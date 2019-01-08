@@ -32,21 +32,14 @@
 
  Example:
 
- func textField(_ textField: UITextField, shouldChangeCharactersIn
-                      range: NSRange,
-    replacementString string: String) -> Bool {
-
-    if string == "\n" {
-        if let trimmedText = textField.text?.trimmingCharacters(in: .whitespaces),
-           trimmedText.count > 0 {
-            // add a chip with the current text (alternatively present list of options based on
-            //  the current text).
-            appendChip(text: trimmedText)
-            textField.text = ""
-        }
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    if let chipTextField = textField as? MDCChipTextField,
+       let chipText = textField.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+       chipText.count > 0 {
+       chipTextField.appendChip(text: chipText) chipTextField.text = ""
     }
     return true
- }
+  }
 
  @param text The string to display in the chip.
  */

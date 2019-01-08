@@ -178,6 +178,8 @@ static UIColor *DrawerShadowColor(void) {
 
 - (void)dealloc {
   [self removeScrollViewObserver];
+  [self.headerShadowLayer removeFromSuperlayer];
+  self.headerShadowLayer = nil;
   [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -297,6 +299,11 @@ static UIColor *DrawerShadowColor(void) {
 
 - (BOOL)shouldPresentFullScreen {
   return [self isAccessibilityMode] || [self isMobileLandscape] || _shouldPresentAtFullscreen;
+}
+
+- (BOOL)contentReachesFullscreen {
+  return [self shouldPresentFullScreen] ? YES
+                                        : self.contentHeightSurplus >= self.contentHeaderTopInset;
 }
 
 /**
@@ -494,10 +501,7 @@ static UIColor *DrawerShadowColor(void) {
 
 - (void)viewDidDisappear:(BOOL)animated {
   [super viewDidDisappear:animated];
-
   [self removeScrollViewObserver];
-  [self.headerShadowLayer removeFromSuperlayer];
-  self.headerShadowLayer = nil;
 }
 
 - (void)preferredContentSizeDidChangeForChildContentContainer:(id<UIContentContainer>)container {
@@ -802,11 +806,6 @@ static UIColor *DrawerShadowColor(void) {
 
 - (CGRect)presentingViewBounds {
   return CGRectStandardize(self.originalPresentingViewController.view.bounds);
-}
-
-- (BOOL)contentReachesFullscreen {
-  return [self shouldPresentFullScreen] ? YES
-                                        : self.contentHeightSurplus >= self.contentHeaderTopInset;
 }
 
 - (BOOL)contentScrollsToReveal {

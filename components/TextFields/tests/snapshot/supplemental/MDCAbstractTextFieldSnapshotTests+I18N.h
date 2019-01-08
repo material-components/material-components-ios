@@ -18,6 +18,12 @@
 
 - (void)changeStringsToArabic;
 
-- (void)changeLayoutToRTL;
+- (void)changeStringsToCyrillic;
+
+- (void)changeStringsToHindi;
+
+- (void)changeStringsToKorean;
+
+- (void)changeLayoutToRTL NS_AVAILABLE_IOS(9.0);
 
 @end

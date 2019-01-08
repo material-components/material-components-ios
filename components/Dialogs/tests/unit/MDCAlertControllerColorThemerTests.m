@@ -62,6 +62,7 @@
                 equalsColor2:[colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87]]);
   XCTAssertTrue([self color1:view.messageLabel.textColor
                 equalsColor2:[colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60]]);
+  XCTAssertEqualObjects(view.backgroundColor, colorScheme.surfaceColor);
   for (UIButton *button in view.actionManager.buttonsInActionOrder) {
     XCTAssertTrue([self color1:button.titleLabel.textColor equalsColor2:colorScheme.primaryColor]);
   }

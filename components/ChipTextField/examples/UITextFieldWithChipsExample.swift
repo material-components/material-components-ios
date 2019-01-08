@@ -16,9 +16,9 @@ import UIKit
 
 class UITextFieldWithChipsExample: UIViewController {
 
-  let textField = InsetTextField()
-  var leftView = UIView()
-  var leadingConstraint: NSLayoutConstraint?
+  fileprivate let textField = InsetTextField()
+  private var leftView = UIView()
+  fileprivate var leadingConstraint: NSLayoutConstraint?
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -34,7 +34,7 @@ class UITextFieldWithChipsExample: UIViewController {
     }
   }
 
-  func setupExample() {
+  private func setupExample() {
 
     textField.translatesAutoresizingMaskIntoConstraints = false
     textField.backgroundColor = UIColor.black.withAlphaComponent(0.05)
@@ -75,7 +75,7 @@ class UITextFieldWithChipsExample: UIViewController {
     textField.leftViewMode = .always
   }
 
-  func additionalTextField() {
+  private func additionalTextField() {
     let additionalTextField = PlainTextField()
     additionalTextField.translatesAutoresizingMaskIntoConstraints = false
     additionalTextField.backgroundColor = UIColor.black.withAlphaComponent(0.05)
@@ -100,7 +100,7 @@ class UITextFieldWithChipsExample: UIViewController {
     }
   }
 
-  func appendLabel(text: String) {
+  fileprivate func appendLabel(text: String) {
 
     let pad: CGFloat = 5.0
 
@@ -132,7 +132,7 @@ class UITextFieldWithChipsExample: UIViewController {
     textField.insetX = label.frame.maxX
   }
 
-  func newLabel(text: String) -> UILabel {
+  private func newLabel(text: String) -> UILabel {
     // create label and add to left view
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
@@ -210,7 +210,7 @@ extension UITextFieldWithChipsExample {
 
 // MARK: UITextField Subclass
 
-class InsetTextField: UITextField {
+private class InsetTextField: UITextField {
 
   // the split point: this is the x position where chips view ends and text begins.
   // Updating this property moves the split point between chips & text.

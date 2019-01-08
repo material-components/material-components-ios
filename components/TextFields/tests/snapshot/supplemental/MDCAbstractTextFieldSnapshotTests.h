@@ -15,12 +15,38 @@
 #import "MDCTextFieldSnapshotTestCase.h"
 #import "MaterialTextFields.h"
 
+/**
+ Defines several methods that allow subclasses to define "hook" methods that execute after different
+ portions of the test lifecycle.
+
+ In general, the test method lifecycle is:
+
+ -   Call @c setUp
+ -   Assign strings to the relevant properties.
+ -   Call @c willGenerateSnapshotAndVerify
+ -   Call @c generateSnapshotAndVerify
+ -   Call @c tearDown
+ */
+@protocol MDCTextFieldSnapshotTestCaseHooking
+
+@optional
+
+/**
+ Hook for test classes to execute any additional code desired before `generateSnapshotAndVerify` is
+ called.
+ */
+- (void)willGenerateSnapshotAndVerify;
+
+@end
+
 @interface MDCAbstractTextFieldSnapshotTests : MDCTextFieldSnapshotTestCase
 
 /**
  The text input controller used during testing.
  */
 @property(nonatomic, strong) NSObject<MDCTextInputController> *textFieldController;
+
+#pragma mark - Text properties
 
 /**
  A short input text string. When rendered, it should be significantly shorter than the width of the
@@ -69,5 +95,16 @@
  field.
  */
 @property(nonatomic, copy) NSString *longErrorText;
+
+#pragma mark - Test control
+
+/**
+ If @c YES, the test case class will execute test methods where no strings are assigned to
+ properties. Can be set to @c NO when repeated test classes are used for the same styles (e.g.,
+ script-based tests).
+
+ The default value is @c YES.
+ */
+@property(nonatomic, assign) BOOL shouldExecuteEmptyTests;
 
 @end

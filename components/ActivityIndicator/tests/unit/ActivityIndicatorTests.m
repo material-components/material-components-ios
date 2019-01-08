@@ -155,6 +155,18 @@ static CGFloat randomNumber() {
   XCTAssertEqualObjects(indicator.accessibilityLabel, testString);
 }
 
+- (void)testStopsAnimatingWhenHidden {
+  // Given
+  MDCActivityIndicator *indicator = [[MDCActivityIndicator alloc] init];
+  [indicator startAnimating];
+
+  // When
+  indicator.hidden = YES;
+
+  // Then
+  XCTAssertFalse(indicator.animating);
+}
+
 #pragma mark - Helpers
 
 - (void)verifySettingProgressOnIndicator:(MDCActivityIndicator *)indicator animated:(BOOL)animated {
