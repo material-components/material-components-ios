@@ -20,6 +20,7 @@ import MaterialComponents.MaterialTypographyScheme
 import MaterialComponents.MaterialShadowElevations
 import MaterialComponentsBeta.MaterialContainerScheme
 import MaterialComponentsBeta.MaterialButtons_Theming
+import MaterialComponentsBeta.MaterialDialogs_Theming
 
 class DialogsMaterialThemingTests: XCTestCase {
 

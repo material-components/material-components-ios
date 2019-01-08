@@ -21,6 +21,7 @@ import MaterialComponents.MaterialShapeScheme
 import MaterialComponents.MaterialShapeLibrary
 import MaterialComponents.MaterialTypographyScheme
 import MaterialComponentsBeta.MaterialContainerScheme
+import MaterialComponentsBeta.MaterialButtons_Theming
 
 class ButtonsThemingTest: XCTestCase {
 

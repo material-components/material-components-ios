@@ -15,8 +15,8 @@
 import XCTest
 
 import MaterialComponents.MaterialShadowElevations
-import MaterialComponents.MDCAlertScheme
-import MaterialComponents.MDCAlertControllerThemer
+import MaterialComponents.MaterialDialogs
+import MaterialComponents.MaterialDialogs_DialogThemer
 
 class MDCAlertControllerAlertThemerTests: XCTestCase {
 
