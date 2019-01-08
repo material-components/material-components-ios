@@ -148,7 +148,7 @@
                                     constant:0];
 
   NSLayoutConstraint *chipViewConstraintLeading = nil;
-  NSInteger numberOfChips = [self.dataSource numberOfChipsOnScrollView:self];
+  NSInteger numberOfChips = [self.dataSource numberOfChipsInScrollView:self];
   // The left most chip is always done before all other chips are added right now,
   // we should remove the assumption when moving to Beta
   if (numberOfChips == 0) {
@@ -187,7 +187,7 @@
 - (void)removeChipView:(MDCChipView *)chipView {
   [chipView removeFromSuperview];
 
-  NSInteger numberOfChips = [self.dataSource numberOfChipsOnScrollView:self];
+  NSInteger numberOfChips = [self.dataSource numberOfChipsInScrollView:self];
   if (numberOfChips > 0) {
     MDCChipView *lastChipView = [self.dataSource scrollView:self chipForIndex:numberOfChips - 1];
     NSLayoutConstraint *chipViewConstraintTrailing =

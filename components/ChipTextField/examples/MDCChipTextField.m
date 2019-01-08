@@ -109,6 +109,7 @@ static CGFloat const kTextToEnterPlaceholderLength = 16.0f;
 }
 
 // TODO: the constant here reflects the margin, places calling this method need to be refactored.
+// Ideally no constant needs to be passed into this method for the function to work.
 - (void)clearChipsContainerOffsetWithConstant:(CGFloat)constant {
   self.chipContainerViewConstraintTrailingConstant = -constant;
   [self invalidateIntrinsicContentSize];
@@ -349,7 +350,7 @@ static CGFloat const kTextToEnterPlaceholderLength = 16.0f;
 
 #pragma mark - MDCChipTextFieldScrollViewDataSource
 
-- (NSInteger)numberOfChipsOnScrollView:(MDCChipTextFieldScrollView *)scrollView {
+- (NSInteger)numberOfChipsInScrollView:(MDCChipTextFieldScrollView *)scrollView {
   return self.chipViews.count;
 }
 

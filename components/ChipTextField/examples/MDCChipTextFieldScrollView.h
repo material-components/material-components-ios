@@ -26,7 +26,7 @@
 
 @protocol MDCChipTextFieldScrollViewDataSource <NSObject>
 
-- (NSInteger)numberOfChipsOnScrollView:(MDCChipTextFieldScrollView *)scrollView;
+- (NSInteger)numberOfChipsInScrollView:(MDCChipTextFieldScrollView *)scrollView;
 - (MDCChipView *)scrollView:(MDCChipTextFieldScrollView *)scrollView chipForIndex:(NSInteger)index;
 
 @end
