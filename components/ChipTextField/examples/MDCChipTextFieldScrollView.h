@@ -36,7 +36,6 @@
 @property(nonatomic, weak, nullable) id<MDCChipTextFieldScrollViewDelegate> delegate;
 @property(nonatomic, weak, nullable) id<MDCChipTextFieldScrollViewDataSource> dataSource;
 
-
 /**
  The spacing between chips in this scroll view.
  */
