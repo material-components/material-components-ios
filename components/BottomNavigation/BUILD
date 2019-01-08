@@ -15,10 +15,12 @@
 
 load(
     "//:material_components_ios.bzl",
+    "mdc_extension_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
     "mdc_unit_test_suite",
 )
+load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
 
@@ -51,30 +53,16 @@ objc_bundle(
     bundle_imports = [":BundleFiles"],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "ColorThemer",
-    srcs = native.glob(["src/ColorThemer/*.m"]),
-    hdrs = native.glob(["src/ColorThemer/*.h"]),
-    includes = ["src/ColorThemer"],
-    sdk_frameworks = [
-        "UIKit",
-    ],
-    visibility = ["//visibility:public"],
     deps = [
         ":BottomNavigation",
         "//components/schemes/Color",
     ],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "TypographyThemer",
-    srcs = native.glob(["src/TypographyThemer/*.m"]),
-    hdrs = native.glob(["src/TypographyThemer/*.h"]),
-    includes = ["src/TypographyThemer"],
-    sdk_frameworks = [
-        "Foundation",
-    ],
-    visibility = ["//visibility:public"],
     deps = [
         ":BottomNavigation",
         "//components/schemes/Typography",
@@ -86,6 +74,49 @@ mdc_objc_library(
     hdrs = native.glob(["src/private/*.h"]),
     includes = ["src/private"],
     visibility = ["//visibility:private"],
+)
+
+mdc_objc_library(
+    name = "ObjcExamples",
+    srcs = native.glob([
+        "examples/*.m",
+        "examples/*.h",
+        "examples/supplemental/*.m",
+        "examples/supplemental/*.h",
+    ]),
+    includes = ["examples/supplemental"],
+    deps = [
+        ":BottomNavigation",
+        ":ColorThemer",
+        ":TypographyThemer",
+        "//components/Palettes",
+        "//components/schemes/Color",
+        "//components/schemes/Typography",
+    ],
+)
+
+swift_library(
+    name = "SwiftExamples",
+    srcs = native.glob(
+        [
+            "examples/*.swift",
+            "examples/supplemental/*.swift",
+        ],
+        exclude = ["examples/BottomNavigationBarControllerExampleViewController.swift"],
+    ),
+    copts = [
+        "-swift-version",
+        "3",
+    ],
+    deps = [
+        ":BottomNavigation",
+        ":ColorThemer",
+        ":ObjcExamples",
+        ":TypographyThemer",
+        "//components/AppBar",
+        "//components/Buttons",
+        "//components/Palettes",
+    ],
 )
 
 mdc_objc_library(
@@ -109,6 +140,7 @@ mdc_objc_library(
 )
 
 mdc_unit_test_suite(
+    name = "unit_tests",
     deps = [
         ":unit_test_sources",
     ],

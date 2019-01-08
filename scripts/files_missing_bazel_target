@@ -1,0 +1,150 @@
+#!/bin/bash
+#
+# Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# Finds all newly-added files that are missing BUILD targets
+
+# Unique identifier for GitHub comments posted by this script.
+COMMENT_IDENTIFIER='bazel-rule-coverage'
+
+## Import Github Comment library script
+if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+  # Import source methods for managing GitHub comments
+  scripts_dir='github/repo/scripts/lib'
+else
+  scripts_dir="$(dirname $0)/lib"
+fi
+
+source "${scripts_dir}/github_comments.sh"
+
+# Required for posting and deleting comments
+source "${scripts_dir}/select_xcode.sh"
+
+if [ -n "$XCODE_VERSION" ]; then
+  select_xcode "$XCODE_VERSION"
+fi
+
+# Generates a list of files that were modified since the target branch 
+modified_files() {
+  # Move to our cloned repository
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    pushd github/repo >> /dev/null
+  fi
+
+  # `target_branch` is either the Pull Request destination branch (where it will be merged) or if
+  # none can be determined, defaults to `develop`.
+  if [ -n "$KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH" ]; then
+    target_branch="origin/${KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH}"
+  else
+    target_branch=develop
+  fi
+
+  # `base_sha` is the merge base of `target_branch` and the current HEAD.
+  base_sha=$(git merge-base "${target_branch}" HEAD)
+
+  # `TARGET` is then all bazel targets affected by changes in the commit range between `base_sha`
+  # and `HEAD`.  By default, that becomes all changes between the `develop` branch and the latest
+  #  commit.
+  range="${base_sha}...HEAD"
+
+  git diff --name-only "${range}" \
+    | grep -E '(\.swift|\.h|\.m)$' \
+    | grep -vE '\/tests\/snapshot\/' \
+    | grep -vE '^components\/private\/Snapshot\/' \
+    | sort \
+    | uniq
+
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    popd >> /dev/null
+  fi
+}
+
+# Deletes any previously-posted comment and posts a comment to GitHub with
+# the list of source files not in a bazel target.
+update_comment() {
+  if [ -n "$GITHUB_API_TOKEN" ]; then
+    delete_comment "$COMMENT_IDENTIFIER"
+  fi
+  
+  if [ -n "$1" ]; then
+    comment_tmp_path=$(mktemp -d)
+    comment_tmp_file="${comment_tmp_path}/comment.tmp"
+    echo -e "The following files are not in any BUILD targets:\n" >> "$comment_tmp_file"
+    echo -e "\`\`\`\n${1}\n\`\`\`\n" >> "$comment_tmp_file"
+
+    cat "$comment_tmp_file"
+    if [ -n "$GITHUB_API_TOKEN" ]; then
+      post_comment "$COMMENT_IDENTIFIER" "$comment_tmp_file"
+    fi
+  fi
+}
+
+# Determines if any of the modified files are not included in a bazel rule.
+check_files_covered() {
+  update_comment # Deletes any previously-posted comment
+
+  files=$(modified_files)
+  SAVEIFS=$IFS
+  IFS=$'\n'
+  files=($files)
+  IFS=$SAVEIFS
+
+  if [ -z "$files" ]; then
+    echo "No source files were modified"
+    exit 0
+  fi
+
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    pushd github/repo >> /dev/null
+    
+    # We must upgrade bazel prior to running bazel query because we rely on features in bazel
+    # 0.20.
+    bazel version
+    use_bazel.sh 0.20.0
+    bazel version
+  fi
+ 
+  num_files="${#files[@]}"
+  current_index=0
+  for file in "${files[@]}"; do
+    targets=$(bazel query "'$file'" --output=package 2>/dev/null) 
+    if [ -z "$targets" ]; then
+      if [ -z "$missing_targets" ]; then
+        missing_targets="$file"
+      else
+        missing_targets="${missing_targets}\n${file}"
+      fi
+      exit_status=1
+    fi
+    ((current_index++))
+    if (( current_index % 25==0 )); then
+      echo "Processing file $current_index / $num_files" 
+    fi
+  done 
+  
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    popd >> /dev/null
+  fi
+
+  if (( exit_status != 0 )); then
+    missing_targets=$(echo -e "$missing_targets" | sort | uniq)
+    update_comment "$missing_targets"
+  fi 
+
+  exit $exit_status
+} 
+
+check_files_covered
+

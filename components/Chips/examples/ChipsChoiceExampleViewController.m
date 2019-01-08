@@ -14,8 +14,9 @@
 
 #import "ChipsExamplesSupplemental.h"
 
+#import "MaterialChips+Theming.h"
 #import "MaterialChips.h"
-#import "MaterialChips+ChipThemer.h"
+#import "MaterialContainerScheme.h"
 
 @interface ChipsChoiceExampleViewController ()
 @property(nonatomic, strong) MDCChipView *sizingChip;
@@ -32,6 +33,13 @@
     self.shapeScheme = [[MDCShapeScheme alloc] init];
   }
   return self;
+}
+
+- (MDCContainerScheme *)containerScheme {
+  MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
+  scheme.colorScheme = self.colorScheme;
+  scheme.shapeScheme = self.shapeScheme;
+  return scheme;
 }
 
 - (void)loadView {
@@ -112,14 +120,10 @@
   chipView.enabled = indexPath.row != 2;
   cell.userInteractionEnabled = indexPath.row != 2;
 
-  MDCChipViewScheme *scheme = [[MDCChipViewScheme alloc] init];
-  scheme.colorScheme = self.colorScheme;
-  scheme.shapeScheme = self.shapeScheme;
-
   if (self.isOutlined) {
-    [MDCChipViewThemer applyOutlinedVariantWithScheme:scheme toChipView:chipView];
+    [chipView applyOutlinedThemeWithScheme:[self containerScheme]];
   } else {
-    [MDCChipViewThemer applyScheme:scheme toChipView:chipView];
+    [chipView applyThemeWithScheme:[self containerScheme]];
   }
 
   return cell;

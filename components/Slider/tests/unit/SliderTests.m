@@ -906,12 +906,12 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 
 - (void)testThumbRadiusDefault {
   // Then
-  XCTAssertEqual(self.slider.thumbRadius, 6);
+  XCTAssertEqualWithAccuracy(self.slider.thumbRadius, 6, kEpsilonAccuracy);
 }
 
 - (void)testThumbElevationDefault {
   // Then
-  XCTAssertEqual(self.slider.thumbElevation, MDCShadowElevationNone);
+  XCTAssertEqualWithAccuracy(self.slider.thumbElevation, MDCShadowElevationNone, kEpsilonAccuracy);
 }
 
 #pragma mark Numeric value label
@@ -1028,25 +1028,25 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 - (void)testAccessibilityIncrement {
   // Given
   self.slider.value = [self randomPercent] - (CGFloat)0.1;
-  CGFloat originalValue = self.slider.value;
+  CGFloat expectedValue = self.slider.value + (CGFloat)0.1;
 
   // When
   [self.slider accessibilityIncrement];
 
   // Then
-  XCTAssertEqual(originalValue + (CGFloat)0.1, self.slider.value);
+  XCTAssertEqualWithAccuracy(self.slider.value, expectedValue, kEpsilonAccuracy);
 }
 
 - (void)testAccessibilityDecrement {
   // Given
   self.slider.value = [self randomPercent] + (CGFloat)0.1;
-  CGFloat originalValue = self.slider.value;
+  CGFloat expectedValue = self.slider.value - (CGFloat)0.1;
 
   // When
   [self.slider accessibilityDecrement];
 
   // Then
-  XCTAssertEqual(originalValue - (CGFloat)0.1, self.slider.value);
+  XCTAssertEqualWithAccuracy(self.slider.value, expectedValue, kEpsilonAccuracy);
 }
 
 - (void)testAccessibilityActivate {
@@ -1058,20 +1058,20 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   CGFloat newValue = (self.slider.maximumValue - self.slider.minimumValue) / 6;
 
   // Then
-  XCTAssertEqual(self.slider.value, newValue);
+  XCTAssertEqualWithAccuracy(self.slider.value, newValue, kEpsilonAccuracy);
 }
 
 - (void)testAccessibilityIncrementWithLargerMax {
   // Given
   self.slider.maximumValue = [self randomNumber];
   self.slider.value = ([self randomPercent] - (CGFloat)0.1) * self.slider.maximumValue;
-  CGFloat originalValue = self.slider.value;
+  CGFloat expectedValue = self.slider.value + (CGFloat)0.1 * self.slider.maximumValue;
 
   // When
   [self.slider accessibilityIncrement];
 
   // Then
-  XCTAssertEqual(originalValue + (CGFloat)0.1 * self.slider.maximumValue, self.slider.value);
+  XCTAssertEqualWithAccuracy(self.slider.value, expectedValue, kEpsilonAccuracy);
 }
 
 - (void)testAccessibilityTraits {
@@ -1084,11 +1084,6 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 }
 
 - (void)testAccessibilityIncrementDiscreteSlider {
-  CGFloat singleWidth = (float)0.54;
-  CGFloat doubleWidthLong = (CGFloat)0.54000002145767212;
-  CGFloat doubleWidthShort = (CGFloat)0.54;
-  NSLog(@"\n S: %.024f\nDl: %.024f\nDs: %.024f\n", singleWidth, doubleWidthLong, doubleWidthShort);
-
   for (NSUInteger i = 2; i < 20; ++i) {
     // Given
     self.slider.numberOfDiscreteValues = i;
@@ -1103,7 +1098,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
     CGFloat stepValue = (self.slider.maximumValue - self.slider.minimumValue) /
         (self.slider.numberOfDiscreteValues - 1);
     CGFloat expectedValue = self.slider.minimumValue + stepValue;
-    XCTAssertEqualWithAccuracy(self.slider.value, expectedValue, 0.0001,
+    XCTAssertEqualWithAccuracy(self.slider.value, expectedValue, kEpsilonAccuracy,
                                @"A slider with (%lu) discrete values should have step of '%.3f'.",
                                (unsigned long)self.slider.numberOfDiscreteValues, stepValue);
   }

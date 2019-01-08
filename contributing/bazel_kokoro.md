@@ -93,6 +93,7 @@ mdc_objc_library(
 )
 
 mdc_unit_test_suite(
+  name = "unit_tests",
     deps = [
       ":unit_test_sources",
     ],
@@ -117,21 +118,18 @@ If your component depends on non-source resources, you can add a bundle target t
 with the following additions:
 
 ```
+load("//tools/build_defs/apple:resources.bzl", "apple_bundle_import")
+
 mdc_public_objc_library(
     name = "ComponentName",
-    bundles = [":Bundle"],
+    data = [":Bundle"],
 )
 
-filegroup(
-    name = "BundleFiles",
-    srcs = glob([
+apple_bundle_import(
+    name = "Bundle",
+    bundle_imports = glob([
         "src/ComponentName.bundle/**",
     ]),
-)
-
-objc_bundle(
-    name = "Bundle",
-    bundle_imports = [":BundleFiles"],
 )
 ```
 
@@ -186,6 +184,7 @@ swift_library(
 )
 
 mdc_unit_test_suite(
+  name = "unit_tests",
     deps = [
       ":unit_test_sources",
       ":unit_test_swift_sources"

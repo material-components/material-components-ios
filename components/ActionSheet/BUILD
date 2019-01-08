@@ -15,6 +15,7 @@
 
 load(
     "//:material_components_ios.bzl",
+    "mdc_extension_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
     "mdc_unit_test_suite",
@@ -33,12 +34,8 @@ mdc_public_objc_library(
     ],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "Theming",
-    srcs = native.glob(["src/Theming/*.m"]),
-    hdrs = native.glob(["src/Theming/*.h"]),
-    includes = ["src/Theming"],
-    visibility = ["//visibility:public"],
     deps = [
         ":ActionSheet",
         ":ColorThemer",
@@ -47,13 +44,8 @@ mdc_objc_library(
     ],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "ActionSheetThemer",
-    srcs = native.glob(["src/ActionSheetThemer/*.m"]),
-    hdrs = native.glob(["src/ActionSheetThemer/*.h"]),
-    includes = ["src/ActionSheetThemer"],
-    sdk_frameworks = ["UIKit"],
-    visibility = ["//visibility:public"],
     deps = [
         ":ActionSheet",
         ":ColorThemer",
@@ -61,26 +53,16 @@ mdc_objc_library(
     ],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "TypographyThemer",
-    srcs = native.glob(["src/TypographyThemer/*.m"]),
-    hdrs = native.glob(["src/TypographyThemer/*.h"]),
-    includes = ["src/TypographyThemer"],
-    sdk_frameworks = ["UIKit"],
-    visibility = ["//visibility:public"],
     deps = [
         ":ActionSheet",
         "//components/schemes/Typography",
     ],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "ColorThemer",
-    srcs = native.glob(["src/ColorThemer/*.m"]),
-    hdrs = native.glob(["src/ColorThemer/*.h"]),
-    includes = ["src/ColorThemer"],
-    sdk_frameworks = ["UIKit"],
-    visibility = ["//visibility:public"],
     deps = [
         ":ActionSheet",
         "//components/schemes/Color",
@@ -91,7 +73,6 @@ mdc_objc_library(
     name = "privateHeaders",
     testonly = 1,
     hdrs = native.glob(["src/private/*.h"]),
-    visibility = ["//visibility:private"],
     deps = [":ActionSheet"],
 )
 
@@ -99,7 +80,35 @@ mdc_objc_library(
     name = "private",
     hdrs = native.glob(["src/private/*.h"]),
     includes = ["src/private"],
-    visibility = ["//visibility:private"],
+)
+
+mdc_objc_library(
+    name = "ObjcExamples",
+    srcs = glob([
+        "examples/*.m",
+        "examples/*.h",
+        "examples/supplemental/*.m",
+        "examples/supplemental/*.h",
+    ]),
+    deps = [
+        ":ActionSheet",
+        ":Theming",
+        "//components/Buttons:ButtonThemer",
+        "//components/schemes/Color",
+        "//components/schemes/Typography",
+    ],
+)
+
+swift_library(
+    name = "SwiftExamples",
+    srcs = glob([
+        "examples/*.swift",
+        "examples/supplemental/*.swift",
+    ]),
+    deps = [
+        ":ActionSheet",
+        ":Theming",
+    ],
 )
 
 swift_library(
@@ -109,7 +118,6 @@ swift_library(
         "-swift-version",
         "3",
     ],
-    visibility = ["//visibility:private"],
     deps = [
         ":ActionSheet",
         ":ColorThemer",
@@ -129,7 +137,6 @@ mdc_objc_library(
         "CoreImage",
         "XCTest",
     ],
-    visibility = ["//visibility:private"],
     deps = [
         ":ActionSheet",
         ":ActionSheetThemer",
@@ -141,6 +148,7 @@ mdc_objc_library(
 )
 
 mdc_unit_test_suite(
+    name = "unit_tests",
     deps = [
         ":unit_test_sources",
         ":unit_test_swift_sources",

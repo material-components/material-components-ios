@@ -50,8 +50,9 @@ static const CGFloat kBorderWidth = 1;
       UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     [card setBorderWidth:kBorderWidth forState:state];
+    [card setShadowElevation:0 forState:state];
   }
-  [card setShadowElevation:kHighlightedElevation forState:UIControlStateHighlighted];
+
   [MDCCardsColorThemer applyOutlinedVariantWithColorScheme:scheme.colorScheme toCard:card];
   [MDCCardsShapeThemer applyShapeScheme:scheme.shapeScheme toCard:card];
 }
@@ -61,10 +62,8 @@ static const CGFloat kBorderWidth = 1;
   for (MDCCardCellState state = MDCCardCellStateNormal; state <= MDCCardCellStateSelected;
        state++) {
     [cardCell setBorderWidth:kBorderWidth forState:state];
+    [cardCell setShadowElevation:0 forState:state];
   }
-  [cardCell setShadowElevation:kHighlightedElevation forState:MDCCardCellStateHighlighted];
-  [cardCell setShadowElevation:kSelectedElevation forState:MDCCardCellStateSelected];
-
 
   [MDCCardsColorThemer applyOutlinedVariantWithColorScheme:scheme.colorScheme toCardCell:cardCell];
   [MDCCardsShapeThemer applyShapeScheme:scheme.shapeScheme toCardCell:cardCell];

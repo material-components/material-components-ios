@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "MaterialComponentsSnapshotTests"
-  s.version      = "73.0.0"
+  s.version      = "73.1.0"
   s.authors      = "The Material Components authors."
   s.summary      = "This spec is an aggregate of all the Material Components snapshot tests."
   s.homepage     = "https://github.com/material-components/material-components-ios"
@@ -14,6 +14,18 @@ Pod::Spec.new do |s|
   # Cards
 
   s.subspec "Cards" do |component|
+    component.ios.deployment_target = '8.0'
+    component.test_spec 'tests' do |tests|
+      tests.test_spec 'snapshot' do |snapshot_tests|
+        snapshot_tests.requires_app_host = true
+        snapshot_tests.source_files = "components/#{component.base_name}/tests/snapshot/*.{h,m,swift}", "components/#{component.base_name}/tests/snapshot/supplemental/*.{h,m,swift}"
+        snapshot_tests.resources = "components/#{component.base_name}/tests/snapshot/resources/*"
+        snapshot_tests.dependency "MaterialComponentsSnapshotTests/private/Snapshot"
+      end
+    end
+  end
+
+  s.subspec "Chips" do |component|
     component.ios.deployment_target = '8.0'
     component.test_spec 'tests' do |tests|
       tests.test_spec 'snapshot' do |snapshot_tests|
@@ -43,7 +55,7 @@ Pod::Spec.new do |s|
   s.subspec "private" do |private_spec|
     private_spec.test_spec "Snapshot" do |snapshot|
       snapshot.ios.deployment_target = '8.0'
-      snapshot.source_files = "components/private/#{snapshot.base_name}/*.{h,m,swift}"
+      snapshot.source_files = "components/private/#{snapshot.base_name}/src/*.{h,m,swift}"
       snapshot.dependency 'iOSSnapshotTestCase', '2.2.0'
     end
   end

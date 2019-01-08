@@ -14,6 +14,8 @@
 
 #import "MDCTabBar.h"
 
+#import <MDFInternationalization/MDFInternationalization.h>
+
 #import "MDCTabBarIndicatorTemplate.h"
 #import "MDCTabBarUnderlineIndicatorTemplate.h"
 #import "MaterialInk.h"
@@ -373,6 +375,20 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
     _dividerBar.backgroundColor = _bottomDividerColor;
   }
 }
+
+// UISemanticContentAttribute was added in iOS SDK 9.0 but is available on devices running earlier
+// version of iOS. We ignore the partial-availability warning that gets thrown on our use of this
+// symbol.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpartial-availability"
+- (void)mdf_setSemanticContentAttribute:(UISemanticContentAttribute)semanticContentAttribute {
+  if (semanticContentAttribute == self.mdf_semanticContentAttribute) {
+    return;
+  }
+  [super mdf_setSemanticContentAttribute:semanticContentAttribute];
+  _itemBar.mdf_semanticContentAttribute = semanticContentAttribute;
+}
+#pragma clang diagnostic pop
 
 #pragma mark - MDCAccessibility
 
