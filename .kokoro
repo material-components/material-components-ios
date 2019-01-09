@@ -14,7 +14,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Fail on any error.
+# Make sure both Homebrew and RubyGems are up to date
+brew --version
+brew update
+brew --version
+brew doctor
+
+gem update --system --no-document
+
+# Fail on any error
 set -e
 
 if [ -n "$KOKORO_BUILD_NUMBER" ]; then
@@ -57,6 +65,8 @@ fix_bazel_imports() {
     find "${stashed_dir}"components/private/*/src -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
     find "${stashed_dir}"components/*/src -type f -name '*.h' -exec perl -pi -e "$1" {} + || true
     find "${stashed_dir}"components/*/src -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/schemes/*/src -type f -name '*.h' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/schemes/*/src -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
   }
 
   stashed_dir=""
@@ -81,7 +91,8 @@ fix_bazel_imports() {
   rewrite_examples "s/import MaterialComponents.Material(.+)/import components_\1_\1/"
   rewrite_source "s/import <Motion(.+)\/Motion.+\.h>/import \"Motion\1.h\"/"
   rewrite_source "s/import <MDFTextAccessibility\/MDFTextAccessibility\.h>/import \"MDFTextAccessibility.h\"/"
-  rewrite_source "s/import <MaterialComponents\/Material(.+)\.h>/import\/\*framework import\*\/ \"Material\1.h\"/"
+  rewrite_source "s/import <MaterialComponents\/Material(.+)\.h>/import\/\*Material prefix framework import\*\/ \"Material\1.h\"/"
+  rewrite_source "s/import <MaterialComponents\/MDC(.+)\.h>/import\/\*MDC prefix framework import\*\/ \"MDC\1.h\"/"
   rewrite_tests "s/import MDFTextAccessibility/import material_text_accessibility_ios_MDFTextAccessibility/"
   rewrite_tests "s/import MDFInternationalization/import material_internationalization_ios_MDFInternationalization/"
   stashed_dir="$(pwd)/"
@@ -105,7 +116,8 @@ fix_bazel_imports() {
     rewrite_examples "s/import components_(.+)_(.+)/import MaterialComponents.Material\1_\2/"
     rewrite_source "s/import \"Motion(.+)\.h\"/import <Motion\1\/Motion\1.h>/"
     rewrite_source "s/import \"MDFTextAccessibility\.h\"/import <MDFTextAccessibility\/MDFTextAccessibility.h>/"
-    rewrite_source "s/import\/\*framework import\*\/ \"Material(.+)\.h\"/import <MaterialComponents\/Material\1\.h>/"
+    rewrite_source "s/import\/\*Material prefix framework import\*\/ \"Material(.+)\.h\"/import <MaterialComponents\/Material\1\.h>/"
+    rewrite_source "s/import\/\*MDC prefix framework import\*\/ \"MDC(.+)\.h\"/import <MaterialComponents\/MDC\1\.h>/"
     rewrite_tests "s/import material_text_accessibility_ios_MDFTextAccessibility/import MDFTextAccessibility/"
     rewrite_tests "s/import material_internationalization_ios_MDFInternationalization/import MDFInternationalization/"
   }
@@ -366,7 +378,6 @@ generate_website() {
 
     ./scripts/build_site.sh
 
-    gem update --system
     gem install bundler --no-document --quiet
     brew update
     brew install yarn --without-node

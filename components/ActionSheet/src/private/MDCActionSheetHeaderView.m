@@ -14,8 +14,8 @@
 
 #import "MDCActionSheetHeaderView.h"
 
-#import "MaterialMath.h"
-#import "MaterialTypography.h"
+#import "MaterialMath.h" //MaterialComponentsBeta import
+#import "MaterialTypography.h" //MaterialComponentsBeta import
 
 static const CGFloat kTitleLabelAlpha = (CGFloat)0.87;
 static const CGFloat kMessageLabelAlpha = (CGFloat)0.6;

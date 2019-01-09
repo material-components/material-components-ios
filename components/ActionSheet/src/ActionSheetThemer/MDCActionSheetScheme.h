@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <MaterialComponents/MaterialColorScheme.h>
-#import <MaterialComponents/MaterialTypographyScheme.h>
+#import "MaterialColorScheme.h" //MaterialComponentsBeta import
+#import "MaterialTypographyScheme.h" //MaterialComponentsBeta import
 
 #import <Foundation/Foundation.h>
 

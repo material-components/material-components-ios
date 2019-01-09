@@ -14,8 +14,8 @@
 
 #import "MDCButtonBar+MaterialTheming.h"
 
-#import "MaterialButtonBar+ColorThemer.h"
-#import "MaterialButtonBar+TypographyThemer.h"
+#import "MaterialButtonBar+ColorThemer.h" //MaterialComponentsBeta import
+#import "MaterialButtonBar+TypographyThemer.h" //MaterialComponentsBeta import
 
 @implementation MDCButtonBar (MaterialTheming)
 

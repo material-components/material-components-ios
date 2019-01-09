@@ -16,7 +16,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import <MaterialComponents/MaterialTypographyScheme.h>
+#import "MaterialTypographyScheme.h" //MaterialComponentsBeta import
 
 /**
  The Material Design typography system's themer for instances of MDCActionSheetController.

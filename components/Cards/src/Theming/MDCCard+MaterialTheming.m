@@ -14,8 +14,8 @@
 
 #import "MDCCard+MaterialTheming.h"
 
-#import "MaterialCards+ColorThemer.h"
-#import "MaterialCards+ShapeThemer.h"
+#import "MaterialCards+ColorThemer.h" //MaterialComponentsBeta import
+#import "MaterialCards+ShapeThemer.h" //MaterialComponentsBeta import
 
 static const MDCShadowElevation kNormalElevation = 1;
 static const MDCShadowElevation kHighlightedElevation = 4;

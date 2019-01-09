@@ -16,7 +16,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import <MaterialComponents/MaterialColorScheme.h>
+#import "MaterialColorScheme.h" //MaterialComponentsBeta import
 
 /**
  The Material Design color system's themer for instances of MDCActionSheetController.

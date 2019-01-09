@@ -12,21 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialDialogs.h" //MaterialComponentsBeta import
-#import "MaterialContainerScheme.h"
+#import <XCTest/XCTest.h>
 
-/**
- This category is used to style MDCAlertController instances to a specific Material style which can
- be found within the [Material Guidelines](https://material.io/design/components/dialogs.html).
- */
-@interface MDCAlertController (MaterialTheming)
+@interface MaterialApplicationTests : XCTestCase
+@end
 
-/**
- Applies a container scheme to this instance.
-
- @param scheme A container scheme instance containing any desired customizations to the theming
- system.
- */
-- (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
-
+@implementation MaterialApplicationTests
 @end
