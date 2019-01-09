@@ -25,6 +25,9 @@ echo "=========="
 brew --version
 brew prune
 brew doctor
+brew outdated
+brew update
+brew doctor
 
 gem update --system
 
