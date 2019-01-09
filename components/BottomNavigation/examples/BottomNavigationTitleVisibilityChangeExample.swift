@@ -34,7 +34,7 @@ class BottomNavigationTitleVisibilityChangeExample: UIViewController, MDCBottomN
   }
   
   func commonBottomNavigationTypicalUseSwiftExampleInit() {
-    view.backgroundColor = .lightGray
+    view.backgroundColor = colorScheme.backgroundColor
     view.addSubview(bottomNavBar)
     
     // Always show bottom navigation bar item titles.
@@ -87,6 +87,9 @@ class BottomNavigationTitleVisibilityChangeExample: UIViewController, MDCBottomN
   override func viewWillLayoutSubviews() {
     super.viewWillLayoutSubviews()
     layoutBottomNavBar()
+  }
+  
+  override func viewDidLoad() {
     addInstructionLabel()
   }
   
