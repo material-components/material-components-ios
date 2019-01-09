@@ -14,8 +14,8 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialBottomNavigation+Theming.h"
 #import "../../src/private/MDCBottomNavigationItemView.h"
+#import "MaterialBottomNavigation+Theming.h"
 
 static const CGFloat kUnselectedOpacity = (CGFloat)0.6;
 @interface BottomNavigationThemingTests : XCTestCase
@@ -40,7 +40,7 @@ static const CGFloat kUnselectedOpacity = (CGFloat)0.6;
 
   self.bottomNavigationBar = [[MDCBottomNavigationBar alloc] init];
   UITabBarItem *item = [[UITabBarItem alloc] init];
-  self.bottomNavigationBar.items = @[item];
+  self.bottomNavigationBar.items = @[ item ];
 
   self.containerScheme = [[MDCContainerScheme alloc] init];
 }
@@ -55,9 +55,9 @@ static const CGFloat kUnselectedOpacity = (CGFloat)0.6;
 
 - (void)testBottomNavigationTheming {
   // Given
-  id <MDCColorScheming> colorScheme =
+  id<MDCColorScheming> colorScheme =
       [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-  id <MDCTypographyScheming> typographyScheme =
+  id<MDCTypographyScheming> typographyScheme =
       [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
 
   // When

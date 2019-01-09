@@ -20,9 +20,9 @@
 /**
  Applies the theme for a material bottom navigation to this instance.
 
- @param scheme A container scheme instance containing any desired customizations to the theming system.
+ @param scheme A container scheme instance containing any desired customizations to the theming
+ system.
  */
 - (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
 
 @end
-
