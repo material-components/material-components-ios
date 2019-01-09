@@ -68,8 +68,6 @@ class BottomAppBarTypicalUseSwiftExample: UIViewController {
     // Set the image on the floating button.
     let addImage = UIImage(named:"Add")?.withRenderingMode(.alwaysTemplate)
     bottomBarView.floatingButton.setImage(addImage, for: .normal)
-    bottomBarView.floatingButton.setTitle("Add new item", for: .normal)
-    bottomBarView.floatingButton.mode = .expanded
 
     // Set the position of the floating button.
     bottomBarView.floatingButtonPosition = .center
@@ -143,7 +141,7 @@ extension BottomAppBarTypicalUseSwiftExample {
     return [
       "breadcrumbs": ["Bottom App Bar", "Bottom App Bar (Swift)"],
       "primaryDemo": false,
-      "presentable": true,
+      "presentable": false,
     ]
   }
 
