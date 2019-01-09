@@ -67,7 +67,7 @@ def mdc_extension_objc_library(
   """Declare a public MDC component extension as an Objective-C library according to MDC's 
      conventions.
 
-  The conventions for an MDC component extensino are:
+  The conventions for an MDC component extension are:
   - The public implementation lives in `src/$name/`.
   - The private implementation lives in `src/$name/private`.
 
