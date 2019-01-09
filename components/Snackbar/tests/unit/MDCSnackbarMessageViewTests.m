@@ -164,7 +164,8 @@
   MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
   action.title = @"Tap Me";
   self.message.action = action;
-  self.manager.accessibilityViewIsModalMode = MDCSnackBarManagerAccessibilityViewNonTransientIsModal;
+  self.manager.accessibilityViewIsModalMode =
+      MDCSnackBarManagerAccessibilityViewNonTransientIsModal;
 
   // When
   [self.manager showMessage:self.message];
@@ -181,7 +182,8 @@
 - (void)testSnackbarAccessibiltyViewNonTransientIsModalModeWithNoActions {
   // Given
   self.manager.internalManager.isVoiceOverRunningOverride = YES;
-  self.manager.accessibilityViewIsModalMode = MDCSnackBarManagerAccessibilityViewNonTransientIsModal;
+  self.manager.accessibilityViewIsModalMode =
+      MDCSnackBarManagerAccessibilityViewNonTransientIsModal;
 
   // When
   [self.manager showMessage:self.message];

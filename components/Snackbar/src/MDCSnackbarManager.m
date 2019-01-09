@@ -237,9 +237,9 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
       break;
     case MDCSnackBarManagerAccessibilityViewNonTransientIsModal:
       if ([self isSnackbarTransient:snackbarView]) {
-          accessibilityViewIsModal = NO;
+        accessibilityViewIsModal = NO;
       } else {
-          accessibilityViewIsModal = YES;
+        accessibilityViewIsModal = YES;
       }
       break;
     case MDCSnackBarManagerAccessibilityViewIsModalNever:
@@ -258,8 +258,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
               animated:YES
             completion:^{
               MDCSnackbarManagerInternal *strongSelf = weakSelf;
-              if (!accessibilityViewIsModal &&
-                  [strongSelf isSnackbarTransient:snackbarView]) {
+              if (!accessibilityViewIsModal && [strongSelf isSnackbarTransient:snackbarView]) {
                 snackbarView.accessibilityElementsHidden = YES;
                 UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification,
                                                 message.voiceNotificationText);
@@ -304,30 +303,29 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
                 }];
 
   __weak MDCSnackbarManagerInternal *weakSelf = self;
-  [self.overlayView
-      dismissSnackbarViewAnimated:YES
-                       completion:^{
-                         MDCSnackbarManagerInternal *strongSelf = weakSelf;
-                         strongSelf.overlayView.hidden = YES;
-                         [strongSelf deactivateOverlay:strongSelf.overlayView];
+  [self.overlayView dismissSnackbarViewAnimated:YES
+                                     completion:^{
+                                       MDCSnackbarManagerInternal *strongSelf = weakSelf;
+                                       strongSelf.overlayView.hidden = YES;
+                                       [strongSelf deactivateOverlay:strongSelf.overlayView];
 
-                         // If the snackbarView was transient and accessibilityViewIsModal
-                         // is NO, the Snackbar was just announced (layout was not
-                         // reported as changed) so there is no need to post a layout
-                         // change here.
-                         if (strongSelf.overlayView.accessibilityViewIsModal ||
-                             ![strongSelf isSnackbarTransient:snackbarView]) {
-                           UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification,
-                                                           nil);
-                         }
+                                       // If the snackbarView was transient and
+                                       // accessibilityViewIsModal is NO, the Snackbar was just
+                                       // announced (layout was not reported as changed) so there is
+                                       // no need to post a layout change here.
+                                       if (strongSelf.overlayView.accessibilityViewIsModal ||
+                                           ![strongSelf isSnackbarTransient:snackbarView]) {
+                                         UIAccessibilityPostNotification(
+                                             UIAccessibilityLayoutChangedNotification, nil);
+                                       }
 
-                         strongSelf.currentSnackbar = nil;
+                                       strongSelf.currentSnackbar = nil;
 
-                         // Now that the snackbarView is offscreen, we can allow more
-                         // messages to be shown.
-                         strongSelf.showingMessage = NO;
-                         [strongSelf showNextMessageIfNecessaryMainThread];
-                       }];
+                                       // Now that the snackbarView is offscreen, we can allow more
+                                       // messages to be shown.
+                                       strongSelf.showingMessage = NO;
+                                       [strongSelf showNextMessageIfNecessaryMainThread];
+                                     }];
 }
 
 #pragma mark - Helper methods

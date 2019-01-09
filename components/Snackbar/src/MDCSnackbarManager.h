@@ -20,7 +20,8 @@
 @protocol MDCSnackbarSuspensionToken;
 
 /**
- Different operating modes for the snackbar manager to set the boolean value of accessibilityViewIsModal for snackbar views.
+ Different operating modes for the snackbar manager to set the boolean value of
+ accessibilityViewIsModal for snackbar views.
 
  Default value is MDCSnackBarManagerAccessibilityViewIsModalNever.
  */
@@ -30,7 +31,8 @@ typedef NS_ENUM(NSInteger, MDCSnackBarManagerAccessibilityViewMode) {
    */
   MDCSnackBarManagerAccessibilityViewIsModalNever,
   /**
-   The accessibilityViewIsModal boolean value will be YES for all non-transient snackbar views with actions, and NO for all transient snackbar views.
+   The accessibilityViewIsModal boolean value will be YES for all non-transient snackbar views with
+   actions, and NO for all transient snackbar views.
    */
   MDCSnackBarManagerAccessibilityViewNonTransientIsModal,
   /**
