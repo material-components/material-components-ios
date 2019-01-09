@@ -195,7 +195,8 @@ private class SimpleTableViewController: UITableViewController {
 
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-    cell.textLabel!.text = "\(title!): Row \(indexPath.item)"
+    let titleString = title ?? ""
+    cell.textLabel?.text = "\(titleString): Row \(indexPath.item)"
     return cell
   }
 
