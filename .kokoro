@@ -14,22 +14,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Fail on any error.
-#set -e
-
-echo "Contents of /usr/local/Homebrew/Library/Homebrew/config.rb"
-echo "=========="
-cat /usr/local/Homebrew/Library/Homebrew/config.rb
-echo "=========="
-
 brew --version
-brew prune
-brew doctor
 brew outdated
 brew update
+brew --version
 brew doctor
 
 gem update --system
+
+# Fail on any error
+set -e
 
 if [ -n "$KOKORO_BUILD_NUMBER" ]; then
   # Import source methods for managing GitHub comments
