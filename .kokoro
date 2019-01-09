@@ -14,13 +14,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Make sure both Homebrew and RubyGems are up to date
 brew --version
-brew outdated
 brew update
 brew --version
 brew doctor
 
-gem update --system
+gem update --system --no-document
 
 # Fail on any error
 set -e
