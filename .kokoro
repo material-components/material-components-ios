@@ -17,6 +17,8 @@
 # Fail on any error.
 set -e
 
+gem update --system
+
 if [ -n "$KOKORO_BUILD_NUMBER" ]; then
   # Import source methods for managing GitHub comments
   scripts_dir='github/repo/scripts/lib'
@@ -366,7 +368,6 @@ generate_website() {
 
     ./scripts/build_site.sh
 
-    gem update --system
     gem install bundler --no-document --quiet
     brew update
     brew install yarn --without-node
