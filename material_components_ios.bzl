@@ -78,7 +78,7 @@ def mdc_extension_objc_library(
     deps: The dependencies of the extension.
     sdk_frameworks: Extra SDK frameworks (e.g., CoreGraphics) required by the extension.
     visibility: The visibility of the extension.
-    **kwarrgs: Any arrguments accepted by _mdc_objc_library().
+    **kwarrgs: Any arguments accepted by _mdc_objc_library().
   """
   mdc_objc_library(
       name = name,
