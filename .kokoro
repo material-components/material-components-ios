@@ -14,7 +14,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Fail on any error.
+# Make sure both Homebrew and RubyGems are up to date
+brew --version
+brew update
+brew --version
+brew doctor
+
+gem update --system --no-document
+
+# Fail on any error
 set -e
 
 if [ -n "$KOKORO_BUILD_NUMBER" ]; then
@@ -366,7 +374,6 @@ generate_website() {
 
     ./scripts/build_site.sh
 
-    gem update --system
     gem install bundler --no-document --quiet
     brew update
     brew install yarn --without-node
