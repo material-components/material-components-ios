@@ -15,12 +15,16 @@
 # limitations under the License.
 
 # Fail on any error.
-set -e
+#set -e
 
 echo "Contents of /usr/local/Homebrew/Library/Homebrew/config.rb"
 echo "=========="
 cat /usr/local/Homebrew/Library/Homebrew/config.rb
 echo "=========="
+
+cd /usr/local/bin
+git reset --hard HEAD
+brew doctor
 
 gem update --system
 
