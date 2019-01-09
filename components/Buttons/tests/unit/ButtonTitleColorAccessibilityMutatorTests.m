@@ -92,7 +92,8 @@ static NSString *controlStateDescription(UIControlState controlState);
 - (void)testMutateUsesUnderlyingColorIfButtonBackgroundColorIsTransparent {
   for (UIColor *color in testColors()) {
     for (NSUInteger controlState = 0; controlState <= kNumUIControlStates; ++controlState) {
-      if ((controlState & kUIControlStateDisabledHighlighted) == kUIControlStateDisabledHighlighted) {
+      if ((controlState & kUIControlStateDisabledHighlighted) ==
+          kUIControlStateDisabledHighlighted) {
         // Skip since it's tested with either .highlighted or (.highlighted | .selected)
         continue;
       }
