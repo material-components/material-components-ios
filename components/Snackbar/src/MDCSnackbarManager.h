@@ -241,7 +241,7 @@ typedef NS_ENUM(NSInteger, MDCSnackBarManagerAccessibilityViewMode) {
     BOOL mdc_adjustsFontForContentSizeCategory;
 
 /**
- The MDCSnackBarManagerAccessibilityViewMode of the snackbar manager.
+ The MDCSnackBarManagerAccessibilityViewMode of this snackbar manager.
 
  Default is MDCSnackBarManagerAccessibilityViewIsModalNever.
  */
