@@ -14,15 +14,15 @@
 
 import Foundation
 import MaterialComponents.MaterialButtons
-import MaterialComponentsBeta.MaterialButtons_Theming
+import MaterialComponents.MaterialCollections
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialDialogs
-import MaterialComponents.MaterialCollections
 import MaterialComponents.MaterialDialogs_DialogThemer
+import MaterialComponents.MaterialPalettes
 import MaterialComponents.MaterialTypographyScheme
+import MaterialComponentsBeta.MaterialButtons_Theming
 import MaterialComponentsBeta.MaterialContainerScheme
 import MaterialComponentsBeta.MaterialDialogs_Theming
-import MaterialComponents.MaterialPalettes
 
 class DialogsAlertCustomizationExampleViewController: MDCCollectionViewController {
 
