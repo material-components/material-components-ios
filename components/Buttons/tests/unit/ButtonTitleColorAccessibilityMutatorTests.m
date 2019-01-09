@@ -39,14 +39,14 @@ static NSString *controlStateDescription(UIControlState controlState);
 
 - (void)testMutateChangesTextColor {
   for (UIColor *color in testColors()) {
-    for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
+    for (NSUInteger controlState = 0; controlState <= kNumUIControlStates; ++controlState) {
       // Given
       MDCButton *button = [[MDCButton alloc] init];
       // Making the background color the same as the title color.
       [button setBackgroundColor:color forState:(UIControlState)controlState];
       [button setTitleColor:color forState:(UIControlState)controlState];
       UIControlState disabledHighlighed = UIControlStateHighlighted | UIControlStateDisabled;
-      if (controlState == disabledHighlighed) {
+      if ((controlState & disabledHighlighed) == disabledHighlighed) {
         // Skip disabled highlighted state because UIButton ignores setTitleColor:forState: when
         // passed that state. See `UIButton strangeness` in ButtonTests.m
         continue;
@@ -65,7 +65,7 @@ static NSString *controlStateDescription(UIControlState controlState);
 - (void)testMutateKeepsAccessibleTextColor {
   NSDictionary* colors = @{ [UIColor redColor]: [UIColor blackColor]};
   for (UIColor *color in colors) {
-    for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
+    for (NSUInteger controlState = 0; controlState <= kNumUIControlStates; ++controlState) {
       if (controlState & kUIControlStateDisabledHighlighted) {
         // We skip the Disabled Highlighted state because UIButton setter ignores it.
         // see: testTitleColorForStateDisabledHighlight
@@ -91,7 +91,11 @@ static NSString *controlStateDescription(UIControlState controlState);
 
 - (void)testMutateUsesUnderlyingColorIfButtonBackgroundColorIsTransparent {
   for (UIColor *color in testColors()) {
-    for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
+    for (NSUInteger controlState = 0; controlState <= kNumUIControlStates; ++controlState) {
+      if ((controlState & kUIControlStateDisabledHighlighted) == kUIControlStateDisabledHighlighted) {
+        // Skip since it's tested with either .highlighted or (.highlighted | .selected)
+        continue;
+      }
       // Given
       MDCButton *button = [[MDCButton alloc] init];
       button.underlyingColorHint = color;
