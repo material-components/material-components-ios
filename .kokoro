@@ -17,6 +17,11 @@
 # Fail on any error.
 set -e
 
+echo "Contents of /usr/local/Homebrew/Library/Homebrew/config.rb"
+echo "=========="
+cat /usr/local/Homebrew/Library/Homebrew/config.rb
+echo "=========="
+
 gem update --system
 
 if [ -n "$KOKORO_BUILD_NUMBER" ]; then
