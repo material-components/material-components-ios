@@ -18,7 +18,7 @@ brew_update() {
   brew --version
   brew update
   brew --version
-  brew doctor
+  brew doctor || true
 }
 
 brew_install() {
@@ -31,7 +31,7 @@ gem_update() {
 }
 
 gem_install() {
-#  gem_update
+  gem_update
   gem install "$@" --no-document --quiet
 }
 
