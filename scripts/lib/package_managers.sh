@@ -24,7 +24,6 @@ gem_install() {
 }
 
 brew_update() {
-  gem_update
   brew --version
   brew update
   brew --version
