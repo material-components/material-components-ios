@@ -123,7 +123,7 @@
                         self.message.accessibilityHint);
 }
 
-- (void)testSnackbarSetAccessibiltyViewIsModalForActionSnacbars {
+- (void)testSnackbarSetAccessibiltyViewIsModalAppliedWithActions {
   // Given
   self.manager.internalManager.isVoiceOverRunningOverride = YES;
   MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
@@ -143,7 +143,7 @@
   XCTAssertTrue(self.manager.internalManager.overlayView.accessibilityViewIsModal);
 }
 
-- (void)testSnackbarAccessibiltyViewIsModalShouldBeNoWithNoActions {
+- (void)testSnackbarAccessibiltyViewIsModalAppliedWithNoActions {
   // Given
   self.manager.shouldEnableAccessibilityViewIsModal = YES;
 
@@ -156,7 +156,7 @@
   [self waitForExpectationsWithTimeout:3 handler:nil];
 
   // Then
-  XCTAssertFalse(self.manager.internalManager.overlayView.accessibilityViewIsModal);
+  XCTAssertTrue(self.manager.internalManager.overlayView.accessibilityViewIsModal);
 }
 
 - (void)testSnackbarSetAccessibiltyViewIsModalShouldBeNoForActionSnacbarsWhenManagerIsNo {
