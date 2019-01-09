@@ -41,6 +41,18 @@ mdc_public_objc_library(
     ],
 )
 
+mdc_extension_objc_library(
+    name = "Themeing",
+    deps = [
+        ":BottomNavigation",
+        ":ColorThemer",
+        ":TypographyThemer",
+        "//components/schemes/Container",
+        "//components/schemes/Color",
+        "//components/schemes/Typography",
+    ],
+)
+
 filegroup(
     name = "BundleFiles",
     srcs = glob([
@@ -136,6 +148,7 @@ mdc_objc_library(
         ":ColorThemer",
         ":TypographyThemer",
         ":private",
+        ":Theming",
     ],
 )
 
