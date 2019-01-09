@@ -26,8 +26,8 @@
 
 @protocol MDCChipTextFieldScrollViewDataSource <NSObject>
 
-- (NSInteger)numberOfChipsInScrollView:(MDCChipTextFieldScrollView *)scrollView;
-- (MDCChipView *)scrollView:(MDCChipTextFieldScrollView *)scrollView chipForIndex:(NSInteger)index;
+- (NSInteger)numberOfChipsInScrollView:(nonnull MDCChipTextFieldScrollView *)scrollView;
+- (nullable MDCChipView *)scrollView:(nonnull MDCChipTextFieldScrollView *)scrollView chipForIndex:(NSInteger)index;
 
 @end
 
@@ -45,7 +45,7 @@
 - (void)scrollToRight;
 
 // TODO: remove these methods if we decide to go with data source. Needs revisit.
-- (void)appendChipView:(MDCChipView *)chipView;
-- (void)removeChipView:(MDCChipView *)chipView;
+- (void)appendChipView:(nonnull MDCChipView *)chipView;
+- (void)removeChipView:(nonnull MDCChipView *)chipView;
 
 @end
