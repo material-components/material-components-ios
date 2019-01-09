@@ -17,6 +17,11 @@
 #import "MaterialBottomNavigation+ColorThemer.h"
 #import "MaterialBottomNavigation+TypographyThemer.h"
 
+@interface MDCBottomNavigationBar (PrivateAPI)
+- (void)applyThemeWithColorScheme:(id<MDCColorScheming>)colorScheme;
+- (void)applyThemeWithTypographyScheme:(id<MDCTypographyScheming>)typographyScheme;
+@end
+
 @implementation MDCBottomNavigationBar (MaterialTheming)
 
 - (void)applyThemeWithScheme:(id<MDCContainerScheming>)scheme {

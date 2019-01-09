@@ -17,6 +17,7 @@
 #import "MaterialBottomNavigation+Theming.h"
 #import "../../src/private/MDCBottomNavigationItemView.h"
 
+static const CGFloat kUnselectedOpacity = (CGFloat)0.6;
 @interface BottomNavigationThemingTests : XCTestCase
 @property(nonatomic, strong, nullable) MDCBottomNavigationBar *bottomNavigationBar;
 @property(nonatomic, strong, nullable) id<MDCContainerScheming> containerScheme;
@@ -24,6 +25,12 @@
 
 @interface MDCBottomNavigationBar (Testing)
 @property(nonatomic, strong) NSMutableArray<MDCBottomNavigationItemView *> *itemViews;
+- (void)applyThemeWithColorScheme:(id<MDCColorScheming>)colorScheme;
+- (void)applyThemeWithTypographyScheme:(id<MDCTypographyScheming>)typographyScheme;
+@end
+
+@interface MDCBottomNavigationItemView (Testing)
+@property(nonatomic, strong) UILabel *label;
 @end
 
 @implementation BottomNavigationThemingTests
@@ -59,10 +66,53 @@
   // Then
   XCTAssertEqualObjects(self.bottomNavigationBar.barTintColor, colorScheme.primaryColor);
   XCTAssertEqualObjects(self.bottomNavigationBar.selectedItemTintColor, colorScheme.onPrimaryColor);
+  XCTAssertEqualObjects(self.bottomNavigationBar.unselectedItemTintColor,
+                        [colorScheme.onPrimaryColor colorWithAlphaComponent:kUnselectedOpacity]);
 
   MDCBottomNavigationItemView *firstItemView = [self.bottomNavigationBar.itemViews firstObject];
   XCTAssertEqualObjects(firstItemView.selectedItemTitleColor, colorScheme.onPrimaryColor);
-  XCTAssertEqual(self.bottomNavigationBar.itemTitleFont, typographyScheme.caption);
+  XCTAssertEqualObjects(firstItemView.unselectedItemTintColor,
+                        [colorScheme.onPrimaryColor colorWithAlphaComponent:kUnselectedOpacity]);
+  XCTAssertEqual(firstItemView.label.font, typographyScheme.caption);
+}
+
+- (void)testBottomNavigationCustomTypographyTheming {
+  // Given
+  UIFont *fakeFont = [UIFont systemFontOfSize:12];
+  MDCTypographyScheme *typographyScheme =
+      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+  typographyScheme.caption = fakeFont;
+
+  // When
+  [self.bottomNavigationBar applyThemeWithTypographyScheme:typographyScheme];
+
+  // Then
+  MDCBottomNavigationItemView *firstItemView = [self.bottomNavigationBar.itemViews firstObject];
+  XCTAssertEqual(firstItemView.label.font, fakeFont);
+}
+
+- (void)testBottomNavigationCustomColorTheming {
+  // Given
+  UIColor *fakeOnPrimaryColor = UIColor.blueColor;
+  UIColor *fakePrimaryColor = UIColor.greenColor;
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  colorScheme.onPrimaryColor = fakeOnPrimaryColor;
+  colorScheme.primaryColor = fakePrimaryColor;
+
+  // When
+  [self.bottomNavigationBar applyThemeWithColorScheme:colorScheme];
+
+  // Then
+  XCTAssertEqualObjects(self.bottomNavigationBar.barTintColor, fakePrimaryColor);
+  XCTAssertEqualObjects(self.bottomNavigationBar.selectedItemTintColor, fakeOnPrimaryColor);
+  XCTAssertEqualObjects(self.bottomNavigationBar.unselectedItemTintColor,
+                        [fakeOnPrimaryColor colorWithAlphaComponent:kUnselectedOpacity]);
+
+  MDCBottomNavigationItemView *firstItemView = [self.bottomNavigationBar.itemViews firstObject];
+  XCTAssertEqualObjects(firstItemView.selectedItemTitleColor, fakeOnPrimaryColor);
+  XCTAssertEqualObjects(firstItemView.unselectedItemTintColor,
+                        [fakeOnPrimaryColor colorWithAlphaComponent:kUnselectedOpacity]);
 }
 
 @end
