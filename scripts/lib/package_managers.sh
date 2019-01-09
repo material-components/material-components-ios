@@ -18,7 +18,6 @@ brew_update() {
   brew --version
   brew update
   brew --version
-  brew doctor || true
 }
 
 brew_install() {
