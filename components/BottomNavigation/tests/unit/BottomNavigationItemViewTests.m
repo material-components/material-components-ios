@@ -138,16 +138,15 @@ static UIImage *fakeImage(void) {
   view.contentHorizontalMargin = 20;
   view.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   [view layoutIfNeeded];
-  CGFloat imageMidY = CGRectGetMidY(view.iconImageView.frame);
-  XCTAssertEqualWithAccuracy(imageMidY, 32.75, 0.001);
+  CGFloat imageMidYWithTitle = CGRectGetMidY(view.iconImageView.frame);
 
   // When
   view.titleVisibility = MDCBottomNavigationBarTitleVisibilityNever;
   [view layoutIfNeeded];
 
   // Then
-  imageMidY = CGRectGetMidY(view.iconImageView.frame);
-  XCTAssertEqualWithAccuracy(imageMidY, 50, 0.001);
+  CGFloat imageMidYWithoutTitle = CGRectGetMidY(view.iconImageView.frame);
+  XCTAssertGreaterThan(imageMidYWithoutTitle, imageMidYWithTitle + 1);  // We add 1 to make sure the change in position is greater than a rounding error. Practically, it's likely to be greater than 10.
 }
 
 - (void)testBadgeCenterIsCorrectWithoutRTL {
