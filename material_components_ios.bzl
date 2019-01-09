@@ -71,7 +71,7 @@ def mdc_extension_objc_library(
   - The public implementation lives in `src/$name/`.
   - The private implementation lives in `src/$name/private`.
 
-  The default visibility can be overridde.
+  The default visibility can be overridden.
 
   Args:
     name: The name of the extension. It must match the folder it resides in.
