@@ -607,7 +607,7 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
                                             didSwipeToDismissItemAtIndexPath:atLocation:)]) {
         [_delegate collectionView:_collectionView
             didSwipeToDismissItemAtIndexPath:_dismissingCellIndexPath
-                                 atLocation:location];
+                                  atLocation:location];
       }
 
       // Update the tracked item's position and alpha.

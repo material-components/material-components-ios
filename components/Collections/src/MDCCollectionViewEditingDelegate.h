@@ -280,7 +280,7 @@
  */
 - (void)collectionView:(nonnull UICollectionView *)collectionView
     didSwipeToDismissItemAtIndexPath:(nonnull NSIndexPath *)indexPath
-    atLocation:(CGPoint)location;
+                          atLocation:(CGPoint)location;
 
 /**
  Sent to the receiver after the collection view item has been dismissed.
