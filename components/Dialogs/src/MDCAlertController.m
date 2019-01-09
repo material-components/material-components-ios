@@ -260,6 +260,13 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   self.mdc_dialogPresentationController.scrimColor = scrimColor;
 }
 
+- (void)setBackgroundColor:(UIColor *)backgroundColor {
+  _backgroundColor = backgroundColor;
+  if (self.alertView) {
+    self.alertView.backgroundColor = backgroundColor;
+  }
+}
+
 - (void)setCornerRadius:(CGFloat)cornerRadius {
   _cornerRadius = cornerRadius;
   if (self.alertView) {
@@ -367,6 +374,10 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   self.alertView.messageFont = self.messageFont;
   self.alertView.titleColor = self.titleColor;
   self.alertView.messageColor = self.messageColor;
+  if (self.backgroundColor) {
+    // Avoid reset background color to transparent when self.backgroundColor is nil.
+    self.alertView.backgroundColor = self.backgroundColor;
+  }
   if (self.buttonTitleColor) {
     // Avoid reset title color to white when setting it to nil. only set it for an actual UIColor.
     self.alertView.buttonColor = self.buttonTitleColor;  // b/117717380: Will be deprecated

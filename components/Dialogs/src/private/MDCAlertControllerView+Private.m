@@ -60,17 +60,17 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    self.backgroundColor = [UIColor whiteColor];
     self.autoresizesSubviews = NO;
     self.clipsToBounds = YES;
 
     self.contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
-    self.contentScrollView.backgroundColor = [UIColor whiteColor];
     [self addSubview:self.contentScrollView];
 
     self.actionsScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
-    self.actionsScrollView.backgroundColor = [UIColor whiteColor];
     [self addSubview:self.actionsScrollView];
+
+    // set the background color after all surface subviews are added
+    self.backgroundColor = [UIColor whiteColor];
 
     self.titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     self.titleLabel.numberOfLines = 0;
@@ -112,6 +112,16 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
   self.titleLabel.text = title;
 
   [self setNeedsLayout];
+}
+
+- (void)setBackgroundColor:(UIColor *)backgroundColor {
+  super.backgroundColor = backgroundColor;
+  self.contentScrollView.backgroundColor = backgroundColor;
+  self.actionsScrollView.backgroundColor = backgroundColor;
+}
+
+- (UIColor *)backgroundColor {
+  return super.backgroundColor;
 }
 
 - (void)addActionButton:(nonnull MDCButton *)button {

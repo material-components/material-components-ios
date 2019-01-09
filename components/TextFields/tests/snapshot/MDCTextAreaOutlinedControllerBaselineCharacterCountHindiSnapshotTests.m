@@ -28,6 +28,9 @@
 - (void)setUp {
   [super setUp];
 
+  // Empty tests are executed in MDCTextAreaOutlinedControllerBaselineCharacterCountSnapshotTests
+  self.shouldExecuteEmptyTests = NO;
+
   // Uncomment below to recreate the golden images for all test methods. Add it to a test method to
   // update only that golden image.
   //  self.recordMode = YES;

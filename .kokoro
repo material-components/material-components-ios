@@ -14,7 +14,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Fail on any error.
+# Make sure both Homebrew and RubyGems are up to date
+brew --version
+brew update
+brew --version
+brew doctor
+
+gem update --system --no-document
+
+# Fail on any error
 set -e
 
 if [ -n "$KOKORO_BUILD_NUMBER" ]; then
@@ -304,7 +312,7 @@ run_cocoapods() {
     # Move into our cloned repo
     cd github/repo
 
-    gem install xcpretty cocoapods --no-rdoc --no-ri --no-document --quiet
+    gem install xcpretty cocoapods --no-document --quiet
     pod --version
 
     # Install git-lfs
@@ -366,7 +374,7 @@ generate_website() {
 
     ./scripts/build_site.sh
 
-    gem install bundler --no-rdoc --no-ri --no-document --quiet
+    gem install bundler --no-document --quiet
     brew update
     brew install yarn --without-node
   fi
