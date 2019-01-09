@@ -45,7 +45,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
       UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
-    if (state == UIControlStateDisabled)  {
+    if (state == UIControlStateDisabled) {
       continue;  // This state is manually checked above.
     }
     XCTAssertEqualObjects([button backgroundColorForState:state],
@@ -77,7 +77,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
       UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
-    if (state == UIControlStateDisabled)  {
+    if (state == UIControlStateDisabled) {
       continue;  // This state is manually checked above.
     }
     XCTAssertEqualObjects([button backgroundColorForState:state],
