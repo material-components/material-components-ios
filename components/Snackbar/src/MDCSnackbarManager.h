@@ -19,6 +19,25 @@
 @class MDCSnackbarMessageView;
 @protocol MDCSnackbarSuspensionToken;
 
+/**
+ Different operating modes for the snackbar manager to set the boolean value of accessibilityViewIsModal for snackbar views.
+
+ Default value is MDCSnackBarManagerAccessibilityViewIsModalNever.
+ */
+typedef NS_ENUM(NSInteger, MDCSnackBarManagerAccessibilityViewMode) {
+  /**
+   The accessibilityViewIsModal boolean value will be NO for all snackbar views.
+   */
+  MDCSnackBarManagerAccessibilityViewIsModalNever,
+  /**
+   The accessibilityViewIsModal boolean value will be YES for all non-transient snackbar views with actions, and NO for all transient snackbar views.
+   */
+  MDCSnackBarManagerAccessibilityViewNonTransientIsModal,
+  /**
+   The accessibilityViewIsModal boolean value will be YES for all snackbar views.
+   */
+  MDCSnackBarManagerAccessibilityViewIsModal,
+};
 
 /**
  Delegate protocol for the MDCSnackbarManager.
@@ -222,11 +241,11 @@
     BOOL mdc_adjustsFontForContentSizeCategory;
 
 /**
- If enabled, accessibilityViewIsModal will be enabled for all snackbar views.
+ The MDCSnackBarManagerAccessibilityViewMode of the snackbar manager.
 
- Default is set to NO.
+ Default is MDCSnackBarManagerAccessibilityViewIsModalNever.
  */
-@property(nonatomic, assign) BOOL shouldEnableAccessibilityViewIsModal;
+@property(nonatomic, assign) MDCSnackBarManagerAccessibilityViewMode accessibilityViewIsModalMode;
 
 /**
  The delegate for MDCSnackbarManager through which it may inform of snackbar presentation updates.
