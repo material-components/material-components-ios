@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import Foundation
+import UIKit
 import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialDialogs
 

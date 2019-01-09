@@ -14,6 +14,7 @@
 
 import Foundation
 import MaterialComponents.MaterialButtons
+import MaterialComponentsBeta.MaterialButtons_Theming
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialDialogs
 import MaterialComponents.MaterialCollections

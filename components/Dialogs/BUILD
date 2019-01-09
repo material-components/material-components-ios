@@ -100,6 +100,41 @@ mdc_extension_objc_library(
 )
 
 mdc_objc_library(
+    name = "ObjcExamples",
+    srcs = native.glob([
+        "examples/*.m",
+        "examples/*.h",
+        "examples/supplemental/*.m",
+        "examples/supplemental/*.h",
+    ]),
+    deps = [
+        ":Dialogs",
+        ":Theming",
+        "//components/Buttons:ButtonThemer",
+        "//components/Collections",
+    ],
+)
+
+swift_library(
+    name = "SwiftExamples",
+    srcs = native.glob([
+        "examples/*.swift",
+        "examples/supplemental/*.swift",
+    ]),
+    copts = [
+        "-swift-version",
+        "3",
+    ],
+    deps = [
+        ":Dialogs",
+        ":DialogThemer",
+        ":Theming",
+        "//components/Collections",
+        "//components/schemes/Container",
+    ],
+)
+
+mdc_objc_library(
     name = "private",
     hdrs = native.glob(["src/private/*.h"]),
     includes = ["src/private"],
