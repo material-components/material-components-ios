@@ -15,7 +15,7 @@
 # limitations under the License.
 
 load(
-    "//:material_components_ios.bzl"
+    "//:material_components_ios.bzl",
     "mdc_examples_objc_library",
     "mdc_examples_swift_library",
     "mdc_extension_objc_library",
