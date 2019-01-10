@@ -581,6 +581,9 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 // itself. That means these constraints need go away. So, we can use the existence of them as a
 // way to check if the placeholder is floating up. See isplaceholderUp.
 - (void)cleanupPlaceholderAnimationConstraints {
+  if (self.placeholderAnimationConstraintLeading.active && self.placeholderAnimationConstraintTop.active && self.placeholderAnimationConstraintTrailing.active) {
+    return;
+  }
   self.placeholderAnimationConstraints = nil;
   self.placeholderAnimationConstraintLeading = nil;
   self.placeholderAnimationConstraintTop = nil;
