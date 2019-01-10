@@ -14,6 +14,7 @@
 
 load(
     "//:material_components_ios.bzl",
+    "mdc_examples_swift_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
     "mdc_unit_test_suite",
@@ -35,6 +36,14 @@ swift_library(
     ],
     visibility = ["//visibility:private"],
     deps = [":Palettes"],
+)
+
+mdc_examples_swift_library(
+    name = "SwiftExamples",
+    deps = [
+        ":Palettes",
+        "@material_text_accessibility_ios//:MDFTextAccessibility",
+    ],
 )
 
 mdc_objc_library(
