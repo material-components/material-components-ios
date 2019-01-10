@@ -150,6 +150,25 @@ mdc_objc_library(
     ],
 )
 
+swift_library(
+    name = "unit_test_swift_sources",
+    srcs = native.glob(["tests/unit/*.swift"]),
+    copts = [
+        "-swift-version",
+        "3",
+    ],
+    visibility = ["//visibility:private"],
+    deps = [
+        ":Dialogs",
+        ":DialogThemer",
+        ":Theming",
+        "//components/schemes/Color",
+        "//components/schemes/Container",
+        "//components/schemes/Typography",
+        "//components/ShadowElevations",
+    ],
+)
+
 mdc_unit_test_suite(
     name = "unit_tests",
     deps = [
