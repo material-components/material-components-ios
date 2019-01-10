@@ -146,7 +146,10 @@ static UIImage *fakeImage(void) {
 
   // Then
   CGFloat imageMidYWithoutTitle = CGRectGetMidY(view.iconImageView.frame);
-  XCTAssertGreaterThan(imageMidYWithoutTitle, imageMidYWithTitle + 1);  // We add 1 to make sure the change in position is greater than a rounding error. Practically, it's likely to be greater than 10.
+  // To check that the image has moved down, we assert imageMidYWithoutTitle is greater than
+  // imageMidYWithTitle + 1. The + 1 makes sure the change in position is greater than a rounding
+  // error. Practically, the difference is likely to be greater than 10.
+  XCTAssertGreaterThan(imageMidYWithoutTitle, imageMidYWithTitle + 1);
 }
 
 - (void)testBadgeCenterIsCorrectWithoutRTL {
