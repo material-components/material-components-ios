@@ -74,7 +74,6 @@ mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
         ":BottomSheet",
-        ":Theming",
         ":ShapeThemer",
         "//components/Buttons",
         "//components/AppBar",
