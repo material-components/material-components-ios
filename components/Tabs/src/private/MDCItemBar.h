@@ -80,6 +80,7 @@
  selection changes.
  */
 @protocol MDCItemBarDelegate <NSObject>
+
 /**
  Called before the selected item changes by user action. This method is not called for programmatic
  changes to the bar's selected item. Return YES to allow the selection.
@@ -91,6 +92,24 @@
  changes to the bar's selected item.
  */
 - (void)itemBar:(nonnull MDCItemBar *)itemBar didSelectItem:(nonnull UITabBarItem *)item;
+
+/**
+ Called when the specified UITabBarItem is about to be displayed. Delegates can use this method
+ to detect when an item is going to appear on screen, as opposed to monitoring the view itself to
+ see when it becomes visible.
+ */
+- (void)itemBar:(nonnull MDCItemBar *)itemBar
+    willDisplayItem:(nonnull UITabBarItem *)item
+            atIndex:(NSInteger)index;
+
+/**
+ Called when the specified UITabBarItem is no longer displayed. Delegates can use this method
+ to detect when an item is removed from the screen, as opposed to monitoring the view itself to
+ see when it disappears.
+ */
+- (void)itemBar:(nonnull MDCItemBar *)itemBar
+    didEndDisplayingItem:(nonnull UITabBarItem *)item
+                 atIndex:(NSInteger)index;
 
 @end
 

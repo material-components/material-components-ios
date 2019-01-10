@@ -176,7 +176,7 @@ IB_DESIGNABLE
 
 /**
  Sets the color of the title for the specified state.
- 
+
  If the @c MDCTabBarItemState value is not set, then defaults to a default value. Therefore,
  at a minimum, you should set the value for MDCTabBarItemStateNormal.
  */
@@ -242,5 +242,23 @@ IB_DESIGNABLE
  changes to the tab bar's selected item.
  */
 - (void)tabBar:(nonnull MDCTabBar *)tabBar didSelectItem:(nonnull UITabBarItem *)item;
+
+/**
+ Called when the specified UITabBarItem is about to be displayed. Delegates can use this method
+ to detect when an item is going to appear on screen, as opposed to monitoring the view itself to
+ see when it becomes visible.
+ */
+- (void)tabBar:(nonnull MDCTabBar *)tabBar
+    willDisplayItem:(nonnull UITabBarItem *)item
+            atIndex:(NSInteger)index;
+
+/**
+ Called when the specified UITabBarItem is no longer displayed. Delegates can use this method
+ to detect when an item is removed from the screen, as opposed to monitoring the view itself to
+ see when it disappears.
+ */
+- (void)tabBar:(nonnull MDCTabBar *)tabBar
+    didEndDisplayingItem:(nonnull UITabBarItem *)item
+                 atIndex:(NSInteger)index;
 
 @end

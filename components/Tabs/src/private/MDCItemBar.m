@@ -379,6 +379,30 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   }
 }
 
+- (void)collectionView:(UICollectionView *)collectionView
+       willDisplayCell:(UICollectionViewCell *)cell
+    forItemAtIndexPath:(NSIndexPath *)indexPath {
+  // Notify the delegate of the tab bar item that will be displayed.
+  id<MDCItemBarDelegate> delegate = self.delegate;
+  if ([delegate respondsToSelector:@selector(itemBar:willDisplayItem:atIndex:)]) {
+    UITabBarItem *itemBarItem = [self itemAtIndexPath:indexPath];
+    NSInteger index = indexPath.item;
+    [delegate itemBar:self willDisplayItem:itemBarItem atIndex:index];
+  }
+}
+
+- (void)collectionView:(UICollectionView *)collectionView
+  didEndDisplayingCell:(UICollectionViewCell *)cell
+    forItemAtIndexPath:(NSIndexPath *)indexPath {
+  // Notify the delegate of the tab bar item which will no longer be displayed.
+  id<MDCItemBarDelegate> delegate = self.delegate;
+  if ([delegate respondsToSelector:@selector(itemBar:didEndDisplayingItem:atIndex:)]) {
+    UITabBarItem *itemBarItem = [self itemAtIndexPath:indexPath];
+    NSInteger index = indexPath.item;
+    [delegate itemBar:self didEndDisplayingItem:itemBarItem atIndex:index];
+  }
+}
+
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
