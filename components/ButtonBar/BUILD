@@ -15,6 +15,8 @@
 
 load(
     "//:material_components_ios.bzl",
+    "mdc_examples_swift_library",
+    "mdc_examples_objc_library",
     "mdc_extension_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
@@ -59,6 +61,26 @@ mdc_extension_objc_library(
         ":ButtonBar",
         ":ColorThemer",
         ":TypographyThemer",
+        "//components/schemes/Container",
+    ],
+)
+
+mdc_examples_objc_library(
+    name = "ObjcExamples",
+    deps = [
+        ":ButtonBar",
+        ":Theming",
+        "//components/private/Icons/icons/ic_check_circle",
+        "//components/private/Icons/icons/ic_info",
+        "//components/schemes/Container",
+    ],
+)
+
+mdc_examples_swift_library(
+    name = "SwiftExamples",
+    deps = [
+        ":ButtonBar",
+        ":Theming",
         "//components/schemes/Container",
     ],
 )
