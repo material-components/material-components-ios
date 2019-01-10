@@ -90,6 +90,7 @@ class BottomNavigationTitleVisibilityChangeExample: UIViewController, MDCBottomN
   }
   
   override func viewDidLoad() {
+    super.viewDidLoad()
     addInstructionLabel()
   }
   
