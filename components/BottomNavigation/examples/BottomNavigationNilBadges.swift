@@ -14,12 +14,19 @@
 
 import Foundation
 import MaterialComponents.MaterialAppBar
-import MaterialComponents.MaterialBottomNavigation_ColorThemer
+import MaterialComponentsBeta.MaterialBottomNavigation_Theming
+import MaterialComponentsBeta.MaterialContainerScheme
 
 class BottomNavigationNilBadges : UIViewController {
 
   let appBarViewController = MDCAppBarViewController()
   var colorScheme = MDCSemanticColorScheme()
+
+  lazy var containerScheme: MDCContainerScheme = {
+    let scheme = MDCContainerScheme()
+    scheme.colorScheme = self.colorScheme
+    return scheme
+  }()
 
   // Create a bottom navigation bar to add to a view.
   let bottomNavBar = MDCBottomNavigationBar()
@@ -99,8 +106,7 @@ class BottomNavigationNilBadges : UIViewController {
     #endif
 
     // Theme the bottom navigation bar.
-    MDCBottomNavigationBarColorThemer.applySemanticColorScheme(colorScheme,
-                                                               toBottomNavigation: bottomNavBar);
+    bottomNavBar.applyTheme(withScheme: containerScheme)
   }
 
   override func viewWillAppear(_ animated: Bool) {

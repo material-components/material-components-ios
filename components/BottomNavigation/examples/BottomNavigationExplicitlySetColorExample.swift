@@ -15,11 +15,18 @@
 import Foundation
 import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialPalettes
-import MaterialComponents.MaterialBottomNavigation_ColorThemer
+import MaterialComponentsBeta.MaterialBottomNavigation_Theming
+import MaterialComponentsBeta.MaterialContainerScheme
 
 class BottomNavigationExplicitlySetColorExample: UIViewController {
 
   var colorScheme = MDCSemanticColorScheme()
+
+  lazy var containerScheme: MDCContainerScheme = {
+    let scheme = MDCContainerScheme()
+    scheme.colorScheme = self.colorScheme
+    return scheme
+  }()
 
   let bottomNavBar = MDCBottomNavigationBar()
 
@@ -93,8 +100,8 @@ class BottomNavigationExplicitlySetColorExample: UIViewController {
     blueButton.addTarget(self, action: #selector(blueTheme), for: .touchUpInside)
     view.addSubview(blueButton)
 
-    MDCBottomNavigationBarColorThemer.applySemanticColorScheme(colorScheme,
-                                                               toBottomNavigation: bottomNavBar)
+    bottomNavBar.applyTheme(withScheme: containerScheme)
+
     bottomNavBar.backgroundColor = MDCPalette.grey.tint700
   }
 

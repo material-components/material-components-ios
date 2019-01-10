@@ -13,17 +13,23 @@
 // limitations under the License.
 
 import Foundation
-import MaterialComponents.MaterialBottomNavigation_ColorThemer
-import MaterialComponents.MaterialBottomNavigation_TypographyThemer
 import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialTypographyScheme
+import MaterialComponentsBeta.MaterialContainerScheme
+import MaterialComponentsBeta.MaterialBottomNavigation_Theming
 
 /// Example to showcase a reorder of the tabs from an user action
 class BottomNavigationResetExample: UIViewController {
 
   var colorScheme = MDCSemanticColorScheme()
   var typographyScheme = MDCTypographyScheme()
+  lazy var containerScheme: MDCContainerScheme = {
+    let scheme = MDCContainerScheme()
+    scheme.colorScheme = self.colorScheme
+    scheme.typographyScheme = self.typographyScheme
+    return scheme
+  }()
 
   let bottomNavBar = MDCBottomNavigationBar()
 
@@ -97,10 +103,7 @@ class BottomNavigationResetExample: UIViewController {
     buttonTwo.addTarget(self, action: #selector(reorderItemsAndSetSelected), for: .touchUpInside)
     view.addSubview(buttonTwo)
 
-    MDCBottomNavigationBarColorThemer.applySemanticColorScheme(colorScheme,
-                                                               toBottomNavigation: bottomNavBar)
-    MDCBottomNavigationBarTypographyThemer.applyTypographyScheme(typographyScheme,
-                                                                 to: bottomNavBar)
+    bottomNavBar.applyTheme(withScheme: containerScheme)
   }
 
   @objc func reorderItems(_ button: UIButton) {
