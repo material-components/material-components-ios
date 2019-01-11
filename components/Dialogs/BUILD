@@ -152,13 +152,21 @@ mdc_objc_library(
 
 swift_library(
     name = "unit_test_swift_sources",
+<<<<<<< HEAD
     srcs = native.glob(["tests/unit/*.swift"]),
+=======
+    srcs = glob([
+        "tests/unit/*.swift",
+        "tests/unit/Theming/*.swift",
+    ]),
+>>>>>>> develop
     copts = [
         "-swift-version",
         "3",
     ],
     visibility = ["//visibility:private"],
     deps = [
+<<<<<<< HEAD
         ":Dialogs",
         ":DialogThemer",
         ":Theming",
@@ -166,6 +174,11 @@ swift_library(
         "//components/schemes/Container",
         "//components/schemes/Typography",
         "//components/ShadowElevations",
+=======
+        ":Theming",
+        ":DialogThemer",
+        "//components/Buttons:Theming",
+>>>>>>> develop
     ],
 )
 
@@ -173,5 +186,6 @@ mdc_unit_test_suite(
     name = "unit_tests",
     deps = [
         ":unit_test_sources",
+        ":unit_test_swift_sources",
     ],
 )
