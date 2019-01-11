@@ -18,7 +18,7 @@
 
 /**
  A slanted rectangle shape generator.
- 
+
  Creates rectangles with the vertical edges at a slant.
  */
 @interface MDCSlantedRectShapeGenerator : NSObject <MDCShapeGenerating>

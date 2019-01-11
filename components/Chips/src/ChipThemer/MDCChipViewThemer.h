@@ -25,16 +25,15 @@
 
 /**
  Applies a chip view scheme's properties to an MDCChipView.
- 
+
  @param scheme The chip view scheme to apply to the component instance.
  @param chip A component instance to which the scheme should be applied.
  */
-+ (void)applyScheme:(nonnull id<MDCChipViewScheming>)scheme
-         toChipView:(nonnull MDCChipView *)chip;
++ (void)applyScheme:(nonnull id<MDCChipViewScheming>)scheme toChipView:(nonnull MDCChipView *)chip;
 
 /**
  Applies a chip view scheme's properties to an MDCChipView using the outlined style.
- 
+
  @param scheme The chip view scheme to apply to the component instance.
  @param chip A component instance to which the scheme should be applied.
  */

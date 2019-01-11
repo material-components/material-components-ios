@@ -58,7 +58,8 @@
 
  @warning This method will soon be deprecated. Please use
  -appBarNavigationController:willAddAppBarViewController:asChildOfViewController: instead. Learn
- more at https://github.com/material-components/material-components-ios/blob/develop/components/AppBar/docs/migration-guide-appbar-appbarviewcontroller.md
+ more at
+ https://github.com/material-components/material-components-ios/blob/develop/components/AppBar/docs/migration-guide-appbar-appbarviewcontroller.md
  */
 - (void)appBarNavigationController:(nonnull MDCAppBarNavigationController *)navigationController
                      willAddAppBar:(nonnull MDCAppBar *)appBar
@@ -80,8 +81,8 @@
  delegate yet. In this case, use the -appBarForViewController: API to retrieve the injected App Bar
  for your root view controller and execute your delegate logic on the returned result, if any.
  */
-__attribute__((objc_subclassing_restricted))
-@interface MDCAppBarNavigationController : UINavigationController
+__attribute__((objc_subclassing_restricted)) @interface MDCAppBarNavigationController
+    : UINavigationController
 
 #pragma mark - Reacting to state changes
 
@@ -107,9 +108,9 @@ __attribute__((objc_subclassing_restricted))
  Returns the injected App Bar for a given view controller, if an App Bar was injected.
 
  @warning This method will eventually be deprecated. Use -appBarViewControllerForViewController:
- instead. Learn more at https://github.com/material-components/material-components-ios/blob/develop/components/AppBar/docs/migration-guide-appbar-appbarviewcontroller.md
+ instead. Learn more at
+ https://github.com/material-components/material-components-ios/blob/develop/components/AppBar/docs/migration-guide-appbar-appbarviewcontroller.md
  */
 - (nullable MDCAppBar *)appBarForViewController:(nonnull UIViewController *)viewController;
 
 @end
-

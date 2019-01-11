@@ -26,7 +26,7 @@
 @interface MDCFlexibleHeaderContainerViewController : UIViewController
 
 - (nonnull instancetype)initWithContentViewController:
-        (nullable UIViewController *)contentViewController NS_DESIGNATED_INITIALIZER;
+    (nullable UIViewController *)contentViewController NS_DESIGNATED_INITIALIZER;
 
 /**
  The header view controller that lives alongside the content view controller.

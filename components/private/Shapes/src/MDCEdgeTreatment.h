@@ -36,4 +36,3 @@
 - (nonnull MDCPathGenerator *)pathGeneratorForEdgeWithLength:(CGFloat)length;
 
 @end
-
