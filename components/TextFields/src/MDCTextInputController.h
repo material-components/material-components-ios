@@ -121,7 +121,6 @@
 /** Default value for textInputFontDefault. If nil, textInput.font would be the fallback.  */
 @property(class, nonatomic, nullable, strong) UIFont *textInputFontDefault;
 
-
 /**
  The font applied to the placeholder when inline (not floating).
 
@@ -311,7 +310,7 @@
  If the TextField is not in an error state helperText is set as the leadingUnderlineLabel's text and
  helperAccessibilityLabel is set as the leadingUnderlineLabel's accessibilityLabel.
  */
--(void)setHelperText:(nullable NSString *)helperText
+- (void)setHelperText:(nullable NSString *)helperText
     helperAccessibilityLabel:(nullable NSString *)helperAccessibilityLabel;
 
 @end

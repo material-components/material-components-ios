@@ -20,9 +20,9 @@
 
 - (instancetype)initWithPresentedViewController:(UIViewController *)presentedViewController
                        presentingViewController:(UIViewController *)presentingViewController
-                  calculateFrameOfPresentedView:(CGRect (^)(UIPresentationController *))calculateFrameOfPresentedView
-                                     sourceView:(UIView *)sourceView
-    NS_DESIGNATED_INITIALIZER;
+                  calculateFrameOfPresentedView:
+                      (CGRect (^)(UIPresentationController *))calculateFrameOfPresentedView
+                                     sourceView:(UIView *)sourceView NS_DESIGNATED_INITIALIZER;
 
 - (instancetype)initWithPresentedViewController:(UIViewController *)presentedViewController
                        presentingViewController:(UIViewController *)presentingViewController

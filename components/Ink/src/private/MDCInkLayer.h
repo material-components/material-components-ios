@@ -74,7 +74,6 @@
  */
 - (void)startAnimationAtPoint:(CGPoint)point;
 
-
 /**
  Starts the ink ripple
 
@@ -93,7 +92,6 @@
  Ends the ink ripple animation.
  */
 - (void)endAnimationAtPoint:(CGPoint)point;
-
 
 /**
  Ends the ink ripple
