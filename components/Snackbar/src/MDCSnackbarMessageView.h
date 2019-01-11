@@ -85,9 +85,8 @@
  @param titleColor The title color.
  @param state The control state.
  */
-- (void)setButtonTitleColor:(nullable UIColor *)titleColor forState:(UIControlState)state
-UI_APPEARANCE_SELECTOR;
-
+- (void)setButtonTitleColor:(nullable UIColor *)titleColor
+                   forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
 /**
  Indicates whether the Snackbar should automatically update its font when the device’s
@@ -102,7 +101,7 @@ UI_APPEARANCE_SELECTOR;
  Default value is NO.
  */
 @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
-BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
+    BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
 
 @end
 

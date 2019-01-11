@@ -31,7 +31,7 @@
                              duration:(NSTimeInterval)duration
                                 delay:(NSTimeInterval)delay
                               options:(UIViewAnimationOptions)options
-                           animations:(void (^ __nonnull)(void))animations
-                           completion:(void (^ __nullable)(BOOL finished))completion;
+                           animations:(void (^__nonnull)(void))animations
+                           completion:(void (^__nullable)(BOOL finished))completion;
 
 @end
