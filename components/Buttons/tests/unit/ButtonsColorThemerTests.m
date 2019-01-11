@@ -38,17 +38,18 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   XCTAssertEqualWithAccuracy(button.disabledAlpha, 1, kEpsilonAccuracy);
   XCTAssertEqualObjects([button backgroundColorForState:UIControlStateNormal], UIColor.clearColor);
   XCTAssertEqualObjects([button backgroundColorForState:UIControlStateDisabled],
-                        UIColor.clearColor);
+                        [button backgroundColorForState:UIControlStateNormal]);
   XCTAssertEqualObjects([button titleColorForState:UIControlStateNormal], colorScheme.primaryColor);
   XCTAssertEqualObjects([button titleColorForState:UIControlStateDisabled],
                         [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38]);
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
       UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
-    if ((state == UIControlStateNormal)||(state == UIControlStateDisabled))  {
-      continue; // These two states are manually checked above.
+    if (state == UIControlStateDisabled) {
+      continue;  // This state is manually checked above.
     }
-    XCTAssertNil([button backgroundColorForState:state], @"state:%lu", (unsigned long)state);
+    XCTAssertEqualObjects([button backgroundColorForState:state],
+                          [button backgroundColorForState:UIControlStateNormal]);
     XCTAssertEqualObjects([button titleColorForState:state], colorScheme.primaryColor, @"state:%lu",
                           (unsigned long)state);
   }
@@ -76,10 +77,11 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
       UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
-    if ((state == UIControlStateNormal)||(state == UIControlStateDisabled))  {
-      continue; // These two states are manually checked above.
+    if (state == UIControlStateDisabled) {
+      continue;  // This state is manually checked above.
     }
-    XCTAssertNil([button backgroundColorForState:state], @"state:%lu", (unsigned long)state);
+    XCTAssertEqualObjects([button backgroundColorForState:state],
+                          [button backgroundColorForState:UIControlStateNormal]);
     XCTAssertEqualObjects([button titleColorForState:state], colorScheme.onPrimaryColor,
                           @"state:%lu", (unsigned long)state);
   }
@@ -234,17 +236,10 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   NSUInteger maximumStateValue =
       UIControlStateSelected | UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
-    // TODO(https://github.com/material-components/material-components-ios/issues/3411 ):
-    //   MDCButton does not return the correct value for `backgroundColorForState:`
-    if (state == UIControlStateNormal) {
       XCTAssertEqualObjects([button backgroundColorForState:state], colorScheme.secondaryColor,
                             @"Background color (%@) is not equal to (%@) for state (%lu).",
                             [button backgroundColorForState:state], colorScheme.secondaryColor,
                             (unsigned long)state);
-    } else {
-      XCTAssertEqual([button backgroundColorForState:state], nil);
-    }
-
     XCTAssertEqualObjects([button imageTintColorForState:state], colorScheme.onSecondaryColor,
                           @"Image tint color (%@) is not equal to (%@) for state (%lu).",
                           [button imageTintColorForState:state], colorScheme.onSecondaryColor,

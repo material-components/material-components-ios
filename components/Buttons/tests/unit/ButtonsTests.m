@@ -281,9 +281,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
   }
 }
 
-// TODO(https://github.com/material-components/material-components-ios/issues/3411 ): Enable this
-//   test when the behavior in MDCButton is fixed.
-- (void)_disabled_testBackgroundColorForStateFallbackBehavior {
+- (void)testBackgroundColorForStateFallbackBehavior {
   // Given
   MDCButton *button = [[MDCButton alloc] init];
 
