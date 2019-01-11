@@ -15,6 +15,8 @@
 
 load(
     "//:material_components_ios.bzl",
+    "mdc_examples_objc_library",
+    "mdc_examples_swift_library",
     "mdc_extension_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
@@ -109,6 +111,35 @@ mdc_objc_library(
     hdrs = native.glob(["src/private/*.h"]),
     includes = ["src/private"],
     visibility = ["//visibility:private"],
+)
+
+mdc_examples_objc_library(
+    name = "ObjcExamples",
+    deps = [
+        ":Chips",
+        ":Theming",
+        ":ShapeThemer",
+        ":TypographyThemer",
+        "//components/schemes/Color",
+        "//components/schemes/Container",
+        "//components/schemes/Shape",
+        "//components/schemes/Typography",
+        "//components/private/ShapeLibrary",
+        "//components/private/Shapes",
+        "//components/Slider:ColorThemer",
+        "//components/Slider",
+        "//components/TextFields",
+    ],
+)
+
+mdc_examples_swift_library(
+    name = "SwiftExamples",
+    deps = [
+        ":Chips",
+        ":Theming",
+        "//components/TextFields",
+        "//components/schemes/Container",
+    ],
 )
 
 swift_library(
