@@ -29,44 +29,44 @@
 @interface MDCTonalColorScheme : NSObject <MDCColorScheme, NSCopying>
 
 /** The main, primary color used for a theme. */
-@property (nonatomic, strong, nonnull, readonly) UIColor *primaryColor;
+@property(nonatomic, strong, nonnull, readonly) UIColor *primaryColor;
 
 /**
  A slightly lighter version of the primary color. Given tonal variations of a color, this color is
  typically two color swatches lighter than the primary color.
  */
-@property (nonatomic, strong, nonnull, readonly) UIColor *primaryLightColor;
+@property(nonatomic, strong, nonnull, readonly) UIColor *primaryLightColor;
 
 /**
  A slightly darker version of the primary color. Given tonal variations of a color, this color is
  typically two color swatches darker than the primary color.
  */
-@property (nonatomic, strong, nonnull, readonly) UIColor *primaryDarkColor;
+@property(nonatomic, strong, nonnull, readonly) UIColor *primaryDarkColor;
 
 /** The secondary, accent color used for a theme. */
-@property (nonatomic, strong, nonnull, readonly) UIColor *secondaryColor;
+@property(nonatomic, strong, nonnull, readonly) UIColor *secondaryColor;
 
 /**
  A slightly lighter version of the secondary color. Given tonal variations of a color, this color is
  typically two color swatches lighter than the secondary color.
  */
-@property (nonatomic, strong, nonnull, readonly) UIColor *secondaryLightColor;
+@property(nonatomic, strong, nonnull, readonly) UIColor *secondaryLightColor;
 
 /**
  A slightly darker version of the secondary color. Given tonal variations of a color, this color is
  typically two color swatches darker than the secondary color.
  */
-@property (nonatomic, strong, nonnull, readonly) UIColor *secondaryDarkColor;
+@property(nonatomic, strong, nonnull, readonly) UIColor *secondaryDarkColor;
 
 /**
  The primary tonal palette that provides colors for the color scheme primary colors.
  */
-@property (nonatomic, strong, nonnull, readonly) MDCTonalPalette *primaryTonalPalette;
+@property(nonatomic, strong, nonnull, readonly) MDCTonalPalette *primaryTonalPalette;
 
 /**
  The secondary tonal palette that provides colors for the color scheme secondary colors.
  */
-@property (nonatomic, strong, nonnull, readonly) MDCTonalPalette *secondaryTonalPalette;
+@property(nonatomic, strong, nonnull, readonly) MDCTonalPalette *secondaryTonalPalette;
 
 - (nonnull instancetype)init NS_UNAVAILABLE;
 

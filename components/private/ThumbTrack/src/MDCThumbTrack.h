@@ -263,7 +263,6 @@
  */
 @property(nullable, nonatomic, strong) UIColor *primaryColor;
 
-
 @end
 
 /** MDCThumbtrack delegate which allows setting custom behavior. */

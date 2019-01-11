@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <UIKit/UIKit.h>
 #import <CoreGraphics/CoreGraphics.h>
+#import <UIKit/UIKit.h>
 
 #import "MaterialShadowElevations.h"
 #import "MaterialShapes.h"
@@ -113,8 +113,8 @@
 /*
  The color of the ink ripple.
  */
-@property(nonatomic, strong, null_resettable) UIColor *inkColor UI_APPEARANCE_SELECTOR
-    __deprecated_msg("Use setInkColor:forState:");
+@property(nonatomic, strong, null_resettable)
+    UIColor *inkColor UI_APPEARANCE_SELECTOR __deprecated_msg("Use setInkColor:forState:");
 
 /*
  The shape generator used to define the chip's shape.
@@ -168,8 +168,8 @@
  @param backgroundColor The background color.
  @param state The control state.
  */
-- (void)setBackgroundColor:(nullable UIColor *)backgroundColor forState:(UIControlState)state
-    UI_APPEARANCE_SELECTOR;
+- (void)setBackgroundColor:(nullable UIColor *)backgroundColor
+                  forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
 /*
  Returns the border color for a particular control state.
@@ -188,8 +188,8 @@
  @param borderColor The border color.
  @param state The control state.
  */
-- (void)setBorderColor:(nullable UIColor *)borderColor forState:(UIControlState)state
-    UI_APPEARANCE_SELECTOR;
+- (void)setBorderColor:(nullable UIColor *)borderColor
+              forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
 /*
  Returns the border width for a particular control state.
@@ -227,8 +227,8 @@
  @param elevation The elevation.
  @param state The control state.
  */
-- (void)setElevation:(MDCShadowElevation)elevation forState:(UIControlState)state
-    UI_APPEARANCE_SELECTOR;
+- (void)setElevation:(MDCShadowElevation)elevation
+            forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
 /*
  Returns the ink color for a particular control state.
@@ -247,8 +247,8 @@
  @param inkColor The ink color.
  @param state The control state.
  */
-- (void)setInkColor:(nullable UIColor *)inkColor forState:(UIControlState)state
-    UI_APPEARANCE_SELECTOR;
+- (void)setInkColor:(nullable UIColor *)inkColor
+           forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
 /*
  Returns the shadow color for a particular control state.
@@ -267,8 +267,8 @@
  @param elevation The shadow color.
  @param state The control state.
  */
-- (void)setShadowColor:(nullable UIColor *)shadowColor forState:(UIControlState)state
-    UI_APPEARANCE_SELECTOR;
+- (void)setShadowColor:(nullable UIColor *)shadowColor
+              forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
 /*
  Returns the title color for a particular control state.
@@ -287,7 +287,7 @@
  @param titleColor The title color.
  @param state The control state.
  */
-- (void)setTitleColor:(nullable UIColor *)titleColor forState:(UIControlState)state
-    UI_APPEARANCE_SELECTOR;
+- (void)setTitleColor:(nullable UIColor *)titleColor
+             forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
 @end
