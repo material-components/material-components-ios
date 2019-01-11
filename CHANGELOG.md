@@ -1,3 +1,22 @@
+# 73.1.1
+
+In this patch release we have improved the formatting of our codebase, and added missing imports to the Dragons target.
+
+## API changes
+
+## Component changes
+
+### Dragons App
+
+* [remove as it isn't supported with tulsiproj (#6277)](https://github.com/material-components/material-components-ios/pull/6283/commits/009ded2a24724e5c29aba5e094636315b97d6642) (Yarden Eitan)
+* [added missing imports to dragons target (#6278)](https://github.com/material-components/material-components-ios/pull/6283/commits/45d519e96a56eae98e5ce96fea5ecd6b5b969b3a) (Yarden Eitan)
+
+## Multi-component changes
+
+* [ran clang-format (#6027)](https://github.com/material-components/material-components-ios/commit/9873d9f3bd6f5b3f7ce0a7fd450756c4f9348ba1) (Yarden Eitan)
+
+---
+
 # 73.1.0
 
 In this minor release we have added new theming extensions for Cards and Chips, as well as added a new component to beta called Ripple that will eventually be a successor to Ink. We also added additional functionality to Dialogs, NavigationBar, and snapshot testing for Textfields.
