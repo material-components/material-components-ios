@@ -31,7 +31,7 @@ typedef NS_ENUM(NSInteger, MDCBottomAppBarFloatingButtonPosition) {
 
 /**
  A bottom app bar view with an embedded floating button.
- 
+
  The bottom app bar is a bar docked at the bottom of the screen. A floating action button is
  provided for a primary action.
  */
@@ -106,7 +106,7 @@ typedef NS_ENUM(NSInteger, MDCBottomAppBarFloatingButtonPosition) {
 
 /**
  Sets the visibility of the floating action button.
- 
+
  @param animated Enable or disable animation.
  */
 - (void)setFloatingButtonHidden:(BOOL)floatingButtonHidden animated:(BOOL)animated;
@@ -123,7 +123,7 @@ typedef NS_ENUM(NSInteger, MDCBottomAppBarFloatingButtonPosition) {
 /**
  Sets the position of the floating action button. Note, if the set position is the same as the
  current position there is no change in the position nor animation.
- 
+
  @param animated Enable or disable animation.
  */
 - (void)setFloatingButtonPosition:(MDCBottomAppBarFloatingButtonPosition)floatingButtonPosition

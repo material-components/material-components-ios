@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
+#import <Foundation/Foundation.h>
 
 /**
  MDCPathGenerator is a factory for creating CGPaths. Describe your path with the
@@ -85,7 +85,7 @@
 
 /**
  Appends a cubic Bézier curve to the path generator.
- 
+
  @param controlPoint1 The first control point
  @param controlPoint2 The second control point
  @param toPoint The end of the curve
@@ -100,8 +100,7 @@
  @param controlPoint The control point
  @param toPoint The end of the curve
  */
-- (void)addQuadCurveWithControlPoint:(CGPoint)controlPoint
-                             toPoint:(CGPoint)toPoint;
+- (void)addQuadCurveWithControlPoint:(CGPoint)controlPoint toPoint:(CGPoint)toPoint;
 
 /**
  Appends the recorded path operations to a CGPath using the provided transform.

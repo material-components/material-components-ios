@@ -12,9 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import <MaterialComponents/MaterialInk.h>
 #import <UIKit/UIKit.h>
-#import "MaterialInk.h"
 #import "MDCActionSheetController.h"
+#import "MaterialInk.h"
 
 @interface MDCActionSheetItemTableViewCell : UITableViewCell
 /**

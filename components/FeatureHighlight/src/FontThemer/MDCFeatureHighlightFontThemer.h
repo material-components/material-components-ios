@@ -32,7 +32,7 @@
 
  @warning This API will soon be deprecated. Please consider using
  MDCFeatureHighlightTypographyThemer instead.
- 
+
  @param fontScheme The font scheme to apply to MDCFeatureHighlightView.
  @param featureHighlightView A MDCFeatureHighlightView instance to apply a font scheme.
  */
