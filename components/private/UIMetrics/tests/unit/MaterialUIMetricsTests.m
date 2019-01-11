@@ -12,19 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <MaterialComponents/MaterialButtonBar.h>
-#import "MaterialContainerScheme.h"
+#import <XCTest/XCTest.h>
 
-// This category applies Material themes that are defined in the Material Guidelines:
-// https://material.io/design/components/app-bars-top.html
-@interface MDCButtonBar (MaterialTheming)
+@interface MaterialUIMetricsTests : XCTestCase
+@end
 
-/**
- Apply the primary theme to this instance.
-
- @param scheme A container scheme instance containing any desired customizations to the theming
- system.
- */
-- (void)applyPrimaryThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
-
+@implementation MaterialUIMetricsTests
 @end

@@ -77,7 +77,10 @@ mdc_extension_objc_library(
 
 swift_library(
     name = "unit_test_swift_sources",
-    srcs = glob(["tests/unit/*.swift"]),
+    srcs = glob([
+        "tests/unit/*.swift",
+        "tests/unit/Theming/*.swift",
+    ]),
     copts = [
         "-swift-version",
         "3",
