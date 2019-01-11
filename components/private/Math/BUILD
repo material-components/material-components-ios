@@ -35,7 +35,6 @@ mdc_objc_library(
         "CoreGraphics",
         "XCTest",
     ],
-    visibility = ["//visibility:private"],
     deps = [
         ":Math",
     ],
