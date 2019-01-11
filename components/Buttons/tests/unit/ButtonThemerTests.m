@@ -70,7 +70,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   XCTAssertEqualObjects([button backgroundColorForState:UIControlStateNormal],
                         [UIColor clearColor]);
   XCTAssertEqualObjects([button backgroundColorForState:UIControlStateDisabled],
-                        nil);
+                        [button backgroundColorForState:UIControlStateNormal]);
   XCTAssertEqualObjects([button titleColorForState:UIControlStateNormal],
                         scheme.colorScheme.primaryColor);
   XCTAssertEqualWithAccuracy(button.disabledAlpha, 1, kEpsilonAccuracy);

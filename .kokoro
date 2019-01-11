@@ -14,8 +14,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Fail on any error.
+# Fail on any error
 set -e
+
+if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+  # Import source methods for managing GitHub comments
+  scripts_dir='github/repo/scripts/lib'
+else
+  scripts_dir="$(dirname $0)/scripts/lib"
+fi
+
+source "${scripts_dir}/github_comments.sh"
+source "${scripts_dir}/select_xcode.sh"
+source "${scripts_dir}/package_managers.sh"
 
 # To install homebrew formulas at specific versions we need to point directly
 # to the desired sha in the homebrew formula repository.
@@ -47,6 +58,8 @@ fix_bazel_imports() {
     find "${stashed_dir}"components/private/*/src -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
     find "${stashed_dir}"components/*/src -type f -name '*.h' -exec perl -pi -e "$1" {} + || true
     find "${stashed_dir}"components/*/src -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/schemes/*/src -type f -name '*.h' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/schemes/*/src -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
   }
 
   stashed_dir=""
@@ -71,7 +84,8 @@ fix_bazel_imports() {
   rewrite_examples "s/import MaterialComponents.Material(.+)/import components_\1_\1/"
   rewrite_source "s/import <Motion(.+)\/Motion.+\.h>/import \"Motion\1.h\"/"
   rewrite_source "s/import <MDFTextAccessibility\/MDFTextAccessibility\.h>/import \"MDFTextAccessibility.h\"/"
-  rewrite_source "s/import <MaterialComponents\/Material(.+)\.h>/import\/\*framework import\*\/ \"Material\1.h\"/"
+  rewrite_source "s/import <MaterialComponents\/Material(.+)\.h>/import\/\*Material prefix framework import\*\/ \"Material\1.h\"/"
+  rewrite_source "s/import <MaterialComponents\/MDC(.+)\.h>/import\/\*MDC prefix framework import\*\/ \"MDC\1.h\"/"
   rewrite_tests "s/import MDFTextAccessibility/import material_text_accessibility_ios_MDFTextAccessibility/"
   rewrite_tests "s/import MDFInternationalization/import material_internationalization_ios_MDFInternationalization/"
   stashed_dir="$(pwd)/"
@@ -95,20 +109,12 @@ fix_bazel_imports() {
     rewrite_examples "s/import components_(.+)_(.+)/import MaterialComponents.Material\1_\2/"
     rewrite_source "s/import \"Motion(.+)\.h\"/import <Motion\1\/Motion\1.h>/"
     rewrite_source "s/import \"MDFTextAccessibility\.h\"/import <MDFTextAccessibility\/MDFTextAccessibility.h>/"
-    rewrite_source "s/import\/\*framework import\*\/ \"Material(.+)\.h\"/import <MaterialComponents\/Material\1\.h>/"
+    rewrite_source "s/import\/\*Material prefix framework import\*\/ \"Material(.+)\.h\"/import <MaterialComponents\/Material\1\.h>/"
+    rewrite_source "s/import\/\*MDC prefix framework import\*\/ \"MDC(.+)\.h\"/import <MaterialComponents\/MDC\1\.h>/"
     rewrite_tests "s/import material_text_accessibility_ios_MDFTextAccessibility/import MDFTextAccessibility/"
     rewrite_tests "s/import material_internationalization_ios_MDFInternationalization/import MDFInternationalization/"
   }
   trap reset_imports EXIT
-}
-
-version_as_number() {
-  padded_version="${1%.}" # Strip any trailing dots
-  # Pad with .0 until we get a M.m.p version string.
-  while [ $(grep -o "\." <<< "$padded_version" | wc -l) -lt "2" ]; do
-    padded_version=${padded_version}.0
-  done
-  echo "${padded_version//.}"
 }
 
 move_derived_data_to_tmp() {
@@ -117,39 +123,6 @@ move_derived_data_to_tmp() {
     mv "$targetDir" /tmpfs/
     ln -sf /tmpfs/DerivedData "$targetDir"
   fi
-}
-
-# xcode-select's the provided xcode version.
-# Usage example:
-#     select_xcode 9.2.0
-select_xcode() {
-  desired_version="$1"
-  if [ -z "$desired_version" ]; then
-    return # No Xcode version to select.
-  fi
-
-  xcodes=$(ls /Applications/ | grep "Xcode")
-  for xcode_path in $xcodes; do
-    xcode_version=$(cat /Applications/$xcode_path/Contents/version.plist \
-      | grep "CFBundleShortVersionString" -A1 \
-      | grep string \
-      | cut -d'>' -f2 \
-      | cut -d'<' -f1)
-    xcode_version_as_number="$(version_as_number $xcode_version)"
-
-    if [ "$xcode_version_as_number" -ne "$(version_as_number $desired_version)" ]; then
-      continue
-    fi
-
-    sudo xcode-select --switch /Applications/$xcode_path/Contents/Developer
-    xcodebuild -version
-
-    # Resolves the following crash when switching Xcode versions:
-    # "Failed to locate a valid instance of CoreSimulatorService in the bootstrap"
-    launchctl remove com.apple.CoreSimulator.CoreSimulatorService || true
-
-    break
-  done
 }
 
 # Uploads all of the bazel test artifacts to Kokoro's artifacts storage.
@@ -166,7 +139,7 @@ upload_bazel_test_artifacts() {
     done
   }
 
-  brew install rename
+  brew_install rename
 
   # rename all test.log to sponge_log.log and then copy them to the kokoro
   # artifacts directory.
@@ -208,6 +181,18 @@ run_bazel_affected() {
     # `base_sha` is the merge base of `target_branch` and the current HEAD.
     base_sha=$(git merge-base "$target_branch" HEAD)
 
+    # We must upgrade bazel prior to running bazel query because we rely on features in bazel
+    # 0.20.
+    if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+      bazel version
+      use_bazel.sh 0.20.0
+      bazel version
+    fi
+    
+    # Output the affected targets to the logs. This also gives the affected_targets script the
+    # opportunity to fail.
+    scripts/affected_targets "$bazel_kind" "$base_sha...HEAD"
+
     # `TARGET` is then all bazel targets affected by changes in the commit range between `base_sha`
     # and `HEAD`.  By default, that becomes all changes between the `develop` branch and the latest
     #  commit.
@@ -222,9 +207,31 @@ run_bazel_affected() {
     echo "Nothing to build."
     exit 0
   fi
-
-  echo "$TARGET"
   
+  comment_identifier="affected-targets"
+
+  if [ -z "$TARGET" ]; then
+    echo "Nothing to build."
+
+    if [ -n "$GITHUB_API_TOKEN" ]; then
+      delete_comment "$comment_identifier"
+    fi
+
+    exit 0
+  else
+    if [ -n "$GITHUB_API_TOKEN" ]; then
+      comment_tmp_path=$(mktemp -d)
+      comment_tmp_file="$comment_tmp_path/comment.tmp"
+      echo "bazel detected changes to the following targets:" > "$comment_tmp_file"
+      echo >> "$comment_tmp_file"
+      echo '```' >> "$comment_tmp_file"
+      echo "$TARGET" >> "$comment_tmp_file"
+      echo '```' >> "$comment_tmp_file"
+
+      post_comment "$comment_identifier" "$comment_tmp_file"
+    fi
+  fi
+
   run_bazel
 }
 
@@ -302,11 +309,11 @@ run_cocoapods() {
     # Move into our cloned repo
     cd github/repo
 
-    gem install xcpretty cocoapods --no-rdoc --no-ri --no-document --quiet
+    gem_install xcpretty cocoapods
     pod --version
 
     # Install git-lfs
-    brew install git-lfs
+    brew_install git-lfs
     git lfs install
     git lfs pull
   fi
@@ -364,9 +371,8 @@ generate_website() {
 
     ./scripts/build_site.sh
 
-    gem install bundler --no-rdoc --no-ri --no-document --quiet
-    brew update
-    brew install yarn --without-node
+    gem_install bundler
+    brew_install yarn --without-node
   fi
 
   cd docsite-generator
@@ -405,7 +411,7 @@ generate_apidiff() {
     cd github/repo
 
     # Install sourcekitten, a dependency of the apidiff tool
-    brew install "$SOURCEKITTEN_FORMULA"
+    brew_install "$SOURCEKITTEN_FORMULA"
 
     sourcekitten version
   fi
@@ -518,7 +524,12 @@ protect_stable_from_undesired_merges() {
 
 # The fall-through case for unknown jobs.
 unknown_job() {
-  echo "The following job is unknown and will not be run: $DEPENDENCY_SYSTEM"
+  if [ -n "$DEPENDENCY_SYSTEM" ]; then
+    echo "The following job is unknown and will not be run: $DEPENDENCY_SYSTEM"
+  else
+    echo "You must provide a depenency system with '-d' or the environment "
+    echo "variable 'DEPENDENCY_SYSTEM'."
+  fi
   exit 1
 }
 

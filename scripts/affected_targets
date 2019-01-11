@@ -41,9 +41,9 @@ else
   base_sha="HEAD^"
 fi
 
-# Generates a list of files that were modified since origin/develop.
+# Generates a list of files that were modified within $range.
 modified_files() {
-  git log --name-only --pretty=oneline --full-index "$range" \
+  git diff --name-only "$range" \
     | grep -vE '^[0-9a-f]{40} ' \
     | sort \
     | uniq

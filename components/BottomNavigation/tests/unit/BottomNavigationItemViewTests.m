@@ -125,6 +125,7 @@ static UIImage *fakeImage(void) {
   // Then
   XCTAssertNotEqualObjects(item1.inkView.inkColor, item1DefaultInkColor);
   XCTAssertNotEqualObjects(item2.inkView.inkColor, item2DefaultInkColor);
+  XCTAssertEqualObjects(item1.inkView.inkColor, item2.inkView.inkColor);
 }
 
 - (void)testBadgeCenterIsCorrectWithoutRTL {
