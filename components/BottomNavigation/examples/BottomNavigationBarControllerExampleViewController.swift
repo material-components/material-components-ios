@@ -42,14 +42,12 @@ class BottomNavigationControllerExampleViewController: MDCBottomNavigationBarCon
     viewController3.tabBarItem = UITabBarItem(title: "Item 3", image: UIImage(named: "Search"), tag: 2)
 
     viewControllers = [ viewController1, viewController2, viewController3 ]
-
-    selectedViewController = viewController1
   }
 
   class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Bottom Navigation", "Bottom Navigation Controller"],
-      "presentable": false
+      "presentable": false,
     ]
   }
 }
