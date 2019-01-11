@@ -29,7 +29,6 @@
  @param scheme The button scheme to apply to the component instance.
  @param button A component instance to which the scheme should be applied.
  */
-+ (void)applyScheme:(nonnull id<MDCButtonScheming>)scheme
-           toButton:(nonnull MDCButton *)button;
++ (void)applyScheme:(nonnull id<MDCButtonScheming>)scheme toButton:(nonnull MDCButton *)button;
 
 @end

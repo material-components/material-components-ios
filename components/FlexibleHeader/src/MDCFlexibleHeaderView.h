@@ -379,7 +379,7 @@ IB_DESIGNABLE
  Informs the receiver that the flexible header view's preferred status bar visibility has changed.
  */
 - (void)flexibleHeaderViewNeedsStatusBarAppearanceUpdate:
-        (nonnull MDCFlexibleHeaderView *)headerView;
+    (nonnull MDCFlexibleHeaderView *)headerView;
 
 /**
  Informs the receiver that the flexible header view's frame has changed.

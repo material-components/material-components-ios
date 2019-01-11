@@ -16,7 +16,10 @@
 
 import CatalogByConvention
 
+import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialFlexibleHeader
+import MaterialComponents.MaterialIcons_ic_chevron_right
+import MaterialComponents.MaterialKeyboardWatcher
 import MaterialComponents.MaterialLibraryInfo
 import MaterialComponents.MaterialShadowElevations
 import MaterialComponents.MaterialShadowLayer
