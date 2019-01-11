@@ -15,9 +15,9 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <Foundation/Foundation.h>
 
-#ifdef NS_TYPED_EXTENSIBLE_ENUM // This macro is introduced in Xcode 9.
+#ifdef NS_TYPED_EXTENSIBLE_ENUM  // This macro is introduced in Xcode 9.
 #define MDC_SHADOW_ELEVATION_TYPED_EXTENSIBLE_ENUM NS_TYPED_EXTENSIBLE_ENUM
-#elif __has_attribute(swift_wrapper) // Backwards compatibility for Xcode 8.
+#elif __has_attribute(swift_wrapper)  // Backwards compatibility for Xcode 8.
 #define MDC_SHADOW_ELEVATION_TYPED_EXTENSIBLE_ENUM __attribute__((swift_wrapper(struct)))
 #else
 #define MDC_SHADOW_ELEVATION_TYPED_EXTENSIBLE_ENUM

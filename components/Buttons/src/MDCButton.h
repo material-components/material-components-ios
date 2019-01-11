@@ -88,7 +88,6 @@
  */
 @property(nonatomic, assign) CGSize maximumSize UI_APPEARANCE_SELECTOR;
 
-
 /**
  The apparent background color as seen by the user, i.e. the color of the view behind the button.
 
@@ -148,8 +147,8 @@
  @param backgroundColor The background color.
  @param state The state.
  */
-- (void)setBackgroundColor:(nullable UIColor *)backgroundColor forState:(UIControlState)state
-    UI_APPEARANCE_SELECTOR;
+- (void)setBackgroundColor:(nullable UIColor *)backgroundColor
+                  forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
 /* Convenience for `setBackgroundColor:backgroundColor forState:UIControlStateNormal`. */
 - (void)setBackgroundColor:(nullable UIColor *)backgroundColor;
@@ -170,8 +169,7 @@
  @param font The font.
  @param state The state.
  */
-- (void)setTitleFont:(nullable UIFont *)font forState:(UIControlState)state
-    UI_APPEARANCE_SELECTOR;
+- (void)setTitleFont:(nullable UIFont *)font forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
 /** Sets the enabled state with optional animation. */
 - (void)setEnabled:(BOOL)enabled animated:(BOOL)animated;
@@ -209,8 +207,8 @@
  @param borderColor The border color to set.
  @param state The state to set.
  */
-- (void)setBorderColor:(nullable UIColor *)borderColor forState:(UIControlState)state
-    UI_APPEARANCE_SELECTOR;
+- (void)setBorderColor:(nullable UIColor *)borderColor
+              forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
 /**
  A color used as the button's imageView tint color @c imageTintColor for @c state.
@@ -232,7 +230,6 @@
  @param state The state to set.
  */
 - (void)setImageTintColor:(nullable UIColor *)imageTintColor forState:(UIControlState)state;
-
 
 /**
  The value set for the button's @c borderWidth for @c state.
@@ -302,8 +299,9 @@
 /**
  This property sets/gets the title color for UIControlStateNormal.
  */
-@property(nonatomic, strong, nullable) UIColor *customTitleColor UI_APPEARANCE_SELECTOR
-    __deprecated_msg("Use setTitleColor:forState: instead");
+@property(nonatomic, strong, nullable)
+    UIColor *customTitleColor UI_APPEARANCE_SELECTOR __deprecated_msg(
+        "Use setTitleColor:forState: instead");
 
 @property(nonatomic)
     BOOL shouldRaiseOnTouch __deprecated_msg("Use MDCFlatButton instead of shouldRaiseOnTouch = NO")

@@ -21,10 +21,10 @@
 
  The presenting view controller will typically store a reference to an instance of this class and
  assign it to the transitioningDelegate of a view controller prior to presenting it.
- 
+
  With zero additional configuration, the transition will perform a fullscreen masked reveal
  presentation, with a slide down dismissal.
- 
+
  It's possible to configure the presented view controller's frame by setting the
  calculateFrameOfPresentedView property. The provided block should return the desired frame of the
  presented view controller. When using calculateFrameOfPresentedView you must also change the
@@ -42,7 +42,7 @@
 
 /**
  Initializes the transition controller without a source view.
- 
+
  Note that if no source view is available at the time of presentation, the transition will fall back
  to the default system presentation.
  */
@@ -62,7 +62,7 @@
  You must set the view controller-to-be-presented's modalPresentationStyle property to
  `UIModalPresentationCustom` in order to use this property.
  */
-@property(nonatomic, copy, nullable)
-    CGRect (^calculateFrameOfPresentedView)(UIPresentationController * _Nonnull);
+@property(nonatomic, copy, nullable) CGRect (^calculateFrameOfPresentedView)
+    (UIPresentationController *_Nonnull);
 
 @end

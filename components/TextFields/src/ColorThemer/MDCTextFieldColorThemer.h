@@ -66,7 +66,7 @@
  @param textInputController A MDCTextInputController instance to apply a color scheme.
  */
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
-   toTextInputController:(nonnull id<MDCTextInputController>)textInputController;
+    toTextInputController:(nonnull id<MDCTextInputController>)textInputController;
 
 /**
  Applies a color scheme to MDCTextField for all instances of the class
