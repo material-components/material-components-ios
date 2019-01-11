@@ -1,18 +1,19 @@
-# #develop#
+# 73.1.1
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+In this patch release we have improved the formatting of our codebase, and added missing imports to the Dragons target.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
 ## API changes
 
 ## Component changes
+
+### Dragons App
+
+* [remove as it isn't supported with tulsiproj (#6277)](https://github.com/material-components/material-components-ios/pull/6283/commits/009ded2a24724e5c29aba5e094636315b97d6642) (Yarden Eitan)
+* [added missing imports to dragons target (#6278)](https://github.com/material-components/material-components-ios/pull/6283/commits/45d519e96a56eae98e5ce96fea5ecd6b5b969b3a) (Yarden Eitan)
+
+## Multi-component changes
+
+* [ran clang-format (#6027)](https://github.com/material-components/material-components-ios/commit/9873d9f3bd6f5b3f7ce0a7fd450756c4f9348ba1) (Yarden Eitan)
 
 ---
 
