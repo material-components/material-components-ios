@@ -20,8 +20,8 @@
 
 #import "MaterialButtons+ButtonThemer.h"
 #import "MaterialColorScheme.h"
-#import "MaterialTypographyScheme.h"
 #import "MaterialTabs.h"
+#import "MaterialTypographyScheme.h"
 
 typedef void (^MDCButtonActionBlock)(void);
 

@@ -39,8 +39,8 @@ typedef enum : NSUInteger {
 /**
  Initializes an MDCTriangleEdgeTreatment with a given size and style.
  */
-- (nonnull instancetype)initWithSize:(CGFloat)size style:(MDCTriangleEdgeStyle)style
-    NS_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithSize:(CGFloat)size
+                               style:(MDCTriangleEdgeStyle)style NS_DESIGNATED_INITIALIZER;
 
 - (nonnull instancetype)init NS_UNAVAILABLE;
 

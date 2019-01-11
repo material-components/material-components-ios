@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCThumbTrack.h"
 #import "MDCNumericValueLabel.h"
+#import "MDCThumbTrack.h"
 #import "MaterialInk.h"
 
 // Credit to the Beacon Tools iOS team for the idea for this implementations

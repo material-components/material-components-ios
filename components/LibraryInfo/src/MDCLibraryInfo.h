@@ -17,12 +17,11 @@
 /**
  Information about the Material Components library.
  */
-__attribute__((objc_subclassing_restricted))
-@interface MDCLibraryInfo: NSObject
+__attribute__((objc_subclassing_restricted)) @interface MDCLibraryInfo : NSObject
 
 /**
  The version of the MDC-iOS library.
- 
+
  The version string will always have the form "X.Y.Z", where
  - X is the major version number of the library.
  - Y is the minor version number of the library.
