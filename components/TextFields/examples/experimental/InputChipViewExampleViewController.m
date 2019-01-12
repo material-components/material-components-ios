@@ -131,7 +131,7 @@
 
   CGFloat wrappingInputChipViewMinX = padding;
   CGFloat wrappingInputChipViewMinY = nonWrappingInputChipViewMinY + nonWrappingInputChipViewSize.height + padding;
-  CGSize wrappingInputChipViewSize = CGSizeMake(inputChipViewWidth, 300);
+  CGSize wrappingInputChipViewSize = CGSizeMake(inputChipViewWidth, 150);
   CGRect wrappingInputChipViewFrame =
       CGRectMake(wrappingInputChipViewMinX, wrappingInputChipViewMinY, wrappingInputChipViewSize.width,
                  wrappingInputChipViewSize.height);
@@ -195,6 +195,8 @@
 - (void)addWrappingInputChipView {
   self.wrappingInputChipView = [[InputChipView alloc] init];
   self.wrappingInputChipView.canChipsWrap = YES;
+  self.wrappingInputChipView.contentInsets = UIEdgeInsetsMake(8, 12, 8, 12);
+  self.wrappingInputChipView.chipRowHeight = 50;
   [self.scrollView addSubview:self.wrappingInputChipView];
   self.wrappingInputChipView.textField.delegate = self;
   self.wrappingInputChipView.layer.borderColor = [UIColor blackColor].CGColor;

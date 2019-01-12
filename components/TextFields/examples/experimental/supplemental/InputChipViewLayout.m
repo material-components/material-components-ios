@@ -30,6 +30,7 @@ static const CGFloat kInterChipPadding = (CGFloat)8.0;
 - (instancetype)initWithBounds:(CGRect)bounds
                          chips:(NSArray<MDCChipView *> *)chips
                   canChipsWrap:(BOOL)canChipsWrap
+                 chipRowHeight:(CGFloat)chipRowHeight
                  textFieldText:(NSString *)textFieldText
                  textFieldFont:(UIFont *)textFieldFont
                  contentInsets:(UIEdgeInsets)contentInsets
@@ -40,6 +41,7 @@ static const CGFloat kInterChipPadding = (CGFloat)8.0;
     [self calculateLayoutWithBounds:bounds
                               chips:chips
                        canChipsWrap:canChipsWrap
+                      chipRowHeight:chipRowHeight
                       TextFieldText:textFieldText
                       textFieldFont:textFieldFont
                       contentInsets:(UIEdgeInsets)contentInsets
@@ -51,39 +53,48 @@ static const CGFloat kInterChipPadding = (CGFloat)8.0;
 - (void)calculateLayoutWithBounds:(CGRect)bounds
                             chips:(NSArray<MDCChipView *> *)chips
                      canChipsWrap:(BOOL)canChipsWrap
+                    chipRowHeight:(CGFloat)chipRowHeight
                     TextFieldText:(NSString *)textFieldText
                     textFieldFont:(UIFont *)textFieldFont
                     contentInsets:(UIEdgeInsets)contentInsets
                             isRTL:(BOOL)isRTL
 {
-  CGSize textFieldSize = [self textFieldSizeWithTextFieldText:textFieldText
-                                                textFieldFont:textFieldFont
-                                                 canChipsWrap:canChipsWrap];
+  CGSize textFieldSize = [self textFieldSizeWithBounds:bounds
+                                         contentInsets:contentInsets
+                                         textFieldText:textFieldText
+                                         textFieldFont:textFieldFont
+                                          canChipsWrap:canChipsWrap
+                                         chipRowHeight:chipRowHeight];
   if (canChipsWrap) {
     if (isRTL) {
     } else {
       NSArray<NSValue *> *chipFrames = [self determineChipFramesWithBounds:bounds
                                                                      chips:chips
                                                               canChipsWrap:canChipsWrap
+                                                             chipRowHeight:chipRowHeight
                                                              contentInsets:contentInsets
                                                                      isRTL:isRTL];
       CGRect textFieldFrame = [self textFieldFrameWithBounds:bounds
                                                   chipFrames:chipFrames
                                                 canChipsWrap:canChipsWrap
+                                               chipRowHeight:chipRowHeight
                                                textFieldSize:textFieldSize
                                                contentInsets:contentInsets
                                                        isRTL:isRTL];
       CGPoint contentOffset = [self scrollViewContentOffsetWithBounds:bounds
+                                                         canChipsWrap:canChipsWrap
+                                                        chipRowHeight:chipRowHeight
                                                        textFieldFrame:textFieldFrame
-                                                        contentInsets:contentInsets];
+                                                        contentInsets:contentInsets
+                                                                isRTL:isRTL];
       CGSize contentSize = [self scrollViewContentSizeWithBounds:bounds
                                                    contentOffset:contentOffset
                                                       chipFrames:chipFrames
                                                     canChipsWrap:canChipsWrap
                                                   textFieldFrame:textFieldFrame];
+
       
-      
-      NSLog(@"content offset: %@ contentSize: %@",NSStringFromCGPoint(contentOffset),NSStringFromCGSize(contentSize));
+//      NSLog(@"content offset: %@ contentSize: %@",NSStringFromCGPoint(contentOffset),NSStringFromCGSize(contentSize));
       
       self.chipFrames = chipFrames;
       self.textFieldFrame = textFieldFrame;
@@ -105,17 +116,22 @@ static const CGFloat kInterChipPadding = (CGFloat)8.0;
       NSArray<NSValue *> *chipFrames = [self determineChipFramesWithBounds:bounds
                                                                      chips:chips
                                                               canChipsWrap:canChipsWrap
+                                                             chipRowHeight:chipRowHeight
                                                              contentInsets:contentInsets
                                                                      isRTL:isRTL];
       CGRect textFieldFrame = [self textFieldFrameWithBounds:bounds
                                                   chipFrames:chipFrames
                                                 canChipsWrap:canChipsWrap
+                                               chipRowHeight:chipRowHeight
                                                textFieldSize:textFieldSize
                                                contentInsets:contentInsets
                                                        isRTL:isRTL];
       CGPoint contentOffset = [self scrollViewContentOffsetWithBounds:bounds
+                                                         canChipsWrap:canChipsWrap
+                                                        chipRowHeight:chipRowHeight
                                                        textFieldFrame:textFieldFrame
-                                                        contentInsets:contentInsets];
+                                                        contentInsets:contentInsets
+                                                                isRTL:isRTL];
       CGSize contentSize = [self scrollViewContentSizeWithBounds:bounds
                                                    contentOffset:contentOffset
                                                       chipFrames:chipFrames
@@ -123,7 +139,7 @@ static const CGFloat kInterChipPadding = (CGFloat)8.0;
                                                   textFieldFrame:textFieldFrame];
       
 
-      NSLog(@"content offset: %@ contentSize: %@",NSStringFromCGPoint(contentOffset),NSStringFromCGSize(contentSize));
+//      NSLog(@"content offset: %@ contentSize: %@",NSStringFromCGPoint(contentOffset),NSStringFromCGSize(contentSize));
 
       self.chipFrames = chipFrames;
       self.textFieldFrame = textFieldFrame;
@@ -137,13 +153,16 @@ static const CGFloat kInterChipPadding = (CGFloat)8.0;
       // i.e. it's highest possible maxX is less than the bounds.width of input chip view.
     }
 
+    
 
   }
+//  NSLog(@"size: %@",NSStringFromCGSize(self.scrollViewContentSize));
 }
 
 - (NSArray<NSValue *> *)determineChipFramesWithBounds:(CGRect)bounds
                                                 chips:(NSArray<MDCChipView *> *)chips
                                          canChipsWrap:(BOOL)canChipsWrap
+                                        chipRowHeight:(CGFloat)chipRowHeight
                                         contentInsets:(UIEdgeInsets)contentInsets
                                                 isRTL:(BOOL)isRTL {
   NSMutableArray<NSValue *> *frames = [[NSMutableArray alloc] initWithCapacity:chips.count];
@@ -153,27 +172,29 @@ static const CGFloat kInterChipPadding = (CGFloat)8.0;
     } else {
       CGFloat highestDesirableSubviewMaxX = CGRectGetWidth(bounds) - contentInsets.right;
       CGFloat chipMinX = contentInsets.left;
-      CGFloat chipMinY = contentInsets.top;
-      CGFloat allChipsMaxY = 0;
+      CGFloat chipMidY = contentInsets.top + (0.5 * chipRowHeight);
+      CGFloat chipMinY = 0;
+      CGRect chipFrame = CGRectZero;
+      NSInteger row = 0;
       for (MDCChipView *chip in chips) {
         CGFloat chipWidth = CGRectGetWidth(chip.frame);
         CGFloat chipHeight = CGRectGetHeight(chip.frame);
-        CGRect chipFrame = CGRectMake(chipMinX, chipMinY, chipWidth, chipHeight);
-        CGFloat chipFrameMaxX = CGRectGetMaxX(chipFrame);
-        CGFloat chipFrameMaxY = CGRectGetMaxY(chipFrame);
-        BOOL isChipTooBig = chipFrameMaxX > highestDesirableSubviewMaxX;
-        BOOL isFirstChipInRow = chipMinX == contentInsets.left;
-        BOOL isNewRow = isChipTooBig && !isFirstChipInRow;
+        CGFloat chipMaxX = chipMinX + chipWidth;
+        BOOL chipIsTooLong = chipMaxX > highestDesirableSubviewMaxX;
+        BOOL firstChipInRow = chipMinX == contentInsets.left;
+        BOOL isNewRow = chipIsTooLong && !firstChipInRow;
         if (isNewRow) {
+          row++;
           chipMinX = contentInsets.left;
-          chipMinY = allChipsMaxY + contentInsets.top;
+          chipMidY = contentInsets.top + (row * chipRowHeight) + (0.5 * chipRowHeight);
+          chipMinY = chipMidY - (0.5 * chipHeight);
           chipFrame = CGRectMake(chipMinX, chipMinY, chipWidth, chipHeight);
+          chipMaxX = CGRectGetMaxX(chipFrame);
         } else {
-          if (chipFrameMaxY > allChipsMaxY) {
-            allChipsMaxY = chipFrameMaxY;
-          }
-          chipMinX = chipFrameMaxX + kInterChipPadding;
+          chipMinY = chipMidY - (0.5 * chipHeight);
+          chipFrame = CGRectMake(chipMinX, chipMinY, chipWidth, chipHeight);
         }
+        chipMinX = chipMaxX + kInterChipPadding;
         NSValue *chipFrameValue = [NSValue valueWithCGRect:chipFrame];
         [frames addObject:chipFrameValue];
       }
@@ -199,26 +220,30 @@ static const CGFloat kInterChipPadding = (CGFloat)8.0;
   return [frames copy];
 }
 
-- (CGSize)textFieldSizeWithTextFieldText:(NSString *)textFieldText
-                           textFieldFont:(UIFont *)textFieldFont
-                            canChipsWrap:(BOOL)canChipsWrap {
-//  if (canChipsWrap) {
-//
-//  } else {
-//    if (!textFieldFont) {
-//      return CGSizeZero;
-//    }
-    CGSize fittingSize = CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX);
-    NSDictionary *attributes = @{NSFontAttributeName : textFieldFont};
-    CGRect rect = [textFieldText boundingRectWithSize:fittingSize
-                                              options:NSStringDrawingUsesLineFragmentOrigin
-                                           attributes:attributes
-                                              context:nil];
-    rect.size.width = MDCCeil(CGRectGetWidth(rect)) + kEstimatedCursorWidth;
-    rect.size.height = MDCCeil(CGRectGetHeight(rect));
-    return rect.size;
-//  }
-  return CGSizeZero;
+- (CGSize)textFieldSizeWithBounds:(CGRect)bounds
+                    contentInsets:(UIEdgeInsets)contentInsets
+                    textFieldText:(NSString *)textFieldText
+                    textFieldFont:(UIFont *)textFieldFont
+                     canChipsWrap:(BOOL)canChipsWrap
+                    chipRowHeight:(CGFloat)chipRowHeight {
+  CGSize fittingSize = CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX);
+  NSDictionary *attributes = @{NSFontAttributeName : textFieldFont};
+  CGRect rect = [textFieldText boundingRectWithSize:fittingSize
+                                            options:NSStringDrawingUsesLineFragmentOrigin
+                                         attributes:attributes
+                                            context:nil];
+  CGFloat maxTextFieldWidth = CGRectGetWidth(bounds) - contentInsets.left - contentInsets.right;
+  CGFloat textFieldWidth = MDCCeil(CGRectGetWidth(rect)) + kEstimatedCursorWidth;
+  CGFloat textFieldHeight = MDCCeil(CGRectGetHeight(rect));
+  if (textFieldWidth > maxTextFieldWidth) {
+    textFieldWidth = maxTextFieldWidth;
+  }
+  if (textFieldHeight > chipRowHeight) {
+    textFieldHeight = chipRowHeight;
+  }
+  rect.size.width = textFieldWidth;
+  rect.size.height = textFieldHeight;
+  return rect.size;
 }
 
 - (CGSize)scrollViewContentSizeWithBounds:(CGRect)bounds
@@ -227,7 +252,11 @@ static const CGFloat kInterChipPadding = (CGFloat)8.0;
                              canChipsWrap:(BOOL)canChipsWrap
                             textFieldFrame:(CGRect)textFieldFrame {
   if (canChipsWrap) {
-    return bounds.size;
+    CGSize size = bounds.size;
+    if (contentOffset.y > 0) {
+      size.height += contentOffset.y;
+    }
+    return size;
   } else {
     CGSize size = bounds.size;
     if (contentOffset.x > 0) {
@@ -276,6 +305,7 @@ static const CGFloat kInterChipPadding = (CGFloat)8.0;
 - (CGRect)textFieldFrameWithBounds:(CGRect)bounds
                         chipFrames:(NSArray<NSValue *> *)chipFrames
                       canChipsWrap:(BOOL)canChipsWrap
+                     chipRowHeight:(CGFloat)chipRowHeight
                      textFieldSize:(CGSize)textFieldSize
                      contentInsets:(UIEdgeInsets)contentInsets
                              isRTL:(BOOL)isRTL
@@ -285,16 +315,41 @@ static const CGFloat kInterChipPadding = (CGFloat)8.0;
       
     } else {
       CGFloat textFieldMinX = 0;
+      CGFloat textFieldMaxX = 0;
       CGFloat textFieldMinY = 0;
+      CGFloat textFieldMidY = 0;
       if (chipFrames.count > 0) {
-        CGRect lastFrame = [[chipFrames lastObject] CGRectValue];
-        textFieldMinX = MDCCeil(CGRectGetMaxX(lastFrame)) + kInterChipPadding;
+        CGFloat highestPossibleTextFieldMaxX = CGRectGetWidth(bounds) - contentInsets.right;
+        CGRect lastChipFrame = [[chipFrames lastObject] CGRectValue];
+        CGFloat lastChipMidY = CGRectGetMidY(lastChipFrame);
+        textFieldMidY = lastChipMidY;
+        textFieldMinY = textFieldMidY - (0.5 * textFieldSize.height);
+        textFieldMinX = CGRectGetMaxX(lastChipFrame) + kInterChipPadding;
+        textFieldMaxX = textFieldMinX + textFieldSize.width;
+        BOOL textFieldShouldMoveToNextRow = textFieldMaxX > highestPossibleTextFieldMaxX;
+        if (textFieldShouldMoveToNextRow) {
+          NSInteger row = [self chipRowWithRect:lastChipFrame
+                                  contentInsets:contentInsets
+                                  chipRowHeight:chipRowHeight];
+          textFieldMidY = contentInsets.top + ((CGFloat)(row + 1) * chipRowHeight) + (0.5 * chipRowHeight);
+          textFieldMinY = textFieldMidY - (0.5 * textFieldSize.height);
+          textFieldMinX = contentInsets.left;
+          textFieldMaxX = textFieldMinX + textFieldSize.width;
+          BOOL textFieldIsStillTooBig = textFieldMaxX > highestPossibleTextFieldMaxX;
+          if (textFieldIsStillTooBig) {
+            CGFloat difference = textFieldMaxX - highestPossibleTextFieldMaxX;
+            textFieldSize.width = textFieldSize.width - difference;
+          }
+        }
+        return CGRectMake(textFieldMinX, textFieldMinY, textFieldSize.width, textFieldSize.height);
       } else {
         textFieldMinX = contentInsets.left;
-        textFieldMinY = contentInsets.top;
+        textFieldMidY = contentInsets.top + (0.5 * chipRowHeight);
+        textFieldMinY = textFieldMidY - (0.5 * textFieldSize.height);
+        return CGRectMake(textFieldMinX, textFieldMinY, textFieldSize.width, textFieldSize.height);
       }
-      CGFloat textFieldCenterY = CGRectGetMidY(bounds);
-      CGFloat textFieldMinY = textFieldCenterY - (0.5 * textFieldSize.height);
+//      CGFloat textFieldCenterY = CGRectGetMidY(bounds);
+//      CGFloat textFieldMinY = textFieldCenterY - (0.5 * textFieldSize.height);
       return CGRectMake(textFieldMinX, textFieldMinY, textFieldSize.width, textFieldSize.height);
     }
   } else {
@@ -311,27 +366,63 @@ static const CGFloat kInterChipPadding = (CGFloat)8.0;
       CGFloat textFieldCenterY = CGRectGetMidY(bounds);
       CGFloat textFieldMinY = textFieldCenterY - (0.5 * textFieldSize.height);
       return CGRectMake(textFieldMinX, textFieldMinY, textFieldSize.width, textFieldSize.height);
+//      CGFloat textFieldMaxX = CGRectGetMaxX(bounds) - contentInsets.right;
+//      CGFloat textFieldWidth = textFieldMaxX - textFieldMinX;
+//      return CGRectMake(textFieldMinX, textFieldMinY, textFieldWidth, chipRowHeight);
     }
   }
   return CGRectZero;
 }
 
 - (CGPoint)scrollViewContentOffsetWithBounds:(CGRect)bounds
+                                canChipsWrap:(BOOL)canChipsWrap
+                               chipRowHeight:(CGFloat)chipRowHeight
                               textFieldFrame:(CGRect)textFieldFrame
-                               contentInsets:(UIEdgeInsets)contentInsets {
+                               contentInsets:(UIEdgeInsets)contentInsets
+                                       isRTL:(BOOL)isRTL {
   CGPoint contentOffset = CGPointZero;
-  CGFloat textFieldMinX = CGRectGetMinX(textFieldFrame);
-  CGFloat textFieldMaxX = CGRectGetMaxX(textFieldFrame);
-  CGFloat lowestPossibleTextFieldMinX = contentInsets.left;
-  CGFloat highestPossibleTextFieldMaxX = CGRectGetWidth(bounds) - contentInsets.right;
-  if (textFieldMaxX > highestPossibleTextFieldMaxX) {
-    CGFloat difference = textFieldMaxX - highestPossibleTextFieldMaxX;
-    contentOffset = CGPointMake(difference, 0);
-  } else if (textFieldMinX < lowestPossibleTextFieldMinX) {
-    CGFloat difference = lowestPossibleTextFieldMinX - textFieldMinX;
-    contentOffset = CGPointMake((-1 * difference), 0);
+  if (canChipsWrap) {
+    if (isRTL) {
+      
+    } else {
+      NSInteger row = [self chipRowWithRect:textFieldFrame
+                              contentInsets:contentInsets
+                              chipRowHeight:chipRowHeight];
+      CGFloat lastRowMaxY = contentInsets.top + ((row + 1) * chipRowHeight);
+      CGFloat boundsMaxY = CGRectGetMaxY(bounds);
+      if (lastRowMaxY > boundsMaxY) {
+        CGFloat difference = lastRowMaxY - boundsMaxY;
+        contentOffset = CGPointMake(0, (difference + contentInsets.bottom));
+      }
+    }
+  } else {
+    if (isRTL) {
+      
+    } else {
+      CGFloat textFieldMinX = CGRectGetMinX(textFieldFrame);
+      CGFloat textFieldMaxX = CGRectGetMaxX(textFieldFrame);
+
+      CGFloat lowestPossibleTextFieldMinX = contentInsets.left;
+      CGFloat highestPossibleTextFieldMaxX = CGRectGetWidth(bounds) - contentInsets.right;
+      if (textFieldMaxX > highestPossibleTextFieldMaxX) {
+        CGFloat difference = textFieldMaxX - highestPossibleTextFieldMaxX;
+        contentOffset = CGPointMake(difference, 0);
+      } else if (textFieldMinX < lowestPossibleTextFieldMinX) {
+        CGFloat difference = lowestPossibleTextFieldMinX - textFieldMinX;
+        contentOffset = CGPointMake((-1 * difference), 0);
+      }
+    }
   }
   return contentOffset;
+}
+
+- (NSInteger)chipRowWithRect:(CGRect)rect
+               contentInsets:(UIEdgeInsets)contentInsets
+               chipRowHeight:(CGFloat)chipRowHeight {
+  CGFloat viewMidY = CGRectGetMidY(rect);
+  CGFloat midYAdjustedForContentInset = MDCRound(viewMidY - contentInsets.top);
+  NSInteger row = (NSInteger)midYAdjustedForContentInset / (NSInteger)chipRowHeight;
+  return row;
 }
 
 @end
