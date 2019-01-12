@@ -18,14 +18,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-//typedef NS_ENUM(NSUInteger, InputChipViewOrien) {
-//};
-
-
 @interface InputChipView : UIControl
 
 @property (strong, nonatomic, readonly) UITextField *textField;
 @property (nonatomic, assign) BOOL canChipsWrap;
+@property (nonatomic, assign) CGFloat chipRowHeight;
 @property (nonatomic, assign) UIEdgeInsets contentInsets;
 
 - (void)addChip:(MDCChipView *)chipView;

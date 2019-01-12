@@ -122,7 +122,6 @@
 
   CGFloat nonWrappingInputChipViewMinX = padding;
   CGFloat nonWrappingInputChipViewMinY = toggleErrorButtonMinY + toggleErrorButtonHeight + padding;
-//  CGSize nonWrappingInputChipViewSize = [self.nonWrappingInputChipView sizeThatFits:inputChipViewFittingSize];
   CGSize nonWrappingInputChipViewSize = CGSizeMake(inputChipViewWidth, 60);
   CGRect nonWrappingInputChipViewButtonFrame =
       CGRectMake(nonWrappingInputChipViewMinX, nonWrappingInputChipViewMinY, nonWrappingInputChipViewSize.width,
@@ -130,16 +129,14 @@
   self.nonWrappingInputChipView.frame = nonWrappingInputChipViewButtonFrame;
   [self.nonWrappingInputChipView setNeedsLayout];
 
-  
-  
-//  CGFloat wrappingInputChipViewMinX = padding;
-//  CGFloat wrappingInputChipViewMinY = nonWrappingInputChipViewMinY + nonWrappingInputChipViewSize.height + padding;
-//  CGSize wrappingInputChipViewSize = [self.wrappingInputChipView sizeThatFits:inputChipViewFittingSize];
-//  CGRect wrappingInputChipViewFrame =
-//      CGRectMake(wrappingInputChipViewMinX, wrappingInputChipViewMinY, wrappingInputChipViewSize.width,
-//                 wrappingInputChipViewSize.height);
-//  self.wrappingInputChipView.frame = wrappingInputChipViewFrame;
-//  [self.wrappingInputChipView setNeedsLayout];
+  CGFloat wrappingInputChipViewMinX = padding;
+  CGFloat wrappingInputChipViewMinY = nonWrappingInputChipViewMinY + nonWrappingInputChipViewSize.height + padding;
+  CGSize wrappingInputChipViewSize = CGSizeMake(inputChipViewWidth, 300);
+  CGRect wrappingInputChipViewFrame =
+      CGRectMake(wrappingInputChipViewMinX, wrappingInputChipViewMinY, wrappingInputChipViewSize.width,
+                 wrappingInputChipViewSize.height);
+  self.wrappingInputChipView.frame = wrappingInputChipViewFrame;
+  [self.wrappingInputChipView setNeedsLayout];
 }
 
 - (void)updateScrollViewContentSize {
@@ -191,7 +188,6 @@
   self.nonWrappingInputChipView.canChipsWrap = NO;
   [self.scrollView addSubview:self.nonWrappingInputChipView];
   self.nonWrappingInputChipView.textField.delegate = self;
-
   self.nonWrappingInputChipView.layer.borderColor = [UIColor blackColor].CGColor;
   self.nonWrappingInputChipView.layer.borderWidth = 1;
 }
@@ -200,6 +196,9 @@
   self.wrappingInputChipView = [[InputChipView alloc] init];
   self.wrappingInputChipView.canChipsWrap = YES;
   [self.scrollView addSubview:self.wrappingInputChipView];
+  self.wrappingInputChipView.textField.delegate = self;
+  self.wrappingInputChipView.layer.borderColor = [UIColor blackColor].CGColor;
+  self.wrappingInputChipView.layer.borderWidth = 1;
 }
 
 - (void)addUiTextField {
@@ -282,23 +281,34 @@
          forControlEvents:UIControlEventTouchUpInside];
       [self.nonWrappingInputChipView addChip:chipView];
     }
+  } else if (textField == self.wrappingInputChipView.textField) {
+    if (textField.text.length > 0) {
+      MDCChipView *chipView = [[MDCChipView alloc] init];
+      chipView.titleLabel.text = textField.text;
+      [chipView sizeToFit];
+      [chipView addTarget:self
+                   action:@selector(selectedChip:)
+         forControlEvents:UIControlEventTouchUpInside];
+      [self.wrappingInputChipView addChip:chipView];
+    }
   }
   return NO;
 }
 
--(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-  const char *character = [string cStringUsingEncoding:NSUTF8StringEncoding];
-  int isBackSpace = strcmp(character, "\\b");
-  if (isBackSpace == -92) {
-    NSLog(@"Backspace was pressed");
-  }
-  return true;
-}
+//-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+//  const char *character = [string cStringUsingEncoding:NSUTF8StringEncoding];
+//  int isBackSpace = strcmp(character, "\\b");
+//  if (isBackSpace == -92) {
+//    NSLog(@"Backspace was pressed");
+//  }
+//  return true;
+//}
 
 #pragma mark User Interaction
 
 - (void)selectedChip:(MDCChipView *)chip {
-  NSLog(@"selected chip: %@",chip.titleLabel.text);
+  chip.selected = !chip.selected;
+  NSLog(@"%@",@(chip.isHighlighted));
 }
 
 #pragma mark Catalog By Convention

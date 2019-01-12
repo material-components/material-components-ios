@@ -18,7 +18,7 @@
 #import <MaterialComponents/MaterialMath.h>
 
 static const CGFloat kEstimatedCursorWidth = (CGFloat)2.0;
-static const CGFloat kInterChipPadding = (CGFloat)5.0;
+static const CGFloat kInterChipPadding = (CGFloat)8.0;
 
 
 @interface InputChipViewLayout ()
@@ -56,14 +56,48 @@ static const CGFloat kInterChipPadding = (CGFloat)5.0;
                     contentInsets:(UIEdgeInsets)contentInsets
                             isRTL:(BOOL)isRTL
 {
+  CGSize textFieldSize = [self textFieldSizeWithTextFieldText:textFieldText
+                                                textFieldFont:textFieldFont
+                                                 canChipsWrap:canChipsWrap];
   if (canChipsWrap) {
     if (isRTL) {
     } else {
+      NSArray<NSValue *> *chipFrames = [self determineChipFramesWithBounds:bounds
+                                                                     chips:chips
+                                                              canChipsWrap:canChipsWrap
+                                                             contentInsets:contentInsets
+                                                                     isRTL:isRTL];
+      CGRect textFieldFrame = [self textFieldFrameWithBounds:bounds
+                                                  chipFrames:chipFrames
+                                                canChipsWrap:canChipsWrap
+                                               textFieldSize:textFieldSize
+                                               contentInsets:contentInsets
+                                                       isRTL:isRTL];
+      CGPoint contentOffset = [self scrollViewContentOffsetWithBounds:bounds
+                                                       textFieldFrame:textFieldFrame
+                                                        contentInsets:contentInsets];
+      CGSize contentSize = [self scrollViewContentSizeWithBounds:bounds
+                                                   contentOffset:contentOffset
+                                                      chipFrames:chipFrames
+                                                    canChipsWrap:canChipsWrap
+                                                  textFieldFrame:textFieldFrame];
+      
+      
+      NSLog(@"content offset: %@ contentSize: %@",NSStringFromCGPoint(contentOffset),NSStringFromCGSize(contentSize));
+      
+      self.chipFrames = chipFrames;
+      self.textFieldFrame = textFieldFrame;
+      self.scrollViewContentOffset = contentOffset;
+      self.scrollViewContentSize = contentSize;
+      self.tapRecognizerViewFrame = CGRectMake(0, 0, contentSize.width, contentSize.height);
+      
+      // lay out all the chips starting from 0
+      // lay out the text field after
+      // determine a content offset that will make it so the text field is visible
+      // i.e. it's highest possible maxX is less than the bounds.width of input chip view.
+
     }
   } else {
-    CGSize textFieldSize = [self textFieldSizeWithTextFieldText:textFieldText
-                                                  textFieldFont:textFieldFont
-                                                   canChipsWrap:canChipsWrap];
     if (isRTL) {
 
 
@@ -76,20 +110,27 @@ static const CGFloat kInterChipPadding = (CGFloat)5.0;
       CGRect textFieldFrame = [self textFieldFrameWithBounds:bounds
                                                   chipFrames:chipFrames
                                                 canChipsWrap:canChipsWrap
-                                               textFieldSize:textFieldSize];
-      CGSize contentSize = [self scrollViewContentSizeWithBounds:bounds
-                                                      chipFrames:chipFrames
-                                                    canChipsWrap:canChipsWrap
-                                                  textFieldFrame:textFieldFrame];
+                                               textFieldSize:textFieldSize
+                                               contentInsets:contentInsets
+                                                       isRTL:isRTL];
       CGPoint contentOffset = [self scrollViewContentOffsetWithBounds:bounds
                                                        textFieldFrame:textFieldFrame
                                                         contentInsets:contentInsets];
+      CGSize contentSize = [self scrollViewContentSizeWithBounds:bounds
+                                                   contentOffset:contentOffset
+                                                      chipFrames:chipFrames
+                                                    canChipsWrap:canChipsWrap
+                                                  textFieldFrame:textFieldFrame];
+      
+
+      NSLog(@"content offset: %@ contentSize: %@",NSStringFromCGPoint(contentOffset),NSStringFromCGSize(contentSize));
 
       self.chipFrames = chipFrames;
       self.textFieldFrame = textFieldFrame;
       self.scrollViewContentOffset = contentOffset;
       self.scrollViewContentSize = contentSize;
-      
+      self.tapRecognizerViewFrame = CGRectMake(0, 0, contentSize.width, contentSize.height);
+
       // lay out all the chips starting from 0
       // lay out the text field after
       // determine a content offset that will make it so the text field is visible
@@ -110,7 +151,32 @@ static const CGFloat kInterChipPadding = (CGFloat)5.0;
     if (isRTL) {
 
     } else {
-
+      CGFloat highestDesirableSubviewMaxX = CGRectGetWidth(bounds) - contentInsets.right;
+      CGFloat chipMinX = contentInsets.left;
+      CGFloat chipMinY = contentInsets.top;
+      CGFloat allChipsMaxY = 0;
+      for (MDCChipView *chip in chips) {
+        CGFloat chipWidth = CGRectGetWidth(chip.frame);
+        CGFloat chipHeight = CGRectGetHeight(chip.frame);
+        CGRect chipFrame = CGRectMake(chipMinX, chipMinY, chipWidth, chipHeight);
+        CGFloat chipFrameMaxX = CGRectGetMaxX(chipFrame);
+        CGFloat chipFrameMaxY = CGRectGetMaxY(chipFrame);
+        BOOL isChipTooBig = chipFrameMaxX > highestDesirableSubviewMaxX;
+        BOOL isFirstChipInRow = chipMinX == contentInsets.left;
+        BOOL isNewRow = isChipTooBig && !isFirstChipInRow;
+        if (isNewRow) {
+          chipMinX = contentInsets.left;
+          chipMinY = allChipsMaxY + contentInsets.top;
+          chipFrame = CGRectMake(chipMinX, chipMinY, chipWidth, chipHeight);
+        } else {
+          if (chipFrameMaxY > allChipsMaxY) {
+            allChipsMaxY = chipFrameMaxY;
+          }
+          chipMinX = chipFrameMaxX + kInterChipPadding;
+        }
+        NSValue *chipFrameValue = [NSValue valueWithCGRect:chipFrame];
+        [frames addObject:chipFrameValue];
+      }
     }
   } else {
     if (isRTL) {
@@ -136,12 +202,12 @@ static const CGFloat kInterChipPadding = (CGFloat)5.0;
 - (CGSize)textFieldSizeWithTextFieldText:(NSString *)textFieldText
                            textFieldFont:(UIFont *)textFieldFont
                             canChipsWrap:(BOOL)canChipsWrap {
-  if (canChipsWrap) {
-
-  } else {
-    if (!textFieldFont) {
-      return CGSizeZero;
-    }
+//  if (canChipsWrap) {
+//
+//  } else {
+//    if (!textFieldFont) {
+//      return CGSizeZero;
+//    }
     CGSize fittingSize = CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX);
     NSDictionary *attributes = @{NSFontAttributeName : textFieldFont};
     CGRect rect = [textFieldText boundingRectWithSize:fittingSize
@@ -151,67 +217,101 @@ static const CGFloat kInterChipPadding = (CGFloat)5.0;
     rect.size.width = MDCCeil(CGRectGetWidth(rect)) + kEstimatedCursorWidth;
     rect.size.height = MDCCeil(CGRectGetHeight(rect));
     return rect.size;
-  }
+//  }
   return CGSizeZero;
 }
 
 - (CGSize)scrollViewContentSizeWithBounds:(CGRect)bounds
+                            contentOffset:(CGPoint)contentOffset
                                chipFrames:(NSArray<NSValue *> *)chipFrames
                              canChipsWrap:(BOOL)canChipsWrap
                             textFieldFrame:(CGRect)textFieldFrame {
-  CGFloat totalMinX = 0;
-  CGFloat totalMaxX = 0;
-  CGFloat totalMinY = 0;
-  CGFloat totalMaxY = 0;
-  NSValue *textFieldFrameValue = [NSValue valueWithCGRect:textFieldFrame];
-  NSArray *allFrames = [chipFrames arrayByAddingObject:textFieldFrameValue];
-  for (NSUInteger index = 0; index < allFrames.count; index++) {
-    NSValue *frameValue = allFrames[index];
-    CGRect frame = frameValue.CGRectValue;
-    if (index == 0) {
-      totalMinX = CGRectGetMinX(frame);
-      totalMaxX = CGRectGetMaxX(frame);
-      totalMinY = CGRectGetMinY(frame);
-      totalMaxY = CGRectGetMaxY(frame);
-    } else {
-      CGFloat minX = CGRectGetMinX(frame);
-      CGFloat maxX = CGRectGetMaxX(frame);
-      CGFloat minY = CGRectGetMinY(frame);
-      CGFloat maxY = CGRectGetMaxY(frame);
-      if (minX < totalMinX) {
-        totalMinX = minX;
-      }
-      if (minY < totalMinY) {
-        totalMinY = minY;
-      }
-      if (maxX > totalMaxX) {
-        totalMaxX = maxX;
-      }
-      if (maxY > totalMaxY) {
-        totalMaxY = maxY;
-      }
+  if (canChipsWrap) {
+    return bounds.size;
+  } else {
+    CGSize size = bounds.size;
+    if (contentOffset.x > 0) {
+      size.width += contentOffset.x;
     }
+    return size;
   }
-  CGFloat width = totalMaxX - totalMinX;
-  CGFloat height = totalMaxY - totalMinY;
-  return CGSizeMake(width, height);
+//  CGFloat totalMinX = 0;
+//  CGFloat totalMaxX = 0;
+//  CGFloat totalMinY = 0;
+//  CGFloat totalMaxY = 0;
+//  NSValue *textFieldFrameValue = [NSValue valueWithCGRect:textFieldFrame];
+//  NSArray *allFrames = [chipFrames arrayByAddingObject:textFieldFrameValue];
+//  for (NSUInteger index = 0; index < allFrames.count; index++) {
+//    NSValue *frameValue = allFrames[index];
+//    CGRect frame = frameValue.CGRectValue;
+//    if (index == 0) {
+//      totalMinX = CGRectGetMinX(frame);
+//      totalMaxX = CGRectGetMaxX(frame);
+//      totalMinY = CGRectGetMinY(frame);
+//      totalMaxY = CGRectGetMaxY(frame);
+//    } else {
+//      CGFloat minX = CGRectGetMinX(frame);
+//      CGFloat maxX = CGRectGetMaxX(frame);
+//      CGFloat minY = CGRectGetMinY(frame);
+//      CGFloat maxY = CGRectGetMaxY(frame);
+//      if (minX < totalMinX) {
+//        totalMinX = minX;
+//      }
+//      if (minY < totalMinY) {
+//        totalMinY = minY;
+//      }
+//      if (maxX > totalMaxX) {
+//        totalMaxX = maxX;
+//      }
+//      if (maxY > totalMaxY) {
+//        totalMaxY = maxY;
+//      }
+//    }
+//  }
+//  CGFloat width = totalMaxX - totalMinX;
+//  CGFloat height = totalMaxY - totalMinY;
+//  return CGSizeMake(width, height);
 }
 
 - (CGRect)textFieldFrameWithBounds:(CGRect)bounds
                         chipFrames:(NSArray<NSValue *> *)chipFrames
                       canChipsWrap:(BOOL)canChipsWrap
-                     textFieldSize:(CGSize)textFieldSize {
+                     textFieldSize:(CGSize)textFieldSize
+                     contentInsets:(UIEdgeInsets)contentInsets
+                             isRTL:(BOOL)isRTL
+{
   if (canChipsWrap) {
-    
-  } else {
-    CGFloat textFieldMinX = 0;// this should be content inset
-    if (chipFrames.count > 0) {
-      CGRect lastFrame = [[chipFrames lastObject] CGRectValue];
-      textFieldMinX = MDCCeil(CGRectGetMaxX(lastFrame)) + kInterChipPadding;
+    if (isRTL) {
+      
+    } else {
+      CGFloat textFieldMinX = 0;
+      CGFloat textFieldMinY = 0;
+      if (chipFrames.count > 0) {
+        CGRect lastFrame = [[chipFrames lastObject] CGRectValue];
+        textFieldMinX = MDCCeil(CGRectGetMaxX(lastFrame)) + kInterChipPadding;
+      } else {
+        textFieldMinX = contentInsets.left;
+        textFieldMinY = contentInsets.top;
+      }
+      CGFloat textFieldCenterY = CGRectGetMidY(bounds);
+      CGFloat textFieldMinY = textFieldCenterY - (0.5 * textFieldSize.height);
+      return CGRectMake(textFieldMinX, textFieldMinY, textFieldSize.width, textFieldSize.height);
     }
-    CGFloat textFieldCenterY = CGRectGetMidY(bounds);
-    CGFloat textFieldMinY = textFieldCenterY - (0.5 * textFieldSize.height);
-    return CGRectMake(textFieldMinX, textFieldMinY, textFieldSize.width, textFieldSize.height);
+  } else {
+    if (isRTL) {
+      
+    } else {
+      CGFloat textFieldMinX = 0;
+      if (chipFrames.count > 0) {
+        CGRect lastFrame = [[chipFrames lastObject] CGRectValue];
+        textFieldMinX = MDCCeil(CGRectGetMaxX(lastFrame)) + kInterChipPadding;
+      } else {
+        textFieldMinX = contentInsets.left;
+      }
+      CGFloat textFieldCenterY = CGRectGetMidY(bounds);
+      CGFloat textFieldMinY = textFieldCenterY - (0.5 * textFieldSize.height);
+      return CGRectMake(textFieldMinX, textFieldMinY, textFieldSize.width, textFieldSize.height);
+    }
   }
   return CGRectZero;
 }
@@ -219,18 +319,19 @@ static const CGFloat kInterChipPadding = (CGFloat)5.0;
 - (CGPoint)scrollViewContentOffsetWithBounds:(CGRect)bounds
                               textFieldFrame:(CGRect)textFieldFrame
                                contentInsets:(UIEdgeInsets)contentInsets {
+  CGPoint contentOffset = CGPointZero;
   CGFloat textFieldMinX = CGRectGetMinX(textFieldFrame);
   CGFloat textFieldMaxX = CGRectGetMaxX(textFieldFrame);
   CGFloat lowestPossibleTextFieldMinX = contentInsets.left;
   CGFloat highestPossibleTextFieldMaxX = CGRectGetWidth(bounds) - contentInsets.right;
   if (textFieldMaxX > highestPossibleTextFieldMaxX) {
     CGFloat difference = textFieldMaxX - highestPossibleTextFieldMaxX;
-    return CGPointMake(difference, 0);
+    contentOffset = CGPointMake(difference, 0);
   } else if (textFieldMinX < lowestPossibleTextFieldMinX) {
     CGFloat difference = lowestPossibleTextFieldMinX - textFieldMinX;
-    return CGPointMake((-1 * difference), 0);
+    contentOffset = CGPointMake((-1 * difference), 0);
   }
-  return CGPointZero;
+  return contentOffset;
 }
 
 @end

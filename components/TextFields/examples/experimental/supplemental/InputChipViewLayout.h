@@ -23,8 +23,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 @interface InputChipViewLayout : NSObject
-@property (nonatomic, assign) CGRect textFieldFrame;
+
 @property (nonatomic, strong) NSArray<NSValue *> *chipFrames;
+
+@property (nonatomic, assign) CGRect textFieldFrame;
+@property (nonatomic, assign) CGRect tapRecognizerViewFrame;
 @property (nonatomic, assign) CGPoint scrollViewContentOffset;
 @property (nonatomic, assign) CGPoint scrollViewContentInset;
 @property (nonatomic, assign) CGSize scrollViewContentSize;
