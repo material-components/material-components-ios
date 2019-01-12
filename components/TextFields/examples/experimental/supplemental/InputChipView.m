@@ -81,7 +81,6 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    self.contentInsets = UIEdgeInsetsMake(8, 8, 8, 8);
     [self commonInputChipViewInit];
   }
   return self;
@@ -92,21 +91,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   [self initializeProperties];
   [self createSubviews];
   [self setUpGradientLayer];
-  
-  
-  [self addTarget:self action:@selector(handleTouchUpInside) forControlEvents:UIControlEventTouchUpInside];
 }
-
-- (void)handleTouchUpInside {
-  NSLog(@"handleTouchUpInside");
-}
-
-//- (void)setUpGradientLayer {
-//  self.gradientLayer.frame = self.scrollView.bounds;
-//  self.gradientLayer.locations = @[@0.0, @0.1, @0.9, @1.0];
-//  self.scrollView.layer.mask = self.gradientLayer;
-//
-//}
 
 - (void)setUpGradientLayer {
   self.gradientLayer = [CAGradientLayer layer];
@@ -154,7 +139,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 }
 
 - (void)setUpContentInsets {
-  self.contentInsets = UIEdgeInsetsMake(8, 8, 8, 8);
+  self.contentInsets = UIEdgeInsetsMake(12, 12, 12, 12);
 }
 
 - (void)setUpChipsArray {
@@ -246,15 +231,15 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 - (void)postLayoutSubviews {
   self.scrollViewContainer.frame = self.bounds;
   self.scrollView.frame = self.bounds;
+  self.tapRecognizerView.frame = self.layout.tapRecognizerViewFrame;
   self.textField.frame = self.layout.textFieldFrame;
   self.scrollView.contentOffset = self.layout.scrollViewContentOffset;
   self.scrollView.contentSize = self.layout.scrollViewContentSize;
-  self.tapRecognizerView.frame = self.scrollView.bounds;
   [self animateChipLayoutChangesWithChips:self.chips
                                chipFrames:self.layout.chipFrames
                             chipsToRemove:self.chipsToRemove
                                chipsToAdd:self.chipsToAdd];
-  NSLog(@"%@",NSStringFromCGRect(self.textField.frame));
+//  NSLog(@"%@",NSStringFromCGRect(self.textField.frame));
   [self updateGradientLocations];
 }
 
@@ -454,15 +439,9 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 #pragma mark User Interaction
 
 - (void)handleTapRecognizer:(UITapGestureRecognizer *)tap {
-  CGPoint location = [tap locationInView:self];
-  NSLog(@"tap at location: %@",NSStringFromCGPoint(location));
-  if ([self.textField isFirstResponder]) {
-//    MDCChipView *chipView = [self chipAtPoint:location];
-//    if (chipView) {
-//      NSLog(@"tap at chip: %@",chipView.titleLabel.text);
-//    }
-  } else {
+  if (![self.textField isFirstResponder]) {
     [self.textField becomeFirstResponder];
+    [self setNeedsLayout];
   }
 }
 
