@@ -61,7 +61,10 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 @property (strong, nonatomic) InputChipViewLayout *layout;
 @property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
 
-@property (strong, nonatomic) CAGradientLayer *gradientLayer;
+@property (strong, nonatomic) CALayer *horizontalGradientLayer;
+@property (strong, nonatomic) CAGradientLayer *horizontalGradientLayerMask;
+@property (strong, nonatomic) CALayer *verticalGradientLayer;
+@property (strong, nonatomic) CAGradientLayer *verticalGradientLayerMask;
 
 @end
 
@@ -90,21 +93,37 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   [self addObservers];
   [self initializeProperties];
   [self createSubviews];
-  [self setUpGradientLayer];
+  [self setUpGradientLayers];
 }
 
-- (void)setUpGradientLayer {
-  self.gradientLayer = [CAGradientLayer layer];
-  self.gradientLayer.frame = self.bounds;
-  self.gradientLayer.colors = @[(id)UIColor.clearColor.CGColor,
-                                (id)UIColor.blackColor.CGColor,
-                                (id)UIColor.blackColor.CGColor,
-                                (id)UIColor.clearColor.CGColor];
-  self.gradientLayer.locations = @[@0.0, @0.1, @0.9, @1.0];
-  self.gradientLayer.startPoint = CGPointMake(0.0, 0.5);
-  self.gradientLayer.endPoint = CGPointMake(1.0, 0.5);
+- (void)setUpGradientLayers {
+//  UIColor *outerColor = (id)UIColor.greenColor.CGColor;
+//  UIColor *innerColor = (id)UIColor.blueColor.CGColor;
+//  NSArray *colors = @[outerColor, innerColor, innerColor, outerColor];
 
-  self.scrollViewContainer.layer.mask = self.gradientLayer;
+  //  self.horizontalGradientLayer = [CALayer layer];
+  self.horizontalGradientLayerMask = [CAGradientLayer layer];
+  self.horizontalGradientLayerMask.frame = self.bounds;
+  self.horizontalGradientLayerMask.colors = @[(id)UIColor.clearColor.CGColor,
+                                              (id)UIColor.blackColor.CGColor,
+                                              (id)UIColor.blackColor.CGColor,
+                                              (id)UIColor.clearColor.CGColor];
+  self.horizontalGradientLayerMask.startPoint = CGPointMake(0.0, 0.5);
+  self.horizontalGradientLayerMask.endPoint = CGPointMake(1.0, 0.5);
+  //  self.horizontalGradientLayer.mask = self.horizontalGradientLayerMask;
+  //  [self.scrollViewContainer.layer insertSublayer:self.horizontalGradientLayer atIndex:0];
+  
+  //  self.verticalGradientLayer = [CALayer layer];
+  self.verticalGradientLayerMask = [CAGradientLayer layer];
+  self.verticalGradientLayerMask.frame = self.bounds;
+  self.verticalGradientLayerMask.colors = @[(id)UIColor.clearColor.CGColor,
+                                            (id)UIColor.blackColor.CGColor,
+                                            (id)UIColor.blackColor.CGColor,
+                                            (id)UIColor.clearColor.CGColor];
+  self.verticalGradientLayerMask.startPoint = CGPointMake(0.5, 0.0);
+  self.verticalGradientLayerMask.endPoint = CGPointMake(0.5, 1.0);
+  //  self.verticalGradientLayer.mask = self.verticalGradientLayerMask;
+  //  [self.scrollViewContainer.layer insertSublayer:self.verticalGradientLayer atIndex:0];
 }
 
 - (void)dealloc {
@@ -136,10 +155,13 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   [self setUpChipsArray];
   [self setUpChipsToRemoveArray];
   [self setUpContentInsets];
+  
+  self.chipRowHeight = [self determineEffectiveTextFieldFont].lineHeight * 2;
+  
 }
 
 - (void)setUpContentInsets {
-  self.contentInsets = UIEdgeInsetsMake(12, 12, 12, 12);
+  self.contentInsets = UIEdgeInsetsMake(8, 12, 8, 12);
 }
 
 - (void)setUpChipsArray {
@@ -189,8 +211,28 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 - (void)layoutSubviews {
   [self preLayoutSubviews];
-  [super layoutSubviews];
+  
+  self.scrollViewContainer.frame = self.bounds;
   self.scrollView.frame = self.bounds;
+  self.tapRecognizerView.frame = self.layout.tapRecognizerViewFrame;
+  self.textField.frame = self.layout.textFieldFrame;
+  self.scrollView.contentOffset = self.layout.scrollViewContentOffset;
+  self.scrollView.contentSize = self.layout.scrollViewContentSize;
+  [self animateChipLayoutChangesWithChips:self.chips
+                               chipFrames:self.layout.chipFrames
+                            chipsToRemove:self.chipsToRemove
+                               chipsToAdd:self.chipsToAdd];
+  //  NSLog(@"%@",NSStringFromCGRect(self.textField.frame));
+  [self.scrollView setNeedsLayout];
+  NSLog(@"inset: %@",NSStringFromUIEdgeInsets(self.scrollView.contentInset));
+  NSLog(@"offset: %@",NSStringFromCGPoint(self.scrollView.contentOffset));
+  NSLog(@"size: %@\n\n",NSStringFromCGSize(self.scrollView.contentSize));
+
+  
+  [super layoutSubviews];
+  
+  
+  
   [self postLayoutSubviews];
 
 }
@@ -218,6 +260,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   return [[InputChipViewLayout alloc] initWithBounds:self.bounds
                                                chips:self.chips
                                         canChipsWrap:self.canChipsWrap
+                                       chipRowHeight:self.chipRowHeight
                                        textFieldText:self.textField.text
                                        textFieldFont:textFieldFont
                                        contentInsets:self.contentInsets
@@ -229,27 +272,31 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 }
 
 - (void)postLayoutSubviews {
-  self.scrollViewContainer.frame = self.bounds;
-  self.scrollView.frame = self.bounds;
-  self.tapRecognizerView.frame = self.layout.tapRecognizerViewFrame;
-  self.textField.frame = self.layout.textFieldFrame;
-  self.scrollView.contentOffset = self.layout.scrollViewContentOffset;
-  self.scrollView.contentSize = self.layout.scrollViewContentSize;
-  [self animateChipLayoutChangesWithChips:self.chips
-                               chipFrames:self.layout.chipFrames
-                            chipsToRemove:self.chipsToRemove
-                               chipsToAdd:self.chipsToAdd];
-//  NSLog(@"%@",NSStringFromCGRect(self.textField.frame));
-  [self updateGradientLocations];
+  [self layOutGradientLayers];
 }
 
-- (void)updateGradientLocations {
-  self.gradientLayer.frame = self.bounds;
+- (void)layOutGradientLayers {
+  self.horizontalGradientLayer.frame = self.bounds;
+  self.horizontalGradientLayerMask.frame = self.bounds;
   CGFloat viewWidth = CGRectGetWidth(self.bounds);
-  self.gradientLayer.locations = @[@(0),
-                                   @(self.contentInsets.left / viewWidth),
-                                   @((viewWidth - self.contentInsets.right) / viewWidth),
-                                   @(viewWidth)];
+  self.horizontalGradientLayerMask.locations = @[@(0),
+                                                 @(self.contentInsets.left / viewWidth),
+                                                 @((viewWidth - self.contentInsets.right) / viewWidth),
+                                                 @(viewWidth)];
+  self.verticalGradientLayer.frame = self.bounds;
+  self.verticalGradientLayerMask.frame = self.bounds;
+  CGFloat viewHeight = CGRectGetHeight(self.bounds);
+  self.verticalGradientLayerMask.locations = @[@(0),
+                                               @(self.contentInsets.top / viewHeight),
+                                               @((viewHeight - self.contentInsets.bottom) / viewHeight),
+                                               @(viewHeight)];
+  // TODO: Figure out how to have both gradients at once
+  
+  if (self.canChipsWrap) {
+    self.scrollViewContainer.layer.mask = self.verticalGradientLayerMask;
+  } else {
+    self.scrollViewContainer.layer.mask = self.horizontalGradientLayerMask;
+  }
 }
 
 - (NSArray<MDCChipView *> *)chipsToAdd {
@@ -441,8 +488,12 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 - (void)handleTapRecognizer:(UITapGestureRecognizer *)tap {
   if (![self.textField isFirstResponder]) {
     [self.textField becomeFirstResponder];
-    [self setNeedsLayout];
   }
+  [self enforceCalculatedScrollViewContentOffset];
+}
+
+- (void)enforceCalculatedScrollViewContentOffset {
+  [self.scrollView setContentOffset:self.layout.scrollViewContentOffset animated:NO];
 }
 
 - (MDCChipView *)chipAtPoint:(CGPoint)point {

@@ -35,6 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithBounds:(CGRect)bounds
                          chips:(NSArray<MDCChipView *> *)chips
                   canChipsWrap:(BOOL)canChipsWrap
+                 chipRowHeight:(CGFloat)chipRowHeight
                  textFieldText:(NSString *)textFieldText
                  textFieldFont:(UIFont *)textFieldFont
                  contentInsets:(UIEdgeInsets)contentInsets
