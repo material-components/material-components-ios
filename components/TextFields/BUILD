@@ -17,8 +17,10 @@ load(
     "mdc_extension_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
+    "mdc_snapshot_test",
     "mdc_unit_test_suite",
 )
+load("@build_bazel_rules_apple//apple:ios.bzl", "ios_unit_test")
 load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
@@ -92,6 +94,33 @@ mdc_objc_library(
         ":TextFields",
         ":TypographyThemer",
     ],
+)
+
+mdc_objc_library(
+    name = "snapshot_test_lib",
+    testonly = 1,
+    srcs = glob([
+        "tests/snapshot/*.m",
+        "tests/snapshot/*.h",
+        "tests/snapshot/supplemental/*.m",
+        "tests/snapshot/supplemental/*.h",
+    ]),
+    sdk_frameworks = [
+        "XCTest",
+    ],
+    visibility = ["//visibility:private"],
+    deps = [
+        ":ColorThemer",
+        ":FontThemer",
+        ":TextFields",
+        ":TypographyThemer",
+        "//components/private/Snapshot",
+    ],
+)
+
+mdc_snapshot_test(
+    name = "snapshot_tests",
+    deps = ["snapshot_test_lib"],
 )
 
 swift_library(

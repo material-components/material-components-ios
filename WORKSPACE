@@ -18,7 +18,7 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_file")
 git_repository(
     name = "build_bazel_rules_apple",
     remote = "https://github.com/bazelbuild/rules_apple.git",
-    tag = "0.9.0",
+    tag = "0.12.0",
 )
 
 load(
@@ -87,4 +87,9 @@ git_repository(
     name = "motion_transitioning_objc",
     remote = "https://github.com/material-motion/motion-transitioning-objc.git",
     tag = "v6.0.0",
+)
+
+local_repository(
+    name = "ios_snapshot_test_case",
+    path = "../ios-snapshot-test-case",
 )
