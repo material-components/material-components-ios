@@ -24,6 +24,21 @@ else
   scripts_dir="$(dirname $0)/scripts/lib"
 fi
 
+if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+  repo_dir='github/repo'
+else
+  repo_dir="$(dirname $0)"
+fi
+
+repo_dir="$(cd $repo_dir; pwd)"
+
+echo "repo_dir: $repo_dir"
+
+snapshot_dir="${repo_dir}/snapshot_test_goldens/goldens"
+tmp_img_dir="$(mktemp -d)"
+
+echo "snapshot_dir: $snapshot_dir"
+
 source "${scripts_dir}/github_comments.sh"
 source "${scripts_dir}/select_xcode.sh"
 source "${scripts_dir}/package_managers.sh"
@@ -295,7 +310,10 @@ run_bazel() {
     # Especially in the event of failure, we want our test artifacts to be uploaded.
     trap upload_bazel_test_artifacts EXIT
   fi
-  bazel $COMMAND $TARGET --xcode_version $xcode_version --ios_minimum_os=8.0 --ios_multi_cpus=i386,x86_64 $extra_args $verbosity_args
+  bazel $COMMAND $TARGET --xcode_version $xcode_version --ios_minimum_os=8.0 \
+    --ios_multi_cpus=i386,x86_64 $extra_args $verbosity_args \
+    --test_env="FB_REFERENCE_IMAGE_DIR=$snapshot_dir" \
+    --test_env="IMAGE_DIFF_DIR=$tmp_img_dir"
 }
 
 run_cocoapods() {
