@@ -14,9 +14,10 @@
 
 #import <XCTest/XCTest.h>
 
-#import "supplemental/MDCAbstractTextFieldSnapshotTests.h"
 #import "MaterialTextFields+ColorThemer.h"
 #import "MaterialTextFields+TypographyThemer.h"
+#import "MaterialTextFields.h"
+#import "supplemental/MDCAbstractTextFieldSnapshotTests.h"
 
 /**
  Snapshot tests for MDCTextInputControllerOutlined with:
