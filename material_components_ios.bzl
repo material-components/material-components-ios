@@ -178,14 +178,14 @@ def mdc_snapshot_test(
     visibility = ["//visibility:private"],
     size = "medium",
     **kwargs):
-    
+  
   test = "%sTest" % name
   app = "%sApp" % name
 
   """Declare an MDC ios_unit_test for snapshot tests."""
   ios_unit_test(
       name = test,
-      deps = ["//components/private/Snapshot/TestHost"] + deps,
+      deps = deps,
       minimum_os_version = minimum_os_version,
       runner = SNAPSHOT_IOS_RUNNER_TARGET,
       test_host = ":%s" % app,
@@ -197,12 +197,12 @@ def mdc_snapshot_test(
       **kwargs)
   ios_application(
       name = app,
-      infoplists = ["components/private/Snapshot/TestHost/TestHost-Info.plist"],
+      infoplists = ["//components/private/Snapshot/TestHost:TestHost-Info.plist"],
       families = ["iphone"],
       bundle_id = "io.material.ios.snapshot",
       testonly = 1,
       deps = [
-          ":%s" % test,
+          "//components/private/Snapshot/TestHost",
       ],
       minimum_os_version = minimum_os_version)
 

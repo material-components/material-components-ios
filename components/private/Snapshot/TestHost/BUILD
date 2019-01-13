@@ -23,3 +23,5 @@ mdc_public_objc_library(
     name = "TestHost",
 )
 
+exports_files(["TestHost-Info.plist"])
+

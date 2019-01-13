@@ -108,6 +108,10 @@ mdc_objc_library(
     sdk_frameworks = [
         "XCTest",
     ],
+    asset_catalogs = [
+      "tests/snapshot/resources/TextFieldsSnapshotTests.xcassets/ic_done.imageset",
+      "tests/snapshot/resources/TextFieldsSnapshotTests.xcassets/ic_search.imageset",
+    ],
     visibility = ["//visibility:private"],
     deps = [
         ":ColorThemer",
