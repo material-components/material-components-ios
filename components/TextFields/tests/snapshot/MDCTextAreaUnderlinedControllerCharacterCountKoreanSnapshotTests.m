@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCAbstractTextFieldSnapshotTests+I18N.h"
-#import "MDCAbstractTextFieldSnapshotTests.h"
+#import "supplemental/MDCAbstractTextFieldSnapshotTests+I18N.h"
+#import "supplemental/MDCAbstractTextFieldSnapshotTests.h"
 #import "MaterialTextFields.h"
-#import "SnapshotFakeMDCMultilineTextField.h"
+#import "supplemental/SnapshotFakeMDCMultilineTextField.h"
 
 @interface MDCTextAreaUnderlinedControllerCharacterCountKoreanSnapshotTests
     : MDCAbstractTextFieldSnapshotTests

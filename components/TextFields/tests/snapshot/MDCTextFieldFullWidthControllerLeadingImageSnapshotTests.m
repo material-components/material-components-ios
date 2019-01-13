@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCAbstractTextFieldSnapshotTests+LeadingImage.h"
-#import "MDCAbstractTextFieldSnapshotTests.h"
-#import "MDCTextFieldSnapshotTestsStrings.h"
+#import "supplemental/MDCAbstractTextFieldSnapshotTests+LeadingImage.h"
+#import "supplemental/MDCAbstractTextFieldSnapshotTests.h"
+#import "supplemental/MDCTextFieldSnapshotTestsStrings.h"
 #import "MaterialTextFields.h"
 
 @interface MDCTextFieldFullWidthControllerLeadingImageSnapshotTests
