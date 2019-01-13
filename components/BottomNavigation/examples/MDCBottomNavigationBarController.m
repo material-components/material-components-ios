@@ -109,6 +109,8 @@
   NSArray *viewControllersCopy = [viewControllers copy];
   self.navigationBar.items = [self tabBarItemsForViewControllers:viewControllersCopy];
   _viewControllers = viewControllersCopy;
+
+  self.selectedViewController = viewControllersCopy.firstObject;
 }
 
 - (UIViewController *)childViewControllerForStatusBarStyle {
