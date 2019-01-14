@@ -21,7 +21,8 @@
 @class InputChipViewTextField;
 @protocol InputChipViewTextFieldDelegate <NSObject>
 - (void)inputChipViewTextFieldDidDeleteBackward:(InputChipViewTextField *)textField
-                             withCursorPosition:(NSInteger)cursorPosition;
+                                        oldText:(NSString *)oldText
+                                        newText:(NSString *)newText;
 @end
 
 
@@ -32,14 +33,12 @@
 @implementation InputChipViewTextField
 
 - (void)deleteBackward {
+  NSString *oldText = self.text;
   [super deleteBackward];
-  NSInteger cursorPosition = [self offsetFromPosition:self.beginningOfDocument
-                                           toPosition:self.selectedTextRange.start];
-  if (cursorPosition == 0) {
-    if ([self.inputChipViewTextFieldDelegate respondsToSelector:@selector(inputChipViewTextFieldDidDeleteBackward:withCursorPosition:)]) {
-      [self.inputChipViewTextFieldDelegate inputChipViewTextFieldDidDeleteBackward:self
-                                                                withCursorPosition:cursorPosition];
-    }
+  if ([self.inputChipViewTextFieldDelegate respondsToSelector:@selector(inputChipViewTextFieldDidDeleteBackward:oldText:newText:)]) {
+    [self.inputChipViewTextFieldDelegate inputChipViewTextFieldDidDeleteBackward:self
+                                                                         oldText:oldText
+                                                                         newText:self.text];
   }
 }
 
@@ -65,6 +64,13 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 @property (strong, nonatomic) CAGradientLayer *horizontalGradientLayerMask;
 @property (strong, nonatomic) CALayer *verticalGradientLayer;
 @property (strong, nonatomic) CAGradientLayer *verticalGradientLayerMask;
+
+@property (strong, nonatomic) UITouch *lastTouch;
+//@property (strong, nonatomic) BOOL lastTouchBeganInside;
+//@property (strong, nonatomic) BOOL lastTouchEndedInside;
+
+@property (nonatomic, assign) CGPoint lastTouchStartingContentOffset;
+@property (nonatomic, assign) CGPoint lastTouchStartingLocation;
 
 @end
 
@@ -94,36 +100,30 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   [self initializeProperties];
   [self createSubviews];
   [self setUpGradientLayers];
+  [self addTarget:self
+           action:@selector(handleTouchUpInside)
+ forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)setUpGradientLayers {
-//  UIColor *outerColor = (id)UIColor.greenColor.CGColor;
-//  UIColor *innerColor = (id)UIColor.blueColor.CGColor;
-//  NSArray *colors = @[outerColor, innerColor, innerColor, outerColor];
-
-  //  self.horizontalGradientLayer = [CALayer layer];
+  UIColor *outerColor = (id)UIColor.clearColor.CGColor;
+  UIColor *innerColor = (id)UIColor.blackColor.CGColor;
+  NSArray *colors = @[outerColor, innerColor, innerColor, outerColor];
   self.horizontalGradientLayerMask = [CAGradientLayer layer];
   self.horizontalGradientLayerMask.frame = self.bounds;
-  self.horizontalGradientLayerMask.colors = @[(id)UIColor.clearColor.CGColor,
-                                              (id)UIColor.blackColor.CGColor,
-                                              (id)UIColor.blackColor.CGColor,
-                                              (id)UIColor.clearColor.CGColor];
+  self.horizontalGradientLayerMask.colors = colors;
   self.horizontalGradientLayerMask.startPoint = CGPointMake(0.0, 0.5);
   self.horizontalGradientLayerMask.endPoint = CGPointMake(1.0, 0.5);
-  //  self.horizontalGradientLayer.mask = self.horizontalGradientLayerMask;
-  //  [self.scrollViewContainer.layer insertSublayer:self.horizontalGradientLayer atIndex:0];
-  
-  //  self.verticalGradientLayer = [CALayer layer];
+
   self.verticalGradientLayerMask = [CAGradientLayer layer];
   self.verticalGradientLayerMask.frame = self.bounds;
-  self.verticalGradientLayerMask.colors = @[(id)UIColor.clearColor.CGColor,
-                                            (id)UIColor.blackColor.CGColor,
-                                            (id)UIColor.blackColor.CGColor,
-                                            (id)UIColor.clearColor.CGColor];
+//  self.verticalGradientLayerMask.colors = @[(id)UIColor.clearColor.CGColor,
+//                                            (id)UIColor.blackColor.CGColor,
+//                                            (id)UIColor.blackColor.CGColor,
+//                                            (id)UIColor.clearColor.CGColor];
+  self.verticalGradientLayerMask.colors = colors;
   self.verticalGradientLayerMask.startPoint = CGPointMake(0.5, 0.0);
   self.verticalGradientLayerMask.endPoint = CGPointMake(0.5, 1.0);
-  //  self.verticalGradientLayer.mask = self.verticalGradientLayerMask;
-  //  [self.scrollViewContainer.layer insertSublayer:self.verticalGradientLayer atIndex:0];
 }
 
 - (void)dealloc {
@@ -185,7 +185,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   self.tapRecognizerView = [[UIView alloc] init];
   [self.scrollView addSubview:self.tapRecognizerView];
   self.tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapRecognizer:)];
-  [self.tapRecognizerView addGestureRecognizer:self.tapRecognizer];
+//  [self.tapRecognizerView addGestureRecognizer:self.tapRecognizer];
   self.tapRecognizer.delegate = self;
   self.inputChipViewTextField = [[InputChipViewTextField alloc] init];
   self.inputChipViewTextField.inputChipViewTextFieldDelegate = self;
@@ -194,8 +194,14 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 #pragma mark UIResponder Overrides
 
--(BOOL)becomeFirstResponder {
-  return [super becomeFirstResponder];
+-(void)handleTouchUpInside {
+//  if (![self.textField isFirstResponder]) {
+//    [self.textField becomeFirstResponder];
+//  }
+//  [self enforceCalculatedScrollViewContentOffset];
+//  BOOL result = [super becomeFirstResponder];
+//  [self.textField becomeFirstResponder];
+//  return result;
   /*
    consider calling textField becomeFirstResponder here, and consider calling this method in touchesbegan.
    this would be a replacement of tap gesture
@@ -212,21 +218,6 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 - (void)layoutSubviews {
   [self preLayoutSubviews];
   
-  self.scrollViewContainer.frame = self.bounds;
-  self.scrollView.frame = self.bounds;
-  self.tapRecognizerView.frame = self.layout.tapRecognizerViewFrame;
-  self.textField.frame = self.layout.textFieldFrame;
-  self.scrollView.contentOffset = self.layout.scrollViewContentOffset;
-  self.scrollView.contentSize = self.layout.scrollViewContentSize;
-  [self animateChipLayoutChangesWithChips:self.chips
-                               chipFrames:self.layout.chipFrames
-                            chipsToRemove:self.chipsToRemove
-                               chipsToAdd:self.chipsToAdd];
-  //  NSLog(@"%@",NSStringFromCGRect(self.textField.frame));
-  [self.scrollView setNeedsLayout];
-  NSLog(@"inset: %@",NSStringFromUIEdgeInsets(self.scrollView.contentInset));
-  NSLog(@"offset: %@",NSStringFromCGPoint(self.scrollView.contentOffset));
-  NSLog(@"size: %@\n\n",NSStringFromCGSize(self.scrollView.contentSize));
 
   
   [super layoutSubviews];
@@ -272,6 +263,22 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 }
 
 - (void)postLayoutSubviews {
+  self.scrollViewContainer.frame = self.bounds;
+  self.scrollView.frame = self.bounds;
+  self.tapRecognizerView.frame = self.layout.tapRecognizerViewFrame;
+  self.textField.frame = self.layout.textFieldFrame;
+  self.scrollView.contentOffset = self.layout.scrollViewContentOffset;
+  self.scrollView.contentSize = self.layout.scrollViewContentSize;
+  [self animateChipLayoutChangesWithChips:self.chips
+                               chipFrames:self.layout.chipFrames
+                            chipsToRemove:self.chipsToRemove
+                               chipsToAdd:self.chipsToAdd];
+  //  NSLog(@"%@",NSStringFromCGRect(self.textField.frame));
+  [self.scrollView setNeedsLayout];
+  //  NSLog(@"inset: %@",NSStringFromUIEdgeInsets(self.scrollView.contentInset));
+  //  NSLog(@"offset: %@",NSStringFromCGPoint(self.scrollView.contentOffset));
+  //  NSLog(@"size: %@\n\n",NSStringFromCGSize(self.scrollView.contentSize));
+
   [self layOutGradientLayers];
 }
 
@@ -531,15 +538,138 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 #pragma mark InputChipViewTextFieldDelegate
 
 -(void)inputChipViewTextFieldDidDeleteBackward:(InputChipViewTextField *)textField
-                            withCursorPosition:(NSInteger)cursorPosition {
-  if (cursorPosition == 0) {
-    NSArray *selectedChips = [self selectedChips];
-    if (selectedChips.count > 0) {
-      [self removeChips:selectedChips];
-    } else if (self.chips.count > 0) {
-      [self selectChip:self.chips.lastObject];
+                                       oldText:(NSString *)oldText
+                                       newText:(NSString *)newText {
+  BOOL isEmpty = newText.length == 0;
+  BOOL isNewlyEmpty = oldText.length > 0 && newText.length == 0;
+  if (isEmpty) {
+    if (!isNewlyEmpty) {
+      NSArray *selectedChips = [self selectedChips];
+      if (selectedChips.count > 0) {
+        [self removeChips:selectedChips];
+      } else if (self.chips.count > 0) {
+        [self selectChip:self.chips.lastObject];
+      }
     }
   }
+}
+
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  [super touchesBegan:touches withEvent:event];
+  NSLog(@"touches began");
+}
+
+-(UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+  UIView *result = [super hitTest:point withEvent:event];
+  NSLog(@"self: %@, scrollViewContainer: %@, scrollView: %@, tapRecognizerView: %@, testField: %@",@(self == result),@(self.scrollViewContainer == result),@(self.scrollView == result), @(self.tapRecognizerView == result), @(self.textField == result));
+  if (result == self.tapRecognizerView) {
+    return self;
+  }
+  return result;
+}
+
+// called first
+-(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(nonnull UITouch *)touch {
+  NSLog(@"should receive touch");
+  return YES;
+}
+
+// called second
+-(BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+  NSLog(@"should begin");
+  return YES;
+}
+
+-(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceivePress:(UIPress *)press {
+  NSLog(@"should receive press");
+  return NO;
+}
+
+-(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+  NSLog(@"should recognize simultaneously");
+  return YES;
+}
+
+
+-(BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
+  BOOL result = [super beginTrackingWithTouch:touch withEvent:event];
+
+  self.lastTouchStartingContentOffset = self.scrollView.contentOffset;
+  self.lastTouchStartingLocation = [touch locationInView:self];
+
+//  NSLog(@"begin tracking: %@, radius: %@, pointInside: %@",@(result), @(touch.majorRadius), NSStringFromCGPoint([touch locationInView:self]));
+  return result;
+}
+
+-(BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
+  BOOL result = [super continueTrackingWithTouch:touch withEvent:event];
+
+  CGPoint location = [touch locationInView:self];
+  CGPoint offsetFromStart = [self offsetOfPoint:location fromPoint:self.lastTouchStartingLocation];
+//  NSLog(@"offset from start: %@",NSStringFromCGPoint(offsetFromStart));
+
+  CGPoint offset = self.lastTouchStartingContentOffset;
+  if (self.canChipsWrap) {
+    CGFloat height = CGRectGetHeight(self.frame);
+    offset.y -= offsetFromStart.y;
+    if (offset.y < 0) {
+      offset.y = 0;
+    }
+    if (offset.y + height > self.scrollView.contentSize.height) {
+      offset.y = self.scrollView.contentSize.height - height;
+    }
+    self.scrollView.contentOffset = offset;
+  } else {
+    CGFloat width = CGRectGetWidth(self.frame);
+    offset.x -= offsetFromStart.x;
+    if (offset.x < 0) {
+      offset.x = 0;
+    }
+    if (offset.x + width > self.scrollView.contentSize.width) {
+      offset.x = self.scrollView.contentSize.width - width;
+    }
+  }
+  self.scrollView.contentOffset = offset;
+
+  return result;
+}
+
+-(void)endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
+  [super endTrackingWithTouch:touch withEvent:event];
+
+  CGPoint location = [touch locationInView:self];
+  CGPoint offset = [self offsetOfPoint:location fromPoint:self.lastTouchStartingLocation];
+  CGPoint absoluteOffset = [self absoluteOffsetOfPoint:offset];
+  BOOL isProbablyTap = absoluteOffset.x < 15 && absoluteOffset.y < 15;
+  if (isProbablyTap) {
+    if (![self.textField isFirstResponder]) {
+      [self.textField becomeFirstResponder];
+    }
+    [self enforceCalculatedScrollViewContentOffset];
+//    NSLog(@"ended a tap!");
+  } else {
+//    NSLog(@"ended a scroll at %@",NSStringFromCGPoint(self.scrollView.contentOffset));
+  }
+//  NSLog(@"end tracking, radius: %@, pointInside: %@", @(touch.majorRadius), NSStringFromCGPoint([touch locationInView:self]));
+}
+
+- (CGPoint)offsetOfPoint:(CGPoint)point1 fromPoint:(CGPoint)point2 {
+  return CGPointMake(point1.x - point2.x, point1.y - point2.y);
+}
+
+- (CGPoint)absoluteOffsetOfPoint:(CGPoint)point {
+  if (point.x < 0) {
+    point.x = point.x * -1;
+  }
+  if (point.y < 0) {
+    point.y = point.y * -1;
+  }
+  return point;
+}
+
+
+-(void)cancelTrackingWithEvent:(UIEvent *)event {
+  [super cancelTrackingWithEvent:event];
 }
 
 @end
