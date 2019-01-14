@@ -51,7 +51,6 @@
 */
 @interface MDCChipTextField : MDCTextField
 
-
 /**
  The chip views in the textfield.
  */
@@ -84,7 +83,6 @@
  @param text The string to display in the chip.
  */
 - (void)appendChipWithText:(nonnull NSString *)text NS_SWIFT_NAME(appendChip(text:));
-
 
 /**
  Set a chip view at particular index to be selected or not.

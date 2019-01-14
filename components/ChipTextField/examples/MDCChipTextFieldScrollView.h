@@ -28,7 +28,6 @@
 
 @protocol MDCChipTextFieldScrollViewDataSource <NSObject>
 
-
 /**
  The number of chip views in data source.
 
@@ -36,7 +35,6 @@
  @return The number of chip views.
  */
 - (NSInteger)numberOfChipsInScrollView:(nonnull MDCChipTextFieldScrollView *)scrollView;
-
 
 /**
  Asks the data source for a chip view in a particular location of the scroll view.
@@ -77,7 +75,6 @@
  Scrolls the scroll view to the right most without animation.
  */
 - (void)scrollToRight;
-
 
 /**
  Append a chipView to the scrollView
