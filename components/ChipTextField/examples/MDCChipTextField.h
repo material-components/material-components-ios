@@ -51,8 +51,15 @@
 */
 @interface MDCChipTextField : MDCTextField
 
+
+/**
+ The chip views in the textfield.
+ */
 @property(nonatomic, readonly, copy) NSArray<MDCChipView *> *chipViews;
 
+/**
+ The MDCChipTextFieldDelegate of this textfield.
+ */
 @property(nonatomic, weak) id<MDCChipTextFieldDelegate> chipTextFieldDelegate;
 
 /*
@@ -78,6 +85,13 @@
  */
 - (void)appendChipWithText:(nonnull NSString *)text NS_SWIFT_NAME(appendChip(text:));
 
+
+/**
+ Set a chip view at particular index to be selected or not.
+
+ @param selected selection status to set
+ @param index The index of the chip view to set the selection status
+ */
 - (void)setChipViewSelected:(BOOL)selected atIndex:(NSInteger)index;
 
 @end
