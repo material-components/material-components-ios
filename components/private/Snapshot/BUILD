@@ -1,4 +1,4 @@
-# Copyright 2017-present The Material Components for iOS Authors. All Rights Reserved.
+# Copyright 2019-present The Material Components for iOS Authors. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,33 +16,13 @@ load(
     "//:material_components_ios.bzl",
     "mdc_objc_library",
     "mdc_public_objc_library",
-    "mdc_unit_test_suite",
 )
 
 licenses(["notice"])  # Apache 2.0
 
 mdc_public_objc_library(
-    name = "Math",
-)
-
-mdc_objc_library(
-    name = "unit_test_sources",
-    srcs = native.glob([
-        "tests/unit/*.m",
-        "tests/unit/*.h",
-    ]),
-    sdk_frameworks = [
-        "CoreGraphics",
-        "XCTest",
-    ],
+    name = "Snapshot",
     deps = [
-        ":Math",
-    ],
-)
-
-mdc_unit_test_suite(
-    name = "unit_tests",
-    deps = [
-        ":unit_test_sources",
+        "@ios_snapshot_test_case//:SnapshotTestCase",
     ],
 )
