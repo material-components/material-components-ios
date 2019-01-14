@@ -14,5 +14,5 @@
 #import <UIKit/UIKit.h>
 
 // No-op delegate sufficient to satisfy UIApplicationMain.
-@interface TestHostMinimalDelegate : UIResponder<UIApplicationDelegate>
+@interface TestHostMinimalDelegate : UIResponder <UIApplicationDelegate>
 @end

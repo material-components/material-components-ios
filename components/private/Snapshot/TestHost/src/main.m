@@ -15,8 +15,6 @@
 
 int main(int argc, char *argv[]) {
   @autoreleasepool {
-    return UIApplicationMain(
-        argc, argv, nil,
-        NSStringFromClass([TestHostMinimalDelegate class]));
+    return UIApplicationMain(argc, argv, nil, NSStringFromClass([TestHostMinimalDelegate class]));
   }
 }
