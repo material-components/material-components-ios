@@ -275,9 +275,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
       NSLog(
           @"Button touch target does not meet minimum size guidlines of (%0.f, %0.f). Button: %@, "
           @"Touch Target: %@",
-          MDCButtonMinimumTouchTargetWidth,
-          MDCButtonMinimumTouchTargetHeight,
-          [self description],
+          MDCButtonMinimumTouchTargetWidth, MDCButtonMinimumTouchTargetHeight, [self description],
           NSStringFromCGSize(CGSizeMake(width, height)));
     });
   }
@@ -569,7 +567,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 #pragma mark - Image Tint Color
 
 - (nullable UIColor *)imageTintColorForState:(UIControlState)state {
-
   return _imageTintColors[@(state)] ?: _imageTintColors[@(UIControlStateNormal)];
 }
 
@@ -806,8 +803,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
   if (_mdc_adjustsFontForContentSizeCategory) {
     // Dynamic type is enabled so apply scaling
-    font = [font mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleButton
-                              scaledForDynamicType:YES];
+    font = [font mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleButton scaledForDynamicType:YES];
   }
 
   self.titleLabel.font = font;

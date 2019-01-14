@@ -14,7 +14,6 @@
 
 #import <Foundation/Foundation.h>
 
-
 /**
  The MDCSheetState enum provides the different possible states the bottom sheet can be in.
  There are currently 3 different states for the bottom sheet:
@@ -30,4 +29,3 @@ typedef NS_ENUM(NSUInteger, MDCSheetState) {
   MDCSheetStatePreferred,
   MDCSheetStateExtended
 };
-

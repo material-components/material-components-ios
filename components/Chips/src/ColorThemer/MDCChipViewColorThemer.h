@@ -49,7 +49,7 @@
 
  @warning This method will soon be deprecated. Consider using
  @c +applyOutlinedVariantWithColorScheme:toChipView: instead.
- 
+
  @param colorScheme The color scheme to apply to the component instance.
  @param strokedChipView A component instance to which the color scheme should be applied.
  */
