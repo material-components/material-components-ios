@@ -301,6 +301,13 @@ run_bazel() {
   snapshot_dir="${repo_dir}/snapshot_test_goldens/goldens"
   tmp_img_dir="$(mktemp -d)"
 
+  # Install git lfs if we're performing tests
+  if [ "$COMMAND" == "test" ]; then
+    brew_install git-lfs
+    git lfs install
+    git lfs pull
+  fi
+
   bazel $COMMAND $TARGET --xcode_version $xcode_version --ios_minimum_os=8.0 \
     --ios_multi_cpus=i386,x86_64 $extra_args $verbosity_args \
     --test_env="FB_REFERENCE_IMAGE_DIR=$snapshot_dir" \
