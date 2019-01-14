@@ -26,4 +26,3 @@ mdc_public_objc_library(
         "@ios_snapshot_test_case//:SnapshotTestCase",
     ],
 )
-
