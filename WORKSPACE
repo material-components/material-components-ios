@@ -89,7 +89,8 @@ git_repository(
     tag = "v6.0.0",
 )
 
-local_repository(
+git_repository(
     name = "ios_snapshot_test_case",
-    path = "../ios-snapshot-test-case",
+    remote = "https://github.com/material-foundation/ios-snapshot-test-case",
+    commit = "21e2d45c7e9c7208ee61788380521b4044b96ec1",
 )
