@@ -190,6 +190,26 @@
   self.nonWrappingInputChipView.textField.delegate = self;
   self.nonWrappingInputChipView.layer.borderColor = [UIColor blackColor].CGColor;
   self.nonWrappingInputChipView.layer.borderWidth = 1;
+  [self.nonWrappingInputChipView addTarget:self action:@selector(handleTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
+  [self.nonWrappingInputChipView addTarget:self action:@selector(handleTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
+  [self.nonWrappingInputChipView addTarget:self action:@selector(handleTouchDown:) forControlEvents:UIControlEventTouchDown];
+  [self.nonWrappingInputChipView addTarget:self action:@selector(handleTouchDragExit:) forControlEvents:UIControlEventTouchDragExit];
+}
+
+- (void)handleTouchUpInside:(InputChipView *)inputChipView {
+  NSLog(@"handleTouchUpInside");
+}
+
+- (void)handleTouchUpOutside:(InputChipView *)inputChipView {
+  NSLog(@"handleTouchUpOutside");
+}
+
+- (void)handleTouchDown:(InputChipView *)inputChipView {
+  NSLog(@"handleTouchDown");
+}
+
+- (void)handleTouchDragExit:(InputChipView *)inputChipView {
+  NSLog(@"handleTouchDragExit");
 }
 
 - (void)addWrappingInputChipView {
