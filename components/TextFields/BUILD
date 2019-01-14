@@ -106,6 +106,7 @@ mdc_objc_library(
         "tests/snapshot/supplemental/*.h",
     ]),
     sdk_frameworks = [
+        "CoreGraphics",
         "XCTest",
     ],
     asset_catalogs = [
