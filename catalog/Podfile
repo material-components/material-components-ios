@@ -58,6 +58,7 @@ target "MDCCatalog" do
   ]
   pod 'MaterialComponentsBeta', :path => '../', :testspecs => [
     'ActionSheet/UnitTests',
+    'BottomNavigation/UnitTests',
     'ButtonBar+Theming/UnitTests',
     'Buttons+Theming/UnitTests',
     'Cards+Theming/UnitTests',
