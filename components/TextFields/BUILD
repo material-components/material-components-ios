@@ -17,6 +17,7 @@ load(
     "mdc_extension_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
+    "mdc_snapshot_objc_library",
     "mdc_snapshot_test",
     "mdc_unit_test_suite",
 )
@@ -96,30 +97,20 @@ mdc_objc_library(
     ],
 )
 
-mdc_objc_library(
+mdc_snapshot_objc_library(
     name = "snapshot_test_lib",
-    testonly = 1,
-    srcs = glob([
-        "tests/snapshot/*.m",
-        "tests/snapshot/*.h",
-        "tests/snapshot/supplemental/*.m",
-        "tests/snapshot/supplemental/*.h",
-    ]),
     sdk_frameworks = [
         "CoreGraphics",
-        "XCTest",
     ],
     asset_catalogs = [
       "tests/snapshot/resources/TextFieldsSnapshotTests.xcassets/ic_done.imageset",
       "tests/snapshot/resources/TextFieldsSnapshotTests.xcassets/ic_search.imageset",
     ],
-    visibility = ["//visibility:private"],
     deps = [
         ":ColorThemer",
         ":FontThemer",
         ":TextFields",
         ":TypographyThemer",
-        "//components/private/Snapshot",
     ],
 )
 
