@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #import <XCTest/XCTest.h>
-#import "MDCAbstractTextFieldSnapshotTests.h"
+#import "supplemental/MDCAbstractTextFieldSnapshotTests.h"
 
 @interface MDCAbstractTextFieldSnapshotTests (Testing)
 - (BOOL)shouldTestExecute;
