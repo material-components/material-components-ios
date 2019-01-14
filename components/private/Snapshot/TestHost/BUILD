@@ -11,13 +11,30 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
-load("//:material_components_ios.bzl", "mdc_public_objc_library")
+load("@build_bazel_rules_apple//apple:ios.bzl", "ios_application")
+load("//:material_components_ios.bzl", "mdc_objc_library")
 
 licenses(["notice"])  # Apache 2.0
 
-mdc_public_objc_library(
-    name = "TestHost",
+mdc_objc_library(
+    name = "test_host_lib",
+    srcs = native.glob([
+        "src/*.m",
+    ]),
+    hdrs = native.glob([
+        "src/*.h",
+    ]),
+    enable_modules = 1,
 )
 
-exports_files(["TestHost-Info.plist"])
+ios_application(
+    name = "TestHost",
+    infoplists = ["TestHost-Info.plist"],
+    families = ["iphone"],
+    bundle_id = "io.material.ios.snapshot",
+    testonly = 1,
+    deps = [":test_host_lib"],
+    visibility = ["//components:__subpackages__"],
+    minimum_os_version = "10.0.0"
+)
+
