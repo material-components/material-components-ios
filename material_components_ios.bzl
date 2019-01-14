@@ -167,6 +167,29 @@ def mdc_examples_swift_library(
       ]),
       **kwargs)
 
+def mdc_snapshot_objc_library(
+    name,
+    extra_srcs = [],
+    deps = [],
+    sdk_frameworks = [],
+    visibility = ["//visibility:private"],
+    testonly = 1,
+    **kwargs):
+  """Declare an mdc_objc_library for snapshot test source."""
+  mdc_objc_library(
+      name = name,
+      srcs = native.glob([
+          "tests/snapshot/*.m",
+          "tests/snapshot/*.h",
+          "tests/snapshot/supplemental/*.m",
+          "tests/snapshot/supplemental/*.h",
+      ]) + extra_srcs,
+      deps = ["//components/private/Snapshot"] + deps,
+      sdk_frameworks = ["XCTest"] + sdk_frameworks,
+      visibility = visibility,
+      testonly = testonly,
+      **kwargs)
+
 def mdc_snapshot_test(
     name,
     deps = [],
