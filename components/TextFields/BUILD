@@ -21,7 +21,6 @@ load(
     "mdc_snapshot_test",
     "mdc_unit_test_suite",
 )
-load("@build_bazel_rules_apple//apple:ios.bzl", "ios_unit_test")
 load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
