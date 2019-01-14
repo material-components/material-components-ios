@@ -26,6 +26,7 @@ static NSString *const kReusableIdentifierItem = @"cell";
 
 @interface DialogsAlertExampleViewController : MDCCollectionViewController
 @property(nonatomic, strong, nullable) NSArray *modes;
+@property(nonatomic, strong, nonnull) MDCContainerScheme *containerScheme;
 @end
 
 @interface DialogsAlertExampleViewController (Supplemental)
@@ -37,6 +38,7 @@ static NSString *const kReusableIdentifierItem = @"cell";
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+  self.containerScheme = [[MDCContainerScheme alloc] init];
   [self loadCollectionView:@[
     @"Show Long Alert", @"Alert (Dynamic Type enabled)", @"Overpopulated Alert"
   ]];
@@ -140,6 +142,7 @@ static NSString *const kReusableIdentifierItem = @"cell";
   // This code accesses the presentation controller and turns off dismiss on background tap.
   MDCDialogPresentationController *presentationController =
       materialAlertController.mdc_dialogPresentationController;
+  [presentationController applyThemeWithScheme:self.containerScheme];
   presentationController.dismissOnBackgroundTap = NO;
 
   [self presentViewController:materialAlertController animated:YES completion:NULL];
