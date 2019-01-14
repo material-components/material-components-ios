@@ -41,7 +41,7 @@
  Previously used to set the corner radius of the button. This has been deprecated and the layer's
  |cornerRadius| property should be set directly.
  */
-- (CGFloat)cornerRadius  __deprecated_msg("Set layer.cornerRadius explicitly");
+- (CGFloat)cornerRadius __deprecated_msg("Set layer.cornerRadius explicitly");
 
 /** The default content edge insets of the button. They are set at initialization time. */
 - (UIEdgeInsets)defaultContentEdgeInsets;

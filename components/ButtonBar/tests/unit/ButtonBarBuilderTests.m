@@ -14,7 +14,6 @@
 
 #import <XCTest/XCTest.h>
 #import "MDCAppBarButtonBarBuilder.h"
-#import "MaterialButtonBar+Theming.h"
 #import "MaterialButtonBar.h"
 #import "MaterialButtons.h"
 

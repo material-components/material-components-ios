@@ -30,7 +30,7 @@
  @param appBarViewController A component instance to which the color scheme should be applied.
  */
 + (void)applyColorScheme:(nonnull id<MDCColorScheming>)colorScheme
-  toAppBarViewController:(nonnull MDCAppBarViewController *)appBarViewController;
+    toAppBarViewController:(nonnull MDCAppBarViewController *)appBarViewController;
 
 /**
  Applies a color scheme's properties to an MDCAppBarViewController instance using the surface

@@ -115,7 +115,7 @@ typedef NS_ENUM(NSUInteger, MDCCollectionViewCellLayoutType) {
  @return Edge outsets as detemined by cell style at this index.
  */
 - (UIEdgeInsets)backgroundImageViewOutsetsForCellWithAttribute:
-        (nonnull MDCCollectionViewLayoutAttributes *)attr;
+    (nonnull MDCCollectionViewLayoutAttributes *)attr;
 
 /**
  Returns an image for use with the given cell style and ordinal position within section.
@@ -127,7 +127,7 @@ typedef NS_ENUM(NSUInteger, MDCCollectionViewCellLayoutType) {
  @return Image as determined by cell style and section ordinal position.
  */
 - (nullable UIImage *)backgroundImageForCellLayoutAttributes:
-        (nonnull MDCCollectionViewLayoutAttributes *)attr;
+    (nonnull MDCCollectionViewLayoutAttributes *)attr;
 
 #pragma mark - Cell Separator
 
@@ -153,7 +153,7 @@ typedef NS_ENUM(NSUInteger, MDCCollectionViewCellLayoutType) {
  @return Whether the separtor should be hidden.
  */
 - (BOOL)shouldHideSeparatorForCellLayoutAttributes:
-        (nonnull MDCCollectionViewLayoutAttributes *)attr;
+    (nonnull MDCCollectionViewLayoutAttributes *)attr;
 
 #pragma mark - Item Inlaying
 

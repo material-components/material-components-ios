@@ -209,12 +209,12 @@ typedef NS_ENUM(NSUInteger, MDCTextInputTextInsetsMode) {
 
 @end
 
- /** 
- Common API for text inputs that support having a leading view.
- 
- MDCTextField implements this protocol but MDCMultilineTextField does not because the designers
- determined multiline text fields should only have trailing views.
- */
+/**
+Common API for text inputs that support having a leading view.
+
+MDCTextField implements this protocol but MDCMultilineTextField does not because the designers
+determined multiline text fields should only have trailing views.
+*/
 @protocol MDCLeadingViewTextInput <MDCTextInput>
 
 /**
