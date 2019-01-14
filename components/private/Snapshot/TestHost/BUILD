@@ -1,4 +1,4 @@
-# Copyright 2017-present The Material Components for iOS Authors. All Rights Reserved.
+# Copyright 2019-present The Material Components for iOS Authors. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -11,38 +11,30 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
-load(
-    "//:material_components_ios.bzl",
-    "mdc_objc_library",
-    "mdc_public_objc_library",
-    "mdc_unit_test_suite",
-)
+load("@build_bazel_rules_apple//apple:ios.bzl", "ios_application")
+load("//:material_components_ios.bzl", "mdc_objc_library")
 
 licenses(["notice"])  # Apache 2.0
 
-mdc_public_objc_library(
-    name = "Math",
-)
-
 mdc_objc_library(
-    name = "unit_test_sources",
+    name = "test_host_lib",
     srcs = native.glob([
-        "tests/unit/*.m",
-        "tests/unit/*.h",
+        "src/*.m",
     ]),
-    sdk_frameworks = [
-        "CoreGraphics",
-        "XCTest",
-    ],
-    deps = [
-        ":Math",
-    ],
+    hdrs = native.glob([
+        "src/*.h",
+    ]),
+    enable_modules = 1,
 )
 
-mdc_unit_test_suite(
-    name = "unit_tests",
-    deps = [
-        ":unit_test_sources",
-    ],
+ios_application(
+    name = "TestHost",
+    infoplists = ["TestHost-Info.plist"],
+    families = ["iphone"],
+    bundle_id = "io.material.ios.snapshot",
+    testonly = 1,
+    deps = [":test_host_lib"],
+    visibility = ["//components:__subpackages__"],
+    minimum_os_version = "10.0.0"
 )
+
