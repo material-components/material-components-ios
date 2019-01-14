@@ -158,14 +158,13 @@
   XCTAssertFalse(self.manager.internalManager.overlayView.accessibilityViewIsModal);
 }
 
-- (void)testSnackbarAccessibiltyViewNonTransientIsModalModeWithActions {
+- (void)testSnackbarAccessibiltyViewIsModalYesWithActions {
   // Given
   self.manager.internalManager.isVoiceOverRunningOverride = YES;
   MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
   action.title = @"Tap Me";
   self.message.action = action;
-  self.manager.accessibilityViewIsModalMode =
-      MDCSnackBarManagerAccessibilityViewNonTransientIsModal;
+  self.manager.shouldEnableAccessibilityViewIsModal = YES;
 
   // When
   [self.manager showMessage:self.message];
@@ -179,11 +178,10 @@
   XCTAssertTrue(self.manager.internalManager.overlayView.accessibilityViewIsModal);
 }
 
-- (void)testSnackbarAccessibiltyViewNonTransientIsModalModeWithNoActions {
+- (void)testSnackbarAccessibiltyViewIsModalYesWithNoActions {
   // Given
   self.manager.internalManager.isVoiceOverRunningOverride = YES;
-  self.manager.accessibilityViewIsModalMode =
-      MDCSnackBarManagerAccessibilityViewNonTransientIsModal;
+  self.manager.shouldEnableAccessibilityViewIsModal = YES;
 
   // When
   [self.manager showMessage:self.message];
@@ -197,13 +195,14 @@
   XCTAssertFalse(self.manager.internalManager.overlayView.accessibilityViewIsModal);
 }
 
-- (void)testSnackbarAccessibiltyViewIsModalModeWithActions {
+- (void)testSnackbarAccessibiltyViewIsModalWithSnackbarViewOverwriteWithActions {
   // Given
+  self.delegate.shouldSetSnackbarViewAccessibilityViewIsModal = YES;
   self.manager.internalManager.isVoiceOverRunningOverride = YES;
   MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
   action.title = @"Tap Me";
   self.message.action = action;
-  self.manager.accessibilityViewIsModalMode = MDCSnackBarManagerAccessibilityViewIsModal;
+  self.message.accessibilityViewIsModal = YES;
 
   // When
   [self.manager showMessage:self.message];
@@ -217,10 +216,11 @@
   XCTAssertTrue(self.manager.internalManager.overlayView.accessibilityViewIsModal);
 }
 
-- (void)testSnackbarAccessibiltyViewIsModalModeWithNoActions {
+- (void)testSnackbarAccessibiltyViewIsModalWithSnackbarViewOverwriteWithNoActions {
   // Given
+  self.delegate.shouldSetSnackbarViewAccessibilityViewIsModal = YES;
   self.manager.internalManager.isVoiceOverRunningOverride = YES;
-  self.manager.accessibilityViewIsModalMode = MDCSnackBarManagerAccessibilityViewIsModal;
+  self.message.accessibilityViewIsModal = YES;
 
   // When
   [self.manager showMessage:self.message];

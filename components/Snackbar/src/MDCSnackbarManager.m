@@ -228,25 +228,10 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   snackbarView = [[viewClass alloc] initWithMessage:message
                                      dismissHandler:dismissHandler
                                     snackbarManager:self.manager];
+  snackbarView.accessibilityViewIsModal = self.manager.shouldEnableAccessibilityViewIsModal && ![self isSnackbarTransient:snackbarView];
   [self.delegate willPresentSnackbarWithMessageView:snackbarView];
   self.currentSnackbar = snackbarView;
-  BOOL accessibilityViewIsModal;
-  switch (self.manager.accessibilityViewIsModalMode) {
-    case MDCSnackBarManagerAccessibilityViewIsModal:
-      accessibilityViewIsModal = YES;
-      break;
-    case MDCSnackBarManagerAccessibilityViewNonTransientIsModal:
-      if ([self isSnackbarTransient:snackbarView]) {
-        accessibilityViewIsModal = NO;
-      } else {
-        accessibilityViewIsModal = YES;
-      }
-      break;
-    case MDCSnackBarManagerAccessibilityViewIsModalNever:
-      accessibilityViewIsModal = NO;
-      break;
-  }
-  self.overlayView.accessibilityViewIsModal = accessibilityViewIsModal;
+  self.overlayView.accessibilityViewIsModal = snackbarView.accessibilityViewIsModal;
   self.overlayView.hidden = NO;
   [self activateOverlay:self.overlayView];
 
@@ -258,7 +243,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
               animated:YES
             completion:^{
               MDCSnackbarManagerInternal *strongSelf = weakSelf;
-              if (!accessibilityViewIsModal && [strongSelf isSnackbarTransient:snackbarView]) {
+              if (!snackbarView.accessibilityViewIsModal && [strongSelf isSnackbarTransient:snackbarView]) {
                 snackbarView.accessibilityElementsHidden = YES;
                 UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification,
                                                 message.voiceNotificationText);
