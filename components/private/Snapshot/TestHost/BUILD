@@ -12,10 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load(
-    "//:material_components_ios.bzl",
-    "mdc_public_objc_library",
-)
+load("//:material_components_ios.bzl", "mdc_public_objc_library")
 
 licenses(["notice"])  # Apache 2.0
 
@@ -24,4 +21,3 @@ mdc_public_objc_library(
 )
 
 exports_files(["TestHost-Info.plist"])
-
