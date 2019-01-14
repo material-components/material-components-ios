@@ -14,10 +14,10 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialTextFields.h"
 #import "supplemental/MDCAbstractTextFieldSnapshotTests+LeadingImage.h"
 #import "supplemental/MDCAbstractTextFieldSnapshotTests.h"
 #import "supplemental/MDCTextFieldSnapshotTestsStrings.h"
-#import "MaterialTextFields.h"
 
 @interface MDCTextFieldFilledControllerLeadingImageSnapshotTests : MDCAbstractTextFieldSnapshotTests
 @end
