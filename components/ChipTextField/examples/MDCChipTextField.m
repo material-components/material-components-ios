@@ -20,7 +20,8 @@
 static CGFloat const kChipsSpacing = 0.0f;
 static CGFloat const kTextToEnterPlaceholderLength = 16.0f;
 
-@interface MDCChipTextField () <MDCChipTextFieldScrollViewDataSource>
+@interface MDCChipTextField () <MDCChipTextFieldScrollViewDataSource,
+                                MDCChipTextFieldScrollViewDelegate>
 
 @property(nonatomic, strong) MDCChipTextFieldScrollView *chipsContainerView;
 
@@ -28,7 +29,7 @@ static CGFloat const kTextToEnterPlaceholderLength = 16.0f;
 @property(nonatomic, readwrite, weak) NSLayoutConstraint *chipContainerViewConstraintTrailing;
 @property(nonatomic) CGFloat chipContainerViewConstraintTrailingConstant;
 // Chip view models
-@property(nonatomic, strong) NSMutableArray<MDCChipView *> *chipViews;
+@property(nonatomic, readwrite, copy) NSMutableArray<MDCChipView *> *mutableChipViews;
 
 @end
 
@@ -37,7 +38,7 @@ static CGFloat const kTextToEnterPlaceholderLength = 16.0f;
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    _chipViews = [[NSMutableArray alloc] init];
+    _mutableChipViews = [[NSMutableArray alloc] init];
     _chipContainerViewConstraintTrailingConstant = 0.0f;
     [self setupChipsContainerView];
 
@@ -48,6 +49,54 @@ static CGFloat const kTextToEnterPlaceholderLength = 16.0f;
     [self addTextFieldObservers];
   }
   return self;
+}
+
+#pragma mark - Property Getter
+
+- (NSArray<MDCChipView *> *)chipViews {
+  return [self.mutableChipViews copy];
+}
+
+#pragma mark - Public API
+
+- (void)appendChipWithText:(NSString *)text {
+  MDCChipView *chipView = [[MDCChipView alloc] init];
+  chipView.titleLabel.text = text;
+  chipView.translatesAutoresizingMaskIntoConstraints = NO;
+
+  [self appendChipView:chipView];
+}
+
+- (void)appendChipView:(MDCChipView *)chipView {
+  if ([self.chipTextFieldDelegate respondsToSelector:@selector(chipField:shouldAddChip:)]) {
+    NSInteger indexToAppend = self.mutableChipViews.count;
+    BOOL shouldAppend = [self.chipTextFieldDelegate chipTextField:self
+                                                shouldAddChipView:chipView
+                                                          atIndex:indexToAppend];
+    if (!shouldAppend) {
+      return;
+    }
+  }
+
+  [self.chipsContainerView appendChipView:chipView];
+
+  // recalculate the layout to get a correct chip frame values
+  [self.chipsContainerView layoutIfNeeded];
+  [self.mutableChipViews addObject:chipView];
+
+  [self clearChipsContainerOffsetWithConstant:kTextToEnterPlaceholderLength];
+
+  if ([self.chipTextFieldDelegate respondsToSelector:@selector(chipField:didAddChip:)]) {
+    NSInteger index = self.mutableChipViews.count - 1;
+    [self.chipTextFieldDelegate chipTextField:self didAddChipView:chipView atIndex:index];
+  }
+}
+
+- (void)setChipViewSelected:(BOOL)selected atIndex:(NSInteger)index {
+  MDCChipView *chipView = self.mutableChipViews[index];
+  if (chipView.selected != selected) {
+    chipView.selected = selected;
+  }
 }
 
 - (void)addTextFieldObservers {
@@ -69,6 +118,7 @@ static CGFloat const kTextToEnterPlaceholderLength = 16.0f;
   chipsContainerView.translatesAutoresizingMaskIntoConstraints = NO;
   chipsContainerView.chipSpacing = kChipsSpacing;
   chipsContainerView.dataSource = self;
+  chipsContainerView.touchDelegate = self;
   self.chipsContainerView = chipsContainerView;
   [self addSubview:chipsContainerView];
 
@@ -92,20 +142,6 @@ static CGFloat const kTextToEnterPlaceholderLength = 16.0f;
       activateConstraints:@[ chipContainerViewConstraintTop, chipContainerViewConstraintBottom ]];
   [self updateChipViewLeadingConstraints];
   [self updateChipViewTrailingConstraints];
-}
-
-- (void)appendChipWithText:(NSString *)text {
-  MDCChipView *chipView = [[MDCChipView alloc] init];
-  chipView.titleLabel.text = text;
-  chipView.translatesAutoresizingMaskIntoConstraints = NO;
-
-  [self.chipsContainerView appendChipView:chipView];
-
-  // recalculate the layout to get a correct chip frame values
-  [self.chipsContainerView layoutIfNeeded];
-  [self.chipViews addObject:chipView];
-
-  [self clearChipsContainerOffsetWithConstant:kTextToEnterPlaceholderLength];
 }
 
 // TODO: the constant here reflects the margin, places calling this method need to be refactored.
@@ -267,13 +303,13 @@ static CGFloat const kTextToEnterPlaceholderLength = 16.0f;
 }
 
 - (BOOL)hasTextContent {
-  return self.text.length > 0 || self.chipViews.count > 0;
+  return self.text.length > 0 || self.mutableChipViews.count > 0;
 }
 
 - (void)clearText {
   self.text = @"";
-  for (NSInteger index = self.chipViews.count - 1; index >= 0; --index) {
-    MDCChipView *chipView = self.chipViews[index];
+  for (NSInteger index = self.mutableChipViews.count - 1; index >= 0; --index) {
+    MDCChipView *chipView = self.mutableChipViews[index];
     [self removeChip:chipView];
   }
 }
@@ -281,7 +317,7 @@ static CGFloat const kTextToEnterPlaceholderLength = 16.0f;
 #pragma mark - Deletion
 
 - (void)deselectAllChipsExceptChip:(MDCChipView *)chip {
-  for (MDCChipView *otherChip in self.chipViews) {
+  for (MDCChipView *otherChip in self.mutableChipViews) {
     if (chip != otherChip) {
       otherChip.selected = NO;
     }
@@ -289,7 +325,7 @@ static CGFloat const kTextToEnterPlaceholderLength = 16.0f;
 }
 
 - (void)selectLastChip {
-  MDCChipView *lastChip = self.chipViews.lastObject;
+  MDCChipView *lastChip = self.mutableChipViews.lastObject;
   [self deselectAllChipsExceptChip:lastChip];
   lastChip.selected = YES;
   UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification,
@@ -301,7 +337,7 @@ static CGFloat const kTextToEnterPlaceholderLength = 16.0f;
 }
 
 - (void)removeChip:(MDCChipView *)chip {
-  [self.chipViews removeObject:chip];
+  [self.mutableChipViews removeObject:chip];
   [self.chipsContainerView removeChipView:chip];
   [self clearChipsContainerOffsetWithConstant:kTextToEnterPlaceholderLength];
 
@@ -311,7 +347,7 @@ static CGFloat const kTextToEnterPlaceholderLength = 16.0f;
 
 - (void)removeSelectedChips {
   NSMutableArray *chipsToRemove = [NSMutableArray array];
-  for (MDCChipView *chip in self.chipViews) {
+  for (MDCChipView *chip in self.mutableChipViews) {
     if (chip.isSelected) {
       [chipsToRemove addObject:chip];
     }
@@ -322,7 +358,7 @@ static CGFloat const kTextToEnterPlaceholderLength = 16.0f;
 }
 
 - (BOOL)isAnyChipSelected {
-  for (MDCChipView *chip in self.chipViews) {
+  for (MDCChipView *chip in self.mutableChipViews) {
     if (chip.isSelected) {
       return YES;
     }
@@ -352,11 +388,31 @@ static CGFloat const kTextToEnterPlaceholderLength = 16.0f;
 #pragma mark - MDCChipTextFieldScrollViewDataSource
 
 - (NSInteger)numberOfChipsInScrollView:(MDCChipTextFieldScrollView *)scrollView {
-  return self.chipViews.count;
+  return self.mutableChipViews.count;
 }
 
 - (MDCChipView *)scrollView:(MDCChipTextFieldScrollView *)scrollView chipForIndex:(NSInteger)index {
-  return self.chipViews[index];
+  return self.mutableChipViews[index];
+}
+
+#pragma mark - MDCChipTextFieldScrollViewDelegate
+
+- (void)chipTextFieldScrollView:(MDCChipTextFieldScrollView *)scrollView
+                 didTapChipView:(MDCChipView *)chipView {
+  if (self.chipsContainerView == scrollView && [self.chipViews containsObject:chipView]) {
+    chipView.selected = !chipView.selected;
+    NSInteger index = [self.mutableChipViews indexOfObject:chipView];
+    if (chipView.selected &&
+        [self.chipTextFieldDelegate respondsToSelector:@selector(chipTextField:
+                                                             didSelectChipView:atIndex:)]) {
+      [self.chipTextFieldDelegate chipTextField:self didSelectChipView:chipView atIndex:index];
+    }
+    if (!chipView.selected &&
+        [self.chipTextFieldDelegate respondsToSelector:@selector(chipTextField:
+                                                           didDeselectChipView:atIndex:)]) {
+      [self.chipTextFieldDelegate chipTextField:self didDeselectChipView:chipView atIndex:index];
+    }
+  }
 }
 
 @end

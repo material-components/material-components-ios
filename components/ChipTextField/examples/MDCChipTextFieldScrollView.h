@@ -20,7 +20,9 @@
 
 @protocol MDCChipTextFieldScrollViewDelegate <NSObject, UIScrollViewDelegate>
 
-// TODO: delegate methods to handle touch event
+@optional
+- (void)chipTextFieldScrollView:(MDCChipTextFieldScrollView *)scrollView
+                 didTapChipView:(MDCChipView *)chipView;
 
 @end
 
@@ -34,7 +36,7 @@
 
 @interface MDCChipTextFieldScrollView : UIScrollView
 
-@property(nonatomic, weak, nullable) id<MDCChipTextFieldScrollViewDelegate> delegate;
+@property(nonatomic, weak, nullable) id<MDCChipTextFieldScrollViewDelegate> touchDelegate;
 @property(nonatomic, weak, nullable) id<MDCChipTextFieldScrollViewDataSource> dataSource;
 
 /**
