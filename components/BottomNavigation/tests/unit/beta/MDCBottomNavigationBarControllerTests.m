@@ -52,9 +52,9 @@ static CGFloat const kDefaultExpectationTimeout = 15;
 }
 
 - (void)tearDown {
-  [super tearDown];
-
   _bottomNavigationBarController = nil;
+
+  [super tearDown];
 }
 
 - (void)testSetViewControllers {
