@@ -115,6 +115,9 @@ mdc_snapshot_objc_library(
 
 mdc_snapshot_test(
     name = "snapshot_tests",
+    # Tests have sometimes taken more than 5 minutes to launch the simulator
+    # and execute
+    timeout = "long",
     deps = ["snapshot_test_lib"],
 )
 
