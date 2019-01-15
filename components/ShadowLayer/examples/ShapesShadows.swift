@@ -14,6 +14,7 @@
 
 import UIKit
 import MaterialComponents.MaterialShapes
+import MaterialComponents.MaterialShapeLibrary
 
 class ShapesShadows: UIView {
 

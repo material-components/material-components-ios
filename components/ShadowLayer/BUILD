@@ -54,9 +54,9 @@ mdc_examples_swift_library(
         ":ShadowLayer",
         "//components/ShadowElevations",
         "//components/private/Shapes",
+        "//components/private/ShapeLibrary",
     ],
 )
-
 
 mdc_objc_library(
     name = "unit_test_sources",
