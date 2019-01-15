@@ -191,7 +191,7 @@
 
 - (void)addFilledTextField {
   self.filledTextField = [[SimpleTextField alloc] init];
-  self.filledTextField.textFieldStyle = TextFieldStyleFilled;
+  self.filledTextField.containerStyle = MDCInputViewContainerStyleFilled;
   self.filledTextField.placeholder = @"This is a placeholder";
   self.filledTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
   self.filledTextField.leadingUnderlineLabel.numberOfLines = 0;
@@ -201,7 +201,7 @@
 
 - (void)addOutlinedTextField {
   self.outlinedTextField = [[SimpleTextField alloc] init];
-  self.outlinedTextField.textFieldStyle = TextFieldStyleOutline;
+  self.outlinedTextField.containerStyle = MDCInputViewContainerStyleOutline;
   self.outlinedTextField.placeholder = @"This is another placeholder";
   self.outlinedTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
   [self.scrollView addSubview:self.outlinedTextField];
