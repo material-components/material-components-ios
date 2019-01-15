@@ -17,84 +17,15 @@
 #import <MDFInternationalization/MDFInternationalization.h>
 #import <MaterialComponents/MDCMath.h>
 
+#import "MDCInputViewContainerStyler.h"
+
 #import "SimpleTextFieldLayout.h"
 #import "SimpleTextFieldLayoutUtils.h"
+#import "SimpleTextFieldColorSchemeAdapter.h"
 
 #import <Foundation/Foundation.h>
 
-// TODO: Consider extracting this to its own file and renaming/refactoring it. Is it really an
-// adapter?
-@interface SimpleTextFieldColorAdapter : NSObject
 
-@property(strong, nonatomic) UIColor *textColor;
-@property(strong, nonatomic) UIColor *underlineLabelColor;
-@property(strong, nonatomic) UIColor *outlineColor;
-@property(strong, nonatomic) UIColor *placeholderLabelColor;
-@property(strong, nonatomic) UIColor *filledSublayerFillColor;
-@property(strong, nonatomic) UIColor *filledSublayerUnderlineFillColor;
-@property(strong, nonatomic) UIColor *clearButtonTintColor;
-
-- (instancetype)initWithColorScheme:(nonnull MDCSemanticColorScheme *)colorScheme
-                     textFieldState:(TextFieldState)textFieldState;
-
-@end
-
-@implementation SimpleTextFieldColorAdapter
-
-- (instancetype)initWithColorScheme:(MDCSemanticColorScheme *)colorScheme
-                     textFieldState:(TextFieldState)textFieldState {
-  self = [super init];
-  if (self) {
-    [self assignPropertiesWithColorScheme:colorScheme textFieldState:textFieldState];
-  }
-  return self;
-}
-
-- (void)assignPropertiesWithColorScheme:(MDCSemanticColorScheme *)colorScheme
-                         textFieldState:(TextFieldState)textFieldState {
-  UIColor *textColor = colorScheme.onSurfaceColor;
-  UIColor *underlineLabelColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
-  UIColor *placeholderLabelColor =
-      [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
-  UIColor *outlineColor = colorScheme.onSurfaceColor;
-  UIColor *filledSublayerUnderlineFillColor = colorScheme.onSurfaceColor;
-  UIColor *filledSublayerFillColor =
-      [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.15];
-  UIColor *clearButtonTintColor =
-      [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.20];
-
-  switch (textFieldState) {
-    case TextFieldStateNormal:
-      break;
-    case TextFieldStateActivated:
-      break;
-    case TextFieldStateDisabled:
-      placeholderLabelColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.10];
-      break;
-    case TextFieldStateErrored:
-      placeholderLabelColor = colorScheme.errorColor;
-      underlineLabelColor = colorScheme.errorColor;
-      filledSublayerUnderlineFillColor = colorScheme.errorColor;
-      outlineColor = colorScheme.errorColor;
-      break;
-    case TextFieldStateFocused:
-      outlineColor = colorScheme.primaryColor;
-      placeholderLabelColor = colorScheme.primaryColor;
-      filledSublayerUnderlineFillColor = colorScheme.primaryColor;
-      break;
-    default:
-      break;
-  }
-  self.textColor = textColor;
-  self.filledSublayerFillColor = filledSublayerFillColor;
-  self.filledSublayerUnderlineFillColor = filledSublayerUnderlineFillColor;
-  self.underlineLabelColor = underlineLabelColor;
-  self.outlineColor = outlineColor;
-  self.placeholderLabelColor = placeholderLabelColor;
-  self.clearButtonTintColor = clearButtonTintColor;
-}
-
-@end
 
 @interface SimpleTextField ()
 
@@ -110,9 +41,8 @@
 
 @property(strong, nonatomic) SimpleTextFieldLayout *layout;
 
-@property(strong, nonatomic) CAShapeLayer *outlinedSublayer;
-@property(strong, nonatomic) CAShapeLayer *filledSublayer;
-@property(strong, nonatomic) CAShapeLayer *filledSublayerUnderline;
+@property(strong, nonatomic) MDCInputViewContainerStyler *containerStyler;
+
 
 @property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
 
@@ -226,22 +156,9 @@
 }
 
 - (void)setUpStyleLayers {
-  [self setUpOutlineSublayer];
-  [self setUpFilledSublayer];
+  self.containerStyler = [[MDCInputViewContainerStyler alloc] init];
 }
 
-- (void)setUpOutlineSublayer {
-  self.outlinedSublayer = [[CAShapeLayer alloc] init];
-  self.outlinedSublayer.fillColor = [UIColor clearColor].CGColor;
-  self.outlinedSublayer.lineWidth = [self outlineLineWidthForState:self.textFieldState];
-}
-
-- (void)setUpFilledSublayer {
-  self.filledSublayer = [[CAShapeLayer alloc] init];
-  self.filledSublayer.lineWidth = 0.0;
-  self.filledSublayerUnderline = [[CAShapeLayer alloc] init];
-  [self.filledSublayer addSublayer:self.filledSublayerUnderline];
-}
 
 - (void)addObservers {
   [[NSNotificationCenter defaultCenter]
@@ -284,9 +201,9 @@
 - (void)preLayoutSubviews {
   self.textFieldState = [self determineCurrentTextFieldState];
   self.placeholderState = [self determineCurrentPlaceholderState];
-  SimpleTextFieldColorAdapter *colorAdapter =
-      [[SimpleTextFieldColorAdapter alloc] initWithColorScheme:self.containerScheme.colorScheme
-                                                textFieldState:self.textFieldState];
+  SimpleTextFieldColorSchemeAdapter *colorAdapter =
+  [[SimpleTextFieldColorSchemeAdapter alloc] initWithColorScheme:self.containerScheme.colorScheme
+                                                  textFieldState:self.textFieldState];
   [self applyColorAdapter:colorAdapter];
   [self applyTypographyScheme:self.containerScheme.typographyScheme];
   CGSize fittingSize = CGSizeMake(CGRectGetWidth(self.frame), CGFLOAT_MAX);
@@ -296,7 +213,7 @@
 - (void)postLayoutSubviews {
   [self applyContainerViewStyle:self.containerStyle
                 textFieldState:self.textFieldState
-               textFieldBounds:self.bounds
+               viewBounds:self.bounds
       floatingPlaceholderFrame:self.layout.placeholderFrameFloating
        topRowBottomRowDividerY:self.layout.topRowBottomRowDividerY
          isFloatingPlaceholder:self.placeholderState == PlaceholderStateFloating];
@@ -875,67 +792,23 @@
 
 - (void)applyContainerViewStyle:(MDCInputViewContainerStyle)containerStyle
               textFieldState:(TextFieldState)textFieldState
-             textFieldBounds:(CGRect)textFieldBounds
+             viewBounds:(CGRect)viewBounds
     floatingPlaceholderFrame:(CGRect)floatingPlaceholderFrame
      topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
        isFloatingPlaceholder:(BOOL)isFloatingPlaceholder {
-  [self applyOutlinedStyle:containerStyle == MDCInputViewContainerStyleOutline
-                textFieldState:textFieldState
-               textFieldBounds:textFieldBounds
+  CGFloat outlineLineWidth = [self outlineLineWidthForState:textFieldState];
+  
+  [self.containerStyler applyOutlinedStyle:containerStyle == MDCInputViewContainerStyleOutline
+               view:self
       floatingPlaceholderFrame:floatingPlaceholderFrame
        topRowBottomRowDividerY:topRowBottomRowDividerY
-         isFloatingPlaceholder:isFloatingPlaceholder];
-  [self applyFilledStyle:containerStyle == MDCInputViewContainerStyleFilled
-           WithTextFieldState:textFieldState
-              textFieldBounds:textFieldBounds
-      topRowBottomRowDividerY:topRowBottomRowDividerY];
-}
-
-- (void)applyOutlinedStyle:(BOOL)isOutlined
-              textFieldState:(TextFieldState)textFieldState
-             textFieldBounds:(CGRect)textFieldBounds
-    floatingPlaceholderFrame:(CGRect)floatingPlaceholderFrame
-     topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
-       isFloatingPlaceholder:(BOOL)isFloatingPlaceholder {
-  if (!isOutlined) {
-    [self.outlinedSublayer removeFromSuperlayer];
-    return;
-  }
-  CGFloat lineWidth = [self outlineLineWidthForState:textFieldState];
-  UIBezierPath *path = [self outlinePathWithTextFieldBounds:textFieldBounds
-                                   floatingPlaceholderFrame:floatingPlaceholderFrame
-                                    topRowBottomRowDividerY:topRowBottomRowDividerY
-                                                  lineWidth:lineWidth
-                                      isFloatingPlaceholder:isFloatingPlaceholder];
-  self.outlinedSublayer.path = path.CGPath;
-  self.outlinedSublayer.lineWidth = lineWidth;
-  if (self.outlinedSublayer.superlayer != self.layer) {
-    [self.layer insertSublayer:self.outlinedSublayer atIndex:0];
-  }
-}
-
-- (void)applyFilledStyle:(BOOL)isFilled
-         WithTextFieldState:(TextFieldState)textFieldState
-            textFieldBounds:(CGRect)textFieldBounds
-    topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY {
-  if (!isFilled) {
-    [self.filledSublayer removeFromSuperlayer];
-    return;
-  }
-
-  UIBezierPath *filledSublayerPath =
-      [self filledSublayerPathWithTextFieldBounds:textFieldBounds
-                          topRowBottomRowDividerY:topRowBottomRowDividerY];
+         isFloatingPlaceholder:isFloatingPlaceholder
+          outlineLineWidth:outlineLineWidth];
   CGFloat underlineThickness = [self underlineThicknessWithTextFieldState:textFieldState];
-  UIBezierPath *filledSublayerUnderlinePath =
-      [self filledSublayerUnderlinePathWithTextFieldBounds:textFieldBounds
-                                   topRowBottomRowDividerY:topRowBottomRowDividerY
-                                        underlineThickness:underlineThickness];
-  self.filledSublayer.path = filledSublayerPath.CGPath;
-  self.filledSublayerUnderline.path = filledSublayerUnderlinePath.CGPath;
-  if (self.filledSublayer.superlayer != self.layer) {
-    [self.layer insertSublayer:self.filledSublayer atIndex:0];
-  }
+  [self.containerStyler applyFilledStyle:containerStyle == MDCInputViewContainerStyleFilled
+                                       view:self
+                    topRowBottomRowDividerY:topRowBottomRowDividerY
+      underlineThickness:underlineThickness];
 }
 
 - (CGFloat)outlineLineWidthForState:(TextFieldState)textFieldState {
@@ -970,219 +843,11 @@
   return underlineThickness;
 }
 
-#pragma mark Path Drawing
 
-- (UIBezierPath *)outlinePathWithTextFieldBounds:(CGRect)textFieldBounds
-                        floatingPlaceholderFrame:(CGRect)floatingPlaceholderFrame
-                         topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
-                                       lineWidth:(CGFloat)lineWidth
-                           isFloatingPlaceholder:(BOOL)isFloatingPlaceholder {
-  UIBezierPath *path = [[UIBezierPath alloc] init];
-  CGFloat radius = kOutlinedTextFieldCornerRadius;
-  CGFloat textFieldWidth = CGRectGetWidth(textFieldBounds);
-  CGFloat sublayerMinY = 0;
-  CGFloat sublayerMaxY = topRowBottomRowDividerY;
-
-  CGPoint startingPoint = CGPointMake(radius, sublayerMinY);
-  CGPoint topRightCornerPoint1 = CGPointMake(textFieldWidth - radius, sublayerMinY);
-  [path moveToPoint:startingPoint];
-  if (isFloatingPlaceholder) {
-    CGFloat leftLineBreak =
-        CGRectGetMinX(floatingPlaceholderFrame) - kFloatingPlaceholderOutlineSidePadding;
-    CGFloat rightLineBreak =
-        CGRectGetMaxX(floatingPlaceholderFrame) + kFloatingPlaceholderOutlineSidePadding;
-    [path addLineToPoint:CGPointMake(leftLineBreak, sublayerMinY)];
-    [path moveToPoint:CGPointMake(rightLineBreak, sublayerMinY)];
-    [path addLineToPoint:CGPointMake(rightLineBreak, sublayerMinY)];
-  } else {
-    [path addLineToPoint:topRightCornerPoint1];
-  }
-
-  CGPoint topRightCornerPoint2 = CGPointMake(textFieldWidth, sublayerMinY + radius);
-  [self addTopRightCornerToPath:path
-                      fromPoint:topRightCornerPoint1
-                        toPoint:topRightCornerPoint2
-                     withRadius:radius];
-
-  CGPoint bottomRightCornerPoint1 = CGPointMake(textFieldWidth, sublayerMaxY - radius);
-  CGPoint bottomRightCornerPoint2 = CGPointMake(textFieldWidth - radius, sublayerMaxY);
-  [path addLineToPoint:bottomRightCornerPoint1];
-  [self addBottomRightCornerToPath:path
-                         fromPoint:bottomRightCornerPoint1
-                           toPoint:bottomRightCornerPoint2
-                        withRadius:radius];
-
-  CGPoint bottomLeftCornerPoint1 = CGPointMake(radius, sublayerMaxY);
-  CGPoint bottomLeftCornerPoint2 = CGPointMake(0, sublayerMaxY - radius);
-  [path addLineToPoint:bottomLeftCornerPoint1];
-  [self addBottomLeftCornerToPath:path
-                        fromPoint:bottomLeftCornerPoint1
-                          toPoint:bottomLeftCornerPoint2
-                       withRadius:radius];
-
-  CGPoint topLeftCornerPoint1 = CGPointMake(0, sublayerMinY + radius);
-  CGPoint topLeftCornerPoint2 = CGPointMake(radius, sublayerMinY);
-  [path addLineToPoint:topLeftCornerPoint1];
-  [self addTopLeftCornerToPath:path
-                     fromPoint:topLeftCornerPoint1
-                       toPoint:topLeftCornerPoint2
-                    withRadius:radius];
-
-  return path;
-}
-
-- (UIBezierPath *)filledSublayerPathWithTextFieldBounds:(CGRect)textFieldBounds
-                                topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY {
-  UIBezierPath *path = [[UIBezierPath alloc] init];
-  CGFloat topRadius = kFilledTextFieldTopCornerRadius;
-  CGFloat bottomRadius = 0;
-  CGFloat textFieldWidth = CGRectGetWidth(textFieldBounds);
-  CGFloat sublayerMinY = 0;
-  CGFloat sublayerMaxY = topRowBottomRowDividerY;
-
-  CGPoint startingPoint = CGPointMake(topRadius, sublayerMinY);
-  CGPoint topRightCornerPoint1 = CGPointMake(textFieldWidth - topRadius, sublayerMinY);
-  [path moveToPoint:startingPoint];
-  [path addLineToPoint:topRightCornerPoint1];
-
-  CGPoint topRightCornerPoint2 = CGPointMake(textFieldWidth, sublayerMinY + topRadius);
-  [self addTopRightCornerToPath:path
-                      fromPoint:topRightCornerPoint1
-                        toPoint:topRightCornerPoint2
-                     withRadius:topRadius];
-
-  CGPoint bottomRightCornerPoint1 = CGPointMake(textFieldWidth, sublayerMaxY - bottomRadius);
-  CGPoint bottomRightCornerPoint2 = CGPointMake(textFieldWidth - bottomRadius, sublayerMaxY);
-  [path addLineToPoint:bottomRightCornerPoint1];
-  [self addBottomRightCornerToPath:path
-                         fromPoint:bottomRightCornerPoint1
-                           toPoint:bottomRightCornerPoint2
-                        withRadius:bottomRadius];
-
-  CGPoint bottomLeftCornerPoint1 = CGPointMake(bottomRadius, sublayerMaxY);
-  CGPoint bottomLeftCornerPoint2 = CGPointMake(0, sublayerMaxY - bottomRadius);
-  [path addLineToPoint:bottomLeftCornerPoint1];
-  [self addBottomLeftCornerToPath:path
-                        fromPoint:bottomLeftCornerPoint1
-                          toPoint:bottomLeftCornerPoint2
-                       withRadius:bottomRadius];
-
-  CGPoint topLeftCornerPoint1 = CGPointMake(0, sublayerMinY + topRadius);
-  CGPoint topLeftCornerPoint2 = CGPointMake(topRadius, sublayerMinY);
-  [path addLineToPoint:topLeftCornerPoint1];
-  [self addTopLeftCornerToPath:path
-                     fromPoint:topLeftCornerPoint1
-                       toPoint:topLeftCornerPoint2
-                    withRadius:topRadius];
-
-  return path;
-}
-
-- (UIBezierPath *)filledSublayerUnderlinePathWithTextFieldBounds:(CGRect)textFieldBounds
-                                         topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
-                                              underlineThickness:(CGFloat)underlineThickness {
-  UIBezierPath *path = [[UIBezierPath alloc] init];
-  CGFloat textFieldWidth = CGRectGetWidth(textFieldBounds);
-  CGFloat sublayerMaxY = topRowBottomRowDividerY;
-  CGFloat sublayerMinY = sublayerMaxY - underlineThickness;
-
-  CGPoint startingPoint = CGPointMake(0, sublayerMinY);
-  CGPoint topRightCornerPoint1 = CGPointMake(textFieldWidth, sublayerMinY);
-  [path moveToPoint:startingPoint];
-  [path addLineToPoint:topRightCornerPoint1];
-
-  CGPoint topRightCornerPoint2 = CGPointMake(textFieldWidth, sublayerMinY);
-  [self addTopRightCornerToPath:path
-                      fromPoint:topRightCornerPoint1
-                        toPoint:topRightCornerPoint2
-                     withRadius:0];
-
-  CGPoint bottomRightCornerPoint1 = CGPointMake(textFieldWidth, sublayerMaxY);
-  CGPoint bottomRightCornerPoint2 = CGPointMake(textFieldWidth, sublayerMaxY);
-  [path addLineToPoint:bottomRightCornerPoint1];
-  [self addBottomRightCornerToPath:path
-                         fromPoint:bottomRightCornerPoint1
-                           toPoint:bottomRightCornerPoint2
-                        withRadius:0];
-
-  CGPoint bottomLeftCornerPoint1 = CGPointMake(0, sublayerMaxY);
-  CGPoint bottomLeftCornerPoint2 = CGPointMake(0, sublayerMaxY);
-  [path addLineToPoint:bottomLeftCornerPoint1];
-  [self addBottomLeftCornerToPath:path
-                        fromPoint:bottomLeftCornerPoint1
-                          toPoint:bottomLeftCornerPoint2
-                       withRadius:0];
-
-  CGPoint topLeftCornerPoint1 = CGPointMake(0, sublayerMinY);
-  CGPoint topLeftCornerPoint2 = CGPointMake(0, sublayerMinY);
-  [path addLineToPoint:topLeftCornerPoint1];
-  [self addTopLeftCornerToPath:path
-                     fromPoint:topLeftCornerPoint1
-                       toPoint:topLeftCornerPoint2
-                    withRadius:0];
-
-  return path;
-}
-
-- (void)addTopRightCornerToPath:(UIBezierPath *)path
-                      fromPoint:(CGPoint)point1
-                        toPoint:(CGPoint)point2
-                     withRadius:(CGFloat)radius {
-  CGFloat startAngle = -(CGFloat)(M_PI / 2);
-  CGFloat endAngle = 0;
-  CGPoint center = CGPointMake(point1.x, point2.y);
-  [path addArcWithCenter:center
-                  radius:radius
-              startAngle:startAngle
-                endAngle:endAngle
-               clockwise:YES];
-}
-
-- (void)addBottomRightCornerToPath:(UIBezierPath *)path
-                         fromPoint:(CGPoint)point1
-                           toPoint:(CGPoint)point2
-                        withRadius:(CGFloat)radius {
-  CGFloat startAngle = 0;
-  CGFloat endAngle = -(CGFloat)((M_PI * 3) / 2);
-  CGPoint center = CGPointMake(point2.x, point1.y);
-  [path addArcWithCenter:center
-                  radius:radius
-              startAngle:startAngle
-                endAngle:endAngle
-               clockwise:YES];
-}
-
-- (void)addBottomLeftCornerToPath:(UIBezierPath *)path
-                        fromPoint:(CGPoint)point1
-                          toPoint:(CGPoint)point2
-                       withRadius:(CGFloat)radius {
-  CGFloat startAngle = -(CGFloat)((M_PI * 3) / 2);
-  CGFloat endAngle = -(CGFloat)M_PI;
-  CGPoint center = CGPointMake(point1.x, point2.y);
-  [path addArcWithCenter:center
-                  radius:radius
-              startAngle:startAngle
-                endAngle:endAngle
-               clockwise:YES];
-}
-
-- (void)addTopLeftCornerToPath:(UIBezierPath *)path
-                     fromPoint:(CGPoint)point1
-                       toPoint:(CGPoint)point2
-                    withRadius:(CGFloat)radius {
-  CGFloat startAngle = -(CGFloat)M_PI;
-  CGFloat endAngle = -(CGFloat)(M_PI / 2);
-  CGPoint center = CGPointMake(point1.x + radius, point2.y + radius);
-  [path addArcWithCenter:center
-                  radius:radius
-              startAngle:startAngle
-                endAngle:endAngle
-               clockwise:YES];
-}
 
 #pragma mark Theming
 
-- (void)applyColorAdapter:(SimpleTextFieldColorAdapter *)colorAdapter {
+- (void)applyColorAdapter:(SimpleTextFieldColorSchemeAdapter *)colorAdapter {
   self.textColor = colorAdapter.textColor;
   self.leadingUnderlineLabel.textColor = colorAdapter.underlineLabelColor;
   self.trailingUnderlineLabel.textColor = colorAdapter.underlineLabelColor;
@@ -1190,9 +855,9 @@
 
   self.clearButtonImageView.tintColor = colorAdapter.clearButtonTintColor;
 
-  self.outlinedSublayer.strokeColor = colorAdapter.outlineColor.CGColor;
-  self.filledSublayerUnderline.fillColor = colorAdapter.filledSublayerUnderlineFillColor.CGColor;
-  self.filledSublayer.fillColor = colorAdapter.filledSublayerFillColor.CGColor;
+  self.containerStyler.outlinedSublayer.strokeColor = colorAdapter.outlineColor.CGColor;
+  self.containerStyler.filledSublayerUnderline.fillColor = colorAdapter.filledSublayerUnderlineFillColor.CGColor;
+  self.containerStyler.filledSublayer.fillColor = colorAdapter.filledSublayerFillColor.CGColor;
 }
 
 - (void)applyTypographyScheme:(MDCTypographyScheme *)typographyScheme {

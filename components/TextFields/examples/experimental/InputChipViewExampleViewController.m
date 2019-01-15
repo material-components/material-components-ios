@@ -185,11 +185,10 @@
 
 - (void)addNonWrappingInputChipView {
   self.nonWrappingInputChipView = [[InputChipView alloc] init];
+  self.nonWrappingInputChipView.containerStyle = MDCInputViewContainerStyleOutline;
   self.nonWrappingInputChipView.canChipsWrap = NO;
   [self.scrollView addSubview:self.nonWrappingInputChipView];
   self.nonWrappingInputChipView.textField.delegate = self;
-  self.nonWrappingInputChipView.layer.borderColor = [UIColor blackColor].CGColor;
-  self.nonWrappingInputChipView.layer.borderWidth = 1;
   [self.nonWrappingInputChipView addTarget:self action:@selector(handleTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
   [self.nonWrappingInputChipView addTarget:self action:@selector(handleTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
   [self.nonWrappingInputChipView addTarget:self action:@selector(handleTouchDown:) forControlEvents:UIControlEventTouchDown];
@@ -214,13 +213,12 @@
 
 - (void)addWrappingInputChipView {
   self.wrappingInputChipView = [[InputChipView alloc] init];
+  self.wrappingInputChipView.containerStyle = MDCInputViewContainerStyleFilled;
   self.wrappingInputChipView.canChipsWrap = YES;
   self.wrappingInputChipView.contentInsets = UIEdgeInsetsMake(8, 12, 8, 12);
   self.wrappingInputChipView.chipRowHeight = 50;
   [self.scrollView addSubview:self.wrappingInputChipView];
   self.wrappingInputChipView.textField.delegate = self;
-  self.wrappingInputChipView.layer.borderColor = [UIColor blackColor].CGColor;
-  self.wrappingInputChipView.layer.borderWidth = 1;
 }
 
 - (void)addUiTextField {

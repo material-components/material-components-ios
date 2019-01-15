@@ -18,6 +18,11 @@
 #import <MDFInternationalization/MDFInternationalization.h>
 #import <CoreGraphics/CoreGraphics.h>
 
+#import "InputChipViewColorSchemeAdapter.h"
+
+#import "MDCInputViewContainerStyler.h"
+
+
 @class InputChipViewTextField;
 @protocol InputChipViewTextFieldDelegate <NSObject>
 - (void)inputChipViewTextFieldDidDeleteBackward:(InputChipViewTextField *)textField
@@ -72,6 +77,10 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 @property (nonatomic, assign) CGPoint lastTouchStartingContentOffset;
 @property (nonatomic, assign) CGPoint lastTouchStartingLocation;
 
+@property (strong, nonatomic) InputChipViewColorSchemeAdapter *colorSchemeAdapter;
+
+@property (nonatomic, strong) MDCInputViewContainerStyler *containerStyler;
+
 @end
 
 
@@ -103,7 +112,19 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   [self addTarget:self
            action:@selector(handleTouchUpInside)
  forControlEvents:UIControlEventTouchUpInside];
+  self.colorSchemeAdapter = [[InputChipViewColorSchemeAdapter alloc] init];
+  
+  [self setUpContainerScheme];
+  
+  self.containerStyler = [[MDCInputViewContainerStyler alloc] init];
 }
+
+- (void)setUpContainerScheme {
+  self.containerScheme = [[MDCContainerScheme alloc] init];
+  self.containerScheme.colorScheme = [[MDCSemanticColorScheme alloc] init];
+  self.containerScheme.typographyScheme = [[MDCTypographyScheme alloc] init];
+}
+
 
 - (void)setUpGradientLayers {
   UIColor *outerColor = (id)UIColor.clearColor.CGColor;
@@ -260,6 +281,10 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 - (void)preLayoutSubviews {
   self.layout = [self calculateLayout];
+  InputChipViewColorSchemeAdapter *colorAdapter =
+  [[InputChipViewColorSchemeAdapter alloc] initWithColorScheme:self.containerScheme.colorScheme];
+//                                                  textFieldState:self.textFieldState];
+  [self applyColorAdapter:colorAdapter];
 }
 
 - (void)postLayoutSubviews {
@@ -279,8 +304,40 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   //  NSLog(@"offset: %@",NSStringFromCGPoint(self.scrollView.contentOffset));
   //  NSLog(@"size: %@\n\n",NSStringFromCGSize(self.scrollView.contentSize));
 
+  [self applyStyle];
   [self layOutGradientLayers];
 }
+
+- (void)applyStyle {
+  [self applyContainerViewStyle:self.containerStyle
+                     viewBounds:self.bounds
+       floatingPlaceholderFrame:CGRectZero
+        topRowBottomRowDividerY:CGRectGetMaxY(self.bounds)
+          isFloatingPlaceholder:NO];
+}
+
+- (void)applyContainerViewStyle:(MDCInputViewContainerStyle)containerStyle
+//                 textFieldState:(TextFieldState)textFieldState
+                     viewBounds:(CGRect)viewBounds
+       floatingPlaceholderFrame:(CGRect)floatingPlaceholderFrame
+        topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
+          isFloatingPlaceholder:(BOOL)isFloatingPlaceholder {
+//  CGFloat outlineLineWidth = [self outlineLineWidthForState:textFieldState];
+  CGFloat outlineLineWidth = 2;
+  [self.containerStyler applyOutlinedStyle:containerStyle == MDCInputViewContainerStyleOutline
+                                      view:self
+                  floatingPlaceholderFrame:floatingPlaceholderFrame
+                   topRowBottomRowDividerY:topRowBottomRowDividerY
+                     isFloatingPlaceholder:isFloatingPlaceholder
+                          outlineLineWidth:outlineLineWidth];
+//  CGFloat underlineThickness = [self underlineThicknessWithTextFieldState:textFieldState];
+  CGFloat underlineThickness = 2;
+  [self.containerStyler applyFilledStyle:containerStyle == MDCInputViewContainerStyleFilled
+                                    view:self
+                 topRowBottomRowDividerY:topRowBottomRowDividerY
+                      underlineThickness:underlineThickness];
+}
+
 
 - (void)layOutGradientLayers {
   self.horizontalGradientLayer.frame = self.bounds;
@@ -671,5 +728,21 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 -(void)cancelTrackingWithEvent:(UIEvent *)event {
   [super cancelTrackingWithEvent:event];
 }
+
+
+#pragma mark Theming
+
+- (void)applyColorAdapter:(InputChipViewColorSchemeAdapter *)colorAdapter {
+//  self.textColor = colorAdapter.textColor;
+//  self.leadingUnderlineLabel.textColor = colorAdapter.underlineLabelColor;
+//  self.trailingUnderlineLabel.textColor = colorAdapter.underlineLabelColor;
+//  self.placeholderLabel.textColor = colorAdapter.placeholderLabelColor;
+//  self.clearButtonImageView.tintColor = colorAdapter.clearButtonTintColor;
+  
+  self.containerStyler.outlinedSublayer.strokeColor = colorAdapter.outlineColor.CGColor;
+  self.containerStyler.filledSublayerUnderline.fillColor = colorAdapter.filledSublayerUnderlineFillColor.CGColor;
+  self.containerStyler.filledSublayer.fillColor = colorAdapter.filledSublayerFillColor.CGColor;
+}
+
 
 @end
