@@ -33,13 +33,13 @@ static const CGFloat kTopMargin = (CGFloat)5.0;
 static const CGFloat kTopRowBottomRowDividerVerticalPadding = (CGFloat)9.0;
 
 /**
- TextFieldStyle dictates what type of text field it will be from a cosmetic standpoint. The values
+ MDCInputViewContainerStyle dictates what type of text field it will be from a cosmetic standpoint. The values
  are derived from the styles outlined in the Material Guidelines for Text Fields.
  */
-typedef NS_ENUM(NSUInteger, TextFieldStyle) {
-  TextFieldStyleNone,
-  TextFieldStyleFilled,
-  TextFieldStyleOutline,
+typedef NS_ENUM(NSUInteger, MDCInputViewContainerStyle) {
+  MDCInputViewContainerStyleNone,
+  MDCInputViewContainerStyleFilled,
+  MDCInputViewContainerStyleOutline,
 };
 
 /**

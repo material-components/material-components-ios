@@ -34,9 +34,9 @@
 @interface SimpleTextField : UITextField
 
 /**
- Dictates the @c TextFieldStyle of the text field.
+ Dictates the @c MDCInputViewContainerStyle of the text field.
  */
-@property(nonatomic, assign) TextFieldStyle textFieldStyle;
+@property(nonatomic, assign) MDCInputViewContainerStyle containerStyle;
 
 /**
  This is a computed property that determines the current @c TextFieldState of the text field.

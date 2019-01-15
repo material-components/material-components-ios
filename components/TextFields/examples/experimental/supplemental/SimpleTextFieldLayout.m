@@ -25,7 +25,7 @@
 #pragma mark Object Lifecycle
 
 - (instancetype)initWithTextFieldSize:(CGSize)textFieldSize
-                       textFieldStyle:(TextFieldStyle)textFieldStyle
+                       containerStyle:(MDCInputViewContainerStyle)containerStyle
                                  text:(NSString *)text
                           placeholder:(NSString *)placeholder
                                  font:(UIFont *)font
@@ -46,7 +46,7 @@
   self = [super init];
   if (self) {
     [self calculateLayoutWithTextFieldSize:textFieldSize
-                            textFieldStyle:textFieldStyle
+                            containerStyle:containerStyle
                                       text:text
                                placeholder:placeholder
                                       font:font
@@ -72,7 +72,7 @@
 #pragma mark Layout Calculation
 
 - (void)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize
-                          textFieldStyle:(TextFieldStyle)textFieldStyle
+                          containerStyle:(MDCInputViewContainerStyle)containerStyle
                                     text:(NSString *)text
                              placeholder:(NSString *)placeholder
                                     font:(UIFont *)font
@@ -151,14 +151,14 @@
       canPlaceholderFloat ? [self textHeightWithFont:floatingPlaceholderFont] : 0;
   CGFloat floatingPlaceholderMinY =
       [self floatingPlaceholderMinYWithFloatingHeight:floatingPlaceholderHeight
-                                       textFieldStyle:textFieldStyle];
+                                       containerStyle:containerStyle];
 
   CGFloat textAreaHeight = [self textHeightWithFont:font];
   CGFloat lowestAllowableTextAreaCenterY =
       [self lowestAllowableTextAreaCenterYWithFloatingPlaceholderMinY:floatingPlaceholderMinY
                                             floatingPlaceholderHeight:floatingPlaceholderHeight
                                                        textAreaHeight:textAreaHeight
-                                                       textFieldStyle:textFieldStyle
+                                                       containerStyle:containerStyle
                                                   placeholderCanFloat:canPlaceholderFloat];
 
   CGFloat topRowSubviewCenterY =
@@ -166,7 +166,7 @@
                                    rightView:rightView
                                         font:font
                                 floatingFont:floatingPlaceholderFont
-                              textFieldStyle:textFieldStyle
+                              containerStyle:containerStyle
               lowestAllowableTextAreaCenterY:lowestAllowableTextAreaCenterY];
 
   CGFloat leftViewHeight = CGRectGetHeight(leftView.frame);
@@ -235,7 +235,7 @@
                  kClearButtonTouchTargetSideLength);
 
   CGRect placeholderFrameNormal = [self placeholderFrameWithPlaceholder:placeholder
-                                                         textFieldStyle:textFieldStyle
+                                                         containerStyle:containerStyle
                                                        placeholderState:PlaceholderStateNormal
                                                                    font:font
                                                 floatingPlaceholderFont:floatingPlaceholderFont
@@ -243,7 +243,7 @@
                                                            textAreaRect:textAreaFrame
                                                                   isRTL:isRTL];
   CGRect placeholderFrameFloating = [self placeholderFrameWithPlaceholder:placeholder
-                                                           textFieldStyle:textFieldStyle
+                                                           containerStyle:containerStyle
                                                          placeholderState:PlaceholderStateFloating
                                                                      font:font
                                                   floatingPlaceholderFont:floatingPlaceholderFont
@@ -262,15 +262,15 @@
                                                         rightViewMaxY:rightViewMaxY];
 
   CGFloat topRowBottomRowDividerY = 0;
-  switch (textFieldStyle) {
-    case TextFieldStyleNone:
+  switch (containerStyle) {
+    case MDCInputViewContainerStyleNone:
       topRowBottomRowDividerY = topRowSubviewMaxY;
       break;
-    case TextFieldStyleFilled:
+    case MDCInputViewContainerStyleFilled:
     default:
       topRowBottomRowDividerY = topRowSubviewMaxY + kTopRowBottomRowDividerVerticalPadding;
       break;
-    case TextFieldStyleOutline:
+    case MDCInputViewContainerStyleOutline:
       topRowBottomRowDividerY = topRowSubviewCenterY * 2;
       break;
   }
@@ -465,19 +465,19 @@
     lowestAllowableTextAreaCenterYWithFloatingPlaceholderMinY:(CGFloat)floatingPlaceholderMinY
                                     floatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight
                                                textAreaHeight:(CGFloat)textAreaHeight
-                                               textFieldStyle:(TextFieldStyle)textFieldStyle
+                                               containerStyle:(MDCInputViewContainerStyle)containerStyle
                                           placeholderCanFloat:(BOOL)placeholderCanFloat {
   if (placeholderCanFloat) {
     CGFloat spaceBetweenPlaceholderAndTextArea = 0;
     CGFloat floatingPlaceholderMaxY = floatingPlaceholderMinY + floatingPlaceholderHeight;
     CGFloat outlinedTextFieldSpaceHeuristic = floatingPlaceholderHeight * (CGFloat)0.22;
-    switch (textFieldStyle) {
-      case TextFieldStyleNone:
-      case TextFieldStyleFilled:
+    switch (containerStyle) {
+      case MDCInputViewContainerStyleNone:
+      case MDCInputViewContainerStyleFilled:
       default:
         spaceBetweenPlaceholderAndTextArea = ((CGFloat)0.25 * floatingPlaceholderMaxY);
         break;
-      case TextFieldStyleOutline:
+      case MDCInputViewContainerStyleOutline:
         spaceBetweenPlaceholderAndTextArea =
             floatingPlaceholderMaxY + outlinedTextFieldSpaceHeuristic;
         break;
@@ -492,18 +492,18 @@
 }
 
 - (CGFloat)floatingPlaceholderMinYWithFloatingHeight:(CGFloat)floatingPlaceholderHeight
-                                      textFieldStyle:(TextFieldStyle)textFieldStyle {
+                                      containerStyle:(MDCInputViewContainerStyle)containerStyle {
   if (floatingPlaceholderHeight <= 0) {
     return 0;
   }
   CGFloat filledPlaceholderTopPaddingScaleHeuristic = ((CGFloat)50.0 / (CGFloat)70.0);
   CGFloat floatingPlaceholderMinY = 0;
-  switch (textFieldStyle) {
-    case TextFieldStyleOutline:
+  switch (containerStyle) {
+    case MDCInputViewContainerStyleOutline:
       floatingPlaceholderMinY = (CGFloat)0 - ((CGFloat)0.5 * floatingPlaceholderHeight);
       break;
-    case TextFieldStyleNone:
-    case TextFieldStyleFilled:
+    case MDCInputViewContainerStyleNone:
+    case MDCInputViewContainerStyleFilled:
     default:
       floatingPlaceholderMinY =
           filledPlaceholderTopPaddingScaleHeuristic * floatingPlaceholderHeight;
@@ -516,7 +516,7 @@
                                   rightView:(UIView *)rightView
                                        font:(UIFont *)font
                                floatingFont:(UIFont *)floatingFont
-                             textFieldStyle:(TextFieldStyle)textFieldStyle
+                             containerStyle:(MDCInputViewContainerStyle)containerStyle
              lowestAllowableTextAreaCenterY:(CGFloat)lowestAllowableTextAreaCenterY {
   CGFloat sideViewMaxHeight =
       MAX(CGRectGetHeight(leftView.bounds), CGRectGetHeight(rightView.bounds));
@@ -559,7 +559,7 @@
 }
 
 - (CGRect)placeholderFrameWithPlaceholder:(NSString *)placeholder
-                           textFieldStyle:(TextFieldStyle)textFieldStyle
+                           containerStyle:(MDCInputViewContainerStyle)containerStyle
                          placeholderState:(PlaceholderState)placeholderState
                                      font:(UIFont *)font
                   floatingPlaceholderFont:(UIFont *)floatingPlaceholderFont

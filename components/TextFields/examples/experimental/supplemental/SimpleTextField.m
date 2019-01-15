@@ -185,7 +185,7 @@
 - (void)setUpFonts {
   self.placeholderFont = [self determineEffectiveFont];
   self.floatingPlaceholderFont = [self floatingPlaceholderFontWithFont:[self determineEffectiveFont]
-                                                        textFieldStyle:self.textFieldStyle];
+                                                        containerStyle:self.containerStyle];
 }
 
 - (void)setUpContainerScheme {
@@ -294,7 +294,7 @@
 }
 
 - (void)postLayoutSubviews {
-  [self applyTextFieldStyle:self.textFieldStyle
+  [self applyContainerViewStyle:self.containerStyle
                 textFieldState:self.textFieldState
                textFieldBounds:self.bounds
       floatingPlaceholderFrame:self.layout.placeholderFrameFloating
@@ -313,12 +313,12 @@
 - (SimpleTextFieldLayout *)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize {
   UIFont *effectiveFont = [self determineEffectiveFont];
   UIFont *floatingFont = [self floatingPlaceholderFontWithFont:effectiveFont
-                                                textFieldStyle:self.textFieldStyle];
+                                                containerStyle:self.containerStyle];
   CGFloat normalizedCustomUnderlineLabelDrawPriority =
       [self normalizedCustomUnderlineLabelDrawPriority:self.customUnderlineLabelDrawPriority];
   return [[SimpleTextFieldLayout alloc]
                  initWithTextFieldSize:textFieldSize
-                        textFieldStyle:self.textFieldStyle
+                        containerStyle:self.containerStyle
                                   text:self.text
                            placeholder:self.placeholder
                                   font:effectiveFont
@@ -562,7 +562,7 @@
 }
 
 - (CGRect)borderRectForBounds:(CGRect)bounds {
-  if (self.textFieldStyle == TextFieldStyleNone) {
+  if (self.containerStyle == MDCInputViewContainerStyleNone) {
     return [super borderRectForBounds:bounds];
   }
   return CGRectZero;
@@ -817,18 +817,18 @@
 }
 
 - (UIFont *)floatingPlaceholderFontWithFont:(UIFont *)font
-                             textFieldStyle:(TextFieldStyle)textFieldStyle {
+                             containerStyle:(MDCInputViewContainerStyle)containerStyle {
   CGFloat floatingPlaceholderFontSize = 0.0;
   CGFloat outlinedFloatingPlaceholderScale = (CGFloat)41 / (CGFloat)55;
   CGFloat filledFloatingPlaceholderScale = (CGFloat)53 / (CGFloat)71;
-  switch (textFieldStyle) {
-    case TextFieldStyleNone:
-    case TextFieldStyleFilled:
+  switch (containerStyle) {
+    case MDCInputViewContainerStyleNone:
+    case MDCInputViewContainerStyleFilled:
     default:
       floatingPlaceholderFontSize =
           (CGFloat)round((double)(font.pointSize * filledFloatingPlaceholderScale));
       break;
-    case TextFieldStyleOutline:
+    case MDCInputViewContainerStyleOutline:
       floatingPlaceholderFontSize =
           (CGFloat)round((double)(font.pointSize * outlinedFloatingPlaceholderScale));
       break;
@@ -873,19 +873,19 @@
 
 #pragma mark Style Management
 
-- (void)applyTextFieldStyle:(TextFieldStyle)textFieldStyle
+- (void)applyContainerViewStyle:(MDCInputViewContainerStyle)containerStyle
               textFieldState:(TextFieldState)textFieldState
              textFieldBounds:(CGRect)textFieldBounds
     floatingPlaceholderFrame:(CGRect)floatingPlaceholderFrame
      topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
        isFloatingPlaceholder:(BOOL)isFloatingPlaceholder {
-  [self applyOutlinedStyle:textFieldStyle == TextFieldStyleOutline
+  [self applyOutlinedStyle:containerStyle == MDCInputViewContainerStyleOutline
                 textFieldState:textFieldState
                textFieldBounds:textFieldBounds
       floatingPlaceholderFrame:floatingPlaceholderFrame
        topRowBottomRowDividerY:topRowBottomRowDividerY
          isFloatingPlaceholder:isFloatingPlaceholder];
-  [self applyFilledStyle:textFieldStyle == TextFieldStyleFilled
+  [self applyFilledStyle:containerStyle == MDCInputViewContainerStyleFilled
            WithTextFieldState:textFieldState
               textFieldBounds:textFieldBounds
       topRowBottomRowDividerY:topRowBottomRowDividerY];
@@ -1199,7 +1199,7 @@
   self.font = typographyScheme.subtitle1;
   self.placeholderFont = typographyScheme.subtitle1;
   self.floatingPlaceholderFont = [self floatingPlaceholderFontWithFont:self.font
-                                                        textFieldStyle:self.textFieldStyle];
+                                                        containerStyle:self.containerStyle];
   self.leadingUnderlineLabel.font = typographyScheme.caption;
   self.trailingUnderlineLabel.font = typographyScheme.caption;
 }
