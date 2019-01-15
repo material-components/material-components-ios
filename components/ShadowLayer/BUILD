@@ -14,6 +14,8 @@
 
 load(
     "//:material_components_ios.bzl",
+    "mdc_examples_objc_library",
+    "mdc_examples_swift_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
     "mdc_unit_test_suite",
@@ -33,6 +35,28 @@ mdc_public_objc_library(
         "//components/ShadowElevations",
     ],
 )
+
+mdc_examples_objc_library(
+    name = "ObjcExamples",
+    deps = [
+        ":ShadowLayer",
+        "//components/AnimationTiming",
+        "//components/Buttons",
+        "//components/Buttons:ButtonThemer",
+        "//components/Slider",
+        "//components/ShadowElevations",
+    ],
+)
+
+mdc_examples_swift_library(
+    name = "SwiftExamples",
+    deps = [
+        ":ShadowLayer",
+        "//components/ShadowElevations",
+        "//components/private/Shapes",
+    ],
+)
+
 
 mdc_objc_library(
     name = "unit_test_sources",
