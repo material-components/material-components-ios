@@ -242,7 +242,8 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
       showSnackbarView:snackbarView
               animated:YES
             completion:^{
-              if (!snackbarView.accessibilityViewIsModal && [self isSnackbarTransient:snackbarView]) {
+              if (!snackbarView.accessibilityViewIsModal &&
+                  [self isSnackbarTransient:snackbarView]) {
                 snackbarView.accessibilityElementsHidden = YES;
                 UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification,
                                                 message.voiceNotificationText);
