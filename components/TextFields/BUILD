@@ -115,6 +115,7 @@ mdc_snapshot_objc_library(
 
 mdc_snapshot_test(
     name = "snapshot_tests",
+    timeout = "long",
     deps = ["snapshot_test_lib"],
 )
 

@@ -15,7 +15,7 @@ DEFAULT_IOS_RUNNER_TARGETS = [
     "//components/testing/runners:IPHONE_X_IN_11_0",
 ]
 
-SNAPSHOT_IOS_RUNNER_TARGET = "//components/testing/runners:IPHONE_7_IN_11_2"
+SNAPSHOT_IOS_RUNNER_TARGET = "//components/testing/runners:IPHONE_7_IN_11_0"
 
 def mdc_objc_library(
     name,
