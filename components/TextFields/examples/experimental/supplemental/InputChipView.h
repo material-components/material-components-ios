@@ -15,6 +15,9 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialChips.h"
+#import "MDCInputViewContainerStyler.h"
+
+#import "MaterialContainerScheme.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -24,6 +27,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL canChipsWrap;
 @property (nonatomic, assign) CGFloat chipRowHeight;
 @property (nonatomic, assign) UIEdgeInsets contentInsets;
+@property (nonatomic, assign) MDCInputViewContainerStyle containerStyle;
+@property (nonatomic, strong) MDCContainerScheme *containerScheme;
 
 - (void)addChip:(MDCChipView *)chipView;
 

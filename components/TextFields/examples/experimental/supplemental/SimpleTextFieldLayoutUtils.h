@@ -20,11 +20,8 @@ static const CGFloat kFloatingPlaceholderAnimationDuration = (CGFloat)0.15;
 static const CGFloat kLeadingMargin = (CGFloat)12.0;
 static const CGFloat kTrailingMargin = (CGFloat)12.0;
 
-static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
 static const CGFloat kFloatingPlaceholderXOffsetFromTextArea = (CGFloat)3.0;
 
-static const CGFloat kFilledTextFieldTopCornerRadius = (CGFloat)4.0;
-static const CGFloat kOutlinedTextFieldCornerRadius = (CGFloat)4.0;
 
 static const CGFloat kClearButtonTouchTargetSideLength = (CGFloat)30.0;
 static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
@@ -32,15 +29,6 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
 static const CGFloat kTopMargin = (CGFloat)5.0;
 static const CGFloat kTopRowBottomRowDividerVerticalPadding = (CGFloat)9.0;
 
-/**
- MDCInputViewContainerStyle dictates what type of text field it will be from a cosmetic standpoint. The values
- are derived from the styles outlined in the Material Guidelines for Text Fields.
- */
-typedef NS_ENUM(NSUInteger, MDCInputViewContainerStyle) {
-  MDCInputViewContainerStyleNone,
-  MDCInputViewContainerStyleFilled,
-  MDCInputViewContainerStyleOutline,
-};
 
 /**
  Dictates the relative importance of the underline labels, and the order in which they are laid out.
