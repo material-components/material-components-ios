@@ -15,9 +15,9 @@ ios_test_runner(
 )
 
 ios_test_runner(
-    name = "IPHONE_7_IN_11_0",
+    name = "IPHONE_7_IN_11_1",
     device_type = "iPhone 7",
-    os_version = "11.0",
+    os_version = "11.1",
     visibility = ["//visibility:public"],
 )
 
