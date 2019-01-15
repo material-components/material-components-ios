@@ -123,7 +123,7 @@
                         self.message.accessibilityHint);
 }
 
-- (void)testSnackbarAccessibiltyViewIsModalByDefaultWithActions {
+- (void)testSnackbarAccessibiltyViewIsModalByDefaultToNoWithActions {
   // Given
   self.manager.internalManager.isVoiceOverRunningOverride = YES;
   MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
@@ -142,7 +142,7 @@
   XCTAssertFalse(self.manager.internalManager.overlayView.accessibilityViewIsModal);
 }
 
-- (void)testSnackbarAccessibiltyViewIsModalByDefaultWithNoActions {
+- (void)testSnackbarAccessibiltyViewIsModalByDefaultToNoWithNoActions {
   // Given
   self.manager.internalManager.isVoiceOverRunningOverride = YES;
 
@@ -176,6 +176,25 @@
 
   // Then
   XCTAssertTrue(self.manager.internalManager.overlayView.accessibilityViewIsModal);
+}
+
+- (void)testSnackbarAccessibiltyViewIsModalYesWithActionsAndWithoutVoiceOver {
+  // Given
+  MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
+  action.title = @"Tap Me";
+  self.message.action = action;
+  self.manager.shouldEnableAccessibilityViewIsModal = YES;
+
+  // When
+  [self.manager showMessage:self.message];
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [expectation fulfill];
+  });
+  [self waitForExpectationsWithTimeout:3 handler:nil];
+
+  // Then
+  XCTAssertFalse(self.manager.internalManager.overlayView.accessibilityViewIsModal);
 }
 
 - (void)testSnackbarAccessibiltyViewIsModalYesWithNoActions {

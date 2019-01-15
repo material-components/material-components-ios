@@ -238,14 +238,11 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 
   // Once the Snackbar has finished animating on screen, start the automatic dismiss timeout, but
   // only if the user isn't running VoiceOver.
-  __weak MDCSnackbarManagerInternal *weakSelf = self;
   [self.overlayView
       showSnackbarView:snackbarView
               animated:YES
             completion:^{
-              MDCSnackbarManagerInternal *strongSelf = weakSelf;
-              if (!snackbarView.accessibilityViewIsModal &&
-                  [strongSelf isSnackbarTransient:snackbarView]) {
+              if (!snackbarView.accessibilityViewIsModal && [self isSnackbarTransient:snackbarView]) {
                 snackbarView.accessibilityElementsHidden = YES;
                 UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification,
                                                 message.voiceNotificationText);
@@ -254,7 +251,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
                                                 snackbarView);
               }
 
-              if ([strongSelf isSnackbarTransient:snackbarView]) {
+              if ([self isSnackbarTransient:snackbarView]) {
                 __weak MDCSnackbarMessageView *weakSnackbarView = snackbarView;
                 dispatch_time_t popTime =
                     dispatch_time(DISPATCH_TIME_NOW, (int64_t)(message.duration * NSEC_PER_SEC));
@@ -289,29 +286,27 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
                   [message executeCompletionHandlerWithUserInteraction:userPrompted completion:nil];
                 }];
 
-  __weak MDCSnackbarManagerInternal *weakSelf = self;
   [self.overlayView dismissSnackbarViewAnimated:YES
                                      completion:^{
-                                       MDCSnackbarManagerInternal *strongSelf = weakSelf;
-                                       strongSelf.overlayView.hidden = YES;
-                                       [strongSelf deactivateOverlay:strongSelf.overlayView];
+                                       self.overlayView.hidden = YES;
+                                       [self deactivateOverlay:self.overlayView];
 
                                        // If the snackbarView was transient and
                                        // accessibilityViewIsModal is NO, the Snackbar was just
                                        // announced (layout was not reported as changed) so there is
                                        // no need to post a layout change here.
-                                       if (strongSelf.overlayView.accessibilityViewIsModal ||
-                                           ![strongSelf isSnackbarTransient:snackbarView]) {
+                                       if (self.overlayView.accessibilityViewIsModal ||
+                                           ![self isSnackbarTransient:snackbarView]) {
                                          UIAccessibilityPostNotification(
                                              UIAccessibilityLayoutChangedNotification, nil);
                                        }
 
-                                       strongSelf.currentSnackbar = nil;
+                                       self.currentSnackbar = nil;
 
                                        // Now that the snackbarView is offscreen, we can allow more
                                        // messages to be shown.
-                                       strongSelf.showingMessage = NO;
-                                       [strongSelf showNextMessageIfNecessaryMainThread];
+                                       self.showingMessage = NO;
+                                       [self showNextMessageIfNecessaryMainThread];
                                      }];
 }
 
