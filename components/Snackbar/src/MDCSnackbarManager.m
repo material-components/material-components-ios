@@ -242,14 +242,14 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
       showSnackbarView:snackbarView
               animated:YES
             completion:^{
-              if (!snackbarView.accessibilityViewIsModal &&
-                  [self isSnackbarTransient:snackbarView]) {
+              if (snackbarView.accessibilityViewIsModal ||
+                  ![self isSnackbarTransient:snackbarView]) {
+                UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification,
+                                                  snackbarView);
+              } else {
                 snackbarView.accessibilityElementsHidden = YES;
                 UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification,
                                                 message.voiceNotificationText);
-              } else {
-                UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification,
-                                                snackbarView);
               }
 
               if ([self isSnackbarTransient:snackbarView]) {

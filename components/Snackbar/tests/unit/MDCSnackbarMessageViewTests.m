@@ -123,7 +123,7 @@
                         self.message.accessibilityHint);
 }
 
-- (void)testSnackbarAccessibiltyViewIsModalByDefaultToNoWithActions {
+- (void)testSnackbarAccessibiltyViewIsModalDefaultsToNoWithActions {
   // Given
   self.manager.internalManager.isVoiceOverRunningOverride = YES;
   MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
@@ -142,7 +142,7 @@
   XCTAssertFalse(self.manager.internalManager.overlayView.accessibilityViewIsModal);
 }
 
-- (void)testSnackbarAccessibiltyViewIsModalByDefaultToNoWithNoActions {
+- (void)testSnackbarAccessibiltyViewIsModalDefaultsToNoWithNoActions {
   // Given
   self.manager.internalManager.isVoiceOverRunningOverride = YES;
 
@@ -158,7 +158,7 @@
   XCTAssertFalse(self.manager.internalManager.overlayView.accessibilityViewIsModal);
 }
 
-- (void)testSnackbarAccessibiltyViewIsModalYesWithActions {
+- (void)testWhenSnackbarAccessibiltyViewIsModalIsYesWithActions {
   // Given
   self.manager.internalManager.isVoiceOverRunningOverride = YES;
   MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
@@ -178,7 +178,7 @@
   XCTAssertTrue(self.manager.internalManager.overlayView.accessibilityViewIsModal);
 }
 
-- (void)testSnackbarAccessibiltyViewIsModalYesWithActionsAndWithoutVoiceOver {
+- (void)testWhenSnackbarAccessibiltyViewIsModalIsYesWithActionsAndWithoutVoiceOver {
   // Given
   MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
   action.title = @"Tap Me";
@@ -197,7 +197,7 @@
   XCTAssertFalse(self.manager.internalManager.overlayView.accessibilityViewIsModal);
 }
 
-- (void)testSnackbarAccessibiltyViewIsModalYesWithNoActions {
+- (void)testWhenSnackbarAccessibiltyViewIsModalIsYesWhenWithNoActions {
   // Given
   self.manager.internalManager.isVoiceOverRunningOverride = YES;
   self.manager.shouldEnableAccessibilityViewIsModal = YES;
@@ -221,7 +221,6 @@
   MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
   action.title = @"Tap Me";
   self.message.action = action;
-  self.message.accessibilityViewIsModal = YES;
 
   // When
   [self.manager showMessage:self.message];
@@ -239,7 +238,6 @@
   // Given
   self.delegate.shouldSetSnackbarViewAccessibilityViewIsModal = YES;
   self.manager.internalManager.isVoiceOverRunningOverride = YES;
-  self.message.accessibilityViewIsModal = YES;
 
   // When
   [self.manager showMessage:self.message];
