@@ -68,8 +68,8 @@ static NSString *const kiPhone7ModelB = @"iPhone9,3";
 // Support multiple OS versions and devices for snapshots
 - (BOOL)isSupportedDevice {
   if (NSProcessInfo.processInfo.operatingSystemVersion.majorVersion != 11 ||
-      NSProcessInfo.processInfo.operatingSystemVersion.minorVersion != 0) {
-    NSLog(@"Unsupported device. Snapshot tests currently only run on iOS 11.0.1");
+      NSProcessInfo.processInfo.operatingSystemVersion.minorVersion != 1) {
+    NSLog(@"Unsupported device. Snapshot tests currently only run on iOS 11.1");
     return NO;
   }
 
