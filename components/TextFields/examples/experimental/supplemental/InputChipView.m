@@ -60,8 +60,6 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 @property (strong, nonatomic) NSMutableArray *chips;
 @property (strong, nonatomic) NSMutableArray *chipsToRemove;
 
-@property (strong, nonatomic) UITapGestureRecognizer *tapRecognizer;
-
 @property (strong, nonatomic) InputChipViewLayout *layout;
 @property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
 
@@ -109,15 +107,19 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   [self initializeProperties];
   [self createSubviews];
   [self setUpGradientLayers];
-  [self addTarget:self
-           action:@selector(handleTouchUpInside)
- forControlEvents:UIControlEventTouchUpInside];
   self.colorSchemeAdapter = [[InputChipViewColorSchemeAdapter alloc] init];
   
   [self setUpContainerScheme];
   
   self.containerStyler = [[MDCInputViewContainerStyler alloc] init];
 }
+
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark View Setup
+
 
 - (void)setUpContainerScheme {
   self.containerScheme = [[MDCContainerScheme alloc] init];
@@ -147,10 +149,6 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   self.verticalGradientLayerMask.endPoint = CGPointMake(0.5, 1.0);
 }
 
-- (void)dealloc {
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 #pragma mark Setup
 
 - (void)addObservers {
@@ -178,7 +176,6 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   [self setUpContentInsets];
   
   self.chipRowHeight = [self determineEffectiveTextFieldFont].lineHeight * 2;
-  
 }
 
 - (void)setUpContentInsets {
@@ -205,29 +202,12 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   [self.scrollViewContainer addSubview:self.scrollView];
   self.tapRecognizerView = [[UIView alloc] init];
   [self.scrollView addSubview:self.tapRecognizerView];
-  self.tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapRecognizer:)];
-//  [self.tapRecognizerView addGestureRecognizer:self.tapRecognizer];
-  self.tapRecognizer.delegate = self;
   self.inputChipViewTextField = [[InputChipViewTextField alloc] init];
   self.inputChipViewTextField.inputChipViewTextFieldDelegate = self;
   [self.scrollView addSubview:self.textField];
 }
 
 #pragma mark UIResponder Overrides
-
--(void)handleTouchUpInside {
-//  if (![self.textField isFirstResponder]) {
-//    [self.textField becomeFirstResponder];
-//  }
-//  [self enforceCalculatedScrollViewContentOffset];
-//  BOOL result = [super becomeFirstResponder];
-//  [self.textField becomeFirstResponder];
-//  return result;
-  /*
-   consider calling textField becomeFirstResponder here, and consider calling this method in touchesbegan.
-   this would be a replacement of tap gesture
-   */
-}
 
 -(BOOL)resignFirstResponder {
   [self.textField resignFirstResponder];
@@ -377,6 +357,10 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
                                chipFrames:(NSArray<NSValue *> *)frames
                             chipsToRemove:(NSArray<MDCChipView *> *)chipsToRemove
                                chipsToAdd:(NSArray<MDCChipView *> *)chipsToAdd {
+  // iterate through views, calculate a frame and an isHidden value for each.
+  // If the chip is going to be removed don't change the frame.
+  // go through and animate each views new status
+
   [self performChipRemovalOnCompletion:^{
     [self performChipPositioningOnCompletion:^{
       [self performChipAdditionsOnCompletion:^{
@@ -465,27 +449,6 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 //  CGRect newChipFrame = [self frameFor]
 }
 
-#pragma mark - Chip Deleting
-
-- (void)deselectAllChipsExceptChip:(MDCChipView *)chip {
-  for (MDCChipView *otherChip in self.chips) {
-    if (chip != otherChip) {
-      otherChip.selected = NO;
-    }
-  }
-}
-
-- (void)selectLastChip {
-  MDCChipView *lastChip = self.chips.lastObject;
-  [self deselectAllChipsExceptChip:lastChip];
-  lastChip.selected = YES;
-  UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification,
-                                  [lastChip accessibilityLabel]);
-}
-
-- (void)deselectAllChips {
-  [self deselectAllChipsExceptChip:nil];
-}
 
 - (void)removeChips:(NSArray<MDCChipView *> *)chips {
   [self.chipsToRemove addObjectsFromArray:chips];
@@ -514,7 +477,6 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   }
   return [selectedChips copy];
 }
-
 
 #pragma mark Notification Listener Methods
 
@@ -547,29 +509,25 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   return self.inputChipViewTextField;
 }
 
-#pragma mark User Interaction
-
-- (void)handleTapRecognizer:(UITapGestureRecognizer *)tap {
-  if (![self.textField isFirstResponder]) {
-    [self.textField becomeFirstResponder];
+-(void)setContentInsets:(UIEdgeInsets)contentInsets {
+  if (UIEdgeInsetsEqualToEdgeInsets(contentInsets, _contentInsets)) {
+    _contentInsets = contentInsets;
   }
-  [self enforceCalculatedScrollViewContentOffset];
+  [self updateLayers];
 }
+
+- (void)updateLayers {
+  
+}
+
+
+
+#pragma mark User Interaction
 
 - (void)enforceCalculatedScrollViewContentOffset {
   [self.scrollView setContentOffset:self.layout.scrollViewContentOffset animated:NO];
 }
 
-- (MDCChipView *)chipAtPoint:(CGPoint)point {
-  MDCChipView *chipAtPoint = nil;
-  for (MDCChipView *chip in self.chips) {
-    if (CGRectContainsPoint(chip.frame, point)) {
-      chipAtPoint = chip;
-      break;
-    }
-  }
-  return chipAtPoint;
-}
 
 #pragma mark Internationalization
 
@@ -624,29 +582,6 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   }
   return result;
 }
-
-// called first
--(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(nonnull UITouch *)touch {
-  NSLog(@"should receive touch");
-  return YES;
-}
-
-// called second
--(BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
-  NSLog(@"should begin");
-  return YES;
-}
-
--(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceivePress:(UIPress *)press {
-  NSLog(@"should receive press");
-  return NO;
-}
-
--(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-  NSLog(@"should recognize simultaneously");
-  return YES;
-}
-
 
 -(BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
   BOOL result = [super beginTrackingWithTouch:touch withEvent:event];
