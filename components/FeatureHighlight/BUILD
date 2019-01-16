@@ -98,7 +98,7 @@ mdc_examples_objc_library(
         ":FeatureHighlight",
         ":FeatureHightlightAccessibilityMutator",
         "//components/Buttons",
-        "//components/Buttons+Theming",
+        "//components/Buttons:Theming",
         "//components/Buttons:ButtonThemer",
         "//components/Collections",
         "//components/Palettes",
