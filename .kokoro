@@ -301,11 +301,13 @@ run_bazel() {
   snapshot_dir="${repo_dir}/snapshot_test_goldens/goldens"
   tmp_img_dir="$(mktemp -d)"
 
-  # Install git lfs if we're performing tests
-  if [ "$COMMAND" == "test" ]; then
-    brew_install git-lfs
-    git lfs install
-    git lfs pull
+  # Install git lfs if we're performing tests on kokoro
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    if [ "$COMMAND" == "test" ]; then
+      brew_install git-lfs
+      git lfs install
+      git lfs pull
+    fi
   fi
 
   bazel $COMMAND $TARGET --xcode_version $xcode_version --ios_minimum_os=8.0 \
