@@ -74,15 +74,14 @@
   plusImage = [plusImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   [containedButton setImage:plusImage forState:UIControlStateNormal];
 
-  MDCRectangleShapeGenerator *raisedShapeGenerator =
-      [[MDCRectangleShapeGenerator alloc] init];
+  MDCRectangleShapeGenerator *raisedShapeGenerator = [[MDCRectangleShapeGenerator alloc] init];
   [raisedShapeGenerator setCorners:[[MDCCutCornerTreatment alloc] initWithCut:8]];
   containedButton.shapeGenerator = raisedShapeGenerator;
 
   [containedButton sizeToFit];
   [containedButton addTarget:self
-                   action:@selector(didTap:)
-         forControlEvents:UIControlEventTouchUpInside];
+                      action:@selector(didTap:)
+            forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:containedButton];
 
   // Disabled raised button
@@ -100,8 +99,8 @@
 
   [disabledContainedButton sizeToFit];
   [disabledContainedButton addTarget:self
-                           action:@selector(didTap:)
-                 forControlEvents:UIControlEventTouchUpInside];
+                              action:@selector(didTap:)
+                    forControlEvents:UIControlEventTouchUpInside];
   [disabledContainedButton setEnabled:NO];
   [self.view addSubview:disabledContainedButton];
 
@@ -127,8 +126,7 @@
   [MDCButtonTypographyThemer applyTypographyScheme:self.typographyScheme toButton:strokedButton];
   [MDCButtonColorThemer applySemanticColorScheme:self.colorScheme toButton:strokedButton];
 
-  MDCSlantedRectShapeGenerator *strokedShapeGenerator =
-      [[MDCSlantedRectShapeGenerator alloc] init];
+  MDCSlantedRectShapeGenerator *strokedShapeGenerator = [[MDCSlantedRectShapeGenerator alloc] init];
   strokedShapeGenerator.slant = 10;
   strokedButton.shapeGenerator = strokedShapeGenerator;
 
@@ -144,22 +142,22 @@
   [disabledStrokedButton setTitle:@"Button" forState:UIControlStateNormal];
   [MDCButtonTypographyThemer applyTypographyScheme:self.typographyScheme
                                           toButton:disabledStrokedButton];
-  [MDCButtonColorThemer applySemanticColorScheme:self.colorScheme
-                                        toButton:disabledStrokedButton];
+  [MDCButtonColorThemer applySemanticColorScheme:self.colorScheme toButton:disabledStrokedButton];
 
   MDCRectangleShapeGenerator *disabledStrokedShapeGenerator =
       [[MDCRectangleShapeGenerator alloc] init];
-  [disabledStrokedShapeGenerator setTopEdge:
-      [[MDCTriangleEdgeTreatment alloc] initWithSize:5 style:MDCTriangleEdgeStyleCut]];
+  [disabledStrokedShapeGenerator
+      setTopEdge:[[MDCTriangleEdgeTreatment alloc] initWithSize:5 style:MDCTriangleEdgeStyleCut]];
   [disabledStrokedShapeGenerator setTopLeftCorner:[[MDCCutCornerTreatment alloc] initWithCut:10]];
-  [disabledStrokedShapeGenerator setTopRightCorner:
-      [[MDCCurvedCornerTreatment alloc] initWithSize:CGSizeMake(5, 20)]];
-  [disabledStrokedShapeGenerator setBottomEdge:
-      [[MDCTriangleEdgeTreatment alloc] initWithSize:5 style:MDCTriangleEdgeStyleHandle]];
-  [disabledStrokedShapeGenerator setBottomRightCorner:
-      [[MDCCutCornerTreatment alloc] initWithCut:5]];
-  [disabledStrokedShapeGenerator setBottomLeftCorner:
-      [[MDCCurvedCornerTreatment alloc] initWithSize:CGSizeMake(10, 5)]];
+  [disabledStrokedShapeGenerator
+      setTopRightCorner:[[MDCCurvedCornerTreatment alloc] initWithSize:CGSizeMake(5, 20)]];
+  [disabledStrokedShapeGenerator
+      setBottomEdge:[[MDCTriangleEdgeTreatment alloc] initWithSize:5
+                                                             style:MDCTriangleEdgeStyleHandle]];
+  [disabledStrokedShapeGenerator
+      setBottomRightCorner:[[MDCCutCornerTreatment alloc] initWithCut:5]];
+  [disabledStrokedShapeGenerator
+      setBottomLeftCorner:[[MDCCurvedCornerTreatment alloc] initWithSize:CGSizeMake(10, 5)]];
   disabledStrokedButton.shapeGenerator = disabledStrokedShapeGenerator;
 
   [disabledStrokedButton sizeToFit];
@@ -190,8 +188,8 @@
   [self.view addSubview:self.floatingButton];
 
   self.buttons = @[
-    containedButton, disabledContainedButton, flatButton, strokedButton,
-    disabledStrokedButton, self.floatingButton
+    containedButton, disabledContainedButton, flatButton, strokedButton, disabledStrokedButton,
+    self.floatingButton
   ];
 
   [self setupShapeExampleViews];

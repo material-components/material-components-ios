@@ -74,9 +74,9 @@ static UIButton *DeleteButton() {
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Chips", @"Choice" ],
-    @"primaryDemo": @NO,
-    @"presentable": @YES,
+    @"breadcrumbs" : @[ @"Chips", @"Choice" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @YES,
   };
 }
 
@@ -89,9 +89,9 @@ static UIButton *DeleteButton() {
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Chips", @"Action" ],
-    @"primaryDemo": @NO,
-    @"presentable": @YES,
+    @"breadcrumbs" : @[ @"Chips", @"Action" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @YES,
   };
 }
 
@@ -104,9 +104,9 @@ static UIButton *DeleteButton() {
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Chips", @"Collections" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Chips", @"Collections" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 
@@ -116,9 +116,9 @@ static UIButton *DeleteButton() {
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Chips", @"Customized" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Chips", @"Customized" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 
@@ -132,9 +132,9 @@ static UIButton *DeleteButton() {
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Chips", @"Filter" ],
-    @"primaryDemo": @NO,
-    @"presentable": @YES,
+    @"breadcrumbs" : @[ @"Chips", @"Filter" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @YES,
   };
 }
 
@@ -148,9 +148,9 @@ static UIButton *DeleteButton() {
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Chips", @"Filter Animated" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Chips", @"Filter Animated" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 
@@ -167,9 +167,9 @@ static UIButton *DeleteButton() {
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Chips", @"Input" ],
-    @"primaryDemo": @NO,
-    @"presentable": @YES,
+    @"breadcrumbs" : @[ @"Chips", @"Input" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @YES,
   };
 }
 
@@ -179,9 +179,9 @@ static UIButton *DeleteButton() {
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Chips", @"Sizing" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Chips", @"Sizing" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 
@@ -199,10 +199,10 @@ static UIButton *DeleteButton() {
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Chips", @"Chips" ],
-    @"description": @"Chips are compact elements that represent an input, attribute, or action.",
-    @"primaryDemo": @YES,
-    @"presentable": @YES,
+    @"breadcrumbs" : @[ @"Chips", @"Chips" ],
+    @"description" : @"Chips are compact elements that represent an input, attribute, or action.",
+    @"primaryDemo" : @YES,
+    @"presentable" : @YES,
   };
 }
 
@@ -216,9 +216,9 @@ static UIButton *DeleteButton() {
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Chips", @"Shaped Chip" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Chips", @"Shaped Chip" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

@@ -15,9 +15,9 @@
 #import <UIKit/UIKit.h>
 #import <WebKit/WebKit.h>
 
-#import "MaterialAppBar.h"
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar+TypographyThemer.h"
+#import "MaterialAppBar.h"
 
 // This demonstrates that a WKWebView with large content as the tracking scroll view is able to
 // scroll as expected, even with the useAdditionalSafeAreaInsetsForWebKitScrollViews flag enabled.
@@ -76,7 +76,7 @@
   WKWebView *webView = [[WKWebView alloc] initWithFrame:self.view.bounds configuration:config];
   [self.view addSubview:webView];
 
-  NSMutableArray *content = [@[@"<html>\n<head></head><body>"] mutableCopy];
+  NSMutableArray *content = [@[ @"<html>\n<head></head><body>" ] mutableCopy];
   for (NSInteger ix = 0; ix < 500; ++ix) {
     [content addObject:@"<p>Hello</p>"];
   }
@@ -87,37 +87,37 @@
     // No need to do anything - additionalSafeAreaInsets will inset our content.
     webView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
   } else {
-  webView.translatesAutoresizingMaskIntoConstraints = NO;
-  [NSLayoutConstraint activateConstraints:
-   @[[NSLayoutConstraint constraintWithItem:webView
-                                  attribute:NSLayoutAttributeTop
-                                  relatedBy:NSLayoutRelationEqual
-                                     toItem:self.topLayoutGuide
-                                  attribute:NSLayoutAttributeBottom
-                                 multiplier:1.0
-                                   constant:0],
-     [NSLayoutConstraint constraintWithItem:webView
-                                  attribute:NSLayoutAttributeBottom
-                                  relatedBy:NSLayoutRelationEqual
-                                     toItem:self.view
-                                  attribute:NSLayoutAttributeBottom
-                                 multiplier:1.0
-                                   constant:0],
-     [NSLayoutConstraint constraintWithItem:webView
-                                  attribute:NSLayoutAttributeLeft
-                                  relatedBy:NSLayoutRelationEqual
-                                     toItem:self.view
-                                  attribute:NSLayoutAttributeLeft
-                                 multiplier:1.0
-                                   constant:0],
-     [NSLayoutConstraint constraintWithItem:webView
-                                  attribute:NSLayoutAttributeRight
-                                  relatedBy:NSLayoutRelationEqual
-                                     toItem:self.view
-                                  attribute:NSLayoutAttributeRight
-                                 multiplier:1.0
-                                   constant:0]
-     ]];
+    webView.translatesAutoresizingMaskIntoConstraints = NO;
+    [NSLayoutConstraint activateConstraints:@[
+      [NSLayoutConstraint constraintWithItem:webView
+                                   attribute:NSLayoutAttributeTop
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:self.topLayoutGuide
+                                   attribute:NSLayoutAttributeBottom
+                                  multiplier:1.0
+                                    constant:0],
+      [NSLayoutConstraint constraintWithItem:webView
+                                   attribute:NSLayoutAttributeBottom
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:self.view
+                                   attribute:NSLayoutAttributeBottom
+                                  multiplier:1.0
+                                    constant:0],
+      [NSLayoutConstraint constraintWithItem:webView
+                                   attribute:NSLayoutAttributeLeft
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:self.view
+                                   attribute:NSLayoutAttributeLeft
+                                  multiplier:1.0
+                                    constant:0],
+      [NSLayoutConstraint constraintWithItem:webView
+                                   attribute:NSLayoutAttributeRight
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:self.view
+                                   attribute:NSLayoutAttributeRight
+                                  multiplier:1.0
+                                    constant:0]
+    ]];
   }
   self.appBar.headerViewController.headerView.trackingScrollView = webView.scrollView;
   [self.appBar addSubviewsToParent];
@@ -143,9 +143,9 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"App Bar", @"WKWebView large content" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"App Bar", @"WKWebView large content" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

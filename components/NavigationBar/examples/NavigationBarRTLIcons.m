@@ -18,11 +18,11 @@
 #import <MDFInternationalization/MDFInternationalization.h>
 
 #import "MaterialIcons+ic_arrow_back.h"
+#import "MaterialIcons+ic_check_circle.h"
 #import "MaterialIcons+ic_info.h"
 #import "MaterialIcons+ic_reorder.h"
-#import "MaterialIcons+ic_check_circle.h"
-#import "MaterialNavigationBar.h"
 #import "MaterialNavigationBar+ColorThemer.h"
+#import "MaterialNavigationBar.h"
 #import "supplemental/NavigationBarTypicalUseExampleSupplemental.h"
 
 @interface NavigationBarRTL : UIViewController
@@ -30,7 +30,6 @@
 @property(nonatomic, strong) MDCNavigationBar *navigationBar;
 
 @end
-
 
 @implementation NavigationBarRTL
 
@@ -64,18 +63,20 @@
               style:UIBarButtonItemStylePlain
              target:nil
              action:nil];
-  UIBarButtonItem *checkCircleButtonItem =
-    [[UIBarButtonItem alloc] initWithImage:[[MDCIcons imageFor_ic_check_circle]
-                                            imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
-                                     style:UIBarButtonItemStylePlain
-                                    target:nil
-                                    action:nil];
+  UIBarButtonItem *checkCircleButtonItem = [[UIBarButtonItem alloc]
+      initWithImage:[[MDCIcons imageFor_ic_check_circle]
+                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+              style:UIBarButtonItemStylePlain
+             target:nil
+             action:nil];
 
   self.navigationBar.tintColor = UIColor.whiteColor;
-  self.navigationItem.rightBarButtonItems = @[ infoButtonItem, reorderButtonItem, checkCircleButtonItem];
+  self.navigationItem.rightBarButtonItems =
+      @[ infoButtonItem, reorderButtonItem, checkCircleButtonItem ];
 
   if (@available(iOS 11.0, *)) {
-    [self.view.safeAreaLayoutGuide.topAnchor constraintEqualToAnchor:self.navigationBar.topAnchor].active = YES;
+    [self.view.safeAreaLayoutGuide.topAnchor constraintEqualToAnchor:self.navigationBar.topAnchor]
+        .active = YES;
   } else {
     [NSLayoutConstraint constraintWithItem:self.topLayoutGuide
                                  attribute:NSLayoutAttributeBottom
@@ -83,7 +84,8 @@
                                     toItem:self.navigationBar
                                  attribute:NSLayoutAttributeTop
                                 multiplier:1.0
-                                  constant:0].active = YES;
+                                  constant:0]
+        .active = YES;
   }
   NSDictionary *viewsBindings = NSDictionaryOfVariableBindings(_navigationBar);
 
@@ -112,9 +114,9 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Navigation Bar", @"Navigation Bar TitleView RTL" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Navigation Bar", @"Navigation Bar TitleView RTL" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

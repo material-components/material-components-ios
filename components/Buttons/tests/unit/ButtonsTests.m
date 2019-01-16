@@ -16,8 +16,8 @@
 
 #import "MaterialButtons.h"
 #import "MaterialShadowElevations.h"
-#import "MaterialShapes.h"
 #import "MaterialShadowLayer.h"
+#import "MaterialShapes.h"
 #import "MaterialTypography.h"
 
 static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
@@ -215,8 +215,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
   TestButton *highlightedButton = [[TestButton alloc] init];
 
   XCTAssertEqualWithAccuracy([selectedButton elevationForState:UIControlStateNormal],
-                             [selectedButton elevationForState:UIControlStateHighlighted],
-                             0.0001,
+                             [selectedButton elevationForState:UIControlStateHighlighted], 0.0001,
                              @"This test assumes that .normal and .highlighted start with the same "
                               "elevation values.");
 
@@ -231,8 +230,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
   [highlightedButton setElevation:75 forState:UIControlStateNormal];
 
   // Then
-  XCTAssertEqual(selectedButton.shadowLayer.elevationAssignmentCount,
-                 selectedButtonElevationCount,
+  XCTAssertEqual(selectedButton.shadowLayer.elevationAssignmentCount, selectedButtonElevationCount,
                  @"Updating an unrelated elevation should not update the layer elevation.");
   XCTAssertEqual(highlightedButtonElevationCount + 1,
                  highlightedButton.shadowLayer.elevationAssignmentCount,
@@ -634,8 +632,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
   [button setElevation:normalElevation forState:UIControlStateNormal];
 
   // Then
-  XCTAssertEqualWithAccuracy([button elevationForState:button.state],
-                             normalElevation,
+  XCTAssertEqualWithAccuracy([button elevationForState:button.state], normalElevation,
                              kEpsilonAccuracy);
 }
 
@@ -878,9 +875,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
     [button setTitleColor:color forState:controlState];
 
     // Then
-    XCTAssertEqualObjects([button titleColorForState:controlState],
-                          color,
-                          @"for control state:%@ ",
+    XCTAssertEqualObjects([button titleColorForState:controlState], color, @"for control state:%@ ",
                           controlStateDescription(controlState));
   }
 }
@@ -899,14 +894,10 @@ static NSString *controlStateDescription(UIControlState controlState) {
   [button setTitleColor:color forState:controlState];
 
   // Then
-  XCTAssertEqualObjects([button titleColorForState:controlState],
-                        normalColor,
-                        @"for control state:%@ ",
-                        controlStateDescription(controlState));
-  XCTAssertNotEqualObjects([button titleColorForState:controlState],
-                           color,
-                           @"for control state:%@ ",
-                           controlStateDescription(controlState));
+  XCTAssertEqualObjects([button titleColorForState:controlState], normalColor,
+                        @"for control state:%@ ", controlStateDescription(controlState));
+  XCTAssertNotEqualObjects([button titleColorForState:controlState], color,
+                           @"for control state:%@ ", controlStateDescription(controlState));
 }
 
 #pragma mark - UIButton state changes
@@ -1038,8 +1029,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
 
   // Then
   XCTAssertTrue(button.mdc_adjustsFontForContentSizeCategory);
-  XCTAssertEqualWithAccuracy(button.titleLabel.font.pointSize,
-                             preferredFont.pointSize,
+  XCTAssertEqualWithAccuracy(button.titleLabel.font.pointSize, preferredFont.pointSize,
                              kEpsilonAccuracy,
                              @"Font size should be equal to MDCFontTextStyleButton's.");
 }
@@ -1050,58 +1040,49 @@ static NSString *controlStateDescription(UIControlState controlState) {
   // Given
   MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectZero];
   [button sizeToFit];
-  CGRect expectedFrame = CGRectMake(0, 0,
-                                    CGRectGetWidth(button.frame) + 15,
-                                    CGRectGetHeight(button.frame) + 21);
+  CGRect expectedFrame =
+      CGRectMake(0, 0, CGRectGetWidth(button.frame) + 15, CGRectGetHeight(button.frame) + 21);
 
   // When
   button.minimumSize = expectedFrame.size;
   [button sizeToFit];
 
   // Then
-  XCTAssertTrue(CGRectEqualToRect(expectedFrame, button.frame),
-                @"\nE: %@\nA: %@",
-                NSStringFromCGRect(expectedFrame),
-                NSStringFromCGRect(button.frame));
+  XCTAssertTrue(CGRectEqualToRect(expectedFrame, button.frame), @"\nE: %@\nA: %@",
+                NSStringFromCGRect(expectedFrame), NSStringFromCGRect(button.frame));
 }
 
 - (void)testSizeThatFitsWithMaximumOnly {
   // Given
   MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectZero];
   [button sizeToFit];
-  CGRect expectedFrame = CGRectMake(0, 0,
-                                    CGRectGetWidth(button.frame) - 7,
-                                    CGRectGetHeight(button.frame) - 3);
+  CGRect expectedFrame =
+      CGRectMake(0, 0, CGRectGetWidth(button.frame) - 7, CGRectGetHeight(button.frame) - 3);
 
   // When
   button.maximumSize = expectedFrame.size;
   [button sizeToFit];
 
   // Then
-  XCTAssertTrue(CGRectEqualToRect(expectedFrame, button.frame),
-                @"\nE: %@\nA: %@",
-                NSStringFromCGRect(expectedFrame),
-                NSStringFromCGRect(button.frame));
+  XCTAssertTrue(CGRectEqualToRect(expectedFrame, button.frame), @"\nE: %@\nA: %@",
+                NSStringFromCGRect(expectedFrame), NSStringFromCGRect(button.frame));
 }
 
 - (void)testSizeThatFitsWithMinimumAndMaximum {
   // Given
   MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectZero];
   [button sizeToFit];
-  CGRect expectedFrame = CGRectMake(0, 0,
-                                    CGRectGetWidth(button.frame) + 21,
-                                    CGRectGetHeight(button.frame) - 4);
+  CGRect expectedFrame =
+      CGRectMake(0, 0, CGRectGetWidth(button.frame) + 21, CGRectGetHeight(button.frame) - 4);
 
   // When
-  button.maximumSize = CGSizeMake(0, CGRectGetHeight(expectedFrame)); // Only bound max height
-  button.minimumSize = CGSizeMake(CGRectGetWidth(expectedFrame), 0); // Only bound min width
+  button.maximumSize = CGSizeMake(0, CGRectGetHeight(expectedFrame));  // Only bound max height
+  button.minimumSize = CGSizeMake(CGRectGetWidth(expectedFrame), 0);   // Only bound min width
   [button sizeToFit];
 
   // Then
-  XCTAssertTrue(CGRectEqualToRect(expectedFrame, button.frame),
-                @"\nE: %@\nA: %@",
-                NSStringFromCGRect(expectedFrame),
-                NSStringFromCGRect(button.frame));
+  XCTAssertTrue(CGRectEqualToRect(expectedFrame, button.frame), @"\nE: %@\nA: %@",
+                NSStringFromCGRect(expectedFrame), NSStringFromCGRect(button.frame));
 }
 
 @end

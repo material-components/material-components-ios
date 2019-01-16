@@ -23,7 +23,7 @@
 + (void)changeTitleColorOfButton:(MDCButton *)button {
   // This ensures title colors will be accessible against the buttons backgrounds.
   UIControlState allControlStates = UIControlStateNormal | UIControlStateHighlighted |
-      UIControlStateDisabled | UIControlStateSelected;
+                                    UIControlStateDisabled | UIControlStateSelected;
   MDFTextAccessibilityOptions options = 0;
   if ([MDFTextAccessibility isLargeForContrastRatios:button.titleLabel.font]) {
     options = MDFTextAccessibilityOptionsLargeFont;
@@ -53,6 +53,5 @@
 + (BOOL)isTransparentColor:(UIColor *)color {
   return !color || [color isEqual:[UIColor clearColor]] || CGColorGetAlpha(color.CGColor) == 0;
 }
-
 
 @end

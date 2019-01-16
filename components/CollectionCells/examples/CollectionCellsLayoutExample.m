@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialTypography.h"
 #import "supplemental/CollectionCellsLayoutExample.h"
+#import "MaterialTypography.h"
 
 @interface SimpleModel : NSObject
 @property(nonatomic, strong, nullable) NSString *text;
@@ -152,8 +152,9 @@ static NSString *const kExampleDetailText =
     cell.accessoryType = MDCCollectionViewCellAccessoryCheckmark;
   }
   if (model.circle) {
-    cell.imageView.image =
-        [self imageWithSize:CGSizeMake(40, 40) color:HEXCOLOR(0x80CBC4) cornerRadius:20];
+    cell.imageView.image = [self imageWithSize:CGSizeMake(40, 40)
+                                         color:HEXCOLOR(0x80CBC4)
+                                  cornerRadius:20];
   }
 
   return cell;
@@ -229,9 +230,9 @@ static NSString *const kExampleDetailText =
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Collection Cells", @"Cell Layout Example" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Collection Cells", @"Cell Layout Example" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

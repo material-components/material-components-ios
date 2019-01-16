@@ -14,9 +14,9 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialAppBar.h"
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar+TypographyThemer.h"
+#import "MaterialAppBar.h"
 
 @interface AppBarTypicalCollectionViewExample : UICollectionViewController
 
@@ -80,9 +80,9 @@
   [self.appBarViewController didMoveToParentViewController:self];
   [MDCAppBarTypographyThemer applyTypographyScheme:self.typographyScheme
                             toAppBarViewController:_appBarViewController];
-  [MDCAppBarColorThemer applyColorScheme:self.colorScheme toAppBarViewController:self.appBarViewController];
+  [MDCAppBarColorThemer applyColorScheme:self.colorScheme
+                  toAppBarViewController:self.appBarViewController];
 }
-
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
@@ -91,9 +91,9 @@
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                            cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-  UICollectionViewCell *cell =
-      [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
-  switch (indexPath.row%3) {
+  UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell"
+                                                                         forIndexPath:indexPath];
+  switch (indexPath.row % 3) {
     case 0:
       cell.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.2 alpha:1];
       break;
@@ -111,8 +111,8 @@
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout*)collectionViewLayout
-  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+                    layout:(UICollectionViewLayout *)collectionViewLayout
+    sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
   CGRect collectionViewFrame = collectionView.frame;
   return CGSizeMake(collectionViewFrame.size.width / 2 - 14, 40);
 }
@@ -127,12 +127,10 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"App Bar", @"Collection View with App bar" ],
-    @"primaryDemo": @NO,
-    @"presentable": @YES,
+    @"breadcrumbs" : @[ @"App Bar", @"Collection View with App bar" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @YES,
   };
 }
 
 @end
-
-

@@ -48,10 +48,11 @@
   }
 
   if (animated) {
-    [UIView animateWithDuration:0.25 animations:^{
-      self.chipView.frame = self.bounds;
-      [self.chipView layoutIfNeeded];
-    }];
+    [UIView animateWithDuration:0.25
+                     animations:^{
+                       self.chipView.frame = self.bounds;
+                       [self.chipView layoutIfNeeded];
+                     }];
   } else {
     _chipView.frame = self.bounds;
   }

@@ -20,9 +20,9 @@
 #import "MaterialIcons+ic_arrow_back.h"
 #import "MaterialIcons+ic_info.h"
 #import "MaterialIcons+ic_reorder.h"
-#import "MaterialNavigationBar.h"
 #import "MaterialNavigationBar+ColorThemer.h"
 #import "MaterialNavigationBar+TypographyThemer.h"
+#import "MaterialNavigationBar.h"
 #import "supplemental/NavigationBarTypicalUseExampleSupplemental.h"
 
 @interface NavigationBarIconsExample ()
@@ -61,8 +61,7 @@
                                         toNavigationBar:self.navigationBar];
 
   UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc]
-      initWithImage:[[[MDCIcons imageFor_ic_arrow_back]
-                        mdf_imageWithHorizontallyFlippedOrientation]
+      initWithImage:[[[MDCIcons imageFor_ic_arrow_back] mdf_imageWithHorizontallyFlippedOrientation]
                         imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
               style:UIBarButtonItemStylePlain
              target:self
@@ -89,7 +88,8 @@
   self.navigationItem.backBarButtonItem = backButtonItem;
 
   if (@available(iOS 11.0, *)) {
-    [self.view.safeAreaLayoutGuide.topAnchor constraintEqualToAnchor:self.navigationBar.topAnchor].active = YES;
+    [self.view.safeAreaLayoutGuide.topAnchor constraintEqualToAnchor:self.navigationBar.topAnchor]
+        .active = YES;
   } else {
     [NSLayoutConstraint constraintWithItem:self.topLayoutGuide
                                  attribute:NSLayoutAttributeBottom
@@ -97,7 +97,8 @@
                                     toItem:self.navigationBar
                                  attribute:NSLayoutAttributeTop
                                 multiplier:1.0
-                                  constant:0].active = YES;
+                                  constant:0]
+        .active = YES;
   }
   NSDictionary *viewsBindings = NSDictionaryOfVariableBindings(_navigationBar);
 
@@ -128,9 +129,9 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Navigation Bar", @"Navigation Bar With Icons" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Navigation Bar", @"Navigation Bar With Icons" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

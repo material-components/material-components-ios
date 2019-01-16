@@ -82,9 +82,9 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Button Bar", @"Button Bar (Icons)" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Button Bar", @"Button Bar (Icons)" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

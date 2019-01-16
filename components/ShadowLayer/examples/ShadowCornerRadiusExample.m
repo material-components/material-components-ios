@@ -53,7 +53,7 @@ static const CGFloat kShadowElevationsSliderFrameHeight = 27;
     CGRect sliderRect =
         CGRectMake(margin, 140, frame.size.width - margin * 2, kShadowElevationsSliderFrameHeight);
     MDCSlider *sliderControl = [[MDCSlider alloc] initWithFrame:sliderRect];
-    sliderControl.numberOfDiscreteValues = (NSUInteger) kShadowElevationsMax + 1;
+    sliderControl.numberOfDiscreteValues = (NSUInteger)kShadowElevationsMax + 1;
     sliderControl.maximumValue = kShadowElevationsMax;
     sliderControl.value = kShadowElevationsDefault;
     sliderControl.delegate = self;
@@ -116,9 +116,9 @@ static const CGFloat kShadowElevationsSliderFrameHeight = 27;
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Shadow", @"Shadow Corner Radius" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Shadow", @"Shadow Corner Radius" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

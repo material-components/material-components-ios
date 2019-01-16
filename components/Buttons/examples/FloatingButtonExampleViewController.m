@@ -105,9 +105,9 @@ NSString *kMiniButtonLabel = @"Add";
   [self.miniFloatingButton sizeToFit];
 
   CGFloat totalUsedHeight = self.iPadLabel.intrinsicContentSize.height +
-      self.miniFloatingButton.intrinsicContentSize.height +
-      self.defaultFloatingButton.intrinsicContentSize.height +
-      self.largeIconFloatingButton.intrinsicContentSize.height;
+                            self.miniFloatingButton.intrinsicContentSize.height +
+                            self.defaultFloatingButton.intrinsicContentSize.height +
+                            self.largeIconFloatingButton.intrinsicContentSize.height;
 
   CGRect bounds = self.view.bounds;
   if (totalUsedHeight > CGRectGetHeight(bounds)) {
@@ -130,9 +130,8 @@ NSString *kMiniButtonLabel = @"Add";
   }
 
   if (!self.iPadLabel.hidden) {
-    self.iPadLabel.center =
-        CGPointMake(CGRectGetMidX(bounds),
-                    viewYOffset + self.iPadLabel.intrinsicContentSize.height / 2);
+    self.iPadLabel.center = CGPointMake(
+        CGRectGetMidX(bounds), viewYOffset + self.iPadLabel.intrinsicContentSize.height / 2);
     viewYOffset += self.iPadLabel.intrinsicContentSize.height + interViewSpacing;
   }
 
@@ -184,13 +183,16 @@ NSString *kMiniButtonLabel = @"Add";
 
   UITraitCollection *currentTraits = self.traitCollection;
   BOOL sizeClassChanged = currentTraits.horizontalSizeClass != newCollection.horizontalSizeClass ||
-      currentTraits.verticalSizeClass != newCollection.verticalSizeClass;
+                          currentTraits.verticalSizeClass != newCollection.verticalSizeClass;
   if (sizeClassChanged) {
     BOOL isRegularRegular = newCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular &&
-        newCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular;
-    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
-      [self updateFloatingButtonsWhenSizeClassIsRegularRegular:isRegularRegular];
-    } completion:nil];
+                            newCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular;
+    [coordinator
+        animateAlongsideTransition:^(
+            id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
+          [self updateFloatingButtonsWhenSizeClassIsRegularRegular:isRegularRegular];
+        }
+                        completion:nil];
   }
 }
 
@@ -198,9 +200,9 @@ NSString *kMiniButtonLabel = @"Add";
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Buttons", @"Floating Action Button" ],
-    @"primaryDemo": @NO,
-    @"presentable": @YES,
+    @"breadcrumbs" : @[ @"Buttons", @"Floating Action Button" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @YES,
   };
 }
 

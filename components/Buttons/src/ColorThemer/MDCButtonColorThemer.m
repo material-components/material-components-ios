@@ -38,7 +38,7 @@
 
 + (void)resetUIControlStatesForButtonTheming:(nonnull MDCButton *)button {
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
-      UIControlStateHighlighted | UIControlStateDisabled;
+                                 UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     [button setBackgroundColor:nil forState:state];
     [button setTitleColor:nil forState:state];
@@ -50,8 +50,7 @@
   [MDCContainedButtonColorThemer applySemanticColorScheme:colorScheme toButton:raisedButton];
 }
 
-+ (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
-                toButton:(MDCButton *)button {
++ (void)applyColorScheme:(id<MDCColorScheme>)colorScheme toButton:(MDCButton *)button {
   [button setBackgroundColor:colorScheme.primaryColor forState:UIControlStateNormal];
   if ([colorScheme respondsToSelector:@selector(primaryLightColor)]) {
     [button setBackgroundColor:colorScheme.primaryLightColor forState:UIControlStateDisabled];

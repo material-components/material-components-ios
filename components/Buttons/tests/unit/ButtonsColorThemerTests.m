@@ -14,8 +14,8 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialButtons.h"
 #import "MaterialButtons+ColorThemer.h"
+#import "MaterialButtons.h"
 
 static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 
@@ -43,7 +43,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   XCTAssertEqualObjects([button titleColorForState:UIControlStateDisabled],
                         [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38]);
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
-      UIControlStateHighlighted | UIControlStateDisabled;
+                                 UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     if (state == UIControlStateDisabled) {
       continue;  // This state is manually checked above.
@@ -75,7 +75,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   XCTAssertEqualObjects([button titleColorForState:UIControlStateDisabled],
                         [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38]);
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
-      UIControlStateHighlighted | UIControlStateDisabled;
+                                 UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     if (state == UIControlStateDisabled) {
       continue;  // This state is manually checked above.
@@ -110,7 +110,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 
   // Then
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
-      UIControlStateHighlighted | UIControlStateDisabled;
+                                 UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     if (state != UIControlStateDisabled) {
       if ([button titleColorForState:state] != nil) {
@@ -153,7 +153,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 
   // Then
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
-      UIControlStateHighlighted | UIControlStateDisabled;
+                                 UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     if (state != UIControlStateDisabled) {
       if ([button titleColorForState:state] != nil) {
@@ -197,7 +197,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 
   // Then
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
-      UIControlStateHighlighted | UIControlStateDisabled;
+                                 UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     if (state != UIControlStateDisabled) {
       if ([button titleColorForState:state] != nil) {
@@ -236,10 +236,10 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   NSUInteger maximumStateValue =
       UIControlStateSelected | UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
-      XCTAssertEqualObjects([button backgroundColorForState:state], colorScheme.secondaryColor,
-                            @"Background color (%@) is not equal to (%@) for state (%lu).",
-                            [button backgroundColorForState:state], colorScheme.secondaryColor,
-                            (unsigned long)state);
+    XCTAssertEqualObjects([button backgroundColorForState:state], colorScheme.secondaryColor,
+                          @"Background color (%@) is not equal to (%@) for state (%lu).",
+                          [button backgroundColorForState:state], colorScheme.secondaryColor,
+                          (unsigned long)state);
     XCTAssertEqualObjects([button imageTintColorForState:state], colorScheme.onSecondaryColor,
                           @"Image tint color (%@) is not equal to (%@) for state (%lu).",
                           [button imageTintColorForState:state], colorScheme.onSecondaryColor,
