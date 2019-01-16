@@ -465,7 +465,8 @@
     lowestAllowableTextAreaCenterYWithFloatingPlaceholderMinY:(CGFloat)floatingPlaceholderMinY
                                     floatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight
                                                textAreaHeight:(CGFloat)textAreaHeight
-                                               containerStyle:(MDCInputViewContainerStyle)containerStyle
+                                               containerStyle:
+                                                   (MDCInputViewContainerStyle)containerStyle
                                           placeholderCanFloat:(BOOL)placeholderCanFloat {
   if (placeholderCanFloat) {
     CGFloat spaceBetweenPlaceholderAndTextArea = 0;

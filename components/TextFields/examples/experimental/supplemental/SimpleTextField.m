@@ -19,9 +19,9 @@
 
 #import "MDCInputViewContainerStyler.h"
 
+#import "SimpleTextFieldColorSchemeAdapter.h"
 #import "SimpleTextFieldLayout.h"
 #import "SimpleTextFieldLayoutUtils.h"
-#import "SimpleTextFieldColorSchemeAdapter.h"
 
 #import <Foundation/Foundation.h>
 
@@ -42,7 +42,6 @@
 @property(strong, nonatomic) SimpleTextFieldLayout *layout;
 
 @property(strong, nonatomic) MDCInputViewContainerStyler *containerStyler;
-
 
 @property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
 
@@ -201,9 +200,9 @@
 - (void)preLayoutSubviews {
   self.textFieldState = [self determineCurrentTextFieldState];
   self.placeholderState = [self determineCurrentPlaceholderState];
-  SimpleTextFieldColorSchemeAdapter *colorAdapter =
-  [[SimpleTextFieldColorSchemeAdapter alloc] initWithColorScheme:self.containerScheme.colorScheme
-                                                  textFieldState:self.textFieldState];
+  SimpleTextFieldColorSchemeAdapter *colorAdapter = [[SimpleTextFieldColorSchemeAdapter alloc]
+      initWithColorScheme:self.containerScheme.colorScheme
+           textFieldState:self.textFieldState];
   [self applyColorAdapter:colorAdapter];
   [self applyTypographyScheme:self.containerScheme.typographyScheme];
   CGSize fittingSize = CGSizeMake(CGRectGetWidth(self.frame), CGFLOAT_MAX);
@@ -212,11 +211,11 @@
 
 - (void)postLayoutSubviews {
   [self applyContainerViewStyle:self.containerStyle
-                textFieldState:self.textFieldState
-               viewBounds:self.bounds
-      floatingPlaceholderFrame:self.layout.placeholderFrameFloating
-       topRowBottomRowDividerY:self.layout.topRowBottomRowDividerY
-         isFloatingPlaceholder:self.placeholderState == PlaceholderStateFloating];
+                 textFieldState:self.textFieldState
+                     viewBounds:self.bounds
+       floatingPlaceholderFrame:self.layout.placeholderFrameFloating
+        topRowBottomRowDividerY:self.layout.topRowBottomRowDividerY
+          isFloatingPlaceholder:self.placeholderState == PlaceholderStateFloating];
   [self layOutPlaceholderWithState:self.placeholderState];
   self.clearButton.frame = self.layout.clearButtonFrame;
   self.clearButton.hidden = self.layout.clearButtonHidden;
@@ -791,24 +790,24 @@
 #pragma mark Style Management
 
 - (void)applyContainerViewStyle:(MDCInputViewContainerStyle)containerStyle
-              textFieldState:(TextFieldState)textFieldState
-             viewBounds:(CGRect)viewBounds
-    floatingPlaceholderFrame:(CGRect)floatingPlaceholderFrame
-     topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
-       isFloatingPlaceholder:(BOOL)isFloatingPlaceholder {
+                 textFieldState:(TextFieldState)textFieldState
+                     viewBounds:(CGRect)viewBounds
+       floatingPlaceholderFrame:(CGRect)floatingPlaceholderFrame
+        topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
+          isFloatingPlaceholder:(BOOL)isFloatingPlaceholder {
   CGFloat outlineLineWidth = [self outlineLineWidthForState:textFieldState];
-  
+
   [self.containerStyler applyOutlinedStyle:containerStyle == MDCInputViewContainerStyleOutline
-               view:self
-      floatingPlaceholderFrame:floatingPlaceholderFrame
-       topRowBottomRowDividerY:topRowBottomRowDividerY
-         isFloatingPlaceholder:isFloatingPlaceholder
-          outlineLineWidth:outlineLineWidth];
+                                      view:self
+                  floatingPlaceholderFrame:floatingPlaceholderFrame
+                   topRowBottomRowDividerY:topRowBottomRowDividerY
+                     isFloatingPlaceholder:isFloatingPlaceholder
+                          outlineLineWidth:outlineLineWidth];
   CGFloat underlineThickness = [self underlineThicknessWithTextFieldState:textFieldState];
   [self.containerStyler applyFilledStyle:containerStyle == MDCInputViewContainerStyleFilled
-                                       view:self
-                    topRowBottomRowDividerY:topRowBottomRowDividerY
-      underlineThickness:underlineThickness];
+                                    view:self
+                 topRowBottomRowDividerY:topRowBottomRowDividerY
+                      underlineThickness:underlineThickness];
 }
 
 - (CGFloat)outlineLineWidthForState:(TextFieldState)textFieldState {
@@ -856,7 +855,8 @@
   self.clearButtonImageView.tintColor = colorAdapter.clearButtonTintColor;
 
   self.containerStyler.outlinedSublayer.strokeColor = colorAdapter.outlineColor.CGColor;
-  self.containerStyler.filledSublayerUnderline.fillColor = colorAdapter.filledSublayerUnderlineFillColor.CGColor;
+  self.containerStyler.filledSublayerUnderline.fillColor =
+      colorAdapter.filledSublayerUnderlineFillColor.CGColor;
   self.containerStyler.filledSublayer.fillColor = colorAdapter.filledSublayerFillColor.CGColor;
 }
 

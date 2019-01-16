@@ -22,7 +22,6 @@
 
 #import <Foundation/Foundation.h>
 
-
 @implementation SimpleTextFieldColorSchemeAdapter
 
 - (instancetype)initWithColorScheme:(MDCSemanticColorScheme *)colorScheme
@@ -79,4 +78,3 @@
 }
 
 @end
-

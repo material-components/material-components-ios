@@ -18,8 +18,8 @@
 
 #import "MaterialColorScheme.h"
 
-#import "MaterialContainerScheme.h"
 #import "MDCInputViewContainerStyler.h"
+#import "MaterialContainerScheme.h"
 
 /**
  A UITextField subclass that attempts to do the following:
