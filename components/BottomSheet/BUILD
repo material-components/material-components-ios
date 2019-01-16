@@ -75,10 +75,10 @@ mdc_examples_objc_library(
     deps = [
         ":BottomSheet",
         ":ShapeThemer",
-        "//components/Buttons",
         "//components/AppBar",
         "//components/AppBar:ColorThemer",
         "//components/AppBar:TypographyThemer",
+        "//components/Buttons",
         "//components/private/Application",
         "//components/private/ShapeLibrary",
         "//components/private/Shapes",
