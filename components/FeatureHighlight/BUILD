@@ -96,7 +96,7 @@ mdc_examples_objc_library(
         ":ColorThemer",
         ":TypographyThemer",
         ":FeatureHighlight",
-        ":FeatureHightlightAccessibilityMutator",
+        ":FeatureHighlightAccessibilityMutator",
         "//components/Buttons",
         "//components/Buttons:Theming",
         "//components/Buttons:ButtonThemer",
