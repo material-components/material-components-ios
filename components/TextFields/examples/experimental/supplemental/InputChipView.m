@@ -456,17 +456,6 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   [self setNeedsLayout];
 }
 
-- (void)removeSelectedChips {
-  NSMutableArray *chipsToRemove = [NSMutableArray array];
-  for (MDCChipView *chip in self.chips) {
-    if (chip.isSelected) {
-      [chipsToRemove addObject:chip];
-    }
-  }
-//  for (MDCChipView *chip in chipsToRemove) {
-//  }
-  [self.chips removeObjectsInArray:chipsToRemove];
-}
 
 - (NSArray<MDCChipView *> *)selectedChips {
   NSMutableArray *selectedChips = [NSMutableArray new];
@@ -510,7 +499,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 }
 
 -(void)setContentInsets:(UIEdgeInsets)contentInsets {
-  if (UIEdgeInsetsEqualToEdgeInsets(contentInsets, _contentInsets)) {
+  if (!UIEdgeInsetsEqualToEdgeInsets(contentInsets, _contentInsets)) {
     _contentInsets = contentInsets;
   }
   [self updateLayers];
