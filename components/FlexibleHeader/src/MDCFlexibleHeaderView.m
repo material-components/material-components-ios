@@ -398,9 +398,9 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
   UIView *hitView = [super hitTest:point withEvent:event];
 
-  // Forwards taps to the scroll view.
-  if (hitView == self || (_contentView != nil && hitView == _contentView)
-      || [_forwardingViews containsObject:hitView]) {
+  if (hitView == self || (_contentView != nil && hitView == _contentView)) {
+    hitView = nil;
+  } else if ([_forwardingViews containsObject:hitView]) {
     hitView = _trackingScrollView;
   }
 
