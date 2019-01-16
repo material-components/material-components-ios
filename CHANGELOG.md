@@ -19,7 +19,7 @@ API.
 MDCDialogPresentationController can now be themed using the Theming extension
 provided by MaterialDialogs+Theming.h.
 
-```objectivec
+```objc
 MDCAlertController *materialAlertController =
     [MDCAlertController alertControllerWithTitle:@"Title" message:@"Message"];
 MDCDialogPresentationController *presentationController =
