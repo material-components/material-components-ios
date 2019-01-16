@@ -50,7 +50,7 @@ mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
         ":CollectionCells",
-        "//components/Collections"
+        "//components/Collections",
         "//components/Typography",
     ],
 )
