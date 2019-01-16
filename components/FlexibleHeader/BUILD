@@ -69,9 +69,9 @@ mdc_extension_objc_library(
 mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
-        ":FlexibleHeader",
         ":CanAlwaysExpandToMaximumHeight",
         ":ColorThemer",
+        ":FlexibleHeader",
         "//components/Buttons",
         "//components/PageControl",
         "//components/Palettes",
