@@ -1,18 +1,35 @@
-# #develop#
+# 74.0.0
 
-Replace this text with a summarized description of this release's contents.
+This major release introduces Material Theming extensions for
+MDCDialogPresentationController and a change to the behavior of MDCButton's
+`backgroundColorForState:` API. Improved support for [the bazel build
+system](https://bazel.build/) is introduced for several components.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+MDCButton's `backgroundColorForState:` behavior now matches that of UIButton's
+`forState:` properties. Any state without an explicitly-set value will
+fall-back to the value for the `UIControlStateNormal` state. This does not
+change the appearance of MDCButton, but does change the values returned by the
+API.
 
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
-## API changes
+### Material Theming for MDCDialogPresentationController
+MDCDialogPresentationController can now be themed using the Theming extension
+provided by MaterialDialogs+Theming.h.
 
-## Component changes
+```objectivec
+MDCAlertController *materialAlertController =
+    [MDCAlertController alertControllerWithTitle:@"Title" message:@"Message"];
+MDCDialogPresentationController *presentationController =
+    materialAlertController.mdc_dialogPresentationController;
+
+MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+[presentationController applyThemeWithScheme:self.containerScheme];
+```
+
+Replace this text with example code for each new feature.
 
 ## Changes
 
@@ -64,6 +81,10 @@ Replace this text with example code for each new feature.
 * [Add example to BUILD file (#6270)](https://github.com/material-components/material-components-ios/commit/42cb68ccb56186c2956863b30216ac22360802f5) (Cody Weaver)
 * [Reduce flakiness of layer timing test. (#6338)](https://github.com/material-components/material-components-ios/commit/4c6aedc7088c97ab32429256c18fb3bf9bd9f30c) (Robert Moore)
 
+### Palettes
+
+* [Add swift examples to BUIlD file (#6265)](https://github.com/material-components/material-components-ios/commit/a98c4ecd4febb51592e1bc8f357c67bb76634504) (Cody Weaver)
+
 ### ProgressView
 
 * [Add ProgressView examples to BUILD file (#6328)](https://github.com/material-components/material-components-ios/commit/dfbf7802b7364377e9cab703cbda1adff88cc113) (Andrew Overton)
@@ -106,7 +127,6 @@ Replace this text with example code for each new feature.
 
 ## Multi-component changes
 
-* [Add swift examples to BUIlD file (#6265)](https://github.com/material-components/material-components-ios/commit/a98c4ecd4febb51592e1bc8f357c67bb76634504) (Cody Weaver)
 * [Don't execute "empty" tests in each class.   (#6192)](https://github.com/material-components/material-components-ios/commit/6cf0926d1e3f4b4ac350d93fe1fdd316d818f381) (Robert Moore)
 * [Make pod install work on Cocoapods 1.6.0.beta.2 (#5966)](https://github.com/material-components/material-components-ios/commit/056e4701f0ee64459f129977cfced71e4f864740) (Andrew Overton)
 * [Use MDCChipTextFieldScrollView to replace leftView functionality for flexibility and extensibility (proof of concept) (#6167)](https://github.com/material-components/material-components-ios/commit/b6d752d52c3feba0fbf9505c876070c907aa2e99) (Wenyu Zhang)
