@@ -38,9 +38,9 @@
 - (void)setSlant:(CGFloat)slant {
   _slant = slant;
 
-  _rectangleGenerator.topLeftCornerOffset     = CGPointMake( slant, 0);
-  _rectangleGenerator.topRightCornerOffset    = CGPointMake( slant, 0);
-  _rectangleGenerator.bottomLeftCornerOffset  = CGPointMake(-slant, 0);
+  _rectangleGenerator.topLeftCornerOffset = CGPointMake(slant, 0);
+  _rectangleGenerator.topRightCornerOffset = CGPointMake(slant, 0);
+  _rectangleGenerator.bottomLeftCornerOffset = CGPointMake(-slant, 0);
   _rectangleGenerator.bottomRightCornerOffset = CGPointMake(-slant, 0);
 }
 
