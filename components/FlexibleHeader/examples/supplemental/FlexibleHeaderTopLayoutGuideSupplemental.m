@@ -26,9 +26,9 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Flexible Header", @"Utilizing Top Layout Guide" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Flexible Header", @"Utilizing Top Layout Guide" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 
@@ -47,9 +47,7 @@
 - (void)setupScrollViewContent {
   UIColor *color = MDCPalette.greyPalette.tint700;
   UIView *scrollViewContent =
-      [[UIView alloc] initWithFrame:CGRectMake(0,
-                                               0,
-                                               self.scrollView.frame.size.width,
+      [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.scrollView.frame.size.width,
                                                self.scrollView.frame.size.height * 2)];
   scrollViewContent.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
