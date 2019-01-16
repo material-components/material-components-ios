@@ -94,27 +94,27 @@ mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
         ":ColorThemer",
-        ":TypographyThemer",
         ":FeatureHighlight",
         ":FeatureHighlightAccessibilityMutator",
+        ":TypographyThemer",
         "//components/Buttons",
-        "//components/Buttons:Theming",
         "//components/Buttons:ButtonThemer",
+        "//components/Buttons:Theming",
         "//components/Collections",
         "//components/Palettes",
+        "//components/Typography",
         "//components/private/Math",
         "//components/schemes/Color",
         "//components/schemes/Container",
         "//components/schemes/Typography",
-        "//components/Typography",
     ],
 )
 
 mdc_examples_swift_library(
     name = "SwiftExamples",
     deps = [
-        ":FeatureHighlight",
         ":ColorThemer",
+        ":FeatureHighlight",
         ":TypographyThemer",
         "//components/Buttons",
         "//components/Buttons:ButtonThemer",
