@@ -404,7 +404,8 @@ static CGFloat const kTextToEnterPlaceholderLength = 16.0f;
   if (self.chipsContainerView == scrollView && [self.chipViews containsObject:chipView]) {
     chipView.selected = !chipView.selected;
     NSInteger index = [self.mutableChipViews indexOfObject:chipView];
-    if ([self.chipTextFieldDelegate respondsToSelector:@selector(chipTextField:didTapChipView:atIndex:)]) {
+    if ([self.chipTextFieldDelegate respondsToSelector:@selector(chipTextField:
+                                                                didTapChipView:atIndex:)]) {
       [self.chipTextFieldDelegate chipTextField:self didTapChipView:chipView atIndex:index];
     }
   }
