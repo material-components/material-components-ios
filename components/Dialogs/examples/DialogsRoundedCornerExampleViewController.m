@@ -14,7 +14,7 @@
 
 #import "DialogsRoundedCornerExampleViewController.h"
 #import "MaterialButtons.h"
-#import "MaterialDialogs.h"
+#import "MaterialDialogs+Theming.h"
 
 @interface DialogsRoundedCornerSimpleController : UIViewController
 
@@ -63,6 +63,7 @@
 
 @property(nonatomic, strong) MDCFlatButton *presentButton;
 @property(nonatomic, strong) MDCDialogTransitionController *transitionController;
+@property(nonatomic, strong) MDCContainerScheme *containerScheme;
 
 @end
 
@@ -70,6 +71,7 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  self.containerScheme = [[MDCContainerScheme alloc] init];
 
   // We must create and store a strong reference to the transitionController.
   // A presented view controller will set this object as its transitioning delegate.
@@ -109,9 +111,9 @@
 
   // ensure shadow/tracking layer matches the dialog's corner radius
   MDCDialogPresentationController *controller = viewController.mdc_dialogPresentationController;
-  controller.dialogCornerRadius = viewController.view.layer.cornerRadius;
+  [controller applyThemeWithScheme:self.containerScheme];
 
-  [self presentViewController:viewController animated:YES completion:NULL];
+  [self presentViewController:viewController animated:YES completion:nil];
 }
 
 #pragma mark - CatalogByConvention

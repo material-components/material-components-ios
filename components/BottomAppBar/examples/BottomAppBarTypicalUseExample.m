@@ -17,6 +17,7 @@
 #import "MaterialBottomAppBar+ColorThemer.h"
 #import "MaterialBottomAppBar.h"
 #import "MaterialButtons+Theming.h"
+#import "MaterialContainerScheme.h"
 
 #import "supplemental/BottomAppBarTypicalUseSupplemental.h"
 

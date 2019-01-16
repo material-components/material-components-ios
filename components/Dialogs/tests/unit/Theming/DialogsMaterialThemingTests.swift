@@ -172,4 +172,23 @@ class DialogsMaterialThemingTests: XCTestCase {
                    colorScheme.onPrimaryColor.withAlphaComponent(inkOpacity))
     XCTAssertEqual(button.imageTintColor(for: .normal), colorScheme.onPrimaryColor)
   }
+
+  func testMDCDialogPresentationControllerTheming() {
+    let alert: MDCAlertController = MDCAlertController(title: "Title", message: "Message")
+    guard let presentationController = alert.mdc_dialogPresentationController else {
+      XCTAssert(false, "alert.mdc_dialogPresentationController should not be nil")
+      return
+    }
+    let scheme: MDCContainerScheme = MDCContainerScheme()
+    let colorScheme = MDCSemanticColorScheme()
+
+    presentationController.applyTheme(withScheme: scheme)
+
+    // Color
+    XCTAssertEqual(presentationController.scrimColor, colorScheme.primaryColor)
+
+    // Other properties
+    XCTAssertEqual(presentationController.dialogCornerRadius, kCornerRadius, accuracy: 0.001)
+    XCTAssertEqual(presentationController.dialogElevation, ShadowElevation.dialog)
+  }
 }

@@ -19,6 +19,8 @@ load(
     "mdc_examples_swift_library",
     "mdc_extension_objc_library",
     "mdc_objc_library",
+    "mdc_snapshot_objc_library",
+    "mdc_snapshot_test",
     "mdc_public_objc_library",
     "mdc_unit_test_suite",
 )
@@ -193,4 +195,21 @@ mdc_unit_test_suite(
     deps = [
         ":unit_test_sources",
     ],
+)
+
+mdc_snapshot_objc_library(
+    name = "snapshot_test_lib",
+    asset_catalogs = [
+        "tests/snapshot/resources/ChipsSnapshotTests.xcassets/ic_cancel.imageset",
+        "tests/snapshot/resources/ChipsSnapshotTests.xcassets/ic_mask.imageset",
+    ],
+    deps = [
+      ":Chips",
+      ":Theming",
+    ],
+)
+
+mdc_snapshot_test(
+    name = "snapshot_tests",
+    deps = [":snapshot_test_lib"],
 )
