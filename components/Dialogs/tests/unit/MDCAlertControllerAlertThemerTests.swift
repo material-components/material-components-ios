@@ -17,6 +17,8 @@ import XCTest
 import MaterialComponents.MaterialShadowElevations
 import MaterialComponents.MaterialDialogs
 import MaterialComponents.MaterialDialogs_DialogThemer
+import MaterialComponents.MaterialColorScheme
+import MaterialComponents.MaterialTypographyScheme
 
 class MDCAlertControllerAlertThemerTests: XCTestCase {
 
