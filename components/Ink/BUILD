@@ -14,6 +14,7 @@
 
 load(
     "//:material_components_ios.bzl",
+    "mdc_examples_objc_library",
     "mdc_extension_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
@@ -48,6 +49,15 @@ mdc_objc_library(
     includes = ["src/private"],
     visibility = ["//visibility:private"],
     deps = [":Ink"],
+)
+
+mdc_examples_objc_library(
+    name = "ObjcExamples",
+    deps = [
+        ":Ink",
+        "//components/Palettes",
+        "//components/Typography",
+    ],
 )
 
 mdc_objc_library(
