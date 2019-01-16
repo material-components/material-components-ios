@@ -70,7 +70,7 @@ mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
         ":FlexibleHeader",
-        ":CanAlwaysExampleToMaximumHeight",
+        ":CanAlwaysExpandToMaximumHeight",
         ":ColorThemer",
         "//components/Buttons",
         "//components/PageControl",
