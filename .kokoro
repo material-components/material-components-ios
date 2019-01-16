@@ -301,17 +301,19 @@ run_bazel() {
   snapshot_dir="${repo_dir}/snapshot_test_goldens/goldens"
   tmp_img_dir="$(mktemp -d)"
 
-  # Install git lfs if we're performing tests
-  if [ "$COMMAND" == "test" ]; then
-    brew_install git-lfs
-    git lfs install
-    git lfs pull
+  # Install git lfs if we're performing tests on kokoro
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    if [ "$COMMAND" == "test" ]; then
+      brew_install git-lfs
+      git lfs install
+      git lfs pull
 
-    # Reset the simulators to prepare for hosted snapshot tests
-    sim_cleaner_tmp=$(mktemp -d)
-    git clone https://github.com/material-foundation/ios-simulator-utils.git "$sim_cleaner_tmp"
-    source "${sim_cleaner_tmp}/scripts/cleanup_simulators.sh"
-    perform_pre_test_cleanup "iPhone"
+      # Reset the simulators to prepare for hosted snapshot tests
+      sim_cleaner_tmp=$(mktemp -d)
+      git clone https://github.com/material-foundation/ios-simulator-utils.git "$sim_cleaner_tmp"
+      source "${sim_cleaner_tmp}/scripts/cleanup_simulators.sh"
+      perform_pre_test_cleanup "iPhone"
+    fi
   fi
 
   bazel $COMMAND $TARGET --xcode_version $xcode_version --ios_minimum_os=8.0 \
