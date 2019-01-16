@@ -59,12 +59,14 @@ static CGFloat const kTextToEnterPlaceholderLength = 16.0f;
 
 #pragma mark - Public API
 
-- (void)appendChipWithText:(NSString *)text {
+- (MDCChipView *)appendChipWithText:(NSString *)text {
   MDCChipView *chipView = [[MDCChipView alloc] init];
   chipView.titleLabel.text = text;
   chipView.translatesAutoresizingMaskIntoConstraints = NO;
 
   [self appendChipView:chipView];
+
+  return chipView;
 }
 
 - (void)appendChipView:(MDCChipView *)chipView {

@@ -35,11 +35,8 @@
               atIndex:(NSInteger)index;
 
 - (void)chipTextField:(MDCChipTextField *)chipTextField
-    didSelectChipView:(MDCChipView *)chipView
+       didTapChipView:(MDCChipView *)chipView
               atIndex:(NSInteger)index;
-- (void)chipTextField:(MDCChipTextField *)chipTextField
-    didDeselectChipView:(MDCChipView *)chipView
-                atIndex:(NSInteger)index;
 
 @end
 
@@ -52,7 +49,7 @@
 @interface MDCChipTextField : MDCTextField
 
 /**
- The chip views in the textfield.
+ The chip views in the textfield with order.
  */
 @property(nonatomic, readonly, copy) NSArray<MDCChipView *> *chipViews;
 
@@ -82,14 +79,6 @@
 
  @param text The string to display in the chip.
  */
-- (void)appendChipWithText:(nonnull NSString *)text NS_SWIFT_NAME(appendChip(text:));
-
-/**
- Set a chip view at particular index to be selected or not.
-
- @param selected selection status to set
- @param index The index of the chip view to set the selection status
- */
-- (void)setChipViewSelected:(BOOL)selected atIndex:(NSInteger)index;
+- (MDCChipView *)appendChipWithText:(nonnull NSString *)text NS_SWIFT_NAME(appendChip(text:));
 
 @end
