@@ -15,8 +15,8 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialColorScheme.h"
-#import "MaterialTabs.h"
 #import "MaterialTabs+ColorThemer.h"
+#import "MaterialTabs.h"
 
 @interface TabBarViewControllerInterfaceBuilderExample : MDCTabBarViewController
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
@@ -64,10 +64,10 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Tab Bar", @"TabBarViewController Interface Builder" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
-    @"storyboardName": @"TabBarViewControllerInterfaceBuilderExample"
+    @"breadcrumbs" : @[ @"Tab Bar", @"TabBarViewController Interface Builder" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
+    @"storyboardName" : @"TabBarViewControllerInterfaceBuilderExample"
   };
 }
 
