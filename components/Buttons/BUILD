@@ -110,37 +110,37 @@ mdc_objc_library(
 mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
-        ":Buttons",
         ":ButtonThemer",
+        ":Buttons",
         ":ColorThemer",
         ":ShapeThemer",
         ":Theming",
         ":TypographyThemer",
+        "//components/Typography",
+        "//components/private/Math",
         "//components/private/ShapeLibrary",
         "//components/private/Shapes",
-        "//components/private/Math",
         "//components/schemes/Color",
         "//components/schemes/Container",
         "//components/schemes/Shape",
         "//components/schemes/Typography",
-        "//components/Typography",
     ],
 )
 
 mdc_examples_swift_library(
     name = "SwiftExamples",
     deps = [
-        ":Buttons",
         ":ButtonThemer",
+        ":Buttons",
         ":ColorThemer",
         ":ShapeThemer",
         ":Theming",
         ":TypographyThemer",
+        "//components/Typography",
         "//components/schemes/Color",
         "//components/schemes/Container",
         "//components/schemes/Shape",
         "//components/schemes/Typography",
-        "//components/Typography",
     ],
 )
 

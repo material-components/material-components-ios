@@ -80,8 +80,8 @@ mdc_extension_objc_library(
 mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
-        ":Tabs",
         ":ColorThemer",
+        ":Tabs",
         ":TypographyThemer",
         "//components/AppBar",
         "//components/AppBar:ColorThemer",
@@ -99,15 +99,15 @@ mdc_examples_objc_library(
 mdc_examples_swift_library(
     name = "SwiftExamples",
     deps = [
-        ":Tabs",
         ":ColorThemer",
+        ":Tabs",
         "//components/AppBar",
         "//components/AppBar:ColorThemer",
         "//components/AppBar:TypographyThemer",
         "//components/Buttons",
         "//components/Buttons:ButtonThemer",
-        "//components/schemes/Color",
         "//components/Palettes",
+        "//components/schemes/Color",
         "//components/schemes/Typography",
     ],
 )

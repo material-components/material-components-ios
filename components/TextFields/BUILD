@@ -98,12 +98,12 @@ mdc_objc_library(
 
 mdc_snapshot_objc_library(
     name = "snapshot_test_lib",
+    asset_catalogs = [
+        "tests/snapshot/resources/TextFieldsSnapshotTests.xcassets/ic_done.imageset",
+        "tests/snapshot/resources/TextFieldsSnapshotTests.xcassets/ic_search.imageset",
+    ],
     sdk_frameworks = [
         "CoreGraphics",
-    ],
-    asset_catalogs = [
-      "tests/snapshot/resources/TextFieldsSnapshotTests.xcassets/ic_done.imageset",
-      "tests/snapshot/resources/TextFieldsSnapshotTests.xcassets/ic_search.imageset",
     ],
     deps = [
         ":ColorThemer",
