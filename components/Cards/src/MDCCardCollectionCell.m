@@ -14,8 +14,8 @@
 
 #import "MDCCardCollectionCell.h"
 
-#import "MaterialMath.h"
 #import "MaterialIcons+ic_check_circle.h"
+#import "MaterialMath.h"
 #import "MaterialShapes.h"
 
 static const CGFloat MDCCardCellCornerRadiusDefault = 4;
@@ -30,7 +30,7 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 @property(nonatomic, readonly, strong) MDCShapedShadowLayer *layer;
 @end
 
-@implementation MDCCardCollectionCell  {
+@implementation MDCCardCollectionCell {
   NSMutableDictionary<NSNumber *, NSNumber *> *_shadowElevations;
   NSMutableDictionary<NSNumber *, UIColor *> *_shadowColors;
   NSMutableDictionary<NSNumber *, NSNumber *> *_borderWidths;
@@ -72,7 +72,8 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 - (void)commonMDCCardCollectionCellInit {
   if (_inkView == nil) {
     _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
-    _inkView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+    _inkView.autoresizingMask =
+        (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     _inkView.usesLegacyInkRipple = NO;
     _inkView.layer.zPosition = FLT_MAX;
     [self addSubview:_inkView];
@@ -82,8 +83,8 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
     _selectedImageView = [[UIImageView alloc] init];
     _selectedImageView.layer.zPosition = _inkView.layer.zPosition - 1;
     _selectedImageView.autoresizingMask =
-    (UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin |
-     UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin);
+        (UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin |
+         UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin);
     [self.contentView addSubview:_selectedImageView];
     _selectedImageView.hidden = YES;
   }
@@ -168,17 +169,13 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
           [self.inkView startTouchBeganAnimationAtPoint:_lastTouch completion:nil];
         } else {
           [self.inkView cancelAllAnimationsAnimated:NO];
-          [self.inkView startTouchBeganAtPoint:self.center
-                                      animated:NO
-                                withCompletion:nil];
+          [self.inkView startTouchBeganAtPoint:self.center animated:NO withCompletion:nil];
         }
       }
       break;
     }
     case MDCCardCellStateNormal: {
-      [self.inkView startTouchEndAtPoint:_lastTouch
-                                animated:animated
-                          withCompletion:nil];
+      [self.inkView startTouchEndAtPoint:_lastTouch animated:animated withCompletion:nil];
       break;
     }
     case MDCCardCellStateHighlighted: {
@@ -379,33 +376,32 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
   switch (verticalImageAlignment) {
     case MDCCardCellVerticalImageAlignmentTop:
       yAlignment =
-          MDCCardCellSelectedImagePadding + CGRectGetHeight(self.selectedImageView.frame)/2;
+          MDCCardCellSelectedImagePadding + CGRectGetHeight(self.selectedImageView.frame) / 2;
       break;
     case MDCCardCellVerticalImageAlignmentCenter:
-      yAlignment = CGRectGetHeight(self.bounds)/2;
+      yAlignment = CGRectGetHeight(self.bounds) / 2;
       break;
     case MDCCardCellVerticalImageAlignmentBottom:
       yAlignment = CGRectGetHeight(self.bounds) - MDCCardCellSelectedImagePadding -
-          CGRectGetHeight(self.selectedImageView.frame)/2;
+                   CGRectGetHeight(self.selectedImageView.frame) / 2;
       break;
   }
 
   switch (horizontalImageAlignment) {
     case MDCCardCellHorizontalImageAlignmentLeft:
       xAlignment =
-          MDCCardCellSelectedImagePadding + CGRectGetWidth(self.selectedImageView.frame)/2;
+          MDCCardCellSelectedImagePadding + CGRectGetWidth(self.selectedImageView.frame) / 2;
       break;
     case MDCCardCellHorizontalImageAlignmentCenter:
-      xAlignment = CGRectGetWidth(self.bounds)/2;
+      xAlignment = CGRectGetWidth(self.bounds) / 2;
       break;
     case MDCCardCellHorizontalImageAlignmentRight:
       xAlignment = CGRectGetWidth(self.bounds) - MDCCardCellSelectedImagePadding -
-          CGRectGetWidth(self.selectedImageView.frame)/2;
+                   CGRectGetWidth(self.selectedImageView.frame) / 2;
       break;
   }
 
-  self.selectedImageView.center = CGPointMake(xAlignment,
-                                              yAlignment);
+  self.selectedImageView.center = CGPointMake(xAlignment, yAlignment);
 }
 
 - (void)setImageTintColor:(UIColor *)imageTintColor forState:(MDCCardCellState)state {

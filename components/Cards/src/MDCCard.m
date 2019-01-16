@@ -63,8 +63,8 @@ static const BOOL MDCCardIsInteractableDefault = YES;
 
   if (_inkView == nil) {
     _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
-    _inkView.autoresizingMask = (UIViewAutoresizingFlexibleWidth |
-                                 UIViewAutoresizingFlexibleHeight);
+    _inkView.autoresizingMask =
+        (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     _inkView.usesLegacyInkRipple = NO;
     _inkView.layer.zPosition = FLT_MAX;
     [self addSubview:_inkView];
