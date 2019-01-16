@@ -18,6 +18,9 @@ import UIKit
 import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialBottomAppBar
 import MaterialComponents.MaterialBottomAppBar_ColorThemer
+import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialColorScheme
+import MaterialComponents.MaterialTypographyScheme
 import MaterialComponents.MaterialButtons_ButtonThemer
 
 class BottomAppBarTypicalUseSwiftExample: UIViewController {
