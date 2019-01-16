@@ -27,7 +27,6 @@ static const CGFloat kOutlinedContainerStyleCornerRadius = (CGFloat)4.0;
 
 static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
 
-
 @interface MDCInputViewContainerStyler ()
 
 - (UIBezierPath *)outlinePathWithViewBounds:(CGRect)viewBounds
@@ -40,12 +39,11 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
                                          topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
                                               underlineThickness:(CGFloat)underlineThickness;
 
-
 @end
 
 @implementation MDCInputViewContainerStyler
 
--(instancetype)init {
+- (instancetype)init {
   self = [super init];
   if (self) {
     [self setUpOutlineSublayer];
@@ -57,7 +55,7 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
 - (void)setUpOutlineSublayer {
   self.outlinedSublayer = [[CAShapeLayer alloc] init];
   self.outlinedSublayer.fillColor = [UIColor clearColor].CGColor;
-//  self.outlinedSublayer.lineWidth = [self outlineLineWidthForState:self.textFieldState];
+  //  self.outlinedSublayer.lineWidth = [self outlineLineWidthForState:self.textFieldState];
 }
 
 - (void)setUpFilledSublayer {
@@ -67,13 +65,12 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
   [self.filledSublayer addSublayer:self.filledSublayerUnderline];
 }
 
-
 - (void)applyOutlinedStyle:(BOOL)isOutlined
-                      view:(UIView *)view
-  floatingPlaceholderFrame:(CGRect)floatingPlaceholderFrame
-   topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
-     isFloatingPlaceholder:(BOOL)isFloatingPlaceholder
-          outlineLineWidth:(CGFloat)outlineLineWidth {
+                        view:(UIView *)view
+    floatingPlaceholderFrame:(CGRect)floatingPlaceholderFrame
+     topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
+       isFloatingPlaceholder:(BOOL)isFloatingPlaceholder
+            outlineLineWidth:(CGFloat)outlineLineWidth {
   if (!isOutlined) {
     [self.outlinedSublayer removeFromSuperlayer];
     return;
@@ -91,28 +88,27 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
 }
 
 - (void)applyFilledStyle:(BOOL)isFilled
-              view:(UIView *)view
- topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
-      underlineThickness:(CGFloat)underlineThickness {
+                       view:(UIView *)view
+    topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
+         underlineThickness:(CGFloat)underlineThickness {
   if (!isFilled) {
     [self.filledSublayer removeFromSuperlayer];
     return;
   }
-  
+
   UIBezierPath *filledSublayerPath =
-  [self filledSublayerPathWithTextFieldBounds:view.bounds
-                                         topRowBottomRowDividerY:topRowBottomRowDividerY];
+      [self filledSublayerPathWithTextFieldBounds:view.bounds
+                          topRowBottomRowDividerY:topRowBottomRowDividerY];
   UIBezierPath *filledSublayerUnderlinePath =
-  [self filledSublayerUnderlinePathWithTextFieldBounds:view.bounds
-                                                  topRowBottomRowDividerY:topRowBottomRowDividerY
-                                                       underlineThickness:underlineThickness];
+      [self filledSublayerUnderlinePathWithTextFieldBounds:view.bounds
+                                   topRowBottomRowDividerY:topRowBottomRowDividerY
+                                        underlineThickness:underlineThickness];
   self.filledSublayer.path = filledSublayerPath.CGPath;
   self.filledSublayerUnderline.path = filledSublayerUnderlinePath.CGPath;
   if (self.filledSublayer.superlayer != view.layer) {
     [view.layer insertSublayer:self.filledSublayer atIndex:0];
   }
 }
-
 
 #pragma mark Path Drawing
 
@@ -126,28 +122,28 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
   CGFloat textFieldWidth = CGRectGetWidth(viewBounds);
   CGFloat sublayerMinY = 0;
   CGFloat sublayerMaxY = topRowBottomRowDividerY;
-  
+
   CGPoint startingPoint = CGPointMake(radius, sublayerMinY);
   CGPoint topRightCornerPoint1 = CGPointMake(textFieldWidth - radius, sublayerMinY);
   [path moveToPoint:startingPoint];
   if (isFloatingPlaceholder) {
     CGFloat leftLineBreak =
-    CGRectGetMinX(floatingPlaceholderFrame) - kFloatingPlaceholderOutlineSidePadding;
+        CGRectGetMinX(floatingPlaceholderFrame) - kFloatingPlaceholderOutlineSidePadding;
     CGFloat rightLineBreak =
-    CGRectGetMaxX(floatingPlaceholderFrame) + kFloatingPlaceholderOutlineSidePadding;
+        CGRectGetMaxX(floatingPlaceholderFrame) + kFloatingPlaceholderOutlineSidePadding;
     [path addLineToPoint:CGPointMake(leftLineBreak, sublayerMinY)];
     [path moveToPoint:CGPointMake(rightLineBreak, sublayerMinY)];
     [path addLineToPoint:CGPointMake(rightLineBreak, sublayerMinY)];
   } else {
     [path addLineToPoint:topRightCornerPoint1];
   }
-  
+
   CGPoint topRightCornerPoint2 = CGPointMake(textFieldWidth, sublayerMinY + radius);
   [self addTopRightCornerToPath:path
                       fromPoint:topRightCornerPoint1
                         toPoint:topRightCornerPoint2
                      withRadius:radius];
-  
+
   CGPoint bottomRightCornerPoint1 = CGPointMake(textFieldWidth, sublayerMaxY - radius);
   CGPoint bottomRightCornerPoint2 = CGPointMake(textFieldWidth - radius, sublayerMaxY);
   [path addLineToPoint:bottomRightCornerPoint1];
@@ -155,7 +151,7 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
                          fromPoint:bottomRightCornerPoint1
                            toPoint:bottomRightCornerPoint2
                         withRadius:radius];
-  
+
   CGPoint bottomLeftCornerPoint1 = CGPointMake(radius, sublayerMaxY);
   CGPoint bottomLeftCornerPoint2 = CGPointMake(0, sublayerMaxY - radius);
   [path addLineToPoint:bottomLeftCornerPoint1];
@@ -163,7 +159,7 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
                         fromPoint:bottomLeftCornerPoint1
                           toPoint:bottomLeftCornerPoint2
                        withRadius:radius];
-  
+
   CGPoint topLeftCornerPoint1 = CGPointMake(0, sublayerMinY + radius);
   CGPoint topLeftCornerPoint2 = CGPointMake(radius, sublayerMinY);
   [path addLineToPoint:topLeftCornerPoint1];
@@ -171,7 +167,7 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
                      fromPoint:topLeftCornerPoint1
                        toPoint:topLeftCornerPoint2
                     withRadius:radius];
-  
+
   return path;
 }
 
@@ -183,18 +179,18 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
   CGFloat textFieldWidth = CGRectGetWidth(viewBounds);
   CGFloat sublayerMinY = 0;
   CGFloat sublayerMaxY = topRowBottomRowDividerY;
-  
+
   CGPoint startingPoint = CGPointMake(topRadius, sublayerMinY);
   CGPoint topRightCornerPoint1 = CGPointMake(textFieldWidth - topRadius, sublayerMinY);
   [path moveToPoint:startingPoint];
   [path addLineToPoint:topRightCornerPoint1];
-  
+
   CGPoint topRightCornerPoint2 = CGPointMake(textFieldWidth, sublayerMinY + topRadius);
   [self addTopRightCornerToPath:path
                       fromPoint:topRightCornerPoint1
                         toPoint:topRightCornerPoint2
                      withRadius:topRadius];
-  
+
   CGPoint bottomRightCornerPoint1 = CGPointMake(textFieldWidth, sublayerMaxY - bottomRadius);
   CGPoint bottomRightCornerPoint2 = CGPointMake(textFieldWidth - bottomRadius, sublayerMaxY);
   [path addLineToPoint:bottomRightCornerPoint1];
@@ -202,7 +198,7 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
                          fromPoint:bottomRightCornerPoint1
                            toPoint:bottomRightCornerPoint2
                         withRadius:bottomRadius];
-  
+
   CGPoint bottomLeftCornerPoint1 = CGPointMake(bottomRadius, sublayerMaxY);
   CGPoint bottomLeftCornerPoint2 = CGPointMake(0, sublayerMaxY - bottomRadius);
   [path addLineToPoint:bottomLeftCornerPoint1];
@@ -210,7 +206,7 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
                         fromPoint:bottomLeftCornerPoint1
                           toPoint:bottomLeftCornerPoint2
                        withRadius:bottomRadius];
-  
+
   CGPoint topLeftCornerPoint1 = CGPointMake(0, sublayerMinY + topRadius);
   CGPoint topLeftCornerPoint2 = CGPointMake(topRadius, sublayerMinY);
   [path addLineToPoint:topLeftCornerPoint1];
@@ -218,7 +214,7 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
                      fromPoint:topLeftCornerPoint1
                        toPoint:topLeftCornerPoint2
                     withRadius:topRadius];
-  
+
   return path;
 }
 
@@ -229,18 +225,18 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
   CGFloat textFieldWidth = CGRectGetWidth(viewBounds);
   CGFloat sublayerMaxY = topRowBottomRowDividerY;
   CGFloat sublayerMinY = sublayerMaxY - underlineThickness;
-  
+
   CGPoint startingPoint = CGPointMake(0, sublayerMinY);
   CGPoint topRightCornerPoint1 = CGPointMake(textFieldWidth, sublayerMinY);
   [path moveToPoint:startingPoint];
   [path addLineToPoint:topRightCornerPoint1];
-  
+
   CGPoint topRightCornerPoint2 = CGPointMake(textFieldWidth, sublayerMinY);
   [self addTopRightCornerToPath:path
                       fromPoint:topRightCornerPoint1
                         toPoint:topRightCornerPoint2
                      withRadius:0];
-  
+
   CGPoint bottomRightCornerPoint1 = CGPointMake(textFieldWidth, sublayerMaxY);
   CGPoint bottomRightCornerPoint2 = CGPointMake(textFieldWidth, sublayerMaxY);
   [path addLineToPoint:bottomRightCornerPoint1];
@@ -248,7 +244,7 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
                          fromPoint:bottomRightCornerPoint1
                            toPoint:bottomRightCornerPoint2
                         withRadius:0];
-  
+
   CGPoint bottomLeftCornerPoint1 = CGPointMake(0, sublayerMaxY);
   CGPoint bottomLeftCornerPoint2 = CGPointMake(0, sublayerMaxY);
   [path addLineToPoint:bottomLeftCornerPoint1];
@@ -256,7 +252,7 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
                         fromPoint:bottomLeftCornerPoint1
                           toPoint:bottomLeftCornerPoint2
                        withRadius:0];
-  
+
   CGPoint topLeftCornerPoint1 = CGPointMake(0, sublayerMinY);
   CGPoint topLeftCornerPoint2 = CGPointMake(0, sublayerMinY);
   [path addLineToPoint:topLeftCornerPoint1];
@@ -264,7 +260,7 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
                      fromPoint:topLeftCornerPoint1
                        toPoint:topLeftCornerPoint2
                     withRadius:0];
-  
+
   return path;
 }
 

@@ -21,15 +21,14 @@
 //#import "MaterialContainerScheme.h"
 
 /**
- MDCInputViewContainerStyle dictates what type of text field it will be from a cosmetic standpoint. The values
- are derived from the styles outlined in the Material Guidelines for Text Fields.
+ MDCInputViewContainerStyle dictates what type of text field it will be from a cosmetic standpoint.
+ The values are derived from the styles outlined in the Material Guidelines for Text Fields.
  */
 typedef NS_ENUM(NSUInteger, MDCInputViewContainerStyle) {
   MDCInputViewContainerStyleNone,
   MDCInputViewContainerStyleFilled,
   MDCInputViewContainerStyleOutline,
 };
-
 
 @interface MDCInputViewContainerStyler : NSObject
 
@@ -38,15 +37,15 @@ typedef NS_ENUM(NSUInteger, MDCInputViewContainerStyle) {
 @property(strong, nonatomic) CAShapeLayer *filledSublayerUnderline;
 
 - (void)applyOutlinedStyle:(BOOL)isOutlined
-                      view:(UIView *)view
-  floatingPlaceholderFrame:(CGRect)floatingPlaceholderFrame
-   topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
-     isFloatingPlaceholder:(BOOL)isFloatingPlaceholder
-          outlineLineWidth:(CGFloat)outlineLineWidth;
+                        view:(UIView *)view
+    floatingPlaceholderFrame:(CGRect)floatingPlaceholderFrame
+     topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
+       isFloatingPlaceholder:(BOOL)isFloatingPlaceholder
+            outlineLineWidth:(CGFloat)outlineLineWidth;
 
 - (void)applyFilledStyle:(BOOL)isFilled
-                    view:(UIView *)view
- topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
-      underlineThickness:(CGFloat)underlineThickness;
+                       view:(UIView *)view
+    topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
+         underlineThickness:(CGFloat)underlineThickness;
 
 @end
