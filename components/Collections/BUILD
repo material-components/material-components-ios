@@ -53,11 +53,7 @@ mdc_examples_objc_library(
 mdc_examples_swift_library(
     name = "SwiftExamples",
     deps = [
-        ":Dialogs",
-        ":DialogThemer",
-        ":Theming",
-        "//components/Collections",
-        "//components/schemes/Container",
+        ":Collections",
     ],
 )
 
