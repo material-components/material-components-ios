@@ -17,6 +17,7 @@
 #import "MaterialApplication.h"
 #import "MaterialCollections.h"
 #import "MaterialColorScheme.h"
+#import "MaterialDialogs+Theming.h"
 #import "MaterialDialogs.h"
 #import "MaterialTypographyScheme.h"
 #import "supplemental/DialogWithPreferredContentSizeExampleViewController.h"
@@ -24,8 +25,7 @@
 #pragma mark - DialogsDismissingExampleViewController Interfaces
 
 @interface DialogsDismissingExampleViewController : MDCCollectionViewController
-@property(nonatomic, strong, nullable) MDCSemanticColorScheme *colorScheme;
-@property(nonatomic, strong, nullable) MDCTypographyScheme *typographyScheme;
+@property(nonatomic, strong, nullable) MDCContainerScheme *containerScheme;
 @property(nonatomic, strong, nullable) NSArray *modes;
 @property(nonatomic, strong) MDCDialogTransitionController *transitionController;
 @end
@@ -47,9 +47,10 @@
 - (id)init {
   self = [super init];
   if (self) {
-    self.colorScheme =
+    self.containerScheme = [[MDCContainerScheme alloc] init];
+    self.containerScheme.colorScheme =
         [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-    self.typographyScheme = [[MDCTypographyScheme alloc] init];
+    self.containerScheme.typographyScheme = [[MDCTypographyScheme alloc] init];
   }
   return self;
 }
@@ -98,6 +99,7 @@
 
   MDCDialogPresentationController *presentationController =
       viewController.mdc_dialogPresentationController;
+  [presentationController applyThemeWithScheme:self.containerScheme];
   if (presentationController) {
     presentationController.dismissOnBackgroundTap = NO;
   }
@@ -122,8 +124,8 @@
       [storyboard instantiateViewControllerWithIdentifier:identifier];
   viewController.modalPresentationStyle = UIModalPresentationCustom;
   viewController.transitioningDelegate = self.transitionController;
-  viewController.colorScheme = self.colorScheme;
-  viewController.typographyScheme = self.typographyScheme;
+  viewController.colorScheme = self.containerScheme.colorScheme;
+  viewController.typographyScheme = self.containerScheme.typographyScheme;
   [self presentViewController:viewController animated:YES completion:NULL];
 }
 

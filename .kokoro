@@ -14,18 +14,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Fail on any error.
+# Fail on any error
 set -e
 
 if [ -n "$KOKORO_BUILD_NUMBER" ]; then
-  # Import source methods for managing GitHub comments
-  scripts_dir='github/repo/scripts/lib'
+  repo_dir='github/repo'
 else
-  scripts_dir="$(dirname $0)/scripts/lib"
+  repo_dir="$(dirname $0)"
 fi
+
+repo_dir="$(cd $repo_dir; pwd)"
+scripts_dir="${repo_dir}/scripts/lib"
 
 source "${scripts_dir}/github_comments.sh"
 source "${scripts_dir}/select_xcode.sh"
+source "${scripts_dir}/package_managers.sh"
 
 # To install homebrew formulas at specific versions we need to point directly
 # to the desired sha in the homebrew formula repository.
@@ -57,6 +60,8 @@ fix_bazel_imports() {
     find "${stashed_dir}"components/private/*/src -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
     find "${stashed_dir}"components/*/src -type f -name '*.h' -exec perl -pi -e "$1" {} + || true
     find "${stashed_dir}"components/*/src -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/schemes/*/src -type f -name '*.h' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/schemes/*/src -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
   }
 
   stashed_dir=""
@@ -79,9 +84,11 @@ fix_bazel_imports() {
   rewrite_examples "s/import MaterialComponentsBeta.Material(.+)_(.+)/import components_\1_\2 \/\/ Beta/"
   rewrite_examples "s/import MaterialComponentsBeta.Material(.+)/import components_\1_\1 \/\/ Beta/"
   rewrite_examples "s/import MaterialComponents.Material(.+)/import components_\1_\1/"
+  rewrite_examples "s/import MDFTextAccessibility/import material_text_accessibility_ios_MDFTextAccessibility/"
   rewrite_source "s/import <Motion(.+)\/Motion.+\.h>/import \"Motion\1.h\"/"
   rewrite_source "s/import <MDFTextAccessibility\/MDFTextAccessibility\.h>/import \"MDFTextAccessibility.h\"/"
-  rewrite_source "s/import <MaterialComponents\/Material(.+)\.h>/import\/\*framework import\*\/ \"Material\1.h\"/"
+  rewrite_source "s/import <MaterialComponents\/Material(.+)\.h>/import\/\*Material prefix framework import\*\/ \"Material\1.h\"/"
+  rewrite_source "s/import <MaterialComponents\/MDC(.+)\.h>/import\/\*MDC prefix framework import\*\/ \"MDC\1.h\"/"
   rewrite_tests "s/import MDFTextAccessibility/import material_text_accessibility_ios_MDFTextAccessibility/"
   rewrite_tests "s/import MDFInternationalization/import material_internationalization_ios_MDFInternationalization/"
   stashed_dir="$(pwd)/"
@@ -103,9 +110,11 @@ fix_bazel_imports() {
     rewrite_examples "s/import components_(.+)_\1/import MaterialComponents.Material\1/"
     rewrite_examples "s/import components_(.+)_(.+) \/\/ Beta/import MaterialComponentsBeta.Material\1_\2/"
     rewrite_examples "s/import components_(.+)_(.+)/import MaterialComponents.Material\1_\2/"
+    rewrite_examples "s/import material_text_accessibility_ios_MDFTextAccessibility/import MDFTextAccessibility/"
     rewrite_source "s/import \"Motion(.+)\.h\"/import <Motion\1\/Motion\1.h>/"
     rewrite_source "s/import \"MDFTextAccessibility\.h\"/import <MDFTextAccessibility\/MDFTextAccessibility.h>/"
-    rewrite_source "s/import\/\*framework import\*\/ \"Material(.+)\.h\"/import <MaterialComponents\/Material\1\.h>/"
+    rewrite_source "s/import\/\*Material prefix framework import\*\/ \"Material(.+)\.h\"/import <MaterialComponents\/Material\1\.h>/"
+    rewrite_source "s/import\/\*MDC prefix framework import\*\/ \"MDC(.+)\.h\"/import <MaterialComponents\/MDC\1\.h>/"
     rewrite_tests "s/import material_text_accessibility_ios_MDFTextAccessibility/import MDFTextAccessibility/"
     rewrite_tests "s/import material_internationalization_ios_MDFInternationalization/import MDFInternationalization/"
   }
@@ -134,7 +143,7 @@ upload_bazel_test_artifacts() {
     done
   }
 
-  brew install rename
+  brew_install rename
 
   # rename all test.log to sponge_log.log and then copy them to the kokoro
   # artifacts directory.
@@ -288,7 +297,29 @@ run_bazel() {
     # Especially in the event of failure, we want our test artifacts to be uploaded.
     trap upload_bazel_test_artifacts EXIT
   fi
-  bazel $COMMAND $TARGET --xcode_version $xcode_version --ios_minimum_os=8.0 --ios_multi_cpus=i386,x86_64 $extra_args $verbosity_args
+
+  snapshot_dir="${repo_dir}/snapshot_test_goldens/goldens"
+  tmp_img_dir="$(mktemp -d)"
+
+  # Install git lfs if we're performing tests on kokoro
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    if [ "$COMMAND" == "test" ]; then
+      brew_install git-lfs
+      git lfs install
+      git lfs pull
+
+      # Reset the simulators to prepare for hosted snapshot tests
+      sim_cleaner_tmp=$(mktemp -d)
+      git clone https://github.com/material-foundation/ios-simulator-utils.git "$sim_cleaner_tmp"
+      source "${sim_cleaner_tmp}/scripts/cleanup_simulators.sh"
+      perform_pre_test_cleanup "iPhone"
+    fi
+  fi
+
+  bazel $COMMAND $TARGET --xcode_version $xcode_version --ios_minimum_os=8.0 \
+    --ios_multi_cpus=i386,x86_64 $extra_args $verbosity_args \
+    --test_env="FB_REFERENCE_IMAGE_DIR=$snapshot_dir" \
+    --test_env="IMAGE_DIFF_DIR=$tmp_img_dir"
 }
 
 run_cocoapods() {
@@ -304,11 +335,11 @@ run_cocoapods() {
     # Move into our cloned repo
     cd github/repo
 
-    gem install xcpretty cocoapods --no-document --quiet
+    gem_install xcpretty cocoapods
     pod --version
 
     # Install git-lfs
-    brew install git-lfs
+    brew_install git-lfs
     git lfs install
     git lfs pull
   fi
@@ -366,10 +397,8 @@ generate_website() {
 
     ./scripts/build_site.sh
 
-    gem update --system
-    gem install bundler --no-document --quiet
-    brew update
-    brew install yarn --without-node
+    gem_install bundler
+    brew_install yarn --without-node
   fi
 
   cd docsite-generator
@@ -408,7 +437,7 @@ generate_apidiff() {
     cd github/repo
 
     # Install sourcekitten, a dependency of the apidiff tool
-    brew install "$SOURCEKITTEN_FORMULA"
+    brew_install "$SOURCEKITTEN_FORMULA"
 
     sourcekitten version
   fi

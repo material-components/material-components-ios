@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "ChipsExamplesSupplemental.h"
+#import "supplemental/ChipsExamplesSupplemental.h"
 
 #import "MaterialChips+ShapeThemer.h"
 #import "MaterialChips+TypographyThemer.h"

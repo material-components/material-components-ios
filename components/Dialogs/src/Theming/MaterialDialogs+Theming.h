@@ -13,3 +13,4 @@
 // limitations under the License.
 
 #import "MDCAlertController+MaterialTheming.h"
+#import "MDCDialogPresentationController+MaterialTheming.h"

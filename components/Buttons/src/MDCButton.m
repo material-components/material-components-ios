@@ -544,7 +544,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   if ((state & UIControlStateHighlighted) == UIControlStateHighlighted) {
     state = state & ~UIControlStateDisabled;
   }
-  return _backgroundColors[@(state)];
+
+  return _backgroundColors[@(state)] ?: _backgroundColors[@(UIControlStateNormal)];
 }
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor forState:(UIControlState)state {
@@ -663,22 +664,15 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 #pragma mark - Private methods
 
-- (UIColor *)currentBackgroundColor {
-  UIColor *color = _backgroundColors[@(self.state)];
-  if (color) {
-    return color;
-  }
-  return [self backgroundColorForState:UIControlStateNormal];
-}
-
 /**
  The background color that a user would see for this button. If self.backgroundColor is not
  transparent, then returns that. Otherwise, returns self.underlyingColorHint.
  @note If self.underlyingColorHint is not set, then this method will return nil.
  */
 - (UIColor *)effectiveBackgroundColor {
-  if (![self isTransparentColor:self.currentBackgroundColor]) {
-    return self.currentBackgroundColor;
+  UIColor *backgroundColor = [self backgroundColorForState:self.state];
+  if (![self isTransparentColor:backgroundColor]) {
+    return backgroundColor;
   } else {
     return self.underlyingColorHint;
   }
@@ -755,7 +749,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (void)updateBackgroundColor {
   // When shapeGenerator is unset then self.layer.shapedBackgroundColor sets the layer's
   // backgroundColor. Whereas when shapeGenerator is set the sublayer's fillColor is set.
-  self.layer.shapedBackgroundColor = self.currentBackgroundColor;
+  self.layer.shapedBackgroundColor = [self backgroundColorForState:self.state];
   [self updateDisabledTitleColor];
 }
 

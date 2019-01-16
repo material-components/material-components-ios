@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #import <XCTest/XCTest.h>
-#import "MDCAbstractTextFieldSnapshotTests.h"
+#import "supplemental/MDCAbstractTextFieldSnapshotTests.h"
 
 @interface MDCAbstractTextFieldSnapshotTests (Testing)
 - (BOOL)shouldTestExecute;
@@ -114,7 +114,9 @@
   [super setUp];
 
   self.fakeTest = [[MDCAbstractTextFieldSnapshotTestsFake alloc] init];
+  self.fakeTest.shouldExecuteEmptyTests = YES;
   self.hookingFakeTest = [[MDCAbstractTextFieldSnapshotTestsHookingFake alloc] init];
+  self.hookingFakeTest.shouldExecuteEmptyTests = YES;
 }
 
 - (void)tearDown {
@@ -137,6 +139,21 @@
   XCTAssertTrue(self.hookingFakeTest.willGenerateSnapshotAndVerifyCalled);
 }
 
+- (void)testTestTextFieldEmptyShouldNotExecute {
+  // Given
+  self.fakeTest.shouldExecuteEmptyTests = NO;
+  self.hookingFakeTest.shouldExecuteEmptyTests = NO;
+
+  // When
+  [self.fakeTest testTextFieldEmpty];
+  [self.hookingFakeTest testTextFieldEmpty];
+
+  // Then
+  XCTAssertFalse(self.fakeTest.generateSnapshotAndVerifyCalled);
+  XCTAssertFalse(self.hookingFakeTest.generateSnapshotAndVerifyCalled);
+  XCTAssertFalse(self.hookingFakeTest.willGenerateSnapshotAndVerifyCalled);
+}
+
 - (void)testTestTextFieldEmptyIsEditing {
   // When
   [self.fakeTest testTextFieldEmptyIsEditing];
@@ -148,6 +165,21 @@
   XCTAssertTrue(self.hookingFakeTest.willGenerateSnapshotAndVerifyCalled);
 }
 
+- (void)testTestTextFieldEmptyShouldNotExecuteIsEditing {
+  // Given
+  self.fakeTest.shouldExecuteEmptyTests = NO;
+  self.hookingFakeTest.shouldExecuteEmptyTests = NO;
+
+  // When
+  [self.fakeTest testTextFieldEmptyIsEditing];
+  [self.hookingFakeTest testTextFieldEmptyIsEditing];
+
+  // Then
+  XCTAssertFalse(self.fakeTest.generateSnapshotAndVerifyCalled);
+  XCTAssertFalse(self.hookingFakeTest.generateSnapshotAndVerifyCalled);
+  XCTAssertFalse(self.hookingFakeTest.willGenerateSnapshotAndVerifyCalled);
+}
+
 - (void)testTestTextFieldEmptyDisabled {
   // When
   [self.fakeTest testTextFieldEmptyDisabled];
@@ -157,6 +189,21 @@
   XCTAssertTrue(self.fakeTest.generateSnapshotAndVerifyCalled);
   XCTAssertTrue(self.hookingFakeTest.generateSnapshotAndVerifyCalled);
   XCTAssertTrue(self.hookingFakeTest.willGenerateSnapshotAndVerifyCalled);
+}
+
+- (void)testTestTextFieldEmptyShouldNotExecuteDisabled {
+  // Given
+  self.fakeTest.shouldExecuteEmptyTests = NO;
+  self.hookingFakeTest.shouldExecuteEmptyTests = NO;
+
+  // When
+  [self.fakeTest testTextFieldEmptyDisabled];
+  [self.hookingFakeTest testTextFieldEmptyDisabled];
+
+  // Then
+  XCTAssertFalse(self.fakeTest.generateSnapshotAndVerifyCalled);
+  XCTAssertFalse(self.hookingFakeTest.generateSnapshotAndVerifyCalled);
+  XCTAssertFalse(self.hookingFakeTest.willGenerateSnapshotAndVerifyCalled);
 }
 
 - (void)testTestTextFieldWithShortPlaceholderText {
