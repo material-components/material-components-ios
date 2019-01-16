@@ -436,17 +436,13 @@ static inline UIColor *MDCTextInputUnderlineColor() {
         [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[border]|"
                                                 options:0
                                                 metrics:nil
-                                                  views:@{
-                                                    @"border" : _borderView
-                                                  }];
+                                                  views:@{@"border" : _borderView}];
     constraints = [constraints
         arrayByAddingObjectsFromArray:[NSLayoutConstraint
                                           constraintsWithVisualFormat:@"H:|[border]|"
                                                               options:0
                                                               metrics:nil
-                                                                views:@{
-                                                                  @"border" : _borderView
-                                                                }]];
+                                                                views:@{@"border" : _borderView}]];
     for (NSLayoutConstraint *constraint in constraints) {
       constraint.priority = UILayoutPriorityDefaultLow;
     }
@@ -513,9 +509,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 #pragma mark - Clear Button Implementation
 
 - (void)updateClearButton {
-  UIImage *image = self.clearButton.currentImage
-                       ? self.clearButton.currentImage
-                       : [self drawnClearButtonImage];
+  UIImage *image =
+      self.clearButton.currentImage ? self.clearButton.currentImage : [self drawnClearButtonImage];
 
   if (![self.clearButton imageForState:UIControlStateNormal]) {
     [self.clearButton setImage:image forState:UIControlStateNormal];
