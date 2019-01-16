@@ -103,9 +103,9 @@ mdc_examples_swift_library(
         ":ColorThemer",
         ":TypographyThemer",
         "//components/FlexibleHeader:CanAlwaysExpandToMaximumHeight",
+        "//components/Tabs",
         "//components/schemes/Color",
         "//components/schemes/Typography",
-        "//components/Tabs",
     ],
 )
 
