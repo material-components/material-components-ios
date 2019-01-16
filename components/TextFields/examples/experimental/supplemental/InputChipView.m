@@ -118,37 +118,6 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-#pragma mark View Setup
-
-
-- (void)setUpContainerScheme {
-  self.containerScheme = [[MDCContainerScheme alloc] init];
-  self.containerScheme.colorScheme = [[MDCSemanticColorScheme alloc] init];
-  self.containerScheme.typographyScheme = [[MDCTypographyScheme alloc] init];
-}
-
-
-- (void)setUpGradientLayers {
-  UIColor *outerColor = (id)UIColor.clearColor.CGColor;
-  UIColor *innerColor = (id)UIColor.blackColor.CGColor;
-  NSArray *colors = @[outerColor, innerColor, innerColor, outerColor];
-  self.horizontalGradientLayerMask = [CAGradientLayer layer];
-  self.horizontalGradientLayerMask.frame = self.bounds;
-  self.horizontalGradientLayerMask.colors = colors;
-  self.horizontalGradientLayerMask.startPoint = CGPointMake(0.0, 0.5);
-  self.horizontalGradientLayerMask.endPoint = CGPointMake(1.0, 0.5);
-
-  self.verticalGradientLayerMask = [CAGradientLayer layer];
-  self.verticalGradientLayerMask.frame = self.bounds;
-//  self.verticalGradientLayerMask.colors = @[(id)UIColor.clearColor.CGColor,
-//                                            (id)UIColor.blackColor.CGColor,
-//                                            (id)UIColor.blackColor.CGColor,
-//                                            (id)UIColor.clearColor.CGColor];
-  self.verticalGradientLayerMask.colors = colors;
-  self.verticalGradientLayerMask.startPoint = CGPointMake(0.5, 0.0);
-  self.verticalGradientLayerMask.endPoint = CGPointMake(0.5, 1.0);
-}
-
 #pragma mark Setup
 
 - (void)addObservers {
@@ -207,6 +176,30 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   [self.scrollView addSubview:self.textField];
 }
 
+- (void)setUpContainerScheme {
+  self.containerScheme = [[MDCContainerScheme alloc] init];
+  self.containerScheme.colorScheme = [[MDCSemanticColorScheme alloc] init];
+  self.containerScheme.typographyScheme = [[MDCTypographyScheme alloc] init];
+}
+
+
+- (void)setUpGradientLayers {
+  UIColor *outerColor = (id)UIColor.clearColor.CGColor;
+  UIColor *innerColor = (id)UIColor.blackColor.CGColor;
+  NSArray *colors = @[outerColor, innerColor, innerColor, outerColor];
+  self.horizontalGradientLayerMask = [CAGradientLayer layer];
+  self.horizontalGradientLayerMask.frame = self.bounds;
+  self.horizontalGradientLayerMask.colors = colors;
+  self.horizontalGradientLayerMask.startPoint = CGPointMake(0.0, 0.5);
+  self.horizontalGradientLayerMask.endPoint = CGPointMake(1.0, 0.5);
+  
+  self.verticalGradientLayerMask = [CAGradientLayer layer];
+  self.verticalGradientLayerMask.frame = self.bounds;
+  self.verticalGradientLayerMask.colors = colors;
+  self.verticalGradientLayerMask.startPoint = CGPointMake(0.5, 0.0);
+  self.verticalGradientLayerMask.endPoint = CGPointMake(0.5, 1.0);
+}
+
 #pragma mark UIResponder Overrides
 
 -(BOOL)resignFirstResponder {
@@ -214,19 +207,18 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   return [super resignFirstResponder];
 }
 
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  [super touchesBegan:touches withEvent:event];
+  NSLog(@"touches began");
+}
+
+
 #pragma mark UIView Overrides
 
 - (void)layoutSubviews {
   [self preLayoutSubviews];
-  
-
-  
   [super layoutSubviews];
-  
-  
-  
   [self postLayoutSubviews];
-
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
@@ -244,6 +236,80 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   [self setUpLayoutDirection];
 }
 
+-(UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+  UIView *result = [super hitTest:point withEvent:event];
+  NSLog(@"self: %@, scrollViewContainer: %@, scrollView: %@, tapRecognizerView: %@, testField: %@",@(self == result),@(self.scrollViewContainer == result),@(self.scrollView == result), @(self.tapRecognizerView == result), @(self.textField == result));
+  if (result == self.tapRecognizerView) {
+    return self;
+  }
+  return result;
+}
+
+#pragma mark UIControl Overrides
+
+-(BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
+  BOOL result = [super beginTrackingWithTouch:touch withEvent:event];
+  self.lastTouchStartingContentOffset = self.scrollView.contentOffset;
+  self.lastTouchStartingLocation = [touch locationInView:self];
+  //  NSLog(@"begin tracking: %@, radius: %@, pointInside: %@",@(result), @(touch.majorRadius), NSStringFromCGPoint([touch locationInView:self]));
+  return result;
+}
+
+-(BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
+  BOOL result = [super continueTrackingWithTouch:touch withEvent:event];
+  
+  CGPoint location = [touch locationInView:self];
+  CGPoint offsetFromStart = [self offsetOfPoint:location fromPoint:self.lastTouchStartingLocation];
+  //  NSLog(@"offset from start: %@",NSStringFromCGPoint(offsetFromStart));
+  
+  CGPoint offset = self.lastTouchStartingContentOffset;
+  if (self.canChipsWrap) {
+    CGFloat height = CGRectGetHeight(self.frame);
+    offset.y -= offsetFromStart.y;
+    if (offset.y < 0) {
+      offset.y = 0;
+    }
+    if (offset.y + height > self.scrollView.contentSize.height) {
+      offset.y = self.scrollView.contentSize.height - height;
+    }
+    self.scrollView.contentOffset = offset;
+  } else {
+    CGFloat width = CGRectGetWidth(self.frame);
+    offset.x -= offsetFromStart.x;
+    if (offset.x < 0) {
+      offset.x = 0;
+    }
+    if (offset.x + width > self.scrollView.contentSize.width) {
+      offset.x = self.scrollView.contentSize.width - width;
+    }
+  }
+  self.scrollView.contentOffset = offset;
+  
+  return result;
+}
+
+-(void)endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
+  [super endTrackingWithTouch:touch withEvent:event];
+  
+  CGPoint location = [touch locationInView:self];
+  CGPoint offset = [self offsetOfPoint:location fromPoint:self.lastTouchStartingLocation];
+  CGPoint absoluteOffset = [self absoluteOffsetOfOffset:offset];
+  BOOL isProbablyTap = absoluteOffset.x < 15 && absoluteOffset.y < 15;
+  if (isProbablyTap) {
+    if (![self.textField isFirstResponder]) {
+      [self.textField becomeFirstResponder];
+    }
+    [self enforceCalculatedScrollViewContentOffset];
+    //    NSLog(@"ended a tap!");
+  } else {
+    //    NSLog(@"ended a scroll at %@",NSStringFromCGPoint(self.scrollView.contentOffset));
+  }
+  //  NSLog(@"end tracking, radius: %@, pointInside: %@", @(touch.majorRadius), NSStringFromCGPoint([touch locationInView:self]));
+}
+
+-(void)cancelTrackingWithEvent:(UIEvent *)event {
+  [super cancelTrackingWithEvent:event];
+}
 
 #pragma mark Layout
 
@@ -335,7 +401,9 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
                                                @((viewHeight - self.contentInsets.bottom) / viewHeight),
                                                @(viewHeight)];
   // TODO: Figure out how to have both gradients at once
-  
+  // Maybe render both CALayers in a content, get an image from that context,
+  // Create a layer that uses resulting image as its contents
+  // then use that layer as a mask
   if (self.canChipsWrap) {
     self.scrollViewContainer.layer.mask = self.verticalGradientLayerMask;
   } else {
@@ -539,6 +607,26 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   return font;
 }
 
+
+
+
+
+#pragma mark Custom UIView Geometry Methods
+
+- (CGPoint)offsetOfPoint:(CGPoint)point1 fromPoint:(CGPoint)point2 {
+  return CGPointMake(point1.x - point2.x, point1.y - point2.y);
+}
+
+- (CGPoint)absoluteOffsetOfOffset:(CGPoint)offset {
+  if (offset.x < 0) {
+    offset.x = offset.x * -1;
+  }
+  if (offset.y < 0) {
+    offset.y = offset.y * -1;
+  }
+  return offset;
+}
+
 #pragma mark InputChipViewTextFieldDelegate
 
 -(void)inputChipViewTextFieldDidDeleteBackward:(InputChipViewTextField *)textField
@@ -556,101 +644,6 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
       }
     }
   }
-}
-
--(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-  [super touchesBegan:touches withEvent:event];
-  NSLog(@"touches began");
-}
-
--(UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
-  UIView *result = [super hitTest:point withEvent:event];
-  NSLog(@"self: %@, scrollViewContainer: %@, scrollView: %@, tapRecognizerView: %@, testField: %@",@(self == result),@(self.scrollViewContainer == result),@(self.scrollView == result), @(self.tapRecognizerView == result), @(self.textField == result));
-  if (result == self.tapRecognizerView) {
-    return self;
-  }
-  return result;
-}
-
--(BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
-  BOOL result = [super beginTrackingWithTouch:touch withEvent:event];
-
-  self.lastTouchStartingContentOffset = self.scrollView.contentOffset;
-  self.lastTouchStartingLocation = [touch locationInView:self];
-
-//  NSLog(@"begin tracking: %@, radius: %@, pointInside: %@",@(result), @(touch.majorRadius), NSStringFromCGPoint([touch locationInView:self]));
-  return result;
-}
-
--(BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
-  BOOL result = [super continueTrackingWithTouch:touch withEvent:event];
-
-  CGPoint location = [touch locationInView:self];
-  CGPoint offsetFromStart = [self offsetOfPoint:location fromPoint:self.lastTouchStartingLocation];
-//  NSLog(@"offset from start: %@",NSStringFromCGPoint(offsetFromStart));
-
-  CGPoint offset = self.lastTouchStartingContentOffset;
-  if (self.canChipsWrap) {
-    CGFloat height = CGRectGetHeight(self.frame);
-    offset.y -= offsetFromStart.y;
-    if (offset.y < 0) {
-      offset.y = 0;
-    }
-    if (offset.y + height > self.scrollView.contentSize.height) {
-      offset.y = self.scrollView.contentSize.height - height;
-    }
-    self.scrollView.contentOffset = offset;
-  } else {
-    CGFloat width = CGRectGetWidth(self.frame);
-    offset.x -= offsetFromStart.x;
-    if (offset.x < 0) {
-      offset.x = 0;
-    }
-    if (offset.x + width > self.scrollView.contentSize.width) {
-      offset.x = self.scrollView.contentSize.width - width;
-    }
-  }
-  self.scrollView.contentOffset = offset;
-
-  return result;
-}
-
--(void)endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
-  [super endTrackingWithTouch:touch withEvent:event];
-
-  CGPoint location = [touch locationInView:self];
-  CGPoint offset = [self offsetOfPoint:location fromPoint:self.lastTouchStartingLocation];
-  CGPoint absoluteOffset = [self absoluteOffsetOfPoint:offset];
-  BOOL isProbablyTap = absoluteOffset.x < 15 && absoluteOffset.y < 15;
-  if (isProbablyTap) {
-    if (![self.textField isFirstResponder]) {
-      [self.textField becomeFirstResponder];
-    }
-    [self enforceCalculatedScrollViewContentOffset];
-//    NSLog(@"ended a tap!");
-  } else {
-//    NSLog(@"ended a scroll at %@",NSStringFromCGPoint(self.scrollView.contentOffset));
-  }
-//  NSLog(@"end tracking, radius: %@, pointInside: %@", @(touch.majorRadius), NSStringFromCGPoint([touch locationInView:self]));
-}
-
-- (CGPoint)offsetOfPoint:(CGPoint)point1 fromPoint:(CGPoint)point2 {
-  return CGPointMake(point1.x - point2.x, point1.y - point2.y);
-}
-
-- (CGPoint)absoluteOffsetOfPoint:(CGPoint)point {
-  if (point.x < 0) {
-    point.x = point.x * -1;
-  }
-  if (point.y < 0) {
-    point.y = point.y * -1;
-  }
-  return point;
-}
-
-
--(void)cancelTrackingWithEvent:(UIEvent *)event {
-  [super cancelTrackingWithEvent:event];
 }
 
 
