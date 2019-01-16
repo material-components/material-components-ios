@@ -129,7 +129,6 @@ Replace this text with example code for each new feature.
 
 * [Don't execute "empty" tests in each class.   (#6192)](https://github.com/material-components/material-components-ios/commit/6cf0926d1e3f4b4ac350d93fe1fdd316d818f381) (Robert Moore)
 * [Make pod install work on Cocoapods 1.6.0.beta.2 (#5966)](https://github.com/material-components/material-components-ios/commit/056e4701f0ee64459f129977cfced71e4f864740) (Andrew Overton)
-* [Use MDCChipTextFieldScrollView to replace leftView functionality for flexibility and extensibility (proof of concept) (#6167)](https://github.com/material-components/material-components-ios/commit/b6d752d52c3feba0fbf9505c876070c907aa2e99) (Wenyu Zhang)
 * [ran clang-format (#6027)](https://github.com/material-components/material-components-ios/commit/2803125b2c6457bb723ea56455da570e459d6dd5) (Yarden Eitan)
 * [{bazel} Add reusable examples rules. (#6252)](https://github.com/material-components/material-components-ios/commit/f7cf6baeb70c29a8f04c315186de57a49db3ec9e) (Robert Moore)
 
