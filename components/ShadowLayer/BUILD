@@ -43,8 +43,8 @@ mdc_examples_objc_library(
         "//components/AnimationTiming",
         "//components/Buttons",
         "//components/Buttons:ButtonThemer",
-        "//components/Slider",
         "//components/ShadowElevations",
+        "//components/Slider",
     ],
 )
 
@@ -53,8 +53,8 @@ mdc_examples_swift_library(
     deps = [
         ":ShadowLayer",
         "//components/ShadowElevations",
-        "//components/private/Shapes",
         "//components/private/ShapeLibrary",
+        "//components/private/Shapes",
     ],
 )
 

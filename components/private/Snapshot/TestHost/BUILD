@@ -29,12 +29,11 @@ mdc_objc_library(
 
 ios_application(
     name = "TestHost",
-    infoplists = ["TestHost-Info.plist"],
-    families = ["iphone"],
-    bundle_id = "io.material.ios.snapshot",
     testonly = 1,
-    deps = [":test_host_lib"],
+    bundle_id = "io.material.ios.snapshot",
+    families = ["iphone"],
+    infoplists = ["TestHost-Info.plist"],
+    minimum_os_version = "10.0.0",
     visibility = ["//components:__subpackages__"],
-    minimum_os_version = "10.0.0"
+    deps = [":test_host_lib"],
 )
-
