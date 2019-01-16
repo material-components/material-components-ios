@@ -380,8 +380,8 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
       }
 
       // Notify delegate dragging has began.
-      if ([_delegate
-              respondsToSelector:@selector(collectionView:willBeginDraggingItemAtIndexPath:)]) {
+      if ([_delegate respondsToSelector:@selector(collectionView:
+                                            willBeginDraggingItemAtIndexPath:)]) {
         [_delegate collectionView:_collectionView
             willBeginDraggingItemAtIndexPath:_reorderingCellIndexPath];
       }
@@ -405,8 +405,8 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
 
         void (^completionBlock)(BOOL finished) = ^(__unused BOOL finished) {
           // Notify delegate dragging has finished.
-          if ([self.delegate
-                  respondsToSelector:@selector(collectionView:didEndDraggingItemAtIndexPath:)]) {
+          if ([self.delegate respondsToSelector:@selector(collectionView:
+                                                    didEndDraggingItemAtIndexPath:)]) {
             [self.delegate collectionView:self.collectionView
                 didEndDraggingItemAtIndexPath:self->_reorderingCellIndexPath];
           }
@@ -467,24 +467,24 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
     }
 
     // Check delegate for permission to move item.
-    if ([_delegate
-            respondsToSelector:@selector(collectionView:canMoveItemAtIndexPath:toIndexPath:)]) {
+    if ([_delegate respondsToSelector:@selector(collectionView:
+                                          canMoveItemAtIndexPath:toIndexPath:)]) {
       if ([_delegate collectionView:_collectionView
               canMoveItemAtIndexPath:previousIndexPath
                          toIndexPath:newIndexPath]) {
         _reorderingCellIndexPath = newIndexPath;
 
         // Notify delegate that item will move.
-        if ([_delegate respondsToSelector:@selector
-                       (collectionView:willMoveItemAtIndexPath:toIndexPath:)]) {
+        if ([_delegate respondsToSelector:@selector(collectionView:
+                                              willMoveItemAtIndexPath:toIndexPath:)]) {
           [_delegate collectionView:_collectionView
               willMoveItemAtIndexPath:previousIndexPath
                           toIndexPath:newIndexPath];
         }
 
         // Notify delegate item did move.
-        if ([_delegate
-                respondsToSelector:@selector(collectionView:didMoveItemAtIndexPath:toIndexPath:)]) {
+        if ([_delegate respondsToSelector:@selector(collectionView:
+                                              didMoveItemAtIndexPath:toIndexPath:)]) {
           [_delegate collectionView:_collectionView
               didMoveItemAtIndexPath:previousIndexPath
                          toIndexPath:newIndexPath];
@@ -533,8 +533,8 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
           if ([_delegate collectionView:_collectionView
                   canSwipeToDismissSection:_dismissingSection]) {
             // Notify delegate.
-            if ([_delegate
-                    respondsToSelector:@selector(collectionView:willBeginSwipeToDismissSection:)]) {
+            if ([_delegate respondsToSelector:@selector(collectionView:
+                                                  willBeginSwipeToDismissSection:)]) {
               [_delegate collectionView:_collectionView
                   willBeginSwipeToDismissSection:_dismissingSection];
             }
@@ -692,8 +692,8 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
 
   // Notify delegate of dismissed item.
   if (_dismissingCellIndexPath) {
-    if ([_delegate
-            respondsToSelector:@selector(collectionView:didEndSwipeToDismissItemAtIndexPath:)]) {
+    if ([_delegate respondsToSelector:@selector(collectionView:
+                                          didEndSwipeToDismissItemAtIndexPath:)]) {
       [_delegate collectionView:_collectionView
           didEndSwipeToDismissItemAtIndexPath:_dismissingCellIndexPath];
     }
@@ -762,8 +762,8 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
 
   // Notify delegate of panned index path cancellation.
   if (_dismissingCellIndexPath) {
-    if ([_delegate
-            respondsToSelector:@selector(collectionView:didCancelSwipeToDismissItemAtIndexPath:)]) {
+    if ([_delegate respondsToSelector:@selector(collectionView:
+                                          didCancelSwipeToDismissItemAtIndexPath:)]) {
       [_delegate collectionView:_collectionView
           didCancelSwipeToDismissItemAtIndexPath:_dismissingCellIndexPath];
     }
