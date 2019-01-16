@@ -14,8 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialAppBar.h"
 #import "MaterialAppBar+ColorThemer.h"
+#import "MaterialAppBar.h"
 
 @interface AppBarImageryExample : UITableViewController
 @property(nonatomic, strong) MDCAppBarViewController *appBarViewController;
@@ -53,10 +53,10 @@
 
   // Create our custom image view and add it to the header view.
   UIImageView *imageView = [[UIImageView alloc]
-      initWithImage:
-          [UIImage imageNamed:@"mdc_theme"
-                                   inBundle:[NSBundle bundleForClass:[AppBarImageryExample class]]
-              compatibleWithTraitCollection:nil]];
+      initWithImage:[UIImage imageNamed:@"mdc_theme"
+                                             inBundle:[NSBundle bundleForClass:[AppBarImageryExample
+                                                                                   class]]
+                        compatibleWithTraitCollection:nil]];
   imageView.frame = self.appBarViewController.headerView.bounds;
 
   // Ensure that the image view resizes in reaction to the header view bounds changing.
@@ -110,11 +110,8 @@
 @implementation AppBarImageryExample (CatalogByConvention)
 
 + (NSDictionary *)catalogMetadata {
-  return @{
-    @"breadcrumbs": @[ @"App Bar", @"Imagery" ],
-    @"primaryDemo": @NO,
-    @"presentable": @YES
-  };
+  return
+      @{@"breadcrumbs" : @[ @"App Bar", @"Imagery" ], @"primaryDemo" : @NO, @"presentable" : @YES};
 }
 
 - (BOOL)catalogShouldHideNavigation {
@@ -135,8 +132,8 @@
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"cell"];
   if (!cell) {
-    cell =
-        [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                  reuseIdentifier:@"cell"];
   }
   cell.selectionStyle = UITableViewCellSelectionStyleNone;
   return cell;
