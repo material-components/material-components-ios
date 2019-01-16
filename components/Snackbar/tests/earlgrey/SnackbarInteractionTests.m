@@ -14,8 +14,8 @@
  limitations under the License.
  */
 
-#import <XCTest/XCTest.h>
 #import <EarlGrey/EarlGrey.h>
+#import <XCTest/XCTest.h>
 
 @interface SnackbarEarlGreyTests : XCTestCase
 
@@ -91,9 +91,9 @@
                                              direction:kGREYDirectionDown
                                               withStep:-1
                                                    tap:YES];
-  NSString *demoName =
-      breadcrumbs.count >= 2 ? [NSString stringWithFormat:@"Cell%@", breadcrumbs[1]]
-                             : @"start.demo";
+  NSString *demoName = breadcrumbs.count >= 2
+                           ? [NSString stringWithFormat:@"Cell%@", breadcrumbs[1]]
+                           : @"start.demo";
   [SnackbarEarlGreyTests
       scrollToElementWithIdentifier:demoName
             inElementWithIdentifier:[NSString stringWithFormat:@"Table%@", breadcrumbs[0]]
@@ -111,11 +111,11 @@
       performAction:grey_tap()];
   // Scroll to the top of the main screen
   [[EarlGrey selectElementWithMatcher:grey_accessibilityID(@"collectionView")]
-   performAction:grey_scrollToContentEdge(kGREYContentEdgeTop)];
+      performAction:grey_scrollToContentEdge(kGREYContentEdgeTop)];
 }
 
 - (void)testSliding {
-  [SnackbarEarlGreyTests jumpToExampleWithBreadcrumbs:@[ @"Snackbar"]];
+  [SnackbarEarlGreyTests jumpToExampleWithBreadcrumbs:@[ @"Snackbar" ]];
   [[EarlGrey selectElementWithMatcher:grey_accessibilityID(@"Simple Snackbar")]
       performAction:grey_tap()];
   [SnackbarEarlGreyTests returnToMainScreen];

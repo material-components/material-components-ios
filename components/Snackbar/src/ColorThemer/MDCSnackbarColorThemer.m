@@ -35,7 +35,7 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-implementations"
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
-   toSnackbarMessageView:(nonnull MDCSnackbarMessageView *)snackbarMessageView {
+    toSnackbarMessageView:(nonnull MDCSnackbarMessageView *)snackbarMessageView {
 }
 #pragma clang diagnostic pop
 

@@ -280,11 +280,11 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   MDCSnackbarMessage *message = snackbarView.message;
 
   // Fire off the button action, if necessary. Always call the message's completion handler.
-  [message
-      executeActionHandler:action
-                completion:^{
-                  [message executeCompletionHandlerWithUserInteraction:userPrompted completion:nil];
-                }];
+  [message executeActionHandler:action
+                     completion:^{
+                       [message executeCompletionHandlerWithUserInteraction:userPrompted
+                                                                 completion:nil];
+                     }];
 
   [self.overlayView dismissSnackbarViewAnimated:YES
                                      completion:^{
@@ -432,18 +432,16 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   // through pending messages and fire off their completion blocks as we remove them from the
   // queue.
   NSMutableIndexSet *indexesToRemove = [NSMutableIndexSet indexSet];
-  [self.pendingMessages
-      enumerateObjectsUsingBlock:^(MDCSnackbarMessage *pendingMessage,
-                                   NSUInteger idx,
-                                   __unused BOOL *stop) {
-        if (!categoryToDismiss || [pendingMessage.category isEqualToString:categoryToDismiss]) {
-          // Mark the message for removal from the pending messages list.
-          [indexesToRemove addIndex:idx];
+  [self.pendingMessages enumerateObjectsUsingBlock:^(MDCSnackbarMessage *pendingMessage,
+                                                     NSUInteger idx, __unused BOOL *stop) {
+    if (!categoryToDismiss || [pendingMessage.category isEqualToString:categoryToDismiss]) {
+      // Mark the message for removal from the pending messages list.
+      [indexesToRemove addIndex:idx];
 
-          // Notify the outside world that this Snackbar has been completed.
-          [pendingMessage executeCompletionHandlerWithUserInteraction:NO completion:nil];
-        }
-      }];
+      // Notify the outside world that this Snackbar has been completed.
+      [pendingMessage executeCompletionHandlerWithUserInteraction:NO completion:nil];
+    }
+  }];
 
   // Make sure the queued up messages aren't shown.
   if ([indexesToRemove count]) {
@@ -522,7 +520,6 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   BOOL _mdc_adjustsFontForContentSizeCategory;
   BOOL _shouldApplyStyleChangesToVisibleSnackbars;
 }
-
 
 + (instancetype)defaultManager {
   static MDCSnackbarManager *defaultManager;
@@ -808,16 +805,16 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   [MDCSnackbarManager.defaultManager setBottomOffset:offset];
 }
 
-+ (nullable id <MDCSnackbarSuspensionToken>)suspendAllMessages {
++ (nullable id<MDCSnackbarSuspensionToken>)suspendAllMessages {
   return MDCSnackbarManager.defaultManager.suspendAllMessages;
 }
 
-+ (nullable id <MDCSnackbarSuspensionToken>)
-    suspendMessagesWithCategory:(nullable NSString *)category {
++ (nullable id<MDCSnackbarSuspensionToken>)suspendMessagesWithCategory:
+    (nullable NSString *)category {
   return [MDCSnackbarManager.defaultManager suspendMessagesWithCategory:category];
 }
 
-+ (void)resumeMessagesWithToken:(nullable id <MDCSnackbarSuspensionToken>)token {
++ (void)resumeMessagesWithToken:(nullable id<MDCSnackbarSuspensionToken>)token {
   [MDCSnackbarManager.defaultManager resumeMessagesWithToken:token];
 }
 
@@ -866,8 +863,8 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   return MDCSnackbarManager.defaultManager.shouldApplyStyleChangesToVisibleSnackbars;
 }
 
-+ (void)setShouldApplyStyleChangesToVisibleSnackbars:(BOOL)shouldApplyStyleChangesToVisibleSnackbars
-    {
++ (void)setShouldApplyStyleChangesToVisibleSnackbars:
+    (BOOL)shouldApplyStyleChangesToVisibleSnackbars {
   MDCSnackbarManager.defaultManager.shouldApplyStyleChangesToVisibleSnackbars =
       shouldApplyStyleChangesToVisibleSnackbars;
 }
