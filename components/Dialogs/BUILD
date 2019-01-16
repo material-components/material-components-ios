@@ -114,8 +114,8 @@ mdc_examples_objc_library(
 mdc_examples_swift_library(
     name = "SwiftExamples",
     deps = [
-        ":Dialogs",
         ":DialogThemer",
+        ":Dialogs",
         ":Theming",
         "//components/Collections",
         "//components/schemes/Container",
@@ -162,14 +162,14 @@ swift_library(
     ],
     visibility = ["//visibility:private"],
     deps = [
-        ":Dialogs",
         ":DialogThemer",
+        ":Dialogs",
         ":Theming",
+        "//components/Buttons:Theming",
+        "//components/ShadowElevations",
         "//components/schemes/Color",
         "//components/schemes/Container",
         "//components/schemes/Typography",
-        "//components/ShadowElevations",
-        "//components/Buttons:Theming",
     ],
 )
 
