@@ -15,6 +15,7 @@
 
 load(
     "//:material_components_ios.bzl",
+    "mdc_examples_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
     "mdc_unit_test_suite",
@@ -42,6 +43,15 @@ mdc_public_objc_library(
         "//components/private/Icons/icons/ic_reorder",
         "//components/private/Math",
         "@material_internationalization_ios//:MDFInternationalization",
+    ],
+)
+
+mdc_examples_objc_library(
+    name = "ObjcExamples",
+    deps = [
+        ":CollectionCells",
+        "//components/Collections"
+        "//components/Typography",
     ],
 )
 
