@@ -1,3 +1,120 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+## Changes
+
+### ActivityIndicator
+
+* [Add ActivityIndicator examples to BUILD file (#6318)](https://github.com/material-components/material-components-ios/commit/bb4cde39a4d056f4a1214e10be797487ceca3c12) (Andrew Overton)
+
+### AnimationTiming
+
+* [Add examples to BUILD file (#6267)](https://github.com/material-components/material-components-ios/commit/847625e4ea34b6a7ae04cccc9b7527f300be444a) (Cody Weaver)
+
+### BottomNavigation
+
+* [Confirm (un)selected ink is same. (#6190)](https://github.com/material-components/material-components-ios/commit/89b44314afa70de966037bc073519e5d19800d04) (Robert Moore)
+* [Sets the selected view controller to the first view controller in the given array when the bottom navigation controller's view controllers are set. (#6284)](https://github.com/material-components/material-components-ios/commit/f119f22226a845665624b0f2a681e8b278dbccc5) (Eric Lee)
+
+### BottomSheet
+
+* [Add examples to BUILD file (#6266)](https://github.com/material-components/material-components-ios/commit/971ab3153111459106cb53be5539ec0abf02e460) (Cody Weaver)
+
+### ButtonBar
+
+* [Add examples to BUILD file (#6264)](https://github.com/material-components/material-components-ios/commit/a5c995e1eb9c8cdd0884d5136a218a0afe8cafdc) (Cody Weaver)
+
+### Buttons
+
+* [Add examples to BUILD file (#6271)](https://github.com/material-components/material-components-ios/commit/f79d0f007d89bd748dd0bc402e794fd5e49f54c7) (Cody Weaver)
+* [backgroundColorForState: should fall-back to .normal. (#6255)](https://github.com/material-components/material-components-ios/commit/84e1d44101689cb041cc587bd693a509601a0c87) (Robert Moore)
+
+### Cards
+
+* [Add Cards examples to BUILD file (#6314)](https://github.com/material-components/material-components-ios/commit/6fc84906697cfb9e0e80d92b653e566d84f4ba59) (Andrew Overton)
+
+### Chips
+
+* [Add example to BUILD file (#6273)](https://github.com/material-components/material-components-ios/commit/12b841aff64c4a806acd903cf2e754a45dec94a8) (Cody Weaver)
+* [Add snapshot tests to bazel. (#6326)](https://github.com/material-components/material-components-ios/commit/a2e9eed2e4f9f4abd8409beee8c42eec2aebd021) (Robert Moore)
+
+### CollectionCells
+
+* [Add examples to BUILD file (#6342)](https://github.com/material-components/material-components-ios/commit/8638ae5cb60f1bcd039c8913531164c823816900) (Cody Weaver)
+
+### Dialogs
+
+* [Add MDCDialogPresentationController+MaterialTheming (#6286)](https://github.com/material-components/material-components-ios/commit/a006ff6e4f4309401194c51b1dbae864e7d62519) (Andrew Overton)
+
+### Ink
+
+* [Add example to BUILD file (#6270)](https://github.com/material-components/material-components-ios/commit/42cb68ccb56186c2956863b30216ac22360802f5) (Cody Weaver)
+* [Reduce flakiness of layer timing test. (#6338)](https://github.com/material-components/material-components-ios/commit/4c6aedc7088c97ab32429256c18fb3bf9bd9f30c) (Robert Moore)
+
+### ProgressView
+
+* [Add ProgressView examples to BUILD file (#6328)](https://github.com/material-components/material-components-ios/commit/dfbf7802b7364377e9cab703cbda1adff88cc113) (Andrew Overton)
+
+### Ripple
+
+* [Fix flaky unit test. (#6315)](https://github.com/material-components/material-components-ios/commit/47cb0eb08f7cd3c4286331548f4b177749c60eeb) (Robert Moore)
+
+### ShadowElevations
+
+* [Add examples to BUILD file (#6330)](https://github.com/material-components/material-components-ios/commit/1975563e3fdcd7db228db752fc042359d1d2a7eb) (Cody Weaver)
+
+### ShadowLayer
+
+* [Add examples to BUILD file (#6331)](https://github.com/material-components/material-components-ios/commit/39e88480192780e6d1c4a32136d55b6ca8896df4) (Cody Weaver)
+
+### TextFields
+
+* [Add Snapshot tests to bazel. (#6309)](https://github.com/material-components/material-components-ios/commit/e064db661ecefd32aff7a935f487a4d7151d8072) (Robert Moore)
+* [Fix snapshot test imports. (#6299)](https://github.com/material-components/material-components-ios/commit/5bee8bc3b6be6745b777fbc091131489da4fb4d0) (Robert Moore)
+* [Increase snapshot test timeout. (#6337)](https://github.com/material-components/material-components-ios/commit/83b34e14e9d904ff0b7dbbc1d7ecc2c579aa3030) (Robert Moore)
+
+### private/Math
+
+* [Add Math tests to bazel (#6282)](https://github.com/material-components/material-components-ios/commit/6ff913571e7694d1a619caeebb0256af4f13974c) (Wenyu Zhang)
+
+### private/Snapshot/TestHost
+
+* [Add test host for snapshot tests. (#6300)](https://github.com/material-components/material-components-ios/commit/0d0db367749935b27ec3ab3be13b33fd873e3842) (Robert Moore)
+
+### private/Snapshot
+
+* [Add BUILD file. (#6308)](https://github.com/material-components/material-components-ios/commit/fdc637d9924584c1cb5faad460772af0f4b53b5a) (Robert Moore)
+* [Add test host for snapshot tests. (#6300)](https://github.com/material-components/material-components-ios/commit/0d0db367749935b27ec3ab3be13b33fd873e3842) (Robert Moore)
+* [Fix CGFloat cast. (#6301)](https://github.com/material-components/material-components-ios/commit/3dc2eaeca36cab174f697d42ef5b6c1caa0cdf38) (Robert Moore)
+
+### schemes/Typography
+
+* [Add examples to BUILD file (#6298)](https://github.com/material-components/material-components-ios/commit/cf918d919438b31bc635da8a1b356ea5fcbb067b) (Cody Weaver)
+
+## Multi-component changes
+
+* [Add swift examples to BUIlD file (#6265)](https://github.com/material-components/material-components-ios/commit/a98c4ecd4febb51592e1bc8f357c67bb76634504) (Cody Weaver)
+* [Don't execute "empty" tests in each class.   (#6192)](https://github.com/material-components/material-components-ios/commit/6cf0926d1e3f4b4ac350d93fe1fdd316d818f381) (Robert Moore)
+* [Make pod install work on Cocoapods 1.6.0.beta.2 (#5966)](https://github.com/material-components/material-components-ios/commit/056e4701f0ee64459f129977cfced71e4f864740) (Andrew Overton)
+* [Use MDCChipTextFieldScrollView to replace leftView functionality for flexibility and extensibility (proof of concept) (#6167)](https://github.com/material-components/material-components-ios/commit/b6d752d52c3feba0fbf9505c876070c907aa2e99) (Wenyu Zhang)
+* [ran clang-format (#6027)](https://github.com/material-components/material-components-ios/commit/2803125b2c6457bb723ea56455da570e459d6dd5) (Yarden Eitan)
+* [{bazel} Add reusable examples rules. (#6252)](https://github.com/material-components/material-components-ios/commit/f7cf6baeb70c29a8f04c315186de57a49db3ec9e) (Robert Moore)
+
+---
+
 # 73.1.1
 
 In this patch release we have improved the formatting of our codebase, and added missing imports to the Dragons target.
