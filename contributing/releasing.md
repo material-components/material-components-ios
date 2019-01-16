@@ -46,6 +46,15 @@ will be working day-to-day with a fork, consider creating a separate clone just 
 
 Please follow [using git-lfs instructions](https://github.com/material-components/material-components-ios/blob/2b6da5f10438081e5a7b2211e27336c6846433e5/contributing/tools.md#using-git-lfs)
 
+### Configure the merge strategy for `.gitattributes`
+
+We have two different versions of `.gitattributes` in the `develop` and
+`stable` branches. To avoid conflicts (or accidental merges) between the two
+branches, we define a custom merge strategy just for that file.  After cloning
+the repository, be sure to run this command:
+
+    git config merge.gitattributes.driver true
+
 ## Cutting and testing the release
 
 Our entire release process is encoded into the `release` script in the scripts/ directory.
