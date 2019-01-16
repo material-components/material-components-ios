@@ -79,7 +79,7 @@ mdc_examples_swift_library(
         ":BottomAppBar",
         ":ColorThemer",
         "//components/AppBar",
-        "//components/Button:ButtonThemer",
+        "//components/Buttons:ButtonThemer",
         "//components/Buttons",
         "//components/schemes/Color",
         "//components/schemes/Typography",
