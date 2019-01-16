@@ -57,7 +57,6 @@ mdc_examples_swift_library(
     ],
 )
 
-
 filegroup(
     name = "BundleFiles",
     srcs = glob([
