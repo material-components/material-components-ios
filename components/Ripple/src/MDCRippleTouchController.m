@@ -214,8 +214,8 @@
       // Long press only brings us into selection mode, but not out of it.
       if (!self.selectionMode) {
         self.selectionMode = YES;
-        self.highlighted = NO;
         self.selected = YES;
+        self.highlighted = NO;
       }
       break;
     }
