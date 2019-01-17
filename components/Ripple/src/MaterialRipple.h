@@ -14,3 +14,4 @@
 
 #import "MDCRippleTouchController.h"
 #import "MDCRippleView.h"
+#import "MDCStatefulRippleTouchController.h"

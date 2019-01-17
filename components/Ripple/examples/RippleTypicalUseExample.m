@@ -18,7 +18,7 @@
 
 #import "supplemental/RippleExampleSupplemental.h"
 
-@interface RippleTypicalUseExample () <MDCRippleTouchControllerDelegate>
+@interface RippleTypicalUseExample () <MDCStatefulRippleTouchControllerDelegate>
 @end
 
 @implementation RippleTypicalUseExample {
@@ -47,7 +47,7 @@
     MDCRippleTouchController *rippleTouchController =
         [[MDCRippleTouchController alloc] initWithView:view];
     rippleTouchController.delegate = self;
-    rippleTouchController.enableLongPressGestureForSelection = YES;
+//    rippleTouchController.enableLongPressGestureForSelection = YES;
     [_rippleTouchControllers addObject:rippleTouchController];
   }
   [containerView addSubview:self.surfaces];

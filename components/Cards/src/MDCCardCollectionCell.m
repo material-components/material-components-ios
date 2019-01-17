@@ -25,7 +25,7 @@ static const CGFloat MDCCardCellShadowElevationNormal = 1;
 static const CGFloat MDCCardCellShadowElevationSelected = 8;
 static const BOOL MDCCardCellIsInteractableDefault = YES;
 
-@interface MDCCardCollectionCell () <MDCRippleTouchControllerDelegate>
+@interface MDCCardCollectionCell () <MDCStatefulRippleTouchControllerDelegate>
 @property(nonatomic, strong, nullable) UIImageView *selectedImageView;
 @property(nonatomic, readonly, strong) MDCShapedShadowLayer *layer;
 @end
@@ -79,7 +79,8 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 //  }
 
   if (_rippleTouchController == nil) {
-    _rippleTouchController = [[MDCRippleTouchController alloc] initWithView:self.contentView];
+    _rippleTouchController =
+        [[MDCStatefulRippleTouchController alloc] initWithView:self.contentView];
     _rippleTouchController.rippleView.layer.zPosition = FLT_MAX;
     _rippleTouchController.delegate = self;
 //    _rippleTouchController.allowsSelection = YES;
@@ -487,7 +488,7 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 //  }
 //}
 
-- (void)rippleTouchController:(MDCRippleTouchController *)rippleTouchController
+- (void)rippleTouchController:(MDCStatefulRippleTouchController *)rippleTouchController
          rippleStateDidChange:(MDCRippleState)rippleState {
   if (rippleState == MDCRippleStateSelected) {
     [self setState:MDCCardCellStateSelected animated:YES];

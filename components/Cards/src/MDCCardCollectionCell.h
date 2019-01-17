@@ -86,7 +86,7 @@ typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
 /**
  The rippleTouchController for the card that is initiated on tap
  */
-@property(nonatomic, strong, nonnull) MDCRippleTouchController *rippleTouchController;
+@property(nonatomic, strong, nonnull) MDCStatefulRippleTouchController *rippleTouchController;
 
 /**
  This property defines if a card as a whole should be interactable or not.
