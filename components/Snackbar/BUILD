@@ -84,7 +84,9 @@ mdc_extension_objc_library(
 mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
+        ":ColorThemer",
         ":Snackbar",
+        ":TypographyThemer",
         "//components/Buttons",
         "//components/Collections",
         "//components/Palettes",
