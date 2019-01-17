@@ -21,21 +21,21 @@
 
 @optional
 
-- (BOOL)chipTextField:(MDCChipTextField *)chipTextField
-    shouldAddChipView:(MDCChipView *)chipView
+- (BOOL)chipTextField:(nonnull MDCChipTextField *)chipTextField
+    shouldAddChipView:(nonnull MDCChipView *)chipView
               atIndex:(NSInteger)index;
-- (void)chipTextField:(MDCChipTextField *)chipTextField
-       didAddChipView:(MDCChipView *)chipView
+- (void)chipTextField:(nonnull MDCChipTextField *)chipTextField
+       didAddChipView:(nonnull MDCChipView *)chipView
               atIndex:(NSInteger)index;
-- (BOOL)chipTextField:(MDCChipTextField *)chipTextField
-    shouldRemoveChipView:(MDCChipView *)chipView
+- (BOOL)chipTextField:(nonnull MDCChipTextField *)chipTextField
+    shouldRemoveChipView:(nonnull MDCChipView *)chipView
                  atIndex:(NSInteger)index;
-- (void)chipTextField:(MDCChipTextField *)chipTextField
-    didRemoveChipView:(MDCChipView *)chipView
+- (void)chipTextField:(nonnull MDCChipTextField *)chipTextField
+    didRemoveChipView:(nonnull MDCChipView *)chipView
               atIndex:(NSInteger)index;
 
-- (void)chipTextField:(MDCChipTextField *)chipTextField
-       didTapChipView:(MDCChipView *)chipView
+- (void)chipTextField:(nonnull MDCChipTextField *)chipTextField
+       didTapChipView:(nonnull MDCChipView *)chipView
               atIndex:(NSInteger)index;
 
 @end
@@ -79,6 +79,6 @@
 
  @param text The string to display in the chip.
  */
-- (MDCChipView *)appendChipWithText:(nonnull NSString *)text NS_SWIFT_NAME(appendChip(text:));
+- (nonnull MDCChipView *)appendChipWithText:(nonnull NSString *)text NS_SWIFT_NAME(appendChip(text:));
 
 @end

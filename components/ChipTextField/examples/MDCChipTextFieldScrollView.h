@@ -20,8 +20,8 @@
 
 @protocol MDCChipTextFieldScrollViewDelegate <NSObject, UIScrollViewDelegate>
 
-- (void)chipTextFieldScrollView:(MDCChipTextFieldScrollView *)scrollView
-                 didTapChipView:(MDCChipView *)chipView;
+- (void)chipTextFieldScrollView:(nonnull MDCChipTextFieldScrollView *)scrollView
+                 didTapChipView:(nonnull MDCChipView *)chipView;
 
 @end
 
