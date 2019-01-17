@@ -14,6 +14,14 @@
 
 #import "MDCStatefulRippleTouchController.h"
 
+static const CGFloat kRippleAlpha = (CGFloat)0.16;
+static const CGFloat kRippleSelectedAlpha = (CGFloat)0.08;
+static const CGFloat kRippleDraggedAlpha = (CGFloat)0.08;
+
+static UIColor *RippleSelectedColor(void) {
+  return [UIColor colorWithRed:(CGFloat)0.384 green:0 blue:(CGFloat)0.933 alpha:1];
+}
+
 @implementation MDCStatefulRippleTouchController {
   BOOL _tapWentOutsideOfBounds;
   NSMutableDictionary<NSNumber *, UIColor *> *_rippleColors;
@@ -28,21 +36,19 @@
   if (self) {
     if (_rippleColors == nil) {
       _rippleColors = [NSMutableDictionary dictionary];
-      UIColor *selectionColor = [UIColor colorWithRed:(CGFloat)0.384
-                                                green:0
-                                                 blue:(CGFloat)0.933
-                                                alpha:1];
-      _rippleColors[@(MDCRippleStateNormal)] = UIColor.clearColor;
-      _rippleColors[@(MDCRippleStateHighlighted)] = [UIColor colorWithWhite:0 alpha:(CGFloat)0.16];
+      UIColor *selectionColor = RippleSelectedColor();
+      _rippleColors[@(MDCRippleStateNormal)] = [UIColor colorWithWhite:0 alpha:kRippleAlpha];
+      _rippleColors[@(MDCRippleStateHighlighted)] = [UIColor colorWithWhite:0 alpha:kRippleAlpha];
       _rippleColors[@(MDCRippleStateSelected)] =
-          [selectionColor colorWithAlphaComponent:(CGFloat)0.08];
+          [selectionColor colorWithAlphaComponent:kRippleSelectedAlpha];
       _rippleColors[@(MDCRippleStateSelected | MDCRippleStateHighlighted)] =
-          [selectionColor colorWithAlphaComponent:(CGFloat)0.16];
-      _rippleColors[@(MDCRippleStateDragged)] = [UIColor colorWithWhite:0 alpha:(CGFloat)0.08];
+          [selectionColor colorWithAlphaComponent:kRippleAlpha];
+      _rippleColors[@(MDCRippleStateDragged)] =
+          [UIColor colorWithWhite:0 alpha:kRippleDraggedAlpha];
       _rippleColors[@(MDCRippleStateDragged | MDCRippleStateHighlighted)] =
-          [UIColor colorWithWhite:0 alpha:(CGFloat)0.08];
+          [UIColor colorWithWhite:0 alpha:kRippleDraggedAlpha];
       _rippleColors[@(MDCRippleStateSelected | MDCRippleStateDragged)] =
-          [selectionColor colorWithAlphaComponent:(CGFloat)0.08];
+          [selectionColor colorWithAlphaComponent:kRippleDraggedAlpha];
     }
   }
   return self;
