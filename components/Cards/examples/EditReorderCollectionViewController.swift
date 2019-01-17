@@ -51,7 +51,6 @@ class EditReorderCollectionViewController: UIViewController,
     (image: "austin-u-texas-pond",    title: "Austin U"),
   ]
   var dataSource: [(image: String, title: String, selected: Bool)] = []
-
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -230,12 +229,14 @@ class EditReorderCollectionViewController: UIViewController,
 
   @available(iOS 9.0, *)
   @objc func reorderCards(gesture: UILongPressGestureRecognizer) {
-
     switch(gesture.state) {
     case .began:
       guard let selectedIndexPath = collectionView.indexPathForItem(at:
-        gesture.location(in: collectionView)) else { break }
+        gesture.location(in: collectionView)) else { return }
+      let cell = collectionView.cellForItem(at: selectedIndexPath)
+      guard let cardCell = cell as? CardEditReorderCollectionCell else { return }
       collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
+      cardCell.rippleTouchController.isDragged = true
     case .changed:
       guard let gestureView = gesture.view else { break }
       collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: gestureView))

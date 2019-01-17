@@ -173,4 +173,8 @@ typedef NS_ENUM(NSInteger, MDCRippleState) {
          didProcessRippleView:(nonnull MDCRippleView *)rippleView
               atTouchLocation:(CGPoint)location;
 
+- (void)rippleTouchController:(nonnull MDCRippleTouchController *)rippleTouchController
+         rippleStateDidChange:(MDCRippleState)rippleState;
+
+
 @end

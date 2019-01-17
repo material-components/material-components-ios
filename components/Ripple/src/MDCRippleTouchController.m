@@ -51,6 +51,11 @@
           [selectionColor colorWithAlphaComponent:(CGFloat)0.08];
       _rippleColors[@(MDCRippleStateSelected | MDCRippleStateHighlighted)] =
           [selectionColor colorWithAlphaComponent:(CGFloat)0.16];
+      _rippleColors[@(MDCRippleStateDragged)] = [UIColor colorWithWhite:0 alpha:(CGFloat)0.08];
+      _rippleColors[@(MDCRippleStateDragged | MDCRippleStateHighlighted)] =
+          [UIColor colorWithWhite:0 alpha:(CGFloat)0.08];
+      _rippleColors[@(MDCRippleStateSelected | MDCRippleStateDragged)] =
+          [selectionColor colorWithAlphaComponent:(CGFloat)0.08];
     }
   }
   return self;
@@ -91,6 +96,11 @@
 - (void)setState:(MDCRippleState)state {
   _state = state;
   NSLog(@"state: %ld", (long)state);
+  if ([_delegate respondsToSelector:@selector(rippleTouchController:
+                                              rippleStateDidChange:)]) {
+    [_delegate rippleTouchController:self
+                rippleStateDidChange:state];
+  }
 }
 
 - (void)setEnableLongPressGestureForSelection:(BOOL)enableLongPressGestureForSelection {
@@ -152,6 +162,7 @@
       // Don't remove overlays if we are selected.
       [self cancelRippleTouchProcessing];
     }
+    self.dragged = NO;
     _isTapped = NO;
   }
 }
