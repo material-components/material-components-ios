@@ -17,6 +17,8 @@
 @implementation MDCRippleTouchController {
   BOOL _tapWentOutsideOfBounds;
   NSMutableDictionary<NSNumber *, UIColor *> *_rippleColors;
+  BOOL _isTapped;
+  CGPoint _lastTouch;
 }
 
 - (instancetype)initWithView:(UIView *)view {
@@ -50,9 +52,6 @@
       _rippleColors[@(MDCRippleStateSelected | MDCRippleStateHighlighted)] =
           [selectionColor colorWithAlphaComponent:(CGFloat)0.16];
     }
-    _selectionMode = NO;
-    _selected = NO;
-    _highlighted = NO;
   }
   return self;
 }
@@ -74,6 +73,7 @@
 
 - (void)updateRippleColor {
   UIColor *rippleColor = [self rippleColorForState:self.state];
+  [self.rippleView setActiveRippleColor:rippleColor];
   [self.rippleView setRippleColor:rippleColor];
 }
 
@@ -87,11 +87,6 @@
 
   [self updateRippleColor];
 }
-
-//- (UIColor *)constructedColorByState {
-//  UIColor *rippleColor = [self rippleColorForState:self.state];
-//  return [rippleColor colorWithAlphaComponent:[self rippleAlphaForState:self.state]];
-//}
 
 - (void)setState:(MDCRippleState)state {
   _state = state;
@@ -126,7 +121,10 @@
   } else {
     self.state &= ~MDCRippleStateSelected;
   }
-  [self updateActiveRippleColor];
+  [self updateRippleColor];
+  if (!selected) {
+    [self.rippleView beginRippleTouchDownAtPoint:CGPointZero animated:NO completion:nil];
+  }
 }
 
 - (void)setHighlighted:(BOOL)highlighted {
@@ -136,10 +134,26 @@
   _highlighted = highlighted;
   if (highlighted) {
     self.state |= MDCRippleStateHighlighted;
+    [self updateRippleColor];
+    [self.rippleView beginRippleTouchDownAtPoint:_lastTouch
+                                        animated:_isTapped
+                                      completion:^{
+                                        if (self.selectionMode) {
+                                          // In selection mode highlighted doesn't stay even
+                                          // if a tap is held.
+                                          self.selected = !self.selected;
+                                          self.highlighted = NO;
+                                        }
+                                      }];
   } else {
     self.state &= ~MDCRippleStateHighlighted;
+    [self updateRippleColor];
+    if (!self.selected) {
+      // Don't remove overlays if we are selected.
+      [self cancelRippleTouchProcessing];
+    }
+    _isTapped = NO;
   }
-  [self updateRippleColor];
 }
 
 - (void)setSelectionMode:(BOOL)selectionMode {
@@ -154,38 +168,25 @@
 }
 
 - (void)handleRippleGesture:(UILongPressGestureRecognizer *)recognizer {
-  CGPoint touchLocation = [recognizer locationInView:_view];
+  _lastTouch = [recognizer locationInView:_view];
 
   switch (recognizer.state) {
     case UIGestureRecognizerStateBegan: {
+      _isTapped = YES;
       _tapWentOutsideOfBounds = NO;
       self.highlighted = YES;
-      [self.rippleView beginRippleTouchDownAtPoint:touchLocation
-                                          animated:YES
-                                        completion:^{
-                                          if (self.selectionMode) {
-                                            // In selection mode highlighted doesn't stay even
-                                            // if a tap is held.
-                                            self.highlighted = NO;
-                                            self.selected = !self.selected;
-                                            if (!self.selected) {
-                                              // If we are unselecting all overlays must go.
-                                              [self.rippleView cancelAllRipplesAnimated:YES];
-                                            }
-                                          }
-                                        }];
       if ([_delegate respondsToSelector:@selector(rippleTouchController:
                                                    didProcessRippleView:atTouchLocation:)]) {
         [_delegate rippleTouchController:self
                     didProcessRippleView:_rippleView
-                         atTouchLocation:touchLocation];
+                         atTouchLocation:_lastTouch];
       }
       break;
     }
     case UIGestureRecognizerStatePossible:  // Ignored
       break;
     case UIGestureRecognizerStateChanged: {
-      BOOL pointContainedinBounds = CGRectContainsPoint(self.view.bounds, touchLocation);
+      BOOL pointContainedinBounds = CGRectContainsPoint(self.view.bounds, _lastTouch);
       if (pointContainedinBounds && _tapWentOutsideOfBounds) {
         _tapWentOutsideOfBounds = NO;
         [self.rippleView fadeInRippleAnimated:YES completion:nil];
@@ -198,12 +199,10 @@
     case UIGestureRecognizerStateEnded:
       if (!_selectionMode) {
         self.highlighted = NO;
-        [self.rippleView beginRippleTouchUpAnimated:YES completion:nil];
       }
       break;
     case UIGestureRecognizerStateCancelled:
     case UIGestureRecognizerStateFailed:
-      [self.rippleView cancelAllRipplesAnimated:YES];
       self.highlighted = NO;
       break;
   }

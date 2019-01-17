@@ -132,21 +132,7 @@ typedef NS_ENUM(NSInteger, MDCRippleState) {
  */
 - (nullable UIColor *)rippleColorForState:(MDCRippleState)state;
 
-///**
-// Sets the alpha of the ripple for state.
-//
-// @param rippleAlpha The ripple alpha to set the ripple to.
-// @param state The state of the ripple in which to set the ripple alpha.
-// */
-//- (void)setRippleAlpha:(CGFloat)rippleAlpha forState:(MDCRippleState)state;
-//
-///**
-// Gets the ripple alpha for the given state.
-//
-// @param state The ripple's state.
-// @return the alpha of the ripple for state.
-// */
-//- (CGFloat)rippleAlphaForState:(MDCRippleState)state;
+- (void)cancelRippleTouchProcessing;
 
 @end
 
