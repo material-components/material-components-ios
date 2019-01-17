@@ -16,6 +16,7 @@
 
 load(
     "//:material_components_ios.bzl",
+    "mdc_examples_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
     "mdc_unit_test_suite",
@@ -27,6 +28,32 @@ mdc_public_objc_library(
     name = "Shape",
     deps = [
         "//components/private/ShapeLibrary",
+    ],
+)
+
+mdc_examples_objc_library(
+    name = "ObjcExamples",
+    deps = [
+        "//components/AppBar",
+        "//components/AppBar:ColorThemer",
+        "//components/AppBar:TypographyThemer",
+        "//components/BottomSheet",
+        "//components/BottomSheet:ShapeThemer",
+        "//components/Buttons",
+        "//components/Buttons:ButtonThemer",
+        "//components/Buttons:ShapeThemer",
+        "//components/Buttons:Theming",
+        "//components/Cards",
+        "//components/Cards:ShapeThemer",
+        "//components/Cards:Theming",
+        "//components/Chips",
+        "//components/Chips:ShapeThemer",
+        "//components/Chips:Theming",
+        "//components/private/ShapeLibrary",
+        "//components/schemes/Color",
+        "//components/schemes/Container",
+        "//components/schemes/Shape",
+        "//components/schemes/Typography",
     ],
 )
 
