@@ -17,7 +17,6 @@
 @implementation MDCRippleTouchController {
   BOOL _tapWentOutsideOfBounds;
   NSMutableDictionary<NSNumber *, UIColor *> *_rippleColors;
-  NSMutableDictionary<NSNumber *, NSNumber *> *_rippleAlphas;
 }
 
 - (instancetype)initWithView:(UIView *)view {
@@ -40,20 +39,20 @@
 
     if (_rippleColors == nil) {
       _rippleColors = [NSMutableDictionary dictionary];
-      _rippleColors[@(MDCRippleStateNormal)] = [UIColor blackColor];
-      _rippleColors[@(MDCRippleStateSelected)] = [UIColor colorWithRed:(CGFloat)0.384
-                                                                 green:0
-                                                                  blue:(CGFloat)0.933
-                                                                 alpha:1];
+      UIColor *selectionColor = [UIColor colorWithRed:(CGFloat)0.384
+                                                green:0
+                                                 blue:(CGFloat)0.933
+                                                alpha:1];
+      _rippleColors[@(MDCRippleStateNormal)] = UIColor.clearColor;
+      _rippleColors[@(MDCRippleStateHighlighted)] = [UIColor colorWithWhite:0 alpha:(CGFloat)0.16];
+      _rippleColors[@(MDCRippleStateSelected)] =
+          [selectionColor colorWithAlphaComponent:(CGFloat)0.08];
+      _rippleColors[@(MDCRippleStateSelected | MDCRippleStateHighlighted)] =
+          [selectionColor colorWithAlphaComponent:(CGFloat)0.16];
     }
-
-    if (_rippleAlphas == nil) {
-      _rippleAlphas = [NSMutableDictionary dictionary];
-      _rippleAlphas[@(MDCRippleStateNormal)] = @(0.16);
-      _rippleAlphas[@(MDCRippleStateSelected)] = @(0.08);
-    }
-
     _selectionMode = NO;
+    _selected = NO;
+    _highlighted = NO;
   }
   return self;
 }
@@ -79,7 +78,7 @@
 }
 
 - (void)updateActiveRippleColor {
-  UIColor *rippleColor = [self constructedColorByState];
+  UIColor *rippleColor = [self rippleColorForState:self.state];
   [self.rippleView setActiveRippleColor:rippleColor];
 }
 
@@ -89,35 +88,23 @@
   [self updateRippleColor];
 }
 
-- (CGFloat)rippleAlphaForState:(MDCRippleState)state {
-  NSNumber *rippleAlpha = _rippleAlphas[@(state)];
-  if (state != MDCRippleStateNormal && rippleAlpha == nil) {
-    rippleAlpha = _rippleAlphas[@(MDCRippleStateNormal)];
-  }
-  return (CGFloat)rippleAlpha.doubleValue;
-}
-
-- (void)setRippleAlpha:(CGFloat)rippleAlpha forState:(MDCRippleState)state {
-  _rippleAlphas[@(state)] = @(rippleAlpha);
-}
-
-- (UIColor *)constructedColorByState {
-  UIColor *rippleColor = [self rippleColorForState:self.state];
-  return [rippleColor colorWithAlphaComponent:[self rippleAlphaForState:self.state]];
-}
+//- (UIColor *)constructedColorByState {
+//  UIColor *rippleColor = [self rippleColorForState:self.state];
+//  return [rippleColor colorWithAlphaComponent:[self rippleAlphaForState:self.state]];
+//}
 
 - (void)setState:(MDCRippleState)state {
   _state = state;
-  [self updateActiveRippleColor];
+  NSLog(@"state: %ld", (long)state);
 }
 
-- (void)setAllowsSelection:(BOOL)allowsSelection {
-  _allowsSelection = allowsSelection;
+- (void)setEnableLongPressGestureForSelection:(BOOL)enableLongPressGestureForSelection {
+  _enableLongPressGestureForSelection = enableLongPressGestureForSelection;
 
-  if (allowsSelection) {
+  if (enableLongPressGestureForSelection) {
     _selectionGestureRecognizer = [[UILongPressGestureRecognizer alloc]
-        initWithTarget:self
-                action:@selector(handleRippleSelectionGesture:)];
+                                   initWithTarget:self
+                                   action:@selector(handleRippleSelectionGesture:)];
     _selectionGestureRecognizer.minimumPressDuration = (CGFloat)0.5;
     _selectionGestureRecognizer.delegate = self;
     _selectionGestureRecognizer.cancelsTouchesInView = NO;
@@ -130,17 +117,33 @@
 }
 
 - (void)setSelected:(BOOL)selected {
+  if (selected == _selected) {
+    return;
+  }
   _selected = selected;
-  [self setState:selected ? MDCRippleStateSelected : MDCRippleStateNormal];
+  if (selected) {
+    self.state |= MDCRippleStateSelected;
+  } else {
+    self.state &= ~MDCRippleStateSelected;
+  }
+  [self updateActiveRippleColor];
+}
+
+- (void)setHighlighted:(BOOL)highlighted {
+  if (highlighted == _highlighted) {
+    return;
+  }
+  _highlighted = highlighted;
+  if (highlighted) {
+    self.state |= MDCRippleStateHighlighted;
+  } else {
+    self.state &= ~MDCRippleStateHighlighted;
+  }
+  [self updateRippleColor];
 }
 
 - (void)setSelectionMode:(BOOL)selectionMode {
   _selectionMode = selectionMode;
-  UIColor *rippleColor =
-      [self rippleColorForState:selectionMode ? MDCRippleStateSelected : MDCRippleStateNormal];
-  rippleColor =
-      [rippleColor colorWithAlphaComponent:[self rippleAlphaForState:MDCRippleStateNormal]];
-  [self.rippleView setRippleColor:rippleColor];
 }
 
 - (void)cancelRippleTouchProcessing {
@@ -153,12 +156,17 @@
   switch (recognizer.state) {
     case UIGestureRecognizerStateBegan: {
       _tapWentOutsideOfBounds = NO;
+      self.highlighted = YES;
       [self.rippleView beginRippleTouchDownAtPoint:touchLocation
                                           animated:YES
                                         completion:^{
                                           if (self.selectionMode) {
+                                            // In selection mode highlighted doesn't stay even
+                                            // if a tap is held.
+                                            self.highlighted = NO;
                                             self.selected = !self.selected;
                                             if (!self.selected) {
+                                              // If we are unselecting all overlays must go.
                                               [self.rippleView cancelAllRipplesAnimated:YES];
                                             }
                                           }
@@ -186,12 +194,14 @@
     }
     case UIGestureRecognizerStateEnded:
       if (!_selectionMode) {
+        self.highlighted = NO;
         [self.rippleView beginRippleTouchUpAnimated:YES completion:nil];
       }
       break;
     case UIGestureRecognizerStateCancelled:
     case UIGestureRecognizerStateFailed:
       [self.rippleView cancelAllRipplesAnimated:YES];
+      self.highlighted = NO;
       break;
   }
 }
@@ -199,13 +209,11 @@
 - (void)handleRippleSelectionGesture:(UILongPressGestureRecognizer *)recognizer {
   switch (recognizer.state) {
     case UIGestureRecognizerStateBegan: {
-      [self setSelectionMode:!_selectionMode];
-      if (self.selectionMode) {
+      // Long press only brings us into selection mode, but not out of it.
+      if (!self.selectionMode) {
+        self.selectionMode = YES;
+        self.highlighted = NO;
         self.selected = YES;
-      } else {
-        if (!self.selected) {
-          [self.rippleView cancelAllRipplesAnimated:YES];
-        }
       }
       break;
     }

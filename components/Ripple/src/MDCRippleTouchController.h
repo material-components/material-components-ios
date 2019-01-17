@@ -27,7 +27,9 @@
  */
 typedef NS_ENUM(NSInteger, MDCRippleState) {
   MDCRippleStateNormal = 0,
-  MDCRippleStateSelected,
+  MDCRippleStateHighlighted = 1 << 0,
+  MDCRippleStateSelected = 1 << 1,
+  MDCRippleStateDragged = 1 << 2,
 };
 
 /**
@@ -74,7 +76,7 @@ typedef NS_ENUM(NSInteger, MDCRippleState) {
 
  Defaults to NO.
  */
-@property(nonatomic) BOOL allowsSelection;
+@property(nonatomic) BOOL enableLongPressGestureForSelection;
 
 /**
  This BOOL is set to YES if the ripple is currently selected, or NO otherwise.
@@ -83,6 +85,11 @@ typedef NS_ENUM(NSInteger, MDCRippleState) {
  Defaults to NO.
  */
 @property(nonatomic, getter=isSelected) BOOL selected;
+
+@property(nonatomic, getter=isHighlighted) BOOL highlighted;
+
+@property(nonatomic, getter=isDragged) BOOL dragged;
+
 
 /**
  This BOOL is set to YES if the ripple is currently in the selection mode, or NO otherwise.
@@ -125,21 +132,21 @@ typedef NS_ENUM(NSInteger, MDCRippleState) {
  */
 - (nullable UIColor *)rippleColorForState:(MDCRippleState)state;
 
-/**
- Sets the alpha of the ripple for state.
-
- @param rippleAlpha The ripple alpha to set the ripple to.
- @param state The state of the ripple in which to set the ripple alpha.
- */
-- (void)setRippleAlpha:(CGFloat)rippleAlpha forState:(MDCRippleState)state;
-
-/**
- Gets the ripple alpha for the given state.
-
- @param state The ripple's state.
- @return the alpha of the ripple for state.
- */
-- (CGFloat)rippleAlphaForState:(MDCRippleState)state;
+///**
+// Sets the alpha of the ripple for state.
+//
+// @param rippleAlpha The ripple alpha to set the ripple to.
+// @param state The state of the ripple in which to set the ripple alpha.
+// */
+//- (void)setRippleAlpha:(CGFloat)rippleAlpha forState:(MDCRippleState)state;
+//
+///**
+// Gets the ripple alpha for the given state.
+//
+// @param state The ripple's state.
+// @return the alpha of the ripple for state.
+// */
+//- (CGFloat)rippleAlphaForState:(MDCRippleState)state;
 
 @end
 
