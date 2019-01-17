@@ -79,6 +79,7 @@
 
  @param text The string to display in the chip.
  */
-- (nonnull MDCChipView *)appendChipWithText:(nonnull NSString *)text NS_SWIFT_NAME(appendChip(text:));
+- (nonnull MDCChipView *)appendChipWithText:(nonnull NSString *)text
+    NS_SWIFT_NAME(appendChip(text:));
 
 @end
