@@ -44,10 +44,10 @@
   _selectionMode = NO;
 
   for (UIView *view in self.surfaces.subviews) {
-    MDCRippleTouchController *rippleTouchController =
-        [[MDCRippleTouchController alloc] initWithView:view];
+    MDCStatefulRippleTouchController *rippleTouchController =
+        [[MDCStatefulRippleTouchController alloc] initWithView:view];
     rippleTouchController.delegate = self;
-    //    rippleTouchController.enableLongPressGestureForSelection = YES;
+    rippleTouchController.enableLongPressGestureForSelection = YES;
     [_rippleTouchControllers addObject:rippleTouchController];
   }
   [containerView addSubview:self.surfaces];
@@ -66,7 +66,7 @@
   } else {
     self.navigationItem.rightBarButtonItem.title = @"Selection Off";
   }
-  for (MDCRippleTouchController *controller in _rippleTouchControllers) {
+  for (MDCStatefulRippleTouchController *controller in _rippleTouchControllers) {
     controller.selectionMode = _selectionMode;
   }
 }
