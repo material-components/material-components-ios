@@ -42,7 +42,7 @@
 /**
  This is a computed property that determines the current @c TextFieldState of the text field.
  */
-@property(nonatomic, assign, readonly) TextFieldState textFieldState;
+//@property(nonatomic, assign, readonly) TextFieldState textFieldState;
 
 /**
  When set to YES, the placeholder floats above the text when the TextFieldState is @c .focused. When

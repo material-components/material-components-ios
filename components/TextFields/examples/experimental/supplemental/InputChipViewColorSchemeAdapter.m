@@ -14,12 +14,6 @@
 
 #import "InputChipViewColorSchemeAdapter.h"
 
-//#import <MDFInternationalization/MDFInternationalization.h>
-//#import <MaterialComponents/MDCMath.h>
-//#import "MDCInputViewContainerStyler.h"
-//#import "SimpleTextFieldLayout.h"
-//#import "SimpleTextFieldLayoutUtils.h"
-
 #import <Foundation/Foundation.h>
 
 @implementation InputChipViewColorSchemeAdapter

@@ -29,6 +29,7 @@ static const CGFloat kInterChipPadding = (CGFloat)8.0;
 
 - (instancetype)initWithBounds:(CGRect)bounds
                          chips:(NSArray<MDCChipView *> *)chips
+                staleChipViews:(NSArray<UIView *> *)staleChipViews
                   canChipsWrap:(BOOL)canChipsWrap
                  chipRowHeight:(CGFloat)chipRowHeight
                  textFieldText:(NSString *)textFieldText
@@ -40,6 +41,7 @@ static const CGFloat kInterChipPadding = (CGFloat)8.0;
   if (self) {
     [self calculateLayoutWithBounds:bounds
                               chips:chips
+                     staleChipViews:staleChipViews
                        canChipsWrap:canChipsWrap
                       chipRowHeight:chipRowHeight
                       TextFieldText:textFieldText
@@ -52,6 +54,7 @@ static const CGFloat kInterChipPadding = (CGFloat)8.0;
 
 - (void)calculateLayoutWithBounds:(CGRect)bounds
                             chips:(NSArray<MDCChipView *> *)chips
+                   staleChipViews:(NSArray<UIView *> *)staleChipViews
                      canChipsWrap:(BOOL)canChipsWrap
                     chipRowHeight:(CGFloat)chipRowHeight
                     TextFieldText:(NSString *)textFieldText
@@ -67,6 +70,7 @@ static const CGFloat kInterChipPadding = (CGFloat)8.0;
                                          chipRowHeight:chipRowHeight];
   if (canChipsWrap) {
     if (isRTL) {
+
     } else {
       NSArray<NSValue *> *chipFrames = [self determineChipFramesWithBounds:bounds
                                                                      chips:chips
@@ -100,7 +104,7 @@ static const CGFloat kInterChipPadding = (CGFloat)8.0;
       self.textFieldFrame = textFieldFrame;
       self.scrollViewContentOffset = contentOffset;
       self.scrollViewContentSize = contentSize;
-      self.tapRecognizerViewFrame = CGRectMake(0, 0, contentSize.width, contentSize.height);
+      self.scrollViewContentViewTouchForwardingView = CGRectMake(0, 0, contentSize.width, contentSize.height);
       
       // lay out all the chips starting from 0
       // lay out the text field after
@@ -145,7 +149,7 @@ static const CGFloat kInterChipPadding = (CGFloat)8.0;
       self.textFieldFrame = textFieldFrame;
       self.scrollViewContentOffset = contentOffset;
       self.scrollViewContentSize = contentSize;
-      self.tapRecognizerViewFrame = CGRectMake(0, 0, contentSize.width, contentSize.height);
+      self.scrollViewContentViewTouchForwardingView = CGRectMake(0, 0, contentSize.width, contentSize.height);
 
       // lay out all the chips starting from 0
       // lay out the text field after

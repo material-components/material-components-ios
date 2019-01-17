@@ -27,13 +27,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSArray<NSValue *> *chipFrames;
 
 @property (nonatomic, assign) CGRect textFieldFrame;
-@property (nonatomic, assign) CGRect tapRecognizerViewFrame;
+@property (nonatomic, assign) CGRect scrollViewContentViewTouchForwardingView;
 @property (nonatomic, assign) CGPoint scrollViewContentOffset;
 @property (nonatomic, assign) CGPoint scrollViewContentInset;
 @property (nonatomic, assign) CGSize scrollViewContentSize;
 
 - (instancetype)initWithBounds:(CGRect)bounds
-                         chips:(NSArray<MDCChipView *> *)chips
+                         chips:(NSArray<UIView *> *)chips
+                staleChipViews:(NSArray<UIView *> *)staleChipViews
                   canChipsWrap:(BOOL)canChipsWrap
                  chipRowHeight:(CGFloat)chipRowHeight
                  textFieldText:(NSString *)textFieldText

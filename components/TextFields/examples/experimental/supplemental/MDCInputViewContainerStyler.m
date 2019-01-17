@@ -29,16 +29,6 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
 
 @interface MDCInputViewContainerStyler ()
 
-- (UIBezierPath *)outlinePathWithViewBounds:(CGRect)viewBounds
-                   floatingPlaceholderFrame:(CGRect)floatingPlaceholderFrame
-                    topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
-                                  lineWidth:(CGFloat)lineWidth
-                      isFloatingPlaceholder:(BOOL)isFloatingPlaceholder;
-
-- (UIBezierPath *)filledSublayerUnderlinePathWithTextFieldBounds:(CGRect)viewBounds
-                                         topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
-                                              underlineThickness:(CGFloat)underlineThickness;
-
 @end
 
 @implementation MDCInputViewContainerStyler
@@ -66,11 +56,11 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
 }
 
 - (void)applyOutlinedStyle:(BOOL)isOutlined
-                        view:(UIView *)view
-    floatingPlaceholderFrame:(CGRect)floatingPlaceholderFrame
-     topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
-       isFloatingPlaceholder:(BOOL)isFloatingPlaceholder
-            outlineLineWidth:(CGFloat)outlineLineWidth {
+                      view:(UIView *)view
+  floatingPlaceholderFrame:(CGRect)floatingPlaceholderFrame
+   topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
+     isFloatingPlaceholder:(BOOL)isFloatingPlaceholder
+          outlineLineWidth:(CGFloat)outlineLineWidth {
   if (!isOutlined) {
     [self.outlinedSublayer removeFromSuperlayer];
     return;

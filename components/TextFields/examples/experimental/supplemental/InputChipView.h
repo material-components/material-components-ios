@@ -30,7 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) MDCInputViewContainerStyle containerStyle;
 @property (nonatomic, strong) MDCContainerScheme *containerScheme;
 
-- (void)addChip:(MDCChipView *)chipView;
+- (void)addChip:(UIView *)chip;
 
 @end
 

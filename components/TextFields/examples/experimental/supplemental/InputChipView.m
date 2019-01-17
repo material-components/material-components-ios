@@ -53,34 +53,31 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 @interface InputChipView () <InputChipViewTextFieldDelegate, UIGestureRecognizerDelegate>
 
-@property (strong, nonatomic) InputChipViewTextField *inputChipViewTextField;
+@property (strong, nonatomic) UIView *maskedScrollViewContainerView;
 @property (strong, nonatomic) UIScrollView *scrollView;
-@property (strong, nonatomic) UIView *scrollViewContainer;
-@property (strong, nonatomic) UIView *tapRecognizerView;
+@property (strong, nonatomic) UIView *scrollViewContentViewTouchForwardingView;
+@property (strong, nonatomic) InputChipViewTextField *inputChipViewTextField;
+
 @property (strong, nonatomic) NSMutableArray *chips;
 @property (strong, nonatomic) NSMutableArray *chipsToRemove;
 
 @property (strong, nonatomic) InputChipViewLayout *layout;
-@property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
+
+@property (strong, nonatomic) UITouch *lastTouch;
+@property (nonatomic, assign) CGPoint lastTouchInitialContentOffset;
+@property (nonatomic, assign) CGPoint lastTouchInitialLocation;
+
+@property (strong, nonatomic) InputChipViewColorSchemeAdapter *colorSchemeAdapter;
+@property (nonatomic, strong) MDCInputViewContainerStyler *containerStyler;
 
 @property (strong, nonatomic) CALayer *horizontalGradientLayer;
 @property (strong, nonatomic) CAGradientLayer *horizontalGradientLayerMask;
 @property (strong, nonatomic) CALayer *verticalGradientLayer;
 @property (strong, nonatomic) CAGradientLayer *verticalGradientLayerMask;
 
-@property (strong, nonatomic) UITouch *lastTouch;
-//@property (strong, nonatomic) BOOL lastTouchBeganInside;
-//@property (strong, nonatomic) BOOL lastTouchEndedInside;
-
-@property (nonatomic, assign) CGPoint lastTouchStartingContentOffset;
-@property (nonatomic, assign) CGPoint lastTouchStartingLocation;
-
-@property (strong, nonatomic) InputChipViewColorSchemeAdapter *colorSchemeAdapter;
-
-@property (nonatomic, strong) MDCInputViewContainerStyler *containerStyler;
+@property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
 
 @end
-
 
 @implementation InputChipView
 
@@ -144,7 +141,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   [self setUpChipsToRemoveArray];
   [self setUpContentInsets];
   
-  self.chipRowHeight = [self determineEffectiveTextFieldFont].lineHeight * 2;
+  self.chipRowHeight = [self determineEffectiveTextViewFont].lineHeight * 2;
 }
 
 - (void)setUpContentInsets {
@@ -164,13 +161,13 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 }
 
 - (void)createSubviews {
-  self.scrollViewContainer = [[UIView  alloc] init];
-  [self addSubview:self.scrollViewContainer];
+  self.maskedScrollViewContainerView = [[UIView  alloc] init];
+  [self addSubview:self.maskedScrollViewContainerView];
   self.scrollView = [[UIScrollView alloc] init];
   self.scrollView.bounces = NO;
-  [self.scrollViewContainer addSubview:self.scrollView];
-  self.tapRecognizerView = [[UIView alloc] init];
-  [self.scrollView addSubview:self.tapRecognizerView];
+  [self.maskedScrollViewContainerView addSubview:self.scrollView];
+  self.scrollViewContentViewTouchForwardingView = [[UIView alloc] init];
+  [self.scrollView addSubview:self.scrollViewContentViewTouchForwardingView];
   self.inputChipViewTextField = [[InputChipViewTextField alloc] init];
   self.inputChipViewTextField.inputChipViewTextFieldDelegate = self;
   [self.scrollView addSubview:self.textField];
@@ -238,8 +235,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 -(UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
   UIView *result = [super hitTest:point withEvent:event];
-  NSLog(@"self: %@, scrollViewContainer: %@, scrollView: %@, tapRecognizerView: %@, testField: %@",@(self == result),@(self.scrollViewContainer == result),@(self.scrollView == result), @(self.tapRecognizerView == result), @(self.textField == result));
-  if (result == self.tapRecognizerView) {
+  if (result == self.scrollViewContentViewTouchForwardingView) {
     return self;
   }
   return result;
@@ -249,8 +245,8 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 -(BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
   BOOL result = [super beginTrackingWithTouch:touch withEvent:event];
-  self.lastTouchStartingContentOffset = self.scrollView.contentOffset;
-  self.lastTouchStartingLocation = [touch locationInView:self];
+  self.lastTouchInitialContentOffset = self.scrollView.contentOffset;
+  self.lastTouchInitialLocation = [touch locationInView:self];
   //  NSLog(@"begin tracking: %@, radius: %@, pointInside: %@",@(result), @(touch.majorRadius), NSStringFromCGPoint([touch locationInView:self]));
   return result;
 }
@@ -259,10 +255,10 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   BOOL result = [super continueTrackingWithTouch:touch withEvent:event];
   
   CGPoint location = [touch locationInView:self];
-  CGPoint offsetFromStart = [self offsetOfPoint:location fromPoint:self.lastTouchStartingLocation];
+  CGPoint offsetFromStart = [self offsetOfPoint:location fromPoint:self.lastTouchInitialLocation];
   //  NSLog(@"offset from start: %@",NSStringFromCGPoint(offsetFromStart));
   
-  CGPoint offset = self.lastTouchStartingContentOffset;
+  CGPoint offset = self.lastTouchInitialContentOffset;
   if (self.canChipsWrap) {
     CGFloat height = CGRectGetHeight(self.frame);
     offset.y -= offsetFromStart.y;
@@ -292,7 +288,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   [super endTrackingWithTouch:touch withEvent:event];
   
   CGPoint location = [touch locationInView:self];
-  CGPoint offset = [self offsetOfPoint:location fromPoint:self.lastTouchStartingLocation];
+  CGPoint offset = [self offsetOfPoint:location fromPoint:self.lastTouchInitialLocation];
   CGPoint absoluteOffset = [self absoluteOffsetOfOffset:offset];
   BOOL isProbablyTap = absoluteOffset.x < 15 && absoluteOffset.y < 15;
   if (isProbablyTap) {
@@ -314,9 +310,10 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 #pragma mark Layout
 
 - (InputChipViewLayout *)calculateLayout {
-  UIFont *textFieldFont = [self determineEffectiveTextFieldFont];
+  UIFont *textFieldFont = [self determineEffectiveTextViewFont];
   return [[InputChipViewLayout alloc] initWithBounds:self.bounds
                                                chips:self.chips
+                                           staleChipViews:self.chips
                                         canChipsWrap:self.canChipsWrap
                                        chipRowHeight:self.chipRowHeight
                                        textFieldText:self.textField.text
@@ -334,9 +331,9 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 }
 
 - (void)postLayoutSubviews {
-  self.scrollViewContainer.frame = self.bounds;
+  self.maskedScrollViewContainerView.frame = self.bounds;
   self.scrollView.frame = self.bounds;
-  self.tapRecognizerView.frame = self.layout.tapRecognizerViewFrame;
+  self.scrollViewContentViewTouchForwardingView.frame = self.layout.scrollViewContentViewTouchForwardingView;
   self.textField.frame = self.layout.textFieldFrame;
   self.scrollView.contentOffset = self.layout.scrollViewContentOffset;
   self.scrollView.contentSize = self.layout.scrollViewContentSize;
@@ -344,7 +341,6 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
                                chipFrames:self.layout.chipFrames
                             chipsToRemove:self.chipsToRemove
                                chipsToAdd:self.chipsToAdd];
-  //  NSLog(@"%@",NSStringFromCGRect(self.textField.frame));
   [self.scrollView setNeedsLayout];
   //  NSLog(@"inset: %@",NSStringFromUIEdgeInsets(self.scrollView.contentInset));
   //  NSLog(@"offset: %@",NSStringFromCGPoint(self.scrollView.contentOffset));
@@ -405,9 +401,9 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   // Create a layer that uses resulting image as its contents
   // then use that layer as a mask
   if (self.canChipsWrap) {
-    self.scrollViewContainer.layer.mask = self.verticalGradientLayerMask;
+    self.maskedScrollViewContainerView.layer.mask = self.verticalGradientLayerMask;
   } else {
-    self.scrollViewContainer.layer.mask = self.horizontalGradientLayerMask;
+    self.maskedScrollViewContainerView.layer.mask = self.horizontalGradientLayerMask;
   }
 }
 
@@ -511,10 +507,8 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 -(void)addChip:(MDCChipView *)chipView {
   [self.chips addObject:chipView];
-  self.textField.text = 0;
+  self.textField.text = nil;
   [self setNeedsLayout];
-//  NSInteger chipIndex = self.chips.count;
-//  CGRect newChipFrame = [self frameFor]
 }
 
 
@@ -594,7 +588,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 #pragma mark Fonts
 
-- (UIFont *)determineEffectiveTextFieldFont {
+- (UIFont *)determineEffectiveTextViewFont {
   return self.textField.font ?: [self uiTextFieldDefaultFont];
 }
 

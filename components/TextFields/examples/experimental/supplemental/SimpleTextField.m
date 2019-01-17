@@ -25,8 +25,6 @@
 
 #import <Foundation/Foundation.h>
 
-
-
 @interface SimpleTextField ()
 
 @property(strong, nonatomic) UIFont *floatingPlaceholderFont;
