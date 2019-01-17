@@ -156,6 +156,22 @@
   }
 }
 
+- (void)setDragged:(BOOL)dragged {
+  if (dragged == _dragged) {
+    return;
+  }
+  _dragged = dragged;
+  if (dragged) {
+    self.state |= MDCRippleStateDragged;
+  } else {
+    self.state &= ~MDCRippleStateDragged;
+  }
+  [self updateRippleColor];
+  if (!dragged) {
+    [self.rippleView beginRippleTouchDownAtPoint:CGPointZero animated:NO completion:nil];
+  }
+}
+
 - (void)setSelectionMode:(BOOL)selectionMode {
   _selectionMode = selectionMode;
   if (!selectionMode) {
