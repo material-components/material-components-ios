@@ -236,7 +236,9 @@ class EditReorderCollectionViewController: UIViewController,
       let cell = collectionView.cellForItem(at: selectedIndexPath)
       guard let cardCell = cell as? CardEditReorderCollectionCell else { return }
       collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
-      cardCell.rippleTouchController.isDragged = true
+      if (toggle == .reorder) {
+        cardCell.rippleTouchController.isDragged = true
+      }
     case .changed:
       guard let gestureView = gesture.view else { break }
       collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: gestureView))
