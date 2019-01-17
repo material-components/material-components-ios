@@ -94,7 +94,8 @@ typedef NS_ENUM(NSInteger, MDCRippleState) {
  A delegate to extend the behavior of the touch controller.
  */
 @property(nonatomic, weak, nullable)
-    id<MDCRippleTouchControllerDelegate, MDCStatefulRippleTouchControllerDelegate> delegate;
+    id<MDCRippleTouchControllerDelegate, MDCStatefulRippleTouchControllerDelegate>
+        delegate;
 
 /**
  Sets the color of the ripple for state.

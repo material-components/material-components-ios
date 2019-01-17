@@ -70,20 +70,20 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 }
 
 - (void)commonMDCCardCollectionCellInit {
-//  if (_inkView == nil) {
-//    _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
-//    _inkView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-//    _inkView.usesLegacyInkRipple = NO;
-//    _inkView.layer.zPosition = FLT_MAX;
-//    [self addSubview:_inkView];
-//  }
+  //  if (_inkView == nil) {
+  //    _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
+  //    _inkView.autoresizingMask = (UIViewAutoresizingFlexibleWidth |
+  //    UIViewAutoresizingFlexibleHeight); _inkView.usesLegacyInkRipple = NO;
+  //    _inkView.layer.zPosition = FLT_MAX;
+  //    [self addSubview:_inkView];
+  //  }
 
   if (_rippleTouchController == nil) {
     _rippleTouchController =
         [[MDCStatefulRippleTouchController alloc] initWithView:self.contentView];
     _rippleTouchController.rippleView.layer.zPosition = FLT_MAX;
     _rippleTouchController.delegate = self;
-//    _rippleTouchController.allowsSelection = YES;
+    //    _rippleTouchController.allowsSelection = YES;
   }
 
   if (_selectedImageView == nil) {
@@ -430,10 +430,10 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 }
 
 - (void)updateInkForShape {
-//  CGRect boundingBox = CGPathGetBoundingBox(self.layer.shapeLayer.path);
-//  self.inkView.maxRippleRadius =
-//      (CGFloat)(MDCHypot(CGRectGetHeight(boundingBox), CGRectGetWidth(boundingBox)) / 2 + 10);
-//  self.rippleTouchController.rippleView.layer.masksToBounds = NO;
+  //  CGRect boundingBox = CGPathGetBoundingBox(self.layer.shapeLayer.path);
+  //  self.inkView.maxRippleRadius =
+  //      (CGFloat)(MDCHypot(CGRectGetHeight(boundingBox), CGRectGetWidth(boundingBox)) / 2 + 10);
+  //  self.rippleTouchController.rippleView.layer.masksToBounds = NO;
 }
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {

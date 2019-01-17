@@ -35,14 +35,14 @@
       _rippleColors[@(MDCRippleStateNormal)] = UIColor.clearColor;
       _rippleColors[@(MDCRippleStateHighlighted)] = [UIColor colorWithWhite:0 alpha:(CGFloat)0.16];
       _rippleColors[@(MDCRippleStateSelected)] =
-      [selectionColor colorWithAlphaComponent:(CGFloat)0.08];
+          [selectionColor colorWithAlphaComponent:(CGFloat)0.08];
       _rippleColors[@(MDCRippleStateSelected | MDCRippleStateHighlighted)] =
-      [selectionColor colorWithAlphaComponent:(CGFloat)0.16];
+          [selectionColor colorWithAlphaComponent:(CGFloat)0.16];
       _rippleColors[@(MDCRippleStateDragged)] = [UIColor colorWithWhite:0 alpha:(CGFloat)0.08];
       _rippleColors[@(MDCRippleStateDragged | MDCRippleStateHighlighted)] =
-      [UIColor colorWithWhite:0 alpha:(CGFloat)0.08];
+          [UIColor colorWithWhite:0 alpha:(CGFloat)0.08];
       _rippleColors[@(MDCRippleStateSelected | MDCRippleStateDragged)] =
-      [selectionColor colorWithAlphaComponent:(CGFloat)0.08];
+          [selectionColor colorWithAlphaComponent:(CGFloat)0.08];
     }
   }
   return self;
@@ -81,10 +81,8 @@
 - (void)setState:(MDCRippleState)state {
   _state = state;
   NSLog(@"state: %ld", (long)state);
-  if ([self.delegate respondsToSelector:@selector(rippleTouchController:
-                                              rippleStateDidChange:)]) {
-    [self.delegate rippleTouchController:self
-                rippleStateDidChange:state];
+  if ([self.delegate respondsToSelector:@selector(rippleTouchController:rippleStateDidChange:)]) {
+    [self.delegate rippleTouchController:self rippleStateDidChange:state];
   }
 }
 
@@ -93,8 +91,8 @@
 
   if (enableLongPressGestureForSelection) {
     _selectionGestureRecognizer = [[UILongPressGestureRecognizer alloc]
-                                   initWithTarget:self
-                                   action:@selector(handleRippleSelectionGesture:)];
+        initWithTarget:self
+                action:@selector(handleRippleSelectionGesture:)];
     _selectionGestureRecognizer.minimumPressDuration = (CGFloat)0.5;
     _selectionGestureRecognizer.delegate = self;
     _selectionGestureRecognizer.cancelsTouchesInView = NO;
@@ -184,10 +182,10 @@
       _tapWentOutsideOfBounds = NO;
       self.highlighted = YES;
       if ([self.delegate respondsToSelector:@selector(rippleTouchController:
-                                                  didProcessRippleView:atTouchLocation:)]) {
+                                                       didProcessRippleView:atTouchLocation:)]) {
         [self.delegate rippleTouchController:self
-                    didProcessRippleView:self.rippleView
-                         atTouchLocation:_lastTouch];
+                        didProcessRippleView:self.rippleView
+                             atTouchLocation:_lastTouch];
       }
       break;
     }
@@ -244,17 +242,17 @@
 #pragma mark - UIGestureRecognizerDelegate
 
 - (BOOL)gestureRecognizer:(__unused UIGestureRecognizer *)gestureRecognizer
-shouldRecognizeSimultaneouslyWithGestureRecognizer:(__unused UIGestureRecognizer *)other {
+    shouldRecognizeSimultaneouslyWithGestureRecognizer:(__unused UIGestureRecognizer *)other {
   // Subclasses can override this to prioritize another recognizer.
   return YES;
 }
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
   if ([self.delegate respondsToSelector:@selector(rippleTouchController:
-                                              shouldProcessRippleTouchesAtTouchLocation:)]) {
+                                            shouldProcessRippleTouchesAtTouchLocation:)]) {
     CGPoint touchLocation = [gestureRecognizer locationInView:self.view];
     return [self.delegate rippleTouchController:self
-  shouldProcessRippleTouchesAtTouchLocation:touchLocation];
+        shouldProcessRippleTouchesAtTouchLocation:touchLocation];
   }
   return YES;
 }
