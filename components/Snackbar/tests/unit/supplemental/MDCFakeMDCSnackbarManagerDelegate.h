@@ -19,6 +19,7 @@
 @interface FakeMDCSnackbarManagerDelegate : NSObject <MDCSnackbarManagerDelegate>
 
 @property(nonatomic, strong) MDCSnackbarMessageView *presentedView;
+@property(nonatomic, assign) BOOL shouldSetSnackbarViewAccessibilityViewIsModal;
 
 - (void)willPresentSnackbarWithMessageView:(MDCSnackbarMessageView *)messageView;
 

@@ -36,9 +36,9 @@ mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
         ":ShadowElevations",
-        "//components/private/Math",
         "//components/ShadowLayer",
         "//components/Slider",
+        "//components/private/Math",
     ],
 )
 

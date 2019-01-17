@@ -14,6 +14,7 @@
 
 load(
     "//:material_components_ios.bzl",
+    "mdc_examples_objc_library",
     "mdc_extension_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
@@ -78,6 +79,15 @@ mdc_extension_objc_library(
     ],
 )
 
+mdc_examples_objc_library(
+    name = "ObjcExamples",
+    deps = [
+        ":ColorThemer",
+        ":TextFields",
+        ":TypographyThemer",
+    ],
+)
+
 mdc_objc_library(
     name = "unit_test_sources",
     testonly = 1,
@@ -98,12 +108,12 @@ mdc_objc_library(
 
 mdc_snapshot_objc_library(
     name = "snapshot_test_lib",
+    asset_catalogs = [
+        "tests/snapshot/resources/TextFieldsSnapshotTests.xcassets/ic_done.imageset",
+        "tests/snapshot/resources/TextFieldsSnapshotTests.xcassets/ic_search.imageset",
+    ],
     sdk_frameworks = [
         "CoreGraphics",
-    ],
-    asset_catalogs = [
-      "tests/snapshot/resources/TextFieldsSnapshotTests.xcassets/ic_done.imageset",
-      "tests/snapshot/resources/TextFieldsSnapshotTests.xcassets/ic_search.imageset",
     ],
     deps = [
         ":ColorThemer",
