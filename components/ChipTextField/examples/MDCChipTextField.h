@@ -51,12 +51,12 @@
 /**
  The chip views in the textfield with order.
  */
-@property(nonatomic, readonly, copy) NSArray<MDCChipView *> *chipViews;
+@property(nonatomic, readonly, copy, nonnull) NSArray<MDCChipView *> *chipViews;
 
 /**
  The MDCChipTextFieldDelegate of this textfield.
  */
-@property(nonatomic, weak) id<MDCChipTextFieldDelegate> chipTextFieldDelegate;
+@property(nonatomic, weak, nullable) id<MDCChipTextFieldDelegate> chipTextFieldDelegate;
 
 /*
  Appends a chip to the end of the text field.
