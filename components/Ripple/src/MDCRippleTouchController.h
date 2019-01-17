@@ -36,14 +36,10 @@
  */
 @property(nonatomic, strong, readonly, nonnull) MDCRippleView *rippleView;
 
-/** Delegate to extend the behavior of the touch control. */
-
 /**
  A delegate to extend the behavior of the touch controller.
  */
 @property(nonatomic, weak, nullable) id<MDCRippleTouchControllerDelegate> delegate;
-
-/** Gesture recognizer used to bind touch events to ripple. */
 
 /**
  The gesture recognizer used to bind the touch events to the ripple.
@@ -63,6 +59,9 @@
  */
 - (nonnull instancetype)initWithView:(nonnull UIView *)view NS_DESIGNATED_INITIALIZER;
 
+/**
+ Cancels all the existing ripples on the view with animation.
+ */
 - (void)cancelRippleTouchProcessing;
 
 @end

@@ -22,8 +22,10 @@
  Provides the current state of the ripple. The ripple is either in its normal state, or in the
  selected state where the ripple remains spread on the view.
 
- - MDCRippleStateNormal: The ripple is in its normal state.
+ - MDCRippleStateNormal: The ripple isn't currently presented.
+ - MDCRippleStateHighlighted: The ripple is activated and shown.
  - MDCRippleStateSelected: The ripple is in the selected state.
+ - MDCRippleStateDragged: The ripple is in the dragged state.
  */
 typedef NS_ENUM(NSInteger, MDCRippleState) {
   MDCRippleStateNormal = 0,
@@ -32,7 +34,11 @@ typedef NS_ENUM(NSInteger, MDCRippleState) {
   MDCRippleStateDragged = 1 << 2,
 };
 
-
+/**
+ The MDCStatefulRippleTouchController is a convenience controller that subclasses
+ MDCRippleTouchController providing a state system and the correct transitions and visuals
+ for those states using the ripple and its overlay.
+ */
 @interface MDCStatefulRippleTouchController : MDCRippleTouchController
 
 /**
@@ -57,10 +63,20 @@ typedef NS_ENUM(NSInteger, MDCRippleState) {
  */
 @property(nonatomic, getter=isSelected) BOOL selected;
 
+/**
+ This BOOL is set to YES if the ripple is currently highlighted, or NO otherwise.
+
+ Defaults to NO.
+ */
 @property(nonatomic, getter=isHighlighted) BOOL highlighted;
 
-@property(nonatomic, getter=isDragged) BOOL dragged;
+/**
+ This BOOL is set to YES if the ripple is currently dragged, or NO otherwise.
+ This state is only triggered manually by setting this property to YES.
 
+ Defaults to NO.
+ */
+@property(nonatomic, getter=isDragged) BOOL dragged;
 
 /**
  This BOOL is set to YES if the ripple is currently in the selection mode, or NO otherwise.
@@ -74,6 +90,9 @@ typedef NS_ENUM(NSInteger, MDCRippleState) {
  */
 @property(nonatomic, readonly) MDCRippleState state;
 
+/**
+ A delegate to extend the behavior of the touch controller.
+ */
 @property(nonatomic, weak, nullable)
     id<MDCRippleTouchControllerDelegate, MDCStatefulRippleTouchControllerDelegate> delegate;
 
@@ -96,8 +115,12 @@ typedef NS_ENUM(NSInteger, MDCRippleState) {
 @end
 
 @protocol MDCStatefulRippleTouchControllerDelegate <MDCRippleTouchControllerDelegate>
-
 @optional
+
+/**
+ Notifies the receiver that the ripple touch controller's state did change with the newly updated
+ state.
+ */
 - (void)rippleTouchController:(nonnull MDCStatefulRippleTouchController *)rippleTouchController
          rippleStateDidChange:(MDCRippleState)rippleState;
 
