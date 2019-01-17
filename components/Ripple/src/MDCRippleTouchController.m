@@ -144,6 +144,9 @@
 
 - (void)setSelectionMode:(BOOL)selectionMode {
   _selectionMode = selectionMode;
+  if (!selectionMode) {
+    self.selected = NO;
+  }
 }
 
 - (void)cancelRippleTouchProcessing {
