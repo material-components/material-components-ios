@@ -205,7 +205,7 @@ class DialogsMaterialThemingTests: XCTestCase {
         XCTAssert(false, "alert.mdc_dialogPresentationController should not be nil")
         return
     }
-    
+
     let presentationThemedAlert: MDCAlertController = MDCAlertController(title: "Title",
                                                                          message: "Message")
     guard let presentationThemedController = presentationThemedAlert.mdc_dialogPresentationController
@@ -216,7 +216,7 @@ class DialogsMaterialThemingTests: XCTestCase {
     let scheme: MDCContainerScheme = MDCContainerScheme()
 
     // When
-    presentationThemedAlert.applyTheme(withScheme: scheme)
+    presentationThemedController.applyTheme(withScheme: scheme)
     alertThemedAlert.applyTheme(withScheme: scheme)
 
     // Then
