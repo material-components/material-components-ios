@@ -121,7 +121,7 @@ static UIColor *RippleSelectedColor(void) {
     self.state &= ~MDCRippleStateSelected;
   }
   [self updateRippleColor];
-  if (!selected) {
+  if (self.selected && !self.highlighted) {
     [self.rippleView beginRippleTouchDownAtPoint:CGPointZero animated:NO completion:nil];
   }
 }
@@ -137,10 +137,8 @@ static UIColor *RippleSelectedColor(void) {
     [self.rippleView beginRippleTouchDownAtPoint:_lastTouch
                                         animated:_isTapped
                                       completion:^{
-                                        if (self.selectionMode) {
-                                          // In selection mode highlighted doesn't stay even
-                                          // if a tap is held.
-                                          self.selected = !self.selected;
+                                        if (self.selectionMode && !self.selected && self.highlighted) {
+                                          self.selected = YES;
                                           self.highlighted = NO;
                                         }
                                       }];
@@ -149,7 +147,11 @@ static UIColor *RippleSelectedColor(void) {
     [self updateRippleColor];
     if (!self.selected) {
       // Don't remove overlays if we are selected.
-      [self cancelRippleTouchProcessing];
+      if (highlighted) {
+        [self.rippleView beginRippleTouchUpAnimated:YES completion:nil];
+      } else {
+        [self cancelRippleTouchProcessing];
+      }
     }
     self.dragged = NO;
     _isTapped = NO;
@@ -209,8 +211,18 @@ static UIColor *RippleSelectedColor(void) {
       break;
     }
     case UIGestureRecognizerStateEnded:
-      if (!_selectionMode) {
+      if (self.selectionMode && self.selected && self.highlighted && !_tapWentOutsideOfBounds) {
+        self.selected = NO;
         self.highlighted = NO;
+      }
+      if (!self.selectionMode) {
+        self.highlighted = NO;
+      } else if (_tapWentOutsideOfBounds && self.selected) {
+        if (!self.highlighted) {
+          self.selected = NO;
+        } else {
+          self.highlighted = NO;
+        }
       }
       break;
     case UIGestureRecognizerStateCancelled:
