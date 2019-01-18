@@ -34,7 +34,7 @@ ios_application(
     launch_storyboard = "MDCCatalog/Base.lproj/LaunchScreen.storyboard",
     minimum_os_version = IOS_MINIMUM_OS,
     deps = [":MDCCatalogLib"],
-)  
+)
 
 ios_application(
     name = "MDCDragons",
@@ -72,13 +72,6 @@ swift_library(
         "//components/Dialogs",
         "//components/FlexibleHeader",
         "//components/FlexibleHeader:ColorThemer",
-        "//components/private/Icons",
-        "//components/private/Icons/icons/ic_arrow_back",
-        "//components/private/Icons/icons/ic_check",
-        "//components/private/Icons/icons/ic_color_lens",
-        "//components/private/Icons/icons/ic_help_outline",
-        "//components/private/Icons/icons/ic_more_horiz",
-        "//components/private/Icons/icons/ic_settings",
         "//components/Ink",
         "//components/LibraryInfo",
         "//components/OverlayWindow",
@@ -87,6 +80,13 @@ swift_library(
         "//components/ShadowLayer",
         "//components/Themes",
         "//components/Typography",
+        "//components/private/Icons",
+        "//components/private/Icons/icons/ic_arrow_back",
+        "//components/private/Icons/icons/ic_check",
+        "//components/private/Icons/icons/ic_color_lens",
+        "//components/private/Icons/icons/ic_help_outline",
+        "//components/private/Icons/icons/ic_more_horiz",
+        "//components/private/Icons/icons/ic_settings",
         "//components/schemes/Color",
         "//components/schemes/Typography",
         "@catalog_by_convention//:CatalogByConvention",
