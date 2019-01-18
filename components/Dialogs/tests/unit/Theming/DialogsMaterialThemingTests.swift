@@ -216,8 +216,8 @@ class DialogsMaterialThemingTests: XCTestCase {
     let scheme: MDCContainerScheme = MDCContainerScheme()
 
     // When
-    presentationThemedController.applyTheme(withScheme: scheme)
     alertThemedAlert.applyTheme(withScheme: scheme)
+    presentationThemedController.applyTheme(withScheme: scheme)
 
     // Then
     // Color
