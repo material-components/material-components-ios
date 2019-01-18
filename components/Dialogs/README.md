@@ -45,8 +45,7 @@ involve multiple tasks.
   - [Typical use: alert](#typical-use-alert)
 - [Extensions](#extensions)
   - [Theming](#theming)
-  - [Color Theming](#color-theming)
-  - [Typography Theming](#typography-theming)
+  - [Action Theming](#action-theming)
 - [Accessibility](#accessibility)
   - [MDCPresentationController Accessibility](#mdcpresentationcontroller-accessibility)
 
@@ -115,6 +114,7 @@ import MaterialComponents.MaterialDialogs
 <!-- Extracted from docs/typical-use-modal-dialog.md -->
 
 ### Typical use: modal dialog
+Your UIViewController presented using Material presentation and transition controllers:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -130,20 +130,27 @@ dialogTransitionController = MDCDialogTransitionController()
 myDialogViewController.modalPresentationStyle = .custom
 myDialogViewController.transitioningDelegate = dialogTransitionController
 
+// Material theming of presentation controller (see full syntax below)
+myDialogViewController.mdc_dialogPresentationController.applyTheme(withScheme: scheme)
+
 present(myDialogViewController, animated: true, completion:...)
 ```
 
 #### Objective-C
 
 ```objc
-// self is the presenting view controller and which has the following property
+// self is the presenting view controller which has the following property
 // defined to keep a reference to the transition controller.
 @property(nonatomic) MDCDialogTransitionController *dialogTransitionController;
 
-// To present the dialog myDialogViewController
+// Prepare to present the dialog myDialogViewController
 self.dialogTransitionController = [[MDCDialogTransitionController alloc] init];
 myDialogViewController.modalPresentationStyle = UIModalPresentationCustom;
 myDialogViewController.transitioningDelegate = self.dialogTransitionController;
+
+// Material theming of presentation controller (see full syntax below)
+[myDialogViewController.mdc_dialogPresentationController applyThemeWithScheme: scheme];
+
 [self presentViewController:myDialogViewController animated:YES completion:...];
 
 ```
@@ -152,6 +159,7 @@ myDialogViewController.transitioningDelegate = self.dialogTransitionController;
 <!-- Extracted from docs/typical-use-alert.md -->
 
 ### Typical use: alert
+A Material alert presented using Material presentation and transition controllers:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -161,6 +169,9 @@ myDialogViewController.transitioningDelegate = self.dialogTransitionController;
 let alertController = MDCAlertController(title: titleString, message: messageString)
 let action = MDCAlertAction(title:"OK") { (action) in print("OK") }
 alertController.addAction(action)
+
+// Material theming of the alert controller (see full syntax below)
+alertController.applyTheme(withScheme: scheme)
 
 present(alertController, animated:true, completion:...)
 ```
@@ -181,6 +192,9 @@ MDCAlertAction *alertAction =
 
 [alertController addAction:alertAction];
 
+// Material theming of the alert controller (see full syntax below)
+[alertController applyThemeWithScheme: scheme];
+
 [self presentViewController:alertController animated:YES completion:...];
 ```
 <!--</div>-->
@@ -195,10 +209,10 @@ MDCAlertAction *alertAction =
 You can theme an MDCDialog to match the Material Design Dialog using your app's schemes in the DialogThemer
 extension.
 
-You must first add the DialogThemer extension to your project:
+Make sure the Dialog's Theming extension is added to your project:
 
 ```bash
-pod 'MaterialComponents/Dialogs+DialogThemer'
+pod 'MaterialComponents/Dialogs+Theming'
 ```
 
 You can then import the extension and create an `MDCAlertControllerThemer` instance. A dialog scheme defines
@@ -210,11 +224,18 @@ the design parameters that you can use to theme your dialogs.
 // Step 1: Import the DialogThemer extension
 import MaterialComponents.MaterialDialogs_DialogThemer
 
-// Step 2: Create or get a alert scheme
-let alertScheme = MDCAlertScheme()
+// Step 2: Create or get a Material container scheme
+let scheme = MDCContainerScheme()
 
-// Step 3: Apply the alert scheme to your component using the desired alert style
-MDCAlertControllerThemer.applyScheme(scheme, to: alertController)
+// Step 3 (optional): Customize the default theme by providing custom color or typography schemes:
+scheme.colorScheme = myColorScheme
+scheme.typographyScheme = myTypographyScheme
+
+// Step 4: Use Material alert themer to theme your MDCAlertController instance
+alertController.applyTheme(withScheme: scheme)
+
+// Step 4: Alternatively, Use Material dialog presentation themer to theme your UIViewController instance:
+myDialogViewController.mdc_dialogPresentationController.applyTheme(withScheme: scheme)
 ```
 
 #### Objective-C
@@ -223,91 +244,73 @@ MDCAlertControllerThemer.applyScheme(scheme, to: alertController)
 // Step 1: Import the DialogThemer extension
 #import "MaterialDialogs+DialogThemer.h"
 
-// Step 2: Create or get a alert scheme
-MDCAlertScheme *alertScheme = [[MDCAlertScheme alloc] init];
+// Step 2: Create or get a Material container scheme
+MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
 
-// Step 3: Apply the alert scheme to your component using the desired alert style
-[MDCAlertControllerThemer applyScheme:alertScheme toAlertController:alertController];
+// Step 3 (optional): Customize the default theme by providing custom color or typography schemes:
+scheme.colorScheme = myColorScheme
+scheme.typographyScheme = myTypographyScheme
+
+// Step 4: Use the Material alert themer to theme an MDCAlertController instance
+[alertController applyThemeWithScheme:scheme];
+
+// Step 4: Alternatively, Use Material dialog presentation themer to theme your UIViewController instance:
+[myDialogViewController.mdc_dialogPresentationController applyThemeWithScheme: scheme];
+
 ```
 <!--</div>-->
 
-<!-- Extracted from docs/color-theming.md -->
+<!-- Extracted from docs/action-theming.md -->
 
-### Color Theming
+### Action Theming
 
-You can theme a dialog with your app's color scheme using the ColorThemer extension.
+Actions in MDCAlertController have emphasis which afects their theming.
+High emphasis actions generate contained buttons, medium emphasis actions generate outlined buttons and low emphasis actions generate text buttons.
 
-You must first add the Color Themer extension to your project:
-
-```bash
-pod 'MaterialComponents/Dialogs+ColorThemer'
-```
+<div class="article__asset article__asset--screenshot">
+  <img src="docs/assets/dialogButtons.png" alt="Dialogs Actions" width="320">
+</div>
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift
-// Step 1: Import the ColorThemer extension
-import MaterialComponents.MaterialDialogs_ColorThemer
+  let alert = MDCAlertController(title: "Button Theming",
+                                 message: "Lorem ipsum dolor sit amet, sit consectetur adipiscing")
 
-// Step 2: Create or get a color scheme
-let colorScheme = MDCSemanticColorScheme()
+  // Adding three actions with different emphasis, creating buttons with different themes.
+  alert.addAction(MDCAlertAction(title:"All Right", emphasis: .high, handler: handler))
+  alert.addAction(MDCAlertAction(title:"Not Now", emphasis: .medium, handler: handler))
+  alert.addAction(MDCAlertAction(title:"Later", emphasis: .low, handler: handler))
 
-// Step 3: Apply the color scheme to your component
-MDCAlertColorThemer.applySemanticColorScheme(colorScheme, to: component)
+  // Make sure to call the themer after all actions are added, so they are themed too!
+  let scheme = MDCContainerScheme()
+  alert.applyTheme(withScheme: scheme)
+
+  present(alertController, animated:true, completion:...)
 ```
 
 #### Objective-C
 
 ```objc
-// Step 1: Import the ColorThemer extension
-#import "MaterialDialogs+ColorThemer.h"
+  MDCAlertController *alert = 
+      [MDCAlertController alertControllerWithTitle:@"Button Theming" message: @"Lorem ipsum..."];
 
-// Step 2: Create or get a color scheme
-id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  // Adding three actions with different emphasis, creating buttons with different themes.
+  MDCAlertAction *primaryAaction = [MDCAlertAction actionWithTitle:@"All Right"
+                                                          emphasis:MDCActionEmphasisHigh
+                                                           handler:handler];
+  [alert addAction:primaryAaction];
 
-// Step 3: Apply the color scheme to your component
-[MDCAlertColorThemer applySemanticColorScheme:colorScheme
-     toAlertController:component];
-```
-<!--</div>-->
+  MDCAlertAction *cancelAaction = [MDCAlertAction actionWithTitle:@"Not Now"
+                                                         emphasis:MDCActionEmphasisMedium
+                                                          handler:handler];
+  [alert addAction:cancelAaction];
 
-<!-- Extracted from docs/typography-theming.md -->
+  // Make sure to call the themer after all actions are added, so they are themed too!
+  MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
+  [alert applyThemeWithScheme:scheme];
 
-### Typography Theming
-
-You can theme a dialog with your app's typography scheme using the TypographyThemer extension.
-
-You must first add the Typography Themer extension to your project:
-
-```bash
-pod 'MaterialComponents/Dialogs+TypographyThemer'
-```
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-// Step 1: Import the TypographyThemer extension
-import MaterialComponents.MaterialDialogs_TypographyThemer
-
-// Step 2: Create or get a typography scheme
-let typographyScheme = MDCTypographyScheme()
-
-// Step 3: Apply the typography scheme to your component
-MDCAlertTypographyThemer.applyTypographyScheme(typographyScheme, to: component)
-```
-
-#### Objective-C
-
-```objc
-// Step 1: Import the TypographyThemer extension
-#import "MaterialDialogs+TypographyThemer.h"
-
-// Step 2: Create or get a typography scheme
-id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
-
-// Step 3: Apply the typography scheme to your component
-[MDCAlertTypographyThemer applyTypographyScheme:colorScheme
-     toAlertController:component];
+  [self presentViewController:alert animated:YES completion:...];
 ```
 <!--</div>-->
 
