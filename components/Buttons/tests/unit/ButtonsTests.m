@@ -265,6 +265,35 @@ static NSString *controlStateDescription(UIControlState controlState) {
   XCTAssertEqual([button elevationForState:UIControlStateNormal], 0);
 }
 
+- (void)testBorderWidthForStateWithDifferentValues {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+
+  for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
+    CGFloat width = (CGFloat)controlState;
+
+    // When
+    [button setBorderWidth:width forState:controlState];
+
+    // Then
+    XCTAssertEqualWithAccuracy([button borderWidthForState:controlState], width, 0.001);
+  }
+}
+
+- (void)testBorderWidthFallbackBehavior {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+  CGFloat fakeBorderWidth = 99;
+
+  // When
+  [button setBorderWidth:fakeBorderWidth forState:UIControlStateNormal];
+
+  // Then
+  for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
+    XCTAssertEqualWithAccuracy([button borderWidthForState:controlState], fakeBorderWidth, 0.001);
+  }
+}
+
 - (void)testBackgroundColorForState {
   // Given
   MDCButton *button = [[MDCButton alloc] init];

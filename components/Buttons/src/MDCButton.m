@@ -632,7 +632,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   if (borderWidth != nil) {
     return (CGFloat)borderWidth.doubleValue;
   }
-  return 0;
+  return (CGFloat)[_borderWidths[@(UIControlStateNormal)] doubleValue];
 }
 
 - (void)setBorderWidth:(CGFloat)borderWidth forState:(UIControlState)state {
