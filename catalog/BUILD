@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load( "//:material_components_ios.bzl", "mdc_objc_library")
+load("//:material_components_ios.bzl", "mdc_objc_library")
 load("@build_bazel_rules_apple//apple:ios.bzl", "ios_application")
 load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
@@ -70,6 +70,3 @@ swift_library(
         "@catalog_by_convention//:CatalogByConvention",
     ],
 )
-
-
-    
