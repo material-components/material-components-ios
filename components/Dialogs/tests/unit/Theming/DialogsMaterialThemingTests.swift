@@ -174,6 +174,7 @@ class DialogsMaterialThemingTests: XCTestCase {
   }
 
   func testMDCDialogPresentationControllerTheming() {
+    // Given
     let alert: MDCAlertController = MDCAlertController(title: "Title", message: "Message")
     guard let presentationController = alert.mdc_dialogPresentationController else {
       XCTAssert(false, "alert.mdc_dialogPresentationController should not be nil")
@@ -182,13 +183,50 @@ class DialogsMaterialThemingTests: XCTestCase {
     let scheme: MDCContainerScheme = MDCContainerScheme()
     let colorScheme = MDCSemanticColorScheme()
 
+    // When
     presentationController.applyTheme(withScheme: scheme)
 
+    // Then
     // Color
-    XCTAssertEqual(presentationController.scrimColor, colorScheme.primaryColor)
+    XCTAssertEqual(presentationController.scrimColor,
+                   colorScheme.onSurfaceColor.withAlphaComponent(0.32))
 
     // Other properties
     XCTAssertEqual(presentationController.dialogCornerRadius, kCornerRadius, accuracy: 0.001)
     XCTAssertEqual(presentationController.dialogElevation, ShadowElevation.dialog)
+  }
+
+  func testMDCDialogPresentationControllerThemingMatchesAlertControllerTheming() {
+    // Given
+    let alertThemedAlert: MDCAlertController = MDCAlertController(title: "Title",
+                                                                  message: "Message")
+    guard let alertThemedController = presentationThemedAlert.mdc_dialogPresentationController
+      else {
+        XCTAssert(false, "alert.mdc_dialogPresentationController should not be nil")
+        return
+    }
+    
+    let presentationThemedAlert: MDCAlertController = MDCAlertController(title: "Title",
+                                                                         message: "Message")
+    guard let presentationThemedController = presentationThemedAlert.mdc_dialogPresentationController
+      else {
+      XCTAssert(false, "alert.mdc_dialogPresentationController should not be nil")
+      return
+    }
+    let scheme: MDCContainerScheme = MDCContainerScheme()
+
+    // When
+    presentationThemedAlert.applyTheme(withScheme: scheme)
+    alertThemedAlert.applyTheme(withScheme: scheme)
+
+    // Then
+    // Color
+    XCTAssertEqual(presentationThemedController.scrimColor, alertThemedController.scrimColor)
+
+    // Other properties
+    XCTAssertEqual(presentationThemedController.dialogCornerRadius,
+                   alertThemedController.dialogCornerRadius, accuracy: 0.001)
+    XCTAssertEqual(presentationThemedController.dialogElevation,
+                   alertThemedController.dialogElevation)
   }
 }
