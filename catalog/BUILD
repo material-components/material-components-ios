@@ -1,0 +1,72 @@
+# Copyright 2019-present The Material Components for iOS Authors. All
+# Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+# implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("//:material_components_ios.bzl", "mdc_objc_library")
+load("@build_bazel_rules_apple//apple:ios.bzl", "ios_application")
+load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
+
+licenses(["notice"])  # Apache 2.0
+
+IOS_MINIMUM_OS = "8.0"
+
+ios_application(
+    name = "MDCDragons",
+    app_icons = glob(["MDCCatalog/Assets.xcassets/AppIconInverse.appiconset/**"]),
+    bundle_id = "com.google.MDCDragons",
+    families = [
+        "iphone",
+        "ipad",
+    ],
+    infoplists = ["MDCDragons/Info.plist"],
+    launch_storyboard = "MDCCatalog/Base.lproj/LaunchScreen.storyboard",
+    minimum_os_version = IOS_MINIMUM_OS,
+    deps = [
+        ":MDCDragonsLib",
+    ],
+)
+
+mdc_objc_library(
+    name = "MaterialCatalog",
+    srcs = native.glob(["MaterialCatalog/*.m"]),
+    hdrs = native.glob(["MaterialCatalog/*.h"]),
+    deps = [
+        "//components/Themes",
+    ],
+)
+
+swift_library(
+    name = "MDCDragonsLib",
+    srcs = native.glob(["MDCDragons/*.swift"]),
+    copts = [
+        "-swift-version",
+        "3",
+    ],
+    data = glob(["MDCCatalog/Assets.xcassets/*.imageset/**"]),
+    resources = ["MDCDragons/HeaderView.xib"],
+    deps = [
+        "//components/AppBar",
+        "//components/FlexibleHeader",
+        "//components/LibraryInfo",
+        "//components/ShadowElevations",
+        "//components/ShadowLayer",
+        "//components/Themes",
+        "//components/Typography",
+        "//components/private/Icons/icons/ic_arrow_back",
+        "//components/private/Icons/icons/ic_chevron_right",
+        "//components/private/KeyboardWatcher",
+        "@catalog_by_convention//:CatalogByConvention",
+    ],
+)

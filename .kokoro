@@ -63,11 +63,18 @@ fix_bazel_imports() {
     find "${stashed_dir}"components/schemes/*/src -type f -name '*.h' -exec perl -pi -e "$1" {} + || true
     find "${stashed_dir}"components/schemes/*/src -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
   }
+  rewrite_catalogs() {
+    find "${stashed_dir}"catalog/MDC* -type f -name '*.swift' -exec perl -pi -e "$1" {} + || true
+  }
 
   stashed_dir=""
   rewrite_tests "s/import MaterialComponents.Material(.+)_(.+)/import components_\1_\2/"
   rewrite_tests "s/import MaterialComponentsBeta.Material(.+)Scheme/import components_schemes_\1_\1 \/\/ Beta/"
   rewrite_tests "s/import MaterialComponents.Material(.+)Scheme/import components_schemes_\1_\1/"
+  rewrite_catalogs "s/import MaterialComponents.MaterialIcons_(.+)/import components_private_Icons_icons_\1_\1/"
+  rewrite_catalogs "s/import MaterialComponents.Material(.+)_(.+)/import components_\1_\2/"
+  rewrite_catalogs "s/import MaterialComponentsBeta.Material(.+)Scheme/import components_schemes_\1_\1 \/\/ Beta/"
+  rewrite_catalogs "s/import MaterialComponents.Material(.+)Scheme/import components_schemes_\1_\1/"
   rewrite_examples "s/import MaterialComponents.Material(.+)_(.+)/import components_\1_\2/"
   rewrite_examples "s/import MaterialComponentsBeta.Material(.+)Scheme/import components_schemes_\1_\1 \/\/ Beta/"
   rewrite_examples "s/import MaterialComponents.Material(.+)Scheme/import components_schemes_\1_\1/"
@@ -77,10 +84,15 @@ fix_bazel_imports() {
     fi
     rewrite_tests "s/import MaterialComponents.Material$private_component/import components_private_${private_component}_${private_component}/"
     rewrite_examples "s/import MaterialComponents.Material$private_component/import components_private_${private_component}_${private_component}/"
+    rewrite_catalogs "s/import MaterialComponents.Material$private_component\\b/import components_private_${private_component}_${private_component}/"
   done
   rewrite_tests "s/import MaterialComponentsBeta.Material(.+)_(.+)/import components_\1_\2 \/\/ Beta/"
   rewrite_tests "s/import MaterialComponentsBeta.Material(.+)/import components_\1_\1 \/\/ Beta/"
   rewrite_tests "s/import MaterialComponents.Material(.+)/import components_\1_\1/"
+  rewrite_catalogs "s/import MaterialComponentsBeta.Material(.+)_(.+)/import components_\1_\2 \/\/ Beta/"
+  rewrite_catalogs "s/import MaterialComponentsBeta.Material(.+)/import components_\1_\1 \/\/ Beta/"
+  rewrite_catalogs "s/import MaterialComponents.Material(.+)/import components_\1_\1/"
+  rewrite_catalogs "s/import CatalogByConvention/import catalog_by_convention_CatalogByConvention/"
   rewrite_examples "s/import MaterialComponentsBeta.Material(.+)_(.+)/import components_\1_\2 \/\/ Beta/"
   rewrite_examples "s/import MaterialComponentsBeta.Material(.+)/import components_\1_\1 \/\/ Beta/"
   rewrite_examples "s/import MaterialComponents.Material(.+)/import components_\1_\1/"
@@ -103,6 +115,15 @@ fix_bazel_imports() {
     rewrite_tests "s/import components_(.+)_\1/import MaterialComponents.Material\1/"
     rewrite_tests "s/import components_(.+)_(.+) \/\/ Beta/import MaterialComponentsBeta.Material\1_\2/"
     rewrite_tests "s/import components_(.+)_(.+)/import MaterialComponents.Material\1_\2/"
+    rewrite_catalogs "s/import components_private_Icons_icons_(.+)_\1/import MaterialComponents.MaterialIcons_\1/"
+    rewrite_catalogs "s/import components_(.+)_\1 \/\/ Beta/import MaterialComponentsBeta.Material\1/"
+    rewrite_catalogs "s/import components_schemes_(.+)_.+ \/\/ Beta/import MaterialComponentsBeta.Material\1Scheme/"
+    rewrite_catalogs "s/import components_schemes_(.+)_.+/import MaterialComponents.Material\1Scheme/"
+    rewrite_catalogs "s/import components_private_(.+)_.+/import MaterialComponents.Material\1/"
+    rewrite_catalogs "s/import components_(.+)_\1/import MaterialComponents.Material\1/"
+    rewrite_catalogs "s/import components_(.+)_(.+) \/\/ Beta/import MaterialComponentsBeta.Material\1_\2/"
+    rewrite_catalogs "s/import components_(.+)_(.+)/import MaterialComponents.Material\1_\2/"
+    rewrite_catalogs "s/import catalog_by_convention_CatalogByConvention/import CatalogByConvention/"
     rewrite_examples "s/import components_(.+)_\1 \/\/ Beta/import MaterialComponentsBeta.Material\1/"
     rewrite_examples "s/import components_schemes_(.+)_.+ \/\/ Beta/import MaterialComponentsBeta.Material\1Scheme/"
     rewrite_examples "s/import components_schemes_(.+)_.+/import MaterialComponents.Material\1Scheme/"
