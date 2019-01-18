@@ -127,3 +127,9 @@ swift_library(
         "@catalog_by_convention//:CatalogByConvention",
     ],
 )
+
+mdc_objc_library(
+    name = "MDCActionExtension",
+    srcs = native.glob(["MDCActionExtension/*.m"]),
+    hdrs = native.glob(["MDCActionExtension/*.h"]),
+)
