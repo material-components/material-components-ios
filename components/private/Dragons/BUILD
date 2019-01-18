@@ -26,4 +26,3 @@ mdc_examples_swift_library(
         "//components/ShadowLayer",
     ],
 )
-
