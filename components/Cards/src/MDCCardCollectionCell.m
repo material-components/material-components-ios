@@ -41,6 +41,7 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
   NSMutableDictionary<NSNumber *, UIColor *> *_imageTintColors;
   UIColor *_backgroundColor;
   CGPoint _lastTouch;
+  MDCRippleState _rippleState;
 }
 
 @dynamic layer;
@@ -80,7 +81,7 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 
   if (_rippleTouchController == nil) {
     _rippleTouchController =
-        [[MDCStatefulRippleTouchController alloc] initWithView:self.contentView];
+        [[MDCStatefulRippleTouchController alloc] initWithView:self];
     _rippleTouchController.rippleView.layer.zPosition = FLT_MAX;
     _rippleTouchController.delegate = self;
     //    _rippleTouchController.allowsSelection = YES;
@@ -183,9 +184,9 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 //  [super setSelected:selected];
 //  if (self.selectable) {
 //    if (selected) {
-//      [self setState:MDCCardCellStateSelected animated:NO];
+//      [self.rippleTouchController setSelected:YES];
 //    } else {
-//      [self setState:MDCCardCellStateNormal animated:NO];
+//      [self.rippleTouchController setSelected:NO];
 //    }
 //  }
 //}
@@ -299,6 +300,7 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 
 - (void)updateImage {
   UIImage *image = [self imageForState:self.state];
+//  self.selectedImageView.hidden = NO;
   [self.selectedImageView setImage:image];
   [self.selectedImageView sizeToFit];
 }
@@ -490,12 +492,24 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 
 - (void)rippleTouchController:(MDCStatefulRippleTouchController *)rippleTouchController
          rippleStateDidChange:(MDCRippleState)rippleState {
-  if (rippleState == MDCRippleStateSelected) {
+  _rippleState = rippleState;
+  if ((rippleState & MDCRippleStateSelected) > 0) {
     [self setState:MDCCardCellStateSelected animated:YES];
-  } else if (rippleState == MDCRippleStateHighlighted) {
+  } else if ((rippleState & MDCRippleStateHighlighted) > 0) {
     [self setState:MDCCardCellStateHighlighted animated:YES];
   } else {
-    [self setState:MDCCardCellStateNormal animated:YES];
+    [self setState:MDCCardCellStateNormal animated:NO];
+  }
+}
+
+- (void)rippleTouchController:(MDCRippleTouchController *)rippleTouchController
+       tapWentOutsideOfBounds:(BOOL)outsideOfBounds {
+  if((_rippleState & MDCRippleStateHighlighted) == 0) {
+    if (outsideOfBounds) {
+      [self setState:MDCCardCellStateNormal animated:YES];
+    } else {
+      [self setState:MDCCardCellStateSelected animated:YES];
+    }
   }
 }
 

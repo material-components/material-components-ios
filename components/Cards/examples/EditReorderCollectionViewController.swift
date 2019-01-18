@@ -140,7 +140,7 @@ class EditReorderCollectionViewController: UIViewController,
 
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
     guard let cardCell = cell as? CardEditReorderCollectionCell else { return cell }
-
+    cardCell.isSelected = false
     cardCell.apply(containerScheme: containerScheme, typographyScheme: typographyScheme)
 
     let title = dataSource[indexPath.item].title
@@ -258,6 +258,7 @@ extension EditReorderCollectionViewController {
       "breadcrumbs": ["Cards", "Edit/Reorder"],
       "primaryDemo": false,
       "presentable": true,
+      "debug": false,
     ]
   }
 }

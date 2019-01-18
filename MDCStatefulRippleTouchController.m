@@ -23,7 +23,6 @@ static UIColor *RippleSelectedColor(void) {
 }
 
 @implementation MDCStatefulRippleTouchController {
-  BOOL _tapWentOutsideOfBounds;
   NSMutableDictionary<NSNumber *, UIColor *> *_rippleColors;
   BOOL _isTapped;
   CGPoint _lastTouch;
@@ -87,6 +86,9 @@ static UIColor *RippleSelectedColor(void) {
 - (void)setState:(MDCRippleState)state {
   _state = state;
   NSLog(@"state: %ld", (long)state);
+  if (state == 0) {
+    
+  }
   if ([self.delegate respondsToSelector:@selector(rippleTouchController:rippleStateDidChange:)]) {
     [self.delegate rippleTouchController:self rippleStateDidChange:state];
   }
@@ -138,7 +140,9 @@ static UIColor *RippleSelectedColor(void) {
                                         animated:_isTapped
                                       completion:^{
                                         if (self.selectionMode && !self.selected && self.highlighted) {
-                                          self.selected = YES;
+                                          if (!self.tapWentOutsideOfBounds) {
+                                            self.selected = YES;
+                                          }
                                           self.highlighted = NO;
                                         }
                                       }];
@@ -153,8 +157,8 @@ static UIColor *RippleSelectedColor(void) {
         [self cancelRippleTouchProcessing];
       }
     }
-    self.dragged = NO;
     _isTapped = NO;
+    self.dragged = NO;
   }
 }
 
@@ -169,16 +173,16 @@ static UIColor *RippleSelectedColor(void) {
     self.state &= ~MDCRippleStateDragged;
   }
   [self updateRippleColor];
-  if (!dragged) {
-    [self.rippleView beginRippleTouchDownAtPoint:CGPointZero animated:NO completion:nil];
-  }
+//  self.highlighted = NO;
+//  if (!dragged) {
+//    [self.rippleView beginRippleTouchDownAtPoint:CGPointZero animated:NO completion:nil];
+//  }
 }
 
 - (void)setSelectionMode:(BOOL)selectionMode {
   _selectionMode = selectionMode;
-  if (!selectionMode) {
-    self.selected = NO;
-  }
+//  self.selected = NO;
+//  self.highlighted = NO;
 }
 
 - (void)handleRippleGesture:(UILongPressGestureRecognizer *)recognizer {
@@ -187,7 +191,7 @@ static UIColor *RippleSelectedColor(void) {
   switch (recognizer.state) {
     case UIGestureRecognizerStateBegan: {
       _isTapped = YES;
-      _tapWentOutsideOfBounds = NO;
+      self.tapWentOutsideOfBounds = NO;
       self.highlighted = YES;
       if ([self.delegate respondsToSelector:@selector(rippleTouchController:
                                                        didProcessRippleView:atTouchLocation:)]) {
@@ -201,23 +205,23 @@ static UIColor *RippleSelectedColor(void) {
       break;
     case UIGestureRecognizerStateChanged: {
       BOOL pointContainedinBounds = CGRectContainsPoint(self.view.bounds, _lastTouch);
-      if (pointContainedinBounds && _tapWentOutsideOfBounds) {
-        _tapWentOutsideOfBounds = NO;
+      if (pointContainedinBounds && self.tapWentOutsideOfBounds) {
+        self.tapWentOutsideOfBounds = NO;
         [self.rippleView fadeInRippleAnimated:YES completion:nil];
-      } else if (!pointContainedinBounds && !_tapWentOutsideOfBounds) {
-        _tapWentOutsideOfBounds = YES;
+      } else if (!pointContainedinBounds && !self.tapWentOutsideOfBounds) {
+        self.tapWentOutsideOfBounds = YES;
         [self.rippleView fadeOutRippleAnimated:YES completion:nil];
       }
       break;
     }
     case UIGestureRecognizerStateEnded:
-      if (self.selectionMode && self.selected && self.highlighted && !_tapWentOutsideOfBounds) {
+      if (self.selectionMode && self.selected && self.highlighted && !self.tapWentOutsideOfBounds) {
         self.selected = NO;
         self.highlighted = NO;
       }
       if (!self.selectionMode) {
         self.highlighted = NO;
-      } else if (_tapWentOutsideOfBounds && self.selected) {
+      } else if (self.tapWentOutsideOfBounds && self.selected) {
         if (!self.highlighted) {
           self.selected = NO;
         } else {

@@ -14,9 +14,7 @@
 
 #import "MDCRippleTouchController.h"
 
-@implementation MDCRippleTouchController {
-  BOOL _tapWentOutsideOfBounds;
-}
+@implementation MDCRippleTouchController
 
 - (instancetype)initWithView:(UIView *)view {
   self = [super init];
@@ -68,10 +66,10 @@
     case UIGestureRecognizerStateChanged: {
       BOOL pointContainedinBounds = CGRectContainsPoint(self.view.bounds, lastTouch);
       if (pointContainedinBounds && _tapWentOutsideOfBounds) {
-        _tapWentOutsideOfBounds = NO;
+        self.tapWentOutsideOfBounds = NO;
         [self.rippleView fadeInRippleAnimated:YES completion:nil];
       } else if (!pointContainedinBounds && !_tapWentOutsideOfBounds) {
-        _tapWentOutsideOfBounds = YES;
+        self.tapWentOutsideOfBounds = YES;
         [self.rippleView fadeOutRippleAnimated:YES completion:nil];
       }
       break;
@@ -83,6 +81,15 @@
     case UIGestureRecognizerStateFailed:
       [self cancelRippleTouchProcessing];
       break;
+  }
+}
+
+- (void)setTapWentOutsideOfBounds:(BOOL)tapWentOutsideOfBounds {
+  _tapWentOutsideOfBounds = tapWentOutsideOfBounds;
+  if ([_delegate respondsToSelector:
+       @selector(rippleTouchController:tapWentOutsideOfBounds:)]) {
+    [_delegate rippleTouchController:self
+              tapWentOutsideOfBounds:tapWentOutsideOfBounds];
   }
 }
 
@@ -103,5 +110,9 @@
   }
   return YES;
 }
+
+//- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+//
+//}
 
 @end

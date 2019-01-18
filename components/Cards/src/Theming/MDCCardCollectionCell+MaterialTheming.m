@@ -19,7 +19,7 @@
 
 static const MDCShadowElevation kNormalElevation = 1;
 static const MDCShadowElevation kHighlightedElevation = 4;
-static const MDCShadowElevation kSelectedElevation = 4;
+static const MDCShadowElevation kSelectedElevation = 1;
 static const CGFloat kBorderWidth = 1;
 
 @implementation MDCCardCollectionCell (MaterialTheming)

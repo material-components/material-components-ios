@@ -46,6 +46,8 @@
  */
 @property(nonatomic, strong, readonly, nonnull) UILongPressGestureRecognizer *gestureRecognizer;
 
+@property(nonatomic, assign) BOOL tapWentOutsideOfBounds;
+
 /**
  Unavailable, please use `initWithView` instead.
  */
@@ -102,5 +104,8 @@
 - (void)rippleTouchController:(nonnull MDCRippleTouchController *)rippleTouchController
          didProcessRippleView:(nonnull MDCRippleView *)rippleView
               atTouchLocation:(CGPoint)location;
+
+- (void)rippleTouchController:(nonnull MDCRippleTouchController *)rippleTouchController
+       tapWentOutsideOfBounds:(BOOL)outsideOfBounds;
 
 @end
