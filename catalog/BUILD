@@ -23,6 +23,20 @@ licenses(["notice"])  # Apache 2.0
 IOS_MINIMUM_OS = "8.0"
 
 ios_application(
+    name = "MDCCatalog",
+    app_icons = glob(["MDCCatalog/Assets.xcassets/AppIcon.appiconset/**"]),
+    bundle_id = "com.google.mdc-catalog",
+    families = [
+        "iphone",
+        "ipad",
+    ],
+    infoplists = ["MDCCatalog/Info.plist"],
+    launch_storyboard = "MDCCatalog/Base.lproj/LaunchScreen.storyboard",
+    minimum_os_version = IOS_MINIMUM_OS,
+    deps = [":MDCCatalogLib"],
+)
+
+ios_application(
     name = "MDCDragons",
     app_icons = glob(["MDCCatalog/Assets.xcassets/AppIconInverse.appiconset/**"]),
     bundle_id = "com.google.MDCDragons",
@@ -35,6 +49,49 @@ ios_application(
     minimum_os_version = IOS_MINIMUM_OS,
     deps = [
         ":MDCDragonsLib",
+    ],
+)
+
+swift_library(
+    name = "MDCCatalogLib",
+    srcs = native.glob(["MDCCatalog/*.swift"]),
+    copts = [
+        "-swift-version",
+        "3",
+    ],
+    resources = ["MDCDragons/HeaderView.xib"],
+    deps = [
+        ":MaterialCatalog",
+        "//components/AppBar",
+        "//components/AppBar:ColorThemer",
+        "//components/AppBar:TypographyThemer",
+        "//components/BottomSheet",
+        "//components/Buttons",
+        "//components/Buttons:ButtonThemer",
+        "//components/Collections",
+        "//components/Dialogs",
+        "//components/FlexibleHeader",
+        "//components/FlexibleHeader:ColorThemer",
+        "//components/Ink",
+        "//components/LibraryInfo",
+        "//components/OverlayWindow",
+        "//components/Palettes",
+        "//components/ShadowElevations",
+        "//components/ShadowLayer",
+        "//components/Themes",
+        "//components/Typography",
+        "//components/private/Icons",
+        "//components/private/Icons/icons/ic_arrow_back",
+        "//components/private/Icons/icons/ic_check",
+        "//components/private/Icons/icons/ic_color_lens",
+        "//components/private/Icons/icons/ic_help_outline",
+        "//components/private/Icons/icons/ic_more_horiz",
+        "//components/private/Icons/icons/ic_settings",
+        "//components/schemes/Color",
+        "//components/schemes/Typography",
+        "@catalog_by_convention//:CatalogByConvention",
+        "@material_internationalization_ios//:MDFInternationalization",
+        "@material_text_accessibility_ios//:MDFTextAccessibility",
     ],
 )
 
