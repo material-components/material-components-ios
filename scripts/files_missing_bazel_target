@@ -63,11 +63,11 @@ modified_files() {
   git diff --name-status "${range}" \
     | grep -v -E '^D'  \
     | grep -E '(\.swift|\.h|\.m)$' \
-    | sort \
-    | uniq \
     | while read LINE; do \
         echo "$LINE" | sed -nE 's/.*[[:blank:]]+([[:alnum:]_\-\.\/+]+)$/\1/p';  \
-      done 
+      done \
+    | sort \
+    | uniq
 
   if [ -n "$KOKORO_BUILD_NUMBER" ]; then
     popd >> /dev/null
