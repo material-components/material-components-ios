@@ -15,6 +15,7 @@
 load(
     "//:material_components_ios.bzl",
     "mdc_examples_objc_library",
+    "mdc_examples_swift_library",
     "mdc_extension_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
@@ -85,6 +86,16 @@ mdc_examples_objc_library(
         ":ColorThemer",
         ":TextFields",
         ":TypographyThemer",
+    ],
+)
+
+mdc_examples_swift_library(
+    name = "SwiftExamples",
+    deps = [
+        ":ColorThemer",
+        ":TextFields",
+        ":TypographyThemer",
+        "//components/AppBar",
     ],
 )
 
