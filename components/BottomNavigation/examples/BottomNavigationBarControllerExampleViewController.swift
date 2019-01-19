@@ -34,7 +34,7 @@ class BottomNavigationControllerExampleViewController: MDCBottomNavigationBarCon
       // The catalog circumvents the controller's guards to ensure that it is only used if
       // iOS 9+ is available. This is a work around to ensure that the catalog does not crash.
       // Remove when MDC is upgraded to iOS 9 as a minimum deployment target.
-      return;
+      return
     }
 
     super.viewDidLoad()
