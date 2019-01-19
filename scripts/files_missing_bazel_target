@@ -59,7 +59,6 @@ modified_files() {
   #  commit.
   range="${base_sha}...HEAD"
 
-
   git diff --name-status "${range}" \
     | grep -v -E '^D'  \
     | grep -E '(\.swift|\.h|\.m)$' \
