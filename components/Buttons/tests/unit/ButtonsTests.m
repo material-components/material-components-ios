@@ -270,7 +270,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
   MDCButton *button = [[MDCButton alloc] init];
 
   // Then
-  for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
+  for (NSUInteger controlState = 0; controlState <= kNumUIControlStates; ++controlState) {
     XCTAssertEqualWithAccuracy([button borderWidthForState:controlState], 0, 0.001);
   }
 }
@@ -279,7 +279,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
   // Given
   MDCButton *button = [[MDCButton alloc] init];
 
-  for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
+  for (NSUInteger controlState = 0; controlState <= kNumUIControlStates; ++controlState) {
     CGFloat width = (CGFloat)controlState;
 
     // When
@@ -289,6 +289,10 @@ static NSString *controlStateDescription(UIControlState controlState) {
     if (controlState == (UIControlStateHighlighted | UIControlStateDisabled)) {
       XCTAssertEqualWithAccuracy([button borderWidthForState:controlState],
                                  [button borderWidthForState:UIControlStateHighlighted], 0.001);
+    } else if (controlState ==
+               (UIControlStateHighlighted | UIControlStateDisabled | UIControlStateSelected)) {
+      XCTAssertNotEqualWithAccuracy([button borderWidthForState:controlState],
+                                    [button borderWidthForState:UIControlStateNormal], 0.001);
     } else {
       XCTAssertEqualWithAccuracy([button borderWidthForState:controlState], width, 0.001);
     }
@@ -304,7 +308,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
   [button setBorderWidth:fakeBorderWidth forState:UIControlStateNormal];
 
   // Then
-  for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
+  for (NSUInteger controlState = 0; controlState <= kNumUIControlStates; ++controlState) {
     XCTAssertEqualWithAccuracy([button borderWidthForState:controlState], fakeBorderWidth, 0.001);
   }
 }
