@@ -286,7 +286,12 @@ static NSString *controlStateDescription(UIControlState controlState) {
     [button setBorderWidth:width forState:controlState];
 
     // Then
-    XCTAssertEqualWithAccuracy([button borderWidthForState:controlState], width, 0.001);
+    if (controlState == (UIControlStateHighlighted | UIControlStateDisabled)) {
+      XCTAssertEqualWithAccuracy([button borderWidthForState:controlState],
+                                 [button borderWidthForState:UIControlStateHighlighted], 0.001);
+    } else {
+      XCTAssertEqualWithAccuracy([button borderWidthForState:controlState], width, 0.001);
+    }
   }
 }
 
