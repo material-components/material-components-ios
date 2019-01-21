@@ -201,9 +201,8 @@ static NSString *controlStateDescription(UIControlState controlState) {
 }
 
 - (void)testElevationForState {
-  // Given
   for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
-    // And given
+    // Given
     CGFloat elevation = randomNumber();
 
     // When
@@ -267,57 +266,51 @@ static NSString *controlStateDescription(UIControlState controlState) {
 }
 
 - (void)testDefaultBorderWidth {
-  // Given
-  MDCButton *button = [[MDCButton alloc] init];
-
   // Then
   for (NSUInteger controlState = 0; controlState <= kNumUIControlStates; ++controlState) {
-    XCTAssertEqualWithAccuracy([button borderWidthForState:controlState], 0, 0.001);
+    XCTAssertEqualWithAccuracy([self.button borderWidthForState:controlState], 0, 0.001);
   }
 }
 
 - (void)testBorderWidthForStateWithDifferentValues {
-  // Given
-  MDCButton *button = [[MDCButton alloc] init];
-
   for (NSUInteger controlState = 0; controlState <= kNumUIControlStates; ++controlState) {
+    // Given
     CGFloat width = (CGFloat)controlState;
 
     // When
-    [button setBorderWidth:width forState:controlState];
+    [self.button setBorderWidth:width forState:controlState];
 
     // Then
     if (controlState == (UIControlStateHighlighted | UIControlStateDisabled)) {
-      XCTAssertEqualWithAccuracy([button borderWidthForState:controlState],
-                                 [button borderWidthForState:UIControlStateHighlighted], 0.001);
+      XCTAssertEqualWithAccuracy([self.button borderWidthForState:controlState],
+                                 [self.button borderWidthForState:UIControlStateHighlighted], 0.001);
     } else if (controlState ==
                (UIControlStateHighlighted | UIControlStateDisabled | UIControlStateSelected)) {
-      XCTAssertNotEqualWithAccuracy([button borderWidthForState:controlState],
-                                    [button borderWidthForState:UIControlStateNormal], 0.001);
+      XCTAssertNotEqualWithAccuracy([self.button borderWidthForState:controlState],
+                                    [self.button borderWidthForState:UIControlStateNormal], 0.001);
     } else {
-      XCTAssertEqualWithAccuracy([button borderWidthForState:controlState], width, 0.001);
+      XCTAssertEqualWithAccuracy([self.button borderWidthForState:controlState], width, 0.001);
     }
   }
 }
 
 - (void)testBorderWidthFallbackBehavior {
   // Given
-  MDCButton *button = [[MDCButton alloc] init];
   CGFloat fakeBorderWidth = 99;
 
   // When
-  [button setBorderWidth:fakeBorderWidth forState:UIControlStateNormal];
+  [self.button setBorderWidth:fakeBorderWidth forState:UIControlStateNormal];
 
   // Then
   for (NSUInteger controlState = 0; controlState <= kNumUIControlStates; ++controlState) {
-    XCTAssertEqualWithAccuracy([button borderWidthForState:controlState], fakeBorderWidth, 0.001);
+    XCTAssertEqualWithAccuracy([self.button borderWidthForState:controlState],
+                               fakeBorderWidth, 0.001);
   }
 }
 
 - (void)testBackgroundColorForState {
-  // Given
   for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
-    // And given
+    // Given
     UIColor *color = randomColor();
 
     // When
