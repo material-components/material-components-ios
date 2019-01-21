@@ -283,7 +283,8 @@ static NSString *controlStateDescription(UIControlState controlState) {
     // Then
     if (controlState == (UIControlStateHighlighted | UIControlStateDisabled)) {
       XCTAssertEqualWithAccuracy([self.button borderWidthForState:controlState],
-                                 [self.button borderWidthForState:UIControlStateHighlighted], 0.001);
+                                 [self.button borderWidthForState:UIControlStateHighlighted],
+                                 0.001);
     } else if (controlState ==
                (UIControlStateHighlighted | UIControlStateDisabled | UIControlStateSelected)) {
       XCTAssertNotEqualWithAccuracy([self.button borderWidthForState:controlState],
@@ -303,8 +304,8 @@ static NSString *controlStateDescription(UIControlState controlState) {
 
   // Then
   for (NSUInteger controlState = 0; controlState <= kNumUIControlStates; ++controlState) {
-    XCTAssertEqualWithAccuracy([self.button borderWidthForState:controlState],
-                               fakeBorderWidth, 0.001);
+    XCTAssertEqualWithAccuracy([self.button borderWidthForState:controlState], fakeBorderWidth,
+                               0.001);
   }
 }
 
