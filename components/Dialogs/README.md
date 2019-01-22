@@ -30,6 +30,8 @@ involve multiple tasks.
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/dialogs/api-docs/Classes/MDCAlertController.html">MDCAlertController</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/dialogs/api-docs/Classes/MDCAlertControllerView.html">MDCAlertControllerView</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/dialogs/api-docs/Classes/MDCDialogPresentationController.html">MDCDialogPresentationController</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/dialogs/api-docs/Enums.html">Enumerations</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/dialogs/api-docs/Enums/MDCActionEmphasis.html">MDCActionEmphasis</a></li>
 </ul>
 
 ## Table of contents
@@ -46,6 +48,8 @@ involve multiple tasks.
 - [Extensions](#extensions)
   - [Theming](#theming)
   - [Action Theming](#action-theming)
+  - [Color Theming](#color-theming)
+  - [Typography Theming](#typography-theming)
 - [Accessibility](#accessibility)
   - [MDCPresentationController Accessibility](#mdcpresentationcontroller-accessibility)
 
@@ -154,11 +158,11 @@ myDialogViewController.transitioningDelegate = self.dialogTransitionController;
 [self presentViewController:myDialogViewController animated:YES completion:...];
 
 ```
-<!--</div>-->
 
 <!-- Extracted from docs/typical-use-alert.md -->
 
 ### Typical use: alert
+
 A Material alert presented using Material presentation and transition controllers:
 
 <!--<div class="material-code-render" markdown="1">-->
@@ -271,9 +275,21 @@ High emphasis actions generate contained buttons, medium emphasis actions genera
   <img src="docs/assets/dialogButtons.png" alt="Dialogs Actions" width="320">
 </div>
 
+Make sure the DialogThemer extension is added to your project:
+
+```bash
+pod 'MaterialComponents/Dialogs+DialogThemer'
+```
+
+The MDCContainerScheme defines design parameters that you can use to theme your dialogs.  The scheme is designed to be instanciated and customized once and be reused by many components.
+
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift
+  // Create or reuse a Container scheme
+  let scheme = MDCContainerScheme()
+
+  // Creating an Alert dialog
   let alert = MDCAlertController(title: "Button Theming",
                                  message: "Lorem ipsum dolor sit amet, sit consectetur adipiscing")
 
@@ -282,16 +298,20 @@ High emphasis actions generate contained buttons, medium emphasis actions genera
   alert.addAction(MDCAlertAction(title:"Not Now", emphasis: .medium, handler: handler))
   alert.addAction(MDCAlertAction(title:"Later", emphasis: .low, handler: handler))
 
-  // Make sure to call the themer after all actions are added, so they are themed too!
-  let scheme = MDCContainerScheme()
+  // Make sure to spply theming after all actions are added, so they are themed too!
   alert.applyTheme(withScheme: scheme)
 
+  // present the alert
   present(alertController, animated:true, completion:...)
 ```
 
 #### Objective-C
 
 ```objc
+  // Create or reuse a Container scheme
+  MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
+
+  // Creating an Alert dialog
   MDCAlertController *alert = 
       [MDCAlertController alertControllerWithTitle:@"Button Theming" message: @"Lorem ipsum..."];
 
@@ -307,10 +327,90 @@ High emphasis actions generate contained buttons, medium emphasis actions genera
   [alert addAction:cancelAaction];
 
   // Make sure to call the themer after all actions are added, so they are themed too!
-  MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
   [alert applyThemeWithScheme:scheme];
 
+  // present the alert
   [self presentViewController:alert animated:YES completion:...];
+```
+<!--</div>-->
+
+<!-- Extracted from docs/color-theming.md -->
+
+### Color Theming
+
+You can theme a dialog with your app's color scheme using the ColorThemer extension.
+
+You must first add the Color Themer extension to your project:
+
+```bash
+pod 'MaterialComponents/Dialogs+ColorThemer'
+```
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+// Step 1: Import the ColorThemer extension
+import MaterialComponents.MaterialDialogs_ColorThemer
+
+// Step 2: Create or get a color scheme
+let colorScheme = MDCSemanticColorScheme()
+
+// Step 3: Apply the color scheme to your component
+MDCAlertColorThemer.applySemanticColorScheme(colorScheme, to: component)
+```
+
+#### Objective-C
+
+```objc
+// Step 1: Import the ColorThemer extension
+#import "MaterialDialogs+ColorThemer.h"
+
+// Step 2: Create or get a color scheme
+id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+
+// Step 3: Apply the color scheme to your component
+[MDCAlertColorThemer applySemanticColorScheme:colorScheme
+     toAlertController:component];
+```
+<!--</div>-->
+
+<!-- Extracted from docs/typography-theming.md -->
+
+### Typography Theming
+
+You can theme a dialog with your app's typography scheme using the TypographyThemer extension.
+
+You must first add the Typography Themer extension to your project:
+
+```bash
+pod 'MaterialComponents/Dialogs+TypographyThemer'
+```
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+// Step 1: Import the TypographyThemer extension
+import MaterialComponents.MaterialDialogs_TypographyThemer
+
+// Step 2: Create or get a typography scheme
+let typographyScheme = MDCTypographyScheme()
+
+// Step 3: Apply the typography scheme to your component
+MDCAlertTypographyThemer.applyTypographyScheme(typographyScheme, to: component)
+```
+
+#### Objective-C
+
+```objc
+// Step 1: Import the TypographyThemer extension
+#import "MaterialDialogs+TypographyThemer.h"
+
+// Step 2: Create or get a typography scheme
+id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
+
+// Step 3: Apply the typography scheme to your component
+[MDCAlertTypographyThemer applyTypographyScheme:colorScheme
+     toAlertController:component];
 ```
 <!--</div>-->
 
