@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import Foundation
+#import "AppDelegate+MDCAppDelegate.h"
 
-public class MDCCatalogPostLauncher {
-  public init() {}
-  public func performPostLaunchAction() {
-    print("This is where you find Material Components iOS")
-    return
-  }
+@implementation AppDelegate (MDCAppDelegate)
+- (void)performPostLaunchAction {
+  NSLog(@"Post Launch");
+  return;
 }
+@end
