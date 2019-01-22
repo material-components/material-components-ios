@@ -33,7 +33,10 @@ ios_application(
     infoplists = ["MDCCatalog/Info.plist"],
     launch_storyboard = "MDCCatalog/Base.lproj/LaunchScreen.storyboard",
     minimum_os_version = IOS_MINIMUM_OS,
-    deps = [":MDCCatalogLib"],
+    deps = [
+        ":MDCCatalogLib",
+        ":MDCExternalOnly",
+    ],
 )
 
 ios_application(
@@ -54,7 +57,10 @@ ios_application(
 
 swift_library(
     name = "MDCCatalogLib",
-    srcs = native.glob(["MDCCatalog/*.swift"]),
+    srcs = glob(
+        ["MDCCatalog/*.swift"],
+        exclude = ["MDCCatalog/MDCExternalOnly.swift"],
+    ),
     copts = [
         "-swift-version",
         "3",
@@ -92,6 +98,15 @@ swift_library(
         "@catalog_by_convention//:CatalogByConvention",
         "@material_internationalization_ios//:MDFInternationalization",
         "@material_text_accessibility_ios//:MDFTextAccessibility",
+    ],
+)
+
+swift_library(
+    name = "MDCExternalOnly",
+    srcs = glob(["MDCCatalog/MDCInternalOnly.swift"]),
+    copts = [
+        "-swift-version",
+        "3",
     ],
 )
 

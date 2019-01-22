@@ -28,6 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MDCAppBarNavigationContro
   var window: UIWindow?
 
   let navigationController = MDCAppBarNavigationController()
+  let postLauncher: MDCCatalogPostLauncher = MDCCatalogPostLauncher()
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions
                    launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -56,6 +57,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MDCAppBarNavigationContro
       selector: #selector(self.themeDidChange),
       name: AppTheme.didChangeGlobalThemeNotificationName,
       object: nil)
+
+    postLauncher.performPostLaunchAction()
 
     return true
   }
