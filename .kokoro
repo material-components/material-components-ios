@@ -428,12 +428,16 @@ generate_website() {
     brew_install yarn --without-node
   fi
 
+  echo "Ran build_site.sh"
   cd docsite-generator
+  echo "== Installing bundle =="
   bundle install
+  echo "== Installing yarn =="
   yarn install
   cd ../
 
   TMP_PATH=$(mktemp -d)
+  echo "== Rerunning build_site.sh =="
   ./scripts/build_site.sh 2>&1 | tee "$TMP_PATH/output"
 
   if [[ $(grep "^Error:" "$TMP_PATH/output") ]]; then
