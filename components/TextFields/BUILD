@@ -101,12 +101,8 @@ mdc_examples_swift_library(
 
 mdc_objc_library(
     name = "ExperimentalExampleSource",
-    srcs = glob([
-        "examples/experimental/supplemental/*.m",
-    ]),
-    hdrs = glob([
-        "examples/experimental/supplemental/*.h",
-    ]),
+    srcs = glob(["examples/experimental/supplemental/*.m"]),
+    hdrs = glob(["examples/experimental/supplemental/*.h"]),
     deps = [
     ],
 )
@@ -118,9 +114,7 @@ swift_library(
         "-swift-version",
         "3",
     ],
-    deps = [
-        ":ExperimentalExampleSource",
-    ],
+    deps = [":ExperimentalExampleSource"],
 )
 
 mdc_objc_library(
@@ -129,9 +123,7 @@ mdc_objc_library(
         "examples/experimental/*.h",
         "examples/experimental/*.m",
     ]),
-    deps = [
-        ":ExperimentalExampleSource",
-    ],
+    deps = [":ExperimentalExampleSource"],
 )
 
 mdc_objc_library(
