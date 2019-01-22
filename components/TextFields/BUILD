@@ -104,6 +104,10 @@ mdc_objc_library(
     srcs = glob(["examples/experimental/supplemental/*.m"]),
     hdrs = glob(["examples/experimental/supplemental/*.h"]),
     deps = [
+        "//components/Buttons",
+        "//components/Buttons:Theming",
+        "//components/private/Math",
+        "//components/schemes/Color",
     ],
 )
 
@@ -123,7 +127,12 @@ mdc_objc_library(
         "examples/experimental/*.h",
         "examples/experimental/*.m",
     ]),
-    deps = [":ExperimentalExampleSource"],
+    deps = [
+        ":ExperimentalExampleSource",
+        "//components/AppBar:ColorThemer",
+        "//components/AppBar:TypographyThemer",
+        "//components/Buttons:ButtonThemer",
+    ],
 )
 
 mdc_objc_library(
