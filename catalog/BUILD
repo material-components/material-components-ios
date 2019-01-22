@@ -54,7 +54,7 @@ ios_application(
 
 swift_library(
     name = "MDCCatalogLib",
-    srcs = glob(["MDCCatalog/*.swift"]),
+    srcs = native.glob(["MDCCatalog/*.swift"]),
     copts = [
         "-swift-version",
         "3",
