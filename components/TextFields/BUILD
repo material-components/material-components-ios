@@ -100,6 +100,41 @@ mdc_examples_swift_library(
 )
 
 mdc_objc_library(
+    name = "ExperimentalExampleSource",
+    srcs = glob([
+        "examples/experimental/supplemental/*.m",
+    ]),
+    hdrs = glob([
+        "examples/experimental/supplemental/*.h",
+    ]),
+    deps = [
+    ],
+)
+
+swift_library(
+    name = "SwiftExperimentalExamples",
+    srcs = glob(["examples/experimental/*.swift"]),
+    copts = [
+        "-swift-version",
+        "3",
+    ],
+    deps = [
+        ":ExperimentalExampleSource",
+    ],
+)
+
+mdc_objc_library(
+    name = "ExperimentalExamples",
+    srcs = glob([
+        "examples/experimental/*.h",
+        "examples/experimental/*.m",
+    ]),
+    deps = [
+        ":ExperimentalExampleSource",
+    ],
+)
+
+mdc_objc_library(
     name = "unit_test_sources",
     testonly = 1,
     srcs = glob(["tests/unit/*.m"]),
