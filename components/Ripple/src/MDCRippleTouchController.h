@@ -48,6 +48,8 @@
 
 @property(nonatomic, assign) BOOL tapWentOutsideOfBounds;
 
+@property(nonatomic, assign) BOOL processRippleWithScrollViewGestures;
+
 /**
  Unavailable, please use `initWithView` instead.
  */

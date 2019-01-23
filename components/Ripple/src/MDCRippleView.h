@@ -72,8 +72,10 @@ typedef NS_ENUM(NSInteger, MDCRippleStyle) {
  Cancels all the existing ripples.
 
  @param animated Whether to animate the cancellation of the ripples or not.
+ @param completion A completion block called after the completion of the animation.
  */
-- (void)cancelAllRipplesAnimated:(BOOL)animated;
+- (void)cancelAllRipplesAnimated:(BOOL)animated
+                      completion:(nullable MDCRippleCompletionBlock)completion;
 
 /**
  Fades the ripple in by changing its opacity.

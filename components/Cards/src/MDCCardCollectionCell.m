@@ -25,9 +25,10 @@ static const CGFloat MDCCardCellShadowElevationNormal = 1;
 static const CGFloat MDCCardCellShadowElevationSelected = 8;
 static const BOOL MDCCardCellIsInteractableDefault = YES;
 
-@interface MDCCardCollectionCell () <MDCStatefulRippleTouchControllerDelegate>
+@interface MDCCardCollectionCell ()
 @property(nonatomic, strong, nullable) UIImageView *selectedImageView;
 @property(nonatomic, readonly, strong) MDCShapedShadowLayer *layer;
+@property(nonatomic, assign) BOOL cardHighlighted;
 @end
 
 @implementation MDCCardCollectionCell  {
@@ -42,6 +43,8 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
   UIColor *_backgroundColor;
   CGPoint _lastTouch;
   MDCRippleState _rippleState;
+  BOOL _rippleAnimating;
+  BOOL _tapWentOutsideOfBounds;
 }
 
 @dynamic layer;
@@ -71,30 +74,20 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 }
 
 - (void)commonMDCCardCollectionCellInit {
-  //  if (_inkView == nil) {
-  //    _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
-  //    _inkView.autoresizingMask = (UIViewAutoresizingFlexibleWidth |
-  //    UIViewAutoresizingFlexibleHeight); _inkView.usesLegacyInkRipple = NO;
-  //    _inkView.layer.zPosition = FLT_MAX;
-  //    [self addSubview:_inkView];
-  //  }
-
-  if (_rippleTouchController == nil) {
-    _rippleTouchController =
-        [[MDCStatefulRippleTouchController alloc] initWithView:self];
-    _rippleTouchController.rippleView.layer.zPosition = FLT_MAX;
-    _rippleTouchController.delegate = self;
-    //    _rippleTouchController.allowsSelection = YES;
-  }
+    if (_rippleView == nil) {
+      _rippleView = [[MDCStatefulRippleView alloc] initWithFrame:self.bounds];
+      _rippleView.layer.zPosition = 100;
+      [self addSubview:_rippleView];
+    }
+  _tapWentOutsideOfBounds = NO;
 
   if (_selectedImageView == nil) {
     _selectedImageView = [[UIImageView alloc] init];
-    _selectedImageView.layer.zPosition = _rippleTouchController.rippleView.layer.zPosition - 1;
+    _selectedImageView.layer.zPosition = 200;
     _selectedImageView.autoresizingMask =
     (UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin |
      UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin);
-    [self.contentView addSubview:_selectedImageView];
-    _selectedImageView.hidden = YES;
+    [self addSubview:_selectedImageView];
   }
 
   if (_shadowElevations == nil) {
@@ -169,8 +162,45 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
   return self.layer.cornerRadius;
 }
 
-- (void)setState:(MDCCardCellState)state animated:(BOOL)animated {
-  _state = state;
+- (MDCCardCellState)state {
+  if (self.selected) {
+    return MDCCardCellStateSelected;
+  } else if (self.cardHighlighted) {
+    return MDCCardCellStateHighlighted;
+  } else {
+    return MDCCardCellStateNormal;
+  }
+}
+
+- (void)setSelected:(BOOL)selected {
+  [super setSelected:selected];
+  if (selected) {
+    [self.rippleView setSelected:YES];
+    [self updateCardCellVisuals];
+  } else {
+    [self.rippleView cancelAllRipplesAnimated:YES completion:^{
+      [self.rippleView setHighlighted:NO];
+      [self.rippleView setSelected:NO];
+      [self.rippleView setDragged:NO];
+      [self updateCardCellVisuals];
+    }];
+  }
+  NSLog(@"selected: %d", selected);
+}
+
+- (void)setCardHighlighted:(BOOL)cardHighlighted {
+  _cardHighlighted = cardHighlighted;
+  [self.rippleView setHighlighted:cardHighlighted];
+  if (cardHighlighted) {
+    [self.rippleView beginRippleTouchDownAtPoint:_lastTouch animated:YES completion:nil];
+  } else {
+    [self.rippleView beginRippleTouchUpAnimated:YES completion:nil];
+  }
+  [self updateCardCellVisuals];
+  NSLog(@"highlighted: %d", cardHighlighted);
+}
+
+- (void)updateCardCellVisuals {
   [self updateShadowElevation];
   [self updateBorderColor];
   [self updateBorderWidth];
@@ -180,21 +210,8 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
   [self updateImageTintColor];
 }
 
-//- (void)setSelected:(BOOL)selected {
-//  [super setSelected:selected];
-//  if (self.selectable) {
-//    if (selected) {
-//      [self.rippleTouchController setSelected:YES];
-//    } else {
-//      [self.rippleTouchController setSelected:NO];
-//    }
-//  }
-//}
-
 - (void)setSelectable:(BOOL)selectable {
   _selectable = selectable;
-  self.selectedImageView.hidden = !selectable;
-  self.rippleTouchController.selectionMode = selectable;
 }
 
 - (UIBezierPath *)boundingPath {
@@ -300,7 +317,11 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 
 - (void)updateImage {
   UIImage *image = [self imageForState:self.state];
-//  self.selectedImageView.hidden = NO;
+  // CardCollectionCell's state system doesn't incorporate multiple states occuring simultaneously.
+  // When the card is selected and highlighted it should take the image of MDCCardCellStateSelected.
+  if (self.rippleView.state & MDCRippleStateSelected) {
+    image = [self imageForState:MDCCardCellStateSelected];
+  }
   [self.selectedImageView setImage:image];
   [self.selectedImageView sizeToFit];
 }
@@ -398,6 +419,12 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 
 - (void)updateImageTintColor {
   UIColor *imageTintColor = [self imageTintColorForState:self.state];
+  // CardCollectionCell's state system doesn't incorporate multiple states occuring simultaneously.
+  // When the card is selected and highlighted it should take the image tint of
+  // MDCCardCellStateSelected.
+  if (self.rippleView.state & MDCRippleStateSelected) {
+    imageTintColor = [self imageTintColorForState:MDCCardCellStateSelected];
+  }
   [self.selectedImageView setTintColor:imageTintColor];
 }
 
@@ -424,18 +451,10 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
   self.layer.shapeGenerator = shapeGenerator;
   self.layer.shadowMaskEnabled = NO;
   [self updateBackgroundColor];
-  [self updateInkForShape];
 }
 
 - (id)shapeGenerator {
   return self.layer.shapeGenerator;
-}
-
-- (void)updateInkForShape {
-  //  CGRect boundingBox = CGPathGetBoundingBox(self.layer.shapeLayer.path);
-  //  self.inkView.maxRippleRadius =
-  //      (CGFloat)(MDCHypot(CGRectGetHeight(boundingBox), CGRectGetWidth(boundingBox)) / 2 + 10);
-  //  self.rippleTouchController.rippleView.layer.masksToBounds = NO;
 }
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
@@ -461,56 +480,41 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
   return result;
 }
 
-//- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-//  [super touchesBegan:touches withEvent:event];
-//
-//  UITouch *touch = [touches anyObject];
-//  CGPoint location = [touch locationInView:self];
-//  _lastTouch = location;
-//  if (!self.selected || !self.selectable) {
-//    [self setState:MDCCardCellStateHighlighted animated:YES];
-//  }
-//}
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+  [super touchesBegan:touches withEvent:event];
+  _tapWentOutsideOfBounds = NO;
+  UITouch *touch = [touches anyObject];
+  CGPoint location = [touch locationInView:self];
+  _lastTouch = location;
+  self.cardHighlighted = YES;
+}
 
-//- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-//  [super touchesMoved:touches withEvent:event];
-//}
-//
-//- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-//  [super touchesEnded:touches withEvent:event];
-//  if (!self.selected || !self.selectable) {
-//    [self setState:MDCCardCellStateNormal animated:YES];
-//  }
-//}
-//
-//- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-//  [super touchesCancelled:touches withEvent:event];
-//  if (!self.selected || !self.selectable) {
-//    [self setState:MDCCardCellStateNormal animated:YES];
-//  }
-//}
-
-- (void)rippleTouchController:(MDCStatefulRippleTouchController *)rippleTouchController
-         rippleStateDidChange:(MDCRippleState)rippleState {
-  _rippleState = rippleState;
-  if ((rippleState & MDCRippleStateSelected) > 0) {
-    [self setState:MDCCardCellStateSelected animated:YES];
-  } else if ((rippleState & MDCRippleStateHighlighted) > 0) {
-    [self setState:MDCCardCellStateHighlighted animated:YES];
-  } else {
-    [self setState:MDCCardCellStateNormal animated:NO];
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  [super touchesMoved:touches withEvent:event];
+  UITouch *touch = [touches anyObject];
+  CGPoint location = [touch locationInView:self];
+  BOOL pointContainedinBounds = CGRectContainsPoint(self.bounds, location);
+  if (pointContainedinBounds && _tapWentOutsideOfBounds) {
+    _tapWentOutsideOfBounds = NO;
+    [self.rippleView fadeInRippleAnimated:YES completion:nil];
+  } else if (!pointContainedinBounds && !_tapWentOutsideOfBounds) {
+    _tapWentOutsideOfBounds = YES;
+    [self.rippleView fadeOutRippleAnimated:YES completion:nil];
   }
 }
 
-- (void)rippleTouchController:(MDCRippleTouchController *)rippleTouchController
-       tapWentOutsideOfBounds:(BOOL)outsideOfBounds {
-  if((_rippleState & MDCRippleStateHighlighted) == 0) {
-    if (outsideOfBounds) {
-      [self setState:MDCCardCellStateNormal animated:YES];
-    } else {
-      [self setState:MDCCardCellStateSelected animated:YES];
-    }
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+  [super touchesEnded:touches withEvent:event];
+  if (!self.selected) {
+    self.cardHighlighted = NO;
+  } else if (self.selected && _tapWentOutsideOfBounds) {
+    [self.rippleView beginRippleTouchUpAnimated:YES completion:nil];
   }
+}
+
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  [super touchesCancelled:touches withEvent:event];
+  self.cardHighlighted = NO;
 }
 
 @end

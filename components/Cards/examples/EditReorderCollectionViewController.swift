@@ -140,7 +140,6 @@ class EditReorderCollectionViewController: UIViewController,
 
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
     guard let cardCell = cell as? CardEditReorderCollectionCell else { return cell }
-    cardCell.isSelected = false
     cardCell.apply(containerScheme: containerScheme, typographyScheme: typographyScheme)
 
     let title = dataSource[indexPath.item].title
@@ -237,7 +236,7 @@ class EditReorderCollectionViewController: UIViewController,
       guard let cardCell = cell as? CardEditReorderCollectionCell else { return }
       collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
       if (toggle == .reorder) {
-        cardCell.rippleTouchController.isDragged = true
+//        cardCell.rippleTouchController.isDragged = true
       }
     case .changed:
       guard let gestureView = gesture.view else { break }
@@ -258,7 +257,7 @@ extension EditReorderCollectionViewController {
       "breadcrumbs": ["Cards", "Edit/Reorder"],
       "primaryDemo": false,
       "presentable": true,
-      "debug": false,
+      "debug": true,
     ]
   }
 }

@@ -33,6 +33,7 @@
     _rippleView = [[MDCRippleView alloc] initWithFrame:view.bounds];
     [_view addSubview:_rippleView];
     _tapWentOutsideOfBounds = NO;
+    _processRippleWithScrollViewGestures = YES;
   }
   return self;
 }
@@ -43,7 +44,7 @@
 }
 
 - (void)cancelRippleTouchProcessing {
-  [self.rippleView cancelAllRipplesAnimated:YES];
+  [self.rippleView cancelAllRipplesAnimated:YES completion:nil];
 }
 
 - (void)handleRippleGesture:(UILongPressGestureRecognizer *)recognizer {
@@ -111,8 +112,12 @@
   return YES;
 }
 
-//- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-//
-//}
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+  if (!self.processRippleWithScrollViewGestures &&
+      [otherGestureRecognizer.view isKindOfClass:[UIScrollView class]]) {
+    return YES;
+  }
+  return NO;
+}
 
 @end

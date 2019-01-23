@@ -31,10 +31,10 @@ typedef NS_ENUM(NSInteger, MDCCardCellState) {
   MDCCardCellStateNormal = 0,
 
   /** The visual state when the cell is in its highlighted state. */
-  MDCCardCellStateHighlighted,
+  MDCCardCellStateHighlighted = 1 << 0,
 
   /** The visual state when the cell has been selected. */
-  MDCCardCellStateSelected
+  MDCCardCellStateSelected = 1 << 1,
 };
 
 /**
@@ -86,7 +86,7 @@ typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
 /**
  The rippleTouchController for the card that is initiated on tap
  */
-@property(nonatomic, strong, nonnull) MDCStatefulRippleTouchController *rippleTouchController;
+@property(nonatomic, strong, nonnull) MDCStatefulRippleView *rippleView;
 
 /**
  This property defines if a card as a whole should be interactable or not.
