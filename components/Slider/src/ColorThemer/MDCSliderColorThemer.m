@@ -31,7 +31,7 @@ static const CGFloat kSliderBaselineDisabledTicksAlpha = (CGFloat)0.12;
       [colorScheme.onSurfaceColor colorWithAlphaComponent:kSliderBaselineDisabledFillAlpha];
   UIColor *enabledBackgroundColor =
       [colorScheme.primaryColor colorWithAlphaComponent:kSliderBaselineEnabledBackgroundAlpha];
-  
+
   if (slider.statefulAPIEnabled) {
     [slider setTrackFillColor:colorScheme.primaryColor forState:UIControlStateNormal];
     [slider setTrackFillColor:disabledFillColor forState:UIControlStateDisabled];
@@ -64,8 +64,7 @@ static const CGFloat kSliderBaselineDisabledTicksAlpha = (CGFloat)0.12;
   slider.valueLabelBackgroundColor = colorScheme.primaryColor;
 }
 
-+ (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
-                toSlider:(MDCSlider *)slider {
++ (void)applyColorScheme:(id<MDCColorScheme>)colorScheme toSlider:(MDCSlider *)slider {
   if ([colorScheme respondsToSelector:@selector(primaryLightColor)]) {
     slider.trackBackgroundColor = colorScheme.primaryLightColor;
   }

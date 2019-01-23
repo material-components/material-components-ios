@@ -41,7 +41,7 @@
     id<MDCSnackbarSuspensionToken> token = [MDCSnackbarManager suspendAllMessages];
     [MDCSnackbarManager showMessage:suspendedMessage];
 
-  // When
+    // When
     token = nil;
   }
 

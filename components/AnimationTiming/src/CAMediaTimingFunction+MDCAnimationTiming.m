@@ -18,6 +18,7 @@
 
 + (CAMediaTimingFunction *)mdc_functionWithType:(MDCAnimationTimingFunction)type {
   switch (type) {
+    // clang-format off
     case MDCAnimationTimingFunctionStandard:
       return [[CAMediaTimingFunction alloc] initWithControlPoints:(float)0.4:0:(float)0.2:1];
     case MDCAnimationTimingFunctionDeceleration:
@@ -26,6 +27,7 @@
       return [[CAMediaTimingFunction alloc] initWithControlPoints:(float)0.4:0:1:1];
     case MDCAnimationTimingFunctionSharp:
       return [[CAMediaTimingFunction alloc] initWithControlPoints:(float)0.4:0:(float)0.6:1];
+      // clang-format on
   }
   NSAssert(NO, @"Invalid MDCAnimationTimingFunction value %i.", (int)type);
   // Reasonable default to use in Release mode for garbage input.

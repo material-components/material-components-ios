@@ -93,7 +93,7 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = (CGFloat)1.5;
 
 /* Disable setter. Always use internal transition controller */
 - (void)setTransitioningDelegate:
-      (__unused id<UIViewControllerTransitioningDelegate>)transitioningDelegate {
+    (__unused id<UIViewControllerTransitioningDelegate>)transitioningDelegate {
   NSAssert(NO, @"MDCAlertController.transitioningDelegate cannot be changed.");
   return;
 }
@@ -166,14 +166,14 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = (CGFloat)1.5;
 - (void)viewWillTransitionToSize:(CGSize)size
        withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
   [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-  [coordinator animateAlongsideTransition:
-   ^(__unused id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
-     [self resetHighlightPoint];
-   }
-                               completion:
-   ^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
-     [self resetHighlightPoint];
-   }];
+  [coordinator
+      animateAlongsideTransition:^(
+          __unused id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
+        [self resetHighlightPoint];
+      }
+      completion:^(id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
+        [self resetHighlightPoint];
+      }];
 }
 
 - (void)resetHighlightPoint {
@@ -298,7 +298,7 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = (CGFloat)1.5;
 }
 
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:
-        (UIViewController *)dismissed {
+    (UIViewController *)dismissed {
   if (dismissed == self) {
     return _animationController;
   }
@@ -361,6 +361,5 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = (CGFloat)1.5;
   NSString *resourcePath = [(nil == bundle ? [NSBundle mainBundle] : bundle) resourcePath];
   return [resourcePath stringByAppendingPathComponent:bundleName];
 }
-
 
 @end

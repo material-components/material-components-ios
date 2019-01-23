@@ -60,8 +60,8 @@
   // Given
   MDCCollectionViewFlowLayout *layout = [[MDCCollectionViewFlowLayout alloc] init];
 
-  UICollectionView *collectionView =
-      [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
+  UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero
+                                                        collectionViewLayout:layout];
   collectionView.dataSource = self;
   NSMutableArray<UICollectionViewUpdateItem *> *updates = [NSMutableArray array];
   FakeUICollectionViewUpdateItem *section1Update = [[FakeUICollectionViewUpdateItem alloc] init];
@@ -108,8 +108,8 @@
   // Given
   MDCCollectionViewFlowLayout *layout = [[MDCCollectionViewFlowLayout alloc] init];
 
-  UICollectionView *collectionView =
-      [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
+  UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero
+                                                        collectionViewLayout:layout];
   collectionView.dataSource = self;
   NSMutableArray<UICollectionViewUpdateItem *> *updates = [NSMutableArray array];
   FakeUICollectionViewUpdateItem *section0Update = [[FakeUICollectionViewUpdateItem alloc] init];
@@ -167,8 +167,8 @@
 - (void)testPrepareForCollectionViewUpdatesDeleteSection {
   // Given
   MDCCollectionViewFlowLayout *layout = [[MDCCollectionViewFlowLayout alloc] init];
-  UICollectionView *collectionView =
-      [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
+  UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero
+                                                        collectionViewLayout:layout];
   collectionView.dataSource = self;
   NSMutableArray<UICollectionViewUpdateItem *> *updates = [NSMutableArray array];
   FakeUICollectionViewUpdateItem *section1Update = [[FakeUICollectionViewUpdateItem alloc] init];
@@ -202,8 +202,8 @@
 - (void)testPrepareForCollectionViewUpdatesDeleteItem {
   // Given
   MDCCollectionViewFlowLayout *layout = [[MDCCollectionViewFlowLayout alloc] init];
-  UICollectionView *collectionView =
-      [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
+  UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero
+                                                        collectionViewLayout:layout];
   collectionView.dataSource = self;
   NSMutableArray<UICollectionViewUpdateItem *> *updates = [NSMutableArray array];
   FakeUICollectionViewUpdateItem *section1Update = [[FakeUICollectionViewUpdateItem alloc] init];

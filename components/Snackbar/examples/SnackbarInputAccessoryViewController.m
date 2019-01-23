@@ -30,29 +30,20 @@
   [super viewDidLoad];
   self.view.backgroundColor = UIColor.whiteColor;
   UIToolbar *toolbar =
-      [[UIToolbar alloc] initWithFrame:CGRectMake(0,
-                                                  0,
-                                                  UIScreen.mainScreen.bounds.size.width,
-                                                  50)];
+      [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, UIScreen.mainScreen.bounds.size.width, 50)];
   UIButton *button =
-      [[UIButton alloc] initWithFrame:CGRectMake(0,
-                                                 0,
-                                                 UIScreen.mainScreen.bounds.size.width,
-                                                 50)];
+      [[UIButton alloc] initWithFrame:CGRectMake(0, 0, UIScreen.mainScreen.bounds.size.width, 50)];
   button.contentMode = UIViewContentModeCenter;
   [button setTitle:@"Show Snackbar" forState:UIControlStateNormal];
   [button setTitleColor:UIColor.darkTextColor forState:UIControlStateNormal];
   [button addTarget:self
-              action:@selector(handleSend:)
-    forControlEvents:UIControlEventTouchUpInside];
+                action:@selector(handleSend:)
+      forControlEvents:UIControlEventTouchUpInside];
   UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-  toolbar.items = @[buttonItem];
+  toolbar.items = @[ buttonItem ];
 
-  _textField =
-      [[UITextField alloc] initWithFrame:CGRectMake(0,
-                                                    0,
-                                                    UIScreen.mainScreen.bounds.size.width,
-                                                    50)];
+  _textField = [[UITextField alloc]
+      initWithFrame:CGRectMake(0, 0, UIScreen.mainScreen.bounds.size.width, 50)];
   _textField.inputAccessoryView = toolbar;
   _textField.backgroundColor = UIColor.whiteColor;
   _textField.text = @"Tap Me";

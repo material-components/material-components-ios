@@ -54,8 +54,7 @@
   UIFont *finalTitleFont = [button titleFontForState:UIControlStateNormal];
 
   // Then
-  XCTAssert(finalTitleFont == nil,
-            @"titleLabel font should be nil");
+  XCTAssert(finalTitleFont == nil, @"titleLabel font should be nil");
 }
 
 @end

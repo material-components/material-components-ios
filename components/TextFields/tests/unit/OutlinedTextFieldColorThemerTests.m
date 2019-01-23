@@ -16,8 +16,8 @@
 
 #import "MDCTextInputBorderView.h"
 #import "MaterialColorScheme.h"
-#import "MaterialTextFields.h"
 #import "MaterialTextFields+ColorThemer.h"
+#import "MaterialTextFields.h"
 
 @interface OutlinedTextFieldColorThemerTests : XCTestCase
 

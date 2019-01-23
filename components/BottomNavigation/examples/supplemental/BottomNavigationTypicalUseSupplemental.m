@@ -20,11 +20,11 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Bottom Navigation", @"Bottom Navigation" ],
-    @"description": @"Bottom navigation bars allow movement between primary destinations in "
-    @"an app.",
-    @"primaryDemo": @YES,
-    @"presentable": @YES,
+    @"breadcrumbs" : @[ @"Bottom Navigation", @"Bottom Navigation" ],
+    @"description" : @"Bottom navigation bars allow movement between primary destinations in "
+                     @"an app.",
+    @"primaryDemo" : @YES,
+    @"presentable" : @YES,
   };
 }
 

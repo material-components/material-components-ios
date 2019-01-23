@@ -540,7 +540,8 @@ static UIColor *DrawerShadowColor(void) {
   }
 
   [self addChildViewController:self.headerViewController];
-  if ([self.headerViewController respondsToSelector:@selector(updateDrawerHeaderTransitionRatio:)]) {
+  if ([self.headerViewController
+          respondsToSelector:@selector(updateDrawerHeaderTransitionRatio:)]) {
     [self.headerViewController updateDrawerHeaderTransitionRatio:0];
   }
 
@@ -597,7 +598,7 @@ static UIColor *DrawerShadowColor(void) {
   BOOL contentReachesFullscreen = self.contentReachesFullscreen;
 
   if ([self.headerViewController
-       respondsToSelector:@selector(updateDrawerHeaderTransitionRatio:)]) {
+          respondsToSelector:@selector(updateDrawerHeaderTransitionRatio:)]) {
     [self.headerViewController
         updateDrawerHeaderTransitionRatio:contentReachesFullscreen ? headerTransitionToTop : 0];
   }
@@ -671,7 +672,8 @@ static UIColor *DrawerShadowColor(void) {
   return _addedContentHeight;
 }
 
-- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+- (void)viewWillTransitionToSize:(CGSize)size
+       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
   [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
   _contentHeaderTopInset = NSNotFound;
   _contentHeightSurplus = NSNotFound;

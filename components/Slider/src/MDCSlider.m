@@ -14,10 +14,10 @@
 
 #import "MDCSlider.h"
 
-#import "private/MDCSlider+Private.h"
-#import "private/MDCSlider_Subclassable.h"
 #import "MaterialPalettes.h"
 #import "MaterialThumbTrack.h"
+#import "private/MDCSlider+Private.h"
+#import "private/MDCSlider_Subclassable.h"
 
 static const CGFloat kSliderDefaultWidth = 100;
 static const CGFloat kSliderFrameHeight = 27;
@@ -59,8 +59,8 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 }
 
 - (void)commonMDCSliderInit {
-  _thumbTrack =
-      [[MDCThumbTrack alloc] initWithFrame:self.bounds onTintColor:MDCThumbTrackDefaultColor()];
+  _thumbTrack = [[MDCThumbTrack alloc] initWithFrame:self.bounds
+                                         onTintColor:MDCThumbTrackDefaultColor()];
   _thumbTrack.delegate = self;
   _thumbTrack.disabledTrackHasThumbGaps = YES;
   _thumbTrack.trackEndsAreInset = YES;
@@ -133,7 +133,6 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   }
   return color;
 }
-
 
 - (void)setTrackBackgroundColor:(UIColor *)trackBackgroundColor forState:(UIControlState)state {
   _trackBackgroundColorsForState[@(state)] = trackBackgroundColor;
@@ -495,10 +494,10 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
       newValue = self.value + adjustmentAmount;
     }
     [_thumbTrack setValue:newValue
-                 animated:NO
-    animateThumbAfterMove:NO
-            userGenerated:YES
-               completion:NULL];
+                     animated:NO
+        animateThumbAfterMove:NO
+                userGenerated:YES
+                   completion:NULL];
     [self sendActionsForControlEvents:UIControlEventValueChanged];
   }
   return YES;
@@ -539,7 +538,7 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 
 - (void)setTrackBackgroundColor:(UIColor *)trackBackgroundColor {
   _thumbTrack.trackOffColor =
-  trackBackgroundColor ? trackBackgroundColor : [[self class] defaultTrackOffColor];
+      trackBackgroundColor ? trackBackgroundColor : [[self class] defaultTrackOffColor];
 }
 
 - (UIColor *)trackBackgroundColor {
