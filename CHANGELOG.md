@@ -1,18 +1,11 @@
-# #develop#
+# 75.0.1
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This patch release reformats the entire code base to align to the latest
+Google Objective-C Style enforced by clang-format.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+## Multi-component changes
 
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
-## API changes
-
-## Component changes
+* [{clang-format} Format the components. (#6347)](https://github.com/material-components/material-components-ios/commit/ef98eeafc13ff301ef1a363ed231b498b54d6abd) (Robert Moore)
 
 ---
 
