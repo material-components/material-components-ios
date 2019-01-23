@@ -59,8 +59,12 @@ modified_files() {
   #  commit.
   range="${base_sha}...HEAD"
 
-  git diff --name-only "${range}" \
+  git diff --name-status "${range}" \
+    | grep -v -E '^D'  \
     | grep -E '(\.swift|\.h|\.m)$' \
+    | while read LINE; do \
+        echo "$LINE" | sed -nE 's/.*[[:blank:]]+([[:alnum:]_\-\.\/+]+)$/\1/p';  \
+      done \
     | sort \
     | uniq
 

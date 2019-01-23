@@ -57,6 +57,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MDCAppBarNavigationContro
       name: AppTheme.didChangeGlobalThemeNotificationName,
       object: nil)
 
+    if self.responds(to: Selector(("performPostLaunchAction"))) {
+      self.perform(Selector(("performPostLaunchAction")))
+    }
+
     return true
   }
 

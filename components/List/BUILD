@@ -14,6 +14,8 @@
 
 load(
     "//:material_components_ios.bzl",
+    "mdc_examples_objc_library",
+    "mdc_examples_swift_library",
     "mdc_extension_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
@@ -85,5 +87,21 @@ mdc_unit_test_suite(
     name = "unit_tests",
     deps = [
         ":unit_test_sources",
+    ],
+)
+
+mdc_examples_objc_library(
+    name = "ObjcExamples",
+    deps = [
+        ":List",
+        ":ListThemer",
+        "//components/private/Icons/icons/ic_info",
+    ],
+)
+
+mdc_examples_swift_library(
+    name = "SwiftExamples",
+    deps = [
+        ":List",
     ],
 )
