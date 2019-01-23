@@ -34,7 +34,6 @@ static const CGFloat MDCTextInputControllerLegacyFullWidthClearButtonImageSquare
 @end
 @implementation MDCTextInputControllerLegacyFullWidth
 
-
 - (void)setupInput {
   [super setupInput];
   if (!self.textInput) {

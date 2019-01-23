@@ -146,17 +146,17 @@ typedef enum : NSUInteger {
   // Create transformation matrices for each corner and edge
   for (NSInteger i = 0; i < 4; i++) {
     CGPoint cornerCoords = [self cornerCoordsForPosition:i forViewSize:size];
-    CGAffineTransform cornerTransform = CGAffineTransformMakeTranslation(cornerCoords.x,
-                                                                         cornerCoords.y);
+    CGAffineTransform cornerTransform =
+        CGAffineTransformMakeTranslation(cornerCoords.x, cornerCoords.y);
     CGFloat prevEdgeAngle = edgeAngles[(i + 4 - 1) % 4];
     // We add 90 degrees (M_PI_2) here because the corner starts rotated from the edge.
     cornerTransform = CGAffineTransformRotate(cornerTransform, prevEdgeAngle + (CGFloat)M_PI_2);
     cornerTransforms[i] = cornerTransform;
 
-    CGPoint edgeStartPoint = CGPointApplyAffineTransform(cornerPaths[i].endPoint,
-                                                         cornerTransforms[i]);
-    CGAffineTransform edgeTransform = CGAffineTransformMakeTranslation(edgeStartPoint.x,
-                                                                       edgeStartPoint.y);
+    CGPoint edgeStartPoint =
+        CGPointApplyAffineTransform(cornerPaths[i].endPoint, cornerTransforms[i]);
+    CGAffineTransform edgeTransform =
+        CGAffineTransformMakeTranslation(edgeStartPoint.x, edgeStartPoint.y);
     CGFloat edgeAngle = edgeAngles[i];
     edgeTransform = CGAffineTransformRotate(edgeTransform, edgeAngle);
     edgeTransforms[i] = edgeTransform;
@@ -165,17 +165,15 @@ typedef enum : NSUInteger {
   // Calculate the length of each edge using the transformed corner paths.
   for (NSInteger i = 0; i < 4; i++) {
     NSInteger next = (i + 1) % 4;
-    CGPoint edgeStartPoint = CGPointApplyAffineTransform(cornerPaths[i].endPoint,
-                                                         cornerTransforms[i]);
-    CGPoint edgeEndPoint = CGPointApplyAffineTransform(cornerPaths[next].startPoint,
-                                                       cornerTransforms[next]);
+    CGPoint edgeStartPoint =
+        CGPointApplyAffineTransform(cornerPaths[i].endPoint, cornerTransforms[i]);
+    CGPoint edgeEndPoint =
+        CGPointApplyAffineTransform(cornerPaths[next].startPoint, cornerTransforms[next]);
     edgeLengths[i] = CGPointDistanceToPoint(edgeStartPoint, edgeEndPoint);
   }
 
   // Draw the first corner manually because we have to MoveToPoint to start the path.
-  CGPathMoveToPoint(path,
-                    &cornerTransforms[0],
-                    cornerPaths[0].startPoint.x,
+  CGPathMoveToPoint(path, &cornerTransforms[0], cornerPaths[0].startPoint.x,
                     cornerPaths[0].startPoint.y);
   [cornerPaths[0] appendToCGPath:path transform:&cornerTransforms[0]];
 
@@ -202,18 +200,19 @@ typedef enum : NSUInteger {
 
 - (CGFloat)angleOfCorner:(MDCShapeCornerPosition)cornerPosition forViewSize:(CGSize)size {
   CGPoint prevCornerCoord = [self cornerCoordsForPosition:(cornerPosition - 1 + 4) % 4
-                                          forViewSize:size];
+                                              forViewSize:size];
   CGPoint nextCornerCoord = [self cornerCoordsForPosition:(cornerPosition + 1) % 4
                                               forViewSize:size];
   CGPoint cornerCoord = [self cornerCoordsForPosition:cornerPosition forViewSize:size];
-  CGPoint prevVector = CGPointMake(prevCornerCoord.x - cornerCoord.x,
-                                   prevCornerCoord.y - cornerCoord.y);
-  CGPoint nextVector = CGPointMake(nextCornerCoord.x - cornerCoord.x,
-                                   nextCornerCoord.y - cornerCoord.y);
+  CGPoint prevVector =
+      CGPointMake(prevCornerCoord.x - cornerCoord.x, prevCornerCoord.y - cornerCoord.y);
+  CGPoint nextVector =
+      CGPointMake(nextCornerCoord.x - cornerCoord.x, nextCornerCoord.y - cornerCoord.y);
   CGFloat prevAngle = MDCAtan2(prevVector.y, prevVector.x);
   CGFloat nextAngle = MDCAtan2(nextVector.y, nextVector.x);
   CGFloat angle = prevAngle - nextAngle;
-  if (angle < 0) angle += 2 * M_PI;
+  if (angle < 0)
+    angle += 2 * M_PI;
   return angle;
 }
 
@@ -223,8 +222,8 @@ typedef enum : NSUInteger {
   CGPoint startCornerCoord = [self cornerCoordsForPosition:startCornerPosition forViewSize:size];
   CGPoint endCornerCoord = [self cornerCoordsForPosition:endCornerPosition forViewSize:size];
 
-  CGPoint edgeVector = CGPointMake(endCornerCoord.x - startCornerCoord.x,
-                                   endCornerCoord.y - startCornerCoord.y);
+  CGPoint edgeVector =
+      CGPointMake(endCornerCoord.x - startCornerCoord.x, endCornerCoord.y - startCornerCoord.y);
   return MDCAtan2(edgeVector.y, edgeVector.x);
 }
 
@@ -247,8 +246,7 @@ typedef enum : NSUInteger {
       break;
   }
 
-  return CGPointMake(offset.x + translation.x,
-                     offset.y + translation.y);
+  return CGPointMake(offset.x + translation.x, offset.y + translation.y);
 }
 
 @end

@@ -105,9 +105,8 @@ const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
       MIN(0, -(kMinimumAccessibleButtonSize.height - CGRectGetHeight(textButton.bounds)) / 2);
   CGFloat textButtonHorizontalInset =
       MIN(0, -(kMinimumAccessibleButtonSize.width - CGRectGetWidth(textButton.bounds)) / 2);
-  textButton.hitAreaInsets =
-      UIEdgeInsetsMake(textButtonVerticalInset, textButtonHorizontalInset,
-                       textButtonVerticalInset, textButtonHorizontalInset);
+  textButton.hitAreaInsets = UIEdgeInsetsMake(textButtonVerticalInset, textButtonHorizontalInset,
+                                              textButtonVerticalInset, textButtonHorizontalInset);
   [textButton addTarget:self
                  action:@selector(didTap:)
        forControlEvents:UIControlEventTouchUpInside];
@@ -139,8 +138,8 @@ const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
       UIEdgeInsetsMake(outlineButtonVerticalInset, outlineButtonHorizontalInset,
                        outlineButtonVerticalInset, outlineButtonHorizontalInset);
   [outlinedButton addTarget:self
-                    action:@selector(didTap:)
-          forControlEvents:UIControlEventTouchUpInside];
+                     action:@selector(didTap:)
+           forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:outlinedButton];
 
   // Disabled outlined button
@@ -172,7 +171,7 @@ const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
 
   self.buttons = @[
     containedButton, disabledContainedButton, textButton, disabledTextButton, outlinedButton,
-    disabledOutlinedButton,self.floatingButton
+    disabledOutlinedButton, self.floatingButton
   ];
 
   [self setupExampleViews];

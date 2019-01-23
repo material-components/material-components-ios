@@ -20,17 +20,15 @@
 
 @implementation MDCOutlinedButtonThemer
 
-+ (void)applyScheme:(nonnull id<MDCButtonScheming>)scheme
-           toButton:(nonnull MDCButton *)button {
++ (void)applyScheme:(nonnull id<MDCButtonScheming>)scheme toButton:(nonnull MDCButton *)button {
   [MDCOutlinedButtonColorThemer applySemanticColorScheme:scheme.colorScheme toButton:button];
   [MDCButtonShapeThemer applyShapeScheme:scheme.shapeScheme toButton:button];
   [MDCButtonTypographyThemer applyTypographyScheme:scheme.typographyScheme toButton:button];
   button.minimumSize = CGSizeMake(0, scheme.minimumHeight);
   button.layer.cornerRadius = scheme.cornerRadius;
 
-  NSUInteger maximumStateValue =
-      UIControlStateNormal | UIControlStateSelected | UIControlStateHighlighted |
-      UIControlStateDisabled;
+  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
+                                 UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     [button setBorderWidth:1 forState:state];
   }

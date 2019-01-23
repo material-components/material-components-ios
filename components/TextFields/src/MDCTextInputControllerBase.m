@@ -393,7 +393,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
           : self.leadingUnderlineLabelTextColor;
 }
 
-#pragma  mark - TextInput Customization
+#pragma mark - TextInput Customization
 
 - (void)updateTextInput {
   UIFont *font = self.textInputFont;
@@ -416,22 +416,19 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     placeHolderFont =
         [placeHolderFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleBody1
                                       scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
-
   }
 
   // Aside from not wanting to kick off extra work for setting a font that hasn't changed, we use
   // this custom equality check to prevent an edge case that caused a 1 pixel change in width even
   // when the important parts of the new font were the same as the existing font.
-  if (![self.textInput.placeholderLabel.font mdc_isSimplyEqual:placeHolderFont]){
+  if (![self.textInput.placeholderLabel.font mdc_isSimplyEqual:placeHolderFont]) {
     self.textInput.placeholderLabel.font = placeHolderFont;
   }
 
   UIColor *placeholderColor;
   if ([self isPlaceholderUp]) {
-    UIColor *nonErrorColor =
-        self.textInput.isEditing
-                           ? self.floatingPlaceholderActiveColor
-                           : self.floatingPlaceholderNormalColor;
+    UIColor *nonErrorColor = self.textInput.isEditing ? self.floatingPlaceholderActiveColor
+                                                      : self.floatingPlaceholderNormalColor;
     placeholderColor = (self.isDisplayingCharacterCountError || self.isDisplayingErrorText)
                            ? self.errorColor
                            : nonErrorColor;
@@ -503,8 +500,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     // See MDCTextInputController.h.
     UIEdgeInsets insets = self.textInput.textInsets;
 
-    CGFloat leadingConstant =
-        [self floatingPlaceholderAnimationConstraintLeadingConstant:insets offset:offset];
+    CGFloat leadingConstant = [self floatingPlaceholderAnimationConstraintLeadingConstant:insets
+                                                                                   offset:offset];
     if (!self.placeholderAnimationConstraintLeading) {
       self.placeholderAnimationConstraintLeading =
           [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
@@ -529,8 +526,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     }
     self.placeholderAnimationConstraintTop.constant = offset.vertical;
 
-    CGFloat trailingConstant =
-        [self floatingPlaceholderAnimationConstraintTrailingConstant:insets offset:offset];
+    CGFloat trailingConstant = [self floatingPlaceholderAnimationConstraintTrailingConstant:insets
+                                                                                     offset:offset];
     if (!self.placeholderAnimationConstraintTrailing) {
       self.placeholderAnimationConstraintTrailing =
           [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
@@ -568,10 +565,10 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
   UIOffset offset = [self floatingPlaceholderOffset];
 
-  CGFloat leadingConstant =
-      [self floatingPlaceholderAnimationConstraintLeadingConstant:insets offset:offset];
-  CGFloat trailingConstant =
-      [self floatingPlaceholderAnimationConstraintTrailingConstant:insets offset:offset];
+  CGFloat leadingConstant = [self floatingPlaceholderAnimationConstraintLeadingConstant:insets
+                                                                                 offset:offset];
+  CGFloat trailingConstant = [self floatingPlaceholderAnimationConstraintTrailingConstant:insets
+                                                                                   offset:offset];
 
   return self.placeholderAnimationConstraintLeading.constant != leadingConstant &&
          self.placeholderAnimationConstraintTrailing.constant != trailingConstant;
@@ -669,9 +666,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     UIFont *font = self.trailingUnderlineLabelFont;
     if (self.mdc_adjustsFontForContentSizeCategory) {
       // TODO: (#4331) This needs to be converted to the new text scheme.
-      font =
-          [font mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleCaption
-                             scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+      font = [font mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleCaption
+                                scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
     }
     self.textInput.trailingUnderlineLabel.font = font;
   }
@@ -819,8 +815,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 - (void)setDisabledColor:(UIColor *)disabledColor {
   if (_disabledColor != disabledColor) {
-    _disabledColor = disabledColor ? disabledColor
-                                   : [self class].disabledColorDefault;
+    _disabledColor = disabledColor ? disabledColor : [self class].disabledColorDefault;
     [self updateLayout];
   }
 }
@@ -852,7 +847,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   _errorAccessibilityValue = [errorAccessibilityValue copy];
 }
 
--(void)setHelperAccessibilityLabel:(NSString *)helperAccessibilityLabel {
+- (void)setHelperAccessibilityLabel:(NSString *)helperAccessibilityLabel {
   _helperAccessibilityLabel = [helperAccessibilityLabel copy];
   if ([self.textInput.leadingUnderlineLabel.text isEqualToString:self.helperText]) {
     self.textInput.leadingUnderlineLabel.accessibilityLabel = _helperAccessibilityLabel;
@@ -905,7 +900,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 }
 - (UIColor *)floatingPlaceholderActiveColor {
   return _floatingPlaceholderActiveColor ? _floatingPlaceholderActiveColor
-  : [self class].floatingPlaceholderActiveColorDefault;
+                                         : [self class].floatingPlaceholderActiveColorDefault;
 }
 
 - (void)setFloatingPlaceholderActiveColor:(UIColor *)floatingPlaceholderActiveColor {
@@ -924,8 +919,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 + (void)setFloatingPlaceholderActiveColorDefault:(UIColor *)floatingPlaceholderActiveColorDefault {
   _floatingPlaceholderActiveColorDefault = floatingPlaceholderActiveColorDefault
-  ? floatingPlaceholderActiveColorDefault
-  : [self class].activeColorDefault;
+                                               ? floatingPlaceholderActiveColorDefault
+                                               : [self class].activeColorDefault;
 }
 
 - (UIColor *)floatingPlaceholderNormalColor {
@@ -1210,7 +1205,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 }
 
 + (void)setTextInputFontDefault:(UIFont *)textInputFontDefault {
-    _textInputFontDefault = textInputFontDefault;
+  _textInputFontDefault = textInputFontDefault;
 }
 
 - (UIColor *)textInputClearButtonTintColor {
@@ -1276,7 +1271,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 }
 
 + (void)setTrailingUnderlineLabelTextColorDefault:
-        (UIColor *)trailingUnderlineLabelTextColorDefault {
+    (UIColor *)trailingUnderlineLabelTextColorDefault {
   _trailingUnderlineLabelTextColorDefault =
       trailingUnderlineLabelTextColorDefault
           ? trailingUnderlineLabelTextColorDefault
@@ -1590,7 +1585,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                                   self.textInput.leadingUnderlineLabel);
 }
 
--(void)setHelperText:(NSString *)helperText
+- (void)setHelperText:(NSString *)helperText
     helperAccessibilityLabel:(NSString *)helperAccessibilityLabel {
   self.helperText = helperText;
   self.helperAccessibilityLabel = helperAccessibilityLabel;
@@ -1624,7 +1619,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 }
 
 + (void)setMdc_adjustsFontForContentSizeCategoryDefault:
-        (BOOL)mdc_adjustsFontForContentSizeCategoryDefault {
+    (BOOL)mdc_adjustsFontForContentSizeCategoryDefault {
   _mdc_adjustsFontForContentSizeCategoryDefault = mdc_adjustsFontForContentSizeCategoryDefault;
 }
 

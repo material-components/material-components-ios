@@ -20,11 +20,9 @@
 
 @implementation MDCChipViewThemer
 
-+ (void)applyScheme:(nonnull id<MDCChipViewScheming>)scheme
-         toChipView:(nonnull MDCChipView *)chip {
-  NSUInteger maximumStateValue =
-      UIControlStateNormal | UIControlStateSelected | UIControlStateHighlighted |
-      UIControlStateDisabled;
++ (void)applyScheme:(nonnull id<MDCChipViewScheming>)scheme toChipView:(nonnull MDCChipView *)chip {
+  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
+                                 UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     [chip setBorderWidth:0 forState:state];
   }
@@ -35,9 +33,8 @@
 
 + (void)applyOutlinedVariantWithScheme:(nonnull id<MDCChipViewScheming>)scheme
                             toChipView:(nonnull MDCChipView *)chip {
-  NSUInteger maximumStateValue =
-      UIControlStateNormal | UIControlStateSelected | UIControlStateHighlighted |
-      UIControlStateDisabled;
+  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
+                                 UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     [chip setBorderWidth:1 forState:state];
   }
@@ -47,5 +44,3 @@
 }
 
 @end
-
-

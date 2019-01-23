@@ -14,8 +14,8 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialButtons.h"
 #import "MaterialButtons+TitleColorAccessibilityMutator.h"
+#import "MaterialButtons.h"
 
 // A value greater than the largest value created by combining normal values of UIControlState.
 // This is a complete hack, but UIControlState doesn't expose anything useful here.
@@ -25,9 +25,11 @@ static const UIControlState kNumUIControlStates = 2 * UIControlStateSelected - 1
 static const UIControlState kUIControlStateDisabledHighlighted =
     UIControlStateHighlighted | UIControlStateDisabled;
 
-static NSArray<UIColor *> *testColors(){
-  return @[[UIColor whiteColor], [UIColor blackColor], [UIColor redColor], [UIColor orangeColor],
-           [UIColor greenColor], [UIColor blueColor], [UIColor grayColor]];
+static NSArray<UIColor *> *testColors() {
+  return @[
+    [UIColor whiteColor], [UIColor blackColor], [UIColor redColor], [UIColor orangeColor],
+    [UIColor greenColor], [UIColor blueColor], [UIColor grayColor]
+  ];
 }
 
 static NSString *controlStateDescription(UIControlState controlState);
@@ -63,7 +65,7 @@ static NSString *controlStateDescription(UIControlState controlState);
 }
 
 - (void)testMutateKeepsAccessibleTextColor {
-  NSDictionary* colors = @{ [UIColor redColor]: [UIColor blackColor]};
+  NSDictionary *colors = @{[UIColor redColor] : [UIColor blackColor]};
   for (UIColor *color in colors) {
     for (NSUInteger controlState = 0; controlState <= kNumUIControlStates; ++controlState) {
       if (controlState & kUIControlStateDisabledHighlighted) {

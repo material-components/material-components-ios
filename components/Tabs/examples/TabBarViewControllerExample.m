@@ -16,8 +16,8 @@
 
 #import "MaterialColorScheme.h"
 #import "MaterialSlider.h"
-#import "MaterialTabs.h"
 #import "MaterialTabs+ColorThemer.h"
+#import "MaterialTabs.h"
 #import "supplemental/TabBarViewControllerExampleSupplemental.h"
 
 @implementation TabBarViewControllerExample

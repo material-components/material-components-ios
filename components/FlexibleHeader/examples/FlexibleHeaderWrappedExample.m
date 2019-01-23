@@ -53,7 +53,7 @@
 
 - (void)commonMDCFlexibleHeaderViewControllerInit {
   _fhvc = [[MDCFlexibleHeaderViewController alloc] initWithNibName:nil bundle:nil];
-  
+
   // Behavioral flags.
   _fhvc.topLayoutGuideAdjustmentEnabled = YES;
   _fhvc.inferTopSafeAreaInsetFromViewController = YES;

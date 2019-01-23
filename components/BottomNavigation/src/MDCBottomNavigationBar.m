@@ -11,8 +11,8 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-#import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
+#import <Foundation/Foundation.h>
 
 #import "MDCBottomNavigationBar.h"
 
@@ -22,9 +22,9 @@
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
+#import "private/MDCBottomNavigationItemView.h"
 #import "private/MaterialBottomNavigationStrings.h"
 #import "private/MaterialBottomNavigationStrings_table.h"
-#import "private/MDCBottomNavigationItemView.h"
 
 // The Bundle for string resources.
 static NSString *const kMaterialBottomNavigationBundle = @"MaterialBottomNavigation.bundle";
@@ -35,8 +35,7 @@ static const CGFloat kMDCBottomNavigationBarLandscapeContainerWidth = 320;
 static const CGFloat kMDCBottomNavigationBarItemsHorizontalMargin = 12;
 static NSString *const kMDCBottomNavigationBarBadgeColorString = @"badgeColor";
 static NSString *const kMDCBottomNavigationBarBadgeValueString = @"badgeValue";
-static NSString *const kMDCBottomNavigationBarAccessibilityValueString =
-    @"accessibilityValue";
+static NSString *const kMDCBottomNavigationBarAccessibilityValueString = @"accessibilityValue";
 static NSString *const kMDCBottomNavigationBarImageString = @"image";
 static NSString *const kMDCBottomNavigationBarSelectedImageString = @"selectedImage";
 // TODO: - Change to NSKeyValueChangeNewKey
@@ -48,7 +47,6 @@ static NSString *const kMDCBottomNavigationBarAccessibilityHint = @"accessibilit
 static NSString *const kMDCBottomNavigationBarIsAccessibilityElement = @"isAccessibilityElement";
 
 static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
-
 
 @interface MDCBottomNavigationBar () <MDCInkTouchControllerDelegate>
 
@@ -104,8 +102,8 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
   }
   _maxLandscapeClusterContainerWidth = kMDCBottomNavigationBarLandscapeContainerWidth;
   _containerView = [[UIView alloc] initWithFrame:CGRectZero];
-  _containerView.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin |
-                                     UIViewAutoresizingFlexibleRightMargin);
+  _containerView.autoresizingMask =
+      (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin);
   _containerView.clipsToBounds = YES;
   [self addSubview:_containerView];
 #if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
@@ -218,8 +216,7 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
     if (layoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
       itemView.frame = CGRectMake(i * itemWidth, 0, itemWidth, navBarHeight);
     } else {
-      itemView.frame =
-          CGRectMake(navBarWidth - (i + 1) * itemWidth, 0,  itemWidth, navBarHeight);
+      itemView.frame = CGRectMake(navBarWidth - (i + 1) * itemWidth, 0, itemWidth, navBarHeight);
     }
   }
 }
@@ -278,18 +275,15 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
     @try {
       [item removeObserver:self forKeyPath:kMDCBottomNavigationBarBadgeColorString];
       [item removeObserver:self forKeyPath:kMDCBottomNavigationBarBadgeValueString];
-      [item removeObserver:self
-                forKeyPath:kMDCBottomNavigationBarAccessibilityValueString];
+      [item removeObserver:self forKeyPath:kMDCBottomNavigationBarAccessibilityValueString];
       [item removeObserver:self forKeyPath:kMDCBottomNavigationBarImageString];
-      [item removeObserver:self
-                forKeyPath:kMDCBottomNavigationBarSelectedImageString];
+      [item removeObserver:self forKeyPath:kMDCBottomNavigationBarSelectedImageString];
       [item removeObserver:self forKeyPath:kMDCBottomNavigationBarTitleString];
       [item removeObserver:self forKeyPath:kMDCBottomNavigationBarAccessibilityIdentifier];
       [item removeObserver:self forKeyPath:kMDCBottomNavigationBarAccessibilityLabel];
       [item removeObserver:self forKeyPath:kMDCBottomNavigationBarAccessibilityHint];
       [item removeObserver:self forKeyPath:kMDCBottomNavigationBarIsAccessibilityElement];
-    }
-    @catch (NSException *exception) {
+    } @catch (NSException *exception) {
       if (exception) {
         // No need to do anything if there are no observers.
       }
@@ -299,7 +293,7 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
                       ofObject:(id)object
-                        change:(NSDictionary<NSKeyValueChangeKey,id> *)change
+                        change:(NSDictionary<NSKeyValueChangeKey, id> *)change
                        context:(void *)context {
   if (!context) {
     NSInteger selectedItemNum = 0;
@@ -313,8 +307,7 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
     MDCBottomNavigationItemView *itemView = _itemViews[selectedItemNum];
     if ([keyPath isEqualToString:kMDCBottomNavigationBarBadgeColorString]) {
       itemView.badgeColor = change[kMDCBottomNavigationBarNewString];
-    } else if ([keyPath
-                isEqualToString:kMDCBottomNavigationBarAccessibilityValueString]) {
+    } else if ([keyPath isEqualToString:kMDCBottomNavigationBarAccessibilityValueString]) {
       itemView.accessibilityValue = change[NSKeyValueChangeNewKey];
     } else if ([keyPath isEqualToString:kMDCBottomNavigationBarBadgeValueString]) {
       itemView.badgeValue = change[kMDCBottomNavigationBarNewString];
@@ -361,8 +354,8 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 
 - (void)didTouchDownButton:(UIButton *)button {
   MDCBottomNavigationItemView *itemView = (MDCBottomNavigationItemView *)button.superview;
-  CGPoint centerPoint = CGPointMake(CGRectGetMidX(itemView.inkView.bounds),
-                                    CGRectGetMidY(itemView.inkView.bounds));
+  CGPoint centerPoint =
+      CGPointMake(CGRectGetMidX(itemView.inkView.bounds), CGRectGetMidY(itemView.inkView.bounds));
   [itemView.inkView startTouchBeganAnimationAtPoint:centerPoint completion:nil];
 }
 
@@ -439,14 +432,11 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
     [self.inkControllers addObject:controller];
 
     if (self.shouldPretendToBeATabBar) {
-      NSString *key = kMaterialBottomNavigationStringTable[
-        kStr_MaterialBottomNavigationItemCountAccessibilityHint
-      ];
-      NSString *itemOfTotalString =
-          NSLocalizedStringFromTableInBundle(key,
-                                             kMaterialBottomNavigationStringsTableName,
-                                             [[self class] bundle],
-                                             kMDCBottomNavigationBarOfString);
+      NSString *key = kMaterialBottomNavigationStringTable
+          [kStr_MaterialBottomNavigationItemCountAccessibilityHint];
+      NSString *itemOfTotalString = NSLocalizedStringFromTableInBundle(
+          key, kMaterialBottomNavigationStringsTableName, [[self class] bundle],
+          kMDCBottomNavigationBarOfString);
       NSString *localizedPosition =
           [NSString localizedStringWithFormat:itemOfTotalString, (i + 1), (int)items.count];
       itemView.button.accessibilityHint = localizedPosition;

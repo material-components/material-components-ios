@@ -16,8 +16,8 @@
 
 #import "MDCSlider+Private.h"
 #import "MaterialPalettes.h"
-#import "MaterialThumbTrack.h"
 #import "MaterialSlider.h"
+#import "MaterialThumbTrack.h"
 
 static const int kNumberOfRepeats = 20;
 static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
@@ -100,7 +100,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   // Given
   self.slider.maximumValue = [self randomNumber];
   self.slider.value = self.slider.minimumValue +
-      [self randomPercent] * (self.slider.maximumValue - self.slider.minimumValue);
+                      [self randomPercent] * (self.slider.maximumValue - self.slider.minimumValue);
 
   // When
   self.slider.maximumValue = self.slider.value - [self randomPercent] * self.slider.value;
@@ -113,7 +113,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   // Given
   self.slider.maximumValue = [self randomNumber];
   self.slider.value = self.slider.minimumValue +
-      [self randomPercent] * (self.slider.maximumValue - self.slider.minimumValue);
+                      [self randomPercent] * (self.slider.maximumValue - self.slider.minimumValue);
 
   // When
   self.slider.minimumValue = self.slider.value + [self randomPercent] * self.slider.value;
@@ -320,11 +320,10 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 
   // Then
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
-      UIControlStateHighlighted | UIControlStateDisabled;
+                                 UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     if (state == UIControlStateDisabled) {
-      XCTAssertEqualObjects([self.slider thumbColorForState:state],
-                            expectedThumbDisabledColor,
+      XCTAssertEqualObjects([self.slider thumbColorForState:state], expectedThumbDisabledColor,
                             @"(%@) is not equal to (%@) for state (%ld)",
                             [self.slider thumbColorForState:state], expectedThumbDisabledColor,
                             (long)state);
@@ -344,7 +343,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 
   // Then
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
-      UIControlStateHighlighted | UIControlStateDisabled;
+                                 UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     XCTAssertEqualObjects([self.slider thumbColorForState:state], UIColor.purpleColor,
                           @"(%@) is not equal to (%@) for state (%ld)",
@@ -377,12 +376,12 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   self.slider.enabled = NO;
   self.slider.selected = YES;
   self.slider.highlighted = NO;
-  XCTAssertEqualObjects(self.slider.thumbTrack.thumbDisabledColor,
-                        [self.slider thumbColorForState:UIControlStateDisabled |
-                         UIControlStateSelected]);
-  XCTAssertNotEqualObjects(self.slider.thumbTrack.thumbEnabledColor,
-                           [self.slider thumbColorForState:UIControlStateDisabled |
-                            UIControlStateSelected]);
+  XCTAssertEqualObjects(
+      self.slider.thumbTrack.thumbDisabledColor,
+      [self.slider thumbColorForState:UIControlStateDisabled | UIControlStateSelected]);
+  XCTAssertNotEqualObjects(
+      self.slider.thumbTrack.thumbEnabledColor,
+      [self.slider thumbColorForState:UIControlStateDisabled | UIControlStateSelected]);
   self.slider.enabled = NO;
   self.slider.selected = NO;
   self.slider.highlighted = YES;
@@ -393,12 +392,12 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   self.slider.enabled = NO;
   self.slider.selected = YES;
   self.slider.highlighted = YES;
-  XCTAssertEqualObjects(self.slider.thumbTrack.thumbDisabledColor,
-                        [self.slider thumbColorForState:UIControlStateDisabled |
-                         UIControlStateSelected]);
-  XCTAssertNotEqualObjects(self.slider.thumbTrack.thumbEnabledColor,
-                           [self.slider thumbColorForState:UIControlStateDisabled |
-                            UIControlStateSelected]);
+  XCTAssertEqualObjects(
+      self.slider.thumbTrack.thumbDisabledColor,
+      [self.slider thumbColorForState:UIControlStateDisabled | UIControlStateSelected]);
+  XCTAssertNotEqualObjects(
+      self.slider.thumbTrack.thumbEnabledColor,
+      [self.slider thumbColorForState:UIControlStateDisabled | UIControlStateSelected]);
   self.slider.enabled = YES;
   self.slider.selected = NO;
   self.slider.highlighted = NO;
@@ -423,12 +422,12 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   self.slider.enabled = YES;
   self.slider.selected = YES;
   self.slider.highlighted = YES;
-  XCTAssertEqualObjects(self.slider.thumbTrack.thumbEnabledColor,
-                        [self.slider thumbColorForState:UIControlStateHighlighted |
-                         UIControlStateSelected]);
-  XCTAssertNotEqualObjects(self.slider.thumbTrack.thumbDisabledColor,
-                           [self.slider thumbColorForState:UIControlStateHighlighted |
-                            UIControlStateSelected]);
+  XCTAssertEqualObjects(
+      self.slider.thumbTrack.thumbEnabledColor,
+      [self.slider thumbColorForState:UIControlStateHighlighted | UIControlStateSelected]);
+  XCTAssertNotEqualObjects(
+      self.slider.thumbTrack.thumbDisabledColor,
+      [self.slider thumbColorForState:UIControlStateHighlighted | UIControlStateSelected]);
 }
 
 - (void)testSettingThumbColorForStateHasNoEffectWhenStatefulAPIDisabled {
@@ -453,7 +452,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 
   // When
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
-  UIControlStateHighlighted | UIControlStateDisabled;
+                                 UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     [self.slider setThumbColor:nil forState:state];
   }
@@ -470,7 +469,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 
   // Then
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
-  UIControlStateHighlighted | UIControlStateDisabled;
+                                 UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     XCTAssertEqualObjects([self.slider trackFillColorForState:state], expectedTrackFillColor,
                           @"(%@) is not equal to (%@) for state (%ld)",
@@ -485,11 +484,12 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 
   // Then
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
-  UIControlStateHighlighted | UIControlStateDisabled;
+                                 UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     XCTAssertEqualObjects([self.slider trackFillColorForState:state], UIColor.purpleColor,
                           @"(%@) is not equal to (%@) for state (%ld)",
-                          [self.slider trackFillColorForState:state], UIColor.purpleColor, (long)state);
+                          [self.slider trackFillColorForState:state], UIColor.purpleColor,
+                          (long)state);
   }
 }
 
@@ -512,13 +512,13 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   self.slider.selected = NO;
   self.slider.highlighted = NO;
   XCTAssertEqualObjects(self.slider.thumbTrack.trackOnColor,
-                           [self.slider trackFillColorForState:UIControlStateDisabled]);
+                        [self.slider trackFillColorForState:UIControlStateDisabled]);
   self.slider.enabled = NO;
   self.slider.selected = YES;
   self.slider.highlighted = NO;
-  XCTAssertEqualObjects(self.slider.thumbTrack.trackOnColor,
-                        [self.slider trackFillColorForState:UIControlStateDisabled |
-                         UIControlStateSelected]);
+  XCTAssertEqualObjects(
+      self.slider.thumbTrack.trackOnColor,
+      [self.slider trackFillColorForState:UIControlStateDisabled | UIControlStateSelected]);
   self.slider.enabled = NO;
   self.slider.selected = NO;
   self.slider.highlighted = YES;
@@ -527,9 +527,9 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   self.slider.enabled = NO;
   self.slider.selected = YES;
   self.slider.highlighted = YES;
-  XCTAssertEqualObjects(self.slider.thumbTrack.trackOnColor,
-                        [self.slider trackFillColorForState:UIControlStateDisabled |
-                         UIControlStateSelected]);
+  XCTAssertEqualObjects(
+      self.slider.thumbTrack.trackOnColor,
+      [self.slider trackFillColorForState:UIControlStateDisabled | UIControlStateSelected]);
   self.slider.enabled = YES;
   self.slider.selected = NO;
   self.slider.highlighted = NO;
@@ -554,12 +554,12 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   self.slider.enabled = YES;
   self.slider.selected = YES;
   self.slider.highlighted = YES;
-  XCTAssertEqualObjects(self.slider.thumbTrack.trackOnColor,
-                        [self.slider trackFillColorForState:UIControlStateHighlighted |
-                         UIControlStateSelected]);
-  XCTAssertNotEqualObjects(self.slider.thumbTrack.trackDisabledColor,
-                           [self.slider trackFillColorForState:UIControlStateHighlighted |
-                            UIControlStateSelected]);
+  XCTAssertEqualObjects(
+      self.slider.thumbTrack.trackOnColor,
+      [self.slider trackFillColorForState:UIControlStateHighlighted | UIControlStateSelected]);
+  XCTAssertNotEqualObjects(
+      self.slider.thumbTrack.trackDisabledColor,
+      [self.slider trackFillColorForState:UIControlStateHighlighted | UIControlStateSelected]);
 }
 
 - (void)testSettingTrackFillColorForStateHasNoEffectWhenStatefulAPIDisabled {
@@ -584,7 +584,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 
   // When
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
-      UIControlStateHighlighted | UIControlStateDisabled;
+                                 UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     [self.slider setTrackFillColor:nil forState:state];
   }
@@ -604,7 +604,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 
   // Then
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
-      UIControlStateHighlighted | UIControlStateDisabled;
+                                 UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     if (state == UIControlStateDisabled) {
       XCTAssertEqualObjects([self.slider trackBackgroundColorForState:state],
@@ -626,7 +626,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 
   // Then
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
-  UIControlStateHighlighted | UIControlStateDisabled;
+                                 UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     XCTAssertEqualObjects([self.slider trackBackgroundColorForState:state], UIColor.purpleColor,
                           @"(%@) is not equal to (%@) for state (%ld)",
@@ -658,9 +658,9 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   self.slider.enabled = NO;
   self.slider.selected = YES;
   self.slider.highlighted = NO;
-  XCTAssertEqualObjects(self.slider.thumbTrack.trackOffColor,
-                        [self.slider trackBackgroundColorForState:UIControlStateDisabled |
-                         UIControlStateSelected]);
+  XCTAssertEqualObjects(
+      self.slider.thumbTrack.trackOffColor,
+      [self.slider trackBackgroundColorForState:UIControlStateDisabled | UIControlStateSelected]);
   self.slider.enabled = NO;
   self.slider.selected = NO;
   self.slider.highlighted = YES;
@@ -669,9 +669,9 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   self.slider.enabled = NO;
   self.slider.selected = YES;
   self.slider.highlighted = YES;
-  XCTAssertEqualObjects(self.slider.thumbTrack.trackOffColor,
-                        [self.slider trackBackgroundColorForState:UIControlStateDisabled |
-                         UIControlStateSelected]);
+  XCTAssertEqualObjects(
+      self.slider.thumbTrack.trackOffColor,
+      [self.slider trackBackgroundColorForState:UIControlStateDisabled | UIControlStateSelected]);
   self.slider.enabled = YES;
   self.slider.selected = NO;
   self.slider.highlighted = NO;
@@ -692,7 +692,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   self.slider.highlighted = YES;
   XCTAssertEqualObjects(self.slider.thumbTrack.trackOffColor,
                         [self.slider trackBackgroundColorForState:UIControlStateHighlighted |
-                         UIControlStateSelected]);
+                                                                  UIControlStateSelected]);
 }
 
 - (void)testSettingTrackBackgroundColorForStateHasNoEffectWhenStatefulAPIDisabled {
@@ -718,10 +718,9 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 - (void)testFilledTrackTickColorForStateDefaults {
   // Then
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
-      UIControlStateHighlighted | UIControlStateDisabled;
+                                 UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
-    XCTAssertEqualObjects([self.slider filledTrackTickColorForState:state],
-                          UIColor.blackColor);
+    XCTAssertEqualObjects([self.slider filledTrackTickColorForState:state], UIColor.blackColor);
   }
 }
 
@@ -731,7 +730,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 
   // Then
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
-      UIControlStateHighlighted | UIControlStateDisabled;
+                                 UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     XCTAssertEqualObjects([self.slider filledTrackTickColorForState:state], UIColor.orangeColor,
                           @"(%@) is not equal to (%@) for state (%ld)",
@@ -763,9 +762,9 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   self.slider.enabled = NO;
   self.slider.selected = YES;
   self.slider.highlighted = NO;
-  XCTAssertEqualObjects(self.slider.thumbTrack.trackOnTickColor,
-                        [self.slider filledTrackTickColorForState:UIControlStateDisabled |
-                         UIControlStateSelected]);
+  XCTAssertEqualObjects(
+      self.slider.thumbTrack.trackOnTickColor,
+      [self.slider filledTrackTickColorForState:UIControlStateDisabled | UIControlStateSelected]);
   self.slider.enabled = NO;
   self.slider.selected = NO;
   self.slider.highlighted = YES;
@@ -774,9 +773,9 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   self.slider.enabled = NO;
   self.slider.selected = YES;
   self.slider.highlighted = YES;
-  XCTAssertEqualObjects(self.slider.thumbTrack.trackOnTickColor,
-                        [self.slider filledTrackTickColorForState:UIControlStateDisabled |
-                         UIControlStateSelected]);
+  XCTAssertEqualObjects(
+      self.slider.thumbTrack.trackOnTickColor,
+      [self.slider filledTrackTickColorForState:UIControlStateDisabled | UIControlStateSelected]);
   self.slider.enabled = YES;
   self.slider.selected = NO;
   self.slider.highlighted = NO;
@@ -797,7 +796,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   self.slider.highlighted = YES;
   XCTAssertEqualObjects(self.slider.thumbTrack.trackOnTickColor,
                         [self.slider filledTrackTickColorForState:UIControlStateHighlighted |
-                         UIControlStateSelected]);
+                                                                  UIControlStateSelected]);
 }
 
 #pragma mark - backgroundTrackTickColorForState
@@ -805,10 +804,9 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 - (void)testBackgroundTrackTickColorForStateDefaults {
   // Then
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
-  UIControlStateHighlighted | UIControlStateDisabled;
+                                 UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
-    XCTAssertEqualObjects([self.slider backgroundTrackTickColorForState:state],
-                          UIColor.blackColor);
+    XCTAssertEqualObjects([self.slider backgroundTrackTickColorForState:state], UIColor.blackColor);
   }
 }
 
@@ -818,7 +816,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 
   // Then
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
-      UIControlStateHighlighted | UIControlStateDisabled;
+                                 UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     XCTAssertEqualObjects([self.slider backgroundTrackTickColorForState:state], UIColor.orangeColor,
                           @"(%@) is not equal to (%@) for state (%ld)",
@@ -852,7 +850,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   self.slider.highlighted = NO;
   XCTAssertEqualObjects(self.slider.thumbTrack.trackOffTickColor,
                         [self.slider backgroundTrackTickColorForState:UIControlStateDisabled |
-                         UIControlStateSelected]);
+                                                                      UIControlStateSelected]);
   self.slider.enabled = NO;
   self.slider.selected = NO;
   self.slider.highlighted = YES;
@@ -863,7 +861,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   self.slider.highlighted = YES;
   XCTAssertEqualObjects(self.slider.thumbTrack.trackOffTickColor,
                         [self.slider backgroundTrackTickColorForState:UIControlStateDisabled |
-                         UIControlStateSelected]);
+                                                                      UIControlStateSelected]);
   self.slider.enabled = YES;
   self.slider.selected = NO;
   self.slider.highlighted = NO;
@@ -884,7 +882,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   self.slider.highlighted = YES;
   XCTAssertEqualObjects(self.slider.thumbTrack.trackOffTickColor,
                         [self.slider backgroundTrackTickColorForState:UIControlStateHighlighted |
-                         UIControlStateSelected]);
+                                                                      UIControlStateSelected]);
 }
 
 #pragma mark - InkColor
@@ -990,7 +988,8 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 // This test is flaky.
 /*
  Test Case '-[SliderTests testAccessibilityValue]' started.
- components/Slider/tests/unit/SliderTests.m:1000: error: -[SliderTests testAccessibilityValue] : (([self.slider accessibilityValue]) equal to (expected)) failed: ("30%") is not equal to ("29%")
+ components/Slider/tests/unit/SliderTests.m:1000: error: -[SliderTests testAccessibilityValue] :
+ (([self.slider accessibilityValue]) equal to (expected)) failed: ("30%") is not equal to ("29%")
  Test Case '-[SliderTests testAccessibilityValue]' failed (0.002 seconds).
  */
 - (void)disabled_testAccessibilityValue {
@@ -1020,7 +1019,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
   numberFormatter.numberStyle = NSNumberFormatterPercentStyle;
   CGFloat percent = (self.slider.value - self.slider.minimumValue) /
-      (self.slider.maximumValue - self.slider.minimumValue);
+                    (self.slider.maximumValue - self.slider.minimumValue);
   NSString *expected = [numberFormatter stringFromNumber:[NSNumber numberWithFloat:(float)percent]];
   XCTAssertEqualObjects([self.slider accessibilityValue], expected);
 }
@@ -1096,7 +1095,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 
     // Then
     CGFloat stepValue = (self.slider.maximumValue - self.slider.minimumValue) /
-        (self.slider.numberOfDiscreteValues - 1);
+                        (self.slider.numberOfDiscreteValues - 1);
     CGFloat expectedValue = self.slider.minimumValue + stepValue;
     XCTAssertEqualWithAccuracy(self.slider.value, expectedValue, kEpsilonAccuracy,
                                @"A slider with (%lu) discrete values should have step of '%.3f'.",

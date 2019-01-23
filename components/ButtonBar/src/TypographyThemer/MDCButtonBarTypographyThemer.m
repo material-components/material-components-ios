@@ -17,9 +17,9 @@
 @implementation MDCButtonBarTypographyThemer
 
 + (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme
-                   toButtonBar:(nonnull MDCButtonBar *)buttonBar {
+                  toButtonBar:(nonnull MDCButtonBar *)buttonBar {
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
-      UIControlStateHighlighted | UIControlStateDisabled;
+                                 UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     [buttonBar setButtonsTitleFont:nil forState:state];
   }
