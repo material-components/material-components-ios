@@ -22,7 +22,6 @@
 
 @implementation FeatureHighlightViewControllerTests
 
-
 - (void)testFeatureHighlightViewIsNotLoadedWhenSettingProperties {
   UIView *view = [[UIView alloc] init];
   UIView *view2 = [[UIView alloc] init];

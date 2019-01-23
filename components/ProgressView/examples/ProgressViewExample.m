@@ -121,12 +121,12 @@ static const CGFloat MDCProgressViewAnimationDuration = 1;
   self.navigationItem.rightBarButtonItem.accessibilityIdentifier = @"animate_button";
 }
 
--(void)viewDidLayoutSubviews {
+- (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
   [self positionContainer];
 }
 
--(void)setupContainer {
+- (void)setupContainer {
   self.container = [[UIView alloc] initWithFrame:self.view.bounds];
   [self.view addSubview:self.container];
 }
@@ -134,10 +134,10 @@ static const CGFloat MDCProgressViewAnimationDuration = 1;
 - (void)positionContainer {
   CGFloat originX = CGRectGetMinX(self.view.bounds) + self.view.layoutMargins.left;
   CGFloat originY = CGRectGetMinY(self.view.bounds) + self.view.layoutMargins.top;
-  CGFloat width = self.view.bounds.size.width
-      - (self.view.layoutMargins.left + self.view.layoutMargins.right);
-  CGFloat height = self.view.bounds.size.height
-      - (self.view.layoutMargins.top + self.view.layoutMargins.bottom);
+  CGFloat width =
+      self.view.bounds.size.width - (self.view.layoutMargins.left + self.view.layoutMargins.right);
+  CGFloat height =
+      self.view.bounds.size.height - (self.view.layoutMargins.top + self.view.layoutMargins.bottom);
   CGRect frame = CGRectMake(originX, originY, width, height);
   self.container.frame = frame;
 }
@@ -241,10 +241,10 @@ static const CGFloat MDCProgressViewAnimationDuration = 1;
   [self animateStep1:_tintedProgressView];
   [self animateStep1:_fullyColoredProgressView];
   [self animateBackwardProgressResetViewWithCountdown:4];
-  [self animateBackwardProgressAnimateViewWithCountdown:4 completion:^(BOOL ignored) {
-    sender.enabled = YES;
-  }];
-
+  [self animateBackwardProgressAnimateViewWithCountdown:4
+                                             completion:^(BOOL ignored) {
+                                               sender.enabled = YES;
+                                             }];
 }
 
 - (void)animateStep1:(MDCProgressView *)progressView {
@@ -274,9 +274,7 @@ static const CGFloat MDCProgressViewAnimationDuration = 1;
 }
 
 - (void)animateStep4:(MDCProgressView *)progressView {
-  [progressView setHidden:YES
-                 animated:YES
-               completion:nil];
+  [progressView setHidden:YES animated:YES completion:nil];
 }
 
 - (void)animateBackwardProgressResetViewWithCountdown:(NSInteger)remainingCounts {
@@ -290,8 +288,8 @@ static const CGFloat MDCProgressViewAnimationDuration = 1;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
                                  (int64_t)(MDCProgressViewAnimationDuration * NSEC_PER_SEC)),
                    dispatch_get_main_queue(), ^{
-      [weakSelf animateBackwardProgressResetViewWithCountdown:remainingCounts];
-    });
+                     [weakSelf animateBackwardProgressResetViewWithCountdown:remainingCounts];
+                   });
   }
 }
 
@@ -307,9 +305,9 @@ static const CGFloat MDCProgressViewAnimationDuration = 1;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
                                  (int64_t)(MDCProgressViewAnimationDuration * NSEC_PER_SEC)),
                    dispatch_get_main_queue(), ^{
-      [weakSelf animateBackwardProgressAnimateViewWithCountdown:remainingCounts
-                                                     completion:completion];
-    });
+                     [weakSelf animateBackwardProgressAnimateViewWithCountdown:remainingCounts
+                                                                    completion:completion];
+                   });
   }
 }
 
@@ -317,11 +315,11 @@ static const CGFloat MDCProgressViewAnimationDuration = 1;
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Progress View", @"Progress View" ],
-    @"description": @"Progress indicators display the length of a process or express an "
-    @"unspecified wait time.",
-    @"primaryDemo": @YES,
-    @"presentable": @YES,
+    @"breadcrumbs" : @[ @"Progress View", @"Progress View" ],
+    @"description" : @"Progress indicators display the length of a process or express an "
+                     @"unspecified wait time.",
+    @"primaryDemo" : @YES,
+    @"presentable" : @YES,
   };
 }
 

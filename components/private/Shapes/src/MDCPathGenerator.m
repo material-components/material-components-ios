@@ -94,8 +94,8 @@
   op.clockwise = clockwise;
   [_operations addObject:op];
 
-  _endPoint = CGPointMake(center.x + radius * MDCCos(endAngle),
-                          center.y + radius * MDCSin(endAngle));
+  _endPoint =
+      CGPointMake(center.x + radius * MDCCos(endAngle), center.y + radius * MDCSin(endAngle));
 }
 
 - (void)addArcWithTangentPoint:(CGPoint)tangentPoint
@@ -122,8 +122,7 @@
   _endPoint = toPoint;
 }
 
-- (void)addQuadCurveWithControlPoint:(CGPoint)controlPoint
-                             toPoint:(CGPoint)toPoint {
+- (void)addQuadCurveWithControlPoint:(CGPoint)controlPoint toPoint:(CGPoint)toPoint {
   MDCPathQuadCurveCommand *op = [[MDCPathQuadCurveCommand alloc] init];
   op.control = controlPoint;
   op.end = toPoint;
@@ -159,26 +158,15 @@
 
 @implementation MDCPathArcCommand
 - (void)applyToCGPath:(CGMutablePathRef)cgPath transform:(CGAffineTransform *)transform {
-  CGPathAddArc(cgPath,
-               transform,
-               self.point.x,
-               self.point.y,
-               self.radius,
-               self.startAngle,
-               self.endAngle,
-               self.clockwise);
+  CGPathAddArc(cgPath, transform, self.point.x, self.point.y, self.radius, self.startAngle,
+               self.endAngle, self.clockwise);
 }
 @end
 
 @implementation MDCPathArcToCommand
 
 - (void)applyToCGPath:(CGMutablePathRef)cgPath transform:(CGAffineTransform *)transform {
-  CGPathAddArcToPoint(cgPath,
-                      transform,
-                      self.start.x,
-                      self.start.y,
-                      self.end.x,
-                      self.end.y,
+  CGPathAddArcToPoint(cgPath, transform, self.start.x, self.start.y, self.end.x, self.end.y,
                       self.radius);
 }
 
@@ -187,14 +175,8 @@
 @implementation MDCPathCurveCommand
 
 - (void)applyToCGPath:(CGMutablePathRef)cgPath transform:(CGAffineTransform *)transform {
-  CGPathAddCurveToPoint(cgPath,
-                        transform,
-                        self.control1.x,
-                        self.control1.y,
-                        self.control2.x,
-                        self.control2.y,
-                        self.end.x,
-                        self.end.y);
+  CGPathAddCurveToPoint(cgPath, transform, self.control1.x, self.control1.y, self.control2.x,
+                        self.control2.y, self.end.x, self.end.y);
 }
 
 @end
@@ -202,11 +184,7 @@
 @implementation MDCPathQuadCurveCommand
 
 - (void)applyToCGPath:(CGMutablePathRef)cgPath transform:(CGAffineTransform *)transform {
-  CGPathAddQuadCurveToPoint(cgPath,
-                            transform,
-                            self.control.x,
-                            self.control.y,
-                            self.end.x,
+  CGPathAddQuadCurveToPoint(cgPath, transform, self.control.x, self.control.y, self.end.x,
                             self.end.y);
 }
 

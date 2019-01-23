@@ -14,9 +14,9 @@
 
 #import <XCTest/XCTest.h>
 
+#import "MaterialTextFields+TypographyThemer.h"
 #import "MaterialTextFields.h"
 #import "MaterialThemes.h"
-#import "MaterialTextFields+TypographyThemer.h"
 
 @interface MDCTextFieldTypographyThemer (ResetDefaults)
 
@@ -38,7 +38,7 @@
   [textInputControllerClass setLeadingUnderlineLabelFontDefault:nil];
 
   if ([textInputControllerClass
-       conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
+          conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
     Class<MDCTextInputControllerFloatingPlaceholder> textInputControllerFloatingPlaceholderClass =
         (Class<MDCTextInputControllerFloatingPlaceholder>)textInputControllerClass;
     [textInputControllerFloatingPlaceholderClass setFloatingPlaceholderScaleDefault:0];
@@ -97,7 +97,7 @@
   XCTAssertEqualObjects([MDCTextInputControllerBase inlinePlaceholderFontDefault],
                         typographyScheme.subtitle1);
   XCTAssertEqual([MDCTextInputControllerBase floatingPlaceholderScaleDefault],
-                 typographyScheme.caption.pointSize/typographyScheme.subtitle1.pointSize);
+                 typographyScheme.caption.pointSize / typographyScheme.subtitle1.pointSize);
 }
 
 - (void)testTypographyThemerSetsTheFontsForTextInputControllerInstance {
@@ -125,7 +125,7 @@
                         typographyScheme.caption);
   XCTAssertEqualObjects(floatingInputController.inlinePlaceholderFont, typographyScheme.subtitle1);
   XCTAssertEqual([floatingInputController.floatingPlaceholderScale doubleValue],
-                 typographyScheme.caption.pointSize/typographyScheme.subtitle1.pointSize);
+                 typographyScheme.caption.pointSize / typographyScheme.subtitle1.pointSize);
 }
 
 @end

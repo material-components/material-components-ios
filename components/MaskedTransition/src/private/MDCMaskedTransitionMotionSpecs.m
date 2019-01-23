@@ -32,178 +32,279 @@
   MDMMotionCurve easeInEaseOut = [self easeInEaseOut];
   MDMMotionCurve easeIn = [self easeIn];
   return (MDCMaskedTransitionMotionSpec){
-    .expansion = {
-      .iconFade = {
-        .delay = 0.000, .duration = 0.075, .curve = easeInEaseOut,
-      },
-      .contentFade = {
-        .delay = 0.150, .duration = 0.225, .curve = easeInEaseOut,
-      },
-      .floodBackgroundColor = {
-        .delay = 0.000, .duration = 0.075, .curve = easeInEaseOut,
-      },
-      .maskTransformation = {
-        .delay = 0.000, .duration = 0.105, .curve = easeIn,
-      },
-      .horizontalMovement = {.curve = { .type = MDMMotionCurveTypeInstant }},
-      .verticalMovement = {
-        .delay = 0.045, .duration = 0.330, .curve = easeInEaseOut,
-      },
-      .scrimFade = {
-        .delay = 0.000, .duration = 0.150, .curve = easeInEaseOut,
-      },
-      .overallDuration = 0.375
-    },
-    .shouldSlideWhenCollapsed = true,
-    .isCentered = false
-  };
+      .expansion = {.iconFade =
+                        {
+                            .delay = 0.000,
+                            .duration = 0.075,
+                            .curve = easeInEaseOut,
+                        },
+                    .contentFade =
+                        {
+                            .delay = 0.150,
+                            .duration = 0.225,
+                            .curve = easeInEaseOut,
+                        },
+                    .floodBackgroundColor =
+                        {
+                            .delay = 0.000,
+                            .duration = 0.075,
+                            .curve = easeInEaseOut,
+                        },
+                    .maskTransformation =
+                        {
+                            .delay = 0.000,
+                            .duration = 0.105,
+                            .curve = easeIn,
+                        },
+                    .horizontalMovement = {.curve = {.type = MDMMotionCurveTypeInstant}},
+                    .verticalMovement =
+                        {
+                            .delay = 0.045,
+                            .duration = 0.330,
+                            .curve = easeInEaseOut,
+                        },
+                    .scrimFade =
+                        {
+                            .delay = 0.000,
+                            .duration = 0.150,
+                            .curve = easeInEaseOut,
+                        },
+                    .overallDuration = 0.375},
+      .shouldSlideWhenCollapsed = true,
+      .isCentered = false};
 }
 
 + (MDCMaskedTransitionMotionSpec)bottomSheet {
   MDMMotionCurve easeInEaseOut = [self easeInEaseOut];
   MDMMotionCurve easeIn = [self easeIn];
   return (MDCMaskedTransitionMotionSpec){
-    .expansion = {
-      .iconFade = {
-        .delay = 0.000, .duration = 0.075, .curve = easeInEaseOut, // No spec
-      },
-      .contentFade = { // No spec for this
-        .delay = 0.100, .duration = 0.200, .curve = easeInEaseOut,
-      },
-      .floodBackgroundColor = {
-        .delay = 0.000, .duration = 0.075, .curve = easeInEaseOut,
-      },
-      .maskTransformation = {
-        .delay = 0.000, .duration = 0.105, .curve = easeIn,
-      },
-      .horizontalMovement = {.curve = { .type = MDMMotionCurveTypeInstant }},
-      .verticalMovement = {
-        .delay = 0.045, .duration = 0.330, .curve = easeInEaseOut,
-      },
-      .scrimFade = {
-        .delay = 0.000, .duration = 0.150, .curve = easeInEaseOut,
-      },
-      .overallDuration = 0.375
-    },
-    .shouldSlideWhenCollapsed = true,
-    .isCentered = false
-  };
+      .expansion = {.iconFade =
+                        {
+                            .delay = 0.000, .duration = 0.075, .curve = easeInEaseOut,  // No spec
+                        },
+                    .contentFade =
+                        {
+                            // No spec for this
+                            .delay = 0.100,
+                            .duration = 0.200,
+                            .curve = easeInEaseOut,
+                        },
+                    .floodBackgroundColor =
+                        {
+                            .delay = 0.000,
+                            .duration = 0.075,
+                            .curve = easeInEaseOut,
+                        },
+                    .maskTransformation =
+                        {
+                            .delay = 0.000,
+                            .duration = 0.105,
+                            .curve = easeIn,
+                        },
+                    .horizontalMovement = {.curve = {.type = MDMMotionCurveTypeInstant}},
+                    .verticalMovement =
+                        {
+                            .delay = 0.045,
+                            .duration = 0.330,
+                            .curve = easeInEaseOut,
+                        },
+                    .scrimFade =
+                        {
+                            .delay = 0.000,
+                            .duration = 0.150,
+                            .curve = easeInEaseOut,
+                        },
+                    .overallDuration = 0.375},
+      .shouldSlideWhenCollapsed = true,
+      .isCentered = false};
 }
 
 + (MDCMaskedTransitionMotionSpec)bottomCard {
   MDMMotionCurve easeInEaseOut = [self easeInEaseOut];
   MDMMotionCurve easeIn = [self easeIn];
   MDMMotionCurve easeOut = [self easeOut];
-  return (MDCMaskedTransitionMotionSpec){
-    .expansion = {
-      .iconFade = {
-        .delay = 0.000, .duration = 0.120, .curve = easeInEaseOut,
-      },
-      .contentFade = {
-        .delay = 0.150, .duration = 0.150, .curve = easeInEaseOut,
-      },
-      .floodBackgroundColor = {
-        .delay = 0.075, .duration = 0.075, .curve = easeInEaseOut,
-      },
-      .maskTransformation = {
-        .delay = 0.045, .duration = 0.225, .curve = easeIn,
-      },
-      .horizontalMovement = {
-        .delay = 0.000, .duration = 0.150, .curve = easeInEaseOut,
-      },
-      .verticalMovement = {
-        .delay = 0.000, .duration = 0.345, .curve = easeInEaseOut,
-      },
-      .scrimFade = {
-        .delay = 0.075, .duration = 0.150, .curve = easeInEaseOut,
-      },
-      .overallDuration = 0.345
-    },
-    .collapse = {
-      .iconFade = {
-        .delay = 0.150, .duration = 0.150, .curve = easeInEaseOut,
-      },
-      .contentFade = {
-        .delay = 0.000, .duration = 0.075, .curve = easeIn,
-      },
-      .floodBackgroundColor = {
-        .delay = 0.060, .duration = 0.150, .curve = easeInEaseOut,
-      },
-      .maskTransformation = {
-        .delay = 0.000, .duration = 0.180, .curve = easeOut,
-      },
-      .horizontalMovement = {
-        .delay = 0.045, .duration = 0.255, .curve = easeInEaseOut,
-      },
-      .verticalMovement = {
-        .delay = 0.000, .duration = 0.255, .curve = easeInEaseOut,
-      },
-      .scrimFade = {
-        .delay = 0.000, .duration = 0.150, .curve = easeInEaseOut,
-      },
-      .overallDuration = 0.300
-    },
-    .shouldSlideWhenCollapsed = false,
-    .isCentered = true
-  };
+  return (MDCMaskedTransitionMotionSpec){.expansion = {.iconFade =
+                                                           {
+                                                               .delay = 0.000,
+                                                               .duration = 0.120,
+                                                               .curve = easeInEaseOut,
+                                                           },
+                                                       .contentFade =
+                                                           {
+                                                               .delay = 0.150,
+                                                               .duration = 0.150,
+                                                               .curve = easeInEaseOut,
+                                                           },
+                                                       .floodBackgroundColor =
+                                                           {
+                                                               .delay = 0.075,
+                                                               .duration = 0.075,
+                                                               .curve = easeInEaseOut,
+                                                           },
+                                                       .maskTransformation =
+                                                           {
+                                                               .delay = 0.045,
+                                                               .duration = 0.225,
+                                                               .curve = easeIn,
+                                                           },
+                                                       .horizontalMovement =
+                                                           {
+                                                               .delay = 0.000,
+                                                               .duration = 0.150,
+                                                               .curve = easeInEaseOut,
+                                                           },
+                                                       .verticalMovement =
+                                                           {
+                                                               .delay = 0.000,
+                                                               .duration = 0.345,
+                                                               .curve = easeInEaseOut,
+                                                           },
+                                                       .scrimFade =
+                                                           {
+                                                               .delay = 0.075,
+                                                               .duration = 0.150,
+                                                               .curve = easeInEaseOut,
+                                                           },
+                                                       .overallDuration = 0.345},
+                                         .collapse = {.iconFade =
+                                                          {
+                                                              .delay = 0.150,
+                                                              .duration = 0.150,
+                                                              .curve = easeInEaseOut,
+                                                          },
+                                                      .contentFade =
+                                                          {
+                                                              .delay = 0.000,
+                                                              .duration = 0.075,
+                                                              .curve = easeIn,
+                                                          },
+                                                      .floodBackgroundColor =
+                                                          {
+                                                              .delay = 0.060,
+                                                              .duration = 0.150,
+                                                              .curve = easeInEaseOut,
+                                                          },
+                                                      .maskTransformation =
+                                                          {
+                                                              .delay = 0.000,
+                                                              .duration = 0.180,
+                                                              .curve = easeOut,
+                                                          },
+                                                      .horizontalMovement =
+                                                          {
+                                                              .delay = 0.045,
+                                                              .duration = 0.255,
+                                                              .curve = easeInEaseOut,
+                                                          },
+                                                      .verticalMovement =
+                                                          {
+                                                              .delay = 0.000,
+                                                              .duration = 0.255,
+                                                              .curve = easeInEaseOut,
+                                                          },
+                                                      .scrimFade =
+                                                          {
+                                                              .delay = 0.000,
+                                                              .duration = 0.150,
+                                                              .curve = easeInEaseOut,
+                                                          },
+                                                      .overallDuration = 0.300},
+                                         .shouldSlideWhenCollapsed = false,
+                                         .isCentered = true};
 }
 
 + (MDCMaskedTransitionMotionSpec)toolbar {
   MDMMotionCurve easeInEaseOut = [self easeInEaseOut];
   MDMMotionCurve easeIn = [self easeIn];
   MDMMotionCurve easeOut = [self easeOut];
-  return (MDCMaskedTransitionMotionSpec){
-    .expansion = {
-      .iconFade = {
-        .delay = 0.000, .duration = 0.120, .curve = easeInEaseOut,
-      },
-      .contentFade = {
-        .delay = 0.150, .duration = 0.150, .curve = easeInEaseOut,
-      },
-      .floodBackgroundColor = {
-        .delay = 0.075, .duration = 0.075, .curve = easeInEaseOut,
-      },
-      .maskTransformation = {
-        .delay = 0.045, .duration = 0.225, .curve = easeIn,
-      },
-      .horizontalMovement = {
-        .delay = 0.000, .duration = 0.300, .curve = easeInEaseOut,
-      },
-      .verticalMovement = {
-        .delay = 0.000, .duration = 0.120, .curve = easeInEaseOut,
-      },
-      .scrimFade = {
-        .delay = 0.075, .duration = 0.150, .curve = easeInEaseOut,
-      },
-      .overallDuration = 0.300
-    },
-    .collapse = {
-      .iconFade = {
-        .delay = 0.150, .duration = 0.150, .curve = easeInEaseOut,
-      },
-      .contentFade = {
-        .delay = 0.000, .duration = 0.075, .curve = easeIn,
-      },
-      .floodBackgroundColor = {
-        .delay = 0.060, .duration = 0.150, .curve = easeInEaseOut,
-      },
-      .maskTransformation = {
-        .delay = 0.000, .duration = 0.180, .curve = easeOut,
-      },
-      .horizontalMovement = {
-        .delay = 0.105, .duration = 0.195, .curve = easeInEaseOut,
-      },
-      .verticalMovement = {
-        .delay = 0.000, .duration = 0.255, .curve = easeInEaseOut,
-      },
-      .scrimFade = {
-        .delay = 0.000, .duration = 0.150, .curve = easeInEaseOut,
-      },
-      .overallDuration = 0.300
-    },
-    .shouldSlideWhenCollapsed = false,
-    .isCentered = true
-  };
+  return (MDCMaskedTransitionMotionSpec){.expansion = {.iconFade =
+                                                           {
+                                                               .delay = 0.000,
+                                                               .duration = 0.120,
+                                                               .curve = easeInEaseOut,
+                                                           },
+                                                       .contentFade =
+                                                           {
+                                                               .delay = 0.150,
+                                                               .duration = 0.150,
+                                                               .curve = easeInEaseOut,
+                                                           },
+                                                       .floodBackgroundColor =
+                                                           {
+                                                               .delay = 0.075,
+                                                               .duration = 0.075,
+                                                               .curve = easeInEaseOut,
+                                                           },
+                                                       .maskTransformation =
+                                                           {
+                                                               .delay = 0.045,
+                                                               .duration = 0.225,
+                                                               .curve = easeIn,
+                                                           },
+                                                       .horizontalMovement =
+                                                           {
+                                                               .delay = 0.000,
+                                                               .duration = 0.300,
+                                                               .curve = easeInEaseOut,
+                                                           },
+                                                       .verticalMovement =
+                                                           {
+                                                               .delay = 0.000,
+                                                               .duration = 0.120,
+                                                               .curve = easeInEaseOut,
+                                                           },
+                                                       .scrimFade =
+                                                           {
+                                                               .delay = 0.075,
+                                                               .duration = 0.150,
+                                                               .curve = easeInEaseOut,
+                                                           },
+                                                       .overallDuration = 0.300},
+                                         .collapse = {.iconFade =
+                                                          {
+                                                              .delay = 0.150,
+                                                              .duration = 0.150,
+                                                              .curve = easeInEaseOut,
+                                                          },
+                                                      .contentFade =
+                                                          {
+                                                              .delay = 0.000,
+                                                              .duration = 0.075,
+                                                              .curve = easeIn,
+                                                          },
+                                                      .floodBackgroundColor =
+                                                          {
+                                                              .delay = 0.060,
+                                                              .duration = 0.150,
+                                                              .curve = easeInEaseOut,
+                                                          },
+                                                      .maskTransformation =
+                                                          {
+                                                              .delay = 0.000,
+                                                              .duration = 0.180,
+                                                              .curve = easeOut,
+                                                          },
+                                                      .horizontalMovement =
+                                                          {
+                                                              .delay = 0.105,
+                                                              .duration = 0.195,
+                                                              .curve = easeInEaseOut,
+                                                          },
+                                                      .verticalMovement =
+                                                          {
+                                                              .delay = 0.000,
+                                                              .duration = 0.255,
+                                                              .curve = easeInEaseOut,
+                                                          },
+                                                      .scrimFade =
+                                                          {
+                                                              .delay = 0.000,
+                                                              .duration = 0.150,
+                                                              .curve = easeInEaseOut,
+                                                          },
+                                                      .overallDuration = 0.300},
+                                         .shouldSlideWhenCollapsed = false,
+                                         .isCentered = true};
 }
 
 @end

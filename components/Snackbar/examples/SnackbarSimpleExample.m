@@ -35,26 +35,23 @@
         [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
   }
   [self setupExampleViews:@[
-      @"Simple Snackbar",
-      @"Snackbar with Action Button",
-      @"Snackbar with Long Text",
-      @"Attributed Text Example",
-      @"Color Themed Snackbar",
-      @"Customize Font Example",
-      @"De-Customize Example"
+    @"Simple Snackbar", @"Snackbar with Action Button", @"Snackbar with Long Text",
+    @"Attributed Text Example", @"Color Themed Snackbar", @"Customize Font Example",
+    @"De-Customize Example"
   ]];
   self.title = @"Snackbar";
   _legacyMode = YES;
   _dynamicType = NO;
-  self.navigationItem.rightBarButtonItems =
-      @[[[UIBarButtonItem alloc] initWithTitle:@"Legacy"
-                                         style:UIBarButtonItemStylePlain
-                                        target:self
-                                        action:@selector(toggleModes)],
-        [[UIBarButtonItem alloc] initWithTitle:@"DT Off"
-                                         style:UIBarButtonItemStylePlain
-                                        target:self
-                                        action:@selector(toggleDynamicType)]];
+  self.navigationItem.rightBarButtonItems = @[
+    [[UIBarButtonItem alloc] initWithTitle:@"Legacy"
+                                     style:UIBarButtonItemStylePlain
+                                    target:self
+                                    action:@selector(toggleModes)],
+    [[UIBarButtonItem alloc] initWithTitle:@"DT Off"
+                                     style:UIBarButtonItemStylePlain
+                                    target:self
+                                    action:@selector(toggleDynamicType)]
+  ];
   MDCSnackbarManager.delegate = self;
 }
 
@@ -95,7 +92,6 @@
   [MDCSnackbarManager showMessage:message];
 }
 
-
 - (void)showLongSnackbarMessage:(id)sender {
   MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
   message.text = @"A red flair silhouetted the jagged edge of a sublime wing.";
@@ -112,17 +108,14 @@
   [MDCSnackbarManager showMessage:message];
 }
 
-
 - (void)showBoldSnackbar:(id)sender {
   MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
   NSMutableAttributedString *text = [[NSMutableAttributedString alloc] init];
   [text appendAttributedString:[[NSAttributedString alloc]
-                                initWithString:@"Boldly"
-                                attributes:@{
-                                             MDCSnackbarMessageBoldAttributeName : @YES
-                                             }]];
+                                   initWithString:@"Boldly"
+                                       attributes:@{MDCSnackbarMessageBoldAttributeName : @YES}]];
   [text appendAttributedString:[[NSAttributedString alloc]
-                                initWithString:@" go where no one has gone before."]];
+                                   initWithString:@" go where no one has gone before."]];
   message.attributedText = text;
 
   [MDCSnackbarManager showMessage:message];
@@ -178,7 +171,8 @@
 
 #pragma mark - UICollectionView
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+- (void)collectionView:(UICollectionView *)collectionView
+    didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
   [super collectionView:collectionView didSelectItemAtIndexPath:indexPath];
   switch (indexPath.row) {
     case 0:

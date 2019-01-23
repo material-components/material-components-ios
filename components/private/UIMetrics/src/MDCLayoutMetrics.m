@@ -26,10 +26,8 @@ static BOOL HasHardwareSafeAreas(void) {
     if (!hasCheckedForHardwareSafeAreas && [UIApplication mdc_safeSharedApplication].keyWindow) {
       dispatch_once(&onceToken, ^{
         UIEdgeInsets insets = [UIApplication mdc_safeSharedApplication].keyWindow.safeAreaInsets;
-        hasHardwareSafeAreas = (insets.top > kFixedStatusBarHeightOnPreiPhoneXDevices
-                                || insets.left > 0
-                                || insets.bottom > 0
-                                || insets.right > 0);
+        hasHardwareSafeAreas = (insets.top > kFixedStatusBarHeightOnPreiPhoneXDevices ||
+                                insets.left > 0 || insets.bottom > 0 || insets.right > 0);
 
         hasCheckedForHardwareSafeAreas = YES;
       });

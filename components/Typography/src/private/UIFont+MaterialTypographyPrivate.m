@@ -20,7 +20,7 @@
  Returns a string indicating the weight of the font.  These weights were added in iOS 8.2.
  */
 + (NSString *)mdc_fontWeightDescription:(CGFloat)weight {
-// The UIFontWeight enumeration was added in iOS 8.2
+  // The UIFontWeight enumeration was added in iOS 8.2
   NSString *description = [NSString stringWithFormat:@"(%.3f)", weight];
 #if defined(__IPHONE_8_2)
 #pragma clang diagnostic push

@@ -157,7 +157,7 @@ static UIViewAnimationOptions animationOptionsWithCurve(UIViewAnimationCurve ani
 }
 
 + (UIViewAnimationOptions)animationCurveOptionFromKeyboardNotification:
-        (NSNotification *)notification {
+    (NSNotification *)notification {
   if (![notification.name isEqualToString:MDCKeyboardWatcherKeyboardWillShowNotification] &&
       ![notification.name isEqualToString:MDCKeyboardWatcherKeyboardWillHideNotification] &&
       ![notification.name isEqualToString:MDCKeyboardWatcherKeyboardWillChangeFrameNotification]) {

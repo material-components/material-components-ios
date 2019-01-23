@@ -14,11 +14,10 @@
 
 #import "UICollectionViewController+MDCCardReordering.h"
 
-#import "MaterialInk.h"
 #import "MDCCardCollectionCell.h"
+#import "MaterialInk.h"
 
 @implementation UICollectionViewController (MDCCardReordering)
-
 
 - (void)mdc_setupCardReordering {
   UILongPressGestureRecognizer *longGestureRecognizer =

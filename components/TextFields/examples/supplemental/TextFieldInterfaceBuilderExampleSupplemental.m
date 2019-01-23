@@ -26,10 +26,10 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Text Field", @"Storyboard" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
-    @"storyboardName": @"TextFieldInterfaceBuilderExample"
+    @"breadcrumbs" : @[ @"Text Field", @"Storyboard" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
+    @"storyboardName" : @"TextFieldInterfaceBuilderExample"
   };
 }
 
@@ -47,10 +47,10 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Text Field", @"[Legacy] Storyboard" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
-    @"storyboardName": @"TextFieldInterfaceBuilderLegacyExample"
+    @"breadcrumbs" : @[ @"Text Field", @"[Legacy] Storyboard" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
+    @"storyboardName" : @"TextFieldInterfaceBuilderLegacyExample"
   };
 }
 

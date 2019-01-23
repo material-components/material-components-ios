@@ -15,8 +15,8 @@
 #import <XCTest/XCTest.h>
 
 #import "MaterialButtonBar.h"
-#import "MaterialNavigationBar.h"
 #import "MaterialNavigationBar+TypographyThemer.h"
+#import "MaterialNavigationBar.h"
 
 static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 
@@ -309,9 +309,9 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   XCTAssertEqualWithAccuracy(resultFont.pointSize, 20, 0.01);
 
   // When
-  NSDictionary <NSString *, NSNumber *> *fontTraits =
+  NSDictionary<NSString *, NSNumber *> *fontTraits =
       [[font fontDescriptor] objectForKey:UIFontDescriptorTraitsAttribute];
-  NSDictionary <NSString *, NSNumber *> *resultTraits =
+  NSDictionary<NSString *, NSNumber *> *resultTraits =
       [[resultFont fontDescriptor] objectForKey:UIFontDescriptorTraitsAttribute];
 
   // Then
@@ -337,9 +337,9 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   XCTAssertEqualWithAccuracy(resultFont.pointSize, 24, 0.01);
 
   // When
-  NSDictionary <NSString *, NSNumber *> *fontTraits =
+  NSDictionary<NSString *, NSNumber *> *fontTraits =
       [[font fontDescriptor] objectForKey:UIFontDescriptorTraitsAttribute];
-  NSDictionary <NSString *, NSNumber *> *resultTraits =
+  NSDictionary<NSString *, NSNumber *> *resultTraits =
       [[resultFont fontDescriptor] objectForKey:UIFontDescriptorTraitsAttribute];
 
   // Then
@@ -355,7 +355,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 
 - (void)testAccessibilityItemsCountWithNoTitle {
   // Then
-  const NSInteger elementsCount = 3; // Leading bar, titleLabel, trailing bar
+  const NSInteger elementsCount = 3;  // Leading bar, titleLabel, trailing bar
   XCTAssertEqual(elementsCount, self.navBar.accessibilityElementCount);
 }
 
@@ -364,7 +364,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   self.navBar.titleView = [[UIView alloc] init];
 
   // Then
-  const NSInteger elementsCount = 3; // Leading bar, titleView, trailing bar
+  const NSInteger elementsCount = 3;  // Leading bar, titleView, trailing bar
   XCTAssertEqual(elementsCount, self.navBar.accessibilityElementCount);
 }
 
@@ -489,7 +489,6 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   }
 
   return weight;
-
 }
 
 #pragma mark - Color

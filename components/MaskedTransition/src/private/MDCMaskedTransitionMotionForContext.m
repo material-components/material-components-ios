@@ -16,9 +16,8 @@
 
 #import "MDCMaskedTransitionMotionForContext.h"
 
-MDCMaskedTransitionMotionSpec
-MDCMaskedTransitionMotionSpecForContext(UIView *containerView,
-                                        UIViewController *presentedViewController) {
+MDCMaskedTransitionMotionSpec MDCMaskedTransitionMotionSpecForContext(
+    UIView *containerView, UIViewController *presentedViewController) {
   const CGRect foreBounds = presentedViewController.view.bounds;
   const CGRect foreFrame = presentedViewController.view.frame;
   const CGRect containerBounds = containerView.bounds;
@@ -26,8 +25,8 @@ MDCMaskedTransitionMotionSpecForContext(UIView *containerView,
   if (CGRectEqualToRect(presentedViewController.view.frame, containerBounds)) {
     return MDCMaskedTransitionMotionSpecs.fullscreen;
 
-  } else if (foreBounds.size.width == containerBounds.size.width
-             && CGRectGetMaxY(foreFrame) == CGRectGetMaxY(containerBounds)) {
+  } else if (foreBounds.size.width == containerBounds.size.width &&
+             CGRectGetMaxY(foreFrame) == CGRectGetMaxY(containerBounds)) {
     if (foreFrame.size.height > 100) {
       return MDCMaskedTransitionMotionSpecs.bottomSheet;
 

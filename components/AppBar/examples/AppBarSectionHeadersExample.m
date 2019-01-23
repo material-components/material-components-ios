@@ -14,8 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialAppBar.h"
 #import "MaterialAppBar+ColorThemer.h"
+#import "MaterialAppBar.h"
 
 @interface AppBarSectionHeadersExample : UITableViewController
 
@@ -55,7 +55,8 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  [MDCAppBarColorThemer applyColorScheme:self.colorScheme toAppBarViewController:self.appBarViewController];
+  [MDCAppBarColorThemer applyColorScheme:self.colorScheme
+                  toAppBarViewController:self.appBarViewController];
 
   // Recommended step: Set the tracking scroll view.
   self.appBarViewController.headerView.trackingScrollView = self.tableView;
@@ -100,9 +101,9 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"App Bar", @"UITableView with section headers" ],
-    @"primaryDemo": @NO,
-    @"presentable": @YES,
+    @"breadcrumbs" : @[ @"App Bar", @"UITableView with section headers" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @YES,
   };
 }
 
@@ -120,8 +121,8 @@
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"cell"];
   if (!cell) {
-    cell =
-    [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                  reuseIdentifier:@"cell"];
   }
   cell.textLabel.text = indexPath.section == 0 ? @"Demo" : @"Example";
   cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -136,8 +137,7 @@
   return 25;
 }
 
-- (NSString *)tableView:(UITableView*)tableView
-titleForHeaderInSection:(NSInteger)section {
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
   return section == 0 ? @"D" : @"E";
 }
 
@@ -146,4 +146,3 @@ titleForHeaderInSection:(NSInteger)section {
 }
 
 @end
-

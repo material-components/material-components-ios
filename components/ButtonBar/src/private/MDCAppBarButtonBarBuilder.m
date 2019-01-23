@@ -14,12 +14,12 @@
 
 #import "MDCAppBarButtonBarBuilder.h"
 
-#import <objc/runtime.h>
 #import <MDFInternationalization/MDFInternationalization.h>
+#import <objc/runtime.h>
 
-#import "MaterialButtons.h"
-#import "MDCButtonBarButton.h"
 #import "MDCButtonBar+Private.h"
+#import "MDCButtonBarButton.h"
+#import "MaterialButtons.h"
 
 // Additional insets for the left-most or right-most items.
 static const CGFloat kEdgeButtonAdditionalMarginPhone = 4;
@@ -156,8 +156,8 @@ static const UIEdgeInsets kButtonInset = {0, 12, 0, 12};
               layoutPosition:buttonBar.layoutPosition
                  layoutHints:layoutHints
              layoutDirection:[buttonBar mdf_effectiveUserInterfaceLayoutDirection]
-                                userInterfaceIdiom:[self usePadInsetsForButtonBar:buttonBar] ?
-                                UIUserInterfaceIdiomPad : UIUserInterfaceIdiomPhone];
+          userInterfaceIdiom:[self usePadInsetsForButtonBar:buttonBar] ? UIUserInterfaceIdiomPad
+                                                                       : UIUserInterfaceIdiomPhone];
 
   button.contentEdgeInsets = contentInsets;
   button.enabled = buttonItem.enabled;
@@ -192,9 +192,9 @@ static const UIEdgeInsets kButtonInset = {0, 12, 0, 12};
     CGFloat additionalInset =
         (isPad ? kEdgeButtonAdditionalMarginPad : kEdgeButtonAdditionalMarginPhone);
     BOOL isFirstButton = (layoutHints & MDCBarButtonItemLayoutHintsIsFirstButton) ==
-                             MDCBarButtonItemLayoutHintsIsFirstButton;
+                         MDCBarButtonItemLayoutHintsIsFirstButton;
     BOOL isLastButton = (layoutHints & MDCBarButtonItemLayoutHintsIsLastButton) ==
-                            MDCBarButtonItemLayoutHintsIsLastButton;
+                        MDCBarButtonItemLayoutHintsIsLastButton;
     if (isFirstButton && layoutPosition == MDCButtonBarLayoutPositionLeading) {
       // Left-most button in LTR, and right-most button in RTL.
       if (layoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
@@ -275,15 +275,15 @@ static const UIEdgeInsets kButtonInset = {0, 12, 0, 12};
 
     // UIBarButtonItem's appearance proxy values don't appear to come "for free" like they do with
     // typical UIView instances, so we're attempting to recreate the behavior here.
-    NSArray *appearanceProxies = @[ [item.class appearance] ];
+    NSArray *appearanceProxies = @ [[item.class appearance]];
     for (UIBarButtonItem *appearance in appearanceProxies) {
       [attributes addEntriesFromDictionary:[appearance titleTextAttributesForState:state]];
     }
     [attributes addEntriesFromDictionary:[item titleTextAttributesForState:state]];
     if ([attributes count] > 0) {
-      [button
-          setAttributedTitle:[[NSAttributedString alloc] initWithString:title attributes:attributes]
-                    forState:state];
+      [button setAttributedTitle:[[NSAttributedString alloc] initWithString:title
+                                                                 attributes:attributes]
+                        forState:state];
     }
   } else {
     [button setTitle:title forState:state];

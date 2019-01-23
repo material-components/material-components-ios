@@ -139,8 +139,8 @@
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout*)collectionViewLayout
-  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+                    layout:(UICollectionViewLayout *)collectionViewLayout
+    sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
   // The size of the chip depends on title, image and selection state.
   _sizingChip.selected = [_selectedIndecies containsObject:indexPath];
   _sizingChip.titleLabel.text = self.titles[indexPath.row];
@@ -165,18 +165,18 @@
 - (NSArray *)titles {
   if (!_titles) {
     _titles = @[
-                @"Doorman",
-                @"Elevator",
-                @"Garage Parking",
-                @"Gym",
-                @"Laundry in Building",
-                @"Green Building",
-                @"Parking Available",
-                @"Pets Allowed",
-                @"Pied-a-Terre Allowed",
-                @"Swimming Pool",
-                @"Smoke-free",
-                ];
+      @"Doorman",
+      @"Elevator",
+      @"Garage Parking",
+      @"Gym",
+      @"Laundry in Building",
+      @"Green Building",
+      @"Parking Available",
+      @"Pets Allowed",
+      @"Pied-a-Terre Allowed",
+      @"Swimming Pool",
+      @"Smoke-free",
+    ];
   }
   return _titles;
 }
@@ -186,4 +186,3 @@
 }
 
 @end
-

@@ -46,16 +46,19 @@ static const CGFloat kShadowElevationsPaperBottomMargin = 20;
   self = [super initWithFrame:frame];
   if (self) {
     self.backgroundColor = [UIColor whiteColor];
-    
+
     // Add label
-    _elevationLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, kShadowElevationLabelTopOffset, frame.size.width, kShadowElevationLabelHeight)];
+    _elevationLabel =
+        [[UILabel alloc] initWithFrame:CGRectMake(0, kShadowElevationLabelTopOffset,
+                                                  frame.size.width, kShadowElevationLabelHeight)];
     _elevationLabel.textAlignment = NSTextAlignmentCenter;
-    _elevationLabel.text = [[self class] elevationStringForShadowElevationValue:kShadowElevationsDefault];
+    _elevationLabel.text =
+        [[self class] elevationStringForShadowElevationValue:kShadowElevationsDefault];
     [self addSubview:_elevationLabel];
-    
+
     // Add slider control
     MDCSlider *sliderControl = [[MDCSlider alloc] initWithFrame:CGRectZero];
-    sliderControl.numberOfDiscreteValues = (NSUInteger) kShadowElevationsMax + 1;
+    sliderControl.numberOfDiscreteValues = (NSUInteger)kShadowElevationsMax + 1;
     sliderControl.maximumValue = kShadowElevationsMax;
     sliderControl.value = kShadowElevationsDefault;
     sliderControl.delegate = self;
@@ -70,29 +73,33 @@ static const CGFloat kShadowElevationsPaperBottomMargin = 20;
                                     toItem:_elevationLabel
                                  attribute:NSLayoutAttributeBottom
                                 multiplier:1.0
-                                  constant:kShadowElevationsElementSpace].active = YES;
+                                  constant:kShadowElevationsElementSpace]
+        .active = YES;
     [NSLayoutConstraint constraintWithItem:sliderControl
                                  attribute:NSLayoutAttributeHeight
                                  relatedBy:NSLayoutRelationEqual
                                     toItem:nil
                                  attribute:NSLayoutAttributeNotAnAttribute
                                 multiplier:1.0
-                                  constant:kShadowElevationsSliderFrameHeight].active = YES;
+                                  constant:kShadowElevationsSliderFrameHeight]
+        .active = YES;
     [NSLayoutConstraint constraintWithItem:sliderControl
                                  attribute:NSLayoutAttributeLeftMargin
                                  relatedBy:NSLayoutRelationEqual
                                     toItem:self
                                  attribute:NSLayoutAttributeLeftMargin
                                 multiplier:1.0
-                                  constant:kShadowElevationsSliderFrameMargin].active = YES;
+                                  constant:kShadowElevationsSliderFrameMargin]
+        .active = YES;
     [NSLayoutConstraint constraintWithItem:sliderControl
                                  attribute:NSLayoutAttributeRightMargin
                                  relatedBy:NSLayoutRelationEqual
                                     toItem:self
                                  attribute:NSLayoutAttributeRightMargin
                                 multiplier:1.0
-                                  constant:-kShadowElevationsSliderFrameMargin].active = YES;
-    
+                                  constant:-kShadowElevationsSliderFrameMargin]
+        .active = YES;
+
     // Add paper
     _paper = [[ShadowElevationsPointsLabel alloc] initWithFrame:CGRectZero];
     _paper.translatesAutoresizingMaskIntoConstraints = NO;
@@ -106,36 +113,40 @@ static const CGFloat kShadowElevationsPaperBottomMargin = 20;
                                     toItem:self
                                  attribute:NSLayoutAttributeCenterX
                                 multiplier:1.0
-                                  constant:0].active = YES;
+                                  constant:0]
+        .active = YES;
     [NSLayoutConstraint constraintWithItem:_paper
                                  attribute:NSLayoutAttributeTop
                                  relatedBy:NSLayoutRelationEqual
                                     toItem:sliderControl
                                  attribute:NSLayoutAttributeBottom
                                 multiplier:1.0
-                                  constant:kShadowElevationsElementSpace].active = YES;
+                                  constant:kShadowElevationsElementSpace]
+        .active = YES;
     [NSLayoutConstraint constraintWithItem:_paper
                                  attribute:NSLayoutAttributeBottom
                                  relatedBy:NSLayoutRelationLessThanOrEqual
                                     toItem:self
                                  attribute:NSLayoutAttributeBottom
                                 multiplier:1.0
-                                  constant:kShadowElevationsPaperBottomMargin].active = YES;
+                                  constant:kShadowElevationsPaperBottomMargin]
+        .active = YES;
     [NSLayoutConstraint constraintWithItem:_paper
                                  attribute:NSLayoutAttributeWidth
                                  relatedBy:NSLayoutRelationEqual
                                     toItem:_paper
                                  attribute:NSLayoutAttributeHeight
                                 multiplier:1.0
-                                  constant:0].active = YES;
+                                  constant:0]
+        .active = YES;
     [NSLayoutConstraint constraintWithItem:_paper
                                  attribute:NSLayoutAttributeWidth
                                  relatedBy:NSLayoutRelationGreaterThanOrEqual
                                     toItem:nil
                                  attribute:NSLayoutAttributeNotAnAttribute
                                 multiplier:1.0
-                                  constant:kShadowElevationsPaperDimRange].active = YES;
-
+                                  constant:kShadowElevationsPaperDimRange]
+        .active = YES;
   }
   return self;
 }
@@ -158,7 +169,7 @@ static const CGFloat kShadowElevationsPaperBottomMargin = 20;
 
 + (NSString *)elevationStringForShadowElevationValue:(MDCShadowElevation)shadowElevationValue {
   NSString *elevationString = kDefaultShadowElevationLabelString;
-  
+
   if (MDCCGFloatEqual(shadowElevationValue, MDCShadowElevationNone)) {
     elevationString = @"MDCShadowElevationNone";
   } else if (MDCCGFloatEqual(shadowElevationValue, MDCShadowElevationSwitch)) {
@@ -182,7 +193,7 @@ static const CGFloat kShadowElevationsPaperBottomMargin = 20;
   } else if (MDCCGFloatEqual(shadowElevationValue, MDCShadowElevationDialog)) {
     elevationString = @"MDCShadowElevationDialog";
   }
-  
+
   return elevationString;
 }
 
@@ -200,10 +211,10 @@ static const CGFloat kShadowElevationsPaperBottomMargin = 20;
   self.title = @"Shadow Elevations";
   _shadowsView = [[ShadowElevationsPointsView alloc] initWithFrame:self.view.bounds];
   [self.view addSubview:_shadowsView];
-  
+
   if (@available(iOS 11.0, *)) {
     self.shadowsView.autoresizingMask =
-    UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   } else {
     _shadowsView.translatesAutoresizingMaskIntoConstraints = NO;
     [self setupShadowsViewConstraints];
@@ -217,39 +228,44 @@ static const CGFloat kShadowElevationsPaperBottomMargin = 20;
                                   toItem:self.topLayoutGuide
                                attribute:NSLayoutAttributeBottom
                               multiplier:1.0
-                                constant:0].active = YES;
-  
+                                constant:0]
+      .active = YES;
+
   [NSLayoutConstraint constraintWithItem:self.shadowsView
                                attribute:NSLayoutAttributeLeading
                                relatedBy:NSLayoutRelationEqual
                                   toItem:self.view
                                attribute:NSLayoutAttributeLeading
                               multiplier:1.0
-                                constant:0].active = YES;
-  
+                                constant:0]
+      .active = YES;
+
   [NSLayoutConstraint constraintWithItem:self.shadowsView
                                attribute:NSLayoutAttributeWidth
                                relatedBy:NSLayoutRelationEqual
                                   toItem:self.view
                                attribute:NSLayoutAttributeWidth
                               multiplier:1.0
-                                constant:0].active = YES;
-  
+                                constant:0]
+      .active = YES;
+
   [NSLayoutConstraint constraintWithItem:self.shadowsView
                                attribute:NSLayoutAttributeBottom
                                relatedBy:NSLayoutRelationEqual
                                   toItem:self.bottomLayoutGuide
                                attribute:NSLayoutAttributeTop
                               multiplier:1.0
-                                constant:0].active = YES;
+                                constant:0]
+      .active = YES;
 }
 
 - (void)viewSafeAreaInsetsDidChange {
   [super viewSafeAreaInsetsDidChange];
-  CGRect insetedShadowViewFrame = CGRectMake(self.view.bounds.origin.x,
-                                             self.view.bounds.origin.y + self.view.safeAreaInsets.top,
-                                             self.view.bounds.size.width - self.view.safeAreaInsets.left - self.view.safeAreaInsets.right,
-                                             self.view.bounds.size.height - self.view.safeAreaInsets.top - self.view.safeAreaInsets.bottom);
+  CGRect insetedShadowViewFrame = CGRectMake(
+      self.view.bounds.origin.x, self.view.bounds.origin.y + self.view.safeAreaInsets.top,
+      self.view.bounds.size.width - self.view.safeAreaInsets.left - self.view.safeAreaInsets.right,
+      self.view.bounds.size.height - self.view.safeAreaInsets.top -
+          self.view.safeAreaInsets.bottom);
   self.shadowsView.frame = insetedShadowViewFrame;
 }
 
@@ -257,9 +273,9 @@ static const CGFloat kShadowElevationsPaperBottomMargin = 20;
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Shadow", @"Shadow Elevations" ],
-    @"primaryDemo": @NO,
-    @"presentable": @YES,
+    @"breadcrumbs" : @[ @"Shadow", @"Shadow Elevations" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @YES,
   };
 }
 
