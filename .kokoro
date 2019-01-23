@@ -427,7 +427,7 @@ generate_website() {
   ./scripts/build_site.sh
 
   if [ -n "$KOKORO_BUILD_NUMBER" ]; then
-    gem install bundler -v 1.14.6
+    gem install bundler
     brew_install yarn --without-node
   fi
 
