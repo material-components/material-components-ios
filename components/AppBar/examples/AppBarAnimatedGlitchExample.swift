@@ -63,9 +63,6 @@ class AppBarAnimatedJumpExample: UIViewController {
       tab.tabBarItem.tag = offset
     }
 
-    view.backgroundColor = .white
-    view.isOpaque = false
-
     MDCAppBarColorThemer.applyColorScheme(colorScheme, to: appBarViewController)
     MDCAppBarTypographyThemer.applyTypographyScheme(typographyScheme, to: appBarViewController)
 
@@ -73,6 +70,7 @@ class AppBarAnimatedJumpExample: UIViewController {
     appBarViewController.view.isOpaque = false
     setNeedsStatusBarAppearanceUpdate()
 
+    view.isOpaque = false
     view.backgroundColor = colorScheme.backgroundColor
     view.addSubview(appBarViewController.view)
     #if swift(>=4.2)
