@@ -27,9 +27,9 @@
 - (MDCPathGenerator *)pathGeneratorForEdgeWithLength:(CGFloat)length {
   BOOL isCut = (self.style == MDCTriangleEdgeStyleCut);
   MDCPathGenerator *path = [MDCPathGenerator pathGeneratorWithStartPoint:CGPointZero];
-  [path addLineToPoint:CGPointMake(length/2 - _size, 0)];
-  [path addLineToPoint:CGPointMake(length/2, isCut ? _size : -_size)];
-  [path addLineToPoint:CGPointMake(length/2 + _size, 0)];
+  [path addLineToPoint:CGPointMake(length / 2 - _size, 0)];
+  [path addLineToPoint:CGPointMake(length / 2, isCut ? _size : -_size)];
+  [path addLineToPoint:CGPointMake(length / 2 + _size, 0)];
   [path addLineToPoint:CGPointMake(length, 0)];
   return path;
 }

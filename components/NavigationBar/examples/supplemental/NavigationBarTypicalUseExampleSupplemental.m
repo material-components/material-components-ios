@@ -34,7 +34,7 @@
 
   self.exampleView.translatesAutoresizingMaskIntoConstraints = NO;
 
-  NSDictionary *viewBindings = @{ @"exampleView" : self.exampleView, @"navBar" : self.navBar };
+  NSDictionary *viewBindings = @{@"exampleView" : self.exampleView, @"navBar" : self.navBar};
   NSMutableArray<__kindof NSLayoutConstraint *> *arrayOfConstraints = [NSMutableArray array];
 
   // clang-format off
@@ -58,11 +58,11 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Navigation Bar", @"Navigation Bar" ],
-    @"description": @"The Navigation Bar component is a view composed of a left and right Button "
-    @"Bar and either a title label or a custom title view.",
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Navigation Bar", @"Navigation Bar" ],
+    @"description" : @"The Navigation Bar component is a view composed of a left and right Button "
+                     @"Bar and either a title label or a custom title view.",
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

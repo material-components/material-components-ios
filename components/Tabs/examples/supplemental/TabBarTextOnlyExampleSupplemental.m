@@ -21,7 +21,7 @@
 static CGFloat const kAppBarMinHeight = 56;
 static CGFloat const kTabBarHeight = 48;
 
-static NSString * const kReusableIdentifierItem = @"Cell";
+static NSString *const kReusableIdentifierItem = @"Cell";
 
 @implementation TabBarTextOnlyExample (Supplemental)
 
@@ -50,24 +50,22 @@ static NSString * const kReusableIdentifierItem = @"Cell";
   self.appBarViewController.headerView.minimumHeight = kTabBarHeight;
   self.appBarViewController.headerView.maximumHeight = kAppBarMinHeight + kTabBarHeight;
 
-   UIFont *font;
-   if ([UIFont respondsToSelector:@selector(monospacedDigitSystemFontOfSize:weight:)]) {
-      font = [UIFont monospacedDigitSystemFontOfSize:14 weight:UIFontWeightRegular];
-   } else {
-      font = [UIFont systemFontOfSize:14];
-      UIFontDescriptor *descriptor =
-      [[font fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitMonoSpace];
-      if (descriptor) {
-         font = [UIFont fontWithDescriptor:descriptor size:0.0];
-      }
-   }
+  UIFont *font;
+  if ([UIFont respondsToSelector:@selector(monospacedDigitSystemFontOfSize:weight:)]) {
+    font = [UIFont monospacedDigitSystemFontOfSize:14 weight:UIFontWeightRegular];
+  } else {
+    font = [UIFont systemFontOfSize:14];
+    UIFontDescriptor *descriptor =
+        [[font fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitMonoSpace];
+    if (descriptor) {
+      font = [UIFont fontWithDescriptor:descriptor size:0.0];
+    }
+  }
 
-  self.appBarViewController.navigationBar.titleTextAttributes = @{
-      NSForegroundColorAttributeName: [UIColor whiteColor],
-      NSFontAttributeName: font };
+  self.appBarViewController.navigationBar.titleTextAttributes =
+      @{NSForegroundColorAttributeName : [UIColor whiteColor], NSFontAttributeName : font};
   [self.view addSubview:self.appBarViewController.view];
   [self.appBarViewController didMoveToParentViewController:self];
-
 
   [self.collectionView registerClass:[MDCCollectionViewTextCell class]
           forCellWithReuseIdentifier:kReusableIdentifierItem];
@@ -75,12 +73,10 @@ static NSString * const kReusableIdentifierItem = @"Cell";
 
 #pragma mark - UICollectionView
 
-
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
   return self.choices.count;
 }
-
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -107,7 +103,8 @@ static NSString * const kReusableIdentifierItem = @"Cell";
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
   if (scrollView == self.appBarViewController.headerView.trackingScrollView) {
-    [self.appBarViewController.headerView trackingScrollViewDidEndDraggingWillDecelerate:decelerate];
+    [self.appBarViewController.headerView
+        trackingScrollViewDidEndDraggingWillDecelerate:decelerate];
   }
 }
 
@@ -115,8 +112,9 @@ static NSString * const kReusableIdentifierItem = @"Cell";
                      withVelocity:(CGPoint)velocity
               targetContentOffset:(inout CGPoint *)targetContentOffset {
   if (scrollView == self.appBarViewController.headerView.trackingScrollView) {
-    [self.appBarViewController.headerView trackingScrollViewWillEndDraggingWithVelocity:velocity
-                                                                           targetContentOffset:targetContentOffset];
+    [self.appBarViewController.headerView
+        trackingScrollViewWillEndDraggingWithVelocity:velocity
+                                  targetContentOffset:targetContentOffset];
   }
 }
 
@@ -126,9 +124,9 @@ static NSString * const kReusableIdentifierItem = @"Cell";
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Tab Bar", @"Text Tabs" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Tab Bar", @"Text Tabs" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import "supplemental/CollectionListCellExampleTypicalUse.h"
 #import "MaterialIcons+ic_info.h"
 #import "MaterialTypographyScheme.h"
-#import "supplemental/CollectionListCellExampleTypicalUse.h"
 #import "supplemental/CollectionViewListCell.h"
 
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
@@ -76,13 +76,10 @@ static const CGFloat kSmallArbitraryCellWidth = 100;
   for (NSString *alignmentKey in alignmentValues) {
     [_content addObject:@[
       [NSString stringWithFormat:@"(%@) Single line text", alignmentKey],
-      alignmentValues[alignmentKey],
-      @"",
-      alignmentValues[alignmentKey]
+      alignmentValues[alignmentKey], @"", alignmentValues[alignmentKey]
     ]];
     [_content addObject:@[
-      @"",
-      alignmentValues[alignmentKey],
+      @"", alignmentValues[alignmentKey],
       [NSString stringWithFormat:@"(%@) Single line detail text", alignmentKey],
       alignmentValues[alignmentKey]
     ]];
@@ -159,20 +156,21 @@ static const CGFloat kSmallArbitraryCellWidth = 100;
 
   [self.collectionView.collectionViewLayout invalidateLayout];
 
-  [coordinator animateAlongsideTransition:nil completion:^(__unused id context) {
-    [self.collectionView.collectionViewLayout invalidateLayout];
-  }];
+  [coordinator animateAlongsideTransition:nil
+                               completion:^(__unused id context) {
+                                 [self.collectionView.collectionViewLayout invalidateLayout];
+                               }];
 }
 
 #pragma mark - CatalogByConvention
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Lists", @"List Cell Example" ],
-    @"description": @"Material Collection Lists are continuous, vertical indexes of text "
-    @"or images.",
-    @"primaryDemo": @NO,
-    @"presentable": @YES,
+    @"breadcrumbs" : @[ @"Lists", @"List Cell Example" ],
+    @"description" : @"Material Collection Lists are continuous, vertical indexes of text "
+                     @"or images.",
+    @"primaryDemo" : @NO,
+    @"presentable" : @YES,
   };
 }
 

@@ -14,15 +14,15 @@
 
 #import "SliderAutolayoutExampleViewController.h"
 
-#import "MaterialSlider.h"
 #import "MaterialSlider+ColorThemer.h"
+#import "MaterialSlider.h"
 
 @interface SliderAutolayoutExampleViewController ()
 @property(weak, nonatomic) IBOutlet UISlider *vanillaSlider;
 @property(weak, nonatomic) IBOutlet UISwitch *enabledSwitch;
-@property (weak, nonatomic) IBOutlet UILabel *materialLabel;
-@property (weak, nonatomic) IBOutlet UILabel *uiLabel;
-@property (weak, nonatomic) IBOutlet MDCSlider *materialSlider;
+@property(weak, nonatomic) IBOutlet UILabel *materialLabel;
+@property(weak, nonatomic) IBOutlet UILabel *uiLabel;
+@property(weak, nonatomic) IBOutlet MDCSlider *materialSlider;
 
 @end
 
@@ -46,7 +46,7 @@
   _vanillaSlider.enabled = _materialSlider.enabled;
   _enabledSwitch.on = _materialSlider.enabled;
   _materialSlider.value = _vanillaSlider.value;
-    
+
   [MDCSliderColorThemer applySemanticColorScheme:self.colorScheme toSlider:self.materialSlider];
 
   _materialLabel.font = self.typographyScheme.body1;
@@ -75,10 +75,10 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Slider", @"Slider Autolayout" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
-    @"storyboardName": @"SliderAutolayoutExample"
+    @"breadcrumbs" : @[ @"Slider", @"Slider Autolayout" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
+    @"storyboardName" : @"SliderAutolayoutExample"
   };
 }
 

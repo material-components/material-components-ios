@@ -14,9 +14,9 @@
 
 #import "MDCFeatureHighlightView+Private.h"
 
+#import <MDFTextAccessibility/MDFTextAccessibility.h>
 #import "MDCFeatureHighlightDismissGestureRecognizer.h"
 #import "MDCFeatureHighlightLayer.h"
-#import <MDFTextAccessibility/MDFTextAccessibility.h>
 
 #import "MaterialFeatureHighlightStrings.h"
 #import "MaterialFeatureHighlightStrings_table.h"
@@ -144,7 +144,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
 }
 
 - (void)dealloc {
-  //TODO(#2651): Remove once we move to iOS8
+  // TODO(#2651): Remove once we move to iOS8
   // Remove Dynamic Type contentSizeCategoryDidChangeNotification
   [[NSNotificationCenter defaultCenter] removeObserver:self
                                                   name:UIContentSizeCategoryDidChangeNotification
@@ -185,7 +185,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   if (_mdc_adjustsFontForContentSizeCategory) {
     _titleLabel.font =
         [_titleFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
-                                scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+                                 scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
   } else {
     _titleLabel.font = _titleFont;
   }
@@ -354,7 +354,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
 
   CGFloat leftTextBound = kMDCFeatureHighlightTextPadding;
   CGFloat rightTextBound = self.frame.size.width - MAX(titleSize.width, detailSize.width) -
-      kMDCFeatureHighlightTextPadding;
+                           kMDCFeatureHighlightTextPadding;
   CGPoint titlePos = CGPointMake(0, 0);
   titlePos.x = MIN(MAX(_highlightCenter.x - textWidth / 2, leftTextBound), rightTextBound);
   if (topHalf) {
@@ -619,8 +619,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
 
 - (BOOL)gestureRecognizer:(__unused UIGestureRecognizer *)gestureRecognizer
     shouldRecognizeSimultaneouslyWithGestureRecognizer:
-        (__unused UIGestureRecognizer *)otherGestureRecognizer
-{
+        (__unused UIGestureRecognizer *)otherGestureRecognizer {
   return YES;
 }
 

@@ -23,8 +23,8 @@
 + (nonnull UIFontDescriptor *)mdc_fontDescriptorForMaterialTextStyle:(MDCFontTextStyle)style
                                                         sizeCategory:(NSString *)sizeCategory {
   // TODO(#1179): We should include our leading and tracking metrics when creating this descriptor.
-  MDCFontTraits *materialTraits =
-      [MDCFontTraits traitsForTextStyle:style sizeCategory:sizeCategory];
+  MDCFontTraits *materialTraits = [MDCFontTraits traitsForTextStyle:style
+                                                       sizeCategory:sizeCategory];
 
   // Store the system font family name to ensure that we load the system font.
   // If we do not explicitly include this UIFontDescriptorFamilyAttribute in the
@@ -51,7 +51,7 @@
     largeSystemFontFamilyName = [largeSystemFont.familyName copy];
   });
 
-  NSDictionary *traits = @{ UIFontWeightTrait : @(materialTraits.weight) };
+  NSDictionary *traits = @{UIFontWeightTrait : @(materialTraits.weight)};
   NSString *fontFamily =
       materialTraits.pointSize < 19.5 ? smallSystemFontFamilyName : largeSystemFontFamilyName;
   NSDictionary *attributes = @{

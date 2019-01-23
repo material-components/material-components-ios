@@ -28,7 +28,7 @@
 
 + (void)resetUIControlStatesForButtonTheming:(nonnull MDCButton *)button {
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
-  UIControlStateHighlighted | UIControlStateDisabled;
+                                 UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     [button setBackgroundColor:nil forState:state];
     [button setTitleColor:nil forState:state];

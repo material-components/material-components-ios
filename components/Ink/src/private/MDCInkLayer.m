@@ -91,9 +91,7 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
     radius = self.maxRippleRadius;
   }
   CGRect ovalRect = CGRectMake(CGRectGetWidth(self.bounds) / 2 - radius,
-                               CGRectGetHeight(self.bounds) / 2 - radius,
-                               radius * 2,
-                               radius * 2);
+                               CGRectGetHeight(self.bounds) / 2 - radius, radius * 2, radius * 2);
   UIBezierPath *circlePath = [UIBezierPath bezierPathWithOvalInRect:ovalRect];
   self.path = circlePath.CGPath;
   self.fillColor = self.inkColor.CGColor;
@@ -106,7 +104,7 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
     _startAnimationActive = YES;
 
     CAMediaTimingFunction *materialTimingFunction =
-        [[CAMediaTimingFunction alloc] initWithControlPoints:(float)0.4:0:(float)0.2:1];
+        [[CAMediaTimingFunction alloc] initWithControlPoints:(float) 0.4:0:(float)0.2:1];
 
     CGFloat scaleStart =
         MIN(CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds)) / MDCInkLayerScaleDivisor;
@@ -128,7 +126,8 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
 
     UIBezierPath *centerPath = [UIBezierPath bezierPath];
     CGPoint startPoint = point;
-    CGPoint endPoint = CGPointMake(CGRectGetWidth(self.bounds) / 2, CGRectGetHeight(self.bounds) / 2);
+    CGPoint endPoint =
+        CGPointMake(CGRectGetWidth(self.bounds) / 2, CGRectGetHeight(self.bounds) / 2);
     [centerPath moveToPoint:startPoint];
     [centerPath addLineToPoint:endPoint];
     [centerPath closePath];
@@ -150,7 +149,8 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
     fadeInAnim.toValue = @1;
     fadeInAnim.duration = MDCInkLayerCommonDuration;
     fadeInAnim.beginTime = MDCInkLayerCommonDuration;
-    fadeInAnim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+    fadeInAnim.timingFunction =
+        [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
     fadeInAnim.fillMode = kCAFillModeForwards;
     fadeInAnim.removedOnCompletion = NO;
 
@@ -174,8 +174,8 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
 - (void)changeAnimationAtPoint:(CGPoint)point {
   CGFloat animationDelay = 0;
   if (self.startAnimationActive) {
-    animationDelay = MDCInkLayerStartFadeHalfBeginTimeFadeOutDuration +
-        MDCInkLayerStartFadeHalfDuration;
+    animationDelay =
+        MDCInkLayerStartFadeHalfBeginTimeFadeOutDuration + MDCInkLayerStartFadeHalfDuration;
   }
 
   BOOL viewContainsPoint = CGRectContainsPoint(self.bounds, point) ? YES : NO;
@@ -191,8 +191,7 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
   changeAnim.toValue = @(updatedOpacity);
   changeAnim.duration = MDCInkLayerCommonDuration;
   changeAnim.beginTime = [self convertTime:(CACurrentMediaTime() + animationDelay) fromLayer:nil];
-  changeAnim.timingFunction =
-      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+  changeAnim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
   changeAnim.fillMode = kCAFillModeForwards;
   changeAnim.removedOnCompletion = NO;
   [self addAnimation:changeAnim forKey:nil];

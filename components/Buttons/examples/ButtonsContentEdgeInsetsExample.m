@@ -32,10 +32,10 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Buttons", @"Buttons (Content Edge Insets)" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
-    @"storyboardName": @"ButtonsContentEdgeInsets",
+    @"breadcrumbs" : @[ @"Buttons", @"Buttons (Content Edge Insets)" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
+    @"storyboardName" : @"ButtonsContentEdgeInsets",
   };
 }
 

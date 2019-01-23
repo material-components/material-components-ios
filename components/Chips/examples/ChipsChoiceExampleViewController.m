@@ -84,7 +84,6 @@
                                       action:@selector(switchStyle)];
 }
 
-
 - (void)switchStyle {
   self.outlined = !self.isOutlined;
   NSString *buttonTitle = self.isOutlined ? @"Filled Style" : @"Outlined Style";
@@ -130,9 +129,8 @@
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout*)collectionViewLayout
-  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-
+                    layout:(UICollectionViewLayout *)collectionViewLayout
+    sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
   // The size of the chip depends on title here.
   self.sizingChip.titleLabel.text = self.titles[indexPath.row];
   return [self.sizingChip sizeThatFits:collectionView.bounds.size];

@@ -14,8 +14,8 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialTypography.h"
 #import "../../src/private/UIFont+MaterialTypographyPrivate.h"
+#import "MaterialTypography.h"
 
 static const CGFloat kEpsilon = (CGFloat)0.001;
 static const CGFloat kOpacityLight = (CGFloat)0.54;
@@ -354,7 +354,7 @@ static const CGFloat kOpacityMedium = (CGFloat)0.87;
     if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wpartial-availability"
-    systemFont = [UIFont systemFontOfSize:mdcFont.pointSize weight:UIFontWeightRegular];
+      systemFont = [UIFont systemFontOfSize:mdcFont.pointSize weight:UIFontWeightRegular];
     } else {
       systemFont = [UIFont systemFontOfSize:mdcFont.pointSize];
     }
@@ -384,6 +384,5 @@ static const CGFloat kOpacityMedium = (CGFloat)0.87;
   // Then
   XCTAssertNotNil(fontExtendedDescription);
 }
-
 
 @end

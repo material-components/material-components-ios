@@ -17,7 +17,8 @@
 static UIColor *ColorFromRGB(uint32_t colorValue) {
   return [UIColor colorWithRed:(CGFloat)(((colorValue >> 16) & 0xFF) / 255.0)
                          green:(CGFloat)(((colorValue >> 8) & 0xFF) / 255.0)
-                          blue:(CGFloat)((colorValue & 0xFF) / 255.0) alpha:1];
+                          blue:(CGFloat)((colorValue & 0xFF) / 255.0)
+                         alpha:1];
 }
 
 /**
@@ -31,7 +32,7 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
  */
 
 static CGFloat blendColorChannel(CGFloat value, CGFloat bValue, CGFloat alpha, CGFloat bAlpha) {
-  return ((1 - alpha) * bValue * bAlpha + alpha * value)/(alpha + bAlpha*(1 - alpha));
+  return ((1 - alpha) * bValue * bAlpha + alpha * value) / (alpha + bAlpha * (1 - alpha));
 }
 
 @implementation MDCSemanticColorScheme
@@ -70,7 +71,7 @@ static CGFloat blendColorChannel(CGFloat value, CGFloat bValue, CGFloat alpha, C
   return [UIColor colorWithRed:blendColorChannel(red, bRed, alpha, bAlpha)
                          green:blendColorChannel(green, bGreen, alpha, bAlpha)
                           blue:blendColorChannel(blue, bBlue, alpha, bAlpha)
-                         alpha:alpha + bAlpha*(1 - alpha)];
+                         alpha:alpha + bAlpha * (1 - alpha)];
 }
 
 #pragma mark - NSCopying
@@ -92,4 +93,3 @@ static CGFloat blendColorChannel(CGFloat value, CGFloat bValue, CGFloat alpha, C
 }
 
 @end
-

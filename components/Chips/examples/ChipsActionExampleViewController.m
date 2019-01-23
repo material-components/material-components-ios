@@ -51,7 +51,6 @@
   MDCChipCollectionViewFlowLayout *layout = [[MDCChipCollectionViewFlowLayout alloc] init];
   layout.minimumInteritemSpacing = 10;
 
-
   // Action chips should allow single selection, collection view default is based on single
   // selection. Note that MDCChipCollectionViewCell manages the state of the chip accordingly.
   _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
@@ -101,7 +100,6 @@
   }
 }
 
-
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
 
@@ -132,7 +130,8 @@
   return cell;
 }
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+- (void)collectionView:(UICollectionView *)collectionView
+    didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
   // For action chips, we never want the chip to stay in selected state.
   // Other possible apporaches would be relying on theming or Customizing collectionViewCell
   // selected state.
@@ -140,12 +139,11 @@
 
   // Do the action related to the chip
   [self setTitle:[NSString stringWithFormat:@"Action %d", (int)indexPath.row]];
-
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout*)collectionViewLayout
-  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+                    layout:(UICollectionViewLayout *)collectionViewLayout
+    sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
   _sizingChip.titleLabel.text = self.titles[indexPath.row];
   return [_sizingChip sizeThatFits:collectionView.bounds.size];
 }
@@ -153,14 +151,13 @@
 - (NSArray *)titles {
   if (!_titles) {
     _titles = @[
-                @"Change Title to Action 0",
-                @"Change Title to Action 1",
-                @"Change Title to Action 2",
-                @"Change Title to Action 3",
-                ];
+      @"Change Title to Action 0",
+      @"Change Title to Action 1",
+      @"Change Title to Action 2",
+      @"Change Title to Action 3",
+    ];
   }
   return _titles;
 }
 
 @end
-
