@@ -14,23 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-gem_update() {
-  gem update --system --no-document --quiet
-}
-
 gem_install() {
-  gem_update
   gem install "$@" --no-document --quiet
 }
 
-brew_update() {
-  brew --version
-  brew update
-  brew --version
-}
-
 brew_install() {
-  brew_update
   brew install "$@"
 }
 
