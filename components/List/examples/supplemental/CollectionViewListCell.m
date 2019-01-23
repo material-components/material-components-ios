@@ -206,13 +206,13 @@ static inline UIFont *defaultDetailsFont(void) {
                                                                   metrics:nil
                                                                     views:views]];
 
-  [constraints addObjectsFromArray:
-                   [NSLayoutConstraint
-                       constraintsWithVisualFormat:@"V:|-(kTextVerticalPadding)-[titleLabel]["
-                                                   @"detailsTextLabel]-(kTextVerticalPadding)-|"
-                                           options:0
-                                           metrics:metrics
-                                             views:views]];
+  [constraints
+      addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:
+                                                  @"V:|-(kTextVerticalPadding)-[titleLabel]["
+                                                  @"detailsTextLabel]-(kTextVerticalPadding)-|"
+                                                                  options:0
+                                                                  metrics:metrics
+                                                                    views:views]];
 
   [constraints addObject:[NSLayoutConstraint constraintWithItem:_imageView
                                                       attribute:NSLayoutAttributeCenterY

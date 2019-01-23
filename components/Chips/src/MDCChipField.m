@@ -77,8 +77,8 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
 - (BOOL)keyboardInputShouldDelete:(UITextField *)textField {
   BOOL shouldDelete = YES;
   if ([UITextField instancesRespondToSelector:_cmd]) {
-    BOOL (*keyboardInputShouldDelete)
-    (id, SEL, UITextField *) =
+    // NOLINTNEXTLINE
+    BOOL(*keyboardInputShouldDelete)(id, SEL, UITextField *) =
         (BOOL(*)(id, SEL, UITextField *))[UITextField instanceMethodForSelector:_cmd];
     if (keyboardInputShouldDelete) {
       shouldDelete = keyboardInputShouldDelete(self, _cmd, textField);
