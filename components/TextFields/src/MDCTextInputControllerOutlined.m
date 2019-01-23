@@ -175,12 +175,16 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 
   UIBezierPath *path;
   if ([self isPlaceholderUp]) {
-    CGFloat placeholderWidth =
-        [self.textInput.placeholderLabel systemLayoutSizeFittingSize:UILayoutFittingCompressedSize]
-            .width *
-        (CGFloat)self.floatingPlaceholderScale.floatValue;
-
-    placeholderWidth += MDCTextInputOutlinedTextFieldFloatingPlaceholderPadding;
+    CGFloat placeholderWidth = 0;
+    NSString *placeholderString = [self.textInput.placeholderLabel.text
+        stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceCharacterSet];
+    if (placeholderString.length > 0) {
+      placeholderWidth = [self.textInput.placeholderLabel
+                             systemLayoutSizeFittingSize:UILayoutFittingCompressedSize]
+                             .width *
+                         (CGFloat)self.floatingPlaceholderScale.floatValue;
+      placeholderWidth += MDCTextInputOutlinedTextFieldFloatingPlaceholderPadding;
+    }
 
     path = [self roundedPathFromRect:[self borderRect]
                        withTextSpace:placeholderWidth

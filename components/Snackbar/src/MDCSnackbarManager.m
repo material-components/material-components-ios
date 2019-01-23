@@ -228,10 +228,11 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   snackbarView = [[viewClass alloc] initWithMessage:message
                                      dismissHandler:dismissHandler
                                     snackbarManager:self.manager];
+  snackbarView.accessibilityViewIsModal =
+      self.manager.shouldEnableAccessibilityViewIsModal && ![self isSnackbarTransient:snackbarView];
   [self.delegate willPresentSnackbarWithMessageView:snackbarView];
   self.currentSnackbar = snackbarView;
-  self.overlayView.accessibilityViewIsModal =
-      self.manager.shouldEnableAccessibilityViewIsModal && ![self isSnackbarTransient:snackbarView];
+  self.overlayView.accessibilityViewIsModal = snackbarView.accessibilityViewIsModal;
   self.overlayView.hidden = NO;
   [self activateOverlay:self.overlayView];
 
@@ -241,14 +242,14 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
       showSnackbarView:snackbarView
               animated:YES
             completion:^{
-              if ([self isSnackbarTransient:snackbarView]) {
+              if (snackbarView.accessibilityViewIsModal ||
+                  ![self isSnackbarTransient:snackbarView]) {
+                UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification,
+                                                snackbarView);
+              } else {
                 snackbarView.accessibilityElementsHidden = YES;
                 UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification,
                                                 message.voiceNotificationText);
-
-              } else {
-                UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification,
-                                                snackbarView);
               }
 
               if ([self isSnackbarTransient:snackbarView]) {
@@ -291,11 +292,12 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
                                        self.overlayView.hidden = YES;
                                        [self deactivateOverlay:self.overlayView];
 
-                                       // If VoiceOver had been enabled and the snackbarView was
-                                       // transient, the Snackbar was just announced (layout was not
-                                       // reported as changed) so there is no need to post a layout
-                                       // change here.
-                                       if (![self isSnackbarTransient:snackbarView]) {
+                                       // If the snackbarView was transient and
+                                       // accessibilityViewIsModal is NO, the Snackbar was just
+                                       // announced (layout was not reported as changed) so there is
+                                       // no need to post a layout change here.
+                                       if (self.overlayView.accessibilityViewIsModal ||
+                                           ![self isSnackbarTransient:snackbarView]) {
                                          UIAccessibilityPostNotification(
                                              UIAccessibilityLayoutChangedNotification, nil);
                                        }

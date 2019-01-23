@@ -12,9 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import MaterialComponents.MaterialButtons_ButtonThemer
+import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialColorScheme
+import MaterialComponents.MaterialFeatureHighlight
 import MaterialComponents.MaterialFeatureHighlight_ColorThemer
 import MaterialComponents.MaterialFeatureHighlight_TypographyThemer
-import MaterialComponents.MaterialButtons_ButtonThemer
+import MaterialComponents.MaterialTypographyScheme
 
 /// Example to show how to use a feature highlight
 class FeatureHighlightSwiftViewController: UIViewController {

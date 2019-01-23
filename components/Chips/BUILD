@@ -119,18 +119,18 @@ mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
         ":Chips",
-        ":Theming",
         ":ShapeThemer",
+        ":Theming",
         ":TypographyThemer",
+        "//components/Slider",
+        "//components/Slider:ColorThemer",
+        "//components/TextFields",
+        "//components/private/ShapeLibrary",
+        "//components/private/Shapes",
         "//components/schemes/Color",
         "//components/schemes/Container",
         "//components/schemes/Shape",
         "//components/schemes/Typography",
-        "//components/private/ShapeLibrary",
-        "//components/private/Shapes",
-        "//components/Slider:ColorThemer",
-        "//components/Slider",
-        "//components/TextFields",
     ],
 )
 
@@ -204,8 +204,8 @@ mdc_snapshot_objc_library(
         "tests/snapshot/resources/ChipsSnapshotTests.xcassets/ic_mask.imageset",
     ],
     deps = [
-      ":Chips",
-      ":Theming",
+        ":Chips",
+        ":Theming",
     ],
 )
 
