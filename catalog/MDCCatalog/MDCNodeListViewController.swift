@@ -595,5 +595,9 @@ extension MDCNodeListViewController {
     if vc.responds(to: typoSel) {
       vc.perform(typoSel, with: AppTheme.globalTheme.typographyScheme)
     }
+    let containerSel = NSSelectorFromString("setContainerScheme:")
+    if vc.responds(to: containerSel) {
+      vc.perform(containerSel, with: AppTheme.globalTheme.containerScheme)
+    }
   }
 }
