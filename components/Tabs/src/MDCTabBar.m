@@ -125,7 +125,6 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   _unselectedTitleColor = _unselectedItemTintColor;
   _inkColor = [UIColor colorWithWhite:1 alpha:(CGFloat)0.7];
 
-  self.clipsToBounds = YES;
   _barPosition = UIBarPositionAny;
   _hasDefaultItemAppearance = YES;
   _hasDefaultAlignment = YES;
