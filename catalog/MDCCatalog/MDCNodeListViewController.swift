@@ -597,7 +597,7 @@ extension MDCNodeListViewController {
     }
     let containerSel = NSSelectorFromString("setContainerScheme:")
     if vc.responds(to: containerSel) {
-      vc.perform(typoSel, with: AppTheme.globalTheme.containerScheme)
+      vc.perform(containerSel, with: AppTheme.globalTheme.containerScheme)
     }
   }
 }
