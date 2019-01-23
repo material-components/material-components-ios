@@ -14,6 +14,8 @@
 
 load(
     "//:material_components_ios.bzl",
+    "mdc_examples_objc_library",
+    "mdc_examples_swift_library",
     "mdc_extension_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
@@ -78,6 +80,61 @@ mdc_extension_objc_library(
     ],
 )
 
+mdc_examples_objc_library(
+    name = "ObjcExamples",
+    deps = [
+        ":ColorThemer",
+        ":TextFields",
+        ":TypographyThemer",
+    ],
+)
+
+mdc_examples_swift_library(
+    name = "SwiftExamples",
+    deps = [
+        ":ColorThemer",
+        ":TextFields",
+        ":TypographyThemer",
+        "//components/AppBar",
+    ],
+)
+
+mdc_objc_library(
+    name = "ExperimentalExampleSource",
+    srcs = glob(["examples/experimental/supplemental/*.m"]),
+    hdrs = glob(["examples/experimental/supplemental/*.h"]),
+    deps = [
+        "//components/Buttons",
+        "//components/Buttons:Theming",
+        "//components/private/Math",
+        "//components/schemes/Color",
+    ],
+)
+
+swift_library(
+    name = "SwiftExperimentalExamples",
+    srcs = glob(["examples/experimental/*.swift"]),
+    copts = [
+        "-swift-version",
+        "3",
+    ],
+    deps = [":ExperimentalExampleSource"],
+)
+
+mdc_objc_library(
+    name = "ExperimentalExamples",
+    srcs = glob([
+        "examples/experimental/*.h",
+        "examples/experimental/*.m",
+    ]),
+    deps = [
+        ":ExperimentalExampleSource",
+        "//components/AppBar:ColorThemer",
+        "//components/AppBar:TypographyThemer",
+        "//components/Buttons:ButtonThemer",
+    ],
+)
+
 mdc_objc_library(
     name = "unit_test_sources",
     testonly = 1,
@@ -98,12 +155,12 @@ mdc_objc_library(
 
 mdc_snapshot_objc_library(
     name = "snapshot_test_lib",
+    asset_catalogs = [
+        "tests/snapshot/resources/TextFieldsSnapshotTests.xcassets/ic_done.imageset",
+        "tests/snapshot/resources/TextFieldsSnapshotTests.xcassets/ic_search.imageset",
+    ],
     sdk_frameworks = [
         "CoreGraphics",
-    ],
-    asset_catalogs = [
-      "tests/snapshot/resources/TextFieldsSnapshotTests.xcassets/ic_done.imageset",
-      "tests/snapshot/resources/TextFieldsSnapshotTests.xcassets/ic_search.imageset",
     ],
     deps = [
         ":ColorThemer",

@@ -15,6 +15,8 @@
 
 load(
     "//:material_components_ios.bzl",
+    "mdc_examples_objc_library",
+    "mdc_examples_swift_library",
     "mdc_extension_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
@@ -81,6 +83,30 @@ mdc_objc_library(
     hdrs = native.glob(["src/private/*.h"]),
     includes = ["src/private"],
     visibility = ["//visibility:private"],
+)
+
+mdc_examples_objc_library(
+    name = "ObjcExamples",
+    deps = [
+        ":AppBar",
+        ":ColorThemer",
+        ":TypographyThemer",
+        "//components/Buttons",
+        "//components/Buttons:ButtonThemer",
+    ],
+)
+
+mdc_examples_swift_library(
+    name = "SwiftExamples",
+    deps = [
+        ":AppBar",
+        ":ColorThemer",
+        ":TypographyThemer",
+        "//components/FlexibleHeader:CanAlwaysExpandToMaximumHeight",
+        "//components/Tabs",
+        "//components/schemes/Color",
+        "//components/schemes/Typography",
+    ],
 )
 
 swift_library(
