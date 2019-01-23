@@ -110,10 +110,13 @@
 @implementation AppBarImageryExample (CatalogByConvention)
 
 + (NSDictionary *)catalogMetadata {
-  // NOLINTNEXTLINE
-  return @{@"breadcrumbs" : @[ @"App Bar", @"Imagery" ],
-           @"primaryDemo" : @NO,
-           @"presentable" : @YES};
+  // clang-format off
+  return @{
+    @"breadcrumbs" : @[ @"App Bar", @"Imagery" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @YES
+  };
+  // clang-format on
 }
 
 - (BOOL)catalogShouldHideNavigation {
