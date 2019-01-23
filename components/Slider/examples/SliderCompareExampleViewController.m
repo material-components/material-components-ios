@@ -16,8 +16,8 @@
 
 #import "MaterialColorScheme.h"
 #import "MaterialMath.h"
-#import "MaterialSlider.h"
 #import "MaterialSlider+ColorThemer.h"
+#import "MaterialSlider.h"
 #import "MaterialTypographyScheme.h"
 
 @interface SliderCompareExampleViewController : UIViewController
@@ -50,8 +50,8 @@
   self.slider.statefulAPIEnabled = YES;
   [MDCSliderColorThemer applySemanticColorScheme:self.colorScheme toSlider:self.slider];
   [self.slider addTarget:self
-                action:@selector(didChangeMDCSliderValue:)
-      forControlEvents:UIControlEventValueChanged];
+                  action:@selector(didChangeMDCSliderValue:)
+        forControlEvents:UIControlEventValueChanged];
   [self.view addSubview:self.slider];
   self.label = [[UILabel alloc] init];
   self.label.text = @"MDCSlider";
@@ -63,8 +63,8 @@
   // Vanilla  UISlider for comparison.
   self.uiSlider = [[UISlider alloc] initWithFrame:CGRectMake(0, 0, 100, 27)];
   [self.uiSlider addTarget:self
-                action:@selector(didChangeUISliderValue:)
-      forControlEvents:UIControlEventValueChanged];
+                    action:@selector(didChangeUISliderValue:)
+          forControlEvents:UIControlEventValueChanged];
   [self.view addSubview:self.uiSlider];
 
   self.uiSliderLabel = [[UILabel alloc] init];
@@ -77,18 +77,19 @@
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
 
-  self.slider.center = CGPointMake(CGRectGetMidX(self.view.bounds),
-                              CGRectGetMidY(self.view.bounds) - 50);
+  self.slider.center =
+      CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds) - 50);
   CGFloat labelHeight = CGRectGetHeight(self.label.bounds);
   self.label.center = CGPointMake(self.slider.center.x, self.slider.center.y + 2 * labelHeight);
   self.label.frame = MDCRectAlignToScale(self.label.frame, [UIScreen mainScreen].scale);
 
-  self.uiSlider.center = CGPointMake(CGRectGetMidX(self.view.bounds),
-                                 CGRectGetMidY(self.view.bounds) + 50);
+  self.uiSlider.center =
+      CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds) + 50);
   CGFloat uiLabelHeight = CGRectGetHeight(self.uiSliderLabel.bounds);
-  self.uiSliderLabel.center = CGPointMake(self.uiSlider.center.x,
-                                      self.uiSlider.center.y + 2 * uiLabelHeight);
-  self.uiSliderLabel.frame = MDCRectAlignToScale(self.uiSliderLabel.frame, [UIScreen mainScreen].scale);
+  self.uiSliderLabel.center =
+      CGPointMake(self.uiSlider.center.x, self.uiSlider.center.y + 2 * uiLabelHeight);
+  self.uiSliderLabel.frame =
+      MDCRectAlignToScale(self.uiSliderLabel.frame, [UIScreen mainScreen].scale);
 }
 
 - (void)didChangeMDCSliderValue:(MDCSlider *)slider {
@@ -103,9 +104,9 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Slider", @"MDCSlider and UISlider Compared" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Slider", @"MDCSlider and UISlider Compared" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

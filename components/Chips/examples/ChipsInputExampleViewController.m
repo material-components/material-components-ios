@@ -74,7 +74,7 @@
 
 - (void)chipField:(MDCChipField *)chipField didAddChip:(MDCChipView *)chip {
   // Every other chip is stroked
-  if (chipField.chips.count%2) {
+  if (chipField.chips.count % 2) {
     [chip applyOutlinedThemeWithScheme:[self containerScheme]];
   } else {
     [chip applyThemeWithScheme:[self containerScheme]];

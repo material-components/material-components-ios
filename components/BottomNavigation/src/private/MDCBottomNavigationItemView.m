@@ -17,10 +17,10 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
+#import "MDCBottomNavigationItemBadge.h"
 #import "MaterialBottomNavigationStrings.h"
 #import "MaterialBottomNavigationStrings_table.h"
 #import "MaterialMath.h"
-#import "MDCBottomNavigationItemBadge.h"
 
 static const CGFloat MDCBottomNavigationItemViewInkOpacity = (CGFloat)0.150;
 static const CGFloat MDCBottomNavigationItemViewTitleFontSize = 12;
@@ -100,7 +100,6 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 }
 
 - (void)commonMDCBottomNavigationItemViewInit {
-
   if (!_selectedItemTintColor) {
     _selectedItemTintColor = [UIColor blackColor];
   }
@@ -123,7 +122,6 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
     _label.textColor = _selectedItemTitleColor;
     _label.isAccessibilityElement = NO;
     [self addSubview:_label];
-
   }
 
   if (!_badge) {
@@ -138,7 +136,8 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 
   if (!_inkView) {
     _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
-    _inkView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+    _inkView.autoresizingMask =
+        (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     _inkView.usesLegacyInkRipple = NO;
     _inkView.clipsToBounds = NO;
     [self addSubview:_inkView];
@@ -158,8 +157,8 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   [super layoutSubviews];
 
   [self.label sizeToFit];
-  CGSize labelSize = CGSizeMake(CGRectGetWidth(self.label.bounds),
-                                CGRectGetHeight(self.label.bounds));
+  CGSize labelSize =
+      CGSizeMake(CGRectGetWidth(self.label.bounds), CGRectGetHeight(self.label.bounds));
   CGFloat maxWidth = CGRectGetWidth(self.bounds);
   self.label.frame = CGRectMake(0, 0, MIN(maxWidth, labelSize.width), labelSize.height);
   self.inkView.maxRippleRadius =
@@ -191,11 +190,13 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
         CGPointMake(centerX, centerY - totalContentHeight / 2 + iconHeight / 2);
     self.label.center = CGPointMake(centerX, centerY + totalContentHeight / 2 - labelHeight / 2);
     if (animated) {
-      [UIView animateWithDuration:kMDCBottomNavigationItemViewTransitionDuration animations:^(void) {
-        self.iconImageView.center = iconImageViewCenter;
-        self.badge.center =
-            [self badgeCenterFromIconFrame:CGRectStandardize(self.iconImageView.frame) isRTL:isRTL];
-      }];
+      [UIView animateWithDuration:kMDCBottomNavigationItemViewTransitionDuration
+                       animations:^(void) {
+                         self.iconImageView.center = iconImageViewCenter;
+                         self.badge.center = [self
+                             badgeCenterFromIconFrame:CGRectStandardize(self.iconImageView.frame)
+                                                isRTL:isRTL];
+                       }];
     } else {
       self.iconImageView.center = iconImageViewCenter;
       self.badge.center = [self badgeCenterFromIconFrame:CGRectStandardize(self.iconImageView.frame)
@@ -260,13 +261,11 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   }
 
   if (self.shouldPretendToBeATab) {
-    NSString *key =
-        kMaterialBottomNavigationStringTable[kStr_MaterialBottomNavigationTabElementAccessibilityLabel];
-    NSString *tabString =
-        NSLocalizedStringFromTableInBundle(key,
-                                           kMaterialBottomNavigationStringsTableName,
-                                           [[self class] bundle],
-                                           kMDCBottomNavigationItemViewTabString);
+    NSString *key = kMaterialBottomNavigationStringTable
+        [kStr_MaterialBottomNavigationTabElementAccessibilityLabel];
+    NSString *tabString = NSLocalizedStringFromTableInBundle(
+        key, kMaterialBottomNavigationStringsTableName, [[self class] bundle],
+        kMDCBottomNavigationItemViewTabString);
     [labelComponents addObject:tabString];
   }
 
@@ -320,7 +319,6 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   }
   self.inkView.inkColor =
       [self.selectedItemTintColor colorWithAlphaComponent:MDCBottomNavigationItemViewInkOpacity];
-
 }
 
 - (void)setUnselectedItemTintColor:(UIColor *)unselectedItemTintColor {
@@ -362,13 +360,13 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 - (void)setImage:(UIImage *)image {
   _image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   self.iconImageView.image = _image;
-  self.iconImageView.tintColor = (self.selected) ? self.selectedItemTintColor
-      : self.unselectedItemTintColor;
+  self.iconImageView.tintColor =
+      (self.selected) ? self.selectedItemTintColor : self.unselectedItemTintColor;
   [self.iconImageView sizeToFit];
 }
 
--(void)setSelectedImage:(UIImage *)selectedImage {
-  _selectedImage = [selectedImage imageWithRenderingMode: UIImageRenderingModeAlwaysTemplate];
+- (void)setSelectedImage:(UIImage *)selectedImage {
+  _selectedImage = [selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   self.iconImageView.image = _selectedImage;
   self.iconImageView.tintColor = self.selectedItemTintColor;
   [self.iconImageView sizeToFit];
@@ -380,7 +378,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   self.button.accessibilityLabel = [self accessibilityLabelWithTitle:_title];
 }
 
--(void)setTitleVisibility:(MDCBottomNavigationBarTitleVisibility)titleVisibility {
+- (void)setTitleVisibility:(MDCBottomNavigationBarTitleVisibility)titleVisibility {
   _titleVisibility = titleVisibility;
   [self updateLabelVisibility];
 }
@@ -391,7 +389,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   [self setNeedsLayout];
 }
 
--(void)setAccessibilityValue:(NSString *)accessibilityValue {
+- (void)setAccessibilityValue:(NSString *)accessibilityValue {
   [super setAccessibilityValue:accessibilityValue];
   self.button.accessibilityValue = accessibilityValue;
 }
@@ -400,11 +398,11 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   return self.button.accessibilityValue;
 }
 
--(void)setAccessibilityIdentifier:(NSString *)accessibilityIdentifier {
+- (void)setAccessibilityIdentifier:(NSString *)accessibilityIdentifier {
   self.button.accessibilityIdentifier = accessibilityIdentifier;
 }
 
--(NSString *)accessibilityIdentifier {
+- (NSString *)accessibilityIdentifier {
   return self.button.accessibilityIdentifier;
 }
 

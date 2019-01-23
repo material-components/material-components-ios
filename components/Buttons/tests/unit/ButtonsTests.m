@@ -16,8 +16,8 @@
 
 #import "MaterialButtons.h"
 #import "MaterialShadowElevations.h"
-#import "MaterialShapes.h"
 #import "MaterialShadowLayer.h"
+#import "MaterialShapes.h"
 #import "MaterialTypography.h"
 
 static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
@@ -219,8 +219,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
   TestButton *highlightedButton = [[TestButton alloc] init];
 
   XCTAssertEqualWithAccuracy([selectedButton elevationForState:UIControlStateNormal],
-                             [selectedButton elevationForState:UIControlStateHighlighted],
-                             0.0001,
+                             [selectedButton elevationForState:UIControlStateHighlighted], 0.0001,
                              @"This test assumes that .normal and .highlighted start with the same "
                               "elevation values.");
 
@@ -235,8 +234,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
   [highlightedButton setElevation:75 forState:UIControlStateNormal];
 
   // Then
-  XCTAssertEqual(selectedButton.shadowLayer.elevationAssignmentCount,
-                 selectedButtonElevationCount,
+  XCTAssertEqual(selectedButton.shadowLayer.elevationAssignmentCount, selectedButtonElevationCount,
                  @"Updating an unrelated elevation should not update the layer elevation.");
   XCTAssertEqual(highlightedButtonElevationCount + 1,
                  highlightedButton.shadowLayer.elevationAssignmentCount,

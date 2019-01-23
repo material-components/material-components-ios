@@ -22,7 +22,7 @@
 #import "MaterialSlider+ColorThemer.h"
 #import "MaterialSlider.h"
 
-@interface ChipsShapingExampleViewController()
+@interface ChipsShapingExampleViewController ()
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, strong) MDCShapeScheme *shapeScheme;
 @property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
@@ -96,15 +96,10 @@
 
   CGSize sliderSize = [_cornerSlider sizeThatFits:self.view.bounds.size];
   _cornerSlider.frame = CGRectMake(20, 140, self.view.bounds.size.width - 40, sliderSize.height);
-  _cornerSlider.frame =
-      CGRectMake(20,
-                 140 + sliderSize.height + 20,
-                 self.view.bounds.size.width - 40,
-                 sliderSize.height);
+  _cornerSlider.frame = CGRectMake(20, 140 + sliderSize.height + 20,
+                                   self.view.bounds.size.width - 40, sliderSize.height);
   _cornerStyleControl.frame =
-      CGRectMake(20,
-                 CGRectGetMaxY(_cornerSlider.frame) + 20,
-                 self.view.bounds.size.width - 40,
+      CGRectMake(20, CGRectGetMaxY(_cornerSlider.frame) + 20, self.view.bounds.size.width - 40,
                  _cornerStyleControl.frame.size.height);
 
   [self cornerSliderChanged:_cornerSlider];

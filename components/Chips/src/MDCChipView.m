@@ -18,8 +18,8 @@
 
 #import "MaterialInk.h"
 #import "MaterialMath.h"
-#import "MaterialShadowLayer.h"
 #import "MaterialShadowElevations.h"
+#import "MaterialShadowLayer.h"
 #import "MaterialShapes.h"
 #import "MaterialTypography.h"
 
@@ -73,11 +73,8 @@ static CGRect CGRectVerticallyCentered(CGRect rect,
   return CGRectOffset(rect, 0, yValue);
 }
 
-static inline CGRect MDCChipBuildFrame(UIEdgeInsets insets,
-                                       CGSize size,
-                                       CGFloat xOffset,
-                                       CGFloat chipHeight,
-                                       CGFloat pixelScale) {
+static inline CGRect MDCChipBuildFrame(
+    UIEdgeInsets insets, CGSize size, CGFloat xOffset, CGFloat chipHeight, CGFloat pixelScale) {
   CGRect frame = CGRectMake(xOffset + insets.left, insets.top, size.width, size.height);
   return CGRectVerticallyCentered(frame, insets, chipHeight, pixelScale);
 }
@@ -201,11 +198,11 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
     // Because this is not exposed externally, we can't use -touchesMoved: to calculate when to
     // change ink state. So instead we fall back on adding target/actions for these specific events.
     [self addTarget:self
-             action:@selector(touchDragEnter:forEvent:)
-   forControlEvents:UIControlEventTouchDragEnter];
+                  action:@selector(touchDragEnter:forEvent:)
+        forControlEvents:UIControlEventTouchDragEnter];
     [self addTarget:self
-             action:@selector(touchDragExit:forEvent:)
-   forControlEvents:UIControlEventTouchDragExit];
+                  action:@selector(touchDragExit:forEvent:)
+        forControlEvents:UIControlEventTouchDragExit];
 
     self.layer.elevation = [self elevationForState:UIControlStateNormal];
     self.contentHorizontalAlignment = UIControlContentHorizontalAlignmentFill;
@@ -460,9 +457,9 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   if (customTitleFont) {
     // If we are automatically adjusting for Dynamic Type resize the font based on the text style
     if (_mdc_adjustsFontForContentSizeCategory) {
-      self.titleLabel.font =
-          [customTitleFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
-              scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+      self.titleLabel.font = [customTitleFont
+          mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
+                       scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
     } else {
       self.titleLabel.font = customTitleFont;
     }
@@ -477,9 +474,9 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
       } else {
         // There is a custom font loader, retrieve the font and scale it.
         UIFont *customTypographyFont = [MDCTypography buttonFont];
-        _titleLabel.font =
-            [customTypographyFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
-                scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+        _titleLabel.font = [customTypographyFont
+            mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
+                         scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
       }
     } else {
       // If we are using the default (system) font loader, retrieve the
@@ -501,8 +498,8 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 }
 
 - (void)updateAccessibility {
-
-  // Clearing and then adding the relevant traits based on current the state (while accommodating concurrent states).
+  // Clearing and then adding the relevant traits based on current the state (while accommodating
+  // concurrent states).
   self.accessibilityTraits &= ~(UIAccessibilityTraitSelected | UIAccessibilityTraitNotEnabled);
 
   if ((self.state & UIControlStateSelected) == UIControlStateSelected) {
@@ -589,8 +586,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   // Handle RTL
   if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
     for (UIView *subview in self.subviews) {
-      CGRect flippedRect =
-        MDFRectFlippedHorizontally(subview.frame, CGRectGetWidth(self.bounds));
+      CGRect flippedRect = MDFRectFlippedHorizontally(subview.frame, CGRectGetWidth(self.bounds));
       subview.frame = flippedRect;
     }
   }
@@ -615,8 +611,9 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
       maxImageWidth = [self sizeForImageView:self.imageView maxSize:maxContentSize].width;
     }
     if (self.showSelectedImageView) {
-      maxImageWidth = MAX(
-          maxImageWidth, [self sizeForImageView:self.selectedImageView maxSize:maxContentSize].width);
+      maxImageWidth =
+          MAX(maxImageWidth,
+              [self sizeForImageView:self.selectedImageView maxSize:maxContentSize].width);
     }
     neededContentWidth += maxImageWidth + UIEdgeInsetsHorizontal(self.imagePadding);
   }
@@ -652,11 +649,8 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   CGRect frame = CGRectMake(CGRectGetMinX(self.contentRect), CGRectGetMidY(self.contentRect), 0, 0);
   if (visible) {
     CGSize selectedSize = [self sizeForImageView:imageView maxSize:self.contentRect.size];
-    frame = MDCChipBuildFrame(_imagePadding,
-                              selectedSize,
-                              CGRectGetMinX(self.contentRect),
-                              CGRectGetHeight(self.frame),
-                              self.pixelScale);
+    frame = MDCChipBuildFrame(_imagePadding, selectedSize, CGRectGetMinX(self.contentRect),
+                              CGRectGetHeight(self.frame), self.pixelScale);
   }
   return frame;
 }
@@ -672,10 +666,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
     size = [self sizeForAccessoryViewWithMaxSize:self.contentRect.size];
   }
   CGFloat xOffset = CGRectGetMaxX(self.contentRect) - size.width - _accessoryPadding.right;
-  return MDCChipBuildFrame(_accessoryPadding,
-                           size,
-                           xOffset,
-                           CGRectGetHeight(self.frame),
+  return MDCChipBuildFrame(_accessoryPadding, size, xOffset, CGRectGetHeight(self.frame),
                            self.pixelScale);
 }
 
@@ -686,11 +677,12 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
 - (CGRect)titleLabelFrame {
   CGRect imageFrame = CGRectUnion(_imageView.frame, _selectedImageView.frame);
-  CGFloat maximumTitleWidth = CGRectGetWidth(self.contentRect) - CGRectGetWidth(imageFrame)
-      - UIEdgeInsetsHorizontal(_titlePadding) + UIEdgeInsetsHorizontal(_imagePadding);
+  CGFloat maximumTitleWidth = CGRectGetWidth(self.contentRect) - CGRectGetWidth(imageFrame) -
+                              UIEdgeInsetsHorizontal(_titlePadding) +
+                              UIEdgeInsetsHorizontal(_imagePadding);
   if (self.showAccessoryView) {
-    maximumTitleWidth -= CGRectGetWidth(_accessoryView.frame) +
-        UIEdgeInsetsHorizontal(_accessoryPadding);
+    maximumTitleWidth -=
+        CGRectGetWidth(_accessoryView.frame) + UIEdgeInsetsHorizontal(_accessoryPadding);
   }
   CGFloat maximumTitleHeight =
       CGRectGetHeight(self.contentRect) - UIEdgeInsetsVertical(_titlePadding);
@@ -699,10 +691,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   titleSize.width = MAX(0, maximumTitleWidth);
 
   CGFloat imageRightEdge = CGRectGetMaxX(imageFrame) + _imagePadding.right;
-  return MDCChipBuildFrame(_titlePadding,
-                           titleSize,
-                           imageRightEdge,
-                           CGRectGetHeight(self.frame),
+  return MDCChipBuildFrame(_titlePadding, titleSize, imageRightEdge, CGRectGetHeight(self.frame),
                            self.pixelScale);
 }
 
@@ -716,8 +705,8 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   CGSize selectedSize = CGSizeZero;
 
   if (self.showImageView) {
-    imageSize = CGSizeExpandWithInsets([_imageView sizeThatFits:imagePaddedSize],
-                                       self.imagePadding);
+    imageSize =
+        CGSizeExpandWithInsets([_imageView sizeThatFits:imagePaddedSize], self.imagePadding);
   }
   if (self.showSelectedImageView) {
     selectedSize = CGSizeExpandWithInsets([_selectedImageView sizeThatFits:imagePaddedSize],

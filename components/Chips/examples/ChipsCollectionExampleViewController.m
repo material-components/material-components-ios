@@ -56,38 +56,12 @@
 - (NSArray *)titles {
   if (!_titles) {
     _titles = @[
-      @"Truffaut",
-      @"Farm-to-table",
-      @"XOXO",
-      @"Chillwave",
-      @"Fanny",
-      @"Pack",
-      @"Master",
-      @"Cleanse",
-      @"Small",
-      @"Batch",
-      @"Church-key",
-      @"Biodiesel",
-      @"Subway",
-      @"Tile",
-      @"Gentrify",
-      @"Humblebrag",
-      @"Drinking",
-      @"Vinegar",
-      @"Godard",
-      @"Pug",
-      @"Marfa",
-      @"Poutine",
-      @"Jianbing",
-      @"Fashion",
-      @"Axe",
-      @"Banjo",
-      @"Vegan",
-      @"Taxidermy",
-      @"Portland",
-      @"Irony",
-      @"Gastropub",
-      @"Truffaut"
+      @"Truffaut",  @"Farm-to-table", @"XOXO",     @"Chillwave",  @"Fanny",      @"Pack",
+      @"Master",    @"Cleanse",       @"Small",    @"Batch",      @"Church-key", @"Biodiesel",
+      @"Subway",    @"Tile",          @"Gentrify", @"Humblebrag", @"Drinking",   @"Vinegar",
+      @"Godard",    @"Pug",           @"Marfa",    @"Poutine",    @"Jianbing",   @"Fashion",
+      @"Axe",       @"Banjo",         @"Vegan",    @"Taxidermy",  @"Portland",   @"Irony",
+      @"Gastropub", @"Truffaut"
     ];
   }
   return _titles;

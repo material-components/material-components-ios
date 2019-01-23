@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialCollections.h"
 #import "supplemental/CollectionsContainerExample.h"
+#import "MaterialCollections.h"
 
 static const NSInteger kSectionCount = 2;
 static const NSInteger kSectionItemCount = 2;
@@ -21,7 +21,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 @implementation CollectionsContainerExample {
   MDCCollectionViewController *_collectionsController;
-  NSMutableArray <NSMutableArray *>*_content;
+  NSMutableArray<NSMutableArray *> *_content;
 }
 
 - (void)viewDidLoad {
@@ -86,9 +86,9 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Collections", @"Collections in a Container" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Collections", @"Collections in a Container" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

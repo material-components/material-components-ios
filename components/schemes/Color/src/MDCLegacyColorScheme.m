@@ -16,12 +16,12 @@
 
 @interface MDCBasicColorScheme ()
 
-@property (nonatomic, strong, nonnull) UIColor *primaryColor;
-@property (nonatomic, strong, nonnull) UIColor *primaryLightColor;
-@property (nonatomic, strong, nonnull) UIColor *primaryDarkColor;
-@property (nonatomic, strong, nonnull) UIColor *secondaryColor;
-@property (nonatomic, strong, nonnull) UIColor *secondaryLightColor;
-@property (nonatomic, strong, nonnull) UIColor *secondaryDarkColor;
+@property(nonatomic, strong, nonnull) UIColor *primaryColor;
+@property(nonatomic, strong, nonnull) UIColor *primaryLightColor;
+@property(nonatomic, strong, nonnull) UIColor *primaryDarkColor;
+@property(nonatomic, strong, nonnull) UIColor *secondaryColor;
+@property(nonatomic, strong, nonnull) UIColor *secondaryLightColor;
+@property(nonatomic, strong, nonnull) UIColor *secondaryDarkColor;
 
 @end
 

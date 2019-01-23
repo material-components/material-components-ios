@@ -47,13 +47,15 @@ static const NSUInteger kRowCount = 22;
 
   if (indexPath.item % 3 == 2) {
     NSBundle *bundle = [NSBundle bundleForClass:[CollectionCellsTextWithImageController class]];
-    UIImage *cellImage =
-        [UIImage imageNamed:@"SixtyThreexSixtyThree" inBundle:bundle compatibleWithTraitCollection:nil];
+    UIImage *cellImage = [UIImage imageNamed:@"SixtyThreexSixtyThree"
+                                    inBundle:bundle
+               compatibleWithTraitCollection:nil];
     cell.imageView.image = cellImage;
   } else if (indexPath.item % 3 == 1) {
     NSBundle *bundle = [NSBundle bundleForClass:[CollectionCellsTextWithImageController class]];
-    UIImage *cellImage =
-        [UIImage imageNamed:@"FortyxForty" inBundle:bundle compatibleWithTraitCollection:nil];
+    UIImage *cellImage = [UIImage imageNamed:@"FortyxForty"
+                                    inBundle:bundle
+               compatibleWithTraitCollection:nil];
     cell.imageView.image = cellImage;
   } else {
     cell.imageView.image = nil;
@@ -73,9 +75,9 @@ static const NSUInteger kRowCount = 22;
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Collection Cells", @"Cell Text with Image Example" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Collection Cells", @"Cell Text with Image Example" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

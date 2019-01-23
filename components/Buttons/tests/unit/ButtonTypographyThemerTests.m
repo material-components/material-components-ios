@@ -14,8 +14,8 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialButtons.h"
 #import "MaterialButtons+TypographyThemer.h"
+#import "MaterialButtons.h"
 
 @interface ButtonTypographyThemerTests : XCTestCase
 @end
@@ -38,14 +38,12 @@
 
   // Then
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
-      UIControlStateHighlighted | UIControlStateDisabled;
+                                 UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     if ([button titleFontForState:state] != nil) {
       XCTAssertEqual([button titleFontForState:state], typographyScheme.button);
     }
   }
-
 }
 
-    
 @end

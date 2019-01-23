@@ -90,7 +90,7 @@ static const NSInteger kSupplementaryViewZIndex = 99;
 #pragma mark - UICollectionViewLayout (SubclassingHooks)
 
 - (NSArray<__kindof UICollectionViewLayoutAttributes *> *)layoutAttributesForElementsInRect:
-        (CGRect)rect {
+    (CGRect)rect {
   // If performing appearance animation, increase bounds height in order to retrieve additional
   // offscreen attributes needed during animation.
   rect = [self boundsForAppearanceAnimationWithInitialBounds:rect];
@@ -273,7 +273,7 @@ static const NSInteger kSupplementaryViewZIndex = 99;
 }
 
 - (UICollectionViewLayoutAttributes *)initialLayoutAttributesForAppearingItemAtIndexPath:
-        (NSIndexPath *)itemIndexPath {
+    (NSIndexPath *)itemIndexPath {
   UICollectionViewLayoutAttributes *attr =
       [[super initialLayoutAttributesForAppearingItemAtIndexPath:itemIndexPath] copy];
   // Adding new section or item.
@@ -305,7 +305,7 @@ static const NSInteger kSupplementaryViewZIndex = 99;
 }
 
 - (UICollectionViewLayoutAttributes *)finalLayoutAttributesForDisappearingItemAtIndexPath:
-        (NSIndexPath *)itemIndexPath {
+    (NSIndexPath *)itemIndexPath {
   UICollectionViewLayoutAttributes *attr =
       [[super finalLayoutAttributesForDisappearingItemAtIndexPath:itemIndexPath] copy];
   // Deleting section or item.
@@ -339,7 +339,7 @@ static const NSInteger kSupplementaryViewZIndex = 99;
 #pragma mark - Header/Footer Caching
 
 - (void)storeSupplementaryViewsWithAttributes:
-        (NSArray<__kindof UICollectionViewLayoutAttributes *> *)attributes {
+    (NSArray<__kindof UICollectionViewLayoutAttributes *> *)attributes {
   _headerSections = [NSMutableIndexSet indexSet];
   _footerSections = [NSMutableIndexSet indexSet];
 
@@ -392,7 +392,7 @@ static const NSInteger kSupplementaryViewZIndex = 99;
 }
 
 - (MDCCollectionViewLayoutAttributes *)updateSupplementaryViewAttribute:
-        (MDCCollectionViewLayoutAttributes *)attr {
+    (MDCCollectionViewLayoutAttributes *)attr {
   // In vertical scrolling, supplementary views only respect their height and ignore their width
   // value. The opposite is true for horizontal scrolling. Therefore we must manually set insets
   // on both the backgroundView and contentView in order to match the insets of the collection
@@ -451,7 +451,7 @@ static const NSInteger kSupplementaryViewZIndex = 99;
 }
 
 - (MDCCollectionViewOrdinalPosition)ordinalPositionForListElementWithAttribute:
-        (MDCCollectionViewLayoutAttributes *)attr {
+    (MDCCollectionViewLayoutAttributes *)attr {
   // Returns the ordinal position of cells and supplementary views within a list layout. This is
   // used to determine the layout attributes applied to their styling.
   MDCCollectionViewOrdinalPosition position = 0;
@@ -464,15 +464,15 @@ static const NSInteger kSupplementaryViewZIndex = 99;
   BOOL hasSectionItems = [self numberOfItemsInSection:indexPath.section] > 0;
 
   BOOL hidesHeaderBackground = NO;
-  if ([self.styler.delegate
-          respondsToSelector:@selector(collectionView:shouldHideHeaderBackgroundForSection:)]) {
+  if ([self.styler.delegate respondsToSelector:@selector(collectionView:
+                                                   shouldHideHeaderBackgroundForSection:)]) {
     hidesHeaderBackground = [self.styler.delegate collectionView:self.styler.collectionView
                             shouldHideHeaderBackgroundForSection:indexPath.section];
   }
 
   BOOL hidesFooterBackground = NO;
-  if ([self.styler.delegate
-          respondsToSelector:@selector(collectionView:shouldHideFooterBackgroundForSection:)]) {
+  if ([self.styler.delegate respondsToSelector:@selector(collectionView:
+                                                   shouldHideFooterBackgroundForSection:)]) {
     hidesFooterBackground = [self.styler.delegate collectionView:self.styler.collectionView
                             shouldHideFooterBackgroundForSection:indexPath.section];
   }
@@ -504,7 +504,7 @@ static const NSInteger kSupplementaryViewZIndex = 99;
 }
 
 - (MDCCollectionViewOrdinalPosition)ordinalPositionForGridElementWithAttribute:
-        (MDCCollectionViewLayoutAttributes *)attr {
+    (MDCCollectionViewLayoutAttributes *)attr {
   // Returns the ordinal position of cells and supplementary views within a grid layout. This is
   // used to determine the layout attributes applied to their styling.
   MDCCollectionViewOrdinalPosition position = 0;
@@ -552,8 +552,8 @@ static const NSInteger kSupplementaryViewZIndex = 99;
           (id<MDCCollectionViewEditingDelegate>)self.collectionView.dataSource;
 
       // Check if delegate can select during editing.
-      if ([editingDelegate respondsToSelector:@selector
-                           (collectionView:canSelectItemDuringEditingAtIndexPath:)]) {
+      if ([editingDelegate respondsToSelector:@selector(collectionView:
+                                                  canSelectItemDuringEditingAtIndexPath:)]) {
         attr.shouldShowSelectorStateMask = [editingDelegate collectionView:self.collectionView
                                      canSelectItemDuringEditingAtIndexPath:attr.indexPath];
       }
@@ -648,7 +648,7 @@ static const NSInteger kSupplementaryViewZIndex = 99;
 }
 
 - (void)addInfoBarAttributesIfNecessary:
-        (NSMutableArray<__kindof UICollectionViewLayoutAttributes *> *)attributes {
+    (NSMutableArray<__kindof UICollectionViewLayoutAttributes *> *)attributes {
   if (self.editor.isEditing && [attributes count] > 0) {
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
 
@@ -668,7 +668,7 @@ static const NSInteger kSupplementaryViewZIndex = 99;
 }
 
 - (void)addDecorationViewIfNecessary:
-        (NSMutableArray<__kindof UICollectionViewLayoutAttributes *> *)attributes {
+    (NSMutableArray<__kindof UICollectionViewLayoutAttributes *> *)attributes {
   // If necessary, adds a decoration view to a section drawn below its items. This will only happen
   // for a grid layout when it is either A) grouped-style or B) card-style with zero padding. When
   // this happens, the background for those items will not be drawn, and instead this decoration
@@ -735,7 +735,7 @@ static const NSInteger kSupplementaryViewZIndex = 99;
 }
 
 - (void)beginCellAppearanceAnimationIfNecessary:
-        (NSMutableArray<__kindof UICollectionViewLayoutAttributes *> *)attributes {
+    (NSMutableArray<__kindof UICollectionViewLayoutAttributes *> *)attributes {
   // Here we want to assign a delay to each attribute such that the animation will fade-in from the
   // top downwards in a staggered manner. However, the array of attributes we receive here are not
   // in the correct order and must be sorted and re-ordered to properly assign these delays.

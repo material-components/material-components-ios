@@ -18,9 +18,9 @@
 
 #import "TabBarViewControllerExampleSupplemental.h"
 
-#import "MaterialAppBar.h"
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar+TypographyThemer.h"
+#import "MaterialAppBar.h"
 #import "MaterialButtons.h"
 #import "MaterialPalettes.h"
 
@@ -48,7 +48,7 @@
 
 @property(nonatomic) MDCAppBarViewController *appBarViewController;
 @property(nonatomic) UILabel *titleLabel;
-@property(nonatomic) CGRect buttonFrame; // The desired frame of the button
+@property(nonatomic) CGRect buttonFrame;  // The desired frame of the button
 @property(nonatomic) MDCButton *button;
 @property(nonatomic, copy) MDCButtonActionBlock buttonActionBlock;
 
@@ -130,8 +130,8 @@
   self.buttonFrame = CGRectStandardize(frame);
   self.buttonActionBlock = actionBlock;
   [button addTarget:self
-             action:@selector(triggerButtonActionHandler)
-   forControlEvents:UIControlEventTouchUpInside];
+                action:@selector(triggerButtonActionHandler)
+      forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)triggerButtonActionHandler {
@@ -155,8 +155,8 @@
   buttonScheme.colorScheme = self.colorScheme;
   buttonScheme.typographyScheme = self.typographyScheme;
 
-  TBVCSampleViewController *child1 =
-      [TBVCSampleViewController sampleWithTitle:@"One" color:UIColor.redColor];
+  TBVCSampleViewController *child1 = [TBVCSampleViewController sampleWithTitle:@"One"
+                                                                         color:UIColor.redColor];
 
   UIColor *blue = [UIColor colorWithRed:0x3A / 255.f green:0x56 / 255.f blue:0xFF / 255.f alpha:1];
   TBVCSampleViewController *child2 = [TBVCSampleViewController sampleWithTitle:@"Two" color:blue];
@@ -167,16 +167,19 @@
                     actionBlock:^{
                       TabBarViewControllerExample *strongSelf = weakSelf;
                       TBVCSampleViewController *vc =
-                      [TBVCSampleViewController sampleWithTitle:@"Push&Hide" color:UIColor.grayColor];
+                          [TBVCSampleViewController sampleWithTitle:@"Push&Hide"
+                                                              color:UIColor.grayColor];
                       vc.colorScheme = strongSelf.colorScheme;
                       vc.typographyScheme = strongSelf.typographyScheme;
                       [strongSelf.navigationController pushViewController:vc animated:YES];
                     }];
 
-  UIImage *starImage =
-      [UIImage imageNamed:@"TabBarDemo_ic_star" inBundle:bundle compatibleWithTraitCollection:nil];
-  TBVCSampleViewController *child3 =
-      [TBVCSampleViewController sampleWithTitle:@"Three" color:UIColor.blueColor icon:starImage];
+  UIImage *starImage = [UIImage imageNamed:@"TabBarDemo_ic_star"
+                                  inBundle:bundle
+             compatibleWithTraitCollection:nil];
+  TBVCSampleViewController *child3 = [TBVCSampleViewController sampleWithTitle:@"Three"
+                                                                         color:UIColor.blueColor
+                                                                          icon:starImage];
   [child3 setMDCButtonWithFrame:CGRectMake(10, 120, 300, 40)
                    buttonScheme:buttonScheme
                           title:@"Toggle Tab Bar"
@@ -199,9 +202,9 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Tab Bar", @"TabBarViewController" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Tab Bar", @"TabBarViewController" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

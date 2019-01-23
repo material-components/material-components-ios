@@ -134,9 +134,9 @@ static CGFloat _underlineHeightNormalLegacyDefault =
   }
 
   textInsets.top = MDCTextInputControllerLegacyDefaultVerticalPadding +
-  MDCRint(self.textInput.placeholderLabel.font.lineHeight *
-          (CGFloat)self.floatingPlaceholderScale.floatValue) +
-  MDCTextInputControllerLegacyDefaultVerticalHalfPadding;
+                   MDCRint(self.textInput.placeholderLabel.font.lineHeight *
+                           (CGFloat)self.floatingPlaceholderScale.floatValue) +
+                   MDCTextInputControllerLegacyDefaultVerticalHalfPadding;
   return textInsets;
 }
 
@@ -158,7 +158,7 @@ static CGFloat _underlineHeightNormalLegacyDefault =
 
   CGFloat placeholderWidth =
       [self.textInput.placeholderLabel systemLayoutSizeFittingSize:UILayoutFittingCompressedSize]
-      .width;
+          .width;
   if (placeholderWidth > placeholderMaxWidth) {
     placeholderWidth = placeholderMaxWidth;
   }
