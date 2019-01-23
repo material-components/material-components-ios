@@ -73,7 +73,7 @@ You will now have a local `release-candidate` branch, a new section in CHANGELOG
 
 #### Create a Pull Request for the Release Branch
 
-If you have not clicked [the
+If you have not clicked [the release candidate pull request comparison
 link](https://github.com/material-components/material-components-ios/compare/stable...release-candidate)
 provided in the script do so now.
 
