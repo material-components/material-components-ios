@@ -99,6 +99,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 }
 
 - (void)commonItemBarInit {
+  self.clipsToBounds=YES;
   _alignment = MDCItemBarAlignmentLeading;
   _style = [[MDCItemBarStyle alloc] init];
   _items = @[];
