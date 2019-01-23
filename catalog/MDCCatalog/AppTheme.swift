@@ -16,15 +16,24 @@ import Foundation
 import MaterialComponents.MaterialButtons_ButtonThemer
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialTypographyScheme
+import MaterialComponentsBeta.MaterialContainerScheme
 
 final class AppTheme {
-  let colorScheme: MDCColorScheming
-  let typographyScheme: MDCTypographyScheming
+  let containerScheme: MDCContainerScheme
   let buttonScheme: MDCButtonScheming
 
+  var colorScheme: MDCColorScheming {
+    return containerScheme.colorScheme ?? AppTheme.defaultColorScheme
+  }
+
+  var typographyScheme: MDCTypographyScheming {
+    return containerScheme.typographyScheme ?? AppTheme.defaultTypographyScheme
+  }
+
   init(colorScheme: MDCColorScheming, typographyScheme: MDCTypographyScheming) {
-    self.colorScheme = colorScheme
-    self.typographyScheme = typographyScheme
+    self.containerScheme = MDCContainerScheme()
+    self.containerScheme.colorScheme = colorScheme as? MDCSemanticColorScheme
+    self.containerScheme.typographyScheme = typographyScheme as? MDCTypographyScheme
     let buttonScheme = MDCButtonScheme()
     buttonScheme.colorScheme = colorScheme
     buttonScheme.typographyScheme = typographyScheme
@@ -32,6 +41,11 @@ final class AppTheme {
   }
 
   static let defaultTheme: AppTheme = {
+    return AppTheme(colorScheme: defaultColorScheme,
+                    typographyScheme: defaultTypographyScheme)
+  }()
+
+  static var defaultColorScheme: MDCSemanticColorScheme = {
     let colorScheme = MDCSemanticColorScheme()
     colorScheme.primaryColor =  UIColor(red: CGFloat(0x21) / 255.0,
                                         green: CGFloat(0x21) / 255.0,
@@ -42,11 +56,15 @@ final class AppTheme {
                                          green: CGFloat(0xE6) / 255.0,
                                          blue: CGFloat(0x76) / 255.0,
                                          alpha: 1)
+    return colorScheme
+  }()
+
+  static var defaultTypographyScheme: MDCTypographyScheme = {
     let typographyScheme = MDCTypographyScheme()
     typographyScheme.headline1 = UIFont.systemFont(ofSize: 20)
     typographyScheme.headline2 = UIFont.systemFont(ofSize: 18)
     typographyScheme.headline3 = UIFont.systemFont(ofSize: 15)
-    return AppTheme(colorScheme: colorScheme, typographyScheme: typographyScheme)
+    return typographyScheme
   }()
 
   static var globalTheme: AppTheme = defaultTheme {
