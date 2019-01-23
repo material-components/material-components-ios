@@ -217,8 +217,8 @@ Commit the results to your branch:
     
 Update the PR title to the release version. The format is typically "vX.Y.Z" (*e.g.*, v72.0.1). 
 Once this is done, send the PR out for review. Add "material-components/core-ios-team" to the 
-list of Reviewers. Also add anyone else you think might need to review a particular set of 
-changes either in the release candidate or that you've made to fix internal test failures.
+list of Reviewers. Also add anyone else you think might need to review specific changes in the 
+release candidate.
 
 #### Verify CocoaPods podspec and trunk access
 
