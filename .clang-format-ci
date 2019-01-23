@@ -19,7 +19,7 @@ set -e
 
 # The tagged version of https://github.com/material-foundation/clang-format-ci to check out.
 # A * wildcard can be used to check out the latest release of a given version.
-CLANG_FORMAT_CI_VERSION="v1.*"
+CLANG_FORMAT_CI_VERSION="v1.0.0"
 
 CLANG_FORMAT_CI_SRC_DIR=".clang-format-ci-src"
 
