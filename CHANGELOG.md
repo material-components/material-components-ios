@@ -1,18 +1,42 @@
-# #develop#
+# 75.0.0
 
-Replace this text with a summarized description of this release's contents.
+This major release includes a change to the behavior of MDCButton's
+`borderWidthForState:` API and the behavior of MDCSnackbarManager's
+`shouldEnableAccessibilityViewIsModal` property. Improved support for [the
+bazel build system](https://bazel.build/) is introduced for several
+components.
+
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+MDCButton's `borderWidthForState:` behavior now matches that of UIButton's
+`forState:` properties. Any state without an explicitly-set value will
+fall-back to the value for the `UIControlStateNormal` state. This does not
+change the appearance of MDCButton, but does change the values returned by the
+API.
 
-Replace this text with links to deprecation guides.
+
 ## New features
 
-Replace this text with example code for each new feature.
-## API changes
+MDCSnackbarManager's `shouldEnableAccessibilityViewIsModal` was previously
+used to determine the value of a snackbar view's `accessibilityViewIsModal`
+property. Clients can now use the MDCSnackbarManagerDelegate API
+`-willPresentSnackbarWithMessageView:` to override the view's
+`accessibilityViewIsModal` for each Snackbar. This value is propagated to the
+scrim view to ensure that modality is correctly configured for Snackbars.
 
-## Component changes
+```objc
+@implementation MySnackbarManagerDelegate
+
+- (void)willPresentSnackbarWithMessageView:(MDCSnackbarMessageView *)messageView {
+  // All Snackbars with an action are "modal" for UIAccessibility
+  if (messageView.actionButtons.count > 0) {
+    messageView.accessibilityViewIsModal = YES;
+  }
+}
+
+@end
+```
 
 ## Changes
 
@@ -96,6 +120,7 @@ Replace this text with example code for each new feature.
 * [Add Swift examples to bazel (#6430)](https://github.com/material-components/material-components-ios/commit/6d27b469fe5f67e77f3106b26ed27f6978a65800) (Robert Moore)
 * [Add TextField examples to BUILD file (#6397)](https://github.com/material-components/material-components-ios/commit/8d7cd295ecc3bee6c5e9a4e84cd85ab987878a6e) (Andrew Overton)
 * [Add experimental examples to bazel. (#6436)](https://github.com/material-components/material-components-ios/commit/ab9cc0f4d7c8c53d7626b76b8727daff936a57b6) (Robert Moore)
+* [Fix "gap" in outline when placeholder is empty. (#6322)](https://github.com/material-components/material-components-ios/commit/88de3a4fc32d5611a166189a31fcf8817d26aa87) (Robert Moore)
 
 ### Typography
 
@@ -111,7 +136,6 @@ Replace this text with example code for each new feature.
 
 ## Multi-component changes
 
-* [Fix "gap" in outline when placeholder is empty. (#6322)](https://github.com/material-components/material-components-ios/commit/88de3a4fc32d5611a166189a31fcf8817d26aa87) (Robert Moore)
 * [{bazel} Ran `buildifier` on all BUILD files (#6345)](https://github.com/material-components/material-components-ios/commit/07ef7f89e042cca865ba2d8d2125a5eab44581da) (Robert Moore)
 
 ---
