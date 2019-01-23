@@ -146,11 +146,8 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   [self addSubview:_itemBar];
 
   CGFloat dividerTop = CGRectGetMaxY(self.bounds) - kBottomNavigationBarDividerHeight;
-  _dividerBar =
-      [[UIView alloc] initWithFrame:CGRectMake(0,
-                                               dividerTop,
-                                               CGRectGetWidth(self.bounds),
-                                               kBottomNavigationBarDividerHeight)];
+  _dividerBar = [[UIView alloc] initWithFrame:CGRectMake(0, dividerTop, CGRectGetWidth(self.bounds),
+                                                         kBottomNavigationBarDividerHeight)];
   _dividerBar.autoresizingMask =
       UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
   _dividerBar.backgroundColor = _bottomDividerColor;

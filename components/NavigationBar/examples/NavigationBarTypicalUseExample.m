@@ -14,8 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialNavigationBar.h"
 #import "MaterialNavigationBar+ColorThemer.h"
+#import "MaterialNavigationBar.h"
 #import "supplemental/NavigationBarTypicalUseExampleSupplemental.h"
 
 @interface NavigationBarTypicalUseExample ()
@@ -34,7 +34,7 @@
 }
 
 - (void)viewDidLoad {
-  [super viewDidLoad]; 
+  [super viewDidLoad];
   self.view.backgroundColor = [UIColor whiteColor];
 
   self.title = @"Navigation Bar";
@@ -54,7 +54,8 @@
   self.navBar.translatesAutoresizingMaskIntoConstraints = NO;
 
   if (@available(iOS 11.0, *)) {
-    [self.view.safeAreaLayoutGuide.topAnchor constraintEqualToAnchor:self.navBar.topAnchor].active = YES;
+    [self.view.safeAreaLayoutGuide.topAnchor constraintEqualToAnchor:self.navBar.topAnchor].active =
+        YES;
   } else {
     [NSLayoutConstraint constraintWithItem:self.topLayoutGuide
                                  attribute:NSLayoutAttributeBottom
@@ -62,17 +63,18 @@
                                     toItem:self.navBar
                                  attribute:NSLayoutAttributeTop
                                 multiplier:1.0
-                                  constant:0].active = YES;
+                                  constant:0]
+        .active = YES;
   }
-  
+
   NSDictionary *viewsBindings = NSDictionaryOfVariableBindings(_navBar);
 
   [NSLayoutConstraint
-   activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_navBar]|"
-                                                               options:0
-                                                               metrics:nil
-                                                                 views:viewsBindings]];
-  
+      activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_navBar]|"
+                                                                  options:0
+                                                                  metrics:nil
+                                                                    views:viewsBindings]];
+
   [self setupExampleViews];
 }
 

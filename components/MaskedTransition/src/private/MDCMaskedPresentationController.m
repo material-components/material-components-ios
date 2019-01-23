@@ -17,8 +17,8 @@
 
 #import "MDCMaskedPresentationController.h"
 
-#import <MotionTransitioning/MotionTransitioning.h>
 #import <MotionAnimator/MotionAnimator.h>
+#import <MotionTransitioning/MotionTransitioning.h>
 
 #import "MDCMaskedTransitionMotionForContext.h"
 
@@ -29,14 +29,15 @@
 
 - (instancetype)initWithPresentedViewController:(UIViewController *)presentedViewController
                        presentingViewController:(UIViewController *)presentingViewController
-                  calculateFrameOfPresentedView:(CGRect (^)(UIPresentationController *))calculateFrameOfPresentedView
+                  calculateFrameOfPresentedView:
+                      (CGRect (^)(UIPresentationController *))calculateFrameOfPresentedView
                                      sourceView:(UIView *)sourceView {
   self = [super initWithPresentedViewController:presentedViewController
                        presentingViewController:presentingViewController];
   if (self) {
     _scrimView = [[UIView alloc] init];
-    _scrimView.autoresizingMask = (UIViewAutoresizingFlexibleWidth
-                                   | UIViewAutoresizingFlexibleHeight);
+    _scrimView.autoresizingMask =
+        (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     _scrimView.backgroundColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.3];
 
     _calculateFrameOfPresentedView = [calculateFrameOfPresentedView copy];
@@ -94,7 +95,8 @@
     [self.presentedViewController.transitionCoordinator
         animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
           self.scrimView.alpha = 0;
-        } completion:nil];
+        }
+                        completion:nil];
 
   } else {
     MDCMaskedTransitionMotionTiming motionTiming = motionSpecification.collapse;

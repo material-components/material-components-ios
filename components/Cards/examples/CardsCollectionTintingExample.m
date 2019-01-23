@@ -52,7 +52,6 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   // Register cell classes
   [self.collectionView registerClass:[CardTintExampleCell class]
           forCellWithReuseIdentifier:kReusableIdentifierItem];
-
 }
 
 #pragma mark <UICollectionViewDataSource>
@@ -79,8 +78,8 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 #pragma mark - <UICollectionViewDelegateFlowLayout>
 
 - (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout *)collectionViewLayout
-  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+                    layout:(UICollectionViewLayout *)collectionViewLayout
+    sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
   CGFloat cardSize = (self.view.bounds.size.width / 3) - 12;
   return CGSizeMake(cardSize, cardSize);
 }
@@ -92,14 +91,14 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView
-                   layout:(UICollectionViewLayout*)collectionViewLayout
-minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+                                 layout:(UICollectionViewLayout *)collectionViewLayout
+    minimumLineSpacingForSectionAtIndex:(NSInteger)section {
   return 8;
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView
-                   layout:(UICollectionViewLayout*)collectionViewLayout
-minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+                                      layout:(UICollectionViewLayout *)collectionViewLayout
+    minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
   return 8;
 }
 
@@ -107,9 +106,9 @@ minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Cards", @"Collection Card Tinting" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Cards", @"Collection Card Tinting" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

@@ -14,8 +14,8 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialButtons.h"
 #import "MaterialButtons+ButtonThemer.h"
+#import "MaterialButtons.h"
 #import "MaterialColorScheme.h"
 #import "MaterialPalettes.h"
 #import "MaterialTypographyScheme.h"
@@ -78,8 +78,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
                         [scheme.colorScheme.primaryColor colorWithAlphaComponent:(CGFloat)0.16]);
   XCTAssertEqualObjects([button borderColorForState:UIControlStateNormal],
                         [scheme.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.12]);
-  XCTAssertEqualObjects([button borderColorForState:UIControlStateDisabled],
-                        nil);
+  XCTAssertEqualObjects([button borderColorForState:UIControlStateDisabled], nil);
 
   // Typography
   XCTAssertEqualObjects([button titleFontForState:UIControlStateNormal],

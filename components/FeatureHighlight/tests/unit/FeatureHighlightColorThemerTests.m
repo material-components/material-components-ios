@@ -12,15 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
-#import "MaterialFeatureHighlight.h"
 #import "MaterialFeatureHighlight+ColorThemer.h"
+#import "MaterialFeatureHighlight.h"
 
 #import <XCTest/XCTest.h>
 
 @interface FeatureHighlightColorThemerTests : XCTestCase
-@property (nonatomic, strong) UIView *highlightedView;
-@property (nonatomic, strong) UIView *showView;
+@property(nonatomic, strong) UIView *highlightedView;
+@property(nonatomic, strong) UIView *showView;
 @end
 
 @implementation FeatureHighlightColorThemerTests

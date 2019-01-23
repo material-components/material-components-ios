@@ -31,10 +31,8 @@
   // Then
   XCTAssertTrue(inkView.usesLegacyInkRipple);
   XCTAssertFalse(inkView.usesCustomInkCenter);
-  XCTAssertTrue(CGPointEqualToPoint(inkView.customInkCenter, CGPointZero),
-                @"%@ is not equal to %@",
-                NSStringFromCGPoint(inkView.customInkCenter),
-                NSStringFromCGPoint(CGPointZero));
+  XCTAssertTrue(CGPointEqualToPoint(inkView.customInkCenter, CGPointZero), @"%@ is not equal to %@",
+                NSStringFromCGPoint(inkView.customInkCenter), NSStringFromCGPoint(CGPointZero));
   XCTAssertNil(inkView.animationDelegate);
   XCTAssertEqualObjects(inkView.inkColor, inkView.defaultInkColor);
   XCTAssertEqual(inkView.inkStyle, MDCInkStyleBounded);
@@ -54,7 +52,6 @@
   inkViewRadiusThenStyle.maxRippleRadius = 12;
   inkViewRadiusThenStyle.inkStyle = MDCInkStyleUnbounded;
 
-
   // Then
   XCTAssertEqualWithAccuracy(inkViewStyleThenRadius.maxRippleRadius, 12, 0.0001);
   XCTAssertEqualWithAccuracy(inkViewRadiusThenStyle.maxRippleRadius, 12, 0.0001);
@@ -72,7 +69,6 @@
   inkViewStyleThenRadius.maxRippleRadius = 12;
   inkViewRadiusThenStyle.maxRippleRadius = 12;
   inkViewRadiusThenStyle.inkStyle = MDCInkStyleUnbounded;
-
 
   // Then
   XCTAssertEqualWithAccuracy(inkViewStyleThenRadius.maxRippleRadius, 12, 0.0001);
@@ -92,7 +88,6 @@
   inkViewRadiusThenStyle.maxRippleRadius = 12;
   inkViewRadiusThenStyle.inkStyle = MDCInkStyleBounded;
 
-
   // Then
   XCTAssertEqualWithAccuracy(inkViewStyleThenRadius.maxRippleRadius, 0, 0.0001);
   XCTAssertEqualWithAccuracy(inkViewRadiusThenStyle.maxRippleRadius, 0, 0.0001);
@@ -110,7 +105,6 @@
   inkViewStyleThenRadius.maxRippleRadius = 12;
   inkViewRadiusThenStyle.maxRippleRadius = 12;
   inkViewRadiusThenStyle.inkStyle = MDCInkStyleBounded;
-
 
   // Then
   XCTAssertEqualWithAccuracy(inkViewStyleThenRadius.maxRippleRadius, 12, 0.0001);

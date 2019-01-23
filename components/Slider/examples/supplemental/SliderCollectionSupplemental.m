@@ -23,10 +23,10 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Slider", @"Slider" ],
-    @"description": @"Sliders allow users to make selections from a range of values.",
-    @"primaryDemo": @YES,
-    @"presentable": @YES,
+    @"breadcrumbs" : @[ @"Slider", @"Slider" ],
+    @"description" : @"Sliders allow users to make selections from a range of values.",
+    @"primaryDemo" : @YES,
+    @"presentable" : @YES,
   };
 }
 

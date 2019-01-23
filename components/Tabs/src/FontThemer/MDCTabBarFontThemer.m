@@ -16,8 +16,7 @@
 
 @implementation MDCTabBarFontThemer
 
-+ (void)applyFontScheme:(id<MDCFontScheme>)fontScheme
-               toTabBar:(MDCTabBar *)tabBar {
++ (void)applyFontScheme:(id<MDCFontScheme>)fontScheme toTabBar:(MDCTabBar *)tabBar {
   tabBar.selectedItemTitleFont = fontScheme.button;
   tabBar.unselectedItemTitleFont = fontScheme.button;
 }

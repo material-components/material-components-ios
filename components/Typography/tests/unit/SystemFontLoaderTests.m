@@ -30,8 +30,8 @@
   if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wpartial-availability"
-    XCTAssertEqual([fontLoader lightFontOfSize:size],
-                   [UIFont systemFontOfSize:size weight:UIFontWeightLight]);
+    XCTAssertEqual([fontLoader lightFontOfSize:size], [UIFont systemFontOfSize:size
+                                                                        weight:UIFontWeightLight]);
     XCTAssertEqual([fontLoader regularFontOfSize:size],
                    [UIFont systemFontOfSize:size weight:UIFontWeightRegular]);
     XCTAssertEqual([fontLoader mediumFontOfSize:size],
@@ -41,11 +41,11 @@
 #pragma clang diagnostic pop
   } else {
     // Fallback on earlier versions
-    XCTAssertEqual([fontLoader lightFontOfSize:size],
-                   [UIFont fontWithName:@"HelveticaNeue-Light" size:size]);
+    XCTAssertEqual([fontLoader lightFontOfSize:size], [UIFont fontWithName:@"HelveticaNeue-Light"
+                                                                      size:size]);
     XCTAssertEqual([fontLoader regularFontOfSize:size], [UIFont systemFontOfSize:size]);
-    XCTAssertEqual([fontLoader mediumFontOfSize:size],
-                   [UIFont fontWithName:@"HelveticaNeue-Medium" size:size]);
+    XCTAssertEqual([fontLoader mediumFontOfSize:size], [UIFont fontWithName:@"HelveticaNeue-Medium"
+                                                                       size:size]);
     XCTAssertEqual([fontLoader boldFontOfSize:size], [UIFont boldSystemFontOfSize:size]);
   }
   UIFontDescriptor *fontDescriptorWithBoldItalic = [[UIFont systemFontOfSize:size].fontDescriptor

@@ -68,4 +68,3 @@ static NSString *const MDCCutCornerTreatmentCutKey = @"MDCCutCornerTreatmentCutK
 }
 
 @end
-

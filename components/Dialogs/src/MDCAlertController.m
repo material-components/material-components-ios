@@ -84,7 +84,6 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 @end
 
 @implementation MDCAlertController {
-
   // This is because title is overlapping with view controller title, However Apple alertController
   // redefines title as well.
   NSString *_alertTitle;
@@ -94,11 +93,10 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   BOOL _mdc_adjustsFontForContentSizeCategory;
 }
 
-
 + (instancetype)alertControllerWithTitle:(nullable NSString *)alertTitle
                                  message:(nullable NSString *)message {
-  MDCAlertController *alertController =
-      [[MDCAlertController alloc] initWithTitle:alertTitle message:message];
+  MDCAlertController *alertController = [[MDCAlertController alloc] initWithTitle:alertTitle
+                                                                          message:message];
 
   return alertController;
 }
@@ -143,7 +141,6 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
     self.alertView.titleLabel.text = title;
     self.preferredContentSize =
         [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
-
   }
 }
 
@@ -323,11 +320,12 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   // We call our action.completionHandler after we dismiss the existing alert in case the handler
   // also presents a view controller. Otherwise we get a warning about presenting on a controller
   // which is already presenting.
-  [self.presentingViewController dismissViewControllerAnimated:YES completion:^(void){
-    if (action.completionHandler) {
-      action.completionHandler(action);
-    }
-  }];
+  [self.presentingViewController dismissViewControllerAnimated:YES
+                                                    completion:^(void) {
+                                                      if (action.completionHandler) {
+                                                        action.completionHandler(action);
+                                                      }
+                                                    }];
 }
 
 #pragma mark - UIViewController
@@ -355,12 +353,9 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
   NSString *key =
       kMaterialDialogsStringTable[kStr_MaterialDialogsPresentedAccessibilityAnnouncement];
-  NSString *announcement = NSLocalizedStringFromTableInBundle(key,
-                                                              kMaterialDialogsStringsTableName,
-                                                              [[self class] bundle],
-                                                              @"Alert");
-  UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification,
-                                  announcement);
+  NSString *announcement = NSLocalizedStringFromTableInBundle(key, kMaterialDialogsStringsTableName,
+                                                              [[self class] bundle], @"Alert");
+  UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, announcement);
 }
 
 - (void)setupAlertView {
@@ -403,8 +398,8 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   if (CGRectGetWidth(self.view.bounds) != _previousLayoutSize.width ||
       CGRectGetHeight(self.view.bounds) != _previousLayoutSize.height) {
     CGSize currentPreferredContentSize = self.preferredContentSize;
-    CGSize calculatedPreferredContentSize =
-    [self.alertView calculatePreferredContentSizeForBounds:CGRectStandardize(self.alertView.bounds).size];
+    CGSize calculatedPreferredContentSize = [self.alertView
+        calculatePreferredContentSizeForBounds:CGRectStandardize(self.alertView.bounds).size];
 
     if (!CGSizeEqualToSize(currentPreferredContentSize, calculatedPreferredContentSize)) {
       // NOTE: Setting the preferredContentSize can lead to a change to self.view.bounds.
@@ -460,13 +455,14 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
        withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
   [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 
-  [coordinator animateAlongsideTransition:
-      ^(__unused id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
+  [coordinator
+      animateAlongsideTransition:^(
+          __unused id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
         // Reset preferredContentSize on viewWIllTransition to take advantage of additional width
         self.preferredContentSize =
             [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
       }
-                               completion:nil];
+                      completion:nil];
 }
 
 #pragma mark - UIAccessibilityAction

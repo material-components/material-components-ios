@@ -16,7 +16,7 @@
 #import "MaterialSnackbar+ColorThemer.h"
 #import "MaterialSnackbar+TypographyThemer.h"
 
-static NSString * const kCellIdentifier = @"Cell";
+static NSString *const kCellIdentifier = @"Cell";
 
 @implementation SnackbarExample
 
@@ -35,7 +35,6 @@ static NSString * const kCellIdentifier = @"Cell";
      numberOfItemsInSection:(NSInteger)section {
   return self.choices.count;
 }
-
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -56,11 +55,11 @@ static NSString * const kCellIdentifier = @"Cell";
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Snackbar", @"Snackbar" ],
-    @"description": @"Snackbars provide brief messages about app processes at the bottom of "
-    @"the screen.",
-    @"primaryDemo": @YES,
-    @"presentable": @YES,
+    @"breadcrumbs" : @[ @"Snackbar", @"Snackbar" ],
+    @"description" : @"Snackbars provide brief messages about app processes at the bottom of "
+                     @"the screen.",
+    @"primaryDemo" : @YES,
+    @"presentable" : @YES,
   };
 }
 
@@ -70,9 +69,9 @@ static NSString * const kCellIdentifier = @"Cell";
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Snackbar", @"Snackbar Overlay View" ],
-    @"primaryDemo": @NO,
-    @"presentable": @YES,
+    @"breadcrumbs" : @[ @"Snackbar", @"Snackbar Overlay View" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @YES,
   };
 }
 
@@ -82,9 +81,9 @@ static NSString * const kCellIdentifier = @"Cell";
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Snackbar", @"Snackbar Input Accessory" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Snackbar", @"Snackbar Input Accessory" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 
@@ -95,8 +94,8 @@ static NSString * const kCellIdentifier = @"Cell";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   MDCCollectionViewTextCell *cell =
-  [collectionView dequeueReusableCellWithReuseIdentifier:kCellIdentifier
-                                            forIndexPath:indexPath];
+      [collectionView dequeueReusableCellWithReuseIdentifier:kCellIdentifier
+                                                forIndexPath:indexPath];
 
   cell.textLabel.text = self.choices[indexPath.row];
   cell.isAccessibilityElement = YES;
@@ -124,9 +123,9 @@ static NSString * const kCellIdentifier = @"Cell";
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Snackbar", @"Snackbar Suspension" ],
-    @"primaryDemo": @NO,
-    @"presentable": @YES,
+    @"breadcrumbs" : @[ @"Snackbar", @"Snackbar Suspension" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @YES,
   };
 }
 
