@@ -18,8 +18,19 @@ gem_install() {
   gem install "$@" --no-document --quiet
 }
 
+brew_update() {
+  tmp_dir="$(mktemp -d)"
+  brew --version
+  brew update >> "$tmp_dir/brew_update_logs"
+  if [ "$?" -ne 0 ]; then
+    echo "brew update failed"
+    cat "$tmp_dir/brew_update_logs"
+  fi
+  brew --version
+}
+
 brew_install() {
-  HOMEBREW_NO_AUTO_UPDATE=1
+  brew_update
   brew install "$@"
 }
 
