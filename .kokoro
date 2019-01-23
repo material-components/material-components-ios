@@ -16,6 +16,7 @@
 
 # Fail on any error
 set -e
+set -o xtrace
 
 if [ -n "$KOKORO_BUILD_NUMBER" ]; then
   repo_dir='github/repo'
