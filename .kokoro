@@ -422,10 +422,12 @@ generate_website() {
   if [ -n "$KOKORO_BUILD_NUMBER" ]; then
     # Move into our cloned repo
     cd github/repo
+  fi
 
-    ./scripts/build_site.sh
+  ./scripts/build_site.sh
 
-    gem_install bundler
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    gem install bundler -v 1.14.6
     brew_install yarn --without-node
   fi
 
