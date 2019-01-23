@@ -1,3 +1,14 @@
+# 75.0.1
+
+This patch release reformats the entire code base to align to the latest
+Google Objective-C Style enforced by clang-format.
+
+## Multi-component changes
+
+* [{clang-format} Format the components. (#6347)](https://github.com/material-components/material-components-ios/commit/ef98eeafc13ff301ef1a363ed231b498b54d6abd) (Robert Moore)
+
+---
+
 # 75.0.0
 
 This major release includes a change to the behavior of MDCButton's
