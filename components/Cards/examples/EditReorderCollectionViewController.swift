@@ -70,10 +70,10 @@ class EditReorderCollectionViewController: UIViewController,
                                                           target: self,
                                                           action: #selector(toggleModes))
 
-      let longPressGesture = UILongPressGestureRecognizer(target: self,
-                                                          action: #selector(reorderCards(gesture:)))
-      longPressGesture.cancelsTouchesInView = false
-      collectionView.addGestureRecognizer(longPressGesture)
+//      let longPressGesture = UILongPressGestureRecognizer(target: self,
+//                                                          action: #selector(reorderCards(gesture:)))
+//      longPressGesture.cancelsTouchesInView = false
+//      collectionView.addGestureRecognizer(longPressGesture)
     }
 
     // randomly select images to display 30 items
@@ -139,6 +139,7 @@ class EditReorderCollectionViewController: UIViewController,
                       cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
+    cell.tag = indexPath.item;
     guard let cardCell = cell as? CardEditReorderCollectionCell else { return cell }
     cardCell.apply(containerScheme: containerScheme, typographyScheme: typographyScheme)
 
@@ -148,8 +149,9 @@ class EditReorderCollectionViewController: UIViewController,
 
     cardCell.isSelectable = (toggle == .edit)
     if self.dataSource[indexPath.item].selected {
-      collectionView.selectItem(at: indexPath, animated: true, scrollPosition: [])
-      cardCell.isSelected = true
+//      collectionView.selectItem(at: indexPath, animated: true, scrollPosition: [])
+//      print(indexPath.item)
+//      cardCell.isSelected = true
     }
 
     cardCell.isAccessibilityElement = true
@@ -160,6 +162,7 @@ class EditReorderCollectionViewController: UIViewController,
 
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     guard toggle == .edit else { return }
+    print(indexPath.item)
     dataSource[indexPath.item].selected = true
   }
 

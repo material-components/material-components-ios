@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import "MDCStatefulRippleView.h"
+#import "MDCRippleLayer.h"
 
 static const CGFloat kRippleAlpha = (CGFloat)0.16;
 static const CGFloat kRippleSelectedAlpha = (CGFloat)0.08;
@@ -22,9 +23,15 @@ static UIColor *RippleSelectedColor(void) {
   return [UIColor colorWithRed:(CGFloat)0.384 green:0 blue:(CGFloat)0.933 alpha:1];
 }
 
+@interface MDCStatefulRippleView ()
+@property(nonatomic, strong) MDCRippleLayer *activeRippleLayer;
+@end
+
 @implementation MDCStatefulRippleView {
   NSMutableDictionary<NSNumber *, UIColor *> *_rippleColors;
 }
+
+@dynamic activeRippleLayer;
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -92,6 +99,11 @@ static UIColor *RippleSelectedColor(void) {
 }
 
 - (void)setSelected:(BOOL)selected {
+  if (selected && self.activeRippleLayer == nil) {
+    NSLog(@"IM HERE HEHE");
+    [self updateRippleColor];
+    [self beginRippleTouchDownAtPoint:CGPointZero animated:NO completion:nil];
+  }
   if (selected == _selected) {
     return;
   }

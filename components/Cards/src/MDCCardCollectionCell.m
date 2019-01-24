@@ -185,7 +185,7 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
       [self updateCardCellVisuals];
     }];
   }
-  NSLog(@"selected: %d", selected);
+  NSLog(@"selected: %d for item: %ld", selected, (long)self.tag);
 }
 
 - (void)setCardHighlighted:(BOOL)cardHighlighted {
