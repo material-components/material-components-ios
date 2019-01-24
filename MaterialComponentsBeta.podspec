@@ -66,6 +66,19 @@ Pod::Spec.new do |mdc|
     extension.dependency "MaterialComponents/schemes/Typography"
   end
 
+  mdc.subspec "BottomNavigation" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/beta/*.h"
+    component.source_files = "components/#{component.base_name}/src/beta/*.{h,m}"
+    component.dependency "MaterialComponents/BottomNavigation"
+
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = [
+        "components/#{component.base_name}/tests/unit/beta/*.{h,m,swift}"
+      ]
+    end
+  end
+
   mdc.subspec "ButtonBar+Theming" do |extension|
     extension.ios.deployment_target = '8.0'
     extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
