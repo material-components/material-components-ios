@@ -14,6 +14,7 @@
 
 #import "supplemental/ChipsExamplesSupplemental.h"
 
+#import "MaterialChips+Theming.h"
 #import "MaterialChips.h"
 #import "MaterialSlider.h"
 
@@ -29,10 +30,17 @@
 
   self.view.backgroundColor = [UIColor whiteColor];
 
+  self.containerScheme = [[MDCContainerScheme alloc] init];
+  self.containerScheme.colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  self.containerScheme.shapeScheme = [[MDCShapeScheme alloc] init];
+  self.containerScheme.typographyScheme = [[MDCTypographyScheme alloc] init];
+
   _chipView = [[MDCChipView alloc] init];
   _chipView.titleLabel.text = @"Material";
   _chipView.imageView.image = [self faceImage];
   _chipView.accessoryView = [self deleteButton];
+  [_chipView applyThemeWithScheme:self.containerScheme];
   [self.view addSubview:_chipView];
 
   CGSize chipSize = [_chipView sizeThatFits:self.view.bounds.size];

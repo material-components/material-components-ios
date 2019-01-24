@@ -14,6 +14,7 @@
 
 #import "supplemental/ChipsExamplesSupplemental.h"
 
+#import "MaterialChips+Theming.h"
 #import "MaterialChips.h"
 
 @implementation ChipsCollectionExampleViewController
@@ -26,6 +27,10 @@
   self = [super initWithCollectionViewLayout:layout];
   if (self) {
     self.editing = YES;
+    self.containerScheme = [[MDCContainerScheme alloc] init];
+    self.containerScheme.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    self.containerScheme.typographyScheme = [[MDCTypographyScheme alloc] init];
   }
   return self;
 }
@@ -50,6 +55,7 @@
   MDCChipCollectionViewCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
   cell.chipView.titleLabel.text = self.titles[indexPath.row];
+  [cell.chipView applyThemeWithScheme:self.containerScheme];
   return cell;
 }
 

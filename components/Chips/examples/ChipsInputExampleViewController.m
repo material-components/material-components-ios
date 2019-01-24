@@ -29,31 +29,24 @@
 - (id)init {
   self = [super init];
   if (self) {
-    _colorScheme =
+    self.containerScheme = [[MDCContainerScheme alloc] init];
+    self.containerScheme.colorScheme =
         [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-    _typographyScheme = [[MDCTypographyScheme alloc] init];
-    _shapeScheme = [[MDCShapeScheme alloc] init];
+    self.containerScheme.typographyScheme = [[MDCTypographyScheme alloc] init];
+    self.containerScheme.shapeScheme = [[MDCShapeScheme alloc] init];
   }
   return self;
-}
-
-- (MDCContainerScheme *)containerScheme {
-  MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
-  scheme.colorScheme = self.colorScheme;
-  scheme.shapeScheme = self.shapeScheme;
-  scheme.typographyScheme = self.typographyScheme;
-  return scheme;
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.view.backgroundColor = self.colorScheme.backgroundColor;
+  self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
 
   _chipField = [[MDCChipField alloc] initWithFrame:CGRectZero];
   _chipField.delegate = self;
   _chipField.textField.placeholderLabel.text = @"This is a chip field.";
-  _chipField.backgroundColor = self.colorScheme.surfaceColor;
+  _chipField.backgroundColor = self.containerScheme.colorScheme.surfaceColor;
   [self.view addSubview:_chipField];
 }
 

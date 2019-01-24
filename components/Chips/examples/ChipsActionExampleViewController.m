@@ -27,21 +27,14 @@
 - (id)init {
   self = [super init];
   if (self) {
-    self.colorScheme =
+    self.containerScheme = [[MDCContainerScheme alloc] init];
+    self.containerScheme.colorScheme =
         [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-    self.shapeScheme = [[MDCShapeScheme alloc] init];
-    self.typographyScheme =
+    self.containerScheme.shapeScheme = [[MDCShapeScheme alloc] init];
+    self.containerScheme.typographyScheme =
         [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
   }
   return self;
-}
-
-- (MDCContainerScheme *)containerScheme {
-  MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
-  scheme.colorScheme = self.colorScheme;
-  scheme.shapeScheme = self.shapeScheme;
-  scheme.typographyScheme = self.typographyScheme;
-  return scheme;
 }
 
 - (void)loadView {
@@ -78,6 +71,7 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  [_sizingChip applyThemeWithScheme:self.containerScheme];
 
   _isOutlined = NO;
   self.navigationItem.rightBarButtonItem =

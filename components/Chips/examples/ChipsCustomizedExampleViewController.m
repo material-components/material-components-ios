@@ -14,6 +14,7 @@
 
 #import "supplemental/ChipsExamplesSupplemental.h"
 
+#import "MaterialChips+Theming.h"
 #import "MaterialChips.h"
 
 @implementation ChipsCustomizedExampleViewController {
@@ -64,6 +65,16 @@
   [self.view addSubview:_collectionView];
 }
 
+- (void)viewDidLoad {
+  [super viewDidLoad];
+
+  self.containerScheme = [[MDCContainerScheme alloc] init];
+  self.containerScheme.colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  self.containerScheme.typographyScheme = [[MDCTypographyScheme alloc] init];
+  [_sizingChip applyThemeWithScheme:self.containerScheme];
+}
+
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
 
@@ -85,7 +96,7 @@
   cell.chipView.titleLabel.text = self.titles[indexPath.row];
   cell.chipView.selectedImageView.image = [self doneImage];
   cell.alwaysAnimateResize = YES;
-
+  [cell.chipView applyThemeWithScheme:self.containerScheme];
   return cell;
 }
 

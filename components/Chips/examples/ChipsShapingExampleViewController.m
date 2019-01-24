@@ -22,12 +22,6 @@
 #import "MaterialSlider+ColorThemer.h"
 #import "MaterialSlider.h"
 
-@interface ChipsShapingExampleViewController ()
-@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
-@property(nonatomic, strong) MDCShapeScheme *shapeScheme;
-@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
-@end
-
 @implementation ChipsShapingExampleViewController {
   MDCChipView *_chipView;
   MDCSlider *_cornerSlider;
@@ -38,20 +32,13 @@
 - (id)init {
   self = [super init];
   if (self) {
-    _colorScheme =
+    self.containerScheme = [[MDCContainerScheme alloc] init];
+    self.containerScheme.colorScheme =
         [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-    _shapeScheme = [[MDCShapeScheme alloc] init];
-    _typographyScheme = [[MDCTypographyScheme alloc] init];
+    self.containerScheme.shapeScheme = [[MDCShapeScheme alloc] init];
+    self.containerScheme.typographyScheme = [[MDCTypographyScheme alloc] init];
   }
   return self;
-}
-
-- (MDCContainerScheme *)containerScheme {
-  MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
-  scheme.colorScheme = self.colorScheme;
-  scheme.shapeScheme = self.shapeScheme;
-  scheme.typographyScheme = self.typographyScheme;
-  return scheme;
 }
 
 - (void)viewDidLoad {
@@ -69,7 +56,7 @@
   _chipView.accessoryPadding = UIEdgeInsetsMake(0, 0, 0, 10);
   CGSize chipSize = [_chipView sizeThatFits:self.view.bounds.size];
   _chipView.frame = CGRectMake(20, 20, chipSize.width + 20, chipSize.height + 20);
-  [_chipView applyThemeWithScheme:[self containerScheme]];
+  [_chipView applyThemeWithScheme:self.containerScheme];
   _chipView.shapeGenerator = _rectangleShapeGenerator;
   [self.view addSubview:_chipView];
 
@@ -80,7 +67,8 @@
   [_cornerSlider addTarget:self
                     action:@selector(cornerSliderChanged:)
           forControlEvents:UIControlEventValueChanged];
-  [MDCSliderColorThemer applySemanticColorScheme:_colorScheme toSlider:_cornerSlider];
+  [MDCSliderColorThemer applySemanticColorScheme:self.containerScheme.colorScheme
+                                        toSlider:_cornerSlider];
   [self.view addSubview:_cornerSlider];
 
   _cornerStyleControl = [[UISegmentedControl alloc] initWithItems:@[ @"Rounded", @"Cut", @"None" ]];

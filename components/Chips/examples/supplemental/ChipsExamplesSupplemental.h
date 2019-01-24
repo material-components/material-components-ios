@@ -13,9 +13,7 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
-#import "MaterialColorScheme.h"
-#import "MaterialShapeScheme.h"
-#import "MaterialTypographyScheme.h"
+#import "MaterialContainerScheme.h"
 
 @class MDCChipView;
 @class ChipModel;
@@ -27,27 +25,26 @@
     : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource>
 @property(nonatomic, strong) NSArray<NSString *> *titles;
 @property(nonatomic, strong) UICollectionView *collectionView;
-@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
-@property(nonatomic, strong) MDCShapeScheme *shapeScheme;
+@property(nonatomic, strong) MDCContainerScheme *containerScheme;
 @end
 
 @interface ChipsActionExampleViewController
     : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource>
 @property(nonatomic, strong) NSArray<NSString *> *titles;
 @property(nonatomic, strong) UICollectionView *collectionView;
-@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
-@property(nonatomic, strong) MDCShapeScheme *shapeScheme;
-@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
+@property(nonatomic, strong) MDCContainerScheme *containerScheme;
 @end
 
 @interface ChipsCollectionExampleViewController
     : ExampleChipCollectionViewController <UICollectionViewDelegate, UICollectionViewDataSource>
 @property(nonatomic, strong) NSArray<NSString *> *titles;
+@property(nonatomic, strong) MDCContainerScheme *containerScheme;
 @end
 
 @interface ChipsCustomizedExampleViewController
     : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource>
 @property(nonatomic, strong) NSArray<NSString *> *titles;
+@property(nonatomic, strong) MDCContainerScheme *containerScheme;
 @end
 
 @interface ChipsCustomizedExampleViewController (Supplemental)
@@ -57,9 +54,7 @@
 @interface ChipsFilterExampleViewController
     : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource>
 @property(nonatomic, strong) NSArray<NSString *> *titles;
-@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
-@property(nonatomic, strong) MDCShapeScheme *shapeScheme;
-@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
+@property(nonatomic, strong) MDCContainerScheme *containerScheme;
 @end
 
 @interface ChipsFilterAnimatedExampleViewController
@@ -71,12 +66,11 @@
 @end
 
 @interface ChipsInputExampleViewController : UIViewController
-@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
-@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
-@property(nonatomic, strong) MDCShapeScheme *shapeScheme;
+@property(nonatomic, strong) MDCContainerScheme *containerScheme;
 @end
 
 @interface ChipsSizingExampleViewController : UIViewController
+@property(nonatomic, strong) MDCContainerScheme *containerScheme;
 @end
 
 @interface ChipsSizingExampleViewController (Supplemental)
@@ -89,8 +83,7 @@
                                            UICollectionViewDataSource,
                                            UICollectionViewDelegateFlowLayout>
 @property(nonatomic, strong) NSArray<ChipModel *> *model;
-@property(nonatomic, strong) MDCShapeScheme *shapeScheme;
-@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
+@property(nonatomic, strong) MDCContainerScheme *containerScheme;
 @end
 
 @interface ChipsTypicalUseViewController (Supplemental)
@@ -98,6 +91,7 @@
 @end
 
 @interface ChipsShapingExampleViewController : UIViewController
+@property(nonatomic, strong) MDCContainerScheme *containerScheme;
 @end
 
 @interface ChipsShapingExampleViewController (Supplemental)

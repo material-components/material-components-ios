@@ -28,21 +28,14 @@
 - (id)init {
   self = [super init];
   if (self) {
-    self.colorScheme =
+    self.containerScheme = [[MDCContainerScheme alloc] init];
+    self.containerScheme.colorScheme =
         [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-    self.shapeScheme = [[MDCShapeScheme alloc] init];
-    self.typographyScheme =
+    self.containerScheme.shapeScheme = [[MDCShapeScheme alloc] init];
+    self.containerScheme.typographyScheme =
         [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
   }
   return self;
-}
-
-- (MDCContainerScheme *)containerScheme {
-  MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
-  scheme.colorScheme = self.colorScheme;
-  scheme.shapeScheme = self.shapeScheme;
-  scheme.typographyScheme = self.typographyScheme;
-  return scheme;
 }
 
 - (void)loadView {
@@ -125,7 +118,7 @@
   chipView.selectedImageView.image =
       [[self doneImage] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   chipView.selectedImageView.tintColor =
-      [_colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.54];
+      [self.containerScheme.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.54];
   chipView.selected = [_selectedIndecies containsObject:indexPath];
   cell.alwaysAnimateResize = [self shouldAnimateResize];
 
