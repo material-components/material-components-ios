@@ -346,7 +346,7 @@ run_bazel() {
       perform_pre_test_cleanup "iPhone"
     fi
   fi
-  
+
   bazel $COMMAND $TARGET --xcode_version $xcode_version --ios_minimum_os=8.0 \
     --ios_multi_cpus=i386,x86_64 $extra_args $verbosity_args \
     --test_env="FB_REFERENCE_IMAGE_DIR=$snapshot_dir" \
