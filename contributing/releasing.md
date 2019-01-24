@@ -80,7 +80,7 @@ provided in the script do so now.
 At this point you should also create the initial Release Candidate pull request using the URL
 that the `cut` script generated.
 
-Name the Pull Request title "[WIP] Release Candidate." until you are able to provide the version as the title.
+Name the Pull Request title "{WIP} Release Candidate." until you are able to provide the version as the title.
 
 Add the group `material-components/release-blocking-clients` to the pull request's reviewers. This is the mechanism by which
 release-blocking clients are notified of a new release.
