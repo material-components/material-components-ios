@@ -449,7 +449,6 @@ generate_website() {
 
   cd docsite-generator
   bundle install --quiet
-  yarn add fsevents
   yarn install --silent
   cd ../
 
