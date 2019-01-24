@@ -90,7 +90,7 @@ containerScheme.shapeScheme = myShapeScheme
 #import <MaterialComponents/MaterialColorScheme.h>
 #import <MaterialComponents/MaterialShapeScheme.h>
 #import <MaterialComponents/MaterialTypographyScheme.h>
-#import <MaterialComponents/MaterialContainerScheme.h>
+#import <MaterialComponentsBeta/MaterialContainerScheme.h>
 
 MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
 containerScheme.colorScheme = self.myColorScheme;
@@ -119,7 +119,7 @@ button.applyTextTheme(withScheme: containerScheme)
 ```objc
 #import <MaterialComponents/MaterialButtons.h>
 #import <MaterialComponents/MaterialButtons+Theming.h>
-#import <MaterialComponents/MaterialContainerScheme.h>
+#import <MaterialComponentsBeta/MaterialContainerScheme.h>
 
 MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
 MDCButton *button = [[MDCButton alloc] init];
