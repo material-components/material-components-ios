@@ -88,6 +88,7 @@ swift_library(
         "//components/private/Icons/icons/ic_more_horiz",
         "//components/private/Icons/icons/ic_settings",
         "//components/schemes/Color",
+        "//components/schemes/Container",
         "//components/schemes/Typography",
         "@catalog_by_convention//:CatalogByConvention",
         "@material_internationalization_ios//:MDFInternationalization",

@@ -291,7 +291,7 @@ run_bazel() {
     COMMAND="test"
   fi
   if [ -z "$TARGET" ]; then
-    TARGET="//components/..."
+    TARGET="//..."
   fi
 
   if [ -n "$KOKORO_BUILD_NUMBER" ]; then
