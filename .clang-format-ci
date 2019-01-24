@@ -46,6 +46,7 @@ lint_clang_format() {
   git fetch > /dev/null
   TAG=$(git tag --sort=v:refname -l "$CLANG_FORMAT_CI_VERSION" | tail -n1)
   git checkout "$TAG" > /dev/null
+  git submodule update --init --recursive
   echo "Using clang-format-ci $TAG"
   popd
 
