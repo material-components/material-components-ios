@@ -45,8 +45,8 @@ many distinct button styles including text buttons, contained buttons, and float
   - [Customizing elevation](#customizing-elevation)
   - [Customizing floating action buttons](#customizing-floating-action-buttons)
   - [Interface Builder](#interface-builder)
-- [Extensions](#extensions)
-  - [Theming](#theming)
+- [Theming](#theming)
+  - [Theming an MDCButton](#theming-an-mdcbutton)
 - [Accessibility](#accessibility)
   - [Set `-accessibilityLabel`](#set-`-accessibilitylabel`)
   - [Minimum touch size](#minimum-touch-size)
@@ -102,7 +102,7 @@ import MaterialComponents.MaterialButtons
 ### Typical use: themed buttons
 
 Create an instance of `MDCButton` and theme it with as one of the Material Design button styles
-using the ButtonThemer extension. Once themed, use the button like you would use a typical UIButton
+using the button theming extension. Once themed, use the button like you would use a typical UIButton
 instance.
 
 <!--<div class="material-code-render" markdown="1">-->
@@ -120,7 +120,7 @@ button.applyTextTheme(withScheme: containerScheme)
 MDCButton *button = [[MDCButton alloc] init];
 
 // Themed as a text button:
-[button applyTextThemeWithContainerScheme:containerScheme];
+[button applyTextThemeWithScheme:containerScheme];
 ```
 <!--</div>-->
 
@@ -215,22 +215,15 @@ MDCButton and its subclasses can be used in Interface Builder, but the button ty
 to "custom" in order for the button's highlight states to work as expected.
 
 
-## Extensions
 
 <!-- Extracted from docs/theming.md -->
 
-### Theming
+## Theming
 
 You can theme an MDCButton to match one of the Material Design button styles using your app's
-schemes in the ButtonThemer extension.
+schemes in the button theming extension.
 
-You must first add the ButtonThemer extension to your project:
-
-```bash
-pod 'MaterialComponents/Buttons+Theming'
-```
-
-You can then import the extension and create an `MDCContainerScheme` instance. A container scheme defines
+You must first import the extension and create an `MDCContainerScheme` instance. A container scheme defines
 the design parameters that you can use to theme your app. For additional information on [`MDCContainerScheme`](<#Inset-link-to-theming-doc>).
 
 <!--<div class="material-code-render" markdown="1">-->
