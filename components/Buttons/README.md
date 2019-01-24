@@ -47,7 +47,6 @@ many distinct button styles including text buttons, contained buttons, and float
   - [Interface Builder](#interface-builder)
 - [Extensions](#extensions)
   - [Theming](#theming)
-  - [Theming an MDCButton](#theming-an-mdcbutton)
 - [Accessibility](#accessibility)
   - [Set `-accessibilityLabel`](#set-`-accessibilitylabel`)
   - [Minimum touch size](#minimum-touch-size)
@@ -112,7 +111,7 @@ instance.
 let button = MDCButton()
 
 // Themed as a text button:
-MDCTextButtonThemer.applyScheme(buttonScheme, to: button)
+button.applyTextTheme(withScheme: containerScheme)
 ```
 
 #### Objective-C
@@ -121,11 +120,11 @@ MDCTextButtonThemer.applyScheme(buttonScheme, to: button)
 MDCButton *button = [[MDCButton alloc] init];
 
 // Themed as a text button:
-[MDCTextButtonThemer applyScheme:buttonScheme toButton:button];
+[button applyTextThemeWithContainerScheme:containerScheme];
 ```
 <!--</div>-->
 
-See the [ButtonThemer documentation](docs/theming.md) for a full list of supported Material Design
+See the [button theming documentation](docs/theming.md) for a full list of supported Material Design
 button styles.
 
 <!-- Extracted from docs/typical-use-floating-action-buttons.md -->
@@ -144,7 +143,7 @@ their normal state.
 let plusImage = UIImage(named: "plus").withRenderingMode(.alwaysTemplate)
 let button = MDCFloatingButton()
 button.setImage(plusImage, forState: .normal)
-MDCFloatingActionButtonThemer.applyScheme(buttonScheme, to: button)
+button.applySecondaryTheme(withScheme: containerScheme)
 ```
 
 #### Objective-C
@@ -155,7 +154,7 @@ UIImage *plusImage =
     [[UIImage imageNamed:@"plus"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 MDCFloatingButton *button = [[MDCFloatingButton alloc] init];
 [button setImage:plusImage forState:UIControlStateNormal];
-[MDCFloatingActionButtonThemer applyScheme:buttonScheme toButton:button];
+[button applySecondaryThemeWithScheme:containerScheme];
 ```
 <!--</div>-->
 
