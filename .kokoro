@@ -429,15 +429,6 @@ generate_website() {
   echo "node version: $(node --version)"
   echo "npm version: $(npm --version)"
 
-  brew_update
-  brew unlink node
-  brew install node@9
-
-  echo "Versions after pinning node to v9"
-  echo "brew version: $(brew --version)"
-  echo "node version: $(node --version)"
-  echo "npm version: $(npm --version)"
-
   ./scripts/build_site.sh
 
   if [ -n "$KOKORO_BUILD_NUMBER" ]; then
@@ -446,6 +437,19 @@ generate_website() {
     brew_install yarn --without-node
     yarn --version
   fi
+
+  echo "Versions after installing bundler and yarn"
+  echo "brew version: $(brew --version)"
+  echo "node version: $(node --version)"
+  echo "npm version: $(npm --version)"
+
+  brew unlink node
+  brew install node@8
+
+  echo "Versions after pinning node@8"
+  echo "brew version: $(brew --version)"
+  echo "node version: $(node --version)"
+  echo "npm version: $(npm --version)"
 
   cd docsite-generator
   bundle install --quiet
