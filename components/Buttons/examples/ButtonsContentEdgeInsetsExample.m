@@ -24,6 +24,7 @@
 @property(weak, nonatomic) IBOutlet MDCButton *containedButton;
 @property(weak, nonatomic) IBOutlet MDCFloatingButton *floatingActionButton;
 @property(weak, nonatomic) IBOutlet UISwitch *inkBoundingSwitch;
+@property(strong, nonatomic) MDCContainerScheme *containerScheme;
 @end
 
 @implementation ButtonsContentEdgeInsetsExample
@@ -54,17 +55,6 @@
                                            inMode:MDCFloatingButtonModeNormal];
 
   [self updateInkStyle:self.inkBoundingSwitch.isOn ? MDCInkStyleBounded : MDCInkStyleUnbounded];
-}
-
-- (MDCContainerScheme *)containerScheme {
-  MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
-  scheme.colorScheme =
-      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-  scheme.shapeScheme =
-      [[MDCShapeScheme alloc] initWithDefaults:MDCShapeSchemeDefaultsMaterial201809];
-  scheme.typographyScheme =
-      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
-  return scheme;
 }
 
 - (void)updateInkStyle:(MDCInkStyle)inkStyle {

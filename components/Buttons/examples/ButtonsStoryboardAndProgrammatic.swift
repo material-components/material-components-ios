@@ -20,11 +20,13 @@ import MaterialComponents.MaterialButtons_ButtonThemer
 class ButtonsSwiftAndStoryboardController: UIViewController {
 
   let containedButton = MDCButton()
-  let flatButton = MDCFlatButton()
+  let flatButton = MDCButton()
   let floatingButton = MDCFloatingButton()
 
+  var containerScheme = MDCContainerScheme()
+
   @IBOutlet weak var storyboardContained: MDCButton!
-  @IBOutlet weak var storyboardFlat: MDCFlatButton!
+  @IBOutlet weak var storyboardFlat: MDCButton!
   @IBOutlet weak var storyboardFloating: MDCFloatingButton!
 
   private lazy var containerView: UIView = {
@@ -85,6 +87,9 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
       ButtonsTypicalUseSupplemental.createPlusShapeLayer(floatingButton)
     storyboardFloating.layer.addSublayer(storyboardPlusShapeLayer)
 
+    storyboardContained.applyContainedTheme(withScheme: containerScheme)
+    storyboardFlat.applyTextTheme(withScheme: containerScheme)
+
     addButtonConstraints()
   }
 
@@ -132,16 +137,14 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
   private func buttonSetup() {
     let backgroundColor = UIColor(white: 0.1, alpha: 1.0)
 
-    let buttonScheme = MDCButtonScheme()
-    MDCContainedButtonThemer.applyScheme(buttonScheme, to: containedButton)
-    MDCContainedButtonThemer.applyScheme(buttonScheme, to: storyboardContained)
-
+    containedButton.applyContainedTheme(withScheme: containerScheme)
     containedButton.setTitle("Programmatic", for: .normal)
     containedButton.sizeToFit()
     containedButton.translatesAutoresizingMaskIntoConstraints = false
     containedButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
     innerContainerView.addSubview(containedButton)
 
+    flatButton.applyTextTheme(withScheme: containerScheme)
     flatButton.setTitleColor(.gray, for: .normal)
     flatButton.setTitle("Programmatic", for: .normal)
     flatButton.sizeToFit()

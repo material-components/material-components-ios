@@ -15,12 +15,16 @@
 import UIKit
 
 import MaterialComponents.MaterialButtons
+import MaterialComponentsBeta.MaterialButtons_Theming
+import MaterialComponentsBeta.MaterialContainerScheme
 
 class FloatingButtonExampleSwiftViewController: UIViewController {
 
   let miniFloatingButton = MDCFloatingButton(frame: .zero, shape: .mini)
   let defaultFloatingButton = MDCFloatingButton()
   let largeIconFloatingButton = MDCFloatingButton()
+
+  var containerScheme = MDCContainerScheme()
 
   override func viewDidLoad() {
     super.viewDidLoad()

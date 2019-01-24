@@ -23,6 +23,8 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
 
   let floatingButtonPlusDimension = CGFloat(24)
   let kMinimumAccessibleButtonSize = CGSize(width: 64, height: 48)
+
+  var containerScheme = MDCContainerScheme()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -30,10 +32,9 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
     view.backgroundColor = UIColor(white: 0.9, alpha: 1.0)
     //let titleColor = UIColor.white
     let backgroundColor = UIColor(white: 0.1, alpha: 1.0)
-    let buttonScheme = MDCButtonScheme()
     
     let containedButton = MDCButton()
-    MDCContainedButtonThemer.applyScheme(buttonScheme, to: containedButton)
+    containedButton.applyContainedTheme(withScheme: containerScheme)
     containedButton.setTitle("Tap Me Too", for: UIControlState())
     containedButton.sizeToFit()
     let containedButtonVerticalInset =

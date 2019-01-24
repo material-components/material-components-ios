@@ -60,10 +60,6 @@
   self.view.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
   UIColor *titleColor = [UIColor whiteColor];
 
-  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
-  buttonScheme.colorScheme = self.colorScheme;
-  buttonScheme.typographyScheme = self.typographyScheme;
-
   // Raised button
 
   MDCButton *containedButton = [[MDCButton alloc] init];
@@ -123,8 +119,7 @@
 
   MDCButton *strokedButton = [self buildCustomStrokedButton];
   [strokedButton setTitle:@"Button" forState:UIControlStateNormal];
-  [MDCButtonTypographyThemer applyTypographyScheme:self.typographyScheme toButton:strokedButton];
-  [MDCButtonColorThemer applySemanticColorScheme:self.colorScheme toButton:strokedButton];
+  [strokedButton applyOutlinedThemeWithScheme:self.containerScheme];
 
   MDCSlantedRectShapeGenerator *strokedShapeGenerator = [[MDCSlantedRectShapeGenerator alloc] init];
   strokedShapeGenerator.slant = 10;
@@ -140,9 +135,7 @@
 
   MDCButton *disabledStrokedButton = [self buildCustomStrokedButton];
   [disabledStrokedButton setTitle:@"Button" forState:UIControlStateNormal];
-  [MDCButtonTypographyThemer applyTypographyScheme:self.typographyScheme
-                                          toButton:disabledStrokedButton];
-  [MDCButtonColorThemer applySemanticColorScheme:self.colorScheme toButton:disabledStrokedButton];
+  [disabledStrokedButton applyOutlinedThemeWithScheme:self.containerScheme];
 
   MDCRectangleShapeGenerator *disabledStrokedShapeGenerator =
       [[MDCRectangleShapeGenerator alloc] init];

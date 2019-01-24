@@ -15,9 +15,12 @@
 import UIKit
 
 import MaterialComponents.MaterialButtons
-import MaterialComponents.MaterialButtons_ButtonThemer
+import MaterialComponentsBeta.MaterialButtons_Theming
+import MaterialComponentsBeta.MaterialContainerScheme
 
 class ButtonsCustomFontViewController: UIViewController {
+
+  var containerScheme = MDCContainerScheme()
 
   class func catalogMetadata() -> [String: Any] {
     return [
@@ -42,7 +45,7 @@ class ButtonsCustomFontViewController: UIViewController {
     view.backgroundColor = buttonScheme.colorScheme.backgroundColor
 
     let flatButtonStatic = MDCButton()
-    MDCContainedButtonThemer.applyScheme(buttonScheme, to: flatButtonStatic)
+    flatButtonStatic.applyContainedTheme(withScheme: containerScheme)
     flatButtonStatic.setTitle("Static", for: UIControlState())
     flatButtonStatic.sizeToFit()
     flatButtonStatic.translatesAutoresizingMaskIntoConstraints = false
@@ -50,7 +53,7 @@ class ButtonsCustomFontViewController: UIViewController {
     view.addSubview(flatButtonStatic)
 
     let flatButtonDynamic = MDCButton()
-    MDCContainedButtonThemer.applyScheme(buttonScheme, to: flatButtonDynamic)
+    flatButtonDynamic.applyContainedTheme(withScheme: containerScheme)
     flatButtonDynamic.setTitle("Dynamic", for: UIControlState())
     flatButtonDynamic.sizeToFit()
     flatButtonDynamic.translatesAutoresizingMaskIntoConstraints = false
