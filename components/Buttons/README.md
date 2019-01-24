@@ -47,6 +47,7 @@ many distinct button styles including text buttons, contained buttons, and float
   - [Interface Builder](#interface-builder)
 - [Theming](#theming)
   - [Theming an MDCButton](#theming-an-mdcbutton)
+  - [Theming an MDCFloatingButton](#theming-an-mdcfloatingbutton)
 - [Accessibility](#accessibility)
   - [Set `-accessibilityLabel`](#set-`-accessibilitylabel`)
   - [Minimum touch size](#minimum-touch-size)
@@ -337,7 +338,7 @@ button.applyContainedTheme(withScheme: containerScheme)
 ```
 <!--</div>-->
 
-#### Theming an MDCFloatingButton
+### Theming an MDCFloatingButton
 
 #### Create a button
 

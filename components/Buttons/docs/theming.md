@@ -117,7 +117,7 @@ button.applyContainedTheme(withScheme: containerScheme)
 ```
 <!--</div>-->
 
-#### Theming an MDCFloatingButton
+### Theming an MDCFloatingButton
 
 #### Create a button
 
