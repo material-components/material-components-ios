@@ -424,6 +424,20 @@ generate_website() {
     cd github/repo
   fi
 
+  echo "Initial versions"
+  echo "brew version: $(brew --version)"
+  echo "node version: $(node --version)"
+  echo "npm version: $(npm --version)"
+
+  brew_update
+  brew unlink node
+  brew install node@9
+
+  echo "Versions after pinning node to v9"
+  echo "brew version: $(brew --version)"
+  echo "node version: $(node --version)"
+  echo "npm version: $(npm --version)"
+
   ./scripts/build_site.sh
 
   if [ -n "$KOKORO_BUILD_NUMBER" ]; then
@@ -438,9 +452,6 @@ generate_website() {
   yarn add fsevents
   yarn install --silent
   cd ../
-  
-  echo "node version: $(node --version)"
-  echo "npm version: $(npm --version)"
 
   TMP_PATH=$(mktemp -d)
   ./scripts/build_site.sh 2>&1 | tee "$TMP_PATH/output"
