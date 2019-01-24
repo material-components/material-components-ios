@@ -31,10 +31,10 @@ typedef NS_ENUM(NSInteger, MDCCardCellState) {
   MDCCardCellStateNormal = 0,
 
   /** The visual state when the cell is in its highlighted state. */
-  MDCCardCellStateHighlighted = 1 << 0,
+  MDCCardCellStateHighlighted = 1,
 
   /** The visual state when the cell has been selected. */
-  MDCCardCellStateSelected = 1 << 1,
+  MDCCardCellStateSelected = 2,
 };
 
 /**

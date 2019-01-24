@@ -45,7 +45,7 @@ typedef NS_ENUM(NSInteger, MDCRippleState) {
 
  Defaults to NO.
  */
-@property(nonatomic, getter=isHighlighted) BOOL highlighted;
+@property(nonatomic, getter=isRippleHighlighted) BOOL rippleHighlighted;
 
 /**
  This BOOL is set to YES if the ripple is currently dragged, or NO otherwise.
@@ -61,6 +61,8 @@ typedef NS_ENUM(NSInteger, MDCRippleState) {
  Defaults to NO.
  */
 @property(nonatomic) BOOL selectionMode;
+
+@property(nonatomic) CGPoint touchLocation;
 
 /**
  The current state of the ripple.

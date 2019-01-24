@@ -148,11 +148,7 @@ class EditReorderCollectionViewController: UIViewController,
     cardCell.configure(title: title, imageName: imageName)
 
     cardCell.isSelectable = (toggle == .edit)
-    if self.dataSource[indexPath.item].selected {
-//      collectionView.selectItem(at: indexPath, animated: true, scrollPosition: [])
-//      print(indexPath.item)
-//      cardCell.isSelected = true
-    }
+    print("\(indexPath.item): \(cardCell.isSelected)")
 
     cardCell.isAccessibilityElement = true
     cardCell.accessibilityLabel = title

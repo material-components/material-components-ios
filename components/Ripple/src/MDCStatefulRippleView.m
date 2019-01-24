@@ -29,6 +29,8 @@ static UIColor *RippleSelectedColor(void) {
 
 @implementation MDCStatefulRippleView {
   NSMutableDictionary<NSNumber *, UIColor *> *_rippleColors;
+  BOOL _rippleAnimating;
+  BOOL _deselecting;
 }
 
 @dynamic activeRippleLayer;
@@ -99,34 +101,54 @@ static UIColor *RippleSelectedColor(void) {
 }
 
 - (void)setSelected:(BOOL)selected {
-  if (selected && self.activeRippleLayer == nil) {
-    NSLog(@"IM HERE HEHE");
-    [self updateRippleColor];
-    [self beginRippleTouchDownAtPoint:CGPointZero animated:NO completion:nil];
-  }
-  if (selected == _selected) {
-    return;
-  }
   _selected = selected;
   if (selected) {
     self.state |= MDCRippleStateSelected;
   } else {
     self.state &= ~MDCRippleStateSelected;
   }
-  [self updateRippleColor];
+
+  // If set to selected, the ripple color should be set prior to initiating the ripple.
+  if (selected) {
+    [self updateRippleColor];
+  }
+
+  // Go into the selected state visually.
+  if (selected && !self.rippleHighlighted) {
+    [self beginRippleTouchDownAtPoint:self.touchLocation animated:self.rippleHighlighted completion:nil];
+  } else if (!selected) {
+    _deselecting = YES;
+    [self beginRippleTouchUpAnimated:self.rippleHighlighted completion:^{
+      [self cancelAllRipplesAnimated:!self.rippleHighlighted completion:^{
+        self->_deselecting = NO;
+        [self updateRippleColor];
+      }];
+    }];
+  }
 }
 
-- (void)setHighlighted:(BOOL)highlighted {
-  if (highlighted == _highlighted) {
-    return;
-  }
-  _highlighted = highlighted;
-  if (highlighted) {
+- (void)setRippleHighlighted:(BOOL)rippleHighlighted {
+  _rippleHighlighted = rippleHighlighted;
+  if (rippleHighlighted) {
     self.state |= MDCRippleStateHighlighted;
   } else {
     self.state &= ~MDCRippleStateHighlighted;
   }
-  [self updateRippleColor];
+  if (!_deselecting) {
+    [self updateRippleColor];
+  }
+  if (!self.selected && !_deselecting) {
+    [self cancelAllRipplesAnimated:NO completion:nil];
+  }
+  if (rippleHighlighted) {
+    _rippleAnimating = YES;
+    [self beginRippleTouchDownAtPoint:self.touchLocation animated:YES completion:^{
+      self->_rippleAnimating = NO;
+      [self updateRippleColor];
+    }];
+  } else if (!_deselecting && !self.selected) {
+    [self beginRippleTouchUpAnimated:YES completion:nil];
+  }
 }
 
 - (void)setDragged:(BOOL)dragged {

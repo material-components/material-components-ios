@@ -145,6 +145,11 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
   [self updateBackgroundColor];
 }
 
+- (void)prepareForReuse {
+  [super prepareForReuse];
+  self.cardHighlighted = NO;
+}
+
 - (void)layoutSubviews {
   [super layoutSubviews];
   if (!self.layer.shapeGenerator) {
@@ -174,28 +179,24 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 
 - (void)setSelected:(BOOL)selected {
   [super setSelected:selected];
-  if (selected) {
-    [self.rippleView setSelected:YES];
-    [self updateCardCellVisuals];
-  } else {
-    [self.rippleView cancelAllRipplesAnimated:YES completion:^{
-      [self.rippleView setHighlighted:NO];
-      [self.rippleView setSelected:NO];
-      [self.rippleView setDragged:NO];
-      [self updateCardCellVisuals];
-    }];
-  }
+  self.rippleView.touchLocation = _lastTouch;
+  self.rippleView.selected = selected;
+  [self updateCardCellVisuals];
   NSLog(@"selected: %d for item: %ld", selected, (long)self.tag);
+  if (selected) {
+
+  }
 }
 
 - (void)setCardHighlighted:(BOOL)cardHighlighted {
   _cardHighlighted = cardHighlighted;
-  [self.rippleView setHighlighted:cardHighlighted];
-  if (cardHighlighted) {
-    [self.rippleView beginRippleTouchDownAtPoint:_lastTouch animated:YES completion:nil];
-  } else {
-    [self.rippleView beginRippleTouchUpAnimated:YES completion:nil];
-  }
+  self.rippleView.touchLocation = _lastTouch;
+  self.rippleView.rippleHighlighted = cardHighlighted;
+//  if (cardHighlighted) {
+//    [self.rippleView beginRippleTouchDownAtPoint:_lastTouch animated:YES completion:nil];
+//  } else {
+//    [self.rippleView beginRippleTouchUpAnimated:YES completion:nil];
+//  }
   [self updateCardCellVisuals];
   NSLog(@"highlighted: %d", cardHighlighted);
 }
@@ -505,11 +506,11 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
   [super touchesEnded:touches withEvent:event];
-  if (!self.selected) {
+//  if (!self.selected) {
     self.cardHighlighted = NO;
-  } else if (self.selected && _tapWentOutsideOfBounds) {
-    [self.rippleView beginRippleTouchUpAnimated:YES completion:nil];
-  }
+//  } else if (self.selected && _tapWentOutsideOfBounds) {
+//    [self.rippleView beginRippleTouchUpAnimated:YES completion:nil];
+//  }
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
