@@ -426,6 +426,13 @@ generate_website() {
 
     gem_install bundler
     brew_install yarn --without-node
+    
+    # The above installations update node to v10, but the docsite generator
+    # relies on v8.
+    brew unlink node
+    brew install node@8
+    # Required because node@8 is keg-only, meaning it isn't linked automatically.
+    brew link --force --overwrite node@8
   fi
 
   cd docsite-generator
