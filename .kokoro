@@ -16,7 +16,6 @@
 
 # Fail on any error
 set -e
-set -o xtrace
 
 if [ -n "$KOKORO_BUILD_NUMBER" ]; then
   repo_dir='github/repo'
@@ -422,11 +421,9 @@ generate_website() {
   if [ -n "$KOKORO_BUILD_NUMBER" ]; then
     # Move into our cloned repo
     cd github/repo
-  fi
 
-  ./scripts/build_site.sh
+    ./scripts/build_site.sh
 
-  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
     gem_install bundler
     bundle --version
     brew_install yarn --without-node
