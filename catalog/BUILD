@@ -132,4 +132,5 @@ mdc_objc_library(
     name = "MDCActionExtension",
     srcs = native.glob(["MDCActionExtension/*.m"]),
     hdrs = native.glob(["MDCActionExtension/*.h"]),
+    deps = ["@catalog_by_convention//:CatalogByConvention"],
 )

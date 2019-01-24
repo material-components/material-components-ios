@@ -65,6 +65,8 @@ fix_bazel_imports() {
   }
   rewrite_catalogs() {
     find "${stashed_dir}"catalog/MDC* -type f -name '*.swift' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"catalog/MDC* -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"catalog/MDC* -type f -name '*.h' -exec perl -pi -e "$1" {} + || true
   }
 
   stashed_dir=""
@@ -96,6 +98,7 @@ fix_bazel_imports() {
   rewrite_catalogs "s/import CatalogByConvention/import catalog_by_convention_CatalogByConvention/"
   rewrite_catalogs "s/import MDFInternationalization/import material_internationalization_ios_MDFInternationalization/"
   rewrite_catalogs "s/import MDFTextAccessibility/import material_text_accessibility_ios_MDFTextAccessibility/"
+  rewrite_catalogs "s/import <CatalogByConvention\/CatalogByConvention\.h>/import\/\*Material prefix framework import\*\/ \"CatalogByConvention.h\"/"
   rewrite_examples "s/import MaterialComponentsBeta.Material(.+)_(.+)/import components_\1_\2 \/\/ Beta/"
   rewrite_examples "s/import MaterialComponentsBeta.Material(.+)/import components_\1_\1 \/\/ Beta/"
   rewrite_examples "s/import MaterialComponents.Material(.+)/import components_\1_\1/"
@@ -118,6 +121,7 @@ fix_bazel_imports() {
     rewrite_tests "s/import components_(.+)_\1/import MaterialComponents.Material\1/"
     rewrite_tests "s/import components_(.+)_(.+) \/\/ Beta/import MaterialComponentsBeta.Material\1_\2/"
     rewrite_tests "s/import components_(.+)_(.+)/import MaterialComponents.Material\1_\2/"
+    rewrite_catalogs "s/import\/\*Material prefix framework import\*\/ \"CatalogByConvention\.h\"/import <CatalogByConvention\/CatalogByConvention\.h>/"
     rewrite_catalogs "s/import catalog_MaterialCatalog/import MaterialCatalog/"
     rewrite_catalogs "s/import components_private_Icons_icons_(.+)_\1/import MaterialComponents.MaterialIcons_\1/"
     rewrite_catalogs "s/import components_(.+)_\1 \/\/ Beta/import MaterialComponentsBeta.Material\1/"
