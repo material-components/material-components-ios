@@ -250,6 +250,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
         break;
     }
   }
+  [self setNeedsLayout];
 }
 
 - (NSString *)accessibilityLabelWithTitle:(NSString *)title {

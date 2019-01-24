@@ -43,7 +43,7 @@ class BottomNavigationNilBadges : UIViewController {
   }
 
   func commonBottomNavigationTypicalUseSwiftExampleInit() {
-    view.backgroundColor = .lightGray
+    view.backgroundColor = colorScheme.backgroundColor
     view.addSubview(bottomNavBar)
 
     // Always show bottom navigation bar item titles.
