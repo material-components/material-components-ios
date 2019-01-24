@@ -39,14 +39,14 @@ CLANG_FORMAT_CI_SRC_DIR=".clang-format-ci-src"
 # - git-clang-format
 lint_clang_format() {
   if [ ! -d "$CLANG_FORMAT_CI_SRC_DIR" ]; then
-    git clone --recurse-submodules https://github.com/material-foundation/clang-format-ci.git "$CLANG_FORMAT_CI_SRC_DIR"
+    git clone --recurse-submodules https://github.com/jverkoey/clang-format-ci.git "$CLANG_FORMAT_CI_SRC_DIR"
   fi
 
   pushd "$CLANG_FORMAT_CI_SRC_DIR"
   git fetch > /dev/null
-  TAG=$(git tag --sort=v:refname -l "$CLANG_FORMAT_CI_VERSION" | tail -n1)
-  git checkout "$TAG" > /dev/null
-  echo "Using clang-format-ci $TAG"
+#  TAG=$(git tag --sort=v:refname -l "$CLANG_FORMAT_CI_VERSION" | tail -n1)
+  git checkout "logs" > /dev/null
+  echo "Using clang-format-ci @ logs"
   popd
 
   .clang-format-ci-src/from-kokoro.sh "material-components/material-components-ios"
