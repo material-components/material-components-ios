@@ -22,15 +22,15 @@ Our approach to theming relies on the relationships between the following concep
 
 Components are expected to provide public APIs for a variety of parameters. An example of a component is [MDCButton](https://github.com/material-components/material-components-ios/tree/develop/components/Buttons).
 
-Subsystem schemes represent a set of opinionated properties that are intended to be mapped to component parameters. There is a scheme for each Material Theming subsystem. For example, there is a scheme for color, shape, and typography subsystems.
+Subsystem schemes represent a set of opinionated properties that are intended to be mapped to component parameters. There is a scheme for each Material Theming subsystem. For example, there is a scheme for the color, shape, and typography subsystems.
 
 The Container scheme represents a single configurable entity that is applicable to all themeable components. A container scheme consists of all of the subsystem schemes.
 
-Theming extensions are component extensions that, when invoked with a default container scheme, will configure a component to match the design system's defaults. When provided with subsystem schemes via a container scheme, the extension will map the subsystem scheme's values to the component’s parameters.
+Theming extensions are component extensions that, when invoked with a default container scheme, will theme a component according to the [Material Design guidelines](https://material.io/design). When provided with subsystem schemes via a container scheme, the extension will map the subsystem scheme's values to the component’s parameters.
 
 ### Sensible defaults, yet highly configurable
 
-By default, we try and give our components sensible values for all of their customizable properties, things such as `backgroundColor` or `titleFont`. You can use these defaults as a baseline, but we encourage you to theming your components to match your brand style.
+By default, we try and give our components sensible values for all of their customizable properties, things such as `backgroundColor` or `titleFont`. You can use these defaults as a baseline, but we encourage you to theme your components to match your brand style.
 
 ### Schemes
 
@@ -40,10 +40,6 @@ By default, we try and give our components sensible values for all of their cust
 <li class="icon-list-item icon-list-item--link"><a href="Shape/">Shape scheme</a></li>
 <li class="icon-list-item icon-list-item--link"><a href="Typography/">Typography scheme</a></li>
 </ul>
-
-#### Container scheme
-
-The Container Scheme represents a single configurable entity that is applicable to all themeable Components. A Container Scheme consists of all of the Subsystem Schemes.
 
 ## Examples
 
@@ -56,22 +52,18 @@ The Container Scheme represents a single configurable entity that is applicable 
 import MaterialComponents.MaterialColorScheme
 
 let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
-// Configure custom properties to match your branch
-colorScheme.backgroundColor = .black
-colorScheme.primaryColor = .yellow
-colorScheme.secondaryColor = .red
+// Configure custom properties to match your brand
+colorScheme.backgroundColor = .lightGray
 ```
 
 #### Objective-C
 
 ```objc
-#import "MaterialColorScheme.h"
+#import <MaterialComponents/MaterialColorScheme.h>
 
 MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-// Configure custom properties to match your branch
-colorScheme.backgroundColor = UIColor.blackColor;
-colorScheme.primaryColor = UIColor.yellowColor;
-colorScheme.secondaryColor = UIColor.redColor;
+// Configure custom properties to match your brand
+colorScheme.backgroundColor = UIColor.lightGrayColor
 ```
 <!--</div>-->
 
@@ -84,6 +76,7 @@ colorScheme.secondaryColor = UIColor.redColor;
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialTypographyScheme
 import MaterialComponents.MaterialShapeScheme
+import MaterialComponentsBeta.MaterialContainerScheme
 
 let containerScheme = MDCContainerScheme()
 containerScheme.colorScheme = myColorScheme
@@ -94,9 +87,10 @@ containerScheme.shapeScheme = myShapeScheme
 #### Objective-C
 
 ```objc
-#import "MaterialColorScheme.h"
-#import "MaterialShapeScheme.h"
-#import "MaterialTypographyScheme.h"
+#import <MaterialComponents/MaterialColorScheme.h>
+#import <MaterialComponents/MaterialShapeScheme.h>
+#import <MaterialComponents/MaterialTypographyScheme.h>
+#import <MaterialComponents/MaterialContainerScheme.h>
 
 MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
 containerScheme.colorScheme = self.myColorScheme;
@@ -115,7 +109,6 @@ import MaterialComponents.MaterialButtons
 import MaterialComponentsBeta.MaterialButtons_Theming
 import MaterialComponentsBeta.MaterialContainerScheme
 
-
 let containerScheme = MDCContainerScheme()
 let button = MDCButton()
 button.applyTextTheme(withScheme: containerScheme)
@@ -124,10 +117,9 @@ button.applyTextTheme(withScheme: containerScheme)
 #### Objective-C
 
 ```objc
-#import "MaterialButtons.h"
-#import "MaterialButtons+Theming.h"
-#import "MaterialContainerScheme.h"
-
+#import <MaterialComponents/MaterialButtons.h>
+#import <MaterialComponents/MaterialButtons+Theming.h>
+#import <MaterialComponents/MaterialContainerScheme.h>
 
 MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
 MDCButton *button = [[MDCButton alloc] init];
@@ -136,7 +128,7 @@ MDCButton *button = [[MDCButton alloc] init];
 <!--</div>-->
 
 
-### Additional links
+## Additional links
 
-* [Material Design Theming document](https://material.io/design/material-theming/overview.html#)
+* [Material Guidelines introduction to Theming](https://material.io/design/material-theming/overview.html)
 * [Material Theming at Google I/O](https://youtu.be/3VUMl_l-_fI)
