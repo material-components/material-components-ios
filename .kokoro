@@ -427,7 +427,14 @@ generate_website() {
   ./scripts/build_site.sh
 
   if [ -n "$KOKORO_BUILD_NUMBER" ]; then
-    gem install bundler
+    # Pinning to a specific version resolves the following error:
+    #
+    # > "find_spec_for_exe': can't find gem bundler (>= 0.a) (Gem::GemNotFoundException)"
+    #
+    # Context:
+    #  https://stackoverflow.com/questions/47026174/find-spec-for-exe-cant-find-gem-bundler-0-a-gemgemnotfoundexception
+    gem_install bundler -v 1.14.6
+
     brew_install yarn --without-node
   fi
 
