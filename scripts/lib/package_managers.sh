@@ -15,7 +15,12 @@
 # limitations under the License.
 
 gem_update() {
-  gem update --system --no-document --quiet
+  tmp_dir="$(mktemp -d)"
+  gem update --system --no-document --quiet >> "$tmp_dir/gem_update_logs"
+  if [ "$?" -ne 0 ]; then
+    echo "gem update failed"
+    cat "$tmp_dir/gem_update_logs"
+  fi
 }
 
 gem_install() {

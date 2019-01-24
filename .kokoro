@@ -434,14 +434,18 @@ generate_website() {
     # Context:
     #  https://stackoverflow.com/questions/47026174/find-spec-for-exe-cant-find-gem-bundler-0-a-gemgemnotfoundexception
     gem_install bundler -v 1.14.6
-
+    bundle --version
     brew_install yarn --without-node
+    yarn --version
   fi
 
   cd docsite-generator
-  bundle install
-  yarn install
+  bundle install --quiet
+  yarn install --silent
   cd ../
+  
+  echo "node version: $(node --version)"
+  echo "npm version: $(npm --version)"
 
   TMP_PATH=$(mktemp -d)
   ./scripts/build_site.sh 2>&1 | tee "$TMP_PATH/output"
