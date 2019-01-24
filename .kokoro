@@ -445,6 +445,7 @@ generate_website() {
 
   brew unlink node
   brew install node@8
+  brew link --force --overwrite node@8
 
   echo "Versions after pinning node@8"
   echo "brew version: $(brew --version)"
