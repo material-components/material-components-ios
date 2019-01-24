@@ -1,4 +1,4 @@
-// Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,33 +16,33 @@ import Foundation
 import MaterialComponents.MaterialBottomNavigation_ColorThemer
 import MaterialComponents.MaterialColorScheme
 
-class BottomNavigationTypicalUseSwiftExample: UIViewController {
-
+class BottomNavigationTitleVisibilityChangeExample: UIViewController, MDCBottomNavigationBarDelegate {
+  
   var colorScheme = MDCSemanticColorScheme()
-
+  
   // Create a bottom navigation bar to add to a view.
   let bottomNavBar = MDCBottomNavigationBar()
-
+  
   init() {
     super.init(nibName: nil, bundle: nil)
     commonBottomNavigationTypicalUseSwiftExampleInit()
   }
-
+  
   @available(*, unavailable)
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
   }
-
+  
   func commonBottomNavigationTypicalUseSwiftExampleInit() {
     view.backgroundColor = colorScheme.backgroundColor
     view.addSubview(bottomNavBar)
-
+    
     // Always show bottom navigation bar item titles.
     bottomNavBar.titleVisibility = .always
-
+    
     // Cluster and center the bottom navigation bar items.
     bottomNavBar.alignment = .centered
-
+    
     // Add items to the bottom navigation bar.
     let tabBarItem1 = UITabBarItem(title: "Home", image: UIImage(named: "Home"), tag: 0)
     let tabBarItem2 =
@@ -50,9 +50,11 @@ class BottomNavigationTypicalUseSwiftExample: UIViewController {
     let tabBarItem3 =
       UITabBarItem(title: "Favorites", image: UIImage(named: "Favorite"), tag: 2)
     bottomNavBar.items = [ tabBarItem1, tabBarItem2, tabBarItem3 ]
-
+    
     // Select a bottom navigation bar item.
     bottomNavBar.selectedItem = tabBarItem2;
+    
+    bottomNavBar.delegate = self
   }
   
   func layoutBottomNavBar() {
@@ -67,24 +69,51 @@ class BottomNavigationTypicalUseSwiftExample: UIViewController {
     }
     bottomNavBar.frame = bottomNavBarFrame
   }
-
+  
+  func addInstructionLabel() {
+    let instructionLabel = UILabel()
+    instructionLabel.numberOfLines = 0
+    instructionLabel.lineBreakMode = .byWordWrapping
+    instructionLabel.text = "Choose the Home tab to make all titles disappear, and any other tab to make them reappear."
+    view.addSubview(instructionLabel)
+    let size = instructionLabel.sizeThatFits(view.bounds.size)
+    let instructionFrame = CGRect(x: 0,
+                                  y: view.bounds.height / 2 - size.height / 2,
+                                  width: size.width,
+                                  height: size.height)
+    instructionLabel.frame = instructionFrame
+  }
+  
   override func viewWillLayoutSubviews() {
     super.viewWillLayoutSubviews()
     layoutBottomNavBar()
   }
-
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    addInstructionLabel()
+  }
+  
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     self.navigationController?.setNavigationBarHidden(true, animated: animated)
   }
+  
+  func bottomNavigationBar(_ bottomNavigationBar: MDCBottomNavigationBar, didSelect item: UITabBarItem) {
+    if item == bottomNavigationBar.items[0] {
+      bottomNavigationBar.titleVisibility = .never
+    } else {
+      bottomNavigationBar.titleVisibility = .always
+    }
+  }
 }
 
 // MARK: Catalog by convention
-extension BottomNavigationTypicalUseSwiftExample {
-
+extension BottomNavigationTitleVisibilityChangeExample {
+  
   class func catalogMetadata() -> [String: Any] {
     return [
-      "breadcrumbs": ["Bottom Navigation", "Bottom Navigation (Swift)"],
+      "breadcrumbs": ["Bottom Navigation", "Bottom Navigation Title Visibility (Swift)"],
       "primaryDemo": false,
       "presentable": false,
     ]
