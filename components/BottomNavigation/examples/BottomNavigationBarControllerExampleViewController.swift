@@ -15,17 +15,19 @@
 import UIKit
 
 import MaterialComponentsBeta.MaterialBottomNavigationBeta
+import MaterialComponents.MaterialBottomNavigation_ColorThemer
+import MaterialComponents.MaterialBottomNavigation_TypographyThemer
 
 @available(iOS 9.0, *)
 class BottomNavigationControllerExampleViewController: MDCBottomNavigationBarController {
 
-  public var colorScheme: MDCColorScheme? {
+  public var colorScheme: MDCColorScheming  = MDCSemanticColorScheme() {
     didSet {
       apply(colorScheme: colorScheme)
     }
   }
 
-  public var typographyScheme: MDCTypographyScheme? {
+  public var typographyScheme: MDCTypographyScheming = MDCTypographyScheme() {
     didSet {
       apply(typographyScheme: typographyScheme)
     }
@@ -41,13 +43,16 @@ class BottomNavigationControllerExampleViewController: MDCBottomNavigationBarCon
 
     super.viewDidLoad()
 
-    let viewController1 = BaseCellExample()
+    let viewController1 = UIViewController()
+    viewController1.view.backgroundColor = colorScheme.primaryColor
     viewController1.tabBarItem = UITabBarItem(title: "Item 1", image: UIImage(named: "Home"), tag: 0)
 
-    let viewController2 = PageControlSwiftExampleViewController()
+    let viewController2 = UIViewController()
+    viewController2.view.backgroundColor = colorScheme.secondaryColor
     viewController2.tabBarItem = UITabBarItem(title: "Item 2", image: UIImage(named: "Favorite"), tag: 1)
 
-    let viewController3 = PalettesGeneratedExampleViewController()
+    let viewController3 = UIViewController()
+    viewController3.view.backgroundColor = colorScheme.surfaceColor
     viewController3.tabBarItem = UITabBarItem(title: "Item 3", image: UIImage(named: "Search"), tag: 2)
 
     viewControllers = [ viewController1, viewController2, viewController3 ]
@@ -65,13 +70,12 @@ class BottomNavigationControllerExampleViewController: MDCBottomNavigationBarCon
 
 @available(iOS 9.0, *)
 extension BottomNavigationControllerExampleViewController {
-  fileprivate func apply(colorScheme: MDCColorScheme?) {
-    guard let scheme = colorScheme else { return }
-    MDCBottomNavigationBarColorThemer.apply(scheme, to: self.navigationBar)
+  fileprivate func apply(colorScheme: MDCColorScheming) {
+    MDCBottomNavigationBarColorThemer.applySemanticColorScheme(colorScheme, toBottomNavigation: self.navigationBar)
   }
 
-  fileprivate func apply(typographyScheme: MDCTypographyScheme?) {
-    guard let scheme = typographyScheme else { return }
-    MDCBottomNavigationBarTypographyThemer.applyTypographyScheme(scheme, to: self.navigationBar)
+  fileprivate func apply(typographyScheme: MDCTypographyScheming) {
+    MDCBottomNavigationBarTypographyThemer.applyTypographyScheme(typographyScheme,
+                                                                 to: self.navigationBar)
   }
 }
