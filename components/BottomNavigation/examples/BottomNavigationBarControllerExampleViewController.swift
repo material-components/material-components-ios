@@ -14,6 +14,8 @@
 
 import UIKit
 
+import MaterialComponentsBeta.MaterialBottomNavigationBeta
+
 @available(iOS 9.0, *)
 class BottomNavigationControllerExampleViewController: MDCBottomNavigationBarController {
 

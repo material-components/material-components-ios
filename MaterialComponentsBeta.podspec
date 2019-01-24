@@ -66,15 +66,15 @@ Pod::Spec.new do |mdc|
     extension.dependency "MaterialComponents/schemes/Typography"
   end
 
-  mdc.subspec "BottomNavigation" do |component|
+  mdc.subspec "BottomNavigationBeta" do |component|
     component.ios.deployment_target = '8.0'
-    component.public_header_files = "components/#{component.base_name}/src/beta/*.h"
-    component.source_files = "components/#{component.base_name}/src/beta/*.{h,m}"
+    component.public_header_files = "components/BottomNavigation/src/beta/*.h"
+    component.source_files = "components/BottomNavigation/src/beta/*.{h,m}"
     component.dependency "MaterialComponents/BottomNavigation"
 
     component.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
-        "components/#{component.base_name}/tests/unit/beta/*.{h,m,swift}"
+        "components/BottomNavigation/tests/unit/beta/*.{h,m,swift}"
       ]
     end
   end

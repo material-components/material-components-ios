@@ -77,6 +77,13 @@ mdc_objc_library(
 )
 
 mdc_objc_library(
+    name = "Beta",
+    srcs = native.glob(["src/beta/*.m"]),
+    hdrs = native.glob(["src/beta/*.h"]),
+    deps = [":BottomNavigation"],
+)
+
+mdc_objc_library(
     name = "ObjcExamples",
     srcs = native.glob([
         "examples/*.m",
@@ -102,13 +109,13 @@ swift_library(
             "examples/*.swift",
             "examples/supplemental/*.swift",
         ],
-        exclude = ["examples/BottomNavigationBarControllerExampleViewController.swift"],
     ),
     copts = [
         "-swift-version",
         "3",
     ],
     deps = [
+        ":Beta",
         ":BottomNavigation",
         ":ColorThemer",
         ":ObjcExamples",
