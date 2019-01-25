@@ -15,8 +15,8 @@
 #import "MDCStatefulRippleView.h"
 #import "MDCRippleLayer.h"
 
-static const CGFloat kRippleAlpha = (CGFloat)0.16;
-static const CGFloat kRippleSelectedAlpha = (CGFloat)0.08;
+//static const CGFloat kRippleAlpha = (CGFloat)0.16;
+//static const CGFloat kRippleSelectedAlpha = (CGFloat)0.08;
 static const CGFloat kRippleDraggedAlpha = (CGFloat)0.08;
 
 static UIColor *RippleSelectedColor(void) {
@@ -57,12 +57,12 @@ static UIColor *RippleSelectedColor(void) {
   if (_rippleColors == nil) {
     _rippleColors = [NSMutableDictionary dictionary];
     UIColor *selectionColor = RippleSelectedColor();
-    _rippleColors[@(MDCRippleStateNormal)] = [UIColor colorWithWhite:0 alpha:kRippleAlpha];
-    _rippleColors[@(MDCRippleStateHighlighted)] = [UIColor colorWithWhite:0 alpha:kRippleAlpha];
-    _rippleColors[@(MDCRippleStateSelected)] =
-    [selectionColor colorWithAlphaComponent:kRippleSelectedAlpha];
-    _rippleColors[@(MDCRippleStateSelected | MDCRippleStateHighlighted)] =
-    [selectionColor colorWithAlphaComponent:kRippleAlpha];
+    _rippleColors[@(MDCRippleStateNormal)] = [[UIColor blackColor] colorWithAlphaComponent:0.2];// [UIColor colorWithWhite:0 alpha:kRippleAlpha];
+    _rippleColors[@(MDCRippleStateHighlighted)] = [[UIColor greenColor] colorWithAlphaComponent:0.2];// [UIColor colorWithWhite:0 alpha:kRippleAlpha];
+    _rippleColors[@(MDCRippleStateSelected)] = [[UIColor blueColor] colorWithAlphaComponent:0.2];
+//    [selectionColor colorWithAlphaComponent:kRippleSelectedAlpha];
+    _rippleColors[@(MDCRippleStateSelected | MDCRippleStateHighlighted)] = [[UIColor redColor] colorWithAlphaComponent:0.2];
+//    [selectionColor colorWithAlphaComponent:kRippleAlpha];
     _rippleColors[@(MDCRippleStateDragged)] =
     [UIColor colorWithWhite:0 alpha:kRippleDraggedAlpha];
     _rippleColors[@(MDCRippleStateDragged | MDCRippleStateHighlighted)] =
@@ -93,40 +93,41 @@ static UIColor *RippleSelectedColor(void) {
   [self updateRippleColor];
 }
 
-- (void)setState:(MDCRippleState)state {
-  _state = state;
-  NSLog(@"state: %ld", (long)state);
+- (MDCRippleState)state {
+  NSInteger state = 0;
+  if (self.selected) {
+    state |= MDCRippleStateSelected;
+  }
+  if (self.rippleHighlighted) {
+    state |= MDCRippleStateHighlighted;
+  }
+  if (self.dragged) {
+    state |= MDCRippleStateDragged;
+  }
+  return state;
 }
 
 - (void)setSelected:(BOOL)selected {
   if (!self.selectionMode) {
+    // If selection mode is off we don't want to apply any visual or state changes for selection.
     return;
   }
   _selected = selected;
-  if (selected) {
-    self.state |= MDCRippleStateSelected;
-  } else {
-    self.state &= ~MDCRippleStateSelected;
-  }
-
-  // If set to selected, the ripple color should be set prior to initiating the ripple.
-  if (selected) {
-    [self updateRippleColor];
-  }
 
   // Go into the selected state visually.
   if (selected && !self.rippleHighlighted && !self.activeRippleLayer) {
-    [self beginRippleTouchDownAtPoint:self.touchLocation animated:self.rippleHighlighted completion:nil];
+    // If we go into the selected state manually, without coming from the highlighted state,
+    // We present the ripple overlay instantly without animation.
+    [self beginRippleTouchDownAtPoint:self.touchLocation animated:NO completion:nil];
   } else if (!selected) {
-    // completion block won't be called if there is no activeRippleLayer to invoke on.
-    if (self.activeRippleLayer) {
-      _deselecting = YES;
-    }
-    [self beginRippleTouchUpAnimated:self.rippleHighlighted completion:^{
-      [self cancelAllRipplesAnimated:!self.rippleHighlighted completion:^{
-        self->_deselecting = NO;
-        [self updateRippleColor];
-      }];
+    // If we are unselecting, we cancel all the ripples.
+    _deselecting = YES;
+    [self cancelAllRipplesAnimated:YES completion:^{
+      // Deselection is now complete.
+      self->_deselecting = NO;
+      // We update the ripple color only after the deselection so during the deselection process the
+      // ripple still has the selected color.
+      [self updateRippleColor];
     }];
   }
 }
@@ -134,16 +135,8 @@ static UIColor *RippleSelectedColor(void) {
 - (void)setRippleHighlighted:(BOOL)rippleHighlighted {
   _rippleHighlighted = rippleHighlighted;
   if (rippleHighlighted) {
-    self.state |= MDCRippleStateHighlighted;
-  } else {
-    self.state &= ~MDCRippleStateHighlighted;
-  }
-  if (rippleHighlighted) {
-    [self beginRippleTouchDownAtPoint:self.touchLocation animated:YES completion:^{
-      if (!self.selected) {
-        [self updateRippleColor];
-      }
-    }];
+    // If ripple becomes highlighted we initiate a ripple with animation.
+    [self beginRippleTouchDownAtPoint:self.touchLocation animated:YES completion:nil];
     [self updateRippleColor];
   } else if ((!_deselecting && !self.selected) || _tapWentOutsideOfBounds) {
     [self beginRippleTouchUpAnimated:YES completion:nil];
@@ -157,11 +150,6 @@ static UIColor *RippleSelectedColor(void) {
     return;
   }
   _dragged = dragged;
-  if (dragged) {
-    self.state |= MDCRippleStateDragged;
-  } else {
-    self.state &= ~MDCRippleStateDragged;
-  }
   [self updateRippleColor];
 }
 
@@ -178,6 +166,7 @@ static UIColor *RippleSelectedColor(void) {
   [super touchesMoved:touches withEvent:event];
   UITouch *touch = [touches anyObject];
   CGPoint location = [touch locationInView:self];
+  NSLog(@"%f, %f", location.x, location.y);
   BOOL pointContainedinBounds = CGRectContainsPoint(self.bounds, location);
   if (pointContainedinBounds && _tapWentOutsideOfBounds) {
     _tapWentOutsideOfBounds = NO;
@@ -186,6 +175,12 @@ static UIColor *RippleSelectedColor(void) {
     _tapWentOutsideOfBounds = YES;
     [self fadeOutRippleAnimated:YES completion:nil];
   }
+}
+
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  [super touchesCancelled:touches withEvent:event];
+  _tapWentOutsideOfBounds = YES;
+  [self beginRippleTouchUpAnimated:YES completion:nil];
 }
 
 @end

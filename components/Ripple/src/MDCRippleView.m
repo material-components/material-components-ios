@@ -136,12 +136,7 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
 
 - (void)beginRippleTouchUpAnimated:(BOOL)animated
                         completion:(nullable MDCRippleCompletionBlock)completion {
-  [self.activeRippleLayer endRippleAnimated:animated completion:^{
-    self.activeRippleLayer = nil;
-    if (completion) {
-      completion();
-    }
-  }];
+  [self.activeRippleLayer endRippleAnimated:animated completion:completion];
 }
 
 - (void)fadeInRippleAnimated:(BOOL)animated completion:(MDCRippleCompletionBlock)completion {
@@ -157,6 +152,13 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
     return;
   }
   self.activeRippleLayer.fillColor = rippleColor.CGColor;
+}
+
+- (MDCRippleLayer *)activeRippleLayer {
+  if (self.layer.sublayers.count < 1) {
+    return nil;
+  }
+  return _activeRippleLayer;
 }
 
 #pragma mark - MDCRippleLayerDelegate
