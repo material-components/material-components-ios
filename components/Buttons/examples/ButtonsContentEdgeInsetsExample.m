@@ -42,6 +42,14 @@
 
 #pragma mark - UIViewController
 
+- (id)init {
+  self = [super init];
+  if (self) {
+    _containerScheme = [[MDCContainerScheme alloc] init];
+  }
+  return self;
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
 
