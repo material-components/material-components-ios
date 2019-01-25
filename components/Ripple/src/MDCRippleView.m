@@ -136,7 +136,12 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
 
 - (void)beginRippleTouchUpAnimated:(BOOL)animated
                         completion:(nullable MDCRippleCompletionBlock)completion {
-  [self.activeRippleLayer endRippleAnimated:animated completion:completion];
+  [self.activeRippleLayer endRippleAnimated:animated completion:^{
+    self.activeRippleLayer = nil;
+    if (completion) {
+      completion();
+    }
+  }];
 }
 
 - (void)fadeInRippleAnimated:(BOOL)animated completion:(MDCRippleCompletionBlock)completion {

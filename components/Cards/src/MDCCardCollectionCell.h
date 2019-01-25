@@ -35,6 +35,9 @@ typedef NS_ENUM(NSInteger, MDCCardCellState) {
 
   /** The visual state when the cell has been selected. */
   MDCCardCellStateSelected = 2,
+
+  /** The viual state when the cell is being dragged. */
+  MDCCardCellStateDragged = 3,
 };
 
 /**
@@ -76,6 +79,8 @@ typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
  Default is set to NO.
  */
 @property(nonatomic, assign, getter=isSelectable) BOOL selectable;
+
+@property (nonatomic, getter=isDragged) BOOL dragged;
 
 /**
  The corner radius for the card

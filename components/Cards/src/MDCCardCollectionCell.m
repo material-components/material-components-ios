@@ -23,6 +23,7 @@ static const CGFloat MDCCardCellSelectedImagePadding = 8;
 static const CGFloat MDCCardCellShadowElevationHighlighted = 8;
 static const CGFloat MDCCardCellShadowElevationNormal = 1;
 static const CGFloat MDCCardCellShadowElevationSelected = 8;
+static const CGFloat MDCCardCellShadowElevationDragged = 8;
 static const BOOL MDCCardCellIsInteractableDefault = YES;
 
 @interface MDCCardCollectionCell ()
@@ -95,6 +96,7 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
     _shadowElevations[@(MDCCardCellStateNormal)] = @(MDCCardCellShadowElevationNormal);
     _shadowElevations[@(MDCCardCellStateHighlighted)] = @(MDCCardCellShadowElevationHighlighted);
     _shadowElevations[@(MDCCardCellStateSelected)] = @(MDCCardCellShadowElevationSelected);
+    _shadowElevations[@(MDCCardCellStateDragged)] = @(MDCCardCellShadowElevationDragged);
   }
 
   if (_shadowColors == nil) {
@@ -168,8 +170,10 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 }
 
 - (MDCCardCellState)state {
-  if (self.selected) {
+  if (self.selected && self.selectable) {
     return MDCCardCellStateSelected;
+  } else if (self.dragged) {
+    return MDCCardCellStateDragged;
   } else if (self.cardHighlighted) {
     return MDCCardCellStateHighlighted;
   } else {
@@ -179,26 +183,27 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 
 - (void)setSelected:(BOOL)selected {
   [super setSelected:selected];
+  if (!self.selectable) {
+    return;
+  }
   self.rippleView.touchLocation = _lastTouch;
   self.rippleView.selected = selected;
   [self updateCardCellVisuals];
-  NSLog(@"selected: %d for item: %ld", selected, (long)self.tag);
-  if (selected) {
+}
 
-  }
+- (void)setDragged:(BOOL)dragged {
+  _dragged = dragged;
+  self.rippleView.dragged = dragged;
+  [self updateCardCellVisuals];
 }
 
 - (void)setCardHighlighted:(BOOL)cardHighlighted {
   _cardHighlighted = cardHighlighted;
   self.rippleView.touchLocation = _lastTouch;
   self.rippleView.rippleHighlighted = cardHighlighted;
-//  if (cardHighlighted) {
-//    [self.rippleView beginRippleTouchDownAtPoint:_lastTouch animated:YES completion:nil];
-//  } else {
-//    [self.rippleView beginRippleTouchUpAnimated:YES completion:nil];
-//  }
+  // When highlighted is NO, dragged becomes NO as well.
+  self.dragged = NO;
   [self updateCardCellVisuals];
-  NSLog(@"highlighted: %d", cardHighlighted);
 }
 
 - (void)updateCardCellVisuals {
@@ -213,6 +218,7 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 
 - (void)setSelectable:(BOOL)selectable {
   _selectable = selectable;
+  self.rippleView.selectionMode = selectable;
 }
 
 - (UIBezierPath *)boundingPath {
@@ -492,25 +498,11 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   [super touchesMoved:touches withEvent:event];
-  UITouch *touch = [touches anyObject];
-  CGPoint location = [touch locationInView:self];
-  BOOL pointContainedinBounds = CGRectContainsPoint(self.bounds, location);
-  if (pointContainedinBounds && _tapWentOutsideOfBounds) {
-    _tapWentOutsideOfBounds = NO;
-    [self.rippleView fadeInRippleAnimated:YES completion:nil];
-  } else if (!pointContainedinBounds && !_tapWentOutsideOfBounds) {
-    _tapWentOutsideOfBounds = YES;
-    [self.rippleView fadeOutRippleAnimated:YES completion:nil];
-  }
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
   [super touchesEnded:touches withEvent:event];
-//  if (!self.selected) {
-    self.cardHighlighted = NO;
-//  } else if (self.selected && _tapWentOutsideOfBounds) {
-//    [self.rippleView beginRippleTouchUpAnimated:YES completion:nil];
-//  }
+  self.cardHighlighted = NO;
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {

@@ -17,9 +17,10 @@
 #import "MaterialCards+ColorThemer.h"
 #import "MaterialCards+ShapeThemer.h"
 
-//static const MDCShadowElevation kNormalElevation = 1;
-//static const MDCShadowElevation kHighlightedElevation = 4;
-//static const MDCShadowElevation kSelectedElevation = 1;
+static const MDCShadowElevation kNormalElevation = 1;
+static const MDCShadowElevation kHighlightedElevation = 1;
+static const MDCShadowElevation kSelectedElevation = 1;
+static const MDCShadowElevation kDraggedElevation = 8;
 static const CGFloat kBorderWidth = 1;
 
 @implementation MDCCardCollectionCell (MaterialTheming)
@@ -41,9 +42,10 @@ static const CGFloat kBorderWidth = 1;
     self.layer.cornerRadius = (CGFloat)4;
   }
 
-//  [self setShadowElevation:kNormalElevation forState:MDCCardCellStateNormal];
-//  [self setShadowElevation:kHighlightedElevation forState:MDCCardCellStateHighlighted];
-//  [self setShadowElevation:kSelectedElevation forState:MDCCardCellStateSelected];
+  [self setShadowElevation:kNormalElevation forState:MDCCardCellStateNormal];
+  [self setShadowElevation:kHighlightedElevation forState:MDCCardCellStateHighlighted];
+  [self setShadowElevation:kSelectedElevation forState:MDCCardCellStateSelected];
+  [self setShadowElevation:kDraggedElevation forState:MDCCardCellStateDragged];
   self.interactable = YES;  // To achieve baseline themed, the card should be interactable.
 }
 

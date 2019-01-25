@@ -70,10 +70,10 @@ class EditReorderCollectionViewController: UIViewController,
                                                           target: self,
                                                           action: #selector(toggleModes))
 
-//      let longPressGesture = UILongPressGestureRecognizer(target: self,
-//                                                          action: #selector(reorderCards(gesture:)))
-//      longPressGesture.cancelsTouchesInView = false
-//      collectionView.addGestureRecognizer(longPressGesture)
+      let longPressGesture = UILongPressGestureRecognizer(target: self,
+                                                          action: #selector(reorderCards(gesture:)))
+      longPressGesture.cancelsTouchesInView = false
+      collectionView.addGestureRecognizer(longPressGesture)
     }
 
     // randomly select images to display 30 items
@@ -235,7 +235,7 @@ class EditReorderCollectionViewController: UIViewController,
       guard let cardCell = cell as? CardEditReorderCollectionCell else { return }
       collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
       if (toggle == .reorder) {
-//        cardCell.rippleTouchController.isDragged = true
+        cardCell.isDragged = true
       }
     case .changed:
       guard let gestureView = gesture.view else { break }

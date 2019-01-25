@@ -29,8 +29,8 @@ static UIColor *RippleSelectedColor(void) {
 
 @implementation MDCStatefulRippleView {
   NSMutableDictionary<NSNumber *, UIColor *> *_rippleColors;
-  BOOL _rippleAnimating;
   BOOL _deselecting;
+  BOOL _tapWentOutsideOfBounds;
 }
 
 @dynamic activeRippleLayer;
@@ -70,6 +70,7 @@ static UIColor *RippleSelectedColor(void) {
     _rippleColors[@(MDCRippleStateSelected | MDCRippleStateDragged)] =
     [selectionColor colorWithAlphaComponent:kRippleDraggedAlpha];
   }
+  self.userInteractionEnabled = YES;
 }
 
 - (UIColor *)rippleColorForState:(MDCRippleState)state {
@@ -94,13 +95,13 @@ static UIColor *RippleSelectedColor(void) {
 
 - (void)setState:(MDCRippleState)state {
   _state = state;
-//  NSLog(@"state: %ld", (long)state);
-  if (state == 0) {
-
-  }
+  NSLog(@"state: %ld", (long)state);
 }
 
 - (void)setSelected:(BOOL)selected {
+  if (!self.selectionMode) {
+    return;
+  }
   _selected = selected;
   if (selected) {
     self.state |= MDCRippleStateSelected;
@@ -114,10 +115,13 @@ static UIColor *RippleSelectedColor(void) {
   }
 
   // Go into the selected state visually.
-  if (selected && !self.rippleHighlighted) {
+  if (selected && !self.rippleHighlighted && !self.activeRippleLayer) {
     [self beginRippleTouchDownAtPoint:self.touchLocation animated:self.rippleHighlighted completion:nil];
   } else if (!selected) {
-    _deselecting = YES;
+    // completion block won't be called if there is no activeRippleLayer to invoke on.
+    if (self.activeRippleLayer) {
+      _deselecting = YES;
+    }
     [self beginRippleTouchUpAnimated:self.rippleHighlighted completion:^{
       [self cancelAllRipplesAnimated:!self.rippleHighlighted completion:^{
         self->_deselecting = NO;
@@ -134,20 +138,17 @@ static UIColor *RippleSelectedColor(void) {
   } else {
     self.state &= ~MDCRippleStateHighlighted;
   }
-  if (!_deselecting) {
-    [self updateRippleColor];
-  }
-  if (!self.selected && !_deselecting) {
-    [self cancelAllRipplesAnimated:NO completion:nil];
-  }
   if (rippleHighlighted) {
-    _rippleAnimating = YES;
     [self beginRippleTouchDownAtPoint:self.touchLocation animated:YES completion:^{
-      self->_rippleAnimating = NO;
-      [self updateRippleColor];
+      if (!self.selected) {
+        [self updateRippleColor];
+      }
     }];
-  } else if (!_deselecting && !self.selected) {
+    [self updateRippleColor];
+  } else if ((!_deselecting && !self.selected) || _tapWentOutsideOfBounds) {
     [self beginRippleTouchUpAnimated:YES completion:nil];
+  } else if (!_deselecting) {
+    [self updateRippleColor];
   }
 }
 
@@ -168,5 +169,23 @@ static UIColor *RippleSelectedColor(void) {
   _selectionMode = selectionMode;
 }
 
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  [super touchesBegan:touches withEvent:event];
+  _tapWentOutsideOfBounds = NO;
+}
+
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  [super touchesMoved:touches withEvent:event];
+  UITouch *touch = [touches anyObject];
+  CGPoint location = [touch locationInView:self];
+  BOOL pointContainedinBounds = CGRectContainsPoint(self.bounds, location);
+  if (pointContainedinBounds && _tapWentOutsideOfBounds) {
+    _tapWentOutsideOfBounds = NO;
+    [self fadeInRippleAnimated:YES completion:nil];
+  } else if (!pointContainedinBounds && !_tapWentOutsideOfBounds) {
+    _tapWentOutsideOfBounds = YES;
+    [self fadeOutRippleAnimated:YES completion:nil];
+  }
+}
 
 @end
