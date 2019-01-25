@@ -128,6 +128,75 @@ colorScheme.backgroundColor = UIColor.lightGrayColor
 ```
 <!--</div>-->
 
+## Themers (Deprecated)
+
+**Note** These will soon be deprecated for theming-extensions outlined above.
+
+Our approach to theming relies on the relationships between the following concepts:
+
+1. Components
+2. Schemes
+3. Themers
+
+Components are expected to provide public APIs for a variety of parameters. An example of a component is [MDCBottomNavigation](https://github.com/material-components/material-components-ios/tree/develop/components/BottomNavigation).
+
+Schemes represent a set of opinionated properties that are intended to be mapped to component parameters. There is a scheme for each Material Theming subsystem. For example, there is a scheme for the color, shape, and typography subsystems.
+
+Themers are objects that, when invoked with a scheme, will theme a component according to the [Material Design guidelines](https://material.io/design).
+
+## Examples
+
+### Theme component
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+
+```swift
+import MaterialComponents.MaterialBottomNavigation
+import MaterialComponents.MaterialButtons_ColorThemer
+
+let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
+let bottomNavBar = MDCBottomNavigationBar()
+MDCBottomNavigationBarColorThemer.applySemanticColorScheme(colorScheme,
+toBottomNavigation: bottomNavBar)
+```
+
+#### Objective-C
+
+```objc
+#import <MaterialComponents/MaterialBottomNavigation.h>
+#import <MaterialComponents/MaterialBottomNavigation+ColorThemer.h>
+
+MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+MDCBottomNavigation *bottomNavBar = [[MDCBottomNavigation alloc] init];
+[MDCBottomNavigationBarColorThemer applySemanticColorScheme:self.colorScheme
+toBottomNavigation:_bottomNavBar];
+```
+<!--</div>-->
+
+### Using a scheme
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+
+```swift
+import MaterialComponents.MaterialColorScheme
+
+let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
+// Configure custom properties to match your brand
+colorScheme.backgroundColor = .lightGray
+```
+
+#### Objective-C
+
+```objc
+#import <MaterialComponents/MaterialColorScheme.h>
+
+MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+// Configure custom properties to match your brand
+colorScheme.backgroundColor = UIColor.lightGrayColor
+```
+<!--</div>-->
 
 ## Additional links
 
