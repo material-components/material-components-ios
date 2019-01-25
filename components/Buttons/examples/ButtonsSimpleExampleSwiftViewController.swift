@@ -15,7 +15,7 @@
 import Foundation
 import UIKit
 
-import MaterialComponents.MaterialButtons_ButtonThemer
+import MaterialComponents.MaterialButtons
 import MaterialComponentsBeta.MaterialButtons_Theming
 import MaterialComponentsBeta.MaterialContainerScheme
 
