@@ -152,6 +152,13 @@ class EditReorderCollectionViewController: UIViewController,
 
     cardCell.isAccessibilityElement = true
     cardCell.accessibilityLabel = title
+    if (indexPath.item == 0) {
+      cardCell.cardHighlighted = true
+    } else if (indexPath.item == 1) {
+      cardCell.isSelected = true
+    } else if (indexPath.item == 2) {
+      cardCell.isDragged = true
+    }
 
     return cardCell
   }

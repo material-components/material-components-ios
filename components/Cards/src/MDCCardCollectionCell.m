@@ -29,7 +29,6 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 @interface MDCCardCollectionCell ()
 @property(nonatomic, strong, nullable) UIImageView *selectedImageView;
 @property(nonatomic, readonly, strong) MDCShapedShadowLayer *layer;
-@property(nonatomic, assign) BOOL cardHighlighted;
 @end
 
 @implementation MDCCardCollectionCell  {
@@ -186,7 +185,6 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
   if (!self.selectable) {
     return;
   }
-  self.rippleView.touchLocation = _lastTouch;
   self.rippleView.selected = selected;
   [self updateCardCellVisuals];
 }
@@ -199,10 +197,12 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 
 - (void)setCardHighlighted:(BOOL)cardHighlighted {
   _cardHighlighted = cardHighlighted;
-  self.rippleView.touchLocation = _lastTouch;
   self.rippleView.rippleHighlighted = cardHighlighted;
-  // When highlighted is NO, dragged becomes NO as well.
-  self.dragged = NO;
+
+  if (self.dragged) {
+    // When highlighted is NO, dragged becomes NO as well.
+    self.dragged = NO;
+  }
   [self updateCardCellVisuals];
 }
 

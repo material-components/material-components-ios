@@ -62,8 +62,6 @@ typedef NS_ENUM(NSInteger, MDCRippleState) {
  */
 @property(nonatomic) BOOL selectionMode;
 
-@property(nonatomic) CGPoint touchLocation;
-
 /**
  The current state of the ripple.
  */

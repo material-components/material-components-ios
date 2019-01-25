@@ -82,6 +82,8 @@ typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
 
 @property (nonatomic, getter=isDragged) BOOL dragged;
 
+@property(nonatomic, assign) BOOL cardHighlighted;
+
 /**
  The corner radius for the card
  Default is set to 4.

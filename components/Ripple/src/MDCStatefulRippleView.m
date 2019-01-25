@@ -31,6 +31,7 @@ static UIColor *RippleSelectedColor(void) {
   NSMutableDictionary<NSNumber *, UIColor *> *_rippleColors;
   BOOL _deselecting;
   BOOL _tapWentOutsideOfBounds;
+  CGPoint _lastTouch;
 }
 
 @dynamic activeRippleLayer;
@@ -113,20 +114,20 @@ static UIColor *RippleSelectedColor(void) {
     return;
   }
   _selected = selected;
-
   // Go into the selected state visually.
   if (selected && !self.rippleHighlighted && !self.activeRippleLayer) {
     // If we go into the selected state manually, without coming from the highlighted state,
     // We present the ripple overlay instantly without animation.
-    [self beginRippleTouchDownAtPoint:self.touchLocation animated:NO completion:nil];
+    [self updateRippleColor];
+    [self beginRippleTouchDownAtPoint:_lastTouch animated:NO completion:nil];
   } else if (!selected) {
     // If we are unselecting, we cancel all the ripples.
     _deselecting = YES;
     [self cancelAllRipplesAnimated:YES completion:^{
       // Deselection is now complete.
       self->_deselecting = NO;
-      // We update the ripple color only after the deselection so during the deselection process the
-      // ripple still has the selected color.
+      // We update the ripple color only after the deselection so during the deselection
+      // process the ripple still has the selected color.
       [self updateRippleColor];
     }];
   }
@@ -136,12 +137,20 @@ static UIColor *RippleSelectedColor(void) {
   _rippleHighlighted = rippleHighlighted;
   if (rippleHighlighted) {
     // If ripple becomes highlighted we initiate a ripple with animation.
-    [self beginRippleTouchDownAtPoint:self.touchLocation animated:YES completion:nil];
+    [self beginRippleTouchDownAtPoint:_lastTouch animated:YES completion:nil];
     [self updateRippleColor];
-  } else if ((!_deselecting && !self.selected) || _tapWentOutsideOfBounds) {
-    [self beginRippleTouchUpAnimated:YES completion:nil];
-  } else if (!_deselecting) {
-    [self updateRippleColor];
+  } else {
+    if ((!_deselecting && !self.selected) || _tapWentOutsideOfBounds) {
+      // If we are not selected and not currently deselecting, we are in the normal state
+      // therefore we can remove the highlight and the ripple. Also if the tap went outside of
+      // bounds, we want to cancel the visual change and not remove the ripple.
+      [self beginRippleTouchUpAnimated:YES completion:nil];
+    } else if (!_deselecting) {
+      // If we are removing the highlight and not deselecting we can update the ripple color,
+      // otherwise we want to not change the ripple color or it will fall back to the
+      // normal ripple color immediately.
+      [self updateRippleColor];
+    }
   }
 }
 
@@ -150,6 +159,12 @@ static UIColor *RippleSelectedColor(void) {
     return;
   }
   _dragged = dragged;
+  if (dragged && !self.rippleHighlighted && !self.activeRippleLayer) {
+    // If we go into the dragged state manually, without coming from the highlighted state,
+    // We present the ripple overlay instantly without animation.
+    [self updateRippleColor];
+    [self beginRippleTouchDownAtPoint:_lastTouch animated:NO completion:nil];
+  }
   [self updateRippleColor];
 }
 
@@ -158,6 +173,9 @@ static UIColor *RippleSelectedColor(void) {
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  UITouch *touch = [touches anyObject];
+  CGPoint location = [touch locationInView:self];
+  _lastTouch = location;
   [super touchesBegan:touches withEvent:event];
   _tapWentOutsideOfBounds = NO;
 }
@@ -166,7 +184,6 @@ static UIColor *RippleSelectedColor(void) {
   [super touchesMoved:touches withEvent:event];
   UITouch *touch = [touches anyObject];
   CGPoint location = [touch locationInView:self];
-  NSLog(@"%f, %f", location.x, location.y);
   BOOL pointContainedinBounds = CGRectContainsPoint(self.bounds, location);
   if (pointContainedinBounds && _tapWentOutsideOfBounds) {
     _tapWentOutsideOfBounds = NO;
