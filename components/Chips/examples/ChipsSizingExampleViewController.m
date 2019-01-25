@@ -25,16 +25,22 @@
   UISegmentedControl *_horizontalAlignmentControl;
 }
 
+- (id)init {
+  self = [super init];
+  if (self) {
+    self.containerScheme = [[MDCContainerScheme alloc] init];
+    self.containerScheme.colorScheme =
+    [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    self.containerScheme.shapeScheme = [[MDCShapeScheme alloc] init];
+    self.containerScheme.typographyScheme = [[MDCTypographyScheme alloc] init];
+  }
+  return self;
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
 
   self.view.backgroundColor = [UIColor whiteColor];
-
-  self.containerScheme = [[MDCContainerScheme alloc] init];
-  self.containerScheme.colorScheme =
-      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-  self.containerScheme.shapeScheme = [[MDCShapeScheme alloc] init];
-  self.containerScheme.typographyScheme = [[MDCTypographyScheme alloc] init];
 
   _chipView = [[MDCChipView alloc] init];
   _chipView.titleLabel.text = @"Material";

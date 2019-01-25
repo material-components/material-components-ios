@@ -22,6 +22,17 @@
   MDCChipView *_sizingChip;
 }
 
+- (id)init {
+  self = [super init];
+  if (self) {
+    self.containerScheme = [[MDCContainerScheme alloc] init];
+    self.containerScheme.colorScheme =
+    [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    self.containerScheme.typographyScheme = [[MDCTypographyScheme alloc] init];
+  }
+  return self;
+}
+
 + (void)configureChip:(MDCChipView *)chip {
   UIFont *customTitleFont = [UIFont fontWithName:@"ChalkDuster" size:14];
   chip.titleFont = customTitleFont;
@@ -68,10 +79,6 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.containerScheme = [[MDCContainerScheme alloc] init];
-  self.containerScheme.colorScheme =
-      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-  self.containerScheme.typographyScheme = [[MDCTypographyScheme alloc] init];
   [_sizingChip applyThemeWithScheme:self.containerScheme];
 }
 

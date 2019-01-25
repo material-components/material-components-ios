@@ -25,24 +25,37 @@ class ChipsFieldDeleteEnabledViewController : UIViewController, MDCChipFieldDele
 
   init() {
     super.init(nibName: nil, bundle: nil)
+    commonInit()
   }
 
   @available(*, unavailable)
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
+    commonInit()
+  }
+
+  func commonInit() {
+    setUpContainerScheme()
+  }
+
+  func setUpContainerScheme() {
+    containerScheme.colorScheme = MDCSemanticColorScheme()
+    containerScheme.shapeScheme = MDCShapeScheme()
+    containerScheme.typographyScheme = MDCTypographyScheme()
   }
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    containerScheme.colorScheme = MDCSemanticColorScheme()
-    containerScheme.shapeScheme = MDCShapeScheme()
-    containerScheme.typographyScheme = MDCTypographyScheme()
-    view.backgroundColor = containerScheme.colorScheme!.backgroundColor
+    view.backgroundColor =
+      containerScheme.colorScheme?.backgroundColor ??
+      MDCSemanticColorScheme().backgroundColor
     chipField.frame = .zero
     chipField.delegate = self
     chipField.textField.placeholderLabel.text = "This is a chip field."
-    chipField.backgroundColor = containerScheme.colorScheme!.surfaceColor
+    chipField.backgroundColor =
+      containerScheme.colorScheme?.surfaceColor ??
+      MDCSemanticColorScheme().surfaceColor
     chipField.showChipsDeleteButton = true
     view.addSubview(chipField)
   }
