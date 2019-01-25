@@ -163,6 +163,14 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
   }
 }
 
+- (NSTimeInterval)minimumPressDuration {
+  return _longPressGestureRecognizer.minimumPressDuration;
+}
+
+- (void)setMinimumPressDuration:(NSTimeInterval)minimumPressDuration {
+  _longPressGestureRecognizer.minimumPressDuration = minimumPressDuration;
+}
+
 #pragma mark - Private
 
 - (void)updateCellSnapshotPosition:(CGPoint)newPosition {

@@ -35,6 +35,12 @@
 @property(nonatomic, readonly, assign) NSInteger dismissingSection;
 
 /**
+  Sets the minimum press duration in seconds that will trigger the dragging behaviour.
+  By default, the long press recognizer sets this to 0.5s.
+ */
+@property(nonatomic, assign) NSTimeInterval minimumPressDuration;
+
+/**
  A Boolean value indicating whether the a visible cell within the collectionView is being
  edited.
 
