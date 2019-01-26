@@ -146,26 +146,16 @@ class EditReorderCollectionViewController: UIViewController,
     let title = dataSource[indexPath.item].title
     let imageName = dataSource[indexPath.item].image
     cardCell.configure(title: title, imageName: imageName)
-
     cardCell.isSelectable = (toggle == .edit)
-    print("\(indexPath.item): \(cardCell.isSelected)")
 
     cardCell.isAccessibilityElement = true
     cardCell.accessibilityLabel = title
-    if (indexPath.item == 0) {
-      cardCell.cardHighlighted = true
-    } else if (indexPath.item == 1) {
-      cardCell.isSelected = true
-    } else if (indexPath.item == 2) {
-      cardCell.isDragged = true
-    }
 
     return cardCell
   }
 
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     guard toggle == .edit else { return }
-    print(indexPath.item)
     dataSource[indexPath.item].selected = true
   }
 

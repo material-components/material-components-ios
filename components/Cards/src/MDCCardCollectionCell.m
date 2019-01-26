@@ -41,10 +41,7 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
   NSMutableDictionary<NSNumber *, NSNumber *> *_verticalImageAlignments;
   NSMutableDictionary<NSNumber *, UIColor *> *_imageTintColors;
   UIColor *_backgroundColor;
-  CGPoint _lastTouch;
   MDCRippleState _rippleState;
-  BOOL _rippleAnimating;
-  BOOL _tapWentOutsideOfBounds;
 }
 
 @dynamic layer;
@@ -79,7 +76,6 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
       _rippleView.layer.zPosition = 100;
       [self addSubview:_rippleView];
     }
-  _tapWentOutsideOfBounds = NO;
 
   if (_selectedImageView == nil) {
     _selectedImageView = [[UIImageView alloc] init];
@@ -173,7 +169,7 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
     return MDCCardCellStateSelected;
   } else if (self.dragged) {
     return MDCCardCellStateDragged;
-  } else if (self.cardHighlighted) {
+  } else if (self.highlighted) {
     return MDCCardCellStateHighlighted;
   } else {
     return MDCCardCellStateNormal;
@@ -182,6 +178,7 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 
 - (void)setSelected:(BOOL)selected {
   [super setSelected:selected];
+
   if (!self.selectable) {
     return;
   }
@@ -189,21 +186,32 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
   [self updateCardCellVisuals];
 }
 
+- (void)setHighlighted:(BOOL)highlighted {
+  [super setHighlighted:highlighted];
+
+  self.rippleView.rippleHighlighted = highlighted;
+  [self updateCardCellVisuals];
+}
+
 - (void)setDragged:(BOOL)dragged {
   _dragged = dragged;
+
   self.rippleView.dragged = dragged;
+  if (dragged) {
+    self.highlighted = NO;
+  }
   [self updateCardCellVisuals];
 }
 
 - (void)setCardHighlighted:(BOOL)cardHighlighted {
   _cardHighlighted = cardHighlighted;
-  self.rippleView.rippleHighlighted = cardHighlighted;
-
-  if (self.dragged) {
-    // When highlighted is NO, dragged becomes NO as well.
-    self.dragged = NO;
-  }
-  [self updateCardCellVisuals];
+//  self.rippleView.rippleHighlighted = cardHighlighted;
+//
+//  if (self.dragged) {
+//    // When highlighted is NO, dragged becomes NO as well.
+//    self.dragged = NO;
+//  }
+//  [self updateCardCellVisuals];
 }
 
 - (void)updateCardCellVisuals {
@@ -487,27 +495,18 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
   return result;
 }
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-  [super touchesBegan:touches withEvent:event];
-  _tapWentOutsideOfBounds = NO;
-  UITouch *touch = [touches anyObject];
-  CGPoint location = [touch locationInView:self];
-  _lastTouch = location;
-  self.cardHighlighted = YES;
-}
-
-- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-  [super touchesMoved:touches withEvent:event];
-}
-
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
   [super touchesEnded:touches withEvent:event];
-  self.cardHighlighted = NO;
+  if (self.dragged) {
+    self.dragged = NO;
+  }
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   [super touchesCancelled:touches withEvent:event];
-  self.cardHighlighted = NO;
+  if (self.dragged) {
+    self.dragged = NO;
+  }
 }
 
 @end
