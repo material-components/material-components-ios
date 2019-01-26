@@ -77,7 +77,13 @@ static UIColor *RippleSelectedColor(void) {
 
 - (UIColor *)rippleColorForState:(MDCRippleState)state {
   UIColor *rippleColor = _rippleColors[@(state)];
-  if (state != MDCRippleStateNormal && rippleColor == nil) {
+  if (rippleColor == nil && (state & MDCRippleStateDragged) != 0) {
+    rippleColor = _rippleColors[@(MDCRippleStateDragged)];
+  } else if (rippleColor == nil && (state & MDCRippleStateSelected) != 0) {
+    rippleColor = _rippleColors[@(MDCRippleStateSelected)];
+  }
+
+  if (rippleColor == nil) {
     rippleColor = _rippleColors[@(MDCRippleStateNormal)];
   }
   return rippleColor;
@@ -197,6 +203,8 @@ static UIColor *RippleSelectedColor(void) {
 }
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  // When the touch is held and moved outside and inside the bounds of the surface,
+  // the ripple should gracefully fade out and in accordingly.
   UITouch *touch = [touches anyObject];
   CGPoint location = [touch locationInView:self];
   BOOL pointContainedinBounds = CGRectContainsPoint(self.bounds, location);
