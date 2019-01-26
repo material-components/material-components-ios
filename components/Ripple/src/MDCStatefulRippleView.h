@@ -23,7 +23,7 @@
  - MDCRippleStateSelected: The ripple is in the selected state.
  - MDCRippleStateDragged: The ripple is in the dragged state.
  */
-typedef NS_ENUM(NSInteger, MDCRippleState) {
+typedef NS_OPTIONS(NSInteger, MDCRippleState) {
   MDCRippleStateNormal = 0,
   MDCRippleStateHighlighted = 1 << 0,
   MDCRippleStateSelected = 1 << 1,

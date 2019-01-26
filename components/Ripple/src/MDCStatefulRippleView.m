@@ -15,8 +15,8 @@
 #import "MDCStatefulRippleView.h"
 #import "MDCRippleLayer.h"
 
-//static const CGFloat kRippleAlpha = (CGFloat)0.16;
-//static const CGFloat kRippleSelectedAlpha = (CGFloat)0.08;
+static const CGFloat kRippleAlpha = (CGFloat)0.16;
+static const CGFloat kRippleSelectedAlpha = (CGFloat)0.08;
 static const CGFloat kRippleDraggedAlpha = (CGFloat)0.08;
 
 static UIColor *RippleSelectedColor(void) {
@@ -29,7 +29,6 @@ static UIColor *RippleSelectedColor(void) {
 
 @implementation MDCStatefulRippleView {
   NSMutableDictionary<NSNumber *, UIColor *> *_rippleColors;
-  BOOL _deselecting;
   BOOL _tapWentOutsideOfBounds;
   BOOL _tapWentInsideOfBounds;
   CGPoint _lastTouch;
@@ -59,18 +58,17 @@ static UIColor *RippleSelectedColor(void) {
   if (_rippleColors == nil) {
     _rippleColors = [NSMutableDictionary dictionary];
     UIColor *selectionColor = RippleSelectedColor();
-    _rippleColors[@(MDCRippleStateNormal)] = [[UIColor blackColor] colorWithAlphaComponent:0.2];// [UIColor colorWithWhite:0 alpha:kRippleAlpha];
-    _rippleColors[@(MDCRippleStateHighlighted)] = [[UIColor greenColor] colorWithAlphaComponent:0.2];// [UIColor colorWithWhite:0 alpha:kRippleAlpha];
-    _rippleColors[@(MDCRippleStateSelected)] = [[UIColor blueColor] colorWithAlphaComponent:0.2];
-//    [selectionColor colorWithAlphaComponent:kRippleSelectedAlpha];
-    _rippleColors[@(MDCRippleStateSelected | MDCRippleStateHighlighted)] = [[UIColor redColor] colorWithAlphaComponent:0.2];
-//    [selectionColor colorWithAlphaComponent:kRippleAlpha];
+    _rippleColors[@(MDCRippleStateNormal)] = [UIColor colorWithWhite:0 alpha:kRippleAlpha];
+    _rippleColors[@(MDCRippleStateHighlighted)] = [UIColor colorWithWhite:0 alpha:kRippleAlpha];
+    _rippleColors[@(MDCRippleStateSelected)] = [selectionColor colorWithAlphaComponent:kRippleSelectedAlpha];
+    _rippleColors[@(MDCRippleStateSelected | MDCRippleStateHighlighted)] =
+        [selectionColor colorWithAlphaComponent:kRippleAlpha];
     _rippleColors[@(MDCRippleStateDragged)] =
-    [UIColor colorWithWhite:0 alpha:kRippleDraggedAlpha];
+        [UIColor colorWithWhite:0 alpha:kRippleDraggedAlpha];
     _rippleColors[@(MDCRippleStateDragged | MDCRippleStateHighlighted)] =
-    [UIColor colorWithWhite:0 alpha:kRippleDraggedAlpha];
+        [UIColor colorWithWhite:0 alpha:kRippleDraggedAlpha];
     _rippleColors[@(MDCRippleStateSelected | MDCRippleStateDragged)] =
-    [selectionColor colorWithAlphaComponent:kRippleDraggedAlpha];
+        [selectionColor colorWithAlphaComponent:kRippleDraggedAlpha];
   }
   self.userInteractionEnabled = YES;
 }
