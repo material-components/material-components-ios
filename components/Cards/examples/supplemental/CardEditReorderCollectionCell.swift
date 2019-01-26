@@ -42,14 +42,14 @@ class CardEditReorderCollectionCell: MDCCardCollectionCell {
 
     let bundle = Bundle(for: CardEditReorderCollectionCell.self)
 
-//    self.imageView.image  = UIImage(named: imageName, in: bundle, compatibleWith: nil)
-//    self.titleLabel.text = title
+    self.imageView.image  = UIImage(named: imageName, in: bundle, compatibleWith: nil)
+    self.titleLabel.text = title
 
-//    self.contentView.addSubview(imageView)
-//    self.contentView.addSubview(titleLabel)
-//    titleLabel.setContentCompressionResistancePriority(800, for: .vertical)
+    self.contentView.addSubview(imageView)
+    self.contentView.addSubview(titleLabel)
+    titleLabel.setContentCompressionResistancePriority(800, for: .vertical)
 
-//    addConstraints()
+    addConstraints()
   }
 
   func apply(containerScheme: MDCContainerScheming, typographyScheme: MDCTypographyScheme) {
