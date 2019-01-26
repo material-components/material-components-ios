@@ -14,19 +14,20 @@
 
 #import <UIKit/UIKit.h>
 
-#import "SimpleTextFieldLayoutUtils.h"
+#import "MaterialContainerScheme.h"
+#import "SimpleTextField.h"
 
-@interface SimpleTextFieldColorSchemeAdapter : NSObject
+/**
+ This category is used to style SimpleTextField instances with an MDCContainerScheme.
+ */
+@interface SimpleTextField (MaterialTheming)
 
-@property(strong, nonatomic) UIColor *textColor;
-@property(strong, nonatomic) UIColor *underlineLabelColor;
-@property(strong, nonatomic) UIColor *outlineColor;
-@property(strong, nonatomic) UIColor *placeholderLabelColor;
-@property(strong, nonatomic) UIColor *filledSublayerFillColor;
-@property(strong, nonatomic) UIColor *filledSublayerUnderlineFillColor;
-@property(strong, nonatomic) UIColor *clearButtonTintColor;
+/**
+ Applies a container scheme's subsystem-specific schemes to the receiver.
 
-+ (instancetype)defaultSimpleTextFieldColorScheme;
-+ (instancetype)defaultSimpleTextFieldColorSchemeWithState:(TextFieldState)textFieldState;
+ @param scheme A container scheme instance containing any desired customizations to the theming
+ system.
+ */
+- (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
 
 @end

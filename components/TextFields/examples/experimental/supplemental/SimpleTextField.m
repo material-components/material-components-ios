@@ -1,4 +1,4 @@
-// Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2019-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,9 +27,6 @@
 
 @interface SimpleTextField ()
 
-@property(strong, nonatomic) UIFont *floatingPlaceholderFont;
-@property(strong, nonatomic) UIFont *placeholderFont;
-
 @property(strong, nonatomic) UIButton *clearButton;
 @property(strong, nonatomic) UIImageView *clearButtonImageView;
 @property(strong, nonatomic) UILabel *placeholderLabel;
@@ -45,6 +42,8 @@
 
 @property(nonatomic, assign) TextFieldState textFieldState;
 @property(nonatomic, assign) PlaceholderState placeholderState;
+
+@property(nonatomic, strong) NSMutableDictionary *colorSchemes;
 
 @end
 
@@ -87,43 +86,56 @@
 - (void)initializeProperties {
   [self setUpCanPlaceholderFloat];
   [self setUpLayoutDirection];
-  [self setUpFonts];
-  [self setUpContainerScheme];
   [self setUpPlaceholderState];
   [self setUpTextFieldState];
+  [self setUpStateDependentColorSchemes];
 }
 
 - (void)setUpCanPlaceholderFloat {
   self.canPlaceholderFloat = YES;
 }
 
-- (void)setUpTextFieldState {
-  self.textFieldState = [self determineCurrentTextFieldState];
+- (void)setUpLayoutDirection {
+  self.layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
 }
 
 - (void)setUpPlaceholderState {
   self.placeholderState = [self determineCurrentPlaceholderState];
 }
 
-- (void)setUpLayoutDirection {
-  self.layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
+- (void)setUpTextFieldState {
+  self.textFieldState = [self determineCurrentTextFieldState];
 }
 
-- (void)setUpFonts {
-  self.placeholderFont = [self determineEffectiveFont];
-  self.floatingPlaceholderFont = [self floatingPlaceholderFontWithFont:[self determineEffectiveFont]
-                                                        containerStyle:self.containerStyle];
-}
+- (void)setUpStateDependentColorSchemes {
+  SimpleTextFieldColorSchemeAdapter *normalColorScheme = [SimpleTextFieldColorSchemeAdapter
+      defaultSimpleTextFieldColorSchemeWithState:TextFieldStateNormal];
+  [self setSimpleTextFieldColorScheme:normalColorScheme forState:TextFieldStateNormal];
 
-- (void)setUpContainerScheme {
-  self.containerScheme = [[MDCContainerScheme alloc] init];
-  self.containerScheme.colorScheme = [[MDCSemanticColorScheme alloc] init];
-  self.containerScheme.typographyScheme = [[MDCTypographyScheme alloc] init];
+  SimpleTextFieldColorSchemeAdapter *focusedColorScheme = [SimpleTextFieldColorSchemeAdapter
+      defaultSimpleTextFieldColorSchemeWithState:TextFieldStateFocused];
+  [self setSimpleTextFieldColorScheme:focusedColorScheme forState:TextFieldStateFocused];
+
+  SimpleTextFieldColorSchemeAdapter *activatedColorScheme = [SimpleTextFieldColorSchemeAdapter
+      defaultSimpleTextFieldColorSchemeWithState:TextFieldStateActivated];
+  [self setSimpleTextFieldColorScheme:activatedColorScheme forState:TextFieldStateActivated];
+
+  SimpleTextFieldColorSchemeAdapter *erroredColorScheme = [SimpleTextFieldColorSchemeAdapter
+      defaultSimpleTextFieldColorSchemeWithState:TextFieldStateErrored];
+  [self setSimpleTextFieldColorScheme:erroredColorScheme forState:TextFieldStateErrored];
+
+  SimpleTextFieldColorSchemeAdapter *disabledColorScheme = [SimpleTextFieldColorSchemeAdapter
+      defaultSimpleTextFieldColorSchemeWithState:TextFieldStateDisabled];
+  [self setSimpleTextFieldColorScheme:disabledColorScheme forState:TextFieldStateDisabled];
 }
 
 - (void)setUpUnderlineLabels {
+  CGFloat underlineFontSize = MDCRound([UIFont systemFontSize] * 0.75);
+  UIFont *underlineFont = [UIFont systemFontOfSize:underlineFontSize];
   self.leftUnderlineLabel = [[UILabel alloc] init];
+  self.leftUnderlineLabel.font = underlineFont;
   self.rightUnderlineLabel = [[UILabel alloc] init];
+  self.rightUnderlineLabel.font = underlineFont;
   [self addSubview:self.leftUnderlineLabel];
   [self addSubview:self.rightUnderlineLabel];
 }
@@ -198,13 +210,19 @@
 - (void)preLayoutSubviews {
   self.textFieldState = [self determineCurrentTextFieldState];
   self.placeholderState = [self determineCurrentPlaceholderState];
-  SimpleTextFieldColorSchemeAdapter *colorAdapter = [[SimpleTextFieldColorSchemeAdapter alloc]
-      initWithColorScheme:self.containerScheme.colorScheme
-           textFieldState:self.textFieldState];
-  [self applyColorAdapter:colorAdapter];
-  [self applyTypographyScheme:self.containerScheme.typographyScheme];
+  SimpleTextFieldColorSchemeAdapter *colorAdapter = [self colorSchemeForState:self.textFieldState];
+  [self applySimpleTextFieldColorScheme:colorAdapter];
   CGSize fittingSize = CGSizeMake(CGRectGetWidth(self.frame), CGFLOAT_MAX);
   self.layout = [self calculateLayoutWithTextFieldSize:fittingSize];
+}
+
+- (SimpleTextFieldColorSchemeAdapter *)colorSchemeForState:(TextFieldState)state {
+  SimpleTextFieldColorSchemeAdapter *colorScheme = self.colorSchemes[@(state)];
+  if (!colorScheme) {
+    colorScheme =
+        [SimpleTextFieldColorSchemeAdapter defaultSimpleTextFieldColorSchemeWithState:state];
+  }
+  return colorScheme;
 }
 
 - (void)postLayoutSubviews {
@@ -269,11 +287,6 @@
 }
 
 #pragma mark UITextField Accessor Overrides
-
-- (void)setFont:(UIFont *)font {
-  [super setFont:font];
-  [self setUpFonts];
-}
 
 - (void)setPlaceholder:(NSString *)placeholder {
   self.placeholderLabel.attributedText = nil;
@@ -669,20 +682,18 @@
 }
 
 - (void)layOutPlaceholderWithState:(PlaceholderState)placeholderState {
-  UIFont *font = nil;
+  UIFont *font = [self determineEffectiveFont];
   CGRect frame = CGRectZero;
   BOOL placeholderShouldHide = NO;
   switch (placeholderState) {
     case PlaceholderStateFloating:
-      font = self.floatingPlaceholderFont;
+      font = [self floatingPlaceholderFontWithFont:font containerStyle:self.containerStyle];
       frame = self.layout.placeholderFrameFloating;
       break;
     case PlaceholderStateNormal:
-      font = self.placeholderFont;
       frame = self.layout.placeholderFrameNormal;
       break;
     case PlaceholderStateNone:
-      font = self.placeholderFont;
       frame = self.layout.placeholderFrameNormal;
       placeholderShouldHide = YES;
       break;
@@ -730,6 +741,7 @@
   }
 }
 
+// this could just be a CGFloat between 0 and 1 for floating placeholder scale.
 - (UIFont *)floatingPlaceholderFontWithFont:(UIFont *)font
                              containerStyle:(MDCInputViewContainerStyle)containerStyle {
   CGFloat floatingPlaceholderFontSize = 0.0;
@@ -844,7 +856,7 @@
 
 #pragma mark Theming
 
-- (void)applyColorAdapter:(SimpleTextFieldColorSchemeAdapter *)colorAdapter {
+- (void)applySimpleTextFieldColorScheme:(SimpleTextFieldColorSchemeAdapter *)colorAdapter {
   self.textColor = colorAdapter.textColor;
   self.leadingUnderlineLabel.textColor = colorAdapter.underlineLabelColor;
   self.trailingUnderlineLabel.textColor = colorAdapter.underlineLabelColor;
@@ -858,13 +870,10 @@
   self.containerStyler.filledSublayer.fillColor = colorAdapter.filledSublayerFillColor.CGColor;
 }
 
-- (void)applyTypographyScheme:(MDCTypographyScheme *)typographyScheme {
-  self.font = typographyScheme.subtitle1;
-  self.placeholderFont = typographyScheme.subtitle1;
-  self.floatingPlaceholderFont = [self floatingPlaceholderFontWithFont:self.font
-                                                        containerStyle:self.containerStyle];
-  self.leadingUnderlineLabel.font = typographyScheme.caption;
-  self.trailingUnderlineLabel.font = typographyScheme.caption;
+- (void)setSimpleTextFieldColorScheme:
+            (SimpleTextFieldColorSchemeAdapter *)simpleTextFieldColorScheme
+                             forState:(TextFieldState)textFieldState {
+  self.colorSchemes[@(textFieldState)] = simpleTextFieldColorScheme;
 }
 
 @end

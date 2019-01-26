@@ -1,4 +1,4 @@
-// Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2019-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,69 +12,61 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "SimpleTextFieldColorSchemeAdapter.h"
-
-//#import <MDFInternationalization/MDFInternationalization.h>
-//#import <MaterialComponents/MDCMath.h>
-//#import "MDCInputViewContainerStyler.h"
-//#import "SimpleTextFieldLayout.h"
-//#import "SimpleTextFieldLayoutUtils.h"
-
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
+#import "SimpleTextFieldColorSchemeAdapter.h"
 
 @implementation SimpleTextFieldColorSchemeAdapter
 
-- (instancetype)initWithColorScheme:(MDCSemanticColorScheme *)colorScheme
-                     textFieldState:(TextFieldState)textFieldState {
-  self = [super init];
-  if (self) {
-    [self assignPropertiesWithColorScheme:colorScheme textFieldState:textFieldState];
-  }
-  return self;
++ (instancetype)defaultSimpleTextFieldColorScheme {
+  UIColor *onSurfaceColor = [UIColor blackColor];
+  UIColor *textColor = onSurfaceColor;
+  UIColor *underlineLabelColor = [onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
+  UIColor *placeholderLabelColor = [onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
+  UIColor *outlineColor = onSurfaceColor;
+  UIColor *filledSublayerUnderlineFillColor = onSurfaceColor;
+  UIColor *filledSublayerFillColor = [onSurfaceColor colorWithAlphaComponent:(CGFloat)0.15];
+  UIColor *clearButtonTintColor = [onSurfaceColor colorWithAlphaComponent:(CGFloat)0.20];
+
+  SimpleTextFieldColorSchemeAdapter *simpleTextFieldColorScheme =
+      [[SimpleTextFieldColorSchemeAdapter alloc] init];
+  simpleTextFieldColorScheme.textColor = textColor;
+  simpleTextFieldColorScheme.filledSublayerFillColor = filledSublayerFillColor;
+  simpleTextFieldColorScheme.filledSublayerUnderlineFillColor = filledSublayerUnderlineFillColor;
+  simpleTextFieldColorScheme.underlineLabelColor = underlineLabelColor;
+  simpleTextFieldColorScheme.outlineColor = outlineColor;
+  simpleTextFieldColorScheme.placeholderLabelColor = placeholderLabelColor;
+  simpleTextFieldColorScheme.clearButtonTintColor = clearButtonTintColor;
+  return simpleTextFieldColorScheme;
 }
 
-- (void)assignPropertiesWithColorScheme:(MDCSemanticColorScheme *)colorScheme
-                         textFieldState:(TextFieldState)textFieldState {
-  UIColor *textColor = colorScheme.onSurfaceColor;
-  UIColor *underlineLabelColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
-  UIColor *placeholderLabelColor =
-      [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
-  UIColor *outlineColor = colorScheme.onSurfaceColor;
-  UIColor *filledSublayerUnderlineFillColor = colorScheme.onSurfaceColor;
-  UIColor *filledSublayerFillColor =
-      [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.15];
-  UIColor *clearButtonTintColor =
-      [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.20];
-
++ (instancetype)defaultSimpleTextFieldColorSchemeWithState:(TextFieldState)textFieldState {
+  SimpleTextFieldColorSchemeAdapter *scheme = [self defaultSimpleTextFieldColorScheme];
   switch (textFieldState) {
     case TextFieldStateNormal:
       break;
     case TextFieldStateActivated:
       break;
     case TextFieldStateDisabled:
-      placeholderLabelColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.10];
+      scheme.placeholderLabelColor = [UIColor
+          blueColor];  //[colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.10];
       break;
     case TextFieldStateErrored:
-      placeholderLabelColor = colorScheme.errorColor;
-      underlineLabelColor = colorScheme.errorColor;
-      filledSublayerUnderlineFillColor = colorScheme.errorColor;
-      outlineColor = colorScheme.errorColor;
+      scheme.placeholderLabelColor = [UIColor redColor];
+      scheme.underlineLabelColor = [UIColor redColor];
+      scheme.filledSublayerUnderlineFillColor = [UIColor redColor];
+      scheme.outlineColor = [UIColor redColor];
       break;
     case TextFieldStateFocused:
-      outlineColor = colorScheme.primaryColor;
-      placeholderLabelColor = colorScheme.primaryColor;
-      filledSublayerUnderlineFillColor = colorScheme.primaryColor;
+      //      scheme.outlineColor = colorScheme.primaryColor;
+      //      scheme.placeholderLabelColor = colorScheme.primaryColor;
+      //      scheme.filledSublayerUnderlineFillColor = colorScheme.primaryColor;
       break;
     default:
       break;
   }
-  self.textColor = textColor;
-  self.filledSublayerFillColor = filledSublayerFillColor;
-  self.filledSublayerUnderlineFillColor = filledSublayerUnderlineFillColor;
-  self.underlineLabelColor = underlineLabelColor;
-  self.outlineColor = outlineColor;
-  self.placeholderLabelColor = placeholderLabelColor;
-  self.clearButtonTintColor = clearButtonTintColor;
+  return scheme;
 }
 
 @end

@@ -1,4 +1,4 @@
-// Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2019-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 #import "SimpleTextFieldLayoutUtils.h"
 
 #import "MaterialColorScheme.h"
+#import "SimpleTextFieldColorSchemeAdapter.h"
 
 #import "MDCInputViewContainerStyler.h"
 #import "MaterialContainerScheme.h"
@@ -92,11 +93,6 @@
 @property(nonatomic, assign) UITextFieldViewMode trailingViewMode;
 
 /**
- Setting this property determines the typography and coloring of the text field.
- */
-@property(strong, nonatomic, nullable) MDCContainerScheme *containerScheme;
-
-/**
  This property toggles a state (similar to @c isHighlighted, @c isEnabled, @c isSelected, etc.) that
  is part of a general interpretation of the states outlined in the Material guidelines for Text
  Fields. See the @c TextFieldState enum for more information.
@@ -118,5 +114,9 @@
  A value of @c .5 would result in each underline label getting 50% of the available width.
  */
 @property(nonatomic, assign) CGFloat customUnderlineLabelDrawPriority;
+
+- (void)setSimpleTextFieldColorScheme:
+            (SimpleTextFieldColorSchemeAdapter *)simpleTextFieldColorScheme
+                             forState:(TextFieldState)textFieldState;
 
 @end
