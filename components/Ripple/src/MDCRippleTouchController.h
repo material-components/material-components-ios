@@ -62,6 +62,16 @@ typedef NS_ENUM(NSInteger, MDCRippleState) {
  */
 @property(nonatomic, strong, readonly, nonnull) UILongPressGestureRecognizer *gestureRecognizer;
 
+
+/**
+ If set to NO, the ripple gesture will fail and not be initiated if there are other competing
+ gestures that belong to a UIScrollView. This helps the ripple not be invoked if a user wants
+ to scroll but does so while tapping on a view that incorporates a ripple.
+
+ Defaults to YES.
+ */
+@property(nonatomic, assign) BOOL shouldProcessRippleWithScrollViewGestures;
+
 /**
  The selection gesture recognizer used to bind the touch events related to selection to the ripple.
  */

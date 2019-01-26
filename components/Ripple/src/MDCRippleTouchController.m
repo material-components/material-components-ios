@@ -196,6 +196,14 @@
   }
 }
 
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+  if (!self.shouldProcessRippleWithScrollViewGestures &&
+      [otherGestureRecognizer.view isKindOfClass:[UIScrollView class]]) {
+    return YES;
+  }
+  return NO;
+}
+
 - (void)handleRippleSelectionGesture:(UILongPressGestureRecognizer *)recognizer {
   switch (recognizer.state) {
     case UIGestureRecognizerStateBegan: {
