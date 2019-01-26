@@ -82,7 +82,7 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
   }
 }
 
-- (void)cancelAllRipplesAnimated:(BOOL)animated completion:(MDCRippleCompletionBlock)completion {
+- (void)cancelAllRipplesAnimated:(BOOL)animated {
   NSArray<CALayer *> *sublayers = [self.layer.sublayers copy];
   if (animated) {
     CFTimeInterval latestBeginTouchDownRippleTime = DBL_MIN;
@@ -93,7 +93,6 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
             MAX(latestBeginTouchDownRippleTime, rippleLayer.rippleTouchDownStartTime);
       }
     }
-    dispatch_group_t group = dispatch_group_create();
     for (CALayer *layer in sublayers) {
       if ([layer isKindOfClass:[MDCRippleLayer class]]) {
         MDCRippleLayer *rippleLayer = (MDCRippleLayer *)layer;
@@ -101,17 +100,9 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
           rippleLayer.rippleTouchDownStartTime =
               latestBeginTouchDownRippleTime + kRippleFadeOutDelay;
         }
-        dispatch_group_enter(group);
-        [rippleLayer endRippleAnimated:animated completion:^{
-          dispatch_group_leave(group);
-        }];
+        [rippleLayer endRippleAnimated:animated completion:nil];
       }
     }
-    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
-      if (completion) {
-        completion();
-      }
-    });
   } else {
     for (CALayer *layer in sublayers) {
       if ([layer isKindOfClass:[MDCRippleLayer class]]) {
@@ -120,6 +111,13 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
       }
     }
   }
+}
+
+- (MDCRippleLayer *)activeRippleLayer {
+  if (self.layer.sublayers.count < 1) {
+    return nil;
+  }
+  return _activeRippleLayer;
 }
 
 - (void)beginRippleTouchDownAtPoint:(CGPoint)point
@@ -152,13 +150,6 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
     return;
   }
   self.activeRippleLayer.fillColor = rippleColor.CGColor;
-}
-
-- (MDCRippleLayer *)activeRippleLayer {
-  if (self.layer.sublayers.count < 1) {
-    return nil;
-  }
-  return _activeRippleLayer;
 }
 
 #pragma mark - MDCRippleLayerDelegate

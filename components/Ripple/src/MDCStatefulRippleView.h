@@ -23,11 +23,11 @@
  - MDCRippleStateSelected: The ripple is in the selected state.
  - MDCRippleStateDragged: The ripple is in the dragged state.
  */
-typedef NS_OPTIONS(NSInteger, MDCRippleState) {
-  MDCRippleStateNormal = 0,
-  MDCRippleStateHighlighted = 1 << 0,
-  MDCRippleStateSelected = 1 << 1,
-  MDCRippleStateDragged = 1 << 2,
+typedef NS_OPTIONS(NSInteger, MDCRippleStateNew) {
+  MDCRippleStateNewNormal = 0,
+  MDCRippleStateNewHighlighted = 1 << 0,
+  MDCRippleStateNewSelected = 1 << 1,
+  MDCRippleStateNewDragged = 1 << 2,
 };
 
 @interface MDCStatefulRippleView : MDCRippleView
@@ -65,7 +65,7 @@ typedef NS_OPTIONS(NSInteger, MDCRippleState) {
 /**
  The current state of the ripple.
  */
-@property(nonatomic, readonly) MDCRippleState state;
+@property(nonatomic, readonly) MDCRippleStateNew state;
 
 /**
  Sets the color of the ripple for state.
@@ -73,7 +73,7 @@ typedef NS_OPTIONS(NSInteger, MDCRippleState) {
  @param rippleColor The ripple color to set the ripple to.
  @param state The state of the ripple in which to set the ripple color.
  */
-- (void)setRippleColor:(nullable UIColor *)rippleColor forState:(MDCRippleState)state;
+- (void)setRippleColor:(nullable UIColor *)rippleColor forState:(MDCRippleStateNew)state;
 
 /**
  Gets the ripple color for the given state.
@@ -81,6 +81,6 @@ typedef NS_OPTIONS(NSInteger, MDCRippleState) {
  @param state The ripple's state.
  @return the color of the ripple for state.
  */
-- (nullable UIColor *)rippleColorForState:(MDCRippleState)state;
+- (nullable UIColor *)rippleColorForState:(MDCRippleStateNew)state;
 
 @end

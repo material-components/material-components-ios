@@ -23,7 +23,6 @@
 
 @implementation RippleTypicalUseExample {
   NSMutableArray *_rippleTouchControllers;
-  BOOL _selectionMode;
 }
 
 - (void)viewDidLoad {
@@ -41,34 +40,15 @@
   self.surfaces = [[RippleSurfaces alloc] initWithFrame:customFrame];
 
   _rippleTouchControllers = [[NSMutableArray alloc] init];
-  _selectionMode = NO;
 
   for (UIView *view in self.surfaces.subviews) {
     MDCRippleTouchController *rippleTouchController =
         [[MDCRippleTouchController alloc] initWithView:view];
     rippleTouchController.delegate = self;
-//    rippleTouchController.enableLongPressGestureForSelection = YES;
+    rippleTouchController.allowsSelection = YES;
     [_rippleTouchControllers addObject:rippleTouchController];
   }
   [containerView addSubview:self.surfaces];
-
-  self.navigationItem.rightBarButtonItem =
-      [[UIBarButtonItem alloc] initWithTitle:@"Selection Off"
-                                       style:UIBarButtonItemStylePlain
-                                      target:self
-                                      action:@selector(toggleSelection)];
-}
-
-- (void)toggleSelection {
-  _selectionMode = !_selectionMode;
-  if (_selectionMode) {
-    self.navigationItem.rightBarButtonItem.title = @"Selection On";
-  } else {
-    self.navigationItem.rightBarButtonItem.title = @"Selection Off";
-  }
-//  for (MDCStatefulRippleTouchController *controller in _rippleTouchControllers) {
-//    controller.selectionMode = _selectionMode;
-//  }
 }
 
 #pragma mark - Private

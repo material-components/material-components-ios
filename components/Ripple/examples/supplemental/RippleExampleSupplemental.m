@@ -81,7 +81,6 @@
                      @"expanding outward from the user's touch.",
     @"primaryDemo" : @YES,
     @"presentable" : @YES,
-    @"debug": @NO,
   };
 }
 

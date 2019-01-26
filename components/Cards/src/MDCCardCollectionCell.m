@@ -142,11 +142,6 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
   [self updateBackgroundColor];
 }
 
-- (void)prepareForReuse {
-  [super prepareForReuse];
-  self.cardHighlighted = NO;
-}
-
 - (void)layoutSubviews {
   [super layoutSubviews];
   if (!self.layer.shapeGenerator) {
@@ -201,17 +196,6 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
     self.highlighted = NO;
   }
   [self updateCardCellVisuals];
-}
-
-- (void)setCardHighlighted:(BOOL)cardHighlighted {
-  _cardHighlighted = cardHighlighted;
-//  self.rippleView.rippleHighlighted = cardHighlighted;
-//
-//  if (self.dragged) {
-//    // When highlighted is NO, dragged becomes NO as well.
-//    self.dragged = NO;
-//  }
-//  [self updateCardCellVisuals];
 }
 
 - (void)updateCardCellVisuals {

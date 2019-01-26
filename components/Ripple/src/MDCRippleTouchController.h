@@ -19,6 +19,18 @@
 @protocol MDCRippleTouchControllerDelegate;
 
 /**
+ Provides the current state of the ripple. The ripple is either in its normal state, or in the
+ selected state where the ripple remains spread on the view.
+
+ - MDCRippleStateNormal: The ripple is in its normal state.
+ - MDCRippleStateSelected: The ripple is in the selected state.
+ */
+typedef NS_ENUM(NSInteger, MDCRippleState) {
+  MDCRippleStateNormal = 0,
+  MDCRippleStateSelected,
+};
+
+/**
  The MDCRippleTouchController is a convenience controller that adds all the needed touch tracking
  and logic to provide the correct ripple effect based on the user interacting with the view the
  ripple is added to.
@@ -36,19 +48,53 @@
  */
 @property(nonatomic, strong, readonly, nonnull) MDCRippleView *rippleView;
 
+/** Delegate to extend the behavior of the touch control. */
+
 /**
  A delegate to extend the behavior of the touch controller.
  */
 @property(nonatomic, weak, nullable) id<MDCRippleTouchControllerDelegate> delegate;
+
+/** Gesture recognizer used to bind touch events to ripple. */
 
 /**
  The gesture recognizer used to bind the touch events to the ripple.
  */
 @property(nonatomic, strong, readonly, nonnull) UILongPressGestureRecognizer *gestureRecognizer;
 
-@property(nonatomic, assign) BOOL tapWentOutsideOfBounds;
+/**
+ The selection gesture recognizer used to bind the touch events related to selection to the ripple.
+ */
+@property(nonatomic, strong, readonly, nullable)
+    UILongPressGestureRecognizer *selectionGestureRecognizer;
 
-@property(nonatomic, assign) BOOL processRippleWithScrollViewGestures;
+/**
+ This BOOL tells the touch controller to allow selection and all the logic and visuals
+ that come with it, for this ripple.
+
+ Defaults to NO.
+ */
+@property(nonatomic) BOOL allowsSelection;
+
+/**
+ This BOOL is set to YES if the ripple is currently selected, or NO otherwise.
+ It only has significance if selectionMode is activated.
+
+ Defaults to NO.
+ */
+@property(nonatomic, getter=isSelected) BOOL selected;
+
+/**
+ This BOOL is set to YES if the ripple is currently in the selection mode, or NO otherwise.
+
+ Defaults to NO.
+ */
+@property(nonatomic) BOOL selectionMode;
+
+/**
+ The current state of the ripple.
+ */
+@property(nonatomic, readonly) MDCRippleState state;
 
 /**
  Unavailable, please use `initWithView` instead.
@@ -64,9 +110,36 @@
 - (nonnull instancetype)initWithView:(nonnull UIView *)view NS_DESIGNATED_INITIALIZER;
 
 /**
- Cancels all the existing ripples on the view with animation.
+ Sets the color of the ripple for state.
+
+ @param rippleColor The ripple color to set the ripple to.
+ @param state The state of the ripple in which to set the ripple color.
  */
-- (void)cancelRippleTouchProcessing;
+- (void)setRippleColor:(nullable UIColor *)rippleColor forState:(MDCRippleState)state;
+
+/**
+ Gets the ripple color for the given state.
+
+ @param state The ripple's state.
+ @return the color of the ripple for state.
+ */
+- (nullable UIColor *)rippleColorForState:(MDCRippleState)state;
+
+/**
+ Sets the alpha of the ripple for state.
+
+ @param rippleAlpha The ripple alpha to set the ripple to.
+ @param state The state of the ripple in which to set the ripple alpha.
+ */
+- (void)setRippleAlpha:(CGFloat)rippleAlpha forState:(MDCRippleState)state;
+
+/**
+ Gets the ripple alpha for the given state.
+
+ @param state The ripple's state.
+ @return the alpha of the ripple for state.
+ */
+- (CGFloat)rippleAlphaForState:(MDCRippleState)state;
 
 @end
 
@@ -106,8 +179,5 @@
 - (void)rippleTouchController:(nonnull MDCRippleTouchController *)rippleTouchController
          didProcessRippleView:(nonnull MDCRippleView *)rippleView
               atTouchLocation:(CGPoint)location;
-
-- (void)rippleTouchController:(nonnull MDCRippleTouchController *)rippleTouchController
-       tapWentOutsideOfBounds:(BOOL)outsideOfBounds;
 
 @end
