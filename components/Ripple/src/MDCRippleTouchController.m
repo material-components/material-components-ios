@@ -144,7 +144,7 @@
 }
 
 - (void)cancelRippleTouchProcessing {
-  [self.rippleView cancelAllRipplesAnimated:YES];
+  [self.rippleView cancelAllRipplesAnimated:YES completion:nil];
 }
 
 - (void)handleRippleGesture:(UILongPressGestureRecognizer *)recognizer {
@@ -159,7 +159,8 @@
                                           if (self.selectionMode) {
                                             self.selected = !self.selected;
                                             if (!self.selected) {
-                                              [self.rippleView cancelAllRipplesAnimated:YES];
+                                              [self.rippleView cancelAllRipplesAnimated:YES
+                                                                             completion:nil];
                                             }
                                           }
                                         }];
@@ -191,7 +192,7 @@
       break;
     case UIGestureRecognizerStateCancelled:
     case UIGestureRecognizerStateFailed:
-      [self.rippleView cancelAllRipplesAnimated:YES];
+      [self.rippleView cancelAllRipplesAnimated:YES completion:nil];
       break;
   }
 }
@@ -204,7 +205,7 @@
         self.selected = YES;
       } else {
         if (!self.selected) {
-          [self.rippleView cancelAllRipplesAnimated:YES];
+          [self.rippleView cancelAllRipplesAnimated:YES completion:nil];
         }
       }
       break;
