@@ -72,11 +72,13 @@
   return UIModalPresentationCustom;
 }
 
-- (UIScrollView *)trackingScrollView {
-  return self.transitionController.trackingScrollView;
-}
-
 - (void)setTrackingScrollView:(UIScrollView *)trackingScrollView {
+  _trackingScrollView = trackingScrollView;
+  if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
+    (MDCBottomDrawerPresentationController *)self.presentationController;
+    bottomDrawerPresentationController.trackingScrollView = trackingScrollView;
+  }
   // Rather than have the client manually disable scrolling on the internal scroll view for
   // the drawer to work properly, we can disable it if a trackingScrollView is provided.
   [trackingScrollView setScrollEnabled:NO];
