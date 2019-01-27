@@ -44,7 +44,7 @@ By default, components have reasonable defaults for all of their customizable pr
 
 ## Examples
 
-### Theme component
+### Theming a Component
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -128,7 +128,26 @@ colorScheme.backgroundColor = UIColor.lightGrayColor
 ```
 <!--</div>-->
 
-## Themers (Deprecated)
+### How to get the code
+
+#### Beta components
+
+In order to use the theming extensions and container scheme you'll need to follow [these](../../contributing/beta_components.md) 
+instructions since they are currently in beta.
+
+#### Cocoapods
+
+In order to use the components and subsystem schemes you'll need to add the targets to your Podfile:
+
+<!--<div class="material-code-render" markdown="1">-->
+
+```bash
+pod 'MaterialComponents/Buttons'
+pod 'MaterialComponents/schemes/Color'
+```
+<!--</div>-->
+
+## Themers
 
 **Note** These will soon be deprecated for theming-extensions outlined above.
 
@@ -146,14 +165,14 @@ Themers are objects that, when invoked with a scheme, will theme a component acc
 
 ## Examples
 
-### Theme component
+### Theming a Component
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
 ```swift
 import MaterialComponents.MaterialBottomNavigation
-import MaterialComponents.MaterialButtons_ColorThemer
+import MaterialComponents.MaterialBottomNavigation_ColorThemer
 
 let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
 let bottomNavBar = MDCBottomNavigationBar()
@@ -195,6 +214,21 @@ colorScheme.backgroundColor = .lightGray
 MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 // Configure custom properties to match your brand
 colorScheme.backgroundColor = UIColor.lightGrayColor
+```
+<!--</div>-->
+
+### How to get the code
+
+#### Cocoapods
+
+In order to use the components, themers and subsystem schemes you'll need to add the targets to your Podfile:
+
+<!--<div class="material-code-render" markdown="1">-->
+
+```bash
+pod 'MaterialComponents/BottomNavigation'
+pod 'MaterialComponents/BottomNavigation+ColorThemer'
+pod 'MaterialComponents/schemes/Color'
 ```
 <!--</div>-->
 
