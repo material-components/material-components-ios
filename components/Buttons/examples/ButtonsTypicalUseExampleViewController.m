@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import "MaterialButtons.h"
+#import "MaterialButtons+Theming.h"
 #import "MaterialContainerScheme.h"
 #import "MaterialTypography.h"
 
