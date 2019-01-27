@@ -15,6 +15,8 @@
 
 load(
     "//:material_components_ios.bzl",
+    "mdc_examples_objc_library",
+    "mdc_examples_swift_library",
     "mdc_extension_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
@@ -82,32 +84,29 @@ mdc_objc_library(
     includes = ["src/private"],
 )
 
-mdc_objc_library(
+mdc_examples_objc_library(
     name = "ObjcExamples",
-    srcs = glob([
-        "examples/*.m",
-        "examples/*.h",
-        "examples/supplemental/*.m",
-        "examples/supplemental/*.h",
-    ]),
     deps = [
         ":ActionSheet",
         ":Theming",
-        "//components/Buttons:ButtonThemer",
+        "//components/Buttons",
+        "//components/Buttons:Theming",
         "//components/schemes/Color",
+        "//components/schemes/Container",
         "//components/schemes/Typography",
     ],
 )
 
-swift_library(
+mdc_examples_swift_library(
     name = "SwiftExamples",
-    srcs = glob([
-        "examples/*.swift",
-        "examples/supplemental/*.swift",
-    ]),
     deps = [
         ":ActionSheet",
         ":Theming",
+        "//components/Buttons",
+        "//components/Buttons:Theming",
+        "//components/schemes/Color",
+        "//components/schemes/Container",
+        "//components/schemes/Typography",
     ],
 )
 
