@@ -66,9 +66,7 @@ class BottomDrawerExpandFullscreenExample: UIViewController {
     let bottomDrawerViewController = MDCBottomDrawerViewController()
     bottomDrawerViewController.contentViewController = contentViewController
     contentViewController.drawerVC = bottomDrawerViewController
-    bottomDrawerViewController.setTopCornersRadius(12, for: .collapsed)
     bottomDrawerViewController.headerViewController = headerViewController
-    bottomDrawerViewController.isTopHandleHidden = false
     bottomDrawerViewController.trackingScrollView = contentViewController.tableView
     MDCBottomDrawerColorThemer.applySemanticColorScheme(colorScheme,
                                                         toBottomDrawer: bottomDrawerViewController)
@@ -108,7 +106,7 @@ class ExpandFullscreenContentViewController: UITableViewController {
   }
 
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 10
+    return 4
   }
 
   override func numberOfSections(in tableView: UITableView) -> Int {

@@ -89,6 +89,8 @@ class DrawerContentTableViewController: UITableViewController {
     }
   }
 
+  var supportScrollToTop = true
+
   var numberOfRows = 10
 
   init() {
@@ -113,7 +115,10 @@ class DrawerContentTableViewController: UITableViewController {
   }
 
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return numberOfRows
+    if (supportScrollToTop == false) {
+      return numberOfRows
+    }
+    return 100
   }
 
   override func numberOfSections(in tableView: UITableView) -> Int {
@@ -122,13 +127,17 @@ class DrawerContentTableViewController: UITableViewController {
 
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
-    toggleNumberOfRows()
-    tableView.reloadData()
-    self.preferredContentSize = tableView.contentSize
+    if (supportScrollToTop == false) {
+      toggleNumberOfRows()
+      tableView.reloadData()
+      self.preferredContentSize = tableView.contentSize
+    } else {
+      drawerVC.setContentOffsetY(0, animated: false)
+    }
   }
 
   private func toggleNumberOfRows() {
-    numberOfRows = (numberOfRows == 10) ? 20 : 10
+    numberOfRows = (numberOfRows == 10) ? 14 : 10
   }
 
 }
