@@ -505,6 +505,20 @@
   XCTAssertEqual(self.fakeScrollView.scrollEnabled, NO);
 }
 
+- (void)testSetTrackingScrollView {
+  // When
+  self.drawerViewController.scrimColor = UIColor.blueColor;
+  self.drawerViewController.trackingScrollView = self.fakeScrollView;
+  if ([self.drawerViewController.presentationController
+       isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
+        (MDCBottomDrawerPresentationController *)self.drawerViewController.presentationController;
+
+    // Then
+    XCTAssertNotNil(bottomDrawerPresentationController.bottomDrawerContainerViewController.trackingScrollView);
+  }
+}
+
 - (void)testBottomDrawerTopInset {
   // Given
   MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
