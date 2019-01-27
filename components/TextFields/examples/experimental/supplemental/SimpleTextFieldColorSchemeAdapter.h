@@ -16,6 +16,31 @@
 
 #import "SimpleTextFieldLayoutUtils.h"
 
+// make NSCopying
+@protocol SimpleTextFieldColorScheming <NSObject>
+@property(strong, nonatomic, readonly, nonnull) UIColor *textColor;
+@property(strong, nonatomic, readonly, nonnull) UIColor *underlineLabelColor;
+@property(strong, nonatomic, readonly, nonnull) UIColor *placeholderLabelColor;
+@property(strong, nonatomic, readonly, nonnull) UIColor *clearButtonTintColor;
+@end
+
+@interface SimpleTextFieldColorScheme : NSObject <SimpleTextFieldColorScheming>
+@property(strong, nonatomic) UIColor *textColor;
+@property(strong, nonatomic) UIColor *underlineLabelColor;
+@property(strong, nonatomic) UIColor *placeholderLabelColor;
+@property(strong, nonatomic) UIColor *clearButtonTintColor;
+@end
+
+
+@interface SimpleTextFieldColorSchemeFilled : SimpleTextFieldColorScheme
+@property(strong, nonatomic, readonly) UIColor *filledSublayerFillColor;
+@property(strong, nonatomic, readonly) UIColor *filledSublayerUnderlineFillColor;
+@end
+
+@interface SimpleTextFieldColorSchemeOutlined : SimpleTextFieldColorScheme
+@property(strong, nonatomic, readonly) UIColor *outlineColor;
+@end
+
 @interface SimpleTextFieldColorSchemeAdapter : NSObject
 
 @property(strong, nonatomic) UIColor *textColor;

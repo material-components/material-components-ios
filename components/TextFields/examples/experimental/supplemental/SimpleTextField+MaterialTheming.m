@@ -117,4 +117,11 @@
   return simpleTextFieldColorScheme;
 }
 
+
+- (void)applyFilledThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme {
+  MDCContainerStyleFilled *filledStyle = [[MDCContainerStyleFilled alloc] init];
+  self.containerStyleObject = filledStyle;
+}
+
+
 @end

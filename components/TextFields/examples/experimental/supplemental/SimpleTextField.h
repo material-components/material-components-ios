@@ -33,7 +33,12 @@
  - Enable easy set up and reliable and predictable behavior.
 
  */
-@interface SimpleTextField : UITextField
+@interface SimpleTextField : UITextField <MDCContainedInputView>
+
+/**
+ Dictates the @c MDCInputViewContainerStyle of the text field.
+ */
+@property(nonatomic, strong) MDCContainerStyle *containerStyleObject;
 
 /**
  Dictates the @c MDCInputViewContainerStyle of the text field.
@@ -43,7 +48,7 @@
 /**
  This is a computed property that determines the current @c TextFieldState of the text field.
  */
-//@property(nonatomic, assign, readonly) TextFieldState textFieldState;
+@property(nonatomic, assign, readonly) MDCContainedInputViewState containedInputViewState;
 
 /**
  When set to YES, the placeholder floats above the text when the TextFieldState is @c .focused. When

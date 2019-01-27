@@ -40,7 +40,7 @@
 
 @property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
 
-@property(nonatomic, assign) TextFieldState textFieldState;
+@property(nonatomic, assign) MDCContainedInputViewState containedInputViewState;
 @property(nonatomic, assign) PlaceholderState placeholderState;
 
 @property(nonatomic, strong) NSMutableDictionary *colorSchemes;
@@ -87,8 +87,8 @@
   [self setUpCanPlaceholderFloat];
   [self setUpLayoutDirection];
   [self setUpPlaceholderState];
-  [self setUpTextFieldState];
-  [self setUpStateDependentColorSchemes];
+  [self setUpContainedInputViewState];
+  [self setUpContainerStyle];
 }
 
 - (void)setUpCanPlaceholderFloat {
@@ -103,31 +103,58 @@
   self.placeholderState = [self determineCurrentPlaceholderState];
 }
 
-- (void)setUpTextFieldState {
-  self.textFieldState = [self determineCurrentTextFieldState];
+- (void)setUpContainedInputViewState {
+  self.containedInputViewState = [self determineCurrentContainedInputViewState];
 }
 
-- (void)setUpStateDependentColorSchemes {
-  SimpleTextFieldColorSchemeAdapter *normalColorScheme = [SimpleTextFieldColorSchemeAdapter
-      defaultSimpleTextFieldColorSchemeWithState:TextFieldStateNormal];
-  [self setSimpleTextFieldColorScheme:normalColorScheme forState:TextFieldStateNormal];
-
-  SimpleTextFieldColorSchemeAdapter *focusedColorScheme = [SimpleTextFieldColorSchemeAdapter
-      defaultSimpleTextFieldColorSchemeWithState:TextFieldStateFocused];
-  [self setSimpleTextFieldColorScheme:focusedColorScheme forState:TextFieldStateFocused];
-
-  SimpleTextFieldColorSchemeAdapter *activatedColorScheme = [SimpleTextFieldColorSchemeAdapter
-      defaultSimpleTextFieldColorSchemeWithState:TextFieldStateActivated];
-  [self setSimpleTextFieldColorScheme:activatedColorScheme forState:TextFieldStateActivated];
-
-  SimpleTextFieldColorSchemeAdapter *erroredColorScheme = [SimpleTextFieldColorSchemeAdapter
-      defaultSimpleTextFieldColorSchemeWithState:TextFieldStateErrored];
-  [self setSimpleTextFieldColorScheme:erroredColorScheme forState:TextFieldStateErrored];
-
-  SimpleTextFieldColorSchemeAdapter *disabledColorScheme = [SimpleTextFieldColorSchemeAdapter
-      defaultSimpleTextFieldColorSchemeWithState:TextFieldStateDisabled];
-  [self setSimpleTextFieldColorScheme:disabledColorScheme forState:TextFieldStateDisabled];
+- (void)setUpContainerStyle {
+  self.containerStyleObject = [[MDCContainerStyle alloc] init];
 }
+
+- (void)setUpStateDependentColorSchemesForStyle:(MDCContainerStyle *)containerStyleObject {
+  id<SimpleTextFieldColorScheming> normalColorScheme =
+      [containerStyleObject defaultColorSchemeForState:MDCContainedInputViewStateNormal];
+  [self setSimpleTextFieldColorScheme:normalColorScheme forState:MDCContainedInputViewStateNormal];
+  
+  id<SimpleTextFieldColorScheming> focusedColorScheme =
+      [containerStyleObject defaultColorSchemeForState:MDCContainedInputViewStateFocused];
+  [self setSimpleTextFieldColorScheme:focusedColorScheme forState:MDCContainedInputViewStateFocused];
+  
+  id<SimpleTextFieldColorScheming> activatedColorScheme =
+      [containerStyleObject defaultColorSchemeForState:MDCContainedInputViewStateActivated];
+  [self setSimpleTextFieldColorScheme:activatedColorScheme forState:MDCContainedInputViewStateActivated];
+
+  id<SimpleTextFieldColorScheming> erroredColorScheme =
+      [containerStyleObject defaultColorSchemeForState:MDCContainedInputViewStateErrored];
+  [self setSimpleTextFieldColorScheme:erroredColorScheme forState:MDCContainedInputViewStateErrored];
+  
+  id<SimpleTextFieldColorScheming> disabledColorScheme =
+      [containerStyleObject defaultColorSchemeForState:MDCContainedInputViewStateDisabled];
+  [self setSimpleTextFieldColorScheme:disabledColorScheme forState:MDCContainedInputViewStateDisabled];
+}
+
+
+//- (void)setUpStateDependentColorSchemes {
+//  SimpleTextFieldColorSchemeAdapter *normalColorScheme = [SimpleTextFieldColorSchemeAdapter
+//      defaultSimpleTextFieldColorSchemeWithState:MDCContainedInputViewStateNormal];
+//  [self setSimpleTextFieldColorScheme:normalColorScheme forState:TextFieldStateNormal];
+//
+//  SimpleTextFieldColorSchemeAdapter *focusedColorScheme = [SimpleTextFieldColorSchemeAdapter
+//      defaultSimpleTextFieldColorSchemeWithState:TextFieldStateFocused];
+//  [self setSimpleTextFieldColorScheme:focusedColorScheme forState:TextFieldStateFocused];
+//
+//  SimpleTextFieldColorSchemeAdapter *activatedColorScheme = [SimpleTextFieldColorSchemeAdapter
+//      defaultSimpleTextFieldColorSchemeWithState:TextFieldStateActivated];
+//  [self setSimpleTextFieldColorScheme:activatedColorScheme forState:TextFieldStateActivated];
+//
+//  SimpleTextFieldColorSchemeAdapter *erroredColorScheme = [SimpleTextFieldColorSchemeAdapter
+//      defaultSimpleTextFieldColorSchemeWithState:TextFieldStateErrored];
+//  [self setSimpleTextFieldColorScheme:erroredColorScheme forState:TextFieldStateErrored];
+//
+//  SimpleTextFieldColorSchemeAdapter *disabledColorScheme = [SimpleTextFieldColorSchemeAdapter
+//      defaultSimpleTextFieldColorSchemeWithState:TextFieldStateDisabled];
+//  [self setSimpleTextFieldColorScheme:disabledColorScheme forState:TextFieldStateDisabled];
+//}
 
 - (void)setUpUnderlineLabels {
   CGFloat underlineFontSize = MDCRound([UIFont systemFontSize] * 0.75);
@@ -208,9 +235,9 @@
 #pragma mark Layout
 
 - (void)preLayoutSubviews {
-  self.textFieldState = [self determineCurrentTextFieldState];
+  self.containedInputViewState = [self determineCurrentContainedInputViewState];
   self.placeholderState = [self determineCurrentPlaceholderState];
-  SimpleTextFieldColorSchemeAdapter *colorAdapter = [self colorSchemeForState:self.textFieldState];
+  SimpleTextFieldColorSchemeAdapter *colorAdapter = [self colorSchemeForState:self.containedInputViewState];
   [self applySimpleTextFieldColorScheme:colorAdapter];
   CGSize fittingSize = CGSizeMake(CGRectGetWidth(self.frame), CGFLOAT_MAX);
   self.layout = [self calculateLayoutWithTextFieldSize:fittingSize];
@@ -226,13 +253,13 @@
 }
 
 - (void)postLayoutSubviews {
+  [self layOutPlaceholderWithState:self.placeholderState];
   [self applyContainerViewStyle:self.containerStyle
-                 textFieldState:self.textFieldState
+                 containedInputViewState:self.containedInputViewState
                      viewBounds:self.bounds
        floatingPlaceholderFrame:self.layout.placeholderFrameFloating
         topRowBottomRowDividerY:self.layout.topRowBottomRowDividerY
           isFloatingPlaceholder:self.placeholderState == PlaceholderStateFloating];
-  [self layOutPlaceholderWithState:self.placeholderState];
   self.clearButton.frame = self.layout.clearButtonFrame;
   self.clearButton.hidden = self.layout.clearButtonHidden;
   self.leftUnderlineLabel.frame = self.layout.leftUnderlineLabelFrame;
@@ -447,6 +474,21 @@
   [self setNeedsLayout];
 }
 
+-(void)setContainerStyleObject:(MDCContainerStyle *)containerStyleObject {
+  MDCContainerStyle *oldStyle = _containerStyleObject;
+  if (oldStyle) {
+    [oldStyle removeStyleFrom:self];
+  }
+  _containerStyleObject = containerStyleObject;
+  [self setUpStateDependentColorSchemesForStyle:self.containerStyleObject];
+}
+
+//-(void)setContainerStyle:(MDCInputViewContainerStyle)containerStyle {
+//  MDCContainerStyle = _containerStyle;
+//  _containerStyle = containerStyle;
+//  
+//}
+
 #pragma mark UITextField Layout Overrides
 
 - (CGRect)textRectForBounds:(CGRect)bounds {
@@ -516,15 +558,15 @@
 
 #pragma mark Text Field State
 
-- (TextFieldState)determineCurrentTextFieldState {
-  return [self textFieldStateWithIsEnabled:self.isEnabled
+- (TextFieldState)determineCurrentContainedInputViewState {
+  return [self containedInputViewStateWithIsEnabled:self.isEnabled
                                  isErrored:self.isErrored
                                  isEditing:self.isEditing
                                 isSelected:self.isSelected
                                isActivated:self.isActivated];
 }
 
-- (TextFieldState)textFieldStateWithIsEnabled:(BOOL)isEnabled
+- (TextFieldState)containedInputViewStateWithIsEnabled:(BOOL)isEnabled
                                     isErrored:(BOOL)isErrored
                                     isEditing:(BOOL)isEditing
                                    isSelected:(BOOL)isSelected
@@ -742,6 +784,7 @@
 }
 
 // this could just be a CGFloat between 0 and 1 for floating placeholder scale.
+// the style protocol should have a method that returns a floating placeholder scale
 - (UIFont *)floatingPlaceholderFontWithFont:(UIFont *)font
                              containerStyle:(MDCInputViewContainerStyle)containerStyle {
   CGFloat floatingPlaceholderFontSize = 0.0;
@@ -800,29 +843,31 @@
 #pragma mark Style Management
 
 - (void)applyContainerViewStyle:(MDCInputViewContainerStyle)containerStyle
-                 textFieldState:(TextFieldState)textFieldState
+                 containedInputViewState:(TextFieldState)containedInputViewState
                      viewBounds:(CGRect)viewBounds
        floatingPlaceholderFrame:(CGRect)floatingPlaceholderFrame
         topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
           isFloatingPlaceholder:(BOOL)isFloatingPlaceholder {
-  CGFloat outlineLineWidth = [self outlineLineWidthForState:textFieldState];
-
+  CGFloat outlineLineWidth = [self outlineLineWidthForState:containedInputViewState];
+//  [self.containerStyle applyToSimpleTextField:self];
+  NSLog(@"placeholderFrame: %@",NSStringFromCGRect(self.placeholderLabel.frame));
+  
   [self.containerStyler applyOutlinedStyle:containerStyle == MDCInputViewContainerStyleOutline
                                       view:self
                   floatingPlaceholderFrame:floatingPlaceholderFrame
                    topRowBottomRowDividerY:topRowBottomRowDividerY
                      isFloatingPlaceholder:isFloatingPlaceholder
                           outlineLineWidth:outlineLineWidth];
-  CGFloat underlineThickness = [self underlineThicknessWithTextFieldState:textFieldState];
+  CGFloat underlineThickness = [self underlineThicknessWithTextFieldState:containedInputViewState];
   [self.containerStyler applyFilledStyle:containerStyle == MDCInputViewContainerStyleFilled
                                     view:self
                  topRowBottomRowDividerY:topRowBottomRowDividerY
                       underlineThickness:underlineThickness];
 }
 
-- (CGFloat)outlineLineWidthForState:(TextFieldState)textFieldState {
+- (CGFloat)outlineLineWidthForState:(TextFieldState)containedInputViewState {
   CGFloat defaultLineWidth = 1;
-  switch (textFieldState) {
+  switch (containedInputViewState) {
     case TextFieldStateActivated:
     case TextFieldStateErrored:
     case TextFieldStateFocused:
@@ -836,9 +881,9 @@
   return defaultLineWidth;
 }
 
-- (CGFloat)underlineThicknessWithTextFieldState:(TextFieldState)textFieldState {
+- (CGFloat)underlineThicknessWithTextFieldState:(TextFieldState)containedInputViewState {
   CGFloat underlineThickness = 1;
-  switch (textFieldState) {
+  switch (containedInputViewState) {
     case TextFieldStateActivated:
     case TextFieldStateErrored:
     case TextFieldStateFocused:
@@ -868,12 +913,14 @@
   self.containerStyler.filledSublayerUnderline.fillColor =
       colorAdapter.filledSublayerUnderlineFillColor.CGColor;
   self.containerStyler.filledSublayer.fillColor = colorAdapter.filledSublayerFillColor.CGColor;
+  
+  // make style listen to adapter
 }
 
 - (void)setSimpleTextFieldColorScheme:
             (SimpleTextFieldColorSchemeAdapter *)simpleTextFieldColorScheme
-                             forState:(TextFieldState)textFieldState {
-  self.colorSchemes[@(textFieldState)] = simpleTextFieldColorScheme;
+                             forState:(TextFieldState)containedInputViewState {
+  self.colorSchemes[@(containedInputViewState)] = simpleTextFieldColorScheme;
 }
 
 @end

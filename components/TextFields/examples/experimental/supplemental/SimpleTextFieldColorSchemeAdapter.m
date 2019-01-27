@@ -17,6 +17,91 @@
 
 #import "SimpleTextFieldColorSchemeAdapter.h"
 
+@implementation SimpleTextFieldColorScheme
+
+//+ (instancetype)defaultSimpleTextFieldColorScheme {
+//  UIColor *onSurfaceColor = [UIColor blackColor];
+//  UIColor *textColor = onSurfaceColor;
+//  UIColor *underlineLabelColor = [onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
+//  UIColor *placeholderLabelColor = [onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
+//  UIColor *outlineColor = onSurfaceColor;
+//  UIColor *filledSublayerUnderlineFillColor = onSurfaceColor;
+//  UIColor *filledSublayerFillColor = [onSurfaceColor colorWithAlphaComponent:(CGFloat)0.15];
+//  UIColor *clearButtonTintColor = [onSurfaceColor colorWithAlphaComponent:(CGFloat)0.20];
+//
+//  SimpleTextFieldColorScheme *simpleTextFieldColorScheme =
+//  [[SimpleTextFieldColorScheme alloc] init];
+//  simpleTextFieldColorScheme.textColor = textColor;
+////  simpleTextFieldColorScheme.filledSublayerFillColor = filledSublayerFillColor;
+////  simpleTextFieldColorScheme.filledSublayerUnderlineFillColor = filledSublayerUnderlineFillColor;
+//  simpleTextFieldColorScheme.underlineLabelColor = underlineLabelColor;
+////  simpleTextFieldColorScheme.outlineColor = outlineColor;
+//  simpleTextFieldColorScheme.placeholderLabelColor = placeholderLabelColor;
+//  simpleTextFieldColorScheme.clearButtonTintColor = clearButtonTintColor;
+//  return simpleTextFieldColorScheme;
+//}
+
+
+//
+//+ (instancetype)defaultSimpleTextFieldColorScheme {
+//  UIColor *onSurfaceColor = [UIColor blackColor];
+//  UIColor *textColor = onSurfaceColor;
+//  UIColor *underlineLabelColor = [onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
+//  UIColor *placeholderLabelColor = [onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
+//  UIColor *outlineColor = onSurfaceColor;
+//  UIColor *filledSublayerUnderlineFillColor = onSurfaceColor;
+//  UIColor *filledSublayerFillColor = [onSurfaceColor colorWithAlphaComponent:(CGFloat)0.15];
+//  UIColor *clearButtonTintColor = [onSurfaceColor colorWithAlphaComponent:(CGFloat)0.20];
+//  
+//  SimpleTextFieldColorScheme *simpleTextFieldColorScheme =
+//  [[SimpleTextFieldColorScheme alloc] init];
+//  simpleTextFieldColorScheme.textColor = textColor;
+//  simpleTextFieldColorScheme.filledSublayerFillColor = filledSublayerFillColor;
+//  simpleTextFieldColorScheme.filledSublayerUnderlineFillColor = filledSublayerUnderlineFillColor;
+//  simpleTextFieldColorScheme.underlineLabelColor = underlineLabelColor;
+//  simpleTextFieldColorScheme.outlineColor = outlineColor;
+//  simpleTextFieldColorScheme.placeholderLabelColor = placeholderLabelColor;
+//  simpleTextFieldColorScheme.clearButtonTintColor = clearButtonTintColor;
+//  return simpleTextFieldColorScheme;
+//}
+
+//+ (instancetype)defaultSimpleTextFieldColorSchemeWithState:(TextFieldState)textFieldState {
+//  SimpleTextFieldColorSchemeAdapter *scheme = [self defaultSimpleTextFieldColorScheme];
+//  switch (textFieldState) {
+//    case TextFieldStateNormal:
+//      break;
+//    case TextFieldStateActivated:
+//      break;
+//    case TextFieldStateDisabled:
+//      scheme.placeholderLabelColor = [UIColor
+//                                      blueColor];  //[colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.10];
+//      break;
+//    case TextFieldStateErrored:
+//      scheme.placeholderLabelColor = [UIColor redColor];
+//      scheme.underlineLabelColor = [UIColor redColor];
+//      scheme.filledSublayerUnderlineFillColor = [UIColor redColor];
+//      scheme.outlineColor = [UIColor redColor];
+//      break;
+//    case TextFieldStateFocused:
+//      //      scheme.outlineColor = colorScheme.primaryColor;
+//      //      scheme.placeholderLabelColor = colorScheme.primaryColor;
+//      //      scheme.filledSublayerUnderlineFillColor = colorScheme.primaryColor;
+//      break;
+//    default:
+//      break;
+//  }
+//  return scheme;
+//}
+//
+@end
+
+@implementation SimpleTextFieldColorSchemeFilled
+@end
+
+@implementation SimpleTextFieldColorSchemeOutlined
+@end
+
+
 @implementation SimpleTextFieldColorSchemeAdapter
 
 + (instancetype)defaultSimpleTextFieldColorScheme {

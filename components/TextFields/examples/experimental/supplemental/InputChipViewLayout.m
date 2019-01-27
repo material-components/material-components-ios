@@ -20,9 +20,7 @@
 static const CGFloat kEstimatedCursorWidth = (CGFloat)2.0;
 static const CGFloat kInterChipPadding = (CGFloat)8.0;
 
-
 @interface InputChipViewLayout ()
-
 @end
 
 @implementation InputChipViewLayout

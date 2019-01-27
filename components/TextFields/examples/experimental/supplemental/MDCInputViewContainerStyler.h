@@ -14,16 +14,70 @@
 
 #import <UIKit/UIKit.h>
 
-//#import "SimpleTextFieldLayoutUtils.h"
-
+#import "SimpleTextFieldLayoutUtils.h"
 //#import "MaterialColorScheme.h"
-
 //#import "MaterialContainerScheme.h"
+#import "SimpleTextFieldColorSchemeAdapter.h"
 
 /**
  MDCInputViewContainerStyle dictates what type of text field it will be from a cosmetic standpoint.
  The values are derived from the styles outlined in the Material Guidelines for Text Fields.
  */
+typedef NS_ENUM(NSUInteger, MDCContainedInputViewState) {
+  MDCContainedInputViewStateNormal,
+  MDCContainedInputViewStateFocused,
+  MDCContainedInputViewStateActivated,
+  MDCContainedInputViewStateErrored,
+  MDCContainedInputViewStateDisabled,
+};
+
+@protocol MDCContainedInputView <NSObject>
+@property (nonatomic, assign, readonly) MDCContainedInputViewState containedInputViewState;
+@optional
+@property (strong, nonatomic, readonly) UILabel *placeholderLabel;
+@property (strong, nonatomic, readonly) UILabel *leadingUnderlineLabel;
+@property (strong, nonatomic, readonly) UILabel *trailingUnderlineLabel;
+@end
+
+@interface MDCContainerStyle : NSObject
++ (Class)colorSchemeClass;
+- (id<SimpleTextFieldColorScheming>)defaultColorScheme;
+- (id<SimpleTextFieldColorScheming>)defaultColorSchemeForState:(MDCContainedInputViewState)state;
+- (void)applyStyleTo:(id<MDCContainedInputView>)containedInputView;
+- (void)removeStyleFrom:(id<MDCContainedInputView>)containedInputView;
+@end
+
+@interface MDCContainerStyleFilled : MDCContainerStyle
+@end
+
+@interface MDCContainerStyleOutlined : MDCContainerStyle
+@end
+
+
+@interface MDCContainerStylePathDrawingUtils : NSObject
+
++ (void)addTopRightCornerToPath:(UIBezierPath *)path
+                      fromPoint:(CGPoint)point1
+                        toPoint:(CGPoint)point2
+                     withRadius:(CGFloat)radius;
++ (void)addBottomRightCornerToPath:(UIBezierPath *)path
+                         fromPoint:(CGPoint)point1
+                           toPoint:(CGPoint)point2
+                        withRadius:(CGFloat)radius;
++ (void)addBottomLeftCornerToPath:(UIBezierPath *)path
+                        fromPoint:(CGPoint)point1
+                          toPoint:(CGPoint)point2
+                       withRadius:(CGFloat)radius;
++ (void)addTopLeftCornerToPath:(UIBezierPath *)path
+                     fromPoint:(CGPoint)point1
+                       toPoint:(CGPoint)point2
+                    withRadius:(CGFloat)radius;
+@end
+
+
+
+
+
 typedef NS_ENUM(NSUInteger, MDCInputViewContainerStyle) {
   MDCInputViewContainerStyleNone,
   MDCInputViewContainerStyleFilled,
@@ -37,15 +91,15 @@ typedef NS_ENUM(NSUInteger, MDCInputViewContainerStyle) {
 @property(strong, nonatomic) CAShapeLayer *filledSublayerUnderline;
 
 - (void)applyOutlinedStyle:(BOOL)isOutlined
-                        view:(UIView *)view
-    floatingPlaceholderFrame:(CGRect)floatingPlaceholderFrame
-     topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
-       isFloatingPlaceholder:(BOOL)isFloatingPlaceholder
-            outlineLineWidth:(CGFloat)outlineLineWidth;
+                      view:(UIView *)view
+  floatingPlaceholderFrame:(CGRect)floatingPlaceholderFrame
+   topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
+     isFloatingPlaceholder:(BOOL)isFloatingPlaceholder
+          outlineLineWidth:(CGFloat)outlineLineWidth;
 
 - (void)applyFilledStyle:(BOOL)isFilled
-                       view:(UIView *)view
-    topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
-         underlineThickness:(CGFloat)underlineThickness;
+                    view:(UIView *)view
+ topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
+      underlineThickness:(CGFloat)underlineThickness;
 
 @end

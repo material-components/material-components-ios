@@ -30,4 +30,7 @@
  */
 - (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
 
+
+- (void)applyFilledThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
+
 @end

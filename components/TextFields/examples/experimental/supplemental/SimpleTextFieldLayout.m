@@ -492,6 +492,22 @@
   }
 }
 
+// so this can be made an object on the style protocol
+- (CGFloat)spaceBetweenFloatingPlaceholderAndTextRect:(MDCInputViewContainerStyle)containerStyle {
+//  switch (containerStyle) {
+//    case MDCInputViewContainerStyleNone:
+//    case MDCInputViewContainerStyleFilled:
+//    default:
+//      spaceBetweenPlaceholderAndTextArea = ((CGFloat)0.25 * floatingPlaceholderMaxY);
+//      break;
+//    case MDCInputViewContainerStyleOutline:
+//      spaceBetweenPlaceholderAndTextArea =
+//      floatingPlaceholderMaxY + outlinedTextFieldSpaceHeuristic;
+//      break;
+//  }
+  return 5;
+}
+
 - (CGFloat)floatingPlaceholderMinYWithFloatingHeight:(CGFloat)floatingPlaceholderHeight
                                       containerStyle:(MDCInputViewContainerStyle)containerStyle {
   if (floatingPlaceholderHeight <= 0) {
