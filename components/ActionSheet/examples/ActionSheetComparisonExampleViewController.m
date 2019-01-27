@@ -16,8 +16,9 @@
 
 #import "MaterialActionSheet+Theming.h"
 #import "MaterialActionSheet.h"
-#import "MaterialButtons+ButtonThemer.h"
+#import "MaterialButtons+Theming.h"
 #import "MaterialButtons.h"
+#import "MaterialContainerScheme.h"
 
 @interface ActionSheetComparisonExampleViewController ()
 
@@ -27,9 +28,7 @@
 
 @end
 
-@implementation ActionSheetComparisonExampleViewController {
-  MDCButtonScheme *_buttonScheme;
-}
+@implementation ActionSheetComparisonExampleViewController
 
 - (instancetype)init {
   self = [super init];
@@ -37,51 +36,48 @@
     self.title = @"Action Sheet";
     _colorScheme = [[MDCSemanticColorScheme alloc] init];
     _typographyScheme = [[MDCTypographyScheme alloc] init];
+    _containerScheme = [[MDCContainerScheme alloc] init];
     _showMaterialButton = [[MDCButton alloc] init];
     _showUIKitButton = [[MDCButton alloc] init];
-    _buttonScheme = [[MDCButtonScheme alloc] init];
   }
   return self;
-}
-
-- (MDCContainerScheme *)containerScheme {
-  if (!_containerScheme) {
-    _containerScheme = [[MDCContainerScheme alloc] init];
-  }
-  _containerScheme.colorScheme = self.colorScheme;
-  _containerScheme.typographyScheme = self.typographyScheme;
-  return _containerScheme;
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.view.backgroundColor = _colorScheme.backgroundColor;
-  [_showMaterialButton setTitle:@"Show Material Action sheet" forState:UIControlStateNormal];
-  [_showMaterialButton sizeToFit];
-  [_showUIKitButton setTitle:@"Show UIKit Action sheet" forState:UIControlStateNormal];
-  [_showUIKitButton sizeToFit];
-  _buttonScheme.colorScheme = _colorScheme;
-  _buttonScheme.typographyScheme = _typographyScheme;
-  [MDCContainedButtonThemer applyScheme:_buttonScheme toButton:_showMaterialButton];
-  [_showMaterialButton addTarget:self
+  if (self.containerScheme.colorScheme == nil) {
+    self.containerScheme.colorScheme = self.colorScheme;
+  }
+
+  if (self.containerScheme.typographyScheme == nil) {
+    self.containerScheme.typographyScheme = self.typographyScheme;
+  }
+
+  self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
+  [self.showMaterialButton setTitle:@"Show Material Action sheet" forState:UIControlStateNormal];
+  [self.showMaterialButton sizeToFit];
+  [self.showUIKitButton setTitle:@"Show UIKit Action sheet" forState:UIControlStateNormal];
+  [self.showUIKitButton sizeToFit];
+  [self.showMaterialButton applyContainedThemeWithScheme:self.containerScheme];
+  [self.showMaterialButton addTarget:self
                           action:@selector(showMaterialActionSheet)
                 forControlEvents:UIControlEventTouchUpInside];
-  [self.view addSubview:_showMaterialButton];
-  [MDCContainedButtonThemer applyScheme:_buttonScheme toButton:_showUIKitButton];
-  [_showUIKitButton addTarget:self
+  [self.view addSubview:self.showMaterialButton];
+  [self.showUIKitButton applyContainedThemeWithScheme:self.containerScheme];
+  [self.showUIKitButton addTarget:self
                        action:@selector(showUIKitActionSheet)
              forControlEvents:UIControlEventTouchUpInside];
-  [self.view addSubview:_showUIKitButton];
+  [self.view addSubview:self.showUIKitButton];
 }
 
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
 
-  _showMaterialButton.center = CGPointMake(self.view.center.x, self.view.center.y - 80);
-  CGPoint UIKitCenter = _showMaterialButton.center;
-  UIKitCenter.y += CGRectGetHeight(_showMaterialButton.frame) * 2;
-  _showUIKitButton.center = UIKitCenter;
+  self.showMaterialButton.center = CGPointMake(self.view.center.x, self.view.center.y - 80);
+  CGPoint UIKitCenter = self.showMaterialButton.center;
+  UIKitCenter.y += CGRectGetHeight(self.showMaterialButton.frame) * 2;
+  self.showUIKitButton.center = UIKitCenter;
 }
 
 - (void)showMaterialActionSheet {

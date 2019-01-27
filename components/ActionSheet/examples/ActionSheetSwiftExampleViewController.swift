@@ -22,12 +22,8 @@ class ActionSheetSwiftExampleViewController: UIViewController {
 
   var colorScheme = MDCSemanticColorScheme()
   var typographyScheme = MDCTypographyScheme()
-  var containerScheme: MDCContainerScheming {
-    let scheme = MDCContainerScheme()
-    scheme.colorScheme = colorScheme
-    scheme.typographyScheme = typographyScheme
-    return scheme
-  }
+  var containerScheme = MDCContainerScheming()
+  
   let tableView = UITableView()
   enum ActionSheetExampleType {
     case typical, title, message, noIcons, titleAndMessage, dynamicType, delayed, thirtyOptions

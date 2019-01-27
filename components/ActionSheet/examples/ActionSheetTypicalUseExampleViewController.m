@@ -14,9 +14,11 @@
 
 #import "ActionSheetTypicalUseExampleViewController.h"
 
+#import "MaterialActionSheet.h"
 #import "MaterialActionSheet+Theming.h"
-#import "MaterialButtons+ButtonThemer.h"
+#import "MaterialButtons+Theming.h"
 #import "MaterialButtons.h"
+#import "MaterialContainerScheme.h"
 
 @interface ActionSheetTypicalUseExampleViewController ()
 
@@ -25,9 +27,7 @@
 
 @end
 
-@implementation ActionSheetTypicalUseExampleViewController {
-  MDCButtonScheme *_buttonScheme;
-}
+@implementation ActionSheetTypicalUseExampleViewController
 
 - (instancetype)init {
   self = [super init];
@@ -36,40 +36,37 @@
     _colorScheme =
         [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
     _typographyScheme = [[MDCTypographyScheme alloc] init];
+    _containerScheme = [[MDCContainerScheme alloc] init];
     _showButton = [[MDCButton alloc] init];
-    _buttonScheme = [[MDCButtonScheme alloc] init];
   }
   return self;
-}
-
-- (MDCContainerScheme *)containerScheme {
-  if (!_containerScheme) {
-    _containerScheme = [[MDCContainerScheme alloc] init];
-  }
-  _containerScheme.colorScheme = self.colorScheme;
-  _containerScheme.typographyScheme = self.typographyScheme;
-  return _containerScheme;
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.view.backgroundColor = _colorScheme.backgroundColor;
-  [_showButton setTitle:@"Show action sheet" forState:UIControlStateNormal];
-  [_showButton sizeToFit];
-  _buttonScheme.colorScheme = _colorScheme;
-  _buttonScheme.typographyScheme = _typographyScheme;
-  [MDCContainedButtonThemer applyScheme:_buttonScheme toButton:_showButton];
-  [_showButton addTarget:self
+  if (self.containerScheme.colorScheme == nil) {
+    self.containerScheme.colorScheme = self.colorScheme;
+  }
+
+  if (self.containerScheme.typographyScheme == nil) {
+    self.containerScheme.typographyScheme = self.typographyScheme;
+  }
+
+  self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
+  [self.showButton setTitle:@"Show action sheet" forState:UIControlStateNormal];
+  [self.showButton sizeToFit];
+  [self.showButton applyContainedThemeWithScheme:self.containerScheme];
+  [self.showButton addTarget:self
                   action:@selector(showActionSheet)
         forControlEvents:UIControlEventTouchUpInside];
-  [self.view addSubview:_showButton];
+  [self.view addSubview:self.showButton];
 }
 
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
 
-  _showButton.center = CGPointMake(self.view.center.x, self.view.center.y - 80);
+  self.showButton.center = CGPointMake(self.view.center.x, self.view.center.y - 80);
 }
 
 - (void)showActionSheet {
