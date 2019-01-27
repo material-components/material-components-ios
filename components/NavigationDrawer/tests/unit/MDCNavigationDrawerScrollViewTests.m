@@ -509,7 +509,7 @@
   // Given
   MDCBottomDrawerPresentationController *drawerPresentationController = nil;
   if ([self.drawerViewController.presentationController
-       isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+          isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
     drawerPresentationController =
         (MDCBottomDrawerPresentationController *)self.drawerViewController.presentationController;
   } else {
@@ -521,7 +521,8 @@
   self.drawerViewController.trackingScrollView = self.fakeScrollView;
 
   // Then
-  XCTAssertNotNil(drawerPresentationController.bottomDrawerContainerViewController.trackingScrollView);
+  XCTAssertNotNil(
+      drawerPresentationController.bottomDrawerContainerViewController.trackingScrollView);
 }
 
 - (void)testBottomDrawerTopInset {
