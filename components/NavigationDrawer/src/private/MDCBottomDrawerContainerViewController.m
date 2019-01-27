@@ -737,10 +737,7 @@ static UIColor *DrawerShadowColor(void) {
   _addedContentHeight = addedContentHeight;
 
   CGFloat totalHeight = contentHeight + contentHeaderHeight;
-  CGFloat contentHeightThresholdForScrollability =
-      MIN(containerHeight - MDCDeviceTopSafeAreaInset(),
-          containerHeight * [self initialDrawerFactor] + contentHeaderHeight);
-  BOOL contentScrollsToReveal = totalHeight >= contentHeightThresholdForScrollability;
+  BOOL contentScrollsToReveal = totalHeight >= (containerHeight * [self initialDrawerFactor]);
 
   if (_contentHeaderTopInset == NSNotFound) {
     // The content header top inset is only set once.
