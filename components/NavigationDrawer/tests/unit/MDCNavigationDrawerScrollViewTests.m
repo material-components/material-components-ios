@@ -506,17 +506,22 @@
 }
 
 - (void)testSetTrackingScrollView {
+  // Given
+  MDCBottomDrawerPresentationController *drawerPresentationController = nil;
+  if ([self.drawerViewController.presentationController
+       isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    drawerPresentationController =
+        (MDCBottomDrawerPresentationController *)self.drawerViewController.presentationController;
+  } else {
+    drawerPresentationController = nil;
+  }
+
   // When
   self.drawerViewController.scrimColor = UIColor.blueColor;
   self.drawerViewController.trackingScrollView = self.fakeScrollView;
-  if ([self.drawerViewController.presentationController
-       isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
-    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
-        (MDCBottomDrawerPresentationController *)self.drawerViewController.presentationController;
 
-    // Then
-    XCTAssertNotNil(bottomDrawerPresentationController.bottomDrawerContainerViewController.trackingScrollView);
-  }
+  // Then
+  XCTAssertNotNil(drawerPresentationController.bottomDrawerContainerViewController.trackingScrollView);
 }
 
 - (void)testBottomDrawerTopInset {
