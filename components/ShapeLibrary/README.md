@@ -4,7 +4,7 @@ layout: detail
 section: components
 excerpt: "ShapeLibrary consists of convenience APIs to create shaped surfaces."
 iconId: shapelibrary
-path: /catalog/shapelibrary-deprecated/
+path: /catalog/shapelibrary/
 api_doc_root: true
 -->
 

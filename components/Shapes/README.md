@@ -4,7 +4,7 @@ layout: detail
 section: components
 excerpt: "Shapes consists of core APIs to create shaped surfaces."
 iconId: shapes
-path: /catalog/shapes-deprecated/
+path: /catalog/shapes/
 api_doc_root: true
 -->
 
