@@ -15,9 +15,12 @@
 import UIKit
 
 import MaterialComponents.MaterialButtons
-import MaterialComponents.MaterialButtons_ButtonThemer
+import MaterialComponentsBeta.MaterialButtons_Theming
+import MaterialComponentsBeta.MaterialContainerScheme
 
 class ButtonsCustomFontViewController: UIViewController {
+
+  var containerScheme = MDCContainerScheme()
 
   class func catalogMetadata() -> [String: Any] {
     return [
@@ -31,18 +34,17 @@ class ButtonsCustomFontViewController: UIViewController {
     super.viewDidLoad()
 
     // Define our design data
-    let buttonScheme = MDCButtonScheme()
     if let customFont = UIFont(name:"Zapfino", size:14.0) {
       let typographyScheme = MDCTypographyScheme()
       typographyScheme.button = customFont
-      buttonScheme.typographyScheme = typographyScheme
     }
 
     // Apply our design data using the Material themers
-    view.backgroundColor = buttonScheme.colorScheme.backgroundColor
+    view.backgroundColor =
+        containerScheme.colorScheme?.backgroundColor ?? MDCSemanticColorScheme().backgroundColor
 
     let flatButtonStatic = MDCButton()
-    MDCContainedButtonThemer.applyScheme(buttonScheme, to: flatButtonStatic)
+    flatButtonStatic.applyContainedTheme(withScheme: containerScheme)
     flatButtonStatic.setTitle("Static", for: UIControlState())
     flatButtonStatic.sizeToFit()
     flatButtonStatic.translatesAutoresizingMaskIntoConstraints = false
@@ -50,7 +52,7 @@ class ButtonsCustomFontViewController: UIViewController {
     view.addSubview(flatButtonStatic)
 
     let flatButtonDynamic = MDCButton()
-    MDCContainedButtonThemer.applyScheme(buttonScheme, to: flatButtonDynamic)
+    flatButtonDynamic.applyContainedTheme(withScheme: containerScheme)
     flatButtonDynamic.setTitle("Dynamic", for: UIControlState())
     flatButtonDynamic.sizeToFit()
     flatButtonDynamic.translatesAutoresizingMaskIntoConstraints = false
