@@ -31,7 +31,7 @@
   if (self) {
     MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
     containerScheme.colorScheme =
-    [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
     containerScheme.shapeScheme = [[MDCShapeScheme alloc] init];
     containerScheme.typographyScheme = [[MDCTypographyScheme alloc] init];
     self.containerScheme = containerScheme;
@@ -45,7 +45,8 @@
   if (self.containerScheme.colorScheme) {
     self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
   } else {
-    MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    MDCSemanticColorScheme *colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
     self.view.backgroundColor = colorScheme.backgroundColor;
   }
 
@@ -55,7 +56,8 @@
   if (self.containerScheme.colorScheme) {
     _chipField.backgroundColor = self.containerScheme.colorScheme.surfaceColor;
   } else {
-    MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    MDCSemanticColorScheme *colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
     _chipField.backgroundColor = colorScheme.surfaceColor;
   }
   [self.view addSubview:_chipField];

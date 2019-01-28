@@ -28,7 +28,8 @@
   self = [super init];
   if (self) {
     MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
-    scheme.colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    scheme.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
     scheme.typographyScheme = [[MDCTypographyScheme alloc] init];
     scheme.shapeScheme = [[MDCShapeScheme alloc] init];
     self.containerScheme = scheme;

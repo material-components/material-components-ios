@@ -30,7 +30,7 @@
   if (self) {
     MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
     containerScheme.colorScheme =
-    [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
     containerScheme.shapeScheme = [[MDCShapeScheme alloc] init];
     containerScheme.typographyScheme = [[MDCTypographyScheme alloc] init];
     self.containerScheme = containerScheme;

@@ -28,7 +28,8 @@
   if (self) {
     self.editing = YES;
     MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
-    scheme.colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    scheme.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
     scheme.typographyScheme = [[MDCTypographyScheme alloc] init];
     scheme.shapeScheme = [[MDCShapeScheme alloc] init];
     self.containerScheme = scheme;
