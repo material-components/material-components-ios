@@ -220,6 +220,7 @@ run_bazel_affected() {
     # 0.20.
     if [ -n "$KOKORO_BUILD_NUMBER" ]; then
       bazel version
+      sw_vers
       use_bazel.sh 0.20.0
       bazel version
     fi
