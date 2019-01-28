@@ -48,9 +48,7 @@
 
   switch (recognizer.state) {
     case UIGestureRecognizerStateBegan: {
-      [self.rippleView beginRippleTouchDownAtPoint:touchLocation
-                                          animated:YES
-                                        completion:nil];
+      [self.rippleView beginRippleTouchDownAtPoint:touchLocation animated:YES completion:nil];
       if ([_delegate respondsToSelector:@selector(rippleTouchController:
                                                    didProcessRippleView:atTouchLocation:)]) {
         [_delegate rippleTouchController:self
