@@ -21,6 +21,7 @@ load(
     "mdc_unit_test_suite",
 )
 load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
+load("@build_bazel_rules_apple//apple:ios.bzl", "ios_unit_test")
 
 licenses(["notice"])  # Apache 2.0
 
@@ -194,10 +195,16 @@ mdc_objc_library(
     ],
 )
 
+ios_unit_test(
+    name = "unit_tests_beta",
+    deps = [":unit_test_beta_sources"],
+    minimum_os_version = "9.0",
+    test_host = "//components/private/Snapshot/TestHost",
+)
+
 mdc_unit_test_suite(
     name = "unit_tests",
     deps = [
         ":unit_test_sources",
-        ":unit_test_beta_sources",
     ],
 )
