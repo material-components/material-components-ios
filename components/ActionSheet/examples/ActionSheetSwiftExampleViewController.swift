@@ -23,21 +23,7 @@ import MaterialComponentsBeta.MaterialContainerScheme
 
 class ActionSheetSwiftExampleViewController: UIViewController {
 
-  var containerScheme: MDCContainerScheming
-
-  init() {
-    let scheme = MDCContainerScheme()
-    scheme.colorScheme = MDCSemanticColorScheme(defaults: .material201804)
-    containerScheme = scheme
-    super.init(nibName: nil, bundle: nil)
-  }
-
-  required init?(coder aDecoder: NSCoder) {
-    let scheme = MDCContainerScheme()
-    scheme.colorScheme = MDCSemanticColorScheme(defaults: .material201804)
-    containerScheme = scheme
-    super.init(coder: aDecoder)
-  }
+  var containerScheme: MDCContainerScheming = MDCContainerScheme()
   
   let tableView = UITableView()
   enum ActionSheetExampleType {

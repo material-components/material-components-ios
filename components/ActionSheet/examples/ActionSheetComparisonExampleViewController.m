@@ -36,10 +36,7 @@
   self = [super init];
   if (self) {
     self.title = @"Action Sheet";
-    MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
-    scheme.colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-    _containerScheme = scheme;
+    _containerScheme = [[MDCContainerScheme alloc] init];
     _showMaterialButton = [[MDCButton alloc] init];
     _showUIKitButton = [[MDCButton alloc] init];
   }
