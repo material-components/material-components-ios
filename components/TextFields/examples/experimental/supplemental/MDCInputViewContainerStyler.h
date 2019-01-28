@@ -18,6 +18,7 @@
 //#import "MaterialColorScheme.h"
 //#import "MaterialContainerScheme.h"
 #import "SimpleTextFieldColorSchemeAdapter.h"
+//#import "MDCContainedInputViewState.h"
 
 /**
  MDCInputViewContainerStyle dictates what type of text field it will be from a cosmetic standpoint.
@@ -73,9 +74,6 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewState) {
                        toPoint:(CGPoint)point2
                     withRadius:(CGFloat)radius;
 @end
-
-
-
 
 
 typedef NS_ENUM(NSUInteger, MDCInputViewContainerStyle) {

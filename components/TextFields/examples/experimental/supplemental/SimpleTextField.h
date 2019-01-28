@@ -20,7 +20,6 @@
 #import "SimpleTextFieldColorSchemeAdapter.h"
 
 #import "MDCInputViewContainerStyler.h"
-#import "MaterialContainerScheme.h"
 
 /**
  A UITextField subclass that attempts to do the following:
@@ -46,12 +45,12 @@
 @property(nonatomic, assign) MDCInputViewContainerStyle containerStyle;
 
 /**
- This is a computed property that determines the current @c TextFieldState of the text field.
+ This is a computed property that determines the current @c MDCContainedInputViewState of the text field.
  */
 @property(nonatomic, assign, readonly) MDCContainedInputViewState containedInputViewState;
 
 /**
- When set to YES, the placeholder floats above the text when the TextFieldState is @c .focused. When
+ When set to YES, the placeholder floats above the text when the MDCContainedInputViewState is @c .focused. When
  set to NO, it does not.
 
  @note The default is YES.
@@ -100,14 +99,14 @@
 /**
  This property toggles a state (similar to @c isHighlighted, @c isEnabled, @c isSelected, etc.) that
  is part of a general interpretation of the states outlined in the Material guidelines for Text
- Fields. See the @c TextFieldState enum for more information.
+ Fields. See the @c MDCContainedInputViewState enum for more information.
  */
 @property(nonatomic, assign) BOOL isErrored;
 
 /**
  This property toggles a state (similar to @c isHighlighted, @c isEnabled, @c isSelected, etc.) that
  is part of a general interpretation of the states outlined in the Material guidelines for Text
- Fields. See the @c TextFieldState enum for more information.
+ Fields. See the @c MDCContainedInputViewState enum for more information.
  */
 @property(nonatomic, assign) BOOL isActivated;
 
@@ -120,8 +119,7 @@
  */
 @property(nonatomic, assign) CGFloat customUnderlineLabelDrawPriority;
 
-- (void)setSimpleTextFieldColorScheme:
-            (SimpleTextFieldColorSchemeAdapter *)simpleTextFieldColorScheme
-                             forState:(TextFieldState)textFieldState;
+- (void)setSimpleTextFieldColorScheming:(id<SimpleTextFieldColorScheming>)simpleTextFieldColorScheming
+                               forState:(MDCContainedInputViewState)textFieldState;
 
 @end

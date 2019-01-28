@@ -15,6 +15,7 @@
 #import <UIKit/UIKit.h>
 
 #import "SimpleTextFieldLayoutUtils.h"
+//#import "MDCInputViewContainerStyler.h"
 
 // make NSCopying
 @protocol SimpleTextFieldColorScheming <NSObject>
@@ -41,17 +42,17 @@
 @property(strong, nonatomic, readonly) UIColor *outlineColor;
 @end
 
-@interface SimpleTextFieldColorSchemeAdapter : NSObject
-
-@property(strong, nonatomic) UIColor *textColor;
-@property(strong, nonatomic) UIColor *underlineLabelColor;
-@property(strong, nonatomic) UIColor *outlineColor;
-@property(strong, nonatomic) UIColor *placeholderLabelColor;
-@property(strong, nonatomic) UIColor *filledSublayerFillColor;
-@property(strong, nonatomic) UIColor *filledSublayerUnderlineFillColor;
-@property(strong, nonatomic) UIColor *clearButtonTintColor;
-
-+ (instancetype)defaultSimpleTextFieldColorScheme;
-+ (instancetype)defaultSimpleTextFieldColorSchemeWithState:(TextFieldState)textFieldState;
-
-@end
+//@interface SimpleTextFieldColorSchemeAdapter : NSObject
+//
+//@property(strong, nonatomic) UIColor *textColor;
+//@property(strong, nonatomic) UIColor *underlineLabelColor;
+//@property(strong, nonatomic) UIColor *outlineColor;
+//@property(strong, nonatomic) UIColor *placeholderLabelColor;
+//@property(strong, nonatomic) UIColor *filledSublayerFillColor;
+//@property(strong, nonatomic) UIColor *filledSublayerUnderlineFillColor;
+//@property(strong, nonatomic) UIColor *clearButtonTintColor;
+//
+//+ (instancetype)defaultSimpleTextFieldColorScheme;
+//+ (instancetype)defaultSimpleTextFieldColorSchemeWithState:(MDCContainedInputViewState)textFieldState;
+//
+//@end
