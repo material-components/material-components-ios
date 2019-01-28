@@ -119,29 +119,28 @@ open class MaskedTransitionTypicalUseSwiftExample: UIViewController {
 
   var transitionController: MDCMaskedTransitionController? = nil
   func didTapFab(fab: UIView) {
-    if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {
-        let target = targets[indexPathForSelectedRow.row]
-        let vc = target.viewControllerType.init()
-        
-        if #available(iOS 11.0, *), target.useSafeAreaInsets {
-            vc.additionalSafeAreaInsets = view.safeAreaInsets
-        }
-        
-        vc.view.autoresizingMask = target.autoresizingMask
-        
-        // Customize the transition
-        let transitionController = MDCMaskedTransitionController(sourceView: fab)
-        if target.calculateFrame != nil {
-            transitionController.calculateFrameOfPresentedView = target.calculateFrame
-            vc.modalPresentationStyle = .custom
-        }
-        vc.transitioningDelegate = transitionController
-        
-        // Must keep a reference to the transition controller
-        self.transitionController = transitionController
-        
-        showDetailViewController(vc, sender: self)
+    guard let indexPathForSelectedRow = tableView.indexPathForSelectedRow else { return }
+    let target = targets[indexPathForSelectedRow.row]
+    let vc = target.viewControllerType.init()
+    
+    if #available(iOS 11.0, *), target.useSafeAreaInsets {
+        vc.additionalSafeAreaInsets = view.safeAreaInsets
     }
+    
+    vc.view.autoresizingMask = target.autoresizingMask
+    
+    // Customize the transition
+    let transitionController = MDCMaskedTransitionController(sourceView: fab)
+    if target.calculateFrame != nil {
+        transitionController.calculateFrameOfPresentedView = target.calculateFrame
+        vc.modalPresentationStyle = .custom
+    }
+    vc.transitioningDelegate = transitionController
+    
+    // Must keep a reference to the transition controller
+    self.transitionController = transitionController
+    
+    showDetailViewController(vc, sender: self)
   }
 }
 
