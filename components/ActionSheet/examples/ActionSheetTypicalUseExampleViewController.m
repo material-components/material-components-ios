@@ -14,8 +14,8 @@
 
 #import "ActionSheetTypicalUseExampleViewController.h"
 
-#import "MaterialActionSheet.h"
 #import "MaterialActionSheet+Theming.h"
+#import "MaterialActionSheet.h"
 #import "MaterialButtons+Theming.h"
 #import "MaterialButtons.h"
 #import "MaterialColorScheme.h"
@@ -60,8 +60,8 @@
   [self.showButton sizeToFit];
   [self.showButton applyContainedThemeWithScheme:self.containerScheme];
   [self.showButton addTarget:self
-                  action:@selector(showActionSheet)
-        forControlEvents:UIControlEventTouchUpInside];
+                      action:@selector(showActionSheet)
+            forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:self.showButton];
 }
 

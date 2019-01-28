@@ -64,13 +64,13 @@
   [self.showUIKitButton sizeToFit];
   [self.showMaterialButton applyContainedThemeWithScheme:self.containerScheme];
   [self.showMaterialButton addTarget:self
-                          action:@selector(showMaterialActionSheet)
-                forControlEvents:UIControlEventTouchUpInside];
+                              action:@selector(showMaterialActionSheet)
+                    forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:self.showMaterialButton];
   [self.showUIKitButton applyContainedThemeWithScheme:self.containerScheme];
   [self.showUIKitButton addTarget:self
-                       action:@selector(showUIKitActionSheet)
-             forControlEvents:UIControlEventTouchUpInside];
+                           action:@selector(showUIKitActionSheet)
+                 forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:self.showUIKitButton];
 }
 
