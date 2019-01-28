@@ -36,12 +36,16 @@ mdc_objc_library(
             exclude = [
                 "src/MDCBottomNavigationBarController.m",
                 "src/MDCBottomNavigationBarController.h",
+                "src/MaterialBottomNavigationBeta.h",
             ],
         ),
     hdrs =
         native.glob(
             ["src/*.h"],
-            exclude = ["src/MDCBottomNavigationBarController.h"],
+            exclude = [
+                "src/MDCBottomNavigationBarController.h",
+                "src/MaterialBottomNavigationBeta.h",
+            ],
         ),
     bundles = [":Bundle"],
     enable_modules = 1,
@@ -71,7 +75,7 @@ mdc_objc_library(
     enable_modules = 1,
     includes = ["src"],
     sdk_frameworks = ["CoreGraphics"],
-    visibility = ["//..."],
+    visibility = ["//:__subpackages__"],
     deps = [":BottomNavigation"],
 )
 
@@ -176,9 +180,24 @@ mdc_objc_library(
     ],
 )
 
+mdc_objc_library(
+    name = "unit_test_beta_sources",
+    testonly = 1,
+    srcs = ["tests/unit/MDCBottomnavigationBarControllerTests.m"],
+    sdk_frameworks = [
+        "CoreGraphics",
+        "XCTest",
+    ],
+    visibility = ["//visibility:private"],
+    deps = [
+        ":BottomNavigationBeta",
+    ],
+)
+
 mdc_unit_test_suite(
     name = "unit_tests",
     deps = [
         ":unit_test_sources",
+        ":unit_test_beta_sources",
     ],
 )
