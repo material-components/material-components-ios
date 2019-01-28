@@ -187,6 +187,15 @@ upload_bazel_test_artifacts() {
   find -L . -name "sponge_log.xml" -type f | copy_to_artifacts
 }
 
+# Upgrades the machine's current bazel version to at least 0.20.0
+upgrade_kokoro_bazel_if_needed() {
+  bazel version
+  if [ "$KOKORO_JOB_POOL" != "high-sierra" ]; then
+    use_bazel.sh 0.20.0
+    bazel version
+  fi
+}
+
 run_bazel_affected() {
   echo "Checking affected targets..."
   if [ -z "$COMMAND" ]; then
@@ -219,11 +228,7 @@ run_bazel_affected() {
     # We must upgrade bazel prior to running bazel query because we rely on features in bazel
     # 0.20.
     if [ -n "$KOKORO_BUILD_NUMBER" ]; then
-      bazel version
-      if [ "$KOKORO_JOB_POOL" != "high-sierra" ]; then
-        use_bazel.sh 0.20.0
-        bazel version
-      fi
+      upgrade_kokoro_bazel_if_needed
     fi
     
     # Output the affected targets to the logs. This also gives the affected_targets script the
@@ -280,9 +285,7 @@ run_bazel() {
   fi
 
   if [ -n "$KOKORO_BUILD_NUMBER" ]; then
-    bazel version
-    use_bazel.sh 0.20.0
-    bazel version
+    upgrade_kokoro_bazel_if_needed
   fi
 
   if [ -n "$VERBOSE_OUTPUT" ]; then
