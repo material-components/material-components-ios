@@ -24,13 +24,33 @@ load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
 
-mdc_public_objc_library(
+mdc_objc_library(
     name = "BottomNavigation",
+    srcs =
+        native.glob(
+            [
+                "src/*.m",
+                "src/private/*.h",
+                "src/private/*.m",
+            ],
+            exclude = [
+                "src/MDCBottomNavigationBarController.m",
+                "src/MDCBottomNavigationBarController.h",
+            ],
+        ),
+    hdrs =
+        native.glob(
+            ["src/*.h"],
+            exclude = ["src/MDCBottomNavigationBarController.h"],
+        ),
     bundles = [":Bundle"],
+    enable_modules = 1,
+    includes = ["src"],
     sdk_frameworks = [
         "CoreGraphics",
         "UIKit",
     ],
+    visibility = ["//visibility:public"],
     deps = [
         "//components/Ink",
         "//components/ShadowElevations",
@@ -122,10 +142,13 @@ swift_library(
 mdc_objc_library(
     name = "unit_test_sources",
     testonly = 1,
-    srcs = native.glob([
-        "tests/unit/*.m",
-        "tests/unit/*.h",
-    ]),
+    srcs = native.glob(
+        [
+            "tests/unit/*.m",
+            "tests/unit/*.h",
+        ],
+        exclude = ["tests/unit/MDCBottomNavigationBarControllerTests.m"],
+    ),
     sdk_frameworks = [
         "UIKit",
         "XCTest",
