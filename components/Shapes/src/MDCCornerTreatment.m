@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCCornerTreatment.h"
+#import "MDCCornerTreatmentNew.h"
 
-#import "MDCPathGenerator.h"
+#import "MDCPathGeneratorNew.h"
 
 @implementation MDCCornerTreatment
 

@@ -12,44 +12,42 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCRoundedCornerTreatment.h"
+#import "MDCCurvedCornerTreatmentNew.h"
 
-#import "MaterialMath.h"
-
-@implementation MDCRoundedCornerTreatment
+@implementation MDCCurvedCornerTreatment
 
 - (instancetype)init {
-  return [self initWithRadius:0];
+  return [self initWithSize:CGSizeZero];
 }
 
-- (instancetype)initWithRadius:(CGFloat)radius {
+- (instancetype)initWithSize:(CGSize)size {
   if (self = [super init]) {
-    _radius = radius;
+    _size = size;
   }
   return self;
 }
 
-- (id)copyWithZone:(NSZone *)zone {
-  MDCRoundedCornerTreatment *copy = [super copyWithZone:zone];
-  copy.radius = _radius;
-  return copy;
-}
-
 - (MDCPathGenerator *)pathGeneratorForCornerWithAngle:(CGFloat)angle {
-  return [self pathGeneratorForCornerWithAngle:angle andRadius:_radius];
+  return [self pathGeneratorForCornerWithAngle:angle andCurve:_size];
 }
 
 - (MDCPathGenerator *)pathGeneratorForCornerWithAngle:(CGFloat)angle forViewSize:(CGSize)viewSize {
-  CGFloat normalizedRadius = _radius * viewSize.height;
-  return [self pathGeneratorForCornerWithAngle:angle andRadius:normalizedRadius];
+  CGSize normalizedCurve =
+      CGSizeMake(_size.width * viewSize.height, _size.height * viewSize.height);
+  return [self pathGeneratorForCornerWithAngle:angle andCurve:normalizedCurve];
 }
 
-- (MDCPathGenerator *)pathGeneratorForCornerWithAngle:(CGFloat)angle andRadius:(CGFloat)radius {
-  MDCPathGenerator *path = [MDCPathGenerator pathGeneratorWithStartPoint:CGPointMake(0, radius)];
-  [path addArcWithTangentPoint:CGPointZero
-                       toPoint:CGPointMake(MDCSin(angle) * radius, MDCCos(angle) * radius)
-                        radius:radius];
+- (MDCPathGenerator *)pathGeneratorForCornerWithAngle:(CGFloat)angle andCurve:(CGSize)curve {
+  MDCPathGenerator *path =
+      [MDCPathGenerator pathGeneratorWithStartPoint:CGPointMake(0, curve.height)];
+  [path addQuadCurveWithControlPoint:CGPointZero toPoint:CGPointMake(curve.width, 0)];
   return path;
+}
+
+- (id)copyWithZone:(NSZone *)zone {
+  MDCCurvedCornerTreatment *copy = [super copyWithZone:zone];
+  copy.size = _size;
+  return copy;
 }
 
 - (BOOL)isEqual:(id)object {
@@ -61,12 +59,12 @@
   if (!object || ![[object class] isEqual:[self class]]) {
     return NO;
   }
-  MDCRoundedCornerTreatment *otherRoundedCorner = (MDCRoundedCornerTreatment *)object;
-  return self.radius == otherRoundedCorner.radius;
+  MDCCurvedCornerTreatment *otherCurvedCorner = (MDCCurvedCornerTreatment *)object;
+  return CGSizeEqualToSize(self.size, otherCurvedCorner.size);
 }
 
 - (NSUInteger)hash {
-  return @(self.radius).hash ^ (NSUInteger)self.valueType;
+  return @(self.size.height).hash ^ @(self.size.width).hash ^ (NSUInteger)self.valueType;
 }
 
 @end

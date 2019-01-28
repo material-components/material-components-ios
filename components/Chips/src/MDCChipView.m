@@ -20,7 +20,7 @@
 #import "MaterialMath.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
-#import "MaterialShapes.h"
+#import "MaterialShapesNew.h"
 #import "MaterialTypography.h"
 
 static const MDCFontTextStyle kTitleTextStyle = MDCFontTextStyleBody2;
