@@ -10,7 +10,7 @@ path: /catalog/theming/
 
 Material Theming refers to the customization of your Material Design app to better reflect your product’s brand.
 
-## Overview
+## Theming extensions
 
 ### Terminology
 
