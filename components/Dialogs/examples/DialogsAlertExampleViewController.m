@@ -26,7 +26,7 @@ static NSString *const kReusableIdentifierItem = @"cell";
 
 @interface DialogsAlertExampleViewController : MDCCollectionViewController
 @property(nonatomic, strong, nullable) NSArray *modes;
-@property(nonatomic, strong, nonnull) id<MDCContainerScheming> containerScheme;
+@property(nonatomic, strong, nonnull) MDCContainerScheme *containerScheme;
 @end
 
 @interface DialogsAlertExampleViewController (Supplemental)
@@ -35,20 +35,10 @@ static NSString *const kReusableIdentifierItem = @"cell";
 
 @implementation DialogsAlertExampleViewController
 
-- (instancetype)init {
-  self = [super init];
-  if (self) {
-    MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
-    scheme.colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-    _containerScheme = scheme;
-  }
-  return self;
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+  self.containerScheme = [[MDCContainerScheme alloc] init];
   [self loadCollectionView:@[
     @"Show Long Alert", @"Alert (Dynamic Type enabled)", @"Overpopulated Alert"
   ]];
@@ -71,7 +61,8 @@ static NSString *const kReusableIdentifierItem = @"cell";
 }
 
 - (void)themeAlertController:(MDCAlertController *)alertController {
-  [alertController applyThemeWithScheme:self.containerScheme];
+  MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
+  [alertController applyThemeWithScheme:scheme];
 }
 
 - (IBAction)didTapShowLongAlert {
