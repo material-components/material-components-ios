@@ -12,35 +12,46 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import Foundation
+import UIKit
+
 import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialDialogs
+import MaterialComponentsBeta.MaterialButtons_Theming
+import MaterialComponentsBeta.MaterialContainerScheme
+import MaterialComponentsBeta.MaterialDialogs_Theming
 
 class DialogsLongAlertExampleViewController: UIViewController {
 
-  let flatButton = MDCFlatButton()
+  let textButton = MDCButton()
+  lazy var containerScheme: MDCContainerScheme = {
+    let scheme = MDCContainerScheme()
+    scheme.colorScheme = MDCSemanticColorScheme()
+    scheme.typographyScheme = MDCTypographyScheme()
+    return scheme
+  }()
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor = UIColor.white
+    view.backgroundColor = containerScheme.colorScheme?.backgroundColor
 
-    flatButton.setTitle("PRESENT ALERT", for: UIControlState())
-    flatButton.setTitleColor(UIColor(white: 0.1, alpha:1), for: UIControlState())
-    flatButton.sizeToFit()
-    flatButton.translatesAutoresizingMaskIntoConstraints = false
-    flatButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
-    self.view.addSubview(flatButton)
+    textButton.setTitle("PRESENT ALERT", for: UIControlState())
+    textButton.setTitleColor(UIColor(white: 0.1, alpha:1), for: UIControlState())
+    textButton.sizeToFit()
+    textButton.translatesAutoresizingMaskIntoConstraints = false
+    textButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
+    textButton.applyTextTheme(withScheme: containerScheme)
+    self.view.addSubview(textButton)
 
     NSLayoutConstraint.activate([
-      NSLayoutConstraint(item:flatButton,
+      NSLayoutConstraint(item:textButton,
                        attribute:.centerX,
                        relatedBy:.equal,
                        toItem:self.view,
                        attribute:.centerX,
                        multiplier:1.0,
                        constant: 0.0),
-      NSLayoutConstraint(item:flatButton,
+      NSLayoutConstraint(item:textButton,
                        attribute:.centerY,
                        relatedBy:.equal,
                        toItem:self.view,
@@ -68,7 +79,7 @@ class DialogsLongAlertExampleViewController: UIViewController {
     let action = MDCAlertAction(title:"OK") { (_) in print("OK") }
 
     materialAlertController.addAction(action)
-
+    materialAlertController.applyTheme(withScheme: containerScheme)
     self.present(materialAlertController, animated: true, completion: nil)
   }
 }

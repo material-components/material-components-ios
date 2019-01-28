@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import Foundation
+import UIKit
+
 import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialCollections
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialDialogs
-import MaterialComponents.MaterialDialogs_DialogThemer
 import MaterialComponents.MaterialPalettes
 import MaterialComponents.MaterialTypographyScheme
 import MaterialComponentsBeta.MaterialButtons_Theming
@@ -40,7 +40,8 @@ class DialogsAlertCustomizationExampleViewController: MDCCollectionViewControlle
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor = UIColor.white
+    view.backgroundColor =
+        containerScheme.colorScheme?.backgroundColor ?? MDCSemanticColorScheme().backgroundColor
 
     loadCollectionView(menu: [
       "Centered Title",
@@ -214,8 +215,6 @@ class DialogsAlertCustomizationExampleViewController: MDCCollectionViewControlle
     alert.addAction(MDCAlertAction(title:"Medium", emphasis: .medium, handler: handler))
     alert.addAction(MDCAlertAction(title:"Low", emphasis: .low, handler: handler))
 
-    let containerScheme = MDCContainerScheme()
-    let colorScheme = MDCSemanticColorScheme()
     colorScheme.primaryColor = .blue
     containerScheme.colorScheme = colorScheme
     alert.applyTheme(withScheme: containerScheme)

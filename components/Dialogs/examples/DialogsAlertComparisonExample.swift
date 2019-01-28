@@ -12,12 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import Foundation
+import UIKit
+
 import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialDialogs
-import MaterialComponents.MaterialDialogs_DialogThemer
 import MaterialComponents.MaterialTypographyScheme
+import MaterialComponentsBeta.MaterialButtons_Theming
 import MaterialComponentsBeta.MaterialContainerScheme
 import MaterialComponentsBeta.MaterialDialogs_Theming
 
@@ -25,20 +26,23 @@ import MaterialComponentsBeta.MaterialDialogs_Theming
 /// Controller.
 class DialogsAlertComparisonExample: UIViewController {
 
-  private let materialButton = MDCFlatButton()
-  private let themedButton = MDCFlatButton()
-  private let uikitButton = MDCFlatButton()
+  private let materialButton = MDCButton()
+  private let themedButton = MDCButton()
+  private let uikitButton = MDCButton()
+  var containerScheme = MDCContainerScheme()
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor = UIColor.white
+    view.backgroundColor =
+        containerScheme.colorScheme?.backgroundColor ?? MDCSemanticColorScheme().backgroundColor
 
     materialButton.translatesAutoresizingMaskIntoConstraints = false
     materialButton.setTitle("Material Alert", for: .normal)
     materialButton.setTitleColor(UIColor(white: 0.1, alpha:1), for: .normal)
     materialButton.sizeToFit()
     materialButton.addTarget(self, action: #selector(tapMaterial), for: .touchUpInside)
+    materialButton.applyTextTheme(withScheme: containerScheme)
     self.view.addSubview(materialButton)
 
     NSLayoutConstraint.activate([
@@ -63,6 +67,7 @@ class DialogsAlertComparisonExample: UIViewController {
     themedButton.setTitleColor(UIColor(white: 0.1, alpha:1), for: .normal)
     themedButton.sizeToFit()
     themedButton.addTarget(self, action: #selector(tapThemed), for: .touchUpInside)
+    themedButton.applyTextTheme(withScheme: containerScheme)
     self.view.addSubview(themedButton)
 
     NSLayoutConstraint.activate([
@@ -87,6 +92,7 @@ class DialogsAlertComparisonExample: UIViewController {
       uikitButton.setTitleColor(UIColor(white: 0.1, alpha:1), for: .normal)
       uikitButton.sizeToFit()
       uikitButton.addTarget(self, action: #selector(tapUIKit), for: .touchUpInside)
+      uikitButton.applyTextTheme(withScheme: containerScheme)
       self.view.addSubview(uikitButton)
 
       NSLayoutConstraint.activate([
@@ -114,8 +120,7 @@ class DialogsAlertComparisonExample: UIViewController {
 
   @objc func tapThemed(_ sender: Any) {
     let alertController = createMDCAlertController()
-    let scheme = MDCContainerScheme()
-    alertController.applyTheme(withScheme: scheme)
+    alertController.applyTheme(withScheme: containerScheme)
     self.present(alertController, animated: true, completion: nil)
   }
 

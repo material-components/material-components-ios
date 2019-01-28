@@ -12,15 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import Foundation
+import UIKit
+
 import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialDialogs
+import MaterialComponentsBeta.MaterialButtons_Theming
+import MaterialComponentsBeta.MDCContainerScheme
+import MaterialComponentsBeta.MaterialDialogs_Theming
 
 class CustomShadowViewController: UIViewController {
 
   let bodyLabel = UILabel()
-
-  let dismissButton = MDCFlatButton()
 
   override func viewDidLoad() {
 
@@ -54,30 +56,33 @@ class CustomShadowViewController: UIViewController {
 
 class DialogsCustomShadowExampleViewController: UIViewController {
 
-  let flatButton = MDCFlatButton()
+  let textButton = MDCButton()
   let transitionController = MDCDialogTransitionController()
+  var containerScheme = MDCContainerScheme()
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor = UIColor.white
+    view.backgroundColor =
+        containerScheme.colorScheme?.backgroundColor ?? MDCSemanticColorScheme().backgroundColor
 
-    flatButton.setTitle("PRESENT ALERT", for: UIControlState())
-    flatButton.setTitleColor(UIColor(white: 0.1, alpha:1), for: UIControlState())
-    flatButton.sizeToFit()
-    flatButton.translatesAutoresizingMaskIntoConstraints = false
-    flatButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
-    self.view.addSubview(flatButton)
+    textButton.setTitle("PRESENT ALERT", for: UIControlState())
+    textButton.setTitleColor(UIColor(white: 0.1, alpha:1), for: UIControlState())
+    textButton.sizeToFit()
+    textButton.translatesAutoresizingMaskIntoConstraints = false
+    textButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
+    textButton.applyTextTheme(withScheme: containerScheme)
+    self.view.addSubview(textButton)
 
     NSLayoutConstraint.activate([
-      NSLayoutConstraint(item:flatButton,
+      NSLayoutConstraint(item:textButton,
                        attribute:.centerX,
                        relatedBy:.equal,
                        toItem:self.view,
                        attribute:.centerX,
                        multiplier:1.0,
                        constant: 0.0),
-      NSLayoutConstraint(item:flatButton,
+      NSLayoutConstraint(item:textButton,
                        attribute:.centerY,
                        relatedBy:.equal,
                        toItem:self.view,
@@ -97,7 +102,7 @@ class DialogsCustomShadowExampleViewController: UIViewController {
     // We set the corner radius to adjust the shadow that is implemented via the trackingView in the
     // presentation controller.
     if let presentationController = presentedController.mdc_dialogPresentationController {
-      presentationController.dialogCornerRadius = presentedController.view.layer.cornerRadius
+      presentationController.applyTheme(withScheme: containerScheme)
     }
   }
 
