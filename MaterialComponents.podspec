@@ -166,6 +166,7 @@ Pod::Spec.new do |mdc|
     component.ios.deployment_target = '8.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+    component.exclude_files = "components/#{component.base_name}/src/MDCBottomNavigationBarController.*"
     component.resources = ["components/#{component.base_name}/src/Material#{component.base_name}.bundle"]
 
     component.dependency "MDFInternationalization"
@@ -177,6 +178,7 @@ Pod::Spec.new do |mdc|
 
     component.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+      unit_tests.exclude_files = "components/#{component.base_name}/tests/unit/MDCBottomNavigationBarControllerTests.m"
       unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
       unit_tests.dependency "MaterialComponents/BottomNavigation+ColorThemer"
       unit_tests.dependency "MaterialComponents/BottomNavigation+TypographyThemer"
