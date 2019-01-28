@@ -18,7 +18,9 @@
 #import "MaterialActionSheet.h"
 #import "MaterialButtons+Theming.h"
 #import "MaterialButtons.h"
+#import "MaterialColorScheme.h"
 #import "MaterialContainerScheme.h"
+#import "MaterialTypographyScheme.h"
 
 @interface ActionSheetComparisonExampleViewController ()
 
@@ -34,8 +36,6 @@
   self = [super init];
   if (self) {
     self.title = @"Action Sheet";
-    _colorScheme = [[MDCSemanticColorScheme alloc] init];
-    _typographyScheme = [[MDCTypographyScheme alloc] init];
     _containerScheme = [[MDCContainerScheme alloc] init];
     _showMaterialButton = [[MDCButton alloc] init];
     _showUIKitButton = [[MDCButton alloc] init];
@@ -47,11 +47,13 @@
   [super viewDidLoad];
 
   if (self.containerScheme.colorScheme == nil) {
-    self.containerScheme.colorScheme = self.colorScheme;
+    self.containerScheme.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   }
 
   if (self.containerScheme.typographyScheme == nil) {
-    self.containerScheme.typographyScheme = self.typographyScheme;
+    self.containerScheme.typographyScheme =
+        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
   }
 
   self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
