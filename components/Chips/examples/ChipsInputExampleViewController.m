@@ -29,36 +29,34 @@
 - (id)init {
   self = [super init];
   if (self) {
-    self.containerScheming = [self defaultContainerScheme];
+    MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+    containerScheme.colorScheme =
+    [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    containerScheme.shapeScheme = [[MDCShapeScheme alloc] init];
+    containerScheme.typographyScheme = [[MDCTypographyScheme alloc] init];
+    self.containerScheme = containerScheme;
   }
   return self;
-}
-
-- (MDCContainerScheme *)defaultContainerScheme {
-  MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
-  containerScheme.colorScheme =
-      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-  containerScheme.shapeScheme = [[MDCShapeScheme alloc] init];
-  containerScheme.typographyScheme = [[MDCTypographyScheme alloc] init];
-  return containerScheme;
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  if (self.containerScheming.colorScheme) {
-    self.view.backgroundColor = self.containerScheming.colorScheme.backgroundColor;
+  if (self.containerScheme.colorScheme) {
+    self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
   } else {
-    self.view.backgroundColor = self.defaultContainerScheme.colorScheme.backgroundColor;
+    MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    self.view.backgroundColor = colorScheme.backgroundColor;
   }
 
   _chipField = [[MDCChipField alloc] initWithFrame:CGRectZero];
   _chipField.delegate = self;
   _chipField.textField.placeholderLabel.text = @"This is a chip field.";
-  if (self.containerScheming.colorScheme) {
-    _chipField.backgroundColor = self.containerScheming.colorScheme.surfaceColor;
+  if (self.containerScheme.colorScheme) {
+    _chipField.backgroundColor = self.containerScheme.colorScheme.surfaceColor;
   } else {
-    _chipField.backgroundColor = self.defaultContainerScheme.colorScheme.surfaceColor;
+    MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    _chipField.backgroundColor = colorScheme.surfaceColor;
   }
   [self.view addSubview:_chipField];
 }
@@ -81,9 +79,9 @@
 - (void)chipField:(MDCChipField *)chipField didAddChip:(MDCChipView *)chip {
   // Every other chip is stroked
   if (chipField.chips.count % 2) {
-    [chip applyOutlinedThemeWithScheme:self.containerScheming];
+    [chip applyOutlinedThemeWithScheme:self.containerScheme];
   } else {
-    [chip applyThemeWithScheme:self.containerScheming];
+    [chip applyThemeWithScheme:self.containerScheme];
   }
   [chip sizeToFit];
   CGFloat chipVerticalInset = MIN(0, (CGRectGetHeight(chip.bounds) - 48) / 2);

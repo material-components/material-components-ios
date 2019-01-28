@@ -28,18 +28,14 @@
 - (id)init {
   self = [super init];
   if (self) {
-    self.containerScheming = [self defaultContainerScheme];
+    MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+    containerScheme.colorScheme =
+    [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    containerScheme.shapeScheme = [[MDCShapeScheme alloc] init];
+    containerScheme.typographyScheme = [[MDCTypographyScheme alloc] init];
+    self.containerScheme = containerScheme;
   }
   return self;
-}
-
-- (MDCContainerScheme *)defaultContainerScheme {
-  MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
-  containerScheme.colorScheme =
-      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-  containerScheme.shapeScheme = [[MDCShapeScheme alloc] init];
-  containerScheme.typographyScheme = [[MDCTypographyScheme alloc] init];
-  return containerScheme;
 }
 
 - (void)viewDidLoad {
@@ -51,7 +47,7 @@
   _chipView.titleLabel.text = @"Material";
   _chipView.imageView.image = [self faceImage];
   _chipView.accessoryView = [self deleteButton];
-  [_chipView applyThemeWithScheme:self.containerScheming];
+  [_chipView applyThemeWithScheme:self.containerScheme];
   [self.view addSubview:_chipView];
 
   CGSize chipSize = [_chipView sizeThatFits:self.view.bounds.size];

@@ -24,20 +24,16 @@ class ChipsFieldDeleteEnabledViewController : UIViewController, MDCChipFieldDele
   var chipField = MDCChipField()
 
   init() {
-    containerScheming = ChipsFieldDeleteEnabledViewController.defaultContainerScheme
+    let scheme = MDCContainerScheme()
+    scheme.colorScheme = MDCSemanticColorScheme()
+    scheme.shapeScheme = MDCShapeScheme()
+    scheme.typographyScheme = MDCTypographyScheme()
+    containerScheming = scheme
     super.init(nibName: nil, bundle: nil)
   }
 
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) is not implemented")
-  }
-
-  static var defaultContainerScheme: MDCContainerScheme {
-    let containerScheme = MDCContainerScheme()
-    containerScheme.colorScheme = MDCSemanticColorScheme()
-    containerScheme.shapeScheme = MDCShapeScheme()
-    containerScheme.typographyScheme = MDCTypographyScheme()
-    return containerScheme
   }
 
   override func viewDidLoad() {

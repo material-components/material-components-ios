@@ -29,7 +29,7 @@
   if (self) {
     _sizingChip = [[MDCChipView alloc] init];
     _sizingChip.mdc_adjustsFontForContentSizeCategory = YES;
-    self.containerScheming = [self defaultContainerScheme];
+    self.containerScheme = [self defaultContainerScheme];
   }
   return self;
 }
@@ -52,7 +52,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  [_sizingChip applyThemeWithScheme:self.containerScheming];
+  [_sizingChip applyThemeWithScheme:self.containerScheme];
 
   if (@available(iOS 11.0, *)) {
     self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
@@ -119,7 +119,7 @@
 
   ChipModel *model = self.model[indexPath.row];
   [model apply:cell.chipView];
-  [cell.chipView applyThemeWithScheme:self.containerScheming];
+  [cell.chipView applyThemeWithScheme:self.containerScheme];
   return cell;
 }
 

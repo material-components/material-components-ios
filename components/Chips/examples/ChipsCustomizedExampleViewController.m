@@ -25,18 +25,13 @@
 - (id)init {
   self = [super init];
   if (self) {
-    self.containerScheming = [self defaultContainerScheme];
+    MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
+    scheme.colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    scheme.typographyScheme = [[MDCTypographyScheme alloc] init];
+    scheme.shapeScheme = [[MDCShapeScheme alloc] init];
+    self.containerScheme = scheme;
   }
   return self;
-}
-
-- (MDCContainerScheme *)defaultContainerScheme {
-  MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
-  containerScheme.colorScheme =
-      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-  containerScheme.shapeScheme = [[MDCShapeScheme alloc] init];
-  containerScheme.typographyScheme = [[MDCTypographyScheme alloc] init];
-  return containerScheme;
 }
 
 + (void)configureChip:(MDCChipView *)chip {
@@ -85,7 +80,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  [_sizingChip applyThemeWithScheme:self.containerScheming];
+  [_sizingChip applyThemeWithScheme:self.containerScheme];
 }
 
 - (void)viewWillLayoutSubviews {
@@ -109,7 +104,7 @@
   cell.chipView.titleLabel.text = self.titles[indexPath.row];
   cell.chipView.selectedImageView.image = [self doneImage];
   cell.alwaysAnimateResize = YES;
-  [cell.chipView applyThemeWithScheme:self.containerScheming];
+  [cell.chipView applyThemeWithScheme:self.containerScheme];
   return cell;
 }
 

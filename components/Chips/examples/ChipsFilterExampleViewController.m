@@ -28,18 +28,14 @@
 - (id)init {
   self = [super init];
   if (self) {
-    self.containerScheming = [self defaultContainerScheme];
+    MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+    containerScheme.colorScheme =
+    [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    containerScheme.shapeScheme = [[MDCShapeScheme alloc] init];
+    containerScheme.typographyScheme = [[MDCTypographyScheme alloc] init];
+    self.containerScheme = containerScheme;
   }
   return self;
-}
-
-- (MDCContainerScheme *)defaultContainerScheme {
-  MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
-  containerScheme.colorScheme =
-      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-  containerScheme.shapeScheme = [[MDCShapeScheme alloc] init];
-  containerScheme.typographyScheme = [[MDCTypographyScheme alloc] init];
-  return containerScheme;
 }
 
 - (void)loadView {
@@ -121,20 +117,22 @@
   chipView.titleLabel.text = self.titles[indexPath.row];
   chipView.selectedImageView.image =
       [[self doneImage] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-  if (self.containerScheming.colorScheme) {
+  if (self.containerScheme.colorScheme) {
     chipView.selectedImageView.tintColor =
-        [self.containerScheming.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.54];
+        [self.containerScheme.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.54];
   } else {
-    chipView.selectedImageView.tintColor = [self.defaultContainerScheme.colorScheme.onSurfaceColor
-        colorWithAlphaComponent:(CGFloat)0.54];
+    MDCSemanticColorScheme *colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    chipView.selectedImageView.tintColor =
+        [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.54];
   }
   chipView.selected = [_selectedIndecies containsObject:indexPath];
   cell.alwaysAnimateResize = [self shouldAnimateResize];
 
   if (_isOutlined) {
-    [chipView applyOutlinedThemeWithScheme:self.containerScheming];
+    [chipView applyOutlinedThemeWithScheme:self.containerScheme];
   } else {
-    [chipView applyThemeWithScheme:self.containerScheming];
+    [chipView applyThemeWithScheme:self.containerScheme];
   }
 
   return cell;
