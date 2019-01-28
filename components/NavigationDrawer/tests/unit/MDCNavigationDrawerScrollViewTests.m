@@ -511,6 +511,8 @@
       (MDCBottomDrawerPresentationController *)self.drawerViewController.presentationController;
 
   // When
+  // Setting the scrim color before setting the tracking scroll view in some cases used to
+  // not set the trackingScrollView on bottomDrawerContainerViewController.
   self.drawerViewController.scrimColor = UIColor.blueColor;
   self.drawerViewController.trackingScrollView = self.fakeScrollView;
 
