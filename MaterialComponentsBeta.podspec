@@ -68,8 +68,8 @@ Pod::Spec.new do |mdc|
 
   mdc.subspec "BottomNavigation" do |component|
     component.ios.deployment_target = '8.0'
-    component.public_header_files = "components/#{component.base_name}/src/MDCBottomNavigationBarController.h"
-    component.source_files = "components/#{component.base_name}/src/MDCBottomNavigationBarController.*"
+    component.public_header_files = "components/#{component.base_name}/src/MDCBottomNavigationBarController.h", "components/#{component.base_name}/src/MaterialBottomNavigationBeta.h"
+    component.source_files = "components/#{component.base_name}/src/MDCBottomNavigationBarController.*", "components/#{component.base_name}/src/MaterialBottomNavigationBeta.h"
     component.dependency "MaterialComponents/BottomNavigation"
 
     component.test_spec 'UnitTests' do |unit_tests|

@@ -166,7 +166,7 @@ Pod::Spec.new do |mdc|
     component.ios.deployment_target = '8.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
-    component.exclude_files = "components/#{component.base_name}/src/MDCBottomNavigationBarController.*"
+    component.exclude_files = "components/#{component.base_name}/src/MDCBottomNavigationBarController.*", "components/#{component.base_name}/src/MaterialBottomNavigationBeta.h"
     component.resources = ["components/#{component.base_name}/src/Material#{component.base_name}.bundle"]
 
     component.dependency "MDFInternationalization"

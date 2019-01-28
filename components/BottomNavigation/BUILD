@@ -61,6 +61,20 @@ mdc_objc_library(
     ],
 )
 
+mdc_objc_library(
+    name = "BottomNavigationBeta",
+    srcs = ["src/MDCBottomNavigationBarController.m"],
+    hdrs = [
+        "src/MDCBottomNavigationBarController.h",
+        "src/MaterialBottomNavigationBeta.h",
+    ],
+    enable_modules = 1,
+    includes = ["src"],
+    sdk_frameworks = ["CoreGraphics"],
+    visibility = ["//..."],
+    deps = [":BottomNavigation"],
+)
+
 filegroup(
     name = "BundleFiles",
     srcs = glob([

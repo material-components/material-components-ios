@@ -15,7 +15,7 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <XCTest/XCTest.h>
 
-#import "MDCBottomNavigationBarController.h"
+#import <MaterialComponentsBeta/MaterialBottomNavigationBeta.h>
 
 static CGFloat const kDefaultExpectationTimeout = 15;
 
