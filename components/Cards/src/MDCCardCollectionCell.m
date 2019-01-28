@@ -16,7 +16,7 @@
 
 #import "MaterialIcons+ic_check_circle.h"
 #import "MaterialMath.h"
-#import "MaterialShapes.h"
+#import "MaterialShapesNew.h"
 
 static const CGFloat MDCCardCellCornerRadiusDefault = 4;
 static const CGFloat MDCCardCellSelectedImagePadding = 8;

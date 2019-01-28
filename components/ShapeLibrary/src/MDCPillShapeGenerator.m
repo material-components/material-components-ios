@@ -12,39 +12,40 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCSlantedRectShapeGenerator.h"
+#import <CoreGraphics/CoreGraphics.h>
 
-@implementation MDCSlantedRectShapeGenerator {
+#import "MDCPillShapeGeneratorNew.h"
+
+#import "MDCRoundedCornerTreatmentNew.h"
+#import "MaterialMath.h"
+
+@implementation MDCPillShapeGenerator {
   MDCRectangleShapeGenerator *_rectangleGenerator;
+  MDCRoundedCornerTreatment *_cornerShape;
 }
 
 - (instancetype)init {
   if (self = [super init]) {
-    [self commonMDCSlantedRectShapeGeneratorInit];
+    [self commonInit];
   }
   return self;
 }
 
-- (void)commonMDCSlantedRectShapeGeneratorInit {
-  _rectangleGenerator = [[MDCRectangleShapeGenerator alloc] init];
-}
-
 - (id)copyWithZone:(NSZone *)__unused zone {
-  MDCSlantedRectShapeGenerator *copy = [[[self class] alloc] init];
-  copy.slant = self.slant;
-  return copy;
+  return [[[self class] alloc] init];
 }
 
-- (void)setSlant:(CGFloat)slant {
-  _slant = slant;
-
-  _rectangleGenerator.topLeftCornerOffset = CGPointMake(slant, 0);
-  _rectangleGenerator.topRightCornerOffset = CGPointMake(slant, 0);
-  _rectangleGenerator.bottomLeftCornerOffset = CGPointMake(-slant, 0);
-  _rectangleGenerator.bottomRightCornerOffset = CGPointMake(-slant, 0);
+- (void)commonInit {
+  _cornerShape = [[MDCRoundedCornerTreatment alloc] init];
+  _rectangleGenerator = [[MDCRectangleShapeGenerator alloc] init];
+  [_rectangleGenerator setCorners:_cornerShape];
 }
 
 - (CGPathRef)pathForSize:(CGSize)size {
+  CGFloat radius = (CGFloat)0.5 * MIN(MDCFabs(size.width), MDCFabs(size.height));
+  if (radius > 0) {
+    [_rectangleGenerator setCorners:[[MDCRoundedCornerTreatment alloc] initWithRadius:radius]];
+  }
   return [_rectangleGenerator pathForSize:size];
 }
 
