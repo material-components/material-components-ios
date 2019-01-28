@@ -187,9 +187,11 @@ upload_bazel_test_artifacts() {
   find -L . -name "sponge_log.xml" -type f | copy_to_artifacts
 }
 
-# Upgrades the machine's current bazel version to at least 0.20.0
+# Upgrades kokoro's current bazel version to at least 0.20.0
 upgrade_kokoro_bazel_if_needed() {
   bazel version
+  # High sierra machines do not presently have a use_bazel.sh tool
+  # They do come pre-installed with bazel 0.21 however, so we don't need to update bazel.
   if [ "$KOKORO_JOB_POOL" != "high-sierra" ]; then
     use_bazel.sh 0.20.0
     bazel version
