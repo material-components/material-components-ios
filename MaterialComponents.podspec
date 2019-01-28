@@ -978,7 +978,7 @@ Pod::Spec.new do |mdc|
     end
   end
 
-  #Shapes
+  # Shapes
 
   mdc.subspec "Shapes" do |component|
     component.ios.deployment_target = '8.0'
