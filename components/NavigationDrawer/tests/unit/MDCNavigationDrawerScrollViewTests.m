@@ -505,16 +505,10 @@
   XCTAssertEqual(self.fakeScrollView.scrollEnabled, NO);
 }
 
-- (void)testSetTrackingScrollView {
+- (void)testSetTrackingScrollViewAfterSetScrimColor {
   // Given
-  MDCBottomDrawerPresentationController *drawerPresentationController = nil;
-  if ([self.drawerViewController.presentationController
-          isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
-    drawerPresentationController =
-        (MDCBottomDrawerPresentationController *)self.drawerViewController.presentationController;
-  } else {
-    drawerPresentationController = nil;
-  }
+  MDCBottomDrawerPresentationController *drawerPresentationController =
+      (MDCBottomDrawerPresentationController *)self.drawerViewController.presentationController;
 
   // When
   self.drawerViewController.scrimColor = UIColor.blueColor;

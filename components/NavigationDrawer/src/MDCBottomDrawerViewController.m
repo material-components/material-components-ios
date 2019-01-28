@@ -77,7 +77,7 @@
   if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
     MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
         (MDCBottomDrawerPresentationController *)self.presentationController;
-    bottomDrawerPresentationController.trackingScrollView = trackingScrollView;
+      bottomDrawerPresentationController.trackingScrollView = trackingScrollView;
   }
   // Rather than have the client manually disable scrolling on the internal scroll view for
   // the drawer to work properly, we can disable it if a trackingScrollView is provided.
