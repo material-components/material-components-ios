@@ -184,7 +184,7 @@ mdc_objc_library(
 mdc_objc_library(
     name = "unit_test_beta_sources",
     testonly = 1,
-    srcs = ["tests/unit/MDCBottomnavigationBarControllerTests.m"],
+    srcs = ["tests/unit/MDCBottomNavigationBarControllerTests.m"],
     sdk_frameworks = [
         "CoreGraphics",
         "XCTest",
