@@ -102,9 +102,10 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
               latestBeginTouchDownRippleTime + kRippleFadeOutDelay;
         }
         dispatch_group_enter(group);
-        [rippleLayer endRippleAnimated:animated completion:^{
-          dispatch_group_leave(group);
-        }];
+        [rippleLayer endRippleAnimated:animated
+                            completion:^{
+                              dispatch_group_leave(group);
+                            }];
       }
     }
     dispatch_group_notify(group, dispatch_get_main_queue(), ^{
