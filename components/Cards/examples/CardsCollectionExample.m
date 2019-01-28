@@ -34,16 +34,9 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   defaultLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
   self = [super initWithCollectionViewLayout:defaultLayout];
   if (self) {
-    [self setUpContainerScheme];
+    self.containerScheming = [[MDCContainerScheme alloc] init];
   }
   return self;
-}
-
-- (void)setUpContainerScheme {
-  self.containerScheme = [[MDCContainerScheme alloc] init];
-  self.containerScheme.colorScheme = [[MDCSemanticColorScheme alloc] init];
-  self.containerScheme.typographyScheme = [[MDCTypographyScheme alloc] init];
-  self.containerScheme.shapeScheme = [[MDCShapeScheme alloc] init];
 }
 
 - (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout {
@@ -83,7 +76,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   MDCCardCollectionCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
                                                 forIndexPath:indexPath];
-  [cell applyThemeWithScheme:self.containerScheme];
+  [cell applyThemeWithScheme:self.containerScheming];
   [cell setBackgroundColor:[UIColor colorWithRed:107 / (CGFloat)255
                                            green:63 / (CGFloat)255
                                             blue:238 / (CGFloat)255

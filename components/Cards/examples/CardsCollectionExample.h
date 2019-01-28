@@ -19,6 +19,6 @@
 
 @interface CardsCollectionExample : UICollectionViewController
 
-@property(strong, nonatomic) MDCContainerScheme *containerScheme;
+@property(strong, nonatomic) id<MDCContainerScheming> containerScheming;
 
 @end

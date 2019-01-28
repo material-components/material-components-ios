@@ -31,23 +31,19 @@ class EditReorderCollectionViewController: UIViewController,
                                         collectionViewLayout: UICollectionViewFlowLayout())
   var toggle = ToggleMode.edit
 
-  var containerScheme = MDCContainerScheme()
+  var containerScheming: MDCContainerScheming
 
-  var colorScheme: MDCSemanticColorScheme {
-    return containerScheme.colorScheme ?? MDCSemanticColorScheme()
+  var colorScheming: MDCColorScheming {
+    return containerScheming.colorScheme ?? MDCSemanticColorScheme()
   }
 
-  var shapeScheme: MDCShapeScheme {
-    return containerScheme.shapeScheme ?? MDCShapeScheme()
-  }
-
-  var typographyScheme: MDCTypographyScheme {
-    return containerScheme.typographyScheme ?? MDCTypographyScheme()
+  var typographyScheming: MDCTypographyScheming {
+    return containerScheming.typographyScheme ?? MDCTypographyScheme()
   }
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    containerScheming = MDCContainerScheme()
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    setUpContainerScheme()
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -69,7 +65,7 @@ class EditReorderCollectionViewController: UIViewController,
     collectionView.frame = view.bounds
     collectionView.dataSource = self
     collectionView.delegate = self
-    collectionView.backgroundColor = colorScheme.backgroundColor
+    collectionView.backgroundColor = colorScheming.backgroundColor
     collectionView.alwaysBounceVertical = true
     collectionView.register(CardEditReorderCollectionCell.self, forCellWithReuseIdentifier: "Cell")
     collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -114,12 +110,6 @@ class EditReorderCollectionViewController: UIViewController,
     self.updateTitle()
   }
 
-  func setUpContainerScheme() {
-    containerScheme.colorScheme = colorScheme
-    containerScheme.typographyScheme = typographyScheme
-    containerScheme.shapeScheme = shapeScheme
-  }
-
   func preiOS11Constraints() {
     self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[view]|",
                                                             options: [],
@@ -159,7 +149,7 @@ class EditReorderCollectionViewController: UIViewController,
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
     guard let cardCell = cell as? CardEditReorderCollectionCell else { return cell }
 
-    cardCell.apply(containerScheme: containerScheme, typographyScheme: typographyScheme)
+    cardCell.apply(containerScheme: containerScheming, typographyScheme: typographyScheming)
 
     let title = dataSource[indexPath.item].title
     let imageName = dataSource[indexPath.item].image

@@ -23,11 +23,11 @@ class CardExampleViewController: UIViewController {
   @IBOutlet weak var card: MDCCard!
   @IBOutlet weak var button: MDCButton!
 
-  var containerScheme: MDCContainerScheme = MDCContainerScheme()
+  var containerScheming: MDCContainerScheming
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    containerScheming = MDCContainerScheme()
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    setUpContainerScheme()
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -43,8 +43,8 @@ class CardExampleViewController: UIViewController {
     bundle.loadNibNamed("CardExampleViewController", owner: self, options: nil)
     view.frame = self.view.bounds
 
-    button.applyTextTheme(withScheme: containerScheme)
-    card.applyTheme(withScheme: containerScheme)
+    button.applyTextTheme(withScheme: containerScheming)
+    card.applyTheme(withScheme: containerScheming)
     card.isInteractable = false
 
     imageView.isAccessibilityElement = true
@@ -57,12 +57,6 @@ class CardExampleViewController: UIViewController {
                                            UITraitCollection(verticalSizeClass: .regular)])
     }
     return super.traitCollection
-  }
-
-  func setUpContainerScheme() {
-    containerScheme.typographyScheme = MDCTypographyScheme()
-    containerScheme.colorScheme = MDCSemanticColorScheme()
-    containerScheme.shapeScheme = MDCShapeScheme()
   }
 }
 
