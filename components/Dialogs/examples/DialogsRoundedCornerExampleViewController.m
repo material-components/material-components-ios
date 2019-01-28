@@ -14,11 +14,15 @@
 
 #import "DialogsRoundedCornerExampleViewController.h"
 #import "MaterialButtons.h"
+#import "MaterialButtons+Theming.h"
+#import "MaterialDialogs.h"
 #import "MaterialDialogs+Theming.h"
 
 @interface DialogsRoundedCornerSimpleController : UIViewController
 
-@property(nonatomic, strong) MDCFlatButton *dismissButton;
+@property(nonatomic, strong) MDCButton *dismissButton;
+
+@property(nonatomic, strong) MDCContainerScheme *containerScheme;
 
 @end
 
@@ -29,17 +33,17 @@
 
   self.view.backgroundColor = [UIColor whiteColor];
 
-  _dismissButton = [[MDCFlatButton alloc] initWithFrame:CGRectZero];
-  [_dismissButton setTitle:@"Dismiss" forState:UIControlStateNormal];
-  [_dismissButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-  _dismissButton.autoresizingMask =
+  self.dismissButton = [[MDCFlatButton alloc] initWithFrame:CGRectZero];
+  [self.dismissButton setTitle:@"Dismiss" forState:UIControlStateNormal];
+  [self.dismissButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+  self.dismissButton.autoresizingMask =
       UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin |
       UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
-  [_dismissButton addTarget:self
+  [self.dismissButton addTarget:self
                      action:@selector(dismiss:)
            forControlEvents:UIControlEventTouchUpInside];
-
-  [self.view addSubview:_dismissButton];
+  [self.dismissButton applyTextThemeWithScheme:self.containerScheme];
+  [self.view addSubview:self.dismissButton];
 }
 
 - (void)viewWillLayoutSubviews {
@@ -61,7 +65,7 @@
 
 @interface DialogsRoundedCornerExampleViewController ()
 
-@property(nonatomic, strong) MDCFlatButton *presentButton;
+@property(nonatomic, strong) MDCButton *presentButton;
 @property(nonatomic, strong) MDCDialogTransitionController *transitionController;
 @property(nonatomic, strong) MDCContainerScheme *containerScheme;
 
@@ -79,17 +83,17 @@
 
   self.view.backgroundColor = [UIColor whiteColor];
 
-  _presentButton = [[MDCFlatButton alloc] initWithFrame:CGRectZero];
-  [_presentButton setTitle:@"Present" forState:UIControlStateNormal];
-  [_presentButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-  _presentButton.autoresizingMask =
+  self.presentButton = [[MDCFlatButton alloc] initWithFrame:CGRectZero];
+  [self.presentButton setTitle:@"Present" forState:UIControlStateNormal];
+  [self.presentButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+  self.presentButton.autoresizingMask =
       UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin |
       UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
-  [_presentButton addTarget:self
+  [self.presentButton addTarget:self
                      action:@selector(didTapPresent:)
            forControlEvents:UIControlEventTouchUpInside];
-
-  [self.view addSubview:_presentButton];
+  [self.presentButton applyTextThemeWithScheme:self.containerScheme];
+  [self.view addSubview:self.presentButton];
 }
 
 - (void)viewWillLayoutSubviews {

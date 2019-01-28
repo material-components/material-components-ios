@@ -17,14 +17,16 @@
  instructions. It is not necessary to import this file to use Material Components for iOS.
  */
 
-#import "MaterialColorScheme.h"
-#import "MaterialTypographyScheme.h"
-
 #import <UIKit/UIKit.h>
+
+#import "MaterialColorScheme.h"
+#import "MaterialContainerScheme.h"
+#import "MaterialTypographyScheme.h"
 
 @interface DialogWithPreferredContentSizeExampleViewController : UIViewController
 
 @property(nonatomic, strong, nullable) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong, nullable) MDCContainerScheme *containerScheme;
 @property(nonatomic, strong, nullable) MDCTypographyScheme *typographyScheme;
 
 @end

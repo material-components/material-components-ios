@@ -15,6 +15,8 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialApplication.h"
+#import "MaterialButtons.h"
+#import "MaterialButtons+Theming.h"
 #import "MaterialCollections.h"
 #import "MaterialColorScheme.h"
 #import "MaterialDialogs+Theming.h"
@@ -176,7 +178,9 @@ static NSString *const kReusableIdentifierItem = @"cell";
 
 @interface ProgrammaticViewController ()
 
-@property(nonatomic, strong) MDCFlatButton *dismissButton;
+@property(nonatomic, strong) MDCButton *dismissButton;
+
+@property(nonatomic, strong) MDCContainerScheme *containerScheme;
 
 @end
 
@@ -187,17 +191,18 @@ static NSString *const kReusableIdentifierItem = @"cell";
 
   self.view.backgroundColor = [UIColor whiteColor];
 
-  _dismissButton = [[MDCFlatButton alloc] init];
-  [_dismissButton setTitle:@"Dismiss" forState:UIControlStateNormal];
-  [_dismissButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-  _dismissButton.autoresizingMask =
+  self.dismissButton = [[MDCFlatButton alloc] init];
+  [self.dismissButton setTitle:@"Dismiss" forState:UIControlStateNormal];
+  [self.dismissButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+  self.dismissButton.autoresizingMask =
       UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin |
       UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
-  [_dismissButton addTarget:self
+  [self.dismissButton addTarget:self
                      action:@selector(dismiss:)
            forControlEvents:UIControlEventTouchUpInside];
+  [self.dismissButton applyTextThemeWithScheme:self.containerScheme];
 
-  [self.view addSubview:_dismissButton];
+  [self.view addSubview:self.dismissButton];
 }
 
 - (void)viewWillLayoutSubviews {
@@ -221,7 +226,9 @@ static NSString *const kReusableIdentifierItem = @"cell";
 
 @interface OpenURLViewController ()
 
-@property(nonatomic, strong) MDCFlatButton *dismissButton;
+@property(nonatomic, strong) MDCButton *dismissButton;
+
+@property(nonatomic, strong) MDCContainerScheme *containerScheme;
 
 @end
 
@@ -232,17 +239,17 @@ static NSString *const kReusableIdentifierItem = @"cell";
 
   self.view.backgroundColor = [UIColor whiteColor];
 
-  _dismissButton = [[MDCFlatButton alloc] init];
-  [_dismissButton setTitle:@"material.io" forState:UIControlStateNormal];
-  [_dismissButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-  _dismissButton.autoresizingMask =
+  self.dismissButton = [[MDCFlatButton alloc] init];
+  [self.dismissButton setTitle:@"material.io" forState:UIControlStateNormal];
+  [self.dismissButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+  self.dismissButton.autoresizingMask =
       UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin |
       UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
-  [_dismissButton addTarget:self
+  [self.dismissButton addTarget:self
                      action:@selector(dismiss:)
            forControlEvents:UIControlEventTouchUpInside];
-
-  [self.view addSubview:_dismissButton];
+  [self.dismissButton applyTextThemeWithScheme:self.containerScheme];
+  [self.view addSubview:self.dismissButton];
 }
 
 - (void)viewWillLayoutSubviews {

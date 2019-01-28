@@ -28,6 +28,7 @@ import MaterialComponents.MaterialPalettes
 class DialogsAlertCustomizationExampleViewController: MDCCollectionViewController {
 
   var containerScheme: MDCContainerScheme = MDCContainerScheme()
+  var colorScheme = MDCSemanticColorScheme()
 
   let kReusableIdentifierItem = "customCell"
 

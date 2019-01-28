@@ -61,8 +61,7 @@ static NSString *const kReusableIdentifierItem = @"cell";
 }
 
 - (void)themeAlertController:(MDCAlertController *)alertController {
-  MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
-  [alertController applyThemeWithScheme:scheme];
+  [alertController applyThemeWithScheme:self.containerScheme];
 }
 
 - (IBAction)didTapShowLongAlert {
