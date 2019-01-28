@@ -16,6 +16,18 @@
 
 #import "MaterialShadowElevations.h"
 
+@class MDCDialogPresentationController;
+
+/**
+ Similar to UIPopoverPresentationControllerDelegate, MDCDialogPresentationControllerDelegate lets
+ you customize the behavior of a popover-based presentation.
+ */
+@protocol MDCDialogPresentationControllerDelegate <NSObject>
+@optional
+- (void)dialogPresentationControllerDidDismissDialog:
+    (MDCDialogPresentationController *)dialogPresentationController;
+@end
+
 /**
  MDCDialogPresentationController will present a modal ViewController as a dialog according to the
  Material spec.
@@ -34,6 +46,12 @@
  presentedView's frame.
  */
 @interface MDCDialogPresentationController : UIPresentationController
+
+/**
+ An object conforming to MDCDialogPresentationControllerDelegate.
+ */
+@property(nonatomic, weak) id<MDCDialogPresentationControllerDelegate>
+    dialogPresentationControllerDelegate;
 
 /**
  Should a tap on the dimmed background view dismiss the presented controller.
