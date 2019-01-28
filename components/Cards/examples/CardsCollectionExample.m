@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #import "CardsCollectionExample.h"
+
 #import "MaterialInk.h"
+#import "MDCCardCollectionCell+MaterialTheming.h"
 #import "UICollectionViewController+MDCCardReordering.h"
 
 @interface CardsCollectionExample ()
@@ -30,7 +32,18 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   defaultLayout.minimumInteritemSpacing = 0;
   defaultLayout.minimumLineSpacing = 1;
   defaultLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
-  return [self initWithCollectionViewLayout:defaultLayout];
+  self = [super initWithCollectionViewLayout:defaultLayout];
+  if (self) {
+    [self setUpContainerScheme];
+  }
+  return self;
+}
+
+- (void)setUpContainerScheme {
+  self.containerScheme = [[MDCContainerScheme alloc] init];
+  self.containerScheme.colorScheme = [[MDCSemanticColorScheme alloc] init];
+  self.containerScheme.typographyScheme = [[MDCTypographyScheme alloc] init];
+  self.containerScheme.shapeScheme = [[MDCShapeScheme alloc] init];
 }
 
 - (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout {
@@ -70,6 +83,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   MDCCardCollectionCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
                                                 forIndexPath:indexPath];
+  [cell applyThemeWithScheme:self.containerScheme];
   [cell setBackgroundColor:[UIColor colorWithRed:107 / (CGFloat)255
                                            green:63 / (CGFloat)255
                                             blue:238 / (CGFloat)255

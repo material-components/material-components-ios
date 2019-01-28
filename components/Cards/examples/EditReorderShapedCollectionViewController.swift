@@ -40,6 +40,23 @@ class EditReorderShapedCollectionViewController: UIViewController,
   UICollectionViewDataSource,
   UICollectionViewDelegateFlowLayout {
 
+  var containerScheme = MDCContainerScheme()
+
+  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    setUpContainerScheme()
+  }
+
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  func setUpContainerScheme() {
+    containerScheme.colorScheme = MDCSemanticColorScheme()
+    containerScheme.typographyScheme = MDCTypographyScheme()
+    containerScheme.shapeScheme = MDCShapeScheme()
+  }
+
   enum ToggleMode: Int {
     case edit = 1, reorder
   }
@@ -124,6 +141,7 @@ class EditReorderShapedCollectionViewController: UIViewController,
                       cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell",
                                                   for: indexPath) as! MDCCardCollectionCell
+    cell.applyTheme(withScheme: containerScheme)
     cell.backgroundColor = .white
     cell.isSelectable = (toggle == .edit)
     return cell
