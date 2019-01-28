@@ -14,8 +14,8 @@
 
 #import "CardsCollectionExample.h"
 
-#import "MaterialInk.h"
 #import "MDCCardCollectionCell+MaterialTheming.h"
+#import "MaterialInk.h"
 #import "UICollectionViewController+MDCCardReordering.h"
 
 @interface CardsCollectionExample ()

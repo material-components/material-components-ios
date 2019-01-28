@@ -19,6 +19,6 @@
 
 @interface CardsCollectionTintingExample : UICollectionViewController
 
-@property (strong, nonatomic) MDCContainerScheme *containerScheme;
+@property(strong, nonatomic) MDCContainerScheme *containerScheme;
 
 @end

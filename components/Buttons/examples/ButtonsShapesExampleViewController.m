@@ -118,14 +118,15 @@
   [outlinedButton setTitle:@"Button" forState:UIControlStateNormal];
   [outlinedButton applyOutlinedThemeWithScheme:self.containerScheme];
 
-  MDCSlantedRectShapeGenerator *outlinedShapeGenerator = [[MDCSlantedRectShapeGenerator alloc] init];
+  MDCSlantedRectShapeGenerator *outlinedShapeGenerator =
+      [[MDCSlantedRectShapeGenerator alloc] init];
   outlinedShapeGenerator.slant = 10;
   outlinedButton.shapeGenerator = outlinedShapeGenerator;
 
   [outlinedButton sizeToFit];
   [outlinedButton addTarget:self
-                    action:@selector(didTap:)
-          forControlEvents:UIControlEventTouchUpInside];
+                     action:@selector(didTap:)
+           forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:outlinedButton];
 
   // Disabled custom outlined button
@@ -152,8 +153,8 @@
 
   [disabledOutlinedButton sizeToFit];
   [disabledOutlinedButton addTarget:self
-                            action:@selector(didTap:)
-                  forControlEvents:UIControlEventTouchUpInside];
+                             action:@selector(didTap:)
+                   forControlEvents:UIControlEventTouchUpInside];
   [disabledOutlinedButton setEnabled:NO];
   [self.view addSubview:disabledOutlinedButton];
 
