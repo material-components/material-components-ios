@@ -8,60 +8,36 @@
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+# implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
 load(
     "//:material_components_ios.bzl",
-    "mdc_examples_objc_library",
-    "mdc_examples_swift_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
     "mdc_unit_test_suite",
 )
-load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
 
 mdc_public_objc_library(
-    name = "ShadowLayer",
+    name = "ShapeLibrary",
     sdk_frameworks = [
         "CoreGraphics",
-        "QuartzCore",
         "UIKit",
     ],
     deps = [
-        "//components/ShadowElevations",
-    ],
-)
-
-mdc_examples_objc_library(
-    name = "ObjcExamples",
-    deps = [
-        ":ShadowLayer",
-        "//components/AnimationTiming",
-        "//components/Buttons",
-        "//components/Buttons:ButtonThemer",
-        "//components/ShadowElevations",
-        "//components/Slider",
-    ],
-)
-
-mdc_examples_swift_library(
-    name = "SwiftExamples",
-    deps = [
-        ":ShadowLayer",
-        "//components/ShadowElevations",
-        "//components/ShapeLibrary",
         "//components/Shapes",
+        "//components/private/Math",
     ],
 )
 
 mdc_objc_library(
     name = "unit_test_sources",
     testonly = 1,
-    srcs = glob([
+    srcs = native.glob([
         "tests/unit/*.m",
         "tests/unit/*.h",
     ]),
@@ -70,7 +46,9 @@ mdc_objc_library(
         "XCTest",
     ],
     visibility = ["//visibility:private"],
-    deps = [":ShadowLayer"],
+    deps = [
+        ":ShapeLibrary",
+    ],
 )
 
 mdc_unit_test_suite(

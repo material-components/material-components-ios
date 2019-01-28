@@ -27,7 +27,7 @@ licenses(["notice"])  # Apache 2.0
 mdc_public_objc_library(
     name = "Shape",
     deps = [
-        "//components/private/ShapeLibrary",
+        "//components/ShapeLibrary",
     ],
 )
 
@@ -49,7 +49,7 @@ mdc_examples_objc_library(
         "//components/Chips",
         "//components/Chips:ShapeThemer",
         "//components/Chips:Theming",
-        "//components/private/ShapeLibrary",
+        "//components/ShapeLibrary",
         "//components/schemes/Color",
         "//components/schemes/Container",
         "//components/schemes/Shape",
