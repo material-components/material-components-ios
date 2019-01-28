@@ -507,6 +507,22 @@
   XCTAssertEqual(self.fakeScrollView.scrollEnabled, NO);
 }
 
+- (void)testSetTrackingScrollViewAfterSetScrimColor {
+  // Given
+  MDCBottomDrawerPresentationController *drawerPresentationController =
+      (MDCBottomDrawerPresentationController *)self.drawerViewController.presentationController;
+
+  // When
+  // Setting the scrim color before setting the tracking scroll view in some cases used to
+  // not set the trackingScrollView on bottomDrawerContainerViewController.
+  self.drawerViewController.scrimColor = UIColor.blueColor;
+  self.drawerViewController.trackingScrollView = self.fakeScrollView;
+
+  // Then
+  XCTAssertNotNil(
+      drawerPresentationController.bottomDrawerContainerViewController.trackingScrollView);
+}
+
 - (void)testBottomDrawerTopInset {
   // Given
   MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
