@@ -27,12 +27,18 @@
   self = [super initWithCollectionViewLayout:layout];
   if (self) {
     self.editing = YES;
-    self.containerScheme = [[MDCContainerScheme alloc] init];
-    self.containerScheme.colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-    self.containerScheme.typographyScheme = [[MDCTypographyScheme alloc] init];
+    self.containerScheming = [self defaultContainerScheme];
   }
   return self;
+}
+
+- (MDCContainerScheme *)defaultContainerScheme {
+  MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+  containerScheme.colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  containerScheme.shapeScheme = [[MDCShapeScheme alloc] init];
+  containerScheme.typographyScheme = [[MDCTypographyScheme alloc] init];
+  return containerScheme;
 }
 
 - (void)viewDidLoad {
@@ -55,7 +61,11 @@
   MDCChipCollectionViewCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
   cell.chipView.titleLabel.text = self.titles[indexPath.row];
-  [cell.chipView applyThemeWithScheme:self.containerScheme];
+  if (self.containerScheming.colorScheme) {
+    [cell.chipView applyThemeWithScheme:self.containerScheming];
+  } else {
+    [cell.chipView applyThemeWithScheme:self.defaultContainerScheme];
+  }
   return cell;
 }
 

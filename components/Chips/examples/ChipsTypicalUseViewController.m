@@ -29,11 +29,18 @@
   if (self) {
     _sizingChip = [[MDCChipView alloc] init];
     _sizingChip.mdc_adjustsFontForContentSizeCategory = YES;
-    _containerScheme = [[MDCContainerScheme alloc] init];
-    _containerScheme.shapeScheme = [[MDCShapeScheme alloc] init];
-    _containerScheme.typographyScheme = [[MDCTypographyScheme alloc] init];
+    self.containerScheming = [self defaultContainerScheme];
   }
   return self;
+}
+
+- (MDCContainerScheme *)defaultContainerScheme {
+  MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+  containerScheme.colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  containerScheme.shapeScheme = [[MDCShapeScheme alloc] init];
+  containerScheme.typographyScheme = [[MDCTypographyScheme alloc] init];
+  return containerScheme;
 }
 
 - (void)dealloc {
@@ -45,7 +52,11 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  [_sizingChip applyThemeWithScheme:self.containerScheme];
+  if (self.containerScheming.colorScheme) {
+    [_sizingChip applyThemeWithScheme:self.containerScheming];
+  } else {
+    [_sizingChip applyThemeWithScheme:self.defaultContainerScheme];
+  }
 
   if (@available(iOS 11.0, *)) {
     self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
@@ -112,7 +123,11 @@
 
   ChipModel *model = self.model[indexPath.row];
   [model apply:cell.chipView];
-  [cell.chipView applyThemeWithScheme:self.containerScheme];
+  if (self.containerScheming.colorScheme) {
+    [cell.chipView applyThemeWithScheme:self.containerScheming];
+  } else {
+    [cell.chipView applyThemeWithScheme:self.defaultContainerScheme];
+  }
   return cell;
 }
 

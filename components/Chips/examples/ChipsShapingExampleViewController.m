@@ -32,13 +32,18 @@
 - (id)init {
   self = [super init];
   if (self) {
-    self.containerScheme = [[MDCContainerScheme alloc] init];
-    self.containerScheme.colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-    self.containerScheme.shapeScheme = [[MDCShapeScheme alloc] init];
-    self.containerScheme.typographyScheme = [[MDCTypographyScheme alloc] init];
+    self.containerScheming = [self defaultContainerScheme];
   }
   return self;
+}
+
+- (MDCContainerScheme *)defaultContainerScheme {
+  MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+  containerScheme.colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  containerScheme.shapeScheme = [[MDCShapeScheme alloc] init];
+  containerScheme.typographyScheme = [[MDCTypographyScheme alloc] init];
+  return containerScheme;
 }
 
 - (void)viewDidLoad {
@@ -56,10 +61,11 @@
   _chipView.accessoryPadding = UIEdgeInsetsMake(0, 0, 0, 10);
   CGSize chipSize = [_chipView sizeThatFits:self.view.bounds.size];
   _chipView.frame = CGRectMake(20, 20, chipSize.width + 20, chipSize.height + 20);
-  if (!self.containerScheme.colorScheme) {
-    self.containerScheme.colorScheme = [[MDCSemanticColorScheme alloc] init];
+  if (self.containerScheming.colorScheme) {
+    [_chipView applyThemeWithScheme:self.containerScheming];
+  } else {
+    [_chipView applyThemeWithScheme:self.defaultContainerScheme];
   }
-  [_chipView applyThemeWithScheme:self.containerScheme];
   _chipView.shapeGenerator = _rectangleShapeGenerator;
   [self.view addSubview:_chipView];
 
@@ -70,8 +76,13 @@
   [_cornerSlider addTarget:self
                     action:@selector(cornerSliderChanged:)
           forControlEvents:UIControlEventValueChanged];
-  [MDCSliderColorThemer applySemanticColorScheme:self.containerScheme.colorScheme
-                                        toSlider:_cornerSlider];
+  if (self.containerScheming.colorScheme) {
+    [MDCSliderColorThemer applySemanticColorScheme:self.containerScheming.colorScheme
+                                          toSlider:_cornerSlider];
+  } else {
+    [MDCSliderColorThemer applySemanticColorScheme:[self defaultContainerScheme].colorScheme
+                                          toSlider:_cornerSlider];
+  }
   [self.view addSubview:_cornerSlider];
 
   _cornerStyleControl = [[UISegmentedControl alloc] initWithItems:@[ @"Rounded", @"Cut", @"None" ]];

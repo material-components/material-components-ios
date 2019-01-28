@@ -20,41 +20,37 @@ import MaterialComponentsBeta.MaterialChips_Theming
 import MaterialComponentsBeta.MaterialContainerScheme
 
 class ChipsFieldDeleteEnabledViewController : UIViewController, MDCChipFieldDelegate {
-  var containerScheme = MDCContainerScheme()
+  var containerScheming: MDCContainerScheming
   var chipField = MDCChipField()
 
   init() {
+    containerScheming = ChipsFieldDeleteEnabledViewController.defaultContainerScheme
     super.init(nibName: nil, bundle: nil)
-    commonInit()
   }
 
-  @available(*, unavailable)
   required init?(coder aDecoder: NSCoder) {
-    super.init(coder: aDecoder)
-    commonInit()
+    fatalError("init(coder:) is not implemented")
   }
 
-  func commonInit() {
-    setUpContainerScheme()
-  }
-
-  func setUpContainerScheme() {
+  static var defaultContainerScheme: MDCContainerScheme {
+    let containerScheme = MDCContainerScheme()
     containerScheme.colorScheme = MDCSemanticColorScheme()
     containerScheme.shapeScheme = MDCShapeScheme()
     containerScheme.typographyScheme = MDCTypographyScheme()
+    return containerScheme
   }
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
     view.backgroundColor =
-      containerScheme.colorScheme?.backgroundColor ??
+      containerScheming.colorScheme?.backgroundColor ??
       MDCSemanticColorScheme().backgroundColor
     chipField.frame = .zero
     chipField.delegate = self
     chipField.textField.placeholderLabel.text = "This is a chip field."
     chipField.backgroundColor =
-      containerScheme.colorScheme?.surfaceColor ??
+      containerScheming.colorScheme?.surfaceColor ??
       MDCSemanticColorScheme().surfaceColor
     chipField.showChipsDeleteButton = true
     view.addSubview(chipField)
@@ -76,7 +72,11 @@ class ChipsFieldDeleteEnabledViewController : UIViewController, MDCChipFieldDele
   }
 
   func chipField(_ chipField: MDCChipField, didAddChip chip: MDCChipView) {
-    chip.applyTheme(withScheme: containerScheme)
+    if let _ = containerScheming.colorScheme {
+      chip.applyTheme(withScheme: containerScheming)
+    } else {
+      chip.applyTheme(withScheme: ChipsFieldDeleteEnabledViewController.defaultContainerScheme)
+    }
     chip.sizeToFit()
     let chipVerticalInset = min(0, chip.bounds.height - 48 / 2)
     chip.hitAreaInsets = UIEdgeInsetsMake(chipVerticalInset, 0, chipVerticalInset, 0)

@@ -28,14 +28,18 @@
 - (id)init {
   self = [super init];
   if (self) {
-    self.containerScheme = [[MDCContainerScheme alloc] init];
-    self.containerScheme.colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-    self.containerScheme.shapeScheme = [[MDCShapeScheme alloc] init];
-    self.containerScheme.typographyScheme =
-        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+    self.containerScheming = [self defaultContainerScheme];
   }
   return self;
+}
+
+- (MDCContainerScheme *)defaultContainerScheme {
+  MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+  containerScheme.colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  containerScheme.shapeScheme = [[MDCShapeScheme alloc] init];
+  containerScheme.typographyScheme = [[MDCTypographyScheme alloc] init];
+  return containerScheme;
 }
 
 - (void)loadView {
@@ -117,15 +121,28 @@
   chipView.titleLabel.text = self.titles[indexPath.row];
   chipView.selectedImageView.image =
       [[self doneImage] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-  chipView.selectedImageView.tintColor =
-      [self.containerScheme.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.54];
+  if (self.containerScheming.colorScheme) {
+    chipView.selectedImageView.tintColor =
+        [self.containerScheming.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.54];
+  } else {
+    chipView.selectedImageView.tintColor = [self.defaultContainerScheme.colorScheme.onSurfaceColor
+        colorWithAlphaComponent:(CGFloat)0.54];
+  }
   chipView.selected = [_selectedIndecies containsObject:indexPath];
   cell.alwaysAnimateResize = [self shouldAnimateResize];
 
   if (_isOutlined) {
-    [chipView applyOutlinedThemeWithScheme:[self containerScheme]];
+    if (self.containerScheming.colorScheme) {
+      [chipView applyOutlinedThemeWithScheme:self.containerScheming];
+    } else {
+      [chipView applyOutlinedThemeWithScheme:self.defaultContainerScheme];
+    }
   } else {
-    [chipView applyThemeWithScheme:[self containerScheme]];
+    if (self.containerScheming.colorScheme) {
+      [chipView applyThemeWithScheme:self.containerScheming];
+    } else {
+      [chipView applyThemeWithScheme:self.defaultContainerScheme];
+    }
   }
 
   return cell;

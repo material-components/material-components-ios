@@ -29,24 +29,37 @@
 - (id)init {
   self = [super init];
   if (self) {
-    self.containerScheme = [[MDCContainerScheme alloc] init];
-    self.containerScheme.colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-    self.containerScheme.typographyScheme = [[MDCTypographyScheme alloc] init];
-    self.containerScheme.shapeScheme = [[MDCShapeScheme alloc] init];
+    self.containerScheming = [self defaultContainerScheme];
   }
   return self;
+}
+
+- (MDCContainerScheme *)defaultContainerScheme {
+  MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+  containerScheme.colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  containerScheme.shapeScheme = [[MDCShapeScheme alloc] init];
+  containerScheme.typographyScheme = [[MDCTypographyScheme alloc] init];
+  return containerScheme;
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
+  if (self.containerScheming.colorScheme) {
+    self.view.backgroundColor = self.containerScheming.colorScheme.backgroundColor;
+  } else {
+    self.view.backgroundColor = self.defaultContainerScheme.colorScheme.backgroundColor;
+  }
 
   _chipField = [[MDCChipField alloc] initWithFrame:CGRectZero];
   _chipField.delegate = self;
   _chipField.textField.placeholderLabel.text = @"This is a chip field.";
-  _chipField.backgroundColor = self.containerScheme.colorScheme.surfaceColor;
+  if (self.containerScheming.colorScheme) {
+    _chipField.backgroundColor = self.containerScheming.colorScheme.surfaceColor;
+  } else {
+    _chipField.backgroundColor = self.defaultContainerScheme.colorScheme.surfaceColor;
+  }
   [self.view addSubview:_chipField];
 }
 
@@ -68,9 +81,17 @@
 - (void)chipField:(MDCChipField *)chipField didAddChip:(MDCChipView *)chip {
   // Every other chip is stroked
   if (chipField.chips.count % 2) {
-    [chip applyOutlinedThemeWithScheme:[self containerScheme]];
+    if (self.containerScheming.colorScheme) {
+      [chip applyOutlinedThemeWithScheme:self.containerScheming];
+    } else {
+      [chip applyOutlinedThemeWithScheme:self.defaultContainerScheme];
+    }
   } else {
-    [chip applyThemeWithScheme:[self containerScheme]];
+    if (self.containerScheming.colorScheme) {
+      [chip applyThemeWithScheme:self.containerScheming];
+    } else {
+      [chip applyThemeWithScheme:self.defaultContainerScheme];
+    }
   }
   [chip sizeToFit];
   CGFloat chipVerticalInset = MIN(0, (CGRectGetHeight(chip.bounds) - 48) / 2);

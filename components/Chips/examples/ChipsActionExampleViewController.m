@@ -27,14 +27,18 @@
 - (id)init {
   self = [super init];
   if (self) {
-    self.containerScheme = [[MDCContainerScheme alloc] init];
-    self.containerScheme.colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-    self.containerScheme.shapeScheme = [[MDCShapeScheme alloc] init];
-    self.containerScheme.typographyScheme =
-        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+    self.containerScheming = [self defaultContainerScheme];
   }
   return self;
+}
+
+- (MDCContainerScheme *)defaultContainerScheme {
+  MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+  containerScheme.colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  containerScheme.shapeScheme = [[MDCShapeScheme alloc] init];
+  containerScheme.typographyScheme = [[MDCTypographyScheme alloc] init];
+  return containerScheme;
 }
 
 - (void)loadView {
@@ -71,7 +75,11 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  [_sizingChip applyThemeWithScheme:self.containerScheme];
+  if (self.containerScheming.colorScheme) {
+    [_sizingChip applyThemeWithScheme:self.containerScheming];
+  } else {
+    [_sizingChip applyThemeWithScheme:self.defaultContainerScheme];
+  }
 
   _isOutlined = NO;
   self.navigationItem.rightBarButtonItem =
@@ -116,9 +124,17 @@
 
   // Apply Theming
   if (_isOutlined) {
-    [chipView applyOutlinedThemeWithScheme:[self containerScheme]];
+    if (self.containerScheming.colorScheme) {
+      [chipView applyOutlinedThemeWithScheme:self.containerScheming];
+    } else {
+      [chipView applyOutlinedThemeWithScheme:self.defaultContainerScheme];
+    }
   } else {
-    [chipView applyThemeWithScheme:[self containerScheme]];
+    if (self.containerScheming.colorScheme) {
+      [chipView applyThemeWithScheme:self.containerScheming];
+    } else {
+      [chipView applyThemeWithScheme:self.defaultContainerScheme];
+    }
   }
 
   return cell;
