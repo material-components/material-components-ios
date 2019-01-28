@@ -102,8 +102,6 @@ mdc_examples_swift_library(
     deps = [
         ":ActionSheet",
         ":Theming",
-        "//components/Buttons",
-        "//components/Buttons:Theming",
         "//components/schemes/Color",
         "//components/schemes/Container",
         "//components/schemes/Typography",

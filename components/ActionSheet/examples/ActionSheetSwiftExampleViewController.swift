@@ -13,16 +13,19 @@
 // limitations under the License.
 
 import UIKit
-import MaterialComponentsBeta.MaterialActionSheet
-import MaterialComponentsBeta.MaterialActionSheet_Theming
+
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialTypographyScheme
+
+import MaterialComponentsBeta.MaterialActionSheet
+import MaterialComponentsBeta.MaterialActionSheet_Theming
+import MaterialComponentsBeta.MaterialContainerScheme
 
 class ActionSheetSwiftExampleViewController: UIViewController {
 
   var colorScheme = MDCSemanticColorScheme()
   var typographyScheme = MDCTypographyScheme()
-  var containerScheme = MDCContainerScheming()
+  var containerScheme = MDCContainerScheme()
   
   let tableView = UITableView()
   enum ActionSheetExampleType {
