@@ -26,7 +26,7 @@
 
 @property(nonatomic, strong) MDCButton *showMaterialButton;
 @property(nonatomic, strong) MDCButton *showUIKitButton;
-@property(nonatomic, strong) MDCContainerScheme *containerScheme;
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 
 @end
 
@@ -36,9 +36,10 @@
   self = [super init];
   if (self) {
     self.title = @"Action Sheet";
-    _containerScheme = [[MDCContainerScheme alloc] init];
-    _containerScheme.colorScheme =
+    MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
+    scheme.colorScheme =
         [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    _containerScheme = scheme;
     _showMaterialButton = [[MDCButton alloc] init];
     _showUIKitButton = [[MDCButton alloc] init];
   }
@@ -48,7 +49,15 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
+  id<MDCColorScheming> colorScheme;
+  if (self.containerScheme.colorScheme != nil) {
+    colorScheme = self.containerScheme.colorScheme;
+  } else {
+    colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  }
+
+  self.view.backgroundColor = colorScheme.backgroundColor;
   [self.showMaterialButton setTitle:@"Show Material Action sheet" forState:UIControlStateNormal];
   [self.showMaterialButton sizeToFit];
   [self.showUIKitButton setTitle:@"Show UIKit Action sheet" forState:UIControlStateNormal];
