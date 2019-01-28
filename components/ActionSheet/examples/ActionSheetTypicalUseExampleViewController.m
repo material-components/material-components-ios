@@ -36,6 +36,8 @@
   if (self) {
     self.title = @"Action Sheet";
     _containerScheme = [[MDCContainerScheme alloc] init];
+    _containerScheme.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];;
     _showButton = [[MDCButton alloc] init];
   }
   return self;
@@ -43,16 +45,6 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-
-  if (self.containerScheme.colorScheme == nil) {
-    self.containerScheme.colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];;
-  }
-
-  if (self.containerScheme.typographyScheme == nil) {
-    self.containerScheme.typographyScheme =
-        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
-  }
 
   self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
   [self.showButton setTitle:@"Show action sheet" forState:UIControlStateNormal];

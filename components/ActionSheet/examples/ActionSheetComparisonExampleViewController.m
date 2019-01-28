@@ -37,6 +37,8 @@
   if (self) {
     self.title = @"Action Sheet";
     _containerScheme = [[MDCContainerScheme alloc] init];
+    _containerScheme.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
     _showMaterialButton = [[MDCButton alloc] init];
     _showUIKitButton = [[MDCButton alloc] init];
   }
@@ -45,16 +47,6 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-
-  if (self.containerScheme.colorScheme == nil) {
-    self.containerScheme.colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-  }
-
-  if (self.containerScheme.typographyScheme == nil) {
-    self.containerScheme.typographyScheme =
-        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
-  }
 
   self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
   [self.showMaterialButton setTitle:@"Show Material Action sheet" forState:UIControlStateNormal];
