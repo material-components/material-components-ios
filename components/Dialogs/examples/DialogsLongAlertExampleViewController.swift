@@ -25,8 +25,8 @@ class DialogsLongAlertExampleViewController: UIViewController {
   let textButton = MDCButton()
   lazy var containerScheme: MDCContainerScheme = {
     let scheme = MDCContainerScheme()
-    scheme.colorScheme = MDCSemanticColorScheme()
-    scheme.typographyScheme = MDCTypographyScheme()
+    scheme.colorScheme = MDCSemanticColorScheme(defaults: .material201804)
+    scheme.typographyScheme = MDCTypographyScheme(defaults: .material201804)
     return scheme
   }()
 
