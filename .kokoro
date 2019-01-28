@@ -220,9 +220,11 @@ run_bazel_affected() {
     # 0.20.
     if [ -n "$KOKORO_BUILD_NUMBER" ]; then
       bazel version
-      sw_vers
-      use_bazel.sh 0.20.0
-      bazel version
+      bazel_minor_version=$(bazel version | grep "Build label" | cut -d'.' -f2)
+      if [ "$bazel_minor_version" -lt "20" ]; then
+        use_bazel.sh 0.20.0
+        bazel version
+      fi
     fi
     
     # Output the affected targets to the logs. This also gives the affected_targets script the
