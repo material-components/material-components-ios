@@ -11,20 +11,21 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+#import <CoreGraphics/CoreGraphics.h>
+#import <Foundation/Foundation.h>
 
-#import <XCTest/XCTest.h>
+#import "MaterialShapesNew.h"
 
-#import "MaterialShapes.h"
+/**
+ A slanted rectangle shape generator.
 
-@interface ShapesNoopTest : XCTestCase
+ Creates rectangles with the vertical edges at a slant.
+ */
+@interface MDCSlantedRectShapeGenerator : NSObject <MDCShapeGenerating>
 
-@end
-
-@implementation ShapesNoopTest
-
-- (void)testInit {
-  MDCShapedView *view = [[MDCShapedView alloc] init];
-  XCTAssertNotNil(view);
-}
+/**
+ The horizontal offset of the corners.
+ */
+@property(nonatomic, assign) CGFloat slant;
 
 @end

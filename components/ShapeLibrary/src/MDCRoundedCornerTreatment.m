@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCRoundedCornerTreatment.h"
+#import "MDCRoundedCornerTreatmentNew.h"
 
 #import "MaterialMath.h"
 

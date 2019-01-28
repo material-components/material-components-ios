@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialShapes.h"
+#import "MaterialShapesNew.h"
 
-#import "MDCCurvedCornerTreatment.h"
-#import "MDCCutCornerTreatment.h"
-#import "MDCRoundedCornerTreatment.h"
+#import "MDCCurvedCornerTreatmentNew.h"
+#import "MDCCutCornerTreatmentNew.h"
+#import "MDCRoundedCornerTreatmentNew.h"
 
 @interface MDCCornerTreatment (CornerTypeInitalizer)
 

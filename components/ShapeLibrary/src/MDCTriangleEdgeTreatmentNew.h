@@ -13,23 +13,35 @@
 // limitations under the License.
 
 #import <CoreGraphics/CoreGraphics.h>
-#import <Foundation/Foundation.h>
 
-#import "MaterialShapes.h"
+#import "MaterialShapesNew.h"
 
-/**
- A curved rectangle shape generator.
- */
-@interface MDCCurvedRectShapeGenerator : NSObject <MDCShapeGenerating>
-
-/**
- The size of the curved corner.
- */
-@property(nonatomic, assign) CGSize cornerSize;
+typedef enum : NSUInteger {
+  MDCTriangleEdgeStyleHandle,
+  MDCTriangleEdgeStyleCut,
+} MDCTriangleEdgeStyle;
 
 /**
- Initializes an MDCCurvedRectShapeGenerator instance with a given cornerSize.
+ An edge treatment that adds a triangle-shaped cut or handle to the edge.
  */
-- (instancetype)initWithCornerSize:(CGSize)cornerSize NS_DESIGNATED_INITIALIZER;
+@interface MDCTriangleEdgeTreatment : MDCEdgeTreatment
+
+/**
+ The size of the triangle shape.
+ */
+@property(nonatomic, assign) CGFloat size;
+
+/**
+ The style of the triangle shape.
+ */
+@property(nonatomic, assign) MDCTriangleEdgeStyle style;
+
+/**
+ Initializes an MDCTriangleEdgeTreatment with a given size and style.
+ */
+- (nonnull instancetype)initWithSize:(CGFloat)size
+                               style:(MDCTriangleEdgeStyle)style NS_DESIGNATED_INITIALIZER;
+
+- (nonnull instancetype)init NS_UNAVAILABLE;
 
 @end

@@ -11,28 +11,25 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
 #import <CoreGraphics/CoreGraphics.h>
+#import <Foundation/Foundation.h>
 
-#import "MaterialShapes.h"
-
-/**
- A rounded corner treatment.
- */
-@interface MDCRoundedCornerTreatment : MDCCornerTreatment
+#import "MaterialShapesNew.h"
 
 /**
- The radius of the corner.
+ A curved rectangle shape generator.
  */
-@property(nonatomic, assign) CGFloat radius;
+@interface MDCCurvedRectShapeGenerator : NSObject <MDCShapeGenerating>
 
 /**
- Initializes an MDCRoundedCornerTreatment instance with a given radius.
+ The size of the curved corner.
  */
-- (nonnull instancetype)initWithRadius:(CGFloat)radius NS_DESIGNATED_INITIALIZER;
+@property(nonatomic, assign) CGSize cornerSize;
 
 /**
- Initializes an MDCRoundedCornerTreatment instance with a radius of zero.
+ Initializes an MDCCurvedRectShapeGenerator instance with a given cornerSize.
  */
-- (nonnull instancetype)init;
+- (instancetype)initWithCornerSize:(CGSize)cornerSize NS_DESIGNATED_INITIALIZER;
 
 @end

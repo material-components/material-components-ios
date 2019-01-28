@@ -29,8 +29,8 @@ mdc_public_objc_library(
         "UIKit",
     ],
     deps = [
-        "//components/Shapes",
         "//components/private/Math",
+        "//components/Shapes",
     ],
 )
 

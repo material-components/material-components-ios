@@ -14,34 +14,27 @@
 
 #import <CoreGraphics/CoreGraphics.h>
 
-#import "MaterialShapes.h"
-
-typedef enum : NSUInteger {
-  MDCTriangleEdgeStyleHandle,
-  MDCTriangleEdgeStyleCut,
-} MDCTriangleEdgeStyle;
+#import "MaterialShapesNew.h"
 
 /**
- An edge treatment that adds a triangle-shaped cut or handle to the edge.
+ A curved corner treatment. Distinct from MDCRoundedCornerTreatment in that MDCurvedCornerTreatment
+ also supports asymmetric curved corners.
  */
-@interface MDCTriangleEdgeTreatment : MDCEdgeTreatment
+@interface MDCCurvedCornerTreatment : MDCCornerTreatment
 
 /**
- The size of the triangle shape.
+ The size of the curve.
  */
-@property(nonatomic, assign) CGFloat size;
+@property(nonatomic, assign) CGSize size;
 
 /**
- The style of the triangle shape.
+ Initializes an MDCCurvedCornerTreatment instance with a given corner size.
  */
-@property(nonatomic, assign) MDCTriangleEdgeStyle style;
+- (nonnull instancetype)initWithSize:(CGSize)size NS_DESIGNATED_INITIALIZER;
 
 /**
- Initializes an MDCTriangleEdgeTreatment with a given size and style.
+ Initializes an MDCCurvedCornerTreatment instance with a corner size of zero.
  */
-- (nonnull instancetype)initWithSize:(CGFloat)size
-                               style:(MDCTriangleEdgeStyle)style NS_DESIGNATED_INITIALIZER;
-
-- (nonnull instancetype)init NS_UNAVAILABLE;
+- (nonnull instancetype)init;
 
 @end

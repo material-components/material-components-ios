@@ -1298,6 +1298,22 @@ Pod::Spec.new do |mdc|
       end
     end
 
+    private_spec.subspec "ShapeLibrary" do |component|
+      component.ios.deployment_target = '8.0'
+      component.public_header_files = "components/private/#{component.base_name}/src/*.h"
+      component.source_files = "components/private/#{component.base_name}/src/*.h"
+
+      component.dependency "MaterialComponents/ShapeLibrary"
+    end
+
+    private_spec.subspec "Shapes" do |component|
+      component.ios.deployment_target = '8.0'
+      component.public_header_files = "components/private/#{component.base_name}/src/*.h"
+      component.source_files = "components/private/#{component.base_name}/src/*.h"
+
+      component.dependency "MaterialComponents/Shapes"
+    end
+
     private_spec.subspec "ThumbTrack" do |component|
       component.ios.deployment_target = '8.0'
       component.public_header_files = "components/private/#{component.base_name}/src/*.h"

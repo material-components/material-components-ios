@@ -14,7 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCShapeGenerating.h"
+#import "MDCShapeGeneratingNew.h"
 
 @class MDCCornerTreatment;
 @class MDCEdgeTreatment;

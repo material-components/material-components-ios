@@ -11,25 +11,28 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+#import <CoreGraphics/CoreGraphics.h>
 
-#import "MDCEdgeTreatment.h"
+#import "MaterialShapesNew.h"
 
-#import "MDCPathGenerator.h"
+/**
+ A rounded corner treatment.
+ */
+@interface MDCRoundedCornerTreatment : MDCCornerTreatment
 
-@implementation MDCEdgeTreatment
+/**
+ The radius of the corner.
+ */
+@property(nonatomic, assign) CGFloat radius;
 
-- (instancetype)init {
-  return [super init];
-}
+/**
+ Initializes an MDCRoundedCornerTreatment instance with a given radius.
+ */
+- (nonnull instancetype)initWithRadius:(CGFloat)radius NS_DESIGNATED_INITIALIZER;
 
-- (MDCPathGenerator *)pathGeneratorForEdgeWithLength:(CGFloat)length {
-  MDCPathGenerator *path = [MDCPathGenerator pathGeneratorWithStartPoint:CGPointZero];
-  [path addLineToPoint:CGPointMake(length, 0)];
-  return path;
-}
-
-- (id)copyWithZone:(nullable NSZone *)__unused zone {
-  return [[[self class] alloc] init];
-}
+/**
+ Initializes an MDCRoundedCornerTreatment instance with a radius of zero.
+ */
+- (nonnull instancetype)init;
 
 @end

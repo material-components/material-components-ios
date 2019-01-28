@@ -18,8 +18,8 @@
 #import "MaterialButtons+TypographyThemer.h"
 #import "MaterialButtons.h"
 #import "MaterialContainerScheme.h"
-#import "MaterialShapeLibrary.h"
-#import "MaterialShapes.h"
+#import "MaterialShapeLibraryNew.h"
+#import "MaterialShapesNew.h"
 #import "MaterialTypography.h"
 
 #import "supplemental/ButtonsTypicalUseSupplemental.h"

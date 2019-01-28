@@ -14,14 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MDCCornerTreatment+CornerTypeInitalizer.h"
-#import "MDCCurvedCornerTreatment.h"
-#import "MDCCurvedRectShapeGenerator.h"
-#import "MDCCutCornerTreatment.h"
-#import "MDCPillShapeGenerator.h"
-#import "MDCRoundedCornerTreatment.h"
-#import "MDCSlantedRectShapeGenerator.h"
-#import "MDCTriangleEdgeTreatment.h"
+#import "MaterialShapeLibraryNew.h"
 #import "MaterialMath.h"
 
 @interface ShapeLibraryTests : XCTestCase
