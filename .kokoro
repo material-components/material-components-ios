@@ -220,8 +220,7 @@ run_bazel_affected() {
     # 0.20.
     if [ -n "$KOKORO_BUILD_NUMBER" ]; then
       bazel version
-      bazel_minor_version=$(bazel version | grep "Build label" | cut -d'.' -f2)
-      if [ "$bazel_minor_version" -lt "20" ]; then
+      if [ "$KOKORO_JOB_POOL" != "high-sierra" ]; then
         use_bazel.sh 0.20.0
         bazel version
       fi
