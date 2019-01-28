@@ -52,11 +52,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  if (self.containerScheming.colorScheme) {
-    [_sizingChip applyThemeWithScheme:self.containerScheming];
-  } else {
-    [_sizingChip applyThemeWithScheme:self.defaultContainerScheme];
-  }
+  [_sizingChip applyThemeWithScheme:self.containerScheming];
 
   if (@available(iOS 11.0, *)) {
     self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
@@ -123,11 +119,7 @@
 
   ChipModel *model = self.model[indexPath.row];
   [model apply:cell.chipView];
-  if (self.containerScheming.colorScheme) {
-    [cell.chipView applyThemeWithScheme:self.containerScheming];
-  } else {
-    [cell.chipView applyThemeWithScheme:self.defaultContainerScheme];
-  }
+  [cell.chipView applyThemeWithScheme:self.containerScheming];
   return cell;
 }
 

@@ -61,11 +61,7 @@
   _chipView.accessoryPadding = UIEdgeInsetsMake(0, 0, 0, 10);
   CGSize chipSize = [_chipView sizeThatFits:self.view.bounds.size];
   _chipView.frame = CGRectMake(20, 20, chipSize.width + 20, chipSize.height + 20);
-  if (self.containerScheming.colorScheme) {
-    [_chipView applyThemeWithScheme:self.containerScheming];
-  } else {
-    [_chipView applyThemeWithScheme:self.defaultContainerScheme];
-  }
+  [_chipView applyThemeWithScheme:self.containerScheming];
   _chipView.shapeGenerator = _rectangleShapeGenerator;
   [self.view addSubview:_chipView];
 

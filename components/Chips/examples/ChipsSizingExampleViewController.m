@@ -51,11 +51,7 @@
   _chipView.titleLabel.text = @"Material";
   _chipView.imageView.image = [self faceImage];
   _chipView.accessoryView = [self deleteButton];
-  if (self.containerScheming.colorScheme) {
-    [_chipView applyThemeWithScheme:self.containerScheming];
-  } else {
-    [_chipView applyThemeWithScheme:self.defaultContainerScheme];
-  }
+  [_chipView applyThemeWithScheme:self.containerScheming];
   [self.view addSubview:_chipView];
 
   CGSize chipSize = [_chipView sizeThatFits:self.view.bounds.size];

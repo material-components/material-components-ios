@@ -61,11 +61,7 @@
   MDCChipCollectionViewCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
   cell.chipView.titleLabel.text = self.titles[indexPath.row];
-  if (self.containerScheming.colorScheme) {
-    [cell.chipView applyThemeWithScheme:self.containerScheming];
-  } else {
-    [cell.chipView applyThemeWithScheme:self.defaultContainerScheme];
-  }
+  [cell.chipView applyThemeWithScheme:self.containerScheming];
   return cell;
 }
 

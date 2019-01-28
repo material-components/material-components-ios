@@ -81,17 +81,9 @@
 - (void)chipField:(MDCChipField *)chipField didAddChip:(MDCChipView *)chip {
   // Every other chip is stroked
   if (chipField.chips.count % 2) {
-    if (self.containerScheming.colorScheme) {
-      [chip applyOutlinedThemeWithScheme:self.containerScheming];
-    } else {
-      [chip applyOutlinedThemeWithScheme:self.defaultContainerScheme];
-    }
+    [chip applyOutlinedThemeWithScheme:self.containerScheming];
   } else {
-    if (self.containerScheming.colorScheme) {
-      [chip applyThemeWithScheme:self.containerScheming];
-    } else {
-      [chip applyThemeWithScheme:self.defaultContainerScheme];
-    }
+    [chip applyThemeWithScheme:self.containerScheming];
   }
   [chip sizeToFit];
   CGFloat chipVerticalInset = MIN(0, (CGRectGetHeight(chip.bounds) - 48) / 2);

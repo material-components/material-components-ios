@@ -85,11 +85,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  if (self.containerScheming.colorScheme) {
-    [_sizingChip applyThemeWithScheme:self.containerScheming];
-  } else {
-    [_sizingChip applyThemeWithScheme:self.defaultContainerScheme];
-  }
+  [_sizingChip applyThemeWithScheme:self.containerScheming];
 }
 
 - (void)viewWillLayoutSubviews {
@@ -113,11 +109,7 @@
   cell.chipView.titleLabel.text = self.titles[indexPath.row];
   cell.chipView.selectedImageView.image = [self doneImage];
   cell.alwaysAnimateResize = YES;
-  if (self.containerScheming.colorScheme) {
-    [cell.chipView applyThemeWithScheme:self.containerScheming];
-  } else {
-    [cell.chipView applyThemeWithScheme:self.defaultContainerScheme];
-  }
+  [cell.chipView applyThemeWithScheme:self.containerScheming];
   return cell;
 }
 

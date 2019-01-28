@@ -124,17 +124,9 @@
 
   // Apply Theming
   if (_isOutlined) {
-    if (self.containerScheming.colorScheme) {
-      [chipView applyOutlinedThemeWithScheme:self.containerScheming];
-    } else {
-      [chipView applyOutlinedThemeWithScheme:self.defaultContainerScheme];
-    }
+    [chipView applyOutlinedThemeWithScheme:self.containerScheming];
   } else {
-    if (self.containerScheming.colorScheme) {
-      [chipView applyThemeWithScheme:self.containerScheming];
-    } else {
-      [chipView applyThemeWithScheme:self.defaultContainerScheme];
-    }
+    [chipView applyThemeWithScheme:self.containerScheming];
   }
 
   return cell;

@@ -72,11 +72,7 @@ class ChipsFieldDeleteEnabledViewController : UIViewController, MDCChipFieldDele
   }
 
   func chipField(_ chipField: MDCChipField, didAddChip chip: MDCChipView) {
-    if let _ = containerScheming.colorScheme {
-      chip.applyTheme(withScheme: containerScheming)
-    } else {
-      chip.applyTheme(withScheme: ChipsFieldDeleteEnabledViewController.defaultContainerScheme)
-    }
+    chip.applyTheme(withScheme: containerScheming)
     chip.sizeToFit()
     let chipVerticalInset = min(0, chip.bounds.height - 48 / 2)
     chip.hitAreaInsets = UIEdgeInsetsMake(chipVerticalInset, 0, chipVerticalInset, 0)
