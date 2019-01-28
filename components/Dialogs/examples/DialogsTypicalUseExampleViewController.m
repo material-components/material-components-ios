@@ -25,24 +25,28 @@
 
 @interface DialogsTypicalUseExampleViewController : UIViewController
 @property(nonatomic, strong, nullable) MDCContainerScheme *containerScheme;
-@property(nonatomic, strong, nullable) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, strong, nullable) NSArray *modes;
 @property(nonatomic, strong, nullable) MDCButton *button;
 @end
 
 @implementation DialogsTypicalUseExampleViewController
 
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    _containerScheme = [[MDCContainerScheme alloc] init];
+    _containerScheme.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    _containerScheme.typographyScheme =
+        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+  }
+  return self;
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  if (!self.containerScheme) {
-    self.containerScheme = [[MDCContainerScheme alloc] init];
-  }
-  if (!self.colorScheme) {
-    self.colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-  }
-  self.view.backgroundColor = self.colorScheme.backgroundColor;
+  self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
 
   MDCButton *dismissButton = [[MDCButton alloc] initWithFrame:CGRectZero];
   self.button = dismissButton;

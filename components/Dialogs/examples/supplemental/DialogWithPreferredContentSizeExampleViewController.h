@@ -25,8 +25,6 @@
 
 @interface DialogWithPreferredContentSizeExampleViewController : UIViewController
 
-@property(nonatomic, strong, nullable) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, strong, nullable) MDCContainerScheme *containerScheme;
-@property(nonatomic, strong, nullable) MDCTypographyScheme *typographyScheme;
 
 @end
