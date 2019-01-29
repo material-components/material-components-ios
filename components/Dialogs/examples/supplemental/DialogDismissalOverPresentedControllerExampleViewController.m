@@ -185,7 +185,9 @@
   [super viewDidLoad];
 
   // Create a way to present a view controller.
-  id<MDCColorScheming> colorScheme = self.containerScheme.colorScheme ?: [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  id<MDCColorScheming> colorScheme =
+      self.containerScheme.colorScheme
+          ?: [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   self.view.backgroundColor = colorScheme.backgroundColor;
 
   self.presentButton = [[MDCButton alloc] init];

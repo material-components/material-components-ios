@@ -31,7 +31,9 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  id<MDCColorScheming> colorScheme = self.containerScheme.colorScheme ?: [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  id<MDCColorScheming> colorScheme =
+      self.containerScheme.colorScheme
+          ?: [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   self.view.backgroundColor = colorScheme.backgroundColor;
 
   self.dismissButton = [[MDCButton alloc] initWithFrame:CGRectZero];
@@ -92,7 +94,9 @@
   // A presented view controller will set this object as its transitioning delegate.
   self.transitionController = [[MDCDialogTransitionController alloc] init];
 
-  id<MDCColorScheming> colorScheme = self.containerScheme.colorScheme ?: [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  id<MDCColorScheming> colorScheme =
+      self.containerScheme.colorScheme
+          ?: [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   self.view.backgroundColor = colorScheme.backgroundColor;
 
   self.presentButton = [[MDCButton alloc] initWithFrame:CGRectZero];

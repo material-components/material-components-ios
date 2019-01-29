@@ -189,7 +189,9 @@ static NSString *const kReusableIdentifierItem = @"cell";
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  id<MDCColorScheming> colorScheme = self.containerScheme.colorScheme ?: [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  id<MDCColorScheming> colorScheme =
+      self.containerScheme.colorScheme
+          ?: [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   self.view.backgroundColor = colorScheme.backgroundColor;
 
   self.dismissButton = [[MDCButton alloc] init];
@@ -238,7 +240,9 @@ static NSString *const kReusableIdentifierItem = @"cell";
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  id<MDCColorScheming> colorScheme = self.containerScheme.colorScheme ?: [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  id<MDCColorScheming> colorScheme =
+      self.containerScheme.colorScheme
+          ?: [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   self.view.backgroundColor = colorScheme.backgroundColor;
 
   self.dismissButton = [[MDCButton alloc] init];
