@@ -20,7 +20,6 @@ import MaterialComponentsBeta.MaterialContainerScheme
 
 final class AppTheme {
   let containerScheme: MDCContainerScheme
-  let buttonScheme: MDCButtonScheming
 
   var colorScheme: MDCColorScheming {
     return containerScheme.colorScheme ?? AppTheme.defaultColorScheme
@@ -34,10 +33,6 @@ final class AppTheme {
     self.containerScheme = MDCContainerScheme()
     self.containerScheme.colorScheme = colorScheme as? MDCSemanticColorScheme
     self.containerScheme.typographyScheme = typographyScheme as? MDCTypographyScheme
-    let buttonScheme = MDCButtonScheme()
-    buttonScheme.colorScheme = colorScheme
-    buttonScheme.typographyScheme = typographyScheme
-    self.buttonScheme = buttonScheme
   }
 
   static let defaultTheme: AppTheme = {
