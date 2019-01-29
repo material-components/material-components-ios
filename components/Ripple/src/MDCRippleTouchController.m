@@ -81,7 +81,8 @@
   }
 }
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
+    shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
   if (!self.shouldProcessRippleWithScrollViewGestures &&
       [otherGestureRecognizer.view isKindOfClass:[UIScrollView class]]) {
     return YES;
