@@ -25,7 +25,7 @@
 @protocol MDCDialogPresentationControllerDelegate <NSObject>
 @optional
 - (void)dialogPresentationControllerDidDismissDialog:
-    (MDCDialogPresentationController *)dialogPresentationController;
+    (MDCDialogPresentationController *_Nonnull)dialogPresentationController;
 @end
 
 /**
@@ -50,7 +50,7 @@
 /**
  An object conforming to MDCDialogPresentationControllerDelegate.
  */
-@property(nonatomic, weak) id<MDCDialogPresentationControllerDelegate>
+@property(nonatomic, weak, nullable) id<MDCDialogPresentationControllerDelegate>
     dialogPresentationControllerDelegate;
 
 /**

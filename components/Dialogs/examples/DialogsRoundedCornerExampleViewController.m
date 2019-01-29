@@ -15,6 +15,7 @@
 #import "DialogsRoundedCornerExampleViewController.h"
 #import "MaterialButtons.h"
 #import "MaterialDialogs+Theming.h"
+#import "MaterialDialogs.h"
 
 @interface DialogsRoundedCornerSimpleController : UIViewController
 
