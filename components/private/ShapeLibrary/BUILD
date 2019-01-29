@@ -29,31 +29,6 @@ mdc_public_objc_library(
         "UIKit",
     ],
     deps = [
-        "//components/private/Math",
-        "//components/private/Shapes",
-    ],
-)
-
-mdc_objc_library(
-    name = "unit_test_sources",
-    testonly = 1,
-    srcs = native.glob([
-        "tests/unit/*.m",
-        "tests/unit/*.h",
-    ]),
-    sdk_frameworks = [
-        "UIKit",
-        "XCTest",
-    ],
-    visibility = ["//visibility:private"],
-    deps = [
-        ":ShapeLibrary",
-    ],
-)
-
-mdc_unit_test_suite(
-    name = "unit_tests",
-    deps = [
-        ":unit_test_sources",
+        "//components/ShapeLibrary",
     ],
 )

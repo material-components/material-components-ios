@@ -40,7 +40,8 @@ fix_bazel_imports() {
   echo "Rewriting imports for bazel..."
 
   private_components() {
-    find "components/private" -type d | cut -d'/' -f3 | sort | uniq
+    # remove the -not -path addition once shapes migration has finished. GitHub issue #6494.
+    find "components/private" -type d -not -path "components/private/Shape*" | cut -d'/' -f3 | sort | uniq
   }
   
   rewrite_tests() {

@@ -53,8 +53,8 @@ mdc_examples_swift_library(
     deps = [
         ":ShadowLayer",
         "//components/ShadowElevations",
-        "//components/private/ShapeLibrary",
-        "//components/private/Shapes",
+        "//components/ShapeLibrary",
+        "//components/Shapes",
     ],
 )
 

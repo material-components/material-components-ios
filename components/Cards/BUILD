@@ -37,10 +37,10 @@ mdc_public_objc_library(
     deps = [
         "//components/Ink",
         "//components/ShadowLayer",
+        "//components/ShapeLibrary",
+        "//components/Shapes",
         "//components/private/Icons/icons/ic_check_circle",
         "//components/private/Math",
-        "//components/private/ShapeLibrary",
-        "//components/private/Shapes",
     ],
 )
 

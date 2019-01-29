@@ -12,19 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <XCTest/XCTest.h>
+#import <Foundation/Foundation.h>
 
-#import "MaterialShapes.h"
+#import "MaterialShapesNew.h"
 
-@interface ShapesNoopTest : XCTestCase
-
-@end
-
-@implementation ShapesNoopTest
-
-- (void)testInit {
-  MDCShapedView *view = [[MDCShapedView alloc] init];
-  XCTAssertNotNil(view);
-}
-
+/**
+ A pill shape generator. Rounds the corners such that the shorter sides of the generated shape are
+ entirely rounded.
+ */
+@interface MDCPillShapeGenerator : NSObject <MDCShapeGenerating>
 @end

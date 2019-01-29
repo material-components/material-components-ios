@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCCornerTreatment+CornerTypeInitalizer.h"
+#import "MDCCornerTreatment+CornerTypeInitalizerNew.h"
 
 @implementation MDCCornerTreatment (CornerTypeInitalizer)
 
