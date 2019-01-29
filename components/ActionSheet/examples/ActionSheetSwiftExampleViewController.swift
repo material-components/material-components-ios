@@ -13,21 +13,18 @@
 // limitations under the License.
 
 import UIKit
-import MaterialComponentsBeta.MaterialActionSheet
-import MaterialComponentsBeta.MaterialActionSheet_Theming
+
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialTypographyScheme
 
+import MaterialComponentsBeta.MaterialActionSheet
+import MaterialComponentsBeta.MaterialActionSheet_Theming
+import MaterialComponentsBeta.MaterialContainerScheme
+
 class ActionSheetSwiftExampleViewController: UIViewController {
 
-  var colorScheme = MDCSemanticColorScheme()
-  var typographyScheme = MDCTypographyScheme()
-  var containerScheme: MDCContainerScheming {
-    let scheme = MDCContainerScheme()
-    scheme.colorScheme = colorScheme
-    scheme.typographyScheme = typographyScheme
-    return scheme
-  }
+  var containerScheme: MDCContainerScheming = MDCContainerScheme()
+  
   let tableView = UITableView()
   enum ActionSheetExampleType {
     case typical, title, message, noIcons, titleAndMessage, dynamicType, delayed, thirtyOptions
@@ -56,7 +53,8 @@ class ActionSheetSwiftExampleViewController: UIViewController {
   override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
     
-    view.backgroundColor = colorScheme.backgroundColor
+    view.backgroundColor = containerScheme.colorScheme?.backgroundColor ??
+        MDCSemanticColorScheme(defaults: .material201804).backgroundColor
     tableView.frame = view.frame
     tableView.frame.origin.y = 0.0
     view.addSubview(tableView)
