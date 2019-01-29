@@ -30,7 +30,11 @@ elevation, Material Design ripples, and other stateful design APIs.
 - [Customizing floating action buttons](customizing-floating-action-buttons.md)
 - [Interface Builder](interface-builder.md)
 
+## Extensions
 
 - [Theming](theming.md)
+- [Color Theming](color-theming.md)
+- [Typography Theming](typography-theming.md)
+- [Shape Theming](shape-theming.md)
 
 - [Accessibility](accessibility.md)

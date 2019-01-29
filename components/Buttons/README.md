@@ -45,6 +45,7 @@ many distinct button styles including text buttons, contained buttons, and float
   - [Customizing elevation](#customizing-elevation)
   - [Customizing floating action buttons](#customizing-floating-action-buttons)
   - [Interface Builder](#interface-builder)
+- [Extensions](#extensions)
   - [Theming extensions](#theming-extensions)
   - [Theming an MDCButton](#theming-an-mdcbutton)
   - [Theming an MDCFloatingButton](#theming-an-mdcfloatingbutton)
@@ -107,7 +108,7 @@ import MaterialComponents.MaterialButtons
 ### Typical use: themed buttons
 
 Create an instance of `MDCButton` and theme it with as one of the Material Design button styles
-using the button theming extension. Once themed, use the button like you would use a typical UIButton
+using the ButtonThemer extension. Once themed, use the button like you would use a typical UIButton
 instance.
 
 <!--<div class="material-code-render" markdown="1">-->
@@ -116,7 +117,7 @@ instance.
 let button = MDCButton()
 
 // Themed as a text button:
-button.applyTextTheme(withScheme: containerScheme)
+MDCTextButtonThemer.applyScheme(buttonScheme, to: button)
 ```
 
 #### Objective-C
@@ -125,11 +126,11 @@ button.applyTextTheme(withScheme: containerScheme)
 MDCButton *button = [[MDCButton alloc] init];
 
 // Themed as a text button:
-[button applyTextThemeWithScheme:containerScheme];
+[MDCTextButtonThemer applyScheme:buttonScheme toButton:button];
 ```
 <!--</div>-->
 
-See the [button theming documentation](docs/theming.md) for a full list of supported Material Design
+See the [ButtonThemer documentation](docs/theming.md) for a full list of supported Material Design
 button styles.
 
 <!-- Extracted from docs/typical-use-floating-action-buttons.md -->
@@ -148,7 +149,7 @@ their normal state.
 let plusImage = UIImage(named: "plus").withRenderingMode(.alwaysTemplate)
 let button = MDCFloatingButton()
 button.setImage(plusImage, forState: .normal)
-button.applySecondaryTheme(withScheme: containerScheme)
+MDCFloatingActionButtonThemer.applyScheme(buttonScheme, to: button)
 ```
 
 #### Objective-C
@@ -159,7 +160,7 @@ UIImage *plusImage =
     [[UIImage imageNamed:@"plus"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 MDCFloatingButton *button = [[MDCFloatingButton alloc] init];
 [button setImage:plusImage forState:UIControlStateNormal];
-[button applySecondaryThemeWithScheme:containerScheme];
+[MDCFloatingActionButtonThemer applyScheme:buttonScheme toButton:button];
 ```
 <!--</div>-->
 
@@ -220,6 +221,7 @@ MDCButton and its subclasses can be used in Interface Builder, but the button ty
 to "custom" in order for the button's highlight states to work as expected.
 
 
+## Extensions
 
 <!-- Extracted from docs/theming.md -->
 
