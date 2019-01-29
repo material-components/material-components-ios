@@ -191,14 +191,12 @@ upload_bazel_test_artifacts() {
 upgrade_kokoro_bazel_if_needed() {
   bazel version
 
-  # Only update bazel if the version is less than 0.20
-  bazel_version=$(bazel version | grep "Build label" | cut -d' ' -f3)
-  bazel_major_version=$(echo "$bazel_version" | cut -d'.' -f1)
-  bazel_minor_version=$(echo "$bazel_version" | cut -d'.' -f2)
-  if [ "$bazel_major_version" -eq 0 ] && [ "$bazel_minor_version" -lt "20" ]; then
+  if [ -f "$KOKORO_GFILE_DIR/use_bazel.sh"]; then
+    "$KOKORO_GFILE_DIR/use_bazel.sh" 0.20.0
+  else
     use_bazel.sh 0.20.0
-    bazel version
   fi
+  bazel version
 }
 
 run_bazel_affected() {
