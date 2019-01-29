@@ -190,9 +190,12 @@ upload_bazel_test_artifacts() {
 # Upgrades kokoro's current bazel version to at least 0.20.0
 upgrade_kokoro_bazel_if_needed() {
   bazel version
-  # High sierra machines do not presently have a use_bazel.sh tool
-  # They do come pre-installed with bazel 0.21 however, so we don't need to update bazel.
-  if [ "$KOKORO_JOB_POOL" != "high-sierra" ]; then
+
+  # Only update bazel if the version is less than 0.20
+  bazel_version=$(bazel version | grep "Build label" | cut -d' ' -f3)
+  bazel_major_version=$(echo "$bazel_version" | cut -d'.' -f1)
+  bazel_minor_version=$(echo "$bazel_version" | cut -d'.' -f2)
+  if [ "$bazel_major_version" -eq 0 ] && [ "$bazel_minor_version" -lt "20" ]; then
     use_bazel.sh 0.20.0
     bazel version
   fi
