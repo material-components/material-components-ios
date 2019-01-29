@@ -67,12 +67,12 @@ typedef NS_ENUM(NSUInteger, PlaceholderState) {
  A representation of Text Field state that is compatible with UIControlState as well as an
  interpretation of the states outlined in the Material guidelines for Text Fields.
  */
-typedef NS_ENUM(NSUInteger, TextFieldState) {
-  TextFieldStateNormal,
-  TextFieldStateFocused,
-  TextFieldStateActivated,
-  TextFieldStateErrored,
-  TextFieldStateDisabled,
-};
+//typedef NS_ENUM(NSUInteger, TextFieldState) {
+//  TextFieldStateNormal,
+//  TextFieldStateFocused,
+//  TextFieldStateActivated,
+//  TextFieldStateErrored,
+//  TextFieldStateDisabled,
+//};
 
 #endif /* SimpleTextFieldLayoutUtils_h */

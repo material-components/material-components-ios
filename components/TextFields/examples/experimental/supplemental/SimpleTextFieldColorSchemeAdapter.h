@@ -34,25 +34,10 @@
 
 
 @interface SimpleTextFieldColorSchemeFilled : SimpleTextFieldColorScheme
-@property(strong, nonatomic, readonly) UIColor *filledSublayerFillColor;
-@property(strong, nonatomic, readonly) UIColor *filledSublayerUnderlineFillColor;
+@property(strong, nonatomic/*, readonly*/) UIColor *filledSublayerFillColor;
+@property(strong, nonatomic/*, readonly*/) UIColor *filledSublayerUnderlineFillColor;
 @end
 
 @interface SimpleTextFieldColorSchemeOutlined : SimpleTextFieldColorScheme
-@property(strong, nonatomic, readonly) UIColor *outlineColor;
+@property(strong, nonatomic/*, readonly*/) UIColor *outlineColor;
 @end
-
-//@interface SimpleTextFieldColorSchemeAdapter : NSObject
-//
-//@property(strong, nonatomic) UIColor *textColor;
-//@property(strong, nonatomic) UIColor *underlineLabelColor;
-//@property(strong, nonatomic) UIColor *outlineColor;
-//@property(strong, nonatomic) UIColor *placeholderLabelColor;
-//@property(strong, nonatomic) UIColor *filledSublayerFillColor;
-//@property(strong, nonatomic) UIColor *filledSublayerUnderlineFillColor;
-//@property(strong, nonatomic) UIColor *clearButtonTintColor;
-//
-//+ (instancetype)defaultSimpleTextFieldColorScheme;
-//+ (instancetype)defaultSimpleTextFieldColorSchemeWithState:(MDCContainedInputViewState)textFieldState;
-//
-//@end

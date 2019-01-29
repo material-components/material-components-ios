@@ -41,7 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, assign) CGFloat topRowBottomRowDividerY;
 
 - (instancetype)initWithTextFieldSize:(CGSize)textFieldSize
-                       containerStyle:(MDCInputViewContainerStyle)containerStyle
+                       containerStyle:(MDCContainerStyle *)containerStyle
                                  text:(NSString *)text
                           placeholder:(NSString *)placeholder
                                  font:(UIFont *)font

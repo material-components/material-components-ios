@@ -25,7 +25,7 @@
 #pragma mark Object Lifecycle
 
 - (instancetype)initWithTextFieldSize:(CGSize)textFieldSize
-                       containerStyle:(MDCInputViewContainerStyle)containerStyle
+                       containerStyle:(MDCContainerStyle *)containerStyle
                                  text:(NSString *)text
                           placeholder:(NSString *)placeholder
                                  font:(UIFont *)font

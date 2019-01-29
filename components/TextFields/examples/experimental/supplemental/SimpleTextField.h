@@ -37,12 +37,7 @@
 /**
  Dictates the @c MDCInputViewContainerStyle of the text field.
  */
-@property(nonatomic, strong) MDCContainerStyle *containerStyleObject;
-
-/**
- Dictates the @c MDCInputViewContainerStyle of the text field.
- */
-@property(nonatomic, assign) MDCInputViewContainerStyle containerStyle;
+@property(nonatomic, strong) MDCContainerStyle *containerStyle;
 
 /**
  This is a computed property that determines the current @c MDCContainedInputViewState of the text field.
@@ -119,6 +114,7 @@
  */
 @property(nonatomic, assign) CGFloat customUnderlineLabelDrawPriority;
 
+- (id<SimpleTextFieldColorScheming>)simpleTextFieldColorSchemingForState:(MDCContainedInputViewState)containedInputViewState;
 - (void)setSimpleTextFieldColorScheming:(id<SimpleTextFieldColorScheming>)simpleTextFieldColorScheming
                                forState:(MDCContainedInputViewState)textFieldState;
 

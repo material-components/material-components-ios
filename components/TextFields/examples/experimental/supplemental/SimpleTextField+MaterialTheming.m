@@ -17,6 +17,7 @@
 #import <Foundation/Foundation.h>
 
 #import "SimpleTextFieldColorSchemeAdapter.h"
+#import "MDCInputViewContainerStyler.h"
 
 @implementation SimpleTextField (MaterialTheming)
 
@@ -40,49 +41,127 @@
   self.trailingUnderlineLabel.font = mdcTypographyScheming.caption;
 }
 
-- (void)applyThemeWithMDCColorScheming:(id<MDCColorScheming>)mdcColorScheming {
-//  SimpleTextFieldColorSchemeAdapter *normalColorScheme =
-//      [self simpleTextFieldColorSchemeWithMDCColorScheming:mdcColorScheming
-//                                            textFieldState:MDCContainedInputViewStateNormal];
-//  [self setSimpleTextFieldColorScheme:normalColorScheme forState:MDCContainedInputViewStateNormal];
-//
-//  SimpleTextFieldColorSchemeAdapter *focusedColorScheme =
-//      [self simpleTextFieldColorSchemeWithMDCColorScheming:mdcColorScheming
-//                                            textFieldState:MDCContainedInputViewStateNormal];
-//  [self setSimpleTextFieldColorScheme:focusedColorScheme forState:MDCContainedInputViewStateFocused];
-//
-//  SimpleTextFieldColorSchemeAdapter *activatedColorScheme =
-//      [self simpleTextFieldColorSchemeWithMDCColorScheming:mdcColorScheming
-//                                            textFieldState:MDCContainedInputViewStateNormal];
-//  [self setSimpleTextFieldColorScheme:activatedColorScheme forState:MDCContainedInputViewStateActivated];
-//
-//  SimpleTextFieldColorSchemeAdapter *erroredColorScheme =
-//      [self simpleTextFieldColorSchemeWithMDCColorScheming:mdcColorScheming
-//                                            textFieldState:MDCContainedInputViewStateNormal];
-//  [self setSimpleTextFieldColorScheme:erroredColorScheme forState:MDCContainedInputViewStateErrored];
-//
-//  SimpleTextFieldColorSchemeAdapter *disabledColorScheme =
-//      [self simpleTextFieldColorSchemeWithMDCColorScheming:mdcColorScheming
-//                                            textFieldState:MDCContainedInputViewStateNormal];
-//  [self setSimpleTextFieldColorScheme:disabledColorScheme forState:MDCContainedInputViewStateDisabled];
+- (void)applyOutlinedThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme {
+  MDCContainerStyleOutlined *outlinedStyle = [[MDCContainerStyleOutlined alloc] init];
+  self.containerStyleObject = outlinedStyle;
+  // ^ if you have side effects in this setter then you can just access them and modify them
+  
+  id<MDCColorScheming> mdcColorScheming = scheme.colorScheme ?: [[MDCSemanticColorScheme alloc] init];
+
+  SimpleTextFieldColorSchemeOutlined *normalColorScheme =
+      [self outlinedColorSchemeWithMDCColorScheming:mdcColorScheming containedInputViewState:MDCContainedInputViewStateNormal];
+  [self setSimpleTextFieldColorScheming:normalColorScheme forState:MDCContainedInputViewStateNormal];
+
+  SimpleTextFieldColorSchemeOutlined *focusedColorScheme =
+      [self outlinedColorSchemeWithMDCColorScheming:mdcColorScheming containedInputViewState:MDCContainedInputViewStateFocused];
+  [self setSimpleTextFieldColorScheming:focusedColorScheme forState:MDCContainedInputViewStateFocused];
+
+  SimpleTextFieldColorSchemeOutlined *activatedColorScheme =
+  [self outlinedColorSchemeWithMDCColorScheming:mdcColorScheming
+                                 containedInputViewState:MDCContainedInputViewStateNormal];
+  [self setSimpleTextFieldColorScheming:activatedColorScheme forState:MDCContainedInputViewStateActivated];
+
+  SimpleTextFieldColorSchemeOutlined *erroredColorScheme =
+  [self outlinedColorSchemeWithMDCColorScheming:mdcColorScheming
+                                 containedInputViewState:MDCContainedInputViewStateNormal];
+  [self setSimpleTextFieldColorScheming:erroredColorScheme forState:MDCContainedInputViewStateErrored];
+
+  SimpleTextFieldColorSchemeOutlined *disabledColorScheme =
+  [self outlinedColorSchemeWithMDCColorScheming:mdcColorScheming
+                                 containedInputViewState:MDCContainedInputViewStateNormal];
+  [self setSimpleTextFieldColorScheming:disabledColorScheme forState:MDCContainedInputViewStateDisabled];
 }
 
-- (SimpleTextFieldColorSchemeAdapter *)
-    simpleTextFieldColorSchemeWithMDCColorScheming:(id<MDCColorScheming>)colorScheming
-                                    textFieldState:(MDCContainedInputViewState)textFieldState {
+
+- (void)applyFilledThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme {
+  MDCContainerStyleFilled *filledStyle = [[MDCContainerStyleFilled alloc] init];
+  self.containerStyleObject = filledStyle;
+  // ^ if you have side effects in this setter then you can just access them and modify them
+  
+  id<MDCColorScheming> mdcColorScheming = scheme.colorScheme ?: [[MDCSemanticColorScheme alloc] init];
+  
+  SimpleTextFieldColorSchemeFilled *normalColorScheme =
+  [self filledColorSchemeWithMDCColorScheming:mdcColorScheming containedInputViewState:MDCContainedInputViewStateNormal];
+  [self setSimpleTextFieldColorScheming:normalColorScheme forState:MDCContainedInputViewStateNormal];
+  
+  SimpleTextFieldColorSchemeFilled *focusedColorScheme =
+  [self filledColorSchemeWithMDCColorScheming:mdcColorScheming containedInputViewState:MDCContainedInputViewStateFocused];
+  [self setSimpleTextFieldColorScheming:focusedColorScheme forState:MDCContainedInputViewStateFocused];
+  
+  SimpleTextFieldColorSchemeFilled *activatedColorScheme =
+  [self filledColorSchemeWithMDCColorScheming:mdcColorScheming
+                                 containedInputViewState:MDCContainedInputViewStateNormal];
+  [self setSimpleTextFieldColorScheming:activatedColorScheme forState:MDCContainedInputViewStateActivated];
+  
+  SimpleTextFieldColorSchemeFilled *erroredColorScheme =
+  [self filledColorSchemeWithMDCColorScheming:mdcColorScheming
+                                 containedInputViewState:MDCContainedInputViewStateNormal];
+  [self setSimpleTextFieldColorScheming:erroredColorScheme forState:MDCContainedInputViewStateErrored];
+  
+  SimpleTextFieldColorSchemeFilled *disabledColorScheme =
+  [self filledColorSchemeWithMDCColorScheming:mdcColorScheming
+                                 containedInputViewState:MDCContainedInputViewStateNormal];
+  [self setSimpleTextFieldColorScheming:disabledColorScheme forState:MDCContainedInputViewStateDisabled];
+}
+
+- (SimpleTextFieldColorSchemeOutlined *)
+    outlinedColorSchemeWithMDCColorScheming:(id<MDCColorScheming>)colorScheming
+                                    containedInputViewState:(MDCContainedInputViewState)containedInputViewState {
   UIColor *textColor = colorScheming.onSurfaceColor;
   UIColor *underlineLabelColor =
       [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
   UIColor *placeholderLabelColor =
       [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
   UIColor *outlineColor = colorScheming.onSurfaceColor;
-  UIColor *filledSublayerUnderlineFillColor = colorScheming.onSurfaceColor;
-  UIColor *filledSublayerFillColor =
-      [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.15];
   UIColor *clearButtonTintColor =
       [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.20];
 
-  switch (textFieldState) {
+  switch (containedInputViewState) {
+    case MDCContainedInputViewStateNormal:
+      break;
+    case MDCContainedInputViewStateActivated:
+      break;
+    case MDCContainedInputViewStateDisabled:
+      placeholderLabelColor = [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.10];
+      break;
+    case MDCContainedInputViewStateErrored:
+      placeholderLabelColor = colorScheming.errorColor;
+      underlineLabelColor = colorScheming.errorColor;
+      outlineColor = colorScheming.errorColor;
+      break;
+    case MDCContainedInputViewStateFocused:
+      outlineColor = colorScheming.primaryColor;
+      placeholderLabelColor = colorScheming.primaryColor;
+      break;
+    default:
+      break;
+  }
+
+  SimpleTextFieldColorSchemeOutlined *simpleTextFieldColorScheme =
+      [[SimpleTextFieldColorSchemeOutlined alloc] init];
+  simpleTextFieldColorScheme.textColor = textColor;
+  simpleTextFieldColorScheme.underlineLabelColor = underlineLabelColor;
+  simpleTextFieldColorScheme.outlineColor = outlineColor;
+  simpleTextFieldColorScheme.placeholderLabelColor = placeholderLabelColor;
+  simpleTextFieldColorScheme.clearButtonTintColor = clearButtonTintColor;
+  return simpleTextFieldColorScheme;
+}
+
+- (SimpleTextFieldColorSchemeFilled *)
+filledColorSchemeWithMDCColorScheming:(id<MDCColorScheming>)colorScheming
+containedInputViewState:(MDCContainedInputViewState)containedInputViewState {
+  UIColor *textColor = colorScheming.onSurfaceColor;
+  UIColor *underlineLabelColor =
+  [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
+  UIColor *placeholderLabelColor =
+  [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
+  UIColor *filledSublayerUnderlineFillColor = colorScheming.onSurfaceColor;
+  UIColor *filledSublayerFillColor =
+  [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.15];
+  UIColor *clearButtonTintColor =
+  [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.20];
+  
+  switch (containedInputViewState) {
     case MDCContainedInputViewStateNormal:
       break;
     case MDCContainedInputViewStateActivated:
@@ -94,34 +173,24 @@
       placeholderLabelColor = colorScheming.errorColor;
       underlineLabelColor = colorScheming.errorColor;
       filledSublayerUnderlineFillColor = colorScheming.errorColor;
-      outlineColor = colorScheming.errorColor;
       break;
     case MDCContainedInputViewStateFocused:
-      outlineColor = colorScheming.primaryColor;
       placeholderLabelColor = colorScheming.primaryColor;
       filledSublayerUnderlineFillColor = colorScheming.primaryColor;
       break;
     default:
       break;
   }
-
-  SimpleTextFieldColorSchemeAdapter *simpleTextFieldColorScheme =
-      [[SimpleTextFieldColorSchemeAdapter alloc] init];
+  
+  SimpleTextFieldColorSchemeFilled *simpleTextFieldColorScheme =
+  [[SimpleTextFieldColorSchemeFilled alloc] init];
   simpleTextFieldColorScheme.textColor = textColor;
   simpleTextFieldColorScheme.filledSublayerFillColor = filledSublayerFillColor;
   simpleTextFieldColorScheme.filledSublayerUnderlineFillColor = filledSublayerUnderlineFillColor;
   simpleTextFieldColorScheme.underlineLabelColor = underlineLabelColor;
-  simpleTextFieldColorScheme.outlineColor = outlineColor;
   simpleTextFieldColorScheme.placeholderLabelColor = placeholderLabelColor;
   simpleTextFieldColorScheme.clearButtonTintColor = clearButtonTintColor;
   return simpleTextFieldColorScheme;
 }
-
-
-- (void)applyFilledThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme {
-  MDCContainerStyleFilled *filledStyle = [[MDCContainerStyleFilled alloc] init];
-  self.containerStyleObject = filledStyle;
-}
-
 
 @end

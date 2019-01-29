@@ -165,8 +165,7 @@ static const CGFloat kInterChipPadding = (CGFloat)8.0;
                                                 chips:(NSArray<MDCChipView *> *)chips
                                          canChipsWrap:(BOOL)canChipsWrap
                                         chipRowHeight:(CGFloat)chipRowHeight
-                                        contentInsets:(UIEdgeInsets)contentInsets
-                                                isRTL:(BOOL)isRTL {
+                                        contentInsets:(UIEdgeInsets)contentInsets                                                 isRTL:(BOOL)isRTL {
   NSMutableArray<NSValue *> *frames = [[NSMutableArray alloc] initWithCapacity:chips.count];
   if (canChipsWrap) {
     if (isRTL) {
@@ -174,7 +173,7 @@ static const CGFloat kInterChipPadding = (CGFloat)8.0;
     } else {
       CGFloat highestDesirableSubviewMaxX = CGRectGetWidth(bounds) - contentInsets.right;
       CGFloat chipMinX = contentInsets.left;
-      CGFloat chipMidY = contentInsets.top + (0.5 * chipRowHeight);
+      CGFloat chipMidY = 0;//contentInsets.top + (0.5 * chipRowHeight);
       CGFloat chipMinY = 0;
       CGRect chipFrame = CGRectZero;
       NSInteger row = 0;
