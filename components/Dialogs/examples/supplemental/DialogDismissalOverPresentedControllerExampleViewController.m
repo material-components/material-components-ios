@@ -45,10 +45,20 @@
 
 @implementation PresentedViewControllerWithDialog
 
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
+    scheme.colorScheme =
+    [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    _containerScheme = scheme;
+  }
+  return self;
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.containerScheme = [[MDCContainerScheme alloc] init];
   self.navigationItem.title = @"Presented View Controller";
 
   // Make a layout that displays content in the corners.
@@ -110,8 +120,6 @@
 
   // Add a button to show the dialog from this presented view controller.
   self.dialogButton = [[MDCButton alloc] init];
-  [self.dialogButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-  [self.dialogButton setBackgroundColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
   [self.dialogButton setTitle:@"Show Dialog" forState:UIControlStateNormal];
   self.dialogButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.dialogButton addTarget:self
@@ -161,6 +169,17 @@
 @end
 
 @implementation DialogDismissalOverPresentedControllerExampleViewController
+
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
+    scheme.colorScheme =
+    [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    _containerScheme = scheme;
+  }
+  return self;
+}
 
 - (void)viewDidLoad {
   [super viewDidLoad];

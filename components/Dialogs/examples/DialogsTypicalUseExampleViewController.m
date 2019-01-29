@@ -31,19 +31,28 @@
 
 @implementation DialogsTypicalUseExampleViewController
 
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
+    scheme.colorScheme =
+    [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    _containerScheme = scheme;
+  }
+  return self;
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  if (self.containerScheme == nil) {
-    MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
-    scheme.colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-    scheme.typographyScheme =
-        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
-    self.containerScheme = scheme;
+  id<MDCColorScheming> colorScheme;
+  if (self.containerScheme.colorScheme != nil) {
+    colorScheme = self.containerScheme.colorScheme;
+  } else {
+    colorScheme =
+    [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   }
-  
-  self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
+  self.view.backgroundColor = colorScheme.backgroundColor;
 
   MDCButton *dismissButton = [[MDCButton alloc] initWithFrame:CGRectZero];
   self.button = dismissButton;

@@ -80,9 +80,19 @@
 
 @implementation DialogsRoundedCornerExampleViewController
 
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
+    scheme.colorScheme =
+    [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    _containerScheme = scheme;
+  }
+  return self;
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
-  self.containerScheme = [[MDCContainerScheme alloc] init];
 
   // We must create and store a strong reference to the transitionController.
   // A presented view controller will set this object as its transitioning delegate.

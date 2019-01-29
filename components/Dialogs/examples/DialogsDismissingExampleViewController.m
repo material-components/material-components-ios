@@ -46,15 +46,19 @@
 
 @implementation DialogsDismissingExampleViewController
 
-- (void)viewDidLoad {
-  [super viewDidLoad];
-
-  if (self.containerScheme == nil) {
+- (instancetype)init {
+  self = [super init];
+  if (self) {
     MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
     scheme.colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-    self.containerScheme = scheme;
+    [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    _containerScheme = scheme;
   }
+  return self;
+}
+
+- (void)viewDidLoad {
+  [super viewDidLoad];
 
   [self loadCollectionView:@[
     @"Dismissable Programmatic", @"Dismissable Storyboard", @"Non-dismissable Programmatic",
