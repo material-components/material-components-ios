@@ -85,7 +85,7 @@
   if (self) {
     MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
     scheme.colorScheme =
-    [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
     _containerScheme = scheme;
   }
   return self;
