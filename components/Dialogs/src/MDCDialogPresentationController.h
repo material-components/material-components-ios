@@ -29,7 +29,7 @@
  MDCDialogPresentationController dismissals.
  */
 - (void)dialogPresentationControllerDidDismiss:
-    (MDCDialogPresentationController *_Nonnull)dialogPresentationController;
+    (nonnull MDCDialogPresentationController *)dialogPresentationController;
 @end
 
 /**
