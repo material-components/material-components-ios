@@ -103,6 +103,7 @@ class DialogsCustomShadowExampleViewController: UIViewController {
     // presentation controller.
     if let presentationController = presentedController.mdc_dialogPresentationController {
       presentationController.applyTheme(withScheme: containerScheme)
+      presentationController.dialogCornerRadius = presentedController.view.layer.cornerRadius
     }
   }
 

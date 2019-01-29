@@ -215,12 +215,9 @@ class DialogsAlertCustomizationExampleViewController: MDCCollectionViewControlle
     alert.addAction(MDCAlertAction(title:"Medium", emphasis: .medium, handler: handler))
     alert.addAction(MDCAlertAction(title:"Low", emphasis: .low, handler: handler))
 
-    let container: MDCContainerScheme =
-        containerScheme as? MDCContainerScheme ?? MDCContainerScheme()
-    let containerCopy: MDCContainerScheme = container.copy() as! MDCContainerScheme
-    containerCopy.colorScheme =
-        containerCopy.colorScheme ?? MDCSemanticColorScheme(defaults: .material201804)
-    alert.applyTheme(withScheme: containerCopy)
+    alert.applyTheme(withScheme: containerScheme)
+    alert.button(for: alert.actions.first!)?.setBackgroundColor(.blue, for: .normal)
+
     return alert
   }
 

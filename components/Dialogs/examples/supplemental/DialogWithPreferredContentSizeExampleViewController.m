@@ -30,21 +30,12 @@
 
 @implementation DialogWithPreferredContentSizeExampleViewController
 
-- (instancetype)init {
-  self = [super init];
-  if (self) {
-    MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
-    scheme.colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-    scheme.typographyScheme =
-        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
-    _containerScheme = scheme;
-  }
-  return self;
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
+
+  if (self.containerScheme == nil) {
+    self.containerScheme = [[MDCContainerScheme alloc] init];
+  }
 
   [self.button applyContainedThemeWithScheme:self.containerScheme];
 }
