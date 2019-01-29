@@ -46,7 +46,6 @@
  */
 @property(nonatomic, strong, readonly, nonnull) UILongPressGestureRecognizer *gestureRecognizer;
 
-
 /**
  If set to NO, the ripple gesture will fail and not be initiated if there are other competing
  gestures that belong to a UIScrollView. This helps the ripple not be invoked if a user wants
