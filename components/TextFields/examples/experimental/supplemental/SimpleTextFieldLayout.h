@@ -17,7 +17,8 @@
 
 #import "SimpleTextFieldLayoutUtils.h"
 
-#import "MDCContainedInputView.h"
+//#import "MDCContainedInputView.h"
+@class MDCContainerStyle;
 
 NS_ASSUME_NONNULL_BEGIN
 

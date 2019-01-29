@@ -16,6 +16,7 @@
 
 #import "SimpleTextField.h"
 #import "SimpleTextFieldLayoutUtils.h"
+#import "MDCContainedInputView.h"
 
 @interface SimpleTextFieldLayout ()
 @end

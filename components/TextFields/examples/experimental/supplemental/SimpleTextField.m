@@ -17,8 +17,6 @@
 #import <MDFInternationalization/MDFInternationalization.h>
 #import "MaterialMath.h"
 
-#import "MDCContainedInputView.h"
-
 #import "SimpleTextFieldColorScheme.h"
 #import "SimpleTextFieldLayout.h"
 #import "SimpleTextFieldLayoutUtils.h"
@@ -239,12 +237,7 @@
 
 - (void)postLayoutSubviews {
   [self layOutPlaceholderWithState:self.placeholderState];
-  [self applyContainerViewStyle:self.containerStyle
-                 containedInputViewState:self.containedInputViewState
-                     viewBounds:self.bounds
-       floatingPlaceholderFrame:self.layout.placeholderFrameFloating
-        topRowBottomRowDividerY:self.layout.topRowBottomRowDividerY
-          isFloatingPlaceholder:self.placeholderState == PlaceholderStateFloating];
+  [self.containerStyle applyStyleTo:self];
   self.clearButton.frame = self.layout.clearButtonFrame;
   self.clearButton.hidden = self.layout.clearButtonHidden;
   self.leftUnderlineLabel.frame = self.layout.leftUnderlineLabelFrame;
@@ -459,13 +452,15 @@
   [self setNeedsLayout];
 }
 
--(void)setContainerStyleObject:(MDCContainerStyle *)containerStyle {
+-(void)setContainerStyle:(MDCContainerStyle *)containerStyle {
   MDCContainerStyle *oldStyle = _containerStyle;
   if (oldStyle) {
     [oldStyle removeStyleFrom:self];
   }
   _containerStyle = containerStyle;
-  [self setUpStateDependentColorSchemesForStyle:self.containerStyle];
+  [self setUpStateDependentColorSchemesForStyle:_containerStyle];
+  [_containerStyle applyStyleTo:self];
+  // TODO: setneedslayout?
 }
 
 #pragma mark UITextField Layout Overrides
@@ -825,29 +820,6 @@
 
 #pragma mark Style Management
 
-- (void)applyContainerViewStyle:(MDCContainerStyle *)containerStyle
-                 containedInputViewState:(MDCContainedInputViewState)containedInputViewState
-                     viewBounds:(CGRect)viewBounds
-       floatingPlaceholderFrame:(CGRect)floatingPlaceholderFrame
-        topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
-          isFloatingPlaceholder:(BOOL)isFloatingPlaceholder {
-//  CGFloat outlineLineWidth = [self outlineLineWidthForState:containedInputViewState];
-//  [self.containerStyle applyToSimpleTextField:self];
-//  NSLog(@"placeholderFrame: %@",NSStringFromCGRect(self.placeholderLabel.frame));
-  [containerStyle applyStyleTo:self];
-  
-//  [self.containerStyler applyOutlinedStyle:containerStyle == MDCInputViewContainerStyleOutline
-//                                      view:self
-//                  floatingPlaceholderFrame:floatingPlaceholderFrame
-//                   topRowBottomRowDividerY:topRowBottomRowDividerY
-//                     isFloatingPlaceholder:isFloatingPlaceholder
-//                          outlineLineWidth:outlineLineWidth];
-//  CGFloat underlineThickness = [self underlineThicknessWithMDCContainedInputViewState:containedInputViewState];
-//  [self.containerStyler applyFilledStyle:containerStyle == MDCInputViewContainerStyleFilled
-//                                    view:self
-//                 topRowBottomRowDividerY:topRowBottomRowDividerY
-//                      underlineThickness:underlineThickness];
-}
 
 - (CGFloat)outlineLineWidthForState:(MDCContainedInputViewState)containedInputViewState {
   CGFloat defaultLineWidth = 1;
