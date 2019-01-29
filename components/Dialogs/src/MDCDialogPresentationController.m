@@ -301,16 +301,11 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
 
 - (void)dismiss:(UIGestureRecognizer *)gesture {
   if (gesture.state == UIGestureRecognizerStateRecognized) {
-    __weak __typeof(self) weakSelf = self;
     [self.presentingViewController
         dismissViewControllerAnimated:YES
                            completion:^{
-                             if ([weakSelf.dialogPresentationControllerDelegate
-                                     respondsToSelector:@selector
-                                     (dialogPresentationControllerDidDismissDialog:)]) {
-                               [weakSelf.dialogPresentationControllerDelegate
-                                   dialogPresentationControllerDidDismissDialog:weakSelf];
-                             }
+                             [self.dialogPresentationControllerDelegate
+                                 dialogPresentationControllerDidDismiss:self];
                            }];
   }
 }

@@ -19,12 +19,16 @@
 @class MDCDialogPresentationController;
 
 /**
- Similar to UIPopoverPresentationControllerDelegate, MDCDialogPresentationControllerDelegate lets
- you customize the behavior of a popover-based presentation.
+ MDCDialogPresentationControllerDelegate provides a method that allows a delegate of an
+ MDCDialogPresentationController to respond to its dismissals.
  */
 @protocol MDCDialogPresentationControllerDelegate <NSObject>
-@optional
-- (void)dialogPresentationControllerDidDismissDialog:
+
+/**
+ This method allows a delegate conforming to MDCDialogPresentationControllerDelegate to respond to
+ MDCDialogPresentationController dismissals.
+ */
+- (void)dialogPresentationControllerDidDismiss:
     (MDCDialogPresentationController *_Nonnull)dialogPresentationController;
 @end
 
@@ -48,7 +52,9 @@
 @interface MDCDialogPresentationController : UIPresentationController
 
 /**
- An object conforming to MDCDialogPresentationControllerDelegate.
+ An object conforming to MDCDialogPresentationControllerDelegate. When non-nil, the
+ MDCDialogPresentationController will call the appropriate MDCDialogPresentationControllerDelegate
+ methods on this object.
  */
 @property(nonatomic, weak, nullable) id<MDCDialogPresentationControllerDelegate>
     dialogPresentationControllerDelegate;

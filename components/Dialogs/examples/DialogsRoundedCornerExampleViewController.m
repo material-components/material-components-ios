@@ -118,7 +118,7 @@
   [self presentViewController:viewController animated:YES completion:nil];
 }
 
-- (void)dialogPresentationControllerDidDismissDialog:
+- (void)dialogPresentationControllerDidDismiss:
     (MDCDialogPresentationController *)dialogPresentationController {
   NSLog(@"You just dismissed a dialog with rounded corners");
 }
