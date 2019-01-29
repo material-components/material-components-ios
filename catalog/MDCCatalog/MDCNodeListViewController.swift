@@ -524,8 +524,7 @@ extension MDCNodeListViewController {
       cell?.selectionStyle = .none
       let primaryDemoCell = cell as! NodeViewTableViewPrimaryDemoCell
       let button = primaryDemoCell.containedButton
-      let buttonScheme = AppTheme.globalTheme.buttonScheme
-      MDCContainedButtonThemer.applyScheme(buttonScheme, to:button)
+      button.applyContainedTheme(withScheme: AppTheme.globalTheme.containerScheme)
       button.addTarget(self, action: #selector(primaryDemoButtonClicked), for: .touchUpInside)
     } else {
       cell = tableView.dequeueReusableCell(withIdentifier: "NodeViewTableViewDemoCell")
