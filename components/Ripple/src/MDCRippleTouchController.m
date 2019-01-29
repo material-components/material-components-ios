@@ -75,7 +75,7 @@
       break;
     case UIGestureRecognizerStateCancelled:
     case UIGestureRecognizerStateFailed:
-      [self.rippleView cancelAllRipplesAnimated:YES];
+      [self.rippleView cancelAllRipplesAnimated:YES completion:nil];
       break;
   }
 }
