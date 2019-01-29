@@ -39,7 +39,7 @@
 
 @property(nonatomic, strong) UILabel *bottomRightLabel;
 
-@property(nonatomic, strong) MDCContainerScheme *containerScheme;
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 
 @end
 

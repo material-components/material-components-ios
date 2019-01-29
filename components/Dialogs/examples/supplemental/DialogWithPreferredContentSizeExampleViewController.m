@@ -21,6 +21,8 @@
 
 #import "MaterialButtons.h"
 #import "MaterialButtons+Theming.h"
+#import "MaterialColorScheme.h"
+#import "MaterialTypographyScheme.h"
 
 @interface DialogWithPreferredContentSizeExampleViewController ()
 @property(nonatomic, strong) IBOutlet MDCButton *button;
@@ -31,11 +33,12 @@
 - (instancetype)init {
   self = [super init];
   if (self) {
-    _containerScheme = [[MDCContainerScheme alloc] init];
-    _containerScheme.colorScheme =
+    MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
+    scheme.colorScheme =
         [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-    _containerScheme.typographyScheme =
+    scheme.typographyScheme =
         [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+    _containerScheme = scheme;
   }
   return self;
 }

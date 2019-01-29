@@ -19,12 +19,10 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialColorScheme.h"
 #import "MaterialContainerScheme.h"
-#import "MaterialTypographyScheme.h"
 
 @interface DialogWithPreferredContentSizeExampleViewController : UIViewController
 
-@property(nonatomic, strong, nullable) MDCContainerScheme *containerScheme;
+@property(nonatomic, strong, nullable) id<MDCContainerScheming> containerScheme;
 
 @end

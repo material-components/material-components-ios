@@ -24,7 +24,7 @@
 #pragma mark - DialogsTypicalUseExampleViewController
 
 @interface DialogsTypicalUseExampleViewController : UIViewController
-@property(nonatomic, strong, nullable) MDCContainerScheme *containerScheme;
+@property(nonatomic, strong, nullable) id<MDCContainerScheming> containerScheme;
 @property(nonatomic, strong, nullable) NSArray *modes;
 @property(nonatomic, strong, nullable) MDCButton *button;
 @end
@@ -34,11 +34,12 @@
 - (instancetype)init {
   self = [super init];
   if (self) {
-    _containerScheme = [[MDCContainerScheme alloc] init];
-    _containerScheme.colorScheme =
+    MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
+    scheme.colorScheme =
         [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-    _containerScheme.typographyScheme =
+    scheme.typographyScheme =
         [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+    _containerScheme = scheme;
   }
   return self;
 }

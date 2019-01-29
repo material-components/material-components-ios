@@ -26,7 +26,7 @@ static NSString *const kReusableIdentifierItem = @"cell";
 
 @interface DialogsAlertExampleViewController : MDCCollectionViewController
 @property(nonatomic, strong, nullable) NSArray *modes;
-@property(nonatomic, strong, nonnull) MDCContainerScheme *containerScheme;
+@property(nonatomic, strong, nonnull) id<MDCContainerScheming> containerScheme;
 @end
 
 @interface DialogsAlertExampleViewController (Supplemental)

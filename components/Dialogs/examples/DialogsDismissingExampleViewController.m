@@ -27,7 +27,7 @@
 #pragma mark - DialogsDismissingExampleViewController Interfaces
 
 @interface DialogsDismissingExampleViewController : MDCCollectionViewController
-@property(nonatomic, strong, nullable) MDCContainerScheme *containerScheme;
+@property(nonatomic, strong, nullable) id<MDCContainerScheming> containerScheme;
 @property(nonatomic, strong, nullable) NSArray *modes;
 @property(nonatomic, strong) MDCDialogTransitionController *transitionController;
 @end
@@ -46,19 +46,16 @@
 
 @implementation DialogsDismissingExampleViewController
 
-- (id)init {
-  self = [super init];
-  if (self) {
-    self.containerScheme = [[MDCContainerScheme alloc] init];
-    self.containerScheme.colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-    self.containerScheme.typographyScheme = [[MDCTypographyScheme alloc] init];
-  }
-  return self;
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
+
+  if (self.containerScheme == nil) {
+    MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
+    scheme.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    self.containerScheme = scheme;
+  }
+
   [self loadCollectionView:@[
     @"Dismissable Programmatic", @"Dismissable Storyboard", @"Non-dismissable Programmatic",
     @"Open URL"
@@ -126,8 +123,7 @@
       [storyboard instantiateViewControllerWithIdentifier:identifier];
   viewController.modalPresentationStyle = UIModalPresentationCustom;
   viewController.transitioningDelegate = self.transitionController;
-  viewController.colorScheme = self.containerScheme.colorScheme;
-  viewController.typographyScheme = self.containerScheme.typographyScheme;
+  viewController.containerScheme = self.containerScheme;
   [self presentViewController:viewController animated:YES completion:NULL];
 }
 
