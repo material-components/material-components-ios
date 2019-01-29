@@ -84,7 +84,9 @@
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
     shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
   if (!self.shouldProcessRippleWithScrollViewGestures &&
-      [otherGestureRecognizer.view isKindOfClass:[UIScrollView class]]) {
+      [otherGestureRecognizer.view isKindOfClass:[UIScrollView class]] &&
+      ![otherGestureRecognizer isKindOfClass:[UITapGestureRecognizer class]] &&
+      ![otherGestureRecognizer isKindOfClass:[UILongPressGestureRecognizer class]]) {
     return YES;
   }
   return NO;
