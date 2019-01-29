@@ -33,7 +33,10 @@ ios_application(
     infoplists = ["MDCCatalog/Info.plist"],
     launch_storyboard = "MDCCatalog/Base.lproj/LaunchScreen.storyboard",
     minimum_os_version = IOS_MINIMUM_OS,
-    deps = [":MDCCatalogLib"],
+    deps = [
+      ":MDCCatalogLib",
+      ":MDCCatalogObjcLib",
+    ],
 )
 
 ios_application(
@@ -50,6 +53,12 @@ ios_application(
     deps = [
         ":MDCDragonsLib",
     ],
+)
+
+mdc_objc_library(
+    name = "MDCCatalogObjcLib",
+    srcs = native.glob(["MDCCatalog/*.h"]),
+    visibility = ["//visibility:private"],
 )
 
 swift_library(
