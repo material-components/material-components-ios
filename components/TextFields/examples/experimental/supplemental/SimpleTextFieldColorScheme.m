@@ -15,7 +15,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "SimpleTextFieldColorSchemeAdapter.h"
+#import "SimpleTextFieldColorScheme.h"
 
 @implementation SimpleTextFieldColorScheme
 @end

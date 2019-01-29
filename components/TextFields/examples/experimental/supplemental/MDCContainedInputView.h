@@ -14,12 +14,13 @@
 
 #import <UIKit/UIKit.h>
 
-#import "SimpleTextFieldLayoutUtils.h"
+//#import "SimpleTextFieldLayoutUtils.h"
 //#import "MaterialColorScheme.h"
 //#import "MaterialContainerScheme.h"
-#import "SimpleTextFieldColorSchemeAdapter.h"
+//#import "SimpleTextFieldColorScheme.h"
 //#import "MDCContainedInputViewState.h"
 
+@protocol SimpleTextFieldColorScheming;
 /**
  MDCInputViewContainerStyle dictates what type of text field it will be from a cosmetic standpoint.
  The values are derived from the styles outlined in the Material Guidelines for Text Fields.
@@ -76,28 +77,28 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewState) {
 @end
 
 
-typedef NS_ENUM(NSUInteger, MDCInputViewContainerStyle) {
-  MDCInputViewContainerStyleNone,
-  MDCInputViewContainerStyleFilled,
-  MDCInputViewContainerStyleOutline,
-};
+//typedef NS_ENUM(NSUInteger, MDCInputViewContainerStyle) {
+//  MDCInputViewContainerStyleNone,
+//  MDCInputViewContainerStyleFilled,
+//  MDCInputViewContainerStyleOutline,
+//};
 
-@interface MDCInputViewContainerStyler : NSObject
+//@interface MDCInputViewContainerStyler : NSObject
+//
+//@property(strong, nonatomic) CAShapeLayer *outlinedSublayer;
+//@property(strong, nonatomic) CAShapeLayer *filledSublayer;
+//@property(strong, nonatomic) CAShapeLayer *filledSublayerUnderline;
+//
+//- (void)applyOutlinedStyle:(BOOL)isOutlined
+//                      view:(UIView *)view
+//  floatingPlaceholderFrame:(CGRect)floatingPlaceholderFrame
+//   topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
+//     isFloatingPlaceholder:(BOOL)isFloatingPlaceholder
+//          outlineLineWidth:(CGFloat)outlineLineWidth;
+//
+//- (void)applyFilledStyle:(BOOL)isFilled
+//                    view:(UIView *)view
+// topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
+//      underlineThickness:(CGFloat)underlineThickness;
 
-@property(strong, nonatomic) CAShapeLayer *outlinedSublayer;
-@property(strong, nonatomic) CAShapeLayer *filledSublayer;
-@property(strong, nonatomic) CAShapeLayer *filledSublayerUnderline;
-
-- (void)applyOutlinedStyle:(BOOL)isOutlined
-                      view:(UIView *)view
-  floatingPlaceholderFrame:(CGRect)floatingPlaceholderFrame
-   topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
-     isFloatingPlaceholder:(BOOL)isFloatingPlaceholder
-          outlineLineWidth:(CGFloat)outlineLineWidth;
-
-- (void)applyFilledStyle:(BOOL)isFilled
-                    view:(UIView *)view
- topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
-      underlineThickness:(CGFloat)underlineThickness;
-
-@end
+//@end

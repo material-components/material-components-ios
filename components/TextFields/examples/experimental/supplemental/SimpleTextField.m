@@ -17,9 +17,9 @@
 #import <MDFInternationalization/MDFInternationalization.h>
 #import "MaterialMath.h"
 
-#import "MDCInputViewContainerStyler.h"
+#import "MDCContainedInputView.h"
 
-#import "SimpleTextFieldColorSchemeAdapter.h"
+#import "SimpleTextFieldColorScheme.h"
 #import "SimpleTextFieldLayout.h"
 #import "SimpleTextFieldLayoutUtils.h"
 
@@ -36,7 +36,6 @@
 
 @property(strong, nonatomic) SimpleTextFieldLayout *layout;
 
-@property(strong, nonatomic) MDCInputViewContainerStyler *containerStyler;
 
 @property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
 
@@ -74,7 +73,6 @@
   [self setUpPlaceholderLabel];
   [self setUpUnderlineLabels];
   [self setUpClearButton];
-  [self setUpStyleLayers];
 }
 
 - (void)dealloc {
@@ -157,7 +155,7 @@
 //}
 
 - (void)setUpUnderlineLabels {
-  CGFloat underlineFontSize = MDCRound([UIFont systemFontSize] * 0.75);
+  CGFloat underlineFontSize = 5;//MDCRound([UIFont systemFontSize] * 0.75);
   UIFont *underlineFont = [UIFont systemFontOfSize:underlineFontSize];
   self.leftUnderlineLabel = [[UILabel alloc] init];
   self.leftUnderlineLabel.font = underlineFont;
@@ -190,11 +188,6 @@
   [self addSubview:self.clearButton];
   self.clearButtonImageView.center = self.clearButton.center;
 }
-
-- (void)setUpStyleLayers {
-  self.containerStyler = [[MDCInputViewContainerStyler alloc] init];
-}
-
 
 - (void)addObservers {
   [[NSNotificationCenter defaultCenter]
@@ -517,7 +510,14 @@
 }
 
 - (CGRect)borderRectForBounds:(CGRect)bounds {
-  if (self.containerStyle == MDCInputViewContainerStyleNone) {
+//  if (self.containerStyle == MDCInputViewContainerStyleNone) {
+//    return [super borderRectForBounds:bounds];
+//  }
+//  return CGRectZero;
+
+  // TODO: Figure out how this method should be implemented
+  // possibly make a MDCContainerStyleNone class
+  if ([self.containerStyle isMemberOfClass:[MDCContainerStyle class]]) {
     return [super borderRectForBounds:bounds];
   }
   return CGRectZero;

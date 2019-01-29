@@ -17,9 +17,9 @@
 #import "SimpleTextFieldLayoutUtils.h"
 
 #import "MaterialColorScheme.h"
-#import "SimpleTextFieldColorSchemeAdapter.h"
+#import "SimpleTextFieldColorScheme.h"
 
-#import "MDCInputViewContainerStyler.h"
+#import "MDCContainedInputView.h"
 
 /**
  A UITextField subclass that attempts to do the following:
@@ -35,7 +35,7 @@
 @interface SimpleTextField : UITextField <MDCContainedInputView>
 
 /**
- Dictates the @c MDCInputViewContainerStyle of the text field.
+ Dictates the @c MDCContainerStyle of the text field.
  */
 @property(nonatomic, strong) MDCContainerStyle *containerStyle;
 

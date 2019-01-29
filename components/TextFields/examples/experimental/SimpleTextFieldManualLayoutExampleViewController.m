@@ -24,6 +24,8 @@
 #import "MaterialAppBar+TypographyThemer.h"
 #import "MaterialButtons+ButtonThemer.h"
 
+#import "SimpleTextField+MaterialTheming.h"
+
 @interface SimpleTextFieldManualLayoutExampleViewController ()
 
 @property(strong, nonatomic) UIScrollView *scrollView;
@@ -34,13 +36,22 @@
 @property(strong, nonatomic) SimpleTextField *outlinedTextField;
 @property(strong, nonatomic) UITextField *uiTextField;
 
-@property(strong, nonatomic) MDCContainerScheme *containerScheme;
-
 @property(nonatomic, assign) BOOL isErrored;
 
 @end
 
 @implementation SimpleTextFieldManualLayoutExampleViewController
+
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+    containerScheme.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    containerScheme.typographyScheme = [[MDCTypographyScheme alloc] init];
+    self.containerScheme = containerScheme;
+  }
+  return self;
+}
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -191,7 +202,7 @@
 
 - (void)addFilledTextField {
   self.filledTextField = [[SimpleTextField alloc] init];
-  self.filledTextField.containerStyle = MDCInputViewContainerStyleFilled;
+  [self.filledTextField applyFilledThemeWithScheme:self.containerScheme];
   self.filledTextField.placeholder = @"This is a placeholder";
   self.filledTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
   self.filledTextField.leadingUnderlineLabel.numberOfLines = 0;
@@ -201,7 +212,7 @@
 
 - (void)addOutlinedTextField {
   self.outlinedTextField = [[SimpleTextField alloc] init];
-  self.outlinedTextField.containerStyle = MDCInputViewContainerStyleOutline;
+  [self.filledTextField applyOutlinedThemeWithScheme:self.containerScheme];
   self.outlinedTextField.placeholder = @"This is another placeholder";
   self.outlinedTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
   [self.scrollView addSubview:self.outlinedTextField];

@@ -72,7 +72,7 @@
 #pragma mark Layout Calculation
 
 - (void)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize
-                          containerStyle:(MDCInputViewContainerStyle)containerStyle
+                          containerStyle:(MDCContainerStyle *)containerStyle
                                     text:(NSString *)text
                              placeholder:(NSString *)placeholder
                                     font:(UIFont *)font
@@ -262,17 +262,14 @@
                                                         rightViewMaxY:rightViewMaxY];
 
   CGFloat topRowBottomRowDividerY = 0;
-  switch (containerStyle) {
-    case MDCInputViewContainerStyleNone:
-      topRowBottomRowDividerY = topRowSubviewMaxY;
-      break;
-    case MDCInputViewContainerStyleFilled:
-    default:
-      topRowBottomRowDividerY = topRowSubviewMaxY + kTopRowBottomRowDividerVerticalPadding;
-      break;
-    case MDCInputViewContainerStyleOutline:
-      topRowBottomRowDividerY = topRowSubviewCenterY * 2;
-      break;
+
+
+  if ([containerStyle isMemberOfClass:[MDCContainerStyleFilled class]]) {
+    topRowBottomRowDividerY = topRowSubviewMaxY + kTopRowBottomRowDividerVerticalPadding;
+  } else if ([containerStyle isMemberOfClass:[MDCContainerStyleOutlined class]]) {
+    topRowBottomRowDividerY = topRowSubviewCenterY * 2;
+  } else {
+    topRowBottomRowDividerY = topRowSubviewMaxY;
   }
 
   CGFloat underlineLabelsCombinedMinY =
@@ -466,23 +463,22 @@
                                     floatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight
                                                textAreaHeight:(CGFloat)textAreaHeight
                                                containerStyle:
-                                                   (MDCInputViewContainerStyle)containerStyle
+                                                   (MDCContainerStyle *)containerStyle
                                           placeholderCanFloat:(BOOL)placeholderCanFloat {
   if (placeholderCanFloat) {
     CGFloat spaceBetweenPlaceholderAndTextArea = 0;
     CGFloat floatingPlaceholderMaxY = floatingPlaceholderMinY + floatingPlaceholderHeight;
     CGFloat outlinedTextFieldSpaceHeuristic = floatingPlaceholderHeight * (CGFloat)0.22;
-    switch (containerStyle) {
-      case MDCInputViewContainerStyleNone:
-      case MDCInputViewContainerStyleFilled:
-      default:
-        spaceBetweenPlaceholderAndTextArea = ((CGFloat)0.25 * floatingPlaceholderMaxY);
-        break;
-      case MDCInputViewContainerStyleOutline:
-        spaceBetweenPlaceholderAndTextArea =
-            floatingPlaceholderMaxY + outlinedTextFieldSpaceHeuristic;
-        break;
+    
+    if ([containerStyle isMemberOfClass:[MDCContainerStyleFilled class]]) {
+      spaceBetweenPlaceholderAndTextArea = ((CGFloat)0.25 * floatingPlaceholderMaxY);
+    } else if ([containerStyle isMemberOfClass:[MDCContainerStyleOutlined class]]) {
+      spaceBetweenPlaceholderAndTextArea =
+      floatingPlaceholderMaxY + outlinedTextFieldSpaceHeuristic;
+    } else {
+
     }
+    
     CGFloat lowestAllowableTextAreaMinY =
         floatingPlaceholderMaxY + spaceBetweenPlaceholderAndTextArea;
     return lowestAllowableTextAreaMinY + ((CGFloat)0.5 * textAreaHeight);
@@ -493,38 +489,33 @@
 }
 
 // so this can be made an object on the style protocol
-- (CGFloat)spaceBetweenFloatingPlaceholderAndTextRect:(MDCInputViewContainerStyle)containerStyle {
-//  switch (containerStyle) {
-//    case MDCInputViewContainerStyleNone:
-//    case MDCInputViewContainerStyleFilled:
-//    default:
-//      spaceBetweenPlaceholderAndTextArea = ((CGFloat)0.25 * floatingPlaceholderMaxY);
-//      break;
-//    case MDCInputViewContainerStyleOutline:
-//      spaceBetweenPlaceholderAndTextArea =
-//      floatingPlaceholderMaxY + outlinedTextFieldSpaceHeuristic;
-//      break;
+//- (CGFloat)spaceBetweenFloatingPlaceholderAndTextRect:(MDCContainerStyle *)containerStyle {
+//  if ([containerStyle isMemberOfClass:[MDCContainerStyleFilled class]]) {
+//    spaceBetweenPlaceholderAndTextArea = ((CGFloat)0.25 * floatingPlaceholderMaxY);
+//  } else if ([containerStyle isMemberOfClass:[MDCContainerStyleOutlined class]]) {
+//    spaceBetweenPlaceholderAndTextArea =
+//    floatingPlaceholderMaxY + outlinedTextFieldSpaceHeuristic;
+//  } else {
+//
 //  }
-  return 5;
-}
+//  return spacebet;
+//}
 
 - (CGFloat)floatingPlaceholderMinYWithFloatingHeight:(CGFloat)floatingPlaceholderHeight
-                                      containerStyle:(MDCInputViewContainerStyle)containerStyle {
+                                      containerStyle:(MDCContainerStyle *)containerStyle {
   if (floatingPlaceholderHeight <= 0) {
     return 0;
   }
   CGFloat filledPlaceholderTopPaddingScaleHeuristic = ((CGFloat)50.0 / (CGFloat)70.0);
   CGFloat floatingPlaceholderMinY = 0;
-  switch (containerStyle) {
-    case MDCInputViewContainerStyleOutline:
-      floatingPlaceholderMinY = (CGFloat)0 - ((CGFloat)0.5 * floatingPlaceholderHeight);
-      break;
-    case MDCInputViewContainerStyleNone:
-    case MDCInputViewContainerStyleFilled:
-    default:
-      floatingPlaceholderMinY =
-          filledPlaceholderTopPaddingScaleHeuristic * floatingPlaceholderHeight;
-      break;
+
+  if ([containerStyle isMemberOfClass:[MDCContainerStyleFilled class]]) {
+    floatingPlaceholderMinY =
+    filledPlaceholderTopPaddingScaleHeuristic * floatingPlaceholderHeight;
+  } else if ([containerStyle isMemberOfClass:[MDCContainerStyleOutlined class]]) {
+    floatingPlaceholderMinY = (CGFloat)0 - ((CGFloat)0.5 * floatingPlaceholderHeight);
+  } else {
+
   }
   return floatingPlaceholderMinY;
 }
@@ -533,7 +524,7 @@
                                   rightView:(UIView *)rightView
                                        font:(UIFont *)font
                                floatingFont:(UIFont *)floatingFont
-                             containerStyle:(MDCInputViewContainerStyle)containerStyle
+                             containerStyle:(MDCContainerStyle *)containerStyle
              lowestAllowableTextAreaCenterY:(CGFloat)lowestAllowableTextAreaCenterY {
   CGFloat sideViewMaxHeight =
       MAX(CGRectGetHeight(leftView.bounds), CGRectGetHeight(rightView.bounds));
@@ -576,7 +567,7 @@
 }
 
 - (CGRect)placeholderFrameWithPlaceholder:(NSString *)placeholder
-                           containerStyle:(MDCInputViewContainerStyle)containerStyle
+                           containerStyle:(MDCContainerStyle *)containerStyle
                          placeholderState:(PlaceholderState)placeholderState
                                      font:(UIFont *)font
                   floatingPlaceholderFont:(UIFont *)floatingPlaceholderFont

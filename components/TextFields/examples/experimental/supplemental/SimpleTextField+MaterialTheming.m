@@ -16,8 +16,10 @@
 
 #import <Foundation/Foundation.h>
 
-#import "SimpleTextFieldColorSchemeAdapter.h"
-#import "MDCInputViewContainerStyler.h"
+#import "SimpleTextFieldColorScheme.h"
+#import "MDCContainedInputView.h"
+
+//#import "MDCSemanticColorScheme.h"
 
 @implementation SimpleTextField (MaterialTheming)
 
@@ -35,6 +37,10 @@
   [self applyThemeWithMDCColorScheming:mdcColorScheme];
 }
 
+- (void)applyThemeWithMDCColorScheming:(id<MDCColorScheming>)mdcColorScheming {
+  
+}
+
 - (void)applyThemeWithMDCTypographyScheming:(id<MDCTypographyScheming>)mdcTypographyScheming {
   self.font = mdcTypographyScheming.subtitle1;
   self.leadingUnderlineLabel.font = mdcTypographyScheming.caption;
@@ -43,7 +49,7 @@
 
 - (void)applyOutlinedThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme {
   MDCContainerStyleOutlined *outlinedStyle = [[MDCContainerStyleOutlined alloc] init];
-  self.containerStyleObject = outlinedStyle;
+  self.containerStyle = outlinedStyle;
   // ^ if you have side effects in this setter then you can just access them and modify them
   
   id<MDCColorScheming> mdcColorScheming = scheme.colorScheme ?: [[MDCSemanticColorScheme alloc] init];
@@ -75,7 +81,7 @@
 
 - (void)applyFilledThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme {
   MDCContainerStyleFilled *filledStyle = [[MDCContainerStyleFilled alloc] init];
-  self.containerStyleObject = filledStyle;
+  self.containerStyle = filledStyle;
   // ^ if you have side effects in this setter then you can just access them and modify them
   
   id<MDCColorScheming> mdcColorScheming = scheme.colorScheme ?: [[MDCSemanticColorScheme alloc] init];

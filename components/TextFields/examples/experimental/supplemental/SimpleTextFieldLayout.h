@@ -17,7 +17,7 @@
 
 #import "SimpleTextFieldLayoutUtils.h"
 
-#import "MDCInputViewContainerStyler.h"
+#import "MDCContainedInputView.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
