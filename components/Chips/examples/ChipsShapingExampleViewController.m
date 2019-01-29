@@ -17,8 +17,8 @@
 #import "MaterialChips+Theming.h"
 #import "MaterialChips.h"
 #import "MaterialContainerScheme.h"
-#import "MaterialShapeLibrary.h"
-#import "MaterialShapes.h"
+#import "MaterialShapeLibraryNew.h"
+#import "MaterialShapesNew.h"
 #import "MaterialSlider+ColorThemer.h"
 #import "MaterialSlider.h"
 

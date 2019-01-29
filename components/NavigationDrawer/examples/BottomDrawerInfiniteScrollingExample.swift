@@ -66,8 +66,10 @@ class BottomDrawerInfiniteScrollingExample: UIViewController {
     let bottomDrawerViewController = MDCBottomDrawerViewController()
     bottomDrawerViewController.contentViewController = contentViewController
     contentViewController.drawerVC = bottomDrawerViewController
+    bottomDrawerViewController.setTopCornersRadius(12, for: .collapsed)
     bottomDrawerViewController.headerViewController = headerViewController
     bottomDrawerViewController.trackingScrollView = contentViewController.tableView
+    bottomDrawerViewController.isTopHandleHidden = false
     MDCBottomDrawerColorThemer.applySemanticColorScheme(colorScheme,
                                                         toBottomDrawer: bottomDrawerViewController)
     present(bottomDrawerViewController, animated: true, completion: nil)
@@ -86,6 +88,10 @@ class DrawerContentTableViewController: UITableViewController {
       super.preferredContentSize = newValue
     }
   }
+
+  var supportScrollToTop = true
+
+  var numberOfRows = 10
 
   init() {
     super.init(nibName: nil, bundle: nil)
@@ -109,6 +115,9 @@ class DrawerContentTableViewController: UITableViewController {
   }
 
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    if (supportScrollToTop == false) {
+      return numberOfRows
+    }
     return 100
   }
 
@@ -118,7 +127,17 @@ class DrawerContentTableViewController: UITableViewController {
 
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
-    drawerVC.setContentOffsetY(0, animated: false)
+    if (supportScrollToTop == false) {
+      toggleNumberOfRows()
+      tableView.reloadData()
+      self.preferredContentSize = tableView.contentSize
+    } else {
+      drawerVC.setContentOffsetY(0, animated: false)
+    }
+  }
+
+  private func toggleNumberOfRows() {
+    numberOfRows = (numberOfRows == 10) ? 14 : 10
   }
 
 }

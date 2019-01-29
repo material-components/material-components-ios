@@ -40,12 +40,14 @@ fix_bazel_imports() {
   echo "Rewriting imports for bazel..."
 
   private_components() {
-    find "components/private" -type d | cut -d'/' -f3 | sort | uniq
+    # remove the -not -path addition once shapes migration has finished. GitHub issue #6494.
+    find "components/private" -type d -not -path "components/private/Shape*" | cut -d'/' -f3 | sort | uniq
   }
   
   rewrite_tests() {
     find "${stashed_dir}"components/private/*/tests/unit -type f -name '*.swift' -exec perl -pi -e "$1" {} + || true
     find "${stashed_dir}"components/*/tests/unit -type f -name '*.swift' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/*/tests/unit -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
   }
   rewrite_examples() {
     find "${stashed_dir}"components/private/*/examples -type f -name '*.swift' -exec perl -pi -e "$1" {} + || true
@@ -71,6 +73,7 @@ fix_bazel_imports() {
 
   stashed_dir=""
   rewrite_tests "s/import MaterialComponents.Material(.+)_(.+)/import components_\1_\2/"
+  rewrite_tests "s/import MaterialComponentsBeta.Material(.+)Beta/import components_\1_\1Beta \/\/ BetaSplit/"
   rewrite_tests "s/import MaterialComponentsBeta.Material(.+)Scheme/import components_schemes_\1_\1 \/\/ Beta/"
   rewrite_tests "s/import MaterialComponents.Material(.+)Scheme/import components_schemes_\1_\1/"
   rewrite_catalogs "s/import MaterialCatalog/import catalog_MaterialCatalog/"
@@ -79,6 +82,7 @@ fix_bazel_imports() {
   rewrite_catalogs "s/import MaterialComponentsBeta.Material(.+)Scheme/import components_schemes_\1_\1 \/\/ Beta/"
   rewrite_catalogs "s/import MaterialComponents.Material(.+)Scheme/import components_schemes_\1_\1/"
   rewrite_examples "s/import MaterialComponents.Material(.+)_(.+)/import components_\1_\2/"
+  rewrite_examples "s/import MaterialComponentsBeta.Material(.+)Beta/import components_\1_\1Beta \/\/ BetaSplit/"
   rewrite_examples "s/import MaterialComponentsBeta.Material(.+)Scheme/import components_schemes_\1_\1 \/\/ Beta/"
   rewrite_examples "s/import MaterialComponents.Material(.+)Scheme/import components_schemes_\1_\1/"
   private_components | while read private_component; do
@@ -107,6 +111,7 @@ fix_bazel_imports() {
   rewrite_source "s/import <MDFTextAccessibility\/MDFTextAccessibility\.h>/import \"MDFTextAccessibility.h\"/"
   rewrite_source "s/import <MaterialComponents\/Material(.+)\.h>/import\/\*Material prefix framework import\*\/ \"Material\1.h\"/"
   rewrite_source "s/import <MaterialComponents\/MDC(.+)\.h>/import\/\*MDC prefix framework import\*\/ \"MDC\1.h\"/"
+  rewrite_tests "s/import <MaterialComponentsBeta\/Material(.+)Beta\.h>/import\/\*Material beta prefix framework import\*\/ \"Material\1Beta.h\"/"
   rewrite_tests "s/import MDFTextAccessibility/import material_text_accessibility_ios_MDFTextAccessibility/"
   rewrite_tests "s/import MDFInternationalization/import material_internationalization_ios_MDFInternationalization/"
   stashed_dir="$(pwd)/"
@@ -114,11 +119,13 @@ fix_bazel_imports() {
     echo "Undoing import rewrites for bazel..."
 
     # Undoes our source changes from above.
+    rewrite_tests "s/import\/\*Material beta prefix framework import\*\/ \"Material(.+).h\"/import <MaterialComponentsBeta\/Material\1\.h>/"
     rewrite_tests "s/import components_(.+)_\1 \/\/ Beta/import MaterialComponentsBeta.Material\1/"
     rewrite_tests "s/import components_schemes_(.+)_.+ \/\/ Beta/import MaterialComponentsBeta.Material\1Scheme/"
     rewrite_tests "s/import components_schemes_(.+)_.+/import MaterialComponents.Material\1Scheme/"
     rewrite_tests "s/import components_private_(.+)_.+/import MaterialComponents.Material\1/"
     rewrite_tests "s/import components_(.+)_\1/import MaterialComponents.Material\1/"
+    rewrite_tests "s/import components_(.+)_\1Beta \/\/ BetaSplit/import MaterialComponentsBeta.Material\1Beta/"
     rewrite_tests "s/import components_(.+)_(.+) \/\/ Beta/import MaterialComponentsBeta.Material\1_\2/"
     rewrite_tests "s/import components_(.+)_(.+)/import MaterialComponents.Material\1_\2/"
     rewrite_catalogs "s/import\/\*Material prefix framework import\*\/ \"CatalogByConvention\.h\"/import <CatalogByConvention\/CatalogByConvention\.h>/"
@@ -187,6 +194,18 @@ upload_bazel_test_artifacts() {
   find -L . -name "sponge_log.xml" -type f | copy_to_artifacts
 }
 
+# Upgrades kokoro's current bazel version to at least 0.20.0
+upgrade_kokoro_bazel_if_needed() {
+  bazel version
+
+  if [ -f "$KOKORO_GFILE_DIR/use_bazel.sh" ]; then
+    bash "$KOKORO_GFILE_DIR/use_bazel.sh" 0.20.0
+  else
+    use_bazel.sh 0.20.0
+  fi
+  bazel version
+}
+
 run_bazel_affected() {
   echo "Checking affected targets..."
   if [ -z "$COMMAND" ]; then
@@ -219,9 +238,7 @@ run_bazel_affected() {
     # We must upgrade bazel prior to running bazel query because we rely on features in bazel
     # 0.20.
     if [ -n "$KOKORO_BUILD_NUMBER" ]; then
-      bazel version
-      use_bazel.sh 0.20.0
-      bazel version
+      upgrade_kokoro_bazel_if_needed
     fi
     
     # Output the affected targets to the logs. This also gives the affected_targets script the
@@ -278,9 +295,7 @@ run_bazel() {
   fi
 
   if [ -n "$KOKORO_BUILD_NUMBER" ]; then
-    bazel version
-    use_bazel.sh 0.20.0
-    bazel version
+    upgrade_kokoro_bazel_if_needed
   fi
 
   if [ -n "$VERBOSE_OUTPUT" ]; then

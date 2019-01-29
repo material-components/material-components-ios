@@ -15,12 +15,16 @@
 import UIKit
 
 import MaterialComponents.MaterialButtons
+import MaterialComponentsBeta.MaterialButtons_Theming
+import MaterialComponentsBeta.MaterialContainerScheme
 
 class FloatingButtonExampleSwiftViewController: UIViewController {
 
   let miniFloatingButton = MDCFloatingButton(frame: .zero, shape: .mini)
   let defaultFloatingButton = MDCFloatingButton()
   let largeIconFloatingButton = MDCFloatingButton()
+
+  var containerScheme = MDCContainerScheme()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -36,11 +40,13 @@ class FloatingButtonExampleSwiftViewController: UIViewController {
     miniFloatingButton.setMinimumSize(CGSize(width: 96, height: 40), for: .mini, in: .expanded)
     miniFloatingButton.setImage(plusImage, for: .normal)
     miniFloatingButton.accessibilityLabel = "Create"
+    miniFloatingButton.applySecondaryTheme(withScheme: containerScheme)
 
     defaultFloatingButton.sizeToFit()
     defaultFloatingButton.translatesAutoresizingMaskIntoConstraints = false
     defaultFloatingButton.setImage(plusImage, for: .normal)
     defaultFloatingButton.accessibilityLabel = "Create"
+    defaultFloatingButton.applySecondaryTheme(withScheme: containerScheme)
 
     largeIconFloatingButton.sizeToFit()
     largeIconFloatingButton.translatesAutoresizingMaskIntoConstraints = false
@@ -48,6 +54,7 @@ class FloatingButtonExampleSwiftViewController: UIViewController {
     largeIconFloatingButton.accessibilityLabel = "Create"
     largeIconFloatingButton.setContentEdgeInsets(UIEdgeInsetsMake(-6, -6, -6, 0), for: .default,
                                                  in: .expanded)
+    largeIconFloatingButton.applySecondaryTheme(withScheme: containerScheme)
 
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
