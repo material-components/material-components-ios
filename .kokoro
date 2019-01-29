@@ -192,7 +192,7 @@ upgrade_kokoro_bazel_if_needed() {
   bazel version
 
   if [ -f "$KOKORO_GFILE_DIR/use_bazel.sh" ]; then
-    "$KOKORO_GFILE_DIR/use_bazel.sh" 0.20.0
+    bash "$KOKORO_GFILE_DIR/use_bazel.sh" 0.20.0
   else
     use_bazel.sh 0.20.0
   fi
