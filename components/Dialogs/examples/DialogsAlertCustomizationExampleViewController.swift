@@ -27,8 +27,7 @@ import MaterialComponents.MaterialPalettes
 
 class DialogsAlertCustomizationExampleViewController: MDCCollectionViewController {
 
-  var containerScheme: MDCContainerScheme = MDCContainerScheme()
-  var colorScheme = MDCSemanticColorScheme()
+  var containerScheme: MDCContainerScheming = MDCContainerScheme()
 
   let kReusableIdentifierItem = "customCell"
 
@@ -41,8 +40,8 @@ class DialogsAlertCustomizationExampleViewController: MDCCollectionViewControlle
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor =
-        containerScheme.colorScheme?.backgroundColor ?? MDCSemanticColorScheme().backgroundColor
+    view.backgroundColor = containerScheme.colorScheme?.backgroundColor ??
+        MDCSemanticColorScheme(defaults: .material201804).backgroundColor
 
     loadCollectionView(menu: [
       "Centered Title",
@@ -216,9 +215,12 @@ class DialogsAlertCustomizationExampleViewController: MDCCollectionViewControlle
     alert.addAction(MDCAlertAction(title:"Medium", emphasis: .medium, handler: handler))
     alert.addAction(MDCAlertAction(title:"Low", emphasis: .low, handler: handler))
 
-    colorScheme.primaryColor = .blue
-    containerScheme.colorScheme = colorScheme
-    alert.applyTheme(withScheme: containerScheme)
+    let container: MDCContainerScheme =
+        containerScheme as? MDCContainerScheme ?? MDCContainerScheme()
+    let containerCopy: MDCContainerScheme = container.copy() as! MDCContainerScheme
+    containerCopy.colorScheme =
+        containerCopy.colorScheme ?? MDCSemanticColorScheme(defaults: .material201804)
+    alert.applyTheme(withScheme: containerCopy)
     return alert
   }
 

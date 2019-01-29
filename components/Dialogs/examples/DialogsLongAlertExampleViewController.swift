@@ -23,17 +23,13 @@ import MaterialComponentsBeta.MaterialDialogs_Theming
 class DialogsLongAlertExampleViewController: UIViewController {
 
   let textButton = MDCButton()
-  lazy var containerScheme: MDCContainerScheme = {
-    let scheme = MDCContainerScheme()
-    scheme.colorScheme = MDCSemanticColorScheme(defaults: .material201804)
-    scheme.typographyScheme = MDCTypographyScheme(defaults: .material201804)
-    return scheme
-  }()
+  var containerScheme: MDCContainerScheming = MDCContainerScheme()
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor = containerScheme.colorScheme?.backgroundColor
+    view.backgroundColor = containerScheme.colorScheme?.backgroundColor ??
+        MDCSemanticColorScheme(defaults: .material201804).backgroundColor
 
     textButton.setTitle("PRESENT ALERT", for: UIControlState())
     textButton.setTitleColor(UIColor(white: 0.1, alpha:1), for: UIControlState())

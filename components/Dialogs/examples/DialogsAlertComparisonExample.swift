@@ -29,13 +29,13 @@ class DialogsAlertComparisonExample: UIViewController {
   private let materialButton = MDCButton()
   private let themedButton = MDCButton()
   private let uikitButton = MDCButton()
-  var containerScheme = MDCContainerScheme()
+  var containerScheme: MDCContainerScheming = MDCContainerScheme()
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor =
-        containerScheme.colorScheme?.backgroundColor ?? MDCSemanticColorScheme().backgroundColor
+    view.backgroundColor = containerScheme.colorScheme?.backgroundColor ??
+        MDCSemanticColorScheme(defaults: .material201804).backgroundColor
 
     materialButton.translatesAutoresizingMaskIntoConstraints = false
     materialButton.setTitle("Material Alert", for: .normal)
