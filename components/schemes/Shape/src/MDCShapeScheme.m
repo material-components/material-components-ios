@@ -56,7 +56,9 @@
   }
 
   MDCShapeScheme *otherShapeScheme = (MDCShapeScheme *)other;
-  return [self.smallComponentShape isEqual:otherShapeScheme.smallComponentShape] && [self.mediumComponentShape isEqual:otherShapeScheme.mediumComponentShape] && [self.largeComponentShape isEqual:otherShapeScheme.largeComponentShape];
+  return [self.smallComponentShape isEqual:otherShapeScheme.smallComponentShape] &&
+         [self.mediumComponentShape isEqual:otherShapeScheme.mediumComponentShape] &&
+         [self.largeComponentShape isEqual:otherShapeScheme.largeComponentShape];
 }
 
 - (NSUInteger)hash {
