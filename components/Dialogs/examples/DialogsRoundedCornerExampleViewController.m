@@ -13,10 +13,10 @@
 // limitations under the License.
 
 #import "DialogsRoundedCornerExampleViewController.h"
-#import "MaterialButtons.h"
 #import "MaterialButtons+Theming.h"
-#import "MaterialDialogs.h"
+#import "MaterialButtons.h"
 #import "MaterialDialogs+Theming.h"
+#import "MaterialDialogs.h"
 
 @interface DialogsRoundedCornerSimpleController : UIViewController
 
@@ -47,8 +47,8 @@
       UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin |
       UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
   [self.dismissButton addTarget:self
-                     action:@selector(dismiss:)
-           forControlEvents:UIControlEventTouchUpInside];
+                         action:@selector(dismiss:)
+               forControlEvents:UIControlEventTouchUpInside];
   [self.dismissButton applyTextThemeWithScheme:self.containerScheme];
   [self.view addSubview:self.dismissButton];
 }
@@ -104,8 +104,8 @@
       UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin |
       UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
   [self.presentButton addTarget:self
-                     action:@selector(didTapPresent:)
-           forControlEvents:UIControlEventTouchUpInside];
+                         action:@selector(didTapPresent:)
+               forControlEvents:UIControlEventTouchUpInside];
   [self.presentButton applyTextThemeWithScheme:self.containerScheme];
   [self.view addSubview:self.presentButton];
 }

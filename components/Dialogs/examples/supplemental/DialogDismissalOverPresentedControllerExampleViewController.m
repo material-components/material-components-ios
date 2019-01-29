@@ -19,11 +19,11 @@
 
 #import "DialogDismissalOverPresentedControllerExampleViewController.h"
 
-#import "MaterialButtons.h"
 #import "MaterialButtons+Theming.h"
+#import "MaterialButtons.h"
 #import "MaterialContainerScheme.h"
-#import "MaterialDialogs.h"
 #import "MaterialDialogs+Theming.h"
+#import "MaterialDialogs.h"
 
 #pragma mark - Helper View Controller
 
@@ -181,8 +181,8 @@
   [self.presentButton setTitle:@"Present View Controller" forState:UIControlStateNormal];
   self.presentButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.presentButton addTarget:self
-                     action:@selector(presentController:)
-           forControlEvents:UIControlEventTouchUpInside];
+                         action:@selector(presentController:)
+               forControlEvents:UIControlEventTouchUpInside];
   [self.presentButton applyTextThemeWithScheme:self.containerScheme];
   [self.view addSubview:self.presentButton];
 

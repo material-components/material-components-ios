@@ -19,8 +19,8 @@
 
 #import "DialogWithPreferredContentSizeExampleViewController.h"
 
-#import "MaterialButtons.h"
 #import "MaterialButtons+Theming.h"
+#import "MaterialButtons.h"
 #import "MaterialColorScheme.h"
 #import "MaterialTypographyScheme.h"
 

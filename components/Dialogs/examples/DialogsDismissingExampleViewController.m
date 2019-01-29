@@ -15,8 +15,8 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialApplication.h"
-#import "MaterialButtons.h"
 #import "MaterialButtons+Theming.h"
+#import "MaterialButtons.h"
 #import "MaterialCollections.h"
 #import "MaterialColorScheme.h"
 #import "MaterialDialogs+Theming.h"
@@ -201,8 +201,8 @@ static NSString *const kReusableIdentifierItem = @"cell";
       UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin |
       UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
   [self.dismissButton addTarget:self
-                     action:@selector(dismiss:)
-           forControlEvents:UIControlEventTouchUpInside];
+                         action:@selector(dismiss:)
+               forControlEvents:UIControlEventTouchUpInside];
   [self.dismissButton applyTextThemeWithScheme:self.containerScheme];
 
   [self.view addSubview:self.dismissButton];
@@ -256,8 +256,8 @@ static NSString *const kReusableIdentifierItem = @"cell";
       UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin |
       UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
   [self.dismissButton addTarget:self
-                     action:@selector(dismiss:)
-           forControlEvents:UIControlEventTouchUpInside];
+                         action:@selector(dismiss:)
+               forControlEvents:UIControlEventTouchUpInside];
   [self.dismissButton applyTextThemeWithScheme:self.containerScheme];
   [self.view addSubview:self.dismissButton];
 }
