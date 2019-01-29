@@ -141,13 +141,13 @@ swift_library(
             "examples/*.swift",
             "examples/supplemental/*.swift",
         ],
-        exclude = ["examples/BottomNavigationBarControllerExampleViewController.swift"],
     ),
     copts = [
         "-swift-version",
         "3",
     ],
     deps = [
+        ":BottomNavigationBeta",
         ":BottomNavigation",
         ":ColorThemer",
         ":ObjcExamples",

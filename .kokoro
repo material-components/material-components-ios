@@ -141,6 +141,7 @@ fix_bazel_imports() {
     rewrite_catalogs "s/import catalog_by_convention_CatalogByConvention/import CatalogByConvention/"
     rewrite_catalogs "s/import material_internationalization_ios_MDFInternationalization/import MDFInternationalization/"
     rewrite_catalogs "s/import material_text_accessibility_ios_MDFTextAccessibility/import MDFTextAccessibility/"
+    rewrite_examples "s/import components_(.+)_\1Beta \/\/ BetaSplit/import MaterialComponentsBeta.Material\1Beta/"
     rewrite_examples "s/import components_(.+)_\1 \/\/ Beta/import MaterialComponentsBeta.Material\1/"
     rewrite_examples "s/import components_schemes_(.+)_.+ \/\/ Beta/import MaterialComponentsBeta.Material\1Scheme/"
     rewrite_examples "s/import components_schemes_(.+)_.+/import MaterialComponents.Material\1Scheme/"
