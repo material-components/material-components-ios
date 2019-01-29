@@ -23,7 +23,7 @@ class MDCCatalogCollectionViewCell: UICollectionViewCell {
     static let padding: CGFloat = 16
   }
 
-  private let label: UILabel
+  private let label = UILabel()
   private lazy var tile = MDCCatalogTileView(frame: CGRect.zero)
 
   deinit {
@@ -33,8 +33,6 @@ class MDCCatalogCollectionViewCell: UICollectionViewCell {
   }
 
   override init(frame: CGRect) {
-    label = UILabel()
-
     super.init(frame: frame)
     contentView.addSubview(label)
     contentView.clipsToBounds = true
@@ -53,8 +51,6 @@ class MDCCatalogCollectionViewCell: UICollectionViewCell {
 
   @available(*, unavailable)
   required init(coder: NSCoder) {
-    label = UILabel()
-
     super.init(coder: coder)!
   }
 
