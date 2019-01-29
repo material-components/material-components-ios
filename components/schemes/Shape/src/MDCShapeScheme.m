@@ -37,4 +37,31 @@
   return self;
 }
 
+- (nonnull id)copyWithZone:(nullable NSZone *)zone {
+  MDCShapeScheme *copy =
+      [[MDCShapeScheme alloc] initWithDefaults:MDCShapeSchemeDefaultsMaterial201809];
+  copy.smallComponentShape = self.smallComponentShape;
+  copy.mediumComponentShape = self.mediumComponentShape;
+  copy.largeComponentShape = self.largeComponentShape;
+  return copy;
+}
+
+- (BOOL)isEqual:(id)other {
+  if (other == self) {
+    return YES;
+  }
+
+  if (!other || ![[other class] isEqual:[self class]]) {
+    return NO;
+  }
+
+  MDCShapeScheme *otherShapeScheme = (MDCShapeScheme *)other;
+  return [self.smallComponentShape isEqual:otherShapeScheme.smallComponentShape] && [self.mediumComponentShape isEqual:otherShapeScheme.mediumComponentShape] && [self.largeComponentShape isEqual:otherShapeScheme.largeComponentShape];
+}
+
+- (NSUInteger)hash {
+  return (self.smallComponentShape.hash ^ self.mediumComponentShape.hash ^
+          self.largeComponentShape.hash);
+}
+
 @end
