@@ -67,6 +67,7 @@ swift_library(
         "//components/AppBar:TypographyThemer",
         "//components/BottomSheet",
         "//components/Buttons",
+        "//components/Buttons:ButtonThemer",
         "//components/Buttons:Theming",
         "//components/Collections",
         "//components/Dialogs",
