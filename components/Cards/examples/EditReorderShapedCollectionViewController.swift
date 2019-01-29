@@ -40,10 +40,10 @@ class EditReorderShapedCollectionViewController: UIViewController,
   UICollectionViewDataSource,
   UICollectionViewDelegateFlowLayout {
 
-  var containerScheming: MDCContainerScheming
+  var containerScheme: MDCContainerScheming
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-    containerScheming = MDCContainerScheme()
+    containerScheme = MDCContainerScheme()
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
 
@@ -135,7 +135,7 @@ class EditReorderShapedCollectionViewController: UIViewController,
                       cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell",
                                                   for: indexPath) as! MDCCardCollectionCell
-    cell.applyTheme(withScheme: containerScheming)
+    cell.applyTheme(withScheme: containerScheme)
     cell.backgroundColor = .white
     cell.isSelectable = (toggle == .edit)
     return cell

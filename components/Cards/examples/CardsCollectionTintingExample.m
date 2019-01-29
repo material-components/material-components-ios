@@ -34,7 +34,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   defaultLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
   self = [super initWithCollectionViewLayout:defaultLayout];
   if (self) {
-    self.containerScheming = [[MDCContainerScheme alloc] init];
+    self.containerScheme = [[MDCContainerScheme alloc] init];
   }
   return self;
 }
@@ -76,7 +76,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   CardTintExampleCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
                                                 forIndexPath:indexPath];
-  [cell applyThemeWithScheme:self.containerScheming];
+  [cell applyThemeWithScheme:self.containerScheme];
   [cell setTintColor:[UIColor redColor]];
   [cell setNeedsDisplay];
   return cell;

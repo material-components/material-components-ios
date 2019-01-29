@@ -23,10 +23,10 @@ class CardExampleViewController: UIViewController {
   @IBOutlet weak var card: MDCCard!
   @IBOutlet weak var button: MDCButton!
 
-  var containerScheming: MDCContainerScheming
+  var containerScheme: MDCContainerScheming
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-    containerScheming = MDCContainerScheme()
+    containerScheme = MDCContainerScheme()
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
 
@@ -43,8 +43,8 @@ class CardExampleViewController: UIViewController {
     bundle.loadNibNamed("CardExampleViewController", owner: self, options: nil)
     view.frame = self.view.bounds
 
-    button.applyTextTheme(withScheme: containerScheming)
-    card.applyTheme(withScheme: containerScheming)
+    button.applyTextTheme(withScheme: containerScheme)
+    card.applyTheme(withScheme: containerScheme)
     card.isInteractable = false
 
     imageView.isAccessibilityElement = true

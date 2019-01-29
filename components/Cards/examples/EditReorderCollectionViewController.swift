@@ -31,18 +31,18 @@ class EditReorderCollectionViewController: UIViewController,
                                         collectionViewLayout: UICollectionViewFlowLayout())
   var toggle = ToggleMode.edit
 
-  var containerScheming: MDCContainerScheming
+  var containerScheme: MDCContainerScheming
 
   var colorScheming: MDCColorScheming {
-    return containerScheming.colorScheme ?? MDCSemanticColorScheme()
+    return containerScheme.colorScheme ?? MDCSemanticColorScheme()
   }
 
   var typographyScheming: MDCTypographyScheming {
-    return containerScheming.typographyScheme ?? MDCTypographyScheme()
+    return containerScheme.typographyScheme ?? MDCTypographyScheme()
   }
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-    containerScheming = MDCContainerScheme()
+    containerScheme = MDCContainerScheme()
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
 
@@ -149,7 +149,7 @@ class EditReorderCollectionViewController: UIViewController,
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
     guard let cardCell = cell as? CardEditReorderCollectionCell else { return cell }
 
-    cardCell.apply(containerScheme: containerScheming, typographyScheme: typographyScheming)
+    cardCell.apply(containerScheme: containerScheme, typographyScheme: typographyScheming)
 
     let title = dataSource[indexPath.item].title
     let imageName = dataSource[indexPath.item].image
