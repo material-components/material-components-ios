@@ -15,61 +15,57 @@
 #import "ActionSheetTypicalUseExampleViewController.h"
 
 #import "MaterialActionSheet+Theming.h"
-#import "MaterialButtons+ButtonThemer.h"
+#import "MaterialActionSheet.h"
+#import "MaterialButtons+Theming.h"
 #import "MaterialButtons.h"
+#import "MaterialColorScheme.h"
+#import "MaterialContainerScheme.h"
+#import "MaterialTypographyScheme.h"
 
 @interface ActionSheetTypicalUseExampleViewController ()
 
 @property(nonatomic, strong) MDCButton *showButton;
-@property(nonatomic, strong) MDCContainerScheme *containerScheme;
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 
 @end
 
-@implementation ActionSheetTypicalUseExampleViewController {
-  MDCButtonScheme *_buttonScheme;
-}
+@implementation ActionSheetTypicalUseExampleViewController
 
 - (instancetype)init {
   self = [super init];
   if (self) {
     self.title = @"Action Sheet";
-    _colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-    _typographyScheme = [[MDCTypographyScheme alloc] init];
+    _containerScheme = [[MDCContainerScheme alloc] init];
     _showButton = [[MDCButton alloc] init];
-    _buttonScheme = [[MDCButtonScheme alloc] init];
   }
   return self;
-}
-
-- (MDCContainerScheme *)containerScheme {
-  if (!_containerScheme) {
-    _containerScheme = [[MDCContainerScheme alloc] init];
-  }
-  _containerScheme.colorScheme = self.colorScheme;
-  _containerScheme.typographyScheme = self.typographyScheme;
-  return _containerScheme;
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.view.backgroundColor = _colorScheme.backgroundColor;
-  [_showButton setTitle:@"Show action sheet" forState:UIControlStateNormal];
-  [_showButton sizeToFit];
-  _buttonScheme.colorScheme = _colorScheme;
-  _buttonScheme.typographyScheme = _typographyScheme;
-  [MDCContainedButtonThemer applyScheme:_buttonScheme toButton:_showButton];
-  [_showButton addTarget:self
-                  action:@selector(showActionSheet)
-        forControlEvents:UIControlEventTouchUpInside];
-  [self.view addSubview:_showButton];
+  id<MDCColorScheming> colorScheme;
+  if (self.containerScheme.colorScheme != nil) {
+    colorScheme = self.containerScheme.colorScheme;
+  } else {
+    colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  }
+
+  self.view.backgroundColor = colorScheme.backgroundColor;
+  [self.showButton setTitle:@"Show action sheet" forState:UIControlStateNormal];
+  [self.showButton sizeToFit];
+  [self.showButton applyContainedThemeWithScheme:self.containerScheme];
+  [self.showButton addTarget:self
+                      action:@selector(showActionSheet)
+            forControlEvents:UIControlEventTouchUpInside];
+  [self.view addSubview:self.showButton];
 }
 
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
 
-  _showButton.center = CGPointMake(self.view.center.x, self.view.center.y - 80);
+  self.showButton.center = CGPointMake(self.view.center.x, self.view.center.y - 80);
 }
 
 - (void)showActionSheet {
