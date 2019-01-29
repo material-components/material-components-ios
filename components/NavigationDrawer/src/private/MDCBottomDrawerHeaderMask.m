@@ -50,7 +50,6 @@
   } else if (percentage > 1) {
     return minimumCornerRadius;
   }
-  NSLog(@"%f", percentage);
   return ((maximumCornerRadius - minimumCornerRadius) * percentage) + minimumCornerRadius;
 }
 
