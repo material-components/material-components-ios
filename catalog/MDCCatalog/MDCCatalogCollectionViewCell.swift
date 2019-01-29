@@ -23,26 +23,38 @@ class MDCCatalogCollectionViewCell: UICollectionViewCell {
     static let padding: CGFloat = 16
   }
 
-  private lazy var label: UILabel = {
-    let label = UILabel()
-    label.textColor = AppTheme.defaultTheme.colorScheme.primaryColor
-    label.font = MDCTypography.buttonFont()
-
-    return label
-  }()
+  private let label: UILabel
   private lazy var tile = MDCCatalogTileView(frame: CGRect.zero)
 
+  deinit {
+    NotificationCenter.default.removeObserver(self,
+                                              name: AppTheme.didChangeGlobalThemeNotificationName,
+                                              object: nil)
+  }
+
   override init(frame: CGRect) {
+    label = UILabel()
+
     super.init(frame: frame)
     contentView.addSubview(label)
     contentView.clipsToBounds = true
     contentView.addSubview(tile)
     self.isAccessibilityElement = true
     self.accessibilityTraits |= UIAccessibilityTraitButton
+
+    updateTheme()
+
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(self.themeDidChange),
+      name: AppTheme.didChangeGlobalThemeNotificationName,
+      object: nil)
   }
 
   @available(*, unavailable)
   required init(coder: NSCoder) {
+    label = UILabel()
+
     super.init(coder: coder)!
   }
 
@@ -70,6 +82,15 @@ class MDCCatalogCollectionViewCell: UICollectionViewCell {
   override func prepareForReuse() {
     super.prepareForReuse()
     label.text = ""
+  }
+
+  func updateTheme() {
+    label.font = AppTheme.globalTheme.typographyScheme.button
+    label.textColor = AppTheme.globalTheme.colorScheme.primaryColor
+  }
+
+  func themeDidChange(notification: NSNotification) {
+    updateTheme()
   }
 
   func populateView(_ componentName: String) {
