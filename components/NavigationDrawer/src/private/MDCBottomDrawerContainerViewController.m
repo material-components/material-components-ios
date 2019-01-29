@@ -840,7 +840,7 @@ static UIColor *DrawerShadowColor(void) {
 }
 
 - (CGFloat)headerAnimationDistance {
-  CGFloat headerAnimationDistance = MIN(kHeaderAnimationDistanceAddedDistanceFromTopSafeAreaInset, self.contentHeightSurplus);
+  CGFloat headerAnimationDistance = kHeaderAnimationDistanceAddedDistanceFromTopSafeAreaInset;
   if (self.contentReachesFullscreen) {
     headerAnimationDistance += MDCDeviceTopSafeAreaInset();
   }
