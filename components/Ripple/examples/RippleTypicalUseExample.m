@@ -45,7 +45,6 @@
     MDCRippleTouchController *rippleTouchController =
         [[MDCRippleTouchController alloc] initWithView:view];
     rippleTouchController.delegate = self;
-    rippleTouchController.allowsSelection = YES;
     [_rippleTouchControllers addObject:rippleTouchController];
   }
   [containerView addSubview:self.surfaces];

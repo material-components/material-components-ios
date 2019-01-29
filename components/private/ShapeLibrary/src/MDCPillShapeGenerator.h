@@ -12,13 +12,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <Foundation/Foundation.h>
-
-#import "MaterialShapes.h"
-
-/**
- A pill shape generator. Rounds the corners such that the shorter sides of the generated shape are
- entirely rounded.
- */
-@interface MDCPillShapeGenerator : NSObject <MDCShapeGenerating>
-@end
+#import "MDCPillShapeGeneratorNew.h"
