@@ -24,6 +24,7 @@ import MaterialComponents.MaterialButtons_ButtonThemer
 import MaterialComponents.MaterialCollections
 import MaterialComponents.MaterialTypography
 import MaterialComponents.MaterialFlexibleHeader_ColorThemer
+import MaterialComponentsBeta.MaterialButtons_Theming
 
 class NodeViewTableViewDemoCell: UITableViewCell {
 
