@@ -29,6 +29,7 @@
     _gestureRecognizer.cancelsTouchesInView = NO;
     _gestureRecognizer.delaysTouchesEnded = NO;
 
+    _shouldProcessRippleWithScrollViewGestures = YES;
     _view = view;
     [_view addGestureRecognizer:_gestureRecognizer];
 
@@ -78,6 +79,14 @@
       [self.rippleView cancelAllRipplesAnimated:YES completion:nil];
       break;
   }
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+  if (!self.shouldProcessRippleWithScrollViewGestures &&
+      [otherGestureRecognizer.view isKindOfClass:[UIScrollView class]]) {
+    return YES;
+  }
+  return NO;
 }
 
 #pragma mark - UIGestureRecognizerDelegate
