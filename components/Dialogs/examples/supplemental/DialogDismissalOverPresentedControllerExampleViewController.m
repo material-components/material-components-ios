@@ -156,7 +156,7 @@
 
 @property(nonatomic, strong) MDCButton *presentButton;
 
-@property(nonatomic, strong) MDCContainerScheme *containerScheme;
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 
 @end
 
@@ -166,9 +166,16 @@
   [super viewDidLoad];
 
   // Create a way to present a view controller.
-  self.view.backgroundColor = [UIColor whiteColor];
+  id<MDCColorScheming> colorScheme;
+  if (self.containerScheme.colorScheme != nil) {
+    colorScheme = self.containerScheme.colorScheme;
+  } else {
+    colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  }
+  self.view.backgroundColor = colorScheme.backgroundColor;
 
-  self.presentButton = [[MDCFlatButton alloc] init];
+  self.presentButton = [[MDCButton alloc] init];
   [self.presentButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   [self.presentButton setBackgroundColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
   [self.presentButton setTitle:@"Present View Controller" forState:UIControlStateNormal];

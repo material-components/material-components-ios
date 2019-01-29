@@ -22,7 +22,7 @@
 
 @property(nonatomic, strong) MDCButton *dismissButton;
 
-@property(nonatomic, strong) MDCContainerScheme *containerScheme;
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 
 @end
 
@@ -31,9 +31,16 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.view.backgroundColor = [UIColor whiteColor];
+  id<MDCColorScheming> colorScheme;
+  if (self.containerScheme.colorScheme != nil) {
+    colorScheme = self.containerScheme.colorScheme;
+  } else {
+    colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  }
+  self.view.backgroundColor = colorScheme.backgroundColor;
 
-  self.dismissButton = [[MDCFlatButton alloc] initWithFrame:CGRectZero];
+  self.dismissButton = [[MDCButton alloc] initWithFrame:CGRectZero];
   [self.dismissButton setTitle:@"Dismiss" forState:UIControlStateNormal];
   [self.dismissButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
   self.dismissButton.autoresizingMask =
@@ -67,7 +74,7 @@
 
 @property(nonatomic, strong) MDCButton *presentButton;
 @property(nonatomic, strong) MDCDialogTransitionController *transitionController;
-@property(nonatomic, strong) MDCContainerScheme *containerScheme;
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 
 @end
 
@@ -81,9 +88,16 @@
   // A presented view controller will set this object as its transitioning delegate.
   self.transitionController = [[MDCDialogTransitionController alloc] init];
 
-  self.view.backgroundColor = [UIColor whiteColor];
+  id<MDCColorScheming> colorScheme;
+  if (self.containerScheme.colorScheme != nil) {
+    colorScheme = self.containerScheme.colorScheme;
+  } else {
+    colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  }
+  self.view.backgroundColor = colorScheme.backgroundColor;
 
-  self.presentButton = [[MDCFlatButton alloc] initWithFrame:CGRectZero];
+  self.presentButton = [[MDCButton alloc] initWithFrame:CGRectZero];
   [self.presentButton setTitle:@"Present" forState:UIControlStateNormal];
   [self.presentButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
   self.presentButton.autoresizingMask =

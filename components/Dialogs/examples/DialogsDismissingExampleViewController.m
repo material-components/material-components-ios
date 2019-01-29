@@ -180,7 +180,7 @@ static NSString *const kReusableIdentifierItem = @"cell";
 
 @property(nonatomic, strong) MDCButton *dismissButton;
 
-@property(nonatomic, strong) MDCContainerScheme *containerScheme;
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 
 @end
 
@@ -189,9 +189,16 @@ static NSString *const kReusableIdentifierItem = @"cell";
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.view.backgroundColor = [UIColor whiteColor];
+  id<MDCColorScheming> colorScheme;
+  if (self.containerScheme.colorScheme != nil) {
+    colorScheme = self.containerScheme.colorScheme;
+  } else {
+    colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  }
+  self.view.backgroundColor = colorScheme.backgroundColor;
 
-  self.dismissButton = [[MDCFlatButton alloc] init];
+  self.dismissButton = [[MDCButton alloc] init];
   [self.dismissButton setTitle:@"Dismiss" forState:UIControlStateNormal];
   [self.dismissButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
   self.dismissButton.autoresizingMask =
@@ -228,7 +235,7 @@ static NSString *const kReusableIdentifierItem = @"cell";
 
 @property(nonatomic, strong) MDCButton *dismissButton;
 
-@property(nonatomic, strong) MDCContainerScheme *containerScheme;
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 
 @end
 
@@ -237,9 +244,16 @@ static NSString *const kReusableIdentifierItem = @"cell";
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.view.backgroundColor = [UIColor whiteColor];
+  id<MDCColorScheming> colorScheme;
+  if (self.containerScheme.colorScheme != nil) {
+    colorScheme = self.containerScheme.colorScheme;
+  } else {
+    colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  }
+  self.view.backgroundColor = colorScheme.backgroundColor;
 
-  self.dismissButton = [[MDCFlatButton alloc] init];
+  self.dismissButton = [[MDCButton alloc] init];
   [self.dismissButton setTitle:@"material.io" forState:UIControlStateNormal];
   [self.dismissButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
   self.dismissButton.autoresizingMask =
