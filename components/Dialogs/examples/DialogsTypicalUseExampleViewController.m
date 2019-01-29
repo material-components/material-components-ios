@@ -45,13 +45,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  id<MDCColorScheming> colorScheme;
-  if (self.containerScheme.colorScheme != nil) {
-    colorScheme = self.containerScheme.colorScheme;
-  } else {
-    colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-  }
+  id<MDCColorScheming> colorScheme = self.containerScheme.colorScheme ?: [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   self.view.backgroundColor = colorScheme.backgroundColor;
 
   MDCButton *dismissButton = [[MDCButton alloc] initWithFrame:CGRectZero];
