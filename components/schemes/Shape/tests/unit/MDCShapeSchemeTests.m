@@ -96,35 +96,6 @@
 
   // Then
   XCTAssertNotEqual(shapeScheme, copiedShapeScheme);
-  XCTAssertEqualObjects(shapeScheme, copiedShapeScheme);
-  XCTAssertEqualObjects(shapeScheme.smallComponentShape, copiedShapeScheme.smallComponentShape);
-  XCTAssertEqualObjects(shapeScheme.mediumComponentShape, copiedShapeScheme.mediumComponentShape);
-  XCTAssertEqualObjects(shapeScheme.largeComponentShape, copiedShapeScheme.largeComponentShape);
-}
-
-- (void)testCopyShapeSchemeWithCustomValues {
-  // Given
-  MDCShapeScheme *shapeScheme =
-      [[MDCShapeScheme alloc] initWithDefaults:MDCShapeSchemeDefaultsMaterial201809];
-  MDCShapeCategory *smallComponentShape =
-      [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyCut andSize:20];
-  shapeScheme.smallComponentShape = smallComponentShape;
-  MDCShapeCategory *mediumComponentShape =
-      [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyRounded andSize:40];
-  shapeScheme.mediumComponentShape = mediumComponentShape;
-  MDCShapeCategory *largeComponentShape =
-      [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyRounded andSize:60];
-  shapeScheme.largeComponentShape = largeComponentShape;
-
-  // When
-  MDCShapeScheme *copiedShapeScheme = [shapeScheme copy];
-
-  // Then
-  XCTAssertNotEqual(shapeScheme, copiedShapeScheme);
-  XCTAssertEqualObjects(shapeScheme, copiedShapeScheme);
-  XCTAssertEqualObjects(copiedShapeScheme.smallComponentShape, smallComponentShape);
-  XCTAssertEqualObjects(copiedShapeScheme.mediumComponentShape, mediumComponentShape);
-  XCTAssertEqualObjects(copiedShapeScheme.largeComponentShape, largeComponentShape);
 }
 
 @end
