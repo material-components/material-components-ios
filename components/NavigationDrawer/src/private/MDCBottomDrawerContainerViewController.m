@@ -655,7 +655,7 @@ static UIColor *DrawerShadowColor(void) {
   if (self.contentViewController) {
     CGRect contentViewFrame = CGRectStandardize(self.contentViewController.view.frame);
     contentViewFrame.size =
-    CGSizeMake(contentViewFrame.size.width, contentViewFrame.size.height + heightToAdd);
+        CGSizeMake(contentViewFrame.size.width, contentViewFrame.size.height + heightToAdd);
     self.contentViewController.view.frame = contentViewFrame;
   }
 }

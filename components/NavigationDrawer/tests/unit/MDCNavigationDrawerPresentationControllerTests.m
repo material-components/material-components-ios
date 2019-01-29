@@ -43,21 +43,21 @@
   fakeBottomDrawer.contentViewController = fakeContentViewController;
   UIViewController *fakePresentingViewController = [[UIViewController alloc] init];
   MDCBottomDrawerPresentationController *presentationController =
-  [[MDCBottomDrawerPresentationController alloc]
-   initWithPresentedViewController:fakeBottomDrawer
-   presentingViewController:fakePresentingViewController];
+      [[MDCBottomDrawerPresentationController alloc]
+          initWithPresentedViewController:fakeBottomDrawer
+                 presentingViewController:fakePresentingViewController];
   [presentationController presentationTransitionWillBegin];
 
   // When
   [presentationController.bottomDrawerContainerViewController
-   updateViewWithContentOffset:CGPointMake(0, 100)];
+      updateViewWithContentOffset:CGPointMake(0, 100)];
   [presentationController dismissalTransitionDidEnd:YES];
 
   // Then
   XCTAssertNil(presentationController.topHandle.superview);
   XCTAssertNil(presentationController.scrimView.superview);
   CGRect finalContentFrame = CGRectStandardize(
-                                               presentationController.bottomDrawerContainerViewController.contentViewController.view.frame);
+      presentationController.bottomDrawerContainerViewController.contentViewController.view.frame);
   XCTAssertEqualWithAccuracy(finalContentFrame.origin.x, fakeInitialContentFrame.origin.x, 0.001);
   XCTAssertEqualWithAccuracy(finalContentFrame.origin.y, fakeInitialContentFrame.origin.y, 0.001);
   XCTAssertEqualWithAccuracy(finalContentFrame.size.width, fakeInitialContentFrame.size.width,

@@ -564,7 +564,7 @@
 - (void)testAddedHeight {
   // Given
   CGFloat contentViewControllerHeight =
-  CGRectStandardize(self.fakeBottomDrawer.contentViewController.view.frame).size.height;
+      CGRectStandardize(self.fakeBottomDrawer.contentViewController.view.frame).size.height;
   CGFloat fakeHeight = 100;
   self.fakeBottomDrawer.trackingScrollView = nil;
 
@@ -573,7 +573,7 @@
 
   // Then
   CGFloat newContentViewControllerHeight =
-  CGRectGetHeight(self.fakeBottomDrawer.contentViewController.view.frame);
+      CGRectGetHeight(self.fakeBottomDrawer.contentViewController.view.frame);
   CGFloat expectedHeight = contentViewControllerHeight + fakeHeight;
   XCTAssertEqualWithAccuracy(newContentViewControllerHeight, expectedHeight, 0.001);
 }
@@ -581,7 +581,7 @@
 - (void)testAddedHeightWithMultipleScrolls {
   // Given
   CGFloat contentViewControllerHeight =
-  CGRectStandardize(self.fakeBottomDrawer.contentViewController.view.frame).size.height;
+      CGRectStandardize(self.fakeBottomDrawer.contentViewController.view.frame).size.height;
   CGFloat fakeFirstHeight = 80;
   CGFloat fakeSecondHeight = 100;
   self.fakeBottomDrawer.trackingScrollView = nil;
@@ -592,7 +592,7 @@
 
   // Then
   CGFloat newContentViewControllerHeight =
-  CGRectGetHeight(self.fakeBottomDrawer.contentViewController.view.frame);
+      CGRectGetHeight(self.fakeBottomDrawer.contentViewController.view.frame);
   CGFloat expectedHeight = contentViewControllerHeight + fakeSecondHeight;
   XCTAssertEqualWithAccuracy(newContentViewControllerHeight, expectedHeight, 0.001);
 }
