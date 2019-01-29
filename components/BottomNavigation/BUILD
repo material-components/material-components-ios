@@ -199,6 +199,7 @@ ios_unit_test(
     name = "unit_tests_beta",
     deps = [":unit_test_beta_sources"],
     minimum_os_version = "9.0",
+    flaky = 1,
     test_host = "//components/private/Snapshot/TestHost",
 )
 
