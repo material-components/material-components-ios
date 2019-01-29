@@ -21,16 +21,41 @@ load(
     "mdc_unit_test_suite",
 )
 load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
+load("@build_bazel_rules_apple//apple:ios.bzl", "ios_unit_test")
 
 licenses(["notice"])  # Apache 2.0
 
-mdc_public_objc_library(
+mdc_objc_library(
     name = "BottomNavigation",
+    srcs =
+        native.glob(
+            [
+                "src/*.m",
+                "src/private/*.h",
+                "src/private/*.m",
+            ],
+            exclude = [
+                "src/MDCBottomNavigationBarController.m",
+                "src/MDCBottomNavigationBarController.h",
+                "src/MaterialBottomNavigationBeta.h",
+            ],
+        ),
+    hdrs =
+        native.glob(
+            ["src/*.h"],
+            exclude = [
+                "src/MDCBottomNavigationBarController.h",
+                "src/MaterialBottomNavigationBeta.h",
+            ],
+        ),
     bundles = [":Bundle"],
+    enable_modules = 1,
+    includes = ["src"],
     sdk_frameworks = [
         "CoreGraphics",
         "UIKit",
     ],
+    visibility = ["//visibility:public"],
     deps = [
         "//components/Ink",
         "//components/ShadowElevations",
@@ -39,6 +64,20 @@ mdc_public_objc_library(
         "//components/private/Math",
         "@material_internationalization_ios//:MDFInternationalization",
     ],
+)
+
+mdc_objc_library(
+    name = "BottomNavigationBeta",
+    srcs = ["src/MDCBottomNavigationBarController.m"],
+    hdrs = [
+        "src/MDCBottomNavigationBarController.h",
+        "src/MaterialBottomNavigationBeta.h",
+    ],
+    enable_modules = 1,
+    includes = ["src"],
+    sdk_frameworks = ["CoreGraphics"],
+    visibility = ["//:__subpackages__"],
+    deps = [":BottomNavigation"],
 )
 
 filegroup(
@@ -122,10 +161,13 @@ swift_library(
 mdc_objc_library(
     name = "unit_test_sources",
     testonly = 1,
-    srcs = native.glob([
-        "tests/unit/*.m",
-        "tests/unit/*.h",
-    ]),
+    srcs = native.glob(
+        [
+            "tests/unit/*.m",
+            "tests/unit/*.h",
+        ],
+        exclude = ["tests/unit/MDCBottomNavigationBarControllerTests.m"],
+    ),
     sdk_frameworks = [
         "UIKit",
         "XCTest",
@@ -137,6 +179,28 @@ mdc_objc_library(
         ":TypographyThemer",
         ":private",
     ],
+)
+
+mdc_objc_library(
+    name = "unit_test_beta_sources",
+    testonly = 1,
+    srcs = ["tests/unit/MDCBottomNavigationBarControllerTests.m"],
+    sdk_frameworks = [
+        "CoreGraphics",
+        "XCTest",
+    ],
+    visibility = ["//visibility:private"],
+    deps = [
+        ":BottomNavigationBeta",
+    ],
+)
+
+ios_unit_test(
+    name = "unit_tests_beta",
+    deps = [":unit_test_beta_sources"],
+    minimum_os_version = "9.0",
+    flaky = 1,
+    test_host = "//components/private/Snapshot/TestHost",
 )
 
 mdc_unit_test_suite(

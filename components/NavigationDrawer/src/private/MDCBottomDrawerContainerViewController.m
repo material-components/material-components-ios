@@ -134,6 +134,9 @@ static UIColor *DrawerShadowColor(void) {
 // The current bottom drawer state.
 @property(nonatomic) MDCBottomDrawerState drawerState;
 
+// Updates both the header and content based off content offset of the scroll view.
+- (void)updateViewWithContentOffset:(CGPoint)contentOffset;
+
 /**
  The height of the drawer at initial layout. This value is a percentage between 0-100% (0-1).
  - 1 or 100% indicates the drawer is full screen.
@@ -586,6 +589,7 @@ static UIColor *DrawerShadowColor(void) {
   [self updateContentHeaderWithTransitionToTop:headerTransitionToTop
                         fullscreenHeaderHeight:fullscreenHeaderHeight];
   [self updateTopHeaderBottomShadowWithContentOffset:contentOffset];
+  [self updateContentWithHeight:contentOffset.y];
 }
 
 - (void)updateContentHeaderWithTransitionToTop:(CGFloat)headerTransitionToTop
@@ -634,6 +638,25 @@ static UIColor *DrawerShadowColor(void) {
         (float)[self transitionPercentageForContentOffset:contentOffset
                                                    offset:-kVerticalShadowAnimationDistance
                                                  distance:kVerticalShadowAnimationDistance];
+  }
+}
+
+- (void)updateContentWithHeight:(CGFloat)height {
+  if (self.trackingScrollView != nil) {
+    return;
+  }
+  if (height < 0) {
+    height = 0;
+  }
+  // This is added so we don't recursively add height
+  CGFloat previousAddedHeight = self.addedHeight;
+  self.addedHeight = height;
+  CGFloat heightToAdd = self.addedHeight - previousAddedHeight;
+  if (self.contentViewController) {
+    CGRect contentViewFrame = CGRectStandardize(self.contentViewController.view.frame);
+    contentViewFrame.size =
+        CGSizeMake(contentViewFrame.size.width, contentViewFrame.size.height + heightToAdd);
+    self.contentViewController.view.frame = contentViewFrame;
   }
 }
 
