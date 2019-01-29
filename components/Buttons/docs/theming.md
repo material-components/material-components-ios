@@ -3,8 +3,9 @@
 You can theme an MDCButton to match one of the Material Design button styles using your app's
 schemes in the button theming extension.
 
-You must first import the extension and create an `MDCContainerScheme` instance. A container scheme defines
-the design parameters that you can use to theme your app. For additional information on [`MDCContainerScheme`](<#Inset-link-to-theming-doc>).
+You must first import the extension and create an `MDCContainerScheme`
+instance. A container scheme defines the design parameters that you can use to
+theme your app.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
