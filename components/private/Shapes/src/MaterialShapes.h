@@ -12,10 +12,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCCornerTreatment.h"
-#import "MDCEdgeTreatment.h"
-#import "MDCPathGenerator.h"
-#import "MDCRectangleShapeGenerator.h"
-#import "MDCShapeGenerating.h"
-#import "MDCShapedShadowLayer.h"
-#import "MDCShapedView.h"
+#import "MaterialShapesNew.h"

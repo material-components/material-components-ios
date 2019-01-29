@@ -214,6 +214,11 @@ Commit the results to your branch:
 
     git commit -am "Bumped version number to $(scripts/print_version)."
     git push origin release-candidate
+    
+Update the PR title to the release version. The format is typically "vX.Y.Z" (*e.g.*, v72.0.1). 
+Once this is done, send the PR out for review. Add "material-components/core-ios-team" to the 
+list of Reviewers. Also add anyone else you think might need to review specific changes in the 
+release candidate.
 
 #### Verify CocoaPods podspec and trunk access
 

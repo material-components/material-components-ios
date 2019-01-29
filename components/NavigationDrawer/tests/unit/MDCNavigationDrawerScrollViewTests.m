@@ -214,10 +214,10 @@
   [self.fakeBottomDrawer cacheLayoutCalculations];
 
   // Then
-  // presentingViewBounds.size.height = 500, contentHeaderHeight = 300
-  // contentViewController.preferredContentSize.height = 100
-  // 500 - 300 - 100 = 100
-  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 100, 0.001);
+  // presentingViewBounds.size.height = 500 / 2 = 250
+  // The drawer should initially open to half the presentingViewBounds if there is more than
+  // half of the view's height worth of content
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 250, 0.001);
 }
 
 - (void)testContentHeaderTopInsetWithNoHeaderOrContentViewController {
@@ -244,10 +244,10 @@
   [self.fakeBottomDrawer cacheLayoutCalculations];
 
   // Then
-  // presentingViewBounds.size.height = 500, contentHeaderHeight = 300
-  // contentViewController.preferredContentSize.height = 0
-  // 500 - 300 - 0 = 200
-  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 200, 0.001);
+  // presentingViewBounds.size.height = 500 / 2 = 250
+  // The drawer should initially open to half the presentingViewBounds if there is more than
+  // half of the view's height worth of content
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 250, 0.001);
 }
 
 - (void)testContentHeaderTopInsetWithOnlyContentViewController {
@@ -376,10 +376,12 @@
       [[MDCNavigationDrawerFakeTableViewController alloc] init];
 
   // When
-  self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(200, 200);
+  self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(200, 100);
   [self.fakeBottomDrawer cacheLayoutCalculations];
 
   // Then
+  // The drawer needs less than half the presentingViewBounds.height to be in an expanded state
+  // Unless if a user scrolls passed `initialDrawerFactor`.
   XCTAssertEqual(self.fakeBottomDrawer.drawerState, MDCBottomDrawerStateExpanded);
 }
 
@@ -503,6 +505,22 @@
 
   // Then
   XCTAssertEqual(self.fakeScrollView.scrollEnabled, NO);
+}
+
+- (void)testSetTrackingScrollViewAfterSetScrimColor {
+  // Given
+  MDCBottomDrawerPresentationController *drawerPresentationController =
+      (MDCBottomDrawerPresentationController *)self.drawerViewController.presentationController;
+
+  // When
+  // Setting the scrim color before setting the tracking scroll view in some cases used to
+  // not set the trackingScrollView on bottomDrawerContainerViewController.
+  self.drawerViewController.scrimColor = UIColor.blueColor;
+  self.drawerViewController.trackingScrollView = self.fakeScrollView;
+
+  // Then
+  XCTAssertNotNil(
+      drawerPresentationController.bottomDrawerContainerViewController.trackingScrollView);
 }
 
 - (void)testBottomDrawerTopInset {

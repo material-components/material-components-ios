@@ -14,15 +14,8 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MDCCornerTreatment+CornerTypeInitalizer.h"
-#import "MDCCurvedCornerTreatment.h"
-#import "MDCCurvedRectShapeGenerator.h"
-#import "MDCCutCornerTreatment.h"
-#import "MDCPillShapeGenerator.h"
-#import "MDCRoundedCornerTreatment.h"
-#import "MDCSlantedRectShapeGenerator.h"
-#import "MDCTriangleEdgeTreatment.h"
 #import "MaterialMath.h"
+#import "MaterialShapeLibraryNew.h"
 
 @interface ShapeLibraryTests : XCTestCase
 void GetCGPathAddLineToPointValues(void *info, const CGPathElement *element);
