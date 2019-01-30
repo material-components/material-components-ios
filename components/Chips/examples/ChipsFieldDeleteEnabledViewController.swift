@@ -24,11 +24,7 @@ class ChipsFieldDeleteEnabledViewController : UIViewController, MDCChipFieldDele
   var chipField = MDCChipField()
 
   init() {
-    let scheme = MDCContainerScheme()
-    scheme.colorScheme = MDCSemanticColorScheme()
-    scheme.shapeScheme = MDCShapeScheme()
-    scheme.typographyScheme = MDCTypographyScheme()
-    containerScheming = scheme
+    containerScheming = MDCContainerScheme()
     super.init(nibName: nil, bundle: nil)
   }
 

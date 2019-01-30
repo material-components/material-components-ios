@@ -29,12 +29,8 @@
   if (self) {
     _sizingChip = [[MDCChipView alloc] init];
     _sizingChip.mdc_adjustsFontForContentSizeCategory = YES;
-    MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
-    containerScheme.colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-    containerScheme.shapeScheme = [[MDCShapeScheme alloc] init];
-    containerScheme.typographyScheme = [[MDCTypographyScheme alloc] init];
-    self.containerScheme = containerScheme;
+    self.containerScheme = [[MDCContainerScheme alloc] init];
+    ;
   }
   return self;
 }
