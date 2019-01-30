@@ -15,6 +15,7 @@
 import Foundation
 import MaterialComponents.MaterialButtons_ButtonThemer
 import MaterialComponents.MaterialColorScheme
+import MaterialComponents.MaterialShapeScheme
 import MaterialComponents.MaterialTypographyScheme
 import MaterialComponentsBeta.MaterialContainerScheme
 
@@ -65,6 +66,9 @@ func DefaultContainerScheme() -> MDCContainerScheme {
   typographyScheme.headline2 = UIFont.systemFont(ofSize: 18)
   typographyScheme.headline3 = UIFont.systemFont(ofSize: 15)
   containerScheme.typographyScheme = typographyScheme
+
+  let shapeScheme = MDCShapeScheme()
+  containerScheme.shapeScheme = shapeScheme
 
   return containerScheme
 }
