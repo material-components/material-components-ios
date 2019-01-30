@@ -28,21 +28,9 @@
 - (id)init {
   self = [super init];
   if (self) {
-    self.colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-    self.shapeScheme = [[MDCShapeScheme alloc] init];
-    self.typographyScheme =
-        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+    self.containerScheme = [[MDCContainerScheme alloc] init];
   }
   return self;
-}
-
-- (MDCContainerScheme *)containerScheme {
-  MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
-  scheme.colorScheme = self.colorScheme;
-  scheme.shapeScheme = self.shapeScheme;
-  scheme.typographyScheme = self.typographyScheme;
-  return scheme;
 }
 
 - (void)loadView {
@@ -124,15 +112,22 @@
   chipView.titleLabel.text = self.titles[indexPath.row];
   chipView.selectedImageView.image =
       [[self doneImage] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-  chipView.selectedImageView.tintColor =
-      [_colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.54];
+  if (self.containerScheme.colorScheme) {
+    chipView.selectedImageView.tintColor =
+        [self.containerScheme.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.54];
+  } else {
+    MDCSemanticColorScheme *colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    chipView.selectedImageView.tintColor =
+        [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.54];
+  }
   chipView.selected = [_selectedIndecies containsObject:indexPath];
   cell.alwaysAnimateResize = [self shouldAnimateResize];
 
   if (_isOutlined) {
-    [chipView applyOutlinedThemeWithScheme:[self containerScheme]];
+    [chipView applyOutlinedThemeWithScheme:self.containerScheme];
   } else {
-    [chipView applyThemeWithScheme:[self containerScheme]];
+    [chipView applyThemeWithScheme:self.containerScheme];
   }
 
   return cell;
