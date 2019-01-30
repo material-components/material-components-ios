@@ -23,7 +23,7 @@
  MDCDialogPresentationController to respond to its dismissals.
  */
 @protocol MDCDialogPresentationControllerDelegate <NSObject>
-
+@optional
 /**
  This method allows a delegate conforming to MDCDialogPresentationControllerDelegate to respond to
  MDCDialogPresentationController dismissals.

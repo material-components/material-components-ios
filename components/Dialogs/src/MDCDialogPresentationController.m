@@ -304,8 +304,12 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
     [self.presentingViewController
         dismissViewControllerAnimated:YES
                            completion:^{
-                             [self.dialogPresentationControllerDelegate
-                                 dialogPresentationControllerDidDismiss:self];
+                             if ([self.dialogPresentationControllerDelegate
+                                     respondsToSelector:@selector
+                                     (dialogPresentationControllerDidDismiss:)]) {
+                               [self.dialogPresentationControllerDelegate
+                                   dialogPresentationControllerDidDismiss:self];
+                             }
                            }];
   }
 }
