@@ -55,9 +55,6 @@ class MDCCatalogTileView: UIView {
   }
 
   func themeDidChange(notification: NSNotification) {
-    guard notification.userInfo?[AppTheme.globalThemeNotificationColorSchemeKey] != nil else {
-        return
-    }
     imageCache.removeAllObjects()
   }
 
