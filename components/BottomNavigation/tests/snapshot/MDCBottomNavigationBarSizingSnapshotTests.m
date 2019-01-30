@@ -99,6 +99,8 @@ static inline UIImage *CreateTestImage(CGSize size) {
   self.tabItem3 = [[UITabBarItem alloc] initWithTitle:@"Item 3" image:self.testImage tag:3];
   self.tabItem4 = [[UITabBarItem alloc] initWithTitle:@"Item 4" image:self.testImage tag:4];
   self.tabItem5 = [[UITabBarItem alloc] initWithTitle:@"Item 5" image:self.testImage tag:5];
+  self.navigationBar.items =
+      @[ self.tabItem1, self.tabItem2, self.tabItem3, self.tabItem4, self.tabItem5 ];
 }
 
 - (void)generateAndVerifySnapshot {
@@ -110,7 +112,7 @@ static inline UIImage *CreateTestImage(CGSize size) {
 
 - (void)testJustifiedUnspecifiedSelectedWithThreeItemsTypicalWidthTypicalHeight {
   // When
-  self.navigationBar.items = @[self.tabItem1, self.tabItem2, self.tabItem3];
+  self.navigationBar.items = @[ self.tabItem1, self.tabItem2, self.tabItem3 ];
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
   self.navigationBar.selectedItem = self.tabItem2;
   self.navigationBar.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
@@ -121,7 +123,7 @@ static inline UIImage *CreateTestImage(CGSize size) {
 
 - (void)testJustifiedUnspecifiedAlwaysWithThreeItemsTypicalWidthTypicalHeight {
   // When
-  self.navigationBar.items = @[self.tabItem1, self.tabItem2, self.tabItem3];
+  self.navigationBar.items = @[ self.tabItem1, self.tabItem2, self.tabItem3 ];
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   self.navigationBar.selectedItem = self.tabItem2;
   self.navigationBar.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
@@ -132,7 +134,7 @@ static inline UIImage *CreateTestImage(CGSize size) {
 
 - (void)testJustifiedUnspecifiedNeverWithThreeItemsTypicalWidthTypicalHeight {
   // When
-  self.navigationBar.items = @[self.tabItem1, self.tabItem2, self.tabItem3];
+  self.navigationBar.items = @[ self.tabItem1, self.tabItem2, self.tabItem3 ];
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityNever;
   self.navigationBar.selectedItem = self.tabItem2;
   self.navigationBar.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
@@ -145,8 +147,6 @@ static inline UIImage *CreateTestImage(CGSize size) {
 
 - (void)testJustifiedUnspecifiedAlwaysFiveItemsNarrowWidthShortHeight {
   // When
-  self.navigationBar.items =
-      @[self.tabItem1, self.tabItem2, self.tabItem3, self.tabItem4, self.tabItem5];
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   self.navigationBar.selectedItem = self.tabItem2;
   self.navigationBar.frame = CGRectMake(0, 0, kWidthNarrow, kHeightShort);
@@ -157,8 +157,6 @@ static inline UIImage *CreateTestImage(CGSize size) {
 
 - (void)testJustifiedUnspecifiedAlwaysFiveItemsWideWidthTallHeight {
   // When
-  self.navigationBar.items =
-      @[self.tabItem1, self.tabItem2, self.tabItem3, self.tabItem4, self.tabItem5];
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   self.navigationBar.selectedItem = self.tabItem2;
   self.navigationBar.frame = CGRectMake(0, 0, kWidthWide, kHeightTall);
@@ -175,8 +173,6 @@ static inline UIImage *CreateTestImage(CGSize size) {
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassUnspecified;
 
   // When
-  self.navigationBar.items =
-  @[self.tabItem1, self.tabItem2, self.tabItem3, self.tabItem4, self.tabItem5];
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   self.navigationBar.alignment = MDCBottomNavigationBarAlignmentJustified;
   self.navigationBar.selectedItem = self.tabItem2;
@@ -194,8 +190,6 @@ static inline UIImage *CreateTestImage(CGSize size) {
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassCompact;
 
   // When
-  self.navigationBar.items =
-  @[self.tabItem1, self.tabItem2, self.tabItem3, self.tabItem4, self.tabItem5];
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   self.navigationBar.alignment = MDCBottomNavigationBarAlignmentJustified;
   self.navigationBar.selectedItem = self.tabItem2;
@@ -213,8 +207,6 @@ static inline UIImage *CreateTestImage(CGSize size) {
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassRegular;
 
   // When
-  self.navigationBar.items =
-  @[self.tabItem1, self.tabItem2, self.tabItem3, self.tabItem4, self.tabItem5];
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   self.navigationBar.alignment = MDCBottomNavigationBarAlignmentJustified;
   self.navigationBar.selectedItem = self.tabItem2;
@@ -235,8 +227,6 @@ static inline UIImage *CreateTestImage(CGSize size) {
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassUnspecified;
 
   // When
-  self.navigationBar.items =
-      @[self.tabItem1, self.tabItem2, self.tabItem3, self.tabItem4, self.tabItem5];
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   self.navigationBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles;
   self.navigationBar.selectedItem = self.tabItem2;
@@ -254,8 +244,6 @@ static inline UIImage *CreateTestImage(CGSize size) {
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassCompact;
 
   // When
-  self.navigationBar.items =
-      @[self.tabItem1, self.tabItem2, self.tabItem3, self.tabItem4, self.tabItem5];
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   self.navigationBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles;
   self.navigationBar.selectedItem = self.tabItem2;
@@ -273,8 +261,6 @@ static inline UIImage *CreateTestImage(CGSize size) {
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassRegular;
 
   // When
-  self.navigationBar.items =
-      @[self.tabItem1, self.tabItem2, self.tabItem3, self.tabItem4, self.tabItem5];
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   self.navigationBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles;
   self.navigationBar.selectedItem = self.tabItem2;
@@ -294,8 +280,6 @@ static inline UIImage *CreateTestImage(CGSize size) {
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassUnspecified;
 
   // When
-  self.navigationBar.items =
-  @[self.tabItem1, self.tabItem2, self.tabItem3, self.tabItem4, self.tabItem5];
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   self.navigationBar.alignment = MDCBottomNavigationBarAlignmentCentered;
   self.navigationBar.selectedItem = self.tabItem2;
@@ -313,8 +297,6 @@ static inline UIImage *CreateTestImage(CGSize size) {
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassCompact;
 
   // When
-  self.navigationBar.items =
-  @[self.tabItem1, self.tabItem2, self.tabItem3, self.tabItem4, self.tabItem5];
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   self.navigationBar.alignment = MDCBottomNavigationBarAlignmentCentered;
   self.navigationBar.selectedItem = self.tabItem2;
@@ -332,8 +314,6 @@ static inline UIImage *CreateTestImage(CGSize size) {
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassRegular;
 
   // When
-  self.navigationBar.items =
-  @[self.tabItem1, self.tabItem2, self.tabItem3, self.tabItem4, self.tabItem5];
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   self.navigationBar.alignment = MDCBottomNavigationBarAlignmentCentered;
   self.navigationBar.selectedItem = self.tabItem2;
@@ -359,7 +339,7 @@ static inline UIImage *CreateTestImage(CGSize size) {
                                            toBottomNavigation:self.navigationBar];
   [MDCBottomNavigationBarTypographyThemer applyTypographyScheme:typographyScheme
                                           toBottomNavigationBar:self.navigationBar];
-  self.navigationBar.items = @[self.tabItem1, self.tabItem2, self.tabItem3];
+  self.navigationBar.items = @[ self.tabItem1, self.tabItem2, self.tabItem3 ];
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   self.navigationBar.selectedItem = self.tabItem2;
   self.navigationBar.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
@@ -391,7 +371,7 @@ static inline UIImage *CreateTestImage(CGSize size) {
                                            toBottomNavigation:self.navigationBar];
   [MDCBottomNavigationBarTypographyThemer applyTypographyScheme:typographyScheme
                                           toBottomNavigationBar:self.navigationBar];
-  self.navigationBar.items = @[self.tabItem1, self.tabItem2, self.tabItem3];
+  self.navigationBar.items = @[ self.tabItem1, self.tabItem2, self.tabItem3 ];
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   self.navigationBar.selectedItem = self.tabItem2;
   self.navigationBar.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
