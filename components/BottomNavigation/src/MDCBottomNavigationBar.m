@@ -31,7 +31,6 @@ static NSString *const kMaterialBottomNavigationBundle = @"MaterialBottomNavigat
 
 static const CGFloat kMDCBottomNavigationBarHeight = 56;
 static const CGFloat kMDCBottomNavigationBarHeightAdjacentTitles = 40;
-static const CGFloat kMDCBottomNavigationBarLandscapeContainerWidth = 320;
 static const CGFloat kMDCBottomNavigationBarItemsHorizontalMargin = 12;
 static NSString *const kMDCBottomNavigationBarBadgeColorString = @"badgeColor";
 static NSString *const kMDCBottomNavigationBarBadgeValueString = @"badgeValue";
@@ -52,7 +51,6 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 
 @property(nonatomic, assign) BOOL itemsDistributed;
 @property(nonatomic, assign) BOOL titleBelowItem;
-@property(nonatomic, assign) CGFloat maxLandscapeClusterContainerWidth;
 @property(nonatomic, strong) NSMutableArray<MDCBottomNavigationItemView *> *itemViews;
 @property(nonatomic, readonly) UIEdgeInsets mdc_safeAreaInsets;
 @property(nonatomic, strong) UIView *containerView;
@@ -101,7 +99,7 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
       [view removeFromSuperview];
     }
   }
-  _maxLandscapeClusterContainerWidth = kMDCBottomNavigationBarLandscapeContainerWidth;
+
   _containerView = [[UIView alloc] initWithFrame:CGRectZero];
   _containerView.autoresizingMask =
       (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin);
@@ -129,10 +127,9 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  CGSize size = self.bounds.size;
+  CGSize size = CGSizeMake(CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
   if (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
-    [self layoutLandscapeModeWithBottomNavSize:size
-                                containerWidth:self.maxLandscapeClusterContainerWidth];
+    [self layoutLandscapeModeWithBottomNavSize:size containerWidth:size.width];
   } else {
     [self sizeContainerViewItemsDistributed:YES withBottomNavSize:size containerWidth:size.width];
     self.titleBelowItem = YES;
@@ -141,7 +138,6 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
-  self.maxLandscapeClusterContainerWidth = MIN(size.width, size.height);
   UIEdgeInsets insets = self.mdc_safeAreaInsets;
   CGFloat heightWithInset = kMDCBottomNavigationBarHeight + insets.bottom;
   if (self.alignment == MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles &&
@@ -205,9 +201,10 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
     }
     maxItemWidth = MIN(168, maxItemWidth);
     CGFloat layoutFrameWidth = maxItemWidth * self.items.count;
+    containerWidth = MAX(containerWidth, layoutFrameWidth);
     CGFloat clusteredOffsetX = (bottomNavSize.width - containerWidth) / 2;
     self.containerView.frame = CGRectMake(clusteredOffsetX, 0, containerWidth, barHeight);
-    CGFloat itemLayoutFrameOffsetX = (CGRectGetWidth(self.containerView.frame) - layoutFrameWidth) / 2;
+    CGFloat itemLayoutFrameOffsetX = (containerWidth - layoutFrameWidth) / 2;
     self.itemLayoutFrame = CGRectMake(itemLayoutFrameOffsetX, 0, layoutFrameWidth, barHeight);
   }
 }
