@@ -1,76 +1,20 @@
-# #develop#
+# 76.0.0
 
-Replace this text with a summarized description of this release's contents.
+This major release changes the Material Theming colors for Cards cells. It also includes bug fixes
+for Navigation Drawer and Text Fields.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+The MDCCardsColorThemer now sets the `imageTintColor:forState:` on MDCCardCollectionCell.  This
+property was previously unset by the themer.
 
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
 ## API changes
-
-### BottomNavigationBeta
-
-**New component.**
 
 ### Collections
 
 #### MDCCollectionViewEditing
 
 *new* property: `minimumPressDuration` in `MDCCollectionViewEditing`
-
-### Ripple
-
-#### MDCRippleTouchController
-
-*new* property: `shouldProcessRippleWithScrollViewGestures` in `MDCRippleTouchController`
-
-*removed* property: `selectionGestureRecognizer` in `MDCRippleTouchController`
-
-*removed* method: `-setRippleAlpha:forState:` in `MDCRippleTouchController`
-
-*removed* property: `selected` in `MDCRippleTouchController`
-
-*removed* property: `allowsSelection` in `MDCRippleTouchController`
-
-*removed* method: `-rippleColorForState:` in `MDCRippleTouchController`
-
-*removed* method: `-rippleAlphaForState:` in `MDCRippleTouchController`
-
-*removed* property: `state` in `MDCRippleTouchController`
-
-*removed* property: `selectionMode` in `MDCRippleTouchController`
-
-*removed* method: `-setRippleColor:forState:` in `MDCRippleTouchController`
-
-#### MDCRippleView
-
-*new* method: `-cancelAllRipplesAnimated:completion:` in `MDCRippleView`
-
-*removed* method: `-cancelAllRipplesAnimated:` in `MDCRippleView`
-
-#### MDCRippleState
-
-*removed* enum: `MDCRippleState`
-
-*removed* enum value: `MDCRippleStateNormal` in `MDCRippleState`
-
-*removed* typedef: `MDCRippleState`
-
-*removed* enum value: `MDCRippleStateSelected` in `MDCRippleState`
-
-### ShapeLibraryNew
-
-**New component.**
-
-### ShapesNew
-
-**New component.**
-
-## Component changes
 
 ## Changes
 
@@ -84,6 +28,9 @@ Replace this text with example code for each new feature.
 * [Example is self-contained. (#6480)](https://github.com/material-components/material-components-ios/commit/62c5097a7a5e65f9d2bfff92ef4eae1ec2250e52) (Robert Moore)
 * [Fix import in VC. (#6470)](https://github.com/material-components/material-components-ios/commit/49e2422e294a1a24968da3a1f948d469736b0cdb) (Robert Moore)
 * [Lays out the bar when titleVisibility is changed (#6152)](https://github.com/material-components/material-components-ios/commit/a9c8fab43dc05df7d56e2e647d2d02efedbac756) (Bartholomew Furrow)
+* [Add snapshot tests. (#6521)](https://github.com/material-components/material-components-ios/commit/d97f9ce0da44b4d78f34372d9868799738d3e02d) (Robert Moore)
+* [Move controller out of `/beta`. (#6501)](https://github.com/material-components/material-components-ios/commit/1b98e1ea21382ed9db3cac66408411c603a6b868) (Robert Moore)
+* [Stop excluding VC example. (#6515)](https://github.com/material-components/material-components-ios/commit/7f959bec011765d268504ba99fdde22438558a9b) (Robert Moore)
 
 ### Buttons
 
@@ -124,10 +71,7 @@ Replace this text with example code for each new feature.
 
 ## Multi-component changes
 
-* [Add snapshot tests. (#6521)](https://github.com/material-components/material-components-ios/commit/d97f9ce0da44b4d78f34372d9868799738d3e02d) (Robert Moore)
-* [Move controller out of `/beta`. (#6501)](https://github.com/material-components/material-components-ios/commit/1b98e1ea21382ed9db3cac66408411c603a6b868) (Robert Moore)
 * [Move shapes from components/private to components/ (#6495)](https://github.com/material-components/material-components-ios/commit/de5d200599035b8e67ed95a7507f82ad2f35d8c4) (Yarden Eitan)
-* [Stop excluding VC example. (#6515)](https://github.com/material-components/material-components-ios/commit/7f959bec011765d268504ba99fdde22438558a9b) (Robert Moore)
 * [{clang-format} Format the components. (#6347)](https://github.com/material-components/material-components-ios/commit/800188a64994c68d089af849ea7cd080b1a4d4ab) (Robert Moore)
 
 ---
