@@ -1,3 +1,137 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+### BottomNavigationBeta
+
+**New component.**
+
+### Collections
+
+#### MDCCollectionViewEditing
+
+*new* property: `minimumPressDuration` in `MDCCollectionViewEditing`
+
+### Ripple
+
+#### MDCRippleTouchController
+
+*new* property: `shouldProcessRippleWithScrollViewGestures` in `MDCRippleTouchController`
+
+*removed* property: `selectionGestureRecognizer` in `MDCRippleTouchController`
+
+*removed* method: `-setRippleAlpha:forState:` in `MDCRippleTouchController`
+
+*removed* property: `selected` in `MDCRippleTouchController`
+
+*removed* property: `allowsSelection` in `MDCRippleTouchController`
+
+*removed* method: `-rippleColorForState:` in `MDCRippleTouchController`
+
+*removed* method: `-rippleAlphaForState:` in `MDCRippleTouchController`
+
+*removed* property: `state` in `MDCRippleTouchController`
+
+*removed* property: `selectionMode` in `MDCRippleTouchController`
+
+*removed* method: `-setRippleColor:forState:` in `MDCRippleTouchController`
+
+#### MDCRippleView
+
+*new* method: `-cancelAllRipplesAnimated:completion:` in `MDCRippleView`
+
+*removed* method: `-cancelAllRipplesAnimated:` in `MDCRippleView`
+
+#### MDCRippleState
+
+*removed* enum: `MDCRippleState`
+
+*removed* enum value: `MDCRippleStateNormal` in `MDCRippleState`
+
+*removed* typedef: `MDCRippleState`
+
+*removed* enum value: `MDCRippleStateSelected` in `MDCRippleState`
+
+### ShapeLibraryNew
+
+**New component.**
+
+### ShapesNew
+
+**New component.**
+
+## Component changes
+
+## Changes
+
+### ActionSheet
+
+* [Make examples use container scheme (#6493)](https://github.com/material-components/material-components-ios/commit/e11f9995d5bd835618e23c739b56cd740a126537) (Cody Weaver)
+
+### BottomNavigation
+
+* [Elevates the BottomNavigationBarController to beta status and re-adds its unit tests. (#6311)](https://github.com/material-components/material-components-ios/commit/d8fed5953562de48d9ba9c04e22faca9bf5f106f) (Eric Lee)
+* [Example is self-contained. (#6480)](https://github.com/material-components/material-components-ios/commit/62c5097a7a5e65f9d2bfff92ef4eae1ec2250e52) (Robert Moore)
+* [Fix import in VC. (#6470)](https://github.com/material-components/material-components-ios/commit/49e2422e294a1a24968da3a1f948d469736b0cdb) (Robert Moore)
+* [Lays out the bar when titleVisibility is changed (#6152)](https://github.com/material-components/material-components-ios/commit/a9c8fab43dc05df7d56e2e647d2d02efedbac756) (Bartholomew Furrow)
+
+### Buttons
+
+* [Remove broken link. (#6518)](https://github.com/material-components/material-components-ios/commit/af00416ce3a23a6e4401059eb917473b04a0bc98) (Robert Moore)
+* [Update examples to use theming extensions (#6475)](https://github.com/material-components/material-components-ios/commit/b99faa6c28b2ef8fb61ebbb7eadbb9995568728e) (Cody Weaver)
+* [Update theming docs for theming extensions (#6467)](https://github.com/material-components/material-components-ios/commit/2248b33aeb6508a4ff360a595a7a495104a665d7) (Cody Weaver)
+
+### Cards
+
+* [Fix elevation values for Highlighted and Selected for Cards in themer. (#6485)](https://github.com/material-components/material-components-ios/commit/eb98acd604eae9bb68da0cbc7828688a9c0ca9cc) (Yarden Eitan)
+* [added correct theming for selected icon (#6482)](https://github.com/material-components/material-components-ios/commit/d947748fee1de88cf625f8c8480fc57c58ada31a) (Yarden Eitan)
+
+### Collections
+
+* [Customize reorder long-press timing. (#6469)](https://github.com/material-components/material-components-ios/commit/d57f7199b3cc434442d1176f230e4d80c8b18d69) (Robert Moore)
+
+### Dialogs
+
+* [Fix broken link to beta documentation. (#6506)](https://github.com/material-components/material-components-ios/commit/49c5913b62a6e6da8c4f832d50338ec5020aee56) (featherless)
+* [Update theming docs for theming extension (#6496)](https://github.com/material-components/material-components-ios/commit/3f77bf511830727af4607e6dfe8ac61db0be6d64) (Cody Weaver)
+
+### NavigationDrawer
+
+* [Fix issue when setting `trackingScrollView` (#6492)](https://github.com/material-components/material-components-ios/commit/4a3ca45176fa457a735260d6fe7ec3e48d274bcc) (Cody Weaver)
+* [Fix issue where drawer opens passed `initialDrawerFactor` (#6491)](https://github.com/material-components/material-components-ios/commit/63c8c54ec2ec9a14d76823dc7eacab7aca5b81a8) (Cody Weaver)
+* [Fix issue where scrim is shown below content (#6514)](https://github.com/material-components/material-components-ios/commit/7050808d62e0b854f4ab8d2680de0983da7cb418) (Cody Weaver)
+* [fix bottom drawer rest in the middle of corner radius animation (#6516)](https://github.com/material-components/material-components-ios/commit/0512eb03bf3845fbc739f6f206ff5010a20c35e6) (Wenyu Zhang)
+
+### Ripple
+
+* [Fail the ripple gesture when other scroll view gestures are competing unless they are tap or long press gestures. (#6487)](https://github.com/material-components/material-components-ios/commit/6c39907fb65438176dc5c589a763f7f94fb72dcc) (Yarden Eitan)
+* [Remove the notion of state and its implementation from the ripple touch controller (#6486)](https://github.com/material-components/material-components-ios/commit/4556a2a71a0986553da94f37dfe3148259abe376) (Yarden Eitan)
+* [provide completion block for cancellation (#6488)](https://github.com/material-components/material-components-ios/commit/854b8fe8384fd0eb0ef6c7082ccde2e039e1092e) (Yarden Eitan)
+
+### TextFields
+
+* [Fixed issue: Placeholder label gets stuck in expanded state when switching between controls  (#6269)](https://github.com/material-components/material-components-ios/commit/99871be6cd2ca9b365d99d46a6c28a93ac22e802) (Sergey Aleksandrov)
+
+## Multi-component changes
+
+* [Add snapshot tests. (#6521)](https://github.com/material-components/material-components-ios/commit/d97f9ce0da44b4d78f34372d9868799738d3e02d) (Robert Moore)
+* [Move controller out of `/beta`. (#6501)](https://github.com/material-components/material-components-ios/commit/1b98e1ea21382ed9db3cac66408411c603a6b868) (Robert Moore)
+* [Move shapes from components/private to components/ (#6495)](https://github.com/material-components/material-components-ios/commit/de5d200599035b8e67ed95a7507f82ad2f35d8c4) (Yarden Eitan)
+* [Stop excluding VC example. (#6515)](https://github.com/material-components/material-components-ios/commit/7f959bec011765d268504ba99fdde22438558a9b) (Robert Moore)
+* [{clang-format} Format the components. (#6347)](https://github.com/material-components/material-components-ios/commit/800188a64994c68d089af849ea7cd080b1a4d4ab) (Robert Moore)
+
+---
+
 # 75.0.1
 
 This patch release reformats the entire code base to align to the latest
