@@ -29,6 +29,8 @@
 // The Bundle for string resources.
 static NSString *const kMaterialBottomNavigationBundle = @"MaterialBottomNavigation.bundle";
 
+static const CGFloat kMinItemWidth = 80;
+static const CGFloat kMaxItemWidth = 168;
 static const CGFloat kMDCBottomNavigationBarHeight = 56;
 static const CGFloat kMDCBottomNavigationBarHeightAdjacentTitles = 40;
 static const CGFloat kMDCBottomNavigationBarItemsHorizontalMargin = 12;
@@ -195,12 +197,12 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
         CGRectMake(insets.left, 0, bottomNavSize.width - insets.left - insets.right, barHeight);
     self.itemLayoutFrame = CGRectMake(0, 0, CGRectGetWidth(self.containerView.frame), barHeight);
   } else {
-    CGFloat maxItemWidth = 120;
+    CGFloat maxItemWidth = kMinItemWidth;
     for (UIView *itemView in self.itemViews) {
       maxItemWidth =
           MAX(maxItemWidth, [itemView sizeThatFits:CGSizeMake(INFINITY, INFINITY)].width);
     }
-    maxItemWidth = MIN(168, maxItemWidth);
+    maxItemWidth = MIN(kMaxItemWidth, maxItemWidth);
     CGFloat layoutFrameWidth = maxItemWidth * self.items.count;
     containerWidth = MAX(containerWidth, layoutFrameWidth);
     CGFloat clusteredOffsetX = (bottomNavSize.width - containerWidth) / 2;
