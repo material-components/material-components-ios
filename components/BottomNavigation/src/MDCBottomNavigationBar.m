@@ -197,7 +197,8 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
   } else {
     CGFloat maxItemWidth = 120;
     for (UIView *itemView in self.itemViews) {
-      maxItemWidth = MAX(maxItemWidth, [itemView sizeThatFits:CGSizeMake(INFINITY, INFINITY)].width);
+      maxItemWidth =
+          MAX(maxItemWidth, [itemView sizeThatFits:CGSizeMake(INFINITY, INFINITY)].width);
     }
     maxItemWidth = MIN(168, maxItemWidth);
     CGFloat layoutFrameWidth = maxItemWidth * self.items.count;
@@ -220,9 +221,11 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
   for (NSUInteger i = 0; i < self.itemViews.count; i++) {
     MDCBottomNavigationItemView *itemView = self.itemViews[i];
     if (layoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
-      itemView.frame = CGRectMake(CGRectGetMinX(self.itemLayoutFrame) + i * itemWidth, 0, itemWidth, navBarHeight);
+      itemView.frame = CGRectMake(CGRectGetMinX(self.itemLayoutFrame) + i * itemWidth, 0, itemWidth,
+                                  navBarHeight);
     } else {
-      itemView.frame = CGRectMake(CGRectGetMaxX(self.itemLayoutFrame) - (i + 1) * itemWidth, 0, itemWidth, navBarHeight);
+      itemView.frame = CGRectMake(CGRectGetMaxX(self.itemLayoutFrame) - (i + 1) * itemWidth, 0,
+                                  itemWidth, navBarHeight);
     }
   }
 }
