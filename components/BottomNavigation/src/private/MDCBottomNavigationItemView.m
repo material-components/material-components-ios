@@ -166,64 +166,125 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   [self centerLayoutAnimated:NO];
 }
 
-- (void)centerLayoutAnimated:(BOOL)animated {
-  CGRect contentBoundingRect = UIEdgeInsetsInsetRect(self.bounds, self.contentInsets);
+- (CGSize)sizeThatFits:(CGSize)size {
+  CGRect availableRect = CGRectMake(0, 0, size.width, size.height);
+  CGRect labelFrame = CGRectZero;
+  CGRect iconImageViewFrame = CGRectZero;
+  [self calculateLayoutInBounds:availableRect
+                  forLabelFrame:&labelFrame
+             iconImageViewFrame:&iconImageViewFrame
+                badgeViewCenter:NULL];
+
+  CGRect totalFrame = CGRectUnion(labelFrame, iconImageViewFrame);
+  totalFrame = UIEdgeInsetsInsetRect(totalFrame, UIEdgeInsetsMake(-self.contentInsets.top,
+                                                                  -self.contentInsets.left,
+                                                                  -self.contentInsets.bottom,
+                                                                  -self.contentInsets.right));
+  return totalFrame.size;
+}
+
+- (void)calculateLayoutInBounds:(CGRect)contentBounds
+                  forLabelFrame:(CGRect *)outLabelFrame
+             iconImageViewFrame:(CGRect *)outIconFrame
+                badgeViewCenter:(CGPoint *)outBadgeViewCenter {
+  CGRect contentBoundingRect = CGRectStandardize(UIEdgeInsetsInsetRect(contentBounds,
+                                                                       self.contentInsets));
   CGFloat centerY = CGRectGetMidY(contentBoundingRect);
   CGFloat centerX = CGRectGetMidX(contentBoundingRect);
   UIUserInterfaceLayoutDirection layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
   BOOL isRTL = layoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
   if (isRTL) {
-    centerX = CGRectGetWidth(self.bounds) - centerX;
+    centerX = CGRectGetWidth(contentBounds) - centerX;
   }
+
+  CGSize iconImageViewSize = [self.iconImageView sizeThatFits:contentBoundingRect.size];
+  CGSize labelSize = [self.label sizeThatFits:contentBoundingRect.size];
+  CGPoint labelCenter = CGPointZero;
+  CGPoint iconImageViewCenter = CGPointZero;
 
   if (self.titleBelowIcon) {
     BOOL titleHidden =
         self.titleVisibility == MDCBottomNavigationBarTitleVisibilityNever ||
         (self.titleVisibility == MDCBottomNavigationBarTitleVisibilitySelected && !self.selected);
-    CGFloat iconHeight = CGRectGetHeight(self.iconImageView.bounds);
-    CGFloat labelHeight = CGRectGetHeight(self.label.bounds);
+    CGFloat iconHeight = iconImageViewSize.height;
+    CGFloat labelHeight = labelSize.height;
     CGFloat totalContentHeight = iconHeight;
     if (!titleHidden) {
       totalContentHeight += labelHeight + self.contentVerticalMargin;
     }
-    CGPoint iconImageViewCenter =
-        CGPointMake(centerX, centerY - totalContentHeight / 2 + iconHeight / 2);
-    self.label.center = CGPointMake(centerX, centerY + totalContentHeight / 2 - labelHeight / 2);
+    iconImageViewCenter = CGPointMake(centerX, centerY - totalContentHeight / 2 + iconHeight / 2);
+    labelCenter = CGPointMake(centerX, centerY + totalContentHeight / 2 - labelHeight / 2);
+  } else {
+    CGFloat contentsWidth = iconImageViewSize.width + labelSize.width;
+    if (!isRTL) {
+      iconImageViewCenter =
+          CGPointMake(centerX - CGRectGetWidth(contentBoundingRect) * (CGFloat)0.2, centerY);
+      CGFloat labelCenterX =
+          iconImageViewCenter.x + contentsWidth / 2 + self.contentHorizontalMargin;
+      labelCenter = CGPointMake(labelCenterX, centerY);
+    } else {
+      iconImageViewCenter =
+          CGPointMake(centerX + CGRectGetWidth(contentBoundingRect) * (CGFloat)0.2, centerY);
+      CGFloat labelCenterX =
+          iconImageViewCenter.x - contentsWidth / 2 - self.contentHorizontalMargin;
+      labelCenter = CGPointMake(labelCenterX, centerY);
+    }
+  }
+  CGRect tempIconImageViewFrame = CGRectMake(iconImageViewCenter.x - (iconImageViewSize.width / 2),
+                                             iconImageViewCenter.y - (iconImageViewSize.height / 2),
+                                             iconImageViewSize.width, iconImageViewSize.height);
+  if (outBadgeViewCenter != NULL) {
+    *outBadgeViewCenter = [self badgeCenterFromIconFrame:tempIconImageViewFrame isRTL:isRTL];
+  }
+  if (outLabelFrame != NULL) {
+    *outLabelFrame = CGRectMake(labelCenter.x - (labelSize.width / 2),
+                                labelCenter.y - (labelSize.height / 2),
+                                labelSize.width, labelSize.height);
+  }
+  if (outIconFrame != NULL) {
+    *outIconFrame = tempIconImageViewFrame;
+  }
+}
+
+- (void)centerLayoutAnimated:(BOOL)animated {
+  CGRect labelFrame = CGRectZero;
+  CGRect iconImageViewFrame = CGRectZero;
+  CGPoint badgeViewCenter = CGPointZero;
+  UIUserInterfaceLayoutDirection layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
+  BOOL isRTL = layoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
+
+  [self calculateLayoutInBounds:self.bounds
+                  forLabelFrame:&labelFrame
+             iconImageViewFrame:&iconImageViewFrame
+                badgeViewCenter:&badgeViewCenter];
+
+  CGPoint iconImageViewCenter = CGPointMake(CGRectGetMidX(iconImageViewFrame),
+                                            CGRectGetMidY(iconImageViewFrame));
+  self.label.center = CGPointMake(CGRectGetMidX(labelFrame), CGRectGetMidY(labelFrame));
+
+  if (self.titleBelowIcon) {
     if (animated) {
       [UIView animateWithDuration:kMDCBottomNavigationItemViewTransitionDuration
                        animations:^(void) {
                          self.iconImageView.center = iconImageViewCenter;
                          self.badge.center = [self
-                             badgeCenterFromIconFrame:CGRectStandardize(self.iconImageView.frame)
+                             badgeCenterFromIconFrame:CGRectStandardize(iconImageViewFrame)
                                                 isRTL:isRTL];
                        }];
     } else {
       self.iconImageView.center = iconImageViewCenter;
-      self.badge.center = [self badgeCenterFromIconFrame:CGRectStandardize(self.iconImageView.frame)
+      self.badge.center = [self badgeCenterFromIconFrame:CGRectStandardize(iconImageViewFrame)
                                                    isRTL:isRTL];
     }
     self.label.textAlignment = NSTextAlignmentCenter;
   } else {
-    CGFloat contentsWidth =
-        CGRectGetWidth(self.iconImageView.bounds) + CGRectGetWidth(self.label.bounds);
     if (!isRTL) {
-      CGPoint iconImageViewCenter =
-          CGPointMake(centerX - CGRectGetWidth(contentBoundingRect) * (CGFloat)0.2, centerY);
-      self.iconImageView.center = iconImageViewCenter;
-      CGFloat labelCenterX =
-          iconImageViewCenter.x + contentsWidth / 2 + self.contentHorizontalMargin;
-      self.label.center = CGPointMake(labelCenterX, centerY);
       self.label.textAlignment = NSTextAlignmentLeft;
     } else {
-      CGPoint iconImageViewCenter =
-          CGPointMake(centerX + CGRectGetWidth(contentBoundingRect) * (CGFloat)0.2, centerY);
-      self.iconImageView.center = iconImageViewCenter;
-      CGFloat labelCenterX =
-          iconImageViewCenter.x - contentsWidth / 2 - self.contentHorizontalMargin;
-      self.label.center = CGPointMake(labelCenterX, centerY);
       self.label.textAlignment = NSTextAlignmentRight;
     }
-    self.badge.center = [self badgeCenterFromIconFrame:CGRectStandardize(self.iconImageView.frame)
+    self.iconImageView.center = iconImageViewCenter;
+    self.badge.center = [self badgeCenterFromIconFrame:CGRectStandardize(iconImageViewFrame)
                                                  isRTL:isRTL];
   }
 }
