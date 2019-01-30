@@ -28,18 +28,9 @@
 - (id)init {
   self = [super init];
   if (self) {
-    self.colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-    self.shapeScheme = [[MDCShapeScheme alloc] init];
+    self.containerScheme = [[MDCContainerScheme alloc] init];
   }
   return self;
-}
-
-- (MDCContainerScheme *)containerScheme {
-  MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
-  scheme.colorScheme = self.colorScheme;
-  scheme.shapeScheme = self.shapeScheme;
-  return scheme;
 }
 
 - (void)loadView {
@@ -75,6 +66,7 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  [self.sizingChip applyThemeWithScheme:self.containerScheme];
 
   self.outlined = NO;
   self.navigationItem.rightBarButtonItem =
@@ -120,9 +112,9 @@
   cell.userInteractionEnabled = indexPath.row != 2;
 
   if (self.isOutlined) {
-    [chipView applyOutlinedThemeWithScheme:[self containerScheme]];
+    [chipView applyOutlinedThemeWithScheme:self.containerScheme];
   } else {
-    [chipView applyThemeWithScheme:[self containerScheme]];
+    [chipView applyThemeWithScheme:self.containerScheme];
   }
 
   return cell;

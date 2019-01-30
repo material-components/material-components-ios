@@ -14,8 +14,7 @@
 
 #import "supplemental/ChipsExamplesSupplemental.h"
 
-#import "MaterialChips+ShapeThemer.h"
-#import "MaterialChips+TypographyThemer.h"
+#import "MaterialChips+Theming.h"
 #import "MaterialChips.h"
 
 @implementation ChipsTypicalUseViewController {
@@ -30,8 +29,7 @@
   if (self) {
     _sizingChip = [[MDCChipView alloc] init];
     _sizingChip.mdc_adjustsFontForContentSizeCategory = YES;
-    self.shapeScheme = [[MDCShapeScheme alloc] init];
-    self.typographyScheme = [[MDCTypographyScheme alloc] init];
+    self.containerScheme = [[MDCContainerScheme alloc] init];
   }
   return self;
 }
@@ -45,8 +43,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  [MDCChipViewTypographyThemer applyTypographyScheme:self.typographyScheme toChipView:_sizingChip];
-  [MDCChipViewShapeThemer applyShapeScheme:self.shapeScheme toChipView:_sizingChip];
+  [_sizingChip applyThemeWithScheme:self.containerScheme];
 
   if (@available(iOS 11.0, *)) {
     self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
@@ -113,10 +110,7 @@
 
   ChipModel *model = self.model[indexPath.row];
   [model apply:cell.chipView];
-  [MDCChipViewTypographyThemer applyTypographyScheme:self.typographyScheme
-                                          toChipView:cell.chipView];
-  [MDCChipViewShapeThemer applyShapeScheme:self.shapeScheme toChipView:cell.chipView];
-
+  [cell.chipView applyThemeWithScheme:self.containerScheme];
   return cell;
 }
 
