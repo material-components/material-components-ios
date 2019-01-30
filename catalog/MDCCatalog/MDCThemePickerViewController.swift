@@ -152,6 +152,7 @@ class MDCThemePickerViewController: UIViewController, UITableViewDelegate, UITab
 
   private func showDialog(for propertyIndex: Int) {
     print("Change \(properties[propertyIndex])")
+    present(ColorSchemeDialog(nibName: nil, bundle: nil), animated: true, completion: nil)
   }
 
 }
@@ -230,5 +231,26 @@ class SchemeCell : UITableViewCell {
 }
 
 class ColorSchemeDialog : UIViewController {
-  
+
+  lazy var alertView: MDCAlertControllerView = {
+    self.view as? MDCAlertControllerView
+  }()
+  override var view: UIView! = MDCAlertControllerView(frame: .zero)
+
+  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    super.init(nibName: nil, bundle: nil)
+    self.transitionCoordinator = MDCDialogTransitionController()
+    super.transitioningDelegate = self.transitionCoordinator
+    super.modalPresentationStyle = .custom
+  }
+
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
+    self.alertView.backgroundColor = .blue
+  }
 }
