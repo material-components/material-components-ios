@@ -30,7 +30,6 @@
     _sizingChip = [[MDCChipView alloc] init];
     _sizingChip.mdc_adjustsFontForContentSizeCategory = YES;
     self.containerScheme = [[MDCContainerScheme alloc] init];
-    ;
   }
   return self;
 }

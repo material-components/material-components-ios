@@ -30,7 +30,6 @@
   self = [super init];
   if (self) {
     self.containerScheme = [[MDCContainerScheme alloc] init];
-    ;
   }
   return self;
 }

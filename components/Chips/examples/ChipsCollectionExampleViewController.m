@@ -28,7 +28,6 @@
   if (self) {
     self.editing = YES;
     self.containerScheme = [[MDCContainerScheme alloc] init];
-    ;
   }
   return self;
 }
