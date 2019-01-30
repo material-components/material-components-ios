@@ -28,7 +28,7 @@ final class AppTheme {
   var typographyScheme: MDCTypographyScheming {
     return containerScheme.typographyScheme ?? MDCTypographyScheme(defaults: .material201804)
   }
-2
+
   init(containerScheme: MDCContainerScheming) {
     self.containerScheme = containerScheme
   }
