@@ -66,7 +66,7 @@
 
 @end
 
-@interface DialogsRoundedCornerExampleViewController ()
+@interface DialogsRoundedCornerExampleViewController () <MDCDialogPresentationControllerDelegate>
 
 @property(nonatomic, strong) MDCButton *presentButton;
 @property(nonatomic, strong) MDCDialogTransitionController *transitionController;
@@ -131,9 +131,15 @@
 
   // ensure shadow/tracking layer matches the dialog's corner radius
   MDCDialogPresentationController *controller = viewController.mdc_dialogPresentationController;
+  controller.dialogPresentationControllerDelegate = self;
   [controller applyThemeWithScheme:self.containerScheme];
 
   [self presentViewController:viewController animated:YES completion:nil];
+}
+
+- (void)dialogPresentationControllerDidDismiss:
+    (MDCDialogPresentationController *)dialogPresentationController {
+  NSLog(@"You just dismissed a dialog with rounded corners");
 }
 
 #pragma mark - CatalogByConvention
