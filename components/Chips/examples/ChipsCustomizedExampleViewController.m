@@ -90,8 +90,8 @@
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout*)collectionViewLayout
-  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+                    layout:(UICollectionViewLayout *)collectionViewLayout
+    sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
   NSArray *selectedPaths = [collectionView indexPathsForSelectedItems];
   _sizingChip.selected = [selectedPaths containsObject:indexPath];
   _sizingChip.titleLabel.text = self.titles[indexPath.row];
@@ -129,4 +129,3 @@
 }
 
 @end
-

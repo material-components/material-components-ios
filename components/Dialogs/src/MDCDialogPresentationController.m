@@ -85,8 +85,8 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
     _dimmingView = [[UIView alloc] initWithFrame:CGRectZero];
     _dimmingView.backgroundColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.32];
     _dimmingView.alpha = 0;
-    _dismissGestureRecognizer =
-        [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismiss:)];
+    _dismissGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                        action:@selector(dismiss:)];
     [_dimmingView addGestureRecognizer:_dismissGestureRecognizer];
 
     _trackingView = [[MDCDialogShadowedView alloc] init];
@@ -121,7 +121,8 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
   containerSafeAreaInsets.bottom = MAX(containerSafeAreaInsets.bottom, keyboardHeight);
 
   // Area that the presented dialog can use.
-  CGRect standardPresentableBounds = UIEdgeInsetsInsetRect(containerBounds, containerSafeAreaInsets);
+  CGRect standardPresentableBounds =
+      UIEdgeInsetsInsetRect(containerBounds, containerSafeAreaInsets);
 
   CGRect presentedViewFrame = CGRectZero;
   presentedViewFrame.size = [self sizeForChildContentContainer:self.presentedViewController
@@ -267,14 +268,15 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
        withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
   [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 
-  [coordinator animateAlongsideTransition:
-      ^(__unused id<UIViewControllerTransitionCoordinatorContext> context) {
+  [coordinator
+      animateAlongsideTransition:^(
+          __unused id<UIViewControllerTransitionCoordinatorContext> context) {
         self.dimmingView.frame = self.containerView.bounds;
         CGRect presentedViewFrame = [self frameOfPresentedViewInContainerView];
         self.presentedView.frame = presentedViewFrame;
         self.trackingView.frame = presentedViewFrame;
       }
-                               completion:NULL];
+                      completion:NULL];
 }
 
 /**

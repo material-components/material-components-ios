@@ -45,8 +45,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  [MDCChipViewTypographyThemer applyTypographyScheme:self.typographyScheme
-                                          toChipView:_sizingChip];
+  [MDCChipViewTypographyThemer applyTypographyScheme:self.typographyScheme toChipView:_sizingChip];
   [MDCChipViewShapeThemer applyShapeScheme:self.shapeScheme toChipView:_sizingChip];
 
   if (@available(iOS 11.0, *)) {
@@ -65,9 +64,9 @@
                                       target:self
                                       action:@selector(clearSelected)];
 
-  NSDictionary *enabledAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
+  NSDictionary *enabledAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
   NSDictionary *disabledAttributes =
-      @{NSForegroundColorAttributeName: [UIColor colorWithWhite:1 alpha:0.75]};
+      @{NSForegroundColorAttributeName : [UIColor colorWithWhite:1 alpha:0.75]};
   [self.navigationItem.rightBarButtonItem setTitleTextAttributes:enabledAttributes
                                                         forState:UIControlStateNormal];
   [self.navigationItem.rightBarButtonItem setTitleTextAttributes:disabledAttributes
@@ -128,8 +127,8 @@
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout*)collectionViewLayout
-  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+                    layout:(UICollectionViewLayout *)collectionViewLayout
+    sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
   NSArray *selectedPaths = [collectionView indexPathsForSelectedItems];
   _sizingChip.selected = [selectedPaths containsObject:indexPath];
 

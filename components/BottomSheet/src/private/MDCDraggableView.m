@@ -23,7 +23,7 @@ static void CancelGestureRecognizer(UIGestureRecognizer *gesture) {
   }
 }
 
-@interface MDCDraggableView ()<UIGestureRecognizerDelegate>
+@interface MDCDraggableView () <UIGestureRecognizerDelegate>
 @property(nonatomic) UIPanGestureRecognizer *dragRecognizer;
 @property(nonatomic, strong) UIScrollView *scrollView;
 @end

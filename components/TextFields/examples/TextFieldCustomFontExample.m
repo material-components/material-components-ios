@@ -52,10 +52,12 @@
   MDCTextField *systemFontDynamicTextField = [self setupSystemFontDynamicTextField];
 
   // Create a Custom Font TextField.
-  MDCTextField *customFontTextField = [self setupCustomFontTextField];;
+  MDCTextField *customFontTextField = [self setupCustomFontTextField];
+  ;
 
   // Create a Custom Font Dynamic TextField.
-  MDCTextField *customFontDynamicTextField = [self setupCustomFontDynamicTextField];;
+  MDCTextField *customFontDynamicTextField = [self setupCustomFontDynamicTextField];
+  ;
 
   // Create a System Multiline TextField.
   MDCMultilineTextField *multilineTextField = [self setupSystemMultilineTextField];
@@ -67,25 +69,23 @@
   MDCMultilineTextField *multilineCustomDynamicTextField =
       [self setupCustomMultilineDynamicTextField];
 
-
   NSDictionary *views = @{
-                          @"t1" : systemFontTextField,
-                          @"t2" : systemFontDynamicTextField,
-                          @"t3" : customFontTextField,
-                          @"t4" : customFontDynamicTextField,
-                          @"t5" : multilineTextField,
-                          @"t6" : multilineDynamicTextField,
-                          @"t7" : multilineCustomDynamicTextField
-                          };
+    @"t1" : systemFontTextField,
+    @"t2" : systemFontDynamicTextField,
+    @"t3" : customFontTextField,
+    @"t4" : customFontDynamicTextField,
+    @"t5" : multilineTextField,
+    @"t6" : multilineDynamicTextField,
+    @"t7" : multilineCustomDynamicTextField
+  };
   NSMutableArray<NSLayoutConstraint *> *constraints = [NSMutableArray
-                                                       arrayWithArray:
-                                                       [NSLayoutConstraint
-                                                        constraintsWithVisualFormat:@"V:[t1]-[t2]-[t3]-[t4]-[t5]-[t6]-[t7]"
+      arrayWithArray:[NSLayoutConstraint
+                         constraintsWithVisualFormat:@"V:[t1]-[t2]-[t3]-[t4]-[t5]-[t6]-[t7]"
 
-                                                        options:NSLayoutFormatAlignAllLeading |
-                                                        NSLayoutFormatAlignAllTrailing
-                                                        metrics:nil
-                                                        views:views]];
+                                             options:NSLayoutFormatAlignAllLeading |
+                                                     NSLayoutFormatAlignAllTrailing
+                                             metrics:nil
+                                               views:views]];
   [constraints addObject:[NSLayoutConstraint constraintWithItem:systemFontTextField
                                                       attribute:NSLayoutAttributeLeading
                                                       relatedBy:NSLayoutRelationEqual
@@ -102,38 +102,38 @@
                                                        constant:0]];
   if (@available(iOS 11.0, *)) {
     [NSLayoutConstraint activateConstraints:@[
-                                              [NSLayoutConstraint constraintWithItem:systemFontTextField
-                                                                           attribute:NSLayoutAttributeTop
-                                                                           relatedBy:NSLayoutRelationEqual
-                                                                              toItem:self.scrollView.contentLayoutGuide
-                                                                           attribute:NSLayoutAttributeTop
-                                                                          multiplier:1
-                                                                            constant:20],
-                                              [NSLayoutConstraint constraintWithItem:multilineCustomDynamicTextField
-                                                                           attribute:NSLayoutAttributeBottom
-                                                                           relatedBy:NSLayoutRelationEqual
-                                                                              toItem:self.scrollView.contentLayoutGuide
-                                                                           attribute:NSLayoutAttributeBottomMargin
-                                                                          multiplier:1
-                                                                            constant:-20]
-                                              ]];
+      [NSLayoutConstraint constraintWithItem:systemFontTextField
+                                   attribute:NSLayoutAttributeTop
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:self.scrollView.contentLayoutGuide
+                                   attribute:NSLayoutAttributeTop
+                                  multiplier:1
+                                    constant:20],
+      [NSLayoutConstraint constraintWithItem:multilineCustomDynamicTextField
+                                   attribute:NSLayoutAttributeBottom
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:self.scrollView.contentLayoutGuide
+                                   attribute:NSLayoutAttributeBottomMargin
+                                  multiplier:1
+                                    constant:-20]
+    ]];
   } else {
     [NSLayoutConstraint activateConstraints:@[
-                                              [NSLayoutConstraint constraintWithItem:systemFontTextField
-                                                                           attribute:NSLayoutAttributeTop
-                                                                           relatedBy:NSLayoutRelationEqual
-                                                                              toItem:self.scrollView
-                                                                           attribute:NSLayoutAttributeTop
-                                                                          multiplier:1
-                                                                            constant:20],
-                                              [NSLayoutConstraint constraintWithItem:multilineCustomDynamicTextField
-                                                                           attribute:NSLayoutAttributeBottom
-                                                                           relatedBy:NSLayoutRelationEqual
-                                                                              toItem:self.scrollView
-                                                                           attribute:NSLayoutAttributeBottomMargin
-                                                                          multiplier:1
-                                                                            constant:-20]
-                                              ]];
+      [NSLayoutConstraint constraintWithItem:systemFontTextField
+                                   attribute:NSLayoutAttributeTop
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:self.scrollView
+                                   attribute:NSLayoutAttributeTop
+                                  multiplier:1
+                                    constant:20],
+      [NSLayoutConstraint constraintWithItem:multilineCustomDynamicTextField
+                                   attribute:NSLayoutAttributeBottom
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:self.scrollView
+                                   attribute:NSLayoutAttributeBottomMargin
+                                  multiplier:1
+                                    constant:-20]
+    ]];
   }
 
   [NSLayoutConstraint activateConstraints:constraints];
@@ -173,7 +173,8 @@
   systemFontTextField.clearButtonMode = UITextFieldViewModeUnlessEditing;
   systemFontTextField.backgroundColor = [UIColor whiteColor];
 
-  self.systemFontController = [[MDCTextInputControllerOutlined alloc] initWithTextInput:systemFontTextField];
+  self.systemFontController =
+      [[MDCTextInputControllerOutlined alloc] initWithTextInput:systemFontTextField];
   self.systemFontController.placeholderText = @"System Font";
   self.systemFontController.mdc_adjustsFontForContentSizeCategory = NO;
   return systemFontTextField;
@@ -208,12 +209,12 @@
       [[MDCTextInputControllerOutlined alloc] initWithTextInput:customFontTextField];
   self.customFontController.placeholderText = @"Custom Font";
   self.customFontController.mdc_adjustsFontForContentSizeCategory = NO;
-  self.customFontController.leadingUnderlineLabelFont =
-      [UIFont fontWithName:@"AmericanTypewriter" size:12];
-  self.customFontController.trailingUnderlineLabelFont =
-      [UIFont fontWithName:@"Chalkduster" size:12];
-  self.customFontController.inlinePlaceholderFont =
-      [UIFont fontWithName:@"AmericanTypewriter" size:12];
+  self.customFontController.leadingUnderlineLabelFont = [UIFont fontWithName:@"AmericanTypewriter"
+                                                                        size:12];
+  self.customFontController.trailingUnderlineLabelFont = [UIFont fontWithName:@"Chalkduster"
+                                                                         size:12];
+  self.customFontController.inlinePlaceholderFont = [UIFont fontWithName:@"AmericanTypewriter"
+                                                                    size:12];
   self.customFontController.textInputFont = [UIFont fontWithName:@"Chalkduster" size:16];
   return customFontTextField;
 }
@@ -230,10 +231,10 @@
       [[MDCTextInputControllerOutlined alloc] initWithTextInput:customFontDynamicTextField];
   self.customFontDynamicController.placeholderText = @"Custom Font - Dynamic";
   self.customFontDynamicController.helperText = @"Helper";
-  self.customFontDynamicController.leadingUnderlineLabelFont =
-      [UIFont fontWithName:@"Zapfino" size:12];
-  self.customFontDynamicController.trailingUnderlineLabelFont =
-      [UIFont fontWithName:@"Chalkduster" size:12];
+  self.customFontDynamicController.leadingUnderlineLabelFont = [UIFont fontWithName:@"Zapfino"
+                                                                               size:12];
+  self.customFontDynamicController.trailingUnderlineLabelFont = [UIFont fontWithName:@"Chalkduster"
+                                                                                size:12];
   self.customFontDynamicController.inlinePlaceholderFont = [UIFont fontWithName:@"Zapfino" size:12];
   self.customFontDynamicController.textInputFont = [UIFont fontWithName:@"Zapfino" size:16];
   self.customFontDynamicController.mdc_adjustsFontForContentSizeCategory = YES;
@@ -277,22 +278,20 @@
 
   multilineCustomDynamicTextField.textView.delegate = self;
 
-  self.multilineCustomFontDynamicController =
-      [[MDCTextInputControllerOutlinedTextArea alloc]
-            initWithTextInput:multilineCustomDynamicTextField];
+  self.multilineCustomFontDynamicController = [[MDCTextInputControllerOutlinedTextArea alloc]
+      initWithTextInput:multilineCustomDynamicTextField];
   self.multilineCustomFontDynamicController.placeholderText = @"Multiline Custom Font Dynamic Text";
   self.multilineCustomFontDynamicController.leadingUnderlineLabelFont =
       [UIFont fontWithName:@"AmericanTypewriter" size:12];
-  self.customFontDynamicController.trailingUnderlineLabelFont =
-      [UIFont fontWithName:@"Chalkduster" size:12];
-  self.multilineCustomFontDynamicController.inlinePlaceholderFont =
-      [UIFont fontWithName:@"Zapfino" size:12];
+  self.customFontDynamicController.trailingUnderlineLabelFont = [UIFont fontWithName:@"Chalkduster"
+                                                                                size:12];
+  self.multilineCustomFontDynamicController.inlinePlaceholderFont = [UIFont fontWithName:@"Zapfino"
+                                                                                    size:12];
   self.multilineCustomFontDynamicController.textInputFont =
       [UIFont fontWithName:@"AmericanTypewriter" size:16];
   self.multilineCustomFontDynamicController.mdc_adjustsFontForContentSizeCategory = YES;
   return multilineCustomDynamicTextField;
 }
-
 
 #pragma mark - UITextFieldDelegate
 
@@ -303,16 +302,17 @@
 }
 
 - (BOOL)textField:(UITextField *)textField
-shouldChangeCharactersInRange:(NSRange)range
-replacementString:(NSString *)string {
-  NSString *finishedString =
-  [textField.text stringByReplacingCharactersInRange:range withString:string];
+    shouldChangeCharactersInRange:(NSRange)range
+                replacementString:(NSString *)string {
+  NSString *finishedString = [textField.text stringByReplacingCharactersInRange:range
+                                                                     withString:string];
 
   if (textField == (UITextField *)self.systemFontController.textInput) {
     if ([finishedString rangeOfCharacterFromSet:[NSCharacterSet decimalDigitCharacterSet]].length &&
         ![self.systemFontController.errorText isEqualToString:@"Error: You cannot enter numbers"]) {
       // The entered text contains numbers and we have not set an error
-      [self.systemFontController setErrorText:@"You cannot enter numbers" errorAccessibilityValue:nil];
+      [self.systemFontController setErrorText:@"You cannot enter numbers"
+                      errorAccessibilityValue:nil];
 
       // Since we are doing manual layout, we need to react to the expansion of the input that will
       // come from setting an error.
@@ -329,9 +329,9 @@ replacementString:(NSString *)string {
 
   if (textField == (UITextField *)self.customFontController.textInput) {
     if ([finishedString rangeOfCharacterFromSet:[[NSCharacterSet letterCharacterSet] invertedSet]]
-        .length > 0) {
+            .length > 0) {
       [self.customFontController setErrorText:@"Error: City can only contain letters"
-                errorAccessibilityValue:nil];
+                      errorAccessibilityValue:nil];
     } else {
       [self.customFontController setErrorText:nil errorAccessibilityValue:nil];
     }
@@ -409,9 +409,9 @@ replacementString:(NSString *)string {
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Text Field", @"Custom Fonts" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Text Field", @"Custom Fonts" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

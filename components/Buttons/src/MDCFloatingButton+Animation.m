@@ -129,15 +129,20 @@ static const NSTimeInterval kMDCFloatingButtonOpacityExitOffset = 0.150;
                                                                   presentationLayer.transform,
                                                                   CATransform3DMakeScale(0, 0, 1))]
                             : nil;
+
+      // clang-format off
+      CAMediaTimingFunction *iconScaleTimingFunction =
+          [[CAMediaTimingFunction alloc] initWithControlPoints:0:0:(float)0.2:1];
+      // clang-format on
       CABasicAnimation *iconScaleAnimation = [MDCFloatingButton
           animationWithKeypath:@"transform"
                        toValue:[NSValue valueWithCATransform3D:iconPresentationLayer.transform]
                      fromValue:fromValue
-                timingFunction:[[CAMediaTimingFunction alloc]
-                                   initWithControlPoints:0:0:(float)0.2:1]
+                timingFunction:iconScaleTimingFunction
                       fillMode:kCAFillModeBoth
                       duration:kMDCFloatingButtonEnterIconDuration
                    beginOffset:kMDCFloatingButtonEnterIconOffset];
+
       [self.imageView.layer addAnimation:iconScaleAnimation forKey:kMDCFloatingButtonTransformKey];
     }
 
@@ -184,12 +189,16 @@ static const NSTimeInterval kMDCFloatingButtonOpacityExitOffset = 0.150;
                                                             self.layer.transform,
                                                             [MDCFloatingButton collapseTransform])]
                    fromValue:nil
+              // clang-format off
               timingFunction:[[CAMediaTimingFunction alloc] initWithControlPoints:(float)0.4:0:1:1]
+                    // clang-format on
                     fillMode:kCAFillModeForwards
                     duration:kMDCFloatingButtonExitDuration
                  beginOffset:0];
+
     [self.layer addAnimation:overallScaleAnimation forKey:kMDCFloatingButtonTransformKey];
 
+    // clang-format off
     CABasicAnimation *iconScaleAnimation = [MDCFloatingButton
         animationWithKeypath:@"transform"
                      toValue:[NSValue
@@ -197,7 +206,9 @@ static const NSTimeInterval kMDCFloatingButtonOpacityExitOffset = 0.150;
                                                             self.imageView.layer.transform,
                                                             [MDCFloatingButton collapseTransform])]
                    fromValue:nil
+              // clang-format off
               timingFunction:[[CAMediaTimingFunction alloc] initWithControlPoints:(float)0.4:0:1:1]
+                    // clang-format on
                     fillMode:kCAFillModeForwards
                     duration:kMDCFloatingButtonExitIconDuration
                  beginOffset:kMDCFloatingButtonExitIconOffset];

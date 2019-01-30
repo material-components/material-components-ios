@@ -19,8 +19,8 @@
 
 @interface MDCBaseCell ()
 
-@property (nonatomic, assign) CGPoint lastTouch;
-@property (strong, nonatomic, nonnull) MDCInkView *inkView;
+@property(nonatomic, assign) CGPoint lastTouch;
+@property(strong, nonatomic, nonnull) MDCInkView *inkView;
 
 @end
 
@@ -57,15 +57,11 @@
 #pragma mark Ink
 
 - (void)startInk {
-  [self.inkView startTouchBeganAtPoint:_lastTouch
-                              animated:YES
-                        withCompletion:nil];
+  [self.inkView startTouchBeganAtPoint:_lastTouch animated:YES withCompletion:nil];
 }
 
 - (void)endInk {
-  [self.inkView startTouchEndAtPoint:_lastTouch
-                            animated:YES
-                      withCompletion:nil];
+  [self.inkView startTouchEndAtPoint:_lastTouch animated:YES withCompletion:nil];
 }
 
 #pragma mark Shadow

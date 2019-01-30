@@ -205,6 +205,8 @@ def mdc_snapshot_test(
       runner = SNAPSHOT_IOS_RUNNER_TARGET,
       test_host = "//components/private/Snapshot/TestHost",
       visibility = visibility,
+      # TODO(https://github.com/material-components/material-components-ios/issues/6335)
+      flaky = 1,
       size = size,
       **kwargs)
 

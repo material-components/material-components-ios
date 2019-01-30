@@ -20,7 +20,7 @@
 @implementation MDCTextFieldColorThemer
 
 + (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
-   toTextInputController:(id<MDCTextInputController>)textInputController {
+    toTextInputController:(id<MDCTextInputController>)textInputController {
   textInputController.activeColor = colorScheme.primaryColor;
   if ([textInputController
           conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
@@ -90,7 +90,7 @@
 #pragma clang diagnostic ignored "-Wobjc-method-access"
 #endif
 + (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
-toAllTextInputControllersOfClass:(Class<MDCTextInputController>)textInputControllerClass {
+    toAllTextInputControllersOfClass:(Class<MDCTextInputController>)textInputControllerClass {
   UIColor *onSurface87Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87];
   UIColor *onSurface60Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
   [textInputControllerClass setActiveColorDefault:colorScheme.primaryColor];

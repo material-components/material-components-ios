@@ -12,14 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialButtons+ButtonThemer.h"
-#import "MaterialButtons+ColorThemer.h"
 #import "MaterialButtons+Theming.h"
-#import "MaterialButtons+TypographyThemer.h"
 #import "MaterialButtons.h"
 #import "MaterialContainerScheme.h"
-#import "MaterialShapeLibrary.h"
-#import "MaterialShapes.h"
+#import "MaterialShapeLibraryNew.h"
+#import "MaterialShapesNew.h"
 #import "MaterialTypography.h"
 
 #import "supplemental/ButtonsTypicalUseSupplemental.h"
@@ -46,7 +43,7 @@
   return self;
 }
 
-- (MDCButton *)buildCustomStrokedButton {
+- (MDCButton *)buildCustomOutlinedButton {
   MDCButton *button = [[MDCButton alloc] init];
   [button setBorderWidth:1.0 forState:UIControlStateNormal];
   [button setBorderColor:[UIColor colorWithWhite:(CGFloat)0.1 alpha:1]
@@ -60,10 +57,6 @@
   self.view.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
   UIColor *titleColor = [UIColor whiteColor];
 
-  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
-  buttonScheme.colorScheme = self.colorScheme;
-  buttonScheme.typographyScheme = self.typographyScheme;
-
   // Raised button
 
   MDCButton *containedButton = [[MDCButton alloc] init];
@@ -74,15 +67,14 @@
   plusImage = [plusImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   [containedButton setImage:plusImage forState:UIControlStateNormal];
 
-  MDCRectangleShapeGenerator *raisedShapeGenerator =
-      [[MDCRectangleShapeGenerator alloc] init];
+  MDCRectangleShapeGenerator *raisedShapeGenerator = [[MDCRectangleShapeGenerator alloc] init];
   [raisedShapeGenerator setCorners:[[MDCCutCornerTreatment alloc] initWithCut:8]];
   containedButton.shapeGenerator = raisedShapeGenerator;
 
   [containedButton sizeToFit];
   [containedButton addTarget:self
-                   action:@selector(didTap:)
-         forControlEvents:UIControlEventTouchUpInside];
+                      action:@selector(didTap:)
+            forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:containedButton];
 
   // Disabled raised button
@@ -100,8 +92,8 @@
 
   [disabledContainedButton sizeToFit];
   [disabledContainedButton addTarget:self
-                           action:@selector(didTap:)
-                 forControlEvents:UIControlEventTouchUpInside];
+                              action:@selector(didTap:)
+                    forControlEvents:UIControlEventTouchUpInside];
   [disabledContainedButton setEnabled:NO];
   [self.view addSubview:disabledContainedButton];
 
@@ -120,54 +112,50 @@
        forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:flatButton];
 
-  // Custom stroked button
+  // Custom outlined button
 
-  MDCButton *strokedButton = [self buildCustomStrokedButton];
-  [strokedButton setTitle:@"Button" forState:UIControlStateNormal];
-  [MDCButtonTypographyThemer applyTypographyScheme:self.typographyScheme toButton:strokedButton];
-  [MDCButtonColorThemer applySemanticColorScheme:self.colorScheme toButton:strokedButton];
+  MDCButton *outlinedButton = [self buildCustomOutlinedButton];
+  [outlinedButton setTitle:@"Button" forState:UIControlStateNormal];
+  [outlinedButton applyOutlinedThemeWithScheme:self.containerScheme];
 
-  MDCSlantedRectShapeGenerator *strokedShapeGenerator =
-      [[MDCSlantedRectShapeGenerator alloc] init];
-  strokedShapeGenerator.slant = 10;
-  strokedButton.shapeGenerator = strokedShapeGenerator;
+  MDCSlantedRectShapeGenerator *outlinedShapeGenerator = [[MDCSlantedRectShapeGenerator alloc] init];
+  outlinedShapeGenerator.slant = 10;
+  outlinedButton.shapeGenerator = outlinedShapeGenerator;
 
-  [strokedButton sizeToFit];
-  [strokedButton addTarget:self
+  [outlinedButton sizeToFit];
+  [outlinedButton addTarget:self
                     action:@selector(didTap:)
           forControlEvents:UIControlEventTouchUpInside];
-  [self.view addSubview:strokedButton];
+  [self.view addSubview:outlinedButton];
 
-  // Disabled custom stroked button
+  // Disabled custom outlined button
 
-  MDCButton *disabledStrokedButton = [self buildCustomStrokedButton];
-  [disabledStrokedButton setTitle:@"Button" forState:UIControlStateNormal];
-  [MDCButtonTypographyThemer applyTypographyScheme:self.typographyScheme
-                                          toButton:disabledStrokedButton];
-  [MDCButtonColorThemer applySemanticColorScheme:self.colorScheme
-                                        toButton:disabledStrokedButton];
+  MDCButton *disabledOutlinedButton = [self buildCustomOutlinedButton];
+  [disabledOutlinedButton setTitle:@"Button" forState:UIControlStateNormal];
+  [disabledOutlinedButton applyOutlinedThemeWithScheme:self.containerScheme];
 
-  MDCRectangleShapeGenerator *disabledStrokedShapeGenerator =
+  MDCRectangleShapeGenerator *disabledOutlinedShapeGenerator =
       [[MDCRectangleShapeGenerator alloc] init];
-  [disabledStrokedShapeGenerator setTopEdge:
-      [[MDCTriangleEdgeTreatment alloc] initWithSize:5 style:MDCTriangleEdgeStyleCut]];
-  [disabledStrokedShapeGenerator setTopLeftCorner:[[MDCCutCornerTreatment alloc] initWithCut:10]];
-  [disabledStrokedShapeGenerator setTopRightCorner:
-      [[MDCCurvedCornerTreatment alloc] initWithSize:CGSizeMake(5, 20)]];
-  [disabledStrokedShapeGenerator setBottomEdge:
-      [[MDCTriangleEdgeTreatment alloc] initWithSize:5 style:MDCTriangleEdgeStyleHandle]];
-  [disabledStrokedShapeGenerator setBottomRightCorner:
-      [[MDCCutCornerTreatment alloc] initWithCut:5]];
-  [disabledStrokedShapeGenerator setBottomLeftCorner:
-      [[MDCCurvedCornerTreatment alloc] initWithSize:CGSizeMake(10, 5)]];
-  disabledStrokedButton.shapeGenerator = disabledStrokedShapeGenerator;
+  [disabledOutlinedShapeGenerator
+      setTopEdge:[[MDCTriangleEdgeTreatment alloc] initWithSize:5 style:MDCTriangleEdgeStyleCut]];
+  [disabledOutlinedShapeGenerator setTopLeftCorner:[[MDCCutCornerTreatment alloc] initWithCut:10]];
+  [disabledOutlinedShapeGenerator
+      setTopRightCorner:[[MDCCurvedCornerTreatment alloc] initWithSize:CGSizeMake(5, 20)]];
+  [disabledOutlinedShapeGenerator
+      setBottomEdge:[[MDCTriangleEdgeTreatment alloc] initWithSize:5
+                                                             style:MDCTriangleEdgeStyleHandle]];
+  [disabledOutlinedShapeGenerator
+      setBottomRightCorner:[[MDCCutCornerTreatment alloc] initWithCut:5]];
+  [disabledOutlinedShapeGenerator
+      setBottomLeftCorner:[[MDCCurvedCornerTreatment alloc] initWithSize:CGSizeMake(10, 5)]];
+  disabledOutlinedButton.shapeGenerator = disabledOutlinedShapeGenerator;
 
-  [disabledStrokedButton sizeToFit];
-  [disabledStrokedButton addTarget:self
+  [disabledOutlinedButton sizeToFit];
+  [disabledOutlinedButton addTarget:self
                             action:@selector(didTap:)
                   forControlEvents:UIControlEventTouchUpInside];
-  [disabledStrokedButton setEnabled:NO];
-  [self.view addSubview:disabledStrokedButton];
+  [disabledOutlinedButton setEnabled:NO];
+  [self.view addSubview:disabledOutlinedButton];
 
   // Floating action button
 
@@ -190,8 +178,8 @@
   [self.view addSubview:self.floatingButton];
 
   self.buttons = @[
-    containedButton, disabledContainedButton, flatButton, strokedButton,
-    disabledStrokedButton, self.floatingButton
+    containedButton, disabledContainedButton, flatButton, outlinedButton, disabledOutlinedButton,
+    self.floatingButton
   ];
 
   [self setupShapeExampleViews];
@@ -201,13 +189,13 @@
   UILabel *raisedButtonLabel = [self addLabelWithText:@"Contained: Cut Corners"];
   UILabel *disabledRaisedButtonLabel = [self addLabelWithText:@"Disabled Contained: Curved Cut"];
   UILabel *flatButtonLabel = [self addLabelWithText:@"Flat: Oval Ink"];
-  UILabel *strokedButtonLabel = [self addLabelWithText:@"Stroked: Triangular"];
-  UILabel *disabledStrokedButtonLabel = [self addLabelWithText:@"Stroked Disabled: Freeform"];
+  UILabel *outlinedButtonLabel = [self addLabelWithText:@"Outlined: Triangular"];
+  UILabel *disabledOutlinedButtonLabel = [self addLabelWithText:@"Outlined Disabled: Freeform"];
   UILabel *floatingDiamondLabel = [self addLabelWithText:@"Floating Action: Diamond"];
 
   self.labels = @[
-    raisedButtonLabel, disabledRaisedButtonLabel, flatButtonLabel, strokedButtonLabel,
-    disabledStrokedButtonLabel, floatingDiamondLabel
+    raisedButtonLabel, disabledRaisedButtonLabel, flatButtonLabel, outlinedButtonLabel,
+    disabledOutlinedButtonLabel, floatingDiamondLabel
   ];
 }
 

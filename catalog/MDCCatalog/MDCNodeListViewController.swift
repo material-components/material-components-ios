@@ -24,6 +24,7 @@ import MaterialComponents.MaterialButtons_ButtonThemer
 import MaterialComponents.MaterialCollections
 import MaterialComponents.MaterialTypography
 import MaterialComponents.MaterialFlexibleHeader_ColorThemer
+import MaterialComponentsBeta.MaterialButtons_Theming
 
 class NodeViewTableViewDemoCell: UITableViewCell {
 
@@ -524,8 +525,7 @@ extension MDCNodeListViewController {
       cell?.selectionStyle = .none
       let primaryDemoCell = cell as! NodeViewTableViewPrimaryDemoCell
       let button = primaryDemoCell.containedButton
-      let buttonScheme = AppTheme.globalTheme.buttonScheme
-      MDCContainedButtonThemer.applyScheme(buttonScheme, to:button)
+      button.applyContainedTheme(withScheme: AppTheme.globalTheme.containerScheme)
       button.addTarget(self, action: #selector(primaryDemoButtonClicked), for: .touchUpInside)
     } else {
       cell = tableView.dequeueReusableCell(withIdentifier: "NodeViewTableViewDemoCell")
@@ -594,6 +594,10 @@ extension MDCNodeListViewController {
     let typoSel = NSSelectorFromString("setTypographyScheme:");
     if vc.responds(to: typoSel) {
       vc.perform(typoSel, with: AppTheme.globalTheme.typographyScheme)
+    }
+    let containerSel = NSSelectorFromString("setContainerScheme:")
+    if vc.responds(to: containerSel) {
+      vc.perform(containerSel, with: AppTheme.globalTheme.containerScheme)
     }
   }
 }

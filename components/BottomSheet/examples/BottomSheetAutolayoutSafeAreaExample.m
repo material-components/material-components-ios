@@ -14,9 +14,9 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialApplication.h"
 #import "MaterialBottomSheet.h"
 #import "supplemental/BottomSheetSupplemental.h"
-#import "MaterialApplication.h"
 
 static const CGFloat kSafeContentHeight = 150;
 static const CGFloat kSafeContentWidth = 300;
@@ -122,8 +122,7 @@ static const CGFloat kSafeContentWidth = 300;
   [super viewDidLayoutSubviews];
   CGPoint origin = CGRectStandardize(self.withinSafeAreaView.frame).origin;
   UIWindow *keyWindow = [UIApplication mdc_safeSharedApplication].keyWindow;
-  CGPoint safeAreaViewAbsoluteOrigin = [keyWindow convertPoint:origin
-                                                      fromView:self.view];
+  CGPoint safeAreaViewAbsoluteOrigin = [keyWindow convertPoint:origin fromView:self.view];
   CGFloat safeAreaBottomAbsoluteY =
       safeAreaViewAbsoluteOrigin.y + CGRectStandardize(self.withinSafeAreaView.bounds).size.height;
   CGFloat safeAreaBottomInset =

@@ -68,8 +68,8 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   MDCCardCollectionCell *cell =
-  [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
-                                            forIndexPath:indexPath];
+      [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
+                                                forIndexPath:indexPath];
   [cell setBackgroundColor:[UIColor colorWithRed:107 / (CGFloat)255
                                            green:63 / (CGFloat)255
                                             blue:238 / (CGFloat)255
@@ -80,8 +80,8 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 #pragma mark - <UICollectionViewDelegateFlowLayout>
 
 - (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout *)collectionViewLayout
-  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+                    layout:(UICollectionViewLayout *)collectionViewLayout
+    sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
   CGFloat cardSize = (self.view.bounds.size.width / 3) - 12;
   return CGSizeMake(cardSize, cardSize);
 }
@@ -93,26 +93,26 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView
-                   layout:(UICollectionViewLayout*)collectionViewLayout
-minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+                                 layout:(UICollectionViewLayout *)collectionViewLayout
+    minimumLineSpacingForSectionAtIndex:(NSInteger)section {
   return 8;
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView
-                   layout:(UICollectionViewLayout*)collectionViewLayout
-minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+                                      layout:(UICollectionViewLayout *)collectionViewLayout
+    minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
   return 8;
 }
 
 #pragma mark - Reordering
 
 - (void)collectionView:(UICollectionView *)collectionView
-   moveItemAtIndexPath:(NSIndexPath *)sourceIndexPath
-           toIndexPath:(NSIndexPath *)destinationIndexPath {
+    moveItemAtIndexPath:(NSIndexPath *)sourceIndexPath
+            toIndexPath:(NSIndexPath *)destinationIndexPath {
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView
-canMoveItemAtIndexPath:(NSIndexPath *)indexPath {
+    canMoveItemAtIndexPath:(NSIndexPath *)indexPath {
   return YES;
 }
 
@@ -120,9 +120,9 @@ canMoveItemAtIndexPath:(NSIndexPath *)indexPath {
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Cards", @"Collection Card Cells" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Cards", @"Collection Card Cells" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

@@ -15,6 +15,8 @@
 import UIKit
 
 import MaterialComponents.MaterialButtons
+import MaterialComponentsBeta.MaterialButtons_Theming
+import MaterialComponentsBeta.MaterialContainerScheme
 
 class ButtonsDynamicTypeViewController: UIViewController {
 
@@ -26,6 +28,8 @@ class ButtonsDynamicTypeViewController: UIViewController {
     ]
   }
 
+  var containerScheme = MDCContainerScheme()
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -33,7 +37,8 @@ class ButtonsDynamicTypeViewController: UIViewController {
     let titleColor = UIColor.white
     let backgroundColor = UIColor(white: 0.1, alpha: 1.0)
 
-    let flatButtonStatic = MDCRaisedButton()
+    let flatButtonStatic = MDCButton()
+    flatButtonStatic.applyContainedTheme(withScheme: containerScheme)
     flatButtonStatic.setTitleColor(titleColor, for: .normal)
     flatButtonStatic.setBackgroundColor(backgroundColor, for: .normal)
     flatButtonStatic.setTitle("Static", for: UIControlState())
@@ -42,7 +47,8 @@ class ButtonsDynamicTypeViewController: UIViewController {
     flatButtonStatic.addTarget(self, action: #selector(tap), for: .touchUpInside)
     view.addSubview(flatButtonStatic)
 
-    let flatButtonDynamic = MDCRaisedButton()
+    let flatButtonDynamic = MDCButton()
+    flatButtonDynamic.applyContainedTheme(withScheme: containerScheme)
     flatButtonDynamic.setTitleColor(titleColor, for: .normal)
     flatButtonDynamic.setBackgroundColor(backgroundColor, for: .normal)
     flatButtonDynamic.setTitle("Dynamic", for: UIControlState())

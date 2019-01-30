@@ -25,7 +25,7 @@ static const CGFloat kCornerRadius = 4;
     colorScheme =
         [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   }
-  self.scrimColor = colorScheme.primaryColor;
+  self.scrimColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.32];
 
   // Other properties
   self.dialogCornerRadius = kCornerRadius;

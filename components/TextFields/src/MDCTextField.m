@@ -221,7 +221,9 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
   self.inputLayoutStrut.text = self.text;
 
   UIEdgeInsets insets = [self textInsets];
-  self.inputLayoutStrut.frame = CGRectMake(insets.left, insets.top, CGRectGetWidth(self.bounds) - insets.right, self.inputLayoutStrut.intrinsicContentSize.height);
+  self.inputLayoutStrut.frame =
+      CGRectMake(insets.left, insets.top, CGRectGetWidth(self.bounds) - insets.right,
+                 self.inputLayoutStrut.intrinsicContentSize.height);
 }
 
 #pragma mark - Applying Color
@@ -387,14 +389,6 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
   return _fundament.underline;
 }
 
-- (BOOL)hasTextContent {
-  return self.text.length > 0;
-}
-
-- (void)clearText {
-  self.text = nil;
-}
-
 #pragma mark - UITextField Property Overrides
 
 #if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_10_0)
@@ -476,8 +470,8 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
 
   if (!self.isFirstResponder) {
     [[NSNotificationCenter defaultCenter]
-     postNotificationName:MDCTextFieldTextDidSetTextNotification
-     object:self];
+        postNotificationName:MDCTextFieldTextDidSetTextNotification
+                      object:self];
   }
 }
 
@@ -545,7 +539,7 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
     clearButtonWidth += 2 * MDCTextInputClearButtonImageBuiltInPadding;
 
     // Clear buttons are only shown if there is entered text or programatically set text to clear.
-    if (self.hasTextContent) {
+    if (self.text.length > 0) {
       switch (self.clearButtonMode) {
         case UITextFieldViewModeAlways:
         case UITextFieldViewModeUnlessEditing:
@@ -589,7 +583,7 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
   if (self.rightView.superview) {
     editingRect.size.width += MDCTextInputEditingRectRightViewPaddingCorrection;
   } else {
-    if (self.hasTextContent) {
+    if (self.text.length > 0) {
       CGFloat clearButtonWidth = CGRectGetWidth(self.clearButton.bounds);
 
       // The width is adjusted by the padding twice: once for the right side, once for left.
@@ -614,10 +608,10 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
     editingRect = MDFRectFlippedHorizontally(editingRect, CGRectGetWidth(bounds));
   }
 
-  if ([self.fundament.positioningDelegate
-          respondsToSelector:@selector(editingRectForBounds:defaultRect:)]) {
-    editingRect =
-        [self.fundament.positioningDelegate editingRectForBounds:bounds defaultRect:editingRect];
+  if ([self.fundament.positioningDelegate respondsToSelector:@selector(editingRectForBounds:
+                                                                                defaultRect:)]) {
+    editingRect = [self.fundament.positioningDelegate editingRectForBounds:bounds
+                                                               defaultRect:editingRect];
   }
 
   return editingRect;
@@ -634,16 +628,16 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
 
   if ((self.mdf_effectiveUserInterfaceLayoutDirection ==
        UIUserInterfaceLayoutDirectionRightToLeft) &&
-      [self.positioningDelegate
-          respondsToSelector:@selector(trailingViewRectForBounds:defaultRect:)]) {
-    leftViewRect =
-        [self.positioningDelegate trailingViewRectForBounds:bounds defaultRect:leftViewRect];
+      [self.positioningDelegate respondsToSelector:@selector(trailingViewRectForBounds:
+                                                                           defaultRect:)]) {
+    leftViewRect = [self.positioningDelegate trailingViewRectForBounds:bounds
+                                                           defaultRect:leftViewRect];
   } else if ((self.mdf_effectiveUserInterfaceLayoutDirection ==
               UIUserInterfaceLayoutDirectionLeftToRight) &&
-             [self.positioningDelegate
-                 respondsToSelector:@selector(leadingViewRectForBounds:defaultRect:)]) {
-    leftViewRect =
-        [self.positioningDelegate leadingViewRectForBounds:bounds defaultRect:leftViewRect];
+             [self.positioningDelegate respondsToSelector:@selector(leadingViewRectForBounds:
+                                                                                 defaultRect:)]) {
+    leftViewRect = [self.positioningDelegate leadingViewRectForBounds:bounds
+                                                          defaultRect:leftViewRect];
   }
 
   return leftViewRect;
@@ -656,16 +650,16 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
 
   if ((self.mdf_effectiveUserInterfaceLayoutDirection ==
        UIUserInterfaceLayoutDirectionRightToLeft) &&
-      [self.positioningDelegate
-          respondsToSelector:@selector(leadingViewRectForBounds:defaultRect:)]) {
-    rightViewRect =
-        [self.positioningDelegate leadingViewRectForBounds:bounds defaultRect:rightViewRect];
+      [self.positioningDelegate respondsToSelector:@selector(leadingViewRectForBounds:
+                                                                          defaultRect:)]) {
+    rightViewRect = [self.positioningDelegate leadingViewRectForBounds:bounds
+                                                           defaultRect:rightViewRect];
   } else if ((self.mdf_effectiveUserInterfaceLayoutDirection ==
               UIUserInterfaceLayoutDirectionLeftToRight) &&
-             [self.positioningDelegate
-                 respondsToSelector:@selector(trailingViewRectForBounds:defaultRect:)]) {
-    rightViewRect =
-        [self.positioningDelegate trailingViewRectForBounds:bounds defaultRect:rightViewRect];
+             [self.positioningDelegate respondsToSelector:@selector(trailingViewRectForBounds:
+                                                                                  defaultRect:)]) {
+    rightViewRect = [self.positioningDelegate trailingViewRectForBounds:bounds
+                                                            defaultRect:rightViewRect];
   }
   return rightViewRect;
 }

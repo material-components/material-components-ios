@@ -155,21 +155,22 @@
   // Given
   CapturingAnimationsMDCRippleLayer *rippleLayer = [[CapturingAnimationsMDCRippleLayer alloc] init];
   rippleLayer.bounds = CGRectMake(0, 0, 10, 10);
-  rippleLayer.speed = (CGFloat)0.5;
-  CGFloat rippleDelay = (CGFloat)0.15;
+  rippleLayer.speed = (float)0.1;
+  CGFloat expectedRippleFadeoutDelay = (CGFloat)0.150;
 
   // When
   [rippleLayer startRippleAtPoint:CGPointMake(0, 0) animated:YES completion:nil];
+  NSTimeInterval startTime = rippleLayer.rippleTouchDownStartTime;
   [rippleLayer endRippleAnimated:YES completion:nil];
-  NSTimeInterval startTime = CACurrentMediaTime();
 
   // Then
   XCTAssertEqual(rippleLayer.addedAnimations.count, 2U);
   CAAnimation *animation = rippleLayer.addedAnimations.lastObject;
   if (animation) {
-    startTime = [rippleLayer convertTime:startTime + rippleDelay fromLayer:nil];
+    startTime = [rippleLayer convertTime:startTime + expectedRippleFadeoutDelay fromLayer:nil];
     XCTAssertEqualWithAccuracy(animation.beginTime, startTime, 0.010);
   }
+  NSLog(@"\nA: %.12f\nE: %.12f\n", animation.beginTime, startTime);
 }
 
 - (void)testStartRippleAnimationCorrectness {

@@ -14,9 +14,9 @@
 
 #import "MDCCardCollectionCell.h"
 
-#import "MaterialMath.h"
 #import "MaterialIcons+ic_check_circle.h"
-#import "MaterialShapes.h"
+#import "MaterialMath.h"
+#import "MaterialShapesNew.h"
 
 static const CGFloat MDCCardCellCornerRadiusDefault = 4;
 static const CGFloat MDCCardCellSelectedImagePadding = 8;
@@ -31,7 +31,7 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 @property(nonatomic, readonly, strong) MDCShapedShadowLayer *layer;
 @end
 
-@implementation MDCCardCollectionCell  {
+@implementation MDCCardCollectionCell {
   NSMutableDictionary<NSNumber *, NSNumber *> *_shadowElevations;
   NSMutableDictionary<NSNumber *, UIColor *> *_shadowColors;
   NSMutableDictionary<NSNumber *, NSNumber *> *_borderWidths;
@@ -173,7 +173,7 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 
 - (void)setSelected:(BOOL)selected {
   [super setSelected:selected];
-
+  NSLog(@"CELL SELECTED: %d", selected);
   if (!self.selectable) {
     return;
   }
@@ -183,6 +183,7 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 
 - (void)setHighlighted:(BOOL)highlighted {
   [super setHighlighted:highlighted];
+  NSLog(@"CELL HIGHLIGHTED: %d", highlighted);
 
   self.rippleView.rippleHighlighted = highlighted;
   [self updateCardCellVisuals];
@@ -381,33 +382,32 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
   switch (verticalImageAlignment) {
     case MDCCardCellVerticalImageAlignmentTop:
       yAlignment =
-          MDCCardCellSelectedImagePadding + CGRectGetHeight(self.selectedImageView.frame)/2;
+          MDCCardCellSelectedImagePadding + CGRectGetHeight(self.selectedImageView.frame) / 2;
       break;
     case MDCCardCellVerticalImageAlignmentCenter:
-      yAlignment = CGRectGetHeight(self.bounds)/2;
+      yAlignment = CGRectGetHeight(self.bounds) / 2;
       break;
     case MDCCardCellVerticalImageAlignmentBottom:
       yAlignment = CGRectGetHeight(self.bounds) - MDCCardCellSelectedImagePadding -
-          CGRectGetHeight(self.selectedImageView.frame)/2;
+                   CGRectGetHeight(self.selectedImageView.frame) / 2;
       break;
   }
 
   switch (horizontalImageAlignment) {
     case MDCCardCellHorizontalImageAlignmentLeft:
       xAlignment =
-          MDCCardCellSelectedImagePadding + CGRectGetWidth(self.selectedImageView.frame)/2;
+          MDCCardCellSelectedImagePadding + CGRectGetWidth(self.selectedImageView.frame) / 2;
       break;
     case MDCCardCellHorizontalImageAlignmentCenter:
-      xAlignment = CGRectGetWidth(self.bounds)/2;
+      xAlignment = CGRectGetWidth(self.bounds) / 2;
       break;
     case MDCCardCellHorizontalImageAlignmentRight:
       xAlignment = CGRectGetWidth(self.bounds) - MDCCardCellSelectedImagePadding -
-          CGRectGetWidth(self.selectedImageView.frame)/2;
+                   CGRectGetWidth(self.selectedImageView.frame) / 2;
       break;
   }
 
-  self.selectedImageView.center = CGPointMake(xAlignment,
-                                              yAlignment);
+  self.selectedImageView.center = CGPointMake(xAlignment, yAlignment);
 }
 
 - (void)setImageTintColor:(UIColor *)imageTintColor forState:(MDCCardCellState)state {

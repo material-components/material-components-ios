@@ -14,11 +14,11 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialAppBar.h"
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar+TypographyThemer.h"
-#import "MaterialButtons.h"
+#import "MaterialAppBar.h"
 #import "MaterialButtons+ButtonThemer.h"
+#import "MaterialButtons.h"
 
 @interface PresentedDemoViewController : UICollectionViewController
 @property(nonatomic, strong) MDCAppBarViewController *appBarViewController;
@@ -80,7 +80,8 @@
           forCellWithReuseIdentifier:@"Cell"];
 
   self.navigationItem.leftBarButtonItem =
-      [[UIBarButtonItem alloc] initWithTitle:@"Dismiss" style:UIBarButtonItemStyleDone
+      [[UIBarButtonItem alloc] initWithTitle:@"Dismiss"
+                                       style:UIBarButtonItemStyleDone
                                       target:self
                                       action:@selector(dismiss)];
 }
@@ -104,9 +105,9 @@
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                            cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-  UICollectionViewCell *cell =
-  [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
-  switch (indexPath.row%3) {
+  UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell"
+                                                                         forIndexPath:indexPath];
+  switch (indexPath.row % 3) {
     case 0:
       cell.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.2 alpha:1];
       break;
@@ -124,8 +125,8 @@
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout*)collectionViewLayout
-  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+                    layout:(UICollectionViewLayout *)collectionViewLayout
+    sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
   CGRect collectionViewFrame = collectionView.frame;
   return CGSizeMake(collectionViewFrame.size.width / 2 - 14, 40);
 }
@@ -163,14 +164,11 @@
   [button setTitle:@"Present Modal App Bar Demo" forState:UIControlStateNormal];
   [button sizeToFit];
   button.center = self.view.center;
-  button.frame =
-      CGRectMake(button.frame.origin.x,
-                 button.center.y - 48 * 2 - buttonMargin,
-                 button.bounds.size.width,
-                 MAX(button.bounds.size.height, 48));
+  button.frame = CGRectMake(button.frame.origin.x, button.center.y - 48 * 2 - buttonMargin,
+                            button.bounds.size.width, MAX(button.bounds.size.height, 48));
   [button addTarget:self
-             action:@selector(presentDemo)
-   forControlEvents:UIControlEventTouchUpInside];
+                action:@selector(presentDemo)
+      forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:button];
   [MDCContainedButtonThemer applyScheme:buttonScheme toButton:button];
 
@@ -180,10 +178,8 @@
     [popoverButton sizeToFit];
     popoverButton.center = self.view.center;
     popoverButton.frame =
-    CGRectMake(popoverButton.frame.origin.x,
-               popoverButton.center.y - 48,
-               popoverButton.bounds.size.width,
-               MAX(popoverButton.bounds.size.height, 48));
+        CGRectMake(popoverButton.frame.origin.x, popoverButton.center.y - 48,
+                   popoverButton.bounds.size.width, MAX(popoverButton.bounds.size.height, 48));
     [popoverButton addTarget:self
                       action:@selector(presentDemoPopover)
             forControlEvents:UIControlEventTouchUpInside];
@@ -203,7 +199,7 @@
   if (@available(iOS 11.0, *)) {
     rect = CGRectMake(self.view.bounds.size.width / 2, self.view.safeAreaInsets.top, 1, 1);
   }
-  
+
   self.demoViewController.modalPresentationStyle = UIModalPresentationPopover;
   self.demoViewController.popoverPresentationController.sourceView = self.view;
   self.demoViewController.popoverPresentationController.sourceRect = rect;
@@ -221,9 +217,9 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"App Bar", @"Presented" ],
-    @"primaryDemo": @NO,
-    @"presentable": @YES,
+    @"breadcrumbs" : @[ @"App Bar", @"Presented" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @YES,
   };
 }
 

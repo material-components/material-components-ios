@@ -37,6 +37,7 @@
 /components/PageControl/          @randallli
 /components/Palettes/             @ajsecord
 /components/ProgressView/         @romoore
+/components/Ripple                @yarneo
 /components/ShadowElevations/     @ianegordon
 /components/ShadowLayer/          @ianegordon
 /components/Slider/               @romoore

@@ -72,9 +72,7 @@ static const CGFloat kMDCBottomNavigationItemBadgeYPadding = 2;
   if (_badgeCircleWidth < _badgeCircleHeight) {
     _badgeCircleWidth = _badgeCircleHeight;
   }
-  self.frame = CGRectMake(CGRectGetMinX(self.frame),
-                          CGRectGetMinY(self.frame),
-                          _badgeCircleWidth,
+  self.frame = CGRectMake(CGRectGetMinX(self.frame), CGRectGetMinY(self.frame), _badgeCircleWidth,
                           _badgeCircleHeight);
   self.badgeValueLabel.center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
 

@@ -13,8 +13,8 @@
 // limitations under the License.
 #import <UIKit/UIKit.h>
 
-#import "SnapshotFakeMDCTextField.h"
 #import <MDFInternationalization/MDFInternationalization.h>
+#import "SnapshotFakeMDCTextField.h"
 
 @implementation SnapshotFakeMDCTextField {
   BOOL _isEditing;

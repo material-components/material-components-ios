@@ -128,6 +128,30 @@ static UIImage *fakeImage(void) {
   XCTAssertEqualObjects(item1.inkView.inkColor, item2.inkView.inkColor);
 }
 
+- (void)testSetTitleVisibilityUpdatesLayout {
+  // Given
+  MDCBottomNavigationItemView *view = [[MDCBottomNavigationItemView alloc] init];
+  view.title = @"Test Content";
+  view.image = fakeImage();
+  view.bounds = CGRectMake(0, 0, 100, 100);
+  view.contentVerticalMargin = 20;
+  view.contentHorizontalMargin = 20;
+  view.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+  [view layoutIfNeeded];
+  CGFloat imageMidYWithTitle = CGRectGetMidY(view.iconImageView.frame);
+
+  // When
+  view.titleVisibility = MDCBottomNavigationBarTitleVisibilityNever;
+  [view layoutIfNeeded];
+
+  // Then
+  CGFloat imageMidYWithoutTitle = CGRectGetMidY(view.iconImageView.frame);
+  // To check that the image has moved down, we assert imageMidYWithoutTitle is greater than
+  // imageMidYWithTitle + 1. The + 1 makes sure the change in position is greater than a rounding
+  // error. Practically, the difference is likely to be greater than 10.
+  XCTAssertGreaterThan(imageMidYWithoutTitle, imageMidYWithTitle + 1);
+}
+
 - (void)testBadgeCenterIsCorrectWithoutRTL {
   // Given
   MDCBottomNavigationItemView *itemView = [[MDCBottomNavigationItemView alloc] init];

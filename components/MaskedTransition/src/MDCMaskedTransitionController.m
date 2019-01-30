@@ -14,8 +14,8 @@
 
 #import "MDCMaskedTransitionController.h"
 
-#import "private/MDCMaskedTransition.h"
 #import "private/MDCMaskedPresentationController.h"
+#import "private/MDCMaskedTransition.h"
 #import "private/MDCMaskedTransitionMotionForContext.h"
 
 @implementation MDCMaskedTransitionController
@@ -37,8 +37,8 @@
 
 - (id<UIViewControllerAnimatedTransitioning>)
     animationControllerForPresentedController:(UIViewController *)presented
-    presentingController:(UIViewController *)presenting
-    sourceController:(UIViewController *)source {
+                         presentingController:(UIViewController *)presenting
+                             sourceController:(UIViewController *)source {
   if (_sourceView == nil) {
     return nil;
   }
@@ -46,14 +46,13 @@
                                                direction:MDMTransitionDirectionForward];
 }
 
-- (id<UIViewControllerAnimatedTransitioning>)
-    animationControllerForDismissedController:(UIViewController *)dismissed {
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:
+    (UIViewController *)dismissed {
   if (_sourceView == nil) {
     return nil;
   }
-  MDCMaskedTransitionMotionSpec motionSpecification =
-      MDCMaskedTransitionMotionSpecForContext(dismissed.presentingViewController.view.superview,
-                                              dismissed);
+  MDCMaskedTransitionMotionSpec motionSpecification = MDCMaskedTransitionMotionSpecForContext(
+      dismissed.presentingViewController.view.superview, dismissed);
   if (motionSpecification.shouldSlideWhenCollapsed) {
     return nil;
   }
@@ -63,13 +62,13 @@
 
 - (UIPresentationController *)
     presentationControllerForPresentedViewController:(UIViewController *)presented
-    presentingViewController:(UIViewController *)presenting
-    sourceViewController:(UIViewController *)source {
-  return
-      [[MDCMaskedPresentationController alloc] initWithPresentedViewController:presented
-                                                      presentingViewController:presenting
-                                                 calculateFrameOfPresentedView:self.calculateFrameOfPresentedView
-                                                                    sourceView:self.sourceView];
+                            presentingViewController:(UIViewController *)presenting
+                                sourceViewController:(UIViewController *)source {
+  return [[MDCMaskedPresentationController alloc]
+      initWithPresentedViewController:presented
+             presentingViewController:presenting
+        calculateFrameOfPresentedView:self.calculateFrameOfPresentedView
+                           sourceView:self.sourceView];
 }
 
 @end

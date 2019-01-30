@@ -55,9 +55,9 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Collections", @"Custom Section Insets" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Collections", @"Custom Section Insets" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

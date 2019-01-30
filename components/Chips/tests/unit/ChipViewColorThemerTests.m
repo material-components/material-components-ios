@@ -14,13 +14,13 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialChips.h"
 #import "MaterialChips+ColorThemer.h"
+#import "MaterialChips.h"
 
 @interface ChipViewColorThemerTests : XCTestCase
 
-@property (nonatomic, strong) MDCChipView *chip;
-@property (nonatomic, strong) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong) MDCChipView *chip;
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 
 @end
 
@@ -46,18 +46,14 @@
   UIColor *onSurface16Opacity =
       [self.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.16];
 
-  UIColor *backgroundColor =
-      [MDCSemanticColorScheme blendColor:onSurface12Opacity
-                     withBackgroundColor:self.colorScheme.surfaceColor];
-  UIColor *selectedBackgroundColor =
-      [MDCSemanticColorScheme blendColor:onSurface12Opacity
-                     withBackgroundColor:backgroundColor];
-  UIColor *textColor =
-      [MDCSemanticColorScheme blendColor:onSurface87Opacity
-                     withBackgroundColor:backgroundColor];
-  UIColor *selectedTextColor =
-      [MDCSemanticColorScheme blendColor:onSurface87Opacity
-                     withBackgroundColor:selectedBackgroundColor];
+  UIColor *backgroundColor = [MDCSemanticColorScheme blendColor:onSurface12Opacity
+                                            withBackgroundColor:self.colorScheme.surfaceColor];
+  UIColor *selectedBackgroundColor = [MDCSemanticColorScheme blendColor:onSurface12Opacity
+                                                    withBackgroundColor:backgroundColor];
+  UIColor *textColor = [MDCSemanticColorScheme blendColor:onSurface87Opacity
+                                      withBackgroundColor:backgroundColor];
+  UIColor *selectedTextColor = [MDCSemanticColorScheme blendColor:onSurface87Opacity
+                                              withBackgroundColor:selectedBackgroundColor];
 
   XCTAssertEqualObjects([self.chip inkColorForState:UIControlStateNormal], onSurface16Opacity);
   XCTAssertEqualObjects([self.chip titleColorForState:UIControlStateNormal], textColor);
@@ -83,15 +79,12 @@
   UIColor *selectedBackgroundColor =
       [MDCSemanticColorScheme blendColor:onSurface12Opacity
                      withBackgroundColor:self.colorScheme.surfaceColor];
-  UIColor *borderColor =
-      [MDCSemanticColorScheme blendColor:onSurface12Opacity
-                     withBackgroundColor:self.colorScheme.surfaceColor];
-  UIColor *textColor =
-      [MDCSemanticColorScheme blendColor:onSurface87Opacity
-                     withBackgroundColor:self.colorScheme.surfaceColor];
-  UIColor *selectedTextColor =
-      [MDCSemanticColorScheme blendColor:onSurface87Opacity
-                     withBackgroundColor:selectedBackgroundColor];
+  UIColor *borderColor = [MDCSemanticColorScheme blendColor:onSurface12Opacity
+                                        withBackgroundColor:self.colorScheme.surfaceColor];
+  UIColor *textColor = [MDCSemanticColorScheme blendColor:onSurface87Opacity
+                                      withBackgroundColor:self.colorScheme.surfaceColor];
+  UIColor *selectedTextColor = [MDCSemanticColorScheme blendColor:onSurface87Opacity
+                                              withBackgroundColor:selectedBackgroundColor];
 
   XCTAssertEqualObjects([self.chip borderColorForState:UIControlStateNormal], borderColor);
   XCTAssertEqualObjects([self.chip borderColorForState:UIControlStateSelected],

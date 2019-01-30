@@ -201,12 +201,6 @@ typedef NS_ENUM(NSUInteger, MDCTextInputTextInsetsMode) {
 /** The underline view */
 @property(nonatomic, nullable, strong, readonly) MDCTextInputUnderlineView *underline;
 
-/** A boolean value that indicates whether the text input contains content **/
-@property(nonatomic, assign, readonly) BOOL hasTextContent;
-
-/** Clear the text content in the text input **/
-- (void)clearText;
-
 @end
 
 /**

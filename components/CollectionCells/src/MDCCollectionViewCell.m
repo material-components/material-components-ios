@@ -148,17 +148,22 @@ NSString *const kDeselectedCellAccessibilityHintKey =
         break;
     }
     self->_editingReorderImageView.alpha = self->_attr.shouldShowReorderStateMask ? 1 : 0;
-    self->_editingReorderImageView.transform = self->_attr.shouldShowReorderStateMask ?
-        CGAffineTransformMakeTranslation(txReorderTransform, 0) : CGAffineTransformIdentity;
+    self->_editingReorderImageView.transform =
+        self->_attr.shouldShowReorderStateMask
+            ? CGAffineTransformMakeTranslation(txReorderTransform, 0)
+            : CGAffineTransformIdentity;
 
     self->_editingSelectorImageView.alpha = self->_attr.shouldShowSelectorStateMask ? 1 : 0;
-    self->_editingSelectorImageView.transform = self->_attr.shouldShowSelectorStateMask ?
-        CGAffineTransformMakeTranslation(txSelectorTransform, 0) : CGAffineTransformIdentity;
+    self->_editingSelectorImageView.transform =
+        self->_attr.shouldShowSelectorStateMask
+            ? CGAffineTransformMakeTranslation(txSelectorTransform, 0)
+            : CGAffineTransformIdentity;
 
     self.accessoryView.alpha = self->_attr.shouldShowSelectorStateMask ? 0 : 1;
-    self->_accessoryInset.right = self->_attr.shouldShowSelectorStateMask
-                                  ? kAccessoryInsetDefault.right + kEditingControlAppearanceOffset
-                                  : kAccessoryInsetDefault.right;
+    self->_accessoryInset.right =
+        self->_attr.shouldShowSelectorStateMask
+            ? kAccessoryInsetDefault.right + kEditingControlAppearanceOffset
+            : kAccessoryInsetDefault.right;
   };
 
   // Animate editing controls.
@@ -207,10 +212,10 @@ NSString *const kDeselectedCellAccessibilityHintKey =
 
   // If necessary flip subviews for RTL.
   if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
-    _accessoryView.frame = MDFRectFlippedHorizontally(_accessoryView.frame,
-                                                      CGRectGetWidth(self.bounds));
-    self.contentView.frame = MDFRectFlippedHorizontally(self.contentView.frame,
-                                                        CGRectGetWidth(self.bounds));
+    _accessoryView.frame =
+        MDFRectFlippedHorizontally(_accessoryView.frame, CGRectGetWidth(self.bounds));
+    self.contentView.frame =
+        MDFRectFlippedHorizontally(self.contentView.frame, CGRectGetWidth(self.bounds));
   }
 }
 
@@ -529,8 +534,8 @@ NSString *const kDeselectedCellAccessibilityHintKey =
 
 + (NSString *)localizedStringWithKey:(NSString *)key {
   NSBundle *containingBundle = [NSBundle bundleForClass:self];
-  NSURL *resourceBundleURL =
-      [containingBundle URLForResource:kResourceBundleName withExtension:@"bundle"];
+  NSURL *resourceBundleURL = [containingBundle URLForResource:kResourceBundleName
+                                                withExtension:@"bundle"];
   NSBundle *resourceBundle = [NSBundle bundleWithURL:resourceBundleURL];
   return [resourceBundle localizedStringForKey:key value:nil table:kStringTableName];
 }

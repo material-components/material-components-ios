@@ -48,24 +48,38 @@ static NSDictionary<NSNumber *, NSDictionary *> *_styleTable;
 #pragma clang diagnostic ignored "-Wpartial-availability"
 + (void)initialize {
   _body1Traits = @{
-    UIContentSizeCategoryExtraSmall :
-        [MDCFontTraits traitsWithPointSize:11 weight:UIFontWeightRegular leading:0.0 tracking:0.0],
-    UIContentSizeCategorySmall :
-        [MDCFontTraits traitsWithPointSize:12 weight:UIFontWeightRegular leading:0.0 tracking:0.0],
-    UIContentSizeCategoryMedium :
-        [MDCFontTraits traitsWithPointSize:13 weight:UIFontWeightRegular leading:0.0 tracking:0.0],
-    UIContentSizeCategoryLarge :
-        [MDCFontTraits traitsWithPointSize:14 weight:UIFontWeightRegular leading:0.0 tracking:0.0],
-    UIContentSizeCategoryExtraLarge :
-        [MDCFontTraits traitsWithPointSize:16 weight:UIFontWeightRegular leading:0.0 tracking:0.0],
-    UIContentSizeCategoryExtraExtraLarge :
-        [MDCFontTraits traitsWithPointSize:18 weight:UIFontWeightRegular leading:0.0 tracking:0.0],
+    UIContentSizeCategoryExtraSmall : [MDCFontTraits traitsWithPointSize:11
+                                                                  weight:UIFontWeightRegular
+                                                                 leading:0.0
+                                                                tracking:0.0],
+    UIContentSizeCategorySmall : [MDCFontTraits traitsWithPointSize:12
+                                                             weight:UIFontWeightRegular
+                                                            leading:0.0
+                                                           tracking:0.0],
+    UIContentSizeCategoryMedium : [MDCFontTraits traitsWithPointSize:13
+                                                              weight:UIFontWeightRegular
+                                                             leading:0.0
+                                                            tracking:0.0],
+    UIContentSizeCategoryLarge : [MDCFontTraits traitsWithPointSize:14
+                                                             weight:UIFontWeightRegular
+                                                            leading:0.0
+                                                           tracking:0.0],
+    UIContentSizeCategoryExtraLarge : [MDCFontTraits traitsWithPointSize:16
+                                                                  weight:UIFontWeightRegular
+                                                                 leading:0.0
+                                                                tracking:0.0],
+    UIContentSizeCategoryExtraExtraLarge : [MDCFontTraits traitsWithPointSize:18
+                                                                       weight:UIFontWeightRegular
+                                                                      leading:0.0
+                                                                     tracking:0.0],
     UIContentSizeCategoryExtraExtraExtraLarge :
         [MDCFontTraits traitsWithPointSize:20 weight:UIFontWeightRegular leading:0.0 tracking:0.0],
     UIContentSizeCategoryAccessibilityMedium :
         [MDCFontTraits traitsWithPointSize:25 weight:UIFontWeightRegular leading:0.0 tracking:0.0],
-    UIContentSizeCategoryAccessibilityLarge :
-        [MDCFontTraits traitsWithPointSize:30 weight:UIFontWeightRegular leading:0.0 tracking:0.0],
+    UIContentSizeCategoryAccessibilityLarge : [MDCFontTraits traitsWithPointSize:30
+                                                                          weight:UIFontWeightRegular
+                                                                         leading:0.0
+                                                                        tracking:0.0],
     UIContentSizeCategoryAccessibilityExtraLarge :
         [MDCFontTraits traitsWithPointSize:37 weight:UIFontWeightRegular leading:0.0 tracking:0.0],
     UIContentSizeCategoryAccessibilityExtraExtraLarge :

@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "supplemental/SliderCollectionSupplemental.h"
 #import "MaterialCollections.h"
 #import "MaterialColorScheme.h"
 #import "MaterialPalettes.h"
-#import "MaterialSlider.h"
 #import "MaterialSlider+ColorThemer.h"
+#import "MaterialSlider.h"
 #import "MaterialTypographyScheme.h"
+#import "supplemental/SliderCollectionSupplemental.h"
 
 static NSString *const kReusableIdentifierItem = @"sliderItemCellIdentifier";
 static CGFloat const kSliderHorizontalMargin = 16;
@@ -73,7 +73,7 @@ static CGFloat const kSliderVerticalMargin = 12;
 @end
 
 @interface MDCSliderExampleCollectionViewCell : UICollectionViewCell
-@property (nonatomic, strong, nullable) UIFont *labelFont;
+@property(nonatomic, strong, nullable) UIFont *labelFont;
 - (void)applyModel:(MDCSliderModel *)model withColorScheme:(MDCSemanticColorScheme *)colorScheme;
 @end
 
@@ -106,7 +106,7 @@ static CGFloat const kSliderVerticalMargin = 12;
   _slider.shouldDisplayDiscreteValueLabel = model.discreteValueLabel;
   _slider.thumbHollowAtStart = model.hollowCircle;
   _slider.enabled = model.enabled;
-  
+
   // Don't apply a `nil` color, use the default
   if (model.sliderColor) {
     [_slider setTrackFillColor:model.sliderColor forState:UIControlStateNormal];
@@ -117,7 +117,7 @@ static CGFloat const kSliderVerticalMargin = 12;
   if (model.trackBackgroundColor) {
     [_slider setTrackBackgroundColor:model.trackBackgroundColor forState:UIControlStateNormal];
   }
-  
+
   if (model.filledTickColor) {
     [_slider setFilledTrackTickColor:model.filledTickColor forState:UIControlStateNormal];
   }
@@ -149,8 +149,9 @@ static CGFloat const kSliderVerticalMargin = 12;
     safeArea = self.safeAreaInsets;
     safeArea.top = 0;
   }
-  CGRect labelFrame = CGRectMake(kSliderHorizontalMargin + 6, kSliderVerticalMargin,
-                                 self.contentView.frame.size.width - (2 * kSliderHorizontalMargin), 20);
+  CGRect labelFrame =
+      CGRectMake(kSliderHorizontalMargin + 6, kSliderVerticalMargin,
+                 self.contentView.frame.size.width - (2 * kSliderHorizontalMargin), 20);
 
   _label.frame = UIEdgeInsetsInsetRect(labelFrame, safeArea);
 
@@ -187,7 +188,7 @@ static CGFloat const kSliderVerticalMargin = 12;
 
 - (void)invalidateLayout {
   [super invalidateLayout];
-  
+
   [self.collectionView setNeedsLayout];
 }
 

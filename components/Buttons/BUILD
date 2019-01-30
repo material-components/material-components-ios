@@ -38,10 +38,10 @@ mdc_public_objc_library(
         "//components/Ink",
         "//components/ShadowElevations",
         "//components/ShadowLayer",
+        "//components/ShapeLibrary",
+        "//components/Shapes",
         "//components/Typography",
         "//components/private/Math",
-        "//components/private/ShapeLibrary",
-        "//components/private/Shapes",
         "@material_text_accessibility_ios//:MDFTextAccessibility",
     ],
 )
@@ -111,19 +111,15 @@ mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
         ":Buttons",
-        ":ButtonThemer",
-        ":ColorThemer",
-        ":ShapeThemer",
         ":Theming",
-        ":TypographyThemer",
+        "//components/Typography",
+        "//components/private/Math",
         "//components/private/ShapeLibrary",
         "//components/private/Shapes",
-        "//components/private/Math",
         "//components/schemes/Color",
         "//components/schemes/Container",
         "//components/schemes/Shape",
         "//components/schemes/Typography",
-        "//components/Typography",
     ],
 )
 
@@ -131,16 +127,12 @@ mdc_examples_swift_library(
     name = "SwiftExamples",
     deps = [
         ":Buttons",
-        ":ButtonThemer",
-        ":ColorThemer",
-        ":ShapeThemer",
         ":Theming",
-        ":TypographyThemer",
+        "//components/Typography",
         "//components/schemes/Color",
         "//components/schemes/Container",
         "//components/schemes/Shape",
         "//components/schemes/Typography",
-        "//components/Typography",
     ],
 )
 

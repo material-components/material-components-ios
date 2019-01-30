@@ -58,31 +58,31 @@ static UIColor *RippleSelectedColor(void) {
   if (_rippleColors == nil) {
     _rippleColors = [NSMutableDictionary dictionary];
     UIColor *selectionColor = RippleSelectedColor();
-    _rippleColors[@(MDCRippleStateNewNormal)] = [UIColor colorWithWhite:0 alpha:kRippleAlpha];
-    _rippleColors[@(MDCRippleStateNewHighlighted)] = [UIColor colorWithWhite:0 alpha:kRippleAlpha];
-    _rippleColors[@(MDCRippleStateNewSelected)] = [selectionColor colorWithAlphaComponent:kRippleSelectedAlpha];
-    _rippleColors[@(MDCRippleStateNewSelected | MDCRippleStateNewHighlighted)] =
+    _rippleColors[@(MDCRippleStateNormal)] = [UIColor colorWithWhite:0 alpha:kRippleAlpha];
+    _rippleColors[@(MDCRippleStateHighlighted)] = [UIColor colorWithWhite:0 alpha:kRippleAlpha];
+    _rippleColors[@(MDCRippleStateSelected)] = [selectionColor colorWithAlphaComponent:kRippleSelectedAlpha];
+    _rippleColors[@(MDCRippleStateSelected | MDCRippleStateHighlighted)] =
         [selectionColor colorWithAlphaComponent:kRippleAlpha];
-    _rippleColors[@(MDCRippleStateNewDragged)] =
+    _rippleColors[@(MDCRippleStateDragged)] =
         [UIColor colorWithWhite:0 alpha:kRippleDraggedAlpha];
-    _rippleColors[@(MDCRippleStateNewDragged | MDCRippleStateNewHighlighted)] =
+    _rippleColors[@(MDCRippleStateDragged | MDCRippleStateHighlighted)] =
         [UIColor colorWithWhite:0 alpha:kRippleDraggedAlpha];
-    _rippleColors[@(MDCRippleStateNewSelected | MDCRippleStateNewDragged)] =
+    _rippleColors[@(MDCRippleStateSelected | MDCRippleStateDragged)] =
         [selectionColor colorWithAlphaComponent:kRippleDraggedAlpha];
   }
   self.userInteractionEnabled = YES;
 }
 
-- (UIColor *)rippleColorForState:(MDCRippleStateNew)state {
+- (UIColor *)rippleColorForState:(MDCRippleState)state {
   UIColor *rippleColor = _rippleColors[@(state)];
-  if (rippleColor == nil && (state & MDCRippleStateNewDragged) != 0) {
-    rippleColor = _rippleColors[@(MDCRippleStateNewDragged)];
-  } else if (rippleColor == nil && (state & MDCRippleStateNewSelected) != 0) {
-    rippleColor = _rippleColors[@(MDCRippleStateNewSelected)];
+  if (rippleColor == nil && (state & MDCRippleStateDragged) != 0) {
+    rippleColor = _rippleColors[@(MDCRippleStateDragged)];
+  } else if (rippleColor == nil && (state & MDCRippleStateSelected) != 0) {
+    rippleColor = _rippleColors[@(MDCRippleStateSelected)];
   }
 
   if (rippleColor == nil) {
-    rippleColor = _rippleColors[@(MDCRippleStateNewNormal)];
+    rippleColor = _rippleColors[@(MDCRippleStateNormal)];
   }
   return rippleColor;
 }
@@ -97,22 +97,22 @@ static UIColor *RippleSelectedColor(void) {
   [self setActiveRippleColor:rippleColor];
 }
 
-- (void)setRippleColor:(UIColor *)rippleColor forState:(MDCRippleStateNew)state {
+- (void)setRippleColor:(UIColor *)rippleColor forState:(MDCRippleState)state {
   _rippleColors[@(state)] = rippleColor;
 
   [self updateRippleColor];
 }
 
-- (MDCRippleStateNew)state {
+- (MDCRippleState)state {
   NSInteger state = 0;
   if (self.selected) {
-    state |= MDCRippleStateNewSelected;
+    state |= MDCRippleStateSelected;
   }
   if (self.rippleHighlighted) {
-    state |= MDCRippleStateNewHighlighted;
+    state |= MDCRippleStateHighlighted;
   }
   if (self.dragged) {
-    state |= MDCRippleStateNewDragged;
+    state |= MDCRippleStateDragged;
   }
   return state;
 }
@@ -140,7 +140,7 @@ static UIColor *RippleSelectedColor(void) {
   } else {
     // If we are no longer selecting, we cancel all the ripples.
     [self updateRippleColor];
-    [self cancelAllRipplesAnimated:YES];
+    [self cancelAllRipplesAnimated:YES completion:nil];
   }
 }
 
@@ -183,7 +183,7 @@ static UIColor *RippleSelectedColor(void) {
   } else {
     // If we are no longer dragging, we cancel all the ripples.
     [self updateRippleColor];
-    [self cancelAllRipplesAnimated:YES];
+    [self cancelAllRipplesAnimated:YES completion:nil];
   }
 }
 

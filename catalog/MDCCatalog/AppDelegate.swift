@@ -25,6 +25,8 @@ import MaterialComponents.MaterialIcons_ic_more_horiz
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, MDCAppBarNavigationControllerDelegate {
 
+  private static let performPostLaunchSelector = "performPostLaunchSelector"
+
   var window: UIWindow?
 
   let navigationController = MDCAppBarNavigationController()
@@ -56,6 +58,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MDCAppBarNavigationContro
       selector: #selector(self.themeDidChange),
       name: AppTheme.didChangeGlobalThemeNotificationName,
       object: nil)
+
+    if self.responds(to: Selector((AppDelegate.performPostLaunchSelector))) {
+      self.perform(Selector((AppDelegate.performPostLaunchSelector)))
+    }
 
     return true
   }

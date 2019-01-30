@@ -76,8 +76,7 @@
   // Second the controller is created to manage the text field
   self.textFieldControllerOutlined =
       [[MDCTextInputControllerOutlined alloc] initWithTextInput:textFieldOutlined];
-  self.textFieldControllerOutlined.placeholderText =
-      @"MDCTextInputControllerOutlined";
+  self.textFieldControllerOutlined.placeholderText = @"MDCTextInputControllerOutlined";
   self.textFieldControllerOutlined.characterCountMax = characterCountMax;
 
   [self.textFieldControllerOutlined mdc_setAdjustsFontForContentSizeCategory:YES];
@@ -197,7 +196,7 @@
                                  attribute:NSLayoutAttributeBottom
                                 multiplier:1
                                   constant:-20]
-    .active = YES;
+        .active = YES;
   } else {
     [NSLayoutConstraint constraintWithItem:textFieldOutlined
                                  attribute:NSLayoutAttributeTop
@@ -214,7 +213,7 @@
                                  attribute:NSLayoutAttributeBottom
                                 multiplier:1
                                   constant:-20]
-    .active = YES;
+        .active = YES;
   }
 }
 
@@ -258,6 +257,5 @@
 - (void)keyboardWillHide:(NSNotification *)notification {
   self.scrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
 }
-
 
 @end

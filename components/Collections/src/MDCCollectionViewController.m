@@ -223,8 +223,8 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
     height = [_styler.delegate collectionView:collectionView cellHeightAtIndexPath:attr.indexPath];
   }
 
-  CGFloat width =
-      [self cellWidthAtSectionIndex:attr.indexPath.section collectionView:collectionView];
+  CGFloat width = [self cellWidthAtSectionIndex:attr.indexPath.section
+                                 collectionView:collectionView];
   return CGSizeMake(width, height);
 }
 
@@ -232,7 +232,7 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
 - (CGFloat)cellWidthAtSectionIndex:(NSInteger)section
                     collectionView:(UICollectionView *)collectionView {
   UIEdgeInsets contentInset = collectionView.contentInset;
-// On the iPhone X, we need to use the offset which might take into account the safe area.
+  // On the iPhone X, we need to use the offset which might take into account the safe area.
   if (@available(iOS 11.0, *)) {
     contentInset = collectionView.adjustedContentInset;
   }
@@ -265,8 +265,8 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
     insets.left = inset;
     insets.right = inset;
     if (@available(iOS 11.0, *)) {
-      if (collectionView.contentInsetAdjustmentBehavior
-          == UIScrollViewContentInsetAdjustmentAlways) {
+      if (collectionView.contentInsetAdjustmentBehavior ==
+          UIScrollViewContentInsetAdjustmentAlways) {
         // We don't need section insets if there are already safe area insets.
         insets.left = MAX(0, insets.left - collectionView.safeAreaInsets.left);
         insets.right = MAX(0, insets.right - collectionView.safeAreaInsets.right);
@@ -292,8 +292,8 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
     BOOL nextCellIsInlaid = NO;
 
     BOOL hasSectionHeader = NO;
-    if ([self
-            respondsToSelector:@selector(collectionView:layout:referenceSizeForHeaderInSection:)]) {
+    if ([self respondsToSelector:@selector(collectionView:
+                                                   layout:referenceSizeForHeaderInSection:)]) {
       CGSize headerSize = [self collectionView:collectionView
                                         layout:collectionView.collectionViewLayout
                referenceSizeForHeaderInSection:indexPath.section];
@@ -301,8 +301,8 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
     }
 
     BOOL hasSectionFooter = NO;
-    if ([self
-            respondsToSelector:@selector(collectionView:layout:referenceSizeForFooterInSection:)]) {
+    if ([self respondsToSelector:@selector(collectionView:
+                                                   layout:referenceSizeForFooterInSection:)]) {
       CGSize footerSize = [self collectionView:collectionView
                                         layout:_collectionViewLayout
                referenceSizeForFooterInSection:indexPath.section];
@@ -311,8 +311,8 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
 
     // Check if previous cell is inlaid.
     if (indexPath.item > 0 || hasSectionHeader) {
-      NSIndexPath *prevIndexPath =
-          [NSIndexPath indexPathForItem:(indexPath.item - 1) inSection:indexPath.section];
+      NSIndexPath *prevIndexPath = [NSIndexPath indexPathForItem:(indexPath.item - 1)
+                                                       inSection:indexPath.section];
       prevCellIsInlaid = [_styler isItemInlaidAtIndexPath:prevIndexPath];
       inlayInsets.top = prevCellIsInlaid ? inset / 2 : inset;
     }
@@ -320,8 +320,8 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
     // Check if next cell is inlaid.
     if (indexPath.item < [collectionView numberOfItemsInSection:indexPath.section] - 1 ||
         hasSectionFooter) {
-      NSIndexPath *nextIndexPath =
-          [NSIndexPath indexPathForItem:(indexPath.item + 1) inSection:indexPath.section];
+      NSIndexPath *nextIndexPath = [NSIndexPath indexPathForItem:(indexPath.item + 1)
+                                                       inSection:indexPath.section];
       nextCellIsInlaid = [_styler isItemInlaidAtIndexPath:nextIndexPath];
       inlayInsets.bottom = nextCellIsInlaid ? inset / 2 : inset;
     }
@@ -345,8 +345,7 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
   if (@available(iOS 11.0, *)) {
     contentInset = self.collectionView.adjustedContentInset;
   }
-  CGFloat bounds = CGRectGetWidth(
-      UIEdgeInsetsInsetRect(self.collectionView.bounds, contentInset));
+  CGFloat bounds = CGRectGetWidth(UIEdgeInsetsInsetRect(self.collectionView.bounds, contentInset));
   UIEdgeInsets sectionInsets = [self collectionView:self.collectionView
                                              layout:self.collectionView.collectionViewLayout
                              insetForSectionAtIndex:section];
@@ -381,8 +380,8 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
   UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
   MDCInkView *ink = nil;
 
-  if ([_styler.delegate
-          respondsToSelector:@selector(collectionView:inkTouchController:inkViewAtIndexPath:)]) {
+  if ([_styler.delegate respondsToSelector:@selector(collectionView:
+                                                 inkTouchController:inkViewAtIndexPath:)]) {
     return [_styler.delegate collectionView:self.collectionView
                          inkTouchController:inkTouchController
                          inkViewAtIndexPath:indexPath];
@@ -458,8 +457,8 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
 
   // Update ink color if necessary.
   if ([_styler.delegate respondsToSelector:@selector(collectionView:inkColorAtIndexPath:)]) {
-    inkView.inkColor =
-        [_styler.delegate collectionView:collectionView inkColorAtIndexPath:indexPath];
+    inkView.inkColor = [_styler.delegate collectionView:collectionView
+                                    inkColorAtIndexPath:indexPath];
     if (!inkView.inkColor) {
       inkView.inkColor = inkView.defaultInkColor;
     }
@@ -519,8 +518,8 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
 
 - (void)collectionViewWillBeginEditing:(__unused UICollectionView *)collectionView {
   if (self.currentlyActiveInk) {
-    MDCInkView *activeInkView =
-        [self inkTouchController:_inkTouchController inkViewAtTouchLocation:_inkTouchLocation];
+    MDCInkView *activeInkView = [self inkTouchController:_inkTouchController
+                                  inkViewAtTouchLocation:_inkTouchLocation];
     [activeInkView startTouchEndedAnimationAtPoint:_inkTouchLocation completion:nil];
   }
   // Inlay all items.
