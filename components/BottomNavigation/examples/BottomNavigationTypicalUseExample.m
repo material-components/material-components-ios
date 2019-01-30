@@ -42,18 +42,18 @@
 
 - (void)commonBottomNavigationTypicalUseExampleViewDidLoad {
   _bottomNavBar = [[MDCBottomNavigationBar alloc] initWithFrame:CGRectZero];
-  _bottomNavBar.titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
+  _bottomNavBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   _bottomNavBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles;
   _bottomNavBar.delegate = self;
   [self.view addSubview:_bottomNavBar];
 
-  UITabBarItem *tabBarItem1 = [[UITabBarItem alloc] initWithTitle:@"Home"
+  UITabBarItem *tabBarItem1 = [[UITabBarItem alloc] initWithTitle:@"Home Home Home Home Home"
                                                             image:[UIImage imageNamed:@"Home"]
                                                               tag:0];
-  UITabBarItem *tabBarItem2 = [[UITabBarItem alloc] initWithTitle:@"Messages"
+  UITabBarItem *tabBarItem2 = [[UITabBarItem alloc] initWithTitle:@"Messages Messages Messages Messages"
                                                             image:[UIImage imageNamed:@"Email"]
                                                               tag:0];
-  UITabBarItem *tabBarItem3 = [[UITabBarItem alloc] initWithTitle:@"Favorites"
+  UITabBarItem *tabBarItem3 = [[UITabBarItem alloc] initWithTitle:@"Favorites Favorites Favorites Favorites"
                                                             image:[UIImage imageNamed:@"Favorite"]
                                                               tag:0];
   UITabBarItem *tabBarItem4 = [[UITabBarItem alloc] initWithTitle:@"Search"

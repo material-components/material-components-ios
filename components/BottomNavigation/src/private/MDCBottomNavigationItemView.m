@@ -214,13 +214,24 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
     }
     iconImageViewCenter = CGPointMake(centerX, centerY - totalContentHeight / 2 + iconHeight / 2);
     labelCenter = CGPointMake(centerX, centerY + totalContentHeight / 2 - labelHeight / 2);
+    CGFloat availableContentWidth = CGRectGetWidth(contentBoundingRect);
+    if (labelSize.width > availableContentWidth) {
+      labelSize = CGSizeMake(availableContentWidth, labelSize.height);
+    }
   } else {
-    CGFloat contentsWidth = iconImageViewSize.width + labelSize.width;
+    CGFloat contentsWidth = iconImageViewSize.width + labelSize.width + self.contentHorizontalMargin;
+    CGFloat availableContentWidth = CGRectGetWidth(contentBoundingRect);
+    if (contentsWidth > availableContentWidth) {
+      contentsWidth = availableContentWidth;
+    }
     if (!isRTL) {
-      iconImageViewCenter =
-          CGPointMake(centerX - CGRectGetWidth(contentBoundingRect) * (CGFloat)0.2, centerY);
-      CGFloat labelCenterX =
-          iconImageViewCenter.x + contentsWidth / 2 + self.contentHorizontalMargin;
+      CGFloat contentBoundingRectMinX = CGRectGetMinX(contentBoundingRect);
+      CGFloat contentBoundingContentWidthDiff = availableContentWidth - contentsWidth;
+      iconImageViewCenter = CGPointMake(contentBoundingRectMinX + contentBoundingContentWidthDiff / 2 + iconImageViewSize.width / 2,
+                                        centerY);
+      availableContentWidth -= iconImageViewSize.width + self.contentHorizontalMargin;
+      labelSize = CGSizeMake(MIN(labelSize.width, availableContentWidth), labelSize.height);
+      CGFloat labelCenterX = iconImageViewCenter.x + iconImageViewSize.width / 2 + self.contentHorizontalMargin + labelSize.width / 2;
       labelCenter = CGPointMake(labelCenterX, centerY);
     } else {
       iconImageViewCenter =
@@ -261,6 +272,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   CGPoint iconImageViewCenter = CGPointMake(CGRectGetMidX(iconImageViewFrame),
                                             CGRectGetMidY(iconImageViewFrame));
   self.label.center = CGPointMake(CGRectGetMidX(labelFrame), CGRectGetMidY(labelFrame));
+  self.label.bounds = CGRectMake(0, 0, CGRectGetWidth(labelFrame), CGRectGetHeight(labelFrame));
 
   if (self.titleBelowIcon) {
     if (animated) {

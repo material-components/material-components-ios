@@ -30,7 +30,10 @@
 static NSString *const kMaterialBottomNavigationBundle = @"MaterialBottomNavigation.bundle";
 
 static const CGFloat kMinItemWidth = 80;
+static const CGFloat kPreferredItemWidth = 120;
 static const CGFloat kMaxItemWidth = 168;
+// The amount of internal padding on the leading/trailing edges of each bar item.
+static const CGFloat kItemHorizontalPadding = 12;
 static const CGFloat kMDCBottomNavigationBarHeight = 56;
 static const CGFloat kMDCBottomNavigationBarHeightAdjacentTitles = 40;
 static const CGFloat kMDCBottomNavigationBarItemsHorizontalMargin = 12;
@@ -183,6 +186,25 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
   }
 }
 
+- (CGFloat)widthForItemsWhenCenteredWithAvailableWidth:(CGFloat)availableWidth
+                                                height:(CGFloat)barHeight {
+  CGFloat maxItemWidth = kPreferredItemWidth;
+  for (UIView *itemView in self.itemViews) {
+    maxItemWidth =
+        MAX(maxItemWidth, [itemView sizeThatFits:CGSizeMake(availableWidth, barHeight)].width
+                          + kItemHorizontalPadding * 2);
+  }
+  maxItemWidth = MIN(kMaxItemWidth, maxItemWidth);
+  CGFloat totalWidth = maxItemWidth * self.items.count;
+  if (totalWidth > availableWidth) {
+    maxItemWidth = availableWidth / self.items.count;
+  }
+  if (maxItemWidth < kMinItemWidth) {
+    maxItemWidth = kMinItemWidth;
+  }
+  return maxItemWidth;
+}
+
 - (void)sizeContainerViewItemsDistributed:(BOOL)itemsDistributed
                         withBottomNavSize:(CGSize)bottomNavSize
                            containerWidth:(CGFloat)containerWidth {
@@ -191,20 +213,18 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
       self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
     barHeight = kMDCBottomNavigationBarHeightAdjacentTitles;
   }
+  UIEdgeInsets insets = self.mdc_safeAreaInsets;
+  CGFloat bottomNavWidthInset = bottomNavSize.width - insets.left - insets.right;
   if (itemsDistributed) {
-    UIEdgeInsets insets = self.mdc_safeAreaInsets;
     self.containerView.frame =
-        CGRectMake(insets.left, 0, bottomNavSize.width - insets.left - insets.right, barHeight);
+        CGRectMake(insets.left, 0, bottomNavWidthInset, barHeight);
     self.itemLayoutFrame = CGRectMake(0, 0, CGRectGetWidth(self.containerView.frame), barHeight);
   } else {
-    CGFloat maxItemWidth = kMinItemWidth;
-    for (UIView *itemView in self.itemViews) {
-      maxItemWidth =
-          MAX(maxItemWidth, [itemView sizeThatFits:CGSizeMake(containerWidth, barHeight)].width);
-    }
-    maxItemWidth = MIN(kMaxItemWidth, maxItemWidth);
+    CGFloat maxItemWidth = [self widthForItemsWhenCenteredWithAvailableWidth:bottomNavWidthInset
+                                                                      height:barHeight];
     CGFloat layoutFrameWidth = maxItemWidth * self.items.count;
-    containerWidth = MAX(containerWidth, layoutFrameWidth);
+    layoutFrameWidth = MIN(bottomNavWidthInset, layoutFrameWidth);
+    containerWidth = MIN(bottomNavWidthInset, MAX(containerWidth, layoutFrameWidth));
     CGFloat clusteredOffsetX = (bottomNavSize.width - containerWidth) / 2;
     self.containerView.frame = CGRectMake(clusteredOffsetX, 0, containerWidth, barHeight);
     CGFloat itemLayoutFrameOffsetX = (containerWidth - layoutFrameWidth) / 2;
@@ -223,11 +243,11 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
   for (NSUInteger i = 0; i < self.itemViews.count; i++) {
     MDCBottomNavigationItemView *itemView = self.itemViews[i];
     if (layoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
-      itemView.frame = CGRectMake(CGRectGetMinX(self.itemLayoutFrame) + i * itemWidth, 0, itemWidth,
+      itemView.frame = CGRectMake(CGRectGetMinX(self.itemLayoutFrame) + i * itemWidth + kItemHorizontalPadding, 0, itemWidth - 2 * kItemHorizontalPadding,
                                   navBarHeight);
     } else {
-      itemView.frame = CGRectMake(CGRectGetMaxX(self.itemLayoutFrame) - (i + 1) * itemWidth, 0,
-                                  itemWidth, navBarHeight);
+      itemView.frame = CGRectMake(CGRectGetMaxX(self.itemLayoutFrame) - (i + 1) * itemWidth + kItemHorizontalPadding, 0,
+                                  itemWidth - 2 * kItemHorizontalPadding, navBarHeight);
     }
   }
 }
