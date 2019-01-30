@@ -67,10 +67,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MDCAppBarNavigationContro
   }
 
   func themeDidChange(notification: NSNotification) {
-    guard let colorScheme = notification.userInfo?[AppTheme.globalThemeNotificationColorSchemeKey]
-      as? MDCColorScheming else {
-        return
-    }
+    let colorScheme = AppTheme.globalTheme.colorScheme
     for viewController in navigationController.childViewControllers {
       guard let appBar = navigationController.appBar(for: viewController) else {
         continue

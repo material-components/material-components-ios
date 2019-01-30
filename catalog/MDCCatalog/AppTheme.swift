@@ -66,15 +66,10 @@ final class AppTheme {
     didSet {
       NotificationCenter.default.post(name: AppTheme.didChangeGlobalThemeNotificationName,
                                       object: nil,
-                                      userInfo:
-        [AppTheme.globalThemeNotificationColorSchemeKey: AppTheme.globalTheme.colorScheme,
-         AppTheme.globalThemeNotificationTypographySchemeKey: AppTheme.globalTheme.typographyScheme]
-      )
+                                      userInfo: nil)
     }
   }
 
   static let didChangeGlobalThemeNotificationName =
     Notification.Name("MDCCatalogDidChangeGlobalTheme")
-  static let globalThemeNotificationColorSchemeKey = "colorScheme"
-  static let globalThemeNotificationTypographySchemeKey = "typographyScheme"
 }
