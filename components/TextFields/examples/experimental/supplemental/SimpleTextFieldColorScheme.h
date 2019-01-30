@@ -18,14 +18,14 @@
 #import "SimpleTextFieldLayoutUtils.h"
 
 // make NSCopying
-@protocol SimpleTextFieldColorScheming <NSObject>
+@protocol MDCContainedInputViewColorScheming <NSObject>
 @property(strong, nonatomic, readonly, nonnull) UIColor *textColor;
 @property(strong, nonatomic, readonly, nonnull) UIColor *underlineLabelColor;
 @property(strong, nonatomic, readonly, nonnull) UIColor *placeholderLabelColor;
 @property(strong, nonatomic, readonly, nonnull) UIColor *clearButtonTintColor;
 @end
 
-@interface SimpleTextFieldColorScheme : NSObject <SimpleTextFieldColorScheming>
+@interface SimpleTextFieldColorScheme : NSObject <MDCContainedInputViewColorScheming>
 @property(strong, nonatomic) UIColor *textColor;
 @property(strong, nonatomic) UIColor *underlineLabelColor;
 @property(strong, nonatomic) UIColor *placeholderLabelColor;

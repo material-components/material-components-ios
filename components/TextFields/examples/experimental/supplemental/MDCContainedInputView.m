@@ -94,13 +94,13 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
   return [SimpleTextFieldColorScheme class];
 }
 
-- (id<SimpleTextFieldColorScheming>)defaultColorSchemeForState:(MDCContainedInputViewState)state {
+- (id<MDCContainedInputViewColorScheming>)defaultColorSchemeForState:(MDCContainedInputViewState)state {
   SimpleTextFieldColorScheme *colorScheme = [[SimpleTextFieldColorScheme alloc] init];
   //TODO: Implement
   return colorScheme;
 }
 
-- (id<SimpleTextFieldColorScheming>)defaultColorScheme {
+- (id<MDCContainedInputViewColorScheming>)defaultColorScheme {
   return [self defaultColorSchemeForState:MDCContainedInputViewStateNormal];
 }
 

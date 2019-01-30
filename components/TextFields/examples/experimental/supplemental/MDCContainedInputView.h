@@ -20,7 +20,7 @@
 //#import "SimpleTextFieldColorScheme.h"
 //#import "MDCContainedInputViewState.h"
 
-@protocol SimpleTextFieldColorScheming;
+@protocol MDCContainedInputViewColorScheming;
 /**
  MDCInputViewContainerStyle dictates what type of text field it will be from a cosmetic standpoint.
  The values are derived from the styles outlined in the Material Guidelines for Text Fields.
@@ -43,8 +43,8 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewState) {
 
 @interface MDCContainerStyle : NSObject
 + (Class)colorSchemeClass;
-- (id<SimpleTextFieldColorScheming>)defaultColorScheme;
-- (id<SimpleTextFieldColorScheming>)defaultColorSchemeForState:(MDCContainedInputViewState)state;
+- (id<MDCContainedInputViewColorScheming>)defaultColorScheme;
+- (id<MDCContainedInputViewColorScheming>)defaultColorSchemeForState:(MDCContainedInputViewState)state;
 - (void)applyStyleTo:(id<MDCContainedInputView>)containedInputView;
 - (void)removeStyleFrom:(id<MDCContainedInputView>)containedInputView;
 @end

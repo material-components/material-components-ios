@@ -108,25 +108,30 @@
 }
 
 - (void)setUpStateDependentColorSchemesForStyle:(MDCContainerStyle *)containerStyle {
-  id<SimpleTextFieldColorScheming> normalColorScheme =
+  id<MDCContainedInputViewColorScheming> normalColorScheme =
       [containerStyle defaultColorSchemeForState:MDCContainedInputViewStateNormal];
-  [self setSimpleTextFieldColorScheming:normalColorScheme forState:MDCContainedInputViewStateNormal];
+  [self setContainedInputViewColorScheming:normalColorScheme
+                                  forState:MDCContainedInputViewStateNormal];
   
-  id<SimpleTextFieldColorScheming> focusedColorScheme =
+  id<MDCContainedInputViewColorScheming> focusedColorScheme =
       [containerStyle defaultColorSchemeForState:MDCContainedInputViewStateFocused];
-  [self setSimpleTextFieldColorScheming:focusedColorScheme forState:MDCContainedInputViewStateFocused];
+  [self setContainedInputViewColorScheming:focusedColorScheme
+                                  forState:MDCContainedInputViewStateFocused];
   
-  id<SimpleTextFieldColorScheming> activatedColorScheme =
+  id<MDCContainedInputViewColorScheming> activatedColorScheme =
       [containerStyle defaultColorSchemeForState:MDCContainedInputViewStateActivated];
-  [self setSimpleTextFieldColorScheming:activatedColorScheme forState:MDCContainedInputViewStateActivated];
+  [self setContainedInputViewColorScheming:activatedColorScheme
+                                  forState:MDCContainedInputViewStateActivated];
 
-  id<SimpleTextFieldColorScheming> erroredColorScheme =
+  id<MDCContainedInputViewColorScheming> erroredColorScheme =
       [containerStyle defaultColorSchemeForState:MDCContainedInputViewStateErrored];
-  [self setSimpleTextFieldColorScheming:erroredColorScheme forState:MDCContainedInputViewStateErrored];
+  [self setContainedInputViewColorScheming:erroredColorScheme
+                                  forState:MDCContainedInputViewStateErrored];
   
-  id<SimpleTextFieldColorScheming> disabledColorScheme =
+  id<MDCContainedInputViewColorScheming> disabledColorScheme =
       [containerStyle defaultColorSchemeForState:MDCContainedInputViewStateDisabled];
-  [self setSimpleTextFieldColorScheming:disabledColorScheme forState:MDCContainedInputViewStateDisabled];
+  [self setContainedInputViewColorScheming:disabledColorScheme
+                                  forState:MDCContainedInputViewStateDisabled];
 }
 
 
@@ -228,8 +233,8 @@
 - (void)preLayoutSubviews {
   self.containedInputViewState = [self determineCurrentContainedInputViewState];
   self.placeholderState = [self determineCurrentPlaceholderState];
-  id<SimpleTextFieldColorScheming> colorScheming = [self simpleTextFieldColorSchemingForState:self.containedInputViewState];
-  [self applySimpleTextFieldColorScheming:colorScheming];
+  id<MDCContainedInputViewColorScheming> colorScheming = [self containedInputViewColorSchemingForState:self.containedInputViewState];
+  [self applyMDCContainedInputViewColorScheming:colorScheming];
   CGSize fittingSize = CGSizeMake(CGRectGetWidth(self.frame), CGFLOAT_MAX);
   self.layout = [self calculateLayoutWithTextFieldSize:fittingSize];
 }
@@ -857,11 +862,14 @@
 
 #pragma mark Theming
 
-- (void)applySimpleTextFieldColorScheming:(id<SimpleTextFieldColorScheming>)colorScheming {
+- (void)applyMDCContainedInputViewColorScheming:(id<MDCContainedInputViewColorScheming>)colorScheming {
   // update all the base class properties
   // then do [style applyColorScheming:colorSceming];
   // or just do that
-  
+
+  // apply things that you need
+  // make clear button tint color optional in the protocol?
+
   
   
   //  self.textColor = colorAdapter.textColor;
@@ -879,13 +887,13 @@
   // make style listen to adapter
 }
 
-- (void)setSimpleTextFieldColorScheming:(id<SimpleTextFieldColorScheming>)simpleTextFieldColorScheming
+- (void)setContainedInputViewColorScheming:(id<MDCContainedInputViewColorScheming>)simpleTextFieldColorScheming
                              forState:(MDCContainedInputViewState)containedInputViewState {
   self.colorSchemes[@(containedInputViewState)] = simpleTextFieldColorScheming;
 }
 
--(id<SimpleTextFieldColorScheming>)simpleTextFieldColorSchemingForState:(MDCContainedInputViewState)containedInputViewState {
-  id<SimpleTextFieldColorScheming> colorScheme = self.colorSchemes[@(containedInputViewState)];
+-(id<MDCContainedInputViewColorScheming>)containedInputViewColorSchemingForState:(MDCContainedInputViewState)containedInputViewState {
+  id<MDCContainedInputViewColorScheming> colorScheme = self.colorSchemes[@(containedInputViewState)];
   if (!colorScheme) {
     colorScheme =
     [self.containerStyle defaultColorSchemeForState:containedInputViewState];

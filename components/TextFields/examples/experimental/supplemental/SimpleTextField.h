@@ -114,8 +114,8 @@
  */
 @property(nonatomic, assign) CGFloat customUnderlineLabelDrawPriority;
 
-- (id<SimpleTextFieldColorScheming>)simpleTextFieldColorSchemingForState:(MDCContainedInputViewState)containedInputViewState;
-- (void)setSimpleTextFieldColorScheming:(id<SimpleTextFieldColorScheming>)simpleTextFieldColorScheming
-                               forState:(MDCContainedInputViewState)textFieldState;
+- (id<MDCContainedInputViewColorScheming>)containedInputViewColorSchemingForState:(MDCContainedInputViewState)containedInputViewState;
+- (void)setContainedInputViewColorScheming:(id<MDCContainedInputViewColorScheming>)containedInputViewColorScheming
+                                  forState:(MDCContainedInputViewState)textFieldState;
 
 @end
