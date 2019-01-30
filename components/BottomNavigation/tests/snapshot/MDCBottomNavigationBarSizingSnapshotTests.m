@@ -218,7 +218,6 @@ static inline UIImage *CreateTestImage(CGSize size) {
   [self generateAndVerifySnapshot];
 }
 
-
 #pragma mark - Alignment .JustifiedAdjacent
 
 - (void)testJustifiedAdjacentUnspecifiedAlwaysFiveItemsFitWidthFitHeight {
