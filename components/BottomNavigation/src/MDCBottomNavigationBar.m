@@ -193,7 +193,7 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
     UIEdgeInsets insets = self.mdc_safeAreaInsets;
     self.containerView.frame =
         CGRectMake(insets.left, 0, bottomNavSize.width - insets.left - insets.right, barHeight);
-    self.itemLayoutFrame = self.containerView.frame;
+    self.itemLayoutFrame = CGRectMake(0, 0, CGRectGetWidth(self.containerView.frame), barHeight);
   } else {
     CGFloat maxItemWidth = 120;
     for (UIView *itemView in self.itemViews) {
