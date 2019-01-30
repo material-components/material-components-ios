@@ -200,7 +200,7 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
     CGFloat maxItemWidth = kMinItemWidth;
     for (UIView *itemView in self.itemViews) {
       maxItemWidth =
-          MAX(maxItemWidth, [itemView sizeThatFits:CGSizeMake(INFINITY, INFINITY)].width);
+          MAX(maxItemWidth, [itemView sizeThatFits:CGSizeMake(containerWidth, barHeight)].width);
     }
     maxItemWidth = MIN(kMaxItemWidth, maxItemWidth);
     CGFloat layoutFrameWidth = maxItemWidth * self.items.count;
