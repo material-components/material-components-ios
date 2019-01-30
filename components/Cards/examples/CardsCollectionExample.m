@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #import "CardsCollectionExample.h"
+
+#import "MDCCardCollectionCell+MaterialTheming.h"
 #import "MaterialInk.h"
 #import "UICollectionViewController+MDCCardReordering.h"
 
@@ -30,7 +32,11 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   defaultLayout.minimumInteritemSpacing = 0;
   defaultLayout.minimumLineSpacing = 1;
   defaultLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
-  return [self initWithCollectionViewLayout:defaultLayout];
+  self = [super initWithCollectionViewLayout:defaultLayout];
+  if (self) {
+    self.containerScheme = [[MDCContainerScheme alloc] init];
+  }
+  return self;
 }
 
 - (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout {
@@ -70,6 +76,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   MDCCardCollectionCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
                                                 forIndexPath:indexPath];
+  [cell applyThemeWithScheme:self.containerScheme];
   [cell setBackgroundColor:[UIColor colorWithRed:107 / (CGFloat)255
                                            green:63 / (CGFloat)255
                                             blue:238 / (CGFloat)255

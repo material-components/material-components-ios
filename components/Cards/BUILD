@@ -153,7 +153,9 @@ mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
         ":Cards",
+        ":Theming",
         "//components/Ink",
+        "//components/schemes/Container",
     ],
 )
 
@@ -164,5 +166,6 @@ mdc_examples_swift_library(
         ":Theming",
         "//components/Buttons:ButtonThemer",
         "//components/Buttons:Theming",
+        "//components/schemes/Container",
     ],
 )
