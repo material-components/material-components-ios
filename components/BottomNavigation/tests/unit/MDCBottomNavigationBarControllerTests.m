@@ -15,7 +15,7 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <XCTest/XCTest.h>
 
-#import "MDCBottomNavigationBarController.h"
+#import <MaterialComponentsBeta/MaterialBottomNavigationBeta.h>
 
 static CGFloat const kDefaultExpectationTimeout = 15;
 
@@ -288,22 +288,22 @@ static CGFloat const kDefaultExpectationTimeout = 15;
 - (void)verifyStateOfSelectedIndex:(NSUInteger)index {
   XCTAssertEqual(
       self.bottomNavigationBarController.selectedIndex, index,
-      @"Expected bottom navigation bar controller's selected index to be %lu. Received: %li", index,
-      self.bottomNavigationBarController.selectedIndex);
+      @"Expected bottom navigation bar controller's selected index to be %lu. Received: %lu",
+      (unsigned long)index, (unsigned long)self.bottomNavigationBarController.selectedIndex);
 
   UIViewController *expectedVC =
       [self.bottomNavigationBarController.viewControllers objectAtIndex:index];
   XCTAssertEqualObjects(self.bottomNavigationBarController.selectedViewController, expectedVC,
                         @"Expected bottom navigation bar's selected view controller to be equal to "
-                        @"the view controller at index: %li",
-                        index);
+                        @"the view controller at index: %lu",
+                        (unsigned long)index);
 
   UITabBarItem *expectedItem =
       [self.bottomNavigationBarController.navigationBar.items objectAtIndex:index];
   XCTAssertEqualObjects(
       self.bottomNavigationBarController.navigationBar.selectedItem, expectedItem,
-      @"Expected bottom navigation bar's selected item to be equal to the item at index: %li",
-      index);
+      @"Expected bottom navigation bar's selected item to be equal to the item at index: %lu",
+      (unsigned long)index);
 }
 
 /**

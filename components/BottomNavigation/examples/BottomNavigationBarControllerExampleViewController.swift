@@ -14,7 +14,7 @@
 
 import UIKit
 
-import MaterialComponentsBeta.MDCBottomNavigationBarController
+import MaterialComponentsBeta.MaterialBottomNavigationBeta
 import MaterialComponents.MaterialBottomNavigation_ColorThemer
 import MaterialComponents.MaterialBottomNavigation_TypographyThemer
 

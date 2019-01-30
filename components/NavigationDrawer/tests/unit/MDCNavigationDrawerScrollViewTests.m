@@ -61,6 +61,7 @@
 @property(nonatomic) CGFloat initialDrawerFactor;
 @property(nullable, nonatomic, readonly) UIPresentationController *presentationController;
 - (void)cacheLayoutCalculations;
+- (void)updateViewWithContentOffset:(CGPoint)contentOffset;
 - (void)updateDrawerState:(CGFloat)transitionPercentage;
 - (CGFloat)calculateInitialDrawerFactor;
 @end
@@ -558,6 +559,58 @@
 
   // Then
   XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.scrollView.contentOffset.y, 500, (CGFloat)0.001);
+}
+
+- (void)testAddedHeight {
+  // Given
+  CGFloat contentViewControllerHeight =
+      CGRectStandardize(self.fakeBottomDrawer.contentViewController.view.frame).size.height;
+  CGFloat fakeHeight = 100;
+  self.fakeBottomDrawer.trackingScrollView = nil;
+
+  // When
+  [self.fakeBottomDrawer updateViewWithContentOffset:CGPointMake(0, fakeHeight)];
+
+  // Then
+  CGFloat newContentViewControllerHeight =
+      CGRectGetHeight(self.fakeBottomDrawer.contentViewController.view.frame);
+  CGFloat expectedHeight = contentViewControllerHeight + fakeHeight;
+  XCTAssertEqualWithAccuracy(newContentViewControllerHeight, expectedHeight, 0.001);
+}
+
+- (void)testAddedHeightWithMultipleScrolls {
+  // Given
+  CGFloat contentViewControllerHeight =
+      CGRectStandardize(self.fakeBottomDrawer.contentViewController.view.frame).size.height;
+  CGFloat fakeFirstHeight = 80;
+  CGFloat fakeSecondHeight = 100;
+  self.fakeBottomDrawer.trackingScrollView = nil;
+
+  // When
+  [self.fakeBottomDrawer updateViewWithContentOffset:CGPointMake(0, fakeFirstHeight)];
+  [self.fakeBottomDrawer updateViewWithContentOffset:CGPointMake(0, fakeSecondHeight)];
+
+  // Then
+  CGFloat newContentViewControllerHeight =
+      CGRectGetHeight(self.fakeBottomDrawer.contentViewController.view.frame);
+  CGFloat expectedHeight = contentViewControllerHeight + fakeSecondHeight;
+  XCTAssertEqualWithAccuracy(newContentViewControllerHeight, expectedHeight, 0.001);
+}
+
+- (void)testAddedHeightWithTrackingScrollView {
+  // Given
+  CGFloat contentViewControllerHeight =
+      CGRectStandardize(self.fakeBottomDrawer.contentViewController.view.frame).size.height;
+  CGFloat fakeHeight = 100;
+  self.fakeBottomDrawer.trackingScrollView = self.fakeScrollView;
+
+  // When
+  [self.fakeBottomDrawer updateViewWithContentOffset:CGPointMake(0, fakeHeight)];
+
+  // Then
+  CGFloat newContentViewControllerHeight =
+      CGRectGetHeight(self.fakeBottomDrawer.contentViewController.view.frame);
+  XCTAssertEqualWithAccuracy(newContentViewControllerHeight, contentViewControllerHeight, 0.001);
 }
 
 - (void)testCalculateInitialDrawerFactorWithSmallHeight {
