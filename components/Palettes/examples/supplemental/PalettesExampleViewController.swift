@@ -82,7 +82,7 @@ class PalettesExampleViewController: UITableViewController {
     cell.textLabel?.text = tones[indexPath.row].name
     cell.backgroundColor = tones[indexPath.row].tone
     if let cellBackgroundColor = cell.backgroundColor {
-        cell.textLabel?.textColor = TextColorFor(backgroundColor: cellBackgroundColor)
+      cell.textLabel?.textColor = TextColorFor(backgroundColor: cellBackgroundColor)
     }
     cell.selectionStyle = .none
 

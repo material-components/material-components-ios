@@ -49,7 +49,7 @@ class TypographyFontListExampleViewController: UITableViewController {
     
     // textLabel must be unwrapped to access 'font'.
     if cell.textLabel!.font.pointSize > 100 && indexPath.section == 0 {
-        cell.textLabel?.text = "MDC"
+      cell.textLabel?.text = "MDC"
     }
 
     cell.detailTextLabel?.text = fontStyleNames[indexPath.row]
