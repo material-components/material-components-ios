@@ -18,6 +18,42 @@
 #import "MaterialBottomNavigation.h"
 #import "MaterialShadowElevations.h"
 
+static const CGFloat kMinItemWidth = 80;
+static const CGFloat kMaxItemWidth = 168;
+static const CGFloat kAccuracy = 0.0001;
+static NSString *const kLongTitle =
+    @"123456789012345678901234567890123456789012345678901234567890"
+     "123456789012345678901234567890123456789012345678901234567890";
+
+@interface MDCMutableUITraitCollection : UITraitCollection
+@property(nonatomic, assign) UIUserInterfaceSizeClass horizontalSizeClassOverride;
+@property(nonatomic, assign) UIUserInterfaceSizeClass verticalSizeClassOverride;
+@end
+
+@implementation MDCMutableUITraitCollection
+
+- (UIUserInterfaceSizeClass)horizontalSizeClass {
+  return self.horizontalSizeClassOverride;
+}
+
+- (UIUserInterfaceSizeClass)verticalSizeClass {
+  return self.verticalSizeClassOverride;
+}
+
+@end
+
+@interface MDCFakeBottomNavigationBar : MDCBottomNavigationBar
+@property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
+@end
+
+@implementation MDCFakeBottomNavigationBar
+
+- (UITraitCollection *)traitCollection {
+  return self.traitCollectionOverride ?: [super traitCollection];
+}
+
+@end
+
 @interface MDCBottomNavigationBar (Testing)
 @property(nonatomic, strong) NSMutableArray<MDCBottomNavigationItemView *> *itemViews;
 @end
@@ -298,6 +334,96 @@
 
   // Then
   XCTAssert([self.bottomNavBar viewForItem:item3] == nil);
+}
+
+- (void)testSizeThatFitsWontChangeLayout {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:0];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"3" image:nil tag:0];
+  MDCMutableUITraitCollection *traitCollection = [[MDCMutableUITraitCollection alloc] init];
+  traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassRegular;
+  MDCFakeBottomNavigationBar *bottomNavBar = [[MDCFakeBottomNavigationBar alloc] init];
+  bottomNavBar.traitCollectionOverride = traitCollection;
+  bottomNavBar.alignment = MDCBottomNavigationBarAlignmentCentered;
+  bottomNavBar.items = @[ item1, item2, item3 ];
+  bottomNavBar.bounds = CGRectMake(0, 0, 360, 56);
+  [bottomNavBar layoutIfNeeded];
+  CGRect item1OriginalFrame = [bottomNavBar viewForItem:item1].frame;
+  CGRect item2OriginalFrame = [bottomNavBar viewForItem:item2].frame;
+  CGRect item3OriginalFrame = [bottomNavBar viewForItem:item3].frame;
+
+  // When
+  [bottomNavBar sizeThatFits:CGSizeMake(0,0)];
+  [bottomNavBar setNeedsLayout];
+  [bottomNavBar layoutIfNeeded];
+
+  // Then
+  CGRect item1FinalFrame = [bottomNavBar viewForItem:item1].frame;
+  CGRect item2FinalFrame = [bottomNavBar viewForItem:item2].frame;
+  CGRect item3FinalFrame = [bottomNavBar viewForItem:item3].frame;
+
+  XCTAssertTrue(CGRectEqualToRect(item1FinalFrame, item1OriginalFrame),
+                @"(%@) is not equal to (%@)", NSStringFromCGRect(item1FinalFrame),
+                NSStringFromCGRect(item1FinalFrame));
+  XCTAssertTrue(CGRectEqualToRect(item2FinalFrame, item2OriginalFrame),
+                @"(%@) is not equal to (%@)", NSStringFromCGRect(item2FinalFrame),
+                NSStringFromCGRect(item2FinalFrame));
+  XCTAssertTrue(CGRectEqualToRect(item3FinalFrame, item3OriginalFrame),
+                @"(%@) is not equal to (%@)", NSStringFromCGRect(item3FinalFrame),
+                NSStringFromCGRect(item3FinalFrame));
+}
+
+- (void)testCenteredAlignmentHorizontallyRegularMaxLayoutWidthWithLongTitles {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:kLongTitle image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:kLongTitle image:nil tag:0];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:kLongTitle image:nil tag:0];
+  MDCMutableUITraitCollection *traitCollection = [[MDCMutableUITraitCollection alloc] init];
+  traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassRegular;
+  MDCFakeBottomNavigationBar *bottomNavBar = [[MDCFakeBottomNavigationBar alloc] init];
+  bottomNavBar.traitCollectionOverride = traitCollection;
+  bottomNavBar.alignment = MDCBottomNavigationBarAlignmentCentered;
+  bottomNavBar.items = @[ item1, item2, item3 ];
+
+  // When
+  bottomNavBar.bounds = CGRectMake(0, 0, 1000, 56);
+  [bottomNavBar layoutIfNeeded];
+
+  // Then
+  CGRect item1Frame = [bottomNavBar viewForItem:item1].frame;
+  CGRect item2Frame = [bottomNavBar viewForItem:item2].frame;
+  CGRect item3Frame = [bottomNavBar viewForItem:item3].frame;
+
+  XCTAssertEqualWithAccuracy(CGRectGetWidth(item1Frame), kMaxItemWidth, kAccuracy);
+  XCTAssertEqualWithAccuracy(CGRectGetWidth(item2Frame), kMaxItemWidth, kAccuracy);
+  XCTAssertEqualWithAccuracy(CGRectGetWidth(item3Frame), kMaxItemWidth, kAccuracy);
+}
+
+- (void)testCenteredAlignmentHorizontallyRegularMaxLayoutWidthWithShortTitles {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"" image:nil tag:0];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"" image:nil tag:0];
+  MDCMutableUITraitCollection *traitCollection = [[MDCMutableUITraitCollection alloc] init];
+  traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassRegular;
+  MDCFakeBottomNavigationBar *bottomNavBar = [[MDCFakeBottomNavigationBar alloc] init];
+  bottomNavBar.traitCollectionOverride = traitCollection;
+  bottomNavBar.alignment = MDCBottomNavigationBarAlignmentCentered;
+  bottomNavBar.items = @[ item1, item2, item3 ];
+
+  // When
+  bottomNavBar.bounds = CGRectMake(0, 0, 1000, 56);
+  [bottomNavBar layoutIfNeeded];
+
+  // Then
+  CGRect item1Frame = [bottomNavBar viewForItem:item1].frame;
+  CGRect item2Frame = [bottomNavBar viewForItem:item2].frame;
+  CGRect item3Frame = [bottomNavBar viewForItem:item3].frame;
+
+  XCTAssertEqualWithAccuracy(CGRectGetWidth(item1Frame), kMinItemWidth, kAccuracy);
+  XCTAssertEqualWithAccuracy(CGRectGetWidth(item2Frame), kMinItemWidth, kAccuracy);
+  XCTAssertEqualWithAccuracy(CGRectGetWidth(item3Frame), kMinItemWidth, kAccuracy);
 }
 
 @end
