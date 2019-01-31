@@ -13,5 +13,5 @@
 // limitations under the License.
 
 #import "MDCSnapshotTestCase.h"
-#import "UIView+MDCSnapshot.h"
 #import "UIImage+MDCSnapshot.h"
+#import "UIView+MDCSnapshot.h"
