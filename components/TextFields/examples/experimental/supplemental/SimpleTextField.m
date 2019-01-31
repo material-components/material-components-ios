@@ -71,6 +71,7 @@
   [self setUpPlaceholderLabel];
   [self setUpUnderlineLabels];
   [self setUpClearButton];
+  [self setUpContainerStyle];
 }
 
 - (void)dealloc {
@@ -84,7 +85,6 @@
   [self setUpLayoutDirection];
   [self setUpPlaceholderState];
   [self setUpContainedInputViewState];
-  [self setUpContainerStyle];
 }
 
 - (void)setUpCanPlaceholderFloat {
@@ -233,16 +233,19 @@
 - (void)preLayoutSubviews {
   self.containedInputViewState = [self determineCurrentContainedInputViewState];
   self.placeholderState = [self determineCurrentPlaceholderState];
-  id<MDCContainedInputViewColorScheming> colorScheming = [self containedInputViewColorSchemingForState:self.containedInputViewState];
-  [self applyMDCContainedInputViewColorScheming:colorScheming];
+//  id<MDCContainedInputViewColorScheming> colorScheming =
+//      [self containedInputViewColorSchemingForState:self.containedInputViewState];
+//  [self applyMDCContainedInputViewColorScheming:colorScheming];
   CGSize fittingSize = CGSizeMake(CGRectGetWidth(self.frame), CGFLOAT_MAX);
   self.layout = [self calculateLayoutWithTextFieldSize:fittingSize];
 }
 
-
 - (void)postLayoutSubviews {
   [self layOutPlaceholderWithState:self.placeholderState];
-  [self.containerStyle applyStyleTo:self];
+    id<MDCContainedInputViewColorScheming> colorScheming =
+        [self containedInputViewColorSchemingForState:self.containedInputViewState];
+//    [self applyMDCContainedInputViewColorScheming:colorScheming];
+  [self.containerStyle applyStyleTo:self withContainedInputViewColorScheming:colorScheming];
   self.clearButton.frame = self.layout.clearButtonFrame;
   self.clearButton.hidden = self.layout.clearButtonHidden;
   self.leftUnderlineLabel.frame = self.layout.leftUnderlineLabelFrame;
@@ -464,7 +467,9 @@
   }
   _containerStyle = containerStyle;
   [self setUpStateDependentColorSchemesForStyle:_containerStyle];
-  [_containerStyle applyStyleTo:self];
+  id<MDCContainedInputViewColorScheming> colorScheme =
+      [self containedInputViewColorSchemingForState:self.containedInputViewState];
+  [_containerStyle applyStyleTo:self withContainedInputViewColorScheming:colorScheme];
   // TODO: setneedslayout?
 }
 
@@ -863,6 +868,8 @@
 #pragma mark Theming
 
 - (void)applyMDCContainedInputViewColorScheming:(id<MDCContainedInputViewColorScheming>)colorScheming {
+//  [self.containerStyle applyStyleTo:self using:colorScheming];
+
   // update all the base class properties
   // then do [style applyColorScheming:colorSceming];
   // or just do that

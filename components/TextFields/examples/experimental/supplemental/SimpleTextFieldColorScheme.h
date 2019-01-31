@@ -25,7 +25,7 @@
 @property(strong, nonatomic, readonly, nonnull) UIColor *clearButtonTintColor;
 @end
 
-@interface SimpleTextFieldColorScheme : NSObject <MDCContainedInputViewColorScheming>
+@interface MDCContainedInputViewColorScheme : NSObject <MDCContainedInputViewColorScheming>
 @property(strong, nonatomic) UIColor *textColor;
 @property(strong, nonatomic) UIColor *underlineLabelColor;
 @property(strong, nonatomic) UIColor *placeholderLabelColor;
@@ -33,11 +33,11 @@
 @end
 
 
-@interface SimpleTextFieldColorSchemeFilled : SimpleTextFieldColorScheme
+@interface MDCContainedInputViewColorSchemeFilled : MDCContainedInputViewColorScheme
 @property(strong, nonatomic/*, readonly*/) UIColor *filledSublayerFillColor;
 @property(strong, nonatomic/*, readonly*/) UIColor *filledSublayerUnderlineFillColor;
 @end
 
-@interface SimpleTextFieldColorSchemeOutlined : SimpleTextFieldColorScheme
+@interface MDCContainedInputViewColorSchemeOutlined : MDCContainedInputViewColorScheme
 @property(strong, nonatomic/*, readonly*/) UIColor *outlineColor;
 @end

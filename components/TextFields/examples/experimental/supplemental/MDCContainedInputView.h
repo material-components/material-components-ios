@@ -42,10 +42,10 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewState) {
 @end
 
 @interface MDCContainerStyle : NSObject
-+ (Class)colorSchemeClass;
-- (id<MDCContainedInputViewColorScheming>)defaultColorScheme;
 - (id<MDCContainedInputViewColorScheming>)defaultColorSchemeForState:(MDCContainedInputViewState)state;
-- (void)applyStyleTo:(id<MDCContainedInputView>)containedInputView;
+//- (void)applyStyleTo:(id<MDCContainedInputView>)containedInputView;
+- (void)applyStyleTo:(id<MDCContainedInputView>)containedInputView
+withContainedInputViewColorScheming:(id<MDCContainedInputViewColorScheming>)colorScheme;
 - (void)removeStyleFrom:(id<MDCContainedInputView>)containedInputView;
 @end
 

@@ -14,11 +14,11 @@
 
 #import "SimpleTextFieldColorScheme.h"
 
-@implementation SimpleTextFieldColorScheme
+@implementation MDCContainedInputViewColorScheme
 @end
 
-@implementation SimpleTextFieldColorSchemeFilled
+@implementation MDCContainedInputViewColorSchemeFilled
 @end
 
-@implementation SimpleTextFieldColorSchemeOutlined
+@implementation MDCContainedInputViewColorSchemeOutlined
 @end
