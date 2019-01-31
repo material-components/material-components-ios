@@ -30,6 +30,8 @@ involve multiple tasks.
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/dialogs/api-docs/Classes/MDCAlertController.html">MDCAlertController</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/dialogs/api-docs/Classes/MDCAlertControllerView.html">MDCAlertControllerView</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/dialogs/api-docs/Classes/MDCDialogPresentationController.html">MDCDialogPresentationController</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/dialogs/api-docs/Enums.html">Enumerations</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/dialogs/api-docs/Enums/MDCActionEmphasis.html">MDCActionEmphasis</a></li>
 </ul>
 
 ## Table of contents
@@ -44,9 +46,8 @@ involve multiple tasks.
   - [Typical use: modal dialog](#typical-use-modal-dialog)
   - [Typical use: alert](#typical-use-alert)
 - [Extensions](#extensions)
-  - [Theming](#theming)
-  - [Color Theming](#color-theming)
-  - [Typography Theming](#typography-theming)
+  - [Theming extensions](#theming-extensions)
+  - [Using a Themer](#using-a-themer)
 - [Accessibility](#accessibility)
   - [MDCPresentationController Accessibility](#mdcpresentationcontroller-accessibility)
 
@@ -190,7 +191,47 @@ MDCAlertAction *alertAction =
 
 <!-- Extracted from docs/theming.md -->
 
-### Theming
+### Theming extensions
+
+You can theme an MDCDialog to match the Material Design Dialog using your app's schemes in the Dialog theming
+extension.
+
+You must first add the Dialog theming extension to your project, by following the standard 
+[beta component](docs/../../../contributing/beta_components.md) steps.
+
+You can then import the theming extension and create an `MDCContainerScheme` instance. A container scheme 
+defines the design parameters that you can use to theme your dialogs.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+// Step 1: Import the Dialog theming extension and container scheme
+import MaterialComponentsBeta.MaterialDialogs_Theming
+import MaterialComponentsBeta.MaterialContainerScheme
+
+// Step 2: Create or get a container scheme
+let containerScheme = MDCContainerScheme()
+
+// Step 3: Apply the container scheme to your component using the desired alert style
+alertController.applyTheme(withScheme: containerScheme)
+```
+
+#### Objective-C
+
+```objc
+// Step 1: Import the Dialog theming extension and container scheme
+#import "MaterialDialogs+Theming.h"
+#import "MaterialContainerScheme.h"
+
+// Step 2: Create or get a container scheme
+MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+
+// Step 3: Apply the container scheme to your component using the desired alert style
+[alertController applyThemeWithScheme:containerScheme];
+```
+<!--</div>-->
+
+### Using a Themer
 
 You can theme an MDCDialog to match the Material Design Dialog using your app's schemes in the DialogThemer
 extension.
@@ -228,86 +269,6 @@ MDCAlertScheme *alertScheme = [[MDCAlertScheme alloc] init];
 
 // Step 3: Apply the alert scheme to your component using the desired alert style
 [MDCAlertControllerThemer applyScheme:alertScheme toAlertController:alertController];
-```
-<!--</div>-->
-
-<!-- Extracted from docs/color-theming.md -->
-
-### Color Theming
-
-You can theme a dialog with your app's color scheme using the ColorThemer extension.
-
-You must first add the Color Themer extension to your project:
-
-```bash
-pod 'MaterialComponents/Dialogs+ColorThemer'
-```
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-// Step 1: Import the ColorThemer extension
-import MaterialComponents.MaterialDialogs_ColorThemer
-
-// Step 2: Create or get a color scheme
-let colorScheme = MDCSemanticColorScheme()
-
-// Step 3: Apply the color scheme to your component
-MDCAlertColorThemer.applySemanticColorScheme(colorScheme, to: component)
-```
-
-#### Objective-C
-
-```objc
-// Step 1: Import the ColorThemer extension
-#import "MaterialDialogs+ColorThemer.h"
-
-// Step 2: Create or get a color scheme
-id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-
-// Step 3: Apply the color scheme to your component
-[MDCAlertColorThemer applySemanticColorScheme:colorScheme
-     toAlertController:component];
-```
-<!--</div>-->
-
-<!-- Extracted from docs/typography-theming.md -->
-
-### Typography Theming
-
-You can theme a dialog with your app's typography scheme using the TypographyThemer extension.
-
-You must first add the Typography Themer extension to your project:
-
-```bash
-pod 'MaterialComponents/Dialogs+TypographyThemer'
-```
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-// Step 1: Import the TypographyThemer extension
-import MaterialComponents.MaterialDialogs_TypographyThemer
-
-// Step 2: Create or get a typography scheme
-let typographyScheme = MDCTypographyScheme()
-
-// Step 3: Apply the typography scheme to your component
-MDCAlertTypographyThemer.applyTypographyScheme(typographyScheme, to: component)
-```
-
-#### Objective-C
-
-```objc
-// Step 1: Import the TypographyThemer extension
-#import "MaterialDialogs+TypographyThemer.h"
-
-// Step 2: Create or get a typography scheme
-id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
-
-// Step 3: Apply the typography scheme to your component
-[MDCAlertTypographyThemer applyTypographyScheme:colorScheme
-     toAlertController:component];
 ```
 <!--</div>-->
 

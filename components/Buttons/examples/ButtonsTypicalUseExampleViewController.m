@@ -12,11 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialButtons+ButtonThemer.h"
-#import "MaterialButtons+ColorThemer.h"
-#import "MaterialButtons+Theming.h"
-#import "MaterialButtons+TypographyThemer.h"
 #import "MaterialButtons.h"
+#import "MaterialButtons+Theming.h"
 #import "MaterialContainerScheme.h"
 #import "MaterialTypography.h"
 
@@ -47,23 +44,10 @@ const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
   return self;
 }
 
-- (MDCContainerScheme *)containerScheme {
-  MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
-  scheme.colorScheme = self.colorScheme;
-  scheme.shapeScheme = self.shapeScheme;
-  scheme.typographyScheme = self.typographyScheme;
-  return scheme;
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
 
   self.view.backgroundColor = [UIColor whiteColor];
-
-  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
-  buttonScheme.colorScheme = self.colorScheme;
-  buttonScheme.shapeScheme = self.shapeScheme;
-  buttonScheme.typographyScheme = self.typographyScheme;
 
   // Contained button
 

@@ -15,7 +15,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialButtons.h"
-#import "MaterialShapeLibrary.h"
+#import "MaterialShapeLibraryNew.h"
 #import "MaterialShapeScheme.h"
 
 /**

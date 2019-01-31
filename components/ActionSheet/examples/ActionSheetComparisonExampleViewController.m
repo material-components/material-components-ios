@@ -16,72 +16,68 @@
 
 #import "MaterialActionSheet+Theming.h"
 #import "MaterialActionSheet.h"
-#import "MaterialButtons+ButtonThemer.h"
+#import "MaterialButtons+Theming.h"
 #import "MaterialButtons.h"
+#import "MaterialColorScheme.h"
+#import "MaterialContainerScheme.h"
+#import "MaterialTypographyScheme.h"
 
 @interface ActionSheetComparisonExampleViewController ()
 
 @property(nonatomic, strong) MDCButton *showMaterialButton;
 @property(nonatomic, strong) MDCButton *showUIKitButton;
-@property(nonatomic, strong) MDCContainerScheme *containerScheme;
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 
 @end
 
-@implementation ActionSheetComparisonExampleViewController {
-  MDCButtonScheme *_buttonScheme;
-}
+@implementation ActionSheetComparisonExampleViewController
 
 - (instancetype)init {
   self = [super init];
   if (self) {
     self.title = @"Action Sheet";
-    _colorScheme = [[MDCSemanticColorScheme alloc] init];
-    _typographyScheme = [[MDCTypographyScheme alloc] init];
+    _containerScheme = [[MDCContainerScheme alloc] init];
     _showMaterialButton = [[MDCButton alloc] init];
     _showUIKitButton = [[MDCButton alloc] init];
-    _buttonScheme = [[MDCButtonScheme alloc] init];
   }
   return self;
-}
-
-- (MDCContainerScheme *)containerScheme {
-  if (!_containerScheme) {
-    _containerScheme = [[MDCContainerScheme alloc] init];
-  }
-  _containerScheme.colorScheme = self.colorScheme;
-  _containerScheme.typographyScheme = self.typographyScheme;
-  return _containerScheme;
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.view.backgroundColor = _colorScheme.backgroundColor;
-  [_showMaterialButton setTitle:@"Show Material Action sheet" forState:UIControlStateNormal];
-  [_showMaterialButton sizeToFit];
-  [_showUIKitButton setTitle:@"Show UIKit Action sheet" forState:UIControlStateNormal];
-  [_showUIKitButton sizeToFit];
-  _buttonScheme.colorScheme = _colorScheme;
-  _buttonScheme.typographyScheme = _typographyScheme;
-  [MDCContainedButtonThemer applyScheme:_buttonScheme toButton:_showMaterialButton];
-  [_showMaterialButton addTarget:self
-                          action:@selector(showMaterialActionSheet)
-                forControlEvents:UIControlEventTouchUpInside];
-  [self.view addSubview:_showMaterialButton];
-  [MDCContainedButtonThemer applyScheme:_buttonScheme toButton:_showUIKitButton];
-  [_showUIKitButton addTarget:self
-                       action:@selector(showUIKitActionSheet)
-             forControlEvents:UIControlEventTouchUpInside];
-  [self.view addSubview:_showUIKitButton];
+  id<MDCColorScheming> colorScheme;
+  if (self.containerScheme.colorScheme != nil) {
+    colorScheme = self.containerScheme.colorScheme;
+  } else {
+    colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  }
+
+  self.view.backgroundColor = colorScheme.backgroundColor;
+  [self.showMaterialButton setTitle:@"Show Material Action sheet" forState:UIControlStateNormal];
+  [self.showMaterialButton sizeToFit];
+  [self.showUIKitButton setTitle:@"Show UIKit Action sheet" forState:UIControlStateNormal];
+  [self.showUIKitButton sizeToFit];
+  [self.showMaterialButton applyContainedThemeWithScheme:self.containerScheme];
+  [self.showMaterialButton addTarget:self
+                              action:@selector(showMaterialActionSheet)
+                    forControlEvents:UIControlEventTouchUpInside];
+  [self.view addSubview:self.showMaterialButton];
+  [self.showUIKitButton applyContainedThemeWithScheme:self.containerScheme];
+  [self.showUIKitButton addTarget:self
+                           action:@selector(showUIKitActionSheet)
+                 forControlEvents:UIControlEventTouchUpInside];
+  [self.view addSubview:self.showUIKitButton];
 }
 
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
 
-  _showMaterialButton.center = CGPointMake(self.view.center.x, self.view.center.y - 80);
-  CGPoint UIKitCenter = _showMaterialButton.center;
-  UIKitCenter.y += CGRectGetHeight(_showMaterialButton.frame) * 2;
-  _showUIKitButton.center = UIKitCenter;
+  self.showMaterialButton.center = CGPointMake(self.view.center.x, self.view.center.y - 80);
+  CGPoint UIKitCenter = self.showMaterialButton.center;
+  UIKitCenter.y += CGRectGetHeight(self.showMaterialButton.frame) * 2;
+  self.showUIKitButton.center = UIKitCenter;
 }
 
 - (void)showMaterialActionSheet {
