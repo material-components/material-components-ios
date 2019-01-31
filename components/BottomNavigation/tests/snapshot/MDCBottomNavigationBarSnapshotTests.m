@@ -15,17 +15,23 @@
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 
+#import "../../src/private/MDCBottomNavigationItemView.h"
+
 #import "MaterialBottomNavigation+ColorThemer.h"
 #import "MaterialBottomNavigation+TypographyThemer.h"
 #import "MaterialBottomNavigation.h"
+#import "MaterialInk.h"
 #import "MaterialSnapshot.h"
 
 static const CGFloat kWidthWide = 1600;
+static const CGFloat kWidthiPad = 1024;
 static const CGFloat kWidthTypical = 360;
 static const CGFloat kWidthNarrow = 240;
 static const CGFloat kHeightTall = 120;
 static const CGFloat kHeightTypical = 56;
 static const CGFloat kHeightShort = 48;
+static NSString *const kLongTitle = @"123456789012345678901234567890123456789012345678901234567890";
+static NSString *const kShortTitle = @".";
 
 static inline UIImage *CreateTestImage(CGSize size) {
   UIGraphicsBeginImageContext(size);
@@ -108,6 +114,71 @@ static inline UIImage *CreateTestImage(CGSize size) {
   [self snapshotVerifyView:backgroundView];
 }
 
+- (void)performInkTouchOnBar:(MDCBottomNavigationBar *)navigationBar item:(UITabBarItem *)item {
+  [navigationBar layoutIfNeeded];
+  MDCBottomNavigationItemView *itemView =
+      (MDCBottomNavigationItemView *)[navigationBar viewForItem:item];
+  [itemView.inkView startTouchBeganAtPoint:CGPointMake(CGRectGetMidX(itemView.bounds),
+                                                       CGRectGetMidY(itemView.bounds))
+                                  animated:NO
+                            withCompletion:nil];
+}
+
+#pragma mark - Title length
+
+- (void)testJustifiedUnspecifiedAlwaysWithFiveLongTitleItemsiPadWidthTypicalHeight {
+  // When
+  self.navigationBar.alignment = MDCBottomNavigationBarAlignmentJustified;
+  self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+  self.tabItem1.title = kLongTitle;
+  self.tabItem2.title = kLongTitle;
+  self.tabItem3.title = kLongTitle;
+  self.tabItem4.title = kLongTitle;
+  self.tabItem5.title = kLongTitle;
+  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testJustifiedAdjacentRegularAlwaysWithFiveLongTitleItemsiPadWidthTypicalHeight {
+  // Given
+  MDCMutableUITraitCollection *traitCollection = [[MDCMutableUITraitCollection alloc] init];
+  traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassRegular;
+
+  // When
+  self.navigationBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles;
+  self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+  self.navigationBar.traitCollectionOverride = traitCollection;
+  self.tabItem1.title = kLongTitle;
+  self.tabItem2.title = kLongTitle;
+  self.tabItem3.title = kLongTitle;
+  self.tabItem4.title = kLongTitle;
+  self.tabItem5.title = kLongTitle;
+  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testCenteredUnspecifiedAlwaysWithFiveLongTitleItemsiPadWidthTypicalHeight {
+  // When
+  self.navigationBar.alignment = MDCBottomNavigationBarAlignmentCentered;
+  self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+  self.tabItem1.title = kLongTitle;
+  self.tabItem2.title = kLongTitle;
+  self.tabItem3.title = kLongTitle;
+  self.tabItem4.title = kLongTitle;
+  self.tabItem5.title = kLongTitle;
+  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
 #pragma mark - Title visibility
 
 - (void)testJustifiedUnspecifiedSelectedWithThreeItemsTypicalWidthTypicalHeight {
@@ -116,6 +187,7 @@ static inline UIImage *CreateTestImage(CGSize size) {
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
   self.navigationBar.selectedItem = self.tabItem2;
   self.navigationBar.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
   [self generateAndVerifySnapshot];
@@ -127,6 +199,7 @@ static inline UIImage *CreateTestImage(CGSize size) {
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   self.navigationBar.selectedItem = self.tabItem2;
   self.navigationBar.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
   [self generateAndVerifySnapshot];
@@ -138,6 +211,7 @@ static inline UIImage *CreateTestImage(CGSize size) {
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityNever;
   self.navigationBar.selectedItem = self.tabItem2;
   self.navigationBar.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
   [self generateAndVerifySnapshot];
@@ -150,6 +224,7 @@ static inline UIImage *CreateTestImage(CGSize size) {
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   self.navigationBar.selectedItem = self.tabItem2;
   self.navigationBar.frame = CGRectMake(0, 0, kWidthNarrow, kHeightShort);
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
   [self generateAndVerifySnapshot];
@@ -160,6 +235,7 @@ static inline UIImage *CreateTestImage(CGSize size) {
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   self.navigationBar.selectedItem = self.tabItem2;
   self.navigationBar.frame = CGRectMake(0, 0, kWidthWide, kHeightTall);
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
   [self generateAndVerifySnapshot];
@@ -179,6 +255,7 @@ static inline UIImage *CreateTestImage(CGSize size) {
   self.navigationBar.traitCollectionOverride = traitCollection;
   CGSize fitSize = [self.navigationBar sizeThatFits:CGSizeMake(kWidthWide, kHeightTall)];
   self.navigationBar.frame = CGRectMake(0, 0, fitSize.width, fitSize.height);
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
   [self generateAndVerifySnapshot];
@@ -196,6 +273,7 @@ static inline UIImage *CreateTestImage(CGSize size) {
   self.navigationBar.traitCollectionOverride = traitCollection;
   CGSize fitSize = [self.navigationBar sizeThatFits:CGSizeMake(kWidthWide, kHeightTall)];
   self.navigationBar.frame = CGRectMake(0, 0, fitSize.width, fitSize.height);
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
   [self generateAndVerifySnapshot];
@@ -213,6 +291,7 @@ static inline UIImage *CreateTestImage(CGSize size) {
   self.navigationBar.traitCollectionOverride = traitCollection;
   CGSize fitSize = [self.navigationBar sizeThatFits:CGSizeMake(kWidthWide, kHeightTall)];
   self.navigationBar.frame = CGRectMake(0, 0, fitSize.width, fitSize.height);
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
   [self generateAndVerifySnapshot];
@@ -232,6 +311,7 @@ static inline UIImage *CreateTestImage(CGSize size) {
   self.navigationBar.traitCollectionOverride = traitCollection;
   CGSize fitSize = [self.navigationBar sizeThatFits:CGSizeMake(kWidthWide, kHeightTall)];
   self.navigationBar.frame = CGRectMake(0, 0, fitSize.width, fitSize.height);
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
   [self generateAndVerifySnapshot];
@@ -249,6 +329,7 @@ static inline UIImage *CreateTestImage(CGSize size) {
   self.navigationBar.traitCollectionOverride = traitCollection;
   CGSize fitSize = [self.navigationBar sizeThatFits:CGSizeMake(kWidthWide, kHeightTall)];
   self.navigationBar.frame = CGRectMake(0, 0, fitSize.width, fitSize.height);
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
   [self generateAndVerifySnapshot];
@@ -266,6 +347,7 @@ static inline UIImage *CreateTestImage(CGSize size) {
   self.navigationBar.traitCollectionOverride = traitCollection;
   CGSize fitSize = [self.navigationBar sizeThatFits:CGSizeMake(kWidthWide, kHeightTall)];
   self.navigationBar.frame = CGRectMake(0, 0, fitSize.width, fitSize.height);
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
   [self generateAndVerifySnapshot];
@@ -285,6 +367,7 @@ static inline UIImage *CreateTestImage(CGSize size) {
   self.navigationBar.traitCollectionOverride = traitCollection;
   CGSize fitSize = [self.navigationBar sizeThatFits:CGSizeMake(kWidthWide, kHeightTall)];
   self.navigationBar.frame = CGRectMake(0, 0, fitSize.width, fitSize.height);
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
   [self generateAndVerifySnapshot];
@@ -302,6 +385,7 @@ static inline UIImage *CreateTestImage(CGSize size) {
   self.navigationBar.traitCollectionOverride = traitCollection;
   CGSize fitSize = [self.navigationBar sizeThatFits:CGSizeMake(kWidthWide, kHeightTall)];
   self.navigationBar.frame = CGRectMake(0, 0, fitSize.width, fitSize.height);
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
   [self generateAndVerifySnapshot];
@@ -319,6 +403,7 @@ static inline UIImage *CreateTestImage(CGSize size) {
   self.navigationBar.traitCollectionOverride = traitCollection;
   CGSize fitSize = [self.navigationBar sizeThatFits:CGSizeMake(kWidthWide, kHeightTall)];
   self.navigationBar.frame = CGRectMake(0, 0, fitSize.width, fitSize.height);
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
   [self generateAndVerifySnapshot];
@@ -342,6 +427,7 @@ static inline UIImage *CreateTestImage(CGSize size) {
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   self.navigationBar.selectedItem = self.tabItem2;
   self.navigationBar.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem2];
 
   // Then
   [self generateAndVerifySnapshot];
@@ -374,6 +460,7 @@ static inline UIImage *CreateTestImage(CGSize size) {
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   self.navigationBar.selectedItem = self.tabItem2;
   self.navigationBar.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem2];
 
   // Then
   [self generateAndVerifySnapshot];

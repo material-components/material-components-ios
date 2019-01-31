@@ -218,6 +218,7 @@ mdc_snapshot_objc_library(
         ":BottomNavigation",
         ":ColorThemer",
         ":TypographyThemer",
+        ":private",
     ],
 )
 
