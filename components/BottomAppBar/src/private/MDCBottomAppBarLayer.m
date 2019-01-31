@@ -119,14 +119,14 @@
 
   [bottomBarPath addArcWithCenter:arcCenter1
                            radius:arcRadius
-                       startAngle:(CGFloat)-180 * M_PI / 180
-                         endAngle:(CGFloat)-270 * M_PI / 180
+                       startAngle:-180 * (float)M_PI / 180
+                         endAngle:-270 * (float)M_PI / 180
                         clockwise:NO];
   [bottomBarPath addLineToPoint:CGPointMake(arcCenter2.x, arcRadius + yOffset)];
   [bottomBarPath addArcWithCenter:arcCenter2
                            radius:arcRadius
-                       startAngle:(CGFloat)-270 * M_PI / 180
-                         endAngle:(CGFloat)-360 * M_PI / 180
+                       startAngle:-270 * (float)M_PI / 180
+                         endAngle:-360 * (float)M_PI / 180
                         clockwise:NO];
 
   [bottomBarPath addLineToPoint:CGPointMake(width, yOffset)];
