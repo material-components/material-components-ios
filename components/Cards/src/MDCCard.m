@@ -15,7 +15,7 @@
 #import "MDCCard.h"
 
 #import "MaterialMath.h"
-#import "MaterialShapes.h"
+#import "MaterialShapesNew.h"
 
 static const CGFloat MDCCardShadowElevationNormal = 1;
 static const CGFloat MDCCardShadowElevationHighlighted = 8;

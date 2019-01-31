@@ -1,6 +1,6 @@
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponentsBeta"
-  mdc.version      = "75.0.1"
+  mdc.version      = "76.0.0"
   mdc.authors      = "The Material Components authors."
   mdc.summary      = "A collection of stand-alone alpha UI libraries that are not yet guaranteed to be ready for general production use. Use with caution."
   mdc.homepage     = "https://github.com/material-components/material-components-ios"
@@ -64,6 +64,19 @@ Pod::Spec.new do |mdc|
     extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}", "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/private/*.{h,m}"
     extension.dependency "MaterialComponentsBeta/#{extension.base_name.split('+')[0]}"
     extension.dependency "MaterialComponents/schemes/Typography"
+  end
+
+  mdc.subspec "BottomNavigation" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/MDCBottomNavigationBarController.h", "components/#{component.base_name}/src/MaterialBottomNavigationBeta.h"
+    component.source_files = "components/#{component.base_name}/src/MDCBottomNavigationBarController.*", "components/#{component.base_name}/src/MaterialBottomNavigationBeta.h"
+    component.dependency "MaterialComponents/BottomNavigation"
+
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = [
+        "components/#{component.base_name}/tests/unit/MDCBottomNavigationBarControllerTests.m"
+      ]
+    end
   end
 
   mdc.subspec "ButtonBar+Theming" do |extension|
