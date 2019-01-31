@@ -24,25 +24,31 @@
 #pragma mark - DialogsTypicalUseExampleViewController
 
 @interface DialogsTypicalUseExampleViewController : UIViewController
-@property(nonatomic, strong, nullable) MDCContainerScheme *containerScheme;
-@property(nonatomic, strong, nullable) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong, nullable) id<MDCContainerScheming> containerScheme;
 @property(nonatomic, strong, nullable) NSArray *modes;
 @property(nonatomic, strong, nullable) MDCButton *button;
 @end
 
 @implementation DialogsTypicalUseExampleViewController
 
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
+    scheme.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    _containerScheme = scheme;
+  }
+  return self;
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  if (!self.containerScheme) {
-    self.containerScheme = [[MDCContainerScheme alloc] init];
-  }
-  if (!self.colorScheme) {
-    self.colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-  }
-  self.view.backgroundColor = self.colorScheme.backgroundColor;
+  id<MDCColorScheming> colorScheme =
+      self.containerScheme.colorScheme
+          ?: [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  self.view.backgroundColor = colorScheme.backgroundColor;
 
   MDCButton *dismissButton = [[MDCButton alloc] initWithFrame:CGRectZero];
   self.button = dismissButton;

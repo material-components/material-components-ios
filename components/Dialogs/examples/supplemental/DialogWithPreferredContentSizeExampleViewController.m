@@ -19,8 +19,10 @@
 
 #import "DialogWithPreferredContentSizeExampleViewController.h"
 
-#import "MaterialButtons+ButtonThemer.h"
+#import "MaterialButtons+Theming.h"
 #import "MaterialButtons.h"
+#import "MaterialColorScheme.h"
+#import "MaterialTypographyScheme.h"
 
 @interface DialogWithPreferredContentSizeExampleViewController ()
 @property(nonatomic, strong) IBOutlet MDCButton *button;
@@ -31,10 +33,11 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  MDCButtonScheme *scheme = [[MDCButtonScheme alloc] init];
-  scheme.colorScheme = self.colorScheme;
-  scheme.typographyScheme = self.typographyScheme;
-  [MDCContainedButtonThemer applyScheme:scheme toButton:self.button];
+  if (self.containerScheme == nil) {
+    self.containerScheme = [[MDCContainerScheme alloc] init];
+  }
+
+  [self.button applyContainedThemeWithScheme:self.containerScheme];
 }
 
 - (IBAction)buttonPushed:(id)sender {

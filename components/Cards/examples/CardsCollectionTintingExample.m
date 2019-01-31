@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #import "CardsCollectionTintingExample.h"
+
+#import <MaterialComponentsBeta/MaterialCards+Theming.h>
 #import "MaterialInk.h"
 #import "supplemental/CardTintExampleCell.h"
 
@@ -30,7 +32,11 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   defaultLayout.minimumInteritemSpacing = 0;
   defaultLayout.minimumLineSpacing = 1;
   defaultLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
-  return [self initWithCollectionViewLayout:defaultLayout];
+  self = [super initWithCollectionViewLayout:defaultLayout];
+  if (self) {
+    self.containerScheme = [[MDCContainerScheme alloc] init];
+  }
+  return self;
 }
 
 - (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout {
@@ -70,6 +76,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   CardTintExampleCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
                                                 forIndexPath:indexPath];
+  [cell applyThemeWithScheme:self.containerScheme];
   [cell setTintColor:[UIColor redColor]];
   [cell setNeedsDisplay];
   return cell;

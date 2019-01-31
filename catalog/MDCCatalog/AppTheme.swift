@@ -15,66 +15,60 @@
 import Foundation
 import MaterialComponents.MaterialButtons_ButtonThemer
 import MaterialComponents.MaterialColorScheme
+import MaterialComponents.MaterialShapeScheme
 import MaterialComponents.MaterialTypographyScheme
 import MaterialComponentsBeta.MaterialContainerScheme
 
 final class AppTheme {
-  let containerScheme: MDCContainerScheme
+  let containerScheme: MDCContainerScheming
 
   var colorScheme: MDCColorScheming {
-    return containerScheme.colorScheme ?? AppTheme.defaultColorScheme
+    return containerScheme.colorScheme ?? MDCSemanticColorScheme(defaults: .material201804)
   }
 
   var typographyScheme: MDCTypographyScheming {
-    return containerScheme.typographyScheme ?? AppTheme.defaultTypographyScheme
+    return containerScheme.typographyScheme ?? MDCTypographyScheme(defaults: .material201804)
   }
 
-  init(colorScheme: MDCColorScheming, typographyScheme: MDCTypographyScheming) {
-    self.containerScheme = MDCContainerScheme()
-    self.containerScheme.colorScheme = colorScheme as? MDCSemanticColorScheme
-    self.containerScheme.typographyScheme = typographyScheme as? MDCTypographyScheme
+  init(containerScheme: MDCContainerScheming) {
+    self.containerScheme = containerScheme
   }
 
-  static let defaultTheme: AppTheme = {
-    return AppTheme(colorScheme: defaultColorScheme,
-                    typographyScheme: defaultTypographyScheme)
-  }()
-
-  static var defaultColorScheme: MDCSemanticColorScheme = {
-    let colorScheme = MDCSemanticColorScheme()
-    colorScheme.primaryColor =  UIColor(red: CGFloat(0x21) / 255.0,
-                                        green: CGFloat(0x21) / 255.0,
-                                        blue: CGFloat(0x21) / 255.0,
-                                        alpha: 1)
-    colorScheme.primaryColorVariant = .init(white: 0.7, alpha: 1)
-    colorScheme.secondaryColor = UIColor(red: CGFloat(0x00) / 255.0,
-                                         green: CGFloat(0xE6) / 255.0,
-                                         blue: CGFloat(0x76) / 255.0,
-                                         alpha: 1)
-    return colorScheme
-  }()
-
-  static var defaultTypographyScheme: MDCTypographyScheme = {
-    let typographyScheme = MDCTypographyScheme()
-    typographyScheme.headline1 = UIFont.systemFont(ofSize: 20)
-    typographyScheme.headline2 = UIFont.systemFont(ofSize: 18)
-    typographyScheme.headline3 = UIFont.systemFont(ofSize: 15)
-    return typographyScheme
-  }()
-
-  static var globalTheme: AppTheme = defaultTheme {
+  static var globalTheme = AppTheme(containerScheme: DefaultContainerScheme()) {
     didSet {
       NotificationCenter.default.post(name: AppTheme.didChangeGlobalThemeNotificationName,
                                       object: nil,
-                                      userInfo:
-        [AppTheme.globalThemeNotificationColorSchemeKey: AppTheme.globalTheme.colorScheme,
-         AppTheme.globalThemeNotificationTypographySchemeKey: AppTheme.globalTheme.typographyScheme]
-      )
+                                      userInfo: nil)
     }
   }
 
   static let didChangeGlobalThemeNotificationName =
     Notification.Name("MDCCatalogDidChangeGlobalTheme")
-  static let globalThemeNotificationColorSchemeKey = "colorScheme"
-  static let globalThemeNotificationTypographySchemeKey = "typographyScheme"
+}
+
+func DefaultContainerScheme() -> MDCContainerScheme {
+  let containerScheme = MDCContainerScheme()
+
+  let colorScheme = MDCSemanticColorScheme()
+  colorScheme.primaryColor =  UIColor(red: CGFloat(0x21) / 255.0,
+                                      green: CGFloat(0x21) / 255.0,
+                                      blue: CGFloat(0x21) / 255.0,
+                                      alpha: 1)
+  colorScheme.primaryColorVariant = .init(white: 0.7, alpha: 1)
+  colorScheme.secondaryColor = UIColor(red: CGFloat(0x00) / 255.0,
+                                       green: CGFloat(0xE6) / 255.0,
+                                       blue: CGFloat(0x76) / 255.0,
+                                       alpha: 1)
+  containerScheme.colorScheme = colorScheme
+
+  let typographyScheme = MDCTypographyScheme()
+  typographyScheme.headline1 = UIFont.systemFont(ofSize: 20)
+  typographyScheme.headline2 = UIFont.systemFont(ofSize: 18)
+  typographyScheme.headline3 = UIFont.systemFont(ofSize: 15)
+  containerScheme.typographyScheme = typographyScheme
+
+  let shapeScheme = MDCShapeScheme()
+  containerScheme.shapeScheme = shapeScheme
+
+  return containerScheme
 }
