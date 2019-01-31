@@ -13,8 +13,12 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
+
 #import "MaterialCards.h"
+#import "MaterialContainerScheme.h"
 
 @interface CardsCollectionTintingExample : UICollectionViewController
+
+@property(strong, nonatomic) id<MDCContainerScheming> containerScheme;
 
 @end

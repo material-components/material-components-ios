@@ -108,6 +108,8 @@ mdc_examples_objc_library(
         ":Theming",
         "//components/Buttons:ButtonThemer",
         "//components/Collections",
+        "//components/schemes/Color",
+        "//components/schemes/Container",
     ],
 )
 
@@ -118,6 +120,7 @@ mdc_examples_swift_library(
         ":Dialogs",
         ":Theming",
         "//components/Collections",
+        "//components/schemes/Color",
         "//components/schemes/Container",
     ],
 )
