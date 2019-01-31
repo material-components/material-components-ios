@@ -18,7 +18,7 @@
 
 + (UIImage *)mdc_testImageOfSize:(CGSize)size {
   UIGraphicsBeginImageContext(size);
-  [UIColor.whiteColor setFill];
+  [UIColor.blackColor setFill];
   CGFloat quarterWidth = size.width / 4;
   CGFloat quarterHeight = size.height / 4;
   // Create a "checkboard" pattern
