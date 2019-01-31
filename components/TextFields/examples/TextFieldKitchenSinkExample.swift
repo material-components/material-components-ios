@@ -328,7 +328,8 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     textFieldControllerUnderlineCustomFontFloating.floatingPlaceholderActiveColor = .orange
 
     let bundle = Bundle(for: TextFieldKitchenSinkSwiftExample.self)
-    let leadingViewImage = UIImage(named: "ic_search", in: bundle, compatibleWith: nil)!
+    let leadingViewImage = UIImage(named: "ic_search", in: bundle, compatibleWith: nil) ??
+        UIImage()
 
     let textFieldLeadingView = MDCTextField()
     textFieldLeadingView.leadingViewMode = .always
@@ -391,7 +392,8 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
         "This has a leading view and floats"
     textFieldLeadingViewFloatingAttributed.attributedText = attributedString
 
-    let trailingViewImage = UIImage(named: "ic_done", in: bundle, compatibleWith: nil)!
+    let trailingViewImage = UIImage(named: "ic_done", in: bundle, compatibleWith: nil) ??
+        UIImage()
 
     let textFieldTrailingView = MDCTextField()
     textFieldTrailingView.trailingViewMode = .always
@@ -619,7 +621,8 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
 
   func setupSpecialMultilineTextFields() -> [MDCTextInputController] {
     let bundle = Bundle(for: TextFieldKitchenSinkSwiftExample.self)
-    let trailingViewImage = UIImage(named: "ic_done", in: bundle, compatibleWith: nil)!
+    let trailingViewImage = UIImage(named: "ic_done", in: bundle, compatibleWith: nil) ??
+        UIImage()
 
     let multilineTextFieldTrailingView = MDCMultilineTextField()
     multilineTextFieldTrailingView.trailingViewMode = .always

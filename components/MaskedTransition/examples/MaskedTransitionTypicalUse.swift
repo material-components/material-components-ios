@@ -57,17 +57,19 @@ open class MaskedTransitionTypicalUseSwiftExample: UIViewController {
     view.addSubview(leftFAB)
 
     targets.append(.init(name: "Bottom sheet", viewControllerType: ModalViewController.self, calculateFrame: { info in
-      let size = CGSize(width: info.containerView!.bounds.width, height: 300)
-      return CGRect(x: info.containerView!.bounds.minX,
-                    y: info.containerView!.bounds.height - size.height,
+      let containerBounds = info.frameOfPresentedViewInContainerView
+      let size = CGSize(width: containerBounds.width, height: 300)
+      return CGRect(x: containerBounds.minX,
+                    y: containerBounds.height - size.height,
                     width: size.width,
                     height: size.height)
     }, autoresizingMask: [.flexibleWidth, .flexibleTopMargin], useSafeAreaInsets: true))
 
     targets.append(.init(name: "Centered card", viewControllerType: ModalViewController.self, calculateFrame: { info in
+      let containerBounds = info.frameOfPresentedViewInContainerView
       let size = CGSize(width: 200, height: 200)
-      return CGRect(x: (info.containerView!.bounds.width - size.width) / 2,
-                    y: (info.containerView!.bounds.height - size.height) / 2,
+      return CGRect(x: (containerBounds.width - size.width) / 2,
+                    y: (containerBounds.height - size.height) / 2,
                     width: size.width,
                     height: size.height)
     }, autoresizingMask: [.flexibleLeftMargin, .flexibleTopMargin,
@@ -117,7 +119,8 @@ open class MaskedTransitionTypicalUseSwiftExample: UIViewController {
 
   var transitionController: MDCMaskedTransitionController? = nil
   func didTapFab(fab: UIView) {
-    let target = targets[tableView.indexPathForSelectedRow!.row]
+    guard let indexPathForSelectedRow = tableView.indexPathForSelectedRow else { return }
+    let target = targets[indexPathForSelectedRow.row]
     let vc = target.viewControllerType.init()
 
     if #available(iOS 11.0, *), target.useSafeAreaInsets {
