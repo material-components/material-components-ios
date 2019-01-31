@@ -44,7 +44,7 @@
  @c applySemanticColorScheme:toFeatureHighlightViewController: instead. Learn more at
  components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
 
- @param colorScheme The color scheme to apply to MDCFeatureHighlightView. 
+ @param colorScheme The color scheme to apply to MDCFeatureHighlightView.
  @param featureHighlightView A MDCFeatureHighlightView instance to apply a color scheme.
  */
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme

@@ -33,7 +33,7 @@ typedef struct MDCMaskedTransitionMotionSpec {
   BOOL isCentered;
 } MDCMaskedTransitionMotionSpec;
 
-@interface MDCMaskedTransitionMotionSpecs: NSObject
+@interface MDCMaskedTransitionMotionSpecs : NSObject
 
 @property(nonatomic, class, readonly) MDCMaskedTransitionMotionSpec fullscreen;
 @property(nonatomic, class, readonly) MDCMaskedTransitionMotionSpec bottomSheet;

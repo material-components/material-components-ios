@@ -26,7 +26,7 @@
 /**
  * Delegate for handling drag events.
  */
-@property(nonatomic, weak, nullable) id <MDCDraggableViewDelegate> delegate;
+@property(nonatomic, weak, nullable) id<MDCDraggableViewDelegate> delegate;
 
 /**
  * Initializes a MDCDraggableView.

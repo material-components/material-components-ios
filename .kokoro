@@ -14,18 +14,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Fail on any error.
+# Fail on any error
 set -e
 
 if [ -n "$KOKORO_BUILD_NUMBER" ]; then
-  # Import source methods for managing GitHub comments
-  scripts_dir='github/repo/scripts/lib'
+  repo_dir='github/repo'
 else
-  scripts_dir="$(dirname $0)/scripts/lib"
+  repo_dir="$(dirname $0)"
 fi
+
+repo_dir="$(cd $repo_dir; pwd)"
+scripts_dir="${repo_dir}/scripts/lib"
 
 source "${scripts_dir}/github_comments.sh"
 source "${scripts_dir}/select_xcode.sh"
+source "${scripts_dir}/package_managers.sh"
 
 # To install homebrew formulas at specific versions we need to point directly
 # to the desired sha in the homebrew formula repository.
@@ -37,12 +40,14 @@ fix_bazel_imports() {
   echo "Rewriting imports for bazel..."
 
   private_components() {
-    find "components/private" -type d | cut -d'/' -f3 | sort | uniq
+    # remove the -not -path addition once shapes migration has finished. GitHub issue #6494.
+    find "components/private" -type d -not -path "components/private/Shape*" | cut -d'/' -f3 | sort | uniq
   }
   
   rewrite_tests() {
     find "${stashed_dir}"components/private/*/tests/unit -type f -name '*.swift' -exec perl -pi -e "$1" {} + || true
     find "${stashed_dir}"components/*/tests/unit -type f -name '*.swift' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/*/tests/unit -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
   }
   rewrite_examples() {
     find "${stashed_dir}"components/private/*/examples -type f -name '*.swift' -exec perl -pi -e "$1" {} + || true
@@ -57,13 +62,27 @@ fix_bazel_imports() {
     find "${stashed_dir}"components/private/*/src -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
     find "${stashed_dir}"components/*/src -type f -name '*.h' -exec perl -pi -e "$1" {} + || true
     find "${stashed_dir}"components/*/src -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/schemes/*/src -type f -name '*.h' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/schemes/*/src -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
+  }
+  rewrite_catalogs() {
+    find "${stashed_dir}"catalog/MDC* -type f -name '*.swift' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"catalog/MDC* -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"catalog/MDC* -type f -name '*.h' -exec perl -pi -e "$1" {} + || true
   }
 
   stashed_dir=""
   rewrite_tests "s/import MaterialComponents.Material(.+)_(.+)/import components_\1_\2/"
+  rewrite_tests "s/import MaterialComponentsBeta.Material(.+)Beta/import components_\1_\1Beta \/\/ BetaSplit/"
   rewrite_tests "s/import MaterialComponentsBeta.Material(.+)Scheme/import components_schemes_\1_\1 \/\/ Beta/"
   rewrite_tests "s/import MaterialComponents.Material(.+)Scheme/import components_schemes_\1_\1/"
+  rewrite_catalogs "s/import MaterialCatalog/import catalog_MaterialCatalog/"
+  rewrite_catalogs "s/import MaterialComponents.MaterialIcons_(.+)/import components_private_Icons_icons_\1_\1/"
+  rewrite_catalogs "s/import MaterialComponents.Material(.+)_(.+)/import components_\1_\2/"
+  rewrite_catalogs "s/import MaterialComponentsBeta.Material(.+)Scheme/import components_schemes_\1_\1 \/\/ Beta/"
+  rewrite_catalogs "s/import MaterialComponents.Material(.+)Scheme/import components_schemes_\1_\1/"
   rewrite_examples "s/import MaterialComponents.Material(.+)_(.+)/import components_\1_\2/"
+  rewrite_examples "s/import MaterialComponentsBeta.Material(.+)Beta/import components_\1_\1Beta \/\/ BetaSplit/"
   rewrite_examples "s/import MaterialComponentsBeta.Material(.+)Scheme/import components_schemes_\1_\1 \/\/ Beta/"
   rewrite_examples "s/import MaterialComponents.Material(.+)Scheme/import components_schemes_\1_\1/"
   private_components | while read private_component; do
@@ -72,16 +91,27 @@ fix_bazel_imports() {
     fi
     rewrite_tests "s/import MaterialComponents.Material$private_component/import components_private_${private_component}_${private_component}/"
     rewrite_examples "s/import MaterialComponents.Material$private_component/import components_private_${private_component}_${private_component}/"
+    rewrite_catalogs "s/import MaterialComponents.Material$private_component\\b/import components_private_${private_component}_${private_component}/"
   done
   rewrite_tests "s/import MaterialComponentsBeta.Material(.+)_(.+)/import components_\1_\2 \/\/ Beta/"
   rewrite_tests "s/import MaterialComponentsBeta.Material(.+)/import components_\1_\1 \/\/ Beta/"
   rewrite_tests "s/import MaterialComponents.Material(.+)/import components_\1_\1/"
+  rewrite_catalogs "s/import MaterialComponentsBeta.Material(.+)_(.+)/import components_\1_\2 \/\/ Beta/"
+  rewrite_catalogs "s/import MaterialComponentsBeta.Material(.+)/import components_\1_\1 \/\/ Beta/"
+  rewrite_catalogs "s/import MaterialComponents.Material(.+)/import components_\1_\1/"
+  rewrite_catalogs "s/import CatalogByConvention/import catalog_by_convention_CatalogByConvention/"
+  rewrite_catalogs "s/import MDFInternationalization/import material_internationalization_ios_MDFInternationalization/"
+  rewrite_catalogs "s/import MDFTextAccessibility/import material_text_accessibility_ios_MDFTextAccessibility/"
+  rewrite_catalogs "s/import <CatalogByConvention\/CatalogByConvention\.h>/import\/\*Material prefix framework import\*\/ \"CatalogByConvention.h\"/"
   rewrite_examples "s/import MaterialComponentsBeta.Material(.+)_(.+)/import components_\1_\2 \/\/ Beta/"
   rewrite_examples "s/import MaterialComponentsBeta.Material(.+)/import components_\1_\1 \/\/ Beta/"
   rewrite_examples "s/import MaterialComponents.Material(.+)/import components_\1_\1/"
+  rewrite_examples "s/import MDFTextAccessibility/import material_text_accessibility_ios_MDFTextAccessibility/"
   rewrite_source "s/import <Motion(.+)\/Motion.+\.h>/import \"Motion\1.h\"/"
   rewrite_source "s/import <MDFTextAccessibility\/MDFTextAccessibility\.h>/import \"MDFTextAccessibility.h\"/"
-  rewrite_source "s/import <MaterialComponents\/Material(.+)\.h>/import\/\*framework import\*\/ \"Material\1.h\"/"
+  rewrite_source "s/import <MaterialComponents\/Material(.+)\.h>/import\/\*Material prefix framework import\*\/ \"Material\1.h\"/"
+  rewrite_source "s/import <MaterialComponents\/MDC(.+)\.h>/import\/\*MDC prefix framework import\*\/ \"MDC\1.h\"/"
+  rewrite_tests "s/import <MaterialComponentsBeta\/Material(.+)Beta\.h>/import\/\*Material beta prefix framework import\*\/ \"Material\1Beta.h\"/"
   rewrite_tests "s/import MDFTextAccessibility/import material_text_accessibility_ios_MDFTextAccessibility/"
   rewrite_tests "s/import MDFInternationalization/import material_internationalization_ios_MDFInternationalization/"
   stashed_dir="$(pwd)/"
@@ -89,13 +119,29 @@ fix_bazel_imports() {
     echo "Undoing import rewrites for bazel..."
 
     # Undoes our source changes from above.
+    rewrite_tests "s/import\/\*Material beta prefix framework import\*\/ \"Material(.+).h\"/import <MaterialComponentsBeta\/Material\1\.h>/"
     rewrite_tests "s/import components_(.+)_\1 \/\/ Beta/import MaterialComponentsBeta.Material\1/"
     rewrite_tests "s/import components_schemes_(.+)_.+ \/\/ Beta/import MaterialComponentsBeta.Material\1Scheme/"
     rewrite_tests "s/import components_schemes_(.+)_.+/import MaterialComponents.Material\1Scheme/"
     rewrite_tests "s/import components_private_(.+)_.+/import MaterialComponents.Material\1/"
     rewrite_tests "s/import components_(.+)_\1/import MaterialComponents.Material\1/"
+    rewrite_tests "s/import components_(.+)_\1Beta \/\/ BetaSplit/import MaterialComponentsBeta.Material\1Beta/"
     rewrite_tests "s/import components_(.+)_(.+) \/\/ Beta/import MaterialComponentsBeta.Material\1_\2/"
     rewrite_tests "s/import components_(.+)_(.+)/import MaterialComponents.Material\1_\2/"
+    rewrite_catalogs "s/import\/\*Material prefix framework import\*\/ \"CatalogByConvention\.h\"/import <CatalogByConvention\/CatalogByConvention\.h>/"
+    rewrite_catalogs "s/import catalog_MaterialCatalog/import MaterialCatalog/"
+    rewrite_catalogs "s/import components_private_Icons_icons_(.+)_\1/import MaterialComponents.MaterialIcons_\1/"
+    rewrite_catalogs "s/import components_(.+)_\1 \/\/ Beta/import MaterialComponentsBeta.Material\1/"
+    rewrite_catalogs "s/import components_schemes_(.+)_.+ \/\/ Beta/import MaterialComponentsBeta.Material\1Scheme/"
+    rewrite_catalogs "s/import components_schemes_(.+)_.+/import MaterialComponents.Material\1Scheme/"
+    rewrite_catalogs "s/import components_private_(.+)_.+/import MaterialComponents.Material\1/"
+    rewrite_catalogs "s/import components_(.+)_\1/import MaterialComponents.Material\1/"
+    rewrite_catalogs "s/import components_(.+)_(.+) \/\/ Beta/import MaterialComponentsBeta.Material\1_\2/"
+    rewrite_catalogs "s/import components_(.+)_(.+)/import MaterialComponents.Material\1_\2/"
+    rewrite_catalogs "s/import catalog_by_convention_CatalogByConvention/import CatalogByConvention/"
+    rewrite_catalogs "s/import material_internationalization_ios_MDFInternationalization/import MDFInternationalization/"
+    rewrite_catalogs "s/import material_text_accessibility_ios_MDFTextAccessibility/import MDFTextAccessibility/"
+    rewrite_examples "s/import components_(.+)_\1Beta \/\/ BetaSplit/import MaterialComponentsBeta.Material\1Beta/"
     rewrite_examples "s/import components_(.+)_\1 \/\/ Beta/import MaterialComponentsBeta.Material\1/"
     rewrite_examples "s/import components_schemes_(.+)_.+ \/\/ Beta/import MaterialComponentsBeta.Material\1Scheme/"
     rewrite_examples "s/import components_schemes_(.+)_.+/import MaterialComponents.Material\1Scheme/"
@@ -103,9 +149,11 @@ fix_bazel_imports() {
     rewrite_examples "s/import components_(.+)_\1/import MaterialComponents.Material\1/"
     rewrite_examples "s/import components_(.+)_(.+) \/\/ Beta/import MaterialComponentsBeta.Material\1_\2/"
     rewrite_examples "s/import components_(.+)_(.+)/import MaterialComponents.Material\1_\2/"
+    rewrite_examples "s/import material_text_accessibility_ios_MDFTextAccessibility/import MDFTextAccessibility/"
     rewrite_source "s/import \"Motion(.+)\.h\"/import <Motion\1\/Motion\1.h>/"
     rewrite_source "s/import \"MDFTextAccessibility\.h\"/import <MDFTextAccessibility\/MDFTextAccessibility.h>/"
-    rewrite_source "s/import\/\*framework import\*\/ \"Material(.+)\.h\"/import <MaterialComponents\/Material\1\.h>/"
+    rewrite_source "s/import\/\*Material prefix framework import\*\/ \"Material(.+)\.h\"/import <MaterialComponents\/Material\1\.h>/"
+    rewrite_source "s/import\/\*MDC prefix framework import\*\/ \"MDC(.+)\.h\"/import <MaterialComponents\/MDC\1\.h>/"
     rewrite_tests "s/import material_text_accessibility_ios_MDFTextAccessibility/import MDFTextAccessibility/"
     rewrite_tests "s/import material_internationalization_ios_MDFInternationalization/import MDFInternationalization/"
   }
@@ -134,7 +182,7 @@ upload_bazel_test_artifacts() {
     done
   }
 
-  brew install rename
+  brew_install rename
 
   # rename all test.log to sponge_log.log and then copy them to the kokoro
   # artifacts directory.
@@ -145,6 +193,18 @@ upload_bazel_test_artifacts() {
   # artifacts directory.
   find -L . -name "test.xml" -type f -exec rename 's/test.xml/sponge_log.xml/' {} \;
   find -L . -name "sponge_log.xml" -type f | copy_to_artifacts
+}
+
+# Upgrades kokoro's current bazel version to at least 0.20.0
+upgrade_kokoro_bazel_if_needed() {
+  bazel version
+
+  if [ -f "$KOKORO_GFILE_DIR/use_bazel.sh" ]; then
+    bash "$KOKORO_GFILE_DIR/use_bazel.sh" 0.20.0
+  else
+    use_bazel.sh 0.20.0
+  fi
+  bazel version
 }
 
 run_bazel_affected() {
@@ -179,9 +239,7 @@ run_bazel_affected() {
     # We must upgrade bazel prior to running bazel query because we rely on features in bazel
     # 0.20.
     if [ -n "$KOKORO_BUILD_NUMBER" ]; then
-      bazel version
-      use_bazel.sh 0.20.0
-      bazel version
+      upgrade_kokoro_bazel_if_needed
     fi
     
     # Output the affected targets to the logs. This also gives the affected_targets script the
@@ -238,9 +296,7 @@ run_bazel() {
   fi
 
   if [ -n "$KOKORO_BUILD_NUMBER" ]; then
-    bazel version
-    use_bazel.sh 0.20.0
-    bazel version
+    upgrade_kokoro_bazel_if_needed
   fi
 
   if [ -n "$VERBOSE_OUTPUT" ]; then
@@ -251,7 +307,7 @@ run_bazel() {
     COMMAND="test"
   fi
   if [ -z "$TARGET" ]; then
-    TARGET="//components/..."
+    TARGET="//..."
   fi
 
   if [ -n "$KOKORO_BUILD_NUMBER" ]; then
@@ -288,7 +344,29 @@ run_bazel() {
     # Especially in the event of failure, we want our test artifacts to be uploaded.
     trap upload_bazel_test_artifacts EXIT
   fi
-  bazel $COMMAND $TARGET --xcode_version $xcode_version --ios_minimum_os=8.0 --ios_multi_cpus=i386,x86_64 $extra_args $verbosity_args
+
+  snapshot_dir="${repo_dir}/snapshot_test_goldens/goldens"
+  tmp_img_dir="$(mktemp -d)"
+
+  # Install git lfs if we're performing tests on kokoro
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    if [ "$COMMAND" == "test" ]; then
+      brew_install git-lfs
+      git lfs install
+      git lfs pull
+
+      # Reset the simulators to prepare for hosted snapshot tests
+      sim_cleaner_tmp=$(mktemp -d)
+      git clone https://github.com/material-foundation/ios-simulator-utils.git "$sim_cleaner_tmp"
+      source "${sim_cleaner_tmp}/scripts/cleanup_simulators.sh"
+      perform_pre_test_cleanup "iPhone"
+    fi
+  fi
+
+  bazel $COMMAND $TARGET --xcode_version $xcode_version --ios_minimum_os=8.0 \
+    --ios_multi_cpus=i386,x86_64 $extra_args $verbosity_args \
+    --test_env="FB_REFERENCE_IMAGE_DIR=$snapshot_dir" \
+    --test_env="IMAGE_DIFF_DIR=$tmp_img_dir"
 }
 
 run_cocoapods() {
@@ -304,11 +382,11 @@ run_cocoapods() {
     # Move into our cloned repo
     cd github/repo
 
-    gem install xcpretty cocoapods --no-rdoc --no-ri --no-document --quiet
+    gem_install xcpretty cocoapods
     pod --version
 
     # Install git-lfs
-    brew install git-lfs
+    brew_install git-lfs
     git lfs install
     git lfs pull
   fi
@@ -366,9 +444,15 @@ generate_website() {
 
     ./scripts/build_site.sh
 
-    gem install bundler --no-rdoc --no-ri --no-document --quiet
-    brew update
-    brew install yarn --without-node
+    gem_install bundler
+    brew_install yarn --without-node
+    
+    # The above installations update node to v10, but the docsite generator
+    # relies on v8.
+    brew unlink node
+    brew install node@8
+    # Required because node@8 is keg-only, meaning it isn't linked automatically.
+    brew link --force --overwrite node@8
   fi
 
   cd docsite-generator
@@ -407,7 +491,7 @@ generate_apidiff() {
     cd github/repo
 
     # Install sourcekitten, a dependency of the apidiff tool
-    brew install "$SOURCEKITTEN_FORMULA"
+    brew_install "$SOURCEKITTEN_FORMULA"
 
     sourcekitten version
   fi

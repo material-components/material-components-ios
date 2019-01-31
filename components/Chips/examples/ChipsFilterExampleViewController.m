@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "ChipsExamplesSupplemental.h"
+#import "supplemental/ChipsExamplesSupplemental.h"
 
 #import "MaterialChips+Theming.h"
 #import "MaterialChips.h"
@@ -28,21 +28,9 @@
 - (id)init {
   self = [super init];
   if (self) {
-    self.colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-    self.shapeScheme = [[MDCShapeScheme alloc] init];
-    self.typographyScheme =
-        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+    self.containerScheme = [[MDCContainerScheme alloc] init];
   }
   return self;
-}
-
-- (MDCContainerScheme *)containerScheme {
-  MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
-  scheme.colorScheme = self.colorScheme;
-  scheme.shapeScheme = self.shapeScheme;
-  scheme.typographyScheme = self.typographyScheme;
-  return scheme;
 }
 
 - (void)loadView {
@@ -124,23 +112,30 @@
   chipView.titleLabel.text = self.titles[indexPath.row];
   chipView.selectedImageView.image =
       [[self doneImage] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-  chipView.selectedImageView.tintColor =
-      [_colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.54];
+  if (self.containerScheme.colorScheme) {
+    chipView.selectedImageView.tintColor =
+        [self.containerScheme.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.54];
+  } else {
+    MDCSemanticColorScheme *colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    chipView.selectedImageView.tintColor =
+        [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.54];
+  }
   chipView.selected = [_selectedIndecies containsObject:indexPath];
   cell.alwaysAnimateResize = [self shouldAnimateResize];
 
   if (_isOutlined) {
-    [chipView applyOutlinedThemeWithScheme:[self containerScheme]];
+    [chipView applyOutlinedThemeWithScheme:self.containerScheme];
   } else {
-    [chipView applyThemeWithScheme:[self containerScheme]];
+    [chipView applyThemeWithScheme:self.containerScheme];
   }
 
   return cell;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout*)collectionViewLayout
-  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+                    layout:(UICollectionViewLayout *)collectionViewLayout
+    sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
   // The size of the chip depends on title, image and selection state.
   _sizingChip.selected = [_selectedIndecies containsObject:indexPath];
   _sizingChip.titleLabel.text = self.titles[indexPath.row];
@@ -165,18 +160,18 @@
 - (NSArray *)titles {
   if (!_titles) {
     _titles = @[
-                @"Doorman",
-                @"Elevator",
-                @"Garage Parking",
-                @"Gym",
-                @"Laundry in Building",
-                @"Green Building",
-                @"Parking Available",
-                @"Pets Allowed",
-                @"Pied-a-Terre Allowed",
-                @"Swimming Pool",
-                @"Smoke-free",
-                ];
+      @"Doorman",
+      @"Elevator",
+      @"Garage Parking",
+      @"Gym",
+      @"Laundry in Building",
+      @"Green Building",
+      @"Parking Available",
+      @"Pets Allowed",
+      @"Pied-a-Terre Allowed",
+      @"Swimming Pool",
+      @"Smoke-free",
+    ];
   }
   return _titles;
 }
@@ -186,4 +181,3 @@
 }
 
 @end
-

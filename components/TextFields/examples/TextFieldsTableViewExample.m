@@ -23,9 +23,10 @@ static NSString *const TSTTextFieldTableViewCellIdentifier = @"TSTTextFieldsTabl
 
 @end
 
-@interface TextFieldsTableViewExample : UIViewController <UITableViewDataSource, UITextFieldDelegate>
+@interface TextFieldsTableViewExample
+    : UIViewController <UITableViewDataSource, UITextFieldDelegate>
 
-@property(nonatomic, strong) NSMutableArray <NSString *> *strings;
+@property(nonatomic, strong) NSMutableArray<NSString *> *strings;
 @property(nonatomic, strong) UITableView *tableView;
 
 @end
@@ -39,7 +40,8 @@ static NSString *const TSTTextFieldTableViewCellIdentifier = @"TSTTextFieldsTabl
   self.tableView.rowHeight = UITableViewAutomaticDimension;
   self.tableView.estimatedRowHeight = 82;
   self.tableView.dataSource = self;
-  [self.tableView registerClass:[TextFieldTableViewCell class] forCellReuseIdentifier:TSTTextFieldTableViewCellIdentifier];
+  [self.tableView registerClass:[TextFieldTableViewCell class]
+         forCellReuseIdentifier:TSTTextFieldTableViewCellIdentifier];
 
   self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:self.tableView];
@@ -48,11 +50,12 @@ static NSString *const TSTTextFieldTableViewCellIdentifier = @"TSTTextFieldsTabl
   [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
 
   if (@available(iOS 11.0, *)) {
-    [self.tableView.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor].active = YES;
+    [self.tableView.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor]
+        .active = YES;
   } else {
-    [self.tableView.topAnchor constraintEqualToAnchor:self.topLayoutGuide.bottomAnchor].active = YES;
+    [self.tableView.topAnchor constraintEqualToAnchor:self.topLayoutGuide.bottomAnchor].active =
+        YES;
   }
-
 
   [self.tableView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor].active = YES;
 
@@ -64,10 +67,12 @@ static NSString *const TSTTextFieldTableViewCellIdentifier = @"TSTTextFieldsTabl
 
 #pragma mark - UITableViewDataSource
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:TSTTextFieldTableViewCellIdentifier];
+- (UITableViewCell *)tableView:(UITableView *)tableView
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+  UITableViewCell *cell =
+      [tableView dequeueReusableCellWithIdentifier:TSTTextFieldTableViewCellIdentifier];
   if ([cell isKindOfClass:[TextFieldTableViewCell class]]) {
-    TextFieldTableViewCell *textFieldCell = (TextFieldTableViewCell*)cell;
+    TextFieldTableViewCell *textFieldCell = (TextFieldTableViewCell *)cell;
 
     textFieldCell.textField.tag = indexPath.row;
     textFieldCell.textField.delegate = self;
@@ -76,7 +81,8 @@ static NSString *const TSTTextFieldTableViewCellIdentifier = @"TSTTextFieldsTabl
       NSString *string = self.strings[indexPath.row];
       textFieldCell.textFieldController.textInput.text = string;
     }
-    textFieldCell.textFieldController.placeholderText = [NSString stringWithFormat:@"TextField #%lu", (long)indexPath.row];
+    textFieldCell.textFieldController.placeholderText =
+        [NSString stringWithFormat:@"TextField #%lu", (long)indexPath.row];
   }
 
   return cell;
@@ -113,9 +119,9 @@ static NSString *const TSTTextFieldTableViewCellIdentifier = @"TSTTextFieldsTabl
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Text Field", @"Table View" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Text Field", @"Table View" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 
@@ -123,7 +129,8 @@ static NSString *const TSTTextFieldTableViewCellIdentifier = @"TSTTextFieldsTabl
 
 @implementation TextFieldTableViewCell
 
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+- (instancetype)initWithStyle:(UITableViewCellStyle)style
+              reuseIdentifier:(NSString *)reuseIdentifier {
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
   if (self) {
     self.textField = [[MDCTextField alloc] initWithFrame:CGRectZero];
@@ -132,8 +139,10 @@ static NSString *const TSTTextFieldTableViewCellIdentifier = @"TSTTextFieldsTabl
 
     [self.textField.topAnchor constraintEqualToAnchor:self.topAnchor].active = YES;
     [self.textField.bottomAnchor constraintEqualToAnchor:self.bottomAnchor].active = YES;
-    [self.textField.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:8].active = YES;
-    [self.textField.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-8].active = YES;
+    [self.textField.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:8].active =
+        YES;
+    [self.textField.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-8].active =
+        YES;
 
     _textFieldController = [[MDCTextInputControllerFilled alloc] initWithTextInput:self.textField];
   }

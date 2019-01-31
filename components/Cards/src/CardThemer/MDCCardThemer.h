@@ -23,16 +23,15 @@
 
 /**
  Applies the material card style using the card scheme data.
- 
+
  @param scheme The card style data that should be used to change the @c card.
  @param card A MDCCard instance to apply the @c scheme
  */
-+ (void)applyScheme:(nonnull id<MDCCardScheming>)scheme
-             toCard:(nonnull MDCCard *)card;
++ (void)applyScheme:(nonnull id<MDCCardScheming>)scheme toCard:(nonnull MDCCard *)card;
 
 /**
  Applies the material card style using the card scheme data.
- 
+
  @param scheme The card style data that should be used to change the @c card.
  @param cardCell A MDCCardCollectionCell instance to apply the @c scheme
  */
@@ -41,7 +40,7 @@
 
 /**
  Applies the material outlined card style using the card scheme data.
- 
+
  @param scheme The card style data that should be used to change the @c card.
  @param card A MDCCard instance to apply the @c scheme
  */
@@ -50,7 +49,7 @@
 
 /**
  Applies the material outlined card style using the card scheme data.
- 
+
  @param scheme The card style data that should be used to change the @c card.
  @param cardCell A MDCCardCollectionCell instance to apply the @c scheme
  */
@@ -58,4 +57,3 @@
                             toCardCell:(nonnull MDCCardCollectionCell *)cardCell;
 
 @end
-

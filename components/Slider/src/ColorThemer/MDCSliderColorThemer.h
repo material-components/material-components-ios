@@ -65,5 +65,4 @@
  */
 + (nonnull MDCBasicColorScheme *)defaultSliderDarkColorScheme;
 
-
 @end

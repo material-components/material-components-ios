@@ -16,6 +16,7 @@ import UIKit
 
 import MaterialComponents.MaterialCards
 import MaterialComponents.MaterialShapeLibrary
+import MaterialComponentsBeta.MaterialContainerScheme
 
 class ShapedCardCollectionCell: MDCCardCollectionCell {
   override init(frame: CGRect) {
@@ -39,6 +40,17 @@ class EditReorderShapedCollectionViewController: UIViewController,
   UICollectionViewDelegate,
   UICollectionViewDataSource,
   UICollectionViewDelegateFlowLayout {
+
+  var containerScheme: MDCContainerScheming
+
+  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    containerScheme = MDCContainerScheme()
+    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+  }
+
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
 
   enum ToggleMode: Int {
     case edit = 1, reorder
@@ -124,6 +136,7 @@ class EditReorderShapedCollectionViewController: UIViewController,
                       cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell",
                                                   for: indexPath) as! MDCCardCollectionCell
+    cell.applyTheme(withScheme: containerScheme)
     cell.backgroundColor = .white
     cell.isSelectable = (toggle == .edit)
     return cell

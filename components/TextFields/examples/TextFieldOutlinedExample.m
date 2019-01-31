@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialTextFields.h"
 #import "MaterialTextFields+ColorThemer.h"
 #import "MaterialTextFields+TypographyThemer.h"
+#import "MaterialTextFields.h"
 
 @interface TextFieldOutlinedObjectiveCExample
     : UIViewController <UITextFieldDelegate, UITextViewDelegate>
@@ -172,7 +172,7 @@
   self.messageController =
       [[MDCTextInputControllerOutlinedTextArea alloc] initWithTextInput:textFieldMessage];
   textFieldMessage.text = @"This is where you could put a multi-line message like an email.\n\n"
-      "It can even handle new lines.";
+                           "It can even handle new lines.";
   self.messageController.placeholderText = @"Message";
   [self styleTextInputController:self.messageController];
 
@@ -271,17 +271,13 @@
                               constraintsWithVisualFormat:@"V:|[scrollView]|"
                                                   options:0
                                                   metrics:nil
-                                                    views:@{
-                                                      @"scrollView" : self.scrollView
-                                                    }]];
+                                                    views:@{@"scrollView" : self.scrollView}]];
   [NSLayoutConstraint
       activateConstraints:[NSLayoutConstraint
                               constraintsWithVisualFormat:@"H:|[scrollView]|"
                                                   options:0
                                                   metrics:nil
-                                                    views:@{
-                                                      @"scrollView" : self.scrollView
-                                                    }]];
+                                                    views:@{@"scrollView" : self.scrollView}]];
   UIEdgeInsets margins = UIEdgeInsetsMake(0, 16, 0, 16);
   self.scrollView.layoutMargins = margins;
 
@@ -306,8 +302,8 @@
 - (BOOL)textField:(UITextField *)textField
     shouldChangeCharactersInRange:(NSRange)range
                 replacementString:(NSString *)string {
-  NSString *finishedString =
-      [textField.text stringByReplacingCharactersInRange:range withString:string];
+  NSString *finishedString = [textField.text stringByReplacingCharactersInRange:range
+                                                                     withString:string];
 
   if (textField == (UITextField *)self.nameController.textInput) {
     if ([finishedString rangeOfCharacterFromSet:[NSCharacterSet decimalDigitCharacterSet]].length &&
@@ -439,9 +435,9 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Text Field", @"Outlined text fields" ],
-    @"primaryDemo": @YES,
-    @"presentable": @YES,
+    @"breadcrumbs" : @[ @"Text Field", @"Outlined text fields" ],
+    @"primaryDemo" : @YES,
+    @"presentable" : @YES,
   };
 }
 

@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <math.h>
-#import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
+#import <Foundation/Foundation.h>
+#import <math.h>
 
 static inline CGFloat MDCSin(CGFloat value) {
 #if CGFLOAT_IS_DOUBLE
@@ -93,7 +93,9 @@ static inline CGFloat MDCHypot(CGFloat x, CGFloat y) {
 }
 
 // Checks whether the provided floating point number is exactly zero.
-static inline BOOL MDCCGFloatIsExactlyZero(CGFloat value) { return (value == 0); }
+static inline BOOL MDCCGFloatIsExactlyZero(CGFloat value) {
+  return (value == 0);
+}
 
 static inline CGFloat MDCPow(CGFloat value, CGFloat power) {
 #if CGFLOAT_IS_DOUBLE

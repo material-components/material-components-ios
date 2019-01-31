@@ -12,13 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "ChipsExamplesSupplemental.h"
+#import "supplemental/ChipsExamplesSupplemental.h"
 
+#import "MaterialChips+Theming.h"
 #import "MaterialChips.h"
 
 @implementation ChipsCustomizedExampleViewController {
   UICollectionView *_collectionView;
   MDCChipView *_sizingChip;
+}
+
+- (id)init {
+  self = [super init];
+  if (self) {
+    self.containerScheme = [[MDCContainerScheme alloc] init];
+  }
+  return self;
 }
 
 + (void)configureChip:(MDCChipView *)chip {
@@ -64,6 +73,12 @@
   [self.view addSubview:_collectionView];
 }
 
+- (void)viewDidLoad {
+  [super viewDidLoad];
+
+  [_sizingChip applyThemeWithScheme:self.containerScheme];
+}
+
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
 
@@ -85,13 +100,13 @@
   cell.chipView.titleLabel.text = self.titles[indexPath.row];
   cell.chipView.selectedImageView.image = [self doneImage];
   cell.alwaysAnimateResize = YES;
-
+  [cell.chipView applyThemeWithScheme:self.containerScheme];
   return cell;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout*)collectionViewLayout
-  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+                    layout:(UICollectionViewLayout *)collectionViewLayout
+    sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
   NSArray *selectedPaths = [collectionView indexPathsForSelectedItems];
   _sizingChip.selected = [selectedPaths containsObject:indexPath];
   _sizingChip.titleLabel.text = self.titles[indexPath.row];
@@ -129,4 +144,3 @@
 }
 
 @end
-

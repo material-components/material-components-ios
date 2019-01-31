@@ -13,6 +13,6 @@
 // limitations under the License.
 
 #import "MDCFlexibleHeaderContainerViewController.h"
-#import "MDCFlexibleHeaderView.h"
 #import "MDCFlexibleHeaderView+ShiftBehavior.h"
+#import "MDCFlexibleHeaderView.h"
 #import "MDCFlexibleHeaderViewController.h"

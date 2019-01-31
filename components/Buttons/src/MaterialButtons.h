@@ -14,6 +14,6 @@
 
 #import "MDCButton.h"
 #import "MDCFlatButton.h"
-#import "MDCFloatingButton.h"
 #import "MDCFloatingButton+Animation.h"
+#import "MDCFloatingButton.h"
 #import "MDCRaisedButton.h"

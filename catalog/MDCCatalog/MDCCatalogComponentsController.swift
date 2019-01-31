@@ -116,10 +116,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
   }
 
   func themeDidChange(notification: NSNotification) {
-    guard let colorScheme = notification.userInfo?[AppTheme.globalThemeNotificationColorSchemeKey]
-          as? MDCColorScheming else {
-      return
-    }
+    let colorScheme = AppTheme.globalTheme.colorScheme
     MDCFlexibleHeaderColorThemer.applySemanticColorScheme(colorScheme,
                                                           to: headerViewController.headerView)
     setNeedsStatusBarAppearanceUpdate()

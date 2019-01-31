@@ -20,6 +20,10 @@
 - (void)setUp {
   [super setUp];
 
+  // NOTE: Please keep the default value as `YES` so test authors don't forget to set this property.
+  // Turning off "empty" tests is an optimization and it's better not to skip them.
+  self.shouldExecuteEmptyTests = YES;
+
   // Default to Latin strings
   self.shortInputText = MDCTextFieldSnapshotTestsInputShortTextLatin;
   self.longInputText = MDCTextFieldSnapshotTestsInputLongTextLatin;
@@ -69,6 +73,10 @@
     return;
   }
 
+  if (!self.shouldExecuteEmptyTests) {
+    return;
+  }
+
   // When
   [self invokeWillGenerateSnapshotAndVerify];
 
@@ -78,6 +86,10 @@
 
 - (void)testTextFieldEmptyIsEditing {
   if (![self shouldTestExecute]) {
+    return;
+  }
+
+  if (!self.shouldExecuteEmptyTests) {
     return;
   }
 
@@ -91,6 +103,10 @@
 
 - (void)testTextFieldEmptyDisabled {
   if (![self shouldTestExecute]) {
+    return;
+  }
+
+  if (!self.shouldExecuteEmptyTests) {
     return;
   }
 

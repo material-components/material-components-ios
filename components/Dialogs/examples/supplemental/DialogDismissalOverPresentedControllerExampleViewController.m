@@ -18,16 +18,18 @@
  */
 
 #import "DialogDismissalOverPresentedControllerExampleViewController.h"
+
+#import "MaterialButtons+Theming.h"
 #import "MaterialButtons.h"
+#import "MaterialContainerScheme.h"
+#import "MaterialDialogs+Theming.h"
 #import "MaterialDialogs.h"
 
 #pragma mark - Helper View Controller
 
 @interface PresentedViewControllerWithDialog : UIViewController
 
-@property(nonatomic, strong) MDCFlatButton *dialogButton;
-
-@property(nonatomic, strong) MDCFlatButton *dismissButton;
+@property(nonatomic, strong) MDCButton *dialogButton;
 
 @property(nonatomic, strong) UILabel *topLeftLabel;
 
@@ -37,9 +39,22 @@
 
 @property(nonatomic, strong) UILabel *bottomRightLabel;
 
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
+
 @end
 
 @implementation PresentedViewControllerWithDialog
+
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
+    scheme.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    _containerScheme = scheme;
+  }
+  return self;
+}
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -104,15 +119,14 @@
   [NSLayoutConstraint activateConstraints:constraints];
 
   // Add a button to show the dialog from this presented view controller.
-  _dialogButton = [[MDCFlatButton alloc] init];
-  [_dialogButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-  [_dialogButton setBackgroundColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-  [_dialogButton setTitle:@"Show Dialog" forState:UIControlStateNormal];
-  _dialogButton.translatesAutoresizingMaskIntoConstraints = NO;
-  [_dialogButton addTarget:self
-                    action:@selector(showDialog:)
-          forControlEvents:UIControlEventTouchUpInside];
-  [self.view addSubview:_dialogButton];
+  self.dialogButton = [[MDCButton alloc] init];
+  [self.dialogButton setTitle:@"Show Dialog" forState:UIControlStateNormal];
+  self.dialogButton.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.dialogButton addTarget:self
+                        action:@selector(showDialog:)
+              forControlEvents:UIControlEventTouchUpInside];
+  [self.dialogButton applyTextThemeWithScheme:self.containerScheme];
+  [self.view addSubview:self.dialogButton];
 
   [[NSLayoutConstraint constraintWithItem:_dialogButton
                                 attribute:NSLayoutAttributeCenterX
@@ -138,6 +152,7 @@
                                                     " remain unchanged and all four sections should"
                                                     " continue to be fully visible."];
   [dialog addAction:[MDCAlertAction actionWithTitle:@"Dismiss Me" handler:nil]];
+  [dialog applyThemeWithScheme:self.containerScheme];
   [self presentViewController:dialog animated:YES completion:nil];
 }
 
@@ -147,27 +162,44 @@
 
 @interface DialogDismissalOverPresentedControllerExampleViewController ()
 
-@property(nonatomic, strong) MDCFlatButton *presentButton;
+@property(nonatomic, strong) MDCButton *presentButton;
+
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 
 @end
 
 @implementation DialogDismissalOverPresentedControllerExampleViewController
 
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
+    scheme.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    _containerScheme = scheme;
+  }
+  return self;
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
 
   // Create a way to present a view controller.
-  self.view.backgroundColor = [UIColor whiteColor];
+  id<MDCColorScheming> colorScheme =
+      self.containerScheme.colorScheme
+          ?: [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  self.view.backgroundColor = colorScheme.backgroundColor;
 
-  _presentButton = [[MDCFlatButton alloc] init];
-  [_presentButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-  [_presentButton setBackgroundColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-  [_presentButton setTitle:@"Present View Controller" forState:UIControlStateNormal];
-  _presentButton.translatesAutoresizingMaskIntoConstraints = NO;
-  [_presentButton addTarget:self
-                     action:@selector(presentController:)
-           forControlEvents:UIControlEventTouchUpInside];
-  [self.view addSubview:_presentButton];
+  self.presentButton = [[MDCButton alloc] init];
+  [self.presentButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+  [self.presentButton setBackgroundColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+  [self.presentButton setTitle:@"Present View Controller" forState:UIControlStateNormal];
+  self.presentButton.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.presentButton addTarget:self
+                         action:@selector(presentController:)
+               forControlEvents:UIControlEventTouchUpInside];
+  [self.presentButton applyTextThemeWithScheme:self.containerScheme];
+  [self.view addSubview:self.presentButton];
 
   [[NSLayoutConstraint constraintWithItem:_presentButton
                                 attribute:NSLayoutAttributeCenterX

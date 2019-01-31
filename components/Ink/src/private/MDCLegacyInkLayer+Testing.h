@@ -24,7 +24,7 @@
 
 @end
 
-@interface MDCLegacyInkLayer ()  <MDCLegacyInkLayerRippleDelegate>
+@interface MDCLegacyInkLayer () <MDCLegacyInkLayerRippleDelegate>
 @end
 
 @interface MDCLegacyInkLayerRipple : CAShapeLayer

@@ -12,10 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "ChipsExamplesSupplemental.h"
+#import "supplemental/ChipsExamplesSupplemental.h"
 
-#import "MaterialChips+ShapeThemer.h"
-#import "MaterialChips+TypographyThemer.h"
+#import "MaterialChips+Theming.h"
 #import "MaterialChips.h"
 
 @implementation ChipsTypicalUseViewController {
@@ -30,8 +29,7 @@
   if (self) {
     _sizingChip = [[MDCChipView alloc] init];
     _sizingChip.mdc_adjustsFontForContentSizeCategory = YES;
-    self.shapeScheme = [[MDCShapeScheme alloc] init];
-    self.typographyScheme = [[MDCTypographyScheme alloc] init];
+    self.containerScheme = [[MDCContainerScheme alloc] init];
   }
   return self;
 }
@@ -45,9 +43,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  [MDCChipViewTypographyThemer applyTypographyScheme:self.typographyScheme
-                                          toChipView:_sizingChip];
-  [MDCChipViewShapeThemer applyShapeScheme:self.shapeScheme toChipView:_sizingChip];
+  [_sizingChip applyThemeWithScheme:self.containerScheme];
 
   if (@available(iOS 11.0, *)) {
     self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
@@ -65,9 +61,9 @@
                                       target:self
                                       action:@selector(clearSelected)];
 
-  NSDictionary *enabledAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
+  NSDictionary *enabledAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
   NSDictionary *disabledAttributes =
-      @{NSForegroundColorAttributeName: [UIColor colorWithWhite:1 alpha:0.75]};
+      @{NSForegroundColorAttributeName : [UIColor colorWithWhite:1 alpha:0.75]};
   [self.navigationItem.rightBarButtonItem setTitleTextAttributes:enabledAttributes
                                                         forState:UIControlStateNormal];
   [self.navigationItem.rightBarButtonItem setTitleTextAttributes:disabledAttributes
@@ -114,10 +110,7 @@
 
   ChipModel *model = self.model[indexPath.row];
   [model apply:cell.chipView];
-  [MDCChipViewTypographyThemer applyTypographyScheme:self.typographyScheme
-                                          toChipView:cell.chipView];
-  [MDCChipViewShapeThemer applyShapeScheme:self.shapeScheme toChipView:cell.chipView];
-
+  [cell.chipView applyThemeWithScheme:self.containerScheme];
   return cell;
 }
 
@@ -128,8 +121,8 @@
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout*)collectionViewLayout
-  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+                    layout:(UICollectionViewLayout *)collectionViewLayout
+    sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
   NSArray *selectedPaths = [collectionView indexPathsForSelectedItems];
   _sizingChip.selected = [selectedPaths containsObject:indexPath];
 

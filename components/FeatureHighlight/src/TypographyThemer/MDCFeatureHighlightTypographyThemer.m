@@ -17,7 +17,7 @@
 @implementation MDCFeatureHighlightTypographyThemer
 
 + (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme
-       toFeatureHighlightViewController:
+    toFeatureHighlightViewController:
         (nonnull MDCFeatureHighlightViewController *)featureHighlightViewController {
   featureHighlightViewController.titleFont = typographyScheme.headline6;
   featureHighlightViewController.bodyFont = typographyScheme.body2;

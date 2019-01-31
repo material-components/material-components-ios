@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import <MDFInternationalization/MDFInternationalization.h>
 #import "MaterialIcons+ic_arrow_back.h"
+#import "MaterialNavigationBar+ColorThemer.h"
 #import "MaterialNavigationBar.h"
 #import "MaterialTextFields.h"
-#import "MaterialNavigationBar+ColorThemer.h"
-#import <MDFInternationalization/MDFInternationalization.h>
 
 @interface NavigationBarLayoutExample : UIViewController <UITextFieldDelegate>
 
@@ -101,7 +101,8 @@
   [self.view addSubview:self.titleField];
 
   if (@available(iOS 11.0, *)) {
-    [self.view.safeAreaLayoutGuide.topAnchor constraintEqualToAnchor:self.navigationBar.topAnchor].active = YES;
+    [self.view.safeAreaLayoutGuide.topAnchor constraintEqualToAnchor:self.navigationBar.topAnchor]
+        .active = YES;
   } else {
     [NSLayoutConstraint constraintWithItem:self.topLayoutGuide
                                  attribute:NSLayoutAttributeBottom
@@ -109,7 +110,8 @@
                                     toItem:self.navigationBar
                                  attribute:NSLayoutAttributeTop
                                 multiplier:1.0
-                                  constant:0].active = YES;
+                                  constant:0]
+        .active = YES;
   }
   [NSLayoutConstraint constraintWithItem:self.navigationBar
                                attribute:NSLayoutAttributeBottom
@@ -117,21 +119,24 @@
                                   toItem:self.leadingItemField
                                attribute:NSLayoutAttributeTop
                               multiplier:1.0
-                                constant:0].active = YES;
+                                constant:0]
+      .active = YES;
   [NSLayoutConstraint constraintWithItem:self.leadingItemField
                                attribute:NSLayoutAttributeBottom
                                relatedBy:NSLayoutRelationEqual
                                   toItem:self.titleField
                                attribute:NSLayoutAttributeTop
                               multiplier:1.0
-                                constant:0].active = YES;
+                                constant:0]
+      .active = YES;
   [NSLayoutConstraint constraintWithItem:self.titleField
                                attribute:NSLayoutAttributeBottom
                                relatedBy:NSLayoutRelationEqual
                                   toItem:self.trailingItemField
                                attribute:NSLayoutAttributeTop
                               multiplier:1.0
-                                constant:0].active = YES;
+                                constant:0]
+      .active = YES;
 
   NSDictionary *viewsBindings = NSDictionaryOfVariableBindings(_navigationBar, _leadingItemField,
                                                                _titleField, _trailingItemField);
@@ -179,8 +184,8 @@
 - (BOOL)textField:(UITextField *)textField
     shouldChangeCharactersInRange:(NSRange)range
                 replacementString:(NSString *)string {
-  NSString *finishedString =
-      [textField.text stringByReplacingCharactersInRange:range withString:string];
+  NSString *finishedString = [textField.text stringByReplacingCharactersInRange:range
+                                                                     withString:string];
 
   // MDCNavigationBar doesn't handle BarButtonItems with no image and zero-length strings
   if (finishedString.length == 0) {
@@ -215,9 +220,9 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Navigation Bar", @"Navigation Bar Item Layout" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Navigation Bar", @"Navigation Bar Item Layout" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

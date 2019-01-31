@@ -15,7 +15,7 @@
 #import <Foundation/Foundation.h>
 #import <MotionInterchange/MotionInterchange.h>
 
-@interface MDCProgressViewMotionSpec: NSObject
+@interface MDCProgressViewMotionSpec : NSObject
 
 @property(nonatomic, class, readonly) MDMMotionTiming willChangeProgress;
 @property(nonatomic, class, readonly) MDMMotionTiming willChangeHidden;

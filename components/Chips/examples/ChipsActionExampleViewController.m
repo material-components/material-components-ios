@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "ChipsExamplesSupplemental.h"
+#import "supplemental/ChipsExamplesSupplemental.h"
 
 #import "MaterialChips+Theming.h"
 #import "MaterialChips.h"
@@ -27,21 +27,9 @@
 - (id)init {
   self = [super init];
   if (self) {
-    self.colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-    self.shapeScheme = [[MDCShapeScheme alloc] init];
-    self.typographyScheme =
-        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+    self.containerScheme = [[MDCContainerScheme alloc] init];
   }
   return self;
-}
-
-- (MDCContainerScheme *)containerScheme {
-  MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
-  scheme.colorScheme = self.colorScheme;
-  scheme.shapeScheme = self.shapeScheme;
-  scheme.typographyScheme = self.typographyScheme;
-  return scheme;
 }
 
 - (void)loadView {
@@ -50,7 +38,6 @@
   // Our preferred CollectionView Layout For chips
   MDCChipCollectionViewFlowLayout *layout = [[MDCChipCollectionViewFlowLayout alloc] init];
   layout.minimumInteritemSpacing = 10;
-
 
   // Action chips should allow single selection, collection view default is based on single
   // selection. Note that MDCChipCollectionViewCell manages the state of the chip accordingly.
@@ -79,6 +66,7 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  [_sizingChip applyThemeWithScheme:self.containerScheme];
 
   _isOutlined = NO;
   self.navigationItem.rightBarButtonItem =
@@ -100,7 +88,6 @@
                             scrollPosition:UICollectionViewScrollPositionNone];
   }
 }
-
 
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
@@ -124,15 +111,16 @@
 
   // Apply Theming
   if (_isOutlined) {
-    [chipView applyOutlinedThemeWithScheme:[self containerScheme]];
+    [chipView applyOutlinedThemeWithScheme:self.containerScheme];
   } else {
-    [chipView applyThemeWithScheme:[self containerScheme]];
+    [chipView applyThemeWithScheme:self.containerScheme];
   }
 
   return cell;
 }
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+- (void)collectionView:(UICollectionView *)collectionView
+    didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
   // For action chips, we never want the chip to stay in selected state.
   // Other possible apporaches would be relying on theming or Customizing collectionViewCell
   // selected state.
@@ -140,12 +128,11 @@
 
   // Do the action related to the chip
   [self setTitle:[NSString stringWithFormat:@"Action %d", (int)indexPath.row]];
-
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout*)collectionViewLayout
-  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+                    layout:(UICollectionViewLayout *)collectionViewLayout
+    sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
   _sizingChip.titleLabel.text = self.titles[indexPath.row];
   return [_sizingChip sizeThatFits:collectionView.bounds.size];
 }
@@ -153,14 +140,13 @@
 - (NSArray *)titles {
   if (!_titles) {
     _titles = @[
-                @"Change Title to Action 0",
-                @"Change Title to Action 1",
-                @"Change Title to Action 2",
-                @"Change Title to Action 3",
-                ];
+      @"Change Title to Action 0",
+      @"Change Title to Action 1",
+      @"Change Title to Action 2",
+      @"Change Title to Action 3",
+    ];
   }
   return _titles;
 }
 
 @end
-

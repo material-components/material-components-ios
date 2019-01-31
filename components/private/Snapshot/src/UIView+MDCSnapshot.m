@@ -24,7 +24,7 @@
   UIView *backgroundView = [[UIView alloc]
       initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds) + insets.left + insets.right,
                                CGRectGetHeight(self.bounds) + insets.top + insets.bottom)];
-  backgroundView.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1];
+  backgroundView.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.8 alpha:1];
   [backgroundView addSubview:self];
 
   CGRect frame = self.frame;

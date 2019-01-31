@@ -34,7 +34,6 @@
  @param fontScheme The font scheme to apply to MDCTabBar.
  @param tabBar A MDCTabBar instance to apply a color scheme.
  */
-+ (void)applyFontScheme:(nonnull id<MDCFontScheme>)fontScheme
-               toTabBar:(nonnull MDCTabBar *)tabBar;
++ (void)applyFontScheme:(nonnull id<MDCFontScheme>)fontScheme toTabBar:(nonnull MDCTabBar *)tabBar;
 
 @end

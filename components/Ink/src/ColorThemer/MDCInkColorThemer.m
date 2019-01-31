@@ -16,8 +16,7 @@
 
 @implementation MDCInkColorThemer
 
-+ (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
-               toInkView:(MDCInkView *)inkView {
++ (void)applyColorScheme:(id<MDCColorScheme>)colorScheme toInkView:(MDCInkView *)inkView {
   if ([colorScheme respondsToSelector:@selector(primaryLightColor)]) {
     inkView.inkColor = colorScheme.primaryLightColor;
   }

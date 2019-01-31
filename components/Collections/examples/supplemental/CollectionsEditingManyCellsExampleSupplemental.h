@@ -20,5 +20,5 @@ static NSString *const kCollectionsEditingManyCellsCellIdentifierItem = @"itemCe
 static NSString *const kCollectionsEditingManyCellsHeaderReuseIdentifier = @"EditingExampleHeader";
 
 @interface CollectionsEditingManyCellsExample : MDCCollectionViewController
-@property (nonatomic, strong) NSMutableArray <NSMutableArray *>*content;
+@property(nonatomic, strong) NSMutableArray<NSMutableArray *> *content;
 @end

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialColorScheme.h"
 #import "MaterialBottomNavigation.h"
+#import "MaterialColorScheme.h"
 
 /**
  The Material Design color system's themer for instances of MDCBottomNavigationBar.

@@ -16,11 +16,11 @@
 
 #import "MaterialAppBar.h"
 #import "MaterialColorScheme.h"
-#import "MaterialTabs.h"
 #import "MaterialTabs+ColorThemer.h"
+#import "MaterialTabs.h"
 
 @interface TabBarIconExample ()
-@property(nonatomic, strong)UIBarButtonItem *addStarButtonItem;
+@property(nonatomic, strong) UIBarButtonItem *addStarButtonItem;
 @end
 
 @implementation TabBarIconExample
@@ -78,10 +78,12 @@
   tabBar.alignment = MDCTabBarAlignmentCenterSelected;
 
   NSBundle *bundle = [NSBundle bundleForClass:[TabBarIconExample class]];
-  UIImage *infoImage =
-      [UIImage imageNamed:@"TabBarDemo_ic_info" inBundle:bundle compatibleWithTraitCollection:nil];
-  UIImage *starImage =
-      [UIImage imageNamed:@"TabBarDemo_ic_star" inBundle:bundle compatibleWithTraitCollection:nil];
+  UIImage *infoImage = [UIImage imageNamed:@"TabBarDemo_ic_info"
+                                  inBundle:bundle
+             compatibleWithTraitCollection:nil];
+  UIImage *starImage = [UIImage imageNamed:@"TabBarDemo_ic_star"
+                                  inBundle:bundle
+             compatibleWithTraitCollection:nil];
   tabBar.items = @[
     [[UITabBarItem alloc] initWithTitle:@"Info" image:infoImage tag:0],
     [[UITabBarItem alloc] initWithTitle:@"Stars" image:starImage tag:0]

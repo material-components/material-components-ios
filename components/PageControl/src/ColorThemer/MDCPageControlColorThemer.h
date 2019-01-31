@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialThemes.h"
 #import "MaterialPageControl.h"
+#import "MaterialThemes.h"
 
 #import <Foundation/Foundation.h>
 

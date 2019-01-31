@@ -19,13 +19,12 @@
 
 @implementation MDCFeatureHighlightAccessibilityMutator
 
-
 + (void)mutate:(MDCFeatureHighlightViewController *)featureHighlightViewController {
   [MDCFeatureHighlightAccessibilityMutator mutateTitleColor:featureHighlightViewController];
   [MDCFeatureHighlightAccessibilityMutator mutateBodyColor:featureHighlightViewController];
 }
 
-+ (void)mutateTitleColor:(MDCFeatureHighlightViewController *)featureHighlightViewController{
++ (void)mutateTitleColor:(MDCFeatureHighlightViewController *)featureHighlightViewController {
   MDFTextAccessibilityOptions options = MDFTextAccessibilityOptionsPreferLighter;
   if ([MDFTextAccessibility isLargeForContrastRatios:featureHighlightViewController.titleFont]) {
     options |= MDFTextAccessibilityOptionsLargeFont;
@@ -44,10 +43,9 @@
   }
 
   // Make title alpha the maximum it can be.
-  CGFloat titleAlpha =
-      [MDFTextAccessibility minAlphaOfTextColor:titleColor
-                              onBackgroundColor:backgroundColor
-                                        options:options];
+  CGFloat titleAlpha = [MDFTextAccessibility minAlphaOfTextColor:titleColor
+                                               onBackgroundColor:backgroundColor
+                                                         options:options];
   titleAlpha = MAX([MDCTypography titleFontOpacity], titleAlpha);
   featureHighlightViewController.titleColor = [titleColor colorWithAlphaComponent:titleAlpha];
 }
@@ -83,4 +81,3 @@
 }
 
 @end
-

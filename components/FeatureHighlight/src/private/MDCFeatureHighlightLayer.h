@@ -22,8 +22,7 @@
 
 - (void)setFillColor:(CGColorRef)fillColor animated:(BOOL)animated;
 
-- (void)animateRadiusOverKeyframes:(NSArray *)radii
-                          keyTimes:(NSArray *)keyTimes;
+- (void)animateRadiusOverKeyframes:(NSArray *)radii keyTimes:(NSArray *)keyTimes;
 
 - (void)animateFillColorOverKeyframes:(NSArray *)colors keyTimes:(NSArray *)keyTimes;
 

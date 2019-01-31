@@ -138,8 +138,8 @@
   // Standardized: (7.80, -20.29), (10.10, 15.85)
   CGRect alignedScale1Rect = CGRectMake(7, -21, 11, 17);
   CGRect alignedScale2Rect = CGRectMake((CGFloat)7.5, (CGFloat)-20.5, (CGFloat)10.5, (CGFloat)16.5);
-  CGRect alignedScale3Rect = CGRectMake((CGFloat)(23.0 / 3.0), (CGFloat)(-61.0 / 3.0),
-                                        (CGFloat)(31.0 / 3.0), 16);
+  CGRect alignedScale3Rect =
+      CGRectMake((CGFloat)(23.0 / 3.0), (CGFloat)(-61.0 / 3.0), (CGFloat)(31.0 / 3.0), 16);
 
   // Then
   CGRect outputScale1Rect = MDCRectAlignToScale(misalignedRect, 1);
@@ -197,8 +197,8 @@
   CGRect rectangle = CGRectMake((CGFloat)1.1, (CGFloat)2.2, (CGFloat)3.3, (CGFloat)4.4);
 
   // Then
-  XCTAssertTrue(CGRectEqualToRect(MDCRectAlignToScale(rectangle, 0),
-                                  MDCRectAlignToScale(rectangle, 1)));
+  XCTAssertTrue(
+      CGRectEqualToRect(MDCRectAlignToScale(rectangle, 0), MDCRectAlignToScale(rectangle, 1)));
 }
 
 #pragma mark - MDCPoint
@@ -211,12 +211,12 @@
   CGPoint alignedScale3Point = CGPointMake((CGFloat)(2.0 / 3.0), (CGFloat)(-4.0 / 3.0));
 
   // Then
-  XCTAssertTrue(CGPointEqualToPoint(alignedScale1Point,
-                                    MDCPointRoundWithScale(misalignedPoint, 1)));
-  XCTAssertTrue(CGPointEqualToPoint(alignedScale2Point,
-                                    MDCPointRoundWithScale(misalignedPoint, 2)));
-  XCTAssertTrue(CGPointEqualToPoint(alignedScale3Point,
-                                    MDCPointRoundWithScale(misalignedPoint, 3)));
+  XCTAssertTrue(
+      CGPointEqualToPoint(alignedScale1Point, MDCPointRoundWithScale(misalignedPoint, 1)));
+  XCTAssertTrue(
+      CGPointEqualToPoint(alignedScale2Point, MDCPointRoundWithScale(misalignedPoint, 2)));
+  XCTAssertTrue(
+      CGPointEqualToPoint(alignedScale3Point, MDCPointRoundWithScale(misalignedPoint, 3)));
 }
 
 - (void)testMDCPointRoundScaleZeroScale {
@@ -276,18 +276,15 @@
 
 - (void)testMDCRoundCenterWithBoundsAndScaleZero {
   // Then
-  XCTAssertTrue(CGPointEqualToPoint(CGPointZero,
-                                    MDCRoundCenterWithBoundsAndScale(CGPointMake(-5, 10),
-                                                                     CGRectMake(0, 0, 20, 20),
-                                                                     0)));
+  XCTAssertTrue(CGPointEqualToPoint(
+      CGPointZero,
+      MDCRoundCenterWithBoundsAndScale(CGPointMake(-5, 10), CGRectMake(0, 0, 20, 20), 0)));
 }
 
 - (void)testMDCRoundCenterWithBoundsAndScaleNullBounds {
   // Then
-  XCTAssertTrue(CGPointEqualToPoint(CGPointZero,
-                                    MDCRoundCenterWithBoundsAndScale(CGPointMake(1, 2),
-                                                                     CGRectNull,
-                                                                     1)));
+  XCTAssertTrue(CGPointEqualToPoint(
+      CGPointZero, MDCRoundCenterWithBoundsAndScale(CGPointMake(1, 2), CGRectNull, 1)));
 }
 
 @end

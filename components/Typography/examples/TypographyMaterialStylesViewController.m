@@ -31,66 +31,50 @@
   self.tableView.estimatedRowHeight = 50.0;
 
   _strings = @[
-               @"Material Design Components",
-               @"A quick brown fox jumped over the lazy dog.",
-               @"ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-               @"abcdefghijklmnopqrstuvwxyz",
-               @"1234567890",
-               @"!@#$%^&*()-=_+[]\\;',./<>?:\""
-               ];
+    @"Material Design Components", @"A quick brown fox jumped over the lazy dog.",
+    @"ABCDEFGHIJKLMNOPQRSTUVWXYZ", @"abcdefghijklmnopqrstuvwxyz", @"1234567890",
+    @"!@#$%^&*()-=_+[]\\;',./<>?:\""
+  ];
 
   _styleNames = @[
-                  // Common UI fonts.
-                  @"Headline Font",
-                  @"Headline Font (Dynamic Type-enabled)",
-                  @"Title Font",
-                  @"Title Font (Dynamic Type-enabled)",
-                  @"Subhead Font",
-                  @"Subhead Font (Dynamic Type-enabled)",
-                  @"Body 2 Font",
-                  @"Body 2 Font (Dynamic Type-enabled)",
-                  @"Body 1 Font",
-                  @"Body 1 Font (Dynamic Type-enabled)",
-                  @"Caption Font",
-                  @"Caption Font (Dynamic Type-enabled)",
-                  @"Button Font",
-                  @"Button Font (Dynamic Type-enabled)",
+    // Common UI fonts.
+    @"Headline Font", @"Headline Font (Dynamic Type-enabled)", @"Title Font",
+    @"Title Font (Dynamic Type-enabled)", @"Subhead Font", @"Subhead Font (Dynamic Type-enabled)",
+    @"Body 2 Font", @"Body 2 Font (Dynamic Type-enabled)", @"Body 1 Font",
+    @"Body 1 Font (Dynamic Type-enabled)", @"Caption Font", @"Caption Font (Dynamic Type-enabled)",
+    @"Button Font", @"Button Font (Dynamic Type-enabled)",
 
-                  // Display fonts (extra large fonts)
-                  @"Display 1 Font",
-                  @"Display 1 Font (Dynamic Type-enabled)",
-                  @"Display 2 Font",
-                  @"Display 2 Font (Dynamic Type-enabled)",
-                  @"Display 3 Font",
-                  @"Display 3 Font (Dynamic Type-enabled)",
-                  @"Display 4 Font",
-                  @"Display 4 Font (Dynamic Type-enabled)"
-                  ];
+    // Display fonts (extra large fonts)
+    @"Display 1 Font", @"Display 1 Font (Dynamic Type-enabled)", @"Display 2 Font",
+    @"Display 2 Font (Dynamic Type-enabled)", @"Display 3 Font",
+    @"Display 3 Font (Dynamic Type-enabled)", @"Display 4 Font",
+    @"Display 4 Font (Dynamic Type-enabled)"
+  ];
 
   _styleFonts = @[
-                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleHeadline],
-                  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleHeadline],
-                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleTitle],
-                  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleTitle],
-                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleSubheadline],
-                  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleSubheadline],
-                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody2],
-                  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody2],
-                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody1],
-                  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1],
-                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleCaption],
-                  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleCaption],
-                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleButton],
-                  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleButton],
-                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleDisplay1],
-                  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleDisplay1],
-                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleDisplay2],
-                  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleDisplay2],
-                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleDisplay3],
-                  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleDisplay3],
-                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleDisplay4],
-                  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleDisplay4]
-                  ];
+    [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleHeadline],
+    [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleHeadline],
+    [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleTitle],
+    [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleTitle],
+    [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleSubheadline],
+    [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleSubheadline],
+    [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody2],
+    [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody2],
+    [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody1],
+    [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1],
+    [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleCaption],
+    [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleCaption],
+    [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleButton],
+    [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleButton],
+    [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleDisplay1],
+    [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleDisplay1],
+    [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleDisplay2],
+    [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleDisplay2],
+    [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleDisplay3],
+    [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleDisplay3],
+    [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleDisplay4],
+    [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleDisplay4]
+  ];
 
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(contentSizeCategoryDidChange:)
@@ -120,7 +104,7 @@
   NSLog(@"UIFontWeightBlack %f", UIFontWeightBlack);
 
   UIFont *defaultFont = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
-  NSLog (@"Font Family : %@", defaultFont.familyName);
+  NSLog(@"Font Family : %@", defaultFont.familyName);
 }
 
 - (void)contentSizeCategoryDidChange:(NSNotification *)notification {
@@ -129,29 +113,29 @@
 
   // Update font array to reflect new size category
   _styleFonts = @[
-                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleHeadline],
-                  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleHeadline],
-                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleTitle],
-                  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleTitle],
-                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleSubheadline],
-                  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleSubheadline],
-                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody2],
-                  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody2],
-                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody1],
-                  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1],
-                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleCaption],
-                  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleCaption],
-                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleButton],
-                  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleButton],
-                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleDisplay1],
-                  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleDisplay1],
-                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleDisplay2],
-                  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleDisplay2],
-                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleDisplay3],
-                  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleDisplay3],
-                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleDisplay4],
-                  [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleDisplay4]
-                  ];
+    [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleHeadline],
+    [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleHeadline],
+    [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleTitle],
+    [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleTitle],
+    [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleSubheadline],
+    [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleSubheadline],
+    [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody2],
+    [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody2],
+    [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody1],
+    [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1],
+    [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleCaption],
+    [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleCaption],
+    [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleButton],
+    [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleButton],
+    [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleDisplay1],
+    [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleDisplay1],
+    [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleDisplay2],
+    [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleDisplay2],
+    [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleDisplay3],
+    [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleDisplay3],
+    [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleDisplay4],
+    [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleDisplay4]
+  ];
 
   [self.tableView reloadData];
 }
@@ -194,9 +178,9 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Typography and Fonts", @"Material Font Styles" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Typography and Fonts", @"Material Font Styles" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

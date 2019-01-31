@@ -21,7 +21,7 @@
 
 /**
  Used to apply a font scheme to theme to MDCSnackbarMessageView.
- 
+
  @warning This class will soon be deprecated. Please consider using MDCSnackbarTypographyThemer
  instead.
  */

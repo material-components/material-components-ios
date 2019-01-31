@@ -14,9 +14,9 @@
 
 #import <XCTest/XCTest.h>
 
+#import "MaterialTextFields+FontThemer.h"
 #import "MaterialTextFields.h"
 #import "MaterialThemes.h"
-#import "MaterialTextFields+FontThemer.h"
 
 @interface TextFieldsFontThemerTests : XCTestCase
 
@@ -77,7 +77,7 @@
   XCTAssertEqualObjects([MDCTextInputControllerBase inlinePlaceholderFontDefault],
                         fontScheme.body1);
   XCTAssertEqual([MDCTextInputControllerBase floatingPlaceholderScaleDefault],
-                 fontScheme.caption.pointSize/fontScheme.body1.pointSize);
+                 fontScheme.caption.pointSize / fontScheme.body1.pointSize);
 }
 
 - (void)testFontThemerSetsTheFontsForTextInputControllerInstance {
@@ -105,7 +105,7 @@
   XCTAssertEqualObjects(floatingInputController.leadingUnderlineLabelFont, fontScheme.caption);
   XCTAssertEqualObjects(floatingInputController.inlinePlaceholderFont, fontScheme.body1);
   XCTAssertEqual([floatingInputController.floatingPlaceholderScale doubleValue],
-                 fontScheme.caption.pointSize/fontScheme.body1.pointSize);
+                 fontScheme.caption.pointSize / fontScheme.body1.pointSize);
 }
 
 @end

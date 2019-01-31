@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponents"
-  mdc.version      = "73.0.0"
+  mdc.version      = "75.0.1"
   mdc.authors      = "The Material Components authors."
   mdc.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   mdc.homepage     = "https://github.com/material-components/material-components-ios"
@@ -56,11 +56,10 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/private/Application"
     component.dependency "MotionAnimator", "~> 2.0"
 
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'unit' do |unit_tests|
-        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-      end
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+      unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      unit_tests.dependency "MaterialComponents/ActivityIndicator+ColorThemer"
     end
   end
 
@@ -80,11 +79,9 @@ Pod::Spec.new do |mdc|
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
 
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'unit' do |unit_tests|
-        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-      end
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+      unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
     end
   end
 
@@ -110,11 +107,11 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/private/Icons/ic_arrow_back"
     component.dependency "MaterialComponents/private/UIMetrics"
 
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'unit' do |unit_tests|
-        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-      end
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+      unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      unit_tests.dependency "MaterialComponents/AppBar+ColorThemer"
+      unit_tests.dependency "MaterialComponents/AppBar+TypographyThemer"
     end
   end
 
@@ -148,11 +145,10 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/NavigationBar"
     component.dependency "MaterialComponents/private/Math"
 
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'unit' do |unit_tests|
-        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-      end
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+      unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      unit_tests.dependency "MaterialComponents/BottomAppBar+ColorThemer"
     end
   end
 
@@ -170,6 +166,7 @@ Pod::Spec.new do |mdc|
     component.ios.deployment_target = '8.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+    component.exclude_files = "components/#{component.base_name}/src/MDCBottomNavigationBarController.*", "components/#{component.base_name}/src/MaterialBottomNavigationBeta.h"
     component.resources = ["components/#{component.base_name}/src/Material#{component.base_name}.bundle"]
 
     component.dependency "MDFInternationalization"
@@ -179,11 +176,12 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/Typography"
     component.dependency "MaterialComponents/private/Math"
 
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'unit' do |unit_tests|
-        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-      end
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+      unit_tests.exclude_files = "components/#{component.base_name}/tests/unit/MDCBottomNavigationBarControllerTests.m"
+      unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      unit_tests.dependency "MaterialComponents/BottomNavigation+ColorThemer"
+      unit_tests.dependency "MaterialComponents/BottomNavigation+TypographyThemer"
     end
   end
 
@@ -210,16 +208,15 @@ Pod::Spec.new do |mdc|
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
 
+    component.dependency "MaterialComponents/ShapeLibrary"
+    component.dependency "MaterialComponents/Shapes"
     component.dependency "MaterialComponents/private/KeyboardWatcher"
     component.dependency "MaterialComponents/private/Math"
-    component.dependency "MaterialComponents/private/ShapeLibrary"
-    component.dependency "MaterialComponents/private/Shapes"
 
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'unit' do |unit_tests|
-        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-      end
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+      unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      unit_tests.dependency "MaterialComponents/BottomSheet+ShapeThemer"
     end
   end
 
@@ -243,17 +240,18 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/Ink"
     component.dependency "MaterialComponents/ShadowElevations"
     component.dependency "MaterialComponents/ShadowLayer"
+    component.dependency "MaterialComponents/Shapes"
     component.dependency "MaterialComponents/Typography"
     component.dependency "MaterialComponents/private/Math"
-    component.dependency "MaterialComponents/private/Shapes"
 
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'unit' do |unit_tests|
-        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-
-        unit_tests.dependency "MaterialComponentsBeta/#{component.base_name}+Theming"
-      end
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+      unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      unit_tests.dependency "MaterialComponents/Buttons+ShapeThemer"
+      unit_tests.dependency "MaterialComponents/Buttons+ColorThemer"
+      unit_tests.dependency "MaterialComponents/Buttons+TypographyThemer"
+      unit_tests.dependency "MaterialComponents/Buttons+TitleColorAccessibilityMutator"
+      unit_tests.dependency "MaterialComponents/Buttons+ButtonThemer"
     end
   end
 
@@ -300,6 +298,7 @@ Pod::Spec.new do |mdc|
     extension.dependency "MaterialComponents/Buttons+ColorThemer"
     extension.dependency "MaterialComponents/Buttons+ShapeThemer"
     extension.dependency "MaterialComponents/Buttons+TypographyThemer"
+    extension.dependency "MaterialComponents/Palettes"
   end
 
   # ButtonBar
@@ -313,13 +312,10 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/Buttons"
     component.dependency "MaterialComponents/private/Application"
 
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'unit' do |unit_tests|
-        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-
-        unit_tests.dependency "MaterialComponentsBeta/#{component.base_name}+Theming"
-      end
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+      unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      unit_tests.dependency "MaterialComponents/ButtonBar+TypographyThemer"
     end
   end
 
@@ -349,16 +345,15 @@ Pod::Spec.new do |mdc|
     component.source_files = "components/#{component.base_name}/src/*.{h,m}"
     component.dependency "MaterialComponents/Ink"
     component.dependency "MaterialComponents/ShadowLayer"
+    component.dependency "MaterialComponents/Shapes"
     component.dependency "MaterialComponents/private/Icons/ic_check_circle"
     component.dependency "MaterialComponents/private/Math"
-    component.dependency "MaterialComponents/private/Shapes"
 
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'unit' do |unit_tests|
-        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-        unit_tests.dependency "MaterialComponentsBeta/#{component.base_name}+Theming"
-      end
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+      unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      unit_tests.dependency "MaterialComponents/#{component.base_name}+ColorThemer"
+      unit_tests.dependency "MaterialComponents/#{component.base_name}+ShapeThemer"
     end
   end
 
@@ -399,18 +394,18 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/Ink"
     component.dependency "MaterialComponents/ShadowLayer"
     component.dependency "MaterialComponents/ShadowElevations"
+    component.dependency "MaterialComponents/ShapeLibrary"
+    component.dependency "MaterialComponents/Shapes"
     component.dependency "MaterialComponents/TextFields"
     component.dependency "MaterialComponents/Typography"
     component.dependency "MaterialComponents/private/Math"
-    component.dependency "MaterialComponents/private/ShapeLibrary"
-    component.dependency "MaterialComponents/private/Shapes"
 
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'unit' do |unit_tests|
-        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-        unit_tests.dependency "MaterialComponentsBeta/#{component.base_name}+Theming"
-      end
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+      unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      unit_tests.dependency "MaterialComponents/Chips+ChipThemer"
+      unit_tests.dependency "MaterialComponents/Chips+FontThemer"
+      unit_tests.dependency "MaterialComponents/Themes"
     end
   end
 
@@ -483,11 +478,9 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/private/Icons/ic_reorder"
     component.dependency "MaterialComponents/private/Math"
 
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'unit' do |unit_tests|
-        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-      end
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+      unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
     end
   end
 
@@ -498,11 +491,9 @@ Pod::Spec.new do |mdc|
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = "components/#{component.base_name}/src/*.{h,m}"
 
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'unit' do |unit_tests|
-        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-      end
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+      unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
     end
   end
 
@@ -523,11 +514,9 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/ShadowLayer"
     component.dependency "MaterialComponents/Typography"
 
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'unit' do |unit_tests|
-        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-      end
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+      unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
     end
   end
 
@@ -546,12 +535,10 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/private/KeyboardWatcher"
     component.dependency "MDFInternationalization"
 
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'unit' do |unit_tests|
-        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-        unit_tests.dependency "MaterialComponentsBeta/#{component.base_name}+Theming"
-      end
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+      unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      unit_tests.dependency "MaterialComponents/Dialogs+DialogThemer"
     end
   end
 
@@ -598,11 +585,12 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/Typography"
     component.dependency "MDFTextAccessibility"
 
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'unit' do |unit_tests|
-        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-      end
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+      unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      unit_tests.dependency "MaterialComponents/FeatureHighlight+ColorThemer"
+      unit_tests.dependency "MaterialComponents/FeatureHighlight+TypographyThemer"
+      unit_tests.dependency "MaterialComponents/FeatureHighlight+FeatureHighlightAccessibilityMutator"
     end
   end
 
@@ -653,11 +641,10 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/private/Application"
     component.dependency "MaterialComponents/private/UIMetrics"
 
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'unit' do |unit_tests|
-        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-      end
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+      unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      unit_tests.dependency "MaterialComponents/FlexibleHeader+ColorThemer"
     end
   end
 
@@ -685,11 +672,9 @@ Pod::Spec.new do |mdc|
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = "components/#{component.base_name}/src/*.{h,m}"
 
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'unit' do |unit_tests|
-        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-      end
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+      unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
     end
   end
 
@@ -711,11 +696,9 @@ Pod::Spec.new do |mdc|
 
     component.dependency "MaterialComponents/private/Math"
 
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'unit' do |unit_tests|
-        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-      end
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+      unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
     end
   end
 
@@ -735,11 +718,9 @@ Pod::Spec.new do |mdc|
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
 
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'unit' do |unit_tests|
-        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-      end
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+      unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
     end
   end
 
@@ -757,11 +738,12 @@ Pod::Spec.new do |mdc|
     component.dependency "MDFInternationalization"
     component.dependency "MaterialComponents/private/Math"
 
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'unit' do |unit_tests|
-        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-      end
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+      unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      unit_tests.dependency "MaterialComponents/List+ColorThemer"
+      unit_tests.dependency "MaterialComponents/List+TypographyThemer"
+      unit_tests.dependency "MaterialComponents/List+ListThemer"
     end
   end
 
@@ -802,11 +784,9 @@ Pod::Spec.new do |mdc|
     component.dependency "MotionAnimator", "~> 2.0"
     component.dependency "MotionInterchange", "~> 1.0"
 
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'unit' do |unit_tests|
-        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-      end
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+      unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
     end
   end
 
@@ -825,11 +805,11 @@ Pod::Spec.new do |mdc|
     component.dependency "MDFInternationalization"
     component.dependency "MaterialComponents/private/Math"
 
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'unit' do |unit_tests|
-        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-      end
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+      unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      unit_tests.dependency "MaterialComponents/NavigationBar+ColorThemer"
+      unit_tests.dependency "MaterialComponents/NavigationBar+TypographyThemer"
     end
   end
 
@@ -863,10 +843,9 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/private/Math"
     component.dependency "MaterialComponents/private/UIMetrics"
 
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'unit' do |unit_tests|
-        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-      end
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+      unit_tests.dependency "MaterialComponents/NavigationDrawer+ColorThemer"
     end
   end
 
@@ -887,11 +866,9 @@ Pod::Spec.new do |mdc|
 
     component.dependency "MaterialComponents/private/Application"
 
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'unit' do |unit_tests|
-        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-      end
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+      unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
     end
   end
 
@@ -904,11 +881,9 @@ Pod::Spec.new do |mdc|
     component.resources = ["components/#{component.base_name}/src/Material#{component.base_name}.bundle"]
     component.dependency "MDFInternationalization"
 
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'unit' do |unit_tests|
-        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-      end
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+      unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
     end
   end
 
@@ -928,11 +903,9 @@ Pod::Spec.new do |mdc|
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
 
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'unit' do |unit_tests|
-        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-      end
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+      unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
     end
   end
 
@@ -948,11 +921,9 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/private/Math"
     component.dependency "MotionAnimator", "~> 2.1"
 
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'unit' do |unit_tests|
-        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-      end
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+      unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
     end
   end
 
@@ -972,11 +943,9 @@ Pod::Spec.new do |mdc|
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = "components/#{component.base_name}/src/*.{h,m}"
 
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'unit' do |unit_tests|
-        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-      end
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+      unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
     end
   end
 
@@ -989,11 +958,41 @@ Pod::Spec.new do |mdc|
 
     component.dependency "MaterialComponents/ShadowElevations"
 
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'unit' do |unit_tests|
-        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-      end
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+      unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+    end
+  end
+
+  # ShapeLibrary
+
+  mdc.subspec "ShapeLibrary" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+
+    component.dependency "MaterialComponents/Shapes"
+    component.dependency "MaterialComponents/private/Math"
+
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+      unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+    end
+  end
+
+  # Shapes
+
+  mdc.subspec "Shapes" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+
+    component.dependency "MaterialComponents/ShadowLayer"
+    component.dependency "MaterialComponents/private/Math"
+
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+      unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
     end
   end
 
@@ -1008,11 +1007,9 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/ShadowElevations"
     component.dependency "MaterialComponents/private/ThumbTrack"
 
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'unit' do |unit_tests|
-        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-      end
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+      unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
     end
   end
 
@@ -1042,11 +1039,13 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/private/KeyboardWatcher"
     component.dependency "MaterialComponents/private/Overlay"
 
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'unit' do |unit_tests|
-        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-      end
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+      unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      unit_tests.dependency "MaterialComponents/Snackbar+ColorThemer"
+      unit_tests.dependency "MaterialComponents/Snackbar+FontThemer"
+      unit_tests.dependency "MaterialComponents/Snackbar+TypographyThemer"
+      unit_tests.dependency "MaterialComponents/Themes"
     end
   end
 
@@ -1093,11 +1092,13 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/Typography"
     component.dependency "MaterialComponents/private/Math"
 
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'unit' do |unit_tests|
-        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-      end
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+      unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      unit_tests.dependency "MaterialComponents/Tabs+ColorThemer"
+      unit_tests.dependency "MaterialComponents/Tabs+FontThemer"
+      unit_tests.dependency "MaterialComponents/Tabs+TypographyThemer"
+      unit_tests.dependency "MaterialComponents/Themes"
     end
   end
 
@@ -1142,11 +1143,13 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/private/Math"
     component.dependency "MDFInternationalization"
 
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'unit' do |unit_tests|
-        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-      end
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+      unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      unit_tests.dependency "MaterialComponents/TextFields+ColorThemer"
+      unit_tests.dependency "MaterialComponents/TextFields+FontThemer"
+      unit_tests.dependency "MaterialComponents/TextFields+TypographyThemer"
+      unit_tests.dependency "MaterialComponents/Themes"
     end
   end
 
@@ -1187,11 +1190,9 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/schemes/Color"
     component.dependency "MaterialComponents/schemes/Typography"
 
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'unit' do |unit_tests|
-        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-      end
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+      unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
     end
   end
 
@@ -1205,11 +1206,9 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/private/Application"
     component.dependency "MaterialComponents/private/Math"
 
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'unit' do |unit_tests|
-        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-      end
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+      unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
     end
   end
 
@@ -1219,25 +1218,22 @@ Pod::Spec.new do |mdc|
       scheme.public_header_files = "components/schemes/#{scheme.base_name}/src/*.h"
       scheme.source_files = "components/schemes/#{scheme.base_name}/src/*.{h,m}"
 
-      scheme.test_spec 'tests' do |tests|
-        tests.test_spec 'unit' do |unit_tests|
-          unit_tests.source_files = "components/schemes/#{scheme.base_name}/tests/unit/*.{h,m,swift}", "components/schemes/#{scheme.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-          unit_tests.resources = "components/schemes/#{scheme.base_name}/tests/unit/resources/*"
-        end
+      scheme.test_spec 'UnitTests' do |unit_tests|
+        unit_tests.source_files = "components/schemes/#{scheme.base_name}/tests/unit/*.{h,m,swift}", "components/schemes/#{scheme.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.resources = "components/schemes/#{scheme.base_name}/tests/unit/resources/*"
+        unit_tests.dependency "MaterialComponents/private/Math"
       end
     end
     scheme_spec.subspec "Shape" do |scheme|
       scheme.ios.deployment_target = '8.0'
       scheme.public_header_files = "components/schemes/#{scheme.base_name}/src/*.h"
       scheme.source_files = "components/schemes/#{scheme.base_name}/src/*.{h,m}"
-      scheme.dependency "MaterialComponents/private/ShapeLibrary"
-      scheme.dependency "MaterialComponents/private/Shapes"
+      scheme.dependency "MaterialComponents/ShapeLibrary"
+      scheme.dependency "MaterialComponents/Shapes"
 
-      scheme.test_spec 'tests' do |tests|
-        tests.test_spec 'unit' do |unit_tests|
-          unit_tests.source_files = "components/schemes/#{scheme.base_name}/tests/unit/*.{h,m,swift}", "components/schemes/#{scheme.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-          unit_tests.resources = "components/schemes/#{scheme.base_name}/tests/unit/resources/*"
-        end
+      scheme.test_spec 'UnitTests' do |unit_tests|
+        unit_tests.source_files = "components/schemes/#{scheme.base_name}/tests/unit/*.{h,m,swift}", "components/schemes/#{scheme.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.resources = "components/schemes/#{scheme.base_name}/tests/unit/resources/*"
       end
     end
     scheme_spec.subspec "Typography" do |scheme|
@@ -1245,11 +1241,9 @@ Pod::Spec.new do |mdc|
       scheme.public_header_files = "components/schemes/#{scheme.base_name}/src/*.h"
       scheme.source_files = "components/schemes/#{scheme.base_name}/src/*.{h,m}"
 
-      scheme.test_spec 'tests' do |tests|
-        tests.test_spec 'unit' do |unit_tests|
-          unit_tests.source_files = "components/schemes/#{scheme.base_name}/tests/unit/*.{h,m,swift}", "components/schemes/#{scheme.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-          unit_tests.resources = "components/schemes/#{scheme.base_name}/tests/unit/resources/*"
-        end
+      scheme.test_spec 'UnitTests' do |unit_tests|
+        unit_tests.source_files = "components/schemes/#{scheme.base_name}/tests/unit/*.{h,m,swift}", "components/schemes/#{scheme.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.resources = "components/schemes/#{scheme.base_name}/tests/unit/resources/*"
       end
     end
   end
@@ -1265,11 +1259,9 @@ Pod::Spec.new do |mdc|
       component.public_header_files = "components/private/#{component.base_name}/src/*.h"
       component.source_files = "components/private/#{component.base_name}/src/*.{h,m}"
 
-      component.test_spec 'tests' do |tests|
-        tests.test_spec 'unit' do |unit_tests|
-          unit_tests.source_files = "components/private/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/private/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-          unit_tests.resources = "components/private/#{component.base_name}/tests/unit/resources/*"
-        end
+      component.test_spec 'UnitTests' do |unit_tests|
+        unit_tests.source_files = "components/private/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/private/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.resources = "components/private/#{component.base_name}/tests/unit/resources/*"
       end
     end
 
@@ -1280,11 +1272,9 @@ Pod::Spec.new do |mdc|
 
       component.dependency "MaterialComponents/private/Application"
 
-      component.test_spec 'tests' do |tests|
-        tests.test_spec 'unit' do |unit_tests|
-          unit_tests.source_files = "components/private/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/private/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-          unit_tests.resources = "components/private/#{component.base_name}/tests/unit/resources/*"
-        end
+      component.test_spec 'UnitTests' do |unit_tests|
+        unit_tests.source_files = "components/private/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/private/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.resources = "components/private/#{component.base_name}/tests/unit/resources/*"
       end
     end
 
@@ -1293,11 +1283,9 @@ Pod::Spec.new do |mdc|
       component.public_header_files = "components/private/#{component.base_name}/src/*.h"
       component.source_files = "components/private/#{component.base_name}/src/*.{h,m}"
 
-      component.test_spec 'tests' do |tests|
-        tests.test_spec 'unit' do |unit_tests|
-          unit_tests.source_files = "components/private/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/private/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-          unit_tests.resources = "components/private/#{component.base_name}/tests/unit/resources/*"
-        end
+      component.test_spec 'UnitTests' do |unit_tests|
+        unit_tests.source_files = "components/private/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/private/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.resources = "components/private/#{component.base_name}/tests/unit/resources/*"
       end
     end
 
@@ -1306,44 +1294,26 @@ Pod::Spec.new do |mdc|
       component.public_header_files = "components/private/#{component.base_name}/src/*.h"
       component.source_files = "components/private/#{component.base_name}/src/*.{h,m}", "components/private/#{component.base_name}/src/private/*.{h,m}"
 
-      component.test_spec 'tests' do |tests|
-        tests.test_spec 'unit' do |unit_tests|
-          unit_tests.source_files = "components/private/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/private/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-          unit_tests.resources = "components/private/#{component.base_name}/tests/unit/resources/*"
-        end
+      component.test_spec 'UnitTests' do |unit_tests|
+        unit_tests.source_files = "components/private/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/private/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.resources = "components/private/#{component.base_name}/tests/unit/resources/*"
       end
     end
 
     private_spec.subspec "ShapeLibrary" do |component|
       component.ios.deployment_target = '8.0'
       component.public_header_files = "components/private/#{component.base_name}/src/*.h"
-      component.source_files = "components/private/#{component.base_name}/src/*.{h,m}", "components/private/#{component.base_name}/src/private/*.{h,m}"
+      component.source_files = "components/private/#{component.base_name}/src/*.h"
 
-      component.dependency "MaterialComponents/private/Shapes"
-      component.dependency "MaterialComponents/private/Math"
-
-      component.test_spec 'tests' do |tests|
-        tests.test_spec 'unit' do |unit_tests|
-          unit_tests.source_files = "components/private/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/private/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-          unit_tests.resources = "components/private/#{component.base_name}/tests/unit/resources/*"
-        end
-      end
+      component.dependency "MaterialComponents/ShapeLibrary"
     end
 
     private_spec.subspec "Shapes" do |component|
       component.ios.deployment_target = '8.0'
       component.public_header_files = "components/private/#{component.base_name}/src/*.h"
-      component.source_files = "components/private/#{component.base_name}/src/*.{h,m}", "components/private/#{component.base_name}/src/private/*.{h,m}"
+      component.source_files = "components/private/#{component.base_name}/src/*.h"
 
-      component.dependency "MaterialComponents/ShadowLayer"
-      component.dependency "MaterialComponents/private/Math"
-
-      component.test_spec 'tests' do |tests|
-        tests.test_spec 'unit' do |unit_tests|
-          unit_tests.source_files = "components/private/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/private/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-          unit_tests.resources = "components/private/#{component.base_name}/tests/unit/resources/*"
-        end
-      end
+      component.dependency "MaterialComponents/Shapes"
     end
 
     private_spec.subspec "ThumbTrack" do |component|
@@ -1358,11 +1328,9 @@ Pod::Spec.new do |mdc|
       component.dependency "MDFInternationalization"
       component.dependency "MaterialComponents/private/Math"
 
-      component.test_spec 'tests' do |tests|
-        tests.test_spec 'unit' do |unit_tests|
-          unit_tests.source_files = "components/private/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/private/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-          unit_tests.resources = "components/private/#{component.base_name}/tests/unit/resources/*"
-        end
+      component.test_spec 'UnitTests' do |unit_tests|
+        unit_tests.source_files = "components/private/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/private/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.resources = "components/private/#{component.base_name}/tests/unit/resources/*"
       end
     end
 
@@ -1373,11 +1341,9 @@ Pod::Spec.new do |mdc|
 
       component.dependency "MaterialComponents/private/Application"
 
-      component.test_spec 'tests' do |tests|
-        tests.test_spec 'unit' do |unit_tests|
-          unit_tests.source_files = "components/private/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/private/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-          unit_tests.resources = "components/private/#{component.base_name}/tests/unit/resources/*"
-        end
+      component.test_spec 'UnitTests' do |unit_tests|
+        unit_tests.source_files = "components/private/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/private/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.resources = "components/private/#{component.base_name}/tests/unit/resources/*"
       end
     end
   end

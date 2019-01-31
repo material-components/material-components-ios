@@ -15,8 +15,12 @@
 
 load(
     "//:material_components_ios.bzl",
+    "mdc_examples_objc_library",
+    "mdc_examples_swift_library",
     "mdc_extension_objc_library",
     "mdc_objc_library",
+    "mdc_snapshot_objc_library",
+    "mdc_snapshot_test",
     "mdc_public_objc_library",
     "mdc_unit_test_suite",
 )
@@ -34,11 +38,11 @@ mdc_public_objc_library(
         "//components/Ink",
         "//components/ShadowElevations",
         "//components/ShadowLayer",
+        "//components/ShapeLibrary",
+        "//components/Shapes",
         "//components/TextFields",
         "//components/Typography",
         "//components/private/Math",
-        "//components/private/ShapeLibrary",
-        "//components/private/Shapes",
         "@material_internationalization_ios//:MDFInternationalization",
     ],
 )
@@ -111,9 +115,41 @@ mdc_objc_library(
     visibility = ["//visibility:private"],
 )
 
+mdc_examples_objc_library(
+    name = "ObjcExamples",
+    deps = [
+        ":Chips",
+        ":ShapeThemer",
+        ":Theming",
+        ":TypographyThemer",
+        "//components/ShapeLibrary",
+        "//components/Shapes",
+        "//components/Slider",
+        "//components/Slider:ColorThemer",
+        "//components/TextFields",
+        "//components/schemes/Color",
+        "//components/schemes/Container",
+        "//components/schemes/Shape",
+        "//components/schemes/Typography",
+    ],
+)
+
+mdc_examples_swift_library(
+    name = "SwiftExamples",
+    deps = [
+        ":Chips",
+        ":Theming",
+        "//components/TextFields",
+        "//components/schemes/Container",
+    ],
+)
+
 swift_library(
     name = "unit_test_swift_sources",
-    srcs = glob(["tests/unit/*.swift"]),
+    srcs = glob([
+        "tests/unit/*.swift",
+        "tests/unit/Theming/*.swift",
+    ]),
     copts = [
         "-swift-version",
         "3",
@@ -149,8 +185,8 @@ mdc_objc_library(
         ":TypographyThemer",
         ":private",
         ":privateHeaders",
+        "//components/ShapeLibrary",
         "//components/TextFields:private",
-        "//components/private/ShapeLibrary",
     ],
 )
 
@@ -159,4 +195,21 @@ mdc_unit_test_suite(
     deps = [
         ":unit_test_sources",
     ],
+)
+
+mdc_snapshot_objc_library(
+    name = "snapshot_test_lib",
+    asset_catalogs = [
+        "tests/snapshot/resources/ChipsSnapshotTests.xcassets/ic_cancel.imageset",
+        "tests/snapshot/resources/ChipsSnapshotTests.xcassets/ic_mask.imageset",
+    ],
+    deps = [
+        ":Chips",
+        ":Theming",
+    ],
+)
+
+mdc_snapshot_test(
+    name = "snapshot_tests",
+    deps = [":snapshot_test_lib"],
 )

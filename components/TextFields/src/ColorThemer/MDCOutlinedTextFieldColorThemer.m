@@ -38,18 +38,17 @@ static CGFloat const kOutlinedTextFieldIconAlpha = (CGFloat)0.54;
       [colorScheme.onSurfaceColor colorWithAlphaComponent:kOutlinedTextFieldDisabledAlpha];
 
   if ([textInputController isKindOfClass:[MDCTextInputControllerBase class]]) {
-    MDCTextInputControllerBase *baseController =
-        (MDCTextInputControllerBase *)textInputController;
+    MDCTextInputControllerBase *baseController = (MDCTextInputControllerBase *)textInputController;
     baseController.textInputClearButtonTintColor =
         [colorScheme.onSurfaceColor colorWithAlphaComponent:kOutlinedTextFieldIconAlpha];
   }
 
   if ([textInputController
-       conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
+          conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
     id<MDCTextInputControllerFloatingPlaceholder> textInputControllerFloatingPlaceholder =
-    (id<MDCTextInputControllerFloatingPlaceholder>)textInputController;
+        (id<MDCTextInputControllerFloatingPlaceholder>)textInputController;
     if ([textInputControllerFloatingPlaceholder
-         respondsToSelector:@selector(setFloatingPlaceholderNormalColor:)]) {
+            respondsToSelector:@selector(setFloatingPlaceholderNormalColor:)]) {
       textInputControllerFloatingPlaceholder.floatingPlaceholderNormalColor = onSurfaceOpacity;
       textInputControllerFloatingPlaceholder.floatingPlaceholderActiveColor =
           [colorScheme.primaryColor colorWithAlphaComponent:kOutlinedTextFieldActiveAlpha];

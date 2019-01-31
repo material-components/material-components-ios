@@ -93,7 +93,6 @@ typedef void (^MDCSnackbarMessageDismissHandler)(BOOL userInitiated,
                          duration:(NSTimeInterval)duration
                    timingFunction:(CAMediaTimingFunction *_Nullable)timingFunction;
 
-
 /**
  Animate the opacity of the Snackbar view.
 
@@ -104,7 +103,6 @@ typedef void (^MDCSnackbarMessageDismissHandler)(BOOL userInitiated,
 - (CABasicAnimation *_Nullable)animateSnackbarOpacityFrom:(CGFloat)fromOpacity
                                                        to:(CGFloat)toOpacity;
 
-
 /**
  Animate the scale of the Snackbar view.
 
@@ -112,7 +110,6 @@ typedef void (^MDCSnackbarMessageDismissHandler)(BOOL userInitiated,
  @param toScale scale to finish animation.
  @return the scale animation.
  */
-- (CABasicAnimation *_Nullable)animateSnackbarScaleFrom:(CGFloat)fromScale
-                                                toScale:(CGFloat)toScale;
+- (CABasicAnimation *_Nullable)animateSnackbarScaleFrom:(CGFloat)fromScale toScale:(CGFloat)toScale;
 
 @end

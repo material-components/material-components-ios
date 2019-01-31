@@ -15,6 +15,8 @@
 
 load(
     "//:material_components_ios.bzl",
+    "mdc_examples_objc_library",
+    "mdc_examples_swift_library",
     "mdc_extension_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
@@ -52,6 +54,35 @@ mdc_extension_objc_library(
         ":BottomAppBar",
         "//components/Themes",
         "//components/schemes/Color",
+    ],
+)
+
+mdc_examples_objc_library(
+    name = "ObjcExamples",
+    deps = [
+        ":BottomAppBar",
+        ":ColorThemer",
+        "//components/AppBar",
+        "//components/AppBar:ColorThemer",
+        "//components/AppBar:TypographyThemer",
+        "//components/Buttons",
+        "//components/Buttons:Theming",
+        "//components/schemes/Color",
+        "//components/schemes/Container",
+        "//components/schemes/Typography",
+    ],
+)
+
+mdc_examples_swift_library(
+    name = "SwiftExamples",
+    deps = [
+        ":BottomAppBar",
+        ":ColorThemer",
+        "//components/AppBar",
+        "//components/Buttons",
+        "//components/Buttons:ButtonThemer",
+        "//components/schemes/Color",
+        "//components/schemes/Typography",
     ],
 )
 

@@ -18,7 +18,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 @implementation CollectionsCellAccessoryExample {
   NSArray *_accessoryTypes;
-  NSMutableArray <NSArray *>*_content;
+  NSMutableArray<NSArray *> *_content;
 }
 
 - (void)viewDidLoad {
@@ -111,9 +111,9 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Collections", @"Cell Accessory Example" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Collections", @"Cell Accessory Example" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

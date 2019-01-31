@@ -93,11 +93,11 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Button Bar", @"Button Bar" ],
-    @"description": @"The Button Bar is a view that represents a list of UIBarButtonItems as "
-    @"horizontally-aligned buttons.",
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Button Bar", @"Button Bar" ],
+    @"description" : @"The Button Bar is a view that represents a list of UIBarButtonItems as "
+                     @"horizontally-aligned buttons.",
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

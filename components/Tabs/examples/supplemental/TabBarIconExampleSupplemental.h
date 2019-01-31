@@ -27,13 +27,13 @@
 
 @interface TabBarIconExample : UIViewController <MDCTabBarDelegate>
 
-@property(nonatomic, nullable) MDCTabBar * tabBar;
-@property(nonatomic, nullable) MDCButton * alignmentButton;
-@property(nonatomic, nullable) MDCAppBarViewController * appBarViewController;
+@property(nonatomic, nullable) MDCTabBar *tabBar;
+@property(nonatomic, nullable) MDCButton *alignmentButton;
+@property(nonatomic, nullable) MDCAppBarViewController *appBarViewController;
 @property(nonatomic, nullable) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, nullable) MDCTypographyScheme *typographyScheme;
-@property(nonatomic, nullable) UIScrollView * scrollView;
-@property(nonatomic, nullable) UIView * starPage;
+@property(nonatomic, nullable) UIScrollView *scrollView;
+@property(nonatomic, nullable) UIView *starPage;
 @end
 
 @interface TabBarIconExample (Supplemental)

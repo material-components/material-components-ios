@@ -22,7 +22,7 @@
 @protocol MDCCardScheming
 
 /** The color scheme to apply to cards. */
-@property(nonnull, readonly, nonatomic) id <MDCColorScheming> colorScheme;
+@property(nonnull, readonly, nonatomic) id<MDCColorScheming> colorScheme;
 
 /** The shape scheme to apply to cards. */
 @property(nonnull, readonly, nonatomic) id<MDCShapeScheming> shapeScheme;
@@ -37,4 +37,3 @@
 @property(nonnull, readwrite, nonatomic) MDCShapeScheme *shapeScheme;
 
 @end
-

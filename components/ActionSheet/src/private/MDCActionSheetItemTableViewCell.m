@@ -14,7 +14,7 @@
 
 #import "MDCActionSheetItemTableViewCell.h"
 
-#import "MaterialTypography.h"
+#import <MaterialComponents/MaterialTypography.h>
 
 static const CGFloat kLabelAlpha = (CGFloat)0.87;
 static const CGFloat kImageLeadingPadding = 16;
@@ -176,8 +176,8 @@ static const CGFloat kActionItemTitleVerticalPadding = 18;
 }
 
 - (void)updateTitleFont {
-  UIFont *titleFont = _actionFont ?:
-      [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
+  UIFont *titleFont =
+      _actionFont ?: [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
   if (self.mdc_adjustsFontForContentSizeCategory) {
     self.actionLabel.font =
         [titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline

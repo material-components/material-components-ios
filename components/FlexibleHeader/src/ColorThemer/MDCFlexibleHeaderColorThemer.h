@@ -72,6 +72,7 @@
  @param flexibleHeaderController A MDCFlexibleHeaderViewController instance to apply a color scheme.
  */
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
-    toMDCFlexibleHeaderController:(nonnull MDCFlexibleHeaderViewController *)flexibleHeaderController;
+    toMDCFlexibleHeaderController:
+        (nonnull MDCFlexibleHeaderViewController *)flexibleHeaderController;
 
 @end

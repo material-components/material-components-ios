@@ -19,6 +19,7 @@ load(
     "mdc_public_objc_library",
     "mdc_unit_test_suite",
 )
+load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
 
@@ -58,6 +59,20 @@ mdc_objc_library(
     deps = [
         ":MaskedTransition",
         ":private",
+    ],
+)
+
+swift_library(
+    name = "SwiftExamples",
+    srcs = native.glob(["examples/*.swift"]),
+    copts = [
+        "-swift-version",
+        "3",
+    ],
+    deps = [
+        ":MaskedTransition",
+        "//components/Buttons",
+        "//components/Buttons:ButtonThemer",
     ],
 )
 

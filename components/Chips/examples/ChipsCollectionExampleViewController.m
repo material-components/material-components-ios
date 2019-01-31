@@ -12,8 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "ChipsExamplesSupplemental.h"
+#import "supplemental/ChipsExamplesSupplemental.h"
 
+#import "MaterialChips+Theming.h"
 #import "MaterialChips.h"
 
 @implementation ChipsCollectionExampleViewController
@@ -26,6 +27,7 @@
   self = [super initWithCollectionViewLayout:layout];
   if (self) {
     self.editing = YES;
+    self.containerScheme = [[MDCContainerScheme alloc] init];
   }
   return self;
 }
@@ -50,44 +52,19 @@
   MDCChipCollectionViewCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
   cell.chipView.titleLabel.text = self.titles[indexPath.row];
+  [cell.chipView applyThemeWithScheme:self.containerScheme];
   return cell;
 }
 
 - (NSArray *)titles {
   if (!_titles) {
     _titles = @[
-      @"Truffaut",
-      @"Farm-to-table",
-      @"XOXO",
-      @"Chillwave",
-      @"Fanny",
-      @"Pack",
-      @"Master",
-      @"Cleanse",
-      @"Small",
-      @"Batch",
-      @"Church-key",
-      @"Biodiesel",
-      @"Subway",
-      @"Tile",
-      @"Gentrify",
-      @"Humblebrag",
-      @"Drinking",
-      @"Vinegar",
-      @"Godard",
-      @"Pug",
-      @"Marfa",
-      @"Poutine",
-      @"Jianbing",
-      @"Fashion",
-      @"Axe",
-      @"Banjo",
-      @"Vegan",
-      @"Taxidermy",
-      @"Portland",
-      @"Irony",
-      @"Gastropub",
-      @"Truffaut"
+      @"Truffaut",  @"Farm-to-table", @"XOXO",     @"Chillwave",  @"Fanny",      @"Pack",
+      @"Master",    @"Cleanse",       @"Small",    @"Batch",      @"Church-key", @"Biodiesel",
+      @"Subway",    @"Tile",          @"Gentrify", @"Humblebrag", @"Drinking",   @"Vinegar",
+      @"Godard",    @"Pug",           @"Marfa",    @"Poutine",    @"Jianbing",   @"Fashion",
+      @"Axe",       @"Banjo",         @"Vegan",    @"Taxidermy",  @"Portland",   @"Irony",
+      @"Gastropub", @"Truffaut"
     ];
   }
   return _titles;

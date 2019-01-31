@@ -21,16 +21,16 @@
 /** Header must be created with initWithFrame */
 - (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_UNAVAILABLE;
 
-@property (nonatomic, nullable, copy) NSString *title;
+@property(nonatomic, nullable, copy) NSString *title;
 
-@property (nonatomic, nullable, copy) NSString *message;
+@property(nonatomic, nullable, copy) NSString *message;
 
 @property(nonatomic, setter=mdc_setAdjustsFontForContentSizeCategory:)
     BOOL mdc_adjustsFontForContentSizeCategory;
 
-@property (nonatomic, strong, nonnull) UIFont *titleFont;
+@property(nonatomic, strong, nonnull) UIFont *titleFont;
 
-@property (nonatomic, strong, nonnull) UIFont *messageFont;
+@property(nonatomic, strong, nonnull) UIFont *messageFont;
 
 @property(nonatomic, strong, nullable) UIColor *titleTextColor;
 

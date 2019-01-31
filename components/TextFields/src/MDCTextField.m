@@ -221,7 +221,9 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
   self.inputLayoutStrut.text = self.text;
 
   UIEdgeInsets insets = [self textInsets];
-  self.inputLayoutStrut.frame = CGRectMake(insets.left, insets.top, CGRectGetWidth(self.bounds) - insets.right, self.inputLayoutStrut.intrinsicContentSize.height);
+  self.inputLayoutStrut.frame =
+      CGRectMake(insets.left, insets.top, CGRectGetWidth(self.bounds) - insets.right,
+                 self.inputLayoutStrut.intrinsicContentSize.height);
 }
 
 #pragma mark - Applying Color
@@ -468,8 +470,8 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
 
   if (!self.isFirstResponder) {
     [[NSNotificationCenter defaultCenter]
-     postNotificationName:MDCTextFieldTextDidSetTextNotification
-     object:self];
+        postNotificationName:MDCTextFieldTextDidSetTextNotification
+                      object:self];
   }
 }
 
@@ -606,10 +608,10 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
     editingRect = MDFRectFlippedHorizontally(editingRect, CGRectGetWidth(bounds));
   }
 
-  if ([self.fundament.positioningDelegate
-          respondsToSelector:@selector(editingRectForBounds:defaultRect:)]) {
-    editingRect =
-        [self.fundament.positioningDelegate editingRectForBounds:bounds defaultRect:editingRect];
+  if ([self.fundament.positioningDelegate respondsToSelector:@selector(editingRectForBounds:
+                                                                                defaultRect:)]) {
+    editingRect = [self.fundament.positioningDelegate editingRectForBounds:bounds
+                                                               defaultRect:editingRect];
   }
 
   return editingRect;
@@ -626,16 +628,16 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
 
   if ((self.mdf_effectiveUserInterfaceLayoutDirection ==
        UIUserInterfaceLayoutDirectionRightToLeft) &&
-      [self.positioningDelegate
-          respondsToSelector:@selector(trailingViewRectForBounds:defaultRect:)]) {
-    leftViewRect =
-        [self.positioningDelegate trailingViewRectForBounds:bounds defaultRect:leftViewRect];
+      [self.positioningDelegate respondsToSelector:@selector(trailingViewRectForBounds:
+                                                                           defaultRect:)]) {
+    leftViewRect = [self.positioningDelegate trailingViewRectForBounds:bounds
+                                                           defaultRect:leftViewRect];
   } else if ((self.mdf_effectiveUserInterfaceLayoutDirection ==
               UIUserInterfaceLayoutDirectionLeftToRight) &&
-             [self.positioningDelegate
-                 respondsToSelector:@selector(leadingViewRectForBounds:defaultRect:)]) {
-    leftViewRect =
-        [self.positioningDelegate leadingViewRectForBounds:bounds defaultRect:leftViewRect];
+             [self.positioningDelegate respondsToSelector:@selector(leadingViewRectForBounds:
+                                                                                 defaultRect:)]) {
+    leftViewRect = [self.positioningDelegate leadingViewRectForBounds:bounds
+                                                          defaultRect:leftViewRect];
   }
 
   return leftViewRect;
@@ -648,16 +650,16 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
 
   if ((self.mdf_effectiveUserInterfaceLayoutDirection ==
        UIUserInterfaceLayoutDirectionRightToLeft) &&
-      [self.positioningDelegate
-          respondsToSelector:@selector(leadingViewRectForBounds:defaultRect:)]) {
-    rightViewRect =
-        [self.positioningDelegate leadingViewRectForBounds:bounds defaultRect:rightViewRect];
+      [self.positioningDelegate respondsToSelector:@selector(leadingViewRectForBounds:
+                                                                          defaultRect:)]) {
+    rightViewRect = [self.positioningDelegate leadingViewRectForBounds:bounds
+                                                           defaultRect:rightViewRect];
   } else if ((self.mdf_effectiveUserInterfaceLayoutDirection ==
               UIUserInterfaceLayoutDirectionLeftToRight) &&
-             [self.positioningDelegate
-                 respondsToSelector:@selector(trailingViewRectForBounds:defaultRect:)]) {
-    rightViewRect =
-        [self.positioningDelegate trailingViewRectForBounds:bounds defaultRect:rightViewRect];
+             [self.positioningDelegate respondsToSelector:@selector(trailingViewRectForBounds:
+                                                                                  defaultRect:)]) {
+    rightViewRect = [self.positioningDelegate trailingViewRectForBounds:bounds
+                                                            defaultRect:rightViewRect];
   }
   return rightViewRect;
 }

@@ -160,10 +160,9 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
 
 - (CAMediaTimingFunction *)logDecelerateEasing {
   // This bezier curve is an approximation of a log curve.
-  return [[CAMediaTimingFunction alloc] initWithControlPoints:(float)0.157
-                                                             :(float)0.72
-                                                             :(float)0.386
-                                                             :(float)0.987];
+  return
+      [[CAMediaTimingFunction alloc] initWithControlPoints:(float)
+                                                     0.157:(float)0.72:(float)0.386:(float)0.987];
 }
 
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)finished {
@@ -274,8 +273,8 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
       MDCLegacyInkLayerForegroundRipple *strongSelf = weakSelf;
       [strongSelf removeFromSuperlayer];
 
-      if ([strongSelf.animationDelegate
-              respondsToSelector:@selector(animationDidStop:shapeLayer:finished:)]) {
+      if ([strongSelf.animationDelegate respondsToSelector:@selector(animationDidStop:
+                                                                           shapeLayer:finished:)]) {
         [strongSelf.animationDelegate animationDidStop:nil shapeLayer:strongSelf finished:YES];
       }
     }];
@@ -404,8 +403,8 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
       MDCLegacyInkLayerBackgroundRipple *strongSelf = weakSelf;
       [strongSelf removeFromSuperlayer];
 
-      if ([strongSelf.animationDelegate
-              respondsToSelector:@selector(animationDidStop:shapeLayer:finished:)]) {
+      if ([strongSelf.animationDelegate respondsToSelector:@selector(animationDidStop:
+                                                                           shapeLayer:finished:)]) {
         [strongSelf.animationDelegate animationDidStop:nil shapeLayer:strongSelf finished:YES];
       }
     }];

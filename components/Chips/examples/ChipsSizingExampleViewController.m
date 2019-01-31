@@ -12,8 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "ChipsExamplesSupplemental.h"
+#import "supplemental/ChipsExamplesSupplemental.h"
 
+#import "MaterialChips+Theming.h"
 #import "MaterialChips.h"
 #import "MaterialSlider.h"
 
@@ -22,6 +23,14 @@
   MDCSlider *_widthSlider;
   MDCSlider *_heightSlider;
   UISegmentedControl *_horizontalAlignmentControl;
+}
+
+- (id)init {
+  self = [super init];
+  if (self) {
+    self.containerScheme = [[MDCContainerScheme alloc] init];
+  }
+  return self;
 }
 
 - (void)viewDidLoad {
@@ -33,10 +42,11 @@
   _chipView.titleLabel.text = @"Material";
   _chipView.imageView.image = [self faceImage];
   _chipView.accessoryView = [self deleteButton];
+  [_chipView applyThemeWithScheme:self.containerScheme];
   [self.view addSubview:_chipView];
 
   CGSize chipSize = [_chipView sizeThatFits:self.view.bounds.size];
-  _chipView.frame = (CGRect) { CGPointMake(20, 20), chipSize };
+  _chipView.frame = (CGRect){CGPointMake(20, 20), chipSize};
 
   _widthSlider = [[MDCSlider alloc] initWithFrame:CGRectZero];
   _widthSlider.maximumValue = 200;
@@ -54,7 +64,8 @@
           forControlEvents:UIControlEventValueChanged];
   [self.view addSubview:_heightSlider];
 
-  _horizontalAlignmentControl = [[UISegmentedControl alloc] initWithItems:@[ @"Default", @"Centered" ]];
+  _horizontalAlignmentControl =
+      [[UISegmentedControl alloc] initWithItems:@[ @"Default", @"Centered" ]];
   _horizontalAlignmentControl.selectedSegmentIndex = 0;
   [_horizontalAlignmentControl addTarget:self
                                   action:@selector(horizontalAlignmentChanged:)
@@ -67,10 +78,11 @@
 
   CGSize sliderSize = [_widthSlider sizeThatFits:self.view.bounds.size];
   _widthSlider.frame = CGRectMake(20, 140, self.view.bounds.size.width - 40, sliderSize.height);
-  _heightSlider.frame =
-      CGRectMake(20, 140 + sliderSize.height + 20, self.view.bounds.size.width - 40, sliderSize.height);
+  _heightSlider.frame = CGRectMake(20, 140 + sliderSize.height + 20,
+                                   self.view.bounds.size.width - 40, sliderSize.height);
   _horizontalAlignmentControl.frame =
-      CGRectMake(20, CGRectGetMaxY(_heightSlider.frame) + 20, self.view.bounds.size.width - 40, _horizontalAlignmentControl.frame.size.height);
+      CGRectMake(20, CGRectGetMaxY(_heightSlider.frame) + 20, self.view.bounds.size.width - 40,
+                 _horizontalAlignmentControl.frame.size.height);
 }
 
 - (void)widthSliderChanged:(MDCSlider *)slider {
@@ -89,8 +101,8 @@
 
 - (void)horizontalAlignmentChanged:(UISegmentedControl *)segmentedControl {
   UIControlContentHorizontalAlignment alignment = (segmentedControl.selectedSegmentIndex == 0)
-      ? UIControlContentHorizontalAlignmentFill
-      : UIControlContentHorizontalAlignmentCenter;
+                                                      ? UIControlContentHorizontalAlignmentFill
+                                                      : UIControlContentHorizontalAlignmentCenter;
   _chipView.contentHorizontalAlignment = alignment;
   [_chipView layoutIfNeeded];
 }

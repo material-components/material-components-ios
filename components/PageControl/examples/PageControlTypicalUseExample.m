@@ -157,11 +157,11 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Page Control", @"Page Control" ],
-    @"description": @"This control is designed to be a drop-in replacement for UIPageControl, "
-    @"with a user experience influenced by Material Design.",
-    @"primaryDemo": @YES,
-    @"presentable": @YES,
+    @"breadcrumbs" : @[ @"Page Control", @"Page Control" ],
+    @"description" : @"This control is designed to be a drop-in replacement for UIPageControl, "
+                     @"with a user experience influenced by Material Design.",
+    @"primaryDemo" : @YES,
+    @"presentable" : @YES,
   };
 }
 

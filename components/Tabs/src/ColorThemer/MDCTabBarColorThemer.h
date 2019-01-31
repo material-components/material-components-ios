@@ -53,7 +53,7 @@
  instead. Learn more at components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
 
  @param colorScheme The color scheme to apply to MDCTabBar.
- @param tabBar A MDCTabBar instance to apply a color scheme. 
+ @param tabBar A MDCTabBar instance to apply a color scheme.
  */
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
                 toTabBar:(nonnull MDCTabBar *)tabBar;

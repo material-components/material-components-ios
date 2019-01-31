@@ -14,6 +14,8 @@
 
 load(
     "//:material_components_ios.bzl",
+    "mdc_examples_objc_library",
+    "mdc_examples_swift_library",
     "mdc_extension_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
@@ -30,10 +32,10 @@ mdc_public_objc_library(
         "UIKit",
     ],
     deps = [
+        "//components/ShapeLibrary",
+        "//components/Shapes",
         "//components/private/KeyboardWatcher",
         "//components/private/Math",
-        "//components/private/ShapeLibrary",
-        "//components/private/Shapes",
     ],
 )
 
@@ -65,6 +67,32 @@ mdc_objc_library(
     deps = [
         ":BottomSheet",
         ":privateHeaders",
+    ],
+)
+
+mdc_examples_objc_library(
+    name = "ObjcExamples",
+    deps = [
+        ":BottomSheet",
+        ":ShapeThemer",
+        "//components/AppBar",
+        "//components/AppBar:ColorThemer",
+        "//components/AppBar:TypographyThemer",
+        "//components/ShapeLibrary",
+        "//components/Shapes",
+        "//components/Buttons",
+        "//components/private/Application",
+        "//components/schemes/Color",
+        "//components/schemes/Typography",
+    ],
+)
+
+mdc_examples_swift_library(
+    name = "SwiftExamples",
+    deps = [
+        ":BottomSheet",
+        "//components/Buttons",
+        "//components/Buttons:ButtonThemer",
     ],
 )
 

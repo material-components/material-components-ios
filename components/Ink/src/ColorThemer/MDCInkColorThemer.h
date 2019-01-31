@@ -43,4 +43,3 @@
                toInkView:(nonnull MDCInkView *)inkView;
 
 @end
-
