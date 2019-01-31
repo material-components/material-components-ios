@@ -124,17 +124,32 @@ static inline UIImage *CreateTestImage(CGSize size) {
                             withCompletion:nil];
 }
 
+- (void)configureBottomNavigation:(MDCFakeBottomNavigationBar *)bottomNavigation
+                    withAlignment:(MDCBottomNavigationBarAlignment)alignment
+                  titleVisibility:(MDCBottomNavigationBarTitleVisibility)titleVisibility
+                  traitCollection:(UITraitCollection *)traitCollection
+                        allTitles:(NSString *)title {
+  bottomNavigation.alignment = alignment;
+  bottomNavigation.titleVisibility = titleVisibility;
+  if (traitCollection) {
+    bottomNavigation.traitCollectionOverride = traitCollection;
+  }
+  if (title) {
+    for (UITabBarItem *item in bottomNavigation.items) {
+      item.title = title;
+    }
+  }
+}
+
 #pragma mark - Title length
 
 - (void)testJustifiedUnspecifiedAlwaysWithFiveLongTitleItemsiPadWidthTypicalHeight {
   // When
-  self.navigationBar.alignment = MDCBottomNavigationBarAlignmentJustified;
-  self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
-  self.tabItem1.title = kLongTitle;
-  self.tabItem2.title = kLongTitle;
-  self.tabItem3.title = kLongTitle;
-  self.tabItem4.title = kLongTitle;
-  self.tabItem5.title = kLongTitle;
+  [self configureBottomNavigation:self.navigationBar
+                    withAlignment:MDCBottomNavigationBarAlignmentJustified
+                  titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
+                  traitCollection:nil
+                        allTitles:kLongTitle];
   self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
@@ -148,14 +163,11 @@ static inline UIImage *CreateTestImage(CGSize size) {
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassRegular;
 
   // When
-  self.navigationBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles;
-  self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
-  self.navigationBar.traitCollectionOverride = traitCollection;
-  self.tabItem1.title = kLongTitle;
-  self.tabItem2.title = kLongTitle;
-  self.tabItem3.title = kLongTitle;
-  self.tabItem4.title = kLongTitle;
-  self.tabItem5.title = kLongTitle;
+  [self configureBottomNavigation:self.navigationBar
+                    withAlignment:MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles
+                  titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
+                  traitCollection:traitCollection
+                        allTitles:kLongTitle];
   self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
@@ -165,13 +177,11 @@ static inline UIImage *CreateTestImage(CGSize size) {
 
 - (void)testCenteredUnspecifiedAlwaysWithFiveLongTitleItemsiPadWidthTypicalHeight {
   // When
-  self.navigationBar.alignment = MDCBottomNavigationBarAlignmentCentered;
-  self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
-  self.tabItem1.title = kLongTitle;
-  self.tabItem2.title = kLongTitle;
-  self.tabItem3.title = kLongTitle;
-  self.tabItem4.title = kLongTitle;
-  self.tabItem5.title = kLongTitle;
+  [self configureBottomNavigation:self.navigationBar
+                    withAlignment:MDCBottomNavigationBarAlignmentCentered
+                  titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
+                  traitCollection:nil
+                        allTitles:kLongTitle];
   self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
