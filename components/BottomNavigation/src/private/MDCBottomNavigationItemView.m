@@ -237,10 +237,14 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
                              self.contentHorizontalMargin + labelSize.width / 2;
       labelCenter = CGPointMake(labelCenterX, centerY);
     } else {
-      iconImageViewCenter =
-          CGPointMake(centerX + CGRectGetWidth(contentBoundingRect) * (CGFloat)0.2, centerY);
-      CGFloat labelCenterX =
-          iconImageViewCenter.x - contentsWidth / 2 - self.contentHorizontalMargin;
+      CGFloat contentBoundingRectMaxX = CGRectGetMaxX(contentBoundingRect);
+      CGFloat contentBoundingContentWidthDiff = availableContentWidth - contentsWidth;
+      iconImageViewCenter = CGPointMake(contentBoundingRectMaxX - contentBoundingContentWidthDiff / 2 -
+                                        iconImageViewSize.width / 2,
+                                        centerY);
+      availableContentWidth -= iconImageViewSize.width + self.contentHorizontalMargin;
+      labelSize = CGSizeMake(MIN(labelSize.width, availableContentWidth), labelSize.height);
+      CGFloat labelCenterX = iconImageViewCenter.x - iconImageViewSize.width / 2 - self.contentHorizontalMargin - labelSize.width / 2;
       labelCenter = CGPointMake(labelCenterX, centerY);
     }
   }
