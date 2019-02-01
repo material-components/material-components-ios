@@ -1,4 +1,4 @@
-// Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2019-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,6 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCSnapshotTestCase.h"
-#import "UIImage+MDCSnapshot.h"
-#import "UIView+MDCSnapshot.h"
+#import <UIKit/UIKit.h>
+
+@interface UIImage (MDCSnapshot)
+
+/**
+ Creates a new image useful for testing with a given size. The image is a repeating pattern of black
+ squares on a transparent background.
+
+ @param size The size of the image to create.
+ @returns a new image of the specified size.
+ */
++ (UIImage *)mdc_testImageOfSize:(CGSize)size;
+
+@end
