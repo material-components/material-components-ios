@@ -296,8 +296,35 @@ class ColorSchemeDialog : UIViewController {
   }
 
   @objc private func submit() {
-    
-    self.dismiss(animated: true, completion: nil)
+    defer {
+      self.dismiss(animated: true, completion: nil)
+    }
+    // Get current color scheme
+    guard let semanticColor =
+      AppTheme.globalTheme.containerScheme.colorScheme as? MDCSemanticColorScheme else {
+      return
+    }
+
+    guard let color = alertView.color else { return }
+
+    // Update value
+    let updatedColorScheme = update(colorScheme: semanticColor, property: property, with: color)
+    // Set color scheme on container scheme
+    let scheme = MDCContainerScheme()
+    scheme.typographyScheme =
+      AppTheme.globalTheme.containerScheme.typographyScheme as? MDCTypographyScheme
+        ?? MDCTypographyScheme(defaults: .material201804)
+    scheme.shapeScheme = AppTheme.globalTheme.containerScheme.shapeScheme as? MDCShapeScheme
+      ?? MDCShapeScheme()
+    scheme.colorScheme = updatedColorScheme
+    // Update global theme
+    AppTheme.globalTheme = AppTheme.init(containerScheme: scheme)
+  }
+
+  private func update(colorScheme: MDCSemanticColorScheme,
+                      property: String,
+                      with color: UIColor) -> MDCSemanticColorScheme {
+    return MDCSemanticColorScheme(defaults: .material201804)
   }
 }
 
