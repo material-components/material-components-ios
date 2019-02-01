@@ -176,10 +176,9 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
                 badgeViewCenter:NULL];
 
   CGRect totalFrame = CGRectUnion(labelFrame, iconImageViewFrame);
-  totalFrame = UIEdgeInsetsInsetRect(totalFrame, UIEdgeInsetsMake(-self.contentInsets.top,
-                                                                  -self.contentInsets.left,
-                                                                  -self.contentInsets.bottom,
-                                                                  -self.contentInsets.right));
+  totalFrame = UIEdgeInsetsInsetRect(
+      totalFrame, UIEdgeInsetsMake(-self.contentInsets.top, -self.contentInsets.left,
+                                   -self.contentInsets.bottom, -self.contentInsets.right));
   return totalFrame.size;
 }
 
@@ -187,8 +186,8 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
                   forLabelFrame:(CGRect *)outLabelFrame
              iconImageViewFrame:(CGRect *)outIconFrame
                 badgeViewCenter:(CGPoint *)outBadgeViewCenter {
-  CGRect contentBoundingRect = CGRectStandardize(UIEdgeInsetsInsetRect(contentBounds,
-                                                                       self.contentInsets));
+  CGRect contentBoundingRect =
+      CGRectStandardize(UIEdgeInsetsInsetRect(contentBounds, self.contentInsets));
   CGFloat centerY = CGRectGetMidY(contentBoundingRect);
   CGFloat centerX = CGRectGetMidX(contentBoundingRect);
   UIUserInterfaceLayoutDirection layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
@@ -219,7 +218,8 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
       labelSize = CGSizeMake(availableContentWidth, labelSize.height);
     }
   } else {
-    CGFloat contentsWidth = iconImageViewSize.width + labelSize.width + self.contentHorizontalMargin;
+    CGFloat contentsWidth =
+        iconImageViewSize.width + labelSize.width + self.contentHorizontalMargin;
     CGFloat availableContentWidth = CGRectGetWidth(contentBoundingRect);
     if (contentsWidth > availableContentWidth) {
       contentsWidth = availableContentWidth;
@@ -227,11 +227,14 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
     if (!isRTL) {
       CGFloat contentBoundingRectMinX = CGRectGetMinX(contentBoundingRect);
       CGFloat contentBoundingContentWidthDiff = availableContentWidth - contentsWidth;
-      iconImageViewCenter = CGPointMake(contentBoundingRectMinX + contentBoundingContentWidthDiff / 2 + iconImageViewSize.width / 2,
-                                        centerY);
+      iconImageViewCenter =
+          CGPointMake(contentBoundingRectMinX + contentBoundingContentWidthDiff / 2 +
+                          iconImageViewSize.width / 2,
+                      centerY);
       availableContentWidth -= iconImageViewSize.width + self.contentHorizontalMargin;
       labelSize = CGSizeMake(MIN(labelSize.width, availableContentWidth), labelSize.height);
-      CGFloat labelCenterX = iconImageViewCenter.x + iconImageViewSize.width / 2 + self.contentHorizontalMargin + labelSize.width / 2;
+      CGFloat labelCenterX = iconImageViewCenter.x + iconImageViewSize.width / 2 +
+                             self.contentHorizontalMargin + labelSize.width / 2;
       labelCenter = CGPointMake(labelCenterX, centerY);
     } else {
       iconImageViewCenter =
@@ -248,9 +251,9 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
     *outBadgeViewCenter = [self badgeCenterFromIconFrame:tempIconImageViewFrame isRTL:isRTL];
   }
   if (outLabelFrame != NULL) {
-    *outLabelFrame = CGRectMake(labelCenter.x - (labelSize.width / 2),
-                                labelCenter.y - (labelSize.height / 2),
-                                labelSize.width, labelSize.height);
+    *outLabelFrame =
+        CGRectMake(labelCenter.x - (labelSize.width / 2), labelCenter.y - (labelSize.height / 2),
+                   labelSize.width, labelSize.height);
   }
   if (outIconFrame != NULL) {
     *outIconFrame = tempIconImageViewFrame;
@@ -269,8 +272,8 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
              iconImageViewFrame:&iconImageViewFrame
                 badgeViewCenter:&badgeViewCenter];
 
-  CGPoint iconImageViewCenter = CGPointMake(CGRectGetMidX(iconImageViewFrame),
-                                            CGRectGetMidY(iconImageViewFrame));
+  CGPoint iconImageViewCenter =
+      CGPointMake(CGRectGetMidX(iconImageViewFrame), CGRectGetMidY(iconImageViewFrame));
   self.label.center = CGPointMake(CGRectGetMidX(labelFrame), CGRectGetMidY(labelFrame));
   self.label.bounds = CGRectMake(0, 0, CGRectGetWidth(labelFrame), CGRectGetHeight(labelFrame));
 
@@ -279,9 +282,9 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
       [UIView animateWithDuration:kMDCBottomNavigationItemViewTransitionDuration
                        animations:^(void) {
                          self.iconImageView.center = iconImageViewCenter;
-                         self.badge.center = [self
-                             badgeCenterFromIconFrame:CGRectStandardize(iconImageViewFrame)
-                                                isRTL:isRTL];
+                         self.badge.center =
+                             [self badgeCenterFromIconFrame:CGRectStandardize(iconImageViewFrame)
+                                                      isRTL:isRTL];
                        }];
     } else {
       self.iconImageView.center = iconImageViewCenter;
