@@ -43,32 +43,8 @@ static const CGFloat kWidthTypical = 96;  // 120 - 12 points on leading/trailing
 /** The maximum acceptable width for correct layout */
 static const CGFloat kWidthMaximum = 144;  // 168 - 12 points on leading/trailing edge
 
-@interface MDCFakeBottomNavigationItemView : MDCBottomNavigationItemView
-@property(nonatomic, assign)
-    UIUserInterfaceLayoutDirection effectiveUserInterfaceLayoutDirectionOverride;
-@end
-
-@implementation MDCFakeBottomNavigationItemView {
-  BOOL _isEffectiveUserInterfaceLayoutDirectionOverridden;
-  UIUserInterfaceLayoutDirection _effectiveUserInterfaceLayoutDirectionOverride;
-}
-
-- (UIUserInterfaceLayoutDirection)effectiveUserInterfaceLayoutDirection {
-  return _isEffectiveUserInterfaceLayoutDirectionOverridden
-             ? _effectiveUserInterfaceLayoutDirectionOverride
-             : [super effectiveUserInterfaceLayoutDirection];
-}
-
-- (void)setEffectiveUserInterfaceLayoutDirectionOverride:
-    (UIUserInterfaceLayoutDirection)effectiveUserInterfaceLayoutDirectionOverride {
-  _isEffectiveUserInterfaceLayoutDirectionOverridden = YES;
-  _effectiveUserInterfaceLayoutDirectionOverride = effectiveUserInterfaceLayoutDirectionOverride;
-}
-
-@end
-
 @interface MDCBottomNavigationItemViewSnapshotTests : MDCSnapshotTestCase
-@property(nonatomic, strong) MDCFakeBottomNavigationItemView *itemView;
+@property(nonatomic, strong) MDCBottomNavigationItemView *itemView;
 @end
 
 @implementation MDCBottomNavigationItemViewSnapshotTests
@@ -80,7 +56,7 @@ static const CGFloat kWidthMaximum = 144;  // 168 - 12 points on leading/trailin
   // test you wish to recreate the golden for).
   //  self.recordMode = YES;
 
-  self.itemView = [[MDCFakeBottomNavigationItemView alloc] init];
+  self.itemView = [[MDCBottomNavigationItemView alloc] init];
   self.itemView.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   self.itemView.image = [UIImage mdc_testImageOfSize:CGSizeMake(24, 24)];
   self.itemView.title = kLongTitleLatin;
@@ -92,8 +68,9 @@ static const CGFloat kWidthMaximum = 144;  // 168 - 12 points on leading/trailin
 }
 
 - (void)changeToRTLAndArabic {
-  self.itemView.effectiveUserInterfaceLayoutDirectionOverride =
-      UIUserInterfaceLayoutDirectionRightToLeft;
+  if (@available(iOS 9.0, *)) {
+    self.itemView.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
+  }
   self.itemView.title = kLongTitleArabic;
 }
 
