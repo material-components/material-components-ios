@@ -50,19 +50,19 @@ static const CGFloat kWidthMaximum = 144;  // 168 - 12 points on leading/trailin
 
 @implementation MDCFakeBottomNavigationItemView {
   BOOL _isEffectiveUserInterfaceLayoutDirectionOverridden;
-  UIUserInterfaceLayoutDirection _effectiveUserInterfaceLayoutDirectionOverridden;
+  UIUserInterfaceLayoutDirection _effectiveUserInterfaceLayoutDirectionOverride;
 }
 
 - (UIUserInterfaceLayoutDirection)effectiveUserInterfaceLayoutDirection {
   return _isEffectiveUserInterfaceLayoutDirectionOverridden
-             ? _effectiveUserInterfaceLayoutDirectionOverridden
+             ? _effectiveUserInterfaceLayoutDirectionOverride
              : [super effectiveUserInterfaceLayoutDirection];
 }
 
 - (void)setEffectiveUserInterfaceLayoutDirectionOverride:
     (UIUserInterfaceLayoutDirection)effectiveUserInterfaceLayoutDirectionOverride {
   _isEffectiveUserInterfaceLayoutDirectionOverridden = YES;
-  _effectiveUserInterfaceLayoutDirectionOverridden = effectiveUserInterfaceLayoutDirectionOverride;
+  _effectiveUserInterfaceLayoutDirectionOverride = effectiveUserInterfaceLayoutDirectionOverride;
 }
 
 @end
