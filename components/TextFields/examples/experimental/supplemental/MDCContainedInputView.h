@@ -51,15 +51,16 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewState) {
 - (void)applyStyleToContainedInputView:(id<MDCContainedInputView>)inputView
    withContainedInputViewColorScheming:(id<MDCContainedInputViewColorScheming>)colorScheme;
 - (void)removeStyleFrom:(id<MDCContainedInputView>)containedInputView;
-
-#pragma mark Density
-- (CGFloat)spaceBetweenTopAndFloatingPlaceholder;
-- (CGFloat)spaceBetweenFloatingPlaceholderAndTextArea;
-- (CGFloat)spaceBetweenTextAreaAndTopRowBottomRowDivider;
 @end
 
 @interface MDCContainerStyleBase : NSObject <MDCContainedInputViewStyle>
 @end
 
-
-
+@protocol MDCContainedInputViewStyleDensityInforming <NSObject>
+@optional
+- (CGFloat)floatingPlaceholderMinYWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight;
+- (CGFloat)spaceBetweenFloatingPlaceholderAndTextAreaWithFloatingPlaceholderMinY:(CGFloat)floatingPlaceholderMinY
+                                                       floatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight;
+- (CGFloat)topRowBottomRowDividerYWithTopRowSubviewMaxY:(CGFloat)topRowSubviewMaxY
+                                   topRowSubviewCenterY:(CGFloat)topRowSubviewCenterY;
+@end

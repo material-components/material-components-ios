@@ -262,16 +262,15 @@
                                                          leftViewMaxY:leftViewMaxY
                                                         rightViewMaxY:rightViewMaxY];
 
-  CGFloat topRowBottomRowDividerY = 0;
-
-
-//  if ([containerStyle isMemberOfClass:[MDCContainerStyleFilled class]]) {
-//    topRowBottomRowDividerY = topRowSubviewMaxY + kTopRowBottomRowDividerVerticalPadding;
-//  } else if ([containerStyle isMemberOfClass:[MDCContainerStyleOutlined class]]) {
-//    topRowBottomRowDividerY = topRowSubviewCenterY * 2;
-//  } else {
-    topRowBottomRowDividerY = topRowSubviewMaxY;
-//  }
+  CGFloat topRowBottomRowDividerY = topRowSubviewMaxY + kTopRowBottomRowDividerVerticalPadding;
+  if ([containerStyle conformsToProtocol:@protocol(MDCContainedInputViewStyleDensityInforming)]) {
+    id<MDCContainedInputViewStyleDensityInforming> densityInformer = (id<MDCContainedInputViewStyleDensityInforming>)containerStyle;
+    if ([densityInformer respondsToSelector:@selector(topRowBottomRowDividerYWithTopRowSubviewMaxY:topRowSubviewCenterY:)]) {
+      topRowBottomRowDividerY =
+          [densityInformer topRowBottomRowDividerYWithTopRowSubviewMaxY:topRowSubviewMaxY
+                                                   topRowSubviewCenterY:topRowSubviewCenterY];
+    }
+  }
 
   CGFloat underlineLabelsCombinedMinY =
       topRowBottomRowDividerY + kTopRowBottomRowDividerVerticalPadding;
@@ -467,19 +466,16 @@
                                                    (id<MDCContainedInputViewStyle>)containerStyle
                                           placeholderCanFloat:(BOOL)placeholderCanFloat {
   if (placeholderCanFloat) {
-    CGFloat spaceBetweenPlaceholderAndTextArea = 0;
     CGFloat floatingPlaceholderMaxY = floatingPlaceholderMinY + floatingPlaceholderHeight;
-    CGFloat outlinedTextFieldSpaceHeuristic = floatingPlaceholderHeight * (CGFloat)0.22;
-    
-//    if ([containerStyle isMemberOfClass:[MDCContainerStyleFilled class]]) {
-//      spaceBetweenPlaceholderAndTextArea = ((CGFloat)0.25 * floatingPlaceholderMaxY);
-//    } else if ([containerStyle isMemberOfClass:[MDCContainerStyleOutlined class]]) {
+    CGFloat spaceBetweenPlaceholderAndTextArea = 0;
+    if ([containerStyle conformsToProtocol:@protocol(MDCContainedInputViewStyleDensityInforming)]) {
+      id<MDCContainedInputViewStyleDensityInforming> densityInformer = (id<MDCContainedInputViewStyleDensityInforming>)containerStyle;
       spaceBetweenPlaceholderAndTextArea =
-      floatingPlaceholderMaxY + outlinedTextFieldSpaceHeuristic;
-//    } else {
-//
-//    }
-    
+          [densityInformer spaceBetweenFloatingPlaceholderAndTextAreaWithFloatingPlaceholderMinY:floatingPlaceholderMinY
+                                                                       floatingPlaceholderHeight:floatingPlaceholderHeight];
+    } else {
+      spaceBetweenPlaceholderAndTextArea = ((CGFloat)0.25 * floatingPlaceholderMaxY);
+    }
     CGFloat lowestAllowableTextAreaMinY =
         floatingPlaceholderMaxY + spaceBetweenPlaceholderAndTextArea;
     return lowestAllowableTextAreaMinY + ((CGFloat)0.5 * textAreaHeight);
@@ -507,19 +503,12 @@
   if (floatingPlaceholderHeight <= 0) {
     return 0;
   }
-
-  [containerStyle spaceBetweenTopAndFloatingPlaceholder];
-  
-    CGFloat filledPlaceholderTopPaddingScaleHeuristic = ((CGFloat)50.0 / (CGFloat)70.0);
   CGFloat floatingPlaceholderMinY = 0;
-
-  if ([containerStyle isMemberOfClass:[MDCContainerStyleFilled class]]) {
-    floatingPlaceholderMinY =
-    filledPlaceholderTopPaddingScaleHeuristic * floatingPlaceholderHeight;
-  } else if ([containerStyle isMemberOfClass:[MDCContainerStyleOutlined class]]) {
-    floatingPlaceholderMinY = (CGFloat)0 - ((CGFloat)0.5 * floatingPlaceholderHeight);
+  if ([containerStyle conformsToProtocol:@protocol(MDCContainedInputViewStyleDensityInforming)]) {
+    id<MDCContainedInputViewStyleDensityInforming> densityInformer = (id<MDCContainedInputViewStyleDensityInforming>)containerStyle;
+    floatingPlaceholderMinY = [densityInformer floatingPlaceholderMinYWithFloatingPlaceholderHeight:floatingPlaceholderHeight];
   } else {
-
+    floatingPlaceholderMinY = (0.5 * floatingPlaceholderHeight);
   }
   return floatingPlaceholderMinY;
 }

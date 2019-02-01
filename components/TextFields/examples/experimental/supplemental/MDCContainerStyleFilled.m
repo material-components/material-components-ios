@@ -224,28 +224,39 @@ static const CGFloat kFilledContainerStyleTopCornerRadius = (CGFloat)4.0;
   return underlineThickness;
 }
 
--(CGFloat)spaceBetweenTopAndFloatingPlaceholder {
+//-(CGFloat)spaceBetweenTopAndFloatingPlaceholder {
+//
+//  [containerStyle spaceBetweenTopAndFloatingPlaceholder];
+//
+//  CGFloat filledPlaceholderTopPaddingScaleHeuristic = ((CGFloat)50.0 / (CGFloat)70.0);
+//  CGFloat floatingPlaceholderMinY = 0;
+//
+//  if ([containerStyle isMemberOfClass:[MDCContainerStyleFilled class]]) {
+//    floatingPlaceholderMinY =
+//    filledPlaceholderTopPaddingScaleHeuristic * floatingPlaceholderHeight;
+//  } else if ([containerStyle isMemberOfClass:[MDCContainerStyleOutlined class]]) {
+//    floatingPlaceholderMinY = (CGFloat)0 - ((CGFloat)0.5 * floatingPlaceholderHeight);
+//  } else {
+//
+//  }
+//  return floatingPlaceholderMinY;
+//}
 
+#pragma mark MDCContainedInputViewStyleDensityInforming
 
-  
-  
-  [containerStyle spaceBetweenTopAndFloatingPlaceholder];
-  
-  CGFloat filledPlaceholderTopPaddingScaleHeuristic = ((CGFloat)50.0 / (CGFloat)70.0);
-  CGFloat floatingPlaceholderMinY = 0;
-  
-  if ([containerStyle isMemberOfClass:[MDCContainerStyleFilled class]]) {
-    floatingPlaceholderMinY =
-    filledPlaceholderTopPaddingScaleHeuristic * floatingPlaceholderHeight;
-  } else if ([containerStyle isMemberOfClass:[MDCContainerStyleOutlined class]]) {
-    floatingPlaceholderMinY = (CGFloat)0 - ((CGFloat)0.5 * floatingPlaceholderHeight);
-  } else {
-    
-  }
-  return floatingPlaceholderMinY;
-
-  
-  
+-(CGFloat)spaceBetweenFloatingPlaceholderAndTextAreaWithFloatingPlaceholderMinY:(CGFloat)floatingPlaceholderMinY
+                                                      floatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight {
+  return ((CGFloat)0.25 * (floatingPlaceholderMinY + floatingPlaceholderHeight));
 }
+
+- (CGFloat)floatingPlaceholderMinYWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight {
+  CGFloat filledPlaceholderTopPaddingScaleHeuristic = ((CGFloat)50.0 / (CGFloat)70.0);
+  return filledPlaceholderTopPaddingScaleHeuristic * floatingPlaceholderHeight;
+}
+
+//- (CGFloat)topRowBottomRowDividerYWithTopRowSubviewMaxY:(CGFloat)topRowSubviewMaxY
+//                                   topRowSubviewCenterY:(CGFloat)topRowSubviewCenterY {
+//  return topRowSubviewMaxY + kTopRowBottomRowDividerVerticalPadding;
+//}
 
 @end

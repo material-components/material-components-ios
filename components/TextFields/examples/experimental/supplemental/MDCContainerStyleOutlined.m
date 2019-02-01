@@ -63,10 +63,10 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
     case MDCContainedInputViewStateDisabled:
       break;
     case MDCContainedInputViewStateErrored:
-//      outlineColor = colorScheme.errorColor;
+      outlineColor = colorScheme.errorColor;
       break;
     case MDCContainedInputViewStateFocused:
-//      outlineColor = colorScheme.primaryColor;
+//      outlineColor = [UIColor blackColor]//colorScheme.primaryColor;
       break;
     default:
       break;
@@ -195,25 +195,39 @@ isFloatingPlaceholder:(BOOL)isFloatingPlaceholder
   return defaultLineWidth;
 }
 
--(CGFloat)spaceBetweenTopAndFloatingPlaceholder {
-  
-  [containerStyle spaceBetweenTopAndFloatingPlaceholder];
-  
-  CGFloat filledPlaceholderTopPaddingScaleHeuristic = ((CGFloat)50.0 / (CGFloat)70.0);
-  CGFloat floatingPlaceholderMinY = 0;
-  
-  if ([containerStyle isMemberOfClass:[MDCContainerStyleFilled class]]) {
-    floatingPlaceholderMinY =
-    filledPlaceholderTopPaddingScaleHeuristic * floatingPlaceholderHeight;
-  } else if ([containerStyle isMemberOfClass:[MDCContainerStyleOutlined class]]) {
-    floatingPlaceholderMinY = (CGFloat)0 - ((CGFloat)0.5 * floatingPlaceholderHeight);
-  } else {
-    
-  }
-  return floatingPlaceholderMinY;
-  
-  
-  
+//-(CGFloat)spaceBetweenTopAndFloatingPlaceholder {
+//
+//  [containerStyle spaceBetweenTopAndFloatingPlaceholder];
+//
+//  CGFloat filledPlaceholderTopPaddingScaleHeuristic = ((CGFloat)50.0 / (CGFloat)70.0);
+//  CGFloat floatingPlaceholderMinY = 0;
+//
+//  if ([containerStyle isMemberOfClass:[MDCContainerStyleFilled class]]) {
+//    floatingPlaceholderMinY =
+//    filledPlaceholderTopPaddingScaleHeuristic * floatingPlaceholderHeight;
+//  } else if ([containerStyle isMemberOfClass:[MDCContainerStyleOutlined class]]) {
+//    floatingPlaceholderMinY = (CGFloat)0 - ((CGFloat)0.5 * floatingPlaceholderHeight);
+//  } else {
+//
+//  }
+//  return floatingPlaceholderMinY;
+//
+//
+//
+//}
+
+-(CGFloat)spaceBetweenFloatingPlaceholderAndTextAreaWithFloatingPlaceholderMinY:(CGFloat)floatingPlaceholderMinY
+                                                      floatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight {
+  CGFloat outlinedTextFieldSpaceHeuristic = floatingPlaceholderHeight * (CGFloat)0.22;
+  return floatingPlaceholderMinY + floatingPlaceholderHeight + outlinedTextFieldSpaceHeuristic;
+}
+
+- (CGFloat)floatingPlaceholderMinYWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight {
+  return (CGFloat)0 - ((CGFloat)0.5 * floatingPlaceholderHeight);
+}
+
+- (CGFloat)topRowBottomRowDividerYWithTopRowSubviewCenterY:(CGFloat)topRowSubviewCenterY {
+  return topRowSubviewCenterY * 2;
 }
 
 @end
