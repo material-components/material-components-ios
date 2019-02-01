@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #import <XCTest/XCTest.h>
-#import "MaterialInk.h"
 #import "MDCLegacyInkLayer+Testing.h"
+#import "MaterialInk.h"
 
 #pragma mark - Property exposure
 
@@ -94,8 +94,7 @@
   XCTAssertTrue(self.inkLayer.isBounded);
   XCTAssertFalse(self.inkLayer.useCustomInkCenter);
   XCTAssertTrue(CGPointEqualToPoint(self.inkLayer.customInkCenter, CGPointZero),
-                @"%@ is not equal to %@",
-                NSStringFromCGPoint(self.inkLayer.customInkCenter),
+                @"%@ is not equal to %@", NSStringFromCGPoint(self.inkLayer.customInkCenter),
                 NSStringFromCGPoint(CGPointZero));
   XCTAssertFalse(self.inkLayer.userLinearExpansion);
   XCTAssertEqualWithAccuracy(self.inkLayer.evaporateDuration, 0, 0.0001);

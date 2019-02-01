@@ -17,7 +17,7 @@
 
 #import "MaterialInk.h"
 #import "MaterialShadowElevations.h"
-#import "MaterialShapes.h"
+#import "MaterialShapesNew.h"
 
 /**
  A Material flat, raised or floating button.

@@ -17,16 +17,10 @@
 #import "MaterialChips+Theming.h"
 #import "MaterialChips.h"
 #import "MaterialContainerScheme.h"
-#import "MaterialShapeLibrary.h"
-#import "MaterialShapes.h"
+#import "MaterialShapeLibraryNew.h"
+#import "MaterialShapesNew.h"
 #import "MaterialSlider+ColorThemer.h"
 #import "MaterialSlider.h"
-
-@interface ChipsShapingExampleViewController()
-@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
-@property(nonatomic, strong) MDCShapeScheme *shapeScheme;
-@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
-@end
 
 @implementation ChipsShapingExampleViewController {
   MDCChipView *_chipView;
@@ -38,20 +32,9 @@
 - (id)init {
   self = [super init];
   if (self) {
-    _colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-    _shapeScheme = [[MDCShapeScheme alloc] init];
-    _typographyScheme = [[MDCTypographyScheme alloc] init];
+    self.containerScheme = [[MDCContainerScheme alloc] init];
   }
   return self;
-}
-
-- (MDCContainerScheme *)containerScheme {
-  MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
-  scheme.colorScheme = self.colorScheme;
-  scheme.shapeScheme = self.shapeScheme;
-  scheme.typographyScheme = self.typographyScheme;
-  return scheme;
 }
 
 - (void)viewDidLoad {
@@ -69,7 +52,7 @@
   _chipView.accessoryPadding = UIEdgeInsetsMake(0, 0, 0, 10);
   CGSize chipSize = [_chipView sizeThatFits:self.view.bounds.size];
   _chipView.frame = CGRectMake(20, 20, chipSize.width + 20, chipSize.height + 20);
-  [_chipView applyThemeWithScheme:[self containerScheme]];
+  [_chipView applyThemeWithScheme:self.containerScheme];
   _chipView.shapeGenerator = _rectangleShapeGenerator;
   [self.view addSubview:_chipView];
 
@@ -80,7 +63,14 @@
   [_cornerSlider addTarget:self
                     action:@selector(cornerSliderChanged:)
           forControlEvents:UIControlEventValueChanged];
-  [MDCSliderColorThemer applySemanticColorScheme:_colorScheme toSlider:_cornerSlider];
+  if (self.containerScheme.colorScheme) {
+    [MDCSliderColorThemer applySemanticColorScheme:self.containerScheme.colorScheme
+                                          toSlider:_cornerSlider];
+  } else {
+    MDCSemanticColorScheme *colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    [MDCSliderColorThemer applySemanticColorScheme:colorScheme toSlider:_cornerSlider];
+  }
   [self.view addSubview:_cornerSlider];
 
   _cornerStyleControl = [[UISegmentedControl alloc] initWithItems:@[ @"Rounded", @"Cut", @"None" ]];
@@ -96,15 +86,10 @@
 
   CGSize sliderSize = [_cornerSlider sizeThatFits:self.view.bounds.size];
   _cornerSlider.frame = CGRectMake(20, 140, self.view.bounds.size.width - 40, sliderSize.height);
-  _cornerSlider.frame =
-      CGRectMake(20,
-                 140 + sliderSize.height + 20,
-                 self.view.bounds.size.width - 40,
-                 sliderSize.height);
+  _cornerSlider.frame = CGRectMake(20, 140 + sliderSize.height + 20,
+                                   self.view.bounds.size.width - 40, sliderSize.height);
   _cornerStyleControl.frame =
-      CGRectMake(20,
-                 CGRectGetMaxY(_cornerSlider.frame) + 20,
-                 self.view.bounds.size.width - 40,
+      CGRectMake(20, CGRectGetMaxY(_cornerSlider.frame) + 20, self.view.bounds.size.width - 40,
                  _cornerStyleControl.frame.size.height);
 
   [self cornerSliderChanged:_cornerSlider];

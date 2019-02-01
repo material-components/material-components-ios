@@ -44,8 +44,7 @@
   MDCAppBarContainerViewController *container =
       [[MDCAppBarContainerViewController alloc] initWithContentViewController:viewController];
   container.preferredContentSize = CGSizeMake(500, 200);
-  container.appBarViewController.headerView.trackingScrollView =
-      viewController.collectionView;
+  container.appBarViewController.headerView.trackingScrollView = viewController.collectionView;
   container.topLayoutGuideAdjustmentEnabled = YES;
 
   [MDCAppBarColorThemer applyColorScheme:self.colorScheme

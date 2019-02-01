@@ -233,8 +233,9 @@ static const CGFloat kMaximumHeight = 80;
  */
 - (CGFloat)staticBottomMargin {
   if (MDCSnackbarMessage.usesLegacySnackbar) {
-    return UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? MDCSnackbarLegacyBottomMargin_iPad
-                                                                : MDCSnackbarLegacyBottomMargin_iPhone;
+    return UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad
+               ? MDCSnackbarLegacyBottomMargin_iPad
+               : MDCSnackbarLegacyBottomMargin_iPhone;
   }
   return UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? MDCSnackbarBottomMargin_iPad
                                                               : MDCSnackbarBottomMargin_iPhone;
@@ -242,13 +243,13 @@ static const CGFloat kMaximumHeight = 80;
 
 - (CGFloat)sideMargin {
   if (MDCSnackbarMessage.usesLegacySnackbar) {
-    return self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular ?
-        MDCSnackbarSideMargin_RegularWidth :
-        MDCSnackbarLegacySideMargin_CompactWidth;
+    return self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular
+               ? MDCSnackbarSideMargin_RegularWidth
+               : MDCSnackbarLegacySideMargin_CompactWidth;
   }
-  return self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular ?
-      MDCSnackbarSideMargin_RegularWidth :
-      MDCSnackbarSideMargin_CompactWidth;
+  return self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular
+             ? MDCSnackbarSideMargin_RegularWidth
+             : MDCSnackbarSideMargin_CompactWidth;
 }
 
 - (void)setSnackbarView:(MDCSnackbarMessageView *)snackbarView {
@@ -507,7 +508,7 @@ static const CGFloat kMaximumHeight = 80;
     duration = onscreen ? MDCSnackbarEnterTransitionDuration : MDCSnackbarExitTransitionDuration;
   }
   CAMediaTimingFunction *timingFunction =
-  [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
+      [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
   [CATransaction begin];
   [CATransaction setAnimationTimingFunction:timingFunction];
   [CATransaction setCompletionBlock:completion];
@@ -535,9 +536,8 @@ static const CGFloat kMaximumHeight = 80;
                              timingFunction:timingFunction];
   } else {
     NSMutableArray *animations =
-        [NSMutableArray arrayWithObject:
-            [snackbarView animateSnackbarOpacityFrom:fromContentOpacity
-                                                  to:toContentOpacity]];
+        [NSMutableArray arrayWithObject:[snackbarView animateSnackbarOpacityFrom:fromContentOpacity
+                                                                              to:toContentOpacity]];
     if (onscreen) {
       [animations addObject:[snackbarView animateSnackbarScaleFrom:MDCSnackbarEnterStartingScale
                                                            toScale:1]];

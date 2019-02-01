@@ -12,11 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialButtons+ButtonThemer.h"
-#import "MaterialButtons+ColorThemer.h"
-#import "MaterialButtons+Theming.h"
-#import "MaterialButtons+TypographyThemer.h"
 #import "MaterialButtons.h"
+#import "MaterialButtons+Theming.h"
 #import "MaterialContainerScheme.h"
 #import "MaterialTypography.h"
 
@@ -47,23 +44,10 @@ const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
   return self;
 }
 
-- (MDCContainerScheme *)containerScheme {
-  MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
-  scheme.colorScheme = self.colorScheme;
-  scheme.shapeScheme = self.shapeScheme;
-  scheme.typographyScheme = self.typographyScheme;
-  return scheme;
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
 
   self.view.backgroundColor = [UIColor whiteColor];
-
-  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
-  buttonScheme.colorScheme = self.colorScheme;
-  buttonScheme.shapeScheme = self.shapeScheme;
-  buttonScheme.typographyScheme = self.typographyScheme;
 
   // Contained button
 
@@ -105,9 +89,8 @@ const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
       MIN(0, -(kMinimumAccessibleButtonSize.height - CGRectGetHeight(textButton.bounds)) / 2);
   CGFloat textButtonHorizontalInset =
       MIN(0, -(kMinimumAccessibleButtonSize.width - CGRectGetWidth(textButton.bounds)) / 2);
-  textButton.hitAreaInsets =
-      UIEdgeInsetsMake(textButtonVerticalInset, textButtonHorizontalInset,
-                       textButtonVerticalInset, textButtonHorizontalInset);
+  textButton.hitAreaInsets = UIEdgeInsetsMake(textButtonVerticalInset, textButtonHorizontalInset,
+                                              textButtonVerticalInset, textButtonHorizontalInset);
   [textButton addTarget:self
                  action:@selector(didTap:)
        forControlEvents:UIControlEventTouchUpInside];
@@ -139,8 +122,8 @@ const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
       UIEdgeInsetsMake(outlineButtonVerticalInset, outlineButtonHorizontalInset,
                        outlineButtonVerticalInset, outlineButtonHorizontalInset);
   [outlinedButton addTarget:self
-                    action:@selector(didTap:)
-          forControlEvents:UIControlEventTouchUpInside];
+                     action:@selector(didTap:)
+           forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:outlinedButton];
 
   // Disabled outlined button
@@ -172,7 +155,7 @@ const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
 
   self.buttons = @[
     containedButton, disabledContainedButton, textButton, disabledTextButton, outlinedButton,
-    disabledOutlinedButton,self.floatingButton
+    disabledOutlinedButton, self.floatingButton
   ];
 
   [self setupExampleViews];

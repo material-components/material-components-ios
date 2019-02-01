@@ -47,4 +47,3 @@ static const CGFloat kMinimumItemWidth = 36;
 }
 
 @end
-

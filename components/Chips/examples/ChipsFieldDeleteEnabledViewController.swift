@@ -20,36 +20,30 @@ import MaterialComponentsBeta.MaterialChips_Theming
 import MaterialComponentsBeta.MaterialContainerScheme
 
 class ChipsFieldDeleteEnabledViewController : UIViewController, MDCChipFieldDelegate {
-  var colorScheme = MDCSemanticColorScheme()
-  var shapeScheme = MDCShapeScheme()
-  var typographyScheme = MDCTypographyScheme()
+  var containerScheming: MDCContainerScheming
   var chipField = MDCChipField()
 
-  var scheme: MDCContainerScheming {
-    let scheme = MDCContainerScheme()
-    scheme.colorScheme = colorScheme
-    scheme.shapeScheme = shapeScheme
-    scheme.typographyScheme = typographyScheme
-    return scheme
-  }
-
   init() {
+    containerScheming = MDCContainerScheme()
     super.init(nibName: nil, bundle: nil)
   }
 
-  @available(*, unavailable)
   required init?(coder aDecoder: NSCoder) {
-    super.init(coder: aDecoder)
+    fatalError("init(coder:) is not implemented")
   }
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor = colorScheme.backgroundColor
+    view.backgroundColor =
+      containerScheming.colorScheme?.backgroundColor ??
+      MDCSemanticColorScheme().backgroundColor
     chipField.frame = .zero
     chipField.delegate = self
     chipField.textField.placeholderLabel.text = "This is a chip field."
-    chipField.backgroundColor = colorScheme.surfaceColor
+    chipField.backgroundColor =
+      containerScheming.colorScheme?.surfaceColor ??
+      MDCSemanticColorScheme().surfaceColor
     chipField.showChipsDeleteButton = true
     view.addSubview(chipField)
   }
@@ -70,7 +64,7 @@ class ChipsFieldDeleteEnabledViewController : UIViewController, MDCChipFieldDele
   }
 
   func chipField(_ chipField: MDCChipField, didAddChip chip: MDCChipView) {
-    chip.applyTheme(withScheme: scheme)
+    chip.applyTheme(withScheme: containerScheming)
     chip.sizeToFit()
     let chipVerticalInset = min(0, chip.bounds.height - 48 / 2)
     chip.hitAreaInsets = UIEdgeInsetsMake(chipVerticalInset, 0, chipVerticalInset, 0)

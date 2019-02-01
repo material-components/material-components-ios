@@ -47,12 +47,9 @@ static NSString *const kCategoryB = @"CategoryB";
         [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
   }
   [self setupExampleViews:@[
-      @"Show Category A Message",
-      @"Show Category B Message",
-      @"Show Message with no category",
-      @"Suspend Category A",
-      @"Suspend Category B",
-      @"Suspend All"]];
+    @"Show Category A Message", @"Show Category B Message", @"Show Message with no category",
+    @"Suspend Category A", @"Suspend Category B", @"Suspend All"
+  ]];
   self.title = @"Message Suspension";
 }
 
@@ -62,9 +59,7 @@ static NSString *const kCategoryB = @"CategoryB";
   NSString *formattedPrefix = [NSString stringWithFormat:@"%@ : ", prefix];
   NSAttributedString *attributedString =
       [[NSAttributedString alloc] initWithString:formattedPrefix
-                                      attributes:@{
-                                        MDCSnackbarMessageBoldAttributeName : @YES
-                                      }];
+                                      attributes:@{MDCSnackbarMessageBoldAttributeName : @YES}];
   [attributedMessage appendAttributedString:attributedString];
 
   NSAttributedString *attributedStringID =
@@ -106,7 +101,8 @@ static NSString *const kCategoryB = @"CategoryB";
 
 #pragma mark - Event Handling
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+- (void)collectionView:(UICollectionView *)collectionView
+    didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
   [super collectionView:collectionView didSelectItemAtIndexPath:indexPath];
   switch (indexPath.row) {
     case 0:

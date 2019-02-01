@@ -23,11 +23,11 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Flexible Header", @"Flexible Header" ],
-    @"description": @"The Flexible Header is a container view whose height and vertical offset "
-    @"react to UIScrollViewDelegate events.",
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Flexible Header", @"Flexible Header" ],
+    @"description" : @"The Flexible Header is a container view whose height and vertical offset "
+                     @"react to UIScrollViewDelegate events.",
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

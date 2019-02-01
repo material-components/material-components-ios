@@ -81,7 +81,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
 
     // Set up ink controller to splash ink on taps.
     _inkTouchController = [[MDCInkTouchController alloc] initWithView:self];
-    [_inkTouchController addInkView];   // Ink should always be on top of other views
+    [_inkTouchController addInkView];  // Ink should always be on top of other views
 
     [self updateInk];
     [self updateColors];
@@ -92,9 +92,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
 
 #pragma mark - Public
 
-+ (CGSize)sizeThatFits:(CGSize)size
-                   item:(UITabBarItem *)item
-                  style:(MDCItemBarStyle *)style {
++ (CGSize)sizeThatFits:(CGSize)size item:(UITabBarItem *)item style:(MDCItemBarStyle *)style {
   NSString *title = [self displayedTitleForTitle:item.title style:style];
 
   CGRect textBounds = CGRectZero;
@@ -299,9 +297,8 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
   _badgeLabel.center = MDCRoundCenterWithBoundsAndScale(badgeCenter, _badgeLabel.bounds, scale);
 
   self.titleLabel.bounds = MDCRectAlignToScale(titleBounds, scale);
-  self.titleLabel.center = MDCRoundCenterWithBoundsAndScale(titleCenter,
-                                                            self.titleLabel.bounds,
-                                                            scale);
+  self.titleLabel.center =
+      MDCRoundCenterWithBoundsAndScale(titleCenter, self.titleLabel.bounds, scale);
 }
 
 - (void)tintColorDidChange {
@@ -395,8 +392,8 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
 
 + (NSString *)localizedStringWithKey:(NSString *)key {
   NSBundle *containingBundle = [NSBundle bundleForClass:self];
-  NSURL *resourceBundleURL =
-      [containingBundle URLForResource:kResourceBundleName withExtension:@"bundle"];
+  NSURL *resourceBundleURL = [containingBundle URLForResource:kResourceBundleName
+                                                withExtension:@"bundle"];
   NSBundle *resourceBundle = [NSBundle bundleWithURL:resourceBundleURL];
   return [resourceBundle localizedStringForKey:key value:nil table:kStringTableName];
 }

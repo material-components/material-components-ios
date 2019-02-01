@@ -17,145 +17,119 @@
 #import "MaterialTypography.h"
 
 @implementation TypographyCustomFontViewController {
-   NSArray<NSString *> *_strings;
-   NSArray<NSString *> *_styleNames;
-   NSArray<UIFont *> *_styleFonts;
-   NSArray<NSNumber *> *_opacities;
+  NSArray<NSString *> *_strings;
+  NSArray<NSString *> *_styleNames;
+  NSArray<UIFont *> *_styleFonts;
+  NSArray<NSNumber *> *_opacities;
 }
 
 static inline UIFont *customFont(MDCFontTextStyle style) {
-   UIFontDescriptor *descriptor = [UIFontDescriptor mdc_preferredFontDescriptorForMaterialTextStyle:style];
-   descriptor = [descriptor fontDescriptorWithFamily:@"American Typewriter"];
-   UIFont *font = [UIFont fontWithDescriptor:descriptor size:descriptor.pointSize];
-   return font;
+  UIFontDescriptor *descriptor =
+      [UIFontDescriptor mdc_preferredFontDescriptorForMaterialTextStyle:style];
+  descriptor = [descriptor fontDescriptorWithFamily:@"American Typewriter"];
+  UIFont *font = [UIFont fontWithDescriptor:descriptor size:descriptor.pointSize];
+  return font;
 };
 
 - (void)viewDidLoad {
-   [super viewDidLoad];
-   // Do any additional setup after loading the view, typically from a nib.
-   self.view.backgroundColor = [UIColor whiteColor];
-   self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+  [super viewDidLoad];
+  // Do any additional setup after loading the view, typically from a nib.
+  self.view.backgroundColor = [UIColor whiteColor];
+  self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 
-   self.tableView.rowHeight = UITableViewAutomaticDimension;
-   self.tableView.estimatedRowHeight = 50.0;
-   _strings = @[
-                @"ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-                @"abcdefghijklmnopqrstuvwxyz",
-                @"0123456789"
-                ];
+  self.tableView.rowHeight = UITableViewAutomaticDimension;
+  self.tableView.estimatedRowHeight = 50.0;
+  _strings = @[ @"ABCDEFGHIJKLMNOPQRSTUVWXYZ", @"abcdefghijklmnopqrstuvwxyz", @"0123456789" ];
 
-   _styleNames = @[
-                   // Common UI fonts.
-                   @"Headline Font",
-                   @"Title Font",
-                   @"Subhead Font",
-                   @"Body 2 Font",
-                   @"Body 1 Font",
-                   @"Caption Font",
-                   @"Button Font",
+  _styleNames = @[
+    // Common UI fonts.
+    @"Headline Font", @"Title Font", @"Subhead Font", @"Body 2 Font", @"Body 1 Font",
+    @"Caption Font", @"Button Font",
 
-                   // Display fonts (extra large fonts)
-                   @"Display 1 Font",
-                   @"Display 2 Font",
-                   @"Display 3 Font",
-                   @"Display 4 Font"
-                   ];
+    // Display fonts (extra large fonts)
+    @"Display 1 Font", @"Display 2 Font", @"Display 3 Font", @"Display 4 Font"
+  ];
 
-   _styleFonts = @[
-                   customFont(MDCFontTextStyleHeadline),
-                   customFont(MDCFontTextStyleTitle),
-                   customFont(MDCFontTextStyleSubheadline),
-                   customFont(MDCFontTextStyleBody2),
-                   customFont(MDCFontTextStyleBody1),
-                   customFont(MDCFontTextStyleCaption),
-                   customFont(MDCFontTextStyleButton),
-                   customFont(MDCFontTextStyleDisplay1),
-                   customFont(MDCFontTextStyleDisplay2),
-                   customFont(MDCFontTextStyleDisplay3),
-                   customFont(MDCFontTextStyleDisplay4)
-                   ];
+  _styleFonts = @[
+    customFont(MDCFontTextStyleHeadline), customFont(MDCFontTextStyleTitle),
+    customFont(MDCFontTextStyleSubheadline), customFont(MDCFontTextStyleBody2),
+    customFont(MDCFontTextStyleBody1), customFont(MDCFontTextStyleCaption),
+    customFont(MDCFontTextStyleButton), customFont(MDCFontTextStyleDisplay1),
+    customFont(MDCFontTextStyleDisplay2), customFont(MDCFontTextStyleDisplay3),
+    customFont(MDCFontTextStyleDisplay4)
+  ];
 
-   _opacities = @[
-                  @([MDCTypography headlineFontOpacity]),
-                  @([MDCTypography titleFontOpacity]),
-                  @([MDCTypography subheadFontOpacity]),
-                  @([MDCTypography body2FontOpacity]),
-                  @([MDCTypography body1FontOpacity]),
-                  @([MDCTypography captionFontOpacity]),
-                  @([MDCTypography buttonFontOpacity]),
-                  @([MDCTypography display1FontOpacity]),
-                  @([MDCTypography display2FontOpacity]),
-                  @([MDCTypography display3FontOpacity]),
-                  @([MDCTypography display4FontOpacity])
-                  ];
+  _opacities = @[
+    @([MDCTypography headlineFontOpacity]), @([MDCTypography titleFontOpacity]),
+    @([MDCTypography subheadFontOpacity]), @([MDCTypography body2FontOpacity]),
+    @([MDCTypography body1FontOpacity]), @([MDCTypography captionFontOpacity]),
+    @([MDCTypography buttonFontOpacity]), @([MDCTypography display1FontOpacity]),
+    @([MDCTypography display2FontOpacity]), @([MDCTypography display3FontOpacity]),
+    @([MDCTypography display4FontOpacity])
+  ];
 
-   [[NSNotificationCenter defaultCenter] addObserver:self
-                                            selector:@selector(contentSizeCategoryDidChange:)
-                                                name:UIContentSizeCategoryDidChangeNotification
-                                              object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(contentSizeCategoryDidChange:)
+                                               name:UIContentSizeCategoryDidChangeNotification
+                                             object:nil];
 }
 
 - (void)contentSizeCategoryDidChange:(NSNotification *)notification {
-   // Update font array to reflect new size category
-   _styleFonts = @[
-                   customFont(MDCFontTextStyleHeadline),
-                   customFont(MDCFontTextStyleTitle),
-                   customFont(MDCFontTextStyleSubheadline),
-                   customFont(MDCFontTextStyleBody2),
-                   customFont(MDCFontTextStyleBody1),
-                   customFont(MDCFontTextStyleCaption),
-                   customFont(MDCFontTextStyleButton),
-                   customFont(MDCFontTextStyleDisplay1),
-                   customFont(MDCFontTextStyleDisplay2),
-                   customFont(MDCFontTextStyleDisplay3),
-                   customFont(MDCFontTextStyleDisplay4)
-                   ];
+  // Update font array to reflect new size category
+  _styleFonts = @[
+    customFont(MDCFontTextStyleHeadline), customFont(MDCFontTextStyleTitle),
+    customFont(MDCFontTextStyleSubheadline), customFont(MDCFontTextStyleBody2),
+    customFont(MDCFontTextStyleBody1), customFont(MDCFontTextStyleCaption),
+    customFont(MDCFontTextStyleButton), customFont(MDCFontTextStyleDisplay1),
+    customFont(MDCFontTextStyleDisplay2), customFont(MDCFontTextStyleDisplay3),
+    customFont(MDCFontTextStyleDisplay4)
+  ];
 
-   [self.tableView reloadData];
+  [self.tableView reloadData];
 }
 
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-   return _strings.count;
+  return _strings.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-   return _styleFonts.count;
+  return _styleFonts.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-   UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"cell"];
-   if (cell == nil) {
-      cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle
-                                    reuseIdentifier:@"cell"];
-   }
-   cell.textLabel.text = _strings[indexPath.section];
-   cell.textLabel.font = _styleFonts[indexPath.row];
-   cell.textLabel.alpha = [_opacities[indexPath.row] floatValue];
-   cell.textLabel.numberOfLines = 0;
-   cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
+  UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"cell"];
+  if (cell == nil) {
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle
+                                  reuseIdentifier:@"cell"];
+  }
+  cell.textLabel.text = _strings[indexPath.section];
+  cell.textLabel.font = _styleFonts[indexPath.row];
+  cell.textLabel.alpha = [_opacities[indexPath.row] floatValue];
+  cell.textLabel.numberOfLines = 0;
+  cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
 
-   if (cell.textLabel.font.pointSize > 100 && indexPath.section == 0) {
-      cell.textLabel.text = @"ABCD";
-   }
+  if (cell.textLabel.font.pointSize > 100 && indexPath.section == 0) {
+    cell.textLabel.text = @"ABCD";
+  }
 
-   cell.detailTextLabel.text = _styleNames[indexPath.row];
-   cell.detailTextLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
+  cell.detailTextLabel.text = _styleNames[indexPath.row];
+  cell.detailTextLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
 
-   cell.selectionStyle = UITableViewCellSelectionStyleNone;
+  cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
-   return cell;
+  return cell;
 }
 
 #pragma mark - CatalogByConvention
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Typography and Fonts", @"Custom Font Example" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Typography and Fonts", @"Custom Font Example" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

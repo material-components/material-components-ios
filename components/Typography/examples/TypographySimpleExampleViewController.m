@@ -42,9 +42,9 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Typography and Fonts", @"Read Me Demo" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Typography and Fonts", @"Read Me Demo" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

@@ -34,9 +34,7 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
 + (instancetype)actionWithTitle:(NSString *)title
                           image:(UIImage *)image
                         handler:(void (^__nullable)(MDCActionSheetAction *action))handler {
-    return [[MDCActionSheetAction alloc] initWithTitle:title
-                                                 image:image
-                                               handler:handler];
+  return [[MDCActionSheetAction alloc] initWithTitle:title image:image handler:handler];
 }
 
 - (instancetype)initWithTitle:(NSString *)title
@@ -63,7 +61,8 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
 @end
 
 @interface MDCActionSheetController () <MDCBottomSheetPresentationControllerDelegate,
-    UITableViewDelegate, UITableViewDataSource>
+                                        UITableViewDelegate,
+                                        UITableViewDataSource>
 @property(nonatomic, strong) UITableView *tableView;
 @property(nonatomic, strong) MDCActionSheetHeaderView *header;
 @end
@@ -100,8 +99,8 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
     super.modalPresentationStyle = UIModalPresentationCustom;
     _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     _transitionController.trackingScrollView = _tableView;
-    _tableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth
-                                   | UIViewAutoresizingFlexibleHeight);
+    _tableView.autoresizingMask =
+        (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.estimatedRowHeight = 56;
@@ -211,8 +210,7 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
 - (void)preferredContentSizeDidChangeForChildContentContainer:(id<UIContentContainer>)container {
   [super preferredContentSizeDidChangeForChildContentContainer:container];
 
-  [self.presentationController
-      preferredContentSizeDidChangeForChildContentContainer:self];
+  [self.presentationController preferredContentSizeDidChangeForChildContentContainer:self];
 }
 
 - (UIScrollView *)trackingScrollView {
@@ -234,7 +232,7 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
 
 /* Disable setter. Always use internal transition controller */
 - (void)setTransitioningDelegate:
-(__unused id<UIViewControllerTransitioningDelegate>)transitioningDelegate {
+    (__unused id<UIViewControllerTransitioningDelegate>)transitioningDelegate {
   NSAssert(NO, @"MDCActionSheetController.transitioningDelegate cannot be changed.");
   return;
 }
@@ -255,11 +253,12 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   MDCActionSheetAction *action = self.actions[indexPath.row];
 
-  [self.presentingViewController dismissViewControllerAnimated:YES completion:^(void){
-    if (action.completionHandler) {
-      action.completionHandler(action);
-    }
-  }];
+  [self.presentingViewController dismissViewControllerAnimated:YES
+                                                    completion:^(void) {
+                                                      if (action.completionHandler) {
+                                                        action.completionHandler(action);
+                                                      }
+                                                    }];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -364,12 +363,12 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
 }
 
 - (void)updateTableFonts {
-  UIFont *finalActionsFont = _actionFont ?:
-      [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
+  UIFont *finalActionsFont =
+      _actionFont ?: [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
   if (self.mdc_adjustsFontForContentSizeCategory) {
-    finalActionsFont =
-        [finalActionsFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
-                                       scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
+    finalActionsFont = [finalActionsFont
+        mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
+                     scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
   }
   _actionFont = finalActionsFont;
   [self updateTable];

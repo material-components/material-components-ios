@@ -89,8 +89,8 @@ static UIImage *fakeImage(void) {
 
   // Then
   XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsZero, defaultButtonNormal.hitAreaInsets));
-  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsZero,
-                                              defaultButtonExpanded.hitAreaInsets));
+  XCTAssertTrue(
+      UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsZero, defaultButtonExpanded.hitAreaInsets));
   XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsMake(-4, -4, -4, -4),
                                               miniButtonNormal.hitAreaInsets));
   XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsZero, miniButtonExpanded.hitAreaInsets));
@@ -98,7 +98,7 @@ static UIImage *fakeImage(void) {
 
 - (void)testSetHitAreaInsetsForShapeInNormalMode {
   // Given
-  MDCFloatingButton *defaultButton = [[MDCFloatingButton alloc] init]; // Default shape
+  MDCFloatingButton *defaultButton = [[MDCFloatingButton alloc] init];  // Default shape
   defaultButton.mode = MDCFloatingButtonModeExpanded;
   MDCFloatingButton *miniButton =
       [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeMini];
@@ -110,20 +110,20 @@ static UIImage *fakeImage(void) {
                            inMode:MDCFloatingButtonModeNormal];
   defaultButton.mode = MDCFloatingButtonModeNormal;
   [miniButton setHitAreaInsets:UIEdgeInsetsMake(9, 8, 7, 6)
-                          forShape:MDCFloatingButtonShapeMini
-                            inMode:MDCFloatingButtonModeNormal];
+                      forShape:MDCFloatingButtonShapeMini
+                        inMode:MDCFloatingButtonModeNormal];
   miniButton.mode = MDCFloatingButtonModeNormal;
 
   // Then
-  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsMake(1, 2, 3, 4),
-                                              defaultButton.hitAreaInsets));
-  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsMake(9, 8, 7, 6),
-                                              miniButton.hitAreaInsets));
+  XCTAssertTrue(
+      UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsMake(1, 2, 3, 4), defaultButton.hitAreaInsets));
+  XCTAssertTrue(
+      UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsMake(9, 8, 7, 6), miniButton.hitAreaInsets));
 }
 
 - (void)testSetHitAreaInsetsForShapeInExpandedMode {
   // Given
-  MDCFloatingButton *defaultButton = [[MDCFloatingButton alloc] init]; // Default shape
+  MDCFloatingButton *defaultButton = [[MDCFloatingButton alloc] init];  // Default shape
   MDCFloatingButton *miniButton =
       [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeMini];
 
@@ -138,15 +138,15 @@ static UIImage *fakeImage(void) {
   miniButton.mode = MDCFloatingButtonModeExpanded;
 
   // Then
-  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsMake(1, 2, 3, 4),
-                                              defaultButton.hitAreaInsets));
-  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsMake(9, 8, 7, 6),
-                                              miniButton.hitAreaInsets));
+  XCTAssertTrue(
+      UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsMake(1, 2, 3, 4), defaultButton.hitAreaInsets));
+  XCTAssertTrue(
+      UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsMake(9, 8, 7, 6), miniButton.hitAreaInsets));
 }
 
 - (void)testChangingHitAreaInsetsWontTriggerResizing {
   // Given
-  FakeFloatingButton *button = [[FakeFloatingButton alloc] init]; // Default shape
+  FakeFloatingButton *button = [[FakeFloatingButton alloc] init];  // Default shape
   [button reset];
 
   // When
@@ -177,19 +177,19 @@ static UIImage *fakeImage(void) {
   miniButtonExpanded.mode = MDCFloatingButtonModeExpanded;
 
   // Then
-  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsZero,
-                                              defaultButtonNormal.contentEdgeInsets));
-  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsZero,
-                                              defaultButtonExpanded.contentEdgeInsets));
+  XCTAssertTrue(
+      UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsZero, defaultButtonNormal.contentEdgeInsets));
+  XCTAssertTrue(
+      UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsZero, defaultButtonExpanded.contentEdgeInsets));
   XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsMake(8, 8, 8, 8),
                                               miniButtonNormal.contentEdgeInsets));
-  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsZero,
-                                              miniButtonExpanded.contentEdgeInsets));
+  XCTAssertTrue(
+      UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsZero, miniButtonExpanded.contentEdgeInsets));
 }
 
 - (void)testSetContentEdgeInsetsForShapeInNormalMode {
   // Given
-  MDCFloatingButton *defaultButton = [[MDCFloatingButton alloc] init]; // Default shape
+  MDCFloatingButton *defaultButton = [[MDCFloatingButton alloc] init];  // Default shape
   defaultButton.mode = MDCFloatingButtonModeExpanded;
   MDCFloatingButton *miniButton =
       [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeMini];
@@ -206,15 +206,15 @@ static UIImage *fakeImage(void) {
   miniButton.mode = MDCFloatingButtonModeNormal;
 
   // Then
-  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsMake(1, 2, 3, 4),
-                                              defaultButton.contentEdgeInsets));
-  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsMake(9, 8, 7, 6),
-                                              miniButton.contentEdgeInsets));
+  XCTAssertTrue(
+      UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsMake(1, 2, 3, 4), defaultButton.contentEdgeInsets));
+  XCTAssertTrue(
+      UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsMake(9, 8, 7, 6), miniButton.contentEdgeInsets));
 }
 
 - (void)testSetContentEdgeInsetsForShapeInExpandedMode {
   // Given
-  MDCFloatingButton *defaultButton = [[MDCFloatingButton alloc] init]; // Default shape
+  MDCFloatingButton *defaultButton = [[MDCFloatingButton alloc] init];  // Default shape
   MDCFloatingButton *miniButton =
       [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeMini];
 
@@ -229,15 +229,15 @@ static UIImage *fakeImage(void) {
   miniButton.mode = MDCFloatingButtonModeExpanded;
 
   // Then
-  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsMake(1, 2, 3, 4),
-                                              defaultButton.contentEdgeInsets));
-  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsMake(9, 8, 7, 6),
-                                              miniButton.contentEdgeInsets));
+  XCTAssertTrue(
+      UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsMake(1, 2, 3, 4), defaultButton.contentEdgeInsets));
+  XCTAssertTrue(
+      UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsMake(9, 8, 7, 6), miniButton.contentEdgeInsets));
 }
 
 - (void)testSettingContentEdgeInsetsInvalidatesIntrinsicContentSize {
   // Given
-  FakeFloatingButton *button = [[FakeFloatingButton alloc] init]; // Default shape
+  FakeFloatingButton *button = [[FakeFloatingButton alloc] init];  // Default shape
   [button reset];
 
   // When
@@ -256,7 +256,7 @@ static UIImage *fakeImage(void) {
 
 - (void)testDefaultMaximumSizeForShapeInNormalModeSizeToFit {
   // Given
-  MDCFloatingButton *defaultButton = [[MDCFloatingButton alloc] init]; // Default shape
+  MDCFloatingButton *defaultButton = [[MDCFloatingButton alloc] init];  // Default shape
   [defaultButton setTitle:@"a very long title" forState:UIControlStateNormal];
   MDCFloatingButton *miniButton =
       [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeMini];
@@ -289,7 +289,7 @@ static UIImage *fakeImage(void) {
 
 - (void)testSetMaximumSizeForShapeInModeNormal {
   // Given
-  MDCFloatingButton *defaultButton = [[MDCFloatingButton alloc] init]; // Default shape
+  MDCFloatingButton *defaultButton = [[MDCFloatingButton alloc] init];  // Default shape
   [defaultButton setTitle:@"a very long title" forState:UIControlStateNormal];
   defaultButton.mode = MDCFloatingButtonModeExpanded;
   MDCFloatingButton *miniButton =
@@ -316,7 +316,7 @@ static UIImage *fakeImage(void) {
 
 - (void)testSetMaximumSizeForShapeInModeExpanded {
   // Given
-  MDCFloatingButton *defaultButton = [[MDCFloatingButton alloc] init]; // Default shape
+  MDCFloatingButton *defaultButton = [[MDCFloatingButton alloc] init];  // Default shape
   [defaultButton setTitle:@"An even longer title that should require more than 328 points to render"
                  forState:UIControlStateNormal];
   MDCFloatingButton *miniButton =
@@ -343,7 +343,7 @@ static UIImage *fakeImage(void) {
 
 - (void)testSettingMaximumSizeInvalidatesIntrinsicContentSize {
   // Given
-  FakeFloatingButton *button = [[FakeFloatingButton alloc] init]; // Default shape
+  FakeFloatingButton *button = [[FakeFloatingButton alloc] init];  // Default shape
   [button reset];
 
   // When
@@ -393,7 +393,7 @@ static UIImage *fakeImage(void) {
 
 - (void)testSetMinimumSizeForShapeInModeNormal {
   // Given
-  MDCFloatingButton *defaultButton = [[MDCFloatingButton alloc] init]; // Default shape
+  MDCFloatingButton *defaultButton = [[MDCFloatingButton alloc] init];  // Default shape
   defaultButton.mode = MDCFloatingButtonModeExpanded;
   MDCFloatingButton *miniButton =
       [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeMini];
@@ -427,7 +427,7 @@ static UIImage *fakeImage(void) {
 
 - (void)testSetMinimumSizeForShapeInModeExpanded {
   // Given
-  MDCFloatingButton *defaultButton = [[MDCFloatingButton alloc] init]; // Default shape
+  MDCFloatingButton *defaultButton = [[MDCFloatingButton alloc] init];  // Default shape
   MDCFloatingButton *miniButton =
       [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeMini];
 
@@ -453,7 +453,7 @@ static UIImage *fakeImage(void) {
 
 - (void)testSettingMinimumSizeInvalidatesIntrinsicContentSize {
   // Given
-  FakeFloatingButton *button = [[FakeFloatingButton alloc] init]; // Default shape
+  FakeFloatingButton *button = [[FakeFloatingButton alloc] init];  // Default shape
   [button reset];
 
   // When
@@ -498,7 +498,7 @@ static UIImage *fakeImage(void) {
 - (void)testExpandedLayoutShortTitle {
   // Given
   MDCFloatingButton *button =
-  [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeDefault];
+      [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeDefault];
   button.mode = MDCFloatingButtonModeExpanded;
   [button setTitle:@"A" forState:UIControlStateNormal];
   [button setImage:fakeImage() forState:UIControlStateNormal];
@@ -539,7 +539,7 @@ static UIImage *fakeImage(void) {
   // Then
   CGRect imageFrame = button.imageView.frame;
   CGRect titleFrame = button.titleLabel.frame;
-  XCTAssertEqualWithAccuracy(CGRectGetMaxX(imageFrame), CGRectGetWidth(button.bounds)-16, 1);
+  XCTAssertEqualWithAccuracy(CGRectGetMaxX(imageFrame), CGRectGetWidth(button.bounds) - 16, 1);
   XCTAssertEqualWithAccuracy(CGRectGetMinX(titleFrame), 24, 1);
   XCTAssertEqualWithAccuracy(CGRectGetMinX(imageFrame),
                              CGRectGetMaxX(titleFrame) + button.imageTitleSpace, 1);
@@ -577,7 +577,7 @@ static UIImage *fakeImage(void) {
 
 - (void)testExpandedLayoutBehaviorIsIdempotent {
   // Given
-  MDCFloatingButton *button = [[MDCFloatingButton alloc] init]; // Default shape
+  MDCFloatingButton *button = [[MDCFloatingButton alloc] init];  // Default shape
   button.mode = MDCFloatingButtonModeExpanded;
   [button setTitle:@"Title" forState:UIControlStateNormal];
   [button setImage:fakeImage() forState:UIControlStateNormal];
@@ -599,7 +599,6 @@ static UIImage *fakeImage(void) {
                 @"Title frames are not equal.\nExpected: %@\nReceived: %@",
                 NSStringFromCGRect(originalTitleFrame),
                 NSStringFromCGRect(button.titleLabel.frame));
-
 }
 
 - (void)testDefaultElevationsForState {
@@ -650,7 +649,9 @@ static UIImage *fakeImage(void) {
 }
 
 // This test is flaky.
-// <unknown>:0: error: -[FloatingButtonsTests testCollapseExpandAnimatedRestoresTransform] : Asynchronous wait failed: Exceeded timeout of 1 seconds, with unfulfilled expectations: "Expand animation complete".
+// <unknown>:0: error: -[FloatingButtonsTests testCollapseExpandAnimatedRestoresTransform] :
+// Asynchronous wait failed: Exceeded timeout of 1 seconds, with unfulfilled expectations: "Expand
+// animation complete".
 - (void)disabled_testCollapseExpandAnimatedRestoresTransform {
   // Given
   MDCFloatingButton *button = [[MDCFloatingButton alloc] init];

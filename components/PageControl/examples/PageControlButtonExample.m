@@ -162,9 +162,9 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Page Control", @"Page Control with Next Button" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Page Control", @"Page Control with Next Button" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

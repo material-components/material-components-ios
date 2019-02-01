@@ -15,8 +15,8 @@
 #import <XCTest/XCTest.h>
 
 #import "MaterialColorScheme.h"
-#import "MaterialTabs.h"
 #import "MaterialTabs+ColorThemer.h"
+#import "MaterialTabs.h"
 
 @interface MDCTabBarTestColorScheme : NSObject <MDCColorScheme>
 
@@ -66,10 +66,9 @@
   tabBar.barTintColor = [UIColor greenColor];
   tabBar.tintColor = [UIColor yellowColor];
   tabBar.selectedItemTintColor = [UIColor yellowColor];
-  
+
   // When
-  [MDCTabBarColorThemer applySemanticColorScheme:colorScheme
-                                          toTabs:tabBar];
+  [MDCTabBarColorThemer applySemanticColorScheme:colorScheme toTabs:tabBar];
 
   // Then
   XCTAssertEqualObjects(tabBar.barTintColor, colorScheme.primaryColor);

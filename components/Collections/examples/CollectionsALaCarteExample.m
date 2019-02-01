@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialTypography.h"
 #import "supplemental/CollectionsALaCarteExample.h"
+#import "MaterialTypography.h"
 
 static const NSInteger kSectionCount = 10;
 static const NSInteger kSectionItemCount = 5;
@@ -47,7 +47,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
  */
 @implementation CollectionsALaCarteExample {
   CustomCollectionView *_customCollectionView;
-  NSMutableArray <NSMutableArray *>*_content;
+  NSMutableArray<NSMutableArray *> *_content;
 }
 
 - (void)viewDidLoad {
@@ -125,9 +125,9 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Collections", @"Collections À la carte" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Collections", @"Collections À la carte" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

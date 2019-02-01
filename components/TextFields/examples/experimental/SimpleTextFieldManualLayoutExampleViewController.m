@@ -18,7 +18,7 @@
 
 #import "MaterialButtons+Theming.h"
 #import "MaterialColorScheme.h"
-#import "SimpleTextField.h"
+#import "supplemental/SimpleTextField.h"
 
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar+TypographyThemer.h"

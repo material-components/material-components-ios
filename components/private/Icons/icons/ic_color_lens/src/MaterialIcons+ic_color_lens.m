@@ -23,8 +23,8 @@ static NSString *const kBundleName = @"MaterialIcons_ic_color_lens";
 static NSString *const kIconName = @"ic_color_lens";
 
 // Export a nonsense symbol to suppress a libtool warning when this is linked alone in a static lib.
-__attribute__((visibility("default")))
-    char MDCIconsExportToSuppressLibToolWarning_ic_color_lens = 0;
+__attribute__((visibility("default"))) char MDCIconsExportToSuppressLibToolWarning_ic_color_lens =
+    0;
 
 @implementation MDCIcons (ic_color_lens)
 
@@ -34,9 +34,7 @@ __attribute__((visibility("default")))
 
 + (nullable UIImage *)imageFor_ic_color_lens {
   NSBundle *bundle = [self bundleNamed:kBundleName];
-  return [UIImage imageNamed:kIconName
-                    inBundle:bundle
-      compatibleWithTraitCollection:nil];
+  return [UIImage imageNamed:kIconName inBundle:bundle compatibleWithTraitCollection:nil];
 }
 
 @end

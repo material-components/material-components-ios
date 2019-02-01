@@ -82,8 +82,8 @@
 - (BOOL)textField:(UITextField *)textField
     shouldChangeCharactersInRange:(NSRange)range
                 replacementString:(NSString *)string {
-  NSString *finishedString =
-      [textField.text stringByReplacingCharactersInRange:range withString:string];
+  NSString *finishedString = [textField.text stringByReplacingCharactersInRange:range
+                                                                     withString:string];
 
   if (textField == (UITextField *)self.nameController.textInput) {
     if ([finishedString rangeOfCharacterFromSet:[NSCharacterSet decimalDigitCharacterSet]].length &&
@@ -153,9 +153,9 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Text Field", @"[Legacy] Manual Layout" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Text Field", @"[Legacy] Manual Layout" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

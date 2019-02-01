@@ -189,11 +189,11 @@ static NSArray<UIFont *> *Fonts() {
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Typography", @"TypographyScheme" ],
-    @"description": @"The Typography component provides methods for displaying text using the "
-    @"type sizes and opacities from the Material Design specifications.",
-    @"primaryDemo": @YES,
-    @"presentable": @YES,
+    @"breadcrumbs" : @[ @"Typography", @"TypographyScheme" ],
+    @"description" : @"The Typography component provides methods for displaying text using the "
+                     @"type sizes and opacities from the Material Design specifications.",
+    @"primaryDemo" : @YES,
+    @"presentable" : @YES,
   };
 }
 

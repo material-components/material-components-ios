@@ -37,10 +37,10 @@ mdc_public_objc_library(
     deps = [
         "//components/Ink",
         "//components/ShadowLayer",
+        "//components/ShapeLibrary",
+        "//components/Shapes",
         "//components/private/Icons/icons/ic_check_circle",
         "//components/private/Math",
-        "//components/private/ShapeLibrary",
-        "//components/private/Shapes",
     ],
 )
 
@@ -153,7 +153,9 @@ mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
         ":Cards",
+        ":Theming",
         "//components/Ink",
+        "//components/schemes/Container",
     ],
 )
 
@@ -164,5 +166,6 @@ mdc_examples_swift_library(
         ":Theming",
         "//components/Buttons:ButtonThemer",
         "//components/Buttons:Theming",
+        "//components/schemes/Container",
     ],
 )

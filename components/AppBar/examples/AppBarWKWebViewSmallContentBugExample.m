@@ -15,9 +15,9 @@
 #import <UIKit/UIKit.h>
 #import <WebKit/WebKit.h>
 
-#import "MaterialAppBar.h"
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar+TypographyThemer.h"
+#import "MaterialAppBar.h"
 
 // This demonstrates a bug when WKWebView's scroll view is the tracking scroll view and the web
 // view's content is smaller than the screen. Note that the content is scrollable because the
@@ -105,9 +105,9 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"App Bar", @"WKWebView small content bug" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"App Bar", @"WKWebView small content bug" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 
