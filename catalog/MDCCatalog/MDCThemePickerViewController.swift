@@ -303,10 +303,6 @@ class ColorSchemeDialog : UIViewController {
 
 fileprivate class MDCDialogThemePickerView: UIView {
 
-  private enum Slider {
-    case red, green, blue
-  }
-
   private let redLeadingButton = MDCButton(frame: .zero)
   private let redSlider = MDCSlider(frame: .zero)
   private let redTrailingButton = MDCButton(frame: .zero)
