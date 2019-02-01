@@ -17,8 +17,9 @@
 #import "../../src/private/MDCBottomNavigationItemView.h"
 #import "MaterialBottomNavigation.h"
 
-static NSString *const kLongTitle = @"123456789012345678901234567890123456789012345678901234567890";
-static NSString *const kShortTitle = @".";
+static NSString *const kLongTitleLatin = @"123456789012345678901234567890123456789012345678901234567890";
+static NSString *const kLongTitleArabic =
+@"دول السيطرة استطاعوا ٣٠. مليون وفرنسا أوراقهم انه تم, نفس قد والديون العالمية. دون ما تنفّس.";
 
 /** The shortest acceptable height for correct layout. */
 static const CGFloat kHeightShort = 48;
@@ -41,8 +42,33 @@ static const CGFloat kWidthTypical = 96;  // 120 - 12 points on leading/trailing
 /** The maximum acceptable width for correct layout */
 static const CGFloat kWidthMaximum = 144;  // 168 - 12 points on leading/trailing edge
 
+@interface MDCFakeBottomNavigationItemView : MDCBottomNavigationItemView
+@property(nonatomic, assign)
+    UIUserInterfaceLayoutDirection effectiveUserInterfaceLayoutDirectionOverride;
+@end
+
+@implementation MDCFakeBottomNavigationItemView {
+  BOOL _isEffectiveUserInterfaceLayoutDirectionOverridden;
+  UIUserInterfaceLayoutDirection _effectiveUserInterfaceLayoutDirectionOverridden;
+}
+
+- (UIUserInterfaceLayoutDirection)effectiveUserInterfaceLayoutDirection {
+  return _isEffectiveUserInterfaceLayoutDirectionOverridden
+             ? _effectiveUserInterfaceLayoutDirectionOverridden
+             : [super effectiveUserInterfaceLayoutDirection];
+}
+
+- (void)setEffectiveUserInterfaceLayoutDirectionOverride:
+    (UIUserInterfaceLayoutDirection)effectiveUserInterfaceLayoutDirectionOverride {
+  _isEffectiveUserInterfaceLayoutDirectionOverridden = YES;
+  _effectiveUserInterfaceLayoutDirectionOverridden =
+      effectiveUserInterfaceLayoutDirectionOverride;
+}
+
+@end
+
 @interface MDCBottomNavigationItemViewSnapshotTests : MDCSnapshotTestCase
-@property(nonatomic, strong) MDCBottomNavigationItemView *itemView;
+@property(nonatomic, strong) MDCFakeBottomNavigationItemView *itemView;
 @end
 
 @implementation MDCBottomNavigationItemViewSnapshotTests
@@ -54,9 +80,10 @@ static const CGFloat kWidthMaximum = 144;  // 168 - 12 points on leading/trailin
   // test you wish to recreate the golden for).
   //  self.recordMode = YES;
 
-  self.itemView = [[MDCBottomNavigationItemView alloc] init];
+  self.itemView = [[MDCFakeBottomNavigationItemView alloc] init];
   self.itemView.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   self.itemView.image = [UIImage mdc_testImageOfSize:CGSizeMake(24, 24)];
+  self.itemView.title = kLongTitleLatin;
 }
 
 - (void)generateAndVerifySnapshot {
@@ -64,74 +91,144 @@ static const CGFloat kWidthMaximum = 144;  // 168 - 12 points on leading/trailin
   [self snapshotVerifyView:backgroundView];
 }
 
+- (void)changeToRTLAndArabic {
+  self.itemView.effectiveUserInterfaceLayoutDirectionOverride =
+      UIUserInterfaceLayoutDirectionRightToLeft;
+  self.itemView.title = kLongTitleArabic;
+}
+
 #pragma mark - Varied widths
 
-- (void)testNarrowWidthTypicalHeightLongTitleStacked {
+- (void)testNarrowWidthTypicalHeightLongTitleStackedLTR {
   // When
-  self.itemView.title = kLongTitle;
   self.itemView.titleBelowIcon = YES;
   self.itemView.frame = CGRectMake(0, 0, kWidthNarrrow, kHeightTypical);
 
   [self generateAndVerifySnapshot];
 }
 
-- (void)testNarrowWidthTypicalHeightLongTitleAdjacent {
+- (void)testNarrowWidthTypicalHeightLongTitleStackedRTL {
   // When
-  self.itemView.title = kLongTitle;
+  [self changeToRTLAndArabic];
+  self.itemView.titleBelowIcon = YES;
+  self.itemView.frame = CGRectMake(0, 0, kWidthNarrrow, kHeightTypical);
+
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testNarrowWidthTypicalHeightLongTitleAdjacentLTR {
+  // When
   self.itemView.titleBelowIcon = NO;
   self.itemView.frame = CGRectMake(0, 0, kWidthNarrrow, kHeightTypical);
 
   [self generateAndVerifySnapshot];
 }
 
-- (void)testMinimumWidthTypicalHeightLongTitleStacked {
+- (void)testNarrowWidthTypicalHeightLongTitleAdjacentRTL {
   // When
-  self.itemView.title = kLongTitle;
+  [self changeToRTLAndArabic];
+  self.itemView.titleBelowIcon = NO;
+  self.itemView.frame = CGRectMake(0, 0, kWidthNarrrow, kHeightTypical);
+
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testMinimumWidthTypicalHeightLongTitleStackedLTR {
+  // When
   self.itemView.titleBelowIcon = YES;
   self.itemView.frame = CGRectMake(0, 0, kWidthMinimum, kHeightTypical);
 
   [self generateAndVerifySnapshot];
 }
 
-- (void)testMinimumWidthTypicalHeightLongTitleAdjacent {
+- (void)testMinimumWidthTypicalHeightLongTitleStackedRTL {
   // When
-  self.itemView.title = kLongTitle;
+  [self changeToRTLAndArabic];
+  self.itemView.titleBelowIcon = YES;
+  self.itemView.frame = CGRectMake(0, 0, kWidthMinimum, kHeightTypical);
+
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testMinimumWidthTypicalHeightLongTitleAdjacentLTR {
+  // When
   self.itemView.titleBelowIcon = NO;
   self.itemView.frame = CGRectMake(0, 0, kWidthMinimum, kHeightTypical);
 
   [self generateAndVerifySnapshot];
 }
 
-- (void)testTypicalWidthTypicalHeightLongTitleStacked {
+- (void)testMinimumWidthTypicalHeightLongTitleAdjacentRTL {
   // When
-  self.itemView.title = kLongTitle;
+  [self changeToRTLAndArabic];
+  self.itemView.titleBelowIcon = NO;
+  self.itemView.frame = CGRectMake(0, 0, kWidthMinimum, kHeightTypical);
+
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testTypicalWidthTypicalHeightLongTitleStackedLTR {
+  // When
   self.itemView.titleBelowIcon = YES;
   self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
 
   [self generateAndVerifySnapshot];
 }
 
-- (void)testTypicalWidthTypicalHeightLongTitleAdjacent {
+- (void)testTypicalWidthTypicalHeightLongTitleStackedRTL {
   // When
-  self.itemView.title = kLongTitle;
+  [self changeToRTLAndArabic];
+  self.itemView.titleBelowIcon = YES;
+  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testTypicalWidthTypicalHeightLongTitleAdjacentLTR {
+  // When
   self.itemView.titleBelowIcon = NO;
   self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
 
   [self generateAndVerifySnapshot];
 }
 
-- (void)testMaximumWidthTypicalHeightLongTitleStacked {
+- (void)testTypicalWidthTypicalHeightLongTitleAdjacentRTL {
   // When
-  self.itemView.title = kLongTitle;
+  [self changeToRTLAndArabic];
+  self.itemView.titleBelowIcon = NO;
+  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testMaximumWidthTypicalHeightLongTitleStackedLTR {
+  // When
   self.itemView.titleBelowIcon = YES;
   self.itemView.frame = CGRectMake(0, 0, kWidthMaximum, kHeightTypical);
 
   [self generateAndVerifySnapshot];
 }
 
-- (void)testMaximumWidthTypicalHeightLongTitleAdjacent {
+- (void)testMaximumWidthTypicalHeightLongTitleStackedRTL {
   // When
-  self.itemView.title = kLongTitle;
+  [self changeToRTLAndArabic];
+  self.itemView.titleBelowIcon = YES;
+  self.itemView.frame = CGRectMake(0, 0, kWidthMaximum, kHeightTypical);
+
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testMaximumWidthTypicalHeightLongTitleAdjacentLTR {
+  // When
+  self.itemView.titleBelowIcon = NO;
+  self.itemView.frame = CGRectMake(0, 0, kWidthMaximum, kHeightTypical);
+
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testMaximumWidthTypicalHeightLongTitleAdjacentRTL {
+  // When
+  [self changeToRTLAndArabic];
   self.itemView.titleBelowIcon = NO;
   self.itemView.frame = CGRectMake(0, 0, kWidthMaximum, kHeightTypical);
 
@@ -140,36 +237,68 @@ static const CGFloat kWidthMaximum = 144;  // 168 - 12 points on leading/trailin
 
 #pragma mark - Varied heights
 
-- (void)testTypicalWidthShortHeightLongTitleStacked {
+- (void)testTypicalWidthShortHeightLongTitleStackedLTR {
   // When
-  self.itemView.title = kLongTitle;
   self.itemView.titleBelowIcon = YES;
   self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightShort);
 
   [self generateAndVerifySnapshot];
 }
 
-- (void)testTypicalWidthShortHeightLongTitleAdjacent {
+- (void)testTypicalWidthShortHeightLongTitleStackedRTL {
   // When
-  self.itemView.title = kLongTitle;
+  [self changeToRTLAndArabic];
+  self.itemView.titleBelowIcon = YES;
+  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightShort);
+
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testTypicalWidthShortHeightLongTitleAdjacentLTR {
+  // When
   self.itemView.titleBelowIcon = NO;
   self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightShort);
 
   [self generateAndVerifySnapshot];
 }
 
-- (void)testTypicalWidthTallHeightLongTitleStacked {
+- (void)testTypicalWidthShortHeightLongTitleAdjacentRTL {
   // When
-  self.itemView.title = kLongTitle;
+  [self changeToRTLAndArabic];
+  self.itemView.titleBelowIcon = NO;
+  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightShort);
+
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testTypicalWidthTallHeightLongTitleStackedLTR {
+  // When
   self.itemView.titleBelowIcon = YES;
   self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTall);
 
   [self generateAndVerifySnapshot];
 }
 
-- (void)testTypicalWidthTallHeightLongTitleAdjacent {
+- (void)testTypicalWidthTallHeightLongTitleStackedRTL {
   // When
-  self.itemView.title = kLongTitle;
+  [self changeToRTLAndArabic];
+  self.itemView.titleBelowIcon = YES;
+  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTall);
+
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testTypicalWidthTallHeightLongTitleAdjacentLTR {
+  // When
+  self.itemView.titleBelowIcon = NO;
+  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTall);
+
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testTypicalWidthTallHeightLongTitleAdjacentRTL {
+  // When
+  [self changeToRTLAndArabic];
   self.itemView.titleBelowIcon = NO;
   self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTall);
 
