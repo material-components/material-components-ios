@@ -17,9 +17,10 @@
 #import "../../src/private/MDCBottomNavigationItemView.h"
 #import "MaterialBottomNavigation.h"
 
-static NSString *const kLongTitleLatin = @"123456789012345678901234567890123456789012345678901234567890";
+static NSString *const kLongTitleLatin =
+    @"123456789012345678901234567890123456789012345678901234567890";
 static NSString *const kLongTitleArabic =
-@"دول السيطرة استطاعوا ٣٠. مليون وفرنسا أوراقهم انه تم, نفس قد والديون العالمية. دون ما تنفّس.";
+    @"دول السيطرة استطاعوا ٣٠. مليون وفرنسا أوراقهم انه تم, نفس قد والديون العالمية. دون ما تنفّس.";
 
 /** The shortest acceptable height for correct layout. */
 static const CGFloat kHeightShort = 48;
@@ -61,8 +62,7 @@ static const CGFloat kWidthMaximum = 144;  // 168 - 12 points on leading/trailin
 - (void)setEffectiveUserInterfaceLayoutDirectionOverride:
     (UIUserInterfaceLayoutDirection)effectiveUserInterfaceLayoutDirectionOverride {
   _isEffectiveUserInterfaceLayoutDirectionOverridden = YES;
-  _effectiveUserInterfaceLayoutDirectionOverridden =
-      effectiveUserInterfaceLayoutDirectionOverride;
+  _effectiveUserInterfaceLayoutDirectionOverridden = effectiveUserInterfaceLayoutDirectionOverride;
 }
 
 @end
