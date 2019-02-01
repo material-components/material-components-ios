@@ -321,10 +321,38 @@ class ColorSchemeDialog : UIViewController {
     AppTheme.globalTheme = AppTheme.init(containerScheme: scheme)
   }
 
+  /**
+   "onBackgroundColor",
+ */
+
   private func update(colorScheme: MDCSemanticColorScheme,
                       property: String,
-                      with color: UIColor) -> MDCSemanticColorScheme {
-    return MDCSemanticColorScheme(defaults: .material201804)
+                      with newColor: UIColor) -> MDCSemanticColorScheme {
+    switch property {
+    case "primaryColor":
+      colorScheme.primaryColor = newColor
+    case "primaryColorVariant":
+      colorScheme.primaryColorVariant = newColor
+    case "secondaryColor":
+      colorScheme.secondaryColor = newColor
+    case "errorColor":
+      colorScheme.errorColor = newColor
+    case "surfaceColor":
+      colorScheme.surfaceColor = newColor
+    case "backgroundColor":
+      colorScheme.backgroundColor = newColor
+    case "onPrimaryColor":
+      colorScheme.onPrimaryColor = newColor
+    case "onSecondaryColor":
+      colorScheme.onSecondaryColor = newColor
+    case "onSurfaceColor":
+      colorScheme.onSurfaceColor = newColor
+    case "onBackgroundColor":
+      colorScheme.onBackgroundColor = newColor
+    default:
+      break
+    }
+    return colorScheme
   }
 }
 
