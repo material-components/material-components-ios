@@ -61,6 +61,20 @@ static const CGFloat kMDCBottomNavigationItemBadgeYPadding = 2;
   [self sizeBadge];
 }
 
+- (CGSize)sizeThatFits:(CGSize)size {
+  if (self.badgeValue == nil || self.badgeValue.length == 0) {
+    return CGSizeZero;
+  }
+
+  CGSize labelSize = [self.badgeValueLabel sizeThatFits:size];
+  CGFloat badgeCircleWidth = labelSize.width + self.xPadding;
+  CGFloat badgeCircleHeight = labelSize.height + self.yPadding;
+  if (badgeCircleWidth < badgeCircleHeight) {
+    badgeCircleWidth = badgeCircleHeight;
+  }
+  return CGSizeMake(badgeCircleWidth, badgeCircleHeight);
+}
+
 - (void)sizeBadge {
   [_badgeValueLabel sizeToFit];
   _xPadding = kMDCBottomNavigationItemBadgeXPadding;

@@ -172,8 +172,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   CGRect iconImageViewFrame = CGRectZero;
   [self calculateLayoutInBounds:availableRect
                   forLabelFrame:&labelFrame
-             iconImageViewFrame:&iconImageViewFrame
-                badgeViewCenter:NULL];
+             iconImageViewFrame:&iconImageViewFrame];
 
   CGRect totalFrame = CGRectUnion(labelFrame, iconImageViewFrame);
   totalFrame = UIEdgeInsetsInsetRect(
@@ -184,8 +183,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 
 - (void)calculateLayoutInBounds:(CGRect)contentBounds
                   forLabelFrame:(CGRect *)outLabelFrame
-             iconImageViewFrame:(CGRect *)outIconFrame
-                badgeViewCenter:(CGPoint *)outBadgeViewCenter {
+             iconImageViewFrame:(CGRect *)outIconFrame {
   CGRect contentBoundingRect =
       CGRectStandardize(UIEdgeInsetsInsetRect(contentBounds, self.contentInsets));
   CGFloat centerY = CGRectGetMidY(contentBoundingRect);
@@ -251,9 +249,6 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   CGRect tempIconImageViewFrame = CGRectMake(iconImageViewCenter.x - (iconImageViewSize.width / 2),
                                              iconImageViewCenter.y - (iconImageViewSize.height / 2),
                                              iconImageViewSize.width, iconImageViewSize.height);
-  if (outBadgeViewCenter != NULL) {
-    *outBadgeViewCenter = [self badgeCenterFromIconFrame:tempIconImageViewFrame isRTL:isRTL];
-  }
   if (outLabelFrame != NULL) {
     *outLabelFrame =
         CGRectMake(labelCenter.x - (labelSize.width / 2), labelCenter.y - (labelSize.height / 2),
@@ -267,14 +262,12 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 - (void)centerLayoutAnimated:(BOOL)animated {
   CGRect labelFrame = CGRectZero;
   CGRect iconImageViewFrame = CGRectZero;
-  CGPoint badgeViewCenter = CGPointZero;
   UIUserInterfaceLayoutDirection layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
   BOOL isRTL = layoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
 
   [self calculateLayoutInBounds:self.bounds
                   forLabelFrame:&labelFrame
-             iconImageViewFrame:&iconImageViewFrame
-                badgeViewCenter:&badgeViewCenter];
+             iconImageViewFrame:&iconImageViewFrame];
 
   CGPoint iconImageViewCenter =
       CGPointMake(CGRectGetMidX(iconImageViewFrame), CGRectGetMidY(iconImageViewFrame));
