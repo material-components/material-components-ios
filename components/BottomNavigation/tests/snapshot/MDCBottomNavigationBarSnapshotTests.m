@@ -30,8 +30,11 @@ static const CGFloat kWidthNarrow = 240;
 static const CGFloat kHeightTall = 120;
 static const CGFloat kHeightTypical = 56;
 static const CGFloat kHeightShort = 48;
-static NSString *const kLongTitle = @"123456789012345678901234567890123456789012345678901234567890";
-static NSString *const kShortTitle = @".";
+static NSString *const kLongTitleLatin =
+    @"123456789012345678901234567890123456789012345678901234567890";
+static NSString *const kLongTitleArabic =
+    @"دول السيطرة استطاعوا ٣٠. مليون وفرنسا أوراقهم انه تم, نفس قد والديون العالمية. دون ما تنفّس.";
+static NSString *const kShortTitleArabic = @"ما تنفّس.";
 
 @interface MDCMutableUITraitCollection : UITraitCollection
 @property(nonatomic, assign) UIUserInterfaceSizeClass horizontalSizeClassOverride;
@@ -125,15 +128,28 @@ static NSString *const kShortTitle = @".";
   }
 }
 
+- (void)changeToRTLAndArabicWithTitle:(NSString *)title {
+  if (@available(iOS 9.0, *)) {
+    self.navigationBar.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
+  }
+  for (UITabBarItem *item in self.navigationBar.items) {
+    item.title = title;
+    if (@available(iOS 9.0, *)) {
+      UIView *view = [self.navigationBar viewForItem:item];
+      view.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
+    }
+  }
+}
+
 #pragma mark - Title length
 
-- (void)testJustifiedUnspecifiedAlwaysWithFiveLongTitleItemsiPadWidthTypicalHeight {
+- (void)testJustifiedUnspecifiedAlwaysWithFiveLongTitleItemsiPadWidthTypicalHeightLTR {
   // When
   [self configureBottomNavigation:self.navigationBar
                     withAlignment:MDCBottomNavigationBarAlignmentJustified
                   titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
                   traitCollection:nil
-                        allTitles:kLongTitle];
+                        allTitles:kLongTitleLatin];
   self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
@@ -141,7 +157,22 @@ static NSString *const kShortTitle = @".";
   [self generateAndVerifySnapshot];
 }
 
-- (void)testJustifiedAdjacentRegularAlwaysWithFiveLongTitleItemsiPadWidthTypicalHeight {
+- (void)testJustifiedUnspecifiedAlwaysWithFiveLongTitleItemsiPadWidthTypicalHeightRTL {
+  // When
+  [self configureBottomNavigation:self.navigationBar
+                    withAlignment:MDCBottomNavigationBarAlignmentJustified
+                  titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
+                  traitCollection:nil
+                        allTitles:kLongTitleLatin];
+  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
+  [self changeToRTLAndArabicWithTitle:kLongTitleArabic];
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testJustifiedAdjacentRegularAlwaysWithFiveLongTitleItemsiPadWidthTypicalHeightLTR {
   // Given
   MDCMutableUITraitCollection *traitCollection = [[MDCMutableUITraitCollection alloc] init];
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassRegular;
@@ -151,7 +182,7 @@ static NSString *const kShortTitle = @".";
                     withAlignment:MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles
                   titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
                   traitCollection:traitCollection
-                        allTitles:kLongTitle];
+                        allTitles:kLongTitleLatin];
   self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
@@ -159,14 +190,48 @@ static NSString *const kShortTitle = @".";
   [self generateAndVerifySnapshot];
 }
 
-- (void)testCenteredUnspecifiedAlwaysWithFiveLongTitleItemsiPadWidthTypicalHeight {
+- (void)testJustifiedAdjacentRegularAlwaysWithFiveLongTitleItemsiPadWidthTypicalHeightRTL {
+  // Given
+  MDCMutableUITraitCollection *traitCollection = [[MDCMutableUITraitCollection alloc] init];
+  traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassRegular;
+
+  // When
+  [self configureBottomNavigation:self.navigationBar
+                    withAlignment:MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles
+                  titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
+                  traitCollection:traitCollection
+                        allTitles:kLongTitleLatin];
+  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
+  [self changeToRTLAndArabicWithTitle:kLongTitleArabic];
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testCenteredUnspecifiedAlwaysWithFiveLongTitleItemsiPadWidthTypicalHeightLTR {
   // When
   [self configureBottomNavigation:self.navigationBar
                     withAlignment:MDCBottomNavigationBarAlignmentCentered
                   titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
                   traitCollection:nil
-                        allTitles:kLongTitle];
+                        allTitles:kLongTitleLatin];
   self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testCenteredUnspecifiedAlwaysWithFiveLongTitleItemsiPadWidthTypicalHeightRTL {
+  // When
+  [self configureBottomNavigation:self.navigationBar
+                    withAlignment:MDCBottomNavigationBarAlignmentCentered
+                  titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
+                  traitCollection:nil
+                        allTitles:kLongTitleLatin];
+  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
+  [self changeToRTLAndArabicWithTitle:kLongTitleArabic];
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
@@ -175,7 +240,7 @@ static NSString *const kShortTitle = @".";
 
 #pragma mark - Title visibility
 
-- (void)testJustifiedUnspecifiedSelectedWithThreeItemsTypicalWidthTypicalHeight {
+- (void)testJustifiedUnspecifiedSelectedWithThreeItemsTypicalWidthTypicalHeightLTR {
   // When
   self.navigationBar.items = @[ self.tabItem1, self.tabItem2, self.tabItem3 ];
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
@@ -187,7 +252,20 @@ static NSString *const kShortTitle = @".";
   [self generateAndVerifySnapshot];
 }
 
-- (void)testJustifiedUnspecifiedAlwaysWithThreeItemsTypicalWidthTypicalHeight {
+- (void)testJustifiedUnspecifiedSelectedWithThreeItemsTypicalWidthTypicalHeightRTL {
+  // When
+  self.navigationBar.items = @[ self.tabItem1, self.tabItem2, self.tabItem3 ];
+  self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
+  self.navigationBar.selectedItem = self.tabItem2;
+  self.navigationBar.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+  [self changeToRTLAndArabicWithTitle:kShortTitleArabic];
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testJustifiedUnspecifiedAlwaysWithThreeItemsTypicalWidthTypicalHeightLTR {
   // When
   self.navigationBar.items = @[ self.tabItem1, self.tabItem2, self.tabItem3 ];
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
@@ -199,7 +277,20 @@ static NSString *const kShortTitle = @".";
   [self generateAndVerifySnapshot];
 }
 
-- (void)testJustifiedUnspecifiedNeverWithThreeItemsTypicalWidthTypicalHeight {
+- (void)testJustifiedUnspecifiedAlwaysWithThreeItemsTypicalWidthTypicalHeightRTL {
+  // When
+  self.navigationBar.items = @[ self.tabItem1, self.tabItem2, self.tabItem3 ];
+  self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+  self.navigationBar.selectedItem = self.tabItem2;
+  self.navigationBar.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+  [self changeToRTLAndArabicWithTitle:kShortTitleArabic];
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testJustifiedUnspecifiedNeverWithThreeItemsTypicalWidthTypicalHeightLTR {
   // When
   self.navigationBar.items = @[ self.tabItem1, self.tabItem2, self.tabItem3 ];
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityNever;
@@ -211,9 +302,22 @@ static NSString *const kShortTitle = @".";
   [self generateAndVerifySnapshot];
 }
 
+- (void)testJustifiedUnspecifiedNeverWithThreeItemsTypicalWidthTypicalHeightRTL {
+  // When
+  self.navigationBar.items = @[ self.tabItem1, self.tabItem2, self.tabItem3 ];
+  self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityNever;
+  self.navigationBar.selectedItem = self.tabItem2;
+  self.navigationBar.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+  [self changeToRTLAndArabicWithTitle:kShortTitleArabic];
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
 #pragma mark - Extreme sizes
 
-- (void)testJustifiedUnspecifiedAlwaysFiveItemsNarrowWidthShortHeight {
+- (void)testJustifiedUnspecifiedAlwaysFiveItemsNarrowWidthShortHeightLTR {
   // When
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   self.navigationBar.selectedItem = self.tabItem2;
@@ -224,7 +328,19 @@ static NSString *const kShortTitle = @".";
   [self generateAndVerifySnapshot];
 }
 
-- (void)testJustifiedUnspecifiedAlwaysFiveItemsWideWidthTallHeight {
+- (void)testJustifiedUnspecifiedAlwaysFiveItemsNarrowWidthShortHeightRTL {
+  // When
+  self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+  self.navigationBar.selectedItem = self.tabItem2;
+  self.navigationBar.frame = CGRectMake(0, 0, kWidthNarrow, kHeightShort);
+  [self changeToRTLAndArabicWithTitle:kShortTitleArabic];
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testJustifiedUnspecifiedAlwaysFiveItemsWideWidthTallHeightLTR {
   // When
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   self.navigationBar.selectedItem = self.tabItem2;
@@ -235,9 +351,21 @@ static NSString *const kShortTitle = @".";
   [self generateAndVerifySnapshot];
 }
 
+- (void)testJustifiedUnspecifiedAlwaysFiveItemsWideWidthTallHeightRTL {
+  // When
+  self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+  self.navigationBar.selectedItem = self.tabItem2;
+  self.navigationBar.frame = CGRectMake(0, 0, kWidthWide, kHeightTall);
+  [self changeToRTLAndArabicWithTitle:kShortTitleArabic];
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
 #pragma mark - Alignment .Justified
 
-- (void)testJustifiedUnspecifiedAlwaysFiveItemsFitWidthFitHeight {
+- (void)testJustifiedUnspecifiedAlwaysFiveItemsFitWidthFitHeightLTR {
   // Given
   MDCMutableUITraitCollection *traitCollection = [[MDCMutableUITraitCollection alloc] init];
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassUnspecified;
@@ -255,7 +383,26 @@ static NSString *const kShortTitle = @".";
   [self generateAndVerifySnapshot];
 }
 
-- (void)testJustifiedCompactAlwaysFiveItemsFitWidthFitHeight {
+- (void)testJustifiedUnspecifiedAlwaysFiveItemsFitWidthFitHeightRTL {
+  // Given
+  MDCMutableUITraitCollection *traitCollection = [[MDCMutableUITraitCollection alloc] init];
+  traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassUnspecified;
+
+  // When
+  self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+  self.navigationBar.alignment = MDCBottomNavigationBarAlignmentJustified;
+  self.navigationBar.selectedItem = self.tabItem2;
+  self.navigationBar.traitCollectionOverride = traitCollection;
+  CGSize fitSize = [self.navigationBar sizeThatFits:CGSizeMake(kWidthWide, kHeightTall)];
+  self.navigationBar.frame = CGRectMake(0, 0, fitSize.width, fitSize.height);
+  [self changeToRTLAndArabicWithTitle:kShortTitleArabic];
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testJustifiedCompactAlwaysFiveItemsFitWidthFitHeightLTR {
   // Given
   MDCMutableUITraitCollection *traitCollection = [[MDCMutableUITraitCollection alloc] init];
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassCompact;
@@ -273,7 +420,26 @@ static NSString *const kShortTitle = @".";
   [self generateAndVerifySnapshot];
 }
 
-- (void)testJustifiedRegularAlwaysFiveItemsFitWidthFitHeight {
+- (void)testJustifiedCompactAlwaysFiveItemsFitWidthFitHeightRTL {
+  // Given
+  MDCMutableUITraitCollection *traitCollection = [[MDCMutableUITraitCollection alloc] init];
+  traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassCompact;
+
+  // When
+  self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+  self.navigationBar.alignment = MDCBottomNavigationBarAlignmentJustified;
+  self.navigationBar.selectedItem = self.tabItem2;
+  self.navigationBar.traitCollectionOverride = traitCollection;
+  CGSize fitSize = [self.navigationBar sizeThatFits:CGSizeMake(kWidthWide, kHeightTall)];
+  self.navigationBar.frame = CGRectMake(0, 0, fitSize.width, fitSize.height);
+  [self changeToRTLAndArabicWithTitle:kShortTitleArabic];
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testJustifiedRegularAlwaysFiveItemsFitWidthFitHeightLTR {
   // Given
   MDCMutableUITraitCollection *traitCollection = [[MDCMutableUITraitCollection alloc] init];
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassRegular;
@@ -285,6 +451,25 @@ static NSString *const kShortTitle = @".";
   self.navigationBar.traitCollectionOverride = traitCollection;
   CGSize fitSize = [self.navigationBar sizeThatFits:CGSizeMake(kWidthWide, kHeightTall)];
   self.navigationBar.frame = CGRectMake(0, 0, fitSize.width, fitSize.height);
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testJustifiedRegularAlwaysFiveItemsFitWidthFitHeightRTL {
+  // Given
+  MDCMutableUITraitCollection *traitCollection = [[MDCMutableUITraitCollection alloc] init];
+  traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassRegular;
+
+  // When
+  self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+  self.navigationBar.alignment = MDCBottomNavigationBarAlignmentJustified;
+  self.navigationBar.selectedItem = self.tabItem2;
+  self.navigationBar.traitCollectionOverride = traitCollection;
+  CGSize fitSize = [self.navigationBar sizeThatFits:CGSizeMake(kWidthWide, kHeightTall)];
+  self.navigationBar.frame = CGRectMake(0, 0, fitSize.width, fitSize.height);
+  [self changeToRTLAndArabicWithTitle:kShortTitleArabic];
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
@@ -293,7 +478,7 @@ static NSString *const kShortTitle = @".";
 
 #pragma mark - Alignment .JustifiedAdjacent
 
-- (void)testJustifiedAdjacentUnspecifiedAlwaysFiveItemsFitWidthFitHeight {
+- (void)testJustifiedAdjacentUnspecifiedAlwaysFiveItemsFitWidthFitHeightLTR {
   // Given
   MDCMutableUITraitCollection *traitCollection = [[MDCMutableUITraitCollection alloc] init];
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassUnspecified;
@@ -311,7 +496,26 @@ static NSString *const kShortTitle = @".";
   [self generateAndVerifySnapshot];
 }
 
-- (void)testJustifiedAdjacentCompactAlwaysFiveItemsFitWidthFitHeight {
+- (void)testJustifiedAdjacentUnspecifiedAlwaysFiveItemsFitWidthFitHeightRTL {
+  // Given
+  MDCMutableUITraitCollection *traitCollection = [[MDCMutableUITraitCollection alloc] init];
+  traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassUnspecified;
+
+  // When
+  self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+  self.navigationBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles;
+  self.navigationBar.selectedItem = self.tabItem2;
+  self.navigationBar.traitCollectionOverride = traitCollection;
+  CGSize fitSize = [self.navigationBar sizeThatFits:CGSizeMake(kWidthWide, kHeightTall)];
+  self.navigationBar.frame = CGRectMake(0, 0, fitSize.width, fitSize.height);
+  [self changeToRTLAndArabicWithTitle:kShortTitleArabic];
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testJustifiedAdjacentCompactAlwaysFiveItemsFitWidthFitHeightLTR {
   // Given
   MDCMutableUITraitCollection *traitCollection = [[MDCMutableUITraitCollection alloc] init];
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassCompact;
@@ -329,7 +533,26 @@ static NSString *const kShortTitle = @".";
   [self generateAndVerifySnapshot];
 }
 
-- (void)testJustifiedAdjacentRegularAlwaysFiveItemsFitWidthFitHeight {
+- (void)testJustifiedAdjacentCompactAlwaysFiveItemsFitWidthFitHeightRTL {
+  // Given
+  MDCMutableUITraitCollection *traitCollection = [[MDCMutableUITraitCollection alloc] init];
+  traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassCompact;
+
+  // When
+  self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+  self.navigationBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles;
+  self.navigationBar.selectedItem = self.tabItem2;
+  self.navigationBar.traitCollectionOverride = traitCollection;
+  CGSize fitSize = [self.navigationBar sizeThatFits:CGSizeMake(kWidthWide, kHeightTall)];
+  self.navigationBar.frame = CGRectMake(0, 0, fitSize.width, fitSize.height);
+  [self changeToRTLAndArabicWithTitle:kShortTitleArabic];
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testJustifiedAdjacentRegularAlwaysFiveItemsFitWidthFitHeightLTR {
   // Given
   MDCMutableUITraitCollection *traitCollection = [[MDCMutableUITraitCollection alloc] init];
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassRegular;
@@ -341,6 +564,25 @@ static NSString *const kShortTitle = @".";
   self.navigationBar.traitCollectionOverride = traitCollection;
   CGSize fitSize = [self.navigationBar sizeThatFits:CGSizeMake(kWidthWide, kHeightTall)];
   self.navigationBar.frame = CGRectMake(0, 0, fitSize.width, fitSize.height);
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testJustifiedAdjacentRegularAlwaysFiveItemsFitWidthFitHeightRTL {
+  // Given
+  MDCMutableUITraitCollection *traitCollection = [[MDCMutableUITraitCollection alloc] init];
+  traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassRegular;
+
+  // When
+  self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+  self.navigationBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles;
+  self.navigationBar.selectedItem = self.tabItem2;
+  self.navigationBar.traitCollectionOverride = traitCollection;
+  CGSize fitSize = [self.navigationBar sizeThatFits:CGSizeMake(kWidthWide, kHeightTall)];
+  self.navigationBar.frame = CGRectMake(0, 0, fitSize.width, fitSize.height);
+  [self changeToRTLAndArabicWithTitle:kShortTitleArabic];
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
@@ -349,7 +591,7 @@ static NSString *const kShortTitle = @".";
 
 #pragma mark - Alignment .Centered
 
-- (void)testCenteredUnspecifiedAlwaysFiveItemsFitWidthFitHeight {
+- (void)testCenteredUnspecifiedAlwaysFiveItemsFitWidthFitHeightLTR {
   // Given
   MDCMutableUITraitCollection *traitCollection = [[MDCMutableUITraitCollection alloc] init];
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassUnspecified;
@@ -367,7 +609,26 @@ static NSString *const kShortTitle = @".";
   [self generateAndVerifySnapshot];
 }
 
-- (void)testCenteredCompactAlwaysFiveItemsFitWidthFitHeight {
+- (void)testCenteredUnspecifiedAlwaysFiveItemsFitWidthFitHeightRTL {
+  // Given
+  MDCMutableUITraitCollection *traitCollection = [[MDCMutableUITraitCollection alloc] init];
+  traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassUnspecified;
+
+  // When
+  self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+  self.navigationBar.alignment = MDCBottomNavigationBarAlignmentCentered;
+  self.navigationBar.selectedItem = self.tabItem2;
+  self.navigationBar.traitCollectionOverride = traitCollection;
+  CGSize fitSize = [self.navigationBar sizeThatFits:CGSizeMake(kWidthWide, kHeightTall)];
+  self.navigationBar.frame = CGRectMake(0, 0, fitSize.width, fitSize.height);
+  [self changeToRTLAndArabicWithTitle:kShortTitleArabic];
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testCenteredCompactAlwaysFiveItemsFitWidthFitHeightLTR {
   // Given
   MDCMutableUITraitCollection *traitCollection = [[MDCMutableUITraitCollection alloc] init];
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassCompact;
@@ -385,7 +646,26 @@ static NSString *const kShortTitle = @".";
   [self generateAndVerifySnapshot];
 }
 
-- (void)testCenteredRegularAlwaysFiveItemsFitWidthFitHeight {
+- (void)testCenteredCompactAlwaysFiveItemsFitWidthFitHeightRTL {
+  // Given
+  MDCMutableUITraitCollection *traitCollection = [[MDCMutableUITraitCollection alloc] init];
+  traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassCompact;
+
+  // When
+  self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+  self.navigationBar.alignment = MDCBottomNavigationBarAlignmentCentered;
+  self.navigationBar.selectedItem = self.tabItem2;
+  self.navigationBar.traitCollectionOverride = traitCollection;
+  CGSize fitSize = [self.navigationBar sizeThatFits:CGSizeMake(kWidthWide, kHeightTall)];
+  self.navigationBar.frame = CGRectMake(0, 0, fitSize.width, fitSize.height);
+  [self changeToRTLAndArabicWithTitle:kShortTitleArabic];
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testCenteredRegularAlwaysFiveItemsFitWidthFitHeightLTR {
   // Given
   MDCMutableUITraitCollection *traitCollection = [[MDCMutableUITraitCollection alloc] init];
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassRegular;
@@ -397,6 +677,25 @@ static NSString *const kShortTitle = @".";
   self.navigationBar.traitCollectionOverride = traitCollection;
   CGSize fitSize = [self.navigationBar sizeThatFits:CGSizeMake(kWidthWide, kHeightTall)];
   self.navigationBar.frame = CGRectMake(0, 0, fitSize.width, fitSize.height);
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testCenteredRegularAlwaysFiveItemsFitWidthFitHeightRTL {
+  // Given
+  MDCMutableUITraitCollection *traitCollection = [[MDCMutableUITraitCollection alloc] init];
+  traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassRegular;
+
+  // When
+  self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+  self.navigationBar.alignment = MDCBottomNavigationBarAlignmentCentered;
+  self.navigationBar.selectedItem = self.tabItem2;
+  self.navigationBar.traitCollectionOverride = traitCollection;
+  CGSize fitSize = [self.navigationBar sizeThatFits:CGSizeMake(kWidthWide, kHeightTall)];
+  self.navigationBar.frame = CGRectMake(0, 0, fitSize.width, fitSize.height);
+  [self changeToRTLAndArabicWithTitle:kShortTitleArabic];
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
