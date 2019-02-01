@@ -12,19 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-//#import "SimpleTextFieldLayoutUtils.h"
-//#import "MaterialColorScheme.h"
-//#import "MaterialContainerScheme.h"
-//#import "SimpleTextFieldColorScheme.h"
-//#import "MDCContainedInputViewState.h"
-
-@protocol MDCContainedInputViewColorScheming;
-/**
- MDCInputViewContainerStyle dictates what type of text field it will be from a cosmetic standpoint.
- The values are derived from the styles outlined in the Material Guidelines for Text Fields.
- */
 typedef NS_ENUM(NSUInteger, MDCContainedInputViewState) {
   MDCContainedInputViewStateNormal,
   MDCContainedInputViewStateFocused,
@@ -35,70 +25,41 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewState) {
 
 @protocol MDCContainedInputView <NSObject>
 @property (nonatomic, assign, readonly) MDCContainedInputViewState containedInputViewState;
-@optional
 @property (strong, nonatomic, readonly) UILabel *placeholderLabel;
 @property (strong, nonatomic, readonly) UILabel *leadingUnderlineLabel;
 @property (strong, nonatomic, readonly) UILabel *trailingUnderlineLabel;
 @end
 
-@interface MDCContainerStyle : NSObject
+@protocol MDCContainedInputViewColorScheming <NSObject>
+@property(strong, nonatomic, readonly, nonnull) UIColor *textColor;
+@property(strong, nonatomic, readonly, nonnull) UIColor *underlineLabelColor;
+@property(strong, nonatomic, readonly, nonnull) UIColor *placeholderLabelColor;
+@property(strong, nonatomic, readonly, nonnull) UIColor *clearButtonTintColor;
+@property(strong, nonatomic, readonly, nonnull) UIColor *errorColor;
+@end
+
+@interface MDCContainedInputViewColorScheme : NSObject <MDCContainedInputViewColorScheming>
+@property(strong, nonatomic) UIColor *textColor;
+@property(strong, nonatomic) UIColor *underlineLabelColor;
+@property(strong, nonatomic) UIColor *placeholderLabelColor;
+@property(strong, nonatomic) UIColor *clearButtonTintColor;
+@property(strong, nonatomic) UIColor *errorColor;
+@end
+
+@protocol MDCContainedInputViewStyle <NSObject>
 - (id<MDCContainedInputViewColorScheming>)defaultColorSchemeForState:(MDCContainedInputViewState)state;
-//- (void)applyStyleTo:(id<MDCContainedInputView>)containedInputView;
-- (void)applyStyleTo:(id<MDCContainedInputView>)containedInputView
-withContainedInputViewColorScheming:(id<MDCContainedInputViewColorScheming>)colorScheme;
+- (void)applyStyleToContainedInputView:(id<MDCContainedInputView>)inputView
+   withContainedInputViewColorScheming:(id<MDCContainedInputViewColorScheming>)colorScheme;
 - (void)removeStyleFrom:(id<MDCContainedInputView>)containedInputView;
+
+#pragma mark Density
+- (CGFloat)spaceBetweenTopAndFloatingPlaceholder;
+- (CGFloat)spaceBetweenFloatingPlaceholderAndTextArea;
+- (CGFloat)spaceBetweenTextAreaAndTopRowBottomRowDivider;
 @end
 
-@interface MDCContainerStyleFilled : MDCContainerStyle
-@end
-
-@interface MDCContainerStyleOutlined : MDCContainerStyle
-@end
-
-
-@interface MDCContainerStylePathDrawingUtils : NSObject
-
-+ (void)addTopRightCornerToPath:(UIBezierPath *)path
-                      fromPoint:(CGPoint)point1
-                        toPoint:(CGPoint)point2
-                     withRadius:(CGFloat)radius;
-+ (void)addBottomRightCornerToPath:(UIBezierPath *)path
-                         fromPoint:(CGPoint)point1
-                           toPoint:(CGPoint)point2
-                        withRadius:(CGFloat)radius;
-+ (void)addBottomLeftCornerToPath:(UIBezierPath *)path
-                        fromPoint:(CGPoint)point1
-                          toPoint:(CGPoint)point2
-                       withRadius:(CGFloat)radius;
-+ (void)addTopLeftCornerToPath:(UIBezierPath *)path
-                     fromPoint:(CGPoint)point1
-                       toPoint:(CGPoint)point2
-                    withRadius:(CGFloat)radius;
+@interface MDCContainerStyleBase : NSObject <MDCContainedInputViewStyle>
 @end
 
 
-//typedef NS_ENUM(NSUInteger, MDCInputViewContainerStyle) {
-//  MDCInputViewContainerStyleNone,
-//  MDCInputViewContainerStyleFilled,
-//  MDCInputViewContainerStyleOutline,
-//};
 
-//@interface MDCInputViewContainerStyler : NSObject
-//
-//@property(strong, nonatomic) CAShapeLayer *outlinedSublayer;
-//@property(strong, nonatomic) CAShapeLayer *filledSublayer;
-//@property(strong, nonatomic) CAShapeLayer *filledSublayerUnderline;
-//
-//- (void)applyOutlinedStyle:(BOOL)isOutlined
-//                      view:(UIView *)view
-//  floatingPlaceholderFrame:(CGRect)floatingPlaceholderFrame
-//   topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
-//     isFloatingPlaceholder:(BOOL)isFloatingPlaceholder
-//          outlineLineWidth:(CGFloat)outlineLineWidth;
-//
-//- (void)applyFilledStyle:(BOOL)isFilled
-//                    view:(UIView *)view
-// topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
-//      underlineThickness:(CGFloat)underlineThickness;
-
-//@end

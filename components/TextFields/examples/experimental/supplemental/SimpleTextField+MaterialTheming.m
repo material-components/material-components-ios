@@ -16,8 +16,9 @@
 
 #import <Foundation/Foundation.h>
 
-#import "SimpleTextFieldColorScheme.h"
 #import "MDCContainedInputView.h"
+#import "MDCContainerStyleOutlined.h"
+#import "MDCContainerStyleFilled.h"
 
 //#import "MDCSemanticColorScheme.h"
 

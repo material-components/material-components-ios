@@ -12,417 +12,88 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCContainedInputView.h"
-
-//#import <MDFInternationalization/MDFInternationalization.h>
-//#import <MaterialComponents/MDCMath.h>
-
-#import "MDCContainedInputView.h"
-
 #import <Foundation/Foundation.h>
-#import "SimpleTextFieldColorScheme.h"
+#import <UIKit/UIKit.h>
 
-static const CGFloat kFilledContainerStyleTopCornerRadius = (CGFloat)4.0;
-static const CGFloat kOutlinedContainerStyleCornerRadius = (CGFloat)4.0;
+#import "MDCContainedInputView.h"
 
-static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
+@implementation MDCContainedInputViewColorScheme
 
-@implementation MDCContainerStylePathDrawingUtils
-
-+ (void)addTopRightCornerToPath:(UIBezierPath *)path
-                      fromPoint:(CGPoint)point1
-                        toPoint:(CGPoint)point2
-                     withRadius:(CGFloat)radius {
-  CGFloat startAngle = -(CGFloat)(M_PI / 2);
-  CGFloat endAngle = 0;
-  CGPoint center = CGPointMake(point1.x, point2.y);
-  [path addArcWithCenter:center
-                  radius:radius
-              startAngle:startAngle
-                endAngle:endAngle
-               clockwise:YES];
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    [self commonMDCContainedInputViewColorSchemeInit];
+  }
+  return self;
 }
 
-+ (void)addBottomRightCornerToPath:(UIBezierPath *)path
-                         fromPoint:(CGPoint)point1
-                           toPoint:(CGPoint)point2
-                        withRadius:(CGFloat)radius {
-  CGFloat startAngle = 0;
-  CGFloat endAngle = -(CGFloat)((M_PI * 3) / 2);
-  CGPoint center = CGPointMake(point2.x, point1.y);
-  [path addArcWithCenter:center
-                  radius:radius
-              startAngle:startAngle
-                endAngle:endAngle
-               clockwise:YES];
+- (void)commonMDCContainedInputViewColorSchemeInit {
+  UIColor *textColor = [UIColor blackColor];
+  UIColor *underlineLabelColor = [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.60];
+  UIColor *placeholderLabelColor = [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.60];
+  UIColor *errorColor = [UIColor redColor];
+  UIColor *clearButtonTintColor =
+      [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.20];
+  self.textColor = textColor;
+  self.underlineLabelColor = underlineLabelColor;
+  self.placeholderLabelColor = placeholderLabelColor;
+  self.clearButtonTintColor = clearButtonTintColor;
+  self.errorColor = errorColor;
 }
-
-+ (void)addBottomLeftCornerToPath:(UIBezierPath *)path
-                        fromPoint:(CGPoint)point1
-                          toPoint:(CGPoint)point2
-                       withRadius:(CGFloat)radius {
-  CGFloat startAngle = -(CGFloat)((M_PI * 3) / 2);
-  CGFloat endAngle = -(CGFloat)M_PI;
-  CGPoint center = CGPointMake(point1.x, point2.y);
-  [path addArcWithCenter:center
-                  radius:radius
-              startAngle:startAngle
-                endAngle:endAngle
-               clockwise:YES];
-}
-
-+ (void)addTopLeftCornerToPath:(UIBezierPath *)path
-                     fromPoint:(CGPoint)point1
-                       toPoint:(CGPoint)point2
-                    withRadius:(CGFloat)radius {
-  CGFloat startAngle = -(CGFloat)M_PI;
-  CGFloat endAngle = -(CGFloat)(M_PI / 2);
-  CGPoint center = CGPointMake(point1.x + radius, point2.y + radius);
-  [path addArcWithCenter:center
-                  radius:radius
-              startAngle:startAngle
-                endAngle:endAngle
-               clockwise:YES];
-}
-
 
 @end
 
-@implementation MDCContainerStyle
+@implementation MDCContainerStyleBase
 
 - (id<MDCContainedInputViewColorScheming>)defaultColorSchemeForState:(MDCContainedInputViewState)state {
   MDCContainedInputViewColorScheme *colorScheme = [[MDCContainedInputViewColorScheme alloc] init];
-  //TODO: Implement
+
+  UIColor *placeholderLabelColor = colorScheme.placeholderLabelColor;
+  UIColor *underlineLabelColor = colorScheme.underlineLabelColor;
+  UIColor *textColor = colorScheme.underlineLabelColor;
+
+  switch (state) {
+    case MDCContainedInputViewStateNormal:
+      break;
+    case MDCContainedInputViewStateActivated:
+      break;
+    case MDCContainedInputViewStateDisabled:
+      placeholderLabelColor = [placeholderLabelColor colorWithAlphaComponent:(CGFloat)0.10];
+      break;
+    case MDCContainedInputViewStateErrored:
+      textColor = colorScheme.errorColor;
+      underlineLabelColor = colorScheme.errorColor;
+      placeholderLabelColor = colorScheme.errorColor;
+      break;
+    case MDCContainedInputViewStateFocused:
+//      placeholderLabelColor = [UIColor blackColor];
+      break;
+    default:
+      break;
+  }
+
+  colorScheme.textColor = textColor;
+  colorScheme.underlineLabelColor = underlineLabelColor;
+  colorScheme.placeholderLabelColor = placeholderLabelColor;
+
   return colorScheme;
 }
 
-- (id<MDCContainedInputViewColorScheming>)defaultColorScheme {
-  return [self defaultColorSchemeForState:MDCContainedInputViewStateNormal];
-}
+-(void)applyStyleToContainedInputView:(id<MDCContainedInputView>)inputView
+  withContainedInputViewColorScheming:(id<MDCContainedInputViewColorScheming>)colorScheme { }
 
-- (void)applyStyleTo:(id<MDCContainedInputView>)containedInputView { }
-- (void)applyStyleTo:(id<MDCContainedInputView>)containedInputView
-withContainedInputViewColorScheming:(id<MDCContainedInputViewColorScheming>)colorScheme { }
 - (void)removeStyleFrom:(id<MDCContainedInputView>)containedInputView { }
 
-@end
-
-@interface MDCContainerStyleFilled ()
-@property(strong, nonatomic) CAShapeLayer *filledSublayer;
-@property(strong, nonatomic) CAShapeLayer *filledSublayerUnderline;
-@end
-
-@implementation MDCContainerStyleFilled
-
-- (instancetype)init {
-  self = [super init];
-  if (self) {
-    [self setUpFilledSublayer];
-  }
-  return self;
+- (CGFloat)spaceBetweenTopAndFloatingPlaceholder {
+  return 10;
 }
 
-- (void)setUpFilledSublayer {
-  self.filledSublayer = [[CAShapeLayer alloc] init];
-  self.filledSublayer.lineWidth = 0.0;
-  self.filledSublayerUnderline = [[CAShapeLayer alloc] init];
-  [self.filledSublayer addSublayer:self.filledSublayerUnderline];
+- (CGFloat)spaceBetweenFloatingPlaceholderAndTextArea {
+  return 10;
 }
 
-- (void)applyStyleTo:(id<MDCContainedInputView>)containedInputView
-withContainedInputViewColorScheming:(id<MDCContainedInputViewColorScheming>)colorScheme {
-  if (![containedInputView isKindOfClass:[UIView class]]) {
-    [self removeStyleFrom:containedInputView];
-    return;
-  }
-  UIView *uiView = (UIView *)containedInputView;
-  CGFloat underlineThickness =
-  [self underlineThicknessWithMDCContainedInputViewState:containedInputView.containedInputViewState];
-  CGFloat topRowBottomRowDividerY = containedInputView.leadingUnderlineLabel.frame.origin.y - 10;
-  [self applyStyleToView:uiView
- topRowBottomRowDividerY:topRowBottomRowDividerY
-      underlineThickness:underlineThickness];
-  if ([colorScheme isKindOfClass:[MDCContainedInputViewColorSchemeFilled class]]) {
-    MDCContainedInputViewColorSchemeFilled *filledScheme = (MDCContainedInputViewColorSchemeFilled *)colorScheme;
-    self.filledSublayer.fillColor = filledScheme.filledSublayerFillColor.CGColor;
-    self.filledSublayerUnderline.fillColor = filledScheme.underlineLabelColor.CGColor;
-  }
-}
-
--(void)removeStyleFrom:(id<MDCContainedInputView>)containedInputView {
-  [self.filledSublayer removeFromSuperlayer];
-  [self.filledSublayerUnderline removeFromSuperlayer];
-}
-
-- (void)applyStyleToView:(UIView *)view
- topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
-      underlineThickness:(CGFloat)underlineThickness {
-
-  UIBezierPath *filledSublayerPath =
-  [self filledSublayerPathWithTextFieldBounds:view.bounds
-                      topRowBottomRowDividerY:topRowBottomRowDividerY];
-  UIBezierPath *filledSublayerUnderlinePath =
-  [self filledSublayerUnderlinePathWithTextFieldBounds:view.bounds
-                               topRowBottomRowDividerY:topRowBottomRowDividerY
-                                    underlineThickness:underlineThickness];
-  self.filledSublayer.path = filledSublayerPath.CGPath;
-  self.filledSublayerUnderline.path = filledSublayerUnderlinePath.CGPath;
-  if (self.filledSublayer.superlayer != view.layer) {
-    [view.layer insertSublayer:self.filledSublayer atIndex:0];
-  }
-}
-
-- (UIBezierPath *)filledSublayerPathWithTextFieldBounds:(CGRect)viewBounds
-                                topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY {
-  UIBezierPath *path = [[UIBezierPath alloc] init];
-  CGFloat topRadius = kFilledContainerStyleTopCornerRadius;
-  CGFloat bottomRadius = 0;
-  CGFloat textFieldWidth = CGRectGetWidth(viewBounds);
-  CGFloat sublayerMinY = 0;
-  CGFloat sublayerMaxY = topRowBottomRowDividerY;
-
-  CGPoint startingPoint = CGPointMake(topRadius, sublayerMinY);
-  CGPoint topRightCornerPoint1 = CGPointMake(textFieldWidth - topRadius, sublayerMinY);
-  [path moveToPoint:startingPoint];
-  [path addLineToPoint:topRightCornerPoint1];
-
-  CGPoint topRightCornerPoint2 = CGPointMake(textFieldWidth, sublayerMinY + topRadius);
-  [MDCContainerStylePathDrawingUtils addTopRightCornerToPath:path
-                                                   fromPoint:topRightCornerPoint1
-                                                     toPoint:topRightCornerPoint2
-                                                  withRadius:topRadius];
-
-  CGPoint bottomRightCornerPoint1 = CGPointMake(textFieldWidth, sublayerMaxY - bottomRadius);
-  CGPoint bottomRightCornerPoint2 = CGPointMake(textFieldWidth - bottomRadius, sublayerMaxY);
-  [path addLineToPoint:bottomRightCornerPoint1];
-  [MDCContainerStylePathDrawingUtils addBottomRightCornerToPath:path
-                                                      fromPoint:bottomRightCornerPoint1
-                                                        toPoint:bottomRightCornerPoint2
-                                                     withRadius:bottomRadius];
-
-  CGPoint bottomLeftCornerPoint1 = CGPointMake(bottomRadius, sublayerMaxY);
-  CGPoint bottomLeftCornerPoint2 = CGPointMake(0, sublayerMaxY - bottomRadius);
-  [path addLineToPoint:bottomLeftCornerPoint1];
-  [MDCContainerStylePathDrawingUtils addBottomLeftCornerToPath:path
-                                                     fromPoint:bottomLeftCornerPoint1
-                                                       toPoint:bottomLeftCornerPoint2
-                                                    withRadius:bottomRadius];
-
-  CGPoint topLeftCornerPoint1 = CGPointMake(0, sublayerMinY + topRadius);
-  CGPoint topLeftCornerPoint2 = CGPointMake(topRadius, sublayerMinY);
-  [path addLineToPoint:topLeftCornerPoint1];
-  [MDCContainerStylePathDrawingUtils addTopLeftCornerToPath:path
-                                                  fromPoint:topLeftCornerPoint1
-                                                    toPoint:topLeftCornerPoint2
-                                                 withRadius:topRadius];
-
-  return path;
-}
-
-- (UIBezierPath *)filledSublayerUnderlinePathWithTextFieldBounds:(CGRect)viewBounds
-                                         topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
-                                              underlineThickness:(CGFloat)underlineThickness {
-  UIBezierPath *path = [[UIBezierPath alloc] init];
-  CGFloat textFieldWidth = CGRectGetWidth(viewBounds);
-  CGFloat sublayerMaxY = topRowBottomRowDividerY;
-  CGFloat sublayerMinY = sublayerMaxY - underlineThickness;
-
-  CGPoint startingPoint = CGPointMake(0, sublayerMinY);
-  CGPoint topRightCornerPoint1 = CGPointMake(textFieldWidth, sublayerMinY);
-  [path moveToPoint:startingPoint];
-  [path addLineToPoint:topRightCornerPoint1];
-
-  CGPoint topRightCornerPoint2 = CGPointMake(textFieldWidth, sublayerMinY);
-  [MDCContainerStylePathDrawingUtils addTopRightCornerToPath:path
-                                                   fromPoint:topRightCornerPoint1
-                                                     toPoint:topRightCornerPoint2
-                                                  withRadius:0];
-
-  CGPoint bottomRightCornerPoint1 = CGPointMake(textFieldWidth, sublayerMaxY);
-  CGPoint bottomRightCornerPoint2 = CGPointMake(textFieldWidth, sublayerMaxY);
-  [path addLineToPoint:bottomRightCornerPoint1];
-  [MDCContainerStylePathDrawingUtils addBottomRightCornerToPath:path
-                                                      fromPoint:bottomRightCornerPoint1
-                                                        toPoint:bottomRightCornerPoint2
-                                                     withRadius:0];
-
-  CGPoint bottomLeftCornerPoint1 = CGPointMake(0, sublayerMaxY);
-  CGPoint bottomLeftCornerPoint2 = CGPointMake(0, sublayerMaxY);
-  [path addLineToPoint:bottomLeftCornerPoint1];
-  [MDCContainerStylePathDrawingUtils addBottomLeftCornerToPath:path
-                                                     fromPoint:bottomLeftCornerPoint1
-                                                       toPoint:bottomLeftCornerPoint2
-                                                    withRadius:0];
-
-  CGPoint topLeftCornerPoint1 = CGPointMake(0, sublayerMinY);
-  CGPoint topLeftCornerPoint2 = CGPointMake(0, sublayerMinY);
-  [path addLineToPoint:topLeftCornerPoint1];
-  [MDCContainerStylePathDrawingUtils addTopLeftCornerToPath:path
-                                                  fromPoint:topLeftCornerPoint1
-                                                    toPoint:topLeftCornerPoint2
-                                                 withRadius:0];
-
-  return path;
-}
-
-- (CGFloat)underlineThicknessWithMDCContainedInputViewState:(MDCContainedInputViewState)containedInputViewState {
-  CGFloat underlineThickness = 1;
-  switch (containedInputViewState) {
-    case MDCContainedInputViewStateActivated:
-    case MDCContainedInputViewStateErrored:
-    case MDCContainedInputViewStateFocused:
-      underlineThickness = 2;
-      break;
-    case MDCContainedInputViewStateNormal:
-    case MDCContainedInputViewStateDisabled:
-    default:
-      break;
-  }
-  return underlineThickness;
-}
-
-@end
-
-@interface MDCContainerStyleOutlined ()
-
-@property(strong, nonatomic) CAShapeLayer *outlinedSublayer;
-
-@end
-
-@implementation MDCContainerStyleOutlined
-
-- (instancetype)init {
-  self = [super init];
-  if (self) {
-    [self setUpOutlineSublayer];
-  }
-  return self;
-}
-
-- (void)setUpOutlineSublayer {
-  self.outlinedSublayer = [[CAShapeLayer alloc] init];
-  self.outlinedSublayer.fillColor = [UIColor clearColor].CGColor;
-  self.outlinedSublayer.lineWidth = [self outlineLineWidthForState:MDCContainedInputViewStateNormal];
-}
-
-- (void)applyStyleTo:(id<MDCContainedInputView>)containedInputView
-withContainedInputViewColorScheming:(id<MDCContainedInputViewColorScheming>)colorScheme {
-  UIView *uiView = nil;
-  if (![containedInputView isKindOfClass:[UIView class]]) {
-    [self removeStyleFrom:containedInputView];
-    return;
-  }
-  uiView = (UIView *)containedInputView;
-  CGRect placeholderFrame = containedInputView.placeholderLabel.frame;
-  BOOL isFloatingPlaceholder = [self isPlaceholderFloatingWithFrame:placeholderFrame];
-  CGFloat topRowBottomRowDividerY = containedInputView.leadingUnderlineLabel.frame.origin.y - 10;
-  CGFloat lineWidth = [self outlineLineWidthForState:containedInputView.containedInputViewState];
-  [self applyStyleTo:uiView
-    placeholderFrame:placeholderFrame
-topRowBottomRowDividerY:topRowBottomRowDividerY
-isFloatingPlaceholder:isFloatingPlaceholder
-    outlineLineWidth:lineWidth];
-  if ([colorScheme isKindOfClass:[MDCContainedInputViewColorSchemeOutlined class]]) {
-    MDCContainedInputViewColorSchemeOutlined *outlinedScheme = (MDCContainedInputViewColorSchemeOutlined *)colorScheme;
-    self.outlinedSublayer.strokeColor = outlinedScheme.outlineColor.CGColor;
-  }
-}
-
-- (BOOL)isPlaceholderFloatingWithFrame:(CGRect)frame {
-  // TODO: Implement
-  return NO;
-}
-
-- (void)applyStyleTo:(UIView *)view
-    placeholderFrame:(CGRect)placeholderFrame
-topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
-isFloatingPlaceholder:(BOOL)isFloatingPlaceholder
-    outlineLineWidth:(CGFloat)outlineLineWidth {
-  UIBezierPath *path = [self outlinePathWithViewBounds:view.bounds
-                                      placeholderFrame:placeholderFrame
-                               topRowBottomRowDividerY:topRowBottomRowDividerY
-                                             lineWidth:outlineLineWidth
-                                 isFloatingPlaceholder:isFloatingPlaceholder];
-  self.outlinedSublayer.path = path.CGPath;
-  self.outlinedSublayer.lineWidth = outlineLineWidth;
-  if (self.outlinedSublayer.superlayer != view.layer) {
-    [view.layer insertSublayer:self.outlinedSublayer atIndex:0];
-  }
-}
-
-- (UIBezierPath *)outlinePathWithViewBounds:(CGRect)viewBounds
-                           placeholderFrame:(CGRect)placeholderFrame
-                    topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
-                                  lineWidth:(CGFloat)lineWidth
-                      isFloatingPlaceholder:(BOOL)isFloatingPlaceholder {
-  UIBezierPath *path = [[UIBezierPath alloc] init];
-  CGFloat radius = kOutlinedContainerStyleCornerRadius;
-  CGFloat textFieldWidth = CGRectGetWidth(viewBounds);
-  CGFloat sublayerMinY = 0;
-  CGFloat sublayerMaxY = topRowBottomRowDividerY;
-
-  CGPoint startingPoint = CGPointMake(radius, sublayerMinY);
-  CGPoint topRightCornerPoint1 = CGPointMake(textFieldWidth - radius, sublayerMinY);
-  [path moveToPoint:startingPoint];
-  if (isFloatingPlaceholder) {
-    CGFloat leftLineBreak =
-    CGRectGetMinX(placeholderFrame) - kFloatingPlaceholderOutlineSidePadding;
-    CGFloat rightLineBreak =
-    CGRectGetMaxX(placeholderFrame) + kFloatingPlaceholderOutlineSidePadding;
-    [path addLineToPoint:CGPointMake(leftLineBreak, sublayerMinY)];
-    [path moveToPoint:CGPointMake(rightLineBreak, sublayerMinY)];
-    [path addLineToPoint:CGPointMake(rightLineBreak, sublayerMinY)];
-  } else {
-    [path addLineToPoint:topRightCornerPoint1];
-  }
-
-  CGPoint topRightCornerPoint2 = CGPointMake(textFieldWidth, sublayerMinY + radius);
-  [MDCContainerStylePathDrawingUtils addTopRightCornerToPath:path
-                                                   fromPoint:topRightCornerPoint1
-                                                     toPoint:topRightCornerPoint2
-                                                  withRadius:radius];
-
-  CGPoint bottomRightCornerPoint1 = CGPointMake(textFieldWidth, sublayerMaxY - radius);
-  CGPoint bottomRightCornerPoint2 = CGPointMake(textFieldWidth - radius, sublayerMaxY);
-  [path addLineToPoint:bottomRightCornerPoint1];
-  [MDCContainerStylePathDrawingUtils addBottomRightCornerToPath:path
-                                                      fromPoint:bottomRightCornerPoint1
-                                                        toPoint:bottomRightCornerPoint2
-                                                     withRadius:radius];
-
-  CGPoint bottomLeftCornerPoint1 = CGPointMake(radius, sublayerMaxY);
-  CGPoint bottomLeftCornerPoint2 = CGPointMake(0, sublayerMaxY - radius);
-  [path addLineToPoint:bottomLeftCornerPoint1];
-  [MDCContainerStylePathDrawingUtils addBottomLeftCornerToPath:path
-                                                     fromPoint:bottomLeftCornerPoint1
-                                                       toPoint:bottomLeftCornerPoint2
-                                                    withRadius:radius];
-
-  CGPoint topLeftCornerPoint1 = CGPointMake(0, sublayerMinY + radius);
-  CGPoint topLeftCornerPoint2 = CGPointMake(radius, sublayerMinY);
-  [path addLineToPoint:topLeftCornerPoint1];
-  [MDCContainerStylePathDrawingUtils addTopLeftCornerToPath:path
-                                                  fromPoint:topLeftCornerPoint1
-                                                    toPoint:topLeftCornerPoint2
-                                                 withRadius:radius];
-
-  return path;
-}
-
-- (CGFloat)outlineLineWidthForState:(MDCContainedInputViewState)containedInputViewState {
-  CGFloat defaultLineWidth = 1;
-  switch (containedInputViewState) {
-    case MDCContainedInputViewStateActivated:
-    case MDCContainedInputViewStateErrored:
-    case MDCContainedInputViewStateFocused:
-      defaultLineWidth = 2;
-      break;
-    case MDCContainedInputViewStateNormal:
-    case MDCContainedInputViewStateDisabled:
-    default:
-      break;
-  }
-  return defaultLineWidth;
+- (CGFloat)spaceBetweenTextAreaAndTopRowBottomRowDivider {
+  return 10;
 }
 
 @end

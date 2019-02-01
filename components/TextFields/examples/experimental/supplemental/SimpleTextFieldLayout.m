@@ -26,7 +26,7 @@
 #pragma mark Object Lifecycle
 
 - (instancetype)initWithTextFieldSize:(CGSize)textFieldSize
-                       containerStyle:(MDCContainerStyle *)containerStyle
+                       containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
                                  text:(NSString *)text
                           placeholder:(NSString *)placeholder
                                  font:(UIFont *)font
@@ -73,7 +73,7 @@
 #pragma mark Layout Calculation
 
 - (void)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize
-                          containerStyle:(MDCContainerStyle *)containerStyle
+                          containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
                                     text:(NSString *)text
                              placeholder:(NSString *)placeholder
                                     font:(UIFont *)font
@@ -265,13 +265,13 @@
   CGFloat topRowBottomRowDividerY = 0;
 
 
-  if ([containerStyle isMemberOfClass:[MDCContainerStyleFilled class]]) {
-    topRowBottomRowDividerY = topRowSubviewMaxY + kTopRowBottomRowDividerVerticalPadding;
-  } else if ([containerStyle isMemberOfClass:[MDCContainerStyleOutlined class]]) {
-    topRowBottomRowDividerY = topRowSubviewCenterY * 2;
-  } else {
+//  if ([containerStyle isMemberOfClass:[MDCContainerStyleFilled class]]) {
+//    topRowBottomRowDividerY = topRowSubviewMaxY + kTopRowBottomRowDividerVerticalPadding;
+//  } else if ([containerStyle isMemberOfClass:[MDCContainerStyleOutlined class]]) {
+//    topRowBottomRowDividerY = topRowSubviewCenterY * 2;
+//  } else {
     topRowBottomRowDividerY = topRowSubviewMaxY;
-  }
+//  }
 
   CGFloat underlineLabelsCombinedMinY =
       topRowBottomRowDividerY + kTopRowBottomRowDividerVerticalPadding;
@@ -464,21 +464,21 @@
                                     floatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight
                                                textAreaHeight:(CGFloat)textAreaHeight
                                                containerStyle:
-                                                   (MDCContainerStyle *)containerStyle
+                                                   (id<MDCContainedInputViewStyle>)containerStyle
                                           placeholderCanFloat:(BOOL)placeholderCanFloat {
   if (placeholderCanFloat) {
     CGFloat spaceBetweenPlaceholderAndTextArea = 0;
     CGFloat floatingPlaceholderMaxY = floatingPlaceholderMinY + floatingPlaceholderHeight;
     CGFloat outlinedTextFieldSpaceHeuristic = floatingPlaceholderHeight * (CGFloat)0.22;
     
-    if ([containerStyle isMemberOfClass:[MDCContainerStyleFilled class]]) {
-      spaceBetweenPlaceholderAndTextArea = ((CGFloat)0.25 * floatingPlaceholderMaxY);
-    } else if ([containerStyle isMemberOfClass:[MDCContainerStyleOutlined class]]) {
+//    if ([containerStyle isMemberOfClass:[MDCContainerStyleFilled class]]) {
+//      spaceBetweenPlaceholderAndTextArea = ((CGFloat)0.25 * floatingPlaceholderMaxY);
+//    } else if ([containerStyle isMemberOfClass:[MDCContainerStyleOutlined class]]) {
       spaceBetweenPlaceholderAndTextArea =
       floatingPlaceholderMaxY + outlinedTextFieldSpaceHeuristic;
-    } else {
-
-    }
+//    } else {
+//
+//    }
     
     CGFloat lowestAllowableTextAreaMinY =
         floatingPlaceholderMaxY + spaceBetweenPlaceholderAndTextArea;
@@ -503,11 +503,14 @@
 //}
 
 - (CGFloat)floatingPlaceholderMinYWithFloatingHeight:(CGFloat)floatingPlaceholderHeight
-                                      containerStyle:(MDCContainerStyle *)containerStyle {
+                                      containerStyle:(id<MDCContainedInputViewStyle>)containerStyle {
   if (floatingPlaceholderHeight <= 0) {
     return 0;
   }
-  CGFloat filledPlaceholderTopPaddingScaleHeuristic = ((CGFloat)50.0 / (CGFloat)70.0);
+
+  [containerStyle spaceBetweenTopAndFloatingPlaceholder];
+  
+    CGFloat filledPlaceholderTopPaddingScaleHeuristic = ((CGFloat)50.0 / (CGFloat)70.0);
   CGFloat floatingPlaceholderMinY = 0;
 
   if ([containerStyle isMemberOfClass:[MDCContainerStyleFilled class]]) {
@@ -525,7 +528,7 @@
                                   rightView:(UIView *)rightView
                                        font:(UIFont *)font
                                floatingFont:(UIFont *)floatingFont
-                             containerStyle:(MDCContainerStyle *)containerStyle
+                             containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
              lowestAllowableTextAreaCenterY:(CGFloat)lowestAllowableTextAreaCenterY {
   CGFloat sideViewMaxHeight =
       MAX(CGRectGetHeight(leftView.bounds), CGRectGetHeight(rightView.bounds));
@@ -568,7 +571,7 @@
 }
 
 - (CGRect)placeholderFrameWithPlaceholder:(NSString *)placeholder
-                           containerStyle:(MDCContainerStyle *)containerStyle
+                           containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
                          placeholderState:(PlaceholderState)placeholderState
                                      font:(UIFont *)font
                   floatingPlaceholderFont:(UIFont *)floatingPlaceholderFont

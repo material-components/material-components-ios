@@ -17,7 +17,6 @@
 #import <MDFInternationalization/MDFInternationalization.h>
 #import "MaterialMath.h"
 
-#import "SimpleTextFieldColorScheme.h"
 #import "SimpleTextFieldLayout.h"
 #import "SimpleTextFieldLayoutUtils.h"
 
@@ -104,10 +103,10 @@
 }
 
 - (void)setUpContainerStyle {
-  self.containerStyle = [[MDCContainerStyle alloc] init];
+  self.containerStyle = [[MDCContainerStyleBase alloc] init];
 }
 
-- (void)setUpStateDependentColorSchemesForStyle:(MDCContainerStyle *)containerStyle {
+- (void)setUpStateDependentColorSchemesForStyle:(id<MDCContainedInputViewStyle>)containerStyle {
   id<MDCContainedInputViewColorScheming> normalColorScheme =
       [containerStyle defaultColorSchemeForState:MDCContainedInputViewStateNormal];
   [self setContainedInputViewColorScheming:normalColorScheme
@@ -245,7 +244,8 @@
     id<MDCContainedInputViewColorScheming> colorScheming =
         [self containedInputViewColorSchemingForState:self.containedInputViewState];
 //    [self applyMDCContainedInputViewColorScheming:colorScheming];
-  [self.containerStyle applyStyleTo:self withContainedInputViewColorScheming:colorScheming];
+  [self.containerStyle applyStyleToContainedInputView:self
+                  withContainedInputViewColorScheming:colorScheming];
   self.clearButton.frame = self.layout.clearButtonFrame;
   self.clearButton.hidden = self.layout.clearButtonHidden;
   self.leftUnderlineLabel.frame = self.layout.leftUnderlineLabelFrame;
@@ -460,8 +460,8 @@
   [self setNeedsLayout];
 }
 
--(void)setContainerStyle:(MDCContainerStyle *)containerStyle {
-  MDCContainerStyle *oldStyle = _containerStyle;
+-(void)setContainerStyle:(id<MDCContainedInputViewStyle>)containerStyle {
+  id<MDCContainedInputViewStyle> oldStyle = _containerStyle;
   if (oldStyle) {
     [oldStyle removeStyleFrom:self];
   }
@@ -469,7 +469,7 @@
   [self setUpStateDependentColorSchemesForStyle:_containerStyle];
   id<MDCContainedInputViewColorScheming> colorScheme =
       [self containedInputViewColorSchemingForState:self.containedInputViewState];
-  [_containerStyle applyStyleTo:self withContainedInputViewColorScheming:colorScheme];
+  [_containerStyle applyStyleToContainedInputView:self withContainedInputViewColorScheming:colorScheme];
   // TODO: setneedslayout?
 }
 
@@ -522,7 +522,7 @@
 
   // TODO: Figure out how this method should be implemented
   // possibly make a MDCContainerStyleNone class
-  if ([self.containerStyle isMemberOfClass:[MDCContainerStyle class]]) {
+  if (!self.containerStyle) {
     return [super borderRectForBounds:bounds];
   }
   return CGRectZero;
@@ -777,19 +777,19 @@
 // this could just be a CGFloat between 0 and 1 for floating placeholder scale.
 // the style protocol should have a method that returns a floating placeholder scale
 - (UIFont *)floatingPlaceholderFontWithFont:(UIFont *)font
-                             containerStyle:(MDCContainerStyle *)containerStyle {
+                             containerStyle:(id<MDCContainedInputViewStyle>)containerStyle {
   CGFloat floatingPlaceholderFontSize = 0.0;
-  CGFloat outlinedFloatingPlaceholderScale = (CGFloat)41 / (CGFloat)55;
-  CGFloat filledFloatingPlaceholderScale = (CGFloat)53 / (CGFloat)71;
-  if ([self.containerStyle isMemberOfClass:[MDCContainerStyleFilled class]]) {
-    floatingPlaceholderFontSize =
-    (CGFloat)round((double)(font.pointSize * filledFloatingPlaceholderScale));
-  } else if ([self.containerStyle isMemberOfClass:[MDCContainerStyleOutlined class]]) {
-    floatingPlaceholderFontSize =
-    (CGFloat)round((double)(font.pointSize * outlinedFloatingPlaceholderScale));
-  } else {
-    // TODO: fix this
-  }
+//  CGFloat outlinedFloatingPlaceholderScale = (CGFloat)41 / (CGFloat)55;
+//  CGFloat filledFloatingPlaceholderScale = (CGFloat)53 / (CGFloat)71;
+//  if ([self.containerStyle isMemberOfClass:[MDCContainerStyleFilled class]]) {
+//    floatingPlaceholderFontSize =
+//    (CGFloat)round((double)(font.pointSize * filledFloatingPlaceholderScale));
+//  } else if ([self.containerStyle isMemberOfClass:[MDCContainerStyleOutlined class]]) {
+//    floatingPlaceholderFontSize =
+//    (CGFloat)round((double)(font.pointSize * outlinedFloatingPlaceholderScale));
+//  } else {
+//    // TODO: fix this
+//  }
   return [font fontWithSize:floatingPlaceholderFontSize];
 }
 

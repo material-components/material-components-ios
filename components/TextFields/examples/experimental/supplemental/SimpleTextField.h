@@ -17,7 +17,6 @@
 #import "SimpleTextFieldLayoutUtils.h"
 
 #import "MaterialColorScheme.h"
-#import "SimpleTextFieldColorScheme.h"
 
 #import "MDCContainedInputView.h"
 
@@ -37,7 +36,7 @@
 /**
  Dictates the @c MDCContainerStyle of the text field.
  */
-@property(nonatomic, strong) MDCContainerStyle *containerStyle;
+@property(nonatomic, strong) id<MDCContainedInputViewStyle> containerStyle;
 
 /**
  This is a computed property that determines the current @c MDCContainedInputViewState of the text field.
