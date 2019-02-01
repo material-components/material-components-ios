@@ -63,6 +63,7 @@ static const CGFloat kContentHorizontalMargin = 12;
   self.itemView.image = [UIImage mdc_testImageOfSize:CGSizeMake(24, 24)];
   self.itemView.title = kLongTitleLatin;
   self.itemView.contentHorizontalMargin = kContentHorizontalMargin;
+  self.itemView.backgroundColor = UIColor.whiteColor;
 }
 
 - (void)generateAndVerifySnapshot {
