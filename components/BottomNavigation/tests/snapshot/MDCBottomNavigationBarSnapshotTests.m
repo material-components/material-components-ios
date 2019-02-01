@@ -33,6 +33,8 @@ static const CGFloat kHeightShort = 48;
 static NSString *const kLongTitleLatin = @"123456789012345678901234567890123456789012345678901234567890";
 static NSString *const kLongTitleArabic =
     @"دول السيطرة استطاعوا ٣٠. مليون وفرنسا أوراقهم انه تم, نفس قد والديون العالمية. دون ما تنفّس.";
+static NSString *const kShortTitleArabic = @"ما تنفّس.";
+
 
 
 @interface MDCMutableUITraitCollection : UITraitCollection
@@ -54,26 +56,9 @@ static NSString *const kLongTitleArabic =
 
 @interface MDCFakeBottomNavigationBar : MDCBottomNavigationBar
 @property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
-@property(nonatomic, assign)
-    UIUserInterfaceLayoutDirection effectiveUserInterfaceLayoutDirectionOverride;
 @end
 
-@implementation MDCFakeBottomNavigationBar {
-  BOOL _isEffectiveUserInterfaceLayoutDirectionOverridden;
-  UIUserInterfaceLayoutDirection _effectiveUserInterfaceLayoutDirectionOverride;
-}
-
-- (UIUserInterfaceLayoutDirection)effectiveUserInterfaceLayoutDirection {
-  return _isEffectiveUserInterfaceLayoutDirectionOverridden
-             ? _effectiveUserInterfaceLayoutDirectionOverride
-             : [super effectiveUserInterfaceLayoutDirection];
-}
-
- - (void)setEffectiveUserInterfaceLayoutDirectionOverride:
-    (UIUserInterfaceLayoutDirection)effectiveUserInterfaceLayoutDirectionOverride {
-  _isEffectiveUserInterfaceLayoutDirectionOverridden = YES;
-  _effectiveUserInterfaceLayoutDirectionOverride = effectiveUserInterfaceLayoutDirectionOverride;
-}
+@implementation MDCFakeBottomNavigationBar
 
 - (UITraitCollection *)traitCollection {
   return self.traitCollectionOverride ?: [super traitCollection];
@@ -144,11 +129,16 @@ static NSString *const kLongTitleArabic =
   }
 }
 
-- (void)changeToRTLAndArabic {
-  self.navigationBar.effectiveUserInterfaceLayoutDirectionOverride =
-      UIUserInterfaceLayoutDirectionRightToLeft;
+- (void)changeToRTLAndArabicWithTitle:(NSString *)title {
+  if (@available(iOS 9.0, *)) {
+    self.navigationBar.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
+  }
   for (UITabBarItem *item in self.navigationBar.items) {
-    item.title = kLongTitleArabic;
+    item.title = title;
+    if (@available(iOS 9.0, *)) {
+      UIView *view = [self.navigationBar viewForItem:item];
+      view.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
+    }
   }
 }
 
@@ -176,7 +166,7 @@ static NSString *const kLongTitleArabic =
                   traitCollection:nil
                         allTitles:kLongTitleLatin];
   self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
-  [self changeToRTLAndArabic];
+  [self changeToRTLAndArabicWithTitle:kLongTitleArabic];
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
@@ -213,7 +203,7 @@ static NSString *const kLongTitleArabic =
                   traitCollection:traitCollection
                         allTitles:kLongTitleLatin];
   self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
-  [self changeToRTLAndArabic];
+  [self changeToRTLAndArabicWithTitle:kLongTitleArabic];
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
@@ -242,7 +232,7 @@ static NSString *const kLongTitleArabic =
                   traitCollection:nil
                         allTitles:kLongTitleLatin];
   self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
-  [self changeToRTLAndArabic];
+  [self changeToRTLAndArabicWithTitle:kLongTitleArabic];
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
@@ -269,7 +259,7 @@ static NSString *const kLongTitleArabic =
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
   self.navigationBar.selectedItem = self.tabItem2;
   self.navigationBar.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
-  [self changeToRTLAndArabic];
+  [self changeToRTLAndArabicWithTitle:kShortTitleArabic];
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
@@ -294,7 +284,7 @@ static NSString *const kLongTitleArabic =
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   self.navigationBar.selectedItem = self.tabItem2;
   self.navigationBar.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
-  [self changeToRTLAndArabic];
+  [self changeToRTLAndArabicWithTitle:kShortTitleArabic];
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
@@ -319,7 +309,7 @@ static NSString *const kLongTitleArabic =
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityNever;
   self.navigationBar.selectedItem = self.tabItem2;
   self.navigationBar.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
-  [self changeToRTLAndArabic];
+  [self changeToRTLAndArabicWithTitle:kShortTitleArabic];
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
@@ -344,7 +334,7 @@ static NSString *const kLongTitleArabic =
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   self.navigationBar.selectedItem = self.tabItem2;
   self.navigationBar.frame = CGRectMake(0, 0, kWidthNarrow, kHeightShort);
-  [self changeToRTLAndArabic];
+  [self changeToRTLAndArabicWithTitle:kShortTitleArabic];
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
@@ -367,7 +357,7 @@ static NSString *const kLongTitleArabic =
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   self.navigationBar.selectedItem = self.tabItem2;
   self.navigationBar.frame = CGRectMake(0, 0, kWidthWide, kHeightTall);
-  [self changeToRTLAndArabic];
+  [self changeToRTLAndArabicWithTitle:kShortTitleArabic];
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
@@ -406,7 +396,7 @@ static NSString *const kLongTitleArabic =
   self.navigationBar.traitCollectionOverride = traitCollection;
   CGSize fitSize = [self.navigationBar sizeThatFits:CGSizeMake(kWidthWide, kHeightTall)];
   self.navigationBar.frame = CGRectMake(0, 0, fitSize.width, fitSize.height);
-  [self changeToRTLAndArabic];
+  [self changeToRTLAndArabicWithTitle:kShortTitleArabic];
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
@@ -443,7 +433,7 @@ static NSString *const kLongTitleArabic =
   self.navigationBar.traitCollectionOverride = traitCollection;
   CGSize fitSize = [self.navigationBar sizeThatFits:CGSizeMake(kWidthWide, kHeightTall)];
   self.navigationBar.frame = CGRectMake(0, 0, fitSize.width, fitSize.height);
-  [self changeToRTLAndArabic];
+  [self changeToRTLAndArabicWithTitle:kShortTitleArabic];
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
@@ -480,7 +470,7 @@ static NSString *const kLongTitleArabic =
   self.navigationBar.traitCollectionOverride = traitCollection;
   CGSize fitSize = [self.navigationBar sizeThatFits:CGSizeMake(kWidthWide, kHeightTall)];
   self.navigationBar.frame = CGRectMake(0, 0, fitSize.width, fitSize.height);
-  [self changeToRTLAndArabic];
+  [self changeToRTLAndArabicWithTitle:kShortTitleArabic];
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
@@ -519,7 +509,7 @@ static NSString *const kLongTitleArabic =
   self.navigationBar.traitCollectionOverride = traitCollection;
   CGSize fitSize = [self.navigationBar sizeThatFits:CGSizeMake(kWidthWide, kHeightTall)];
   self.navigationBar.frame = CGRectMake(0, 0, fitSize.width, fitSize.height);
-  [self changeToRTLAndArabic];
+  [self changeToRTLAndArabicWithTitle:kShortTitleArabic];
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
@@ -556,7 +546,7 @@ static NSString *const kLongTitleArabic =
   self.navigationBar.traitCollectionOverride = traitCollection;
   CGSize fitSize = [self.navigationBar sizeThatFits:CGSizeMake(kWidthWide, kHeightTall)];
   self.navigationBar.frame = CGRectMake(0, 0, fitSize.width, fitSize.height);
-  [self changeToRTLAndArabic];
+  [self changeToRTLAndArabicWithTitle:kShortTitleArabic];
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
@@ -593,7 +583,7 @@ static NSString *const kLongTitleArabic =
   self.navigationBar.traitCollectionOverride = traitCollection;
   CGSize fitSize = [self.navigationBar sizeThatFits:CGSizeMake(kWidthWide, kHeightTall)];
   self.navigationBar.frame = CGRectMake(0, 0, fitSize.width, fitSize.height);
-  [self changeToRTLAndArabic];
+  [self changeToRTLAndArabicWithTitle:kShortTitleArabic];
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
@@ -632,7 +622,7 @@ static NSString *const kLongTitleArabic =
   self.navigationBar.traitCollectionOverride = traitCollection;
   CGSize fitSize = [self.navigationBar sizeThatFits:CGSizeMake(kWidthWide, kHeightTall)];
   self.navigationBar.frame = CGRectMake(0, 0, fitSize.width, fitSize.height);
-  [self changeToRTLAndArabic];
+  [self changeToRTLAndArabicWithTitle:kShortTitleArabic];
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
@@ -669,7 +659,7 @@ static NSString *const kLongTitleArabic =
   self.navigationBar.traitCollectionOverride = traitCollection;
   CGSize fitSize = [self.navigationBar sizeThatFits:CGSizeMake(kWidthWide, kHeightTall)];
   self.navigationBar.frame = CGRectMake(0, 0, fitSize.width, fitSize.height);
-  [self changeToRTLAndArabic];
+  [self changeToRTLAndArabicWithTitle:kShortTitleArabic];
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
@@ -706,7 +696,7 @@ static NSString *const kLongTitleArabic =
   self.navigationBar.traitCollectionOverride = traitCollection;
   CGSize fitSize = [self.navigationBar sizeThatFits:CGSizeMake(kWidthWide, kHeightTall)];
   self.navigationBar.frame = CGRectMake(0, 0, fitSize.width, fitSize.height);
-  [self changeToRTLAndArabic];
+  [self changeToRTLAndArabicWithTitle:kShortTitleArabic];
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
