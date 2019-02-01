@@ -18,6 +18,11 @@ import MaterialComponents.MaterialPalettes
 import MaterialComponents.MaterialThemes
 import MaterialComponentsBeta.MaterialContainerScheme
 import MaterialComponents.MaterialList
+import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialDialogs
+import MaterialComponents.MaterialSlider
+import MaterialComponents.MaterialSlider_ColorThemer
+import MaterialComponentsBeta.MaterialButtons_Theming
 import UIKit
 
 private func schemeWithPalette(_ palette: MDCPalette) -> MDCContainerScheming {
@@ -272,6 +277,7 @@ class ColorSchemeDialog : UIViewController {
 
     color = ColorSchemeDialog.propertiesDictionary[property]
     self.alertView.color = color
+    self.alertView.submitButton.addTarget(self, action: #selector(submit), for: .touchUpInside)
   }
 
   override func viewWillLayoutSubviews() {
@@ -288,6 +294,11 @@ class ColorSchemeDialog : UIViewController {
       }
     }
   }
+
+  @objc private func submit() {
+    
+    self.dismiss(animated: true, completion: nil)
+  }
 }
 
 fileprivate class MDCDialogThemePickerView: UIView {
@@ -296,16 +307,31 @@ fileprivate class MDCDialogThemePickerView: UIView {
     case red, green, blue
   }
 
-  private let redLabel = UILabel(frame: .zero)
+  private let redLeadingButton = MDCButton(frame: .zero)
   private let redSlider = MDCSlider(frame: .zero)
-  private let greenLabel = UILabel(frame: .zero)
+  private let redTrailingButton = MDCButton(frame: .zero)
+  private let greenLeadingButton = MDCButton(frame: .zero)
   private let greenSlider = MDCSlider(frame: .zero)
-  private let blueLabel = UILabel(frame: .zero)
+  private let greenTrailingButton = MDCButton(frame: .zero)
+  private let blueLeadingButton = MDCButton(frame: .zero)
   private let blueSlider = MDCSlider(frame: .zero)
+  private let blueTrailingButton = MDCButton(frame: .zero)
+  let submitButton = MDCButton(frame: .zero)
   let paletteView = UIView(frame: .zero)
   private let dialogMaxDimension: CGFloat = 560
 
-  public var color: UIColor? = nil
+  public var color: UIColor? = nil {
+    didSet {
+      self.paletteView.backgroundColor = color
+    }
+
+    willSet {
+      if color == nil {
+        guard let value = newValue else { return }
+        setupValues(value)
+      }
+    }
+  }
 
   override func sizeThatFits(_ size: CGSize) -> CGSize {
     let width = min(size.width - 48, dialogMaxDimension)
@@ -316,16 +342,29 @@ fileprivate class MDCDialogThemePickerView: UIView {
   override init(frame: CGRect) {
     super.init(frame: frame)
 
-    setup(label: redLabel, with: "R")
-    setup(label: greenLabel, with: "G")
-    setup(label: blueLabel, with: "B")
+    setup(button: redLeadingButton, with: "R")
+    redLeadingButton.addTarget(self, action: #selector(decrementRed), for: .touchUpInside)
+    setup(button: greenLeadingButton, with: "G")
+    greenLeadingButton.addTarget(self, action: #selector(decrementGreen), for: .touchUpInside)
+    setup(button: blueLeadingButton, with: "B")
+    blueLeadingButton.addTarget(self, action: #selector(decrementBlue), for: .touchUpInside)
     let redValue = 127
     let blueValue = 127
     let greenValue = 127
     setup(slider: redSlider, with: redValue)
+    redSlider.addTarget(self, action: #selector(updateRedSlider), for: .valueChanged)
     setup(slider: greenSlider, with: greenValue)
+    greenSlider.addTarget(self, action: #selector(updateGreenSlider), for: .valueChanged)
     setup(slider: blueSlider, with: blueValue)
+    blueSlider.addTarget(self, action: #selector(updateBlueSlider), for: .valueChanged)
+    setup(button: redTrailingButton)
+    redTrailingButton.addTarget(self, action: #selector(incrementRed), for: .touchUpInside)
+    setup(button: greenTrailingButton)
+    greenTrailingButton.addTarget(self, action: #selector(incrementGreen), for: .touchUpInside)
+    setup(button: blueTrailingButton)
+    blueTrailingButton.addTarget(self, action: #selector(incrementBlue), for: .touchUpInside)
     addSubview(paletteView)
+    setupSubmitButton()
   }
 
   @available(*, unavailable)
@@ -337,33 +376,135 @@ fileprivate class MDCDialogThemePickerView: UIView {
     super.layoutSubviews()
 
     let halfHeight = frame.height / 2
-    backgroundColor = AppTheme.globalTheme.colorScheme.backgroundColor
+    backgroundColor = AppTheme.globalTheme.colorScheme.surfaceColor
     paletteView.frame = CGRect(origin: .zero, size: CGSize(width: frame.width,
                                                            height: halfHeight))
-    let verticalPadding: CGFloat = 48
-    let horizontalPadding: CGFloat = 12
-    redLabel.center = CGPoint (x: horizontalPadding, y: halfHeight + verticalPadding * 1)
-    greenLabel.center = CGPoint (x: horizontalPadding, y: halfHeight + verticalPadding * 2)
-    blueLabel.center = CGPoint (x: horizontalPadding, y: halfHeight + verticalPadding * 3)
-    redSlider.frame = CGRect(x: 29, y: halfHeight + verticalPadding * 1 - 24, width: frame.width - 85, height: 48)
-    greenSlider.frame = CGRect(x: 29, y: halfHeight + verticalPadding * 2 - 24, width: frame.width - 85, height: 48)
-    blueSlider.frame = CGRect(x: 29, y: halfHeight + verticalPadding * 3 - 24, width: frame.width - 85, height: 48)
-    paletteView.backgroundColor = color
-  }
-
-  private func setup(label: UILabel, with text: String) {
-    label.text = text
-    label.font = AppTheme.globalTheme.typographyScheme.body1
-    label.textColor = AppTheme.globalTheme.colorScheme.onSurfaceColor
-    label.sizeToFit()
-    label.frame.size.height = 48
-    addSubview(label)
+    let verticalPadding: CGFloat = 56
+    let horizontalPadding: CGFloat = 28
+    redLeadingButton.center = CGPoint (x: horizontalPadding, y: halfHeight + verticalPadding * 1)
+    greenLeadingButton.center = CGPoint (x: horizontalPadding, y: halfHeight + verticalPadding * 2)
+    blueLeadingButton.center = CGPoint (x: horizontalPadding, y: halfHeight + verticalPadding * 3)
+    redSlider.frame = CGRect(x: 56, y: halfHeight + verticalPadding * 1 - 24,
+                             width: frame.width - 104, height: 48)
+    greenSlider.frame = CGRect(x: 56, y: halfHeight + verticalPadding * 2 - 24,
+                               width: frame.width - 104, height: 48)
+    blueSlider.frame = CGRect(x: 56, y: halfHeight + verticalPadding * 3 - 24,
+                              width: frame.width - 104, height: 48)
+    redTrailingButton.center = CGPoint(x: frame.width - redTrailingButton.frame.width,
+                                       y: halfHeight + verticalPadding * 1)
+    greenTrailingButton.center = CGPoint(x: frame.width - greenTrailingButton.frame.width,
+                                       y: halfHeight + verticalPadding * 2)
+    blueTrailingButton.center = CGPoint(x: frame.width - blueTrailingButton.frame.width,
+                                       y: halfHeight + verticalPadding * 3)
+    let xPosition = frame.width - (submitButton.frame.width + 12)
+    let yPosition = frame.height - (submitButton.frame.height + 12)
+    submitButton.frame = CGRect(x: xPosition,
+                                y: yPosition,
+                                width: submitButton.frame.width,
+                                height: submitButton.frame.height)
   }
 
   private func setup(slider: MDCSlider, with value: Int) {
     slider.maximumValue = 255
     slider.minimumValue = 0
     slider.value = CGFloat(value)
+    MDCSliderColorThemer.applySemanticColorScheme(AppTheme.globalTheme.colorScheme, to: slider)
     addSubview(slider)
+  }
+
+  private func setup(button: MDCButton, with title: String = "999") {
+    button.setTitle(title, for: .normal)
+    button.setTitleFont(AppTheme.globalTheme.typographyScheme.button, for: .normal)
+    button.applyTextTheme(withScheme: AppTheme.globalTheme.containerScheme)
+    button.contentEdgeInsets = .zero
+    button.sizeToFit()
+    button.frame.size.height = 48
+    addSubview(button)
+  }
+
+  private func setupSubmitButton() {
+    submitButton.setTitle("Submit", for: .normal)
+    submitButton.setTitleFont(AppTheme.globalTheme.typographyScheme.button, for: .normal)
+    submitButton.applyTextTheme(withScheme: AppTheme.globalTheme.containerScheme)
+    submitButton.sizeToFit()
+    addSubview(submitButton)
+  }
+
+  @objc private func updateRedSlider() {
+    let value = redSlider.value
+    guard let color = self.color else { return }
+    let components = getColorComponents(color)
+    self.color = UIColor(red: value / 255, green: components.green, blue: components.blue, alpha: 1)
+    redTrailingButton.setTitle("\(Int(redSlider.value))", for: .normal)
+  }
+
+  @objc private func updateGreenSlider() {
+    let value = greenSlider.value
+    guard let color = self.color else { return }
+    let components = getColorComponents(color)
+    self.color = UIColor(red: components.red, green: value / 255, blue: components.blue, alpha: 1)
+    greenTrailingButton.setTitle("\(Int(greenSlider.value))", for: .normal)
+  }
+
+  @objc private func updateBlueSlider() {
+    let value = blueSlider.value
+    guard let color = self.color else { return }
+    let components = getColorComponents(color)
+    self.color = UIColor(red: components.red, green: components.green, blue: value / 255, alpha: 1)
+    blueTrailingButton.setTitle("\(Int(blueSlider.value))", for: .normal)
+  }
+
+  @objc private func incrementRed() {
+    redSlider.value += 1
+    redTrailingButton.setTitle("\(Int(redSlider.value))", for: .normal)
+    updateRedSlider()
+  }
+
+  @objc private func incrementGreen() {
+    greenSlider.value += 1
+    greenTrailingButton.setTitle("\(Int(greenSlider.value))", for: .normal)
+    updateGreenSlider()
+  }
+
+  @objc private func incrementBlue() {
+    blueSlider.value += 1
+    blueTrailingButton.setTitle("\(Int(blueSlider.value))", for: .normal)
+    updateBlueSlider()
+  }
+
+  @objc private func decrementRed() {
+    redSlider.value -= 1
+    redTrailingButton.setTitle("\(Int(redSlider.value))", for: .normal)
+    updateRedSlider()
+  }
+
+  @objc private func decrementGreen() {
+    greenSlider.value -= 1
+    greenTrailingButton.setTitle("\(Int(greenSlider.value))", for: .normal)
+    updateGreenSlider()
+  }
+
+  @objc private func decrementBlue() {
+    blueSlider.value += 1
+    blueTrailingButton.setTitle("\(Int(blueSlider.value))", for: .normal)
+    updateBlueSlider()
+  }
+
+  private func setupValues(_ color: UIColor) {
+    let colorComponents = getColorComponents(color)
+    redSlider.value = colorComponents.red * 255
+    greenSlider.value = colorComponents.green * 255
+    blueSlider.value = colorComponents.blue * 255
+    redTrailingButton.setTitle("\(Int(colorComponents.red * 255))", for: .normal)
+    greenTrailingButton.setTitle("\(Int(colorComponents.green * 255))", for: .normal)
+    blueTrailingButton.setTitle("\(Int(colorComponents.blue * 255))", for: .normal)
+  }
+
+  private func getColorComponents(_ color: UIColor) -> (red: CGFloat, green: CGFloat, blue: CGFloat) {
+    var red: CGFloat = 0
+    var green: CGFloat = 0
+    var blue: CGFloat = 0
+    color.getRed(&red, green: &green, blue: &blue, alpha: nil)
+    return (red: red, green: green, blue: blue)
   }
 }
