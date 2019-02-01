@@ -152,9 +152,10 @@ class MDCThemePickerViewController: UIViewController, UITableViewDelegate, UITab
 
   private func showDialog(for propertyIndex: Int) {
     print("Change \(properties[propertyIndex])")
-    present(ColorSchemeDialog(nibName: nil, bundle: nil), animated: true, completion: nil)
+    let colorSchemeDialog = ColorSchemeDialog(nibName: nil, bundle: nil)
+    colorSchemeDialog.property = properties[propertyIndex]
+    present(colorSchemeDialog, animated: true, completion: nil)
   }
-
 }
 
 class SchemeCell : UITableViewCell {
@@ -232,15 +233,29 @@ class SchemeCell : UITableViewCell {
 
 class ColorSchemeDialog : UIViewController {
 
-  lazy var alertView: MDCAlertControllerView = {
-    self.view as? MDCAlertControllerView
+  public var property: String = ""
+  static let propertiesDictionary: [String: UIColor] = [
+    "primaryColor": AppTheme.globalTheme.colorScheme.primaryColor,
+    "primaryColorVariant": AppTheme.globalTheme.colorScheme.primaryColorVariant,
+    "secondaryColor": AppTheme.globalTheme.colorScheme.secondaryColor,
+    "errorColor": AppTheme.globalTheme.colorScheme.errorColor,
+    "surfaceColor": AppTheme.globalTheme.colorScheme.surfaceColor,
+    "backgroundColor": AppTheme.globalTheme.colorScheme.backgroundColor,
+    "onPrimaryColor": AppTheme.globalTheme.colorScheme.onPrimaryColor,
+    "onSecondaryColor": AppTheme.globalTheme.colorScheme.onSecondaryColor,
+    "onSurfaceColor": AppTheme.globalTheme.colorScheme.onSurfaceColor,
+    "onBackgroundColor": AppTheme.globalTheme.colorScheme.onBackgroundColor,
+    ]
+
+  var color: UIColor? = nil
+  private let transitionController = MDCDialogTransitionController()
+  fileprivate lazy var alertView: MDCDialogThemePickerView = {
+    self.view as? MDCDialogThemePickerView ?? MDCDialogThemePickerView(frame: .zero)
   }()
-  override var view: UIView! = MDCAlertControllerView(frame: .zero)
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     super.init(nibName: nil, bundle: nil)
-    self.transitionCoordinator = MDCDialogTransitionController()
-    super.transitioningDelegate = self.transitionCoordinator
+    super.transitioningDelegate = self.transitionController
     super.modalPresentationStyle = .custom
   }
 
@@ -248,9 +263,107 @@ class ColorSchemeDialog : UIViewController {
     fatalError("init(coder:) has not been implemented")
   }
 
+  override func loadView() {
+    self.view = MDCDialogThemePickerView(frame: .zero)
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    self.alertView.backgroundColor = .blue
+    color = ColorSchemeDialog.propertiesDictionary[property]
+    self.alertView.color = color
+  }
+
+  override func viewWillLayoutSubviews() {
+    super.viewWillLayoutSubviews()
+
+    let size = alertView.sizeThatFits(self.view.bounds.size)
+    self.alertView.bounds = CGRect(origin: .zero, size: size)
+    self.alertView.center = view.center
+    if let presentation = self.presentationController as? MDCDialogPresentationController {
+      guard presentation.containerView?.subviews.count ?? 0 > 2 else { return }
+      if let trackingView = presentation.containerView?.subviews[1] {
+        trackingView.bounds = self.alertView.bounds
+        trackingView.center = self.alertView.center
+      }
+    }
+  }
+}
+
+fileprivate class MDCDialogThemePickerView: UIView {
+
+  private enum Slider {
+    case red, green, blue
+  }
+
+  private let redLabel = UILabel(frame: .zero)
+  private let redSlider = MDCSlider(frame: .zero)
+  private let greenLabel = UILabel(frame: .zero)
+  private let greenSlider = MDCSlider(frame: .zero)
+  private let blueLabel = UILabel(frame: .zero)
+  private let blueSlider = MDCSlider(frame: .zero)
+  let paletteView = UIView(frame: .zero)
+  private let dialogMaxDimension: CGFloat = 560
+
+  public var color: UIColor? = nil
+
+  override func sizeThatFits(_ size: CGSize) -> CGSize {
+    let width = min(size.width - 48, dialogMaxDimension)
+    let height = min(size.height - 96, dialogMaxDimension)
+    return CGSize(width: width, height: height)
+  }
+
+  override init(frame: CGRect) {
+    super.init(frame: frame)
+
+    setup(label: redLabel, with: "R")
+    setup(label: greenLabel, with: "G")
+    setup(label: blueLabel, with: "B")
+    let redValue = 127
+    let blueValue = 127
+    let greenValue = 127
+    setup(slider: redSlider, with: redValue)
+    setup(slider: greenSlider, with: greenValue)
+    setup(slider: blueSlider, with: blueValue)
+    addSubview(paletteView)
+  }
+
+  @available(*, unavailable)
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  override func layoutSubviews() {
+    super.layoutSubviews()
+
+    let halfHeight = frame.height / 2
+    backgroundColor = AppTheme.globalTheme.colorScheme.backgroundColor
+    paletteView.frame = CGRect(origin: .zero, size: CGSize(width: frame.width,
+                                                           height: halfHeight))
+    let verticalPadding: CGFloat = 48
+    let horizontalPadding: CGFloat = 12
+    redLabel.center = CGPoint (x: horizontalPadding, y: halfHeight + verticalPadding * 1)
+    greenLabel.center = CGPoint (x: horizontalPadding, y: halfHeight + verticalPadding * 2)
+    blueLabel.center = CGPoint (x: horizontalPadding, y: halfHeight + verticalPadding * 3)
+    redSlider.frame = CGRect(x: 29, y: halfHeight + verticalPadding * 1 - 24, width: frame.width - 85, height: 48)
+    greenSlider.frame = CGRect(x: 29, y: halfHeight + verticalPadding * 2 - 24, width: frame.width - 85, height: 48)
+    blueSlider.frame = CGRect(x: 29, y: halfHeight + verticalPadding * 3 - 24, width: frame.width - 85, height: 48)
+    paletteView.backgroundColor = color
+  }
+
+  private func setup(label: UILabel, with text: String) {
+    label.text = text
+    label.font = AppTheme.globalTheme.typographyScheme.body1
+    label.textColor = AppTheme.globalTheme.colorScheme.onSurfaceColor
+    label.sizeToFit()
+    label.frame.size.height = 48
+    addSubview(label)
+  }
+
+  private func setup(slider: MDCSlider, with value: Int) {
+    slider.maximumValue = 255
+    slider.minimumValue = 0
+    slider.value = CGFloat(value)
+    addSubview(slider)
   }
 }
