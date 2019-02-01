@@ -33,22 +33,6 @@ static const CGFloat kHeightShort = 48;
 static NSString *const kLongTitle = @"123456789012345678901234567890123456789012345678901234567890";
 static NSString *const kShortTitle = @".";
 
-static inline UIImage *CreateTestImage(CGSize size) {
-  UIGraphicsBeginImageContext(size);
-  [UIColor.whiteColor setFill];
-  CGFloat quarterWidth = size.width / 4;
-  CGFloat quarterHeight = size.height / 4;
-  // Create a "checkboard" pattern
-  for (int x = 0; x < 4; ++x) {
-    for (int y = (x & 0x01); y < 4; y += 2) {
-      UIRectFill(CGRectMake(x * quarterWidth, y * quarterHeight, quarterWidth, quarterHeight));
-    }
-  }
-  UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-  UIGraphicsEndImageContext();
-  return image;
-}
-
 @interface MDCMutableUITraitCollection : UITraitCollection
 @property(nonatomic, assign) UIUserInterfaceSizeClass horizontalSizeClassOverride;
 @property(nonatomic, assign) UIUserInterfaceSizeClass verticalSizeClassOverride;
@@ -99,7 +83,7 @@ static inline UIImage *CreateTestImage(CGSize size) {
 
   self.navigationBar = [[MDCFakeBottomNavigationBar alloc] init];
 
-  self.testImage = CreateTestImage(CGSizeMake(24, 24));
+  self.testImage = [UIImage mdc_testImageOfSize:CGSizeMake(24, 24)];
   self.tabItem1 = [[UITabBarItem alloc] initWithTitle:@"Item 1" image:self.testImage tag:1];
   self.tabItem2 = [[UITabBarItem alloc] initWithTitle:@"Item 2" image:self.testImage tag:2];
   self.tabItem3 = [[UITabBarItem alloc] initWithTitle:@"Item 3" image:self.testImage tag:3];
