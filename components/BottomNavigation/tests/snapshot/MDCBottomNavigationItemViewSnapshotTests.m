@@ -64,6 +64,7 @@ static const CGFloat kContentHorizontalMargin = 12;
   self.itemView.title = kLongTitleLatin;
   self.itemView.contentHorizontalMargin = kContentHorizontalMargin;
   self.itemView.backgroundColor = UIColor.whiteColor;
+  self.itemView.badgeValue = @"42";
 }
 
 - (void)generateAndVerifySnapshot {
