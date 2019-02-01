@@ -121,7 +121,9 @@
                        startAngle:-180 * (float)M_PI / 180
                          endAngle:-270 * (float)M_PI / 180
                         clockwise:NO];
+
   [bottomBarPath addLineToPoint:CGPointMake(arcCenter2.x, arcRadius + yOffset)];
+
   [bottomBarPath addArcWithCenter:arcCenter2
                            radius:arcRadius
                        startAngle:-270 * (float)M_PI / 180
@@ -151,23 +153,20 @@
   [bottomBarPath addLineToPoint:CGPointMake(0, yOffset)];
   [bottomBarPath addLineToPoint:CGPointMake(arcCenter1.x - arcRadius, yOffset)];
 
-  [bottomBarPath addCurveToPoint:CGPointMake(arcCenter1.x - arcRadius, yOffset)
-                   controlPoint1:CGPointMake(arcCenter1.x - arcRadius, yOffset)
-                   controlPoint2:CGPointMake(arcCenter1.x - arcRadius, yOffset)];
-
-  [bottomBarPath addCurveToPoint:CGPointMake(arcCenter1.x, yOffset)
-                   controlPoint1:CGPointMake(arcCenter1.x - arcRadius, yOffset)
-                   controlPoint2:CGPointMake(arcCenter1.x - arcRadius / 2, yOffset)];
-
-  [bottomBarPath addLineToPoint:CGPointMake(arcCenter2.x, yOffset)];
+  // draw circle with radius 0 to ensure we have the same number of points as the cut-out path
+  [bottomBarPath addArcWithCenter:arcCenter1
+                           radius:0
+                       startAngle:-180 * (float)M_PI / 180
+                         endAngle:-270 * (float)M_PI / 180
+                        clockwise:NO];
   [bottomBarPath addLineToPoint:CGPointMake(arcCenter2.x, yOffset)];
 
-  [bottomBarPath addCurveToPoint:CGPointMake(arcCenter2.x + arcRadius, yOffset)
-                   controlPoint1:CGPointMake(arcCenter2.x + arcRadius - arcRadius / 2, yOffset)
-                   controlPoint2:CGPointMake(arcCenter2.x + arcRadius, yOffset)];
-  [bottomBarPath addCurveToPoint:CGPointMake(arcCenter2.x + arcRadius, yOffset)
-                   controlPoint1:CGPointMake(arcCenter2.x + arcRadius, yOffset)
-                   controlPoint2:CGPointMake(arcCenter2.x + arcRadius, yOffset)];
+  // draw circle with radius 0 to ensure we have the same number of points as the cut-out path
+  [bottomBarPath addArcWithCenter:arcCenter2
+                           radius:0
+                       startAngle:-270 * (float)M_PI / 180
+                         endAngle:-360 * (float)M_PI / 180
+                        clockwise:NO];
 
   [bottomBarPath addLineToPoint:CGPointMake(width, yOffset)];
   [bottomBarPath closePath];
