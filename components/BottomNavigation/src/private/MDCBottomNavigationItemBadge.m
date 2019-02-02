@@ -14,11 +14,10 @@
 #import <CoreGraphics/CoreGraphics.h>
 
 #import "MDCBottomNavigationItemBadge.h"
+#import "MaterialMath.h"
 
 static const CGFloat kBadgeFontSize = 10;
 // These padding values get pretty close to the material.io guidelines article.
-// Reducing the x-padding risks exposing CJK characters to the rounded edges.
-static const CGFloat kBadgeXPadding = 2;
 static const CGFloat kBadgeYPadding = 2;
 // For an empty badge, ensure that the size is close to the guidelines article.
 static const CGFloat kMinDiameter = 9;
@@ -61,18 +60,25 @@ static const CGFloat kMinDiameter = 9;
   }
 }
 
+- (CGFloat)badgeXPaddingForRadius:(CGFloat)radius {
+  CGFloat badgeXPadding = sin(M_PI_4) * (radius); // sin(ø) = badgeXPadding / radius
+  badgeXPadding += 1; // Extra point to ensure some background extends beyond the label.
+  // Align to the nearest pixel
+  badgeXPadding = MDCRound(badgeXPadding * self.contentScaleFactor) / self.contentScaleFactor;
+
+  return badgeXPadding;
+}
+
 - (void)layoutSubviews {
   [super layoutSubviews];
 
+  CGFloat badgeRadius = CGRectGetHeight(self.bounds) / 2;
   CGRect availableContentRect =
-      CGRectStandardize(CGRectInset(self.bounds, kBadgeXPadding, kBadgeYPadding));
+      CGRectStandardize(CGRectInset(self.bounds, [self badgeXPaddingForRadius:badgeRadius], kBadgeYPadding));
   CGSize labelFitSize = [self.badgeValueLabel sizeThatFits:availableContentRect.size];
   self.badgeValueLabel.bounds = CGRectMake(0, 0, labelFitSize.width, labelFitSize.height);
-
   self.badgeValueLabel.center =
       CGPointMake(CGRectGetMidX(availableContentRect), CGRectGetMidY(availableContentRect));
-
-  CGFloat badgeRadius = CGRectGetMidY(self.bounds);
   self.layer.cornerRadius = badgeRadius;
   self.layer.backgroundColor = self.badgeColor.CGColor;
 }
@@ -82,9 +88,21 @@ static const CGFloat kMinDiameter = 9;
     return CGSizeZero;
   }
 
+  // Calculate the badge and label heights
   CGSize labelSize = [self.badgeValueLabel sizeThatFits:size];
-  CGFloat badgeWidth = MAX(kMinDiameter, labelSize.width + kBadgeXPadding);
-  CGFloat badgeHeight = MAX(kMinDiameter, labelSize.height + kBadgeYPadding);
+  CGFloat badgeHeight = labelSize.height + kBadgeYPadding;
+  if (badgeHeight > size.height) {
+    badgeHeight = size.height;
+    labelSize = CGSizeMake(labelSize.width, badgeHeight - kBadgeYPadding);
+  }
+  CGFloat contentXPadding = [self badgeXPaddingForRadius:badgeHeight / 2];
+  CGFloat badgeWidth = labelSize.width + contentXPadding;
+  if (badgeWidth > size.width) {
+    badgeWidth = size.width;
+    labelSize = CGSizeMake(badgeWidth - contentXPadding, labelSize.height);
+  }
+  badgeWidth = MAX(kMinDiameter, badgeWidth);
+  badgeHeight = MAX(kMinDiameter, badgeHeight);
   if (badgeWidth < badgeHeight) {
     badgeWidth = badgeHeight;
   }
