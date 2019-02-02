@@ -11,12 +11,13 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+#import <CoreGraphics/CoreGraphics.h>
 
 #import "MDCBottomNavigationItemBadge.h"
 
-static const CGFloat kMDCBottomNavigationItemBadgeFontSize = 10;
-static const CGFloat kMDCBottomNavigationItemBadgeXPadding = 8;
-static const CGFloat kMDCBottomNavigationItemBadgeYPadding = 2;
+static const CGFloat kBadgeFontSize = 10;
+static const CGFloat kBadgeXPadding = 8;
+static const CGFloat kBadgeYPadding = 2;
 
 @implementation MDCBottomNavigationItemBadge
 
@@ -41,13 +42,11 @@ static const CGFloat kMDCBottomNavigationItemBadgeYPadding = 2;
     _badgeColor = [UIColor redColor];
   }
   self.layer.backgroundColor = _badgeColor.CGColor;
-  _xPadding = kMDCBottomNavigationItemBadgeXPadding;
-  _yPadding = kMDCBottomNavigationItemBadgeYPadding;
 
   if (self.subviews.count == 0) {
     _badgeValueLabel = [[UILabel alloc] initWithFrame:self.bounds];
     _badgeValueLabel.textColor = [UIColor whiteColor];
-    _badgeValueLabel.font = [UIFont systemFontOfSize:kMDCBottomNavigationItemBadgeFontSize];
+    _badgeValueLabel.font = [UIFont systemFontOfSize:kBadgeFontSize];
     _badgeValueLabel.textAlignment = NSTextAlignmentCenter;
     _badgeValueLabel.isAccessibilityElement = NO;
     _badgeValueLabel.text = _badgeValue;
@@ -62,7 +61,7 @@ static const CGFloat kMDCBottomNavigationItemBadgeYPadding = 2;
   [super layoutSubviews];
 
   CGRect availableContentRect =
-      CGRectStandardize(CGRectInset(self.bounds, self.xPadding, self.yPadding));
+      CGRectStandardize(CGRectInset(self.bounds, kBadgeXPadding, kBadgeYPadding));
   CGSize labelFitSize = [self.badgeValueLabel sizeThatFits:availableContentRect.size];
   self.badgeValueLabel.bounds = CGRectMake(0, 0, labelFitSize.width, labelFitSize.height);
 
@@ -80,8 +79,8 @@ static const CGFloat kMDCBottomNavigationItemBadgeYPadding = 2;
   }
 
   CGSize labelSize = [self.badgeValueLabel sizeThatFits:size];
-  CGFloat badgeWidth = labelSize.width + self.xPadding;
-  CGFloat badgeHeight = labelSize.height + self.yPadding;
+  CGFloat badgeWidth = labelSize.width + kBadgeXPadding;
+  CGFloat badgeHeight = labelSize.height + kBadgeYPadding;
   if (badgeWidth < badgeHeight) {
     badgeWidth = badgeHeight;
   }

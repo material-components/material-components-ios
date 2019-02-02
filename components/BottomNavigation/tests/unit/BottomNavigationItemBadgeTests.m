@@ -119,19 +119,4 @@
                 NSStringFromCGRect(finalFrame), NSStringFromCGRect(originalFrame));
 }
 
-- (void)testLayoutSubviewsWontChangePadding {
-  // Given
-  CGFloat originalXPadding = 99;
-  CGFloat originalYPadding = 77;
-  self.badge.xPadding = originalXPadding;
-  self.badge.yPadding = originalYPadding;
-
-  // When
-  [self.badge layoutSubviews];
-
-  // Then
-  XCTAssertEqualWithAccuracy(self.badge.xPadding, originalXPadding, 0.001);
-  XCTAssertEqualWithAccuracy(self.badge.yPadding, originalYPadding, 0.001);
-}
-
 @end
