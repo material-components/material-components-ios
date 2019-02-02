@@ -18,7 +18,8 @@
 static const CGFloat kBadgeFontSize = 10;
 // Given these padding values, a double-eight value produces a near circle.
 // This matches the material.io guidelines article.
-static const CGFloat kBadgeXPadding = 2;
+static const CGFloat kBadgeXPadding = 3;
+static const CGFloat kBadgeYPadding = 4;
 // For an empty badge, ensure that the size is close to the guidelines article.
 static const CGFloat kMinDiameter = 9;
 
@@ -60,15 +61,11 @@ static const CGFloat kMinDiameter = 9;
   }
 }
 
-- (CGFloat)verticalPadding {
-  return self.badgeValueLabel.font.xHeight / 2;
-}
-
 - (void)layoutSubviews {
   [super layoutSubviews];
 
   CGRect availableContentRect =
-      CGRectStandardize(CGRectInset(self.bounds, kBadgeXPadding, [self verticalPadding]));
+      CGRectStandardize(CGRectInset(self.bounds, kBadgeXPadding, kBadgeYPadding));
   CGSize labelFitSize = [self.badgeValueLabel sizeThatFits:availableContentRect.size];
   self.badgeValueLabel.bounds = CGRectMake(0, 0, labelFitSize.width, labelFitSize.height);
 
@@ -87,7 +84,7 @@ static const CGFloat kMinDiameter = 9;
 
   CGSize labelSize = [self.badgeValueLabel sizeThatFits:size];
   CGFloat badgeWidth = MAX(kMinDiameter, labelSize.width + kBadgeXPadding);
-  CGFloat badgeHeight = MAX(kMinDiameter, labelSize.height + [self verticalPadding]);
+  CGFloat badgeHeight = MAX(kMinDiameter, labelSize.height + kBadgeYPadding);
   if (badgeWidth < badgeHeight) {
     badgeWidth = badgeHeight;
   }
