@@ -61,7 +61,7 @@ static const CGFloat kMinDiameter = 9;
 }
 
 - (CGFloat)badgeXPaddingForRadius:(CGFloat)radius {
-  CGFloat badgeXPadding = sin(M_PI_4) * (radius);  // sin(ø) = badgeXPadding / radius
+  CGFloat badgeXPadding = (CGFloat)(sin(M_PI_4) * (radius));  // sin(ø) = badgeXPadding / radius
   badgeXPadding += 1;  // Extra point to ensure some background extends beyond the label.
   // Align to the nearest pixel
   badgeXPadding = MDCRound(badgeXPadding * self.contentScaleFactor) / self.contentScaleFactor;
