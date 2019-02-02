@@ -305,9 +305,10 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
     if (animated) {
       [UIView animateWithDuration:kMDCBottomNavigationItemViewTransitionDuration
                        animations:^(void) {
-                         self.badge.center = [self badgeCenterFromIconFrame:CGRectStandardize(iconImageViewFrame)
-                                                                 labelFrame:CGRectStandardize(labelFrame)
-                                                                      isRTL:isRTL];
+                         self.badge.center =
+                             [self badgeCenterFromIconFrame:CGRectStandardize(iconImageViewFrame)
+                                                 labelFrame:CGRectStandardize(labelFrame)
+                                                      isRTL:isRTL];
                        }];
     } else {
       self.badge.center = [self badgeCenterFromIconFrame:CGRectStandardize(iconImageViewFrame)
@@ -388,7 +389,6 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
     badgeCenterY = MAX(badgeHalfHeight + 1, CGRectGetMinY(labelFrame) - badgeHalfHeight);
   }
   return CGPointMake(badgeCenterX, badgeCenterY);
-
 }
 
 - (NSString *)badgeValue {
