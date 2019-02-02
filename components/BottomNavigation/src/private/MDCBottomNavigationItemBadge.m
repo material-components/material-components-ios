@@ -41,6 +41,8 @@ static const CGFloat kMDCBottomNavigationItemBadgeYPadding = 2;
     _badgeColor = [UIColor redColor];
   }
   self.layer.backgroundColor = _badgeColor.CGColor;
+  _xPadding = kMDCBottomNavigationItemBadgeXPadding;
+  _yPadding = kMDCBottomNavigationItemBadgeYPadding;
 
   if (self.subviews.count == 0) {
     _badgeValueLabel = [[UILabel alloc] initWithFrame:self.bounds];
@@ -58,27 +60,34 @@ static const CGFloat kMDCBottomNavigationItemBadgeYPadding = 2;
 
 - (void)layoutSubviews {
   [super layoutSubviews];
-  [self sizeBadge];
-}
 
-- (void)sizeBadge {
   [_badgeValueLabel sizeToFit];
-  _xPadding = kMDCBottomNavigationItemBadgeXPadding;
-  _yPadding = kMDCBottomNavigationItemBadgeYPadding;
 
-  _badgeCircleWidth = CGRectGetWidth(_badgeValueLabel.bounds) + _xPadding;
-  _badgeCircleHeight = CGRectGetHeight(_badgeValueLabel.bounds) + _yPadding;
-
-  if (_badgeCircleWidth < _badgeCircleHeight) {
-    _badgeCircleWidth = _badgeCircleHeight;
-  }
-  self.frame = CGRectMake(CGRectGetMinX(self.frame), CGRectGetMinY(self.frame), _badgeCircleWidth,
-                          _badgeCircleHeight);
   self.badgeValueLabel.center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
 
   CGFloat badgeRadius = CGRectGetMidY(self.bounds);
   self.layer.cornerRadius = badgeRadius;
   self.layer.backgroundColor = self.badgeColor.CGColor;
+}
+
+- (CGSize)sizeThatFits:(CGSize)size {
+  if (self.badgeValue == nil || self.badgeValue.length == 0) {
+    return CGSizeZero;
+  }
+
+  CGSize labelSize = [self.badgeValueLabel sizeThatFits:size];
+  CGFloat badgeWidth = labelSize.width + self.xPadding;
+  CGFloat badgeHeight = labelSize.height + self.yPadding;
+  if (badgeWidth < badgeHeight) {
+    badgeWidth = badgeHeight;
+  }
+  return CGSizeMake(badgeWidth, badgeHeight);
+}
+
+- (void)sizeToFit {
+  CGSize fitSize = [self sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
+  CGRect newBounds = CGRectMake(0, 0, fitSize.width, fitSize.height);
+  self.bounds = newBounds;
 }
 
 - (void)setBadgeValue:(NSString *)badgeValue {

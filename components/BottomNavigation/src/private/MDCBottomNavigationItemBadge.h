@@ -17,8 +17,6 @@
 
 @interface MDCBottomNavigationItemBadge : UIView
 
-@property(nonatomic, assign) CGFloat badgeCircleWidth;
-@property(nonatomic, assign) CGFloat badgeCircleHeight;
 @property(nonatomic, assign) CGFloat xPadding;
 @property(nonatomic, assign) CGFloat yPadding;
 
