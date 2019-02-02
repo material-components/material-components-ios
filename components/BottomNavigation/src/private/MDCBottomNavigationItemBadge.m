@@ -61,8 +61,8 @@ static const CGFloat kMinDiameter = 9;
 }
 
 - (CGFloat)badgeXPaddingForRadius:(CGFloat)radius {
-  CGFloat badgeXPadding = sin(M_PI_4) * (radius); // sin(ø) = badgeXPadding / radius
-  badgeXPadding += 1; // Extra point to ensure some background extends beyond the label.
+  CGFloat badgeXPadding = sin(M_PI_4) * (radius);  // sin(ø) = badgeXPadding / radius
+  badgeXPadding += 1;  // Extra point to ensure some background extends beyond the label.
   // Align to the nearest pixel
   badgeXPadding = MDCRound(badgeXPadding * self.contentScaleFactor) / self.contentScaleFactor;
 
@@ -73,8 +73,8 @@ static const CGFloat kMinDiameter = 9;
   [super layoutSubviews];
 
   CGFloat badgeRadius = CGRectGetHeight(self.bounds) / 2;
-  CGRect availableContentRect =
-      CGRectStandardize(CGRectInset(self.bounds, [self badgeXPaddingForRadius:badgeRadius], kBadgeYPadding));
+  CGRect availableContentRect = CGRectStandardize(
+      CGRectInset(self.bounds, [self badgeXPaddingForRadius:badgeRadius], kBadgeYPadding));
   CGSize labelFitSize = [self.badgeValueLabel sizeThatFits:availableContentRect.size];
   self.badgeValueLabel.bounds = CGRectMake(0, 0, labelFitSize.width, labelFitSize.height);
   self.badgeValueLabel.center =
