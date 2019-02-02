@@ -50,13 +50,13 @@
   UITabBarItem *tabBarItem1 = [[UITabBarItem alloc] initWithTitle:@"Home"
                                                             image:[UIImage imageNamed:@"Home"]
                                                               tag:0];
-  tabBarItem1.badgeValue = @"";
   UITabBarItem *tabBarItem2 = [[UITabBarItem alloc] initWithTitle:@"Messages"
                                                             image:[UIImage imageNamed:@"Email"]
                                                               tag:0];
   UITabBarItem *tabBarItem3 = [[UITabBarItem alloc] initWithTitle:@"Favorites"
                                                             image:[UIImage imageNamed:@"Favorite"]
                                                               tag:0];
+  tabBarItem3.badgeValue = @"";
   UITabBarItem *tabBarItem4 = [[UITabBarItem alloc] initWithTitle:@"Search"
                                                             image:[UIImage imageNamed:@"Search"]
                                                               tag:0];

@@ -21,7 +21,7 @@ static const CGFloat kBadgeFontSize = 10;
 static const CGFloat kBadgeXPadding = 3;
 static const CGFloat kBadgeYPadding = 4;
 // For an empty badge, ensure that the size is close to the guidelines article.
-static const CGFloat kMinDiameter = 11;
+static const CGFloat kMinDiameter = 9;
 
 @implementation MDCBottomNavigationItemBadge
 
