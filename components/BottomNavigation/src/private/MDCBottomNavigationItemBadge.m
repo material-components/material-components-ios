@@ -61,9 +61,13 @@ static const CGFloat kMDCBottomNavigationItemBadgeYPadding = 2;
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  [self.badgeValueLabel sizeToFit];
+  CGRect availableContentRect =
+      CGRectStandardize(CGRectInset(self.bounds, self.xPadding, self.yPadding));
+  CGSize labelFitSize = [self.badgeValueLabel sizeThatFits:availableContentRect.size];
+  self.badgeValueLabel.bounds = CGRectMake(0, 0, labelFitSize.width, labelFitSize.height);
 
-  self.badgeValueLabel.center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
+  self.badgeValueLabel.center =
+      CGPointMake(CGRectGetMidX(availableContentRect), CGRectGetMidY(availableContentRect));
 
   CGFloat badgeRadius = CGRectGetMidY(self.bounds);
   self.layer.cornerRadius = badgeRadius;
