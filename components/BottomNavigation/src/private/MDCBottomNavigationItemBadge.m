@@ -19,7 +19,7 @@ static const CGFloat kBadgeFontSize = 10;
 // These padding values get pretty close to the material.io guidelines article.
 // Reducing the x-padding risks exposing CJK characters to the rounded edges.
 static const CGFloat kBadgeXPadding = 2;
-static const CGFloat kBadgeYPadding = 0;
+static const CGFloat kBadgeYPadding = 2;
 // For an empty badge, ensure that the size is close to the guidelines article.
 static const CGFloat kMinDiameter = 9;
 
