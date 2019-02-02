@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import <XCTest/XCTest.h>
+#import <CoreGraphics/CoreGraphics.h>
 
 #import "../../src/private/MDCBottomNavigationItemBadge.h"
 #import "MaterialBottomNavigation.h"
