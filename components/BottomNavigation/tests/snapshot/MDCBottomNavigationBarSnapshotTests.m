@@ -35,6 +35,8 @@ static NSString *const kLongTitleLatin =
 static NSString *const kLongTitleArabic =
     @"دول السيطرة استطاعوا ٣٠. مليون وفرنسا أوراقهم انه تم, نفس قد والديون العالمية. دون ما تنفّس.";
 static NSString *const kShortTitleArabic = @"ما تنفّس.";
+static NSString *const kBadgeTitleLatin = @"888+";
+static NSString *const kBadgeTitleArabic = @"أورا";
 
 @interface MDCMutableUITraitCollection : UITraitCollection
 @property(nonatomic, assign) UIUserInterfaceSizeClass horizontalSizeClassOverride;
@@ -89,6 +91,7 @@ static NSString *const kShortTitleArabic = @"ما تنفّس.";
   self.testImage = [UIImage mdc_testImageOfSize:CGSizeMake(24, 24)];
   self.tabItem1 = [[UITabBarItem alloc] initWithTitle:@"Item 1" image:self.testImage tag:1];
   self.tabItem2 = [[UITabBarItem alloc] initWithTitle:@"Item 2" image:self.testImage tag:2];
+  self.tabItem2.badgeValue = kBadgeTitleLatin;
   self.tabItem3 = [[UITabBarItem alloc] initWithTitle:@"Item 3" image:self.testImage tag:3];
   self.tabItem4 = [[UITabBarItem alloc] initWithTitle:@"Item 4" image:self.testImage tag:4];
   self.tabItem5 = [[UITabBarItem alloc] initWithTitle:@"Item 5" image:self.testImage tag:5];
@@ -138,6 +141,11 @@ static NSString *const kShortTitleArabic = @"ما تنفّس.";
       UIView *view = [self.navigationBar viewForItem:item];
       view.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
     }
+  }
+  if (self.navigationBar.items.count >= 2U) {
+    self.navigationBar.items[1].badgeValue = kBadgeTitleArabic;
+  } else {
+    self.navigationBar.items.firstObject.badgeValue = kBadgeTitleArabic;
   }
 }
 
