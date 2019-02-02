@@ -41,6 +41,8 @@ static const CGFloat kMDCBottomNavigationItemBadgeYPadding = 2;
     _badgeColor = [UIColor redColor];
   }
   self.layer.backgroundColor = _badgeColor.CGColor;
+  _xPadding = kMDCBottomNavigationItemBadgeXPadding;
+  _yPadding = kMDCBottomNavigationItemBadgeYPadding;
 
   if (self.subviews.count == 0) {
     _badgeValueLabel = [[UILabel alloc] initWithFrame:self.bounds];
@@ -58,7 +60,20 @@ static const CGFloat kMDCBottomNavigationItemBadgeYPadding = 2;
 
 - (void)layoutSubviews {
   [super layoutSubviews];
-  [self sizeBadge];
+
+  [_badgeValueLabel sizeToFit];
+
+  _badgeCircleWidth = CGRectGetWidth(_badgeValueLabel.bounds) + _xPadding;
+  _badgeCircleHeight = CGRectGetHeight(_badgeValueLabel.bounds) + _yPadding;
+
+  if (_badgeCircleWidth < _badgeCircleHeight) {
+    _badgeCircleWidth = _badgeCircleHeight;
+  }
+  self.badgeValueLabel.center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
+
+  CGFloat badgeRadius = CGRectGetMidY(self.bounds);
+  self.layer.cornerRadius = badgeRadius;
+  self.layer.backgroundColor = self.badgeColor.CGColor;
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
@@ -75,24 +90,12 @@ static const CGFloat kMDCBottomNavigationItemBadgeYPadding = 2;
   return CGSizeMake(badgeCircleWidth, badgeCircleHeight);
 }
 
-- (void)sizeBadge {
-  [_badgeValueLabel sizeToFit];
-  _xPadding = kMDCBottomNavigationItemBadgeXPadding;
-  _yPadding = kMDCBottomNavigationItemBadgeYPadding;
-
-  _badgeCircleWidth = CGRectGetWidth(_badgeValueLabel.bounds) + _xPadding;
-  _badgeCircleHeight = CGRectGetHeight(_badgeValueLabel.bounds) + _yPadding;
-
-  if (_badgeCircleWidth < _badgeCircleHeight) {
-    _badgeCircleWidth = _badgeCircleHeight;
-  }
-  self.frame = CGRectMake(CGRectGetMinX(self.frame), CGRectGetMinY(self.frame), _badgeCircleWidth,
-                          _badgeCircleHeight);
-  self.badgeValueLabel.center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
-
-  CGFloat badgeRadius = CGRectGetMidY(self.bounds);
-  self.layer.cornerRadius = badgeRadius;
-  self.layer.backgroundColor = self.badgeColor.CGColor;
+- (void)sizeToFit {
+  CGSize superSize = CGSizeMake(CGRectGetWidth(self.superview.bounds),
+                                CGRectGetHeight(self.superview.bounds));
+  CGSize fitSize = [self sizeThatFits:superSize];
+  CGRect newBounds = CGRectMake(0, 0, fitSize.width, fitSize.height);
+  self.bounds = newBounds;
 }
 
 - (void)setBadgeValue:(NSString *)badgeValue {

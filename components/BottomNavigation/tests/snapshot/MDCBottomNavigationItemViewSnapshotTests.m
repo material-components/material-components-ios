@@ -19,9 +19,10 @@
 
 static NSString *const kLongTitleLatin =
     @"123456789012345678901234567890123456789012345678901234567890";
+static NSString *const kBadgeTitleLatin = @"4242";
 static NSString *const kLongTitleArabic =
     @"دول السيطرة استطاعوا ٣٠. مليون وفرنسا أوراقهم انه تم, نفس قد والديون العالمية. دون ما تنفّس.";
-
+static NSString *const kBadgeTitleArabic = @"أورا";
 /** The shortest acceptable height for correct layout. */
 static const CGFloat kHeightShort = 48;
 
@@ -56,7 +57,7 @@ static const CGFloat kContentHorizontalMargin = 12;
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  //  self.recordMode = YES;
+    self.recordMode = YES;
 
   self.itemView = [[MDCBottomNavigationItemView alloc] init];
   self.itemView.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
@@ -64,7 +65,7 @@ static const CGFloat kContentHorizontalMargin = 12;
   self.itemView.title = kLongTitleLatin;
   self.itemView.contentHorizontalMargin = kContentHorizontalMargin;
   self.itemView.backgroundColor = UIColor.whiteColor;
-  self.itemView.badgeValue = @"42";
+  self.itemView.badgeValue = kBadgeTitleLatin;
 }
 
 - (void)generateAndVerifySnapshot {
@@ -77,6 +78,7 @@ static const CGFloat kContentHorizontalMargin = 12;
     self.itemView.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
   }
   self.itemView.title = kLongTitleArabic;
+  self.itemView.badgeValue = kBadgeTitleArabic;
 }
 
 #pragma mark - Varied widths
