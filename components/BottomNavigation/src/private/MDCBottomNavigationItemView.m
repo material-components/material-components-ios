@@ -24,8 +24,8 @@
 
 static const CGFloat MDCBottomNavigationItemViewInkOpacity = (CGFloat)0.150;
 static const CGFloat MDCBottomNavigationItemViewTitleFontSize = 12;
-// The amount the badge's edge is offset from the edge of the icon.
-static const CGFloat kBadgeXOffset = 8;
+// The amount the badge's edge is inset from the edge of the icon.
+static const CGFloat kBadgeXInset = 8;
 
 // The duration of the selection transition animation.
 static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.180;
@@ -353,11 +353,16 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 
 - (CGPoint)badgeCenterFromIconFrame:(CGRect)iconFrame isRTL:(BOOL)isRTL {
   CGSize badgeSize = [self.badge sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
-  if (isRTL) {
-    return CGPointMake(CGRectGetMinX(iconFrame) - badgeSize.width / 2 + kBadgeXOffset,
-                       CGRectGetMinY(iconFrame));
+  CGFloat badgeHalfHeight = badgeSize.height / 2;
+  CGFloat badgeCenterY = CGRectGetMinY(iconFrame);
+  CGFloat badgeYExcursion = badgeCenterY - badgeHalfHeight;
+  if (badgeYExcursion < 0) {
+    badgeCenterY -= badgeYExcursion;
   }
-  return CGPointMake(CGRectGetMaxX(iconFrame) + kBadgeXOffset, CGRectGetMinY(iconFrame));
+  if (isRTL) {
+    return CGPointMake(CGRectGetMinX(iconFrame) - badgeSize.width / 2 + kBadgeXInset, badgeCenterY);
+  }
+  return CGPointMake(CGRectGetMaxX(iconFrame) + kBadgeXInset, badgeCenterY);
 }
 
 - (NSString *)badgeValue {

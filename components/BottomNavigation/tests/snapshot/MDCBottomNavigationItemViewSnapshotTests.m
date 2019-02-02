@@ -19,7 +19,7 @@
 
 static NSString *const kLongTitleLatin =
     @"123456789012345678901234567890123456789012345678901234567890";
-static NSString *const kBadgeTitleLatin = @"4242";
+static NSString *const kBadgeTitleLatin = @"888+";
 static NSString *const kLongTitleArabic =
     @"دول السيطرة استطاعوا ٣٠. مليون وفرنسا أوراقهم انه تم, نفس قد والديون العالمية. دون ما تنفّس.";
 static NSString *const kBadgeTitleArabic = @"أورا";
