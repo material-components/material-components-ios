@@ -91,8 +91,8 @@ static const CGFloat kMDCBottomNavigationItemBadgeYPadding = 2;
 }
 
 - (void)sizeToFit {
-  CGSize superSize = CGSizeMake(CGRectGetWidth(self.superview.bounds),
-                                CGRectGetHeight(self.superview.bounds));
+  CGSize superSize =
+      CGSizeMake(CGRectGetWidth(self.superview.bounds), CGRectGetHeight(self.superview.bounds));
   CGSize fitSize = [self sizeThatFits:superSize];
   CGRect newBounds = CGRectMake(0, 0, fitSize.width, fitSize.height);
   self.bounds = newBounds;

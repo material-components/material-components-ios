@@ -239,12 +239,14 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
     } else {
       CGFloat contentBoundingRectMaxX = CGRectGetMaxX(contentBoundingRect);
       CGFloat contentBoundingContentWidthDiff = availableContentWidth - contentsWidth;
-      iconImageViewCenter = CGPointMake(contentBoundingRectMaxX - contentBoundingContentWidthDiff / 2 -
-                                        iconImageViewSize.width / 2,
-                                        centerY);
+      iconImageViewCenter =
+          CGPointMake(contentBoundingRectMaxX - contentBoundingContentWidthDiff / 2 -
+                          iconImageViewSize.width / 2,
+                      centerY);
       availableContentWidth -= iconImageViewSize.width + self.contentHorizontalMargin;
       labelSize = CGSizeMake(MIN(labelSize.width, availableContentWidth), labelSize.height);
-      CGFloat labelCenterX = iconImageViewCenter.x - iconImageViewSize.width / 2 - self.contentHorizontalMargin - labelSize.width / 2;
+      CGFloat labelCenterX = iconImageViewCenter.x - iconImageViewSize.width / 2 -
+                             self.contentHorizontalMargin - labelSize.width / 2;
       labelCenter = CGPointMake(labelCenterX, centerY);
     }
   }
@@ -355,8 +357,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
     return CGPointMake(CGRectGetMinX(iconFrame) - badgeSize.width / 2 + kBadgeXOffset,
                        CGRectGetMinY(iconFrame));
   }
-  return CGPointMake(CGRectGetMaxX(iconFrame) + kBadgeXOffset,
-                     CGRectGetMinY(iconFrame));
+  return CGPointMake(CGRectGetMaxX(iconFrame) + kBadgeXOffset, CGRectGetMinY(iconFrame));
 }
 
 - (NSString *)badgeValue {
