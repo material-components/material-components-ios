@@ -304,7 +304,7 @@ private extension MDCAlertController {
   // (TODO: b/121392425) A workaround to get a correct outline color & scrim
   //      color for dark themed dialogs with medium emphasis actions
   func applyDarkTheme(withScheme scheme: MDCContainerScheming) {
-    // apply the default alert themer
+    // Apply Material theming extension before overriding it
     self.applyTheme(withScheme: scheme)
 
     self.scrimColor = MDCPalette.grey.tint900.withAlphaComponent(0.4)

@@ -1,6 +1,6 @@
 ### Typical use: alert
 
-A Material alert presented using Material presentation and transition controllers:
+The following example shows how to present a Material alert:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -14,7 +14,7 @@ alertController.addAction(action)
 // Material theming of the alert controller (see full syntax below)
 alertController.applyTheme(withScheme: scheme)
 
-present(alertController, animated:true, completion:...)
+present(alertController, animated:true, completion:nil)
 ```
 
 #### Objective-C
@@ -34,7 +34,7 @@ MDCAlertAction *alertAction =
 [alertController addAction:alertAction];
 
 // Material theming of the alert controller (see full syntax below)
-[alertController applyThemeWithScheme: scheme];
+[alertController applyThemeWithScheme:scheme];
 
 [self presentViewController:alertController animated:YES completion:...];
 ```

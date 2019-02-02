@@ -1,5 +1,6 @@
 ### Typical use: modal dialog
-Your UIViewController presented using Material presentation and transition controllers:
+
+The following example shows how to present a custom UIViewController as the content within a Material dialog:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -34,8 +35,9 @@ myDialogViewController.modalPresentationStyle = UIModalPresentationCustom;
 myDialogViewController.transitioningDelegate = self.dialogTransitionController;
 
 // Material theming of presentation controller (see full syntax below)
-[myDialogViewController.mdc_dialogPresentationController applyThemeWithScheme: scheme];
+[myDialogViewController.mdc_dialogPresentationController applyThemeWithScheme:scheme];
 
 [self presentViewController:myDialogViewController animated:YES completion:...];
 
 ```
+<!--</div>-->

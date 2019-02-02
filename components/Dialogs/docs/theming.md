@@ -3,10 +3,18 @@
 You can theme an MDCDialog to match the Material Design Dialog using your app's schemes in the DialogThemer
 extension.
 
-Make sure the Dialog's Theming extension is added to your project:
+Make sure the Dialog's Theming extension is added to your project.
+
+If you're using the new theming extentions and schemes (MDCContainerScheme), add:
 
 ```bash
 pod 'MaterialComponents/Dialogs+Theming'
+```
+
+If you're using the current (and soon to be retired) extentions and schemes (MDCAlertScheme), add:
+
+```bash
+pod 'MaterialComponents/Dialogs+DialogThemer'
 ```
 
 You can then import the extension and create an `MDCAlertControllerThemer` instance. A dialog scheme defines
@@ -25,10 +33,10 @@ let scheme = MDCContainerScheme()
 scheme.colorScheme = myColorScheme
 scheme.typographyScheme = myTypographyScheme
 
-// Step 4: Use Material alert themer to theme your MDCAlertController instance
+// Step 4: Use Material Theming category method to theme your MDCAlertController instance
 alertController.applyTheme(withScheme: scheme)
 
-// Step 4: Alternatively, Use Material dialog presentation themer to theme your UIViewController instance:
+// Step 4: For custom dialogs, use Material dialog presentation theming method to theme your custom UIViewController:
 myDialogViewController.mdc_dialogPresentationController.applyTheme(withScheme: scheme)
 ```
 
@@ -45,11 +53,11 @@ MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
 scheme.colorScheme = myColorScheme
 scheme.typographyScheme = myTypographyScheme
 
-// Step 4: Use the Material alert themer to theme an MDCAlertController instance
+// Step 4: Use Material Theming category method to theme an MDCAlertController instance
 [alertController applyThemeWithScheme:scheme];
 
-// Step 4: Alternatively, Use Material dialog presentation themer to theme your UIViewController instance:
-[myDialogViewController.mdc_dialogPresentationController applyThemeWithScheme: scheme];
+// Step 4: For custom dialogs, use Material dialog presentation theming method to theme your custom UIViewController:
+[myDialogViewController.mdc_dialogPresentationController applyThemeWithScheme:scheme];
 
 ```
 <!--</div>-->

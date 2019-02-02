@@ -118,7 +118,8 @@ import MaterialComponents.MaterialDialogs
 <!-- Extracted from docs/typical-use-modal-dialog.md -->
 
 ### Typical use: modal dialog
-Your UIViewController presented using Material presentation and transition controllers:
+
+The following example shows how to present a custom UIViewController as the content within a Material dialog:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -153,17 +154,18 @@ myDialogViewController.modalPresentationStyle = UIModalPresentationCustom;
 myDialogViewController.transitioningDelegate = self.dialogTransitionController;
 
 // Material theming of presentation controller (see full syntax below)
-[myDialogViewController.mdc_dialogPresentationController applyThemeWithScheme: scheme];
+[myDialogViewController.mdc_dialogPresentationController applyThemeWithScheme:scheme];
 
 [self presentViewController:myDialogViewController animated:YES completion:...];
 
 ```
+<!--</div>-->
 
 <!-- Extracted from docs/typical-use-alert.md -->
 
 ### Typical use: alert
 
-A Material alert presented using Material presentation and transition controllers:
+The following example shows how to present a Material alert:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -177,7 +179,7 @@ alertController.addAction(action)
 // Material theming of the alert controller (see full syntax below)
 alertController.applyTheme(withScheme: scheme)
 
-present(alertController, animated:true, completion:...)
+present(alertController, animated:true, completion:nil)
 ```
 
 #### Objective-C
@@ -197,7 +199,7 @@ MDCAlertAction *alertAction =
 [alertController addAction:alertAction];
 
 // Material theming of the alert controller (see full syntax below)
-[alertController applyThemeWithScheme: scheme];
+[alertController applyThemeWithScheme:scheme];
 
 [self presentViewController:alertController animated:YES completion:...];
 ```
@@ -213,10 +215,18 @@ MDCAlertAction *alertAction =
 You can theme an MDCDialog to match the Material Design Dialog using your app's schemes in the DialogThemer
 extension.
 
-Make sure the Dialog's Theming extension is added to your project:
+Make sure the Dialog's Theming extension is added to your project.
+
+If you're using the new theming extentions and schemes (MDCContainerScheme), add:
 
 ```bash
 pod 'MaterialComponents/Dialogs+Theming'
+```
+
+If you're using the current (and soon to be retired) extentions and schemes (MDCAlertScheme), add:
+
+```bash
+pod 'MaterialComponents/Dialogs+DialogThemer'
 ```
 
 You can then import the extension and create an `MDCAlertControllerThemer` instance. A dialog scheme defines
@@ -235,10 +245,10 @@ let scheme = MDCContainerScheme()
 scheme.colorScheme = myColorScheme
 scheme.typographyScheme = myTypographyScheme
 
-// Step 4: Use Material alert themer to theme your MDCAlertController instance
+// Step 4: Use Material Theming category method to theme your MDCAlertController instance
 alertController.applyTheme(withScheme: scheme)
 
-// Step 4: Alternatively, Use Material dialog presentation themer to theme your UIViewController instance:
+// Step 4: For custom dialogs, use Material dialog presentation theming method to theme your custom UIViewController:
 myDialogViewController.mdc_dialogPresentationController.applyTheme(withScheme: scheme)
 ```
 
@@ -255,11 +265,11 @@ MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
 scheme.colorScheme = myColorScheme
 scheme.typographyScheme = myTypographyScheme
 
-// Step 4: Use the Material alert themer to theme an MDCAlertController instance
+// Step 4: Use Material Theming category method to theme an MDCAlertController instance
 [alertController applyThemeWithScheme:scheme];
 
-// Step 4: Alternatively, Use Material dialog presentation themer to theme your UIViewController instance:
-[myDialogViewController.mdc_dialogPresentationController applyThemeWithScheme: scheme];
+// Step 4: For custom dialogs, use Material dialog presentation theming method to theme your custom UIViewController:
+[myDialogViewController.mdc_dialogPresentationController applyThemeWithScheme:scheme];
 
 ```
 <!--</div>-->
@@ -268,17 +278,17 @@ scheme.typographyScheme = myTypographyScheme
 
 ### Action Theming
 
-Actions in MDCAlertController have emphasis which afects their theming.
+Actions in MDCAlertController have emphasis which affects their theming.
 High emphasis actions generate contained buttons, medium emphasis actions generate outlined buttons and low emphasis actions generate text buttons.
 
 <div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/dialogButtons.png" alt="Dialogs Actions" width="320">
+  <img src="docs/assets/dialogButtons.png" alt="An alert presented with a title, body, high-emphasis 'OK' button and low-emphasis 'Cancel' button." width="320">
 </div>
 
-Make sure the DialogThemer extension is added to your project:
+Make sure the Dialog Theming extension is added to your project:
 
 ```bash
-pod 'MaterialComponents/Dialogs+DialogThemer'
+pod 'MaterialComponents/Dialogs+Theming'
 ```
 
 The MDCContainerScheme defines design parameters that you can use to theme your dialogs.  The scheme is designed to be instanciated and customized once and be reused by many components.
@@ -289,20 +299,26 @@ The MDCContainerScheme defines design parameters that you can use to theme your 
   // Create or reuse a Container scheme
   let scheme = MDCContainerScheme()
 
-  // Creating an Alert dialog
+  // Create an Alert dialog
   let alert = MDCAlertController(title: "Button Theming",
                                  message: "Lorem ipsum dolor sit amet, sit consectetur adipiscing")
 
-  // Adding three actions with different emphasis, creating buttons with different themes.
+  // Add actions with emphases that will generate buttons with the desired appearance. 
+
+  // An example of a high emphasis action (and button appearance):
   alert.addAction(MDCAlertAction(title:"All Right", emphasis: .high, handler: handler))
+
+  // An example for a medium exmphasis:
   alert.addAction(MDCAlertAction(title:"Not Now", emphasis: .medium, handler: handler))
+
+  // Low exmphasis:
   alert.addAction(MDCAlertAction(title:"Later", emphasis: .low, handler: handler))
 
   // Make sure to spply theming after all actions are added, so they are themed too!
   alert.applyTheme(withScheme: scheme)
 
   // present the alert
-  present(alertController, animated:true, completion:...)
+  present(alertController, animated:true, completion:nil)
 ```
 
 #### Objective-C
@@ -311,20 +327,21 @@ The MDCContainerScheme defines design parameters that you can use to theme your 
   // Create or reuse a Container scheme
   MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
 
-  // Creating an Alert dialog
+  // Create an Alert dialog
   MDCAlertController *alert = 
-      [MDCAlertController alertControllerWithTitle:@"Button Theming" message: @"Lorem ipsum..."];
+      [MDCAlertController alertControllerWithTitle:@"Button Theming" 
+                    message:@"Lorem ipsum dolor sit amet, sit consectetur adipiscing"];
 
-  // Adding three actions with different emphasis, creating buttons with different themes.
-  MDCAlertAction *primaryAaction = [MDCAlertAction actionWithTitle:@"All Right"
+  // Add actions with different emphasis, creating buttons with different themes.
+  MDCAlertAction *primaryAction = [MDCAlertAction actionWithTitle:@"All Right"
                                                           emphasis:MDCActionEmphasisHigh
                                                            handler:handler];
-  [alert addAction:primaryAaction];
+  [alert addAction:primaryAction];
 
-  MDCAlertAction *cancelAaction = [MDCAlertAction actionWithTitle:@"Not Now"
+  MDCAlertAction *cancelAction = [MDCAlertAction actionWithTitle:@"Not Now"
                                                          emphasis:MDCActionEmphasisMedium
                                                           handler:handler];
-  [alert addAction:cancelAaction];
+  [alert addAction:cancelAction];
 
   // Make sure to call the themer after all actions are added, so they are themed too!
   [alert applyThemeWithScheme:scheme];
