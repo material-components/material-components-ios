@@ -61,7 +61,7 @@ static const CGFloat kMDCBottomNavigationItemBadgeYPadding = 2;
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  [_badgeValueLabel sizeToFit];
+  [self.badgeValueLabel sizeToFit];
 
   self.badgeValueLabel.center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
 
@@ -92,7 +92,7 @@ static const CGFloat kMDCBottomNavigationItemBadgeYPadding = 2;
 
 - (void)setBadgeValue:(NSString *)badgeValue {
   _badgeValue = badgeValue;
-  _badgeValueLabel.text = badgeValue;
+  self.badgeValueLabel.text = badgeValue;
   [self setNeedsLayout];
 }
 
