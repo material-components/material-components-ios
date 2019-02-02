@@ -5,13 +5,13 @@ extension.
 
 Make sure the Dialog's Theming extension is added to your project.
 
-If you're using the new theming extentions and schemes (MDCContainerScheme), add:
+If you're using the new theming extentions and schemes (MDCContainerScheme), add the Theming framework:
 
 ```bash
 pod 'MaterialComponents/Dialogs+Theming'
 ```
 
-If you're using the current (and soon to be retired) extentions and schemes (MDCAlertScheme), add:
+If you're using the current (and soon to be deprecated) extentions and schemes (MDCAlertScheme), add the DialogThemer framework:
 
 ```bash
 pod 'MaterialComponents/Dialogs+DialogThemer'

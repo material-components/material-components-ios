@@ -44,7 +44,7 @@ involve multiple tasks.
   - [Importing](#importing)
 - [Usage](#usage)
   - [Typical use: modal dialog](#typical-use-modal-dialog)
-  - [Typical use: alert](#typical-use-alert)
+  - [Typical use: alert controller](#typical-use-alert-controller)
 - [Extensions](#extensions)
   - [Theming](#theming)
   - [Action Theming](#action-theming)
@@ -163,9 +163,9 @@ myDialogViewController.transitioningDelegate = self.dialogTransitionController;
 
 <!-- Extracted from docs/typical-use-alert.md -->
 
-### Typical use: alert
+### Typical use: alert controller
 
-The following example shows how to present a Material alert:
+The following example shows how to present a Material alert controller:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift

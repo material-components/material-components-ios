@@ -1,6 +1,6 @@
-### Typical use: alert
+### Typical use: alert controller
 
-The following example shows how to present a Material alert:
+The following example shows how to present a Material alert controller:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
