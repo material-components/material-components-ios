@@ -50,6 +50,7 @@
   UITabBarItem *tabBarItem1 = [[UITabBarItem alloc] initWithTitle:@"Home"
                                                             image:[UIImage imageNamed:@"Home"]
                                                               tag:0];
+  tabBarItem1.badgeValue = @"";
   UITabBarItem *tabBarItem2 = [[UITabBarItem alloc] initWithTitle:@"Messages"
                                                             image:[UIImage imageNamed:@"Email"]
                                                               tag:0];
@@ -63,7 +64,7 @@
   UITabBarItem *tabBarItem5 = [[UITabBarItem alloc] initWithTitle:@"Birthday"
                                                             image:[UIImage imageNamed:@"Cake"]
                                                               tag:0];
-  tabBarItem5.badgeValue = @"999+";
+  tabBarItem5.badgeValue = @"888+";
 #if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wpartial-availability"

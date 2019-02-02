@@ -16,8 +16,12 @@
 #import "MDCBottomNavigationItemBadge.h"
 
 static const CGFloat kBadgeFontSize = 10;
-static const CGFloat kBadgeXPadding = 8;
-static const CGFloat kBadgeYPadding = 2;
+// Given these padding values, a double-eight value produces a near circle.
+// This matches the material.io guidelines article.
+static const CGFloat kBadgeXPadding = 3;
+static const CGFloat kBadgeYPadding = 4;
+// For an empty badge, ensure that the size is close to the guidelines article.
+static const CGFloat kMinDiameter = 11;
 
 @implementation MDCBottomNavigationItemBadge
 
@@ -74,13 +78,13 @@ static const CGFloat kBadgeYPadding = 2;
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
-  if (self.badgeValue == nil || self.badgeValue.length == 0) {
+  if (self.badgeValue == nil) {
     return CGSizeZero;
   }
 
   CGSize labelSize = [self.badgeValueLabel sizeThatFits:size];
-  CGFloat badgeWidth = labelSize.width + kBadgeXPadding;
-  CGFloat badgeHeight = labelSize.height + kBadgeYPadding;
+  CGFloat badgeWidth = MAX(kMinDiameter, labelSize.width + kBadgeXPadding);
+  CGFloat badgeHeight = MAX(kMinDiameter, labelSize.height + kBadgeYPadding);
   if (badgeWidth < badgeHeight) {
     badgeWidth = badgeHeight;
   }

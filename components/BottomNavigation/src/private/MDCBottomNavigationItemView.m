@@ -352,7 +352,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   if ([super accessibilityValue] == nil || [self accessibilityValue].length == 0) {
     self.button.accessibilityValue = badgeValue;
   }
-  if (badgeValue == nil || badgeValue.length == 0) {
+  if (badgeValue == nil) {
     self.badge.hidden = YES;
   } else {
     self.badge.hidden = NO;

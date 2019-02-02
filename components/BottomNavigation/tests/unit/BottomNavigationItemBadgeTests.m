@@ -82,8 +82,9 @@
 
   // Then
   CGRect badgeBounds = CGRectStandardize(self.badge.bounds);
-  XCTAssertTrue(CGRectEqualToRect(badgeBounds, CGRectZero), @"(%@) is not equal to (%@)",
-                NSStringFromCGRect(badgeBounds), NSStringFromCGRect(CGRectZero));
+  XCTAssertGreaterThan(badgeBounds.size.width, 1);
+  XCTAssertGreaterThan(badgeBounds.size.height, 1);
+  XCTAssertEqualWithAccuracy(badgeBounds.size.width, badgeBounds.size.height, 0.001);
 }
 
 - (void)testSizeToFitNonEmptyLabel {
