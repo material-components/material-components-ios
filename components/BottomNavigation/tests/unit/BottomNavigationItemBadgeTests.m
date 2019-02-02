@@ -14,8 +14,8 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialBottomNavigation.h"
 #import "../../src/private/MDCBottomNavigationItemBadge.h"
+#import "MaterialBottomNavigation.h"
 
 @interface BottomNavigationItemBadgeTests : XCTestCase
 @property(nonatomic, strong) MDCBottomNavigationItemBadge *badge;
@@ -100,8 +100,8 @@
                 @"(%@) should be smaller than (%@)", NSStringFromCGRect(badgeLabelBounds),
                 NSStringFromCGRect(badgeBounds));
   XCTAssertFalse(CGRectContainsRect(badgeLabelBounds, badgeBounds),
-                @"(%@) should be greater than (%@)", NSStringFromCGRect(badgeLabelBounds),
-                NSStringFromCGRect(badgeBounds));
+                 @"(%@) should be greater than (%@)", NSStringFromCGRect(badgeLabelBounds),
+                 NSStringFromCGRect(badgeBounds));
 }
 
 - (void)testLayoutSubviewsWontAdjustFrame {
