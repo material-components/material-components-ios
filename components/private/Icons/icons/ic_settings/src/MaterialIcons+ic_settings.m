@@ -23,8 +23,7 @@ static NSString *const kBundleName = @"MaterialIcons_ic_settings";
 static NSString *const kIconName = @"ic_settings";
 
 // Export a nonsense symbol to suppress a libtool warning when this is linked alone in a static lib.
-__attribute__((visibility("default")))
-    char MDCIconsExportToSuppressLibToolWarning_ic_settings = 0;
+__attribute__((visibility("default"))) char MDCIconsExportToSuppressLibToolWarning_ic_settings = 0;
 
 @implementation MDCIcons (ic_settings)
 
@@ -34,9 +33,7 @@ __attribute__((visibility("default")))
 
 + (nullable UIImage *)imageFor_ic_settings {
   NSBundle *bundle = [self bundleNamed:kBundleName];
-  return [UIImage imageNamed:kIconName
-                    inBundle:bundle
-      compatibleWithTraitCollection:nil];
+  return [UIImage imageNamed:kIconName inBundle:bundle compatibleWithTraitCollection:nil];
 }
 
 @end

@@ -15,7 +15,7 @@
 #import "SimpleTextField.h"
 
 #import <MDFInternationalization/MDFInternationalization.h>
-#import <MaterialComponents/MDCMath.h>
+#import "MaterialMath.h"
 
 #import "SimpleTextFieldLayout.h"
 #import "SimpleTextFieldLayoutUtils.h"

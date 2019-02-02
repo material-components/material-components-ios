@@ -26,17 +26,17 @@ static const CGFloat kStrokeVariantBorderOpacity = (CGFloat)0.37;
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                       toCardCell:(nonnull MDCCardCollectionCell *)cardCell {
   cardCell.backgroundColor = colorScheme.surfaceColor;
+  [cardCell setImageTintColor:colorScheme.primaryColor forState:MDCCardCellStateNormal];
 }
 
 + (void)applyOutlinedVariantWithColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                                      toCard:(nonnull MDCCard *)card {
-  NSUInteger maximumStateValue =
-      UIControlStateNormal | UIControlStateSelected | UIControlStateHighlighted |
-          UIControlStateDisabled;
+  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
+                                 UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     [card setBorderColor:nil forState:state];
   }
-  
+
   card.backgroundColor = colorScheme.surfaceColor;
   UIColor *borderColor =
       [colorScheme.onSurfaceColor colorWithAlphaComponent:kStrokeVariantBorderOpacity];
@@ -45,13 +45,12 @@ static const CGFloat kStrokeVariantBorderOpacity = (CGFloat)0.37;
 
 + (void)applyOutlinedVariantWithColorScheme:(id<MDCColorScheming>)colorScheme
                                  toCardCell:(MDCCardCollectionCell *)cardCell {
-  NSUInteger maximumStateValue =
-      UIControlStateNormal | UIControlStateSelected | UIControlStateHighlighted |
-          UIControlStateDisabled;
+  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
+                                 UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     [cardCell setBorderColor:nil forState:state];
   }
-  
+
   cardCell.backgroundColor = colorScheme.surfaceColor;
   UIColor *borderColor =
       [colorScheme.onSurfaceColor colorWithAlphaComponent:kStrokeVariantBorderOpacity];

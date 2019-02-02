@@ -16,8 +16,7 @@
 
 @implementation CardTintExampleCell
 
-- (instancetype)initWithFrame:(CGRect)frame
-{
+- (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
     self.backgroundColor = [UIColor whiteColor];
@@ -39,7 +38,8 @@
 - (void)layoutSubviews {
   [super layoutSubviews];
   _switchView.center = CGPointMake(self.contentView.center.x, _switchView.bounds.size.height);
-  _sliderView.center = CGPointMake(self.contentView.center.x, self.bounds.size.height - _sliderView.bounds.size.height);
+  _sliderView.center = CGPointMake(self.contentView.center.x,
+                                   self.bounds.size.height - _sliderView.bounds.size.height);
 }
 
 @end

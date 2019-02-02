@@ -14,10 +14,9 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialAppBar.h"
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar+TypographyThemer.h"
-
+#import "MaterialAppBar.h"
 
 @interface WrappedDemoViewController : UIViewController
 @end
@@ -59,15 +58,17 @@
       [[MDCAppBarContainerViewController alloc] initWithContentViewController:demoVC];
 
   // Behavioral flags.
-  MDCAppBarViewController *appBarViewController = self.appBarContainerViewController.appBarViewController;
+  MDCAppBarViewController *appBarViewController =
+      self.appBarContainerViewController.appBarViewController;
   appBarViewController.inferTopSafeAreaInsetFromViewController = YES;
   appBarViewController.headerView.minMaxHeightIncludesSafeArea = NO;
   self.appBarContainerViewController.topLayoutGuideAdjustmentEnabled = YES;
 
   [MDCAppBarColorThemer applyColorScheme:self.colorScheme
                   toAppBarViewController:self.appBarContainerViewController.appBarViewController];
-  [MDCAppBarTypographyThemer applyTypographyScheme:self.typographyScheme
-                            toAppBarViewController:self.appBarContainerViewController.appBarViewController];
+  [MDCAppBarTypographyThemer
+       applyTypographyScheme:self.typographyScheme
+      toAppBarViewController:self.appBarContainerViewController.appBarViewController];
 
   // Need to update the status bar style after applying the theme.
   [self setNeedsStatusBarAppearanceUpdate];
@@ -88,9 +89,9 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"App Bar", @"Wrapped" ],
-    @"primaryDemo": @NO,
-    @"presentable": @YES,
+    @"breadcrumbs" : @[ @"App Bar", @"Wrapped" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @YES,
   };
 }
 

@@ -17,7 +17,7 @@
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 @implementation CollectionsCellColorExample {
-  NSMutableArray <NSArray *>*_content;
+  NSMutableArray<NSArray *> *_content;
   NSArray *_cellBackgroundColors;
 }
 
@@ -79,9 +79,9 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Collections", @"Cell Color Example" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Collections", @"Cell Color Example" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

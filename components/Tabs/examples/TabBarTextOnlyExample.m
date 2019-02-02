@@ -18,8 +18,8 @@
 #import "MaterialButtons.h"
 #import "MaterialCollections.h"
 #import "MaterialColorScheme.h"
-#import "MaterialTabs.h"
 #import "MaterialTabs+ColorThemer.h"
+#import "MaterialTabs.h"
 #import "supplemental/TabBarTextOnlyExampleSupplemental.h"
 
 @implementation TabBarTextOnlyExample
@@ -27,7 +27,7 @@
 - (id)initWithCollectionViewLayout:(UICollectionViewLayout *)layout {
   self = [super initWithCollectionViewLayout:layout];
   if (self) {
-    [self setupExampleViews:@[@"Change Alignment", @"Toggle Case", @"Clear Selection"]];
+    [self setupExampleViews:@[ @"Change Alignment", @"Toggle Case", @"Clear Selection" ]];
     self.colorScheme =
         [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   }
@@ -110,8 +110,8 @@
 
 #pragma mark - Options in Collection View
 
-
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+- (void)collectionView:(UICollectionView *)collectionView
+    didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
   [super collectionView:collectionView didSelectItemAtIndexPath:indexPath];
   switch (indexPath.row) {
     case 0:

@@ -31,16 +31,23 @@ class EditReorderCollectionViewController: UIViewController,
                                         collectionViewLayout: UICollectionViewFlowLayout())
   var toggle = ToggleMode.edit
 
-  var colorScheme = MDCSemanticColorScheme()
-  var shapeScheme = MDCShapeScheme()
-  var typographyScheme = MDCTypographyScheme()
+  var containerScheme: MDCContainerScheming
 
-  var containerScheme: MDCContainerScheming {
-    let scheme = MDCContainerScheme()
-    scheme.colorScheme = colorScheme
-    scheme.typographyScheme = typographyScheme
-    scheme.shapeScheme = shapeScheme
-    return scheme
+  var colorScheme: MDCColorScheming {
+    return containerScheme.colorScheme ?? MDCSemanticColorScheme()
+  }
+
+  var typographyScheme: MDCTypographyScheming {
+    return containerScheme.typographyScheme ?? MDCTypographyScheme()
+  }
+
+  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    containerScheme = MDCContainerScheme()
+    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+  }
+
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
   }
 
   let images = [

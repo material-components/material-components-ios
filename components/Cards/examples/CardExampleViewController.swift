@@ -23,16 +23,15 @@ class CardExampleViewController: UIViewController {
   @IBOutlet weak var card: MDCCard!
   @IBOutlet weak var button: MDCButton!
 
-  var colorScheme = MDCSemanticColorScheme()
-  var shapeScheme = MDCShapeScheme()
-  var typographyScheme = MDCTypographyScheme()
+  var containerScheme: MDCContainerScheming
 
-  var scheme: MDCContainerScheming {
-    let scheme = MDCContainerScheme()
-    scheme.colorScheme = colorScheme
-    scheme.typographyScheme = typographyScheme
-    scheme.shapeScheme = shapeScheme
-    return scheme
+  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    containerScheme = MDCContainerScheme()
+    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+  }
+
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
   }
 
   override func viewDidLoad() {
@@ -44,8 +43,8 @@ class CardExampleViewController: UIViewController {
     bundle.loadNibNamed("CardExampleViewController", owner: self, options: nil)
     view.frame = self.view.bounds
 
-    button.applyTextTheme(withScheme: scheme)
-    card.applyTheme(withScheme: scheme)
+    button.applyTextTheme(withScheme: containerScheme)
+    card.applyTheme(withScheme: containerScheme)
     card.isInteractable = false
 
     imageView.isAccessibilityElement = true
@@ -59,7 +58,6 @@ class CardExampleViewController: UIViewController {
     }
     return super.traitCollection
   }
-
 }
 
 extension CardExampleViewController {

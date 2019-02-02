@@ -144,8 +144,7 @@
   @try {
     pageControl.numberOfPages = 0;
     pageControl.currentPage = 0;
-  }
-  @catch (NSException *e) {
+  } @catch (NSException *e) {
     exception = e;
   }
 
@@ -163,8 +162,7 @@
   // When
   @try {
     [pageControl scrollViewDidScroll:scrollView];
-  }
-  @catch (NSException *e) {
+  } @catch (NSException *e) {
     exception = e;
   }
 

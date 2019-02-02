@@ -64,7 +64,7 @@ static NSString *const kBundleName = @"MaterialCollections.bundle";
   // not be in the main .app bundle, but rather in a nested framework, so figure out where we live
   // and use that as the search location.
   NSBundle *bundle = [NSBundle bundleForClass:[MDCCollectionStringResources class]];
-  NSString *resourcePath = [(nil == bundle ? [NSBundle mainBundle] : bundle)resourcePath];
+  NSString *resourcePath = [(nil == bundle ? [NSBundle mainBundle] : bundle) resourcePath];
   return [resourcePath stringByAppendingPathComponent:bundleName];
 }
 @end

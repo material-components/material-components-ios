@@ -15,6 +15,8 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialApplication.h"
+#import "MaterialButtons+Theming.h"
+#import "MaterialButtons.h"
 #import "MaterialCollections.h"
 #import "MaterialColorScheme.h"
 #import "MaterialDialogs+Theming.h"
@@ -25,7 +27,7 @@
 #pragma mark - DialogsDismissingExampleViewController Interfaces
 
 @interface DialogsDismissingExampleViewController : MDCCollectionViewController
-@property(nonatomic, strong, nullable) MDCContainerScheme *containerScheme;
+@property(nonatomic, strong, nullable) id<MDCContainerScheming> containerScheme;
 @property(nonatomic, strong, nullable) NSArray *modes;
 @property(nonatomic, strong) MDCDialogTransitionController *transitionController;
 @end
@@ -44,19 +46,20 @@
 
 @implementation DialogsDismissingExampleViewController
 
-- (id)init {
+- (instancetype)init {
   self = [super init];
   if (self) {
-    self.containerScheme = [[MDCContainerScheme alloc] init];
-    self.containerScheme.colorScheme =
+    MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
+    scheme.colorScheme =
         [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-    self.containerScheme.typographyScheme = [[MDCTypographyScheme alloc] init];
+    _containerScheme = scheme;
   }
   return self;
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+
   [self loadCollectionView:@[
     @"Dismissable Programmatic", @"Dismissable Storyboard", @"Non-dismissable Programmatic",
     @"Open URL"
@@ -124,8 +127,7 @@
       [storyboard instantiateViewControllerWithIdentifier:identifier];
   viewController.modalPresentationStyle = UIModalPresentationCustom;
   viewController.transitioningDelegate = self.transitionController;
-  viewController.colorScheme = self.containerScheme.colorScheme;
-  viewController.typographyScheme = self.containerScheme.typographyScheme;
+  viewController.containerScheme = self.containerScheme;
   [self presentViewController:viewController animated:YES completion:NULL];
 }
 
@@ -176,7 +178,9 @@ static NSString *const kReusableIdentifierItem = @"cell";
 
 @interface ProgrammaticViewController ()
 
-@property(nonatomic, strong) MDCFlatButton *dismissButton;
+@property(nonatomic, strong) MDCButton *dismissButton;
+
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 
 @end
 
@@ -185,19 +189,23 @@ static NSString *const kReusableIdentifierItem = @"cell";
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.view.backgroundColor = [UIColor whiteColor];
+  id<MDCColorScheming> colorScheme =
+      self.containerScheme.colorScheme
+          ?: [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  self.view.backgroundColor = colorScheme.backgroundColor;
 
-  _dismissButton = [[MDCFlatButton alloc] init];
-  [_dismissButton setTitle:@"Dismiss" forState:UIControlStateNormal];
-  [_dismissButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-  _dismissButton.autoresizingMask =
+  self.dismissButton = [[MDCButton alloc] init];
+  [self.dismissButton setTitle:@"Dismiss" forState:UIControlStateNormal];
+  [self.dismissButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+  self.dismissButton.autoresizingMask =
       UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin |
       UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
-  [_dismissButton addTarget:self
-                     action:@selector(dismiss:)
-           forControlEvents:UIControlEventTouchUpInside];
+  [self.dismissButton addTarget:self
+                         action:@selector(dismiss:)
+               forControlEvents:UIControlEventTouchUpInside];
+  [self.dismissButton applyTextThemeWithScheme:self.containerScheme];
 
-  [self.view addSubview:_dismissButton];
+  [self.view addSubview:self.dismissButton];
 }
 
 - (void)viewWillLayoutSubviews {
@@ -221,7 +229,9 @@ static NSString *const kReusableIdentifierItem = @"cell";
 
 @interface OpenURLViewController ()
 
-@property(nonatomic, strong) MDCFlatButton *dismissButton;
+@property(nonatomic, strong) MDCButton *dismissButton;
+
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 
 @end
 
@@ -230,19 +240,22 @@ static NSString *const kReusableIdentifierItem = @"cell";
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.view.backgroundColor = [UIColor whiteColor];
+  id<MDCColorScheming> colorScheme =
+      self.containerScheme.colorScheme
+          ?: [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  self.view.backgroundColor = colorScheme.backgroundColor;
 
-  _dismissButton = [[MDCFlatButton alloc] init];
-  [_dismissButton setTitle:@"material.io" forState:UIControlStateNormal];
-  [_dismissButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-  _dismissButton.autoresizingMask =
+  self.dismissButton = [[MDCButton alloc] init];
+  [self.dismissButton setTitle:@"material.io" forState:UIControlStateNormal];
+  [self.dismissButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+  self.dismissButton.autoresizingMask =
       UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin |
       UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
-  [_dismissButton addTarget:self
-                     action:@selector(dismiss:)
-           forControlEvents:UIControlEventTouchUpInside];
-
-  [self.view addSubview:_dismissButton];
+  [self.dismissButton addTarget:self
+                         action:@selector(dismiss:)
+               forControlEvents:UIControlEventTouchUpInside];
+  [self.dismissButton applyTextThemeWithScheme:self.containerScheme];
+  [self.view addSubview:self.dismissButton];
 }
 
 - (void)viewWillLayoutSubviews {

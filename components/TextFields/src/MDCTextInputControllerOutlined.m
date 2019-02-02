@@ -166,7 +166,7 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
   self.textInput.clipsToBounds = NO;
 }
 
--(void)updateUnderline {
+- (void)updateUnderline {
   self.textInput.underline.hidden = YES;
 }
 
@@ -175,11 +175,16 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 
   UIBezierPath *path;
   if ([self isPlaceholderUp]) {
-    CGFloat placeholderWidth =
-        [self.textInput.placeholderLabel systemLayoutSizeFittingSize:UILayoutFittingCompressedSize]
-        .width * (CGFloat)self.floatingPlaceholderScale.floatValue;
-
-    placeholderWidth += MDCTextInputOutlinedTextFieldFloatingPlaceholderPadding;
+    CGFloat placeholderWidth = 0;
+    NSString *placeholderString = [self.textInput.placeholderLabel.text
+        stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceCharacterSet];
+    if (placeholderString.length > 0) {
+      placeholderWidth = [self.textInput.placeholderLabel
+                             systemLayoutSizeFittingSize:UILayoutFittingCompressedSize]
+                             .width *
+                         (CGFloat)self.floatingPlaceholderScale.floatValue;
+      placeholderWidth += MDCTextInputOutlinedTextFieldFloatingPlaceholderPadding;
+    }
 
     path = [self roundedPathFromRect:[self borderRect]
                        withTextSpace:placeholderWidth
@@ -239,26 +244,27 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 
   [path addArcWithCenter:CGPointMake(f.size.width - radius + xOffset, radius + yOffset)
                   radius:radius
-              startAngle:- (CGFloat)(M_PI / 2)
+              startAngle:-(CGFloat)(M_PI / 2)
                 endAngle:0
                clockwise:YES];
   [path addLineToPoint:CGPointMake(f.size.width + xOffset, f.size.height - radius + yOffset)];
-  [path addArcWithCenter:CGPointMake(f.size.width - radius + xOffset, f.size.height - radius + yOffset)
+  [path addArcWithCenter:CGPointMake(f.size.width - radius + xOffset,
+                                     f.size.height - radius + yOffset)
                   radius:radius
               startAngle:0
-                endAngle:- (CGFloat)((M_PI * 3) / 2)
+                endAngle:-(CGFloat)((M_PI * 3) / 2)
                clockwise:YES];
   [path addLineToPoint:CGPointMake(radius + xOffset, f.size.height + yOffset)];
   [path addArcWithCenter:CGPointMake(radius + xOffset, f.size.height - radius + yOffset)
                   radius:radius
-              startAngle:- (CGFloat)((M_PI * 3) / 2)
-                endAngle:- (CGFloat)M_PI
+              startAngle:-(CGFloat)((M_PI * 3) / 2)
+                endAngle:-(CGFloat)M_PI
                clockwise:YES];
   [path addLineToPoint:CGPointMake(xOffset, radius + yOffset)];
   [path addArcWithCenter:CGPointMake(radius + xOffset, radius + yOffset)
                   radius:radius
-              startAngle:- (CGFloat)M_PI
-                endAngle:- (CGFloat)(M_PI / 2)
+              startAngle:-(CGFloat)M_PI
+                endAngle:-(CGFloat)(M_PI / 2)
                clockwise:YES];
 
   return path;

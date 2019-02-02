@@ -14,9 +14,9 @@
 
 #import <XCTest/XCTest.h>
 
+#import "MaterialSnackbar+FontThemer.h"
 #import "MaterialSnackbar.h"
 #import "MaterialThemes.h"
-#import "MaterialSnackbar+FontThemer.h"
 
 @interface MDCSnackbarFontThemerTests : XCTestCase
 @end
@@ -38,10 +38,8 @@
   fontScheme.body2 = [UIFont systemFontOfSize:13];
   [MDCSnackbarFontThemer applyFontScheme:fontScheme
                    toSnackbarMessageView:[MDCSnackbarMessageView appearance]];
-  XCTAssertEqualObjects([MDCSnackbarMessageView appearance].messageFont,
-                        fontScheme.body2);
-  XCTAssertEqualObjects([MDCSnackbarMessageView appearance].buttonFont,
-                        fontScheme.button);
+  XCTAssertEqualObjects([MDCSnackbarMessageView appearance].messageFont, fontScheme.body2);
+  XCTAssertEqualObjects([MDCSnackbarMessageView appearance].buttonFont, fontScheme.button);
 }
 
 - (void)testSnackbarFontThemer {
@@ -52,10 +50,8 @@
   fontScheme.button = [UIFont boldSystemFontOfSize:12];
   fontScheme.body2 = [UIFont systemFontOfSize:13];
   [MDCSnackbarFontThemer applyFontScheme:fontScheme];
-  XCTAssertEqualObjects(MDCSnackbarManager.messageFont,
-                        fontScheme.body2);
-  XCTAssertEqualObjects(MDCSnackbarManager.buttonFont,
-                        fontScheme.button);
+  XCTAssertEqualObjects(MDCSnackbarManager.messageFont, fontScheme.body2);
+  XCTAssertEqualObjects(MDCSnackbarManager.buttonFont, fontScheme.button);
 }
 
 @end

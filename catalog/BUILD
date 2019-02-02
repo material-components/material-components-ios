@@ -33,7 +33,10 @@ ios_application(
     infoplists = ["MDCCatalog/Info.plist"],
     launch_storyboard = "MDCCatalog/Base.lproj/LaunchScreen.storyboard",
     minimum_os_version = IOS_MINIMUM_OS,
-    deps = [":MDCCatalogLib"],
+    deps = [
+      ":MDCCatalogLib",
+      ":MDCCatalogObjcLib",
+    ],
 )
 
 ios_application(
@@ -52,6 +55,12 @@ ios_application(
     ],
 )
 
+mdc_objc_library(
+    name = "MDCCatalogObjcLib",
+    srcs = native.glob(["MDCCatalog/*.h"]),
+    visibility = ["//visibility:private"],
+)
+
 swift_library(
     name = "MDCCatalogLib",
     srcs = native.glob(["MDCCatalog/*.swift"]),
@@ -68,6 +77,7 @@ swift_library(
         "//components/BottomSheet",
         "//components/Buttons",
         "//components/Buttons:ButtonThemer",
+        "//components/Buttons:Theming",
         "//components/Collections",
         "//components/Dialogs",
         "//components/FlexibleHeader",
@@ -88,6 +98,7 @@ swift_library(
         "//components/private/Icons/icons/ic_more_horiz",
         "//components/private/Icons/icons/ic_settings",
         "//components/schemes/Color",
+        "//components/schemes/Container",
         "//components/schemes/Typography",
         "@catalog_by_convention//:CatalogByConvention",
         "@material_internationalization_ios//:MDFInternationalization",
@@ -132,4 +143,5 @@ mdc_objc_library(
     name = "MDCActionExtension",
     srcs = native.glob(["MDCActionExtension/*.m"]),
     hdrs = native.glob(["MDCActionExtension/*.h"]),
+    deps = ["@catalog_by_convention//:CatalogByConvention"],
 )

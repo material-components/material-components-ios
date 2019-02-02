@@ -89,8 +89,7 @@ static UIColor *InkColorDefault() {
   CGFloat newMinX = MAX(0, MIN(1, CGRectGetMinX(activeDotsSegment)));
   CGFloat newMaxX = MIN(1, MAX(0, CGRectGetMaxX(activeDotsSegment)));
 
-  _activeDotsSegment = CGRectMake(newMinX, 0,
-                                  (newMaxX - newMinX), 0);
+  _activeDotsSegment = CGRectMake(newMinX, 0, (newMaxX - newMinX), 0);
   [self setNeedsDisplay];
 }
 
@@ -226,8 +225,8 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     _thumbEnabledColor = onTintColor ?: ThumbEnabledColorDefault();
     _trackOnColor = onTintColor ?: TrackOnColorDefault();
     _valueLabelBackgroundColor = onTintColor ?: ValueLabelBackgroundColorDefault();
-    _touchController.defaultInkView.inkColor = onTintColor ?
-        [onTintColor colorWithAlphaComponent:kTrackOnAlpha] : InkColorDefault();
+    _touchController.defaultInkView.inkColor =
+        onTintColor ? [onTintColor colorWithAlphaComponent:kTrackOnAlpha] : InkColorDefault();
     _clearColor = UIColor.clearColor;
     _valueLabelTextColor = ValueLabelTextColorDefault();
     _trackOnTickColor = UIColor.blackColor;
@@ -472,8 +471,8 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   CGFloat previousValue = _value;
   CGFloat newValue = MAX(_minimumValue, MIN(value, _maximumValue));
   newValue = [self closestValueToTargetValue:newValue];
-  if (newValue != previousValue &&
-      [_delegate respondsToSelector:@selector(thumbTrack:willJumpToValue:)]) {
+  if (newValue != previousValue && [_delegate respondsToSelector:@selector(thumbTrack:
+                                                                      willJumpToValue:)]) {
     [self.delegate thumbTrack:self willJumpToValue:newValue];
   }
   _value = newValue;
@@ -539,7 +538,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 #pragma mark - Animation helpers
 
 - (CAMediaTimingFunction *)timingFunctionFromUIViewAnimationOptions:
-        (UIViewAnimationOptions)options {
+    (UIViewAnimationOptions)options {
   NSString *name;
 
   // It's important to check these in this order, due to their actual values specified in UIView.h:
@@ -587,7 +586,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   [self updateViewsNoAnimation];
 
   BOOL activeSegmentShrinking = MDCFabs(self.value - self.filledTrackAnchorValue) <
-      MDCFabs(previousValue - self.filledTrackAnchorValue);
+                                MDCFabs(previousValue - self.filledTrackAnchorValue);
 
   UIViewAnimationOptions baseAnimationOptions =
       UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionAllowUserInteraction;
@@ -723,7 +722,8 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   if (!MDCCGFloatEqual(self.maximumValue, self.minimumValue)) {
     CGFloat relativeAnchorPoint =
         (self.filledTrackAnchorValue - self.minimumValue) / (self.maximumValue - self.minimumValue);
-    CGFloat relativeValuePoint = (self.value - self.minimumValue) / (self.maximumValue - self.minimumValue);
+    CGFloat relativeValuePoint =
+        (self.value - self.minimumValue) / (self.maximumValue - self.minimumValue);
     CGFloat activeSegmentWidth = MDCFabs(relativeAnchorPoint - relativeValuePoint);
     CGFloat activeSegmentOriginX = MIN(relativeAnchorPoint, relativeValuePoint);
     _discreteDots.activeDotsSegment = CGRectMake(activeSegmentOriginX, 0, activeSegmentWidth, 0);
@@ -1201,9 +1201,8 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
                  completion:^{
                    MDCThumbTrack *strongSelf = weakSelf;
                    [strongSelf sendDiscreteChangeAction];
-                   if (strongSelf &&
-                       [strongSelf->_delegate
-                           respondsToSelector:@selector(thumbTrack:didAnimateToValue:)]) {
+                   if (strongSelf && [strongSelf->_delegate respondsToSelector:@selector
+                                                            (thumbTrack:didAnimateToValue:)]) {
                      [strongSelf->_delegate thumbTrack:weakSelf didAnimateToValue:value];
                    }
                  }];

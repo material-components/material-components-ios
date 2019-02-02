@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import Foundation
+import UIKit
+
 import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialCollections
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialDialogs
-import MaterialComponents.MaterialDialogs_DialogThemer
 import MaterialComponents.MaterialPalettes
 import MaterialComponents.MaterialTypographyScheme
 import MaterialComponentsBeta.MaterialButtons_Theming
@@ -27,7 +27,7 @@ import MaterialComponents.MaterialPalettes
 
 class DialogsAlertCustomizationExampleViewController: MDCCollectionViewController {
 
-  var containerScheme: MDCContainerScheme = MDCContainerScheme()
+  var containerScheme: MDCContainerScheming = MDCContainerScheme()
 
   let kReusableIdentifierItem = "customCell"
 
@@ -40,7 +40,8 @@ class DialogsAlertCustomizationExampleViewController: MDCCollectionViewControlle
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor = UIColor.white
+    view.backgroundColor = containerScheme.colorScheme?.backgroundColor ??
+        MDCSemanticColorScheme(defaults: .material201804).backgroundColor
 
     loadCollectionView(menu: [
       "Centered Title",
@@ -219,6 +220,8 @@ class DialogsAlertCustomizationExampleViewController: MDCCollectionViewControlle
     colorScheme.primaryColor = .blue
     containerScheme.colorScheme = colorScheme
     alert.applyTheme(withScheme: containerScheme)
+    alert.button(for: alert.actions.first!)?.setBackgroundColor(.blue, for: .normal)
+
     return alert
   }
 

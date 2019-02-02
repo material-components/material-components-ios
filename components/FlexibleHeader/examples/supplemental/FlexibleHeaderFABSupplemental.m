@@ -25,9 +25,9 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Flexible Header", @"Floating Action Button" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Flexible Header", @"Floating Action Button" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

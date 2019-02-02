@@ -16,6 +16,22 @@
 
 #import "MaterialShadowElevations.h"
 
+@class MDCDialogPresentationController;
+
+/**
+ MDCDialogPresentationControllerDelegate provides a method that allows a delegate of an
+ MDCDialogPresentationController to respond to its dismissals.
+ */
+@protocol MDCDialogPresentationControllerDelegate <NSObject>
+@optional
+/**
+ This method allows a delegate conforming to MDCDialogPresentationControllerDelegate to respond to
+ MDCDialogPresentationController dismissals.
+ */
+- (void)dialogPresentationControllerDidDismiss:
+    (nonnull MDCDialogPresentationController *)dialogPresentationController;
+@end
+
 /**
  MDCDialogPresentationController will present a modal ViewController as a dialog according to the
  Material spec.
@@ -34,6 +50,14 @@
  presentedView's frame.
  */
 @interface MDCDialogPresentationController : UIPresentationController
+
+/**
+ An object conforming to MDCDialogPresentationControllerDelegate. When non-nil, the
+ MDCDialogPresentationController will call the appropriate MDCDialogPresentationControllerDelegate
+ methods on this object.
+ */
+@property(nonatomic, weak, nullable) id<MDCDialogPresentationControllerDelegate>
+    dialogPresentationControllerDelegate;
 
 /**
  Should a tap on the dimmed background view dismiss the presented controller.

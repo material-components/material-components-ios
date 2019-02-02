@@ -15,7 +15,7 @@
 #import "MDCCard.h"
 
 #import "MaterialMath.h"
-#import "MaterialShapes.h"
+#import "MaterialShapesNew.h"
 
 static const CGFloat MDCCardShadowElevationNormal = 1;
 static const CGFloat MDCCardShadowElevationHighlighted = 8;
@@ -63,8 +63,8 @@ static const BOOL MDCCardIsInteractableDefault = YES;
 
   if (_inkView == nil) {
     _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
-    _inkView.autoresizingMask = (UIViewAutoresizingFlexibleWidth |
-                                 UIViewAutoresizingFlexibleHeight);
+    _inkView.autoresizingMask =
+        (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     _inkView.usesLegacyInkRipple = NO;
     _inkView.layer.zPosition = FLT_MAX;
     [self addSubview:_inkView];

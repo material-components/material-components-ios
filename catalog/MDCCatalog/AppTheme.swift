@@ -15,53 +15,60 @@
 import Foundation
 import MaterialComponents.MaterialButtons_ButtonThemer
 import MaterialComponents.MaterialColorScheme
+import MaterialComponents.MaterialShapeScheme
 import MaterialComponents.MaterialTypographyScheme
+import MaterialComponentsBeta.MaterialContainerScheme
 
 final class AppTheme {
-  let colorScheme: MDCColorScheming
-  let typographyScheme: MDCTypographyScheming
-  let buttonScheme: MDCButtonScheming
+  let containerScheme: MDCContainerScheming
 
-  init(colorScheme: MDCColorScheming, typographyScheme: MDCTypographyScheming) {
-    self.colorScheme = colorScheme
-    self.typographyScheme = typographyScheme
-    let buttonScheme = MDCButtonScheme()
-    buttonScheme.colorScheme = colorScheme
-    buttonScheme.typographyScheme = typographyScheme
-    self.buttonScheme = buttonScheme
+  var colorScheme: MDCColorScheming {
+    return containerScheme.colorScheme ?? MDCSemanticColorScheme(defaults: .material201804)
   }
 
-  static let defaultTheme: AppTheme = {
-    let colorScheme = MDCSemanticColorScheme()
-    colorScheme.primaryColor =  UIColor(red: CGFloat(0x21) / 255.0,
-                                        green: CGFloat(0x21) / 255.0,
-                                        blue: CGFloat(0x21) / 255.0,
-                                        alpha: 1)
-    colorScheme.primaryColorVariant = .init(white: 0.7, alpha: 1)
-    colorScheme.secondaryColor = UIColor(red: CGFloat(0x00) / 255.0,
-                                         green: CGFloat(0xE6) / 255.0,
-                                         blue: CGFloat(0x76) / 255.0,
-                                         alpha: 1)
-    let typographyScheme = MDCTypographyScheme()
-    typographyScheme.headline1 = UIFont.systemFont(ofSize: 20)
-    typographyScheme.headline2 = UIFont.systemFont(ofSize: 18)
-    typographyScheme.headline3 = UIFont.systemFont(ofSize: 15)
-    return AppTheme(colorScheme: colorScheme, typographyScheme: typographyScheme)
-  }()
+  var typographyScheme: MDCTypographyScheming {
+    return containerScheme.typographyScheme ?? MDCTypographyScheme(defaults: .material201804)
+  }
 
-  static var globalTheme: AppTheme = defaultTheme {
+  init(containerScheme: MDCContainerScheming) {
+    self.containerScheme = containerScheme
+  }
+
+  static var globalTheme = AppTheme(containerScheme: DefaultContainerScheme()) {
     didSet {
       NotificationCenter.default.post(name: AppTheme.didChangeGlobalThemeNotificationName,
                                       object: nil,
-                                      userInfo:
-        [AppTheme.globalThemeNotificationColorSchemeKey: AppTheme.globalTheme.colorScheme,
-         AppTheme.globalThemeNotificationTypographySchemeKey: AppTheme.globalTheme.typographyScheme]
-      )
+                                      userInfo: nil)
     }
   }
 
   static let didChangeGlobalThemeNotificationName =
     Notification.Name("MDCCatalogDidChangeGlobalTheme")
-  static let globalThemeNotificationColorSchemeKey = "colorScheme"
-  static let globalThemeNotificationTypographySchemeKey = "typographyScheme"
+}
+
+func DefaultContainerScheme() -> MDCContainerScheme {
+  let containerScheme = MDCContainerScheme()
+
+  let colorScheme = MDCSemanticColorScheme()
+  colorScheme.primaryColor =  UIColor(red: CGFloat(0x21) / 255.0,
+                                      green: CGFloat(0x21) / 255.0,
+                                      blue: CGFloat(0x21) / 255.0,
+                                      alpha: 1)
+  colorScheme.primaryColorVariant = .init(white: 0.7, alpha: 1)
+  colorScheme.secondaryColor = UIColor(red: CGFloat(0x00) / 255.0,
+                                       green: CGFloat(0xE6) / 255.0,
+                                       blue: CGFloat(0x76) / 255.0,
+                                       alpha: 1)
+  containerScheme.colorScheme = colorScheme
+
+  let typographyScheme = MDCTypographyScheme()
+  typographyScheme.headline1 = UIFont.systemFont(ofSize: 20)
+  typographyScheme.headline2 = UIFont.systemFont(ofSize: 18)
+  typographyScheme.headline3 = UIFont.systemFont(ofSize: 15)
+  containerScheme.typographyScheme = typographyScheme
+
+  let shapeScheme = MDCShapeScheme()
+  containerScheme.shapeScheme = shapeScheme
+
+  return containerScheme
 }

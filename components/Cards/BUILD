@@ -16,9 +16,12 @@
 load(
     "//:material_components_ios.bzl",
     "mdc_examples_objc_library",
+    "mdc_examples_swift_library",
     "mdc_extension_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
+    "mdc_snapshot_objc_library",
+    "mdc_snapshot_test",
     "mdc_unit_test_suite",
 )
 load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
@@ -34,10 +37,10 @@ mdc_public_objc_library(
     deps = [
         "//components/Ink",
         "//components/ShadowLayer",
+        "//components/ShapeLibrary",
+        "//components/Shapes",
         "//components/private/Icons/icons/ic_check_circle",
         "//components/private/Math",
-        "//components/private/ShapeLibrary",
-        "//components/private/Shapes",
     ],
 )
 
@@ -121,10 +124,48 @@ mdc_unit_test_suite(
     ],
 )
 
+mdc_snapshot_objc_library(
+    name = "snapshot_test_lib",
+    deps = [
+        ":Cards",
+        ":Theming",
+    ],
+)
+
+swift_library(
+    name = "snapshot_test_swift_lib",
+    srcs = glob(["tests/snapshot/*.swift"]),
+    copts = [
+        "-swift-version",
+        "3",
+    ],
+)
+
+mdc_snapshot_test(
+    name = "snapshot_tests",
+    deps = [
+        ":snapshot_test_lib",
+        ":snapshot_test_swift_lib",
+    ],
+)
+
 mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
         ":Cards",
+        ":Theming",
         "//components/Ink",
+        "//components/schemes/Container",
+    ],
+)
+
+mdc_examples_swift_library(
+    name = "SwiftExamples",
+    deps = [
+        ":Cards",
+        ":Theming",
+        "//components/Buttons:ButtonThemer",
+        "//components/Buttons:Theming",
+        "//components/schemes/Container",
     ],
 )

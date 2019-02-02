@@ -48,4 +48,3 @@ static CGFloat const kFilledTextFieldIconAlpha = (CGFloat)0.54;
 }
 
 @end
-

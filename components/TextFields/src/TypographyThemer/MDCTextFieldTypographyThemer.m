@@ -22,7 +22,7 @@
   textInputController.leadingUnderlineLabelFont = typographyScheme.caption;
   textInputController.trailingUnderlineLabelFont = typographyScheme.caption;
   if ([textInputController
-       conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
+          conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
     id<MDCTextInputControllerFloatingPlaceholder> textInputControllerFloatingPlaceholder =
         (id<MDCTextInputControllerFloatingPlaceholder>)textInputController;
 
@@ -30,7 +30,7 @@
     if (typographyScheme.caption.pointSize <= 0) {
       textInputControllerFloatingPlaceholder.floatingPlaceholderScale = nil;
     } else {
-      double ratio = typographyScheme.caption.pointSize/typographyScheme.subtitle1.pointSize;
+      double ratio = typographyScheme.caption.pointSize / typographyScheme.subtitle1.pointSize;
       textInputControllerFloatingPlaceholder.floatingPlaceholderScale =
           [NSNumber numberWithDouble:ratio];
     }
@@ -52,19 +52,19 @@
 #pragma clang diagnostic ignored "-Wobjc-method-access"
 #endif
 + (void)applyTypographyScheme:(id<MDCTypographyScheming>)typographyScheme
-  toAllTextInputControllersOfClass:(Class<MDCTextInputController>)textInputControllerClass {
+    toAllTextInputControllersOfClass:(Class<MDCTextInputController>)textInputControllerClass {
   [textInputControllerClass setInlinePlaceholderFontDefault:typographyScheme.subtitle1];
   [textInputControllerClass setTrailingUnderlineLabelFontDefault:typographyScheme.caption];
   [textInputControllerClass setLeadingUnderlineLabelFontDefault:typographyScheme.caption];
   if ([textInputControllerClass
-       conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
+          conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
     Class<MDCTextInputControllerFloatingPlaceholder> textInputControllerFloatingPlaceholderClass =
         (Class<MDCTextInputControllerFloatingPlaceholder>)textInputControllerClass;
     // if caption.pointSize <= 0 there is no meaningful ratio so we fallback to default.
-  if (typographyScheme.caption.pointSize <= 0) {
+    if (typographyScheme.caption.pointSize <= 0) {
       [textInputControllerFloatingPlaceholderClass setFloatingPlaceholderScaleDefault:0];
     } else {
-      CGFloat scale = typographyScheme.caption.pointSize/typographyScheme.subtitle1.pointSize;
+      CGFloat scale = typographyScheme.caption.pointSize / typographyScheme.subtitle1.pointSize;
       [textInputControllerFloatingPlaceholderClass setFloatingPlaceholderScaleDefault:scale];
     }
   }
@@ -72,6 +72,5 @@
 #if !defined(__IPHONE_11_0)
 #pragma clang diagnostic pop
 #endif
-
 
 @end

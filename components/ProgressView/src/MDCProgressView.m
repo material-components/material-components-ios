@@ -189,18 +189,18 @@ static const NSTimeInterval MDCProgressViewAnimationDuration = 0.25;
   }
 
   [UIView animateWithDuration:animated ? [[self class] animationDuration] : 0
-                         delay:0
-                       options:[[self class] animationOptions]
-                    animations:animations
-                    completion:^(BOOL finished) {
-                      if (hidden) {
-                        self.animatingHide = NO;
-                        self.hidden = YES;
-                      }
-                      if (userCompletion) {
-                        userCompletion(finished);
-                      }
-                    }];
+                        delay:0
+                      options:[[self class] animationOptions]
+                   animations:animations
+                   completion:^(BOOL finished) {
+                     if (hidden) {
+                       self.animatingHide = NO;
+                       self.hidden = YES;
+                     }
+                     if (userCompletion) {
+                       userCompletion(finished);
+                     }
+                   }];
 }
 
 #pragma mark Accessibility

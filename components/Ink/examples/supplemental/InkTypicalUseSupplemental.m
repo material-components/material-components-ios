@@ -108,10 +108,8 @@
 
   self.legacyShape.backgroundColor = MDCPalette.greyPalette.tint800;
 
-  CGRect legacyTitleLabelFrame = CGRectMake(0,
-                                            CGRectGetHeight(self.legacyShape.frame),
-                                            CGRectGetWidth(self.legacyShape.frame),
-                                            36);
+  CGRect legacyTitleLabelFrame = CGRectMake(0, CGRectGetHeight(self.legacyShape.frame),
+                                            CGRectGetWidth(self.legacyShape.frame), 36);
   UILabel *legacyTitleLabel = [[UILabel alloc] initWithFrame:legacyTitleLabelFrame];
   legacyTitleLabel.text = @"Legacy Ink";
   legacyTitleLabel.textAlignment = NSTextAlignmentCenter;
@@ -123,30 +121,30 @@
 - (void)viewWillLayoutSubviews {
   if (@available(iOS 11.0, *)) {
     UIEdgeInsets safeAreaInsets = self.view.safeAreaInsets;
-    self.containerView.frame = CGRectMake(safeAreaInsets.left,
-                                          safeAreaInsets.top,
-                                          CGRectGetWidth(self.view.frame) - safeAreaInsets.left - safeAreaInsets.right,
-                                          CGRectGetHeight(self.view.frame) - safeAreaInsets.top - safeAreaInsets.bottom);
+    self.containerView.frame =
+        CGRectMake(safeAreaInsets.left, safeAreaInsets.top,
+                   CGRectGetWidth(self.view.frame) - safeAreaInsets.left - safeAreaInsets.right,
+                   CGRectGetHeight(self.view.frame) - safeAreaInsets.top - safeAreaInsets.bottom);
   } else {
-    self.containerView.frame = CGRectMake(0,
-                                          self.topLayoutGuide.length,
-                                          CGRectGetWidth(self.view.frame),
-                                          CGRectGetHeight(self.view.frame) - self.topLayoutGuide.length);
+    self.containerView.frame =
+        CGRectMake(0, self.topLayoutGuide.length, CGRectGetWidth(self.view.frame),
+                   CGRectGetHeight(self.view.frame) - self.topLayoutGuide.length);
   }
 
   CGFloat offset = 8;
   CGFloat shapeDimension = 200;
   CGFloat spacing = 16;
   if (CGRectGetHeight(self.containerView.frame) > CGRectGetWidth(self.containerView.frame)) {
-    self.shapes.center =
-        CGPointMake(self.containerView.center.x, self.containerView.center.y - shapeDimension - offset);
-    self.legacyShape.center =
-        CGPointMake(self.containerView.center.x, self.containerView.center.y + spacing * 2 + offset);
+    self.shapes.center = CGPointMake(self.containerView.center.x,
+                                     self.containerView.center.y - shapeDimension - offset);
+    self.legacyShape.center = CGPointMake(self.containerView.center.x,
+                                          self.containerView.center.y + spacing * 2 + offset);
   } else {
     self.shapes.center = CGPointMake(self.containerView.center.x - shapeDimension / 2 - spacing * 2,
                                      self.containerView.center.y / 2 + spacing * 2);
-    self.legacyShape.center = CGPointMake(self.containerView.center.x + shapeDimension / 2 + spacing * 2,
-                                          self.containerView.center.y / 2 + spacing * 2);
+    self.legacyShape.center =
+        CGPointMake(self.containerView.center.x + shapeDimension / 2 + spacing * 2,
+                    self.containerView.center.y / 2 + spacing * 2);
   }
 }
 

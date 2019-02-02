@@ -136,15 +136,16 @@
   // Now compute in the form at^2 + bt + c = 0
   // a = (r2 - r1)^2 - (c2.x - c1.x)^2 - (c2.y - c1.y)^2
   CGFloat a = MDCPow(r2 - r1, 2) - MDCPow(c2.x - c1.x, 2) - MDCPow(c2.y - c1.y, 2);
-  // b = 2r1(r2 - r1) - 2c1.x(c2.x - c1.x) + 2(c2.x - c1.x)p.x - 2c1.y(c2.y - c1.y) + 2(c2.y - c1.y)p.y
-  CGFloat b = 2*r1*(r2 - r1) - 2*c1.x*(c2.x - c1.x) + 2*(c2.x - c1.x)*p.x - 2*c1.y*(c2.y - c1.y)
-      + 2*(c2.y - c1.y)*p.y;
+  // b = 2r1(r2 - r1) - 2c1.x(c2.x - c1.x) + 2(c2.x - c1.x)p.x - 2c1.y(c2.y - c1.y) + 2(c2.y -
+  // c1.y)p.y
+  CGFloat b = 2 * r1 * (r2 - r1) - 2 * c1.x * (c2.x - c1.x) + 2 * (c2.x - c1.x) * p.x -
+              2 * c1.y * (c2.y - c1.y) + 2 * (c2.y - c1.y) * p.y;
   // c = r1^2 - c1.x^2 + 2c1.x*p.x - p.x^2 - c1.y^2 + 2c1.y*p.y - p.y^2
-  CGFloat c = MDCPow(r1, 2) - MDCPow(c1.x, 2) + 2*c1.x*p.x - MDCPow(p.x, 2) - MDCPow(c1.y, 2)
-       + 2*c1.y*p.y - MDCPow(p.y, 2);
+  CGFloat c = MDCPow(r1, 2) - MDCPow(c1.x, 2) + 2 * c1.x * p.x - MDCPow(p.x, 2) - MDCPow(c1.y, 2) +
+              2 * c1.y * p.y - MDCPow(p.y, 2);
 
   // Apply the quadratic equation
-  CGFloat t = (-b - MDCSqrt(b*b - 4*a*c))/(2*a);
+  CGFloat t = (-b - MDCSqrt(b * b - 4 * a * c)) / (2 * a);
 
   return MIN(1, MAX(0, t));
 }

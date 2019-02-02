@@ -196,6 +196,7 @@ def mdc_snapshot_test(
     minimum_os_version = SNAPSHOT_IOS_MINIMUM_OS,
     visibility = ["//visibility:private"],
     size = "medium",
+    tags = ["exclusive"],
     **kwargs):
   """Declare an MDC ios_unit_test for snapshot tests."""
   ios_unit_test(
@@ -203,6 +204,7 @@ def mdc_snapshot_test(
       deps = deps,
       minimum_os_version = minimum_os_version,
       runner = SNAPSHOT_IOS_RUNNER_TARGET,
+      tags = tags,
       test_host = "//components/private/Snapshot/TestHost",
       visibility = visibility,
       # TODO(https://github.com/material-components/material-components-ios/issues/6335)
