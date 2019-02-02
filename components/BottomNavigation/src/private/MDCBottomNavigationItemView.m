@@ -157,6 +157,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   [super layoutSubviews];
 
   [self.label sizeToFit];
+  [self.badge sizeToFit];
   CGSize labelSize =
       CGSizeMake(CGRectGetWidth(self.label.bounds), CGRectGetHeight(self.label.bounds));
   CGFloat maxWidth = CGRectGetWidth(self.bounds);
