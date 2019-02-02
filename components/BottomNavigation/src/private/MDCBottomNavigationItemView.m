@@ -24,8 +24,6 @@
 
 static const CGFloat MDCBottomNavigationItemViewInkOpacity = (CGFloat)0.150;
 static const CGFloat MDCBottomNavigationItemViewTitleFontSize = 12;
-// The amount the badge's edge is inset from the edge of the icon.
-static const CGFloat kBadgeXInset = 8;
 
 // The duration of the selection transition animation.
 static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.180;
@@ -40,7 +38,9 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 @property(nonatomic, strong) UIImageView *iconImageView;
 @property(nonatomic, strong) UILabel *label;
 @property(nonatomic) BOOL shouldPretendToBeATab;
-- (CGPoint)badgeCenterFromIconFrame:(CGRect)iconFrame isRTL:(BOOL)isRTL;
+- (CGPoint)badgeCenterFromIconFrame:(CGRect)iconFrame
+                         labelFrame:(CGRect)labelFrame
+                              isRTL:(BOOL)isRTL;
 
 @end
 
@@ -285,11 +285,13 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
                          self.iconImageView.center = iconImageViewCenter;
                          self.badge.center =
                              [self badgeCenterFromIconFrame:CGRectStandardize(iconImageViewFrame)
+                                                 labelFrame:CGRectStandardize(labelFrame)
                                                       isRTL:isRTL];
                        }];
     } else {
       self.iconImageView.center = iconImageViewCenter;
       self.badge.center = [self badgeCenterFromIconFrame:CGRectStandardize(iconImageViewFrame)
+                                              labelFrame:CGRectStandardize(labelFrame)
                                                    isRTL:isRTL];
     }
     self.label.textAlignment = NSTextAlignmentCenter;
@@ -300,8 +302,18 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
       self.label.textAlignment = NSTextAlignmentRight;
     }
     self.iconImageView.center = iconImageViewCenter;
-    self.badge.center = [self badgeCenterFromIconFrame:CGRectStandardize(iconImageViewFrame)
-                                                 isRTL:isRTL];
+    if (animated) {
+      [UIView animateWithDuration:kMDCBottomNavigationItemViewTransitionDuration
+                       animations:^(void) {
+                         self.badge.center = [self badgeCenterFromIconFrame:CGRectStandardize(iconImageViewFrame)
+                                                                 labelFrame:CGRectStandardize(labelFrame)
+                                                                      isRTL:isRTL];
+                       }];
+    } else {
+      self.badge.center = [self badgeCenterFromIconFrame:CGRectStandardize(iconImageViewFrame)
+                                              labelFrame:CGRectStandardize(labelFrame)
+                                                   isRTL:isRTL];
+    }
   }
 }
 
@@ -351,18 +363,32 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   return [labelComponents componentsJoinedByString:@", "];
 }
 
-- (CGPoint)badgeCenterFromIconFrame:(CGRect)iconFrame isRTL:(BOOL)isRTL {
+- (CGPoint)badgeCenterFromIconFrame:(CGRect)iconFrame
+                         labelFrame:(CGRect)labelFrame
+                              isRTL:(BOOL)isRTL {
+  // Thought: Top of badge is XX points above top of image?
   CGSize badgeSize = [self.badge sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
   CGFloat badgeHalfHeight = badgeSize.height / 2;
-  CGFloat badgeCenterY = CGRectGetMinY(iconFrame);
-  CGFloat badgeYExcursion = badgeCenterY - badgeHalfHeight;
-  if (badgeYExcursion < 0) {
-    badgeCenterY -= badgeYExcursion;
-  }
+  CGFloat badgeHalfWidth = badgeSize.width / 2;
+  CGFloat badgeTopY = MAX(0, CGRectGetMinY(iconFrame) - 1);
+  CGFloat badgeCenterY = badgeTopY + badgeHalfHeight;
+  CGFloat badgeXInsetFromIconEdge = MIN(10, badgeHalfWidth);
+
+  CGFloat badgeCenterX = CGRectGetMaxX(iconFrame) - badgeXInsetFromIconEdge + badgeHalfWidth;
   if (isRTL) {
-    return CGPointMake(CGRectGetMinX(iconFrame) - badgeSize.width / 2 + kBadgeXInset, badgeCenterY);
+    badgeCenterX = CGRectGetMinX(iconFrame) + badgeXInsetFromIconEdge - badgeHalfWidth;
   }
-  return CGPointMake(CGRectGetMaxX(iconFrame) + kBadgeXInset, badgeCenterY);
+  BOOL titleBelowIcon = CGRectGetMaxY(iconFrame) <= CGRectGetMaxY(labelFrame);
+  BOOL titleVisible = !self.label.hidden;
+  BOOL titleOverlapsBadge = CGRectGetMinX(labelFrame) < (badgeCenterX + badgeHalfWidth);
+  if (isRTL) {
+    titleOverlapsBadge = CGRectGetMaxX(labelFrame) > (badgeCenterX - badgeHalfWidth);
+  }
+  if (!titleBelowIcon && titleVisible && titleOverlapsBadge) {
+    badgeCenterY = MAX(badgeHalfHeight + 1, CGRectGetMinY(labelFrame) - badgeHalfHeight);
+  }
+  return CGPointMake(badgeCenterX, badgeCenterY);
+
 }
 
 - (NSString *)badgeValue {
