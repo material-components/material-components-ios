@@ -171,7 +171,7 @@ mdc_objc_library(
         exclude = ["tests/unit/MDCBottomNavigationBarControllerTests.m"],
     ),
     sdk_frameworks = [
-        "CoreGraphics",
+        "UIKit",
         "XCTest",
     ],
     visibility = ["//visibility:private"],
