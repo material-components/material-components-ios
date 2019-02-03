@@ -32,7 +32,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, assign) CGRect placeholderFrameFloating;
 @property(nonatomic, assign) CGRect placeholderFrameNormal;
 @property(nonatomic, assign) CGRect textRect;
+@property(nonatomic, assign) CGRect textRectFloatingPlaceholder;
 @property(nonatomic, assign) CGRect clearButtonFrame;
+@property(nonatomic, assign) CGRect clearButtonFrameFloatingPlaceholder;
 @property(nonatomic, assign) CGRect leftViewFrame;
 @property(nonatomic, assign) CGRect rightViewFrame;
 @property(nonatomic, assign) CGRect leftUnderlineLabelFrame;

@@ -250,13 +250,23 @@
         [self containedInputViewColorSchemingForState:self.containedInputViewState];
   [self.containerStyle applyStyleToContainedInputView:self
                   withContainedInputViewColorScheming:colorScheming];
-  self.clearButton.frame = self.layout.clearButtonFrame;
+  self.clearButton.frame = [self clearButtonFrameFromLayout:self.layout
+                                           placeholderState:self.placeholderState];
   self.clearButton.hidden = self.layout.clearButtonHidden;
   self.leftUnderlineLabel.frame = self.layout.leftUnderlineLabelFrame;
   self.rightUnderlineLabel.frame = self.layout.rightUnderlineLabelFrame;
   self.leftView.hidden = self.layout.leftViewHidden;
   self.rightView.hidden = self.layout.rightViewHidden;
   // TODO: Consider hiding views that don't actually fit in the frame
+}
+
+- (CGRect)clearButtonFrameFromLayout:(SimpleTextFieldLayout *)layout
+                  placeholderState:(PlaceholderState)placeholderState {
+  CGRect clearButtonFrame = layout.clearButtonFrame;
+  if (placeholderState == PlaceholderStateFloating) {
+    clearButtonFrame = layout.clearButtonFrameFloatingPlaceholder;
+  }
+  return clearButtonFrame;
 }
 
 - (SimpleTextFieldLayout *)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize {
@@ -484,13 +494,26 @@
 #pragma mark UITextField Layout Overrides
 
 - (CGRect)textRectForBounds:(CGRect)bounds {
-  return [self adjustTextAreaFrame:self.layout.textRect
+  CGRect textRect = [self textRectFromLayout:self.layout
+                            placeholderState:self.placeholderState];
+  return [self adjustTextAreaFrame:textRect
       withParentClassTextAreaFrame:[super textRectForBounds:bounds]];
 }
 
 - (CGRect)editingRectForBounds:(CGRect)bounds {
-  return [self adjustTextAreaFrame:self.layout.textRect
+  CGRect textRect = [self textRectFromLayout:self.layout
+                            placeholderState:self.placeholderState];
+  return [self adjustTextAreaFrame:textRect
       withParentClassTextAreaFrame:[super editingRectForBounds:bounds]];
+}
+
+- (CGRect)textRectFromLayout:(SimpleTextFieldLayout *)layout
+            placeholderState:(PlaceholderState)placeholderState {
+  CGRect textRect = layout.textRect;
+  if (placeholderState == PlaceholderStateFloating) {
+    textRect = layout.textRectFloatingPlaceholder;
+  }
+  return textRect;
 }
 
 - (CGRect)adjustTextAreaFrame:(CGRect)textRect

@@ -154,27 +154,30 @@
       [self floatingPlaceholderMinYWithFloatingHeight:floatingPlaceholderHeight
                                        containerStyle:containerStyle];
 
-  CGFloat textAreaHeight = [self textHeightWithFont:font];
-  CGFloat lowestAllowableTextAreaCenterY =
-      [self lowestAllowableTextAreaCenterYWithFloatingPlaceholderMinY:floatingPlaceholderMinY
-                                            floatingPlaceholderHeight:floatingPlaceholderHeight
-                                                       textAreaHeight:textAreaHeight
-                                                       containerStyle:containerStyle
-                                                  placeholderCanFloat:canPlaceholderFloat];
+  CGFloat textRectHeight = [self textHeightWithFont:font];
+  // TODO: Defer to densityInformer for value below
+  CGFloat textRectCenterY = (textRectHeight * 3) * (0.5);//[self]
+  
+  CGFloat textRectFloatingPlaceholderCenterY =
+      [self textRectFloatingPlaceholderCenterYWithFloatingPlaceholderMinY:floatingPlaceholderMinY
+                                                floatingPlaceholderHeight:floatingPlaceholderHeight
+                                                           textRectHeight:textRectHeight
+                                                           containerStyle:containerStyle];
 
-  CGFloat topRowSubviewCenterY =
-      [self topRowSubviewCenterYWithLeftView:leftView
-                                   rightView:rightView
-                                        font:font
-                                floatingFont:floatingPlaceholderFont
-                              containerStyle:containerStyle
-              lowestAllowableTextAreaCenterY:lowestAllowableTextAreaCenterY];
-
+//  CGFloat textRectCenterY =
+//      [self textRectCenterYWithLeftView:leftView
+//                                   rightView:rightView
+//                                        font:font
+//                                floatingFont:floatingPlaceholderFont
+//                              containerStyle:containerStyle
+//              textRectFloatingPlaceholderCenterY:textRectFloatingPlaceholderCenterY];
+      // textRectFloatingPlaceholderCenterY should actually be non floating text area centerY
+  
   CGFloat leftViewHeight = CGRectGetHeight(leftView.frame);
   CGFloat leftViewMinY = 0;
   CGFloat leftViewMaxY = 0;
   if (shouldAttemptToDisplayLeftView) {
-    leftViewMinY = [self minYForSubviewWithHeight:leftViewHeight centerY:topRowSubviewCenterY];
+    leftViewMinY = [self minYForSubviewWithHeight:leftViewHeight centerY:textRectCenterY];
     leftViewMaxY = leftViewMinY + leftViewHeight;
   }
 
@@ -182,66 +185,80 @@
   CGFloat rightViewMinY = 0;
   CGFloat rightViewMaxY = 0;
   if (shouldAttemptToDisplayRightView) {
-    rightViewMinY = [self minYForSubviewWithHeight:rightViewHeight centerY:topRowSubviewCenterY];
+    rightViewMinY = [self minYForSubviewWithHeight:rightViewHeight centerY:textRectCenterY];
     rightViewMaxY = rightViewMinY + rightViewHeight;
   }
 
   CGFloat clearButtonMinY = 0;
+  CGFloat clearButtonFloatingPlaceholderMinY = 0;
   if (shouldAttemptToDisplayClearButton) {
     clearButtonMinY = [self minYForSubviewWithHeight:kClearButtonTouchTargetSideLength
-                                             centerY:topRowSubviewCenterY];
+                                             centerY:textRectCenterY];
+    clearButtonFloatingPlaceholderMinY = [self minYForSubviewWithHeight:kClearButtonTouchTargetSideLength
+                                                                centerY:textRectFloatingPlaceholderCenterY];
   }
 
-  CGFloat textAreaMinX = 0;
-  CGFloat textAreaMaxX = 0;
+  CGFloat textRectMinX = 0;
+  CGFloat textRectMaxX = 0;
   if (isRTL) {
     if (shouldAttemptToDisplayClearButton) {
       CGFloat clearButtonMaxX =
           clearButtonMinX + kClearButtonTouchTargetSideLength + clearButtonImageViewSideMargin;
-      textAreaMinX = clearButtonMaxX;
+      textRectMinX = clearButtonMaxX;
     } else if (shouldAttemptToDisplayLeftView) {
-      textAreaMinX = leftViewMaxX + kTrailingMargin;
+      textRectMinX = leftViewMaxX + kTrailingMargin;
     } else {
-      textAreaMinX = kTrailingMargin;
+      textRectMinX = kTrailingMargin;
     }
     if (shouldAttemptToDisplayRightView) {
-      textAreaMaxX = rightViewMinX - kLeadingMargin;
+      textRectMaxX = rightViewMinX - kLeadingMargin;
     } else {
-      textAreaMaxX = textFieldWidth - kLeadingMargin;
+      textRectMaxX = textFieldWidth - kLeadingMargin;
     }
   } else {
     if (shouldAttemptToDisplayLeftView) {
-      textAreaMinX = leftViewMaxX + kLeadingMargin;
+      textRectMinX = leftViewMaxX + kLeadingMargin;
     } else {
-      textAreaMinX = kLeadingMargin;
+      textRectMinX = kLeadingMargin;
     }
     if (shouldAttemptToDisplayClearButton) {
-      textAreaMaxX = clearButtonMinX - clearButtonImageViewSideMargin;
+      textRectMaxX = clearButtonMinX - clearButtonImageViewSideMargin;
     } else if (shouldAttemptToDisplayRightView) {
-      textAreaMaxX = rightViewMinX - kTrailingMargin;
+      textRectMaxX = rightViewMinX - kTrailingMargin;
     } else {
-      textAreaMaxX = textFieldWidth - kTrailingMargin;
+      textRectMaxX = textFieldWidth - kTrailingMargin;
     }
   }
 
-  CGFloat textAreaWidth = textAreaMaxX - textAreaMinX;
-  CGFloat textAreaMinY =
-      (CGFloat)round((double)(topRowSubviewCenterY - (textAreaHeight * (CGFloat)0.5)));
-  CGFloat textAreaMaxY = textAreaMinY + textAreaHeight;
-  CGRect textRect = CGRectMake(textAreaMinX, textAreaMinY, textAreaWidth, textAreaHeight);
+  
+  
+  CGFloat textRectWidth = textRectMaxX - textRectMinX;
+  CGFloat textRectMinY =
+      (CGFloat)round((double)(textRectCenterY - (textRectHeight * (CGFloat)0.5)));
+  CGFloat textRectMaxY = textRectMinY + textRectHeight;
+  CGRect textRect = CGRectMake(textRectMinX, textRectMinY, textRectWidth, textRectHeight);
+
+  CGFloat floatingPlaceholderTextAreaMinY =
+      (CGFloat)round((double)(textRectFloatingPlaceholderCenterY - (textRectHeight * (CGFloat)0.5)));
+  CGRect floatingPlaceholderTextAreaRect = CGRectMake(textRectMinX, floatingPlaceholderTextAreaMinY, textRectWidth, textRectHeight);
+
+
   CGRect leftViewFrame = CGRectMake(leftViewMinX, leftViewMinY, leftViewWidth, leftViewHeight);
   CGRect rightViewFrame = CGRectMake(rightViewMinX, rightViewMinY, rightViewWidth, rightViewHeight);
   CGRect clearButtonFrame =
       CGRectMake(clearButtonMinX, clearButtonMinY, kClearButtonTouchTargetSideLength,
                  kClearButtonTouchTargetSideLength);
-
+  CGRect clearButtonFrameFloatingPlaceholder =
+      CGRectMake(clearButtonMinX, clearButtonFloatingPlaceholderMinY,
+                 kClearButtonTouchTargetSideLength, kClearButtonTouchTargetSideLength);
+  
   CGRect placeholderFrameNormal = [self placeholderFrameWithPlaceholder:placeholder
                                                          containerStyle:containerStyle
                                                        placeholderState:PlaceholderStateNormal
                                                                    font:font
                                                 floatingPlaceholderFont:floatingPlaceholderFont
                                                 floatingPlaceholderMinY:floatingPlaceholderMinY
-                                                           textAreaRect:textRect
+                                                           textRectRect:textRect
                                                                   isRTL:isRTL];
   CGRect placeholderFrameFloating = [self placeholderFrameWithPlaceholder:placeholder
                                                            containerStyle:containerStyle
@@ -249,7 +266,7 @@
                                                                      font:font
                                                   floatingPlaceholderFont:floatingPlaceholderFont
                                                   floatingPlaceholderMinY:floatingPlaceholderMinY
-                                                             textAreaRect:textRect
+                                                             textRectRect:textRect
                                                                     isRTL:isRTL];
 
   CGFloat underlineLabelsCombinedMinX = isRTL ? kTrailingMargin : kLeadingMargin;
@@ -258,7 +275,9 @@
   CGFloat underlineLabelsCombinedMaxWidth =
       underlineLabelsCombinedMaxX - underlineLabelsCombinedMinX;
 
-  CGFloat topRowSubviewMaxY = [self topRowSubviewMaxYWithTextAreaMaxY:textAreaMaxY
+  CGFloat floatingPlaceholderTextAreaMaxY = floatingPlaceholderTextAreaMinY + textRectHeight;
+  CGFloat topRowSubviewMaxY = [self topRowSubviewMaxYWithTextAreaMaxY:textRectMaxY
+                                      floatingPlaceholderTextAreaMaxY:floatingPlaceholderTextAreaMaxY
                                                          leftViewMaxY:leftViewMaxY
                                                         rightViewMaxY:rightViewMaxY];
 
@@ -268,7 +287,7 @@
     if ([densityInformer respondsToSelector:@selector(topRowBottomRowDividerYWithTopRowSubviewMaxY:topRowSubviewCenterY:)]) {
       topRowBottomRowDividerY =
           [densityInformer topRowBottomRowDividerYWithTopRowSubviewMaxY:topRowSubviewMaxY
-                                                   topRowSubviewCenterY:topRowSubviewCenterY];
+           topRowSubviewCenterY:textRectCenterY];
     }
   }
 
@@ -332,7 +351,9 @@
   self.leftViewFrame = leftViewFrame;
   self.rightViewFrame = rightViewFrame;
   self.clearButtonFrame = clearButtonFrame;
+  self.clearButtonFrameFloatingPlaceholder = clearButtonFrameFloatingPlaceholder;
   self.textRect = textRect;
+  self.textRectFloatingPlaceholder = floatingPlaceholderTextAreaRect;
   self.placeholderFrameFloating = placeholderFrameFloating;
   self.placeholderFrameNormal = placeholderFrameNormal;
   self.leftUnderlineLabelFrame = leftUnderlineLabelFrame;
@@ -344,10 +365,12 @@
   self.topRowBottomRowDividerY = topRowBottomRowDividerY;
 }
 
-- (CGFloat)topRowSubviewMaxYWithTextAreaMaxY:(CGFloat)textAreaMaxY
+- (CGFloat)topRowSubviewMaxYWithTextAreaMaxY:(CGFloat)textRectMaxY
+             floatingPlaceholderTextAreaMaxY:(CGFloat)floatingPlaceholderTextAreaMaxY
                                 leftViewMaxY:(CGFloat)leftViewMaxY
                                rightViewMaxY:(CGFloat)rightViewMaxY {
-  CGFloat max = textAreaMaxY;
+  CGFloat max = textRectMaxY;
+  max = MAX(max, floatingPlaceholderTextAreaMaxY);
   max = MAX(max, leftViewMaxY);
   max = MAX(max, rightViewMaxY);
   return max;
@@ -459,30 +482,24 @@
 }
 
 - (CGFloat)
-    lowestAllowableTextAreaCenterYWithFloatingPlaceholderMinY:(CGFloat)floatingPlaceholderMinY
+    textRectFloatingPlaceholderCenterYWithFloatingPlaceholderMinY:(CGFloat)floatingPlaceholderMinY
                                     floatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight
-                                               textAreaHeight:(CGFloat)textAreaHeight
+                                               textRectHeight:(CGFloat)textRectHeight
                                                containerStyle:
-                                                   (id<MDCContainedInputViewStyle>)containerStyle
-                                          placeholderCanFloat:(BOOL)placeholderCanFloat {
-  if (placeholderCanFloat) {
-    CGFloat floatingPlaceholderMaxY = floatingPlaceholderMinY + floatingPlaceholderHeight;
-    CGFloat spaceBetweenPlaceholderAndTextArea = 0;
-    if ([containerStyle conformsToProtocol:@protocol(MDCContainedInputViewStyleDensityInforming)]) {
-      id<MDCContainedInputViewStyleDensityInforming> densityInformer = (id<MDCContainedInputViewStyleDensityInforming>)containerStyle;
-      spaceBetweenPlaceholderAndTextArea =
-          [densityInformer spaceBetweenFloatingPlaceholderAndTextAreaWithFloatingPlaceholderMinY:floatingPlaceholderMinY
-                                                                       floatingPlaceholderHeight:floatingPlaceholderHeight];
-    } else {
-      spaceBetweenPlaceholderAndTextArea = ((CGFloat)0.25 * floatingPlaceholderMaxY);
-    }
-    CGFloat lowestAllowableTextAreaMinY =
-        floatingPlaceholderMaxY + spaceBetweenPlaceholderAndTextArea;
-    return lowestAllowableTextAreaMinY + ((CGFloat)0.5 * textAreaHeight);
+                                                   (id<MDCContainedInputViewStyle>)containerStyle {
+  CGFloat floatingPlaceholderMaxY = floatingPlaceholderMinY + floatingPlaceholderHeight;
+  CGFloat spaceBetweenPlaceholderAndTextArea = 0;
+  if ([containerStyle conformsToProtocol:@protocol(MDCContainedInputViewStyleDensityInforming)]) {
+    id<MDCContainedInputViewStyleDensityInforming> densityInformer = (id<MDCContainedInputViewStyleDensityInforming>)containerStyle;
+    spaceBetweenPlaceholderAndTextArea =
+    [densityInformer spaceBetweenFloatingPlaceholderAndTextAreaWithFloatingPlaceholderMinY:floatingPlaceholderMinY
+                                                                 floatingPlaceholderHeight:floatingPlaceholderHeight];
   } else {
-    CGFloat lowestAllowableTextAreaMinY = kTopRowBottomRowDividerVerticalPadding;
-    return lowestAllowableTextAreaMinY + ((CGFloat)0.5 * textAreaHeight);
+    spaceBetweenPlaceholderAndTextArea = ((CGFloat)0.25 * floatingPlaceholderMaxY);
   }
+  CGFloat lowestAllowableTextAreaMinY =
+  floatingPlaceholderMaxY + spaceBetweenPlaceholderAndTextArea;
+  return lowestAllowableTextAreaMinY + ((CGFloat)0.5 * textRectHeight);
 }
 
 // so this can be made an object on the style protocol
@@ -513,30 +530,30 @@
   return floatingPlaceholderMinY;
 }
 
-- (CGFloat)topRowSubviewCenterYWithLeftView:(UIView *)leftView
-                                  rightView:(UIView *)rightView
-                                       font:(UIFont *)font
-                               floatingFont:(UIFont *)floatingFont
-                             containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
-             lowestAllowableTextAreaCenterY:(CGFloat)lowestAllowableTextAreaCenterY {
+- (CGFloat)textRectCenterYWithLeftView:(UIView *)leftView
+                             rightView:(UIView *)rightView
+                                  font:(UIFont *)font
+                          floatingFont:(UIFont *)floatingFont
+                        containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
+        textRectFloatingPlaceholderCenterY:(CGFloat)textRectFloatingPlaceholderCenterY {
   CGFloat sideViewMaxHeight =
       MAX(CGRectGetHeight(leftView.bounds), CGRectGetHeight(rightView.bounds));
   CGFloat lowestAllowableSideViewCenterY = kTopMargin + ((CGFloat)0.5 * sideViewMaxHeight);
-  CGFloat sharedCenterY = MAX(lowestAllowableTextAreaCenterY, lowestAllowableSideViewCenterY);
+  CGFloat sharedCenterY = MAX(textRectFloatingPlaceholderCenterY, lowestAllowableSideViewCenterY);
   return sharedCenterY;
 }
 
-- (CGFloat)maxPlaceholderWidthWithTextAreaWidth:(CGFloat)textAreaWidth
+- (CGFloat)maxPlaceholderWidthWithTextAreaWidth:(CGFloat)textRectWidth
                                placeholderState:(PlaceholderState)placeholderState {
   CGFloat maxPlaceholderWidth = 0;
   switch (placeholderState) {
     case PlaceholderStateNone:
       break;
     case PlaceholderStateFloating:
-      maxPlaceholderWidth = textAreaWidth - (2 * kFloatingPlaceholderXOffsetFromTextArea);
+      maxPlaceholderWidth = textRectWidth - (2 * kFloatingPlaceholderXOffsetFromTextArea);
       break;
     case PlaceholderStateNormal:
-      maxPlaceholderWidth = textAreaWidth;
+      maxPlaceholderWidth = textRectWidth;
       break;
     default:
       break;
@@ -565,14 +582,14 @@
                                      font:(UIFont *)font
                   floatingPlaceholderFont:(UIFont *)floatingPlaceholderFont
                   floatingPlaceholderMinY:(CGFloat)floatingPlaceholderMinY
-                             textAreaRect:(CGRect)textAreaRect
+                             textRectRect:(CGRect)textRectRect
                                     isRTL:(BOOL)isRTL {
-  CGFloat textAreaWidth = CGRectGetWidth(textAreaRect);
-  CGFloat maxPlaceholderWidth = [self maxPlaceholderWidthWithTextAreaWidth:textAreaWidth
+  CGFloat textRectWidth = CGRectGetWidth(textRectRect);
+  CGFloat maxPlaceholderWidth = [self maxPlaceholderWidthWithTextAreaWidth:textRectWidth
                                                           placeholderState:placeholderState];
-  CGFloat textAreaMinX = CGRectGetMinX(textAreaRect);
-  CGFloat textAreaMaxX = CGRectGetMaxX(textAreaRect);
-  CGFloat textAreaMidY = CGRectGetMidY(textAreaRect);
+  CGFloat textRectMinX = CGRectGetMinX(textRectRect);
+  CGFloat textRectMaxX = CGRectGetMaxX(textRectRect);
+  CGFloat textRectMidY = CGRectGetMidY(textRectRect);
   CGSize size = CGSizeZero;
   CGRect rect = CGRectZero;
   CGFloat originX = 0;
@@ -586,9 +603,9 @@
                                              font:floatingPlaceholderFont];
       originY = floatingPlaceholderMinY;
       if (isRTL) {
-        originX = textAreaMaxX - kFloatingPlaceholderXOffsetFromTextArea - size.width;
+        originX = textRectMaxX - kFloatingPlaceholderXOffsetFromTextArea - size.width;
       } else {
-        originX = textAreaMinX + kFloatingPlaceholderXOffsetFromTextArea;
+        originX = textRectMinX + kFloatingPlaceholderXOffsetFromTextArea;
       }
       rect = CGRectMake(originX, originY, size.width, size.height);
       break;
@@ -596,11 +613,11 @@
       size = [self placeholderSizeWithPlaceholder:placeholder
                               maxPlaceholderWidth:maxPlaceholderWidth
                                              font:font];
-      originY = textAreaMidY - ((CGFloat)0.5 * size.height);
+      originY = textRectMidY - ((CGFloat)0.5 * size.height);
       if (isRTL) {
-        originX = textAreaMaxX - size.width;
+        originX = textRectMaxX - size.width;
       } else {
-        originX = textAreaMinX;
+        originX = textRectMinX;
       }
       rect = CGRectMake(originX, originY, size.width, size.height);
       break;
