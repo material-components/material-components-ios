@@ -212,7 +212,7 @@
 
 - (void)addOutlinedTextField {
   self.outlinedTextField = [[SimpleTextField alloc] init];
-  [self.filledTextField applyOutlinedThemeWithScheme:self.containerScheme];
+  [self.outlinedTextField applyOutlinedThemeWithScheme:self.containerScheme];
   self.outlinedTextField.placeholder = @"This is another placeholder";
   self.outlinedTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
   [self.scrollView addSubview:self.outlinedTextField];

@@ -39,7 +39,7 @@
 @property(nonatomic, assign) MDCContainedInputViewState containedInputViewState;
 @property(nonatomic, assign) PlaceholderState placeholderState;
 
-@property(nonatomic, strong) NSMutableDictionary *colorSchemes;
+@property(nonatomic, strong) NSMutableDictionary<NSNumber *,id<MDCContainedInputViewColorScheming>> *colorSchemes;
 
 @end
 
@@ -84,6 +84,7 @@
   [self setUpLayoutDirection];
   [self setUpPlaceholderState];
   [self setUpContainedInputViewState];
+  [self setUpColorSchemesDictionary];
 }
 
 - (void)setUpCanPlaceholderFloat {
@@ -100,6 +101,10 @@
 
 - (void)setUpContainedInputViewState {
   self.containedInputViewState = [self determineCurrentContainedInputViewState];
+}
+
+- (void)setUpColorSchemesDictionary {
+  self.colorSchemes = [[NSMutableDictionary alloc] init];
 }
 
 - (void)setUpContainerStyle {
@@ -232,9 +237,9 @@
 - (void)preLayoutSubviews {
   self.containedInputViewState = [self determineCurrentContainedInputViewState];
   self.placeholderState = [self determineCurrentPlaceholderState];
-//  id<MDCContainedInputViewColorScheming> colorScheming =
-//      [self containedInputViewColorSchemingForState:self.containedInputViewState];
-//  [self applyMDCContainedInputViewColorScheming:colorScheming];
+  id<MDCContainedInputViewColorScheming> colorScheming =
+      [self containedInputViewColorSchemingForState:self.containedInputViewState];
+  [self applyMDCContainedInputViewColorScheming:colorScheming];
   CGSize fittingSize = CGSizeMake(CGRectGetWidth(self.frame), CGFLOAT_MAX);
   self.layout = [self calculateLayoutWithTextFieldSize:fittingSize];
 }
@@ -243,7 +248,6 @@
   [self layOutPlaceholderWithState:self.placeholderState];
     id<MDCContainedInputViewColorScheming> colorScheming =
         [self containedInputViewColorSchemingForState:self.containedInputViewState];
-//    [self applyMDCContainedInputViewColorScheming:colorScheming];
   [self.containerStyle applyStyleToContainedInputView:self
                   withContainedInputViewColorScheming:colorScheming];
   self.clearButton.frame = self.layout.clearButtonFrame;
@@ -473,23 +477,27 @@
   // TODO: setneedslayout?
 }
 
+- (CGRect)containerRect {
+  return CGRectMake(0, 0, CGRectGetWidth(self.frame), self.layout.topRowBottomRowDividerY);
+}
+
 #pragma mark UITextField Layout Overrides
 
 - (CGRect)textRectForBounds:(CGRect)bounds {
-  return [self adjustTextAreaFrame:self.layout.textAreaFrame
+  return [self adjustTextAreaFrame:self.layout.textRect
       withParentClassTextAreaFrame:[super textRectForBounds:bounds]];
 }
 
 - (CGRect)editingRectForBounds:(CGRect)bounds {
-  return [self adjustTextAreaFrame:self.layout.textAreaFrame
+  return [self adjustTextAreaFrame:self.layout.textRect
       withParentClassTextAreaFrame:[super editingRectForBounds:bounds]];
 }
 
-- (CGRect)adjustTextAreaFrame:(CGRect)textAreaFrame
+- (CGRect)adjustTextAreaFrame:(CGRect)textRect
     withParentClassTextAreaFrame:(CGRect)parentClassTextAreaFrame {
   CGFloat systemDefinedHeight = CGRectGetHeight(parentClassTextAreaFrame);
-  CGFloat minY = CGRectGetMidY(textAreaFrame) - (systemDefinedHeight * (CGFloat)0.5);
-  return CGRectMake(CGRectGetMinX(textAreaFrame), minY, CGRectGetWidth(textAreaFrame),
+  CGFloat minY = CGRectGetMidY(textRect) - (systemDefinedHeight * (CGFloat)0.5);
+  return CGRectMake(CGRectGetMinX(textRect), minY, CGRectGetWidth(textRect),
                     systemDefinedHeight);
 }
 
@@ -774,22 +782,14 @@
   }
 }
 
-// this could just be a CGFloat between 0 and 1 for floating placeholder scale.
-// the style protocol should have a method that returns a floating placeholder scale
 - (UIFont *)floatingPlaceholderFontWithFont:(UIFont *)font
                              containerStyle:(id<MDCContainedInputViewStyle>)containerStyle {
-  CGFloat floatingPlaceholderFontSize = 0.0;
-//  CGFloat outlinedFloatingPlaceholderScale = (CGFloat)41 / (CGFloat)55;
-//  CGFloat filledFloatingPlaceholderScale = (CGFloat)53 / (CGFloat)71;
-//  if ([self.containerStyle isMemberOfClass:[MDCContainerStyleFilled class]]) {
-//    floatingPlaceholderFontSize =
-//    (CGFloat)round((double)(font.pointSize * filledFloatingPlaceholderScale));
-//  } else if ([self.containerStyle isMemberOfClass:[MDCContainerStyleOutlined class]]) {
-//    floatingPlaceholderFontSize =
-//    (CGFloat)round((double)(font.pointSize * outlinedFloatingPlaceholderScale));
-//  } else {
-//    // TODO: fix this
-//  }
+  CGFloat floatingPlaceholderFontScaleFactor = 0.5;
+  if ([containerStyle conformsToProtocol:@protocol(MDCContainedInputViewStyleDensityInforming)]) {
+    id<MDCContainedInputViewStyleDensityInforming> densityInformer = (id<MDCContainedInputViewStyleDensityInforming>)containerStyle;
+    floatingPlaceholderFontScaleFactor = [densityInformer floatingPlaceholderFontSizeScaleFactor];
+  }
+  CGFloat floatingPlaceholderFontSize = font.pointSize * floatingPlaceholderFontScaleFactor;
   return [font fontWithSize:floatingPlaceholderFontSize];
 }
 
@@ -868,30 +868,11 @@
 #pragma mark Theming
 
 - (void)applyMDCContainedInputViewColorScheming:(id<MDCContainedInputViewColorScheming>)colorScheming {
-//  [self.containerStyle applyStyleTo:self using:colorScheming];
-
-  // update all the base class properties
-  // then do [style applyColorScheming:colorSceming];
-  // or just do that
-
-  // apply things that you need
-  // make clear button tint color optional in the protocol?
-
-  
-  
-  //  self.textColor = colorAdapter.textColor;
-//  self.leadingUnderlineLabel.textColor = colorAdapter.underlineLabelColor;
-//  self.trailingUnderlineLabel.textColor = colorAdapter.underlineLabelColor;
-//  self.placeholderLabel.textColor = colorAdapter.placeholderLabelColor;
-//
-//  self.clearButtonImageView.tintColor = colorAdapter.clearButtonTintColor;
-//
-//  self.containerStyler.outlinedSublayer.strokeColor = colorAdapter.outlineColor.CGColor;
-//  self.containerStyler.filledSublayerUnderline.fillColor =
-//      colorAdapter.filledSublayerUnderlineFillColor.CGColor;
-//  self.containerStyler.filledSublayer.fillColor = colorAdapter.filledSublayerFillColor.CGColor;
-//  
-  // make style listen to adapter
+  self.textColor = colorScheming.textColor;
+  self.leadingUnderlineLabel.textColor = colorScheming.underlineLabelColor;
+  self.trailingUnderlineLabel.textColor = colorScheming.underlineLabelColor;
+  self.placeholderLabel.textColor = colorScheming.placeholderLabelColor;
+  self.clearButtonImageView.tintColor = colorScheming.clearButtonTintColor;
 }
 
 - (void)setContainedInputViewColorScheming:(id<MDCContainedInputViewColorScheming>)simpleTextFieldColorScheming

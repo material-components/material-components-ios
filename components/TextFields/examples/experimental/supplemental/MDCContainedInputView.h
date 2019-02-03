@@ -25,6 +25,7 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewState) {
 
 @protocol MDCContainedInputView <NSObject>
 @property (nonatomic, assign, readonly) MDCContainedInputViewState containedInputViewState;
+@property (nonatomic, assign, readonly) CGRect containerRect;
 @property (strong, nonatomic, readonly) UILabel *placeholderLabel;
 @property (strong, nonatomic, readonly) UILabel *leadingUnderlineLabel;
 @property (strong, nonatomic, readonly) UILabel *trailingUnderlineLabel;
@@ -47,20 +48,21 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewState) {
 @end
 
 @protocol MDCContainedInputViewStyle <NSObject>
-- (id<MDCContainedInputViewColorScheming>)defaultColorSchemeForState:(MDCContainedInputViewState)state;
-- (void)applyStyleToContainedInputView:(id<MDCContainedInputView>)inputView
-   withContainedInputViewColorScheming:(id<MDCContainedInputViewColorScheming>)colorScheme;
-- (void)removeStyleFrom:(id<MDCContainedInputView>)containedInputView;
+- (nonnull id<MDCContainedInputViewColorScheming>)defaultColorSchemeForState:(MDCContainedInputViewState)state;
+- (void)applyStyleToContainedInputView:(nonnull id<MDCContainedInputView>)inputView
+   withContainedInputViewColorScheming:(nonnull id<MDCContainedInputViewColorScheming>)colorScheme;
+- (void)removeStyleFrom:(nonnull id<MDCContainedInputView>)containedInputView;
 @end
 
 @interface MDCContainerStyleBase : NSObject <MDCContainedInputViewStyle>
 @end
 
 @protocol MDCContainedInputViewStyleDensityInforming <NSObject>
-@optional
+//@optional
 - (CGFloat)floatingPlaceholderMinYWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight;
 - (CGFloat)spaceBetweenFloatingPlaceholderAndTextAreaWithFloatingPlaceholderMinY:(CGFloat)floatingPlaceholderMinY
                                                        floatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight;
 - (CGFloat)topRowBottomRowDividerYWithTopRowSubviewMaxY:(CGFloat)topRowSubviewMaxY
                                    topRowSubviewCenterY:(CGFloat)topRowSubviewCenterY;
+- (CGFloat)floatingPlaceholderFontSizeScaleFactor;
 @end

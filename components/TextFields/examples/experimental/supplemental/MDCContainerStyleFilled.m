@@ -19,6 +19,8 @@
 #import "MDCContainerStylePathDrawingUtils.h"
 
 static const CGFloat kFilledContainerStyleTopCornerRadius = (CGFloat)4.0;
+static const CGFloat kTopRowBottomRowDividerVerticalPadding = (CGFloat)9.0;
+
 
 @implementation MDCContainedInputViewColorSchemeFilled
 @end
@@ -59,10 +61,10 @@ static const CGFloat kFilledContainerStyleTopCornerRadius = (CGFloat)4.0;
     case MDCContainedInputViewStateDisabled:
       break;
     case MDCContainedInputViewStateErrored:
-//      filledSublayerUnderlineFillColor = colorScheme.errorColor;
+      filledSublayerUnderlineFillColor = colorScheme.errorColor;
       break;
     case MDCContainedInputViewStateFocused:
-//      filledSublayerUnderlineFillColor = colorScheme.primaryColor;
+      filledSublayerUnderlineFillColor = [UIColor blackColor];
       break;
     default:
       break;
@@ -80,17 +82,24 @@ static const CGFloat kFilledContainerStyleTopCornerRadius = (CGFloat)4.0;
   }
   UIView *uiView = (UIView *)containedInputView;
   CGFloat underlineThickness =
-  [self underlineThicknessWithMDCContainedInputViewState:containedInputView.containedInputViewState];
-  CGFloat topRowBottomRowDividerY = containedInputView.leadingUnderlineLabel.frame.origin.y - 10;
+      [self underlineThicknessWithMDCContainedInputViewState:containedInputView.containedInputViewState];
+  // TODO: Consult density informer, this is a bad way of doing it
+//  CGFloat topRowBottomRowDividerY = containedInputView.leadingUnderlineLabel.frame.origin.y - 10;
+  CGFloat topRowBottomRowDividerY = CGRectGetMaxY(containedInputView.containerRect);
+  //[self primaryHorizontalContentDividerWithContainerRect:containedInputView.containerRect];
   [self applyStyleToView:uiView
  topRowBottomRowDividerY:topRowBottomRowDividerY
       underlineThickness:underlineThickness];
   if ([colorScheme isKindOfClass:[MDCContainedInputViewColorSchemeFilled class]]) {
     MDCContainedInputViewColorSchemeFilled *filledScheme = (MDCContainedInputViewColorSchemeFilled *)colorScheme;
     self.filledSublayer.fillColor = filledScheme.filledSublayerFillColor.CGColor;
-    self.filledSublayerUnderline.fillColor = filledScheme.underlineLabelColor.CGColor;
+    self.filledSublayerUnderline.fillColor = filledScheme.filledSublayerUnderlineFillColor.CGColor;
   }
 }
+
+//- (CGFloat)primaryHorizontalContentDividerWithContainerRect:(CGRect)containerRect {
+//  return
+//}
 
 -(void)removeStyleFrom:(id<MDCContainedInputView>)containedInputView {
   [self.filledSublayer removeFromSuperlayer];
@@ -241,6 +250,15 @@ static const CGFloat kFilledContainerStyleTopCornerRadius = (CGFloat)4.0;
 //  }
 //  return floatingPlaceholderMinY;
 //}
+
+- (CGFloat)floatingPlaceholderFontSizeScaleFactor {
+  return ((CGFloat)53 / (CGFloat)71);
+}
+
+- (CGFloat)topRowBottomRowDividerYWithTopRowSubviewMaxY:(CGFloat)topRowSubviewMaxY
+                                   topRowSubviewCenterY:(CGFloat)topRowSubviewCenterY {
+  return topRowSubviewMaxY + kTopRowBottomRowDividerVerticalPadding;
+}
 
 #pragma mark MDCContainedInputViewStyleDensityInforming
 

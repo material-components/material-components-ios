@@ -66,7 +66,7 @@
       placeholderLabelColor = colorScheme.errorColor;
       break;
     case MDCContainedInputViewStateFocused:
-//      placeholderLabelColor = [UIColor blackColor];
+      placeholderLabelColor = [UIColor blackColor];
       break;
     default:
       break;
@@ -95,5 +95,7 @@
 - (CGFloat)spaceBetweenTextAreaAndTopRowBottomRowDivider {
   return 10;
 }
+
+//floatingPlaceholderFontSizeScaleFactor
 
 @end

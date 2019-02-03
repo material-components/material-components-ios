@@ -85,7 +85,8 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
   uiView = (UIView *)containedInputView;
   CGRect placeholderFrame = containedInputView.placeholderLabel.frame;
   BOOL isFloatingPlaceholder = [self isPlaceholderFloatingWithFrame:placeholderFrame];
-  CGFloat topRowBottomRowDividerY = containedInputView.leadingUnderlineLabel.frame.origin.y - 10;
+  CGFloat topRowBottomRowDividerY = CGRectGetMaxY(containedInputView.containerRect);
+//  CGFloat topRowBottomRowDividerY = containedInputView.leadingUnderlineLabel.frame.origin.y - 10;
   CGFloat lineWidth = [self outlineLineWidthForState:containedInputView.containedInputViewState];
   [self applyStyleTo:uiView
     placeholderFrame:placeholderFrame
@@ -99,8 +100,7 @@ isFloatingPlaceholder:isFloatingPlaceholder
 }
 
 - (BOOL)isPlaceholderFloatingWithFrame:(CGRect)frame {
-  // TODO: Implement
-  return NO;
+  return CGRectGetMinY(frame) <=0 && CGRectGetMaxY(frame) >= 0;
 }
 
 - (void)applyStyleTo:(UIView *)view
@@ -216,18 +216,26 @@ isFloatingPlaceholder:(BOOL)isFloatingPlaceholder
 //
 //}
 
--(CGFloat)spaceBetweenFloatingPlaceholderAndTextAreaWithFloatingPlaceholderMinY:(CGFloat)floatingPlaceholderMinY
-                                                      floatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight {
-  CGFloat outlinedTextFieldSpaceHeuristic = floatingPlaceholderHeight * (CGFloat)0.22;
-  return floatingPlaceholderMinY + floatingPlaceholderHeight + outlinedTextFieldSpaceHeuristic;
+- (CGFloat)floatingPlaceholderFontSizeScaleFactor {
+  return ((CGFloat)41 / (CGFloat)55);
 }
 
 - (CGFloat)floatingPlaceholderMinYWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight {
   return (CGFloat)0 - ((CGFloat)0.5 * floatingPlaceholderHeight);
 }
 
-- (CGFloat)topRowBottomRowDividerYWithTopRowSubviewCenterY:(CGFloat)topRowSubviewCenterY {
+-(CGFloat)spaceBetweenFloatingPlaceholderAndTextAreaWithFloatingPlaceholderMinY:(CGFloat)floatingPlaceholderMinY
+                                                      floatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight {
+  CGFloat outlinedTextFieldSpaceHeuristic = floatingPlaceholderHeight * (CGFloat)0.22;
+  return floatingPlaceholderMinY + floatingPlaceholderHeight + outlinedTextFieldSpaceHeuristic;
+}
+
+
+// rename this property to primary horizontal content divider?
+-(CGFloat)topRowBottomRowDividerYWithTopRowSubviewMaxY:(CGFloat)topRowSubviewMaxY
+                                  topRowSubviewCenterY:(CGFloat)topRowSubviewCenterY {
   return topRowSubviewCenterY * 2;
 }
+
 
 @end

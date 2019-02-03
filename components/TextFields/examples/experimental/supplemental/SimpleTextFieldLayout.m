@@ -228,7 +228,7 @@
   CGFloat textAreaMinY =
       (CGFloat)round((double)(topRowSubviewCenterY - (textAreaHeight * (CGFloat)0.5)));
   CGFloat textAreaMaxY = textAreaMinY + textAreaHeight;
-  CGRect textAreaFrame = CGRectMake(textAreaMinX, textAreaMinY, textAreaWidth, textAreaHeight);
+  CGRect textRect = CGRectMake(textAreaMinX, textAreaMinY, textAreaWidth, textAreaHeight);
   CGRect leftViewFrame = CGRectMake(leftViewMinX, leftViewMinY, leftViewWidth, leftViewHeight);
   CGRect rightViewFrame = CGRectMake(rightViewMinX, rightViewMinY, rightViewWidth, rightViewHeight);
   CGRect clearButtonFrame =
@@ -241,7 +241,7 @@
                                                                    font:font
                                                 floatingPlaceholderFont:floatingPlaceholderFont
                                                 floatingPlaceholderMinY:floatingPlaceholderMinY
-                                                           textAreaRect:textAreaFrame
+                                                           textAreaRect:textRect
                                                                   isRTL:isRTL];
   CGRect placeholderFrameFloating = [self placeholderFrameWithPlaceholder:placeholder
                                                            containerStyle:containerStyle
@@ -249,7 +249,7 @@
                                                                      font:font
                                                   floatingPlaceholderFont:floatingPlaceholderFont
                                                   floatingPlaceholderMinY:floatingPlaceholderMinY
-                                                             textAreaRect:textAreaFrame
+                                                             textAreaRect:textRect
                                                                     isRTL:isRTL];
 
   CGFloat underlineLabelsCombinedMinX = isRTL ? kTrailingMargin : kLeadingMargin;
@@ -332,7 +332,7 @@
   self.leftViewFrame = leftViewFrame;
   self.rightViewFrame = rightViewFrame;
   self.clearButtonFrame = clearButtonFrame;
-  self.textAreaFrame = textAreaFrame;
+  self.textRect = textRect;
   self.placeholderFrameFloating = placeholderFrameFloating;
   self.placeholderFrameNormal = placeholderFrameNormal;
   self.leftUnderlineLabelFrame = leftUnderlineLabelFrame;
@@ -624,9 +624,9 @@
   if (placeholderFrameFloatingMaxY > maxY) {
     maxY = placeholderFrameNormalMaxY;
   }
-  CGFloat textAreaFrameMaxY = CGRectGetMaxY(self.textAreaFrame);
-  if (textAreaFrameMaxY > maxY) {
-    maxY = textAreaFrameMaxY;
+  CGFloat textRectMaxY = CGRectGetMaxY(self.textRect);
+  if (textRectMaxY > maxY) {
+    maxY = textRectMaxY;
   }
   CGFloat clearButtonFrameMaxY = CGRectGetMaxY(self.clearButtonFrame);
   if (clearButtonFrameMaxY > maxY) {
