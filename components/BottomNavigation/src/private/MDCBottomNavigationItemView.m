@@ -367,17 +367,36 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 - (CGPoint)badgeCenterFromIconFrame:(CGRect)iconFrame
                          labelFrame:(CGRect)labelFrame
                               isRTL:(BOOL)isRTL {
-  // Thought: Top of badge is XX points above top of image?
   CGSize badgeSize = [self.badge sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
   CGFloat badgeHalfHeight = badgeSize.height / 2;
   CGFloat badgeHalfWidth = badgeSize.width / 2;
-  CGFloat badgeTopY = MAX(0, CGRectGetMinY(iconFrame) - 1);
+  // The top edge of the badge should match the top edge of the icon bounds.
+  // There are no specifications for badge layout, so this is based on the Material Guidelines
+  // article for Bottom Navigation which includes an image showing badge positions.
+  // https://storage.googleapis.com/spec-host-backup/mio-design%2Fassets%2F0B6xUSjjSulxcaVpEMk5tZ2RGZ3c%2Fbottomnav-badging-1.png
+  // Attempting to match the "88" badge on the "chrome reader mode" icon results in the badge's top
+  // edge equalling that of the image bounds.
+  // https://material.io/tools/icons/?icon=chrome_reader_mode&style=baseline
+  CGFloat badgeTopY = CGRectGetMinY(iconFrame);
   CGFloat badgeCenterY = badgeTopY + badgeHalfHeight;
-  CGFloat badgeXInsetFromIconEdge = MIN(10, badgeHalfWidth);
 
+  // The fonts available on iOS differ from that used on Material.io.  When trying to approximate
+  // the position on iOS, it seems like a horizontal inset of 10 points looks pretty close.
+  // However, hen the badge has no visible text, its horizontal center should be 1 point inset from
+  // the edge of the image.
+  CGFloat badgeXInsetFromIconEdge = 10;
   CGFloat badgeCenterX = CGRectGetMaxX(iconFrame) - badgeXInsetFromIconEdge + badgeHalfWidth;
+  if (self.badgeValue.length == 0) {
+    badgeCenterX = CGRectGetMaxX(iconFrame) - 1;
+  }
+
+
   if (isRTL) {
-    badgeCenterX = CGRectGetMinX(iconFrame) + badgeXInsetFromIconEdge - badgeHalfWidth;
+    if (self.badgeValue.length == 0) {
+      badgeCenterX = CGRectGetMinX(iconFrame) + 1;
+    } else {
+      badgeCenterX = CGRectGetMinX(iconFrame) + badgeXInsetFromIconEdge - badgeHalfWidth;
+    }
   }
   BOOL titleBelowIcon = CGRectGetMaxY(iconFrame) <= CGRectGetMaxY(labelFrame);
   BOOL titleVisible = !self.label.hidden;
