@@ -15,12 +15,12 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialContainerScheme.h"
-#import "SimpleTextField.h"
+#import "MDCSimpleTextField.h"
 
 /**
  This category is used to style SimpleTextField instances with an MDCContainerScheme.
  */
-@interface SimpleTextField (MaterialTheming)
+@interface MDCSimpleTextField (MaterialTheming)
 
 /**
  Applies a container scheme's subsystem-specific schemes to the receiver.

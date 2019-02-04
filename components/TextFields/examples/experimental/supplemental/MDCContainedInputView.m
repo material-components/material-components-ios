@@ -96,6 +96,4 @@
   return 10;
 }
 
-//floatingPlaceholderFontSizeScaleFactor
-
 @end

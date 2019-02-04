@@ -15,14 +15,16 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "SimpleTextFieldLayoutUtils.h"
+#import "MDCContainedInputView.h"
 
-//#import "MDCContainedInputView.h"
 @protocol MDCContainedInputViewStyle;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SimpleTextFieldLayout : NSObject
+@interface MDCSimpleTextFieldLayout : NSObject
+
+@property(nonatomic, readonly, class) CGFloat clearButtonSideLength;
+@property(nonatomic, readonly, class) CGFloat clearButtonImageViewSideLength;
 
 @property(nonatomic, assign) BOOL leftViewHidden;
 @property(nonatomic, assign) BOOL rightViewHidden;
@@ -58,7 +60,7 @@ NS_ASSUME_NONNULL_BEGIN
                       clearButtonMode:(UITextFieldViewMode)clearButtonMode
                    leftUnderlineLabel:(UILabel *)leftUnderlineLabel
                   rightUnderlineLabel:(UILabel *)rightUnderlineLabel
-           underlineLabelDrawPriority:(UnderlineLabelDrawPriority)underlineLabelDrawPriority
+           underlineLabelDrawPriority:(MDCContainedInputViewUnderlineLabelDrawPriority)underlineLabelDrawPriority
      customUnderlineLabelDrawPriority:(CGFloat)customUnderlineLabelDrawPriority
                                 isRTL:(BOOL)isRTL
                             isEditing:(BOOL)isEditing;

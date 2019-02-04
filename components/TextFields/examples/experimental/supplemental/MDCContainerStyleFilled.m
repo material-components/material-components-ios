@@ -83,10 +83,7 @@ static const CGFloat kTopRowBottomRowDividerVerticalPadding = (CGFloat)9.0;
   UIView *uiView = (UIView *)containedInputView;
   CGFloat underlineThickness =
       [self underlineThicknessWithMDCContainedInputViewState:containedInputView.containedInputViewState];
-  // TODO: Consult density informer, this is a bad way of doing it
-//  CGFloat topRowBottomRowDividerY = containedInputView.leadingUnderlineLabel.frame.origin.y - 10;
   CGFloat topRowBottomRowDividerY = CGRectGetMaxY(containedInputView.containerRect);
-  //[self primaryHorizontalContentDividerWithContainerRect:containedInputView.containerRect];
   [self applyStyleToView:uiView
  topRowBottomRowDividerY:topRowBottomRowDividerY
       underlineThickness:underlineThickness];

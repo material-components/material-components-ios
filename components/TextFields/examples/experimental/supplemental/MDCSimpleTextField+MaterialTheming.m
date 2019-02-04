@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "SimpleTextField+MaterialTheming.h"
+#import "MDCSimpleTextField+MaterialTheming.h"
 
 #import <Foundation/Foundation.h>
 
@@ -22,7 +22,7 @@
 
 //#import "MDCSemanticColorScheme.h"
 
-@implementation SimpleTextField (MaterialTheming)
+@implementation MDCSimpleTextField (MaterialTheming)
 
 - (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
   id<MDCTypographyScheming> mdcTypographyScheming = containerScheme.typographyScheme;

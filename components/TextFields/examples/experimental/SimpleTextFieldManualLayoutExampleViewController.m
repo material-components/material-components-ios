@@ -18,13 +18,13 @@
 
 #import "MaterialButtons+Theming.h"
 #import "MaterialColorScheme.h"
-#import "supplemental/SimpleTextField.h"
+#import "supplemental/MDCSimpleTextField.h"
 
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar+TypographyThemer.h"
 #import "MaterialButtons+ButtonThemer.h"
 
-#import "SimpleTextField+MaterialTheming.h"
+#import "MDCSimpleTextField+MaterialTheming.h"
 
 @interface SimpleTextFieldManualLayoutExampleViewController ()
 
@@ -32,8 +32,8 @@
 
 @property(strong, nonatomic) MDCButton *resignFirstResponderButton;
 @property(strong, nonatomic) MDCButton *toggleErrorButton;
-@property(strong, nonatomic) SimpleTextField *filledTextField;
-@property(strong, nonatomic) SimpleTextField *outlinedTextField;
+@property(strong, nonatomic) MDCSimpleTextField *filledTextField;
+@property(strong, nonatomic) MDCSimpleTextField *outlinedTextField;
 @property(strong, nonatomic) UITextField *uiTextField;
 
 @property(nonatomic, assign) BOOL isErrored;
@@ -201,7 +201,7 @@
 }
 
 - (void)addFilledTextField {
-  self.filledTextField = [[SimpleTextField alloc] init];
+  self.filledTextField = [[MDCSimpleTextField alloc] init];
   [self.filledTextField applyFilledThemeWithScheme:self.containerScheme];
   self.filledTextField.placeholder = @"This is a placeholder";
   self.filledTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
@@ -211,7 +211,7 @@
 }
 
 - (void)addOutlinedTextField {
-  self.outlinedTextField = [[SimpleTextField alloc] init];
+  self.outlinedTextField = [[MDCSimpleTextField alloc] init];
   [self.outlinedTextField applyOutlinedThemeWithScheme:self.containerScheme];
   self.outlinedTextField.placeholder = @"This is another placeholder";
   self.outlinedTextField.clearButtonMode = UITextFieldViewModeWhileEditing;

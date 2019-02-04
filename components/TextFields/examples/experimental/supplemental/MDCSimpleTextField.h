@@ -14,7 +14,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "SimpleTextFieldLayoutUtils.h"
 
 #import "MaterialColorScheme.h"
 
@@ -31,21 +30,17 @@
  - Enable easy set up and reliable and predictable behavior.
 
  */
-@interface SimpleTextField : UITextField <MDCContainedInputView>
+@interface MDCSimpleTextField : UITextField <MDCContainedInputView>
+
+
+///**
+// This is a computed property that determines the current @c MDCContainedInputViewState of the text field.
+// */
+//@property(nonatomic, assign, readonly) MDCContainedInputViewState containedInputViewState;
 
 /**
- Dictates the @c MDCContainerStyle of the text field.
- */
-@property(nonatomic, strong) id<MDCContainedInputViewStyle> containerStyle;
-
-/**
- This is a computed property that determines the current @c MDCContainedInputViewState of the text field.
- */
-@property(nonatomic, assign, readonly) MDCContainedInputViewState containedInputViewState;
-
-/**
- When set to YES, the placeholder floats above the text when the MDCContainedInputViewState is @c .focused. When
- set to NO, it does not.
+ When set to YES, the placeholder floats above the input text instead of disappearing. When
+ set to NO it disappears.
 
  @note The default is YES.
  @note When set to YES, the text field will reserve space for the floating placeholder in the
@@ -53,22 +48,6 @@
  resizing the text field after setting this property, perhaps by calling @c -sizeToFit.
  */
 @property(nonatomic, assign) BOOL canPlaceholderFloat;
-
-/**
- The @c leadingUnderlineLabel can be used to display helper or error text.
- */
-@property(strong, nonatomic, readonly, nonnull) UILabel *leadingUnderlineLabel;
-
-/**
- The @c trailingUnderlineLabel can be used to display helper or error text.
- */
-@property(strong, nonatomic, readonly, nonnull) UILabel *trailingUnderlineLabel;
-
-/**
- This property is used to determine how much horizontal space to allot for each of the two underline
- labels.
- */
-@property(nonatomic, assign) UnderlineLabelDrawPriority underlineLabelDrawPriority;
 
 /**
  This is essentially an RTL-aware wrapper around UITextField's leftView/rightView class.
@@ -103,15 +82,6 @@
  Fields. See the @c MDCContainedInputViewState enum for more information.
  */
 @property(nonatomic, assign) BOOL isActivated;
-
-/**
- When @c underlineLabelDrawPriority is set to @c .custom the value of this property helps determine
- what percentage of the available width each underline label gets. It can be thought of as a
- divider. A value of @c 0 would result in the trailing underline label getting all the available
- width. A value of @c 1 would result in the leading underline label getting all the available width.
- A value of @c .5 would result in each underline label getting 50% of the available width.
- */
-@property(nonatomic, assign) CGFloat customUnderlineLabelDrawPriority;
 
 - (id<MDCContainedInputViewColorScheming>)containedInputViewColorSchemingForState:(MDCContainedInputViewState)containedInputViewState;
 - (void)setContainedInputViewColorScheming:(id<MDCContainedInputViewColorScheming>)containedInputViewColorScheming

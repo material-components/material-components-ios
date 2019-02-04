@@ -12,16 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "SimpleTextFieldLayout.h"
+#import "MDCSimpleTextFieldLayout.h"
 
-#import "SimpleTextField.h"
-#import "SimpleTextFieldLayoutUtils.h"
+#import "MDCSimpleTextField.h"
 #import "MDCContainedInputView.h"
 
-@interface SimpleTextFieldLayout ()
+static const CGFloat kLeadingMargin = (CGFloat)12.0;
+static const CGFloat kTrailingMargin = (CGFloat)12.0;
+static const CGFloat kTopRowBottomRowDividerVerticalPadding = (CGFloat)9.0;
+static const CGFloat kFloatingPlaceholderXOffsetFromTextArea = (CGFloat)3.0;
+static const CGFloat kClearButtonTouchTargetSideLength = (CGFloat)30.0;
+static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
+
+@interface MDCSimpleTextFieldLayout ()
 @end
 
-@implementation SimpleTextFieldLayout
+@implementation MDCSimpleTextFieldLayout
 
 #pragma mark Object Lifecycle
 
@@ -40,7 +46,7 @@
                       clearButtonMode:(UITextFieldViewMode)clearButtonMode
                    leftUnderlineLabel:(UILabel *)leftUnderlineLabel
                   rightUnderlineLabel:(UILabel *)rightUnderlineLabel
-           underlineLabelDrawPriority:(UnderlineLabelDrawPriority)underlineLabelDrawPriority
+           underlineLabelDrawPriority:(MDCContainedInputViewUnderlineLabelDrawPriority)underlineLabelDrawPriority
      customUnderlineLabelDrawPriority:(CGFloat)customUnderlineLabelDrawPriority
                                 isRTL:(BOOL)isRTL
                             isEditing:(BOOL)isEditing {
@@ -87,7 +93,7 @@
                          clearButtonMode:(UITextFieldViewMode)clearButtonMode
                       leftUnderlineLabel:(UILabel *)leftUnderlineLabel
                      rightUnderlineLabel:(UILabel *)rightUnderlineLabel
-              underlineLabelDrawPriority:(UnderlineLabelDrawPriority)underlineLabelDrawPriority
+              underlineLabelDrawPriority:(MDCContainedInputViewUnderlineLabelDrawPriority)underlineLabelDrawPriority
         customUnderlineLabelDrawPriority:(CGFloat)customUnderlineLabelDrawPriority
                                    isRTL:(BOOL)isRTL
                                isEditing:(BOOL)isEditing {
@@ -155,24 +161,16 @@
                                        containerStyle:containerStyle];
 
   CGFloat textRectHeight = [self textHeightWithFont:font];
+
   // TODO: Defer to densityInformer for value below
   CGFloat textRectCenterY = (textRectHeight * 3) * (0.5);//[self]
-  
+
   CGFloat textRectFloatingPlaceholderCenterY =
       [self textRectFloatingPlaceholderCenterYWithFloatingPlaceholderMinY:floatingPlaceholderMinY
                                                 floatingPlaceholderHeight:floatingPlaceholderHeight
                                                            textRectHeight:textRectHeight
                                                            containerStyle:containerStyle];
 
-//  CGFloat textRectCenterY =
-//      [self textRectCenterYWithLeftView:leftView
-//                                   rightView:rightView
-//                                        font:font
-//                                floatingFont:floatingPlaceholderFont
-//                              containerStyle:containerStyle
-//              textRectFloatingPlaceholderCenterY:textRectFloatingPlaceholderCenterY];
-      // textRectFloatingPlaceholderCenterY should actually be non floating text area centerY
-  
   CGFloat leftViewHeight = CGRectGetHeight(leftView.frame);
   CGFloat leftViewMinY = 0;
   CGFloat leftViewMaxY = 0;
@@ -254,7 +252,7 @@
   
   CGRect placeholderFrameNormal = [self placeholderFrameWithPlaceholder:placeholder
                                                          containerStyle:containerStyle
-                                                       placeholderState:PlaceholderStateNormal
+                                                       placeholderState:MDCContainedInputViewPlaceholderStateNormal
                                                                    font:font
                                                 floatingPlaceholderFont:floatingPlaceholderFont
                                                 floatingPlaceholderMinY:floatingPlaceholderMinY
@@ -262,7 +260,7 @@
                                                                   isRTL:isRTL];
   CGRect placeholderFrameFloating = [self placeholderFrameWithPlaceholder:placeholder
                                                            containerStyle:containerStyle
-                                                         placeholderState:PlaceholderStateFloating
+                                                         placeholderState:MDCContainedInputViewPlaceholderStateFloating
                                                                      font:font
                                                   floatingPlaceholderFont:floatingPlaceholderFont
                                                   floatingPlaceholderMinY:floatingPlaceholderMinY
@@ -300,7 +298,7 @@
   UILabel *leadingUnderlineLabel = isRTL ? rightUnderlineLabel : leftUnderlineLabel;
   UILabel *trailingUnderlineLabel = isRTL ? leftUnderlineLabel : rightUnderlineLabel;
   switch (underlineLabelDrawPriority) {
-    case UnderlineLabelDrawPriorityCustom:
+    case MDCContainedInputViewUnderlineLabelDrawPriorityCustom:
       leadingUnderlineLabelWidth = [self
           leadingUnderlineLabelWidthWithCombinedUnderlineLabelsWidth:underlineLabelsCombinedMaxWidth
                                                   customDrawPriority:
@@ -311,7 +309,7 @@
       trailingUnderlineLabelSize = [self underlineLabelSizeWithLabel:trailingUnderlineLabel
                                                   constrainedToWidth:trailingUnderlineLabelWidth];
       break;
-    case UnderlineLabelDrawPriorityLeading:
+    case MDCContainedInputViewUnderlineLabelDrawPriorityLeading:
       leadingUnderlineLabelSize =
           [self underlineLabelSizeWithLabel:leadingUnderlineLabel
                          constrainedToWidth:underlineLabelsCombinedMaxWidth];
@@ -320,7 +318,7 @@
                          constrainedToWidth:underlineLabelsCombinedMaxWidth -
                                             leadingUnderlineLabelSize.width];
       break;
-    case UnderlineLabelDrawPriorityTrailing:
+    case MDCContainedInputViewUnderlineLabelDrawPriorityTrailing:
       trailingUnderlineLabelSize =
           [self underlineLabelSizeWithLabel:trailingUnderlineLabel
                          constrainedToWidth:underlineLabelsCombinedMaxWidth];
@@ -491,9 +489,11 @@
   CGFloat spaceBetweenPlaceholderAndTextArea = 0;
   if ([containerStyle conformsToProtocol:@protocol(MDCContainedInputViewStyleDensityInforming)]) {
     id<MDCContainedInputViewStyleDensityInforming> densityInformer = (id<MDCContainedInputViewStyleDensityInforming>)containerStyle;
-    spaceBetweenPlaceholderAndTextArea =
-    [densityInformer spaceBetweenFloatingPlaceholderAndTextAreaWithFloatingPlaceholderMinY:floatingPlaceholderMinY
-                                                                 floatingPlaceholderHeight:floatingPlaceholderHeight];
+    if ([densityInformer respondsToSelector:@selector(spaceBetweenFloatingPlaceholderAndTextAreaWithFloatingPlaceholderMinY:floatingPlaceholderHeight:)]) {
+      spaceBetweenPlaceholderAndTextArea =
+      [densityInformer spaceBetweenFloatingPlaceholderAndTextAreaWithFloatingPlaceholderMinY:floatingPlaceholderMinY
+                                                                   floatingPlaceholderHeight:floatingPlaceholderHeight];
+    }
   } else {
     spaceBetweenPlaceholderAndTextArea = ((CGFloat)0.25 * floatingPlaceholderMaxY);
   }
@@ -501,19 +501,6 @@
   floatingPlaceholderMaxY + spaceBetweenPlaceholderAndTextArea;
   return lowestAllowableTextAreaMinY + ((CGFloat)0.5 * textRectHeight);
 }
-
-// so this can be made an object on the style protocol
-//- (CGFloat)spaceBetweenFloatingPlaceholderAndTextRect:(MDCContainerStyle *)containerStyle {
-//  if ([containerStyle isMemberOfClass:[MDCContainerStyleFilled class]]) {
-//    spaceBetweenPlaceholderAndTextArea = ((CGFloat)0.25 * floatingPlaceholderMaxY);
-//  } else if ([containerStyle isMemberOfClass:[MDCContainerStyleOutlined class]]) {
-//    spaceBetweenPlaceholderAndTextArea =
-//    floatingPlaceholderMaxY + outlinedTextFieldSpaceHeuristic;
-//  } else {
-//
-//  }
-//  return spacebet;
-//}
 
 - (CGFloat)floatingPlaceholderMinYWithFloatingHeight:(CGFloat)floatingPlaceholderHeight
                                       containerStyle:(id<MDCContainedInputViewStyle>)containerStyle {
@@ -530,29 +517,16 @@
   return floatingPlaceholderMinY;
 }
 
-- (CGFloat)textRectCenterYWithLeftView:(UIView *)leftView
-                             rightView:(UIView *)rightView
-                                  font:(UIFont *)font
-                          floatingFont:(UIFont *)floatingFont
-                        containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
-        textRectFloatingPlaceholderCenterY:(CGFloat)textRectFloatingPlaceholderCenterY {
-  CGFloat sideViewMaxHeight =
-      MAX(CGRectGetHeight(leftView.bounds), CGRectGetHeight(rightView.bounds));
-  CGFloat lowestAllowableSideViewCenterY = kTopMargin + ((CGFloat)0.5 * sideViewMaxHeight);
-  CGFloat sharedCenterY = MAX(textRectFloatingPlaceholderCenterY, lowestAllowableSideViewCenterY);
-  return sharedCenterY;
-}
-
 - (CGFloat)maxPlaceholderWidthWithTextAreaWidth:(CGFloat)textRectWidth
-                               placeholderState:(PlaceholderState)placeholderState {
+                               placeholderState:(MDCContainedInputViewPlaceholderState)placeholderState {
   CGFloat maxPlaceholderWidth = 0;
   switch (placeholderState) {
-    case PlaceholderStateNone:
+    case MDCContainedInputViewPlaceholderStateNone:
       break;
-    case PlaceholderStateFloating:
+    case MDCContainedInputViewPlaceholderStateFloating:
       maxPlaceholderWidth = textRectWidth - (2 * kFloatingPlaceholderXOffsetFromTextArea);
       break;
-    case PlaceholderStateNormal:
+    case MDCContainedInputViewPlaceholderStateNormal:
       maxPlaceholderWidth = textRectWidth;
       break;
     default:
@@ -578,7 +552,7 @@
 
 - (CGRect)placeholderFrameWithPlaceholder:(NSString *)placeholder
                            containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
-                         placeholderState:(PlaceholderState)placeholderState
+                         placeholderState:(MDCContainedInputViewPlaceholderState)placeholderState
                                      font:(UIFont *)font
                   floatingPlaceholderFont:(UIFont *)floatingPlaceholderFont
                   floatingPlaceholderMinY:(CGFloat)floatingPlaceholderMinY
@@ -595,9 +569,9 @@
   CGFloat originX = 0;
   CGFloat originY = 0;
   switch (placeholderState) {
-    case PlaceholderStateNone:
+    case MDCContainedInputViewPlaceholderStateNone:
       break;
-    case PlaceholderStateFloating:
+    case MDCContainedInputViewPlaceholderStateFloating:
       size = [self placeholderSizeWithPlaceholder:placeholder
                               maxPlaceholderWidth:maxPlaceholderWidth
                                              font:floatingPlaceholderFont];
@@ -609,7 +583,7 @@
       }
       rect = CGRectMake(originX, originY, size.width, size.height);
       break;
-    case PlaceholderStateNormal:
+    case MDCContainedInputViewPlaceholderStateNormal:
       size = [self placeholderSizeWithPlaceholder:placeholder
                               maxPlaceholderWidth:maxPlaceholderWidth
                                              font:font];
@@ -669,6 +643,14 @@
     maxY = self.topRowBottomRowDividerY;
   }
   return maxY;
+}
+
++ (CGFloat)clearButtonImageViewSideLength {
+  return kClearButtonImageViewSideLength;
+}
+
++ (CGFloat)clearButtonSideLength {
+  return kClearButtonTouchTargetSideLength;
 }
 
 @end
