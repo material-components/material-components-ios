@@ -59,7 +59,7 @@
                                                               tag:0];
   tabBarItem3.badgeValue = @"";
   UITabBarItem *tabBarItem4 = [[UITabBarItem alloc]
-      initWithTitle:@"Web"
+      initWithTitle:@"Reader"
               image:[UIImage imageNamed:@"baseline_chrome_reader_mode_black_24pt"
                                              inBundle:[NSBundle
                                                           bundleForClass:
