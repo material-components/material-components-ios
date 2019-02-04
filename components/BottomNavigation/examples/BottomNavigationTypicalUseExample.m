@@ -53,9 +53,11 @@
   UITabBarItem *tabBarItem2 = [[UITabBarItem alloc] initWithTitle:@"Messages"
                                                             image:[UIImage imageNamed:@"Email"]
                                                               tag:0];
+  tabBarItem2.badgeValue = @"";
   UITabBarItem *tabBarItem3 = [[UITabBarItem alloc] initWithTitle:@"Favorites"
                                                             image:[UIImage imageNamed:@"Favorite"]
                                                               tag:0];
+  tabBarItem3.badgeValue = @"8";
   UITabBarItem *tabBarItem4 = [[UITabBarItem alloc] initWithTitle:@"Search"
                                                             image:[UIImage imageNamed:@"Search"]
                                                               tag:0];
@@ -63,7 +65,7 @@
   UITabBarItem *tabBarItem5 = [[UITabBarItem alloc] initWithTitle:@"Birthday"
                                                             image:[UIImage imageNamed:@"Cake"]
                                                               tag:0];
-  tabBarItem5.badgeValue = @"999+";
+  tabBarItem5.badgeValue = @"888+";
 #if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wpartial-availability"
