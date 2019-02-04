@@ -165,6 +165,14 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
   // TODO: Defer to densityInformer for value below
   CGFloat textRectCenterY = (textRectHeight * 3) * (0.5);//[self]
 
+  if ([containerStyle conformsToProtocol:@protocol(MDCContainedInputViewStyleDensityInforming)]) {
+    id<MDCContainedInputViewStyleDensityInforming> densityInformer = (id<MDCContainedInputViewStyleDensityInforming>)containerStyle;
+    if ([densityInformer respondsToSelector:@selector(spaceBetweenTopAndTextAreaWithoutFloatingPlaceholderWithTextAreaHeight:)]) {
+      CGFloat minY = [densityInformer spaceBetweenTopAndTextAreaWithoutFloatingPlaceholderWithTextAreaHeight:textRectHeight];
+      textRectCenterY = minY + (0.5 * textRectHeight);
+    }
+  }
+  
   CGFloat textRectFloatingPlaceholderCenterY =
       [self textRectFloatingPlaceholderCenterYWithFloatingPlaceholderMinY:floatingPlaceholderMinY
                                                 floatingPlaceholderHeight:floatingPlaceholderHeight
@@ -228,8 +236,6 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
     }
   }
 
-  
-  
   CGFloat textRectWidth = textRectMaxX - textRectMinX;
   CGFloat textRectMinY =
       (CGFloat)round((double)(textRectCenterY - (textRectHeight * (CGFloat)0.5)));
@@ -508,12 +514,24 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
     return 0;
   }
   CGFloat floatingPlaceholderMinY = 0;
+
   if ([containerStyle conformsToProtocol:@protocol(MDCContainedInputViewStyleDensityInforming)]) {
     id<MDCContainedInputViewStyleDensityInforming> densityInformer = (id<MDCContainedInputViewStyleDensityInforming>)containerStyle;
-    floatingPlaceholderMinY = [densityInformer floatingPlaceholderMinYWithFloatingPlaceholderHeight:floatingPlaceholderHeight];
+    if ([densityInformer respondsToSelector:@selector(spaceBetweenTopAndFloatingPlaceholderWithFloatingPlaceholderHeight:)]) {
+      floatingPlaceholderMinY = [densityInformer spaceBetweenTopAndFloatingPlaceholderWithFloatingPlaceholderHeight:floatingPlaceholderHeight];
+    } else {
+      floatingPlaceholderMinY = (0.5 * floatingPlaceholderHeight);
+    }
   } else {
     floatingPlaceholderMinY = (0.5 * floatingPlaceholderHeight);
   }
+  
+//  if ([containerStyle conformsToProtocol:@protocol(MDCContainedInputViewStyleDensityInforming)]) {
+//    id<MDCContainedInputViewStyleDensityInforming> densityInformer = (id<MDCContainedInputViewStyleDensityInforming>)containerStyle;
+//    floatingPlaceholderMinY = [densityInformer floatingPlaceholderMinYWithFloatingPlaceholderHeight:floatingPlaceholderHeight];
+//  } else {
+//    floatingPlaceholderMinY = (0.5 * floatingPlaceholderHeight);
+//  }
   return floatingPlaceholderMinY;
 }
 

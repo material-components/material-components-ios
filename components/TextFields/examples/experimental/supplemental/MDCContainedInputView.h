@@ -139,19 +139,32 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewPlaceholderState) {
 - (void)removeStyleFrom:(nonnull id<MDCContainedInputView>)containedInputView;
 @end
 
-@interface MDCContainerStyleBase : NSObject <MDCContainedInputViewStyle>
+@protocol MDCContainedInputViewStyleDensityInforming <NSObject>
+//@optional
+
+- (CGFloat)spaceBetweenTopAndFloatingPlaceholderWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight;
+- (CGFloat)spaceBetweenTopAndTextAreaWithoutFloatingPlaceholderWithTextAreaHeight:(CGFloat)textAreaHeight;
+- (CGFloat)spaceBetweenFloatingPlaceholderAndTextAreaWithFloatingPlaceholderMaxY:(CGFloat)textAreaHeight;
+- (CGFloat)spaceBetweenTextAreaAndBottomWithoutFloatingPlaceholder:(CGFloat)textAreaHeight;
+
+//- (CGFloat)floatingPlaceholderMinYWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight;
+//- (CGFloat)textRectMinYNormalWithTextHeight:(CGFloat)textHeight;
+//- (CGFloat)textRectMinYFloatingPlaceholderWithTextHeight:(CGFloat)textHeight
+//                                 floatingPlaceholderMinY:(CGFloat)floatingPlaceholderMinY
+//                                 floatingPlaceholderMinY:(CGFloat)floatingPlaceholderMinY
+//;
+//
+//
+//- (CGFloat)textAreaNormalMinYWithTextHeight:(CGFloat)textHeight;
+//- (CGFloat)textAreaFloatingPlaceholderMinYWithTextHeight:(CGFloat)textHeight;
+//- (CGFloat)textAreaFloatingPlaceholderMinYWithFont:(UIFont *)font;
+//
+//- (CGFloat)spaceBetweenFloatingPlaceholderAndTextAreaWithFloatingPlaceholderMinY:(CGFloat)floatingPlaceholderMinY
+//                                                       floatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight;
+//- (CGFloat)topRowBottomRowDividerYWithTopRowSubviewMaxY:(CGFloat)topRowSubviewMaxY
+//                                   topRowSubviewCenterY:(CGFloat)topRowSubviewCenterY;
+//- (CGFloat)floatingPlaceholderFontSizeScaleFactor;
 @end
 
-@protocol MDCContainedInputViewStyleDensityInforming <NSObject>
-@optional
-- (CGFloat)floatingPlaceholderMinYWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight;
-- (CGFloat)textAreaNormalMinYWithTextHeight:(CGFloat)textHeight;
-- (CGFloat)textAreaFloatingPlaceholderMinYWithTextHeight:(CGFloat)textHeight;
-- (CGFloat)textAreaFloatingPlaceholderMinYWithFont:(UIFont *)font;
-
-- (CGFloat)spaceBetweenFloatingPlaceholderAndTextAreaWithFloatingPlaceholderMinY:(CGFloat)floatingPlaceholderMinY
-                                                       floatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight;
-- (CGFloat)topRowBottomRowDividerYWithTopRowSubviewMaxY:(CGFloat)topRowSubviewMaxY
-                                   topRowSubviewCenterY:(CGFloat)topRowSubviewCenterY;
-- (CGFloat)floatingPlaceholderFontSizeScaleFactor;
+@interface MDCContainerStyleBase : NSObject <MDCContainedInputViewStyle, MDCContainedInputViewStyleDensityInforming>
 @end
