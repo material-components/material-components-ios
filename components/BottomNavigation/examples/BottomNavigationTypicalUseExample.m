@@ -53,14 +53,20 @@
   UITabBarItem *tabBarItem2 = [[UITabBarItem alloc] initWithTitle:@"Messages"
                                                             image:[UIImage imageNamed:@"Email"]
                                                               tag:0];
-  tabBarItem2.badgeValue = @"";
+  tabBarItem2.badgeValue = @"8";
   UITabBarItem *tabBarItem3 = [[UITabBarItem alloc] initWithTitle:@"Favorites"
                                                             image:[UIImage imageNamed:@"Favorite"]
                                                               tag:0];
-  tabBarItem3.badgeValue = @"8";
-  UITabBarItem *tabBarItem4 = [[UITabBarItem alloc] initWithTitle:@"Search"
-                                                            image:[UIImage imageNamed:@"Search"]
-                                                              tag:0];
+  tabBarItem3.badgeValue = @"";
+  UITabBarItem *tabBarItem4 = [[UITabBarItem alloc]
+      initWithTitle:@"Reader"
+              image:[UIImage imageNamed:@"baseline_chrome_reader_mode_black_24pt"
+                                             inBundle:[NSBundle
+                                                          bundleForClass:
+                                                              [BottomNavigationTypicalUseExample
+                                                                  class]]
+                        compatibleWithTraitCollection:nil]
+                tag:0];
   tabBarItem4.badgeValue = @"88";
   UITabBarItem *tabBarItem5 = [[UITabBarItem alloc] initWithTitle:@"Birthday"
                                                             image:[UIImage imageNamed:@"Cake"]
