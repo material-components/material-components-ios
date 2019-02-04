@@ -26,7 +26,14 @@
 
 - (void)setUp {
   [super setUp];
+
   self.badge = [[MDCBottomNavigationItemBadge alloc] init];
+}
+
+- (void)tearDown {
+  self.badge = nil;
+
+  [super tearDown];
 }
 
 - (void)testSizeThatFitsWontResize {
