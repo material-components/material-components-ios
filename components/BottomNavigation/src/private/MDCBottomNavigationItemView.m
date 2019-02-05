@@ -155,20 +155,6 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   }
 }
 
-- (void)layoutSubviews {
-  [super layoutSubviews];
-
-  [self.label sizeToFit];
-  [self.badge sizeToFit];
-  CGSize labelSize =
-      CGSizeMake(CGRectGetWidth(self.label.bounds), CGRectGetHeight(self.label.bounds));
-  CGFloat maxWidth = CGRectGetWidth(self.bounds);
-  self.label.frame = CGRectMake(0, 0, MIN(maxWidth, labelSize.width), labelSize.height);
-  self.inkView.maxRippleRadius =
-      (CGFloat)(MDCHypot(CGRectGetHeight(self.bounds), CGRectGetWidth(self.bounds)) / 2);
-  [self centerLayoutAnimated:NO];
-}
-
 - (CGSize)sizeThatFits:(CGSize)size {
   // If we're given a zero or negative value, return the content size with any margins
   if (size.width < 0.0001) {
@@ -177,14 +163,64 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   if (size.height > 0.0001) {
     size.height = kDefaultUndefinedDimensionSize;
   }
-  CGRect availableRect = CGRectMake(0, 0, size.width, size.height);
-  CGRect labelFrame = CGRectZero;
-  CGRect iconImageViewFrame = CGRectZero;
-  [self calculateLayoutInBounds:availableRect
-                  forLabelFrame:&labelFrame
-             iconImageViewFrame:&iconImageViewFrame];
+  if (self.titleBelowIcon) {
+    return [self sizeThatFitsForVerticalLayout:size];
+  } else {
+    return [self sizeThatFitsForHorizontalLayout:size];
+  }
+}
 
-  return CGRectUnion(labelFrame, iconImageViewFrame).size;
+- (CGSize)sizeThatFitsForVerticalLayout:(CGSize)size {
+  BOOL titleHidden =
+      self.titleVisibility == MDCBottomNavigationBarTitleVisibilityNever ||
+      (self.titleVisibility == MDCBottomNavigationBarTitleVisibilitySelected && !self.selected);
+  CGSize maxSize = CGSizeMake(kDefaultUndefinedDimensionSize, kDefaultUndefinedDimensionSize);
+  CGSize iconSize = [self.iconImageView sizeThatFits:maxSize];
+  CGRect iconFrame = CGRectMake(0, 0, iconSize.width, iconSize.height);
+  CGSize badgeSize = [self.badge sizeThatFits:maxSize];
+  CGPoint badgeCenter = [self badgeCenterFromIconFrame:iconFrame isRTL:NO];
+  CGRect badgeFrame = CGRectMake(badgeCenter.x - badgeSize.width / 2,
+                                 badgeCenter.y - badgeSize.height / 2, badgeSize.width,
+                                 badgeSize.height);
+  CGRect labelFrame = CGRectZero;
+  if (!titleHidden) {
+    CGSize labelSize = [self.label sizeThatFits:maxSize];
+    labelFrame =
+        CGRectMake(CGRectGetMidX(iconFrame) - labelSize.width / 2,
+                   CGRectGetMaxY(iconFrame) + self.contentVerticalMargin, labelSize.width,
+                   labelSize.height);
+  }
+  return CGRectStandardize(CGRectUnion(labelFrame, CGRectUnion(iconFrame, badgeFrame))).size;
+}
+
+- (CGSize)sizeThatFitsForHorizontalLayout:(CGSize)size {
+  CGSize maxSize = CGSizeMake(kDefaultUndefinedDimensionSize, kDefaultUndefinedDimensionSize);
+  CGSize iconSize = [self.iconImageView sizeThatFits:maxSize];
+  CGRect iconFrame = CGRectMake(0, 0, iconSize.width, iconSize.height);
+  CGSize badgeSize = [self.badge sizeThatFits:maxSize];
+  CGPoint badgeCenter = [self badgeCenterFromIconFrame:iconFrame isRTL:NO];
+  CGRect badgeFrame = CGRectMake(badgeCenter.x - badgeSize.width / 2,
+                                 badgeCenter.y - badgeSize.height / 2, badgeSize.width,
+                                 badgeSize.height);
+  CGSize labelSize = [self.label sizeThatFits:maxSize];
+  CGRect labelFrame = CGRectMake(CGRectGetMaxX(iconFrame) + self.contentHorizontalMargin,
+                                 CGRectGetMidY(iconFrame) - labelSize.height / 2,
+                                 labelSize.width, labelSize.height);
+  return CGRectStandardize(CGRectUnion(labelFrame, CGRectUnion(iconFrame, badgeFrame))).size;
+}
+
+- (void)layoutSubviews {
+  [super layoutSubviews];
+
+  [self.label sizeToFit];
+  [self.badge sizeToFit];
+  CGSize labelSize =
+  CGSizeMake(CGRectGetWidth(self.label.bounds), CGRectGetHeight(self.label.bounds));
+  CGFloat maxWidth = CGRectGetWidth(self.bounds);
+  self.label.frame = CGRectMake(0, 0, MIN(maxWidth, labelSize.width), labelSize.height);
+  self.inkView.maxRippleRadius =
+  (CGFloat)(MDCHypot(CGRectGetHeight(self.bounds), CGRectGetWidth(self.bounds)) / 2);
+  [self centerLayoutAnimated:NO];
 }
 
 - (void)calculateVerticalLayoutInBounds:(CGRect)contentBounds

@@ -185,17 +185,18 @@ static UIImage *fakeImage(void) {
   // Given
   MDCBottomNavigationItemView *itemView =
       [[MDCBottomNavigationItemView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+  itemView.image = fakeImage();
   itemView.title = @"A very long title that takes much space to fit.";
   itemView.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   itemView.titleBelowIcon = YES;
-  CGSize desiredSize = CGSizeMake(24, 24);
+  CGSize desiredSize = CGSizeMake(24, 8);
 
   // When
   CGSize fitSize = [itemView sizeThatFits:desiredSize];
 
   // Then
-  XCTAssertLessThanOrEqual(fitSize.width, desiredSize.width);
-  XCTAssertLessThanOrEqual(fitSize.height, desiredSize.height);
+  XCTAssertGreaterThanOrEqual(fitSize.width, desiredSize.width);
+  XCTAssertGreaterThanOrEqual(fitSize.height, desiredSize.height);
 }
 
 - (void)testSizeThatFitsLargerThanTooSmallBounds {
