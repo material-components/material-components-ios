@@ -301,7 +301,7 @@ static const CGFloat kContentHorizontalMargin = 12;
 
 #pragma mark - ContentInsets
 
-- (void)testContentInsetsVerticalLayoutLTR {
+- (void)testContentInsetsStackedLTR {
   // When
   // Shift DOWN and RIGHT
   self.itemView.titleBelowIcon = YES;
@@ -311,7 +311,7 @@ static const CGFloat kContentHorizontalMargin = 12;
   [self generateAndVerifySnapshot];
 }
 
-- (void)testContentInsetsVerticalLayoutRTL {
+- (void)testContentInsetsStackedRTL {
   // When
   // Shift DOWN and LEFT
   [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleEmpty];
@@ -322,7 +322,7 @@ static const CGFloat kContentHorizontalMargin = 12;
   [self generateAndVerifySnapshot];
 }
 
-- (void)testContentInsetsNoopVerticalLayoutLTR {
+- (void)testContentInsetsNoopStackedLTR {
   // When
   self.itemView.titleBelowIcon = YES;
   self.itemView.contentInsets = UIEdgeInsetsMake(kHeightTypical / 2, kWidthTypical / 2,
@@ -333,7 +333,7 @@ static const CGFloat kContentHorizontalMargin = 12;
 }
 
 
-- (void)testContentInsetsNoopVerticalLayoutRTL {
+- (void)testContentInsetsNoopStackedRTL {
   // When
   [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleEmpty];
   self.itemView.titleBelowIcon = YES;
@@ -344,7 +344,7 @@ static const CGFloat kContentHorizontalMargin = 12;
   [self generateAndVerifySnapshot];
 }
 
-- (void)testContentInsetsHorizontalLayoutLTR {
+- (void)testContentInsetsAdjacentLTR {
   // When
   // Shift UP and LEFT
   self.itemView.titleBelowIcon = NO;
@@ -354,7 +354,7 @@ static const CGFloat kContentHorizontalMargin = 12;
   [self generateAndVerifySnapshot];
 }
 
-- (void)testContentInsetsHorizontalLayoutRTL {
+- (void)testContentInsetsAdjacentRTL {
   // When
   // Shift UP and RIGHT
   [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleEmpty];
@@ -365,7 +365,7 @@ static const CGFloat kContentHorizontalMargin = 12;
   [self generateAndVerifySnapshot];
 }
 
-- (void)testContentInsetsNoopHorizontalLayoutLTR {
+- (void)testContentInsetsNoopAdjacentLTR {
   // When
   self.itemView.titleBelowIcon = NO;
   self.itemView.contentInsets = UIEdgeInsetsMake(kHeightTypical / 2, kWidthTypical / 2,
@@ -375,7 +375,7 @@ static const CGFloat kContentHorizontalMargin = 12;
   [self generateAndVerifySnapshot];
 }
 
-- (void)testContentInsetsNoopHorizontalLayoutRTL {
+- (void)testContentInsetsNoopAdjacentRTL {
   // When
   [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleEmpty];
   self.itemView.titleBelowIcon = NO;
