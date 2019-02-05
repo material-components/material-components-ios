@@ -118,8 +118,8 @@ static UIColor *RippleSelectedColor(void) {
 }
 
 - (void)setSelected:(BOOL)selected {
-  if (!self.selectionMode) {
-    // If selection mode is off we don't want to apply any visual or state changes for selection.
+  if (!self.allowsSelection) {
+    // If we disallow selection we don't want to apply any visual or state changes for selection.
     return;
   }
   NSLog(@"SELECTED: %d", selected);
@@ -156,7 +156,7 @@ static UIColor *RippleSelectedColor(void) {
     [self updateRippleColor];
     [self beginRippleTouchDownAtPoint:_lastTouch animated:YES completion:nil];
   } else {
-    if (!self.selectionMode && !self.selected && !self.dragged && !_tapWentOutsideOfBounds) {
+    if (!self.allowsSelection && !self.selected && !self.dragged && !_tapWentOutsideOfBounds) {
       // We dissolve the ripple when highlighted is NO, unless we are going into selection.
       [self updateRippleColor];
       [self beginRippleTouchUpAnimated:YES completion:nil];
@@ -185,10 +185,6 @@ static UIColor *RippleSelectedColor(void) {
     [self updateRippleColor];
     [self cancelAllRipplesAnimated:YES completion:nil];
   }
-}
-
-- (void)setSelectionMode:(BOOL)selectionMode {
-  _selectionMode = selectionMode;
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {

@@ -34,7 +34,7 @@ typedef NS_OPTIONS(NSInteger, MDCRippleState) {
 
 /**
  This BOOL is set to YES if the ripple is currently selected, or NO otherwise.
- It only has significance if selectionMode is activated.
+ It only has significance if allowsSelection is set to YES.
 
  Defaults to NO.
  */
@@ -56,11 +56,12 @@ typedef NS_OPTIONS(NSInteger, MDCRippleState) {
 @property(nonatomic, getter=isDragged) BOOL dragged;
 
 /**
- This BOOL is set to YES if the ripple is currently in the selection mode, or NO otherwise.
+ This BOOL is set to YES if the ripple allows selection, or NO otherwise.
 
  Defaults to NO.
  */
-@property(nonatomic) BOOL selectionMode;
+@property(nonatomic) BOOL allowsSelection;
+
 
 /**
  The current state of the ripple.

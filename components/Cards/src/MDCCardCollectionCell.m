@@ -211,7 +211,7 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 
 - (void)setSelectable:(BOOL)selectable {
   _selectable = selectable;
-  self.rippleView.selectionMode = selectable;
+  self.rippleView.allowsSelection = selectable;
 }
 
 - (UIBezierPath *)boundingPath {
