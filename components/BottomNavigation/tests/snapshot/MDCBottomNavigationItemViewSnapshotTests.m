@@ -299,4 +299,91 @@ static const CGFloat kContentHorizontalMargin = 12;
   [self generateAndVerifySnapshot];
 }
 
+#pragma mark - ContentInsets
+
+- (void)testContentInsetsVerticalLayoutLTR {
+  // When
+  // Shift DOWN and RIGHT
+  self.itemView.titleBelowIcon = YES;
+  self.itemView.contentInsets = UIEdgeInsetsMake(10, 5, -10, -5);
+  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testContentInsetsVerticalLayoutRTL {
+  // When
+  // Shift DOWN and LEFT
+  [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleEmpty];
+  self.itemView.titleBelowIcon = YES;
+  self.itemView.contentInsets = UIEdgeInsetsMake(10, 5, -10, -5);
+  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testContentInsetsNoopVerticalLayoutLTR {
+  // When
+  self.itemView.titleBelowIcon = YES;
+  self.itemView.contentInsets = UIEdgeInsetsMake(kHeightTypical / 2, kWidthTypical / 2,
+                                                 kHeightTypical / 2, kWidthTypical / 2);
+  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+
+  [self generateAndVerifySnapshot];
+}
+
+
+- (void)testContentInsetsNoopVerticalLayoutRTL {
+  // When
+  [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleEmpty];
+  self.itemView.titleBelowIcon = YES;
+  self.itemView.contentInsets = UIEdgeInsetsMake(kHeightTypical / 2, kWidthTypical / 2,
+                                                 kHeightTypical / 2, kWidthTypical / 2);
+  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testContentInsetsHorizontalLayoutLTR {
+  // When
+  // Shift UP and LEFT
+  self.itemView.titleBelowIcon = NO;
+  self.itemView.contentInsets = UIEdgeInsetsMake(-5, -10, 5, 10);
+  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testContentInsetsHorizontalLayoutRTL {
+  // When
+  // Shift UP and RIGHT
+  [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleEmpty];
+  self.itemView.titleBelowIcon = NO;
+  self.itemView.contentInsets = UIEdgeInsetsMake(-5, -10, 5, 10);
+  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testContentInsetsNoopHorizontalLayoutLTR {
+  // When
+  self.itemView.titleBelowIcon = NO;
+  self.itemView.contentInsets = UIEdgeInsetsMake(kHeightTypical / 2, kWidthTypical / 2,
+                                                 kHeightTypical / 2, kWidthTypical / 2);
+  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testContentInsetsNoopHorizontalLayoutRTL {
+  // When
+  [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleEmpty];
+  self.itemView.titleBelowIcon = NO;
+  self.itemView.contentInsets = UIEdgeInsetsMake(kHeightTypical / 2, kWidthTypical / 2,
+                                                 kHeightTypical / 2, kWidthTypical / 2);
+  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+
+  [self generateAndVerifySnapshot];
+}
+
 @end
