@@ -299,4 +299,48 @@ static const CGFloat kContentHorizontalMargin = 12;
   [self generateAndVerifySnapshot];
 }
 
+#pragma mark - ContentInsets
+
+- (void)testContentInsetsVerticalLayoutLTR {
+  // When
+  // Shift 10 points DOWN and 15 points RIGHT
+  self.itemView.titleBelowIcon = YES;
+  self.itemView.contentInsets = UIEdgeInsetsMake(10, 15, -10, -15);
+  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testContentInsetsVerticalLayoutRTL {
+  // When
+  // Shift 10 points DOWN and 15 points LEFT
+  [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleEmpty];
+  self.itemView.titleBelowIcon = YES;
+  self.itemView.contentInsets = UIEdgeInsetsMake(10, 15, -10, -15);
+  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testContentInsetsHorizontalLayoutLTR {
+  // When
+  // Shift 10 points UP and 8 points LEFT
+  self.itemView.titleBelowIcon = NO;
+  self.itemView.contentInsets = UIEdgeInsetsMake(-10, -8, 10, 8);
+  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testContentInsetsHorizontalLayoutRTL {
+  // When
+  // Shift 10 points UP and 8 points RIGHT
+  [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleEmpty];
+  self.itemView.titleBelowIcon = NO;
+  self.itemView.contentInsets = UIEdgeInsetsMake(-10, -8, 10, 8);
+  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+
+  [self generateAndVerifySnapshot];
+}
+
 @end

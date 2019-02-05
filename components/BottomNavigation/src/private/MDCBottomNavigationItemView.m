@@ -194,7 +194,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 - (void)calculateVerticalLayoutInBounds:(CGRect)contentBounds
                           forLabelFrame:(CGRect *)outLabelFrame
                      iconImageViewFrame:(CGRect *)outIconFrame {
-    CGRect contentBoundingRect =
+  CGRect contentBoundingRect =
       CGRectStandardize(UIEdgeInsetsInsetRect(contentBounds, self.contentInsets));
   CGSize iconImageViewSize = [self.iconImageView sizeThatFits:contentBoundingRect.size];
   CGSize labelSize = [self.label sizeThatFits:contentBoundingRect.size];
@@ -209,39 +209,34 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   }
   CGFloat centerY = CGRectGetMidY(contentBoundingRect);
   CGFloat centerX = CGRectGetMidX(contentBoundingRect);
-  CGPoint iconImageViewCenter = CGPointMake(centerX, centerY - totalContentHeight / 2 + iconHeight / 2);
+  CGPoint iconImageViewCenter =
+      CGPointMake(centerX, centerY - totalContentHeight / 2 + iconHeight / 2);
   CGPoint labelCenter = CGPointMake(centerX, centerY + totalContentHeight / 2 - labelHeight / 2);
   CGFloat availableContentWidth = CGRectGetWidth(contentBoundingRect);
   if (labelSize.width > availableContentWidth) {
     labelSize = CGSizeMake(availableContentWidth, labelSize.height);
   }
-  
+
   if (outLabelFrame != NULL) {
     *outLabelFrame =
-    CGRectMake(labelCenter.x - (labelSize.width / 2), labelCenter.y - (labelSize.height / 2),
-               labelSize.width, labelSize.height);
+        CGRectMake(labelCenter.x - (labelSize.width / 2), labelCenter.y - (labelSize.height / 2),
+                   labelSize.width, labelSize.height);
   }
   if (outIconFrame != NULL) {
     *outIconFrame = CGRectMake(iconImageViewCenter.x - (iconImageViewSize.width / 2),
                                iconImageViewCenter.y - (iconImageViewSize.height / 2),
                                iconImageViewSize.width, iconImageViewSize.height);
   }
-
 }
 
 - (void)calculateHorizontalLayoutInBounds:(CGRect)contentBounds
                             forLabelFrame:(CGRect *)outLabelFrame
                        iconImageViewFrame:(CGRect *)outIconFrame {
-  CGRect contentBoundingRect =
-      CGRectStandardize(UIEdgeInsetsInsetRect(contentBounds, self.contentInsets));
-  CGFloat centerY = CGRectGetMidY(contentBoundingRect);
-
+  CGRect contentBoundingRect = CGRectStandardize(contentBounds);
   CGSize iconImageViewSize = [self.iconImageView sizeThatFits:contentBoundingRect.size];
   CGSize labelSize = [self.label sizeThatFits:contentBoundingRect.size];
-  CGPoint iconImageViewCenter = CGPointZero;
 
-  CGFloat contentsWidth =
-      iconImageViewSize.width + labelSize.width + self.contentHorizontalMargin;
+  CGFloat contentsWidth = iconImageViewSize.width + labelSize.width + self.contentHorizontalMargin;
   CGFloat availableContentWidth = CGRectGetWidth(contentBoundingRect);
   if (contentsWidth > availableContentWidth) {
     contentsWidth = availableContentWidth;
@@ -251,22 +246,31 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   CGFloat contentPadding = (availableContentWidth - contentsWidth) / 2;
   availableContentWidth -= iconImageViewSize.width + self.contentHorizontalMargin;
   labelSize = CGSizeMake(MIN(labelSize.width, availableContentWidth), labelSize.height);
-  // Amount icon center is offset from the leading edge.
-  CGFloat iconCenterOffset = contentPadding + iconImageViewSize.width / 2;
-  CGFloat labelOffsetFromIcon =
-      iconImageViewSize.width / 2 + self.contentHorizontalMargin + labelSize.width / 2;
 
   BOOL isRTL =
       self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
-
   NSInteger rtlCoefficient = isRTL ? -1 : 1;
-  CGFloat layoutStartingPoint = isRTL ? CGRectGetMaxX(contentBoundingRect)
-                                      : CGRectGetMinX(contentBoundingRect);
+  UIEdgeInsets effectiveContentInsets =
+      isRTL ? UIEdgeInsetsMake(self.contentInsets.top, self.contentInsets.right,
+                               self.contentInsets.bottom, self.contentInsets.left)
+            : self.contentInsets;
+  CGRect positioningRect = UIEdgeInsetsInsetRect(contentBoundingRect, effectiveContentInsets);
+  CGPoint centerOffset =
+      CGPointMake(CGRectGetMidX(contentBoundingRect) - CGRectGetMidX(positioningRect),
+                  CGRectGetMidY(contentBoundingRect) - CGRectGetMidY(positioningRect));
 
-  iconImageViewCenter = CGPointMake(layoutStartingPoint + rtlCoefficient * iconCenterOffset,
-                                    centerY);
-  CGFloat labelCenterX = iconImageViewCenter.x + rtlCoefficient * labelOffsetFromIcon;
-  CGPoint labelCenter = CGPointMake(labelCenterX, centerY);
+  CGFloat layoutStartingPoint =
+      isRTL ? CGRectGetMaxX(contentBoundingRect) : CGRectGetMinX(contentBoundingRect);
+
+  CGFloat centerY = CGRectGetMidY(contentBoundingRect) + centerOffset.y;
+  // Amount icon center is offset from the leading edge.
+  CGFloat iconCenterOffset = contentPadding + (iconImageViewSize.width / 2);
+  CGPoint iconImageViewCenter = CGPointMake(
+      layoutStartingPoint + centerOffset.x + rtlCoefficient * iconCenterOffset, centerY);
+  CGFloat labelOffsetFromIcon =
+      iconImageViewSize.width / 2 + self.contentHorizontalMargin + labelSize.width / 2;
+  CGPoint labelCenter =
+      CGPointMake(iconImageViewCenter.x + rtlCoefficient * labelOffsetFromIcon, centerY);
 
   if (outLabelFrame != NULL) {
     *outLabelFrame =
@@ -285,13 +289,12 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
              iconImageViewFrame:(CGRect *)outIconFrame {
   if (self.titleBelowIcon) {
     return [self calculateVerticalLayoutInBounds:contentBounds
-                            forLabelFrame:outLabelFrame
-                       iconImageViewFrame:outIconFrame];
+                                   forLabelFrame:outLabelFrame
+                              iconImageViewFrame:outIconFrame];
   }
   return [self calculateHorizontalLayoutInBounds:contentBounds
                                    forLabelFrame:outLabelFrame
                               iconImageViewFrame:outIconFrame];
-
 }
 
 - (void)centerLayoutAnimated:(BOOL)animated {
