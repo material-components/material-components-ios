@@ -303,9 +303,9 @@ static const CGFloat kContentHorizontalMargin = 12;
 
 - (void)testContentInsetsVerticalLayoutLTR {
   // When
-  // Shift 20 points DOWN and 60 points RIGHT
+  // Shift DOWN and RIGHT
   self.itemView.titleBelowIcon = YES;
-  self.itemView.contentInsets = UIEdgeInsetsMake(20, 12, -20, -12);
+  self.itemView.contentInsets = UIEdgeInsetsMake(10, 5, -10, -5);
   self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
 
   [self generateAndVerifySnapshot];
@@ -313,10 +313,10 @@ static const CGFloat kContentHorizontalMargin = 12;
 
 - (void)testContentInsetsVerticalLayoutRTL {
   // When
-  // Shift 20 points DOWN and 60 points LEFT
+  // Shift DOWN and LEFT
   [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleEmpty];
   self.itemView.titleBelowIcon = YES;
-  self.itemView.contentInsets = UIEdgeInsetsMake(20, 12, -20, -12);
+  self.itemView.contentInsets = UIEdgeInsetsMake(10, 5, -10, -5);
   self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
 
   [self generateAndVerifySnapshot];
@@ -324,9 +324,9 @@ static const CGFloat kContentHorizontalMargin = 12;
 
 - (void)testContentInsetsHorizontalLayoutLTR {
   // When
-  // Shift 25 points UP and 30 points LEFT
+  // Shift UP and LEFT
   self.itemView.titleBelowIcon = NO;
-  self.itemView.contentInsets = UIEdgeInsetsMake(-25, -30, 25, 30);
+  self.itemView.contentInsets = UIEdgeInsetsMake(-5, -10, 5, 10);
   self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
 
   [self generateAndVerifySnapshot];
@@ -334,10 +334,10 @@ static const CGFloat kContentHorizontalMargin = 12;
 
 - (void)testContentInsetsHorizontalLayoutRTL {
   // When
-  // Shift 25 points UP and 30 points RIGHT
+  // Shift UP and RIGHT
   [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleEmpty];
   self.itemView.titleBelowIcon = NO;
-  self.itemView.contentInsets = UIEdgeInsetsMake(-25, -30, 25, 30);
+  self.itemView.contentInsets = UIEdgeInsetsMake(-5, -10, 5, 10);
   self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
 
   [self generateAndVerifySnapshot];

@@ -205,13 +205,11 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   BOOL isRTL =
       self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
   UIEdgeInsets effectiveContentInsets =
-      isRTL ? UIEdgeInsetsMake(self.contentInsets.top, self.contentInsets.right,
-                               self.contentInsets.bottom, self.contentInsets.left)
-            : self.contentInsets;
+      isRTL ? MDFInsetsFlippedHorizontally(self.contentInsets) : self.contentInsets;
   CGRect positioningRect = UIEdgeInsetsInsetRect(contentBoundingRect, effectiveContentInsets);
   CGPoint centerOffset =
-      CGPointMake(CGRectGetMidX(contentBoundingRect) - CGRectGetMidX(positioningRect),
-                  CGRectGetMidY(contentBoundingRect) - CGRectGetMidY(positioningRect));
+      CGPointMake(CGRectGetMidX(positioningRect) - CGRectGetMidX(contentBoundingRect),
+                  CGRectGetMidY(positioningRect) - CGRectGetMidY(contentBoundingRect));
   CGFloat centerY = CGRectGetMidY(contentBoundingRect) + centerOffset.y;
   CGFloat centerX = CGRectGetMidX(contentBoundingRect) + centerOffset.x;
   CGPoint iconImageViewCenter =
@@ -261,8 +259,8 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
             : self.contentInsets;
   CGRect positioningRect = UIEdgeInsetsInsetRect(contentBoundingRect, effectiveContentInsets);
   CGPoint centerOffset =
-      CGPointMake(CGRectGetMidX(contentBoundingRect) - CGRectGetMidX(positioningRect),
-                  CGRectGetMidY(contentBoundingRect) - CGRectGetMidY(positioningRect));
+      CGPointMake(CGRectGetMidX(positioningRect) - CGRectGetMidX(contentBoundingRect),
+                  CGRectGetMidY(positioningRect) - CGRectGetMidY(contentBoundingRect));
   CGFloat layoutStartingPoint =
       isRTL ? CGRectGetMaxX(contentBoundingRect) : CGRectGetMinX(contentBoundingRect);
 
