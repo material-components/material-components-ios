@@ -22,6 +22,9 @@
 #import "MaterialBottomNavigationStrings_table.h"
 #import "MaterialMath.h"
 
+// A number large enough to be larger than any reasonable screen dimension but small enough that
+// CGFloat doesn't lose precision.
+static const CGFloat kMaxSizeDimension = 1000000;
 static const CGFloat MDCBottomNavigationItemViewInkOpacity = (CGFloat)0.150;
 static const CGFloat MDCBottomNavigationItemViewTitleFontSize = 12;
 static const CGFloat kMDCBottomNavigationItemViewBadgeYOffset = 4;
@@ -151,6 +154,52 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
     _button.accessibilityValue = self.accessibilityValue;
     [self addSubview:_button];
   }
+}
+
+- (CGSize)sizeThatFits:(__unused CGSize)size {
+  if (self.titleBelowIcon) {
+    return [self sizeThatFitsForVerticalLayout];
+  } else {
+    return [self sizeThatFitsForHorizontalLayout];
+  }
+}
+
+- (CGSize)sizeThatFitsForVerticalLayout {
+  BOOL titleHidden =
+      self.titleVisibility == MDCBottomNavigationBarTitleVisibilityNever ||
+      (self.titleVisibility == MDCBottomNavigationBarTitleVisibilitySelected && !self.selected);
+  CGSize maxSize = CGSizeMake(kMaxSizeDimension, kMaxSizeDimension);
+  CGSize iconSize = [self.iconImageView sizeThatFits:maxSize];
+  CGRect iconFrame = CGRectMake(0, 0, iconSize.width, iconSize.height);
+  CGSize badgeSize = [self.badge sizeThatFits:maxSize];
+  CGPoint badgeCenter = [self badgeCenterFromIconFrame:iconFrame isRTL:NO];
+  CGRect badgeFrame =
+      CGRectMake(badgeCenter.x - badgeSize.width / 2, badgeCenter.y - badgeSize.height / 2,
+                 badgeSize.width, badgeSize.height);
+  CGRect labelFrame = CGRectZero;
+  if (!titleHidden) {
+    CGSize labelSize = [self.label sizeThatFits:maxSize];
+    labelFrame = CGRectMake(CGRectGetMidX(iconFrame) - labelSize.width / 2,
+                            CGRectGetMaxY(iconFrame) + self.contentVerticalMargin, labelSize.width,
+                            labelSize.height);
+  }
+  return CGRectStandardize(CGRectUnion(labelFrame, CGRectUnion(iconFrame, badgeFrame))).size;
+}
+
+- (CGSize)sizeThatFitsForHorizontalLayout {
+  CGSize maxSize = CGSizeMake(kMaxSizeDimension, kMaxSizeDimension);
+  CGSize iconSize = [self.iconImageView sizeThatFits:maxSize];
+  CGRect iconFrame = CGRectMake(0, 0, iconSize.width, iconSize.height);
+  CGSize badgeSize = [self.badge sizeThatFits:maxSize];
+  CGPoint badgeCenter = [self badgeCenterFromIconFrame:iconFrame isRTL:NO];
+  CGRect badgeFrame =
+      CGRectMake(badgeCenter.x - badgeSize.width / 2, badgeCenter.y - badgeSize.height / 2,
+                 badgeSize.width, badgeSize.height);
+  CGSize labelSize = [self.label sizeThatFits:maxSize];
+  CGRect labelFrame = CGRectMake(CGRectGetMaxX(iconFrame) + self.contentHorizontalMargin,
+                                 CGRectGetMidY(iconFrame) - labelSize.height / 2, labelSize.width,
+                                 labelSize.height);
+  return CGRectStandardize(CGRectUnion(labelFrame, CGRectUnion(iconFrame, badgeFrame))).size;
 }
 
 - (void)layoutSubviews {
