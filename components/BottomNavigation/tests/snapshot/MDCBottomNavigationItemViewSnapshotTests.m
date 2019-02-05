@@ -303,9 +303,9 @@ static const CGFloat kContentHorizontalMargin = 12;
 
 - (void)testContentInsetsVerticalLayoutLTR {
   // When
-  // Shift 10 points DOWN and 15 points RIGHT
+  // Shift 20 points DOWN and 60 points RIGHT
   self.itemView.titleBelowIcon = YES;
-  self.itemView.contentInsets = UIEdgeInsetsMake(10, 15, -10, -15);
+  self.itemView.contentInsets = UIEdgeInsetsMake(20, 60, -20, -60);
   self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
 
   [self generateAndVerifySnapshot];
@@ -313,10 +313,10 @@ static const CGFloat kContentHorizontalMargin = 12;
 
 - (void)testContentInsetsVerticalLayoutRTL {
   // When
-  // Shift 10 points DOWN and 15 points LEFT
+  // Shift 20 points DOWN and 60 points LEFT
   [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleEmpty];
   self.itemView.titleBelowIcon = YES;
-  self.itemView.contentInsets = UIEdgeInsetsMake(10, 15, -10, -15);
+  self.itemView.contentInsets = UIEdgeInsetsMake(20, 60, -20, -60);
   self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
 
   [self generateAndVerifySnapshot];
@@ -324,9 +324,9 @@ static const CGFloat kContentHorizontalMargin = 12;
 
 - (void)testContentInsetsHorizontalLayoutLTR {
   // When
-  // Shift 10 points UP and 8 points LEFT
+  // Shift 25 points UP and 30 points LEFT
   self.itemView.titleBelowIcon = NO;
-  self.itemView.contentInsets = UIEdgeInsetsMake(-10, -8, 10, 8);
+  self.itemView.contentInsets = UIEdgeInsetsMake(-25, -30, 25, 30);
   self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
 
   [self generateAndVerifySnapshot];
@@ -334,10 +334,10 @@ static const CGFloat kContentHorizontalMargin = 12;
 
 - (void)testContentInsetsHorizontalLayoutRTL {
   // When
-  // Shift 10 points UP and 8 points RIGHT
+  // Shift 25 points UP and 30 points RIGHT
   [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleEmpty];
   self.itemView.titleBelowIcon = NO;
-  self.itemView.contentInsets = UIEdgeInsetsMake(-10, -8, 10, 8);
+  self.itemView.contentInsets = UIEdgeInsetsMake(-25, -30, 25, 30);
   self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
 
   [self generateAndVerifySnapshot];
