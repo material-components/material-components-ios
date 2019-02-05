@@ -20,43 +20,74 @@
 #import "MDCContainerStyleFilled.h"
 #import "MDCContainerStyleOutlined.h"
 
-//#import "MDCSemanticColorScheme.h"
-
 @implementation MDCSimpleTextField (MaterialTheming)
 
 - (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
+  [self applyTypographySchemeWith:containerScheme];
+  [self applyColorSchemeWith:containerScheme];
+}
+
+- (void)applyTypographySchemeWith:(id<MDCContainerScheming>)containerScheme {
   id<MDCTypographyScheming> mdcTypographyScheming = containerScheme.typographyScheme;
   if (!mdcTypographyScheming) {
     mdcTypographyScheming =
-        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+    [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
   }
-  [self applyThemeWithMDCTypographyScheming:mdcTypographyScheming];
+  [self applyMDCTypographyScheming:mdcTypographyScheming];
+}
 
+- (void)applyColorSchemeWith:(id<MDCContainerScheming>)containerScheme {
   id<MDCColorScheming> mdcColorScheme = containerScheme.colorScheme;
   if (!mdcColorScheme) {
     mdcColorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   }
-  [self applyThemeWithMDCColorScheming:mdcColorScheme];
+  [self applyMDCColorScheming:mdcColorScheme];
 }
 
-- (void)applyThemeWithMDCColorScheming:(id<MDCColorScheming>)mdcColorScheming {
-  // TODO: Implement
+- (void)applyMDCColorScheming:(id<MDCColorScheming>)mdcColorScheming {
+  MDCContainedInputViewColorScheme *normalColorScheme =
+      [self.containerStyle defaultColorSchemeForState:MDCContainedInputViewStateNormal];
+  [self setContainedInputViewColorScheming:normalColorScheme
+                                  forState:MDCContainedInputViewStateNormal];
+
+  MDCContainedInputViewColorScheme *focusedColorScheme =
+      [self.containerStyle defaultColorSchemeForState:MDCContainedInputViewStateFocused];
+  [self setContainedInputViewColorScheming:focusedColorScheme
+                                  forState:MDCContainedInputViewStateFocused];
+
+  MDCContainedInputViewColorScheme *activatedColorScheme =
+      [self.containerStyle defaultColorSchemeForState:MDCContainedInputViewStateActivated];
+  [self setContainedInputViewColorScheming:activatedColorScheme
+                                  forState:MDCContainedInputViewStateActivated];
+
+  MDCContainedInputViewColorScheme *erroredColorScheme =
+      [self.containerStyle defaultColorSchemeForState:MDCContainedInputViewStateErrored];
+  [self setContainedInputViewColorScheming:erroredColorScheme
+                                  forState:MDCContainedInputViewStateErrored];
+
+  MDCContainedInputViewColorScheme *disabledColorScheme =
+      [self.containerStyle defaultColorSchemeForState:MDCContainedInputViewStateDisabled];
+  [self setContainedInputViewColorScheming:disabledColorScheme
+                                  forState:MDCContainedInputViewStateDisabled];
+
+  self.tintColor = mdcColorScheming.primaryColor;
 }
 
-- (void)applyThemeWithMDCTypographyScheming:(id<MDCTypographyScheming>)mdcTypographyScheming {
+- (void)applyMDCTypographyScheming:(id<MDCTypographyScheming>)mdcTypographyScheming {
   self.font = mdcTypographyScheming.subtitle1;
   self.leadingUnderlineLabel.font = mdcTypographyScheming.caption;
   self.trailingUnderlineLabel.font = mdcTypographyScheming.caption;
 }
 
-- (void)applyOutlinedThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme {
+- (void)applyOutlinedThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
   MDCContainerStyleOutlined *outlinedStyle = [[MDCContainerStyleOutlined alloc] init];
   self.containerStyle = outlinedStyle;
-  // ^ if you have side effects in this setter then you can just access them and modify them
+
+  [self applyTypographySchemeWith:containerScheme];
 
   id<MDCColorScheming> mdcColorScheming =
-      scheme.colorScheme ?: [[MDCSemanticColorScheme alloc] init];
+      containerScheme.colorScheme ?: [[MDCSemanticColorScheme alloc] init];
 
   MDCContainedInputViewColorSchemeOutlined *normalColorScheme =
       [self outlinedColorSchemeWithMDCColorScheming:mdcColorScheming
@@ -91,13 +122,14 @@
   self.tintColor = mdcColorScheming.primaryColor;
 }
 
-- (void)applyFilledThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme {
+- (void)applyFilledThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
   MDCContainerStyleFilled *filledStyle = [[MDCContainerStyleFilled alloc] init];
   self.containerStyle = filledStyle;
-  // ^ if you have side effects in this setter then you can just access them and modify them
+
+  [self applyTypographySchemeWith:containerScheme];
 
   id<MDCColorScheming> mdcColorScheming =
-      scheme.colorScheme ?: [[MDCSemanticColorScheme alloc] init];
+      containerScheme.colorScheme ?: [[MDCSemanticColorScheme alloc] init];
 
   MDCContainedInputViewColorSchemeFilled *normalColorScheme =
       [self filledColorSchemeWithMDCColorScheming:mdcColorScheming

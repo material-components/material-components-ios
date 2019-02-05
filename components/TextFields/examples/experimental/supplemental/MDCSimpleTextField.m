@@ -197,7 +197,6 @@ static const CGFloat kFloatingPlaceholderAnimationDuration = (CGFloat)0.15;
 #pragma mark UIView Overrides
 
 - (void)layoutSubviews {
-  NSLog(@"layoutSubviews");
   [self preLayoutSubviews];
   [super layoutSubviews];
   [self postLayoutSubviews];
@@ -256,7 +255,6 @@ static const CGFloat kFloatingPlaceholderAnimationDuration = (CGFloat)0.15;
 }
 
 - (MDCSimpleTextFieldLayout *)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize {
-  NSLog(@"calculate layout");
   UIFont *effectiveFont = [self determineEffectiveFont];
   UIFont *floatingFont = [self floatingPlaceholderFontWithFont:effectiveFont
                                                 containerStyle:self.containerStyle];
@@ -450,7 +448,7 @@ static const CGFloat kFloatingPlaceholderAnimationDuration = (CGFloat)0.15;
     return;
   }
   _layoutDirection = layoutDirection;
-  //  [self setNeedsLayout];
+    [self setNeedsLayout];
 }
 
 - (void)setCanPlaceholderFloat:(BOOL)canPlaceholderFloat {
@@ -458,7 +456,7 @@ static const CGFloat kFloatingPlaceholderAnimationDuration = (CGFloat)0.15;
     return;
   }
   _canPlaceholderFloat = canPlaceholderFloat;
-  //  [self setNeedsLayout];
+    [self setNeedsLayout];
 }
 
 - (void)setContainerStyle:(id<MDCContainedInputViewStyle>)containerStyle {
@@ -775,7 +773,6 @@ static const CGFloat kFloatingPlaceholderAnimationDuration = (CGFloat)0.15;
         weakSelf.placeholderLabel.transform = transform;
       }
       completion:^(BOOL finished) {
-        NSLog(@"death");
         weakSelf.placeholderLabel.transform = CGAffineTransformIdentity;
         weakSelf.placeholderLabel.frame = targetFrame;
         weakSelf.placeholderLabel.font = targetFont;

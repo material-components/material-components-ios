@@ -55,7 +55,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   [self addObservers];
-  self.view.backgroundColor = [UIColor yellowColor];
+  self.view.backgroundColor = [UIColor whiteColor];
   [self addSubviews];
 }
 
