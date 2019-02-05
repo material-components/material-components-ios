@@ -155,22 +155,15 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   }
 }
 
-- (CGSize)sizeThatFits:(CGSize)size {
-  // If we're given a zero or negative value, return the content size with any margins
-  if (size.width < 0.0001) {
-    size.width = kDefaultUndefinedDimensionSize;
-  }
-  if (size.height > 0.0001) {
-    size.height = kDefaultUndefinedDimensionSize;
-  }
+- (CGSize)sizeThatFits:(__unused CGSize)size {
   if (self.titleBelowIcon) {
-    return [self sizeThatFitsForVerticalLayout:size];
+    return [self sizeThatFitsForVerticalLayout];
   } else {
-    return [self sizeThatFitsForHorizontalLayout:size];
+    return [self sizeThatFitsForHorizontalLayout];
   }
 }
 
-- (CGSize)sizeThatFitsForVerticalLayout:(CGSize)size {
+- (CGSize)sizeThatFitsForVerticalLayout {
   BOOL titleHidden =
       self.titleVisibility == MDCBottomNavigationBarTitleVisibilityNever ||
       (self.titleVisibility == MDCBottomNavigationBarTitleVisibilitySelected && !self.selected);
@@ -192,7 +185,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   return CGRectStandardize(CGRectUnion(labelFrame, CGRectUnion(iconFrame, badgeFrame))).size;
 }
 
-- (CGSize)sizeThatFitsForHorizontalLayout:(CGSize)size {
+- (CGSize)sizeThatFitsForHorizontalLayout {
   CGSize maxSize = CGSizeMake(kDefaultUndefinedDimensionSize, kDefaultUndefinedDimensionSize);
   CGSize iconSize = [self.iconImageView sizeThatFits:maxSize];
   CGRect iconFrame = CGRectMake(0, 0, iconSize.width, iconSize.height);
