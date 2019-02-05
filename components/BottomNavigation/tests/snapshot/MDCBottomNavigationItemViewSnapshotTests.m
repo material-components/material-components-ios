@@ -305,7 +305,7 @@ static const CGFloat kContentHorizontalMargin = 12;
   // When
   // Shift 20 points DOWN and 60 points RIGHT
   self.itemView.titleBelowIcon = YES;
-  self.itemView.contentInsets = UIEdgeInsetsMake(20, 60, -20, -60);
+  self.itemView.contentInsets = UIEdgeInsetsMake(20, 12, -20, -12);
   self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
 
   [self generateAndVerifySnapshot];
@@ -316,7 +316,7 @@ static const CGFloat kContentHorizontalMargin = 12;
   // Shift 20 points DOWN and 60 points LEFT
   [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleEmpty];
   self.itemView.titleBelowIcon = YES;
-  self.itemView.contentInsets = UIEdgeInsetsMake(20, 60, -20, -60);
+  self.itemView.contentInsets = UIEdgeInsetsMake(20, 12, -20, -12);
   self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
 
   [self generateAndVerifySnapshot];
