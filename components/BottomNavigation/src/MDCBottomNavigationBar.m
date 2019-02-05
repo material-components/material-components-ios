@@ -424,7 +424,10 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
     itemView.accessibilityLabel = item.accessibilityLabel;
     itemView.accessibilityHint = item.accessibilityHint;
     itemView.isAccessibilityElement = item.isAccessibilityElement;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     itemView.contentInsets = self.itemsContentInsets;
+#pragma clang diagnostic pop
     itemView.contentVerticalMargin = self.itemsContentVerticalMargin;
     itemView.contentHorizontalMargin = self.itemsContentHorizontalMargin;
     MDCInkTouchController *controller = [[MDCInkTouchController alloc] initWithView:itemView];

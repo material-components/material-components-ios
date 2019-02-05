@@ -23,7 +23,7 @@
 
 // A number large enough to be larger than any reasonable screen dimension but small enough that
 // CGFloat doesn't lose precision.
-static const CGFloat kDefaultUndefinedDimensionSize = 1000000;
+static const CGFloat kMaxSizeDimension = 1000000;
 static const CGFloat MDCBottomNavigationItemViewInkOpacity = (CGFloat)0.150;
 static const CGFloat MDCBottomNavigationItemViewTitleFontSize = 12;
 static const CGFloat kMDCBottomNavigationItemViewBadgeYOffset = 4;
@@ -167,7 +167,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   BOOL titleHidden =
       self.titleVisibility == MDCBottomNavigationBarTitleVisibilityNever ||
       (self.titleVisibility == MDCBottomNavigationBarTitleVisibilitySelected && !self.selected);
-  CGSize maxSize = CGSizeMake(kDefaultUndefinedDimensionSize, kDefaultUndefinedDimensionSize);
+  CGSize maxSize = CGSizeMake(kMaxSizeDimension, kMaxSizeDimension);
   CGSize iconSize = [self.iconImageView sizeThatFits:maxSize];
   CGRect iconFrame = CGRectMake(0, 0, iconSize.width, iconSize.height);
   CGSize badgeSize = [self.badge sizeThatFits:maxSize];
@@ -186,7 +186,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 }
 
 - (CGSize)sizeThatFitsForHorizontalLayout {
-  CGSize maxSize = CGSizeMake(kDefaultUndefinedDimensionSize, kDefaultUndefinedDimensionSize);
+  CGSize maxSize = CGSizeMake(kMaxSizeDimension, kMaxSizeDimension);
   CGSize iconSize = [self.iconImageView sizeThatFits:maxSize];
   CGRect iconFrame = CGRectMake(0, 0, iconSize.width, iconSize.height);
   CGSize badgeSize = [self.badge sizeThatFits:maxSize];
