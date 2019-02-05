@@ -40,6 +40,7 @@
 
 - (void)applyThemeWithMDCColorScheming:(id<MDCColorScheming>)mdcColorScheming {
   //TODO: Implement
+  
 }
 
 - (void)applyThemeWithMDCTypographyScheming:(id<MDCTypographyScheming>)mdcTypographyScheming {
@@ -77,6 +78,8 @@
   [self outlinedColorSchemeWithMDCColorScheming:mdcColorScheming
                                  containedInputViewState:MDCContainedInputViewStateDisabled];
   [self setContainedInputViewColorScheming:disabledColorScheme forState:MDCContainedInputViewStateDisabled];
+  
+  self.tintColor = mdcColorScheming.primaryColor;
 }
 
 
@@ -109,6 +112,8 @@
   [self filledColorSchemeWithMDCColorScheming:mdcColorScheming
                                  containedInputViewState:MDCContainedInputViewStateDisabled];
   [self setContainedInputViewColorScheming:disabledColorScheme forState:MDCContainedInputViewStateDisabled];
+
+  self.tintColor = mdcColorScheming.primaryColor;
 }
 
 - (MDCContainedInputViewColorSchemeOutlined *)

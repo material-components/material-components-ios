@@ -1,4 +1,4 @@
-// Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2019-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,9 +13,6 @@
 // limitations under the License.
 
 #import "MDCContainedInputView.h"
-
-//#import <MDFInternationalization/MDFInternationalization.h>
-//#import <MaterialComponents/MDCMath.h>
 
 #import "MDCContainerStylePathDrawingUtils.h"
 
@@ -195,27 +192,6 @@ isFloatingPlaceholder:(BOOL)isFloatingPlaceholder
   return defaultLineWidth;
 }
 
-//-(CGFloat)spaceBetweenTopAndFloatingPlaceholder {
-//
-//  [containerStyle spaceBetweenTopAndFloatingPlaceholder];
-//
-//  CGFloat filledPlaceholderTopPaddingScaleHeuristic = ((CGFloat)50.0 / (CGFloat)70.0);
-//  CGFloat floatingPlaceholderMinY = 0;
-//
-//  if ([containerStyle isMemberOfClass:[MDCContainerStyleFilled class]]) {
-//    floatingPlaceholderMinY =
-//    filledPlaceholderTopPaddingScaleHeuristic * floatingPlaceholderHeight;
-//  } else if ([containerStyle isMemberOfClass:[MDCContainerStyleOutlined class]]) {
-//    floatingPlaceholderMinY = (CGFloat)0 - ((CGFloat)0.5 * floatingPlaceholderHeight);
-//  } else {
-//
-//  }
-//  return floatingPlaceholderMinY;
-//
-//
-//
-//}
-
 - (CGFloat)floatingPlaceholderFontSizeScaleFactor {
   return ((CGFloat)41 / (CGFloat)55);
 }
@@ -230,12 +206,8 @@ isFloatingPlaceholder:(BOOL)isFloatingPlaceholder
   return floatingPlaceholderMinY + floatingPlaceholderHeight + outlinedTextFieldSpaceHeuristic;
 }
 
-
-// rename this property to primary horizontal content divider?
--(CGFloat)topRowBottomRowDividerYWithTopRowSubviewMaxY:(CGFloat)topRowSubviewMaxY
-                                  topRowSubviewCenterY:(CGFloat)topRowSubviewCenterY {
-  return topRowSubviewCenterY * 2;
+- (CGFloat)textAreaTopPaddingWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY textAreaHeight:(CGFloat)textAreaHeight {
+  return [self normalTextAreaTopPaddingWithTextAreaHeight:textAreaHeight];
 }
-
 
 @end

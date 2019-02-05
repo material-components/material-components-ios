@@ -34,7 +34,6 @@
 @property(strong, nonatomic) MDCButton *toggleErrorButton;
 @property(strong, nonatomic) MDCSimpleTextField *filledTextField;
 @property(strong, nonatomic) MDCSimpleTextField *outlinedTextField;
-@property(strong, nonatomic) UITextField *uiTextField;
 
 @property(nonatomic, assign) BOOL isErrored;
 
@@ -56,8 +55,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   [self addObservers];
-  self.view.backgroundColor = [UIColor whiteColor];
-  self.containerScheme = [[MDCContainerScheme alloc] init];
+  self.view.backgroundColor = [UIColor yellowColor];
   [self addSubviews];
 }
 
@@ -90,7 +88,6 @@
   [self addToggleErrorButton];
   [self addFilledTextField];
   [self addOutlinedTextField];
-  [self addUiTextField];
 }
 
 - (void)layoutScrollView {
@@ -138,7 +135,7 @@
       CGRectMake(filledTextFieldMinX, filledTextFieldMinY, filledTextFieldSize.width,
                  filledTextFieldSize.height);
   self.filledTextField.frame = filledTextFieldButtonFrame;
-  [self.filledTextField setNeedsLayout];
+//  [self.filledTextField setNeedsLayout];
 
   CGFloat outlinedTextFieldMinX = padding;
   CGFloat outlinedTextFieldMinY = filledTextFieldMinY + filledTextFieldSize.height + padding;
@@ -147,13 +144,8 @@
       CGRectMake(outlinedTextFieldMinX, outlinedTextFieldMinY, outlinedTextFieldSize.width,
                  outlinedTextFieldSize.height);
   self.outlinedTextField.frame = outlinedTextFieldFrame;
-  [self.outlinedTextField setNeedsLayout];
+//  [self.outlinedTextField setNeedsLayout];
 
-  CGFloat uiTextFieldMinX = padding;
-  CGFloat uiTextFieldMinY = outlinedTextFieldMinY + outlinedTextFieldSize.height + padding;
-  CGRect uiTextFieldFrame = CGRectMake(uiTextFieldMinX, uiTextFieldMinY, textFieldWidth,
-                                       CGRectGetHeight(self.uiTextField.frame));
-  self.uiTextField.frame = uiTextFieldFrame;
 }
 
 - (void)updateScrollViewContentSize {
@@ -218,14 +210,6 @@
   [self.scrollView addSubview:self.outlinedTextField];
 }
 
-- (void)addUiTextField {
-  self.uiTextField = [[UITextField alloc] init];
-  self.uiTextField.borderStyle = UITextBorderStyleRoundedRect;
-  self.uiTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-
-  [self.scrollView addSubview:self.uiTextField];
-}
-
 #pragma mark Private
 
 - (void)updateToggleButtonTheme {
@@ -274,7 +258,6 @@
 - (void)resignFirstResponderButtonTapped:(UIButton *)button {
   [self.filledTextField resignFirstResponder];
   [self.outlinedTextField resignFirstResponder];
-  [self.uiTextField resignFirstResponder];
 }
 
 - (void)toggleErrorButtonTapped:(UIButton *)button {

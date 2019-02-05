@@ -1,4 +1,4 @@
-// Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2019-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,11 +19,11 @@
  A set of Contained Input View states outlined in the Material guidelines. These states overlap and extend UIControlState.
  */
 typedef NS_OPTIONS(NSInteger, MDCContainedInputViewState) {
-  MDCContainedInputViewStateNormal = 1 << 0, // bits: 0001
-  MDCContainedInputViewStateFocused = 1 << 1, // bits: 0010
-  MDCContainedInputViewStateActivated = 1 << 2, // bits: 0011
-  MDCContainedInputViewStateErrored = 1 << 3, // bits: 0100
-  MDCContainedInputViewStateDisabled = 1 << 4, // bits: 0101
+  MDCContainedInputViewStateNormal = 1 << 0,
+  MDCContainedInputViewStateFocused = 1 << 1,
+  MDCContainedInputViewStateActivated = 1 << 2,
+  MDCContainedInputViewStateErrored = 1 << 3,
+  MDCContainedInputViewStateDisabled = 1 << 4,
 };
 
 /**
@@ -68,7 +68,6 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewPlaceholderState) {
   MDCContainedInputViewPlaceholderStateNormal,
 };
 
-
 @protocol MDCContainedInputViewStyle;
 
 @protocol MDCContainedInputView <NSObject>
@@ -95,6 +94,7 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewPlaceholderState) {
  The @c trailingUnderlineLabel can be used to display helper or error text.
  */
 @property(strong, nonatomic, readonly, nonnull) UILabel *trailingUnderlineLabel;
+
 /**
  This property is used to determine how much horizontal space to allot for each of the two underline
  labels.
@@ -140,30 +140,12 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewPlaceholderState) {
 @end
 
 @protocol MDCContainedInputViewStyleDensityInforming <NSObject>
-//@optional
-
-- (CGFloat)spaceBetweenTopAndFloatingPlaceholderWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight;
-- (CGFloat)spaceBetweenTopAndTextAreaWithoutFloatingPlaceholderWithTextAreaHeight:(CGFloat)textAreaHeight;
-- (CGFloat)spaceBetweenFloatingPlaceholderAndTextAreaWithFloatingPlaceholderMaxY:(CGFloat)textAreaHeight;
-- (CGFloat)spaceBetweenTextAreaAndBottomWithoutFloatingPlaceholder:(CGFloat)textAreaHeight;
-
-//- (CGFloat)floatingPlaceholderMinYWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight;
-//- (CGFloat)textRectMinYNormalWithTextHeight:(CGFloat)textHeight;
-//- (CGFloat)textRectMinYFloatingPlaceholderWithTextHeight:(CGFloat)textHeight
-//                                 floatingPlaceholderMinY:(CGFloat)floatingPlaceholderMinY
-//                                 floatingPlaceholderMinY:(CGFloat)floatingPlaceholderMinY
-//;
-//
-//
-//- (CGFloat)textAreaNormalMinYWithTextHeight:(CGFloat)textHeight;
-//- (CGFloat)textAreaFloatingPlaceholderMinYWithTextHeight:(CGFloat)textHeight;
-//- (CGFloat)textAreaFloatingPlaceholderMinYWithFont:(UIFont *)font;
-//
-//- (CGFloat)spaceBetweenFloatingPlaceholderAndTextAreaWithFloatingPlaceholderMinY:(CGFloat)floatingPlaceholderMinY
-//                                                       floatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight;
-//- (CGFloat)topRowBottomRowDividerYWithTopRowSubviewMaxY:(CGFloat)topRowSubviewMaxY
-//                                   topRowSubviewCenterY:(CGFloat)topRowSubviewCenterY;
-//- (CGFloat)floatingPlaceholderFontSizeScaleFactor;
+- (CGFloat)floatingPlaceholderMinYWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight;
+- (CGFloat)normalTextAreaTopPaddingWithTextAreaHeight:(CGFloat)textAreaHeight;
+- (CGFloat)normalTextAreaBottomPaddingWithTextAreaHeight:(CGFloat)textAreaHeight;
+- (CGFloat)textAreaTopPaddingWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY
+                                          textAreaHeight:(CGFloat)textAreaHeight;
+- (CGFloat)floatingPlaceholderFontSizeScaleFactor;
 @end
 
 @interface MDCContainerStyleBase : NSObject <MDCContainedInputViewStyle, MDCContainedInputViewStyleDensityInforming>

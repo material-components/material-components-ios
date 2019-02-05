@@ -1,4 +1,4 @@
-// Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2019-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -84,16 +84,30 @@
 
 - (void)removeStyleFrom:(id<MDCContainedInputView>)containedInputView { }
 
-- (CGFloat)spaceBetweenTopAndFloatingPlaceholder {
+- (CGFloat)floatingPlaceholderMinYWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight {
   return 10;
 }
 
-- (CGFloat)spaceBetweenFloatingPlaceholderAndTextArea {
-  return 10;
+- (CGFloat)textAreaTopPaddingWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY
+                                          textAreaHeight:(CGFloat)textAreaHeight {
+  return floatingPlaceholderMaxY + 10;
 }
 
-- (CGFloat)spaceBetweenTextAreaAndTopRowBottomRowDivider {
-  return 10;
+- (CGFloat)normalTextAreaTopPaddingWithTextAreaHeight:(CGFloat)textAreaHeight {
+  return [self verticalPaddingWithTextAreaHeight:textAreaHeight];
+}
+
+- (CGFloat)normalTextAreaBottomPaddingWithTextAreaHeight:(CGFloat)textAreaHeight {
+  return [self verticalPaddingWithTextAreaHeight:textAreaHeight];
+}
+
+-(CGFloat)floatingPlaceholderFontSizeScaleFactor {
+  return (CGFloat)0.33;
+}
+
+- (CGFloat)verticalPaddingWithTextAreaHeight:(CGFloat)textAreaHeight {
+
+  return (((CGFloat)textAreaHeight * (CGFloat)3) * (CGFloat)(0.5)) - ((CGFloat)textAreaHeight * (CGFloat)0.5);
 }
 
 @end

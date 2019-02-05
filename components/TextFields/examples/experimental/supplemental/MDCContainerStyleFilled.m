@@ -1,4 +1,4 @@
-// Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2019-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,8 +19,6 @@
 #import "MDCContainerStylePathDrawingUtils.h"
 
 static const CGFloat kFilledContainerStyleTopCornerRadius = (CGFloat)4.0;
-static const CGFloat kTopRowBottomRowDividerVerticalPadding = (CGFloat)9.0;
-
 
 @implementation MDCContainedInputViewColorSchemeFilled
 @end
@@ -49,9 +47,11 @@ static const CGFloat kTopRowBottomRowDividerVerticalPadding = (CGFloat)9.0;
 
 - (id<MDCContainedInputViewColorScheming>)defaultColorSchemeForState:(MDCContainedInputViewState)state {
   MDCContainedInputViewColorSchemeFilled *colorScheme = [[MDCContainedInputViewColorSchemeFilled alloc] init];
-  UIColor *filledSublayerUnderlineFillColor = [[UIColor blackColor] colorWithAlphaComponent:0.1];
-  UIColor *filledSublayerFillColor =
-      [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.15];
+  UIColor *filledSublayerUnderlineFillColor = [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.06];
+  UIColor *filledSublayerFillColor =[UIColor colorWithRed:(0xDD/256) green:(0xDD/256) blue:(0xDD/256) alpha:1];
+  
+  
+//      [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.15];
   
   switch (state) {
     case MDCContainedInputViewStateNormal:
@@ -230,34 +230,11 @@ static const CGFloat kTopRowBottomRowDividerVerticalPadding = (CGFloat)9.0;
   return underlineThickness;
 }
 
-//-(CGFloat)spaceBetweenTopAndFloatingPlaceholder {
-//
-//  [containerStyle spaceBetweenTopAndFloatingPlaceholder];
-//
-//  CGFloat filledPlaceholderTopPaddingScaleHeuristic = ((CGFloat)50.0 / (CGFloat)70.0);
-//  CGFloat floatingPlaceholderMinY = 0;
-//
-//  if ([containerStyle isMemberOfClass:[MDCContainerStyleFilled class]]) {
-//    floatingPlaceholderMinY =
-//    filledPlaceholderTopPaddingScaleHeuristic * floatingPlaceholderHeight;
-//  } else if ([containerStyle isMemberOfClass:[MDCContainerStyleOutlined class]]) {
-//    floatingPlaceholderMinY = (CGFloat)0 - ((CGFloat)0.5 * floatingPlaceholderHeight);
-//  } else {
-//
-//  }
-//  return floatingPlaceholderMinY;
-//}
+#pragma mark MDCContainedInputViewStyleDensityInforming
 
 - (CGFloat)floatingPlaceholderFontSizeScaleFactor {
   return ((CGFloat)53 / (CGFloat)71);
 }
-
-- (CGFloat)topRowBottomRowDividerYWithTopRowSubviewMaxY:(CGFloat)topRowSubviewMaxY
-                                   topRowSubviewCenterY:(CGFloat)topRowSubviewCenterY {
-  return topRowSubviewMaxY + kTopRowBottomRowDividerVerticalPadding;
-}
-
-#pragma mark MDCContainedInputViewStyleDensityInforming
 
 -(CGFloat)spaceBetweenFloatingPlaceholderAndTextAreaWithFloatingPlaceholderMinY:(CGFloat)floatingPlaceholderMinY
                                                       floatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight {
@@ -269,9 +246,8 @@ static const CGFloat kTopRowBottomRowDividerVerticalPadding = (CGFloat)9.0;
   return filledPlaceholderTopPaddingScaleHeuristic * floatingPlaceholderHeight;
 }
 
-//- (CGFloat)topRowBottomRowDividerYWithTopRowSubviewMaxY:(CGFloat)topRowSubviewMaxY
-//                                   topRowSubviewCenterY:(CGFloat)topRowSubviewCenterY {
-//  return topRowSubviewMaxY + kTopRowBottomRowDividerVerticalPadding;
-//}
+- (CGFloat)textAreaTopPaddingWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY textAreaHeight:(CGFloat)textAreaHeight {
+  return floatingPlaceholderMaxY + 7;
+}
 
 @end

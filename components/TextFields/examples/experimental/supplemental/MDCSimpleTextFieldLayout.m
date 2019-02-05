@@ -163,13 +163,13 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
   CGFloat textRectHeight = [self textHeightWithFont:font];
 
   // TODO: Defer to densityInformer for value below
-  CGFloat textRectCenterY = (textRectHeight * 3) * (0.5);//[self]
+  CGFloat textRectCenterY = ((CGFloat)textRectHeight * (CGFloat)3) * (CGFloat)(0.5);//[self]
 
   if ([containerStyle conformsToProtocol:@protocol(MDCContainedInputViewStyleDensityInforming)]) {
     id<MDCContainedInputViewStyleDensityInforming> densityInformer = (id<MDCContainedInputViewStyleDensityInforming>)containerStyle;
-    if ([densityInformer respondsToSelector:@selector(spaceBetweenTopAndTextAreaWithoutFloatingPlaceholderWithTextAreaHeight:)]) {
-      CGFloat minY = [densityInformer spaceBetweenTopAndTextAreaWithoutFloatingPlaceholderWithTextAreaHeight:textRectHeight];
-      textRectCenterY = minY + (0.5 * textRectHeight);
+    if ([densityInformer respondsToSelector:@selector(normalTextAreaTopPaddingWithTextAreaHeight:)]) {
+      CGFloat minY = [densityInformer normalTextAreaTopPaddingWithTextAreaHeight:textRectHeight];
+      textRectCenterY = (CGFloat)minY + ((CGFloat)0.5 * (CGFloat)textRectHeight);
     }
   }
   
@@ -288,10 +288,9 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
   CGFloat topRowBottomRowDividerY = topRowSubviewMaxY + kTopRowBottomRowDividerVerticalPadding;
   if ([containerStyle conformsToProtocol:@protocol(MDCContainedInputViewStyleDensityInforming)]) {
     id<MDCContainedInputViewStyleDensityInforming> densityInformer = (id<MDCContainedInputViewStyleDensityInforming>)containerStyle;
-    if ([densityInformer respondsToSelector:@selector(topRowBottomRowDividerYWithTopRowSubviewMaxY:topRowSubviewCenterY:)]) {
-      topRowBottomRowDividerY =
-          [densityInformer topRowBottomRowDividerYWithTopRowSubviewMaxY:topRowSubviewMaxY
-           topRowSubviewCenterY:textRectCenterY];
+    if ([densityInformer respondsToSelector:@selector(normalTextAreaBottomPaddingWithTextAreaHeight:)]) {
+      CGFloat bottomPadding = [densityInformer normalTextAreaBottomPaddingWithTextAreaHeight:textRectHeight];
+      topRowBottomRowDividerY = textRectMaxY + bottomPadding;
     }
   }
 
@@ -495,10 +494,10 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
   CGFloat spaceBetweenPlaceholderAndTextArea = 0;
   if ([containerStyle conformsToProtocol:@protocol(MDCContainedInputViewStyleDensityInforming)]) {
     id<MDCContainedInputViewStyleDensityInforming> densityInformer = (id<MDCContainedInputViewStyleDensityInforming>)containerStyle;
-    if ([densityInformer respondsToSelector:@selector(spaceBetweenFloatingPlaceholderAndTextAreaWithFloatingPlaceholderMinY:floatingPlaceholderHeight:)]) {
-      spaceBetweenPlaceholderAndTextArea =
-      [densityInformer spaceBetweenFloatingPlaceholderAndTextAreaWithFloatingPlaceholderMinY:floatingPlaceholderMinY
-                                                                   floatingPlaceholderHeight:floatingPlaceholderHeight];
+    if ([densityInformer respondsToSelector:@selector(textAreaTopPaddingWithFloatingPlaceholderMaxY:textAreaHeight:)]) {
+      CGFloat textAreaTopPaddingWithFloatingPlaceholderMaxY =
+          [densityInformer textAreaTopPaddingWithFloatingPlaceholderMaxY:floatingPlaceholderMaxY textAreaHeight:textRectHeight];
+      spaceBetweenPlaceholderAndTextArea = textAreaTopPaddingWithFloatingPlaceholderMaxY - floatingPlaceholderMaxY;
     }
   } else {
     spaceBetweenPlaceholderAndTextArea = ((CGFloat)0.25 * floatingPlaceholderMaxY);
@@ -517,13 +516,13 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
 
   if ([containerStyle conformsToProtocol:@protocol(MDCContainedInputViewStyleDensityInforming)]) {
     id<MDCContainedInputViewStyleDensityInforming> densityInformer = (id<MDCContainedInputViewStyleDensityInforming>)containerStyle;
-    if ([densityInformer respondsToSelector:@selector(spaceBetweenTopAndFloatingPlaceholderWithFloatingPlaceholderHeight:)]) {
-      floatingPlaceholderMinY = [densityInformer spaceBetweenTopAndFloatingPlaceholderWithFloatingPlaceholderHeight:floatingPlaceholderHeight];
+    if ([densityInformer respondsToSelector:@selector(floatingPlaceholderMinYWithFloatingPlaceholderHeight:)]) {
+      floatingPlaceholderMinY = [densityInformer floatingPlaceholderMinYWithFloatingPlaceholderHeight:floatingPlaceholderHeight];
     } else {
-      floatingPlaceholderMinY = (0.5 * floatingPlaceholderHeight);
+      floatingPlaceholderMinY = ((CGFloat)0.5 * (CGFloat)floatingPlaceholderHeight);
     }
   } else {
-    floatingPlaceholderMinY = (0.5 * floatingPlaceholderHeight);
+    floatingPlaceholderMinY = ((CGFloat)0.5 * (CGFloat)floatingPlaceholderHeight);
   }
   
 //  if ([containerStyle conformsToProtocol:@protocol(MDCContainedInputViewStyleDensityInforming)]) {
