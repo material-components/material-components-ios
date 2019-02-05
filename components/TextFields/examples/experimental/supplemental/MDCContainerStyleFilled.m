@@ -45,14 +45,19 @@ static const CGFloat kFilledContainerStyleTopCornerRadius = (CGFloat)4.0;
   [self.filledSublayer addSublayer:self.filledSublayerUnderline];
 }
 
-- (id<MDCContainedInputViewColorScheming>)defaultColorSchemeForState:(MDCContainedInputViewState)state {
-  MDCContainedInputViewColorSchemeFilled *colorScheme = [[MDCContainedInputViewColorSchemeFilled alloc] init];
-  UIColor *filledSublayerUnderlineFillColor = [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.06];
-  UIColor *filledSublayerFillColor =[UIColor colorWithRed:(0xDD/256) green:(0xDD/256) blue:(0xDD/256) alpha:1];
-  
-  
-//      [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.15];
-  
+- (id<MDCContainedInputViewColorScheming>)defaultColorSchemeForState:
+    (MDCContainedInputViewState)state {
+  MDCContainedInputViewColorSchemeFilled *colorScheme =
+      [[MDCContainedInputViewColorSchemeFilled alloc] init];
+  UIColor *filledSublayerUnderlineFillColor =
+      [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.06];
+  UIColor *filledSublayerFillColor = [UIColor colorWithRed:(0xDD / 256)
+                                                     green:(0xDD / 256)
+                                                      blue:(0xDD / 256)
+                                                     alpha:1];
+
+  //      [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.15];
+
   switch (state) {
     case MDCContainedInputViewStateNormal:
       break;
@@ -74,21 +79,22 @@ static const CGFloat kFilledContainerStyleTopCornerRadius = (CGFloat)4.0;
   return (id<MDCContainedInputViewColorScheming>)colorScheme;
 }
 
--(void)applyStyleToContainedInputView:(id<MDCContainedInputView>)containedInputView
-  withContainedInputViewColorScheming:(id<MDCContainedInputViewColorScheming>)colorScheme {
+- (void)applyStyleToContainedInputView:(id<MDCContainedInputView>)containedInputView
+    withContainedInputViewColorScheming:(id<MDCContainedInputViewColorScheming>)colorScheme {
   if (![containedInputView isKindOfClass:[UIView class]]) {
     [self removeStyleFrom:containedInputView];
     return;
   }
   UIView *uiView = (UIView *)containedInputView;
-  CGFloat underlineThickness =
-      [self underlineThicknessWithMDCContainedInputViewState:containedInputView.containedInputViewState];
+  CGFloat underlineThickness = [self
+      underlineThicknessWithMDCContainedInputViewState:containedInputView.containedInputViewState];
   CGFloat topRowBottomRowDividerY = CGRectGetMaxY(containedInputView.containerRect);
   [self applyStyleToView:uiView
- topRowBottomRowDividerY:topRowBottomRowDividerY
-      underlineThickness:underlineThickness];
+      topRowBottomRowDividerY:topRowBottomRowDividerY
+           underlineThickness:underlineThickness];
   if ([colorScheme isKindOfClass:[MDCContainedInputViewColorSchemeFilled class]]) {
-    MDCContainedInputViewColorSchemeFilled *filledScheme = (MDCContainedInputViewColorSchemeFilled *)colorScheme;
+    MDCContainedInputViewColorSchemeFilled *filledScheme =
+        (MDCContainedInputViewColorSchemeFilled *)colorScheme;
     self.filledSublayer.fillColor = filledScheme.filledSublayerFillColor.CGColor;
     self.filledSublayerUnderline.fillColor = filledScheme.filledSublayerUnderlineFillColor.CGColor;
   }
@@ -98,22 +104,21 @@ static const CGFloat kFilledContainerStyleTopCornerRadius = (CGFloat)4.0;
 //  return
 //}
 
--(void)removeStyleFrom:(id<MDCContainedInputView>)containedInputView {
+- (void)removeStyleFrom:(id<MDCContainedInputView>)containedInputView {
   [self.filledSublayer removeFromSuperlayer];
   [self.filledSublayerUnderline removeFromSuperlayer];
 }
 
 - (void)applyStyleToView:(UIView *)view
- topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
-      underlineThickness:(CGFloat)underlineThickness {
-
+    topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
+         underlineThickness:(CGFloat)underlineThickness {
   UIBezierPath *filledSublayerPath =
-  [self filledSublayerPathWithTextFieldBounds:view.bounds
-                      topRowBottomRowDividerY:topRowBottomRowDividerY];
+      [self filledSublayerPathWithTextFieldBounds:view.bounds
+                          topRowBottomRowDividerY:topRowBottomRowDividerY];
   UIBezierPath *filledSublayerUnderlinePath =
-  [self filledSublayerUnderlinePathWithTextFieldBounds:view.bounds
-                               topRowBottomRowDividerY:topRowBottomRowDividerY
-                                    underlineThickness:underlineThickness];
+      [self filledSublayerUnderlinePathWithTextFieldBounds:view.bounds
+                                   topRowBottomRowDividerY:topRowBottomRowDividerY
+                                        underlineThickness:underlineThickness];
   self.filledSublayer.path = filledSublayerPath.CGPath;
   self.filledSublayerUnderline.path = filledSublayerUnderlinePath.CGPath;
   if (self.filledSublayer.superlayer != view.layer) {
@@ -214,7 +219,8 @@ static const CGFloat kFilledContainerStyleTopCornerRadius = (CGFloat)4.0;
   return path;
 }
 
-- (CGFloat)underlineThicknessWithMDCContainedInputViewState:(MDCContainedInputViewState)containedInputViewState {
+- (CGFloat)underlineThicknessWithMDCContainedInputViewState:
+    (MDCContainedInputViewState)containedInputViewState {
   CGFloat underlineThickness = 1;
   switch (containedInputViewState) {
     case MDCContainedInputViewStateActivated:
@@ -236,8 +242,10 @@ static const CGFloat kFilledContainerStyleTopCornerRadius = (CGFloat)4.0;
   return ((CGFloat)53 / (CGFloat)71);
 }
 
--(CGFloat)spaceBetweenFloatingPlaceholderAndTextAreaWithFloatingPlaceholderMinY:(CGFloat)floatingPlaceholderMinY
-                                                      floatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight {
+- (CGFloat)spaceBetweenFloatingPlaceholderAndTextAreaWithFloatingPlaceholderMinY:
+               (CGFloat)floatingPlaceholderMinY
+                                                       floatingPlaceholderHeight:
+                                                           (CGFloat)floatingPlaceholderHeight {
   return ((CGFloat)0.25 * (floatingPlaceholderMinY + floatingPlaceholderHeight));
 }
 
@@ -246,7 +254,8 @@ static const CGFloat kFilledContainerStyleTopCornerRadius = (CGFloat)4.0;
   return filledPlaceholderTopPaddingScaleHeuristic * floatingPlaceholderHeight;
 }
 
-- (CGFloat)textAreaTopPaddingWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY textAreaHeight:(CGFloat)textAreaHeight {
+- (CGFloat)textAreaTopPaddingWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY
+                                          textAreaHeight:(CGFloat)textAreaHeight {
   return floatingPlaceholderMaxY + 7;
 }
 

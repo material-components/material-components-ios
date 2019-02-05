@@ -14,8 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialContainerScheme.h"
 #import "MDCSimpleTextField.h"
+#import "MaterialContainerScheme.h"
 
 /**
  This category is used to style SimpleTextField instances with an MDCContainerScheme.
@@ -32,6 +32,5 @@
 
 - (void)applyFilledThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
 - (void)applyOutlinedThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
-
 
 @end

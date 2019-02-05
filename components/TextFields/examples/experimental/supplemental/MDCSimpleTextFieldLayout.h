@@ -60,7 +60,8 @@ NS_ASSUME_NONNULL_BEGIN
                       clearButtonMode:(UITextFieldViewMode)clearButtonMode
                    leftUnderlineLabel:(UILabel *)leftUnderlineLabel
                   rightUnderlineLabel:(UILabel *)rightUnderlineLabel
-           underlineLabelDrawPriority:(MDCContainedInputViewUnderlineLabelDrawPriority)underlineLabelDrawPriority
+           underlineLabelDrawPriority:
+               (MDCContainedInputViewUnderlineLabelDrawPriority)underlineLabelDrawPriority
      customUnderlineLabelDrawPriority:(CGFloat)customUnderlineLabelDrawPriority
                                 isRTL:(BOOL)isRTL
                             isEditing:(BOOL)isEditing;

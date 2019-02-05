@@ -14,8 +14,8 @@
 
 #import "MDCSimpleTextFieldLayout.h"
 
-#import "MDCSimpleTextField.h"
 #import "MDCContainedInputView.h"
+#import "MDCSimpleTextField.h"
 
 static const CGFloat kLeadingMargin = (CGFloat)12.0;
 static const CGFloat kTrailingMargin = (CGFloat)12.0;
@@ -46,7 +46,8 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
                       clearButtonMode:(UITextFieldViewMode)clearButtonMode
                    leftUnderlineLabel:(UILabel *)leftUnderlineLabel
                   rightUnderlineLabel:(UILabel *)rightUnderlineLabel
-           underlineLabelDrawPriority:(MDCContainedInputViewUnderlineLabelDrawPriority)underlineLabelDrawPriority
+           underlineLabelDrawPriority:
+               (MDCContainedInputViewUnderlineLabelDrawPriority)underlineLabelDrawPriority
      customUnderlineLabelDrawPriority:(CGFloat)customUnderlineLabelDrawPriority
                                 isRTL:(BOOL)isRTL
                             isEditing:(BOOL)isEditing {
@@ -93,7 +94,8 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
                          clearButtonMode:(UITextFieldViewMode)clearButtonMode
                       leftUnderlineLabel:(UILabel *)leftUnderlineLabel
                      rightUnderlineLabel:(UILabel *)rightUnderlineLabel
-              underlineLabelDrawPriority:(MDCContainedInputViewUnderlineLabelDrawPriority)underlineLabelDrawPriority
+              underlineLabelDrawPriority:
+                  (MDCContainedInputViewUnderlineLabelDrawPriority)underlineLabelDrawPriority
         customUnderlineLabelDrawPriority:(CGFloat)customUnderlineLabelDrawPriority
                                    isRTL:(BOOL)isRTL
                                isEditing:(BOOL)isEditing {
@@ -163,16 +165,18 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
   CGFloat textRectHeight = [self textHeightWithFont:font];
 
   // TODO: Defer to densityInformer for value below
-  CGFloat textRectCenterY = ((CGFloat)textRectHeight * (CGFloat)3) * (CGFloat)(0.5);//[self]
+  CGFloat textRectCenterY = ((CGFloat)textRectHeight * (CGFloat)3) * (CGFloat)(0.5);  //[self]
 
   if ([containerStyle conformsToProtocol:@protocol(MDCContainedInputViewStyleDensityInforming)]) {
-    id<MDCContainedInputViewStyleDensityInforming> densityInformer = (id<MDCContainedInputViewStyleDensityInforming>)containerStyle;
-    if ([densityInformer respondsToSelector:@selector(normalTextAreaTopPaddingWithTextAreaHeight:)]) {
+    id<MDCContainedInputViewStyleDensityInforming> densityInformer =
+        (id<MDCContainedInputViewStyleDensityInforming>)containerStyle;
+    if ([densityInformer
+            respondsToSelector:@selector(normalTextAreaTopPaddingWithTextAreaHeight:)]) {
       CGFloat minY = [densityInformer normalTextAreaTopPaddingWithTextAreaHeight:textRectHeight];
       textRectCenterY = (CGFloat)minY + ((CGFloat)0.5 * (CGFloat)textRectHeight);
     }
   }
-  
+
   CGFloat textRectFloatingPlaceholderCenterY =
       [self textRectFloatingPlaceholderCenterYWithFloatingPlaceholderMinY:floatingPlaceholderMinY
                                                 floatingPlaceholderHeight:floatingPlaceholderHeight
@@ -200,8 +204,9 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
   if (shouldAttemptToDisplayClearButton) {
     clearButtonMinY = [self minYForSubviewWithHeight:kClearButtonTouchTargetSideLength
                                              centerY:textRectCenterY];
-    clearButtonFloatingPlaceholderMinY = [self minYForSubviewWithHeight:kClearButtonTouchTargetSideLength
-                                                                centerY:textRectFloatingPlaceholderCenterY];
+    clearButtonFloatingPlaceholderMinY =
+        [self minYForSubviewWithHeight:kClearButtonTouchTargetSideLength
+                               centerY:textRectFloatingPlaceholderCenterY];
   }
 
   CGFloat textRectMinX = 0;
@@ -242,10 +247,10 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
   CGFloat textRectMaxY = textRectMinY + textRectHeight;
   CGRect textRect = CGRectMake(textRectMinX, textRectMinY, textRectWidth, textRectHeight);
 
-  CGFloat floatingPlaceholderTextAreaMinY =
-      (CGFloat)round((double)(textRectFloatingPlaceholderCenterY - (textRectHeight * (CGFloat)0.5)));
-  CGRect floatingPlaceholderTextAreaRect = CGRectMake(textRectMinX, floatingPlaceholderTextAreaMinY, textRectWidth, textRectHeight);
-
+  CGFloat floatingPlaceholderTextAreaMinY = (CGFloat)round(
+      (double)(textRectFloatingPlaceholderCenterY - (textRectHeight * (CGFloat)0.5)));
+  CGRect floatingPlaceholderTextAreaRect =
+      CGRectMake(textRectMinX, floatingPlaceholderTextAreaMinY, textRectWidth, textRectHeight);
 
   CGRect leftViewFrame = CGRectMake(leftViewMinX, leftViewMinY, leftViewWidth, leftViewHeight);
   CGRect rightViewFrame = CGRectMake(rightViewMinX, rightViewMinY, rightViewWidth, rightViewHeight);
@@ -255,23 +260,25 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
   CGRect clearButtonFrameFloatingPlaceholder =
       CGRectMake(clearButtonMinX, clearButtonFloatingPlaceholderMinY,
                  kClearButtonTouchTargetSideLength, kClearButtonTouchTargetSideLength);
-  
-  CGRect placeholderFrameNormal = [self placeholderFrameWithPlaceholder:placeholder
-                                                         containerStyle:containerStyle
-                                                       placeholderState:MDCContainedInputViewPlaceholderStateNormal
-                                                                   font:font
-                                                floatingPlaceholderFont:floatingPlaceholderFont
-                                                floatingPlaceholderMinY:floatingPlaceholderMinY
-                                                           textRectRect:textRect
-                                                                  isRTL:isRTL];
-  CGRect placeholderFrameFloating = [self placeholderFrameWithPlaceholder:placeholder
-                                                           containerStyle:containerStyle
-                                                         placeholderState:MDCContainedInputViewPlaceholderStateFloating
-                                                                     font:font
-                                                  floatingPlaceholderFont:floatingPlaceholderFont
-                                                  floatingPlaceholderMinY:floatingPlaceholderMinY
-                                                             textRectRect:textRect
-                                                                    isRTL:isRTL];
+
+  CGRect placeholderFrameNormal =
+      [self placeholderFrameWithPlaceholder:placeholder
+                             containerStyle:containerStyle
+                           placeholderState:MDCContainedInputViewPlaceholderStateNormal
+                                       font:font
+                    floatingPlaceholderFont:floatingPlaceholderFont
+                    floatingPlaceholderMinY:floatingPlaceholderMinY
+                               textRectRect:textRect
+                                      isRTL:isRTL];
+  CGRect placeholderFrameFloating =
+      [self placeholderFrameWithPlaceholder:placeholder
+                             containerStyle:containerStyle
+                           placeholderState:MDCContainedInputViewPlaceholderStateFloating
+                                       font:font
+                    floatingPlaceholderFont:floatingPlaceholderFont
+                    floatingPlaceholderMinY:floatingPlaceholderMinY
+                               textRectRect:textRect
+                                      isRTL:isRTL];
 
   CGFloat underlineLabelsCombinedMinX = isRTL ? kTrailingMargin : kLeadingMargin;
   CGFloat underlineLabelsCombinedMaxX =
@@ -280,16 +287,20 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
       underlineLabelsCombinedMaxX - underlineLabelsCombinedMinX;
 
   CGFloat floatingPlaceholderTextAreaMaxY = floatingPlaceholderTextAreaMinY + textRectHeight;
-  CGFloat topRowSubviewMaxY = [self topRowSubviewMaxYWithTextAreaMaxY:textRectMaxY
-                                      floatingPlaceholderTextAreaMaxY:floatingPlaceholderTextAreaMaxY
-                                                         leftViewMaxY:leftViewMaxY
-                                                        rightViewMaxY:rightViewMaxY];
+  CGFloat topRowSubviewMaxY =
+      [self topRowSubviewMaxYWithTextAreaMaxY:textRectMaxY
+              floatingPlaceholderTextAreaMaxY:floatingPlaceholderTextAreaMaxY
+                                 leftViewMaxY:leftViewMaxY
+                                rightViewMaxY:rightViewMaxY];
 
   CGFloat topRowBottomRowDividerY = topRowSubviewMaxY + kTopRowBottomRowDividerVerticalPadding;
   if ([containerStyle conformsToProtocol:@protocol(MDCContainedInputViewStyleDensityInforming)]) {
-    id<MDCContainedInputViewStyleDensityInforming> densityInformer = (id<MDCContainedInputViewStyleDensityInforming>)containerStyle;
-    if ([densityInformer respondsToSelector:@selector(normalTextAreaBottomPaddingWithTextAreaHeight:)]) {
-      CGFloat bottomPadding = [densityInformer normalTextAreaBottomPaddingWithTextAreaHeight:textRectHeight];
+    id<MDCContainedInputViewStyleDensityInforming> densityInformer =
+        (id<MDCContainedInputViewStyleDensityInforming>)containerStyle;
+    if ([densityInformer
+            respondsToSelector:@selector(normalTextAreaBottomPaddingWithTextAreaHeight:)]) {
+      CGFloat bottomPadding =
+          [densityInformer normalTextAreaBottomPaddingWithTextAreaHeight:textRectHeight];
       topRowBottomRowDividerY = textRectMaxY + bottomPadding;
     }
   }
@@ -486,56 +497,68 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
 
 - (CGFloat)
     textRectFloatingPlaceholderCenterYWithFloatingPlaceholderMinY:(CGFloat)floatingPlaceholderMinY
-                                    floatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight
-                                               textRectHeight:(CGFloat)textRectHeight
-                                               containerStyle:
-                                                   (id<MDCContainedInputViewStyle>)containerStyle {
+                                        floatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight
+                                                   textRectHeight:(CGFloat)textRectHeight
+                                                   containerStyle:(id<MDCContainedInputViewStyle>)
+                                                                      containerStyle {
   CGFloat floatingPlaceholderMaxY = floatingPlaceholderMinY + floatingPlaceholderHeight;
   CGFloat spaceBetweenPlaceholderAndTextArea = 0;
   if ([containerStyle conformsToProtocol:@protocol(MDCContainedInputViewStyleDensityInforming)]) {
-    id<MDCContainedInputViewStyleDensityInforming> densityInformer = (id<MDCContainedInputViewStyleDensityInforming>)containerStyle;
-    if ([densityInformer respondsToSelector:@selector(textAreaTopPaddingWithFloatingPlaceholderMaxY:textAreaHeight:)]) {
+    id<MDCContainedInputViewStyleDensityInforming> densityInformer =
+        (id<MDCContainedInputViewStyleDensityInforming>)containerStyle;
+    if ([densityInformer respondsToSelector:@selector
+                         (textAreaTopPaddingWithFloatingPlaceholderMaxY:textAreaHeight:)]) {
       CGFloat textAreaTopPaddingWithFloatingPlaceholderMaxY =
-          [densityInformer textAreaTopPaddingWithFloatingPlaceholderMaxY:floatingPlaceholderMaxY textAreaHeight:textRectHeight];
-      spaceBetweenPlaceholderAndTextArea = textAreaTopPaddingWithFloatingPlaceholderMaxY - floatingPlaceholderMaxY;
+          [densityInformer textAreaTopPaddingWithFloatingPlaceholderMaxY:floatingPlaceholderMaxY
+                                                          textAreaHeight:textRectHeight];
+      spaceBetweenPlaceholderAndTextArea =
+          textAreaTopPaddingWithFloatingPlaceholderMaxY - floatingPlaceholderMaxY;
     }
   } else {
     spaceBetweenPlaceholderAndTextArea = ((CGFloat)0.25 * floatingPlaceholderMaxY);
   }
   CGFloat lowestAllowableTextAreaMinY =
-  floatingPlaceholderMaxY + spaceBetweenPlaceholderAndTextArea;
+      floatingPlaceholderMaxY + spaceBetweenPlaceholderAndTextArea;
   return lowestAllowableTextAreaMinY + ((CGFloat)0.5 * textRectHeight);
 }
 
 - (CGFloat)floatingPlaceholderMinYWithFloatingHeight:(CGFloat)floatingPlaceholderHeight
-                                      containerStyle:(id<MDCContainedInputViewStyle>)containerStyle {
+                                      containerStyle:
+                                          (id<MDCContainedInputViewStyle>)containerStyle {
   if (floatingPlaceholderHeight <= 0) {
     return 0;
   }
   CGFloat floatingPlaceholderMinY = 0;
 
   if ([containerStyle conformsToProtocol:@protocol(MDCContainedInputViewStyleDensityInforming)]) {
-    id<MDCContainedInputViewStyleDensityInforming> densityInformer = (id<MDCContainedInputViewStyleDensityInforming>)containerStyle;
-    if ([densityInformer respondsToSelector:@selector(floatingPlaceholderMinYWithFloatingPlaceholderHeight:)]) {
-      floatingPlaceholderMinY = [densityInformer floatingPlaceholderMinYWithFloatingPlaceholderHeight:floatingPlaceholderHeight];
+    id<MDCContainedInputViewStyleDensityInforming> densityInformer =
+        (id<MDCContainedInputViewStyleDensityInforming>)containerStyle;
+    if ([densityInformer
+            respondsToSelector:@selector(floatingPlaceholderMinYWithFloatingPlaceholderHeight:)]) {
+      floatingPlaceholderMinY = [densityInformer
+          floatingPlaceholderMinYWithFloatingPlaceholderHeight:floatingPlaceholderHeight];
     } else {
       floatingPlaceholderMinY = ((CGFloat)0.5 * (CGFloat)floatingPlaceholderHeight);
     }
   } else {
     floatingPlaceholderMinY = ((CGFloat)0.5 * (CGFloat)floatingPlaceholderHeight);
   }
-  
-//  if ([containerStyle conformsToProtocol:@protocol(MDCContainedInputViewStyleDensityInforming)]) {
-//    id<MDCContainedInputViewStyleDensityInforming> densityInformer = (id<MDCContainedInputViewStyleDensityInforming>)containerStyle;
-//    floatingPlaceholderMinY = [densityInformer floatingPlaceholderMinYWithFloatingPlaceholderHeight:floatingPlaceholderHeight];
-//  } else {
-//    floatingPlaceholderMinY = (0.5 * floatingPlaceholderHeight);
-//  }
+
+  //  if ([containerStyle conformsToProtocol:@protocol(MDCContainedInputViewStyleDensityInforming)])
+  //  {
+  //    id<MDCContainedInputViewStyleDensityInforming> densityInformer =
+  //    (id<MDCContainedInputViewStyleDensityInforming>)containerStyle; floatingPlaceholderMinY =
+  //    [densityInformer
+  //    floatingPlaceholderMinYWithFloatingPlaceholderHeight:floatingPlaceholderHeight];
+  //  } else {
+  //    floatingPlaceholderMinY = (0.5 * floatingPlaceholderHeight);
+  //  }
   return floatingPlaceholderMinY;
 }
 
 - (CGFloat)maxPlaceholderWidthWithTextAreaWidth:(CGFloat)textRectWidth
-                               placeholderState:(MDCContainedInputViewPlaceholderState)placeholderState {
+                               placeholderState:
+                                   (MDCContainedInputViewPlaceholderState)placeholderState {
   CGFloat maxPlaceholderWidth = 0;
   switch (placeholderState) {
     case MDCContainedInputViewPlaceholderStateNone:

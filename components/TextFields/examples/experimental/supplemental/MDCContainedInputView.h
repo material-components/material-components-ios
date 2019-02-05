@@ -16,7 +16,8 @@
 #import <UIKit/UIKit.h>
 
 /**
- A set of Contained Input View states outlined in the Material guidelines. These states overlap and extend UIControlState.
+ A set of Contained Input View states outlined in the Material guidelines. These states overlap and
+ extend UIControlState.
  */
 typedef NS_OPTIONS(NSInteger, MDCContainedInputViewState) {
   MDCContainedInputViewStateNormal = 1 << 0,
@@ -72,19 +73,21 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewPlaceholderState) {
 
 @protocol MDCContainedInputView <NSObject>
 /**
- Dictates the @c MDCContainerStyle of the text field. Defaults to an instance of MDCContainerStyleBase.
+ Dictates the @c MDCContainerStyle of the text field. Defaults to an instance of
+ MDCContainerStyleBase.
  */
 @property(nonatomic, strong, nonnull) id<MDCContainedInputViewStyle> containerStyle;
 
 /**
- Describes the current @c MDCContainerStyle of the text field based off its UIControlState and the current values for @c isActivated and @c isErrored.
+ Describes the current @c MDCContainerStyle of the text field based off its UIControlState and the
+ current values for @c isActivated and @c isErrored.
  */
-@property (nonatomic, assign, readonly) MDCContainedInputViewState containedInputViewState;
+@property(nonatomic, assign, readonly) MDCContainedInputViewState containedInputViewState;
 
 /**
  The @c leadingUnderlineLabel can be used to display helper or error text.
  */
-@property (strong, nonatomic, readonly, nonnull) UILabel *placeholderLabel;
+@property(strong, nonatomic, readonly, nonnull) UILabel *placeholderLabel;
 /**
  The @c leadingUnderlineLabel can be used to display helper or error text.
  */
@@ -99,7 +102,8 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewPlaceholderState) {
  This property is used to determine how much horizontal space to allot for each of the two underline
  labels.
  */
-@property(nonatomic, assign) MDCContainedInputViewUnderlineLabelDrawPriority underlineLabelDrawPriority;
+@property(nonatomic, assign)
+    MDCContainedInputViewUnderlineLabelDrawPriority underlineLabelDrawPriority;
 
 /**
  When @c underlineLabelDrawPriority is set to @c .custom the value of this property helps determine
@@ -111,9 +115,10 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewPlaceholderState) {
 @property(nonatomic, assign) CGFloat customUnderlineLabelDrawPriority;
 
 /**
- Returns the rect surrounding the main content, i.e. the area that the container should be drawn around.
+ Returns the rect surrounding the main content, i.e. the area that the container should be drawn
+ around.
  */
-@property (nonatomic, assign, readonly) CGRect containerRect;
+@property(nonatomic, assign, readonly) CGRect containerRect;
 @end
 
 @protocol MDCContainedInputViewColorScheming <NSObject>
@@ -133,9 +138,10 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewPlaceholderState) {
 @end
 
 @protocol MDCContainedInputViewStyle <NSObject>
-- (nonnull id<MDCContainedInputViewColorScheming>)defaultColorSchemeForState:(MDCContainedInputViewState)state;
+- (nonnull id<MDCContainedInputViewColorScheming>)defaultColorSchemeForState:
+    (MDCContainedInputViewState)state;
 - (void)applyStyleToContainedInputView:(nonnull id<MDCContainedInputView>)inputView
-   withContainedInputViewColorScheming:(nonnull id<MDCContainedInputViewColorScheming>)colorScheme;
+    withContainedInputViewColorScheming:(nonnull id<MDCContainedInputViewColorScheming>)colorScheme;
 - (void)removeStyleFrom:(nonnull id<MDCContainedInputView>)containedInputView;
 @end
 
@@ -148,5 +154,6 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewPlaceholderState) {
 - (CGFloat)floatingPlaceholderFontSizeScaleFactor;
 @end
 
-@interface MDCContainerStyleBase : NSObject <MDCContainedInputViewStyle, MDCContainedInputViewStyleDensityInforming>
+@interface MDCContainerStyleBase
+    : NSObject <MDCContainedInputViewStyle, MDCContainedInputViewStyleDensityInforming>
 @end

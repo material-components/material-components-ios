@@ -18,5 +18,5 @@
 
 @interface SimpleTextFieldManualLayoutExampleViewController : UIViewController
 
-@property (strong, nonatomic) id<MDCContainerScheming> containerScheme;
+@property(strong, nonatomic) id<MDCContainerScheming> containerScheme;
 @end

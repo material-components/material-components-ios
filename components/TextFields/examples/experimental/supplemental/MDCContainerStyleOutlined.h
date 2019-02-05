@@ -20,6 +20,6 @@
 @property(strong, nonatomic) UIColor *outlineColor;
 @end
 
-@interface MDCContainerStyleOutlined : MDCContainerStyleBase <MDCContainedInputViewStyle, MDCContainedInputViewStyleDensityInforming>
+@interface MDCContainerStyleOutlined
+    : MDCContainerStyleBase <MDCContainedInputViewStyle, MDCContainedInputViewStyleDensityInforming>
 @end
-

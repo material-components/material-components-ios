@@ -135,7 +135,7 @@
       CGRectMake(filledTextFieldMinX, filledTextFieldMinY, filledTextFieldSize.width,
                  filledTextFieldSize.height);
   self.filledTextField.frame = filledTextFieldButtonFrame;
-//  [self.filledTextField setNeedsLayout];
+  //  [self.filledTextField setNeedsLayout];
 
   CGFloat outlinedTextFieldMinX = padding;
   CGFloat outlinedTextFieldMinY = filledTextFieldMinY + filledTextFieldSize.height + padding;
@@ -144,8 +144,7 @@
       CGRectMake(outlinedTextFieldMinX, outlinedTextFieldMinY, outlinedTextFieldSize.width,
                  outlinedTextFieldSize.height);
   self.outlinedTextField.frame = outlinedTextFieldFrame;
-//  [self.outlinedTextField setNeedsLayout];
-
+  //  [self.outlinedTextField setNeedsLayout];
 }
 
 - (void)updateScrollViewContentSize {

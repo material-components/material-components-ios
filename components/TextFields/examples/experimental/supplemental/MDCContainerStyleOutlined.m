@@ -26,7 +26,6 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
 @implementation MDCContainedInputViewColorSchemeOutlined
 @end
 
-
 @interface MDCContainerStyleOutlined ()
 
 @property(strong, nonatomic) CAShapeLayer *outlinedSublayer;
@@ -46,11 +45,14 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
 - (void)setUpOutlineSublayer {
   self.outlinedSublayer = [[CAShapeLayer alloc] init];
   self.outlinedSublayer.fillColor = [UIColor clearColor].CGColor;
-  self.outlinedSublayer.lineWidth = [self outlineLineWidthForState:MDCContainedInputViewStateNormal];
+  self.outlinedSublayer.lineWidth =
+      [self outlineLineWidthForState:MDCContainedInputViewStateNormal];
 }
 
--(id<MDCContainedInputViewColorScheming>)defaultColorSchemeForState:(MDCContainedInputViewState)state {
-  MDCContainedInputViewColorSchemeOutlined *colorScheme = [[MDCContainedInputViewColorSchemeOutlined alloc] init];
+- (id<MDCContainedInputViewColorScheming>)defaultColorSchemeForState:
+    (MDCContainedInputViewState)state {
+  MDCContainedInputViewColorSchemeOutlined *colorScheme =
+      [[MDCContainedInputViewColorSchemeOutlined alloc] init];
   UIColor *outlineColor = [UIColor blackColor];
   switch (state) {
     case MDCContainedInputViewStateNormal:
@@ -63,7 +65,7 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
       outlineColor = colorScheme.errorColor;
       break;
     case MDCContainedInputViewStateFocused:
-//      outlineColor = [UIColor blackColor]//colorScheme.primaryColor;
+      //      outlineColor = [UIColor blackColor]//colorScheme.primaryColor;
       break;
     default:
       break;
@@ -72,8 +74,8 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
   return (id<MDCContainedInputViewColorScheming>)colorScheme;
 }
 
--(void)applyStyleToContainedInputView:(id<MDCContainedInputView>)containedInputView
-  withContainedInputViewColorScheming:(id<MDCContainedInputViewColorScheming>)colorScheme {
+- (void)applyStyleToContainedInputView:(id<MDCContainedInputView>)containedInputView
+    withContainedInputViewColorScheming:(id<MDCContainedInputViewColorScheming>)colorScheme {
   UIView *uiView = nil;
   if (![containedInputView isKindOfClass:[UIView class]]) {
     [self removeStyleFrom:containedInputView];
@@ -83,28 +85,30 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
   CGRect placeholderFrame = containedInputView.placeholderLabel.frame;
   BOOL isFloatingPlaceholder = [self isPlaceholderFloatingWithFrame:placeholderFrame];
   CGFloat topRowBottomRowDividerY = CGRectGetMaxY(containedInputView.containerRect);
-//  CGFloat topRowBottomRowDividerY = containedInputView.leadingUnderlineLabel.frame.origin.y - 10;
+  //  CGFloat topRowBottomRowDividerY = containedInputView.leadingUnderlineLabel.frame.origin.y -
+  //  10;
   CGFloat lineWidth = [self outlineLineWidthForState:containedInputView.containedInputViewState];
   [self applyStyleTo:uiView
-    placeholderFrame:placeholderFrame
-topRowBottomRowDividerY:topRowBottomRowDividerY
-isFloatingPlaceholder:isFloatingPlaceholder
-    outlineLineWidth:lineWidth];
+             placeholderFrame:placeholderFrame
+      topRowBottomRowDividerY:topRowBottomRowDividerY
+        isFloatingPlaceholder:isFloatingPlaceholder
+             outlineLineWidth:lineWidth];
   if ([colorScheme isKindOfClass:[MDCContainedInputViewColorSchemeOutlined class]]) {
-    MDCContainedInputViewColorSchemeOutlined *outlinedScheme = (MDCContainedInputViewColorSchemeOutlined *)colorScheme;
+    MDCContainedInputViewColorSchemeOutlined *outlinedScheme =
+        (MDCContainedInputViewColorSchemeOutlined *)colorScheme;
     self.outlinedSublayer.strokeColor = outlinedScheme.outlineColor.CGColor;
   }
 }
 
 - (BOOL)isPlaceholderFloatingWithFrame:(CGRect)frame {
-  return CGRectGetMinY(frame) <=0 && CGRectGetMaxY(frame) >= 0;
+  return CGRectGetMinY(frame) <= 0 && CGRectGetMaxY(frame) >= 0;
 }
 
 - (void)applyStyleTo:(UIView *)view
-    placeholderFrame:(CGRect)placeholderFrame
-topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
-isFloatingPlaceholder:(BOOL)isFloatingPlaceholder
-    outlineLineWidth:(CGFloat)outlineLineWidth {
+           placeholderFrame:(CGRect)placeholderFrame
+    topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
+      isFloatingPlaceholder:(BOOL)isFloatingPlaceholder
+           outlineLineWidth:(CGFloat)outlineLineWidth {
   UIBezierPath *path = [self outlinePathWithViewBounds:view.bounds
                                       placeholderFrame:placeholderFrame
                                topRowBottomRowDividerY:topRowBottomRowDividerY
@@ -133,9 +137,9 @@ isFloatingPlaceholder:(BOOL)isFloatingPlaceholder
   [path moveToPoint:startingPoint];
   if (isFloatingPlaceholder) {
     CGFloat leftLineBreak =
-    CGRectGetMinX(placeholderFrame) - kFloatingPlaceholderOutlineSidePadding;
+        CGRectGetMinX(placeholderFrame) - kFloatingPlaceholderOutlineSidePadding;
     CGFloat rightLineBreak =
-    CGRectGetMaxX(placeholderFrame) + kFloatingPlaceholderOutlineSidePadding;
+        CGRectGetMaxX(placeholderFrame) + kFloatingPlaceholderOutlineSidePadding;
     [path addLineToPoint:CGPointMake(leftLineBreak, sublayerMinY)];
     [path moveToPoint:CGPointMake(rightLineBreak, sublayerMinY)];
     [path addLineToPoint:CGPointMake(rightLineBreak, sublayerMinY)];
@@ -200,13 +204,16 @@ isFloatingPlaceholder:(BOOL)isFloatingPlaceholder
   return (CGFloat)0 - ((CGFloat)0.5 * floatingPlaceholderHeight);
 }
 
--(CGFloat)spaceBetweenFloatingPlaceholderAndTextAreaWithFloatingPlaceholderMinY:(CGFloat)floatingPlaceholderMinY
-                                                      floatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight {
+- (CGFloat)spaceBetweenFloatingPlaceholderAndTextAreaWithFloatingPlaceholderMinY:
+               (CGFloat)floatingPlaceholderMinY
+                                                       floatingPlaceholderHeight:
+                                                           (CGFloat)floatingPlaceholderHeight {
   CGFloat outlinedTextFieldSpaceHeuristic = floatingPlaceholderHeight * (CGFloat)0.22;
   return floatingPlaceholderMinY + floatingPlaceholderHeight + outlinedTextFieldSpaceHeuristic;
 }
 
-- (CGFloat)textAreaTopPaddingWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY textAreaHeight:(CGFloat)textAreaHeight {
+- (CGFloat)textAreaTopPaddingWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY
+                                          textAreaHeight:(CGFloat)textAreaHeight {
   return [self normalTextAreaTopPaddingWithTextAreaHeight:textAreaHeight];
 }
 

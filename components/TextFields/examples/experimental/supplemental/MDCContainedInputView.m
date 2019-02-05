@@ -32,8 +32,7 @@
   UIColor *underlineLabelColor = [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.60];
   UIColor *placeholderLabelColor = [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.60];
   UIColor *errorColor = [UIColor redColor];
-  UIColor *clearButtonTintColor =
-      [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.20];
+  UIColor *clearButtonTintColor = [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.20];
   self.textColor = textColor;
   self.underlineLabelColor = underlineLabelColor;
   self.placeholderLabelColor = placeholderLabelColor;
@@ -45,7 +44,8 @@
 
 @implementation MDCContainerStyleBase
 
-- (id<MDCContainedInputViewColorScheming>)defaultColorSchemeForState:(MDCContainedInputViewState)state {
+- (id<MDCContainedInputViewColorScheming>)defaultColorSchemeForState:
+    (MDCContainedInputViewState)state {
   MDCContainedInputViewColorScheme *colorScheme = [[MDCContainedInputViewColorScheme alloc] init];
 
   UIColor *placeholderLabelColor = colorScheme.placeholderLabelColor;
@@ -79,10 +79,12 @@
   return colorScheme;
 }
 
--(void)applyStyleToContainedInputView:(id<MDCContainedInputView>)inputView
-  withContainedInputViewColorScheming:(id<MDCContainedInputViewColorScheming>)colorScheme { }
+- (void)applyStyleToContainedInputView:(id<MDCContainedInputView>)inputView
+    withContainedInputViewColorScheming:(id<MDCContainedInputViewColorScheming>)colorScheme {
+}
 
-- (void)removeStyleFrom:(id<MDCContainedInputView>)containedInputView { }
+- (void)removeStyleFrom:(id<MDCContainedInputView>)containedInputView {
+}
 
 - (CGFloat)floatingPlaceholderMinYWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight {
   return 10;
@@ -101,13 +103,13 @@
   return [self verticalPaddingWithTextAreaHeight:textAreaHeight];
 }
 
--(CGFloat)floatingPlaceholderFontSizeScaleFactor {
+- (CGFloat)floatingPlaceholderFontSizeScaleFactor {
   return (CGFloat)0.33;
 }
 
 - (CGFloat)verticalPaddingWithTextAreaHeight:(CGFloat)textAreaHeight {
-
-  return (((CGFloat)textAreaHeight * (CGFloat)3) * (CGFloat)(0.5)) - ((CGFloat)textAreaHeight * (CGFloat)0.5);
+  return (((CGFloat)textAreaHeight * (CGFloat)3) * (CGFloat)(0.5)) -
+         ((CGFloat)textAreaHeight * (CGFloat)0.5);
 }
 
 @end

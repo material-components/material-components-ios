@@ -14,7 +14,6 @@
 
 #import <UIKit/UIKit.h>
 
-
 #import "MaterialColorScheme.h"
 
 #import "MDCContainedInputView.h"
@@ -32,9 +31,9 @@
  */
 @interface MDCSimpleTextField : UITextField <MDCContainedInputView>
 
-
 ///**
-// This is a computed property that determines the current @c MDCContainedInputViewState of the text field.
+// This is a computed property that determines the current @c MDCContainedInputViewState of the text
+// field.
 // */
 //@property(nonatomic, assign, readonly) MDCContainedInputViewState containedInputViewState;
 
@@ -83,8 +82,10 @@
  */
 @property(nonatomic, assign) BOOL isActivated;
 
-- (id<MDCContainedInputViewColorScheming>)containedInputViewColorSchemingForState:(MDCContainedInputViewState)containedInputViewState;
-- (void)setContainedInputViewColorScheming:(id<MDCContainedInputViewColorScheming>)containedInputViewColorScheming
+- (id<MDCContainedInputViewColorScheming>)containedInputViewColorSchemingForState:
+    (MDCContainedInputViewState)containedInputViewState;
+- (void)setContainedInputViewColorScheming:
+            (id<MDCContainedInputViewColorScheming>)containedInputViewColorScheming
                                   forState:(MDCContainedInputViewState)textFieldState;
 
 @end

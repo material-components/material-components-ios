@@ -17,8 +17,8 @@
 #import <Foundation/Foundation.h>
 
 #import "MDCContainedInputView.h"
-#import "MDCContainerStyleOutlined.h"
 #import "MDCContainerStyleFilled.h"
+#import "MDCContainerStyleOutlined.h"
 
 //#import "MDCSemanticColorScheme.h"
 
@@ -27,20 +27,21 @@
 - (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
   id<MDCTypographyScheming> mdcTypographyScheming = containerScheme.typographyScheme;
   if (!mdcTypographyScheming) {
-    mdcTypographyScheming = [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+    mdcTypographyScheming =
+        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
   }
   [self applyThemeWithMDCTypographyScheming:mdcTypographyScheming];
 
   id<MDCColorScheming> mdcColorScheme = containerScheme.colorScheme;
   if (!mdcColorScheme) {
-    mdcColorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    mdcColorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   }
   [self applyThemeWithMDCColorScheming:mdcColorScheme];
 }
 
 - (void)applyThemeWithMDCColorScheming:(id<MDCColorScheming>)mdcColorScheming {
-  //TODO: Implement
-  
+  // TODO: Implement
 }
 
 - (void)applyThemeWithMDCTypographyScheming:(id<MDCTypographyScheming>)mdcTypographyScheming {
@@ -53,72 +54,87 @@
   MDCContainerStyleOutlined *outlinedStyle = [[MDCContainerStyleOutlined alloc] init];
   self.containerStyle = outlinedStyle;
   // ^ if you have side effects in this setter then you can just access them and modify them
-  
-  id<MDCColorScheming> mdcColorScheming = scheme.colorScheme ?: [[MDCSemanticColorScheme alloc] init];
+
+  id<MDCColorScheming> mdcColorScheming =
+      scheme.colorScheme ?: [[MDCSemanticColorScheme alloc] init];
 
   MDCContainedInputViewColorSchemeOutlined *normalColorScheme =
-      [self outlinedColorSchemeWithMDCColorScheming:mdcColorScheming containedInputViewState:MDCContainedInputViewStateNormal];
-  [self setContainedInputViewColorScheming:normalColorScheme forState:MDCContainedInputViewStateNormal];
+      [self outlinedColorSchemeWithMDCColorScheming:mdcColorScheming
+                            containedInputViewState:MDCContainedInputViewStateNormal];
+  [self setContainedInputViewColorScheming:normalColorScheme
+                                  forState:MDCContainedInputViewStateNormal];
 
   MDCContainedInputViewColorSchemeOutlined *focusedColorScheme =
-      [self outlinedColorSchemeWithMDCColorScheming:mdcColorScheming containedInputViewState:MDCContainedInputViewStateFocused];
-  [self setContainedInputViewColorScheming:focusedColorScheme forState:MDCContainedInputViewStateFocused];
+      [self outlinedColorSchemeWithMDCColorScheming:mdcColorScheming
+                            containedInputViewState:MDCContainedInputViewStateFocused];
+  [self setContainedInputViewColorScheming:focusedColorScheme
+                                  forState:MDCContainedInputViewStateFocused];
 
   MDCContainedInputViewColorSchemeOutlined *activatedColorScheme =
-  [self outlinedColorSchemeWithMDCColorScheming:mdcColorScheming
-                                 containedInputViewState:MDCContainedInputViewStateActivated];
-  [self setContainedInputViewColorScheming:activatedColorScheme forState:MDCContainedInputViewStateActivated];
+      [self outlinedColorSchemeWithMDCColorScheming:mdcColorScheming
+                            containedInputViewState:MDCContainedInputViewStateActivated];
+  [self setContainedInputViewColorScheming:activatedColorScheme
+                                  forState:MDCContainedInputViewStateActivated];
 
   MDCContainedInputViewColorSchemeOutlined *erroredColorScheme =
-  [self outlinedColorSchemeWithMDCColorScheming:mdcColorScheming
-                                 containedInputViewState:MDCContainedInputViewStateErrored];
-  [self setContainedInputViewColorScheming:erroredColorScheme forState:MDCContainedInputViewStateErrored];
+      [self outlinedColorSchemeWithMDCColorScheming:mdcColorScheming
+                            containedInputViewState:MDCContainedInputViewStateErrored];
+  [self setContainedInputViewColorScheming:erroredColorScheme
+                                  forState:MDCContainedInputViewStateErrored];
 
   MDCContainedInputViewColorSchemeOutlined *disabledColorScheme =
-  [self outlinedColorSchemeWithMDCColorScheming:mdcColorScheming
-                                 containedInputViewState:MDCContainedInputViewStateDisabled];
-  [self setContainedInputViewColorScheming:disabledColorScheme forState:MDCContainedInputViewStateDisabled];
-  
+      [self outlinedColorSchemeWithMDCColorScheming:mdcColorScheming
+                            containedInputViewState:MDCContainedInputViewStateDisabled];
+  [self setContainedInputViewColorScheming:disabledColorScheme
+                                  forState:MDCContainedInputViewStateDisabled];
+
   self.tintColor = mdcColorScheming.primaryColor;
 }
-
 
 - (void)applyFilledThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme {
   MDCContainerStyleFilled *filledStyle = [[MDCContainerStyleFilled alloc] init];
   self.containerStyle = filledStyle;
   // ^ if you have side effects in this setter then you can just access them and modify them
-  
-  id<MDCColorScheming> mdcColorScheming = scheme.colorScheme ?: [[MDCSemanticColorScheme alloc] init];
-  
+
+  id<MDCColorScheming> mdcColorScheming =
+      scheme.colorScheme ?: [[MDCSemanticColorScheme alloc] init];
+
   MDCContainedInputViewColorSchemeFilled *normalColorScheme =
-  [self filledColorSchemeWithMDCColorScheming:mdcColorScheming containedInputViewState:MDCContainedInputViewStateNormal];
-  [self setContainedInputViewColorScheming:normalColorScheme forState:MDCContainedInputViewStateNormal];
-  
+      [self filledColorSchemeWithMDCColorScheming:mdcColorScheming
+                          containedInputViewState:MDCContainedInputViewStateNormal];
+  [self setContainedInputViewColorScheming:normalColorScheme
+                                  forState:MDCContainedInputViewStateNormal];
+
   MDCContainedInputViewColorSchemeFilled *focusedColorScheme =
-  [self filledColorSchemeWithMDCColorScheming:mdcColorScheming containedInputViewState:MDCContainedInputViewStateFocused];
-  [self setContainedInputViewColorScheming:focusedColorScheme forState:MDCContainedInputViewStateFocused];
-  
+      [self filledColorSchemeWithMDCColorScheming:mdcColorScheming
+                          containedInputViewState:MDCContainedInputViewStateFocused];
+  [self setContainedInputViewColorScheming:focusedColorScheme
+                                  forState:MDCContainedInputViewStateFocused];
+
   MDCContainedInputViewColorSchemeFilled *activatedColorScheme =
-  [self filledColorSchemeWithMDCColorScheming:mdcColorScheming
-                                 containedInputViewState:MDCContainedInputViewStateActivated];
-  [self setContainedInputViewColorScheming:activatedColorScheme forState:MDCContainedInputViewStateActivated];
-  
+      [self filledColorSchemeWithMDCColorScheming:mdcColorScheming
+                          containedInputViewState:MDCContainedInputViewStateActivated];
+  [self setContainedInputViewColorScheming:activatedColorScheme
+                                  forState:MDCContainedInputViewStateActivated];
+
   MDCContainedInputViewColorSchemeFilled *erroredColorScheme =
-  [self filledColorSchemeWithMDCColorScheming:mdcColorScheming
-                                 containedInputViewState:MDCContainedInputViewStateErrored];
-  [self setContainedInputViewColorScheming:erroredColorScheme forState:MDCContainedInputViewStateErrored];
-  
+      [self filledColorSchemeWithMDCColorScheming:mdcColorScheming
+                          containedInputViewState:MDCContainedInputViewStateErrored];
+  [self setContainedInputViewColorScheming:erroredColorScheme
+                                  forState:MDCContainedInputViewStateErrored];
+
   MDCContainedInputViewColorSchemeFilled *disabledColorScheme =
-  [self filledColorSchemeWithMDCColorScheming:mdcColorScheming
-                                 containedInputViewState:MDCContainedInputViewStateDisabled];
-  [self setContainedInputViewColorScheming:disabledColorScheme forState:MDCContainedInputViewStateDisabled];
+      [self filledColorSchemeWithMDCColorScheming:mdcColorScheming
+                          containedInputViewState:MDCContainedInputViewStateDisabled];
+  [self setContainedInputViewColorScheming:disabledColorScheme
+                                  forState:MDCContainedInputViewStateDisabled];
 
   self.tintColor = mdcColorScheming.primaryColor;
 }
 
 - (MDCContainedInputViewColorSchemeOutlined *)
     outlinedColorSchemeWithMDCColorScheming:(id<MDCColorScheming>)colorScheming
-                                    containedInputViewState:(MDCContainedInputViewState)containedInputViewState {
+                    containedInputViewState:(MDCContainedInputViewState)containedInputViewState {
   UIColor *textColor = colorScheming.onSurfaceColor;
   UIColor *underlineLabelColor =
       [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
@@ -160,19 +176,19 @@
 }
 
 - (MDCContainedInputViewColorSchemeFilled *)
-filledColorSchemeWithMDCColorScheming:(id<MDCColorScheming>)colorScheming
-containedInputViewState:(MDCContainedInputViewState)containedInputViewState {
+    filledColorSchemeWithMDCColorScheming:(id<MDCColorScheming>)colorScheming
+                  containedInputViewState:(MDCContainedInputViewState)containedInputViewState {
   UIColor *textColor = colorScheming.onSurfaceColor;
   UIColor *underlineLabelColor =
-  [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
+      [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
   UIColor *placeholderLabelColor =
-  [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
+      [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
   UIColor *filledSublayerUnderlineFillColor = colorScheming.onSurfaceColor;
   UIColor *filledSublayerFillColor =
-  [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.15];
+      [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.15];
   UIColor *clearButtonTintColor =
-  [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.20];
-  
+      [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.20];
+
   switch (containedInputViewState) {
     case MDCContainedInputViewStateNormal:
       break;
@@ -193,9 +209,9 @@ containedInputViewState:(MDCContainedInputViewState)containedInputViewState {
     default:
       break;
   }
-  
+
   MDCContainedInputViewColorSchemeFilled *simpleTextFieldColorScheme =
-  [[MDCContainedInputViewColorSchemeFilled alloc] init];
+      [[MDCContainedInputViewColorSchemeFilled alloc] init];
   simpleTextFieldColorScheme.textColor = textColor;
   simpleTextFieldColorScheme.filledSublayerFillColor = filledSublayerFillColor;
   simpleTextFieldColorScheme.filledSublayerUnderlineFillColor = filledSublayerUnderlineFillColor;
