@@ -182,6 +182,7 @@ static UIImage *fakeImage(void) {
 }
 
 #pragma mark - sizeThatFits
+
 - (void)testSizeThatFitsSmallSizeStackedLayout {
   // Given
   MDCBottomNavigationItemView *itemView = [[MDCBottomNavigationItemView alloc] init];
