@@ -332,7 +332,6 @@ static const CGFloat kContentHorizontalMargin = 12;
   [self generateAndVerifySnapshot];
 }
 
-
 - (void)testContentInsetsNoopStackedRTL {
   // When
   [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleEmpty];
