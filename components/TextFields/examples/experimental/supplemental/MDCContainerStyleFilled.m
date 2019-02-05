@@ -100,10 +100,6 @@ static const CGFloat kFilledContainerStyleTopCornerRadius = (CGFloat)4.0;
   }
 }
 
-//- (CGFloat)primaryHorizontalContentDividerWithContainerRect:(CGRect)containerRect {
-//  return
-//}
-
 - (void)removeStyleFrom:(id<MDCContainedInputView>)containedInputView {
   [self.filledSublayer removeFromSuperlayer];
   [self.filledSublayerUnderline removeFromSuperlayer];

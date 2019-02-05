@@ -31,7 +31,7 @@
   id<MDCTypographyScheming> mdcTypographyScheming = containerScheme.typographyScheme;
   if (!mdcTypographyScheming) {
     mdcTypographyScheming =
-    [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
   }
   [self applyMDCTypographyScheming:mdcTypographyScheming];
 }
@@ -40,7 +40,7 @@
   id<MDCColorScheming> mdcColorScheme = containerScheme.colorScheme;
   if (!mdcColorScheme) {
     mdcColorScheme =
-    [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   }
   [self applyMDCColorScheming:mdcColorScheme];
 }

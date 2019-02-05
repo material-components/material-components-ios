@@ -14,12 +14,13 @@
 
 #import "MDCSimpleTextField.h"
 
-#import <MDFInternationalization/MDFInternationalization.h>
-#import "MaterialMath.h"
-
-#import "MDCSimpleTextFieldLayout.h"
-
 #import <Foundation/Foundation.h>
+
+#import <MDFInternationalization/MDFInternationalization.h>
+
+#import "MDCContainerStylePathDrawingUtils.h"
+#import "MDCSimpleTextFieldLayout.h"
+#import "MaterialMath.h"
 
 static const CGFloat kFloatingPlaceholderAnimationDuration = (CGFloat)0.15;
 
@@ -52,6 +53,9 @@ static const CGFloat kFloatingPlaceholderAnimationDuration = (CGFloat)0.15;
 @synthesize underlineLabelDrawPriority = _underlineLabelDrawPriority;
 @synthesize customUnderlineLabelDrawPriority = _customUnderlineLabelDrawPriority;
 @synthesize containerStyle = _containerStyle;
+@synthesize isActivated = _isActivated;
+@synthesize isErrored = _isErrored;
+@synthesize canPlaceholderFloat = _canPlaceholderFloat;
 
 #pragma mark Object Lifecycle
 
@@ -72,16 +76,11 @@ static const CGFloat kFloatingPlaceholderAnimationDuration = (CGFloat)0.15;
 }
 
 - (void)commonMDCSimpleTextFieldInit {
-  [self addObservers];
   [self initializeProperties];
   [self setUpPlaceholderLabel];
   [self setUpUnderlineLabels];
   [self setUpClearButton];
   [self setUpContainerStyle];
-}
-
-- (void)dealloc {
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark View Setup
@@ -146,7 +145,7 @@ static const CGFloat kFloatingPlaceholderAnimationDuration = (CGFloat)0.15;
 }
 
 - (void)setUpUnderlineLabels {
-  CGFloat underlineFontSize = 5;  // MDCRound([UIFont systemFontSize] * 0.75);
+  CGFloat underlineFontSize = MDCRound([UIFont systemFontSize] * 0.75);
   UIFont *underlineFont = [UIFont systemFontOfSize:underlineFontSize];
   self.leftUnderlineLabel = [[UILabel alloc] init];
   self.leftUnderlineLabel.font = underlineFont;
@@ -179,19 +178,6 @@ static const CGFloat kFloatingPlaceholderAnimationDuration = (CGFloat)0.15;
   [self.clearButton addSubview:self.clearButtonImageView];
   [self addSubview:self.clearButton];
   self.clearButtonImageView.center = self.clearButton.center;
-}
-
-- (void)addObservers {
-  [[NSNotificationCenter defaultCenter]
-      addObserver:self
-         selector:@selector(textFieldDidEndEditingWithNotification:)
-             name:UITextFieldTextDidEndEditingNotification
-           object:nil];
-  [[NSNotificationCenter defaultCenter]
-      addObserver:self
-         selector:@selector(textFieldDidBeginEditingWithNotification:)
-             name:UITextFieldTextDidBeginEditingNotification
-           object:nil];
 }
 
 #pragma mark UIView Overrides
@@ -448,7 +434,7 @@ static const CGFloat kFloatingPlaceholderAnimationDuration = (CGFloat)0.15;
     return;
   }
   _layoutDirection = layoutDirection;
-    [self setNeedsLayout];
+  [self setNeedsLayout];
 }
 
 - (void)setCanPlaceholderFloat:(BOOL)canPlaceholderFloat {
@@ -456,7 +442,7 @@ static const CGFloat kFloatingPlaceholderAnimationDuration = (CGFloat)0.15;
     return;
   }
   _canPlaceholderFloat = canPlaceholderFloat;
-    [self setNeedsLayout];
+  [self setNeedsLayout];
 }
 
 - (void)setContainerStyle:(id<MDCContainedInputViewStyle>)containerStyle {
@@ -470,7 +456,22 @@ static const CGFloat kFloatingPlaceholderAnimationDuration = (CGFloat)0.15;
       [self containedInputViewColorSchemingForState:self.containedInputViewState];
   [_containerStyle applyStyleToContainedInputView:self
               withContainedInputViewColorScheming:colorScheme];
-  // TODO: setneedslayout?
+}
+
+- (CGRect)textRectFromLayout:(MDCSimpleTextFieldLayout *)layout
+            placeholderState:(MDCContainedInputViewPlaceholderState)placeholderState {
+  CGRect textRect = layout.textRect;
+  if (placeholderState == MDCContainedInputViewPlaceholderStateFloating) {
+    textRect = layout.textRectFloatingPlaceholder;
+  }
+  return textRect;
+}
+
+- (CGRect)adjustTextAreaFrame:(CGRect)textRect
+    withParentClassTextAreaFrame:(CGRect)parentClassTextAreaFrame {
+  CGFloat systemDefinedHeight = CGRectGetHeight(parentClassTextAreaFrame);
+  CGFloat minY = CGRectGetMidY(textRect) - (systemDefinedHeight * (CGFloat)0.5);
+  return CGRectMake(CGRectGetMinX(textRect), minY, CGRectGetWidth(textRect), systemDefinedHeight);
 }
 
 - (CGRect)containerRect {
@@ -489,22 +490,6 @@ static const CGFloat kFloatingPlaceholderAnimationDuration = (CGFloat)0.15;
   CGRect textRect = [self textRectFromLayout:self.layout placeholderState:self.placeholderState];
   return [self adjustTextAreaFrame:textRect
       withParentClassTextAreaFrame:[super editingRectForBounds:bounds]];
-}
-
-- (CGRect)textRectFromLayout:(MDCSimpleTextFieldLayout *)layout
-            placeholderState:(MDCContainedInputViewPlaceholderState)placeholderState {
-  CGRect textRect = layout.textRect;
-  if (placeholderState == MDCContainedInputViewPlaceholderStateFloating) {
-    textRect = layout.textRectFloatingPlaceholder;
-  }
-  return textRect;
-}
-
-- (CGRect)adjustTextAreaFrame:(CGRect)textRect
-    withParentClassTextAreaFrame:(CGRect)parentClassTextAreaFrame {
-  CGFloat systemDefinedHeight = CGRectGetHeight(parentClassTextAreaFrame);
-  CGFloat minY = CGRectGetMidY(textRect) - (systemDefinedHeight * (CGFloat)0.5);
-  return CGRectMake(CGRectGetMinX(textRect), minY, CGRectGetWidth(textRect), systemDefinedHeight);
 }
 
 // The implementations for this method and the method below deserve some context! Unfortunately,
@@ -529,13 +514,6 @@ static const CGFloat kFloatingPlaceholderAnimationDuration = (CGFloat)0.15;
 }
 
 - (CGRect)borderRectForBounds:(CGRect)bounds {
-  //  if (self.containerStyle == MDCInputViewContainerStyleNone) {
-  //    return [super borderRectForBounds:bounds];
-  //  }
-  //  return CGRectZero;
-
-  // TODO: Figure out how this method should be implemented
-  // possibly make a MDCContainerStyleNone class
   if (!self.containerStyle) {
     return [super borderRectForBounds:bounds];
   }
@@ -595,6 +573,35 @@ static const CGFloat kFloatingPlaceholderAnimationDuration = (CGFloat)0.15;
   }
 }
 
+- (MDCContainedInputViewPlaceholderState)placeholderStateWithPlaceholder:(NSString *)placeholder
+                                                                    text:(NSString *)text
+                                                     canPlaceholderFloat:(BOOL)canPlaceholderFloat
+                                                               isEditing:(BOOL)isEditing {
+  BOOL hasPlaceholder = placeholder.length > 0;
+  BOOL hasText = text.length > 0;
+  if (hasPlaceholder) {
+    if (canPlaceholderFloat) {
+      if (isEditing) {
+        return MDCContainedInputViewPlaceholderStateFloating;
+      } else {
+        if (hasText) {
+          return MDCContainedInputViewPlaceholderStateFloating;
+        } else {
+          return MDCContainedInputViewPlaceholderStateNormal;
+        }
+      }
+    } else {
+      if (hasText) {
+        return MDCContainedInputViewPlaceholderStateNone;
+      } else {
+        return MDCContainedInputViewPlaceholderStateNormal;
+      }
+    }
+  } else {
+    return MDCContainedInputViewPlaceholderStateNone;
+  }
+}
+
 #pragma mark Clear Button
 
 - (UIImage *)untintedClearButtonImage {
@@ -602,120 +609,11 @@ static const CGFloat kFloatingPlaceholderAnimationDuration = (CGFloat)0.15;
   CGRect rect = CGRectMake(0, 0, sideLength, sideLength);
   UIGraphicsBeginImageContextWithOptions(rect.size, false, 0);
   [[UIColor blackColor] setFill];
-  [[self pathForClearButtonImageWithFrame:rect] fill];
+  [[MDCContainerStylePathDrawingUtils pathForClearButtonImageWithFrame:rect] fill];
   UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
   UIGraphicsEndImageContext();
   image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   return image;
-}
-
-// This generated code is taken from the MDCTextField.
-- (UIBezierPath *)pathForClearButtonImageWithFrame:(CGRect)frame {
-  CGRect innerBounds =
-      CGRectMake(CGRectGetMinX(frame) + 2, CGRectGetMinY(frame) + 2,
-                 MDCFloor((frame.size.width - 2) * (CGFloat)0.90909 + (CGFloat)0.5),
-                 MDCFloor((frame.size.height - 2) * (CGFloat)0.90909 + (CGFloat)0.5));
-
-  UIBezierPath *ic_clear_path = [UIBezierPath bezierPath];
-  [ic_clear_path moveToPoint:CGPointMake(CGRectGetMinX(innerBounds) +
-                                             (CGFloat)0.50000 * innerBounds.size.width,
-                                         CGRectGetMinY(innerBounds) + 0 * innerBounds.size.height)];
-  [ic_clear_path
-      addCurveToPoint:CGPointMake(
-                          CGRectGetMinX(innerBounds) + 1 * innerBounds.size.width,
-                          CGRectGetMinY(innerBounds) + (CGFloat)0.50000 * innerBounds.size.height)
-        controlPoint1:CGPointMake(
-                          CGRectGetMinX(innerBounds) + (CGFloat)0.77600 * innerBounds.size.width,
-                          CGRectGetMinY(innerBounds) + 0 * innerBounds.size.height)
-        controlPoint2:CGPointMake(
-                          CGRectGetMinX(innerBounds) + 1 * innerBounds.size.width,
-                          CGRectGetMinY(innerBounds) + (CGFloat)0.22400 * innerBounds.size.height)];
-  [ic_clear_path
-      addCurveToPoint:CGPointMake(
-                          CGRectGetMinX(innerBounds) + (CGFloat)0.50000 * innerBounds.size.width,
-                          CGRectGetMinY(innerBounds) + 1 * innerBounds.size.height)
-        controlPoint1:CGPointMake(
-                          CGRectGetMinX(innerBounds) + 1 * innerBounds.size.width,
-                          CGRectGetMinY(innerBounds) + (CGFloat)0.77600 * innerBounds.size.height)
-        controlPoint2:CGPointMake(
-                          CGRectGetMinX(innerBounds) + (CGFloat)0.77600 * innerBounds.size.width,
-                          CGRectGetMinY(innerBounds) + 1 * innerBounds.size.height)];
-  [ic_clear_path
-      addCurveToPoint:CGPointMake(
-                          CGRectGetMinX(innerBounds) + 0 * innerBounds.size.width,
-                          CGRectGetMinY(innerBounds) + (CGFloat)0.50000 * innerBounds.size.height)
-        controlPoint1:CGPointMake(
-                          CGRectGetMinX(innerBounds) + (CGFloat)0.22400 * innerBounds.size.width,
-                          CGRectGetMinY(innerBounds) + 1 * innerBounds.size.height)
-        controlPoint2:CGPointMake(
-                          CGRectGetMinX(innerBounds) + 0 * innerBounds.size.width,
-                          CGRectGetMinY(innerBounds) + (CGFloat)0.77600 * innerBounds.size.height)];
-  [ic_clear_path
-      addCurveToPoint:CGPointMake(
-                          CGRectGetMinX(innerBounds) + (CGFloat)0.50000 * innerBounds.size.width,
-                          CGRectGetMinY(innerBounds) + 0 * innerBounds.size.height)
-        controlPoint1:CGPointMake(
-                          CGRectGetMinX(innerBounds) + 0 * innerBounds.size.width,
-                          CGRectGetMinY(innerBounds) + (CGFloat)0.22400 * innerBounds.size.height)
-        controlPoint2:CGPointMake(
-                          CGRectGetMinX(innerBounds) + (CGFloat)0.22400 * innerBounds.size.width,
-                          CGRectGetMinY(innerBounds) + 0 * innerBounds.size.height)];
-  [ic_clear_path closePath];
-  [ic_clear_path
-      moveToPoint:CGPointMake(
-                      CGRectGetMinX(innerBounds) + (CGFloat)0.73417 * innerBounds.size.width,
-                      CGRectGetMinY(innerBounds) + (CGFloat)0.31467 * innerBounds.size.height)];
-  [ic_clear_path
-      addLineToPoint:CGPointMake(
-                         CGRectGetMinX(innerBounds) + (CGFloat)0.68700 * innerBounds.size.width,
-                         CGRectGetMinY(innerBounds) + (CGFloat)0.26750 * innerBounds.size.height)];
-  [ic_clear_path
-      addLineToPoint:CGPointMake(
-                         CGRectGetMinX(innerBounds) + (CGFloat)0.50083 * innerBounds.size.width,
-                         CGRectGetMinY(innerBounds) + (CGFloat)0.45367 * innerBounds.size.height)];
-  [ic_clear_path
-      addLineToPoint:CGPointMake(
-                         CGRectGetMinX(innerBounds) + (CGFloat)0.31467 * innerBounds.size.width,
-                         CGRectGetMinY(innerBounds) + (CGFloat)0.26750 * innerBounds.size.height)];
-  [ic_clear_path
-      addLineToPoint:CGPointMake(
-                         CGRectGetMinX(innerBounds) + (CGFloat)0.26750 * innerBounds.size.width,
-                         CGRectGetMinY(innerBounds) + (CGFloat)0.31467 * innerBounds.size.height)];
-  [ic_clear_path
-      addLineToPoint:CGPointMake(
-                         CGRectGetMinX(innerBounds) + (CGFloat)0.45367 * innerBounds.size.width,
-                         CGRectGetMinY(innerBounds) + (CGFloat)0.50083 * innerBounds.size.height)];
-  [ic_clear_path
-      addLineToPoint:CGPointMake(
-                         CGRectGetMinX(innerBounds) + (CGFloat)0.26750 * innerBounds.size.width,
-                         CGRectGetMinY(innerBounds) + (CGFloat)0.68700 * innerBounds.size.height)];
-  [ic_clear_path
-      addLineToPoint:CGPointMake(
-                         CGRectGetMinX(innerBounds) + (CGFloat)0.31467 * innerBounds.size.width,
-                         CGRectGetMinY(innerBounds) + (CGFloat)0.73417 * innerBounds.size.height)];
-  [ic_clear_path
-      addLineToPoint:CGPointMake(
-                         CGRectGetMinX(innerBounds) + (CGFloat)0.50083 * innerBounds.size.width,
-                         CGRectGetMinY(innerBounds) + (CGFloat)0.54800 * innerBounds.size.height)];
-  [ic_clear_path
-      addLineToPoint:CGPointMake(
-                         CGRectGetMinX(innerBounds) + (CGFloat)0.68700 * innerBounds.size.width,
-                         CGRectGetMinY(innerBounds) + (CGFloat)0.73417 * innerBounds.size.height)];
-  [ic_clear_path
-      addLineToPoint:CGPointMake(
-                         CGRectGetMinX(innerBounds) + (CGFloat)0.73417 * innerBounds.size.width,
-                         CGRectGetMinY(innerBounds) + (CGFloat)0.68700 * innerBounds.size.height)];
-  [ic_clear_path
-      addLineToPoint:CGPointMake(
-                         CGRectGetMinX(innerBounds) + (CGFloat)0.54800 * innerBounds.size.width,
-                         CGRectGetMinY(innerBounds) + (CGFloat)0.50083 * innerBounds.size.height)];
-  [ic_clear_path
-      addLineToPoint:CGPointMake(
-                         CGRectGetMinX(innerBounds) + (CGFloat)0.73417 * innerBounds.size.width,
-                         CGRectGetMinY(innerBounds) + (CGFloat)0.31467 * innerBounds.size.height)];
-  [ic_clear_path closePath];
-
-  return ic_clear_path;
 }
 
 #pragma mark Placeholder
@@ -776,7 +674,7 @@ static const CGFloat kFloatingPlaceholderAnimationDuration = (CGFloat)0.15;
         weakSelf.placeholderLabel.transform = CGAffineTransformIdentity;
         weakSelf.placeholderLabel.frame = targetFrame;
         weakSelf.placeholderLabel.font = targetFont;
-        self.isAnimating = NO;
+        weakSelf.isAnimating = NO;
       }];
 }
 
@@ -789,35 +687,6 @@ static const CGFloat kFloatingPlaceholderAnimationDuration = (CGFloat)0.15;
                                      finalRect.size.height / sourceRect.size.height);
 
   return transform;
-}
-
-- (MDCContainedInputViewPlaceholderState)placeholderStateWithPlaceholder:(NSString *)placeholder
-                                                                    text:(NSString *)text
-                                                     canPlaceholderFloat:(BOOL)canPlaceholderFloat
-                                                               isEditing:(BOOL)isEditing {
-  BOOL hasPlaceholder = placeholder.length > 0;
-  BOOL hasText = text.length > 0;
-  if (hasPlaceholder) {
-    if (canPlaceholderFloat) {
-      if (isEditing) {
-        return MDCContainedInputViewPlaceholderStateFloating;
-      } else {
-        if (hasText) {
-          return MDCContainedInputViewPlaceholderStateFloating;
-        } else {
-          return MDCContainedInputViewPlaceholderStateNormal;
-        }
-      }
-    } else {
-      if (hasText) {
-        return MDCContainedInputViewPlaceholderStateNone;
-      } else {
-        return MDCContainedInputViewPlaceholderStateNormal;
-      }
-    }
-  } else {
-    return MDCContainedInputViewPlaceholderStateNone;
-  }
 }
 
 - (UIFont *)floatingPlaceholderFontWithFont:(UIFont *)font
@@ -840,66 +709,10 @@ static const CGFloat kFloatingPlaceholderAnimationDuration = (CGFloat)0.15;
   // Add it!
 }
 
-// TODO: Do something with these or get rid of them.
-#pragma mark Notification Listener Methods
-
-- (void)textFieldDidEndEditingWithNotification:(NSNotification *)notification {
-  if (notification.object != self) {
-    return;
-  }
-}
-
-- (void)textFieldDidChangeWithNotification:(NSNotification *)notification {
-  if (notification.object != self) {
-    return;
-  }
-}
-
-- (void)textFieldDidBeginEditingWithNotification:(NSNotification *)notification {
-  if (notification.object != self) {
-    return;
-  }
-}
-
 #pragma mark Internationalization
 
 - (BOOL)isRTL {
   return self.layoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
-}
-
-#pragma mark Style Management
-
-- (CGFloat)outlineLineWidthForState:(MDCContainedInputViewState)containedInputViewState {
-  CGFloat defaultLineWidth = 1;
-  switch (containedInputViewState) {
-    case MDCContainedInputViewStateActivated:
-    case MDCContainedInputViewStateErrored:
-    case MDCContainedInputViewStateFocused:
-      defaultLineWidth = 2;
-      break;
-    case MDCContainedInputViewStateNormal:
-    case MDCContainedInputViewStateDisabled:
-    default:
-      break;
-  }
-  return defaultLineWidth;
-}
-
-- (CGFloat)underlineThicknessWithMDCContainedInputViewState:
-    (MDCContainedInputViewState)containedInputViewState {
-  CGFloat underlineThickness = 1;
-  switch (containedInputViewState) {
-    case MDCContainedInputViewStateActivated:
-    case MDCContainedInputViewStateErrored:
-    case MDCContainedInputViewStateFocused:
-      underlineThickness = 2;
-      break;
-    case MDCContainedInputViewStateNormal:
-    case MDCContainedInputViewStateDisabled:
-    default:
-      break;
-  }
-  return underlineThickness;
 }
 
 #pragma mark Theming

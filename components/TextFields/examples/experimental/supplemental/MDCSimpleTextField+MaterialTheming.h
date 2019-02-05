@@ -25,12 +25,24 @@
 /**
  Applies a container scheme's subsystem-specific schemes to the receiver.
 
- @param scheme A container scheme instance containing any desired customizations to the theming
- system.
+ @param scheme A container scheme instance.
  */
 - (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
 
+/**
+ Sets an MDCContainerStyleFilled instance as the containerStyle and then applies the container
+ scheme's subsystem-specific schemes to the receiver.
+
+ @param scheme A container scheme instance.
+ */
 - (void)applyFilledThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
+
+/**
+ Sets an MDCContainerStyleOutlined instance as the containerStyle and then applies the container
+ scheme's subsystem-specific schemes to the receiver.
+
+ @param scheme A container scheme instance.
+ */
 - (void)applyOutlinedThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
 
 @end

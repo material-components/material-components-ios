@@ -70,6 +70,7 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewPlaceholderState) {
 };
 
 @protocol MDCContainedInputViewStyle;
+@protocol MDCContainedInputViewColorScheming;
 
 @protocol MDCContainedInputView <NSObject>
 /**
@@ -113,6 +114,37 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewPlaceholderState) {
  A value of @c .5 would result in each underline label getting 50% of the available width.
  */
 @property(nonatomic, assign) CGFloat customUnderlineLabelDrawPriority;
+
+/**
+ When set to YES, the placeholder floats above the input text instead of disappearing. When
+ set to NO it disappears.
+
+ @note The default is YES.
+ @note When set to YES, the text field will reserve space for the floating placeholder in the
+ layout, which will result in a text field that requires more height to render properly. Consider
+ resizing the text field after setting this property, perhaps by calling @c -sizeToFit.
+ */
+@property(nonatomic, assign) BOOL canPlaceholderFloat;
+
+/**
+ This property toggles a state (similar to @c isHighlighted, @c isEnabled, @c isSelected, etc.) that
+ is part of a general interpretation of the states outlined in the Material guidelines for Text
+ Fields. See the @c MDCContainedInputViewState enum for more information.
+ */
+@property(nonatomic, assign) BOOL isErrored;
+
+/**
+ This property toggles a state (similar to @c isHighlighted, @c isEnabled, @c isSelected, etc.) that
+ is part of a general interpretation of the states outlined in the Material guidelines for Text
+ Fields. See the @c MDCContainedInputViewState enum for more information.
+ */
+@property(nonatomic, assign) BOOL isActivated;
+
+- (id<MDCContainedInputViewColorScheming>)containedInputViewColorSchemingForState:
+    (MDCContainedInputViewState)containedInputViewState;
+- (void)setContainedInputViewColorScheming:
+            (id<MDCContainedInputViewColorScheming>)containedInputViewColorScheming
+                                  forState:(MDCContainedInputViewState)textFieldState;
 
 /**
  Returns the rect surrounding the main content, i.e. the area that the container should be drawn
