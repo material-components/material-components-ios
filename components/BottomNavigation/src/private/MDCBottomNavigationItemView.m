@@ -179,16 +179,15 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   CGRect iconFrame = CGRectMake(0, 0, iconSize.width, iconSize.height);
   CGSize badgeSize = [self.badge sizeThatFits:maxSize];
   CGPoint badgeCenter = [self badgeCenterFromIconFrame:iconFrame isRTL:NO];
-  CGRect badgeFrame = CGRectMake(badgeCenter.x - badgeSize.width / 2,
-                                 badgeCenter.y - badgeSize.height / 2, badgeSize.width,
-                                 badgeSize.height);
+  CGRect badgeFrame =
+      CGRectMake(badgeCenter.x - badgeSize.width / 2, badgeCenter.y - badgeSize.height / 2,
+                 badgeSize.width, badgeSize.height);
   CGRect labelFrame = CGRectZero;
   if (!titleHidden) {
     CGSize labelSize = [self.label sizeThatFits:maxSize];
-    labelFrame =
-        CGRectMake(CGRectGetMidX(iconFrame) - labelSize.width / 2,
-                   CGRectGetMaxY(iconFrame) + self.contentVerticalMargin, labelSize.width,
-                   labelSize.height);
+    labelFrame = CGRectMake(CGRectGetMidX(iconFrame) - labelSize.width / 2,
+                            CGRectGetMaxY(iconFrame) + self.contentVerticalMargin, labelSize.width,
+                            labelSize.height);
   }
   return CGRectStandardize(CGRectUnion(labelFrame, CGRectUnion(iconFrame, badgeFrame))).size;
 }
@@ -199,13 +198,13 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   CGRect iconFrame = CGRectMake(0, 0, iconSize.width, iconSize.height);
   CGSize badgeSize = [self.badge sizeThatFits:maxSize];
   CGPoint badgeCenter = [self badgeCenterFromIconFrame:iconFrame isRTL:NO];
-  CGRect badgeFrame = CGRectMake(badgeCenter.x - badgeSize.width / 2,
-                                 badgeCenter.y - badgeSize.height / 2, badgeSize.width,
-                                 badgeSize.height);
+  CGRect badgeFrame =
+      CGRectMake(badgeCenter.x - badgeSize.width / 2, badgeCenter.y - badgeSize.height / 2,
+                 badgeSize.width, badgeSize.height);
   CGSize labelSize = [self.label sizeThatFits:maxSize];
   CGRect labelFrame = CGRectMake(CGRectGetMaxX(iconFrame) + self.contentHorizontalMargin,
-                                 CGRectGetMidY(iconFrame) - labelSize.height / 2,
-                                 labelSize.width, labelSize.height);
+                                 CGRectGetMidY(iconFrame) - labelSize.height / 2, labelSize.width,
+                                 labelSize.height);
   return CGRectStandardize(CGRectUnion(labelFrame, CGRectUnion(iconFrame, badgeFrame))).size;
 }
 
@@ -214,12 +213,8 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 
   [self.label sizeToFit];
   [self.badge sizeToFit];
-  CGSize labelSize =
-  CGSizeMake(CGRectGetWidth(self.label.bounds), CGRectGetHeight(self.label.bounds));
-  CGFloat maxWidth = CGRectGetWidth(self.bounds);
-  self.label.frame = CGRectMake(0, 0, MIN(maxWidth, labelSize.width), labelSize.height);
   self.inkView.maxRippleRadius =
-  (CGFloat)(MDCHypot(CGRectGetHeight(self.bounds), CGRectGetWidth(self.bounds)) / 2);
+      (CGFloat)(MDCHypot(CGRectGetHeight(self.bounds), CGRectGetWidth(self.bounds)) / 2);
   [self centerLayoutAnimated:NO];
 }
 
