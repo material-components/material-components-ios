@@ -301,7 +301,7 @@ static const CGFloat kContentHorizontalMargin = 12;
 
 #pragma mark - ContentInsets
 
-- (void)testContentInsetsVerticalLayoutLTR {
+- (void)testContentInsetsStackedLTR {
   // When
   // Shift DOWN and RIGHT
   self.itemView.titleBelowIcon = YES;
@@ -311,7 +311,7 @@ static const CGFloat kContentHorizontalMargin = 12;
   [self generateAndVerifySnapshot];
 }
 
-- (void)testContentInsetsVerticalLayoutRTL {
+- (void)testContentInsetsStackedRTL {
   // When
   // Shift DOWN and LEFT
   [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleEmpty];
@@ -322,7 +322,28 @@ static const CGFloat kContentHorizontalMargin = 12;
   [self generateAndVerifySnapshot];
 }
 
-- (void)testContentInsetsHorizontalLayoutLTR {
+- (void)testContentInsetsNoopStackedLTR {
+  // When
+  self.itemView.titleBelowIcon = YES;
+  self.itemView.contentInsets = UIEdgeInsetsMake(kHeightTypical / 2, kWidthTypical / 2,
+                                                 kHeightTypical / 2, kWidthTypical / 2);
+  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testContentInsetsNoopStackedRTL {
+  // When
+  [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleEmpty];
+  self.itemView.titleBelowIcon = YES;
+  self.itemView.contentInsets = UIEdgeInsetsMake(kHeightTypical / 2, kWidthTypical / 2,
+                                                 kHeightTypical / 2, kWidthTypical / 2);
+  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testContentInsetsAdjacentLTR {
   // When
   // Shift UP and LEFT
   self.itemView.titleBelowIcon = NO;
@@ -332,12 +353,33 @@ static const CGFloat kContentHorizontalMargin = 12;
   [self generateAndVerifySnapshot];
 }
 
-- (void)testContentInsetsHorizontalLayoutRTL {
+- (void)testContentInsetsAdjacentRTL {
   // When
   // Shift UP and RIGHT
   [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleEmpty];
   self.itemView.titleBelowIcon = NO;
   self.itemView.contentInsets = UIEdgeInsetsMake(-5, -10, 5, 10);
+  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testContentInsetsNoopAdjacentLTR {
+  // When
+  self.itemView.titleBelowIcon = NO;
+  self.itemView.contentInsets = UIEdgeInsetsMake(kHeightTypical / 2, kWidthTypical / 2,
+                                                 kHeightTypical / 2, kWidthTypical / 2);
+  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testContentInsetsNoopAdjacentRTL {
+  // When
+  [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleEmpty];
+  self.itemView.titleBelowIcon = NO;
+  self.itemView.contentInsets = UIEdgeInsetsMake(kHeightTypical / 2, kWidthTypical / 2,
+                                                 kHeightTypical / 2, kWidthTypical / 2);
   self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
 
   [self generateAndVerifySnapshot];
