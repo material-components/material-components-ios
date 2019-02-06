@@ -31,6 +31,8 @@ static const CGFloat kCornerRadius = 4;
   }
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+  // TODO(https://github.com/material-components/material-components-ios/issues/6566 ): Inline the
+  // theming code
   [MDCAlertColorThemer applySemanticColorScheme:colorScheme toAlertController:self];
 #pragma clang diagnostic pop
 
@@ -42,6 +44,8 @@ static const CGFloat kCornerRadius = 4;
   }
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+  // TODO(https://github.com/material-components/material-components-ios/issues/6566 ): Inline the
+  // theming code
   [MDCAlertTypographyThemer applyTypographyScheme:typographyScheme toAlertController:self];
 #pragma clang diagnostic pop
 
