@@ -18,7 +18,10 @@
 #import "MaterialButtons+TypographyThemer.h"
 #import "MaterialTypography.h"
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 @implementation MDCAlertTypographyThemer
+#pragma clang diagnostic pop
 
 + (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme
             toAlertController:(nonnull MDCAlertController *)alertController {

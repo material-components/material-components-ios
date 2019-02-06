@@ -29,7 +29,10 @@ static const CGFloat kCornerRadius = 4;
     colorScheme =
         [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   }
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   [MDCAlertColorThemer applySemanticColorScheme:colorScheme toAlertController:self];
+#pragma clang diagnostic pop
 
   // Typography
   id<MDCTypographyScheming> typographyScheme = scheme.typographyScheme;
@@ -37,7 +40,10 @@ static const CGFloat kCornerRadius = 4;
     typographyScheme =
         [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
   }
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   [MDCAlertTypographyThemer applyTypographyScheme:typographyScheme toAlertController:self];
+#pragma clang diagnostic pop
 
   // Other properties
   self.cornerRadius = kCornerRadius;
