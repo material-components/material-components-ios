@@ -1,18 +1,10 @@
 # #develop#
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+Add additional snapshot tests and mark outdated theming API as deprecated.
 
-Replace this explanations for how to resolve the breaking changes.
 ## New deprecations
 
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
-## API changes
-
-## Component changes
+The previous theming API is being depracted in favor of MDCContainerScheme.
 
 ## Changes
 
@@ -22,7 +14,7 @@ Replace this text with example code for each new feature.
 
 ### BottomAppBar
 
-* [Fix it/bottom app bar cut out (#6420)](https://github.com/material-components/material-components-ios/commit/e1008e52061908c5e8f3caec55e071be4aeaea10) (Peter Friese)
+* [Fix bottom app bar cut out (#6420)](https://github.com/material-components/material-components-ios/commit/e1008e52061908c5e8f3caec55e071be4aeaea10) (Peter Friese)
 
 ### BottomNavigation
 
