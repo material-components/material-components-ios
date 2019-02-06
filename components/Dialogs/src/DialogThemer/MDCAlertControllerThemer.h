@@ -17,8 +17,8 @@
 #import "MDCAlertScheme.h"
 #import "MaterialDialogs.h"
 
-__deprecated_msg("Please use MaterialDialogs+Theming.") @interface MDCAlertControllerThemer :
-    NSObject
+__deprecated_msg("Please use MaterialDialogs+Theming.") @interface MDCAlertControllerThemer
+    : NSObject
 
 /**
  Applies a component scheme's properties to an MDCAlertController.
