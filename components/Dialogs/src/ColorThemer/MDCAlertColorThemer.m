@@ -18,7 +18,10 @@
 #import "MaterialButtons+ColorThemer.h"
 #import "MaterialButtons.h"
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 @implementation MDCAlertColorThemer
+#pragma clang diagnostic pop
 
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                toAlertController:(nonnull MDCAlertController *)alertController {
