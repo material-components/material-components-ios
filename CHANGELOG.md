@@ -1,3 +1,7 @@
+# 76.1.1
+
+Fix Cocoapods validation failures.
+
 # 76.1.0
 
 Add additional snapshot tests and mark outdated theming API as deprecated.
