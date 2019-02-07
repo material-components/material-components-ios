@@ -1,14 +1,14 @@
 # 76.1.1
 
-Fix build failures.
+Fix Cocoapods validation failures.
 
 # 76.1.0
 
-Add additional snapshot tests and mark previous Dialog Themer APIs as deprecated.
+Add additional snapshot tests and mark outdated theming API as deprecated.
 
 ## New deprecations
 
-The previous theming API is being deprecated in favor of our new [Theming Extensions](https://github.com/material-components/material-components-ios/blob/develop/components/schemes/README.md).
+The previous theming API is being deprecated in favor of MDCContainerScheme.
 Bottom Navigation's itemsContentInsets in is being deprecated as it is no longer used internally.
 
 ## Changes
