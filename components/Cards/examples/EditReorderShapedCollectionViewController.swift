@@ -15,7 +15,6 @@
 import UIKit
 
 import MaterialComponents.MaterialCards
-import MaterialComponents.MaterialShapeLibrary
 import MaterialComponentsBeta.MaterialContainerScheme
 
 class ShapedCardCollectionCell: MDCCardCollectionCell {
