@@ -17,7 +17,6 @@ import XCTest
 import MaterialComponents.MaterialCards
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialShapeScheme
-import MaterialComponents.MaterialShapeLibrary
 import MaterialComponentsBeta.MaterialCards_Theming
 import MaterialComponentsBeta.MaterialContainerScheme
 
