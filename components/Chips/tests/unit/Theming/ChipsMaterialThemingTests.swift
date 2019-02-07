@@ -17,7 +17,6 @@ import XCTest
 import MaterialComponents.MaterialChips
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialShapeScheme
-import MaterialComponents.MaterialShapeLibrary
 import MaterialComponents.MaterialTypographyScheme
 import MaterialComponentsBeta.MaterialChips_Theming
 import MaterialComponentsBeta.MaterialContainerScheme
