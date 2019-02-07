@@ -55,7 +55,7 @@ static const CGFloat kCornerRadius = 4;
 - (void)applyTypographyThemeWithScheme:(id<MDCTypographyScheming>)typographyScheme {
   if (!typographyScheme) {
     typographyScheme =
-    [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
   }
   self.titleFont = typographyScheme.headline6;
   self.messageFont = typographyScheme.body1;
@@ -64,7 +64,7 @@ static const CGFloat kCornerRadius = 4;
 - (void)applyColorThemeWithScheme:(id<MDCColorScheming>)colorScheme {
   if (!colorScheme) {
     colorScheme =
-    [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   }
 
   self.titleColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87];
