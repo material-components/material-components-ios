@@ -21,7 +21,7 @@
  squares on a transparent background.
 
  @param size The size of the image to create.
- @returns a new image of the specified size.
+ @return a new image of the specified size.
  */
 + (UIImage *)mdc_testImageOfSize:(CGSize)size;
 
