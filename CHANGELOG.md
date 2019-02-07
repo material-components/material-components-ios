@@ -1,3 +1,49 @@
+# 76.1.0
+
+Add additional snapshot tests and mark outdated theming API as deprecated.
+
+## New deprecations
+
+The previous theming API is being deprecated in favor of MDCContainerScheme.
+Bottom Navigation's itemsContentInsets in is being deprecated as it is no longer used internally.
+
+## Changes
+
+### AppBar
+
+* [Add animated tab switching example (#6447)](https://github.com/material-components/material-components-ios/commit/b64e1af39577ca76bfbf454b2d1c810db5d82a1a) (Brian Moore)
+
+### BottomAppBar
+
+* [Fix bottom app bar cut out (#6420)](https://github.com/material-components/material-components-ios/commit/e1008e52061908c5e8f3caec55e071be4aeaea10) (Peter Friese)
+
+### BottomNavigation
+
+* [Add sizeThatFits: to Item View (#6559)](https://github.com/material-components/material-components-ios/commit/24ec11d91fe1434499e58e245521bef15c50908f) (Robert Moore)
+* [Deprecate `itemsContentInsets` API (#6557)](https://github.com/material-components/material-components-ios/commit/c671c29be66752131b65f8e6702d0dc8e218b0a8) (Robert Moore)
+* [Minor refactor of snapshot tests. (#6535)](https://github.com/material-components/material-components-ios/commit/0d373a68c113f66a4cfde9426ebce14f78d1bb63) (Robert Moore)
+* [Suppress deprecation warning. (#6561)](https://github.com/material-components/material-components-ios/commit/d1867c9c97be464ea6daa2bf8eab95dd895c790f) (Robert Moore)
+* [Use chrome_reader in example. (#6551)](https://github.com/material-components/material-components-ios/commit/e1fe168b73becf77a7a2abd2a4cf3185ab3f1b37) (Robert Moore)
+* [Add ItemView snapshot tests. (#6533)](https://github.com/material-components/material-components-ios/commit/914be3bac19ae83d160fb6cb6c2b419806955969) (Robert Moore)
+* [Add RTL snapshot tests.   (#6539)](https://github.com/material-components/material-components-ios/commit/1b346744544103f1f72009c620e09c4fe3edd2ca) (Robert Moore)
+* [Add snapshot tests for contentInsets (#6554)](https://github.com/material-components/material-components-ios/commit/418e8ef7537a8f98463737becc1f428457e4fe3d) (Robert Moore)
+* [Simplify and improve badge view.  (#6544)](https://github.com/material-components/material-components-ios/commit/b1e9182aaf4621ab62fdf2a694baf7ebdc669348) (Robert Moore)
+* [Vary badges in snapshot tests. (#6550)](https://github.com/material-components/material-components-ios/commit/bbe86a3fcbe4d13a7cefa2213412ae29629c959d) (Robert Moore)
+
+### Dialogs
+
+* [Deprecate Themers and AlertScheme. (#6564)](https://github.com/material-components/material-components-ios/commit/8c5b6d0d6d7febf7a0f6c47dff1581890f98eaeb) (Robert Moore)
+* [Fix deprecation warnings. (#6567)](https://github.com/material-components/material-components-ios/commit/9a3397fe63462ce691c8c7dc194dea90c95f194f) (Robert Moore)
+* [Theming dialog actions doc (#6547)](https://github.com/material-components/material-components-ios/commit/9eebe7a2e64c01453201febe5dc44228153e7a8f) (Galia Kaufman)
+
+## Multi-component changes
+
+* [Add test image helper. (#6534)](https://github.com/material-components/material-components-ios/commit/b26ba5db3e004bd7b77779ce68c60935e5c94b51) (Robert Moore)
+* [Completed audit of swift forced unwrapping in catalog (#6186)](https://github.com/material-components/material-components-ios/commit/fc7f30d0127bf2cd2a65ca365aa7d841cbac110e) (Joe Aguilar)
+* [Improve snapshot tests. (#6543)](https://github.com/material-components/material-components-ios/commit/c2adc2813c6c5eca713e2836bf725cbd7fe8e207) (Robert Moore)
+
+---
+
 # 76.0.0
 
 This major release changes the Material Theming colors for Cards cells. It also includes bug fixes
