@@ -11,12 +11,17 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
 #import "MDCBottomNavigationItemBadge.h"
 
-static const CGFloat kMDCBottomNavigationItemBadgeFontSize = 10;
-static const CGFloat kMDCBottomNavigationItemBadgeXPadding = 8;
-static const CGFloat kMDCBottomNavigationItemBadgeYPadding = 2;
+#import <CoreGraphics/CoreGraphics.h>
+
+#import "MaterialMath.h"
+
+static const CGFloat kBadgeFontSize = 10;
+// These padding values get pretty close to the material.io guidelines article.
+static const CGFloat kBadgeYPadding = 2;
+// For an empty badge, ensure that the size is close to the guidelines article.
+static const CGFloat kMinDiameter = 9;
 
 @implementation MDCBottomNavigationItemBadge
 
@@ -45,7 +50,7 @@ static const CGFloat kMDCBottomNavigationItemBadgeYPadding = 2;
   if (self.subviews.count == 0) {
     _badgeValueLabel = [[UILabel alloc] initWithFrame:self.bounds];
     _badgeValueLabel.textColor = [UIColor whiteColor];
-    _badgeValueLabel.font = [UIFont systemFontOfSize:kMDCBottomNavigationItemBadgeFontSize];
+    _badgeValueLabel.font = [UIFont systemFontOfSize:kBadgeFontSize];
     _badgeValueLabel.textAlignment = NSTextAlignmentCenter;
     _badgeValueLabel.isAccessibilityElement = NO;
     _badgeValueLabel.text = _badgeValue;
@@ -56,34 +61,64 @@ static const CGFloat kMDCBottomNavigationItemBadgeYPadding = 2;
   }
 }
 
-- (void)layoutSubviews {
-  [super layoutSubviews];
-  [self sizeBadge];
+- (CGFloat)badgeXPaddingForRadius:(CGFloat)radius {
+  CGFloat badgeXPadding = (CGFloat)(sin(M_PI_4) * (radius));  // sin(ø) = badgeXPadding / radius
+  badgeXPadding += 1;  // Extra point to ensure some background extends beyond the label.
+  // Align to the nearest pixel
+  badgeXPadding = MDCRound(badgeXPadding * self.contentScaleFactor) / self.contentScaleFactor;
+
+  return badgeXPadding;
 }
 
-- (void)sizeBadge {
-  [_badgeValueLabel sizeToFit];
-  _xPadding = kMDCBottomNavigationItemBadgeXPadding;
-  _yPadding = kMDCBottomNavigationItemBadgeYPadding;
+- (void)layoutSubviews {
+  [super layoutSubviews];
 
-  _badgeCircleWidth = CGRectGetWidth(_badgeValueLabel.bounds) + _xPadding;
-  _badgeCircleHeight = CGRectGetHeight(_badgeValueLabel.bounds) + _yPadding;
-
-  if (_badgeCircleWidth < _badgeCircleHeight) {
-    _badgeCircleWidth = _badgeCircleHeight;
-  }
-  self.frame = CGRectMake(CGRectGetMinX(self.frame), CGRectGetMinY(self.frame), _badgeCircleWidth,
-                          _badgeCircleHeight);
-  self.badgeValueLabel.center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
-
-  CGFloat badgeRadius = CGRectGetMidY(self.bounds);
+  CGFloat badgeRadius = CGRectGetHeight(self.bounds) / 2;
+  CGRect availableContentRect = CGRectStandardize(
+      CGRectInset(self.bounds, [self badgeXPaddingForRadius:badgeRadius], kBadgeYPadding));
+  CGSize labelFitSize = [self.badgeValueLabel sizeThatFits:availableContentRect.size];
+  self.badgeValueLabel.bounds = CGRectMake(0, 0, labelFitSize.width, labelFitSize.height);
+  self.badgeValueLabel.center =
+      CGPointMake(CGRectGetMidX(availableContentRect), CGRectGetMidY(availableContentRect));
   self.layer.cornerRadius = badgeRadius;
   self.layer.backgroundColor = self.badgeColor.CGColor;
 }
 
+- (CGSize)sizeThatFits:(CGSize)size {
+  if (self.badgeValue == nil) {
+    return CGSizeZero;
+  }
+
+  // Calculate the badge and label heights
+  CGSize labelSize = [self.badgeValueLabel sizeThatFits:size];
+  CGFloat badgeHeight = labelSize.height + kBadgeYPadding;
+  if (badgeHeight > size.height) {
+    badgeHeight = size.height;
+    labelSize = CGSizeMake(labelSize.width, badgeHeight - kBadgeYPadding);
+  }
+  CGFloat contentXPadding = [self badgeXPaddingForRadius:badgeHeight / 2];
+  CGFloat badgeWidth = labelSize.width + contentXPadding;
+  if (badgeWidth > size.width) {
+    badgeWidth = size.width;
+    labelSize = CGSizeMake(badgeWidth - contentXPadding, labelSize.height);
+  }
+  badgeWidth = MAX(kMinDiameter, badgeWidth);
+  badgeHeight = MAX(kMinDiameter, badgeHeight);
+  if (badgeWidth < badgeHeight) {
+    badgeWidth = badgeHeight;
+  }
+  return CGSizeMake(badgeWidth, badgeHeight);
+}
+
+- (void)sizeToFit {
+  CGSize fitSize = [self sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
+  CGRect newBounds = CGRectMake(0, 0, fitSize.width, fitSize.height);
+  self.bounds = newBounds;
+}
+
 - (void)setBadgeValue:(NSString *)badgeValue {
   _badgeValue = badgeValue;
-  _badgeValueLabel.text = badgeValue;
+  self.badgeValueLabel.text = badgeValue;
   [self setNeedsLayout];
 }
 

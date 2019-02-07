@@ -30,6 +30,7 @@ involve multiple tasks.
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/dialogs/api-docs/Classes/MDCAlertController.html">MDCAlertController</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/dialogs/api-docs/Classes/MDCAlertControllerView.html">MDCAlertControllerView</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/dialogs/api-docs/Classes/MDCDialogPresentationController.html">MDCDialogPresentationController</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/dialogs/api-docs/Protocols/MDCDialogPresentationControllerDelegate.html">MDCDialogPresentationControllerDelegate</a></li>
   <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/dialogs/api-docs/Enums.html">Enumerations</a></li>
   <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/dialogs/api-docs/Enums/MDCActionEmphasis.html">MDCActionEmphasis</a></li>
 </ul>
@@ -46,7 +47,8 @@ involve multiple tasks.
   - [Typical use: modal dialog](#typical-use-modal-dialog)
   - [Typical use: alert](#typical-use-alert)
 - [Extensions](#extensions)
-  - [Theming extensions](#theming-extensions)
+  - [Theming Extensions](#theming-extensions)
+  - [Theming Actions](#theming-actions)
   - [Using a Themer](#using-a-themer)
 - [Accessibility](#accessibility)
   - [MDCPresentationController Accessibility](#mdcpresentationcontroller-accessibility)
@@ -191,7 +193,7 @@ MDCAlertAction *alertAction =
 
 <!-- Extracted from docs/theming.md -->
 
-### Theming extensions
+### Theming Extensions
 
 You can theme an MDCDialog to match the Material Design Dialog using your app's schemes in the Dialog theming
 extension.
@@ -228,6 +230,65 @@ MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
 
 // Step 3: Apply the container scheme to your component using the desired alert style
 [alertController applyThemeWithScheme:containerScheme];
+```
+<!--</div>-->
+
+### Theming Actions
+
+Actions in MDCAlertController have emphasis which affects how the Dialog's buttons will be themed.
+High, Medium and low emphasis are supported.
+
+<div class="article__asset article__asset--screenshot">
+  <img src="docs/assets/dialogButtons.png" alt="An alert presented with a title, body, high-emphasis 'OK' button and low-emphasis 'Cancel' button." width="320">
+</div>
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+  // Create or reuse a Container scheme
+  let scheme = MDCContainerScheme()
+
+  // Create an Alert dialog
+  let alert = MDCAlertController(title: "Button Theming", message: "Add item to cart?")
+
+  // Add actions with emphases that will generate buttons with the desired appearance. 
+  // An example of a high and a medium emphasis actions:
+  alert.addAction(MDCAlertAction(title:"Add Item", emphasis: .high, handler: handler))
+  alert.addAction(MDCAlertAction(title:"Cancel", emphasis: .medium, handler: handler))
+
+  // Make sure to apply theming after all actions are added, so they are themed too!
+  alert.applyTheme(withScheme: scheme)
+
+  // present the alert
+  present(alertController, animated:true, completion:nil)
+```
+
+#### Objective-C
+
+```objc
+  // Create or reuse a Container scheme
+  MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
+
+  // Create an Alert dialog
+  MDCAlertController *alert = 
+      [MDCAlertController alertControllerWithTitle:@"Button Theming" message:@"Add item to cart?"];
+
+  // Add actions with different emphasis, creating buttons with different themes.
+  MDCAlertAction *primaryAction = [MDCAlertAction actionWithTitle:@"Add Item"
+                                                          emphasis:MDCActionEmphasisHigh
+                                                           handler:handler];
+  [alert addAction:primaryAction];
+
+  MDCAlertAction *cancelAction = [MDCAlertAction actionWithTitle:@"Cancel"
+                                                         emphasis:MDCActionEmphasisMedium
+                                                          handler:handler];
+  [alert addAction:cancelAction];
+
+  // Make sure to apply theming after all actions are added, so they are themed too!
+  [alert applyThemeWithScheme:scheme];
+
+  // present the alert
+  [self presentViewController:alert animated:YES completion:...];
 ```
 <!--</div>-->
 
