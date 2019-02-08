@@ -1,17 +1,18 @@
 experimental_sources = [
   'components/*/examples/experimental/supplemental/*.{h,m,swift}',
   'components/*/examples/experimental/*.{h,m,swift}',
+  'components/schemes/*/examples/src/*.{h,m,swift}',
 ]
 
 experimental_headers = [
   'components/*/examples/experimental/supplemental/*.h',
   'components/*/examples/experimental/*.h',
+  'components/schemes/*/examples/src/*.h',
 ]
 
 experimental_resources = [
   'components/*/examples/experimental/resources/*'
 ]
-
 
 Pod::Spec.new do |s|
   s.name         = "MaterialComponentsExamples"
