@@ -1,6 +1,17 @@
+# 76.1.2
+
+Fix build tooling.
+
+* [Bumped version number to 76.1.2.](https://github.com/material-components/material-components-ios/commit/ac78d824a9f201b15497c42aedc40a2a28068654) (Ian Gordon)
+* [{kokoro} Fix develop (#6575)](https://github.com/material-components/material-components-ios/commit/3b9d66bf694f6368d804b09d529bf529e8829db0) (Robert Moore)
+
+---
+
 # 76.1.1
 
 Fix Cocoapods validation failures.
+
+---
 
 # 76.1.0
 
