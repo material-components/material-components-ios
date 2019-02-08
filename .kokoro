@@ -16,7 +16,7 @@
 
 # Fail on any error
 set -e
-KOKORO_VERSION="1.5.3"
+COCOAPODS_VERSION="1.5.3"
 
 if [ -n "$KOKORO_BUILD_NUMBER" ]; then
   repo_dir='github/repo'
@@ -389,7 +389,7 @@ run_cocoapods() {
 
     gem_install xcpretty 
     # TODO(https://github.com/material-components/material-components-ios/issues/6356 ): Move to 1.6
-    gem install cocoapods -v "$KOKORO_VERSION"
+    gem install cocoapods -v "$COCOAPODS_VERSION"
     pod --version
 
     # Install git-lfs
