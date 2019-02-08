@@ -711,6 +711,14 @@
   return self.fundament.underline;
 }
 
+- (BOOL)hasTextContent {
+  return self.text.length > 0;
+}
+
+- (void)clearText {
+  self.text = nil;
+}
+
 #pragma mark - UITextView Notification Observation
 
 - (void)textViewDidBeginEditing:(__unused NSNotification *)note {
