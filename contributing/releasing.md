@@ -71,6 +71,21 @@ Note: if for some reason `cut` fails, first ensure that nobody else is in the mi
 You will now have a local `release-candidate` branch, a new section in CHANGELOG.md titled
 "release-candidate", and the `release-candidate` branch will have been pushed to GitHub.
 
+#### Hotfixing
+
+If you need to cut a hotfix release, run the following command instead:
+
+    scripts/release cut --hotfix
+
+A hotfix release is like a regular release, but its scope is limited specifically to the fix. Hotfix
+release candidates start from origin/stable rather than origin/develop. 
+
+If the hotfix is to fix a regression or a problematic commit in a recent release, the ideal
+path forward is to revert that commit using the `git revert <commit-hash>` command and opening a PR with that change to the develop branch.
+After that PR is merged, you should cherry-pick the revert commit into the `release-candidate` branch: `git cherry-pick <commit-hash>`.
+
+Other than the steps above regarding hotfixing, the entire release process stays the same.
+
 #### Create a Pull Request for the Release Branch
 
 If you have not clicked [the release candidate pull request comparison
@@ -87,21 +102,6 @@ release-blocking clients are notified of a new release.
 
 **Do not use GitHub's big green button to merge the approved pull request.** Release are an
 exception to our normal squash-and-merge procedure.
-
-#### Hotfixing
-
-If you need to cut a hotfix release, run the following command instead:
-
-    scripts/release cut --hotfix
-
-A hotfix release is like a regular release, but its scope is limited specifically to the fix. Hotfix
-release candidates start from origin/stable rather than origin/develop. 
-
-If the hotfix is to fix a regression or a problematic commit in a recent release, the ideal
-path forward is to revert that commit using the `git revert <commit-hash>` command and opening a PR with that change to the develop branch.
-After that PR is merged, you should cherry-pick the revert commit into the `release-candidate` branch: `git cherry-pick <commit-hash>`.
-
-Other than the steps above regarding hotfixing, the entire release process stays the same.
 
 ### Start internal testing
 
