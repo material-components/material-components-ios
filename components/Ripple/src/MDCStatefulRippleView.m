@@ -118,7 +118,7 @@ static UIColor *RippleSelectedColor(void) {
 }
 
 - (void)setSelected:(BOOL)selected {
-  if (!self.allowsSelection) {
+  if (!self.allowsSelection || _tapWentOutsideOfBounds) {
     // If we disallow selection we don't want to apply any visual or state changes for selection.
     return;
   }
