@@ -37,8 +37,6 @@
 @property(nonatomic, strong) UIColor *unselectedItemTintColor UI_APPEARANCE_SELECTOR;
 @property(nonatomic, strong) UIColor *selectedItemTitleColor;
 
-@property(nonatomic, assign) UIEdgeInsets contentInsets;
-
 @property(nonatomic, assign) CGFloat contentVerticalMargin;
 @property(nonatomic, assign) CGFloat contentHorizontalMargin;
 
