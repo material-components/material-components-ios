@@ -14,34 +14,48 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MDCContainedInputView.h"
 #import "MaterialChips.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-//typedef NS_ENUM(NSUInteger, InputChipViewOrien) {
+// typedef NS_ENUM(NSUInteger, InputChipViewOrien) {
 //};
-
 
 @interface InputChipViewLayout : NSObject
 
-@property (nonatomic, strong) NSArray<NSValue *> *chipFrames;
+@property(nonatomic, strong) NSArray<NSValue *> *chipFrames;
 
-@property (nonatomic, assign) CGRect textFieldFrame;
-@property (nonatomic, assign) CGRect scrollViewContentViewTouchForwardingView;
-@property (nonatomic, assign) CGPoint scrollViewContentOffset;
-@property (nonatomic, assign) CGPoint scrollViewContentInset;
-@property (nonatomic, assign) CGSize scrollViewContentSize;
+@property(nonatomic, assign) CGRect placeholderFrameFloating;
+@property(nonatomic, assign) CGRect placeholderFrameNormal;
 
-- (instancetype)initWithBounds:(CGRect)bounds
-                         chips:(NSArray<UIView *> *)chips
-                staleChipViews:(NSArray<UIView *> *)staleChipViews
-                  canChipsWrap:(BOOL)canChipsWrap
-                 chipRowHeight:(CGFloat)chipRowHeight
-                 textFieldText:(NSString *)textFieldText
-                   placeholder:(NSString *)placeholder
-                 textFieldFont:(UIFont *)textFieldFont
-                 contentInsets:(UIEdgeInsets)contentInsets
-                         isRTL:(BOOL)isRTL;
+@property(nonatomic, assign) CGRect textFieldFrame;
+@property(nonatomic, assign) CGRect scrollViewContentViewTouchForwardingView;
+@property(nonatomic, assign) CGPoint scrollViewContentOffset;
+@property(nonatomic, assign) CGPoint scrollViewContentInset;
+@property(nonatomic, assign) CGSize scrollViewContentSize;
+
+- (instancetype)initWithSize:(CGSize)size
+                      containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
+                                text:(NSString *)text
+                         placeholder:(NSString *)placeholder
+                                font:(UIFont *)font
+             floatingPlaceholderFont:(UIFont *)floatingPlaceholderFont
+                 canPlaceholderFloat:(BOOL)canPlaceholderFloat
+                               chips:(NSArray<UIView *> *)chips
+                      staleChipViews:(NSArray<UIView *> *)staleChipViews
+                        canChipsWrap:(BOOL)canChipsWrap
+                       chipRowHeight:(CGFloat)chipRowHeight
+                       contentInsets:(UIEdgeInsets)contentInsets
+                         clearButton:(UIButton *)clearButton
+                 clearButtonViewMode:(UITextFieldViewMode)clearButtonViewMode
+                  leftUnderlineLabel:(UILabel *)leftUnderlineLabel
+                 rightUnderlineLabel:(UILabel *)rightUnderlineLabel
+          underlineLabelDrawPriority:
+              (MDCContainedInputViewUnderlineLabelDrawPriority)underlineLabelDrawPriority
+    customUnderlineLabelDrawPriority:(CGFloat)normalizedCustomUnderlineLabelDrawPriority
+                               isRTL:(BOOL)isRTL
+                           isEditing:(BOOL)isEditing;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -19,17 +19,17 @@
 @implementation InputChipViewColorSchemeAdapter
 
 - (instancetype)initWithColorScheme:(MDCSemanticColorScheme *)colorScheme {
-//                     textFieldState:(TextFieldState)textFieldState {
+  //                     textFieldState:(TextFieldState)textFieldState {
   self = [super init];
   if (self) {
     [self assignPropertiesWithColorScheme:colorScheme];
-//                           textFieldState:textFieldState];
+    //                           textFieldState:textFieldState];
   }
   return self;
 }
 
 - (void)assignPropertiesWithColorScheme:(MDCSemanticColorScheme *)colorScheme {
-//                         textFieldState:(TextFieldState)textFieldState {
+  //                         textFieldState:(TextFieldState)textFieldState {
   UIColor *textColor = colorScheme.onSurfaceColor;
   UIColor *underlineLabelColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
   UIColor *placeholderLabelColor =
@@ -41,28 +41,28 @@
   UIColor *clearButtonTintColor =
       [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.20];
 
-//  switch (textFieldState) {
-//    case TextFieldStateNormal:
-//      break;
-//    case TextFieldStateActivated:
-//      break;
-//    case TextFieldStateDisabled:
-//      placeholderLabelColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.10];
-//      break;
-//    case TextFieldStateErrored:
-//      placeholderLabelColor = colorScheme.errorColor;
-//      underlineLabelColor = colorScheme.errorColor;
-//      filledSublayerUnderlineFillColor = colorScheme.errorColor;
-//      outlineColor = colorScheme.errorColor;
-//      break;
-//    case TextFieldStateFocused:
-//      outlineColor = colorScheme.primaryColor;
-//      placeholderLabelColor = colorScheme.primaryColor;
-//      filledSublayerUnderlineFillColor = colorScheme.primaryColor;
-//      break;
-//    default:
-//      break;
-//  }
+  //  switch (textFieldState) {
+  //    case TextFieldStateNormal:
+  //      break;
+  //    case TextFieldStateActivated:
+  //      break;
+  //    case TextFieldStateDisabled:
+  //      placeholderLabelColor = [colorScheme.onSurfaceColor
+  //      colorWithAlphaComponent:(CGFloat)0.10]; break;
+  //    case TextFieldStateErrored:
+  //      placeholderLabelColor = colorScheme.errorColor;
+  //      underlineLabelColor = colorScheme.errorColor;
+  //      filledSublayerUnderlineFillColor = colorScheme.errorColor;
+  //      outlineColor = colorScheme.errorColor;
+  //      break;
+  //    case TextFieldStateFocused:
+  //      outlineColor = colorScheme.primaryColor;
+  //      placeholderLabelColor = colorScheme.primaryColor;
+  //      filledSublayerUnderlineFillColor = colorScheme.primaryColor;
+  //      break;
+  //    default:
+  //      break;
+  //  }
 
   outlineColor = colorScheme.primaryColor;
   placeholderLabelColor = colorScheme.primaryColor;
@@ -78,4 +78,3 @@
 }
 
 @end
-

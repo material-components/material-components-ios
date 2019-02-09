@@ -16,18 +16,16 @@
 
 #import "MaterialButtons.h"
 
+#import "InputChipView.h"
 #import "MaterialButtons+Theming.h"
 #import "MaterialColorScheme.h"
-#import "InputChipView.h"
 
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar+TypographyThemer.h"
 #import "MaterialButtons+ButtonThemer.h"
 #import "MaterialChips.h"
 
-
 #import "InputChipView+MaterialTheming.h"
-
 
 @interface InputChipViewExampleViewController () <UITextFieldDelegate>
 
@@ -127,23 +125,24 @@
   self.toggleErrorButton.frame = toggleErrorButtonFrame;
 
   CGFloat inputChipViewWidth = CGRectGetWidth(self.scrollView.frame) - (2 * padding);
-//  CGSize inputChipViewFittingSize = CGSizeMake(inputChipViewWidth, CGFLOAT_MAX);
+  //  CGSize inputChipViewFittingSize = CGSizeMake(inputChipViewWidth, CGFLOAT_MAX);
 
   CGFloat nonWrappingInputChipViewMinX = padding;
   CGFloat nonWrappingInputChipViewMinY = toggleErrorButtonMinY + toggleErrorButtonHeight + padding;
   CGSize nonWrappingInputChipViewSize = CGSizeMake(inputChipViewWidth, 60);
   CGRect nonWrappingInputChipViewButtonFrame =
-      CGRectMake(nonWrappingInputChipViewMinX, nonWrappingInputChipViewMinY, nonWrappingInputChipViewSize.width,
-                 nonWrappingInputChipViewSize.height);
+      CGRectMake(nonWrappingInputChipViewMinX, nonWrappingInputChipViewMinY,
+                 nonWrappingInputChipViewSize.width, nonWrappingInputChipViewSize.height);
   self.nonWrappingInputChipView.frame = nonWrappingInputChipViewButtonFrame;
   [self.nonWrappingInputChipView setNeedsLayout];
 
   CGFloat wrappingInputChipViewMinX = padding;
-  CGFloat wrappingInputChipViewMinY = nonWrappingInputChipViewMinY + nonWrappingInputChipViewSize.height + padding;
+  CGFloat wrappingInputChipViewMinY =
+      nonWrappingInputChipViewMinY + nonWrappingInputChipViewSize.height + padding;
   CGSize wrappingInputChipViewSize = CGSizeMake(inputChipViewWidth, 150);
   CGRect wrappingInputChipViewFrame =
-      CGRectMake(wrappingInputChipViewMinX, wrappingInputChipViewMinY, wrappingInputChipViewSize.width,
-                 wrappingInputChipViewSize.height);
+      CGRectMake(wrappingInputChipViewMinX, wrappingInputChipViewMinY,
+                 wrappingInputChipViewSize.width, wrappingInputChipViewSize.height);
   self.wrappingInputChipView.frame = wrappingInputChipViewFrame;
   [self.wrappingInputChipView setNeedsLayout];
 }
@@ -195,14 +194,17 @@
 - (void)addNonWrappingInputChipView {
   self.nonWrappingInputChipView = [[InputChipView alloc] init];
   self.nonWrappingInputChipView.textField.placeholder = @"placeholder 1";
-  [self.wrappingInputChipView applyFilledThemeWithScheme:self.containerScheme];
+  [self.nonWrappingInputChipView applyFilledThemeWithScheme:self.containerScheme];
   self.nonWrappingInputChipView.canChipsWrap = NO;
+  self.nonWrappingInputChipView.canPlaceholderFloat = NO;
   [self.scrollView addSubview:self.nonWrappingInputChipView];
   self.nonWrappingInputChipView.textField.delegate = self;
-  [self.nonWrappingInputChipView addTarget:self action:@selector(handleTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
-  [self.nonWrappingInputChipView addTarget:self action:@selector(handleTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
-  [self.nonWrappingInputChipView addTarget:self action:@selector(handleTouchDown:) forControlEvents:UIControlEventTouchDown];
-  [self.nonWrappingInputChipView addTarget:self action:@selector(handleTouchDragExit:) forControlEvents:UIControlEventTouchDragExit];
+  //  [self.nonWrappingInputChipView addTarget:self action:@selector(handleTouchUpOutside:)
+  //  forControlEvents:UIControlEventTouchUpOutside]; [self.nonWrappingInputChipView addTarget:self
+  //  action:@selector(handleTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
+  //  [self.nonWrappingInputChipView addTarget:self action:@selector(handleTouchDown:)
+  //  forControlEvents:UIControlEventTouchDown]; [self.nonWrappingInputChipView addTarget:self
+  //  action:@selector(handleTouchDragExit:) forControlEvents:UIControlEventTouchDragExit];
 }
 
 - (void)handleTouchUpInside:(InputChipView *)inputChipView {
@@ -223,9 +225,10 @@
 
 - (void)addWrappingInputChipView {
   self.wrappingInputChipView = [[InputChipView alloc] init];
-  self.wrappingInputChipView.textField.placeholder = @"placeholder 1";
+  self.wrappingInputChipView.textField.placeholder = @"placeholder 2";
   [self.wrappingInputChipView applyOutlinedThemeWithScheme:self.containerScheme];
   self.wrappingInputChipView.canChipsWrap = YES;
+  self.wrappingInputChipView.canPlaceholderFloat = YES;
   self.wrappingInputChipView.contentInsets = UIEdgeInsetsMake(8, 12, 8, 12);
   self.wrappingInputChipView.chipRowHeight = 50;
   [self.scrollView addSubview:self.wrappingInputChipView];
@@ -247,23 +250,23 @@
 }
 
 - (void)updateInputChipViewStates {
-//  if (self.isErrored) {
-//    self.nonWrappingInputChipView.isErrored = YES;
-//    self.nonWrappingInputChipView.leadingUnderlineLabel.text =
-//        @"Suspendisse quam elit, mattis sit amet justo vel, venenatis lobortis massa. Donec metus "
-//        @"dolor.";
-//
-//    self.wrappingInputChipView.isErrored = YES;
-//    self.wrappingInputChipView.leadingUnderlineLabel.text = @"This is an error.";
-//    self.wrappingInputChipView.leadingUnderlineLabel.numberOfLines = 0;
-//  } else {
-//    self.nonWrappingInputChipView.isErrored = NO;
-//    self.nonWrappingInputChipView.leadingUnderlineLabel.text = @"This is helper text.";
-//
-//    self.wrappingInputChipView.isErrored = NO;
-//    self.wrappingInputChipView.leadingUnderlineLabel.text = nil;
-//  }
-//  [self.view setNeedsLayout];
+  if (self.isErrored) {
+    self.nonWrappingInputChipView.isErrored = YES;
+    self.nonWrappingInputChipView.leadingUnderlineLabel.text =
+        @"Suspendisse quam elit, mattis sit amet justo vel, venenatis lobortis massa. Donec metus "
+        @"dolor.";
+
+    self.wrappingInputChipView.isErrored = YES;
+    self.wrappingInputChipView.leadingUnderlineLabel.text = @"This is an error.";
+    self.wrappingInputChipView.leadingUnderlineLabel.numberOfLines = 0;
+  } else {
+    self.nonWrappingInputChipView.isErrored = NO;
+    self.nonWrappingInputChipView.leadingUnderlineLabel.text = @"This is helper text.";
+
+    self.wrappingInputChipView.isErrored = NO;
+    self.wrappingInputChipView.leadingUnderlineLabel.text = nil;
+  }
+  [self.view setNeedsLayout];
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification {
@@ -297,8 +300,8 @@
       chipView.titleLabel.text = textField.text;
       [chipView sizeToFit];
       [chipView addTarget:self
-                   action:@selector(selectedChip:)
-         forControlEvents:UIControlEventTouchUpInside];
+                    action:@selector(selectedChip:)
+          forControlEvents:UIControlEventTouchUpInside];
       [self.nonWrappingInputChipView addChip:chipView];
     }
   } else if (textField == self.wrappingInputChipView.textField) {
@@ -307,15 +310,16 @@
       chipView.titleLabel.text = textField.text;
       [chipView sizeToFit];
       [chipView addTarget:self
-                   action:@selector(selectedChip:)
-         forControlEvents:UIControlEventTouchUpInside];
+                    action:@selector(selectedChip:)
+          forControlEvents:UIControlEventTouchUpInside];
       [self.wrappingInputChipView addChip:chipView];
     }
   }
   return NO;
 }
 
-//-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+//-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range
+//replacementString:(NSString *)string {
 //  const char *character = [string cStringUsingEncoding:NSUTF8StringEncoding];
 //  int isBackSpace = strcmp(character, "\\b");
 //  if (isBackSpace == -92) {
@@ -328,7 +332,7 @@
 
 - (void)selectedChip:(MDCChipView *)chip {
   chip.selected = !chip.selected;
-  NSLog(@"%@",@(chip.isHighlighted));
+  NSLog(@"%@", @(chip.isHighlighted));
 }
 
 #pragma mark Catalog By Convention

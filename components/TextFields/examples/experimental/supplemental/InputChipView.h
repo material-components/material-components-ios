@@ -18,17 +18,14 @@
 
 #import "MDCContainedInputView.h"
 
-
-
-
 NS_ASSUME_NONNULL_BEGIN
 
 @interface InputChipView : UIControl <MDCContainedInputView>
 
-@property (strong, nonatomic, readonly) UITextField *textField;
-@property (nonatomic, assign) BOOL canChipsWrap;
-@property (nonatomic, assign) CGFloat chipRowHeight;
-@property (nonatomic, assign) UIEdgeInsets contentInsets;
+@property(strong, nonatomic, readonly) UITextField *textField;
+@property(nonatomic, assign) BOOL canChipsWrap;
+@property(nonatomic, assign) CGFloat chipRowHeight;
+@property(nonatomic, assign) UIEdgeInsets contentInsets;
 - (void)addChip:(UIView *)chip;
 
 @end

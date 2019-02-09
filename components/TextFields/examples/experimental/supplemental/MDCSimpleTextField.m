@@ -573,7 +573,6 @@ static const CGFloat kFloatingPlaceholderAnimationDuration = (CGFloat)0.15;
   }
 }
 
-
 #pragma mark Clear Button
 
 - (UIImage *)untintedClearButtonImage {

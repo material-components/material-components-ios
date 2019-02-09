@@ -112,17 +112,6 @@
          ((CGFloat)textAreaHeight * (CGFloat)0.5);
 }
 
-
-
-
-
-
-
-
-
-
-
-
 - (MDCContainedInputViewState)containedInputViewStateWithIsEnabled:(BOOL)isEnabled
                                                          isErrored:(BOOL)isErrored
                                                          isEditing:(BOOL)isEditing
@@ -175,9 +164,5 @@
     return MDCContainedInputViewPlaceholderStateNone;
   }
 }
-
-
-
-
 
 @end

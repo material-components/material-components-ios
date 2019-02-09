@@ -86,6 +86,13 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewPlaceholderState) {
 @property(nonatomic, assign, readonly) MDCContainedInputViewState containedInputViewState;
 
 /**
+ Describes the current @c MDCContainedInputViewPlaceholderState of the contained input view based
+ off its UIControlState,  the value of the @c canPlaceholderFloat property, and the value of its
+ placeholder text.
+ */
+@property(nonatomic, assign, readonly) MDCContainedInputViewPlaceholderState placeholderState;
+
+/**
  The @c leadingUnderlineLabel can be used to display helper or error text.
  */
 @property(strong, nonatomic, readonly, nonnull) UILabel *placeholderLabel;
@@ -198,6 +205,7 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewPlaceholderState) {
                                                                isEditing:(BOOL)isEditing;
 @end
 
-@interface MDCContainerStyleBase
-    : NSObject <MDCContainedInputViewStyle, MDCContainedInputViewStyleDensityInforming, MDCContainedInputViewLayoutCalculating>
+@interface MDCContainerStyleBase : NSObject <MDCContainedInputViewStyle,
+                                             MDCContainedInputViewStyleDensityInforming,
+                                             MDCContainedInputViewLayoutCalculating>
 @end
