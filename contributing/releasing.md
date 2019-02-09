@@ -271,7 +271,7 @@ go-ahead from the following clients:
 
 ## Merge the release candidate branch
 
-Once the release-candidate has passed all tests by clients, you may merge the release into the
+Once the release-candidate has **passed all "Required" GitHub presubmit tests** and **all internal presubmit tests**, you may merge the release into the
 `develop` and `stable` branches using the `release` script.
 
 **Do not use GitHub's big green button to merge the approved pull request.** Release are an
