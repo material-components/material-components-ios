@@ -31,6 +31,7 @@ static const CGFloat kInterChipPadding = (CGFloat)8.0;
                   canChipsWrap:(BOOL)canChipsWrap
                  chipRowHeight:(CGFloat)chipRowHeight
                  textFieldText:(NSString *)textFieldText
+                   placeholder:(NSString *)placeholder
                  textFieldFont:(UIFont *)textFieldFont
                  contentInsets:(UIEdgeInsets)contentInsets
                          isRTL:(BOOL)isRTL
@@ -43,6 +44,7 @@ static const CGFloat kInterChipPadding = (CGFloat)8.0;
                        canChipsWrap:canChipsWrap
                       chipRowHeight:chipRowHeight
                       TextFieldText:textFieldText
+                        placeholder:placeholder
                       textFieldFont:textFieldFont
                       contentInsets:(UIEdgeInsets)contentInsets
                               isRTL:isRTL];
@@ -56,10 +58,13 @@ static const CGFloat kInterChipPadding = (CGFloat)8.0;
                      canChipsWrap:(BOOL)canChipsWrap
                     chipRowHeight:(CGFloat)chipRowHeight
                     TextFieldText:(NSString *)textFieldText
+                      placeholder:(NSString *)placeholder
                     textFieldFont:(UIFont *)textFieldFont
                     contentInsets:(UIEdgeInsets)contentInsets
                             isRTL:(BOOL)isRTL
 {
+  
+  
   CGSize textFieldSize = [self textFieldSizeWithBounds:bounds
                                          contentInsets:contentInsets
                                          textFieldText:textFieldText
@@ -173,7 +178,7 @@ static const CGFloat kInterChipPadding = (CGFloat)8.0;
     } else {
       CGFloat highestDesirableSubviewMaxX = CGRectGetWidth(bounds) - contentInsets.right;
       CGFloat chipMinX = contentInsets.left;
-      CGFloat chipMidY = 0;//contentInsets.top + (0.5 * chipRowHeight);
+      CGFloat chipMidY = contentInsets.top + (0.5 * chipRowHeight);
       CGFloat chipMinY = 0;
       CGRect chipFrame = CGRectZero;
       NSInteger row = 0;
@@ -313,7 +318,7 @@ static const CGFloat kInterChipPadding = (CGFloat)8.0;
 {
   if (canChipsWrap) {
     if (isRTL) {
-      
+
     } else {
       CGFloat textFieldMinX = 0;
       CGFloat textFieldMaxX = 0;
@@ -355,7 +360,7 @@ static const CGFloat kInterChipPadding = (CGFloat)8.0;
     }
   } else {
     if (isRTL) {
-      
+
     } else {
       CGFloat textFieldMinX = 0;
       if (chipFrames.count > 0) {

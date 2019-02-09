@@ -112,4 +112,72 @@
          ((CGFloat)textAreaHeight * (CGFloat)0.5);
 }
 
+
+
+
+
+
+
+
+
+
+
+
+- (MDCContainedInputViewState)containedInputViewStateWithIsEnabled:(BOOL)isEnabled
+                                                         isErrored:(BOOL)isErrored
+                                                         isEditing:(BOOL)isEditing
+                                                        isSelected:(BOOL)isSelected
+                                                       isActivated:(BOOL)isActivated {
+  if (isEnabled) {
+    if (isErrored) {
+      return MDCContainedInputViewStateErrored;
+    } else {
+      if (isEditing) {
+        return MDCContainedInputViewStateFocused;
+      } else {
+        if (isSelected || isActivated) {
+          return MDCContainedInputViewStateActivated;
+        } else {
+          return MDCContainedInputViewStateNormal;
+        }
+      }
+    }
+  } else {
+    return MDCContainedInputViewStateDisabled;
+  }
+}
+
+- (MDCContainedInputViewPlaceholderState)placeholderStateWithPlaceholder:(NSString *)placeholder
+                                                                    text:(NSString *)text
+                                                     canPlaceholderFloat:(BOOL)canPlaceholderFloat
+                                                               isEditing:(BOOL)isEditing {
+  BOOL hasPlaceholder = placeholder.length > 0;
+  BOOL hasText = text.length > 0;
+  if (hasPlaceholder) {
+    if (canPlaceholderFloat) {
+      if (isEditing) {
+        return MDCContainedInputViewPlaceholderStateFloating;
+      } else {
+        if (hasText) {
+          return MDCContainedInputViewPlaceholderStateFloating;
+        } else {
+          return MDCContainedInputViewPlaceholderStateNormal;
+        }
+      }
+    } else {
+      if (hasText) {
+        return MDCContainedInputViewPlaceholderStateNone;
+      } else {
+        return MDCContainedInputViewPlaceholderStateNormal;
+      }
+    }
+  } else {
+    return MDCContainedInputViewPlaceholderStateNone;
+  }
+}
+
+
+
+
+
 @end

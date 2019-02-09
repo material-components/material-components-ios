@@ -573,6 +573,30 @@ static const CGFloat kFloatingPlaceholderAnimationDuration = (CGFloat)0.15;
   }
 }
 
+
+#pragma mark Clear Button
+
+- (UIImage *)untintedClearButtonImage {
+  CGFloat sideLength = MDCSimpleTextFieldLayout.clearButtonImageViewSideLength;
+  CGRect rect = CGRectMake(0, 0, sideLength, sideLength);
+  UIGraphicsBeginImageContextWithOptions(rect.size, false, 0);
+  [[UIColor blackColor] setFill];
+  [[MDCContainerStylePathDrawingUtils pathForClearButtonImageWithFrame:rect] fill];
+  UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+  UIGraphicsEndImageContext();
+  image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  return image;
+}
+
+#pragma mark Placeholder
+
+- (MDCContainedInputViewPlaceholderState)determineCurrentPlaceholderState {
+  return [self placeholderStateWithPlaceholder:self.placeholder
+                                          text:self.text
+                           canPlaceholderFloat:self.canPlaceholderFloat
+                                     isEditing:self.isEditing];
+}
+
 - (MDCContainedInputViewPlaceholderState)placeholderStateWithPlaceholder:(NSString *)placeholder
                                                                     text:(NSString *)text
                                                      canPlaceholderFloat:(BOOL)canPlaceholderFloat
@@ -600,29 +624,6 @@ static const CGFloat kFloatingPlaceholderAnimationDuration = (CGFloat)0.15;
   } else {
     return MDCContainedInputViewPlaceholderStateNone;
   }
-}
-
-#pragma mark Clear Button
-
-- (UIImage *)untintedClearButtonImage {
-  CGFloat sideLength = MDCSimpleTextFieldLayout.clearButtonImageViewSideLength;
-  CGRect rect = CGRectMake(0, 0, sideLength, sideLength);
-  UIGraphicsBeginImageContextWithOptions(rect.size, false, 0);
-  [[UIColor blackColor] setFill];
-  [[MDCContainerStylePathDrawingUtils pathForClearButtonImageWithFrame:rect] fill];
-  UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-  UIGraphicsEndImageContext();
-  image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-  return image;
-}
-
-#pragma mark Placeholder
-
-- (MDCContainedInputViewPlaceholderState)determineCurrentPlaceholderState {
-  return [self placeholderStateWithPlaceholder:self.placeholder
-                                          text:self.text
-                           canPlaceholderFloat:self.canPlaceholderFloat
-                                     isEditing:self.isEditing];
 }
 
 - (void)layOutPlaceholderWithState:(MDCContainedInputViewPlaceholderState)placeholderState {

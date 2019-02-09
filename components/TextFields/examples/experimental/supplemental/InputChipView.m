@@ -49,6 +49,23 @@
   }
 }
 
+// we don't want to display the placeholder, we have a label that we create and manage to do that.
+-(CGRect)placeholderRectForBounds:(CGRect)bounds {
+  return CGRectZero;
+}
+
+-(CGRect)clearButtonRectForBounds:(CGRect)bounds {
+  return CGRectZero;
+}
+
+-(CGRect)leftViewRectForBounds:(CGRect)bounds {
+  return CGRectZero;
+}
+
+-(CGRect)rightViewRectForBounds:(CGRect)bounds {
+  return CGRectZero;
+}
+
 @end
 
 static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
@@ -101,7 +118,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 @property(nonatomic, assign) MDCContainedInputViewPlaceholderState placeholderState;
 
 @property(nonatomic, strong)
-NSMutableDictionary<NSNumber *, id<MDCContainedInputViewColorScheming>> *colorSchemes;
+    NSMutableDictionary<NSNumber *, id<MDCContainedInputViewColorScheming>> *colorSchemes;
 
 @property(nonatomic, assign) BOOL isAnimating;
 
@@ -110,7 +127,6 @@ NSMutableDictionary<NSNumber *, id<MDCContainedInputViewColorScheming>> *colorSc
 @implementation InputChipView
 
 //@synthesize containedInputViewState = _containedInputViewState;
-
 @synthesize underlineLabelDrawPriority = _underlineLabelDrawPriority;
 @synthesize customUnderlineLabelDrawPriority = _customUnderlineLabelDrawPriority;
 @synthesize containerStyle = _containerStyle;
@@ -148,6 +164,9 @@ NSMutableDictionary<NSNumber *, id<MDCContainedInputViewColorScheming>> *colorSc
   [self setUpUnderlineLabels];
   [self setUpClearButton];
   [self setUpContainerStyle];
+  
+  
+  self.backgroundColor = [UIColor yellowColor];
   
 }
 
@@ -259,14 +278,14 @@ NSMutableDictionary<NSNumber *, id<MDCContainedInputViewColorScheming>> *colorSc
 }
 
 - (void)setUpUnderlineLabels {
-  CGFloat underlineFontSize = MDCRound([UIFont systemFontSize] * 0.75);
-  UIFont *underlineFont = [UIFont systemFontOfSize:underlineFontSize];
-  self.leftUnderlineLabel = [[UILabel alloc] init];
-  self.leftUnderlineLabel.font = underlineFont;
-  self.rightUnderlineLabel = [[UILabel alloc] init];
-  self.rightUnderlineLabel.font = underlineFont;
-  [self addSubview:self.leftUnderlineLabel];
-  [self addSubview:self.rightUnderlineLabel];
+//  CGFloat underlineFontSize = MDCRound([UIFont systemFontSize] * 0.75);
+//  UIFont *underlineFont = [UIFont systemFontOfSize:underlineFontSize];
+//  self.leftUnderlineLabel = [[UILabel alloc] init];
+//  self.leftUnderlineLabel.font = underlineFont;
+//  self.rightUnderlineLabel = [[UILabel alloc] init];
+//  self.rightUnderlineLabel.font = underlineFont;
+//  [self addSubview:self.leftUnderlineLabel];
+//  [self addSubview:self.rightUnderlineLabel];
 }
 
 - (void)setUpPlaceholderLabel {
@@ -432,6 +451,7 @@ NSMutableDictionary<NSNumber *, id<MDCContainedInputViewColorScheming>> *colorSc
                                         canChipsWrap:self.canChipsWrap
                                        chipRowHeight:self.chipRowHeight
                                        textFieldText:self.textField.text
+                                         placeholder:self.textField.placeholder
                                        textFieldFont:textFieldFont
                                        contentInsets:self.contentInsets
                                                isRTL:[self isRTL]];
@@ -439,7 +459,7 @@ NSMutableDictionary<NSNumber *, id<MDCContainedInputViewColorScheming>> *colorSc
 
 - (void)preLayoutSubviews {
     self.containedInputViewState = [self determineCurrentContainedInputViewState];
-  //  self.placeholderState = [self determineCurrentPlaceholderState];
+//    self.placeholderState = [self determineCurrentPlaceholderState];
   self.layout = [self calculateLayout];
   //  InputChipViewColorSchemeAdapter *colorAdapter =
   //  [[InputChipViewColorSchemeAdapter alloc] initWithColorScheme:self.containerScheme.colorScheme];
@@ -449,10 +469,10 @@ NSMutableDictionary<NSNumber *, id<MDCContainedInputViewColorScheming>> *colorSc
 
 - (MDCContainedInputViewState)determineCurrentContainedInputViewState {
   return [self containedInputViewStateWithIsEnabled:(self.enabled && self.inputChipViewTextField.enabled)
-                                          isErrored:self.isErrored
-                                          isEditing:self.inputChipViewTextField.isEditing
-                                         isSelected:self.isSelected
-                                        isActivated:self.isActivated];
+                                                         isErrored:self.isErrored
+                                                         isEditing:self.inputChipViewTextField.isEditing
+                                                        isSelected:self.isSelected
+                                                       isActivated:self.isActivated];
 }
 
 - (MDCContainedInputViewState)containedInputViewStateWithIsEnabled:(BOOL)isEnabled
@@ -479,6 +499,36 @@ NSMutableDictionary<NSNumber *, id<MDCContainedInputViewColorScheming>> *colorSc
   }
 }
 
+- (MDCContainedInputViewPlaceholderState)placeholderStateWithPlaceholder:(NSString *)placeholder
+                                                                    text:(NSString *)text
+                                                     canPlaceholderFloat:(BOOL)canPlaceholderFloat
+                                                               isEditing:(BOOL)isEditing {
+  BOOL hasPlaceholder = placeholder.length > 0;
+  BOOL hasText = text.length > 0;
+  if (hasPlaceholder) {
+    if (canPlaceholderFloat) {
+      if (isEditing) {
+        return MDCContainedInputViewPlaceholderStateFloating;
+      } else {
+        if (hasText) {
+          return MDCContainedInputViewPlaceholderStateFloating;
+        } else {
+          return MDCContainedInputViewPlaceholderStateNormal;
+        }
+      }
+    } else {
+      if (hasText) {
+        return MDCContainedInputViewPlaceholderStateNone;
+      } else {
+        return MDCContainedInputViewPlaceholderStateNormal;
+      }
+    }
+  } else {
+    return MDCContainedInputViewPlaceholderStateNone;
+  }
+}
+
+
 
 - (void)postLayoutSubviews {
   self.maskedScrollViewContainerView.frame = self.bounds;
@@ -501,8 +551,10 @@ NSMutableDictionary<NSNumber *, id<MDCContainedInputViewColorScheming>> *colorSc
 }
 
 - (CGRect)containerRect {
-  return CGRectMake(0, 0, CGRectGetWidth(self.frame), 100/*self.layout.topRowBottomRowDividerY*/);
+  return CGRectMake(0, 0, CGRectGetWidth(self.frame),CGRectGetHeight(self.frame));
+  /*self.layout.topRowBottomRowDividerY*/
 }
+
 
 
 - (void)applyStyle {

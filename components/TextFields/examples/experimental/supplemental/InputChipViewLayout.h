@@ -38,6 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
                   canChipsWrap:(BOOL)canChipsWrap
                  chipRowHeight:(CGFloat)chipRowHeight
                  textFieldText:(NSString *)textFieldText
+                   placeholder:(NSString *)placeholder
                  textFieldFont:(UIFont *)textFieldFont
                  contentInsets:(UIEdgeInsets)contentInsets
                          isRTL:(BOOL)isRTL;

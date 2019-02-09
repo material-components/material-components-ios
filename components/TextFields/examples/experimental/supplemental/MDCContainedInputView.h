@@ -186,6 +186,18 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewPlaceholderState) {
 - (CGFloat)floatingPlaceholderFontSizeScaleFactor;
 @end
 
+@protocol MDCContainedInputViewLayoutCalculating <NSObject>
+- (MDCContainedInputViewState)containedInputViewStateWithIsEnabled:(BOOL)isEnabled
+                                                         isErrored:(BOOL)isErrored
+                                                         isEditing:(BOOL)isEditing
+                                                        isSelected:(BOOL)isSelected
+                                                       isActivated:(BOOL)isActivated;
+- (MDCContainedInputViewPlaceholderState)placeholderStateWithPlaceholder:(NSString *)placeholder
+                                                                    text:(NSString *)text
+                                                     canPlaceholderFloat:(BOOL)canPlaceholderFloat
+                                                               isEditing:(BOOL)isEditing;
+@end
+
 @interface MDCContainerStyleBase
-    : NSObject <MDCContainedInputViewStyle, MDCContainedInputViewStyleDensityInforming>
+    : NSObject <MDCContainedInputViewStyle, MDCContainedInputViewStyleDensityInforming, MDCContainedInputViewLayoutCalculating>
 @end
