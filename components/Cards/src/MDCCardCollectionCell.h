@@ -80,7 +80,7 @@ typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
  */
 @property(nonatomic, assign, getter=isSelectable) BOOL selectable;
 
-@property (nonatomic, getter=isDragged) BOOL dragged;
+@property(nonatomic, getter=isDragged) BOOL dragged;
 
 @property(nonatomic, assign) BOOL cardHighlighted;
 

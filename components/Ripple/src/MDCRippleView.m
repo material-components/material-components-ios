@@ -14,7 +14,6 @@
 
 #import "MDCRippleView.h"
 #import "private/MDCRippleLayer.h"
-#import <QuartzCore/QuartzCore.h>
 
 #import "MaterialMath.h"
 

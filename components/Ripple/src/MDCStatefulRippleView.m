@@ -37,8 +37,7 @@ static UIColor *RippleSelectedColor(void) {
 
 @dynamic activeRippleLayer;
 
-- (instancetype)initWithFrame:(CGRect)frame
-{
+- (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
     [self commonMDCStatefulRippleViewInit];
@@ -46,8 +45,7 @@ static UIColor *RippleSelectedColor(void) {
   return self;
 }
 
-- (instancetype)initWithCoder:(NSCoder *)coder
-{
+- (instancetype)initWithCoder:(NSCoder *)coder {
   self = [super initWithCoder:coder];
   if (self) {
     [self commonMDCStatefulRippleViewInit];
@@ -61,11 +59,11 @@ static UIColor *RippleSelectedColor(void) {
     UIColor *selectionColor = RippleSelectedColor();
     _rippleColors[@(MDCRippleStateNormal)] = [UIColor colorWithWhite:0 alpha:kRippleAlpha];
     _rippleColors[@(MDCRippleStateHighlighted)] = [UIColor colorWithWhite:0 alpha:kRippleAlpha];
-    _rippleColors[@(MDCRippleStateSelected)] = [selectionColor colorWithAlphaComponent:kRippleSelectedAlpha];
+    _rippleColors[@(MDCRippleStateSelected)] =
+        [selectionColor colorWithAlphaComponent:kRippleSelectedAlpha];
     _rippleColors[@(MDCRippleStateSelected | MDCRippleStateHighlighted)] =
         [selectionColor colorWithAlphaComponent:kRippleAlpha];
-    _rippleColors[@(MDCRippleStateDragged)] =
-        [UIColor colorWithWhite:0 alpha:kRippleDraggedAlpha];
+    _rippleColors[@(MDCRippleStateDragged)] = [UIColor colorWithWhite:0 alpha:kRippleDraggedAlpha];
     _rippleColors[@(MDCRippleStateDragged | MDCRippleStateHighlighted)] =
         [UIColor colorWithWhite:0 alpha:kRippleDraggedAlpha];
     _rippleColors[@(MDCRippleStateSelected | MDCRippleStateDragged)] =
@@ -130,7 +128,7 @@ static UIColor *RippleSelectedColor(void) {
   _selected = selected;
   // Go into the selected state visually.
   if (selected) {
-    if(!self.activeRippleLayer) {
+    if (!self.activeRippleLayer) {
       // If we go into the selected state manually, without coming from the highlighted state,
       // We present the ripple overlay instantly without animation.
       [self updateRippleColor];

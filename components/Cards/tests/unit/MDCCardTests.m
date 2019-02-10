@@ -209,9 +209,9 @@
 //  [self.cell setShadowColor:[UIColor greenColor] forState:MDCCardCellStateHighlighted];
 //  [self.cell setShadowColor:[UIColor redColor] forState:MDCCardCellStateSelected];
 //  XCTAssertEqual([self.cell shadowColorForState:MDCCardCellStateNormal], [UIColor blueColor]);
-//  XCTAssertEqual([self.cell shadowColorForState:MDCCardCellStateHighlighted], [UIColor greenColor]);
-//  XCTAssertEqual([self.cell shadowColorForState:MDCCardCellStateSelected], [UIColor redColor]);
-//  [self.cell setTestState:MDCCardCellStateHighlighted];
+//  XCTAssertEqual([self.cell shadowColorForState:MDCCardCellStateHighlighted], [UIColor
+//  greenColor]); XCTAssertEqual([self.cell shadowColorForState:MDCCardCellStateSelected], [UIColor
+//  redColor]); [self.cell setTestState:MDCCardCellStateHighlighted];
 //  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).shadowColor, [UIColor greenColor].CGColor);
 //  [self.cell setTestState:MDCCardCellStateNormal];
 //  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).shadowColor, [UIColor blueColor].CGColor);
@@ -248,9 +248,9 @@
 //  [self.cell setBorderColor:[UIColor greenColor] forState:MDCCardCellStateHighlighted];
 //  [self.cell setBorderColor:[UIColor redColor] forState:MDCCardCellStateSelected];
 //  XCTAssertEqual([self.cell borderColorForState:MDCCardCellStateNormal], [UIColor blueColor]);
-//  XCTAssertEqual([self.cell borderColorForState:MDCCardCellStateHighlighted], [UIColor greenColor]);
-//  XCTAssertEqual([self.cell borderColorForState:MDCCardCellStateSelected], [UIColor redColor]);
-//  [self.cell setTestState:MDCCardCellStateHighlighted];
+//  XCTAssertEqual([self.cell borderColorForState:MDCCardCellStateHighlighted], [UIColor
+//  greenColor]); XCTAssertEqual([self.cell borderColorForState:MDCCardCellStateSelected], [UIColor
+//  redColor]); [self.cell setTestState:MDCCardCellStateHighlighted];
 //  XCTAssertEqual(self.cell.layer.borderColor, [UIColor greenColor].CGColor);
 //  [self.cell setTestState:MDCCardCellStateNormal];
 //  XCTAssertEqual(self.cell.layer.borderColor, [UIColor blueColor].CGColor);

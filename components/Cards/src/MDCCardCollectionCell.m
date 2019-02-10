@@ -71,11 +71,11 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 }
 
 - (void)commonMDCCardCollectionCellInit {
-    if (_rippleView == nil) {
-      _rippleView = [[MDCStatefulRippleView alloc] initWithFrame:self.bounds];
-      _rippleView.layer.zPosition = 100;
-      [self addSubview:_rippleView];
-    }
+  if (_rippleView == nil) {
+    _rippleView = [[MDCStatefulRippleView alloc] initWithFrame:self.bounds];
+    _rippleView.layer.zPosition = 100;
+    [self addSubview:_rippleView];
+  }
 
   if (_selectedImageView == nil) {
     _selectedImageView = [[UIImageView alloc] init];

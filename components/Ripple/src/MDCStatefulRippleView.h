@@ -62,7 +62,6 @@ typedef NS_OPTIONS(NSInteger, MDCRippleState) {
  */
 @property(nonatomic) BOOL allowsSelection;
 
-
 /**
  The current state of the ripple.
  */
