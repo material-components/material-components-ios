@@ -157,12 +157,12 @@
 #pragma mark - Blur effect
 
 - (void)toggleBlurEffect {
-  self.bottomNavBar.backgroundBlurEnabled = !self.bottomNavBar.backgroundBlurEnabled;
+  self.bottomNavBar.backgroundBlurEnabled = !self.bottomNavBar.isBackgroundBlurEnabled;
   [self updateBlurToggleButton];
 }
 
 - (void)updateBlurToggleButton {
-  if (self.bottomNavBar.backgroundBlurEnabled) {
+  if (self.bottomNavBar.isBackgroundBlurEnabled) {
     self.navigationItem.rightBarButtonItem.image = self.blurOnIcon;
     self.navigationItem.rightBarButtonItem.accessibilityLabel = @"Disable blur";
     self.navigationItem.rightBarButtonItem.accessibilityHint =
