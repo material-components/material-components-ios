@@ -56,8 +56,9 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 @property(nonatomic, strong) NSMutableArray<MDCBottomNavigationItemView *> *itemViews;
 @property(nonatomic, readonly) UIEdgeInsets mdc_safeAreaInsets;
 @property(nonatomic, strong) UIView *barView;
-@property(nonatomic, strong) UIView *containerView;
 @property(nonatomic, strong) UIVisualEffectView *blurEffectView;
+@property(nonatomic, strong) UIView *itemsLayoutView;
+@property(nonatomic, strong) UIView *inkClippingView;
 @property(nonatomic, strong) NSMutableArray *inkControllers;
 @property(nonatomic) BOOL shouldPretendToBeATabBar;
 
@@ -117,17 +118,30 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
   _barView.backgroundColor = _barTintColor;
   [self addSubview:_barView];
 
-  _containerView = [[UIView alloc] initWithFrame:CGRectZero];
-  _containerView.autoresizingMask =
+  _itemsLayoutView = [[UIView alloc] initWithFrame:CGRectZero];
+  _itemsLayoutView.autoresizingMask =
       (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin);
-  _containerView.clipsToBounds = YES;
-  [_barView addSubview:_containerView];
+  _itemsLayoutView.clipsToBounds = YES;
+  [_barView addSubview:_itemsLayoutView];
+
+
+  _inkClippingView = [[UIView alloc] init];
+  _inkClippingView.clipsToBounds = YES;
+  _inkClippingView.autoresizingMask =
+      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleWidth;
+  _itemsLayoutView = [[UIView alloc] initWithFrame:CGRectZero];
+  _itemsLayoutView.autoresizingMask =
+      (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin);
+  _itemsLayoutView.clipsToBounds = NO;
+  [self addSubview:_inkClippingView];
+  [_inkClippingView addSubview:_itemsLayoutView];
+
 #if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunguarded-availability"
 #pragma clang diagnostic ignored "-Wtautological-pointer-compare"
   if (&UIAccessibilityTraitTabBar != NULL) {
-    _containerView.accessibilityTraits = UIAccessibilityTraitTabBar;
+    _itemsLayoutView.accessibilityTraits = UIAccessibilityTraitTabBar;
   } else {
     _shouldPretendToBeATabBar = YES;
   }
@@ -148,11 +162,13 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
   CGSize size = standardBounds.size;
   self.blurEffectView.frame = standardBounds;
   self.barView.frame = standardBounds;
+  self.inkClippingView.frame = standardBounds;
+  CGSize size = standardBounds.size;
   if (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
     [self layoutLandscapeModeWithBottomNavSize:size
                                 containerWidth:self.maxLandscapeClusterContainerWidth];
   } else {
-    [self sizeContainerViewItemsDistributed:YES withBottomNavSize:size containerWidth:size.width];
+    [self sizeItemsLayoutViewItemsDistributed:YES withBottomNavSize:size containerWidth:size.width];
     self.titleBelowItem = YES;
   }
   [self layoutItemViews];
@@ -183,29 +199,29 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
                               containerWidth:(CGFloat)containerWidth {
   switch (self.alignment) {
     case MDCBottomNavigationBarAlignmentJustified:
-      [self sizeContainerViewItemsDistributed:YES
-                            withBottomNavSize:bottomNavSize
-                               containerWidth:containerWidth];
+      [self sizeItemsLayoutViewItemsDistributed:YES
+                              withBottomNavSize:bottomNavSize
+                                 containerWidth:containerWidth];
       self.titleBelowItem = YES;
       break;
     case MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles:
-      [self sizeContainerViewItemsDistributed:YES
-                            withBottomNavSize:bottomNavSize
-                               containerWidth:containerWidth];
+      [self sizeItemsLayoutViewItemsDistributed:YES
+                              withBottomNavSize:bottomNavSize
+                                 containerWidth:containerWidth];
       self.titleBelowItem = NO;
       break;
     case MDCBottomNavigationBarAlignmentCentered:
-      [self sizeContainerViewItemsDistributed:NO
-                            withBottomNavSize:bottomNavSize
-                               containerWidth:containerWidth];
+      [self sizeItemsLayoutViewItemsDistributed:NO
+                              withBottomNavSize:bottomNavSize
+                                 containerWidth:containerWidth];
       self.titleBelowItem = YES;
       break;
   }
 }
 
-- (void)sizeContainerViewItemsDistributed:(BOOL)itemsDistributed
-                        withBottomNavSize:(CGSize)bottomNavSize
-                           containerWidth:(CGFloat)containerWidth {
+- (void)sizeItemsLayoutViewItemsDistributed:(BOOL)itemsDistributed
+                          withBottomNavSize:(CGSize)bottomNavSize
+                             containerWidth:(CGFloat)containerWidth {
   CGFloat barHeight = kMDCBottomNavigationBarHeight;
   if (self.alignment == MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles &&
       self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
@@ -213,11 +229,11 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
   }
   if (itemsDistributed) {
     UIEdgeInsets insets = self.mdc_safeAreaInsets;
-    self.containerView.frame =
+    self.itemsLayoutView.frame =
         CGRectMake(insets.left, 0, bottomNavSize.width - insets.left - insets.right, barHeight);
   } else {
     CGFloat clusteredOffsetX = (bottomNavSize.width - containerWidth) / 2;
-    self.containerView.frame = CGRectMake(clusteredOffsetX, 0, containerWidth, barHeight);
+    self.itemsLayoutView.frame = CGRectMake(clusteredOffsetX, 0, containerWidth, barHeight);
   }
 }
 
@@ -227,8 +243,8 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
   if (numItems == 0) {
     return;
   }
-  CGFloat navBarWidth = CGRectGetWidth(self.containerView.bounds);
-  CGFloat navBarHeight = CGRectGetHeight(self.containerView.bounds);
+  CGFloat navBarWidth = CGRectGetWidth(self.itemsLayoutView.bounds);
+  CGFloat navBarHeight = CGRectGetHeight(self.itemsLayoutView.bounds);
   CGFloat itemWidth = navBarWidth / numItems;
   for (NSUInteger i = 0; i < self.itemViews.count; i++) {
     MDCBottomNavigationItemView *itemView = self.itemViews[i];
@@ -488,7 +504,7 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
                         action:@selector(didTouchUpInsideButton:)
               forControlEvents:UIControlEventTouchUpInside];
     [self.itemViews addObject:itemView];
-    [self.containerView addSubview:itemView];
+    [self.itemsLayoutView addSubview:itemView];
   }
   self.selectedItem = nil;
   [self addObserversToTabBarItems];
