@@ -35,7 +35,6 @@
 - (id)init {
   self = [super init];
   if (self) {
-    self.title = @"Bottom Navigation";
     _colorScheme =
         [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
     _typographyScheme =
@@ -204,12 +203,7 @@
   return cell;
 }
 
-@end
-
-@interface BottomNavigationBlurExample (CatalogByConvention)
-@end
-
-@implementation BottomNavigationBlurExample (CatalogByConvention)
+#pragma mark - CatalogByConvention
 
 + (NSDictionary *)catalogMetadata {
   return @{
