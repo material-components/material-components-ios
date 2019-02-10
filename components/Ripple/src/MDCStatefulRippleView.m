@@ -31,6 +31,7 @@ static UIColor *RippleSelectedColor(void) {
   NSMutableDictionary<NSNumber *, UIColor *> *_rippleColors;
   BOOL _tapWentOutsideOfBounds;
   BOOL _tapWentInsideOfBounds;
+  BOOL _didReceiveTouch;
   CGPoint _lastTouch;
 }
 
@@ -154,7 +155,7 @@ static UIColor *RippleSelectedColor(void) {
   if (rippleHighlighted && !_tapWentInsideOfBounds) {
     // If ripple becomes highlighted we initiate a ripple with animation.
     [self updateRippleColor];
-    [self beginRippleTouchDownAtPoint:_lastTouch animated:YES completion:nil];
+    [self beginRippleTouchDownAtPoint:_lastTouch animated:_didReceiveTouch completion:nil];
   } else {
     if (!self.allowsSelection && !self.selected && !self.dragged && !_tapWentOutsideOfBounds) {
       // We dissolve the ripple when highlighted is NO, unless we are going into selection.
@@ -190,6 +191,7 @@ static UIColor *RippleSelectedColor(void) {
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   UITouch *touch = [touches anyObject];
   CGPoint location = [touch locationInView:self];
+  _didReceiveTouch = YES;
   _lastTouch = location;
   _tapWentInsideOfBounds = NO;
   _tapWentOutsideOfBounds = NO;
@@ -217,6 +219,7 @@ static UIColor *RippleSelectedColor(void) {
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   [super touchesEnded:touches withEvent:event];
+  _didReceiveTouch = NO;
   if (_tapWentOutsideOfBounds) {
     [self beginRippleTouchUpAnimated:NO completion:nil];
   }
@@ -224,6 +227,7 @@ static UIColor *RippleSelectedColor(void) {
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   [super touchesCancelled:touches withEvent:event];
+  _didReceiveTouch = NO;
   [self beginRippleTouchUpAnimated:YES completion:nil];
 }
 

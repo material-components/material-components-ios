@@ -23,18 +23,25 @@ class RippleView : UIView {
 
   override init(frame: CGRect) {
     super.init(frame: frame)
-    self.addSubview(statefulRippleView)
-    self.translatesAutoresizingMaskIntoConstraints = false
-    longPressGesture.minimumPressDuration = 0.5
-    longPressGesture.cancelsTouchesInView = false
-    self.addGestureRecognizer(longPressGesture)
-    self.isUserInteractionEnabled = true
+    commonRippleViewInit()
   }
 
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
-    self.addSubview(statefulRippleView)
-    self.translatesAutoresizingMaskIntoConstraints = false
+    commonRippleViewInit()
+  }
+
+  func commonRippleViewInit() {
+    statefulRippleView.frame = self.bounds
+    statefulRippleView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+    addSubview(statefulRippleView)
+    longPressGesture.minimumPressDuration = 0.5
+    longPressGesture.cancelsTouchesInView = false
+    addGestureRecognizer(longPressGesture)
+    isUserInteractionEnabled = true
+    layer.cornerRadius = 4
+    layer.borderColor = UIColor.darkGray.withAlphaComponent(0.5).cgColor
+    layer.borderWidth = 0.5
   }
 
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -61,6 +68,7 @@ class RippleView : UIView {
     case .began:
       if (!statefulRippleView.allowsSelection) {
         statefulRippleView.allowsSelection = true
+        statefulRippleView.isRippleHighlighted = false
         statefulRippleView.isSelected = true
         didLongPress = true
       }
@@ -71,21 +79,19 @@ class RippleView : UIView {
 }
 
 class StatefulRippleExample : UIViewController {
-  let interactiveView = RippleView()
-  let highlightedView = RippleView()
-  let selectedView = RippleView()
-  let draggedView = RippleView()
+  @IBOutlet weak var interactiveView: RippleView!
+  @IBOutlet weak var highlightedView: RippleView!
+  @IBOutlet weak var selectedView: RippleView!
+  @IBOutlet weak var draggedView: RippleView!
 
   override func viewDidLoad() {
+    let bundle = Bundle(for: StatefulRippleExample.self)
+    bundle.loadNibNamed("StatefulRippleExample", owner: self, options: nil)
+    view.frame = self.view.bounds
     view.backgroundColor = .white
-    view.addSubview(interactiveView)
-    view.addSubview(highlightedView)
-    view.addSubview(selectedView)
-    view.addSubview(draggedView)
     highlightedView.isUserInteractionEnabled = false
     selectedView.isUserInteractionEnabled = false
     draggedView.isUserInteractionEnabled = false
-    addConstraints()
   }
 
   override func viewDidLayoutSubviews() {
@@ -93,37 +99,6 @@ class StatefulRippleExample : UIViewController {
     selectedView.statefulRippleView.allowsSelection = true
     selectedView.statefulRippleView.isSelected = true
     draggedView.statefulRippleView.isDragged = true
-  }
-
-  private func addConstraints() {
-    let views: [String: UIView] = ["interactive": interactiveView,
-                                   "highlighted": highlightedView,
-                                   "selected": selectedView,
-                                   "dragged": draggedView]
-    let metrics = ["margin": 10.0]
-    // Interactive View
-    var constraints: [NSLayoutConstraint] = NSLayoutConstraint.constraints(withVisualFormat:
-      "H:|-[interactive]-|", options: [.alignAllCenterY], metrics: metrics, views: views)
-    constraints.append(NSLayoutConstraint(item: interactiveView, attribute: .height, relatedBy: .equal, toItem: interactiveView, attribute: .width, multiplier: 1, constant: 0))
-
-    // Stateful Views
-    constraints += NSLayoutConstraint.constraints(withVisualFormat:
-      "H:|-[highlighted]-(margin)-[selected]-(margin)-[dragged]-|",
-                                                  options: [.alignAllCenterY],
-                                                  metrics: metrics,
-                                                  views: views)
-    constraints.append(NSLayoutConstraint(item: highlightedView, attribute: .width, relatedBy: .equal, toItem: selectedView, attribute: .width, multiplier: 1, constant: 0))
-    constraints.append(NSLayoutConstraint(item: selectedView, attribute: .width, relatedBy: .equal, toItem: draggedView, attribute: .width, multiplier: 1, constant: 0))
-    constraints.append(NSLayoutConstraint(item: highlightedView, attribute: .height, relatedBy: .equal, toItem: highlightedView, attribute: .width, multiplier: 1, constant: 0))
-    constraints.append(NSLayoutConstraint(item: selectedView, attribute: .height, relatedBy: .equal, toItem: selectedView, attribute: .width, multiplier: 1, constant: 0))
-    constraints.append(NSLayoutConstraint(item: draggedView, attribute: .height, relatedBy: .equal, toItem: draggedView, attribute: .width, multiplier: 1, constant: 0))
-    constraints += NSLayoutConstraint.constraints(withVisualFormat:
-      "V:|-[interactive]-(margin)-[highlighted]",
-                                                  options: [],
-                                                  metrics: metrics,
-                                                  views: views)
-
-    self.view.addConstraints(constraints)
   }
 }
 
@@ -134,6 +109,7 @@ extension StatefulRippleExample {
       "breadcrumbs": ["Ripple", "Stateful Ripple"],
       "primaryDemo": false,
       "presentable": false,
+      "debug": true,
     ]
   }
 }
