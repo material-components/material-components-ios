@@ -141,7 +141,7 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
     [self layoutLandscapeModeWithBottomNavSize:size
                                 containerWidth:self.maxLandscapeClusterContainerWidth];
   } else {
-    [self sizeitemsLayoutViewItemsDistributed:YES withBottomNavSize:size containerWidth:size.width];
+    [self sizeItemsLayoutViewItemsDistributed:YES withBottomNavSize:size containerWidth:size.width];
     self.titleBelowItem = YES;
   }
   [self layoutItemViews];
@@ -172,19 +172,19 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
                               containerWidth:(CGFloat)containerWidth {
   switch (self.alignment) {
     case MDCBottomNavigationBarAlignmentJustified:
-      [self sizeitemsLayoutViewItemsDistributed:YES
+      [self sizeItemsLayoutViewItemsDistributed:YES
                               withBottomNavSize:bottomNavSize
                                  containerWidth:containerWidth];
       self.titleBelowItem = YES;
       break;
     case MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles:
-      [self sizeitemsLayoutViewItemsDistributed:YES
+      [self sizeItemsLayoutViewItemsDistributed:YES
                               withBottomNavSize:bottomNavSize
                                  containerWidth:containerWidth];
       self.titleBelowItem = NO;
       break;
     case MDCBottomNavigationBarAlignmentCentered:
-      [self sizeitemsLayoutViewItemsDistributed:NO
+      [self sizeItemsLayoutViewItemsDistributed:NO
                               withBottomNavSize:bottomNavSize
                                  containerWidth:containerWidth];
       self.titleBelowItem = YES;
@@ -192,7 +192,7 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
   }
 }
 
-- (void)sizeitemsLayoutViewItemsDistributed:(BOOL)itemsDistributed
+- (void)sizeItemsLayoutViewItemsDistributed:(BOOL)itemsDistributed
                           withBottomNavSize:(CGSize)bottomNavSize
                              containerWidth:(CGFloat)containerWidth {
   CGFloat barHeight = kMDCBottomNavigationBarHeight;
