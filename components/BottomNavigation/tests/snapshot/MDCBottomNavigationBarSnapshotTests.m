@@ -774,8 +774,7 @@ static NSString *const kBadgeTitleArabic = @"أورا";
   UIView *barSuperview =
       [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWidthTypical, kHeightTypical * 2)];
   UIColor *patternColor = [UIColor
-      colorWithPatternImage:[UIImage
-                                mdc_testImageOfSize:CGSizeMake(kWidthTypical, kWidthTypical)]];
+      colorWithPatternImage:[UIImage mdc_testImageOfSize:CGSizeMake(kWidthTypical, kWidthTypical)]];
   barSuperview.backgroundColor = patternColor;
   [barSuperview addSubview:self.navigationBar];
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
@@ -821,8 +820,7 @@ static NSString *const kBadgeTitleArabic = @"أورا";
   UIView *barSuperview =
       [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWidthTypical, kHeightTypical * 2)];
   UIColor *patternColor = [UIColor
-      colorWithPatternImage:[UIImage
-                                mdc_testImageOfSize:CGSizeMake(kWidthTypical, kWidthTypical)]];
+      colorWithPatternImage:[UIImage mdc_testImageOfSize:CGSizeMake(kWidthTypical, kWidthTypical)]];
   barSuperview.backgroundColor = patternColor;
   [barSuperview addSubview:self.navigationBar];
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
@@ -845,8 +843,7 @@ static NSString *const kBadgeTitleArabic = @"أورا";
   UIView *barSuperview =
       [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWidthTypical, kHeightTypical * 2)];
   UIColor *patternColor = [UIColor
-      colorWithPatternImage:[UIImage
-                                mdc_testImageOfSize:CGSizeMake(kWidthTypical, kWidthTypical)]];
+      colorWithPatternImage:[UIImage mdc_testImageOfSize:CGSizeMake(kWidthTypical, kWidthTypical)]];
   barSuperview.backgroundColor = patternColor;
   [barSuperview addSubview:self.navigationBar];
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
