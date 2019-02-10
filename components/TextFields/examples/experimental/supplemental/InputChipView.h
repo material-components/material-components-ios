@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(strong, nonatomic, readonly) UITextField *textField;
 @property(nonatomic, assign) BOOL canChipsWrap;
-@property(nonatomic, assign) CGFloat chipRowHeight;
+//@property(nonatomic, assign) CGFloat chipRowHeight;
 @property(nonatomic, assign) UIEdgeInsets contentInsets;
 - (void)addChip:(UIView *)chip;
 

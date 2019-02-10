@@ -216,8 +216,6 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   [self setUpChipsArray];
   [self setUpChipsToRemoveArray];
   [self setUpContentInsets];
-
-  self.chipRowHeight = self.inputChipViewTextField.effectiveFont.lineHeight * 2;
 }
 
 - (void)setUpContentInsets {
@@ -481,11 +479,10 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
                                        placeholder:self.inputChipViewTextField.placeholder
                                               font:self.inputChipViewTextField.effectiveFont
                            floatingPlaceholderFont:floatingFont
-                               canPlaceholderFloat:self.canPlaceholderFloat
+                                  placeholderState:self.placeholderState
                                              chips:self.chips
                                     staleChipViews:self.chips
                                       canChipsWrap:self.canChipsWrap
-                                     chipRowHeight:self.chipRowHeight
                                      contentInsets:self.contentInsets
                                        clearButton:self.clearButton
                                clearButtonViewMode:self.textField.clearButtonMode
@@ -840,8 +837,8 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   NSAssert([NSThread isMainThread], nil);
   UIFont *targetFont = normalFont;
 
-  CGRect normalFrame = CGRectZero;    // self.layout.placeholderFrameNormal;
-  CGRect floatingFrame = CGRectZero;  // self.layout.placeholderFrameFloating;
+  CGRect normalFrame = self.layout.placeholderFrameNormal;
+  CGRect floatingFrame = self.layout.placeholderFrameFloating;
   CGRect targetFrame = normalFrame;
 
   BOOL placeholderShouldHide = NO;

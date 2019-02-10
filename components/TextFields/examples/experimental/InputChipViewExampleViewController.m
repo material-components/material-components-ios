@@ -194,6 +194,7 @@
 - (void)addNonWrappingInputChipView {
   self.nonWrappingInputChipView = [[InputChipView alloc] init];
   self.nonWrappingInputChipView.textField.placeholder = @"placeholder 1";
+//  [self.nonWrappingInputChipView applyOutlinedThemeWithScheme:self.containerScheme];
   [self.nonWrappingInputChipView applyFilledThemeWithScheme:self.containerScheme];
   self.nonWrappingInputChipView.canChipsWrap = NO;
   self.nonWrappingInputChipView.canPlaceholderFloat = NO;
@@ -226,11 +227,12 @@
 - (void)addWrappingInputChipView {
   self.wrappingInputChipView = [[InputChipView alloc] init];
   self.wrappingInputChipView.textField.placeholder = @"placeholder 2";
+//  [self.wrappingInputChipView applyFilledThemeWithScheme:self.containerScheme];
   [self.wrappingInputChipView applyOutlinedThemeWithScheme:self.containerScheme];
+
   self.wrappingInputChipView.canChipsWrap = YES;
   self.wrappingInputChipView.canPlaceholderFloat = YES;
   self.wrappingInputChipView.contentInsets = UIEdgeInsetsMake(8, 12, 8, 12);
-  self.wrappingInputChipView.chipRowHeight = 50;
   [self.scrollView addSubview:self.wrappingInputChipView];
   self.wrappingInputChipView.textField.delegate = self;
 }

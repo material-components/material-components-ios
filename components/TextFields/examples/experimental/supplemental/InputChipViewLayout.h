@@ -41,11 +41,10 @@ NS_ASSUME_NONNULL_BEGIN
                          placeholder:(NSString *)placeholder
                                 font:(UIFont *)font
              floatingPlaceholderFont:(UIFont *)floatingPlaceholderFont
-                 canPlaceholderFloat:(BOOL)canPlaceholderFloat
+                    placeholderState:(MDCContainedInputViewPlaceholderState)placeholderState
                                chips:(NSArray<UIView *> *)chips
                       staleChipViews:(NSArray<UIView *> *)staleChipViews
                         canChipsWrap:(BOOL)canChipsWrap
-                       chipRowHeight:(CGFloat)chipRowHeight
                        contentInsets:(UIEdgeInsets)contentInsets
                          clearButton:(UIButton *)clearButton
                  clearButtonViewMode:(UITextFieldViewMode)clearButtonViewMode
