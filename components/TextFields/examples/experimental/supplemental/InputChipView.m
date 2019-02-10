@@ -830,8 +830,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 - (UIFont *)floatingPlaceholderFontWithFont:(UIFont *)font
                              containerStyle:(id<MDCContainedInputViewStyle>)containerStyle {
-  CGFloat floatingPlaceholderFontScaleFactor = [containerStyle.densityInformer floatingPlaceholderFontSizeScaleFactor];
-  CGFloat floatingPlaceholderFontSize = font.pointSize * floatingPlaceholderFontScaleFactor;
+  CGFloat floatingPlaceholderFontSize = [containerStyle.densityInformer floatingPlaceholderFontSize];
   return [font fontWithSize:floatingPlaceholderFontSize];
 }
 

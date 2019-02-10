@@ -15,6 +15,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+
 /**
  A set of Contained Input View states outlined in the Material guidelines. These states overlap and
  extend UIControlState.
@@ -179,7 +180,7 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewPlaceholderState) {
 @protocol MDCContainedInputViewStyleDensityInforming;
 
 @protocol MDCContainedInputViewStyle <NSObject>
-- (nonnull id<MDCContainedInputViewStyleDensityInforming>)densityInformer;
+@property (strong, nonatomic) id<MDCContainedInputViewStyleDensityInforming> densityInformer;
 - (nonnull id<MDCContainedInputViewColorScheming>)defaultColorSchemeForState:
     (MDCContainedInputViewState)state;
 - (void)applyStyleToContainedInputView:(nonnull id<MDCContainedInputView>)inputView
@@ -187,24 +188,22 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewPlaceholderState) {
 - (void)removeStyleFrom:(nonnull id<MDCContainedInputView>)containedInputView;
 @end
 
-//@protocol MDCContainedInputViewStyleDensityInforming2 <NSObject>
-//- (UIFont *)floatingPlaceholderFontWithFont:(UIFont *)font;
+@protocol MDCContainedInputViewStyleDensityInforming <NSObject>
+- (CGFloat)floatingPlaceholderFontSize;
+- (CGFloat)floatingPlaceholderMinYWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight;
+- (CGFloat)normalContentAreaTopPadding;
+- (CGFloat)normalContentAreaBottomPadding;
+- (CGFloat)contentAreaTopPaddingWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY;
+@end
+
+//@protocol MDCContainedInputViewStyleDensityInforming <NSObject>
+//- (CGFloat)floatingPlaceholderFontSizeScaleFactor;
 //- (CGFloat)floatingPlaceholderMinYWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight;
 //- (CGFloat)normalTextAreaTopPaddingWithTextAreaHeight:(CGFloat)textAreaHeight;
 //- (CGFloat)normalTextAreaBottomPaddingWithTextAreaHeight:(CGFloat)textAreaHeight;
 //- (CGFloat)textAreaTopPaddingWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY
 //                                          textAreaHeight:(CGFloat)textAreaHeight;
 //@end
-
-
-@protocol MDCContainedInputViewStyleDensityInforming <NSObject>
-- (CGFloat)floatingPlaceholderMinYWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight;
-- (CGFloat)normalTextAreaTopPaddingWithTextAreaHeight:(CGFloat)textAreaHeight;
-- (CGFloat)normalTextAreaBottomPaddingWithTextAreaHeight:(CGFloat)textAreaHeight;
-- (CGFloat)textAreaTopPaddingWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY
-                                          textAreaHeight:(CGFloat)textAreaHeight;
-- (CGFloat)floatingPlaceholderFontSizeScaleFactor;
-@end
 
 @protocol MDCContainedInputViewLayoutCalculating <NSObject>
 - (MDCContainedInputViewState)containedInputViewStateWithIsEnabled:(BOOL)isEnabled
@@ -220,6 +219,7 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewPlaceholderState) {
 
 @interface MDCContainerStyleBase : NSObject <MDCContainedInputViewStyle,
                                              MDCContainedInputViewLayoutCalculating>
+- (instancetype)init NS_DESIGNATED_INITIALIZER;
 @end
 
 @interface MDCContainerStyleBaseDensityInformer : NSObject <MDCContainedInputViewStyleDensityInforming>

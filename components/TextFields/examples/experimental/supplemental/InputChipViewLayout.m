@@ -93,9 +93,13 @@ static const CGFloat kInterChipPadding = (CGFloat)8.0;
     customUnderlineLabelDrawPriority:(CGFloat)normalizedCustomUnderlineLabelDrawPriority
                                isRTL:(BOOL)isRTL
                            isEditing:(BOOL)isEditing {
+
 //  CGFloat floatingPlaceholderHeight =
 //      canPlaceholderFloat ? [self textHeightWithFont:floatingPlaceholderFont] : 0;
 //  CGFloat floatingPlaceholderMinY = [containerStyle.densityInformer floatingPlaceholderMinYWithFloatingPlaceholderHeight:floatingPlaceholderHeight];
+//  CGFloat floatingPlaceholderMaxY = floatingPlaceholderMinY + floatingPlaceholderHeight;
+//  CGFloat topPaddingWithFloatingPlaceholder = [containerStyle.densityInformer contentAreaTopPaddingWithFloatingPlaceholderMaxY:floatingPlaceholderMaxY];
+//  CGFloat normalTopPadding = [containerStyle.densityInformer normalContentAreaTopPadding];
 //  CGFloat textRectHeight = [self textHeightWithFont:font];
 
   CGSize textFieldSize = [self textSizeWithViewSize:size

@@ -691,8 +691,7 @@ static const CGFloat kFloatingPlaceholderAnimationDuration = (CGFloat)0.15;
 
 - (UIFont *)floatingPlaceholderFontWithFont:(UIFont *)font
                              containerStyle:(id<MDCContainedInputViewStyle>)containerStyle {
-  CGFloat floatingPlaceholderFontScaleFactor = [containerStyle.densityInformer floatingPlaceholderFontSizeScaleFactor];
-  CGFloat floatingPlaceholderFontSize = font.pointSize * floatingPlaceholderFontScaleFactor;
+  CGFloat floatingPlaceholderFontSize = [containerStyle.densityInformer floatingPlaceholderFontSize];
   return [font fontWithSize:floatingPlaceholderFontSize];
 }
 

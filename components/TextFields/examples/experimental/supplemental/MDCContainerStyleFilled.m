@@ -33,9 +33,18 @@ static const CGFloat kFilledContainerStyleTopCornerRadius = (CGFloat)4.0;
 - (instancetype)init {
   self = [super init];
   if (self) {
-    [self setUpFilledSublayers];
+    [self setUp];
   }
   return self;
+}
+
+- (void)setUp {
+  [self setUpDensityInformer];
+  [self setUpFilledSublayers];
+}
+
+- (void)setUpDensityInformer {
+  self.densityInformer = [[MDCContainerStyleFilledDensityInformer alloc] init];
 }
 
 - (void)setUpFilledSublayers {
@@ -232,23 +241,13 @@ static const CGFloat kFilledContainerStyleTopCornerRadius = (CGFloat)4.0;
   return underlineThickness;
 }
 
--(id<MDCContainedInputViewStyleDensityInforming>)densityInformer {
-  return [[MDCContainerStyleFilledDensityInformer alloc] init];
-}
-
 @end
 
 @implementation MDCContainerStyleFilledDensityInformer
 
-- (CGFloat)floatingPlaceholderFontSizeScaleFactor {
-  return ((CGFloat)53 / (CGFloat)71);
-}
-
-- (CGFloat)spaceBetweenFloatingPlaceholderAndTextAreaWithFloatingPlaceholderMinY:
-(CGFloat)floatingPlaceholderMinY
-                                                       floatingPlaceholderHeight:
-(CGFloat)floatingPlaceholderHeight {
-  return ((CGFloat)0.25 * (floatingPlaceholderMinY + floatingPlaceholderHeight));
+- (CGFloat)floatingPlaceholderFontSize {
+  CGFloat scaleFactor = ((CGFloat)53 / (CGFloat)71);
+  return scaleFactor * [UIFont systemFontSize];
 }
 
 - (CGFloat)floatingPlaceholderMinYWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight {
@@ -256,9 +255,8 @@ static const CGFloat kFilledContainerStyleTopCornerRadius = (CGFloat)4.0;
   return filledPlaceholderTopPaddingScaleHeuristic * floatingPlaceholderHeight;
 }
 
-- (CGFloat)textAreaTopPaddingWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY
-                                          textAreaHeight:(CGFloat)textAreaHeight {
-  return floatingPlaceholderMaxY + 7;
+- (CGFloat)contentAreaTopPaddingWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY {
+  return floatingPlaceholderMaxY + 6.5;
 }
 
 @end

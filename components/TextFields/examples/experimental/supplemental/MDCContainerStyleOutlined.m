@@ -204,25 +204,17 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
 
 @implementation MDCContainerStyleOutlinedDensityInformer
 
-- (CGFloat)floatingPlaceholderFontSizeScaleFactor {
-  return ((CGFloat)41 / (CGFloat)55);
+- (CGFloat)floatingPlaceholderFontSize {
+  CGFloat scaleFactor = ((CGFloat)41 / (CGFloat)55);
+  return scaleFactor * [UIFont systemFontSize];
 }
 
 - (CGFloat)floatingPlaceholderMinYWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight {
   return (CGFloat)0 - ((CGFloat)0.5 * floatingPlaceholderHeight);
 }
 
-- (CGFloat)spaceBetweenFloatingPlaceholderAndTextAreaWithFloatingPlaceholderMinY:
-(CGFloat)floatingPlaceholderMinY
-                                                       floatingPlaceholderHeight:
-(CGFloat)floatingPlaceholderHeight {
-  CGFloat outlinedTextFieldSpaceHeuristic = floatingPlaceholderHeight * (CGFloat)0.22;
-  return floatingPlaceholderMinY + floatingPlaceholderHeight + outlinedTextFieldSpaceHeuristic;
-}
-
-- (CGFloat)textAreaTopPaddingWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY
-                                          textAreaHeight:(CGFloat)textAreaHeight {
-  return [self normalTextAreaTopPaddingWithTextAreaHeight:textAreaHeight];
+-(CGFloat)contentAreaTopPaddingWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY {
+  return [self normalContentAreaTopPadding];
 }
 
 @end

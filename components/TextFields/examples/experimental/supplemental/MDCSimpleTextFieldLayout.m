@@ -163,7 +163,7 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
   
   CGFloat textRectHeight = [self textHeightWithFont:font];
 
-  CGFloat textRectMinY = [containerStyle.densityInformer normalTextAreaTopPaddingWithTextAreaHeight:textRectHeight];
+  CGFloat textRectMinY = [containerStyle.densityInformer normalContentAreaTopPadding];
   CGFloat textRectCenterY = (CGFloat)textRectMinY + ((CGFloat)0.5 * (CGFloat)textRectHeight);
   CGFloat textRectFloatingPlaceholderCenterY =
       [self textRectFloatingPlaceholderCenterYWithFloatingPlaceholderMinY:floatingPlaceholderMinY
@@ -282,7 +282,7 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
                                 rightViewMaxY:rightViewMaxY];
 
   CGFloat topRowBottomRowDividerY = topRowSubviewMaxY + kTopRowBottomRowDividerVerticalPadding;
-  CGFloat bottomPadding = [containerStyle.densityInformer normalTextAreaBottomPaddingWithTextAreaHeight:textRectHeight];
+  CGFloat bottomPadding = [containerStyle.densityInformer normalContentAreaBottomPadding];
   topRowBottomRowDividerY = textRectMaxY + bottomPadding;
   
   CGFloat underlineLabelsCombinedMinY =
@@ -483,8 +483,7 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
                                                                       containerStyle {
   CGFloat floatingPlaceholderMaxY = floatingPlaceholderMinY + floatingPlaceholderHeight;
   CGFloat textAreaTopPaddingWithFloatingPlaceholderMaxY =
-  [containerStyle.densityInformer textAreaTopPaddingWithFloatingPlaceholderMaxY:floatingPlaceholderMaxY
-                                                                 textAreaHeight:textRectHeight];
+  [containerStyle.densityInformer contentAreaTopPaddingWithFloatingPlaceholderMaxY:floatingPlaceholderMaxY];
   CGFloat spaceBetweenPlaceholderAndTextArea =
       textAreaTopPaddingWithFloatingPlaceholderMaxY - floatingPlaceholderMaxY;
   CGFloat lowestAllowableTextAreaMinY =
