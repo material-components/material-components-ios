@@ -16,7 +16,10 @@
 
 static const CGFloat kCornerRadius = 4;
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 @implementation MDCAlertScheme
+#pragma clang diagnostic pop
 
 - (instancetype)init {
   self = [super init];

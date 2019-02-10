@@ -12,15 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKit.h>
 
 @interface MDCBottomNavigationItemBadge : UIView
-
-@property(nonatomic, assign) CGFloat badgeCircleWidth;
-@property(nonatomic, assign) CGFloat badgeCircleHeight;
-@property(nonatomic, assign) CGFloat xPadding;
-@property(nonatomic, assign) CGFloat yPadding;
 
 @property(nonatomic, copy) NSString *badgeValue;
 @property(nonatomic, strong) UIColor *badgeColor UI_APPEARANCE_SELECTOR;
