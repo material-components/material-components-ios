@@ -58,7 +58,6 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 @property(nonatomic, strong) UIView *barView;
 @property(nonatomic, strong) UIVisualEffectView *blurEffectView;
 @property(nonatomic, strong) UIView *itemsLayoutView;
-@property(nonatomic, strong) UIView *inkClippingView;
 @property(nonatomic, strong) NSMutableArray *inkControllers;
 @property(nonatomic) BOOL shouldPretendToBeATabBar;
 
@@ -109,7 +108,7 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
   _blurEffectView.hidden = !_backgroundBlurEnabled;
   _blurEffectView.autoresizingMask =
       (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-  [self addSubview:_blurEffectView];
+  [self addSubview:_blurEffectView];  // Needs to always be at the bottom
 
   _barView = [[UIView alloc] init];
   _barView.autoresizingMask =
@@ -121,20 +120,8 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
   _itemsLayoutView = [[UIView alloc] initWithFrame:CGRectZero];
   _itemsLayoutView.autoresizingMask =
       (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin);
-  _itemsLayoutView.clipsToBounds = YES;
-  [_barView addSubview:_itemsLayoutView];
-
-
-  _inkClippingView = [[UIView alloc] init];
-  _inkClippingView.clipsToBounds = YES;
-  _inkClippingView.autoresizingMask =
-      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleWidth;
-  _itemsLayoutView = [[UIView alloc] initWithFrame:CGRectZero];
-  _itemsLayoutView.autoresizingMask =
-      (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin);
   _itemsLayoutView.clipsToBounds = NO;
-  [self addSubview:_inkClippingView];
-  [_inkClippingView addSubview:_itemsLayoutView];
+  [_barView addSubview:_itemsLayoutView];
 
 #if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
 #pragma clang diagnostic push
@@ -159,10 +146,9 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
   [super layoutSubviews];
 
   CGRect standardBounds = CGRectStandardize(self.bounds);
-  CGSize size = standardBounds.size;
   self.blurEffectView.frame = standardBounds;
   self.barView.frame = standardBounds;
-  self.inkClippingView.frame = standardBounds;
+
   CGSize size = standardBounds.size;
   if (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
     [self layoutLandscapeModeWithBottomNavSize:size

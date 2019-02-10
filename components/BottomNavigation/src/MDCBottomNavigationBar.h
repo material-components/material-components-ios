@@ -124,10 +124,9 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
 @property(nullable, nonatomic, copy) UIColor *backgroundColor UI_APPEARANCE_SELECTOR;
 
 /**
- The blur effect style to use for the background when a non-opaque color is set as the
- @c barTintColor.
+ The blur effect style to use behind the Bottom Navigation bar.
 
- Has no effect unless @backgroundBlurEnabled is @c YES.
+ Has no effect unless @backgroundBlurEnabled is @c YES and a non-opaque @c barTintColor is used.
  */
 @property(nonatomic, assign) UIBlurEffectStyle backgroundBlurEffectStyle;
 
