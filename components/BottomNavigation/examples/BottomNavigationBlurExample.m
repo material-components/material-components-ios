@@ -18,12 +18,9 @@
 #import "MaterialBottomNavigation+TypographyThemer.h"
 #import "MaterialBottomNavigation.h"
 #import "MaterialColorScheme.h"
-#import "MaterialPalettes.h"
 #import "MaterialTypographyScheme.h"
 
-@interface BottomNavigationBlurExample : UIViewController <MDCBottomNavigationBarDelegate,
-                                                           UICollectionViewDelegate,
-                                                           UICollectionViewDataSource>
+@interface BottomNavigationBlurExample : UIViewController <UICollectionViewDataSource>
 
 @property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
@@ -47,12 +44,9 @@
   return self;
 }
 
-- (void)commonBottomNavigationTypicalUseExampleViewDidLoad {
-  _bottomNavBar = [[MDCBottomNavigationBar alloc] initWithFrame:CGRectZero];
-  _bottomNavBar.titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
-  _bottomNavBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles;
-  _bottomNavBar.delegate = self;
-  [self.view addSubview:_bottomNavBar];
+- (void)configureNavigationBar {
+  self.bottomNavBar.titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
+  self.bottomNavBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles;
 
   UITabBarItem *tabBarItem1 = [[UITabBarItem alloc] initWithTitle:@"Home"
                                                             image:[UIImage imageNamed:@"Home"]
@@ -78,17 +72,11 @@
                                                             image:[UIImage imageNamed:@"Cake"]
                                                               tag:0];
   tabBarItem5.badgeValue = @"888+";
-#if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wpartial-availability"
-  if ([tabBarItem5 respondsToSelector:@selector(badgeColor)]) {
-    tabBarItem5.badgeColor = [MDCPalette cyanPalette].accent700;
-  }
-#pragma clang diagnostic pop
-#endif
-  _bottomNavBar.items = @[ tabBarItem1, tabBarItem2, tabBarItem3, tabBarItem4, tabBarItem5 ];
-  _bottomNavBar.selectedItem = tabBarItem2;
+  self.bottomNavBar.items = @[ tabBarItem1, tabBarItem2, tabBarItem3, tabBarItem4, tabBarItem5 ];
+  self.bottomNavBar.selectedItem = tabBarItem2;
+}
 
+- (void)configureBlurToggleButton {
   NSBundle *selfBundle = [NSBundle bundleForClass:[BottomNavigationBlurExample class]];
   self.blurOffIcon = [[UIImage imageNamed:@"baseline_blur_off_black_24pt"
                                  inBundle:selfBundle
@@ -107,44 +95,52 @@
   [self updateBlurToggleButton];
 }
 
-- (void)layoutBottomNavBar {
-  CGSize size = [_bottomNavBar sizeThatFits:self.view.bounds.size];
-  CGRect bottomNavBarFrame =
-      CGRectMake(0, CGRectGetHeight(self.view.bounds) - size.height, size.width, size.height);
-  _bottomNavBar.frame = bottomNavBarFrame;
-  self.collectionView.contentInset = UIEdgeInsetsMake(0, 0, size.height, 0);
+- (void)applyTheming {
+  [MDCBottomNavigationBarTypographyThemer applyTypographyScheme:self.typographyScheme
+                                          toBottomNavigationBar:self.bottomNavBar];
+  [MDCBottomNavigationBarColorThemer applySemanticColorScheme:self.colorScheme
+                                           toBottomNavigation:self.bottomNavBar];
+  self.bottomNavBar.barTintColor =
+      [self.bottomNavBar.barTintColor colorWithAlphaComponent:(CGFloat)0.85];
+  self.view.backgroundColor = self.colorScheme.backgroundColor;
+  self.collectionView.backgroundColor = self.colorScheme.backgroundColor;
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  [self commonBottomNavigationTypicalUseExampleViewDidLoad];
-
-  [MDCBottomNavigationBarTypographyThemer applyTypographyScheme:self.typographyScheme
-                                          toBottomNavigationBar:_bottomNavBar];
-  [MDCBottomNavigationBarColorThemer applySemanticColorScheme:self.colorScheme
-                                           toBottomNavigation:_bottomNavBar];
-  self.bottomNavBar.barTintColor = [self.bottomNavBar.barTintColor colorWithAlphaComponent:0.85];
-  self.view.backgroundColor = self.colorScheme.backgroundColor;
+  [self configureBlurToggleButton];
 
   self.collectionView =
       [[UICollectionView alloc] initWithFrame:self.view.bounds
                          collectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
-  self.collectionView.backgroundColor = self.self.colorScheme.backgroundColor;
   self.collectionView.dataSource = self;
-  self.collectionView.delegate = self;
   self.collectionView.autoresizingMask =
       (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
   [self.collectionView registerClass:[UICollectionViewCell class]
           forCellWithReuseIdentifier:@"cell"];
   [self.view addSubview:self.collectionView];
 
-  [self.view bringSubviewToFront:self.bottomNavBar];
+  self.bottomNavBar = [[MDCBottomNavigationBar alloc] initWithFrame:CGRectZero];
+  [self.view addSubview:self.bottomNavBar];
+  [self configureNavigationBar];
+
+  [self applyTheming];
 }
+
+#pragma mark - Layout
 
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
   self.collectionView.frame = CGRectStandardize(self.view.bounds);
+}
+
+- (void)layoutBottomNavBar {
+  CGSize size = [self.bottomNavBar sizeThatFits:self.view.bounds.size];
+  CGRect bottomNavBarFrame =
+      CGRectMake(0, CGRectGetHeight(self.view.bounds) - size.height, size.width, size.height);
+  self.bottomNavBar.frame = bottomNavBarFrame;
+  self.collectionView.contentInset = UIEdgeInsetsMake(0, 0, size.height, 0);
 }
 
 - (void)viewDidLayoutSubviews {
@@ -159,9 +155,7 @@
   [self layoutBottomNavBar];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
-}
+#pragma mark - Blur effect
 
 - (void)toggleBlurEffect {
   self.bottomNavBar.backgroundBlurEnabled = !self.bottomNavBar.backgroundBlurEnabled;
@@ -183,14 +177,7 @@
   }
 }
 
-#pragma mark - MDCBottomNavigationBarDelegate
-
-- (void)bottomNavigationBar:(nonnull MDCBottomNavigationBar *)bottomNavigationBar
-              didSelectItem:(nonnull UITabBarItem *)item {
-  NSLog(@"Selected Item: %@", item.title);
-}
-
-#pragma mark - UICollectionViewDataSource
+#pragma mark - UICollectionView
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
