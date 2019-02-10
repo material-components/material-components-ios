@@ -232,16 +232,22 @@ static const CGFloat kFilledContainerStyleTopCornerRadius = (CGFloat)4.0;
   return underlineThickness;
 }
 
-#pragma mark MDCContainedInputViewStyleDensityInforming
+-(id<MDCContainedInputViewStyleDensityInforming>)densityInformer {
+  return [[MDCContainerStyleFilledDensityInformer alloc] init];
+}
+
+@end
+
+@implementation MDCContainerStyleFilledDensityInformer
 
 - (CGFloat)floatingPlaceholderFontSizeScaleFactor {
   return ((CGFloat)53 / (CGFloat)71);
 }
 
 - (CGFloat)spaceBetweenFloatingPlaceholderAndTextAreaWithFloatingPlaceholderMinY:
-               (CGFloat)floatingPlaceholderMinY
+(CGFloat)floatingPlaceholderMinY
                                                        floatingPlaceholderHeight:
-                                                           (CGFloat)floatingPlaceholderHeight {
+(CGFloat)floatingPlaceholderHeight {
   return ((CGFloat)0.25 * (floatingPlaceholderMinY + floatingPlaceholderHeight));
 }
 

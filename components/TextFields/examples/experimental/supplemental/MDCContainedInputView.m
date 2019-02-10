@@ -44,6 +44,10 @@
 
 @implementation MDCContainerStyleBase
 
+-(id)densityInformer {
+  return [[MDCContainerStyleBaseDensityInformer alloc] init];
+}
+
 - (id<MDCContainedInputViewColorScheming>)defaultColorSchemeForState:
     (MDCContainedInputViewState)state {
   MDCContainedInputViewColorScheme *colorScheme = [[MDCContainedInputViewColorScheme alloc] init];
@@ -86,31 +90,8 @@
 - (void)removeStyleFrom:(id<MDCContainedInputView>)containedInputView {
 }
 
-- (CGFloat)floatingPlaceholderMinYWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight {
-  return 10;
-}
 
-- (CGFloat)textAreaTopPaddingWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY
-                                          textAreaHeight:(CGFloat)textAreaHeight {
-  return floatingPlaceholderMaxY + 10;
-}
 
-- (CGFloat)normalTextAreaTopPaddingWithTextAreaHeight:(CGFloat)textAreaHeight {
-  return [self verticalPaddingWithTextAreaHeight:textAreaHeight];
-}
-
-- (CGFloat)normalTextAreaBottomPaddingWithTextAreaHeight:(CGFloat)textAreaHeight {
-  return [self verticalPaddingWithTextAreaHeight:textAreaHeight];
-}
-
-- (CGFloat)floatingPlaceholderFontSizeScaleFactor {
-  return (CGFloat)0.33;
-}
-
-- (CGFloat)verticalPaddingWithTextAreaHeight:(CGFloat)textAreaHeight {
-  return (((CGFloat)textAreaHeight * (CGFloat)3) * (CGFloat)(0.5)) -
-         ((CGFloat)textAreaHeight * (CGFloat)0.5);
-}
 
 - (MDCContainedInputViewState)containedInputViewStateWithIsEnabled:(BOOL)isEnabled
                                                          isErrored:(BOOL)isErrored
@@ -163,6 +144,36 @@
   } else {
     return MDCContainedInputViewPlaceholderStateNone;
   }
+}
+
+@end
+
+@implementation MDCContainerStyleBaseDensityInformer
+
+- (CGFloat)floatingPlaceholderMinYWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight {
+  return 10;
+}
+
+- (CGFloat)normalTextAreaTopPaddingWithTextAreaHeight:(CGFloat)textAreaHeight {
+  return [self verticalPaddingWithTextAreaHeight:textAreaHeight];
+}
+
+- (CGFloat)normalTextAreaBottomPaddingWithTextAreaHeight:(CGFloat)textAreaHeight {
+  return [self verticalPaddingWithTextAreaHeight:textAreaHeight];
+}
+
+- (CGFloat)textAreaTopPaddingWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY
+                                          textAreaHeight:(CGFloat)textAreaHeight {
+  return floatingPlaceholderMaxY + 10;
+}
+
+- (CGFloat)floatingPlaceholderFontSizeScaleFactor {
+  return (CGFloat)0.33;
+}
+
+- (CGFloat)verticalPaddingWithTextAreaHeight:(CGFloat)textAreaHeight {
+  return (((CGFloat)textAreaHeight * (CGFloat)3) * (CGFloat)(0.5)) -
+  ((CGFloat)textAreaHeight * (CGFloat)0.5);
 }
 
 @end

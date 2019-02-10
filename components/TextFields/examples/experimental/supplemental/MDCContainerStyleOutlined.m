@@ -195,6 +195,15 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
   return defaultLineWidth;
 }
 
+-(id<MDCContainedInputViewStyleDensityInforming>)densityInformer {
+  return [[MDCContainerStyleOutlinedDensityInformer alloc] init];
+}
+
+
+@end
+
+@implementation MDCContainerStyleOutlinedDensityInformer
+
 - (CGFloat)floatingPlaceholderFontSizeScaleFactor {
   return ((CGFloat)41 / (CGFloat)55);
 }
@@ -204,9 +213,9 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
 }
 
 - (CGFloat)spaceBetweenFloatingPlaceholderAndTextAreaWithFloatingPlaceholderMinY:
-               (CGFloat)floatingPlaceholderMinY
+(CGFloat)floatingPlaceholderMinY
                                                        floatingPlaceholderHeight:
-                                                           (CGFloat)floatingPlaceholderHeight {
+(CGFloat)floatingPlaceholderHeight {
   CGFloat outlinedTextFieldSpaceHeuristic = floatingPlaceholderHeight * (CGFloat)0.22;
   return floatingPlaceholderMinY + floatingPlaceholderHeight + outlinedTextFieldSpaceHeuristic;
 }

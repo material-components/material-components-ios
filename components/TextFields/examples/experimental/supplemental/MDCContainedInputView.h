@@ -176,13 +176,26 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewPlaceholderState) {
 @property(strong, nonatomic) UIColor *errorColor;
 @end
 
+@protocol MDCContainedInputViewStyleDensityInforming;
+
 @protocol MDCContainedInputViewStyle <NSObject>
+- (nonnull id<MDCContainedInputViewStyleDensityInforming>)densityInformer;
 - (nonnull id<MDCContainedInputViewColorScheming>)defaultColorSchemeForState:
     (MDCContainedInputViewState)state;
 - (void)applyStyleToContainedInputView:(nonnull id<MDCContainedInputView>)inputView
     withContainedInputViewColorScheming:(nonnull id<MDCContainedInputViewColorScheming>)colorScheme;
 - (void)removeStyleFrom:(nonnull id<MDCContainedInputView>)containedInputView;
 @end
+
+//@protocol MDCContainedInputViewStyleDensityInforming2 <NSObject>
+//- (UIFont *)floatingPlaceholderFontWithFont:(UIFont *)font;
+//- (CGFloat)floatingPlaceholderMinYWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight;
+//- (CGFloat)normalTextAreaTopPaddingWithTextAreaHeight:(CGFloat)textAreaHeight;
+//- (CGFloat)normalTextAreaBottomPaddingWithTextAreaHeight:(CGFloat)textAreaHeight;
+//- (CGFloat)textAreaTopPaddingWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY
+//                                          textAreaHeight:(CGFloat)textAreaHeight;
+//@end
+
 
 @protocol MDCContainedInputViewStyleDensityInforming <NSObject>
 - (CGFloat)floatingPlaceholderMinYWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight;
@@ -206,6 +219,8 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewPlaceholderState) {
 @end
 
 @interface MDCContainerStyleBase : NSObject <MDCContainedInputViewStyle,
-                                             MDCContainedInputViewStyleDensityInforming,
                                              MDCContainedInputViewLayoutCalculating>
+@end
+
+@interface MDCContainerStyleBaseDensityInformer : NSObject <MDCContainedInputViewStyleDensityInforming>
 @end

@@ -95,13 +95,9 @@ static const CGFloat kInterChipPadding = (CGFloat)8.0;
                            isEditing:(BOOL)isEditing {
 //  CGFloat floatingPlaceholderHeight =
 //      canPlaceholderFloat ? [self textHeightWithFont:floatingPlaceholderFont] : 0;
-//  CGFloat floatingPlaceholderMinY =
-//      [self floatingPlaceholderMinYWithFloatingHeight:floatingPlaceholderHeight
-//                                       containerStyle:containerStyle];
+//  CGFloat floatingPlaceholderMinY = [containerStyle.densityInformer floatingPlaceholderMinYWithFloatingPlaceholderHeight:floatingPlaceholderHeight];
 //  CGFloat textRectHeight = [self textHeightWithFont:font];
-  
-  // TODO: Defer to densityInformer for value below
-//  CGFloat textRectCenterY = ((CGFloat)textRectHeight * (CGFloat)3) * (CGFloat)(0.5);  //[self]
+
   CGSize textFieldSize = [self textSizeWithViewSize:size
                                       contentInsets:contentInsets
                                                text:text

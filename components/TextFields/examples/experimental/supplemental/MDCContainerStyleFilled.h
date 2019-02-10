@@ -22,5 +22,9 @@
 @end
 
 @interface MDCContainerStyleFilled
-    : MDCContainerStyleBase <MDCContainedInputViewStyle, MDCContainedInputViewStyleDensityInforming>
+    : MDCContainerStyleBase <MDCContainedInputViewStyle>
 @end
+
+@interface MDCContainerStyleFilledDensityInformer : MDCContainerStyleBaseDensityInformer <MDCContainedInputViewStyleDensityInforming>
+@end
+
