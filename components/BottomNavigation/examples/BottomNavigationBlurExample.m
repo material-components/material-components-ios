@@ -109,6 +109,7 @@
   CGRect bottomNavBarFrame =
       CGRectMake(0, CGRectGetHeight(self.view.bounds) - size.height, size.width, size.height);
   _bottomNavBar.frame = bottomNavBarFrame;
+  self.collectionView.contentInset = UIEdgeInsetsMake(0, 0, size.height, 0);
 }
 
 - (void)viewDidLoad {
@@ -126,6 +127,7 @@
   self.collectionView =
       [[UICollectionView alloc] initWithFrame:self.view.bounds
                          collectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
+  self.collectionView.backgroundColor = self.self.colorScheme.backgroundColor;
   self.collectionView.dataSource = self;
   self.collectionView.delegate = self;
   self.collectionView.autoresizingMask =
@@ -228,7 +230,7 @@
   return @{
     @"breadcrumbs" : @[ @"Bottom Navigation", @"Blur Effect" ],
     @"primaryDemo" : @NO,
-    @"presentable" : @YES,
+    @"presentable" : @NO,
   };
 }
 
