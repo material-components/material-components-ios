@@ -136,7 +136,7 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
 
  Defaults to @c NO.
  */
-@property(nonatomic, assign) BOOL backgroundBlurEnabled;
+@property(nonatomic, assign, getter=isBackgroundBlurEnabled) BOOL backgroundBlurEnabled;
 
 /**
  The inset applied to each items bounds to determine the rect in which the items' contents will be

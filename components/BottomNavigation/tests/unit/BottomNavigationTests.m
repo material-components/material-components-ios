@@ -46,7 +46,7 @@
 
   // Then
   XCTAssertEqualObjects(bar.backgroundColor, UIColor.whiteColor);
-  XCTAssertFalse(bar.backgroundBlurEnabled);
+  XCTAssertFalse(bar.isBackgroundBlurEnabled);
   XCTAssertEqual(bar.backgroundBlurEffectStyle, UIBlurEffectStyleExtraLight);
 }
 
