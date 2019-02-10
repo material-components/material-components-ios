@@ -173,28 +173,28 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
   switch (self.alignment) {
     case MDCBottomNavigationBarAlignmentJustified:
       [self sizeitemsLayoutViewItemsDistributed:YES
-                            withBottomNavSize:bottomNavSize
-                               containerWidth:containerWidth];
+                              withBottomNavSize:bottomNavSize
+                                 containerWidth:containerWidth];
       self.titleBelowItem = YES;
       break;
     case MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles:
       [self sizeitemsLayoutViewItemsDistributed:YES
-                            withBottomNavSize:bottomNavSize
-                               containerWidth:containerWidth];
+                              withBottomNavSize:bottomNavSize
+                                 containerWidth:containerWidth];
       self.titleBelowItem = NO;
       break;
     case MDCBottomNavigationBarAlignmentCentered:
       [self sizeitemsLayoutViewItemsDistributed:NO
-                            withBottomNavSize:bottomNavSize
-                               containerWidth:containerWidth];
+                              withBottomNavSize:bottomNavSize
+                                 containerWidth:containerWidth];
       self.titleBelowItem = YES;
       break;
   }
 }
 
 - (void)sizeitemsLayoutViewItemsDistributed:(BOOL)itemsDistributed
-                        withBottomNavSize:(CGSize)bottomNavSize
-                           containerWidth:(CGFloat)containerWidth {
+                          withBottomNavSize:(CGSize)bottomNavSize
+                             containerWidth:(CGFloat)containerWidth {
   CGFloat barHeight = kMDCBottomNavigationBarHeight;
   if (self.alignment == MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles &&
       self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
