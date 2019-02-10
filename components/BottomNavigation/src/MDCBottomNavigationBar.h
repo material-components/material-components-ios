@@ -128,7 +128,8 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
  centered. The contents are centered in this rect, but not compressed, so they may still extend
  beyond these bounds. Defaults to {0, 0, 0, 0}. The inset is flipped for RTL.
  */
-@property(nonatomic, assign) UIEdgeInsets itemsContentInsets;
+@property(nonatomic, assign)
+    UIEdgeInsets itemsContentInsets __deprecated_msg("This API will be removed.");
 
 /**
  The margin between the item's icon and title when alignment is either Justified or Centered.

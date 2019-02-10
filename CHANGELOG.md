@@ -1,3 +1,142 @@
+# 76.1.2
+
+Fix build tooling.
+
+* [Bumped version number to 76.1.2.](https://github.com/material-components/material-components-ios/commit/ac78d824a9f201b15497c42aedc40a2a28068654) (Ian Gordon)
+* [{kokoro} Fix develop (#6575)](https://github.com/material-components/material-components-ios/commit/3b9d66bf694f6368d804b09d529bf529e8829db0) (Robert Moore)
+
+---
+
+# 76.1.1
+
+Fix Cocoapods validation failures.
+
+---
+
+# 76.1.0
+
+Add additional snapshot tests and mark outdated theming API as deprecated.
+
+## New deprecations
+
+The previous theming API is being deprecated in favor of MDCContainerScheme.
+Bottom Navigation's itemsContentInsets in is being deprecated as it is no longer used internally.
+
+## Changes
+
+### AppBar
+
+* [Add animated tab switching example (#6447)](https://github.com/material-components/material-components-ios/commit/b64e1af39577ca76bfbf454b2d1c810db5d82a1a) (Brian Moore)
+
+### BottomAppBar
+
+* [Fix bottom app bar cut out (#6420)](https://github.com/material-components/material-components-ios/commit/e1008e52061908c5e8f3caec55e071be4aeaea10) (Peter Friese)
+
+### BottomNavigation
+
+* [Add sizeThatFits: to Item View (#6559)](https://github.com/material-components/material-components-ios/commit/24ec11d91fe1434499e58e245521bef15c50908f) (Robert Moore)
+* [Deprecate `itemsContentInsets` API (#6557)](https://github.com/material-components/material-components-ios/commit/c671c29be66752131b65f8e6702d0dc8e218b0a8) (Robert Moore)
+* [Minor refactor of snapshot tests. (#6535)](https://github.com/material-components/material-components-ios/commit/0d373a68c113f66a4cfde9426ebce14f78d1bb63) (Robert Moore)
+* [Suppress deprecation warning. (#6561)](https://github.com/material-components/material-components-ios/commit/d1867c9c97be464ea6daa2bf8eab95dd895c790f) (Robert Moore)
+* [Use chrome_reader in example. (#6551)](https://github.com/material-components/material-components-ios/commit/e1fe168b73becf77a7a2abd2a4cf3185ab3f1b37) (Robert Moore)
+* [Add ItemView snapshot tests. (#6533)](https://github.com/material-components/material-components-ios/commit/914be3bac19ae83d160fb6cb6c2b419806955969) (Robert Moore)
+* [Add RTL snapshot tests.   (#6539)](https://github.com/material-components/material-components-ios/commit/1b346744544103f1f72009c620e09c4fe3edd2ca) (Robert Moore)
+* [Add snapshot tests for contentInsets (#6554)](https://github.com/material-components/material-components-ios/commit/418e8ef7537a8f98463737becc1f428457e4fe3d) (Robert Moore)
+* [Simplify and improve badge view.  (#6544)](https://github.com/material-components/material-components-ios/commit/b1e9182aaf4621ab62fdf2a694baf7ebdc669348) (Robert Moore)
+* [Vary badges in snapshot tests. (#6550)](https://github.com/material-components/material-components-ios/commit/bbe86a3fcbe4d13a7cefa2213412ae29629c959d) (Robert Moore)
+
+### Dialogs
+
+* [Deprecate Themers and AlertScheme. (#6564)](https://github.com/material-components/material-components-ios/commit/8c5b6d0d6d7febf7a0f6c47dff1581890f98eaeb) (Robert Moore)
+* [Fix deprecation warnings. (#6567)](https://github.com/material-components/material-components-ios/commit/9a3397fe63462ce691c8c7dc194dea90c95f194f) (Robert Moore)
+* [Theming dialog actions doc (#6547)](https://github.com/material-components/material-components-ios/commit/9eebe7a2e64c01453201febe5dc44228153e7a8f) (Galia Kaufman)
+
+## Multi-component changes
+
+* [Add test image helper. (#6534)](https://github.com/material-components/material-components-ios/commit/b26ba5db3e004bd7b77779ce68c60935e5c94b51) (Robert Moore)
+* [Completed audit of swift forced unwrapping in catalog (#6186)](https://github.com/material-components/material-components-ios/commit/fc7f30d0127bf2cd2a65ca365aa7d841cbac110e) (Joe Aguilar)
+* [Improve snapshot tests. (#6543)](https://github.com/material-components/material-components-ios/commit/c2adc2813c6c5eca713e2836bf725cbd7fe8e207) (Robert Moore)
+
+---
+
+# 76.0.0
+
+This major release changes the Material Theming colors for Cards cells. It also includes bug fixes
+for Navigation Drawer and Text Fields.
+
+## Breaking changes
+
+The MDCCardsColorThemer now sets the `imageTintColor:forState:` on MDCCardCollectionCell.  This
+property was previously unset by the themer.
+
+## API changes
+
+### Collections
+
+#### MDCCollectionViewEditing
+
+*new* property: `minimumPressDuration` in `MDCCollectionViewEditing`
+
+## Changes
+
+### ActionSheet
+
+* [Make examples use container scheme (#6493)](https://github.com/material-components/material-components-ios/commit/e11f9995d5bd835618e23c739b56cd740a126537) (Cody Weaver)
+
+### BottomNavigation
+
+* [Elevates the BottomNavigationBarController to beta status and re-adds its unit tests. (#6311)](https://github.com/material-components/material-components-ios/commit/d8fed5953562de48d9ba9c04e22faca9bf5f106f) (Eric Lee)
+* [Example is self-contained. (#6480)](https://github.com/material-components/material-components-ios/commit/62c5097a7a5e65f9d2bfff92ef4eae1ec2250e52) (Robert Moore)
+* [Fix import in VC. (#6470)](https://github.com/material-components/material-components-ios/commit/49e2422e294a1a24968da3a1f948d469736b0cdb) (Robert Moore)
+* [Lays out the bar when titleVisibility is changed (#6152)](https://github.com/material-components/material-components-ios/commit/a9c8fab43dc05df7d56e2e647d2d02efedbac756) (Bartholomew Furrow)
+* [Add snapshot tests. (#6521)](https://github.com/material-components/material-components-ios/commit/d97f9ce0da44b4d78f34372d9868799738d3e02d) (Robert Moore)
+* [Move controller out of `/beta`. (#6501)](https://github.com/material-components/material-components-ios/commit/1b98e1ea21382ed9db3cac66408411c603a6b868) (Robert Moore)
+* [Stop excluding VC example. (#6515)](https://github.com/material-components/material-components-ios/commit/7f959bec011765d268504ba99fdde22438558a9b) (Robert Moore)
+
+### Buttons
+
+* [Remove broken link. (#6518)](https://github.com/material-components/material-components-ios/commit/af00416ce3a23a6e4401059eb917473b04a0bc98) (Robert Moore)
+* [Update examples to use theming extensions (#6475)](https://github.com/material-components/material-components-ios/commit/b99faa6c28b2ef8fb61ebbb7eadbb9995568728e) (Cody Weaver)
+* [Update theming docs for theming extensions (#6467)](https://github.com/material-components/material-components-ios/commit/2248b33aeb6508a4ff360a595a7a495104a665d7) (Cody Weaver)
+
+### Cards
+
+* [Fix elevation values for Highlighted and Selected for Cards in themer. (#6485)](https://github.com/material-components/material-components-ios/commit/eb98acd604eae9bb68da0cbc7828688a9c0ca9cc) (Yarden Eitan)
+* [added correct theming for selected icon (#6482)](https://github.com/material-components/material-components-ios/commit/d947748fee1de88cf625f8c8480fc57c58ada31a) (Yarden Eitan)
+
+### Collections
+
+* [Customize reorder long-press timing. (#6469)](https://github.com/material-components/material-components-ios/commit/d57f7199b3cc434442d1176f230e4d80c8b18d69) (Robert Moore)
+
+### Dialogs
+
+* [Fix broken link to beta documentation. (#6506)](https://github.com/material-components/material-components-ios/commit/49c5913b62a6e6da8c4f832d50338ec5020aee56) (featherless)
+* [Update theming docs for theming extension (#6496)](https://github.com/material-components/material-components-ios/commit/3f77bf511830727af4607e6dfe8ac61db0be6d64) (Cody Weaver)
+
+### NavigationDrawer
+
+* [Fix issue when setting `trackingScrollView` (#6492)](https://github.com/material-components/material-components-ios/commit/4a3ca45176fa457a735260d6fe7ec3e48d274bcc) (Cody Weaver)
+* [Fix issue where drawer opens passed `initialDrawerFactor` (#6491)](https://github.com/material-components/material-components-ios/commit/63c8c54ec2ec9a14d76823dc7eacab7aca5b81a8) (Cody Weaver)
+* [Fix issue where scrim is shown below content (#6514)](https://github.com/material-components/material-components-ios/commit/7050808d62e0b854f4ab8d2680de0983da7cb418) (Cody Weaver)
+* [fix bottom drawer rest in the middle of corner radius animation (#6516)](https://github.com/material-components/material-components-ios/commit/0512eb03bf3845fbc739f6f206ff5010a20c35e6) (Wenyu Zhang)
+
+### Ripple
+
+* [Fail the ripple gesture when other scroll view gestures are competing unless they are tap or long press gestures. (#6487)](https://github.com/material-components/material-components-ios/commit/6c39907fb65438176dc5c589a763f7f94fb72dcc) (Yarden Eitan)
+* [Remove the notion of state and its implementation from the ripple touch controller (#6486)](https://github.com/material-components/material-components-ios/commit/4556a2a71a0986553da94f37dfe3148259abe376) (Yarden Eitan)
+* [provide completion block for cancellation (#6488)](https://github.com/material-components/material-components-ios/commit/854b8fe8384fd0eb0ef6c7082ccde2e039e1092e) (Yarden Eitan)
+
+### TextFields
+
+* [Fixed issue: Placeholder label gets stuck in expanded state when switching between controls  (#6269)](https://github.com/material-components/material-components-ios/commit/99871be6cd2ca9b365d99d46a6c28a93ac22e802) (Sergey Aleksandrov)
+
+## Multi-component changes
+
+* [Move shapes from components/private to components/ (#6495)](https://github.com/material-components/material-components-ios/commit/de5d200599035b8e67ed95a7507f82ad2f35d8c4) (Yarden Eitan)
+* [{clang-format} Format the components. (#6347)](https://github.com/material-components/material-components-ios/commit/800188a64994c68d089af849ea7cd080b1a4d4ab) (Robert Moore)
+
+---
+
 # 75.0.1
 
 This patch release reformats the entire code base to align to the latest

@@ -14,6 +14,7 @@
 
 #import "supplemental/ChipsExamplesSupplemental.h"
 
+#import "MaterialChips+Theming.h"
 #import "MaterialChips.h"
 #import "MaterialSlider.h"
 
@@ -22,6 +23,14 @@
   MDCSlider *_widthSlider;
   MDCSlider *_heightSlider;
   UISegmentedControl *_horizontalAlignmentControl;
+}
+
+- (id)init {
+  self = [super init];
+  if (self) {
+    self.containerScheme = [[MDCContainerScheme alloc] init];
+  }
+  return self;
 }
 
 - (void)viewDidLoad {
@@ -33,6 +42,7 @@
   _chipView.titleLabel.text = @"Material";
   _chipView.imageView.image = [self faceImage];
   _chipView.accessoryView = [self deleteButton];
+  [_chipView applyThemeWithScheme:self.containerScheme];
   [self.view addSubview:_chipView];
 
   CGSize chipSize = [_chipView sizeThatFits:self.view.bounds.size];
