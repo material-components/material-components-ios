@@ -767,4 +767,105 @@ static NSString *const kBadgeTitleArabic = @"أورا";
   [self generateAndVerifySnapshot];
 }
 
+#pragma mark - Transparent background and blur
+
+- (void)testTransparentBackgroundColor {
+  // Given
+  UIView *barSuperview =
+      [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWidthTypical, kHeightTypical * 2)];
+  UIColor *patternColor =
+      [UIColor colorWithPatternImage:[UIImage mdc_testImageOfSize:CGSizeMake(kHeightTypical,
+                                                                             kHeightTypical)]];
+  barSuperview.backgroundColor = patternColor;
+  [barSuperview addSubview:self.navigationBar];
+  self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+  self.navigationBar.selectedItem = self.tabItem2;
+  self.navigationBar.frame = CGRectMake(0, kHeightTypical, kWidthTypical, kHeightTypical);
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem2];
+
+  // When
+  self.navigationBar.backgroundColor = [UIColor.whiteColor colorWithAlphaComponent:(CGFloat)0.5];
+
+  // Then
+  UIView *backgroundView = [barSuperview mdc_addToBackgroundView];
+  [self snapshotVerifyView:backgroundView];
+
+}
+
+- (void)testTransparentBackgroundColorWithExtraLightBlur {
+  // Given
+  UIView *barSuperview =
+      [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWidthTypical, kHeightTypical * 2)];
+  UIColor *patternColor =
+      [UIColor colorWithPatternImage:[UIImage mdc_testImageOfSize:CGSizeMake(kWidthTypical,
+                                                                             kWidthTypical)]];
+
+  barSuperview.backgroundColor = patternColor;
+  [barSuperview addSubview:self.navigationBar];
+  self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+  self.navigationBar.selectedItem = self.tabItem2;
+  self.navigationBar.frame = CGRectMake(0, kHeightTypical, kWidthTypical, kHeightTypical);
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem2];
+
+  // When
+  self.navigationBar.barTintColor =
+      [self.navigationBar.barTintColor colorWithAlphaComponent:(CGFloat).5];
+  self.navigationBar.backgroundBlurEnabled = YES;
+  self.navigationBar.backgroundBlurEffectStyle = UIBlurEffectStyleExtraLight;
+
+  // Then
+  UIView *backgroundView = [barSuperview mdc_addToBackgroundView];
+  [self snapshotVerifyView:backgroundView];
+}
+
+- (void)testTransparentBackgroundColorWithLightBlur {
+  // Given
+  UIView *barSuperview =
+      [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWidthTypical, kHeightTypical * 2)];
+  UIColor *patternColor =
+      [UIColor colorWithPatternImage:[UIImage mdc_testImageOfSize:CGSizeMake(kHeightTypical,
+                                                                             kHeightTypical)]];
+  barSuperview.backgroundColor = patternColor;
+  [barSuperview addSubview:self.navigationBar];
+  self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+  self.navigationBar.selectedItem = self.tabItem2;
+  self.navigationBar.frame = CGRectMake(0, kHeightTypical, kWidthTypical, kHeightTypical);
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem2];
+
+  // When
+  self.navigationBar.backgroundColor = [UIColor.whiteColor colorWithAlphaComponent:(CGFloat)0.5];
+  self.navigationBar.backgroundBlurEnabled = YES;
+  self.navigationBar.backgroundBlurEffectStyle = UIBlurEffectStyleLight;
+
+  // Then
+  UIView *backgroundView = [barSuperview mdc_addToBackgroundView];
+  [self snapshotVerifyView:backgroundView];
+
+}
+
+- (void)testTransparentBackgroundColorWithDarkBlur {
+  // Given
+  UIView *barSuperview =
+      [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWidthTypical, kHeightTypical * 2)];
+  UIColor *patternColor =
+      [UIColor colorWithPatternImage:[UIImage mdc_testImageOfSize:CGSizeMake(kHeightTypical,
+                                                                             kHeightTypical)]];
+  barSuperview.backgroundColor = patternColor;
+  [barSuperview addSubview:self.navigationBar];
+  self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+  self.navigationBar.selectedItem = self.tabItem2;
+  self.navigationBar.frame = CGRectMake(0, kHeightTypical, kWidthTypical, kHeightTypical);
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem2];
+
+  // When
+  self.navigationBar.backgroundColor = [UIColor.whiteColor colorWithAlphaComponent:(CGFloat)0.5];
+  self.navigationBar.backgroundBlurEnabled = YES;
+  self.navigationBar.backgroundBlurEffectStyle = UIBlurEffectStyleDark;
+
+  // Then
+  UIView *backgroundView = [barSuperview mdc_addToBackgroundView];
+  [self snapshotVerifyView:backgroundView];
+
+}
+
 @end
