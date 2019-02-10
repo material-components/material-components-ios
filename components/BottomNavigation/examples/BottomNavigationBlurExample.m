@@ -27,9 +27,10 @@
 
 @property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
-@property(nonatomic, assign) int badgeCount;
 @property(nonatomic, strong) MDCBottomNavigationBar *bottomNavBar;
 @property(nonatomic, strong) UICollectionView *collectionView;
+@property(nonatomic, strong) UIImage *blurOnIcon;
+@property(nonatomic, strong) UIImage *blurOffIcon;
 @end
 
 @implementation BottomNavigationBlurExample
@@ -89,19 +90,21 @@
   _bottomNavBar.selectedItem = tabBarItem2;
 
   NSBundle *selfBundle = [NSBundle bundleForClass:[BottomNavigationBlurExample class]];
-  UIImage *blurEnableImage = [[UIImage imageNamed:@"baseline_blur_off_black_24pt"
-                                         inBundle:selfBundle
-                    compatibleWithTraitCollection:nil]
+  self.blurOffIcon = [[UIImage imageNamed:@"baseline_blur_off_black_24pt"
+                                 inBundle:selfBundle
+            compatibleWithTraitCollection:nil]
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  self.blurOnIcon = [[UIImage imageNamed:@"baseline_blur_on_black_24pt"
+                                inBundle:selfBundle
+           compatibleWithTraitCollection:nil]
       imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   self.navigationItem.rightBarButtonItem =
-      [[UIBarButtonItem alloc] initWithImage:blurEnableImage
+      [[UIBarButtonItem alloc] initWithImage:nil
                                        style:UIBarButtonItemStylePlain
                                       target:self
                                       action:@selector(toggleBlurEffect)];
-  self.navigationItem.rightBarButtonItem.accessibilityLabel = @"Enable blur";
-  self.navigationItem.rightBarButtonItem.accessibilityHint =
-      @"Enables the Bottom Navigation bar blur visual effect";
-  self.navigationItem.rightBarButtonItem.accessibilityIdentifier = @"messages-increment-badge";
+  // Updates icon and accessibility values for blur button
+  [self updateBlurToggleButton];
 }
 
 - (void)layoutBottomNavBar {
@@ -162,23 +165,18 @@
 
 - (void)toggleBlurEffect {
   self.bottomNavBar.backgroundBlurEnabled = !self.bottomNavBar.backgroundBlurEnabled;
-  NSBundle *selfBundle = [NSBundle bundleForClass:[BottomNavigationBlurExample class]];
+  [self updateBlurToggleButton];
+}
+
+- (void)updateBlurToggleButton {
   if (self.bottomNavBar.backgroundBlurEnabled) {
-    UIImage *blurEnableImage = [[UIImage imageNamed:@"baseline_blur_on_black_24pt"
-                                           inBundle:selfBundle
-                      compatibleWithTraitCollection:nil]
-        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    self.navigationItem.rightBarButtonItem.image = blurEnableImage;
+    self.navigationItem.rightBarButtonItem.image = self.blurOnIcon;
     self.navigationItem.rightBarButtonItem.accessibilityLabel = @"Disable blur";
     self.navigationItem.rightBarButtonItem.accessibilityHint =
         @"Disables the Bottom Navigation bar blur visual effect";
 
   } else {
-    UIImage *blurEnableImage = [[UIImage imageNamed:@"baseline_blur_off_black_24pt"
-                                           inBundle:selfBundle
-                      compatibleWithTraitCollection:nil]
-        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    self.navigationItem.rightBarButtonItem.image = blurEnableImage;
+    self.navigationItem.rightBarButtonItem.image = self.blurOffIcon;
     self.navigationItem.rightBarButtonItem.accessibilityLabel = @"Enable blur";
     self.navigationItem.rightBarButtonItem.accessibilityHint =
         @"Enables the Bottom Navigation bar blur visual effect";
@@ -196,7 +194,7 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
-  return 100;
+  return 1000;
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
