@@ -121,7 +121,6 @@ static UIColor *RippleSelectedColor(void) {
     // If we disallow selection we don't want to apply any visual or state changes for selection.
     return;
   }
-  NSLog(@"SELECTED: %d", selected);
   if (selected == _selected && self.activeRippleLayer) {
     return;
   }
@@ -148,7 +147,6 @@ static UIColor *RippleSelectedColor(void) {
     return;
   }
   _rippleHighlighted = rippleHighlighted;
-  NSLog(@"HIGHLIGHTED: %d", rippleHighlighted);
   // Go into the highlighted state visually.
   if (rippleHighlighted && !_tapWentInsideOfBounds) {
     // If ripple becomes highlighted we initiate a ripple with animation.
@@ -168,7 +166,6 @@ static UIColor *RippleSelectedColor(void) {
     return;
   }
   _dragged = dragged;
-  NSLog(@"DRAGGED: %d", dragged);
   // Go into the dragged state visually.
   if (dragged) {
     if (!self.activeRippleLayer) {

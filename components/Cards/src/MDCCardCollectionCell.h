@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
-#import "MaterialRipple.h"
+#import "MaterialInk.h"
 #import "MaterialShadowLayer.h"
 
 @protocol MDCShapeGenerating;
@@ -31,13 +31,10 @@ typedef NS_ENUM(NSInteger, MDCCardCellState) {
   MDCCardCellStateNormal = 0,
 
   /** The visual state when the cell is in its highlighted state. */
-  MDCCardCellStateHighlighted = 1,
+  MDCCardCellStateHighlighted,
 
   /** The visual state when the cell has been selected. */
-  MDCCardCellStateSelected = 2,
-
-  /** The viual state when the cell is being dragged. */
-  MDCCardCellStateDragged = 3,
+  MDCCardCellStateSelected
 };
 
 /**
@@ -80,10 +77,6 @@ typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
  */
 @property(nonatomic, assign, getter=isSelectable) BOOL selectable;
 
-@property(nonatomic, getter=isDragged) BOOL dragged;
-
-@property(nonatomic, assign) BOOL cardHighlighted;
-
 /**
  The corner radius for the card
  Default is set to 4.
@@ -91,9 +84,9 @@ typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
 @property(nonatomic, assign) CGFloat cornerRadius UI_APPEARANCE_SELECTOR;
 
 /**
- The rippleTouchController for the card that is initiated on tap
+ The inkView for the card that is initiated on tap
  */
-@property(nonatomic, strong, nonnull) MDCStatefulRippleView *rippleView;
+@property(nonatomic, readonly, strong, nonnull) MDCInkView *inkView;
 
 /**
  This property defines if a card as a whole should be interactable or not.

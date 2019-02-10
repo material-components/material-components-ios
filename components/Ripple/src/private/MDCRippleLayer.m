@@ -35,12 +35,6 @@ static NSString *const kRippleLayerScaleString = @"transform.scale";
 - (void)setNeedsLayout {
   [super setNeedsLayout];
   [self setRadiiWithRect:self.bounds];
-  CGRect ovalRect =
-      CGRectMake(CGRectGetMidX(self.bounds) - _rippleRadius,
-                 CGRectGetMidY(self.bounds) - _rippleRadius, _rippleRadius * 2, _rippleRadius * 2);
-  UIBezierPath *circlePath = [UIBezierPath bezierPathWithOvalInRect:ovalRect];
-  self.path = circlePath.CGPath;
-  self.position = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
 }
 
 - (void)setRadiiWithRect:(CGRect)rect {
@@ -55,13 +49,15 @@ static NSString *const kRippleLayerScaleString = @"transform.scale";
       CGRectMake(CGRectGetMidX(self.bounds) - _rippleRadius,
                  CGRectGetMidY(self.bounds) - _rippleRadius, _rippleRadius * 2, _rippleRadius * 2);
   UIBezierPath *circlePath = [UIBezierPath bezierPathWithOvalInRect:ovalRect];
-  [self.rippleLayerDelegate rippleLayerTouchDownAnimationDidBegin:self];
   self.path = circlePath.CGPath;
-  self.opacity = 1;
-  self.position = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
+  [self.rippleLayerDelegate rippleLayerTouchDownAnimationDidBegin:self];
   if (!animated) {
+    self.opacity = 1;
+    self.position = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
     [self.rippleLayerDelegate rippleLayerTouchDownAnimationDidEnd:self];
   } else {
+    self.opacity = 0;
+    self.position = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
     _startAnimationActive = YES;
 
     CABasicAnimation *scaleAnim = [[CABasicAnimation alloc] init];
@@ -70,6 +66,8 @@ static NSString *const kRippleLayerScaleString = @"transform.scale";
     scaleAnim.toValue = @1;
     scaleAnim.timingFunction =
         [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionStandard];
+    scaleAnim.fillMode = kCAFillModeForwards;
+    scaleAnim.removedOnCompletion = NO;
 
     UIBezierPath *centerPath = [UIBezierPath bezierPath];
     CGPoint startPoint = point;
@@ -85,6 +83,8 @@ static NSString *const kRippleLayerScaleString = @"transform.scale";
     positionAnim.values = @[ @0, @1 ];
     positionAnim.timingFunction =
         [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionStandard];
+    positionAnim.fillMode = kCAFillModeForwards;
+    positionAnim.removedOnCompletion = NO;
 
     CABasicAnimation *fadeInAnim = [[CABasicAnimation alloc] init];
     fadeInAnim.keyPath = kRippleLayerOpacityString;
@@ -93,11 +93,15 @@ static NSString *const kRippleLayerScaleString = @"transform.scale";
     fadeInAnim.duration = kRippleFadeInDuration;
     fadeInAnim.timingFunction =
         [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+    fadeInAnim.fillMode = kCAFillModeForwards;
+    fadeInAnim.removedOnCompletion = NO;
 
     [CATransaction begin];
     CAAnimationGroup *animGroup = [[CAAnimationGroup alloc] init];
     animGroup.animations = @[ scaleAnim, positionAnim, fadeInAnim ];
     animGroup.duration = kRippleTouchDownDuration;
+    animGroup.fillMode = kCAFillModeForwards;
+    animGroup.removedOnCompletion = NO;
     [CATransaction setCompletionBlock:^{
       self->_startAnimationActive = NO;
       if (completion) {
@@ -164,6 +168,8 @@ static NSString *const kRippleLayerScaleString = @"transform.scale";
   fadeOutAnim.beginTime = [self convertTime:_rippleTouchDownStartTime + delay fromLayer:nil];
   fadeOutAnim.timingFunction =
       [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+  fadeOutAnim.fillMode = kCAFillModeForwards;
+  fadeOutAnim.removedOnCompletion = NO;
   [CATransaction setCompletionBlock:^{
     if (completion) {
       completion();

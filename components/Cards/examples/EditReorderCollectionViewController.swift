@@ -31,16 +31,23 @@ class EditReorderCollectionViewController: UIViewController,
                                         collectionViewLayout: UICollectionViewFlowLayout())
   var toggle = ToggleMode.edit
 
-  var colorScheme = MDCSemanticColorScheme()
-  var shapeScheme = MDCShapeScheme()
-  var typographyScheme = MDCTypographyScheme()
+  var containerScheme: MDCContainerScheming
 
-  var containerScheme: MDCContainerScheming {
-    let scheme = MDCContainerScheme()
-    scheme.colorScheme = colorScheme
-    scheme.typographyScheme = typographyScheme
-    scheme.shapeScheme = shapeScheme
-    return scheme
+  var colorScheme: MDCColorScheming {
+    return containerScheme.colorScheme ?? MDCSemanticColorScheme()
+  }
+
+  var typographyScheme: MDCTypographyScheming {
+    return containerScheme.typographyScheme ?? MDCTypographyScheme()
+  }
+
+  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    containerScheme = MDCContainerScheme()
+    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+  }
+
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
   }
 
   let images = [
@@ -51,6 +58,7 @@ class EditReorderCollectionViewController: UIViewController,
     (image: "austin-u-texas-pond",    title: "Austin U"),
   ]
   var dataSource: [(image: String, title: String, selected: Bool)] = []
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -140,12 +148,18 @@ class EditReorderCollectionViewController: UIViewController,
 
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
     guard let cardCell = cell as? CardEditReorderCollectionCell else { return cell }
+
     cardCell.apply(containerScheme: containerScheme, typographyScheme: typographyScheme)
 
     let title = dataSource[indexPath.item].title
     let imageName = dataSource[indexPath.item].image
     cardCell.configure(title: title, imageName: imageName)
+
     cardCell.isSelectable = (toggle == .edit)
+    if self.dataSource[indexPath.item].selected {
+      collectionView.selectItem(at: indexPath, animated: true, scrollPosition: [])
+      cardCell.isSelected = true
+    }
 
     cardCell.isAccessibilityElement = true
     cardCell.accessibilityLabel = title
@@ -223,16 +237,12 @@ class EditReorderCollectionViewController: UIViewController,
 
   @available(iOS 9.0, *)
   @objc func reorderCards(gesture: UILongPressGestureRecognizer) {
+
     switch(gesture.state) {
     case .began:
       guard let selectedIndexPath = collectionView.indexPathForItem(at:
         gesture.location(in: collectionView)) else { break }
-      let cell = collectionView.cellForItem(at: selectedIndexPath)
-      guard let cardCell = cell as? CardEditReorderCollectionCell else { break }
       collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
-      if (toggle == .reorder) {
-        cardCell.isDragged = true
-      }
     case .changed:
       guard let gestureView = gesture.view else { break }
       collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: gestureView))

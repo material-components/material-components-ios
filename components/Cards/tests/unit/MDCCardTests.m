@@ -16,18 +16,12 @@
 
 #import "MaterialCards.h"
 
-@interface MDCCardCollectionCellTest : MDCCardCollectionCell
-@property(nonatomic) MDCCardCellState testState;
-@end
-
-@implementation MDCCardCollectionCellTest
-- (MDCCardCellState)state {
-  return _testState;
-}
+@interface MDCCardCollectionCell (MDCCardTests)
+- (void)setState:(MDCCardCellState)state animated:(BOOL)animated;
 @end
 
 @interface MDCCardTests : XCTestCase
-@property(nonatomic, strong) MDCCardCollectionCellTest *cell;
+@property(nonatomic, strong) MDCCardCollectionCell *cell;
 @property(nonatomic, strong) MDCCard *card;
 @end
 
@@ -35,7 +29,7 @@
 
 - (void)setUp {
   [super setUp];
-  self.cell = [[MDCCardCollectionCellTest alloc] init];
+  self.cell = [[MDCCardCollectionCell alloc] init];
   self.card = [[MDCCard alloc] init];
 }
 
@@ -124,157 +118,156 @@
   XCTAssertNil(view);
 }
 
-//- (void)testCellSelectAndUnselect {
-//  [self.cell layoutSubviews];
-//  XCTAssertEqual([self.cell shadowElevationForState:MDCCardCellStateNormal], 1);
-//  XCTAssertEqual(self.cell.cornerRadius, 4);
-//  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 1U);
-//  self.cell.selectable = YES;
-//  self.cell.selected = YES;
-//  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 8);
-//  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 2U);
-//  XCTAssertEqual(((CAShapeLayer *)self.cell.inkView.layer.sublayers.lastObject).fillColor,
-//                 self.cell.inkView.inkColor.CGColor);
-//  self.cell.selected = NO;
-//  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 1);
-//  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 1U);
-//  self.cell.selected = YES;
-//  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 8);
-//  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 2U);
-//  XCTAssertEqual(((CAShapeLayer *)self.cell.inkView.layer.sublayers.lastObject).fillColor,
-//                 self.cell.inkView.inkColor.CGColor);
-//  XCTAssert(
-//    CGRectEqualToRect(
-//      (((CAShapeLayer *)self.cell.inkView.layer.sublayers.firstObject).frame),
-//      self.cell.inkView.layer.bounds));
-//  self.cell.selected = NO;
-//  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 1);
-//  XCTAssertEqual(self.cell.cornerRadius, 4);
-//  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 1U);
-//}
+- (void)testCellSelectAndUnselect {
+  [self.cell layoutSubviews];
+  XCTAssertEqual([self.cell shadowElevationForState:MDCCardCellStateNormal], 1);
+  XCTAssertEqual(self.cell.cornerRadius, 4);
+  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 1U);
+  self.cell.selectable = YES;
+  self.cell.selected = YES;
+  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 8);
+  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 2U);
+  XCTAssertEqual(((CAShapeLayer *)self.cell.inkView.layer.sublayers.lastObject).fillColor,
+                 self.cell.inkView.inkColor.CGColor);
+  self.cell.selected = NO;
+  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 1);
+  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 1U);
+  self.cell.selected = YES;
+  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 8);
+  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 2U);
+  XCTAssertEqual(((CAShapeLayer *)self.cell.inkView.layer.sublayers.lastObject).fillColor,
+                 self.cell.inkView.inkColor.CGColor);
+  XCTAssert(
+      CGRectEqualToRect((((CAShapeLayer *)self.cell.inkView.layer.sublayers.firstObject).frame),
+                        self.cell.inkView.layer.bounds));
+  self.cell.selected = NO;
+  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 1);
+  XCTAssertEqual(self.cell.cornerRadius, 4);
+  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 1U);
+}
 
-//- (void)testCellInteractabilityToggle {
-//  self.cell.interactable = NO;
-//  self.cell.frame = CGRectMake(0, 0, 1000, 1000);
-//  NSMutableArray *touchArray = [NSMutableArray new];
-//  [touchArray addObject:[UITouch new]];
-//  NSSet *touches = [[NSSet alloc] init];
-//  [touches setByAddingObjectsFromArray:touchArray];
-//  UIEvent *event = [[UIEvent alloc] init];
-//  UIView *view = [self.cell hitTest:self.cell.center withEvent:event];
-//  XCTAssertNil(view);
-//}
-//
-//- (void)testCellLongPress {
-//  NSMutableArray *touchArray = [NSMutableArray new];
-//  [touchArray addObject:[UITouch new]];
-//  NSSet *touches = [[NSSet alloc] init];
-//  [touches setByAddingObjectsFromArray:touchArray];
-//  UIEvent *event = [[UIEvent alloc] init];
-//  [self.cell touchesBegan:touches withEvent:event];
-//
-//  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 8);
-////  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 2U);
-//
-//  [self.cell touchesEnded:touches withEvent:event];
-//
-//  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 1);
-//}
-//
-//- (void)testShadowElevationForCell {
-//  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 1);
-//  XCTAssertEqual([self.cell shadowElevationForState:MDCCardCellStateNormal], 1);
-//  [self.cell setShadowElevation:8 forState:MDCCardCellStateNormal];
-//  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 8);
-//  [self.cell setShadowElevation:4 forState:MDCCardCellStateHighlighted];
-//  [self.cell setShadowElevation:12 forState:MDCCardCellStateSelected];
-//  XCTAssertEqual([self.cell shadowElevationForState:MDCCardCellStateNormal], 8);
-//  XCTAssertEqual([self.cell shadowElevationForState:MDCCardCellStateHighlighted], 4);
-//  XCTAssertEqual([self.cell shadowElevationForState:MDCCardCellStateSelected], 12);
-//  [self.cell setTestState:MDCCardCellStateHighlighted];
-//  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 4);
-//  [self.cell setTestState:MDCCardCellStateNormal];
-//  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 8);
-//  [self.cell setTestState:MDCCardCellStateSelected];
-//  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 12);
-//  [self.cell setTestState:MDCCardCellStateNormal];
-//  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 8);
-//}
-//
-//- (void)testShadowColorForCell {
-//  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).shadowColor, [UIColor blackColor].CGColor);
-//  XCTAssertEqual([self.cell shadowColorForState:MDCCardCellStateNormal], [UIColor blackColor]);
-//  [self.cell setShadowColor:[UIColor blueColor] forState:MDCCardCellStateNormal];
-//  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).shadowColor, [UIColor blueColor].CGColor);
-//  [self.cell setShadowColor:[UIColor greenColor] forState:MDCCardCellStateHighlighted];
-//  [self.cell setShadowColor:[UIColor redColor] forState:MDCCardCellStateSelected];
-//  XCTAssertEqual([self.cell shadowColorForState:MDCCardCellStateNormal], [UIColor blueColor]);
-//  XCTAssertEqual([self.cell shadowColorForState:MDCCardCellStateHighlighted], [UIColor
-//  greenColor]); XCTAssertEqual([self.cell shadowColorForState:MDCCardCellStateSelected], [UIColor
-//  redColor]); [self.cell setTestState:MDCCardCellStateHighlighted];
-//  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).shadowColor, [UIColor greenColor].CGColor);
-//  [self.cell setTestState:MDCCardCellStateNormal];
-//  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).shadowColor, [UIColor blueColor].CGColor);
-//  [self.cell setTestState:MDCCardCellStateSelected];
-//  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).shadowColor, [UIColor redColor].CGColor);
-//  [self.cell setTestState:MDCCardCellStateNormal];
-//  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).shadowColor, [UIColor blueColor].CGColor);
-//}
-//
-//- (void)testBorderWidthForCell {
-//  XCTAssertEqual(self.cell.layer.borderWidth, 0);
-//  XCTAssertEqual([self.cell borderWidthForState:MDCCardCellStateNormal], 0);
-//  [self.cell setBorderWidth:1 forState:MDCCardCellStateNormal];
-//  XCTAssertEqual(self.cell.layer.borderWidth, 1);
-//  [self.cell setBorderWidth:3 forState:MDCCardCellStateHighlighted];
-//  [self.cell setBorderWidth:6 forState:MDCCardCellStateSelected];
-//  XCTAssertEqual([self.cell borderWidthForState:MDCCardCellStateNormal], 1);
-//  XCTAssertEqual([self.cell borderWidthForState:MDCCardCellStateHighlighted], 3);
-//  XCTAssertEqual([self.cell borderWidthForState:MDCCardCellStateSelected], 6);
-//  [self.cell setTestState:MDCCardCellStateHighlighted];
-//  XCTAssertEqual(self.cell.layer.borderWidth, 3);
-//  [self.cell setTestState:MDCCardCellStateNormal];
-//  XCTAssertEqual(self.cell.layer.borderWidth, 1);
-//  [self.cell setTestState:MDCCardCellStateSelected];
-//  XCTAssertEqual(self.cell.layer.borderWidth, 6);
-//  [self.cell setTestState:MDCCardCellStateNormal];
-//  XCTAssertEqual(self.cell.layer.borderWidth, 1);
-//}
-//
-//- (void)testBorderColorForCell {
-//  XCTAssertEqual([self.cell borderColorForState:MDCCardCellStateNormal], nil);
-//  [self.cell setBorderColor:[UIColor blueColor] forState:MDCCardCellStateNormal];
-//  XCTAssertEqual(self.cell.layer.borderColor, [UIColor blueColor].CGColor);
-//  [self.cell setBorderColor:[UIColor greenColor] forState:MDCCardCellStateHighlighted];
-//  [self.cell setBorderColor:[UIColor redColor] forState:MDCCardCellStateSelected];
-//  XCTAssertEqual([self.cell borderColorForState:MDCCardCellStateNormal], [UIColor blueColor]);
-//  XCTAssertEqual([self.cell borderColorForState:MDCCardCellStateHighlighted], [UIColor
-//  greenColor]); XCTAssertEqual([self.cell borderColorForState:MDCCardCellStateSelected], [UIColor
-//  redColor]); [self.cell setTestState:MDCCardCellStateHighlighted];
-//  XCTAssertEqual(self.cell.layer.borderColor, [UIColor greenColor].CGColor);
-//  [self.cell setTestState:MDCCardCellStateNormal];
-//  XCTAssertEqual(self.cell.layer.borderColor, [UIColor blueColor].CGColor);
-//  [self.cell setTestState:MDCCardCellStateSelected];
-//  XCTAssertEqual(self.cell.layer.borderColor, [UIColor redColor].CGColor);
-//  [self.cell setTestState:MDCCardCellStateNormal];
-//  XCTAssertEqual(self.cell.layer.borderColor, [UIColor blueColor].CGColor);
-//}
-//
-//- (void)testCornerForCell {
-//  XCTAssertEqual(self.cell.layer.cornerRadius, 4);
-//  self.cell.cornerRadius = 8;
-//  XCTAssertEqual(self.cell.layer.cornerRadius, 8);
-//}
+- (void)testCellInteractabilityToggle {
+  self.cell.interactable = NO;
+  self.cell.frame = CGRectMake(0, 0, 1000, 1000);
+  NSMutableArray *touchArray = [NSMutableArray new];
+  [touchArray addObject:[UITouch new]];
+  NSSet *touches = [[NSSet alloc] init];
+  [touches setByAddingObjectsFromArray:touchArray];
+  UIEvent *event = [[UIEvent alloc] init];
+  UIView *view = [self.cell hitTest:self.cell.center withEvent:event];
+  XCTAssertNil(view);
+}
 
-//- (void)testCellInk {
-//  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 1U);
-//  [self.cell setState:MDCCardCellStateHighlighted animated:NO];
-//  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 2U);
-//  [self.cell setState:MDCCardCellStateSelected animated:NO];
-//  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 2U);
-//  [self.cell setState:MDCCardCellStateNormal animated:NO];
-//  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 1U);
-//}
+- (void)testCellLongPress {
+  NSMutableArray *touchArray = [NSMutableArray new];
+  [touchArray addObject:[UITouch new]];
+  NSSet *touches = [[NSSet alloc] init];
+  [touches setByAddingObjectsFromArray:touchArray];
+  UIEvent *event = [[UIEvent alloc] init];
+  [self.cell touchesBegan:touches withEvent:event];
+
+  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 8);
+  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 2U);
+
+  [self.cell touchesEnded:touches withEvent:event];
+
+  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 1);
+}
+
+- (void)testShadowElevationForCell {
+  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 1);
+  XCTAssertEqual([self.cell shadowElevationForState:MDCCardCellStateNormal], 1);
+  [self.cell setShadowElevation:8 forState:MDCCardCellStateNormal];
+  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 8);
+  [self.cell setShadowElevation:4 forState:MDCCardCellStateHighlighted];
+  [self.cell setShadowElevation:12 forState:MDCCardCellStateSelected];
+  XCTAssertEqual([self.cell shadowElevationForState:MDCCardCellStateNormal], 8);
+  XCTAssertEqual([self.cell shadowElevationForState:MDCCardCellStateHighlighted], 4);
+  XCTAssertEqual([self.cell shadowElevationForState:MDCCardCellStateSelected], 12);
+  [self.cell setState:MDCCardCellStateHighlighted animated:NO];
+  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 4);
+  [self.cell setState:MDCCardCellStateNormal animated:NO];
+  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 8);
+  [self.cell setState:MDCCardCellStateSelected animated:NO];
+  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 12);
+  [self.cell setState:MDCCardCellStateNormal animated:NO];
+  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 8);
+}
+
+- (void)testShadowColorForCell {
+  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).shadowColor, [UIColor blackColor].CGColor);
+  XCTAssertEqual([self.cell shadowColorForState:MDCCardCellStateNormal], [UIColor blackColor]);
+  [self.cell setShadowColor:[UIColor blueColor] forState:MDCCardCellStateNormal];
+  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).shadowColor, [UIColor blueColor].CGColor);
+  [self.cell setShadowColor:[UIColor greenColor] forState:MDCCardCellStateHighlighted];
+  [self.cell setShadowColor:[UIColor redColor] forState:MDCCardCellStateSelected];
+  XCTAssertEqual([self.cell shadowColorForState:MDCCardCellStateNormal], [UIColor blueColor]);
+  XCTAssertEqual([self.cell shadowColorForState:MDCCardCellStateHighlighted], [UIColor greenColor]);
+  XCTAssertEqual([self.cell shadowColorForState:MDCCardCellStateSelected], [UIColor redColor]);
+  [self.cell setState:MDCCardCellStateHighlighted animated:NO];
+  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).shadowColor, [UIColor greenColor].CGColor);
+  [self.cell setState:MDCCardCellStateNormal animated:NO];
+  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).shadowColor, [UIColor blueColor].CGColor);
+  [self.cell setState:MDCCardCellStateSelected animated:NO];
+  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).shadowColor, [UIColor redColor].CGColor);
+  [self.cell setState:MDCCardCellStateNormal animated:NO];
+  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).shadowColor, [UIColor blueColor].CGColor);
+}
+
+- (void)testBorderWidthForCell {
+  XCTAssertEqual(self.cell.layer.borderWidth, 0);
+  XCTAssertEqual([self.cell borderWidthForState:MDCCardCellStateNormal], 0);
+  [self.cell setBorderWidth:1 forState:MDCCardCellStateNormal];
+  XCTAssertEqual(self.cell.layer.borderWidth, 1);
+  [self.cell setBorderWidth:3 forState:MDCCardCellStateHighlighted];
+  [self.cell setBorderWidth:6 forState:MDCCardCellStateSelected];
+  XCTAssertEqual([self.cell borderWidthForState:MDCCardCellStateNormal], 1);
+  XCTAssertEqual([self.cell borderWidthForState:MDCCardCellStateHighlighted], 3);
+  XCTAssertEqual([self.cell borderWidthForState:MDCCardCellStateSelected], 6);
+  [self.cell setState:MDCCardCellStateHighlighted animated:NO];
+  XCTAssertEqual(self.cell.layer.borderWidth, 3);
+  [self.cell setState:MDCCardCellStateNormal animated:NO];
+  XCTAssertEqual(self.cell.layer.borderWidth, 1);
+  [self.cell setState:MDCCardCellStateSelected animated:NO];
+  XCTAssertEqual(self.cell.layer.borderWidth, 6);
+  [self.cell setState:MDCCardCellStateNormal animated:NO];
+  XCTAssertEqual(self.cell.layer.borderWidth, 1);
+}
+
+- (void)testBorderColorForCell {
+  XCTAssertEqual([self.cell borderColorForState:MDCCardCellStateNormal], nil);
+  [self.cell setBorderColor:[UIColor blueColor] forState:MDCCardCellStateNormal];
+  XCTAssertEqual(self.cell.layer.borderColor, [UIColor blueColor].CGColor);
+  [self.cell setBorderColor:[UIColor greenColor] forState:MDCCardCellStateHighlighted];
+  [self.cell setBorderColor:[UIColor redColor] forState:MDCCardCellStateSelected];
+  XCTAssertEqual([self.cell borderColorForState:MDCCardCellStateNormal], [UIColor blueColor]);
+  XCTAssertEqual([self.cell borderColorForState:MDCCardCellStateHighlighted], [UIColor greenColor]);
+  XCTAssertEqual([self.cell borderColorForState:MDCCardCellStateSelected], [UIColor redColor]);
+  [self.cell setState:MDCCardCellStateHighlighted animated:NO];
+  XCTAssertEqual(self.cell.layer.borderColor, [UIColor greenColor].CGColor);
+  [self.cell setState:MDCCardCellStateNormal animated:NO];
+  XCTAssertEqual(self.cell.layer.borderColor, [UIColor blueColor].CGColor);
+  [self.cell setState:MDCCardCellStateSelected animated:NO];
+  XCTAssertEqual(self.cell.layer.borderColor, [UIColor redColor].CGColor);
+  [self.cell setState:MDCCardCellStateNormal animated:NO];
+  XCTAssertEqual(self.cell.layer.borderColor, [UIColor blueColor].CGColor);
+}
+
+- (void)testCornerForCell {
+  XCTAssertEqual(self.cell.layer.cornerRadius, 4);
+  self.cell.cornerRadius = 8;
+  XCTAssertEqual(self.cell.layer.cornerRadius, 8);
+}
+
+- (void)testCellInk {
+  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 1U);
+  [self.cell setState:MDCCardCellStateHighlighted animated:NO];
+  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 2U);
+  [self.cell setState:MDCCardCellStateSelected animated:NO];
+  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 2U);
+  [self.cell setState:MDCCardCellStateNormal animated:NO];
+  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 1U);
+}
 
 static UIImage *FakeImage(void) {
   CGSize imageSize = CGSizeMake(24, 24);
