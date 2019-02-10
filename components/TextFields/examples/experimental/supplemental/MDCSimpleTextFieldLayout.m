@@ -164,19 +164,18 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
 
   CGFloat textRectHeight = [self textHeightWithFont:font];
 
-  // TODO: Defer to densityInformer for value below
-  CGFloat textRectCenterY = ((CGFloat)textRectHeight * (CGFloat)3) * (CGFloat)(0.5);  //[self]
-
+  CGFloat textRectMinY = 0;
+  // TODO: Create density informer object
   if ([containerStyle conformsToProtocol:@protocol(MDCContainedInputViewStyleDensityInforming)]) {
     id<MDCContainedInputViewStyleDensityInforming> densityInformer =
         (id<MDCContainedInputViewStyleDensityInforming>)containerStyle;
     if ([densityInformer
             respondsToSelector:@selector(normalTextAreaTopPaddingWithTextAreaHeight:)]) {
-      CGFloat minY = [densityInformer normalTextAreaTopPaddingWithTextAreaHeight:textRectHeight];
-      textRectCenterY = (CGFloat)minY + ((CGFloat)0.5 * (CGFloat)textRectHeight);
+      textRectMinY = [densityInformer normalTextAreaTopPaddingWithTextAreaHeight:textRectHeight];
     }
   }
 
+  CGFloat textRectCenterY = (CGFloat)textRectMinY + ((CGFloat)0.5 * (CGFloat)textRectHeight);
   CGFloat textRectFloatingPlaceholderCenterY =
       [self textRectFloatingPlaceholderCenterYWithFloatingPlaceholderMinY:floatingPlaceholderMinY
                                                 floatingPlaceholderHeight:floatingPlaceholderHeight
@@ -242,8 +241,8 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
   }
 
   CGFloat textRectWidth = textRectMaxX - textRectMinX;
-  CGFloat textRectMinY =
-      (CGFloat)round((double)(textRectCenterY - (textRectHeight * (CGFloat)0.5)));
+//  CGFloat textRectMinY =
+//      (CGFloat)round((double)(textRectCenterY - (textRectHeight * (CGFloat)0.5)));
   CGFloat textRectMaxY = textRectMinY + textRectHeight;
   CGRect textRect = CGRectMake(textRectMinX, textRectMinY, textRectWidth, textRectHeight);
 

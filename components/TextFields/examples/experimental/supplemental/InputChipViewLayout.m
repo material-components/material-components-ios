@@ -76,7 +76,7 @@ static const CGFloat kInterChipPadding = (CGFloat)8.0;
                       containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
                                 text:(NSString *)text
                          placeholder:(NSString *)placeholder
-                                font:(UIFont *)textFieldFont
+                                font:(UIFont *)font
              floatingPlaceholderFont:(UIFont *)floatingPlaceholderFont
                  canPlaceholderFloat:(BOOL)canPlaceholderFloat
                                chips:(NSArray<UIView *> *)chips
@@ -93,13 +93,27 @@ static const CGFloat kInterChipPadding = (CGFloat)8.0;
     customUnderlineLabelDrawPriority:(CGFloat)normalizedCustomUnderlineLabelDrawPriority
                                isRTL:(BOOL)isRTL
                            isEditing:(BOOL)isEditing {
-  CGSize textFieldSize = [self textFieldSizeWithSize:size
-                                       contentInsets:contentInsets
-                                                text:text
-                                         placeholder:placeholder
-                                       textFieldFont:textFieldFont
-                                        canChipsWrap:canChipsWrap
-                                       chipRowHeight:chipRowHeight];
+//  CGFloat floatingPlaceholderHeight =
+//      canPlaceholderFloat ? [self textHeightWithFont:floatingPlaceholderFont] : 0;
+//  CGFloat floatingPlaceholderMinY =
+//      [self floatingPlaceholderMinYWithFloatingHeight:floatingPlaceholderHeight
+//                                       containerStyle:containerStyle];
+//  CGFloat textRectHeight = [self textHeightWithFont:font];
+  
+  // TODO: Defer to densityInformer for value below
+//  CGFloat textRectCenterY = ((CGFloat)textRectHeight * (CGFloat)3) * (CGFloat)(0.5);  //[self]
+  CGSize textFieldSize = [self textSizeWithViewSize:size
+                                      contentInsets:contentInsets
+                                               text:text
+                                      textFieldFont:font
+                                       canChipsWrap:canChipsWrap
+                                      chipRowHeight:chipRowHeight];
+//  CGSize placeholderLabelSize = [self textSizeWithViewSize:size
+//                                             contentInsets:contentInsets
+//                                                      text:placeholder
+//                                             textFieldFont:font
+//                                              canChipsWrap:canChipsWrap
+//                                             chipRowHeight:chipRowHeight];
   if (canChipsWrap) {
     if (isRTL) {
     } else {
@@ -191,6 +205,11 @@ static const CGFloat kInterChipPadding = (CGFloat)8.0;
   //  NSLog(@"size: %@",NSStringFromCGSize(self.scrollViewContentSize));
 }
 
+- (CGFloat)textHeightWithFont:(UIFont *)font {
+  return (CGFloat)ceil((double)font.lineHeight);
+}
+
+
 - (NSArray<NSValue *> *)determineChipFramesWithSize:(CGSize)size
                                               chips:(NSArray<UIView *> *)chips
                                        canChipsWrap:(BOOL)canChipsWrap
@@ -250,22 +269,14 @@ static const CGFloat kInterChipPadding = (CGFloat)8.0;
   return [frames copy];
 }
 
-- (CGSize)textFieldSizeWithSize:(CGSize)size
+- (CGSize)textSizeWithViewSize:(CGSize)size
                   contentInsets:(UIEdgeInsets)contentInsets
-                           text:(NSString *)textFieldText
-                    placeholder:(NSString *)placeholder
+                           text:(NSString *)text
                   textFieldFont:(UIFont *)textFieldFont
                    canChipsWrap:(BOOL)canChipsWrap
                   chipRowHeight:(CGFloat)chipRowHeight {
   CGSize fittingSize = CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX);
   NSDictionary *attributes = @{NSFontAttributeName : textFieldFont};
-
-  NSString *text = nil;
-  if (textFieldText.length > 0) {
-    text = textFieldText;
-  } else if (placeholder.length > 0) {
-    text = placeholder;
-  }
 
   CGRect rect = [text boundingRectWithSize:fittingSize
                                    options:NSStringDrawingUsesLineFragmentOrigin
