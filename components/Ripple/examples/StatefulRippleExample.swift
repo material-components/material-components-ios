@@ -109,7 +109,6 @@ extension StatefulRippleExample {
       "breadcrumbs": ["Ripple", "Stateful Ripple"],
       "primaryDemo": false,
       "presentable": false,
-      "debug": true,
     ]
   }
 }
