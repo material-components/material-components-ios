@@ -155,7 +155,7 @@ static NSString *const kBadgeTitleArabic = @"أورا";
   UIView *barSuperview =
       [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWidthTypical, kHeightTypical * 2)];
   UIColor *patternColor = [UIColor
-                           colorWithPatternImage:[UIImage mdc_testImageOfSize:CGSizeMake(kWidthTypical, kWidthTypical)]];
+      colorWithPatternImage:[UIImage mdc_testImageOfSize:CGSizeMake(kWidthTypical, kWidthTypical)]];
   barSuperview.backgroundColor = patternColor;
   [barSuperview addSubview:navigationBar];
   return barSuperview;
@@ -792,7 +792,7 @@ static NSString *const kBadgeTitleArabic = @"أورا";
   // Given
   UIView *barSuperview = [self superviewForVisualBlurEffectWithNavigationBar:self.navigationBar];
   [self configureNavigationBarForVisualBlurEffectTest:self.navigationBar];
-  
+
   // When
   self.navigationBar.backgroundColor = [UIColor.whiteColor colorWithAlphaComponent:(CGFloat)0.5];
 
