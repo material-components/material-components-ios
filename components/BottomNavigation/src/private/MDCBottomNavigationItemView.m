@@ -406,6 +406,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   } else {
     self.badge.hidden = NO;
   }
+  [self setNeedsLayout];
 }
 
 - (void)setImage:(UIImage *)image {
