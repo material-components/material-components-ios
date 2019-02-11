@@ -172,9 +172,9 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   [self addObservers];
   [self initializeProperties];
   [self createSubviews];
+  [self setUpChipRowHeight];
   [self setUpGradientLayers];
   [self setUpColorSchemesDictionary];
-  [self setUpPlaceholderLabel];
   [self setUpUnderlineLabels];
   [self setUpClearButton];
   [self setUpContainerStyle];
@@ -215,11 +215,6 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   [self setUpLayoutDirection];
   [self setUpChipsArray];
   [self setUpChipsToRemoveArray];
-  [self setUpContentInsets];
-}
-
-- (void)setUpContentInsets {
-  self.contentInsets = UIEdgeInsetsMake(8, 12, 8, 12);
 }
 
 - (void)setUpChipsArray {
@@ -234,17 +229,30 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   self.layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
 }
 
+- (void)setUpChipRowHeight {
+  CGFloat textHeight = (CGFloat)ceil((double)self.inputChipViewTextField.effectiveFont.lineHeight);
+  self.chipRowHeight = textHeight * 2;
+
+  self.chipRowSpacing = 5;
+}
+
 - (void)createSubviews {
   self.maskedScrollViewContainerView = [[UIView alloc] init];
   [self addSubview:self.maskedScrollViewContainerView];
+
   self.scrollView = [[UIScrollView alloc] init];
   self.scrollView.bounces = NO;
   [self.maskedScrollViewContainerView addSubview:self.scrollView];
+
   self.scrollViewContentViewTouchForwardingView = [[UIView alloc] init];
   [self.scrollView addSubview:self.scrollViewContentViewTouchForwardingView];
+
   self.inputChipViewTextField = [[InputChipViewTextField alloc] init];
   self.inputChipViewTextField.inputChipViewTextFieldDelegate = self;
-  [self.scrollView addSubview:self.textField];
+  [self.scrollView addSubview:self.inputChipViewTextField];
+
+  self.placeholderLabel = [[UILabel alloc] init];
+  [self addSubview:self.placeholderLabel];
 }
 
 - (void)setContainerStyle:(id<MDCContainedInputViewStyle>)containerStyle {
@@ -298,11 +306,6 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   //  [self addSubview:self.rightUnderlineLabel];
 }
 
-- (void)setUpPlaceholderLabel {
-  self.placeholderLabel = [[UILabel alloc] init];
-  [self addSubview:self.placeholderLabel];
-}
-
 - (void)setUpClearButton {
   //  CGFloat clearButtonSideLength = MDCSimpleTextFieldLayout.clearButtonSideLength;
   //  CGRect clearButtonFrame = CGRectMake(0, 0, clearButtonSideLength, clearButtonSideLength);
@@ -324,9 +327,9 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 }
 
 - (void)setUpGradientLayers {
-  UIColor *outerColor = (id)UIColor.clearColor.CGColor;
-  UIColor *innerColor = (id)UIColor.blackColor.CGColor;
-  NSArray *colors = @[ outerColor, innerColor, innerColor, outerColor ];
+  UIColor *outer = (id)UIColor.clearColor.CGColor;
+  UIColor *inner = (id)UIColor.blackColor.CGColor;
+  NSArray *colors = @[ outer, outer, inner, inner, outer, outer ];
   self.horizontalGradientLayerMask = [CAGradientLayer layer];
   self.horizontalGradientLayerMask.frame = self.bounds;
   self.horizontalGradientLayerMask.colors = colors;
@@ -354,7 +357,6 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 - (BOOL)becomeFirstResponder {
   BOOL textFieldDidBecome = [self.textField becomeFirstResponder];
-  NSLog(@"tf did become");
   [self setNeedsLayout];
   return textFieldDidBecome;
 }
@@ -365,7 +367,6 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   [super touchesBegan:touches withEvent:event];
-  NSLog(@"touches began");
 }
 
 #pragma mark UIView Overrides
@@ -377,8 +378,16 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
-  // TODO: Implement this
-  return [super sizeThatFits:size];
+  NSLog(@"entering sizeThatFits");
+  CGSize sizeThatFits = [super sizeThatFits:size];
+  NSLog(@"leaving sizeThatFits");
+  return sizeThatFits;
+}
+
+- (void)sizeToFit {
+  NSLog(@"entering sizeToFit");
+  [super sizeToFit];
+  NSLog(@"leaving sizeToFit");
 }
 
 - (CGSize)intrinsicContentSize {
@@ -483,7 +492,8 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
                                              chips:self.chips
                                     staleChipViews:self.chips
                                       canChipsWrap:self.canChipsWrap
-                                     contentInsets:self.contentInsets
+                                     chipRowHeight:self.chipRowHeight
+                                  interChipSpacing:self.chipRowSpacing
                                        clearButton:self.clearButton
                                clearButtonViewMode:self.textField.clearButtonMode
                                 leftUnderlineLabel:self.leftUnderlineLabel
@@ -569,7 +579,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   self.maskedScrollViewContainerView.frame = self.bounds;
   self.scrollView.frame = self.bounds;
   self.scrollViewContentViewTouchForwardingView.frame =
-      self.layout.scrollViewContentViewTouchForwardingView;
+      self.layout.scrollViewContentViewTouchForwardingViewFrame;
   self.textField.frame = self.layout.textFieldFrame;
   self.scrollView.contentOffset = self.layout.scrollViewContentOffset;
   self.scrollView.contentSize = self.layout.scrollViewContentSize;
@@ -582,7 +592,6 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   //  NSLog(@"offset: %@",NSStringFromCGPoint(self.scrollView.contentOffset));
   //  NSLog(@"size: %@\n\n",NSStringFromCGSize(self.scrollView.contentSize));
 
-  [self applyStyle];
   [self layOutGradientLayers];
 }
 
@@ -591,39 +600,30 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   /*self.layout.topRowBottomRowDividerY*/
 }
 
-- (void)applyStyle {
-  //
-  //  id<MDCContainedInputViewColorScheming> colorScheme = self.colorSchemes
-
-  //  [self applyContainerViewStyle:self.containerStyle
-  //                     viewBounds:self.bounds
-  //       floatingPlaceholderFrame:CGRectZero
-  //        topRowBottomRowDividerY:CGRectGetMaxY(self.bounds)
-  //          isFloatingPlaceholder:NO];
-}
-
-//- (void)applyContainerViewStyle:(MDCInputViewContainerStyle)containerStyle
-//                 textFieldState:(TextFieldState)textFieldState
-//                     viewBounds:(CGRect)viewBounds
-//       floatingPlaceholderFrame:(CGRect)floatingPlaceholderFrame
-//        topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
-//          isFloatingPlaceholder:(BOOL)isFloatingPlaceholder {
-//}
-
 - (void)layOutGradientLayers {
   self.horizontalGradientLayer.frame = self.bounds;
   self.horizontalGradientLayerMask.frame = self.bounds;
   CGFloat viewWidth = CGRectGetWidth(self.bounds);
   self.horizontalGradientLayerMask.locations = @[
-    @(0), @(self.contentInsets.left / viewWidth),
-    @((viewWidth - self.contentInsets.right) / viewWidth), @(viewWidth)
+    @(0),
+    @((self.layout.globalChipRowMinX - 10) / viewWidth),
+    @((self.layout.globalChipRowMinX) / viewWidth),
+    @((self.layout.globalChipRowMaxX) / viewWidth),
+    @((self.layout.globalChipRowMaxX + 10) / viewWidth),
+    @(1),
   ];
   self.verticalGradientLayer.frame = self.bounds;
   self.verticalGradientLayerMask.frame = self.bounds;
   CGFloat viewHeight = CGRectGetHeight(self.bounds);
   self.verticalGradientLayerMask.locations = @[
-    @(0), @(self.contentInsets.top / viewHeight),
-    @((viewHeight - self.contentInsets.bottom) / viewHeight), @(viewHeight)
+    @(0),
+    @((self.layout.initialChipRowMinY - 10) / viewHeight),
+    @((self.layout.initialChipRowMinY) / viewHeight),
+    @((viewHeight - [self.containerStyle.densityInformer normalContentAreaBottomPadding]) /
+      viewHeight),
+    @((viewHeight - [self.containerStyle.densityInformer normalContentAreaBottomPadding] + 10) /
+      viewHeight),
+    @(1),
   ];
   // TODO: Figure out how to have both gradients at once
   // Maybe render both CALayers in a content, get an image from that context,
@@ -827,7 +827,8 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 - (UIFont *)floatingPlaceholderFontWithFont:(UIFont *)font
                              containerStyle:(id<MDCContainedInputViewStyle>)containerStyle {
-  CGFloat floatingPlaceholderFontSize = [containerStyle.densityInformer floatingPlaceholderFontSize];
+  CGFloat floatingPlaceholderFontSize =
+      [containerStyle.densityInformer floatingPlaceholderFontSize];
   return [font fontWithSize:floatingPlaceholderFontSize];
 }
 
@@ -898,16 +899,6 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 - (UITextField *)textField {
   return self.inputChipViewTextField;
-}
-
-- (void)setContentInsets:(UIEdgeInsets)contentInsets {
-  if (!UIEdgeInsetsEqualToEdgeInsets(contentInsets, _contentInsets)) {
-    _contentInsets = contentInsets;
-  }
-  [self updateLayers];
-}
-
-- (void)updateLayers {
 }
 
 - (UILabel *)leadingUnderlineLabel {
@@ -989,6 +980,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 }
 
 - (void)inputChipViewTextFieldDidSetPlaceholder:(NSString *)placeholder {
+  self.placeholderLabel.text = placeholder;
   [self setNeedsLayout];
 }
 

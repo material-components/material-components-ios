@@ -158,9 +158,9 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
   }
   CGFloat floatingPlaceholderHeight =
       canPlaceholderFloat ? [self textHeightWithFont:floatingPlaceholderFont] : 0;
-  CGFloat floatingPlaceholderMinY =
-  [containerStyle.densityInformer floatingPlaceholderMinYWithFloatingPlaceholderHeight:floatingPlaceholderHeight];
-  
+  CGFloat floatingPlaceholderMinY = [containerStyle.densityInformer
+      floatingPlaceholderMinYWithFloatingPlaceholderHeight:floatingPlaceholderHeight];
+
   CGFloat textRectHeight = [self textHeightWithFont:font];
 
   CGFloat textRectMinY = [containerStyle.densityInformer normalContentAreaTopPadding];
@@ -230,8 +230,8 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
   }
 
   CGFloat textRectWidth = textRectMaxX - textRectMinX;
-//  CGFloat textRectMinY =
-//      (CGFloat)round((double)(textRectCenterY - (textRectHeight * (CGFloat)0.5)));
+  //  CGFloat textRectMinY =
+  //      (CGFloat)round((double)(textRectCenterY - (textRectHeight * (CGFloat)0.5)));
   CGFloat textRectMaxY = textRectMinY + textRectHeight;
   CGRect textRect = CGRectMake(textRectMinX, textRectMinY, textRectWidth, textRectHeight);
 
@@ -284,7 +284,7 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
   CGFloat topRowBottomRowDividerY = topRowSubviewMaxY + kTopRowBottomRowDividerVerticalPadding;
   CGFloat bottomPadding = [containerStyle.densityInformer normalContentAreaBottomPadding];
   topRowBottomRowDividerY = textRectMaxY + bottomPadding;
-  
+
   CGFloat underlineLabelsCombinedMinY =
       topRowBottomRowDividerY + kTopRowBottomRowDividerVerticalPadding;
   CGFloat leadingUnderlineLabelWidth = 0;
@@ -482,8 +482,8 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
                                                    containerStyle:(id<MDCContainedInputViewStyle>)
                                                                       containerStyle {
   CGFloat floatingPlaceholderMaxY = floatingPlaceholderMinY + floatingPlaceholderHeight;
-  CGFloat textAreaTopPaddingWithFloatingPlaceholderMaxY =
-  [containerStyle.densityInformer contentAreaTopPaddingWithFloatingPlaceholderMaxY:floatingPlaceholderMaxY];
+  CGFloat textAreaTopPaddingWithFloatingPlaceholderMaxY = [containerStyle.densityInformer
+      contentAreaTopPaddingWithFloatingPlaceholderMaxY:floatingPlaceholderMaxY];
   CGFloat spaceBetweenPlaceholderAndTextArea =
       textAreaTopPaddingWithFloatingPlaceholderMaxY - floatingPlaceholderMaxY;
   CGFloat lowestAllowableTextAreaMinY =

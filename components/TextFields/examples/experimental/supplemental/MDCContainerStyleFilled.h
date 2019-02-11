@@ -21,11 +21,9 @@
 @property(strong, nonatomic) UIColor *filledSublayerUnderlineFillColor;
 @end
 
-@interface MDCContainerStyleFilledDensityInformer : MDCContainerStyleBaseDensityInformer <MDCContainedInputViewStyleDensityInforming>
+@interface MDCContainerStyleFilledDensityInformer
+    : MDCContainerStyleBaseDensityInformer <MDCContainedInputViewStyleDensityInforming>
 @end
 
-@interface MDCContainerStyleFilled
-    : MDCContainerStyleBase <MDCContainedInputViewStyle>
+@interface MDCContainerStyleFilled : MDCContainerStyleBase <MDCContainedInputViewStyle>
 @end
-
-

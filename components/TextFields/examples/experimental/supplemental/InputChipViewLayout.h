@@ -23,6 +23,10 @@ NS_ASSUME_NONNULL_BEGIN
 //};
 
 @interface InputChipViewLayout : NSObject
+@property(nonatomic, assign) CGFloat initialChipRowMinY;
+@property(nonatomic, assign) CGFloat finalChipRowMaxY;
+@property(nonatomic, assign) CGFloat globalChipRowMinX;
+@property(nonatomic, assign) CGFloat globalChipRowMaxX;
 
 @property(nonatomic, strong) NSArray<NSValue *> *chipFrames;
 
@@ -30,9 +34,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, assign) CGRect placeholderFrameNormal;
 
 @property(nonatomic, assign) CGRect textFieldFrame;
-@property(nonatomic, assign) CGRect scrollViewContentViewTouchForwardingView;
+@property(nonatomic, assign) CGRect scrollViewContentViewTouchForwardingViewFrame;
 @property(nonatomic, assign) CGPoint scrollViewContentOffset;
-@property(nonatomic, assign) CGPoint scrollViewContentInset;
+//@property(nonatomic, assign) CGPoint scrollViewContentInset;
 @property(nonatomic, assign) CGSize scrollViewContentSize;
 
 - (instancetype)initWithSize:(CGSize)size
@@ -45,7 +49,8 @@ NS_ASSUME_NONNULL_BEGIN
                                chips:(NSArray<UIView *> *)chips
                       staleChipViews:(NSArray<UIView *> *)staleChipViews
                         canChipsWrap:(BOOL)canChipsWrap
-                       contentInsets:(UIEdgeInsets)contentInsets
+                       chipRowHeight:(CGFloat)chipRowHeight
+                    interChipSpacing:(CGFloat)interChipSpacing
                          clearButton:(UIButton *)clearButton
                  clearButtonViewMode:(UITextFieldViewMode)clearButtonViewMode
                   leftUnderlineLabel:(UILabel *)leftUnderlineLabel

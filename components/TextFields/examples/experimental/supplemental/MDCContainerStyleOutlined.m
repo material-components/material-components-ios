@@ -195,10 +195,9 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
   return defaultLineWidth;
 }
 
--(id<MDCContainedInputViewStyleDensityInforming>)densityInformer {
+- (id<MDCContainedInputViewStyleDensityInforming>)densityInformer {
   return [[MDCContainerStyleOutlinedDensityInformer alloc] init];
 }
-
 
 @end
 
@@ -213,7 +212,7 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
   return (CGFloat)0 - ((CGFloat)0.5 * floatingPlaceholderHeight);
 }
 
--(CGFloat)contentAreaTopPaddingWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY {
+- (CGFloat)contentAreaTopPaddingWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY {
   return [self normalContentAreaTopPadding];
 }
 

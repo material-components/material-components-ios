@@ -47,7 +47,7 @@
 
 #pragma mark Object Lifecycle
 
--(instancetype)init {
+- (instancetype)init {
   self = [super init];
   if (self) {
     [self setUp];
@@ -62,8 +62,6 @@
 - (void)setUpDensityInformer {
   self.densityInformer = [[MDCContainerStyleBaseDensityInformer alloc] init];
 }
-
-
 
 - (id<MDCContainedInputViewColorScheming>)defaultColorSchemeForState:
     (MDCContainedInputViewState)state {
@@ -106,9 +104,6 @@
 
 - (void)removeStyleFrom:(id<MDCContainedInputView>)containedInputView {
 }
-
-
-
 
 - (MDCContainedInputViewState)containedInputViewStateWithIsEnabled:(BOOL)isEnabled
                                                          isErrored:(BOOL)isErrored
