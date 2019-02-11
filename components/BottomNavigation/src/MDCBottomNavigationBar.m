@@ -445,10 +445,6 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
     itemView.accessibilityLabel = item.accessibilityLabel;
     itemView.accessibilityHint = item.accessibilityHint;
     itemView.isAccessibilityElement = item.isAccessibilityElement;
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-    itemView.contentInsets = self.itemsContentInsets;
-#pragma clang diagnostic pop
     itemView.contentVerticalMargin = self.itemsContentVerticalMargin;
     itemView.contentHorizontalMargin = self.itemsContentHorizontalMargin;
     MDCInkTouchController *controller = [[MDCInkTouchController alloc] initWithView:itemView];
@@ -515,18 +511,6 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
       [itemView setSelected:NO animated:animated];
     }
   }
-}
-
-- (void)setItemsContentInsets:(UIEdgeInsets)itemsContentInsets {
-  if (UIEdgeInsetsEqualToEdgeInsets(_itemsContentInsets, itemsContentInsets)) {
-    return;
-  }
-  _itemsContentInsets = itemsContentInsets;
-  for (NSUInteger i = 0; i < self.items.count; i++) {
-    MDCBottomNavigationItemView *itemView = self.itemViews[i];
-    itemView.contentInsets = itemsContentInsets;
-  }
-  [self setNeedsLayout];
 }
 
 - (void)setItemsContentVerticalMargin:(CGFloat)itemsContentsVerticalMargin {
