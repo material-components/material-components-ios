@@ -124,6 +124,22 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
 @property(nullable, nonatomic, copy) UIColor *backgroundColor UI_APPEARANCE_SELECTOR;
 
 /**
+ The blur effect style to use behind the Bottom Navigation bar.
+
+ Has no effect unless @backgroundBlurEnabled is @c YES and @c barTintColor has an @c alpha value
+ less than 1.
+ */
+@property(nonatomic, assign) UIBlurEffectStyle backgroundBlurEffectStyle;
+
+/**
+ If @c YES, the background of the bar is masked by a UIBlurEffectView. Configure the blur effect
+ style using the @c backgroundBlurEffectStyle property.
+
+ Defaults to @c NO.
+ */
+@property(nonatomic, assign, getter=isBackgroundBlurEnabled) BOOL backgroundBlurEnabled;
+
+/**
  The margin between the item's icon and title when alignment is either Justified or Centered.
  Defaults to 0.
  */
