@@ -24,15 +24,6 @@ class DialogsWithEmphasisButtonExampleViewController: UIViewController {
   private let materialButton = MDCButton()
   var containerScheme = MDCContainerScheme()
 
-  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    containerScheme.colorScheme = MDCSemanticColorScheme(defaults: .material201804);
-  }
-
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-
   override func viewDidLoad() {
     super.viewDidLoad()
 
