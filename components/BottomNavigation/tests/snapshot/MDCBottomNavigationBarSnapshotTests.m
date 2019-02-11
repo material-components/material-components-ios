@@ -99,6 +99,8 @@ static NSString *const kBadgeTitleArabic = @"أورا";
       @[ self.tabItem1, self.tabItem2, self.tabItem3, self.tabItem4, self.tabItem5 ];
 }
 
+#pragma mark - Helpers
+
 - (void)generateAndVerifySnapshot {
   UIView *backgroundView = [self.navigationBar mdc_addToBackgroundView];
   [self snapshotVerifyView:backgroundView];
@@ -147,6 +149,23 @@ static NSString *const kBadgeTitleArabic = @"أورا";
   } else {
     self.navigationBar.items.firstObject.badgeValue = kBadgeTitleArabic;
   }
+}
+
+- (UIView *)superviewForVisualBlurEffectWithNavigationBar:(MDCBottomNavigationBar *)navigationBar {
+  UIView *barSuperview =
+      [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWidthTypical, kHeightTypical * 2)];
+  UIColor *patternColor = [UIColor
+                           colorWithPatternImage:[UIImage mdc_testImageOfSize:CGSizeMake(kWidthTypical, kWidthTypical)]];
+  barSuperview.backgroundColor = patternColor;
+  [barSuperview addSubview:navigationBar];
+  return barSuperview;
+}
+
+- (void)configureNavigationBarForVisualBlurEffectTest:(MDCBottomNavigationBar *)navigationBar {
+  navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+  navigationBar.selectedItem = self.tabItem2;
+  navigationBar.frame = CGRectMake(0, kHeightTypical, kWidthTypical, kHeightTypical);
+  [self performInkTouchOnBar:navigationBar item:self.tabItem2];
 }
 
 #pragma mark - Title length
@@ -771,17 +790,9 @@ static NSString *const kBadgeTitleArabic = @"أورا";
 
 - (void)testTransparentBackgroundColor {
   // Given
-  UIView *barSuperview =
-      [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWidthTypical, kHeightTypical * 2)];
-  UIColor *patternColor = [UIColor
-      colorWithPatternImage:[UIImage mdc_testImageOfSize:CGSizeMake(kWidthTypical, kWidthTypical)]];
-  barSuperview.backgroundColor = patternColor;
-  [barSuperview addSubview:self.navigationBar];
-  self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
-  self.navigationBar.selectedItem = self.tabItem2;
-  self.navigationBar.frame = CGRectMake(0, kHeightTypical, kWidthTypical, kHeightTypical);
-  [self performInkTouchOnBar:self.navigationBar item:self.tabItem2];
-
+  UIView *barSuperview = [self superviewForVisualBlurEffectWithNavigationBar:self.navigationBar];
+  [self configureNavigationBarForVisualBlurEffectTest:self.navigationBar];
+  
   // When
   self.navigationBar.backgroundColor = [UIColor.whiteColor colorWithAlphaComponent:(CGFloat)0.5];
 
@@ -792,17 +803,8 @@ static NSString *const kBadgeTitleArabic = @"أورا";
 
 - (void)testTransparentBackgroundColorWithExtraLightBlur {
   // Given
-  UIView *barSuperview =
-      [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWidthTypical, kHeightTypical * 2)];
-  UIColor *patternColor = [UIColor
-      colorWithPatternImage:[UIImage mdc_testImageOfSize:CGSizeMake(kWidthTypical, kWidthTypical)]];
-
-  barSuperview.backgroundColor = patternColor;
-  [barSuperview addSubview:self.navigationBar];
-  self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
-  self.navigationBar.selectedItem = self.tabItem2;
-  self.navigationBar.frame = CGRectMake(0, kHeightTypical, kWidthTypical, kHeightTypical);
-  [self performInkTouchOnBar:self.navigationBar item:self.tabItem2];
+  UIView *barSuperview = [self superviewForVisualBlurEffectWithNavigationBar:self.navigationBar];
+  [self configureNavigationBarForVisualBlurEffectTest:self.navigationBar];
 
   // When
   self.navigationBar.barTintColor =
@@ -817,16 +819,8 @@ static NSString *const kBadgeTitleArabic = @"أورا";
 
 - (void)testTransparentBackgroundColorWithLightBlur {
   // Given
-  UIView *barSuperview =
-      [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWidthTypical, kHeightTypical * 2)];
-  UIColor *patternColor = [UIColor
-      colorWithPatternImage:[UIImage mdc_testImageOfSize:CGSizeMake(kWidthTypical, kWidthTypical)]];
-  barSuperview.backgroundColor = patternColor;
-  [barSuperview addSubview:self.navigationBar];
-  self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
-  self.navigationBar.selectedItem = self.tabItem2;
-  self.navigationBar.frame = CGRectMake(0, kHeightTypical, kWidthTypical, kHeightTypical);
-  [self performInkTouchOnBar:self.navigationBar item:self.tabItem2];
+  UIView *barSuperview = [self superviewForVisualBlurEffectWithNavigationBar:self.navigationBar];
+  [self configureNavigationBarForVisualBlurEffectTest:self.navigationBar];
 
   // When
   self.navigationBar.backgroundColor = [UIColor.whiteColor colorWithAlphaComponent:(CGFloat)0.5];
@@ -840,16 +834,8 @@ static NSString *const kBadgeTitleArabic = @"أورا";
 
 - (void)testTransparentBackgroundColorWithDarkBlur {
   // Given
-  UIView *barSuperview =
-      [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWidthTypical, kHeightTypical * 2)];
-  UIColor *patternColor = [UIColor
-      colorWithPatternImage:[UIImage mdc_testImageOfSize:CGSizeMake(kWidthTypical, kWidthTypical)]];
-  barSuperview.backgroundColor = patternColor;
-  [barSuperview addSubview:self.navigationBar];
-  self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
-  self.navigationBar.selectedItem = self.tabItem2;
-  self.navigationBar.frame = CGRectMake(0, kHeightTypical, kWidthTypical, kHeightTypical);
-  [self performInkTouchOnBar:self.navigationBar item:self.tabItem2];
+  UIView *barSuperview = [self superviewForVisualBlurEffectWithNavigationBar:self.navigationBar];
+  [self configureNavigationBarForVisualBlurEffectTest:self.navigationBar];
 
   // When
   self.navigationBar.backgroundColor = [UIColor.whiteColor colorWithAlphaComponent:(CGFloat)0.5];
