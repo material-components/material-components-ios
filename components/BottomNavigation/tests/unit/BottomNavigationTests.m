@@ -46,6 +46,8 @@
 
   // Then
   XCTAssertEqualObjects(bar.backgroundColor, UIColor.whiteColor);
+  XCTAssertFalse(bar.isBackgroundBlurEnabled);
+  XCTAssertEqual(bar.backgroundBlurEffectStyle, UIBlurEffectStyleExtraLight);
 }
 
 #pragma mark - Fonts
