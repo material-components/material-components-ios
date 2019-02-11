@@ -55,8 +55,9 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 @property(nonatomic, assign) CGFloat maxLandscapeClusterContainerWidth;
 @property(nonatomic, strong) NSMutableArray<MDCBottomNavigationItemView *> *itemViews;
 @property(nonatomic, readonly) UIEdgeInsets mdc_safeAreaInsets;
+@property(nonatomic, strong) UIView *barView;
+@property(nonatomic, strong) UIVisualEffectView *blurEffectView;
 @property(nonatomic, strong) UIView *itemsLayoutView;
-@property(nonatomic, strong) UIView *inkClippingView;
 @property(nonatomic, strong) NSMutableArray *inkControllers;
 @property(nonatomic) BOOL shouldPretendToBeATabBar;
 
@@ -92,7 +93,6 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
   _itemsDistributed = YES;
   _titleBelowItem = YES;
   _barTintColor = [UIColor whiteColor];
-  self.backgroundColor = _barTintColor;
 
   // Remove any unarchived subviews and reconfigure the view hierarchy
   if (self.subviews.count) {
@@ -102,16 +102,27 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
     }
   }
   _maxLandscapeClusterContainerWidth = kMDCBottomNavigationBarLandscapeContainerWidth;
-  _inkClippingView = [[UIView alloc] init];
-  _inkClippingView.clipsToBounds = YES;
-  _inkClippingView.autoresizingMask =
-      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleWidth;
+
+  UIBlurEffect *defaultBlurEffect = [UIBlurEffect effectWithStyle:_backgroundBlurEffectStyle];
+  _blurEffectView = [[UIVisualEffectView alloc] initWithEffect:defaultBlurEffect];
+  _blurEffectView.hidden = !_backgroundBlurEnabled;
+  _blurEffectView.autoresizingMask =
+      (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+  [self addSubview:_blurEffectView];  // Needs to always be at the bottom
+
+  _barView = [[UIView alloc] init];
+  _barView.autoresizingMask =
+      (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin);
+  _barView.clipsToBounds = YES;
+  _barView.backgroundColor = _barTintColor;
+  [self addSubview:_barView];
+
   _itemsLayoutView = [[UIView alloc] initWithFrame:CGRectZero];
   _itemsLayoutView.autoresizingMask =
       (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin);
   _itemsLayoutView.clipsToBounds = NO;
-  [self addSubview:_inkClippingView];
-  [_inkClippingView addSubview:_itemsLayoutView];
+  [_barView addSubview:_itemsLayoutView];
+
 #if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunguarded-availability"
@@ -135,7 +146,9 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
   [super layoutSubviews];
 
   CGRect standardBounds = CGRectStandardize(self.bounds);
-  self.inkClippingView.frame = standardBounds;
+  self.blurEffectView.frame = standardBounds;
+  self.barView.frame = standardBounds;
+
   CGSize size = standardBounds.size;
   if (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
     [self layoutLandscapeModeWithBottomNavSize:size
@@ -585,15 +598,32 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 
 - (void)setBarTintColor:(UIColor *)barTintColor {
   _barTintColor = barTintColor;
-  self.backgroundColor = barTintColor;
+  self.barView.backgroundColor = barTintColor;
 }
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
-  super.backgroundColor = backgroundColor;
+  self.barView.backgroundColor = backgroundColor;
 }
 
 - (UIColor *)backgroundColor {
-  return super.backgroundColor;
+  return self.barView.backgroundColor;
+}
+
+- (void)setBackgroundBlurEffectStyle:(UIBlurEffectStyle)backgroundBlurEffectStyle {
+  if (_backgroundBlurEffectStyle == backgroundBlurEffectStyle) {
+    return;
+  }
+  _backgroundBlurEffectStyle = backgroundBlurEffectStyle;
+  self.blurEffectView.effect = [UIBlurEffect effectWithStyle:_backgroundBlurEffectStyle];
+}
+
+- (void)setBackgroundBlurEnabled:(BOOL)backgroundBlurEnabled {
+  if (_backgroundBlurEnabled == backgroundBlurEnabled) {
+    return;
+  }
+  _backgroundBlurEnabled = backgroundBlurEnabled;
+
+  self.blurEffectView.hidden = !_backgroundBlurEnabled;
 }
 
 #pragma mark - Resource bundle

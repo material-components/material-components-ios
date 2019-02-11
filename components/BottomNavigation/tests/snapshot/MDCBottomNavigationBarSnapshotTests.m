@@ -99,6 +99,8 @@ static NSString *const kBadgeTitleArabic = @"أورا";
       @[ self.tabItem1, self.tabItem2, self.tabItem3, self.tabItem4, self.tabItem5 ];
 }
 
+#pragma mark - Helpers
+
 - (void)generateAndVerifySnapshot {
   UIView *backgroundView = [self.navigationBar mdc_addToBackgroundView];
   [self snapshotVerifyView:backgroundView];
@@ -147,6 +149,23 @@ static NSString *const kBadgeTitleArabic = @"أورا";
   } else {
     self.navigationBar.items.firstObject.badgeValue = kBadgeTitleArabic;
   }
+}
+
+- (UIView *)superviewForVisualBlurEffectWithNavigationBar:(MDCBottomNavigationBar *)navigationBar {
+  UIView *barSuperview =
+      [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWidthTypical, kHeightTypical * 2)];
+  UIColor *patternColor = [UIColor
+      colorWithPatternImage:[UIImage mdc_testImageOfSize:CGSizeMake(kWidthTypical, kWidthTypical)]];
+  barSuperview.backgroundColor = patternColor;
+  [barSuperview addSubview:navigationBar];
+  return barSuperview;
+}
+
+- (void)configureNavigationBarForVisualBlurEffectTest:(MDCBottomNavigationBar *)navigationBar {
+  navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+  navigationBar.selectedItem = self.tabItem2;
+  navigationBar.frame = CGRectMake(0, kHeightTypical, kWidthTypical, kHeightTypical);
+  [self performInkTouchOnBar:navigationBar item:self.tabItem2];
 }
 
 #pragma mark - Title length
@@ -765,6 +784,67 @@ static NSString *const kBadgeTitleArabic = @"أورا";
 
   // Then
   [self generateAndVerifySnapshot];
+}
+
+#pragma mark - Transparent background and blur
+
+- (void)testTransparentBackgroundColor {
+  // Given
+  UIView *barSuperview = [self superviewForVisualBlurEffectWithNavigationBar:self.navigationBar];
+  [self configureNavigationBarForVisualBlurEffectTest:self.navigationBar];
+
+  // When
+  self.navigationBar.backgroundColor = [UIColor.whiteColor colorWithAlphaComponent:(CGFloat)0.5];
+
+  // Then
+  UIView *backgroundView = [barSuperview mdc_addToBackgroundView];
+  [self snapshotVerifyView:backgroundView];
+}
+
+- (void)testTransparentBackgroundColorWithExtraLightBlur {
+  // Given
+  UIView *barSuperview = [self superviewForVisualBlurEffectWithNavigationBar:self.navigationBar];
+  [self configureNavigationBarForVisualBlurEffectTest:self.navigationBar];
+
+  // When
+  self.navigationBar.barTintColor =
+      [self.navigationBar.barTintColor colorWithAlphaComponent:(CGFloat).5];
+  self.navigationBar.backgroundBlurEnabled = YES;
+  self.navigationBar.backgroundBlurEffectStyle = UIBlurEffectStyleExtraLight;
+
+  // Then
+  UIView *backgroundView = [barSuperview mdc_addToBackgroundView];
+  [self snapshotVerifyView:backgroundView];
+}
+
+- (void)testTransparentBackgroundColorWithLightBlur {
+  // Given
+  UIView *barSuperview = [self superviewForVisualBlurEffectWithNavigationBar:self.navigationBar];
+  [self configureNavigationBarForVisualBlurEffectTest:self.navigationBar];
+
+  // When
+  self.navigationBar.backgroundColor = [UIColor.whiteColor colorWithAlphaComponent:(CGFloat)0.5];
+  self.navigationBar.backgroundBlurEnabled = YES;
+  self.navigationBar.backgroundBlurEffectStyle = UIBlurEffectStyleLight;
+
+  // Then
+  UIView *backgroundView = [barSuperview mdc_addToBackgroundView];
+  [self snapshotVerifyView:backgroundView];
+}
+
+- (void)testTransparentBackgroundColorWithDarkBlur {
+  // Given
+  UIView *barSuperview = [self superviewForVisualBlurEffectWithNavigationBar:self.navigationBar];
+  [self configureNavigationBarForVisualBlurEffectTest:self.navigationBar];
+
+  // When
+  self.navigationBar.backgroundColor = [UIColor.whiteColor colorWithAlphaComponent:(CGFloat)0.5];
+  self.navigationBar.backgroundBlurEnabled = YES;
+  self.navigationBar.backgroundBlurEffectStyle = UIBlurEffectStyleDark;
+
+  // Then
+  UIView *backgroundView = [barSuperview mdc_addToBackgroundView];
+  [self snapshotVerifyView:backgroundView];
 }
 
 @end
