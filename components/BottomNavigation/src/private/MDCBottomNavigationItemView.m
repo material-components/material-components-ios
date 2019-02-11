@@ -217,7 +217,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 }
 
 - (void)centerLayoutAnimated:(BOOL)animated {
-  CGRect contentBoundingRect = UIEdgeInsetsInsetRect(self.bounds, self.contentInsets);
+  CGRect contentBoundingRect = CGRectStandardize(self.bounds);
   CGFloat centerY = CGRectGetMidY(contentBoundingRect);
   CGFloat centerX = CGRectGetMidX(contentBoundingRect);
   UIUserInterfaceLayoutDirection layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
@@ -406,6 +406,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   } else {
     self.badge.hidden = NO;
   }
+  [self setNeedsLayout];
 }
 
 - (void)setImage:(UIImage *)image {

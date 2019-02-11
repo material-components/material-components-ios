@@ -103,18 +103,19 @@ target "MDCDragons" do
 end
 
 post_install do |installer|
-  pod_dir = File.dirname(installer.pods_project.path)
 
-  # Inject our specific warning flags into the .xcconfig files.
-  mdc_xcconfigs = [
-    "#{pod_dir}/Target Support Files/MaterialComponents/MaterialComponents.xcconfig",
-    "#{pod_dir}/Target Support Files/MaterialComponents/MaterialComponents.unit.xcconfig",
-    "#{pod_dir}/Target Support Files/MaterialComponentsBeta/MaterialComponentsBeta.xcconfig",
-    "#{pod_dir}/Target Support Files/MaterialComponentsBeta/MaterialComponentsBeta.unit.xcconfig",
-    "#{pod_dir}/Target Support Files/MaterialComponentsExamples/MaterialComponentsExamples.xcconfig",
-    "#{pod_dir}/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog.debug.xcconfig",
-    "#{pod_dir}/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog.release.xcconfig",
-  ]
+  mdc_xcconfigs = []
+  target_support_files_path = File.dirname(installer.pods_project.path) + "/" + "Target Support Files"
+  subdirectories = ["MaterialComponents", "MaterialComponentsBeta", "MaterialComponentsExamples", "Pods-MDCCatalog"]
+  subdirectories.each do |subdirectory|
+  subdirectory_path = target_support_files_path + "/" + subdirectory
+    Dir.foreach(subdirectory_path) do |file|
+      if file.include? "xcconfig"
+        file_path = subdirectory_path + "/" + file
+        mdc_xcconfigs.push file_path
+      end
+    end
+  end
 
   # Note the path is relative to the xcconfig file being modified.
   # https://pewpewthespells.com/blog/xcconfig_guide.html
