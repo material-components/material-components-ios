@@ -108,8 +108,8 @@ post_install do |installer|
   target_support_files_path = File.dirname(installer.pods_project.path) + "/" + "Target Support Files"
   subdirectories = ["MaterialComponents", "MaterialComponentsBeta", "MaterialComponentsExamples", "Pods-MDCCatalog"]
   subdirectories.each do |subdirectory|
-	subdirectory_path = target_support_files_path + "/" + subdirectory
-	  Dir.foreach(subdirectory_path) do |file|
+  subdirectory_path = target_support_files_path + "/" + subdirectory
+    Dir.foreach(subdirectory_path) do |file|
       if file.include? "xcconfig"
         file_path = subdirectory_path + "/" + file
         mdc_xcconfigs.push file_path
