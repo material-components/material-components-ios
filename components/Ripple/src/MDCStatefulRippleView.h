@@ -30,6 +30,21 @@ typedef NS_OPTIONS(NSInteger, MDCRippleState) {
   MDCRippleStateDragged = 1 << 2,
 };
 
+/**
+ This class subclasses MDCRippleView which provides the Ripple functionality, and adds
+ to it support for states. By providing states, you can set the overlay color for each state, and
+ change the state of the RippleView by using its highlighted/selected/dragged API.
+
+ This class, as opposed to MDCRippleView is less passive in its appraoch and listens to touches to
+ be able to record the last touch and initiate the Ripple from there, as opposed to receiving
+ the touch as input. It also is able to identify when a tap goes off/on the view, and fades in/out
+ the ripple accordingly.
+
+ Lastly, the implementation for states follows Material Guidelines closely and is built to work
+ well with UICollectionViewCells, UITableViewCells, and UIControls. Therefore MDCStatefulRippleView
+ should be used when one wants to leverage the Material state system and should ideally be
+ configured/set alongside the UIKit APIs (i.e. UIControlState or cell's setSelected/setHighlighted).
+ */
 @interface MDCStatefulRippleView : MDCRippleView
 
 /**
@@ -42,6 +57,12 @@ typedef NS_OPTIONS(NSInteger, MDCRippleState) {
 
 /**
  This BOOL is set to YES if the ripple is currently highlighted, or NO otherwise.
+
+ Note: The reason for not calling this property `highlighted` is due to UIKit's internal logic of
+ crawling and setting all subviews of a UICollectionViewCell to highlighted when a cell goes
+ into the selected state. Because we want the ripple view to imitate the state of the cell itself
+ when inserted into a cell, and not become the state of the cell's subviews, we have named the
+ property `rippleHighlighted` to make sure the state isn't altered by UIKit.
 
  Defaults to NO.
  */
@@ -61,11 +82,6 @@ typedef NS_OPTIONS(NSInteger, MDCRippleState) {
  Defaults to NO.
  */
 @property(nonatomic) BOOL allowsSelection;
-
-/**
- The current state of the ripple.
- */
-@property(nonatomic, readonly) MDCRippleState state;
 
 /**
  Sets the color of the ripple for state.
