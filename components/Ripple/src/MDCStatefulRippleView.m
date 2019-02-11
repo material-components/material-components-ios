@@ -58,14 +58,14 @@ static UIColor *RippleSelectedColor(void) {
     _rippleColors = [NSMutableDictionary dictionary];
     UIColor *selectionColor = RippleSelectedColor();
     _rippleColors[@(MDCRippleStateNormal)] = [UIColor colorWithWhite:0 alpha:kDefaultRippleAlpha];
-    _rippleColors[@(MDCRippleStateHighlighted)] =
-        [UIColor colorWithWhite:0 alpha:kDefaultRippleAlpha];
+    _rippleColors[@(MDCRippleStateHighlighted)] = [UIColor colorWithWhite:0
+                                                                    alpha:kDefaultRippleAlpha];
     _rippleColors[@(MDCRippleStateSelected)] =
         [selectionColor colorWithAlphaComponent:kDefaultRippleSelectedAlpha];
     _rippleColors[@(MDCRippleStateSelected | MDCRippleStateHighlighted)] =
         [selectionColor colorWithAlphaComponent:kDefaultRippleAlpha];
-    _rippleColors[@(MDCRippleStateDragged)] =
-        [UIColor colorWithWhite:0 alpha:kDefaultRippleDraggedAlpha];
+    _rippleColors[@(MDCRippleStateDragged)] = [UIColor colorWithWhite:0
+                                                                alpha:kDefaultRippleDraggedAlpha];
     _rippleColors[@(MDCRippleStateDragged | MDCRippleStateHighlighted)] =
         [UIColor colorWithWhite:0 alpha:kDefaultRippleDraggedAlpha];
     _rippleColors[@(MDCRippleStateSelected | MDCRippleStateDragged)] =
