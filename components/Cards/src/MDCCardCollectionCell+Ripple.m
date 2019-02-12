@@ -34,7 +34,7 @@
   }
 }
 
-- (void)setRippleSelected:(BOOL)selected {
+- (void)rippleDelegateSetSelected:(BOOL)selected {
   if (!self.selectable) {
     return;
   }
@@ -42,16 +42,16 @@
   [self updateCardCellVisuals];
 }
 
-- (void)setRippleHighlighted:(BOOL)highlighted {
+- (void)rippleDelegateSetHighlighted:(BOOL)highlighted {
   self.castedRippleView.rippleHighlighted = highlighted;
   [self updateCardCellVisuals];
 }
 
-- (void)setRippleSelectable:(BOOL)selectable {
+- (void)rippleDelegateSetSelectable:(BOOL)selectable {
   self.castedRippleView.allowsSelection = selectable;
 }
 
-- (UIImage *)updateRippleImage:(UIImage *)image {
+- (UIImage *)rippleDelegateUpdateImage:(UIImage *)image {
   // CardCollectionCell's state system doesn't incorporate multiple states occuring simultaneously.
   // When the card is selected and highlighted it should take the image of MDCCardCellStateSelected.
   if (self.castedRippleView.selected) {
@@ -60,7 +60,7 @@
   return image;
 }
 
-- (UIColor *)updateRippleImageTintColor:(UIColor *)imageTintColor {
+- (UIColor *)rippleDelegateUpdateImageTintColor:(UIColor *)imageTintColor {
   // CardCollectionCell's state system doesn't incorporate multiple states occuring simultaneously.
   // When the card is selected and highlighted it should take the image tint of
   // MDCCardCellStateSelected.

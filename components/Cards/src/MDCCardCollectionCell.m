@@ -224,8 +224,8 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 
 - (void)setSelected:(BOOL)selected {
   [super setSelected:selected];
-  if ([self.rippleDelegate respondsToSelector:@selector(setRippleSelected:)]) {
-    [self.rippleDelegate setRippleSelected:selected];
+  if ([self.rippleDelegate respondsToSelector:@selector(rippleDelegateSetSelected:)]) {
+    [self.rippleDelegate rippleDelegateSetSelected:selected];
     return;
   }
   if (self.selectable) {
@@ -239,15 +239,15 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 
 - (void)setHighlighted:(BOOL)highlighted {
   [super setHighlighted:highlighted];
-  if ([self.rippleDelegate respondsToSelector:@selector(setRippleHighlighted:)]) {
-    [self.rippleDelegate setRippleHighlighted:highlighted];
+  if ([self.rippleDelegate respondsToSelector:@selector(rippleDelegateSetHighlighted:)]) {
+    [self.rippleDelegate rippleDelegateSetHighlighted:highlighted];
   }
 }
 
 - (void)setSelectable:(BOOL)selectable {
   _selectable = selectable;
-  if ([self.rippleDelegate respondsToSelector:@selector(setRippleSelectable:)]) {
-    [self.rippleDelegate setRippleSelectable:selectable];
+  if ([self.rippleDelegate respondsToSelector:@selector(rippleDelegateSetSelectable:)]) {
+    [self.rippleDelegate rippleDelegateSetSelectable:selectable];
     return;
   }
   self.selectedImageView.hidden = !selectable;
@@ -363,8 +363,8 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 
 - (void)updateImage {
   UIImage *image = [self imageForState:self.state];
-  if ([self.rippleDelegate respondsToSelector:@selector(updateRippleImage:)]) {
-    image = [self.rippleDelegate updateRippleImage:image];
+  if ([self.rippleDelegate respondsToSelector:@selector(rippleDelegateUpdateImage:)]) {
+    image = [self.rippleDelegate rippleDelegateUpdateImage:image];
   }
   [self.selectedImageView setImage:image];
   [self.selectedImageView sizeToFit];
@@ -462,8 +462,8 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 
 - (void)updateImageTintColor {
   UIColor *imageTintColor = [self imageTintColorForState:self.state];
-  if ([self.rippleDelegate respondsToSelector:@selector(updateRippleImageTintColor:)]) {
-    imageTintColor = [self.rippleDelegate updateRippleImageTintColor:imageTintColor];
+  if ([self.rippleDelegate respondsToSelector:@selector(rippleDelegateUpdateImageTintColor:)]) {
+    imageTintColor = [self.rippleDelegate rippleDelegateUpdateImageTintColor:imageTintColor];
   }
   [self.selectedImageView setTintColor:imageTintColor];
 }
