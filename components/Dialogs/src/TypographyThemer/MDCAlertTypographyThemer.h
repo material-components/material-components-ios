@@ -20,7 +20,8 @@
 /**
  The Material Design typography system's themer for instances of MDCAlertController.
  */
-@interface MDCAlertTypographyThemer : NSObject
+__deprecated_msg("Please use MaterialDialogs+Theming.") @interface MDCAlertTypographyThemer
+    : NSObject
 
 /**
  Applies a typography scheme's properties to an MDCAlertController.

@@ -86,30 +86,6 @@ static UIImage *fakeImage(void) {
                              (CGFloat)0.001);
 }
 
-- (void)testContentInsetLayout {
-  // Given
-  MDCBottomNavigationItemView *view = [[MDCBottomNavigationItemView alloc] init];
-  view.title = @"Test Content";
-  view.image = fakeImage();
-  view.bounds = CGRectMake(0, 0, 100, 100);
-  view.contentVerticalMargin = 20;
-  view.contentHorizontalMargin = 20;
-  view.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
-
-  // When
-  view.titleBelowIcon = YES;
-  view.contentInsets = UIEdgeInsetsMake(10, 10, 5, 5);
-  [view layoutSubviews];
-
-  // Then
-  CGRect contentRect = UIEdgeInsetsInsetRect(view.bounds, view.contentInsets);
-  XCTAssert(view.label.center.x == CGRectGetMidX(contentRect));
-  XCTAssert(view.iconImageView.center.x == CGRectGetMidX(contentRect));
-  CGFloat contentSpan = CGRectGetMaxY(view.label.frame) - CGRectGetMinY(view.iconImageView.frame);
-  XCTAssertEqualWithAccuracy(CGRectGetMinY(view.iconImageView.frame) + contentSpan / 2,
-                             CGRectGetMidY(contentRect), (CGFloat)0.001);
-}
-
 - (void)testSetSelectedItemTintColorUpdatesInkColor {
   // Given
   MDCBottomNavigationItemView *item1 = [[MDCBottomNavigationItemView alloc] init];
@@ -179,6 +155,178 @@ static UIImage *fakeImage(void) {
   // Then
   XCTAssertEqualWithAccuracy(badgePoint.x, expectedCenter.x, 0.001);
   XCTAssertEqualWithAccuracy(badgePoint.y, expectedCenter.y, 0.001);
+}
+
+#pragma mark - sizeThatFits
+
+- (void)testSizeThatFitsSmallSizeStackedLayout {
+  // Given
+  MDCBottomNavigationItemView *itemView = [[MDCBottomNavigationItemView alloc] init];
+  itemView.image = fakeImage();
+  itemView.title = @"A very long title that takes much space to fit.";
+  itemView.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+  itemView.titleBelowIcon = YES;
+  CGSize desiredSize = CGSizeMake(24, 8);
+
+  // When
+  CGSize fitSize = [itemView sizeThatFits:desiredSize];
+
+  // Then
+  XCTAssertGreaterThanOrEqual(fitSize.width, desiredSize.width);
+  XCTAssertGreaterThanOrEqual(fitSize.height, desiredSize.height);
+}
+
+- (void)testSizeThatFitsSmallSizeAdjacentLayout {
+  // Given
+  MDCBottomNavigationItemView *itemView = [[MDCBottomNavigationItemView alloc] init];
+  itemView.image = fakeImage();
+  itemView.title = @"A very long title that takes much space to fit.";
+  itemView.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+  itemView.titleBelowIcon = NO;
+  CGSize desiredSize = CGSizeMake(24, 8);
+
+  // When
+  CGSize fitSize = [itemView sizeThatFits:desiredSize];
+
+  // Then
+  XCTAssertGreaterThanOrEqual(fitSize.width, desiredSize.width);
+  XCTAssertGreaterThanOrEqual(fitSize.height, desiredSize.height);
+}
+
+- (void)testSizeThatFitsLargerThanTooSmallBoundsStackedLayout {
+  // Given
+  CGRect originalFrame = CGRectMake(0, 0, 1, 3);
+  MDCBottomNavigationItemView *itemView =
+      [[MDCBottomNavigationItemView alloc] initWithFrame:originalFrame];
+  itemView.title = @"A very long title that takes much space to fit.";
+  itemView.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+  itemView.titleBelowIcon = YES;
+
+  // When
+  CGSize fitSize = [itemView sizeThatFits:CGSizeMake(10000, 10000)];
+
+  // Then
+  XCTAssertGreaterThan(fitSize.width, originalFrame.size.width);
+  XCTAssertGreaterThan(fitSize.height, originalFrame.size.height);
+}
+
+- (void)testSizeThatFitsLargerThanTooSmallBoundsAdjacentLayout {
+  // Given
+  CGRect originalFrame = CGRectMake(0, 0, 1, 3);
+  MDCBottomNavigationItemView *itemView =
+      [[MDCBottomNavigationItemView alloc] initWithFrame:originalFrame];
+  itemView.title = @"A very long title that takes much space to fit.";
+  itemView.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+  itemView.titleBelowIcon = NO;
+
+  // When
+  CGSize fitSize = [itemView sizeThatFits:CGSizeMake(10000, 10000)];
+
+  // Then
+  XCTAssertGreaterThan(fitSize.width, originalFrame.size.width);
+  XCTAssertGreaterThan(fitSize.height, originalFrame.size.height);
+}
+
+- (void)testSizeThatFitsSmallerThanTooLargeBoundsStackedLayout {
+  // Given
+  CGRect originalFrame = CGRectMake(0, 0, 1202, 1301);
+  MDCBottomNavigationItemView *itemView =
+      [[MDCBottomNavigationItemView alloc] initWithFrame:originalFrame];
+  itemView.title = @"1";
+  itemView.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+  itemView.titleBelowIcon = YES;
+
+  // When
+  CGSize fitSize = [itemView sizeThatFits:CGSizeMake(10000, 10000)];
+
+  // Then
+  XCTAssertLessThan(fitSize.width, originalFrame.size.width);
+  XCTAssertLessThan(fitSize.height, originalFrame.size.height);
+}
+
+- (void)testSizeThatFitsSmallerThanTooLargeBoundsAdjacentLayout {
+  // Given
+  CGRect originalFrame = CGRectMake(0, 0, 1202, 1301);
+  MDCBottomNavigationItemView *itemView =
+      [[MDCBottomNavigationItemView alloc] initWithFrame:originalFrame];
+  itemView.title = @"1";
+  itemView.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+  itemView.titleBelowIcon = NO;
+
+  // When
+  CGSize fitSize = [itemView sizeThatFits:CGSizeMake(10000, 10000)];
+
+  // Then
+  XCTAssertLessThan(fitSize.width, originalFrame.size.width);
+  XCTAssertLessThan(fitSize.height, originalFrame.size.height);
+}
+
+- (void)testSizeThatFitWithCGSizeZeroStackedLayout {
+  // Given
+  MDCBottomNavigationItemView *itemView = [[MDCBottomNavigationItemView alloc] init];
+  itemView.title = @"Favorites";
+  itemView.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+  itemView.titleBelowIcon = YES;
+
+  // When
+  CGSize fitSize = [itemView sizeThatFits:CGSizeZero];
+
+  // Then
+  XCTAssertGreaterThan(fitSize.width, 0);
+  XCTAssertGreaterThan(fitSize.height, 0);
+}
+
+- (void)testSizeThatFitWithCGSizeZeroAdjacentLayout {
+  // Given
+  MDCBottomNavigationItemView *itemView = [[MDCBottomNavigationItemView alloc] init];
+  itemView.title = @"Favorites";
+  itemView.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+  itemView.titleBelowIcon = NO;
+
+  // When
+  CGSize fitSize = [itemView sizeThatFits:CGSizeZero];
+
+  // Then
+  XCTAssertGreaterThan(fitSize.width, 0);
+  XCTAssertGreaterThan(fitSize.height, 0);
+}
+
+- (void)testSizeThatFitsMatchesSizeToFitUnboundedStackedLayout {
+  // Given
+  MDCBottomNavigationItemView *itemView = [[MDCBottomNavigationItemView alloc] init];
+  itemView.title = @"Favorites";
+  itemView.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+  itemView.titleBelowIcon = YES;
+  CGSize fitSize = [itemView sizeThatFits:CGSizeMake(10000, 10000)];
+
+  // When
+  [itemView sizeToFit];
+
+  // Then
+  CGRect fitBounds = CGRectStandardize(itemView.bounds);
+  XCTAssertFalse(CGRectEqualToRect(fitBounds, CGRectZero),
+                 @"sizeToFit should never set a CGRectZero bounds when content is present.");
+  XCTAssertEqualWithAccuracy(fitBounds.size.width, fitSize.width, 0.001);
+  XCTAssertEqualWithAccuracy(fitBounds.size.height, fitSize.height, 0.001);
+}
+
+- (void)testSizeThatFitsMatchesSizeToFitUnboundedAdjacentLayout {
+  // Given
+  MDCBottomNavigationItemView *itemView = [[MDCBottomNavigationItemView alloc] init];
+  itemView.title = @"Favorites";
+  itemView.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+  itemView.titleBelowIcon = NO;
+  CGSize fitSize = [itemView sizeThatFits:CGSizeMake(10000, 10000)];
+
+  // When
+  [itemView sizeToFit];
+
+  // Then
+  CGRect fitBounds = CGRectStandardize(itemView.bounds);
+  XCTAssertFalse(CGRectEqualToRect(fitBounds, CGRectZero),
+                 @"sizeToFit should never set a CGRectZero bounds when content is present.");
+  XCTAssertEqualWithAccuracy(fitBounds.size.width, fitSize.width, 0.001);
+  XCTAssertEqualWithAccuracy(fitBounds.size.height, fitSize.height, 0.001);
 }
 
 @end

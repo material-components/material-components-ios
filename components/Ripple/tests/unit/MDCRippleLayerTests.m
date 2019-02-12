@@ -186,7 +186,7 @@
   XCTAssertEqual(group.animations.count, 3U);
   NSInteger animationsCount = 0;
   for (CAAnimation *animation in group.animations) {
-    XCTAssertFalse(animation.removedOnCompletion);
+    XCTAssertTrue(animation.removedOnCompletion);
     if ([animation isKindOfClass:[CABasicAnimation class]]) {
       CABasicAnimation *basicAnimation = (CABasicAnimation *)animation;
       if ([basicAnimation.keyPath isEqualToString:@"opacity"]) {

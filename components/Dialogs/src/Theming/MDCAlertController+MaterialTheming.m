@@ -24,20 +24,10 @@ static const CGFloat kCornerRadius = 4;
 
 - (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme {
   // Color
-  id<MDCColorScheming> colorScheme = scheme.colorScheme;
-  if (!colorScheme) {
-    colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-  }
-  [MDCAlertColorThemer applySemanticColorScheme:colorScheme toAlertController:self];
+  [self applyColorThemeWithScheme:scheme.colorScheme];
 
   // Typography
-  id<MDCTypographyScheming> typographyScheme = scheme.typographyScheme;
-  if (!typographyScheme) {
-    typographyScheme =
-        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
-  }
-  [MDCAlertTypographyThemer applyTypographyScheme:typographyScheme toAlertController:self];
+  [self applyTypographyThemeWithScheme:scheme.typographyScheme];
 
   // Other properties
   self.cornerRadius = kCornerRadius;
@@ -60,6 +50,28 @@ static const CGFloat kCornerRadius = 4;
         break;
     }
   }
+}
+
+- (void)applyTypographyThemeWithScheme:(id<MDCTypographyScheming>)typographyScheme {
+  if (!typographyScheme) {
+    typographyScheme =
+        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+  }
+  self.titleFont = typographyScheme.headline6;
+  self.messageFont = typographyScheme.body1;
+}
+
+- (void)applyColorThemeWithScheme:(id<MDCColorScheming>)colorScheme {
+  if (!colorScheme) {
+    colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  }
+
+  self.titleColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87];
+  self.messageColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
+  self.titleIconTintColor = colorScheme.primaryColor;
+  self.scrimColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.32];
+  self.backgroundColor = colorScheme.surfaceColor;
 }
 
 @end
