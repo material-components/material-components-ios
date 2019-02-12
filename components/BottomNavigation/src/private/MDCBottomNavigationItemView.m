@@ -103,6 +103,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 }
 
 - (void)commonMDCBottomNavigationItemViewInit {
+  _truncatesTitle = YES;
   if (!_selectedItemTintColor) {
     _selectedItemTintColor = [UIColor blackColor];
   }

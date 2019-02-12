@@ -329,4 +329,36 @@ static UIImage *fakeImage(void) {
   XCTAssertEqualWithAccuracy(fitBounds.size.height, fitSize.height, 0.001);
 }
 
+#pragma mark - Title truncation
+
+- (void)testUntruncatedTitleExtendsBeyondFrame {
+  // Given
+  MDCBottomNavigationItemView *itemView =
+      [[MDCBottomNavigationItemView alloc] initWithFrame:CGRectMake(0, 0, 120, 56)];
+
+  // When
+  itemView.truncatesTitle = NO;
+  itemView.title = @"1234567890123456789012345678901234567890";
+  [itemView layoutSubviews];
+
+  // Then
+  XCTAssertGreaterThan(CGRectGetWidth(itemView.label.bounds), CGRectGetWidth(itemView.bounds));
+}
+
+- (void)testTruncatedTitleRemainsWithinFrame {
+  // Given
+  MDCBottomNavigationItemView *itemView =
+      [[MDCBottomNavigationItemView alloc] initWithFrame:CGRectMake(0, 0, 120, 56)];
+
+  // When
+  itemView.truncatesTitle = YES;
+  itemView.title = @"1234567890123456789012345678901234567890";
+  [itemView layoutSubviews];
+
+  // Then
+  XCTAssertTrue(CGRectContainsRect(itemView.bounds, itemView.label.frame),
+                @"(%@) does not contain (%@)", NSStringFromCGRect(itemView.bounds),
+                NSStringFromCGRect(itemView.label.frame));
+}
+
 @end

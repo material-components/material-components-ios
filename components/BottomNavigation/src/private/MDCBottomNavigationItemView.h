@@ -27,6 +27,7 @@
 @property(nonatomic, copy) NSString *badgeValue;
 @property(nonatomic, copy) NSString *title;
 @property(nonatomic, strong) UIFont *itemTitleFont UI_APPEARANCE_SELECTOR;
+// Default = YES
 @property(nonatomic, assign) BOOL truncatesTitle;
 
 @property(nonatomic, strong) UIButton *button;
