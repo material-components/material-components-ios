@@ -16,6 +16,7 @@ import UIKit
 
 import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialDialogs
+import MaterialComponentsBeta.MaterialButtons_Theming
 import MaterialComponentsBeta.MaterialContainerScheme
 import MaterialComponentsBeta.MaterialDialogs_Theming
 
@@ -32,7 +33,6 @@ class DialogsWithEmphasisButtonExampleViewController: UIViewController {
 
     materialButton.translatesAutoresizingMaskIntoConstraints = false
     materialButton.setTitle("Material Alert With Emphasis Buttons", for: .normal)
-    materialButton.setTitleColor(UIColor(white: 0.1, alpha:1), for: .normal)
     materialButton.sizeToFit()
     materialButton.addTarget(self, action: #selector(tapMaterial), for: .touchUpInside)
     materialButton.applyTextTheme(withScheme: containerScheme)
