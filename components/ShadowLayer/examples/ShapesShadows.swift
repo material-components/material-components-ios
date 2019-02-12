@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import UIKit
-import MaterialComponents.MaterialShapeLibrary
+import MaterialComponents.MaterialShapeLibraryNew
 import MaterialComponents.MaterialShapes
 
 class ShapesShadows: UIView {

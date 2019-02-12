@@ -15,7 +15,7 @@
 import UIKit
 
 import MaterialComponents.MaterialCards
-import MaterialComponents.MaterialShapeLibrary
+import MaterialComponents.MaterialShapeLibraryNew
 
 @available(iOS 9.0, *)
 class CardView: MDCCard {

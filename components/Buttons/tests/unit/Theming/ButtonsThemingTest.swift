@@ -18,7 +18,7 @@ import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialShadowElevations
 import MaterialComponents.MaterialShapeScheme
-import MaterialComponents.MaterialShapeLibrary
+import MaterialComponents.MaterialShapeLibraryNew
 import MaterialComponents.MaterialTypographyScheme
 import MaterialComponentsBeta.MaterialButtons_Theming
 import MaterialComponentsBeta.MaterialContainerScheme

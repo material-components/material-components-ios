@@ -15,7 +15,7 @@
 import XCTest
 import MaterialComponents.MaterialBottomSheet
 import MaterialComponents.MaterialBottomSheet_ShapeThemer
-import MaterialComponents.MaterialShapeLibrary
+import MaterialComponents.MaterialShapeLibraryNew
 
 class BottomSheetShapeThemerTests: XCTestCase {
 
