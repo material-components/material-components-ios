@@ -236,7 +236,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
       CGPointMake(centerX, centerY - totalContentHeight / 2 + iconHeight / 2);
   CGPoint labelCenter = CGPointMake(centerX, centerY + totalContentHeight / 2 - labelHeight / 2);
   CGFloat availableContentWidth = CGRectGetWidth(contentBoundingRect);
-  if (labelSize.width > availableContentWidth) {
+  if (self.truncatesTitle && (labelSize.width > availableContentWidth)) {
     labelSize = CGSizeMake(availableContentWidth, labelSize.height);
   }
 
@@ -273,7 +273,9 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   // the contents.
   CGFloat contentPadding = (remainingContentWidth - contentsWidth) / 2;
   remainingContentWidth -= iconImageViewSize.width + self.contentHorizontalMargin;
-  labelSize = CGSizeMake(MIN(labelSize.width, remainingContentWidth), labelSize.height);
+  if (self.truncatesTitle) {
+    labelSize = CGSizeMake(MIN(labelSize.width, remainingContentWidth), labelSize.height);
+  }
 
   // Account for RTL
   BOOL isRTL =
