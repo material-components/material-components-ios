@@ -184,6 +184,21 @@ static NSString *const kBadgeTitleArabic = @"أورا";
   [self generateAndVerifySnapshot];
 }
 
+- (void)testJustifiedUnspecifiedAlwaysWithFiveLongTitleItemsUnboundiPadWidthTypicalHeightLTR {
+  // When
+  [self configureBottomNavigation:self.navigationBar
+                    withAlignment:MDCBottomNavigationBarAlignmentJustified
+                  titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
+                  traitCollection:nil
+                        allTitles:kLongTitleLatin];
+  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
+  self.navigationBar.truncatesLongTitles = NO;
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
 - (void)testJustifiedUnspecifiedAlwaysWithFiveLongTitleItemsiPadWidthTypicalHeightRTL {
   // When
   [self configureBottomNavigation:self.navigationBar
@@ -193,6 +208,22 @@ static NSString *const kBadgeTitleArabic = @"أورا";
                         allTitles:kLongTitleLatin];
   self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
   [self changeToRTLAndArabicWithTitle:kLongTitleArabic];
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testJustifiedUnspecifiedAlwaysWithFiveLongTitleItemsUnboundiPadWidthTypicalHeightRTL {
+  // When
+  [self configureBottomNavigation:self.navigationBar
+                    withAlignment:MDCBottomNavigationBarAlignmentJustified
+                  titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
+                  traitCollection:nil
+                        allTitles:kLongTitleLatin];
+  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
+  [self changeToRTLAndArabicWithTitle:kLongTitleArabic];
+  self.navigationBar.truncatesLongTitles = NO;
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
@@ -211,6 +242,25 @@ static NSString *const kBadgeTitleArabic = @"أورا";
                   traitCollection:traitCollection
                         allTitles:kLongTitleLatin];
   self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testJustifiedAdjacentRegularAlwaysWithFiveLongTitleItemsUnboundiPadWidthTypicalHeightLTR {
+  // Given
+  MDCMutableUITraitCollection *traitCollection = [[MDCMutableUITraitCollection alloc] init];
+  traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassRegular;
+
+  // When
+  [self configureBottomNavigation:self.navigationBar
+                    withAlignment:MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles
+                  titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
+                  traitCollection:traitCollection
+                        allTitles:kLongTitleLatin];
+  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
+  self.navigationBar.truncatesLongTitles = NO;
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
@@ -236,6 +286,26 @@ static NSString *const kBadgeTitleArabic = @"أورا";
   [self generateAndVerifySnapshot];
 }
 
+- (void)testJustifiedAdjacentRegularAlwaysWithFiveLongTitleItemsUnboundiPadWidthTypicalHeightRTL {
+  // Given
+  MDCMutableUITraitCollection *traitCollection = [[MDCMutableUITraitCollection alloc] init];
+  traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassRegular;
+
+  // When
+  [self configureBottomNavigation:self.navigationBar
+                    withAlignment:MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles
+                  titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
+                  traitCollection:traitCollection
+                        allTitles:kLongTitleLatin];
+  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
+  [self changeToRTLAndArabicWithTitle:kLongTitleArabic];
+  self.navigationBar.truncatesLongTitles = NO;
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
 - (void)testCenteredUnspecifiedAlwaysWithFiveLongTitleItemsiPadWidthTypicalHeightLTR {
   // When
   [self configureBottomNavigation:self.navigationBar
@@ -244,6 +314,21 @@ static NSString *const kBadgeTitleArabic = @"أورا";
                   traitCollection:nil
                         allTitles:kLongTitleLatin];
   self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testCenteredUnspecifiedAlwaysWithFiveLongTitleItemsUnboundiPadWidthTypicalHeightLTR {
+  // When
+  [self configureBottomNavigation:self.navigationBar
+                    withAlignment:MDCBottomNavigationBarAlignmentCentered
+                  titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
+                  traitCollection:nil
+                        allTitles:kLongTitleLatin];
+  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
+  self.navigationBar.truncatesLongTitles = NO;
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
@@ -259,6 +344,22 @@ static NSString *const kBadgeTitleArabic = @"أورا";
                         allTitles:kLongTitleLatin];
   self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
   [self changeToRTLAndArabicWithTitle:kLongTitleArabic];
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testCenteredUnspecifiedAlwaysWithFiveLongTitleItemsUnboundiPadWidthTypicalHeightRTL {
+  // When
+  [self configureBottomNavigation:self.navigationBar
+                    withAlignment:MDCBottomNavigationBarAlignmentCentered
+                  titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
+                  traitCollection:nil
+                        allTitles:kLongTitleLatin];
+  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
+  [self changeToRTLAndArabicWithTitle:kLongTitleArabic];
+  self.navigationBar.truncatesLongTitles = NO;
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then

@@ -93,6 +93,7 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
   _itemsDistributed = YES;
   _titleBelowItem = YES;
   _barTintColor = [UIColor whiteColor];
+  _truncatesLongTitles = YES;
 
   // Remove any unarchived subviews and reconfigure the view hierarchy
   if (self.subviews.count) {
@@ -447,6 +448,7 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
     itemView.isAccessibilityElement = item.isAccessibilityElement;
     itemView.contentVerticalMargin = self.itemsContentVerticalMargin;
     itemView.contentHorizontalMargin = self.itemsContentHorizontalMargin;
+    itemView.truncatesTitle = self.truncatesLongTitles;
     MDCInkTouchController *controller = [[MDCInkTouchController alloc] initWithView:itemView];
     controller.delegate = self;
     [self.inkControllers addObject:controller];
@@ -533,6 +535,15 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
   for (NSUInteger i = 0; i < self.items.count; i++) {
     MDCBottomNavigationItemView *itemView = self.itemViews[i];
     itemView.contentHorizontalMargin = itemsContentHorizontalMargin;
+  }
+  [self setNeedsLayout];
+}
+
+- (void)setTruncatesLongTitles:(BOOL)truncatesLongTitles {
+  _truncatesLongTitles = truncatesLongTitles;
+  for (MDCBottomNavigationItemView *itemView in self.itemViews) {
+    itemView.truncatesTitle = truncatesLongTitles;
+    [itemView setNeedsLayout];
   }
   [self setNeedsLayout];
 }
