@@ -132,7 +132,7 @@ static UIImage *fakeImage(void) {
   // Given
   MDCBottomNavigationItemView *itemView = [[MDCBottomNavigationItemView alloc] init];
   itemView.iconImageView.frame = CGRectMake(8, 8, 24, 24);
-  CGPoint expectedCenter = CGPointMake(32, 12);
+  CGPoint expectedCenter = CGPointMake(31, 8);
 
   // When
   CGPoint badgePoint =
@@ -146,7 +146,7 @@ static UIImage *fakeImage(void) {
   // Given
   MDCBottomNavigationItemView *itemView = [[MDCBottomNavigationItemView alloc] init];
   itemView.iconImageView.frame = CGRectMake(8, 8, 24, 24);
-  CGPoint expectedCenter = CGPointMake(8, 12);
+  CGPoint expectedCenter = CGPointMake(9, 8);
 
   // When
   CGPoint badgePoint =
