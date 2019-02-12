@@ -25,8 +25,15 @@
 // A number large enough to be larger than any reasonable screen dimension but small enough that
 // CGFloat doesn't lose precision.
 static const CGFloat kMaxSizeDimension = 1000000;
-static const CGFloat MDCBottomNavigationItemViewInkOpacity = (CGFloat)0.150;
-static const CGFloat MDCBottomNavigationItemViewTitleFontSize = 12;
+static const CGFloat kInkOpacity = (CGFloat)0.150;
+static const CGFloat kTitleFontSize = 12;
+static const CGFloat kBadgeYOffsetFromTop = 0;
+
+// The fonts available on iOS differ from that used on Material.io.  When trying to approximate
+// the position on iOS, it seems like a horizontal inset of 10 points looks pretty close.
+// However, hen the badge has no visible text, its horizontal center should be 1 point inset from
+// the edge of the image.
+static const CGFloat kBadgeXOffsetFromIconEdgeLTR = -8;
 
 // The duration of the selection transition animation.
 static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.180;
@@ -119,7 +126,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   if (!_label) {
     _label = [[UILabel alloc] initWithFrame:CGRectZero];
     _label.text = _title;
-    _label.font = [UIFont systemFontOfSize:MDCBottomNavigationItemViewTitleFontSize];
+    _label.font = [UIFont systemFontOfSize:kTitleFontSize];
     _label.textAlignment = NSTextAlignmentCenter;
     _label.textColor = _selectedItemTitleColor;
     _label.isAccessibilityElement = NO;
@@ -384,7 +391,6 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 - (CGPoint)badgeCenterFromIconFrame:(CGRect)iconFrame
                               isRTL:(BOOL)isRTL {
   CGSize badgeSize = [self.badge sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
-  CGFloat badgeHalfHeight = badgeSize.height / 2;
   CGFloat badgeHalfWidth = badgeSize.width / 2;
   // The top edge of the badge should match the top edge of the icon bounds.
   // There are no specifications for badge layout, so this is based on the Material Guidelines
@@ -393,15 +399,11 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   // Attempting to match the "88" badge on the "chrome reader mode" icon results in the badge's top
   // edge equalling that of the image bounds.
   // https://material.io/tools/icons/?icon=chrome_reader_mode&style=baseline
-  CGFloat badgeTopY = CGRectGetMinY(iconFrame) - 1;
-  CGFloat badgeCenterY = badgeTopY + badgeHalfHeight;
+  CGFloat badgeTopY = CGRectGetMinY(iconFrame) + kBadgeYOffsetFromTop;
+  CGFloat badgeCenterY = badgeTopY + badgeSize.height / 2;
 
-  // The fonts available on iOS differ from that used on Material.io.  When trying to approximate
-  // the position on iOS, it seems like a horizontal inset of 10 points looks pretty close.
-  // However, hen the badge has no visible text, its horizontal center should be 1 point inset from
-  // the edge of the image.
-  CGFloat badgeXInsetFromIconEdge = 10;
-  CGFloat badgeCenterX = CGRectGetMaxX(iconFrame) - badgeXInsetFromIconEdge + badgeHalfWidth;
+  CGFloat badgeCenterX = CGRectGetMaxX(iconFrame) + kBadgeXOffsetFromIconEdgeLTR + badgeHalfWidth;
+  // Special handling for the "empty dot" badge.
   if (self.badgeValue.length == 0) {
     badgeCenterX = CGRectGetMaxX(iconFrame) - 1;
   }
@@ -410,7 +412,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
     if (self.badgeValue.length == 0) {
       badgeCenterX = CGRectGetMinX(iconFrame) + 1;
     } else {
-      badgeCenterX = CGRectGetMinX(iconFrame) + badgeXInsetFromIconEdge - badgeHalfWidth;
+      badgeCenterX = CGRectGetMinX(iconFrame) - kBadgeXOffsetFromIconEdgeLTR - badgeHalfWidth;
     }
   }
 
@@ -453,7 +455,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
     self.label.textColor = self.selectedItemTitleColor;
   }
   self.inkView.inkColor =
-      [self.selectedItemTintColor colorWithAlphaComponent:MDCBottomNavigationItemViewInkOpacity];
+      [self.selectedItemTintColor colorWithAlphaComponent:kInkOpacity];
 }
 
 - (void)setUnselectedItemTintColor:(UIColor *)unselectedItemTintColor {
