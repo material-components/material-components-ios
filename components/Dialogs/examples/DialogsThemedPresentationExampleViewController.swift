@@ -16,6 +16,7 @@ import UIKit
 
 import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialDialogs
+import MaterialComponentsBeta.MaterialButtons_Theming
 import MaterialComponentsBeta.MaterialContainerScheme
 import MaterialComponentsBeta.MaterialDialogs_Theming
 
@@ -36,7 +37,6 @@ class CustomDialogViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = UIColor.white
-    view.layer.cornerRadius = 22.0
 
     let titleLabel = UILabel()
     titleLabel.text = dialogTitle
@@ -133,15 +133,6 @@ class DialogsThemedPresentationExampleViewController: UIViewController {
   private let transitionController = MDCDialogTransitionController()
   var containerScheme = MDCContainerScheme()
 
-  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    containerScheme.colorScheme = MDCSemanticColorScheme(defaults: .material201804);
-  }
-
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -150,7 +141,6 @@ class DialogsThemedPresentationExampleViewController: UIViewController {
 
     materialButton.translatesAutoresizingMaskIntoConstraints = false
     materialButton.setTitle("Custom Alert With Themed Presentation", for: .normal)
-    materialButton.setTitleColor(UIColor(white: 0.1, alpha:1), for: .normal)
     materialButton.sizeToFit()
     materialButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
     materialButton.applyTextTheme(withScheme: containerScheme)
@@ -183,7 +173,7 @@ class DialogsThemedPresentationExampleViewController: UIViewController {
 
     if let presentationController = customDialogController.mdc_dialogPresentationController {
       presentationController.applyTheme(withScheme: containerScheme)
-      presentationController.dialogCornerRadius = customDialogController.view.layer.cornerRadius
+      customDialogController.view.layer.cornerRadius = presentationController.dialogCornerRadius;
     }
     present(customDialogController, animated: true, completion: nil)
   }
@@ -193,7 +183,7 @@ extension DialogsThemedPresentationExampleViewController {
 
   class func catalogMetadata() -> [String: Any] {
     return [
-      "breadcrumbs": ["Dialogs", "Custom Dialog with Themed Presentation Style"],
+      "breadcrumbs": ["Dialogs", "Dialog Presentation Controller Theming"],
       "primaryDemo": false,
       "presentable": true,
     ]
