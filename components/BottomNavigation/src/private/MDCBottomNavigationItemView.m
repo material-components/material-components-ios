@@ -287,8 +287,8 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   CGFloat iconCenterOffset = contentPadding + (iconImageViewSize.width / 2);
 
   // Determine the position of the label and icon
-  CGPoint iconImageViewCenter = CGPointMake(
-      layoutStartingPoint + rtlCoefficient * iconCenterOffset, centerY);
+  CGPoint iconImageViewCenter =
+      CGPointMake(layoutStartingPoint + rtlCoefficient * iconCenterOffset, centerY);
   CGFloat labelOffsetFromIcon =
       iconImageViewSize.width / 2 + self.contentHorizontalMargin + labelSize.width / 2;
   CGPoint labelCenter =
