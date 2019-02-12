@@ -27,7 +27,14 @@
 static const CGFloat kMaxSizeDimension = 1000000;
 static const CGFloat MDCBottomNavigationItemViewInkOpacity = (CGFloat)0.150;
 static const CGFloat MDCBottomNavigationItemViewTitleFontSize = 12;
-static const CGFloat kMDCBottomNavigationItemViewBadgeYOffset = 4;
+
+// The fonts available on iOS differ from that used on Material.io.  When trying to approximate
+// the position on iOS, it seems like a horizontal inset of 10 points looks pretty close.
+static const CGFloat kBadgeXOffsetFromIconEdgeWithTextLTR = -8;
+
+// However, when the badge has no visible text, its horizontal center should be 1 point inset from
+// the edge of the image.
+static const CGFloat kBadgeXOffsetFromIconEdgeEmptyLTR = -1;
 
 // The duration of the selection transition animation.
 static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.180;
@@ -325,12 +332,24 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 }
 
 - (CGPoint)badgeCenterFromIconFrame:(CGRect)iconFrame isRTL:(BOOL)isRTL {
-  if (isRTL) {
-    return CGPointMake(CGRectGetMinX(iconFrame),
-                       CGRectGetMinY(iconFrame) + kMDCBottomNavigationItemViewBadgeYOffset);
+  CGSize badgeSize = [self.badge sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
+
+  // There are no specifications for badge layout, so this is based on the Material Guidelines
+  // article for Bottom Navigation which includes an image showing badge positions.
+  // https://storage.googleapis.com/spec-host-backup/mio-design%2Fassets%2F0B6xUSjjSulxcaVpEMk5tZ2RGZ3c%2Fbottomnav-badging-1.png
+  // Attempting to match the "88" badge on the "chrome reader mode" icon results in the badge's top
+  // edge equalling that of the image bounds.
+  // https://material.io/tools/icons/?icon=chrome_reader_mode&style=baseline
+  CGFloat badgeCenterY = CGRectGetMinY(iconFrame) + (badgeSize.height / 2);
+
+  CGFloat badgeCenterXOffset = kBadgeXOffsetFromIconEdgeWithTextLTR + (badgeSize.width / 2);
+  if (self.badgeValue.length == 0) {
+    badgeCenterXOffset = kBadgeXOffsetFromIconEdgeEmptyLTR;
   }
-  return CGPointMake(CGRectGetMaxX(iconFrame),
-                     CGRectGetMinY(iconFrame) + kMDCBottomNavigationItemViewBadgeYOffset);
+  CGFloat badgeCenterX = isRTL ? CGRectGetMinX(iconFrame) - badgeCenterXOffset
+                               : CGRectGetMaxX(iconFrame) + badgeCenterXOffset;
+
+  return CGPointMake(badgeCenterX, badgeCenterY);
 }
 
 - (NSString *)badgeValue {
