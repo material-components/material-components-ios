@@ -154,7 +154,7 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
 /**
  If @c YES, it will truncate titles that don't fit within the bounds available to the item.
 
- Default is @c NO.
+ Default is @c YES.
  */
 @property(nonatomic, assign) BOOL truncatesLongTitles;
 
