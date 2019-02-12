@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
       tests.test_spec 'snapshot' do |snapshot_tests|
         snapshot_tests.requires_app_host = true
         snapshot_tests.source_files = "components/#{component.base_name}/tests/snapshot/*.{h,m,swift}"
-        snapshot_tests.dependency "MaterialComponentsSnapshotTests/private/Snapshot"
+        snapshot_tests.dependency "MaterialComponentsSnapshotTests/private"
       end
     end
   end
@@ -29,7 +29,7 @@ Pod::Spec.new do |s|
         snapshot_tests.requires_app_host = true
         snapshot_tests.source_files = "components/#{component.base_name}/tests/snapshot/*.{h,m,swift}", "components/#{component.base_name}/tests/snapshot/supplemental/*.{h,m,swift}"
         snapshot_tests.resources = "components/#{component.base_name}/tests/snapshot/resources/*"
-        snapshot_tests.dependency "MaterialComponentsSnapshotTests/private/Snapshot"
+        snapshot_tests.dependency "MaterialComponentsSnapshotTests/private"
       end
     end
   end
@@ -41,7 +41,7 @@ Pod::Spec.new do |s|
         snapshot_tests.requires_app_host = true
         snapshot_tests.source_files = "components/#{component.base_name}/tests/snapshot/*.{h,m,swift}", "components/#{component.base_name}/tests/snapshot/supplemental/*.{h,m,swift}"
         snapshot_tests.resources = "components/#{component.base_name}/tests/snapshot/resources/*"
-        snapshot_tests.dependency "MaterialComponentsSnapshotTests/private/Snapshot"
+        snapshot_tests.dependency "MaterialComponentsSnapshotTests/private"
       end
     end
   end
@@ -52,7 +52,7 @@ Pod::Spec.new do |s|
       tests.test_spec 'snapshot' do |snapshot_tests|
         snapshot_tests.requires_app_host = true
         snapshot_tests.source_files = "components/#{component.base_name}/tests/snapshot/*.{h,m,swift}", "components/#{component.base_name}/tests/snapshot/supplemental/*.{h,m,swift}"
-        snapshot_tests.dependency "MaterialComponentsSnapshotTests/private/Snapshot"
+        snapshot_tests.dependency "MaterialComponentsSnapshotTests/private"
       end
     end
   end
@@ -64,7 +64,7 @@ Pod::Spec.new do |s|
         snapshot_tests.requires_app_host = true
         snapshot_tests.source_files = "components/#{component.base_name}/tests/snapshot/*.{h,m,swift}", "components/#{component.base_name}/tests/snapshot/supplemental/*.{h,m,swift}"
         snapshot_tests.resources = "components/#{component.base_name}/tests/snapshot/resources/*"
-        snapshot_tests.dependency "MaterialComponentsSnapshotTests/private/Snapshot"
+        snapshot_tests.dependency "MaterialComponentsSnapshotTests/private"
         snapshot_tests.dependency "MDFInternationalization"
       end
     end
@@ -73,10 +73,9 @@ Pod::Spec.new do |s|
   # Private for Snapshot test helpers
 
   s.subspec "private" do |private_spec|
-    private_spec.test_spec "Snapshot" do |snapshot|
-      snapshot.ios.deployment_target = '8.0'
-      snapshot.source_files = "components/private/#{snapshot.base_name}/src/*.{h,m,swift}"
-      snapshot.dependency 'iOSSnapshotTestCase', '2.2.0'
-    end
+    private_spec.public_header_files = "components/#{private_spec.base_name}/tests/snapshot/MaterialSnapshot.h"
+    private_spec.source_files = "components/#{private_spec.base_name}/Snapshot/src/*.{h,m,swift}"
+    private_spec.ios.deployment_target = '8.0'
+    private_spec.dependency 'iOSSnapshotTestCase', '2.2.0'
   end
 end
