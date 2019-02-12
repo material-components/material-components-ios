@@ -229,19 +229,9 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
     totalContentHeight += labelHeight + self.contentVerticalMargin;
   }
 
-  // Prepare for RTL and contentInsets
-  BOOL isRTL =
-      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
-  UIEdgeInsets effectiveContentInsets =
-      isRTL ? MDFInsetsFlippedHorizontally(self.contentInsets) : self.contentInsets;
-  CGRect positioningRect = UIEdgeInsetsInsetRect(contentBoundingRect, effectiveContentInsets);
-  UIOffset contentOffset =
-      UIOffsetMake(CGRectGetMidX(positioningRect) - CGRectGetMidX(contentBoundingRect),
-                   CGRectGetMidY(positioningRect) - CGRectGetMidY(contentBoundingRect));
-  CGFloat centerY = CGRectGetMidY(contentBoundingRect) + contentOffset.vertical;
-  CGFloat centerX = CGRectGetMidX(contentBoundingRect) + contentOffset.horizontal;
-
   // Determine the position of the label and icon
+  CGFloat centerY = CGRectGetMidY(contentBoundingRect);
+  CGFloat centerX = CGRectGetMidX(contentBoundingRect);
   CGPoint iconImageViewCenter =
       CGPointMake(centerX, centerY - totalContentHeight / 2 + iconHeight / 2);
   CGPoint labelCenter = CGPointMake(centerX, centerY + totalContentHeight / 2 - labelHeight / 2);
@@ -285,28 +275,20 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   remainingContentWidth -= iconImageViewSize.width + self.contentHorizontalMargin;
   labelSize = CGSizeMake(MIN(labelSize.width, remainingContentWidth), labelSize.height);
 
-  // Account for RTL and contentInsets
+  // Account for RTL
   BOOL isRTL =
       self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
   NSInteger rtlCoefficient = isRTL ? -1 : 1;
-  UIEdgeInsets effectiveContentInsets =
-      isRTL ? UIEdgeInsetsMake(self.contentInsets.top, self.contentInsets.right,
-                               self.contentInsets.bottom, self.contentInsets.left)
-            : self.contentInsets;
-  CGRect positioningRect = UIEdgeInsetsInsetRect(contentBoundingRect, effectiveContentInsets);
-  UIOffset contentOffset =
-      UIOffsetMake(CGRectGetMidX(positioningRect) - CGRectGetMidX(contentBoundingRect),
-                   CGRectGetMidY(positioningRect) - CGRectGetMidY(contentBoundingRect));
   CGFloat layoutStartingPoint =
       isRTL ? CGRectGetMaxX(contentBoundingRect) : CGRectGetMinX(contentBoundingRect);
 
-  CGFloat centerY = CGRectGetMidY(contentBoundingRect) + contentOffset.vertical;
+  CGFloat centerY = CGRectGetMidY(contentBoundingRect);
   // Amount icon center is offset from the leading edge.
   CGFloat iconCenterOffset = contentPadding + (iconImageViewSize.width / 2);
 
   // Determine the position of the label and icon
   CGPoint iconImageViewCenter = CGPointMake(
-      layoutStartingPoint + contentOffset.horizontal + rtlCoefficient * iconCenterOffset, centerY);
+      layoutStartingPoint + rtlCoefficient * iconCenterOffset, centerY);
   CGFloat labelOffsetFromIcon =
       iconImageViewSize.width / 2 + self.contentHorizontalMargin + labelSize.width / 2;
   CGPoint labelCenter =
