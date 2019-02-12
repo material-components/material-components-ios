@@ -54,6 +54,7 @@ class CustomDialogViewController: UIViewController {
     confirmButton.setTitle("OK", for: .normal)
     confirmButton.setTitleColor(UIColor.black, for: .normal)
     confirmButton.translatesAutoresizingMaskIntoConstraints = false
+    confirmButton.addTarget(self, action: #selector(dismissDialog), for: .touchUpInside)
     self.view.addSubview(confirmButton)
 
     NSLayoutConstraint.activate([
@@ -125,6 +126,9 @@ class CustomDialogViewController: UIViewController {
     }
   }
 
+  @objc func dismissDialog() {
+    self.dismiss(animated:true)
+  }
 }
 
 class DialogsThemedPresentationExampleViewController: UIViewController {
