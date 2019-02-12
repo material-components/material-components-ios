@@ -23,11 +23,14 @@ static const CGFloat MDCCardCellSelectedImagePadding = 8;
 static const CGFloat MDCCardCellShadowElevationHighlighted = 8;
 static const CGFloat MDCCardCellShadowElevationNormal = 1;
 static const CGFloat MDCCardCellShadowElevationSelected = 8;
+static const CGFloat MDCCardCellShadowElevationDragged = 8; // Used for Ripple Beta
 static const BOOL MDCCardCellIsInteractableDefault = YES;
 
 @interface MDCCardCollectionCell ()
 @property(nonatomic, strong, nullable) UIImageView *selectedImageView;
 @property(nonatomic, readonly, strong) MDCShapedShadowLayer *layer;
+@property(nonatomic, strong) UIView *rippleView; // Used for Ripple Beta.
+@property(nonatomic, getter=isDragged) BOOL dragged; // Used for Ripple Beta.
 @end
 
 @implementation MDCCardCollectionCell {
@@ -43,6 +46,7 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
   CGPoint _lastTouch;
 }
 
+@synthesize state = _state;
 @dynamic layer;
 
 + (Class)layerClass {
@@ -94,6 +98,7 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
     _shadowElevations[@(MDCCardCellStateNormal)] = @(MDCCardCellShadowElevationNormal);
     _shadowElevations[@(MDCCardCellStateHighlighted)] = @(MDCCardCellShadowElevationHighlighted);
     _shadowElevations[@(MDCCardCellStateSelected)] = @(MDCCardCellShadowElevationSelected);
+    _shadowElevations[@(MDCCardCellStateDragged)] = @(MDCCardCellShadowElevationDragged);
   }
 
   if (_shadowColors == nil) {
@@ -135,6 +140,13 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
     _backgroundColor = UIColor.whiteColor;
   }
 
+  SEL initRippleSelector = NSSelectorFromString(@"initializeRipple");
+  if ([self respondsToSelector:initRippleSelector]) {
+    IMP imp = [self methodForSelector:initRippleSelector];
+    void (*func)(id, SEL) = (void *)imp;
+    func(self, initRippleSelector);
+  }
+
   [self updateShadowElevation];
   [self updateBorderColor];
   [self updateBorderWidth];
@@ -162,6 +174,10 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 }
 
 - (void)setState:(MDCCardCellState)state animated:(BOOL)animated {
+  if (self.rippleDelegate) {
+    // Used for Ripple Beta
+    return;
+  }
   switch (state) {
     case MDCCardCellStateSelected: {
       if (_state != MDCCardCellStateHighlighted) {
@@ -186,6 +202,8 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
       [self.inkView startTouchBeganAtPoint:_lastTouch animated:animated withCompletion:nil];
       break;
     }
+    default:
+      break;
   }
   _state = state;
   [self updateShadowElevation];
@@ -197,8 +215,19 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
   [self updateImageTintColor];
 }
 
+- (MDCCardCellState)state {
+  if ([self.rippleDelegate respondsToSelector:@selector(rippleDelegateState)]) {
+    return [self.rippleDelegate rippleDelegateState];
+  }
+  return _state;
+}
+
 - (void)setSelected:(BOOL)selected {
   [super setSelected:selected];
+  if ([self.rippleDelegate respondsToSelector:@selector(setRippleSelected:)]) {
+    [self.rippleDelegate setRippleSelected:selected];
+    return;
+  }
   if (self.selectable) {
     if (selected) {
       [self setState:MDCCardCellStateSelected animated:NO];
@@ -208,9 +237,27 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
   }
 }
 
+- (void)setHighlighted:(BOOL)highlighted {
+  [super setHighlighted:highlighted];
+  if ([self.rippleDelegate respondsToSelector:@selector(setRippleHighlighted:)]) {
+    [self.rippleDelegate setRippleHighlighted:highlighted];
+  }
+}
+
 - (void)setSelectable:(BOOL)selectable {
   _selectable = selectable;
+  if ([self.rippleDelegate respondsToSelector:@selector(setRippleSelectable:)]) {
+    [self.rippleDelegate setRippleSelectable:selectable];
+    return;
+  }
   self.selectedImageView.hidden = !selectable;
+}
+
+- (void)setDragged:(BOOL)dragged {
+  _dragged = dragged;
+  if ([self.rippleDelegate respondsToSelector:@selector(rippleDelegateSetDragged:)]) {
+    [self.rippleDelegate rippleDelegateSetDragged:dragged];
+  }
 }
 
 - (UIBezierPath *)boundingPath {
@@ -316,6 +363,9 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 
 - (void)updateImage {
   UIImage *image = [self imageForState:self.state];
+  if ([self.rippleDelegate respondsToSelector:@selector(updateRippleImage:)]) {
+    image = [self.rippleDelegate updateRippleImage:image];
+  }
   [self.selectedImageView setImage:image];
   [self.selectedImageView sizeToFit];
 }
@@ -412,6 +462,9 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 
 - (void)updateImageTintColor {
   UIColor *imageTintColor = [self imageTintColorForState:self.state];
+  if ([self.rippleDelegate respondsToSelector:@selector(updateRippleImageTintColor:)]) {
+    imageTintColor = [self.rippleDelegate updateRippleImageTintColor:imageTintColor];
+  }
   [self.selectedImageView setTintColor:imageTintColor];
 }
 
@@ -438,7 +491,9 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
   self.layer.shapeGenerator = shapeGenerator;
   self.layer.shadowMaskEnabled = NO;
   [self updateBackgroundColor];
-  [self updateInkForShape];
+  if (self.rippleDelegate == nil) {
+    [self updateInkForShape];
+  }
 }
 
 - (id)shapeGenerator {
@@ -477,7 +532,9 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
   [super touchesBegan:touches withEvent:event];
-
+  if (self.rippleDelegate != nil) {
+    return;
+  }
   UITouch *touch = [touches anyObject];
   CGPoint location = [touch locationInView:self];
   _lastTouch = location;
@@ -492,6 +549,10 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
   [super touchesEnded:touches withEvent:event];
+  if ([self.rippleDelegate respondsToSelector:@selector(rippleDelegateTouchesEnded)]) {
+    [self.rippleDelegate rippleDelegateTouchesEnded];
+    return;
+  }
   if (!self.selected || !self.selectable) {
     [self setState:MDCCardCellStateNormal animated:YES];
   }
@@ -499,6 +560,10 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   [super touchesCancelled:touches withEvent:event];
+  if ([self.rippleDelegate respondsToSelector:@selector(rippleDelegateTouchesCancelled)]) {
+    [self.rippleDelegate rippleDelegateTouchesCancelled];
+    return;
+  }
   if (!self.selected || !self.selectable) {
     [self setState:MDCCardCellStateNormal animated:YES];
   }

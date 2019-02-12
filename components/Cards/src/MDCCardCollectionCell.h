@@ -17,6 +17,7 @@
 #import "MaterialShadowLayer.h"
 
 @protocol MDCShapeGenerating;
+@protocol MDCCardCollectionCellRippleDelegate;
 
 /**
  Through the lifecycle of the cell, the cell can go through one of the 3 states,
@@ -34,7 +35,13 @@ typedef NS_ENUM(NSInteger, MDCCardCellState) {
   MDCCardCellStateHighlighted,
 
   /** The visual state when the cell has been selected. */
-  MDCCardCellStateSelected
+  MDCCardCellStateSelected,
+
+  /**
+   The viual state when the cell is being dragged.
+   Currently only used with the Ripple Beta component.
+  */
+  MDCCardCellStateDragged
 };
 
 /**
@@ -114,6 +121,14 @@ typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
  Default value for shapeGenerator is nil.
  */
 @property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator;
+
+
+/**
+ This is used to integrate the Ripple Beta component into the card collection cell.
+
+ Warning: Please do not conform to this as this is used to integrate the Beta Ripple component.
+ */
+@property(nonatomic, weak, nullable) id<MDCCardCollectionCellRippleDelegate> rippleDelegate;
 
 /**
  Sets the shadow elevation for an MDCCardViewState state
@@ -292,4 +307,29 @@ typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
  */
 @property(nonatomic, readonly) MDCCardCellState state;
 
+@end
+
+/**
+ This protocol is used to integrate the Ripple Beta component into Cards. Please do not conform
+ to this protocol.
+ */
+@protocol MDCCardCollectionCellRippleDelegate <NSObject>
+
+- (void)setRippleSelected:(BOOL)selected;
+
+- (void)setRippleHighlighted:(BOOL)highlighted;
+
+- (void)setRippleSelectable:(BOOL)selectable;
+
+- (void)rippleDelegateSetDragged:(BOOL)dragged;
+
+- (UIImage *)updateRippleImage:(UIImage *)image;
+
+- (UIColor *)updateRippleImageTintColor:(UIColor *)imageTintColor;
+
+- (MDCCardCellState)rippleDelegateState;
+
+- (void)rippleDelegateTouchesEnded;
+
+- (void)rippleDelegateTouchesCancelled;
 @end
