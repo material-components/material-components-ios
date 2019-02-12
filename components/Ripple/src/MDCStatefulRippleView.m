@@ -118,6 +118,13 @@ static UIColor *RippleSelectedColor(void) {
   return state;
 }
 
+- (void)setAllowsSelection:(BOOL)allowsSelection {
+  if (!allowsSelection && self.selected) {
+    self.selected = NO;
+  }
+  _allowsSelection = allowsSelection;
+}
+
 - (void)setSelected:(BOOL)selected {
   if (!self.allowsSelection) {
     // If we disallow selection we don't want to apply any visual or state changes for selection.
@@ -203,7 +210,11 @@ static UIColor *RippleSelectedColor(void) {
 }
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
-  if ([self pointInsideSuperview:point withEvent:event]) {
+  if ([self pointInsideSuperview:point withEvent:event] && !_didReceiveTouch) {
+    // Once we find that the tap is inside the hit are insets of the encapsulating view (super view
+    // of the ripple view), we would want to capture the touch from where to initiate the ripple,
+    // and also initialize the values to indicate there was a touch, and the held tap's location
+    // to fade the ripple in and out if the help tap goes inside or outside the hit area.
     _didReceiveTouch = YES;
     _lastTouch = point;
     _tapWentInsideOfBounds = NO;
@@ -217,12 +228,12 @@ static UIColor *RippleSelectedColor(void) {
   // the ripple should gracefully fade out and in accordingly.
   UITouch *touch = [touches anyObject];
   CGPoint location = [touch locationInView:self];
-  BOOL pointContainedinSuperview = [self pointInsideSuperview:location withEvent:event];
-  if (pointContainedinSuperview && _tapWentOutsideOfBounds) {
+  BOOL pointContainedInSuperview = [self pointInsideSuperview:location withEvent:event];
+  if (pointContainedInSuperview && _tapWentOutsideOfBounds) {
     _tapWentInsideOfBounds = YES;
     _tapWentOutsideOfBounds = NO;
     [self fadeInRippleAnimated:YES completion:nil];
-  } else if (!pointContainedinSuperview && !_tapWentOutsideOfBounds) {
+  } else if (!pointContainedInSuperview && !_tapWentOutsideOfBounds) {
     _tapWentOutsideOfBounds = YES;
     [self fadeOutRippleAnimated:YES completion:nil];
   }
