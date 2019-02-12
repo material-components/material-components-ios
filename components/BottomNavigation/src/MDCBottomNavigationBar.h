@@ -152,6 +152,13 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
 @property(nonatomic, assign) CGFloat itemsContentHorizontalMargin;
 
 /**
+ If @c YES, it will truncate titles that don't fit within the bounds available to the item.
+
+ Default is @c YES.
+ */
+@property(nonatomic, assign) BOOL truncatesLongTitles;
+
+/**
  The elevation of the bottom navigation bar. Defaults to @c MDCShadowElevationBottomNavigationBar .
  */
 @property(nonatomic, assign) MDCShadowElevation elevation;

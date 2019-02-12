@@ -132,6 +132,13 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
   }
 }
 
+- (MDCRippleLayer *)activeRippleLayer {
+  if (self.layer.sublayers.count < 1) {
+    return nil;
+  }
+  return _activeRippleLayer;
+}
+
 - (void)beginRippleTouchDownAtPoint:(CGPoint)point
                            animated:(BOOL)animated
                          completion:(nullable MDCRippleCompletionBlock)completion {

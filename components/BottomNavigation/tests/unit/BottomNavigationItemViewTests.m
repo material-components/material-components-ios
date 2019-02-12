@@ -132,7 +132,7 @@ static UIImage *fakeImage(void) {
   // Given
   MDCBottomNavigationItemView *itemView = [[MDCBottomNavigationItemView alloc] init];
   itemView.iconImageView.frame = CGRectMake(8, 8, 24, 24);
-  CGPoint expectedCenter = CGPointMake(32, 12);
+  CGPoint expectedCenter = CGPointMake(31, 8);
 
   // When
   CGPoint badgePoint =
@@ -146,7 +146,7 @@ static UIImage *fakeImage(void) {
   // Given
   MDCBottomNavigationItemView *itemView = [[MDCBottomNavigationItemView alloc] init];
   itemView.iconImageView.frame = CGRectMake(8, 8, 24, 24);
-  CGPoint expectedCenter = CGPointMake(8, 12);
+  CGPoint expectedCenter = CGPointMake(9, 8);
 
   // When
   CGPoint badgePoint =
@@ -327,6 +327,38 @@ static UIImage *fakeImage(void) {
                  @"sizeToFit should never set a CGRectZero bounds when content is present.");
   XCTAssertEqualWithAccuracy(fitBounds.size.width, fitSize.width, 0.001);
   XCTAssertEqualWithAccuracy(fitBounds.size.height, fitSize.height, 0.001);
+}
+
+#pragma mark - Title truncation
+
+- (void)testUntruncatedTitleExtendsBeyondFrame {
+  // Given
+  MDCBottomNavigationItemView *itemView =
+      [[MDCBottomNavigationItemView alloc] initWithFrame:CGRectMake(0, 0, 120, 56)];
+
+  // When
+  itemView.truncatesTitle = NO;
+  itemView.title = @"1234567890123456789012345678901234567890";
+  [itemView layoutSubviews];
+
+  // Then
+  XCTAssertGreaterThan(CGRectGetWidth(itemView.label.bounds), CGRectGetWidth(itemView.bounds));
+}
+
+- (void)testTruncatedTitleRemainsWithinFrame {
+  // Given
+  MDCBottomNavigationItemView *itemView =
+      [[MDCBottomNavigationItemView alloc] initWithFrame:CGRectMake(0, 0, 120, 56)];
+
+  // When
+  itemView.truncatesTitle = YES;
+  itemView.title = @"1234567890123456789012345678901234567890";
+  [itemView layoutSubviews];
+
+  // Then
+  XCTAssertTrue(CGRectContainsRect(itemView.bounds, itemView.label.frame),
+                @"(%@) does not contain (%@)", NSStringFromCGRect(itemView.bounds),
+                NSStringFromCGRect(itemView.label.frame));
 }
 
 @end
