@@ -32,7 +32,7 @@ static const CGFloat MDCBottomNavigationItemViewTitleFontSize = 12;
 // the position on iOS, it seems like a horizontal inset of 10 points looks pretty close.
 static const CGFloat kBadgeXOffsetFromIconEdgeWithTextLTR = -8;
 
-// However, hen the badge has no visible text, its horizontal center should be 1 point inset from
+// However, when the badge has no visible text, its horizontal center should be 1 point inset from
 // the edge of the image.
 static const CGFloat kBadgeXOffsetFromIconEdgeEmptyLTR = -1;
 
@@ -331,8 +331,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   return [labelComponents componentsJoinedByString:@", "];
 }
 
-- (CGPoint)badgeCenterFromIconFrame:(CGRect)iconFrame
-                              isRTL:(BOOL)isRTL {
+- (CGPoint)badgeCenterFromIconFrame:(CGRect)iconFrame isRTL:(BOOL)isRTL {
   CGSize badgeSize = [self.badge sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
 
   // There are no specifications for badge layout, so this is based on the Material Guidelines
