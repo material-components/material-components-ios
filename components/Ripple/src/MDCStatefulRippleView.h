@@ -79,6 +79,8 @@ __attribute__((objc_subclassing_restricted)) @interface MDCStatefulRippleView : 
 /**
  This BOOL is set to YES if the ripple allows selection, or NO otherwise.
 
+ Note: If allowsSelection is set to NO, it will also set selected to NO if selected was YES prior.
+
  Defaults to NO.
  */
 @property(nonatomic) BOOL allowsSelection;
