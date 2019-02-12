@@ -35,7 +35,7 @@ typedef NS_OPTIONS(NSInteger, MDCRippleState) {
  to it support for states. By providing states, you can set the overlay color for each state, and
  change the state of the RippleView by using its highlighted/selected/dragged API.
 
- This class, as opposed to MDCRippleView is less passive in its appraoch and listens to touches to
+ This class, as opposed to MDCRippleView is less passive in its approach and listens to touches to
  be able to record the last touch and initiate the Ripple from there, as opposed to receiving
  the touch as input. It also is able to identify when a tap goes off/on the view, and fades in/out
  the ripple accordingly.
@@ -45,7 +45,7 @@ typedef NS_OPTIONS(NSInteger, MDCRippleState) {
  should be used when one wants to leverage the Material state system and should ideally be
  configured/set alongside the UIKit APIs (i.e. UIControlState or cell's setSelected/setHighlighted).
  */
-@interface MDCStatefulRippleView : MDCRippleView
+__attribute__((objc_subclassing_restricted)) @interface MDCStatefulRippleView : MDCRippleView
 
 /**
  This BOOL is set to YES if the ripple is currently selected, or NO otherwise.
