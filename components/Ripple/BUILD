@@ -14,6 +14,8 @@
 
 load(
     "//:material_components_ios.bzl",
+    "mdc_examples_objc_library",
+    "mdc_examples_swift_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
     "mdc_unit_test_suite",
@@ -42,14 +44,16 @@ mdc_objc_library(
     deps = [":Ripple"],
 )
 
-mdc_objc_library(
+mdc_examples_objc_library(
     name = "ObjcExamples",
-    srcs = glob([
-        "examples/*.h",
-        "examples/*.m",
-        "examples/supplemental/*.h",
-        "examples/supplemental/*.m",
-    ]),
+    visibility = ["//visibility:private"],
+    deps = [
+        ":Ripple",
+    ],
+)
+
+mdc_examples_swift_library(
+    name = "SwiftExamples",
     visibility = ["//visibility:private"],
     deps = [
         ":Ripple",
