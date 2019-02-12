@@ -42,8 +42,19 @@ class CustomDialogViewController: UIViewController {
     titleLabel.text = dialogTitle
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
     titleLabel.numberOfLines = 0
-    titleLabel.sizeToFit()
     self.view.addSubview(titleLabel)
+
+    let bodyLabel = UILabel()
+    bodyLabel.text = dialogMessage
+    bodyLabel.translatesAutoresizingMaskIntoConstraints = false
+    bodyLabel.numberOfLines = 0
+    self.view.addSubview(bodyLabel)
+
+    let confirmButton = UIButton()
+    confirmButton.setTitle("OK", for: .normal)
+    confirmButton.setTitleColor(UIColor.black, for: .normal)
+    confirmButton.translatesAutoresizingMaskIntoConstraints = false
+    self.view.addSubview(confirmButton)
 
     NSLayoutConstraint.activate([
       NSLayoutConstraint(item: titleLabel,
@@ -59,20 +70,50 @@ class CustomDialogViewController: UIViewController {
                          toItem: self.view,
                          attribute: .top,
                          multiplier: 1.0,
-                         constant: 10.0)
+                         constant: 15.0),
+      NSLayoutConstraint(item: bodyLabel,
+                         attribute: .top,
+                         relatedBy: .equal,
+                         toItem: titleLabel,
+                         attribute: .bottom,
+                         multiplier: 1.0,
+                         constant: 10.0),
+      NSLayoutConstraint(item: bodyLabel,
+                         attribute: .left,
+                         relatedBy: .equal,
+                         toItem: self.view,
+                         attribute: .left,
+                         multiplier: 1.0,
+                         constant: 5.0),
+      NSLayoutConstraint(item: bodyLabel,
+                         attribute: .right,
+                         relatedBy: .equal,
+                         toItem: self.view,
+                         attribute: .right,
+                         multiplier: 1.0,
+                         constant: -5.0),
+      NSLayoutConstraint(item: confirmButton,
+                         attribute: .top,
+                         relatedBy: .equal,
+                         toItem: bodyLabel,
+                         attribute: .bottom,
+                         multiplier: 1.0,
+                         constant: 10.0),
+      NSLayoutConstraint(item: confirmButton,
+                         attribute: .bottom,
+                         relatedBy: .lessThanOrEqual,
+                         toItem: self.view,
+                         attribute: .bottom,
+                         multiplier: 1.0,
+                         constant: 0.0),
+      NSLayoutConstraint(item: confirmButton,
+                         attribute: .centerX,
+                         relatedBy: .equal,
+                         toItem: self.view,
+                         attribute: .centerX,
+                         multiplier: 1.0,
+                         constant: 0.0),
       ])
-
-    let bodyLabel = UILabel()
-    bodyLabel.text = dialogMessage
-    bodyLabel.translatesAutoresizingMaskIntoConstraints = false
-    bodyLabel.numberOfLines = 0
-    bodyLabel.sizeToFit()
-    self.view.addSubview(bodyLabel)
-
-    NSLayoutConstraint.activate(
-      NSLayoutConstraint.constraints(withVisualFormat: "H:|-[body]-|", options: [], metrics: nil, views: [ "body": bodyLabel]))
-    NSLayoutConstraint.activate(
-      NSLayoutConstraint.constraints(withVisualFormat: "V:|-[body]-|", options: [], metrics: nil, views: [ "body": bodyLabel]))
   }
 
   override var preferredContentSize: CGSize {
@@ -134,8 +175,8 @@ class DialogsThemedPresentationExampleViewController: UIViewController {
   }
 
   @objc func tap(_ sender: Any) {
-    let title = "Reset Settings?"
-    let message = "This will reset your device to its default factory settings."
+    let title = "Reset Settings"
+    let message = "Your device will reset to its default factory settings."
     let customDialogController = CustomDialogViewController(title: title, message: message)
     customDialogController.modalPresentationStyle = .custom;
     customDialogController.transitioningDelegate = self.transitionController;
