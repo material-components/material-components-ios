@@ -112,7 +112,10 @@ __attribute__((objc_subclassing_restricted)) @interface MDCStatefulRippleView : 
  To identify that a touch is held and then moved we need to have the superview pass the touch to
  this class so the ripple can react appropriately.
 
- This class needs to be invoked in the `touchesMoved:withEvent` of its superview.
+ This class needs to be invoked in the `touchesMoved:withEvent` of its superview BEFORE super is
+ called. It needs to be called before `[super touchesMoved:withEvent]` because otherwise
+ `setHighlighted` will be triggered prior to knowing if the touch is outside the bounds or not
+ and won't be able to act accordingly.
 
  @param touch The corresponding touch when it is moved, as provided by `touchesMoved`.
  @param event The event for the touch, as provided by `touchesMoved`.
