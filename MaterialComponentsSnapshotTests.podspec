@@ -12,12 +12,17 @@ Pod::Spec.new do |s|
   s.dependency 'MaterialComponentsBeta'
   s.dependency 'iOSSnapshotTestCase', '2.2.0'
 
+  s.source_files = [
+    "components/private/Snapshot/src/Dummy/Dummy.h",
+    "components/private/Snapshot/src/Dummy/Dummy.m",
+  ]
+  
   s.subspec "BottomNavigation" do |component|
     component.ios.deployment_target = '8.0'
-    component.source_files = [
-      "components/private/Snapshot/src/Dummy/Dummy.h",
-      "components/private/Snapshot/src/Dummy/Dummy.m",
-    ]
+#    component.source_files = [
+#      "components/private/Snapshot/src/Dummy/Dummy.h",
+#      "components/private/Snapshot/src/Dummy/Dummy.m",
+#    ]
     component.test_spec 'SnapshotTests' do |snapshot_tests|
       snapshot_tests.requires_app_host = true
       snapshot_tests.source_files = [
@@ -29,15 +34,15 @@ Pod::Spec.new do |s|
 
   s.subspec "Cards" do |component|
     component.ios.deployment_target = '8.0'
-    component.source_files = [
-      "components/private/Snapshot/src/Dummy/Dummy.h",
-      "components/private/Snapshot/src/Dummy/Dummy.m",
-    ]
+#    component.source_files = [
+#      "components/private/Snapshot/src/Dummy/Dummy.h",
+#      "components/private/Snapshot/src/Dummy/Dummy.m",
+#      "components/Cards/tests/snapshot/supplemental/*.{h,m}",
+#    ]
     component.test_spec 'SnapshotTests' do |snapshot_tests|
       snapshot_tests.requires_app_host = true
       snapshot_tests.source_files = [
         "components/Cards/tests/snapshot/*.{h,m,swift}",
-        "components/Cards/tests/snapshot/supplemental/*.{h,m,swift}",
       ]
       snapshot_tests.resources = "components/#{component.base_name}/tests/snapshot/resources/*"
       snapshot_tests.dependency "MaterialComponentsSnapshotTests/private"
