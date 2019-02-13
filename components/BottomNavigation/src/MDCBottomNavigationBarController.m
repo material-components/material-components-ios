@@ -18,9 +18,7 @@
 
 /** The view that hosts the content for the selected view controller **/
 @property(nonatomic, strong) UIView *content;
-
-/** Constrains the navigation bar's height to the constant value of this property **/
-@property(nonatomic, strong) NSLayoutConstraint *navigationBarHeightConstraint;
+@property(nonatomic, strong) NSLayoutConstraint *bnCons;
 
 @end
 
@@ -47,16 +45,6 @@
   [self.view addSubview:self.content];
   [self.view addSubview:self.navigationBar];
   [self loadConstraints];
-}
-
-- (void)viewDidLayoutSubviews {
-  [super viewDidLayoutSubviews];
-  [self updateNavigationBarHeight];
-}
-
-- (void)viewSafeAreaInsetsDidChange {
-  [super viewSafeAreaInsetsDidChange];
-  [self updateNavigationBarHeight];
 }
 
 - (void)setSelectedViewController:(nullable UIViewController *)selectedViewController {
@@ -111,6 +99,7 @@
   _viewControllers = viewControllersCopy;
 
   self.selectedViewController = viewControllersCopy.firstObject;
+  [self.view setNeedsLayout];
 }
 
 - (UIViewController *)childViewControllerForStatusBarStyle {
@@ -223,12 +212,9 @@
   [self.view.leftAnchor constraintEqualToAnchor:self.navigationBar.leftAnchor].active = YES;
   [self.view.rightAnchor constraintEqualToAnchor:self.navigationBar.rightAnchor].active = YES;
 
-  self.navigationBarHeightConstraint =
-      [_navigationBar.heightAnchor constraintEqualToConstant:[self calculateNavigationBarHeight]];
-  self.navigationBarHeightConstraint.active = YES;
-
   [self.navigationBar.topAnchor constraintEqualToAnchor:self.content.bottomAnchor].active = YES;
-  [self.navigationBar.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor].active = YES;
+  self.bnCons = [self.navigationBar.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor];
+  self.bnCons.active = YES;
 
   // Content View Constraints
   [self.view.leftAnchor constraintEqualToAnchor:self.content.leftAnchor].active = YES;
@@ -246,17 +232,6 @@
   [view.trailingAnchor constraintEqualToAnchor:self.content.trailingAnchor].active = YES;
   [view.topAnchor constraintEqualToAnchor:self.content.topAnchor].active = YES;
   [view.bottomAnchor constraintEqualToAnchor:self.content.bottomAnchor].active = YES;
-}
-
-/** Returns the desired height of the navigation bar. **/
-- (CGFloat)calculateNavigationBarHeight {
-  CGSize fitSize = CGSizeMake(CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds));
-  return [self.navigationBar sizeThatFits:fitSize].height;
-}
-
-/** Sets the navigation bar's height based on its desired size **/
-- (void)updateNavigationBarHeight {
-  self.navigationBarHeightConstraint.constant = [self calculateNavigationBarHeight];
 }
 
 /** Maps an array of view controllers to their corrisponding tab bar items **/
