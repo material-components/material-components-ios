@@ -49,7 +49,13 @@ class RippleView : UIView {
     statefulRippleView.isRippleHighlighted = true
   }
 
+  override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+    statefulRippleView.superviewTouchMoved(touches.first, event: event)
+    super.touchesMoved(touches, with: event)
+  }
+
   override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    statefulRippleView.superviewTouchEnded()
     super.touchesEnded(touches, with: event)
     statefulRippleView.isRippleHighlighted = false
     if (!didLongPress) {
@@ -59,6 +65,7 @@ class RippleView : UIView {
   }
 
   override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+    statefulRippleView.superviewTouchCancelled()
     super.touchesCancelled(touches, with: event)
     statefulRippleView.isRippleHighlighted = false
   }

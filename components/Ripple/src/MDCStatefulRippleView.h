@@ -101,4 +101,54 @@ __attribute__((objc_subclassing_restricted)) @interface MDCStatefulRippleView : 
  */
 - (nullable UIColor *)rippleColorForState:(MDCRippleState)state;
 
+/**
+ The next three methods are important to get the correct behavior and functionality
+ for the stateful ripple.
+ The methods need to be invoked in the corresponding `touchesMoved`, `touchesEnded`,
+ and `touchesCancelled` in the superview of this view.
+ More detailed information can be found in each specific method below.
+ */
+#pragma mark - Superview Touch Handling
+
+/**
+ The stateful ripple view should fade in an out as a held touch goes in and out of the view.
+ To identify that a touch is held and then moved we need to have the superview pass the touch to
+ this class so the ripple can react appropriately.
+
+ This class needs to be invoked in the `touchesMoved:withEvent` of its superview BEFORE super is
+ called. It needs to be called before `[super touchesMoved:withEvent]` because otherwise
+ `setHighlighted` will be triggered prior to knowing if the touch is outside the bounds or not
+ and won't be able to act accordingly.
+
+ Note: This class can also be invoked in `continueTrackingWithTouch:withEvent:` of a UIControl.
+
+ @param touch The corresponding touch when it is moved, as provided by `touchesMoved`.
+ @param event The event for the touch, as provided by `touchesMoved`.
+ */
+- (void)superviewTouchMoved:(UITouch *)touch event:(UIEvent *)event;
+
+/**
+ The stateful ripple view needs to identify an end of a touch for two reasons:
+ 1. To know the touch has ended so if `setHighlighted` isn't triggered by a touch, it shouldn't
+    animate the ripple.
+ 2. To dissolve the existing ripple if the touch is let go outside the hit target of the superview.
+
+ This class needs to be invoked in the `touchesEnded:withEvent:` of its superview.
+
+ Note: This class can also be invoked in `endTrackingWithTouch:withEvent` of a UIControl.
+ */
+- (void)superviewTouchEnded;
+
+/**
+ The stateful ripple view needs to identify a cancellation of a touch for two reason:
+ 1. To know the touch has ended so if `setHighlighted` isn't triggered by a touch, it shouldn't
+    animate the ripple.
+ 2. To dissolve the existing ripple if the touch gets cancelled.
+
+ This class needs to be invoked in the `touchesCancelled:withEvent:` of its superview.
+
+ Note: This class can also be invoked in `cancelTrackingWithEvent:` of a UIControl.
+ */
+- (void)superviewTouchCancelled;
+
 @end

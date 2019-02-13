@@ -210,23 +210,28 @@ static UIColor *RippleSelectedColor(void) {
 }
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
-  if ([self pointInsideSuperview:point withEvent:event] && !_didReceiveTouch) {
+  if ([self pointInsideSuperview:point withEvent:event]) {
     // Once we find that the tap is inside the hit are insets of the encapsulating view (super view
     // of the ripple view), we would want to capture the touch from where to initiate the ripple,
     // and also initialize the values to indicate there was a touch, and the held tap's location
     // to fade the ripple in and out if the help tap goes inside or outside the hit area.
-    _didReceiveTouch = YES;
     _lastTouch = point;
-    _tapWentInsideOfBounds = NO;
-    _tapWentOutsideOfBounds = NO;
+    if (!_didReceiveTouch) {
+      _didReceiveTouch = YES;
+      _tapWentInsideOfBounds = NO;
+      _tapWentOutsideOfBounds = NO;
+    }
   }
-  return [super pointInside:point withEvent:event];
+  // We will always return NO because we don't want the ripple view to capture and take the touches
+  // from other views. We are just looking to track the initial touch using pointInside.
+  return NO;
 }
 
-- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+#pragma mark - Superview Touch Handling
+
+- (void)superviewTouchMoved:(UITouch *)touch event:(UIEvent *)event {
   // When the touch is held and moved outside and inside the bounds of the surface,
   // the ripple should gracefully fade out and in accordingly.
-  UITouch *touch = [touches anyObject];
   CGPoint location = [touch locationInView:self];
   BOOL pointContainedInSuperview = [self pointInsideSuperview:location withEvent:event];
   if (pointContainedInSuperview && _tapWentOutsideOfBounds) {
@@ -237,21 +242,17 @@ static UIColor *RippleSelectedColor(void) {
     _tapWentOutsideOfBounds = YES;
     [self fadeOutRippleAnimated:YES completion:nil];
   }
-  [super touchesMoved:touches withEvent:event];
 }
 
-- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-  [super touchesEnded:touches withEvent:event];
+- (void)superviewTouchEnded {
   _didReceiveTouch = NO;
   if (_tapWentOutsideOfBounds) {
     [self beginRippleTouchUpAnimated:NO completion:nil];
   }
 }
 
-- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-  [super touchesCancelled:touches withEvent:event];
+- (void)superviewTouchCancelled {
   _didReceiveTouch = NO;
   [self beginRippleTouchUpAnimated:YES completion:nil];
 }
-
 @end
