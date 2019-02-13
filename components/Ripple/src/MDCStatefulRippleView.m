@@ -211,15 +211,17 @@ static UIColor *RippleSelectedColor(void) {
 }
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
-  if ([self pointInsideSuperview:point withEvent:event] && !_didReceiveTouch) {
+  if ([self pointInsideSuperview:point withEvent:event]) {
     // Once we find that the tap is inside the hit are insets of the encapsulating view (super view
     // of the ripple view), we would want to capture the touch from where to initiate the ripple,
     // and also initialize the values to indicate there was a touch, and the held tap's location
     // to fade the ripple in and out if the help tap goes inside or outside the hit area.
-    _didReceiveTouch = YES;
     _lastTouch = point;
-    _tapWentInsideOfBounds = NO;
-    _tapWentOutsideOfBounds = NO;
+    if (!_didReceiveTouch) {
+      _didReceiveTouch = YES;
+      _tapWentInsideOfBounds = NO;
+      _tapWentOutsideOfBounds = NO;
+    }
   }
   return NO;
 }
