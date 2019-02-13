@@ -2,7 +2,7 @@ workspace 'MDCCatalog.xcworkspace'
 project 'MDCCatalog.xcodeproj'
 
 # TODO: Uncomment line below and switch from legacy build system when Cocoapods 1.6 goes out of beta
-install! 'cocoapods', :disable_input_output_paths => true
+# install! 'cocoapods', :disable_input_output_paths => true
 
 target "MDCCatalog" do
   platform :ios, '8.0'
