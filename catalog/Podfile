@@ -68,7 +68,7 @@ target "MDCCatalog" do
     'schemes/Container/UnitTests',
   ]
   pod 'MaterialComponentsSnapshotTests', :path => '../', :testspecs => [
-#    'BottomNavigation/SnapshotTests',
+    'BottomNavigation/SnapshotTests',
     'Cards/SnapshotTests',
 #    'Chips/tests/snapshot',
 #    'Ripple/tests/snapshot',
