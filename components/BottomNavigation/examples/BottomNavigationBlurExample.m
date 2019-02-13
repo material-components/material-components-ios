@@ -113,45 +113,30 @@
   self.collectionView =
       [[UICollectionView alloc] initWithFrame:self.view.bounds
                          collectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
+  self.collectionView.translatesAutoresizingMaskIntoConstraints = NO;
   self.collectionView.dataSource = self;
-  self.collectionView.autoresizingMask =
-      (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
   [self.collectionView registerClass:[UICollectionViewCell class]
           forCellWithReuseIdentifier:@"cell"];
   [self.view addSubview:self.collectionView];
 
   self.bottomNavBar = [[MDCBottomNavigationBar alloc] initWithFrame:CGRectZero];
+  self.bottomNavBar.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:self.bottomNavBar];
   [self configureNavigationBar];
 
   [self applyTheming];
-}
 
-#pragma mark - Layout
+  // Pin the BottomNavigationBar to the bottom of the view
+  NSMutableArray *constraints = [@[] mutableCopy];
+  [constraints addObject:[NSLayoutConstraint constraintWithItem:self.bottomNavBar attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1 constant:0]];
+  [constraints addObject:[NSLayoutConstraint constraintWithItem:self.bottomNavBar attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRight multiplier:1 constant:0]];
+  [constraints addObject:[NSLayoutConstraint constraintWithItem:self.bottomNavBar attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:0]];
 
-- (void)viewWillLayoutSubviews {
-  [super viewWillLayoutSubviews];
-  self.collectionView.frame = CGRectStandardize(self.view.bounds);
-}
-
-- (void)layoutBottomNavBar {
-  CGSize size = [self.bottomNavBar sizeThatFits:self.view.bounds.size];
-  CGRect bottomNavBarFrame =
-      CGRectMake(0, CGRectGetHeight(self.view.bounds) - size.height, size.width, size.height);
-  self.bottomNavBar.frame = bottomNavBarFrame;
-  self.collectionView.contentInset = UIEdgeInsetsMake(0, 0, size.height, 0);
-}
-
-- (void)viewDidLayoutSubviews {
-  [super viewDidLayoutSubviews];
-  [self layoutBottomNavBar];
-}
-
-- (void)viewSafeAreaInsetsDidChange {
-  if (@available(iOS 11.0, *)) {
-    [super viewSafeAreaInsetsDidChange];
-  }
-  [self layoutBottomNavBar];
+  [constraints addObject:[NSLayoutConstraint constraintWithItem:self.collectionView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1 constant:0]];
+  [constraints addObject:[NSLayoutConstraint constraintWithItem:self.collectionView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRight multiplier:1 constant:0]];
+  [constraints addObject:[NSLayoutConstraint constraintWithItem:self.collectionView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1 constant:0]];
+  [constraints addObject:[NSLayoutConstraint constraintWithItem:self.collectionView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:0]];
+  [NSLayoutConstraint activateConstraints:constraints];
 }
 
 #pragma mark - Blur effect
@@ -175,12 +160,16 @@
         @"Enables the Bottom Navigation bar blur visual effect";
   }
 }
+- (void)viewSafeAreaInsetsDidChange {
+  [super viewSafeAreaInsetsDidChange];
+  [self.view layoutIfNeeded];
+}
 
 #pragma mark - UICollectionView
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
-  return 1000;
+  return 100;
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
