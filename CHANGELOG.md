@@ -1,15 +1,45 @@
-# #develop#
+# 77.0.0
 
-Replace this text with a summarized description of this release's contents.
+In this release we made improvements to BottomNavigationBar and landed stateful ripple in the ripple (beta) component.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+### BottomNavigationBar
 
-Replace this text with links to deprecation guides.
+Removed a deprecated API:
+```
+@property(nonatomic, assign) UIEdgeInsets itemsContentInsets 
+```
+
 ## New features
 
-Replace this text with example code for each new feature.
+### BottomNavigationBar
+
+#### Blur
+
+BottomNavigation can use blur in its background when not fully opaque
+```
+self.bottomNavBar.backgroundBlurEnabled = YES;
+```
+
+#### Long item titles
+
+We automatically truncate titles that go out of bounds but added a bool to allow some clients to still overflow.
+
+```
+self.navigationBar.truncatesLongTitles = NO;
+```
+
+### Stateful Ripple
+
+We added this new component that can simplifies the intersection of states and ripples.
+
+You can set the state of the ripple like so:
+```
+    statefulRippleView.isRippleHighlighted = true
+...
+    statefulRippleView.isSelected = true
+```
 ## API changes
 
 ### BottomNavigation
