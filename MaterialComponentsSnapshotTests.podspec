@@ -13,8 +13,9 @@ Pod::Spec.new do |s|
   s.dependency 'iOSSnapshotTestCase', '2.2.0'
 
   s.source_files = [
-    "components/private/Snapshot/src/Dummy/Dummy.h",
-    "components/private/Snapshot/src/Dummy/Dummy.m",
+    "components/private/Snapshot/src/SourceDummies/GlobalSnapshotSourceDummy.h",
+    "components/private/Snapshot/src/SourceDummies/GlobalSnapshotSourceDummy.m",
+#    "components/private/Snapshot/src/Dummy/Dummy.swift",
   ]
   
   s.subspec "BottomNavigation" do |component|
@@ -27,6 +28,7 @@ Pod::Spec.new do |s|
       snapshot_tests.requires_app_host = true
       snapshot_tests.source_files = [
         "components/#{component.base_name}/tests/snapshot/*.{h,m,swift}",
+#        "components/#{component.base_name}/tests/snapshot/*.{h,m}",
       ]
       snapshot_tests.dependency "MaterialComponentsSnapshotTests/private"
     end

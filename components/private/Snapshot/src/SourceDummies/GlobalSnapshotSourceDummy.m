@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #import <Foundation/Foundation.h>
-#import "Dummy.h"
+#import "GlobalSnapshotSourceDummy.h"
 
 @implementation MDCSnapshotTestCaseDummy
 @end
