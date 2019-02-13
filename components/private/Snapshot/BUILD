@@ -22,13 +22,8 @@ licenses(["notice"])  # Apache 2.0
 
 mdc_public_objc_library(
     name = "Snapshot",
-    srcs =
-        native.glob(
-            [
-                "src/SourceDummies/*.h",
-                "src/SourceDummies/*.m",
-            ],
-        ),
+    srcs = glob(["src/SourceDummies/*.m"]),
+    hdrs = glob(["src/SourceDummies/*.h"]),
     deps = [
         "@ios_snapshot_test_case//:SnapshotTestCase",
     ],

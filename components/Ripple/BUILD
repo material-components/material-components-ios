@@ -19,7 +19,10 @@ load(
     "mdc_objc_library",
     "mdc_public_objc_library",
     "mdc_unit_test_suite",
+    "mdc_snapshot_objc_library",
+    "mdc_snapshot_test",
 )
+load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
 
