@@ -12,7 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import "MDCGlobalSnapshotSourceDummy.h"
 #import <Foundation/Foundation.h>
 
-@interface MDCSnapshotTestCaseDummy : NSObject
+@implementation MDCGlobalSnapshotSourceDummy
 @end
