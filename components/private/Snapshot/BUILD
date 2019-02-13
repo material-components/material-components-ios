@@ -20,11 +20,20 @@ load(
 
 licenses(["notice"])  # Apache 2.0
 
+mdc_objc_library(
+    name = "SnapshotSourceDummies",
+    testonly = 1,
+    srcs = native.glob([
+        "src/SourceDummies/*.h",
+        "src/SourceDummies/*.m",
+    ]),
+    visibility = ["//visibility:private"],
+)
+
 mdc_public_objc_library(
     name = "Snapshot",
-    srcs = native.glob(["src/SourceDummies/*.m"]),
-    hdrs = native.glob(["src/SourceDummies/*.h"]),
     deps = [
         "@ios_snapshot_test_case//:SnapshotTestCase",
+        ":SnapshotSourceDummies",
     ],
 )
