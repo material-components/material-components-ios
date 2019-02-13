@@ -32,7 +32,7 @@ self.navigationBar.truncatesLongTitles = NO;
 
 ### Stateful Ripple
 
-We added this new component that can simplifies the intersection of states and ripples.
+We added this new component that simplifies the intersection of states and ripples.
 
 You can set the state of the ripple like so:
 ```
