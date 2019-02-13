@@ -24,6 +24,7 @@ static const BOOL MDCCardIsInteractableDefault = YES;
 
 @interface MDCCard ()
 @property(nonatomic, readonly, strong) MDCShapedShadowLayer *layer;
+@property(nonatomic, strong) UIView *rippleView; // Used for Ripple Beta.
 @end
 
 @implementation MDCCard {
@@ -91,6 +92,13 @@ static const BOOL MDCCardIsInteractableDefault = YES;
 
   if (_backgroundColor == nil) {
     _backgroundColor = UIColor.whiteColor;
+  }
+
+  SEL initRippleSelector = NSSelectorFromString(@"initializeRipple");
+  if ([self respondsToSelector:initRippleSelector]) {
+    IMP imp = [self methodForSelector:initRippleSelector];
+    void (*func)(id, SEL) = (void *)imp;
+    func(self, initRippleSelector);
   }
 
   [self updateShadowElevation];
@@ -213,12 +221,17 @@ static const BOOL MDCCardIsInteractableDefault = YES;
 }
 
 - (void)setHighlighted:(BOOL)highlighted {
-  if (highlighted && !self.highlighted) {
-    [self.inkView startTouchBeganAnimationAtPoint:_lastTouch completion:nil];
-  } else if (!highlighted && self.highlighted) {
-    [self.inkView startTouchEndedAnimationAtPoint:_lastTouch completion:nil];
+  if (![self.rippleDelegate respondsToSelector:@selector(rippleDelegateSetHighlighted:)]) {
+    if (highlighted && !self.highlighted) {
+      [self.inkView startTouchBeganAnimationAtPoint:_lastTouch completion:nil];
+    } else if (!highlighted && self.highlighted) {
+      [self.inkView startTouchEndedAnimationAtPoint:_lastTouch completion:nil];
+    }
   }
   [super setHighlighted:highlighted];
+  if ([self.rippleDelegate respondsToSelector:@selector(rippleDelegateSetHighlighted:)]) {
+    [self.rippleDelegate rippleDelegateSetHighlighted:highlighted];
+  }
   [self updateShadowElevation];
   [self updateBorderColor];
   [self updateBorderWidth];
@@ -255,7 +268,9 @@ static const BOOL MDCCardIsInteractableDefault = YES;
   self.layer.shapeGenerator = shapeGenerator;
   self.layer.shadowMaskEnabled = NO;
   [self updateBackgroundColor];
-  [self updateInkForShape];
+  if (self.rippleDelegate == nil) {
+    [self updateInkForShape];
+  }
 }
 
 - (id<MDCShapeGenerating>)shapeGenerator {
@@ -282,4 +297,27 @@ static const BOOL MDCCardIsInteractableDefault = YES;
   self.layer.shapedBackgroundColor = _backgroundColor;
 }
 
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  // The ripple invocation must come before touchesMoved of the super, otherwise the setHighlighted
+  // of the UIControl will be triggered before the ripple identifies that the highlighted was
+  // trigerred from a long press entering the view and shouldn't invoke a ripple.
+  if ([self.rippleDelegate respondsToSelector:@selector(rippleDelegateTouchesMoved:withEvent:)]) {
+    [self.rippleDelegate rippleDelegateTouchesMoved:touches withEvent:event];
+  }
+  [super touchesMoved:touches withEvent:event];
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  [super touchesEnded:touches withEvent:event];
+  if ([self.rippleDelegate respondsToSelector:@selector(rippleDelegateTouchesEnded)]) {
+    [self.rippleDelegate rippleDelegateTouchesEnded];
+  }
+}
+
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  [super touchesCancelled:touches withEvent:event];
+  if ([self.rippleDelegate respondsToSelector:@selector(rippleDelegateTouchesCancelled)]) {
+    [self.rippleDelegate rippleDelegateTouchesCancelled];
+  }
+}
 @end

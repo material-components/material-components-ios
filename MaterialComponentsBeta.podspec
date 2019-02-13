@@ -126,11 +126,11 @@ Pod::Spec.new do |mdc|
   mdc.subspec "Cards+Ripple" do |extension|
     extension.ios.deployment_target = '8.0'
     extension.public_header_files = [
-        # "components/#{extension.base_name.split('+')[0]}/src/MDCCard+Ripple.h",
+        "components/#{extension.base_name.split('+')[0]}/src/MDCCard+Ripple.h",
         "components/#{extension.base_name.split('+')[0]}/src/MDCCardCollectionCell+Ripple.h"
     ]
     extension.source_files = [
-        # "components/#{extension.base_name.split('+')[0]}/src/MDCCard+Ripple.{h,m}",
+        "components/#{extension.base_name.split('+')[0]}/src/MDCCard+Ripple.{h,m}",
         "components/#{extension.base_name.split('+')[0]}/src/MDCCardCollectionCell+Ripple.{h,m}",
     ]    
     extension.dependency "MaterialComponentsBeta/Ripple"

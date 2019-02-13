@@ -25,6 +25,7 @@ static UIColor *RippleSelectedColor(void) {
 
 @interface MDCStatefulRippleView ()
 @property(nonatomic, strong) MDCRippleLayer *activeRippleLayer;
+@property(nonatomic, strong) UILongPressGestureRecognizer *longPressGestureRecognizer;
 @end
 
 @implementation MDCStatefulRippleView {
@@ -220,13 +221,12 @@ static UIColor *RippleSelectedColor(void) {
     _tapWentInsideOfBounds = NO;
     _tapWentOutsideOfBounds = NO;
   }
-  return [super pointInside:point withEvent:event];
+  return NO;
 }
 
-- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+- (void)touchMovedForSuperview:(UITouch *)touch event:(UIEvent *)event {
   // When the touch is held and moved outside and inside the bounds of the surface,
   // the ripple should gracefully fade out and in accordingly.
-  UITouch *touch = [touches anyObject];
   CGPoint location = [touch locationInView:self];
   BOOL pointContainedInSuperview = [self pointInsideSuperview:location withEvent:event];
   if (pointContainedInSuperview && _tapWentOutsideOfBounds) {
@@ -237,19 +237,16 @@ static UIColor *RippleSelectedColor(void) {
     _tapWentOutsideOfBounds = YES;
     [self fadeOutRippleAnimated:YES completion:nil];
   }
-  [super touchesMoved:touches withEvent:event];
 }
 
-- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-  [super touchesEnded:touches withEvent:event];
+- (void)touchEndedForSuperview {
   _didReceiveTouch = NO;
   if (_tapWentOutsideOfBounds) {
     [self beginRippleTouchUpAnimated:NO completion:nil];
   }
 }
 
-- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-  [super touchesCancelled:touches withEvent:event];
+- (void)touchCancelledForSuperview {
   _didReceiveTouch = NO;
   [self beginRippleTouchUpAnimated:YES completion:nil];
 }

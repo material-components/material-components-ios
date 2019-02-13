@@ -476,7 +476,8 @@ Pod::Spec.new do |mdc|
         "components/#{component.base_name}/src/*.{h,m}"
     ]
     component.exclude_files = [
-        "components/#{component.base_name}/src/MDCCardCollectionCell+Ripple.{h,m}",
+        "components/#{component.base_name}/src/MDCCard+Ripple.{h,m}",
+        "components/#{component.base_name}/src/MDCCardCollectionCell+Ripple.{h,m}"
     ]
     component.dependency "MaterialComponents/Cards+Private"
     component.dependency "MaterialComponents/Ink"

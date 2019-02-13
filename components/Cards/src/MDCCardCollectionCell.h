@@ -316,20 +316,14 @@ typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
 @protocol MDCCardCollectionCellRippleDelegate <NSObject>
 
 - (void)rippleDelegateSetSelected:(BOOL)selected;
-
 - (void)rippleDelegateSetHighlighted:(BOOL)highlighted;
-
 - (void)rippleDelegateSetSelectable:(BOOL)selectable;
-
 - (void)rippleDelegateSetDragged:(BOOL)dragged;
-
 - (UIImage *)rippleDelegateUpdateImage:(UIImage *)image;
-
 - (UIColor *)rippleDelegateUpdateImageTintColor:(UIColor *)imageTintColor;
-
 - (MDCCardCellState)rippleDelegateState;
-
 - (void)rippleDelegateTouchesEnded;
-
 - (void)rippleDelegateTouchesCancelled;
+- (void)rippleDelegateTouchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event;
+
 @end

@@ -544,6 +544,12 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 }
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  // The ripple invocation must come before touchesMoved of the super, otherwise the setHighlighted
+  // of the UICollectionViewCell will be triggered before the ripple identifies that the highlighted
+  // was trigerred from a long press entering the view and shouldn't invoke a ripple.
+  if ([self.rippleDelegate respondsToSelector:@selector(rippleDelegateTouchesMoved:withEvent:)]) {
+    [self.rippleDelegate rippleDelegateTouchesMoved:touches withEvent:event];
+  }
   [super touchesMoved:touches withEvent:event];
 }
 

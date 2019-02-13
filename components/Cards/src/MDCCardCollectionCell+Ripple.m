@@ -93,15 +93,21 @@
 }
 
 - (void)rippleDelegateTouchesEnded {
+  [self.castedRippleView touchEndedForSuperview];
   if (self.dragged) {
     self.dragged = NO;
   }
 }
 
 - (void)rippleDelegateTouchesCancelled {
+  [self.castedRippleView touchCancelledForSuperview];
   if (self.dragged) {
     self.dragged = NO;
   }
+}
+
+- (void)rippleDelegateTouchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  [self.castedRippleView touchMovedForSuperview:[touches anyObject] event:event];
 }
 
 - (void)rippleDelegateSetDragged:(BOOL)dragged {

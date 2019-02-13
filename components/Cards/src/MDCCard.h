@@ -17,6 +17,7 @@
 #import "MaterialShadowLayer.h"
 
 @protocol MDCShapeGenerating;
+@protocol MDCCardRippleDelegate;
 
 @interface MDCCard : UIControl
 
@@ -44,6 +45,12 @@
  the card's content, such as buttons or other tappable controls.
  */
 @property(nonatomic, getter=isInteractable) IBInspectable BOOL interactable;
+
+/**
+ This is used to integrate the Ripple Beta component into the card collection cell.
+ Warning: Please do not conform to this as this is used to integrate the Beta Ripple component.
+ */
+@property(nonatomic, weak, nullable) id<MDCCardRippleDelegate> rippleDelegate;
 
 /**
  Sets the shadow elevation for an UIControlState state
@@ -137,5 +144,18 @@
  Default value for shapeGenerator is nil.
  */
 @property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator;
+
+@end
+
+/**
+ This protocol is used to integrate the Ripple Beta component into Cards. Please do not conform
+ to this protocol.
+ */
+@protocol MDCCardRippleDelegate <NSObject>
+
+- (void)rippleDelegateSetHighlighted:(BOOL)highlighted;
+- (void)rippleDelegateTouchesEnded;
+- (void)rippleDelegateTouchesCancelled;
+- (void)rippleDelegateTouchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event;
 
 @end
