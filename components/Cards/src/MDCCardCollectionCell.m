@@ -239,6 +239,7 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 
 - (void)setHighlighted:(BOOL)highlighted {
   [super setHighlighted:highlighted];
+  NSLog(@"highlighted: %d", highlighted);
   if ([self.rippleDelegate respondsToSelector:@selector(rippleDelegateSetHighlighted:)]) {
     [self.rippleDelegate rippleDelegateSetHighlighted:highlighted];
   }

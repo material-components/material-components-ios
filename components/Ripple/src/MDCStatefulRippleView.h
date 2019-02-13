@@ -136,9 +136,7 @@ __attribute__((objc_subclassing_restricted)) @interface MDCStatefulRippleView : 
  The stateful ripple view needs to identify a cancellation of a touch for two reason:
  1. To know the touch has ended so if `setHighlighted` isn't triggered by a touch, it shouldn't
     animate the ripple.
- 2. There are cases where a UIControl or UICollectionViewCell will leave their highlighted state
-    to YES, even though a touch was cancelled due to a scroll or pan. This cancellation should
-    dissolve the ripple appropriately as we are no longer interacting with it.
+ 2. To dissolve the existing ripple if the touch gets cancelled.
 
  This class needs to be invoked in the `touchesCancelled:withEvent` of its superview.
  */
