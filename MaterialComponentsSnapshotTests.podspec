@@ -26,15 +26,10 @@ Pod::Spec.new do |s|
   s.subspec "Cards" do |component|
     component.ios.deployment_target = '8.0'
     component.source_files = [
-#      "components/Cards/tests/snapshot/Dummy4.swift"
-      "components/private/Snapshot/src/Dummy/Dummy3.swift",
+#      "components/private/Snapshot/src/Dummy/Dummy3.swift",
       "components/private/Snapshot/src/Dummy/Dummy.h",
       "components/private/Snapshot/src/Dummy/Dummy.m",
-#      ,
-#      "components/#{component.base_name}/tests/snapshot/supplemental/*.{h,m,swift}",
-#      "components/#{component.base_name}/tests/snapshot/supplemental/*.{h,m,swift}"
     ]
-#    component.dependency "MaterialComponentsSnapshotTests/private/Snapshot"
     component.test_spec 'SnapshotTests' do |snapshot_tests|
       snapshot_tests.requires_app_host = true
       snapshot_tests.source_files = [
@@ -88,12 +83,13 @@ Pod::Spec.new do |s|
   s.subspec "private" do |private_spec|
     private_spec.public_header_files = "components/private/Snapshot/src/Dummy/Dummy.h"
     private_spec.source_files = [
-      "components/private/Snapshot/src/Dummy/Dummy.swift",
-      "components/private/Snapshot/src/Dummy/Dummy.h",
-      "components/private/Snapshot/src/Dummy/Dummy.m",
- 
+#      "components/private/Snapshot/src/Dummy/Dummy.swift",
+# ^ try with this one
+
+#      "components/private/Snapshot/src/Dummy/Dummy2.swift",
+#      "components/private/Snapshot/src/Dummy/Dummy.h",
+#      "components/private/Snapshot/src/Dummy/Dummy.m",
      "components/private/Snapshot/src/*.{h,m,swift}",
-     "components/private/Snapshot/src/Dummy/Dummy2.swift",
     ]
     private_spec.dependency 'iOSSnapshotTestCase', '2.2.0'
 #    private_spec.test_spec "Snapshot" do |snapshot|
