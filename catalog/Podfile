@@ -2,7 +2,7 @@ workspace 'MDCCatalog.xcworkspace'
 project 'MDCCatalog.xcodeproj'
 
 # TODO: Uncomment line below and switch from legacy build system when Cocoapods 1.6 goes out of beta
-# install! 'cocoapods', :disable_input_output_paths => true
+install! 'cocoapods', :disable_input_output_paths => true
 
 target "MDCCatalog" do
   platform :ios, '8.0'
@@ -68,11 +68,11 @@ target "MDCCatalog" do
     'schemes/Container/UnitTests',
   ]
   pod 'MaterialComponentsSnapshotTests', :path => '../', :testspecs => [
-    'BottomNavigation/tests/snapshot',
-    'Cards/tests/snapshot',
-    'Chips/tests/snapshot',
-    'Ripple/tests/snapshot',
-    'TextFields/tests/snapshot',
+#    'BottomNavigation/SnapshotTests',
+    'Cards/SnapshotTests',
+#    'Chips/tests/snapshot',
+#    'Ripple/tests/snapshot',
+#    'TextFields/tests/snapshot',
   ]
   pod 'CatalogByConvention', "~> 2.5"
   pod 'MaterialCatalog', :path => 'MaterialCatalog/'
@@ -104,6 +104,14 @@ target "MDCDragons" do
 end
 
 post_install do |installer|
+
+#  installer.pods_project.targets.each do |target|
+#    if target.name.include? "snapshot"
+#      target.build_configurations.each do |config|
+#        config.build_settings['ENABLE_BITCODE'] = 'NO'
+#      end
+#    end
+#  end
 
   mdc_xcconfigs = []
   target_support_files_path = File.dirname(installer.pods_project.path) + "/" + "Target Support Files"

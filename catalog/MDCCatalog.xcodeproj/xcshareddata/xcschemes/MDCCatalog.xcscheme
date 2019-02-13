@@ -597,9 +597,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "50482A4A7B2996553D6D4CAAD309BB0A"
-               BuildableName = "MaterialComponentsSnapshotTests-Unit-BottomNavigation-tests-snapshot.xctest"
-               BlueprintName = "MaterialComponentsSnapshotTests-Unit-BottomNavigation-tests-snapshot"
+               BlueprintIdentifier = "EAC50314A59D40958D6C330DB81185AD"
+               BuildableName = "MaterialComponentsSnapshotTests-Unit-private-Snapshot.xctest"
+               BlueprintName = "MaterialComponentsSnapshotTests-Unit-private-Snapshot"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -607,39 +607,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "886939DCAF6B20FE787401AB4C1A1EE3"
-               BuildableName = "MaterialComponentsSnapshotTests-Unit-Cards-tests-snapshot.xctest"
-               BlueprintName = "MaterialComponentsSnapshotTests-Unit-Cards-tests-snapshot"
-               ReferencedContainer = "container:Pods/Pods.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E5509316B80355B763967B65E845CE94"
-               BuildableName = "MaterialComponentsSnapshotTests-Unit-Chips-tests-snapshot.xctest"
-               BlueprintName = "MaterialComponentsSnapshotTests-Unit-Chips-tests-snapshot"
-               ReferencedContainer = "container:Pods/Pods.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6AC08A6DF6853A921B373C359A5D30F5"
-               BuildableName = "MaterialComponentsSnapshotTests-Unit-Ripple-tests-snapshot.xctest"
-               BlueprintName = "MaterialComponentsSnapshotTests-Unit-Ripple-tests-snapshot"
-               ReferencedContainer = "container:Pods/Pods.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "5009B5079989F7015768D99D40E181F8"
-               BuildableName = "MaterialComponentsSnapshotTests-Unit-TextFields-tests-snapshot.xctest"
-               BlueprintName = "MaterialComponentsSnapshotTests-Unit-TextFields-tests-snapshot"
+               BlueprintIdentifier = "9F1E65CF98E9170D737AA256C5F00A69"
+               BuildableName = "MaterialComponentsSnapshotTests-Unit-Cards-SnapshotTests.xctest"
+               BlueprintName = "MaterialComponentsSnapshotTests-Unit-Cards-SnapshotTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
             </BuildableReference>
          </TestableReference>
