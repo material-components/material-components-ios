@@ -149,8 +149,8 @@ swift_library(
         "3",
     ],
     deps = [
-        ":BottomNavigationBeta",
         ":BottomNavigation",
+        ":BottomNavigationBeta",
         ":ColorThemer",
         ":ObjcExamples",
         ":TypographyThemer",
@@ -199,10 +199,10 @@ mdc_objc_library(
 
 ios_unit_test(
     name = "unit_tests_beta",
-    deps = [":unit_test_beta_sources"],
-    minimum_os_version = "9.0",
     flaky = 1,
+    minimum_os_version = "9.0",
     test_host = "//components/private/Snapshot/TestHost",
+    deps = [":unit_test_beta_sources"],
 )
 
 mdc_unit_test_suite(
@@ -222,7 +222,19 @@ mdc_snapshot_objc_library(
     ],
 )
 
+swift_library(
+    name = "snapshot_test_swift_lib",
+    srcs = glob(["tests/snapshot/*.swift"]),
+    copts = [
+        "-swift-version",
+        "3",
+    ],
+)
+
 mdc_snapshot_test(
     name = "snapshot_tests",
-    deps = [":snapshot_test_lib"],
+    deps = [
+        ":snapshot_test_lib",
+        ":snapshot_test_swift_lib",
+    ],
 )
