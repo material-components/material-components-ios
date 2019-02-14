@@ -26,7 +26,6 @@ mdc_objc_library(
         "src/SourceDummies/*.h",
         "src/SourceDummies/*.m",
     ]),
-    visibility = ["//visibility:private"],
 )
 
 mdc_public_objc_library(
