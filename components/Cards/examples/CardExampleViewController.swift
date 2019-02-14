@@ -45,7 +45,7 @@ class CardExampleViewController: UIViewController {
 
     button.applyTextTheme(withScheme: containerScheme)
     card.applyTheme(withScheme: containerScheme)
-//    card.isInteractable = false
+    card.isInteractable = false
 
     imageView.isAccessibilityElement = true
     imageView.accessibilityLabel = "Missing Dish"
