@@ -154,8 +154,9 @@
 @protocol MDCCardRippleDelegate <NSObject>
 
 - (void)rippleDelegateSetHighlighted:(BOOL)highlighted;
-- (void)rippleDelegateTouchesEnded;
-- (void)rippleDelegateTouchesCancelled;
+- (void)rippleDelegateTouchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event;
+- (void)rippleDelegateTouchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event;
+- (void)rippleDelegateTouchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event;
 - (void)rippleDelegateTouchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event;
 
 @end

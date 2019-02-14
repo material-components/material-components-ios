@@ -532,15 +532,17 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-  [super touchesBegan:touches withEvent:event];
-  if (self.rippleDelegate != nil) {
-    return;
+  if ([self.rippleDelegate respondsToSelector:@selector(rippleDelegateTouchesBegan:withEvent:)]) {
+    [self.rippleDelegate rippleDelegateTouchesBegan:touches withEvent:event];
   }
-  UITouch *touch = [touches anyObject];
-  CGPoint location = [touch locationInView:self];
-  _lastTouch = location;
-  if (!self.selected || !self.selectable) {
-    [self setState:MDCCardCellStateHighlighted animated:YES];
+  [super touchesBegan:touches withEvent:event];
+  if (![self.rippleDelegate respondsToSelector:@selector(rippleDelegateTouchesBegan:withEvent:)]) {
+    UITouch *touch = [touches anyObject];
+    CGPoint location = [touch locationInView:self];
+    _lastTouch = location;
+    if (!self.selected || !self.selectable) {
+      [self setState:MDCCardCellStateHighlighted animated:YES];
+    }
   }
 }
 
@@ -555,24 +557,28 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-  [super touchesEnded:touches withEvent:event];
-  if ([self.rippleDelegate respondsToSelector:@selector(rippleDelegateTouchesEnded)]) {
-    [self.rippleDelegate rippleDelegateTouchesEnded];
-    return;
+  if ([self.rippleDelegate respondsToSelector:@selector(rippleDelegateTouchesEnded:withEvent:)]) {
+    [self.rippleDelegate rippleDelegateTouchesEnded:touches withEvent:event];
   }
-  if (!self.selected || !self.selectable) {
-    [self setState:MDCCardCellStateNormal animated:YES];
+  [super touchesEnded:touches withEvent:event];
+  if (![self.rippleDelegate respondsToSelector:@selector(rippleDelegateTouchesEnded:withEvent:)]) {
+    if (!self.selected || !self.selectable) {
+      [self setState:MDCCardCellStateNormal animated:YES];
+    }
   }
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-  [super touchesCancelled:touches withEvent:event];
-  if ([self.rippleDelegate respondsToSelector:@selector(rippleDelegateTouchesCancelled)]) {
-    [self.rippleDelegate rippleDelegateTouchesCancelled];
-    return;
+  if ([self.rippleDelegate
+       respondsToSelector:@selector(rippleDelegateTouchesCancelled:withEvent:)]) {
+    [self.rippleDelegate rippleDelegateTouchesCancelled:touches withEvent:event];
   }
-  if (!self.selected || !self.selectable) {
-    [self setState:MDCCardCellStateNormal animated:YES];
+  [super touchesCancelled:touches withEvent:event];
+  if (![self.rippleDelegate
+       respondsToSelector:@selector(rippleDelegateTouchesCancelled:withEvent:)]) {
+    if (!self.selected || !self.selectable) {
+      [self setState:MDCCardCellStateNormal animated:YES];
+    }
   }
 }
 

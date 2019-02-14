@@ -92,22 +92,26 @@
   }
 }
 
-- (void)rippleDelegateTouchesEnded {
-  [self.castedRippleView touchEndedForSuperview];
-  if (self.dragged) {
-    self.dragged = NO;
-  }
-}
-
-- (void)rippleDelegateTouchesCancelled {
-  [self.castedRippleView touchCancelledForSuperview];
-  if (self.dragged) {
-    self.dragged = NO;
-  }
+- (void)rippleDelegateTouchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  [self.castedRippleView touchesBegan:touches withEvent:event];
 }
 
 - (void)rippleDelegateTouchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-  [self.castedRippleView touchMovedForSuperview:[touches anyObject] event:event];
+  [self.castedRippleView touchesMoved:touches withEvent:event];
+}
+
+- (void)rippleDelegateTouchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  [self.castedRippleView touchesEnded:touches withEvent:event];
+  if (self.dragged) {
+    self.dragged = NO;
+  }
+}
+
+- (void)rippleDelegateTouchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  [self.castedRippleView touchesCancelled:touches withEvent:event];
+  if (self.dragged) {
+    self.dragged = NO;
+  }
 }
 
 - (void)rippleDelegateSetDragged:(BOOL)dragged {

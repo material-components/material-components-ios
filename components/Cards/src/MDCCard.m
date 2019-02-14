@@ -297,6 +297,13 @@ static const BOOL MDCCardIsInteractableDefault = YES;
   self.layer.shapedBackgroundColor = _backgroundColor;
 }
 
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  if ([self.rippleDelegate respondsToSelector:@selector(rippleDelegateTouchesBegan:withEvent:)]) {
+    [self.rippleDelegate rippleDelegateTouchesBegan:touches withEvent:event];
+  }
+  [super touchesBegan:touches withEvent:event];
+}
+
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   // The ripple invocation must come before touchesMoved of the super, otherwise the setHighlighted
   // of the UIControl will be triggered before the ripple identifies that the highlighted was
@@ -308,16 +315,17 @@ static const BOOL MDCCardIsInteractableDefault = YES;
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-  [super touchesEnded:touches withEvent:event];
-  if ([self.rippleDelegate respondsToSelector:@selector(rippleDelegateTouchesEnded)]) {
-    [self.rippleDelegate rippleDelegateTouchesEnded];
+  if ([self.rippleDelegate respondsToSelector:@selector(rippleDelegateTouchesEnded:withEvent:)]) {
+    [self.rippleDelegate rippleDelegateTouchesEnded:touches withEvent:event];
   }
+  [super touchesEnded:touches withEvent:event];
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-  [super touchesCancelled:touches withEvent:event];
-  if ([self.rippleDelegate respondsToSelector:@selector(rippleDelegateTouchesCancelled)]) {
-    [self.rippleDelegate rippleDelegateTouchesCancelled];
+  if ([self.rippleDelegate
+       respondsToSelector:@selector(rippleDelegateTouchesCancelled:withEvent:)]) {
+    [self.rippleDelegate rippleDelegateTouchesCancelled:touches withEvent:event];
   }
+  [super touchesCancelled:touches withEvent:event];
 }
 @end
