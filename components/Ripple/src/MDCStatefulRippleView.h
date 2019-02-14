@@ -118,7 +118,7 @@ __attribute__((objc_subclassing_restricted)) @interface MDCStatefulRippleView : 
  @param touches The touches, as provided by the superview's `touchesBegan:withEvent:`.
  @param event The event, as provided by the superview's `touchesBegan:withEvent:`.
  */
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event;
+- (void)touchesBegan:(nullable NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event;
 
 /**
  The stateful ripple view should fade in an out as a held touch goes in and out of the view.
@@ -132,7 +132,7 @@ __attribute__((objc_subclassing_restricted)) @interface MDCStatefulRippleView : 
  @param touches The touches, as provided by the superview's `touchesMoved:withEvent:`.
  @param event The event, as provided by the superview's `touchesMoved:withEvent:`.
  */
-- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event;
+- (void)touchesMoved:(nullable NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event;
 
 /**
  The stateful ripple view needs to identify an end of a touch for two reasons:
@@ -146,7 +146,7 @@ __attribute__((objc_subclassing_restricted)) @interface MDCStatefulRippleView : 
  @param touches The touches, as provided by the superview's `touchesEnded:withEvent:`.
  @param event The event, as provided by the superview's `touchesEnded:withEvent:`.
  */
-- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event;
+- (void)touchesEnded:(nullable NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event;
 
 /**
  The stateful ripple view needs to identify a cancellation of a touch for two reason:
@@ -160,6 +160,6 @@ __attribute__((objc_subclassing_restricted)) @interface MDCStatefulRippleView : 
  @param touches The touches, as provided by the superview's `touchesCancelled:withEvent:`.
  @param event The event, as provided by the superview's `touchesCancelled:withEvent:`.
  */
-- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event;
+- (void)touchesCancelled:(nullable NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event;
 
 @end
