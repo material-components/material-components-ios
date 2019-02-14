@@ -11,6 +11,7 @@ Pod::Spec.new do |s|
   s.dependency 'MaterialComponents'
   s.dependency 'MaterialComponentsBeta'
   s.dependency 'iOSSnapshotTestCase', '2.2.0'
+  s.pod_target_xcconfig = { 'ENABLE_BITCODE' => 'NO' }
 
   # These source dummies are required at the top level to build successfully with Cocoapods 1.6.0.
   # Swift dummy source files are required at the subspec level.
