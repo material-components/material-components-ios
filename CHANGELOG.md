@@ -24,7 +24,7 @@ self.bottomNavBar.backgroundBlurEnabled = YES;
 
 #### Long item titles
 
-We automatically truncate titles that go out of bounds but added a bool to allow some clients to still overflow.
+We automatically truncate titles that go out of bounds but added a flag to allow some clients to still overflow.
 
 ```
 self.navigationBar.truncatesLongTitles = NO;
@@ -94,6 +94,12 @@ You can set the state of the ripple like so:
 
 * [Add blur example (#6589)](https://github.com/material-components/material-components-ios/commit/cbac7a9a48ea8139b289e64d26b8eca8fee428b7) (Robert Moore)
 * [Badge size grows with value (#6594)](https://github.com/material-components/material-components-ios/commit/2cc9cecd36320a55bd751d564b9aaa5821181bce) (Robert Moore)
+* [Add support for blur effect. (#6587)](https://github.com/material-components/material-components-ios/commit/cd2a67896e1cac9ea4ee203d87c4ebf4d4f2fa02) (Robert Moore)
+* [Delete `itemsContentInsets` API (#6584)](https://github.com/material-components/material-components-ios/commit/0c2b2ea61b010242a74d57f726230d1d53a9df4b) (Robert Moore)
+* [Extend ripple to bar bounds. (#6586)](https://github.com/material-components/material-components-ios/commit/266d0f5406b8a3e901c3426a4046cf80175571a7) (Robert Moore)
+* [Fix "centered" alignment. (#6604)](https://github.com/material-components/material-components-ios/commit/f53fc6c6c9ac7e9c7ca75f9cd912f6378ad0bb37) (Robert Moore)
+* [Fix Item View layout.   (#6603)](https://github.com/material-components/material-components-ios/commit/10f39dab221558b608dd54a4d6d3fc81f7734878) (Robert Moore)
+* [Fix badge position and font. (#6602)](https://github.com/material-components/material-components-ios/commit/3f7477d8479cc154fe6c72baea516bcc9c282dde) (Robert Moore)
 
 ### Dialogs
 
@@ -107,12 +113,6 @@ You can set the state of the ripple like so:
 
 ## Multi-component changes
 
-* [Add support for blur effect. (#6587)](https://github.com/material-components/material-components-ios/commit/cd2a67896e1cac9ea4ee203d87c4ebf4d4f2fa02) (Robert Moore)
-* [Delete `itemsContentInsets` API (#6584)](https://github.com/material-components/material-components-ios/commit/0c2b2ea61b010242a74d57f726230d1d53a9df4b) (Robert Moore)
-* [Extend ripple to bar bounds. (#6586)](https://github.com/material-components/material-components-ios/commit/266d0f5406b8a3e901c3426a4046cf80175571a7) (Robert Moore)
-* [Fix "centered" alignment. (#6604)](https://github.com/material-components/material-components-ios/commit/f53fc6c6c9ac7e9c7ca75f9cd912f6378ad0bb37) (Robert Moore)
-* [Fix Item View layout.   (#6603)](https://github.com/material-components/material-components-ios/commit/10f39dab221558b608dd54a4d6d3fc81f7734878) (Robert Moore)
-* [Fix badge position and font. (#6602)](https://github.com/material-components/material-components-ios/commit/3f7477d8479cc154fe6c72baea516bcc9c282dde) (Robert Moore)
 * [Fix ripple layout issues with autolayout (#6588)](https://github.com/material-components/material-components-ios/commit/02161e4a76375dcdf80cdcb955b6279967cda295) (Yarden Eitan)
 * [{kokoro} Fix develop (#6575)](https://github.com/material-components/material-components-ios/commit/46ff9c3173f2ce15d981b347b745cfecbb6b8a8e) (Robert Moore)
 
