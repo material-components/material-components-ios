@@ -15,27 +15,11 @@ Pod::Spec.new do |mdc|
 
   # ActionSheet
 
-  mdc.subspec "ActionSheet" do |component|
-    component.ios.deployment_target = '8.0'
-    component.public_header_files = "components/#{component.base_name}/src/*.h"
-    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
-
-    component.dependency "MaterialComponents/BottomSheet"
-    component.dependency "MaterialComponents/Ink"
-    component.dependency "MaterialComponents/Typography"
-
-    component.test_spec 'UnitTests' do |unit_tests|
-      unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}"
-      unit_tests.dependency "MaterialComponentsBeta/#{component.base_name}+Theming"
-      unit_tests.dependency "MaterialComponentsBeta/#{component.base_name}+#{component.base_name}Themer"
-    end
-  end
-
   mdc.subspec "ActionSheet+ActionSheetThemer" do |extension|
     extension.ios.deployment_target = '8.0'
     extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}", "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/private/*.{h,m}"
-    extension.dependency "MaterialComponentsBeta/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
     extension.dependency "MaterialComponentsBeta/ActionSheet+ColorThemer"
     extension.dependency "MaterialComponentsBeta/ActionSheet+TypographyThemer"
   end
@@ -44,7 +28,7 @@ Pod::Spec.new do |mdc|
     extension.ios.deployment_target = '8.0'
     extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}", "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/private/*.{h,m}"
-    extension.dependency "MaterialComponentsBeta/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
     extension.dependency "MaterialComponents/schemes/Color"
   end
 
@@ -52,7 +36,7 @@ Pod::Spec.new do |mdc|
     extension.ios.deployment_target = '8.0'
     extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}", "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/private/*.{h,m}"
-    extension.dependency "MaterialComponentsBeta/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
     extension.dependency "MaterialComponentsBeta/#{extension.base_name.split('+')[0]}+ColorThemer"
     extension.dependency "MaterialComponentsBeta/#{extension.base_name.split('+')[0]}+TypographyThemer"
     extension.dependency "MaterialComponentsBeta/schemes/Container"
@@ -62,7 +46,7 @@ Pod::Spec.new do |mdc|
     extension.ios.deployment_target = '8.0'
     extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}", "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/private/*.{h,m}"
-    extension.dependency "MaterialComponentsBeta/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
     extension.dependency "MaterialComponents/schemes/Typography"
   end
 
