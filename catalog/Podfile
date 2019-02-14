@@ -68,11 +68,11 @@ target "MDCCatalog" do
     'schemes/Container/UnitTests',
   ]
   pod 'MaterialComponentsSnapshotTests', :path => '../', :testspecs => [
-    'BottomNavigation/tests/snapshot',
-    'Cards/tests/snapshot',
-    'Chips/tests/snapshot',
-    'Ripple/tests/snapshot',
-    'TextFields/tests/snapshot',
+    'BottomNavigation/SnapshotTests',
+    'Cards/SnapshotTests',
+    'Chips/SnapshotTests',
+    'Ripple/SnapshotTests',
+    'TextFields/SnapshotTests',
   ]
   pod 'CatalogByConvention', "~> 2.5"
   pod 'MaterialCatalog', :path => 'MaterialCatalog/'
@@ -104,6 +104,12 @@ target "MDCDragons" do
 end
 
 post_install do |installer|
+
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['ENABLE_BITCODE'] = 'NO'
+    end
+  end
 
   mdc_xcconfigs = []
   target_support_files_path = File.dirname(installer.pods_project.path) + "/" + "Target Support Files"
