@@ -122,7 +122,6 @@ typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
  */
 @property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator;
 
-
 /**
  This is used to integrate the Ripple Beta component into the card collection cell.
 

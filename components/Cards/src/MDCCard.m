@@ -24,7 +24,7 @@ static const BOOL MDCCardIsInteractableDefault = YES;
 
 @interface MDCCard ()
 @property(nonatomic, readonly, strong) MDCShapedShadowLayer *layer;
-@property(nonatomic, strong) UIView *rippleView; // Used for Ripple Beta.
+@property(nonatomic, strong) UIView *rippleView;  // Used for Ripple Beta.
 @end
 
 @implementation MDCCard {
@@ -322,8 +322,8 @@ static const BOOL MDCCardIsInteractableDefault = YES;
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-  if ([self.rippleDelegate
-       respondsToSelector:@selector(rippleDelegateTouchesCancelled:withEvent:)]) {
+  if ([self.rippleDelegate respondsToSelector:@selector(rippleDelegateTouchesCancelled:
+                                                                             withEvent:)]) {
     [self.rippleDelegate rippleDelegateTouchesCancelled:touches withEvent:event];
   }
   [super touchesCancelled:touches withEvent:event];

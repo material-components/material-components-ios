@@ -23,14 +23,14 @@ static const CGFloat MDCCardCellSelectedImagePadding = 8;
 static const CGFloat MDCCardCellShadowElevationHighlighted = 8;
 static const CGFloat MDCCardCellShadowElevationNormal = 1;
 static const CGFloat MDCCardCellShadowElevationSelected = 8;
-static const CGFloat MDCCardCellShadowElevationDragged = 8; // Used for Ripple Beta
+static const CGFloat MDCCardCellShadowElevationDragged = 8;  // Used for Ripple Beta
 static const BOOL MDCCardCellIsInteractableDefault = YES;
 
 @interface MDCCardCollectionCell ()
 @property(nonatomic, strong, nullable) UIImageView *selectedImageView;
 @property(nonatomic, readonly, strong) MDCShapedShadowLayer *layer;
-@property(nonatomic, strong) UIView *rippleView; // Used for Ripple Beta.
-@property(nonatomic, getter=isDragged) BOOL dragged; // Used for Ripple Beta.
+@property(nonatomic, strong) UIView *rippleView;      // Used for Ripple Beta.
+@property(nonatomic, getter=isDragged) BOOL dragged;  // Used for Ripple Beta.
 @end
 
 @implementation MDCCardCollectionCell {
@@ -569,13 +569,13 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-  if ([self.rippleDelegate
-       respondsToSelector:@selector(rippleDelegateTouchesCancelled:withEvent:)]) {
+  if ([self.rippleDelegate respondsToSelector:@selector(rippleDelegateTouchesCancelled:
+                                                                             withEvent:)]) {
     [self.rippleDelegate rippleDelegateTouchesCancelled:touches withEvent:event];
   }
   [super touchesCancelled:touches withEvent:event];
-  if (![self.rippleDelegate
-       respondsToSelector:@selector(rippleDelegateTouchesCancelled:withEvent:)]) {
+  if (![self.rippleDelegate respondsToSelector:@selector(rippleDelegateTouchesCancelled:
+                                                                              withEvent:)]) {
     if (!self.selected || !self.selectable) {
       [self setState:MDCCardCellStateNormal animated:YES];
     }

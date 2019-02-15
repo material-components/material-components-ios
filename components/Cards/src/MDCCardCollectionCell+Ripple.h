@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <MaterialComponents/MaterialCards.h>
 #import <MaterialComponents/MDCCardCollectionCell+Private.h>
+#import <MaterialComponents/MaterialCards.h>
 
 @interface MDCCardCollectionCell (Ripple) <MDCCardCollectionCellRippleDelegate>
 @end
