@@ -215,6 +215,7 @@ class DialogsThemedPresentationExampleViewController: UIViewController {
 
     if let presentationController = customDialogController.mdc_dialogPresentationController {
       presentationController.applyTheme(withScheme: containerScheme)
+      // TODO(b/124469770) remove setting the cornerRadius of custom dialog view here.
       customDialogController.view.layer.cornerRadius = presentationController.dialogCornerRadius;
     }
     present(customDialogController, animated: true, completion: nil)
