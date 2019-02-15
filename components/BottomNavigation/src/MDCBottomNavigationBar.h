@@ -124,12 +124,20 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
 @property(nullable, nonatomic, copy) UIColor *backgroundColor UI_APPEARANCE_SELECTOR;
 
 /**
- The inset applied to each items bounds to determine the rect in which the items' contents will be
- centered. The contents are centered in this rect, but not compressed, so they may still extend
- beyond these bounds. Defaults to {0, 0, 0, 0}. The inset is flipped for RTL.
+ The blur effect style to use behind the Bottom Navigation bar.
+
+ Has no effect unless @backgroundBlurEnabled is @c YES and @c barTintColor has an @c alpha value
+ less than 1.
  */
-@property(nonatomic, assign)
-    UIEdgeInsets itemsContentInsets __deprecated_msg("This API will be removed.");
+@property(nonatomic, assign) UIBlurEffectStyle backgroundBlurEffectStyle;
+
+/**
+ If @c YES, the background of the bar is masked by a UIBlurEffectView. Configure the blur effect
+ style using the @c backgroundBlurEffectStyle property.
+
+ Defaults to @c NO.
+ */
+@property(nonatomic, assign, getter=isBackgroundBlurEnabled) BOOL backgroundBlurEnabled;
 
 /**
  The margin between the item's icon and title when alignment is either Justified or Centered.
@@ -142,6 +150,13 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
  12.
  */
 @property(nonatomic, assign) CGFloat itemsContentHorizontalMargin;
+
+/**
+ If @c YES, it will truncate titles that don't fit within the bounds available to the item.
+
+ Default is @c YES.
+ */
+@property(nonatomic, assign) BOOL truncatesLongTitles;
 
 /**
  The elevation of the bottom navigation bar. Defaults to @c MDCShadowElevationBottomNavigationBar .
