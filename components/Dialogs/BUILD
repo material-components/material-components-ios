@@ -120,6 +120,7 @@ mdc_examples_swift_library(
         ":Dialogs",
         ":Theming",
         "//components/Collections",
+        "//components/List",
         "//components/schemes/Color",
         "//components/schemes/Container",
     ],
