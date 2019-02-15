@@ -41,7 +41,16 @@ mdc_public_objc_library(
         "//components/Shapes",
         "//components/private/Icons/icons/ic_check_circle",
         "//components/private/Math",
+        ":CardsPrivate"
     ],
+)
+
+mdc_extension_objc_library(
+    name = "CardsPrivate",
+    hdrs = native.glob(["src/private/*.h"]),
+    includes = ["src/private"],
+    visibility = ["//visibility:private"],
+    deps = ["//components/Ripple"],
 )
 
 mdc_extension_objc_library(
