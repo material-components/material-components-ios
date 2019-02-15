@@ -493,9 +493,7 @@ Pod::Spec.new do |mdc|
   mdc.subspec "Cards" do |component|
     component.ios.deployment_target = '8.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
-    component.source_files = [
-        "components/#{component.base_name}/src/*.{h,m}"
-    ]
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}"
     component.exclude_files = [
         "components/#{component.base_name}/src/MDCCard+Ripple.{h,m}",
         "components/#{component.base_name}/src/MDCCardCollectionCell+Ripple.{h,m}"
