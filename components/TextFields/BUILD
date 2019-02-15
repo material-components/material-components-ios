@@ -170,24 +170,12 @@ mdc_snapshot_objc_library(
     ],
 )
 
-swift_library(
-    name = "snapshot_test_swift_lib",
-    srcs = glob(["tests/snapshot/*.swift"]),
-    copts = [
-        "-swift-version",
-        "3",
-    ],
-)
-
 mdc_snapshot_test(
     name = "snapshot_tests",
     # Tests have sometimes taken more than 5 minutes to launch the simulator
     # and execute
     timeout = "long",
-    deps = [
-        ":snapshot_test_lib",
-        ":snapshot_test_swift_lib",
-    ],
+    deps = ["snapshot_test_lib"],
 )
 
 swift_library(

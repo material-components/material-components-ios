@@ -20,18 +20,9 @@ load(
 
 licenses(["notice"])  # Apache 2.0
 
-mdc_objc_library(
-    name = "SnapshotSourceDummies",
-    srcs = native.glob([
-        "src/SourceDummies/*.h",
-        "src/SourceDummies/*.m",
-    ]),
-)
-
 mdc_public_objc_library(
     name = "Snapshot",
     deps = [
         "@ios_snapshot_test_case//:SnapshotTestCase",
-        ":SnapshotSourceDummies",
     ],
 )
