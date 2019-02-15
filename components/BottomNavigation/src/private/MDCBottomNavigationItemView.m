@@ -27,7 +27,14 @@
 static const CGFloat kMaxSizeDimension = 1000000;
 static const CGFloat MDCBottomNavigationItemViewInkOpacity = (CGFloat)0.150;
 static const CGFloat MDCBottomNavigationItemViewTitleFontSize = 12;
-static const CGFloat kMDCBottomNavigationItemViewBadgeYOffset = 4;
+
+// The fonts available on iOS differ from that used on Material.io.  When trying to approximate
+// the position on iOS, it seems like a horizontal inset of 10 points looks pretty close.
+static const CGFloat kBadgeXOffsetFromIconEdgeWithTextLTR = -8;
+
+// However, when the badge has no visible text, its horizontal center should be 1 point inset from
+// the edge of the image.
+static const CGFloat kBadgeXOffsetFromIconEdgeEmptyLTR = -1;
 
 // The duration of the selection transition animation.
 static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.180;
@@ -103,6 +110,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 }
 
 - (void)commonMDCBottomNavigationItemViewInit {
+  _truncatesTitle = YES;
   if (!_selectedItemTintColor) {
     _selectedItemTintColor = [UIColor blackColor];
   }
@@ -207,73 +215,153 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 
   [self.label sizeToFit];
   [self.badge sizeToFit];
-  CGSize labelSize =
-      CGSizeMake(CGRectGetWidth(self.label.bounds), CGRectGetHeight(self.label.bounds));
-  CGFloat maxWidth = CGRectGetWidth(self.bounds);
-  self.label.frame = CGRectMake(0, 0, MIN(maxWidth, labelSize.width), labelSize.height);
   self.inkView.maxRippleRadius =
       (CGFloat)(MDCHypot(CGRectGetHeight(self.bounds), CGRectGetWidth(self.bounds)) / 2);
   [self centerLayoutAnimated:NO];
 }
 
-- (void)centerLayoutAnimated:(BOOL)animated {
-  CGRect contentBoundingRect = UIEdgeInsetsInsetRect(self.bounds, self.contentInsets);
-  CGFloat centerY = CGRectGetMidY(contentBoundingRect);
-  CGFloat centerX = CGRectGetMidX(contentBoundingRect);
-  UIUserInterfaceLayoutDirection layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
-  BOOL isRTL = layoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
-  if (isRTL) {
-    centerX = CGRectGetWidth(self.bounds) - centerX;
+- (void)calculateVerticalLayoutInBounds:(CGRect)contentBounds
+                          forLabelFrame:(CGRect *)outLabelFrame
+                     iconImageViewFrame:(CGRect *)outIconFrame {
+  // Determine the intrinsic size of the label, icon, and combined content
+  CGRect contentBoundingRect = CGRectStandardize(contentBounds);
+  CGSize iconImageViewSize = [self.iconImageView sizeThatFits:contentBoundingRect.size];
+  CGSize labelSize = [self.label sizeThatFits:contentBoundingRect.size];
+  BOOL titleHidden =
+      self.titleVisibility == MDCBottomNavigationBarTitleVisibilityNever ||
+      (self.titleVisibility == MDCBottomNavigationBarTitleVisibilitySelected && !self.selected);
+  CGFloat iconHeight = iconImageViewSize.height;
+  CGFloat labelHeight = labelSize.height;
+  CGFloat totalContentHeight = iconHeight;
+  if (!titleHidden) {
+    totalContentHeight += labelHeight + self.contentVerticalMargin;
   }
 
+  // Determine the position of the label and icon
+  CGFloat centerY = CGRectGetMidY(contentBoundingRect);
+  CGFloat centerX = CGRectGetMidX(contentBoundingRect);
+  CGPoint iconImageViewCenter =
+      CGPointMake(centerX, centerY - totalContentHeight / 2 + iconHeight / 2);
+  CGPoint labelCenter = CGPointMake(centerX, centerY + totalContentHeight / 2 - labelHeight / 2);
+  CGFloat availableContentWidth = CGRectGetWidth(contentBoundingRect);
+  if (self.truncatesTitle && (labelSize.width > availableContentWidth)) {
+    labelSize = CGSizeMake(availableContentWidth, labelSize.height);
+  }
+
+  // Assign the frames to the inout arguments
+  if (outLabelFrame != NULL) {
+    *outLabelFrame =
+        CGRectMake(labelCenter.x - (labelSize.width / 2), labelCenter.y - (labelSize.height / 2),
+                   labelSize.width, labelSize.height);
+  }
+  if (outIconFrame != NULL) {
+    *outIconFrame = CGRectMake(iconImageViewCenter.x - (iconImageViewSize.width / 2),
+                               iconImageViewCenter.y - (iconImageViewSize.height / 2),
+                               iconImageViewSize.width, iconImageViewSize.height);
+  }
+}
+
+- (void)calculateHorizontalLayoutInBounds:(CGRect)contentBounds
+                            forLabelFrame:(CGRect *)outLabelFrame
+                       iconImageViewFrame:(CGRect *)outIconFrame {
+  // Determine the intrinsic size of the label and icon
+  CGRect contentBoundingRect = CGRectStandardize(contentBounds);
+  CGSize iconImageViewSize = [self.iconImageView sizeThatFits:contentBoundingRect.size];
+  CGSize maxLabelSize = CGSizeMake(
+      contentBoundingRect.size.width - self.contentHorizontalMargin - iconImageViewSize.width,
+      contentBoundingRect.size.height);
+  CGSize labelSize = [self.label sizeThatFits:maxLabelSize];
+
+  CGFloat contentsWidth = iconImageViewSize.width + self.contentHorizontalMargin + labelSize.width;
+  CGFloat remainingContentWidth = CGRectGetWidth(contentBoundingRect);
+  if (contentsWidth > remainingContentWidth) {
+    contentsWidth = remainingContentWidth;
+  }
+  // If the content width and available width are different, the internal spacing required to center
+  // the contents.
+  CGFloat contentPadding = (remainingContentWidth - contentsWidth) / 2;
+  remainingContentWidth -= iconImageViewSize.width + self.contentHorizontalMargin;
+  if (self.truncatesTitle) {
+    labelSize = CGSizeMake(MIN(labelSize.width, remainingContentWidth), labelSize.height);
+  }
+
+  // Account for RTL
+  BOOL isRTL =
+      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
+  NSInteger rtlCoefficient = isRTL ? -1 : 1;
+  CGFloat layoutStartingPoint =
+      isRTL ? CGRectGetMaxX(contentBoundingRect) : CGRectGetMinX(contentBoundingRect);
+
+  CGFloat centerY = CGRectGetMidY(contentBoundingRect);
+  // Amount icon center is offset from the leading edge.
+  CGFloat iconCenterOffset = contentPadding + (iconImageViewSize.width / 2);
+
+  // Determine the position of the label and icon
+  CGPoint iconImageViewCenter =
+      CGPointMake(layoutStartingPoint + rtlCoefficient * iconCenterOffset, centerY);
+  CGFloat labelOffsetFromIcon =
+      iconImageViewSize.width / 2 + self.contentHorizontalMargin + labelSize.width / 2;
+  CGPoint labelCenter =
+      CGPointMake(iconImageViewCenter.x + rtlCoefficient * labelOffsetFromIcon, centerY);
+
+  // Assign the frames to the inout arguments
+  if (outLabelFrame != NULL) {
+    *outLabelFrame =
+        CGRectMake(labelCenter.x - (labelSize.width / 2), labelCenter.y - (labelSize.height / 2),
+                   labelSize.width, labelSize.height);
+  }
+  if (outIconFrame != NULL) {
+    *outIconFrame = CGRectMake(iconImageViewCenter.x - (iconImageViewSize.width / 2),
+                               iconImageViewCenter.y - (iconImageViewSize.height / 2),
+                               iconImageViewSize.width, iconImageViewSize.height);
+  }
+}
+
+- (void)centerLayoutAnimated:(BOOL)animated {
+  CGRect labelFrame = CGRectZero;
+  CGRect iconImageViewFrame = CGRectZero;
+
   if (self.titleBelowIcon) {
-    BOOL titleHidden =
-        self.titleVisibility == MDCBottomNavigationBarTitleVisibilityNever ||
-        (self.titleVisibility == MDCBottomNavigationBarTitleVisibilitySelected && !self.selected);
-    CGFloat iconHeight = CGRectGetHeight(self.iconImageView.bounds);
-    CGFloat labelHeight = CGRectGetHeight(self.label.bounds);
-    CGFloat totalContentHeight = iconHeight;
-    if (!titleHidden) {
-      totalContentHeight += labelHeight + self.contentVerticalMargin;
-    }
-    CGPoint iconImageViewCenter =
-        CGPointMake(centerX, centerY - totalContentHeight / 2 + iconHeight / 2);
-    self.label.center = CGPointMake(centerX, centerY + totalContentHeight / 2 - labelHeight / 2);
+    [self calculateVerticalLayoutInBounds:self.bounds
+                            forLabelFrame:&labelFrame
+                       iconImageViewFrame:&iconImageViewFrame];
+  } else {
+    [self calculateHorizontalLayoutInBounds:self.bounds
+                              forLabelFrame:&labelFrame
+                         iconImageViewFrame:&iconImageViewFrame];
+  }
+
+  CGPoint iconImageViewCenter =
+      CGPointMake(CGRectGetMidX(iconImageViewFrame), CGRectGetMidY(iconImageViewFrame));
+  self.label.center = CGPointMake(CGRectGetMidX(labelFrame), CGRectGetMidY(labelFrame));
+  self.label.bounds = CGRectMake(0, 0, CGRectGetWidth(labelFrame), CGRectGetHeight(labelFrame));
+
+  UIUserInterfaceLayoutDirection layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
+  BOOL isRTL = layoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
+
+  if (self.titleBelowIcon) {
     if (animated) {
       [UIView animateWithDuration:kMDCBottomNavigationItemViewTransitionDuration
                        animations:^(void) {
                          self.iconImageView.center = iconImageViewCenter;
-                         self.badge.center = [self
-                             badgeCenterFromIconFrame:CGRectStandardize(self.iconImageView.frame)
-                                                isRTL:isRTL];
+                         self.badge.center =
+                             [self badgeCenterFromIconFrame:CGRectStandardize(iconImageViewFrame)
+                                                      isRTL:isRTL];
                        }];
     } else {
       self.iconImageView.center = iconImageViewCenter;
-      self.badge.center = [self badgeCenterFromIconFrame:CGRectStandardize(self.iconImageView.frame)
+      self.badge.center = [self badgeCenterFromIconFrame:CGRectStandardize(iconImageViewFrame)
                                                    isRTL:isRTL];
     }
     self.label.textAlignment = NSTextAlignmentCenter;
   } else {
-    CGFloat contentsWidth =
-        CGRectGetWidth(self.iconImageView.bounds) + CGRectGetWidth(self.label.bounds);
     if (!isRTL) {
-      CGPoint iconImageViewCenter =
-          CGPointMake(centerX - CGRectGetWidth(contentBoundingRect) * (CGFloat)0.2, centerY);
-      self.iconImageView.center = iconImageViewCenter;
-      CGFloat labelCenterX =
-          iconImageViewCenter.x + contentsWidth / 2 + self.contentHorizontalMargin;
-      self.label.center = CGPointMake(labelCenterX, centerY);
       self.label.textAlignment = NSTextAlignmentLeft;
     } else {
-      CGPoint iconImageViewCenter =
-          CGPointMake(centerX + CGRectGetWidth(contentBoundingRect) * (CGFloat)0.2, centerY);
-      self.iconImageView.center = iconImageViewCenter;
-      CGFloat labelCenterX =
-          iconImageViewCenter.x - contentsWidth / 2 - self.contentHorizontalMargin;
-      self.label.center = CGPointMake(labelCenterX, centerY);
       self.label.textAlignment = NSTextAlignmentRight;
     }
-    self.badge.center = [self badgeCenterFromIconFrame:CGRectStandardize(self.iconImageView.frame)
+    self.iconImageView.center = iconImageViewCenter;
+    self.badge.center = [self badgeCenterFromIconFrame:CGRectStandardize(iconImageViewFrame)
                                                  isRTL:isRTL];
   }
 }
@@ -325,12 +413,24 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 }
 
 - (CGPoint)badgeCenterFromIconFrame:(CGRect)iconFrame isRTL:(BOOL)isRTL {
-  if (isRTL) {
-    return CGPointMake(CGRectGetMinX(iconFrame),
-                       CGRectGetMinY(iconFrame) + kMDCBottomNavigationItemViewBadgeYOffset);
+  CGSize badgeSize = [self.badge sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
+
+  // There are no specifications for badge layout, so this is based on the Material Guidelines
+  // article for Bottom Navigation which includes an image showing badge positions.
+  // https://storage.googleapis.com/spec-host-backup/mio-design%2Fassets%2F0B6xUSjjSulxcaVpEMk5tZ2RGZ3c%2Fbottomnav-badging-1.png
+  // Attempting to match the "88" badge on the "chrome reader mode" icon results in the badge's top
+  // edge equalling that of the image bounds.
+  // https://material.io/tools/icons/?icon=chrome_reader_mode&style=baseline
+  CGFloat badgeCenterY = CGRectGetMinY(iconFrame) + (badgeSize.height / 2);
+
+  CGFloat badgeCenterXOffset = kBadgeXOffsetFromIconEdgeWithTextLTR + (badgeSize.width / 2);
+  if (self.badgeValue.length == 0) {
+    badgeCenterXOffset = kBadgeXOffsetFromIconEdgeEmptyLTR;
   }
-  return CGPointMake(CGRectGetMaxX(iconFrame),
-                     CGRectGetMinY(iconFrame) + kMDCBottomNavigationItemViewBadgeYOffset);
+  CGFloat badgeCenterX = isRTL ? CGRectGetMinX(iconFrame) - badgeCenterXOffset
+                               : CGRectGetMaxX(iconFrame) + badgeCenterXOffset;
+
+  return CGPointMake(badgeCenterX, badgeCenterY);
 }
 
 - (NSString *)badgeValue {
@@ -406,6 +506,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   } else {
     self.badge.hidden = NO;
   }
+  [self setNeedsLayout];
 }
 
 - (void)setImage:(UIImage *)image {

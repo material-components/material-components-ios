@@ -17,7 +17,8 @@
 
 #import "MaterialMath.h"
 
-static const CGFloat kBadgeFontSize = 10;
+// This is very close to the material.io guidelines article considering the fonts differ.
+static const CGFloat kBadgeFontSize = 8;
 // These padding values get pretty close to the material.io guidelines article.
 static const CGFloat kBadgeYPadding = 2;
 // For an empty badge, ensure that the size is close to the guidelines article.
@@ -92,28 +93,14 @@ static const CGFloat kMinDiameter = 9;
   // Calculate the badge and label heights
   CGSize labelSize = [self.badgeValueLabel sizeThatFits:size];
   CGFloat badgeHeight = labelSize.height + kBadgeYPadding;
-  if (badgeHeight > size.height) {
-    badgeHeight = size.height;
-    labelSize = CGSizeMake(labelSize.width, badgeHeight - kBadgeYPadding);
-  }
   CGFloat contentXPadding = [self badgeXPaddingForRadius:badgeHeight / 2];
   CGFloat badgeWidth = labelSize.width + contentXPadding;
-  if (badgeWidth > size.width) {
-    badgeWidth = size.width;
-    labelSize = CGSizeMake(badgeWidth - contentXPadding, labelSize.height);
-  }
   badgeWidth = MAX(kMinDiameter, badgeWidth);
   badgeHeight = MAX(kMinDiameter, badgeHeight);
   if (badgeWidth < badgeHeight) {
     badgeWidth = badgeHeight;
   }
   return CGSizeMake(badgeWidth, badgeHeight);
-}
-
-- (void)sizeToFit {
-  CGSize fitSize = [self sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
-  CGRect newBounds = CGRectMake(0, 0, fitSize.width, fitSize.height);
-  self.bounds = newBounds;
 }
 
 - (void)setBadgeValue:(NSString *)badgeValue {

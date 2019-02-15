@@ -60,6 +60,15 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
 - (void)layoutSubviews {
   [super layoutSubviews];
   [self updateRippleStyle];
+  self.frame = CGRectStandardize(self.superview.bounds);
+}
+
+- (void)layoutSublayersOfLayer:(CALayer *)layer {
+  [super layoutSublayersOfLayer:layer];
+  for (CALayer *sublayer in self.layer.sublayers) {
+    sublayer.frame = CGRectStandardize(self.bounds);
+    [sublayer setNeedsLayout];
+  }
 }
 
 - (void)setRippleStyle:(MDCRippleStyle)rippleStyle {
@@ -121,6 +130,13 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
       }
     }
   }
+}
+
+- (MDCRippleLayer *)activeRippleLayer {
+  if (self.layer.sublayers.count < 1) {
+    return nil;
+  }
+  return _activeRippleLayer;
 }
 
 - (void)beginRippleTouchDownAtPoint:(CGPoint)point

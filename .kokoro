@@ -16,7 +16,7 @@
 
 # Fail on any error
 set -e
-COCOAPODS_VERSION="1.5.3"
+COCOAPODS_VERSION="1.6.0"
 
 if [ -n "$KOKORO_BUILD_NUMBER" ]; then
   repo_dir='github/repo'
@@ -452,7 +452,7 @@ generate_website() {
     ./scripts/build_site.sh
 
     gem_install bundler
-    brew_install yarn --without-node
+    brew_install yarn --ignore-dependencies
     
     # The above installations update node to v10, but the docsite generator
     # relies on v8.
