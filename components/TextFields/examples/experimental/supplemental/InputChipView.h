@@ -22,9 +22,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface InputChipView : UIControl <MDCContainedInputView>
 @property(strong, nonatomic, readonly) UITextField *textField;
+
 @property(nonatomic, assign) BOOL canChipsWrap;
+
+@property(nonatomic, assign) CGFloat preferredMainContentAreaHeight;
+@property(nonatomic, assign) CGFloat preferredUnderlineLabelAreaHeight;
 @property(nonatomic, assign) CGFloat chipRowHeight;
 @property(nonatomic, assign) CGFloat chipRowSpacing;
+
 - (void)addChip:(UIView *)chip;
 
 @end

@@ -14,8 +14,19 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MDCContainedInputView.h"
+#import "MDCContainerStyleFilled.h"
+#import "MDCContainerStyleOutlined.h"
 #import "MDCSimpleTextField.h"
 #import "MaterialContainerScheme.h"
+
+@interface MDCSimpleTextFieldFilledDensityInformer
+    : MDCContainerStyleFilledDensityInformer <MDCContainedInputViewStyleDensityInforming>
+@end
+
+@interface MDCSimpleTextFieldOutlinedDensityInformer
+    : MDCContainerStyleOutlinedDensityInformer <MDCContainedInputViewStyleDensityInforming>
+@end
 
 /**
  This category is used to style SimpleTextField instances with an MDCContainerScheme.

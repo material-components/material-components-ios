@@ -29,6 +29,7 @@ static const CGFloat kFilledContainerStyleTopCornerRadius = (CGFloat)4.0;
 @end
 
 @implementation MDCContainerStyleFilled
+@synthesize densityInformer = _densityInformer;
 
 - (instancetype)init {
   self = [super init];
@@ -241,6 +242,13 @@ static const CGFloat kFilledContainerStyleTopCornerRadius = (CGFloat)4.0;
   return underlineThickness;
 }
 
+- (id<MDCContainedInputViewStyleDensityInforming>)densityInformer {
+  if (_densityInformer) {
+    return _densityInformer;
+  }
+  return [[MDCContainerStyleFilledDensityInformer alloc] init];
+}
+
 @end
 
 @implementation MDCContainerStyleFilledDensityInformer
@@ -257,6 +265,10 @@ static const CGFloat kFilledContainerStyleTopCornerRadius = (CGFloat)4.0;
 
 - (CGFloat)contentAreaTopPaddingWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY {
   return floatingPlaceholderMaxY + 6.5;
+}
+
+- (CGFloat)normalContentAreaBottomPadding {
+  return 10;
 }
 
 @end

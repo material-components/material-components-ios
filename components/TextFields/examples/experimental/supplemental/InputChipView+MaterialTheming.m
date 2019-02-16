@@ -82,6 +82,7 @@
 
 - (void)applyOutlinedThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
   MDCContainerStyleOutlined *outlinedStyle = [[MDCContainerStyleOutlined alloc] init];
+  outlinedStyle.densityInformer = [[InputChipViewOutlinedDensityInformer alloc] init];
   self.containerStyle = outlinedStyle;
 
   [self applyTypographySchemeWith:containerScheme];
@@ -125,6 +126,7 @@
 - (void)applyFilledThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
   MDCContainerStyleFilled *filledStyle = [[MDCContainerStyleFilled alloc] init];
   self.containerStyle = filledStyle;
+  self.containerStyle.densityInformer = [[InputChipViewFilledDensityInformer alloc] init];
 
   [self applyTypographySchemeWith:containerScheme];
 
@@ -253,4 +255,17 @@
   return simpleTextFieldColorScheme;
 }
 
+@end
+
+@implementation InputChipViewFilledDensityInformer
+
+@end
+
+@implementation InputChipViewOutlinedDensityInformer
+- (CGFloat)normalContentAreaTopPadding {
+  return 12;
+}
+- (CGFloat)normalContentAreaBottomPadding {
+  return 12;
+}
 @end

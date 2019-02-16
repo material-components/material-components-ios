@@ -34,32 +34,44 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, assign) CGRect placeholderFrameNormal;
 
 @property(nonatomic, assign) CGRect textFieldFrame;
+
+@property(nonatomic, assign) CGRect underlineLabelFrame;
+@property(nonatomic, assign) CGRect leftUnderlineLabelFrame;
+@property(nonatomic, assign) CGRect rightUnderlineLabelFrame;
+
+@property(nonatomic, assign) CGRect maskedScrollViewContainerViewFrame;
+@property(nonatomic, assign) CGRect scrollViewFrame;
 @property(nonatomic, assign) CGRect scrollViewContentViewTouchForwardingViewFrame;
-@property(nonatomic, assign) CGPoint scrollViewContentOffset;
-//@property(nonatomic, assign) CGPoint scrollViewContentInset;
 @property(nonatomic, assign) CGSize scrollViewContentSize;
+@property(nonatomic, assign) CGPoint scrollViewContentOffset;
+
+@property(nonatomic, readonly) CGFloat calculatedHeight;
+//@property(nonatomic, readonly) CGFloat minimumHeight;
+@property(nonatomic, readonly) CGFloat contentAreaMaxY;
 
 - (instancetype)initWithSize:(CGSize)size
-                      containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
-                                text:(NSString *)text
-                         placeholder:(NSString *)placeholder
-                                font:(UIFont *)font
-             floatingPlaceholderFont:(UIFont *)floatingPlaceholderFont
-                    placeholderState:(MDCContainedInputViewPlaceholderState)placeholderState
-                               chips:(NSArray<UIView *> *)chips
-                      staleChipViews:(NSArray<UIView *> *)staleChipViews
-                        canChipsWrap:(BOOL)canChipsWrap
-                       chipRowHeight:(CGFloat)chipRowHeight
-                    interChipSpacing:(CGFloat)interChipSpacing
-                         clearButton:(UIButton *)clearButton
-                 clearButtonViewMode:(UITextFieldViewMode)clearButtonViewMode
-                  leftUnderlineLabel:(UILabel *)leftUnderlineLabel
-                 rightUnderlineLabel:(UILabel *)rightUnderlineLabel
-          underlineLabelDrawPriority:
-              (MDCContainedInputViewUnderlineLabelDrawPriority)underlineLabelDrawPriority
-    customUnderlineLabelDrawPriority:(CGFloat)normalizedCustomUnderlineLabelDrawPriority
-                               isRTL:(BOOL)isRTL
-                           isEditing:(BOOL)isEditing;
+                       containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
+                                 text:(NSString *)text
+                          placeholder:(NSString *)placeholder
+                                 font:(UIFont *)font
+              floatingPlaceholderFont:(UIFont *)floatingPlaceholderFont
+                     placeholderState:(MDCContainedInputViewPlaceholderState)placeholderState
+                                chips:(NSArray<UIView *> *)chips
+                       staleChipViews:(NSArray<UIView *> *)staleChipViews
+                         canChipsWrap:(BOOL)canChipsWrap
+                        chipRowHeight:(CGFloat)chipRowHeight
+                     interChipSpacing:(CGFloat)interChipSpacing
+                          clearButton:(UIButton *)clearButton
+                  clearButtonViewMode:(UITextFieldViewMode)clearButtonViewMode
+                   leftUnderlineLabel:(UILabel *)leftUnderlineLabel
+                  rightUnderlineLabel:(UILabel *)rightUnderlineLabel
+           underlineLabelDrawPriority:
+               (MDCContainedInputViewUnderlineLabelDrawPriority)underlineLabelDrawPriority
+     customUnderlineLabelDrawPriority:(CGFloat)normalizedCustomUnderlineLabelDrawPriority
+       preferredMainContentAreaHeight:(CGFloat)preferredMainContentAreaHeight
+    preferredUnderlineLabelAreaHeight:(CGFloat)preferredUnderlineLabelAreaHeight
+                                isRTL:(BOOL)isRTL
+                            isEditing:(BOOL)isEditing;
 @end
 
 NS_ASSUME_NONNULL_END

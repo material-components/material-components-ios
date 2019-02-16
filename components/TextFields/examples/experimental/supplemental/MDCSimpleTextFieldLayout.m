@@ -163,19 +163,26 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
 
   CGFloat textRectHeight = [self textHeightWithFont:font];
 
-  CGFloat textRectMinY = [containerStyle.densityInformer normalContentAreaTopPadding];
-  CGFloat textRectCenterY = (CGFloat)textRectMinY + ((CGFloat)0.5 * (CGFloat)textRectHeight);
+  CGFloat textRectMinYNormal = [containerStyle.densityInformer normalContentAreaTopPadding];
+  CGFloat textRectCenterYNormal =
+      (CGFloat)textRectMinYNormal + ((CGFloat)0.5 * (CGFloat)textRectHeight);
+  CGFloat textRectMaxYNormal = (CGFloat)textRectMinYNormal + (CGFloat)textRectHeight;
   CGFloat textRectFloatingPlaceholderCenterY =
       [self textRectFloatingPlaceholderCenterYWithFloatingPlaceholderMinY:floatingPlaceholderMinY
                                                 floatingPlaceholderHeight:floatingPlaceholderHeight
                                                            textRectHeight:textRectHeight
                                                            containerStyle:containerStyle];
+  CGFloat textRectMaxYFloatingPlaceholder =
+      textRectFloatingPlaceholderCenterY + (0.5 * textRectHeight);
+  CGFloat highestPossibleTextRectMaxY = MAX(textRectMaxYNormal, textRectMaxYFloatingPlaceholder);
+  CGFloat bottomPadding = [containerStyle.densityInformer normalContentAreaBottomPadding];
+  CGFloat topRowBottomRowDividerY = highestPossibleTextRectMaxY + bottomPadding;
 
   CGFloat leftViewHeight = CGRectGetHeight(leftView.frame);
   CGFloat leftViewMinY = 0;
   CGFloat leftViewMaxY = 0;
   if (shouldAttemptToDisplayLeftView) {
-    leftViewMinY = [self minYForSubviewWithHeight:leftViewHeight centerY:textRectCenterY];
+    leftViewMinY = [self minYForSubviewWithHeight:leftViewHeight centerY:textRectCenterYNormal];
     leftViewMaxY = leftViewMinY + leftViewHeight;
   }
 
@@ -183,7 +190,7 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
   CGFloat rightViewMinY = 0;
   CGFloat rightViewMaxY = 0;
   if (shouldAttemptToDisplayRightView) {
-    rightViewMinY = [self minYForSubviewWithHeight:rightViewHeight centerY:textRectCenterY];
+    rightViewMinY = [self minYForSubviewWithHeight:rightViewHeight centerY:textRectCenterYNormal];
     rightViewMaxY = rightViewMinY + rightViewHeight;
   }
 
@@ -191,7 +198,7 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
   CGFloat clearButtonFloatingPlaceholderMinY = 0;
   if (shouldAttemptToDisplayClearButton) {
     clearButtonMinY = [self minYForSubviewWithHeight:kClearButtonTouchTargetSideLength
-                                             centerY:textRectCenterY];
+                                             centerY:textRectCenterYNormal];
     clearButtonFloatingPlaceholderMinY =
         [self minYForSubviewWithHeight:kClearButtonTouchTargetSideLength
                                centerY:textRectFloatingPlaceholderCenterY];
@@ -230,15 +237,14 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
   }
 
   CGFloat textRectWidth = textRectMaxX - textRectMinX;
-  //  CGFloat textRectMinY =
-  //      (CGFloat)round((double)(textRectCenterY - (textRectHeight * (CGFloat)0.5)));
-  CGFloat textRectMaxY = textRectMinY + textRectHeight;
-  CGRect textRect = CGRectMake(textRectMinX, textRectMinY, textRectWidth, textRectHeight);
-
-  CGFloat floatingPlaceholderTextAreaMinY = (CGFloat)round(
+  //    CGFloat textRectMinY =
+  //        (CGFloat)round((double)(textRectCenterY - (textRectHeight * (CGFloat)0.5)));
+  CGRect textRectNormal =
+      CGRectMake(textRectMinX, textRectMinYNormal, textRectWidth, textRectHeight);
+  CGFloat textRectMinYFloatingPlaceholder = (CGFloat)round(
       (double)(textRectFloatingPlaceholderCenterY - (textRectHeight * (CGFloat)0.5)));
   CGRect floatingPlaceholderTextAreaRect =
-      CGRectMake(textRectMinX, floatingPlaceholderTextAreaMinY, textRectWidth, textRectHeight);
+      CGRectMake(textRectMinX, textRectMinYFloatingPlaceholder, textRectWidth, textRectHeight);
 
   CGRect leftViewFrame = CGRectMake(leftViewMinX, leftViewMinY, leftViewWidth, leftViewHeight);
   CGRect rightViewFrame = CGRectMake(rightViewMinX, rightViewMinY, rightViewWidth, rightViewHeight);
@@ -256,7 +262,7 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
                                        font:font
                     floatingPlaceholderFont:floatingPlaceholderFont
                     floatingPlaceholderMinY:floatingPlaceholderMinY
-                               textRectRect:textRect
+                               textRectRect:textRectNormal
                                       isRTL:isRTL];
   CGRect placeholderFrameFloating =
       [self placeholderFrameWithPlaceholder:placeholder
@@ -265,7 +271,7 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
                                        font:font
                     floatingPlaceholderFont:floatingPlaceholderFont
                     floatingPlaceholderMinY:floatingPlaceholderMinY
-                               textRectRect:textRect
+                               textRectRect:textRectNormal
                                       isRTL:isRTL];
 
   CGFloat underlineLabelsCombinedMinX = isRTL ? kTrailingMargin : kLeadingMargin;
@@ -274,16 +280,16 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
   CGFloat underlineLabelsCombinedMaxWidth =
       underlineLabelsCombinedMaxX - underlineLabelsCombinedMinX;
 
-  CGFloat floatingPlaceholderTextAreaMaxY = floatingPlaceholderTextAreaMinY + textRectHeight;
-  CGFloat topRowSubviewMaxY =
-      [self topRowSubviewMaxYWithTextAreaMaxY:textRectMaxY
-              floatingPlaceholderTextAreaMaxY:floatingPlaceholderTextAreaMaxY
-                                 leftViewMaxY:leftViewMaxY
-                                rightViewMaxY:rightViewMaxY];
-
-  CGFloat topRowBottomRowDividerY = topRowSubviewMaxY + kTopRowBottomRowDividerVerticalPadding;
-  CGFloat bottomPadding = [containerStyle.densityInformer normalContentAreaBottomPadding];
-  topRowBottomRowDividerY = textRectMaxY + bottomPadding;
+  //  CGFloat floatingPlaceholderTextAreaMaxY = textRectMinYFloatingPlaceholder + textRectHeight;
+  //  CGFloat topRowSubviewMaxY =
+  //      [self topRowSubviewMaxYWithTextAreaMaxY:textRectMaxY
+  //              floatingPlaceholderTextAreaMaxY:floatingPlaceholderTextAreaMaxY
+  //                                 leftViewMaxY:leftViewMaxY
+  //                                rightViewMaxY:rightViewMaxY];
+  //
+  //  CGFloat topRowBottomRowDividerY = topRowSubviewMaxY + kTopRowBottomRowDividerVerticalPadding;
+  //  CGFloat bottomPadding = [containerStyle.densityInformer normalContentAreaBottomPadding];
+  //  CGFloat topRowBottomRowDividerY = floatingPlaceholderTextAreaMaxY + bottomPadding;
 
   CGFloat underlineLabelsCombinedMinY =
       topRowBottomRowDividerY + kTopRowBottomRowDividerVerticalPadding;
@@ -346,7 +352,7 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
   self.rightViewFrame = rightViewFrame;
   self.clearButtonFrame = clearButtonFrame;
   self.clearButtonFrameFloatingPlaceholder = clearButtonFrameFloatingPlaceholder;
-  self.textRect = textRect;
+  self.textRect = textRectNormal;
   self.textRectFloatingPlaceholder = floatingPlaceholderTextAreaRect;
   self.placeholderFrameFloating = placeholderFrameFloating;
   self.placeholderFrameNormal = placeholderFrameNormal;

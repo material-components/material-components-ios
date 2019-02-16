@@ -158,6 +158,19 @@
   }
 }
 
+#pragma mark Accessors
+
+- (void)setDensityInformer:(id<MDCContainedInputViewStyleDensityInforming>)densityInformer {
+  _densityInformer = densityInformer;
+}
+
+- (id<MDCContainedInputViewStyleDensityInforming>)densityInformer {
+  if (_densityInformer) {
+    return _densityInformer;
+  }
+  return [[MDCContainerStyleBaseDensityInformer alloc] init];
+}
+
 @end
 
 @implementation MDCContainerStyleBaseDensityInformer

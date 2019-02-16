@@ -254,3 +254,29 @@
 }
 
 @end
+
+@implementation MDCSimpleTextFieldFilledDensityInformer
+
+- (CGFloat)floatingPlaceholderFontSize {
+  CGFloat scaleFactor = ((CGFloat)53 / (CGFloat)71);
+  return scaleFactor * [UIFont systemFontSize];
+}
+
+- (CGFloat)floatingPlaceholderMinYWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight {
+  CGFloat filledPlaceholderTopPaddingScaleHeuristic = ((CGFloat)50.0 / (CGFloat)70.0);
+  return filledPlaceholderTopPaddingScaleHeuristic * floatingPlaceholderHeight;
+}
+
+- (CGFloat)contentAreaTopPaddingWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY {
+  return floatingPlaceholderMaxY + 6.5;
+}
+
+- (CGFloat)normalContentAreaBottomPadding {
+  return 10;
+}
+
+@end
+
+@implementation MDCSimpleTextFieldOutlinedDensityInformer
+
+@end

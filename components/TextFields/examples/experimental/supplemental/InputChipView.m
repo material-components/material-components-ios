@@ -18,8 +18,6 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <MDFInternationalization/MDFInternationalization.h>
 
-#import "InputChipViewColorSchemeAdapter.h"
-
 #import "MDCContainedInputView.h"
 
 #import "MaterialMath.h"
@@ -31,6 +29,7 @@ static const CGFloat kFloatingPlaceholderAnimationDuration = (CGFloat)0.15;
 - (void)inputChipViewTextFieldDidDeleteBackward:(InputChipViewTextField *)textField
                                         oldText:(NSString *)oldText
                                         newText:(NSString *)newText;
+- (void)inputChipViewTextFieldDidBecomeFirstResponder:(BOOL)didBecome;
 - (void)inputChipViewTextFieldDidResignFirstResponder:(BOOL)didResign;
 - (void)inputChipViewTextFieldDidSetPlaceholder:(NSString *)placeholder;
 @end
@@ -62,6 +61,13 @@ static const CGFloat kFloatingPlaceholderAnimationDuration = (CGFloat)0.15;
   [self.inputChipViewTextFieldDelegate
       inputChipViewTextFieldDidResignFirstResponder:didResignFirstResponder];
   return didResignFirstResponder;
+}
+
+- (BOOL)becomeFirstResponder {
+  BOOL didBecomeFirstResponder = [super becomeFirstResponder];
+  [self.inputChipViewTextFieldDelegate
+      inputChipViewTextFieldDidBecomeFirstResponder:didBecomeFirstResponder];
+  return didBecomeFirstResponder;
 }
 
 - (void)setPlaceholder:(NSString *)placeholder {
@@ -113,8 +119,6 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 @property(strong, nonatomic) UITouch *lastTouch;
 @property(nonatomic, assign) CGPoint lastTouchInitialContentOffset;
 @property(nonatomic, assign) CGPoint lastTouchInitialLocation;
-
-@property(strong, nonatomic) InputChipViewColorSchemeAdapter *colorSchemeAdapter;
 
 @property(strong, nonatomic) CALayer *horizontalGradientLayer;
 @property(strong, nonatomic) CAGradientLayer *horizontalGradientLayerMask;
@@ -347,18 +351,16 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 - (BOOL)resignFirstResponder {
   BOOL textFieldDidResign = [self.textField resignFirstResponder];
-  [self performResignFirstResponder];
   return textFieldDidResign;
-}
-
-- (void)performResignFirstResponder {
-  [self setNeedsLayout];
 }
 
 - (BOOL)becomeFirstResponder {
   BOOL textFieldDidBecome = [self.textField becomeFirstResponder];
-  [self setNeedsLayout];
   return textFieldDidBecome;
+}
+
+- (void)handleResponderChange {
+  [self setNeedsLayout];
 }
 
 - (BOOL)isFirstResponder {
@@ -378,21 +380,17 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
-  NSLog(@"entering sizeThatFits");
-  CGSize sizeThatFits = [super sizeThatFits:size];
-  NSLog(@"leaving sizeThatFits");
-  return sizeThatFits;
-}
-
-- (void)sizeToFit {
-  NSLog(@"entering sizeToFit");
-  [super sizeToFit];
-  NSLog(@"leaving sizeToFit");
+  return [self preferredSizeWithWidth:size.width];
 }
 
 - (CGSize)intrinsicContentSize {
-  // TODO: Implement this
-  return [super intrinsicContentSize];
+  return [self preferredSizeWithWidth:CGRectGetWidth(self.bounds)];
+}
+
+- (CGSize)preferredSizeWithWidth:(CGFloat)width {
+  CGSize fittingSize = CGSizeMake(width, CGFLOAT_MAX);
+  InputChipViewLayout *layout = [self calculateLayoutWithSize:fittingSize];
+  return CGSizeMake(width, layout.calculatedHeight);
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -500,19 +498,10 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
                                rightUnderlineLabel:self.rightUnderlineLabel
                         underlineLabelDrawPriority:self.underlineLabelDrawPriority
                   customUnderlineLabelDrawPriority:self.customUnderlineLabelDrawPriority
+                    preferredMainContentAreaHeight:self.preferredMainContentAreaHeight
+                 preferredUnderlineLabelAreaHeight:self.preferredUnderlineLabelAreaHeight
                                              isRTL:self.isRTL
                                          isEditing:self.inputChipViewTextField.isEditing];
-
-  //           initWithSize:size
-  //                                               chips:self.chips
-  //                                      staleChipViews:self.chips
-  //                                        canChipsWrap:self.canChipsWrap
-  //                                       chipRowHeight:self.chipRowHeight
-  //                                       textFieldText:self.textField.text
-  //                                         placeholder:self.textField.placeholder
-  //                                       textFieldFont:textFieldFont
-  //                                       contentInsets:self.contentInsets
-  //                                               isRTL:[self isRTL]];
 }
 
 - (void)preLayoutSubviews {
@@ -574,10 +563,9 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   //  self.clearButton.hidden = self.layout.clearButtonHidden;
   //  self.leftUnderlineLabel.frame = self.layout.leftUnderlineLabelFrame;
   //  self.rightUnderlineLabel.frame = self.layout.rightUnderlineLabelFrame;
-  //
 
-  self.maskedScrollViewContainerView.frame = self.bounds;
-  self.scrollView.frame = self.bounds;
+  self.maskedScrollViewContainerView.frame = self.layout.maskedScrollViewContainerViewFrame;
+  self.scrollView.frame = self.layout.scrollViewFrame;
   self.scrollViewContentViewTouchForwardingView.frame =
       self.layout.scrollViewContentViewTouchForwardingViewFrame;
   self.textField.frame = self.layout.textFieldFrame;
@@ -596,8 +584,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 }
 
 - (CGRect)containerRect {
-  return CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame));
-  /*self.layout.topRowBottomRowDividerY*/
+  return CGRectMake(0, 0, CGRectGetWidth(self.frame), self.layout.contentAreaMaxY);
 }
 
 - (void)layOutGradientLayers {
@@ -615,10 +602,17 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   self.verticalGradientLayer.frame = self.bounds;
   self.verticalGradientLayerMask.frame = self.bounds;
   CGFloat viewHeight = CGRectGetHeight(self.bounds);
+
+  CGFloat floatingPlaceholderMaxY = CGRectGetMaxY(self.placeholderLabel.frame);
+  CGFloat spacing = [self.containerStyle.densityInformer
+      contentAreaTopPaddingWithFloatingPlaceholderMaxY:floatingPlaceholderMaxY];
+  CGFloat topFadeStart = (floatingPlaceholderMaxY + (0.0 * spacing)) / viewHeight;
+  CGFloat topFadeEnd = (floatingPlaceholderMaxY + (0.5 * spacing)) / viewHeight;
+
   self.verticalGradientLayerMask.locations = @[
     @(0),
-    @((self.layout.initialChipRowMinY - 10) / viewHeight),
-    @((self.layout.initialChipRowMinY) / viewHeight),
+    @(topFadeStart),
+    @(topFadeEnd),
     @((viewHeight - [self.containerStyle.densityInformer normalContentAreaBottomPadding]) /
       viewHeight),
     @((viewHeight - [self.containerStyle.densityInformer normalContentAreaBottomPadding] + 10) /
@@ -976,7 +970,11 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 }
 
 - (void)inputChipViewTextFieldDidResignFirstResponder:(BOOL)didBecome {
-  [self performResignFirstResponder];
+  [self handleResponderChange];
+}
+
+- (void)inputChipViewTextFieldDidBecomeFirstResponder:(BOOL)didBecome {
+  [self handleResponderChange];
 }
 
 - (void)inputChipViewTextFieldDidSetPlaceholder:(NSString *)placeholder {

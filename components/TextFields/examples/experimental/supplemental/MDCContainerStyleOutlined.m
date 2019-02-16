@@ -33,6 +33,7 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
 @end
 
 @implementation MDCContainerStyleOutlined
+@synthesize densityInformer = _densityInformer;
 
 - (instancetype)init {
   self = [super init];
@@ -196,6 +197,9 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
 }
 
 - (id<MDCContainedInputViewStyleDensityInforming>)densityInformer {
+  if (_densityInformer) {
+    return _densityInformer;
+  }
   return [[MDCContainerStyleOutlinedDensityInformer alloc] init];
 }
 
