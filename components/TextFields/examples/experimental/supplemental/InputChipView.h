@@ -25,8 +25,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic, assign) BOOL canChipsWrap;
 
-@property(nonatomic, assign) CGFloat preferredMainContentAreaHeight;
-@property(nonatomic, assign) CGFloat preferredUnderlineLabelAreaHeight;
 @property(nonatomic, assign) CGFloat chipRowHeight;
 @property(nonatomic, assign) CGFloat chipRowSpacing;
 

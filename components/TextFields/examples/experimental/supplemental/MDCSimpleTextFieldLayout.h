@@ -63,6 +63,8 @@ NS_ASSUME_NONNULL_BEGIN
            underlineLabelDrawPriority:
                (MDCContainedInputViewUnderlineLabelDrawPriority)underlineLabelDrawPriority
      customUnderlineLabelDrawPriority:(CGFloat)customUnderlineLabelDrawPriority
+       preferredMainContentAreaHeight:(CGFloat)preferredMainContentAreaHeight
+    preferredUnderlineLabelAreaHeight:(CGFloat)preferredUnderlineLabelAreaHeight
                                 isRTL:(BOOL)isRTL
                             isEditing:(BOOL)isEditing;
 

@@ -49,6 +49,8 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
            underlineLabelDrawPriority:
                (MDCContainedInputViewUnderlineLabelDrawPriority)underlineLabelDrawPriority
      customUnderlineLabelDrawPriority:(CGFloat)customUnderlineLabelDrawPriority
+       preferredMainContentAreaHeight:(CGFloat)preferredMainContentAreaHeight
+    preferredUnderlineLabelAreaHeight:(CGFloat)preferredUnderlineLabelAreaHeight
                                 isRTL:(BOOL)isRTL
                             isEditing:(BOOL)isEditing {
   self = [super init];
@@ -70,6 +72,8 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
                        rightUnderlineLabel:rightUnderlineLabel
                 underlineLabelDrawPriority:underlineLabelDrawPriority
           customUnderlineLabelDrawPriority:customUnderlineLabelDrawPriority
+            preferredMainContentAreaHeight:preferredMainContentAreaHeight
+         preferredUnderlineLabelAreaHeight:preferredUnderlineLabelAreaHeight
                                      isRTL:isRTL
                                  isEditing:isEditing];
     return self;
@@ -97,6 +101,8 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
               underlineLabelDrawPriority:
                   (MDCContainedInputViewUnderlineLabelDrawPriority)underlineLabelDrawPriority
         customUnderlineLabelDrawPriority:(CGFloat)customUnderlineLabelDrawPriority
+          preferredMainContentAreaHeight:(CGFloat)preferredMainContentAreaHeight
+       preferredUnderlineLabelAreaHeight:(CGFloat)preferredUnderlineLabelAreaHeight
                                    isRTL:(BOOL)isRTL
                                isEditing:(BOOL)isEditing {
   BOOL shouldAttemptToDisplayLeftView = [self shouldAttemptToDisplaySideView:leftView
@@ -176,7 +182,11 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
       textRectFloatingPlaceholderCenterY + (0.5 * textRectHeight);
   CGFloat highestPossibleTextRectMaxY = MAX(textRectMaxYNormal, textRectMaxYFloatingPlaceholder);
   CGFloat bottomPadding = [containerStyle.densityInformer normalContentAreaBottomPadding];
-  CGFloat topRowBottomRowDividerY = highestPossibleTextRectMaxY + bottomPadding;
+  CGFloat intrinsicMainContentAreaHeight = highestPossibleTextRectMaxY + bottomPadding;
+  CGFloat topRowBottomRowDividerY = intrinsicMainContentAreaHeight;
+  if (preferredMainContentAreaHeight > intrinsicMainContentAreaHeight) {
+    topRowBottomRowDividerY = preferredMainContentAreaHeight;
+  }
 
   CGFloat leftViewHeight = CGRectGetHeight(leftView.frame);
   CGFloat leftViewMinY = 0;

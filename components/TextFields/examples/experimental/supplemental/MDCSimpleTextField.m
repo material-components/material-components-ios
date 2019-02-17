@@ -49,7 +49,8 @@ static const CGFloat kFloatingPlaceholderAnimationDuration = (CGFloat)0.15;
 
 // TODO: Go through UITextField.h and make sure you consider the entire public API
 @implementation MDCSimpleTextField
-
+@synthesize preferredMainContentAreaHeight = _preferredMainContentAreaHeight;
+@synthesize preferredUnderlineLabelAreaHeight = _preferredUnderlineLabelAreaHeight;
 @synthesize underlineLabelDrawPriority = _underlineLabelDrawPriority;
 @synthesize customUnderlineLabelDrawPriority = _customUnderlineLabelDrawPriority;
 @synthesize containerStyle = _containerStyle;
@@ -247,25 +248,27 @@ static const CGFloat kFloatingPlaceholderAnimationDuration = (CGFloat)0.15;
   CGFloat normalizedCustomUnderlineLabelDrawPriority =
       [self normalizedCustomUnderlineLabelDrawPriority:self.customUnderlineLabelDrawPriority];
   return [[MDCSimpleTextFieldLayout alloc]
-                 initWithTextFieldSize:textFieldSize
-                        containerStyle:self.containerStyle
-                                  text:self.text
-                           placeholder:self.placeholder
-                                  font:effectiveFont
-               floatingPlaceholderFont:floatingFont
-                   canPlaceholderFloat:self.canPlaceholderFloat
-                              leftView:self.leftView
-                          leftViewMode:self.leftViewMode
-                             rightView:self.rightView
-                         rightViewMode:self.rightViewMode
-                           clearButton:self.clearButton
-                       clearButtonMode:self.clearButtonMode
-                    leftUnderlineLabel:self.leftUnderlineLabel
-                   rightUnderlineLabel:self.rightUnderlineLabel
-            underlineLabelDrawPriority:self.underlineLabelDrawPriority
-      customUnderlineLabelDrawPriority:normalizedCustomUnderlineLabelDrawPriority
-                                 isRTL:[self isRTL]
-                             isEditing:self.isEditing];
+                  initWithTextFieldSize:textFieldSize
+                         containerStyle:self.containerStyle
+                                   text:self.text
+                            placeholder:self.placeholder
+                                   font:effectiveFont
+                floatingPlaceholderFont:floatingFont
+                    canPlaceholderFloat:self.canPlaceholderFloat
+                               leftView:self.leftView
+                           leftViewMode:self.leftViewMode
+                              rightView:self.rightView
+                          rightViewMode:self.rightViewMode
+                            clearButton:self.clearButton
+                        clearButtonMode:self.clearButtonMode
+                     leftUnderlineLabel:self.leftUnderlineLabel
+                    rightUnderlineLabel:self.rightUnderlineLabel
+             underlineLabelDrawPriority:self.underlineLabelDrawPriority
+       customUnderlineLabelDrawPriority:normalizedCustomUnderlineLabelDrawPriority
+         preferredMainContentAreaHeight:self.preferredMainContentAreaHeight
+      preferredUnderlineLabelAreaHeight:self.preferredUnderlineLabelAreaHeight
+                                  isRTL:self.isRTL
+                              isEditing:self.isEditing];
 }
 
 - (CGFloat)normalizedCustomUnderlineLabelDrawPriority:(CGFloat)customPriority {

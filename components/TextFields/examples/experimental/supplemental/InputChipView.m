@@ -145,8 +145,8 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 @end
 
 @implementation InputChipView
-
-//@synthesize containedInputViewState = _containedInputViewState;
+@synthesize preferredMainContentAreaHeight = _preferredMainContentAreaHeight;
+@synthesize preferredUnderlineLabelAreaHeight = _preferredUnderlineLabelAreaHeight;
 @synthesize underlineLabelDrawPriority = _underlineLabelDrawPriority;
 @synthesize customUnderlineLabelDrawPriority = _customUnderlineLabelDrawPriority;
 @synthesize containerStyle = _containerStyle;

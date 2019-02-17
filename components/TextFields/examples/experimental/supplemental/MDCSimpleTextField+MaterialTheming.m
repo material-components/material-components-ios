@@ -83,6 +83,7 @@
 - (void)applyOutlinedThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
   MDCContainerStyleOutlined *outlinedStyle = [[MDCContainerStyleOutlined alloc] init];
   self.containerStyle = outlinedStyle;
+  self.containerStyle.densityInformer = [[MDCContainerStyleOutlinedDensityInformer alloc] init];
 
   [self applyTypographySchemeWith:containerScheme];
 
@@ -125,6 +126,7 @@
 - (void)applyFilledThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
   MDCContainerStyleFilled *filledStyle = [[MDCContainerStyleFilled alloc] init];
   self.containerStyle = filledStyle;
+  self.containerStyle.densityInformer = [[MDCContainerStyleFilledDensityInformer alloc] init];
 
   [self applyTypographySchemeWith:containerScheme];
 

@@ -158,6 +158,10 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewPlaceholderState) {
  around.
  */
 @property(nonatomic, assign, readonly) CGRect containerRect;
+
+@property(nonatomic, assign) CGFloat preferredMainContentAreaHeight;
+@property(nonatomic, assign) CGFloat preferredUnderlineLabelAreaHeight;
+
 @end
 
 @protocol MDCContainedInputViewColorScheming <NSObject>
