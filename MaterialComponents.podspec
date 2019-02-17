@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponents"
-  mdc.version      = "76.1.2"
+  mdc.version      = "77.0.0"
   mdc.authors      = "The Material Components authors."
   mdc.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   mdc.homepage     = "https://github.com/material-components/material-components-ios"
@@ -51,6 +51,27 @@ Pod::Spec.new do |mdc|
   #   end
   #  end
   #
+
+  # ActionSheet
+
+  mdc.subspec "ActionSheet" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = [
+      "components/#{component.base_name}/src/*.{h,m}",
+      "components/#{component.base_name}/src/private/*.{h,m}"
+    ]
+
+    component.dependency "MaterialComponents/BottomSheet"
+    component.dependency "MaterialComponents/Ink"
+    component.dependency "MaterialComponents/Typography"
+
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = [
+        "components/#{component.base_name}/tests/unit/*.{h,m,swift}"
+      ]
+    end
+  end
 
   # ActivityIndicator
 

@@ -452,7 +452,7 @@ generate_website() {
     ./scripts/build_site.sh
 
     gem_install bundler
-    brew_install yarn --without-node
+    brew_install yarn --ignore-dependencies
     
     # The above installations update node to v10, but the docsite generator
     # relies on v8.
