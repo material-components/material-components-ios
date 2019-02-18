@@ -23,6 +23,9 @@ static const CGFloat kCornerRadius = 4;
 @implementation MDCAlertController (MaterialTheming)
 
 - (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme {
+  // TODO(): Force-load the view before setting the buttons fonts to ensure that they aren't
+  //  overwritten in -updateButtonFont.
+  (void)self.view;
   // Color
   [self applyColorThemeWithScheme:scheme.colorScheme];
 
