@@ -43,7 +43,7 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
                      placeholderState:(MDCContainedInputViewPlaceholderState)placeholderState
                                 chips:(NSArray<UIView *> *)chips
                        staleChipViews:(NSArray<UIView *> *)staleChipViews
-                         canChipsWrap:(BOOL)canChipsWrap
+                            chipsWrap:(BOOL)chipsWrap
                         chipRowHeight:(CGFloat)chipRowHeight
                      interChipSpacing:(CGFloat)interChipSpacing
                           clearButton:(UIButton *)clearButton
@@ -68,7 +68,7 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
                          placeholderState:placeholderState
                                     chips:chips
                            staleChipViews:staleChipViews
-                             canChipsWrap:canChipsWrap
+                                chipsWrap:chipsWrap
                             chipRowHeight:chipRowHeight
                          interChipSpacing:interChipSpacing
                               clearButton:clearButton
@@ -94,7 +94,7 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
                      placeholderState:(MDCContainedInputViewPlaceholderState)placeholderState
                                 chips:(NSArray<UIView *> *)chips
                        staleChipViews:(NSArray<UIView *> *)staleChipViews
-                         canChipsWrap:(BOOL)canChipsWrap
+                            chipsWrap:(BOOL)chipsWrap
                         chipRowHeight:(CGFloat)chipRowHeight
                      interChipSpacing:(CGFloat)interChipSpacing
                           clearButton:(UIButton *)clearButton
@@ -134,12 +134,12 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
                                                                          font:font
                                                             globalChipRowMinX:globalChipRowMinX
                                                                  maxTextWidth:maxTextWidth
-                                                                 canChipsWrap:canChipsWrap
+                                                                    chipsWrap:chipsWrap
                                                             contentAreaHeight:self.contentAreaMaxY
                                                                containerStyle:containerStyle];
 
   CGFloat initialChipRowMinYNormal = CGRectGetMidY(placeholderFrameNormal) - (0.5 * chipRowHeight);
-  if (canChipsWrap) {
+  if (chipsWrap) {
   } else {
     CGFloat center = self.contentAreaMaxY * 0.5;
     initialChipRowMinYNormal = center - (chipRowHeight * 0.5);
@@ -152,7 +152,7 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
   CGSize textFieldSize = [self textSizeWithText:text font:font maxWidth:maxTextWidth];
 
   NSArray<NSValue *> *chipFrames = [self determineChipFramesWithChips:chips
-                                                         canChipsWrap:canChipsWrap
+                                                            chipsWrap:chipsWrap
                                                         chipRowHeight:chipRowHeight
                                                      interChipSpacing:interChipSpacing
                                                    initialChipRowMinY:initialChipRowMinY
@@ -164,7 +164,7 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
 
   CGRect textFieldFrame = [self textFieldFrameWithSize:scrollViewSize
                                             chipFrames:chipFrames
-                                          canChipsWrap:canChipsWrap
+                                             chipsWrap:chipsWrap
                                          chipRowHeight:chipRowHeight
                                       interChipSpacing:interChipSpacing
                                     initialChipRowMinY:initialChipRowMinY
@@ -174,7 +174,7 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
                                                  isRTL:isRTL];
 
   CGPoint contentOffset = [self scrollViewContentOffsetWithSize:scrollViewSize
-                                                   canChipsWrap:canChipsWrap
+                                                      chipsWrap:chipsWrap
                                                   chipRowHeight:chipRowHeight
                                                interChipSpacing:interChipSpacing
                                                  textFieldFrame:textFieldFrame
@@ -186,7 +186,7 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
   CGSize contentSize = [self scrollViewContentSizeWithSize:scrollViewSize
                                              contentOffset:contentOffset
                                                 chipFrames:chipFrames
-                                              canChipsWrap:canChipsWrap
+                                                 chipsWrap:chipsWrap
                                             textFieldFrame:textFieldFrame];
 
   self.chipFrames = chipFrames;
@@ -242,14 +242,14 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
                                            font:(UIFont *)font
                               globalChipRowMinX:(CGFloat)globalChipRowMinX
                                    maxTextWidth:(CGFloat)maxTextWidth
-                                   canChipsWrap:(BOOL)canChipsWrap
+                                      chipsWrap:(BOOL)chipsWrap
                               contentAreaHeight:(CGFloat)contentAreaHeight
                                  containerStyle:(id<MDCContainedInputViewStyle>)containerStyle {
   CGFloat placeholderHeight = [self textHeightWithFont:font];
   CGFloat placeholderMinX = globalChipRowMinX;
   CGFloat placeholderMinY = 0;
   CGSize placeholderSize = [self textSizeWithText:placeholder font:font maxWidth:maxTextWidth];
-  if (canChipsWrap) {
+  if (chipsWrap) {
     placeholderMinY = [containerStyle.densityInformer normalContentAreaTopPadding];
   } else {
     CGFloat center = contentAreaHeight * 0.5;
@@ -281,7 +281,7 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
 }
 
 - (NSArray<NSValue *> *)determineChipFramesWithChips:(NSArray<UIView *> *)chips
-                                        canChipsWrap:(BOOL)canChipsWrap
+                                           chipsWrap:(BOOL)chipsWrap
                                        chipRowHeight:(CGFloat)chipRowHeight
                                     interChipSpacing:(CGFloat)interChipSpacing
                                   initialChipRowMinY:(CGFloat)initialChipRowMinY
@@ -289,7 +289,7 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
                                    globalChipRowMaxX:(CGFloat)globalChipRowMaxX
                                                isRTL:(BOOL)isRTL {
   NSMutableArray<NSValue *> *frames = [[NSMutableArray alloc] initWithCapacity:chips.count];
-  if (canChipsWrap) {
+  if (chipsWrap) {
     if (isRTL) {
     } else {
       CGFloat chipMinX = globalChipRowMinX;
@@ -365,9 +365,9 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
 - (CGSize)scrollViewContentSizeWithSize:(CGSize)size
                           contentOffset:(CGPoint)contentOffset
                              chipFrames:(NSArray<NSValue *> *)chipFrames
-                           canChipsWrap:(BOOL)canChipsWrap
+                              chipsWrap:(BOOL)chipsWrap
                          textFieldFrame:(CGRect)textFieldFrame {
-  if (canChipsWrap) {
+  if (chipsWrap) {
     if (contentOffset.y > 0) {
       size.height += contentOffset.y;
     }
@@ -418,7 +418,7 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
 
 - (CGRect)textFieldFrameWithSize:(CGSize)size
                       chipFrames:(NSArray<NSValue *> *)chipFrames
-                    canChipsWrap:(BOOL)canChipsWrap
+                       chipsWrap:(BOOL)chipsWrap
                    chipRowHeight:(CGFloat)chipRowHeight
                 interChipSpacing:(CGFloat)interChipSpacing
               initialChipRowMinY:(CGFloat)initialChipRowMinY
@@ -426,7 +426,7 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
                globalChipRowMaxX:(CGFloat)globalChipRowMaxX
                    textFieldSize:(CGSize)textFieldSize
                            isRTL:(BOOL)isRTL {
-  if (canChipsWrap) {
+  if (chipsWrap) {
     if (isRTL) {
     } else {
       CGFloat textFieldMinX = 0;
@@ -492,7 +492,7 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
 }
 
 - (CGPoint)scrollViewContentOffsetWithSize:(CGSize)size
-                              canChipsWrap:(BOOL)canChipsWrap
+                                 chipsWrap:(BOOL)chipsWrap
                              chipRowHeight:(CGFloat)chipRowHeight
                           interChipSpacing:(CGFloat)interChipSpacing
                             textFieldFrame:(CGRect)textFieldFrame
@@ -502,7 +502,7 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
                              bottomPadding:(CGFloat)bottomPadding
                                      isRTL:(BOOL)isRTL {
   CGPoint contentOffset = CGPointZero;
-  if (canChipsWrap) {
+  if (chipsWrap) {
     if (isRTL) {
     } else {
       NSInteger row = [self chipRowWithRect:textFieldFrame

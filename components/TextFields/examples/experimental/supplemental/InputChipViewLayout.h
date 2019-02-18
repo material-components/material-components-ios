@@ -58,7 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
                      placeholderState:(MDCContainedInputViewPlaceholderState)placeholderState
                                 chips:(NSArray<UIView *> *)chips
                        staleChipViews:(NSArray<UIView *> *)staleChipViews
-                         canChipsWrap:(BOOL)canChipsWrap
+                            chipsWrap:(BOOL)chipsWrap
                         chipRowHeight:(CGFloat)chipRowHeight
                      interChipSpacing:(CGFloat)interChipSpacing
                           clearButton:(UIButton *)clearButton

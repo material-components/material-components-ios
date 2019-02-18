@@ -425,7 +425,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   //  NSLog(@"offset from start: %@",NSStringFromCGPoint(offsetFromStart));
 
   CGPoint offset = self.lastTouchInitialContentOffset;
-  if (self.canChipsWrap) {
+  if (self.chipsWrap) {
     CGFloat height = CGRectGetHeight(self.frame);
     offset.y -= offsetFromStart.y;
     if (offset.y < 0) {
@@ -489,7 +489,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
                                   placeholderState:self.placeholderState
                                              chips:self.chips
                                     staleChipViews:self.chips
-                                      canChipsWrap:self.canChipsWrap
+                                         chipsWrap:self.chipsWrap
                                      chipRowHeight:self.chipRowHeight
                                   interChipSpacing:self.chipRowSpacing
                                        clearButton:self.clearButton
@@ -623,7 +623,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   // Maybe render both CALayers in a content, get an image from that context,
   // Create a layer that uses resulting image as its contents
   // then use that layer as a mask
-  if (self.canChipsWrap) {
+  if (self.chipsWrap) {
     self.maskedScrollViewContainerView.layer.mask = self.verticalGradientLayerMask;
   } else {
     self.maskedScrollViewContainerView.layer.mask = self.horizontalGradientLayerMask;
