@@ -24,7 +24,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong, nonatomic, readonly) UITextField *textField;
 
 @property(nonatomic, assign) BOOL chipsWrap;
-@property(nonatomic, assign) BOOL chipsFadeOutOfView;
 
 @property(nonatomic, assign) CGFloat chipRowHeight;
 @property(nonatomic, assign) CGFloat chipRowSpacing;

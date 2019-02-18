@@ -237,7 +237,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   CGFloat textHeight = (CGFloat)ceil((double)self.inputChipViewTextField.effectiveFont.lineHeight);
   self.chipRowHeight = textHeight * 2;
 
-  self.chipRowSpacing = 5;
+  self.chipRowSpacing = 7;
 }
 
 - (void)createSubviews {
@@ -604,19 +604,20 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   CGFloat viewHeight = CGRectGetHeight(self.bounds);
 
   CGFloat floatingPlaceholderMaxY = CGRectGetMaxY(self.placeholderLabel.frame);
-  CGFloat spacing = [self.containerStyle.densityInformer
+  CGFloat topSpacing = [self.containerStyle.densityInformer
       contentAreaTopPaddingWithFloatingPlaceholderMaxY:floatingPlaceholderMaxY];
-  CGFloat topFadeStart = (floatingPlaceholderMaxY + (0.0 * spacing)) / viewHeight;
-  CGFloat topFadeEnd = (floatingPlaceholderMaxY + (0.5 * spacing)) / viewHeight;
+  CGFloat topFadeStart = (floatingPlaceholderMaxY + (0.0 * topSpacing)) / viewHeight;
+  CGFloat topFadeEnd = (floatingPlaceholderMaxY + (0.25 * topSpacing)) / viewHeight;
+  CGFloat bottomSpacing = [self.containerStyle.densityInformer normalContentAreaBottomPadding];
+  CGFloat bottomFadeStart = (viewHeight - bottomSpacing) / viewHeight;
+  CGFloat bottomFadeEnd = (viewHeight - (0.5 * bottomSpacing)) / viewHeight;
 
   self.verticalGradientLayerMask.locations = @[
     @(0),
     @(topFadeStart),
     @(topFadeEnd),
-    @((viewHeight - [self.containerStyle.densityInformer normalContentAreaBottomPadding]) /
-      viewHeight),
-    @((viewHeight - [self.containerStyle.densityInformer normalContentAreaBottomPadding] + 10) /
-      viewHeight),
+    @(bottomFadeStart),
+    @(bottomFadeEnd),
     @(1),
   ];
   // TODO: Figure out how to have both gradients at once

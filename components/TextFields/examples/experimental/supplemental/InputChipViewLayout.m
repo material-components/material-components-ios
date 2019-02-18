@@ -14,6 +14,7 @@
 
 #import "InputChipViewLayout.h"
 
+#import <MDFInternationalization/MDFInternationalization.h>
 #import <MaterialComponents/MaterialMath.h>
 #import "InputChipView.h"
 
@@ -115,8 +116,9 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
       [self floatingPlaceholderFrameWithPlaceholder:placeholder
                                                font:floatingPlaceholderFont
                                   globalChipRowMinX:globalChipRowMinX
-                                       maxTextWidth:maxTextWidth
-                                     containerStyle:containerStyle];
+                                  globalChipRowMaxX:globalChipRowMaxX
+                                     containerStyle:containerStyle
+                                              isRTL:isRTL];
 
   CGFloat initialChipRowMinYWithFloatingPlaceholder = [containerStyle.densityInformer
       contentAreaTopPaddingWithFloatingPlaceholderMaxY:CGRectGetMaxY(placeholderFrameFloating)];
@@ -124,24 +126,26 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
       initialChipRowMinYWithFloatingPlaceholder + chipRowHeight;
   CGFloat bottomPadding = [containerStyle.densityInformer normalContentAreaBottomPadding];
   CGFloat intrinsicMainContentAreaHeight = highestPossibleInitialChipRowMaxY + bottomPadding;
+  CGFloat contentAreaMaxY = 0;
   if (preferredMainContentAreaHeight > intrinsicMainContentAreaHeight) {
-    self.contentAreaMaxY = preferredMainContentAreaHeight;
+    contentAreaMaxY = preferredMainContentAreaHeight;
   } else {
-    self.contentAreaMaxY = intrinsicMainContentAreaHeight;
+    contentAreaMaxY = intrinsicMainContentAreaHeight;
   }
 
   CGRect placeholderFrameNormal = [self normalPlaceholderFrameWithPlaceholder:placeholder
                                                                          font:font
                                                             globalChipRowMinX:globalChipRowMinX
-                                                                 maxTextWidth:maxTextWidth
+                                                            globalChipRowMaxX:globalChipRowMaxX
                                                                     chipsWrap:chipsWrap
-                                                            contentAreaHeight:self.contentAreaMaxY
-                                                               containerStyle:containerStyle];
+                                                            contentAreaHeight:contentAreaMaxY
+                                                               containerStyle:containerStyle
+                                                                        isRTL:isRTL];
 
   CGFloat initialChipRowMinYNormal = CGRectGetMidY(placeholderFrameNormal) - (0.5 * chipRowHeight);
   if (chipsWrap) {
   } else {
-    CGFloat center = self.contentAreaMaxY * 0.5;
+    CGFloat center = contentAreaMaxY * 0.5;
     initialChipRowMinYNormal = center - (chipRowHeight * 0.5);
   }
   CGFloat initialChipRowMinY = initialChipRowMinYNormal;
@@ -160,7 +164,7 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
                                                     globalChipRowMaxX:globalChipRowMaxX
                                                                 isRTL:isRTL];
 
-  CGSize scrollViewSize = CGSizeMake(size.width, self.contentAreaMaxY);
+  CGSize scrollViewSize = CGSizeMake(size.width, contentAreaMaxY);
 
   CGRect textFieldFrame = [self textFieldFrameWithSize:scrollViewSize
                                             chipFrames:chipFrames
@@ -189,6 +193,7 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
                                                  chipsWrap:chipsWrap
                                             textFieldFrame:textFieldFrame];
 
+  self.contentAreaMaxY = contentAreaMaxY;
   self.chipFrames = chipFrames;
   self.textFieldFrame = textFieldFrame;
   self.scrollViewContentOffset = contentOffset;
@@ -197,14 +202,33 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
       CGRectMake(0, 0, contentSize.width, contentSize.height);
   self.placeholderFrameFloating = placeholderFrameFloating;
   self.placeholderFrameNormal = placeholderFrameNormal;
-
   self.initialChipRowMinY = initialChipRowMinY;
   self.globalChipRowMinX = globalChipRowMinX;
   self.globalChipRowMaxX = globalChipRowMaxX;
-
-  CGRect scrollViewRect = CGRectMake(0, 0, size.width, self.contentAreaMaxY);
+  CGRect scrollViewRect = CGRectMake(0, 0, size.width, contentAreaMaxY);
   self.maskedScrollViewContainerViewFrame = scrollViewRect;
   self.scrollViewFrame = scrollViewRect;
+
+  //  if (isRTL) {
+  //    NSMutableArray<NSValue *> *rtlChips =
+  //        [[NSMutableArray alloc] initWithCapacity:chipFrames.count];
+  //    for (NSValue *chipFrame in chipFrames) {
+  //      CGRect frame = [chipFrame CGRectValue];
+  //      frame = MDFRectFlippedHorizontally(frame, size.width);
+  //      [rtlChips addObject:[NSValue valueWithCGRect:frame]];
+  //    }
+  //    self.chipFrames = [rtlChips copy];
+  //    self.textFieldFrame = MDFRectFlippedHorizontally(textFieldFrame, size.width);
+  //    self.scrollViewContentViewTouchForwardingViewFrame =
+  //        MDFRectFlippedHorizontally(self.scrollViewContentViewTouchForwardingViewFrame,
+  //        size.width);
+  //    self.placeholderFrameFloating = MDFRectFlippedHorizontally(placeholderFrameFloating,
+  //    size.width); self.placeholderFrameNormal =
+  //    MDFRectFlippedHorizontally(placeholderFrameNormal, size.width);
+  //    self.maskedScrollViewContainerViewFrame =
+  //        MDFRectFlippedHorizontally(self.maskedScrollViewContainerViewFrame, size.width);
+  //    self.scrollViewFrame = MDFRectFlippedHorizontally(scrollViewRect, size.width);
+  //  }
 
   return;
 }
@@ -241,19 +265,23 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
 - (CGRect)normalPlaceholderFrameWithPlaceholder:(NSString *)placeholder
                                            font:(UIFont *)font
                               globalChipRowMinX:(CGFloat)globalChipRowMinX
-                                   maxTextWidth:(CGFloat)maxTextWidth
+                              globalChipRowMaxX:(CGFloat)globalChipRowMaxX
                                       chipsWrap:(BOOL)chipsWrap
                               contentAreaHeight:(CGFloat)contentAreaHeight
-                                 containerStyle:(id<MDCContainedInputViewStyle>)containerStyle {
-  CGFloat placeholderHeight = [self textHeightWithFont:font];
-  CGFloat placeholderMinX = globalChipRowMinX;
-  CGFloat placeholderMinY = 0;
+                                 containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
+                                          isRTL:(BOOL)isRTL {
+  CGFloat maxTextWidth = globalChipRowMaxX - globalChipRowMinX;
   CGSize placeholderSize = [self textSizeWithText:placeholder font:font maxWidth:maxTextWidth];
+  CGFloat placeholderMinX = globalChipRowMinX;
+  if (isRTL) {
+    placeholderMinX = globalChipRowMaxX - placeholderSize.width;
+  }
+  CGFloat placeholderMinY = 0;
   if (chipsWrap) {
     placeholderMinY = [containerStyle.densityInformer normalContentAreaTopPadding];
   } else {
     CGFloat center = contentAreaHeight * 0.5;
-    placeholderMinY = center - (placeholderHeight * 0.5);
+    placeholderMinY = center - (placeholderSize.height * 0.5);
   }
   return CGRectMake(placeholderMinX, placeholderMinY, placeholderSize.width,
                     placeholderSize.height);
@@ -262,16 +290,17 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
 - (CGRect)floatingPlaceholderFrameWithPlaceholder:(NSString *)placeholder
                                              font:(UIFont *)font
                                 globalChipRowMinX:(CGFloat)globalChipRowMinX
-                                     maxTextWidth:(CGFloat)maxTextWidth
-                                   containerStyle:(id<MDCContainedInputViewStyle>)containerStyle {
-  CGFloat placeholderHeight = [self textHeightWithFont:font];
-  CGFloat placeholderMinX = globalChipRowMinX;
-  CGFloat placeholderMinY = 0;
-  CGSize placeholderSize = CGSizeZero;
-  placeholderMinX = placeholderMinX + kFloatingPlaceholderXOffset;
-  placeholderMinY = [containerStyle.densityInformer
-      floatingPlaceholderMinYWithFloatingPlaceholderHeight:placeholderHeight];
-  placeholderSize = [self textSizeWithText:placeholder font:font maxWidth:maxTextWidth];
+                                globalChipRowMaxX:(CGFloat)globalChipRowMaxX
+                                   containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
+                                            isRTL:(BOOL)isRTL {
+  CGFloat maxTextWidth = globalChipRowMaxX - globalChipRowMinX - kFloatingPlaceholderXOffset;
+  CGSize placeholderSize = [self textSizeWithText:placeholder font:font maxWidth:maxTextWidth];
+  CGFloat placeholderMinY = [containerStyle.densityInformer
+      floatingPlaceholderMinYWithFloatingPlaceholderHeight:placeholderSize.height];
+  CGFloat placeholderMinX = globalChipRowMinX + kFloatingPlaceholderXOffset;
+  if (isRTL) {
+    placeholderMinX = globalChipRowMaxX - kFloatingPlaceholderXOffset - placeholderSize.width;
+  }
   return CGRectMake(placeholderMinX, placeholderMinY, placeholderSize.width,
                     placeholderSize.height);
 }
@@ -289,9 +318,54 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
                                    globalChipRowMaxX:(CGFloat)globalChipRowMaxX
                                                isRTL:(BOOL)isRTL {
   NSMutableArray<NSValue *> *frames = [[NSMutableArray alloc] initWithCapacity:chips.count];
-  if (chipsWrap) {
-    if (isRTL) {
+
+  if (isRTL) {
+    NSArray<UIView *> *rtlChips = [[chips reverseObjectEnumerator] allObjects];
+    if (chipsWrap) {
+      //      CGFloat chipMinX = globalChipRowMinX;
+      //      CGFloat chipMidY = initialChipRowMinY + (0.5 * chipRowHeight);
+      //      CGFloat chipMinY = 0;
+      //      CGRect chipFrame = CGRectZero;
+      //      NSInteger row = 0;
+      //      for (MDCChipView *chip in chips) {
+      //        CGFloat chipWidth = CGRectGetWidth(chip.frame);
+      //        CGFloat chipHeight = CGRectGetHeight(chip.frame);
+      //        CGFloat chipMaxX = chipMinX + chipWidth;
+      //        BOOL chipIsTooLong = chipMaxX > globalChipRowMaxX;
+      //        BOOL firstChipInRow = chipMinX == globalChipRowMinX;
+      //        BOOL isNewRow = chipIsTooLong && !firstChipInRow;
+      //        if (isNewRow) {
+      //          row++;
+      //          chipMinX = globalChipRowMinX;
+      //          chipMidY = initialChipRowMinY + (row * (chipRowHeight + interChipSpacing)) +
+      //          (0.5 * chipRowHeight);
+      //          chipMinY = chipMidY - (0.5 * chipHeight);
+      //          chipFrame = CGRectMake(chipMinX, chipMinY, chipWidth, chipHeight);
+      //          chipMaxX = CGRectGetMaxX(chipFrame);
+      //        } else {
+      //          chipMinY = chipMidY - (0.5 * chipHeight);
+      //          chipFrame = CGRectMake(chipMinX, chipMinY, chipWidth, chipHeight);
+      //        }
+      //        chipMinX = chipMaxX + interChipSpacing;
+      //        NSValue *chipFrameValue = [NSValue valueWithCGRect:chipFrame];
+      //        [frames addObject:chipFrameValue];
+      //      }
     } else {
+      CGFloat chipMinX = globalChipRowMinX;
+      CGFloat chipCenterY = initialChipRowMinY + (chipRowHeight * 0.5);
+      for (MDCChipView *chip in rtlChips) {
+        CGFloat chipWidth = CGRectGetWidth(chip.frame);
+        CGFloat chipHeight = CGRectGetHeight(chip.frame);
+        CGFloat chipMinY = chipCenterY - (0.5 * chipHeight);
+        CGRect chipFrame = CGRectMake(chipMinX, chipMinY, chipWidth, chipHeight);
+        NSValue *chipFrameValue = [NSValue valueWithCGRect:chipFrame];
+        [frames addObject:chipFrameValue];
+        CGFloat chipMaxX = MDCCeil(CGRectGetMaxX(chipFrame));
+        chipMinX = chipMaxX + interChipSpacing;
+      }
+    }
+  } else {
+    if (chipsWrap) {
       CGFloat chipMinX = globalChipRowMinX;
       CGFloat chipMidY = initialChipRowMinY + (0.5 * chipRowHeight);
       CGFloat chipMinY = 0;
@@ -320,9 +394,6 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
         NSValue *chipFrameValue = [NSValue valueWithCGRect:chipFrame];
         [frames addObject:chipFrameValue];
       }
-    }
-  } else {
-    if (isRTL) {
     } else {
       CGFloat chipMinX = globalChipRowMinX;
       CGFloat chipCenterY = initialChipRowMinY + (chipRowHeight * 0.5);
@@ -426,9 +497,12 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
                globalChipRowMaxX:(CGFloat)globalChipRowMaxX
                    textFieldSize:(CGSize)textFieldSize
                            isRTL:(BOOL)isRTL {
-  if (chipsWrap) {
-    if (isRTL) {
+  if (isRTL) {
+    if (chipsWrap) {
     } else {
+    }
+  } else {
+    if (chipsWrap) {
       CGFloat textFieldMinX = 0;
       CGFloat textFieldMaxX = 0;
       CGFloat textFieldMinY = 0;
@@ -466,12 +540,7 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
         textFieldMinY = textFieldMidY - (0.5 * textFieldSize.height);
         return CGRectMake(textFieldMinX, textFieldMinY, textFieldSize.width, textFieldSize.height);
       }
-      //      CGFloat textFieldCenterY = CGRectGetMidY(bounds);
-      //      CGFloat textFieldMinY = textFieldCenterY - (0.5 * textFieldSize.height);
       return CGRectMake(textFieldMinX, textFieldMinY, textFieldSize.width, textFieldSize.height);
-    }
-  } else {
-    if (isRTL) {
     } else {
       CGFloat textFieldMinX = 0;
       if (chipFrames.count > 0) {
@@ -483,9 +552,6 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
       CGFloat textFieldCenterY = initialChipRowMinY + (0.5 * chipRowHeight);
       CGFloat textFieldMinY = textFieldCenterY - (0.5 * textFieldSize.height);
       return CGRectMake(textFieldMinX, textFieldMinY, textFieldSize.width, textFieldSize.height);
-      //      CGFloat textFieldMaxX = CGRectGetMaxX(bounds) - contentInsets.right;
-      //      CGFloat textFieldWidth = textFieldMaxX - textFieldMinX;
-      //      return CGRectMake(textFieldMinX, textFieldMinY, textFieldWidth, chipRowHeight);
     }
   }
   return CGRectZero;
@@ -502,9 +568,12 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
                              bottomPadding:(CGFloat)bottomPadding
                                      isRTL:(BOOL)isRTL {
   CGPoint contentOffset = CGPointZero;
-  if (chipsWrap) {
-    if (isRTL) {
+  if (isRTL) {
+    if (chipsWrap) {
     } else {
+    }
+  } else {
+    if (chipsWrap) {
       NSInteger row = [self chipRowWithRect:textFieldFrame
                          initialChipRowMinY:initialChipRowMinY
                               chipRowHeight:chipRowHeight
@@ -515,9 +584,6 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
         CGFloat difference = lastRowMaxY - boundsMaxY;
         contentOffset = CGPointMake(0, (difference + bottomPadding));
       }
-    }
-  } else {
-    if (isRTL) {
     } else {
       CGFloat textFieldMinX = CGRectGetMinX(textFieldFrame);
       CGFloat textFieldMaxX = CGRectGetMaxX(textFieldFrame);
