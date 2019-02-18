@@ -14,10 +14,10 @@
 
 #import "MaterialSnapshot.h"
 
+#import "MaterialColorScheme.h"
+#import "MaterialContainerScheme.h"
 #import "MaterialDialogs+Theming.h"
 #import "MaterialDialogs.h"
-#import "MaterialContainerScheme.h"
-#import "MaterialColorScheme.h"
 #import "MaterialTypographyScheme.h"
 
 static NSString *const kActionHighTitleLatin = @"High";
@@ -25,30 +25,30 @@ static NSString *const kActionMediumTitleLatin = @"Medium";
 static NSString *const kActionLowTitleLatin = @"Low";
 static NSString *const kTitleShortLatin = @"Title";
 static NSString *const kTitleLongLatin =
-@"Title Title Title Title Title Title Title Title Title Title Title Title Title Title";
+    @"Title Title Title Title Title Title Title Title Title Title Title Title Title Title";
 static NSString *const kMessageShortLatin = @"Message";
 static NSString *const kMessageLongLatin =
-@"Lorem ipsum dolor sit amet, consul docendi indoctum id quo, ad unum suavitate incorrupte "
-"sea. An his meis consul cotidieque, eam recteque mnesarchum et, mundi volumus cu cum. Quo "
-"falli dicunt an. Praesent molestiae vim ut.\n\n"
-"Nec eirmod voluptua reformidans ne, viderer voluptua senserit at vis, est omnis accusam "
-"adipisci cu. Vis eu singulis deseruisse elaboraret. Cu sit possit scribentur, integre "
-"complectitur eu sit. Ei qui everti instructior, in vis harum quidam vituperata, te velit "
-"epicuri dissentias ius. Id est consul graecis consequat, id eam ancillae detraxit convenire, "
-"ne possim noluisse mei.";
+    @"Lorem ipsum dolor sit amet, consul docendi indoctum id quo, ad unum suavitate incorrupte "
+     "sea. An his meis consul cotidieque, eam recteque mnesarchum et, mundi volumus cu cum. Quo "
+     "falli dicunt an. Praesent molestiae vim ut.\n\n"
+     "Nec eirmod voluptua reformidans ne, viderer voluptua senserit at vis, est omnis accusam "
+     "adipisci cu. Vis eu singulis deseruisse elaboraret. Cu sit possit scribentur, integre "
+     "complectitur eu sit. Ei qui everti instructior, in vis harum quidam vituperata, te velit "
+     "epicuri dissentias ius. Id est consul graecis consequat, id eam ancillae detraxit convenire, "
+     "ne possim noluisse mei.";
 
 static NSString *const kTitleShortArabic = @"الأمريكي كل.";
 static NSString *const kTitleLongArabic = @"ما جيوب لمحاكم تحرّكت بعض, و نفس ٢٠٠٤ المسرح استدعى. "
-@"الا الثقيل اقتصادية ثم, مع إستعمل مشاركة بلا. مدن هو.";
+                                          @"الا الثقيل اقتصادية ثم, مع إستعمل مشاركة بلا. مدن هو.";
 static NSString *const kMessageShortArabic = @"قد لغات ";
 static NSString *const kMessageLongArabic =
-@"قد لغات هاربر الموسوعة الا, بلديهما الأمريكي في وقد. وفي تم هناك بداية, مرجع العصبة عسكرياً قد"
-"أما. يكن ومضى واتّجه الأمريكي كل. منتصف استمرار أسر بل.\n\n"
+    @"قد لغات هاربر الموسوعة الا, بلديهما الأمريكي في وقد. وفي تم هناك بداية, مرجع العصبة عسكرياً قد"
+     "أما. يكن ومضى واتّجه الأمريكي كل. منتصف استمرار أسر بل.\n\n"
 
-@" ومن مشارف التبرعات الأوروبيّون عن, نهاية نتيجة ٣٠ إيو. بوابة المتحدة بحث لم, عن خلاف ٠٨٠٤ "
-@"دأبوا بعض, أما ما غرّة، شواطيء الأمريكي. على لهذه الهجوم مليارات عل, وقبل واحدة بتخصيص إيو "
-@"قد. أفاق بشرية الأخذ لكل مع, الشهير وبريطانيا عل شيء, ألمّ لإعادة المواد مدن إذ. إجلاء "
-@"للأراضي ضرب ما, عن لكون لعملة ويعزى تلك, الآلاف استدعى الثقيل بحق إذ. ٣٠ عدم وعُرفت الصفحات.";
+    @" ومن مشارف التبرعات الأوروبيّون عن, نهاية نتيجة ٣٠ إيو. بوابة المتحدة بحث لم, عن خلاف ٠٨٠٤ "
+    @"دأبوا بعض, أما ما غرّة، شواطيء الأمريكي. على لهذه الهجوم مليارات عل, وقبل واحدة بتخصيص إيو "
+    @"قد. أفاق بشرية الأخذ لكل مع, الشهير وبريطانيا عل شيء, ألمّ لإعادة المواد مدن إذ. إجلاء "
+    @"للأراضي ضرب ما, عن لكون لعملة ويعزى تلك, الآلاف استدعى الثقيل بحق إذ. ٣٠ عدم وعُرفت الصفحات.";
 
 @interface MDCAlertController_ThemingSnapshotTests : MDCSnapshotTestCase
 @property(nonatomic, strong) MDCAlertController *alertController;
@@ -67,7 +67,7 @@ static NSString *const kMessageLongArabic =
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  self.recordMode = YES;
+  //  self.recordMode = YES;
 
   self.actionHigh = [MDCAlertAction actionWithTitle:@"High"
                                            emphasis:MDCActionEmphasisHigh
@@ -79,13 +79,13 @@ static NSString *const kMessageLongArabic =
                                           emphasis:MDCActionEmphasisLow
                                            handler:nil];
   self.iconImage = [[UIImage mdc_testImageOfSize:CGSizeMake(40, 40)]
-                    imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   ;
   self.alertController = [[MDCAlertController alloc] init];
   [self.alertController addAction:self.actionHigh];
   [self.alertController addAction:self.actionMedium];
   [self.alertController addAction:self.actionLow];
-  (void)self.alertController.view; // Force loading the view so it doesn't overwrite button fonts.
+  (void)self.alertController.view;  // Force loading the view so it doesn't overwrite button fonts.
 
   self.defaultScheme = [[MDCContainerScheme alloc] init];
 }
@@ -109,14 +109,22 @@ static NSString *const kMessageLongArabic =
   colorScheme.errorColor = [UIColor colorWithRed:1 green:1 blue:0 alpha:1];
   colorScheme.surfaceColor = [UIColor colorWithWhite:(CGFloat)0.25 alpha:1];
   colorScheme.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.1 alpha:1];
-  colorScheme.onPrimaryColor =
-      [UIColor colorWithRed:1 green:(CGFloat)0.5 blue:(CGFloat)0.25 alpha:1];
-  colorScheme.onSecondaryColor =
-      [UIColor colorWithRed:(CGFloat)0.5 green:1 blue:(CGFloat)0.25 alpha:1];
-  colorScheme.onSurfaceColor =
-      [UIColor colorWithRed:(CGFloat)0.25 green:(CGFloat)0.5 blue:1 alpha:1];
-  colorScheme.onBackgroundColor =
-      [UIColor colorWithRed:(CGFloat)0.25 green:0 blue:(CGFloat)0.75 alpha:1];
+  colorScheme.onPrimaryColor = [UIColor colorWithRed:1
+                                               green:(CGFloat)0.5
+                                                blue:(CGFloat)0.25
+                                               alpha:1];
+  colorScheme.onSecondaryColor = [UIColor colorWithRed:(CGFloat)0.5
+                                                 green:1
+                                                  blue:(CGFloat)0.25
+                                                 alpha:1];
+  colorScheme.onSurfaceColor = [UIColor colorWithRed:(CGFloat)0.25
+                                               green:(CGFloat)0.5
+                                                blue:1
+                                               alpha:1];
+  colorScheme.onBackgroundColor = [UIColor colorWithRed:(CGFloat)0.25
+                                                  green:0
+                                                   blue:(CGFloat)0.75
+                                                  alpha:1];
   container.colorScheme = colorScheme;
 
   MDCTypographyScheme *typographyScheme =
