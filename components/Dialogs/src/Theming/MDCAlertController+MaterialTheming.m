@@ -23,8 +23,9 @@ static const CGFloat kCornerRadius = 4;
 @implementation MDCAlertController (MaterialTheming)
 
 - (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme {
-  // TODO(): Force-load the view before setting the buttons fonts to ensure that they aren't
-  //  overwritten in -updateButtonFont.
+  // TODO(https://github.com/material-components/material-components-ios/issues/6637 ): Force-load
+  // the view before setting the buttons fonts to ensure that they aren't overwritten in
+  // -updateButtonFont. If the bug gets fixed, this hack can be removed.
   (void)self.view;
   // Color
   [self applyColorThemeWithScheme:scheme.colorScheme];
