@@ -50,7 +50,6 @@ static const int kMDCButtonAnimationDuration = 200;
 @property(nonatomic, strong) MDCBottomAppBarCutView *cutView;
 @property(nonatomic, strong) MDCBottomAppBarLayer *bottomBarLayer;
 @property(nonatomic, strong) MDCNavigationBar *navBar;
-@property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
 
 @end
 
@@ -80,7 +79,6 @@ static const int kMDCButtonAnimationDuration = 200;
 
   self.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin |
                            UIViewAutoresizingFlexibleRightMargin);
-  self.layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
 
   [self addFloatingButton];
   [self addBottomBarLayer];
@@ -129,7 +127,8 @@ static const int kMDCButtonAnimationDuration = 200;
   floatingButtonPoint.y = MAX(0, navigationBarTopEdgeYOffset - self.floatingButtonVerticalOffset);
   switch (self.floatingButtonPosition) {
     case MDCBottomAppBarFloatingButtonPositionLeading: {
-      if (self.layoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
+      if (self.mdf_effectiveUserInterfaceLayoutDirection ==
+          UIUserInterfaceLayoutDirectionLeftToRight) {
         floatingButtonPoint.x = kMDCBottomAppBarFloatingButtonPositionX;
       } else {
         floatingButtonPoint.x = appBarWidth - kMDCBottomAppBarFloatingButtonPositionX;
@@ -141,7 +140,8 @@ static const int kMDCButtonAnimationDuration = 200;
       break;
     }
     case MDCBottomAppBarFloatingButtonPositionTrailing: {
-      if (self.layoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
+      if (self.mdf_effectiveUserInterfaceLayoutDirection ==
+          UIUserInterfaceLayoutDirectionLeftToRight) {
         floatingButtonPoint.x = appBarWidth - kMDCBottomAppBarFloatingButtonPositionX;
       } else {
         floatingButtonPoint.x = kMDCBottomAppBarFloatingButtonPositionX;
