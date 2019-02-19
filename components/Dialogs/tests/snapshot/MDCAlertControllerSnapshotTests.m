@@ -74,7 +74,6 @@ static NSString *const kMessageLongArabic =
                                            handler:nil];
   self.iconImage = [[UIImage mdc_testImageOfSize:CGSizeMake(40, 40)]
       imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-  ;
   self.alertController = [[MDCAlertController alloc] init];
   [self.alertController addAction:self.actionHigh];
   [self.alertController addAction:self.actionMedium];
@@ -87,6 +86,7 @@ static NSString *const kMessageLongArabic =
   self.actionMedium = nil;
   self.actionHigh = nil;
   self.iconImage = nil;
+
   [super tearDown];
 }
 

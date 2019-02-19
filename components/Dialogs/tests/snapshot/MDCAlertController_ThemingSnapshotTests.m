@@ -80,11 +80,12 @@ static NSString *const kMessageLongArabic =
                                            handler:nil];
   self.iconImage = [[UIImage mdc_testImageOfSize:CGSizeMake(40, 40)]
       imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-  ;
   self.alertController = [[MDCAlertController alloc] init];
   [self.alertController addAction:self.actionHigh];
   [self.alertController addAction:self.actionMedium];
   [self.alertController addAction:self.actionLow];
+  // TODO(https://github.com/material-components/material-components-ios/pull/6638): Remove
+  // once the PR lands.
   (void)self.alertController.view;  // Force loading the view so it doesn't overwrite button fonts.
 
   self.defaultScheme = [[MDCContainerScheme alloc] init];
@@ -96,6 +97,8 @@ static NSString *const kMessageLongArabic =
   self.actionMedium = nil;
   self.actionHigh = nil;
   self.iconImage = nil;
+  self.defaultScheme = nil;
+
   [super tearDown];
 }
 
@@ -153,6 +156,7 @@ static NSString *const kMessageLongArabic =
   shapeScheme.largeComponentShape =
       [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyCut andSize:24];
   container.shapeScheme = shapeScheme;
+
   return container;
 }
 
