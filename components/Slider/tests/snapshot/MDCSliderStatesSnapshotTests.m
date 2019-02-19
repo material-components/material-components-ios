@@ -29,7 +29,7 @@
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  self.recordMode = YES;
+  //  self.recordMode = YES;
 
   self.slider = [[MDCSlider alloc] initWithFrame:CGRectMake(0, 0, 120, 48)];
   self.slider.statefulAPIEnabled = YES;
@@ -44,10 +44,10 @@
   [self setSlider:self.slider colorsForState:UIControlStateHighlighted withRed:0 green:0 blue:1];
   [self setSlider:self.slider colorsForState:UIControlStateDisabled withRed:1 green:1 blue:0];
   [self setSlider:self.slider
-   colorsForState:(UIControlStateSelected | UIControlStateHighlighted)
-          withRed:1
-            green:0
-             blue:1];
+      colorsForState:(UIControlStateSelected | UIControlStateHighlighted)
+             withRed:1
+               green:0
+                blue:1];
 }
 
 - (void)tearDown {
@@ -57,10 +57,10 @@
 }
 
 - (void)setSlider:(MDCSlider *)slider
-   colorsForState:(UIControlState)state
-          withRed:(CGFloat)red
-            green:(CGFloat)green
-             blue:(CGFloat)blue {
+    colorsForState:(UIControlState)state
+           withRed:(CGFloat)red
+             green:(CGFloat)green
+              blue:(CGFloat)blue {
   [slider setTrackBackgroundColor:[UIColor colorWithRed:(CGFloat)(0.1 * red)
                                                   green:(CGFloat)(0.1 * green)
                                                    blue:(CGFloat)(0.1 * blue)
