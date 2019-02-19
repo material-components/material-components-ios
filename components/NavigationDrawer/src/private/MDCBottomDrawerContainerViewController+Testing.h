@@ -19,5 +19,6 @@
  */
 @interface MDCBottomDrawerContainerViewController (Testing)
 
-NSString *_Nonnull const kMDCBottomDrawerScrollViewAccessibilityIdentifier;
+extern NSString *_Nonnull const kMDCBottomDrawerScrollViewAccessibilityIdentifier;
 
+@end
