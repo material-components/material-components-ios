@@ -72,6 +72,7 @@ target "MDCCatalog" do
     'BottomNavigation/tests/snapshot',
     'Cards/tests/snapshot',
     'Chips/tests/snapshot',
+    'Dialogs/tests/snapshot',
     'Ripple/tests/snapshot',
     'TextFields/tests/snapshot',
   ]
