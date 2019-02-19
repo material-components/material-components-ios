@@ -132,6 +132,7 @@ mdc_objc_library(
         "//components/AppBar:ColorThemer",
         "//components/AppBar:TypographyThemer",
         "//components/Buttons:ButtonThemer",
+        "//components/Chips",
     ],
 )
 
