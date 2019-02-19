@@ -147,10 +147,10 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewPlaceholderState) {
  */
 @property(nonatomic, assign) BOOL isActivated;
 
-- (id<MDCContainedInputViewColorScheming>)containedInputViewColorSchemingForState:
+- (nonnull id<MDCContainedInputViewColorScheming>)containedInputViewColorSchemingForState:
     (MDCContainedInputViewState)containedInputViewState;
 - (void)setContainedInputViewColorScheming:
-            (id<MDCContainedInputViewColorScheming>)containedInputViewColorScheming
+            (nonnull id<MDCContainedInputViewColorScheming>)containedInputViewColorScheming
                                   forState:(MDCContainedInputViewState)textFieldState;
 
 /**
@@ -173,17 +173,17 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewPlaceholderState) {
 @end
 
 @interface MDCContainedInputViewColorScheme : NSObject <MDCContainedInputViewColorScheming>
-@property(strong, nonatomic) UIColor *textColor;
-@property(strong, nonatomic) UIColor *underlineLabelColor;
-@property(strong, nonatomic) UIColor *placeholderLabelColor;
-@property(strong, nonatomic) UIColor *clearButtonTintColor;
-@property(strong, nonatomic) UIColor *errorColor;
+@property(strong, nonatomic, nonnull) UIColor *textColor;
+@property(strong, nonatomic, nonnull) UIColor *underlineLabelColor;
+@property(strong, nonatomic, nonnull) UIColor *placeholderLabelColor;
+@property(strong, nonatomic, nonnull) UIColor *clearButtonTintColor;
+@property(strong, nonatomic, nonnull) UIColor *errorColor;
 @end
 
 @protocol MDCContainedInputViewStyleDensityInforming;
 
 @protocol MDCContainedInputViewStyle <NSObject>
-@property(strong, nonatomic) id<MDCContainedInputViewStyleDensityInforming> densityInformer;
+@property(strong, nonatomic, nonnull) id<MDCContainedInputViewStyleDensityInforming> densityInformer;
 - (nonnull id<MDCContainedInputViewColorScheming>)defaultColorSchemeForState:
     (MDCContainedInputViewState)state;
 - (void)applyStyleToContainedInputView:(nonnull id<MDCContainedInputView>)inputView
@@ -199,31 +199,9 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewPlaceholderState) {
 - (CGFloat)contentAreaTopPaddingWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY;
 @end
 
-//@protocol MDCContainedInputViewStyleDensityInforming <NSObject>
-//- (CGFloat)floatingPlaceholderFontSizeScaleFactor;
-//-
-//(CGFloat)floatingPlaceholderMinYWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight;
-//- (CGFloat)normalTextAreaTopPaddingWithTextAreaHeight:(CGFloat)textAreaHeight;
-//- (CGFloat)normalTextAreaBottomPaddingWithTextAreaHeight:(CGFloat)textAreaHeight;
-//- (CGFloat)textAreaTopPaddingWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY
-//                                          textAreaHeight:(CGFloat)textAreaHeight;
-//@end
-
-@protocol MDCContainedInputViewLayoutCalculating <NSObject>
-- (MDCContainedInputViewState)containedInputViewStateWithIsEnabled:(BOOL)isEnabled
-                                                         isErrored:(BOOL)isErrored
-                                                         isEditing:(BOOL)isEditing
-                                                        isSelected:(BOOL)isSelected
-                                                       isActivated:(BOOL)isActivated;
-- (MDCContainedInputViewPlaceholderState)placeholderStateWithPlaceholder:(NSString *)placeholder
-                                                                    text:(NSString *)text
-                                                     canPlaceholderFloat:(BOOL)canPlaceholderFloat
-                                                               isEditing:(BOOL)isEditing;
-@end
-
 @interface MDCContainerStyleBase
-    : NSObject <MDCContainedInputViewStyle, MDCContainedInputViewLayoutCalculating>
-- (instancetype)init NS_DESIGNATED_INITIALIZER;
+    : NSObject <MDCContainedInputViewStyle>
+- (nonnull instancetype)init NS_DESIGNATED_INITIALIZER;
 @end
 
 @interface MDCContainerStyleBaseDensityInformer
