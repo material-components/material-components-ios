@@ -120,10 +120,8 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 @property(nonatomic, assign) CGPoint lastTouchInitialContentOffset;
 @property(nonatomic, assign) CGPoint lastTouchInitialLocation;
 
-@property(strong, nonatomic) CALayer *horizontalGradientLayer;
-@property(strong, nonatomic) CAGradientLayer *horizontalGradientLayerMask;
-@property(strong, nonatomic) CALayer *verticalGradientLayer;
-@property(strong, nonatomic) CAGradientLayer *verticalGradientLayerMask;
+@property(strong, nonatomic) CAGradientLayer *horizontalGradient;
+@property(strong, nonatomic) CAGradientLayer *verticalGradient;
 
 //@property(strong, nonatomic) UIButton *clearButton;
 //@property(strong, nonatomic) UIImageView *clearButtonImageView;
@@ -334,17 +332,17 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   UIColor *outer = (id)UIColor.clearColor.CGColor;
   UIColor *inner = (id)UIColor.blackColor.CGColor;
   NSArray *colors = @[ outer, outer, inner, inner, outer, outer ];
-  self.horizontalGradientLayerMask = [CAGradientLayer layer];
-  self.horizontalGradientLayerMask.frame = self.bounds;
-  self.horizontalGradientLayerMask.colors = colors;
-  self.horizontalGradientLayerMask.startPoint = CGPointMake(0.0, 0.5);
-  self.horizontalGradientLayerMask.endPoint = CGPointMake(1.0, 0.5);
+  self.horizontalGradient = [CAGradientLayer layer];
+  self.horizontalGradient.frame = self.bounds;
+  self.horizontalGradient.colors = colors;
+  self.horizontalGradient.startPoint = CGPointMake(0.0, 0.5);
+  self.horizontalGradient.endPoint = CGPointMake(1.0, 0.5);
 
-  self.verticalGradientLayerMask = [CAGradientLayer layer];
-  self.verticalGradientLayerMask.frame = self.bounds;
-  self.verticalGradientLayerMask.colors = colors;
-  self.verticalGradientLayerMask.startPoint = CGPointMake(0.5, 0.0);
-  self.verticalGradientLayerMask.endPoint = CGPointMake(0.5, 1.0);
+  self.verticalGradient = [CAGradientLayer layer];
+  self.verticalGradient.frame = self.bounds;
+  self.verticalGradient.colors = colors;
+  self.verticalGradient.startPoint = CGPointMake(0.5, 0.0);
+  self.verticalGradient.endPoint = CGPointMake(0.5, 1.0);
 }
 
 #pragma mark UIResponder Overrides
@@ -588,31 +586,62 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 }
 
 - (void)layOutGradientLayers {
-  self.horizontalGradientLayer.frame = self.bounds;
-  self.horizontalGradientLayerMask.frame = self.bounds;
-  CGFloat viewWidth = CGRectGetWidth(self.bounds);
-  self.horizontalGradientLayerMask.locations = @[
+  CGRect gradientLayerFrame = self.layout.maskedScrollViewContainerViewFrame;
+  self.horizontalGradient.frame = gradientLayerFrame;
+  self.verticalGradient.frame = gradientLayerFrame;
+  CGFloat viewWidth = CGRectGetWidth(gradientLayerFrame);
+  CGFloat viewHeight = CGRectGetHeight(gradientLayerFrame);
+
+  CGFloat magicNumber = 6;
+
+  CGFloat leftFadeStart = (self.layout.globalChipRowMinX - magicNumber) / viewWidth;
+  if (leftFadeStart < 0) {
+    leftFadeStart = 0;
+  }
+  CGFloat leftFadeEnd = self.layout.globalChipRowMinX / viewWidth;
+  if (leftFadeEnd < 0) {
+    leftFadeEnd = 0;
+  }
+  CGFloat rightFadeStart = (self.layout.globalChipRowMaxX) / viewWidth;
+  if (rightFadeStart >= 1) {
+    rightFadeStart = 1;
+  }
+  CGFloat rightFadeEnd = (self.layout.globalChipRowMaxX + magicNumber) / viewWidth;
+  if (rightFadeEnd >= 1) {
+    rightFadeEnd = 1;
+  }
+
+  self.horizontalGradient.locations = @[
     @(0),
-    @((self.layout.globalChipRowMinX - 10) / viewWidth),
-    @((self.layout.globalChipRowMinX) / viewWidth),
-    @((self.layout.globalChipRowMaxX) / viewWidth),
-    @((self.layout.globalChipRowMaxX + 10) / viewWidth),
+    @(leftFadeStart),
+    @(leftFadeEnd),
+    @(rightFadeStart),
+    @(rightFadeEnd),
     @(1),
   ];
-  self.verticalGradientLayer.frame = self.bounds;
-  self.verticalGradientLayerMask.frame = self.bounds;
-  CGFloat viewHeight = CGRectGetHeight(self.bounds);
 
   CGFloat floatingPlaceholderMaxY = CGRectGetMaxY(self.placeholderLabel.frame);
   CGFloat topSpacing = [self.containerStyle.densityInformer
       contentAreaTopPaddingWithFloatingPlaceholderMaxY:floatingPlaceholderMaxY];
   CGFloat topFadeStart = (floatingPlaceholderMaxY + (0.0 * topSpacing)) / viewHeight;
-  CGFloat topFadeEnd = (floatingPlaceholderMaxY + (0.25 * topSpacing)) / viewHeight;
+  if (topFadeStart <= 0) {
+    topFadeStart = 0;
+  }
+  CGFloat topFadeEnd = (floatingPlaceholderMaxY + magicNumber) / viewHeight;
+  if (topFadeEnd <= 0) {
+    topFadeEnd = 0;
+  }
   CGFloat bottomSpacing = [self.containerStyle.densityInformer normalContentAreaBottomPadding];
   CGFloat bottomFadeStart = (viewHeight - bottomSpacing) / viewHeight;
-  CGFloat bottomFadeEnd = (viewHeight - (0.5 * bottomSpacing)) / viewHeight;
+  if (bottomFadeStart >= 1) {
+    bottomFadeStart = 1;
+  }
+  CGFloat bottomFadeEnd = (viewHeight - magicNumber) / viewHeight;
+  if (bottomFadeEnd >= 1) {
+    bottomFadeEnd = 1;
+  }
 
-  self.verticalGradientLayerMask.locations = @[
+  self.verticalGradient.locations = @[
     @(0),
     @(topFadeStart),
     @(topFadeEnd),
@@ -620,15 +649,33 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
     @(bottomFadeEnd),
     @(1),
   ];
-  // TODO: Figure out how to have both gradients at once
-  // Maybe render both CALayers in a content, get an image from that context,
-  // Create a layer that uses resulting image as its contents
-  // then use that layer as a mask
-  if (self.chipsWrap) {
-    self.maskedScrollViewContainerView.layer.mask = self.verticalGradientLayerMask;
-  } else {
-    self.maskedScrollViewContainerView.layer.mask = self.horizontalGradientLayerMask;
-  }
+
+  CALayer *scrollViewBorderGradient = [self layerCombiningHorizontalGradient:self.horizontalGradient
+                                                        withVerticalGradient:self.verticalGradient];
+  self.maskedScrollViewContainerView.layer.mask = scrollViewBorderGradient;
+}
+
+- (CALayer *)layerCombiningHorizontalGradient:(CAGradientLayer *)horizontalGradient
+                         withVerticalGradient:(CAGradientLayer *)verticalGradient {
+  horizontalGradient.mask = verticalGradient;
+  UIImage *image = [self createImageWithLayer:horizontalGradient];
+  CALayer *layer = [self createLayerWithImage:image];
+  return layer;
+}
+
+- (UIImage *)createImageWithLayer:(CALayer *)layer {
+  UIGraphicsBeginImageContext(layer.frame.size);
+  [layer renderInContext:UIGraphicsGetCurrentContext()];
+  UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+  UIGraphicsEndImageContext();
+  return image;
+}
+
+- (CALayer *)createLayerWithImage:(UIImage *)image {
+  CALayer *layer = [[CALayer alloc] init];
+  layer.frame = CGRectMake(0, 0, image.size.width, image.size.height);
+  layer.contents = (__bridge id _Nullable)(image.CGImage);
+  return layer;
 }
 
 - (NSArray<MDCChipView *> *)chipsToAdd {
