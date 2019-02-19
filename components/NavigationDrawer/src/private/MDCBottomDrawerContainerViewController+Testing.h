@@ -14,11 +14,10 @@
 
 #import "MDCBottomDrawerContainerViewController.h"
 
+extern NSString *_Nonnull const kMDCBottomDrawerScrollViewAccessibilityIdentifier;
+
 /**
  Exposes parts of MDCBottomDrawerContainerViewController for testing.
  */
 @interface MDCBottomDrawerContainerViewController (Testing)
-
-extern NSString *_Nonnull const kMDCBottomDrawerScrollViewAccessibilityIdentifier;
-
 @end
