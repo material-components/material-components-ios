@@ -12,21 +12,32 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import <CoreGraphics/CoreGraphics.h>
+#import <UIKit/UIKit.h>
+
 #import "MDCCardCollectionCell+Ripple.h"
 #import "MaterialRipple.h"
 
 @implementation MDCCardCollectionCell (Ripple)
 
 - (MDCStatefulRippleView *)castedRippleView {
+  if (![self.rippleView isKindOfClass:[MDCStatefulRippleView class]]) {
+    NSAssert(NO, @"The ripple view needs to be of the kind MDCStatefulRippleView, otherwise"
+             @" a bad change has occurred and the ripple integration will not work.");
+    return nil;
+  }
   return (MDCStatefulRippleView *)self.rippleView;
 }
 
-- (void)initializeRipple {
+- (void)configureRipple {
   self.rippleDelegate = self;
+  // With the new states implementation the selectedImageView doesn't need to be hidden as
+  // there can be an image apparent not only when the cell is selected, but rather
+  // depending on the setImage:ForState: API.
   self.selectedImageView.hidden = NO;
   if (self.rippleView == nil) {
     self.rippleView = [[MDCStatefulRippleView alloc] initWithFrame:self.bounds];
-    self.rippleView.layer.zPosition = FLT_MAX;
+    self.rippleView.layer.zPosition = CGFLOAT_MAX;
     [self addSubview:self.rippleView];
   }
   if (self.inkView) {
@@ -34,7 +45,7 @@
   }
 }
 
-- (void)rippleDelegateSetSelected:(BOOL)selected {
+- (void)cardCellRippleDelegateSetSelected:(BOOL)selected {
   if (!self.selectable) {
     return;
   }
@@ -42,16 +53,16 @@
   [self updateCardCellVisuals];
 }
 
-- (void)rippleDelegateSetHighlighted:(BOOL)highlighted {
+- (void)cardCellRippleDelegateSetHighlighted:(BOOL)highlighted {
   self.castedRippleView.rippleHighlighted = highlighted;
   [self updateCardCellVisuals];
 }
 
-- (void)rippleDelegateSetSelectable:(BOOL)selectable {
+- (void)cardCellRippleDelegateSetSelectable:(BOOL)selectable {
   self.castedRippleView.allowsSelection = selectable;
 }
 
-- (UIImage *)rippleDelegateUpdateImage:(UIImage *)image {
+- (UIImage *)cardCellRippleDelegateUpdateImage:(UIImage *)image {
   // CardCollectionCell's state system doesn't incorporate multiple states occuring simultaneously.
   // When the card is selected and highlighted it should take the image of MDCCardCellStateSelected.
   if (self.castedRippleView.selected) {
@@ -60,7 +71,7 @@
   return image;
 }
 
-- (UIColor *)rippleDelegateUpdateImageTintColor:(UIColor *)imageTintColor {
+- (UIColor *)cardCellRippleDelegateUpdateImageTintColor:(UIColor *)imageTintColor {
   // CardCollectionCell's state system doesn't incorporate multiple states occuring simultaneously.
   // When the card is selected and highlighted it should take the image tint of
   // MDCCardCellStateSelected.
@@ -80,7 +91,7 @@
   [self updateImageTintColor];
 }
 
-- (MDCCardCellState)rippleDelegateState {
+- (MDCCardCellState)cardCellRippleDelegateState {
   if (self.selected && self.selectable) {
     return MDCCardCellStateSelected;
   } else if (self.dragged) {
@@ -92,29 +103,29 @@
   }
 }
 
-- (void)rippleDelegateTouchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+- (void)cardCellRippleDelegateTouchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   [self.castedRippleView touchesBegan:touches withEvent:event];
 }
 
-- (void)rippleDelegateTouchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+- (void)cardCellRippleDelegateTouchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   [self.castedRippleView touchesMoved:touches withEvent:event];
 }
 
-- (void)rippleDelegateTouchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+- (void)cardCellRippleDelegateTouchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   [self.castedRippleView touchesEnded:touches withEvent:event];
   if (self.dragged) {
     self.dragged = NO;
   }
 }
 
-- (void)rippleDelegateTouchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+- (void)cardCellRippleDelegateTouchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   [self.castedRippleView touchesCancelled:touches withEvent:event];
   if (self.dragged) {
     self.dragged = NO;
   }
 }
 
-- (void)rippleDelegateSetDragged:(BOOL)dragged {
+- (void)cardCellRippleDelegateSetDragged:(BOOL)dragged {
   self.castedRippleView.dragged = dragged;
   if (dragged) {
     self.highlighted = NO;

@@ -12,20 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import <CoreGraphics/CoreGraphics.h>
+#import <UIKit/UIKit.h>
+
 #import "MDCCard+Ripple.h"
 #import "MaterialRipple.h"
 
 @implementation MDCCard (Ripple)
 
 - (MDCStatefulRippleView *)castedRippleView {
+  if (![self.rippleView isKindOfClass:[MDCStatefulRippleView class]]) {
+    NSAssert(NO, @"The ripple view needs to be of the kind MDCStatefulRippleView, otherwise"
+             @" a bad change has occurred and the ripple integration will not work.");
+    return nil;
+  }
   return (MDCStatefulRippleView *)self.rippleView;
 }
 
-- (void)initializeRipple {
+- (void)configureRipple {
   self.rippleDelegate = self;
   if (self.rippleView == nil) {
     self.rippleView = [[MDCStatefulRippleView alloc] initWithFrame:self.bounds];
-    self.rippleView.layer.zPosition = FLT_MAX;
+    self.rippleView.layer.zPosition = CGFLOAT_MAX;
     [self addSubview:self.rippleView];
   }
   if (self.inkView) {
@@ -33,23 +41,23 @@
   }
 }
 
-- (void)rippleDelegateSetHighlighted:(BOOL)highlighted {
+- (void)cardRippleDelegateSetHighlighted:(BOOL)highlighted {
   self.castedRippleView.rippleHighlighted = highlighted;
 }
 
-- (void)rippleDelegateTouchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+- (void)cardRippleDelegateTouchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   [self.castedRippleView touchesBegan:touches withEvent:event];
 }
 
-- (void)rippleDelegateTouchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+- (void)cardRippleDelegateTouchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   [self.castedRippleView touchesMoved:touches withEvent:event];
 }
 
-- (void)rippleDelegateTouchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+- (void)cardRippleDelegateTouchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   [self.castedRippleView touchesEnded:touches withEvent:event];
 }
 
-- (void)rippleDelegateTouchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+- (void)cardRippleDelegateTouchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   [self.castedRippleView touchesCancelled:touches withEvent:event];
 }
 

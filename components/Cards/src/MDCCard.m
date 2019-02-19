@@ -94,11 +94,13 @@ static const BOOL MDCCardIsInteractableDefault = YES;
     _backgroundColor = UIColor.whiteColor;
   }
 
-  SEL initRippleSelector = NSSelectorFromString(@"initializeRipple");
-  if ([self respondsToSelector:initRippleSelector]) {
-    IMP imp = [self methodForSelector:initRippleSelector];
-    void (*func)(id, SEL) = (void *)imp;
-    func(self, initRippleSelector);
+  // TODO: Remove this performSelector code once Ripple is no longer in Beta.
+  SEL configureRippleSelector = NSSelectorFromString(@"configureRipple");
+  if ([self respondsToSelector:configureRippleSelector]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+    [self performSelector:configureRippleSelector];
+#pragma clang diagnostic pop
   }
 
   [self updateShadowElevation];
@@ -221,7 +223,8 @@ static const BOOL MDCCardIsInteractableDefault = YES;
 }
 
 - (void)setHighlighted:(BOOL)highlighted {
-  if (![self.rippleDelegate respondsToSelector:@selector(rippleDelegateSetHighlighted:)]) {
+  // Original logic for changing the state to highlighted.
+  if (![self.rippleDelegate respondsToSelector:@selector(cardRippleDelegateSetHighlighted:)]) {
     if (highlighted && !self.highlighted) {
       [self.inkView startTouchBeganAnimationAtPoint:_lastTouch completion:nil];
     } else if (!highlighted && self.highlighted) {
@@ -229,8 +232,9 @@ static const BOOL MDCCardIsInteractableDefault = YES;
     }
   }
   [super setHighlighted:highlighted];
-  if ([self.rippleDelegate respondsToSelector:@selector(rippleDelegateSetHighlighted:)]) {
-    [self.rippleDelegate rippleDelegateSetHighlighted:highlighted];
+  // Updated logic using Ripple for changing the state to highlighted.
+  if ([self.rippleDelegate respondsToSelector:@selector(cardRippleDelegateSetHighlighted:)]) {
+    [self.rippleDelegate cardRippleDelegateSetHighlighted:highlighted];
   }
   [self updateShadowElevation];
   [self updateBorderColor];
@@ -268,6 +272,7 @@ static const BOOL MDCCardIsInteractableDefault = YES;
   self.layer.shapeGenerator = shapeGenerator;
   self.layer.shadowMaskEnabled = NO;
   [self updateBackgroundColor];
+  // Original logic for configuring Ink prior to the Ripple integration.
   if (self.rippleDelegate == nil) {
     [self updateInkForShape];
   }
@@ -298,8 +303,8 @@ static const BOOL MDCCardIsInteractableDefault = YES;
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-  if ([self.rippleDelegate respondsToSelector:@selector(rippleDelegateTouchesBegan:withEvent:)]) {
-    [self.rippleDelegate rippleDelegateTouchesBegan:touches withEvent:event];
+  if ([self.rippleDelegate respondsToSelector:@selector(cardRippleDelegateTouchesBegan:withEvent:)]) {
+    [self.rippleDelegate cardRippleDelegateTouchesBegan:touches withEvent:event];
   }
   [super touchesBegan:touches withEvent:event];
 }
@@ -308,23 +313,23 @@ static const BOOL MDCCardIsInteractableDefault = YES;
   // The ripple invocation must come before touchesMoved of the super, otherwise the setHighlighted
   // of the UIControl will be triggered before the ripple identifies that the highlighted was
   // trigerred from a long press entering the view and shouldn't invoke a ripple.
-  if ([self.rippleDelegate respondsToSelector:@selector(rippleDelegateTouchesMoved:withEvent:)]) {
-    [self.rippleDelegate rippleDelegateTouchesMoved:touches withEvent:event];
+  if ([self.rippleDelegate respondsToSelector:@selector(cardRippleDelegateTouchesMoved:withEvent:)]) {
+    [self.rippleDelegate cardRippleDelegateTouchesMoved:touches withEvent:event];
   }
   [super touchesMoved:touches withEvent:event];
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-  if ([self.rippleDelegate respondsToSelector:@selector(rippleDelegateTouchesEnded:withEvent:)]) {
-    [self.rippleDelegate rippleDelegateTouchesEnded:touches withEvent:event];
+  if ([self.rippleDelegate respondsToSelector:@selector(cardRippleDelegateTouchesEnded:withEvent:)]) {
+    [self.rippleDelegate cardRippleDelegateTouchesEnded:touches withEvent:event];
   }
   [super touchesEnded:touches withEvent:event];
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-  if ([self.rippleDelegate respondsToSelector:@selector(rippleDelegateTouchesCancelled:
+  if ([self.rippleDelegate respondsToSelector:@selector(cardRippleDelegateTouchesCancelled:
                                                                              withEvent:)]) {
-    [self.rippleDelegate rippleDelegateTouchesCancelled:touches withEvent:event];
+    [self.rippleDelegate cardRippleDelegateTouchesCancelled:touches withEvent:event];
   }
   [super touchesCancelled:touches withEvent:event];
 }

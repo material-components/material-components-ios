@@ -312,18 +312,18 @@ typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
  This protocol is used to integrate the Ripple Beta component into Cards. Please do not conform
  to this protocol.
  */
-@protocol MDCCardCollectionCellRippleDelegate <NSObject>
+__deprecated_msg("This protocol is temporarily used to incorporate the Ripple Beta component into Cards. This is deprecated, please do not conform to this protocol.") @protocol MDCCardCollectionCellRippleDelegate <NSObject>
 
-- (void)rippleDelegateSetSelected:(BOOL)selected;
-- (void)rippleDelegateSetHighlighted:(BOOL)highlighted;
-- (void)rippleDelegateSetSelectable:(BOOL)selectable;
-- (void)rippleDelegateSetDragged:(BOOL)dragged;
-- (UIImage *)rippleDelegateUpdateImage:(UIImage *)image;
-- (UIColor *)rippleDelegateUpdateImageTintColor:(UIColor *)imageTintColor;
-- (MDCCardCellState)rippleDelegateState;
-- (void)rippleDelegateTouchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event;
-- (void)rippleDelegateTouchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event;
-- (void)rippleDelegateTouchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event;
-- (void)rippleDelegateTouchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event;
+- (void)cardCellRippleDelegateSetSelected:(BOOL)selected;
+- (void)cardCellRippleDelegateSetHighlighted:(BOOL)highlighted;
+- (void)cardCellRippleDelegateSetSelectable:(BOOL)selectable;
+- (void)cardCellRippleDelegateSetDragged:(BOOL)dragged;
+- (UIImage *)cardCellRippleDelegateUpdateImage:(UIImage *)image;
+- (UIColor *)cardCellRippleDelegateUpdateImageTintColor:(UIColor *)imageTintColor;
+- (MDCCardCellState)cardCellRippleDelegateState;
+- (void)cardCellRippleDelegateTouchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event;
+- (void)cardCellRippleDelegateTouchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event;
+- (void)cardCellRippleDelegateTouchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event;
+- (void)cardCellRippleDelegateTouchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event;
 
 @end
