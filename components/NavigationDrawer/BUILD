@@ -57,8 +57,8 @@ mdc_objc_library(
 mdc_objc_library(
     name = "TestingHeader",
     testonly = 1,
-    hdrs = native.glob(["src/private/MDCBottomDrawerContainerViewController+Test.h"]),
-    includes = ["src/private/MDCBottomDrawerContainerViewController+Test.h"],
+    hdrs = native.glob(["src/private/MDCBottomDrawerContainerViewController+Testing.h"]),
+    includes = ["src/private/MDCBottomDrawerContainerViewController+Testing.h"],
     visibility = ["//visibility:public"],
     deps = [":NavigationDrawer"],
 )
