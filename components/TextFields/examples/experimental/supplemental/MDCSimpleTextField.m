@@ -217,7 +217,12 @@ static const CGFloat kFloatingPlaceholderAnimationDuration = (CGFloat)0.15;
 }
 
 - (void)postLayoutSubviews {
-  [self layOutPlaceholderWithState:self.placeholderState];
+  UIFont *normalFont = [self determineEffectiveFont];
+  UIFont *floatingFont = [self floatingPlaceholderFontWithFont:normalFont
+                                                containerStyle:self.containerStyle];
+  [self layOutPlaceholderWithState:self.placeholderState
+                        normalFont:normalFont
+                      floatingFont:floatingFont];
   id<MDCContainedInputViewColorScheming> colorScheming =
       [self containedInputViewColorSchemingForState:self.containedInputViewState];
   [self.containerStyle applyStyleToContainedInputView:self
@@ -628,13 +633,12 @@ static const CGFloat kFloatingPlaceholderAnimationDuration = (CGFloat)0.15;
   }
 }
 
-- (void)layOutPlaceholderWithState:(MDCContainedInputViewPlaceholderState)placeholderState {
-  NSAssert([NSThread isMainThread], nil);
-  UIFont *normalFont = [self determineEffectiveFont];
-  UIFont *floatingFont = [self floatingPlaceholderFontWithFont:normalFont
-                                                containerStyle:self.containerStyle];
+- (void)layOutPlaceholderWithState:(MDCContainedInputViewPlaceholderState)placeholderState
+                        normalFont:(UIFont *)normalFont
+                      floatingFont:(UIFont *)floatingFont {
   UIFont *targetFont = normalFont;
 
+  CGRect currentFrame = self.placeholderLabel.frame;
   CGRect normalFrame = self.layout.placeholderFrameNormal;
   CGRect floatingFrame = self.layout.placeholderFrameFloating;
   CGRect targetFrame = normalFrame;
@@ -655,30 +659,41 @@ static const CGFloat kFloatingPlaceholderAnimationDuration = (CGFloat)0.15;
       break;
   }
 
-  CGAffineTransform transform = CGAffineTransformIdentity;
+  CGAffineTransform currentTransform = self.placeholderLabel.transform;
+  CGAffineTransform targetTransform = CGAffineTransformIdentity;
 
-  if (self.isAnimating || CGRectEqualToRect(self.placeholderLabel.frame, CGRectZero)) {
+  if (self.isAnimating || CGRectEqualToRect(currentFrame, CGRectZero)) {
     self.placeholderLabel.transform = CGAffineTransformIdentity;
     self.placeholderLabel.frame = targetFrame;
     self.placeholderLabel.font = targetFont;
     return;
-  } else if (!CGRectEqualToRect(self.placeholderLabel.frame, targetFrame)) {
-    transform = [self transformFromRect:self.placeholderLabel.frame toRect:targetFrame];
+  } else if (!CGRectEqualToRect(currentFrame, targetFrame)) {
+    targetTransform = [self transformFromRect:currentFrame toRect:targetFrame];
   }
 
   self.isAnimating = YES;
   self.placeholderLabel.hidden = placeholderShouldHide;
+
   __weak typeof(self) weakSelf = self;
-  [UIView animateWithDuration:kFloatingPlaceholderAnimationDuration
-      animations:^{
-        weakSelf.placeholderLabel.transform = transform;
-      }
-      completion:^(BOOL finished) {
-        weakSelf.placeholderLabel.transform = CGAffineTransformIdentity;
-        weakSelf.placeholderLabel.frame = targetFrame;
-        weakSelf.placeholderLabel.font = targetFont;
-        weakSelf.isAnimating = NO;
-      }];
+  [CATransaction begin];
+  {
+    [CATransaction setCompletionBlock:^{
+      weakSelf.placeholderLabel.transform = CGAffineTransformIdentity;
+      weakSelf.placeholderLabel.frame = targetFrame;
+      weakSelf.placeholderLabel.font = targetFont;
+      weakSelf.isAnimating = NO;
+    }];
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform"];
+    animation.fromValue =
+        [NSValue valueWithCATransform3D:CATransform3DMakeAffineTransform(currentTransform)];
+    animation.toValue =
+        [NSValue valueWithCATransform3D:CATransform3DMakeAffineTransform(targetTransform)];
+    animation.duration = kFloatingPlaceholderAnimationDuration;
+    animation.removedOnCompletion = YES;
+    weakSelf.placeholderLabel.transform = targetTransform;
+    [weakSelf.placeholderLabel.layer addAnimation:animation forKey:animation.keyPath];
+  }
+  [CATransaction commit];
 }
 
 - (CGAffineTransform)transformFromRect:(CGRect)sourceRect toRect:(CGRect)finalRect {
