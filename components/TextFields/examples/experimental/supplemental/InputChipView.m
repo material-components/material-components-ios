@@ -624,7 +624,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   CGFloat floatingPlaceholderMaxY = CGRectGetMaxY(self.placeholderLabel.frame);
   CGFloat topSpacing = [self.containerStyle.densityInformer
       contentAreaTopPaddingWithFloatingPlaceholderMaxY:floatingPlaceholderMaxY];
-  CGFloat topFadeStart = (floatingPlaceholderMaxY + (0.0 * topSpacing)) / viewHeight;
+  CGFloat topFadeStart = (floatingPlaceholderMaxY + ((CGFloat)0.0 * topSpacing)) / viewHeight;
   if (topFadeStart <= 0) {
     topFadeStart = 0;
   }
