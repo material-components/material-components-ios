@@ -27,7 +27,7 @@
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  self.recordMode = YES;
+  //  self.recordMode = YES;
 
   self.appBar = [[MDCBottomAppBarView alloc] init];
   UIBarButtonItem *leading1 = [[UIBarButtonItem alloc] initWithTitle:@"L1"
