@@ -1,3 +1,123 @@
+# 77.0.0
+
+In this release we made improvements to BottomNavigationBar and landed stateful ripple in the ripple (beta) component.
+
+## Breaking changes
+
+### BottomNavigationBar
+
+Removed a deprecated API:
+```
+@property(nonatomic, assign) UIEdgeInsets itemsContentInsets 
+```
+
+## New features
+
+### BottomNavigationBar
+
+#### Blur
+
+BottomNavigation can use blur in its background when not fully opaque
+```
+self.bottomNavBar.backgroundBlurEnabled = YES;
+```
+
+#### Long item titles
+
+We automatically truncate titles that go out of bounds but added a flag to allow some clients to still overflow.
+
+```
+self.navigationBar.truncatesLongTitles = NO;
+```
+
+### Stateful Ripple
+
+We added this new component that simplifies the intersection of states and ripples.
+
+You can set the state of the ripple like so:
+```
+    statefulRippleView.isRippleHighlighted = true
+...
+    statefulRippleView.isSelected = true
+```
+## API changes
+
+### BottomNavigation
+
+#### MDCBottomNavigationBar
+
+*new* property: `backgroundBlurEffectStyle` in `MDCBottomNavigationBar`
+
+*new* property: `backgroundBlurEnabled` in `MDCBottomNavigationBar`
+
+*new* property: `truncatesLongTitles` in `MDCBottomNavigationBar`
+
+*removed* property: `itemsContentInsets` in `MDCBottomNavigationBar`
+
+### Ripple
+
+#### MDCRippleState
+
+*new* enum: `MDCRippleState`
+
+*new* enum value: `MDCRippleStateSelected` in `MDCRippleState`
+
+*new* enum value: `MDCRippleStateDragged` in `MDCRippleState`
+
+*new* enum value: `MDCRippleStateHighlighted` in `MDCRippleState`
+
+*new* enum value: `MDCRippleStateNormal` in `MDCRippleState`
+
+*new* typedef: `MDCRippleState`
+
+#### MDCStatefulRippleView
+
+*new* class: `MDCStatefulRippleView`
+
+*new* method: `-rippleColorForState:` in `MDCStatefulRippleView`
+
+*new* property: `selected` in `MDCStatefulRippleView`
+
+*new* property: `allowsSelection` in `MDCStatefulRippleView`
+
+*new* property: `rippleHighlighted` in `MDCStatefulRippleView`
+
+*new* method: `-setRippleColor:forState:` in `MDCStatefulRippleView`
+
+*new* property: `dragged` in `MDCStatefulRippleView`
+
+## Component changes
+
+## Changes
+
+### BottomNavigation
+
+* [Add blur example (#6589)](https://github.com/material-components/material-components-ios/commit/cbac7a9a48ea8139b289e64d26b8eca8fee428b7) (Robert Moore)
+* [Badge size grows with value (#6594)](https://github.com/material-components/material-components-ios/commit/2cc9cecd36320a55bd751d564b9aaa5821181bce) (Robert Moore)
+* [Add support for blur effect. (#6587)](https://github.com/material-components/material-components-ios/commit/cd2a67896e1cac9ea4ee203d87c4ebf4d4f2fa02) (Robert Moore)
+* [Delete `itemsContentInsets` API (#6584)](https://github.com/material-components/material-components-ios/commit/0c2b2ea61b010242a74d57f726230d1d53a9df4b) (Robert Moore)
+* [Extend ripple to bar bounds. (#6586)](https://github.com/material-components/material-components-ios/commit/266d0f5406b8a3e901c3426a4046cf80175571a7) (Robert Moore)
+* [Fix "centered" alignment. (#6604)](https://github.com/material-components/material-components-ios/commit/f53fc6c6c9ac7e9c7ca75f9cd912f6378ad0bb37) (Robert Moore)
+* [Fix Item View layout.   (#6603)](https://github.com/material-components/material-components-ios/commit/10f39dab221558b608dd54a4d6d3fc81f7734878) (Robert Moore)
+* [Fix badge position and font. (#6602)](https://github.com/material-components/material-components-ios/commit/3f7477d8479cc154fe6c72baea516bcc9c282dde) (Robert Moore)
+
+### Dialogs
+
+* [Remove internal usage of Themers. (#6572)](https://github.com/material-components/material-components-ios/commit/a09a0c7c341b869bd090243a5344f0d2be2803a8) (Robert Moore)
+* [add an example for themed button with emphasis (#6600)](https://github.com/material-components/material-components-ios/commit/4629b52279f3fe82ec246294c5fadfd955ec7d24) (Wenyu Zhang)
+* [hide non main examples in Catalog (#6576)](https://github.com/material-components/material-components-ios/commit/e30b8b2b391152bbb86695c8689f2fa0881d2e04) (Wenyu Zhang)
+
+### Ripple
+
+* [[Ripple] Provides a Stateful Ripple implementation (#6591)](https://github.com/material-components/material-components-ios/commit/8a960fc9632b844b8a63d68a527daf09716de35f) (Yarden Eitan)
+
+## Multi-component changes
+
+* [Fix ripple layout issues with autolayout (#6588)](https://github.com/material-components/material-components-ios/commit/02161e4a76375dcdf80cdcb955b6279967cda295) (Yarden Eitan)
+* [{kokoro} Fix develop (#6575)](https://github.com/material-components/material-components-ios/commit/46ff9c3173f2ce15d981b347b745cfecbb6b8a8e) (Robert Moore)
+
+---
+
 # 76.1.2
 
 Fix build tooling.
