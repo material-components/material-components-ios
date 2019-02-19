@@ -74,6 +74,7 @@ target "MDCCatalog" do
     'Chips/tests/snapshot',
     'Dialogs/tests/snapshot',
     'Ripple/tests/snapshot',
+    'Slider/tests/snapshot',
     'TextFields/tests/snapshot',
   ]
   pod 'CatalogByConvention', "~> 2.5"
