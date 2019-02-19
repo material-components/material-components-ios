@@ -63,7 +63,7 @@
 }
 
 - (UIImage *)cardCellRippleDelegateUpdateImage:(UIImage *)image {
-  // CardCollectionCell's state system doesn't incorporate multiple states occuring simultaneously.
+  // TODO(#6661): CardCollectionCell's state system doesn't incorporate multiple states occuring simultaneously.
   // When the card is selected and highlighted it should take the image of MDCCardCellStateSelected.
   if (self.castedRippleView.selected) {
     image = [self imageForState:MDCCardCellStateSelected];
@@ -72,7 +72,7 @@
 }
 
 - (UIColor *)cardCellRippleDelegateUpdateImageTintColor:(UIColor *)imageTintColor {
-  // CardCollectionCell's state system doesn't incorporate multiple states occuring simultaneously.
+  // TODO(#6661): CardCollectionCell's state system doesn't incorporate multiple states occuring simultaneously.
   // When the card is selected and highlighted it should take the image tint of
   // MDCCardCellStateSelected.
   if (self.castedRippleView.selected) {

@@ -493,6 +493,7 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
   self.layer.shapeGenerator = shapeGenerator;
   self.layer.shadowMaskEnabled = NO;
   [self updateBackgroundColor];
+  // Original logic for configuring Ink prior to the Ripple integration.
   if (self.rippleDelegate == nil) {
     [self updateInkForShape];
   }
