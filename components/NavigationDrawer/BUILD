@@ -54,6 +54,15 @@ mdc_objc_library(
     visibility = ["//visibility:private"],
 )
 
+mdc_objc_library(
+    name = "TestingHeader",
+    testonly = 1,
+    hdrs = native.glob(["src/private/MDCBottomDrawerContainerViewController+Test.h"]),
+    includes = ["src/private/MDCBottomDrawerContainerViewController+Test.h"],
+    visibility = ["//visibility:public"],
+    deps = [":NavigationDrawer"],
+)
+
 mdc_examples_swift_library(
     name = "SwiftExamples",
     deps = [
