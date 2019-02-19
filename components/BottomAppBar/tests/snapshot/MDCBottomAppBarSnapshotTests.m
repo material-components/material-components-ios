@@ -27,16 +27,30 @@
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-    self.recordMode = YES;
+  self.recordMode = YES;
 
   self.appBar = [[MDCBottomAppBarView alloc] init];
-  UIBarButtonItem *leading1 = [[UIBarButtonItem alloc] initWithTitle:@"L1" style:UIBarButtonItemStylePlain target:nil action:NULL];
-  UIImage *leadingImage2 = [[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-  UIBarButtonItem *leading2 = [[UIBarButtonItem alloc] initWithImage:leadingImage2 style:UIBarButtonItemStylePlain target:nil action:NULL];
+  UIBarButtonItem *leading1 = [[UIBarButtonItem alloc] initWithTitle:@"L1"
+                                                               style:UIBarButtonItemStylePlain
+                                                              target:nil
+                                                              action:NULL];
+  UIImage *leadingImage2 = [[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  UIBarButtonItem *leading2 = [[UIBarButtonItem alloc] initWithImage:leadingImage2
+                                                               style:UIBarButtonItemStylePlain
+                                                              target:nil
+                                                              action:NULL];
 
-  UIImage *trailingImage1 = [[UIImage mdc_testImageOfSize:CGSizeMake(40, 40)] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-  UIBarButtonItem *trailing1 = [[UIBarButtonItem alloc] initWithImage:trailingImage1 style:UIBarButtonItemStylePlain target:nil action:NULL];
-  UIBarButtonItem *trailing2 = [[UIBarButtonItem alloc] initWithTitle:@"T2" style:UIBarButtonItemStylePlain target:nil action:NULL];
+  UIImage *trailingImage1 = [[UIImage mdc_testImageOfSize:CGSizeMake(40, 40)]
+      imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+  UIBarButtonItem *trailing1 = [[UIBarButtonItem alloc] initWithImage:trailingImage1
+                                                                style:UIBarButtonItemStylePlain
+                                                               target:nil
+                                                               action:NULL];
+  UIBarButtonItem *trailing2 = [[UIBarButtonItem alloc] initWithTitle:@"T2"
+                                                                style:UIBarButtonItemStylePlain
+                                                               target:nil
+                                                               action:NULL];
 
   self.appBar.leadingBarButtonItems = @[ leading1, leading2 ];
   self.appBar.trailingBarButtonItems = @[ trailing1, trailing2 ];
