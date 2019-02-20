@@ -114,10 +114,10 @@ mdc_examples_objc_library(
     deps = [
         ":Buttons",
         ":Theming",
+        "//components/ShapeLibrary",
+        "//components/Shapes",
         "//components/Typography",
         "//components/private/Math",
-        "//components/private/ShapeLibrary",
-        "//components/private/Shapes",
         "//components/schemes/Color",
         "//components/schemes/Container",
         "//components/schemes/Shape",
