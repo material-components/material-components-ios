@@ -106,6 +106,7 @@ mdc_objc_library(
     deps = [
         "//components/Buttons",
         "//components/Buttons:Theming",
+        "//components/Chips",
         "//components/private/Math",
         "//components/schemes/Color",
     ],
