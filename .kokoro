@@ -408,7 +408,7 @@ run_cocoapods() {
       bash scripts/test_all catalog/MDCCatalog.xcworkspace:MDCCatalog
     fi
   elif [ "$DEPENDENCY_SYSTEM" = "cocoapods-podspec" ]; then
-    pod lib lint MaterialComponents.podspec --skip-tests
+    pod lib lint MaterialComponents.podspec --skip-tests --verbose
   fi
 
   if [ -n "$CODECOV_TOKEN" ]; then
