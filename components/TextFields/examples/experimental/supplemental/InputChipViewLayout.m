@@ -15,7 +15,7 @@
 #import "InputChipViewLayout.h"
 
 #import <MDFInternationalization/MDFInternationalization.h>
-#import <MaterialComponents/MaterialMath.h>
+#import "MaterialMath.h"
 #import "InputChipView.h"
 
 static const CGFloat kEstimatedCursorWidth = (CGFloat)2.0;
