@@ -17,10 +17,13 @@
 
 /**
  This category implements the MDCCardCollectionCellRippleDelegate protocol to integrate Ripple
- and the new states implementation that Ripple provides into the Card component.
+ and the states implementation that Ripple provides into the Card component.
  The reason for not implementing this code directly into the MDCCardCollectionCell implementation
  file is because Ripple is still a Beta component and therefore shouldn't be directly integrated
  into Cards, a ready component.
  */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 @interface MDCCardCollectionCell (Ripple) <MDCCardCollectionCellRippleDelegate>
 @end
+#pragma clang diagnostic pop
