@@ -14,9 +14,15 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialContainerScheme.h"
+#import "MDCContainedInputView.h"
 
-@interface SimpleTextFieldManualLayoutExampleViewController : UIViewController
+@interface MDCContainedInputViewColorSchemeOutlined : MDCContainedInputViewColorScheme
+@property(strong, nonatomic) UIColor *outlineColor;
+@end
 
-@property(strong, nonatomic) id<MDCContainerScheming> containerScheme;
+@interface MDCContainerStyleOutlined : MDCContainerStyleBase <MDCContainedInputViewStyle>
+@end
+
+@interface MDCContainerStyleOutlinedDensityInformer
+    : MDCContainerStyleBaseDensityInformer <MDCContainedInputViewStyleDensityInforming>
 @end

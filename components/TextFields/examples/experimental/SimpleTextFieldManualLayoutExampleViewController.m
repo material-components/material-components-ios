@@ -1,4 +1,4 @@
-// Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2019-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,11 +18,13 @@
 
 #import "MaterialButtons+Theming.h"
 #import "MaterialColorScheme.h"
-#import "supplemental/SimpleTextField.h"
+#import "supplemental/MDCSimpleTextField.h"
 
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar+TypographyThemer.h"
 #import "MaterialButtons+ButtonThemer.h"
+
+#import "supplemental/MDCSimpleTextField+MaterialTheming.h"
 
 @interface SimpleTextFieldManualLayoutExampleViewController ()
 
@@ -30,11 +32,8 @@
 
 @property(strong, nonatomic) MDCButton *resignFirstResponderButton;
 @property(strong, nonatomic) MDCButton *toggleErrorButton;
-@property(strong, nonatomic) SimpleTextField *filledTextField;
-@property(strong, nonatomic) SimpleTextField *outlinedTextField;
-@property(strong, nonatomic) UITextField *uiTextField;
-
-@property(strong, nonatomic) MDCContainerScheme *containerScheme;
+@property(strong, nonatomic) MDCSimpleTextField *filledTextField;
+@property(strong, nonatomic) MDCSimpleTextField *outlinedTextField;
 
 @property(nonatomic, assign) BOOL isErrored;
 
@@ -42,11 +41,21 @@
 
 @implementation SimpleTextFieldManualLayoutExampleViewController
 
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+    containerScheme.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    containerScheme.typographyScheme = [[MDCTypographyScheme alloc] init];
+    self.containerScheme = containerScheme;
+  }
+  return self;
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
   [self addObservers];
   self.view.backgroundColor = [UIColor whiteColor];
-  self.containerScheme = [[MDCContainerScheme alloc] init];
   [self addSubviews];
 }
 
@@ -79,7 +88,6 @@
   [self addToggleErrorButton];
   [self addFilledTextField];
   [self addOutlinedTextField];
-  [self addUiTextField];
 }
 
 - (void)layoutScrollView {
@@ -127,7 +135,7 @@
       CGRectMake(filledTextFieldMinX, filledTextFieldMinY, filledTextFieldSize.width,
                  filledTextFieldSize.height);
   self.filledTextField.frame = filledTextFieldButtonFrame;
-  [self.filledTextField setNeedsLayout];
+  //  [self.filledTextField setNeedsLayout];
 
   CGFloat outlinedTextFieldMinX = padding;
   CGFloat outlinedTextFieldMinY = filledTextFieldMinY + filledTextFieldSize.height + padding;
@@ -136,13 +144,7 @@
       CGRectMake(outlinedTextFieldMinX, outlinedTextFieldMinY, outlinedTextFieldSize.width,
                  outlinedTextFieldSize.height);
   self.outlinedTextField.frame = outlinedTextFieldFrame;
-  [self.outlinedTextField setNeedsLayout];
-
-  CGFloat uiTextFieldMinX = padding;
-  CGFloat uiTextFieldMinY = outlinedTextFieldMinY + outlinedTextFieldSize.height + padding;
-  CGRect uiTextFieldFrame = CGRectMake(uiTextFieldMinX, uiTextFieldMinY, textFieldWidth,
-                                       CGRectGetHeight(self.uiTextField.frame));
-  self.uiTextField.frame = uiTextFieldFrame;
+  //  [self.outlinedTextField setNeedsLayout];
 }
 
 - (void)updateScrollViewContentSize {
@@ -190,8 +192,8 @@
 }
 
 - (void)addFilledTextField {
-  self.filledTextField = [[SimpleTextField alloc] init];
-  self.filledTextField.textFieldStyle = TextFieldStyleFilled;
+  self.filledTextField = [[MDCSimpleTextField alloc] init];
+  [self.filledTextField applyFilledThemeWithScheme:self.containerScheme];
   self.filledTextField.placeholder = @"This is a placeholder";
   self.filledTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
   self.filledTextField.leadingUnderlineLabel.numberOfLines = 0;
@@ -200,19 +202,11 @@
 }
 
 - (void)addOutlinedTextField {
-  self.outlinedTextField = [[SimpleTextField alloc] init];
-  self.outlinedTextField.textFieldStyle = TextFieldStyleOutline;
+  self.outlinedTextField = [[MDCSimpleTextField alloc] init];
+  [self.outlinedTextField applyOutlinedThemeWithScheme:self.containerScheme];
   self.outlinedTextField.placeholder = @"This is another placeholder";
   self.outlinedTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
   [self.scrollView addSubview:self.outlinedTextField];
-}
-
-- (void)addUiTextField {
-  self.uiTextField = [[UITextField alloc] init];
-  self.uiTextField.borderStyle = UITextBorderStyleRoundedRect;
-  self.uiTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-
-  [self.scrollView addSubview:self.uiTextField];
 }
 
 #pragma mark Private
@@ -263,7 +257,6 @@
 - (void)resignFirstResponderButtonTapped:(UIButton *)button {
   [self.filledTextField resignFirstResponder];
   [self.outlinedTextField resignFirstResponder];
-  [self.uiTextField resignFirstResponder];
 }
 
 - (void)toggleErrorButtonTapped:(UIButton *)button {

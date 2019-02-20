@@ -16,7 +16,20 @@
 
 #import "MaterialContainerScheme.h"
 
-@interface SimpleTextFieldManualLayoutExampleViewController : UIViewController
+#import "MDCContainedInputView.h"
 
-@property(strong, nonatomic) id<MDCContainerScheming> containerScheme;
+NS_ASSUME_NONNULL_BEGIN
+
+@interface InputChipView : UIControl <MDCContainedInputView>
+@property(strong, nonatomic, readonly) UITextField *textField;
+
+@property(nonatomic, assign) BOOL chipsWrap;
+
+@property(nonatomic, assign) CGFloat chipRowHeight;
+@property(nonatomic, assign) CGFloat chipRowSpacing;
+
+- (void)addChip:(UIView *)chip;
+
 @end
+
+NS_ASSUME_NONNULL_END
