@@ -6,22 +6,19 @@ This major release promotes the Shape libraries from private to ready, as well a
 
 Moving both Shape libraries, Shapes and ShapeLibrary, from components/private/ to components/ is a breaking change. Clients need to migrate over and update their imports to point to the new location of the Shape libraries.
 
-## New features
-
-Replace this text with example code for each new feature.
 ## API changes
 
 ### ActionSheet
 
-**New component.**
+**New component - promoted to Ready.**
 
 ### ShapeLibrary
 
-**New component.**
+**New component - promoted to Ready.**
 
 ### Shapes
 
-**New component.**
+**New component - promoted to Ready.**
 
 ## Component changes
 
