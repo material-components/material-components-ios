@@ -44,6 +44,17 @@ Pod::Spec.new do |s|
     end
   end
 
+  s.subspec "ButtonBar" do |component|
+    component.ios.deployment_target = '8.0'
+    component.test_spec 'tests' do |tests|
+      tests.test_spec 'snapshot' do |snapshot_tests|
+        snapshot_tests.requires_app_host = true
+        snapshot_tests.source_files = "components/#{component.base_name}/tests/snapshot/*.{h,m,swift}"
+        snapshot_tests.dependency "MaterialComponentsSnapshotTests/private/Snapshot"
+      end
+    end
+  end
+
   s.subspec "Cards" do |component|
     component.ios.deployment_target = '8.0'
     component.test_spec 'tests' do |tests|
