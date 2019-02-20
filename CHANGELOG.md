@@ -1,16 +1,19 @@
-# #develop#
+# 78.0.0
 
-Replace this text with a summarized description of this release's contents.
+This major release promotes the Shape libraries from private to ready, as well as promoting Action Sheet to ready by migrating it from the MaterialComponentsBeta podspec to the MaterialComponents main podspec.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+Moving both Shape libraries, Shapes and ShapeLibrary, from components/private/ to components/ is a breaking change. Clients need to migrate over and update their imports to point to the new location of the Shape libraries.
 
-Replace this text with links to deprecation guides.
 ## New features
 
 Replace this text with example code for each new feature.
 ## API changes
+
+### ActionSheet
+
+**New component.**
 
 ### ShapeLibrary
 
@@ -35,10 +38,24 @@ Replace this text with example code for each new feature.
 ### BottomAppBar
 
 * [Fix FAB location when RTL changes. (#6644)](https://github.com/material-components/material-components-ios/commit/ecf420e23e3a427a0a2035acbab7f26dbde5f378) (Robert Moore)
+* [Add basic snapshot tests. (#6643)](https://github.com/material-components/material-components-ios/commit/fb8190d8d471a5df78f44429239a29a2d4d7fd5b) (Robert Moore)
+
+### ButtonBar
+
+* [Add basic snapshot tests. (#6662)](https://github.com/material-components/material-components-ios/commit/5ee639cc913eb1f521b54b0f2e70ca5522240ada) (Robert Moore)
+
+### Buttons
+
+* [Add states snapshot tests. (#6639)](https://github.com/material-components/material-components-ios/commit/41612628cc3eb845c8d00d79aef8c981b175bdad) (Robert Moore)
+
+### Cards
+
+* [[Ripple] Integrate the new ripple and states into the Cards component (#6621)](https://github.com/material-components/material-components-ios/commit/136273636d074159a348b6f639148236c0fcfbca) (Yarden Eitan)
 
 ### Dialogs
 
 * [add an example for custom dialog view controller themed by theming extension (#6601)](https://github.com/material-components/material-components-ios/commit/6090cd6dad51a541a11287ed3ab3ce00f5e2054e) (Wenyu Zhang)
+* [Add snapshot tests to MDCAlertController (#6641)](https://github.com/material-components/material-components-ios/commit/d77f1b3dbbdee8dac13644fb97c38e987c80bdfa) (Robert Moore)
 
 ### NavigationDrawer
 
@@ -53,20 +70,18 @@ Replace this text with example code for each new feature.
 
 * [shape path nil check (#6616)](https://github.com/material-components/material-components-ios/commit/017b613a7557d9af80f1fb4a5f5b88dd855309c9) (Yarden Eitan)
 
+### Slider
+
+* [Add basic snapshot tests. (#6640)](https://github.com/material-components/material-components-ios/commit/65426c86f9c158753755526b146b511f50265d59) (Robert Moore)
+
 ### TextFields
 
 * [Updates to SimpleTextFIeld and InputChipView prototype (#6647)](https://github.com/material-components/material-components-ios/commit/1d7fedd32db9d83ee24f9aaa80f5bc34d98df781) (Andrew Overton)
 
 ## Multi-component changes
 
-* [Add basic snapshot tests. (#6640)](https://github.com/material-components/material-components-ios/commit/65426c86f9c158753755526b146b511f50265d59) (Robert Moore)
-* [Add basic snapshot tests. (#6643)](https://github.com/material-components/material-components-ios/commit/fb8190d8d471a5df78f44429239a29a2d4d7fd5b) (Robert Moore)
-* [Add basic snapshot tests. (#6662)](https://github.com/material-components/material-components-ios/commit/5ee639cc913eb1f521b54b0f2e70ca5522240ada) (Robert Moore)
-* [Add snapshot tests to MDCAlertController (#6641)](https://github.com/material-components/material-components-ios/commit/d77f1b3dbbdee8dac13644fb97c38e987c80bdfa) (Robert Moore)
-* [Add states snapshot tests. (#6639)](https://github.com/material-components/material-components-ios/commit/41612628cc3eb845c8d00d79aef8c981b175bdad) (Robert Moore)
 * [Fix snapshot testing after Cocoapods 1.6.0 update (#6611)](https://github.com/material-components/material-components-ios/commit/fb21536d9f685485793de87f25ad2d4cd43e081e) (Andrew Overton)
 * [Revert "[Cocoapods] Fix snapshot testing after Cocoapods 1.6.0 update (#6611)" (#6619)](https://github.com/material-components/material-components-ios/commit/3b1d82a52614973601b92a209f09a0c518a969f9) (Andrew Overton)
-* [[Ripple] Integrate the new ripple and states into the Cards component (#6621)](https://github.com/material-components/material-components-ios/commit/136273636d074159a348b6f639148236c0fcfbca) (Yarden Eitan)
 
 ---
 
