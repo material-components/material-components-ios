@@ -1169,6 +1169,7 @@ Pod::Spec.new do |mdc|
       "components/#{component.base_name}/src/*.{h,m}",
       "components/#{component.base_name}/src/private/*.{h,m}"
     ]
+    component.exclude_files = "components/#{component.base_name}/src/private/MDCBottomDrawerContainerViewController+Testing.h"
 
     component.dependency "MaterialComponents/Palettes"
     component.dependency "MaterialComponents/ShadowLayer"
@@ -1178,7 +1179,8 @@ Pod::Spec.new do |mdc|
     component.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
         "components/#{component.base_name}/tests/unit/*.{h,m,swift}",
-        "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}",
+        "components/#{component.base_name}/src/private/MDCBottomDrawerContainerViewController+Testing.h"
       ]
       unit_tests.dependency "MaterialComponents/NavigationDrawer+ColorThemer"
     end
