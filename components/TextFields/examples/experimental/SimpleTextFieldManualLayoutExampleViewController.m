@@ -24,7 +24,7 @@
 #import "MaterialAppBar+TypographyThemer.h"
 #import "MaterialButtons+ButtonThemer.h"
 
-#import "MDCSimpleTextField+MaterialTheming.h"
+#import "supplemental/MDCSimpleTextField+MaterialTheming.h"
 
 @interface SimpleTextFieldManualLayoutExampleViewController ()
 

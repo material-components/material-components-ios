@@ -16,16 +16,16 @@
 
 #import "MaterialButtons.h"
 
-#import "InputChipView.h"
 #import "MaterialButtons+Theming.h"
 #import "MaterialColorScheme.h"
+#import "supplemental/InputChipView.h"
 
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar+TypographyThemer.h"
 #import "MaterialButtons+ButtonThemer.h"
 #import "MaterialChips.h"
 
-#import "InputChipView+MaterialTheming.h"
+#import "supplemental/InputChipView+MaterialTheming.h"
 
 static const CGFloat kSideMargin = (CGFloat)30.0;
 

@@ -124,10 +124,8 @@ swift_library(
 
 mdc_objc_library(
     name = "ExperimentalExamples",
-    srcs = glob([
-        "examples/experimental/*.h",
-        "examples/experimental/*.m",
-    ]),
+    srcs = glob(["examples/experimental/*.m"]),
+    hdrs = glob(["examples/experimental/*.h"]),
     deps = [
         ":ExperimentalExampleSource",
         "//components/AppBar:ColorThemer",
