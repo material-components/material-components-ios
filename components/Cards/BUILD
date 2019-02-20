@@ -54,6 +54,7 @@ mdc_objc_library(
         "CoreGraphics",
         "UIKit",
     ],
+    visibility = ["//visibility:public"],
     deps = [
         "//components/Ink",
         "//components/ShadowLayer",

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import "MDCCardCollectionCell.h"
+#import "private/MDCCardCollectionCell+Private.h"
 
 #import "MaterialIcons+ic_check_circle.h"
 #import "MaterialMath.h"
@@ -29,8 +30,14 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 @interface MDCCardCollectionCell ()
 @property(nonatomic, strong, nullable) UIImageView *selectedImageView;
 @property(nonatomic, readonly, strong) MDCShapedShadowLayer *layer;
-@property(nonatomic, strong) UIView *rippleView;      // Used for Ripple Beta.
-@property(nonatomic, getter=isDragged) BOOL dragged;  // Used for Ripple Beta.
+
+// Used for Ripple Beta
+@property(nonatomic, strong) UIView *rippleView;
+@property(nonatomic, getter=isDragged) BOOL dragged;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+@property(nonatomic, weak) id<MDCCardCollectionCellRippleDelegate> rippleDelegate;
+#pragma clang diagnostic pop
 @end
 
 @implementation MDCCardCollectionCell {

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import "MDCCard.h"
+#import "private/MDCCard+Private.h"
 
 #import "MaterialMath.h"
 #import "MaterialShapesNew.h"
@@ -24,7 +25,13 @@ static const BOOL MDCCardIsInteractableDefault = YES;
 
 @interface MDCCard ()
 @property(nonatomic, readonly, strong) MDCShapedShadowLayer *layer;
-@property(nonatomic, strong) UIView *rippleView;  // Used for Ripple Beta.
+
+// Used for Ripple Beta
+@property(nonatomic, strong) UIView *rippleView;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+@property(nonatomic, weak) id<MDCCardRippleDelegate> rippleDelegate;
+#pragma clang diagnostic pop
 @end
 
 @implementation MDCCard {
