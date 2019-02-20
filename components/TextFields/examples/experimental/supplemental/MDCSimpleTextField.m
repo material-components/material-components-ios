@@ -146,7 +146,7 @@ static const CGFloat kFloatingPlaceholderAnimationDuration = (CGFloat)0.15;
 }
 
 - (void)setUpUnderlineLabels {
-  CGFloat underlineFontSize = MDCRound([UIFont systemFontSize] * 0.75);
+  CGFloat underlineFontSize = MDCRound([UIFont systemFontSize] * (CGFloat)0.75);
   UIFont *underlineFont = [UIFont systemFontOfSize:underlineFontSize];
   self.leftUnderlineLabel = [[UILabel alloc] init];
   self.leftUnderlineLabel.font = underlineFont;

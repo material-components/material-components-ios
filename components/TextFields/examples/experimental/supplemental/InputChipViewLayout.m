@@ -142,11 +142,12 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
                                                                containerStyle:containerStyle
                                                                         isRTL:isRTL];
 
-  CGFloat initialChipRowMinYNormal = CGRectGetMidY(placeholderFrameNormal) - (0.5 * chipRowHeight);
+  CGFloat initialChipRowMinYNormal =
+      CGRectGetMidY(placeholderFrameNormal) - ((CGFloat)0.5 * chipRowHeight);
   if (chipsWrap) {
   } else {
-    CGFloat center = contentAreaMaxY * 0.5;
-    initialChipRowMinYNormal = center - (chipRowHeight * 0.5);
+    CGFloat center = contentAreaMaxY * (CGFloat)0.5;
+    initialChipRowMinYNormal = center - (chipRowHeight * (CGFloat)0.5);
   }
   CGFloat initialChipRowMinY = initialChipRowMinYNormal;
   if (placeholderState == MDCContainedInputViewPlaceholderStateFloating) {
@@ -280,8 +281,8 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
   if (chipsWrap) {
     placeholderMinY = [containerStyle.densityInformer normalContentAreaTopPadding];
   } else {
-    CGFloat center = contentAreaHeight * 0.5;
-    placeholderMinY = center - (placeholderSize.height * 0.5);
+    CGFloat center = contentAreaHeight * (CGFloat)0.5;
+    placeholderMinY = center - (placeholderSize.height * (CGFloat)0.5);
   }
   return CGRectMake(placeholderMinX, placeholderMinY, placeholderSize.width,
                     placeholderSize.height);
@@ -352,11 +353,11 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
       //      }
     } else {
       CGFloat chipMinX = globalChipRowMinX;
-      CGFloat chipCenterY = initialChipRowMinY + (chipRowHeight * 0.5);
+      CGFloat chipCenterY = initialChipRowMinY + (chipRowHeight * (CGFloat)0.5);
       for (MDCChipView *chip in rtlChips) {
         CGFloat chipWidth = CGRectGetWidth(chip.frame);
         CGFloat chipHeight = CGRectGetHeight(chip.frame);
-        CGFloat chipMinY = chipCenterY - (0.5 * chipHeight);
+        CGFloat chipMinY = chipCenterY - ((CGFloat)0.5 * chipHeight);
         CGRect chipFrame = CGRectMake(chipMinX, chipMinY, chipWidth, chipHeight);
         NSValue *chipFrameValue = [NSValue valueWithCGRect:chipFrame];
         [frames addObject:chipFrameValue];
@@ -367,10 +368,10 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
   } else {
     if (chipsWrap) {
       CGFloat chipMinX = globalChipRowMinX;
-      CGFloat chipMidY = initialChipRowMinY + (0.5 * chipRowHeight);
+      CGFloat chipMidY = initialChipRowMinY + ((CGFloat)0.5 * chipRowHeight);
       CGFloat chipMinY = 0;
       CGRect chipFrame = CGRectZero;
-      NSInteger row = 0;
+      CGFloat row = 0;
       for (MDCChipView *chip in chips) {
         CGFloat chipWidth = CGRectGetWidth(chip.frame);
         CGFloat chipHeight = CGRectGetHeight(chip.frame);
@@ -382,12 +383,12 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
           row++;
           chipMinX = globalChipRowMinX;
           chipMidY = initialChipRowMinY + (row * (chipRowHeight + interChipSpacing)) +
-                     (0.5 * chipRowHeight);
-          chipMinY = chipMidY - (0.5 * chipHeight);
+                     ((CGFloat)0.5 * chipRowHeight);
+          chipMinY = chipMidY - ((CGFloat)0.5 * chipHeight);
           chipFrame = CGRectMake(chipMinX, chipMinY, chipWidth, chipHeight);
           chipMaxX = CGRectGetMaxX(chipFrame);
         } else {
-          chipMinY = chipMidY - (0.5 * chipHeight);
+          chipMinY = chipMidY - ((CGFloat)0.5 * chipHeight);
           chipFrame = CGRectMake(chipMinX, chipMinY, chipWidth, chipHeight);
         }
         chipMinX = chipMaxX + interChipSpacing;
@@ -396,11 +397,11 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
       }
     } else {
       CGFloat chipMinX = globalChipRowMinX;
-      CGFloat chipCenterY = initialChipRowMinY + (chipRowHeight * 0.5);
+      CGFloat chipCenterY = initialChipRowMinY + (chipRowHeight * (CGFloat)0.5);
       for (MDCChipView *chip in chips) {
         CGFloat chipWidth = CGRectGetWidth(chip.frame);
         CGFloat chipHeight = CGRectGetHeight(chip.frame);
-        CGFloat chipMinY = chipCenterY - (0.5 * chipHeight);
+        CGFloat chipMinY = chipCenterY - ((CGFloat)0.5 * chipHeight);
         CGRect chipFrame = CGRectMake(chipMinX, chipMinY, chipWidth, chipHeight);
         NSValue *chipFrameValue = [NSValue valueWithCGRect:chipFrame];
         [frames addObject:chipFrameValue];
@@ -511,7 +512,7 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
         CGRect lastChipFrame = [[chipFrames lastObject] CGRectValue];
         CGFloat lastChipMidY = CGRectGetMidY(lastChipFrame);
         textFieldMidY = lastChipMidY;
-        textFieldMinY = textFieldMidY - (0.5 * textFieldSize.height);
+        textFieldMinY = textFieldMidY - ((CGFloat)0.5 * textFieldSize.height);
         textFieldMinX = CGRectGetMaxX(lastChipFrame) + interChipSpacing;
         textFieldMaxX = textFieldMinX + textFieldSize.width;
         BOOL textFieldShouldMoveToNextRow = textFieldMaxX > globalChipRowMaxX;
@@ -523,8 +524,8 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
           NSInteger nextRow = currentRow + 1;
           CGFloat nextRowMinY =
               initialChipRowMinY + ((CGFloat)(nextRow) * (chipRowHeight + interChipSpacing));
-          textFieldMidY = nextRowMinY + (0.5 * chipRowHeight);
-          textFieldMinY = textFieldMidY - (0.5 * textFieldSize.height);
+          textFieldMidY = nextRowMinY + ((CGFloat)0.5 * chipRowHeight);
+          textFieldMinY = textFieldMidY - ((CGFloat)0.5 * textFieldSize.height);
           textFieldMinX = globalChipRowMinX;
           textFieldMaxX = textFieldMinX + textFieldSize.width;
           BOOL textFieldIsStillTooBig = textFieldMaxX > globalChipRowMaxX;
@@ -536,8 +537,8 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
         return CGRectMake(textFieldMinX, textFieldMinY, textFieldSize.width, textFieldSize.height);
       } else {
         textFieldMinX = globalChipRowMinX;
-        textFieldMidY = initialChipRowMinY + (0.5 * chipRowHeight);
-        textFieldMinY = textFieldMidY - (0.5 * textFieldSize.height);
+        textFieldMidY = initialChipRowMinY + ((CGFloat)0.5 * chipRowHeight);
+        textFieldMinY = textFieldMidY - ((CGFloat)0.5 * textFieldSize.height);
         return CGRectMake(textFieldMinX, textFieldMinY, textFieldSize.width, textFieldSize.height);
       }
       return CGRectMake(textFieldMinX, textFieldMinY, textFieldSize.width, textFieldSize.height);
@@ -549,8 +550,8 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
       } else {
         textFieldMinX = globalChipRowMinX;
       }
-      CGFloat textFieldCenterY = initialChipRowMinY + (0.5 * chipRowHeight);
-      CGFloat textFieldMinY = textFieldCenterY - (0.5 * textFieldSize.height);
+      CGFloat textFieldCenterY = initialChipRowMinY + ((CGFloat)0.5 * chipRowHeight);
+      CGFloat textFieldMinY = textFieldCenterY - ((CGFloat)0.5 * textFieldSize.height);
       return CGRectMake(textFieldMinX, textFieldMinY, textFieldSize.width, textFieldSize.height);
     }
   }

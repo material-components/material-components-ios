@@ -270,7 +270,7 @@
 }
 
 - (CGFloat)contentAreaTopPaddingWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY {
-  return floatingPlaceholderMaxY + 6.5;
+  return floatingPlaceholderMaxY + (CGFloat)6.5;
 }
 
 - (CGFloat)normalContentAreaBottomPadding {

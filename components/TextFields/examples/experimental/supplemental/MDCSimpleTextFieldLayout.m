@@ -171,7 +171,7 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
       contentAreaTopPaddingWithFloatingPlaceholderMaxY:floatingPlaceholderMaxY];
   CGFloat textRectHeight = [self textHeightWithFont:font];
   CGFloat textRectCenterYWithFloatingPlaceholder =
-      textRectMinYWithFloatingPlaceholder + (0.5 * textRectHeight);
+      textRectMinYWithFloatingPlaceholder + ((CGFloat)0.5 * textRectHeight);
   CGFloat textRectMaxYWithFloatingPlaceholder =
       textRectMinYWithFloatingPlaceholder + textRectHeight;
   CGFloat bottomPadding = [containerStyle.densityInformer normalContentAreaBottomPadding];
@@ -181,8 +181,8 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
     topRowBottomRowDividerY = preferredMainContentAreaHeight;
   }
 
-  CGFloat textRectCenterYNormal = topRowBottomRowDividerY * 0.5;
-  CGFloat textRectMinYNormal = textRectCenterYNormal - (textRectHeight * 0.5);
+  CGFloat textRectCenterYNormal = topRowBottomRowDividerY * (CGFloat)0.5;
+  CGFloat textRectMinYNormal = textRectCenterYNormal - (textRectHeight * (CGFloat)0.5);
 
   CGFloat leftViewHeight = CGRectGetHeight(leftView.frame);
   CGFloat leftViewMinY = 0;
