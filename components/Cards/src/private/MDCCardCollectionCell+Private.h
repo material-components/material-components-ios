@@ -17,7 +17,7 @@
 @interface MDCCardCollectionCell (Private)
 
 // These properties matches the same properties in MDCCardCollectionCell.m
-@property(nonatomic, strong) UIView *rippleView;
+@property(nonatomic, strong, nonnull) UIView *rippleView;
 @property(nonatomic, getter=isDragged) BOOL dragged;
 @property(nonatomic, strong, nullable) UIImageView *selectedImageView;
 
@@ -28,7 +28,7 @@
 - (void)updateImage;
 - (void)updateImageAlignment;
 - (void)updateImageTintColor;
-- (UIImage *)imageForState:(MDCCardCellState)state;
-- (UIColor *)imageTintColorForState:(MDCCardCellState)state;
+- (nullable UIImage *)imageForState:(MDCCardCellState)state;
+- (nullable UIColor *)imageTintColorForState:(MDCCardCellState)state;
 
 @end

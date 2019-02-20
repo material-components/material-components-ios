@@ -318,12 +318,12 @@ __deprecated_msg("This protocol is temporarily used to incorporate the Ripple Be
 - (void)cardCellRippleDelegateSetHighlighted:(BOOL)highlighted;
 - (void)cardCellRippleDelegateSetSelectable:(BOOL)selectable;
 - (void)cardCellRippleDelegateSetDragged:(BOOL)dragged;
-- (UIImage *)cardCellRippleDelegateUpdateImage:(UIImage *)image;
-- (UIColor *)cardCellRippleDelegateUpdateImageTintColor:(UIColor *)imageTintColor;
+- (nullable UIImage *)cardCellRippleDelegateUpdateImage:(nullable UIImage *)image;
+- (nullable UIColor *)cardCellRippleDelegateUpdateImageTintColor:(nullable UIColor *)imageTintColor;
 - (MDCCardCellState)cardCellRippleDelegateState;
-- (void)cardCellRippleDelegateTouchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event;
-- (void)cardCellRippleDelegateTouchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event;
-- (void)cardCellRippleDelegateTouchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event;
-- (void)cardCellRippleDelegateTouchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event;
+- (void)cardCellRippleDelegateTouchesBegan:(nullable NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event;
+- (void)cardCellRippleDelegateTouchesEnded:(nullable NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event;
+- (void)cardCellRippleDelegateTouchesCancelled:(nullable NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event;
+- (void)cardCellRippleDelegateTouchesMoved:(nullable NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event;
 
 @end

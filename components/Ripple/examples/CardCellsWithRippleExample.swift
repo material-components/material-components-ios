@@ -14,8 +14,10 @@
 
 import UIKit
 
+import MaterialComponents.MaterialCards_Private
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialTypographyScheme
+import MaterialComponentsBeta.MaterialCards_Theming
 import MaterialComponentsBeta.MaterialContainerScheme
 
 class CardCellsWithRippleExample: UIViewController,
@@ -58,7 +60,7 @@ class CardCellsWithRippleExample: UIViewController,
     collectionView.delegate = self
     collectionView.backgroundColor = colorScheme.backgroundColor
     collectionView.alwaysBounceVertical = true
-    collectionView.register(CardEditReorderCollectionCell.self, forCellWithReuseIdentifier: "Cell")
+    collectionView.register(MDCCardCollectionCell.self, forCellWithReuseIdentifier: "Cell")
     collectionView.translatesAutoresizingMaskIntoConstraints = false
     collectionView.allowsMultipleSelection = true
     view.addSubview(collectionView)
@@ -131,10 +133,8 @@ class CardCellsWithRippleExample: UIViewController,
                       cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
-    guard let cardCell = cell as? CardEditReorderCollectionCell else { return cell }
-
-    cardCell.apply(containerScheme: containerScheme, typographyScheme: typographyScheme)
-
+    guard let cardCell = cell as? MDCCardCollectionCell else { return cell }
+    cardCell.applyTheme(withScheme: containerScheme)
     cardCell.isSelectable = (toggle == .edit)
     cardCell.isAccessibilityElement = true
     cardCell.accessibilityLabel = title
@@ -202,7 +202,7 @@ class CardCellsWithRippleExample: UIViewController,
       guard let selectedIndexPath = collectionView.indexPathForItem(at:
         gesture.location(in: collectionView)) else { break }
       let cell = collectionView.cellForItem(at: selectedIndexPath)
-      guard let cardCell = cell as? CardEditReorderCollectionCell else { break }
+      guard let cardCell = cell as? MDCCardCollectionCell else { break }
       collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
       if (toggle == .reorder) {
         cardCell.isDragged = true

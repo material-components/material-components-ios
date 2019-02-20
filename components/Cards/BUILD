@@ -28,8 +28,28 @@ load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
 
-mdc_public_objc_library(
+mdc_objc_library(
     name = "Cards",
+    srcs =
+        native.glob(
+            ["src/*.m"],
+            exclude = [
+                "src/MDCCard+Ripple.h", 
+                "src/MDCCardCollectionCell+Ripple.h",
+                "src/MDCCard+Ripple.m", 
+                "src/MDCCardCollectionCell+Ripple.m",
+            ],
+        ),
+    hdrs =
+        native.glob(
+            ["src/*.h"],
+            exclude = [
+                "src/MDCCard+Ripple.h",
+                "src/MDCCardCollectionCell+Ripple.h",
+            ],
+        ),
+    enable_modules = 1,
+    includes = ["src"],
     sdk_frameworks = [
         "CoreGraphics",
         "UIKit",
@@ -45,12 +65,29 @@ mdc_public_objc_library(
     ],
 )
 
-mdc_extension_objc_library(
+mdc_objc_library(
     name = "CardsPrivate",
+    sdk_frameworks = [
+        "UIKit",
+    ],
     hdrs = native.glob(["src/private/*.h"]),
     includes = ["src/private"],
-    visibility = ["//visibility:private"],
-    deps = ["//components/Ripple"],
+    visibility = ["//visibility:public"],
+)
+
+mdc_objc_library(
+    name = "CardsRipple",
+    sdk_frameworks = [
+        "UIKit",
+    ],
+    hdrs = ["src/MDCCard+Ripple.h", "src/MDCCardCollectionCell+Ripple.h"],
+    srcs = ["src/MDCCard+Ripple.m", "src/MDCCardCollectionCell+Ripple.m"],
+    includes = ["src/MDCCard+Ripple.{h,m}", "src/MDCCardCollectionCell+Ripple.{h,m}"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":Cards",
+        "//components/Ripple",
+    ],
 )
 
 mdc_extension_objc_library(

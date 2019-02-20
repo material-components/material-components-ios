@@ -12,11 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCCard.h"
-
-@interface MDCCard (Private)
-
-// These properties matches the same properties in MDCCard.m
-@property(nonatomic, strong, nonnull) UIView *rippleView;
-
-@end
+#import "MDCCard+Private.h"
+#import "MDCCardCollectionCell+Private.h"
