@@ -14,6 +14,8 @@
 
 #import "MDCCardCollectionCell.h"
 
+@protocol MDCCardCollectionCellRippleDelegate;
+
 @interface MDCCardCollectionCell (Private)
 
 /**

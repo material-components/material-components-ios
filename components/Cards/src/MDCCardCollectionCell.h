@@ -17,7 +17,6 @@
 #import "MaterialShadowLayer.h"
 
 @protocol MDCShapeGenerating;
-@protocol MDCCardCollectionCellRippleDelegate;
 
 /**
  Through the lifecycle of the cell, the cell can go through one of the 3 states,
