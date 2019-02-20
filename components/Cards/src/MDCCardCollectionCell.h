@@ -37,7 +37,7 @@ typedef NS_ENUM(NSInteger, MDCCardCellState) {
   MDCCardCellStateSelected,
 
   /**
-   The viual state when the cell is being dragged.
+   The visual state when the cell is being dragged.
    Currently only used with the Ripple Beta component.
   */
   MDCCardCellStateDragged

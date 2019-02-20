@@ -28,6 +28,7 @@ load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
 
+# This is intentionally not using mdc_public_objc_library so we can exclude files from srcs and hdrs using native.glob functionality.
 mdc_objc_library(
     name = "Cards",
     srcs =
@@ -76,6 +77,8 @@ mdc_objc_library(
     visibility = ["//visibility:public"],
 )
 
+# Ripple is currently a Beta component. Therefore, clients that wish to use Ripple in their app will need to manually 
+# clone the repo and add the code to their project. 
 mdc_objc_library(
     name = "CardsRipple",
     sdk_frameworks = [
