@@ -1,3 +1,75 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+### ShapeLibrary
+
+**New component.**
+
+### Shapes
+
+**New component.**
+
+## Component changes
+
+## Multi-component breaking changes
+
+* [**Breaking**: Move shapes from components/private to components/ - Part 2 (#6664)](https://github.com/material-components/material-components-ios/commit/25ff47e2484e9ac4f38db7662b8e8d2328c0b11e) (Yarden Eitan)
+
+## Changes
+
+### ActionSheet
+
+* [Promote to Ready (#6613)](https://github.com/material-components/material-components-ios/commit/7614c80c265958c4c5b5e2c8b3f3baaea3b39c11) (Cody Weaver)
+
+### BottomAppBar
+
+* [Fix FAB location when RTL changes. (#6644)](https://github.com/material-components/material-components-ios/commit/ecf420e23e3a427a0a2035acbab7f26dbde5f378) (Robert Moore)
+
+### Dialogs
+
+* [add an example for custom dialog view controller themed by theming extension (#6601)](https://github.com/material-components/material-components-ios/commit/6090cd6dad51a541a11287ed3ab3ce00f5e2054e) (Wenyu Zhang)
+
+### NavigationDrawer
+
+* [Expose the a11y identifier so it can be reached for testing purposes. (#6659)](https://github.com/material-components/material-components-ios/commit/bc281ff876c2bfcf0ad7b66cb207cd908324cfb5) (Yarden Eitan)
+* [add a11y identifier for the nav drawer scrollview (#6629)](https://github.com/material-components/material-components-ios/commit/abec164732570859f14d49a849ec8df0c12bc62b) (Yarden Eitan)
+
+### Ripple
+
+* [[States] Moving touch handling ownership away from the ripple view (#6615)](https://github.com/material-components/material-components-ios/commit/9bdc91dd8930810ec810c88f66f9de493a038943) (Yarden Eitan)
+
+### Shapes
+
+* [shape path nil check (#6616)](https://github.com/material-components/material-components-ios/commit/017b613a7557d9af80f1fb4a5f5b88dd855309c9) (Yarden Eitan)
+
+### TextFields
+
+* [Updates to SimpleTextFIeld and InputChipView prototype (#6647)](https://github.com/material-components/material-components-ios/commit/1d7fedd32db9d83ee24f9aaa80f5bc34d98df781) (Andrew Overton)
+
+## Multi-component changes
+
+* [Add basic snapshot tests. (#6640)](https://github.com/material-components/material-components-ios/commit/65426c86f9c158753755526b146b511f50265d59) (Robert Moore)
+* [Add basic snapshot tests. (#6643)](https://github.com/material-components/material-components-ios/commit/fb8190d8d471a5df78f44429239a29a2d4d7fd5b) (Robert Moore)
+* [Add basic snapshot tests. (#6662)](https://github.com/material-components/material-components-ios/commit/5ee639cc913eb1f521b54b0f2e70ca5522240ada) (Robert Moore)
+* [Add snapshot tests to MDCAlertController (#6641)](https://github.com/material-components/material-components-ios/commit/d77f1b3dbbdee8dac13644fb97c38e987c80bdfa) (Robert Moore)
+* [Add states snapshot tests. (#6639)](https://github.com/material-components/material-components-ios/commit/41612628cc3eb845c8d00d79aef8c981b175bdad) (Robert Moore)
+* [Fix snapshot testing after Cocoapods 1.6.0 update (#6611)](https://github.com/material-components/material-components-ios/commit/fb21536d9f685485793de87f25ad2d4cd43e081e) (Andrew Overton)
+* [Revert "[Cocoapods] Fix snapshot testing after Cocoapods 1.6.0 update (#6611)" (#6619)](https://github.com/material-components/material-components-ios/commit/3b1d82a52614973601b92a209f09a0c518a969f9) (Andrew Overton)
+* [[Ripple] Integrate the new ripple and states into the Cards component (#6621)](https://github.com/material-components/material-components-ios/commit/136273636d074159a348b6f639148236c0fcfbca) (Yarden Eitan)
+
+---
+
 # 77.0.0
 
 In this release we made improvements to BottomNavigationBar and landed stateful ripple in the ripple (beta) component.
