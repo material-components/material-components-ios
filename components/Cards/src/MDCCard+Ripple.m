@@ -23,7 +23,7 @@
 - (MDCStatefulRippleView *)castedRippleView {
   if (![self.rippleView isKindOfClass:[MDCStatefulRippleView class]]) {
     NSAssert(NO, @"The ripple view needs to be of the kind MDCStatefulRippleView, otherwise"
-             @" a bad change has occurred and the ripple integration will not work.");
+                 @" a bad change has occurred and the ripple integration will not work.");
     return nil;
   }
   return (MDCStatefulRippleView *)self.rippleView;

@@ -151,12 +151,18 @@
  This protocol is used to integrate the Ripple Beta component into Cards. Please do not conform
  to this protocol.
  */
-__deprecated_msg("This protocol is temporarily used to incorporate the Ripple Beta component into Cards. This is deprecated, please do not conform to this protocol.") @protocol MDCCardRippleDelegate <NSObject>
+__deprecated_msg("This protocol is temporarily used to incorporate the Ripple Beta component into "
+                 "Cards. This is deprecated, please do not conform to this protocol.")
+    @protocol MDCCardRippleDelegate<NSObject>
 
 - (void)cardRippleDelegateSetHighlighted:(BOOL)highlighted;
-- (void)cardRippleDelegateTouchesBegan:(nullable NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event;
-- (void)cardRippleDelegateTouchesEnded:(nullable NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event;
-- (void)cardRippleDelegateTouchesCancelled:(nullable NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event;
-- (void)cardRippleDelegateTouchesMoved:(nullable NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event;
+- (void)cardRippleDelegateTouchesBegan:(nullable NSSet<UITouch *> *)touches
+                             withEvent:(nullable UIEvent *)event;
+- (void)cardRippleDelegateTouchesEnded:(nullable NSSet<UITouch *> *)touches
+                             withEvent:(nullable UIEvent *)event;
+- (void)cardRippleDelegateTouchesCancelled:(nullable NSSet<UITouch *> *)touches
+                                 withEvent:(nullable UIEvent *)event;
+- (void)cardRippleDelegateTouchesMoved:(nullable NSSet<UITouch *> *)touches
+                             withEvent:(nullable UIEvent *)event;
 
 @end

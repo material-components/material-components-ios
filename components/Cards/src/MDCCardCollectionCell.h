@@ -312,7 +312,9 @@ typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
  This protocol is used to integrate the Ripple Beta component into Cards. Please do not conform
  to this protocol.
  */
-__deprecated_msg("This protocol is temporarily used to incorporate the Ripple Beta component into Cards. This is deprecated, please do not conform to this protocol.") @protocol MDCCardCollectionCellRippleDelegate <NSObject>
+__deprecated_msg("This protocol is temporarily used to incorporate the Ripple Beta component into "
+                 "Cards. This is deprecated, please do not conform to this protocol.")
+    @protocol MDCCardCollectionCellRippleDelegate<NSObject>
 
 - (void)cardCellRippleDelegateSetSelected:(BOOL)selected;
 - (void)cardCellRippleDelegateSetHighlighted:(BOOL)highlighted;
@@ -321,9 +323,13 @@ __deprecated_msg("This protocol is temporarily used to incorporate the Ripple Be
 - (nullable UIImage *)cardCellRippleDelegateUpdateImage:(nullable UIImage *)image;
 - (nullable UIColor *)cardCellRippleDelegateUpdateImageTintColor:(nullable UIColor *)imageTintColor;
 - (MDCCardCellState)cardCellRippleDelegateState;
-- (void)cardCellRippleDelegateTouchesBegan:(nullable NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event;
-- (void)cardCellRippleDelegateTouchesEnded:(nullable NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event;
-- (void)cardCellRippleDelegateTouchesCancelled:(nullable NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event;
-- (void)cardCellRippleDelegateTouchesMoved:(nullable NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event;
+- (void)cardCellRippleDelegateTouchesBegan:(nullable NSSet<UITouch *> *)touches
+                                 withEvent:(nullable UIEvent *)event;
+- (void)cardCellRippleDelegateTouchesEnded:(nullable NSSet<UITouch *> *)touches
+                                 withEvent:(nullable UIEvent *)event;
+- (void)cardCellRippleDelegateTouchesCancelled:(nullable NSSet<UITouch *> *)touches
+                                     withEvent:(nullable UIEvent *)event;
+- (void)cardCellRippleDelegateTouchesMoved:(nullable NSSet<UITouch *> *)touches
+                                 withEvent:(nullable UIEvent *)event;
 
 @end

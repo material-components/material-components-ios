@@ -23,7 +23,7 @@
 - (MDCStatefulRippleView *)castedRippleView {
   if (![self.rippleView isKindOfClass:[MDCStatefulRippleView class]]) {
     NSAssert(NO, @"The ripple view needs to be of the kind MDCStatefulRippleView, otherwise"
-             @" a bad change has occurred and the ripple integration will not work.");
+                 @" a bad change has occurred and the ripple integration will not work.");
     return nil;
   }
   return (MDCStatefulRippleView *)self.rippleView;
@@ -63,8 +63,9 @@
 }
 
 - (UIImage *)cardCellRippleDelegateUpdateImage:(UIImage *)image {
-  // TODO(#6661): CardCollectionCell's state system doesn't incorporate multiple states occuring simultaneously.
-  // When the card is selected and highlighted it should take the image of MDCCardCellStateSelected.
+  // TODO(#6661): CardCollectionCell's state system doesn't incorporate multiple states occuring
+  // simultaneously. When the card is selected and highlighted it should take the image of
+  // MDCCardCellStateSelected.
   if (self.castedRippleView.selected) {
     image = [self imageForState:MDCCardCellStateSelected];
   }
@@ -72,8 +73,8 @@
 }
 
 - (UIColor *)cardCellRippleDelegateUpdateImageTintColor:(UIColor *)imageTintColor {
-  // TODO(#6661): CardCollectionCell's state system doesn't incorporate multiple states occuring simultaneously.
-  // When the card is selected and highlighted it should take the image tint of
+  // TODO(#6661): CardCollectionCell's state system doesn't incorporate multiple states occuring
+  // simultaneously. When the card is selected and highlighted it should take the image tint of
   // MDCCardCellStateSelected.
   if (self.castedRippleView.selected) {
     imageTintColor = [self imageTintColorForState:MDCCardCellStateSelected];
@@ -118,7 +119,8 @@
   }
 }
 
-- (void)cardCellRippleDelegateTouchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+- (void)cardCellRippleDelegateTouchesCancelled:(NSSet<UITouch *> *)touches
+                                     withEvent:(UIEvent *)event {
   [self.castedRippleView touchesCancelled:touches withEvent:event];
   if (self.dragged) {
     self.dragged = NO;

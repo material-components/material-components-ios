@@ -458,7 +458,8 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 - (void)updateImageTintColor {
   UIColor *imageTintColor = [self imageTintColorForState:self.state];
   if (self.rippleDelegate != nil) {
-    imageTintColor = [self.rippleDelegate cardCellRippleDelegateUpdateImageTintColor:imageTintColor];
+    imageTintColor =
+        [self.rippleDelegate cardCellRippleDelegateUpdateImageTintColor:imageTintColor];
   }
   [self.selectedImageView setTintColor:imageTintColor];
 }
