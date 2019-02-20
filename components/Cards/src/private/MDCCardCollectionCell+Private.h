@@ -46,7 +46,7 @@
  */
 __deprecated_msg("This protocol is temporarily used to incorporate the Ripple Beta component into "
                  "Cards. This is deprecated, please do not conform to this protocol.")
-@protocol MDCCardCollectionCellRippleDelegate<NSObject>
+    @protocol MDCCardCollectionCellRippleDelegate<NSObject>
 
 - (void)cardCellRippleDelegateSetSelected:(BOOL)selected;
 - (void)cardCellRippleDelegateSetHighlighted:(BOOL)highlighted;

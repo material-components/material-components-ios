@@ -35,7 +35,7 @@
  */
 __deprecated_msg("This protocol is temporarily used to incorporate the Ripple Beta component into "
                  "Cards. This is deprecated, please do not conform to this protocol.")
-@protocol MDCCardRippleDelegate<NSObject>
+    @protocol MDCCardRippleDelegate<NSObject>
 
 - (void)cardRippleDelegateSetHighlighted:(BOOL)highlighted;
 - (void)cardRippleDelegateTouchesBegan:(nullable NSSet<UITouch *> *)touches
