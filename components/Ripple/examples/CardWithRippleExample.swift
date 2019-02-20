@@ -26,6 +26,7 @@ class CardWithRippleExample: UIViewController {
   var containerScheme: MDCContainerScheming
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    card.enableBetaBehavior = true
     containerScheme = MDCContainerScheme()
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }

@@ -29,19 +29,29 @@
   return (MDCStatefulRippleView *)self.rippleView;
 }
 
-- (void)configureRipple {
-  self.rippleDelegate = self;
-  // With the new states implementation the selectedImageView doesn't need to be hidden as
-  // there can be an image apparent not only when the cell is selected, but rather
-  // depending on the setImage:ForState: API.
-  self.selectedImageView.hidden = NO;
-  if (self.rippleView == nil) {
-    self.rippleView = [[MDCStatefulRippleView alloc] initWithFrame:self.bounds];
-    self.rippleView.layer.zPosition = FLT_MAX;
-    [self addSubview:self.rippleView];
-  }
-  if (self.inkView) {
-    [self.inkView removeFromSuperview];
+- (void)cardCellRippleEnableBetaBehavior:(NSNumber *)enabledValue {
+  BOOL enabled = enabledValue.boolValue;
+  if (enabled) {
+    self.rippleDelegate = self;
+    // With the new states implementation the selectedImageView doesn't need to be hidden as
+    // there can be an image apparent not only when the cell is selected, but rather
+    // depending on the setImage:ForState: API.
+    self.selectedImageView.hidden = NO;
+    if (self.rippleView == nil) {
+      self.rippleView = [[MDCStatefulRippleView alloc] initWithFrame:self.bounds];
+      self.rippleView.layer.zPosition = FLT_MAX;
+      [self addSubview:self.rippleView];
+    }
+    if (self.inkView) {
+      [self.inkView removeFromSuperview];
+    }
+  } else {
+    self.rippleDelegate = nil;
+    self.selectedImageView.hidden = YES;
+    if (self.rippleView) {
+      [self.rippleView removeFromSuperview];
+    }
+    [self addSubview:self.inkView];
   }
 }
 

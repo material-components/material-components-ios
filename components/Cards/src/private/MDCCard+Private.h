@@ -18,7 +18,17 @@
 
 @interface MDCCard (Private)
 
-// These properties matches the same properties in MDCCard.m
+/**
+ To turn on the beta behavior for cards that includes the ripple integration and the state support
+ please set this runtime flag to YES.
+
+ Defaults to NO.
+ */
+@property(nonatomic, assign) BOOL enableBetaBehavior;
+
+/**
+ The ripple view.
+ */
 @property(nonatomic, strong, nonnull) UIView *rippleView;
 
 /**
@@ -46,5 +56,4 @@ __deprecated_msg("This protocol is temporarily used to incorporate the Ripple Be
                                  withEvent:(nullable UIEvent *)event;
 - (void)cardRippleDelegateTouchesMoved:(nullable NSSet<UITouch *> *)touches
                              withEvent:(nullable UIEvent *)event;
-
 @end

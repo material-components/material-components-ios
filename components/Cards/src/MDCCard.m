@@ -32,6 +32,7 @@ static const BOOL MDCCardIsInteractableDefault = YES;
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 @property(nonatomic, weak) id<MDCCardRippleDelegate> rippleDelegate;
 #pragma clang diagnostic pop
+@property(nonatomic, assign) BOOL enableBetaBehavior;
 @end
 
 @implementation MDCCard {
@@ -99,15 +100,6 @@ static const BOOL MDCCardIsInteractableDefault = YES;
 
   if (_backgroundColor == nil) {
     _backgroundColor = UIColor.whiteColor;
-  }
-
-  // TODO: Remove this performSelector code once Ripple is no longer in Beta.
-  SEL configureRippleSelector = NSSelectorFromString(@"configureRipple");
-  if ([self respondsToSelector:configureRippleSelector]) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-    [self performSelector:configureRippleSelector];
-#pragma clang diagnostic pop
   }
 
   [self updateShadowElevation];
@@ -329,5 +321,21 @@ static const BOOL MDCCardIsInteractableDefault = YES;
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   [self.rippleDelegate cardRippleDelegateTouchesCancelled:touches withEvent:event];
   [super touchesCancelled:touches withEvent:event];
+}
+
+- (void)setEnableBetaBehavior:(BOOL)enableBetaBehavior {
+  if (enableBetaBehavior == _enableBetaBehavior) {
+    return;
+  }
+  _enableBetaBehavior = enableBetaBehavior;
+  // TODO: Remove this performSelector code once Ripple is no longer in Beta.
+  SEL cardRippleEnableBetaBehavior = NSSelectorFromString(@"cardRippleEnableBetaBehavior:");
+  if ([self respondsToSelector:cardRippleEnableBetaBehavior]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+    NSNumber *enabled = [NSNumber numberWithBool:enableBetaBehavior];
+    [self performSelector:cardRippleEnableBetaBehavior withObject:enabled];
+#pragma clang diagnostic pop
+  }
 }
 @end

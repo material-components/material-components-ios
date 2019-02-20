@@ -134,6 +134,7 @@ class CardCellsWithRippleExample: UIViewController,
 
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
     guard let cardCell = cell as? MDCCardCollectionCell else { return cell }
+    cardCell.enableBetaBehavior = true
     cardCell.applyTheme(withScheme: containerScheme)
     cardCell.isSelectable = (toggle == .edit)
     cardCell.isAccessibilityElement = true

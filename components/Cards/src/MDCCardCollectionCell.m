@@ -38,6 +38,7 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 @property(nonatomic, weak) id<MDCCardCollectionCellRippleDelegate> rippleDelegate;
 #pragma clang diagnostic pop
+@property(nonatomic, assign) BOOL enableBetaBehavior;
 @end
 
 @implementation MDCCardCollectionCell {
@@ -145,15 +146,6 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 
   if (_backgroundColor == nil) {
     _backgroundColor = UIColor.whiteColor;
-  }
-
-  // TODO: Remove this performSelector code once Ripple is no longer in Beta.
-  SEL configureRippleSelector = NSSelectorFromString(@"configureRipple");
-  if ([self respondsToSelector:configureRippleSelector]) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-    [self performSelector:configureRippleSelector];
-#pragma clang diagnostic pop
   }
 
   [self updateShadowElevation];
@@ -575,4 +567,19 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
   }
 }
 
+- (void)setEnableBetaBehavior:(BOOL)enableBetaBehavior {
+  if (enableBetaBehavior == _enableBetaBehavior) {
+    return;
+  }
+  _enableBetaBehavior = enableBetaBehavior;
+  // TODO: Remove this performSelector code once Ripple is no longer in Beta.
+  SEL cardCellRippleEnableBetaBehavior = NSSelectorFromString(@"cardCellRippleEnableBetaBehavior:");
+  if ([self respondsToSelector:cardCellRippleEnableBetaBehavior]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+    NSNumber *enabled = [NSNumber numberWithBool:enableBetaBehavior];
+    [self performSelector:cardCellRippleEnableBetaBehavior withObject:enabled];
+#pragma clang diagnostic pop
+  }
+}
 @end

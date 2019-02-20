@@ -29,15 +29,24 @@
   return (MDCStatefulRippleView *)self.rippleView;
 }
 
-- (void)configureRipple {
-  self.rippleDelegate = self;
-  if (self.rippleView == nil) {
-    self.rippleView = [[MDCStatefulRippleView alloc] initWithFrame:self.bounds];
-    self.rippleView.layer.zPosition = CGFLOAT_MAX;
-    [self addSubview:self.rippleView];
-  }
-  if (self.inkView) {
-    [self.inkView removeFromSuperview];
+- (void)cardRippleEnableBetaBehavior:(NSNumber *)enabledValue {
+  BOOL enabled = enabledValue.boolValue;
+  if (enabled) {
+    self.rippleDelegate = self;
+    if (self.rippleView == nil) {
+      self.rippleView = [[MDCStatefulRippleView alloc] initWithFrame:self.bounds];
+      self.rippleView.layer.zPosition = CGFLOAT_MAX;
+      [self addSubview:self.rippleView];
+    }
+    if (self.inkView) {
+      [self.inkView removeFromSuperview];
+    }
+  } else {
+    self.rippleDelegate = nil;
+    if (self.rippleView) {
+      [self.rippleView removeFromSuperview];
+    }
+    [self addSubview:self.inkView];
   }
 }
 

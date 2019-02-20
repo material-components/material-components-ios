@@ -19,6 +19,14 @@
 @interface MDCCardCollectionCell (Private)
 
 /**
+ To turn on the beta behavior for cards that includes the ripple integration and the state support
+ please set this runtime flag to YES.
+
+ Defaults to NO.
+ */
+@property(nonatomic, assign) BOOL enableBetaBehavior;
+
+/**
  This is used to integrate the Ripple Beta component into the card collection cell.
 
  Warning: Please do not conform to this as this is used to integrate the Beta Ripple component.
