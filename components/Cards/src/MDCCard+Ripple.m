@@ -35,7 +35,7 @@
     self.rippleDelegate = self;
     if (self.rippleView == nil) {
       self.rippleView = [[MDCStatefulRippleView alloc] initWithFrame:self.bounds];
-      self.rippleView.layer.zPosition = CGFLOAT_MAX;
+      self.rippleView.layer.zPosition = FLT_MAX;
       [self addSubview:self.rippleView];
     }
     if (self.inkView) {
