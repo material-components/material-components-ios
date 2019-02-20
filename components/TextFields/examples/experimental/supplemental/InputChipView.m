@@ -23,7 +23,7 @@
 
 #import "MaterialMath.h"
 
-static const CGFloat kFloatingPlaceholderAnimationDuration = (CGFloat)0.15;
+static const CGFloat kFloatingPlaceholderAnimationVelocityInPointsPerSecond = (CGFloat)200;
 
 @class InputChipViewTextField;
 @protocol InputChipViewTextFieldDelegate <NSObject>
@@ -875,6 +875,8 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   return [font fontWithSize:floatingPlaceholderFontSize];
 }
 
+// TODO: Find a shared home for methods like this that basically do the same thing across contained
+// input views
 - (void)layOutPlaceholderWithState:(MDCContainedInputViewPlaceholderState)placeholderState
                         normalFont:(UIFont *)normalFont
                       floatingFont:(UIFont *)floatingFont {
@@ -916,6 +918,12 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   self.isAnimating = YES;
   self.placeholderLabel.hidden = placeholderShouldHide;
 
+  CGFloat lowerMinY = MIN(CGRectGetMinY(currentFrame), CGRectGetMinY(targetFrame));
+  CGFloat higherMinY = MAX(CGRectGetMinY(currentFrame), CGRectGetMinY(targetFrame));
+  CGFloat distanceTravelled = higherMinY - lowerMinY;
+  CGFloat animationDuration =
+      distanceTravelled / kFloatingPlaceholderAnimationVelocityInPointsPerSecond;
+
   __weak typeof(self) weakSelf = self;
   [CATransaction begin];
   {
@@ -930,7 +938,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
         [NSValue valueWithCATransform3D:CATransform3DMakeAffineTransform(currentTransform)];
     animation.toValue =
         [NSValue valueWithCATransform3D:CATransform3DMakeAffineTransform(targetTransform)];
-    animation.duration = kFloatingPlaceholderAnimationDuration;
+    animation.duration = animationDuration;
     animation.removedOnCompletion = YES;
     weakSelf.placeholderLabel.transform = targetTransform;
     [weakSelf.placeholderLabel.layer addAnimation:animation forKey:animation.keyPath];

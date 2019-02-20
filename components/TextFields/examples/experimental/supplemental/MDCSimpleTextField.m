@@ -22,7 +22,7 @@
 #import "MDCSimpleTextFieldLayout.h"
 #import "MaterialMath.h"
 
-static const CGFloat kFloatingPlaceholderAnimationDuration = (CGFloat)0.15;
+static const CGFloat kFloatingPlaceholderAnimationVelocityInPointsPerSecond = (CGFloat)200;
 
 @interface MDCSimpleTextField ()
 
@@ -674,6 +674,12 @@ static const CGFloat kFloatingPlaceholderAnimationDuration = (CGFloat)0.15;
   self.isAnimating = YES;
   self.placeholderLabel.hidden = placeholderShouldHide;
 
+  CGFloat lowerMinY = MIN(CGRectGetMinY(currentFrame), CGRectGetMinY(targetFrame));
+  CGFloat higherMinY = MAX(CGRectGetMinY(currentFrame), CGRectGetMinY(targetFrame));
+  CGFloat distanceTravelled = higherMinY - lowerMinY;
+  CGFloat animationDuration =
+      distanceTravelled / kFloatingPlaceholderAnimationVelocityInPointsPerSecond;
+
   __weak typeof(self) weakSelf = self;
   [CATransaction begin];
   {
@@ -688,7 +694,7 @@ static const CGFloat kFloatingPlaceholderAnimationDuration = (CGFloat)0.15;
         [NSValue valueWithCATransform3D:CATransform3DMakeAffineTransform(currentTransform)];
     animation.toValue =
         [NSValue valueWithCATransform3D:CATransform3DMakeAffineTransform(targetTransform)];
-    animation.duration = kFloatingPlaceholderAnimationDuration;
+    animation.duration = animationDuration;
     animation.removedOnCompletion = YES;
     weakSelf.placeholderLabel.transform = targetTransform;
     [weakSelf.placeholderLabel.layer addAnimation:animation forKey:animation.keyPath];
