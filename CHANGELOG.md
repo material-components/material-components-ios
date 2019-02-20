@@ -1,6 +1,6 @@
 # 78.0.0
 
-This major release promotes the Shape libraries from private to ready, as well as promoting Action Sheet to ready by migrating it from the MaterialComponentsBeta podspec to the MaterialComponents main podspec.
+This major release promotes the Shape libraries from private to ready, as well as promoting Action Sheet to ready by migrating it from the MaterialComponentsBeta podspec to the MaterialComponents main podspec. Lastly, we've increased our snapshot test coverage across multiple components.
 
 ## Breaking changes
 
