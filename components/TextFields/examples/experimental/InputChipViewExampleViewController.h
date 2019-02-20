@@ -14,9 +14,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialContainerScheme.h"
+@interface InputChipViewExampleViewController : UIViewController
 
-@interface SimpleTextFieldManualLayoutExampleViewController : UIViewController
-
-@property(strong, nonatomic) id<MDCContainerScheming> containerScheme;
 @end
