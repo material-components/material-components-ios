@@ -15,7 +15,8 @@
 #import <Foundation/Foundation.h>
 
 /**
- Without these dummy source files the snapshot test target is not visible in Xcode after pod install.
+ Without these dummy source files the snapshot test target is not visible in Xcode after pod
+ install.
  */
 @interface MDCSnapshotSourceDummy : NSObject
 @end
