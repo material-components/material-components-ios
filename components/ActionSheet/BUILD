@@ -154,25 +154,6 @@ mdc_objc_library(
 )
 
 mdc_objc_library(
-    name = "unit_test_theming_sources",
-    testonly = 1,
-    srcs = native.glob([
-        "tests/unit/Theming/*.m",
-    ]),
-    sdk_frameworks = [
-        "UIKit",
-        "CoreImage",
-        "XCTest",
-    ],
-    deps = [
-        ":ActionSheet",
-        ":Theming",
-        ":privateHeaders",
-        ":unit_test_sources",
-    ],
-)
-
-mdc_objc_library(
     name = "unit_test_themer_sources",
     testonly = 1,
     srcs = native.glob([
