@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponents"
-  mdc.version      = "77.0.0"
+  mdc.version      = "78.0.0"
   mdc.authors      = "The Material Components authors."
   mdc.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   mdc.homepage     = "https://github.com/material-components/material-components-ios"
@@ -51,6 +51,27 @@ Pod::Spec.new do |mdc|
   #   end
   #  end
   #
+
+  # ActionSheet
+
+  mdc.subspec "ActionSheet" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = [
+      "components/#{component.base_name}/src/*.{h,m}",
+      "components/#{component.base_name}/src/private/*.{h,m}"
+    ]
+
+    component.dependency "MaterialComponents/BottomSheet"
+    component.dependency "MaterialComponents/Ink"
+    component.dependency "MaterialComponents/Typography"
+
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = [
+        "components/#{component.base_name}/tests/unit/*.{h,m,swift}"
+      ]
+    end
+  end
 
   # ActivityIndicator
 
@@ -473,6 +494,11 @@ Pod::Spec.new do |mdc|
     component.ios.deployment_target = '8.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = "components/#{component.base_name}/src/*.{h,m}"
+    component.exclude_files = [
+        "components/#{component.base_name}/src/MDCCard+Ripple.{h,m}",
+        "components/#{component.base_name}/src/MDCCardCollectionCell+Ripple.{h,m}"
+    ]
+    component.dependency "MaterialComponents/Cards+Private"
     component.dependency "MaterialComponents/Ink"
     component.dependency "MaterialComponents/ShadowLayer"
     component.dependency "MaterialComponents/Shapes"
@@ -488,6 +514,14 @@ Pod::Spec.new do |mdc|
       unit_tests.dependency "MaterialComponents/#{component.base_name}+ColorThemer"
       unit_tests.dependency "MaterialComponents/#{component.base_name}+ShapeThemer"
     end
+  end
+
+  mdc.subspec "Cards+Private" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/private/*.h"
+    extension.source_files = [
+        "components/#{extension.base_name.split('+')[0]}/src/private/*.{h,m}"
+    ]
   end
 
   mdc.subspec "Cards+ColorThemer" do |extension|
@@ -1148,6 +1182,7 @@ Pod::Spec.new do |mdc|
       "components/#{component.base_name}/src/*.{h,m}",
       "components/#{component.base_name}/src/private/*.{h,m}"
     ]
+    component.exclude_files = "components/#{component.base_name}/src/private/MDCBottomDrawerContainerViewController+Testing.h"
 
     component.dependency "MaterialComponents/Palettes"
     component.dependency "MaterialComponents/ShadowLayer"
@@ -1157,7 +1192,8 @@ Pod::Spec.new do |mdc|
     component.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
         "components/#{component.base_name}/tests/unit/*.{h,m,swift}",
-        "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}",
+        "components/#{component.base_name}/src/private/MDCBottomDrawerContainerViewController+Testing.h"
       ]
       unit_tests.dependency "MaterialComponents/NavigationDrawer+ColorThemer"
     end
@@ -1763,22 +1799,6 @@ Pod::Spec.new do |mdc|
         ]
         unit_tests.resources = "components/private/#{component.base_name}/tests/unit/resources/*"
       end
-    end
-
-    private_spec.subspec "ShapeLibrary" do |component|
-      component.ios.deployment_target = '8.0'
-      component.public_header_files = "components/private/#{component.base_name}/src/*.h"
-      component.source_files = "components/private/#{component.base_name}/src/*.h"
-
-      component.dependency "MaterialComponents/ShapeLibrary"
-    end
-
-    private_spec.subspec "Shapes" do |component|
-      component.ios.deployment_target = '8.0'
-      component.public_header_files = "components/private/#{component.base_name}/src/*.h"
-      component.source_files = "components/private/#{component.base_name}/src/*.h"
-
-      component.dependency "MaterialComponents/Shapes"
     end
 
     private_spec.subspec "ThumbTrack" do |component|

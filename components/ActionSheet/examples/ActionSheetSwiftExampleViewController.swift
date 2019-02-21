@@ -17,7 +17,7 @@ import UIKit
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialTypographyScheme
 
-import MaterialComponentsBeta.MaterialActionSheet
+import MaterialComponents.MaterialActionSheet
 import MaterialComponentsBeta.MaterialActionSheet_Theming
 import MaterialComponentsBeta.MaterialContainerScheme
 
