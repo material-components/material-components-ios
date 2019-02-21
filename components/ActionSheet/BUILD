@@ -40,8 +40,6 @@ mdc_extension_objc_library(
     name = "Theming",
     deps = [
         ":ActionSheet",
-        ":ColorThemer",
-        ":TypographyThemer",
         "//components/schemes/Container",
     ],
 )
@@ -168,10 +166,7 @@ mdc_objc_library(
     ],
     deps = [
         ":ActionSheet",
-        ":ActionSheetThemer",
-        ":ColorThemer",
         ":Theming",
-        ":TypographyThemer",
         ":privateHeaders",
         ":unit_test_sources",
     ],
