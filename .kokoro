@@ -382,8 +382,7 @@ run_bazel() {
   bazel $COMMAND $TARGET --xcode_version $xcode_version --ios_minimum_os=8.0 \
     --ios_multi_cpus=i386,x86_64 $extra_args $verbosity_args \
     --test_env="FB_REFERENCE_IMAGE_DIR=$snapshot_dir" \
-    --test_env="IMAGE_DIFF_DIR=$tmp_img_dir" \
-    --sandbox_debug
+    --test_env="IMAGE_DIFF_DIR=$tmp_img_dir"
 }
 
 run_cocoapods() {
