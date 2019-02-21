@@ -16,6 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import <MaterialComponentsTestingSupport/MaterialTypographyScheme+TestingSupport.h>
 #import "MaterialButtonBar+Theming.h"
 #import "MaterialButtonBar.h"
 #import "MaterialColorScheme.h"
@@ -122,22 +123,7 @@
                                                   alpha:1];
   container.colorScheme = colorScheme;
 
-  MDCTypographyScheme *typographyScheme =
-      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
-  typographyScheme.headline1 = [UIFont systemFontOfSize:30];
-  typographyScheme.headline2 = [UIFont systemFontOfSize:28];
-  typographyScheme.headline3 = [UIFont systemFontOfSize:26];
-  typographyScheme.headline4 = [UIFont systemFontOfSize:24];
-  typographyScheme.headline5 = [UIFont systemFontOfSize:22];
-  typographyScheme.headline6 = [UIFont systemFontOfSize:20];
-  typographyScheme.subtitle1 = [UIFont systemFontOfSize:18];
-  typographyScheme.subtitle2 = [UIFont systemFontOfSize:16];
-  typographyScheme.body1 = [UIFont systemFontOfSize:14];
-  typographyScheme.body2 = [UIFont systemFontOfSize:12];
-  typographyScheme.caption = [UIFont systemFontOfSize:10];
-  typographyScheme.button = [UIFont systemFontOfSize:8];
-  typographyScheme.overline = [UIFont systemFontOfSize:6];
-  container.typographyScheme = typographyScheme;
+  container.typographyScheme = [MDCTypographyScheme typographySchemeWithVaryingFontSize];
 
   MDCShapeScheme *shapeScheme =
       [[MDCShapeScheme alloc] initWithDefaults:MDCShapeSchemeDefaultsMaterial201809];
