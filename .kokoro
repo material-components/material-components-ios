@@ -47,6 +47,9 @@ fix_bazel_imports() {
   
   rewrite_tests() {
     find "${stashed_dir}"components/private/*/tests/unit -type f -name '*.swift' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/schemes/*/tests/support -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/schemes/*/tests/support -type f -name '*.h' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/*/tests/snapshot -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
     find "${stashed_dir}"components/*/tests/unit -type f -name '*.swift' -exec perl -pi -e "$1" {} + || true
     find "${stashed_dir}"components/*/tests/unit -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
   }
@@ -73,6 +76,9 @@ fix_bazel_imports() {
   }
 
   stashed_dir=""
+  rewrite_tests "s/import <MaterialComponents\/Material(.+)\.h>/import\/\*Material prefix framework import\*\/ \"Material\1.h\"/"
+  rewrite_tests "s/import MaterialComponentsTestingSupport.Material(.+)Scheme_(.+)/import components_schemes_\1_\2 \/\/ TestingSupport/"
+  rewrite_tests "s/import <MaterialComponentsTestingSupport\/Material(.+)>/import\/\*TestingSupport\*\/ \"Material\1\"/"
   rewrite_tests "s/import MaterialComponents.Material(.+)_(.+)/import components_\1_\2/"
   rewrite_tests "s/import MaterialComponentsBeta.Material(.+)Beta/import components_\1_\1Beta \/\/ BetaSplit/"
   rewrite_tests "s/import MaterialComponentsBeta.Material(.+)Scheme/import components_schemes_\1_\1 \/\/ Beta/"
@@ -123,6 +129,9 @@ fix_bazel_imports() {
     echo "Undoing import rewrites for bazel..."
 
     # Undoes our source changes from above.
+    rewrite_tests "s/import\/\*Material prefix framework import\*\/ \"Material(.+)\.h\"/import <MaterialComponents\/Material\1\.h>/"
+    rewrite_tests "s/import components_schemes_(.+)_(.+) \/\/ TestingSupport/import MaterialComponentsTestingSupport.Material\1Scheme_\2/"
+    rewrite_tests "s/import\/\*TestingSupport\*\/ \"(.+)\"/import <MaterialComponentsTestingSupport\/\1>/"
     rewrite_tests "s/import\/\*Material beta prefix framework import\*\/ \"Material(.+).h\"/import <MaterialComponentsBeta\/Material\1\.h>/"
     rewrite_tests "s/import components_(.+)_\1 \/\/ Beta/import MaterialComponentsBeta.Material\1/"
     rewrite_tests "s/import components_schemes_(.+)_.+ \/\/ Beta/import MaterialComponentsBeta.Material\1Scheme/"

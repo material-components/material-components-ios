@@ -51,6 +51,7 @@ Pod::Spec.new do |s|
         snapshot_tests.requires_app_host = true
         snapshot_tests.source_files = "components/#{component.base_name}/tests/snapshot/*.{h,m,swift}"
         snapshot_tests.dependency "MaterialComponentsSnapshotTests/private/Snapshot"
+        snapshot_tests.dependency "MaterialComponentsTestingSupport/schemes/Typography"
       end
     end
   end
