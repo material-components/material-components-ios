@@ -114,10 +114,10 @@ mdc_examples_objc_library(
     deps = [
         ":Buttons",
         ":Theming",
+        "//components/ShapeLibrary",
+        "//components/Shapes",
         "//components/Typography",
         "//components/private/Math",
-        "//components/private/ShapeLibrary",
-        "//components/private/Shapes",
         "//components/schemes/Color",
         "//components/schemes/Container",
         "//components/schemes/Shape",
@@ -174,6 +174,7 @@ mdc_objc_library(
 
 swift_library(
     name = "unit_test_swift_sources",
+    testonly = 1,
     srcs = native.glob([
         "tests/unit/*.swift",
         "tests/unit/Theming/*.swift",
@@ -189,6 +190,7 @@ swift_library(
         ":Theming",
         ":TypographyThemer",
         ":private",
+        "//components/schemes/Typography:TestingSupport",
     ],
 )
 

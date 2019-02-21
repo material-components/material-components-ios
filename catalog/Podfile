@@ -58,6 +58,9 @@ target "MDCCatalog" do
     'Typography/UnitTests',
   ]
   pod 'MaterialComponentsBeta', :path => '../', :testspecs => [
+    'ActionSheet+ActionSheetThemer/UnitTests',
+    'ActionSheet+ColorThemer/UnitTests',
+    'ActionSheet+Theming/UnitTests',
     'BottomNavigation/UnitTests',
     'ButtonBar+Theming/UnitTests',
     'Buttons+Theming/UnitTests',
@@ -67,10 +70,12 @@ target "MDCCatalog" do
     'Ripple/UnitTests',
     'schemes/Container/UnitTests',
   ]
+  pod 'MaterialComponentsTestingSupport', :path => '../'
   pod 'MaterialComponentsSnapshotTests', :path => '../', :testspecs => [
     'BottomAppBar/tests/snapshot',
     'BottomNavigation/tests/snapshot',
     'Buttons/tests/snapshot',
+    'ButtonBar/tests/snapshot',
     'Cards/tests/snapshot',
     'Chips/tests/snapshot',
     'Dialogs/tests/snapshot',

@@ -106,6 +106,7 @@ mdc_objc_library(
     deps = [
         "//components/Buttons",
         "//components/Buttons:Theming",
+        "//components/Chips",
         "//components/private/Math",
         "//components/schemes/Color",
     ],
@@ -123,15 +124,14 @@ swift_library(
 
 mdc_objc_library(
     name = "ExperimentalExamples",
-    srcs = glob([
-        "examples/experimental/*.h",
-        "examples/experimental/*.m",
-    ]),
+    srcs = glob(["examples/experimental/*.m"]),
+    hdrs = glob(["examples/experimental/*.h"]),
     deps = [
         ":ExperimentalExampleSource",
         "//components/AppBar:ColorThemer",
         "//components/AppBar:TypographyThemer",
         "//components/Buttons:ButtonThemer",
+        "//components/Chips",
     ],
 )
 
