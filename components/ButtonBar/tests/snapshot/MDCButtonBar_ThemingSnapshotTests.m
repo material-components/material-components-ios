@@ -16,12 +16,12 @@
 
 #import <UIKit/UIKit.h>
 
+#import <MaterialComponentsTestingSupport/MaterialTypographyScheme+TestingSupport.h>
 #import "MaterialButtonBar+Theming.h"
 #import "MaterialButtonBar.h"
 #import "MaterialColorScheme.h"
 #import "MaterialContainerScheme.h"
 #import "MaterialTypographyScheme.h"
-#import <MaterialComponentsTestingSupport/MaterialTypographyScheme+TestingSupport.h>
 
 @interface MDCButtonBar_ThemingSnapshotTests : MDCSnapshotTestCase
 @property(nonatomic, strong) UIBarButtonItem *leadingTitleItem;
