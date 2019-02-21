@@ -44,6 +44,18 @@ package_group(
 )
 
 mdc_objc_library(
+    name = "TestingSupport",
+    testonly = 1,
+    srcs = glob(["tests/support/*.m"]),
+    hdrs = glob(["tests/support/*.h"]),
+    includes = ["tests/support"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":Typography",
+    ],
+)
+
+mdc_objc_library(
     name = "unit_test_sources",
     testonly = 1,
     srcs = glob(["tests/unit/*.m"]),
