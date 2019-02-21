@@ -57,6 +57,11 @@ mdc_examples_swift_library(
     visibility = ["//visibility:private"],
     deps = [
         ":Ripple",
+        "//components/Buttons:ButtonThemer",
+        "//components/Buttons:Theming",
+        "//components/Cards:CardThemer",
+        "//components/Cards:Theming",
+        "//components/Cards:CardsPrivate",
     ],
 )
 

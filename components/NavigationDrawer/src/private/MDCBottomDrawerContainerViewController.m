@@ -35,6 +35,8 @@ static const CGFloat kEpsilon = (CGFloat)0.001;
 static const CGFloat kScrollViewBufferForPerformance = 20;
 static const CGFloat kDragVelocityThresholdForHidingDrawer = -2;
 static NSString *const kContentOffsetKeyPath = @"contentOffset";
+NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
+    @"kMDCBottomDrawerScrollViewAccessibilityIdentifier";
 
 static UIColor *DrawerShadowColor(void) {
   return [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.2];
@@ -429,6 +431,8 @@ static UIColor *DrawerShadowColor(void) {
     [self.scrollView addSubview:self.contentViewController.view];
     [self.contentViewController didMoveToParentViewController:self];
   }
+
+  self.scrollView.accessibilityIdentifier = kMDCBottomDrawerScrollViewAccessibilityIdentifier;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
