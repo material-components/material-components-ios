@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
-#import "MaterialStates.h"
 
 @interface StateSchemeExampleController : UIViewController
 

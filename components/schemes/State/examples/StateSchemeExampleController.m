@@ -138,7 +138,7 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs" : @[ @"Alpha: States", @"States Prototype" ],
+    @"breadcrumbs" : @[ @"Schemes", @"States Prototype (Alpha)" ],
     @"description" : @"Prototype of States Theming.",
     @"primaryDemo" : @NO,
     @"presentable" : @NO,
