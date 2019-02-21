@@ -1,4 +1,4 @@
-// Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2019-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,11 +15,16 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "SimpleTextFieldLayoutUtils.h"
+#import "MDCContainedInputView.h"
+
+@protocol MDCContainedInputViewStyle;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SimpleTextFieldLayout : NSObject
+@interface MDCSimpleTextFieldLayout : NSObject
+
+@property(nonatomic, readonly, class) CGFloat clearButtonSideLength;
+@property(nonatomic, readonly, class) CGFloat clearButtonImageViewSideLength;
 
 @property(nonatomic, assign) BOOL leftViewHidden;
 @property(nonatomic, assign) BOOL rightViewHidden;
@@ -28,8 +33,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic, assign) CGRect placeholderFrameFloating;
 @property(nonatomic, assign) CGRect placeholderFrameNormal;
-@property(nonatomic, assign) CGRect textAreaFrame;
+@property(nonatomic, assign) CGRect textRect;
+@property(nonatomic, assign) CGRect textRectFloatingPlaceholder;
 @property(nonatomic, assign) CGRect clearButtonFrame;
+@property(nonatomic, assign) CGRect clearButtonFrameFloatingPlaceholder;
 @property(nonatomic, assign) CGRect leftViewFrame;
 @property(nonatomic, assign) CGRect rightViewFrame;
 @property(nonatomic, assign) CGRect leftUnderlineLabelFrame;
@@ -39,7 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, assign) CGFloat topRowBottomRowDividerY;
 
 - (instancetype)initWithTextFieldSize:(CGSize)textFieldSize
-                       textFieldStyle:(TextFieldStyle)textFieldStyle
+                       containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
                                  text:(NSString *)text
                           placeholder:(NSString *)placeholder
                                  font:(UIFont *)font
@@ -53,8 +60,11 @@ NS_ASSUME_NONNULL_BEGIN
                       clearButtonMode:(UITextFieldViewMode)clearButtonMode
                    leftUnderlineLabel:(UILabel *)leftUnderlineLabel
                   rightUnderlineLabel:(UILabel *)rightUnderlineLabel
-           underlineLabelDrawPriority:(UnderlineLabelDrawPriority)underlineLabelDrawPriority
+           underlineLabelDrawPriority:
+               (MDCContainedInputViewUnderlineLabelDrawPriority)underlineLabelDrawPriority
      customUnderlineLabelDrawPriority:(CGFloat)customUnderlineLabelDrawPriority
+       preferredMainContentAreaHeight:(CGFloat)preferredMainContentAreaHeight
+    preferredUnderlineLabelAreaHeight:(CGFloat)preferredUnderlineLabelAreaHeight
                                 isRTL:(BOOL)isRTL
                             isEditing:(BOOL)isEditing;
 
