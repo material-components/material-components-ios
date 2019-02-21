@@ -14,11 +14,11 @@ Moving both Shape libraries, Shapes and ShapeLibrary, from components/private/ t
 
 ### ShapeLibrary
 
-**New component - promoted to Ready.**
+**New component - Migrated to components/ from components/private.**
 
 ### Shapes
 
-**New component - promoted to Ready.**
+**New component - Migrated to components/ from components/private.**
 
 ## Component changes
 
