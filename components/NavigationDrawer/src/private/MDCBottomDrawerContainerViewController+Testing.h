@@ -12,11 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <UIKit/UIKit.h>
+#import "MDCBottomDrawerContainerViewController.h"
 
-#import "MaterialContainerScheme.h"
+extern NSString *_Nonnull const kMDCBottomDrawerScrollViewAccessibilityIdentifier;
 
-@interface SimpleTextFieldManualLayoutExampleViewController : UIViewController
-
-@property(strong, nonatomic) id<MDCContainerScheming> containerScheme;
+/**
+ Exposes parts of MDCBottomDrawerContainerViewController for testing.
+ */
+@interface MDCBottomDrawerContainerViewController (Testing)
 @end
