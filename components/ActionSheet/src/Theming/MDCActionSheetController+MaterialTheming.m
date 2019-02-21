@@ -14,8 +14,9 @@
 
 #import "MDCActionSheetController+MaterialTheming.h"
 
-#import "MaterialActionSheet+ColorThemer.h"
-#import "MaterialActionSheet+TypographyThemer.h"
+static const CGFloat kHighAlpha = (CGFloat)0.87;
+static const CGFloat kMediumAlpha = (CGFloat)0.6;
+static const CGFloat kInkAlpha = (CGFloat)0.16;
 
 @implementation MDCActionSheetController (MaterialTheming)
 
@@ -36,12 +37,24 @@
 }
 
 - (void)applyThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
-  [MDCActionSheetColorThemer applySemanticColorScheme:colorScheme toActionSheetController:self];
+  self.backgroundColor = colorScheme.surfaceColor;
+  if (self.message && ![self.message isEqualToString:@""]) {
+    // If there is a message then this can be high opacity and won't clash with actions.
+    self.titleTextColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kHighAlpha];
+  } else {
+    self.titleTextColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kMediumAlpha];
+  }
+  self.messageTextColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kMediumAlpha];
+  self.imageRenderingMode = UIImageRenderingModeAlwaysTemplate;
+  self.actionTintColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kMediumAlpha];
+  self.actionTextColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kHighAlpha];
+  self.inkColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kInkAlpha];
 }
 
 - (void)applyThemeWithTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
-  [MDCActionSheetTypographyThemer applyTypographyScheme:typographyScheme
-                                toActionSheetController:self];
+  self.titleFont = typographyScheme.subtitle1;
+  self.messageFont = typographyScheme.body2;
+  self.actionFont = typographyScheme.subtitle1;
 }
 
 @end
