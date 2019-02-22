@@ -207,6 +207,7 @@ mdc_objc_library(
     ],
     deps = [
         ":ActionSheet",
+        ":private",
     ],
 )
 
