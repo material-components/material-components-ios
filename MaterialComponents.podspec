@@ -98,6 +98,7 @@ Pod::Spec.new do |mdc|
       ]
       unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
       unit_tests.dependency "MaterialComponents/ActivityIndicator+ColorThemer"
+      unit_tests.dependency "MaterialComponentsTestingSupport/schemes/Color"
     end
   end
 
@@ -221,6 +222,7 @@ Pod::Spec.new do |mdc|
       ]
       unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
       unit_tests.dependency "MaterialComponents/BottomAppBar+ColorThemer"
+      unit_tests.dependency "MaterialComponentsTestingSupport/schemes/Color"
     end
   end
 
