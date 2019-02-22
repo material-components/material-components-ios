@@ -12,7 +12,33 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import "MDCChipView.h"
 #import "MDCTextField.h"
+
+@class MDCChipTextField;
+
+@protocol MDCChipTextFieldDelegate <NSObject>
+
+@optional
+
+- (BOOL)chipTextField:(nonnull MDCChipTextField *)chipTextField
+    shouldAddChipView:(nonnull MDCChipView *)chipView
+              atIndex:(NSInteger)index;
+- (void)chipTextField:(nonnull MDCChipTextField *)chipTextField
+       didAddChipView:(nonnull MDCChipView *)chipView
+              atIndex:(NSInteger)index;
+- (BOOL)chipTextField:(nonnull MDCChipTextField *)chipTextField
+    shouldRemoveChipView:(nonnull MDCChipView *)chipView
+                 atIndex:(NSInteger)index;
+- (void)chipTextField:(nonnull MDCChipTextField *)chipTextField
+    didRemoveChipView:(nonnull MDCChipView *)chipView
+              atIndex:(NSInteger)index;
+
+- (void)chipTextField:(nonnull MDCChipTextField *)chipTextField
+       didTapChipView:(nonnull MDCChipView *)chipView
+              atIndex:(NSInteger)index;
+
+@end
 
 /*
  MDCChipTextField is a sublcass of MDCTextField which is a subclass of UITextField.
@@ -21,6 +47,16 @@
     [Material Guidelines](https://material.io/design/components/chips.html#input-chips).
 */
 @interface MDCChipTextField : MDCTextField
+
+/**
+ The chip views in the textfield with order.
+ */
+@property(nonatomic, readonly, copy, nonnull) NSArray<MDCChipView *> *chipViews;
+
+/**
+ The MDCChipTextFieldDelegate of this textfield.
+ */
+@property(nonatomic, weak, nullable) id<MDCChipTextFieldDelegate> chipTextFieldDelegate;
 
 /*
  Appends a chip to the end of the text field.
@@ -43,6 +79,7 @@
 
  @param text The string to display in the chip.
  */
-- (void)appendChipWithText:(nonnull NSString *)text NS_SWIFT_NAME(appendChip(text:));
+- (nonnull MDCChipView *)appendChipWithText:(nonnull NSString *)text
+    NS_SWIFT_NAME(appendChip(text:));
 
 @end
