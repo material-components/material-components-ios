@@ -38,10 +38,7 @@ static NSString *const kReusableIdentifierItem = @"cell";
 - (instancetype)init {
   self = [super init];
   if (self) {
-    MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
-    scheme.colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-    _containerScheme = scheme;
+    _containerScheme = [[MDCContainerScheme alloc] init];
   }
   return self;
 }
