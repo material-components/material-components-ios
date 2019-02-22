@@ -14,7 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import <MaterialComponentsTestingSupport/MaterialActionSheet+TestingSupport.h>
+#import "../../support/MDCActionSheetTestHelper.h"
 #import "../../../src/private/MDCActionSheetHeaderView.h"
 #import "../../../src/private/MDCActionSheetItemTableViewCell.h"
 #import "MaterialActionSheet+ActionSheetThemer.h"

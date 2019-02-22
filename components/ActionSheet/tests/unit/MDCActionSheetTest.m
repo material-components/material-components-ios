@@ -16,7 +16,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import <MaterialComponentsTestingSupport/MaterialActionSheet+TestingSupport.h>
+#import "MDCActionSheetTestHelper.h"
 #import "../../src/private/MDCActionSheetHeaderView.h"
 
 static const CGFloat kSafeAreaAmount = 20;
