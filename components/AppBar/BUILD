@@ -111,6 +111,7 @@ mdc_examples_swift_library(
 
 swift_library(
     name = "unit_test_swift_sources",
+    testonly = 1,
     srcs = glob(["tests/unit/*.swift"]),
     copts = [
         "-swift-version",
@@ -122,6 +123,7 @@ swift_library(
         ":ColorThemer",
         ":TypographyThemer",
         ":private",
+        "//components/schemes/Typography:TestingSupport",
     ],
 )
 
