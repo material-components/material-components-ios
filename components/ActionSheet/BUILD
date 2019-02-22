@@ -147,6 +147,7 @@ mdc_objc_library(
         ":ActionSheet",
         ":ActionSheetThemer",
         ":ColorThemer",
+        ":TestingSupport",
         ":Theming",
         ":TypographyThemer",
         ":privateHeaders",
@@ -166,6 +167,7 @@ mdc_objc_library(
     ],
     deps = [
         ":ActionSheet",
+        ":TestingSupport",
         ":Theming",
         ":privateHeaders",
         ":unit_test_sources",
