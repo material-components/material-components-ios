@@ -22,14 +22,13 @@ static const CGFloat kUnderlineIndicatorHeight = 2;
 
 @implementation MDCTabBarUnderlineIndicatorTemplate
 
-- (MDCTabBarIndicatorAttributes *)
-    indicatorAttributesForContext:(id<MDCTabBarIndicatorContext>)context {
+- (MDCTabBarIndicatorAttributes *)indicatorAttributesForContext:
+    (id<MDCTabBarIndicatorContext>)context {
   CGRect bounds = context.bounds;
   MDCTabBarIndicatorAttributes *attributes = [[MDCTabBarIndicatorAttributes alloc] init];
-  CGRect underlineFrame = CGRectMake(CGRectGetMinX(bounds),
-                                     CGRectGetMaxY(bounds) - kUnderlineIndicatorHeight,
-                                     CGRectGetWidth(bounds),
-                                     kUnderlineIndicatorHeight);
+  CGRect underlineFrame =
+      CGRectMake(CGRectGetMinX(bounds), CGRectGetMaxY(bounds) - kUnderlineIndicatorHeight,
+                 CGRectGetWidth(bounds), kUnderlineIndicatorHeight);
   attributes.path = [UIBezierPath bezierPathWithRect:underlineFrame];
   return attributes;
 }

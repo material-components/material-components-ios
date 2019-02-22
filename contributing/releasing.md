@@ -46,6 +46,15 @@ will be working day-to-day with a fork, consider creating a separate clone just 
 
 Please follow [using git-lfs instructions](https://github.com/material-components/material-components-ios/blob/2b6da5f10438081e5a7b2211e27336c6846433e5/contributing/tools.md#using-git-lfs)
 
+### Configure the merge strategy for `.gitattributes`
+
+We have two different versions of `.gitattributes` in the `develop` and
+`stable` branches. To avoid conflicts (or accidental merges) between the two
+branches, we define a custom merge strategy just for that file.  After cloning
+the repository, be sure to run this command:
+
+    git config merge.gitattributes.driver true
+
 ## Cutting and testing the release
 
 Our entire release process is encoded into the `release` script in the scripts/ directory.
@@ -62,23 +71,6 @@ Note: if for some reason `cut` fails, first ensure that nobody else is in the mi
 You will now have a local `release-candidate` branch, a new section in CHANGELOG.md titled
 "release-candidate", and the `release-candidate` branch will have been pushed to GitHub.
 
-#### Create a Pull Request for the Release Branch
-
-If you have not clicked [the
-link](https://github.com/material-components/material-components-ios/compare/stable...release-candidate)
-provided in the script do so now.
-
-At this point you should also create the initial Release Candidate pull request using the URL
-that the `cut` script generated.
-
-Name the Pull Request title "[WIP] Release Candidate." until you are able to provide the version as the title.
-
-Add the group `material-components/release-blocking-clients` to the pull request's reviewers. This is the mechanism by which
-release-blocking clients are notified of a new release.
-
-**Do not use GitHub's big green button to merge the approved pull request.** Release are an
-exception to our normal squash-and-merge procedure.
-
 #### Hotfixing
 
 If you need to cut a hotfix release, run the following command instead:
@@ -93,6 +85,23 @@ path forward is to revert that commit using the `git revert <commit-hash>` comma
 After that PR is merged, you should cherry-pick the revert commit into the `release-candidate` branch: `git cherry-pick <commit-hash>`.
 
 Other than the steps above regarding hotfixing, the entire release process stays the same.
+
+#### Create a Pull Request for the Release Branch
+
+If you have not clicked [the release candidate pull request comparison
+link](https://github.com/material-components/material-components-ios/compare/stable...release-candidate)
+provided in the script do so now.
+
+At this point you should also create the initial Release Candidate pull request using the URL
+that the `cut` script generated.
+
+Name the Pull Request title "{WIP} Release Candidate." until you are able to provide the version as the title.
+
+Add the group `material-components/release-blocking-clients` to the pull request's reviewers. This is the mechanism by which
+release-blocking clients are notified of a new release.
+
+**Do not use GitHub's big green button to merge the approved pull request.** Release are an
+exception to our normal squash-and-merge procedure.
 
 ### Start internal testing
 
@@ -205,6 +214,11 @@ Commit the results to your branch:
 
     git commit -am "Bumped version number to $(scripts/print_version)."
     git push origin release-candidate
+    
+Update the PR title to the release version. The format is typically "vX.Y.Z" (*e.g.*, v72.0.1). 
+Once this is done, send the PR out for review. Add "material-components/core-ios-team" to the 
+list of Reviewers. Also add anyone else you think might need to review specific changes in the 
+release candidate.
 
 #### Verify CocoaPods podspec and trunk access
 
@@ -257,7 +271,7 @@ go-ahead from the following clients:
 
 ## Merge the release candidate branch
 
-Once the release-candidate has passed all tests by clients, you may merge the release into the
+Once the release-candidate has **passed all "Required" GitHub presubmit tests** and **all internal presubmit tests**, you may merge the release into the
 `develop` and `stable` branches using the `release` script.
 
 **Do not use GitHub's big green button to merge the approved pull request.** Release are an

@@ -290,7 +290,7 @@ const CGFloat MDCTypographySecondaryOpacity = (CGFloat)0.54;
   } else {
     font = [UIFont boldSystemFontOfSize:fontSize];
   }
-  #pragma clang diagnostic pop
+#pragma clang diagnostic pop
 
   [self.fontCache setObject:font forKey:cacheKey];
 
@@ -319,7 +319,7 @@ const CGFloat MDCTypographySecondaryOpacity = (CGFloat)0.54;
   }
 
   UIFont *regular = [self regularFontOfSize:fontSize];
-  UIFontDescriptor * _Nullable descriptor = [regular.fontDescriptor
+  UIFontDescriptor *_Nullable descriptor = [regular.fontDescriptor
       fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold | UIFontDescriptorTraitItalic];
   if (!descriptor) {
     return nil;

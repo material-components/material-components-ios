@@ -13,21 +13,18 @@
 // limitations under the License.
 
 import UIKit
-import MaterialComponentsBeta.MaterialActionSheet
-import MaterialComponentsBeta.MaterialActionSheet_Theming
+
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialTypographyScheme
 
+import MaterialComponents.MaterialActionSheet
+import MaterialComponentsBeta.MaterialActionSheet_Theming
+import MaterialComponentsBeta.MaterialContainerScheme
+
 class ActionSheetSwiftExampleViewController: UIViewController {
 
-  var colorScheme = MDCSemanticColorScheme()
-  var typographyScheme = MDCTypographyScheme()
-  var containerScheme: MDCContainerScheming {
-    let scheme = MDCContainerScheme()
-    scheme.colorScheme = colorScheme
-    scheme.typographyScheme = typographyScheme
-    return scheme
-  }
+  var containerScheme: MDCContainerScheming = MDCContainerScheme()
+  
   let tableView = UITableView()
   enum ActionSheetExampleType {
     case typical, title, message, noIcons, titleAndMessage, dynamicType, delayed, thirtyOptions
@@ -56,7 +53,8 @@ class ActionSheetSwiftExampleViewController: UIViewController {
   override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
     
-    view.backgroundColor = colorScheme.backgroundColor
+    view.backgroundColor = containerScheme.colorScheme?.backgroundColor ??
+        MDCSemanticColorScheme(defaults: .material201804).backgroundColor
     tableView.frame = view.frame
     tableView.frame.origin.y = 0.0
     view.addSubview(tableView)
@@ -131,20 +129,23 @@ extension ActionSheetSwiftExampleViewController : UITableViewDataSource {
 
 extension ActionSheetSwiftExampleViewController {
   static var actionOne: MDCActionSheetAction {
+    let image = UIImage(named: "Home") ?? UIImage()
     return MDCActionSheetAction(title: "Home",
-                                image: UIImage(named: "Home")!) { (_) in
+                                image: image) { (_) in
                                   print("Home action") }
   }
 
   static var actionTwo: MDCActionSheetAction {
+    let image = UIImage(named: "Favorite") ?? UIImage()
     return MDCActionSheetAction(title: "Favorite",
-                                image: UIImage(named: "Favorite")!) { (_) in
+                                image: image) { (_) in
                                   print("Favorite action") }
   }
 
   static var actionThree: MDCActionSheetAction {
+    let image = UIImage(named: "Email") ?? UIImage()
     return MDCActionSheetAction(title: "Email",
-                                image: UIImage(named: "Email")!) { (_) in
+                                image: image) { (_) in
                                   print("Email action") }
   }
 
@@ -209,8 +210,9 @@ extension ActionSheetSwiftExampleViewController {
   static func dynamic() -> MDCActionSheetController {
     let actionSheet = MDCActionSheetController(title: "Action sheet", message: messageString)
     actionSheet.mdc_adjustsFontForContentSizeCategory = true
+    let image = UIImage(named: "Email") ?? UIImage()
     let actionThree = MDCActionSheetAction(title: "Email",
-                                           image: UIImage(named: "Email")!,
+                                           image: image,
                                            handler: nil)
     actionSheet.addAction(actionOne)
     actionSheet.addAction(actionTwo)

@@ -60,6 +60,15 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
 - (void)layoutSubviews {
   [super layoutSubviews];
   [self updateRippleStyle];
+  self.frame = CGRectStandardize(self.superview.bounds);
+}
+
+- (void)layoutSublayersOfLayer:(CALayer *)layer {
+  [super layoutSublayersOfLayer:layer];
+  for (CALayer *sublayer in self.layer.sublayers) {
+    sublayer.frame = CGRectStandardize(self.bounds);
+    [sublayer setNeedsLayout];
+  }
 }
 
 - (void)setRippleStyle:(MDCRippleStyle)rippleStyle {
@@ -82,7 +91,7 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
   }
 }
 
-- (void)cancelAllRipplesAnimated:(BOOL)animated {
+- (void)cancelAllRipplesAnimated:(BOOL)animated completion:(MDCRippleCompletionBlock)completion {
   NSArray<CALayer *> *sublayers = [self.layer.sublayers copy];
   if (animated) {
     CFTimeInterval latestBeginTouchDownRippleTime = DBL_MIN;
@@ -93,6 +102,7 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
             MAX(latestBeginTouchDownRippleTime, rippleLayer.rippleTouchDownStartTime);
       }
     }
+    dispatch_group_t group = dispatch_group_create();
     for (CALayer *layer in sublayers) {
       if ([layer isKindOfClass:[MDCRippleLayer class]]) {
         MDCRippleLayer *rippleLayer = (MDCRippleLayer *)layer;
@@ -100,9 +110,18 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
           rippleLayer.rippleTouchDownStartTime =
               latestBeginTouchDownRippleTime + kRippleFadeOutDelay;
         }
-        [rippleLayer endRippleAnimated:animated completion:nil];
+        dispatch_group_enter(group);
+        [rippleLayer endRippleAnimated:animated
+                            completion:^{
+                              dispatch_group_leave(group);
+                            }];
       }
     }
+    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+      if (completion) {
+        completion();
+      }
+    });
   } else {
     for (CALayer *layer in sublayers) {
       if ([layer isKindOfClass:[MDCRippleLayer class]]) {
@@ -111,6 +130,13 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
       }
     }
   }
+}
+
+- (MDCRippleLayer *)activeRippleLayer {
+  if (self.layer.sublayers.count < 1) {
+    return nil;
+  }
+  return _activeRippleLayer;
 }
 
 - (void)beginRippleTouchDownAtPoint:(CGPoint)point

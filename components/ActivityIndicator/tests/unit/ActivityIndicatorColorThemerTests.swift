@@ -15,14 +15,14 @@
 import XCTest
 import MaterialComponents.MaterialActivityIndicator
 import MaterialComponents.MaterialActivityIndicator_ColorThemer
+import MaterialComponentsTestingSupport.MaterialColorScheme_TestingSupport
 
 class ActivityIndicatorColorThemerTests: XCTestCase {
 
   func testColorThemerChangesTheBackgroundColor() {
     // Given
-    let colorScheme = MDCSemanticColorScheme()
+    let colorScheme = MDCSemanticColorScheme.withVaryingOpacity()
     let activityIndicator = MDCActivityIndicator()
-    colorScheme.primaryColor = .red
     activityIndicator.cycleColors = [ .white ]
 
     // When

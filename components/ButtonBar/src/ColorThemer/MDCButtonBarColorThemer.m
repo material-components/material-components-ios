@@ -22,8 +22,7 @@
   buttonBar.tintColor = colorScheme.onPrimaryColor;
 }
 
-+ (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
-             toButtonBar:(MDCButtonBar *)buttonBar {
++ (void)applyColorScheme:(id<MDCColorScheme>)colorScheme toButtonBar:(MDCButtonBar *)buttonBar {
   buttonBar.backgroundColor = colorScheme.primaryColor;
 }
 

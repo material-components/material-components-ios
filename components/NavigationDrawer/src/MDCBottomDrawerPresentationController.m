@@ -167,7 +167,7 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
 - (void)presentationTransitionDidEnd:(BOOL)completed {
   // Set up the tap recognizer to dimiss the drawer by.
   UITapGestureRecognizer *tapGestureRecognizer =
-  [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideDrawer)];
+      [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideDrawer)];
   [self.containerView addGestureRecognizer:tapGestureRecognizer];
   tapGestureRecognizer.delegate = self;
 
@@ -192,6 +192,10 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
 - (void)dismissalTransitionDidEnd:(BOOL)completed {
   if (completed) {
     if ([self.presentedViewController isKindOfClass:[MDCBottomDrawerViewController class]]) {
+      CGRect newFrame = CGRectStandardize(
+          self.bottomDrawerContainerViewController.contentViewController.view.frame);
+      newFrame.size.height -= self.bottomDrawerContainerViewController.addedHeight;
+      self.bottomDrawerContainerViewController.contentViewController.view.frame = newFrame;
       [self.bottomDrawerContainerViewController removeFromParentViewController];
     }
     [self.scrimView removeFromSuperview];
@@ -206,7 +210,7 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size
-       withTransitionCoordinator:(id <UIViewControllerTransitionCoordinator>)coordinator {
+       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
   [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
   [self.bottomDrawerContainerViewController viewWillTransitionToSize:size
                                            withTransitionCoordinator:coordinator];

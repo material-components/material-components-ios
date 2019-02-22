@@ -15,6 +15,7 @@
 
 load(
     "//:material_components_ios.bzl",
+    "mdc_examples_objc_library",
     "mdc_extension_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
@@ -80,6 +81,22 @@ mdc_extension_objc_library(
     ],
 )
 
+mdc_examples_objc_library(
+    name = "ObjcExamples",
+    deps = [
+        ":ColorThemer",
+        ":Snackbar",
+        ":TypographyThemer",
+        "//components/Buttons",
+        "//components/Collections",
+        "//components/Palettes",
+        "//components/Typography",
+        "//components/private/Overlay",
+        "//components/schemes/Color",
+        "//components/schemes/Typography",
+    ],
+)
+
 mdc_objc_library(
     name = "private",
     hdrs = native.glob(["src/private/*.h"]),
@@ -89,6 +106,7 @@ mdc_objc_library(
 
 swift_library(
     name = "unit_test_swift_sources",
+    testonly = 1,
     srcs = glob(["tests/unit/*.swift"]),
     copts = [
         "-swift-version",
@@ -100,6 +118,7 @@ swift_library(
         ":Snackbar",
         ":TypographyThemer",
         ":private",
+        "//components/schemes/Typography:TestingSupport",
     ],
 )
 

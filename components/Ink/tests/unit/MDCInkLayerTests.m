@@ -93,7 +93,7 @@
   // Given
   CapturingMDCInkLayerSubclass *inkLayer = [[CapturingMDCInkLayerSubclass alloc] init];
   inkLayer.bounds = CGRectMake(0, 0, 10, 10);
-  inkLayer.speed = (CGFloat)0.5;
+  inkLayer.speed = (float)0.0025;
   inkLayer.endAnimationDelay = (CGFloat)0.9;
 
   // When
@@ -113,7 +113,7 @@
   // Given
   CapturingMDCInkLayerSubclass *inkLayer = [[CapturingMDCInkLayerSubclass alloc] init];
   inkLayer.bounds = CGRectMake(0, 0, 10, 10);
-  inkLayer.speed = (CGFloat)0.5;
+  inkLayer.speed = (float)0.0025;
 
   // When
   [inkLayer changeAnimationAtPoint:CGPointMake(5, 5)];

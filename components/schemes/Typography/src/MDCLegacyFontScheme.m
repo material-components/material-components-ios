@@ -14,5 +14,5 @@
 
 #import "MDCLegacyFontScheme.h"
 
-@implementation MDCBasicFontScheme	
+@implementation MDCBasicFontScheme
 @end

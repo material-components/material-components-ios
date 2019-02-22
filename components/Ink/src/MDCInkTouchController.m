@@ -34,7 +34,7 @@ static const NSTimeInterval kInkTouchDelayInterval = 0.1;
  has been migrated to the new delegate protocol.
  */
 - (BOOL)shouldInkTouchControllerProcessInkTouches:
-        (nonnull MDCInkTouchController *)inkTouchController
+    (nonnull MDCInkTouchController *)inkTouchController
     __deprecated_msg("shouldInkTouchControllerProcessInkTouches has been replaced with "
                      "inkTouchController:shouldProcessInkTouchesAtTouchLocation.");
 
@@ -186,8 +186,8 @@ static const NSTimeInterval kInkTouchDelayInterval = 0.1;
 - (void)touchBeganAtPoint:(CGPoint)point touchLocation:(CGPoint)touchLocation {
   if (_shouldRespondToTouch) {
     [_addedInkView startTouchBeganAnimationAtPoint:point completion:nil];
-    if ([_delegate
-            respondsToSelector:@selector(inkTouchController:didProcessInkView:atTouchLocation:)]) {
+    if ([_delegate respondsToSelector:@selector(inkTouchController:
+                                                 didProcessInkView:atTouchLocation:)]) {
       [_delegate inkTouchController:self
                   didProcessInkView:_addedInkView
                     atTouchLocation:touchLocation];

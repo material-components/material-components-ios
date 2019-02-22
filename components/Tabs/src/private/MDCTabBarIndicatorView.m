@@ -17,7 +17,7 @@
 #import "MDCTabBarIndicatorAttributes.h"
 
 /** Content view that displays a filled path and supports animation between states. */
-@interface MDCTabBarIndicatorShapeView: UIView
+@interface MDCTabBarIndicatorShapeView : UIView
 
 /** The path to display. It will be filled using the view's tintColor. */
 @property(nonatomic, nullable) UIBezierPath *path;
@@ -56,8 +56,7 @@
 - (void)commonMDCTabBarIndicatorViewInit {
   // Fill the indicator with the shape.
   _shapeView = [[MDCTabBarIndicatorShapeView alloc] initWithFrame:self.bounds];
-  _shapeView.autoresizingMask =
-      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  _shapeView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   [self addSubview:_shapeView];
 }
 

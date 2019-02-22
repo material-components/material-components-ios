@@ -15,9 +15,13 @@
 
 load(
     "//:material_components_ios.bzl",
+    "mdc_examples_objc_library",
+    "mdc_examples_swift_library",
     "mdc_extension_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
+    "mdc_snapshot_objc_library",
+    "mdc_snapshot_test",
     "mdc_unit_test_suite",
 )
 
@@ -55,6 +59,35 @@ mdc_extension_objc_library(
     ],
 )
 
+mdc_examples_objc_library(
+    name = "ObjcExamples",
+    deps = [
+        ":BottomAppBar",
+        ":ColorThemer",
+        "//components/AppBar",
+        "//components/AppBar:ColorThemer",
+        "//components/AppBar:TypographyThemer",
+        "//components/Buttons",
+        "//components/Buttons:Theming",
+        "//components/schemes/Color",
+        "//components/schemes/Container",
+        "//components/schemes/Typography",
+    ],
+)
+
+mdc_examples_swift_library(
+    name = "SwiftExamples",
+    deps = [
+        ":BottomAppBar",
+        ":ColorThemer",
+        "//components/AppBar",
+        "//components/Buttons",
+        "//components/Buttons:ButtonThemer",
+        "//components/schemes/Color",
+        "//components/schemes/Typography",
+    ],
+)
+
 mdc_objc_library(
     name = "unit_test_sources",
     testonly = 1,
@@ -73,6 +106,7 @@ mdc_objc_library(
         ":ColorThemer",
         ":private",
         "//components/NavigationBar",
+        "//components/schemes/Color:TestingSupport",
     ],
 )
 
@@ -81,4 +115,16 @@ mdc_unit_test_suite(
     deps = [
         ":unit_test_sources",
     ],
+)
+
+mdc_snapshot_objc_library(
+    name = "snapshot_test_lib",
+    deps = [
+        ":BottomAppBar",
+    ],
+)
+
+mdc_snapshot_test(
+    name = "snapshot_tests",
+    deps = [":snapshot_test_lib"],
 )

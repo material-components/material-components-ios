@@ -61,6 +61,7 @@
 @property(nonatomic) CGFloat initialDrawerFactor;
 @property(nullable, nonatomic, readonly) UIPresentationController *presentationController;
 - (void)cacheLayoutCalculations;
+- (void)updateViewWithContentOffset:(CGPoint)contentOffset;
 - (void)updateDrawerState:(CGFloat)transitionPercentage;
 - (CGFloat)calculateInitialDrawerFactor;
 @end
@@ -214,10 +215,10 @@
   [self.fakeBottomDrawer cacheLayoutCalculations];
 
   // Then
-  // presentingViewBounds.size.height = 500, contentHeaderHeight = 300
-  // contentViewController.preferredContentSize.height = 100
-  // 500 - 300 - 100 = 100
-  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 100, 0.001);
+  // presentingViewBounds.size.height = 500 / 2 = 250
+  // The drawer should initially open to half the presentingViewBounds if there is more than
+  // half of the view's height worth of content
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 250, 0.001);
 }
 
 - (void)testContentHeaderTopInsetWithNoHeaderOrContentViewController {
@@ -244,10 +245,10 @@
   [self.fakeBottomDrawer cacheLayoutCalculations];
 
   // Then
-  // presentingViewBounds.size.height = 500, contentHeaderHeight = 300
-  // contentViewController.preferredContentSize.height = 0
-  // 500 - 300 - 0 = 200
-  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 200, 0.001);
+  // presentingViewBounds.size.height = 500 / 2 = 250
+  // The drawer should initially open to half the presentingViewBounds if there is more than
+  // half of the view's height worth of content
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 250, 0.001);
 }
 
 - (void)testContentHeaderTopInsetWithOnlyContentViewController {
@@ -376,10 +377,12 @@
       [[MDCNavigationDrawerFakeTableViewController alloc] init];
 
   // When
-  self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(200, 200);
+  self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(200, 100);
   [self.fakeBottomDrawer cacheLayoutCalculations];
 
   // Then
+  // The drawer needs less than half the presentingViewBounds.height to be in an expanded state
+  // Unless if a user scrolls passed `initialDrawerFactor`.
   XCTAssertEqual(self.fakeBottomDrawer.drawerState, MDCBottomDrawerStateExpanded);
 }
 
@@ -505,6 +508,22 @@
   XCTAssertEqual(self.fakeScrollView.scrollEnabled, NO);
 }
 
+- (void)testSetTrackingScrollViewAfterSetScrimColor {
+  // Given
+  MDCBottomDrawerPresentationController *drawerPresentationController =
+      (MDCBottomDrawerPresentationController *)self.drawerViewController.presentationController;
+
+  // When
+  // Setting the scrim color before setting the tracking scroll view in some cases used to
+  // not set the trackingScrollView on bottomDrawerContainerViewController.
+  self.drawerViewController.scrimColor = UIColor.blueColor;
+  self.drawerViewController.trackingScrollView = self.fakeScrollView;
+
+  // Then
+  XCTAssertNotNil(
+      drawerPresentationController.bottomDrawerContainerViewController.trackingScrollView);
+}
+
 - (void)testBottomDrawerTopInset {
   // Given
   MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
@@ -540,6 +559,58 @@
 
   // Then
   XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.scrollView.contentOffset.y, 500, (CGFloat)0.001);
+}
+
+- (void)testAddedHeight {
+  // Given
+  CGFloat contentViewControllerHeight =
+      CGRectStandardize(self.fakeBottomDrawer.contentViewController.view.frame).size.height;
+  CGFloat fakeHeight = 100;
+  self.fakeBottomDrawer.trackingScrollView = nil;
+
+  // When
+  [self.fakeBottomDrawer updateViewWithContentOffset:CGPointMake(0, fakeHeight)];
+
+  // Then
+  CGFloat newContentViewControllerHeight =
+      CGRectGetHeight(self.fakeBottomDrawer.contentViewController.view.frame);
+  CGFloat expectedHeight = contentViewControllerHeight + fakeHeight;
+  XCTAssertEqualWithAccuracy(newContentViewControllerHeight, expectedHeight, 0.001);
+}
+
+- (void)testAddedHeightWithMultipleScrolls {
+  // Given
+  CGFloat contentViewControllerHeight =
+      CGRectStandardize(self.fakeBottomDrawer.contentViewController.view.frame).size.height;
+  CGFloat fakeFirstHeight = 80;
+  CGFloat fakeSecondHeight = 100;
+  self.fakeBottomDrawer.trackingScrollView = nil;
+
+  // When
+  [self.fakeBottomDrawer updateViewWithContentOffset:CGPointMake(0, fakeFirstHeight)];
+  [self.fakeBottomDrawer updateViewWithContentOffset:CGPointMake(0, fakeSecondHeight)];
+
+  // Then
+  CGFloat newContentViewControllerHeight =
+      CGRectGetHeight(self.fakeBottomDrawer.contentViewController.view.frame);
+  CGFloat expectedHeight = contentViewControllerHeight + fakeSecondHeight;
+  XCTAssertEqualWithAccuracy(newContentViewControllerHeight, expectedHeight, 0.001);
+}
+
+- (void)testAddedHeightWithTrackingScrollView {
+  // Given
+  CGFloat contentViewControllerHeight =
+      CGRectStandardize(self.fakeBottomDrawer.contentViewController.view.frame).size.height;
+  CGFloat fakeHeight = 100;
+  self.fakeBottomDrawer.trackingScrollView = self.fakeScrollView;
+
+  // When
+  [self.fakeBottomDrawer updateViewWithContentOffset:CGPointMake(0, fakeHeight)];
+
+  // Then
+  CGFloat newContentViewControllerHeight =
+      CGRectGetHeight(self.fakeBottomDrawer.contentViewController.view.frame);
+  XCTAssertEqualWithAccuracy(newContentViewControllerHeight, contentViewControllerHeight, 0.001);
 }
 
 - (void)testCalculateInitialDrawerFactorWithSmallHeight {

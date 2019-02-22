@@ -16,8 +16,8 @@ import XCTest
 
 import MaterialComponents.MaterialCards
 import MaterialComponents.MaterialColorScheme
-import MaterialComponents.MaterialShapeScheme
 import MaterialComponents.MaterialShapeLibrary
+import MaterialComponents.MaterialShapeScheme
 import MaterialComponentsBeta.MaterialCards_Theming
 import MaterialComponentsBeta.MaterialContainerScheme
 
@@ -52,7 +52,7 @@ class CardsMaterialThemingTests: XCTestCase {
 
     // Test remaining properties
     XCTAssertEqual(card.shadowElevation(for: .normal), ShadowElevation(rawValue: 1))
-    XCTAssertEqual(card.shadowElevation(for: .highlighted), ShadowElevation(rawValue: 4))
+    XCTAssertEqual(card.shadowElevation(for: .highlighted), ShadowElevation(rawValue: 1))
     XCTAssertTrue(card.isInteractable)
   }
 
@@ -152,8 +152,8 @@ class CardsMaterialThemingTests: XCTestCase {
 
     // Test remaining properties
     XCTAssertEqual(cardCell.shadowElevation(for: .normal), ShadowElevation(rawValue: 1))
-    XCTAssertEqual(cardCell.shadowElevation(for: .highlighted), ShadowElevation(rawValue: 4))
-    XCTAssertEqual(cardCell.shadowElevation(for: .selected), ShadowElevation(rawValue: 4))
+    XCTAssertEqual(cardCell.shadowElevation(for: .highlighted), ShadowElevation(rawValue: 1))
+    XCTAssertEqual(cardCell.shadowElevation(for: .selected), ShadowElevation(rawValue: 1))
     XCTAssertTrue(cardCell.isInteractable)
   }
 

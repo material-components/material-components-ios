@@ -30,7 +30,6 @@
 @implementation FeatureHighlightCustomFontTest
 
 - (void)testCustomTitleFontUpdateLabel {
-
   // Given
   MDCFeatureHighlightView *view = [[MDCFeatureHighlightView alloc] init];
 
@@ -48,7 +47,6 @@
 }
 
 - (void)testCustomBodyFontUpdateLabel {
-
   // Given
   MDCFeatureHighlightView *view = [[MDCFeatureHighlightView alloc] init];
 

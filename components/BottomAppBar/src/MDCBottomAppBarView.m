@@ -50,7 +50,6 @@ static const int kMDCButtonAnimationDuration = 200;
 @property(nonatomic, strong) MDCBottomAppBarCutView *cutView;
 @property(nonatomic, strong) MDCBottomAppBarLayer *bottomBarLayer;
 @property(nonatomic, strong) MDCNavigationBar *navBar;
-@property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
 
 @end
 
@@ -78,10 +77,8 @@ static const int kMDCButtonAnimationDuration = 200;
       kMDCBottomAppBarViewFloatingButtonCenterToNavigationBarTopOffset;
   [self addSubview:self.cutView];
 
-  self.autoresizingMask = (UIViewAutoresizingFlexibleWidth |
-                           UIViewAutoresizingFlexibleLeftMargin |
+  self.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin |
                            UIViewAutoresizingFlexibleRightMargin);
-  self.layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
 
   [self addFloatingButton];
   [self addBottomBarLayer];
@@ -130,7 +127,8 @@ static const int kMDCButtonAnimationDuration = 200;
   floatingButtonPoint.y = MAX(0, navigationBarTopEdgeYOffset - self.floatingButtonVerticalOffset);
   switch (self.floatingButtonPosition) {
     case MDCBottomAppBarFloatingButtonPositionLeading: {
-      if (self.layoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
+      if (self.mdf_effectiveUserInterfaceLayoutDirection ==
+          UIUserInterfaceLayoutDirectionLeftToRight) {
         floatingButtonPoint.x = kMDCBottomAppBarFloatingButtonPositionX;
       } else {
         floatingButtonPoint.x = appBarWidth - kMDCBottomAppBarFloatingButtonPositionX;
@@ -142,7 +140,8 @@ static const int kMDCButtonAnimationDuration = 200;
       break;
     }
     case MDCBottomAppBarFloatingButtonPositionTrailing: {
-      if (self.layoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
+      if (self.mdf_effectiveUserInterfaceLayoutDirection ==
+          UIUserInterfaceLayoutDirectionLeftToRight) {
         floatingButtonPoint.x = appBarWidth - kMDCBottomAppBarFloatingButtonPositionX;
       } else {
         floatingButtonPoint.x = kMDCBottomAppBarFloatingButtonPositionX;
@@ -178,7 +177,7 @@ static const int kMDCButtonAnimationDuration = 200;
   }
 }
 
-- (void)healBottomAppBarViewAnimated:(BOOL)animated  {
+- (void)healBottomAppBarViewAnimated:(BOOL)animated {
   CGPathRef pathWithoutCut = [self.bottomBarLayer pathFromRect:self.bounds
                                                 floatingButton:self.floatingButton
                                             navigationBarFrame:self.navBar.frame
@@ -219,7 +218,8 @@ static const int kMDCButtonAnimationDuration = 200;
   self.floatingButton.center = endPoint;
 }
 
-- (void)showBarButtonItemsWithFloatingButtonPosition:(MDCBottomAppBarFloatingButtonPosition)floatingButtonPosition {
+- (void)showBarButtonItemsWithFloatingButtonPosition:
+    (MDCBottomAppBarFloatingButtonPosition)floatingButtonPosition {
   switch (floatingButtonPosition) {
     case MDCBottomAppBarFloatingButtonPositionCenter:
       [self.navBar setLeadingBarButtonItems:_leadingBarButtonItems];
@@ -256,7 +256,6 @@ static const int kMDCButtonAnimationDuration = 200;
 - (UIEdgeInsets)mdc_safeAreaInsets {
   UIEdgeInsets insets = UIEdgeInsetsZero;
   if (@available(iOS 11.0, *)) {
-
     // Accommodate insets for iPhone X.
     insets = self.safeAreaInsets;
   }
@@ -271,7 +270,6 @@ static const int kMDCButtonAnimationDuration = 200;
 }
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
-
   // Make sure the floating button can always be tapped.
   BOOL contains = CGRectContainsPoint(self.floatingButton.frame, point);
   if (contains) {
@@ -364,9 +362,10 @@ static const int kMDCButtonAnimationDuration = 200;
   _floatingButtonHidden = floatingButtonHidden;
   if (floatingButtonHidden) {
     [self healBottomAppBarViewAnimated:animated];
-    [_floatingButton collapse:animated completion:^{
-      self.floatingButton.hidden = YES;
-    }];
+    [_floatingButton collapse:animated
+                   completion:^{
+                     self.floatingButton.hidden = YES;
+                   }];
   } else {
     _floatingButton.hidden = NO;
     [self cutBottomAppBarViewAnimated:animated];

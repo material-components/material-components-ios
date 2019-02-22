@@ -20,7 +20,7 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 static NSString *const HEADER_REUSE_IDENTIFIER = @"EditingExampleHeader";
 
 @implementation CollectionsEditingExample {
-  NSMutableArray <NSMutableArray *>*_content;
+  NSMutableArray<NSMutableArray *> *_content;
 }
 
 - (void)viewDidLoad {
@@ -166,9 +166,9 @@ static NSString *const HEADER_REUSE_IDENTIFIER = @"EditingExampleHeader";
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Collections", @"Cell Editing Example" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Collections", @"Cell Editing Example" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

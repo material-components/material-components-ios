@@ -15,28 +15,82 @@
 
 load(
     "//:material_components_ios.bzl",
+    "mdc_examples_objc_library",
+    "mdc_examples_swift_library",
     "mdc_extension_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
+    "mdc_snapshot_objc_library",
+    "mdc_snapshot_test",
     "mdc_unit_test_suite",
 )
 load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
 
-mdc_public_objc_library(
+# This is intentionally not using mdc_public_objc_library so we can exclude files from srcs and hdrs using native.glob functionality.
+mdc_objc_library(
     name = "Cards",
+    srcs =
+        native.glob(
+            ["src/*.m"],
+            exclude = [
+                "src/MDCCard+Ripple.h", 
+                "src/MDCCardCollectionCell+Ripple.h",
+                "src/MDCCard+Ripple.m", 
+                "src/MDCCardCollectionCell+Ripple.m",
+            ],
+        ),
+    hdrs =
+        native.glob(
+            ["src/*.h"],
+            exclude = [
+                "src/MDCCard+Ripple.h",
+                "src/MDCCardCollectionCell+Ripple.h",
+            ],
+        ),
+    enable_modules = 1,
+    includes = ["src"],
     sdk_frameworks = [
         "CoreGraphics",
         "UIKit",
     ],
+    visibility = ["//visibility:public"],
     deps = [
         "//components/Ink",
         "//components/ShadowLayer",
+        "//components/ShapeLibrary",
+        "//components/Shapes",
         "//components/private/Icons/icons/ic_check_circle",
         "//components/private/Math",
-        "//components/private/ShapeLibrary",
-        "//components/private/Shapes",
+        ":CardsPrivate"
+    ],
+)
+
+mdc_objc_library(
+    name = "CardsPrivate",
+    sdk_frameworks = [
+        "UIKit",
+    ],
+    hdrs = native.glob(["src/private/*.h"]),
+    includes = ["src/private"],
+    visibility = ["//visibility:public"],
+)
+
+# Ripple is currently a Beta component. Therefore, clients that wish to use Ripple in their app will need to manually 
+# clone the repo and add the code to their project. 
+mdc_objc_library(
+    name = "CardsRipple",
+    sdk_frameworks = [
+        "UIKit",
+    ],
+    hdrs = ["src/MDCCard+Ripple.h", "src/MDCCardCollectionCell+Ripple.h"],
+    srcs = ["src/MDCCard+Ripple.m", "src/MDCCardCollectionCell+Ripple.m"],
+    includes = ["src/MDCCard+Ripple.{h,m}", "src/MDCCardCollectionCell+Ripple.{h,m}"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":Cards",
+        "//components/Ripple",
     ],
 )
 
@@ -117,5 +171,39 @@ mdc_unit_test_suite(
     deps = [
         ":unit_test_sources",
         ":unit_test_swift_sources",
+    ],
+)
+
+mdc_snapshot_objc_library(
+    name = "snapshot_test_lib",
+    deps = [
+        ":Cards",
+        ":Theming",
+    ],
+)
+
+mdc_snapshot_test(
+    name = "snapshot_tests",
+    deps = [":snapshot_test_lib"],
+)
+
+mdc_examples_objc_library(
+    name = "ObjcExamples",
+    deps = [
+        ":Cards",
+        ":Theming",
+        "//components/Ink",
+        "//components/schemes/Container",
+    ],
+)
+
+mdc_examples_swift_library(
+    name = "SwiftExamples",
+    deps = [
+        ":Cards",
+        ":Theming",
+        "//components/Buttons:ButtonThemer",
+        "//components/Buttons:Theming",
+        "//components/schemes/Container",
     ],
 )

@@ -16,6 +16,7 @@ import XCTest
 import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialAppBar_TypographyThemer
 import MaterialComponents.MaterialTypography
+import MaterialComponentsTestingSupport.MaterialTypographyScheme_TestingSupport
 
 class AppBarTypographyThemerTests: XCTestCase {
 
@@ -32,7 +33,7 @@ class AppBarTypographyThemerTests: XCTestCase {
   func testTypographyThemerAffectsSubComponents() {
     // Given
     let appBar = MDCAppBar()
-    let typographyScheme = MDCTypographyScheme(defaults: .material201804)
+    let typographyScheme = MDCTypographyScheme.withVaryingFontSize()
 
     // When
     MDCAppBarTypographyThemer.applyTypographyScheme(typographyScheme, to: appBar)

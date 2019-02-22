@@ -220,7 +220,10 @@
     BOOL mdc_adjustsFontForContentSizeCategory;
 
 /**
- If enabled, accessibilityViewIsModal will be enabled for all non-transient snackbar views.
+ If enabled, accessibilityViewIsModal will be enabled for all non-transient snackbar views by
+ default. If accessibilityViewIsModal needs to be set for specific snackbar views,
+ -willPresentSnackbarWithMessageView: in MDCSnackbarManagerDelegate can be used to access
+ snackbar view and set the accessibilityViewIsModal value.
 
  Default is set to NO.
  */

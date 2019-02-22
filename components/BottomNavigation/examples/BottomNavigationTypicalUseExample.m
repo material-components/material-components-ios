@@ -16,10 +16,10 @@
 
 #import "BottomNavigationTypicalUseSupplemental.h"
 
-#import "MaterialBottomNavigation.h"
-#import "MaterialPalettes.h"
 #import "MaterialBottomNavigation+ColorThemer.h"
 #import "MaterialBottomNavigation+TypographyThemer.h"
+#import "MaterialBottomNavigation.h"
+#import "MaterialPalettes.h"
 
 @interface BottomNavigationTypicalUseExample () <MDCBottomNavigationBarDelegate>
 
@@ -41,35 +41,37 @@
 }
 
 - (void)commonBottomNavigationTypicalUseExampleViewDidLoad {
-
   _bottomNavBar = [[MDCBottomNavigationBar alloc] initWithFrame:CGRectZero];
   _bottomNavBar.titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
   _bottomNavBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles;
   _bottomNavBar.delegate = self;
   [self.view addSubview:_bottomNavBar];
 
-  UITabBarItem *tabBarItem1 =
-      [[UITabBarItem alloc] initWithTitle:@"Home"
-                                    image:[UIImage imageNamed:@"Home"]
-                                      tag:0];
-  UITabBarItem *tabBarItem2 =
-      [[UITabBarItem alloc] initWithTitle:@"Messages"
-                                    image:[UIImage imageNamed:@"Email"]
-                                      tag:0];
-  UITabBarItem *tabBarItem3 =
-      [[UITabBarItem alloc] initWithTitle:@"Favorites"
-                                    image:[UIImage imageNamed:@"Favorite"]
-                                      tag:0];
-  UITabBarItem *tabBarItem4 =
-      [[UITabBarItem alloc] initWithTitle:@"Search"
-                                    image:[UIImage imageNamed:@"Search"]
-                                      tag:0];
+  UITabBarItem *tabBarItem1 = [[UITabBarItem alloc] initWithTitle:@"Home"
+                                                            image:[UIImage imageNamed:@"Home"]
+                                                              tag:0];
+  UITabBarItem *tabBarItem2 = [[UITabBarItem alloc] initWithTitle:@"Messages"
+                                                            image:[UIImage imageNamed:@"Email"]
+                                                              tag:0];
+  tabBarItem2.badgeValue = @"8";
+  UITabBarItem *tabBarItem3 = [[UITabBarItem alloc] initWithTitle:@"Favorites"
+                                                            image:[UIImage imageNamed:@"Favorite"]
+                                                              tag:0];
+  tabBarItem3.badgeValue = @"";
+  UITabBarItem *tabBarItem4 = [[UITabBarItem alloc]
+      initWithTitle:@"Reader"
+              image:[UIImage imageNamed:@"baseline_chrome_reader_mode_black_24pt"
+                                             inBundle:[NSBundle
+                                                          bundleForClass:
+                                                              [BottomNavigationTypicalUseExample
+                                                                  class]]
+                        compatibleWithTraitCollection:nil]
+                tag:0];
   tabBarItem4.badgeValue = @"88";
-  UITabBarItem *tabBarItem5 =
-      [[UITabBarItem alloc] initWithTitle:@"Birthday"
-                                    image:[UIImage imageNamed:@"Cake"]
-                                      tag:0];
-  tabBarItem5.badgeValue = @"999+";
+  UITabBarItem *tabBarItem5 = [[UITabBarItem alloc] initWithTitle:@"Birthday"
+                                                            image:[UIImage imageNamed:@"Cake"]
+                                                              tag:0];
+  tabBarItem5.badgeValue = @"888+";
 #if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wpartial-availability"
@@ -94,10 +96,8 @@
 
 - (void)layoutBottomNavBar {
   CGSize size = [_bottomNavBar sizeThatFits:self.view.bounds.size];
-  CGRect bottomNavBarFrame = CGRectMake(0,
-                                        CGRectGetHeight(self.view.bounds) - size.height,
-                                        size.width,
-                                        size.height);
+  CGRect bottomNavBarFrame =
+      CGRectMake(0, CGRectGetHeight(self.view.bounds) - size.height, size.width, size.height);
   _bottomNavBar.frame = bottomNavBarFrame;
 }
 
@@ -130,7 +130,6 @@
 }
 
 - (void)updateBadgeItemCount {
-
   // Example of badge with increasing count.
   if (!self.badgeCount) {
     self.badgeCount = 0;

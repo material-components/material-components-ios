@@ -20,7 +20,7 @@
 /**
  The Material Design color system's themer for instances of MDCAlertController.
  */
-@interface MDCAlertColorThemer : NSObject
+__deprecated_msg("Please use MaterialDialogs+Theming.") @interface MDCAlertColorThemer : NSObject
 
 /**
  Applies a color scheme's properties to an MDCAlertController.

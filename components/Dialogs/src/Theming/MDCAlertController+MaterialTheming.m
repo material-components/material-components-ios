@@ -12,34 +12,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCButton+MaterialTheming.h"
-
 #import <MaterialComponents/MDCAlertController+ButtonForAction.h>
 #import <MaterialComponents/MaterialDialogs+ColorThemer.h>
 #import <MaterialComponents/MaterialDialogs+TypographyThemer.h>
 #import <MaterialComponents/MaterialShadowElevations.h>
-#import "MaterialButtons+Theming.h"
+#import <MaterialComponentsBeta/MaterialButtons+Theming.h>
 
 static const CGFloat kCornerRadius = 4;
 
 @implementation MDCAlertController (MaterialTheming)
 
 - (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme {
-  // Color
-  id<MDCColorScheming> colorScheme = scheme.colorScheme;
-  if (!colorScheme) {
-    colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  // TODO(https://github.com/material-components/material-components-ios/issues/6637 ): Force-load
+  // the view before setting the buttons fonts to ensure that they aren't overwritten in
+  // -updateButtonFont. If the bug gets fixed, this hack can be removed.
+  if (@available(iOS 9.0, *)) {
+    [self loadViewIfNeeded];
+  } else {
+    (void)self.view;
   }
-  [MDCAlertColorThemer applySemanticColorScheme:colorScheme toAlertController:self];
+  // Color
+  [self applyColorThemeWithScheme:scheme.colorScheme];
 
   // Typography
-  id<MDCTypographyScheming> typographyScheme = scheme.typographyScheme;
-  if (!typographyScheme) {
-    typographyScheme =
-        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
-  }
-  [MDCAlertTypographyThemer applyTypographyScheme:typographyScheme toAlertController:self];
+  [self applyTypographyThemeWithScheme:scheme.typographyScheme];
 
   // Other properties
   self.cornerRadius = kCornerRadius;
@@ -62,6 +58,28 @@ static const CGFloat kCornerRadius = 4;
         break;
     }
   }
+}
+
+- (void)applyTypographyThemeWithScheme:(id<MDCTypographyScheming>)typographyScheme {
+  if (!typographyScheme) {
+    typographyScheme =
+        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+  }
+  self.titleFont = typographyScheme.headline6;
+  self.messageFont = typographyScheme.body1;
+}
+
+- (void)applyColorThemeWithScheme:(id<MDCColorScheming>)colorScheme {
+  if (!colorScheme) {
+    colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  }
+
+  self.titleColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87];
+  self.messageColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
+  self.titleIconTintColor = colorScheme.primaryColor;
+  self.scrimColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.32];
+  self.backgroundColor = colorScheme.surfaceColor;
 }
 
 @end

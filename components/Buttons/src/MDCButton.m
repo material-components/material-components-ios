@@ -628,17 +628,29 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 #pragma mark - Border Width
 
 - (CGFloat)borderWidthForState:(UIControlState)state {
+  // If the `.highlighted` flag is set, turn off the `.disabled` flag
+  if ((state & UIControlStateHighlighted) == UIControlStateHighlighted) {
+    state = state & ~UIControlStateDisabled;
+  }
   NSNumber *borderWidth = _borderWidths[@(state)];
   if (borderWidth != nil) {
     return (CGFloat)borderWidth.doubleValue;
   }
-  return 0;
+  return (CGFloat)[_borderWidths[@(UIControlStateNormal)] doubleValue];
 }
 
 - (void)setBorderWidth:(CGFloat)borderWidth forState:(UIControlState)state {
-  _borderWidths[@(state)] = @(borderWidth);
-
-  [self updateBorderWidth];
+  UIControlState storageState = state;
+  if ((state & UIControlStateHighlighted) == UIControlStateHighlighted) {
+    storageState = state & ~UIControlStateDisabled;
+  }
+  // Only update the backing dictionary if:
+  // 1. The `state` argument is the same as the "storage" state, OR
+  // 2. There is already a value in the "storage" state.
+  if (storageState == state || _backgroundColors[@(storageState)] != nil) {
+    _borderWidths[@(state)] = @(borderWidth);
+    [self updateBorderWidth];
+  }
 }
 
 - (void)updateBorderWidth {

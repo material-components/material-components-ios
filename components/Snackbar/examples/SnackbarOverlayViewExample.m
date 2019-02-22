@@ -46,10 +46,10 @@ static const CGFloat kBottomBarHeight = 44;
 
   _legacyMode = YES;
   self.navigationItem.rightBarButtonItem =
-  [[UIBarButtonItem alloc] initWithTitle:@"Legacy"
-                                   style:UIBarButtonItemStylePlain
-                                  target:self
-                                  action:@selector(toggleModes)];
+      [[UIBarButtonItem alloc] initWithTitle:@"Legacy"
+                                       style:UIBarButtonItemStylePlain
+                                      target:self
+                                      action:@selector(toggleModes)];
 
   self.floatingButton = [[MDCFloatingButton alloc] init];
   [self.floatingButton sizeToFit];

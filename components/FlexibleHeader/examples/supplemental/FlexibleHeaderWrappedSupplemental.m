@@ -23,9 +23,9 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Flexible Header", @"Wrapped View Controller" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Flexible Header", @"Wrapped View Controller" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

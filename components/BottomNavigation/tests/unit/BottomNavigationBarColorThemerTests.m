@@ -13,12 +13,12 @@
 // limitations under the License.
 
 #import <XCTest/XCTest.h>
-#import "MaterialBottomNavigation+ColorThemer.h"
-#import "MaterialColorScheme.h"
-#import "MaterialBottomNavigation.h"
 #import "../../src/private/MDCBottomNavigationItemView.h"
+#import "MaterialBottomNavigation+ColorThemer.h"
+#import "MaterialBottomNavigation.h"
+#import "MaterialColorScheme.h"
 
-@interface FakeColorScheme : NSObject<MDCColorScheme>
+@interface FakeColorScheme : NSObject <MDCColorScheme>
 @property(nonatomic, strong) UIColor *primaryColor;
 @end
 @implementation FakeColorScheme
@@ -42,10 +42,10 @@
   colorScheme.onPrimaryColor = [UIColor blueColor];
   UITabBarItem *item = [[UITabBarItem alloc] init];
   MDCBottomNavigationBar *bottomNavigationBar = [[MDCBottomNavigationBar alloc] init];
-  [bottomNavigationBar setItems:@[item]];
+  [bottomNavigationBar setItems:@[ item ]];
   bottomNavigationBar.barTintColor = [UIColor greenColor];
   bottomNavigationBar.selectedItemTintColor = [UIColor yellowColor];
-  
+
   // When
   [MDCBottomNavigationBarColorThemer applySemanticColorScheme:colorScheme
                                            toBottomNavigation:bottomNavigationBar];

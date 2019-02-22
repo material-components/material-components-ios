@@ -34,5 +34,4 @@
   XCTAssertEqual([button elevationForState:UIControlStateDisabled], MDCShadowElevationNone);
 }
 
-
 @end

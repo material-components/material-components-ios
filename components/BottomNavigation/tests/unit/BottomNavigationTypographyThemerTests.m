@@ -28,7 +28,7 @@
   UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
   UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:0];
   bottomBar.itemTitleFont = [UIFont systemFontOfSize:31];
-  bottomBar.items = @[item1, item2];
+  bottomBar.items = @[ item1, item2 ];
 
   [MDCBottomNavigationBarTypographyThemer applyTypographyScheme:typographyScheme
                                           toBottomNavigationBar:bottomBar];

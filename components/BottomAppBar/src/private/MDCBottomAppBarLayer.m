@@ -14,23 +14,23 @@
 
 #import "MDCBottomAppBarLayer.h"
 
-#import "MaterialMath.h"
 #import "MDCBottomAppBarAttributes.h"
+#import "MaterialMath.h"
 
 @interface MDCBottomAppBarLayer (PathGenerators)
 - (UIBezierPath *)drawWithPathToCut:(UIBezierPath *)bottomBarPath
                             yOffset:(CGFloat)yOffset
                               width:(CGFloat)width
                              height:(CGFloat)height
-                          arcCenter:(CGPoint)arcCenter
                           arcRadius:(CGFloat)arcRadius
-                         startAngle:(CGFloat)startAngle
-                           endAngle:(CGFloat)endAngle;
+                         arcCenter1:(CGPoint)arcCenter1
+                         arcCenter2:(CGPoint)arcCenter2;
 - (UIBezierPath *)drawWithPlainPath:(UIBezierPath *)bottomBarPath
                             yOffset:(CGFloat)yOffset
                               width:(CGFloat)width
                              height:(CGFloat)height
-                          arcCenter:(CGPoint)arcCenter
+                         arcCenter1:(CGPoint)arcCenter1
+                         arcCenter2:(CGPoint)arcCenter2
                           arcRadius:(CGFloat)arcRadius;
 @end
 
@@ -59,31 +59,37 @@
                 shouldCut:(BOOL)shouldCut {
   UIBezierPath *bottomBarPath = [UIBezierPath bezierPath];
 
-  CGFloat arcRadius =
-      CGRectGetHeight(floatingButton.bounds) / 2 + kMDCBottomAppBarFloatingButtonRadiusOffset;
-  CGFloat navigationBarYOffset = CGRectGetMinY(navigationBarFrame);
-  CGFloat halfAngle = acosf((float)((navigationBarYOffset - floatingButton.center.y) / arcRadius));
-  CGFloat startAngle = (float)M_PI / 2 + halfAngle;
-  CGFloat endAngle = (float)M_PI / 2 - halfAngle;
+  CGFloat yOffset = CGRectGetMinY(navigationBarFrame);
 
   CGFloat width = CGRectGetWidth(rect);
   CGFloat height = CGRectGetHeight(rect);
+  CGFloat arcRadius =
+      CGRectGetHeight(floatingButton.bounds) / 2 + kMDCBottomAppBarFloatingButtonRadiusOffset;
+
+  CGPoint arcCenter1 =
+      CGPointMake(floatingButton.center.x - CGRectGetWidth(floatingButton.bounds) / 2 + arcRadius -
+                      kMDCBottomAppBarFloatingButtonRadiusOffset,
+                  floatingButton.center.y);
+  CGPoint arcCenter2 =
+      CGPointMake(floatingButton.center.x + CGRectGetWidth(floatingButton.bounds) / 2 - arcRadius +
+                      kMDCBottomAppBarFloatingButtonRadiusOffset,
+                  floatingButton.center.y);
 
   if (shouldCut) {
     [self drawWithPathToCut:bottomBarPath
-                    yOffset:navigationBarYOffset
+                    yOffset:yOffset
                       width:width
                      height:height
-                  arcCenter:floatingButton.center
                   arcRadius:arcRadius
-                 startAngle:startAngle
-                   endAngle:endAngle];
+                 arcCenter1:arcCenter1
+                 arcCenter2:arcCenter2];
   } else {
     [self drawWithPlainPath:bottomBarPath
-                    yOffset:navigationBarYOffset
+                    yOffset:yOffset
                       width:width
                      height:height
-                  arcCenter:floatingButton.center
+                 arcCenter1:arcCenter1
+                 arcCenter2:arcCenter2
                   arcRadius:arcRadius];
   }
 
@@ -96,19 +102,35 @@
                             yOffset:(CGFloat)yOffset
                               width:(CGFloat)width
                              height:(CGFloat)height
-                          arcCenter:(CGPoint)arcCenter
                           arcRadius:(CGFloat)arcRadius
-                         startAngle:(CGFloat)startAngle
-                           endAngle:(CGFloat)endAngle {
-  [bottomBarPath moveToPoint:CGPointMake(0, yOffset)];
-  [bottomBarPath addArcWithCenter:arcCenter
-                           radius:arcRadius
-                       startAngle:startAngle
-                         endAngle:endAngle
-                        clockwise:NO];
-  [bottomBarPath addLineToPoint:CGPointMake(width, yOffset)];
+                         arcCenter1:(CGPoint)arcCenter1
+                         arcCenter2:(CGPoint)arcCenter2 {
+  [bottomBarPath moveToPoint:CGPointMake(width, yOffset)];
+  [bottomBarPath addCurveToPoint:CGPointMake(width, yOffset)
+                   controlPoint1:CGPointMake(width, yOffset)
+                   controlPoint2:CGPointMake(width, yOffset)];
+
   [bottomBarPath addLineToPoint:CGPointMake(width, height * 2 + yOffset)];
   [bottomBarPath addLineToPoint:CGPointMake(0, height * 2 + yOffset)];
+
+  [bottomBarPath addLineToPoint:CGPointMake(0, yOffset)];
+  [bottomBarPath addLineToPoint:CGPointMake(arcCenter1.x - arcRadius, yOffset)];
+
+  [bottomBarPath addArcWithCenter:arcCenter1
+                           radius:arcRadius
+                       startAngle:-180 * (float)M_PI / 180
+                         endAngle:-270 * (float)M_PI / 180
+                        clockwise:NO];
+
+  [bottomBarPath addLineToPoint:CGPointMake(arcCenter2.x, arcRadius + yOffset)];
+
+  [bottomBarPath addArcWithCenter:arcCenter2
+                           radius:arcRadius
+                       startAngle:-270 * (float)M_PI / 180
+                         endAngle:-360 * (float)M_PI / 180
+                        clockwise:NO];
+
+  [bottomBarPath addLineToPoint:CGPointMake(width, yOffset)];
   [bottomBarPath closePath];
   return bottomBarPath;
 }
@@ -117,17 +139,36 @@
                             yOffset:(CGFloat)yOffset
                               width:(CGFloat)width
                              height:(CGFloat)height
-                          arcCenter:(CGPoint)arcCenter
+                         arcCenter1:(CGPoint)arcCenter1
+                         arcCenter2:(CGPoint)arcCenter2
                           arcRadius:(CGFloat)arcRadius {
-  [bottomBarPath moveToPoint:CGPointMake(0, yOffset)];
-  [bottomBarPath addLineToPoint:CGPointMake(arcCenter.x - arcRadius, yOffset)];
-  [bottomBarPath addLineToPoint:CGPointMake(arcCenter.x, yOffset)];
-  [bottomBarPath addLineToPoint:CGPointMake(arcCenter.x + arcRadius, yOffset)];
-  // The extra line is needed to have the same number of control points in boths paths.
-  [bottomBarPath addLineToPoint:CGPointMake(arcCenter.x + arcRadius, yOffset)];
-  [bottomBarPath addLineToPoint:CGPointMake(width, yOffset)];
+  [bottomBarPath moveToPoint:CGPointMake(width, yOffset)];
+  [bottomBarPath addCurveToPoint:CGPointMake(width, yOffset)
+                   controlPoint1:CGPointMake(width, yOffset)
+                   controlPoint2:CGPointMake(width, yOffset)];
+
   [bottomBarPath addLineToPoint:CGPointMake(width, height * 2 + yOffset)];
   [bottomBarPath addLineToPoint:CGPointMake(0, height * 2 + yOffset)];
+
+  [bottomBarPath addLineToPoint:CGPointMake(0, yOffset)];
+  [bottomBarPath addLineToPoint:CGPointMake(arcCenter1.x - arcRadius, yOffset)];
+
+  // draw circle with radius 0 to ensure we have the same number of points as the cut-out path
+  [bottomBarPath addArcWithCenter:arcCenter1
+                           radius:0
+                       startAngle:-180 * (float)M_PI / 180
+                         endAngle:-270 * (float)M_PI / 180
+                        clockwise:NO];
+  [bottomBarPath addLineToPoint:CGPointMake(arcCenter2.x, yOffset)];
+
+  // draw circle with radius 0 to ensure we have the same number of points as the cut-out path
+  [bottomBarPath addArcWithCenter:arcCenter2
+                           radius:0
+                       startAngle:-270 * (float)M_PI / 180
+                         endAngle:-360 * (float)M_PI / 180
+                        clockwise:NO];
+
+  [bottomBarPath addLineToPoint:CGPointMake(width, yOffset)];
   [bottomBarPath closePath];
   return bottomBarPath;
 }

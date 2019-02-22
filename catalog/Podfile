@@ -9,6 +9,7 @@ target "MDCCatalog" do
   project 'MDCCatalog.xcodeproj'
   pod 'MaterialComponentsExamples', :path => '../'
   pod 'MaterialComponents', :path => '../', :testspecs => [
+    'ActionSheet/UnitTests',
     'ActivityIndicator/UnitTests',
     'AnimationTiming/UnitTests',
     'AppBar/UnitTests',
@@ -39,8 +40,6 @@ target "MDCCatalog" do
     'private/KeyboardWatcher/UnitTests',
     'private/Math/UnitTests',
     'private/Overlay/UnitTests',
-    'private/ShapeLibrary/UnitTests',
-    'private/Shapes/UnitTests',
     'private/ThumbTrack/UnitTests',
     'private/UIMetrics/UnitTests',
     'ProgressView/UnitTests',
@@ -49,6 +48,8 @@ target "MDCCatalog" do
     'schemes/Typography/UnitTests',
     'ShadowElevations/UnitTests',
     'ShadowLayer/UnitTests',
+    'ShapeLibrary/UnitTests',
+    'Shapes/UnitTests',
     'Slider/UnitTests',
     'Snackbar/UnitTests',
     'Tabs/UnitTests',
@@ -57,7 +58,10 @@ target "MDCCatalog" do
     'Typography/UnitTests',
   ]
   pod 'MaterialComponentsBeta', :path => '../', :testspecs => [
-    'ActionSheet/UnitTests',
+    'ActionSheet+ActionSheetThemer/UnitTests',
+    'ActionSheet+ColorThemer/UnitTests',
+    'ActionSheet+Theming/UnitTests',
+    'BottomNavigation/UnitTests',
     'ButtonBar+Theming/UnitTests',
     'Buttons+Theming/UnitTests',
     'Cards+Theming/UnitTests',
@@ -66,10 +70,9 @@ target "MDCCatalog" do
     'Ripple/UnitTests',
     'schemes/Container/UnitTests',
   ]
+  pod 'MaterialComponentsTestingSupport', :path => '../'
   pod 'MaterialComponentsSnapshotTests', :path => '../', :testspecs => [
-    'Cards/tests/snapshot',
-    'Chips/tests/snapshot',
-    'TextFields/tests/snapshot',
+    'SnapshotTests'
   ]
   pod 'CatalogByConvention', "~> 2.5"
   pod 'MaterialCatalog', :path => 'MaterialCatalog/'
@@ -96,23 +99,23 @@ target "MDCDragons" do
   pod 'MaterialComponents', :path => '../'
   pod 'MaterialComponentsBeta', :path => '../'
   pod 'MaterialComponentsExamples', :path => '../'
-  pod 'MaterialComponentsSnapshotTests', :path => '../'
   use_frameworks!
 end
 
 post_install do |installer|
-  pod_dir = File.dirname(installer.pods_project.path)
 
-  # Inject our specific warning flags into the .xcconfig files.
-  mdc_xcconfigs = [
-    "#{pod_dir}/Target Support Files/MaterialComponents/MaterialComponents.xcconfig",
-    "#{pod_dir}/Target Support Files/MaterialComponents/MaterialComponents.unit.xcconfig",
-    "#{pod_dir}/Target Support Files/MaterialComponentsBeta/MaterialComponentsBeta.xcconfig",
-    "#{pod_dir}/Target Support Files/MaterialComponentsBeta/MaterialComponentsBeta.unit.xcconfig",
-    "#{pod_dir}/Target Support Files/MaterialComponentsExamples/MaterialComponentsExamples.xcconfig",
-    "#{pod_dir}/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog.debug.xcconfig",
-    "#{pod_dir}/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog.release.xcconfig",
-  ]
+  mdc_xcconfigs = []
+  target_support_files_path = File.dirname(installer.pods_project.path) + "/" + "Target Support Files"
+  subdirectories = ["MaterialComponents", "MaterialComponentsBeta", "MaterialComponentsExamples", "Pods-MDCCatalog"]
+  subdirectories.each do |subdirectory|
+  subdirectory_path = target_support_files_path + "/" + subdirectory
+    Dir.foreach(subdirectory_path) do |file|
+      if file.include? "xcconfig"
+        file_path = subdirectory_path + "/" + file
+        mdc_xcconfigs.push file_path
+      end
+    end
+  end
 
   # Note the path is relative to the xcconfig file being modified.
   # https://pewpewthespells.com/blog/xcconfig_guide.html

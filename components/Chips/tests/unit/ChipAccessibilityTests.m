@@ -37,51 +37,68 @@
   NSString *chipLabel = @"Test1";
   [chip.titleLabel setText:chipLabel];
   XCTAssertTrue(chip.isAccessibilityElement, @"Chip view should be the accessibility element");
-  XCTAssertEqual(chip.accessibilityLabel, chipLabel, @"Chip accessibility label should be: [%@]", chipLabel);
+  XCTAssertEqual(chip.accessibilityLabel, chipLabel, @"Chip accessibility label should be: [%@]",
+                 chipLabel);
 }
 
 - (void)testAccessibleEnabledState {
   chip.enabled = YES;
-  XCTAssertNotEqual(chip.accessibilityTraits & UIAccessibilityTraitNotEnabled, UIAccessibilityTraitNotEnabled, @"Chip accessibility should be enabled");
+  XCTAssertNotEqual(chip.accessibilityTraits & UIAccessibilityTraitNotEnabled,
+                    UIAccessibilityTraitNotEnabled, @"Chip accessibility should be enabled");
 
   chip.selected = YES;
   chip.highlighted = YES;
-  XCTAssertNotEqual(chip.accessibilityTraits & UIAccessibilityTraitNotEnabled, UIAccessibilityTraitNotEnabled, @"Chip accessibility should be enabled when selected & highlighted");
+  XCTAssertNotEqual(chip.accessibilityTraits & UIAccessibilityTraitNotEnabled,
+                    UIAccessibilityTraitNotEnabled,
+                    @"Chip accessibility should be enabled when selected & highlighted");
 }
 
 - (void)testAccessibleDisabledState {
   chip.enabled = NO;
-  XCTAssertEqual(chip.accessibilityTraits & UIAccessibilityTraitNotEnabled, UIAccessibilityTraitNotEnabled, @"Chip accessibility should be disabled");
+  XCTAssertEqual(chip.accessibilityTraits & UIAccessibilityTraitNotEnabled,
+                 UIAccessibilityTraitNotEnabled, @"Chip accessibility should be disabled");
 
   chip.selected = YES;
   chip.highlighted = YES;
-  XCTAssertEqual(chip.accessibilityTraits & UIAccessibilityTraitNotEnabled, UIAccessibilityTraitNotEnabled, @"Chip accessibility should be disabled when selected & highlighted");
+  XCTAssertEqual(chip.accessibilityTraits & UIAccessibilityTraitNotEnabled,
+                 UIAccessibilityTraitNotEnabled,
+                 @"Chip accessibility should be disabled when selected & highlighted");
 }
 
 - (void)testAccessibleSelectedState {
   chip.selected = YES;
-  XCTAssertEqual(chip.accessibilityTraits & UIAccessibilityTraitSelected, UIAccessibilityTraitSelected, @"Chip accessibility should be selected");
+  XCTAssertEqual(chip.accessibilityTraits & UIAccessibilityTraitSelected,
+                 UIAccessibilityTraitSelected, @"Chip accessibility should be selected");
 
   chip.enabled = YES;
   chip.highlighted = YES;
-  XCTAssertEqual(chip.accessibilityTraits & UIAccessibilityTraitSelected, UIAccessibilityTraitSelected, @"Chip accessibility should be selected when enabled & highlighted");
+  XCTAssertEqual(chip.accessibilityTraits & UIAccessibilityTraitSelected,
+                 UIAccessibilityTraitSelected,
+                 @"Chip accessibility should be selected when enabled & highlighted");
 
   chip.enabled = NO;
   chip.highlighted = YES;
-  XCTAssertEqual(chip.accessibilityTraits & UIAccessibilityTraitSelected, UIAccessibilityTraitSelected, @"Chip accessibility should be selected when disabled & highlighted");
+  XCTAssertEqual(chip.accessibilityTraits & UIAccessibilityTraitSelected,
+                 UIAccessibilityTraitSelected,
+                 @"Chip accessibility should be selected when disabled & highlighted");
 }
 
 - (void)testAccessibleDeselectedState {
   chip.selected = NO;
-  XCTAssertNotEqual(chip.accessibilityTraits & UIAccessibilityTraitSelected, UIAccessibilityTraitSelected, @"Chip accessibility should be de-selected");
+  XCTAssertNotEqual(chip.accessibilityTraits & UIAccessibilityTraitSelected,
+                    UIAccessibilityTraitSelected, @"Chip accessibility should be de-selected");
 
   chip.enabled = YES;
   chip.highlighted = YES;
-  XCTAssertNotEqual(chip.accessibilityTraits & UIAccessibilityTraitSelected, UIAccessibilityTraitSelected, @"Chip accessibility should be de-selected when enabled & highlighted");
+  XCTAssertNotEqual(chip.accessibilityTraits & UIAccessibilityTraitSelected,
+                    UIAccessibilityTraitSelected,
+                    @"Chip accessibility should be de-selected when enabled & highlighted");
 
   chip.enabled = NO;
   chip.highlighted = YES;
-  XCTAssertNotEqual(chip.accessibilityTraits & UIAccessibilityTraitSelected, UIAccessibilityTraitSelected, @"Chip accessibility should be de-selected when disabled & highlighted");
+  XCTAssertNotEqual(chip.accessibilityTraits & UIAccessibilityTraitSelected,
+                    UIAccessibilityTraitSelected,
+                    @"Chip accessibility should be de-selected when disabled & highlighted");
 }
 
 - (void)testAccessibilityLabel_default {

@@ -14,8 +14,8 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialFeatureHighlight.h"
 #import "MDCFeatureHighlightView+Private.h"
+#import "MaterialFeatureHighlight.h"
 
 @interface MDCFeatureHighlightViewController (Testing)
 @property(nonatomic, strong) MDCFeatureHighlightView *view;
@@ -32,9 +32,9 @@
   UIView *view = [[UIView alloc] init];
   UIView *view2 = [[UIView alloc] init];
   MDCFeatureHighlightViewController *controller =
-  [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:view
-                                                         andShowView:view2
-                                                          completion:nil];
+      [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:view
+                                                             andShowView:view2
+                                                              completion:nil];
 
   // When (cause the view to load)
   (void)controller.view;
@@ -66,9 +66,9 @@
   UIView *view = [[UIView alloc] init];
   UIView *view2 = [[UIView alloc] init];
   MDCFeatureHighlightViewController *controller =
-  [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:view
-                                                         andShowView:view2
-                                                          completion:nil];
+      [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:view
+                                                             andShowView:view2
+                                                              completion:nil];
   controller.accessibilityHint = nil;
 
   // Then

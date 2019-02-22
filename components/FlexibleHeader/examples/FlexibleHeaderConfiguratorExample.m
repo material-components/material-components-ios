@@ -37,7 +37,7 @@
 - (void)field:(FlexibleHeaderConfiguratorField)field didChangeValue:(NSNumber *)value {
   MDCFlexibleHeaderView *headerView = self.fhvc.headerView;
   switch (field) {
-    // Basic behavior
+      // Basic behavior
 
     case FlexibleHeaderConfiguratorFieldCanOverExtend:
       headerView.canOverExtend = [value boolValue];
@@ -60,7 +60,7 @@
       break;
     }
 
-    // Shift behavior
+      // Shift behavior
 
     case FlexibleHeaderConfiguratorFieldShiftBehaviorEnabled: {
       BOOL isOn = [value boolValue];

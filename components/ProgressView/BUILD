@@ -15,6 +15,7 @@
 
 load(
     "//:material_components_ios.bzl",
+    "mdc_examples_objc_library",
     "mdc_extension_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
@@ -76,5 +77,14 @@ mdc_unit_test_suite(
     name = "unit_tests",
     deps = [
         ":unit_test_sources",
+    ],
+)
+
+mdc_examples_objc_library(
+    name = "ObjcExamples",
+    deps = [
+        ":ProgressView",
+        "//components/schemes/Color",
+        "//components/schemes/Typography",
     ],
 )

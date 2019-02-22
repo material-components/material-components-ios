@@ -15,6 +15,7 @@
 
 load(
     "//:material_components_ios.bzl",
+    "mdc_examples_swift_library",
     "mdc_extension_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
@@ -51,6 +52,26 @@ mdc_objc_library(
     hdrs = native.glob(["src/private/*.h"]),
     includes = ["src/private"],
     visibility = ["//visibility:private"],
+)
+
+mdc_objc_library(
+    name = "TestingHeader",
+    testonly = 1,
+    hdrs = native.glob(["src/private/MDCBottomDrawerContainerViewController+Testing.h"]),
+    includes = ["src/private/MDCBottomDrawerContainerViewController+Testing.h"],
+    visibility = ["//visibility:public"],
+    deps = [":NavigationDrawer"],
+)
+
+mdc_examples_swift_library(
+    name = "SwiftExamples",
+    deps = [
+        ":ColorThemer",
+        ":NavigationDrawer",
+        "//components/BottomAppBar",
+        "//components/BottomAppBar:ColorThemer",
+        "//components/schemes/Color",
+    ],
 )
 
 mdc_objc_library(

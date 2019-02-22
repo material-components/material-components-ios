@@ -21,6 +21,8 @@ load(
     "mdc_extension_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
+    "mdc_snapshot_objc_library",
+    "mdc_snapshot_test",
     "mdc_unit_test_suite",
 )
 load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
@@ -38,10 +40,10 @@ mdc_public_objc_library(
         "//components/Ink",
         "//components/ShadowElevations",
         "//components/ShadowLayer",
+        "//components/ShapeLibrary",
+        "//components/Shapes",
         "//components/Typography",
         "//components/private/Math",
-        "//components/private/ShapeLibrary",
-        "//components/private/Shapes",
         "@material_text_accessibility_ios//:MDFTextAccessibility",
     ],
 )
@@ -111,19 +113,15 @@ mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
         ":Buttons",
-        ":ButtonThemer",
-        ":ColorThemer",
-        ":ShapeThemer",
         ":Theming",
-        ":TypographyThemer",
-        "//components/private/ShapeLibrary",
-        "//components/private/Shapes",
+        "//components/ShapeLibrary",
+        "//components/Shapes",
+        "//components/Typography",
         "//components/private/Math",
         "//components/schemes/Color",
         "//components/schemes/Container",
         "//components/schemes/Shape",
         "//components/schemes/Typography",
-        "//components/Typography",
     ],
 )
 
@@ -131,16 +129,12 @@ mdc_examples_swift_library(
     name = "SwiftExamples",
     deps = [
         ":Buttons",
-        ":ButtonThemer",
-        ":ColorThemer",
-        ":ShapeThemer",
         ":Theming",
-        ":TypographyThemer",
+        "//components/Typography",
         "//components/schemes/Color",
         "//components/schemes/Container",
         "//components/schemes/Shape",
         "//components/schemes/Typography",
-        "//components/Typography",
     ],
 )
 
@@ -180,6 +174,7 @@ mdc_objc_library(
 
 swift_library(
     name = "unit_test_swift_sources",
+    testonly = 1,
     srcs = native.glob([
         "tests/unit/*.swift",
         "tests/unit/Theming/*.swift",
@@ -195,6 +190,7 @@ swift_library(
         ":Theming",
         ":TypographyThemer",
         ":private",
+        "//components/schemes/Typography:TestingSupport",
     ],
 )
 
@@ -204,4 +200,16 @@ mdc_unit_test_suite(
         ":unit_test_sources",
         ":unit_test_swift_sources",
     ],
+)
+
+mdc_snapshot_objc_library(
+    name = "snapshot_test_lib",
+    deps = [
+        ":Buttons",
+    ],
+)
+
+mdc_snapshot_test(
+    name = "snapshot_tests",
+    deps = [":snapshot_test_lib"],
 )

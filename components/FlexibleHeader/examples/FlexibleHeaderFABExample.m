@@ -131,8 +131,8 @@ static const CGFloat kFlexibleHeaderMinHeight = 200;
   if (scrollView == self.fhvc.headerView.trackingScrollView) {
     [self.fhvc scrollViewDidScroll:scrollView];
   }
-  self.floatingButton.center = CGPointMake(self.floatingButton.center.x,
-                                           CGRectGetMaxY(self.fhvc.headerView.frame));
+  self.floatingButton.center =
+      CGPointMake(self.floatingButton.center.x, CGRectGetMaxY(self.fhvc.headerView.frame));
 }
 
 @end

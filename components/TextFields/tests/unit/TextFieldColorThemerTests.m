@@ -14,11 +14,11 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialTextFields.h"
-#import "MaterialTypographyScheme.h"
-#import "MaterialThemes.h"
-#import "MaterialTextFields+ColorThemer.h"
 #import "MDCSemanticColorScheme.h"
+#import "MaterialTextFields+ColorThemer.h"
+#import "MaterialTextFields.h"
+#import "MaterialThemes.h"
+#import "MaterialTypographyScheme.h"
 
 @interface MDCTextFieldColorThemer (ResetDefaults)
 
@@ -43,7 +43,7 @@
   [textInputControllerClass setLeadingUnderlineLabelTextColorDefault:nil];
 
   if ([textInputControllerClass
-       conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
+          conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
     Class<MDCTextInputControllerFloatingPlaceholder> textInputControllerFloatingPlaceholderClass =
         (Class<MDCTextInputControllerFloatingPlaceholder>)textInputControllerClass;
     [textInputControllerFloatingPlaceholderClass setFloatingPlaceholderActiveColorDefault:nil];
@@ -62,15 +62,14 @@
 
 @implementation TextFieldColorThemerTests
 
-- (void)setUp{
+- (void)setUp {
   [super setUp];
   MDCSemanticColorScheme *colorScheme =
       [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   [MDCTextFieldColorThemer applySemanticColorScheme:colorScheme
-           toAllTextInputControllersOfClass:[MDCTextInputControllerFullWidth class]];
+                   toAllTextInputControllersOfClass:[MDCTextInputControllerFullWidth class]];
   [MDCTextFieldColorThemer applySemanticColorScheme:colorScheme
-           toAllTextInputControllersOfClass:[MDCTextInputControllerBase class]];
-
+                   toAllTextInputControllersOfClass:[MDCTextInputControllerBase class]];
 }
 
 - (void)tearDown {
@@ -126,9 +125,7 @@
   MDCTextInputControllerFullWidth *fullWidthInputController =
       [[MDCTextInputControllerFullWidth alloc] initWithTextInput:fullWidthTextField];
 
-
-  [MDCTextFieldColorThemer applySemanticColorScheme:colorScheme
-                                        toTextInput:textField];
+  [MDCTextFieldColorThemer applySemanticColorScheme:colorScheme toTextInput:textField];
   XCTAssertEqualObjects(textField.cursorColor, colorScheme.primaryColor);
   XCTAssertEqualObjects(textField.textColor, onSurface87Opacity);
   XCTAssertEqualObjects(textField.placeholderLabel.textColor, onSurface60Opacity);
@@ -145,7 +142,7 @@
   XCTAssertEqualObjects(baseInputController.leadingUnderlineLabelTextColor, onSurface60Opacity);
 
   [MDCTextFieldColorThemer applySemanticColorScheme:colorScheme
-                      toTextInputController:fullWidthInputController];
+                              toTextInputController:fullWidthInputController];
   XCTAssertEqualObjects(fullWidthInputController.errorColor, colorScheme.errorColor);
   XCTAssertEqualObjects(fullWidthInputController.inlinePlaceholderColor, onSurface60Opacity);
   XCTAssertEqualObjects(fullWidthInputController.trailingUnderlineLabelTextColor,

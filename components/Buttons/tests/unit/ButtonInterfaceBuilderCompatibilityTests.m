@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <XCTest/XCTest.h>
 #import <Foundation/Foundation.h>
+#import <XCTest/XCTest.h>
 
 #import "supplemental/ButtonTestView.h"
 
@@ -36,7 +36,6 @@
   // Then
   XCTAssertEqualObjects(buttonFont, [UIFont systemFontOfSize:40]);
   XCTAssertEqualObjects(buttonColor, [UIColor blackColor]);
-
 }
 
 @end
