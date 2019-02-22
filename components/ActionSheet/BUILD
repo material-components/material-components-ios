@@ -136,8 +136,8 @@ swift_library(
 mdc_objc_library(
     name = "unit_test_sources",
     testonly = 1,
-    srcs = native.glob(["tests/unit/*.m",]),
-    hdrs = native.glob(["tests/unit/*.h",]),
+    srcs = native.glob(["tests/unit/*.m"]),
+    hdrs = native.glob(["tests/unit/*.h"]),
     sdk_frameworks = [
         "UIKit",
         "CoreImage",
@@ -193,9 +193,25 @@ mdc_objc_library(
     ],
 )
 
+mdc_objc_library(
+    name = "unit_test_helpers",
+    testonly = 1,
+    srcs = native.glob(["tests/support/*.m"]),
+    hdrs = native.glob(["tests/support/*.h"]),
+    sdk_frameworks = [
+        "UIKit",
+        "CoreImage",
+        "XCTest",
+    ],
+    deps = [
+        ":ActionSheet",
+    ],
+)
+
 mdc_unit_test_suite(
     name = "unit_tests",
     deps = [
+        ":unit_test_helpers",
         ":unit_test_sources",
         ":unit_test_swift_sources",
     ],
