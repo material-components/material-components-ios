@@ -462,6 +462,7 @@ Pod::Spec.new do |mdc|
       ]
       unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
       unit_tests.dependency "MaterialComponents/ButtonBar+TypographyThemer"
+      unit_tests.dependency "MaterialComponentsTestingSupport/schemes/Typography"
     end
   end
 
