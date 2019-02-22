@@ -26,8 +26,14 @@
   MDCContainerScheme *defaultContainerScheme = [[MDCContainerScheme alloc] init];
 
   // Then
-  XCTAssertNil(defaultContainerScheme.colorScheme);
-  XCTAssertNil(defaultContainerScheme.typographyScheme);
+  XCTAssertNotNil(defaultContainerScheme.colorScheme);
+  XCTAssertEqualObjects(
+      defaultContainerScheme.colorScheme,
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804]);
+  XCTAssertNotNil(defaultContainerScheme.typographyScheme);
+  XCTAssertEqualObjects(
+      defaultContainerScheme.typographyScheme,
+      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804]);
   XCTAssertNil(defaultContainerScheme.shapeScheme);
 }
 

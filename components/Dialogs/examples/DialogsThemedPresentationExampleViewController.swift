@@ -40,7 +40,7 @@ class CustomDialogViewController: UIViewController, UICollectionViewDelegate, UI
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = containerScheme.colorScheme?.backgroundColor
+    view.backgroundColor = containerScheme.colorScheme.backgroundColor
 
     let titleLabel = UILabel()
     titleLabel.text = dialogTitle
@@ -180,8 +180,7 @@ class DialogsThemedPresentationExampleViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor = containerScheme.colorScheme?.backgroundColor ??
-      MDCSemanticColorScheme(defaults: .material201804).backgroundColor
+    view.backgroundColor = containerScheme.colorScheme.backgroundColor
 
     materialButton.translatesAutoresizingMaskIntoConstraints = false
     materialButton.setTitle("Custom Alert With Themed Presentation", for: .normal)
