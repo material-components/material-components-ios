@@ -20,13 +20,28 @@
 
 @protocol MDCChipTextFieldScrollViewDelegate <NSObject, UIScrollViewDelegate>
 
-// TODO: delegate methods to handle touch event
+- (void)chipTextFieldScrollView:(nonnull MDCChipTextFieldScrollView *)scrollView
+                 didTapChipView:(nonnull MDCChipView *)chipView;
 
 @end
 
 @protocol MDCChipTextFieldScrollViewDataSource <NSObject>
 
+/**
+ The number of chip views in data source.
+
+ @param scrollView The scroll view object requesting this information.
+ @return The number of chip views.
+ */
 - (NSInteger)numberOfChipsInScrollView:(nonnull MDCChipTextFieldScrollView *)scrollView;
+
+/**
+ Asks the data source for a chip view in a particular location of the scroll view.
+
+ @param scrollView The scroll view object requesting this information.
+ @param index The index
+ @return The chip view in the particular location.
+ */
 - (nullable MDCChipView *)scrollView:(nonnull MDCChipTextFieldScrollView *)scrollView
                         chipForIndex:(NSInteger)index;
 
@@ -34,7 +49,15 @@
 
 @interface MDCChipTextFieldScrollView : UIScrollView
 
-@property(nonatomic, weak, nullable) id<MDCChipTextFieldScrollViewDelegate> delegate;
+/**
+ The object acts as the delegate of the the MDCChipTextFieldScrollView that handles
+ touch events.
+ */
+@property(nonatomic, weak, nullable) id<MDCChipTextFieldScrollViewDelegate> touchDelegate;
+
+/**
+ The object acts as the chip view source of the MDCChipTextFieldScrollView.
+ */
 @property(nonatomic, weak, nullable) id<MDCChipTextFieldScrollViewDataSource> dataSource;
 
 /**
@@ -42,11 +65,28 @@
  */
 @property(nonatomic) CGFloat chipSpacing;
 
+/**
+ Scrolls the scroll view to the left most without animation.
+ */
 - (void)scrollToLeft;
+
+/**
+ Scrolls the scroll view to the right most without animation.
+ */
 - (void)scrollToRight;
 
-// TODO: remove these methods if we decide to go with data source. Needs revisit.
+/**
+ Append a chipView to the scrollView
+
+ @param chipView The chipView to append
+ */
 - (void)appendChipView:(nonnull MDCChipView *)chipView;
+
+/**
+ Remove a chipView from the scrollView
+
+ @param chipView The chipView to remove
+ */
 - (void)removeChipView:(nonnull MDCChipView *)chipView;
 
 @end

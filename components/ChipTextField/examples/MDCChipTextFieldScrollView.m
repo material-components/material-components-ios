@@ -182,6 +182,11 @@
     chipViewConstraintLeading, chipViewConstraintTrailing
   ]];
   self.trailingConstraint = chipViewConstraintTrailing;
+
+  // Add touch handler
+  [chipView addTarget:self
+                action:@selector(didTapChipView:)
+      forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)removeChipView:(MDCChipView *)chipView {
@@ -216,6 +221,15 @@
   [super layoutSubviews];
 
   self.contentSize = self.contentView.frame.size;
+}
+
+#pragma mark - Touch Handlers
+
+- (void)didTapChipView:(id)sender {
+  MDCChipView *chipView = (MDCChipView *)sender;
+  if ([self.touchDelegate respondsToSelector:@selector(chipTextFieldScrollView:didTapChipView:)]) {
+    [self.touchDelegate chipTextFieldScrollView:self didTapChipView:chipView];
+  }
 }
 
 @end
