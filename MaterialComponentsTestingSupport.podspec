@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "MaterialComponentsTestingSupport"
-  s.version      = "77.0.0"
+  s.version      = "78.0.0"
   s.authors      = "The Material Components authors."
   s.summary      = "This spec provides support files and utilities for testing."
   s.homepage     = "https://github.com/material-components/material-components-ios"
@@ -10,6 +10,13 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.subspec "schemes" do |scheme|
+    scheme.subspec "Color" do |component|
+      component.ios.deployment_target = '8.0'
+      component.public_header_files = "components/schemes/#{component.base_name}/tests/support/*.h"
+      component.source_files = "components/schemes/#{component.base_name}/tests/support/*.{h,m,swift}"
+      component.dependency "MaterialComponents/schemes/Color"
+    end
+    
     scheme.subspec "Typography" do |component|
       component.ios.deployment_target = '8.0'
       component.public_header_files = "components/schemes/#{component.base_name}/tests/support/*.h"

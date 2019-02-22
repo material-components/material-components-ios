@@ -27,6 +27,18 @@ mdc_public_objc_library(
     name = "Color",
 )
 
+mdc_objc_library(
+    name = "TestingSupport",
+    testonly = 1,
+    srcs = glob(["tests/support/*.m"]),
+    hdrs = glob(["tests/support/*.h"]),
+    includes = ["tests/support"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":Color",
+    ],
+)
+
 package_group(
     name = "test_targets",
     packages = [
