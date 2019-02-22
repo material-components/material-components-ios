@@ -16,8 +16,8 @@
 
 #import "MaterialBottomAppBar+ColorThemer.h"
 #import "MaterialBottomAppBar.h"
-#import "MaterialThemes.h"
 #import "MaterialColorScheme+TestingSupport.h"
+#import "MaterialThemes.h"
 
 @interface BottomAppBarColorThemerTests : XCTestCase
 @property(nonatomic, strong) MDCBottomAppBarView *bottomAppBar;
