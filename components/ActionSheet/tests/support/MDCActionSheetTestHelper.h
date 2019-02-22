@@ -14,8 +14,6 @@
 
 #import "MaterialActionSheet.h"
 
-#import <XCTest/XCTest.h>
-
 @class MDCActionSheetHeaderView;
 @class MDCActionSheetItemTableViewCell;
 

@@ -9,6 +9,13 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '8.0'
   s.requires_arc = true
 
+  s.subspec "ActionSheet" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/tests/support/*.h"
+    component.source_files = "components/#{component.base_name}/tests/support/*.{h,m,swift}"
+    component.dependency "MaterialComponents/ActionSheet"
+  end
+
   s.subspec "schemes" do |scheme|
     scheme.subspec "Color" do |component|
       component.ios.deployment_target = '8.0'

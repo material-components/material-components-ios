@@ -70,6 +70,7 @@ Pod::Spec.new do |mdc|
       unit_tests.source_files = [
         "components/#{component.base_name}/tests/unit/*.{h,m,swift}"
       ]
+      unit_tests.dependency "MaterialComponentsTestingSupport/ActionSheet"
     end
   end
 
