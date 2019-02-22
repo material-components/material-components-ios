@@ -1,3 +1,64 @@
+module SnapshotPodspecHelper
+  class Component
+    attr_accessor :name
+    attr_accessor :source_files
+    attr_accessor :resources
+
+    def initialize(name)
+      @name = name
+      @source_files = default_source_files
+      @resources = default_resources
+    end
+
+    def default_source_files
+      if @name.present?
+        return [
+          "components/#{@name}/tests/snapshot/*.{h,m,swift}",
+          "components/#{@name}/tests/snapshot/supplemental/*.{h,m,swift}",
+        ]
+      end
+      return []
+    end
+
+    def default_resources
+      if @name.present?
+        return [
+          "components/#{@name}/tests/snapshot/resources/*",
+        ]
+      end
+      return []
+    end
+  end
+
+  def self.snapshot_sources
+    base_sources = ["components/private/Snapshot/src/*.{h,m,swift}"]
+    return components.reduce(base_sources) do |sources_so_far, component|
+      sources_so_far + component.source_files
+    end
+  end
+
+  def self.snapshot_resources
+    return components.reduce([]) do |resources_so_far, component|
+      resources_so_far + component.resources
+    end
+  end
+
+  def self.components
+    return [
+      Component.new("BottomAppBar"),
+      Component.new("BottomNavigation"),
+      Component.new("Buttons"),
+      Component.new("ButtonBar"),
+      Component.new("Cards"),
+      Component.new("Chips"),
+      Component.new("Dialogs"),
+      Component.new("Ripple"),
+      Component.new("Slider"),
+      Component.new("TextFields"),
+    ]
+  end
+end
+
 Pod::Spec.new do |s|
   s.name         = "MaterialComponentsSnapshotTests"
   s.version      = "78.0.0"
@@ -11,129 +72,17 @@ Pod::Spec.new do |s|
   s.dependency 'MaterialComponents'
   s.dependency 'MaterialComponentsBeta'
 
-  s.subspec "BottomAppBar" do |component|
-    component.ios.deployment_target = '8.0'
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'snapshot' do |snapshot_tests|
-        snapshot_tests.requires_app_host = true
-        snapshot_tests.source_files = "components/#{component.base_name}/tests/snapshot/*.{h,m,swift}"
-        snapshot_tests.dependency "MaterialComponentsSnapshotTests/private/Snapshot"
-      end
-    end
-  end
+  # Top level sources are required. Without them, unit test targets do not show up in Xcode.
+  # However, no top level sources can import iOSSnapshotTestCase, otherwise the app will crash on
+  # launch because XCTest isn't found.
+  s.source_files = ["components/private/Snapshot/src/SourceDummies/*.{h,m}"]
 
-  s.subspec "BottomNavigation" do |component|
-    component.ios.deployment_target = '8.0'
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'snapshot' do |snapshot_tests|
-        snapshot_tests.requires_app_host = true
-        snapshot_tests.source_files = "components/#{component.base_name}/tests/snapshot/*.{h,m,swift}"
-        snapshot_tests.dependency "MaterialComponentsSnapshotTests/private/Snapshot"
-      end
-    end
-  end
-
-  s.subspec "Buttons" do |component|
-    component.ios.deployment_target = '8.0'
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'snapshot' do |snapshot_tests|
-        snapshot_tests.requires_app_host = true
-        snapshot_tests.source_files = "components/#{component.base_name}/tests/snapshot/*.{h,m,swift}"
-        snapshot_tests.dependency "MaterialComponentsSnapshotTests/private/Snapshot"
-      end
-    end
-  end
-
-  s.subspec "ButtonBar" do |component|
-    component.ios.deployment_target = '8.0'
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'snapshot' do |snapshot_tests|
-        snapshot_tests.requires_app_host = true
-        snapshot_tests.source_files = "components/#{component.base_name}/tests/snapshot/*.{h,m,swift}"
-        snapshot_tests.dependency "MaterialComponentsSnapshotTests/private/Snapshot"
-        snapshot_tests.dependency "MaterialComponentsTestingSupport/schemes/Typography"
-      end
-    end
-  end
-
-  s.subspec "Cards" do |component|
-    component.ios.deployment_target = '8.0'
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'snapshot' do |snapshot_tests|
-        snapshot_tests.requires_app_host = true
-        snapshot_tests.source_files = "components/#{component.base_name}/tests/snapshot/*.{h,m,swift}", "components/#{component.base_name}/tests/snapshot/supplemental/*.{h,m,swift}"
-        snapshot_tests.resources = "components/#{component.base_name}/tests/snapshot/resources/*"
-        snapshot_tests.dependency "MaterialComponentsSnapshotTests/private/Snapshot"
-      end
-    end
-  end
-
-  s.subspec "Chips" do |component|
-    component.ios.deployment_target = '8.0'
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'snapshot' do |snapshot_tests|
-        snapshot_tests.requires_app_host = true
-        snapshot_tests.source_files = "components/#{component.base_name}/tests/snapshot/*.{h,m,swift}", "components/#{component.base_name}/tests/snapshot/supplemental/*.{h,m,swift}"
-        snapshot_tests.resources = "components/#{component.base_name}/tests/snapshot/resources/*"
-        snapshot_tests.dependency "MaterialComponentsSnapshotTests/private/Snapshot"
-      end
-    end
-  end
-
-  s.subspec "Dialogs" do |component|
-    component.ios.deployment_target = '8.0'
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'snapshot' do |snapshot_tests|
-        snapshot_tests.requires_app_host = true
-        snapshot_tests.source_files = "components/#{component.base_name}/tests/snapshot/*.{h,m,swift}", "components/#{component.base_name}/tests/snapshot/supplemental/*.{h,m,swift}"
-        snapshot_tests.resources = "components/#{component.base_name}/tests/snapshot/resources/*"
-        snapshot_tests.dependency "MaterialComponentsSnapshotTests/private/Snapshot"
-      end
-    end
-  end
-
-  s.subspec "Ripple" do |component|
-    component.ios.deployment_target = '8.0'
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'snapshot' do |snapshot_tests|
-        snapshot_tests.requires_app_host = true
-        snapshot_tests.source_files = "components/#{component.base_name}/tests/snapshot/*.{h,m,swift}", "components/#{component.base_name}/tests/snapshot/supplemental/*.{h,m,swift}"
-        snapshot_tests.dependency "MaterialComponentsSnapshotTests/private/Snapshot"
-      end
-    end
-  end
-
-  s.subspec "Slider" do |component|
-    component.ios.deployment_target = '8.0'
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'snapshot' do |snapshot_tests|
-        snapshot_tests.requires_app_host = true
-        snapshot_tests.source_files = "components/#{component.base_name}/tests/snapshot/*.{h,m,swift}", "components/#{component.base_name}/tests/snapshot/supplemental/*.{h,m,swift}"
-        snapshot_tests.dependency "MaterialComponentsSnapshotTests/private/Snapshot"
-      end
-    end
-  end
-
- s.subspec "TextFields" do |component|
-    component.ios.deployment_target = '8.0'
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'snapshot' do |snapshot_tests|
-        snapshot_tests.requires_app_host = true
-        snapshot_tests.source_files = "components/#{component.base_name}/tests/snapshot/*.{h,m,swift}", "components/#{component.base_name}/tests/snapshot/supplemental/*.{h,m,swift}"
-        snapshot_tests.resources = "components/#{component.base_name}/tests/snapshot/resources/*"
-        snapshot_tests.dependency "MaterialComponentsSnapshotTests/private/Snapshot"
-        snapshot_tests.dependency "MDFInternationalization"
-      end
-    end
-  end
-
-  # Private for Snapshot test helpers
-
-  s.subspec "private" do |private_spec|
-    private_spec.test_spec "Snapshot" do |snapshot|
-      snapshot.ios.deployment_target = '8.0'
-      snapshot.source_files = "components/private/#{snapshot.base_name}/src/*.{h,m,swift}"
-      snapshot.dependency 'iOSSnapshotTestCase', '2.2.0'
-    end
+  s.test_spec "SnapshotTests" do |snapshot_tests|
+    snapshot_tests.ios.deployment_target = '8.0'
+    snapshot_tests.requires_app_host = true
+    snapshot_tests.source_files = SnapshotPodspecHelper.snapshot_sources
+    snapshot_tests.resources = SnapshotPodspecHelper.snapshot_resources
+    snapshot_tests.dependency 'iOSSnapshotTestCase/Core', '2.2.0'
+    snapshot_tests.dependency "MaterialComponentsTestingSupport/schemes/Typography"
   end
 end
