@@ -15,6 +15,7 @@
 import XCTest
 import MaterialComponents.MaterialSnackbar
 import MaterialComponents.MaterialSnackbar_TypographyThemer
+import MaterialComponentsTestingSupport.MaterialTypographyScheme_TestingSupport
 
 class MDCSnackbarTypographyThemerTests: XCTestCase {
 
@@ -26,11 +27,9 @@ class MDCSnackbarTypographyThemerTests: XCTestCase {
     
   func testSnackbarTypographyThemer() {
     // Given
-    let typographyScheme = MDCTypographyScheme()
+    let typographyScheme = MDCTypographyScheme.withVaryingFontSize()
     let message = MDCSnackbarMessage()
     message.text = "How much wood would a woodchuck chuck if a woodchuck could chuck wood?"
-    typographyScheme.button = UIFont.boldSystemFont(ofSize: 12)
-    typographyScheme.body2 = UIFont.systemFont(ofSize: 19)
     MDCSnackbarManager.buttonFont = UIFont.systemFont(ofSize: 21)
     MDCSnackbarManager.messageFont = UIFont.systemFont(ofSize: 30)
 
