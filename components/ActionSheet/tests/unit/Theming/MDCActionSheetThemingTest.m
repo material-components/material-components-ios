@@ -14,9 +14,9 @@
 
 #import <XCTest/XCTest.h>
 
+#import <MaterialComponentsTestingSupport/MaterialActionSheet+TestingSupport.h>
 #import "../../../src/private/MDCActionSheetHeaderView.h"
 #import "../../../src/private/MDCActionSheetItemTableViewCell.h"
-#import "../../support/MDCActionSheetTestHelper.h"
 #import "MaterialActionSheet+Theming.h"
 
 static const CGFloat kHighAlpha = (CGFloat)0.87;

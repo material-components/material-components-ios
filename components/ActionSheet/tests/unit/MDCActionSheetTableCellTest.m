@@ -14,8 +14,8 @@
 
 #import <XCTest/XCTest.h>
 
+#import <MaterialComponentsTestingSupport/MaterialActionSheet+TestingSupport.h>
 #import "../../src/private/MDCActionSheetItemTableViewCell.h"
-#import "MDCActionSheetTestHelper.h"
 
 @interface MDCActionSheetItemTableViewCell (Testing)
 @property(nonatomic, strong) UILabel *actionLabel;

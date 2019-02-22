@@ -187,6 +187,7 @@ mdc_objc_library(
         ":ActionSheet",
         ":ActionSheetThemer",
         ":ColorThemer",
+        ":TestingSupport",
         ":TypographyThemer",
         ":privateHeaders",
         ":unit_test_sources",
@@ -194,12 +195,11 @@ mdc_objc_library(
 )
 
 mdc_objc_library(
-    name = "unit_test_helpers",
+    name = "TestingSupport",
     testonly = 1,
     srcs = native.glob(["tests/support/*.m"]),
     hdrs = native.glob(["tests/support/*.h"]),
     sdk_frameworks = [
-        "UIKit",
         "CoreImage",
         "XCTest",
     ],
@@ -211,7 +211,6 @@ mdc_objc_library(
 mdc_unit_test_suite(
     name = "unit_tests",
     deps = [
-        ":unit_test_helpers",
         ":unit_test_sources",
         ":unit_test_swift_sources",
     ],
