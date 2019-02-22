@@ -63,6 +63,7 @@ mdc_extension_objc_library(
 
 swift_library(
     name = "unit_test_swift_sources",
+    testonly = 1,
     srcs = glob(["tests/unit/*.swift"]),
     copts = [
         "-swift-version",
@@ -72,6 +73,7 @@ swift_library(
     deps = [
         ":ActivityIndicator",
         ":ColorThemer",
+        "//components/schemes/Color:TestingSupport",
     ],
 )
 
