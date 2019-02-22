@@ -1,4 +1,4 @@
-module SnapshotPodspecHelpers
+module SnapshotPodspecHelper
   class Component
     attr_accessor :name
     attr_accessor :source_files
@@ -27,6 +27,19 @@ module SnapshotPodspecHelpers
         ]
       end
       return []
+    end
+  end
+
+  def self.snapshot_sources
+    base_sources = ["components/private/Snapshot/src/*.{h,m,swift}"]
+    return SnapshotPodspecHelper.components.reduce(base_sources) do |sources_so_far, component|
+      sources_so_far + component.source_files
+    end
+  end
+
+  def self.snapshot_resources
+    return SnapshotPodspecHelper.components.reduce([]) do |resources_so_far, component|
+      resources_so_far + component.resources
     end
   end
 
@@ -64,21 +77,11 @@ Pod::Spec.new do |s|
   # launch because XCTest isn't found.
   s.source_files = ["components/private/Snapshot/src/SourceDummies/*.{h,m}"]
 
-  base_sources = ["components/private/Snapshot/src/*.{h,m,swift}"]
-  all_sources = SnapshotPodspecHelpers.components.reduce(base_sources) do |sources_so_far, component|
-    sources_so_far + component.source_files
-  end
-
-  base_resources = []
-  all_resources = SnapshotPodspecHelpers.components.reduce(base_resources) do |resources_so_far, component|
-    resources_so_far + component.resources
-  end
-
   s.test_spec "SnapshotTests" do |snapshot_tests|
     snapshot_tests.ios.deployment_target = '8.0'
     snapshot_tests.requires_app_host = true
-    snapshot_tests.source_files = all_sources
-    snapshot_tests.resources = all_resources
+    snapshot_tests.source_files = SnapshotPodspecHelper.snapshot_sources
+    snapshot_tests.resources = SnapshotPodspecHelper.snapshot_resources
     snapshot_tests.dependency 'iOSSnapshotTestCase/Core', '2.2.0'
     snapshot_tests.dependency "MaterialComponentsTestingSupport/schemes/Typography"
   end
