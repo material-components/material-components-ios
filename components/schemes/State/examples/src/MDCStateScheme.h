@@ -27,11 +27,11 @@
   Note that some themes, like outline and elevated may not have state information
   for all attributes, and will inherit attributes they don't have from a  base
   theme (either OnWhite and OnPrimary).
+  Note: Theme inheritence is calculated in [self baseThemeDictionary:]
 */
 typedef NS_ENUM(NSInteger, MDCStateSchemeTheme) {
-  MDCStateSchemeThemeNone,
-  MDCStateSchemeThemeOnWhite,    // base theme
-  MDCStateSchemeThemeOnPrimary,  // base theme
+  MDCStateSchemeThemeOnWhite,    // full theme
+  MDCStateSchemeThemeOnPrimary,  // full theme
   MDCStateSchemeThemeOutlined,   // inherits from: onWhite
   MDCStateSchemeThemeElevated    // inherits from: onWhite
 };

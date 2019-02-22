@@ -57,6 +57,7 @@
 
 - (id)copyWithZone:(NSZone *)zone {
   MDCStateExampleColorScheme *copy = [[MDCStateExampleColorScheme alloc] init];
+  copy.MDCColorScheme = self.MDCColorScheme;
   copy.primaryColor = self.primaryColor;
   copy.primaryColorVariant = self.primaryColorVariant;
   copy.secondaryColor = self.secondaryColor;

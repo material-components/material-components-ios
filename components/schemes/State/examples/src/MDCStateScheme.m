@@ -246,8 +246,6 @@ typedef NSDictionary<NSString *, MDCAttributeMutableDictionary *> MDCStateMutabl
       return self.outlined;
     case MDCStateSchemeThemeElevated:
       return self.elevated;
-    case MDCStateSchemeThemeNone:
-      return nil;
   }
 }
 
