@@ -33,6 +33,7 @@ static const CGFloat kMDCBottomNavigationBarHeight = 56;
 static const CGFloat kMDCBottomNavigationBarHeightAdjacentTitles = 40;
 static const CGFloat kMDCBottomNavigationBarLandscapeContainerWidth = 320;
 static const CGFloat kMDCBottomNavigationBarItemsHorizontalMargin = 12;
+static const NSTimeInterval kMDCBottomNavigationBarLongPressMinimumPressDuration = 0.35;
 static NSString *const kMDCBottomNavigationBarBadgeColorString = @"badgeColor";
 static NSString *const kMDCBottomNavigationBarBadgeValueString = @"badgeValue";
 static NSString *const kMDCBottomNavigationBarAccessibilityValueString = @"accessibilityValue";
@@ -58,6 +59,8 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 @property(nonatomic, strong) UIView *containerView;
 @property(nonatomic, strong) NSMutableArray *inkControllers;
 @property(nonatomic) BOOL shouldPretendToBeATabBar;
+@property(nonatomic, strong, nonnull) UILongPressGestureRecognizer *longPressGestureRecognizer;
+@property(nonatomic, strong, nullable) MDCBottomNavigationItemView *lastPressedItemView;
 
 @end
 
@@ -123,6 +126,11 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
   [(MDCShadowLayer *)self.layer setElevation:_elevation];
   _itemViews = [NSMutableArray array];
   _itemTitleFont = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleCaption];
+  _longPressGestureRecognizer =
+      [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
+  _longPressGestureRecognizer.minimumPressDuration =
+      kMDCBottomNavigationBarLongPressMinimumPressDuration;
+  [self addGestureRecognizer:_longPressGestureRecognizer];
 }
 
 - (void)layoutSubviews {
@@ -350,6 +358,41 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
   return _itemViews[itemIndex];
 }
 
+/** Returns the item view at the given point and nil if point is not inside an item view. */
+- (nullable MDCBottomNavigationItemView *)itemViewAtPoint:(CGPoint)point {
+  for (MDCBottomNavigationItemView *itemView in self.itemViews) {
+    if (CGRectContainsPoint(itemView.frame, point)) {
+      return itemView;
+    }
+  }
+
+  return nil;
+}
+
+/** Returns the corresponding item given an item view. */
+- (nullable UITabBarItem *)itemWithItemView:(MDCBottomNavigationItemView *)itemView {
+  NSUInteger itemViewIndex = [self.itemViews indexOfObject:itemView];
+  if (itemViewIndex == NSNotFound || itemViewIndex >= self.items.count) {
+    return nil;
+  }
+
+  return [self.items objectAtIndex:itemViewIndex];
+}
+
+/** Calls the delegate's corresponding method for when an item is pressed. */
+- (void)notifyDelegateOfItemPressed:(UITabBarItem *)item {
+  if ([self.delegate respondsToSelector:@selector(bottomNavigationBar:didPressItem:)]) {
+    [self.delegate bottomNavigationBar:self didPressItem:item];
+  }
+}
+
+/** Calls the delegate's corresponding method for when an item is released. */
+- (void)notifyDelegateOfItemReleased:(UITabBarItem *)item {
+  if ([self.delegate respondsToSelector:@selector(bottomNavigationBar:didReleaseItem:)]) {
+    [self.delegate bottomNavigationBar:self didReleaseItem:item];
+  }
+}
+
 #pragma mark - Touch handlers
 
 - (void)didTouchDownButton:(UIButton *)button {
@@ -386,6 +429,59 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 - (void)didCancelTouchesForButton:(UIButton *)button {
   MDCBottomNavigationItemView *itemView = (MDCBottomNavigationItemView *)button.superview;
   [itemView.inkView cancelAllAnimationsAnimated:NO];
+}
+
+/** Method that responds to the long press gesture recognizer changes. */
+- (void)handleLongPress:(UILongPressGestureRecognizer *)gestureRecognizer {
+  CGPoint touchPoint = [gestureRecognizer locationInView:self];
+
+  switch (gestureRecognizer.state) {
+    case UIGestureRecognizerStateBegan:
+    case UIGestureRecognizerStateChanged:
+      [self handleLongPressUpdate:touchPoint];
+      break;
+    case UIGestureRecognizerStateEnded:
+    default:
+      [self handleLongPressEnded:touchPoint];
+      break;
+  }
+}
+
+/**
+ * Handles long press touch position updates. This may be the gesture recognizering beginning or
+ * updating the touch location.
+ */
+- (void)handleLongPressUpdate:(CGPoint)point {
+  BOOL isTouchInCurrentlyPressedView =
+      self.lastPressedItemView && CGRectContainsPoint(self.lastPressedItemView.frame, point);
+  if (isTouchInCurrentlyPressedView) {
+    return;
+  }
+
+  MDCBottomNavigationItemView *itemView = [self itemViewAtPoint:point];
+  if (!itemView) {
+    [self handleLongPressEnded:point];
+  } else {
+    UITabBarItem *item = [self itemWithItemView:itemView];
+    self.lastPressedItemView = itemView;
+    [self notifyDelegateOfItemPressed:item];
+  }
+}
+
+/** Handles behavior when the user is not longer holding an item. */
+- (void)handleLongPressEnded:(CGPoint)point {
+  if (!self.lastPressedItemView) {
+    return;
+  }
+
+  UITabBarItem *lastPressedItem = [self itemWithItemView:self.lastPressedItemView];
+  self.lastPressedItemView = nil;
+
+  MDCBottomNavigationItemView *itemView = [self itemViewAtPoint:point];
+  if (itemView) {
+    [self didTouchUpInsideButton:itemView.button];
+  }
+  [self notifyDelegateOfItemReleased:lastPressedItem];
 }
 
 #pragma mark - Setters

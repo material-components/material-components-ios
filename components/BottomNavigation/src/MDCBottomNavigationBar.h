@@ -180,4 +180,20 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
 - (void)bottomNavigationBar:(nonnull MDCBottomNavigationBar *)bottomNavigationBar
               didSelectItem:(nonnull UITabBarItem *)item;
 
+/**
+ Called when the user long holds a tab bar item. A user may drag their finger along the bottom
+ navigation bar to a new tab bar item and this method will be called again with the new item.
+ */
+- (void)bottomNavigationBar:(MDCBottomNavigationBar *)bottomNavigationBar
+               didPressItem:(nonnull UITabBarItem *)item;
+
+/**
+ Called when the user releases their finger from the currently pressed item.  This may be when the
+ user lifts their finger from the screen or when they drag their finger so it is no longer over any
+ tab bar item.
+ This call is not necessarily balanced with every didPressItem call.
+ */
+- (void)bottomNavigationBar:(MDCBottomNavigationBar *)bottomNavigationBar
+             didReleaseItem:(nonnull UITabBarItem *)item;
+
 @end
