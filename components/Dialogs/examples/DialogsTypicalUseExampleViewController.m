@@ -34,14 +34,15 @@
 - (instancetype)init {
   self = [super init];
   if (self) {
-    _containerScheme = [[MDCContainerScheme alloc] init];;
+    _containerScheme = [[MDCContainerScheme alloc] init];
+    ;
   }
   return self;
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  
+
   self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
 
   MDCButton *dismissButton = [[MDCButton alloc] initWithFrame:CGRectZero];
