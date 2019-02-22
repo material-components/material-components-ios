@@ -136,8 +136,8 @@ swift_library(
 mdc_objc_library(
     name = "unit_test_sources",
     testonly = 1,
-    srcs = native.glob(["tests/unit/*.m",]),
-    hdrs = native.glob(["tests/unit/*.h",]),
+    srcs = native.glob(["tests/unit/*.m"]),
+    hdrs = native.glob(["tests/unit/*.h"]),
     sdk_frameworks = [
         "UIKit",
         "CoreImage",
@@ -150,6 +150,25 @@ mdc_objc_library(
         ":Theming",
         ":TypographyThemer",
         ":privateHeaders",
+    ],
+)
+
+mdc_objc_library(
+    name = "unit_test_theming_sources",
+    testonly = 1,
+    srcs = native.glob([
+        "tests/unit/Theming/*.m",
+    ]),
+    sdk_frameworks = [
+        "UIKit",
+        "CoreImage",
+        "XCTest",
+    ],
+    deps = [
+        ":ActionSheet",
+        ":Theming",
+        ":privateHeaders",
+        ":unit_test_sources",
     ],
 )
 
