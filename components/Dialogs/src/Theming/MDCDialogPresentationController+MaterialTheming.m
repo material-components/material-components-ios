@@ -27,8 +27,15 @@ static const CGFloat kCornerRadius = 4;
   }
   self.scrimColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.32];
 
-  // Other properties
-  self.dialogCornerRadius = kCornerRadius;
+  // Corner Radius
+  if ([self.presentedViewController isKindOfClass:[MDCAlertController class]]) {
+    ((MDCAlertController *)self.presentedViewController).cornerRadius = kCornerRadius;
+  } else {
+    self.presentedViewController.view.layer.cornerRadius = kCornerRadius;
+    self.dialogCornerRadius = kCornerRadius;
+  }
+
+  // Elevation
   self.dialogElevation = MDCShadowElevationDialog;
 }
 

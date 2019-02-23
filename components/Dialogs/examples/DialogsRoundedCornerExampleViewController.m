@@ -126,13 +126,17 @@
   viewController.modalPresentationStyle = UIModalPresentationCustom;
   viewController.transitioningDelegate = self.transitionController;
 
-  // sets the dialog's corner radius
-  viewController.view.layer.cornerRadius = 24;
-
-  // ensure shadow/tracking layer matches the dialog's corner radius
   MDCDialogPresentationController *controller = viewController.mdc_dialogPresentationController;
   controller.dialogPresentationControllerDelegate = self;
+
+  // Apply a presentation theme, which, among other things, sets the corner radius
   [controller applyThemeWithScheme:self.containerScheme];
+
+  // Manually override the dialog's corner radius that was set when we applied a presentation theme
+  // Ensure both the presented view and the presentation controller corner
+  // radius mathcnes, so the presented shadow is rendered correctly.
+  viewController.view.layer.cornerRadius = 24.0;
+  controller.dialogCornerRadius = 24.0;
 
   [self presentViewController:viewController animated:YES completion:nil];
 }

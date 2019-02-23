@@ -28,7 +28,13 @@ class CustomShadowViewController: UIViewController {
 
     super.viewDidLoad()
     view.backgroundColor = UIColor.white
-    view.layer.cornerRadius = 32.0
+
+    // This demonstrates how to manually set the corner raidus, while ensuring that
+    // the presentation controller's corner radius matches, so it renders the shadow correctly.
+    // Note that setting the corner radius in viewDidLoad is not recommended, since it
+    // may be overriden if callers apply a theme using a thmeing extension.
+    self.view.layer.cornerRadius = 32.0
+    self.mdc_dialogPresentationController?.dialogCornerRadius = 32.0
 
     bodyLabel.text =
       "This presented view has a corner radius so we've set the corner radius on the presentation controller."
@@ -98,13 +104,6 @@ class DialogsCustomShadowExampleViewController: UIViewController {
     presentedController.transitioningDelegate = self.transitionController;
 
     self.present(presentedController, animated: true, completion: nil)
-
-    // We set the corner radius to adjust the shadow that is implemented via the trackingView in the
-    // presentation controller.
-    if let presentationController = presentedController.mdc_dialogPresentationController {
-      presentationController.applyTheme(withScheme: containerScheme)
-      presentationController.dialogCornerRadius = presentedController.view.layer.cornerRadius
-    }
   }
 
   // MARK: Catalog by convention
