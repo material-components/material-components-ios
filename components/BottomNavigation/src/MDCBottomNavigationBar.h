@@ -184,7 +184,7 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
  Called when the user long holds a tab bar item. A user may drag their finger along the bottom
  navigation bar to a new tab bar item and this method will be called again with the new item.
  */
-- (void)bottomNavigationBar:(MDCBottomNavigationBar *)bottomNavigationBar
+- (void)bottomNavigationBar:(nonnull MDCBottomNavigationBar *)bottomNavigationBar
                didPressItem:(nonnull UITabBarItem *)item;
 
 /**
@@ -193,7 +193,7 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
  tab bar item.
  This call is not necessarily balanced with every didPressItem call.
  */
-- (void)bottomNavigationBar:(MDCBottomNavigationBar *)bottomNavigationBar
+- (void)bottomNavigationBar:(nonnull MDCBottomNavigationBar *)bottomNavigationBar
              didReleaseItem:(nonnull UITabBarItem *)item;
 
 @end

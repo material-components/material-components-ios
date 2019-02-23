@@ -370,7 +370,7 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 }
 
 /** Returns the corresponding item given an item view. */
-- (nullable UITabBarItem *)itemWithItemView:(MDCBottomNavigationItemView *)itemView {
+- (nullable UITabBarItem *)itemWithItemView:(nonnull MDCBottomNavigationItemView *)itemView {
   NSUInteger itemViewIndex = [self.itemViews indexOfObject:itemView];
   if (itemViewIndex == NSNotFound || itemViewIndex >= self.items.count) {
     return nil;
@@ -380,14 +380,14 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 }
 
 /** Calls the delegate's corresponding method for when an item is pressed. */
-- (void)notifyDelegateOfItemPressed:(UITabBarItem *)item {
+- (void)notifyDelegateOfItemPressed:(nonnull UITabBarItem *)item {
   if ([self.delegate respondsToSelector:@selector(bottomNavigationBar:didPressItem:)]) {
     [self.delegate bottomNavigationBar:self didPressItem:item];
   }
 }
 
 /** Calls the delegate's corresponding method for when an item is released. */
-- (void)notifyDelegateOfItemReleased:(UITabBarItem *)item {
+- (void)notifyDelegateOfItemReleased:(nonnull UITabBarItem *)item {
   if ([self.delegate respondsToSelector:@selector(bottomNavigationBar:didReleaseItem:)]) {
     [self.delegate bottomNavigationBar:self didReleaseItem:item];
   }
