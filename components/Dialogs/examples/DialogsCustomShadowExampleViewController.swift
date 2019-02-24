@@ -29,12 +29,11 @@ class CustomShadowViewController: UIViewController {
     super.viewDidLoad()
     view.backgroundColor = UIColor.white
 
-    // This demonstrates how to manually set the corner raidus, while ensuring that
-    // the presentation controller's corner radius matches, so it renders the shadow correctly.
+    // Setting the corner radius of the view's layer will propagate to the shadow
+    // layer when the view is presented by MDCDailogPresentationController.
     // Note that setting the corner radius in viewDidLoad is not recommended, since it
-    // may be overriden if callers apply a theme using a thmeing extension.
+    // will be overriden if callers apply a themer to the MDCDailogPresentationController instance.
     self.view.layer.cornerRadius = 32.0
-    self.mdc_dialogPresentationController?.dialogCornerRadius = 32.0
 
     bodyLabel.text =
       "This presented view has a corner radius so we've set the corner radius on the presentation controller."
@@ -100,9 +99,15 @@ class DialogsCustomShadowExampleViewController: UIViewController {
 
   @objc func tap(_ sender: Any) {
     let presentedController = CustomShadowViewController(nibName: nil, bundle: nil)
+
+    // Using a MDCDialogTransitionController as the transition delegate also sets
+    // MDCDailogPresentationController as the presentation controller.
+    // Make sure to store a strong reference to the transitionController.
     presentedController.modalPresentationStyle = .custom;
     presentedController.transitioningDelegate = self.transitionController;
 
+    // Note this example demonstrate direct manipulation of cornerRadius on the
+    //  view's layer so we're intentionally not calling the presentation controller's themer.
     self.present(presentedController, animated: true, completion: nil)
   }
 

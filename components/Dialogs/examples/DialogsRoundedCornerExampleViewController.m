@@ -123,20 +123,23 @@
   DialogsRoundedCornerSimpleController *viewController =
       [[DialogsRoundedCornerSimpleController alloc] initWithNibName:nil bundle:nil];
 
+  // Make sure to store a strong reference to the transitionController.
   viewController.modalPresentationStyle = UIModalPresentationCustom;
   viewController.transitioningDelegate = self.transitionController;
 
   MDCDialogPresentationController *controller = viewController.mdc_dialogPresentationController;
   controller.dialogPresentationControllerDelegate = self;
 
-  // Apply a presentation theme, which, among other things, sets the corner radius
+  // Apply a presentation theme, which, among other things, sets the dialog's corner radius to 4.
   [controller applyThemeWithScheme:self.containerScheme];
 
-  // Manually override the dialog's corner radius that was set when we applied a presentation theme
-  // Ensure both the presented view and the presentation controller corner
-  // radius mathcnes, so the presented shadow is rendered correctly.
+  // To override the corner radius set by the themer, update the presentation controller's radius.
+  // The following line will override the value set by the themer, setting 10.0 as the final value:
+  viewController.mdc_dialogPresentationController.dialogCornerRadius = 10.0;
+
+  // Once dialogCornerRadius property is set, manually setting the view's cornerRadius is ignored.
+  // Hence, the following value will be ignored (corner radius is still 10.0):
   viewController.view.layer.cornerRadius = 24.0;
-  controller.dialogCornerRadius = 24.0;
 
   [self presentViewController:viewController animated:YES completion:nil];
 }

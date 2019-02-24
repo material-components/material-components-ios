@@ -51,16 +51,6 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
   return _dismissGestureRecognizer.enabled;
 }
 
-// presentedViewCornerRadius wraps the cornerRadius property of our tracking view to avoid
-// duplication.
-- (void)setDialogCornerRadius:(CGFloat)cornerRadius {
-  _trackingView.layer.cornerRadius = cornerRadius;
-}
-
-- (CGFloat)dialogCornerRadius {
-  return _trackingView.layer.cornerRadius;
-}
-
 - (void)setScrimColor:(UIColor *)scrimColor {
   self.dimmingView.backgroundColor = scrimColor;
 }
@@ -82,6 +72,7 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
   self = [super initWithPresentedViewController:presentedViewController
                        presentingViewController:presentingViewController];
   if (self) {
+    _dialogCornerRadius = -1.0;
     _dimmingView = [[UIView alloc] initWithFrame:CGRectZero];
     _dimmingView.backgroundColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.32];
     _dimmingView.alpha = 0;
@@ -145,6 +136,20 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
   // TODO: Follow the Material spec description of Autonomous surface creation for both
   // presentation and dismissal of the dialog.
   // https://material.io/guidelines/motion/choreography.html#choreography-creation
+
+  // Ensure corner radius matches between the tracking view and the view being presented
+  if (self.dialogCornerRadius < 0) {
+    // If dialogCornerRadius is not set, use the presented view's cornerRadius for the shadow layer.
+    _trackingView.layer.cornerRadius = self.presentedViewController.view.layer.cornerRadius;
+  } else {
+    // If dialogCornerRadius is set, use its value for the shadow layer as well as the presented
+    // view layer, overriding any direct assignments to the presented view's cornerRadius.
+    _trackingView.layer.cornerRadius = self.dialogCornerRadius;
+    // Note: For MDCAlertController, this assumes that the "view" property points to the same
+    // instance as the "alertView" property. Therefore, we are safe to not set its cornerRadius
+    // property (its ".cornerRadius", rather then its ".view.layer.cornerRadius")
+    self.presentedViewController.view.layer.cornerRadius = self.dialogCornerRadius;
+  }
 
   // Set the dimming view to the container's bounds and fully transparent.
   self.dimmingView.frame = self.containerView.bounds;
