@@ -378,9 +378,9 @@ run_bazel() {
 run_cocoapods() {
   echo "Running cocoapods builds..."
 
-  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+  # if [ -n "$KOKORO_BUILD_NUMBER" ]; then
     # move_derived_data_to_tmp
-  fi
+  # fi
 
   if [ -n "$KOKORO_BUILD_NUMBER" ]; then
     select_xcode "$XCODE_VERSION"
