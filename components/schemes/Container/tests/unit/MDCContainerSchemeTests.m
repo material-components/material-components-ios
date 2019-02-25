@@ -14,9 +14,9 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialContainerScheme.h"
 #import <MaterialComponents/MaterialColorScheme.h>
 #import <MaterialComponents/MaterialTypographyScheme.h>
+#import "MaterialContainerScheme.h"
 
 @interface MDCContainerSchemeTests : XCTestCase
 @end
@@ -26,14 +26,17 @@
 - (void)testWithMaterialInit {
   // Given
   MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-  MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  MDCTypographyScheme *typographyScheme =
+      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
 
   // Then
   // Color
   XCTAssertNotNil(containerScheme.colorScheme);
   XCTAssertEqualObjects(containerScheme.colorScheme.primaryColor, colorScheme.primaryColor);
-  XCTAssertEqualObjects(containerScheme.colorScheme.primaryColorVariant, colorScheme.primaryColorVariant);
+  XCTAssertEqualObjects(containerScheme.colorScheme.primaryColorVariant,
+                        colorScheme.primaryColorVariant);
   XCTAssertEqualObjects(containerScheme.colorScheme.secondaryColor, colorScheme.secondaryColor);
   XCTAssertEqualObjects(containerScheme.colorScheme.errorColor, colorScheme.errorColor);
   XCTAssertEqualObjects(containerScheme.colorScheme.surfaceColor, colorScheme.surfaceColor);
@@ -41,7 +44,8 @@
   XCTAssertEqualObjects(containerScheme.colorScheme.onPrimaryColor, colorScheme.onPrimaryColor);
   XCTAssertEqualObjects(containerScheme.colorScheme.onSecondaryColor, colorScheme.onSecondaryColor);
   XCTAssertEqualObjects(containerScheme.colorScheme.onSurfaceColor, colorScheme.onSurfaceColor);
-  XCTAssertEqualObjects(containerScheme.colorScheme.onBackgroundColor, colorScheme.onBackgroundColor);
+  XCTAssertEqualObjects(containerScheme.colorScheme.onBackgroundColor,
+                        colorScheme.onBackgroundColor);
   // Typography
   XCTAssertNotNil(containerScheme.typographyScheme);
   XCTAssertEqualObjects(containerScheme.typographyScheme.headline1, typographyScheme.headline1);
