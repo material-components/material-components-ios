@@ -112,8 +112,15 @@
   chipView.titleLabel.text = self.titles[indexPath.row];
   chipView.selectedImageView.image =
       [[self doneImage] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  if (self.containerScheme.colorScheme) {
     chipView.selectedImageView.tintColor =
         [self.containerScheme.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.54];
+  } else {
+    MDCSemanticColorScheme *colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    chipView.selectedImageView.tintColor =
+        [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.54];
+  }
   chipView.selected = [_selectedIndecies containsObject:indexPath];
   cell.alwaysAnimateResize = [self shouldAnimateResize];
 

@@ -44,7 +44,15 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
+  id<MDCColorScheming> colorScheme;
+  if (self.containerScheme.colorScheme != nil) {
+    colorScheme = self.containerScheme.colorScheme;
+  } else {
+    colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  }
+
+  self.view.backgroundColor = colorScheme.backgroundColor;
   [self.showButton setTitle:@"Show action sheet" forState:UIControlStateNormal];
   [self.showButton sizeToFit];
   [self.showButton applyContainedThemeWithScheme:self.containerScheme];

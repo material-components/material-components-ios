@@ -46,7 +46,15 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
+  id<MDCColorScheming> colorScheme;
+  if (self.containerScheme.colorScheme != nil) {
+    colorScheme = self.containerScheme.colorScheme;
+  } else {
+    colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  }
+
+  self.view.backgroundColor = colorScheme.backgroundColor;
   [self.showMaterialButton setTitle:@"Show Material Action sheet" forState:UIControlStateNormal];
   [self.showMaterialButton sizeToFit];
   [self.showUIKitButton setTitle:@"Show UIKit Action sheet" forState:UIControlStateNormal];

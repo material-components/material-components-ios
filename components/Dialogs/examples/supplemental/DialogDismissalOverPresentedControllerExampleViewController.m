@@ -48,7 +48,10 @@
 - (instancetype)init {
   self = [super init];
   if (self) {
-    _containerScheme = [[MDCContainerScheme alloc] init];
+    MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
+    scheme.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    _containerScheme = scheme;
   }
   return self;
 }
@@ -170,8 +173,10 @@
 - (instancetype)init {
   self = [super init];
   if (self) {
-    _containerScheme = [[MDCContainerScheme alloc] init];
-    ;
+    MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
+    scheme.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    _containerScheme = scheme;
   }
   return self;
 }
@@ -180,7 +185,10 @@
   [super viewDidLoad];
 
   // Create a way to present a view controller.
-  self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
+  id<MDCColorScheming> colorScheme =
+      self.containerScheme.colorScheme
+          ?: [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  self.view.backgroundColor = colorScheme.backgroundColor;
 
   self.presentButton = [[MDCButton alloc] init];
   [self.presentButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

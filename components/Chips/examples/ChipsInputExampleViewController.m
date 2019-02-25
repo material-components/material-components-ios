@@ -37,12 +37,24 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
+  if (self.containerScheme.colorScheme) {
+    self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
+  } else {
+    MDCSemanticColorScheme *colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    self.view.backgroundColor = colorScheme.backgroundColor;
+  }
 
   _chipField = [[MDCChipField alloc] initWithFrame:CGRectZero];
   _chipField.delegate = self;
   _chipField.textField.placeholderLabel.text = @"This is a chip field.";
-  _chipField.backgroundColor = self.containerScheme.colorScheme.surfaceColor;
+  if (self.containerScheme.colorScheme) {
+    _chipField.backgroundColor = self.containerScheme.colorScheme.surfaceColor;
+  } else {
+    MDCSemanticColorScheme *colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    _chipField.backgroundColor = colorScheme.surfaceColor;
+  }
   [self.view addSubview:_chipField];
 }
 

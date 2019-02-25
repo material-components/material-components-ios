@@ -49,7 +49,10 @@
 - (instancetype)init {
   self = [super init];
   if (self) {
-    _containerScheme = [[MDCContainerScheme alloc] init];
+    MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
+    scheme.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    _containerScheme = scheme;
   }
   return self;
 }

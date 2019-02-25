@@ -49,8 +49,19 @@
 __attribute__((objc_subclassing_restricted)) @interface MDCContainerScheme
     : NSObject<MDCContainerScheming>
 
+/**
+ Defaults to @c MDCColorSchemeDefaultsMaterial201804
+ */
 @property(nonatomic, nonnull, readwrite) MDCSemanticColorScheme *colorScheme;
+
+/**
+ Defaults to @c MDCTypographySchemeDefaultsMaterial201804
+ */
 @property(nonatomic, nonnull, readwrite) MDCTypographyScheme *typographyScheme;
+
+/**
+ Defaults to @c nil
+ */
 @property(nonatomic, nullable, readwrite) MDCShapeScheme *shapeScheme;
 
 @end

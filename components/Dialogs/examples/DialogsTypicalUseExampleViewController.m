@@ -34,8 +34,10 @@
 - (instancetype)init {
   self = [super init];
   if (self) {
-    _containerScheme = [[MDCContainerScheme alloc] init];
-    ;
+    MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
+    scheme.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    _containerScheme = scheme;
   }
   return self;
 }
@@ -43,7 +45,10 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
+  id<MDCColorScheming> colorScheme =
+      self.containerScheme.colorScheme
+          ?: [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  self.view.backgroundColor = colorScheme.backgroundColor;
 
   MDCButton *dismissButton = [[MDCButton alloc] initWithFrame:CGRectZero];
   self.button = dismissButton;

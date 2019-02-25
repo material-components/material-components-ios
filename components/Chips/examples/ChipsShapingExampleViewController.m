@@ -63,8 +63,14 @@
   [_cornerSlider addTarget:self
                     action:@selector(cornerSliderChanged:)
           forControlEvents:UIControlEventValueChanged];
-  [MDCSliderColorThemer applySemanticColorScheme:self.containerScheme.colorScheme
-                                        toSlider:_cornerSlider];
+  if (self.containerScheme.colorScheme) {
+    [MDCSliderColorThemer applySemanticColorScheme:self.containerScheme.colorScheme
+                                          toSlider:_cornerSlider];
+  } else {
+    MDCSemanticColorScheme *colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    [MDCSliderColorThemer applySemanticColorScheme:colorScheme toSlider:_cornerSlider];
+  }
   [self.view addSubview:_cornerSlider];
 
   _cornerStyleControl = [[UISegmentedControl alloc] initWithItems:@[ @"Rounded", @"Cut", @"None" ]];
