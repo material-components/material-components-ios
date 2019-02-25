@@ -378,15 +378,18 @@ run_bazel() {
 run_cocoapods() {
   echo "Running cocoapods builds..."
 
-  # if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    echo "no kokoro build number"
     # move_derived_data_to_tmp
-  # fi
+  fi
 
   if [ -n "$KOKORO_BUILD_NUMBER" ]; then
     select_xcode "$XCODE_VERSION"
 
     # Move into our cloned repo
-    cd github/repo
+    # cd github/repo
+    repo_dir
+    echo "moved to repo_dir"
 
     gem_install xcpretty 
     gem install cocoapods -v "$COCOAPODS_VERSION"
@@ -408,6 +411,11 @@ run_cocoapods() {
     fi
   elif [ "$DEPENDENCY_SYSTEM" = "cocoapods-podspec" ]; then
     pod cache clean --all
+    echo "running ls:"
+    ls
+    echo "running pwd:"
+    pwd
+    bash scripts/prep_all
     pod lib lint MaterialComponents.podspec --skip-tests --fail-fast --verbose
   fi
 
