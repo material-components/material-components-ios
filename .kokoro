@@ -409,11 +409,8 @@ run_cocoapods() {
       bash scripts/test_all catalog/MDCCatalog.xcworkspace:MDCCatalog
     fi
   elif [ "$DEPENDENCY_SYSTEM" = "cocoapods-podspec" ]; then
+    cd catalog && rm -rf Pods && cd ..
     pod cache clean --all
-    echo "running ls:"
-    ls
-    echo "running pwd:"
-    pwd
     bash scripts/prep_all
     pod lib lint MaterialComponents.podspec --skip-tests --fail-fast --verbose
   fi
