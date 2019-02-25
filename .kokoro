@@ -389,7 +389,6 @@ run_cocoapods() {
     cd github/repo
 
     gem_install xcpretty 
-    # TODO(https://github.com/material-components/material-components-ios/issues/6356 ): Move to 1.6
     gem install cocoapods -v "$COCOAPODS_VERSION"
     pod --version
 
@@ -408,7 +407,8 @@ run_cocoapods() {
       bash scripts/test_all catalog/MDCCatalog.xcworkspace:MDCCatalog
     fi
   elif [ "$DEPENDENCY_SYSTEM" = "cocoapods-podspec" ]; then
-    pod lib lint MaterialComponents.podspec --skip-tests
+    pod cache clean --all
+    pod lib lint MaterialComponents.podspec --skip-tests --fail-fast
   fi
 
   if [ -n "$CODECOV_TOKEN" ]; then
