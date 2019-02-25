@@ -141,7 +141,8 @@ class EditReorderCollectionViewController: UIViewController,
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
     guard let cardCell = cell as? CardEditReorderCollectionCell else { return cell }
 
-    cardCell.apply(containerScheme: containerScheme, typographyScheme: typographyScheme)
+    cardCell.apply(containerScheme: containerScheme,
+                   typographyScheme: containerScheme.typographyScheme)
 
     let title = dataSource[indexPath.item].title
     let imageName = dataSource[indexPath.item].image
