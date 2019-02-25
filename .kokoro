@@ -387,8 +387,7 @@ run_cocoapods() {
     select_xcode "$XCODE_VERSION"
 
     # Move into our cloned repo
-    # cd github/repo
-    repo_dir
+    cd github/repo
     echo "moved to repo_dir"
 
     gem_install xcpretty 
