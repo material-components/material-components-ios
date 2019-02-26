@@ -12,16 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/** This is a dummy swift file to ensure Snapshot tests compile. It can be removed once a snapshot
- *  test class exists that is written in Swift. The issue I ran into was the following linker error:
- *      library not found for -lswiftSwiftOnoneSupport
- *
- *  I arrived at this solution from the following links:
- *    https://forums.developer.apple.com/thread/88451
- *    https://github.com/CocoaPods/CocoaPods/issues/7170
- *
- *  It appears that Xcode test targets require at least one Swift file in order to include the
- *  swift runtime.
- */
+#import <Foundation/Foundation.h>
 
-import Foundation
+/**
+ Without these dummy source files the snapshot test target is not visible in Xcode after pod
+ install.
+ */
+@interface MDCSnapshotSourceDummy : NSObject
+@end
