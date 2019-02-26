@@ -40,8 +40,6 @@ mdc_extension_objc_library(
     name = "Theming",
     deps = [
         ":ActionSheet",
-        ":ColorThemer",
-        ":TypographyThemer",
         "//components/schemes/Container",
     ],
 )
@@ -117,6 +115,19 @@ swift_library(
     ],
     deps = [
         ":ActionSheet",
+        ":private",
+    ],
+)
+
+swift_library(
+    name = "unit_test_color_themer_swift_sources",
+    srcs = glob(["tests/unit/ColorThemer/*.swift"]),
+    copts = [
+        "-swift-version",
+        "3",
+    ],
+    deps = [
+        ":ActionSheet",
         ":ColorThemer",
         ":private",
     ],
@@ -125,10 +136,8 @@ swift_library(
 mdc_objc_library(
     name = "unit_test_sources",
     testonly = 1,
-    srcs = native.glob([
-        "tests/unit/*.m",
-        "tests/unit/*.h",
-    ]),
+    srcs = native.glob(["tests/unit/*.m",]),
+    hdrs = native.glob(["tests/unit/*.h",]),
     sdk_frameworks = [
         "UIKit",
         "CoreImage",
@@ -141,6 +150,46 @@ mdc_objc_library(
         ":Theming",
         ":TypographyThemer",
         ":privateHeaders",
+    ],
+)
+
+mdc_objc_library(
+    name = "unit_test_theming_sources",
+    testonly = 1,
+    srcs = native.glob([
+        "tests/unit/Theming/*.m",
+    ]),
+    sdk_frameworks = [
+        "UIKit",
+        "CoreImage",
+        "XCTest",
+    ],
+    deps = [
+        ":ActionSheet",
+        ":Theming",
+        ":privateHeaders",
+        ":unit_test_sources",
+    ],
+)
+
+mdc_objc_library(
+    name = "unit_test_themer_sources",
+    testonly = 1,
+    srcs = native.glob([
+        "tests/unit/ActionSheetThemer/*.m",
+    ]),
+    sdk_frameworks = [
+        "UIKit",
+        "CoreImage",
+        "XCTest",
+    ],
+    deps = [
+        ":ActionSheet",
+        ":ActionSheetThemer",
+        ":ColorThemer",
+        ":TypographyThemer",
+        ":privateHeaders",
+        ":unit_test_sources",
     ],
 )
 

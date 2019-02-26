@@ -41,8 +41,7 @@ fix_bazel_imports() {
   echo "Rewriting imports for bazel..."
 
   private_components() {
-    # remove the -not -path addition once shapes migration has finished. GitHub issue #6494.
-    find "components/private" -type d -not -path "components/private/Shape*" | cut -d'/' -f3 | sort | uniq
+    find "components/private" -type d | cut -d'/' -f3 | sort | uniq
   }
   
   rewrite_tests() {
@@ -83,6 +82,7 @@ fix_bazel_imports() {
   rewrite_catalogs "s/import MaterialComponentsBeta.Material(.+)Scheme/import components_schemes_\1_\1 \/\/ Beta/"
   rewrite_catalogs "s/import MaterialComponents.Material(.+)Scheme/import components_schemes_\1_\1/"
   rewrite_examples "s/import <MaterialComponentsBeta\/(.+)>/import\/\*Material beta framework import\*\/ \"\1\"/"
+  rewrite_examples "s/import MaterialComponents.Material(.+)_Private/import components_\1_\1Private/"
   rewrite_examples "s/import MaterialComponents.Material(.+)_(.+)/import components_\1_\2/"
   rewrite_examples "s/import MaterialComponentsBeta.Material(.+)Beta/import components_\1_\1Beta \/\/ BetaSplit/"
   rewrite_examples "s/import MaterialComponentsBeta.Material(.+)Scheme/import components_schemes_\1_\1 \/\/ Beta/"
@@ -150,6 +150,7 @@ fix_bazel_imports() {
     rewrite_examples "s/import components_schemes_(.+)_.+ \/\/ Beta/import MaterialComponentsBeta.Material\1Scheme/"
     rewrite_examples "s/import components_schemes_(.+)_.+/import MaterialComponents.Material\1Scheme/"
     rewrite_examples "s/import components_private_(.+)_.+/import MaterialComponents.Material\1/"
+    rewrite_examples "s/import components_(.+)_\1Private/import MaterialComponents.Material\1_Private/"
     rewrite_examples "s/import components_(.+)_\1/import MaterialComponents.Material\1/"
     rewrite_examples "s/import components_(.+)_(.+) \/\/ Beta/import MaterialComponentsBeta.Material\1_\2/"
     rewrite_examples "s/import components_(.+)_(.+)/import MaterialComponents.Material\1_\2/"
