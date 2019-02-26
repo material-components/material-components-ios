@@ -12,13 +12,12 @@ In this patch release we have improved our testing support and provided a ChipTe
 
 **New extension.**
 
-## Component changes
-
 ## Changes
 
 ### ActionSheet
 
 * [Removing theming extensions dependency on themers (#6654)](https://github.com/material-components/material-components-ios/commit/c2f6293c67a450d1b185c69cfd4de40be8587cb5) (Cody Weaver)
+* [Remove Beta test from Ready component (#6677)](https://github.com/material-components/material-components-ios/commit/96c8a5f6e8efda4b4e29b9848daa52706ae36247) (Cody Weaver)
 
 ### AppBar
 
@@ -45,7 +44,6 @@ In this patch release we have improved our testing support and provided a ChipTe
 
 * [Add test schemes. (#6690)](https://github.com/material-components/material-components-ios/commit/f1b5318d5ea7aa6f327e6a22a13ed4362e79cd8d) (Robert Moore)
 * [Fixing Snapshot Tests (#6618)](https://github.com/material-components/material-components-ios/commit/419d0cc9ca51d2f91e26d8e9fb614c847636e900) (Andrew Overton)
-* [Remove Beta test from Ready component (#6677)](https://github.com/material-components/material-components-ios/commit/96c8a5f6e8efda4b4e29b9848daa52706ae36247) (Cody Weaver)
 * [Use MDCChipTextFieldScrollView to replace leftView functionality for flexibility and extensibility (#6686)](https://github.com/material-components/material-components-ios/commit/6f26784f86ac9d3b1ee583bc6655e968b690fa54) (Wenyu Zhang)
 * [{Testing} Create mechanism for test fakes and test data (#6673)](https://github.com/material-components/material-components-ios/commit/ef9e18ea7fdb187aac13b2e5c82ecdafe9e987c2) (Robert Moore)
 
