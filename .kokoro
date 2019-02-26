@@ -388,7 +388,6 @@ run_cocoapods() {
 
     # Move into our cloned repo
     cd github/repo
-    echo "moved to repo_dir"
 
     gem_install xcpretty 
     gem install cocoapods -v "$COCOAPODS_VERSION"
@@ -412,7 +411,9 @@ run_cocoapods() {
     cd catalog && rm -rf Pods && cd ..
     pod cache clean --all
     bash scripts/prep_all
-    pod lib lint MaterialComponents.podspec --skip-tests --fail-fast --verbose
+    cd catalog
+    echo "linting..."
+    pod lib lint ../MaterialComponents.podspec --skip-tests --fail-fast --verbose
   fi
 
   if [ -n "$CODECOV_TOKEN" ]; then
