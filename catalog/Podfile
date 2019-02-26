@@ -70,7 +70,6 @@ target "MDCCatalog" do
     'Ripple/UnitTests',
     'schemes/Container/UnitTests',
   ]
-  pod 'MaterialComponentsTestingSupport', :path => '../'
   pod 'MaterialComponentsSnapshotTests', :path => '../', :testspecs => [
     'SnapshotTests'
   ]

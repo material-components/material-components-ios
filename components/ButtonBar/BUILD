@@ -146,7 +146,6 @@ mdc_snapshot_objc_library(
         "//components/schemes/Color",
         "//components/schemes/Container",
         "//components/schemes/Typography",
-        "//components/schemes/Typography:TestingSupport",
     ],
 )
 
