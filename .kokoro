@@ -175,13 +175,13 @@ move_derived_data_to_tmp() {
   fi
 }
 
-# delete_all_derived_data() {
-#   targetDir="${HOME}/Library/Developer/Xcode/DerivedData"
-#   if [[ -d "$targetDir" ]]; then
-#     rm -rf "$targetDir"
-#     rm -rf /tmpfs/DerivedData
-#   fi
-# }
+delete_all_derived_data() {
+  targetDir="${HOME}/Library/Developer/Xcode/DerivedData"
+  if [[ -d "$targetDir" ]]; then
+    rm -rf "$targetDir"
+    rm -rf /tmpfs/DerivedData
+  fi
+}
 
 # Uploads all of the bazel test artifacts to Kokoro's artifacts storage.
 upload_bazel_test_artifacts() {
@@ -389,7 +389,8 @@ run_cocoapods() {
 
   if [ -n "$KOKORO_BUILD_NUMBER" ]; then
     echo "no kokoro build number"
-    move_derived_data_to_tmp
+    # move_derived_data_to_tmp
+    delete_all_derived_data
   fi
 
   if [ -n "$KOKORO_BUILD_NUMBER" ]; then
@@ -426,13 +427,12 @@ run_cocoapods() {
     bash ../scripts/prep_all
     echo "still in catalog:"
     ls
-    rm Podfile.lock
     # cd ..
 
     # pod cache clean --all
     # cd catalog
     echo "running pod repo update..."
-    pod repo update
+    pod install
     echo "linting..."
     pod lib lint ../MaterialComponents.podspec --skip-tests --fail-fast --verbose
   fi
