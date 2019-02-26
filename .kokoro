@@ -399,7 +399,7 @@ run_cocoapods() {
     cd github/repo
 
     gem_install xcpretty 
-    gem_install install cocoapods -v "$COCOAPODS_VERSION"
+    gem install cocoapods -v "$COCOAPODS_VERSION"
     echo "installed cocoapods version:"
     pod --version
 
