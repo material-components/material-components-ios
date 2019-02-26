@@ -423,7 +423,7 @@ run_cocoapods() {
     ls
     rm -rf Pods
     echo "prep_all..."
-    bash scripts/prep_all
+    bash ../scripts/prep_all
     echo "still in catalog:"
     ls
     rm Podfile.lock
