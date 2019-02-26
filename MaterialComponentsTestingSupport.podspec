@@ -1,7 +1,11 @@
 Pod::Spec.new do |s|
   s.name         = "MaterialComponentsTestingSupport"
 <<<<<<< HEAD
+<<<<<<< HEAD
   s.version      = "78.0.1"
+=======
+  s.version      = "77.0.0"
+>>>>>>> parent of f1b5318d5... [ColorScheme] Add test schemes. (#6690)
 =======
   s.version      = "77.0.0"
 >>>>>>> parent of f1b5318d5... [ColorScheme] Add test schemes. (#6690)
