@@ -422,12 +422,13 @@ run_cocoapods() {
     echo "in catalog:"
     ls
     rm -rf Pods
-    rm Podfile.lock
+    echo "prep_all..."
+    bash scripts/prep_all
     echo "still in catalog:"
     ls
+    rm Podfile.lock
     # cd ..
     pod cache clean --all
-    # bash scripts/prep_all
     # cd catalog
     echo "linting..."
     pod lib lint ../MaterialComponents.podspec --skip-tests --fail-fast --verbose
