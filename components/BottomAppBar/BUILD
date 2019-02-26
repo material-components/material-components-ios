@@ -106,7 +106,6 @@ mdc_objc_library(
         ":ColorThemer",
         ":private",
         "//components/NavigationBar",
-        "//components/schemes/Color:TestingSupport",
     ],
 )
 
