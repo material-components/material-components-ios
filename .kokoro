@@ -388,8 +388,8 @@ run_cocoapods() {
 
   if [ -n "$KOKORO_BUILD_NUMBER" ]; then
     echo "no kokoro build number"
-    move_derived_data_to_tmp
-    # delete_all_derived_data
+    # move_derived_data_to_tmp
+    delete_all_derived_data
   fi
 
   if [ -n "$KOKORO_BUILD_NUMBER" ]; then
@@ -418,22 +418,23 @@ run_cocoapods() {
       bash scripts/test_all catalog/MDCCatalog.xcworkspace:MDCCatalog
     fi
   elif [ "$DEPENDENCY_SYSTEM" = "cocoapods-podspec" ]; then
-    cd catalog
-    echo "in catalog:"
-    ls
-    rm -rf Pods
-    echo "prep_all..."
-    bash ../scripts/prep_all
-    echo "still in catalog:"
-    ls
+    # cd catalog
+    # echo "in catalog:"
+    # ls
+    # rm -rf Pods
+    # echo "prep_all..."
+    # bash ../scripts/prep_all
+    # echo "still in catalog:"
+    # ls
     # cd ..
 
     # pod cache clean --all
     # cd catalog
-    echo "running pod repo update..."
-    pod install
-    echo "linting..."
-    pod lib lint ../MaterialComponents.podspec --skip-tests --fail-fast --verbose
+    # echo "running pod repo update..."
+    # pod install
+    # echo "linting..."
+    # pod lib lint ../MaterialComponents.podspec --skip-tests --fail-fast --verbose
+    pod lib lint MaterialComponents.podspec --skip-tests --fail-fast --verbose
   fi
 
   if [ -n "$CODECOV_TOKEN" ]; then
