@@ -16,6 +16,9 @@
 
 #import <CoreText/CoreText.h>
 
+#import "MDCFontScaler.h"
+#import "UIFont+MaterialScalable.h"
+
 @implementation MDCTypographyScheme
 
 - (instancetype)init {
@@ -26,7 +29,8 @@
   self = [super init];
   if (self) {
     switch (defaults) {
-      case MDCTypographySchemeDefaultsMaterial201804:
+      case MDCTypographySchemeDefaultsMaterial201804:  //FALLTHRU
+      case MDCTypographySchemeDefaultsMaterial201902:
 #if defined(__IPHONE_8_2)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wpartial-availability"
@@ -63,8 +67,26 @@
 #endif
         break;
     }
+
+    if (defaults == MDCTypographySchemeDefaultsMaterial201902) {
+      // We typically avoid calling an instance method in an init method, but in this case the
+      // code would be an exact duplication and we know we are in a state where calling
+      // updateFontsForSizeCategory will behave as expected.
+      // (The fonts have already been initialized)
+      [self updateFontsForSizeCategory];
+
+      [[NSNotificationCenter defaultCenter] addObserver:self
+                                               selector:@selector(updateFontsForSizeCategory)
+                                                   name:UIContentSizeCategoryDidChangeNotification
+                                                 object:nil];
+
+    }
   }
   return self;
+}
+
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - NSCopying
@@ -86,6 +108,68 @@
   copy.overline = self.overline;
 
   return copy;
+}
+
+#pragma mark - Handle size category changes
+
+- (void)updateFontsForSizeCategory {
+  // Attach a sizing curve to all fonts
+  MDCFontScaler *fontScaler =
+      [[MDCFontScaler alloc] initForMaterialTextStyle:MaterialTextStyleHeadline1];
+  _headline1 = [fontScaler scalableFontWithFont:_headline1];
+  _headline1 = [_headline1 mdc_scaledFontForCurrentSizeCategory];
+
+  fontScaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MaterialTextStyleHeadline2];
+  _headline2 = [fontScaler scalableFontWithFont:_headline2];
+  _headline2 = [_headline2 mdc_scaledFontForCurrentSizeCategory];
+
+  fontScaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MaterialTextStyleHeadline3];
+  _headline3 = [fontScaler scalableFontWithFont:_headline3];
+  _headline3 = [_headline3 mdc_scaledFontForCurrentSizeCategory];
+
+  fontScaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MaterialTextStyleHeadline4];
+  _headline4 = [fontScaler scalableFontWithFont:_headline4];
+  _headline4 = [_headline4 mdc_scaledFontForCurrentSizeCategory];
+
+  fontScaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MaterialTextStyleHeadline5];
+  _headline5 = [fontScaler scalableFontWithFont:_headline5];
+  _headline5 = [_headline5 mdc_scaledFontForCurrentSizeCategory];
+
+  fontScaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MaterialTextStyleHeadline6];
+  _headline6 = [fontScaler scalableFontWithFont:_headline6];
+  _headline6 = [_headline6 mdc_scaledFontForCurrentSizeCategory];
+
+  fontScaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MaterialTextStyleSubtitle1];
+  _subtitle1 = [fontScaler scalableFontWithFont:_subtitle1];
+  _subtitle1 = [_subtitle1 mdc_scaledFontForCurrentSizeCategory];
+
+  fontScaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MaterialTextStyleSubtitle2];
+  _subtitle2 = [fontScaler scalableFontWithFont:_subtitle2];
+  _subtitle2 = [_subtitle2 mdc_scaledFontForCurrentSizeCategory];
+
+  fontScaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MaterialTextStyleBody1];
+  _body1 = [fontScaler scalableFontWithFont:_body1];
+  _body1 = [_body1 mdc_scaledFontForCurrentSizeCategory];
+
+  fontScaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MaterialTextStyleBody2];
+  _body2 = [fontScaler scalableFontWithFont:_body2];
+  _body2 = [_body2 mdc_scaledFontForCurrentSizeCategory];
+
+  fontScaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MaterialTextStyleBody2];
+  _body2 = [fontScaler scalableFontWithFont:_body2];
+  _body2 = [_body2 mdc_scaledFontForCurrentSizeCategory];
+
+  fontScaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MaterialTextStyleCaption];
+  _caption = [fontScaler scalableFontWithFont:_caption];
+  _caption = [_caption mdc_scaledFontForCurrentSizeCategory];
+
+  fontScaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MaterialTextStyleButton];
+  _button = [fontScaler scalableFontWithFont:_button];
+  _button = [_button mdc_scaledFontForCurrentSizeCategory];
+
+  fontScaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MaterialTextStyleOverline];
+  _overline = [fontScaler scalableFontWithFont:_overline];
+  _overline = [_overline mdc_scaledFontForCurrentSizeCategory];
 }
 
 @end
