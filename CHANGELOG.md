@@ -1,16 +1,6 @@
 # 78.0.1
 
-In this patch release we have improved our testing support and provided a ChipTextField example along with some Beta theming bug fixes.
-
-## API changes
-
-### ColorScheme+TestingSupport
-
-**New extension.**
-
-### TypographyScheme+TestingSupport
-
-**New extension.**
+In this patch release we have provided a ChipTextField example along with some Beta theming bug fixes.
 
 ## Changes
 
@@ -19,33 +9,18 @@ In this patch release we have improved our testing support and provided a ChipTe
 * [Removing theming extensions dependency on themers (#6654)](https://github.com/material-components/material-components-ios/commit/c2f6293c67a450d1b185c69cfd4de40be8587cb5) (Cody Weaver)
 * [Remove Beta test from Ready component (#6677)](https://github.com/material-components/material-components-ios/commit/96c8a5f6e8efda4b4e29b9848daa52706ae36247) (Cody Weaver)
 
-### AppBar
-
-* [Use test Typography scheme (#6692)](https://github.com/material-components/material-components-ios/commit/f7bbace1c0403760445ca02af97f171285d8c773) (Robert Moore)
-
-### ButtonBar
-
-* [Use test Typography scheme (#6693)](https://github.com/material-components/material-components-ios/commit/84916db4360bd9b3db0a7fd5312f1760c840019b) (Robert Moore)
-
 ### Dialogs
 
 * [Fix button font in Theming Extension (#6638)](https://github.com/material-components/material-components-ios/commit/669737f710c4693f3c85c8c369978b45ef187a8b) (Robert Moore)
-* [Use test Typography scheme (#6694)](https://github.com/material-components/material-components-ios/commit/81bab4571f0c38efde43afaae3dc3b886bc2519a) (Robert Moore)
 
 ### Ripple
 
 * [Add Ripple snapshot test target to BUILD file (#6698)](https://github.com/material-components/material-components-ios/commit/19ccf9ca3af70f82e1e266cd136330eb2593896a) (Andrew Overton)
 
-### Snackbar
-
-* [Use test Typography scheme (#6695)](https://github.com/material-components/material-components-ios/commit/b99025053836a0c97b6b453914f78d379d375f08) (Robert Moore)
-
 ## Multi-component changes
 
-* [Add test schemes. (#6690)](https://github.com/material-components/material-components-ios/commit/f1b5318d5ea7aa6f327e6a22a13ed4362e79cd8d) (Robert Moore)
 * [Fixing Snapshot Tests (#6618)](https://github.com/material-components/material-components-ios/commit/419d0cc9ca51d2f91e26d8e9fb614c847636e900) (Andrew Overton)
 * [Use MDCChipTextFieldScrollView to replace leftView functionality for flexibility and extensibility (#6686)](https://github.com/material-components/material-components-ios/commit/6f26784f86ac9d3b1ee583bc6655e968b690fa54) (Wenyu Zhang)
-* [{Testing} Create mechanism for test fakes and test data (#6673)](https://github.com/material-components/material-components-ios/commit/ef9e18ea7fdb187aac13b2e5c82ecdafe9e987c2) (Robert Moore)
 
 ---
 
