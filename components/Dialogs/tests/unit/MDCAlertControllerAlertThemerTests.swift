@@ -17,7 +17,6 @@ import XCTest
 import MaterialComponents.MaterialShadowElevations
 import MaterialComponents.MaterialDialogs
 import MaterialComponents.MaterialDialogs_DialogThemer
-import MaterialComponentsTestingSupport.MaterialTypographyScheme_TestingSupport
 
 class MDCAlertControllerAlertThemerTests: XCTestCase {
 
@@ -32,7 +31,7 @@ class MDCAlertControllerAlertThemerTests: XCTestCase {
 
     alertScheme = MDCAlertScheme()
     alertScheme.colorScheme = MDCSemanticColorScheme()
-    alertScheme.typographyScheme = MDCTypographyScheme.withVaryingFontSize()
+    alertScheme.typographyScheme = MDCTypographyScheme()
 
     alert = MDCAlertController(title: "Title", message: "Message")
   }
@@ -42,6 +41,14 @@ class MDCAlertControllerAlertThemerTests: XCTestCase {
     alert = nil
 
     super.tearDown()
+  }
+
+
+  func testDefaultAlertScheme() {
+    XCTAssertEqual(alertScheme.colorScheme.primaryColor, MDCSemanticColorScheme().primaryColor)
+    XCTAssertEqual(alertScheme.typographyScheme.body1, MDCTypographyScheme().body1)
+    XCTAssertEqual(alertScheme.cornerRadius, defaultCornerRadius)
+    XCTAssertEqual(alertScheme.elevation, defaultElevation)
   }
 
   func testApplyingAlertSchemeWithCustomColor() {
@@ -96,7 +103,9 @@ class MDCAlertControllerAlertThemerTests: XCTestCase {
 
   func testApplyingAlertSchemeWithCustomTypography() {
     // Given
-    let typographyScheme = MDCTypographyScheme.withVaryingFontSize()
+    let typographyScheme = MDCTypographyScheme()
+    let testFont = UIFont.boldSystemFont(ofSize: 55.0)
+    typographyScheme.headline6 = testFont
     alertScheme.typographyScheme = typographyScheme
 
     // When
@@ -106,6 +115,7 @@ class MDCAlertControllerAlertThemerTests: XCTestCase {
     XCTAssertEqual(alertScheme.typographyScheme.headline6, typographyScheme.headline6)
     XCTAssertEqual(alertView.titleFont, alertScheme.typographyScheme.headline6)
     XCTAssertNotEqual(alertView.titleFont, MDCTypographyScheme().headline6)
+    XCTAssertEqual(alertView.titleFont, testFont)
   }
 
   func testApplyingAlertSchemeWithCustomShape() {
