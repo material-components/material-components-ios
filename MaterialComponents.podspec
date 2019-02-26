@@ -1465,7 +1465,6 @@ Pod::Spec.new do |mdc|
       unit_tests.dependency "MaterialComponents/Snackbar+FontThemer"
       unit_tests.dependency "MaterialComponents/Snackbar+TypographyThemer"
       unit_tests.dependency "MaterialComponents/Themes"
-      unit_tests.dependency "MaterialComponentsTestingSupport/schemes/Typography"
     end
   end
 
