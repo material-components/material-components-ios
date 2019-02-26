@@ -16,7 +16,6 @@
 
 #import "MaterialBottomAppBar+ColorThemer.h"
 #import "MaterialBottomAppBar.h"
-#import "MaterialColorScheme+TestingSupport.h"
 #import "MaterialThemes.h"
 
 @interface BottomAppBarColorThemerTests : XCTestCase
@@ -50,7 +49,11 @@
 - (void)testSurfaceVariantColorThemer {
   // Given
   MDCSemanticColorScheme *colorScheme =
-      [MDCSemanticColorScheme semanticColorSchemeWithVaryingOpacity];
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  colorScheme.primaryColor = UIColor.orangeColor;
+  colorScheme.onPrimaryColor = UIColor.cyanColor;
+  colorScheme.surfaceColor = UIColor.blueColor;
+  colorScheme.onSurfaceColor = UIColor.purpleColor;
 
   // When
   [MDCBottomAppBarColorThemer applySurfaceVariantWithSemanticColorScheme:colorScheme
