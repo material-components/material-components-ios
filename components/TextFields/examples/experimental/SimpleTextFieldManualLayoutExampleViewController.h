@@ -1,4 +1,4 @@
-// Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2019-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,6 +14,9 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialContainerScheme.h"
+
 @interface SimpleTextFieldManualLayoutExampleViewController : UIViewController
 
+@property(strong, nonatomic) id<MDCContainerScheming> containerScheme;
 @end

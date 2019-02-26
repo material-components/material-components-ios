@@ -9,6 +9,7 @@ target "MDCCatalog" do
   project 'MDCCatalog.xcodeproj'
   pod 'MaterialComponentsExamples', :path => '../'
   pod 'MaterialComponents', :path => '../', :testspecs => [
+    'ActionSheet/UnitTests',
     'ActivityIndicator/UnitTests',
     'AnimationTiming/UnitTests',
     'AppBar/UnitTests',
@@ -57,7 +58,9 @@ target "MDCCatalog" do
     'Typography/UnitTests',
   ]
   pod 'MaterialComponentsBeta', :path => '../', :testspecs => [
-    'ActionSheet/UnitTests',
+    'ActionSheet+ActionSheetThemer/UnitTests',
+    'ActionSheet+ColorThemer/UnitTests',
+    'ActionSheet+Theming/UnitTests',
     'BottomNavigation/UnitTests',
     'ButtonBar+Theming/UnitTests',
     'Buttons+Theming/UnitTests',
@@ -68,11 +71,7 @@ target "MDCCatalog" do
     'schemes/Container/UnitTests',
   ]
   pod 'MaterialComponentsSnapshotTests', :path => '../', :testspecs => [
-    'BottomNavigation/tests/snapshot',
-    'Cards/tests/snapshot',
-    'Chips/tests/snapshot',
-    'Ripple/tests/snapshot',
-    'TextFields/tests/snapshot',
+    'SnapshotTests'
   ]
   pod 'CatalogByConvention', "~> 2.5"
   pod 'MaterialCatalog', :path => 'MaterialCatalog/'
@@ -99,7 +98,6 @@ target "MDCDragons" do
   pod 'MaterialComponents', :path => '../'
   pod 'MaterialComponentsBeta', :path => '../'
   pod 'MaterialComponentsExamples', :path => '../'
-  pod 'MaterialComponentsSnapshotTests', :path => '../'
   use_frameworks!
 end
 
