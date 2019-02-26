@@ -50,7 +50,7 @@
 @interface MDCChipTextFieldScrollView : UIScrollView
 
 /**
- The object acts as the delegate of the the MDCChipTextFieldScrollView that handles
+ The object acts as the delegate of the MDCChipTextFieldScrollView that handles
  touch events.
  */
 @property(nonatomic, weak, nullable) id<MDCChipTextFieldScrollViewDelegate> touchDelegate;
