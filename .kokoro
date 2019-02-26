@@ -428,8 +428,11 @@ run_cocoapods() {
     ls
     rm Podfile.lock
     # cd ..
-    pod cache clean --all
+
+    # pod cache clean --all
     # cd catalog
+    echo "running pod repo update..."
+    pod repo update
     echo "linting..."
     pod lib lint ../MaterialComponents.podspec --skip-tests --fail-fast --verbose
   fi
