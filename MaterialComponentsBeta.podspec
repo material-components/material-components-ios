@@ -128,7 +128,6 @@ Pod::Spec.new do |mdc|
         "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/supplemental/*.{h,m,swift}"
       ]
       unit_tests.resources = "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/resources/*"
-      unit_tests.dependency "MaterialComponentsTestingSupport/schemes/Typography"
     end
   end
 
