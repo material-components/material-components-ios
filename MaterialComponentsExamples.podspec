@@ -1,6 +1,7 @@
 experimental_sources = [
   'components/*/examples/experimental/supplemental/*.{h,m,swift}',
   'components/*/examples/experimental/*.{h,m,swift}',
+  'components/private/State/src/*.{h,m,swift}'
 ]
 
 experimental_headers = [
