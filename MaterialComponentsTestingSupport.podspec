@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "MaterialComponentsTestingSupport"
-  s.version      = "78.0.0"
+  s.version      = "78.0.1"
   s.authors      = "The Material Components authors."
   s.summary      = "This spec provides support files and utilities for testing."
   s.homepage     = "https://github.com/material-components/material-components-ios"
