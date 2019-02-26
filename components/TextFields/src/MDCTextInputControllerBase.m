@@ -598,7 +598,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 - (void)forceUpdatePlaceholderY {
   BOOL isDirectionToUp = NO;
   if (self.floatingEnabled) {
-    isDirectionToUp = self.textInput.text.length >= 1 || self.textInput.isEditing;
+    isDirectionToUp = self.textInput.hasTextContent || self.textInput.isEditing;
   }
 
   [CATransaction begin];
@@ -1159,7 +1159,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     return;
   }
   _textInput.placeholder = [placeholderText copy];
-  if (self.isFloatingEnabled && _textInput.text.length > 0) {
+  if (self.isFloatingEnabled && _textInput.hasTextContent) {
     [self updatePlaceholderAnimationConstraints:YES];
   }
 }
@@ -1432,7 +1432,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 }
 
 - (void)textInputDidUpdateConstraints {
-  if (self.isFloatingEnabled && _textInput.text.length > 0) {
+  if (self.isFloatingEnabled && _textInput.hasTextContent > 0) {
     [self updatePlaceholderAnimationConstraints:YES];
   }
 }
@@ -1449,7 +1449,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
   [self updateLayout];
 
-  if (self.isFloatingEnabled && self.textInput.text.length == 0) {
+  if (self.isFloatingEnabled && !self.textInput.hasTextContent) {
     [self movePlaceholderToUp:YES];
   }
   [CATransaction commit];
@@ -1510,7 +1510,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
   [self updateLayout];
 
-  if (self.isFloatingEnabled && self.textInput.text.length == 0) {
+  if (self.isFloatingEnabled && !self.textInput.hasTextContent) {
     [self movePlaceholderToUp:NO];
   }
   [CATransaction commit];

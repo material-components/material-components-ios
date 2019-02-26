@@ -58,6 +58,9 @@ target "MDCCatalog" do
     'Typography/UnitTests',
   ]
   pod 'MaterialComponentsBeta', :path => '../', :testspecs => [
+    'ActionSheet+ActionSheetThemer/UnitTests',
+    'ActionSheet+ColorThemer/UnitTests',
+    'ActionSheet+Theming/UnitTests',
     'BottomNavigation/UnitTests',
     'ButtonBar+Theming/UnitTests',
     'Buttons+Theming/UnitTests',
@@ -68,16 +71,7 @@ target "MDCCatalog" do
     'schemes/Container/UnitTests',
   ]
   pod 'MaterialComponentsSnapshotTests', :path => '../', :testspecs => [
-    'BottomAppBar/tests/snapshot',
-    'BottomNavigation/tests/snapshot',
-    'Buttons/tests/snapshot',
-    'ButtonBar/tests/snapshot',
-    'Cards/tests/snapshot',
-    'Chips/tests/snapshot',
-    'Dialogs/tests/snapshot',
-    'Ripple/tests/snapshot',
-    'Slider/tests/snapshot',
-    'TextFields/tests/snapshot',
+    'SnapshotTests'
   ]
   pod 'CatalogByConvention', "~> 2.5"
   pod 'MaterialCatalog', :path => 'MaterialCatalog/'
@@ -104,7 +98,6 @@ target "MDCDragons" do
   pod 'MaterialComponents', :path => '../'
   pod 'MaterialComponentsBeta', :path => '../'
   pod 'MaterialComponentsExamples', :path => '../'
-  pod 'MaterialComponentsSnapshotTests', :path => '../'
   use_frameworks!
 end
 
