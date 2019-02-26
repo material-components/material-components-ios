@@ -1,3 +1,29 @@
+# 78.0.1
+
+In this patch release we have provided a ChipTextField example along with some Beta theming bug fixes.
+
+## Changes
+
+### ActionSheet
+
+* [Removing theming extensions dependency on themers (#6654)](https://github.com/material-components/material-components-ios/commit/c2f6293c67a450d1b185c69cfd4de40be8587cb5) (Cody Weaver)
+* [Remove Beta test from Ready component (#6677)](https://github.com/material-components/material-components-ios/commit/96c8a5f6e8efda4b4e29b9848daa52706ae36247) (Cody Weaver)
+
+### Dialogs
+
+* [Fix button font in Theming Extension (#6638)](https://github.com/material-components/material-components-ios/commit/669737f710c4693f3c85c8c369978b45ef187a8b) (Robert Moore)
+
+### Ripple
+
+* [Add Ripple snapshot test target to BUILD file (#6698)](https://github.com/material-components/material-components-ios/commit/19ccf9ca3af70f82e1e266cd136330eb2593896a) (Andrew Overton)
+
+## Multi-component changes
+
+* [Fixing Snapshot Tests (#6618)](https://github.com/material-components/material-components-ios/commit/419d0cc9ca51d2f91e26d8e9fb614c847636e900) (Andrew Overton)
+* [Use MDCChipTextFieldScrollView to replace leftView functionality for flexibility and extensibility (#6686)](https://github.com/material-components/material-components-ios/commit/6f26784f86ac9d3b1ee583bc6655e968b690fa54) (Wenyu Zhang)
+
+---
+
 # 78.0.0
 
 This major release promotes the Shape libraries from private to ready, as well as promoting Action Sheet to ready by migrating it from the MaterialComponentsBeta podspec to the MaterialComponents main podspec. Lastly, we've increased our snapshot test coverage across multiple components.

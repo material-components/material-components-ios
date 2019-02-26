@@ -116,7 +116,6 @@ mdc_objc_library(
 
 swift_library(
     name = "unit_test_swift_sources",
-    testonly = 1,
     srcs = native.glob([
         "tests/unit/*.swift",
         "tests/unit/Theming/*.swift",
@@ -128,7 +127,6 @@ swift_library(
     visibility = ["//visibility:private"],
     deps = [
         ":Theming",
-        "//components/schemes/Typography:TestingSupport",
     ],
 )
 
@@ -148,7 +146,6 @@ mdc_snapshot_objc_library(
         "//components/schemes/Color",
         "//components/schemes/Container",
         "//components/schemes/Typography",
-        "//components/schemes/Typography:TestingSupport",
     ],
 )
 

@@ -61,7 +61,7 @@ end
 
 Pod::Spec.new do |s|
   s.name         = "MaterialComponentsSnapshotTests"
-  s.version      = "78.0.0"
+  s.version      = "78.0.1"
   s.authors      = "The Material Components authors."
   s.summary      = "This spec is an aggregate of all the Material Components snapshot tests."
   s.homepage     = "https://github.com/material-components/material-components-ios"
@@ -83,6 +83,5 @@ Pod::Spec.new do |s|
     snapshot_tests.source_files = SnapshotPodspecHelper.snapshot_sources
     snapshot_tests.resources = SnapshotPodspecHelper.snapshot_resources
     snapshot_tests.dependency 'iOSSnapshotTestCase/Core', '2.2.0'
-    snapshot_tests.dependency "MaterialComponentsTestingSupport/schemes/Typography"
   end
 end

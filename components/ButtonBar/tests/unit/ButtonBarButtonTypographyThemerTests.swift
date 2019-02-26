@@ -17,7 +17,6 @@ import MaterialComponents.MaterialButtonBar
 import MaterialComponents.MaterialButtonBar_TypographyThemer
 import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialTypographyScheme
-import MaterialComponentsTestingSupport.MaterialTypographyScheme_TestingSupport
 
 class ButtonBarButtonTypographyThemerTests: XCTestCase {
 
@@ -27,7 +26,7 @@ class ButtonBarButtonTypographyThemerTests: XCTestCase {
     let items = [UIBarButtonItem(title: "Text", style: .plain, target: nil, action: nil)]
     buttonBar.items = items
 
-    let typographyScheme = MDCTypographyScheme.withVaryingFontSize()
+    let typographyScheme = MDCTypographyScheme()
     MDCButtonBarTypographyThemer.applyTypographyScheme(typographyScheme, to: buttonBar)
 
     // Then

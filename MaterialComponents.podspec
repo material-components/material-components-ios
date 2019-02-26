@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponents"
-  mdc.version      = "78.0.0"
+  mdc.version      = "78.0.1"
   mdc.authors      = "The Material Components authors."
   mdc.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   mdc.homepage     = "https://github.com/material-components/material-components-ios"
@@ -98,7 +98,6 @@ Pod::Spec.new do |mdc|
       ]
       unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
       unit_tests.dependency "MaterialComponents/ActivityIndicator+ColorThemer"
-      unit_tests.dependency "MaterialComponentsTestingSupport/schemes/Color"
     end
   end
 
@@ -169,7 +168,6 @@ Pod::Spec.new do |mdc|
       unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
       unit_tests.dependency "MaterialComponents/AppBar+ColorThemer"
       unit_tests.dependency "MaterialComponents/AppBar+TypographyThemer"
-      unit_tests.dependency "MaterialComponentsTestingSupport/schemes/Typography"
     end
   end
 
@@ -223,7 +221,6 @@ Pod::Spec.new do |mdc|
       ]
       unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
       unit_tests.dependency "MaterialComponents/BottomAppBar+ColorThemer"
-      unit_tests.dependency "MaterialComponentsTestingSupport/schemes/Color"
     end
   end
 
@@ -462,7 +459,6 @@ Pod::Spec.new do |mdc|
       ]
       unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
       unit_tests.dependency "MaterialComponents/ButtonBar+TypographyThemer"
-      unit_tests.dependency "MaterialComponentsTestingSupport/schemes/Typography"
     end
   end
 
@@ -775,7 +771,6 @@ Pod::Spec.new do |mdc|
       ]
       unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
       unit_tests.dependency "MaterialComponents/Dialogs+DialogThemer"
-      unit_tests.dependency "MaterialComponentsTestingSupport/schemes/Typography"
     end
   end
 
@@ -1466,7 +1461,6 @@ Pod::Spec.new do |mdc|
       unit_tests.dependency "MaterialComponents/Snackbar+FontThemer"
       unit_tests.dependency "MaterialComponents/Snackbar+TypographyThemer"
       unit_tests.dependency "MaterialComponents/Themes"
-      unit_tests.dependency "MaterialComponentsTestingSupport/schemes/Typography"
     end
   end
 
