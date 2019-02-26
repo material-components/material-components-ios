@@ -170,9 +170,18 @@ move_derived_data_to_tmp() {
   targetDir="${HOME}/Library/Developer/Xcode/DerivedData"
   if [[ -d "$targetDir" ]]; then
     mv "$targetDir" /tmpfs/
-    ln -sf /tmpfs/DerivedData "$targetDir"
+    # ln -sf /tmpfs/DerivedData "$targetDir"
+    ln -sf /tmpfs/DerivedData "${HOME}/Library/Developer/Xcode/"
   fi
 }
+
+# delete_all_derived_data() {
+#   targetDir="${HOME}/Library/Developer/Xcode/DerivedData"
+#   if [[ -d "$targetDir" ]]; then
+#     rm -rf "$targetDir"
+#     rm -rf /tmpfs/DerivedData
+#   fi
+# }
 
 # Uploads all of the bazel test artifacts to Kokoro's artifacts storage.
 upload_bazel_test_artifacts() {
@@ -380,7 +389,7 @@ run_cocoapods() {
 
   if [ -n "$KOKORO_BUILD_NUMBER" ]; then
     echo "no kokoro build number"
-    # move_derived_data_to_tmp
+    move_derived_data_to_tmp
   fi
 
   if [ -n "$KOKORO_BUILD_NUMBER" ]; then
@@ -390,7 +399,8 @@ run_cocoapods() {
     cd github/repo
 
     gem_install xcpretty 
-    gem install cocoapods -v "$COCOAPODS_VERSION"
+    gem_install install cocoapods -v "$COCOAPODS_VERSION"
+    echo "installed cocoapods version:"
     pod --version
 
     # Install git-lfs
@@ -408,10 +418,17 @@ run_cocoapods() {
       bash scripts/test_all catalog/MDCCatalog.xcworkspace:MDCCatalog
     fi
   elif [ "$DEPENDENCY_SYSTEM" = "cocoapods-podspec" ]; then
-    cd catalog && rm -rf Pods && cd ..
-    pod cache clean --all
-    bash scripts/prep_all
     cd catalog
+    echo "in catalog:"
+    ls
+    rm -rf Pods
+    rm Podfile.lock
+    echo "still in catalog:"
+    ls
+    # cd ..
+    pod cache clean --all
+    # bash scripts/prep_all
+    # cd catalog
     echo "linting..."
     pod lib lint ../MaterialComponents.podspec --skip-tests --fail-fast --verbose
   fi
