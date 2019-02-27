@@ -170,6 +170,15 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
       self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
     height = kMDCBottomNavigationBarHeightAdjacentTitles;
   }
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+  if (@available(iOS 11.0, *)) {
+    if (self.sizeThatFitsIncludesSafeArea) {
+      height += self.safeAreaInsets.bottom;
+    }
+  }
+#pragma clang diagnostic pop
+
   return CGSizeMake(size.width, height);
 }
 
