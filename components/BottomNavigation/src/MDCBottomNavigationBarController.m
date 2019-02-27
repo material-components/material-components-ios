@@ -47,6 +47,13 @@
   [self loadConstraints];
 }
 
+- (void)viewSafeAreaInsetsDidChange {
+  [super viewSafeAreaInsetsDidChange];
+  
+  self.navigationBarTopConstraint.constant = -self.navigationBar.intrinsicContentSize.height;
+  [self.view setNeedsLayout];
+}
+
 - (void)setSelectedViewController:(nullable UIViewController *)selectedViewController {
   // Assert that the given VC is one of our view controllers or it is nil (we are unselecting)
   NSAssert(
@@ -224,12 +231,6 @@
   [self.view.rightAnchor constraintEqualToAnchor:self.content.rightAnchor].active = YES;
 
   [self.view.topAnchor constraintEqualToAnchor:self.content.topAnchor].active = YES;
-}
-
-- (void)viewSafeAreaInsetsDidChange {
-  [super viewSafeAreaInsetsDidChange];
-  self.navigationBarTopConstraint.constant = -self.navigationBar.intrinsicContentSize.height;
-  [self.view setNeedsLayout];
 }
 
 /**
