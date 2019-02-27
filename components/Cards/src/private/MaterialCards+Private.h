@@ -13,4 +13,4 @@
 // limitations under the License.
 
 #import "MDCCard+Private.h"
-#import "MDCCardCollectionCell+Private.h"
+#import <MaterialComponents/MDCCardCollectionCell+Private.h>
