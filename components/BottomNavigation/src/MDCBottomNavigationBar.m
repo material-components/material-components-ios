@@ -165,14 +165,12 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
-  UIEdgeInsets insets = self.mdc_safeAreaInsets;
-  CGFloat heightWithInset = kMDCBottomNavigationBarHeight + insets.bottom;
+  CGFloat height = kMDCBottomNavigationBarHeight;
   if (self.alignment == MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles &&
       self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
-    heightWithInset = kMDCBottomNavigationBarHeightAdjacentTitles + insets.bottom;
+    height = kMDCBottomNavigationBarHeightAdjacentTitles;
   }
-  CGSize insetSize = CGSizeMake(size.width, heightWithInset);
-  return insetSize;
+  return CGSizeMake(size.width, height);
 }
 
 + (Class)layerClass {
