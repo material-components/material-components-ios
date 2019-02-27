@@ -49,7 +49,7 @@
 
 - (void)viewSafeAreaInsetsDidChange {
   [super viewSafeAreaInsetsDidChange];
-  
+
   self.navigationBarTopConstraint.constant = -self.navigationBar.intrinsicContentSize.height;
   [self.view setNeedsLayout];
 }
@@ -106,7 +106,6 @@
   _viewControllers = viewControllersCopy;
 
   self.selectedViewController = viewControllersCopy.firstObject;
-  [self.view setNeedsLayout];
 }
 
 - (UIViewController *)childViewControllerForStatusBarStyle {
