@@ -84,7 +84,7 @@ static NSString *const kBadgeTitleArabic = @"أورا";
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-    self.recordMode = YES;
+  //  self.recordMode = YES;
 
   self.navigationBar = [[MDCFakeBottomNavigationBar alloc] init];
 
@@ -843,7 +843,6 @@ static NSString *const kBadgeTitleArabic = @"أورا";
   CGSize fitSize = [self.navigationBar sizeThatFits:CGSizeMake(kWidthWide, kHeightTall)];
   self.navigationBar.frame = CGRectMake(0, 0, fitSize.width, fitSize.height);
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
-
 
   // When
   self.tabItem1.titlePositionAdjustment = UIOffsetMake(20, -20);
