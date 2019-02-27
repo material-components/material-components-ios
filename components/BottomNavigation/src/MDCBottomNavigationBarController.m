@@ -18,6 +18,8 @@
 
 /** The view that hosts the content for the selected view controller **/
 @property(nonatomic, strong) UIView *content;
+
+/** Constrains the top of the bottom navigation bar to its height within the safe area. */
 @property(nonatomic, strong) NSLayoutConstraint *navigationBarTopConstraint;
 
 @end
