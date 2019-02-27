@@ -146,6 +146,8 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 }
 
 - (void)layoutSubviews {
+  [super layoutSubviews];
+
   CGRect standardBounds = CGRectStandardize(self.bounds);
   self.blurEffectView.frame = standardBounds;
   self.barView.frame = standardBounds;
@@ -594,7 +596,6 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
     itemView.truncatesTitle = truncatesLongTitles;
     [itemView setNeedsLayout];
   }
-  [self invalidateIntrinsicContentSize];
   [self setNeedsLayout];
 }
 
@@ -625,7 +626,6 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
   for (MDCBottomNavigationItemView *itemView in self.itemViews) {
     itemView.titleVisibility = titleVisibility;
   }
-  [self invalidateIntrinsicContentSize];
   [self setNeedsLayout];
 }
 
