@@ -360,7 +360,7 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
   __block NSInteger count = 0;
   void (^block)(MDCPageControlIndicator *, NSUInteger, BOOL *) =
       ^(MDCPageControlIndicator *indicator, NSUInteger index, BOOL *stop) {
-        BOOL isCurrentPageIndicator = (NSInteger)index == _currentPage;
+        BOOL isCurrentPageIndicator = (NSInteger)index == self.currentPage;
 
         // Reveal indicators if hidden and not current page indicator.
         if (indicator.isHidden && !isCurrentPageIndicator) {
