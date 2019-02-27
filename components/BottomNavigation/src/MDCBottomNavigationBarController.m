@@ -18,7 +18,7 @@
 
 /** The view that hosts the content for the selected view controller **/
 @property(nonatomic, strong) UIView *content;
-@property(nonatomic, strong) NSLayoutConstraint *bnTopCons;
+@property(nonatomic, strong) NSLayoutConstraint *navigationBarTopConstraint;
 
 @end
 
@@ -214,10 +214,10 @@
 
   [self.navigationBar.topAnchor constraintEqualToAnchor:self.content.bottomAnchor].active = YES;
   [self.navigationBar.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor].active = YES;
-  self.bnTopCons = [self.navigationBar.topAnchor
+  self.navigationBarTopConstraint = [self.navigationBar.topAnchor
       constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor
                      constant:-self.navigationBar.intrinsicContentSize.height];
-  self.bnTopCons.active = YES;
+  self.navigationBarTopConstraint.active = YES;
 
   // Content View Constraints
   [self.view.leftAnchor constraintEqualToAnchor:self.content.leftAnchor].active = YES;
@@ -228,7 +228,7 @@
 
 - (void)viewSafeAreaInsetsDidChange {
   [super viewSafeAreaInsetsDidChange];
-  self.bnTopCons.constant = -self.navigationBar.intrinsicContentSize.height;
+  self.navigationBarTopConstraint.constant = -self.navigationBar.intrinsicContentSize.height;
   [self.view setNeedsLayout];
 }
 
