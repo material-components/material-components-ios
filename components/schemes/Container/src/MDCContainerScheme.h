@@ -43,8 +43,6 @@
 /**
  MDCContainerScheme is a class conforming to MDCContainerScheming that contains
  schemes values for theming systems.
-
- All scheme properties are @c nil by default.
  */
 __attribute__((objc_subclassing_restricted)) @interface MDCContainerScheme
     : NSObject<MDCContainerScheming>
