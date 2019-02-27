@@ -169,8 +169,7 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 - (CGSize)intrinsicContentSize {
   CGFloat height = self.isTitleBelowIcon ? kBarHeightStackedTitle : kBarHeightAdjacentTitle;
   CGFloat itemWidth = [self widthForItemsWhenCenteredWithAvailableWidth:CGFLOAT_MAX height:height];
-  CGSize size =
-      CGSizeMake(itemWidth * self.items.count, height);
+  CGSize size = CGSizeMake(itemWidth * self.items.count, height);
   return size;
 }
 

@@ -216,7 +216,7 @@
   [self.navigationBar.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor].active = YES;
   self.bnTopCons = [self.navigationBar.topAnchor
       constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor
-                    constant:-self.navigationBar.intrinsicContentSize.height];
+                     constant:-self.navigationBar.intrinsicContentSize.height];
   self.bnTopCons.active = YES;
 
   // Content View Constraints
