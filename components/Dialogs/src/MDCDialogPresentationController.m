@@ -18,6 +18,7 @@
 #import "MaterialShadowLayer.h"
 #import "private/MDCDialogShadowedView.h"
 
+CGFloat const kPresentedViewCorenerRadius = -1.0;
 static CGFloat MDCDialogMinimumWidth = 280;
 // TODO: Spec indicates 40 side margins and 280 minimum width.
 // That is incompatible with a 320 wide device.
@@ -72,7 +73,7 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
   self = [super initWithPresentedViewController:presentedViewController
                        presentingViewController:presentingViewController];
   if (self) {
-    _dialogCornerRadius = -1.0;
+    _dialogCornerRadius = kPresentedViewCorenerRadius;
     _dimmingView = [[UIView alloc] initWithFrame:CGRectZero];
     _dimmingView.backgroundColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.32];
     _dimmingView.alpha = 0;
@@ -138,7 +139,7 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
   // https://material.io/guidelines/motion/choreography.html#choreography-creation
 
   // Ensure corner radius matches between the tracking view and the view being presented
-  if (self.dialogCornerRadius < 0) {
+  if (self.dialogCornerRadius <= kPresentedViewCorenerRadius) {
     // If dialogCornerRadius is not set, use the presented view's cornerRadius for the shadow layer.
     _trackingView.layer.cornerRadius = self.presentedView.layer.cornerRadius;
   } else {
@@ -147,7 +148,7 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
     _trackingView.layer.cornerRadius = self.dialogCornerRadius;
     // Note: For MDCAlertController, this assumes that the "view" property points to the same
     // instance as the "alertView" property. Therefore, we are safe to not set its cornerRadius
-    // property (its ".cornerRadius", rather then its ".view.layer.cornerRadius")
+    // property (its ".cornerRadius", rather then its "presentedView.layer.cornerRadius")
     self.presentedView.layer.cornerRadius = self.dialogCornerRadius;
   }
 

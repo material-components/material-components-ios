@@ -16,6 +16,8 @@
 
 #import "MaterialShadowElevations.h"
 
+extern CGFloat const kPresentedViewCorenerRadius;
+
 @class MDCDialogPresentationController;
 
 /**
@@ -69,18 +71,22 @@
 /**
  Customize the corner radius of the shadow to match the presented view's corner radius.
 
- The default value (-1) will use the presented view's corner radius as the corner radius of the
- shadow. Setting any value to myPresentedViewConteroller.view.layer.cornerRadius will be used
- as the shadow's corner radius.
+ By default (when the value is kPresentedViewCorenerRadius), the dialogCornerRadius is ignored,
+ and the presented view will be presented with it original corner radius value that is assigned
+ by the client. The presentation controller will ensure in that case to match its shadow
+ shape to the corner radius of the presented view.
 
- Changing the dialogCornerRadius will work in the opposite way. When a view controller is pesented,
- it's view's corner radius will be adjusted to match this value.
+ Modifying dialogCornerRadius to a positive value, will present the presented view with this
+ positive value, overriding previous corner radius values that may have been previously
+ set by the client. The presentation controller will ensure in that case to match both the
+ presetned view's and the shadow's corner radius to the value assigned in dialogCornerRadius.
 
- Applying a themer on a custom dialog or on an alert (MDCAlertController) will adjust the
- dialogCornerRadius value, and will override any value manually set for the
- presented view controller.
+ Material themers use dialogCornerRadius for setting the corner radius, therefore, when applying
+ a themer to your custom UIViewController, any value you assign to your view's corner radius
+(through view.layer.cornerRadius) will be ignored. In that case, if you wish to further
+ customize the corner radius of the presented view, set dialogCornerRadius instead.
 
- Defaults to -1.0.
+ Defaults to: kPresentedViewCorenerRadius (-1.0).
  */
 @property(nonatomic, assign) CGFloat dialogCornerRadius;
 

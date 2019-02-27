@@ -178,9 +178,9 @@ static const CGFloat kCornerRadiusUnthemed = 12;
   // The following line will override the value set by the themer, setting 6.0 as the final value:
   viewController.mdc_dialogPresentationController.dialogCornerRadius = kCornerRadiusThemed;
 
-  // Do not set the corner radius directly on the view while using the presentation
-  // controller themer. This next line is ignored bcasue applyThemeWithScheme: takes precedence:
-  viewController.view.layer.cornerRadius = 24.0;
+  // Do not set the corner radius directly on the view if applying a presentation controller
+  // themer. This next line is ignored bcasue applyThemeWithScheme: takes precedence:
+  viewController.view.layer.cornerRadius = 24.0;  // AVOID!
 
   [self presentViewController:viewController animated:YES completion:nil];
 }
@@ -196,7 +196,7 @@ static const CGFloat kCornerRadiusUnthemed = 12;
   viewController.containerScheme = self.containerScheme;
 
   // Setting the presented dialog's corner radius on an un-themed dialog is ok:
-  viewController.view.layer.cornerRadius = kCornerRadiusUnthemed;
+  viewController.view.layer.cornerRadius = kCornerRadiusUnthemed;  // OK!
 
   [self presentViewController:viewController animated:YES completion:nil];
 }
