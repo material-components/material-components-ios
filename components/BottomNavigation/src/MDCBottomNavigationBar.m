@@ -65,7 +65,6 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 @property(nonatomic, strong) UIView *itemsLayoutView;
 @property(nonatomic, strong) NSMutableArray *inkControllers;
 @property(nonatomic) BOOL shouldPretendToBeATabBar;
-@property(nonatomic, assign) UIEdgeInsets formerSafeAreaInsets;
 @end
 
 @implementation MDCBottomNavigationBar
@@ -147,7 +146,6 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 }
 
 - (void)layoutSubviews {
-  NSLog(@"LAYOUTSUBVIEWS");
   CGRect standardBounds = CGRectStandardize(self.bounds);
   self.blurEffectView.frame = standardBounds;
   self.barView.frame = standardBounds;
@@ -159,31 +157,20 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
     [self sizeItemsLayoutViewItemsDistributed:YES withBottomNavSize:size containerWidth:size.width];
   }
   [self layoutItemViews];
-  [super layoutSubviews];
-
 }
 
 - (void)safeAreaInsetsDidChange {
-  BOOL needsLayout = !UIEdgeInsetsEqualToEdgeInsets(self.formerSafeAreaInsets,
-                                                    self.mdc_safeAreaInsets);
-  self.formerSafeAreaInsets = self.mdc_safeAreaInsets;
   if (@available(iOS 11.0, *)) {
     [super safeAreaInsetsDidChange];
   }
-  if (needsLayout) {
-    [self invalidateIntrinsicContentSize];
-    [self.superview setNeedsLayout];
-    [self.superview layoutIfNeeded];
-  }
+  [self setNeedsLayout];
 }
 
 - (CGSize)intrinsicContentSize {
   CGFloat height = self.isTitleBelowIcon ? kBarHeightStackedTitle : kBarHeightAdjacentTitle;
-  UIEdgeInsets safeAreaInsets = [self mdc_safeAreaInsets];
   CGFloat itemWidth = [self widthForItemsWhenCenteredWithAvailableWidth:CGFLOAT_MAX height:height];
   CGSize size =
-      CGSizeMake(itemWidth * self.items.count + safeAreaInsets.left + safeAreaInsets.right,
-                 height + safeAreaInsets.top + safeAreaInsets.bottom);
+      CGSizeMake(itemWidth * self.items.count, height);
   return size;
 }
 
