@@ -626,7 +626,6 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
   for (MDCBottomNavigationItemView *itemView in self.itemViews) {
     itemView.titleVisibility = titleVisibility;
   }
-  [self setNeedsLayout];
 }
 
 - (void)setItemTitleFont:(UIFont *)itemTitleFont {
@@ -675,7 +674,6 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
   _alignment = alignment;
   for (MDCBottomNavigationItemView *itemView in self.itemViews) {
     itemView.titleBelowIcon = self.isTitleBelowIcon;
-    [itemView setNeedsLayout];
   }
   [self invalidateIntrinsicContentSize];
   [self setNeedsLayout];
