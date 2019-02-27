@@ -40,9 +40,7 @@ class ButtonsCustomFontViewController: UIViewController {
     }
 
     // Apply our design data using the Material themers
-    view.backgroundColor =
-        containerScheme.colorScheme?.backgroundColor ?? MDCSemanticColorScheme().backgroundColor
-
+    view.backgroundColor = containerScheme.colorScheme.backgroundColor
     let flatButtonStatic = MDCButton()
     flatButtonStatic.applyContainedTheme(withScheme: containerScheme)
     flatButtonStatic.setTitle("Static", for: UIControlState())
