@@ -63,8 +63,7 @@ class DialogsCustomShadowExampleViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor = containerScheme.colorScheme?.backgroundColor ??
-        MDCSemanticColorScheme(defaults: .material201804).backgroundColor
+    view.backgroundColor = containerScheme.colorScheme.backgroundColor
 
     textButton.setTitle("PRESENT ALERT", for: UIControlState())
     textButton.setTitleColor(UIColor(white: 0.1, alpha:1), for: UIControlState())

@@ -60,8 +60,8 @@ class DialogsMaterialThemingTests: XCTestCase {
     XCTAssertEqual(alert.elevation, ShadowElevation.dialog)
 
     for action in alert.actions {
-      guard let button = alert.button(for: action),
-        let colorScheme = scheme.colorScheme
+      let colorScheme = scheme.colorScheme
+      guard let button = alert.button(for: action)
         else { continue }
       switch action.emphasis {
       case .low:

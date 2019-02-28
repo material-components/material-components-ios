@@ -53,8 +53,7 @@ class ActionSheetSwiftExampleViewController: UIViewController {
   override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
     
-    view.backgroundColor = containerScheme.colorScheme?.backgroundColor ??
-        MDCSemanticColorScheme(defaults: .material201804).backgroundColor
+    view.backgroundColor = containerScheme.colorScheme.backgroundColor
     tableView.frame = view.frame
     tableView.frame.origin.y = 0.0
     view.addSubview(tableView)
