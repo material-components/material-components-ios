@@ -49,6 +49,7 @@ static NSString *const kMDCBottomNavigationBarAccessibilityIdentifier = @"access
 static NSString *const kMDCBottomNavigationBarAccessibilityLabel = @"accessibilityLabel";
 static NSString *const kMDCBottomNavigationBarAccessibilityHint = @"accessibilityHint";
 static NSString *const kMDCBottomNavigationBarIsAccessibilityElement = @"isAccessibilityElement";
+static NSString *const kTitlePositionAdjustment = @"titlePositionAdjustment";
 
 static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 
@@ -99,6 +100,7 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
   _titleBelowItem = YES;
   _barTintColor = [UIColor whiteColor];
   _truncatesLongTitles = YES;
+  _sizeThatFitsIncludesSafeArea = YES;
 
   // Remove any unarchived subviews and reconfigure the view hierarchy
   if (self.subviews.count) {
@@ -165,14 +167,21 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
-  UIEdgeInsets insets = self.mdc_safeAreaInsets;
-  CGFloat heightWithInset = kMDCBottomNavigationBarHeight + insets.bottom;
+  CGFloat height = kMDCBottomNavigationBarHeight;
   if (self.alignment == MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles &&
       self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
-    heightWithInset = kMDCBottomNavigationBarHeightAdjacentTitles + insets.bottom;
+    height = kMDCBottomNavigationBarHeightAdjacentTitles;
   }
-  CGSize insetSize = CGSizeMake(size.width, heightWithInset);
-  return insetSize;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+  if (@available(iOS 11.0, *)) {
+    if (self.sizeThatFitsIncludesSafeArea) {
+      height += self.safeAreaInsets.bottom;
+    }
+  }
+#pragma clang diagnostic pop
+
+  return CGSizeMake(size.width, height);
 }
 
 + (Class)layerClass {
@@ -322,6 +331,10 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
            forKeyPath:kMDCBottomNavigationBarIsAccessibilityElement
               options:NSKeyValueObservingOptionNew
               context:nil];
+    [item addObserver:self
+           forKeyPath:kTitlePositionAdjustment
+              options:NSKeyValueObservingOptionNew
+              context:nil];
   }
 }
 
@@ -338,6 +351,7 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
       [item removeObserver:self forKeyPath:kMDCBottomNavigationBarAccessibilityLabel];
       [item removeObserver:self forKeyPath:kMDCBottomNavigationBarAccessibilityHint];
       [item removeObserver:self forKeyPath:kMDCBottomNavigationBarIsAccessibilityElement];
+      [item removeObserver:self forKeyPath:kTitlePositionAdjustment];
     } @catch (NSException *exception) {
       if (exception) {
         // No need to do anything if there are no observers.
@@ -380,6 +394,8 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
       itemView.accessibilityHint = change[kMDCBottomNavigationBarNewString];
     } else if ([keyPath isEqualToString:kMDCBottomNavigationBarIsAccessibilityElement]) {
       itemView.isAccessibilityElement = [change[kMDCBottomNavigationBarNewString] boolValue];
+    } else if ([keyPath isEqualToString:kTitlePositionAdjustment]) {
+      itemView.titlePositionAdjustment = [change[kMDCBottomNavigationBarNewString] UIOffsetValue];
     }
   }
 }
@@ -482,6 +498,7 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
     itemView.contentVerticalMargin = self.itemsContentVerticalMargin;
     itemView.contentHorizontalMargin = self.itemsContentHorizontalMargin;
     itemView.truncatesTitle = self.truncatesLongTitles;
+    itemView.titlePositionAdjustment = item.titlePositionAdjustment;
     MDCInkTouchController *controller = [[MDCInkTouchController alloc] initWithView:itemView];
     controller.delegate = self;
     [self.inkControllers addObject:controller];

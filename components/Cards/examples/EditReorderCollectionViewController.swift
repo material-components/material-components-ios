@@ -33,14 +33,6 @@ class EditReorderCollectionViewController: UIViewController,
 
   var containerScheme: MDCContainerScheming
 
-  var colorScheme: MDCColorScheming {
-    return containerScheme.colorScheme ?? MDCSemanticColorScheme()
-  }
-
-  var typographyScheme: MDCTypographyScheming {
-    return containerScheme.typographyScheme ?? MDCTypographyScheme()
-  }
-
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     containerScheme = MDCContainerScheme()
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -65,7 +57,7 @@ class EditReorderCollectionViewController: UIViewController,
     collectionView.frame = view.bounds
     collectionView.dataSource = self
     collectionView.delegate = self
-    collectionView.backgroundColor = colorScheme.backgroundColor
+    collectionView.backgroundColor = containerScheme.colorScheme.backgroundColor
     collectionView.alwaysBounceVertical = true
     collectionView.register(CardEditReorderCollectionCell.self, forCellWithReuseIdentifier: "Cell")
     collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -149,7 +141,8 @@ class EditReorderCollectionViewController: UIViewController,
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
     guard let cardCell = cell as? CardEditReorderCollectionCell else { return cell }
 
-    cardCell.apply(containerScheme: containerScheme, typographyScheme: typographyScheme)
+    cardCell.apply(containerScheme: containerScheme,
+                   typographyScheme: containerScheme.typographyScheme)
 
     let title = dataSource[indexPath.item].title
     let imageName = dataSource[indexPath.item].image
