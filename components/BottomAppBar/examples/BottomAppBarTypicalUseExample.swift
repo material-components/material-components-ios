@@ -150,7 +150,7 @@ extension BottomAppBarTypicalUseSwiftExample {
     return [
       "breadcrumbs": ["Bottom App Bar", "Bottom App Bar (Swift)"],
       "primaryDemo": false,
-      "presentable": true,
+      "presentable": false,
     ]
   }
 
