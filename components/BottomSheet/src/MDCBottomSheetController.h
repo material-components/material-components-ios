@@ -14,7 +14,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MDCSheetState.h"
-#import "MaterialShapesNew.h"
+#import "MaterialShapes.h"
 
 @protocol MDCBottomSheetControllerDelegate;
 

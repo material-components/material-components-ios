@@ -14,9 +14,9 @@
 
 #import <CoreGraphics/CoreGraphics.h>
 
-#import "MDCPillShapeGeneratorNew.h"
+#import "MDCPillShapeGenerator.h"
 
-#import "MDCRoundedCornerTreatmentNew.h"
+#import "MDCRoundedCornerTreatment.h"
 #import "MaterialMath.h"
 
 @implementation MDCPillShapeGenerator {

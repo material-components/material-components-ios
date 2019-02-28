@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCSlantedRectShapeGeneratorNew.h"
+#import "MDCSlantedRectShapeGenerator.h"
 
 @implementation MDCSlantedRectShapeGenerator {
   MDCRectangleShapeGenerator *_rectangleGenerator;

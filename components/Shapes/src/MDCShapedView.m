@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCShapedViewNew.h"
+#import "MDCShapedView.h"
 
-#import "MDCShapedShadowLayerNew.h"
+#import "MDCShapedShadowLayer.h"
 
 @interface MDCShapedView ()
 @property(nonatomic, readonly, strong) MDCShapedShadowLayer *layer;
