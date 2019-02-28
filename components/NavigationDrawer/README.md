@@ -48,8 +48,6 @@ Navigation drawers are recommended for:
 
 ## Overview
 
-Navigation Drawer is currently a [beta component](https://github.com/material-components/material-components-ios/blob/develop/contributing/beta_components.md). Therefore, clients that wish to use Navigation Drawer in their app will need to manually clone the repo and add the code to their project.
-
 Navigation Drawer currently provides the [Bottom Drawer](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619577-accessibilitylabel) presentation style.
 
 The Navigation Drawer is architected by implementing a custom `UIPresentationController` and a `UIViewControllerTransitioningDelegate` named `MDCBottomDrawerPresentationController` and `MDCBottomDrawerTransitionController` respectively.
@@ -70,8 +68,6 @@ Lastly, your headerViewController conforms to the `MDCBottomDrawerHeader` protoc
 
 ## Installation
 
-**This component is a [beta component](https://github.com/material-components/material-components-ios/blob/develop/contributing/beta_components.md) and therefore doesn't support installation via CocoaPods. To install this component you will need to manually clone the repo and add the code to your project. This is intended.**
-
 ### Importing
 
 To import the component:
@@ -79,7 +75,7 @@ To import the component:
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift
-import MaterialComponentsBeta.MaterialNavigationDrawer
+import MaterialComponents.MaterialNavigationDrawer
 ```
 
 #### Objective-C
