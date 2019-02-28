@@ -24,6 +24,9 @@ class BottomNavigationSelectedIconExample: UIViewController {
   let bottomNavBar = MDCBottomNavigationBar()
 
   override func viewDidLoad() {
+    super.viewDidLoad()
+
+    bottomNavBar.sizeThatFitsIncludesSafeArea = false
     colorScheme.backgroundColor = .white
     view.backgroundColor = colorScheme.backgroundColor
 

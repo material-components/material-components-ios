@@ -26,7 +26,6 @@ class BottomNavigationTitleVisibilityChangeExample: UIViewController, MDCBottomN
   
   init() {
     super.init(nibName: nil, bundle: nil)
-    commonBottomNavigationTypicalUseSwiftExampleInit()
   }
   
   @available(*, unavailable)
@@ -34,10 +33,13 @@ class BottomNavigationTitleVisibilityChangeExample: UIViewController, MDCBottomN
     super.init(coder: aDecoder)
   }
   
-  func commonBottomNavigationTypicalUseSwiftExampleInit() {
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
     view.backgroundColor = colorScheme.backgroundColor
     view.addSubview(bottomNavBar)
-    
+
+    bottomNavBar.sizeThatFitsIncludesSafeArea = false
     // Always show bottom navigation bar item titles.
     bottomNavBar.titleVisibility = .always
     
@@ -56,6 +58,7 @@ class BottomNavigationTitleVisibilityChangeExample: UIViewController, MDCBottomN
     bottomNavBar.selectedItem = tabBarItem2;
     
     bottomNavBar.delegate = self
+    addInstructionLabel()
   }
   
   func layoutBottomNavBar() {
@@ -93,11 +96,6 @@ class BottomNavigationTitleVisibilityChangeExample: UIViewController, MDCBottomN
     instructionLabel.center = CGPoint(x: viewBounds.midX, y: viewBounds.midY);
 
     layoutBottomNavBar()
-  }
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    addInstructionLabel()
   }
   
   override func viewWillAppear(_ animated: Bool) {
