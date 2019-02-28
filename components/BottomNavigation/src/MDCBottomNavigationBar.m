@@ -98,6 +98,7 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
   _itemsDistributed = YES;
   _barTintColor = [UIColor whiteColor];
   _truncatesLongTitles = YES;
+  _sizeThatFitsIncludesSafeArea = YES;
 
   // Remove any unarchived subviews and reconfigure the view hierarchy
   if (self.subviews.count) {
@@ -177,11 +178,21 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
-  UIEdgeInsets insets = self.mdc_safeAreaInsets;
-  CGFloat heightWithInset =
-      (self.isTitleBelowIcon ? kBarHeightStackedTitle : kBarHeightAdjacentTitle) + insets.bottom;
-  CGSize insetSize = CGSizeMake(size.width, heightWithInset);
-  return insetSize;
+  CGFloat height = kMDCBottomNavigationBarHeight;
+  if (self.alignment == MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles &&
+      self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
+    height = kMDCBottomNavigationBarHeightAdjacentTitles;
+  }
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+  if (@available(iOS 11.0, *)) {
+    if (self.sizeThatFitsIncludesSafeArea) {
+      height += self.safeAreaInsets.bottom;
+    }
+  }
+#pragma clang diagnostic pop
+
+  return CGSizeMake(size.width, height);
 }
 
 + (Class)layerClass {
