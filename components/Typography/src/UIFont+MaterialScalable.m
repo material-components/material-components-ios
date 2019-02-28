@@ -116,13 +116,14 @@ static char MDCFontScaleObjectKey;
 }
 
 // @property(nonatomic, nullable, setter=mdc_setScalingCurve:) NSDictionary<UIContentSizeCategory, NSNumber*> *mdc_scalingCurve;
-- (NSDictionary<UIContentSizeCategory, NSNumber*> *)mdc_scalingCurve {
-  return (NSDictionary<UIContentSizeCategory, NSNumber*> *)objc_getAssociatedObject(self, &MDCFontScaleObjectKey);
+- (NSDictionary<UIContentSizeCategory, NSNumber *> *)mdc_scalingCurve {
+  return (NSDictionary<UIContentSizeCategory, NSNumber *> *)objc_getAssociatedObject(
+      self, &MDCFontScaleObjectKey);
 }
 
 - (void)mdc_setScalingCurve:(NSDictionary<UIContentSizeCategory,NSNumber *> *)scalingCurve {
-  objc_setAssociatedObject(self, &MDCFontScaleObjectKey, scalingCurve, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+  objc_setAssociatedObject(self, &MDCFontScaleObjectKey, scalingCurve,
+      OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
-
 
 @end

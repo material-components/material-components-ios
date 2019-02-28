@@ -4,6 +4,7 @@
 
 #import "MDCFontTraits.h"
 #import "UIApplication+AppExtensions.h"
+#import "UIFont+MaterialScalable.h"
 
 NSString *MaterialTextStyleHeadline1 = @"Material.TextStyle.Headline1";
 NSString *MaterialTextStyleHeadline2 = @"Material.TextStyle.Headline2";
@@ -19,76 +20,8 @@ NSString *MaterialTextStyleButton = @"Material.TextStyle.Button";
 NSString *MaterialTextStyleCaption = @"Material.TextStyle.Caption";
 NSString *MaterialTextStyleOverline = @"Material.TextStyle.Overline";
 
-
-static char MDCFontScaleObjectKey;
-
-@implementation UIFont (MMDCFontMetrics)
-
-- (UIFont *)mdc_scaledFontForSizeCategory:(UIContentSizeCategory)sizeCategory {
-  if (!self.mdc_hasScalingCurve) {
-    return self;
-  }
-
-  NSNumber *fontSizeNumber;
-  if (sizeCategory) {
-    fontSizeNumber = self.mdc_scalingCurve[sizeCategory];
-  }
-
-  // If you have queried the table for a sizeCategory that doesn't exist, we will return the
-  // traits for XXXL.  This handles the case where the values are requested for one of the
-  // accessibility size categories beyond XXXL such as
-  // UIContentSizeCategoryAccessibilityExtraLarge.  Accessbility size categories are only
-  // defined for the Body Font Style.
-  if (fontSizeNumber == nil) {
-    fontSizeNumber = self.mdc_scalingCurve[UIContentSizeCategoryExtraExtraExtraLarge];
-  }
-
-  // Guard against broken / incomplete scaling curves by returning self if fontSizeNumber is nil.
-  if (fontSizeNumber == nil) {
-    return self;
-  }
-
-  CGFloat fontSize = (CGFloat)fontSizeNumber.doubleValue;
-  UIFont *scaledFont = [UIFont fontWithDescriptor:self.fontDescriptor size:fontSize];
-
-  return scaledFont;
-}
-
-- (UIFont *)mdc_scaledFontForCurrentSizeCategory {
-  // If we are within an application, query the preferredContentSizeCategory.
-  UIContentSizeCategory sizeCategory = UIContentSizeCategoryLarge;
-  if ([UIApplication mdc_safeSharedApplication]) {
-    sizeCategory = [UIApplication mdc_safeSharedApplication].preferredContentSizeCategory;
-  } else if (@available(iOS 10.0, *)) {
-    sizeCategory = UIScreen.mainScreen.traitCollection.preferredContentSizeCategory;
-  }
-
-  return [self mdc_scaledFontForSizeCategory:sizeCategory];
-}
-
-- (BOOL)mdc_hasScalingCurve {
-  if (self.mdc_scalingCurve != nil) {
-    return YES;
-  } else {
-    return NO;
-  }
-}
-
-// @property(nonatomic, nullable, setter=mdc_setScalingCurve:) NSDictionary<UIContentSizeCategory, NSNumber*> *mdc_scalingCurve;
-- (NSDictionary<UIContentSizeCategory, NSNumber*> *)mdc_scalingCurve {
-  return (NSDictionary<UIContentSizeCategory, NSNumber*> *)objc_getAssociatedObject(self, &MDCFontScaleObjectKey);
-}
-
-- (void)mdc_setScalingCurve:(NSDictionary<UIContentSizeCategory,NSNumber *> *)scalingCurve {
-  objc_setAssociatedObject(self, &MDCFontScaleObjectKey, scalingCurve, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-@end
-
-
-
 @implementation MDCFontScaler {
-  NSDictionary<NSString *, NSNumber*> *_scalingCurve;
+  NSDictionary<NSString *, NSNumber *> *_scalingCurve;
 }
 
 + (instancetype)scalerForMaterialTextStyle:(NSString *)textStyle {
@@ -96,42 +29,40 @@ static char MDCFontScaleObjectKey;
 }
 
 - (instancetype)initForMaterialTextStyle:(NSString *)textStyle {
-  self  = [super init];
+  self = [super init];
   if (self) {
-    //TODO(iangordon): Fill in missing fonts
+    // TODO(iangordon): Fill in missing fonts
     if ([MaterialTextStyleHeadline1 isEqualToString:textStyle]) {
-      NSDictionary<UIContentSizeCategory, NSNumber *> *scalingCurve =
-      @{
+      NSDictionary<UIContentSizeCategory, NSNumber *> *scalingCurve = @{
         UIContentSizeCategoryExtraSmall : @30,
         UIContentSizeCategorySmall : @32,
         UIContentSizeCategoryMedium : @34,
         UIContentSizeCategoryLarge : @36,
         UIContentSizeCategoryExtraLarge : @38,
-        UIContentSizeCategoryExtraExtraLarge :  @40,
+        UIContentSizeCategoryExtraExtraLarge : @40,
         UIContentSizeCategoryExtraExtraExtraLarge : @42,
         UIContentSizeCategoryAccessibilityMedium : @46,
         UIContentSizeCategoryAccessibilityLarge : @50,
         UIContentSizeCategoryAccessibilityExtraLarge : @54,
-        UIContentSizeCategoryAccessibilityExtraExtraLarge :  @58,
-        UIContentSizeCategoryAccessibilityExtraExtraExtraLarge :  @62
+        UIContentSizeCategoryAccessibilityExtraExtraLarge : @58,
+        UIContentSizeCategoryAccessibilityExtraExtraExtraLarge : @62
         };
       _scalingCurve = scalingCurve;
     } else {
       // If nothing matches, return the metrics for MaterialTextStyleBody1
-      NSDictionary<UIContentSizeCategory, NSNumber *> *scalingCurve =
-      @{
+      NSDictionary<UIContentSizeCategory, NSNumber *> *scalingCurve = @{
         UIContentSizeCategoryExtraSmall : @13,
         UIContentSizeCategorySmall : @14,
         UIContentSizeCategoryMedium : @15,
         UIContentSizeCategoryLarge : @16,
         UIContentSizeCategoryExtraLarge : @18,
-        UIContentSizeCategoryExtraExtraLarge :  @20,
+        UIContentSizeCategoryExtraExtraLarge : @20,
         UIContentSizeCategoryExtraExtraExtraLarge : @22,
         UIContentSizeCategoryAccessibilityMedium : @26,
         UIContentSizeCategoryAccessibilityLarge : @30,
         UIContentSizeCategoryAccessibilityExtraLarge : @34,
-        UIContentSizeCategoryAccessibilityExtraExtraLarge :  @38,
-        UIContentSizeCategoryAccessibilityExtraExtraExtraLarge :  @42
+        UIContentSizeCategoryAccessibilityExtraExtraLarge : @38,
+        UIContentSizeCategoryAccessibilityExtraExtraExtraLarge : @42
         };
       _scalingCurve = scalingCurve;
     }

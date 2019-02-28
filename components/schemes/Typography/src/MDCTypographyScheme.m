@@ -29,7 +29,7 @@
   self = [super init];
   if (self) {
     switch (defaults) {
-      case MDCTypographySchemeDefaultsMaterial201804:  //FALLTHRU
+      case MDCTypographySchemeDefaultsMaterial201804:  // FALLTHRU
       case MDCTypographySchemeDefaultsMaterial201902:
 #if defined(__IPHONE_8_2)
 #pragma clang diagnostic push
@@ -79,7 +79,6 @@
                                                selector:@selector(updateFontsForSizeCategory)
                                                    name:UIContentSizeCategoryDidChangeNotification
                                                  object:nil];
-
     }
   }
   return self;
