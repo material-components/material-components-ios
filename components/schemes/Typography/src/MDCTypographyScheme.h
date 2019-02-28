@@ -85,6 +85,12 @@
  */
 @property(nonatomic, nonnull, readonly, copy) UIFont *overline;
 
+/**
+ Whether this typography scheme adjusts the returned fonts based on the device's Dynamic Type
+ settings.
+ */
+@property(nonatomic, readonly) BOOL mdc_adjustsFontForContentSizeCategory;
+
 @end
 
 /**
@@ -125,6 +131,7 @@ typedef NS_ENUM(NSInteger, MDCTypographySchemeDefaults) {
 @property(nonatomic, nonnull, readwrite, copy) UIFont *caption;
 @property(nonatomic, nonnull, readwrite, copy) UIFont *button;
 @property(nonatomic, nonnull, readwrite, copy) UIFont *overline;
+@property(nonatomic, readwrite) BOOL mdc_adjustsFontForContentSizeCategory;
 
 /**
  Initializes the typography scheme with the latest material defaults.
