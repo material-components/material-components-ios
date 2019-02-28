@@ -36,7 +36,7 @@
 #import "MaterialChips.h"
 #import "MaterialColorScheme.h"
 #import "MaterialContainerScheme.h"
-#import "MaterialShapeLibraryNew.h"
+#import "MaterialShapeLibrary.h"
 #import "MaterialShapeScheme.h"
 #import "MaterialTypographyScheme.h"
 

@@ -12,4 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCShapeGeneratingNew.h"
+#import <UIKit/UIKit.h>
+
+/**
+ A protocol for objects that create closed CGPaths of varying sizes.
+ */
+@protocol MDCShapeGenerating <NSCopying>
+
+/**
+ Creates a CGPath for the given size.
+
+ @param size The expected size of the generated path.
+ @return CGPathRef A closed path of the provided size. If size is empty, may return NULL.
+ */
+- (nullable CGPathRef)pathForSize:(CGSize)size;
+
+@end
