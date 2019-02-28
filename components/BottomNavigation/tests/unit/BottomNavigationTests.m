@@ -18,6 +18,22 @@
 #import "MaterialBottomNavigation.h"
 #import "MaterialShadowElevations.h"
 
+/**
+ A testing MDCBottomNavigationBar that allows safeAreaInsets to be set programmatically.
+ */
+@interface MDCSafeAreaCustomizingBottomNavigationBar : MDCBottomNavigationBar
+/** Set this to override the value returned by @c safeAreaInsets. */
+@property(nonatomic, assign) UIEdgeInsets test_safeAreaInsets;
+@end
+
+@implementation MDCSafeAreaCustomizingBottomNavigationBar
+
+- (UIEdgeInsets)safeAreaInsets {
+  return self.test_safeAreaInsets;
+}
+
+@end
+
 @interface MDCBottomNavigationBar (Testing)
 @property(nonatomic, strong) NSMutableArray<MDCBottomNavigationItemView *> *itemViews;
 @end
@@ -300,6 +316,85 @@
 
   // Then
   XCTAssert([self.bottomNavBar viewForItem:item3] == nil);
+}
+
+- (void)testSizeThatFitsDefaultIncludesSafeArea {
+  // Given
+  CGRect barFrame = CGRectMake(0, 0, 360, 56);
+  MDCSafeAreaCustomizingBottomNavigationBar *bottomNavBar =
+      [[MDCSafeAreaCustomizingBottomNavigationBar alloc] initWithFrame:barFrame];
+  bottomNavBar.test_safeAreaInsets = UIEdgeInsetsZero;
+  CGSize initialSize = [bottomNavBar sizeThatFits:barFrame.size];
+  UIEdgeInsets safeAreaInsets = UIEdgeInsetsMake(20, 20, 20, 20);
+  CGSize expectedSize = CGSizeMake(initialSize.width, initialSize.height + safeAreaInsets.bottom);
+
+  // When
+  bottomNavBar.test_safeAreaInsets = UIEdgeInsetsMake(20, 20, 20, 20);
+
+  // Then
+  CGSize finalSize = [bottomNavBar sizeThatFits:barFrame.size];
+  XCTAssertFalse(CGSizeEqualToSize(finalSize, CGSizeZero),
+                 "sizeThatFits: should not return CGSizeZero");
+  if (@available(iOS 11.0, *)) {
+    XCTAssertTrue(CGSizeEqualToSize(finalSize, expectedSize), @"(%@) is not equal to (%@)",
+                  NSStringFromCGSize(finalSize), NSStringFromCGSize(expectedSize));
+  } else {
+    XCTAssertTrue(CGSizeEqualToSize(finalSize, initialSize), @"(%@) is not equal to (%@)",
+                  NSStringFromCGSize(finalSize), NSStringFromCGSize(initialSize));
+  }
+}
+
+- (void)testSizeThatFitsExplicitlyIncludesSafeArea {
+  // Given
+  CGRect barFrame = CGRectMake(0, 0, 360, 56);
+  MDCSafeAreaCustomizingBottomNavigationBar *bottomNavBar =
+      [[MDCSafeAreaCustomizingBottomNavigationBar alloc] initWithFrame:barFrame];
+  bottomNavBar.test_safeAreaInsets = UIEdgeInsetsZero;
+  CGSize initialSize = [bottomNavBar sizeThatFits:barFrame.size];
+  UIEdgeInsets safeAreaInsets = UIEdgeInsetsMake(20, 20, 20, 20);
+  CGSize expectedSize = CGSizeMake(initialSize.width, initialSize.height + safeAreaInsets.bottom);
+
+  // When
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+  bottomNavBar.sizeThatFitsIncludesSafeArea = YES;
+#pragma clang diagnostic pop
+  bottomNavBar.test_safeAreaInsets = safeAreaInsets;
+
+  // Then
+  CGSize finalSize = [bottomNavBar sizeThatFits:barFrame.size];
+  XCTAssertFalse(CGSizeEqualToSize(finalSize, CGSizeZero),
+                 "sizeThatFits: should not return CGSizeZero");
+  if (@available(iOS 11.0, *)) {
+    XCTAssertTrue(CGSizeEqualToSize(finalSize, expectedSize), @"(%@) is not equal to (%@)",
+                  NSStringFromCGSize(finalSize), NSStringFromCGSize(expectedSize));
+  } else {
+    XCTAssertTrue(CGSizeEqualToSize(finalSize, initialSize), @"(%@) is not equal to (%@)",
+                  NSStringFromCGSize(finalSize), NSStringFromCGSize(initialSize));
+  }
+}
+
+- (void)testSizeThatFitsExplicitlyExcludesSafeArea {
+  // Given
+  CGRect barFrame = CGRectMake(0, 0, 360, 56);
+  MDCSafeAreaCustomizingBottomNavigationBar *bottomNavBar =
+      [[MDCSafeAreaCustomizingBottomNavigationBar alloc] initWithFrame:barFrame];
+  bottomNavBar.test_safeAreaInsets = UIEdgeInsetsZero;
+  CGSize initialSize = [bottomNavBar sizeThatFits:barFrame.size];
+
+  // When
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+  bottomNavBar.sizeThatFitsIncludesSafeArea = NO;
+#pragma clang diagnostic pop
+  bottomNavBar.test_safeAreaInsets = UIEdgeInsetsMake(20, 20, 20, 20);
+
+  // Then
+  CGSize finalSize = [bottomNavBar sizeThatFits:barFrame.size];
+  XCTAssertFalse(CGSizeEqualToSize(finalSize, CGSizeZero),
+                 "sizeThatFits: should not return CGSizeZero");
+  XCTAssertTrue(CGSizeEqualToSize(finalSize, initialSize), @"(%@) is not equal to (%@)",
+                NSStringFromCGSize(finalSize), NSStringFromCGSize(initialSize));
 }
 
 @end
