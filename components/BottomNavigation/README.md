@@ -78,9 +78,9 @@ The current implementation of `-[MDCBottomNavigationBar sizeThatFits:]` incorrec
 extending the height of the `MDCBottomNavigationBar` so that it extends out of the safe area and to
 the bottom edge of the screen.
 
-Code that currently relies on this behavior must migrate to the correct view management. To stop
+Code that currently relies on this behavior must migrate to correct view management. To stop
 `MDCBottomNavigationBar` from including `safeAreaInsets` in its calculations, set
-`sizeThatFitsIncludesSafeArea` to `NO`.  At that point, you will likely need to update your layout
+`sizeThatFitsIncludesSafeArea = NO`.  At that point, you will likely need to update your layout
 code.  If you are using constraints-based layout, `intrinsicContentSize` will not have this error.
 However, manually-computing frames and positioning views will likely require an update.
 
@@ -92,6 +92,7 @@ let bottomNavBar = MDCBottomNavigationBar()
 override func viewDidLoad() {
   super.viewDidLoad()
 
+  // Disable inclusion of safe area in size calculations.
   bottomNavBar.sizeThatFitsIncludesSafeArea = false
 }
 
@@ -101,6 +102,7 @@ func layoutBottomNavBar() {
                                  y: view.bounds.height - size.height,
                                  width: size.width,
                                  height: size.height)
+  // Extend the Bottom Navigation to the bottom of the screen.
   if #available(iOS 11.0, *) {
     bottomNavBarFrame.size.height += view.safeAreaInsets.bottom
     bottomNavBarFrame.origin.y -= view.safeAreaInsets.bottom
@@ -116,6 +118,8 @@ func layoutBottomNavBar() {
   [super viewDidLoad];
 
   self.bottomNavBar = [[MDCBottomNavigationBar alloc] init];
+  
+  // Disable inclusion of safe area in size calculations.
   self.bottomNavBar.sizeThatFitsIncludesSafeArea = NO;
 }
 
@@ -123,6 +127,7 @@ func layoutBottomNavBar() {
   CGRect viewBounds = CGRectStandardize(self.view.bounds);
   CGSize size = [self.bottomNavBar sizeThatFits:viewBounds.size];
   UIEdgeInsets safeAreaInsets = UIEdgeInsetsZero;
+  // Extend the Bottom Navigation to the bottom of the screen.
   if (@available(iOS 11.0, *)){
     safeAreaInsets = self.view.safeAreaInsets;
   }
