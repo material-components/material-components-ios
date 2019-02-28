@@ -100,7 +100,7 @@ typedef NS_ENUM(NSInteger, MDCTypographySchemeDefaults) {
 
    This scheme implements fonts with the same matrics as MDCTypographySchemeDefaultsMaterial201804
    with the addition that vended fonts will have scalingCurves attached and will resize when
-   a device's Text Size is changed.
+   a device's Dynamic Type setting is changed.
    */
   MDCTypographySchemeDefaultsMaterial201902,
 };

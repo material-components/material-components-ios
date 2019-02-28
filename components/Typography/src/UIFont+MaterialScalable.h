@@ -26,18 +26,10 @@
     NSDictionary<UIContentSizeCategory, NSNumber *> *mdc_scalingCurve;
 
 /**
- Is there an associated scaling curve on the font
+ Is there a scaling curve associated with the font
  */
 @property(nonatomic, readonly, getter=mdc_hasScalingCurve) BOOL mdc_scalingCurveAssociated;
 
-
-/**
- Return a font with the same family, weight and traits, with a size based on the device's
- text size setting and an associated scaling curve.
-
- @return Font sized for the current size category OR self if there is no associated curve
- */
-- (nonnull UIFont *)mdc_scaledFontForCurrentSizeCategory;
 
 /**
  Return a font with the same family, weight and traits, with a size based on the given size
@@ -48,8 +40,34 @@
  */
 - (nonnull UIFont *)mdc_scaledFontForSizeCategory:(nonnull UIContentSizeCategory)sizeCategory;
 
+/**
+ Return a font with the same family, weight and traits, with a size based on the device's
+ text size setting and an associated scaling curve.
 
+ @return Font sized for the current size category OR self if there is no associated curve
+ */
+- (nonnull UIFont *)mdc_scaledFontForCurrentSizeCategory;
+
+
+/**
+ Return a font with the same family, weight and traits, with a font size based on the default
+ size category of UIContentSizeCategoryLarge.
+
+ This can be used to return a font for a text element that should *not* be scaled with Dynamic
+ Type.
+
+ @return Font sized for UIContentSizeCategoryLarge OR self if there is no associated curve
+ */
 - (nonnull UIFont *)mdc_scaledFontAtDefaultSize;
+
+
+/**
+ Scales an arbitraty value based on the current Dynamic Type settings and the scaling curve.
+
+ @param value The original layout value.
+ @return A value that has been scaled based on the
+ */
+- (CGFloat)scaledValueForValue:(CGFloat)value;
 
 
 @end

@@ -77,6 +77,44 @@ static char MDCFontScaleObjectKey;
   }
 }
 
+- (CGFloat)scaledValueForValue:(CGFloat)value {
+  // If it is available, query the preferredContentSizeCategory.
+  UIContentSizeCategory defaultSizeCategory = UIContentSizeCategoryLarge;
+  UIContentSizeCategory currentSizeCategory = UIContentSizeCategoryLarge;
+  if ([UIApplication mdc_safeSharedApplication]) {
+    currentSizeCategory = [UIApplication mdc_safeSharedApplication].preferredContentSizeCategory;
+  } else if (@available(iOS 10.0, *)) {
+    currentSizeCategory = UIScreen.mainScreen.traitCollection.preferredContentSizeCategory;
+  }
+
+  NSNumber *defaultFontSizeNumber = self.mdc_scalingCurve[defaultSizeCategory];
+
+  NSNumber *currentFontSizeNumber = self.mdc_scalingCurve[currentSizeCategory];
+  // If you have queried the table for a sizeCategory that doesn't exist, we will return the
+  // traits for XXXL.  This handles the case where the values are requested for one of the
+  // accessibility size categories beyond XXXL such as
+  // UIContentSizeCategoryAccessibilityExtraLarge.
+  if (currentFontSizeNumber == nil) {
+    currentFontSizeNumber = self.mdc_scalingCurve[UIContentSizeCategoryExtraExtraExtraLarge];
+  }
+
+  // Guard against broken / incomplete scaling curves by returning self if fontSizeNumber is nil.
+  if (currentFontSizeNumber == nil || defaultFontSizeNumber == nil) {
+    return value;
+  }
+
+  CGFloat currentFontSize = (CGFloat)currentFontSizeNumber.doubleValue;
+  CGFloat defaultFontSize = (CGFloat)currentFontSizeNumber.doubleValue;
+
+  // Guard against broken / incomplete scaling curves by returning original value if the
+  // fontSize <= 0.0.
+  if (currentFontSize <= 0.0 || defaultFontSize <= 0.0) {
+    return value;
+  }
+
+  return currentFontSize / defaultFontSize;
+}
+
 // @property(nonatomic, nullable, setter=mdc_setScalingCurve:) NSDictionary<UIContentSizeCategory, NSNumber*> *mdc_scalingCurve;
 - (NSDictionary<UIContentSizeCategory, NSNumber*> *)mdc_scalingCurve {
   return (NSDictionary<UIContentSizeCategory, NSNumber*> *)objc_getAssociatedObject(self, &MDCFontScaleObjectKey);
