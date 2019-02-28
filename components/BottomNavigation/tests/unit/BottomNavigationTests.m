@@ -368,7 +368,7 @@
   // Given
   CGRect barFrame = CGRectMake(0, 0, 360, 56);
   MDCSafeAreaCustomizingBottomNavigationBar *bottomNavBar =
-  [[MDCSafeAreaCustomizingBottomNavigationBar alloc] initWithFrame:barFrame];
+      [[MDCSafeAreaCustomizingBottomNavigationBar alloc] initWithFrame:barFrame];
   bottomNavBar.test_safeAreaInsets = UIEdgeInsetsZero;
   CGSize initialSize = [bottomNavBar sizeThatFits:barFrame.size];
 
