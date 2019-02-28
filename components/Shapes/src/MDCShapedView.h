@@ -51,6 +51,6 @@
  */
 - (nonnull instancetype)initWithFrame:(CGRect)frame
                        shapeGenerator:(nullable id<MDCShapeGenerating>)shapeGenerator
-NS_DESIGNATED_INITIALIZER;
+    NS_DESIGNATED_INITIALIZER;
 
 @end
