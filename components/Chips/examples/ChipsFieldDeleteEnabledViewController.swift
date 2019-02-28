@@ -35,15 +35,11 @@ class ChipsFieldDeleteEnabledViewController : UIViewController, MDCChipFieldDele
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor =
-      containerScheming.colorScheme?.backgroundColor ??
-      MDCSemanticColorScheme().backgroundColor
+    view.backgroundColor = containerScheming.colorScheme.backgroundColor
     chipField.frame = .zero
     chipField.delegate = self
     chipField.textField.placeholderLabel.text = "This is a chip field."
-    chipField.backgroundColor =
-      containerScheming.colorScheme?.surfaceColor ??
-      MDCSemanticColorScheme().surfaceColor
+    chipField.backgroundColor = containerScheming.colorScheme.surfaceColor
     chipField.showChipsDeleteButton = true
     view.addSubview(chipField)
   }

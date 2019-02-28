@@ -26,12 +26,12 @@
 /**
  The color scheme to use for the container scheme.
  */
-@property(nonatomic, nullable, readonly) id<MDCColorScheming> colorScheme;
+@property(nonatomic, nonnull, readonly) id<MDCColorScheming> colorScheme;
 
 /**
  The typography scheme to use for the container scheme.
  */
-@property(nonatomic, nullable, readonly) id<MDCTypographyScheming> typographyScheme;
+@property(nonatomic, nonnull, readonly) id<MDCTypographyScheming> typographyScheme;
 
 /**
  The shape scheme to use for the container scheme.
@@ -43,14 +43,23 @@
 /**
  MDCContainerScheme is a class conforming to MDCContainerScheming that contains
  schemes values for theming systems.
-
- All scheme properties are @c nil by default.
  */
 __attribute__((objc_subclassing_restricted)) @interface MDCContainerScheme
     : NSObject<MDCContainerScheming>
 
-@property(nonatomic, nullable, readwrite) MDCSemanticColorScheme *colorScheme;
-@property(nonatomic, nullable, readwrite) MDCTypographyScheme *typographyScheme;
+/**
+ Defaults to @c MDCColorSchemeDefaultsMaterial201804
+ */
+@property(nonatomic, nonnull, readwrite) MDCSemanticColorScheme *colorScheme;
+
+/**
+ Defaults to @c MDCTypographySchemeDefaultsMaterial201804
+ */
+@property(nonatomic, nonnull, readwrite) MDCTypographyScheme *typographyScheme;
+
+/**
+ Defaults to @c nil
+ */
 @property(nonatomic, nullable, readwrite) MDCShapeScheme *shapeScheme;
 
 @end

@@ -355,25 +355,27 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
 
 - (void)revealIndicatorsReversed:(BOOL)reversed {
   // Animate hidden indicators staggered with delay.
-  NSInteger count = 0;
-  for (MDCPageControlIndicator *indicator in _indicators) {
-    // Determine if this is the current page indicator.
-    NSInteger indicatorIndex = [_indicators indexOfObject:indicator];
-    if (reversed) {
-      indicatorIndex = [_indicators count] - 1 - indicatorIndex;
-    }
-    BOOL isCurrentPageIndicator = indicatorIndex == _currentPage;
+  NSEnumerationOptions options = (reversed) ? NSEnumerationReverse : 0;
 
-    // Reveal indicators if hidden and not current page indicator.
-    if (indicator.isHidden && !isCurrentPageIndicator) {
-      dispatch_time_t popTime = dispatch_time(
-          DISPATCH_TIME_NOW, (int64_t)(kPageControlIndicatorShowDelay * count * NSEC_PER_SEC));
-      dispatch_after(popTime, dispatch_get_main_queue(), ^{
-        [indicator revealIndicator];
-      });
-      count++;
-    }
-  }
+  __block NSInteger count = 0;
+  void (^block)(MDCPageControlIndicator *, NSUInteger, BOOL *) =
+      ^(MDCPageControlIndicator *indicator, NSUInteger index, BOOL *stop) {
+        BOOL isCurrentPageIndicator = (NSInteger)index == self.currentPage;
+
+        // Reveal indicators if hidden and not current page indicator.
+        if (indicator.isHidden && !isCurrentPageIndicator) {
+          dispatch_time_t popTime = dispatch_time(
+              DISPATCH_TIME_NOW, (int64_t)(kPageControlIndicatorShowDelay * count * NSEC_PER_SEC));
+
+          dispatch_after(popTime, dispatch_get_main_queue(), ^{
+            [indicator revealIndicator];
+          });
+
+          count++;
+        }
+      };
+
+  [_indicators enumerateObjectsWithOptions:options usingBlock:block];
 }
 
 #pragma mark - UIGestureRecognizer
