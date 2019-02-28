@@ -1,6 +1,4 @@
-### Deprecations
-
-#### `sizeThatFitsIncludesSafeArea`
+### `sizeThatFitsIncludesSafeArea`
 
 The current implementation of `-[MDCBottomNavigationBar sizeThatFits:]` incorrectly uses
 `safeAreaInsets` to increase the desired size. Instead, the superview or view controller should be
@@ -14,7 +12,7 @@ code.  If you are using constraints-based layout, `intrinsicContentSize` will no
 However, manually-computing frames and positioning views will likely require an update.
 
 <!--<div class="material-code-render" markdown="1">-->
-##### Swift
+#### Swift
 ```swift
 let bottomNavBar = MDCBottomNavigationBar()
 
@@ -38,7 +36,7 @@ func layoutBottomNavBar() {
 }
 ```
 
-##### Objective-C
+#### Objective-C
 
 ```objc
 - (void)viewDidLoad {
