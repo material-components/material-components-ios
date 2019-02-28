@@ -12,4 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCCurvedRectShapeGeneratorNew.h"
+#import <CoreGraphics/CoreGraphics.h>
+#import <Foundation/Foundation.h>
+
+#import "MaterialShapes.h"
+
+/**
+ A curved rectangle shape generator.
+ */
+@interface MDCCurvedRectShapeGenerator : NSObject <MDCShapeGenerating>
+
+/**
+ The size of the curved corner.
+ */
+@property(nonatomic, assign) CGSize cornerSize;
+
+/**
+ Initializes an MDCCurvedRectShapeGenerator instance with a given cornerSize.
+ */
+- (instancetype)initWithCornerSize:(CGSize)cornerSize NS_DESIGNATED_INITIALIZER;
+
+@end

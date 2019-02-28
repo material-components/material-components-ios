@@ -16,7 +16,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialShadowElevations.h"
-#import "MaterialShapesNew.h"
+#import "MaterialShapes.h"
 
 /*
  A Material chip.

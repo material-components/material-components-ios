@@ -12,4 +12,53 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCRectangleShapeGeneratorNew.h"
+#import <UIKit/UIKit.h>
+
+#import "MDCShapeGenerating.h"
+
+@class MDCCornerTreatment;
+@class MDCEdgeTreatment;
+
+/**
+ An MDCShapeGenerating for creating shaped rectanglular CGPaths.
+
+ By default MDCRectangleShapeGenerator creates rectanglular CGPaths. Set the corner and edge
+ treatments to shape parts of the generated path.
+ */
+@interface MDCRectangleShapeGenerator : NSObject <MDCShapeGenerating>
+
+/**
+ The corner treatments to apply to each corner.
+ */
+@property(nonatomic, strong) MDCCornerTreatment *topLeftCorner;
+@property(nonatomic, strong) MDCCornerTreatment *topRightCorner;
+@property(nonatomic, strong) MDCCornerTreatment *bottomLeftCorner;
+@property(nonatomic, strong) MDCCornerTreatment *bottomRightCorner;
+
+/**
+ The offsets to apply to each corner.
+ */
+@property(nonatomic, assign) CGPoint topLeftCornerOffset;
+@property(nonatomic, assign) CGPoint topRightCornerOffset;
+@property(nonatomic, assign) CGPoint bottomLeftCornerOffset;
+@property(nonatomic, assign) CGPoint bottomRightCornerOffset;
+
+/**
+ The edge treatments to apply to each edge.
+ */
+@property(nonatomic, strong) MDCEdgeTreatment *topEdge;
+@property(nonatomic, strong) MDCEdgeTreatment *rightEdge;
+@property(nonatomic, strong) MDCEdgeTreatment *bottomEdge;
+@property(nonatomic, strong) MDCEdgeTreatment *leftEdge;
+
+/**
+ Convenience to set all corners to the same MDCCornerTreatment instance.
+ */
+- (void)setCorners:(MDCCornerTreatment *)cornerShape;
+
+/**
+ Conveninece to set all edge treatments to the same MDCEdgeTreatment instance.
+ */
+- (void)setEdges:(MDCEdgeTreatment *)edgeShape;
+
+@end
