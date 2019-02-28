@@ -1,4 +1,4 @@
-// Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2019-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -115,15 +115,14 @@ static char MDCFontScaleObjectKey;
   return currentFontSize / defaultFontSize;
 }
 
-// @property(nonatomic, nullable, setter=mdc_setScalingCurve:) NSDictionary<UIContentSizeCategory, NSNumber*> *mdc_scalingCurve;
 - (NSDictionary<UIContentSizeCategory, NSNumber *> *)mdc_scalingCurve {
   return (NSDictionary<UIContentSizeCategory, NSNumber *> *)objc_getAssociatedObject(
       self, &MDCFontScaleObjectKey);
 }
 
-- (void)mdc_setScalingCurve:(NSDictionary<UIContentSizeCategory,NSNumber *> *)scalingCurve {
+- (void)mdc_setScalingCurve:(NSDictionary<UIContentSizeCategory, NSNumber *> *)scalingCurve {
   objc_setAssociatedObject(self, &MDCFontScaleObjectKey, scalingCurve,
-      OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+                           OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 @end

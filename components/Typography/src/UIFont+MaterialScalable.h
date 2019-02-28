@@ -1,4 +1,4 @@
-// Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2019-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -30,7 +30,6 @@
  */
 @property(nonatomic, readonly, getter=mdc_hasScalingCurve) BOOL mdc_scalingCurveAssociated;
 
-
 /**
  Return a font with the same family, weight and traits, with a size based on the given size
  category and an associated scaling curve.
@@ -48,7 +47,6 @@
  */
 - (nonnull UIFont *)mdc_scaledFontForCurrentSizeCategory;
 
-
 /**
  Return a font with the same family, weight and traits, with a font size based on the default
  size category of UIContentSizeCategoryLarge.
@@ -60,7 +58,6 @@
  */
 - (nonnull UIFont *)mdc_scaledFontAtDefaultSize;
 
-
 /**
  Scales an arbitraty value based on the current Dynamic Type settings and the scaling curve.
 
@@ -68,6 +65,5 @@
  @return A value that has been scaled based on the
  */
 - (CGFloat)scaledValueForValue:(CGFloat)value;
-
 
 @end
