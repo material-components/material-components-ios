@@ -59,7 +59,7 @@
 - (nonnull UIFont *)mdc_scaledFontAtDefaultSize;
 
 /**
- Scales an arbitraty value based on the current Dynamic Type settings and the scaling curve.
+ Scales an arbitrary value based on the current Dynamic Type settings and the scaling curve.
 
  @param value The original layout value.
  @return A value that has been scaled based on the

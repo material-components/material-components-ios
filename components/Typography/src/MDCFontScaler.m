@@ -20,19 +20,19 @@
 #import "UIApplication+AppExtensions.h"
 #import "UIFont+MaterialScalable.h"
 
-NSString *MaterialTextStyleHeadline1 = @"Material.TextStyle.Headline1";
-NSString *MaterialTextStyleHeadline2 = @"Material.TextStyle.Headline2";
-NSString *MaterialTextStyleHeadline3 = @"Material.TextStyle.Headline3";
-NSString *MaterialTextStyleHeadline4 = @"Material.TextStyle.Headline4";
-NSString *MaterialTextStyleHeadline5 = @"Material.TextStyle.Headline5";
-NSString *MaterialTextStyleHeadline6 = @"Material.TextStyle.Headline6";
-NSString *MaterialTextStyleSubtitle1 = @"Material.TextStyle.Subtitle1";
-NSString *MaterialTextStyleSubtitle2 = @"Material.TextStyle.Subtitle2";
-NSString *MaterialTextStyleBody1 = @"Material.TextStyle.Body1";
-NSString *MaterialTextStyleBody2 = @"Material.TextStyle.Body2";
-NSString *MaterialTextStyleButton = @"Material.TextStyle.Button";
-NSString *MaterialTextStyleCaption = @"Material.TextStyle.Caption";
-NSString *MaterialTextStyleOverline = @"Material.TextStyle.Overline";
+NSString *MDCTextStyleHeadline1 = @"MDC.TextStyle.Headline1";
+NSString *MDCTextStyleHeadline2 = @"MDC.TextStyle.Headline2";
+NSString *MDCTextStyleHeadline3 = @"MDC.TextStyle.Headline3";
+NSString *MDCTextStyleHeadline4 = @"MDC.TextStyle.Headline4";
+NSString *MDCTextStyleHeadline5 = @"MDC.TextStyle.Headline5";
+NSString *MDCTextStyleHeadline6 = @"MDC.TextStyle.Headline6";
+NSString *MDCTextStyleSubtitle1 = @"MDC.TextStyle.Subtitle1";
+NSString *MDCTextStyleSubtitle2 = @"MDC.TextStyle.Subtitle2";
+NSString *MDCTextStyleBody1 = @"MDC.TextStyle.Body1";
+NSString *MDCTextStyleBody2 = @"MDC.TextStyle.Body2";
+NSString *MDCTextStyleButton = @"MDC.TextStyle.Button";
+NSString *MDCTextStyleCaption = @"MDC.TextStyle.Caption";
+NSString *MDCTextStyleOverline = @"MDC.TextStyle.Overline";
 
 @implementation MDCFontScaler {
   NSDictionary<NSString *, NSNumber *> *_scalingCurve;
@@ -46,7 +46,7 @@ NSString *MaterialTextStyleOverline = @"Material.TextStyle.Overline";
   self = [super init];
   if (self) {
     // TODO(iangordon): Fill in missing fonts
-    if ([MaterialTextStyleHeadline1 isEqualToString:textStyle]) {
+    if ([MDCTextStyleHeadline1 isEqualToString:textStyle]) {
       NSDictionary<UIContentSizeCategory, NSNumber *> *scalingCurve = @{
         UIContentSizeCategoryExtraSmall : @30,
         UIContentSizeCategorySmall : @32,
@@ -63,7 +63,7 @@ NSString *MaterialTextStyleOverline = @"Material.TextStyle.Overline";
       };
       _scalingCurve = scalingCurve;
     } else {
-      // If nothing matches, return the metrics for MaterialTextStyleBody1
+      // If nothing matches, return the metrics for MDCTextStyleBody1
       NSDictionary<UIContentSizeCategory, NSNumber *> *scalingCurve = @{
         UIContentSizeCategoryExtraSmall : @13,
         UIContentSizeCategorySmall : @14,

@@ -15,23 +15,22 @@
 #import <UIKit/UIKit.h>
 
 // Material's text styles, which are similar, but not quite equivalent to Apple's UIFontTextStyle.
-extern NSString *_Nonnull MaterialTextStyleHeadline1;
-extern NSString *_Nonnull MaterialTextStyleHeadline2;
-extern NSString *_Nonnull MaterialTextStyleHeadline3;
-extern NSString *_Nonnull MaterialTextStyleHeadline4;
-extern NSString *_Nonnull MaterialTextStyleHeadline5;
-extern NSString *_Nonnull MaterialTextStyleHeadline6;
-extern NSString *_Nonnull MaterialTextStyleSubtitle1;
-extern NSString *_Nonnull MaterialTextStyleSubtitle2;
-extern NSString *_Nonnull MaterialTextStyleBody1;
-extern NSString *_Nonnull MaterialTextStyleBody2;
-extern NSString *_Nonnull MaterialTextStyleButton;
-extern NSString *_Nonnull MaterialTextStyleCaption;
-extern NSString *_Nonnull MaterialTextStyleOverline;
+extern NSString *_Nonnull MDCTextStyleHeadline1;
+extern NSString *_Nonnull MDCTextStyleHeadline2;
+extern NSString *_Nonnull MDCTextStyleHeadline3;
+extern NSString *_Nonnull MDCTextStyleHeadline4;
+extern NSString *_Nonnull MDCTextStyleHeadline5;
+extern NSString *_Nonnull MDCTextStyleHeadline6;
+extern NSString *_Nonnull MDCTextStyleSubtitle1;
+extern NSString *_Nonnull MDCTextStyleSubtitle2;
+extern NSString *_Nonnull MDCTextStyleBody1;
+extern NSString *_Nonnull MDCTextStyleBody2;
+extern NSString *_Nonnull MDCTextStyleButton;
+extern NSString *_Nonnull MDCTextStyleCaption;
+extern NSString *_Nonnull MDCTextStyleOverline;
 
 /**
- MDCFontScaler is used to attach a scaling curve to a UIFont via an associated object on that
- font instance.
+ MDCFontScaler attaches a scaling curve to a UIFont via an associated object on that font instance.
 
  This interface is similar to UIFontMetrics, but the font returned from MDCFontScaler do *not*
  automatically adjust when the device's text size / content size category is changed.
@@ -39,7 +38,7 @@ extern NSString *_Nonnull MaterialTextStyleOverline;
 @interface MDCFontScaler : NSObject
 
 /**
- Initializes a font scaler object for the specified text style.
+ Initializes a font scaler object with the specified text style.
 
  @param textStyle The style that will be used to determine the scaling curver associated with the
    returned font.  For example, MaterialTextStyleBody1.
@@ -48,7 +47,7 @@ extern NSString *_Nonnull MaterialTextStyleOverline;
 - (nonnull instancetype)initForMaterialTextStyle:(nonnull NSString *)textStyle;
 
 /**
- Creates and returns a font scaler object for the specified text style.
+ Creates and returns a font scaler object with the specified text style.
 
  @param textStyle The style that will be used to determine the scaling curver associated with the
  returned font.  For example, MaterialTextStyleBody1.
