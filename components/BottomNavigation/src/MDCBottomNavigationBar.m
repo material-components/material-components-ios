@@ -99,6 +99,7 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
   _titleBelowItem = YES;
   _barTintColor = [UIColor whiteColor];
   _truncatesLongTitles = YES;
+  _sizeThatFitsIncludesSafeArea = YES;
 
   // Remove any unarchived subviews and reconfigure the view hierarchy
   if (self.subviews.count) {

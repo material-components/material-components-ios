@@ -158,7 +158,7 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
  NOTE: In an upcoming release, this flag will be removed and the default behavior will be to exclude
  the safe area in size calculations.
 
- Defaults to @c NO.
+ Defaults to @c YES.
  */
 @property(nonatomic, assign) BOOL sizeThatFitsIncludesSafeArea __deprecated_msg(
     "Safe area should be determined by superviews and added to the bar's bounds.");
