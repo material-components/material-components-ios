@@ -225,15 +225,6 @@
 
 - (void)loadPreiOS9Constraints {
   // Navigation Bar Constraints
-  self.navigationBarHeightConstraint =
-      [NSLayoutConstraint constraintWithItem:self.navigationBar
-                                   attribute:NSLayoutAttributeHeight
-                                   relatedBy:NSLayoutRelationEqual
-                                      toItem:nil
-                                   attribute:NSLayoutAttributeNotAnAttribute
-                                  multiplier:1
-                                    constant:[self calculateNavigationBarHeight]];
-
   NSArray<NSLayoutConstraint *> *navigationBarConstraints = @[
     [NSLayoutConstraint constraintWithItem:self.navigationBar
                                  attribute:NSLayoutAttributeLeading
@@ -292,7 +283,6 @@
 
   [NSLayoutConstraint activateConstraints:navigationBarConstraints];
   [NSLayoutConstraint activateConstraints:contentConstraints];
-  self.navigationBarHeightConstraint.active = YES;
 }
 
 - (void)loadiOS9PlusConstraints {
