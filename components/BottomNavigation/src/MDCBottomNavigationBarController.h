@@ -23,9 +23,7 @@
  * between primary destination in an app.  It ties a list of view controllers to the bottom
  * navigation bar and will display the corresponding view controller in the content view when an
  * in the navigation bar is selected.
- * Available iOS 9.0+
  */
-NS_CLASS_AVAILABLE_IOS(9_0)
 @interface MDCBottomNavigationBarController : UIViewController <MDCBottomNavigationBarDelegate>
 
 /**
