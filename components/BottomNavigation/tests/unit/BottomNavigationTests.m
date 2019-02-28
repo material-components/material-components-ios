@@ -335,8 +335,13 @@
   CGSize finalSize = [bottomNavBar sizeThatFits:barFrame.size];
   XCTAssertFalse(CGSizeEqualToSize(finalSize, CGSizeZero),
                  "sizeThatFits: should not return CGSizeZero");
-  XCTAssertTrue(CGSizeEqualToSize(finalSize, expectedSize), @"(%@) is not equal to (%@)",
-                NSStringFromCGSize(finalSize), NSStringFromCGSize(expectedSize));
+  if (@available(iOS 11.0, *)) {
+    XCTAssertTrue(CGSizeEqualToSize(finalSize, expectedSize), @"(%@) is not equal to (%@)",
+                  NSStringFromCGSize(finalSize), NSStringFromCGSize(expectedSize));
+  } else {
+    XCTAssertTrue(CGSizeEqualToSize(finalSize, initialSize), @"(%@) is not equal to (%@)",
+                  NSStringFromCGSize(finalSize), NSStringFromCGSize(initialSize));
+  }
 }
 
 - (void)testSizeThatFitsExplicitlyIncludesSafeArea {
@@ -360,8 +365,13 @@
   CGSize finalSize = [bottomNavBar sizeThatFits:barFrame.size];
   XCTAssertFalse(CGSizeEqualToSize(finalSize, CGSizeZero),
                  "sizeThatFits: should not return CGSizeZero");
-  XCTAssertTrue(CGSizeEqualToSize(finalSize, expectedSize), @"(%@) is not equal to (%@)",
-                NSStringFromCGSize(finalSize), NSStringFromCGSize(expectedSize));
+  if (@available(iOS 11.0, *)) {
+    XCTAssertTrue(CGSizeEqualToSize(finalSize, expectedSize), @"(%@) is not equal to (%@)",
+                  NSStringFromCGSize(finalSize), NSStringFromCGSize(expectedSize));
+  } else {
+    XCTAssertTrue(CGSizeEqualToSize(finalSize, initialSize), @"(%@) is not equal to (%@)",
+                  NSStringFromCGSize(finalSize), NSStringFromCGSize(initialSize));
+  }
 }
 
 - (void)testSizeThatFitsExplicitlyExcludesSafeArea {
