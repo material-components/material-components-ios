@@ -178,10 +178,10 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
-  CGFloat height = kMDCBottomNavigationBarHeight;
+  CGFloat height = kBarHeightStackedTitle;
   if (self.alignment == MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles &&
       self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
-    height = kMDCBottomNavigationBarHeightAdjacentTitles;
+    height = kBarHeightAdjacentTitle;
   }
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
