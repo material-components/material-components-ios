@@ -160,8 +160,7 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
 
  Defaults to @c YES.
  */
-@property(nonatomic, assign) BOOL sizeThatFitsIncludesSafeArea __deprecated_msg(
-    "Safe area should be determined by superviews and added to the bar's bounds.");
+@property(nonatomic, assign) BOOL sizeThatFitsIncludesSafeArea;
 
 /**
  If @c YES, it will truncate titles that don't fit within the bounds available to the item.
