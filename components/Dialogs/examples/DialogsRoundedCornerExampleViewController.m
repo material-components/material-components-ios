@@ -127,29 +127,29 @@ static const CGFloat kCornerRadiusUnthemed = 12;
                                  relatedBy:NSLayoutRelationEqual
                                     toItem:presentButton
                                  attribute:NSLayoutAttributeCenterX
-                                multiplier:1.0
-                                  constant:0.0],
+                                multiplier:1
+                                  constant:0],
     [NSLayoutConstraint constraintWithItem:self.view
                                  attribute:NSLayoutAttributeCenterY
                                  relatedBy:NSLayoutRelationEqual
                                     toItem:presentButton
                                  attribute:NSLayoutAttributeCenterY
-                                multiplier:1.1
-                                  constant:0.0],
+                                multiplier:(CGFloat)1.1
+                                  constant:0],
     [NSLayoutConstraint constraintWithItem:self.view
                                  attribute:NSLayoutAttributeCenterX
                                  relatedBy:NSLayoutRelationEqual
                                     toItem:unthemedButton
                                  attribute:NSLayoutAttributeCenterX
-                                multiplier:1.0
-                                  constant:0.0],
+                                multiplier:1
+                                  constant:0],
     [NSLayoutConstraint constraintWithItem:self.view
                                  attribute:NSLayoutAttributeCenterY
                                  relatedBy:NSLayoutRelationEqual
                                     toItem:unthemedButton
                                  attribute:NSLayoutAttributeCenterY
-                                multiplier:0.9
-                                  constant:0.0],
+                                multiplier:(CGFloat)0.9
+                                  constant:0],
   ]];
 
   self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;

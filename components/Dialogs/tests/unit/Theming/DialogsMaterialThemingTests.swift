@@ -193,8 +193,6 @@ class DialogsMaterialThemingTests: XCTestCase {
 
     // Corner Radius
     XCTAssertEqual(presentationController.dialogCornerRadius, kCornerRadius, accuracy: 0.001)
-    XCTAssertEqual(alert.view.layer.cornerRadius, kCornerRadius, accuracy: 0.001)
-    XCTAssertEqual(alert.cornerRadius, kCornerRadius, accuracy: 0.001)
 
     // Elevation
     XCTAssertEqual(presentationController.dialogElevation, ShadowElevation.dialog)
@@ -207,6 +205,8 @@ class DialogsMaterialThemingTests: XCTestCase {
     dialog.modalPresentationStyle = .custom
     dialog.transitioningDelegate = transitionController
 
+    // The presentation controller is the object under test. It should be defined correctly
+    // once an MDC transition delegate is assigned. We first verify is exists before testing it:
     guard let presentationController = dialog.mdc_dialogPresentationController else {
       XCTAssert(false, "alert.mdc_dialogPresentationController should not be nil")
       return
@@ -218,15 +218,17 @@ class DialogsMaterialThemingTests: XCTestCase {
     presentationController.applyTheme(withScheme: scheme)
 
     // Then
-    // Color
+    // Presentation
+    XCTAssertEqual(dialog.presentationController, presentationController)
+
+    // Presentation Color
     XCTAssertEqual(presentationController.scrimColor,
                    colorScheme.onSurfaceColor.withAlphaComponent(0.32))
 
-    // Corner Radius
+    // Presentation Corner Radius
     XCTAssertEqual(presentationController.dialogCornerRadius, kCornerRadius, accuracy: 0.001)
-    XCTAssertEqual(dialog.view.layer.cornerRadius, kCornerRadius, accuracy: 0.001)
 
-    // Elevation
+    // Presentation Elevation
     XCTAssertEqual(presentationController.dialogElevation, ShadowElevation.dialog)
   }
 

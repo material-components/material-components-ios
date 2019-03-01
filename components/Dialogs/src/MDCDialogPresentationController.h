@@ -16,8 +16,6 @@
 
 #import "MaterialShadowElevations.h"
 
-extern CGFloat const MDCUsePresentedViewCornerRadius;
-
 @class MDCDialogPresentationController;
 
 /**
@@ -71,22 +69,22 @@ extern CGFloat const MDCUsePresentedViewCornerRadius;
 /**
  Customize the corner radius of the shadow to match the presented view's corner radius.
 
- By default (when the value is MDCUsePresentedViewCornerRadius), the dialogCornerRadius is ignored,
- and the presented view will be presented with it original corner radius value that is assigned
- by the client. The presentation controller will ensure in that case to match its shadow
- shape to the corner radius of the presented view.
+ By default, the corner radius of the presented shadow is adjusted to match the corner radius of the
+ view being presented.  This behavior is achieved without making any changes to dialogCornerRadius.
+ Once a value is set on dialogCornerRadius, that value will be used to determine the radius of both
+ the presetned view and the shadow. That means that any further changes to the presented view's
+ corner radius (yourViewController.view.layer.cornerRadius) will be ignored once dialogCornerRadius
+ is set.
 
- Modifying dialogCornerRadius to a positive value, will present the presented view with this
- positive value, overriding previous corner radius values that may have been previously
- set by the client. The presentation controller will ensure in that case to match both the
- presetned view's and the shadow's corner radius to the value assigned in dialogCornerRadius.
+ In either cases, the presentation controller ensures that the shadow layer's corner radius matches
+ the presented view's.
 
  Material themers use dialogCornerRadius for setting the corner radius, therefore, when applying
  a themer to your custom UIViewController, any value you assign to your view's corner radius
-(through view.layer.cornerRadius) will be ignored. In that case, if you wish to further
- customize the corner radius of the presented view, set dialogCornerRadius instead.
+ will be ignored. If you wish to override the corner radius after a themer is called, make sure
+ to set it to dialogCornerRadius, and not to the presented view's corner radius.
 
- Defaults to: MDCUsePresentedViewCornerRadius (-1.0).
+ Defaults to: The presented view's corner radius.
  */
 @property(nonatomic, assign) CGFloat dialogCornerRadius;
 
