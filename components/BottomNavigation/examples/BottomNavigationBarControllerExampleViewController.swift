@@ -35,6 +35,8 @@ class BottomNavigationControllerExampleViewController: MDCBottomNavigationBarCon
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    self.navigationBar.alignment = .justifiedAdjacentTitles
+
     let viewController1 = UIViewController()
     viewController1.view.backgroundColor = colorScheme.primaryColor
     viewController1.tabBarItem = UITabBarItem(title: "Item 1", image: UIImage(named: "Home"), tag: 0)

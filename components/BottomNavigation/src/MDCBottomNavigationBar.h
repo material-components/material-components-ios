@@ -164,6 +164,11 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
     "Safe area should be determined by superviews and added to the bar's bounds.");
 
 /**
+ UILayoutGuide encompassing the area around all visible items in the bar.
+*/
+@property(nonatomic, readonly, strong) UILayoutGuide *barItemsLayoutGuide NS_AVAILABLE_IOS(9_0);
+
+/**
  If @c YES, it will truncate titles that don't fit within the bounds available to the item.
 
  Default is @c YES.

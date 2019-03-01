@@ -19,9 +19,6 @@
 /** The view that hosts the content for the selected view controller **/
 @property(nonatomic, strong) UIView *content;
 
-/** Constrains the top of the bottom navigation bar to its height within the safe area. */
-@property(nonatomic, strong) NSLayoutConstraint *navigationBarTopConstraint;
-
 @end
 
 @implementation MDCBottomNavigationBarController
@@ -47,13 +44,6 @@
   [self.view addSubview:self.content];
   [self.view addSubview:self.navigationBar];
   [self loadConstraints];
-}
-
-- (void)viewSafeAreaInsetsDidChange {
-  [super viewSafeAreaInsetsDidChange];
-
-  self.navigationBarTopConstraint.constant = -self.navigationBar.intrinsicContentSize.height;
-  [self.view setNeedsLayout];
 }
 
 - (void)setSelectedViewController:(nullable UIViewController *)selectedViewController {
@@ -292,10 +282,11 @@
 
   [self.navigationBar.topAnchor constraintEqualToAnchor:self.content.bottomAnchor].active = YES;
   [self.navigationBar.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor].active = YES;
-  self.navigationBarTopConstraint = [self.navigationBar.topAnchor
-      constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor
-                     constant:-self.navigationBar.intrinsicContentSize.height];
-  self.navigationBarTopConstraint.active = YES;
+  if (@available(iOS 11.0, *)) {
+    [self.navigationBar.barItemsLayoutGuide.bottomAnchor
+        constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor]
+        .active = YES;
+  }
 
   // Content View Constraints
   [self.view.leftAnchor constraintEqualToAnchor:self.content.leftAnchor].active = YES;

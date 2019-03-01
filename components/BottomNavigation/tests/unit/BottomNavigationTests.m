@@ -318,25 +318,6 @@
   XCTAssert([self.bottomNavBar viewForItem:item3] == nil);
 }
 
-- (void)testIntrinsicContentSizeIgnoresSafeArea {
-  // Given
-  CGRect barFrame = CGRectMake(0, 0, 360, 56);
-  MDCSafeAreaCustomizingBottomNavigationBar *bottomNavBar =
-      [[MDCSafeAreaCustomizingBottomNavigationBar alloc] initWithFrame:barFrame];
-  bottomNavBar.test_safeAreaInsets = UIEdgeInsetsZero;
-  CGSize initialSize = [bottomNavBar intrinsicContentSize];
-
-  // When
-  bottomNavBar.test_safeAreaInsets = UIEdgeInsetsMake(20, 20, 20, 20);
-
-  // Then
-  CGSize finalSize = [bottomNavBar intrinsicContentSize];
-  XCTAssertFalse(CGSizeEqualToSize(finalSize, CGSizeZero),
-                 "intrinsicContentSize should not return CGSizeZero");
-  XCTAssertTrue(CGSizeEqualToSize(finalSize, initialSize), @"(%@) is not equal to (%@)",
-                NSStringFromCGSize(finalSize), NSStringFromCGSize(initialSize));
-}
-
 - (void)testSizeThatFitsDefaultIncludesSafeArea {
   // Given
   CGRect barFrame = CGRectMake(0, 0, 360, 56);
@@ -414,6 +395,87 @@
                  "sizeThatFits: should not return CGSizeZero");
   XCTAssertTrue(CGSizeEqualToSize(finalSize, initialSize), @"(%@) is not equal to (%@)",
                 NSStringFromCGSize(finalSize), NSStringFromCGSize(initialSize));
+}
+
+#pragma mark - Autolayout support
+
+- (void)testIntrinsicContentSizeIgnoresSafeArea {
+  // Given
+  CGRect barFrame = CGRectMake(0, 0, 360, 56);
+  MDCSafeAreaCustomizingBottomNavigationBar *bottomNavBar =
+      [[MDCSafeAreaCustomizingBottomNavigationBar alloc] initWithFrame:barFrame];
+  bottomNavBar.test_safeAreaInsets = UIEdgeInsetsZero;
+  CGSize initialSize = [bottomNavBar intrinsicContentSize];
+
+  // When
+  bottomNavBar.test_safeAreaInsets = UIEdgeInsetsMake(20, 20, 20, 20);
+
+  // Then
+  CGSize finalSize = [bottomNavBar intrinsicContentSize];
+  XCTAssertFalse(CGSizeEqualToSize(finalSize, CGSizeZero),
+                 "intrinsicContentSize should not return CGSizeZero");
+  XCTAssertTrue(CGSizeEqualToSize(finalSize, initialSize), @"(%@) is not equal to (%@)",
+                NSStringFromCGSize(finalSize), NSStringFromCGSize(initialSize));
+}
+
+- (void)testBarItemsLayoutGuideMatchesBoundsWithoutSafeArea {
+  // This test should be made available on iOS 9+, however it fails on an iOS 9.3
+  // simulator in Xcode 10.0. The barItemsLayoutGuide's layoutFrame is CGRectZero.
+  // When run in the BottomNavigationBarController, however, the layoutFrame is
+  // correct whether it's attached to an external constraint or not.
+  if (@available(iOS 11.0, *)) {
+    // Given
+    UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
+    UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:0];
+    CGRect barFrame = CGRectMake(0, 0, 360, 56);
+    MDCSafeAreaCustomizingBottomNavigationBar *bottomNavBar =
+        [[MDCSafeAreaCustomizingBottomNavigationBar alloc] initWithFrame:barFrame];
+    bottomNavBar.test_safeAreaInsets = UIEdgeInsetsZero;
+    bottomNavBar.alignment = MDCBottomNavigationBarAlignmentJustified;
+    bottomNavBar.items = @[ item1, item2 ];
+
+    // When
+    [bottomNavBar layoutIfNeeded];
+
+    // Then
+    XCTAssertTrue(CGRectEqualToRect(bottomNavBar.barItemsLayoutGuide.layoutFrame, barFrame),
+                  @"(%@) is not equal to (%@)",
+                  NSStringFromCGRect(bottomNavBar.barItemsLayoutGuide.layoutFrame),
+                  NSStringFromCGRect(barFrame));
+  }
+}
+
+- (void)testBarItemsLayoutGuideMatchesBoundsWithSafeArea {
+  // This test should be made available on iOS 9+, however it fails on an iOS 9.3
+  // simulator in Xcode 10.0. The barItemsLayoutGuide's layoutFrame is CGRectZero.
+  // When run in the BottomNavigationBarController, however, the layoutFrame is
+  // correct whether it's attached to an external constraint or not.
+  if (@available(iOS 11.0, *)) {
+    // Given
+    UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
+    UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:0];
+    CGRect barFrame = CGRectMake(0, 0, 360, 76);
+    MDCSafeAreaCustomizingBottomNavigationBar *bottomNavBar =
+        [[MDCSafeAreaCustomizingBottomNavigationBar alloc] initWithFrame:barFrame];
+    bottomNavBar.test_safeAreaInsets = UIEdgeInsetsZero;
+    bottomNavBar.alignment = MDCBottomNavigationBarAlignmentJustified;
+    bottomNavBar.items = @[ item1, item2 ];
+    UIEdgeInsets safeAreaInsets = UIEdgeInsetsMake(0, 0, 20, 0);
+
+    // When
+    bottomNavBar.test_safeAreaInsets = safeAreaInsets;
+    [bottomNavBar setNeedsLayout];
+    [bottomNavBar layoutIfNeeded];
+
+    // Then
+    CGRect expectedLayoutGuideFrame =
+        UIEdgeInsetsInsetRect(CGRectStandardize(bottomNavBar.bounds), safeAreaInsets);
+    XCTAssertTrue(
+        CGRectEqualToRect(bottomNavBar.barItemsLayoutGuide.layoutFrame, expectedLayoutGuideFrame),
+        @"(%@) is not equal to (%@)",
+        NSStringFromCGRect(bottomNavBar.barItemsLayoutGuide.layoutFrame),
+        NSStringFromCGRect(expectedLayoutGuideFrame));
+  }
 }
 
 @end
