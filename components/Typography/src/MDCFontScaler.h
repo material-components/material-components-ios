@@ -15,7 +15,7 @@
 #import <UIKit/UIKit.h>
 
 // Material's text styles, which are similar, but not quite equivalent to Apple's UIFontTextStyle.
-typedef NSString * _Nonnull MDCTextStyle NS_TYPED_EXTENSIBLE_ENUM;
+typedef NSString *_Nonnull MDCTextStyle NS_TYPED_EXTENSIBLE_ENUM;
 
 extern MDCTextStyle MDCTextStyleHeadline1;
 extern MDCTextStyle MDCTextStyleHeadline2;
