@@ -169,7 +169,7 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
  the safe area layout guide. This will allow the Bottom Navigation bar to extend to the bottom of
  the screen and provide sufficient height for its content above the safe area.
 */
-@property(nonatomic, readonly, strong) UILayoutGuide *barItemsLayoutGuide NS_AVAILABLE_IOS(9_0);
+@property(nonatomic, readonly, nonnull) UILayoutGuide *barItemsLayoutGuide NS_AVAILABLE_IOS(9_0);
 
 /**
  If @c YES, it will truncate titles that don't fit within the bounds available to the item.
