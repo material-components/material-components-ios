@@ -18,7 +18,6 @@
 
 @interface UIFont (MaterialScalable)
 
-
 /**
  An associated scaling curve that is a dictionary that maps UISizeCategory to fontsize
  */
