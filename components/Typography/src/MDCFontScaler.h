@@ -15,19 +15,21 @@
 #import <UIKit/UIKit.h>
 
 // Material's text styles, which are similar, but not quite equivalent to Apple's UIFontTextStyle.
-extern NSString *_Nonnull MDCTextStyleHeadline1;
-extern NSString *_Nonnull MDCTextStyleHeadline2;
-extern NSString *_Nonnull MDCTextStyleHeadline3;
-extern NSString *_Nonnull MDCTextStyleHeadline4;
-extern NSString *_Nonnull MDCTextStyleHeadline5;
-extern NSString *_Nonnull MDCTextStyleHeadline6;
-extern NSString *_Nonnull MDCTextStyleSubtitle1;
-extern NSString *_Nonnull MDCTextStyleSubtitle2;
-extern NSString *_Nonnull MDCTextStyleBody1;
-extern NSString *_Nonnull MDCTextStyleBody2;
-extern NSString *_Nonnull MDCTextStyleButton;
-extern NSString *_Nonnull MDCTextStyleCaption;
-extern NSString *_Nonnull MDCTextStyleOverline;
+typedef NSString * _Nonnull MDCTextStyle NS_TYPED_EXTENSIBLE_ENUM;
+
+extern MDCTextStyle MDCTextStyleHeadline1;
+extern MDCTextStyle MDCTextStyleHeadline2;
+extern MDCTextStyle MDCTextStyleHeadline3;
+extern MDCTextStyle MDCTextStyleHeadline4;
+extern MDCTextStyle MDCTextStyleHeadline5;
+extern MDCTextStyle MDCTextStyleHeadline6;
+extern MDCTextStyle MDCTextStyleSubtitle1;
+extern MDCTextStyle MDCTextStyleSubtitle2;
+extern MDCTextStyle MDCTextStyleBody1;
+extern MDCTextStyle MDCTextStyleBody2;
+extern MDCTextStyle MDCTextStyleButton;
+extern MDCTextStyle MDCTextStyleCaption;
+extern MDCTextStyle MDCTextStyleOverline;
 
 /**
  MDCFontScaler attaches a scaling curve to a UIFont via an associated object on that font instance.
@@ -44,7 +46,7 @@ extern NSString *_Nonnull MDCTextStyleOverline;
    returned font.  For example, MaterialTextStyleBody1.
  @return An initialized font scaler object.
  */
-- (nonnull instancetype)initForMaterialTextStyle:(nonnull NSString *)textStyle;
+- (nonnull instancetype)initForMaterialTextStyle:(MDCTextStyle)textStyle;
 
 /**
  Creates and returns a font scaler object with the specified text style.
@@ -53,7 +55,7 @@ extern NSString *_Nonnull MDCTextStyleOverline;
  returned font.  For example, MaterialTextStyleBody1.
  @return An initialized font scaler object.
  */
-+ (nonnull instancetype)scalerForMaterialTextStyle:(nonnull NSString *)textStyle;
++ (nonnull instancetype)scalerForMaterialTextStyle:(MDCTextStyle)textStyle;
 
 - (nonnull instancetype)init NS_UNAVAILABLE;
 

@@ -20,29 +20,29 @@
 #import "UIApplication+AppExtensions.h"
 #import "UIFont+MaterialScalable.h"
 
-NSString *MDCTextStyleHeadline1 = @"MDC.TextStyle.Headline1";
-NSString *MDCTextStyleHeadline2 = @"MDC.TextStyle.Headline2";
-NSString *MDCTextStyleHeadline3 = @"MDC.TextStyle.Headline3";
-NSString *MDCTextStyleHeadline4 = @"MDC.TextStyle.Headline4";
-NSString *MDCTextStyleHeadline5 = @"MDC.TextStyle.Headline5";
-NSString *MDCTextStyleHeadline6 = @"MDC.TextStyle.Headline6";
-NSString *MDCTextStyleSubtitle1 = @"MDC.TextStyle.Subtitle1";
-NSString *MDCTextStyleSubtitle2 = @"MDC.TextStyle.Subtitle2";
-NSString *MDCTextStyleBody1 = @"MDC.TextStyle.Body1";
-NSString *MDCTextStyleBody2 = @"MDC.TextStyle.Body2";
-NSString *MDCTextStyleButton = @"MDC.TextStyle.Button";
-NSString *MDCTextStyleCaption = @"MDC.TextStyle.Caption";
-NSString *MDCTextStyleOverline = @"MDC.TextStyle.Overline";
+MDCTextStyle MDCTextStyleHeadline1 = @"MDC.TextStyle.Headline1";
+MDCTextStyle MDCTextStyleHeadline2 = @"MDC.TextStyle.Headline2";
+MDCTextStyle MDCTextStyleHeadline3 = @"MDC.TextStyle.Headline3";
+MDCTextStyle MDCTextStyleHeadline4 = @"MDC.TextStyle.Headline4";
+MDCTextStyle MDCTextStyleHeadline5 = @"MDC.TextStyle.Headline5";
+MDCTextStyle MDCTextStyleHeadline6 = @"MDC.TextStyle.Headline6";
+MDCTextStyle MDCTextStyleSubtitle1 = @"MDC.TextStyle.Subtitle1";
+MDCTextStyle MDCTextStyleSubtitle2 = @"MDC.TextStyle.Subtitle2";
+MDCTextStyle MDCTextStyleBody1 = @"MDC.TextStyle.Body1";
+MDCTextStyle MDCTextStyleBody2 = @"MDC.TextStyle.Body2";
+MDCTextStyle MDCTextStyleButton = @"MDC.TextStyle.Button";
+MDCTextStyle MDCTextStyleCaption = @"MDC.TextStyle.Caption";
+MDCTextStyle MDCTextStyleOverline = @"MDC.TextStyle.Overline";
 
 @implementation MDCFontScaler {
   NSDictionary<NSString *, NSNumber *> *_scalingCurve;
 }
 
-+ (instancetype)scalerForMaterialTextStyle:(NSString *)textStyle {
++ (instancetype)scalerForMaterialTextStyle:(MDCTextStyle)textStyle {
   return [[MDCFontScaler alloc] initForMaterialTextStyle:textStyle];
 }
 
-- (instancetype)initForMaterialTextStyle:(NSString *)textStyle {
+- (instancetype)initForMaterialTextStyle:(MDCTextStyle)textStyle {
   self = [super init];
   if (self) {
     // TODO(iangordon): Fill in missing fonts
