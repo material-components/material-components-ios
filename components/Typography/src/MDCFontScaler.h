@@ -34,8 +34,12 @@ extern MDCTextStyle MDCTextStyleOverline;
 /**
  MDCFontScaler attaches a scaling curve to a UIFont via an associated object on that font instance.
 
- This interface is similar to UIFontMetrics, but the font returned from MDCFontScaler do *not*
+ This interface is similar to UIFontMetrics, but the fonts returned from MDCFontScaler do *not*
  automatically adjust when the device's text size / content size category is changed.
+
+ Instances of fonts processed through MDCFontScaler will have an associated dictionary that maps
+ UIFontTextStyle to Font Size.  Category methods on UIFont allow clients to get instances of
+ resized fonts baed on this associated dictionary.
  */
 @interface MDCFontScaler : NSObject
 
