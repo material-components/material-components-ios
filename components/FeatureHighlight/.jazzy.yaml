@@ -3,3 +3,4 @@ module: FeatureHighlight
 umbrella_header: src/MaterialFeatureHighlight.h
 objc: true
 sdk: iphonesimulator
+framework_root: ../

@@ -3,3 +3,4 @@ module: ActionSheet
 umbrella_header: src/MaterialActionSheet.h
 objc: true
 sdk: iphonesimulator
+framework_root: ../
