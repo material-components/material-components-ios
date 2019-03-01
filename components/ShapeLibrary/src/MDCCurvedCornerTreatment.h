@@ -12,4 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCCurvedCornerTreatmentNew.h"
+#import <CoreGraphics/CoreGraphics.h>
+
+#import "MaterialShapes.h"
+
+/**
+ A curved corner treatment. Distinct from MDCRoundedCornerTreatment in that MDCurvedCornerTreatment
+ also supports asymmetric curved corners.
+ */
+@interface MDCCurvedCornerTreatment : MDCCornerTreatment
+
+/**
+ The size of the curve.
+ */
+@property(nonatomic, assign) CGSize size;
+
+/**
+ Initializes an MDCCurvedCornerTreatment instance with a given corner size.
+ */
+- (nonnull instancetype)initWithSize:(CGSize)size NS_DESIGNATED_INITIALIZER;
+
+/**
+ Initializes an MDCCurvedCornerTreatment instance with a corner size of zero.
+ */
+- (nonnull instancetype)init;
+
+@end
