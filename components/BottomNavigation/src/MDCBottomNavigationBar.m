@@ -123,6 +123,9 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
   [self addSubview:_barView];
 
   _itemsLayoutView = [[UIView alloc] initWithFrame:CGRectZero];
+  // By default, the autoresizing mask pins the itemsLayoutView to the top and bottom of the bar.
+  // However, if the `barItemsLayoutGuide` has a constraint moving the position of the view, those
+  // can override the autoresizing mask.
   _itemsLayoutView.autoresizingMask =
       (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin);
   _itemsLayoutView.clipsToBounds = NO;
