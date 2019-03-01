@@ -3,3 +3,4 @@ module: Backdrop
 umbrella_header: src/MaterialBackdrop.h
 objc: true
 sdk: iphonesimulator
+framework_root: ../
