@@ -3,3 +3,4 @@ module: AnimationTiming
 umbrella_header: src/MaterialAnimationTiming.h
 objc: true
 sdk: iphonesimulator
+framework_root: ../

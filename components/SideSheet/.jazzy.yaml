@@ -3,3 +3,4 @@ module: SideSheet
 umbrella_header: src/MaterialSideSheet.h
 objc: true
 sdk: iphonesimulator
+framework_root: ../

@@ -3,3 +3,4 @@ module: ImageList
 umbrella_header: src/MaterialImageList.h
 objc: true
 sdk: iphonesimulator
+framework_root: ../
