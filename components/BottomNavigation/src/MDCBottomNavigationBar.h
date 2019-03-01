@@ -165,7 +165,7 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
 /**
  UILayoutGuide encompassing the area around all visible items in the bar.
 
- Note: It is recommended that the bottom anchor of this layout guide be anchored to the bottom of
+ @note It is recommended that the bottom anchor of this layout guide be anchored to the bottom of
  the safe area layout guide. This will allow the Bottom Navigation bar to extend to the bottom of
  the screen and provide sufficient height for its content above the safe area.
 */
