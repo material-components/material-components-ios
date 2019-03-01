@@ -66,6 +66,7 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 @property(nonatomic, strong) UIView *itemsLayoutView;
 @property(nonatomic, strong) NSMutableArray *inkControllers;
 @property(nonatomic) BOOL shouldPretendToBeATabBar;
+@property(nonatomic, strong) UILayoutGuide *barItemsLayoutGuide;
 @end
 
 @implementation MDCBottomNavigationBar
@@ -192,6 +193,10 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
   CGFloat itemWidth = [self widthForItemsWhenCenteredWithAvailableWidth:CGFLOAT_MAX height:height];
   CGSize size = CGSizeMake(itemWidth * self.items.count, height);
   return size;
+}
+
+- (NSLayoutYAxisAnchor *)barItemsBottomAnchor {
+  return self.barItemsLayoutGuide.bottomAnchor;
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {

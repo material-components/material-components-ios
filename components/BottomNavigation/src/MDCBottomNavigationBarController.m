@@ -283,7 +283,7 @@
   [self.navigationBar.topAnchor constraintEqualToAnchor:self.content.bottomAnchor].active = YES;
   [self.navigationBar.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor].active = YES;
   if (@available(iOS 11.0, *)) {
-    [self.navigationBar.barItemsLayoutGuide.bottomAnchor
+    [self.navigationBar.barItemsBottomAnchor
         constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor]
         .active = YES;
   }
