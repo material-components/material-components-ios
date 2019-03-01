@@ -1034,7 +1034,6 @@ static NSString *const kBadgeTitleArabic = @"أورا";
 
 - (void)testBarItemsBottomAnchorWithOffset {
   if (@available(iOS 9.0, *)) {
-    self.recordMode = YES;
     // Given
     self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
     self.navigationBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles;
@@ -1070,7 +1069,6 @@ static NSString *const kBadgeTitleArabic = @"أورا";
 
 - (void)testBarItemsBottomAnchorWithoutOffset {
   if (@available(iOS 9.0, *)) {
-    self.recordMode = YES;
     // Given
     self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
     self.navigationBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles;
