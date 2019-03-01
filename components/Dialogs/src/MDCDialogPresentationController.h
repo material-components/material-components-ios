@@ -16,7 +16,7 @@
 
 #import "MaterialShadowElevations.h"
 
-extern CGFloat const kPresentedViewCorenerRadius;
+extern CGFloat const MDCUsePresentedViewCornerRadius;
 
 @class MDCDialogPresentationController;
 
@@ -71,7 +71,7 @@ extern CGFloat const kPresentedViewCorenerRadius;
 /**
  Customize the corner radius of the shadow to match the presented view's corner radius.
 
- By default (when the value is kPresentedViewCorenerRadius), the dialogCornerRadius is ignored,
+ By default (when the value is MDCUsePresentedViewCornerRadius), the dialogCornerRadius is ignored,
  and the presented view will be presented with it original corner radius value that is assigned
  by the client. The presentation controller will ensure in that case to match its shadow
  shape to the corner radius of the presented view.
@@ -86,7 +86,7 @@ extern CGFloat const kPresentedViewCorenerRadius;
 (through view.layer.cornerRadius) will be ignored. In that case, if you wish to further
  customize the corner radius of the presented view, set dialogCornerRadius instead.
 
- Defaults to: kPresentedViewCorenerRadius (-1.0).
+ Defaults to: MDCUsePresentedViewCornerRadius (-1.0).
  */
 @property(nonatomic, assign) CGFloat dialogCornerRadius;
 

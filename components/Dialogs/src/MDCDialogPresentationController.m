@@ -18,7 +18,7 @@
 #import "MaterialShadowLayer.h"
 #import "private/MDCDialogShadowedView.h"
 
-CGFloat const kPresentedViewCorenerRadius = -1.0;
+CGFloat const MDCUsePresentedViewCornerRadius = -1.0;
 static CGFloat MDCDialogMinimumWidth = 280;
 // TODO: Spec indicates 40 side margins and 280 minimum width.
 // That is incompatible with a 320 wide device.
@@ -38,6 +38,7 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
 
 @implementation MDCDialogPresentationController {
   UITapGestureRecognizer *_dismissGestureRecognizer;
+  CGFloat previousPresentedViewCornerRadius;
 }
 
 #pragma mark - UIPresentationController
@@ -73,7 +74,9 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
   self = [super initWithPresentedViewController:presentedViewController
                        presentingViewController:presentingViewController];
   if (self) {
-    _dialogCornerRadius = kPresentedViewCorenerRadius;
+    _dialogCornerRadius = MDCUsePresentedViewCornerRadius;
+    previousPresentedViewCornerRadius = MDCUsePresentedViewCornerRadius;
+
     _dimmingView = [[UIView alloc] initWithFrame:CGRectZero];
     _dimmingView.backgroundColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.32];
     _dimmingView.alpha = 0;
@@ -138,8 +141,8 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
   // presentation and dismissal of the dialog.
   // https://material.io/guidelines/motion/choreography.html#choreography-creation
 
-  // Ensure corner radius matches between the tracking view and the view being presented
-  if (self.dialogCornerRadius <= kPresentedViewCorenerRadius) {
+  // Ensure the same corner radius is used by both the tracking view and the view being presented
+  if (self.dialogCornerRadius == MDCUsePresentedViewCornerRadius) {
     // If dialogCornerRadius is not set, use the presented view's cornerRadius for the shadow layer.
     _trackingView.layer.cornerRadius = self.presentedView.layer.cornerRadius;
   } else {
@@ -149,6 +152,7 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
     // Note: For MDCAlertController, this assumes that the "view" property points to the same
     // instance as the "alertView" property. Therefore, we are safe to not set its cornerRadius
     // property (its ".cornerRadius", rather then its "presentedView.layer.cornerRadius")
+    previousPresentedViewCornerRadius = self.presentedView.layer.cornerRadius;
     self.presentedView.layer.cornerRadius = self.dialogCornerRadius;
   }
 
@@ -221,6 +225,11 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
 
     // Re-enable accessibilityElements on the presenting view controller.
     self.presentingViewController.view.accessibilityElementsHidden = NO;
+
+    if (previousPresentedViewCornerRadius != MDCUsePresentedViewCornerRadius) {
+      // Restore cornerRadius in case it had changed during presentation
+      self.presentedView.layer.cornerRadius = previousPresentedViewCornerRadius;
+    }
   }
 
   [super dismissalTransitionDidEnd:completed];
