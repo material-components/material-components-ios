@@ -90,7 +90,7 @@ IB_DESIGNABLE
 
  @note Do not invoke this method if self.observesTrackingScrollViewScrollEvents is YES.
  */
-- (void)trackingScrollViewDidChangeAdjustedContentInset:(UIScrollView *)trackingScrollView;
+- (void)trackingScrollViewDidChangeAdjustedContentInset:(UIScrollView *)trackingScrollView API_AVAILABLE(ios(11.0), tvos(11.0));
 
 #pragma mark Changing the tracking scroll view
 

@@ -277,6 +277,8 @@ extension SimpleTableViewController: UITableViewDelegate {
   }
 
   func scrollViewDidChangeAdjustedContentInset(_ scrollView: UIScrollView) {
-    headerView?.trackingScrollDidChangeAdjustedContentInset(scrollView)
+    if #available(iOS 11.0, *) {
+      headerView?.trackingScrollDidChangeAdjustedContentInset(scrollView)
+    }
   }
 }
