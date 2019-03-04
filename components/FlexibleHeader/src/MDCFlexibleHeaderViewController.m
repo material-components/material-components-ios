@@ -583,7 +583,7 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
   }
 
   UIViewController *ancestor =
-  [self.safeAreaDelegate flexibleHeaderViewControllerTopSafeAreaInsetViewController:self];
+      [self.safeAreaDelegate flexibleHeaderViewControllerTopSafeAreaInsetViewController:self];
   if (ancestor == nil) {
     ancestor = [self fhv_rootAncestorOfViewController:parent];
 
@@ -594,7 +594,7 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
       // controller. Doing so would result in the top layout guide being infinitely increased.
       // Let's use the top layout guide view controller's ancestor instead.
       ancestor = [self
-                  fhv_rootAncestorOfViewController:self.topLayoutGuideViewController.parentViewController];
+          fhv_rootAncestorOfViewController:self.topLayoutGuideViewController.parentViewController];
     }
   }
 

@@ -173,7 +173,7 @@
  */
 @protocol MDCFlexibleHeaderSafeAreaDelegate
 - (UIViewController *_Nullable)flexibleHeaderViewControllerTopSafeAreaInsetViewController:
-(nonnull MDCFlexibleHeaderViewController *)flexibleHeaderViewController;
+    (nonnull MDCFlexibleHeaderViewController *)flexibleHeaderViewController;
 @end
 
 /**
