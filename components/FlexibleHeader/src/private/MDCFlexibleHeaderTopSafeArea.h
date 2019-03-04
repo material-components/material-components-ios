@@ -72,7 +72,7 @@ __attribute__((objc_subclassing_restricted)) @interface MDCFlexibleHeaderTopSafe
 /**
  The delegate may react to changes in the top safe area inset.
  */
-@property(nonatomic, weak, nullable) id<MDCFlexibleHeaderTopSafeAreaDelegate> delegate;
+@property(nonatomic, weak, nullable) id<MDCFlexibleHeaderTopSafeAreaDelegate> topSafeAreaDelegate;
 
 @end
 

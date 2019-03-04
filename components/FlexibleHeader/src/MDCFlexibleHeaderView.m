@@ -249,7 +249,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 
 - (void)commonMDCFlexibleHeaderViewInit {
   _topSafeArea = [[MDCFlexibleHeaderTopSafeArea alloc] init];
-  _topSafeArea.delegate = self;
+  _topSafeArea.topSafeAreaDelegate = self;
 
   _minMaxHeight = [[MDCFlexibleHeaderMinMaxHeight alloc] initWithTopSafeArea:_topSafeArea];
   _minMaxHeight.delegate = self;
