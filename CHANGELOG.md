@@ -1,3 +1,58 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+## Changes
+
+### BottomAppBar
+
+* [hide swift example from Catalog. (#6725)](https://github.com/material-components/material-components-ios/commit/ea0986d30cb9ffd0f9e4dd0ac6c9a6e4a57799dd) (Wenyu Zhang)
+
+### BottomNavigation
+
+* [Make Controller available on iOS 8. (#6719)](https://github.com/material-components/material-components-ios/commit/e553272885f0a3ab00408aec5ffd9cfaa73a3d9a) (Robert Moore)
+* [Remove deprecation notice from sizeThatFitsIncludesSafeArea (#6727)](https://github.com/material-components/material-components-ios/commit/b342919ba3d127111fd357f12065bf032fd92328) (featherless)
+* [sizeThatFits: ignores safe area (#6717)](https://github.com/material-components/material-components-ios/commit/d58c49c7ec17b93180a45cf1aa1b27a59bc03993) (Robert Moore)
+
+### Dialogs
+
+* [Fix presented corner radius in custom view controllers (#6696)](https://github.com/material-components/material-components-ios/commit/df2a4a8c1d4cc46367ac090441d498e614092e90) (Galia Kaufman)
+
+### FlexibleHeader
+
+* [FlexibleHeader changes (#6748)](https://github.com/material-components/material-components-ios/commit/bb323d9904c9d926d634dc3a5487257cd4415e14) (Andrew Overton)
+
+### NavigationDrawer
+
+* [remove beta references from navigation drawer (#6742)](https://github.com/material-components/material-components-ios/commit/c0911869b50753776de8a9f145fe3ba9544c579d) (Yarden Eitan)
+
+### PageControl
+
+* [Fixes MDCPageControl not properly revealing page indicators. (#6714)](https://github.com/material-components/material-components-ios/commit/0294a87db21c12cb4969255e2e6d9944de04b302) (Yarden Eitan)
+
+## Multi-component changes
+
+* [Add autolayout support (#6612)](https://github.com/material-components/material-components-ios/commit/5ca3f347422050a918125db8f92d391695a0cb99) (Robert Moore)
+* [Fix colorScheme and typographyScheme to be nonnull. (#6699)](https://github.com/material-components/material-components-ios/commit/50307bb3308fb7b514a4dc7523d4e45a71440420) (Cody Weaver)
+* [Move shapes from components/private to components/ - Part 3 (last part) (#6734)](https://github.com/material-components/material-components-ios/commit/10abd4524dbc3c7ed1ce6aac0ad0ddc24ac7b4a6) (Yarden Eitan)
+* [Slight changes to Cards targets + rewrite rules (#6749)](https://github.com/material-components/material-components-ios/commit/1bd173d8a776f9e1f3aedd2894395451c6e144b1) (Andrew Overton)
+* [Support titlePositionAdjustment (#6721)](https://github.com/material-components/material-components-ios/commit/60c60b3defba75990fb72ef85f4ffb7830d6d593) (Robert Moore)
+* [updated jazzy yaml files to include framework root (#6750)](https://github.com/material-components/material-components-ios/commit/c4d24627ee4f3959b15ebc40bc838601d1a7e45b) (Yarden Eitan)
+
+---
+
 # 78.0.1
 
 In this patch release we have provided a ChipTextField example along with some Beta theming bug fixes.
