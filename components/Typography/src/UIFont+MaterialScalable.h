@@ -25,11 +25,6 @@
     NSDictionary<UIContentSizeCategory, NSNumber *> *mdc_scalingCurve;
 
 /**
- Is there a scaling curve associated with the font
- */
-@property(nonatomic, readonly, getter=mdc_hasScalingCurve) BOOL mdc_scalingCurveAssociated;
-
-/**
  Return a font with the same family, weight and traits, with a size based on the given size
  category and an associated scaling curve.
 

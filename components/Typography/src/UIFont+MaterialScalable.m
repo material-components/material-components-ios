@@ -24,7 +24,7 @@ static char MDCFontScaleObjectKey;
 @implementation UIFont (MaterialTypography)
 
 - (UIFont *)mdc_scaledFontForSizeCategory:(UIContentSizeCategory)sizeCategory {
-  if (!self.mdc_hasScalingCurve) {
+  if (!self.mdc_scalingCurve) {
     return self;
   }
 
@@ -67,14 +67,6 @@ static char MDCFontScaleObjectKey;
 
 - (nonnull UIFont *)mdc_scaledFontAtDefaultSize {
   return [self mdc_scaledFontForSizeCategory:UIContentSizeCategoryLarge];
-}
-
-- (BOOL)mdc_hasScalingCurve {
-  if (self.mdc_scalingCurve != nil) {
-    return YES;
-  } else {
-    return NO;
-  }
 }
 
 - (CGFloat)scaledValueForValue:(CGFloat)value {
