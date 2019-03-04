@@ -516,7 +516,8 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 
 #pragma mark - Private (fhv_ prefix)
 
-- (void)fhv_setContentOffset:(CGPoint)contentOffset forTrackingScrollView:(UIScrollView *)trackingScrollView {
+- (void)fhv_setContentOffset:(CGPoint)contentOffset
+       forTrackingScrollView:(UIScrollView *)trackingScrollView {
   // Avoid excessive writes. This can also cause infinite recursion if we're observing the content
   // offset because of observesTrackingScrollViewScrollEvents.
   if (!CGPointEqualToPoint(contentOffset, trackingScrollView.contentOffset)) {
@@ -543,7 +544,8 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
     }
     offsetPriorToInsetAdjustment.y =
         MAX(offsetPriorToInsetAdjustment.y, -scrollViewAdjustedContentInsetTop);
-    [self fhv_setContentOffset:offsetPriorToInsetAdjustment forTrackingScrollView:trackingScrollView];
+    [self fhv_setContentOffset:offsetPriorToInsetAdjustment
+         forTrackingScrollView:trackingScrollView];
   }
 }
 

@@ -85,12 +85,13 @@ IB_DESIGNABLE
 /**
  Informs the receiver that the tracking scroll view's adjustedContentInset has changed.
 
- Must be called from the trackingScrollView delegate's UIScrollViewDelegate::scrollViewDidChangeAdjustedContentInset:
- implementor.
+ Must be called from the trackingScrollView delegate's
+ UIScrollViewDelegate::scrollViewDidChangeAdjustedContentInset: implementor.
 
  @note Do not invoke this method if self.observesTrackingScrollViewScrollEvents is YES.
  */
-- (void)trackingScrollViewDidChangeAdjustedContentInset:(UIScrollView *)trackingScrollView API_AVAILABLE(ios(11.0), tvos(11.0));
+- (void)trackingScrollViewDidChangeAdjustedContentInset:(UIScrollView *)trackingScrollView
+    API_AVAILABLE(ios(11.0), tvos(11.0));
 
 #pragma mark Changing the tracking scroll view
 
