@@ -77,7 +77,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 }
 
 @interface MDCFlexibleHeaderView () <MDCStatusBarShifterDelegate,
-                                     MDCFlexibleHeaderSafeAreaDelegate,
+                                     MDCFlexibleHeaderTopSafeAreaDelegate,
                                      MDCFlexibleHeaderMinMaxHeightDelegate>
 
 // The intensity strength of the shadow being displayed under the flexible header. Use this property
@@ -465,7 +465,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   [_topSafeArea safeAreaInsetsDidChange];
 }
 
-#pragma mark MDCFlexibleHeaderSafeAreaDelegate
+#pragma mark MDCFlexibleHeaderTopSafeAreaDelegate
 
 - (void)flexibleHeaderSafeAreaTopSafeAreaInsetDidChange:(MDCFlexibleHeaderTopSafeArea *)safeAreas {
   [self.minMaxHeight recalculateMinMaxHeight];
