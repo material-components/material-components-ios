@@ -1089,20 +1089,20 @@ static NSString *controlStateDescription(UIControlState controlState) {
 - (void)testSetAccessibilityTraitsExcludesButtonExplicitly {
   // When
   self.button.accessibilityTraitsIncludesButton = NO;
-  self.button.accessibilityTraits = UIAccessibilityTraitTabBar;
+  self.button.accessibilityTraits = UIAccessibilityTraitAllowsDirectInteraction;
 
   // Then
-  XCTAssertEqual(self.button.accessibilityTraits, UIAccessibilityTraitTabBar);
+  XCTAssertEqual(self.button.accessibilityTraits, UIAccessibilityTraitAllowsDirectInteraction);
 }
 
 - (void)testSetAccessibilityTraitsIncludesButtonExplicitly {
   // When
   self.button.accessibilityTraitsIncludesButton = YES;
-  self.button.accessibilityTraits = UIAccessibilityTraitTabBar;
+  self.button.accessibilityTraits = UIAccessibilityTraitAllowsDirectInteraction;
 
   // Then
   XCTAssertEqual(self.button.accessibilityTraits,
-                 UIAccessibilityTraitTabBar | UIAccessibilityTraitButton);
+                 UIAccessibilityTraitAllowsDirectInteraction | UIAccessibilityTraitButton);
 }
 
 @end
