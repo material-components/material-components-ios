@@ -76,7 +76,7 @@
   });
 
   // Then
-  [self waitForExpectations:@[expect] timeout:3];
+  [self waitForExpectations:@[ expect ] timeout:3];
 }
 
 @end
