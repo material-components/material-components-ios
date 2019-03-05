@@ -152,6 +152,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   _imageTintColors = [NSMutableDictionary dictionary];
   _borderWidths = [NSMutableDictionary dictionary];
   _fonts = [NSMutableDictionary dictionary];
+  _accessibilityTraitsIncludesButton = YES;
+  [super setAccessibilityTraits:[super accessibilityTraits] | UIAccessibilityTraitButton];
 
   if (!_backgroundColors) {
     // _backgroundColors may have already been initialized by setting the backgroundColor setter.
@@ -482,7 +484,10 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 - (UIAccessibilityTraits)accessibilityTraits {
-  return [super accessibilityTraits] | UIAccessibilityTraitButton;
+  if (self.accessibilityTraitsIncludesButton) {
+    return [super accessibilityTraits] | UIAccessibilityTraitButton;
+  }
+  return [super accessibilityTraits];
 }
 
 #pragma mark - Ink

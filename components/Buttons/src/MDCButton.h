@@ -132,6 +132,13 @@
 @property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator;
 
 /**
+ If true, @c accessiblityTraits will always include @c UIAccessibilityTraitButton.
+
+ @note Defaults to true.
+ */
+@property(nonatomic, assign) BOOL accessibilityTraitsIncludesButton;
+
+/**
  A color used as the button's @c backgroundColor for @c state.
 
  @param state The state.

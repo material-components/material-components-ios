@@ -1070,4 +1070,39 @@ static NSString *controlStateDescription(UIControlState controlState) {
                 NSStringFromCGRect(expectedFrame), NSStringFromCGRect(self.button.frame));
 }
 
+#pragma mark - UIAccessibility
+
+- (void)testAccessibilityTraitsDefault {
+  // Then
+  XCTAssertEqual(self.button.accessibilityTraits, UIAccessibilityTraitButton);
+}
+
+- (void)testSetAccessibilityTraitsIncludesButtonByDefault {
+  // When
+  self.button.accessibilityTraits = UIAccessibilityTraitLink;
+
+  // Then
+  XCTAssertEqual(self.button.accessibilityTraits,
+                 UIAccessibilityTraitLink | UIAccessibilityTraitButton);
+}
+
+- (void)testSetAccessibilityTraitsExcludesButtonExplicitly {
+  // When
+  self.button.accessibilityTraitsIncludesButton = NO;
+  self.button.accessibilityTraits = UIAccessibilityTraitTabBar;
+
+  // Then
+  XCTAssertEqual(self.button.accessibilityTraits, UIAccessibilityTraitTabBar);
+}
+
+- (void)testSetAccessibilityTraitsIncludesButtonExplicitly {
+  // When
+  self.button.accessibilityTraitsIncludesButton = YES;
+  self.button.accessibilityTraits = UIAccessibilityTraitTabBar;
+
+  // Then
+  XCTAssertEqual(self.button.accessibilityTraits,
+                 UIAccessibilityTraitTabBar | UIAccessibilityTraitButton);
+}
+
 @end
