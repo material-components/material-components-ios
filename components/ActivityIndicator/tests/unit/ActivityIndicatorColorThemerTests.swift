@@ -16,6 +16,7 @@ import XCTest
 import MaterialComponents.MaterialActivityIndicator
 import MaterialComponents.MaterialActivityIndicator_ColorThemer
 
+@available(iOS 9.0, *)
 class ActivityIndicatorColorThemerTests: XCTestCase {
 
   func testColorThemerChangesTheBackgroundColor() {
