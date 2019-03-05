@@ -33,6 +33,24 @@ For Googlers, also read [go/mdc-release-engineering](http://go/mdc-release-engin
 
 ## Before you start
 
+### First time setup
+
+Install [brew](https://brew.sh/), [sourcekitten](https://github.com/jpsim/SourceKitten), and [git-lfs](https://git-lfs.github.com/):
+
+    brew install sourcekitten
+    brew install git-lfs
+
+Verify that xcode-select is pointing to an Xcode installation directory:
+
+    sudo xcode-select -p
+    
+    # Example output:
+    # /Applications/Xcode.app/Contents/Developer
+
+If not, select the Xcode you have installed. For example:
+
+    sudo xcode-select --switch /Applications/Xcode.app
+
 ### Create a clean clone
 
 Make sure you are working from a direct clone of the main Git repository.  The scripts involved 
