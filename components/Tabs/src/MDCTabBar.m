@@ -18,7 +18,6 @@
 
 #import "MDCTabBarIndicatorTemplate.h"
 #import "MDCTabBarUnderlineIndicatorTemplate.h"
-#import "MaterialInk.h"
 #import "MaterialTypography.h"
 #import "private/MDCItemBar.h"
 #import "private/MDCItemBarAlignment.h"
@@ -124,7 +123,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   _selectedTitleColor = _selectedItemTintColor;
   _unselectedTitleColor = _unselectedItemTintColor;
   _inkColor = [UIColor colorWithWhite:1 alpha:(CGFloat)0.7];
-
+  _inkStyle = MDCInkStyleBounded;
   self.clipsToBounds = YES;
   _barPosition = UIBarPositionAny;
   _hasDefaultItemAppearance = YES;
@@ -275,6 +274,14 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 - (void)setInkColor:(UIColor *)inkColor {
   if (_inkColor != inkColor && ![_inkColor isEqual:inkColor]) {
     _inkColor = inkColor;
+
+    [self updateItemBarStyle];
+  }
+}
+
+- (void)setInkStyle:(MDCInkStyle)inkStyle {
+  if (_inkStyle != inkStyle) {
+    _inkStyle = inkStyle;
 
     [self updateItemBarStyle];
   }
@@ -603,6 +610,8 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 
   if (_barPosition != newPosition) {
     _barPosition = newPosition;
+    self.inkStyle =
+        [MDCTabBar isTopTabsForPosition:_barPosition] ? MDCInkStyleBounded : MDCInkStyleUnbounded;
     [self updatePositionDerivedDefaultValues];
     [self updateItemBarStyle];
   }
@@ -632,6 +641,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   style.selectionIndicatorTemplate = self.selectionIndicatorTemplate;
   style.selectionIndicatorColor = self.tintColor;
   style.inkColor = _inkColor;
+  style.inkStyle = _inkStyle;
   style.displaysUppercaseTitles = self.displaysUppercaseTitles;
 
   style.selectedTitleColor = _selectedTitleColor ?: self.tintColor;

@@ -17,6 +17,7 @@
 #import "MDCTabBarAlignment.h"
 #import "MDCTabBarItemAppearance.h"
 #import "MDCTabBarTextTransform.h"
+#import "MaterialInk.h"
 
 @class MDCTabBarItem;
 @protocol MDCTabBarDelegate;
@@ -92,6 +93,14 @@ IB_DESIGNABLE
 
 /** Ink color for taps on tab bar items. Default: Semi-transparent white. */
 @property(nonatomic, nonnull) UIColor *inkColor UI_APPEARANCE_SELECTOR;
+
+/**
+ Ink style for taps on tab bar items.
+
+ Defaults to MDCInkStyleBounded when UIBarPosition is Top or Any.
+ Defaults to MDCInkStyleUnbounded when UIBarPosition is Bottom.
+*/
+@property(nonatomic, assign) MDCInkStyle inkStyle;
 
 /** Color for the bottom divider. Default: Clear. */
 @property(nonatomic, nonnull) UIColor *bottomDividerColor;

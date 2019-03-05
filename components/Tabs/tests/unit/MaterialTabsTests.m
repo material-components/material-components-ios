@@ -16,7 +16,7 @@
 
 #import "MaterialTabs.h"
 
-@interface MaterialTabsTests : XCTestCase
+@interface MaterialTabsTests : XCTestCase <MDCTabBarDelegate>
 @end
 
 @implementation MaterialTabsTests {
@@ -24,15 +24,18 @@
   UITabBarItem *_itemA;
   UITabBarItem *_itemB;
   UITabBarItem *_itemC;
+  BOOL _shouldPositionTabBarAtBottom;
 }
 
 - (void)setUp {
   [super setUp];
 
   _tabBar = [[MDCTabBar alloc] init];
+  _tabBar.delegate = nil;
   _itemA = [[UITabBarItem alloc] initWithTitle:@"A" image:nil tag:0];
   _itemB = [[UITabBarItem alloc] initWithTitle:@"B" image:nil tag:0];
   _itemC = [[UITabBarItem alloc] initWithTitle:@"C" image:nil tag:0];
+  _shouldPositionTabBarAtBottom = NO;
 }
 
 - (void)tearDown {
@@ -96,6 +99,30 @@
   XCTAssertEqual(_tabBar.selectedItem, _itemB);
 }
 
+- (void)testInkStyleForBottom {
+  // Given
+  _shouldPositionTabBarAtBottom = YES;
+  _tabBar.delegate = self;
+
+  // Then
+  _tabBar.inkStyle = MDCInkStyleUnbounded;
+}
+
+- (void)testInkStyleForAny {
+  // Given
+  _shouldPositionTabBarAtBottom = NO;
+  _tabBar.delegate = self;
+
+  // Then
+  _tabBar.inkStyle = MDCInkStyleBounded;
+}
+
 // TODO(#5199): Add a snapshot test to prove the tabs render without a window
+
+#pragma mark MDCTabBarDelegate
+
+- (UIBarPosition)positionForBar:(id<UIBarPositioning>)bar {
+  return _shouldPositionTabBarAtBottom ? UIBarPositionBottom : UIBarPositionAny;
+}
 
 @end

@@ -32,6 +32,7 @@
   XCTAssertEqualObjects(tabBar.unselectedItemTintColor, [UIColor colorWithWhite:1
                                                                           alpha:(CGFloat)0.7]);
   XCTAssertEqualObjects(tabBar.inkColor, [UIColor colorWithWhite:1 alpha:(CGFloat)0.7]);
+  XCTAssertEqual(tabBar.inkStyle, MDCInkStyleBounded);
   XCTAssertNil(tabBar.barTintColor);
   XCTAssertTrue(tabBar.clipsToBounds);
   XCTAssertEqual(tabBar.barPosition, UIBarPositionAny);
