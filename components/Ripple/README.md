@@ -69,24 +69,6 @@ Then, run the following command:
 pod install
 ```
 
-### Importing
-
-To import the component:
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-import MaterialComponentsBeta.MaterialRipple
-```
-
-#### Objective-C
-
-```objc
-#import "MaterialRipple.h"
-```
-<!--</div>-->
-
-
 ## Usage
 
 ### Importing
@@ -100,7 +82,6 @@ import MaterialComponentsBeta.MaterialRipple
 ```
 
 #### Objective-C
-
 ```objc
 #import "MaterialRipple.h"
 ```
@@ -135,7 +116,6 @@ UIButton *myButton = [UIButton buttonWithType:UIButtonTypeSystem];
 MDCRippleTouchController *rippleTouchController = [[MDCRippleTouchController alloc] initWithView:myButton];
 ```
 <!--</div>-->
-
 
 
 The `MDCRippleTouchControllerDelegate` gives you some control over aspects of the
