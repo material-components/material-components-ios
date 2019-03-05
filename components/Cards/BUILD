@@ -63,12 +63,12 @@ mdc_objc_library(
         "//components/Shapes",
         "//components/private/Icons/icons/ic_check_circle",
         "//components/private/Math",
-        ":CardsPrivate"
+        ":Private"
     ],
 )
 
 mdc_objc_library(
-    name = "CardsPrivate",
+    name = "Private",
     sdk_frameworks = [
         "UIKit",
     ],

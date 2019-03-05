@@ -41,7 +41,7 @@ class DialogsMaterialThemingTests: XCTestCase {
     alert.addAction(action2)
     let action3: MDCAlertAction = MDCAlertAction(title: "", emphasis: .high)
     alert.addAction(action3)
-
+    
     alert.applyTheme(withScheme: scheme)
 
     // Color
@@ -191,8 +191,44 @@ class DialogsMaterialThemingTests: XCTestCase {
     XCTAssertEqual(presentationController.scrimColor,
                    colorScheme.onSurfaceColor.withAlphaComponent(0.32))
 
-    // Other properties
+    // Corner Radius
     XCTAssertEqual(presentationController.dialogCornerRadius, kCornerRadius, accuracy: 0.001)
+
+    // Elevation
+    XCTAssertEqual(presentationController.dialogElevation, ShadowElevation.dialog)
+  }
+
+  func testMDCDialogPresentationControllerThemingWithCustomViewController() {
+    // Given
+    let dialog: UIViewController = UIViewController(nibName: nil, bundle: nil)
+    let transitionController = MDCDialogTransitionController()
+    dialog.modalPresentationStyle = .custom
+    dialog.transitioningDelegate = transitionController
+
+    // The presentation controller is the object under test. It should be defined correctly
+    // once an MDC transition delegate is assigned. We first verify is exists before testing it:
+    guard let presentationController = dialog.mdc_dialogPresentationController else {
+      XCTAssert(false, "alert.mdc_dialogPresentationController should not be nil")
+      return
+    }
+    let scheme: MDCContainerScheme = MDCContainerScheme()
+    let colorScheme = MDCSemanticColorScheme()
+
+    // When
+    presentationController.applyTheme(withScheme: scheme)
+
+    // Then
+    // Presentation
+    XCTAssertEqual(dialog.presentationController, presentationController)
+
+    // Presentation Color
+    XCTAssertEqual(presentationController.scrimColor,
+                   colorScheme.onSurfaceColor.withAlphaComponent(0.32))
+
+    // Presentation Corner Radius
+    XCTAssertEqual(presentationController.dialogCornerRadius, kCornerRadius, accuracy: 0.001)
+
+    // Presentation Elevation
     XCTAssertEqual(presentationController.dialogElevation, ShadowElevation.dialog)
   }
 

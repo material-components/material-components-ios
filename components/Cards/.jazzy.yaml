@@ -3,3 +3,4 @@ module: Cards
 umbrella_header: src/MaterialCards.h
 objc: true
 sdk: iphonesimulator
+framework_root: ../

@@ -11,5 +11,28 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+#import <CoreGraphics/CoreGraphics.h>
 
-#import "MDCRoundedCornerTreatmentNew.h"
+#import "MaterialShapes.h"
+
+/**
+ A rounded corner treatment.
+ */
+@interface MDCRoundedCornerTreatment : MDCCornerTreatment
+
+/**
+ The radius of the corner.
+ */
+@property(nonatomic, assign) CGFloat radius;
+
+/**
+ Initializes an MDCRoundedCornerTreatment instance with a given radius.
+ */
+- (nonnull instancetype)initWithRadius:(CGFloat)radius NS_DESIGNATED_INITIALIZER;
+
+/**
+ Initializes an MDCRoundedCornerTreatment instance with a radius of zero.
+ */
+- (nonnull instancetype)init;
+
+@end

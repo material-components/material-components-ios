@@ -68,10 +68,23 @@
 
 /**
  Customize the corner radius of the shadow to match the presented view's corner radius.
- If the presented view corner radius and dialogCornerRadius are different, the rendered shadow will
- not match.
 
- Defaults to 0.0.
+ By default, the corner radius of the presented shadow is adjusted to match the corner radius of the
+ view being presented.  This behavior is achieved without making any changes to dialogCornerRadius.
+ Once a value is set on dialogCornerRadius, that value will be used to determine the radius of both
+ the presetned view and the shadow. That means that any further changes to the presented view's
+ corner radius (yourViewController.view.layer.cornerRadius) will be ignored once dialogCornerRadius
+ is set.
+
+ In either cases, the presentation controller ensures that the shadow layer's corner radius matches
+ the presented view's.
+
+ Material themers use dialogCornerRadius for setting the corner radius, therefore, when applying
+ a themer to your custom UIViewController, any value you assign to your view's corner radius
+ will be ignored. If you wish to override the corner radius after a themer is called, make sure
+ to set it to dialogCornerRadius, and not to the presented view's corner radius.
+
+ Defaults to: The presented view's corner radius.
  */
 @property(nonatomic, assign) CGFloat dialogCornerRadius;
 

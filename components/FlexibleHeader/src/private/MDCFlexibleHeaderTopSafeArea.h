@@ -17,7 +17,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@protocol MDCFlexibleHeaderSafeAreaDelegate;
+@protocol MDCFlexibleHeaderTopSafeAreaDelegate;
 
 /**
  Extracts the top safe area for a given view controller.
@@ -72,7 +72,7 @@ __attribute__((objc_subclassing_restricted)) @interface MDCFlexibleHeaderTopSafe
 /**
  The delegate may react to changes in the top safe area inset.
  */
-@property(nonatomic, weak, nullable) id<MDCFlexibleHeaderSafeAreaDelegate> delegate;
+@property(nonatomic, weak, nullable) id<MDCFlexibleHeaderTopSafeAreaDelegate> topSafeAreaDelegate;
 
 @end
 
@@ -80,7 +80,7 @@ __attribute__((objc_subclassing_restricted)) @interface MDCFlexibleHeaderTopSafe
  The delegate protocol through which MDCFlexibleHeaderTopSafeArea communicates changes in the top
  safe area inset.
  */
-@protocol MDCFlexibleHeaderSafeAreaDelegate
+@protocol MDCFlexibleHeaderTopSafeAreaDelegate
 @required
 
 /**

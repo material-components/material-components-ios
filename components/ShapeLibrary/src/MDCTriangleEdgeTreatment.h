@@ -12,4 +12,36 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCTriangleEdgeTreatmentNew.h"
+#import <CoreGraphics/CoreGraphics.h>
+
+#import "MaterialShapes.h"
+
+typedef enum : NSUInteger {
+  MDCTriangleEdgeStyleHandle,
+  MDCTriangleEdgeStyleCut,
+} MDCTriangleEdgeStyle;
+
+/**
+ An edge treatment that adds a triangle-shaped cut or handle to the edge.
+ */
+@interface MDCTriangleEdgeTreatment : MDCEdgeTreatment
+
+/**
+ The size of the triangle shape.
+ */
+@property(nonatomic, assign) CGFloat size;
+
+/**
+ The style of the triangle shape.
+ */
+@property(nonatomic, assign) MDCTriangleEdgeStyle style;
+
+/**
+ Initializes an MDCTriangleEdgeTreatment with a given size and style.
+ */
+- (nonnull instancetype)initWithSize:(CGFloat)size
+                               style:(MDCTriangleEdgeStyle)style NS_DESIGNATED_INITIALIZER;
+
+- (nonnull instancetype)init NS_UNAVAILABLE;
+
+@end

@@ -63,7 +63,7 @@ mdc_examples_swift_library(
         "//components/Buttons:ButtonThemer",
         "//components/Buttons:Theming",
         "//components/Cards:CardThemer",
-        "//components/Cards:CardsPrivate",
+        "//components/Cards:Private",
         "//components/Cards:Theming",
     ],
 )

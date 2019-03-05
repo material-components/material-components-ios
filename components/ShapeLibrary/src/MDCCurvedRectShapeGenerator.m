@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCCurvedRectShapeGeneratorNew.h"
+#import "MDCCurvedRectShapeGenerator.h"
 
-#import "MDCCurvedCornerTreatmentNew.h"
+#import "MDCCurvedCornerTreatment.h"
 
 @implementation MDCCurvedRectShapeGenerator {
   MDCRectangleShapeGenerator *_rectGenerator;

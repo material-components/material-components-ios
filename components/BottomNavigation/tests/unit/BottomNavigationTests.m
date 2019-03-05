@@ -397,4 +397,25 @@
                 NSStringFromCGSize(finalSize), NSStringFromCGSize(initialSize));
 }
 
+#pragma mark - Autolayout support
+
+- (void)testIntrinsicContentSizeIgnoresSafeArea {
+  // Given
+  CGRect barFrame = CGRectMake(0, 0, 360, 56);
+  MDCSafeAreaCustomizingBottomNavigationBar *bottomNavBar =
+      [[MDCSafeAreaCustomizingBottomNavigationBar alloc] initWithFrame:barFrame];
+  bottomNavBar.test_safeAreaInsets = UIEdgeInsetsZero;
+  CGSize initialSize = [bottomNavBar intrinsicContentSize];
+
+  // When
+  bottomNavBar.test_safeAreaInsets = UIEdgeInsetsMake(20, 20, 20, 20);
+
+  // Then
+  CGSize finalSize = [bottomNavBar intrinsicContentSize];
+  XCTAssertFalse(CGSizeEqualToSize(finalSize, CGSizeZero),
+                 "intrinsicContentSize should not return CGSizeZero");
+  XCTAssertTrue(CGSizeEqualToSize(finalSize, initialSize), @"(%@) is not equal to (%@)",
+                NSStringFromCGSize(finalSize), NSStringFromCGSize(initialSize));
+}
+
 @end

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #import <Foundation/Foundation.h>
-#import "MaterialShapesNew.h"
+#import "MaterialShapes.h"
 
 /**
  This enum consists of the different types of shape corners.

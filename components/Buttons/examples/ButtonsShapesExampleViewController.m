@@ -15,8 +15,8 @@
 #import "MaterialButtons+Theming.h"
 #import "MaterialButtons.h"
 #import "MaterialContainerScheme.h"
-#import "MaterialShapeLibraryNew.h"
-#import "MaterialShapesNew.h"
+#import "MaterialShapeLibrary.h"
+#import "MaterialShapes.h"
 #import "MaterialTypography.h"
 
 #import "supplemental/ButtonsTypicalUseSupplemental.h"
