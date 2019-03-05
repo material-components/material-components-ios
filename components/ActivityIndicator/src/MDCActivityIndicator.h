@@ -43,6 +43,7 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorMode) {
  See https://material.io/go/design-progress-indicators
  */
 IB_DESIGNABLE
+NS_AVAILABLE_IOS(9_0)
 @interface MDCActivityIndicator : UIView
 
 /**
@@ -143,6 +144,7 @@ IB_DESIGNABLE
 /**
  Delegate protocol for the MDCActivityIndicator.
  */
+NS_AVAILABLE_IOS(9_0)
 @protocol MDCActivityIndicatorDelegate <NSObject>
 
 @optional
