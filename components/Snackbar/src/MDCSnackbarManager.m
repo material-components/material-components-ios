@@ -269,10 +269,10 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 }
 
 - (MDCSnackbarOverlayView *)overlayView {
-  // Ensure that this method is called on the main thread.
-  NSAssert([NSThread isMainThread], @"Method is not called on main thread.");
-
   if (!_overlayView) {
+    // Only initialize on the main thread.
+    NSAssert([NSThread isMainThread], @"Method is not called on main thread.");
+
     _overlayView = [[MDCSnackbarOverlayView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
   }
   return _overlayView;
