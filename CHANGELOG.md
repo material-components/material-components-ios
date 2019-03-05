@@ -1,16 +1,125 @@
-# #develop#
+# 79.0.0
 
-Replace this text with a summarized description of this release's contents.
+This major release introduces breaking changes for Swift code that makes use of the MDCContainerScheme and MDCContainerScheming types. It also includes breaking changes for Shapes header files and completes the graduation of Shapes to a production-ready state.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+MDCContainerScheming's and MDCContainerScheme's colorScheme and typographyScheme are now both nonnull. This change will require changes in Swift code that make use of these APIs.
 
-Replace this text with links to deprecation guides.
+All Shapes headers have been renamed, dropping their `New` suffix where applicable.
+
 ## New features
 
-Replace this text with example code for each new feature.
+### BottomNavigation
+
+BottomNavigation has two new properties: `sizeThatFitsIncludesSafeArea` and `barItemsBottomAnchor`.
+
+See [components/BottomNavigation/README.md](components/BottomNavigation/README.md#deprecations) for more details on the `sizeThatFitsIncludesSafeArea` property.
+
+`barItemsBottomAnchor` allows anchoring the Bottom Navigation bar to the safe area layout guide. This API is available on iOS 9.0 and above. Example usage:
+
+```
+if (@available(iOS 11.0, *)) {
+  [navigationBar.barItemsBottomAnchor
+      constraintEqualToAnchor:view.safeAreaLayoutGuide.bottomAnchor]
+      .active = YES;
+}
+```
+
+### FlexibleHeader
+
+`MDCFlexibleHeaderViewController` introduces a new `safeAreaDelegate` that can be used to change which view controller is used when extracting top safe area insets.
+
 ## API changes
+
+### BottomNavigation
+
+#### MDCBottomNavigationBar
+
+*new* property: `sizeThatFitsIncludesSafeArea` in `MDCBottomNavigationBar`
+
+*new* property: `barItemsBottomAnchor` in `MDCBottomNavigationBar`
+
+### FlexibleHeader
+
+#### MDCFlexibleHeaderSafeAreaDelegate
+
+*new* method: `-flexibleHeaderViewControllerTopSafeAreaInsetViewController:` in `MDCFlexibleHeaderSafeAreaDelegate`
+
+*new* protocol: `MDCFlexibleHeaderSafeAreaDelegate`
+
+#### MDCFlexibleHeaderViewController
+
+*new* property: `safeAreaDelegate` in `MDCFlexibleHeaderViewController`
+
+### ContainerScheme
+
+#### MDCContainerScheming
+
+*modified* property: `colorScheme` in `MDCContainerScheming`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `var colorScheme: Any? { get }` |
+| To: | `var colorScheme: Any { get }` |
+
+*modified* property: `colorScheme` in `MDCContainerScheming`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@property (readonly, nonatomic, nullable) id colorScheme;` |
+| To: | `@property (readonly, nonatomic, nonnull) id colorScheme;` |
+
+*modified* property: `typographyScheme` in `MDCContainerScheming`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `var typographyScheme: Any? { get }` |
+| To: | `var typographyScheme: Any { get }` |
+
+*modified* property: `typographyScheme` in `MDCContainerScheming`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@property (readonly, nonatomic, nullable) id typographyScheme;` |
+| To: | `@property (readonly, nonatomic, nonnull) id typographyScheme;` |
+
+#### MDCContainerScheme
+
+*modified* property: `colorScheme` in `MDCContainerScheme`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `var colorScheme: UnsafeMutablePointer<Int32>? { get set }` |
+| To: | `var colorScheme: UnsafeMutablePointer<Int32> { get set }` |
+
+*modified* property: `colorScheme` in `MDCContainerScheme`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@property(nonatomic, nullable, readwrite) MDCSemanticColorScheme *colorScheme` |
+| To: | `@property (assign, readwrite, nonatomic, nonnull) int *colorScheme;` |
+
+*modified* property: `shapeScheme` in `MDCContainerScheme`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@property(nonatomic, nullable, readwrite) MDCShapeScheme *shapeScheme` |
+| To: | `@property (assign, readwrite, nonatomic, nullable) int *shapeScheme;` |
+
+*modified* property: `typographyScheme` in `MDCContainerScheme`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `var typographyScheme: UnsafeMutablePointer<Int32>? { get set }` |
+| To: | `var typographyScheme: UnsafeMutablePointer<Int32> { get set }` |
+
+*modified* property: `typographyScheme` in `MDCContainerScheme`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@property(nonatomic, nullable, readwrite) MDCTypographyScheme *typographyScheme` |
+| To: | `@property (assign, readwrite, nonatomic, nonnull) int *typographyScheme;` |
 
 ## Component changes
 
