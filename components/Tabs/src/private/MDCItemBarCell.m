@@ -251,7 +251,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
   titleBounds.size = titleSize;
 
   // Size badge
-  CGSize badgeSize = [self badgeLabelSizeWithText:_badgeLabel.text];
+  CGSize badgeSize = [self badgeLabelSizeWithText:_badgeLabel.text font:_badgeLabel.font];
   badgeBounds.size = badgeSize;
 
   // Determine badge center
@@ -583,7 +583,8 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
   _titleLabel.text = [[self class] displayedTitleForTitle:_title style:_style];
 }
 
-- (CGSize)badgeLabelSizeWithText:(NSString *)string {
+- (CGSize)badgeLabelSizeWithText:(NSString *)string
+                            font:(UIFont *)font {
   if (string.length <= 0) {
     return CGSizeZero;
   }
@@ -605,7 +606,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
   CGRect largestAllowableBadgeRect =
       [[longestAllowableBadgeString copy] boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)
                                             options:NSStringDrawingUsesLineFragmentOrigin
-                                         attributes:@{NSFontAttributeName : _badgeLabel.font}
+                                         attributes:@{NSFontAttributeName : font}
                                             context:nil];
   return largestAllowableBadgeRect.size;
 }
