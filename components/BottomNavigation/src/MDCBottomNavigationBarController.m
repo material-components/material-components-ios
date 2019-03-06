@@ -181,10 +181,8 @@ static void *const kObservationContext = (void *)&kObservationContext;
 
 - (void)didUpdateNavigationBarItemsWithNewValue:(NSArray *)items {
   // Verify tab bar items correspond with the view controllers tab bar items.
-  BOOL isItemViewControllerCountEqual = items.count == self.viewControllers.count;
-  NSAssert(isItemViewControllerCountEqual, [self navigationBarItemsChangedExceptionDescription]);
-  if (!isItemViewControllerCountEqual) {
-    NSLog(@"%@", [self navigationBarItemsChangedExceptionDescription]);
+  if (items.count != self.viewControllers.count) {
+    [[self unauthorizedItemsChangedException] raise];
     return;
   }
 
@@ -192,10 +190,8 @@ static void *const kObservationContext = (void *)&kObservationContext;
   for (NSUInteger i = 0; i < self.viewControllers.count; i++) {
     UITabBarItem *viewControllerTabBarItem = [self.viewControllers objectAtIndex:i].tabBarItem;
     UITabBarItem *newTabBarItem = [items objectAtIndex:i];
-    BOOL tabBarItemsEqual = [viewControllerTabBarItem isEqual:newTabBarItem];
-    NSAssert(tabBarItemsEqual, [self navigationBarItemsChangedExceptionDescription]);
-    if (!tabBarItemsEqual) {
-      NSLog(@"%@", [self navigationBarItemsChangedExceptionDescription]);
+    if (![viewControllerTabBarItem isEqual:newTabBarItem]) {
+      [[self unauthorizedItemsChangedException] raise];
       return;
     }
   }
@@ -414,14 +410,16 @@ static void *const kObservationContext = (void *)&kObservationContext;
 }
 
 /**
- * Returns a string for an exception description when the navigation bar's items are set outside of
- * this class.
+ * Returns an exception for when the navigation bar's items are changed from outside of this class.
  */
-- (NSString *)navigationBarItemsChangedExceptionDescription {
-  return [NSString
+- (NSException *)unauthorizedItemsChangedException {
+  NSString *reason = [NSString
       stringWithFormat:
           @"Attempting to set %@'s navigation bar items.  Please instead use setViewControllers:",
           NSStringFromClass([self class])];
+  return [NSException exceptionWithName:NSInternalInconsistencyException
+                                 reason:reason
+                               userInfo:nil];
 }
 
 @end
