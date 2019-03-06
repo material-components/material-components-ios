@@ -34,22 +34,18 @@ static void *const kObservationContext = (void *)&kObservationContext;
     _viewControllers = @[];
     _selectedIndex = NSNotFound;
 
-#ifdef DEBUG
     [_navigationBar addObserver:self
                      forKeyPath:NSStringFromSelector(@selector(items))
                         options:NSKeyValueObservingOptionNew
                         context:kObservationContext];
-#endif
   }
 
   return self;
 }
 
-#ifdef DEBUG
 - (void)dealloc {
   [_navigationBar removeObserver:self forKeyPath:NSStringFromSelector(@selector(items))];
 }
-#endif
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -185,14 +181,23 @@ static void *const kObservationContext = (void *)&kObservationContext;
 
 - (void)didUpdateNavigationBarItemsWithNewValue:(NSArray *)items {
   // Verify tab bar items correspond with the view controllers tab bar items.
-  NSAssert(items.count == self.viewControllers.count,
-           [self navigationBarItemsChangedExceptionDescription]);
+  BOOL isItemViewControllerCountEqual = items.count == self.viewControllers.count;
+  NSAssert(isItemViewControllerCountEqual, [self navigationBarItemsChangedExceptionDescription]);
+  if (!isItemViewControllerCountEqual) {
+    NSLog(@"%@", [self navigationBarItemsChangedExceptionDescription]);
+    return;
+  }
 
+  // Verify each new and the view controller's tab bar items are equal.
   for (NSUInteger i = 0; i < self.viewControllers.count; i++) {
     UITabBarItem *viewControllerTabBarItem = [self.viewControllers objectAtIndex:i].tabBarItem;
     UITabBarItem *newTabBarItem = [items objectAtIndex:i];
-    NSAssert([viewControllerTabBarItem isEqual:newTabBarItem],
-             [self navigationBarItemsChangedExceptionDescription]);
+    BOOL tabBarItemsEqual = [viewControllerTabBarItem isEqual:newTabBarItem];
+    NSAssert(tabBarItemsEqual, [self navigationBarItemsChangedExceptionDescription]);
+    if (!tabBarItemsEqual) {
+      NSLog(@"%@", [self navigationBarItemsChangedExceptionDescription]);
+      return;
+    }
   }
 }
 
