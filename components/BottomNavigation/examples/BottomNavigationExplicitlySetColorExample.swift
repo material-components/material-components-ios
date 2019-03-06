@@ -35,17 +35,29 @@ class BottomNavigationExplicitlySetColorExample: UIViewController {
     super.init(coder: aDecoder)
   }
 
+  func layoutButtons() {
+    redButton.frame.origin = CGPoint(x: view.center.x - (redButton.frame.width / 2),
+                                     y: view.center.y - (redButton.frame.height + 16))
+    blueButton.frame.origin = CGPoint(x: view.center.x - (blueButton.frame.width / 2),
+                                      y: view.center.y + 16)
+  }
+
   func layoutBottomNavBar() {
     let size = bottomNavBar.sizeThatFits(view.bounds.size)
-    let bottomNavBarFrame = CGRect(x: 0,
+    var bottomNavBarFrame = CGRect(x: 0,
                                    y: view.bounds.height - size.height,
                                    width: size.width,
                                    height: size.height)
+    if #available(iOS 11.0, *) {
+      bottomNavBarFrame.size.height += view.safeAreaInsets.bottom
+      bottomNavBarFrame.origin.y -= view.safeAreaInsets.bottom
+    }
     bottomNavBar.frame = bottomNavBarFrame
   }
 
   override func viewWillLayoutSubviews() {
     super.viewWillLayoutSubviews()
+    layoutButtons()
     layoutBottomNavBar()
   }
 
@@ -63,6 +75,7 @@ class BottomNavigationExplicitlySetColorExample: UIViewController {
     view.backgroundColor = MDCPalette.grey.tint300
     view.addSubview(bottomNavBar)
 
+    bottomNavBar.sizeThatFitsIncludesSafeArea = false
     bottomNavBar.alignment = .centered
 
     // Add items to the bottom navigation bar.
@@ -79,16 +92,12 @@ class BottomNavigationExplicitlySetColorExample: UIViewController {
     // Layout buttons
     redButton.setTitle("Red theme", for: .normal)
     redButton.sizeToFit()
-    redButton.frame.origin = CGPoint(x: view.center.x - (redButton.frame.width / 2),
-                                     y: view.center.y - (redButton.frame.height + 16))
     redButton.backgroundColor = MDCPalette.red.tint300
     redButton.addTarget(self, action: #selector(redTheme), for: .touchUpInside)
     view.addSubview(redButton)
 
     blueButton.setTitle("Blue theme", for: .normal)
     blueButton.sizeToFit()
-    blueButton.frame.origin = CGPoint(x: view.center.x - (blueButton.frame.width / 2),
-                                      y: view.center.y + 16)
     blueButton.backgroundColor = MDCPalette.blue.tint300
     blueButton.addTarget(self, action: #selector(blueTheme), for: .touchUpInside)
     view.addSubview(blueButton)
