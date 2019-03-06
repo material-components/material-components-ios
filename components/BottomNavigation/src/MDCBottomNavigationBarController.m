@@ -183,7 +183,6 @@ static void *const kObservationContext = (void *)&kObservationContext;
   // Verify tab bar items correspond with the view controllers tab bar items.
   if (items.count != self.viewControllers.count) {
     [[self unauthorizedItemsChangedException] raise];
-    return;
   }
 
   // Verify each new and the view controller's tab bar items are equal.
@@ -192,7 +191,6 @@ static void *const kObservationContext = (void *)&kObservationContext;
     UITabBarItem *newTabBarItem = [items objectAtIndex:i];
     if (![viewControllerTabBarItem isEqual:newTabBarItem]) {
       [[self unauthorizedItemsChangedException] raise];
-      return;
     }
   }
 }
