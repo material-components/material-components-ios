@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import "UIFont+MaterialTypographyPrivate.h"
+
 #import "UIFont+MaterialScalable.h"
 
 @implementation UIFont (MaterialTypographyPrivate)

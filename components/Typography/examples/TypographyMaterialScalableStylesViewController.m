@@ -181,7 +181,8 @@
     cell.textLabel.text = @"MDC";
   }
 
-  NSString *detail = [NSString stringWithFormat:@"%@ @ %.0f pt", _styleNames[indexPath.row], cell.textLabel.font.pointSize];
+  NSString *detail = [NSString
+      stringWithFormat:@"%@ @ %.0f pt", _styleNames[indexPath.row], cell.textLabel.font.pointSize];
   cell.detailTextLabel.text = detail;
   cell.detailTextLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
 
