@@ -49,6 +49,7 @@ static char MDCFontScaleObjectKey;
 
   CGFloat fontSize = (CGFloat)fontSizeNumber.doubleValue;
   UIFont *scaledFont = [UIFont fontWithDescriptor:self.fontDescriptor size:fontSize];
+  scaledFont.mdc_scalingCurve = self.mdc_scalingCurve;
 
   return scaledFont;
 }

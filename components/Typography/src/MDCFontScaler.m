@@ -270,6 +270,7 @@ MDCTextStyle MDCTextStyleOverline = @"MDC.TextStyle.Overline";
   }
 
   UIFont *scaledFont = [font mdc_scaledFontForSizeCategory:sizeCategory];
+  scaledFont.mdc_scalingCurve = _scalingCurve;
 
   return scaledFont;
 }
