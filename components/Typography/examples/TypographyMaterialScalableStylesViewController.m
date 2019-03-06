@@ -40,18 +40,12 @@
 
   _styleNames = @[
     // Common UI fonts.
-    @"Body1", @"Body1 (Scalable)",
-    @"Body2", @"Body2 (Scalable)",
-    @"Caption", @"Caption (Scalable)",
-    @"Button", @"Button (Scalable)",
-    @"Overline", @"Overline (Scalable)",
-    @"Subtitle1", @"Subtitle1 (Scalable)",
-    @"Subtitle2", @"Subtitle2 (Scalable)",
-    @"Headline1", @"Headline1 (Scalable)",
-    @"Headline2", @"Headline2 (Scalable)",
-    @"Headline3", @"Headline3 (Scalable)",
-    @"Headline4", @"Headline4 (Scalable)",
-    @"Headline5", @"Headline5 (Scalable)",
+    @"Body1", @"Body1 (Scalable)", @"Body2", @"Body2 (Scalable)",
+    @"Caption", @"Caption (Scalable)", @"Button", @"Button (Scalable)",
+    @"Overline", @"Overline (Scalable)", @"Subtitle1", @"Subtitle1 (Scalable)",
+    @"Subtitle2", @"Subtitle2 (Scalable)", @"Headline1", @"Headline1 (Scalable)",
+    @"Headline2", @"Headline2 (Scalable)", @"Headline3", @"Headline3 (Scalable)",
+    @"Headline4", @"Headline4 (Scalable)", @"Headline5", @"Headline5 (Scalable)",
     @"Headline6", @"Headline6 (Scalable)",
   ];
 
