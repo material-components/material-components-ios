@@ -51,7 +51,7 @@ static NSString *const kReusableIdentifierItem = @"Cell";
   self.appBarViewController.headerView.maximumHeight = kAppBarMinHeight + kTabBarHeight;
 
   UIFont *font;
-  if ([UIFont respondsToSelector:@selector(monospacedDigitSystemFontOfSize:weight:)]) {
+  if (@available(iOS 9.0, *)) {
     font = [UIFont monospacedDigitSystemFontOfSize:14 weight:UIFontWeightRegular];
   } else {
     font = [UIFont systemFontOfSize:14];

@@ -15,5 +15,6 @@ MDC_BASIC_WARNINGS = -Wall -Wextra -Werror
 MDC_EXTRA_WARNINGS = -Wcast-align -Wconversion -Watomic-properties -Wmissing-prototypes -Wnewline-eof -Woverlength-strings -Wshadow -Wstrict-selector-match -Wundeclared-selector -Wunreachable-code -Wstrict-prototypes
 MDC_IGNORABLE_WARNINGS = -Wno-error=deprecated -Wno-error=deprecated-implementations
 MDC_DISABLED_WARNINGS = -Wno-partial-availability -Wno-sign-conversion -Wno-unused-parameter
+MDC_AVAILABILITY = -Wunguarded-availability
 
-WARNING_CFLAGS = $(inherited) $(MDC_BASIC_WARNINGS) $(MDC_EXTRA_WARNINGS) $(MDC_IGNORABLE_WARNINGS) $(MDC_DISABLED_WARNINGS)
+WARNING_CFLAGS = $(inherited) $(MDC_BASIC_WARNINGS) $(MDC_EXTRA_WARNINGS) $(MDC_IGNORABLE_WARNINGS) $(MDC_DISABLED_WARNINGS) $(MDC_AVAILABILITY)

@@ -52,15 +52,17 @@ static NSString *const TSTTextFieldTableViewCellIdentifier = @"TSTTextFieldsTabl
   if (@available(iOS 11.0, *)) {
     [self.tableView.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor]
         .active = YES;
-  } else {
+  } else if (@available(iOS 9.0, *)) {
     [self.tableView.topAnchor constraintEqualToAnchor:self.topLayoutGuide.bottomAnchor].active =
         YES;
   }
 
-  [self.tableView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor].active = YES;
+  if (@available(iOS 9.0, *)) {
+    [self.tableView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor].active = YES;
 
-  [self.tableView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor].active = YES;
-  [self.tableView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor].active = YES;
+    [self.tableView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor].active = YES;
+    [self.tableView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor].active = YES;
+  }
 
   [self setupDataModel];
 }
@@ -137,12 +139,14 @@ static NSString *const TSTTextFieldTableViewCellIdentifier = @"TSTTextFieldsTabl
     self.textField.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:self.textField];
 
-    [self.textField.topAnchor constraintEqualToAnchor:self.topAnchor].active = YES;
-    [self.textField.bottomAnchor constraintEqualToAnchor:self.bottomAnchor].active = YES;
-    [self.textField.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:8].active =
-        YES;
-    [self.textField.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-8].active =
-        YES;
+    if (@available(iOS 9.0, *)) {
+      [self.textField.topAnchor constraintEqualToAnchor:self.topAnchor].active = YES;
+      [self.textField.bottomAnchor constraintEqualToAnchor:self.bottomAnchor].active = YES;
+      [self.textField.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:8].active =
+          YES;
+      [self.textField.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-8].active =
+          YES;
+    }
 
     _textFieldController = [[MDCTextInputControllerFilled alloc] initWithTextInput:self.textField];
   }
