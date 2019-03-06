@@ -22,7 +22,7 @@
 @implementation MDCTypographyScheme
 
 - (instancetype)init {
-  return [self initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+  return [self initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
 }
 
 - (instancetype)initWithDefaults:(MDCTypographySchemeDefaults)defaults {

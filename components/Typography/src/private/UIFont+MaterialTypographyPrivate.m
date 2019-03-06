@@ -103,7 +103,7 @@
   if (self.mdc_scalingCurve) {
     [extendedDescription appendString:@" +ScalingCurve"];
   } else {
-    [extendedDescription appendString:@" No ScalingCurve"];
+    [extendedDescription appendString:@" NoScalingCurve"];
   }
 
   return extendedDescription;
