@@ -16,7 +16,7 @@
 
 #import <objc/runtime.h>
 
-#import "MDCFontTraits.h"
+#import "private/MDCFontTraits.h"
 #import "UIApplication+AppExtensions.h"
 #import "UIFont+MaterialScalable.h"
 
