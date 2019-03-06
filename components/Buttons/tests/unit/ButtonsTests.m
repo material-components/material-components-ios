@@ -1070,4 +1070,55 @@ static NSString *controlStateDescription(UIControlState controlState) {
                 NSStringFromCGRect(expectedFrame), NSStringFromCGRect(self.button.frame));
 }
 
+#pragma mark - UIAccessibility
+
+- (void)testAccessibilityTraitsDefault {
+  // Then
+  XCTAssertEqual(self.button.accessibilityTraits, UIAccessibilityTraitButton);
+}
+
+- (void)testAccessibilityTraitsDefaultIncludesButtonExplicitlyTrue {
+  // When
+  self.button.accessibilityTraitsIncludesButton = YES;
+
+  // Then
+  XCTAssertEqual(self.button.accessibilityTraits, UIAccessibilityTraitButton);
+}
+
+- (void)testAccessibilityTraitsDefaultIncludesButtonExplicitlyFalse {
+  // When
+  self.button.accessibilityTraitsIncludesButton = NO;
+
+  // Then
+  XCTAssertEqual(self.button.accessibilityTraits, UIAccessibilityTraitButton);
+}
+
+- (void)testSetAccessibilityTraitsIncludesButtonByDefault {
+  // When
+  self.button.accessibilityTraits = UIAccessibilityTraitLink;
+
+  // Then
+  XCTAssertEqual(self.button.accessibilityTraits,
+                 UIAccessibilityTraitLink | UIAccessibilityTraitButton);
+}
+
+- (void)testSetAccessibilityTraitsExcludesButtonExplicitly {
+  // When
+  self.button.accessibilityTraitsIncludesButton = NO;
+  self.button.accessibilityTraits = UIAccessibilityTraitAllowsDirectInteraction;
+
+  // Then
+  XCTAssertEqual(self.button.accessibilityTraits, UIAccessibilityTraitAllowsDirectInteraction);
+}
+
+- (void)testSetAccessibilityTraitsIncludesButtonExplicitly {
+  // When
+  self.button.accessibilityTraitsIncludesButton = YES;
+  self.button.accessibilityTraits = UIAccessibilityTraitAllowsDirectInteraction;
+
+  // Then
+  XCTAssertEqual(self.button.accessibilityTraits,
+                 UIAccessibilityTraitAllowsDirectInteraction | UIAccessibilityTraitButton);
+}
+
 @end
