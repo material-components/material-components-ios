@@ -23,17 +23,10 @@ class BottomNavigationTypicalUseSwiftExample: UIViewController {
   // Create a bottom navigation bar to add to a view.
   let bottomNavBar = MDCBottomNavigationBar()
 
-  init() {
-    super.init(nibName: nil, bundle: nil)
-    commonBottomNavigationTypicalUseSwiftExampleInit()
-  }
+  override func viewDidLoad() {
+    super.viewDidLoad()
 
-  @available(*, unavailable)
-  required init?(coder aDecoder: NSCoder) {
-    super.init(coder: aDecoder)
-  }
-
-  func commonBottomNavigationTypicalUseSwiftExampleInit() {
+    bottomNavBar.sizeThatFitsIncludesSafeArea = false
     view.backgroundColor = colorScheme.backgroundColor
     view.addSubview(bottomNavBar)
 
@@ -71,11 +64,6 @@ class BottomNavigationTypicalUseSwiftExample: UIViewController {
   override func viewWillLayoutSubviews() {
     super.viewWillLayoutSubviews()
     layoutBottomNavBar()
-  }
-
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    self.navigationController?.setNavigationBarHidden(true, animated: animated)
   }
 }
 

@@ -32,7 +32,6 @@
 - (id)init {
   self = [super init];
   if (self) {
-    self.title = @"Bottom Navigation";
     _colorScheme =
         [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
     _typographyScheme = [[MDCTypographyScheme alloc] init];
@@ -41,11 +40,12 @@
 }
 
 - (void)commonBottomNavigationTypicalUseExampleViewDidLoad {
-  _bottomNavBar = [[MDCBottomNavigationBar alloc] initWithFrame:CGRectZero];
-  _bottomNavBar.titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
-  _bottomNavBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles;
-  _bottomNavBar.delegate = self;
-  [self.view addSubview:_bottomNavBar];
+  self.bottomNavBar = [[MDCBottomNavigationBar alloc] initWithFrame:CGRectZero];
+  self.bottomNavBar.sizeThatFitsIncludesSafeArea = NO;
+  self.bottomNavBar.titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
+  self.bottomNavBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles;
+  self.bottomNavBar.delegate = self;
+  [self.view addSubview:self.bottomNavBar];
 
   UITabBarItem *tabBarItem1 = [[UITabBarItem alloc] initWithTitle:@"Home"
                                                             image:[UIImage imageNamed:@"Home"]
@@ -80,8 +80,8 @@
   }
 #pragma clang diagnostic pop
 #endif
-  _bottomNavBar.items = @[ tabBarItem1, tabBarItem2, tabBarItem3, tabBarItem4, tabBarItem5 ];
-  _bottomNavBar.selectedItem = tabBarItem2;
+  self.bottomNavBar.items = @[ tabBarItem1, tabBarItem2, tabBarItem3, tabBarItem4, tabBarItem5 ];
+  self.bottomNavBar.selectedItem = tabBarItem2;
 
   self.navigationItem.rightBarButtonItem =
       [[UIBarButtonItem alloc] initWithTitle:@"+Message"
@@ -95,10 +95,17 @@
 }
 
 - (void)layoutBottomNavBar {
-  CGSize size = [_bottomNavBar sizeThatFits:self.view.bounds.size];
+  CGRect viewBounds = CGRectStandardize(self.view.bounds);
+  CGSize size = [self.bottomNavBar sizeThatFits:viewBounds.size];
+  UIEdgeInsets safeAreaInsets = UIEdgeInsetsZero;
+  // Extend the Bottom Navigation to the bottom of the screen.
+  if (@available(iOS 11.0, *)) {
+    safeAreaInsets = self.view.safeAreaInsets;
+  }
   CGRect bottomNavBarFrame =
-      CGRectMake(0, CGRectGetHeight(self.view.bounds) - size.height, size.width, size.height);
-  _bottomNavBar.frame = bottomNavBarFrame;
+      CGRectMake(0, viewBounds.size.height - size.height - safeAreaInsets.bottom, size.width,
+                 size.height + safeAreaInsets.bottom);
+  self.bottomNavBar.frame = bottomNavBarFrame;
 }
 
 - (void)viewDidLoad {
@@ -107,9 +114,9 @@
   [self commonBottomNavigationTypicalUseExampleViewDidLoad];
 
   [MDCBottomNavigationBarTypographyThemer applyTypographyScheme:self.typographyScheme
-                                          toBottomNavigationBar:_bottomNavBar];
+                                          toBottomNavigationBar:self.bottomNavBar];
   [MDCBottomNavigationBarColorThemer applySemanticColorScheme:self.colorScheme
-                                           toBottomNavigation:_bottomNavBar];
+                                           toBottomNavigation:self.bottomNavBar];
   self.view.backgroundColor = self.colorScheme.backgroundColor;
 }
 
