@@ -1077,6 +1077,22 @@ static NSString *controlStateDescription(UIControlState controlState) {
   XCTAssertEqual(self.button.accessibilityTraits, UIAccessibilityTraitButton);
 }
 
+- (void)testAccessibilityTraitsDefaultIncludesButtonExplicitlyTrue {
+  // When
+  self.button.accessibilityTraitsIncludesButton = YES;
+
+  // Then
+  XCTAssertEqual(self.button.accessibilityTraits, UIAccessibilityTraitButton);
+}
+
+- (void)testAccessibilityTraitsDefaultIncludesButtonExplicitlyFalse {
+  // When
+  self.button.accessibilityTraitsIncludesButton = NO;
+
+  // Then
+  XCTAssertEqual(self.button.accessibilityTraits, UIAccessibilityTraitButton);
+}
+
 - (void)testSetAccessibilityTraitsIncludesButtonByDefault {
   // When
   self.button.accessibilityTraits = UIAccessibilityTraitLink;
