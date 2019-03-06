@@ -583,8 +583,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
   _titleLabel.text = [[self class] displayedTitleForTitle:_title style:_style];
 }
 
-- (CGSize)badgeLabelSizeWithText:(NSString *)string
-                            font:(UIFont *)font {
+- (CGSize)badgeLabelSizeWithText:(NSString *)string font:(UIFont *)font {
   if (string.length <= 0) {
     return CGSizeZero;
   }
@@ -592,22 +591,21 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
   NSMutableString *longestAllowableBadgeString = [[NSMutableString alloc] init];
   __block NSUInteger composedCharacterIndex = 0;
   [string enumerateSubstringsInRange:NSMakeRange(0, string.length)
-                        options:NSStringEnumerationByComposedCharacterSequences
-                     usingBlock:^(NSString *substring, NSRange substringRange,
-                                  NSRange enclosingRange, BOOL *stop)
-   {
-     [longestAllowableBadgeString appendString:substring];
-     composedCharacterIndex++;
-     if (composedCharacterIndex == kBadgeMaxTextComposedCharacterLength) {
-       *stop = YES;
-     }
-   }];
+                             options:NSStringEnumerationByComposedCharacterSequences
+                          usingBlock:^(NSString *substring, NSRange substringRange,
+                                       NSRange enclosingRange, BOOL *stop) {
+                            [longestAllowableBadgeString appendString:substring];
+                            composedCharacterIndex++;
+                            if (composedCharacterIndex == kBadgeMaxTextComposedCharacterLength) {
+                              *stop = YES;
+                            }
+                          }];
 
   CGRect largestAllowableBadgeRect =
       [[longestAllowableBadgeString copy] boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)
-                                            options:NSStringDrawingUsesLineFragmentOrigin
-                                         attributes:@{NSFontAttributeName : font}
-                                            context:nil];
+                                                       options:NSStringDrawingUsesLineFragmentOrigin
+                                                    attributes:@{NSFontAttributeName : font}
+                                                       context:nil];
   return largestAllowableBadgeRect.size;
 }
 
