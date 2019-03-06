@@ -144,8 +144,8 @@ static NSString *const TSTTextFieldTableViewCellIdentifier = @"TSTTextFieldsTabl
       [self.textField.bottomAnchor constraintEqualToAnchor:self.bottomAnchor].active = YES;
       [self.textField.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:8].active =
           YES;
-      [self.textField.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-8].active =
-          YES;
+      [self.textField.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-8]
+          .active = YES;
     }
 
     _textFieldController = [[MDCTextInputControllerFilled alloc] initWithTextInput:self.textField];
