@@ -261,7 +261,7 @@ MDCTextStyle MDCTextStyleOverline = @"MDC.TextStyle.Overline";
 }
 
 - (UIFont *)scalableFontWithFont:(UIFont *)font {
-  // IIf it is available, query the preferredContentSizeCategory.
+  // If it is available, query the preferredContentSizeCategory.
   UIContentSizeCategory sizeCategory = UIContentSizeCategoryLarge;
   if ([UIApplication mdc_safeSharedApplication]) {
     sizeCategory = [UIApplication mdc_safeSharedApplication].preferredContentSizeCategory;
