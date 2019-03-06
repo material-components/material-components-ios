@@ -52,6 +52,7 @@ mdc_objc_library(
     visibility = ["//visibility:public"],
     deps = [
         ":Typography",
+        "//components/Typography"
     ],
 )
 
