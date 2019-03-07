@@ -84,7 +84,7 @@
 
   // Then
   for (MDCBottomNavigationItemView *item in self.bottomNavBar.itemViews) {
-    XCTAssertEqual(item.itemTitleFont, self.bottomNavBar.itemTitleFont);
+    XCTAssertEqualObjects(item.itemTitleFont, self.bottomNavBar.itemTitleFont);
   }
 }
 
@@ -99,7 +99,7 @@
 
   // Then
   for (MDCBottomNavigationItemView *item in self.bottomNavBar.itemViews) {
-    XCTAssertEqual(item.itemTitleFont, self.bottomNavBar.itemTitleFont);
+    XCTAssertEqualObjects(item.itemTitleFont, self.bottomNavBar.itemTitleFont);
   }
 }
 

@@ -33,7 +33,7 @@
   [MDCBottomNavigationBarTypographyThemer applyTypographyScheme:typographyScheme
                                           toBottomNavigationBar:bottomBar];
 
-  XCTAssertEqual(bottomBar.itemTitleFont, typographyScheme.caption);
+  XCTAssertEqualObjects(bottomBar.itemTitleFont, typographyScheme.caption);
 }
 
 @end
