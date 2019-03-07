@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCRectangleShapeGeneratorNew.h"
+#import "MDCRectangleShapeGenerator.h"
 
-#import "MDCCornerTreatmentNew.h"
-#import "MDCEdgeTreatmentNew.h"
-#import "MDCPathGeneratorNew.h"
+#import "MDCCornerTreatment.h"
+#import "MDCEdgeTreatment.h"
+#import "MDCPathGenerator.h"
 #import "MaterialMath.h"
 
 static inline CGFloat CGPointDistanceToPoint(CGPoint a, CGPoint b) {

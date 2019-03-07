@@ -23,6 +23,7 @@
 @property(nonatomic, assign) BOOL selected;
 @property(nonatomic, assign) MDCBottomNavigationBarTitleVisibility titleVisibility;
 @property(nonatomic, strong) MDCInkView *inkView;
+@property(nonatomic, assign) UIOffset titlePositionAdjustment;
 
 @property(nonatomic, copy) NSString *badgeValue;
 @property(nonatomic, copy) NSString *title;

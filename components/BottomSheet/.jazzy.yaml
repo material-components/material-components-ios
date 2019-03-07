@@ -3,3 +3,4 @@ module: BottomSheet
 umbrella_header: src/MaterialBottomSheet.h
 objc: true
 sdk: iphonesimulator
+framework_root: ../

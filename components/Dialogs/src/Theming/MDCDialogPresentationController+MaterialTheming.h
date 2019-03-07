@@ -16,17 +16,31 @@
 #import "MaterialContainerScheme.h"
 
 /**
- This category is used to style MDCDialogPresentationController instances to a specific Material
- style which can be found within the [Material
- Guidelines](https://material.io/design/components/dialogs.html).
+ An MDCDialogPresentationController theming extension used in theming
+ presentation attributes of custom UIViewControllers according to the
+ [Material Guidelines](https://material.io/design/components/dialogs.html).
  */
 @interface MDCDialogPresentationController (MaterialTheming)
 
 /**
- Applies a container scheme to this instance.
+ Applying material theming to the presentation attributes of a MDCDialogPresentationController,
+ when it is used in a custom UIViewController presentation. Themeable presentation attributes
+ may inclue scrim color corner raidus or shadow elevation.
 
- @param scheme A container scheme instance containing any desired customizations to the theming
- system.
+ @note Make sure to call this method *after* a transition delegate has been
+       assigned to a Material transition controller instance (MDCDialogTransitionController).
+       Calling this method before the transition delegate is assigned may
+       lead to undesired effects and is not supported.
+
+ @example:
+
+ myViewController.modalPresentationStyle = UIModalPresentationCustom;
+ // Note: make sure to store a strong reference to the transitionController instance
+ myViewController.transitioningDelegate = self.transitionController;
+ [myViewController.mdc_dialogPresentationController applyThemeWithScheme:self.containerScheme];
+ [self presentViewController:myViewController animated:YES completion:nil];
+
+ @param scheme The container scheme whose values are used in theming the presentation attributes
  */
 - (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
 

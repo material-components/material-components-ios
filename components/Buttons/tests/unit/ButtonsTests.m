@@ -17,7 +17,7 @@
 #import "MaterialButtons.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
-#import "MaterialShapesNew.h"
+#import "MaterialShapes.h"
 #import "MaterialTypography.h"
 
 static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;

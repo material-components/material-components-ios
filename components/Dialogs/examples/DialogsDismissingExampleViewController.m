@@ -89,6 +89,8 @@
   viewController.modalPresentationStyle = UIModalPresentationCustom;
   viewController.transitioningDelegate = self.transitionController;
 
+  // Apply a presentation theme to the custom view controller
+  [viewController.mdc_dialogPresentationController applyThemeWithScheme:self.containerScheme];
   [self presentViewController:viewController animated:YES completion:NULL];
 }
 
@@ -98,14 +100,11 @@
   viewController.modalPresentationStyle = UIModalPresentationCustom;
   viewController.transitioningDelegate = self.transitionController;
 
-  [self presentViewController:viewController animated:YES completion:NULL];
-
   MDCDialogPresentationController *presentationController =
       viewController.mdc_dialogPresentationController;
+  presentationController.dismissOnBackgroundTap = NO;
   [presentationController applyThemeWithScheme:self.containerScheme];
-  if (presentationController) {
-    presentationController.dismissOnBackgroundTap = NO;
-  }
+  [self presentViewController:viewController animated:YES completion:NULL];
 }
 
 - (IBAction)didTapOpenURL {
@@ -113,6 +112,7 @@
   viewController.modalPresentationStyle = UIModalPresentationCustom;
   viewController.transitioningDelegate = self.transitionController;
 
+  [viewController.mdc_dialogPresentationController applyThemeWithScheme:self.containerScheme];
   [self presentViewController:viewController animated:YES completion:NULL];
 }
 
@@ -128,6 +128,8 @@
   viewController.modalPresentationStyle = UIModalPresentationCustom;
   viewController.transitioningDelegate = self.transitionController;
   viewController.containerScheme = self.containerScheme;
+
+  [viewController.mdc_dialogPresentationController applyThemeWithScheme:self.containerScheme];
   [self presentViewController:viewController animated:YES completion:NULL];
 }
 

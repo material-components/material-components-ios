@@ -12,4 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCEdgeTreatmentNew.h"
+#import <UIKit/UIKit.h>
+
+@class MDCPathGenerator;
+
+/**
+ MDCEdgeTreatment is a factory for creating MDCPathGenerators that represent the
+ path of a edge.
+
+ MDCEdgeTreaments only generate in the top quadrant (i.e. the top edge of a
+ rectangle). MDCShapeModel will transform the generated MDCPathGenerator to the
+ expected position and rotation.
+ */
+@interface MDCEdgeTreatment : NSObject <NSCopying>
+
+- (nonnull instancetype)init NS_DESIGNATED_INITIALIZER;
+
+/**
+ Generates an MDCPathGenerator object for an edge with the provided length.
+
+ @param length The length of the edge.
+ */
+- (nonnull MDCPathGenerator *)pathGeneratorForEdgeWithLength:(CGFloat)length;
+
+@end

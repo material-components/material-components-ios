@@ -3,3 +3,4 @@ module: MaskedTransition
 umbrella_header: src/MaterialMaskedTransition.h
 objc: true
 sdk: iphonesimulator
+framework_root: ../

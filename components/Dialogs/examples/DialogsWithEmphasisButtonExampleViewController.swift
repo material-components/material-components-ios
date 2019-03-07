@@ -28,8 +28,7 @@ class DialogsWithEmphasisButtonExampleViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor = containerScheme.colorScheme?.backgroundColor ??
-      MDCSemanticColorScheme(defaults: .material201804).backgroundColor
+    view.backgroundColor = containerScheme.colorScheme.backgroundColor
 
     materialButton.translatesAutoresizingMaskIntoConstraints = false
     materialButton.setTitle("Material Alert With Emphasis Buttons", for: .normal)
