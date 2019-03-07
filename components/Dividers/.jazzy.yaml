@@ -3,3 +3,4 @@ module: Dividers
 umbrella_header: src/MaterialDividers.h
 objc: true
 sdk: iphonesimulator
+framework_root: ../

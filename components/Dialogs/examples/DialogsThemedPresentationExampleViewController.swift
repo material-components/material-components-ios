@@ -40,12 +40,12 @@ class CustomDialogViewController: UIViewController, UICollectionViewDelegate, UI
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = containerScheme.colorScheme?.backgroundColor
+    view.backgroundColor = containerScheme.colorScheme.backgroundColor
 
     let titleLabel = UILabel()
     titleLabel.text = dialogTitle
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
-    titleLabel.font = containerScheme.typographyScheme?.headline6
+    titleLabel.font = containerScheme.typographyScheme.headline6
     titleLabel.numberOfLines = 0
     self.view.addSubview(titleLabel)
 
@@ -161,11 +161,11 @@ class CustomDialogViewController: UIViewController, UICollectionViewDelegate, UI
     if (indexPath.item < 2) {
       cell.leadingImageView.image = UIImage(named: "ic_person", in: bundle, compatibleWith: nil)
       cell.titleLabel.text = userAccounts[indexPath.item]
-      cell.titleLabel.font = containerScheme.typographyScheme?.body2
+      cell.titleLabel.font = containerScheme.typographyScheme.body2
     } else {
       cell.leadingImageView.image = UIImage(named: "add_circle", in: bundle, compatibleWith: nil)
       cell.titleLabel.text = "Add account"
-      cell.titleLabel.font = containerScheme.typographyScheme?.body2
+      cell.titleLabel.font = containerScheme.typographyScheme.body2
     }
     return cell
   }
@@ -180,8 +180,7 @@ class DialogsThemedPresentationExampleViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor = containerScheme.colorScheme?.backgroundColor ??
-      MDCSemanticColorScheme(defaults: .material201804).backgroundColor
+    view.backgroundColor = containerScheme.colorScheme.backgroundColor
 
     materialButton.translatesAutoresizingMaskIntoConstraints = false
     materialButton.setTitle("Custom Alert With Themed Presentation", for: .normal)
@@ -213,12 +212,7 @@ class DialogsThemedPresentationExampleViewController: UIViewController {
     customDialogController.modalPresentationStyle = .custom;
     customDialogController.transitioningDelegate = self.transitionController;
 
-    if let presentationController = customDialogController.mdc_dialogPresentationController {
-      presentationController.applyTheme(withScheme: containerScheme)
-      // TODO: remove setting the cornerRadius of custom dialog view here.
-      // Github link: https://github.com/material-components/material-components-ios/issues/6622
-      customDialogController.view.layer.cornerRadius = presentationController.dialogCornerRadius;
-    }
+    customDialogController.mdc_dialogPresentationController?.applyTheme(withScheme: containerScheme)
     present(customDialogController, animated: true, completion: nil)
   }
 }

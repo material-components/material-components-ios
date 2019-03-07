@@ -3,3 +3,4 @@ module: PageControl
 umbrella_header: src/MaterialPageControl.h
 objc: true
 sdk: iphonesimulator
+framework_root: ../

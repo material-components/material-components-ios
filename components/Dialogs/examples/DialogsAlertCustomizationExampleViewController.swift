@@ -40,8 +40,7 @@ class DialogsAlertCustomizationExampleViewController: MDCCollectionViewControlle
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor = containerScheme.colorScheme?.backgroundColor ??
-        MDCSemanticColorScheme(defaults: .material201804).backgroundColor
+    view.backgroundColor = containerScheme.colorScheme.backgroundColor
 
     loadCollectionView(menu: [
       "Centered Title",

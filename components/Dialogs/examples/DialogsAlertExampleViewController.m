@@ -127,36 +127,6 @@ static NSString *const kReusableIdentifierItem = @"cell";
   [self presentViewController:materialAlertController animated:YES completion:NULL];
 }
 
-- (IBAction)didTapNondismissingAlert {
-  NSString *titleString = @"This alert requires an action.";
-  NSString *messageString = @"You can't dismiss it by tapping the background. You must choose "
-                             "one of the actions available.";
-
-  MDCAlertController *materialAlertController =
-      [MDCAlertController alertControllerWithTitle:titleString message:messageString];
-  [self themeAlertController:materialAlertController];
-
-  MDCAlertAction *agreeAction = [MDCAlertAction actionWithTitle:@"AGREE"
-                                                        handler:^(MDCAlertAction *action) {
-                                                          NSLog(@"%@", @"AGREE pressed");
-                                                        }];
-  [materialAlertController addAction:agreeAction];
-
-  MDCAlertAction *disagreeAaction = [MDCAlertAction actionWithTitle:@"DISAGREE"
-                                                            handler:^(MDCAlertAction *action) {
-                                                              NSLog(@"%@", @"DISAGREE pressed");
-                                                            }];
-  [materialAlertController addAction:disagreeAaction];
-
-  // This code accesses the presentation controller and turns off dismiss on background tap.
-  MDCDialogPresentationController *presentationController =
-      materialAlertController.mdc_dialogPresentationController;
-  [presentationController applyThemeWithScheme:self.containerScheme];
-  presentationController.dismissOnBackgroundTap = NO;
-
-  [self presentViewController:materialAlertController animated:YES completion:NULL];
-}
-
 - (IBAction)didTapDynamicAlert {
   // The following strings are extra verbose to better demonstrate the dynamic handling of an alert.
   NSString *titleString = @"This alert supports Dynamic Type font sizing.";

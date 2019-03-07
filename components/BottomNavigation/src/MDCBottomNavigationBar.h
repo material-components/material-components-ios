@@ -152,6 +152,27 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
 @property(nonatomic, assign) CGFloat itemsContentHorizontalMargin;
 
 /**
+ Flag to allow clients to gradually correct the size/position of the Bottom Navigation bar relative
+ to the safe area on iOS 11+.
+
+ NOTE: In an upcoming release, this flag will be removed and the default behavior will be to exclude
+ the safe area in size calculations.
+
+ Defaults to @c YES.
+ */
+@property(nonatomic, assign) BOOL sizeThatFitsIncludesSafeArea;
+
+/**
+ NSLayoutAnchor for the bottom of the bar items.
+
+ @note It is recommended that this anchor be constrained to the bottom of the safe area layout guide
+ of the superview. This will allow the Bottom Navigation bar to extend to the bottom of the screen
+ and provide sufficient height for its content above the safe area.
+*/
+@property(nonatomic, readonly, nonnull)
+    NSLayoutYAxisAnchor *barItemsBottomAnchor NS_AVAILABLE_IOS(9_0);
+
+/**
  If @c YES, it will truncate titles that don't fit within the bounds available to the item.
 
  Default is @c YES.

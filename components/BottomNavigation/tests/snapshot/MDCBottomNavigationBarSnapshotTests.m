@@ -830,6 +830,90 @@ static NSString *const kBadgeTitleArabic = @"أورا";
   [self generateAndVerifySnapshot];
 }
 
+#pragma mark - Layout Adjustments
+
+- (void)testTitlePositionAdjustmentJustifiedAdjacentCompactLTR {
+  // Given
+  MDCMutableUITraitCollection *traitCollection = [[MDCMutableUITraitCollection alloc] init];
+  traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassCompact;
+  self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+  self.navigationBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles;
+  self.navigationBar.selectedItem = self.tabItem2;
+  self.navigationBar.traitCollectionOverride = traitCollection;
+  CGSize fitSize = [self.navigationBar sizeThatFits:CGSizeMake(kWidthWide, kHeightTall)];
+  self.navigationBar.frame = CGRectMake(0, 0, fitSize.width, fitSize.height);
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
+
+  // When
+  self.tabItem1.titlePositionAdjustment = UIOffsetMake(20, -20);
+  self.tabItem3.titlePositionAdjustment = UIOffsetMake(-20, 20);
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testTitlePositionAdjustmentJustifiedAdjacentCompactRTL {
+  // Given
+  MDCMutableUITraitCollection *traitCollection = [[MDCMutableUITraitCollection alloc] init];
+  traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassCompact;
+  self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+  self.navigationBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles;
+  self.navigationBar.selectedItem = self.tabItem2;
+  self.navigationBar.traitCollectionOverride = traitCollection;
+  CGSize fitSize = [self.navigationBar sizeThatFits:CGSizeMake(kWidthWide, kHeightTall)];
+  self.navigationBar.frame = CGRectMake(0, 0, fitSize.width, fitSize.height);
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
+  [self changeToRTLAndArabicWithTitle:kShortTitleArabic];
+
+  // When
+  self.tabItem1.titlePositionAdjustment = UIOffsetMake(20, -20);
+  self.tabItem3.titlePositionAdjustment = UIOffsetMake(-20, 20);
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testTitlePositionAdjustmentJustifiedAdjacentRegularLTR {
+  // Given
+  MDCMutableUITraitCollection *traitCollection = [[MDCMutableUITraitCollection alloc] init];
+  traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassRegular;
+  self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+  self.navigationBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles;
+  self.navigationBar.selectedItem = self.tabItem2;
+  self.navigationBar.traitCollectionOverride = traitCollection;
+  CGSize fitSize = [self.navigationBar sizeThatFits:CGSizeMake(kWidthWide, kHeightTall)];
+  self.navigationBar.frame = CGRectMake(0, 0, fitSize.width, fitSize.height);
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
+
+  // When
+  self.tabItem1.titlePositionAdjustment = UIOffsetMake(20, -20);
+  self.tabItem3.titlePositionAdjustment = UIOffsetMake(-20, 20);
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testTitlePositionAdjustmentJustifiedAdjacentRegularRTL {
+  // Given
+  MDCMutableUITraitCollection *traitCollection = [[MDCMutableUITraitCollection alloc] init];
+  traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassRegular;
+  self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+  self.navigationBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles;
+  self.navigationBar.selectedItem = self.tabItem2;
+  self.navigationBar.traitCollectionOverride = traitCollection;
+  CGSize fitSize = [self.navigationBar sizeThatFits:CGSizeMake(kWidthWide, kHeightTall)];
+  self.navigationBar.frame = CGRectMake(0, 0, fitSize.width, fitSize.height);
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
+  [self changeToRTLAndArabicWithTitle:kShortTitleArabic];
+
+  // When
+  self.tabItem1.titlePositionAdjustment = UIOffsetMake(20, -20);
+  self.tabItem3.titlePositionAdjustment = UIOffsetMake(-20, 20);
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
 #pragma mark - Theming Material baseline
 
 - (void)testMaterialBaselineTheme {
@@ -946,6 +1030,67 @@ static NSString *const kBadgeTitleArabic = @"أورا";
   // Then
   UIView *backgroundView = [barSuperview mdc_addToBackgroundView];
   [self snapshotVerifyView:backgroundView];
+}
+
+- (void)testBarItemsBottomAnchorWithOffset {
+  if (@available(iOS 9.0, *)) {
+    // Given
+    self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+    self.navigationBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles;
+    self.navigationBar.selectedItem = self.tabItem2;
+
+    UIView *superView =
+        [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWidthTypical, kHeightTypical * 2)];
+    [superView addSubview:self.navigationBar];
+    self.navigationBar.translatesAutoresizingMaskIntoConstraints = NO;
+    [superView.bottomAnchor constraintEqualToAnchor:self.navigationBar.bottomAnchor].active = YES;
+    [superView.leadingAnchor constraintEqualToAnchor:self.navigationBar.leadingAnchor].active = YES;
+    [superView.trailingAnchor constraintEqualToAnchor:self.navigationBar.trailingAnchor].active =
+        YES;
+
+    // When
+    [self.navigationBar.barItemsBottomAnchor constraintEqualToAnchor:superView.bottomAnchor
+                                                            constant:-20]
+        .active = YES;
+    [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
+    [self.navigationBar setNeedsLayout];
+    [self.navigationBar layoutIfNeeded];
+    [self.navigationBar setNeedsUpdateConstraints];
+    [self.navigationBar updateConstraintsIfNeeded];
+    [superView setNeedsUpdateConstraints];
+    [superView updateConstraintsIfNeeded];
+    [superView layoutIfNeeded];
+
+    // Then
+    UIView *backgroundView = [superView mdc_addToBackgroundView];
+    [self snapshotVerifyView:backgroundView];
+  }
+}
+
+- (void)testBarItemsBottomAnchorWithoutOffset {
+  if (@available(iOS 9.0, *)) {
+    // Given
+    self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+    self.navigationBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles;
+    self.navigationBar.selectedItem = self.tabItem2;
+
+    UIView *superView =
+        [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWidthTypical, kHeightTypical * 2)];
+    [superView addSubview:self.navigationBar];
+    self.navigationBar.translatesAutoresizingMaskIntoConstraints = NO;
+    [superView.bottomAnchor constraintEqualToAnchor:self.navigationBar.bottomAnchor].active = YES;
+    [superView.leadingAnchor constraintEqualToAnchor:self.navigationBar.leadingAnchor].active = YES;
+    [superView.trailingAnchor constraintEqualToAnchor:self.navigationBar.trailingAnchor].active =
+        YES;
+
+    // When
+    [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
+    [superView layoutIfNeeded];
+
+    // Then
+    UIView *backgroundView = [superView mdc_addToBackgroundView];
+    [self snapshotVerifyView:backgroundView];
+  }
 }
 
 @end

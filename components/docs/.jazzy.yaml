@@ -3,3 +3,4 @@ module: docs
 umbrella_header: src/Materialdocs.h
 objc: true
 sdk: iphonesimulator
+framework_root: ../

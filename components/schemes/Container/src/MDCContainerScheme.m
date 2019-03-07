@@ -16,4 +16,15 @@
 
 @implementation MDCContainerScheme
 
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    _colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    _typographyScheme =
+        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+  }
+  return self;
+}
+
 @end

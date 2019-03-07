@@ -3,3 +3,4 @@ module: DataTables
 umbrella_header: src/MaterialDataTables.h
 objc: true
 sdk: iphonesimulator
+framework_root: ../

@@ -3,3 +3,4 @@ module: ProgressView
 umbrella_header: src/MaterialProgressView.h
 objc: true
 sdk: iphonesimulator
+framework_root: ../
