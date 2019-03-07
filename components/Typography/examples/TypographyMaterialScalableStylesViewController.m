@@ -85,31 +85,6 @@
                                            selector:@selector(contentSizeCategoryDidChange:)
                                                name:UIContentSizeCategoryDidChangeNotification
                                              object:nil];
-
-  /*
-  UIKIT_EXTERN const CGFloat UIFontWeightUltraLight NS_AVAILABLE_IOS(8_2);
-  UIKIT_EXTERN const CGFloat UIFontWeightThin NS_AVAILABLE_IOS(8_2);
-  UIKIT_EXTERN const CGFloat UIFontWeightLight NS_AVAILABLE_IOS(8_2);
-  UIKIT_EXTERN const CGFloat UIFontWeightRegular NS_AVAILABLE_IOS(8_2);
-  UIKIT_EXTERN const CGFloat UIFontWeightMedium NS_AVAILABLE_IOS(8_2);
-  UIKIT_EXTERN const CGFloat UIFontWeightSemibold NS_AVAILABLE_IOS(8_2);
-  UIKIT_EXTERN const CGFloat UIFontWeightBold NS_AVAILABLE_IOS(8_2);
-  UIKIT_EXTERN const CGFloat UIFontWeightHeavy NS_AVAILABLE_IOS(8_2);
-  UIKIT_EXTERN const CGFloat UIFontWeightBlack NS_AVAILABLE_IOS(8_2);
-*/
-
-  NSLog(@"UIFontWeightUltraLight %f", UIFontWeightUltraLight);
-  NSLog(@"UIFontWeightThin %f", UIFontWeightThin);
-  NSLog(@"UIFontWeightLight %f", UIFontWeightLight);
-  NSLog(@"UIFontWeightRegular %f", UIFontWeightRegular);
-  NSLog(@"UIFontWeightMedium %f", UIFontWeightMedium);
-  NSLog(@"UIFontWeightSemibold %f", UIFontWeightSemibold);
-  NSLog(@"UIFontWeightBold %f", UIFontWeightBold);
-  NSLog(@"UIFontWeightHeavy %f", UIFontWeightHeavy);
-  NSLog(@"UIFontWeightBlack %f", UIFontWeightBlack);
-
-  UIFont *defaultFont = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
-  NSLog(@"Font Family : %@", defaultFont.familyName);
 }
 
 - (void)contentSizeCategoryDidChange:(NSNotification *)notification {
