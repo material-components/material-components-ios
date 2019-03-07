@@ -3,3 +3,4 @@ module: List
 umbrella_header: src/MaterialList.h
 objc: true
 sdk: iphonesimulator
+framework_root: ../

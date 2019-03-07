@@ -33,6 +33,10 @@ Bottom navigation should be used for top-level destinations in an app of similar
 
 Be cautious when combining bottom navigation with similar navigation placed at the bottom of the screen (e.g. a bottom tab bar), as the combination may cause confusion when navigating an app. For example, tapping across both bottom tabs and bottom navigation could display a mixture of different transitions across the same content.
 
+## Deprecations
+
+- [Deprecations](deprecations.md)
+
 ## Installation
 
 - [Typical installation](../../../docs/component-installation.md)

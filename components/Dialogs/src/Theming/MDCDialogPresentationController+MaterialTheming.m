@@ -27,8 +27,10 @@ static const CGFloat kCornerRadius = 4;
   }
   self.scrimColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.32];
 
-  // Other properties
+  // Corner Radius
   self.dialogCornerRadius = kCornerRadius;
+
+  // Elevation
   self.dialogElevation = MDCShadowElevationDialog;
 }
 

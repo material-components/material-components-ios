@@ -28,7 +28,12 @@ class CustomShadowViewController: UIViewController {
 
     super.viewDidLoad()
     view.backgroundColor = UIColor.white
-    view.layer.cornerRadius = 32.0
+
+    // Setting the corner radius of the view's layer will propagate to the shadow
+    // layer when the view is presented by MDCDailogPresentationController.
+    // Note that setting the corner radius in viewDidLoad is not recommended, since it
+    // will be overriden if callers apply a themer to the MDCDailogPresentationController instance.
+    self.view.layer.cornerRadius = 32.0
 
     bodyLabel.text =
       "This presented view has a corner radius so we've set the corner radius on the presentation controller."
@@ -63,8 +68,7 @@ class DialogsCustomShadowExampleViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor = containerScheme.colorScheme?.backgroundColor ??
-        MDCSemanticColorScheme(defaults: .material201804).backgroundColor
+    view.backgroundColor = containerScheme.colorScheme.backgroundColor
 
     textButton.setTitle("PRESENT ALERT", for: UIControlState())
     textButton.setTitleColor(UIColor(white: 0.1, alpha:1), for: UIControlState())
@@ -94,17 +98,16 @@ class DialogsCustomShadowExampleViewController: UIViewController {
 
   @objc func tap(_ sender: Any) {
     let presentedController = CustomShadowViewController(nibName: nil, bundle: nil)
+
+    // Using a MDCDialogTransitionController as the transition delegate also sets
+    // MDCDailogPresentationController as the presentation controller.
+    // Make sure to store a strong reference to the transitionController.
     presentedController.modalPresentationStyle = .custom;
     presentedController.transitioningDelegate = self.transitionController;
 
+    // Note this example demonstrate direct manipulation of cornerRadius on the
+    //  view's layer so we're intentionally not calling the presentation controller's themer.
     self.present(presentedController, animated: true, completion: nil)
-
-    // We set the corner radius to adjust the shadow that is implemented via the trackingView in the
-    // presentation controller.
-    if let presentationController = presentedController.mdc_dialogPresentationController {
-      presentationController.applyTheme(withScheme: containerScheme)
-      presentationController.dialogCornerRadius = presentedController.view.layer.cornerRadius
-    }
   }
 
   // MARK: Catalog by convention

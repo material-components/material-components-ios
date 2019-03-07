@@ -16,7 +16,7 @@
 
 #import "MaterialButtons+ShapeThemer.h"
 #import "MaterialButtons.h"
-#import "MaterialShapeLibraryNew.h"
+#import "MaterialShapeLibrary.h"
 
 @interface ButtonsShapeThemerTests : XCTestCase
 
