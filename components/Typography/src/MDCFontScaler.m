@@ -16,9 +16,9 @@
 
 #import <objc/runtime.h>
 
-#import "private/MDCFontTraits.h"
 #import "UIApplication+AppExtensions.h"
 #import "UIFont+MaterialScalable.h"
+#import "private/MDCFontTraits.h"
 
 MDCTextStyle MDCTextStyleHeadline1 = @"MDC.TextStyle.Headline1";
 MDCTextStyle MDCTextStyleHeadline2 = @"MDC.TextStyle.Headline2";
