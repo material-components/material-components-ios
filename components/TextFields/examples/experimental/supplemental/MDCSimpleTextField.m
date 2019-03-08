@@ -47,7 +47,6 @@ static const CGFloat kFloatingPlaceholderAnimationVelocityInPointsPerSecond = (C
 
 @end
 
-// TODO: Go through UITextField.h and make sure you consider the entire public API
 @implementation MDCSimpleTextField
 @synthesize preferredMainContentAreaHeight = _preferredMainContentAreaHeight;
 @synthesize preferredUnderlineLabelAreaHeight = _preferredUnderlineLabelAreaHeight;
@@ -715,8 +714,9 @@ static const CGFloat kFloatingPlaceholderAnimationVelocityInPointsPerSecond = (C
 
 - (UIFont *)floatingPlaceholderFontWithFont:(UIFont *)font
                              containerStyle:(id<MDCContainedInputViewStyle>)containerStyle {
-  CGFloat floatingPlaceholderFontSize =
-      [containerStyle.densityInformer floatingPlaceholderFontSize];
+  CGFloat scaleFactor =
+      [self.containerStyle.densityInformer floatingPlaceholderFontSizeScaleFactor];
+  CGFloat floatingPlaceholderFontSize = font.pointSize * scaleFactor;
   return [font fontWithSize:floatingPlaceholderFontSize];
 }
 

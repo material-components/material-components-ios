@@ -175,8 +175,8 @@
 
 @implementation MDCContainerStyleBaseDensityInformer
 
-- (CGFloat)floatingPlaceholderFontSize {
-  return 10;
+- (CGFloat)floatingPlaceholderFontSizeScaleFactor {
+  return 0.75;
 }
 
 - (CGFloat)floatingPlaceholderMinYWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight {
