@@ -724,8 +724,7 @@ static const CGFloat kFloatingPlaceholderAnimationVelocityInPointsPerSecond = (C
 
 - (void)clearButtonPressed:(UIButton *)clearButton {
   self.text = nil;
-  // TODO: I'm pretty sure there is a control event or notification UITextField sens or posts here.
-  // Add it!
+  [self sendActionsForControlEvents:UIControlEventEditingChanged];
 }
 
 #pragma mark Internationalization
