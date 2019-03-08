@@ -35,7 +35,7 @@ MDCTextStyle MDCTextStyleCaption = @"MDC.TextStyle.Caption";
 MDCTextStyle MDCTextStyleOverline = @"MDC.TextStyle.Overline";
 
 @implementation MDCFontScaler {
-  NSDictionary<NSString *, NSNumber *> *_scalingCurve;
+  NSDictionary<UIContentSizeCategory, NSNumber *> *_scalingCurve;
 }
 
 + (instancetype)scalerForMaterialTextStyle:(MDCTextStyle)textStyle {

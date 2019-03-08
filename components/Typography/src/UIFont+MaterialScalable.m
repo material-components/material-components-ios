@@ -33,15 +33,6 @@ static char MDCFontScaleObjectKey;
     fontSizeNumber = self.mdc_scalingCurve[sizeCategory];
   }
 
-  // If you have queried the table for a sizeCategory that doesn't exist, we will return the
-  // traits for XXXL.  This handles the case where the values are requested for one of the
-  // accessibility size categories beyond XXXL such as
-  // UIContentSizeCategoryAccessibilityExtraLarge.  Accessbility size categories are only
-  // defined for the Body Font Style.
-  if (fontSizeNumber == nil) {
-    fontSizeNumber = self.mdc_scalingCurve[UIContentSizeCategoryExtraExtraExtraLarge];
-  }
-
   // Guard against broken / incomplete scaling curves by returning self if fontSizeNumber is nil.
   if (fontSizeNumber == nil) {
     return self;
@@ -54,8 +45,12 @@ static char MDCFontScaleObjectKey;
   return scaledFont;
 }
 
-- (UIFont *)mdc_scaledFontForCurrentSizeCategory {
-  // If we are within an application, query the preferredContentSizeCategory.
+
+/**
+ @return Device's current UIContentSizeCategory or UIContentSizeCategoryLarge
+     if we are unable to query the device due to being in an extension.
+ */
+static UIContentSizeCategory GetCurrentSizeCategory(void) {
   UIContentSizeCategory sizeCategory = UIContentSizeCategoryLarge;
   if ([UIApplication mdc_safeSharedApplication]) {
     sizeCategory = [UIApplication mdc_safeSharedApplication].preferredContentSizeCategory;
@@ -63,7 +58,13 @@ static char MDCFontScaleObjectKey;
     sizeCategory = UIScreen.mainScreen.traitCollection.preferredContentSizeCategory;
   }
 
-  return [self mdc_scaledFontForSizeCategory:sizeCategory];
+  return sizeCategory;
+}
+
+- (UIFont *)mdc_scaledFontForCurrentSizeCategory {
+  UIContentSizeCategory currentSizeCategory = GetCurrentSizeCategory();
+
+  return [self mdc_scaledFontForSizeCategory:currentSizeCategory];
 }
 
 - (nonnull UIFont *)mdc_scaledFontAtDefaultSize {
@@ -71,26 +72,12 @@ static char MDCFontScaleObjectKey;
 }
 
 - (CGFloat)scaledValueForValue:(CGFloat)value {
-  // If it is available, query the preferredContentSizeCategory.
   UIContentSizeCategory defaultSizeCategory = UIContentSizeCategoryLarge;
-  UIContentSizeCategory currentSizeCategory = UIContentSizeCategoryLarge;
-  if ([UIApplication mdc_safeSharedApplication]) {
-    currentSizeCategory = [UIApplication mdc_safeSharedApplication].preferredContentSizeCategory;
-  } else if (@available(iOS 10.0, *)) {
-    currentSizeCategory = UIScreen.mainScreen.traitCollection.preferredContentSizeCategory;
-  }
+  UIContentSizeCategory currentSizeCategory = GetCurrentSizeCategory();
 
   NSNumber *defaultFontSizeNumber = self.mdc_scalingCurve[defaultSizeCategory];
 
   NSNumber *currentFontSizeNumber = self.mdc_scalingCurve[currentSizeCategory];
-  // If you have queried the table for a sizeCategory that doesn't exist, we will return the
-  // traits for XXXL.  This handles the case where the values are requested for one of the
-  // accessibility size categories beyond XXXL such as
-  // UIContentSizeCategoryAccessibilityExtraLarge.
-  if (currentFontSizeNumber == nil) {
-    currentFontSizeNumber = self.mdc_scalingCurve[UIContentSizeCategoryExtraExtraExtraLarge];
-  }
-
   // Guard against broken / incomplete scaling curves by returning self if fontSizeNumber is nil.
   if (currentFontSizeNumber == nil || defaultFontSizeNumber == nil) {
     return value;

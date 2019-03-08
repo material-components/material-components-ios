@@ -20,8 +20,11 @@
 
 /**
  An associated scaling curve that is a dictionary that maps UISizeCategory to fontsize
+ A curve must include a complete set of size categories, from UIContentSizeCategoryExtraSmall to
+ UIContentSizeCategoryExtraExtraExtraLarge AND all UIContentSizeCategoryAccessibility categories.
+ Note that this curve MUST be immutable as it is retained, not copied.
  */
-@property(nonatomic, nullable, setter=mdc_setScalingCurve:)
+@property(nonatomic, strong, nullable, setter=mdc_setScalingCurve:)
     NSDictionary<UIContentSizeCategory, NSNumber *> *mdc_scalingCurve;
 
 /**
