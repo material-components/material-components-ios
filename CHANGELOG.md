@@ -1,18 +1,23 @@
-# #develop#
+# 79.0.1
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This patch release removes `NS_REQUIRES_SUPER` from several MDCCollectionViewController APIs, removing the requirement to call super.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
 ## API changes
 
+### Collections
+
+#### MDCCollectionViewController
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `- (void)collectionView:(nonnull UICollectionView *)collectionView     didHighlightItemAtIndexPath:(nonnull NSIndexPath *)indexPath NS_REQUIRES_SUPER;` |
+| To: | `- (void)collectionView:(nonnull UICollectionView *)collectionView     didHighlightItemAtIndexPath:(nonnull NSIndexPath *)indexPath;` |
+
 ## Component changes
+
+### Collections
+
+* [Clean up interface by removing NS_REQUIRES_SUPER (#6788)](https://github.com/material-components/material-components-ios/commit/4b34568abc92171491b7a058cc97ca22953a3d2b) (dmaclach)
 
 ---
 
