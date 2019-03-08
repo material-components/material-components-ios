@@ -45,7 +45,6 @@ static char MDCFontScaleObjectKey;
   return scaledFont;
 }
 
-
 /**
  @return Device's current UIContentSizeCategory or UIContentSizeCategoryLarge
      if we are unable to query the device due to being in an extension.
