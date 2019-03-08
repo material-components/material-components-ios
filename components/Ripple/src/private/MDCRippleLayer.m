@@ -164,6 +164,8 @@ static NSString *const kRippleLayerScaleString = @"transform.scale";
   fadeOutAnim.beginTime = [self convertTime:_rippleTouchDownStartTime + delay fromLayer:nil];
   fadeOutAnim.timingFunction =
       [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+  fadeOutAnim.fillMode = kCAFillModeForwards;
+  fadeOutAnim.removedOnCompletion = NO;
   [CATransaction setCompletionBlock:^{
     if (completion) {
       completion();
