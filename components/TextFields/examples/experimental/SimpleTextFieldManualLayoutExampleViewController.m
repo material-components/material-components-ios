@@ -26,14 +26,19 @@
 
 #import "supplemental/MDCSimpleTextField+MaterialTheming.h"
 
+static const NSUInteger kDefaultPadding = 20;
+
 @interface SimpleTextFieldManualLayoutExampleViewController ()
 
 @property(strong, nonatomic) UIScrollView *scrollView;
+
+@property(strong, nonatomic) NSArray *scrollViewSubviews;
 
 @property(strong, nonatomic) MDCButton *resignFirstResponderButton;
 @property(strong, nonatomic) MDCButton *toggleErrorButton;
 @property(strong, nonatomic) MDCSimpleTextField *filledTextField;
 @property(strong, nonatomic) MDCSimpleTextField *outlinedTextField;
+@property(strong, nonatomic) MDCSimpleTextField *unthemedTextField;
 
 @property(nonatomic, assign) BOOL isErrored;
 
@@ -83,11 +88,21 @@
 }
 
 - (void)addSubviews {
-  [self addScrollView];
-  [self addResignFirstResponderButton];
-  [self addToggleErrorButton];
-  [self addFilledTextField];
-  [self addOutlinedTextField];
+  self.scrollView = [[UIScrollView alloc] init];
+  [self.view addSubview:self.scrollView];
+  self.scrollViewSubviews = @[
+                    [self createToggleErrorButton],
+                    [self createFirstResponderButton],
+                    [self createLabelWithText:@"Filled MDCSimpleTextField:"],
+                    [self createFilledTextField],
+                    [self createLabelWithText:@"Outlined MDCSimpleTextField:"],
+                    [self createOutlinedTextField],
+                    [self createLabelWithText:@"Unthemed MDCSimpleTextField:"],
+                    [self createUnthemedSimpleTextField],
+                    ];
+  for (UIView *view in self.scrollViewSubviews) {
+    [self.scrollView addSubview:view];
+  }
 }
 
 - (void)layoutScrollView {
@@ -106,45 +121,19 @@
 }
 
 - (void)layoutScrollViewSubviews {
-  CGFloat padding = 30;
-  CGFloat resignFirstResponderButtonMinX = padding;
-  CGFloat resignFirstResponderButtonMinY = padding;
-  CGFloat resignFirstResponderButtonWidth = CGRectGetWidth(self.resignFirstResponderButton.frame);
-  CGFloat resignFirstResponderButtonHeight = CGRectGetHeight(self.resignFirstResponderButton.frame);
-  CGRect resignFirstResponderButtonFrame =
-      CGRectMake(resignFirstResponderButtonMinX, resignFirstResponderButtonMinY,
-                 resignFirstResponderButtonWidth, resignFirstResponderButtonHeight);
-  self.resignFirstResponderButton.frame = resignFirstResponderButtonFrame;
-
-  CGFloat toggleErrorButtonMinX = padding;
-  CGFloat toggleErrorButtonMinY =
-      resignFirstResponderButtonMinY + resignFirstResponderButtonHeight + padding;
-  CGFloat toggleErrorButtonWidth = CGRectGetWidth(self.toggleErrorButton.frame);
-  CGFloat toggleErrorButtonHeight = CGRectGetHeight(self.toggleErrorButton.frame);
-  CGRect toggleErrorButtonFrame = CGRectMake(toggleErrorButtonMinX, toggleErrorButtonMinY,
-                                             toggleErrorButtonWidth, toggleErrorButtonHeight);
-  self.toggleErrorButton.frame = toggleErrorButtonFrame;
-
-  CGFloat textFieldWidth = CGRectGetWidth(self.scrollView.frame) - (2 * padding);
-  CGSize textFieldFittingSize = CGSizeMake(textFieldWidth, CGFLOAT_MAX);
-
-  CGFloat filledTextFieldMinX = padding;
-  CGFloat filledTextFieldMinY = toggleErrorButtonMinY + toggleErrorButtonHeight + padding;
-  CGSize filledTextFieldSize = [self.filledTextField sizeThatFits:textFieldFittingSize];
-  CGRect filledTextFieldButtonFrame =
-      CGRectMake(filledTextFieldMinX, filledTextFieldMinY, filledTextFieldSize.width,
-                 filledTextFieldSize.height);
-  self.filledTextField.frame = filledTextFieldButtonFrame;
-  //  [self.filledTextField setNeedsLayout];
-
-  CGFloat outlinedTextFieldMinX = padding;
-  CGFloat outlinedTextFieldMinY = filledTextFieldMinY + filledTextFieldSize.height + padding;
-  CGSize outlinedTextFieldSize = [self.outlinedTextField sizeThatFits:textFieldFittingSize];
-  CGRect outlinedTextFieldFrame =
-      CGRectMake(outlinedTextFieldMinX, outlinedTextFieldMinY, outlinedTextFieldSize.width,
-                 outlinedTextFieldSize.height);
-  self.outlinedTextField.frame = outlinedTextFieldFrame;
-  //  [self.outlinedTextField setNeedsLayout];
+  CGFloat viewMinX = kDefaultPadding;
+  CGFloat viewMinY = kDefaultPadding;
+  for (UIView *view in self.scrollViewSubviews) {
+    CGSize viewSize = view.frame.size;
+    CGFloat textFieldWidth = CGRectGetWidth(self.scrollView.frame) - (2 * kDefaultPadding);
+    if ([view isKindOfClass:[MDCSimpleTextField class]]) {
+      viewSize = CGSizeMake(textFieldWidth, CGRectGetHeight(view.frame));
+    }
+    CGRect viewFrame = CGRectMake(viewMinX, viewMinY,viewSize.width, viewSize.height);
+    view.frame = viewFrame;
+    [view sizeToFit];
+    viewMinY = viewMinY + CGRectGetHeight(view.frame) + kDefaultPadding;
+  }
 }
 
 - (void)updateScrollViewContentSize {
@@ -163,50 +152,65 @@
   self.scrollView.contentSize = CGSizeMake(maxX, maxY);
 }
 
-- (void)addScrollView {
-  self.scrollView = [[UIScrollView alloc] init];
-  [self.view addSubview:self.scrollView];
+- (MDCButton *)createFirstResponderButton {
+  MDCButton *button = [[MDCButton alloc] init];
+  [button setTitle:@"Resign first responder"
+          forState:UIControlStateNormal];
+  [button addTarget:self
+             action:@selector(resignFirstResponderButtonTapped:)
+   forControlEvents:UIControlEventTouchUpInside];
+  [button applyContainedThemeWithScheme:self.containerScheme];
+  [button sizeToFit];
+  self.resignFirstResponderButton = button;
+  return button;
 }
 
-- (void)addResignFirstResponderButton {
-  self.resignFirstResponderButton = [[MDCButton alloc] init];
-  [self.resignFirstResponderButton setTitle:@"Resign first responder"
-                                   forState:UIControlStateNormal];
-  [self.resignFirstResponderButton addTarget:self
-                                      action:@selector(resignFirstResponderButtonTapped:)
-                            forControlEvents:UIControlEventTouchUpInside];
-  [self.resignFirstResponderButton applyContainedThemeWithScheme:self.containerScheme];
-  [self.resignFirstResponderButton sizeToFit];
-  [self.scrollView addSubview:self.resignFirstResponderButton];
+- (MDCButton *)createToggleErrorButton {
+  MDCButton *button = [[MDCButton alloc] init];
+  [button setTitle:@"Toggle error" forState:UIControlStateNormal];
+  [button addTarget:self
+             action:@selector(toggleErrorButtonTapped:)
+   forControlEvents:UIControlEventTouchUpInside];
+  [button applyContainedThemeWithScheme:self.containerScheme];
+  [button sizeToFit];
+  self.toggleErrorButton = button;
+  return button;
 }
 
-- (void)addToggleErrorButton {
-  self.toggleErrorButton = [[MDCButton alloc] init];
-  [self.toggleErrorButton setTitle:@"Toggle error" forState:UIControlStateNormal];
-  [self.toggleErrorButton addTarget:self
-                             action:@selector(toggleErrorButtonTapped:)
-                   forControlEvents:UIControlEventTouchUpInside];
-  [self.toggleErrorButton applyContainedThemeWithScheme:self.containerScheme];
-  [self.toggleErrorButton sizeToFit];
-  [self.scrollView addSubview:self.toggleErrorButton];
+- (UILabel *)createLabelWithText:(NSString *)text {
+  UILabel *label = [[UILabel alloc] init];
+  label.textColor = self.containerScheme.colorScheme.primaryColor;
+  label.font = self.containerScheme.typographyScheme.subtitle2;
+  label.text = text;
+  return label;
 }
 
-- (void)addFilledTextField {
-  self.filledTextField = [[MDCSimpleTextField alloc] init];
-  [self.filledTextField applyFilledThemeWithScheme:self.containerScheme];
-  self.filledTextField.placeholder = @"This is a placeholder";
-  self.filledTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-  self.filledTextField.leadingUnderlineLabel.numberOfLines = 0;
-  self.filledTextField.leadingUnderlineLabel.text = @"This is helper text.";
-  [self.scrollView addSubview:self.filledTextField];
+- (MDCSimpleTextField *)createFilledTextField {
+  MDCSimpleTextField *textField = [[MDCSimpleTextField alloc] init];
+  [textField applyFilledThemeWithScheme:self.containerScheme];
+  textField.placeholder = @"This is a placeholder";
+  textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+  textField.leadingUnderlineLabel.numberOfLines = 0;
+  textField.leadingUnderlineLabel.text = @"This is helper text.";
+  self.filledTextField = textField;
+  return textField;
 }
 
-- (void)addOutlinedTextField {
-  self.outlinedTextField = [[MDCSimpleTextField alloc] init];
-  [self.outlinedTextField applyOutlinedThemeWithScheme:self.containerScheme];
-  self.outlinedTextField.placeholder = @"This is another placeholder";
-  self.outlinedTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-  [self.scrollView addSubview:self.outlinedTextField];
+- (MDCSimpleTextField *)createOutlinedTextField {
+  MDCSimpleTextField *textField = [[MDCSimpleTextField alloc] init];
+  [textField applyOutlinedThemeWithScheme:self.containerScheme];
+  textField.placeholder = @"This is another placeholder";
+  textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+  self.outlinedTextField = textField;
+  return textField;
+}
+
+- (MDCSimpleTextField *)createUnthemedSimpleTextField {
+  MDCSimpleTextField *textField = [[MDCSimpleTextField alloc] init];
+  textField.placeholder = @"Placeholder City!";
+  textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+  self.unthemedTextField = textField;
+  return textField;
 }
 
 #pragma mark Private
