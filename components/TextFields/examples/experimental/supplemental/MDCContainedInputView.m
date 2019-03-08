@@ -199,7 +199,7 @@
 static const CGFloat kFloatingPlaceholderAnimationVelocityInPointsPerSecond = (CGFloat)200;
 
 @interface MDCContainedInputViewPlaceholderManager ()
-@property (nonatomic, assign) BOOL isAnimating;
+@property(nonatomic, assign) BOOL isAnimating;
 @end
 
 @implementation MDCContainedInputViewPlaceholderManager
@@ -212,7 +212,8 @@ static const CGFloat kFloatingPlaceholderAnimationVelocityInPointsPerSecond = (C
 }
 
 - (void)layOutPlaceholderWithPlaceholderLabel:(UILabel *)placeholderLabel
-                                        state:(MDCContainedInputViewPlaceholderState)placeholderState
+                                        state:
+                                            (MDCContainedInputViewPlaceholderState)placeholderState
                                   normalFrame:(CGRect)normalFrame
                                 floatingFrame:(CGRect)floatingFrame
                                    normalFont:(UIFont *)normalFont
@@ -233,10 +234,10 @@ static const CGFloat kFloatingPlaceholderAnimationVelocityInPointsPerSecond = (C
     default:
       break;
   }
-  
+
   CGAffineTransform currentTransform = placeholderLabel.transform;
   CGAffineTransform targetTransform = CGAffineTransformIdentity;
-  
+
   CGRect currentFrame = placeholderLabel.frame;
   if (self.isAnimating || CGRectEqualToRect(currentFrame, CGRectZero)) {
     placeholderLabel.transform = CGAffineTransformIdentity;
@@ -246,16 +247,16 @@ static const CGFloat kFloatingPlaceholderAnimationVelocityInPointsPerSecond = (C
   } else if (!CGRectEqualToRect(currentFrame, targetFrame)) {
     targetTransform = [self transformFromRect:currentFrame toRect:targetFrame];
   }
-  
+
   self.isAnimating = YES;
   placeholderLabel.hidden = placeholderShouldHide;
-  
+
   CGFloat lowerMinY = MIN(CGRectGetMinY(currentFrame), CGRectGetMinY(targetFrame));
   CGFloat higherMinY = MAX(CGRectGetMinY(currentFrame), CGRectGetMinY(targetFrame));
   CGFloat distanceTravelled = higherMinY - lowerMinY;
   CGFloat animationDuration =
-  distanceTravelled / kFloatingPlaceholderAnimationVelocityInPointsPerSecond;
-  
+      distanceTravelled / kFloatingPlaceholderAnimationVelocityInPointsPerSecond;
+
   __weak typeof(self) weakSelf = self;
   [CATransaction begin];
   {
@@ -267,9 +268,9 @@ static const CGFloat kFloatingPlaceholderAnimationVelocityInPointsPerSecond = (C
     }];
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform"];
     animation.fromValue =
-    [NSValue valueWithCATransform3D:CATransform3DMakeAffineTransform(currentTransform)];
+        [NSValue valueWithCATransform3D:CATransform3DMakeAffineTransform(currentTransform)];
     animation.toValue =
-    [NSValue valueWithCATransform3D:CATransform3DMakeAffineTransform(targetTransform)];
+        [NSValue valueWithCATransform3D:CATransform3DMakeAffineTransform(targetTransform)];
     animation.duration = animationDuration;
     animation.removedOnCompletion = YES;
     placeholderLabel.transform = targetTransform;
@@ -281,11 +282,11 @@ static const CGFloat kFloatingPlaceholderAnimationVelocityInPointsPerSecond = (C
 - (CGAffineTransform)transformFromRect:(CGRect)sourceRect toRect:(CGRect)finalRect {
   CGAffineTransform transform = CGAffineTransformIdentity;
   transform =
-  CGAffineTransformTranslate(transform, -(CGRectGetMidX(sourceRect) - CGRectGetMidX(finalRect)),
-                             -(CGRectGetMidY(sourceRect) - CGRectGetMidY(finalRect)));
+      CGAffineTransformTranslate(transform, -(CGRectGetMidX(sourceRect) - CGRectGetMidX(finalRect)),
+                                 -(CGRectGetMidY(sourceRect) - CGRectGetMidY(finalRect)));
   transform = CGAffineTransformScale(transform, finalRect.size.width / sourceRect.size.width,
                                      finalRect.size.height / sourceRect.size.height);
-  
+
   return transform;
 }
 

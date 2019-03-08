@@ -91,15 +91,15 @@ static const NSUInteger kDefaultPadding = 20;
   self.scrollView = [[UIScrollView alloc] init];
   [self.view addSubview:self.scrollView];
   self.scrollViewSubviews = @[
-                    [self createToggleErrorButton],
-                    [self createFirstResponderButton],
-                    [self createLabelWithText:@"Filled MDCSimpleTextField:"],
-                    [self createFilledTextField],
-                    [self createLabelWithText:@"Outlined MDCSimpleTextField:"],
-                    [self createOutlinedTextField],
-                    [self createLabelWithText:@"Unthemed MDCSimpleTextField:"],
-                    [self createUnthemedSimpleTextField],
-                    ];
+    [self createToggleErrorButton],
+    [self createFirstResponderButton],
+    [self createLabelWithText:@"Filled MDCSimpleTextField:"],
+    [self createFilledTextField],
+    [self createLabelWithText:@"Outlined MDCSimpleTextField:"],
+    [self createOutlinedTextField],
+    [self createLabelWithText:@"Unthemed MDCSimpleTextField:"],
+    [self createUnthemedSimpleTextField],
+  ];
   for (UIView *view in self.scrollViewSubviews) {
     [self.scrollView addSubview:view];
   }
@@ -129,7 +129,7 @@ static const NSUInteger kDefaultPadding = 20;
     if ([view isKindOfClass:[MDCSimpleTextField class]]) {
       viewSize = CGSizeMake(textFieldWidth, CGRectGetHeight(view.frame));
     }
-    CGRect viewFrame = CGRectMake(viewMinX, viewMinY,viewSize.width, viewSize.height);
+    CGRect viewFrame = CGRectMake(viewMinX, viewMinY, viewSize.width, viewSize.height);
     view.frame = viewFrame;
     [view sizeToFit];
     viewMinY = viewMinY + CGRectGetHeight(view.frame) + kDefaultPadding;
@@ -154,11 +154,10 @@ static const NSUInteger kDefaultPadding = 20;
 
 - (MDCButton *)createFirstResponderButton {
   MDCButton *button = [[MDCButton alloc] init];
-  [button setTitle:@"Resign first responder"
-          forState:UIControlStateNormal];
+  [button setTitle:@"Resign first responder" forState:UIControlStateNormal];
   [button addTarget:self
-             action:@selector(resignFirstResponderButtonTapped:)
-   forControlEvents:UIControlEventTouchUpInside];
+                action:@selector(resignFirstResponderButtonTapped:)
+      forControlEvents:UIControlEventTouchUpInside];
   [button applyContainedThemeWithScheme:self.containerScheme];
   [button sizeToFit];
   self.resignFirstResponderButton = button;
@@ -169,8 +168,8 @@ static const NSUInteger kDefaultPadding = 20;
   MDCButton *button = [[MDCButton alloc] init];
   [button setTitle:@"Toggle error" forState:UIControlStateNormal];
   [button addTarget:self
-             action:@selector(toggleErrorButtonTapped:)
-   forControlEvents:UIControlEventTouchUpInside];
+                action:@selector(toggleErrorButtonTapped:)
+      forControlEvents:UIControlEventTouchUpInside];
   [button applyContainedThemeWithScheme:self.containerScheme];
   [button sizeToFit];
   self.toggleErrorButton = button;

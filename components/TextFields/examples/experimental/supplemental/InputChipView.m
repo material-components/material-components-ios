@@ -556,12 +556,13 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   UIFont *floatingFont =
       [self.placeholderManager floatingPlaceholderFontWithFont:normalFont
                                                 containerStyle:self.containerStyle];
-  [self.placeholderManager layOutPlaceholderWithPlaceholderLabel:self.placeholderLabel
-                                                           state:self.placeholderState
-                                                     normalFrame:self.layout.placeholderFrameNormal
-                                                   floatingFrame:self.layout.placeholderFrameFloating
-                                                      normalFont:normalFont
-                                                    floatingFont:floatingFont];
+  [self.placeholderManager
+      layOutPlaceholderWithPlaceholderLabel:self.placeholderLabel
+                                      state:self.placeholderState
+                                normalFrame:self.layout.placeholderFrameNormal
+                              floatingFrame:self.layout.placeholderFrameFloating
+                                 normalFont:normalFont
+                               floatingFont:floatingFont];
   id<MDCContainedInputViewColorScheming> colorScheming =
       [self containedInputViewColorSchemingForState:self.containedInputViewState];
   [self.containerStyle applyStyleToContainedInputView:self

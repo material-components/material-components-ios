@@ -132,9 +132,12 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
 
   CGFloat apparentClearButtonMinX = 0;
   if (isRTL) {
-    apparentClearButtonMinX = shouldAttemptToDisplayLeftView ? leftViewMaxX + kTrailingMargin : kTrailingMargin;
+    apparentClearButtonMinX =
+        shouldAttemptToDisplayLeftView ? leftViewMaxX + kTrailingMargin : kTrailingMargin;
   } else {
-    CGFloat apparentClearButtonMaxX = shouldAttemptToDisplayRightView ? rightViewMinX - kTrailingMargin : textFieldWidth - kTrailingMargin;
+    CGFloat apparentClearButtonMaxX = shouldAttemptToDisplayRightView
+                                          ? rightViewMinX - kTrailingMargin
+                                          : textFieldWidth - kTrailingMargin;
     apparentClearButtonMinX = apparentClearButtonMaxX - kClearButtonInnerImageViewSideLength;
   }
 
@@ -194,8 +197,8 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
   CGFloat textRectMaxX = 0;
   if (isRTL) {
     if (shouldAttemptToDisplayClearButton) {
-      CGFloat clearButtonMaxX =
-          actualClearButtonMinX + kClearButtonTouchTargetSideLength + clearButtonImageViewSideMargin;
+      CGFloat clearButtonMaxX = actualClearButtonMinX + kClearButtonTouchTargetSideLength +
+                                clearButtonImageViewSideMargin;
       textRectMinX = clearButtonMaxX;
     } else if (shouldAttemptToDisplayLeftView) {
       textRectMinX = leftViewMaxX + kTrailingMargin;
@@ -231,7 +234,8 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
       CGRectMake(textRectMinX, textRectMinYFloatingPlaceholder, textRectWidth, textRectHeight);
 
   CGRect leftViewFrame = CGRectMake(leftViewMinX, leftViewMinY, leftViewWidth, leftViewHeight);
-  CGRect rightViewFrame = CGRectMake(rightViewMinX, rightViewMinY, CGRectGetWidth(rightView.frame), rightViewHeight);
+  CGRect rightViewFrame =
+      CGRectMake(rightViewMinX, rightViewMinY, CGRectGetWidth(rightView.frame), rightViewHeight);
   CGRect clearButtonFrame =
       CGRectMake(actualClearButtonMinX, clearButtonMinY, kClearButtonTouchTargetSideLength,
                  kClearButtonTouchTargetSideLength);
