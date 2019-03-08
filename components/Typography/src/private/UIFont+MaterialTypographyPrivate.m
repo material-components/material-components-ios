@@ -14,6 +14,8 @@
 
 #import "UIFont+MaterialTypographyPrivate.h"
 
+#import "UIFont+MaterialScalable.h"
+
 @implementation UIFont (MaterialTypographyPrivate)
 
 /*
@@ -98,7 +100,12 @@
   [extendedDescription appendFormat:@"%@ : ", self.fontName];
   [extendedDescription appendFormat:@"%@ : ", self.familyName];
   [extendedDescription appendFormat:@"%.1f pt : ", self.pointSize];
-  [extendedDescription appendFormat:@"%@", [self mdc_weightString]];
+  [extendedDescription appendFormat:@"%@ : ", [self mdc_weightString]];
+  if (self.mdc_scalingCurve) {
+    [extendedDescription appendString:@"+ScalingCurve"];
+  } else {
+    [extendedDescription appendString:@"NoScalingCurve"];
+  }
 
   return extendedDescription;
 }

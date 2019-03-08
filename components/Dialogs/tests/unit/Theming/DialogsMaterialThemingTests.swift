@@ -33,7 +33,7 @@ class DialogsMaterialThemingTests: XCTestCase {
     let alert: MDCAlertController = MDCAlertController(title: "Title", message: "Message")
     let scheme: MDCContainerScheme = MDCContainerScheme()
     let colorScheme = MDCSemanticColorScheme()
-    let typographyScheme = MDCTypographyScheme()
+    let typographyScheme = MDCTypographyScheme(defaults:.material201804)
 
     let action1: MDCAlertAction = MDCAlertAction(title: "", emphasis: .low)
     alert.addAction(action1)
@@ -52,8 +52,8 @@ class DialogsMaterialThemingTests: XCTestCase {
     XCTAssertEqual(alert.backgroundColor, colorScheme.surfaceColor);
 
     // Typography
-    XCTAssertEqual(alert.titleFont, typographyScheme.headline6)
-    XCTAssertEqual(alert.messageFont, typographyScheme.body1)
+    XCTAssertEqual(alert.titleFont!.pointSize, typographyScheme.headline6.pointSize)
+    XCTAssertEqual(alert.messageFont!.pointSize, typographyScheme.body1.pointSize)
 
     // Other properties
     XCTAssertEqual(alert.cornerRadius, kCornerRadius, accuracy: 0.001)
