@@ -158,7 +158,6 @@ mdc_objc_library(
 
 swift_library(
     name = "unit_test_swift_sources",
-    testonly = 1,
     srcs = glob([
         "tests/unit/*.swift",
         "tests/unit/Theming/*.swift",
@@ -172,7 +171,6 @@ swift_library(
         ":DialogThemer",
         ":Theming",
         "//components/Buttons:Theming",
-        "//components/schemes/Typography:TestingSupport",
     ],
 )
 

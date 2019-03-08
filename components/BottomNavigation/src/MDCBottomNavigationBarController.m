@@ -19,9 +19,6 @@
 /** The view that hosts the content for the selected view controller **/
 @property(nonatomic, strong) UIView *content;
 
-/** Constrains the navigation bar's height to the constant value of this property **/
-@property(nonatomic, strong) NSLayoutConstraint *navigationBarHeightConstraint;
-
 @end
 
 @implementation MDCBottomNavigationBarController
@@ -47,16 +44,6 @@
   [self.view addSubview:self.content];
   [self.view addSubview:self.navigationBar];
   [self loadConstraints];
-}
-
-- (void)viewDidLayoutSubviews {
-  [super viewDidLayoutSubviews];
-  [self updateNavigationBarHeight];
-}
-
-- (void)viewSafeAreaInsetsDidChange {
-  [super viewSafeAreaInsetsDidChange];
-  [self updateNavigationBarHeight];
 }
 
 - (void)setSelectedViewController:(nullable UIViewController *)selectedViewController {
@@ -219,16 +206,87 @@
   self.content.translatesAutoresizingMaskIntoConstraints = NO;
   self.navigationBar.translatesAutoresizingMaskIntoConstraints = NO;
 
+  if (@available(iOS 9.0, *)) {
+    [self loadiOS9PlusConstraints];
+  } else {
+    [self loadPreiOS9Constraints];
+  }
+}
+
+- (void)loadPreiOS9Constraints {
+  // Navigation Bar Constraints
+  NSArray<NSLayoutConstraint *> *navigationBarConstraints = @[
+    [NSLayoutConstraint constraintWithItem:self.navigationBar
+                                 attribute:NSLayoutAttributeLeading
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.view
+                                 attribute:NSLayoutAttributeLeading
+                                multiplier:1
+                                  constant:0],
+    [NSLayoutConstraint constraintWithItem:self.navigationBar
+                                 attribute:NSLayoutAttributeTrailing
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.view
+                                 attribute:NSLayoutAttributeTrailing
+                                multiplier:1
+                                  constant:0],
+    [NSLayoutConstraint constraintWithItem:self.navigationBar
+                                 attribute:NSLayoutAttributeBottom
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.view
+                                 attribute:NSLayoutAttributeBottom
+                                multiplier:1
+                                  constant:0],
+    [NSLayoutConstraint constraintWithItem:self.navigationBar
+                                 attribute:NSLayoutAttributeTop
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.content
+                                 attribute:NSLayoutAttributeBottom
+                                multiplier:1
+                                  constant:0]
+  ];
+
+  // Content View Constraints
+  NSArray<NSLayoutConstraint *> *contentConstraints = @[
+    [NSLayoutConstraint constraintWithItem:self.content
+                                 attribute:NSLayoutAttributeLeading
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.view
+                                 attribute:NSLayoutAttributeLeading
+                                multiplier:1
+                                  constant:0],
+    [NSLayoutConstraint constraintWithItem:self.content
+                                 attribute:NSLayoutAttributeTrailing
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.view
+                                 attribute:NSLayoutAttributeTrailing
+                                multiplier:1
+                                  constant:0],
+    [NSLayoutConstraint constraintWithItem:self.content
+                                 attribute:NSLayoutAttributeTop
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.view
+                                 attribute:NSLayoutAttributeTop
+                                multiplier:1
+                                  constant:0]
+  ];
+
+  [NSLayoutConstraint activateConstraints:navigationBarConstraints];
+  [NSLayoutConstraint activateConstraints:contentConstraints];
+}
+
+- (void)loadiOS9PlusConstraints {
   // Navigation Bar Constraints
   [self.view.leftAnchor constraintEqualToAnchor:self.navigationBar.leftAnchor].active = YES;
   [self.view.rightAnchor constraintEqualToAnchor:self.navigationBar.rightAnchor].active = YES;
 
-  self.navigationBarHeightConstraint =
-      [_navigationBar.heightAnchor constraintEqualToConstant:[self calculateNavigationBarHeight]];
-  self.navigationBarHeightConstraint.active = YES;
-
   [self.navigationBar.topAnchor constraintEqualToAnchor:self.content.bottomAnchor].active = YES;
   [self.navigationBar.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor].active = YES;
+  if (@available(iOS 11.0, *)) {
+    [self.navigationBar.barItemsBottomAnchor
+        constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor]
+        .active = YES;
+  }
 
   // Content View Constraints
   [self.view.leftAnchor constraintEqualToAnchor:self.content.leftAnchor].active = YES;
@@ -242,21 +300,45 @@
  */
 - (void)addConstraintsForContentView:(UIView *)view {
   view.translatesAutoresizingMaskIntoConstraints = NO;
-  [view.leadingAnchor constraintEqualToAnchor:self.content.leadingAnchor].active = YES;
-  [view.trailingAnchor constraintEqualToAnchor:self.content.trailingAnchor].active = YES;
-  [view.topAnchor constraintEqualToAnchor:self.content.topAnchor].active = YES;
-  [view.bottomAnchor constraintEqualToAnchor:self.content.bottomAnchor].active = YES;
-}
-
-/** Returns the desired height of the navigation bar. **/
-- (CGFloat)calculateNavigationBarHeight {
-  CGSize fitSize = CGSizeMake(CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds));
-  return [self.navigationBar sizeThatFits:fitSize].height;
-}
-
-/** Sets the navigation bar's height based on its desired size **/
-- (void)updateNavigationBarHeight {
-  self.navigationBarHeightConstraint.constant = [self calculateNavigationBarHeight];
+  if (@available(iOS 9.0, *)) {
+    [view.leadingAnchor constraintEqualToAnchor:self.content.leadingAnchor].active = YES;
+    [view.trailingAnchor constraintEqualToAnchor:self.content.trailingAnchor].active = YES;
+    [view.topAnchor constraintEqualToAnchor:self.content.topAnchor].active = YES;
+    [view.bottomAnchor constraintEqualToAnchor:self.content.bottomAnchor].active = YES;
+  } else {
+    [NSLayoutConstraint constraintWithItem:self.content
+                                 attribute:NSLayoutAttributeLeading
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:view
+                                 attribute:NSLayoutAttributeLeading
+                                multiplier:1
+                                  constant:0]
+        .active = YES;
+    [NSLayoutConstraint constraintWithItem:self.content
+                                 attribute:NSLayoutAttributeTrailing
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:view
+                                 attribute:NSLayoutAttributeTrailing
+                                multiplier:1
+                                  constant:0]
+        .active = YES;
+    [NSLayoutConstraint constraintWithItem:self.content
+                                 attribute:NSLayoutAttributeTop
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:view
+                                 attribute:NSLayoutAttributeTop
+                                multiplier:1
+                                  constant:0]
+        .active = YES;
+    [NSLayoutConstraint constraintWithItem:self.content
+                                 attribute:NSLayoutAttributeBottom
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:view
+                                 attribute:NSLayoutAttributeBottom
+                                multiplier:1
+                                  constant:0]
+        .active = YES;
+  }
 }
 
 /** Maps an array of view controllers to their corrisponding tab bar items **/

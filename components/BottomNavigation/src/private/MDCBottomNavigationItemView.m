@@ -242,7 +242,9 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   CGFloat centerX = CGRectGetMidX(contentBoundingRect);
   CGPoint iconImageViewCenter =
       CGPointMake(centerX, centerY - totalContentHeight / 2 + iconHeight / 2);
-  CGPoint labelCenter = CGPointMake(centerX, centerY + totalContentHeight / 2 - labelHeight / 2);
+  // Ignore the horizontal titlePositionAdjustment in a vertical layout to match UITabBar behavior.
+  CGPoint labelCenter = CGPointMake(centerX, centerY + totalContentHeight / 2 - labelHeight / 2 +
+                                                 self.titlePositionAdjustment.vertical);
   CGFloat availableContentWidth = CGRectGetWidth(contentBoundingRect);
   if (self.truncatesTitle && (labelSize.width > availableContentWidth)) {
     labelSize = CGSizeMake(availableContentWidth, labelSize.height);
@@ -301,8 +303,9 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
       CGPointMake(layoutStartingPoint + rtlCoefficient * iconCenterOffset, centerY);
   CGFloat labelOffsetFromIcon =
       iconImageViewSize.width / 2 + self.contentHorizontalMargin + labelSize.width / 2;
-  CGPoint labelCenter =
-      CGPointMake(iconImageViewCenter.x + rtlCoefficient * labelOffsetFromIcon, centerY);
+  CGPoint labelCenter = CGPointMake(iconImageViewCenter.x + rtlCoefficient * labelOffsetFromIcon +
+                                        self.titlePositionAdjustment.horizontal,
+                                    centerY + self.titlePositionAdjustment.vertical);
 
   // Assign the frames to the inout arguments
   if (outLabelFrame != NULL) {
@@ -556,6 +559,13 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 
 - (NSString *)accessibilityIdentifier {
   return self.button.accessibilityIdentifier;
+}
+
+- (void)setTitlePositionAdjustment:(UIOffset)titlePositionAdjustment {
+  if (!UIOffsetEqualToOffset(_titlePositionAdjustment, titlePositionAdjustment)) {
+    _titlePositionAdjustment = titlePositionAdjustment;
+    [self setNeedsLayout];
+  }
 }
 
 #pragma mark - Resource bundle

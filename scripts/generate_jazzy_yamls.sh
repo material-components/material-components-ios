@@ -26,6 +26,7 @@ module: $component
 umbrella_header: src/Material$component.h
 objc: true
 sdk: iphonesimulator
+framework_root: ../
 EOL
 
 done

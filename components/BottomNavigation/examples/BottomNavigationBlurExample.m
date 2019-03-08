@@ -44,6 +44,7 @@
 }
 
 - (void)configureNavigationBar {
+  self.bottomNavBar.sizeThatFitsIncludesSafeArea = NO;
   self.bottomNavBar.titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
   self.bottomNavBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles;
 
@@ -135,9 +136,16 @@
 }
 
 - (void)layoutBottomNavBar {
-  CGSize size = [self.bottomNavBar sizeThatFits:self.view.bounds.size];
+  CGRect viewBounds = CGRectStandardize(self.view.bounds);
+  CGSize size = [self.bottomNavBar sizeThatFits:viewBounds.size];
+  UIEdgeInsets safeAreaInsets = UIEdgeInsetsZero;
+  // Extend the Bottom Navigation to the bottom of the screen.
+  if (@available(iOS 11.0, *)) {
+    safeAreaInsets = self.view.safeAreaInsets;
+  }
   CGRect bottomNavBarFrame =
-      CGRectMake(0, CGRectGetHeight(self.view.bounds) - size.height, size.width, size.height);
+      CGRectMake(0, viewBounds.size.height - size.height - safeAreaInsets.bottom, size.width,
+                 size.height + safeAreaInsets.bottom);
   self.bottomNavBar.frame = bottomNavBarFrame;
   self.collectionView.contentInset = UIEdgeInsetsMake(0, 0, size.height, 0);
 }

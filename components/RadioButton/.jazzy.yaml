@@ -3,3 +3,4 @@ module: RadioButton
 umbrella_header: src/MaterialRadioButton.h
 objc: true
 sdk: iphonesimulator
+framework_root: ../

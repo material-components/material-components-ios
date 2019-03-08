@@ -19,13 +19,13 @@ import MaterialComponents.MaterialColorScheme
 class BottomNavigationTitleVisibilityChangeExample: UIViewController, MDCBottomNavigationBarDelegate {
   
   var colorScheme = MDCSemanticColorScheme()
+  let instructionLabel = UILabel()
   
   // Create a bottom navigation bar to add to a view.
   let bottomNavBar = MDCBottomNavigationBar()
   
   init() {
     super.init(nibName: nil, bundle: nil)
-    commonBottomNavigationTypicalUseSwiftExampleInit()
   }
   
   @available(*, unavailable)
@@ -33,10 +33,13 @@ class BottomNavigationTitleVisibilityChangeExample: UIViewController, MDCBottomN
     super.init(coder: aDecoder)
   }
   
-  func commonBottomNavigationTypicalUseSwiftExampleInit() {
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
     view.backgroundColor = colorScheme.backgroundColor
     view.addSubview(bottomNavBar)
-    
+
+    bottomNavBar.sizeThatFitsIncludesSafeArea = false
     // Always show bottom navigation bar item titles.
     bottomNavBar.titleVisibility = .always
     
@@ -55,6 +58,7 @@ class BottomNavigationTitleVisibilityChangeExample: UIViewController, MDCBottomN
     bottomNavBar.selectedItem = tabBarItem2;
     
     bottomNavBar.delegate = self
+    addInstructionLabel()
   }
   
   func layoutBottomNavBar() {
@@ -71,27 +75,27 @@ class BottomNavigationTitleVisibilityChangeExample: UIViewController, MDCBottomN
   }
   
   func addInstructionLabel() {
-    let instructionLabel = UILabel()
     instructionLabel.numberOfLines = 0
+    instructionLabel.textAlignment = .center
     instructionLabel.lineBreakMode = .byWordWrapping
     instructionLabel.text = "Choose the Home tab to make all titles disappear, and any other tab to make them reappear."
     view.addSubview(instructionLabel)
-    let size = instructionLabel.sizeThatFits(view.bounds.size)
-    let instructionFrame = CGRect(x: 0,
-                                  y: view.bounds.height / 2 - size.height / 2,
-                                  width: size.width,
-                                  height: size.height)
-    instructionLabel.frame = instructionFrame
   }
   
   override func viewWillLayoutSubviews() {
     super.viewWillLayoutSubviews()
+
+    var viewBounds = view.bounds;
+    if #available(iOS 11.0, *) {
+      viewBounds = UIEdgeInsetsInsetRect(viewBounds, view.safeAreaInsets)
+    }
+    let labelWidth = min(viewBounds.size.width - 32, 480);
+    let labelSize = instructionLabel.sizeThatFits(CGSize(width: labelWidth,
+                                                         height: viewBounds.size.height))
+    instructionLabel.bounds = CGRect(x: 0, y: 0, width: labelSize.width, height: labelSize.height)
+    instructionLabel.center = CGPoint(x: viewBounds.midX, y: viewBounds.midY);
+
     layoutBottomNavBar()
-  }
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    addInstructionLabel()
   }
   
   override func viewWillAppear(_ animated: Bool) {

@@ -1,3 +1,193 @@
+# 79.0.0
+
+This major release introduces breaking changes for Swift code that makes use of the MDCContainerScheme and MDCContainerScheming types. It also includes breaking changes for Shapes header files and completes the graduation of Shapes to a production-ready state.
+
+## Breaking changes
+
+MDCContainerScheming's and MDCContainerScheme's colorScheme and typographyScheme are now both nonnull. This change will require changes in Swift code that make use of these APIs.
+
+All Shapes headers have been renamed, dropping their `New` suffix where applicable.
+
+## New features
+
+### BottomNavigation
+
+BottomNavigation has two new properties: `sizeThatFitsIncludesSafeArea` and `barItemsBottomAnchor`.
+
+See [components/BottomNavigation/README.md](components/BottomNavigation/README.md#deprecations) for more details on the `sizeThatFitsIncludesSafeArea` property.
+
+`barItemsBottomAnchor` allows anchoring the Bottom Navigation bar to the safe area layout guide. This API is available on iOS 9.0 and above. Example usage:
+
+```
+if (@available(iOS 11.0, *)) {
+  [navigationBar.barItemsBottomAnchor
+      constraintEqualToAnchor:view.safeAreaLayoutGuide.bottomAnchor]
+      .active = YES;
+}
+```
+
+### FlexibleHeader
+
+`MDCFlexibleHeaderViewController` introduces a new `safeAreaDelegate` that can be used to change which view controller is used when extracting top safe area insets.
+
+## API changes
+
+### BottomNavigation
+
+#### MDCBottomNavigationBar
+
+*new* property: `sizeThatFitsIncludesSafeArea` in `MDCBottomNavigationBar`
+
+*new* property: `barItemsBottomAnchor` in `MDCBottomNavigationBar`
+
+### FlexibleHeader
+
+#### MDCFlexibleHeaderSafeAreaDelegate
+
+*new* method: `-flexibleHeaderViewControllerTopSafeAreaInsetViewController:` in `MDCFlexibleHeaderSafeAreaDelegate`
+
+*new* protocol: `MDCFlexibleHeaderSafeAreaDelegate`
+
+#### MDCFlexibleHeaderViewController
+
+*new* property: `safeAreaDelegate` in `MDCFlexibleHeaderViewController`
+
+### ContainerScheme
+
+#### MDCContainerScheming
+
+*modified* property: `colorScheme` in `MDCContainerScheming`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `var colorScheme: Any? { get }` |
+| To: | `var colorScheme: Any { get }` |
+
+*modified* property: `colorScheme` in `MDCContainerScheming`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@property (readonly, nonatomic, nullable) id colorScheme;` |
+| To: | `@property (readonly, nonatomic, nonnull) id colorScheme;` |
+
+*modified* property: `typographyScheme` in `MDCContainerScheming`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `var typographyScheme: Any? { get }` |
+| To: | `var typographyScheme: Any { get }` |
+
+*modified* property: `typographyScheme` in `MDCContainerScheming`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@property (readonly, nonatomic, nullable) id typographyScheme;` |
+| To: | `@property (readonly, nonatomic, nonnull) id typographyScheme;` |
+
+#### MDCContainerScheme
+
+*modified* property: `colorScheme` in `MDCContainerScheme`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `var colorScheme: UnsafeMutablePointer<Int32>? { get set }` |
+| To: | `var colorScheme: UnsafeMutablePointer<Int32> { get set }` |
+
+*modified* property: `colorScheme` in `MDCContainerScheme`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@property(nonatomic, nullable, readwrite) MDCSemanticColorScheme *colorScheme` |
+| To: | `@property (assign, readwrite, nonatomic, nonnull) int *colorScheme;` |
+
+*modified* property: `shapeScheme` in `MDCContainerScheme`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@property(nonatomic, nullable, readwrite) MDCShapeScheme *shapeScheme` |
+| To: | `@property (assign, readwrite, nonatomic, nullable) int *shapeScheme;` |
+
+*modified* property: `typographyScheme` in `MDCContainerScheme`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `var typographyScheme: UnsafeMutablePointer<Int32>? { get set }` |
+| To: | `var typographyScheme: UnsafeMutablePointer<Int32> { get set }` |
+
+*modified* property: `typographyScheme` in `MDCContainerScheme`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@property(nonatomic, nullable, readwrite) MDCTypographyScheme *typographyScheme` |
+| To: | `@property (assign, readwrite, nonatomic, nonnull) int *typographyScheme;` |
+
+## Component changes
+
+## Changes
+
+### BottomAppBar
+
+* [hide swift example from Catalog. (#6725)](https://github.com/material-components/material-components-ios/commit/ea0986d30cb9ffd0f9e4dd0ac6c9a6e4a57799dd) (Wenyu Zhang)
+
+### BottomNavigation
+
+* [Make Controller available on iOS 8. (#6719)](https://github.com/material-components/material-components-ios/commit/e553272885f0a3ab00408aec5ffd9cfaa73a3d9a) (Robert Moore)
+* [Remove deprecation notice from sizeThatFitsIncludesSafeArea (#6727)](https://github.com/material-components/material-components-ios/commit/b342919ba3d127111fd357f12065bf032fd92328) (featherless)
+* [sizeThatFits: ignores safe area (#6717)](https://github.com/material-components/material-components-ios/commit/d58c49c7ec17b93180a45cf1aa1b27a59bc03993) (Robert Moore)
+
+### Dialogs
+
+* [Fix presented corner radius in custom view controllers (#6696)](https://github.com/material-components/material-components-ios/commit/df2a4a8c1d4cc46367ac090441d498e614092e90) (Galia Kaufman)
+
+### FlexibleHeader
+
+* [FlexibleHeader changes (#6748)](https://github.com/material-components/material-components-ios/commit/bb323d9904c9d926d634dc3a5487257cd4415e14) (Andrew Overton)
+
+### NavigationDrawer
+
+* [remove beta references from navigation drawer (#6742)](https://github.com/material-components/material-components-ios/commit/c0911869b50753776de8a9f145fe3ba9544c579d) (Yarden Eitan)
+
+### PageControl
+
+* [Fixes MDCPageControl not properly revealing page indicators. (#6714)](https://github.com/material-components/material-components-ios/commit/0294a87db21c12cb4969255e2e6d9944de04b302) (Yarden Eitan)
+
+## Multi-component changes
+
+* [Add autolayout support (#6612)](https://github.com/material-components/material-components-ios/commit/5ca3f347422050a918125db8f92d391695a0cb99) (Robert Moore)
+* [Fix colorScheme and typographyScheme to be nonnull. (#6699)](https://github.com/material-components/material-components-ios/commit/50307bb3308fb7b514a4dc7523d4e45a71440420) (Cody Weaver)
+* [Move shapes from components/private to components/ - Part 3 (last part) (#6734)](https://github.com/material-components/material-components-ios/commit/10abd4524dbc3c7ed1ce6aac0ad0ddc24ac7b4a6) (Yarden Eitan)
+* [Slight changes to Cards targets + rewrite rules (#6749)](https://github.com/material-components/material-components-ios/commit/1bd173d8a776f9e1f3aedd2894395451c6e144b1) (Andrew Overton)
+* [Support titlePositionAdjustment (#6721)](https://github.com/material-components/material-components-ios/commit/60c60b3defba75990fb72ef85f4ffb7830d6d593) (Robert Moore)
+* [updated jazzy yaml files to include framework root (#6750)](https://github.com/material-components/material-components-ios/commit/c4d24627ee4f3959b15ebc40bc838601d1a7e45b) (Yarden Eitan)
+
+---
+
+# 78.0.1
+
+In this patch release we have provided a ChipTextField example along with some Beta theming bug fixes.
+
+## Changes
+
+### ActionSheet
+
+* [Removing theming extensions dependency on themers (#6654)](https://github.com/material-components/material-components-ios/commit/c2f6293c67a450d1b185c69cfd4de40be8587cb5) (Cody Weaver)
+* [Remove Beta test from Ready component (#6677)](https://github.com/material-components/material-components-ios/commit/96c8a5f6e8efda4b4e29b9848daa52706ae36247) (Cody Weaver)
+
+### Dialogs
+
+* [Fix button font in Theming Extension (#6638)](https://github.com/material-components/material-components-ios/commit/669737f710c4693f3c85c8c369978b45ef187a8b) (Robert Moore)
+
+### Ripple
+
+* [Add Ripple snapshot test target to BUILD file (#6698)](https://github.com/material-components/material-components-ios/commit/19ccf9ca3af70f82e1e266cd136330eb2593896a) (Andrew Overton)
+
+## Multi-component changes
+
+* [Fixing Snapshot Tests (#6618)](https://github.com/material-components/material-components-ios/commit/419d0cc9ca51d2f91e26d8e9fb614c847636e900) (Andrew Overton)
+* [Use MDCChipTextFieldScrollView to replace leftView functionality for flexibility and extensibility (#6686)](https://github.com/material-components/material-components-ios/commit/6f26784f86ac9d3b1ee583bc6655e968b690fa54) (Wenyu Zhang)
+
+---
+
 # 78.0.0
 
 This major release promotes the Shape libraries from private to ready, as well as promoting Action Sheet to ready by migrating it from the MaterialComponentsBeta podspec to the MaterialComponents main podspec. Lastly, we've increased our snapshot test coverage across multiple components.
