@@ -22,7 +22,7 @@ static const CGFloat kTrailingMargin = (CGFloat)12.0;
 static const CGFloat kTopRowBottomRowDividerVerticalPadding = (CGFloat)9.0;
 static const CGFloat kFloatingPlaceholderXOffsetFromTextArea = (CGFloat)3.0;
 static const CGFloat kClearButtonTouchTargetSideLength = (CGFloat)30.0;
-static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
+static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
 
 @interface MDCSimpleTextFieldLayout ()
 @end
@@ -130,38 +130,18 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
     rightViewMinX = [self minXForRightView:rightView textFieldWidth:textFieldWidth isRTL:isRTL];
   }
 
-  CGFloat clearButtonMinX = 0;
-  CGFloat rightViewWidth = CGRectGetWidth(rightView.frame);
-  CGFloat clearButtonImageViewSideMargin =
-      (kClearButtonTouchTargetSideLength - kClearButtonImageViewSideLength) * 0.5;
-  if (shouldAttemptToDisplayClearButton) {
-    // RTL
-    CGFloat uncorrectedVisualLeftMargin = isRTL ? kTrailingMargin : kLeadingMargin;
-    CGFloat correctedVisualLeftMargin =
-        uncorrectedVisualLeftMargin - clearButtonImageViewSideMargin;
-    CGFloat lowestPossibleMinX = 0;
-    if (shouldAttemptToDisplayLeftView) {
-      lowestPossibleMinX = leftViewMaxX + correctedVisualLeftMargin;
-    } else {
-      lowestPossibleMinX = correctedVisualLeftMargin;
-    }
-
-    // LTR
-    CGFloat uncorrectedVisualRightMargin = isRTL ? kLeadingMargin : kTrailingMargin;
-    CGFloat correctedVisualRightMargin =
-        uncorrectedVisualRightMargin - clearButtonImageViewSideMargin;
-    CGFloat highestPossibleMaxX = 0;
-    if (shouldAttemptToDisplayRightView) {
-      highestPossibleMaxX = rightViewMinX - correctedVisualRightMargin;
-    } else {
-      highestPossibleMaxX = textFieldWidth - correctedVisualRightMargin;
-    }
-
-    clearButtonMinX = [self clearButtonMinXWithLowestPossibleMinX:lowestPossibleMinX
-                                              highestPossibleMaxX:highestPossibleMaxX
-                                                 clearButtonWidth:kClearButtonTouchTargetSideLength
-                                                            isRTL:isRTL];
+  CGFloat apparentClearButtonMinX = 0;
+  if (isRTL) {
+    apparentClearButtonMinX = shouldAttemptToDisplayLeftView ? leftViewMaxX + kTrailingMargin : kTrailingMargin;
+  } else {
+    CGFloat apparentClearButtonMaxX = shouldAttemptToDisplayRightView ? rightViewMinX - kTrailingMargin : textFieldWidth - kTrailingMargin;
+    apparentClearButtonMinX = apparentClearButtonMaxX - kClearButtonInnerImageViewSideLength;
   }
+
+  CGFloat clearButtonImageViewSideMargin =
+      (kClearButtonTouchTargetSideLength - kClearButtonInnerImageViewSideLength) * 0.5;
+  CGFloat actualClearButtonMinX = apparentClearButtonMinX - clearButtonImageViewSideMargin;
+
   CGFloat floatingPlaceholderHeight =
       canPlaceholderFloat ? [self textHeightWithFont:floatingPlaceholderFont] : 0;
   CGFloat floatingPlaceholderMinY = [containerStyle.densityInformer
@@ -215,7 +195,7 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
   if (isRTL) {
     if (shouldAttemptToDisplayClearButton) {
       CGFloat clearButtonMaxX =
-          clearButtonMinX + kClearButtonTouchTargetSideLength + clearButtonImageViewSideMargin;
+          actualClearButtonMinX + kClearButtonTouchTargetSideLength + clearButtonImageViewSideMargin;
       textRectMinX = clearButtonMaxX;
     } else if (shouldAttemptToDisplayLeftView) {
       textRectMinX = leftViewMaxX + kTrailingMargin;
@@ -234,7 +214,7 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
       textRectMinX = kLeadingMargin;
     }
     if (shouldAttemptToDisplayClearButton) {
-      textRectMaxX = clearButtonMinX - clearButtonImageViewSideMargin;
+      textRectMaxX = actualClearButtonMinX - clearButtonImageViewSideMargin;
     } else if (shouldAttemptToDisplayRightView) {
       textRectMaxX = rightViewMinX - kTrailingMargin;
     } else {
@@ -251,12 +231,12 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
       CGRectMake(textRectMinX, textRectMinYFloatingPlaceholder, textRectWidth, textRectHeight);
 
   CGRect leftViewFrame = CGRectMake(leftViewMinX, leftViewMinY, leftViewWidth, leftViewHeight);
-  CGRect rightViewFrame = CGRectMake(rightViewMinX, rightViewMinY, rightViewWidth, rightViewHeight);
+  CGRect rightViewFrame = CGRectMake(rightViewMinX, rightViewMinY, CGRectGetWidth(rightView.frame), rightViewHeight);
   CGRect clearButtonFrame =
-      CGRectMake(clearButtonMinX, clearButtonMinY, kClearButtonTouchTargetSideLength,
+      CGRectMake(actualClearButtonMinX, clearButtonMinY, kClearButtonTouchTargetSideLength,
                  kClearButtonTouchTargetSideLength);
   CGRect clearButtonFrameFloatingPlaceholder =
-      CGRectMake(clearButtonMinX, clearButtonFloatingPlaceholderMinY,
+      CGRectMake(actualClearButtonMinX, clearButtonFloatingPlaceholderMinY,
                  kClearButtonTouchTargetSideLength, kClearButtonTouchTargetSideLength);
 
   CGRect placeholderFrameNormal =
@@ -405,19 +385,6 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
   CGFloat rightMargin = isRTL ? kLeadingMargin : kTrailingMargin;
   CGFloat maxX = textFieldWidth - rightMargin;
   return maxX - CGRectGetWidth(rightView.frame);
-}
-
-- (CGFloat)clearButtonMinXWithLowestPossibleMinX:(CGFloat)lowestPossibleMinX
-                             highestPossibleMaxX:(CGFloat)highestPossibleMaxX
-                                clearButtonWidth:(CGFloat)clearButtonWidth
-                                           isRTL:(BOOL)isRTL {
-  CGFloat minX = 0;
-  if (isRTL) {
-    minX = lowestPossibleMinX;
-  } else {
-    minX = highestPossibleMaxX - clearButtonWidth;
-  }
-  return minX;
 }
 
 - (CGFloat)minYForSubviewWithHeight:(CGFloat)height centerY:(CGFloat)centerY {
@@ -604,7 +571,7 @@ static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
 }
 
 + (CGFloat)clearButtonImageViewSideLength {
-  return kClearButtonImageViewSideLength;
+  return kClearButtonInnerImageViewSideLength;
 }
 
 + (CGFloat)clearButtonSideLength {
