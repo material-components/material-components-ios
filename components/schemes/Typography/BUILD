@@ -26,6 +26,9 @@ licenses(["notice"])  # Apache 2.0
 
 mdc_public_objc_library(
     name = "Typography",
+    deps = [
+        "//components/Typography",
+    ],
 )
 
 mdc_examples_objc_library(

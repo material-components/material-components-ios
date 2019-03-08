@@ -25,23 +25,23 @@
 - (void)testInitializer {
   // Given
   MDCTypographyScheme *latestScheme = [[MDCTypographyScheme alloc] init];
-  MDCTypographyScheme *scheme201804 =
-      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+  MDCTypographyScheme *scheme201902 =
+      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
 
   // Then
-  XCTAssertEqual(latestScheme.headline1, scheme201804.headline1);
-  XCTAssertEqual(latestScheme.headline2, scheme201804.headline2);
-  XCTAssertEqual(latestScheme.headline3, scheme201804.headline3);
-  XCTAssertEqual(latestScheme.headline4, scheme201804.headline4);
-  XCTAssertEqual(latestScheme.headline5, scheme201804.headline5);
-  XCTAssertEqual(latestScheme.headline6, scheme201804.headline6);
-  XCTAssertEqual(latestScheme.subtitle1, scheme201804.subtitle1);
-  XCTAssertEqual(latestScheme.subtitle2, scheme201804.subtitle2);
-  XCTAssertEqual(latestScheme.body1, scheme201804.body1);
-  XCTAssertEqual(latestScheme.body2, scheme201804.body2);
-  XCTAssertEqual(latestScheme.caption, scheme201804.caption);
-  XCTAssertEqual(latestScheme.button, scheme201804.button);
-  XCTAssertEqual(latestScheme.overline, scheme201804.overline);
+  XCTAssertEqual(latestScheme.headline1.pointSize, scheme201902.headline1.pointSize);
+  XCTAssertEqual(latestScheme.headline2.pointSize, scheme201902.headline2.pointSize);
+  XCTAssertEqual(latestScheme.headline3.pointSize, scheme201902.headline3.pointSize);
+  XCTAssertEqual(latestScheme.headline4.pointSize, scheme201902.headline4.pointSize);
+  XCTAssertEqual(latestScheme.headline5.pointSize, scheme201902.headline5.pointSize);
+  XCTAssertEqual(latestScheme.headline6.pointSize, scheme201902.headline6.pointSize);
+  XCTAssertEqual(latestScheme.subtitle1.pointSize, scheme201902.subtitle1.pointSize);
+  XCTAssertEqual(latestScheme.subtitle2.pointSize, scheme201902.subtitle2.pointSize);
+  XCTAssertEqual(latestScheme.body1.pointSize, scheme201902.body1.pointSize);
+  XCTAssertEqual(latestScheme.body2.pointSize, scheme201902.body2.pointSize);
+  XCTAssertEqual(latestScheme.caption.pointSize, scheme201902.caption.pointSize);
+  XCTAssertEqual(latestScheme.button.pointSize, scheme201902.button.pointSize);
+  XCTAssertEqual(latestScheme.overline.pointSize, scheme201902.overline.pointSize);
 }
 
 - (void)testTypographySchemeCopy {
