@@ -276,23 +276,27 @@
 }
 
 - (void)loadiOS9PlusConstraints {
-  // Navigation Bar Constraints
-  [self.view.leftAnchor constraintEqualToAnchor:self.navigationBar.leftAnchor].active = YES;
-  [self.view.rightAnchor constraintEqualToAnchor:self.navigationBar.rightAnchor].active = YES;
+  if (@available(iOS 9.0, *)) {
+    // Navigation Bar Constraints
+    [self.view.leftAnchor constraintEqualToAnchor:self.navigationBar.leftAnchor].active = YES;
+    [self.view.rightAnchor constraintEqualToAnchor:self.navigationBar.rightAnchor].active = YES;
+    [self.navigationBar.topAnchor constraintEqualToAnchor:self.content.bottomAnchor].active = YES;
+    [self.navigationBar.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor].active = YES;
+  }
 
-  [self.navigationBar.topAnchor constraintEqualToAnchor:self.content.bottomAnchor].active = YES;
-  [self.navigationBar.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor].active = YES;
   if (@available(iOS 11.0, *)) {
     [self.navigationBar.barItemsBottomAnchor
         constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor]
         .active = YES;
   }
 
-  // Content View Constraints
-  [self.view.leftAnchor constraintEqualToAnchor:self.content.leftAnchor].active = YES;
-  [self.view.rightAnchor constraintEqualToAnchor:self.content.rightAnchor].active = YES;
+  if (@available(iOS 9.0, *)) {
+    // Content View Constraints
+    [self.view.leftAnchor constraintEqualToAnchor:self.content.leftAnchor].active = YES;
+    [self.view.rightAnchor constraintEqualToAnchor:self.content.rightAnchor].active = YES;
 
-  [self.view.topAnchor constraintEqualToAnchor:self.content.topAnchor].active = YES;
+    [self.view.topAnchor constraintEqualToAnchor:self.content.topAnchor].active = YES;
+  }
 }
 
 /**
