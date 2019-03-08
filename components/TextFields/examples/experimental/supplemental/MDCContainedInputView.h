@@ -207,3 +207,14 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewPlaceholderState) {
 @interface MDCContainerStyleBaseDensityInformer
     : NSObject <MDCContainedInputViewStyleDensityInforming>
 @end
+
+@interface MDCContainedInputViewPlaceholderManager : NSObject
+- (UIFont *)floatingPlaceholderFontWithFont:(UIFont *)font
+                             containerStyle:(id<MDCContainedInputViewStyle>)containerStyle;
+- (void)layOutPlaceholderWithPlaceholderLabel:(UILabel *)placeholderLabel
+                                        state:(MDCContainedInputViewPlaceholderState)placeholderState
+                                  normalFrame:(CGRect)normalFrame
+                                floatingFrame:(CGRect)floatingFrame
+                                   normalFont:(UIFont *)normalFont
+                                 floatingFont:(UIFont *)floatingFont;
+@end

@@ -23,8 +23,6 @@
 
 #import "MaterialMath.h"
 
-static const CGFloat kFloatingPlaceholderAnimationVelocityInPointsPerSecond = (CGFloat)200;
-
 @class InputChipViewTextField;
 @protocol InputChipViewTextFieldDelegate <NSObject>
 - (void)inputChipViewTextFieldDidDeleteBackward:(InputChipViewTextField *)textField
@@ -139,6 +137,8 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 @property(nonatomic, strong)
     NSMutableDictionary<NSNumber *, id<MDCContainedInputViewColorScheming>> *colorSchemes;
 
+@property(nonatomic, strong) MDCContainedInputViewPlaceholderManager *placeholderManager;
+
 @property(nonatomic, assign) BOOL isAnimating;
 
 @end
@@ -218,6 +218,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   [self setUpLayoutDirection];
   [self setUpChipsArray];
   [self setUpChipsToRemoveArray];
+  [self setUpPlaceholderManager];
 }
 
 - (void)setUpChipsArray {
@@ -226,6 +227,10 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 - (void)setUpChipsToRemoveArray {
   self.chipsToRemove = [[NSMutableArray alloc] init];
+}
+
+- (void)setUpPlaceholderManager {
+  self.placeholderManager = [[MDCContainedInputViewPlaceholderManager alloc] init];
 }
 
 - (void)setUpLayoutDirection {
@@ -477,7 +482,8 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 - (InputChipViewLayout *)calculateLayoutWithSize:(CGSize)size {
   UIFont *normalFont = self.inputChipViewTextField.effectiveFont;
-  UIFont *floatingFont = [self floatingPlaceholderFontWithFont:normalFont
+  UIFont *floatingFont =
+      [self.placeholderManager floatingPlaceholderFontWithFont:normalFont
                                                 containerStyle:self.containerStyle];
   return [[InputChipViewLayout alloc] initWithSize:size
                                     containerStyle:self.containerStyle
@@ -547,11 +553,15 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 - (void)postLayoutSubviews {
   UIFont *normalFont = self.inputChipViewTextField.effectiveFont;
-  UIFont *floatingFont = [self floatingPlaceholderFontWithFont:normalFont
+  UIFont *floatingFont =
+      [self.placeholderManager floatingPlaceholderFontWithFont:normalFont
                                                 containerStyle:self.containerStyle];
-  [self layOutPlaceholderWithState:self.placeholderState
-                        normalFont:normalFont
-                      floatingFont:floatingFont];
+  [self.placeholderManager layOutPlaceholderWithPlaceholderLabel:self.placeholderLabel
+                                                           state:self.placeholderState
+                                                     normalFrame:self.layout.placeholderFrameNormal
+                                                   floatingFrame:self.layout.placeholderFrameFloating
+                                                      normalFont:normalFont
+                                                    floatingFont:floatingFont];
   id<MDCContainedInputViewColorScheming> colorScheming =
       [self containedInputViewColorSchemingForState:self.containedInputViewState];
   [self.containerStyle applyStyleToContainedInputView:self
@@ -866,95 +876,6 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   } else {
     return MDCContainedInputViewPlaceholderStateNone;
   }
-}
-
-- (UIFont *)floatingPlaceholderFontWithFont:(UIFont *)font
-                             containerStyle:(id<MDCContainedInputViewStyle>)containerStyle {
-  CGFloat scaleFactor = [containerStyle.densityInformer floatingPlaceholderFontSizeScaleFactor];
-  CGFloat floatingPlaceholderFontSize = font.pointSize * scaleFactor;
-  return [font fontWithSize:floatingPlaceholderFontSize];
-}
-
-// TODO: Find a shared home for methods like this that basically do the same thing across contained
-// input views
-- (void)layOutPlaceholderWithState:(MDCContainedInputViewPlaceholderState)placeholderState
-                        normalFont:(UIFont *)normalFont
-                      floatingFont:(UIFont *)floatingFont {
-  UIFont *targetFont = normalFont;
-
-  CGRect currentFrame = self.placeholderLabel.frame;
-  CGRect normalFrame = self.layout.placeholderFrameNormal;
-  CGRect floatingFrame = self.layout.placeholderFrameFloating;
-  CGRect targetFrame = normalFrame;
-
-  BOOL placeholderShouldHide = NO;
-
-  switch (placeholderState) {
-    case MDCContainedInputViewPlaceholderStateFloating:
-      targetFont = floatingFont;
-      targetFrame = floatingFrame;
-      break;
-    case MDCContainedInputViewPlaceholderStateNormal:
-      break;
-    case MDCContainedInputViewPlaceholderStateNone:
-      placeholderShouldHide = YES;
-      break;
-    default:
-      break;
-  }
-
-  CGAffineTransform currentTransform = self.placeholderLabel.transform;
-  CGAffineTransform targetTransform = CGAffineTransformIdentity;
-
-  if (self.isAnimating || CGRectEqualToRect(currentFrame, CGRectZero)) {
-    self.placeholderLabel.transform = CGAffineTransformIdentity;
-    self.placeholderLabel.frame = targetFrame;
-    self.placeholderLabel.font = targetFont;
-    return;
-  } else if (!CGRectEqualToRect(currentFrame, targetFrame)) {
-    targetTransform = [self transformFromRect:currentFrame toRect:targetFrame];
-  }
-
-  self.isAnimating = YES;
-  self.placeholderLabel.hidden = placeholderShouldHide;
-
-  CGFloat lowerMinY = MIN(CGRectGetMinY(currentFrame), CGRectGetMinY(targetFrame));
-  CGFloat higherMinY = MAX(CGRectGetMinY(currentFrame), CGRectGetMinY(targetFrame));
-  CGFloat distanceTravelled = higherMinY - lowerMinY;
-  CGFloat animationDuration =
-      distanceTravelled / kFloatingPlaceholderAnimationVelocityInPointsPerSecond;
-
-  __weak typeof(self) weakSelf = self;
-  [CATransaction begin];
-  {
-    [CATransaction setCompletionBlock:^{
-      weakSelf.placeholderLabel.transform = CGAffineTransformIdentity;
-      weakSelf.placeholderLabel.frame = targetFrame;
-      weakSelf.placeholderLabel.font = targetFont;
-      weakSelf.isAnimating = NO;
-    }];
-    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform"];
-    animation.fromValue =
-        [NSValue valueWithCATransform3D:CATransform3DMakeAffineTransform(currentTransform)];
-    animation.toValue =
-        [NSValue valueWithCATransform3D:CATransform3DMakeAffineTransform(targetTransform)];
-    animation.duration = animationDuration;
-    animation.removedOnCompletion = YES;
-    weakSelf.placeholderLabel.transform = targetTransform;
-    [weakSelf.placeholderLabel.layer addAnimation:animation forKey:animation.keyPath];
-  }
-  [CATransaction commit];
-}
-
-- (CGAffineTransform)transformFromRect:(CGRect)sourceRect toRect:(CGRect)finalRect {
-  CGAffineTransform transform = CGAffineTransformIdentity;
-  transform =
-      CGAffineTransformTranslate(transform, -(CGRectGetMidX(sourceRect) - CGRectGetMidX(finalRect)),
-                                 -(CGRectGetMidY(sourceRect) - CGRectGetMidY(finalRect)));
-  transform = CGAffineTransformScale(transform, finalRect.size.width / sourceRect.size.width,
-                                     finalRect.size.height / sourceRect.size.height);
-
-  return transform;
 }
 
 #pragma mark Accessors
