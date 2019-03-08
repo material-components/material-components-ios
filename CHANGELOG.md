@@ -1,3 +1,26 @@
+# 79.0.1
+
+This patch release removes `NS_REQUIRES_SUPER` from several MDCCollectionViewController APIs, removing the requirement to call super.
+
+## API changes
+
+### Collections
+
+#### MDCCollectionViewController
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `- (void)collectionView:(nonnull UICollectionView *)collectionView     didHighlightItemAtIndexPath:(nonnull NSIndexPath *)indexPath NS_REQUIRES_SUPER;` |
+| To: | `- (void)collectionView:(nonnull UICollectionView *)collectionView     didHighlightItemAtIndexPath:(nonnull NSIndexPath *)indexPath;` |
+
+## Component changes
+
+### Collections
+
+* [Clean up interface by removing NS_REQUIRES_SUPER (#6788)](https://github.com/material-components/material-components-ios/commit/4b34568abc92171491b7a058cc97ca22953a3d2b) (dmaclach)
+
+---
+
 # 79.0.0
 
 This major release introduces breaking changes for Swift code that makes use of the MDCContainerScheme and MDCContainerScheming types. It also includes breaking changes for Shapes header files and completes the graduation of Shapes to a production-ready state.
