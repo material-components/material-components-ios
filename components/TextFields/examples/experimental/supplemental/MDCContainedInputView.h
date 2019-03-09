@@ -194,6 +194,7 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewPlaceholderState) {
 
 @protocol MDCContainedInputViewStyleDensityInforming <NSObject>
 - (CGFloat)floatingPlaceholderFontSizeScaleFactor;
+// TODO: Maybe the above method should not be in this protocol.
 - (CGFloat)floatingPlaceholderMinYWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight;
 - (CGFloat)normalContentAreaTopPadding;
 - (CGFloat)normalContentAreaBottomPadding;

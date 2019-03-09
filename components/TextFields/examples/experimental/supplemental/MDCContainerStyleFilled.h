@@ -18,7 +18,8 @@
 
 @interface MDCContainedInputViewColorSchemeFilled : MDCContainedInputViewColorScheme
 @property(strong, nonatomic) UIColor *filledSublayerFillColor;
-@property(strong, nonatomic) UIColor *filledSublayerUnderlineFillColor;
+@property(strong, nonatomic) UIColor *thinUnderlineFillColor;
+@property(strong, nonatomic) UIColor *thickUnderlineFillColor;
 @end
 
 @interface MDCContainerStyleFilledDensityInformer

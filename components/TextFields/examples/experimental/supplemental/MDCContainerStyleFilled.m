@@ -19,16 +19,28 @@
 #import "MDCContainerStylePathDrawingUtils.h"
 
 static const CGFloat kFilledContainerStyleTopCornerRadius = (CGFloat)4.0;
+static const CGFloat kFilledContainerStyleUnderlineWidthThin = (CGFloat)1.0;
+static const CGFloat kFilledContainerStyleUnderlineWidthThick = (CGFloat)2.0;
+
+static const CGFloat kLayerAnimationDuration = (CGFloat)0.2;
 
 @implementation MDCContainedInputViewColorSchemeFilled
 @end
 
-@interface MDCContainerStyleFilled ()
+@interface MDCContainerStyleFilled () <CAAnimationDelegate>
 @property(strong, nonatomic) CAShapeLayer *filledSublayer;
-@property(strong, nonatomic) CAShapeLayer *filledSublayerUnderline;
+@property(strong, nonatomic) CAShapeLayer *thinUnderlineLayer;
+@property(strong, nonatomic) CAShapeLayer *thickUnderlineLayer;
+
+@property(strong, nonatomic, readonly, class) NSString *thickUnderlineGrowKey;
+@property(strong, nonatomic, readonly, class) NSString *thickUnderlineShrinkKey;
+@property(strong, nonatomic, readonly, class) NSString *thinUnderlineGrowKey;
+@property(strong, nonatomic, readonly, class) NSString *thinUnderlineShrinkKey;
+
 @end
 
 @implementation MDCContainerStyleFilled
+
 @synthesize densityInformer = _densityInformer;
 
 - (instancetype)init {
@@ -51,8 +63,10 @@ static const CGFloat kFilledContainerStyleTopCornerRadius = (CGFloat)4.0;
 - (void)setUpFilledSublayers {
   self.filledSublayer = [[CAShapeLayer alloc] init];
   self.filledSublayer.lineWidth = 0.0;
-  self.filledSublayerUnderline = [[CAShapeLayer alloc] init];
-  [self.filledSublayer addSublayer:self.filledSublayerUnderline];
+  self.thinUnderlineLayer = [[CAShapeLayer alloc] init];
+  [self.filledSublayer addSublayer:self.thinUnderlineLayer];
+  self.thickUnderlineLayer = [[CAShapeLayer alloc] init];
+  [self.filledSublayer addSublayer:self.thickUnderlineLayer];
 }
 
 - (id<MDCContainedInputViewColorScheming>)defaultColorSchemeForState:
@@ -61,12 +75,10 @@ static const CGFloat kFilledContainerStyleTopCornerRadius = (CGFloat)4.0;
       [[MDCContainedInputViewColorSchemeFilled alloc] init];
   UIColor *filledSublayerUnderlineFillColor =
       [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.06];
-  UIColor *filledSublayerFillColor = [UIColor colorWithRed:(0xDD / 256)
-                                                     green:(0xDD / 256)
-                                                      blue:(0xDD / 256)
+  UIColor *filledSublayerFillColor = [UIColor colorWithRed:(0xDD / 255)
+                                                     green:(0xDD / 255)
+                                                      blue:(0xDD / 255)
                                                      alpha:1];
-
-  //      [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.15];
 
   switch (state) {
     case MDCContainedInputViewStateNormal:
@@ -85,7 +97,8 @@ static const CGFloat kFilledContainerStyleTopCornerRadius = (CGFloat)4.0;
       break;
   }
   colorScheme.filledSublayerFillColor = filledSublayerFillColor;
-  colorScheme.filledSublayerUnderlineFillColor = filledSublayerUnderlineFillColor;
+  colorScheme.thickUnderlineFillColor = filledSublayerUnderlineFillColor;
+  colorScheme.thinUnderlineFillColor = filledSublayerUnderlineFillColor;
   return (id<MDCContainedInputViewColorScheming>)colorScheme;
 }
 
@@ -96,40 +109,240 @@ static const CGFloat kFilledContainerStyleTopCornerRadius = (CGFloat)4.0;
     return;
   }
   UIView *uiView = (UIView *)containedInputView;
-  CGFloat underlineThickness = [self
-      underlineThicknessWithMDCContainedInputViewState:containedInputView.containedInputViewState];
-  CGFloat topRowBottomRowDividerY = CGRectGetMaxY(containedInputView.containerRect);
   [self applyStyleToView:uiView
-      topRowBottomRowDividerY:topRowBottomRowDividerY
-           underlineThickness:underlineThickness];
-  if ([colorScheme isKindOfClass:[MDCContainedInputViewColorSchemeFilled class]]) {
-    MDCContainedInputViewColorSchemeFilled *filledScheme =
-        (MDCContainedInputViewColorSchemeFilled *)colorScheme;
-    self.filledSublayer.fillColor = filledScheme.filledSublayerFillColor.CGColor;
-    self.filledSublayerUnderline.fillColor = filledScheme.filledSublayerUnderlineFillColor.CGColor;
-  }
+                   state:containedInputView.containedInputViewState
+             colorScheme:colorScheme
+           containerRect:containedInputView.containerRect];
 }
 
 - (void)removeStyleFrom:(id<MDCContainedInputView>)containedInputView {
   [self.filledSublayer removeFromSuperlayer];
-  [self.filledSublayerUnderline removeFromSuperlayer];
+  [self.thinUnderlineLayer removeFromSuperlayer];
+  [self.thickUnderlineLayer removeFromSuperlayer];
 }
 
 - (void)applyStyleToView:(UIView *)view
-    topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
-         underlineThickness:(CGFloat)underlineThickness {
-  UIBezierPath *filledSublayerPath =
+                   state:(MDCContainedInputViewState)state
+             colorScheme:(id<MDCContainedInputViewColorScheming>)colorScheme
+           containerRect:(CGRect)containerRect {
+  if ([colorScheme isKindOfClass:[MDCContainedInputViewColorSchemeFilled class]]) {
+    MDCContainedInputViewColorSchemeFilled *filledScheme =
+        (MDCContainedInputViewColorSchemeFilled *)colorScheme;
+    self.filledSublayer.fillColor = filledScheme.filledSublayerFillColor.CGColor;
+    self.thinUnderlineLayer.fillColor = filledScheme.thinUnderlineFillColor.CGColor;
+    self.thickUnderlineLayer.fillColor = filledScheme.thickUnderlineFillColor.CGColor;
+  }
+
+  CGFloat topRowBottomRowDividerY = CGRectGetMaxY(containerRect);
+  UIBezierPath *filledSublayerBezier =
       [self filledSublayerPathWithTextFieldBounds:view.bounds
                           topRowBottomRowDividerY:topRowBottomRowDividerY];
-  UIBezierPath *filledSublayerUnderlinePath =
-      [self filledSublayerUnderlinePathWithTextFieldBounds:view.bounds
-                                   topRowBottomRowDividerY:topRowBottomRowDividerY
-                                        underlineThickness:underlineThickness];
-  self.filledSublayer.path = filledSublayerPath.CGPath;
-  self.filledSublayerUnderline.path = filledSublayerUnderlinePath.CGPath;
+  self.filledSublayer.path = filledSublayerBezier.CGPath;
   if (self.filledSublayer.superlayer != view.layer) {
     [view.layer insertSublayer:self.filledSublayer atIndex:0];
   }
+
+  BOOL shouldShowThickUnderline = [self shouldShowThickUnderlineWithState:state];
+  CGFloat viewWidth = CGRectGetWidth(view.bounds);
+  CGFloat thickUnderlineWidth = shouldShowThickUnderline ? viewWidth : 0;
+  UIBezierPath *targetThickUnderlineBezier =
+      [self filledSublayerUnderlinePathWithViewBounds:view.bounds
+                              topRowBottomRowDividerY:topRowBottomRowDividerY
+                                   underlineThickness:kFilledContainerStyleUnderlineWidthThick
+                                       underlineWidth:thickUnderlineWidth];
+  CGFloat thinUnderlineThickness =
+      shouldShowThickUnderline ? 0 : kFilledContainerStyleUnderlineWidthThin;
+  UIBezierPath *targetThinUnderlineBezier =
+      [self filledSublayerUnderlinePathWithViewBounds:view.bounds
+                              topRowBottomRowDividerY:topRowBottomRowDividerY
+                                   underlineThickness:thinUnderlineThickness
+                                       underlineWidth:viewWidth];
+  //  NSLog(@"target thick: %@",NSStringFromCGRect(targetThickUnderlineBezier.bounds));
+  //  NSLog(@"target thin: %@",NSStringFromCGRect(targetThinUnderlineBezier.bounds));
+
+  CABasicAnimation *preexistingThickUnderlineShrinkAnimation =
+      [self.thickUnderlineLayer animationForKey:self.class.thickUnderlineShrinkKey];
+  CABasicAnimation *preexistingThickUnderlineGrowAnimation =
+      [self.thickUnderlineLayer animationForKey:self.class.thickUnderlineGrowKey];
+
+  CABasicAnimation *preexistingThinUnderlineGrowAnimation =
+      [self.thinUnderlineLayer animationForKey:self.class.thinUnderlineGrowKey];
+  CABasicAnimation *preexistingThinUnderlineShrinkAnimation =
+      [self.thinUnderlineLayer animationForKey:self.class.thinUnderlineShrinkKey];
+
+  [CATransaction begin];
+  {
+    if (shouldShowThickUnderline) {
+      if (preexistingThickUnderlineShrinkAnimation) {
+        //        NSLog(@"removing thick shrink");
+        [self.thickUnderlineLayer removeAnimationForKey:self.class.thickUnderlineShrinkKey];
+      }
+      BOOL needsThickUnderlineGrowAnimation = NO;
+      if (preexistingThickUnderlineGrowAnimation) {
+        CGPathRef toValue = (__bridge CGPathRef)preexistingThickUnderlineGrowAnimation.toValue;
+        if (!CGPathEqualToPath(toValue, targetThickUnderlineBezier.CGPath)) {
+          //          NSLog(@"removing out of date thick grow to:
+          //          %@",NSStringFromCGRect([UIBezierPath bezierPathWithCGPath:toValue].bounds));
+          [self.thickUnderlineLayer removeAnimationForKey:self.class.thickUnderlineGrowKey];
+          needsThickUnderlineGrowAnimation = YES;
+          self.thickUnderlineLayer.path = targetThickUnderlineBezier.CGPath;
+        }
+      } else {
+        needsThickUnderlineGrowAnimation = YES;
+      }
+      if (needsThickUnderlineGrowAnimation) {
+        //        NSLog(@"adding thick grow to:
+        //        %@",NSStringFromCGRect(targetThickUnderlineBezier.bounds));
+        [self.thickUnderlineLayer addAnimation:[self pathAnimationTo:targetThickUnderlineBezier]
+                                        forKey:self.class.thickUnderlineGrowKey];
+      }
+
+      if (preexistingThinUnderlineGrowAnimation) {
+        //        NSLog(@"removing thin grow");
+        [self.thinUnderlineLayer removeAnimationForKey:self.class.thinUnderlineGrowKey];
+      }
+      BOOL needsThinUnderlineShrinkAnimation = NO;
+      if (preexistingThinUnderlineShrinkAnimation) {
+        CGPathRef toValue = (__bridge CGPathRef)preexistingThinUnderlineShrinkAnimation.toValue;
+        if (!CGPathEqualToPath(toValue, targetThinUnderlineBezier.CGPath)) {
+          //          NSLog(@"removing out of date thin shrink to:
+          //          %@",NSStringFromCGRect([UIBezierPath bezierPathWithCGPath:toValue].bounds));
+          [self.thinUnderlineLayer removeAnimationForKey:self.class.thinUnderlineShrinkKey];
+          needsThinUnderlineShrinkAnimation = YES;
+          self.thinUnderlineLayer.path = targetThinUnderlineBezier.CGPath;
+        }
+      } else {
+        needsThinUnderlineShrinkAnimation = YES;
+      }
+      if (needsThinUnderlineShrinkAnimation) {
+        //        NSLog(@"adding thin shrink to:
+        //        %@",NSStringFromCGRect(targetThinUnderlineBezier.bounds));
+        [self.thinUnderlineLayer addAnimation:[self pathAnimationTo:targetThinUnderlineBezier]
+                                       forKey:self.class.thinUnderlineShrinkKey];
+      }
+
+    } else {
+      if (preexistingThickUnderlineGrowAnimation) {
+        //        NSLog(@"removing thick grow");
+        [self.thickUnderlineLayer removeAnimationForKey:self.class.thickUnderlineGrowKey];
+      }
+      BOOL needsThickUnderlineShrinkAnimation = NO;
+      if (preexistingThickUnderlineShrinkAnimation) {
+        CGPathRef toValue = (__bridge CGPathRef)preexistingThickUnderlineShrinkAnimation.toValue;
+        if (!CGPathEqualToPath(toValue, targetThickUnderlineBezier.CGPath)) {
+          //          NSLog(@"removing out of date thick shrink to:
+          //          %@",NSStringFromCGRect([UIBezierPath bezierPathWithCGPath:toValue].bounds));
+          [self.thickUnderlineLayer removeAnimationForKey:self.class.thickUnderlineShrinkKey];
+          needsThickUnderlineShrinkAnimation = YES;
+          self.thickUnderlineLayer.path = targetThickUnderlineBezier.CGPath;
+        }
+      } else {
+        needsThickUnderlineShrinkAnimation = YES;
+      }
+      if (needsThickUnderlineShrinkAnimation) {
+        //        NSLog(@"adding thick shrink to:
+        //        %@",NSStringFromCGRect(targetThickUnderlineBezier.bounds));
+        [self.thickUnderlineLayer addAnimation:[self pathAnimationTo:targetThickUnderlineBezier]
+                                        forKey:self.class.thickUnderlineShrinkKey];
+      }
+
+      if (preexistingThinUnderlineShrinkAnimation) {
+        //        NSLog(@"removing thin shrink");
+        [self.thinUnderlineLayer removeAnimationForKey:self.class.thinUnderlineShrinkKey];
+      }
+      BOOL needsThickUnderlineGrowAnimation = NO;
+      if (preexistingThinUnderlineGrowAnimation) {
+        CGPathRef toValue = (__bridge CGPathRef)preexistingThinUnderlineGrowAnimation.toValue;
+        if (!CGPathEqualToPath(toValue, targetThinUnderlineBezier.CGPath)) {
+          //          NSLog(@"removing out of date thin grow to:
+          //          %@",NSStringFromCGRect([UIBezierPath bezierPathWithCGPath:toValue].bounds));
+          [self.thinUnderlineLayer removeAnimationForKey:self.class.thinUnderlineGrowKey];
+          needsThickUnderlineGrowAnimation = YES;
+          self.thinUnderlineLayer.path = targetThinUnderlineBezier.CGPath;
+        }
+      } else {
+        needsThickUnderlineGrowAnimation = YES;
+      }
+      if (needsThickUnderlineGrowAnimation) {
+        //        NSLog(@"adding thin grow to:
+        //        %@",NSStringFromCGRect(targetThinUnderlineBezier.bounds));
+        [self.thinUnderlineLayer addAnimation:[self pathAnimationTo:targetThinUnderlineBezier]
+                                       forKey:self.class.thinUnderlineGrowKey];
+      }
+    }
+  }
+  [CATransaction commit];
+}
+
+- (CABasicAnimation *)pathAnimationTo:(UIBezierPath *)path {
+  CABasicAnimation *animation = [self basicAnimationWithKeyPath:@"path"];
+  animation.toValue = (id)(path.CGPath);
+  return animation;
+}
+
+- (CABasicAnimation *)basicAnimationWithKeyPath:(NSString *)keyPath {
+  CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:keyPath];
+  animation.duration = kLayerAnimationDuration;
+  animation.timingFunction =
+      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+  animation.repeatCount = 0;
+  animation.removedOnCompletion = NO;
+  animation.delegate = self;
+  animation.fillMode = kCAFillModeForwards;
+  return animation;
+}
+
+- (void)animationDidStart:(CAAnimation *)anim {
+}
+
+- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
+  if (![anim isKindOfClass:[CABasicAnimation class]]) {
+    return;
+  }
+
+  CABasicAnimation *animation = (CABasicAnimation *)anim;
+  CGPathRef toValue = (__bridge CGPathRef)animation.toValue;
+
+  CABasicAnimation *thickGrowAnimation =
+      [self.thickUnderlineLayer animationForKey:self.class.thickUnderlineGrowKey];
+  CABasicAnimation *thickShrinkAnimation =
+      [self.thickUnderlineLayer animationForKey:self.class.thickUnderlineShrinkKey];
+  CABasicAnimation *thinGrowAnimation =
+      [self.thinUnderlineLayer animationForKey:self.class.thinUnderlineGrowKey];
+  CABasicAnimation *thinShrinkAnimation =
+      [self.thinUnderlineLayer animationForKey:self.class.thinUnderlineShrinkKey];
+
+  if (flag) {
+    if ((animation == thickGrowAnimation) || (animation == thickShrinkAnimation)) {
+      //      NSLog(@"thick animation completed to %@",NSStringFromCGRect([UIBezierPath
+      //      bezierPathWithCGPath:toValue].bounds));
+      self.thickUnderlineLayer.path = toValue;
+    }
+    if ((animation == thinGrowAnimation) || (animation == thinShrinkAnimation)) {
+      //      NSLog(@"thin animation completed to %@",NSStringFromCGRect([UIBezierPath
+      //      bezierPathWithCGPath:toValue].bounds));
+      self.thinUnderlineLayer.path = toValue;
+    }
+  } else {
+    //    NSLog(@"animation to %@ was cut short",NSStringFromCGRect([UIBezierPath
+    //    bezierPathWithCGPath:toValue].bounds));
+  }
+}
+
+- (BOOL)shouldShowThickUnderlineWithState:(MDCContainedInputViewState)state {
+  BOOL shouldShow = NO;
+  switch (state) {
+    case MDCContainedInputViewStateActivated:
+    case MDCContainedInputViewStateErrored:
+    case MDCContainedInputViewStateFocused:
+      shouldShow = YES;
+      break;
+    case MDCContainedInputViewStateNormal:
+    case MDCContainedInputViewStateDisabled:
+    default:
+      break;
+  }
+  return shouldShow;
 }
 
 - (UIBezierPath *)filledSublayerPathWithTextFieldBounds:(CGRect)viewBounds
@@ -179,43 +392,48 @@ static const CGFloat kFilledContainerStyleTopCornerRadius = (CGFloat)4.0;
   return path;
 }
 
-- (UIBezierPath *)filledSublayerUnderlinePathWithTextFieldBounds:(CGRect)viewBounds
-                                         topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
-                                              underlineThickness:(CGFloat)underlineThickness {
+- (UIBezierPath *)filledSublayerUnderlinePathWithViewBounds:(CGRect)viewBounds
+                                    topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
+                                         underlineThickness:(CGFloat)underlineThickness
+                                             underlineWidth:(CGFloat)underlineWidth {
   UIBezierPath *path = [[UIBezierPath alloc] init];
-  CGFloat textFieldWidth = CGRectGetWidth(viewBounds);
+  CGFloat viewWidth = CGRectGetWidth(viewBounds);
+  CGFloat halfViewWidth = (CGFloat)0.5 * viewWidth;
+  CGFloat halfUnderlineWidth = underlineWidth * (CGFloat)0.5;
+  CGFloat sublayerMinX = halfViewWidth - halfUnderlineWidth;
+  CGFloat sublayerMaxX = sublayerMinX + underlineWidth;
   CGFloat sublayerMaxY = topRowBottomRowDividerY;
   CGFloat sublayerMinY = sublayerMaxY - underlineThickness;
 
-  CGPoint startingPoint = CGPointMake(0, sublayerMinY);
-  CGPoint topRightCornerPoint1 = CGPointMake(textFieldWidth, sublayerMinY);
+  CGPoint startingPoint = CGPointMake(sublayerMinX, sublayerMinY);
+  CGPoint topRightCornerPoint1 = CGPointMake(sublayerMaxX, sublayerMinY);
   [path moveToPoint:startingPoint];
   [path addLineToPoint:topRightCornerPoint1];
 
-  CGPoint topRightCornerPoint2 = CGPointMake(textFieldWidth, sublayerMinY);
+  CGPoint topRightCornerPoint2 = CGPointMake(sublayerMaxX, sublayerMinY);
   [MDCContainerStylePathDrawingUtils addTopRightCornerToPath:path
                                                    fromPoint:topRightCornerPoint1
                                                      toPoint:topRightCornerPoint2
                                                   withRadius:0];
 
-  CGPoint bottomRightCornerPoint1 = CGPointMake(textFieldWidth, sublayerMaxY);
-  CGPoint bottomRightCornerPoint2 = CGPointMake(textFieldWidth, sublayerMaxY);
+  CGPoint bottomRightCornerPoint1 = CGPointMake(sublayerMaxX, sublayerMaxY);
+  CGPoint bottomRightCornerPoint2 = CGPointMake(sublayerMaxX, sublayerMaxY);
   [path addLineToPoint:bottomRightCornerPoint1];
   [MDCContainerStylePathDrawingUtils addBottomRightCornerToPath:path
                                                       fromPoint:bottomRightCornerPoint1
                                                         toPoint:bottomRightCornerPoint2
                                                      withRadius:0];
 
-  CGPoint bottomLeftCornerPoint1 = CGPointMake(0, sublayerMaxY);
-  CGPoint bottomLeftCornerPoint2 = CGPointMake(0, sublayerMaxY);
+  CGPoint bottomLeftCornerPoint1 = CGPointMake(sublayerMinX, sublayerMaxY);
+  CGPoint bottomLeftCornerPoint2 = CGPointMake(sublayerMinX, sublayerMaxY);
   [path addLineToPoint:bottomLeftCornerPoint1];
   [MDCContainerStylePathDrawingUtils addBottomLeftCornerToPath:path
                                                      fromPoint:bottomLeftCornerPoint1
                                                        toPoint:bottomLeftCornerPoint2
                                                     withRadius:0];
 
-  CGPoint topLeftCornerPoint1 = CGPointMake(0, sublayerMinY);
-  CGPoint topLeftCornerPoint2 = CGPointMake(0, sublayerMinY);
+  CGPoint topLeftCornerPoint1 = CGPointMake(sublayerMinX, sublayerMinY);
+  CGPoint topLeftCornerPoint2 = CGPointMake(sublayerMinX, sublayerMinY);
   [path addLineToPoint:topLeftCornerPoint1];
   [MDCContainerStylePathDrawingUtils addTopLeftCornerToPath:path
                                                   fromPoint:topLeftCornerPoint1
@@ -225,28 +443,24 @@ static const CGFloat kFilledContainerStyleTopCornerRadius = (CGFloat)4.0;
   return path;
 }
 
-- (CGFloat)underlineThicknessWithMDCContainedInputViewState:
-    (MDCContainedInputViewState)containedInputViewState {
-  CGFloat underlineThickness = 1;
-  switch (containedInputViewState) {
-    case MDCContainedInputViewStateActivated:
-    case MDCContainedInputViewStateErrored:
-    case MDCContainedInputViewStateFocused:
-      underlineThickness = 2;
-      break;
-    case MDCContainedInputViewStateNormal:
-    case MDCContainedInputViewStateDisabled:
-    default:
-      break;
-  }
-  return underlineThickness;
-}
-
 - (id<MDCContainedInputViewStyleDensityInforming>)densityInformer {
   if (_densityInformer) {
     return _densityInformer;
   }
   return [[MDCContainerStyleFilledDensityInformer alloc] init];
+}
+
++ (NSString *)thinUnderlineShrinkKey {
+  return @"thinUnderlineShrinkKey";
+}
++ (NSString *)thinUnderlineGrowKey {
+  return @"thinUnderlineGrowKey";
+}
++ (NSString *)thickUnderlineShrinkKey {
+  return @"thickUnderlineShrinkKey";
+}
++ (NSString *)thickUnderlineGrowKey {
+  return @"thickUnderlineGrowKey";
 }
 
 @end

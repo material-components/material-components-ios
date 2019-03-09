@@ -217,7 +217,8 @@
       [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
   UIColor *placeholderLabelColor =
       [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
-  UIColor *filledSublayerUnderlineFillColor = colorScheming.onSurfaceColor;
+  UIColor *thinUnderlineFillColor = colorScheming.onBackgroundColor;
+  UIColor *thickUnderlineFillColor = colorScheming.primaryColor;
   UIColor *filledSublayerFillColor =
       [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.15];
   UIColor *clearButtonTintColor =
@@ -234,11 +235,11 @@
     case MDCContainedInputViewStateErrored:
       placeholderLabelColor = colorScheming.errorColor;
       underlineLabelColor = colorScheming.errorColor;
-      filledSublayerUnderlineFillColor = colorScheming.errorColor;
+      thinUnderlineFillColor = colorScheming.errorColor;
+      thickUnderlineFillColor = colorScheming.errorColor;
       break;
     case MDCContainedInputViewStateFocused:
       placeholderLabelColor = colorScheming.primaryColor;
-      filledSublayerUnderlineFillColor = colorScheming.primaryColor;
       break;
     default:
       break;
@@ -248,7 +249,8 @@
       [[MDCContainedInputViewColorSchemeFilled alloc] init];
   simpleTextFieldColorScheme.textColor = textColor;
   simpleTextFieldColorScheme.filledSublayerFillColor = filledSublayerFillColor;
-  simpleTextFieldColorScheme.filledSublayerUnderlineFillColor = filledSublayerUnderlineFillColor;
+  simpleTextFieldColorScheme.thickUnderlineFillColor = thickUnderlineFillColor;
+  simpleTextFieldColorScheme.thinUnderlineFillColor = thinUnderlineFillColor;
   simpleTextFieldColorScheme.underlineLabelColor = underlineLabelColor;
   simpleTextFieldColorScheme.placeholderLabelColor = placeholderLabelColor;
   simpleTextFieldColorScheme.clearButtonTintColor = clearButtonTintColor;

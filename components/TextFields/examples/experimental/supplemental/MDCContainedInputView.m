@@ -196,7 +196,7 @@
 
 @end
 
-static const CGFloat kFloatingPlaceholderAnimationVelocityInPointsPerSecond = (CGFloat)200;
+// static const CGFloat kFloatingPlaceholderAnimationVelocityInPointsPerSecond = (CGFloat)200;
 
 @interface MDCContainedInputViewPlaceholderManager ()
 @property(nonatomic, assign) BOOL isAnimating;
@@ -251,11 +251,11 @@ static const CGFloat kFloatingPlaceholderAnimationVelocityInPointsPerSecond = (C
   self.isAnimating = YES;
   placeholderLabel.hidden = placeholderShouldHide;
 
-  CGFloat lowerMinY = MIN(CGRectGetMinY(currentFrame), CGRectGetMinY(targetFrame));
-  CGFloat higherMinY = MAX(CGRectGetMinY(currentFrame), CGRectGetMinY(targetFrame));
-  CGFloat distanceTravelled = higherMinY - lowerMinY;
-  CGFloat animationDuration =
-      distanceTravelled / kFloatingPlaceholderAnimationVelocityInPointsPerSecond;
+  //  CGFloat lowerMinY = MIN(CGRectGetMinY(currentFrame), CGRectGetMinY(targetFrame));
+  //  CGFloat higherMinY = MAX(CGRectGetMinY(currentFrame), CGRectGetMinY(targetFrame));
+  //  CGFloat distanceTravelled = higherMinY - lowerMinY;
+  CGFloat animationDuration = 0.2;
+  //      distanceTravelled / kFloatingPlaceholderAnimationVelocityInPointsPerSecond;
 
   __weak typeof(self) weakSelf = self;
   [CATransaction begin];
