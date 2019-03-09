@@ -82,9 +82,10 @@
 
 - (void)applyOutlinedThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
   MDCContainerStyleOutlined *outlinedStyle = [[MDCContainerStyleOutlined alloc] init];
+  MDCSimpleTextFieldOutlinedDensityInformer *densityInformer = [[MDCSimpleTextFieldOutlinedDensityInformer alloc] init];
+  outlinedStyle.densityInformer = densityInformer;
   self.containerStyle = outlinedStyle;
-  self.containerStyle.densityInformer = [[MDCContainerStyleOutlinedDensityInformer alloc] init];
-
+  
   [self applyTypographySchemeWith:containerScheme];
 
   id<MDCColorScheming> mdcColorScheming =
@@ -273,44 +274,37 @@
   return lowestMinY + (difference * self.verticalDensity);
 }
 
-- (CGFloat)contentAreaTopPaddingWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY {
+- (CGFloat)contentAreaTopPaddingFloatingPlaceholderWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY {
   CGFloat minYAddition = 3;
   CGFloat maxYAddition = 8;
   CGFloat difference = maxYAddition - minYAddition;
   return floatingPlaceholderMaxY + (minYAddition + (difference * self.verticalDensity));
 }
 
-- (CGFloat)normalContentAreaBottomPadding {
-  CGFloat minBottomPadding = 5;
-  CGFloat maxBottomPadding = 12;
-  CGFloat difference = maxBottomPadding - minBottomPadding;
-  return minBottomPadding + (difference * self.verticalDensity);
+-(CGFloat)contentAreaVerticalPaddingNormalWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY {
+  CGFloat minYAddition = 5;
+  CGFloat maxYAddition = 12;
+  CGFloat difference = maxYAddition - minYAddition;
+  return minYAddition + (difference * self.verticalDensity);
 }
 
 @end
 
 @implementation MDCSimpleTextFieldOutlinedDensityInformer
 
-//-(CGFloat)normalContentAreaTopPadding {
-//
-//}
-
 - (CGFloat)floatingPlaceholderMinYWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight {
   return (CGFloat)0 - ((CGFloat)0.5 * floatingPlaceholderHeight);
 }
 
-- (CGFloat)contentAreaTopPaddingWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY {
+- (CGFloat)contentAreaTopPaddingFloatingPlaceholderWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY {
   CGFloat minYAddition = 3;
-  CGFloat maxYAddition = 10;
+  CGFloat maxYAddition = 15;
   CGFloat difference = maxYAddition - minYAddition;
   return floatingPlaceholderMaxY + (minYAddition + (difference * self.verticalDensity));
 }
 
-- (CGFloat)normalContentAreaBottomPadding {
-  CGFloat minBottomPadding = 5;
-  CGFloat maxBottomPadding = 12;
-  CGFloat difference = maxBottomPadding - minBottomPadding;
-  return minBottomPadding + (difference * self.verticalDensity);
+-(CGFloat)contentAreaVerticalPaddingNormalWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY {
+  return [self contentAreaTopPaddingFloatingPlaceholderWithFloatingPlaceholderMaxY:floatingPlaceholderMaxY];
 }
 
 @end

@@ -196,9 +196,8 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewPlaceholderState) {
 @protocol MDCContainedInputViewStyleDensityInforming <NSObject>
 @property (nonatomic, assign) CGFloat verticalDensity;
 - (CGFloat)floatingPlaceholderMinYWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight;
-- (CGFloat)normalContentAreaTopPadding;
-- (CGFloat)normalContentAreaBottomPadding;
-- (CGFloat)contentAreaTopPaddingWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY;
+- (CGFloat)contentAreaTopPaddingFloatingPlaceholderWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY;
+- (CGFloat)contentAreaVerticalPaddingNormalWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY;
 @end
 
 @interface MDCContainerStyleBase : NSObject <MDCContainedInputViewStyle>

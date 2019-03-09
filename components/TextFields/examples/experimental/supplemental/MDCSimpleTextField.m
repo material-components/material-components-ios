@@ -186,7 +186,6 @@
 #pragma mark UIView Overrides
 
 - (void)layoutSubviews {
-  NSLog(@"layout subviews");
   [self preLayoutSubviews];
   [super layoutSubviews];
   [self postLayoutSubviews];

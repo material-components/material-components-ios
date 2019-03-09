@@ -193,14 +193,11 @@
   return 10;
 }
 
-- (CGFloat)normalContentAreaTopPadding {
+- (CGFloat)contentAreaVerticalPaddingNormalWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY {
   return 20;
 }
 
-- (CGFloat)normalContentAreaBottomPadding {
-  return 20;
-}
-- (CGFloat)contentAreaTopPaddingWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY {
+- (CGFloat)contentAreaTopPaddingFloatingPlaceholderWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY {
   return floatingPlaceholderMaxY + 10;
 }
 

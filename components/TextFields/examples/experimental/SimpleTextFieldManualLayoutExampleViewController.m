@@ -26,7 +26,8 @@
 
 #import "supplemental/MDCSimpleTextField+MaterialTheming.h"
 
-static const NSUInteger kDefaultPadding = 20;
+static const NSUInteger kDefaultHorizontalPadding = 20;
+static const NSUInteger kDefaultVerticalPadding = 20;
 
 @interface SimpleTextFieldManualLayoutExampleViewController ()
 
@@ -124,18 +125,18 @@ static const NSUInteger kDefaultPadding = 20;
 }
 
 - (void)layoutScrollViewSubviews {
-  CGFloat viewMinX = kDefaultPadding;
-  CGFloat viewMinY = kDefaultPadding;
+  CGFloat viewMinX = kDefaultHorizontalPadding;
+  CGFloat viewMinY = kDefaultHorizontalPadding;
   for (UIView *view in self.scrollViewSubviews) {
     CGSize viewSize = view.frame.size;
-    CGFloat textFieldWidth = CGRectGetWidth(self.scrollView.frame) - (2 * kDefaultPadding);
+    CGFloat textFieldWidth = CGRectGetWidth(self.scrollView.frame) - (2 * kDefaultHorizontalPadding);
     if ([view isKindOfClass:[MDCSimpleTextField class]]) {
       viewSize = CGSizeMake(textFieldWidth, CGRectGetHeight(view.frame));
     }
     CGRect viewFrame = CGRectMake(viewMinX, viewMinY, viewSize.width, viewSize.height);
     view.frame = viewFrame;
     [view sizeToFit];
-    viewMinY = viewMinY + CGRectGetHeight(view.frame) + kDefaultPadding;
+    viewMinY = viewMinY + CGRectGetHeight(view.frame) + kDefaultVerticalPadding;
   }
 }
 
@@ -152,7 +153,7 @@ static const NSUInteger kDefaultPadding = 20;
       maxY = subViewMaxY;
     }
   }
-  self.scrollView.contentSize = CGSizeMake(maxX, maxY + kDefaultPadding);
+  self.scrollView.contentSize = CGSizeMake(maxX, maxY + kDefaultHorizontalPadding);
 }
 
 - (MDCButton *)createFirstResponderButton {
