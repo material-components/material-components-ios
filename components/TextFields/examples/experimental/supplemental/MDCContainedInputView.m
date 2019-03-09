@@ -171,13 +171,23 @@
   return [[MDCContainerStyleBaseDensityInformer alloc] init];
 }
 
-@end
-
-@implementation MDCContainerStyleBaseDensityInformer
-
 - (CGFloat)floatingPlaceholderFontSizeScaleFactor {
   return 0.75;
 }
+
+@end
+
+@implementation MDCContainerStyleBaseDensityInformer
+@synthesize verticalDensity = _verticalDensity;
+
+-(instancetype)init {
+  self = [super init];
+  if (self) {
+    self.verticalDensity = 0.5;
+  }
+  return self;
+}
+
 
 - (CGFloat)floatingPlaceholderMinYWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight {
   return 10;
@@ -206,7 +216,7 @@
 
 - (UIFont *)floatingPlaceholderFontWithFont:(UIFont *)font
                              containerStyle:(id<MDCContainedInputViewStyle>)containerStyle {
-  CGFloat scaleFactor = [containerStyle.densityInformer floatingPlaceholderFontSizeScaleFactor];
+  CGFloat scaleFactor = [containerStyle floatingPlaceholderFontSizeScaleFactor];
   CGFloat floatingPlaceholderFontSize = font.pointSize * scaleFactor;
   return [font fontWithSize:floatingPlaceholderFontSize];
 }

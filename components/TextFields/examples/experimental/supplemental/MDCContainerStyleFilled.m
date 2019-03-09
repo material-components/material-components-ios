@@ -467,11 +467,6 @@ static const CGFloat kLayerAnimationDuration = (CGFloat)0.2;
 
 @implementation MDCContainerStyleFilledDensityInformer
 
-- (CGFloat)floatingPlaceholderFontSize {
-  CGFloat scaleFactor = ((CGFloat)53 / (CGFloat)71);
-  return scaleFactor * [UIFont systemFontSize];
-}
-
 - (CGFloat)floatingPlaceholderMinYWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight {
   CGFloat filledPlaceholderTopPaddingScaleHeuristic = ((CGFloat)50.0 / (CGFloat)70.0);
   return filledPlaceholderTopPaddingScaleHeuristic * floatingPlaceholderHeight;

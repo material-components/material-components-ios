@@ -207,11 +207,6 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
 
 @implementation MDCContainerStyleOutlinedDensityInformer
 
-- (CGFloat)floatingPlaceholderFontSize {
-  CGFloat scaleFactor = ((CGFloat)41 / (CGFloat)55);
-  return scaleFactor * [UIFont systemFontSize];
-}
-
 - (CGFloat)floatingPlaceholderMinYWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight {
   return (CGFloat)0 - ((CGFloat)0.5 * floatingPlaceholderHeight);
 }

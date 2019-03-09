@@ -186,6 +186,7 @@
 #pragma mark UIView Overrides
 
 - (void)layoutSubviews {
+  NSLog(@"layout subviews");
   [self preLayoutSubviews];
   [super layoutSubviews];
   [self postLayoutSubviews];
@@ -314,7 +315,8 @@
 - (void)setAttributedPlaceholder:(NSAttributedString *)attributedPlaceholder {
   self.placeholderLabel.text = [attributedPlaceholder string];
   self.placeholderLabel.attributedText = [attributedPlaceholder copy];
-  // TODO: Actually support this by incorporating it into the layout calculations
+  NSLog(@"setting attributedPlaceholder is not currently supported.");
+  // TODO: Evaluate if attributedPlaceholder should be supported.
 }
 
 - (NSAttributedString *)attributedPlaceholder {
@@ -474,6 +476,16 @@
               withContainedInputViewColorScheming:colorScheme];
 }
 
+#pragma mark MDCContainedInputView accessors
+
+-(void)setIsErrored:(BOOL)isErrored {
+  if (_isErrored == isErrored) {
+    return;
+  }
+  _isErrored = isErrored;
+  [self setNeedsLayout];
+}
+
 - (CGRect)textRectFromLayout:(MDCSimpleTextFieldLayout *)layout
             placeholderState:(MDCContainedInputViewPlaceholderState)placeholderState {
   CGRect textRect = layout.textRect;
@@ -492,6 +504,10 @@
 
 - (CGRect)containerRect {
   return CGRectMake(0, 0, CGRectGetWidth(self.frame), self.layout.topRowBottomRowDividerY);
+}
+
+-(void)setText:(NSString *)text {
+  [super setText:text];
 }
 
 #pragma mark UITextField Layout Overrides

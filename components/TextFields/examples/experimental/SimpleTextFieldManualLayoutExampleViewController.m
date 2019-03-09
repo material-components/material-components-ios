@@ -36,9 +36,6 @@ static const NSUInteger kDefaultPadding = 20;
 
 @property(strong, nonatomic) MDCButton *resignFirstResponderButton;
 @property(strong, nonatomic) MDCButton *toggleErrorButton;
-@property(strong, nonatomic) MDCSimpleTextField *filledTextField;
-@property(strong, nonatomic) MDCSimpleTextField *outlinedTextField;
-@property(strong, nonatomic) MDCSimpleTextField *unthemedTextField;
 
 @property(nonatomic, assign) BOOL isErrored;
 
@@ -93,12 +90,18 @@ static const NSUInteger kDefaultPadding = 20;
   self.scrollViewSubviews = @[
     [self createToggleErrorButton],
     [self createFirstResponderButton],
-    [self createLabelWithText:@"Filled MDCSimpleTextField:"],
+    [self createLabelWithText:@"High density filled MDCInputTextField:"],
+    [self createFilledTextFieldWithMinimalDensity],
+    [self createLabelWithText:@"Average density filled MDCInputTextField:"],
     [self createFilledTextField],
-    [self createLabelWithText:@"Outlined MDCSimpleTextField:"],
+    [self createLabelWithText:@"Low density filled MDCInputTextField:"],
+    [self createFilledTextFieldWithMaximalDensity],
+    [self createLabelWithText:@"High density outlined MDCInputTextField:"],
+    [self createOutlinedTextFieldWithMinimalDensity],
+    [self createLabelWithText:@"Average density outlined MDCInputTextField:"],
     [self createOutlinedTextField],
-    [self createLabelWithText:@"Unthemed MDCSimpleTextField:"],
-    [self createUnthemedSimpleTextField],
+    [self createLabelWithText:@"Low density outlined MDCInputTextField:"],
+    [self createOutlinedTextFieldWithMaximalDensity],
   ];
   for (UIView *view in self.scrollViewSubviews) {
     [self.scrollView addSubview:view];
@@ -149,7 +152,7 @@ static const NSUInteger kDefaultPadding = 20;
       maxY = subViewMaxY;
     }
   }
-  self.scrollView.contentSize = CGSizeMake(maxX, maxY);
+  self.scrollView.contentSize = CGSizeMake(maxX, maxY + kDefaultPadding);
 }
 
 - (MDCButton *)createFirstResponderButton {
@@ -184,6 +187,18 @@ static const NSUInteger kDefaultPadding = 20;
   return label;
 }
 
+- (MDCSimpleTextField *)createFilledTextFieldWithMaximalDensity {
+  MDCSimpleTextField *textField = [self createFilledTextField];
+  textField.containerStyle.densityInformer.verticalDensity = 1.0;
+  return textField;
+}
+
+- (MDCSimpleTextField *)createFilledTextFieldWithMinimalDensity {
+  MDCSimpleTextField *textField = [self createFilledTextField];
+  textField.containerStyle.densityInformer.verticalDensity = 0.0;
+  return textField;
+}
+
 - (MDCSimpleTextField *)createFilledTextField {
   MDCSimpleTextField *textField = [[MDCSimpleTextField alloc] init];
   [textField applyFilledThemeWithScheme:self.containerScheme];
@@ -191,7 +206,18 @@ static const NSUInteger kDefaultPadding = 20;
   textField.clearButtonMode = UITextFieldViewModeWhileEditing;
   textField.leadingUnderlineLabel.numberOfLines = 0;
   textField.leadingUnderlineLabel.text = @"This is helper text.";
-  self.filledTextField = textField;
+  return textField;
+}
+
+- (MDCSimpleTextField *)createOutlinedTextFieldWithMaximalDensity {
+  MDCSimpleTextField *textField = [self createOutlinedTextField];
+  textField.containerStyle.densityInformer.verticalDensity = 1.0;
+  return textField;
+}
+
+- (MDCSimpleTextField *)createOutlinedTextFieldWithMinimalDensity {
+  MDCSimpleTextField *textField = [self createOutlinedTextField];
+  textField.containerStyle.densityInformer.verticalDensity = 0.0;
   return textField;
 }
 
@@ -200,7 +226,6 @@ static const NSUInteger kDefaultPadding = 20;
   [textField applyOutlinedThemeWithScheme:self.containerScheme];
   textField.placeholder = @"This is another placeholder";
   textField.clearButtonMode = UITextFieldViewModeWhileEditing;
-  self.outlinedTextField = textField;
   return textField;
 }
 
@@ -208,7 +233,6 @@ static const NSUInteger kDefaultPadding = 20;
   MDCSimpleTextField *textField = [[MDCSimpleTextField alloc] init];
   textField.placeholder = @"Placeholder City!";
   textField.clearButtonMode = UITextFieldViewModeWhileEditing;
-  self.unthemedTextField = textField;
   return textField;
 }
 
@@ -227,22 +251,29 @@ static const NSUInteger kDefaultPadding = 20;
 }
 
 - (void)updateTextFieldStates {
-  if (self.isErrored) {
-    self.filledTextField.isErrored = YES;
-    self.filledTextField.leadingUnderlineLabel.text =
+  [self.allTextFields enumerateObjectsUsingBlock:^(MDCSimpleTextField *textField, NSUInteger idx, BOOL *stop) {
+    textField.isErrored = self.isErrored;
+    BOOL isEven = idx % 2 == 0;
+    if (textField.isErrored) {
+      if (isEven) {
+        textField.leadingUnderlineLabel.text =
         @"Suspendisse quam elit, mattis sit amet justo vel, venenatis lobortis massa. Donec metus "
         @"dolor.";
-
-    self.outlinedTextField.isErrored = YES;
-    self.outlinedTextField.leadingUnderlineLabel.text = @"This is an error.";
-    self.outlinedTextField.leadingUnderlineLabel.numberOfLines = 0;
-  } else {
-    self.filledTextField.isErrored = NO;
-    self.filledTextField.leadingUnderlineLabel.text = @"This is helper text.";
-
-    self.outlinedTextField.isErrored = NO;
-    self.outlinedTextField.leadingUnderlineLabel.text = nil;
-  }
+      } else {
+        textField.leadingUnderlineLabel.text = @"This is an error.";
+      }
+    } else {
+      if (isEven) {
+        textField.leadingUnderlineLabel.text =
+        @"This is helper text.";
+      } else {
+        textField.leadingUnderlineLabel.text = nil;
+//        textField.placeholder = @"Yo what's up";
+      }
+    }
+    NSLog(@"done touching text fields");
+  }];
+  NSLog(@"about to call set needs layout");
   [self.view setNeedsLayout];
 }
 
@@ -258,8 +289,16 @@ static const NSUInteger kDefaultPadding = 20;
 #pragma mark IBActions
 
 - (void)resignFirstResponderButtonTapped:(UIButton *)button {
-  [self.filledTextField resignFirstResponder];
-  [self.outlinedTextField resignFirstResponder];
+  [self.allTextFields enumerateObjectsUsingBlock:^(MDCSimpleTextField *textField, NSUInteger idx, BOOL *stop) {
+    [textField resignFirstResponder];
+  }];
+}
+
+- (NSArray<MDCSimpleTextField *> *)allTextFields {
+  return [self.scrollViewSubviews objectsAtIndexes:[self.scrollViewSubviews indexesOfObjectsPassingTest:^BOOL(UIView *view, NSUInteger idx, BOOL *stop) {
+    
+    return [view isKindOfClass:[MDCSimpleTextField class]];
+  }]];
 }
 
 - (void)toggleErrorButtonTapped:(UIButton *)button {
