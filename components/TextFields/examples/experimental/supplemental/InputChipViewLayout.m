@@ -124,7 +124,8 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
       contentAreaTopPaddingFloatingPlaceholderWithFloatingPlaceholderMaxY:floatingPlaceholderMaxY];
   CGFloat highestPossibleInitialChipRowMaxY =
       initialChipRowMinYWithFloatingPlaceholder + chipRowHeight;
-  CGFloat bottomPadding = [containerStyle.densityInformer contentAreaVerticalPaddingNormalWithFloatingPlaceholderMaxY:floatingPlaceholderMaxY];
+  CGFloat bottomPadding = [containerStyle.densityInformer
+      contentAreaVerticalPaddingNormalWithFloatingPlaceholderMaxY:floatingPlaceholderMaxY];
   CGFloat intrinsicMainContentAreaHeight = highestPossibleInitialChipRowMaxY + bottomPadding;
   CGFloat contentAreaMaxY = 0;
   if (preferredMainContentAreaHeight > intrinsicMainContentAreaHeight) {
@@ -272,7 +273,8 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
                                            globalChipRowMaxX:(CGFloat)globalChipRowMaxX
                                                    chipsWrap:(BOOL)chipsWrap
                                            contentAreaHeight:(CGFloat)contentAreaHeight
-                                              containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
+                                              containerStyle:
+                                                  (id<MDCContainedInputViewStyle>)containerStyle
                                                        isRTL:(BOOL)isRTL {
   CGFloat maxTextWidth = globalChipRowMaxX - globalChipRowMinX;
   CGSize placeholderSize = [self textSizeWithText:placeholder font:font maxWidth:maxTextWidth];
@@ -282,7 +284,9 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
   }
   CGFloat placeholderMinY = 0;
   if (chipsWrap) {
-    placeholderMinY = [containerStyle.densityInformer contentAreaVerticalPaddingNormalWithFloatingPlaceholderMaxY:CGRectGetMaxY(floatingPlaceholderFrame)];
+    placeholderMinY = [containerStyle.densityInformer
+        contentAreaVerticalPaddingNormalWithFloatingPlaceholderMaxY:CGRectGetMaxY(
+                                                                        floatingPlaceholderFrame)];
   } else {
     CGFloat center = contentAreaHeight * (CGFloat)0.5;
     placeholderMinY = center - (placeholderSize.height * (CGFloat)0.5);

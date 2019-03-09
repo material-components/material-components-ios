@@ -129,7 +129,8 @@ static const NSUInteger kDefaultVerticalPadding = 20;
   CGFloat viewMinY = kDefaultHorizontalPadding;
   for (UIView *view in self.scrollViewSubviews) {
     CGSize viewSize = view.frame.size;
-    CGFloat textFieldWidth = CGRectGetWidth(self.scrollView.frame) - (2 * kDefaultHorizontalPadding);
+    CGFloat textFieldWidth =
+        CGRectGetWidth(self.scrollView.frame) - (2 * kDefaultHorizontalPadding);
     if ([view isKindOfClass:[MDCSimpleTextField class]]) {
       viewSize = CGSizeMake(textFieldWidth, CGRectGetHeight(view.frame));
     }
@@ -252,28 +253,28 @@ static const NSUInteger kDefaultVerticalPadding = 20;
 }
 
 - (void)updateTextFieldStates {
-  [self.allTextFields enumerateObjectsUsingBlock:^(MDCSimpleTextField *textField, NSUInteger idx, BOOL *stop) {
-    textField.isErrored = self.isErrored;
-    BOOL isEven = idx % 2 == 0;
-    if (textField.isErrored) {
-      if (isEven) {
-        textField.leadingUnderlineLabel.text =
-        @"Suspendisse quam elit, mattis sit amet justo vel, venenatis lobortis massa. Donec metus "
-        @"dolor.";
-      } else {
-        textField.leadingUnderlineLabel.text = @"This is an error.";
-      }
-    } else {
-      if (isEven) {
-        textField.leadingUnderlineLabel.text =
-        @"This is helper text.";
-      } else {
-        textField.leadingUnderlineLabel.text = nil;
-//        textField.placeholder = @"Yo what's up";
-      }
-    }
-    NSLog(@"done touching text fields");
-  }];
+  [self.allTextFields
+      enumerateObjectsUsingBlock:^(MDCSimpleTextField *textField, NSUInteger idx, BOOL *stop) {
+        textField.isErrored = self.isErrored;
+        BOOL isEven = idx % 2 == 0;
+        if (textField.isErrored) {
+          if (isEven) {
+            textField.leadingUnderlineLabel.text = @"Suspendisse quam elit, mattis sit amet justo "
+                                                   @"vel, venenatis lobortis massa. Donec metus "
+                                                   @"dolor.";
+          } else {
+            textField.leadingUnderlineLabel.text = @"This is an error.";
+          }
+        } else {
+          if (isEven) {
+            textField.leadingUnderlineLabel.text = @"This is helper text.";
+          } else {
+            textField.leadingUnderlineLabel.text = nil;
+            //        textField.placeholder = @"Yo what's up";
+          }
+        }
+        NSLog(@"done touching text fields");
+      }];
   NSLog(@"about to call set needs layout");
   [self.view setNeedsLayout];
 }
@@ -290,16 +291,18 @@ static const NSUInteger kDefaultVerticalPadding = 20;
 #pragma mark IBActions
 
 - (void)resignFirstResponderButtonTapped:(UIButton *)button {
-  [self.allTextFields enumerateObjectsUsingBlock:^(MDCSimpleTextField *textField, NSUInteger idx, BOOL *stop) {
-    [textField resignFirstResponder];
-  }];
+  [self.allTextFields
+      enumerateObjectsUsingBlock:^(MDCSimpleTextField *textField, NSUInteger idx, BOOL *stop) {
+        [textField resignFirstResponder];
+      }];
 }
 
 - (NSArray<MDCSimpleTextField *> *)allTextFields {
-  return [self.scrollViewSubviews objectsAtIndexes:[self.scrollViewSubviews indexesOfObjectsPassingTest:^BOOL(UIView *view, NSUInteger idx, BOOL *stop) {
-    
-    return [view isKindOfClass:[MDCSimpleTextField class]];
-  }]];
+  return [self.scrollViewSubviews
+      objectsAtIndexes:[self.scrollViewSubviews indexesOfObjectsPassingTest:^BOOL(
+                                                    UIView *view, NSUInteger idx, BOOL *stop) {
+        return [view isKindOfClass:[MDCSimpleTextField class]];
+      }]];
 }
 
 - (void)toggleErrorButtonTapped:(UIButton *)button {

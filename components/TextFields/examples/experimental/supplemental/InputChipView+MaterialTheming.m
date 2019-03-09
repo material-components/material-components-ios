@@ -264,7 +264,8 @@
 @end
 
 @implementation InputChipViewOutlinedDensityInformer
-- (CGFloat)contentAreaVerticalPaddingNormalWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY {
+- (CGFloat)contentAreaVerticalPaddingNormalWithFloatingPlaceholderMaxY:
+    (CGFloat)floatingPlaceholderMaxY {
   return 12;
 }
 @end

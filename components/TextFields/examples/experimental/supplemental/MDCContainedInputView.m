@@ -180,7 +180,7 @@
 @implementation MDCContainerStyleBaseDensityInformer
 @synthesize verticalDensity = _verticalDensity;
 
--(instancetype)init {
+- (instancetype)init {
   self = [super init];
   if (self) {
     self.verticalDensity = 0.5;
@@ -188,16 +188,17 @@
   return self;
 }
 
-
 - (CGFloat)floatingPlaceholderMinYWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight {
   return 10;
 }
 
-- (CGFloat)contentAreaVerticalPaddingNormalWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY {
+- (CGFloat)contentAreaVerticalPaddingNormalWithFloatingPlaceholderMaxY:
+    (CGFloat)floatingPlaceholderMaxY {
   return 20;
 }
 
-- (CGFloat)contentAreaTopPaddingFloatingPlaceholderWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY {
+- (CGFloat)contentAreaTopPaddingFloatingPlaceholderWithFloatingPlaceholderMaxY:
+    (CGFloat)floatingPlaceholderMaxY {
   return floatingPlaceholderMaxY + 10;
 }
 

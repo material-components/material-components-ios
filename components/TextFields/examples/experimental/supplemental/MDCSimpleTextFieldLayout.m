@@ -157,7 +157,8 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
       textRectMinYWithFloatingPlaceholder + ((CGFloat)0.5 * textRectHeight);
   CGFloat textRectMaxYWithFloatingPlaceholder =
       textRectMinYWithFloatingPlaceholder + textRectHeight;
-  CGFloat bottomPadding = [containerStyle.densityInformer contentAreaVerticalPaddingNormalWithFloatingPlaceholderMaxY:floatingPlaceholderMaxY];
+  CGFloat bottomPadding = [containerStyle.densityInformer
+      contentAreaVerticalPaddingNormalWithFloatingPlaceholderMaxY:floatingPlaceholderMaxY];
   CGFloat intrinsicContentAreaHeight = textRectMaxYWithFloatingPlaceholder + bottomPadding;
   CGFloat topRowBottomRowDividerY = intrinsicContentAreaHeight;
   if (preferredMainContentAreaHeight > intrinsicContentAreaHeight) {

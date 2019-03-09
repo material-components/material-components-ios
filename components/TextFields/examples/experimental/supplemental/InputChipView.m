@@ -643,7 +643,8 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   if (topFadeEnd <= 0) {
     topFadeEnd = 0;
   }
-  CGFloat bottomSpacing = [self.containerStyle.densityInformer contentAreaVerticalPaddingNormalWithFloatingPlaceholderMaxY:floatingPlaceholderMaxY];
+  CGFloat bottomSpacing = [self.containerStyle.densityInformer
+      contentAreaVerticalPaddingNormalWithFloatingPlaceholderMaxY:floatingPlaceholderMaxY];
   CGFloat bottomFadeStart = (viewHeight - bottomSpacing) / viewHeight;
   if (bottomFadeStart >= 1) {
     bottomFadeStart = 1;

@@ -211,7 +211,8 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
   return (CGFloat)0 - ((CGFloat)0.5 * floatingPlaceholderHeight);
 }
 
-- (CGFloat)contentAreaTopPaddingFloatingPlaceholderWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY {
+- (CGFloat)contentAreaTopPaddingFloatingPlaceholderWithFloatingPlaceholderMaxY:
+    (CGFloat)floatingPlaceholderMaxY {
   return [self contentAreaVerticalPaddingNormalWithFloatingPlaceholderMaxY:floatingPlaceholderMaxY];
 }
 

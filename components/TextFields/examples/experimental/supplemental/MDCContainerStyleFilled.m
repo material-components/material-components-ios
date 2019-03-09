@@ -472,7 +472,8 @@ static const CGFloat kLayerAnimationDuration = (CGFloat)0.2;
   return filledPlaceholderTopPaddingScaleHeuristic * floatingPlaceholderHeight;
 }
 
-- (CGFloat)contentAreaTopPaddingFloatingPlaceholderWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY {
+- (CGFloat)contentAreaTopPaddingFloatingPlaceholderWithFloatingPlaceholderMaxY:
+    (CGFloat)floatingPlaceholderMaxY {
   return floatingPlaceholderMaxY + (CGFloat)6.5;
 }
 

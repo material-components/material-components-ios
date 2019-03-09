@@ -477,7 +477,7 @@
 
 #pragma mark MDCContainedInputView accessors
 
--(void)setIsErrored:(BOOL)isErrored {
+- (void)setIsErrored:(BOOL)isErrored {
   if (_isErrored == isErrored) {
     return;
   }
@@ -505,7 +505,7 @@
   return CGRectMake(0, 0, CGRectGetWidth(self.frame), self.layout.topRowBottomRowDividerY);
 }
 
--(void)setText:(NSString *)text {
+- (void)setText:(NSString *)text {
   [super setText:text];
 }
 

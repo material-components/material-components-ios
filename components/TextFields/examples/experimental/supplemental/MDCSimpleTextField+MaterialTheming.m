@@ -82,10 +82,11 @@
 
 - (void)applyOutlinedThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
   MDCContainerStyleOutlined *outlinedStyle = [[MDCContainerStyleOutlined alloc] init];
-  MDCSimpleTextFieldOutlinedDensityInformer *densityInformer = [[MDCSimpleTextFieldOutlinedDensityInformer alloc] init];
+  MDCSimpleTextFieldOutlinedDensityInformer *densityInformer =
+      [[MDCSimpleTextFieldOutlinedDensityInformer alloc] init];
   outlinedStyle.densityInformer = densityInformer;
   self.containerStyle = outlinedStyle;
-  
+
   [self applyTypographySchemeWith:containerScheme];
 
   id<MDCColorScheming> mdcColorScheming =
@@ -126,7 +127,8 @@
 
 - (void)applyFilledThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
   MDCContainerStyleFilled *filledStyle = [[MDCContainerStyleFilled alloc] init];
-  MDCSimpleTextFieldFilledDensityInformer *densityInformer = [[MDCSimpleTextFieldFilledDensityInformer alloc] init];
+  MDCSimpleTextFieldFilledDensityInformer *densityInformer =
+      [[MDCSimpleTextFieldFilledDensityInformer alloc] init];
   filledStyle.densityInformer = densityInformer;
   self.containerStyle = filledStyle;
 
@@ -274,14 +276,16 @@
   return lowestMinY + (difference * self.verticalDensity);
 }
 
-- (CGFloat)contentAreaTopPaddingFloatingPlaceholderWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY {
+- (CGFloat)contentAreaTopPaddingFloatingPlaceholderWithFloatingPlaceholderMaxY:
+    (CGFloat)floatingPlaceholderMaxY {
   CGFloat minYAddition = 3;
   CGFloat maxYAddition = 8;
   CGFloat difference = maxYAddition - minYAddition;
   return floatingPlaceholderMaxY + (minYAddition + (difference * self.verticalDensity));
 }
 
--(CGFloat)contentAreaVerticalPaddingNormalWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY {
+- (CGFloat)contentAreaVerticalPaddingNormalWithFloatingPlaceholderMaxY:
+    (CGFloat)floatingPlaceholderMaxY {
   CGFloat minYAddition = 5;
   CGFloat maxYAddition = 12;
   CGFloat difference = maxYAddition - minYAddition;
@@ -296,15 +300,18 @@
   return (CGFloat)0 - ((CGFloat)0.5 * floatingPlaceholderHeight);
 }
 
-- (CGFloat)contentAreaTopPaddingFloatingPlaceholderWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY {
+- (CGFloat)contentAreaTopPaddingFloatingPlaceholderWithFloatingPlaceholderMaxY:
+    (CGFloat)floatingPlaceholderMaxY {
   CGFloat minYAddition = 3;
   CGFloat maxYAddition = 15;
   CGFloat difference = maxYAddition - minYAddition;
   return floatingPlaceholderMaxY + (minYAddition + (difference * self.verticalDensity));
 }
 
--(CGFloat)contentAreaVerticalPaddingNormalWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY {
-  return [self contentAreaTopPaddingFloatingPlaceholderWithFloatingPlaceholderMaxY:floatingPlaceholderMaxY];
+- (CGFloat)contentAreaVerticalPaddingNormalWithFloatingPlaceholderMaxY:
+    (CGFloat)floatingPlaceholderMaxY {
+  return [self
+      contentAreaTopPaddingFloatingPlaceholderWithFloatingPlaceholderMaxY:floatingPlaceholderMaxY];
 }
 
 @end
