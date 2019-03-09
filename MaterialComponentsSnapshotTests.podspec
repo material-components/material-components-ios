@@ -52,6 +52,7 @@ module SnapshotPodspecHelper
       Component.new("Cards"),
       Component.new("Chips"),
       Component.new("Dialogs"),
+      Component.new("NavigationBar"),
       Component.new("Ripple"),
       Component.new("Slider"),
       Component.new("TextFields"),
