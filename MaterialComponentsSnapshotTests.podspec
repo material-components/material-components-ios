@@ -44,11 +44,9 @@ module SnapshotPodspecHelper
   end
 
   def self.components
-    components_with_snapshots = []
-    Dir["components/**/tests/snapshot"].each do |dir|
-      components_with_snapshots << Component.new(dir.split('/')[-3])
-      end
-    return components_with_snapshots
+    return Dir["components/**/tests/snapshot"].map { |dir|
+      dir = Component.new(dir.split(File::SEPARATOR)[-3])
+    }
   end
 end
 
