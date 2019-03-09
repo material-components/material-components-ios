@@ -44,18 +44,11 @@ module SnapshotPodspecHelper
   end
 
   def self.components
-    return [
-      Component.new("BottomAppBar"),
-      Component.new("BottomNavigation"),
-      Component.new("Buttons"),
-      Component.new("ButtonBar"),
-      Component.new("Cards"),
-      Component.new("Chips"),
-      Component.new("Dialogs"),
-      Component.new("Ripple"),
-      Component.new("Slider"),
-      Component.new("TextFields"),
-    ]
+    components_with_snapshots = []
+    Dir["components/**/tests/snapshot"].each do |dir|
+      components_with_snapshots << Component.new(dir.split('/')[-3])
+      end
+    return components_with_snapshots
   end
 end
 
