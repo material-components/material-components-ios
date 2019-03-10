@@ -54,6 +54,7 @@ module SnapshotPodspecHelper
       Component.new("Dialogs"),
       Component.new("Ripple"),
       Component.new("Slider"),
+      Component.new("Snackbar"),
       Component.new("TextFields"),
     ]
   end
