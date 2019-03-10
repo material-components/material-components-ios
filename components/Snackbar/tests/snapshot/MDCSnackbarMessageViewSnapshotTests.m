@@ -14,8 +14,12 @@
 
 #import "MaterialSnapshot.h"
 
-#import "MDCSnackbarMessageViewInternal.h"
+// Clang-format wants to reorder these imports, but CocoaPods will fail to build if the main target
+// isn't imported first.
+// clang-format off
 #import "MaterialSnackbar.h"
+#import "MDCSnackbarMessageViewInternal.h"
+// clang-format on
 
 /** The width of the Snackbar for testing. */
 static const CGFloat kWidth = 180;
