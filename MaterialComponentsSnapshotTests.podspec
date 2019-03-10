@@ -45,6 +45,7 @@ module SnapshotPodspecHelper
 
   def self.components
     return [
+      Component.new("ActivityIndicator"),
       Component.new("BottomAppBar"),
       Component.new("BottomNavigation"),
       Component.new("Buttons"),
