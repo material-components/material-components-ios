@@ -18,15 +18,20 @@
 
 __attribute__((objc_subclassing_restricted)) @interface MDCBannerView : UIView
 
+@property(nonatomic, assign) CGFloat preferredContentWidth;
+
 @property(nonatomic, copy, nonnull) NSString *text;
+@property(nonatomic, strong, nonnull) UIColor *textColor;
+@property(nonatomic, strong, nonnull) UIFont *textFont;
 
-@property(nonatomic, strong, nullable) UIImage *image;  // default is nil
-
-@property(nonatomic, assign) NSUInteger numberOfButtons;  // default is 1
+@property(nonatomic, strong, nullable) UIImage *icon;  // default is nil
+@property(nonatomic, strong, nullable) UIColor *iconTintColor;
 
 /**
  The buttons representing the banner's actions.
+
+ Banner supports 1 - 2 buttons.
  */
-@property(nonatomic, readonly, copy, nonnull) NSArray<MDCButton *> *buttons;
+@property(nonatomic, strong, nonnull) NSMutableArray<MDCButton *> *buttons;
 
 @end

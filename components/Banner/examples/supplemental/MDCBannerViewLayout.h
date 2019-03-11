@@ -15,18 +15,24 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
+  MDCBannerViewLayoutStyleInvalid = 0,                 // Invalid style
+  MDCBannerViewLayoutSingleLineStyle = 1,              // All elements lays on the same line
+  MDCBannerViewLayoutMultiLineStackedButtonStyle = 2,  // Multline, stacked button layout
+  MDCBannerViewLayoutMultiLineAlignedButtonStyle =
+      3  // Multiline style with all buttons on the same line
+};
+
 @interface MDCBannerViewLayout : NSObject
 
-@property(nonatomic, readonly, strong) NSArray *buttonFrames;
-@property(nonatomic, readonly, assign) CGRect imageContainerFrame;
-@property(nonatomic, readonly, assign) CGRect textLabelFrame;
+@property(nonatomic, readonly, assign) MDCBannerViewLayoutStyle style;
+@property(nonatomic, readonly, assign) CGSize size;
 
-@property(nonatomic, readonly, assign) CGSize frameSize;
-
-- (instancetype)initWithSizeToFit:(CGSize)sizeToFit
-                        textLabel:(UILabel *)textLabel
-                   imageContainer:(UIView *)imageContainer
-                          buttons:(NSArray<__kindof UIButton *> *)buttons NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithPreferredWidth:(CGFloat)preferredWidth
+                             textLabel:(UILabel *)textLabel
+                         iconContainer:(UIView *)iconContainer
+                               buttons:(NSArray<__kindof UIButton *> *)buttons
+    NS_DESIGNATED_INITIALIZER;
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
 
