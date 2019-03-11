@@ -25,20 +25,11 @@ static const NSInteger kTextNumberOfLineLimit = 3;
 static const NSUInteger kNumberOfButtonsLimit = 2;
 #endif
 
-static const uint32_t MDCBannerDefaultBackgroundColor = 0xFFFFFFFF;
-
-static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
-  return [UIColor colorWithRed:((CGFloat)((rgbValue & 0xFF0000) >> 16)) / 255
-                         green:((CGFloat)((rgbValue & 0x00FF00) >> 8)) / 255
-                          blue:((CGFloat)((rgbValue & 0x0000FF) >> 0)) / 255
-                         alpha:1];
-}
-
 @interface MDCBannerView ()
 
 @property(nonatomic, readwrite, weak) UILabel *textLabel;
 @property(nonatomic, readwrite, weak) UIImageView *iconImageView;
-@property(nonatomic, readwrite, strong) UIView *containerView;
+@property(nonatomic, readwrite, weak) UIView *containerView;
 
 @property(nonatomic, readwrite, strong) MDCBannerViewLayout *layout;
 @property(nonatomic, readwrite, assign) MDCBannerViewLayout *cachedLayout;
@@ -67,10 +58,11 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 }
 
 - (void)commonBannerViewInit {
-  self.backgroundColor = MDCColorFromRGB(MDCBannerDefaultBackgroundColor);
-  _containerView = [[UIView alloc] initWithFrame:CGRectZero];
-  _containerView.translatesAutoresizingMaskIntoConstraints = NO;
-  [self addSubview:_containerView];
+  self.backgroundColor = UIColor.whiteColor;
+  UIView *containerView = [[UIView alloc] initWithFrame:CGRectZero];
+  containerView.translatesAutoresizingMaskIntoConstraints = NO;
+  [self addSubview:containerView];
+  _containerView = containerView;
 
   _buttons = [[NSMutableArray alloc] init];
 
@@ -81,11 +73,10 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   textLabel.alpha = [MDCTypography body2FontOpacity];
   textLabel.numberOfLines = kTextNumberOfLineLimit;
   textLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+  [self.containerView addSubview:textLabel];
   _textLabel = textLabel;
 
   _isLayoutDirty = YES;
-
-  [self.containerView addSubview:textLabel];
 }
 
 #pragma mark - Property Setter and Getter
@@ -165,6 +156,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 
 - (void)setTextFont:(UIFont *)textFont {
   self.textLabel.font = textFont;
+  self.isLayoutDirty = YES;
 }
 
 - (UIFont *)textFont {

@@ -12,6 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// TODO(https://github.com/material-components/material-components-ios/issues/6831)
+// This file should be moved to /private
+
 static const CGFloat kLeadingPadding = 16.0f;
 static const CGFloat kTrailingPadding = 8.0f;
 static const CGFloat kTopPaddingSmall = 10.0f;
