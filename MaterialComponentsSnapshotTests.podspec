@@ -55,6 +55,7 @@ module SnapshotPodspecHelper
       Component.new("Ripple"),
       Component.new("Slider"),
       Component.new("TextFields"),
+      Component.new("Typography"),
     ]
   end
 end
