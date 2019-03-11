@@ -35,9 +35,6 @@ static const NSUInteger kDefaultVerticalPadding = 20;
 
 @property(strong, nonatomic) NSArray *scrollViewSubviews;
 
-@property(strong, nonatomic) MDCButton *resignFirstResponderButton;
-@property(strong, nonatomic) MDCButton *toggleErrorButton;
-
 @property(nonatomic, assign) BOOL isErrored;
 
 @end
@@ -67,7 +64,8 @@ static const NSUInteger kDefaultVerticalPadding = 20;
   [self layoutScrollView];
   [self layoutScrollViewSubviews];
   [self updateScrollViewContentSize];
-  [self updateToggleButtonTheme];
+  [self updateButtonThemes];
+  [self updateLabelColors];
 }
 
 - (void)addObservers {
@@ -92,17 +90,17 @@ static const NSUInteger kDefaultVerticalPadding = 20;
     [self createToggleErrorButton],
     [self createFirstResponderButton],
     [self createLabelWithText:@"High density filled MDCInputTextField:"],
-    [self createFilledTextFieldWithMinimalDensity],
+    [self createFilledTextFieldWithMaximalDensity],
     [self createLabelWithText:@"Average density filled MDCInputTextField:"],
     [self createFilledTextField],
     [self createLabelWithText:@"Low density filled MDCInputTextField:"],
-    [self createFilledTextFieldWithMaximalDensity],
+    [self createFilledTextFieldWithMinimalDensity],
     [self createLabelWithText:@"High density outlined MDCInputTextField:"],
-    [self createOutlinedTextFieldWithMinimalDensity],
+    [self createOutlinedTextFieldWithMaximalDensity],
     [self createLabelWithText:@"Average density outlined MDCInputTextField:"],
     [self createOutlinedTextField],
     [self createLabelWithText:@"Low density outlined MDCInputTextField:"],
-    [self createOutlinedTextFieldWithMaximalDensity],
+    [self createOutlinedTextFieldWithMinimalDensity],
   ];
   for (UIView *view in self.scrollViewSubviews) {
     [self.scrollView addSubview:view];
@@ -165,7 +163,6 @@ static const NSUInteger kDefaultVerticalPadding = 20;
       forControlEvents:UIControlEventTouchUpInside];
   [button applyContainedThemeWithScheme:self.containerScheme];
   [button sizeToFit];
-  self.resignFirstResponderButton = button;
   return button;
 }
 
@@ -177,7 +174,6 @@ static const NSUInteger kDefaultVerticalPadding = 20;
       forControlEvents:UIControlEventTouchUpInside];
   [button applyContainedThemeWithScheme:self.containerScheme];
   [button sizeToFit];
-  self.toggleErrorButton = button;
   return button;
 }
 
@@ -240,16 +236,18 @@ static const NSUInteger kDefaultVerticalPadding = 20;
 
 #pragma mark Private
 
-- (void)updateToggleButtonTheme {
-  if (self.isErrored) {
-    MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
-    colorScheme.primaryColor = colorScheme.errorColor;
-    MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
-    containerScheme.colorScheme = colorScheme;
-    [self.toggleErrorButton applyContainedThemeWithScheme:containerScheme];
-  } else {
-    [self.toggleErrorButton applyOutlinedThemeWithScheme:self.containerScheme];
-  }
+- (void)updateButtonThemes {
+  [self.allButtons enumerateObjectsUsingBlock:^(MDCButton *button, NSUInteger idx, BOOL *stop) {
+    if (self.isErrored) {
+      MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+      colorScheme.primaryColor = colorScheme.errorColor;
+      MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+      containerScheme.colorScheme = colorScheme;
+      [button applyContainedThemeWithScheme:containerScheme];
+    } else {
+      [button applyOutlinedThemeWithScheme:self.containerScheme];
+    }
+  }];
 }
 
 - (void)updateTextFieldStates {
@@ -270,13 +268,40 @@ static const NSUInteger kDefaultVerticalPadding = 20;
             textField.leadingUnderlineLabel.text = @"This is helper text.";
           } else {
             textField.leadingUnderlineLabel.text = nil;
-            //        textField.placeholder = @"Yo what's up";
           }
         }
         NSLog(@"done touching text fields");
       }];
   NSLog(@"about to call set needs layout");
   [self.view setNeedsLayout];
+}
+
+- (void)updateLabelColors {
+  [self.allLabels enumerateObjectsUsingBlock:^(UILabel *label, NSUInteger idx, BOOL *stop) {
+    id<MDCColorScheming> colorScheme = self.containerScheme.colorScheme;
+    UIColor *textColor = self.isErrored ? colorScheme.errorColor : colorScheme.primaryColor;
+    label.textColor = textColor;
+  }];
+}
+
+- (NSArray<MDCSimpleTextField *> *)allTextFields {
+  return [self allViewsOfClass:[MDCSimpleTextField class]];
+}
+
+- (NSArray<MDCButton *> *)allButtons {
+  return [self allViewsOfClass:[MDCButton class]];
+}
+
+- (NSArray<UILabel *> *)allLabels {
+  return [self allViewsOfClass:[UILabel class]];
+}
+
+- (NSArray *)allViewsOfClass:(Class)class {
+  return [self.scrollViewSubviews
+      objectsAtIndexes:[self.scrollViewSubviews indexesOfObjectsPassingTest:^BOOL(
+                                                    UIView *view, NSUInteger idx, BOOL *stop) {
+        return [view isKindOfClass:class];
+      }]];
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification {
@@ -297,18 +322,11 @@ static const NSUInteger kDefaultVerticalPadding = 20;
       }];
 }
 
-- (NSArray<MDCSimpleTextField *> *)allTextFields {
-  return [self.scrollViewSubviews
-      objectsAtIndexes:[self.scrollViewSubviews indexesOfObjectsPassingTest:^BOOL(
-                                                    UIView *view, NSUInteger idx, BOOL *stop) {
-        return [view isKindOfClass:[MDCSimpleTextField class]];
-      }]];
-}
-
 - (void)toggleErrorButtonTapped:(UIButton *)button {
   self.isErrored = !self.isErrored;
-  [self updateToggleButtonTheme];
+  [self updateButtonThemes];
   [self updateTextFieldStates];
+  [self updateLabelColors];
 }
 
 #pragma mark Catalog By Convention

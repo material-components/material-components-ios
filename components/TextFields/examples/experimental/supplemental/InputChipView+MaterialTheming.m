@@ -259,13 +259,58 @@
 
 @end
 
+//@implementation InputChipViewOutlinedDensityInformer
+//- (CGFloat)contentAreaVerticalPaddingNormalWithFloatingPlaceholderMaxY:
+//    (CGFloat)floatingPlaceholderMaxY {
+//  return 12;
+//}
+//@end
+
 @implementation InputChipViewFilledDensityInformer
+
+- (CGFloat)floatingPlaceholderMinYWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight {
+  CGFloat lowestMinY = 4;
+  CGFloat highestMinY = 15;
+  CGFloat difference = highestMinY - lowestMinY;
+  return lowestMinY + (difference * (1 - self.verticalDensity));
+}
+
+- (CGFloat)contentAreaTopPaddingFloatingPlaceholderWithFloatingPlaceholderMaxY:
+    (CGFloat)floatingPlaceholderMaxY {
+  CGFloat minYAddition = 3;
+  CGFloat maxYAddition = 8;
+  CGFloat difference = maxYAddition - minYAddition;
+  return floatingPlaceholderMaxY + (minYAddition + (difference * (1 - self.verticalDensity)));
+}
+
+- (CGFloat)contentAreaVerticalPaddingNormalWithFloatingPlaceholderMaxY:
+    (CGFloat)floatingPlaceholderMaxY {
+  CGFloat minYAddition = 10;
+  CGFloat maxYAddition = 15;
+  CGFloat difference = maxYAddition - minYAddition;
+  return minYAddition + (difference * (1 - self.verticalDensity));
+}
 
 @end
 
 @implementation InputChipViewOutlinedDensityInformer
+
+- (CGFloat)floatingPlaceholderMinYWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight {
+  return (CGFloat)0 - ((CGFloat)0.5 * floatingPlaceholderHeight);
+}
+
+- (CGFloat)contentAreaTopPaddingFloatingPlaceholderWithFloatingPlaceholderMaxY:
+    (CGFloat)floatingPlaceholderMaxY {
+  CGFloat minYAddition = 3;
+  CGFloat maxYAddition = 15;
+  CGFloat difference = maxYAddition - minYAddition;
+  return floatingPlaceholderMaxY + (minYAddition + (difference * (1 - self.verticalDensity)));
+}
+
 - (CGFloat)contentAreaVerticalPaddingNormalWithFloatingPlaceholderMaxY:
     (CGFloat)floatingPlaceholderMaxY {
-  return 12;
+  return [self
+      contentAreaTopPaddingFloatingPlaceholderWithFloatingPlaceholderMaxY:floatingPlaceholderMaxY];
 }
+
 @end

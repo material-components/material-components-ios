@@ -902,6 +902,22 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   }
 }
 
+- (void)setIsErrored:(BOOL)isErrored {
+  if (_isErrored == isErrored) {
+    return;
+  }
+  _isErrored = isErrored;
+  [self setNeedsLayout];
+}
+
+- (void)setIsActivated:(BOOL)isActivated {
+  if (_isActivated == isActivated) {
+    return;
+  }
+  _isActivated = isActivated;
+  [self setNeedsLayout];
+}
+
 #pragma mark User Interaction
 
 - (void)enforceCalculatedScrollViewContentOffset {

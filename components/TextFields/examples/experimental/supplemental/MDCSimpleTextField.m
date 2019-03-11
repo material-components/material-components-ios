@@ -485,6 +485,14 @@
   [self setNeedsLayout];
 }
 
+- (void)setIsActivated:(BOOL)isActivated {
+  if (_isActivated == isActivated) {
+    return;
+  }
+  _isActivated = isActivated;
+  [self setNeedsLayout];
+}
+
 - (CGRect)textRectFromLayout:(MDCSimpleTextFieldLayout *)layout
             placeholderState:(MDCContainedInputViewPlaceholderState)placeholderState {
   CGRect textRect = layout.textRect;
