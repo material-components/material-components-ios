@@ -53,6 +53,7 @@ module SnapshotPodspecHelper
       Component.new("Chips"),
       Component.new("Dialogs"),
       Component.new("Ripple"),
+      Component.new("ShadowElevations"),
       Component.new("Slider"),
       Component.new("TextFields"),
     ]
