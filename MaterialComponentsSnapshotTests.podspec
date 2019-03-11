@@ -44,18 +44,9 @@ module SnapshotPodspecHelper
   end
 
   def self.components
-    return [
-      Component.new("BottomAppBar"),
-      Component.new("BottomNavigation"),
-      Component.new("Buttons"),
-      Component.new("ButtonBar"),
-      Component.new("Cards"),
-      Component.new("Chips"),
-      Component.new("Dialogs"),
-      Component.new("Ripple"),
-      Component.new("Slider"),
-      Component.new("TextFields"),
-    ]
+    return Dir["components/**/tests/snapshot"].map { |dir|
+      dir = Component.new(dir.split(File::SEPARATOR)[-3])
+    }
   end
 end
 
