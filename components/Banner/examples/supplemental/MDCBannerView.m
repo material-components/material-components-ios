@@ -232,7 +232,7 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
 }
 
 - (void)updateConstraintsWithLayoutStyle:(MDCBannerViewLayoutStyle)layoutStyle {
-  // Set Containe
+  // Set Container
   NSLayoutConstraint *containerWidthConstraint =
       [NSLayoutConstraint constraintWithItem:self.containerView
                                    attribute:NSLayoutAttributeWidth
