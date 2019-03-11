@@ -37,8 +37,6 @@ static const NSUInteger kNumberOfButtonsLimit = 2;
 
 @implementation MDCBannerView
 
-@synthesize layout = _layout;
-
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
