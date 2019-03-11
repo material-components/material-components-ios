@@ -243,6 +243,31 @@ static CGFloat const kDefaultExpectationTimeout = 15;
   [self waitForExpectationsWithTimeout:kDefaultExpectationTimeout handler:nil];
 }
 
+- (void)testShouldNotSetNavigationBarItemsWithNoExistingViewControllers {
+  // Given
+  NSArray<UITabBarItem *> *tabBarItems = @[
+    [[UITabBarItem alloc] initWithTitle:@"Tab 1" image:nil tag:0],
+    [[UITabBarItem alloc] initWithTitle:@"Tab 2" image:nil tag:1]
+  ];
+
+  // When/Then
+  XCTAssertThrowsSpecificNamed(self.bottomNavigationBarController.navigationBar.items = tabBarItems,
+                               NSException, NSInternalInconsistencyException);
+}
+
+- (void)testShouldNotSetNavigationBarItemsWithExistingViewControllers {
+  // Given
+  NSArray<UITabBarItem *> *tabBarItems = @[
+    [[UITabBarItem alloc] initWithTitle:@"Tab 1" image:nil tag:0],
+    [[UITabBarItem alloc] initWithTitle:@"Tab 2" image:nil tag:1]
+  ];
+  self.bottomNavigationBarController.viewControllers = [self createArrayOfTwoFakeViewControllers];
+
+  // When/Then
+  XCTAssertThrowsSpecificNamed(self.bottomNavigationBarController.navigationBar.items = tabBarItems,
+                               NSException, NSInternalInconsistencyException);
+}
+
 #pragma mark - MDCBottomNavigationBarControllerDelegate Methods
 
 - (void)bottomNavigationBarController:
