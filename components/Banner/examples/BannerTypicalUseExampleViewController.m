@@ -235,8 +235,8 @@ static NSString *const exampleExtraLongText =
     topAreaInset = self.view.safeAreaInsets.top;
   }
 
-  bannerView.frame =
-      CGRectMake(0.0f, topAreaInset, bannerView.frame.size.width, bannerView.frame.size.height);
+  bannerView.frame = CGRectMake(0.0f, topAreaInset, CGRectGetWidth(bannerView.frame),
+                                CGRectGetHeight(bannerView.frame));
 }
 
 - (void)showSingleLineStyleBannerWithIcon {
@@ -280,8 +280,8 @@ static NSString *const exampleExtraLongText =
   if (@available(iOS 11.0, *)) {
     topAreaInset = self.view.safeAreaInsets.top;
   }
-  bannerView.frame =
-      CGRectMake(0.0f, topAreaInset, bannerView.frame.size.width, bannerView.frame.size.height);
+  bannerView.frame = CGRectMake(0.0f, topAreaInset, CGRectGetWidth(bannerView.frame),
+                                CGRectGetHeight(bannerView.frame));
 }
 
 - (void)showMultiLineAlignedButtonStyleBannerWithIcon {
@@ -325,8 +325,8 @@ static NSString *const exampleExtraLongText =
   if (@available(iOS 11.0, *)) {
     topAreaInset = self.view.safeAreaInsets.top;
   }
-  bannerView.frame =
-      CGRectMake(0.0f, topAreaInset, bannerView.frame.size.width, bannerView.frame.size.height);
+  bannerView.frame = CGRectMake(0.0f, topAreaInset, CGRectGetWidth(bannerView.frame),
+                                CGRectGetHeight(bannerView.frame));
 }
 
 - (void)showMultiLineStackedButtonStyleBannerWithIcon {
