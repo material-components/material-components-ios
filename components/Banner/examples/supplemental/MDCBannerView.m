@@ -32,8 +32,6 @@ static const NSUInteger kNumberOfButtonsLimit = 2;
 @property(nonatomic, readwrite, weak) UIView *containerView;
 
 @property(nonatomic, readwrite, strong) MDCBannerViewLayout *layout;
-@property(nonatomic, readwrite, assign) MDCBannerViewLayout *cachedLayout;
-@property(nonatomic, readwrite, assign) BOOL isLayoutDirty;
 
 @end
 
@@ -75,15 +73,13 @@ static const NSUInteger kNumberOfButtonsLimit = 2;
   textLabel.lineBreakMode = NSLineBreakByTruncatingTail;
   [self.containerView addSubview:textLabel];
   _textLabel = textLabel;
-
-  _isLayoutDirty = YES;
 }
 
 #pragma mark - Property Setter and Getter
 
 - (void)setText:(NSString *)text {
   self.textLabel.text = text;
-  self.isLayoutDirty = YES;
+  [self invalidateIntrinsicContentSize];
 }
 
 - (NSString *)text {
@@ -94,7 +90,7 @@ static const NSUInteger kNumberOfButtonsLimit = 2;
   if (icon == nil) {
     [self.iconImageView removeFromSuperview];
     self.iconImageView = nil;
-    self.isLayoutDirty = YES;
+    [self invalidateIntrinsicContentSize];
   } else if (self.iconImageView == nil) {
     CGRect iconImageViewFrame =
         CGRectMake(0, 0, kIconImageViewSideLength, kIconImageViewSideLength);
@@ -127,7 +123,7 @@ static const NSUInteger kNumberOfButtonsLimit = 2;
     iconImageView.clipsToBounds = YES;
     self.iconImageView = iconImageView;
     [self.containerView addSubview:self.iconImageView];
-    self.isLayoutDirty = YES;
+    [self invalidateIntrinsicContentSize];
   } else {
     self.iconImageView.image = icon;
   }
@@ -146,7 +142,7 @@ static const NSUInteger kNumberOfButtonsLimit = 2;
     button.translatesAutoresizingMaskIntoConstraints = NO;
     [self.containerView addSubview:button];
   }
-  self.isLayoutDirty = YES;
+  [self invalidateIntrinsicContentSize];
 }
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
@@ -156,7 +152,7 @@ static const NSUInteger kNumberOfButtonsLimit = 2;
 
 - (void)setTextFont:(UIFont *)textFont {
   self.textLabel.font = textFont;
-  self.isLayoutDirty = YES;
+  [self invalidateIntrinsicContentSize];
 }
 
 - (UIFont *)textFont {
@@ -182,46 +178,32 @@ static const NSUInteger kNumberOfButtonsLimit = 2;
 #pragma mark - UIView overrides
 
 - (CGSize)sizeThatFits:(CGSize)size {
+  self.layout = [[MDCBannerViewLayout alloc] initWithPreferredWidth:self.preferredContentWidth
+                                                          textLabel:self.textLabel
+                                                      iconContainer:self.iconImageView
+                                                            buttons:self.buttons];
   return CGSizeMake([UIScreen mainScreen].bounds.size.width, self.layout.size.height);
 }
 
 - (CGSize)intrinsicContentSize {
+  self.layout = [[MDCBannerViewLayout alloc] initWithPreferredWidth:self.preferredContentWidth
+                                                          textLabel:self.textLabel
+                                                      iconContainer:self.iconImageView
+                                                            buttons:self.buttons];
   return CGSizeMake([UIScreen mainScreen].bounds.size.width, self.layout.size.height);
 }
 
 - (void)updateConstraints {
-  if (!self.cachedLayout || self.cachedLayout != self.layout) {
-    [self updateConstraintsWithLayoutStyle:self.layout.style];
-    self.cachedLayout = self.layout;
-  }
+  self.layout = [[MDCBannerViewLayout alloc] initWithPreferredWidth:self.preferredContentWidth
+                                                          textLabel:self.textLabel
+                                                      iconContainer:self.iconImageView
+                                                            buttons:self.buttons];
+  [self updateConstraintsWithLayoutStyle:self.layout.style];
 
   [super updateConstraints];
 }
 
 #pragma mark - Layout methods
-
-- (void)setIsLayoutDirty:(BOOL)isLayoutDirty {
-  if (isLayoutDirty) {
-    [self invalidateIntrinsicContentSize];
-  }
-  _isLayoutDirty = isLayoutDirty;
-}
-
-- (MDCBannerViewLayout *)layout {
-  if (!_layout || self.isLayoutDirty) {
-    _layout = [[MDCBannerViewLayout alloc] initWithPreferredWidth:self.preferredContentWidth
-                                                        textLabel:self.textLabel
-                                                    iconContainer:self.iconImageView
-                                                          buttons:self.buttons];
-    self.isLayoutDirty = NO;
-  }
-  return _layout;
-}
-
-- (void)setLayout:(MDCBannerViewLayout *)layout {
-  _layout = layout;
-  [self setNeedsUpdateConstraints];
-}
 
 - (void)updateConstraintsWithLayoutStyle:(MDCBannerViewLayoutStyle)layoutStyle {
   // Set Container
