@@ -44,7 +44,7 @@
 }
 
 - (void)generateSnapshotAndVerifyForView:(UIView *)view {
-  UIView *snapshotView = [view mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(20, 20, 20, 20)];
+  UIView *snapshotView = [view mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(40, 40, 80, 40)];
   [self snapshotVerifyView:snapshotView];
 }
 
