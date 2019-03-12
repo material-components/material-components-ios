@@ -18,6 +18,36 @@ import MaterialComponentsBeta.MaterialBottomNavigationBeta
 import MaterialComponents.MaterialBottomNavigation_ColorThemer
 import MaterialComponents.MaterialBottomNavigation_TypographyThemer
 
+class  MDCBottomNavigationControllerExampleCollectionViewController: UICollectionViewController {
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
+    if #available(iOS 11.0, *) {
+      collectionView?.contentInsetAdjustmentBehavior = .always
+    } else {
+      self.automaticallyAdjustsScrollViewInsets = true
+      collectionView?.preservesSuperviewLayoutMargins = true
+    }
+    collectionView?.dataSource = self
+    collectionView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+  }
+
+  override func numberOfSections(in collectionView: UICollectionView) -> Int {
+    return 1
+  }
+
+  override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return 100
+  }
+
+  override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+    cell.backgroundColor = (indexPath.row % 2) == 0 ? .blue : .red
+    return cell
+  }
+}
+
 class BottomNavigationControllerExampleViewController: MDCBottomNavigationBarController {
 
   public var colorScheme: MDCColorScheming  = MDCSemanticColorScheme() {
@@ -37,7 +67,7 @@ class BottomNavigationControllerExampleViewController: MDCBottomNavigationBarCon
 
     self.navigationBar.alignment = .justifiedAdjacentTitles
 
-    let viewController1 = UIViewController()
+    let viewController1 = MDCBottomNavigationControllerExampleCollectionViewController(collectionViewLayout: UICollectionViewFlowLayout())
     viewController1.view.backgroundColor = colorScheme.primaryColor
     viewController1.tabBarItem = UITabBarItem(title: "Item 1", image: UIImage(named: "Home"), tag: 0)
 
