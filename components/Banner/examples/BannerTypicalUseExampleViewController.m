@@ -247,9 +247,9 @@ static NSString *const exampleExtraLongText =
   // TODO: https://github.com/material-components/material-components-ios/issues/6838
   NSBundle *bundle = [NSBundle bundleForClass:[BannerTypicalUseExampleViewController class]];
   self.bannerView.icon = [[UIImage imageNamed:@"banner-email"
-                                 inBundle:bundle
-            compatibleWithTraitCollection:nil]
-                      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                                     inBundle:bundle
+                compatibleWithTraitCollection:nil]
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 }
 
 - (void)showMultiLineAlignedButtonStyleBanner {
@@ -302,7 +302,7 @@ static NSString *const exampleExtraLongText =
   self.bannerView.icon = [[UIImage imageNamed:@"banner-email"
                                      inBundle:bundle
                 compatibleWithTraitCollection:nil]
-                          imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 }
 
 - (void)showMultiLineStackedButtonStyleBanner {
@@ -355,7 +355,7 @@ static NSString *const exampleExtraLongText =
   self.bannerView.icon = [[UIImage imageNamed:@"banner-email"
                                      inBundle:bundle
                 compatibleWithTraitCollection:nil]
-                          imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 }
 
 - (void)dismissBanner {
