@@ -37,4 +37,13 @@
 @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
 
+
+/**
+ Enable legacy font scaling curves for Dynamic Type
+
+ Default value is NO.
+ */
+@property(nonatomic, readwrite, setter=mdc_setLegacyFontScaling:)
+    BOOL mdc_legacyFontScaling UI_APPEARANCE_SELECTOR;
+
 @end

@@ -215,7 +215,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   if (!_bodyFont) {
     _bodyFont = [MDCFeatureHighlightView defaultBodyFont];
   }
-  if (_mdc_adjustsFontForContentSizeCategory) {
+  if (_mdc_adjustsFontForContentSizeCategory && !_mdc_legacyFontScaling) {
     if (_bodyFont.mdc_scalingCurve) {
       // The font has an associated curve (M2+)
       _bodyLabel.font = [_bodyFont mdc_scaledFontForCurrentSizeCategory];
