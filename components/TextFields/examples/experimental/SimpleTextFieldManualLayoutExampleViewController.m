@@ -200,6 +200,7 @@ static const NSUInteger kDefaultVerticalPadding = 20;
 - (MDCSimpleTextField *)createFilledTextField {
   MDCSimpleTextField *textField = [[MDCSimpleTextField alloc] init];
   [textField applyFilledThemeWithScheme:self.containerScheme];
+  textField.mdc_adjustsFontForContentSizeCategory = YES;
   textField.placeholder = @"This is a placeholder";
   textField.clearButtonMode = UITextFieldViewModeWhileEditing;
   textField.leadingUnderlineLabel.numberOfLines = 0;
@@ -224,6 +225,7 @@ static const NSUInteger kDefaultVerticalPadding = 20;
   [textField applyOutlinedThemeWithScheme:self.containerScheme];
   textField.placeholder = @"This is another placeholder";
   textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+  textField.mdc_adjustsFontForContentSizeCategory = YES;
   return textField;
 }
 

@@ -17,6 +17,7 @@
 #import <Foundation/Foundation.h>
 
 #import <MDFInternationalization/MDFInternationalization.h>
+#import <MaterialComponents/MaterialTypography.h>
 
 #import "MDCContainerStylePathDrawingUtils.h"
 #import "MDCSimpleTextFieldLayout.h"
@@ -513,10 +514,6 @@
   return CGRectMake(0, 0, CGRectGetWidth(self.frame), self.layout.topRowBottomRowDividerY);
 }
 
-- (void)setText:(NSString *)text {
-  [super setText:text];
-}
-
 #pragma mark UITextField Layout Overrides
 
 - (CGRect)textRectForBounds:(CGRect)bounds {
@@ -576,6 +573,41 @@
     font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
   });
   return font;
+}
+
+- (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
+  _mdc_adjustsFontForContentSizeCategory = adjusts;
+  if (_mdc_adjustsFontForContentSizeCategory) {
+    [self startObservingUIContentSizeCategory];
+  } else {
+    [self stopObservingUIContentSizeCategory];
+  }
+  [self updateFontsForDynamicType];
+}
+
+- (void)updateFontsForDynamicType {
+  if (self.mdc_adjustsFontForContentSizeCategory) {
+    UIFont *textFont = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
+    UIFont *helperFont = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleCaption];
+    self.font = textFont;
+    self.placeholderLabel.font = textFont;
+    self.leadingUnderlineLabel.font = helperFont;
+    self.trailingUnderlineLabel.font = helperFont;
+  }
+  [self setNeedsLayout];
+}
+
+- (void)startObservingUIContentSizeCategory {
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(updateFontsForDynamicType)
+                                               name:UIContentSizeCategoryDidChangeNotification
+                                             object:nil];
+}
+
+- (void)stopObservingUIContentSizeCategory {
+  [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                  name:UIContentSizeCategoryDidChangeNotification
+                                                object:nil];
 }
 
 #pragma mark Text Field State
