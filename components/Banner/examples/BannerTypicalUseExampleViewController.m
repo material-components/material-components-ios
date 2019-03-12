@@ -165,39 +165,40 @@ static NSString *const exampleExtraLongText =
                             exampleUseSelector:@selector(showSingleLineStyleBanner)];
   [bannerExampleList addObject:exampleUseInfo1];
 
-  BannerExampleUseInfo *exampleUseInfo4 =
-      [BannerExampleUseInfo infoWithIdentifier:@"example4"
+  BannerExampleUseInfo *exampleUseInfo2 =
+      [BannerExampleUseInfo infoWithIdentifier:@"example2"
                                    displayName:@"Short Text with One Action (Icon)"
                               exampleUseTarget:self
                             exampleUseSelector:@selector(showSingleLineStyleBannerWithIcon)];
+  [bannerExampleList addObject:exampleUseInfo2];
+
+  BannerExampleUseInfo *exampleUseInfo3 =
+      [BannerExampleUseInfo infoWithIdentifier:@"example3"
+                                   displayName:@"Long Text with Two Short Actions"
+                              exampleUseTarget:self
+                            exampleUseSelector:@selector(showMultiLineAlignedButtonStyleBanner)];
+  [bannerExampleList addObject:exampleUseInfo3];
+
+  BannerExampleUseInfo *exampleUseInfo4 = [BannerExampleUseInfo
+      infoWithIdentifier:@"example4"
+             displayName:@"Long Text with Two Short Actions (Icon)"
+        exampleUseTarget:self
+      exampleUseSelector:@selector(showMultiLineAlignedButtonStyleBannerWithIcon)];
   [bannerExampleList addObject:exampleUseInfo4];
 
   BannerExampleUseInfo *exampleUseInfo5 =
       [BannerExampleUseInfo infoWithIdentifier:@"example5"
-                                   displayName:@"Long Text with Two Short Actions"
-                              exampleUseTarget:self
-                            exampleUseSelector:@selector(showMultiLineAlignedButtonStyleBanner)];
-  [bannerExampleList addObject:exampleUseInfo5];
-
-  BannerExampleUseInfo *exampleUseInfo2 = [BannerExampleUseInfo
-      infoWithIdentifier:@"example2"
-             displayName:@"Long Text with Two Short Actions (Icon)"
-        exampleUseTarget:self
-      exampleUseSelector:@selector(showMultiLineAlignedButtonStyleBannerWithIcon)];
-  [bannerExampleList addObject:exampleUseInfo2];
-
-  BannerExampleUseInfo *exampleUseInfo6 =
-      [BannerExampleUseInfo infoWithIdentifier:@"example6"
                                    displayName:@"Long Text with Two Long Actions"
                               exampleUseTarget:self
                             exampleUseSelector:@selector(showMultiLineStackedButtonStyleBanner)];
-  [bannerExampleList addObject:exampleUseInfo6];
-  BannerExampleUseInfo *exampleUseInfo3 = [BannerExampleUseInfo
-      infoWithIdentifier:@"example3"
+  [bannerExampleList addObject:exampleUseInfo5];
+
+  BannerExampleUseInfo *exampleUseInfo6 = [BannerExampleUseInfo
+      infoWithIdentifier:@"example6"
              displayName:@"Long Text with Two Long Actions (Icon)"
         exampleUseTarget:self
       exampleUseSelector:@selector(showMultiLineStackedButtonStyleBannerWithIcon)];
-  [bannerExampleList addObject:exampleUseInfo3];
+  [bannerExampleList addObject:exampleUseInfo6];
 
   return [bannerExampleList copy];
 }
