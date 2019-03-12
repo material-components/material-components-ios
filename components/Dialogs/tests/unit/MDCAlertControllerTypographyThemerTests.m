@@ -32,10 +32,10 @@
   [MDCAlertTypographyThemer applyTypographyScheme:typographyScheme toAlertController:alert];
 
   MDCAlertControllerView *view = (MDCAlertControllerView *)alert.view;
-  XCTAssertEqual(view.titleLabel.font.pointSize, typographyScheme.headline6.pointSize);
-  XCTAssertEqual(view.messageLabel.font.pointSize, typographyScheme.body1.pointSize);
+  XCTAssertEqualObjects(view.titleLabel.font, typographyScheme.headline6);
+  XCTAssertEqualObjects(view.messageLabel.font, typographyScheme.body1);
   for (UIButton *button in view.actionManager.buttonsInActionOrder) {
-    XCTAssertEqual(button.titleLabel.font.pointSize, typographyScheme.button.pointSize);
+    XCTAssertEqualObjects(button.titleLabel.font, typographyScheme.button);
   }
 }
 

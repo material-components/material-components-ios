@@ -49,7 +49,6 @@ mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
         ":Typography",
-        "//components/schemes/Typography",
     ],
 )
 
@@ -57,7 +56,6 @@ mdc_examples_swift_library(
     name = "SwiftExamples",
     deps = [
         ":Typography",
-        "//components/schemes/Typography",
     ],
 )
 
@@ -74,7 +72,6 @@ mdc_objc_library(
     deps = [
         ":Typography",
         ":private",
-        "//components/schemes/Typography",
     ],
 )
 
