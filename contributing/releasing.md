@@ -40,6 +40,8 @@ Install [brew](https://brew.sh/), [sourcekitten](https://github.com/jpsim/Source
     brew install sourcekitten
     brew install git-lfs
 
+Please follow [using git-lfs instructions](https://github.com/material-components/material-components-ios/blob/2b6da5f10438081e5a7b2211e27336c6846433e5/contributing/tools.md#using-git-lfs) if you have already cloned the repository.
+
 Verify that xcode-select is pointing to an Xcode installation directory:
 
     sudo xcode-select -p
@@ -59,10 +61,6 @@ will be working day-to-day with a fork, consider creating a separate clone just 
 
     git clone git@github.com:material-components/material-components-ios.git mdc-ios-release
     cd mdc-ios-release
-
-### Install git-lfs
-
-Please follow [using git-lfs instructions](https://github.com/material-components/material-components-ios/blob/2b6da5f10438081e5a7b2211e27336c6846433e5/contributing/tools.md#using-git-lfs)
 
 ### Configure the merge strategy for `.gitattributes`
 
