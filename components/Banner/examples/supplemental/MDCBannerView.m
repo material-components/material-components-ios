@@ -88,6 +88,7 @@ static const NSUInteger kNumberOfButtonsLimit = 2;
   if (icon == nil) {
     [self.iconImageView removeFromSuperview];
     self.iconImageView = nil;
+    [self invalidateIntrinsicContentSize];
   } else if (self.iconImageView == nil) {
     CGRect iconImageViewFrame =
         CGRectMake(0, 0, kIconImageViewSideLength, kIconImageViewSideLength);
@@ -120,6 +121,7 @@ static const NSUInteger kNumberOfButtonsLimit = 2;
     iconImageView.clipsToBounds = YES;
     self.iconImageView = iconImageView;
     [self.containerView addSubview:self.iconImageView];
+    [self invalidateIntrinsicContentSize];
   } else {
     self.iconImageView.image = icon;
   }
@@ -138,6 +140,7 @@ static const NSUInteger kNumberOfButtonsLimit = 2;
     button.translatesAutoresizingMaskIntoConstraints = NO;
     [self.containerView addSubview:button];
   }
+  [self invalidateIntrinsicContentSize];
 }
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
@@ -147,6 +150,7 @@ static const NSUInteger kNumberOfButtonsLimit = 2;
 
 - (void)setTextFont:(UIFont *)textFont {
   self.textLabel.font = textFont;
+  [self invalidateIntrinsicContentSize];
 }
 
 - (UIFont *)textFont {
@@ -172,6 +176,14 @@ static const NSUInteger kNumberOfButtonsLimit = 2;
 #pragma mark - UIView overrides
 
 - (CGSize)sizeThatFits:(CGSize)size {
+  self.layout = [[MDCBannerViewLayout alloc] initWithPreferredWidth:self.preferredContentWidth
+                                                          textLabel:self.textLabel
+                                                      iconContainer:self.iconImageView
+                                                            buttons:self.buttons];
+  return CGSizeMake([UIScreen mainScreen].bounds.size.width, self.layout.size.height);
+}
+
+- (CGSize)intrinsicContentSize {
   self.layout = [[MDCBannerViewLayout alloc] initWithPreferredWidth:self.preferredContentWidth
                                                           textLabel:self.textLabel
                                                       iconContainer:self.iconImageView
