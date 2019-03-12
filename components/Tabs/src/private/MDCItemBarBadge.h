@@ -1,4 +1,4 @@
-// Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2019-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,9 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCItemBarCell.h"
+#import <UIKit/UIKit.h>
 
-@interface MDCItemBarCell ()
-@property(nonatomic, strong) UILabel *titleLabel;
-@property(nonatomic, strong, readonly) UILabel *badgeLabel;
+@interface MDCItemBarBadge : UIView
+
+@property(nonatomic, copy) NSString *badgeValue;
+@property(nonatomic, copy) UIColor *badgeColor;
+@property(nonatomic, strong, readonly) UILabel *badgeValueLabel;
+
 @end
