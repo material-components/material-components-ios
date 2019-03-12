@@ -1,15 +1,11 @@
-# #develop#
+# 79.1.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This minor release increases our snapshot testing coverage and introduces a migration flag for including `UIAccessibilityTraitButton` in
+MDCButton's accessibilityTraits.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+While we do not expect the new MDCButton behavior to be breaking, you can opt out of it by disabling the new `accessibilityTraitsIncludesButton`
+property. This property will be deprecated and deleted in a future release.
 
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
 ## API changes
 
 ### Buttons
@@ -17,106 +13,6 @@ Replace this text with example code for each new feature.
 #### MDCButton
 
 *new* property: `accessibilityTraitsIncludesButton` in `MDCButton`
-
-### Typography
-
-#### MDCTextStyleButton
-
-*new* constant: `MDCTextStyleButton`
-
-#### MDCTextStyleCaption
-
-*new* constant: `MDCTextStyleCaption`
-
-#### MDCTextStyleHeadline2
-
-*new* constant: `MDCTextStyleHeadline2`
-
-#### MDCTextStyleHeadline4
-
-*new* constant: `MDCTextStyleHeadline4`
-
-#### MDCTextStyleSubtitle1
-
-*new* constant: `MDCTextStyleSubtitle1`
-
-#### MDCTextStyleHeadline3
-
-*new* constant: `MDCTextStyleHeadline3`
-
-#### MDCTextStyleHeadline1
-
-*new* constant: `MDCTextStyleHeadline1`
-
-#### MDCTextStyleOverline
-
-*new* constant: `MDCTextStyleOverline`
-
-#### MDCTextStyleHeadline6
-
-*new* constant: `MDCTextStyleHeadline6`
-
-#### MDCTextStyleSubtitle2
-
-*new* constant: `MDCTextStyleSubtitle2`
-
-#### MDCTextStyleBody1
-
-*new* constant: `MDCTextStyleBody1`
-
-#### MDCTextStyle
-
-*new* typedef: `MDCTextStyle`
-
-#### MDCFontScaler
-
-*new* method: `-scalableFontWithFont:` in `MDCFontScaler`
-
-*new* method: `-init` in `MDCFontScaler`
-
-*new* method: `-initForMaterialTextStyle:` in `MDCFontScaler`
-
-*new* class: `MDCFontScaler`
-
-*new* class method: `+scalerForMaterialTextStyle:` in `MDCFontScaler`
-
-#### MDCTextStyleBody2
-
-*new* constant: `MDCTextStyleBody2`
-
-#### MDCTextStyleHeadline5
-
-*new* constant: `MDCTextStyleHeadline5`
-
-#### UIFont(MaterialScalable)
-
-*new* method: `-scaledValueForValue:` in `UIFont(MaterialScalable)`
-
-*new* property: `mdc_scalingCurve` in `UIFont(MaterialScalable)`
-
-*new* method: `-mdc_scaledFontForSizeCategory:` in `UIFont(MaterialScalable)`
-
-*new* category: `UIFont(MaterialScalable)`
-
-*new* method: `-mdc_scaledFontAtDefaultSize` in `UIFont(MaterialScalable)`
-
-*new* method: `-mdc_scaledFontForCurrentSizeCategory` in `UIFont(MaterialScalable)`
-
-### TypographyScheme
-
-#### MDCTypographySchemeDefaults
-
-*new* enum value: `MDCTypographySchemeDefaultsMaterial201902` in `MDCTypographySchemeDefaults`
-
-#### MDCTypographyScheming
-
-*new* property: `mdc_adjustsFontForContentSizeCategory` in `MDCTypographyScheming`
-
-#### MDCTypographyScheme
-
-*new* property: `mdc_adjustsFontForContentSizeCategory` in `MDCTypographyScheme`
-
-## Component changes
 
 ## Changes
 
@@ -163,6 +59,7 @@ Replace this text with example code for each new feature.
 * [Add basic snapshot tests. (#6822)](https://github.com/material-components/material-components-ios/commit/9e8fdc2d7fc27a3df47781f6ab15c605e3941fed) (Robert Moore)
 * [Dynamic Type 2.0 (#6733)](https://github.com/material-components/material-components-ios/commit/648f2499e80a02de28a545a223cc50f00c715097) (ianegordon)
 * [Enable -Wunguarded-availability. (#6776)](https://github.com/material-components/material-components-ios/commit/f17b01c584b02581c8b7fa3e1a03628b8191b0cf) (featherless)
+* [Revert "[Typography] Dynamic Type 2.0 (#6733)" (#6848)](https://github.com/material-components/material-components-ios/commit/7f52f35f07a8329f6ebf6a931b28d6acf158855a) (ianegordon)
 * [{Tests} Fix font comparison in Objective-C. (#6789)](https://github.com/material-components/material-components-ios/commit/3447c7b719bcdb9ddcbb566c7e491db46b21caeb) (Robert Moore)
 
 ---
