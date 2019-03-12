@@ -437,6 +437,7 @@ static NSString *const kOfAnnouncement = @"of";
     } else if ([keyPath isEqualToString:kTitlePositionAdjustment]) {
       itemView.titlePositionAdjustment = [change[kNewString] UIOffsetValue];
     }
+    [itemView setSelected:itemView.selected animated:NO];
   }
 }
 
