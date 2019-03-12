@@ -1093,4 +1093,90 @@ static NSString *const kBadgeTitleArabic = @"أورا";
   }
 }
 
+#pragma mark - KVO tests
+
+- (void)testChangeSelectedIconWhenUnselected {
+  // Given
+  [self configureBottomNavigation:self.navigationBar
+                    withAlignment:MDCBottomNavigationBarAlignmentJustified
+                  titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
+                  traitCollection:nil
+                        allTitles:kLongTitleLatin];
+  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
+  self.navigationBar.selectedItemTintColor = UIColor.orangeColor;
+  self.navigationBar.unselectedItemTintColor = UIColor.blackColor;
+  self.navigationBar.selectedItem = self.tabItem2;
+
+  // When
+  self.tabItem3.selectedImage = [[UIImage mdc_testImageOfSize:CGSizeMake(36, 36)]
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testChangeSelectedIconWhenSelected {
+  // Given
+  [self configureBottomNavigation:self.navigationBar
+                    withAlignment:MDCBottomNavigationBarAlignmentJustified
+                  titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
+                  traitCollection:nil
+                        allTitles:kLongTitleLatin];
+  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
+  self.navigationBar.selectedItemTintColor = UIColor.orangeColor;
+  self.navigationBar.unselectedItemTintColor = UIColor.blackColor;
+  self.navigationBar.selectedItem = self.tabItem2;
+
+  // When
+  self.tabItem2.selectedImage = [[UIImage mdc_testImageOfSize:CGSizeMake(36, 36)]
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testChangeUnselectedIconWhenUnselected {
+  // Given
+  [self configureBottomNavigation:self.navigationBar
+                    withAlignment:MDCBottomNavigationBarAlignmentJustified
+                  titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
+                  traitCollection:nil
+                        allTitles:kLongTitleLatin];
+  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
+  self.navigationBar.selectedItemTintColor = UIColor.orangeColor;
+  self.navigationBar.unselectedItemTintColor = UIColor.blackColor;
+  self.navigationBar.selectedItem = self.tabItem2;
+
+  // When
+  self.tabItem3.image = [[UIImage mdc_testImageOfSize:CGSizeMake(36, 36)]
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testChangeUnselectedIconWhenSelected {
+  // Given
+  [self configureBottomNavigation:self.navigationBar
+                    withAlignment:MDCBottomNavigationBarAlignmentJustified
+                  titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
+                  traitCollection:nil
+                        allTitles:kLongTitleLatin];
+  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
+  self.navigationBar.selectedItemTintColor = UIColor.orangeColor;
+  self.navigationBar.unselectedItemTintColor = UIColor.blackColor;
+  self.navigationBar.selectedItem = self.tabItem2;
+
+  // When
+  self.tabItem2.image = [[UIImage mdc_testImageOfSize:CGSizeMake(36, 36)]
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
 @end
