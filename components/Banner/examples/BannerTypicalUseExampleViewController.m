@@ -219,7 +219,8 @@ static NSString *const exampleExtraLongText =
   self.bannerView = bannerView;
 
   MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectZero];
-  [button setTitle:@"DISMISS" forState:UIControlStateNormal];
+  [button setTitle:@"Dismiss" forState:UIControlStateNormal];
+  button.uppercaseTitle = YES;
   [button setTitleColor:self.colorScheme.primaryColor forState:UIControlStateNormal];
   [button sizeToFit];
   button.backgroundColor = self.colorScheme.surfaceColor;
@@ -265,7 +266,8 @@ static NSString *const exampleExtraLongText =
   self.bannerView = bannerView;
 
   MDCButton *dismissButton = [[MDCButton alloc] initWithFrame:CGRectZero];
-  [dismissButton setTitle:@"DISMISS" forState:UIControlStateNormal];
+  [dismissButton setTitle:@"Dismiss" forState:UIControlStateNormal];
+  dismissButton.uppercaseTitle = YES;
   [dismissButton setTitleColor:self.colorScheme.primaryColor forState:UIControlStateNormal];
   dismissButton.backgroundColor = self.colorScheme.surfaceColor;
   [dismissButton sizeToFit];
@@ -273,7 +275,8 @@ static NSString *const exampleExtraLongText =
                     action:@selector(dismissBanner)
           forControlEvents:UIControlEventTouchUpInside];
   MDCButton *changeTextButton = [[MDCButton alloc] initWithFrame:CGRectZero];
-  [changeTextButton setTitle:@"LONG DISMISS" forState:UIControlStateNormal];
+  [changeTextButton setTitle:@"Long dismiss" forState:UIControlStateNormal];
+  changeTextButton.uppercaseTitle = YES;
   [changeTextButton setTitleColor:self.colorScheme.primaryColor forState:UIControlStateNormal];
   changeTextButton.backgroundColor = self.colorScheme.surfaceColor;
   [changeTextButton sizeToFit];
@@ -316,7 +319,8 @@ static NSString *const exampleExtraLongText =
   self.bannerView = bannerView;
 
   MDCButton *dismissButton = [[MDCButton alloc] initWithFrame:CGRectZero];
-  [dismissButton setTitle:@"DISMISS" forState:UIControlStateNormal];
+  [dismissButton setTitle:@"Dismiss" forState:UIControlStateNormal];
+  dismissButton.uppercaseTitle = YES;
   [dismissButton setTitleColor:self.colorScheme.primaryColor forState:UIControlStateNormal];
   dismissButton.backgroundColor = self.colorScheme.surfaceColor;
   [dismissButton sizeToFit];
@@ -324,7 +328,8 @@ static NSString *const exampleExtraLongText =
                     action:@selector(dismissBanner)
           forControlEvents:UIControlEventTouchUpInside];
   MDCButton *changeTextButton = [[MDCButton alloc] initWithFrame:CGRectZero];
-  [changeTextButton setTitle:@"EXTRA LONG LONG LONG DISMISS" forState:UIControlStateNormal];
+  [changeTextButton setTitle:@"Extra long long long dismiss" forState:UIControlStateNormal];
+  changeTextButton.uppercaseTitle = YES;
   [changeTextButton setTitleColor:self.colorScheme.primaryColor forState:UIControlStateNormal];
   changeTextButton.backgroundColor = self.colorScheme.surfaceColor;
   [changeTextButton sizeToFit];
