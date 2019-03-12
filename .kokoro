@@ -18,6 +18,11 @@
 set -e
 COCOAPODS_VERSION="1.6.0"
 
+# Fix permissions issue with Ruby Gems (b/128326105)
+if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+  sudo chown -Rh $(whoami) /Library/Ruby/Gems
+fi
+
 if [ -n "$KOKORO_BUILD_NUMBER" ]; then
   repo_dir='github/repo'
 else
