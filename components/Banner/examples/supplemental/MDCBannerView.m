@@ -27,9 +27,9 @@ static const NSUInteger kNumberOfButtonsLimit = 2;
 
 @interface MDCBannerView ()
 
-@property(nonatomic, readwrite, weak) UILabel *textLabel;
-@property(nonatomic, readwrite, weak) UIImageView *iconImageView;
-@property(nonatomic, readwrite, weak) UIView *containerView;
+@property(nonatomic, readwrite, strong) UILabel *textLabel;
+@property(nonatomic, readwrite, strong) UIImageView *iconImageView;
+@property(nonatomic, readwrite, strong) UIView *containerView;
 
 @property(nonatomic, readwrite, strong) MDCBannerViewLayout *layout;
 
