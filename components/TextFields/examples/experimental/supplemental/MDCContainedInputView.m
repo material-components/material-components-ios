@@ -262,7 +262,7 @@
   //  CGFloat lowerMinY = MIN(CGRectGetMinY(currentFrame), CGRectGetMinY(targetFrame));
   //  CGFloat higherMinY = MAX(CGRectGetMinY(currentFrame), CGRectGetMinY(targetFrame));
   //  CGFloat distanceTravelled = higherMinY - lowerMinY;
-  CGFloat animationDuration = 0.2;
+  CGFloat animationDuration = (CGFloat)0.2;
   //      distanceTravelled / kFloatingPlaceholderAnimationVelocityInPointsPerSecond;
 
   __weak typeof(self) weakSelf = self;

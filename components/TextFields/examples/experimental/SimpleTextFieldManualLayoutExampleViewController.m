@@ -272,9 +272,7 @@ static const NSUInteger kDefaultVerticalPadding = 20;
             textField.leadingUnderlineLabel.text = nil;
           }
         }
-        NSLog(@"done touching text fields");
       }];
-  NSLog(@"about to call set needs layout");
   [self.view setNeedsLayout];
 }
 
