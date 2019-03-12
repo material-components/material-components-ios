@@ -27,7 +27,7 @@
 #import "private/MaterialBottomNavigationStrings_table.h"
 
 // The Bundle for string resources.
-static NSString *const kMaterialBottomNavigationBundle = @"MaterialBottomNavigation.bundle";
+static NSString *const kBundleName = @"MaterialBottomNavigation.bundle";
 
 static const CGFloat kMinItemWidth = 80;
 static const CGFloat kPreferredItemWidth = 120;
@@ -36,22 +36,22 @@ static const CGFloat kMaxItemWidth = 168;
 static const CGFloat kItemHorizontalPadding = 12;
 static const CGFloat kBarHeightStackedTitle = 56;
 static const CGFloat kBarHeightAdjacentTitle = 40;
-static const CGFloat kMDCBottomNavigationBarItemsHorizontalMargin = 12;
-static NSString *const kMDCBottomNavigationBarBadgeColorString = @"badgeColor";
-static NSString *const kMDCBottomNavigationBarBadgeValueString = @"badgeValue";
-static NSString *const kMDCBottomNavigationBarAccessibilityValueString = @"accessibilityValue";
-static NSString *const kMDCBottomNavigationBarImageString = @"image";
-static NSString *const kMDCBottomNavigationBarSelectedImageString = @"selectedImage";
+static const CGFloat kItemsHorizontalMargin = 12;
+static NSString *const kBadgeColorString = @"badgeColor";
+static NSString *const kBadgeValueString = @"badgeValue";
+static NSString *const kAccessibilityValueString = @"accessibilityValue";
+static NSString *const kImageString = @"image";
+static NSString *const kSelectedImageString = @"selectedImage";
 // TODO: - Change to NSKeyValueChangeNewKey
-static NSString *const kMDCBottomNavigationBarNewString = @"new";
-static NSString *const kMDCBottomNavigationBarTitleString = @"title";
-static NSString *const kMDCBottomNavigationBarAccessibilityIdentifier = @"accessibilityIdentifier";
-static NSString *const kMDCBottomNavigationBarAccessibilityLabel = @"accessibilityLabel";
-static NSString *const kMDCBottomNavigationBarAccessibilityHint = @"accessibilityHint";
-static NSString *const kMDCBottomNavigationBarIsAccessibilityElement = @"isAccessibilityElement";
+static NSString *const kNewString = @"new";
+static NSString *const kTitleString = @"title";
+static NSString *const kAccessibilityIdentifier = @"accessibilityIdentifier";
+static NSString *const kAccessibilityLabel = @"accessibilityLabel";
+static NSString *const kAccessibilityHint = @"accessibilityHint";
+static NSString *const kIsAccessibilityElement = @"isAccessibilityElement";
 static NSString *const kTitlePositionAdjustment = @"titlePositionAdjustment";
 
-static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
+static NSString *const kOfAnnouncement = @"of";
 
 @interface MDCBottomNavigationBar () <MDCInkTouchControllerDelegate>
 
@@ -90,7 +90,7 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 }
 
 - (void)commonMDCBottomNavigationBarInit {
-  _itemsContentHorizontalMargin = kMDCBottomNavigationBarItemsHorizontalMargin;
+  _itemsContentHorizontalMargin = kItemsHorizontalMargin;
   _selectedItemTintColor = [UIColor blackColor];
   _unselectedItemTintColor = [UIColor grayColor];
   _selectedItemTitleColor = _selectedItemTintColor;
@@ -332,43 +332,43 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 - (void)addObserversToTabBarItems {
   for (UITabBarItem *item in self.items) {
     [item addObserver:self
-           forKeyPath:kMDCBottomNavigationBarBadgeColorString
+           forKeyPath:kBadgeColorString
               options:NSKeyValueObservingOptionNew
               context:nil];
     [item addObserver:self
-           forKeyPath:kMDCBottomNavigationBarBadgeValueString
+           forKeyPath:kBadgeValueString
               options:NSKeyValueObservingOptionNew
               context:nil];
     [item addObserver:self
-           forKeyPath:kMDCBottomNavigationBarAccessibilityValueString
+           forKeyPath:kAccessibilityValueString
               options:NSKeyValueObservingOptionNew
               context:nil];
     [item addObserver:self
-           forKeyPath:kMDCBottomNavigationBarImageString
+           forKeyPath:kImageString
               options:NSKeyValueObservingOptionNew
               context:nil];
     [item addObserver:self
-           forKeyPath:kMDCBottomNavigationBarSelectedImageString
+           forKeyPath:kSelectedImageString
               options:NSKeyValueObservingOptionNew
               context:nil];
     [item addObserver:self
-           forKeyPath:kMDCBottomNavigationBarTitleString
+           forKeyPath:kTitleString
               options:NSKeyValueObservingOptionNew
               context:nil];
     [item addObserver:self
-           forKeyPath:kMDCBottomNavigationBarAccessibilityIdentifier
+           forKeyPath:kAccessibilityIdentifier
               options:NSKeyValueObservingOptionNew
               context:nil];
     [item addObserver:self
-           forKeyPath:kMDCBottomNavigationBarAccessibilityLabel
+           forKeyPath:kAccessibilityLabel
               options:NSKeyValueObservingOptionNew
               context:nil];
     [item addObserver:self
-           forKeyPath:kMDCBottomNavigationBarAccessibilityHint
+           forKeyPath:kAccessibilityHint
               options:NSKeyValueObservingOptionNew
               context:nil];
     [item addObserver:self
-           forKeyPath:kMDCBottomNavigationBarIsAccessibilityElement
+           forKeyPath:kIsAccessibilityElement
               options:NSKeyValueObservingOptionNew
               context:nil];
     [item addObserver:self
@@ -381,16 +381,16 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 - (void)removeObserversFromTabBarItems {
   for (UITabBarItem *item in self.items) {
     @try {
-      [item removeObserver:self forKeyPath:kMDCBottomNavigationBarBadgeColorString];
-      [item removeObserver:self forKeyPath:kMDCBottomNavigationBarBadgeValueString];
-      [item removeObserver:self forKeyPath:kMDCBottomNavigationBarAccessibilityValueString];
-      [item removeObserver:self forKeyPath:kMDCBottomNavigationBarImageString];
-      [item removeObserver:self forKeyPath:kMDCBottomNavigationBarSelectedImageString];
-      [item removeObserver:self forKeyPath:kMDCBottomNavigationBarTitleString];
-      [item removeObserver:self forKeyPath:kMDCBottomNavigationBarAccessibilityIdentifier];
-      [item removeObserver:self forKeyPath:kMDCBottomNavigationBarAccessibilityLabel];
-      [item removeObserver:self forKeyPath:kMDCBottomNavigationBarAccessibilityHint];
-      [item removeObserver:self forKeyPath:kMDCBottomNavigationBarIsAccessibilityElement];
+      [item removeObserver:self forKeyPath:kBadgeColorString];
+      [item removeObserver:self forKeyPath:kBadgeValueString];
+      [item removeObserver:self forKeyPath:kAccessibilityValueString];
+      [item removeObserver:self forKeyPath:kImageString];
+      [item removeObserver:self forKeyPath:kSelectedImageString];
+      [item removeObserver:self forKeyPath:kTitleString];
+      [item removeObserver:self forKeyPath:kAccessibilityIdentifier];
+      [item removeObserver:self forKeyPath:kAccessibilityLabel];
+      [item removeObserver:self forKeyPath:kAccessibilityHint];
+      [item removeObserver:self forKeyPath:kIsAccessibilityElement];
       [item removeObserver:self forKeyPath:kTitlePositionAdjustment];
     } @catch (NSException *exception) {
       if (exception) {
@@ -414,28 +414,28 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
       }
     }
     MDCBottomNavigationItemView *itemView = _itemViews[selectedItemNum];
-    if ([keyPath isEqualToString:kMDCBottomNavigationBarBadgeColorString]) {
-      itemView.badgeColor = change[kMDCBottomNavigationBarNewString];
-    } else if ([keyPath isEqualToString:kMDCBottomNavigationBarAccessibilityValueString]) {
+    if ([keyPath isEqualToString:kBadgeColorString]) {
+      itemView.badgeColor = change[kNewString];
+    } else if ([keyPath isEqualToString:kAccessibilityValueString]) {
       itemView.accessibilityValue = change[NSKeyValueChangeNewKey];
-    } else if ([keyPath isEqualToString:kMDCBottomNavigationBarBadgeValueString]) {
-      itemView.badgeValue = change[kMDCBottomNavigationBarNewString];
-    } else if ([keyPath isEqualToString:kMDCBottomNavigationBarImageString]) {
-      itemView.image = change[kMDCBottomNavigationBarNewString];
-    } else if ([keyPath isEqualToString:kMDCBottomNavigationBarSelectedImageString]) {
-      itemView.selectedImage = change[kMDCBottomNavigationBarNewString];
-    } else if ([keyPath isEqualToString:kMDCBottomNavigationBarTitleString]) {
-      itemView.title = change[kMDCBottomNavigationBarNewString];
-    } else if ([keyPath isEqualToString:kMDCBottomNavigationBarAccessibilityIdentifier]) {
-      itemView.accessibilityIdentifier = change[kMDCBottomNavigationBarNewString];
-    } else if ([keyPath isEqualToString:kMDCBottomNavigationBarAccessibilityLabel]) {
-      itemView.accessibilityLabel = change[kMDCBottomNavigationBarNewString];
-    } else if ([keyPath isEqualToString:kMDCBottomNavigationBarAccessibilityHint]) {
-      itemView.accessibilityHint = change[kMDCBottomNavigationBarNewString];
-    } else if ([keyPath isEqualToString:kMDCBottomNavigationBarIsAccessibilityElement]) {
-      itemView.isAccessibilityElement = [change[kMDCBottomNavigationBarNewString] boolValue];
+    } else if ([keyPath isEqualToString:kBadgeValueString]) {
+      itemView.badgeValue = change[kNewString];
+    } else if ([keyPath isEqualToString:kImageString]) {
+      itemView.image = change[kNewString];
+    } else if ([keyPath isEqualToString:kSelectedImageString]) {
+      itemView.selectedImage = change[kNewString];
+    } else if ([keyPath isEqualToString:kTitleString]) {
+      itemView.title = change[kNewString];
+    } else if ([keyPath isEqualToString:kAccessibilityIdentifier]) {
+      itemView.accessibilityIdentifier = change[kNewString];
+    } else if ([keyPath isEqualToString:kAccessibilityLabel]) {
+      itemView.accessibilityLabel = change[kNewString];
+    } else if ([keyPath isEqualToString:kAccessibilityHint]) {
+      itemView.accessibilityHint = change[kNewString];
+    } else if ([keyPath isEqualToString:kIsAccessibilityElement]) {
+      itemView.isAccessibilityElement = [change[kNewString] boolValue];
     } else if ([keyPath isEqualToString:kTitlePositionAdjustment]) {
-      itemView.titlePositionAdjustment = [change[kMDCBottomNavigationBarNewString] UIOffsetValue];
+      itemView.titlePositionAdjustment = [change[kNewString] UIOffsetValue];
     }
   }
 }
@@ -547,8 +547,7 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
       NSString *key = kMaterialBottomNavigationStringTable
           [kStr_MaterialBottomNavigationItemCountAccessibilityHint];
       NSString *itemOfTotalString = NSLocalizedStringFromTableInBundle(
-          key, kMaterialBottomNavigationStringsTableName, [[self class] bundle],
-          kMDCBottomNavigationBarOfString);
+          key, kMaterialBottomNavigationStringsTableName, [[self class] bundle], kOfString);
       NSString *localizedPosition =
           [NSString localizedStringWithFormat:itemOfTotalString, (i + 1), (int)items.count];
       itemView.button.accessibilityHint = localizedPosition;
@@ -727,7 +726,7 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
   static NSBundle *bundle = nil;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    bundle = [NSBundle bundleWithPath:[self bundlePathWithName:kMaterialBottomNavigationBundle]];
+    bundle = [NSBundle bundleWithPath:[self bundlePathWithName:kBundleName]];
   });
   return bundle;
 }
