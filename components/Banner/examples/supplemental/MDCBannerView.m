@@ -14,22 +14,22 @@
 
 #import "MDCBannerView.h"
 
+#import "MDCBannerViewConstants.h"
 #import "MDCBannerViewLayout.h"
 #import "MaterialButtons.h"
+#import "MaterialTypography.h"
 
-static const CGFloat kIconImageContainerSideLength = 40.0f;
-static const CGFloat kIconImageSideLength = 24.0f;
-static const CGFloat kTextColorOpacity = 0.87f;
-static const CGFloat kTextFontSize = 14.0f;
+static const CGFloat kIconImageViewSideLength = 40;
 static const NSInteger kTextNumberOfLineLimit = 3;
+#if DEBUG
 static const NSUInteger kNumberOfButtonsLimit = 2;
+#endif
 
 @interface MDCBannerView ()
 
-@property(nonatomic, readwrite, weak) UILabel *textLabel;
-@property(nonatomic, readwrite, weak) UIView *iconImageViewContainer;
-@property(nonatomic, readwrite, weak) UIImageView *iconImageView;
-@property(nonatomic, readwrite, copy) NSArray<MDCButton *> *buttons;
+@property(nonatomic, readwrite, strong) UILabel *textLabel;
+@property(nonatomic, readwrite, strong) UIImageView *iconImageView;
+@property(nonatomic, readwrite, strong) UIView *containerView;
 
 @property(nonatomic, readwrite, strong) MDCBannerViewLayout *layout;
 
@@ -54,124 +54,500 @@ static const NSUInteger kNumberOfButtonsLimit = 2;
 }
 
 - (void)commonBannerViewInit {
-  self.backgroundColor = [UIColor whiteColor];
+  self.backgroundColor = UIColor.whiteColor;
+  UIView *containerView = [[UIView alloc] initWithFrame:CGRectZero];
+  containerView.translatesAutoresizingMaskIntoConstraints = NO;
+  [self addSubview:containerView];
+  _containerView = containerView;
 
-  _buttons = [[NSArray alloc] init];
-  self.numberOfButtons = 1;
+  _buttons = [[NSMutableArray alloc] init];
 
   UILabel *textLabel = [[UILabel alloc] init];
-  textLabel.font = [UIFont systemFontOfSize:kTextFontSize];
-  textLabel.textColor = [UIColor colorWithWhite:0 alpha:kTextColorOpacity];
+  textLabel.translatesAutoresizingMaskIntoConstraints = NO;
+  textLabel.font = [MDCTypography body2Font];
+  textLabel.textColor = UIColor.blackColor;
+  textLabel.alpha = [MDCTypography body2FontOpacity];
   textLabel.numberOfLines = kTextNumberOfLineLimit;
   textLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+  [self.containerView addSubview:textLabel];
   _textLabel = textLabel;
-  [self addSubview:textLabel];
 }
 
 #pragma mark - Property Setter and Getter
 
 - (void)setText:(NSString *)text {
   self.textLabel.text = text;
+  [self invalidateIntrinsicContentSize];
 }
 
 - (NSString *)text {
   return self.textLabel.text;
 }
 
-- (void)setImage:(UIImage *)image {
-  if (image) {
-    _image = image;
-    if (!self.iconImageViewContainer) {
-      CGRect iconImageContainerFrame =
-          CGRectMake(0, 0, kIconImageContainerSideLength, kIconImageContainerSideLength);
-      UIView *iconImageViewContainer = [[UIView alloc] initWithFrame:iconImageContainerFrame];
-      UIImageView *iconImageView = [[UIImageView alloc] initWithImage:image];
-      CGRect iconImageFrame = CGRectMake(0, 0, kIconImageSideLength, kIconImageSideLength);
-      iconImageView.frame = iconImageFrame;
-      iconImageView.contentMode = UIViewContentModeScaleAspectFit;
-      iconImageView.clipsToBounds = YES;
-      [iconImageViewContainer addSubview:iconImageView];
-      self.iconImageViewContainer = iconImageViewContainer;
-      self.iconImageView = iconImageView;
-      [self addSubview:iconImageViewContainer];
-    } else {
-      self.iconImageView.image = image;
-    }
+- (void)setIcon:(UIImage *)icon {
+  if (icon == nil) {
+    [self.iconImageView removeFromSuperview];
+    self.iconImageView = nil;
+  } else if (self.iconImageView == nil) {
+    CGRect iconImageViewFrame =
+        CGRectMake(0, 0, kIconImageViewSideLength, kIconImageViewSideLength);
+    UIImageView *iconImageView = [[UIImageView alloc] initWithFrame:iconImageViewFrame];
+    iconImageView.image = icon;
+    iconImageView.translatesAutoresizingMaskIntoConstraints = NO;
+
+    NSLayoutConstraint *iconImageWidthConstraint =
+        [NSLayoutConstraint constraintWithItem:iconImageView
+                                     attribute:NSLayoutAttributeWidth
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:nil
+                                     attribute:NSLayoutAttributeNotAnAttribute
+                                    multiplier:1
+                                      constant:kIconImageViewSideLength];
+
+    NSLayoutConstraint *iconImageHeightConstraint =
+        [NSLayoutConstraint constraintWithItem:iconImageView
+                                     attribute:NSLayoutAttributeHeight
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:nil
+                                     attribute:NSLayoutAttributeNotAnAttribute
+                                    multiplier:1
+                                      constant:kIconImageViewSideLength];
+
+    [NSLayoutConstraint
+        activateConstraints:@[ iconImageWidthConstraint, iconImageHeightConstraint ]];
+
+    iconImageView.contentMode = UIViewContentModeCenter;
+    iconImageView.clipsToBounds = YES;
+    self.iconImageView = iconImageView;
+    [self.containerView addSubview:self.iconImageView];
   } else {
-    _image = nil;
-    [self.iconImageViewContainer removeFromSuperview];
-    self.iconImageViewContainer = nil;
+    self.iconImageView.image = icon;
   }
   [self setNeedsLayout];
 }
 
-- (void)setNumberOfButtons:(NSUInteger)numberOfButtons {
-  NSAssert(numberOfButtons <= kNumberOfButtonsLimit,
-           @"%@ class doesn't support more than %lu buttons", NSStringFromClass([self class]),
-           (unsigned long)kNumberOfButtonsLimit);
-  if (numberOfButtons != self.buttons.count) {
-    NSMutableArray *mutableButtons = [self.buttons mutableCopy];
-    if (numberOfButtons > self.buttons.count) {
-      for (NSUInteger index = self.buttons.count; index < numberOfButtons; ++index) {
-        MDCButton *button = [[MDCButton alloc] init];
-        [mutableButtons addObject:button];
-        [self addSubview:button];
-      }
-    } else if (numberOfButtons < self.buttons.count) {
-      for (NSUInteger index = numberOfButtons; index < self.buttons.count; ++index) {
-        MDCButton *lastObject = [mutableButtons lastObject];
-        [lastObject removeFromSuperview];
-        [mutableButtons removeLastObject];
-      }
-    }
-    self.buttons = [mutableButtons copy];
+- (UIImage *)icon {
+  return self.iconImageView.image;
+}
+
+- (void)setButtons:(NSMutableArray<MDCButton *> *_Nonnull)buttons {
+  NSAssert(buttons.count <= kNumberOfButtonsLimit, @"%@ doesn't support more than %lu buttons",
+           NSStringFromClass([self class]), (unsigned long)kNumberOfButtonsLimit);
+  _buttons = buttons;
+  for (MDCButton *button in buttons) {
+    button.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.containerView addSubview:button];
   }
 }
 
-- (NSUInteger)numberOfButtons {
-  return self.buttons.count;
+- (void)setBackgroundColor:(UIColor *)backgroundColor {
+  [super setBackgroundColor:backgroundColor];
+  self.containerView.backgroundColor = backgroundColor;
+}
+
+- (void)setTextFont:(UIFont *)textFont {
+  self.textLabel.font = textFont;
+}
+
+- (UIFont *)textFont {
+  return self.textLabel.font;
+}
+
+- (void)setTextColor:(UIColor *)textColor {
+  self.textLabel.textColor = textColor;
+}
+
+- (UIColor *)textColor {
+  return self.textLabel.textColor;
+}
+
+- (void)setIconTintColor:(UIColor *)iconTintColor {
+  self.iconImageView.tintColor = iconTintColor;
+}
+
+- (UIColor *)iconTintColor {
+  return self.iconImageView.tintColor;
 }
 
 #pragma mark - UIView overrides
 
 - (CGSize)sizeThatFits:(CGSize)size {
-  self.layout = [[MDCBannerViewLayout alloc] initWithSizeToFit:size
-                                                     textLabel:self.textLabel
-                                                imageContainer:self.iconImageViewContainer
-                                                       buttons:self.buttons];
-  return [self.layout frameSize];
+  self.layout = [[MDCBannerViewLayout alloc] initWithPreferredWidth:self.preferredContentWidth
+                                                          textLabel:self.textLabel
+                                                      iconContainer:self.iconImageView
+                                                            buttons:self.buttons];
+  return CGSizeMake([UIScreen mainScreen].bounds.size.width, self.layout.size.height);
 }
 
-- (void)layoutSubviews {
-  [super layoutSubviews];
+- (void)updateConstraints {
+  self.layout = [[MDCBannerViewLayout alloc] initWithPreferredWidth:self.preferredContentWidth
+                                                          textLabel:self.textLabel
+                                                      iconContainer:self.iconImageView
+                                                            buttons:self.buttons];
+  [self updateConstraintsWithLayoutStyle:self.layout.style];
 
-  [self applyMDCBannerViewLayout:self.layout];
+  [super updateConstraints];
 }
 
 #pragma mark - Layout methods
 
-- (void)applyMDCBannerViewLayout:(MDCBannerViewLayout *)layout {
-  if (![self isMDCBannerViewLayoutApplicable:layout]) {
-    return;
-  }
+- (void)updateConstraintsWithLayoutStyle:(MDCBannerViewLayoutStyle)layoutStyle {
+  // Set Container
+  NSLayoutConstraint *containerWidthConstraint =
+      [NSLayoutConstraint constraintWithItem:self.containerView
+                                   attribute:NSLayoutAttributeWidth
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:nil
+                                   attribute:NSLayoutAttributeNotAnAttribute
+                                  multiplier:1
+                                    constant:self.layout.size.width];
+  NSLayoutConstraint *containerHeightConstraint =
+      [NSLayoutConstraint constraintWithItem:self.containerView
+                                   attribute:NSLayoutAttributeHeight
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:nil
+                                   attribute:NSLayoutAttributeNotAnAttribute
+                                  multiplier:1
+                                    constant:self.layout.size.height];
+  NSLayoutConstraint *containerCenterXConstraint =
+      [NSLayoutConstraint constraintWithItem:self.containerView
+                                   attribute:NSLayoutAttributeCenterX
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:self
+                                   attribute:NSLayoutAttributeCenterX
+                                  multiplier:1
+                                    constant:0];
+  NSLayoutConstraint *containerCenterYConstraint =
+      [NSLayoutConstraint constraintWithItem:self.containerView
+                                   attribute:NSLayoutAttributeCenterY
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:self
+                                   attribute:NSLayoutAttributeCenterY
+                                  multiplier:1
+                                    constant:0];
+  [self addConstraints:@[
+    containerWidthConstraint, containerHeightConstraint, containerCenterXConstraint,
+    containerCenterYConstraint
+  ]];
 
-  self.iconImageViewContainer.frame = layout.imageContainerFrame;
-  self.iconImageView.center = CGPointMake(CGRectGetWidth(layout.imageContainerFrame) / 2,
-                                          CGRectGetHeight(layout.imageContainerFrame) / 2);
-  self.textLabel.frame = layout.textLabelFrame;
-  [self.buttons enumerateObjectsUsingBlock:^(id object, NSUInteger idx, BOOL *stop) {
-    if (idx >= layout.buttonFrames.count) {
-      *stop = YES;
-      return;
+  // Set Elements
+  if (layoutStyle == MDCBannerViewLayoutSingleLineStyle) {
+    if (self.iconImageView) {
+      NSLayoutConstraint *iconLeadingConstraint =
+          [NSLayoutConstraint constraintWithItem:self.iconImageView
+                                       attribute:NSLayoutAttributeLeading
+                                       relatedBy:NSLayoutRelationEqual
+                                          toItem:self.containerView
+                                       attribute:NSLayoutAttributeLeading
+                                      multiplier:1
+                                        constant:kLeadingPadding];
+      NSLayoutConstraint *iconTopConstraint =
+          [NSLayoutConstraint constraintWithItem:self.iconImageView
+                                       attribute:NSLayoutAttributeTop
+                                       relatedBy:NSLayoutRelationEqual
+                                          toItem:self.containerView
+                                       attribute:NSLayoutAttributeTop
+                                      multiplier:1
+                                        constant:kTopPaddingSmall];
+      NSLayoutConstraint *iconBottomConstraint =
+          [NSLayoutConstraint constraintWithItem:self.iconImageView
+                                       attribute:NSLayoutAttributeBottom
+                                       relatedBy:NSLayoutRelationEqual
+                                          toItem:self.containerView
+                                       attribute:NSLayoutAttributeBottom
+                                      multiplier:1
+                                        constant:-kBottomPadding];
+      NSLayoutConstraint *textLabelLeadingConstraint =
+          [NSLayoutConstraint constraintWithItem:self.textLabel
+                                       attribute:NSLayoutAttributeLeading
+                                       relatedBy:NSLayoutRelationEqual
+                                          toItem:self.iconImageView
+                                       attribute:NSLayoutAttributeTrailing
+                                      multiplier:1
+                                        constant:kSpaceBetweenIconImageAndTextLabel];
+      NSLayoutConstraint *textLabelCenterConstraint =
+          [NSLayoutConstraint constraintWithItem:self.textLabel
+                                       attribute:NSLayoutAttributeCenterY
+                                       relatedBy:NSLayoutRelationEqual
+                                          toItem:self.iconImageView
+                                       attribute:NSLayoutAttributeCenterY
+                                      multiplier:1
+                                        constant:0];
+      [NSLayoutConstraint activateConstraints:@[
+        iconLeadingConstraint, iconTopConstraint, iconBottomConstraint, textLabelLeadingConstraint,
+        textLabelCenterConstraint
+      ]];
+    } else {
+      NSLayoutConstraint *textLabelLeadingConstraint =
+          [NSLayoutConstraint constraintWithItem:self.textLabel
+                                       attribute:NSLayoutAttributeLeading
+                                       relatedBy:NSLayoutRelationEqual
+                                          toItem:self.containerView
+                                       attribute:NSLayoutAttributeLeading
+                                      multiplier:1
+                                        constant:kLeadingPadding];
+      NSLayoutConstraint *textLabelTopConstraint =
+          [NSLayoutConstraint constraintWithItem:self.textLabel
+                                       attribute:NSLayoutAttributeTop
+                                       relatedBy:NSLayoutRelationEqual
+                                          toItem:self.containerView
+                                       attribute:NSLayoutAttributeTop
+                                      multiplier:1
+                                        constant:kTopPaddingSmall];
+      NSLayoutConstraint *textLabelBottomConstraint =
+          [NSLayoutConstraint constraintWithItem:self.textLabel
+                                       attribute:NSLayoutAttributeBottom
+                                       relatedBy:NSLayoutRelationEqual
+                                          toItem:self.containerView
+                                       attribute:NSLayoutAttributeBottom
+                                      multiplier:1
+                                        constant:-kBottomPadding];
+      [NSLayoutConstraint activateConstraints:@[
+        textLabelLeadingConstraint, textLabelTopConstraint, textLabelBottomConstraint
+      ]];
     }
-    UIButton *button = (UIButton *)object;
-    CGRect buttonFrame = [layout.buttonFrames[idx] CGRectValue];
-    button.frame = buttonFrame;
-  }];
-}
+    NSLayoutConstraint *buttonLeadingConstraint =
+        [NSLayoutConstraint constraintWithItem:self.buttons[0]
+                                     attribute:NSLayoutAttributeLeading
+                                     relatedBy:NSLayoutRelationGreaterThanOrEqual
+                                        toItem:self.textLabel
+                                     attribute:NSLayoutAttributeTrailing
+                                    multiplier:1
+                                      constant:kHorizontalSpaceBetweenTextLabelAndButton];
+    NSLayoutConstraint *buttonCenterConstraint =
+        [NSLayoutConstraint constraintWithItem:self.buttons[0]
+                                     attribute:NSLayoutAttributeCenterY
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self.textLabel
+                                     attribute:NSLayoutAttributeCenterY
+                                    multiplier:1
+                                      constant:0];
+    NSLayoutConstraint *buttonTrailingConstraint =
+        [NSLayoutConstraint constraintWithItem:self.buttons[0]
+                                     attribute:NSLayoutAttributeTrailing
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self.containerView
+                                     attribute:NSLayoutAttributeTrailing
+                                    multiplier:1
+                                      constant:-kTrailingPadding];
+    [NSLayoutConstraint activateConstraints:@[
+      buttonLeadingConstraint, buttonCenterConstraint, buttonTrailingConstraint
+    ]];
+  } else if (layoutStyle == MDCBannerViewLayoutMultiLineStackedButtonStyle) {
+    if (self.iconImageView) {
+      NSLayoutConstraint *iconLeadingConstraint =
+          [NSLayoutConstraint constraintWithItem:self.iconImageView
+                                       attribute:NSLayoutAttributeLeading
+                                       relatedBy:NSLayoutRelationEqual
+                                          toItem:self.containerView
+                                       attribute:NSLayoutAttributeLeading
+                                      multiplier:1
+                                        constant:kLeadingPadding];
+      NSLayoutConstraint *iconTopConstraint =
+          [NSLayoutConstraint constraintWithItem:self.iconImageView
+                                       attribute:NSLayoutAttributeTop
+                                       relatedBy:NSLayoutRelationEqual
+                                          toItem:self.containerView
+                                       attribute:NSLayoutAttributeTop
+                                      multiplier:1
+                                        constant:kTopPaddingLarge];
+      NSLayoutConstraint *textLabelLeadingConstraint =
+          [NSLayoutConstraint constraintWithItem:self.textLabel
+                                       attribute:NSLayoutAttributeLeading
+                                       relatedBy:NSLayoutRelationEqual
+                                          toItem:self.iconImageView
+                                       attribute:NSLayoutAttributeTrailing
+                                      multiplier:1
+                                        constant:kSpaceBetweenIconImageAndTextLabel];
+      NSLayoutConstraint *button1TopConstraintWithIcon =
+          [NSLayoutConstraint constraintWithItem:self.buttons[0]
+                                       attribute:NSLayoutAttributeTop
+                                       relatedBy:NSLayoutRelationGreaterThanOrEqual
+                                          toItem:self.iconImageView
+                                       attribute:NSLayoutAttributeBottom
+                                      multiplier:1
+                                        constant:kVerticalSpaceBetweenButtonAndTextLabel];
+      [NSLayoutConstraint activateConstraints:@[
+        iconLeadingConstraint, iconTopConstraint, textLabelLeadingConstraint,
+        button1TopConstraintWithIcon
+      ]];
+    } else {
+      NSLayoutConstraint *textLabelLeadingConstraint =
+          [NSLayoutConstraint constraintWithItem:self.textLabel
+                                       attribute:NSLayoutAttributeLeading
+                                       relatedBy:NSLayoutRelationEqual
+                                          toItem:self.containerView
+                                       attribute:NSLayoutAttributeLeading
+                                      multiplier:1
+                                        constant:kLeadingPadding];
+      [NSLayoutConstraint activateConstraints:@[ textLabelLeadingConstraint ]];
+    }
+    NSLayoutConstraint *textLabelTopConstraint =
+        [NSLayoutConstraint constraintWithItem:self.textLabel
+                                     attribute:NSLayoutAttributeTop
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self.containerView
+                                     attribute:NSLayoutAttributeTop
+                                    multiplier:1
+                                      constant:kTopPaddingLarge];
+    NSLayoutConstraint *textLabelTrailingConstraint =
+        [NSLayoutConstraint constraintWithItem:self.textLabel
+                                     attribute:NSLayoutAttributeTrailing
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self.containerView
+                                     attribute:NSLayoutAttributeTrailing
+                                    multiplier:1
+                                      constant:-kTrailingPadding];
 
-- (BOOL)isMDCBannerViewLayoutApplicable:(MDCBannerViewLayout *)layout {
-  return self.buttons.count == layout.buttonFrames.count;
+    NSLayoutConstraint *button1TrailingConstraint =
+        [NSLayoutConstraint constraintWithItem:self.buttons[0]
+                                     attribute:NSLayoutAttributeTrailing
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self.containerView
+                                     attribute:NSLayoutAttributeTrailing
+                                    multiplier:1
+                                      constant:-kTrailingPadding];
+    NSLayoutConstraint *button1TopConstraintWithTextLabel =
+        [NSLayoutConstraint constraintWithItem:self.buttons[0]
+                                     attribute:NSLayoutAttributeTop
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self.textLabel
+                                     attribute:NSLayoutAttributeBottom
+                                    multiplier:1
+                                      constant:kVerticalSpaceBetweenButtonAndTextLabel];
+    button1TopConstraintWithTextLabel.priority = UILayoutPriorityDefaultLow;
+    NSLayoutConstraint *button2TopConstraint =
+        [NSLayoutConstraint constraintWithItem:self.buttons[1]
+                                     attribute:NSLayoutAttributeTop
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self.buttons[0]
+                                     attribute:NSLayoutAttributeBottom
+                                    multiplier:1
+                                      constant:kButtonVerticalIntervalSpace];
+    NSLayoutConstraint *button2TrailingConstraint =
+        [NSLayoutConstraint constraintWithItem:self.buttons[1]
+                                     attribute:NSLayoutAttributeTrailing
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self.containerView
+                                     attribute:NSLayoutAttributeTrailing
+                                    multiplier:1
+                                      constant:-kTrailingPadding];
+    NSLayoutConstraint *button2BottomConstraint =
+        [NSLayoutConstraint constraintWithItem:self.buttons[1]
+                                     attribute:NSLayoutAttributeBottom
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self.containerView
+                                     attribute:NSLayoutAttributeBottom
+                                    multiplier:1
+                                      constant:-kBottomPadding];
+    [NSLayoutConstraint activateConstraints:@[
+      textLabelTopConstraint, textLabelTrailingConstraint, button1TrailingConstraint,
+      button1TopConstraintWithTextLabel, button2TopConstraint, button2TrailingConstraint,
+      button2BottomConstraint
+    ]];
+  } else if (layoutStyle == MDCBannerViewLayoutMultiLineAlignedButtonStyle) {
+    if (self.iconImageView) {
+      NSLayoutConstraint *iconLeadingConstraint =
+          [NSLayoutConstraint constraintWithItem:self.iconImageView
+                                       attribute:NSLayoutAttributeLeading
+                                       relatedBy:NSLayoutRelationEqual
+                                          toItem:self.containerView
+                                       attribute:NSLayoutAttributeLeading
+                                      multiplier:1
+                                        constant:kLeadingPadding];
+      NSLayoutConstraint *iconTopConstraint =
+          [NSLayoutConstraint constraintWithItem:self.iconImageView
+                                       attribute:NSLayoutAttributeTop
+                                       relatedBy:NSLayoutRelationEqual
+                                          toItem:self.containerView
+                                       attribute:NSLayoutAttributeTop
+                                      multiplier:1
+                                        constant:kTopPaddingLarge];
+      NSLayoutConstraint *textLabelLeadingConstraint =
+          [NSLayoutConstraint constraintWithItem:self.textLabel
+                                       attribute:NSLayoutAttributeLeading
+                                       relatedBy:NSLayoutRelationEqual
+                                          toItem:self.iconImageView
+                                       attribute:NSLayoutAttributeTrailing
+                                      multiplier:1
+                                        constant:kSpaceBetweenIconImageAndTextLabel];
+      NSLayoutConstraint *button1TopConstraintWithIcon =
+          [NSLayoutConstraint constraintWithItem:self.buttons[0]
+                                       attribute:NSLayoutAttributeTop
+                                       relatedBy:NSLayoutRelationGreaterThanOrEqual
+                                          toItem:self.iconImageView
+                                       attribute:NSLayoutAttributeBottom
+                                      multiplier:1
+                                        constant:kVerticalSpaceBetweenButtonAndTextLabel];
+      [NSLayoutConstraint activateConstraints:@[
+        iconLeadingConstraint, iconTopConstraint, textLabelLeadingConstraint,
+        button1TopConstraintWithIcon
+      ]];
+    } else {
+      NSLayoutConstraint *textLabelLeadingConstraint =
+          [NSLayoutConstraint constraintWithItem:self.textLabel
+                                       attribute:NSLayoutAttributeLeading
+                                       relatedBy:NSLayoutRelationEqual
+                                          toItem:self.containerView
+                                       attribute:NSLayoutAttributeLeading
+                                      multiplier:1
+                                        constant:kLeadingPadding];
+      [NSLayoutConstraint activateConstraints:@[ textLabelLeadingConstraint ]];
+    }
+    NSLayoutConstraint *textLabelTopConstraint =
+        [NSLayoutConstraint constraintWithItem:self.textLabel
+                                     attribute:NSLayoutAttributeTop
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self.containerView
+                                     attribute:NSLayoutAttributeTop
+                                    multiplier:1
+                                      constant:kTopPaddingLarge];
+    NSLayoutConstraint *textLabelTrailingConstraint =
+        [NSLayoutConstraint constraintWithItem:self.textLabel
+                                     attribute:NSLayoutAttributeTrailing
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self.containerView
+                                     attribute:NSLayoutAttributeTrailing
+                                    multiplier:1
+                                      constant:-kTrailingPadding];
+    NSLayoutConstraint *button1TopConstraintWithTextLabel =
+        [NSLayoutConstraint constraintWithItem:self.buttons[0]
+                                     attribute:NSLayoutAttributeTop
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self.textLabel
+                                     attribute:NSLayoutAttributeBottom
+                                    multiplier:1
+                                      constant:kVerticalSpaceBetweenButtonAndTextLabel];
+    button1TopConstraintWithTextLabel.priority = UILayoutPriorityDefaultLow;
+    NSLayoutConstraint *button2TopConstraint =
+        [NSLayoutConstraint constraintWithItem:self.buttons[1]
+                                     attribute:NSLayoutAttributeTop
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self.buttons[0]
+                                     attribute:NSLayoutAttributeTop
+                                    multiplier:1
+                                      constant:0];
+    NSLayoutConstraint *button2LeadingConstraint =
+        [NSLayoutConstraint constraintWithItem:self.buttons[1]
+                                     attribute:NSLayoutAttributeLeading
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self.buttons[0]
+                                     attribute:NSLayoutAttributeTrailing
+                                    multiplier:1
+                                      constant:kButtonHorizontalIntervalSpace];
+    NSLayoutConstraint *button2TrailingConstraint =
+        [NSLayoutConstraint constraintWithItem:self.buttons[1]
+                                     attribute:NSLayoutAttributeTrailing
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self.containerView
+                                     attribute:NSLayoutAttributeTrailing
+                                    multiplier:1
+                                      constant:-kTrailingPadding];
+    [NSLayoutConstraint activateConstraints:@[
+      textLabelTopConstraint, textLabelTrailingConstraint, button1TopConstraintWithTextLabel,
+      button2TopConstraint, button2LeadingConstraint, button2TrailingConstraint
+    ]];
+  }
 }
 
 @end
