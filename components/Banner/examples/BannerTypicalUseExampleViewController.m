@@ -150,8 +150,8 @@ static NSString *const exampleExtraLongText =
     topAreaInset = self.view.safeAreaInsets.top;
   }
 
-  self.bannerView.frame = CGRectMake(0.0f, topAreaInset, self.bannerView.frame.size.width,
-                                     self.bannerView.frame.size.height);
+  self.bannerView.frame = CGRectMake(0.0f, topAreaInset, CGRectGetWidth(self.bannerView.frame),
+                                     CGRectGetHeight(self.bannerView.frame));
 }
 
 #pragma mark - Internal helpers
