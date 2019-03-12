@@ -462,7 +462,8 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   // printout looks idential comparing the fonts returns false. (Using fontWithSize: did not work
   // for system font medium, instead it returned a regular font).
   UIFont *titleFont = self.navBar.titleLabel.font;
-  XCTAssertEqual(titleFont.pointSize, 20.0);
+  XCTAssertEqualObjects(titleFont.fontName, scheme.headline6.fontName);
+  XCTAssertEqual(titleFont.pointSize, scheme.headline6.pointSize);
 
   // Weight for Fonts was not introduced on iOS 8
   // TODO: remove this when we drop iOS 8 support.
