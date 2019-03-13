@@ -1,15 +1,11 @@
-# #develop#
+# 79.1.1
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This patch release fixes a bug in BottomNavigation where the icons were not showing up correctly.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+## Bugs closed in this release
 
-Replace this text with links to deprecation guides.
-## New features
+- https://github.com/material-components/material-components-ios/issues/6846
 
-Replace this text with example code for each new feature.
 ## API changes
 
 ## Component changes
