@@ -12,10 +12,9 @@ module SnapshotPodspecHelper
 
     def default_source_files
       if @name.present?
-        return [
-          "components/#{@name}/tests/snapshot/*.{h,m,swift}",
-          "components/#{@name}/tests/snapshot/supplemental/*.{h,m,swift}",
-        ]
+        source_files = Dir["components/#{@name}/**/tests/snapshot/*.{h,m,swift}"]
+        supplemental_files = Dir["components/#{@name}/**/tests/snapshot/supplemental/*.{h,m,swift}"]
+        return source_files + supplemental_files
       end
       return []
     end
@@ -45,7 +44,7 @@ module SnapshotPodspecHelper
 
   def self.components
     return Dir["components/**/tests/snapshot"].map { |dir|
-      dir = Component.new(dir.split(File::SEPARATOR)[-3])
+      dir = Component.new(dir.split(File::SEPARATOR)[1])
     }
   end
 end
