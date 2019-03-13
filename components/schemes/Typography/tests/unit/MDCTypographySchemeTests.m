@@ -74,44 +74,44 @@
 // scheme does NOT return fonts with associated scaling curves.
 - (void)testTypographyScheme201804DoesNotHaveCurves {
   // Given
-  MDCTypographyScheme *scheme =
+  MDCTypographyScheme *scheme201804 =
       [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
 
   // Then
-  XCTAssertNil(scheme.headline1.mdc_scalingCurve);
-  XCTAssertNil(scheme.headline2.mdc_scalingCurve);
-  XCTAssertNil(scheme.headline3.mdc_scalingCurve);
-  XCTAssertNil(scheme.headline4.mdc_scalingCurve);
-  XCTAssertNil(scheme.headline5.mdc_scalingCurve);
-  XCTAssertNil(scheme.headline6.mdc_scalingCurve);
-  XCTAssertNil(scheme.subtitle1.mdc_scalingCurve);
-  XCTAssertNil(scheme.subtitle2.mdc_scalingCurve);
-  XCTAssertNil(scheme.body1.mdc_scalingCurve);
-  XCTAssertNil(scheme.body2.mdc_scalingCurve);
-  XCTAssertNil(scheme.caption.mdc_scalingCurve);
-  XCTAssertNil(scheme.button.mdc_scalingCurve);
-  XCTAssertNil(scheme.overline.mdc_scalingCurve);
+  XCTAssertNil(scheme201804.headline1.mdc_scalingCurve);
+  XCTAssertNil(scheme201804.headline2.mdc_scalingCurve);
+  XCTAssertNil(scheme201804.headline3.mdc_scalingCurve);
+  XCTAssertNil(scheme201804.headline4.mdc_scalingCurve);
+  XCTAssertNil(scheme201804.headline5.mdc_scalingCurve);
+  XCTAssertNil(scheme201804.headline6.mdc_scalingCurve);
+  XCTAssertNil(scheme201804.subtitle1.mdc_scalingCurve);
+  XCTAssertNil(scheme201804.subtitle2.mdc_scalingCurve);
+  XCTAssertNil(scheme201804.body1.mdc_scalingCurve);
+  XCTAssertNil(scheme201804.body2.mdc_scalingCurve);
+  XCTAssertNil(scheme201804.caption.mdc_scalingCurve);
+  XCTAssertNil(scheme201804.button.mdc_scalingCurve);
+  XCTAssertNil(scheme201804.overline.mdc_scalingCurve);
 }
 
 - (void)testTypographyScheme201902HasCurves {
   // Given
-  MDCTypographyScheme *scheme =
+  MDCTypographyScheme *scheme201902 =
       [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
 
   // Then
-  XCTAssertNotNil(scheme.headline1.mdc_scalingCurve);
-  XCTAssertNotNil(scheme.headline2.mdc_scalingCurve);
-  XCTAssertNotNil(scheme.headline3.mdc_scalingCurve);
-  XCTAssertNotNil(scheme.headline4.mdc_scalingCurve);
-  XCTAssertNotNil(scheme.headline5.mdc_scalingCurve);
-  XCTAssertNotNil(scheme.headline6.mdc_scalingCurve);
-  XCTAssertNotNil(scheme.subtitle1.mdc_scalingCurve);
-  XCTAssertNotNil(scheme.subtitle2.mdc_scalingCurve);
-  XCTAssertNotNil(scheme.body1.mdc_scalingCurve);
-  XCTAssertNotNil(scheme.body2.mdc_scalingCurve);
-  XCTAssertNotNil(scheme.caption.mdc_scalingCurve);
-  XCTAssertNotNil(scheme.button.mdc_scalingCurve);
-  XCTAssertNotNil(scheme.overline.mdc_scalingCurve);
+  XCTAssertNotNil(scheme201902.headline1.mdc_scalingCurve);
+  XCTAssertNotNil(scheme201902.headline2.mdc_scalingCurve);
+  XCTAssertNotNil(scheme201902.headline3.mdc_scalingCurve);
+  XCTAssertNotNil(scheme201902.headline4.mdc_scalingCurve);
+  XCTAssertNotNil(scheme201902.headline5.mdc_scalingCurve);
+  XCTAssertNotNil(scheme201902.headline6.mdc_scalingCurve);
+  XCTAssertNotNil(scheme201902.subtitle1.mdc_scalingCurve);
+  XCTAssertNotNil(scheme201902.subtitle2.mdc_scalingCurve);
+  XCTAssertNotNil(scheme201902.body1.mdc_scalingCurve);
+  XCTAssertNotNil(scheme201902.body2.mdc_scalingCurve);
+  XCTAssertNotNil(scheme201902.caption.mdc_scalingCurve);
+  XCTAssertNotNil(scheme201902.button.mdc_scalingCurve);
+  XCTAssertNotNil(scheme201902.overline.mdc_scalingCurve);
 }
 
 @end
