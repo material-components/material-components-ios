@@ -1393,12 +1393,10 @@ static BOOL isRunningiOS10_3OrAbove() {
   _isChangingStatusBarVisibility = YES;
   CGPoint stashedContentOffset = _trackingScrollView.contentOffset;
   [self.delegate flexibleHeaderViewNeedsStatusBarAppearanceUpdate:self];
-  [self fhv_enforceInsetsForScrollView:self.trackingScrollView];
-  __weak typeof(self) weakSelf = self;
+  [self fhv_enforceInsetsForScrollView:self.trackinsgScrollView];
   [UIView performWithoutAnimation:^{
-    __strong typeof(weakSelf) strongSelf = weakSelf;
-    [strongSelf fhv_setContentOffset:stashedContentOffset
-               forTrackingScrollView:strongSelf.trackingScrollView];
+    [self fhv_setContentOffset:stashedContentOffset
+         forTrackingScrollView:self.trackingScrollView];
   }];
   _isChangingStatusBarVisibility = NO;
 }
