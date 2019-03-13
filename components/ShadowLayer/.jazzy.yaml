@@ -3,3 +3,4 @@ module: ShadowLayer
 umbrella_header: src/MaterialShadowLayer.h
 objc: true
 sdk: iphonesimulator
+framework_root: ../

@@ -16,6 +16,12 @@
 
 # Fail on any error
 set -e
+COCOAPODS_VERSION="1.6.0"
+
+# Fix permissions issue with Ruby Gems (b/128326105)
+if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+  sudo chown -Rh $(whoami) /Library/Ruby/Gems
+fi
 
 if [ -n "$KOKORO_BUILD_NUMBER" ]; then
   repo_dir='github/repo'
@@ -40,8 +46,7 @@ fix_bazel_imports() {
   echo "Rewriting imports for bazel..."
 
   private_components() {
-    # remove the -not -path addition once shapes migration has finished. GitHub issue #6494.
-    find "components/private" -type d -not -path "components/private/Shape*" | cut -d'/' -f3 | sort | uniq
+    find "components/private" -type d | cut -d'/' -f3 | sort | uniq
   }
   
   rewrite_tests() {
@@ -82,6 +87,7 @@ fix_bazel_imports() {
   rewrite_catalogs "s/import MaterialComponentsBeta.Material(.+)Scheme/import components_schemes_\1_\1 \/\/ Beta/"
   rewrite_catalogs "s/import MaterialComponents.Material(.+)Scheme/import components_schemes_\1_\1/"
   rewrite_examples "s/import <MaterialComponentsBeta\/(.+)>/import\/\*Material beta framework import\*\/ \"\1\"/"
+  rewrite_examples "s/import MaterialComponents.Material(.+)_Private/import components_\1_Private/"
   rewrite_examples "s/import MaterialComponents.Material(.+)_(.+)/import components_\1_\2/"
   rewrite_examples "s/import MaterialComponentsBeta.Material(.+)Beta/import components_\1_\1Beta \/\/ BetaSplit/"
   rewrite_examples "s/import MaterialComponentsBeta.Material(.+)Scheme/import components_schemes_\1_\1 \/\/ Beta/"
@@ -149,6 +155,7 @@ fix_bazel_imports() {
     rewrite_examples "s/import components_schemes_(.+)_.+ \/\/ Beta/import MaterialComponentsBeta.Material\1Scheme/"
     rewrite_examples "s/import components_schemes_(.+)_.+/import MaterialComponents.Material\1Scheme/"
     rewrite_examples "s/import components_private_(.+)_.+/import MaterialComponents.Material\1/"
+    rewrite_examples "s/import components_(.+)_Private/import MaterialComponents.Material\1_Private/"
     rewrite_examples "s/import components_(.+)_\1/import MaterialComponents.Material\1/"
     rewrite_examples "s/import components_(.+)_(.+) \/\/ Beta/import MaterialComponentsBeta.Material\1_\2/"
     rewrite_examples "s/import components_(.+)_(.+)/import MaterialComponents.Material\1_\2/"
@@ -386,7 +393,9 @@ run_cocoapods() {
     # Move into our cloned repo
     cd github/repo
 
-    gem_install xcpretty cocoapods
+    gem_install xcpretty 
+    # TODO(https://github.com/material-components/material-components-ios/issues/6356 ): Move to 1.6
+    gem install cocoapods -v "$COCOAPODS_VERSION"
     pod --version
 
     # Install git-lfs
@@ -449,7 +458,7 @@ generate_website() {
     ./scripts/build_site.sh
 
     gem_install bundler
-    brew_install yarn --without-node
+    brew_install yarn --ignore-dependencies
     
     # The above installations update node to v10, but the docsite generator
     # relies on v8.

@@ -3,3 +3,4 @@ module: NavigationDrawer
 umbrella_header: src/MaterialNavigationDrawer.h
 objc: true
 sdk: iphonesimulator
+framework_root: ../

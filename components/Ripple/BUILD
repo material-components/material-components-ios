@@ -14,10 +14,15 @@
 
 load(
     "//:material_components_ios.bzl",
+    "mdc_examples_objc_library",
+    "mdc_examples_swift_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
     "mdc_unit_test_suite",
+    "mdc_snapshot_objc_library",
+    "mdc_snapshot_test",
 )
+load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
 
@@ -42,17 +47,24 @@ mdc_objc_library(
     deps = [":Ripple"],
 )
 
-mdc_objc_library(
+mdc_examples_objc_library(
     name = "ObjcExamples",
-    srcs = glob([
-        "examples/*.h",
-        "examples/*.m",
-        "examples/supplemental/*.h",
-        "examples/supplemental/*.m",
-    ]),
     visibility = ["//visibility:private"],
     deps = [
         ":Ripple",
+    ],
+)
+
+mdc_examples_swift_library(
+    name = "SwiftExamples",
+    visibility = ["//visibility:private"],
+    deps = [
+        ":Ripple",
+        "//components/Buttons:ButtonThemer",
+        "//components/Buttons:Theming",
+        "//components/Cards:CardThemer",
+        "//components/Cards:Private",
+        "//components/Cards:Theming",
     ],
 )
 
@@ -77,4 +89,14 @@ mdc_unit_test_suite(
     deps = [
         ":unit_test_sources",
     ],
+)
+
+mdc_snapshot_objc_library(
+    name = "snapshot_test_lib",
+    deps = [":Ripple"],
+)
+
+mdc_snapshot_test(
+    name = "snapshot_tests",
+    deps = [":snapshot_test_lib"],
 )

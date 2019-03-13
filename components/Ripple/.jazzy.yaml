@@ -3,3 +3,4 @@ module: Ripple
 umbrella_header: src/MaterialRipple.h
 objc: true
 sdk: iphonesimulator
+framework_root: ../

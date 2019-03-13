@@ -49,20 +49,11 @@
  as well as ink during the highlight/unhighlight states.
  */
 
-- (BOOL)collectionView:(nonnull UICollectionView *)collectionView
-    shouldHighlightItemAtIndexPath:(nonnull NSIndexPath *)indexPath NS_REQUIRES_SUPER;
-
 - (void)collectionView:(nonnull UICollectionView *)collectionView
     didHighlightItemAtIndexPath:(nonnull NSIndexPath *)indexPath NS_REQUIRES_SUPER;
 
 - (void)collectionView:(nonnull UICollectionView *)collectionView
     didUnhighlightItemAtIndexPath:(nonnull NSIndexPath *)indexPath NS_REQUIRES_SUPER;
-
-- (BOOL)collectionView:(nonnull UICollectionView *)collectionView
-    shouldSelectItemAtIndexPath:(nonnull NSIndexPath *)indexPath NS_REQUIRES_SUPER;
-
-- (BOOL)collectionView:(nonnull UICollectionView *)collectionView
-    shouldDeselectItemAtIndexPath:(nonnull NSIndexPath *)indexPath NS_REQUIRES_SUPER;
 
 - (void)collectionView:(nonnull UICollectionView *)collectionView
     didSelectItemAtIndexPath:(nonnull NSIndexPath *)indexPath NS_REQUIRES_SUPER;

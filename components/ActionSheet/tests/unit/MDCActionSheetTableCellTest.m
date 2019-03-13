@@ -148,7 +148,7 @@
   XCTAssertNotEqual(cells.count, 0U);
   for (MDCActionSheetItemTableViewCell *cell in cells) {
     // Then
-    XCTAssertEqual(cell.actionLabel.font, actionFont);
+    XCTAssertEqualObjects(cell.actionLabel.font, actionFont);
   }
 }
 

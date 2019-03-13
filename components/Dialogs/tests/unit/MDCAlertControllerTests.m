@@ -74,10 +74,10 @@
 
   // Then
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
-  XCTAssertEqual(view.titleLabel.font, testFont);
-  XCTAssertEqual(view.messageLabel.font, testFont);
+  XCTAssertEqualObjects(view.titleLabel.font, testFont);
+  XCTAssertEqualObjects(view.messageLabel.font, testFont);
   for (UIButton *button in view.actionManager.buttonsInActionOrder) {
-    XCTAssertEqual(button.titleLabel.font, testFont);
+    XCTAssertEqualObjects(button.titleLabel.font, testFont);
   }
 }
 

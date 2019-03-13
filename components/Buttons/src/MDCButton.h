@@ -17,7 +17,7 @@
 
 #import "MaterialInk.h"
 #import "MaterialShadowElevations.h"
-#import "MaterialShapesNew.h"
+#import "MaterialShapes.h"
 
 /**
  A Material flat, raised or floating button.
@@ -130,6 +130,13 @@
  Default value for shapeGenerator is nil.
  */
 @property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator;
+
+/**
+ If true, @c accessiblityTraits will always include @c UIAccessibilityTraitButton.
+
+ @note Defaults to true.
+ */
+@property(nonatomic, assign) BOOL accessibilityTraitsIncludesButton;
 
 /**
  A color used as the button's @c backgroundColor for @c state.

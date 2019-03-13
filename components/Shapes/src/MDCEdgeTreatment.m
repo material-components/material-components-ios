@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCEdgeTreatmentNew.h"
+#import "MDCEdgeTreatment.h"
 
-#import "MDCPathGeneratorNew.h"
+#import "MDCPathGenerator.h"
 
 @implementation MDCEdgeTreatment
 

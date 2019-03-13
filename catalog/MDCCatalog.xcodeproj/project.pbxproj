@@ -409,7 +409,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/CatalogByConvention/CatalogByConvention.framework",
 				"${BUILT_PRODUCTS_DIR}/MDFInternationalization/MDFInternationalization.framework",
 				"${BUILT_PRODUCTS_DIR}/MDFTextAccessibility/MDFTextAccessibility.framework",
@@ -438,7 +438,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		CF1E8983301BB250EA61087B /* [CP] Check Pods Manifest.lock */ = {

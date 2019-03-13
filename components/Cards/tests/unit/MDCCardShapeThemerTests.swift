@@ -15,6 +15,7 @@
 import XCTest
 import MaterialComponents.MaterialCards
 import MaterialComponents.MaterialCards_ShapeThemer
+import MaterialComponents.MaterialShapeLibrary
 
 class CardShapeThemerTests: XCTestCase {
 

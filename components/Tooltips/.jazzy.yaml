@@ -3,3 +3,4 @@ module: Tooltips
 umbrella_header: src/MaterialTooltips.h
 objc: true
 sdk: iphonesimulator
+framework_root: ../

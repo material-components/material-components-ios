@@ -39,9 +39,9 @@
 
   // Fake the top safe area behavior so that we can control the top safe area inset.
   _delegate = [[FlexibleHeaderTopSafeAreaTestsFakeTopSafeAreaDelegate alloc] init];
-  _delegate.forwardingDelegate = _flexibleHeaderView.topSafeArea.delegate;
+  _delegate.forwardingDelegate = _flexibleHeaderView.topSafeArea.topSafeAreaDelegate;
   _delegate.deviceTopSafeAreaInset = 123;
-  _flexibleHeaderView.topSafeArea.delegate = _delegate;
+  _flexibleHeaderView.topSafeArea.topSafeAreaDelegate = _delegate;
 
   [_delegate flexibleHeaderSafeAreaTopSafeAreaInsetDidChange:_flexibleHeaderView.topSafeArea];
 }

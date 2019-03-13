@@ -19,6 +19,8 @@ load(
     "mdc_extension_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
+    "mdc_snapshot_objc_library",
+    "mdc_snapshot_test",
     "mdc_unit_test_suite",
 )
 
@@ -86,5 +88,19 @@ mdc_examples_objc_library(
         ":ProgressView",
         "//components/schemes/Color",
         "//components/schemes/Typography",
+    ],
+)
+
+mdc_snapshot_objc_library(
+    name = "snapshot_test_lib",
+    deps = [
+        ":ProgressView",
+    ],
+)
+
+mdc_snapshot_test(
+    name = "snapshot_tests",
+    deps = [
+        ":snapshot_test_lib",
     ],
 )

@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCShapedShadowLayerNew.h"
+#import "MDCShapedShadowLayer.h"
 
-#import "MDCShapeGeneratingNew.h"
+#import "MDCShapeGenerating.h"
 
 @implementation MDCShapedShadowLayer
 
@@ -62,8 +62,10 @@
 - (void)layoutSublayers {
   // We have to set the path before calling [super layoutSublayers] because we need the shadowPath
   // to be correctly set before MDCShadowLayer performs layoutSublayers.
-  CGRect standardizedBounds = CGRectStandardize(self.bounds);
-  self.path = [self.shapeGenerator pathForSize:standardizedBounds.size];
+  if (self.shapeGenerator) {
+    CGRect standardizedBounds = CGRectStandardize(self.bounds);
+    self.path = [self.shapeGenerator pathForSize:standardizedBounds.size];
+  }
 
   [super layoutSublayers];
 

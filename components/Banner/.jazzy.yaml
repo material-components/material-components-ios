@@ -3,3 +3,4 @@ module: Banner
 umbrella_header: src/MaterialBanner.h
 objc: true
 sdk: iphonesimulator
+framework_root: ../
