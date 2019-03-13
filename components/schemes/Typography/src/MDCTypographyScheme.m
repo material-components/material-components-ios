@@ -106,7 +106,7 @@
 - (void)addScalingCurves {
   // Attach a sizing curve to all fonts
   MDCFontScaler *fontScaler =
-  [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleHeadline1];
+      [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleHeadline1];
   _headline1 = [fontScaler scalableFontWithFont:_headline1];
   _headline1 = [_headline1 mdc_scaledFontAtDefaultSize];
 
