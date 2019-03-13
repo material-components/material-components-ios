@@ -98,7 +98,9 @@ static NSArray<UICollectionViewCell *> *SortedCellsFromCollectionView(
       (UICollectionViewFlowLayout *)collectionView.collectionViewLayout;
 
   // When
-  _tabBar.mdf_semanticContentAttribute = UISemanticContentAttributeUnspecified;
+  if (@available(iOS 9.0, *)) {
+    _tabBar.mdf_semanticContentAttribute = UISemanticContentAttributeUnspecified;
+  }
 
   // Then
   CGFloat leftInset = flowLayout.sectionInset.left;
