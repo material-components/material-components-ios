@@ -35,8 +35,8 @@ UIKIT_EXTERN MDCTextStyle const MDCTextStyleOverline;
  MDCFontScaler attaches a scaling curve to a UIFont via an associated object on that font instance.
 
  Instances of fonts processed through MDCFontScaler will have an associated dictionary that maps
- UIFontTextStyle to Font Size.  Category methods on UIFont allow clients to get instances of
- resized fonts based on this associated dictionary.  Note that an instance of MDCFontScaler is
+ UIFontTextStyle to Font Size. Category methods on UIFont allow clients to get instances of
+ resized fonts based on this associated dictionary. Note that an instance of MDCFontScaler is
  NOT attached to the processed font.
 
  This interface is similar to UIFontMetrics, but the fonts returned from MDCFontScaler do *not*
@@ -48,7 +48,7 @@ UIKIT_EXTERN MDCTextStyle const MDCTextStyleOverline;
  Initializes a font scaler object with the specified text style.
 
  @param textStyle The style that will be used to determine the scaling curver associated with the
-   returned font.  For example, MaterialTextStyleBody1.
+   returned font. For example, MaterialTextStyleBody1.
  @return An initialized font scaler object.
  */
 - (nonnull instancetype)initForMaterialTextStyle:(MDCTextStyle)textStyle;
@@ -57,7 +57,7 @@ UIKIT_EXTERN MDCTextStyle const MDCTextStyleOverline;
  Creates and returns a font scaler object with the specified text style.
 
  @param textStyle The style that will be used to determine the scaling curver associated with the
- returned font.  For example, MaterialTextStyleBody1.
+ returned font. For example, MaterialTextStyleBody1.
  @return An initialized font scaler object.
  */
 + (nonnull instancetype)scalerForMaterialTextStyle:(MDCTextStyle)textStyle;
