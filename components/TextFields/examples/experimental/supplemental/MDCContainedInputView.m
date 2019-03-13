@@ -15,6 +15,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+#import <Foundation/Foundation.h>
+
 #import "MDCContainedInputView.h"
 
 @implementation MDCContainedInputViewColorScheme
@@ -69,7 +71,7 @@
 
   UIColor *placeholderLabelColor = colorScheme.placeholderLabelColor;
   UIColor *underlineLabelColor = colorScheme.underlineLabelColor;
-  UIColor *textColor = colorScheme.underlineLabelColor;
+  UIColor *textColor = colorScheme.textColor;
 
   switch (state) {
     case MDCContainedInputViewStateNormal:
@@ -103,59 +105,6 @@
 }
 
 - (void)removeStyleFrom:(id<MDCContainedInputView>)containedInputView {
-}
-
-- (MDCContainedInputViewState)containedInputViewStateWithIsEnabled:(BOOL)isEnabled
-                                                         isErrored:(BOOL)isErrored
-                                                         isEditing:(BOOL)isEditing
-                                                        isSelected:(BOOL)isSelected
-                                                       isActivated:(BOOL)isActivated {
-  if (isEnabled) {
-    if (isErrored) {
-      return MDCContainedInputViewStateErrored;
-    } else {
-      if (isEditing) {
-        return MDCContainedInputViewStateFocused;
-      } else {
-        if (isSelected || isActivated) {
-          return MDCContainedInputViewStateActivated;
-        } else {
-          return MDCContainedInputViewStateNormal;
-        }
-      }
-    }
-  } else {
-    return MDCContainedInputViewStateDisabled;
-  }
-}
-
-- (MDCContainedInputViewPlaceholderState)placeholderStateWithPlaceholder:(NSString *)placeholder
-                                                                    text:(NSString *)text
-                                                     canPlaceholderFloat:(BOOL)canPlaceholderFloat
-                                                               isEditing:(BOOL)isEditing {
-  BOOL hasPlaceholder = placeholder.length > 0;
-  BOOL hasText = text.length > 0;
-  if (hasPlaceholder) {
-    if (canPlaceholderFloat) {
-      if (isEditing) {
-        return MDCContainedInputViewPlaceholderStateFloating;
-      } else {
-        if (hasText) {
-          return MDCContainedInputViewPlaceholderStateFloating;
-        } else {
-          return MDCContainedInputViewPlaceholderStateNormal;
-        }
-      }
-    } else {
-      if (hasText) {
-        return MDCContainedInputViewPlaceholderStateNone;
-      } else {
-        return MDCContainedInputViewPlaceholderStateNormal;
-      }
-    }
-  } else {
-    return MDCContainedInputViewPlaceholderStateNone;
-  }
 }
 
 #pragma mark Accessors
@@ -200,6 +149,10 @@
 - (CGFloat)contentAreaTopPaddingFloatingPlaceholderWithFloatingPlaceholderMaxY:
     (CGFloat)floatingPlaceholderMaxY {
   return floatingPlaceholderMaxY + 10;
+}
+
+- (CGFloat)containerBottomVerticalPadding {
+  return 9;
 }
 
 @end

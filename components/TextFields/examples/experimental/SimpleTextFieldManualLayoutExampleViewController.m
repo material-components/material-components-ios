@@ -101,6 +101,8 @@ static const NSUInteger kDefaultVerticalPadding = 20;
     [self createOutlinedTextField],
     [self createLabelWithText:@"Low density outlined MDCInputTextField:"],
     [self createOutlinedTextFieldWithMinimalDensity],
+    [self createLabelWithText:@"Unstyled MDCInputTextField:"],
+    [self createUnthemedSimpleTextField],
   ];
   for (UIView *view in self.scrollViewSubviews) {
     [self.scrollView addSubview:view];

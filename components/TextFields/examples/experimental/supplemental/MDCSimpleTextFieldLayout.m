@@ -19,7 +19,6 @@
 
 static const CGFloat kLeadingMargin = (CGFloat)12.0;
 static const CGFloat kTrailingMargin = (CGFloat)12.0;
-static const CGFloat kTopRowBottomRowDividerVerticalPadding = (CGFloat)9.0;
 static const CGFloat kFloatingPlaceholderXOffsetFromTextArea = (CGFloat)3.0;
 static const CGFloat kClearButtonTouchTargetSideLength = (CGFloat)30.0;
 static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
@@ -270,7 +269,7 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
       underlineLabelsCombinedMaxX - underlineLabelsCombinedMinX;
 
   CGFloat underlineLabelsCombinedMinY =
-      topRowBottomRowDividerY + kTopRowBottomRowDividerVerticalPadding;
+      topRowBottomRowDividerY + [containerStyle.densityInformer containerBottomVerticalPadding];
   CGFloat leadingUnderlineLabelWidth = 0;
   CGFloat trailingUnderlineLabelWidth = 0;
   CGSize leadingUnderlineLabelSize = CGSizeZero;
@@ -477,6 +476,7 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
                                           options:NSStringDrawingUsesLineFragmentOrigin
                                        attributes:attributes
                                           context:nil];
+  rect.size.height = font.lineHeight;
   return rect.size;
 }
 
