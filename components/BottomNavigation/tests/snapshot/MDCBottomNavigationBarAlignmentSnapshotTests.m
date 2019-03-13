@@ -17,13 +17,13 @@
 
 #import "../../src/private/MDCBottomNavigationItemView.h"
 
-#import "supplemental/MDCBottomNavigationSnapshotTestMutableTraitCollection.h"
-#import "supplemental/MDCFakeBottomNavigationBar.h"
 #import "MaterialBottomNavigation+ColorThemer.h"
 #import "MaterialBottomNavigation+TypographyThemer.h"
 #import "MaterialBottomNavigation.h"
 #import "MaterialInk.h"
 #import "MaterialSnapshot.h"
+#import "supplemental/MDCBottomNavigationSnapshotTestMutableTraitCollection.h"
+#import "supplemental/MDCFakeBottomNavigationBar.h"
 
 static const CGFloat kWidthWide = 1600;
 static const CGFloat kHeightTall = 120;
