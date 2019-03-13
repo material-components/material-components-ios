@@ -14,6 +14,12 @@ Replace this text with example code for each new feature.
 
 ## Component changes
 
+### BottomNavigation
+
+* [Fix image updates in ItemView (#6847)](https://github.com/material-components/material-components-ios/commit/5fc3a1a068f04ab421eacefd11d97773888a2733) (Robert Moore)
+* [More snapshots for item icons. (#6855)](https://github.com/material-components/material-components-ios/commit/3542473fa06251f443161e8522b4635b8a89248b) (Robert Moore)
+* [Snapshot test for selection bug (#6843)](https://github.com/material-components/material-components-ios/commit/a42e356a4be6e0227b2a463bdf285a6c7612f8bb) (Robert Moore)
+
 ---
 
 # 79.1.0
