@@ -17,6 +17,8 @@
 
 #import "MaterialTypographyScheme.h"
 
+#import "MaterialTypography.h"
+
 @interface MDCTypographySchemeTests : XCTestCase
 @end
 
@@ -25,23 +27,23 @@
 - (void)testInitializer {
   // Given
   MDCTypographyScheme *latestScheme = [[MDCTypographyScheme alloc] init];
-  MDCTypographyScheme *scheme201804 =
-      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+  MDCTypographyScheme *scheme201902 =
+      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
 
   // Then
-  XCTAssertEqual(latestScheme.headline1, scheme201804.headline1);
-  XCTAssertEqual(latestScheme.headline2, scheme201804.headline2);
-  XCTAssertEqual(latestScheme.headline3, scheme201804.headline3);
-  XCTAssertEqual(latestScheme.headline4, scheme201804.headline4);
-  XCTAssertEqual(latestScheme.headline5, scheme201804.headline5);
-  XCTAssertEqual(latestScheme.headline6, scheme201804.headline6);
-  XCTAssertEqual(latestScheme.subtitle1, scheme201804.subtitle1);
-  XCTAssertEqual(latestScheme.subtitle2, scheme201804.subtitle2);
-  XCTAssertEqual(latestScheme.body1, scheme201804.body1);
-  XCTAssertEqual(latestScheme.body2, scheme201804.body2);
-  XCTAssertEqual(latestScheme.caption, scheme201804.caption);
-  XCTAssertEqual(latestScheme.button, scheme201804.button);
-  XCTAssertEqual(latestScheme.overline, scheme201804.overline);
+  XCTAssertEqual(latestScheme.headline1, scheme201902.headline1);
+  XCTAssertEqual(latestScheme.headline2, scheme201902.headline2);
+  XCTAssertEqual(latestScheme.headline3, scheme201902.headline3);
+  XCTAssertEqual(latestScheme.headline4, scheme201902.headline4);
+  XCTAssertEqual(latestScheme.headline5, scheme201902.headline5);
+  XCTAssertEqual(latestScheme.headline6, scheme201902.headline6);
+  XCTAssertEqual(latestScheme.subtitle1, scheme201902.subtitle1);
+  XCTAssertEqual(latestScheme.subtitle2, scheme201902.subtitle2);
+  XCTAssertEqual(latestScheme.body1, scheme201902.body1);
+  XCTAssertEqual(latestScheme.body2, scheme201902.body2);
+  XCTAssertEqual(latestScheme.caption, scheme201902.caption);
+  XCTAssertEqual(latestScheme.button, scheme201902.button);
+  XCTAssertEqual(latestScheme.overline, scheme201902.overline);
 }
 
 - (void)testTypographySchemeCopy {
@@ -66,6 +68,50 @@
   XCTAssertEqualObjects(typographyScheme.caption, typographySchemeCopy.caption);
   XCTAssertEqualObjects(typographyScheme.button, typographySchemeCopy.button);
   XCTAssertEqualObjects(typographyScheme.overline, typographySchemeCopy.overline);
+}
+
+// In order to avoid unintended consequences for our clients, ensure that our earlier typography
+// scheme does NOT return fonts with associated scaling curves.
+- (void)testTypographyScheme201804DoesNotHaveCurves {
+  // Given
+  MDCTypographyScheme *scheme =
+      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+
+  // Then
+  XCTAssertNil(scheme.headline1.mdc_scalingCurve);
+  XCTAssertNil(scheme.headline2.mdc_scalingCurve);
+  XCTAssertNil(scheme.headline3.mdc_scalingCurve);
+  XCTAssertNil(scheme.headline4.mdc_scalingCurve);
+  XCTAssertNil(scheme.headline5.mdc_scalingCurve);
+  XCTAssertNil(scheme.headline6.mdc_scalingCurve);
+  XCTAssertNil(scheme.subtitle1.mdc_scalingCurve);
+  XCTAssertNil(scheme.subtitle2.mdc_scalingCurve);
+  XCTAssertNil(scheme.body1.mdc_scalingCurve);
+  XCTAssertNil(scheme.body2.mdc_scalingCurve);
+  XCTAssertNil(scheme.caption.mdc_scalingCurve);
+  XCTAssertNil(scheme.button.mdc_scalingCurve);
+  XCTAssertNil(scheme.overline.mdc_scalingCurve);
+}
+
+- (void)testTypographyScheme201902HasCurves {
+  // Given
+  MDCTypographyScheme *scheme =
+      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+
+  // Then
+  XCTAssertNotNil(scheme.headline1.mdc_scalingCurve);
+  XCTAssertNotNil(scheme.headline2.mdc_scalingCurve);
+  XCTAssertNotNil(scheme.headline3.mdc_scalingCurve);
+  XCTAssertNotNil(scheme.headline4.mdc_scalingCurve);
+  XCTAssertNotNil(scheme.headline5.mdc_scalingCurve);
+  XCTAssertNotNil(scheme.headline6.mdc_scalingCurve);
+  XCTAssertNotNil(scheme.subtitle1.mdc_scalingCurve);
+  XCTAssertNotNil(scheme.subtitle2.mdc_scalingCurve);
+  XCTAssertNotNil(scheme.body1.mdc_scalingCurve);
+  XCTAssertNotNil(scheme.body2.mdc_scalingCurve);
+  XCTAssertNotNil(scheme.caption.mdc_scalingCurve);
+  XCTAssertNotNil(scheme.button.mdc_scalingCurve);
+  XCTAssertNotNil(scheme.overline.mdc_scalingCurve);
 }
 
 @end
