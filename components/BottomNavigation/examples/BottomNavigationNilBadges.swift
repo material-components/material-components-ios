@@ -24,6 +24,7 @@ class BottomNavigationNilBadges : UIViewController {
 
   init() {
     super.init(nibName: nil, bundle: nil)
+    self.title = "Bottom Navigation (Swift)"  
   }
 
   @available(*, unavailable)
