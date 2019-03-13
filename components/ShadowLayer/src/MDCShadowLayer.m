@@ -120,8 +120,15 @@ static const float kAmbientShadowOpacity = (float)0.08;
       MDCShadowLayer *otherLayer = (MDCShadowLayer *)layer;
       _elevation = otherLayer.elevation;
       _shadowMaskEnabled = otherLayer.isShadowMaskEnabled;
+
       _bottomShadow = [[CAShapeLayer alloc] initWithLayer:otherLayer.bottomShadow];
+      _bottomShadow.delegate = self;
+      [self addSublayer:_bottomShadow];
+
       _topShadow = [[CAShapeLayer alloc] initWithLayer:otherLayer.topShadow];
+      _topShadow.delegate = self;
+      [self addSublayer:_topShadow];
+
       _topShadowMask = [[CAShapeLayer alloc] initWithLayer:otherLayer.topShadowMask];
       _bottomShadowMask = [[CAShapeLayer alloc] initWithLayer:otherLayer.bottomShadowMask];
       [self commonMDCShadowLayerInit];
