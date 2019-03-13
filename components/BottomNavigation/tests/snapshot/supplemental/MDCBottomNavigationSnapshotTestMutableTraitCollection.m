@@ -14,7 +14,7 @@
 
 #import "MDCBottomNavigationSnapshotTestMutableTraitCollection.h"
 
-@implementation MDCMutableUITraitCollection
+@implementation MDCBottomNavigationSnapshotTestMutableTraitCollection
 
 - (UIUserInterfaceSizeClass)horizontalSizeClass {
   return self.horizontalSizeClassOverride;

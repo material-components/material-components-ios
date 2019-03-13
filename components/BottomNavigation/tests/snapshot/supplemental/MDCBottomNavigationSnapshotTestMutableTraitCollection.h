@@ -15,7 +15,7 @@
 #import <UIKit/UIKit.h>
 
 /** Test double for UITraitCollection allowing property overrides. */
-@interface MDCMutableUITraitCollection : UITraitCollection
+@interface MDCBottomNavigationSnapshotTestMutableTraitCollection : UITraitCollection
 
 /** Allows setting the value of @c horizontalSizeClass. */
 @property(nonatomic, assign) UIUserInterfaceSizeClass horizontalSizeClassOverride;
