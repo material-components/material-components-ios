@@ -93,7 +93,8 @@
 
 - (void)testJustifiedAlignmentWithUnspecifiedHorizontalSizeClassInLTR {
   // Given
-  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection = [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
+  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection =
+      [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassUnspecified;
 
   // When
@@ -106,7 +107,8 @@
 
 - (void)testJustifiedAlignmentWithUnspecifiedHorizontalSizeClassInRTL {
   // Given
-  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection = [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
+  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection =
+      [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassUnspecified;
 
   // When
@@ -121,7 +123,8 @@
 
 - (void)testJustifiedAlignmentWithCompactHorizontalSizeClassInLTR {
   // Given
-  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection = [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
+  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection =
+      [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassCompact;
 
   // When
@@ -134,7 +137,8 @@
 
 - (void)testJustifiedAlignmentWithCompactHorizontalSizeClassInRTL {
   // Given
-  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection = [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
+  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection =
+      [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassCompact;
 
   // When
@@ -148,7 +152,8 @@
 
 - (void)testJustifiedAlignmentWithRegularHorizontalSizeClassInLTR {
   // Given
-  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection = [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
+  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection =
+      [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassRegular;
 
   // When
@@ -161,7 +166,8 @@
 
 - (void)testJustifiedAlignmentWithRegularHorizontalSizeClassInRTL {
   // Given
-  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection = [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
+  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection =
+      [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassRegular;
 
   // When
@@ -177,7 +183,8 @@
 
 - (void)testJustifiedAdjacentAlignmentWithUnspecifiedHorizontalSizeClassInLTR {
   // Given
-  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection = [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
+  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection =
+      [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassUnspecified;
 
   // When
@@ -190,7 +197,8 @@
 
 - (void)testJustifiedAdjacentAlignmentWithUnspecifiedHorizontalSizeClassInRTL {
   // Given
-  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection = [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
+  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection =
+      [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassUnspecified;
 
   // When
@@ -204,7 +212,8 @@
 
 - (void)testJustifiedAdjacentAlignmentWithCompactHorizontalSizeClassInLTR {
   // Given
-  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection = [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
+  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection =
+      [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassCompact;
 
   // When
@@ -217,7 +226,8 @@
 
 - (void)testJustifiedAdjacentAlignmentWithCompactHorizontalSizeClassInRTL {
   // Given
-  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection = [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
+  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection =
+      [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassCompact;
 
   // When
@@ -231,7 +241,8 @@
 
 - (void)testJustifiedAdjacentAlignmentWithRegularHorizontalSizeClassInLTR {
   // Given
-  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection = [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
+  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection =
+      [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassRegular;
 
   // When
@@ -244,7 +255,8 @@
 
 - (void)testJustifiedAdjacentAlignmentWithRegularHorizontalSizeClassInRTL {
   // Given
-  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection = [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
+  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection =
+      [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassRegular;
 
   // When
@@ -260,7 +272,8 @@
 
 - (void)testCenteredAlignmentWithUnspecifiedHorizontalSizeClassInLTR {
   // Given
-  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection = [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
+  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection =
+      [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassUnspecified;
 
   // When
@@ -273,7 +286,8 @@
 
 - (void)testCenteredAlignmentWithUnspecifiedHorizontalSizeClassInRTL {
   // Given
-  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection = [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
+  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection =
+      [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassUnspecified;
 
   // When
@@ -287,7 +301,8 @@
 
 - (void)testCenteredAlignmentWithCompactHorizontalSizeClassInLTR {
   // Given
-  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection = [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
+  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection =
+      [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassCompact;
 
   // When
@@ -300,7 +315,8 @@
 
 - (void)testCenteredAlignmentWithCompactHorizontalSizeClassInRTL {
   // Given
-  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection = [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
+  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection =
+      [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassCompact;
 
   // When
@@ -314,7 +330,8 @@
 
 - (void)testCenteredAlignmentWithRegularHorizontalSizeClassInLTR {
   // Given
-  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection = [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
+  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection =
+      [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassRegular;
 
   // When
@@ -327,7 +344,8 @@
 
 - (void)testCenteredAlignmentWithRegularHorizontalSizeClassInRTL {
   // Given
-  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection = [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
+  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection =
+      [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassRegular;
 
   // When

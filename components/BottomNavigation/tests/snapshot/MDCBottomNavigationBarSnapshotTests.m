@@ -205,7 +205,8 @@ static NSString *const kBadgeTitleArabic = @"أورا";
 
 - (void)testJustifiedAdjacentRegularAlwaysWithFiveLongTitleItemsiPadWidthTypicalHeightLTR {
   // Given
-  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection = [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
+  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection =
+      [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassRegular;
 
   // When
@@ -223,7 +224,8 @@ static NSString *const kBadgeTitleArabic = @"أورا";
 
 - (void)testJustifiedAdjacentRegularAlwaysWithFiveLongTitleItemsUnboundiPadWidthTypicalHeightLTR {
   // Given
-  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection = [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
+  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection =
+      [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassRegular;
 
   // When
@@ -242,7 +244,8 @@ static NSString *const kBadgeTitleArabic = @"أورا";
 
 - (void)testJustifiedAdjacentRegularAlwaysWithFiveLongTitleItemsiPadWidthTypicalHeightRTL {
   // Given
-  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection = [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
+  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection =
+      [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassRegular;
 
   // When
@@ -261,7 +264,8 @@ static NSString *const kBadgeTitleArabic = @"أورا";
 
 - (void)testJustifiedAdjacentRegularAlwaysWithFiveLongTitleItemsUnboundiPadWidthTypicalHeightRTL {
   // Given
-  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection = [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
+  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection =
+      [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassRegular;
 
   // When
@@ -468,7 +472,8 @@ static NSString *const kBadgeTitleArabic = @"أورا";
 
 - (void)testTitlePositionAdjustmentJustifiedAdjacentCompactLTR {
   // Given
-  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection = [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
+  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection =
+      [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassCompact;
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   self.navigationBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles;
@@ -488,7 +493,8 @@ static NSString *const kBadgeTitleArabic = @"أورا";
 
 - (void)testTitlePositionAdjustmentJustifiedAdjacentCompactRTL {
   // Given
-  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection = [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
+  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection =
+      [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassCompact;
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   self.navigationBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles;
@@ -509,7 +515,8 @@ static NSString *const kBadgeTitleArabic = @"أورا";
 
 - (void)testTitlePositionAdjustmentJustifiedAdjacentRegularLTR {
   // Given
-  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection = [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
+  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection =
+      [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassRegular;
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   self.navigationBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles;
@@ -529,7 +536,8 @@ static NSString *const kBadgeTitleArabic = @"أورا";
 
 - (void)testTitlePositionAdjustmentJustifiedAdjacentRegularRTL {
   // Given
-  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection = [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
+  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection =
+      [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
   traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassRegular;
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   self.navigationBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles;
