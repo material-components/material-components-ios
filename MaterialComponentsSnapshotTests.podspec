@@ -15,6 +15,7 @@ module SnapshotPodspecHelper
         return [
           "components/#{@name}/tests/snapshot/*.{h,m,swift}",
           "components/#{@name}/tests/snapshot/supplemental/*.{h,m,swift}",
+          "components/#{@name}/tests/snapshot/Theming/*.{h,m,swift}",
         ]
       end
       return []
