@@ -514,17 +514,26 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 
 - (void)setImage:(UIImage *)image {
   _image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-  self.iconImageView.image = _image;
-  self.iconImageView.tintColor =
-      (self.selected) ? self.selectedItemTintColor : self.unselectedItemTintColor;
-  [self.iconImageView sizeToFit];
+
+  // _image updates unselected state
+  // _image updates selected state IF there is no selectedImage
+  if (!self.selected || (self.selected && !self.selectedImage)) {
+    self.iconImageView.image = _image;
+    self.iconImageView.tintColor =
+        (self.selected) ? self.selectedItemTintColor : self.unselectedItemTintColor;
+    [self.iconImageView sizeToFit];
+    [self setNeedsLayout];
+  }
 }
 
 - (void)setSelectedImage:(UIImage *)selectedImage {
   _selectedImage = [selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-  self.iconImageView.image = _selectedImage;
-  self.iconImageView.tintColor = self.selectedItemTintColor;
-  [self.iconImageView sizeToFit];
+  if (self.selected) {
+    self.iconImageView.image = _selectedImage;
+    self.iconImageView.tintColor = self.selectedItemTintColor;
+    [self.iconImageView sizeToFit];
+    [self setNeedsLayout];
+  }
 }
 
 - (void)setTitle:(NSString *)title {
