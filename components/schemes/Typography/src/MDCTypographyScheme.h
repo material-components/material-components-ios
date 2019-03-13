@@ -85,6 +85,14 @@
  */
 @property(nonatomic, nonnull, readonly, copy) UIFont *overline;
 
+@optional
+
+/**
+ Whether this typography scheme adjusts the returned fonts based on the device's Dynamic Type
+ settings.
+*/
+@property(nonatomic, readonly) BOOL mdc_adjustsFontForContentSizeCategory;
+
 @end
 
 /**
@@ -94,7 +102,15 @@ typedef NS_ENUM(NSInteger, MDCTypographySchemeDefaults) {
   /**
    The Material defaults, circa April 2018.
    */
-  MDCTypographySchemeDefaultsMaterial201804
+  MDCTypographySchemeDefaultsMaterial201804,
+
+  /**
+   The Material defaults, circa February 2019.
+   This scheme implements fonts with the similar metrics as
+   MDCTypographySchemeDefaultsMaterial201804 with the addition that vended fonts will have
+   scalingCurves attached.
+   */
+  MDCTypographySchemeDefaultsMaterial201902,
 };
 
 /**
@@ -117,6 +133,7 @@ typedef NS_ENUM(NSInteger, MDCTypographySchemeDefaults) {
 @property(nonatomic, nonnull, readwrite, copy) UIFont *caption;
 @property(nonatomic, nonnull, readwrite, copy) UIFont *button;
 @property(nonatomic, nonnull, readwrite, copy) UIFont *overline;
+@property(nonatomic, readwrite) BOOL mdc_adjustsFontForContentSizeCategory;
 
 /**
  Initializes the typography scheme with the latest material defaults.
