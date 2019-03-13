@@ -326,12 +326,12 @@ MDCTextStyle const MDCTextStyleOverline = @"MDC.TextStyle.Overline";
 
 - (NSString *)description {
   NSString *superDescription = [super description];
-  NSString *extendedDescription = @"No Attached Style";
+  NSString *styleDescription = @"No Attached Style";
   if (_textStyle) {
-    extendedDescription = _textStyle;
+    styleDescription = _textStyle;
   }
 
-  return [NSString stringWithFormat:@"%@ %@", superDescription, extendedDescription];
+  return [NSString stringWithFormat:@"%@ %@", superDescription, styleDescription];
 }
 
 @end

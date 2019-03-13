@@ -17,14 +17,6 @@
 // Material's text styles, which are similar, but not quite equivalent to Apple's UIFontTextStyle.
 typedef NSString *_Nonnull MDCTextStyle NS_TYPED_EXTENSIBLE_ENUM;
 
-
-//KMKMKM
-//UIFontTextStyle style;
-//UIKIT_EXTERN UIFontTextStyle const UIFontTextStyleTitle2 NS_AVAILABLE_IOS(9_0);
-//typedef NSString * UIContentSizeCategory NS_TYPED_ENUM NS_AVAILABLE_IOS(7_0);
-//// Content size category constants
-//UIKIT_EXTERN UIContentSizeCategory const UIContentSizeCategoryUnspecified NS_AVAILABLE_IOS(10_0);
-
 UIKIT_EXTERN MDCTextStyle const MDCTextStyleHeadline1;
 UIKIT_EXTERN MDCTextStyle const MDCTextStyleHeadline2;
 UIKIT_EXTERN MDCTextStyle const MDCTextStyleHeadline3;
