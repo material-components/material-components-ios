@@ -13,12 +13,10 @@
 // limitations under the License.
 
 import Foundation
-import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialBottomNavigation_ColorThemer
 
 class BottomNavigationNilBadges : UIViewController {
 
-  let appBarViewController = MDCAppBarViewController()
   var colorScheme = MDCSemanticColorScheme()
 
   // Create a bottom navigation bar to add to a view.
@@ -26,15 +24,6 @@ class BottomNavigationNilBadges : UIViewController {
 
   init() {
     super.init(nibName: nil, bundle: nil)
-    self.title = "Bottom Navigation (Swift)"
-
-    self.addChildViewController(appBarViewController)
-    let color = UIColor(white: 0.2, alpha:1)
-    appBarViewController.headerView.backgroundColor = color
-    appBarViewController.navigationBar.tintColor = .white
-    appBarViewController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
-
-    commonBottomNavigationTypicalUseSwiftExampleInit()
   }
 
   @available(*, unavailable)
@@ -42,10 +31,13 @@ class BottomNavigationNilBadges : UIViewController {
     super.init(coder: aDecoder)
   }
 
-  func commonBottomNavigationTypicalUseSwiftExampleInit() {
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
     view.backgroundColor = colorScheme.backgroundColor
     view.addSubview(bottomNavBar)
 
+    bottomNavBar.sizeThatFitsIncludesSafeArea = false
     // Always show bottom navigation bar item titles.
     bottomNavBar.titleVisibility = .always
 
@@ -64,14 +56,23 @@ class BottomNavigationNilBadges : UIViewController {
     // Test that
     tabBarItem1.badgeValue = "";
     tabBarItem2.badgeValue = nil;
+
+    // Theme the bottom navigation bar.
+    MDCBottomNavigationBarColorThemer.applySemanticColorScheme(colorScheme,
+                                                               toBottomNavigation: bottomNavBar);
+
   }
   
   func layoutBottomNavBar() {
     let size = bottomNavBar.sizeThatFits(view.bounds.size)
-    let bottomNavBarFrame = CGRect(x: 0,
+    var bottomNavBarFrame = CGRect(x: 0,
                                    y: view.bounds.height - size.height,
                                    width: size.width,
                                    height: size.height)
+    if #available(iOS 11.0, *) {
+      bottomNavBarFrame.size.height += view.safeAreaInsets.bottom
+      bottomNavBarFrame.origin.y -= view.safeAreaInsets.bottom
+    }
     bottomNavBar.frame = bottomNavBarFrame
   }
 
@@ -88,21 +89,6 @@ class BottomNavigationNilBadges : UIViewController {
   }
   #endif
 
-  override func viewDidLoad() {
-    super.viewDidLoad()
-
-    view.addSubview(appBarViewController.view)
-    #if swift(>=4.2)
-    appBarViewController.didMove(toParent: self)
-    #else
-    appBarViewController.didMove(toParentViewController: self)
-    #endif
-
-    // Theme the bottom navigation bar.
-    MDCBottomNavigationBarColorThemer.applySemanticColorScheme(colorScheme,
-                                                               toBottomNavigation: bottomNavBar);
-  }
-
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     self.navigationController?.setNavigationBarHidden(true, animated: animated)
@@ -118,9 +104,5 @@ extension BottomNavigationNilBadges {
       "primaryDemo": false,
       "presentable": false,
     ]
-  }
-
-  func catalogShouldHideNavigation() -> Bool {
-    return true
   }
 }

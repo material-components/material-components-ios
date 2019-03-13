@@ -384,7 +384,7 @@ static const CGFloat kSafeAreaAmount = 20;
   self.actionSheet.titleFont = titleFont;
 
   // Then
-  XCTAssertEqual(self.actionSheet.header.titleLabel.font, titleFont);
+  XCTAssertEqualObjects(self.actionSheet.header.titleLabel.font, titleFont);
 }
 
 - (void)testSetMessageFont {
@@ -395,7 +395,7 @@ static const CGFloat kSafeAreaAmount = 20;
   self.actionSheet.messageFont = messageFont;
 
   // Then
-  XCTAssertEqual(self.actionSheet.header.messageLabel.font, messageFont);
+  XCTAssertEqualObjects(self.actionSheet.header.messageLabel.font, messageFont);
 }
 
 @end

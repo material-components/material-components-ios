@@ -33,8 +33,9 @@ static const CGFloat kBadgeFontSize = 12;
 /// Padding between top of the cell and the badge.
 static const CGFloat kBadgeTopPadding = 6;
 
-/// Maximum width of a badge. This allows for 3 characters before truncation.
-static const CGFloat kBadgeMaxWidth = 22;
+/// Maximum badge text character length. Badge text longer than this number of characters will
+/// truncate.
+static const NSUInteger kBadgeMaxTextComposedCharacterLength = 4;
 
 /// Outer edge padding from spec: https://material.io/go/design-tabs#spec.
 static const UIEdgeInsets kEdgeInsets = {.top = 0, .right = 16, .bottom = 0, .left = 16};
@@ -249,11 +250,11 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
   titleCenter.x = CGRectGetMidX(contentBounds);
   titleBounds.size = titleSize;
 
-  // Horizontally align the badge.
-  CGSize badgeSize = [_badgeLabel sizeThatFits:contentBounds.size];
-  badgeSize.width = MIN(kBadgeMaxWidth, badgeSize.width);
+  // Size badge
+  CGSize badgeSize = [self badgeLabelSizeWithText:_badgeLabel.text font:_badgeLabel.font];
   badgeBounds.size = badgeSize;
 
+  // Determine badge center
   if (_style.shouldDisplayBadge) {
     CGFloat badgeOffset = (imageBounds.size.width / 2) + (badgeSize.width / 2);
     if (self.mdf_effectiveUserInterfaceLayoutDirection ==
@@ -580,6 +581,32 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
 
 - (void)updateDisplayedTitle {
   _titleLabel.text = [[self class] displayedTitleForTitle:_title style:_style];
+}
+
+- (CGSize)badgeLabelSizeWithText:(NSString *)string font:(UIFont *)font {
+  if (string.length <= 0) {
+    return CGSizeZero;
+  }
+
+  NSMutableString *longestAllowableBadgeString = [[NSMutableString alloc] init];
+  __block NSUInteger composedCharacterIndex = 0;
+  [string enumerateSubstringsInRange:NSMakeRange(0, string.length)
+                             options:NSStringEnumerationByComposedCharacterSequences
+                          usingBlock:^(NSString *substring, NSRange substringRange,
+                                       NSRange enclosingRange, BOOL *stop) {
+                            [longestAllowableBadgeString appendString:substring];
+                            composedCharacterIndex++;
+                            if (composedCharacterIndex == kBadgeMaxTextComposedCharacterLength) {
+                              *stop = YES;
+                            }
+                          }];
+
+  CGRect largestAllowableBadgeRect =
+      [[longestAllowableBadgeString copy] boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)
+                                                       options:NSStringDrawingUsesLineFragmentOrigin
+                                                    attributes:@{NSFontAttributeName : font}
+                                                       context:nil];
+  return largestAllowableBadgeRect.size;
 }
 
 @end
