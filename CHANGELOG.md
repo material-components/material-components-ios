@@ -3,9 +3,12 @@
 This minor release increases our snapshot testing coverage and introduces a migration flag for
 including `UIAccessibilityTraitButton` in MDCButton's accessibilityTraits.
 
-While we do not expect the new MDCButton behavior to be breaking, you will temporarily be able to
-opt out of it by disabling the new `accessibilityTraitsIncludesButton` property. This property will
-be deprecated and deleted in a future release.
+## New features
+
+It is now possible to set `accessibilityTraits` on MDCButton to a custom value that
+does not include `UIAccessibilityTraitButton`. To enable this new behavior you must first set
+accessibilityTraitsIncludesButton = NO. This flag will eventually default to NO and then be
+deprecated/deleted.
 
 ## API changes
 
