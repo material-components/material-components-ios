@@ -98,7 +98,7 @@
 
     UIFont *scalabledFont = [scaler scalableFontWithFont:font];
 
-    for (unsigned long ii = 0; ii != sizeCategories.count - 1; ++ii) {
+    for (unsigned long ii = 0; ii < sizeCategories.count - 1; ++ii) {
       UIContentSizeCategory smallerSizeCategory = sizeCategories[ii];
       UIContentSizeCategory largerSizeCategory = sizeCategories[ii + 1];
 
