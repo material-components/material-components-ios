@@ -1395,8 +1395,7 @@ static BOOL isRunningiOS10_3OrAbove() {
   [self.delegate flexibleHeaderViewNeedsStatusBarAppearanceUpdate:self];
   [self fhv_enforceInsetsForScrollView:self.trackinsgScrollView];
   [UIView performWithoutAnimation:^{
-    [self fhv_setContentOffset:stashedContentOffset
-         forTrackingScrollView:self.trackingScrollView];
+    [self fhv_setContentOffset:stashedContentOffset forTrackingScrollView:self.trackingScrollView];
   }];
   _isChangingStatusBarVisibility = NO;
 }
