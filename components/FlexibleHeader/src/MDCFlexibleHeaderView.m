@@ -507,7 +507,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 #pragma mark - MDCFlexibleHeaderMinMaxHeightDelegate
 
 - (void)flexibleHeaderMaximumHeightDidChange:(MDCFlexibleHeaderMinMaxHeight *)safeAreas {
-  [self fhv_adjustTrackingScrollViewInsets];
+  [self fhv_adjustTrackingScrollViewInsetsForTrackingScrollView:_trackingScrollView];
 }
 
 - (void)flexibleHeaderMinMaxHeightDidChange:(MDCFlexibleHeaderMinMaxHeight *)safeAreas {
@@ -516,11 +516,12 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 
 #pragma mark - Private (fhv_ prefix)
 
-- (void)fhv_setContentOffset:(CGPoint)contentOffset {
+- (void)fhv_setContentOffset:(CGPoint)contentOffset
+       forTrackingScrollView:(UIScrollView *)trackingScrollView {
   // Avoid excessive writes. This can also cause infinite recursion if we're observing the content
   // offset because of observesTrackingScrollViewScrollEvents.
-  if (!CGPointEqualToPoint(contentOffset, _trackingScrollView.contentOffset)) {
-    _trackingScrollView.contentOffset = contentOffset;
+  if (!CGPointEqualToPoint(contentOffset, trackingScrollView.contentOffset)) {
+    trackingScrollView.contentOffset = contentOffset;
   }
 
   // When we manually set our content offset it's because we're trying to avoid any sort of content
@@ -529,21 +530,22 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   _shiftAccumulatorLastContentOffset = [self fhv_boundedContentOffset];
 }
 
-- (void)fhv_adjustTrackingScrollViewInsets {
-  CGPoint offsetPriorToInsetAdjustment = _trackingScrollView.contentOffset;
-  [self fhv_enforceInsetsForScrollView:_trackingScrollView];
+- (void)fhv_adjustTrackingScrollViewInsetsForTrackingScrollView:(UIScrollView *)trackingScrollView {
+  CGPoint offsetPriorToInsetAdjustment = trackingScrollView.contentOffset;
+  [self fhv_enforceInsetsForScrollView:trackingScrollView];
 
   // Only restore the content offset if UIScrollView didn't decide to update the content offset for
   // us. Notably, it seems to automatically adjust the content offset in the first runloop in which
   // the scroll view's been created, but not in any further runloops.
-  if (CGPointEqualToPoint(offsetPriorToInsetAdjustment, _trackingScrollView.contentOffset)) {
-    CGFloat scrollViewAdjustedContentInsetTop = _trackingScrollView.contentInset.top;
+  if (CGPointEqualToPoint(offsetPriorToInsetAdjustment, trackingScrollView.contentOffset)) {
+    CGFloat scrollViewAdjustedContentInsetTop = trackingScrollView.contentInset.top;
     if (@available(iOS 11.0, *)) {
-      scrollViewAdjustedContentInsetTop = _trackingScrollView.adjustedContentInset.top;
+      scrollViewAdjustedContentInsetTop = trackingScrollView.adjustedContentInset.top;
     }
     offsetPriorToInsetAdjustment.y =
         MAX(offsetPriorToInsetAdjustment.y, -scrollViewAdjustedContentInsetTop);
-    [self fhv_setContentOffset:offsetPriorToInsetAdjustment];
+    [self fhv_setContentOffset:offsetPriorToInsetAdjustment
+         forTrackingScrollView:trackingScrollView];
   }
 }
 
@@ -646,7 +648,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
     // statusBarShifterNeedsStatusBarAppearanceUpdate:
     CGPoint contentOffset = scrollView.contentOffset;
     contentOffset.y -= topInsetAdjustment;
-    [self fhv_setContentOffset:contentOffset];
+    [self fhv_setContentOffset:contentOffset forTrackingScrollView:_trackingScrollView];
   }
 
   _wasStatusBarHidden = statusBarIsHidden;
@@ -1225,7 +1227,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
       // focusing.
       CGPoint offset = self.trackingScrollView.contentOffset;
       offset.y = MAX(offset.y, -self.maximumHeight);
-      [self fhv_setContentOffset:offset];
+      [self fhv_setContentOffset:offset forTrackingScrollView:self.trackingScrollView];
       // Setting the transform on the same run loop as the accessibility scroll can cause additional
       // incorrect scrolling as the scrollview attempts to resolve to a position that will place
       // the header in the center of the scroll. Punting to the next loop prevents this.
@@ -1391,9 +1393,9 @@ static BOOL isRunningiOS10_3OrAbove() {
   _isChangingStatusBarVisibility = YES;
   CGPoint stashedContentOffset = _trackingScrollView.contentOffset;
   [self.delegate flexibleHeaderViewNeedsStatusBarAppearanceUpdate:self];
-  [self fhv_enforceInsetsForScrollView:_trackingScrollView];
+  [self fhv_enforceInsetsForScrollView:self.trackingScrollView];
   [UIView performWithoutAnimation:^{
-    [self fhv_setContentOffset:stashedContentOffset];
+    [self fhv_setContentOffset:stashedContentOffset forTrackingScrollView:self.trackingScrollView];
   }];
   _isChangingStatusBarVisibility = NO;
 }
@@ -1658,7 +1660,7 @@ static BOOL isRunningiOS10_3OrAbove() {
   CGFloat delta = _trackingScrollView.contentInset.top - previousInsets.top;
   CGPoint contentOffset = _trackingScrollView.contentOffset;
   contentOffset.y -= delta;  // Keeps the scroll view offset from jumping.
-  [self fhv_setContentOffset:contentOffset];
+  [self fhv_setContentOffset:contentOffset forTrackingScrollView:_trackingScrollView];
   _contentInsetsAreChanging = NO;
 }
 
