@@ -301,10 +301,12 @@ static const CGFloat kContentHorizontalMargin = 12;
 
 #pragma mark - UI Changes
 
-- (void)testChangeIconWhenNotSelected {
+- (void)testChangeUnselectedImageWhenNotSelected {
   // Given
   self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
   self.itemView.selected = NO;
+  self.itemView.selectedImage = [[UIImage mdc_testImageOfSize:CGSizeMake(16, 16)]
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   self.itemView.selectedItemTintColor = UIColor.orangeColor;
   self.itemView.unselectedItemTintColor = UIColor.blackColor;
 
@@ -316,7 +318,39 @@ static const CGFloat kContentHorizontalMargin = 12;
   [self generateAndVerifySnapshot];
 }
 
-- (void)testChangeIconWhenSelected {
+- (void)testChangeUnselectedImageWhenSelected {
+  // Given
+  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+  self.itemView.selected = YES;
+  self.itemView.selectedImage = [[UIImage mdc_testImageOfSize:CGSizeMake(16, 16)]
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  self.itemView.selectedItemTintColor = UIColor.orangeColor;
+  self.itemView.unselectedItemTintColor = UIColor.blackColor;
+
+  // When
+  self.itemView.image = [[UIImage mdc_testImageOfSize:CGSizeMake(36, 36)]
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testChangeSelectedImageWhenNotSelected {
+  // Given
+  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+  self.itemView.selected = NO;
+  self.itemView.selectedItemTintColor = UIColor.orangeColor;
+  self.itemView.unselectedItemTintColor = UIColor.blackColor;
+
+  // When
+  self.itemView.selectedImage = [[UIImage mdc_testImageOfSize:CGSizeMake(36, 36)]
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testChangeSelectedImageWhenSelected {
   // Given
   self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
   self.itemView.selected = YES;
@@ -324,7 +358,7 @@ static const CGFloat kContentHorizontalMargin = 12;
   self.itemView.unselectedItemTintColor = UIColor.blackColor;
 
   // When
-  self.itemView.image = [[UIImage mdc_testImageOfSize:CGSizeMake(36, 36)]
+  self.itemView.selectedImage = [[UIImage mdc_testImageOfSize:CGSizeMake(36, 36)]
       imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 
   // Then
