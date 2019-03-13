@@ -61,6 +61,7 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.dependency 'MaterialComponents'
   s.dependency 'MaterialComponentsBeta'
+  s.dependency 'MaterialComponentsExamples'
 
   # Top level sources are required. Without them, unit test targets do not show up in Xcode.
   # However, no top level sources can import iOSSnapshotTestCase, otherwise the app will crash on
