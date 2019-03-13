@@ -24,10 +24,19 @@
 - (void)testMDC_scaledFontForMaterialTextStyleReturnsEquivalentFonts {
   // Given
   NSArray<MDCTextStyle> *textStyles = @[
-      MDCTextStyleHeadline1, MDCTextStyleHeadline2, MDCTextStyleHeadline3, MDCTextStyleHeadline4,
-      MDCTextStyleHeadline5, MDCTextStyleHeadline6, MDCTextStyleSubtitle1, MDCTextStyleSubtitle2,
-      MDCTextStyleBody1, MDCTextStyleBody2, MDCTextStyleButton, MDCTextStyleCaption,
-      MDCTextStyleOverline,
+    MDCTextStyleHeadline1,
+    MDCTextStyleHeadline2,
+    MDCTextStyleHeadline3,
+    MDCTextStyleHeadline4,
+    MDCTextStyleHeadline5,
+    MDCTextStyleHeadline6,
+    MDCTextStyleSubtitle1,
+    MDCTextStyleSubtitle2,
+    MDCTextStyleBody1,
+    MDCTextStyleBody2,
+    MDCTextStyleButton,
+    MDCTextStyleCaption,
+    MDCTextStyleOverline,
   ];
 
   for (MDCTextStyle textStyle in textStyles) {
@@ -50,22 +59,36 @@
 - (void)testMDC_scaledFontForMaterialTextStyleCurvesIncrease {
   // Given
   NSArray<MDCTextStyle> *textStyles = @[
-                                        MDCTextStyleHeadline1, MDCTextStyleHeadline2, MDCTextStyleHeadline3, MDCTextStyleHeadline4,
-                                        MDCTextStyleHeadline5, MDCTextStyleHeadline6, MDCTextStyleSubtitle1, MDCTextStyleSubtitle2,
-                                        MDCTextStyleBody1, MDCTextStyleBody2, MDCTextStyleButton, MDCTextStyleCaption,
-                                        MDCTextStyleOverline,
-                                        ];
+    MDCTextStyleHeadline1,
+    MDCTextStyleHeadline2,
+    MDCTextStyleHeadline3,
+    MDCTextStyleHeadline4,
+    MDCTextStyleHeadline5,
+    MDCTextStyleHeadline6,
+    MDCTextStyleSubtitle1,
+    MDCTextStyleSubtitle2,
+    MDCTextStyleBody1,
+    MDCTextStyleBody2,
+    MDCTextStyleButton,
+    MDCTextStyleCaption,
+    MDCTextStyleOverline,
+  ];
 
   // The following array MUST be ordered from smallest to largest
   NSArray<UIContentSizeCategory> *sizeCategories = @[
-                                                     UIContentSizeCategoryExtraSmall,UIContentSizeCategorySmall,UIContentSizeCategoryMedium,UIContentSizeCategoryLarge,
-                                                     UIContentSizeCategoryExtraLarge, UIContentSizeCategoryExtraExtraLarge, UIContentSizeCategoryExtraExtraExtraLarge,
-                                                     UIContentSizeCategoryAccessibilityMedium,
-                                                     UIContentSizeCategoryAccessibilityLarge,
-                                                     UIContentSizeCategoryAccessibilityExtraLarge,
-                                                     UIContentSizeCategoryAccessibilityExtraExtraLarge,
-                                                     UIContentSizeCategoryAccessibilityExtraExtraExtraLarge,
-                                                     ];
+    UIContentSizeCategoryExtraSmall,
+    UIContentSizeCategorySmall,
+    UIContentSizeCategoryMedium,
+    UIContentSizeCategoryLarge,
+    UIContentSizeCategoryExtraLarge,
+    UIContentSizeCategoryExtraExtraLarge,
+    UIContentSizeCategoryExtraExtraExtraLarge,
+    UIContentSizeCategoryAccessibilityMedium,
+    UIContentSizeCategoryAccessibilityLarge,
+    UIContentSizeCategoryAccessibilityExtraLarge,
+    UIContentSizeCategoryAccessibilityExtraExtraLarge,
+    UIContentSizeCategoryAccessibilityExtraExtraExtraLarge,
+  ];
 
   for (MDCTextStyle textStyle in textStyles) {
     // When
@@ -91,11 +114,20 @@
 - (void)testMDC_scaledFontDefaultEqualsLarge {
   // Given
   NSArray<MDCTextStyle> *textStyles = @[
-                                        MDCTextStyleHeadline1, MDCTextStyleHeadline2, MDCTextStyleHeadline3, MDCTextStyleHeadline4,
-                                        MDCTextStyleHeadline5, MDCTextStyleHeadline6, MDCTextStyleSubtitle1, MDCTextStyleSubtitle2,
-                                        MDCTextStyleBody1, MDCTextStyleBody2, MDCTextStyleButton, MDCTextStyleCaption,
-                                        MDCTextStyleOverline,
-                                        ];
+    MDCTextStyleHeadline1,
+    MDCTextStyleHeadline2,
+    MDCTextStyleHeadline3,
+    MDCTextStyleHeadline4,
+    MDCTextStyleHeadline5,
+    MDCTextStyleHeadline6,
+    MDCTextStyleSubtitle1,
+    MDCTextStyleSubtitle2,
+    MDCTextStyleBody1,
+    MDCTextStyleBody2,
+    MDCTextStyleButton,
+    MDCTextStyleCaption,
+    MDCTextStyleOverline,
+  ];
 
   for (MDCTextStyle textStyle in textStyles) {
     // When
