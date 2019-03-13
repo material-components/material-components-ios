@@ -1550,6 +1550,10 @@ static BOOL isRunningiOS10_3OrAbove() {
   [self fhv_contentOffsetDidChange];
 }
 
+- (void)trackingScrollViewDidChangeAdjustedContentInset:(UIScrollView *)trackingScrollView {
+  [self fhv_adjustTrackingScrollViewInsetsForTrackingScrollView:trackingScrollView];
+}
+
 - (void)trackingScrollViewDidEndDraggingWillDecelerate:(BOOL)willDecelerate {
   NSAssert(!self.observesTrackingScrollViewScrollEvents,
            @"Do not manually forward tracking scroll view events when"
