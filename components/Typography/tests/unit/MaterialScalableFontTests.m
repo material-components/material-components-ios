@@ -25,7 +25,7 @@
 
 @implementation UIFont_MaterialScalableTests
 
-- (void)testMDC_scaledFontForMaterialTextStyleReturnsEquivalentFonts {
+- (void)testScaledFontsReturnEquivalentFonts {
   // Given
   NSArray<MDCTextStyle> *textStyles = @[
     MDCTextStyleHeadline1,
@@ -60,7 +60,7 @@
   }
 }
 
-- (void)testMDC_scaledFontForMaterialTextStyleCurvesIncrease {
+- (void)testScalingCurvesIncrease {
   // Given
   NSArray<MDCTextStyle> *textStyles = @[
     MDCTextStyleHeadline1,
@@ -115,7 +115,7 @@
   }
 }
 
-- (void)testMDC_scaledFontDefaultEqualsLarge {
+- (void)testScaledFontDefaultEqualsLarge {
   // Given
   NSArray<MDCTextStyle> *textStyles = @[
     MDCTextStyleHeadline1,
@@ -149,7 +149,7 @@
   }
 }
 
-- (void)testMDC_scaledFontInvalidStyleEqualsBody1 {
+- (void)testInvalidStyleFallback {
   // Given
   UIFont *font = [UIFont systemFontOfSize:18.0];
 
@@ -167,7 +167,7 @@
   XCTAssert([scaledFont1 mdc_isSimplyEqual:scaledFont2]);
 }
 
-- (void)testMDC_nonScaledFontReturnsSelf {
+- (void)testNonScaledFontReturnsSelf {
   // Given
   UIFont *font = [UIFont systemFontOfSize:18.0];
 
@@ -178,7 +178,7 @@
   XCTAssert([font mdc_isSimplyEqual:nonScaledFont1]);
 }
 
-- (void)testMDC_negativeCurve {
+- (void)testNegativeAndZeroScalingCurve {
   // Given
   UIFont *font = [UIFont systemFontOfSize:18.0];
 
@@ -214,7 +214,7 @@
   XCTAssert([font mdc_isSimplyEqual:negativeScaledFont]);
 }
 
-- (void)testMDC_incompleteCurve {
+- (void)testIncompleteScalingCurve {
   // Given
   UIFont *font = [UIFont systemFontOfSize:20.0];
 
@@ -240,7 +240,7 @@
 }
 
 - (void)testValueScaling {
-  //Given
+  // Given
   UIFont *originalFont = [UIFont systemFontOfSize:20.0];
   CGFloat originalValue = 10.0;
 
