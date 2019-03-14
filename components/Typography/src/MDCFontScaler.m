@@ -299,15 +299,7 @@ MDCTextStyle const MDCTextStyleOverline = @"MDC.TextStyle.Overline";
   }
 
   NSNumber *defaultFontSizeNumber = _scalingCurve[defaultSizeCategory];
-
   NSNumber *currentFontSizeNumber = _scalingCurve[currentSizeCategory];
-  // If you have queried the table for a sizeCategory that doesn't exist, we will return the
-  // traits for XXXL.  This handles the case where the values are requested for one of the
-  // accessibility size categories beyond XXXL such as
-  // UIContentSizeCategoryAccessibilityExtraLarge.
-  if (currentFontSizeNumber == nil) {
-    currentFontSizeNumber = _scalingCurve[UIContentSizeCategoryExtraExtraExtraLarge];
-  }
 
   // Guard against broken / incomplete scaling curves by returning self if fontSizeNumber is nil.
   if (currentFontSizeNumber == nil || defaultFontSizeNumber == nil) {
@@ -322,7 +314,7 @@ MDCTextStyle const MDCTextStyleOverline = @"MDC.TextStyle.Overline";
     return value;
   }
 
-  return currentFontSize / defaultFontSize;
+  return (currentFontSize / defaultFontSize) * value;
 }
 
 - (NSString *)description {

@@ -14,7 +14,11 @@
 
 #import <UIKit/UIKit.h>
 
-// Material's text styles, which are similar, but not quite equivalent to Apple's UIFontTextStyle.
+/**
+ Set of constants that describe Material's text styles.
+
+ These are similar, but not quite equivalent, to Apple's UIFontTextStyle.
+ */
 typedef NSString *_Nonnull MDCTextStyle NS_TYPED_EXTENSIBLE_ENUM;
 
 UIKIT_EXTERN MDCTextStyle const MDCTextStyleHeadline1;
@@ -51,7 +55,7 @@ UIKIT_EXTERN MDCTextStyle const MDCTextStyleOverline;
    returned font. For example, MaterialTextStyleBody1.
  @return An initialized font scaler object.
  */
-- (nonnull instancetype)initForMaterialTextStyle:(MDCTextStyle)textStyle;
+- (nonnull instancetype)initForMaterialTextStyle:(MDCTextStyle)textStyle NS_DESIGNATED_INITIALIZER;
 
 /**
  Creates and returns a font scaler object with the specified text style.

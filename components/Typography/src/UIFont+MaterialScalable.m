@@ -21,7 +21,22 @@
 
 static char MDCFontScaleObjectKey;
 
-@implementation UIFont (MaterialTypography)
+/**
+ @return Device's current UIContentSizeCategory or UIContentSizeCategoryLarge
+ if we are unable to query the device due to being in an extension.
+ */
+static UIContentSizeCategory GetCurrentSizeCategory(void) {
+  UIContentSizeCategory sizeCategory = UIContentSizeCategoryLarge;
+  if (@available(iOS 10.0, *)) {
+    sizeCategory = UIScreen.mainScreen.traitCollection.preferredContentSizeCategory;
+  } else if ([UIApplication mdc_safeSharedApplication]) {
+    sizeCategory = [UIApplication mdc_safeSharedApplication].preferredContentSizeCategory;
+  }
+
+  return sizeCategory;
+}
+
+@implementation UIFont (MaterialScalable)
 
 - (UIFont *)mdc_scaledFontForSizeCategory:(UIContentSizeCategory)sizeCategory {
   if (!self.mdc_scalingCurve) {
@@ -39,25 +54,16 @@ static char MDCFontScaleObjectKey;
   }
 
   CGFloat fontSize = (CGFloat)fontSizeNumber.doubleValue;
+
+  // Guard against broken scaling curves encoded with 0.0 or negative values
+  if (fontSize <= 0.0) {
+    return self;
+  }
+
   UIFont *scaledFont = [UIFont fontWithDescriptor:self.fontDescriptor size:fontSize];
   scaledFont.mdc_scalingCurve = self.mdc_scalingCurve;
 
   return scaledFont;
-}
-
-/**
- @return Device's current UIContentSizeCategory or UIContentSizeCategoryLarge
-     if we are unable to query the device due to being in an extension.
- */
-static UIContentSizeCategory GetCurrentSizeCategory(void) {
-  UIContentSizeCategory sizeCategory = UIContentSizeCategoryLarge;
-  if ([UIApplication mdc_safeSharedApplication]) {
-    sizeCategory = [UIApplication mdc_safeSharedApplication].preferredContentSizeCategory;
-  } else if (@available(iOS 10.0, *)) {
-    sizeCategory = UIScreen.mainScreen.traitCollection.preferredContentSizeCategory;
-  }
-
-  return sizeCategory;
 }
 
 - (UIFont *)mdc_scaledFontForCurrentSizeCategory {
@@ -91,7 +97,7 @@ static UIContentSizeCategory GetCurrentSizeCategory(void) {
     return value;
   }
 
-  return currentFontSize / defaultFontSize;
+  return (currentFontSize / defaultFontSize) * value;
 }
 
 - (NSDictionary<UIContentSizeCategory, NSNumber *> *)mdc_scalingCurve {
