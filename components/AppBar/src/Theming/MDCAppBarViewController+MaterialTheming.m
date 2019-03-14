@@ -21,7 +21,6 @@
   MDCShadowLayer *shadowLayer = [[MDCShadowLayer alloc] init];
   shadowLayer.elevation = MDCShadowElevationAppBar;
   self.headerView.shadowLayer = shadowLayer;
-  self.navigationBar.tintColor = 
   self.navigationBar.leadingBarItemsTintColor = containerScheme.colorScheme.onPrimaryColor;
   self.navigationBar.trailingBarItemsTintColor = containerScheme.colorScheme.onPrimaryColor;
   self.navigationBar.titleFont = containerScheme.typographyScheme.headline6;
@@ -32,9 +31,11 @@
   self.headerView.backgroundColor = containerScheme.colorScheme.surfaceColor;
   self.headerView.shadowLayer = nil;  // No shadow
   self.navigationBar.leadingBarItemsTintColor = containerScheme.colorScheme.onSurfaceColor;
-  self.navigationBar.trailingBarItemsTintColor = [containerScheme.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.54];
+  self.navigationBar.trailingBarItemsTintColor =
+      [containerScheme.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.54];
   self.navigationBar.titleFont = containerScheme.typographyScheme.headline6;
-  self.navigationBar.titleTextColor = [containerScheme.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87];
+  self.navigationBar.titleTextColor =
+      [containerScheme.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87];
 }
 
 @end

@@ -36,7 +36,7 @@
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-    self.recordMode = YES;
+  //  self.recordMode = YES;
 
   self.customizedContainerScheme = [[MDCContainerScheme alloc] init];
   MDCSemanticColorScheme *colorScheme =
@@ -76,32 +76,37 @@
   CGSize imageSize = CGSizeMake(24, 24);
   UIBarButtonItem *trailingItem1 = [[UIBarButtonItem alloc]
       initWithImage:[[UIImage mdc_testImageOfSize:imageSize
-                                       withStyle:MDCSnapshotTestImageStyleEllipses] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+                                        withStyle:MDCSnapshotTestImageStyleEllipses]
+                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
               style:UIBarButtonItemStylePlain
              target:nil
              action:NULL];
   UIBarButtonItem *trailingItem2 = [[UIBarButtonItem alloc]
       initWithImage:[[UIImage mdc_testImageOfSize:imageSize
-                                       withStyle:MDCSnapshotTestImageStyleRectangles] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+                                        withStyle:MDCSnapshotTestImageStyleRectangles]
+                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
               style:UIBarButtonItemStylePlain
              target:nil
              action:NULL];
   UIBarButtonItem *leadingItem1 = [[UIBarButtonItem alloc]
       initWithImage:[[UIImage mdc_testImageOfSize:imageSize
-                                       withStyle:MDCSnapshotTestImageStyleFramedX] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+                                        withStyle:MDCSnapshotTestImageStyleFramedX]
+                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
               style:UIBarButtonItemStylePlain
              target:nil
              action:NULL];
   UIBarButtonItem *leadingItem2 = [[UIBarButtonItem alloc]
       initWithImage:[[UIImage mdc_testImageOfSize:imageSize
-                                       withStyle:MDCSnapshotTestImageStyleCheckerboard] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+                                        withStyle:MDCSnapshotTestImageStyleCheckerboard]
+                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
               style:UIBarButtonItemStylePlain
              target:nil
              action:NULL];
 
   self.appBarController.navigationBar.backItem = [[UIBarButtonItem alloc]
       initWithImage:[[UIImage mdc_testImageOfSize:imageSize
-                                       withStyle:MDCSnapshotTestImageStyleDiagonalLines] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+                                        withStyle:MDCSnapshotTestImageStyleDiagonalLines]
+                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
               style:UIBarButtonItemStylePlain
              target:nil
              action:NULL];
