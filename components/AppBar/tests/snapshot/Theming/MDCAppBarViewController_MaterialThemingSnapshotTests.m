@@ -14,20 +14,18 @@
 
 #import "MaterialSnapshot.h"
 
-#import "MaterialAppBar+MaterialTheming.h"
 #import <MaterialComponents/MaterialColorScheme.h>
 #import <MaterialComponents/MaterialTypographyScheme.h>
+#import "MaterialAppBar+MaterialTheming.h"
 #import "MaterialContainerScheme.h"
 
 @interface MDCAppBarViewController_MaterialThemingSnapshotTests : MDCSnapshotTestCase
-
 
 /** Container scheme used for theming. */
 @property(nonatomic, strong) MDCContainerScheme *customizedContainerScheme;
 
 /** The controller being tested. */
 @property(nonatomic, strong) MDCAppBarViewController *appBarController;
-
 
 @end
 
@@ -41,7 +39,8 @@
   //  self.recordMode = YES;
 
   self.customizedContainerScheme = [[MDCContainerScheme alloc] init];
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   colorScheme.primaryColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:0];
   colorScheme.primaryColorVariant = [UIColor colorWithWhite:(CGFloat)0.8 alpha:(CGFloat)0.1];
   colorScheme.secondaryColor = [UIColor colorWithWhite:(CGFloat)0.7 alpha:(CGFloat)0.2];
@@ -54,7 +53,8 @@
   colorScheme.onBackgroundColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.9];
   self.customizedContainerScheme.colorScheme = colorScheme;
 
-  MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+  MDCTypographyScheme *typographyScheme =
+      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
   typographyScheme.headline1 = [UIFont systemFontOfSize:1];
   typographyScheme.headline2 = [UIFont systemFontOfSize:2];
   typographyScheme.headline3 = [UIFont systemFontOfSize:3];
@@ -71,6 +71,42 @@
   self.customizedContainerScheme.typographyScheme = typographyScheme;
 
   self.appBarController = [[MDCAppBarViewController alloc] init];
+  self.appBarController.navigationBar.title = @"AppBar";
+  self.appBarController.navigationBar.leadingItemsSupplementBackButton = YES;
+  CGSize imageSize = CGSizeMake(24, 24);
+  UIBarButtonItem *trailingItem1 = [[UIBarButtonItem alloc]
+      initWithImage:[UIImage mdc_testImageOfSize:imageSize
+                                       withStyle:MDCSnapshotTestImageStyleEllipses]
+              style:UIBarButtonItemStylePlain
+             target:nil
+             action:NULL];
+  UIBarButtonItem *trailingItem2 = [[UIBarButtonItem alloc]
+      initWithImage:[UIImage mdc_testImageOfSize:imageSize
+                                       withStyle:MDCSnapshotTestImageStyleRectangles]
+              style:UIBarButtonItemStylePlain
+             target:nil
+             action:NULL];
+  UIBarButtonItem *leadingItem1 = [[UIBarButtonItem alloc]
+      initWithImage:[UIImage mdc_testImageOfSize:imageSize
+                                       withStyle:MDCSnapshotTestImageStyleFramedX]
+              style:UIBarButtonItemStylePlain
+             target:nil
+             action:NULL];
+  UIBarButtonItem *leadingItem2 = [[UIBarButtonItem alloc]
+      initWithImage:[UIImage mdc_testImageOfSize:imageSize
+                                       withStyle:MDCSnapshotTestImageStyleCheckerboard]
+              style:UIBarButtonItemStylePlain
+             target:nil
+             action:NULL];
+
+  self.appBarController.navigationBar.backItem = [[UIBarButtonItem alloc]
+      initWithImage:[UIImage mdc_testImageOfSize:imageSize
+                                       withStyle:MDCSnapshotTestImageStyleDiagonalLines]
+              style:UIBarButtonItemStylePlain
+             target:nil
+             action:NULL];
+  self.appBarController.navigationBar.leadingBarButtonItems = @[ leadingItem1, leadingItem2 ];
+  self.appBarController.navigationBar.trailingBarButtonItems = @[ trailingItem1, trailingItem2 ];
 }
 
 - (void)tearDown {
@@ -88,24 +124,32 @@
 }
 
 - (void)testApplyPrimaryThemeWithSchemeWithBaselineScheme {
+  // When
+  [self.appBarController applyPrimaryThemeWithScheme:[[MDCContainerScheme alloc] init]];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.appBarController.view];
 }
 
 - (void)testApplyPrimaryThemeWithSchemeWithCustomScheme {
+  // When
+  [self.appBarController applyPrimaryThemeWithScheme:self.customizedContainerScheme];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.appBarController.view];
 }
 
 - (void)testApplySurfaceThemeWithSchemeWithBaselineScheme {
+  // When
+  [self.appBarController applySurfaceThemeWithScheme:[[MDCContainerScheme alloc] init]];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.appBarController.view];
 }
 
 - (void)testApplySurfaceThemeWithSchemeWithCustomScheme {
+  // When
+  [self.appBarController applySurfaceThemeWithScheme:self.customizedContainerScheme];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.appBarController.view];
