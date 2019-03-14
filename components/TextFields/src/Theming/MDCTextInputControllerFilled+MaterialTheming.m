@@ -33,8 +33,7 @@
 }
 
 - (void)applyTypographyThemeWithScheme:(nonnull id<MDCTypographyScheming>)typographyScheme {
-  [MDCTextFieldTypographyThemer applyTypographyScheme:typographyScheme
-                                toTextInputController:self];
+  [MDCTextFieldTypographyThemer applyTypographyScheme:typographyScheme toTextInputController:self];
 }
 
 @end
