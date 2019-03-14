@@ -30,4 +30,3 @@ UIContentSizeCategory GetCurrentSizeCategory(void) {
 
   return sizeCategory;
 }
-
