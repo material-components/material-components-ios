@@ -14,12 +14,12 @@
 
 #import "MaterialSnapshot.h"
 
-#import "MaterialButtons.h"
 #import "MDCBannerView.h"
+#import "MaterialButtons.h"
 
 static NSString *const kBannerShortText = @"tristique senectus et";
 static NSString *const kBannerLongText =
-@"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.";
+    @"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.";
 
 /** Snapshot tests for MDCBannerView. */
 @interface MDCBannerViewSnapshotTests : MDCSnapshotTestCase
