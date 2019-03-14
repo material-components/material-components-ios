@@ -232,7 +232,7 @@ static NSString *const exampleExtraLongText =
   [button addTarget:self
                 action:@selector(dismissBanner)
       forControlEvents:UIControlEventTouchUpInside];
-//  [bannerView sizeToFit];
+  //  [bannerView sizeToFit];
 
   // Adjust bannerViewContainer's frame
   CGFloat topAreaInset = 0.0f;
@@ -240,9 +240,9 @@ static NSString *const exampleExtraLongText =
     topAreaInset = self.view.safeAreaInsets.top;
   }
 
-  CGSize bannerViewSize = [bannerView sizeThatFits:CGSizeMake(CGRectGetWidth(self.view.bounds), CGFLOAT_MAX)];
-  bannerView.frame = CGRectMake(0.0f, topAreaInset, bannerViewSize.width,
-                                bannerViewSize.height);
+  CGSize bannerViewSize =
+      [bannerView sizeThatFits:CGSizeMake(CGRectGetWidth(self.view.bounds), CGFLOAT_MAX)];
+  bannerView.frame = CGRectMake(0.0f, topAreaInset, bannerViewSize.width, bannerViewSize.height);
 }
 
 - (void)showSingleLineStyleBannerWithIcon {
@@ -297,9 +297,9 @@ static NSString *const exampleExtraLongText =
   if (@available(iOS 11.0, *)) {
     topAreaInset = self.view.safeAreaInsets.top;
   }
-  CGSize bannerViewSize = [bannerView sizeThatFits:CGSizeMake(CGRectGetWidth(self.view.bounds), CGFLOAT_MAX)];
-  bannerView.frame = CGRectMake(0.0f, topAreaInset, bannerViewSize.width,
-                                bannerViewSize.height);
+  CGSize bannerViewSize =
+      [bannerView sizeThatFits:CGSizeMake(CGRectGetWidth(self.view.bounds), CGFLOAT_MAX)];
+  bannerView.frame = CGRectMake(0.0f, topAreaInset, bannerViewSize.width, bannerViewSize.height);
 }
 
 - (void)showMultiLineAlignedButtonStyleBannerWithIcon {
@@ -354,9 +354,9 @@ static NSString *const exampleExtraLongText =
   if (@available(iOS 11.0, *)) {
     topAreaInset = self.view.safeAreaInsets.top;
   }
-  CGSize bannerViewSize = [bannerView sizeThatFits:CGSizeMake(CGRectGetWidth(self.view.bounds), CGFLOAT_MAX)];
-  bannerView.frame = CGRectMake(0.0f, topAreaInset, bannerViewSize.width,
-                                bannerViewSize.height);
+  CGSize bannerViewSize =
+      [bannerView sizeThatFits:CGSizeMake(CGRectGetWidth(self.view.bounds), CGFLOAT_MAX)];
+  bannerView.frame = CGRectMake(0.0f, topAreaInset, bannerViewSize.width, bannerViewSize.height);
 }
 
 - (void)showMultiLineStackedButtonStyleBannerWithIcon {

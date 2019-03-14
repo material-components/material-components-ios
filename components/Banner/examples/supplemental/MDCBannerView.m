@@ -189,10 +189,12 @@ static const NSUInteger kNumberOfButtonsLimit = 2;
 }
 
 - (void)updateConstraints {
-  self.layout = [[MDCBannerViewLayout alloc] initWithPreferredWidth:CGRectGetWidth(self.bounds) - (self.layoutMargins.left + self.layoutMargins.right)
-                                                          textLabel:self.textLabel
-                                                      iconContainer:self.iconImageView
-                                                            buttons:self.buttons];
+  self.layout = [[MDCBannerViewLayout alloc]
+      initWithPreferredWidth:CGRectGetWidth(self.bounds) -
+                             (self.layoutMargins.left + self.layoutMargins.right)
+                   textLabel:self.textLabel
+               iconContainer:self.iconImageView
+                     buttons:self.buttons];
   [self updateConstraintsWithLayoutStyle:self.layout.style];
 
   [super updateConstraints];
@@ -275,13 +277,13 @@ static const NSUInteger kNumberOfButtonsLimit = 2;
                                       multiplier:1
                                         constant:kSpaceBetweenIconImageAndTextLabel];
       NSLayoutConstraint *buttonCenterConstraint =
-      [NSLayoutConstraint constraintWithItem:self.buttons[0]
-                                   attribute:NSLayoutAttributeCenterY
-                                   relatedBy:NSLayoutRelationEqual
-                                      toItem:self.iconImageView
-                                   attribute:NSLayoutAttributeCenterY
-                                  multiplier:1
-                                    constant:0];
+          [NSLayoutConstraint constraintWithItem:self.buttons[0]
+                                       attribute:NSLayoutAttributeCenterY
+                                       relatedBy:NSLayoutRelationEqual
+                                          toItem:self.iconImageView
+                                       attribute:NSLayoutAttributeCenterY
+                                      multiplier:1
+                                        constant:0];
       [NSLayoutConstraint activateConstraints:@[
         iconLeadingConstraint, iconTopConstraint, iconBottomConstraint, textLabelLeadingConstraint,
         buttonCenterConstraint
