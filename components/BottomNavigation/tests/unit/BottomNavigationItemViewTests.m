@@ -361,4 +361,34 @@ static UIImage *fakeImage(void) {
                 NSStringFromCGRect(itemView.label.frame));
 }
 
+- (void)testChangingSelectedImageWhenNotSelectedWontChangeDisplayedImage {
+  // Given
+  MDCBottomNavigationItemView *itemView = [[MDCBottomNavigationItemView alloc] init];
+  itemView.image = fakeImage();
+  itemView.selectedImage = fakeImage();
+  itemView.selected = NO;
+  UIImage *originalIconImageViewImage = itemView.iconImageView.image;
+
+  // When
+  itemView.selectedImage = fakeImage();
+
+  // Then
+  XCTAssertEqual(itemView.iconImageView.image, originalIconImageViewImage);
+}
+
+- (void)testChangingUnselectedImageWhenSelectedWithSelectedImageWontChangeDisplayedImage {
+  // Given
+  MDCBottomNavigationItemView *itemView = [[MDCBottomNavigationItemView alloc] init];
+  itemView.image = fakeImage();
+  itemView.selectedImage = fakeImage();
+  itemView.selected = YES;
+  UIImage *originalIconImageViewImage = itemView.iconImageView.image;
+
+  // When
+  itemView.image = fakeImage();
+
+  // Then
+  XCTAssertEqual(itemView.iconImageView.image, originalIconImageViewImage);
+}
+
 @end

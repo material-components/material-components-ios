@@ -299,4 +299,102 @@ static const CGFloat kContentHorizontalMargin = 12;
   [self generateAndVerifySnapshot];
 }
 
+#pragma mark - UI Changes
+
+- (void)testChangeUnselectedImageWhenNotSelectedWithSelectedImage {
+  // Given
+  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+  self.itemView.selected = NO;
+  self.itemView.selectedImage = [[UIImage mdc_testImageOfSize:CGSizeMake(16, 16)]
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  self.itemView.selectedItemTintColor = UIColor.orangeColor;
+  self.itemView.unselectedItemTintColor = UIColor.blackColor;
+
+  // When
+  self.itemView.image = [[UIImage mdc_testImageOfSize:CGSizeMake(36, 36)]
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testChangeUnselectedImageWhenNotSelectedWithoutSelectedImage {
+  // Given
+  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+  self.itemView.selected = NO;
+  self.itemView.selectedImage = nil;
+  self.itemView.selectedItemTintColor = UIColor.orangeColor;
+  self.itemView.unselectedItemTintColor = UIColor.blackColor;
+
+  // When
+  self.itemView.image = [[UIImage mdc_testImageOfSize:CGSizeMake(36, 36)]
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testChangeUnselectedImageWhenSelectedWithSelectedImage {
+  // Given
+  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+  self.itemView.selected = YES;
+  self.itemView.selectedImage = [[UIImage mdc_testImageOfSize:CGSizeMake(16, 16)]
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  self.itemView.selectedItemTintColor = UIColor.orangeColor;
+  self.itemView.unselectedItemTintColor = UIColor.blackColor;
+
+  // When
+  self.itemView.image = [[UIImage mdc_testImageOfSize:CGSizeMake(36, 36)]
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testChangeUnselectedImageWhenSelectedWithoutSelectedImage {
+  // Given
+  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+  self.itemView.selected = YES;
+  self.itemView.selectedImage = nil;
+  self.itemView.selectedItemTintColor = UIColor.orangeColor;
+  self.itemView.unselectedItemTintColor = UIColor.blackColor;
+
+  // When
+  self.itemView.image = [[UIImage mdc_testImageOfSize:CGSizeMake(36, 36)]
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testChangeSelectedImageWhenNotSelected {
+  // Given
+  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+  self.itemView.selected = NO;
+  self.itemView.selectedItemTintColor = UIColor.orangeColor;
+  self.itemView.unselectedItemTintColor = UIColor.blackColor;
+
+  // When
+  self.itemView.selectedImage = [[UIImage mdc_testImageOfSize:CGSizeMake(36, 36)]
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testChangeSelectedImageWhenSelected {
+  // Given
+  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+  self.itemView.selected = YES;
+  self.itemView.selectedItemTintColor = UIColor.orangeColor;
+  self.itemView.unselectedItemTintColor = UIColor.blackColor;
+
+  // When
+  self.itemView.selectedImage = [[UIImage mdc_testImageOfSize:CGSizeMake(36, 36)]
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
 @end
