@@ -15,7 +15,7 @@
 import UIKit
 
 class ShadowedView: UIView {
-  private var shadowLayer: MDCShadowLayer?
+  var shadowLayer: MDCShadowLayer?
 
   override init(frame: CGRect) {
     super.init(frame: frame)
