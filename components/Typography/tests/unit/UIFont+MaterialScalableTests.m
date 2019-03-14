@@ -145,4 +145,22 @@
   }
 }
 
+- (void)testMDC_scaledFontInvalidStyleEqualsBody1 {
+  // Given
+  UIFont *font = [UIFont systemFontOfSize:18.0];
+
+  MDCFontScaler *scaler1 = [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleBody1];
+  MDCFontScaler *scaler2 = [[MDCFontScaler alloc] initForMaterialTextStyle:@"IntentionallyNonTextStyleString"];
+
+  UIFont *scalableFont1 = [scaler1 scalableFontWithFont:font];
+  UIFont *scalableFont2 = [scaler2 scalableFontWithFont:font];
+
+  UIFont *scaledFont1 = [scalableFont1 mdc_scaledFontAtDefaultSize];
+  UIFont *scaledFont2 = [scalableFont2 mdc_scaledFontAtDefaultSize];
+
+
+  // Then
+  XCTAssert([scaledFont1 mdc_isSimplyEqual:scaledFont2]);
+}
+
 @end
