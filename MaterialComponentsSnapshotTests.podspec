@@ -12,9 +12,10 @@ module SnapshotPodspecHelper
 
     def default_source_files
       if @name.present?
-        source_files = Dir["components/#{@name}/**/tests/snapshot/*.{h,m,swift}"]
-        supplemental_files = Dir["components/#{@name}/**/tests/snapshot/supplemental/*.{h,m,swift}"]
-        return source_files + supplemental_files
+        source_files = Dir["components/#{@name}/tests/snapshot/*.{h,m,swift}"]
+        supplemental_files = Dir["components/#{@name}/tests/snapshot/supplemental/*.{h,m,swift}"]
+        example_files = Dir["components/#{@name}/examples/tests/snapshot/supplemental/*.{h,m,swift}"]
+        return source_files + supplemental_files + example_files
       end
       return []
     end
