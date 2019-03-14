@@ -167,19 +167,27 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewPlaceholderState) {
 @property(nonatomic, assign, readonly) CGRect containerRect;
 
 /**
- This API allows the user to override the default main content area height. The main content area is the part of the view where the where the data input happens. It is located above the underline label area. If this property is set to a value that's lower than the default main content area height the value will be ignored. Minimum heights are enforced.
+ This API allows the user to override the default main content area height. The main content area is
+ the part of the view where the where the data input happens. It is located above the underline
+ label area. If this property is set to a value that's lower than the default main content area
+ height the value will be ignored. Minimum heights are enforced.
  */
 @property(nonatomic, assign) CGFloat preferredMainContentAreaHeight;
 
 /**
- This API allows the user to override the default underline label area height. The underline label area is the part of the view where the underline labels are. It is located below the main content area. If this property is set to a value that's lower than the default underline label area height the value will be ignored. Minimum heights are enforced.
+ This API allows the user to override the default underline label area height. The underline label
+ area is the part of the view where the underline labels are. It is located below the main content
+ area. If this property is set to a value that's lower than the default underline label area height
+ the value will be ignored. Minimum heights are enforced.
  */
 @property(nonatomic, assign) CGFloat preferredUnderlineLabelAreaHeight;
 
 @end
 
 /**
- This protocol represents a set of colors that are semantically meaningful and specific to MDCContainedInputView. Each property corresponds to the color of a single view that an MDCContainedInputView manages at a given point of time.
+ This protocol represents a set of colors that are semantically meaningful and specific to
+ MDCContainedInputView. Each property corresponds to the color of a single view that an
+ MDCContainedInputView manages at a given point of time.
  */
 @protocol MDCContainedInputViewColorScheming <NSObject>
 @property(strong, nonatomic, readonly, nonnull) UIColor *textColor;

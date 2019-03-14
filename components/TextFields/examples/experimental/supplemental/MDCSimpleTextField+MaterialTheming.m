@@ -292,7 +292,7 @@
   return minYAddition + (difference * (1 - self.verticalDensity));
 }
 
--(CGFloat)containerBottomVerticalPadding {
+- (CGFloat)containerBottomVerticalPadding {
   CGFloat minPadding = 3;
   CGFloat maxPadding = 9;
   CGFloat difference = maxPadding - minPadding;
@@ -321,7 +321,7 @@
       contentAreaTopPaddingFloatingPlaceholderWithFloatingPlaceholderMaxY:floatingPlaceholderMaxY];
 }
 
--(CGFloat)containerBottomVerticalPadding {
+- (CGFloat)containerBottomVerticalPadding {
   CGFloat minPadding = 3;
   CGFloat maxPadding = 12;
   CGFloat difference = maxPadding - minPadding;
