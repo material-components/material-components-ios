@@ -17,11 +17,24 @@
 @implementation MDCAppBarViewController (MaterialTheming)
 
 - (void)applyPrimaryThemeWithScheme:(id<MDCContainerScheming>)containerScheme {
-
+  self.headerView.backgroundColor = containerScheme.colorScheme.primaryColor;
+  MDCShadowLayer *shadowLayer = [[MDCShadowLayer alloc] init];
+  shadowLayer.elevation = MDCShadowElevationAppBar;
+  self.headerView.shadowLayer = shadowLayer;
+  self.navigationBar.tintColor = 
+  self.navigationBar.leadingBarItemsTintColor = containerScheme.colorScheme.onPrimaryColor;
+  self.navigationBar.trailingBarItemsTintColor = containerScheme.colorScheme.onPrimaryColor;
+  self.navigationBar.titleFont = containerScheme.typographyScheme.headline6;
+  self.navigationBar.titleTextColor = containerScheme.colorScheme.onPrimaryColor;
 }
 
 - (void)applySurfaceThemeWithScheme:(id<MDCContainerScheming>)containerScheme {
-  
+  self.headerView.backgroundColor = containerScheme.colorScheme.surfaceColor;
+  self.headerView.shadowLayer = nil;  // No shadow
+  self.navigationBar.leadingBarItemsTintColor = containerScheme.colorScheme.onSurfaceColor;
+  self.navigationBar.trailingBarItemsTintColor = [containerScheme.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.54];
+  self.navigationBar.titleFont = containerScheme.typographyScheme.headline6;
+  self.navigationBar.titleTextColor = [containerScheme.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87];
 }
 
 @end
