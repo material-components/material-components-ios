@@ -15,30 +15,51 @@
 import UIKit
 
 class ShadowedView: UIView {
+  private var shadowLayer: MDCShadowLayer?
 
   override init(frame: CGRect) {
     super.init(frame: frame)
+    shadowLayer = MDCShadowLayer()
+    shadowLayer?.elevation = ShadowElevation.dialog
+    commonInit()
+  }
+
+  init(frame: CGRect, shadowLayer: MDCShadowLayer?) {
+    super.init(frame: frame)
+    if let shadowLayer = shadowLayer {
+      // Testing-only use of initializer that should only be used for presentationLayer.
+      self.shadowLayer = MDCShadowLayer(layer: shadowLayer)
+    }
     commonInit()
   }
   
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
+    self.shadowLayer = MDCShadowLayer()
+    shadowLayer?.elevation = ShadowElevation.dialog
     commonInit()
   }
 
-  override class var layerClass: AnyClass {
-    get {
-      return MDCShadowLayer.self
-    }
+  func commonInit() {
+    backgroundColor = .blue
+    layer.masksToBounds = false
+    commonSetupShadowLayer()
   }
 
-  func commonInit() {
-    guard let layer = layer as? MDCShadowLayer else {
+  func commonSetupShadowLayer() {
+    guard let shadowLayer = shadowLayer else {
       return
     }
-    self.backgroundColor = .blue
-    layer.elevation = ShadowElevation.dialog
-    layer.delegate = self
+    layer.addSublayer(shadowLayer)
+    shadowLayer.frame = layer.bounds
+    shadowLayer.layoutSublayers()
+  }
+
+  override func layoutSublayers(of layer: CALayer) {
+    if layer == self.layer, let shadowLayer = shadowLayer {
+      shadowLayer.frame = layer.bounds
+      shadowLayer.layoutSublayers()
+    }
   }
 }
 
@@ -55,22 +76,10 @@ class ShadowCopyController: UIViewController {
     customView.center = CGPoint(x: self.view.center.x - 80, y: 200)
     self.view.addSubview(customView)
 
-    copiedView = ShadowedView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+    copiedView = ShadowedView(frame: CGRect(x: 0, y: 0, width: 100, height: 100),
+                              shadowLayer: customView.shadowLayer)
     copiedView.center = CGPoint(x: self.view.center.x + 80, y: 200)
     self.view.addSubview(copiedView)
-
-    let button = UIButton(type: .custom)
-    button.setTitle("Duplicate", for: .normal)
-    button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-    button.sizeToFit()
-    self.view.addSubview(button)
-    button.center = CGPoint(x:self.view.center.x, y: self.view.bounds.height - 80)
-  }
-
-  func buttonTapped() {
-    duplicated = !duplicated
-
-    print("TODO: Test initWithLayer:")
   }
 }
 
