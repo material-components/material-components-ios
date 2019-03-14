@@ -23,6 +23,7 @@
   self.headerView.shadowLayer = shadowLayer;
   self.navigationBar.leadingBarItemsTintColor = containerScheme.colorScheme.onPrimaryColor;
   self.navigationBar.trailingBarItemsTintColor = containerScheme.colorScheme.onPrimaryColor;
+  self.navigationBar.allowAnyTitleFontSize = YES;
   self.navigationBar.titleFont = containerScheme.typographyScheme.headline6;
   self.navigationBar.titleTextColor = containerScheme.colorScheme.onPrimaryColor;
 }
@@ -33,6 +34,7 @@
   self.navigationBar.leadingBarItemsTintColor = containerScheme.colorScheme.onSurfaceColor;
   self.navigationBar.trailingBarItemsTintColor =
       [containerScheme.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.54];
+  self.navigationBar.allowAnyTitleFontSize = YES;
   self.navigationBar.titleFont = containerScheme.typographyScheme.headline6;
   self.navigationBar.titleTextColor =
       [containerScheme.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87];

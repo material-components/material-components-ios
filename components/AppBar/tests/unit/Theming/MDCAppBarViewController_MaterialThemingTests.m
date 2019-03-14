@@ -80,7 +80,22 @@
   [self.appBarController applyPrimaryThemeWithScheme:self.containerScheme];
 
   // Then
-  XCTAssertTrue(NO, @"Write me");
+  XCTAssertEqualObjects(self.appBarController.navigationBar.titleFont,
+                        self.containerScheme.typographyScheme.headline6);
+  XCTAssertEqualObjects(self.appBarController.navigationBar.titleTextColor,
+                        self.containerScheme.colorScheme.onPrimaryColor);
+  XCTAssertEqualObjects(self.appBarController.headerView.backgroundColor,
+                        self.containerScheme.colorScheme.primaryColor);
+  XCTAssertEqualObjects(self.appBarController.navigationBar.leadingBarItemsTintColor,
+                        self.containerScheme.colorScheme.onPrimaryColor);
+  XCTAssertEqualObjects(self.appBarController.navigationBar.trailingBarItemsTintColor,
+                        self.containerScheme.colorScheme.onPrimaryColor);
+  if ([self.appBarController.headerView.shadowLayer isKindOfClass:[MDCShadowLayer class]]) {
+    MDCShadowLayer *shadowLayer = (MDCShadowLayer *)self.appBarController.headerView.shadowLayer;
+    XCTAssertEqualWithAccuracy(shadowLayer.elevation, MDCShadowElevationAppBar, 0.001);
+  } else {
+    XCTAssert(NO, @"AppBar's header view should hae a shadow layer.");
+  }
 }
 
 - (void)testApplySurfaceThemeWithScheme {
@@ -88,7 +103,17 @@
   [self.appBarController applySurfaceThemeWithScheme:self.containerScheme];
 
   // Then
-  XCTAssertTrue(NO, @"Write me");
+  XCTAssertEqualObjects(self.appBarController.navigationBar.titleFont,
+                        self.containerScheme.typographyScheme.headline6);
+  XCTAssertEqualObjects(self.appBarController.navigationBar.titleTextColor,
+                        [self.containerScheme.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87]);
+  XCTAssertEqualObjects(self.appBarController.headerView.backgroundColor,
+                        self.containerScheme.colorScheme.surfaceColor);
+  XCTAssertEqualObjects(self.appBarController.navigationBar.leadingBarItemsTintColor,
+                        self.containerScheme.colorScheme.onSurfaceColor);
+  XCTAssertEqualObjects(self.appBarController.navigationBar.trailingBarItemsTintColor,
+                        [self.containerScheme.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.54]);
+  XCTAssertNil(self.appBarController.headerView.shadowLayer);
 }
 
 @end
