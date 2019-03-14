@@ -214,7 +214,6 @@ static NSString *const exampleExtraLongText =
   bannerView.preferredContentWidth = exampleBannerContentWidth;
   bannerView.text = exampleShortText;
   bannerView.backgroundColor = self.colorScheme.surfaceColor;
-  bannerView.tintColor = self.colorScheme.primaryColor;
   [self.view addSubview:bannerView];
   self.bannerView = bannerView;
 
@@ -250,6 +249,7 @@ static NSString *const exampleExtraLongText =
                                      inBundle:bundle
                 compatibleWithTraitCollection:nil]
       imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  self.bannerView.iconTintColor = self.colorScheme.primaryColor;
 }
 
 - (void)showMultiLineAlignedButtonStyleBanner {
@@ -261,7 +261,6 @@ static NSString *const exampleExtraLongText =
   bannerView.preferredContentWidth = exampleBannerContentWidth;
   bannerView.text = exampleLongText;
   bannerView.backgroundColor = self.colorScheme.surfaceColor;
-  bannerView.tintColor = self.colorScheme.primaryColor;
   [self.view addSubview:bannerView];
   self.bannerView = bannerView;
 
@@ -303,6 +302,7 @@ static NSString *const exampleExtraLongText =
                                      inBundle:bundle
                 compatibleWithTraitCollection:nil]
       imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  self.bannerView.iconTintColor = self.colorScheme.primaryColor;
 }
 
 - (void)showMultiLineStackedButtonStyleBanner {
@@ -314,7 +314,6 @@ static NSString *const exampleExtraLongText =
   bannerView.preferredContentWidth = exampleBannerContentWidth;
   bannerView.text = exampleLongText;
   bannerView.backgroundColor = self.colorScheme.surfaceColor;
-  bannerView.tintColor = self.colorScheme.primaryColor;
   [self.view addSubview:bannerView];
   self.bannerView = bannerView;
 
@@ -356,6 +355,7 @@ static NSString *const exampleExtraLongText =
                                      inBundle:bundle
                 compatibleWithTraitCollection:nil]
       imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  self.bannerView.iconTintColor = self.colorScheme.primaryColor;
 }
 
 - (void)dismissBanner {
