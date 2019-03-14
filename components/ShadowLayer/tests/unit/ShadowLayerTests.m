@@ -27,6 +27,18 @@
   // Then
   XCTAssertEqualWithAccuracy(shadowLayer.elevation, 0, 0.0001);
   XCTAssertTrue(shadowLayer.isShadowMaskEnabled);
+  XCTAssertGreaterThan(shadowLayer.sublayers.count, 0);
+}
+
+- (void)testInitWithLayerCopy {
+  // Given
+  MDCShadowLayer *shadowLayer = [[MDCShadowLayer alloc] init];
+  MDCShadowLayer *copyShadowLayer = [[MDCShadowLayer alloc] initWithLayer:shadowLayer];
+
+  // Then
+  XCTAssertEqualWithAccuracy(copyShadowLayer.elevation, shadowLayer.elevation, 0.0001);
+  XCTAssertEqual(copyShadowLayer.isShadowMaskEnabled, shadowLayer.isShadowMaskEnabled);
+  XCTAssertEqual(copyShadowLayer.sublayers.count, shadowLayer.sublayers.count);
 }
 
 @end
