@@ -16,7 +16,8 @@
 
 #import "MaterialTypography.h"
 
-#import "MDCMath.h"
+#import "MaterialMath.h"
+#import "../../src/private/UIContentSizeCategory+Material.h"
 
 @interface UIFont_MaterialScalableTests : XCTestCase
 
@@ -236,6 +237,30 @@
   // Then
   XCTAssertTrue(MDCCGFloatEqual(mediumScaledFont.pointSize, curvePointSize));
   XCTAssert([font mdc_isSimplyEqual:missingCurveScaledFont]);
+}
+
+- (void)testValueScaling {
+  //Given
+  UIFont *originalFont = [UIFont systemFontOfSize:20.0];
+  CGFloat originalValue = 10.0;
+
+  MDCFontScaler *scaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleHeadline1];
+  UIFont *scalableFont = [scaler scalableFontWithFont:originalFont];
+
+  // When
+  UIFont *defaultFont = [scalableFont mdc_scaledFontAtDefaultSize];
+  UIFont *currentFont = [scalableFont mdc_scaledFontForCurrentSizeCategory];
+
+  CGFloat scalerScaledValue = [scaler scaledValueForValue:originalValue];
+  CGFloat fontScaledValue = [scalableFont mdc_scaledValueForValue:originalValue];
+
+  CGFloat sizeScaleFactor = currentFont.pointSize / defaultFont.pointSize;
+  CGFloat scalerScaleFactor = scalerScaledValue / originalValue;
+  CGFloat fontScaleFactor = fontScaledValue / originalValue;
+
+  //Then
+  XCTAssertTrue(MDCCGFloatEqual(sizeScaleFactor, scalerScaleFactor));
+  XCTAssertTrue(MDCCGFloatEqual(scalerScaleFactor, fontScaleFactor));
 }
 
 @end

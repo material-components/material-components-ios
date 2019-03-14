@@ -301,7 +301,7 @@ MDCTextStyle const MDCTextStyleOverline = @"MDC.TextStyle.Overline";
   }
 
   CGFloat currentFontSize = (CGFloat)currentFontSizeNumber.doubleValue;
-  CGFloat defaultFontSize = (CGFloat)currentFontSizeNumber.doubleValue;
+  CGFloat defaultFontSize = (CGFloat)defaultFontSizeNumber.doubleValue;
 
   // Guard against broken / incomplete scaling curves by returning self if fontSize <= 0.0.
   if (currentFontSize <= 0.0 || defaultFontSize <= 0.0) {

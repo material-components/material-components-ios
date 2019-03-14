@@ -74,7 +74,7 @@ static char MDCFontScaleObjectKey;
   }
 
   CGFloat currentFontSize = (CGFloat)currentFontSizeNumber.doubleValue;
-  CGFloat defaultFontSize = (CGFloat)currentFontSizeNumber.doubleValue;
+  CGFloat defaultFontSize = (CGFloat)defaultFontSizeNumber.doubleValue;
 
   // Guard against broken / incomplete scaling curves by returning original value if the
   // fontSize <= 0.0.
