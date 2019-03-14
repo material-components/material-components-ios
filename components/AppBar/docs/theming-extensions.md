@@ -1,4 +1,4 @@
-### Theming Extension (Beta)
+### Theming Extensions (Beta)
 
 `MDCAppBarViewController` supports Material Theming using a Container Scheme. The code is currently
 in Beta readiness, which means you will need to follow the [instructions for adding the
@@ -13,7 +13,7 @@ background to be `surfaceColor` and the Primary Variant colors the App Bar backg
 #### Swift
 
 ```swift
-// Import the AppBar Theming Extension module
+// Import the AppBar Theming Extensions module
 import MaterialComponentsBeta.MaterialAppBar_MaterialTheming
 
 ...
@@ -31,7 +31,7 @@ appBarViewController.applySurfaceTheme(withScheme: containerScheme)
 #### Objective-C
 
 ```objc
-// Import the AppBar Theming Extension header
+// Import the AppBar Theming Extensions header
 #import <MaterialComponentsBeta/MaterialAppBar+MaterialTheming.h>
 
 ...
