@@ -46,7 +46,7 @@ MDCTextStyle const MDCTextStyleOverline = @"MDC.TextStyle.Overline";
 - (instancetype)initForMaterialTextStyle:(MDCTextStyle)textStyle {
   self = [super init];
   if (self) {
-    _textStyle = textStyle;  // Not copied since MDCTextStyle should be immutable
+    _textStyle = [textStyle copy];
 
     if ([MDCTextStyleHeadline1 isEqualToString:textStyle]) {
       NSDictionary<UIContentSizeCategory, NSNumber *> *scalingCurve = @{
@@ -242,6 +242,7 @@ MDCTextStyle const MDCTextStyleOverline = @"MDC.TextStyle.Overline";
       _scalingCurve = scalingCurve;
     } else {
       // If nothing matches, return the metrics for MDCTextStyleBody1
+      _textStyle = [MDCTextStyleBody1 copy];
       NSDictionary<UIContentSizeCategory, NSNumber *> *scalingCurve = @{
         UIContentSizeCategoryExtraSmall : @13,
         UIContentSizeCategorySmall : @14,
