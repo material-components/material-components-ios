@@ -160,7 +160,6 @@
 // static const CGFloat kFloatingPlaceholderAnimationVelocityInPointsPerSecond = (CGFloat)200;
 
 @interface MDCContainedInputViewPlaceholderManager ()
-@property(nonatomic, assign) BOOL isAnimating;
 @end
 
 @implementation MDCContainedInputViewPlaceholderManager
@@ -196,46 +195,38 @@
       break;
   }
 
-  CGAffineTransform currentTransform = placeholderLabel.transform;
-  CGAffineTransform targetTransform = CGAffineTransformIdentity;
-
   CGRect currentFrame = placeholderLabel.frame;
-  if (self.isAnimating || CGRectEqualToRect(currentFrame, CGRectZero)) {
-    placeholderLabel.transform = CGAffineTransformIdentity;
-    placeholderLabel.frame = targetFrame;
-    placeholderLabel.font = targetFont;
-    return;
-  } else if (!CGRectEqualToRect(currentFrame, targetFrame)) {
-    targetTransform = [self transformFromRect:currentFrame toRect:targetFrame];
-  }
+  CGAffineTransform trasformNeededToMakeTargetLookLikeCurrent =
+      [self transformFromRect:targetFrame toRect:currentFrame];
+  CATransform3D fromValueTransform3D =
+      CATransform3DMakeAffineTransform(trasformNeededToMakeTargetLookLikeCurrent);
+  CATransform3D toValueTransform3D = CATransform3DIdentity;
 
-  self.isAnimating = YES;
+  placeholderLabel.frame = targetFrame;
+  placeholderLabel.font = targetFont;
+  placeholderLabel.transform = CGAffineTransformIdentity;
+
+  CABasicAnimation *preexistingAnimation =
+      [placeholderLabel.layer animationForKey:self.transformAnimationKey];
+
   placeholderLabel.hidden = placeholderShouldHide;
 
-  //  CGFloat lowerMinY = MIN(CGRectGetMinY(currentFrame), CGRectGetMinY(targetFrame));
-  //  CGFloat higherMinY = MAX(CGRectGetMinY(currentFrame), CGRectGetMinY(targetFrame));
-  //  CGFloat distanceTravelled = higherMinY - lowerMinY;
-  CGFloat animationDuration = (CGFloat)0.2;
-  //      distanceTravelled / kFloatingPlaceholderAnimationVelocityInPointsPerSecond;
-
-  __weak typeof(self) weakSelf = self;
   [CATransaction begin];
   {
     [CATransaction setCompletionBlock:^{
-      placeholderLabel.transform = CGAffineTransformIdentity;
-      placeholderLabel.frame = targetFrame;
-      placeholderLabel.font = targetFont;
-      weakSelf.isAnimating = NO;
+      [placeholderLabel.layer removeAnimationForKey:self.transformAnimationKey];
     }];
-    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform"];
-    animation.fromValue =
-        [NSValue valueWithCATransform3D:CATransform3DMakeAffineTransform(currentTransform)];
-    animation.toValue =
-        [NSValue valueWithCATransform3D:CATransform3DMakeAffineTransform(targetTransform)];
-    animation.duration = animationDuration;
-    animation.removedOnCompletion = YES;
-    placeholderLabel.transform = targetTransform;
-    [placeholderLabel.layer addAnimation:animation forKey:animation.keyPath];
+    if (preexistingAnimation) {
+      [placeholderLabel.layer removeAnimationForKey:self.transformAnimationKey];
+    } else {
+      CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform"];
+      animation.fromValue = [NSValue valueWithCATransform3D:fromValueTransform3D];
+      animation.toValue = [NSValue valueWithCATransform3D:toValueTransform3D];
+      animation.duration = self.animationDuration;
+      animation.removedOnCompletion = NO;
+      animation.fillMode = kCAFillModeForwards;
+      [placeholderLabel.layer addAnimation:animation forKey:self.transformAnimationKey];
+    }
   }
   [CATransaction commit];
 }
@@ -249,6 +240,19 @@
                                      finalRect.size.height / sourceRect.size.height);
 
   return transform;
+}
+
+- (CGFloat)animationDuration {
+  //  CGFloat lowerMinY = MIN(CGRectGetMinY(currentFrame), CGRectGetMinY(targetFrame));
+  //  CGFloat higherMinY = MAX(CGRectGetMinY(currentFrame), CGRectGetMinY(targetFrame));
+  //  CGFloat distanceTravelled = higherMinY - lowerMinY;
+  CGFloat animationDuration = (CGFloat)0.2;
+  //      distanceTravelled / kFloatingPlaceholderAnimationVelocityInPointsPerSecond;
+  return animationDuration;
+}
+
+- (NSString *)transformAnimationKey {
+  return @"transformAnimationKey";
 }
 
 @end
