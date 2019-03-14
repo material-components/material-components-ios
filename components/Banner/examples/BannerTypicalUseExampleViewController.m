@@ -20,7 +20,7 @@
 #import "supplemental/MDCBannerView.h"
 
 static const CGFloat exampleListTableViewHeight = 160.0f;
-static const CGFloat exampleBannerContentWidth = 350.0f;
+static const CGFloat exampleBannerContentPadding = 10.0f;
 static NSString *const exampleShortText = @"tristique senectus et";
 static NSString *const exampleLongText =
     @"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do incididunt.";
@@ -211,9 +211,12 @@ static NSString *const exampleExtraLongText =
   }
 
   MDCBannerView *bannerView = [[MDCBannerView alloc] init];
-  bannerView.preferredContentWidth = exampleBannerContentWidth;
   bannerView.text = exampleShortText;
   bannerView.backgroundColor = self.colorScheme.surfaceColor;
+  UIEdgeInsets margins = UIEdgeInsetsZero;
+  margins.left = exampleBannerContentPadding;
+  margins.right = exampleBannerContentPadding;
+  bannerView.layoutMargins = margins;
   [self.view addSubview:bannerView];
   self.bannerView = bannerView;
 
@@ -229,7 +232,7 @@ static NSString *const exampleExtraLongText =
   [button addTarget:self
                 action:@selector(dismissBanner)
       forControlEvents:UIControlEventTouchUpInside];
-  [bannerView sizeToFit];
+//  [bannerView sizeToFit];
 
   // Adjust bannerViewContainer's frame
   CGFloat topAreaInset = 0.0f;
@@ -237,8 +240,9 @@ static NSString *const exampleExtraLongText =
     topAreaInset = self.view.safeAreaInsets.top;
   }
 
-  bannerView.frame = CGRectMake(0.0f, topAreaInset, CGRectGetWidth(bannerView.frame),
-                                CGRectGetHeight(bannerView.frame));
+  CGSize bannerViewSize = [bannerView sizeThatFits:CGSizeMake(CGRectGetWidth(self.view.bounds), CGFLOAT_MAX)];
+  bannerView.frame = CGRectMake(0.0f, topAreaInset, bannerViewSize.width,
+                                bannerViewSize.height);
 }
 
 - (void)showSingleLineStyleBannerWithIcon {
@@ -258,9 +262,12 @@ static NSString *const exampleExtraLongText =
   }
 
   MDCBannerView *bannerView = [[MDCBannerView alloc] init];
-  bannerView.preferredContentWidth = exampleBannerContentWidth;
   bannerView.text = exampleLongText;
   bannerView.backgroundColor = self.colorScheme.surfaceColor;
+  UIEdgeInsets margins = UIEdgeInsetsZero;
+  margins.left = exampleBannerContentPadding;
+  margins.right = exampleBannerContentPadding;
+  bannerView.layoutMargins = margins;
   [self.view addSubview:bannerView];
   self.bannerView = bannerView;
 
@@ -290,8 +297,9 @@ static NSString *const exampleExtraLongText =
   if (@available(iOS 11.0, *)) {
     topAreaInset = self.view.safeAreaInsets.top;
   }
-  bannerView.frame = CGRectMake(0.0f, topAreaInset, CGRectGetWidth(bannerView.frame),
-                                CGRectGetHeight(bannerView.frame));
+  CGSize bannerViewSize = [bannerView sizeThatFits:CGSizeMake(CGRectGetWidth(self.view.bounds), CGFLOAT_MAX)];
+  bannerView.frame = CGRectMake(0.0f, topAreaInset, bannerViewSize.width,
+                                bannerViewSize.height);
 }
 
 - (void)showMultiLineAlignedButtonStyleBannerWithIcon {
@@ -311,9 +319,12 @@ static NSString *const exampleExtraLongText =
   }
 
   MDCBannerView *bannerView = [[MDCBannerView alloc] init];
-  bannerView.preferredContentWidth = exampleBannerContentWidth;
   bannerView.text = exampleLongText;
   bannerView.backgroundColor = self.colorScheme.surfaceColor;
+  UIEdgeInsets margins = UIEdgeInsetsZero;
+  margins.left = exampleBannerContentPadding;
+  margins.right = exampleBannerContentPadding;
+  bannerView.layoutMargins = margins;
   [self.view addSubview:bannerView];
   self.bannerView = bannerView;
 
@@ -343,8 +354,9 @@ static NSString *const exampleExtraLongText =
   if (@available(iOS 11.0, *)) {
     topAreaInset = self.view.safeAreaInsets.top;
   }
-  bannerView.frame = CGRectMake(0.0f, topAreaInset, CGRectGetWidth(bannerView.frame),
-                                CGRectGetHeight(bannerView.frame));
+  CGSize bannerViewSize = [bannerView sizeThatFits:CGSizeMake(CGRectGetWidth(self.view.bounds), CGFLOAT_MAX)];
+  bannerView.frame = CGRectMake(0.0f, topAreaInset, bannerViewSize.width,
+                                bannerViewSize.height);
 }
 
 - (void)showMultiLineStackedButtonStyleBannerWithIcon {

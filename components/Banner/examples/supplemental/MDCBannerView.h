@@ -18,8 +18,6 @@
 
 __attribute__((objc_subclassing_restricted)) @interface MDCBannerView : UIView
 
-@property(nonatomic, assign) CGFloat preferredContentWidth;
-
 @property(nonatomic, copy, nonnull) NSString *text;
 @property(nonatomic, strong, nonnull) UIColor *textColor;
 @property(nonatomic, strong, nonnull) UIFont *textFont;

@@ -91,6 +91,7 @@
   switch (style) {
     case MDCBannerViewLayoutSingleLineStyle: {
       frameHeight += kTopPaddingSmall + kBottomPadding;
+      [self.textLabel sizeToFit];
       NSMutableArray *singleLineViews = [[NSMutableArray alloc] init];
       [singleLineViews addObject:self.textLabel];
       if (self.iconContainer) {
