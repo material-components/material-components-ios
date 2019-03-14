@@ -48,6 +48,10 @@ MDCTextStyle const MDCTextStyleOverline = @"MDC.TextStyle.Overline";
   if (self) {
     _textStyle = [textStyle copy];
 
+    // NOTE: All scaling curves MUST include a full set of values for ALL UIContentSizeCategory
+    // values. This values must not decrease and the category size increases. To put it another
+    // way, the value for UIContentSizeCategoryLarge must not be smaller than the value for
+    // UIContentSizeCategoryMedium.
     if ([MDCTextStyleHeadline1 isEqualToString:textStyle]) {
       NSDictionary<UIContentSizeCategory, NSNumber *> *scalingCurve = @{
         UIContentSizeCategoryExtraSmall : @84,

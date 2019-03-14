@@ -59,7 +59,7 @@
  Scales an arbitrary value based on the current Dynamic Type settings and the scaling curve.
 
  @param value The original layout value.
- @return A value that has been scaled based on the
+ @return A value that has been scaled based on the attached scaling curve
  */
 - (CGFloat)mdc_scaledValueForValue:(CGFloat)value;
 

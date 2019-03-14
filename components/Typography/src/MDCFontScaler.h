@@ -77,4 +77,12 @@ UIKIT_EXTERN MDCTextStyle const MDCTextStyleOverline;
  */
 - (nonnull UIFont *)scalableFontWithFont:(nonnull UIFont *)font;
 
+/**
+ Scales an arbitrary value based on the current Dynamic Type settings and the scaling curve.
+
+ @param value The original layout value.
+ @return A value that has been scaled based on the attached scaling curve
+ */
+- (CGFloat)scaledValueForValue:(CGFloat)value;
+
 @end
