@@ -82,9 +82,9 @@ static void RenderFramedXOfSize(CGSize size) {
 + (UIImage *)mdc_testImageOfSize:(CGSize)size withStyle:(MDCSnapshotTestImageStyle)imageStyle {
   CGFloat scale = UIScreen.mainScreen.scale;
   if (scale < 1) {
-    scale = 2; // Default to 2x if somehow there is no scale available.
+    scale = 2;  // Default to 2x if somehow there is no scale available.
   }
-  UIGraphicsBeginImageContextWithOptions(size, NO, scale); 
+  UIGraphicsBeginImageContextWithOptions(size, NO, scale);
   [UIColor.blackColor setFill];
   switch (imageStyle) {
     case MDCSnapshotTestImageStyleCheckerboard:
