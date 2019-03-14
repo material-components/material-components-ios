@@ -16,9 +16,9 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialContainerScheme.h"
 #import <MaterialComponents/MaterialColorScheme.h>
 #import <MaterialComponents/MaterialTypographyScheme.h>
+#import "MaterialContainerScheme.h"
 
 /** Unit tests for MDCAppBarViewController's MaterialTheming category methods. */
 @interface MDCAppBarViewController_MaterialThemingTests : XCTestCase
@@ -37,7 +37,8 @@
   [super setUp];
 
   self.containerScheme = [[MDCContainerScheme alloc] init];
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   colorScheme.primaryColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:0];
   colorScheme.primaryColorVariant = [UIColor colorWithWhite:(CGFloat)0.8 alpha:(CGFloat)0.1];
   colorScheme.secondaryColor = [UIColor colorWithWhite:(CGFloat)0.7 alpha:(CGFloat)0.2];
@@ -50,7 +51,8 @@
   colorScheme.onBackgroundColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.9];
   self.containerScheme.colorScheme = colorScheme;
 
-  MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+  MDCTypographyScheme *typographyScheme =
+      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
   typographyScheme.headline1 = [UIFont systemFontOfSize:1];
   typographyScheme.headline2 = [UIFont systemFontOfSize:2];
   typographyScheme.headline3 = [UIFont systemFontOfSize:3];
@@ -105,14 +107,16 @@
   // Then
   XCTAssertEqualObjects(self.appBarController.navigationBar.titleFont,
                         self.containerScheme.typographyScheme.headline6);
-  XCTAssertEqualObjects(self.appBarController.navigationBar.titleTextColor,
-                        [self.containerScheme.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87]);
+  XCTAssertEqualObjects(
+      self.appBarController.navigationBar.titleTextColor,
+      [self.containerScheme.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87]);
   XCTAssertEqualObjects(self.appBarController.headerView.backgroundColor,
                         self.containerScheme.colorScheme.surfaceColor);
   XCTAssertEqualObjects(self.appBarController.navigationBar.leadingBarItemsTintColor,
                         self.containerScheme.colorScheme.onSurfaceColor);
-  XCTAssertEqualObjects(self.appBarController.navigationBar.trailingBarItemsTintColor,
-                        [self.containerScheme.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.54]);
+  XCTAssertEqualObjects(
+      self.appBarController.navigationBar.trailingBarItemsTintColor,
+      [self.containerScheme.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.54]);
   XCTAssertNil(self.appBarController.headerView.shadowLayer);
 }
 
