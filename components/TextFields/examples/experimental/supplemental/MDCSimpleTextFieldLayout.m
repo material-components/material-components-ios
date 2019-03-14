@@ -195,34 +195,44 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
 
   CGFloat textRectMinX = 0;
   CGFloat textRectMaxX = 0;
+  CGFloat placeholderNormalMinX = 0;
+  CGFloat placeholderNormalMaxX = 0;
+  CGFloat placeholderFloatingMinX = 0;
+  CGFloat placeholderFloatingMaxX = 0;
+
   if (isRTL) {
     if (shouldAttemptToDisplayClearButton) {
-      CGFloat clearButtonMaxX = actualClearButtonMinX + kClearButtonTouchTargetSideLength +
-                                clearButtonImageViewSideMargin;
-      textRectMinX = clearButtonMaxX;
-    } else if (shouldAttemptToDisplayLeftView) {
-      textRectMinX = leftViewMaxX + kTrailingMargin;
+      CGFloat apparentClearButtonMaxX =
+          apparentClearButtonMinX + kClearButtonInnerImageViewSideLength;
+      textRectMinX = apparentClearButtonMaxX + kTrailingMargin;
+      placeholderNormalMinX = textRectMinX;
+      placeholderFloatingMinX = apparentClearButtonMinX;
     } else {
-      textRectMinX = kTrailingMargin;
+      textRectMinX =
+          shouldAttemptToDisplayLeftView ? leftViewMaxX + kTrailingMargin : kTrailingMargin;
+      placeholderNormalMinX = textRectMinX;
+      placeholderFloatingMinX = textRectMinX;
     }
     if (shouldAttemptToDisplayRightView) {
       textRectMaxX = rightViewMinX - kLeadingMargin;
     } else {
       textRectMaxX = textFieldWidth - kLeadingMargin;
     }
+    placeholderNormalMaxX = textRectMaxX;
+    placeholderFloatingMaxX = placeholderNormalMaxX - kFloatingPlaceholderXOffsetFromTextArea;
   } else {
-    if (shouldAttemptToDisplayLeftView) {
-      textRectMinX = leftViewMaxX + kLeadingMargin;
-    } else {
-      textRectMinX = kLeadingMargin;
-    }
+    textRectMinX = shouldAttemptToDisplayLeftView ? leftViewMaxX + kLeadingMargin : kLeadingMargin;
+    placeholderNormalMinX = textRectMinX;
+    placeholderFloatingMinX = placeholderNormalMinX + kFloatingPlaceholderXOffsetFromTextArea;
     if (shouldAttemptToDisplayClearButton) {
-      textRectMaxX = actualClearButtonMinX - clearButtonImageViewSideMargin;
-    } else if (shouldAttemptToDisplayRightView) {
-      textRectMaxX = rightViewMinX - kTrailingMargin;
+      textRectMaxX = apparentClearButtonMinX - kLeadingMargin;
     } else {
-      textRectMaxX = textFieldWidth - kTrailingMargin;
+      textRectMaxX = shouldAttemptToDisplayRightView ? rightViewMinX - kTrailingMargin
+                                                     : textFieldWidth - kTrailingMargin;
     }
+    placeholderNormalMaxX = textRectMaxX;
+    placeholderFloatingMaxX = shouldAttemptToDisplayRightView ? rightViewMinX - kTrailingMargin
+                                                              : textFieldWidth - kTrailingMargin;
   }
 
   CGFloat textRectWidth = textRectMaxX - textRectMinX;
@@ -250,6 +260,8 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
                                        font:font
                     floatingPlaceholderFont:floatingPlaceholderFont
                     floatingPlaceholderMinY:floatingPlaceholderMinY
+                      lowestPlaceholderMinX:placeholderNormalMinX
+                     highestPlaceholderMaxX:placeholderNormalMaxX
                                textRectRect:textRectNormal
                                       isRTL:isRTL];
   CGRect placeholderFrameFloating =
@@ -259,6 +271,8 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
                                        font:font
                     floatingPlaceholderFont:floatingPlaceholderFont
                     floatingPlaceholderMinY:floatingPlaceholderMinY
+                      lowestPlaceholderMinX:placeholderFloatingMinX
+                     highestPlaceholderMaxX:placeholderFloatingMaxX
                                textRectRect:textRectNormal
                                       isRTL:isRTL];
 
@@ -445,25 +459,6 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
   return shouldAttemptToDisplayClearButton;
 }
 
-- (CGFloat)maxPlaceholderWidthWithTextAreaWidth:(CGFloat)textRectWidth
-                               placeholderState:
-                                   (MDCContainedInputViewPlaceholderState)placeholderState {
-  CGFloat maxPlaceholderWidth = 0;
-  switch (placeholderState) {
-    case MDCContainedInputViewPlaceholderStateNone:
-      break;
-    case MDCContainedInputViewPlaceholderStateFloating:
-      maxPlaceholderWidth = textRectWidth - (2 * kFloatingPlaceholderXOffsetFromTextArea);
-      break;
-    case MDCContainedInputViewPlaceholderStateNormal:
-      maxPlaceholderWidth = textRectWidth;
-      break;
-    default:
-      break;
-  }
-  return maxPlaceholderWidth;
-}
-
 - (CGSize)placeholderSizeWithPlaceholder:(NSString *)placeholder
                      maxPlaceholderWidth:(CGFloat)maxPlaceholderWidth
                                     font:(UIFont *)font {
@@ -486,13 +481,11 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
                                      font:(UIFont *)font
                   floatingPlaceholderFont:(UIFont *)floatingPlaceholderFont
                   floatingPlaceholderMinY:(CGFloat)floatingPlaceholderMinY
+                    lowestPlaceholderMinX:(CGFloat)lowestPlaceholderMinX
+                   highestPlaceholderMaxX:(CGFloat)highestPlaceholderMaxX
                              textRectRect:(CGRect)textRectRect
                                     isRTL:(BOOL)isRTL {
-  CGFloat textRectWidth = CGRectGetWidth(textRectRect);
-  CGFloat maxPlaceholderWidth = [self maxPlaceholderWidthWithTextAreaWidth:textRectWidth
-                                                          placeholderState:placeholderState];
-  CGFloat textRectMinX = CGRectGetMinX(textRectRect);
-  CGFloat textRectMaxX = CGRectGetMaxX(textRectRect);
+  CGFloat maxPlaceholderWidth = highestPlaceholderMaxX - lowestPlaceholderMinX;
   CGFloat textRectMidY = CGRectGetMidY(textRectRect);
   CGSize size = CGSizeZero;
   CGRect rect = CGRectZero;
@@ -507,9 +500,9 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
                                              font:floatingPlaceholderFont];
       originY = floatingPlaceholderMinY;
       if (isRTL) {
-        originX = textRectMaxX - kFloatingPlaceholderXOffsetFromTextArea - size.width;
+        originX = highestPlaceholderMaxX - size.width;
       } else {
-        originX = textRectMinX + kFloatingPlaceholderXOffsetFromTextArea;
+        originX = lowestPlaceholderMinX;
       }
       rect = CGRectMake(originX, originY, size.width, size.height);
       break;
@@ -519,9 +512,9 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
                                              font:font];
       originY = textRectMidY - ((CGFloat)0.5 * size.height);
       if (isRTL) {
-        originX = textRectMaxX - size.width;
+        originX = highestPlaceholderMaxX - size.width;
       } else {
-        originX = textRectMinX;
+        originX = lowestPlaceholderMinX;
       }
       rect = CGRectMake(originX, originY, size.width, size.height);
       break;
