@@ -123,7 +123,7 @@ mdc_objc_library(
     name = "unit_test_sources",
     srcs = glob([
         "tests/unit/*.m",
-        "tests/unit/*.h",
+        "tests/unit/Theming/*.m",
     ]),
     sdk_frameworks = ["XCTest"],
     visibility = ["//visibility:private"],
@@ -158,6 +158,7 @@ mdc_unit_test_suite(
 
 mdc_snapshot_objc_library(
     name = "snapshot_test_lib",
+    extra_srcs = native.glob(["tests/snapshot/Theming/*.m"]),
     deps = [
         ":AppBar",
         ":Theming",
