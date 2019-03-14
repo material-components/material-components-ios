@@ -16,4 +16,12 @@
 
 @implementation MDCAppBarViewController (MaterialTheming)
 
+- (void)applyPrimaryThemeWithScheme:(id<MDCContainerScheming>)containerScheme {
+
+}
+
+- (void)applySurfaceThemeWithScheme:(id<MDCContainerScheming>)containerScheme {
+  
+}
+
 @end

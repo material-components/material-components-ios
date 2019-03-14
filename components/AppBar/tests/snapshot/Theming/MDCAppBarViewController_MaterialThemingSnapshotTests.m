@@ -36,6 +36,10 @@
 - (void)setUp {
   [super setUp];
 
+  // Uncomment below to recreate all the goldens (or add the following line to the specific
+  // test you wish to recreate the golden for).
+  //  self.recordMode = YES;
+
   self.customizedContainerScheme = [[MDCContainerScheme alloc] init];
   MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   colorScheme.primaryColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:0];
