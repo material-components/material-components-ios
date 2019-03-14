@@ -1,3 +1,23 @@
+# 79.1.1
+
+This patch release fixes a bug in BottomNavigation where the icons were not showing up correctly.
+
+## Bugs closed in this release
+
+- https://github.com/material-components/material-components-ios/issues/6846
+
+## API changes
+
+## Component changes
+
+### BottomNavigation
+
+* [Fix image updates in ItemView (#6847)](https://github.com/material-components/material-components-ios/commit/5fc3a1a068f04ab421eacefd11d97773888a2733) (Robert Moore)
+* [More snapshots for item icons. (#6855)](https://github.com/material-components/material-components-ios/commit/3542473fa06251f443161e8522b4635b8a89248b) (Robert Moore)
+* [Snapshot test for selection bug (#6843)](https://github.com/material-components/material-components-ios/commit/a42e356a4be6e0227b2a463bdf285a6c7612f8bb) (Robert Moore)
+
+---
+
 # 79.1.0
 
 This minor release increases our snapshot testing coverage and introduces a migration flag for
