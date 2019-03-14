@@ -16,9 +16,9 @@
 
 #import <objc/runtime.h>
 
-#import "UIApplication+AppExtensions.h"
 #import "UIFont+MaterialScalable.h"
 #import "private/MDCFontTraits.h"
+#import "private/UIContentSizeCategory+Material.h"
 
 MDCTextStyle const MDCTextStyleHeadline1 = @"MDC.TextStyle.Headline1";
 MDCTextStyle const MDCTextStyleHeadline2 = @"MDC.TextStyle.Headline2";
@@ -266,12 +266,7 @@ MDCTextStyle const MDCTextStyleOverline = @"MDC.TextStyle.Overline";
 
 - (UIFont *)scalableFontWithFont:(UIFont *)font {
   // If it is available, query the preferredContentSizeCategory.
-  UIContentSizeCategory sizeCategory = UIContentSizeCategoryLarge;
-  if ([UIApplication mdc_safeSharedApplication]) {
-    sizeCategory = [UIApplication mdc_safeSharedApplication].preferredContentSizeCategory;
-  } else if (@available(iOS 10.0, *)) {
-    sizeCategory = UIScreen.mainScreen.traitCollection.preferredContentSizeCategory;
-  }
+  UIContentSizeCategory sizeCategory = GetCurrentSizeCategory();
 
   UIFont *scaledFont;
   if (font.mdc_scalingCurve) {
@@ -289,14 +284,9 @@ MDCTextStyle const MDCTextStyleOverline = @"MDC.TextStyle.Overline";
 }
 
 - (CGFloat)scaledValueForValue:(CGFloat)value {
-  // If it is available, query the preferredContentSizeCategory.
   UIContentSizeCategory defaultSizeCategory = UIContentSizeCategoryLarge;
-  UIContentSizeCategory currentSizeCategory = UIContentSizeCategoryLarge;
-  if ([UIApplication mdc_safeSharedApplication]) {
-    currentSizeCategory = [UIApplication mdc_safeSharedApplication].preferredContentSizeCategory;
-  } else if (@available(iOS 10.0, *)) {
-    currentSizeCategory = UIScreen.mainScreen.traitCollection.preferredContentSizeCategory;
-  }
+  // If it is available, query the preferredContentSizeCategory.
+  UIContentSizeCategory currentSizeCategory = GetCurrentSizeCategory();
 
   NSNumber *defaultFontSizeNumber = _scalingCurve[defaultSizeCategory];
   NSNumber *currentFontSizeNumber = _scalingCurve[currentSizeCategory];

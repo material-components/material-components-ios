@@ -17,24 +17,9 @@
 #import <objc/runtime.h>
 
 #import "MDCTypography.h"
-#import "UIApplication+AppExtensions.h"
+#import "private/UIContentSizeCategory+Material.h"
 
 static char MDCFontScaleObjectKey;
-
-/**
- @return Device's current UIContentSizeCategory or UIContentSizeCategoryLarge
- if we are unable to query the device due to being in an extension.
- */
-static UIContentSizeCategory GetCurrentSizeCategory(void) {
-  UIContentSizeCategory sizeCategory = UIContentSizeCategoryLarge;
-  if (@available(iOS 10.0, *)) {
-    sizeCategory = UIScreen.mainScreen.traitCollection.preferredContentSizeCategory;
-  } else if ([UIApplication mdc_safeSharedApplication]) {
-    sizeCategory = [UIApplication mdc_safeSharedApplication].preferredContentSizeCategory;
-  }
-
-  return sizeCategory;
-}
 
 @implementation UIFont (MaterialScalable)
 
