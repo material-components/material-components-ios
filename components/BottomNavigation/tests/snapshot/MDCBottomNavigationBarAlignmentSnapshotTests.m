@@ -41,13 +41,33 @@
 
   self.navigationBar = [[MDCFakeBottomNavigationBar alloc] init];
 
-  UIImage *testImage = [UIImage mdc_testImageOfSize:CGSizeMake(24, 24)];
-  UITabBarItem *tabItem1 = [[UITabBarItem alloc] initWithTitle:@"Item 1" image:testImage tag:1];
-  UITabBarItem *tabItem2 = [[UITabBarItem alloc] initWithTitle:@"Item 2" image:testImage tag:2];
+  CGSize imageSize = CGSizeMake(24, 24);
+  UITabBarItem *tabItem1 = [[UITabBarItem alloc]
+      initWithTitle:@"Item 1"
+              image:[UIImage mdc_testImageOfSize:imageSize
+                                       withStyle:MDCSnapshotTestImageStyleEllipses]
+                tag:1];
+  UITabBarItem *tabItem2 = [[UITabBarItem alloc]
+      initWithTitle:@"Item 2"
+              image:[UIImage mdc_testImageOfSize:imageSize
+                                       withStyle:MDCSnapshotTestImageStyleCheckerboard]
+                tag:2];
   tabItem2.badgeValue = @"888+";
-  UITabBarItem *tabItem3 = [[UITabBarItem alloc] initWithTitle:@"Item 3" image:testImage tag:3];
-  UITabBarItem *tabItem4 = [[UITabBarItem alloc] initWithTitle:@"Item 4" image:testImage tag:4];
-  UITabBarItem *tabItem5 = [[UITabBarItem alloc] initWithTitle:@"Item 5" image:testImage tag:5];
+  UITabBarItem *tabItem3 = [[UITabBarItem alloc]
+      initWithTitle:@"Item 3"
+              image:[UIImage mdc_testImageOfSize:imageSize
+                                       withStyle:MDCSnapshotTestImageStyleFramedX]
+                tag:3];
+  UITabBarItem *tabItem4 = [[UITabBarItem alloc]
+      initWithTitle:@"Item 4"
+              image:[UIImage mdc_testImageOfSize:imageSize
+                                       withStyle:MDCSnapshotTestImageStyleRectangles]
+                tag:4];
+  UITabBarItem *tabItem5 = [[UITabBarItem alloc]
+      initWithTitle:@"Item 5"
+              image:[UIImage mdc_testImageOfSize:imageSize
+                                       withStyle:MDCSnapshotTestImageStyleDiagonalLines]
+                tag:5];
   self.navigationBar.items = @[ tabItem1, tabItem2, tabItem3, tabItem4, tabItem5 ];
 
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;

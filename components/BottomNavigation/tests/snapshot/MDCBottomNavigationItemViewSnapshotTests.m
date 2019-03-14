@@ -305,7 +305,8 @@ static const CGFloat kContentHorizontalMargin = 12;
   // Given
   self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
   self.itemView.selected = NO;
-  self.itemView.selectedImage = [[UIImage mdc_testImageOfSize:CGSizeMake(16, 16)]
+  self.itemView.selectedImage = [[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
+                                                    withStyle:MDCSnapshotTestImageStyleEllipses]
       imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   self.itemView.selectedItemTintColor = UIColor.orangeColor;
   self.itemView.unselectedItemTintColor = UIColor.blackColor;
@@ -327,7 +328,8 @@ static const CGFloat kContentHorizontalMargin = 12;
   self.itemView.unselectedItemTintColor = UIColor.blackColor;
 
   // When
-  self.itemView.image = [[UIImage mdc_testImageOfSize:CGSizeMake(36, 36)]
+  self.itemView.image = [[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
+                                            withStyle:MDCSnapshotTestImageStyleFramedX]
       imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 
   // Then
@@ -338,13 +340,15 @@ static const CGFloat kContentHorizontalMargin = 12;
   // Given
   self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
   self.itemView.selected = YES;
-  self.itemView.selectedImage = [[UIImage mdc_testImageOfSize:CGSizeMake(16, 16)]
+  self.itemView.selectedImage = [[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
+                                                    withStyle:MDCSnapshotTestImageStyleEllipses]
       imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   self.itemView.selectedItemTintColor = UIColor.orangeColor;
   self.itemView.unselectedItemTintColor = UIColor.blackColor;
 
   // When
-  self.itemView.image = [[UIImage mdc_testImageOfSize:CGSizeMake(36, 36)]
+  self.itemView.image = [[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
+                                            withStyle:MDCSnapshotTestImageStyleFramedX]
       imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 
   // Then
@@ -360,7 +364,8 @@ static const CGFloat kContentHorizontalMargin = 12;
   self.itemView.unselectedItemTintColor = UIColor.blackColor;
 
   // When
-  self.itemView.image = [[UIImage mdc_testImageOfSize:CGSizeMake(36, 36)]
+  self.itemView.image = [[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
+                                            withStyle:MDCSnapshotTestImageStyleFramedX]
       imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 
   // Then
@@ -375,7 +380,8 @@ static const CGFloat kContentHorizontalMargin = 12;
   self.itemView.unselectedItemTintColor = UIColor.blackColor;
 
   // When
-  self.itemView.selectedImage = [[UIImage mdc_testImageOfSize:CGSizeMake(36, 36)]
+  self.itemView.selectedImage = [[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
+                                                    withStyle:MDCSnapshotTestImageStyleEllipses]
       imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 
   // Then
@@ -390,7 +396,8 @@ static const CGFloat kContentHorizontalMargin = 12;
   self.itemView.unselectedItemTintColor = UIColor.blackColor;
 
   // When
-  self.itemView.selectedImage = [[UIImage mdc_testImageOfSize:CGSizeMake(36, 36)]
+  self.itemView.selectedImage = [[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
+                                                    withStyle:MDCSnapshotTestImageStyleEllipses]
       imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 
   // Then
