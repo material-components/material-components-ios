@@ -14,6 +14,25 @@
 
 #import <UIKit/UIKit.h>
 
+/** Test image styles usable for snapshot testing in place of icons. */
+typedef NS_ENUM(NSInteger, MDCSnapshotTestImageStyle) {
+
+  /** An alternating pattern of squares like a checkerboard or chessboard. */
+  MDCSnapshotTestImageStyleCheckerboard = 0,
+
+  /** Concentric outlined rectangles. */
+  MDCSnapshotTestImageStyleRectangles = 1,
+
+  /** Concentric outlined ellipses. */
+  MDCSnapshotTestImageStyleEllipses = 2,
+
+  /** Lines arranged at a 45-degree angle. */
+  MDCSnapshotTestImageStyleDiagonalLines = 3,
+
+  /** A full-bleed "X" with a rectangular frame. */
+  MDCSnapshotTestImageStyleFramedX = 4,
+};
+
 @interface UIImage (MDCSnapshot)
 
 /**
@@ -24,5 +43,14 @@
  @return a new image of the specified size.
  */
 + (UIImage *)mdc_testImageOfSize:(CGSize)size;
+
+/**
+ Creates a new image useful for testing with a given size with a specific style.
+
+ @param size The size of the image to create.
+ @param imageStyle The style of the image to create.
+ @return a new image of the specified size.
+ */
++ (UIImage *)mdc_testImageOfSize:(CGSize)size withStyle:(MDCSnapshotTestImageStyle)imageStyle;
 
 @end
