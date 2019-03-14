@@ -14,9 +14,7 @@
 
 #import "UIImage+MDCSnapshot.h"
 
-@implementation UIImage (MDCSnapshot)
-
-void RenderCheckerboardPatternOfSize(CGSize size) {
+static void RenderCheckerboardPatternOfSize(CGSize size) {
   CGFloat quarterWidth = size.width / 4;
   CGFloat quarterHeight = size.height / 4;
   // Create a "checkboard" pattern
@@ -27,7 +25,7 @@ void RenderCheckerboardPatternOfSize(CGSize size) {
   }
 }
 
-void RenderRectanglesPatternOfSize(CGSize size) {
+static void RenderRectanglesPatternOfSize(CGSize size) {
   CGFloat squareSpacing = 4;
   CGPoint origin = CGPointMake(0, 0);
   while (!CGSizeEqualToSize(size, CGSizeZero)) {
@@ -38,7 +36,7 @@ void RenderRectanglesPatternOfSize(CGSize size) {
   }
 }
 
-void RenderEllipsesPatternOfSize(CGSize size) {
+static void RenderEllipsesPatternOfSize(CGSize size) {
   CGFloat spacing = 6;
   CGPoint origin = CGPointMake(1, 1);
   size = CGSizeMake(MAX(0, size.width - 2), MAX(0, size.height - 2));
@@ -52,7 +50,7 @@ void RenderEllipsesPatternOfSize(CGSize size) {
   }
 }
 
-void RenderDialogLinesPatternOfSize(CGSize size) {
+static void RenderDialogLinesPatternOfSize(CGSize size) {
   NSInteger numLines = 3;
   CGContextRef context = UIGraphicsGetCurrentContext();
   CGContextSetLineWidth(context, 2);
@@ -66,7 +64,7 @@ void RenderDialogLinesPatternOfSize(CGSize size) {
   CGContextStrokePath(context);
 }
 
-void RenderFramedXOfSize(CGSize size) {
+static void RenderFramedXOfSize(CGSize size) {
   CGContextRef context = UIGraphicsGetCurrentContext();
   CGFloat minDimension = MIN(size.width, size.height);
   CGContextSetLineWidth(context, (CGFloat)ceil(minDimension / 10));
@@ -77,6 +75,8 @@ void RenderFramedXOfSize(CGSize size) {
   CGContextStrokePath(context);
   UIRectFrame(CGRectMake(0, 0, size.width, size.height));
 }
+
+@implementation UIImage (MDCSnapshot)
 
 + (UIImage *)mdc_testImageOfSize:(CGSize)size withStyle:(MDCSnapshotTestImageStyle)imageStyle {
   UIGraphicsBeginImageContext(size);
