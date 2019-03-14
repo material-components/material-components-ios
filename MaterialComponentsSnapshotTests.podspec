@@ -12,11 +12,11 @@ module SnapshotPodspecHelper
 
     def default_source_files
       if @name.present?
-        return [
-          "components/#{@name}/tests/snapshot/*.{h,m,swift}",
-          "components/#{@name}/tests/snapshot/supplemental/*.{h,m,swift}",
-          "components/#{@name}/tests/snapshot/Theming/*.{h,m,swift}",
-        ]
+        source_files = Dir["components/#{@name}/tests/snapshot/*.{h,m,swift}"]
+        supplemental_files = Dir["components/#{@name}/tests/snapshot/supplemental/*.{h,m,swift}"]
+        example_files = Dir["components/#{@name}/examples/tests/snapshot/*.{h,m,swift}"]
+        theming_files = Dir["components/#{@name}/tests/snapshot/Theming/*.{h,m,swift}"]
+        return source_files + supplemental_files + example_files + theming_files
       end
       return []
     end
@@ -46,7 +46,7 @@ module SnapshotPodspecHelper
 
   def self.components
     return Dir["components/**/tests/snapshot"].map { |dir|
-      dir = Component.new(dir.split(File::SEPARATOR)[-3])
+      dir = Component.new(dir.split(File::SEPARATOR)[1])
     }
   end
 end
@@ -63,6 +63,7 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.dependency 'MaterialComponents'
   s.dependency 'MaterialComponentsBeta'
+  s.dependency 'MaterialComponentsExamples'
 
   # Top level sources are required. Without them, unit test targets do not show up in Xcode.
   # However, no top level sources can import iOSSnapshotTestCase, otherwise the app will crash on
