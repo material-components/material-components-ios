@@ -286,18 +286,24 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = (CGFloat)0.3;
 }
 
 - (void)updateLayout {
-  CGRect bounds = self.view.bounds;
-  CGFloat tabBarHeight = [[_tabBar class] defaultHeightForBarPosition:UIBarPositionBottom
+  UIBarPosition barPosition = _tabBar.barPosition;
+  CGFloat tabBarHeight = [[_tabBar class] defaultHeightForBarPosition:barPosition
                                                        itemAppearance:_tabBar.itemAppearance];
   if (@available(iOS 11.0, *)) {
     tabBarHeight += self.view.safeAreaInsets.bottom;
   }
 
+  CGRect bounds = CGRectStandardize(self.view.bounds);
   CGRect currentViewFrame = bounds;
-  CGRect tabBarFrame = CGRectMake(bounds.origin.x, bounds.origin.y + bounds.size.height,
-                                  bounds.size.width, tabBarHeight);
+  CGRect tabBarFrame = CGRectMake(0.0, 0.0, CGRectGetWidth(self.view.frame), tabBarHeight);
   if (!_tabBarWantsToBeHidden) {
-    CGRectDivide(bounds, &tabBarFrame, &currentViewFrame, tabBarHeight, CGRectMaxYEdge);
+    if (barPosition == UIBarPositionTop) {
+      currentViewFrame.origin.y = CGRectGetMaxY(tabBarFrame);
+      currentViewFrame.size.height -= CGRectGetHeight(tabBarFrame);
+    } else {
+      currentViewFrame.size.height -= CGRectGetHeight(tabBarFrame);
+      tabBarFrame.origin.x = CGRectGetHeight(bounds) - CGRectGetHeight(tabBarFrame);
+    }
   }
   _tabBar.frame = tabBarFrame;
   _tabBarShadow.frame = tabBarFrame;

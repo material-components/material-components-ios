@@ -25,12 +25,10 @@
 
 typedef void (^MDCButtonActionBlock)(void);
 
-@interface TabBarViewControllerExample : MDCTabBarViewController
-@property(nonatomic, strong, nullable) MDCSemanticColorScheme *colorScheme;
-@property(nonatomic, strong, nullable) MDCTypographyScheme *typographyScheme;
-@end
+@interface ExampleTabBarViewController : MDCTabBarViewController
 
-@interface TabBarViewControllerExample (Supplemental)
+@property(nonatomic, strong, nullable) MDCSemanticColorScheme *colorScheme;  //KM
+@property(nonatomic, strong, nullable) MDCTypographyScheme *typographyScheme;  //KM
 
 - (void)setupTabBarColors;
 
@@ -38,15 +36,3 @@ typedef void (^MDCButtonActionBlock)(void);
 
 @end
 
-@interface TBVCSampleViewController : UIViewController
-
-@property(nonatomic, nullable) MDCSemanticColorScheme *colorScheme;
-@property(nonatomic, nullable) MDCTypographyScheme *typographyScheme;
-
-+ (nonnull instancetype)sampleWithTitle:(nonnull NSString *)title color:(nonnull UIColor *)color;
-
-- (void)setMDCButtonWithFrame:(CGRect)frame
-                 buttonScheme:(nonnull id<MDCButtonScheming>)buttonScheme
-                        title:(nonnull NSString *)title
-                  actionBlock:(nullable MDCButtonActionBlock)actionBlock;
-@end
