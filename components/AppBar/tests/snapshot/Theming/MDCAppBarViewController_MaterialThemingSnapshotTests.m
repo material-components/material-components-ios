@@ -73,7 +73,8 @@
   self.appBarController = [[MDCAppBarViewController alloc] init];
   self.appBarController.navigationBar.title = @"AppBar";
   self.appBarController.navigationBar.leadingItemsSupplementBackButton = YES;
-  self.appBarController.view.bounds = CGRectMake(0, 0, 640, 320);
+  self.appBarController.view.bounds = CGRectMake(0, 0, 640, 80);
+  self.appBarController.headerView.maximumHeight = 80;
   CGSize imageSize = CGSizeMake(24, 24);
   UIBarButtonItem *trailingItem1 = [[UIBarButtonItem alloc]
       initWithImage:[[UIImage mdc_testImageOfSize:imageSize
