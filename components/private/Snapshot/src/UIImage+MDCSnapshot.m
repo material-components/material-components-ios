@@ -38,12 +38,13 @@ static void RenderRectanglesPatternOfSize(CGSize size) {
 
 static void RenderEllipsesPatternOfSize(CGSize size) {
   CGFloat spacing = 6;
-  CGPoint origin = CGPointMake(1, 1);
-  size = CGSizeMake(MAX(0, size.width - 2), MAX(0, size.height - 2));
-  while (size.width >= 2 && size.height >= 2) {
+  CGFloat lineWidth = 2;
+  CGPoint origin = CGPointMake(lineWidth, lineWidth);
+  size = CGSizeMake(MAX(0, size.width - 2 * lineWidth), MAX(0, size.height - 2 * lineWidth));
+  while (size.width >= lineWidth && size.height >= lineWidth) {
     UIBezierPath *path = [UIBezierPath
         bezierPathWithOvalInRect:CGRectMake(origin.x, origin.y, size.width, size.height)];
-    path.lineWidth = 2;
+    path.lineWidth = lineWidth;
     [path stroke];
     origin = CGPointMake(origin.x + spacing, origin.y + spacing);
     size = CGSizeMake(MAX(0, size.width - 2 * spacing), MAX(0, size.height - 2 * spacing));
@@ -79,7 +80,11 @@ static void RenderFramedXOfSize(CGSize size) {
 @implementation UIImage (MDCSnapshot)
 
 + (UIImage *)mdc_testImageOfSize:(CGSize)size withStyle:(MDCSnapshotTestImageStyle)imageStyle {
-  UIGraphicsBeginImageContext(size);
+  CGFloat scale = UIScreen.mainScreen.scale;
+  if (scale < 1) {
+    scale = 2;  // Default to 2x if somehow there is no scale available.
+  }
+  UIGraphicsBeginImageContextWithOptions(size, NO, scale);
   [UIColor.blackColor setFill];
   switch (imageStyle) {
     case MDCSnapshotTestImageStyleCheckerboard:
