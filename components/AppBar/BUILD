@@ -20,6 +20,8 @@ load(
     "mdc_extension_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
+    "mdc_snapshot_objc_library",
+    "mdc_snapshot_test",
     "mdc_unit_test_suite",
 )
 load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
@@ -71,6 +73,14 @@ mdc_extension_objc_library(
 )
 
 mdc_extension_objc_library(
+    name = "Theming",
+    deps = [
+        ":AppBar",
+        "//components/schemes/Container",
+    ],
+)
+
+mdc_extension_objc_library(
     name = "TypographyThemer",
     deps = [
         ":AppBar",
@@ -109,6 +119,20 @@ mdc_examples_swift_library(
     ],
 )
 
+mdc_objc_library(
+    name = "unit_test_sources",
+    srcs = glob([
+        "tests/unit/*.m",
+        "tests/unit/Theming/*.m",
+    ]),
+    sdk_frameworks = ["XCTest"],
+    visibility = ["//visibility:private"],
+    deps = [
+        ":AppBar",
+        ":Theming",
+    ],
+)
+
 swift_library(
     name = "unit_test_swift_sources",
     srcs = glob(["tests/unit/*.swift"]),
@@ -129,5 +153,24 @@ mdc_unit_test_suite(
     name = "unit_tests",
     deps = [
         ":unit_test_swift_sources",
+    ],
+)
+
+mdc_snapshot_objc_library(
+    name = "snapshot_test_lib",
+    extra_srcs = native.glob(["tests/snapshot/Theming/*.m"]),
+    deps = [
+        ":AppBar",
+        ":Theming",
+        "//components/schemes/Color",
+        "//components/schemes/Container",
+        "//components/schemes/Typography",
+    ],
+)
+
+mdc_snapshot_test(
+    name = "snapshot_tests",
+    deps = [
+        ":snapshot_test_lib",
     ],
 )

@@ -61,6 +61,7 @@ target "MDCCatalog" do
     'ActionSheet+ActionSheetThemer/UnitTests',
     'ActionSheet+ColorThemer/UnitTests',
     'ActionSheet+Theming/UnitTests',
+    'AppBar+Theming/UnitTests',
     'BottomNavigation/UnitTests',
     'ButtonBar+Theming/UnitTests',
     'Buttons+Theming/UnitTests',
