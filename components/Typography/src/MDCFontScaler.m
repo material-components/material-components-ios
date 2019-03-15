@@ -18,7 +18,7 @@
 
 #import "UIFont+MaterialScalable.h"
 #import "private/MDCFontTraits.h"
-#import "private/UIContentSizeCategory+Material.h"
+#import "private/MDCTypographyUtilities.h"
 
 MDCTextStyle const MDCTextStyleHeadline1 = @"MDC.TextStyle.Headline1";
 MDCTextStyle const MDCTextStyleHeadline2 = @"MDC.TextStyle.Headline2";
@@ -49,7 +49,7 @@ MDCTextStyle const MDCTextStyleOverline = @"MDC.TextStyle.Overline";
     _textStyle = [textStyle copy];
 
     // NOTE: All scaling curves MUST include a full set of values for ALL UIContentSizeCategory
-    // values. This values must not decrease and the category size increases. To put it another
+    // values. This values must not decrease as the category size increases. To put it another
     // way, the value for UIContentSizeCategoryLarge must not be smaller than the value for
     // UIContentSizeCategoryMedium.
     if ([MDCTextStyleHeadline1 isEqualToString:textStyle]) {
@@ -268,7 +268,7 @@ MDCTextStyle const MDCTextStyleOverline = @"MDC.TextStyle.Overline";
   return self;
 }
 
-- (UIFont *)scalableFontWithFont:(UIFont *)font {
+- (UIFont *)scaledFontWithFont:(UIFont *)font {
   // If it is available, query the preferredContentSizeCategory.
   UIContentSizeCategory sizeCategory = GetCurrentSizeCategory();
 

@@ -17,7 +17,7 @@
 #import <objc/runtime.h>
 
 #import "MDCTypography.h"
-#import "private/UIContentSizeCategory+Material.h"
+#import "private/MDCTypographyUtilities.h"
 
 static char MDCFontScaleObjectKey;
 
@@ -59,30 +59,6 @@ static char MDCFontScaleObjectKey;
 
 - (nonnull UIFont *)mdc_scaledFontAtDefaultSize {
   return [self mdc_scaledFontForSizeCategory:UIContentSizeCategoryLarge];
-}
-
-- (CGFloat)mdc_scaledValueForValue:(CGFloat)value {
-  UIContentSizeCategory defaultSizeCategory = UIContentSizeCategoryLarge;
-  UIContentSizeCategory currentSizeCategory = GetCurrentSizeCategory();
-
-  NSNumber *defaultFontSizeNumber = self.mdc_scalingCurve[defaultSizeCategory];
-
-  NSNumber *currentFontSizeNumber = self.mdc_scalingCurve[currentSizeCategory];
-  // Guard against broken / incomplete scaling curves by returning self if fontSizeNumber is nil.
-  if (currentFontSizeNumber == nil || defaultFontSizeNumber == nil) {
-    return value;
-  }
-
-  CGFloat currentFontSize = (CGFloat)currentFontSizeNumber.doubleValue;
-  CGFloat defaultFontSize = (CGFloat)defaultFontSizeNumber.doubleValue;
-
-  // Guard against broken / incomplete scaling curves by returning original value if the
-  // fontSize <= 0.0.
-  if (currentFontSize <= 0.0 || defaultFontSize <= 0.0) {
-    return value;
-  }
-
-  return (currentFontSize / defaultFontSize) * value;
 }
 
 - (NSDictionary<UIContentSizeCategory, NSNumber *> *)mdc_scalingCurve {

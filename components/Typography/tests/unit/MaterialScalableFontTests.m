@@ -17,13 +17,12 @@
 #import "MaterialTypography.h"
 
 #import "MaterialMath.h"
-#import "../../src/private/UIContentSizeCategory+Material.h"
 
-@interface UIFont_MaterialScalableTests : XCTestCase
+@interface MaterialScalableFontTests : XCTestCase
 
 @end
 
-@implementation UIFont_MaterialScalableTests
+@implementation MaterialScalableFontTests
 
 - (void)testScaledFontsReturnEquivalentFonts {
   // Given
@@ -51,8 +50,8 @@
     MDCFontScaler *scaler1 = [[MDCFontScaler alloc] initForMaterialTextStyle:textStyle];
     MDCFontScaler *scaler2 = [[MDCFontScaler alloc] initForMaterialTextStyle:textStyle];
 
-    UIFont *scaledFont1 = [scaler1 scalableFontWithFont:font1];
-    UIFont *scaledFont2 = [scaler2 scalableFontWithFont:font2];
+    UIFont *scaledFont1 = [scaler1 scaledFontWithFont:font1];
+    UIFont *scaledFont2 = [scaler2 scaledFontWithFont:font2];
 
     // Then
     XCTAssert([font1 mdc_isSimplyEqual:font2]);
@@ -100,7 +99,7 @@
 
     MDCFontScaler *scaler = [[MDCFontScaler alloc] initForMaterialTextStyle:textStyle];
 
-    UIFont *scalableFont = [scaler scalableFontWithFont:font];
+    UIFont *scalableFont = [scaler scaledFontWithFont:font];
 
     for (unsigned long ii = 0; ii < sizeCategories.count - 1; ++ii) {
       UIContentSizeCategory smallerSizeCategory = sizeCategories[ii];
@@ -139,7 +138,7 @@
 
     MDCFontScaler *scaler = [[MDCFontScaler alloc] initForMaterialTextStyle:textStyle];
 
-    UIFont *scalabledFont = [scaler scalableFontWithFont:font];
+    UIFont *scalabledFont = [scaler scaledFontWithFont:font];
 
     UIFont *defaultFont = [scalabledFont mdc_scaledFontAtDefaultSize];
     UIFont *largeFont = [scalabledFont mdc_scaledFontForSizeCategory:UIContentSizeCategoryLarge];
@@ -151,25 +150,23 @@
 
 - (void)testInvalidStyleFallback {
   // Given
-  UIFont *font = [UIFont systemFontOfSize:18.0];
+  UIFont *originalFont = [UIFont systemFontOfSize:22.0];
 
-  MDCFontScaler *scaler1 = [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleBody1];
-  MDCFontScaler *scaler2 =
+  MDCFontScaler *invalidSscaler =
       [[MDCFontScaler alloc] initForMaterialTextStyle:@"IntentionallyNonTextStyleString"];
+  MDCFontScaler *bodySscaler =
+      [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleBody1];
 
-  UIFont *scalableFont1 = [scaler1 scalableFontWithFont:font];
-  UIFont *scalableFont2 = [scaler2 scalableFontWithFont:font];
-
-  UIFont *scaledFont1 = [scalableFont1 mdc_scaledFontAtDefaultSize];
-  UIFont *scaledFont2 = [scalableFont2 mdc_scaledFontAtDefaultSize];
+  UIFont *invalidScalableFont = [invalidSscaler scaledFontWithFont:originalFont];
+  UIFont *bodyScalableFont = [bodySscaler scaledFontWithFont:originalFont];
 
   // Then
-  XCTAssert([scaledFont1 mdc_isSimplyEqual:scaledFont2]);
+  XCTAssert([invalidScalableFont mdc_isSimplyEqual:bodyScalableFont]);
 }
 
 - (void)testNonScaledFontReturnsSelf {
   // Given
-  UIFont *font = [UIFont systemFontOfSize:18.0];
+  UIFont *font = [UIFont systemFontOfSize:24.0];
 
   // Note that no scaling curve has been attached to the font, so it will NOT scale
   UIFont *nonScaledFont1 = [font mdc_scaledFontForSizeCategory:UIContentSizeCategoryExtraLarge];
@@ -235,7 +232,7 @@
       [font mdc_scaledFontForSizeCategory:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
 
   // Then
-  XCTAssertTrue(MDCCGFloatEqual(mediumScaledFont.pointSize, curvePointSize));
+  XCTAssertEqualWithAccuracy(mediumScaledFont.pointSize, curvePointSize, 0.0001);
   XCTAssert([font mdc_isSimplyEqual:missingCurveScaledFont]);
 }
 
@@ -244,23 +241,18 @@
   UIFont *originalFont = [UIFont systemFontOfSize:20.0];
   CGFloat originalValue = 10.0;
 
-  MDCFontScaler *scaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleHeadline1];
-  UIFont *scalableFont = [scaler scalableFontWithFont:originalFont];
+  MDCFontScaler *scaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleBody1];
+  UIFont *scalableFont = [scaler scaledFontWithFont:originalFont];
 
   // When
   UIFont *defaultFont = [scalableFont mdc_scaledFontAtDefaultSize];
   UIFont *currentFont = [scalableFont mdc_scaledFontForCurrentSizeCategory];
 
-  CGFloat scalerScaledValue = [scaler scaledValueForValue:originalValue];
-  CGFloat fontScaledValue = [scalableFont mdc_scaledValueForValue:originalValue];
-
-  CGFloat sizeScaleFactor = currentFont.pointSize / defaultFont.pointSize;
-  CGFloat scalerScaleFactor = scalerScaledValue / originalValue;
-  CGFloat fontScaleFactor = fontScaledValue / originalValue;
+  CGFloat sizeScaleFactor = originalValue * currentFont.pointSize / defaultFont.pointSize;
+  CGFloat scalerScaleFactor = [scaler scaledValueForValue:originalValue];
 
   //Then
-  XCTAssertTrue(MDCCGFloatEqual(sizeScaleFactor, scalerScaleFactor));
-  XCTAssertTrue(MDCCGFloatEqual(scalerScaleFactor, fontScaleFactor));
+  XCTAssertEqualWithAccuracy(sizeScaleFactor, scalerScaleFactor, 0.0001);
 }
 
 @end

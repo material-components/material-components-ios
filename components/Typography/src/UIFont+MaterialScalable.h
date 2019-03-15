@@ -33,7 +33,7 @@
 
  Note that this curve should be immutable as it is retained, not copied.
  */
-@property(nonatomic, strong, nullable, setter=mdc_setScalingCurve:)
+@property(nonatomic, copy, nullable, setter=mdc_setScalingCurve:)
     NSDictionary<UIContentSizeCategory, NSNumber *> *mdc_scalingCurve;
 
 /**
@@ -63,18 +63,5 @@
  @return Font sized for UIContentSizeCategoryLarge OR self if there is no associated curve
  */
 - (nonnull UIFont *)mdc_scaledFontAtDefaultSize;
-
-/**
- Scales an arbitrary value based on the current Dynamic Type settings and the scaling curve.
-
- For instance, assume you have a font that is normally 10pt, but because of the device's Dynamic
- Type settings the font is currently 24pt.
- Scale factor = 24.0 current size / 10.0 standard size = 2.4
- This method calculates the current scale factor and multiplies it by the given value.
-
- @param value The original layout value.
- @return A value that has been scaled based on the attached scaling curve
- */
-- (CGFloat)mdc_scaledValueForValue:(CGFloat)value;
 
 @end
