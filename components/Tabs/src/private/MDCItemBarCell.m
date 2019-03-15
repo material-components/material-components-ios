@@ -584,12 +584,10 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
     return CGSizeZero;
   }
 
-  CGRect largestAllowableBadgeRect =
-      [string boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)
-                           options:NSStringDrawingUsesLineFragmentOrigin
-                        attributes:@{NSFontAttributeName : font}
-                           context:nil];
-  return largestAllowableBadgeRect.size;
+  return [string boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)
+                              options:NSStringDrawingUsesLineFragmentOrigin
+                           attributes:@{NSFontAttributeName : font}
+                              context:nil].size;
 }
 
 @end
