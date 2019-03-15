@@ -202,6 +202,7 @@ swift_library(
     deps = [
         ":ColorThemer",
         ":TextFields",
+        ":Theming",
         "//components/Palettes",
         "//components/private/Math",
     ],
