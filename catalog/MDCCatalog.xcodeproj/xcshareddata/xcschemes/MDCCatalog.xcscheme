@@ -527,7 +527,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CD7C8764E8B3170810C755C5B08F902F"
+               BlueprintIdentifier = "291D9BB32762D225E9E5CBA008677484"
                BuildableName = "MaterialComponentsBeta-Unit-Buttons+Theming-UnitTests.xctest"
                BlueprintName = "MaterialComponentsBeta-Unit-Buttons+Theming-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -587,7 +587,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "45A0F5F05D024D63A454A981932552B0"
+               BlueprintIdentifier = "41997BAA3EE99D8BDC1A3505F441336C"
                BuildableName = "MaterialComponentsSnapshotTests-Unit-SnapshotTests.xctest"
                BlueprintName = "MaterialComponentsSnapshotTests-Unit-SnapshotTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
