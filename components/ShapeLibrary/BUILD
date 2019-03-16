@@ -17,6 +17,8 @@ load(
     "//:material_components_ios.bzl",
     "mdc_objc_library",
     "mdc_public_objc_library",
+    "mdc_snapshot_objc_library",
+    "mdc_snapshot_test",
     "mdc_unit_test_suite",
 )
 
@@ -29,8 +31,8 @@ mdc_public_objc_library(
         "UIKit",
     ],
     deps = [
-        "//components/private/Math",
         "//components/Shapes",
+        "//components/private/Math",
     ],
 )
 
@@ -55,5 +57,19 @@ mdc_unit_test_suite(
     name = "unit_tests",
     deps = [
         ":unit_test_sources",
+    ],
+)
+
+mdc_snapshot_objc_library(
+    name = "snapshot_test_lib",
+    deps = [
+        ":ShapeLibrary",
+    ],
+)
+
+mdc_snapshot_test(
+    name = "snapshot_tests",
+    deps = [
+        ":snapshot_test_lib",
     ],
 )
