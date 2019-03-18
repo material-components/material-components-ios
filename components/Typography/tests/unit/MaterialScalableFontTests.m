@@ -40,19 +40,19 @@
   UIFont *font = [UIFont systemFontOfSize:18.0];
 
   NSDictionary<UIContentSizeCategory, NSNumber *> *scalingCurve = @{
-                                                                    UIContentSizeCategoryExtraSmall : @0,
-                                                                    UIContentSizeCategorySmall : @0,
-                                                                    UIContentSizeCategoryMedium : @0,
-                                                                    UIContentSizeCategoryLarge : @0,
-                                                                    UIContentSizeCategoryExtraLarge : @0,
-                                                                    UIContentSizeCategoryExtraExtraLarge : @0,
-                                                                    UIContentSizeCategoryExtraExtraExtraLarge : @0,
-                                                                    UIContentSizeCategoryAccessibilityMedium : @-1,
-                                                                    UIContentSizeCategoryAccessibilityLarge : @-1,
-                                                                    UIContentSizeCategoryAccessibilityExtraLarge : @-1,
-                                                                    UIContentSizeCategoryAccessibilityExtraExtraLarge : @-1,
-                                                                    UIContentSizeCategoryAccessibilityExtraExtraExtraLarge : @-1,
-                                                                    };
+    UIContentSizeCategoryExtraSmall : @0,
+    UIContentSizeCategorySmall : @0,
+    UIContentSizeCategoryMedium : @0,
+    UIContentSizeCategoryLarge : @0,
+    UIContentSizeCategoryExtraLarge : @0,
+    UIContentSizeCategoryExtraExtraLarge : @0,
+    UIContentSizeCategoryExtraExtraExtraLarge : @0,
+    UIContentSizeCategoryAccessibilityMedium : @-1,
+    UIContentSizeCategoryAccessibilityLarge : @-1,
+    UIContentSizeCategoryAccessibilityExtraLarge : @-1,
+    UIContentSizeCategoryAccessibilityExtraExtraLarge : @-1,
+    UIContentSizeCategoryAccessibilityExtraExtraExtraLarge : @-1,
+  };
 
   font.mdc_scalingCurve = scalingCurve;
 
@@ -79,10 +79,10 @@
 
   // This curve is missing all values over Medius
   NSDictionary<UIContentSizeCategory, NSNumber *> *scalingCurve = @{
-                                                                    UIContentSizeCategoryExtraSmall : @(curvePointSize),
-                                                                    UIContentSizeCategorySmall : @(curvePointSize),
-                                                                    UIContentSizeCategoryMedium : @(curvePointSize),
-                                                                    };
+    UIContentSizeCategoryExtraSmall : @(curvePointSize),
+    UIContentSizeCategorySmall : @(curvePointSize),
+    UIContentSizeCategoryMedium : @(curvePointSize),
+  };
 
   font.mdc_scalingCurve = scalingCurve;
 
@@ -108,20 +108,20 @@
 - (void)testScaledFontsReturnEquivalentFonts {
   // Given
   NSArray<MDCTextStyle> *textStyles = @[
-                                        MDCTextStyleHeadline1,
-                                        MDCTextStyleHeadline2,
-                                        MDCTextStyleHeadline3,
-                                        MDCTextStyleHeadline4,
-                                        MDCTextStyleHeadline5,
-                                        MDCTextStyleHeadline6,
-                                        MDCTextStyleSubtitle1,
-                                        MDCTextStyleSubtitle2,
-                                        MDCTextStyleBody1,
-                                        MDCTextStyleBody2,
-                                        MDCTextStyleButton,
-                                        MDCTextStyleCaption,
-                                        MDCTextStyleOverline,
-                                        ];
+    MDCTextStyleHeadline1,
+    MDCTextStyleHeadline2,
+    MDCTextStyleHeadline3,
+    MDCTextStyleHeadline4,
+    MDCTextStyleHeadline5,
+    MDCTextStyleHeadline6,
+    MDCTextStyleSubtitle1,
+    MDCTextStyleSubtitle2,
+    MDCTextStyleBody1,
+    MDCTextStyleBody2,
+    MDCTextStyleButton,
+    MDCTextStyleCaption,
+    MDCTextStyleOverline,
+  ];
 
   for (MDCTextStyle textStyle in textStyles) {
     // When
