@@ -33,10 +33,6 @@ static const CGFloat kBadgeFontSize = 12;
 /// Padding between top of the cell and the badge.
 static const CGFloat kBadgeTopPadding = 6;
 
-/// Maximum badge text character length. Badge text longer than this number of characters will
-/// truncate.
-static const NSUInteger kBadgeMaxTextComposedCharacterLength = 4;
-
 /// Outer edge padding from spec: https://material.io/go/design-tabs#spec.
 static const UIEdgeInsets kEdgeInsets = {.top = 0, .right = 16, .bottom = 0, .left = 16};
 
@@ -588,25 +584,11 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
     return CGSizeZero;
   }
 
-  NSMutableString *longestAllowableBadgeString = [[NSMutableString alloc] init];
-  __block NSUInteger composedCharacterIndex = 0;
-  [string enumerateSubstringsInRange:NSMakeRange(0, string.length)
-                             options:NSStringEnumerationByComposedCharacterSequences
-                          usingBlock:^(NSString *substring, NSRange substringRange,
-                                       NSRange enclosingRange, BOOL *stop) {
-                            [longestAllowableBadgeString appendString:substring];
-                            composedCharacterIndex++;
-                            if (composedCharacterIndex == kBadgeMaxTextComposedCharacterLength) {
-                              *stop = YES;
-                            }
-                          }];
-
-  CGRect largestAllowableBadgeRect =
-      [[longestAllowableBadgeString copy] boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)
-                                                       options:NSStringDrawingUsesLineFragmentOrigin
-                                                    attributes:@{NSFontAttributeName : font}
-                                                       context:nil];
-  return largestAllowableBadgeRect.size;
+  return [string boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)
+                              options:NSStringDrawingUsesLineFragmentOrigin
+                           attributes:@{NSFontAttributeName : font}
+                              context:nil]
+      .size;
 }
 
 @end
