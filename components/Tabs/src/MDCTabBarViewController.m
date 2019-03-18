@@ -287,27 +287,41 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = (CGFloat)0.3;
 
 - (void)updateLayout {
   UIBarPosition barPosition = _tabBar.barPosition;
-  CGFloat tabBarHeight = [[_tabBar class] defaultHeightForBarPosition:barPosition
-                                                       itemAppearance:_tabBar.itemAppearance];
-  if (@available(iOS 11.0, *)) {
-    tabBarHeight += self.view.safeAreaInsets.bottom;
+
+  CGFloat tabBarHeight = 0.0;
+  if (!_tabBarWantsToBeHidden) {
+    tabBarHeight = [[_tabBar class] defaultHeightForBarPosition:barPosition
+                                                 itemAppearance:_tabBar.itemAppearance];
   }
 
-  CGRect bounds = CGRectStandardize(self.view.bounds);
-  CGRect currentViewFrame = bounds;
-  CGRect tabBarFrame = CGRectMake(0.0, 0.0, CGRectGetWidth(self.view.frame), tabBarHeight);
-  if (!_tabBarWantsToBeHidden) {
-    if (barPosition == UIBarPositionTop) {
-      currentViewFrame.origin.y = CGRectGetMaxY(tabBarFrame);
-      currentViewFrame.size.height -= CGRectGetHeight(tabBarFrame);
-    } else {
-      currentViewFrame.size.height -= CGRectGetHeight(tabBarFrame);
-      tabBarFrame.origin.x = CGRectGetHeight(bounds) - CGRectGetHeight(tabBarFrame);
+  const CGRect bounds = CGRectStandardize(self.view.bounds);
+  CGRect safeBounds = bounds;
+
+  if (@available(iOS 11.0, *)) {
+    UIEdgeInsets topAndBottomSafeAreaInsets =
+        UIEdgeInsetsMake(self.view.safeAreaInsets.top, 0.0, self.view.safeAreaInsets.bottom, 0.0);
+    safeBounds = UIEdgeInsetsInsetRect(bounds, topAndBottomSafeAreaInsets);
+    if (!_tabBarWantsToBeHidden && barPosition == UIBarPositionBottom) {
+      tabBarHeight += self.view.safeAreaInsets.bottom;
     }
   }
+
+  CGRect selectedViewFrame;
+  CGRect tabBarFrame;
+
+  if (barPosition == UIBarPositionTop){
+    // Unlike bottom position, tab bar does not fill the top safe-area because it lays-out at its
+    // origin and would be hidden below the sensor bar or the navigation bar.
+    CGRectDivide(safeBounds, &tabBarFrame, &(CGRect){}, tabBarHeight, CGRectMinYEdge);
+    CGRectDivide(bounds, &(CGRect){}, &selectedViewFrame, CGRectGetMaxY(tabBarFrame),
+                 CGRectMinYEdge);
+  } else {
+    CGRectDivide(bounds, &tabBarFrame, &selectedViewFrame, tabBarHeight, CGRectMaxYEdge);
+  }
+
   _tabBar.frame = tabBarFrame;
   _tabBarShadow.frame = tabBarFrame;
-  _selectedViewController.view.frame = currentViewFrame;
+  _selectedViewController.view.frame = selectedViewFrame;
 }
 
 #pragma mark -  MDCTabBarDelegate
