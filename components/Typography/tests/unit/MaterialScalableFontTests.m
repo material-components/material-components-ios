@@ -59,12 +59,12 @@
   // Note that scaling curve is 0 @ UIContentSizeCategoryExtraExtraExtraLarge so this font should be
   // the same size.
   UIFont *zeroScaledFont =
-  [font mdc_scaledFontForSizeCategory:UIContentSizeCategoryExtraExtraExtraLarge];
+      [font mdc_scaledFontForSizeCategory:UIContentSizeCategoryExtraExtraExtraLarge];
 
   // Note that scaling curve is -1 @ UIContentSizeCategoryAccessibilityExtraExtraExtraLarge so this
   // font should be the same size.
   UIFont *negativeScaledFont =
-  [font mdc_scaledFontForSizeCategory:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+      [font mdc_scaledFontForSizeCategory:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
 
   // Then
   XCTAssert([font mdc_isSimplyEqual:zeroScaledFont]);
@@ -89,7 +89,7 @@
   UIFont *mediumScaledFont = [font mdc_scaledFontForSizeCategory:UIContentSizeCategoryMedium];
 
   UIFont *missingCurveScaledFont =
-  [font mdc_scaledFontForSizeCategory:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+      [font mdc_scaledFontForSizeCategory:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
 
   // Then
   XCTAssertEqualWithAccuracy(mediumScaledFont.pointSize, curvePointSize, 0.0001);
@@ -97,7 +97,6 @@
 }
 
 @end
-
 
 @interface MDCFontScalerTests : XCTestCase
 
@@ -145,7 +144,7 @@
   UIFont *originalFont = [UIFont systemFontOfSize:22.0];
 
   MDCFontScaler *invalidSscaler =
-  [[MDCFontScaler alloc] initForMaterialTextStyle:@"IntentionallyNonTextStyleString"];
+      [[MDCFontScaler alloc] initForMaterialTextStyle:@"IntentionallyNonTextStyleString"];
   MDCFontScaler *bodySscaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleBody1];
 
   UIFont *invalidScalableFont = [invalidSscaler scaledFontWithFont:originalFont];
@@ -156,7 +155,6 @@
 }
 
 @end
-
 
 @interface MaterialScalableFontTests : XCTestCase
 
@@ -271,6 +269,5 @@
   // Then
   XCTAssertEqualWithAccuracy(sizeScaleFactor, scalerScaleFactor, 0.0001);
 }
-
 
 @end
