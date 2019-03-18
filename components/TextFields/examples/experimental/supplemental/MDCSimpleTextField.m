@@ -17,7 +17,7 @@
 #import <Foundation/Foundation.h>
 
 #import <MDFInternationalization/MDFInternationalization.h>
-#import <MaterialComponents/MaterialTypography.h>
+#import "MaterialTypography.h"
 
 #import "MDCContainerStylePathDrawingUtils.h"
 #import "MDCSimpleTextFieldLayout.h"
