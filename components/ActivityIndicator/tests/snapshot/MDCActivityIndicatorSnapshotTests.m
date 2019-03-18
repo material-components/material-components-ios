@@ -35,7 +35,6 @@
 
   self.indicator = [[MDCActivityIndicator alloc] initWithFrame:CGRectMake(0, 0, 64, 64)];
   [self.indicator startAnimating];
-  self.indicator.layer.speed = 100;
 }
 
 - (void)tearDown {
