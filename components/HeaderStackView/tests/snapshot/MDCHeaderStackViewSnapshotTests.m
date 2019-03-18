@@ -79,6 +79,8 @@
 
 - (void)tearDown {
   self.headerStackView = nil;
+  self.topView = nil;
+  self.bottomView = nil;
 
   [super tearDown];
 }
