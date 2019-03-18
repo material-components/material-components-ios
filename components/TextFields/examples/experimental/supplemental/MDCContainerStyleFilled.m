@@ -161,14 +161,17 @@ static const CGFloat kLayerAnimationDuration = (CGFloat)0.2;
   //  NSLog(@"target thin: %@",NSStringFromCGRect(targetThinUnderlineBezier.bounds));
 
   CABasicAnimation *preexistingThickUnderlineShrinkAnimation =
-      [self.thickUnderlineLayer animationForKey:self.class.thickUnderlineShrinkKey];
+      (CABasicAnimation *)[self.thickUnderlineLayer
+          animationForKey:self.class.thickUnderlineShrinkKey];
   CABasicAnimation *preexistingThickUnderlineGrowAnimation =
-      [self.thickUnderlineLayer animationForKey:self.class.thickUnderlineGrowKey];
+      (CABasicAnimation *)[self.thickUnderlineLayer
+          animationForKey:self.class.thickUnderlineGrowKey];
 
   CABasicAnimation *preexistingThinUnderlineGrowAnimation =
-      [self.thinUnderlineLayer animationForKey:self.class.thinUnderlineGrowKey];
+      (CABasicAnimation *)[self.thinUnderlineLayer animationForKey:self.class.thinUnderlineGrowKey];
   CABasicAnimation *preexistingThinUnderlineShrinkAnimation =
-      [self.thinUnderlineLayer animationForKey:self.class.thinUnderlineShrinkKey];
+      (CABasicAnimation *)[self.thinUnderlineLayer
+          animationForKey:self.class.thinUnderlineShrinkKey];
 
   [CATransaction begin];
   {
@@ -303,14 +306,14 @@ static const CGFloat kLayerAnimationDuration = (CGFloat)0.2;
   CABasicAnimation *animation = (CABasicAnimation *)anim;
   CGPathRef toValue = (__bridge CGPathRef)animation.toValue;
 
-  CABasicAnimation *thickGrowAnimation =
-      [self.thickUnderlineLayer animationForKey:self.class.thickUnderlineGrowKey];
-  CABasicAnimation *thickShrinkAnimation =
-      [self.thickUnderlineLayer animationForKey:self.class.thickUnderlineShrinkKey];
+  CABasicAnimation *thickGrowAnimation = (CABasicAnimation *)[self.thickUnderlineLayer
+      animationForKey:self.class.thickUnderlineGrowKey];
+  CABasicAnimation *thickShrinkAnimation = (CABasicAnimation *)[self.thickUnderlineLayer
+      animationForKey:self.class.thickUnderlineShrinkKey];
   CABasicAnimation *thinGrowAnimation =
-      [self.thinUnderlineLayer animationForKey:self.class.thinUnderlineGrowKey];
-  CABasicAnimation *thinShrinkAnimation =
-      [self.thinUnderlineLayer animationForKey:self.class.thinUnderlineShrinkKey];
+      (CABasicAnimation *)[self.thinUnderlineLayer animationForKey:self.class.thinUnderlineGrowKey];
+  CABasicAnimation *thinShrinkAnimation = (CABasicAnimation *)[self.thinUnderlineLayer
+      animationForKey:self.class.thinUnderlineShrinkKey];
 
   if (flag) {
     if ((animation == thickGrowAnimation) || (animation == thickShrinkAnimation)) {

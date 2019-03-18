@@ -207,7 +207,7 @@
   placeholderLabel.transform = CGAffineTransformIdentity;
 
   CABasicAnimation *preexistingAnimation =
-      [placeholderLabel.layer animationForKey:self.transformAnimationKey];
+      (CABasicAnimation *)[placeholderLabel.layer animationForKey:self.transformAnimationKey];
 
   placeholderLabel.hidden = placeholderShouldHide;
 
