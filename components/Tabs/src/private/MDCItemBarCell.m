@@ -587,7 +587,8 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
   return [string boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)
                               options:NSStringDrawingUsesLineFragmentOrigin
                            attributes:@{NSFontAttributeName : font}
-                              context:nil].size;
+                              context:nil]
+      .size;
 }
 
 @end
