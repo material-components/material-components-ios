@@ -263,11 +263,13 @@
   UIFont *defaultFont = [scalableFont mdc_scaledFontAtDefaultSize];
   UIFont *currentFont = [scalableFont mdc_scaledFontForCurrentSizeCategory];
 
-  CGFloat sizeScaleFactor = originalValue * currentFont.pointSize / defaultFont.pointSize;
-  CGFloat scalerScaleFactor = [scaler scaledValueForValue:originalValue];
+  CGFloat fontScaleFactor = currentFont.pointSize / defaultFont.pointSize;
+  CGFloat fontScaledValue = originalValue * fontScaleFactor;
+
+  CGFloat scalerScaledValue = [scaler scaledValueForValue:originalValue];
 
   // Then
-  XCTAssertEqualWithAccuracy(sizeScaleFactor, scalerScaleFactor, 0.0001);
+  XCTAssertEqualWithAccuracy(fontScaledValue, scalerScaledValue, 0.0001);
 }
 
 @end
