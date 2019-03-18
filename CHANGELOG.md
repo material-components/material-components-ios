@@ -1,3 +1,93 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+### AppBar+MaterialTheming
+
+**New extension.**
+
+### FlexibleHeader
+
+#### MDCFlexibleHeaderView
+
+*new* method: `-trackingScrollViewDidChangeAdjustedContentInset:` in `MDCFlexibleHeaderView`
+
+#### MDCFlexibleHeaderView()
+
+*new* category: `MDCFlexibleHeaderView()`
+
+*removed* category: `MDCFlexibleHeaderView()`
+
+*modified* property: `contentView` in `MDCFlexibleHeaderView()`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(ext)MDCFlexibleHeaderView@MDCFlexibleHeaderView.h@14987` |
+| To: | `c:objc(ext)MDCFlexibleHeaderView@MDCFlexibleHeaderView.h@15448` |
+
+### TextFields+Theming
+
+**New extension.**
+
+## Component changes
+
+## Changes
+
+### ActionSheet
+
+* [Add basic Snapshot tests. (#6917)](https://github.com/material-components/material-components-ios/commit/a77ea5cd483b76374d4ee486f7d9f56bf414bd86) (Robert Moore)
+
+### BottomNavigation
+
+* [Fix image updates in ItemView (#6847)](https://github.com/material-components/material-components-ios/commit/5d699448d177b979003a73651ee3d96f9e4f324c) (Robert Moore)
+* [More snapshots for item icons. (#6855)](https://github.com/material-components/material-components-ios/commit/8ec03eba0523b08a9cdc60817a93cacce82c6469) (Robert Moore)
+* [Restore examples titles. (#6869)](https://github.com/material-components/material-components-ios/commit/0c51470c5b35c14596e4855f23786c7d19ad466e) (Robert Moore)
+* [Snapshot test for selection bug (#6843)](https://github.com/material-components/material-components-ios/commit/f8e7a0aa46d5e88eacfaec242d0b7bafa3ea1058) (Robert Moore)
+* [Split alignment snapshot tests. (#6856)](https://github.com/material-components/material-components-ios/commit/7e5c5eec22ffd138f5db4225a9d0d3cbfebc29f4) (Robert Moore)
+* [Use new test icons. (#6898)](https://github.com/material-components/material-components-ios/commit/b9151ecb2b35818dfb02f2f5c9f03d5bbf6be88f) (Robert Moore)
+
+### FlexibleHeader
+
+* [refactor internal helper methods (#6862)](https://github.com/material-components/material-components-ios/commit/4269e8f06c76c53de41ce27b3e7f40b5b695b13a) (Wenyu Zhang)
+
+### Ink
+
+* [Add basic snapshot tests. (#6920)](https://github.com/material-components/material-components-ios/commit/aad941178ad2f3a857b5e6ecfa1aa0a39adc1d95) (Robert Moore)
+
+### ShadowElevations
+
+* [Add basic snapshot tests. (#6829)](https://github.com/material-components/material-components-ios/commit/04aa6c714a0a0493578570a946466d8d9d33c397) (Robert Moore)
+
+### ShadowLayer
+
+* [Add basic Snapshot tests. (#6921)](https://github.com/material-components/material-components-ios/commit/7176a923ed503102c72e2c68ee5f059d4295242f) (Robert Moore)
+
+### private/Snapshot
+
+* [Fix test image scale and clipping. (#6899)](https://github.com/material-components/material-components-ios/commit/223a9963d20ff6b69b6164cf648af96304566707) (Robert Moore)
+
+## Multi-component changes
+
+* [Add a Theming extension for MDCTextInputControllerFilled. (#6870)](https://github.com/material-components/material-components-ios/commit/b6a18f128b22e8a7f1007bdc2ac64c14b2c39cd9) (featherless)
+* [Add theming extension for MDCAppBarViewController (#6903)](https://github.com/material-components/material-components-ios/commit/61e6c07f6a46f7e10cc68e3ea79ae2b66d890487) (Robert Moore)
+* [Adding 4 more test image styles. (#6897)](https://github.com/material-components/material-components-ios/commit/8c5be9ded22e760d6047d29041949bcd81a40a28) (Robert Moore)
+* [Include snapshot tests in examples in Podspec (#6895)](https://github.com/material-components/material-components-ios/commit/f0d42d67df2cf87a373ef42cfb05fec161705ca0) (Wenyu Zhang)
+* [Removing nil-coalescing operators per issue #6827 (#6859)](https://github.com/material-components/material-components-ios/commit/1df965508593f68a6312752c54175f6a568e2e1a) (Joe Aguilar)
+* [Revert "[Typography] Dynamic Type 2.0 (#6733)" (#6848)](https://github.com/material-components/material-components-ios/commit/861cebe7e1ef77a15e4c1088cba839097da8195f) (ianegordon)
+* [update contentInset when tracked view's adjustedContentInset is changed. (#6868)](https://github.com/material-components/material-components-ios/commit/38f364b8e9af98c765a5e33116617cddf9ddcf82) (Wenyu Zhang)
+
+---
+
 # 79.1.1
 
 This patch release fixes a bug in BottomNavigation where the icons were not showing up correctly.
