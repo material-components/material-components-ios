@@ -30,8 +30,6 @@
  The dictionary values are the desired pointSize stored as a CGFloat wrapped in an NSNumber.
 
  Generally, clients will use MDCFontScaler to attach particular scaling curves to a font.
-
- Note that this curve should be immutable as it is retained, not copied.
  */
 @property(nonatomic, copy, nullable, setter=mdc_setScalingCurve:)
     NSDictionary<UIContentSizeCategory, NSNumber *> *mdc_scalingCurve;

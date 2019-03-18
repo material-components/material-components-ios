@@ -154,8 +154,7 @@
 
   MDCFontScaler *invalidSscaler =
       [[MDCFontScaler alloc] initForMaterialTextStyle:@"IntentionallyNonTextStyleString"];
-  MDCFontScaler *bodySscaler =
-      [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleBody1];
+  MDCFontScaler *bodySscaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleBody1];
 
   UIFont *invalidScalableFont = [invalidSscaler scaledFontWithFont:originalFont];
   UIFont *bodyScalableFont = [bodySscaler scaledFontWithFont:originalFont];
@@ -251,7 +250,7 @@
   CGFloat sizeScaleFactor = originalValue * currentFont.pointSize / defaultFont.pointSize;
   CGFloat scalerScaleFactor = [scaler scaledValueForValue:originalValue];
 
-  //Then
+  // Then
   XCTAssertEqualWithAccuracy(sizeScaleFactor, scalerScaleFactor, 0.0001);
 }
 
