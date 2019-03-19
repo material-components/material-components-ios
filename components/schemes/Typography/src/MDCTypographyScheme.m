@@ -15,8 +15,7 @@
 #import "MDCTypographyScheme.h"
 
 #import <CoreText/CoreText.h>
-
-#import "MaterialTypography.h"
+#import <MaterialComponents/MaterialTypography.h>
 
 @implementation MDCTypographyScheme
 
