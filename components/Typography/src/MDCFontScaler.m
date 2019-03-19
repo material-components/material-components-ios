@@ -272,17 +272,11 @@ MDCTextStyle const MDCTextStyleOverline = @"MDC.TextStyle.Overline";
   // If it is available, query the preferredContentSizeCategory.
   UIContentSizeCategory sizeCategory = GetCurrentSizeCategory();
 
-  UIFont *scaledFont;
-  if (font.mdc_scalingCurve) {
-    scaledFont = [font mdc_scaledFontForSizeCategory:sizeCategory];
-    scaledFont.mdc_scalingCurve = _scalingCurve;
-  } else {
-    // The original font does not have a scaling curve, so create a copy some we aren't
-    // attaching associated objects to system fonts
-    scaledFont = [font copy];
-    scaledFont.mdc_scalingCurve = _scalingCurve;
-    scaledFont = [scaledFont mdc_scaledFontForSizeCategory:sizeCategory];
-  }
+  // We copy the input font to ensure we have a complete set of font traits.
+  // They we apply our new scaling curve before returning a scaled font.
+  UIFont *templateFont = [font copy];
+  templateFont.mdc_scalingCurve = _scalingCurve;
+  UIFont *scaledFont = [templateFont mdc_scaledFontForSizeCategory:sizeCategory];
 
   return scaledFont;
 }
