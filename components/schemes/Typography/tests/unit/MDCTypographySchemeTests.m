@@ -27,6 +27,7 @@
 - (void)testInitializer {
   // Given
   MDCTypographyScheme *latestScheme = [[MDCTypographyScheme alloc] init];
+  // The following scheme should be explicitly initialized to the LATEST scheme
   MDCTypographyScheme *scheme201902 =
       [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
 
@@ -93,7 +94,7 @@
   XCTAssertNil(scheme201804.overline.mdc_scalingCurve);
 }
 
-- (void)testTypographyScheme201902HasCurves {
+- (void)testTypographyScheme201902HaveCurves {
   // Given
   MDCTypographyScheme *scheme201902 =
       [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];

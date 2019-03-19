@@ -106,9 +106,10 @@ typedef NS_ENUM(NSInteger, MDCTypographySchemeDefaults) {
 
   /**
    The Material defaults, circa February 2019.
+
    This scheme implements fonts with the similar metrics as
    MDCTypographySchemeDefaultsMaterial201804 with the addition that vended fonts will have
-   scalingCurves attached.
+   appropriate scalingCurves attached.
    */
   MDCTypographySchemeDefaultsMaterial201902,
 };
