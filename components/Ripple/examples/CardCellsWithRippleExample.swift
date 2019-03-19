@@ -36,11 +36,11 @@ class CardCellsWithRippleExample: UIViewController,
   var containerScheme: MDCContainerScheming
 
   var colorScheme: MDCColorScheming {
-    return containerScheme.colorScheme ?? MDCSemanticColorScheme()
+    return containerScheme.colorScheme
   }
 
   var typographyScheme: MDCTypographyScheming {
-    return containerScheme.typographyScheme ?? MDCTypographyScheme()
+    return containerScheme.typographyScheme
   }
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {

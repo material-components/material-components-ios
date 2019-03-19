@@ -23,11 +23,11 @@ final class AppTheme {
   let containerScheme: MDCContainerScheming
 
   var colorScheme: MDCColorScheming {
-    return containerScheme.colorScheme ?? MDCSemanticColorScheme(defaults: .material201804)
+    return containerScheme.colorScheme
   }
 
   var typographyScheme: MDCTypographyScheming {
-    return containerScheme.typographyScheme ?? MDCTypographyScheme(defaults: .material201804)
+    return containerScheme.typographyScheme
   }
 
   init(containerScheme: MDCContainerScheming) {

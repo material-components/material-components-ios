@@ -619,7 +619,8 @@ generate_release_notes() {
       | grep -v "$path" \
       | grep -v "MaterialComponents.podspec" \
       | grep -v "MaterialComponentsBeta.podspec" \
-      | grep -v "catalog/Podfile"
+      | grep -v "catalog/Podfile" \
+      | grep -v "snapshot_test_goldens"
   }
   # Echoes a list of changelog entries that affect a given path and only that path.
   changes_for_path() {

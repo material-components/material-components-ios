@@ -17,6 +17,7 @@ load(
     "mdc_objc_library",
     "mdc_public_objc_library",
 )
+load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
 
@@ -28,10 +29,20 @@ mdc_objc_library(
     ]),
 )
 
+swift_library(
+    name = "SnapshotSwiftLib",
+    srcs = glob(["src/*.swift"]),
+    copts = [
+        "-swift-version",
+        "3",
+    ],
+)
+
 mdc_public_objc_library(
     name = "Snapshot",
     deps = [
         "@ios_snapshot_test_case//:SnapshotTestCase",
         ":SnapshotSourceDummies",
+        ":SnapshotSwiftLib",
     ],
 )
