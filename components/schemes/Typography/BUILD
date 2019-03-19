@@ -27,7 +27,7 @@ licenses(["notice"])  # Apache 2.0
 mdc_public_objc_library(
     name = "Typography",
     deps = [
-        "//components/Typography:Typography",
+        "//components/Typography",
     ],
 )
 
@@ -36,6 +36,7 @@ mdc_examples_objc_library(
     deps = [
         ":Typography",
         "//components/schemes/Color",
+        "//components/Typography",
     ],
 )
 
@@ -60,7 +61,7 @@ mdc_objc_library(
     visibility = ["//visibility:private"],
     deps = [
         ":Typography",
-        "//components/Typography:Typography",
+        "//components/Typography",
     ],
 )
 
