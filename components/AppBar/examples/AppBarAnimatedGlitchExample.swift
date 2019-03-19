@@ -119,6 +119,7 @@ class AppBarAnimatedJumpExample: UIViewController {
     #else
     tab.didMove(toParentViewController: self)
     #endif
+    tab.headerView = self.appBarViewController.headerView
 
     tab.view.alpha = 0
     let animateIn = {
@@ -126,8 +127,6 @@ class AppBarAnimatedJumpExample: UIViewController {
     }
 
     let finishMove = {
-      tab.headerView = self.appBarViewController.headerView
-
       self.appBarViewController.headerView.trackingScrollView = tab.tableView
       self.currentTab = tab
     }
@@ -275,5 +274,11 @@ extension SimpleTableViewController: UITableViewDelegate {
 
   func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
     headerView?.trackingScrollDidEndDraggingWillDecelerate(decelerate)
+  }
+
+  func scrollViewDidChangeAdjustedContentInset(_ scrollView: UIScrollView) {
+    if #available(iOS 11.0, *) {
+      headerView?.trackingScrollDidChangeAdjustedContentInset(scrollView)
+    }
   }
 }
