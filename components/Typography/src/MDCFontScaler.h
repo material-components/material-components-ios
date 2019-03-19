@@ -14,7 +14,11 @@
 
 #import <UIKit/UIKit.h>
 
-// Material's text styles, which are similar, but not quite equivalent to Apple's UIFontTextStyle.
+/**
+ Set of constants that describe Material's text styles.
+
+ These are similar, but not quite equivalent, to Apple's UIFontTextStyle.
+ */
 typedef NSString *_Nonnull MDCTextStyle NS_TYPED_EXTENSIBLE_ENUM;
 
 UIKIT_EXTERN MDCTextStyle const MDCTextStyleHeadline1;
@@ -51,7 +55,7 @@ UIKIT_EXTERN MDCTextStyle const MDCTextStyleOverline;
    returned font. For example, MaterialTextStyleBody1.
  @return An initialized font scaler object.
  */
-- (nonnull instancetype)initForMaterialTextStyle:(MDCTextStyle)textStyle;
+- (nonnull instancetype)initForMaterialTextStyle:(MDCTextStyle)textStyle NS_DESIGNATED_INITIALIZER;
 
 /**
  Creates and returns a font scaler object with the specified text style.
@@ -71,6 +75,21 @@ UIKIT_EXTERN MDCTextStyle const MDCTextStyleOverline;
  @return An instance of the specified font with an associated scaling curve, and scaled to the
    current Dynamic Type setting.
  */
-- (nonnull UIFont *)scalableFontWithFont:(nonnull UIFont *)font;
+- (nonnull UIFont *)scaledFontWithFont:(nonnull UIFont *)font;
+
+/**
+ Scales an arbitrary value based on the current Dynamic Type settings and the scaling curve.
+
+ This method calculates the current scale factor and multiplies it by the given value.
+
+ As an example, assume the metrics value for @c .Large is 12 and the current @c
+ UIContentCategorySize is
+ @c .ExtraLarge with a metrics value of 24.  When passed a @c value of 10, expect a return
+ value of 20.
+
+ @param value The original layout value.
+ @return A value that has been scaled based on the attached scaling curve
+ */
+- (CGFloat)scaledValueForValue:(CGFloat)value;
 
 @end

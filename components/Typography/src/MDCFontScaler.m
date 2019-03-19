@@ -16,9 +16,9 @@
 
 #import <objc/runtime.h>
 
-#import "UIApplication+AppExtensions.h"
 #import "UIFont+MaterialScalable.h"
 #import "private/MDCFontTraits.h"
+#import "private/MDCTypographyUtilities.h"
 
 MDCTextStyle const MDCTextStyleHeadline1 = @"MDC.TextStyle.Headline1";
 MDCTextStyle const MDCTextStyleHeadline2 = @"MDC.TextStyle.Headline2";
@@ -46,8 +46,12 @@ MDCTextStyle const MDCTextStyleOverline = @"MDC.TextStyle.Overline";
 - (instancetype)initForMaterialTextStyle:(MDCTextStyle)textStyle {
   self = [super init];
   if (self) {
-    _textStyle = textStyle;  // Not copied since MDCTextStyle should be immutable
+    _textStyle = [textStyle copy];
 
+    // NOTE: All scaling curves MUST include a full set of values for ALL UIContentSizeCategory
+    // values. This values must not decrease as the category size increases. To put it another
+    // way, the value for UIContentSizeCategoryLarge must not be smaller than the value for
+    // UIContentSizeCategoryMedium.
     if ([MDCTextStyleHeadline1 isEqualToString:textStyle]) {
       NSDictionary<UIContentSizeCategory, NSNumber *> *scalingCurve = @{
         UIContentSizeCategoryExtraSmall : @84,
@@ -242,6 +246,7 @@ MDCTextStyle const MDCTextStyleOverline = @"MDC.TextStyle.Overline";
       _scalingCurve = scalingCurve;
     } else {
       // If nothing matches, return the metrics for MDCTextStyleBody1
+      _textStyle = [MDCTextStyleBody1 copy];
       NSDictionary<UIContentSizeCategory, NSNumber *> *scalingCurve = @{
         UIContentSizeCategoryExtraSmall : @13,
         UIContentSizeCategorySmall : @14,
@@ -263,50 +268,26 @@ MDCTextStyle const MDCTextStyleOverline = @"MDC.TextStyle.Overline";
   return self;
 }
 
-- (UIFont *)scalableFontWithFont:(UIFont *)font {
+- (UIFont *)scaledFontWithFont:(UIFont *)font {
   // If it is available, query the preferredContentSizeCategory.
-  UIContentSizeCategory sizeCategory = UIContentSizeCategoryLarge;
-  if ([UIApplication mdc_safeSharedApplication]) {
-    sizeCategory = [UIApplication mdc_safeSharedApplication].preferredContentSizeCategory;
-  } else if (@available(iOS 10.0, *)) {
-    sizeCategory = UIScreen.mainScreen.traitCollection.preferredContentSizeCategory;
-  }
+  UIContentSizeCategory sizeCategory = GetCurrentSizeCategory();
 
-  UIFont *scaledFont;
-  if (font.mdc_scalingCurve) {
-    scaledFont = [font mdc_scaledFontForSizeCategory:sizeCategory];
-    scaledFont.mdc_scalingCurve = _scalingCurve;
-  } else {
-    // The original font does not have a scaling curve, so create a copy some we aren't
-    // attaching associated objects to system fonts
-    scaledFont = [font copy];
-    scaledFont.mdc_scalingCurve = _scalingCurve;
-    scaledFont = [scaledFont mdc_scaledFontForSizeCategory:sizeCategory];
-  }
+  // We copy the input font to ensure we have a complete set of font traits.
+  // They we apply our new scaling curve before returning a scaled font.
+  UIFont *templateFont = [font copy];
+  templateFont.mdc_scalingCurve = _scalingCurve;
+  UIFont *scaledFont = [templateFont mdc_scaledFontForSizeCategory:sizeCategory];
 
   return scaledFont;
 }
 
 - (CGFloat)scaledValueForValue:(CGFloat)value {
-  // If it is available, query the preferredContentSizeCategory.
   UIContentSizeCategory defaultSizeCategory = UIContentSizeCategoryLarge;
-  UIContentSizeCategory currentSizeCategory = UIContentSizeCategoryLarge;
-  if ([UIApplication mdc_safeSharedApplication]) {
-    currentSizeCategory = [UIApplication mdc_safeSharedApplication].preferredContentSizeCategory;
-  } else if (@available(iOS 10.0, *)) {
-    currentSizeCategory = UIScreen.mainScreen.traitCollection.preferredContentSizeCategory;
-  }
+  // If it is available, query the preferredContentSizeCategory.
+  UIContentSizeCategory currentSizeCategory = GetCurrentSizeCategory();
 
   NSNumber *defaultFontSizeNumber = _scalingCurve[defaultSizeCategory];
-
   NSNumber *currentFontSizeNumber = _scalingCurve[currentSizeCategory];
-  // If you have queried the table for a sizeCategory that doesn't exist, we will return the
-  // traits for XXXL.  This handles the case where the values are requested for one of the
-  // accessibility size categories beyond XXXL such as
-  // UIContentSizeCategoryAccessibilityExtraLarge.
-  if (currentFontSizeNumber == nil) {
-    currentFontSizeNumber = _scalingCurve[UIContentSizeCategoryExtraExtraExtraLarge];
-  }
 
   // Guard against broken / incomplete scaling curves by returning self if fontSizeNumber is nil.
   if (currentFontSizeNumber == nil || defaultFontSizeNumber == nil) {
@@ -314,14 +295,14 @@ MDCTextStyle const MDCTextStyleOverline = @"MDC.TextStyle.Overline";
   }
 
   CGFloat currentFontSize = (CGFloat)currentFontSizeNumber.doubleValue;
-  CGFloat defaultFontSize = (CGFloat)currentFontSizeNumber.doubleValue;
+  CGFloat defaultFontSize = (CGFloat)defaultFontSizeNumber.doubleValue;
 
   // Guard against broken / incomplete scaling curves by returning self if fontSize <= 0.0.
   if (currentFontSize <= 0.0 || defaultFontSize <= 0.0) {
     return value;
   }
 
-  return currentFontSize / defaultFontSize;
+  return (currentFontSize / defaultFontSize) * value;
 }
 
 - (NSString *)description {

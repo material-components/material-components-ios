@@ -61,13 +61,33 @@ static NSString *const kBadgeTitleArabic = @"أورا";
 
   self.navigationBar = [[MDCFakeBottomNavigationBar alloc] init];
 
-  self.testImage = [UIImage mdc_testImageOfSize:CGSizeMake(24, 24)];
-  self.tabItem1 = [[UITabBarItem alloc] initWithTitle:@"Item 1" image:self.testImage tag:1];
-  self.tabItem2 = [[UITabBarItem alloc] initWithTitle:@"Item 2" image:self.testImage tag:2];
+  CGSize imageSize = CGSizeMake(24, 24);
+  self.tabItem1 = [[UITabBarItem alloc]
+      initWithTitle:@"Item 1"
+              image:[UIImage mdc_testImageOfSize:imageSize
+                                       withStyle:MDCSnapshotTestImageStyleEllipses]
+                tag:1];
+  self.tabItem2 = [[UITabBarItem alloc]
+      initWithTitle:@"Item 2"
+              image:[UIImage mdc_testImageOfSize:imageSize
+                                       withStyle:MDCSnapshotTestImageStyleCheckerboard]
+                tag:2];
   self.tabItem2.badgeValue = kBadgeTitleLatin;
-  self.tabItem3 = [[UITabBarItem alloc] initWithTitle:@"Item 3" image:self.testImage tag:3];
-  self.tabItem4 = [[UITabBarItem alloc] initWithTitle:@"Item 4" image:self.testImage tag:4];
-  self.tabItem5 = [[UITabBarItem alloc] initWithTitle:@"Item 5" image:self.testImage tag:5];
+  self.tabItem3 = [[UITabBarItem alloc]
+      initWithTitle:@"Item 3"
+              image:[UIImage mdc_testImageOfSize:imageSize
+                                       withStyle:MDCSnapshotTestImageStyleFramedX]
+                tag:3];
+  self.tabItem4 = [[UITabBarItem alloc]
+      initWithTitle:@"Item 4"
+              image:[UIImage mdc_testImageOfSize:imageSize
+                                       withStyle:MDCSnapshotTestImageStyleRectangles]
+                tag:4];
+  self.tabItem5 = [[UITabBarItem alloc]
+      initWithTitle:@"Item 5"
+              image:[UIImage mdc_testImageOfSize:imageSize
+                                       withStyle:MDCSnapshotTestImageStyleDiagonalLines]
+                tag:5];
   self.navigationBar.items =
       @[ self.tabItem1, self.tabItem2, self.tabItem3, self.tabItem4, self.tabItem5 ];
 }
