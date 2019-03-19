@@ -406,7 +406,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4A589AE07BEEC1B3FAD93E0FDE40ABCB"
+               BlueprintIdentifier = "C5DCDE1D5E919FD6123E3378707F4BC6"
                BuildableName = "MaterialComponents-Unit-Typography-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-Typography-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
