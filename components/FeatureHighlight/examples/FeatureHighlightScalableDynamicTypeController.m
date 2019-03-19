@@ -23,7 +23,8 @@
 
 - (void)showFeatureHighlight:(BOOL)useLegacyFontScaling {
   MDCFeatureHighlightViewController *vc =
-  [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:_featureButton completion:nil];
+      [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:_featureButton
+                                                              completion:nil];
 
   vc.mdc_adjustsFontForContentSizeCategory = YES;
   vc.mdc_legacyFontScaling = useLegacyFontScaling;
