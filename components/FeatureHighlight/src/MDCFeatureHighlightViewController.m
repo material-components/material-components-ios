@@ -71,6 +71,7 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = (CGFloat)1.5;
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   self.featureHighlightView.mdc_adjustsFontForContentSizeCategory =
       _mdc_adjustsFontForContentSizeCategory;
+  self.featureHighlightView.mdc_legacyFontScaling = _mdc_legacyFontScaling;
 
   __weak MDCFeatureHighlightViewController *weakSelf = self;
   self.featureHighlightView.interactionBlock = ^(BOOL accepted) {
@@ -264,6 +265,14 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = (CGFloat)1.5;
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:UIContentSizeCategoryDidChangeNotification
                                                   object:nil];
+  }
+}
+
+- (void)mdc_setLegacyFontScaling:(BOOL)legacyScaling {
+  _mdc_legacyFontScaling = legacyScaling;
+
+  if (self.isViewLoaded) {
+    self.featureHighlightView.mdc_legacyFontScaling = legacyScaling;
   }
 }
 
