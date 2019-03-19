@@ -1,15 +1,30 @@
-# #develop#
+# 79.2.1
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This minor release introduces a bug fix and new API to Flexible Header, Beta Theming Extensions for
+App Bar and Text Fields, and additional component snapshot tests.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
+MDCFlexibleHeaderView has a new API that can be called from UIScrollViewDelegates to notify it of
+updated adjusted content inset values.
+
+```swift
+func scrollViewDidChangeAdjustedContentInset(_ scrollView: UIScrollView) {
+    if #available(iOS 11.0, *) {
+      self.appBarViewController.headerView.trackingScrollDidChangeAdjustedContentInset(scrollView)
+    }
+  }
+```
+
+```objc
+- (void)scrollViewDidChangeAdjustedContentInset:(UIScrollView *)scrollView {
+  if (@available(iOS 11.0, *)) {
+    [self.appBarViewController.headerView
+        trackingScrollViewDidChangeAdjustedContentInset:scrollView];
+  }
+}
+```
+
 ## API changes
 
 ### AppBar+MaterialTheming
@@ -39,13 +54,16 @@ Replace this text with example code for each new feature.
 
 **New extension.**
 
-## Component changes
 
 ## Changes
 
 ### ActionSheet
 
 * [Add basic Snapshot tests. (#6917)](https://github.com/material-components/material-components-ios/commit/a77ea5cd483b76374d4ee486f7d9f56bf414bd86) (Robert Moore)
+
+### AppBar
+
+* [Add theming extension for MDCAppBarViewController (#6903)](https://github.com/material-components/material-components-ios/commit/61e6c07f6a46f7e10cc68e3ea79ae2b66d890487) (Robert Moore)
 
 ### BottomNavigation
 
@@ -58,6 +76,7 @@ Replace this text with example code for each new feature.
 
 ### FlexibleHeader
 
+* [update contentInset when tracked view's adjustedContentInset is changed. (#6868)](https://github.com/material-components/material-components-ios/commit/38f364b8e9af98c765a5e33116617cddf9ddcf82) (Wenyu Zhang)
 * [refactor internal helper methods (#6862)](https://github.com/material-components/material-components-ios/commit/4269e8f06c76c53de41ce27b3e7f40b5b695b13a) (Wenyu Zhang)
 
 ### Ink
@@ -72,19 +91,20 @@ Replace this text with example code for each new feature.
 
 * [Add basic Snapshot tests. (#6921)](https://github.com/material-components/material-components-ios/commit/7176a923ed503102c72e2c68ee5f059d4295242f) (Robert Moore)
 
+### TextFields
+
+* [Add a Theming extension for MDCTextInputControllerFilled. (#6870)](https://github.com/material-components/material-components-ios/commit/b6a18f128b22e8a7f1007bdc2ac64c14b2c39cd9) (featherless)
+
 ### private/Snapshot
 
 * [Fix test image scale and clipping. (#6899)](https://github.com/material-components/material-components-ios/commit/223a9963d20ff6b69b6164cf648af96304566707) (Robert Moore)
+* [Adding 4 more test image styles. (#6897)](https://github.com/material-components/material-components-ios/commit/8c5be9ded22e760d6047d29041949bcd81a40a28) (Robert Moore)
 
 ## Multi-component changes
 
-* [Add a Theming extension for MDCTextInputControllerFilled. (#6870)](https://github.com/material-components/material-components-ios/commit/b6a18f128b22e8a7f1007bdc2ac64c14b2c39cd9) (featherless)
-* [Add theming extension for MDCAppBarViewController (#6903)](https://github.com/material-components/material-components-ios/commit/61e6c07f6a46f7e10cc68e3ea79ae2b66d890487) (Robert Moore)
-* [Adding 4 more test image styles. (#6897)](https://github.com/material-components/material-components-ios/commit/8c5be9ded22e760d6047d29041949bcd81a40a28) (Robert Moore)
 * [Include snapshot tests in examples in Podspec (#6895)](https://github.com/material-components/material-components-ios/commit/f0d42d67df2cf87a373ef42cfb05fec161705ca0) (Wenyu Zhang)
 * [Removing nil-coalescing operators per issue #6827 (#6859)](https://github.com/material-components/material-components-ios/commit/1df965508593f68a6312752c54175f6a568e2e1a) (Joe Aguilar)
 * [Revert "[Typography] Dynamic Type 2.0 (#6733)" (#6848)](https://github.com/material-components/material-components-ios/commit/861cebe7e1ef77a15e4c1088cba839097da8195f) (ianegordon)
-* [update contentInset when tracked view's adjustedContentInset is changed. (#6868)](https://github.com/material-components/material-components-ios/commit/38f364b8e9af98c765a5e33116617cddf9ddcf82) (Wenyu Zhang)
 
 ---
 
