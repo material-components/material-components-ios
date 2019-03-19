@@ -21,13 +21,6 @@
 
 @implementation FeatureHighlightScalableDynamicTypeController
 
-- (id)init {
-  self = [super init];
-  if (self) {
-  }
-  return self;
-}
-
 - (void)showFeatureHighlight:(BOOL)useLegacyFontScaling {
   MDCFeatureHighlightViewController *vc =
   [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:_featureButton completion:nil];
@@ -37,9 +30,6 @@
 
   vc.titleText = @"Hey this is a multi-line title for the Feature Highlight";
   vc.bodyText = @"This text scales in Dynamic Type.";
-  // TODO(https://github.com/material-components/material-components-ios/issues/3644 ):
-  // Disable the incorrect "Double tap" hint for now
-  vc.accessibilityHint = nil;
   [self presentViewController:vc animated:YES completion:nil];
 }
 
@@ -106,7 +96,6 @@
            @"breadcrumbs" : @[ @"Feature Highlight", @"Feature Highlight (Dynamic Type)" ],
            @"primaryDemo" : @NO,
            @"presentable" : @NO,
-           @"debug" : @YES, //KM
            };
 }
 
