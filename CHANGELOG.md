@@ -1,4 +1,4 @@
-# 79.2.1
+# 79.2.0
 
 This minor release introduces a bug fix and new API to Flexible Header, Beta Theming Extensions for
 App Bar and Text Fields, and additional component snapshot tests.
