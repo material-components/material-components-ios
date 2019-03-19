@@ -36,7 +36,6 @@ mdc_examples_objc_library(
     deps = [
         ":Typography",
         "//components/schemes/Color",
-        "//components/Typography",
     ],
 )
 
@@ -61,7 +60,6 @@ mdc_objc_library(
     visibility = ["//visibility:private"],
     deps = [
         ":Typography",
-        "//components/Typography",
     ],
 )
 
