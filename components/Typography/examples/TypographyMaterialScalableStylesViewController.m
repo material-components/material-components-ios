@@ -153,7 +153,7 @@
   NSString *detail = [NSString
       stringWithFormat:@"%@ @ %.0f pt", _styleNames[indexPath.row], cell.textLabel.font.pointSize];
   cell.detailTextLabel.text = detail;
-  cell.detailTextLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
+  cell.detailTextLabel.font = [_typography.caption mdc_scaledFontAtDefaultSize];
 
   cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
