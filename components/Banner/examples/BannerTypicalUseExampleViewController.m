@@ -211,7 +211,7 @@ static NSString *const exampleExtraLongText =
   }
 
   MDCBannerView *bannerView = [[MDCBannerView alloc] init];
-  bannerView.text = exampleShortText;
+  bannerView.textLabel.text = exampleShortText;
   bannerView.backgroundColor = self.colorScheme.surfaceColor;
   UIEdgeInsets margins = UIEdgeInsetsZero;
   margins.left = exampleBannerContentPadding;
@@ -249,11 +249,11 @@ static NSString *const exampleExtraLongText =
   [self showSingleLineStyleBanner];
   // TODO: https://github.com/material-components/material-components-ios/issues/6838
   NSBundle *bundle = [NSBundle bundleForClass:[BannerTypicalUseExampleViewController class]];
-  self.bannerView.icon = [[UIImage imageNamed:@"banner-email"
+  self.bannerView.imageView.image = [[UIImage imageNamed:@"banner-email"
                                      inBundle:bundle
                 compatibleWithTraitCollection:nil]
       imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-  self.bannerView.iconTintColor = self.colorScheme.primaryColor;
+  self.bannerView.imageView.tintColor = self.colorScheme.primaryColor;
 }
 
 - (void)showMultiLineAlignedButtonStyleBanner {
@@ -262,7 +262,7 @@ static NSString *const exampleExtraLongText =
   }
 
   MDCBannerView *bannerView = [[MDCBannerView alloc] init];
-  bannerView.text = exampleLongText;
+  bannerView.textLabel.text = exampleLongText;
   bannerView.backgroundColor = self.colorScheme.surfaceColor;
   UIEdgeInsets margins = UIEdgeInsetsZero;
   margins.left = exampleBannerContentPadding;
@@ -306,11 +306,11 @@ static NSString *const exampleExtraLongText =
   [self showMultiLineAlignedButtonStyleBanner];
   // TODO: https://github.com/material-components/material-components-ios/issues/6838
   NSBundle *bundle = [NSBundle bundleForClass:[BannerTypicalUseExampleViewController class]];
-  self.bannerView.icon = [[UIImage imageNamed:@"banner-email"
+  self.bannerView.imageView.image = [[UIImage imageNamed:@"banner-email"
                                      inBundle:bundle
                 compatibleWithTraitCollection:nil]
       imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-  self.bannerView.iconTintColor = self.colorScheme.primaryColor;
+  self.bannerView.imageView.tintColor = self.colorScheme.primaryColor;
 }
 
 - (void)showMultiLineStackedButtonStyleBanner {
@@ -319,7 +319,7 @@ static NSString *const exampleExtraLongText =
   }
 
   MDCBannerView *bannerView = [[MDCBannerView alloc] init];
-  bannerView.text = exampleLongText;
+  bannerView.textLabel.text = exampleLongText;
   bannerView.backgroundColor = self.colorScheme.surfaceColor;
   UIEdgeInsets margins = UIEdgeInsetsZero;
   margins.left = exampleBannerContentPadding;
@@ -363,11 +363,11 @@ static NSString *const exampleExtraLongText =
   [self showMultiLineStackedButtonStyleBanner];
   // TODO: https://github.com/material-components/material-components-ios/issues/6838
   NSBundle *bundle = [NSBundle bundleForClass:[BannerTypicalUseExampleViewController class]];
-  self.bannerView.icon = [[UIImage imageNamed:@"banner-email"
+  self.bannerView.imageView.image = [[UIImage imageNamed:@"banner-email"
                                      inBundle:bundle
                 compatibleWithTraitCollection:nil]
       imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-  self.bannerView.iconTintColor = self.colorScheme.primaryColor;
+  self.bannerView.imageView.tintColor = self.colorScheme.primaryColor;
 }
 
 - (void)dismissBanner {

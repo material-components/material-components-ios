@@ -18,7 +18,7 @@
 #import "MaterialButtons.h"
 #import "MaterialTypography.h"
 
-static const CGFloat kIconImageViewSideLength = 40;
+static const CGFloat kimageViewSideLength = 40;
 static const NSInteger kTextNumberOfLineLimit = 3;
 #if DEBUG
 static const NSUInteger kNumberOfButtonsLimit = 2;
@@ -35,7 +35,8 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
 @interface MDCBannerView ()
 
 @property(nonatomic, readwrite, strong) UILabel *textLabel;
-@property(nonatomic, readwrite, strong) UIImageView *iconImageView;
+@property(nonatomic, readwrite, strong) UIImageView *imageView;
+@property(nonatomic, readonly, assign) BOOL isImageSet;
 @property(nonatomic, readwrite, strong) UIView *containerView;
 
 @end
@@ -67,6 +68,7 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
 
   _buttons = [[NSMutableArray alloc] init];
 
+  // Create textLabel
   UILabel *textLabel = [[UILabel alloc] init];
   textLabel.translatesAutoresizingMaskIntoConstraints = NO;
   textLabel.font = [MDCTypography body2Font];
@@ -74,67 +76,42 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
   textLabel.alpha = [MDCTypography body2FontOpacity];
   textLabel.numberOfLines = kTextNumberOfLineLimit;
   textLabel.lineBreakMode = NSLineBreakByTruncatingTail;
-  [self.containerView addSubview:textLabel];
+  [containerView addSubview:textLabel];
   _textLabel = textLabel;
+
+  // Create imageView
+  UIImageView *imageView = [[UIImageView alloc] init];
+  imageView.translatesAutoresizingMaskIntoConstraints = NO;
+  NSLayoutConstraint *iconImageWidthConstraint =
+  [NSLayoutConstraint constraintWithItem:imageView
+                               attribute:NSLayoutAttributeWidth
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:nil
+                               attribute:NSLayoutAttributeNotAnAttribute
+                              multiplier:1
+                                constant:kimageViewSideLength];
+
+  NSLayoutConstraint *iconImageHeightConstraint =
+  [NSLayoutConstraint constraintWithItem:imageView
+                               attribute:NSLayoutAttributeHeight
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:nil
+                               attribute:NSLayoutAttributeNotAnAttribute
+                              multiplier:1
+                                constant:kimageViewSideLength];
+
+  [NSLayoutConstraint
+   activateConstraints:@[ iconImageWidthConstraint, iconImageHeightConstraint ]];
+  imageView.contentMode = UIViewContentModeCenter;
+  imageView.clipsToBounds = YES;
+  [containerView addSubview:imageView];
+  _imageView = imageView;
 }
 
 #pragma mark - Property Setter and Getter
 
-- (void)setText:(NSString *)text {
-  self.textLabel.text = text;
-  [self invalidateIntrinsicContentSize];
-}
-
-- (NSString *)text {
-  return self.textLabel.text;
-}
-
-- (void)setIcon:(UIImage *)icon {
-  if (icon == nil) {
-    [self.iconImageView removeFromSuperview];
-    self.iconImageView = nil;
-    [self invalidateIntrinsicContentSize];
-  } else if (self.iconImageView == nil) {
-    CGRect iconImageViewFrame =
-        CGRectMake(0, 0, kIconImageViewSideLength, kIconImageViewSideLength);
-    UIImageView *iconImageView = [[UIImageView alloc] initWithFrame:iconImageViewFrame];
-    iconImageView.image = icon;
-    iconImageView.translatesAutoresizingMaskIntoConstraints = NO;
-
-    NSLayoutConstraint *iconImageWidthConstraint =
-        [NSLayoutConstraint constraintWithItem:iconImageView
-                                     attribute:NSLayoutAttributeWidth
-                                     relatedBy:NSLayoutRelationEqual
-                                        toItem:nil
-                                     attribute:NSLayoutAttributeNotAnAttribute
-                                    multiplier:1
-                                      constant:kIconImageViewSideLength];
-
-    NSLayoutConstraint *iconImageHeightConstraint =
-        [NSLayoutConstraint constraintWithItem:iconImageView
-                                     attribute:NSLayoutAttributeHeight
-                                     relatedBy:NSLayoutRelationEqual
-                                        toItem:nil
-                                     attribute:NSLayoutAttributeNotAnAttribute
-                                    multiplier:1
-                                      constant:kIconImageViewSideLength];
-
-    [NSLayoutConstraint
-        activateConstraints:@[ iconImageWidthConstraint, iconImageHeightConstraint ]];
-
-    iconImageView.contentMode = UIViewContentModeCenter;
-    iconImageView.clipsToBounds = YES;
-    self.iconImageView = iconImageView;
-    [self.containerView addSubview:self.iconImageView];
-    [self invalidateIntrinsicContentSize];
-  } else {
-    self.iconImageView.image = icon;
-  }
-  [self setNeedsLayout];
-}
-
-- (UIImage *)icon {
-  return self.iconImageView.image;
+- (BOOL)isImageSet {
+  return self.imageView.image != nil;
 }
 
 - (void)setButtons:(NSMutableArray<MDCButton *> *_Nonnull)buttons {
@@ -153,37 +130,13 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
   self.containerView.backgroundColor = backgroundColor;
 }
 
-- (void)setTextFont:(UIFont *)textFont {
-  self.textLabel.font = textFont;
-  [self invalidateIntrinsicContentSize];
-}
-
-- (UIFont *)textFont {
-  return self.textLabel.font;
-}
-
-- (void)setTextColor:(UIColor *)textColor {
-  self.textLabel.textColor = textColor;
-}
-
-- (UIColor *)textColor {
-  return self.textLabel.textColor;
-}
-
-- (void)setIconTintColor:(UIColor *)iconTintColor {
-  self.iconImageView.tintColor = iconTintColor;
-}
-
-- (UIColor *)iconTintColor {
-  return self.iconImageView.tintColor;
-}
-
 #pragma mark - UIView overrides
 
 - (CGSize)sizeThatFits:(CGSize)size {
+  UIImageView *imageView = self.isImageSet ? self.imageView : nil;
   CGSize sizeThatFits = [self sizeThatFits:size
                                  textLabel:self.textLabel
-                                 imageView:self.iconImageView
+                                 imageView:imageView
                                    buttons:self.buttons];
   return sizeThatFits;
 }
@@ -195,9 +148,10 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
 - (void)updateConstraints {
   CGSize sizeToFit = CGSizeMake(CGRectGetWidth(self.bounds) -
                                 (self.layoutMargins.left + self.layoutMargins.right), CGRectGetHeight(self.bounds));
+  UIImageView *imageView = self.isImageSet ? self.imageView : nil;
   MDCBannerViewLayoutStyle style = [self styleForSizeToFit:sizeToFit
                                                  textLabel:self.textLabel
-                                                 imageView:self.iconImageView
+                                                 imageView:imageView
                                                    buttons:self.buttons];
   [self updateConstraintsWithLayoutStyle:style];
 
@@ -247,9 +201,9 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
 
   // Set Elements
   if (layoutStyle == MDCBannerViewLayoutSingleLineStyle) {
-    if (self.iconImageView) {
+    if (self.isImageSet) {
       NSLayoutConstraint *iconLeadingConstraint =
-          [NSLayoutConstraint constraintWithItem:self.iconImageView
+          [NSLayoutConstraint constraintWithItem:self.imageView
                                        attribute:NSLayoutAttributeLeading
                                        relatedBy:NSLayoutRelationEqual
                                           toItem:self.containerView
@@ -257,7 +211,7 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
                                       multiplier:1
                                         constant:kLeadingPadding];
       NSLayoutConstraint *iconTopConstraint =
-          [NSLayoutConstraint constraintWithItem:self.iconImageView
+          [NSLayoutConstraint constraintWithItem:self.imageView
                                        attribute:NSLayoutAttributeTop
                                        relatedBy:NSLayoutRelationEqual
                                           toItem:self.containerView
@@ -265,7 +219,7 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
                                       multiplier:1
                                         constant:kTopPaddingSmall];
       NSLayoutConstraint *iconBottomConstraint =
-          [NSLayoutConstraint constraintWithItem:self.iconImageView
+          [NSLayoutConstraint constraintWithItem:self.imageView
                                        attribute:NSLayoutAttributeBottom
                                        relatedBy:NSLayoutRelationEqual
                                           toItem:self.containerView
@@ -276,7 +230,7 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
           [NSLayoutConstraint constraintWithItem:self.textLabel
                                        attribute:NSLayoutAttributeLeading
                                        relatedBy:NSLayoutRelationEqual
-                                          toItem:self.iconImageView
+                                          toItem:self.imageView
                                        attribute:NSLayoutAttributeTrailing
                                       multiplier:1
                                         constant:kSpaceBetweenIconImageAndTextLabel];
@@ -284,7 +238,7 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
           [NSLayoutConstraint constraintWithItem:self.buttons[0]
                                        attribute:NSLayoutAttributeCenterY
                                        relatedBy:NSLayoutRelationEqual
-                                          toItem:self.iconImageView
+                                          toItem:self.imageView
                                        attribute:NSLayoutAttributeCenterY
                                       multiplier:1
                                         constant:0];
@@ -349,9 +303,9 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
       buttonLeadingConstraint, textLabelCenterConstraint, buttonTrailingConstraint
     ]];
   } else if (layoutStyle == MDCBannerViewLayoutMultiLineStackedButtonStyle) {
-    if (self.iconImageView) {
+    if (self.isImageSet) {
       NSLayoutConstraint *iconLeadingConstraint =
-          [NSLayoutConstraint constraintWithItem:self.iconImageView
+          [NSLayoutConstraint constraintWithItem:self.imageView
                                        attribute:NSLayoutAttributeLeading
                                        relatedBy:NSLayoutRelationEqual
                                           toItem:self.containerView
@@ -359,7 +313,7 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
                                       multiplier:1
                                         constant:kLeadingPadding];
       NSLayoutConstraint *iconTopConstraint =
-          [NSLayoutConstraint constraintWithItem:self.iconImageView
+          [NSLayoutConstraint constraintWithItem:self.imageView
                                        attribute:NSLayoutAttributeTop
                                        relatedBy:NSLayoutRelationEqual
                                           toItem:self.containerView
@@ -370,7 +324,7 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
           [NSLayoutConstraint constraintWithItem:self.textLabel
                                        attribute:NSLayoutAttributeLeading
                                        relatedBy:NSLayoutRelationEqual
-                                          toItem:self.iconImageView
+                                          toItem:self.imageView
                                        attribute:NSLayoutAttributeTrailing
                                       multiplier:1
                                         constant:kSpaceBetweenIconImageAndTextLabel];
@@ -378,7 +332,7 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
           [NSLayoutConstraint constraintWithItem:self.buttons[0]
                                        attribute:NSLayoutAttributeTop
                                        relatedBy:NSLayoutRelationGreaterThanOrEqual
-                                          toItem:self.iconImageView
+                                          toItem:self.imageView
                                        attribute:NSLayoutAttributeBottom
                                       multiplier:1
                                         constant:kVerticalSpaceBetweenButtonAndTextLabel];
@@ -461,9 +415,9 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
       button2BottomConstraint
     ]];
   } else if (layoutStyle == MDCBannerViewLayoutMultiLineAlignedButtonStyle) {
-    if (self.iconImageView) {
+    if (self.isImageSet) {
       NSLayoutConstraint *iconLeadingConstraint =
-          [NSLayoutConstraint constraintWithItem:self.iconImageView
+          [NSLayoutConstraint constraintWithItem:self.imageView
                                        attribute:NSLayoutAttributeLeading
                                        relatedBy:NSLayoutRelationEqual
                                           toItem:self.containerView
@@ -471,7 +425,7 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
                                       multiplier:1
                                         constant:kLeadingPadding];
       NSLayoutConstraint *iconTopConstraint =
-          [NSLayoutConstraint constraintWithItem:self.iconImageView
+          [NSLayoutConstraint constraintWithItem:self.imageView
                                        attribute:NSLayoutAttributeTop
                                        relatedBy:NSLayoutRelationEqual
                                           toItem:self.containerView
@@ -482,7 +436,7 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
           [NSLayoutConstraint constraintWithItem:self.textLabel
                                        attribute:NSLayoutAttributeLeading
                                        relatedBy:NSLayoutRelationEqual
-                                          toItem:self.iconImageView
+                                          toItem:self.imageView
                                        attribute:NSLayoutAttributeTrailing
                                       multiplier:1
                                         constant:kSpaceBetweenIconImageAndTextLabel];
@@ -490,7 +444,7 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
           [NSLayoutConstraint constraintWithItem:self.buttons[0]
                                        attribute:NSLayoutAttributeTop
                                        relatedBy:NSLayoutRelationGreaterThanOrEqual
-                                          toItem:self.iconImageView
+                                          toItem:self.imageView
                                        attribute:NSLayoutAttributeBottom
                                       multiplier:1
                                         constant:kVerticalSpaceBetweenButtonAndTextLabel];

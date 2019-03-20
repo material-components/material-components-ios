@@ -18,12 +18,8 @@
 
 __attribute__((objc_subclassing_restricted)) @interface MDCBannerView : UIView
 
-@property(nonatomic, copy, nonnull) NSString *text;
-@property(nonatomic, strong, nonnull) UIColor *textColor;
-@property(nonatomic, strong, nonnull) UIFont *textFont;
-
-@property(nonatomic, strong, nullable) UIImage *icon;  // default is nil
-@property(nonatomic, strong, nullable) UIColor *iconTintColor;
+@property(nonatomic, readonly, strong) UILabel *textLabel;
+@property(nonatomic, readonly, strong) UIImageView *imageView;
 
 /**
  The buttons representing the banner's actions.
