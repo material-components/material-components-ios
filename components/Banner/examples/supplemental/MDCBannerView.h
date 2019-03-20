@@ -18,10 +18,32 @@
 
 __attribute__((objc_subclassing_restricted)) @interface MDCBannerView : UIView
 
+/**
+ A view that displays the text on a @c MDCBannerView.
+ @discussion Although this property is read-only, its properties are read/write. These properties can be used to configure the text shown on @c MDCBannerView.
+ For example:
+ @code
+ MDCBannerView *bannerView = [[MDCBannerView alloc] init];
+ bannerView.textLabel.font = [UIFont systemFontOfSize: 12];
+ @endcode
+ */
 @property(nonatomic, readonly, strong, nonnull) UILabel *textLabel;
+
+/**
+ A view that displays the image on a @c MDCBannerView.
+ @discussion Although this property is read-only, its properties are read/write. These properties can be used to configure the image shown on @c MDCBannerView.
+ For example:
+ @code
+ MDCBannerView *bannerView = [[MDCBannerView alloc] init];
+ bannerView.imageView.image = [UIImage imageNamed:@"example-image"];
+ bannerView.imageView.tintColor = UIColor.whiteColor;
+ @endcode
+ If its own property @c image is @c nil, this view won't show on the @c MDCBannerView.
+ */
 @property(nonatomic, readonly, strong, nonnull) UIImageView *imageView;
 
 @property(nonatomic, readwrite, strong, nullable) MDCButton *leadingButton;
+
 @property(nonatomic, readwrite, strong, nullable) MDCButton *trailingButton;
 
 @end
