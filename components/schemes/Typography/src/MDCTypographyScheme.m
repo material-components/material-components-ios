@@ -62,6 +62,7 @@
         _button = [UIFont systemFontOfSize:14.0];
         _overline = [UIFont systemFontOfSize:12.0];
 #endif
+        _mdc_adjustsFontForContentSizeCategory = NO;
         break;
       case MDCTypographySchemeDefaultsMaterial201902:
 #if defined(__IPHONE_8_2)
@@ -98,6 +99,8 @@
         _button = [UIFont systemFontOfSize:14.0];
         _overline = [UIFont systemFontOfSize:12.0];
 #endif
+
+        _mdc_adjustsFontForContentSizeCategory = YES;
 
         // We typically avoid calling an instance method in an init method, but in this case the
         // code would be an exact duplication and we know we are in a state where calling
