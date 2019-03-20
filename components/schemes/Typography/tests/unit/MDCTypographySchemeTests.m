@@ -121,19 +121,32 @@
       [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
 
   // Then
-  XCTAssert([scheme201902.headline1 mdc_isSimplyEqual:[scheme201902.headline1 mdc_scaledFontAtDefaultSize]]);
-  XCTAssert([scheme201902.headline2 mdc_isSimplyEqual:[scheme201902.headline2 mdc_scaledFontAtDefaultSize]]);
-  XCTAssert([scheme201902.headline3 mdc_isSimplyEqual:[scheme201902.headline3 mdc_scaledFontAtDefaultSize]]);
-  XCTAssert([scheme201902.headline4 mdc_isSimplyEqual:[scheme201902.headline4 mdc_scaledFontAtDefaultSize]]);
-  XCTAssert([scheme201902.headline5 mdc_isSimplyEqual:[scheme201902.headline5 mdc_scaledFontAtDefaultSize]]);
-  XCTAssert([scheme201902.headline6 mdc_isSimplyEqual:[scheme201902.headline6 mdc_scaledFontAtDefaultSize]]);
-  XCTAssert([scheme201902.subtitle1 mdc_isSimplyEqual:[scheme201902.subtitle1 mdc_scaledFontAtDefaultSize]]);
-  XCTAssert([scheme201902.subtitle2 mdc_isSimplyEqual:[scheme201902.subtitle2 mdc_scaledFontAtDefaultSize]]);
-  XCTAssert([scheme201902.body1 mdc_isSimplyEqual:[scheme201902.body1 mdc_scaledFontAtDefaultSize]]);
-  XCTAssert([scheme201902.body2 mdc_isSimplyEqual:[scheme201902.body2 mdc_scaledFontAtDefaultSize]]);
-  XCTAssert([scheme201902.caption mdc_isSimplyEqual:[scheme201902.caption mdc_scaledFontAtDefaultSize]]);
-  XCTAssert([scheme201902.button mdc_isSimplyEqual:[scheme201902.button mdc_scaledFontAtDefaultSize]]);
-  XCTAssert([scheme201902.overline mdc_isSimplyEqual:[scheme201902.overline mdc_scaledFontAtDefaultSize]]);
+  XCTAssert([scheme201902.headline1
+      mdc_isSimplyEqual:[scheme201902.headline1 mdc_scaledFontAtDefaultSize]]);
+  XCTAssert([scheme201902.headline2
+      mdc_isSimplyEqual:[scheme201902.headline2 mdc_scaledFontAtDefaultSize]]);
+  XCTAssert([scheme201902.headline3
+      mdc_isSimplyEqual:[scheme201902.headline3 mdc_scaledFontAtDefaultSize]]);
+  XCTAssert([scheme201902.headline4
+      mdc_isSimplyEqual:[scheme201902.headline4 mdc_scaledFontAtDefaultSize]]);
+  XCTAssert([scheme201902.headline5
+      mdc_isSimplyEqual:[scheme201902.headline5 mdc_scaledFontAtDefaultSize]]);
+  XCTAssert([scheme201902.headline6
+      mdc_isSimplyEqual:[scheme201902.headline6 mdc_scaledFontAtDefaultSize]]);
+  XCTAssert([scheme201902.subtitle1
+      mdc_isSimplyEqual:[scheme201902.subtitle1 mdc_scaledFontAtDefaultSize]]);
+  XCTAssert([scheme201902.subtitle2
+      mdc_isSimplyEqual:[scheme201902.subtitle2 mdc_scaledFontAtDefaultSize]]);
+  XCTAssert(
+      [scheme201902.body1 mdc_isSimplyEqual:[scheme201902.body1 mdc_scaledFontAtDefaultSize]]);
+  XCTAssert(
+      [scheme201902.body2 mdc_isSimplyEqual:[scheme201902.body2 mdc_scaledFontAtDefaultSize]]);
+  XCTAssert(
+      [scheme201902.caption mdc_isSimplyEqual:[scheme201902.caption mdc_scaledFontAtDefaultSize]]);
+  XCTAssert(
+      [scheme201902.button mdc_isSimplyEqual:[scheme201902.button mdc_scaledFontAtDefaultSize]]);
+  XCTAssert([scheme201902.overline
+      mdc_isSimplyEqual:[scheme201902.overline mdc_scaledFontAtDefaultSize]]);
 }
 
 @end

@@ -98,7 +98,7 @@
         _button = [UIFont systemFontOfSize:14.0];
         _overline = [UIFont systemFontOfSize:12.0];
 #endif
-        
+
         // We typically avoid calling an instance method in an init method, but in this case the
         // code would be an exact duplication and we know we are in a state where calling
         // updateFontsForSizeCategory will behave as expected.
