@@ -14,9 +14,8 @@
 
 #import "TypographyMaterialScalableStylesViewController.h"
 
+#import "MaterialTypography.h"
 #import "MaterialTypographyScheme.h"
-
-#import <MaterialComponents/MaterialTypography.h>
 
 @implementation TypographyMaterialScalableStyleViewController {
   NSArray<NSString *> *_strings;
