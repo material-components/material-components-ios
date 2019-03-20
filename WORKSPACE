@@ -92,7 +92,7 @@ git_repository(
 git_repository(
     name = "ios_snapshot_test_case",
     remote = "https://github.com/material-foundation/ios-snapshot-test-case",
-    commit = "21e2d45c7e9c7208ee61788380521b4044b96ec1",
+    commit = "cd9db9129956037297ef023857e3d82c424b6880",
 )
 
 git_repository(
