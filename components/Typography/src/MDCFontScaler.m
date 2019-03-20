@@ -272,9 +272,9 @@ MDCTextStyle const MDCTextStyleOverline = @"MDC.TextStyle.Overline";
   // If it is available, query the preferredContentSizeCategory.
   UIContentSizeCategory sizeCategory = GetCurrentSizeCategory();
 
-  // We copy the input font to ensure we have a complete set of font traits.
+  // We create a new font to ensure we have a complete set of font traits.
   // They we apply our new scaling curve before returning a scaled font.
-  UIFont *templateFont = [font copy];
+  UIFont *templateFont = [UIFont fontWithDescriptor:font.fontDescriptor size:0.0];
   templateFont.mdc_scalingCurve = _scalingCurve;
   UIFont *scaledFont = [templateFont mdc_scaledFontForSizeCategory:sizeCategory];
 
