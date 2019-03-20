@@ -94,7 +94,7 @@
   XCTAssertNil(scheme201804.overline.mdc_scalingCurve);
 }
 
-- (void)testTypographyScheme201902HaveCurves {
+- (void)testTypographyScheme201902DoesHaveCurves {
   // Given
   MDCTypographyScheme *scheme201902 =
       [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
