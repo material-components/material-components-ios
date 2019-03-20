@@ -88,8 +88,10 @@
 @optional
 
 /**
- Whether this typography scheme adjusts the returned fonts based on the device's Dynamic Type
- settings.
+ Whether user interface elements should automatically resize based on the device's setting.
+
+ This can be used by client to communicate whether they support dynamic type to both our theming
+ functionality and embedded frameworks that also render UI.
 */
 @property(nonatomic, readonly) BOOL mdc_adjustsFontForContentSizeCategory;
 
