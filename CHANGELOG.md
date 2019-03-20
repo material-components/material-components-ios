@@ -1,18 +1,14 @@
-# #develop#
+# 79.3.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This minor release fixes a bug in MDCButton's `accessibilityTraits` value. A recent change introduced
+a bug that disabled the default behavior of `accessibilityTraits` and so they would not
+automatically be updated when the button was disabled.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+## Changes
 
-Replace this text with links to deprecation guides.
-## New features
+### Buttons
 
-Replace this text with example code for each new feature.
-## API changes
-
-## Component changes
+* [Fix `accessibilityTraits` in init. (#6948)](https://github.com/material-components/material-components-ios/commit/f8ffee0ad992930e94e39155a6848546a4284d58) (Robert Moore)
 
 ---
 
