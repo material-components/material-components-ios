@@ -85,8 +85,6 @@
  */
 @property(nonatomic, nonnull, readonly, copy) UIFont *overline;
 
-@optional
-
 /**
  Whether user interface elements should automatically resize based on the device's setting.
 
