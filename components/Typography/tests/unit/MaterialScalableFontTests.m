@@ -167,7 +167,6 @@
   XCTAssertNotNil(bodyScalableFont.mdc_scalingCurve);
 }
 
-
 @end
 
 @interface MaterialScalableFontTests : XCTestCase
