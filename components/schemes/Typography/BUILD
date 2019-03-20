@@ -36,6 +36,7 @@ mdc_examples_objc_library(
     deps = [
         ":Typography",
         "//components/schemes/Color",
+        "//components/Typography",
     ],
 )
 
@@ -67,5 +68,6 @@ mdc_unit_test_suite(
     name = "unit_tests",
     deps = [
         ":unit_test_sources",
+        "//components/Typography",
     ],
 )
