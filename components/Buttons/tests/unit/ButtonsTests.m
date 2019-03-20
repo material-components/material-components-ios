@@ -1086,11 +1086,17 @@ static NSString *controlStateDescription(UIControlState controlState) {
 }
 
 - (void)testAccessibilityTraitsDefaultIncludesButtonExplicitlyFalse {
+  // Given
+  UIButton *referenceButton = [[UIButton alloc] init];
+  [referenceButton setTitle:@"title" forState:UIControlStateNormal];
+
   // When
   self.button.accessibilityTraitsIncludesButton = NO;
 
   // Then
-  XCTAssertEqual(self.button.accessibilityTraits, UIAccessibilityTraitButton);
+  // UIButton does not return `.button` in unit tests, but will in a simulator. The best this test
+  // can do is confirm the behavior matches UIButton.
+  XCTAssertEqual(self.button.accessibilityTraits, referenceButton.accessibilityTraits);
 }
 
 - (void)testSetAccessibilityTraitsIncludesButtonByDefault {
