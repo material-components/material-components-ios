@@ -18,14 +18,10 @@
 
 __attribute__((objc_subclassing_restricted)) @interface MDCBannerView : UIView
 
-@property(nonatomic, readonly, strong) UILabel *textLabel;
-@property(nonatomic, readonly, strong) UIImageView *imageView;
+@property(nonatomic, readonly, strong, nonnull) UILabel *textLabel;
+@property(nonatomic, readonly, strong, nonnull) UIImageView *imageView;
 
-/**
- The buttons representing the banner's actions.
-
- Banner supports 1 - 2 buttons.
- */
-@property(nonatomic, strong, nonnull) NSMutableArray<MDCButton *> *buttons;
+@property(nonatomic, readwrite, strong, nullable) MDCButton *leadingButton;
+@property(nonatomic, readwrite, strong, nullable) MDCButton *trailingButton;
 
 @end

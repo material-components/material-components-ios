@@ -20,9 +20,6 @@
 
 static const CGFloat kimageViewSideLength = 40;
 static const NSInteger kTextNumberOfLineLimit = 3;
-#if DEBUG
-static const NSUInteger kNumberOfButtonsLimit = 2;
-#endif
 
 typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
   MDCBannerViewLayoutStyleInvalid = 0,                 // Invalid style
@@ -38,6 +35,7 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
 @property(nonatomic, readwrite, strong) UIImageView *imageView;
 @property(nonatomic, readonly, assign) BOOL isImageSet;
 @property(nonatomic, readwrite, strong) UIView *containerView;
+@property(nonatomic, readonly, strong) NSArray<MDCButton *> *buttons;
 
 @end
 
@@ -65,8 +63,6 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
   containerView.translatesAutoresizingMaskIntoConstraints = NO;
   [self addSubview:containerView];
   _containerView = containerView;
-
-  _buttons = [[NSMutableArray alloc] init];
 
   // Create textLabel
   UILabel *textLabel = [[UILabel alloc] init];
@@ -114,20 +110,35 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
   return self.imageView.image != nil;
 }
 
-- (void)setButtons:(NSMutableArray<MDCButton *> *_Nonnull)buttons {
-  NSAssert(buttons.count <= kNumberOfButtonsLimit, @"%@ doesn't support more than %lu buttons",
-           NSStringFromClass([self class]), (unsigned long)kNumberOfButtonsLimit);
-  _buttons = buttons;
-  for (MDCButton *button in buttons) {
-    button.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.containerView addSubview:button];
-  }
+- (void)setLeadingButton:(MDCButton *)leadingButton {
+  _leadingButton = leadingButton;
+  leadingButton.translatesAutoresizingMaskIntoConstraints = NO;
+  [self addSubview:leadingButton];
+  [self invalidateIntrinsicContentSize];
+}
+
+- (void)setTrailingButton:(MDCButton *)trailingButton {
+  _trailingButton = trailingButton;
+  trailingButton.translatesAutoresizingMaskIntoConstraints = NO;
+  [self addSubview:trailingButton];
   [self invalidateIntrinsicContentSize];
 }
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
   [super setBackgroundColor:backgroundColor];
   self.containerView.backgroundColor = backgroundColor;
+}
+
+// This is a method facilitate during the middle stage of refactoring.
+- (NSArray<MDCButton *> *)buttons {
+  NSMutableArray<MDCButton *> *mutableArray = [NSMutableArray array];
+  if (self.leadingButton) {
+    [mutableArray addObject:self.leadingButton];
+  }
+  if (self.trailingButton) {
+    [mutableArray addObject:self.trailingButton];
+  }
+  return [mutableArray copy];
 }
 
 #pragma mark - UIView overrides
@@ -384,7 +395,7 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
                                      attribute:NSLayoutAttributeBottom
                                     multiplier:1
                                       constant:kVerticalSpaceBetweenButtonAndTextLabel];
-    button1TopConstraintWithTextLabel.priority = UILayoutPriorityDefaultLow;
+    button1TopConstraintWithTextLabel.priority = UILayoutPriorityDefaultLow - 1;
     NSLayoutConstraint *button2TopConstraint =
         [NSLayoutConstraint constraintWithItem:self.buttons[1]
                                      attribute:NSLayoutAttributeTop
@@ -487,7 +498,7 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
                                      attribute:NSLayoutAttributeBottom
                                     multiplier:1
                                       constant:kVerticalSpaceBetweenButtonAndTextLabel];
-    button1TopConstraintWithTextLabel.priority = UILayoutPriorityDefaultLow;
+    button1TopConstraintWithTextLabel.priority = UILayoutPriorityDefaultLow - 1;
     NSLayoutConstraint *button2TopConstraint =
         [NSLayoutConstraint constraintWithItem:self.buttons[1]
                                      attribute:NSLayoutAttributeTop

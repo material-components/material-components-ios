@@ -226,8 +226,7 @@ static NSString *const exampleExtraLongText =
   [button setTitleColor:self.colorScheme.primaryColor forState:UIControlStateNormal];
   [button sizeToFit];
   button.backgroundColor = self.colorScheme.surfaceColor;
-  NSMutableArray *buttons = [NSMutableArray arrayWithObject:button];
-  bannerView.buttons = buttons;
+  bannerView.leadingButton = button;
 
   [button addTarget:self
                 action:@selector(dismissBanner)
@@ -289,8 +288,8 @@ static NSString *const exampleExtraLongText =
   [changeTextButton addTarget:self
                        action:@selector(dismissBanner)
              forControlEvents:UIControlEventTouchUpInside];
-  NSMutableArray *buttons = [NSMutableArray arrayWithObjects:dismissButton, changeTextButton, nil];
-  bannerView.buttons = buttons;
+  bannerView.leadingButton = dismissButton;
+  bannerView.trailingButton = changeTextButton;
 
   // Adjust bannerViewContainer's frame
   CGFloat topAreaInset = 0.0f;
@@ -346,8 +345,8 @@ static NSString *const exampleExtraLongText =
   [changeTextButton addTarget:self
                        action:@selector(dismissBanner)
              forControlEvents:UIControlEventTouchUpInside];
-  NSMutableArray *buttons = [NSMutableArray arrayWithObjects:dismissButton, changeTextButton, nil];
-  bannerView.buttons = buttons;
+  bannerView.leadingButton = dismissButton;
+  bannerView.trailingButton = changeTextButton;
 
   // Adjust bannerViewContainer's frame
   CGFloat topAreaInset = 0.0f;
