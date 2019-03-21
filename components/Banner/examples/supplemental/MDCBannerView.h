@@ -42,8 +42,18 @@ __attribute__((objc_subclassing_restricted)) @interface MDCBannerView : UIView
  */
 @property(nonatomic, readonly, strong, nonnull) UIImageView *imageView;
 
+/**
+ A leading button that displays on a @c MDCBannerView.
+ @discussion This @c leadingButton displays on the leading edge of the view. If it can't occupy on the same line with @c trailingButton, it always shows above it.
+ The default value is nil.
+ */
 @property(nonatomic, readwrite, strong, nullable) MDCButton *leadingButton;
 
+/**
+ A trailing button that displays on a @c MDCBannerView.
+ @discussion This @c trailingButton displays on the trailing edge of the view. If it can't occupy on the same line with @c trailingButton, it always shows below it.
+ The default value is nil.
+ */
 @property(nonatomic, readwrite, strong, nullable) MDCButton *trailingButton;
 
 @end
