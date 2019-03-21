@@ -143,15 +143,28 @@
   // Given
   UIFont *originalFont = [UIFont systemFontOfSize:22.0];
 
-  MDCFontScaler *invalidSscaler =
+  MDCFontScaler *invalidScaler =
       [[MDCFontScaler alloc] initForMaterialTextStyle:@"IntentionallyNonTextStyleString"];
-  MDCFontScaler *bodySscaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleBody1];
+  MDCFontScaler *bodyScaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleBody1];
 
-  UIFont *invalidScalableFont = [invalidSscaler scaledFontWithFont:originalFont];
-  UIFont *bodyScalableFont = [bodySscaler scaledFontWithFont:originalFont];
+  UIFont *invalidScalableFont = [invalidScaler scaledFontWithFont:originalFont];
+  UIFont *bodyScalableFont = [bodyScaler scaledFontWithFont:originalFont];
 
   // Then
   XCTAssert([invalidScalableFont mdc_isSimplyEqual:bodyScalableFont]);
+}
+
+- (void)testOriginalFontDoesNotGetCurve {
+  // Given
+  UIFont *originalFont = [UIFont systemFontOfSize:22.0];
+
+  MDCFontScaler *bodyScaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleBody1];
+
+  UIFont *bodyScalableFont = [bodyScaler scaledFontWithFont:originalFont];
+
+  // Then
+  XCTAssertNil(originalFont.mdc_scalingCurve);
+  XCTAssertNotNil(bodyScalableFont.mdc_scalingCurve);
 }
 
 @end
