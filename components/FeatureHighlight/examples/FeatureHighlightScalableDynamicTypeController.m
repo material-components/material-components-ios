@@ -12,12 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "FeatureHighlightScalableDynamicTypeController.h"
-
 #import "MaterialButtons.h"
 #import "MaterialFeatureHighlight.h"
 #import "MaterialMath.h"
 #import "MaterialTypographyScheme.h"
+
+@interface FeatureHighlightScalableDynamicTypeController : UIViewController
+
+@property(nonatomic) UIButton *featureButton;
+@property(nonatomic) UIButton *showStandardButton;
+@property(nonatomic) UIButton *showLegacyButton;
+
+@end
 
 @implementation FeatureHighlightScalableDynamicTypeController
 
