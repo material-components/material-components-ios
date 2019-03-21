@@ -39,7 +39,7 @@ __attribute__((objc_subclassing_restricted)) @interface MDCBannerView : UIView
 
 /**
  A trailing button that displays on a @c MDCBannerView.
- @discussion This @c trailingButton displays on the trailing edge of the view. If it can't occupy on the same line with @c trailingButton, it always shows below it.
+ @discussion This @c trailingButton displays on the trailing edge of the view. If it can't occupy on the same line with @c leadingButton, it always shows below it.
  */
 @property(nonatomic, readonly, strong, nonnull) MDCButton *trailingButton;
 
