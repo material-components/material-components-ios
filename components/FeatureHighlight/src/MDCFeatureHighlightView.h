@@ -41,7 +41,6 @@
  Enable legacy font scaling curves for Dynamic Type
  Default value is NO.
  */
-@property(nonatomic, readwrite, setter=mdc_setLegacyFontScaling:)
-    BOOL mdc_legacyFontScaling;
+@property(nonatomic, readwrite, setter=mdc_setLegacyFontScaling:) BOOL mdc_legacyFontScaling;
 
 @end

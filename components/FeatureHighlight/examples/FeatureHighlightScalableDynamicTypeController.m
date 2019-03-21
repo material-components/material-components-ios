@@ -62,16 +62,16 @@
   [self.showStandardButton setTitle:@"Show Highlight" forState:UIControlStateNormal];
   [self.showStandardButton sizeToFit];
   [self.showStandardButton addTarget:self
-                        action:@selector(didTapStandardButton:)
-              forControlEvents:UIControlEventTouchUpInside];
+                              action:@selector(didTapStandardButton:)
+                    forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:self.showStandardButton];
 
   self.showLegacyButton = [[MDCButton alloc] initWithFrame:CGRectZero];
   [self.showLegacyButton setTitle:@"Show Highlight (Legacy)" forState:UIControlStateNormal];
   [self.showLegacyButton sizeToFit];
   [self.showLegacyButton addTarget:self
-                        action:@selector(didTapLegacyButton:)
-              forControlEvents:UIControlEventTouchUpInside];
+                            action:@selector(didTapLegacyButton:)
+                  forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:self.showLegacyButton];
 }
 
@@ -100,10 +100,10 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-           @"breadcrumbs" : @[ @"Feature Highlight", @"Feature Highlight (Dynamic Type)" ],
-           @"primaryDemo" : @NO,
-           @"presentable" : @NO,
-           };
+    @"breadcrumbs" : @[ @"Feature Highlight", @"Feature Highlight (Dynamic Type)" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
+  };
 }
 
 @end
