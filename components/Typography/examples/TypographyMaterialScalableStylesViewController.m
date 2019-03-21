@@ -12,10 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "TypographyMaterialScalableStylesViewController.h"
-
 #import "MaterialTypography.h"
 #import "MaterialTypographyScheme.h"
+
+@interface TypographyMaterialScalableStyleViewController : UITableViewController
+@end
 
 @implementation TypographyMaterialScalableStyleViewController {
   NSArray<NSString *> *_strings;
