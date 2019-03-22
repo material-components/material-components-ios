@@ -30,9 +30,9 @@ class AppBarJumpExample: UIViewController {
   var colorScheme = MDCSemanticColorScheme()
   var typographyScheme = MDCTypographyScheme()
 
-  fileprivate let firstTab = SimpleTableViewController()
-  fileprivate let secondTab = SimpleTableViewController()
-  private var currentTab: SimpleTableViewController? = nil
+  fileprivate let firstTab = SimpleComposedTableViewController()
+  fileprivate let secondTab = SimpleComposedTableViewController()
+  private var currentTab: SimpleComposedTableViewController? = nil
 
   lazy var tabBar: MDCTabBar = {
     let tabBar = MDCTabBar()
@@ -78,7 +78,7 @@ class AppBarJumpExample: UIViewController {
     switchToTab(firstTab)
   }
 
-  fileprivate func switchToTab(_ tab: SimpleTableViewController) {
+  fileprivate func switchToTab(_ tab: SimpleComposedTableViewController) {
 
     appBarViewController.headerView.trackingScrollWillChange(toScroll: tab.tableView)
 
@@ -169,57 +169,3 @@ extension AppBarJumpExample {
   }
 }
 
-fileprivate class SimpleTableViewController: UIViewController {
-
-  var tableView = UITableView(frame: CGRect(), style: .plain)
-
-  var headerView: MDCFlexibleHeaderView?
-
-  override func viewDidLoad() {
-    super.viewDidLoad()
-
-    self.view.addSubview(tableView)
-    self.tableView.frame = self.view.bounds
-
-    tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-    tableView.delegate = self
-    tableView.dataSource = self
-  }
-}
-
-extension SimpleTableViewController: UITableViewDataSource {
-
-  func numberOfSections(in tableView: UITableView) -> Int {
-    return 1
-  }
-
-  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 100
-  }
-}
-
-extension SimpleTableViewController: UITableViewDelegate {
-
-  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-    let titleString = title ?? ""
-    cell.textLabel?.text = "\(titleString): Row \(indexPath.item)"
-    return cell
-  }
-
-  func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    headerView?.trackingScrollDidScroll()
-  }
-
-  func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-    headerView?.trackingScrollDidEndDecelerating()
-  }
-
-  func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-    headerView?.trackingScrollWillEndDragging(withVelocity: velocity, targetContentOffset: targetContentOffset)
-  }
-
-  func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-    headerView?.trackingScrollDidEndDraggingWillDecelerate(decelerate)
-  }
-}
