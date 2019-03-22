@@ -34,6 +34,34 @@
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "3E2E7CBF5A69F7357CB0E4A1EE2BE49F"
+               BuildableName = "MaterialComponentsBeta-Unit-ActionSheet+ActionSheetThemer-UnitTests.xctest"
+               BlueprintName = "MaterialComponentsBeta-Unit-ActionSheet+ActionSheetThemer-UnitTests"
+               ReferencedContainer = "container:Pods/Pods.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "A06F5C7178C1AD9F7A3741EC0D78BD34"
+               BuildableName = "MaterialComponentsBeta-Unit-ActionSheet+ColorThemer-UnitTests.xctest"
+               BlueprintName = "MaterialComponentsBeta-Unit-ActionSheet+ColorThemer-UnitTests"
+               ReferencedContainer = "container:Pods/Pods.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -596,7 +624,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "032F1E326A2F5B54A52350BE13F3EC5C"
+               BlueprintIdentifier = "C41275339AF6235C603953FBF8B20172"
                BuildableName = "MaterialComponentsSnapshotTests-Unit-SnapshotTests.xctest"
                BlueprintName = "MaterialComponentsSnapshotTests-Unit-SnapshotTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -609,6 +637,36 @@
                BlueprintIdentifier = "1890BE4767FCA35835C1EB3F2B4AB8B5"
                BuildableName = "MaterialComponentsBeta-Unit-AppBar+Theming-UnitTests.xctest"
                BlueprintName = "MaterialComponentsBeta-Unit-AppBar+Theming-UnitTests"
+               ReferencedContainer = "container:Pods/Pods.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "F413A0F53D9A356F61C27680636F29DC"
+               BuildableName = "MaterialComponentsBeta-Unit-TextFields+Theming-UnitTests.xctest"
+               BlueprintName = "MaterialComponentsBeta-Unit-TextFields+Theming-UnitTests"
+               ReferencedContainer = "container:Pods/Pods.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "3E2E7CBF5A69F7357CB0E4A1EE2BE49F"
+               BuildableName = "MaterialComponentsBeta-Unit-ActionSheet+ActionSheetThemer-UnitTests.xctest"
+               BlueprintName = "MaterialComponentsBeta-Unit-ActionSheet+ActionSheetThemer-UnitTests"
+               ReferencedContainer = "container:Pods/Pods.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "A06F5C7178C1AD9F7A3741EC0D78BD34"
+               BuildableName = "MaterialComponentsBeta-Unit-ActionSheet+ColorThemer-UnitTests.xctest"
+               BlueprintName = "MaterialComponentsBeta-Unit-ActionSheet+ColorThemer-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
             </BuildableReference>
          </TestableReference>
