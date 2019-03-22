@@ -53,6 +53,7 @@ fix_bazel_imports() {
     find "${stashed_dir}"components/private/*/tests -type f -name '*.swift' -exec perl -pi -e "$1" {} + || true
     find "${stashed_dir}"components/*/tests -type f -name '*.swift' -exec perl -pi -e "$1" {} + || true
     find "${stashed_dir}"components/*/tests -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/schemes/*/tests -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
   }
   rewrite_examples() {
     find "${stashed_dir}"components/private/*/examples -type f -name '*.swift' -exec perl -pi -e "$1" {} + || true
