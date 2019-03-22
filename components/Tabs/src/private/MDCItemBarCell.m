@@ -52,16 +52,16 @@ const CGFloat kSelectedNavigationImageYOffset = -2;
 /// Duration of selection animations in applicable content styles.
 static const NSTimeInterval kSelectionAnimationDuration = 0.3;
 
-@interface MDCItemBarCell()
+@interface MDCItemBarCell ()
 
-@property (nonatomic, strong) UIImageView *imageView;
-@property (nonatomic, strong) MDCItemBarBadge *badge;
-@property (nonatomic, strong) MDCInkTouchController *inkTouchController;
+@property(nonatomic, strong) UIImageView *imageView;
+@property(nonatomic, strong) MDCItemBarBadge *badge;
+@property(nonatomic, strong) MDCInkTouchController *inkTouchController;
 
-@property (nonatomic, strong) MDCItemBarStyle *style;
+@property(nonatomic, strong) MDCItemBarStyle *style;
 
-@property (nonatomic) NSInteger itemIndex;
-@property (nonatomic) NSInteger itemCount;
+@property(nonatomic) NSInteger itemIndex;
+@property(nonatomic) NSInteger itemCount;
 
 @end
 

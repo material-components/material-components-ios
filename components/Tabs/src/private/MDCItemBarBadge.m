@@ -63,11 +63,11 @@ static const CGFloat kMinDiameter = 9;
 
   CGFloat badgeRadius = CGRectGetHeight(self.bounds) / 2;
   CGRect availableContentRect = CGRectStandardize(
-                                                  CGRectInset(self.bounds, [self badgeXPaddingForRadius:badgeRadius], kBadgeYPadding));
+      CGRectInset(self.bounds, [self badgeXPaddingForRadius:badgeRadius], kBadgeYPadding));
   CGSize labelFitSize = [self.badgeValueLabel sizeThatFits:availableContentRect.size];
   self.badgeValueLabel.bounds = CGRectMake(0, 0, labelFitSize.width, labelFitSize.height);
   self.badgeValueLabel.center =
-  CGPointMake(CGRectGetMidX(availableContentRect), CGRectGetMidY(availableContentRect));
+      CGPointMake(CGRectGetMidX(availableContentRect), CGRectGetMidY(availableContentRect));
   self.layer.cornerRadius = badgeRadius;
   self.layer.backgroundColor = self.badgeColor.CGColor;
 }
