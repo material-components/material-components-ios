@@ -62,28 +62,33 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   self.item1 = [[UITabBarItem alloc]
       initWithTitle:kItemTitleShort1Latin
               image:[[UIImage mdc_testImageOfSize:imageSize
-                                       withStyle:MDCSnapshotTestImageStyleCheckerboard] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+                                        withStyle:MDCSnapshotTestImageStyleCheckerboard]
+                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
                 tag:1];
   self.item2 = [[UITabBarItem alloc]
       initWithTitle:kItemTitleShort2Latin
               image:[[UIImage mdc_testImageOfSize:imageSize
-                                       withStyle:MDCSnapshotTestImageStyleDiagonalLines] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+                                        withStyle:MDCSnapshotTestImageStyleDiagonalLines]
+                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
                 tag:2];
   self.item3 = [[UITabBarItem alloc]
       initWithTitle:kItemTitleShort3Latin
               image:[[UIImage mdc_testImageOfSize:imageSize
-                                       withStyle:MDCSnapshotTestImageStyleFramedX] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+                                        withStyle:MDCSnapshotTestImageStyleFramedX]
+                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
                 tag:3];
   self.item3.badgeValue = kItemTitleShort1Latin;
   self.item4 = [[UITabBarItem alloc]
       initWithTitle:kItemTitleShort1Latin
               image:[[UIImage mdc_testImageOfSize:imageSize
-                                       withStyle:MDCSnapshotTestImageStyleEllipses] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+                                        withStyle:MDCSnapshotTestImageStyleEllipses]
+                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
                 tag:4];
   self.item5 = [[UITabBarItem alloc]
       initWithTitle:kItemTitleShort2Latin
               image:[[UIImage mdc_testImageOfSize:imageSize
-                                       withStyle:MDCSnapshotTestImageStyleRectangles] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+                                        withStyle:MDCSnapshotTestImageStyleRectangles]
+                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
                 tag:5];
   self.tabBar.items = @[ self.item1, self.item2, self.item3, self.item4, self.item5 ];
 }
