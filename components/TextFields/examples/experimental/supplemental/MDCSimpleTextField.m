@@ -510,7 +510,7 @@
   return CGRectMake(CGRectGetMinX(textRect), minY, CGRectGetWidth(textRect), systemDefinedHeight);
 }
 
-- (CGRect)containerRect {
+- (CGRect)containerFrame {
   return CGRectMake(0, 0, CGRectGetWidth(self.frame), self.layout.topRowBottomRowDividerY);
 }
 

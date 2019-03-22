@@ -593,7 +593,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   [self layOutGradientLayers];
 }
 
-- (CGRect)containerRect {
+- (CGRect)containerFrame {
   return CGRectMake(0, 0, CGRectGetWidth(self.frame), self.layout.contentAreaMaxY);
 }
 

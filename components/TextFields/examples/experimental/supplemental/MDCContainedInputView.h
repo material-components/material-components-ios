@@ -164,7 +164,7 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewPlaceholderState) {
  Returns the rect surrounding the main content, i.e. the area that the container should be drawn
  around.
  */
-@property(nonatomic, assign, readonly) CGRect containerRect;
+@property(nonatomic, assign, readonly) CGRect containerFrame;
 
 /**
  This API allows the user to override the default main content area height. The main content area is

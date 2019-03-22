@@ -112,7 +112,7 @@ static const CGFloat kLayerAnimationDuration = (CGFloat)0.2;
   [self applyStyleToView:uiView
                    state:containedInputView.containedInputViewState
              colorScheme:colorScheme
-           containerRect:containedInputView.containerRect];
+          containerFrame:containedInputView.containerFrame];
 }
 
 - (void)removeStyleFrom:(id<MDCContainedInputView>)containedInputView {
@@ -124,7 +124,7 @@ static const CGFloat kLayerAnimationDuration = (CGFloat)0.2;
 - (void)applyStyleToView:(UIView *)view
                    state:(MDCContainedInputViewState)state
              colorScheme:(id<MDCContainedInputViewColorScheming>)colorScheme
-           containerRect:(CGRect)containerRect {
+          containerFrame:(CGRect)containerFrame {
   if ([colorScheme isKindOfClass:[MDCContainedInputViewColorSchemeFilled class]]) {
     MDCContainedInputViewColorSchemeFilled *filledScheme =
         (MDCContainedInputViewColorSchemeFilled *)colorScheme;
@@ -133,7 +133,7 @@ static const CGFloat kLayerAnimationDuration = (CGFloat)0.2;
     self.thickUnderlineLayer.fillColor = filledScheme.thickUnderlineFillColor.CGColor;
   }
 
-  CGFloat topRowBottomRowDividerY = CGRectGetMaxY(containerRect);
+  CGFloat topRowBottomRowDividerY = CGRectGetMaxY(containerFrame);
   UIBezierPath *filledSublayerBezier =
       [self filledSublayerPathWithTextFieldBounds:view.bounds
                           topRowBottomRowDividerY:topRowBottomRowDividerY];
