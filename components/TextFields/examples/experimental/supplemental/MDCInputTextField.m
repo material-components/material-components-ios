@@ -311,14 +311,15 @@
 //}
 
 - (void)setAttributedPlaceholder:(NSAttributedString *)attributedPlaceholder {
-  self.floatingLabel.text = [attributedPlaceholder string];
-  self.floatingLabel.attributedText = [attributedPlaceholder copy];
-  NSLog(@"setting attributedPlaceholder is not currently supported.");
+  [super setAttributedPlaceholder:attributedPlaceholder];
+  //  self.floatingLabel.text = [attributedPlaceholder string];
+//  self.floatingLabel.attributedText = [attributedPlaceholder copy];
+//  NSLog(@"setting attributedPlaceholder is not currently supported.");
   // TODO: Evaluate if attributedPlaceholder should be supported.
-}
-
-- (NSAttributedString *)attributedPlaceholder {
-  return self.floatingLabel.attributedText;
+//}
+//
+//- (NSAttributedString *)attributedPlaceholder {
+//  return self.floatingLabel.attributedText;
 }
 
 - (void)setLeftViewMode:(UITextFieldViewMode)leftViewMode {
@@ -569,11 +570,11 @@
 
 - (void)drawPlaceholderInRect:(CGRect)rect {
   id<MDCContainedInputViewColorScheming> colorScheme =
-      [self containedInputViewColorSchemingForState:self.containedInputViewState];
+  [self containedInputViewColorSchemingForState:self.containedInputViewState];
   NSDictionary *attributes = @{
-    NSFontAttributeName : self.font,
-    NSForegroundColorAttributeName : colorScheme.placeholderColor
-  };
+                               NSFontAttributeName : self.font,
+                               NSForegroundColorAttributeName : colorScheme.placeholderColor
+                               };
   [self.placeholder drawInRect:rect withAttributes:attributes];
 }
 
