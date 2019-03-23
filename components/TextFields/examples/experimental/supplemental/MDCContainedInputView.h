@@ -55,7 +55,8 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewUnderlineLabelDrawPriority) {
  */
 typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
   /**
-   The state of having no floating label. It's not visible and has no frame and does not affect layout.
+   The state of having no floating label. It's not visible and has no frame and does not affect
+   layout.
    */
   MDCContainedInputViewFloatingLabelStateNone,
   /**
@@ -225,8 +226,7 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
 - (CGFloat)floatingLabelMinYWithFloatingPlaceholderHeight:(CGFloat)floatingLabelHeight;
 - (CGFloat)contentAreaTopPaddingFloatingPlaceholderWithFloatingPlaceholderMaxY:
     (CGFloat)floatingLabelMaxY;
-- (CGFloat)contentAreaVerticalPaddingNormalWithFloatingPlaceholderMaxY:
-    (CGFloat)floatingLabelMaxY;
+- (CGFloat)contentAreaVerticalPaddingNormalWithFloatingPlaceholderMaxY:(CGFloat)floatingLabelMaxY;
 - (CGFloat)containerBottomVerticalPadding;
 @end
 
@@ -240,13 +240,12 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
 
 @interface MDCContainedInputViewFloatingLabelManager : NSObject
 - (UIFont *_Nonnull)floatingLabelFontWithFont:(nonnull UIFont *)font
-                                     containerStyle:
-                                         (nonnull id<MDCContainedInputViewStyle>)containerStyle;
+                               containerStyle:
+                                   (nonnull id<MDCContainedInputViewStyle>)containerStyle;
 - (void)layOutFloatingLabel:(nonnull UILabel *)floatingLabel
-                                        state:
-                                            (MDCContainedInputViewFloatingLabelState)floatingLabelState
-                                  normalFrame:(CGRect)normalFrame
-                                floatingFrame:(CGRect)floatingFrame
-                                   normalFont:(nonnull UIFont *)normalFont
-                                 floatingFont:(nonnull UIFont *)floatingFont;
+                      state:(MDCContainedInputViewFloatingLabelState)floatingLabelState
+                normalFrame:(CGRect)normalFrame
+              floatingFrame:(CGRect)floatingFrame
+                 normalFont:(nonnull UIFont *)normalFont
+               floatingFont:(nonnull UIFont *)floatingFont;
 @end

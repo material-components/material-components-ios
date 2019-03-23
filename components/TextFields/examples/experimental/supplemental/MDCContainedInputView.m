@@ -141,8 +141,7 @@
   return 10;
 }
 
-- (CGFloat)contentAreaVerticalPaddingNormalWithFloatingPlaceholderMaxY:
-    (CGFloat)floatingLabelMaxY {
+- (CGFloat)contentAreaVerticalPaddingNormalWithFloatingPlaceholderMaxY:(CGFloat)floatingLabelMaxY {
   return 20;
 }
 
@@ -165,19 +164,18 @@
 @implementation MDCContainedInputViewFloatingLabelManager
 
 - (UIFont *)floatingLabelFontWithFont:(UIFont *)font
-                             containerStyle:(id<MDCContainedInputViewStyle>)containerStyle {
+                       containerStyle:(id<MDCContainedInputViewStyle>)containerStyle {
   CGFloat scaleFactor = [containerStyle floatingLabelFontSizeScaleFactor];
   CGFloat floatingLabelFontSize = font.pointSize * scaleFactor;
   return [font fontWithSize:floatingLabelFontSize];
 }
 
 - (void)layOutFloatingLabel:(UILabel *)floatingLabel
-                                        state:
-                                            (MDCContainedInputViewFloatingLabelState)floatingLabelState
-                                  normalFrame:(CGRect)normalFrame
-                                floatingFrame:(CGRect)floatingFrame
-                                   normalFont:(UIFont *)normalFont
-                                 floatingFont:(UIFont *)floatingFont {
+                      state:(MDCContainedInputViewFloatingLabelState)floatingLabelState
+                normalFrame:(CGRect)normalFrame
+              floatingFrame:(CGRect)floatingFrame
+                 normalFont:(UIFont *)normalFont
+               floatingFont:(UIFont *)floatingFont {
   UIFont *targetFont = normalFont;
   CGRect targetFrame = normalFrame;
   BOOL placeholderShouldHide = NO;

@@ -35,8 +35,8 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
                                  text:(NSString *)text
                           placeholder:(NSString *)placeholder
                                  font:(UIFont *)font
-              floatingLabelFont:(UIFont *)floatingLabelFont
-                  canFloatingLabelFloat:(BOOL)canFloatingLabelFloat
+                    floatingLabelFont:(UIFont *)floatingLabelFont
+                canFloatingLabelFloat:(BOOL)canFloatingLabelFloat
                              leftView:(UIView *)leftView
                          leftViewMode:(UITextFieldViewMode)leftViewMode
                             rightView:(UIView *)rightView
@@ -59,8 +59,8 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
                                       text:text
                                placeholder:placeholder
                                       font:font
-                   floatingLabelFont:floatingLabelFont
-                       canFloatingLabelFloat:canFloatingLabelFloat
+                         floatingLabelFont:floatingLabelFont
+                     canFloatingLabelFloat:canFloatingLabelFloat
                                   leftView:leftView
                               leftViewMode:leftViewMode
                                  rightView:rightView
@@ -87,8 +87,8 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
                                     text:(NSString *)text
                              placeholder:(NSString *)placeholder
                                     font:(UIFont *)font
-                 floatingLabelFont:(UIFont *)floatingLabelFont
-                     canFloatingLabelFloat:(BOOL)canFloatingLabelFloat
+                       floatingLabelFont:(UIFont *)floatingLabelFont
+                   canFloatingLabelFloat:(BOOL)canFloatingLabelFloat
                                 leftView:(UIView *)leftView
                             leftViewMode:(UITextFieldViewMode)leftViewMode
                                rightView:(UIView *)rightView
@@ -256,10 +256,10 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
   CGRect placeholderFrameNormal =
       [self placeholderFrameWithPlaceholder:placeholder
                              containerStyle:containerStyle
-                           floatingLabelState:MDCContainedInputViewFloatingLabelStateNormal
+                         floatingLabelState:MDCContainedInputViewFloatingLabelStateNormal
                                        font:font
-                    floatingLabelFont:floatingLabelFont
-                    floatingLabelMinY:floatingLabelMinY
+                          floatingLabelFont:floatingLabelFont
+                          floatingLabelMinY:floatingLabelMinY
                       lowestPlaceholderMinX:placeholderNormalMinX
                      highestPlaceholderMaxX:placeholderNormalMaxX
                                textRectRect:textRectNormal
@@ -267,10 +267,10 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
   CGRect placeholderFrameFloating =
       [self placeholderFrameWithPlaceholder:placeholder
                              containerStyle:containerStyle
-                           floatingLabelState:MDCContainedInputViewFloatingLabelStateFloating
+                         floatingLabelState:MDCContainedInputViewFloatingLabelStateFloating
                                        font:font
-                    floatingLabelFont:floatingLabelFont
-                    floatingLabelMinY:floatingLabelMinY
+                          floatingLabelFont:floatingLabelFont
+                          floatingLabelMinY:floatingLabelMinY
                       lowestPlaceholderMinX:placeholderFloatingMinX
                      highestPlaceholderMaxX:placeholderFloatingMaxX
                                textRectRect:textRectNormal
@@ -357,7 +357,7 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
 }
 
 - (CGFloat)topRowSubviewMaxYWithTextAreaMaxY:(CGFloat)textRectMaxY
-             floatingLabelTextAreaMaxY:(CGFloat)floatingLabelTextAreaMaxY
+                   floatingLabelTextAreaMaxY:(CGFloat)floatingLabelTextAreaMaxY
                                 leftViewMaxY:(CGFloat)leftViewMaxY
                                rightViewMaxY:(CGFloat)rightViewMaxY {
   CGFloat max = textRectMaxY;
@@ -477,10 +477,11 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
 
 - (CGRect)placeholderFrameWithPlaceholder:(NSString *)placeholder
                            containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
-                         floatingLabelState:(MDCContainedInputViewFloatingLabelState)floatingLabelState
+                       floatingLabelState:
+                           (MDCContainedInputViewFloatingLabelState)floatingLabelState
                                      font:(UIFont *)font
-                  floatingLabelFont:(UIFont *)floatingLabelFont
-                  floatingLabelMinY:(CGFloat)floatingLabelMinY
+                        floatingLabelFont:(UIFont *)floatingLabelFont
+                        floatingLabelMinY:(CGFloat)floatingLabelMinY
                     lowestPlaceholderMinX:(CGFloat)lowestPlaceholderMinX
                    highestPlaceholderMaxX:(CGFloat)highestPlaceholderMaxX
                              textRectRect:(CGRect)textRectRect
