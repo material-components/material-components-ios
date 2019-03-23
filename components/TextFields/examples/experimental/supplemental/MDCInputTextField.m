@@ -157,7 +157,6 @@
 
 - (void)setUpFloatingLabel {
   self.floatingLabel = [[UILabel alloc] initWithFrame:self.bounds];
-  self.floatingLabel.backgroundColor = [UIColor yellowColor];
   [self addSubview:self.floatingLabel];
 }
 
@@ -566,6 +565,13 @@
     return CGRectZero;
   }
   return [super placeholderRectForBounds:bounds];
+}
+
+-(void)drawPlaceholderInRect:(CGRect)rect {
+  id<MDCContainedInputViewColorScheming> colorScheme =
+  [self containedInputViewColorSchemingForState:self.containedInputViewState];
+  NSDictionary *attributes = @{NSFontAttributeName: self.font, NSForegroundColorAttributeName: colorScheme.placeholderColor};
+  [self.placeholder drawInRect:rect withAttributes:attributes];
 }
 
 #pragma mark Fonts

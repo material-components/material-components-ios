@@ -38,6 +38,7 @@
   self.textColor = textColor;
   self.underlineLabelColor = underlineLabelColor;
   self.floatingLabelColor = floatingLabelColor;
+  self.placeholderColor = floatingLabelColor;
   self.clearButtonTintColor = clearButtonTintColor;
   self.errorColor = errorColor;
 }

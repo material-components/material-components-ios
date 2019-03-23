@@ -93,7 +93,7 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
 @property(nonatomic, assign, readonly) MDCContainedInputViewFloatingLabelState floatingLabelState;
 
 /**
- The @c leadingUnderlineLabel can be used to display helper or error text.
+ The @c floatingLabel is the label.
  */
 @property(strong, nonatomic, readonly, nonnull) UILabel *floatingLabel;
 /**
@@ -193,6 +193,7 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
 @property(strong, nonatomic, readonly, nonnull) UIColor *textColor;
 @property(strong, nonatomic, readonly, nonnull) UIColor *underlineLabelColor;
 @property(strong, nonatomic, readonly, nonnull) UIColor *floatingLabelColor;
+@property(strong, nonatomic, readonly, nonnull) UIColor *placeholderColor;
 @property(strong, nonatomic, readonly, nonnull) UIColor *clearButtonTintColor;
 @property(strong, nonatomic, readonly, nonnull) UIColor *errorColor;
 @end
@@ -204,6 +205,7 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
 @property(strong, nonatomic, nonnull) UIColor *textColor;
 @property(strong, nonatomic, nonnull) UIColor *underlineLabelColor;
 @property(strong, nonatomic, nonnull) UIColor *floatingLabelColor;
+@property(strong, nonatomic, nonnull) UIColor *placeholderColor;
 @property(strong, nonatomic, nonnull) UIColor *clearButtonTintColor;
 @property(strong, nonatomic, nonnull) UIColor *errorColor;
 @end

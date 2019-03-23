@@ -174,6 +174,7 @@
       [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
   UIColor *floatingLabelColor =
       [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
+  UIColor *placeholderColor = floatingLabelColor;
   UIColor *outlineColor = colorScheming.onSurfaceColor;
   UIColor *clearButtonTintColor =
       [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.20];
@@ -206,6 +207,7 @@
   colorScheme.outlineColor = outlineColor;
   colorScheme.floatingLabelColor = floatingLabelColor;
   colorScheme.clearButtonTintColor = clearButtonTintColor;
+  colorScheme.placeholderColor = placeholderColor;
   return colorScheme;
 }
 
