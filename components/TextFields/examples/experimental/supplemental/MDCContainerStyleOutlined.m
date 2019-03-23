@@ -91,7 +91,7 @@ static const CGFloat kFloatingLabelOutlineSidePadding = (CGFloat)5.0;
   [self applyStyleTo:uiView
              placeholderFrame:placeholderFrame
       topRowBottomRowDividerY:topRowBottomRowDividerY
-        isFloatingLabelFloating:isFloatingLabelFloating
+      isFloatingLabelFloating:isFloatingLabelFloating
              outlineLineWidth:lineWidth];
   if ([colorScheme isKindOfClass:[MDCContainedInputViewColorSchemeOutlined class]]) {
     MDCContainedInputViewColorSchemeOutlined *outlinedScheme =
@@ -107,13 +107,13 @@ static const CGFloat kFloatingLabelOutlineSidePadding = (CGFloat)5.0;
 - (void)applyStyleTo:(UIView *)view
            placeholderFrame:(CGRect)placeholderFrame
     topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
-      isFloatingLabelFloating:(BOOL)isFloatingLabelFloating
+    isFloatingLabelFloating:(BOOL)isFloatingLabelFloating
            outlineLineWidth:(CGFloat)outlineLineWidth {
   UIBezierPath *path = [self outlinePathWithViewBounds:view.bounds
                                       placeholderFrame:placeholderFrame
                                topRowBottomRowDividerY:topRowBottomRowDividerY
                                              lineWidth:outlineLineWidth
-                                 isFloatingLabelFloating:isFloatingLabelFloating];
+                               isFloatingLabelFloating:isFloatingLabelFloating];
   self.outlinedSublayer.path = path.CGPath;
   self.outlinedSublayer.lineWidth = outlineLineWidth;
   if (self.outlinedSublayer.superlayer != view.layer) {
@@ -125,7 +125,7 @@ static const CGFloat kFloatingLabelOutlineSidePadding = (CGFloat)5.0;
                            placeholderFrame:(CGRect)placeholderFrame
                     topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
                                   lineWidth:(CGFloat)lineWidth
-                      isFloatingLabelFloating:(BOOL)isFloatingLabelFloating {
+                    isFloatingLabelFloating:(BOOL)isFloatingLabelFloating {
   UIBezierPath *path = [[UIBezierPath alloc] init];
   CGFloat radius = kOutlinedContainerStyleCornerRadius;
   CGFloat textFieldWidth = CGRectGetWidth(viewBounds);
@@ -136,10 +136,8 @@ static const CGFloat kFloatingLabelOutlineSidePadding = (CGFloat)5.0;
   CGPoint topRightCornerPoint1 = CGPointMake(textFieldWidth - radius, sublayerMinY);
   [path moveToPoint:startingPoint];
   if (isFloatingLabelFloating) {
-    CGFloat leftLineBreak =
-        CGRectGetMinX(placeholderFrame) - kFloatingLabelOutlineSidePadding;
-    CGFloat rightLineBreak =
-        CGRectGetMaxX(placeholderFrame) + kFloatingLabelOutlineSidePadding;
+    CGFloat leftLineBreak = CGRectGetMinX(placeholderFrame) - kFloatingLabelOutlineSidePadding;
+    CGFloat rightLineBreak = CGRectGetMaxX(placeholderFrame) + kFloatingLabelOutlineSidePadding;
     [path addLineToPoint:CGPointMake(leftLineBreak, sublayerMinY)];
     [path moveToPoint:CGPointMake(rightLineBreak, sublayerMinY)];
     [path addLineToPoint:CGPointMake(rightLineBreak, sublayerMinY)];

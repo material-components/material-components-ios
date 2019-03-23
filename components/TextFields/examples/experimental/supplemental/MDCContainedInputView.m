@@ -146,8 +146,7 @@
   return 20;
 }
 
-- (CGFloat)contentAreaTopPaddingFloatingLabelWithFloatingLabelMaxY:
-    (CGFloat)floatingLabelMaxY {
+- (CGFloat)contentAreaTopPaddingFloatingLabelWithFloatingLabelMaxY:(CGFloat)floatingLabelMaxY {
   return floatingLabelMaxY + 10;
 }
 

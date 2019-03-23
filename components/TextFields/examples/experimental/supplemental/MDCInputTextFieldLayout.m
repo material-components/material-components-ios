@@ -148,16 +148,15 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
   CGFloat actualClearButtonMinX = apparentClearButtonMinX - clearButtonImageViewSideMargin;
 
   CGFloat floatingLabelHeight = canFloatingLabelFloat ? [self textHeightWithFont:floatingFont] : 0;
-  CGFloat floatingLabelMinY = [containerStyle.densityInformer
-      floatingLabelMinYWithFloatingLabelHeight:floatingLabelHeight];
+  CGFloat floatingLabelMinY =
+      [containerStyle.densityInformer floatingLabelMinYWithFloatingLabelHeight:floatingLabelHeight];
   CGFloat floatingLabelMaxY = floatingLabelMinY + floatingLabelHeight;
   CGFloat textRectMinYWithFloatingLabel = [containerStyle.densityInformer
       contentAreaTopPaddingFloatingLabelWithFloatingLabelMaxY:floatingLabelMaxY];
   CGFloat textRectHeight = [self textHeightWithFont:font];
   CGFloat textRectCenterYWithFloatingLabel =
       textRectMinYWithFloatingLabel + ((CGFloat)0.5 * textRectHeight);
-  CGFloat textRectMaxYWithFloatingLabel =
-      textRectMinYWithFloatingLabel + textRectHeight;
+  CGFloat textRectMaxYWithFloatingLabel = textRectMinYWithFloatingLabel + textRectHeight;
   CGFloat bottomPadding = [containerStyle.densityInformer
       contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:floatingLabelMaxY];
   CGFloat intrinsicContentAreaHeight = textRectMaxYWithFloatingLabel + bottomPadding;
@@ -190,9 +189,8 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
   if (shouldAttemptToDisplayClearButton) {
     clearButtonMinY = [self minYForSubviewWithHeight:kClearButtonTouchTargetSideLength
                                              centerY:textRectCenterYNormal];
-    clearButtonFloatingLabelMinY =
-        [self minYForSubviewWithHeight:kClearButtonTouchTargetSideLength
-                               centerY:textRectCenterYWithFloatingLabel];
+    clearButtonFloatingLabelMinY = [self minYForSubviewWithHeight:kClearButtonTouchTargetSideLength
+                                                          centerY:textRectCenterYWithFloatingLabel];
   }
 
   CGFloat textRectMinX = 0;
@@ -234,14 +232,14 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
     }
     floatingLabelNormalMaxX = textRectMaxX;
     floatingLabelFloatingMaxX = shouldAttemptToDisplayRightView ? rightViewMinX - kTrailingMargin
-                                                              : textFieldWidth - kTrailingMargin;
+                                                                : textFieldWidth - kTrailingMargin;
   }
 
   CGFloat textRectWidth = textRectMaxX - textRectMinX;
   CGRect textRectNormal =
       CGRectMake(textRectMinX, textRectMinYNormal, textRectWidth, textRectHeight);
-  CGFloat textRectMinYFloatingLabel = (CGFloat)round(
-      (double)(textRectCenterYWithFloatingLabel - (textRectHeight * (CGFloat)0.5)));
+  CGFloat textRectMinYFloatingLabel =
+      (CGFloat)round((double)(textRectCenterYWithFloatingLabel - (textRectHeight * (CGFloat)0.5)));
   CGRect floatingLabelTextAreaRect =
       CGRectMake(textRectMinX, textRectMinYFloatingLabel, textRectWidth, textRectHeight);
 
@@ -257,26 +255,26 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
 
   CGRect floatingLabelFrameNormal =
       [self floatingLabelFrameWithText:floatingLabel.text
-                             containerStyle:containerStyle
-                         floatingLabelState:MDCContainedInputViewFloatingLabelStateNormal
-                                       font:font
-                               floatingFont:floatingFont
-                          floatingLabelMinY:floatingLabelMinY
-                      lowestPlaceholderMinX:floatingLabelNormalMinX
-                     highestPlaceholderMaxX:floatingLabelNormalMaxX
-                               textRectRect:textRectNormal
-                                      isRTL:isRTL];
+                        containerStyle:containerStyle
+                    floatingLabelState:MDCContainedInputViewFloatingLabelStateNormal
+                                  font:font
+                          floatingFont:floatingFont
+                     floatingLabelMinY:floatingLabelMinY
+                 lowestPlaceholderMinX:floatingLabelNormalMinX
+                highestPlaceholderMaxX:floatingLabelNormalMaxX
+                          textRectRect:textRectNormal
+                                 isRTL:isRTL];
   CGRect floatingLabelFrameFloating =
       [self floatingLabelFrameWithText:floatingLabel.text
-                             containerStyle:containerStyle
-                         floatingLabelState:MDCContainedInputViewFloatingLabelStateFloating
-                                       font:font
-                               floatingFont:floatingFont
-                          floatingLabelMinY:floatingLabelMinY
-                      lowestPlaceholderMinX:floatingLabelFloatingMinX
-                     highestPlaceholderMaxX:floatingLabelFloatingMaxX
-                               textRectRect:textRectNormal
-                                      isRTL:isRTL];
+                        containerStyle:containerStyle
+                    floatingLabelState:MDCContainedInputViewFloatingLabelStateFloating
+                                  font:font
+                          floatingFont:floatingFont
+                     floatingLabelMinY:floatingLabelMinY
+                 lowestPlaceholderMinX:floatingLabelFloatingMinX
+                highestPlaceholderMaxX:floatingLabelFloatingMaxX
+                          textRectRect:textRectNormal
+                                 isRTL:isRTL];
 
   CGFloat underlineLabelsCombinedMinX = isRTL ? kTrailingMargin : kLeadingMargin;
   CGFloat underlineLabelsCombinedMaxX =
@@ -462,8 +460,8 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
 }
 
 - (CGSize)floatingLabelSizeWithText:(NSString *)placeholder
-                     maxWidth:(CGFloat)maxWidth
-                                    font:(UIFont *)font {
+                           maxWidth:(CGFloat)maxWidth
+                               font:(UIFont *)font {
   if (!font) {
     return CGSizeZero;
   }
@@ -478,16 +476,15 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
 }
 
 - (CGRect)floatingLabelFrameWithText:(NSString *)text
-                           containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
-                       floatingLabelState:
-                           (MDCContainedInputViewFloatingLabelState)floatingLabelState
-                                     font:(UIFont *)font
-                             floatingFont:(UIFont *)floatingFont
-                        floatingLabelMinY:(CGFloat)floatingLabelMinY
-                    lowestPlaceholderMinX:(CGFloat)lowestPlaceholderMinX
-                   highestPlaceholderMaxX:(CGFloat)highestPlaceholderMaxX
-                             textRectRect:(CGRect)textRectRect
-                                    isRTL:(BOOL)isRTL {
+                      containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
+                  floatingLabelState:(MDCContainedInputViewFloatingLabelState)floatingLabelState
+                                font:(UIFont *)font
+                        floatingFont:(UIFont *)floatingFont
+                   floatingLabelMinY:(CGFloat)floatingLabelMinY
+               lowestPlaceholderMinX:(CGFloat)lowestPlaceholderMinX
+              highestPlaceholderMaxX:(CGFloat)highestPlaceholderMaxX
+                        textRectRect:(CGRect)textRectRect
+                               isRTL:(BOOL)isRTL {
   CGFloat maxWidth = highestPlaceholderMaxX - lowestPlaceholderMinX;
   CGFloat textRectMidY = CGRectGetMidY(textRectRect);
   CGSize size = CGSizeZero;
@@ -498,9 +495,7 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
     case MDCContainedInputViewFloatingLabelStateNone:
       break;
     case MDCContainedInputViewFloatingLabelStateFloating:
-      size = [self floatingLabelSizeWithText:text
-                              maxWidth:maxWidth
-                                             font:floatingFont];
+      size = [self floatingLabelSizeWithText:text maxWidth:maxWidth font:floatingFont];
       originY = floatingLabelMinY;
       if (isRTL) {
         originX = highestPlaceholderMaxX - size.width;
@@ -510,9 +505,7 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
       rect = CGRectMake(originX, originY, size.width, size.height);
       break;
     case MDCContainedInputViewFloatingLabelStateNormal:
-      size = [self floatingLabelSizeWithText:text
-                              maxWidth:maxWidth
-                                             font:font];
+      size = [self floatingLabelSizeWithText:text maxWidth:maxWidth font:font];
       originY = textRectMidY - ((CGFloat)0.5 * size.height);
       if (isRTL) {
         originX = highestPlaceholderMaxX - size.width;

@@ -278,8 +278,7 @@
   return floatingPlaceholderMaxY + (minYAddition + (difference * (1 - self.verticalDensity)));
 }
 
-- (CGFloat)contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:
-    (CGFloat)floatingPlaceholderMaxY {
+- (CGFloat)contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:(CGFloat)floatingPlaceholderMaxY {
   CGFloat minYAddition = 10;
   CGFloat maxYAddition = 15;
   CGFloat difference = maxYAddition - minYAddition;
@@ -302,10 +301,8 @@
   return floatingPlaceholderMaxY + (minYAddition + (difference * (1 - self.verticalDensity)));
 }
 
-- (CGFloat)contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:
-    (CGFloat)floatingPlaceholderMaxY {
-  return [self
-      contentAreaTopPaddingFloatingLabelWithFloatingLabelMaxY:floatingPlaceholderMaxY];
+- (CGFloat)contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:(CGFloat)floatingPlaceholderMaxY {
+  return [self contentAreaTopPaddingFloatingLabelWithFloatingLabelMaxY:floatingPlaceholderMaxY];
 }
 
 @end

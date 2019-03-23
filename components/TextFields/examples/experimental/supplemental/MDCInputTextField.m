@@ -567,10 +567,13 @@
   return [super placeholderRectForBounds:bounds];
 }
 
--(void)drawPlaceholderInRect:(CGRect)rect {
+- (void)drawPlaceholderInRect:(CGRect)rect {
   id<MDCContainedInputViewColorScheming> colorScheme =
-  [self containedInputViewColorSchemingForState:self.containedInputViewState];
-  NSDictionary *attributes = @{NSFontAttributeName: self.font, NSForegroundColorAttributeName: colorScheme.placeholderColor};
+      [self containedInputViewColorSchemingForState:self.containedInputViewState];
+  NSDictionary *attributes = @{
+    NSFontAttributeName : self.font,
+    NSForegroundColorAttributeName : colorScheme.placeholderColor
+  };
   [self.placeholder drawInRect:rect withAttributes:attributes];
 }
 
