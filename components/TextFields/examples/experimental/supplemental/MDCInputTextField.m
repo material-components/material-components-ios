@@ -222,7 +222,7 @@
 - (void)postLayoutSubviews {
   UIFont *normalFont = [self determineEffectiveFont];
   UIFont *floatingFont =
-      [self.floatingLabelManager floatingPlaceholderFontWithFont:normalFont
+      [self.floatingLabelManager floatingLabelFontWithFont:normalFont
                                                 containerStyle:self.containerStyle];
   [self.floatingLabelManager
       layOutFloatingLabel:self.floatingLabel
@@ -257,7 +257,7 @@
 - (MDCInputTextFieldLayout *)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize {
   UIFont *effectiveFont = [self determineEffectiveFont];
   UIFont *floatingFont =
-      [self.floatingLabelManager floatingPlaceholderFontWithFont:effectiveFont
+      [self.floatingLabelManager floatingLabelFontWithFont:effectiveFont
                                                 containerStyle:self.containerStyle];
   CGFloat normalizedCustomUnderlineLabelDrawPriority =
       [self normalizedCustomUnderlineLabelDrawPriority:self.customUnderlineLabelDrawPriority];
@@ -267,7 +267,7 @@
                                    text:self.text
                             placeholder:self.placeholder
                                    font:effectiveFont
-                floatingPlaceholderFont:floatingFont
+                floatingLabelFont:floatingFont
                     canFloatingLabelFloat:self.canFloatingLabelFloat
                                leftView:self.leftView
                            leftViewMode:self.leftViewMode
@@ -303,14 +303,14 @@
 
 #pragma mark UITextField Accessor Overrides
 
-- (void)setPlaceholder:(NSString *)placeholder {
-  self.floatingLabel.attributedText = nil;
-  self.floatingLabel.text = [placeholder copy];
-}
-
-- (NSString *)placeholder {
-  return self.floatingLabel.text;
-}
+//- (void)setPlaceholder:(NSString *)placeholder {
+//  self.floatingLabel.attributedText = nil;
+//  self.floatingLabel.text = [placeholder copy];
+//}
+//
+//- (NSString *)placeholder {
+//  return self.floatingLabel.text;
+//}
 
 - (void)setAttributedPlaceholder:(NSAttributedString *)attributedPlaceholder {
   self.floatingLabel.text = [attributedPlaceholder string];

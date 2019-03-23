@@ -199,14 +199,14 @@
       break;
   }
 
-  MDCContainedInputViewColorSchemeOutlined *simpleTextFieldColorScheme =
+  MDCContainedInputViewColorSchemeOutlined *colorScheme =
       [[MDCContainedInputViewColorSchemeOutlined alloc] init];
-  simpleTextFieldColorScheme.textColor = textColor;
-  simpleTextFieldColorScheme.underlineLabelColor = underlineLabelColor;
-  simpleTextFieldColorScheme.outlineColor = outlineColor;
-  simpleTextFieldColorScheme.floatingLabelColor = floatingLabelColor;
-  simpleTextFieldColorScheme.clearButtonTintColor = clearButtonTintColor;
-  return simpleTextFieldColorScheme;
+  colorScheme.textColor = textColor;
+  colorScheme.underlineLabelColor = underlineLabelColor;
+  colorScheme.outlineColor = outlineColor;
+  colorScheme.floatingLabelColor = floatingLabelColor;
+  colorScheme.clearButtonTintColor = clearButtonTintColor;
+  return colorScheme;
 }
 
 - (MDCContainedInputViewColorSchemeFilled *)
@@ -245,16 +245,16 @@
       break;
   }
 
-  MDCContainedInputViewColorSchemeFilled *simpleTextFieldColorScheme =
+  MDCContainedInputViewColorSchemeFilled *colorScheme =
       [[MDCContainedInputViewColorSchemeFilled alloc] init];
-  simpleTextFieldColorScheme.textColor = textColor;
-  simpleTextFieldColorScheme.filledSublayerFillColor = filledSublayerFillColor;
-  simpleTextFieldColorScheme.thickUnderlineFillColor = thickUnderlineFillColor;
-  simpleTextFieldColorScheme.thinUnderlineFillColor = thinUnderlineFillColor;
-  simpleTextFieldColorScheme.underlineLabelColor = underlineLabelColor;
-  simpleTextFieldColorScheme.floatingLabelColor = floatingLabelColor;
-  simpleTextFieldColorScheme.clearButtonTintColor = clearButtonTintColor;
-  return simpleTextFieldColorScheme;
+  colorScheme.textColor = textColor;
+  colorScheme.filledSublayerFillColor = filledSublayerFillColor;
+  colorScheme.thickUnderlineFillColor = thickUnderlineFillColor;
+  colorScheme.thinUnderlineFillColor = thinUnderlineFillColor;
+  colorScheme.underlineLabelColor = underlineLabelColor;
+  colorScheme.floatingLabelColor = floatingLabelColor;
+  colorScheme.clearButtonTintColor = clearButtonTintColor;
+  return colorScheme;
 }
 
 @end

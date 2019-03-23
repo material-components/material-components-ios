@@ -35,7 +35,7 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
                                  text:(NSString *)text
                           placeholder:(NSString *)placeholder
                                  font:(UIFont *)font
-              floatingPlaceholderFont:(UIFont *)floatingPlaceholderFont
+              floatingLabelFont:(UIFont *)floatingLabelFont
                   canFloatingLabelFloat:(BOOL)canFloatingLabelFloat
                              leftView:(UIView *)leftView
                          leftViewMode:(UITextFieldViewMode)leftViewMode
@@ -59,7 +59,7 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
                                       text:text
                                placeholder:placeholder
                                       font:font
-                   floatingPlaceholderFont:floatingPlaceholderFont
+                   floatingLabelFont:floatingLabelFont
                        canFloatingLabelFloat:canFloatingLabelFloat
                                   leftView:leftView
                               leftViewMode:leftViewMode
@@ -87,7 +87,7 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
                                     text:(NSString *)text
                              placeholder:(NSString *)placeholder
                                     font:(UIFont *)font
-                 floatingPlaceholderFont:(UIFont *)floatingPlaceholderFont
+                 floatingLabelFont:(UIFont *)floatingLabelFont
                      canFloatingLabelFloat:(BOOL)canFloatingLabelFloat
                                 leftView:(UIView *)leftView
                             leftViewMode:(UITextFieldViewMode)leftViewMode
@@ -144,20 +144,20 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
       (kClearButtonTouchTargetSideLength - kClearButtonInnerImageViewSideLength) * 0.5;
   CGFloat actualClearButtonMinX = apparentClearButtonMinX - clearButtonImageViewSideMargin;
 
-  CGFloat floatingPlaceholderHeight =
-      canFloatingLabelFloat ? [self textHeightWithFont:floatingPlaceholderFont] : 0;
-  CGFloat floatingPlaceholderMinY = [containerStyle.densityInformer
-      floatingPlaceholderMinYWithFloatingPlaceholderHeight:floatingPlaceholderHeight];
-  CGFloat floatingPlaceholderMaxY = floatingPlaceholderMinY + floatingPlaceholderHeight;
+  CGFloat floatingLabelHeight =
+      canFloatingLabelFloat ? [self textHeightWithFont:floatingLabelFont] : 0;
+  CGFloat floatingLabelMinY = [containerStyle.densityInformer
+      floatingLabelMinYWithFloatingPlaceholderHeight:floatingLabelHeight];
+  CGFloat floatingLabelMaxY = floatingLabelMinY + floatingLabelHeight;
   CGFloat textRectMinYWithFloatingPlaceholder = [containerStyle.densityInformer
-      contentAreaTopPaddingFloatingPlaceholderWithFloatingPlaceholderMaxY:floatingPlaceholderMaxY];
+      contentAreaTopPaddingFloatingPlaceholderWithFloatingPlaceholderMaxY:floatingLabelMaxY];
   CGFloat textRectHeight = [self textHeightWithFont:font];
   CGFloat textRectCenterYWithFloatingPlaceholder =
       textRectMinYWithFloatingPlaceholder + ((CGFloat)0.5 * textRectHeight);
   CGFloat textRectMaxYWithFloatingPlaceholder =
       textRectMinYWithFloatingPlaceholder + textRectHeight;
   CGFloat bottomPadding = [containerStyle.densityInformer
-      contentAreaVerticalPaddingNormalWithFloatingPlaceholderMaxY:floatingPlaceholderMaxY];
+      contentAreaVerticalPaddingNormalWithFloatingPlaceholderMaxY:floatingLabelMaxY];
   CGFloat intrinsicContentAreaHeight = textRectMaxYWithFloatingPlaceholder + bottomPadding;
   CGFloat topRowBottomRowDividerY = intrinsicContentAreaHeight;
   if (preferredMainContentAreaHeight > intrinsicContentAreaHeight) {
@@ -240,7 +240,7 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
       CGRectMake(textRectMinX, textRectMinYNormal, textRectWidth, textRectHeight);
   CGFloat textRectMinYFloatingPlaceholder = (CGFloat)round(
       (double)(textRectCenterYWithFloatingPlaceholder - (textRectHeight * (CGFloat)0.5)));
-  CGRect floatingPlaceholderTextAreaRect =
+  CGRect floatingLabelTextAreaRect =
       CGRectMake(textRectMinX, textRectMinYFloatingPlaceholder, textRectWidth, textRectHeight);
 
   CGRect leftViewFrame = CGRectMake(leftViewMinX, leftViewMinY, leftViewWidth, leftViewHeight);
@@ -258,8 +258,8 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
                              containerStyle:containerStyle
                            floatingLabelState:MDCContainedInputViewFloatingLabelStateNormal
                                        font:font
-                    floatingPlaceholderFont:floatingPlaceholderFont
-                    floatingPlaceholderMinY:floatingPlaceholderMinY
+                    floatingLabelFont:floatingLabelFont
+                    floatingLabelMinY:floatingLabelMinY
                       lowestPlaceholderMinX:placeholderNormalMinX
                      highestPlaceholderMaxX:placeholderNormalMaxX
                                textRectRect:textRectNormal
@@ -269,8 +269,8 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
                              containerStyle:containerStyle
                            floatingLabelState:MDCContainedInputViewFloatingLabelStateFloating
                                        font:font
-                    floatingPlaceholderFont:floatingPlaceholderFont
-                    floatingPlaceholderMinY:floatingPlaceholderMinY
+                    floatingLabelFont:floatingLabelFont
+                    floatingLabelMinY:floatingLabelMinY
                       lowestPlaceholderMinX:placeholderFloatingMinX
                      highestPlaceholderMaxX:placeholderFloatingMaxX
                                textRectRect:textRectNormal
@@ -344,7 +344,7 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
   self.clearButtonFrame = clearButtonFrame;
   self.clearButtonFrameFloatingPlaceholder = clearButtonFrameFloatingPlaceholder;
   self.textRect = textRectNormal;
-  self.textRectFloatingPlaceholder = floatingPlaceholderTextAreaRect;
+  self.textRectFloatingPlaceholder = floatingLabelTextAreaRect;
   self.placeholderFrameFloating = placeholderFrameFloating;
   self.placeholderFrameNormal = placeholderFrameNormal;
   self.leftUnderlineLabelFrame = leftUnderlineLabelFrame;
@@ -357,11 +357,11 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
 }
 
 - (CGFloat)topRowSubviewMaxYWithTextAreaMaxY:(CGFloat)textRectMaxY
-             floatingPlaceholderTextAreaMaxY:(CGFloat)floatingPlaceholderTextAreaMaxY
+             floatingLabelTextAreaMaxY:(CGFloat)floatingLabelTextAreaMaxY
                                 leftViewMaxY:(CGFloat)leftViewMaxY
                                rightViewMaxY:(CGFloat)rightViewMaxY {
   CGFloat max = textRectMaxY;
-  max = MAX(max, floatingPlaceholderTextAreaMaxY);
+  max = MAX(max, floatingLabelTextAreaMaxY);
   max = MAX(max, leftViewMaxY);
   max = MAX(max, rightViewMaxY);
   return max;
@@ -479,8 +479,8 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
                            containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
                          floatingLabelState:(MDCContainedInputViewFloatingLabelState)floatingLabelState
                                      font:(UIFont *)font
-                  floatingPlaceholderFont:(UIFont *)floatingPlaceholderFont
-                  floatingPlaceholderMinY:(CGFloat)floatingPlaceholderMinY
+                  floatingLabelFont:(UIFont *)floatingLabelFont
+                  floatingLabelMinY:(CGFloat)floatingLabelMinY
                     lowestPlaceholderMinX:(CGFloat)lowestPlaceholderMinX
                    highestPlaceholderMaxX:(CGFloat)highestPlaceholderMaxX
                              textRectRect:(CGRect)textRectRect
@@ -497,8 +497,8 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
     case MDCContainedInputViewFloatingLabelStateFloating:
       size = [self placeholderSizeWithPlaceholder:placeholder
                               maxPlaceholderWidth:maxPlaceholderWidth
-                                             font:floatingPlaceholderFont];
-      originY = floatingPlaceholderMinY;
+                                             font:floatingLabelFont];
+      originY = floatingLabelMinY;
       if (isRTL) {
         originX = highestPlaceholderMaxX - size.width;
       } else {

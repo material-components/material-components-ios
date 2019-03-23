@@ -483,14 +483,14 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 - (InputChipViewLayout *)calculateLayoutWithSize:(CGSize)size {
   UIFont *normalFont = self.inputChipViewTextField.effectiveFont;
   UIFont *floatingFont =
-      [self.floatingLabelManager floatingPlaceholderFontWithFont:normalFont
+      [self.floatingLabelManager floatingLabelFontWithFont:normalFont
                                                 containerStyle:self.containerStyle];
   return [[InputChipViewLayout alloc] initWithSize:size
                                     containerStyle:self.containerStyle
                                               text:self.inputChipViewTextField.text
                                        placeholder:self.inputChipViewTextField.placeholder
                                               font:self.inputChipViewTextField.effectiveFont
-                           floatingPlaceholderFont:floatingFont
+                           floatingLabelFont:floatingFont
                                   floatingLabelState:self.floatingLabelState
                                              chips:self.chips
                                     staleChipViews:self.chips
@@ -554,7 +554,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 - (void)postLayoutSubviews {
   UIFont *normalFont = self.inputChipViewTextField.effectiveFont;
   UIFont *floatingFont =
-      [self.floatingLabelManager floatingPlaceholderFontWithFont:normalFont
+      [self.floatingLabelManager floatingLabelFontWithFont:normalFont
                                                 containerStyle:self.containerStyle];
   [self.floatingLabelManager
       layOutFloatingLabel:self.floatingLabel
@@ -632,19 +632,19 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
     @(1),
   ];
 
-  CGFloat floatingPlaceholderMaxY = CGRectGetMaxY(self.floatingLabel.frame);
+  CGFloat floatingLabelMaxY = CGRectGetMaxY(self.floatingLabel.frame);
   CGFloat topSpacing = [self.containerStyle.densityInformer
-      contentAreaTopPaddingFloatingPlaceholderWithFloatingPlaceholderMaxY:floatingPlaceholderMaxY];
-  CGFloat topFadeStart = (floatingPlaceholderMaxY + ((CGFloat)0.0 * topSpacing)) / viewHeight;
+      contentAreaTopPaddingFloatingPlaceholderWithFloatingPlaceholderMaxY:floatingLabelMaxY];
+  CGFloat topFadeStart = (floatingLabelMaxY + ((CGFloat)0.0 * topSpacing)) / viewHeight;
   if (topFadeStart <= 0) {
     topFadeStart = 0;
   }
-  CGFloat topFadeEnd = (floatingPlaceholderMaxY + magicNumber) / viewHeight;
+  CGFloat topFadeEnd = (floatingLabelMaxY + magicNumber) / viewHeight;
   if (topFadeEnd <= 0) {
     topFadeEnd = 0;
   }
   CGFloat bottomSpacing = [self.containerStyle.densityInformer
-      contentAreaVerticalPaddingNormalWithFloatingPlaceholderMaxY:floatingPlaceholderMaxY];
+      contentAreaVerticalPaddingNormalWithFloatingPlaceholderMaxY:floatingLabelMaxY];
   CGFloat bottomFadeStart = (viewHeight - bottomSpacing) / viewHeight;
   if (bottomFadeStart >= 1) {
     bottomFadeStart = 1;

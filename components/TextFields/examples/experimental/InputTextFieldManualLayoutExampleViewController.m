@@ -204,6 +204,7 @@ static const NSUInteger kDefaultVerticalPadding = 20;
   [textField applyFilledThemeWithScheme:self.containerScheme];
   textField.mdc_adjustsFontForContentSizeCategory = YES;
   textField.placeholder = @"This is a placeholder";
+  textField.floatingLabel.text = @"This is a floating label";
   textField.clearButtonMode = UITextFieldViewModeWhileEditing;
   textField.leadingUnderlineLabel.numberOfLines = 0;
   textField.leadingUnderlineLabel.text = @"This is helper text.";
@@ -225,7 +226,8 @@ static const NSUInteger kDefaultVerticalPadding = 20;
 - (MDCInputTextField *)createOutlinedTextField {
   MDCInputTextField *textField = [[MDCInputTextField alloc] init];
   [textField applyOutlinedThemeWithScheme:self.containerScheme];
-  textField.placeholder = @"This is another placeholder";
+  textField.placeholder = @"This is a placeholder";
+  textField.floatingLabel.text = @"This is a floating label";
   textField.clearButtonMode = UITextFieldViewModeWhileEditing;
   textField.mdc_adjustsFontForContentSizeCategory = YES;
   return textField;
@@ -233,7 +235,8 @@ static const NSUInteger kDefaultVerticalPadding = 20;
 
 - (MDCInputTextField *)createUnthemedSimpleTextField {
   MDCInputTextField *textField = [[MDCInputTextField alloc] init];
-  textField.placeholder = @"Placeholder City!";
+  textField.placeholder = @"This is a placeholder";
+  textField.floatingLabel.text = @"This is a floating label";
   textField.clearButtonMode = UITextFieldViewModeWhileEditing;
   return textField;
 }
@@ -335,7 +338,7 @@ static const NSUInteger kDefaultVerticalPadding = 20;
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs" : @[ @"Text Field", @"Simple Text Field (Manual Layout)" ],
+    @"breadcrumbs" : @[ @"Text Field", @"Input Text Field (Manual Layout)" ],
     @"primaryDemo" : @NO,
     @"presentable" : @NO,
   };

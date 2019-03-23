@@ -40,7 +40,7 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
                                  text:(NSString *)text
                           placeholder:(NSString *)placeholder
                                  font:(UIFont *)font
-              floatingPlaceholderFont:(UIFont *)floatingPlaceholderFont
+              floatingLabelFont:(UIFont *)floatingLabelFont
                      floatingLabelState:(MDCContainedInputViewFloatingLabelState)floatingLabelState
                                 chips:(NSArray<UIView *> *)chips
                        staleChipViews:(NSArray<UIView *> *)staleChipViews
@@ -65,7 +65,7 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
                                      text:text
                               placeholder:placeholder
                                      font:font
-                  floatingPlaceholderFont:floatingPlaceholderFont
+                  floatingLabelFont:floatingLabelFont
                          floatingLabelState:floatingLabelState
                                     chips:chips
                            staleChipViews:staleChipViews
@@ -91,7 +91,7 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
                                  text:(NSString *)text
                           placeholder:(NSString *)placeholder
                                  font:(UIFont *)font
-              floatingPlaceholderFont:(UIFont *)floatingPlaceholderFont
+              floatingLabelFont:(UIFont *)floatingLabelFont
                      floatingLabelState:(MDCContainedInputViewFloatingLabelState)floatingLabelState
                                 chips:(NSArray<UIView *> *)chips
                        staleChipViews:(NSArray<UIView *> *)staleChipViews
@@ -113,19 +113,19 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
   CGFloat globalChipRowMaxX = isRTL ? size.width - kLeadingMargin : size.width - kTrailingMargin;
   CGFloat maxTextWidth = globalChipRowMaxX - globalChipRowMinX;
   CGRect placeholderFrameFloating =
-      [self floatingPlaceholderFrameWithPlaceholder:placeholder
-                                               font:floatingPlaceholderFont
+      [self floatingLabelFrameWithPlaceholder:placeholder
+                                               font:floatingLabelFont
                                   globalChipRowMinX:globalChipRowMinX
                                   globalChipRowMaxX:globalChipRowMaxX
                                      containerStyle:containerStyle
                                               isRTL:isRTL];
-  CGFloat floatingPlaceholderMaxY = CGRectGetMaxY(placeholderFrameFloating);
+  CGFloat floatingLabelMaxY = CGRectGetMaxY(placeholderFrameFloating);
   CGFloat initialChipRowMinYWithFloatingPlaceholder = [containerStyle.densityInformer
-      contentAreaTopPaddingFloatingPlaceholderWithFloatingPlaceholderMaxY:floatingPlaceholderMaxY];
+      contentAreaTopPaddingFloatingPlaceholderWithFloatingPlaceholderMaxY:floatingLabelMaxY];
   CGFloat highestPossibleInitialChipRowMaxY =
       initialChipRowMinYWithFloatingPlaceholder + chipRowHeight;
   CGFloat bottomPadding = [containerStyle.densityInformer
-      contentAreaVerticalPaddingNormalWithFloatingPlaceholderMaxY:floatingPlaceholderMaxY];
+      contentAreaVerticalPaddingNormalWithFloatingPlaceholderMaxY:floatingLabelMaxY];
   CGFloat intrinsicMainContentAreaHeight = highestPossibleInitialChipRowMaxY + bottomPadding;
   CGFloat contentAreaMaxY = 0;
   if (preferredMainContentAreaHeight > intrinsicMainContentAreaHeight) {
@@ -266,7 +266,7 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
   return maxY;
 }
 
-- (CGRect)normalPlaceholderFrameWithFloatingPlaceholderFrame:(CGRect)floatingPlaceholderFrame
+- (CGRect)normalPlaceholderFrameWithFloatingPlaceholderFrame:(CGRect)floatingLabelFrame
                                                  placeholder:(NSString *)placeholder
                                                         font:(UIFont *)font
                                            globalChipRowMinX:(CGFloat)globalChipRowMinX
@@ -286,7 +286,7 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
   if (chipsWrap) {
     placeholderMinY = [containerStyle.densityInformer
         contentAreaVerticalPaddingNormalWithFloatingPlaceholderMaxY:CGRectGetMaxY(
-                                                                        floatingPlaceholderFrame)];
+                                                                        floatingLabelFrame)];
   } else {
     CGFloat center = contentAreaHeight * (CGFloat)0.5;
     placeholderMinY = center - (placeholderSize.height * (CGFloat)0.5);
@@ -295,7 +295,7 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
                     placeholderSize.height);
 }
 
-- (CGRect)floatingPlaceholderFrameWithPlaceholder:(NSString *)placeholder
+- (CGRect)floatingLabelFrameWithPlaceholder:(NSString *)placeholder
                                              font:(UIFont *)font
                                 globalChipRowMinX:(CGFloat)globalChipRowMinX
                                 globalChipRowMaxX:(CGFloat)globalChipRowMaxX
@@ -304,7 +304,7 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
   CGFloat maxTextWidth = globalChipRowMaxX - globalChipRowMinX - kFloatingPlaceholderXOffset;
   CGSize placeholderSize = [self textSizeWithText:placeholder font:font maxWidth:maxTextWidth];
   CGFloat placeholderMinY = [containerStyle.densityInformer
-      floatingPlaceholderMinYWithFloatingPlaceholderHeight:placeholderSize.height];
+      floatingLabelMinYWithFloatingPlaceholderHeight:placeholderSize.height];
   CGFloat placeholderMinX = globalChipRowMinX + kFloatingPlaceholderXOffset;
   if (isRTL) {
     placeholderMinX = globalChipRowMaxX - kFloatingPlaceholderXOffset - placeholderSize.width;

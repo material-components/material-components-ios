@@ -120,7 +120,7 @@
   return [[MDCContainerStyleBaseDensityInformer alloc] init];
 }
 
-- (CGFloat)floatingPlaceholderFontSizeScaleFactor {
+- (CGFloat)floatingLabelFontSizeScaleFactor {
   return 0.75;
 }
 
@@ -137,18 +137,18 @@
   return self;
 }
 
-- (CGFloat)floatingPlaceholderMinYWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight {
+- (CGFloat)floatingLabelMinYWithFloatingPlaceholderHeight:(CGFloat)floatingLabelHeight {
   return 10;
 }
 
 - (CGFloat)contentAreaVerticalPaddingNormalWithFloatingPlaceholderMaxY:
-    (CGFloat)floatingPlaceholderMaxY {
+    (CGFloat)floatingLabelMaxY {
   return 20;
 }
 
 - (CGFloat)contentAreaTopPaddingFloatingPlaceholderWithFloatingPlaceholderMaxY:
-    (CGFloat)floatingPlaceholderMaxY {
-  return floatingPlaceholderMaxY + 10;
+    (CGFloat)floatingLabelMaxY {
+  return floatingLabelMaxY + 10;
 }
 
 - (CGFloat)containerBottomVerticalPadding {
@@ -164,11 +164,11 @@
 
 @implementation MDCContainedInputViewFloatingLabelManager
 
-- (UIFont *)floatingPlaceholderFontWithFont:(UIFont *)font
+- (UIFont *)floatingLabelFontWithFont:(UIFont *)font
                              containerStyle:(id<MDCContainedInputViewStyle>)containerStyle {
-  CGFloat scaleFactor = [containerStyle floatingPlaceholderFontSizeScaleFactor];
-  CGFloat floatingPlaceholderFontSize = font.pointSize * scaleFactor;
-  return [font fontWithSize:floatingPlaceholderFontSize];
+  CGFloat scaleFactor = [containerStyle floatingLabelFontSizeScaleFactor];
+  CGFloat floatingLabelFontSize = font.pointSize * scaleFactor;
+  return [font fontWithSize:floatingLabelFontSize];
 }
 
 - (void)layOutFloatingLabel:(UILabel *)floatingLabel

@@ -51,20 +51,19 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewUnderlineLabelDrawPriority) {
 };
 
 /**
- This enum allows us to differentiate between traditional UITextField placeholders and the
- "floating" style customary in Text Fields outlined in the Material guidelines.
+ This enum represents different states the floating label can be in.
  */
 typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
   /**
-   The state of having no placeholder.
+   The state of having no floating label. It's not visible and has no frame and does not affect layout.
    */
   MDCContainedInputViewFloatingLabelStateNone,
   /**
-   The state of having a floating placeholder.
+   The state where the floating label is floating.
    */
   MDCContainedInputViewFloatingLabelStateFloating,
   /**
-   The state of having a non-floating placeholder.
+   The state where the floating label is occupying the normal text area.
    */
   MDCContainedInputViewFloatingLabelStateNormal,
 };
@@ -88,7 +87,7 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
 /**
  Describes the current @c MDCContainedInputViewFloatingLabelState of the contained input view based
  off its UIControlState,  the value of the @c canFloatingLabelFloat property, and the value of its
- placeholder text.
+ floating label's text.
  */
 @property(nonatomic, assign, readonly) MDCContainedInputViewFloatingLabelState floatingLabelState;
 
@@ -123,11 +122,11 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
 @property(nonatomic, assign) CGFloat customUnderlineLabelDrawPriority;
 
 /**
- When set to YES, the placeholder floats above the input text instead of disappearing. When
+ When set to YES, the floating label floats above the input text instead of disappearing. When
  set to NO it disappears.
 
  @note The default is YES.
- @note When set to YES, the text field will reserve space for the floating placeholder in the
+ @note When set to YES, the text field will reserve space for the floating label in the
  layout, which will result in a text field that requires more height to render properly. Consider
  resizing the text field after setting this property, perhaps by calling @c -sizeToFit.
  */
@@ -218,16 +217,16 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
 - (void)applyStyleToContainedInputView:(nonnull id<MDCContainedInputView>)inputView
     withContainedInputViewColorScheming:(nonnull id<MDCContainedInputViewColorScheming>)colorScheme;
 - (void)removeStyleFrom:(nonnull id<MDCContainedInputView>)containedInputView;
-- (CGFloat)floatingPlaceholderFontSizeScaleFactor;
+- (CGFloat)floatingLabelFontSizeScaleFactor;
 @end
 
 @protocol MDCContainedInputViewStyleDensityInforming <NSObject>
 @property(nonatomic, assign) CGFloat verticalDensity;
-- (CGFloat)floatingPlaceholderMinYWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight;
+- (CGFloat)floatingLabelMinYWithFloatingPlaceholderHeight:(CGFloat)floatingLabelHeight;
 - (CGFloat)contentAreaTopPaddingFloatingPlaceholderWithFloatingPlaceholderMaxY:
-    (CGFloat)floatingPlaceholderMaxY;
+    (CGFloat)floatingLabelMaxY;
 - (CGFloat)contentAreaVerticalPaddingNormalWithFloatingPlaceholderMaxY:
-    (CGFloat)floatingPlaceholderMaxY;
+    (CGFloat)floatingLabelMaxY;
 - (CGFloat)containerBottomVerticalPadding;
 @end
 
@@ -240,7 +239,7 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
 @end
 
 @interface MDCContainedInputViewFloatingLabelManager : NSObject
-- (UIFont *_Nonnull)floatingPlaceholderFontWithFont:(nonnull UIFont *)font
+- (UIFont *_Nonnull)floatingLabelFontWithFont:(nonnull UIFont *)font
                                      containerStyle:
                                          (nonnull id<MDCContainedInputViewStyle>)containerStyle;
 - (void)layOutFloatingLabel:(nonnull UILabel *)floatingLabel
