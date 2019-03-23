@@ -100,7 +100,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 #pragma mark MDCContainedInputView properties
 @property(strong, nonatomic) UIButton *clearButton;
 @property(strong, nonatomic) UIImageView *clearButtonImageView;
-@property(strong, nonatomic) UILabel *placeholderLabel;
+@property(strong, nonatomic) UILabel *floatingLabel;
 
 @property(strong, nonatomic) UILabel *leftUnderlineLabel;
 @property(strong, nonatomic) UILabel *rightUnderlineLabel;
@@ -124,7 +124,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 //@property(strong, nonatomic) UIButton *clearButton;
 //@property(strong, nonatomic) UIImageView *clearButtonImageView;
-//@property(strong, nonatomic) UILabel *placeholderLabel;
+//@property(strong, nonatomic) UILabel *floatingLabel;
 //
 //@property(strong, nonatomic) UILabel *leftUnderlineLabel;
 //@property(strong, nonatomic) UILabel *rightUnderlineLabel;
@@ -132,12 +132,12 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 @property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
 
 @property(nonatomic, assign) MDCContainedInputViewState containedInputViewState;
-@property(nonatomic, assign) MDCContainedInputViewPlaceholderState placeholderState;
+@property(nonatomic, assign) MDCContainedInputViewFloatingLabelState floatingLabelState;
 
 @property(nonatomic, strong)
     NSMutableDictionary<NSNumber *, id<MDCContainedInputViewColorScheming>> *colorSchemes;
 
-@property(nonatomic, strong) MDCContainedInputViewPlaceholderManager *placeholderManager;
+@property(nonatomic, strong) MDCContainedInputViewFloatingLabelManager *floatingLabelManager;
 
 @property(nonatomic, assign) BOOL isAnimating;
 
@@ -151,7 +151,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 @synthesize containerStyle = _containerStyle;
 @synthesize isActivated = _isActivated;
 @synthesize isErrored = _isErrored;
-@synthesize canPlaceholderFloat = _canPlaceholderFloat;
+@synthesize canFloatingLabelFloat = _canFloatingLabelFloat;
 
 #pragma mark Object Lifecycle
 
@@ -230,7 +230,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 }
 
 - (void)setUpPlaceholderManager {
-  self.placeholderManager = [[MDCContainedInputViewPlaceholderManager alloc] init];
+  self.floatingLabelManager = [[MDCContainedInputViewFloatingLabelManager alloc] init];
 }
 
 - (void)setUpLayoutDirection {
@@ -259,8 +259,8 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   self.inputChipViewTextField.inputChipViewTextFieldDelegate = self;
   [self.scrollView addSubview:self.inputChipViewTextField];
 
-  self.placeholderLabel = [[UILabel alloc] init];
-  [self addSubview:self.placeholderLabel];
+  self.floatingLabel = [[UILabel alloc] init];
+  [self addSubview:self.floatingLabel];
 }
 
 - (void)setContainerStyle:(id<MDCContainedInputViewStyle>)containerStyle {
@@ -315,7 +315,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 }
 
 - (void)setUpClearButton {
-  //  CGFloat clearButtonSideLength = MDCSimpleTextFieldLayout.clearButtonSideLength;
+  //  CGFloat clearButtonSideLength = MDCInputTextFieldLayout.clearButtonSideLength;
   //  CGRect clearButtonFrame = CGRectMake(0, 0, clearButtonSideLength, clearButtonSideLength);
   //  self.clearButton = [[UIButton alloc] initWithFrame:clearButtonFrame];
   //  [self.clearButton addTarget:self
@@ -323,7 +323,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   //             forControlEvents:UIControlEventTouchUpInside];
   //
   //  CGFloat clearButtonImageViewSideLength =
-  //  MDCSimpleTextFieldLayout.clearButtonImageViewSideLength; CGRect clearButtonImageViewRect =
+  //  MDCInputTextFieldLayout.clearButtonImageViewSideLength; CGRect clearButtonImageViewRect =
   //  CGRectMake(0, 0, clearButtonImageViewSideLength, clearButtonImageViewSideLength);
   //  self.clearButtonImageView = [[UIImageView alloc] initWithFrame:clearButtonImageViewRect];
   //  UIImage *clearButtonImage =
@@ -483,7 +483,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 - (InputChipViewLayout *)calculateLayoutWithSize:(CGSize)size {
   UIFont *normalFont = self.inputChipViewTextField.effectiveFont;
   UIFont *floatingFont =
-      [self.placeholderManager floatingPlaceholderFontWithFont:normalFont
+      [self.floatingLabelManager floatingPlaceholderFontWithFont:normalFont
                                                 containerStyle:self.containerStyle];
   return [[InputChipViewLayout alloc] initWithSize:size
                                     containerStyle:self.containerStyle
@@ -491,7 +491,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
                                        placeholder:self.inputChipViewTextField.placeholder
                                               font:self.inputChipViewTextField.effectiveFont
                            floatingPlaceholderFont:floatingFont
-                                  placeholderState:self.placeholderState
+                                  floatingLabelState:self.floatingLabelState
                                              chips:self.chips
                                     staleChipViews:self.chips
                                          chipsWrap:self.chipsWrap
@@ -511,7 +511,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 - (void)preLayoutSubviews {
   self.containedInputViewState = [self determineCurrentContainedInputViewState];
-  self.placeholderState = [self determineCurrentPlaceholderState];
+  self.floatingLabelState = [self determineCurrentFloatingLabelState];
   id<MDCContainedInputViewColorScheming> colorScheming =
       [self containedInputViewColorSchemingForState:self.containedInputViewState];
   [self applyMDCContainedInputViewColorScheming:colorScheming];
@@ -554,11 +554,11 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 - (void)postLayoutSubviews {
   UIFont *normalFont = self.inputChipViewTextField.effectiveFont;
   UIFont *floatingFont =
-      [self.placeholderManager floatingPlaceholderFontWithFont:normalFont
+      [self.floatingLabelManager floatingPlaceholderFontWithFont:normalFont
                                                 containerStyle:self.containerStyle];
-  [self.placeholderManager
-      layOutPlaceholderWithPlaceholderLabel:self.placeholderLabel
-                                      state:self.placeholderState
+  [self.floatingLabelManager
+      layOutFloatingLabel:self.floatingLabel
+                                      state:self.floatingLabelState
                                 normalFrame:self.layout.placeholderFrameNormal
                               floatingFrame:self.layout.placeholderFrameFloating
                                  normalFont:normalFont
@@ -569,7 +569,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
                   withContainedInputViewColorScheming:colorScheming];
 
   //  self.clearButton.frame = [self clearButtonFrameFromLayout:self.layout
-  //                                           placeholderState:self.placeholderState];
+  //                                           floatingLabelState:self.floatingLabelState];
   //  self.clearButton.hidden = self.layout.clearButtonHidden;
   //  self.leftUnderlineLabel.frame = self.layout.leftUnderlineLabelFrame;
   //  self.rightUnderlineLabel.frame = self.layout.rightUnderlineLabelFrame;
@@ -632,7 +632,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
     @(1),
   ];
 
-  CGFloat floatingPlaceholderMaxY = CGRectGetMaxY(self.placeholderLabel.frame);
+  CGFloat floatingPlaceholderMaxY = CGRectGetMaxY(self.floatingLabel.frame);
   CGFloat topSpacing = [self.containerStyle.densityInformer
       contentAreaTopPaddingFloatingPlaceholderWithFloatingPlaceholderMaxY:floatingPlaceholderMaxY];
   CGFloat topFadeStart = (floatingPlaceholderMaxY + ((CGFloat)0.0 * topSpacing)) / viewHeight;
@@ -840,17 +840,17 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 #pragma mark Placeholder
 
-- (MDCContainedInputViewPlaceholderState)determineCurrentPlaceholderState {
-  return [self placeholderStateWithPlaceholder:self.textField.placeholder
+- (MDCContainedInputViewFloatingLabelState)determineCurrentFloatingLabelState {
+  return [self floatingLabelStateWithPlaceholder:self.textField.placeholder
                                           text:self.textField.text
-                           canPlaceholderFloat:self.canPlaceholderFloat
+                           canFloatingLabelFloat:self.canFloatingLabelFloat
                                      isEditing:self.textField.isEditing
                                          chips:self.chips];
 }
 
-- (MDCContainedInputViewPlaceholderState)placeholderStateWithPlaceholder:(NSString *)placeholder
+- (MDCContainedInputViewFloatingLabelState)floatingLabelStateWithPlaceholder:(NSString *)placeholder
                                                                     text:(NSString *)text
-                                                     canPlaceholderFloat:(BOOL)canPlaceholderFloat
+                                                     canFloatingLabelFloat:(BOOL)canFloatingLabelFloat
                                                                isEditing:(BOOL)isEditing
                                                                    chips:
                                                                        (NSArray<UIView *> *)chips {
@@ -858,25 +858,25 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   BOOL hasText = text.length > 0;
   BOOL hasChips = chips.count > 0;
   if (hasPlaceholder) {
-    if (canPlaceholderFloat) {
+    if (canFloatingLabelFloat) {
       if (isEditing) {
-        return MDCContainedInputViewPlaceholderStateFloating;
+        return MDCContainedInputViewFloatingLabelStateFloating;
       } else {
         if (hasText || hasChips) {
-          return MDCContainedInputViewPlaceholderStateFloating;
+          return MDCContainedInputViewFloatingLabelStateFloating;
         } else {
-          return MDCContainedInputViewPlaceholderStateNormal;
+          return MDCContainedInputViewFloatingLabelStateNormal;
         }
       }
     } else {
       if (hasText || hasChips) {
-        return MDCContainedInputViewPlaceholderStateNone;
+        return MDCContainedInputViewFloatingLabelStateNone;
       } else {
-        return MDCContainedInputViewPlaceholderStateNormal;
+        return MDCContainedInputViewFloatingLabelStateNormal;
       }
     }
   } else {
-    return MDCContainedInputViewPlaceholderStateNone;
+    return MDCContainedInputViewFloatingLabelStateNone;
   }
 }
 
@@ -985,7 +985,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 }
 
 - (void)inputChipViewTextFieldDidSetPlaceholder:(NSString *)placeholder {
-  self.placeholderLabel.text = placeholder;
+  self.floatingLabel.text = placeholder;
   [self setNeedsLayout];
 }
 
@@ -996,7 +996,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   self.textField.textColor = colorScheming.textColor;
   self.leadingUnderlineLabel.textColor = colorScheming.underlineLabelColor;
   self.trailingUnderlineLabel.textColor = colorScheming.underlineLabelColor;
-  self.placeholderLabel.textColor = colorScheming.placeholderLabelColor;
+  self.floatingLabel.textColor = colorScheming.floatingLabelColor;
   self.clearButtonImageView.tintColor = colorScheming.clearButtonTintColor;
 }
 

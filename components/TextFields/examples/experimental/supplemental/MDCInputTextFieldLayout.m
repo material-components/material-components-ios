@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCSimpleTextFieldLayout.h"
+#import "MDCInputTextFieldLayout.h"
 
 #import "MDCContainedInputView.h"
-#import "MDCSimpleTextField.h"
+#import "MDCInputTextField.h"
 
 static const CGFloat kLeadingMargin = (CGFloat)12.0;
 static const CGFloat kTrailingMargin = (CGFloat)12.0;
@@ -23,10 +23,10 @@ static const CGFloat kFloatingPlaceholderXOffsetFromTextArea = (CGFloat)3.0;
 static const CGFloat kClearButtonTouchTargetSideLength = (CGFloat)30.0;
 static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
 
-@interface MDCSimpleTextFieldLayout ()
+@interface MDCInputTextFieldLayout ()
 @end
 
-@implementation MDCSimpleTextFieldLayout
+@implementation MDCInputTextFieldLayout
 
 #pragma mark Object Lifecycle
 
@@ -36,7 +36,7 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
                           placeholder:(NSString *)placeholder
                                  font:(UIFont *)font
               floatingPlaceholderFont:(UIFont *)floatingPlaceholderFont
-                  canPlaceholderFloat:(BOOL)canPlaceholderFloat
+                  canFloatingLabelFloat:(BOOL)canFloatingLabelFloat
                              leftView:(UIView *)leftView
                          leftViewMode:(UITextFieldViewMode)leftViewMode
                             rightView:(UIView *)rightView
@@ -60,7 +60,7 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
                                placeholder:placeholder
                                       font:font
                    floatingPlaceholderFont:floatingPlaceholderFont
-                       canPlaceholderFloat:canPlaceholderFloat
+                       canFloatingLabelFloat:canFloatingLabelFloat
                                   leftView:leftView
                               leftViewMode:leftViewMode
                                  rightView:rightView
@@ -88,7 +88,7 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
                              placeholder:(NSString *)placeholder
                                     font:(UIFont *)font
                  floatingPlaceholderFont:(UIFont *)floatingPlaceholderFont
-                     canPlaceholderFloat:(BOOL)canPlaceholderFloat
+                     canFloatingLabelFloat:(BOOL)canFloatingLabelFloat
                                 leftView:(UIView *)leftView
                             leftViewMode:(UITextFieldViewMode)leftViewMode
                                rightView:(UIView *)rightView
@@ -145,7 +145,7 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
   CGFloat actualClearButtonMinX = apparentClearButtonMinX - clearButtonImageViewSideMargin;
 
   CGFloat floatingPlaceholderHeight =
-      canPlaceholderFloat ? [self textHeightWithFont:floatingPlaceholderFont] : 0;
+      canFloatingLabelFloat ? [self textHeightWithFont:floatingPlaceholderFont] : 0;
   CGFloat floatingPlaceholderMinY = [containerStyle.densityInformer
       floatingPlaceholderMinYWithFloatingPlaceholderHeight:floatingPlaceholderHeight];
   CGFloat floatingPlaceholderMaxY = floatingPlaceholderMinY + floatingPlaceholderHeight;
@@ -256,7 +256,7 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
   CGRect placeholderFrameNormal =
       [self placeholderFrameWithPlaceholder:placeholder
                              containerStyle:containerStyle
-                           placeholderState:MDCContainedInputViewPlaceholderStateNormal
+                           floatingLabelState:MDCContainedInputViewFloatingLabelStateNormal
                                        font:font
                     floatingPlaceholderFont:floatingPlaceholderFont
                     floatingPlaceholderMinY:floatingPlaceholderMinY
@@ -267,7 +267,7 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
   CGRect placeholderFrameFloating =
       [self placeholderFrameWithPlaceholder:placeholder
                              containerStyle:containerStyle
-                           placeholderState:MDCContainedInputViewPlaceholderStateFloating
+                           floatingLabelState:MDCContainedInputViewFloatingLabelStateFloating
                                        font:font
                     floatingPlaceholderFont:floatingPlaceholderFont
                     floatingPlaceholderMinY:floatingPlaceholderMinY
@@ -477,7 +477,7 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
 
 - (CGRect)placeholderFrameWithPlaceholder:(NSString *)placeholder
                            containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
-                         placeholderState:(MDCContainedInputViewPlaceholderState)placeholderState
+                         floatingLabelState:(MDCContainedInputViewFloatingLabelState)floatingLabelState
                                      font:(UIFont *)font
                   floatingPlaceholderFont:(UIFont *)floatingPlaceholderFont
                   floatingPlaceholderMinY:(CGFloat)floatingPlaceholderMinY
@@ -491,10 +491,10 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
   CGRect rect = CGRectZero;
   CGFloat originX = 0;
   CGFloat originY = 0;
-  switch (placeholderState) {
-    case MDCContainedInputViewPlaceholderStateNone:
+  switch (floatingLabelState) {
+    case MDCContainedInputViewFloatingLabelStateNone:
       break;
-    case MDCContainedInputViewPlaceholderStateFloating:
+    case MDCContainedInputViewFloatingLabelStateFloating:
       size = [self placeholderSizeWithPlaceholder:placeholder
                               maxPlaceholderWidth:maxPlaceholderWidth
                                              font:floatingPlaceholderFont];
@@ -506,7 +506,7 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
       }
       rect = CGRectMake(originX, originY, size.width, size.height);
       break;
-    case MDCContainedInputViewPlaceholderStateNormal:
+    case MDCContainedInputViewFloatingLabelStateNormal:
       size = [self placeholderSizeWithPlaceholder:placeholder
                               maxPlaceholderWidth:maxPlaceholderWidth
                                              font:font];

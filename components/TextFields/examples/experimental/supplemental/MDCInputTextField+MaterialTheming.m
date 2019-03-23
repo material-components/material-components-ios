@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCSimpleTextField+MaterialTheming.h"
+#import "MDCInputTextField+MaterialTheming.h"
 
 #import <Foundation/Foundation.h>
 
@@ -20,7 +20,7 @@
 #import "MDCContainerStyleFilled.h"
 #import "MDCContainerStyleOutlined.h"
 
-@implementation MDCSimpleTextField (MaterialTheming)
+@implementation MDCInputTextField (MaterialTheming)
 
 - (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
   [self applyTypographySchemeWith:containerScheme];
@@ -82,8 +82,8 @@
 
 - (void)applyOutlinedThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
   MDCContainerStyleOutlined *outlinedStyle = [[MDCContainerStyleOutlined alloc] init];
-  MDCSimpleTextFieldOutlinedDensityInformer *densityInformer =
-      [[MDCSimpleTextFieldOutlinedDensityInformer alloc] init];
+  MDCInputTextFieldOutlinedDensityInformer *densityInformer =
+      [[MDCInputTextFieldOutlinedDensityInformer alloc] init];
   outlinedStyle.densityInformer = densityInformer;
   self.containerStyle = outlinedStyle;
 
@@ -127,8 +127,8 @@
 
 - (void)applyFilledThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
   MDCContainerStyleFilled *filledStyle = [[MDCContainerStyleFilled alloc] init];
-  MDCSimpleTextFieldFilledDensityInformer *densityInformer =
-      [[MDCSimpleTextFieldFilledDensityInformer alloc] init];
+  MDCInputTextFieldFilledDensityInformer *densityInformer =
+      [[MDCInputTextFieldFilledDensityInformer alloc] init];
   filledStyle.densityInformer = densityInformer;
   self.containerStyle = filledStyle;
 
@@ -176,7 +176,7 @@
   UIColor *textColor = colorScheming.onSurfaceColor;
   UIColor *underlineLabelColor =
       [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
-  UIColor *placeholderLabelColor =
+  UIColor *floatingLabelColor =
       [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
   UIColor *outlineColor = colorScheming.onSurfaceColor;
   UIColor *clearButtonTintColor =
@@ -188,16 +188,16 @@
     case MDCContainedInputViewStateActivated:
       break;
     case MDCContainedInputViewStateDisabled:
-      placeholderLabelColor = [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.10];
+      floatingLabelColor = [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.10];
       break;
     case MDCContainedInputViewStateErrored:
-      placeholderLabelColor = colorScheming.errorColor;
+      floatingLabelColor = colorScheming.errorColor;
       underlineLabelColor = colorScheming.errorColor;
       outlineColor = colorScheming.errorColor;
       break;
     case MDCContainedInputViewStateFocused:
       outlineColor = colorScheming.primaryColor;
-      placeholderLabelColor = colorScheming.primaryColor;
+      floatingLabelColor = colorScheming.primaryColor;
       break;
     default:
       break;
@@ -208,7 +208,7 @@
   simpleTextFieldColorScheme.textColor = textColor;
   simpleTextFieldColorScheme.underlineLabelColor = underlineLabelColor;
   simpleTextFieldColorScheme.outlineColor = outlineColor;
-  simpleTextFieldColorScheme.placeholderLabelColor = placeholderLabelColor;
+  simpleTextFieldColorScheme.floatingLabelColor = floatingLabelColor;
   simpleTextFieldColorScheme.clearButtonTintColor = clearButtonTintColor;
   return simpleTextFieldColorScheme;
 }
@@ -219,7 +219,7 @@
   UIColor *textColor = colorScheming.onSurfaceColor;
   UIColor *underlineLabelColor =
       [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
-  UIColor *placeholderLabelColor =
+  UIColor *floatingLabelColor =
       [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
   UIColor *thinUnderlineFillColor = colorScheming.onBackgroundColor;
   UIColor *thickUnderlineFillColor = colorScheming.primaryColor;
@@ -235,16 +235,16 @@
     case MDCContainedInputViewStateActivated:
       break;
     case MDCContainedInputViewStateDisabled:
-      placeholderLabelColor = [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.10];
+      floatingLabelColor = [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.10];
       break;
     case MDCContainedInputViewStateErrored:
-      placeholderLabelColor = colorScheming.errorColor;
+      floatingLabelColor = colorScheming.errorColor;
       underlineLabelColor = colorScheming.errorColor;
       thinUnderlineFillColor = colorScheming.errorColor;
       thickUnderlineFillColor = colorScheming.errorColor;
       break;
     case MDCContainedInputViewStateFocused:
-      placeholderLabelColor = colorScheming.primaryColor;
+      floatingLabelColor = colorScheming.primaryColor;
       break;
     default:
       break;
@@ -257,17 +257,17 @@
   simpleTextFieldColorScheme.thickUnderlineFillColor = thickUnderlineFillColor;
   simpleTextFieldColorScheme.thinUnderlineFillColor = thinUnderlineFillColor;
   simpleTextFieldColorScheme.underlineLabelColor = underlineLabelColor;
-  simpleTextFieldColorScheme.placeholderLabelColor = placeholderLabelColor;
+  simpleTextFieldColorScheme.floatingLabelColor = floatingLabelColor;
   simpleTextFieldColorScheme.clearButtonTintColor = clearButtonTintColor;
   return simpleTextFieldColorScheme;
 }
 
 @end
 
-//@interface MDCSimpleTextFieldFilledDensityInformer ()
+//@interface MDCInputTextFieldFilledDensityInformer ()
 //@end
 
-@implementation MDCSimpleTextFieldFilledDensityInformer
+@implementation MDCInputTextFieldFilledDensityInformer
 
 - (CGFloat)floatingPlaceholderMinYWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight {
   CGFloat lowestMinY = 4;
@@ -301,7 +301,7 @@
 
 @end
 
-@implementation MDCSimpleTextFieldOutlinedDensityInformer
+@implementation MDCInputTextFieldOutlinedDensityInformer
 
 - (CGFloat)floatingPlaceholderMinYWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight {
   return (CGFloat)0 - ((CGFloat)0.5 * floatingPlaceholderHeight);

@@ -83,9 +83,9 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
     return;
   }
   uiView = (UIView *)containedInputView;
-  CGRect placeholderFrame = containedInputView.placeholderLabel.frame;
+  CGRect placeholderFrame = containedInputView.floatingLabel.frame;
   BOOL isFloatingPlaceholder =
-      containedInputView.placeholderState == MDCContainedInputViewPlaceholderStateFloating;
+      containedInputView.floatingLabelState == MDCContainedInputViewFloatingLabelStateFloating;
   CGFloat topRowBottomRowDividerY = CGRectGetMaxY(containedInputView.containerFrame);
   CGFloat lineWidth = [self outlineLineWidthForState:containedInputView.containedInputViewState];
   [self applyStyleTo:uiView

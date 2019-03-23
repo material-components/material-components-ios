@@ -29,7 +29,7 @@
  - Enable easy set up and reliable and predictable behavior.
 
  */
-@interface MDCSimpleTextField : UITextField <MDCContainedInputView>
+@interface MDCInputTextField : UITextField <MDCContainedInputView>
 
 /**
  This is essentially an RTL-aware wrapper around UITextField's leftView/rightView class.

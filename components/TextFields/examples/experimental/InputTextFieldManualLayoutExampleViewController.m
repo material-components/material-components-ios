@@ -12,19 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "SimpleTextFieldManualLayoutExampleViewController.h"
+#import "InputTextFieldManualLayoutExampleViewController.h"
 
 #import "MaterialButtons.h"
 
 #import "MaterialButtons+Theming.h"
 #import "MaterialColorScheme.h"
-#import "supplemental/MDCSimpleTextField.h"
+#import "supplemental/MDCInputTextField.h"
 
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar+TypographyThemer.h"
 #import "MaterialButtons+ButtonThemer.h"
 
-#import "supplemental/MDCSimpleTextField+MaterialTheming.h"
+#import "supplemental/MDCInputTextField+MaterialTheming.h"
 
 static const NSUInteger kDefaultHorizontalPadding = 20;
 static const NSUInteger kDefaultVerticalPadding = 20;
@@ -131,7 +131,7 @@ static const NSUInteger kDefaultVerticalPadding = 20;
     CGSize viewSize = view.frame.size;
     CGFloat textFieldWidth =
         CGRectGetWidth(self.scrollView.frame) - (2 * kDefaultHorizontalPadding);
-    if ([view isKindOfClass:[MDCSimpleTextField class]]) {
+    if ([view isKindOfClass:[MDCInputTextField class]]) {
       viewSize = CGSizeMake(textFieldWidth, CGRectGetHeight(view.frame));
     }
     CGRect viewFrame = CGRectMake(viewMinX, viewMinY, viewSize.width, viewSize.height);
@@ -187,20 +187,20 @@ static const NSUInteger kDefaultVerticalPadding = 20;
   return label;
 }
 
-- (MDCSimpleTextField *)createFilledTextFieldWithMaximalDensity {
-  MDCSimpleTextField *textField = [self createFilledTextField];
+- (MDCInputTextField *)createFilledTextFieldWithMaximalDensity {
+  MDCInputTextField *textField = [self createFilledTextField];
   textField.containerStyle.densityInformer.verticalDensity = 1.0;
   return textField;
 }
 
-- (MDCSimpleTextField *)createFilledTextFieldWithMinimalDensity {
-  MDCSimpleTextField *textField = [self createFilledTextField];
+- (MDCInputTextField *)createFilledTextFieldWithMinimalDensity {
+  MDCInputTextField *textField = [self createFilledTextField];
   textField.containerStyle.densityInformer.verticalDensity = 0.0;
   return textField;
 }
 
-- (MDCSimpleTextField *)createFilledTextField {
-  MDCSimpleTextField *textField = [[MDCSimpleTextField alloc] init];
+- (MDCInputTextField *)createFilledTextField {
+  MDCInputTextField *textField = [[MDCInputTextField alloc] init];
   [textField applyFilledThemeWithScheme:self.containerScheme];
   textField.mdc_adjustsFontForContentSizeCategory = YES;
   textField.placeholder = @"This is a placeholder";
@@ -210,20 +210,20 @@ static const NSUInteger kDefaultVerticalPadding = 20;
   return textField;
 }
 
-- (MDCSimpleTextField *)createOutlinedTextFieldWithMaximalDensity {
-  MDCSimpleTextField *textField = [self createOutlinedTextField];
+- (MDCInputTextField *)createOutlinedTextFieldWithMaximalDensity {
+  MDCInputTextField *textField = [self createOutlinedTextField];
   textField.containerStyle.densityInformer.verticalDensity = 1.0;
   return textField;
 }
 
-- (MDCSimpleTextField *)createOutlinedTextFieldWithMinimalDensity {
-  MDCSimpleTextField *textField = [self createOutlinedTextField];
+- (MDCInputTextField *)createOutlinedTextFieldWithMinimalDensity {
+  MDCInputTextField *textField = [self createOutlinedTextField];
   textField.containerStyle.densityInformer.verticalDensity = 0.0;
   return textField;
 }
 
-- (MDCSimpleTextField *)createOutlinedTextField {
-  MDCSimpleTextField *textField = [[MDCSimpleTextField alloc] init];
+- (MDCInputTextField *)createOutlinedTextField {
+  MDCInputTextField *textField = [[MDCInputTextField alloc] init];
   [textField applyOutlinedThemeWithScheme:self.containerScheme];
   textField.placeholder = @"This is another placeholder";
   textField.clearButtonMode = UITextFieldViewModeWhileEditing;
@@ -231,8 +231,8 @@ static const NSUInteger kDefaultVerticalPadding = 20;
   return textField;
 }
 
-- (MDCSimpleTextField *)createUnthemedSimpleTextField {
-  MDCSimpleTextField *textField = [[MDCSimpleTextField alloc] init];
+- (MDCInputTextField *)createUnthemedSimpleTextField {
+  MDCInputTextField *textField = [[MDCInputTextField alloc] init];
   textField.placeholder = @"Placeholder City!";
   textField.clearButtonMode = UITextFieldViewModeWhileEditing;
   return textField;
@@ -256,7 +256,7 @@ static const NSUInteger kDefaultVerticalPadding = 20;
 
 - (void)updateTextFieldStates {
   [self.allTextFields
-      enumerateObjectsUsingBlock:^(MDCSimpleTextField *textField, NSUInteger idx, BOOL *stop) {
+      enumerateObjectsUsingBlock:^(MDCInputTextField *textField, NSUInteger idx, BOOL *stop) {
         textField.isErrored = self.isErrored;
         BOOL isEven = idx % 2 == 0;
         if (textField.isErrored) {
@@ -286,8 +286,8 @@ static const NSUInteger kDefaultVerticalPadding = 20;
   }];
 }
 
-- (NSArray<MDCSimpleTextField *> *)allTextFields {
-  return [self allViewsOfClass:[MDCSimpleTextField class]];
+- (NSArray<MDCInputTextField *> *)allTextFields {
+  return [self allViewsOfClass:[MDCInputTextField class]];
 }
 
 - (NSArray<MDCButton *> *)allButtons {
@@ -319,7 +319,7 @@ static const NSUInteger kDefaultVerticalPadding = 20;
 
 - (void)resignFirstResponderButtonTapped:(UIButton *)button {
   [self.allTextFields
-      enumerateObjectsUsingBlock:^(MDCSimpleTextField *textField, NSUInteger idx, BOOL *stop) {
+      enumerateObjectsUsingBlock:^(MDCInputTextField *textField, NSUInteger idx, BOOL *stop) {
         [textField resignFirstResponder];
       }];
 }

@@ -41,7 +41,7 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
                           placeholder:(NSString *)placeholder
                                  font:(UIFont *)font
               floatingPlaceholderFont:(UIFont *)floatingPlaceholderFont
-                     placeholderState:(MDCContainedInputViewPlaceholderState)placeholderState
+                     floatingLabelState:(MDCContainedInputViewFloatingLabelState)floatingLabelState
                                 chips:(NSArray<UIView *> *)chips
                        staleChipViews:(NSArray<UIView *> *)staleChipViews
                             chipsWrap:(BOOL)chipsWrap
@@ -66,7 +66,7 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
                               placeholder:placeholder
                                      font:font
                   floatingPlaceholderFont:floatingPlaceholderFont
-                         placeholderState:placeholderState
+                         floatingLabelState:floatingLabelState
                                     chips:chips
                            staleChipViews:staleChipViews
                                 chipsWrap:chipsWrap
@@ -92,7 +92,7 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
                           placeholder:(NSString *)placeholder
                                  font:(UIFont *)font
               floatingPlaceholderFont:(UIFont *)floatingPlaceholderFont
-                     placeholderState:(MDCContainedInputViewPlaceholderState)placeholderState
+                     floatingLabelState:(MDCContainedInputViewFloatingLabelState)floatingLabelState
                                 chips:(NSArray<UIView *> *)chips
                        staleChipViews:(NSArray<UIView *> *)staleChipViews
                             chipsWrap:(BOOL)chipsWrap
@@ -153,7 +153,7 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
     initialChipRowMinYNormal = center - (chipRowHeight * (CGFloat)0.5);
   }
   CGFloat initialChipRowMinY = initialChipRowMinYNormal;
-  if (placeholderState == MDCContainedInputViewPlaceholderStateFloating) {
+  if (floatingLabelState == MDCContainedInputViewFloatingLabelStateFloating) {
     initialChipRowMinY = initialChipRowMinYWithFloatingPlaceholder;
   }
 

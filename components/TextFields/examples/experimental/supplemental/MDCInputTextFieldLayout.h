@@ -21,7 +21,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MDCSimpleTextFieldLayout : NSObject
+@interface MDCInputTextFieldLayout : NSObject
 
 @property(nonatomic, readonly, class) CGFloat clearButtonSideLength;
 @property(nonatomic, readonly, class) CGFloat clearButtonImageViewSideLength;
@@ -51,7 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
                           placeholder:(NSString *)placeholder
                                  font:(UIFont *)font
               floatingPlaceholderFont:(UIFont *)floatingPlaceholderFont
-                  canPlaceholderFloat:(BOOL)canPlaceholderFloat
+                  canFloatingLabelFloat:(BOOL)canFloatingLabelFloat
                              leftView:(UIView *)leftView
                          leftViewMode:(UITextFieldViewMode)leftViewMode
                             rightView:(UIView *)rightView

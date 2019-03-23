@@ -54,19 +54,19 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewUnderlineLabelDrawPriority) {
  This enum allows us to differentiate between traditional UITextField placeholders and the
  "floating" style customary in Text Fields outlined in the Material guidelines.
  */
-typedef NS_ENUM(NSUInteger, MDCContainedInputViewPlaceholderState) {
+typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
   /**
    The state of having no placeholder.
    */
-  MDCContainedInputViewPlaceholderStateNone,
+  MDCContainedInputViewFloatingLabelStateNone,
   /**
    The state of having a floating placeholder.
    */
-  MDCContainedInputViewPlaceholderStateFloating,
+  MDCContainedInputViewFloatingLabelStateFloating,
   /**
    The state of having a non-floating placeholder.
    */
-  MDCContainedInputViewPlaceholderStateNormal,
+  MDCContainedInputViewFloatingLabelStateNormal,
 };
 
 @protocol MDCContainedInputViewStyle;
@@ -86,16 +86,16 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewPlaceholderState) {
 @property(nonatomic, assign, readonly) MDCContainedInputViewState containedInputViewState;
 
 /**
- Describes the current @c MDCContainedInputViewPlaceholderState of the contained input view based
- off its UIControlState,  the value of the @c canPlaceholderFloat property, and the value of its
+ Describes the current @c MDCContainedInputViewFloatingLabelState of the contained input view based
+ off its UIControlState,  the value of the @c canFloatingLabelFloat property, and the value of its
  placeholder text.
  */
-@property(nonatomic, assign, readonly) MDCContainedInputViewPlaceholderState placeholderState;
+@property(nonatomic, assign, readonly) MDCContainedInputViewFloatingLabelState floatingLabelState;
 
 /**
  The @c leadingUnderlineLabel can be used to display helper or error text.
  */
-@property(strong, nonatomic, readonly, nonnull) UILabel *placeholderLabel;
+@property(strong, nonatomic, readonly, nonnull) UILabel *floatingLabel;
 /**
  The @c leadingUnderlineLabel can be used to display helper or error text.
  */
@@ -131,7 +131,7 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewPlaceholderState) {
  layout, which will result in a text field that requires more height to render properly. Consider
  resizing the text field after setting this property, perhaps by calling @c -sizeToFit.
  */
-@property(nonatomic, assign) BOOL canPlaceholderFloat;
+@property(nonatomic, assign) BOOL canFloatingLabelFloat;
 
 /**
  This property toggles a state (similar to @c isHighlighted, @c isEnabled, @c isSelected, etc.) that
@@ -192,7 +192,7 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewPlaceholderState) {
 @protocol MDCContainedInputViewColorScheming <NSObject>
 @property(strong, nonatomic, readonly, nonnull) UIColor *textColor;
 @property(strong, nonatomic, readonly, nonnull) UIColor *underlineLabelColor;
-@property(strong, nonatomic, readonly, nonnull) UIColor *placeholderLabelColor;
+@property(strong, nonatomic, readonly, nonnull) UIColor *floatingLabelColor;
 @property(strong, nonatomic, readonly, nonnull) UIColor *clearButtonTintColor;
 @property(strong, nonatomic, readonly, nonnull) UIColor *errorColor;
 @end
@@ -203,7 +203,7 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewPlaceholderState) {
 @interface MDCContainedInputViewColorScheme : NSObject <MDCContainedInputViewColorScheming>
 @property(strong, nonatomic, nonnull) UIColor *textColor;
 @property(strong, nonatomic, nonnull) UIColor *underlineLabelColor;
-@property(strong, nonatomic, nonnull) UIColor *placeholderLabelColor;
+@property(strong, nonatomic, nonnull) UIColor *floatingLabelColor;
 @property(strong, nonatomic, nonnull) UIColor *clearButtonTintColor;
 @property(strong, nonatomic, nonnull) UIColor *errorColor;
 @end
@@ -239,13 +239,13 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewPlaceholderState) {
     : NSObject <MDCContainedInputViewStyleDensityInforming>
 @end
 
-@interface MDCContainedInputViewPlaceholderManager : NSObject
+@interface MDCContainedInputViewFloatingLabelManager : NSObject
 - (UIFont *_Nonnull)floatingPlaceholderFontWithFont:(nonnull UIFont *)font
                                      containerStyle:
                                          (nonnull id<MDCContainedInputViewStyle>)containerStyle;
-- (void)layOutPlaceholderWithPlaceholderLabel:(nonnull UILabel *)placeholderLabel
+- (void)layOutFloatingLabel:(nonnull UILabel *)floatingLabel
                                         state:
-                                            (MDCContainedInputViewPlaceholderState)placeholderState
+                                            (MDCContainedInputViewFloatingLabelState)floatingLabelState
                                   normalFrame:(CGRect)normalFrame
                                 floatingFrame:(CGRect)floatingFrame
                                    normalFont:(nonnull UIFont *)normalFont

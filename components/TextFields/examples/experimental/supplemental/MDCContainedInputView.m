@@ -32,12 +32,12 @@
 - (void)commonMDCContainedInputViewColorSchemeInit {
   UIColor *textColor = [UIColor blackColor];
   UIColor *underlineLabelColor = [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.60];
-  UIColor *placeholderLabelColor = [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.60];
+  UIColor *floatingLabelColor = [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.60];
   UIColor *errorColor = [UIColor redColor];
   UIColor *clearButtonTintColor = [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.20];
   self.textColor = textColor;
   self.underlineLabelColor = underlineLabelColor;
-  self.placeholderLabelColor = placeholderLabelColor;
+  self.floatingLabelColor = floatingLabelColor;
   self.clearButtonTintColor = clearButtonTintColor;
   self.errorColor = errorColor;
 }
@@ -69,7 +69,7 @@
     (MDCContainedInputViewState)state {
   MDCContainedInputViewColorScheme *colorScheme = [[MDCContainedInputViewColorScheme alloc] init];
 
-  UIColor *placeholderLabelColor = colorScheme.placeholderLabelColor;
+  UIColor *floatingLabelColor = colorScheme.floatingLabelColor;
   UIColor *underlineLabelColor = colorScheme.underlineLabelColor;
   UIColor *textColor = colorScheme.textColor;
 
@@ -79,15 +79,15 @@
     case MDCContainedInputViewStateActivated:
       break;
     case MDCContainedInputViewStateDisabled:
-      placeholderLabelColor = [placeholderLabelColor colorWithAlphaComponent:(CGFloat)0.10];
+      floatingLabelColor = [floatingLabelColor colorWithAlphaComponent:(CGFloat)0.10];
       break;
     case MDCContainedInputViewStateErrored:
       textColor = colorScheme.errorColor;
       underlineLabelColor = colorScheme.errorColor;
-      placeholderLabelColor = colorScheme.errorColor;
+      floatingLabelColor = colorScheme.errorColor;
       break;
     case MDCContainedInputViewStateFocused:
-      placeholderLabelColor = [UIColor blackColor];
+      floatingLabelColor = [UIColor blackColor];
       break;
     default:
       break;
@@ -95,7 +95,7 @@
 
   colorScheme.textColor = textColor;
   colorScheme.underlineLabelColor = underlineLabelColor;
-  colorScheme.placeholderLabelColor = placeholderLabelColor;
+  colorScheme.floatingLabelColor = floatingLabelColor;
 
   return colorScheme;
 }
@@ -159,10 +159,10 @@
 
 // static const CGFloat kFloatingPlaceholderAnimationVelocityInPointsPerSecond = (CGFloat)200;
 
-@interface MDCContainedInputViewPlaceholderManager ()
+@interface MDCContainedInputViewFloatingLabelManager ()
 @end
 
-@implementation MDCContainedInputViewPlaceholderManager
+@implementation MDCContainedInputViewFloatingLabelManager
 
 - (UIFont *)floatingPlaceholderFontWithFont:(UIFont *)font
                              containerStyle:(id<MDCContainedInputViewStyle>)containerStyle {
@@ -171,9 +171,9 @@
   return [font fontWithSize:floatingPlaceholderFontSize];
 }
 
-- (void)layOutPlaceholderWithPlaceholderLabel:(UILabel *)placeholderLabel
+- (void)layOutFloatingLabel:(UILabel *)floatingLabel
                                         state:
-                                            (MDCContainedInputViewPlaceholderState)placeholderState
+                                            (MDCContainedInputViewFloatingLabelState)floatingLabelState
                                   normalFrame:(CGRect)normalFrame
                                 floatingFrame:(CGRect)floatingFrame
                                    normalFont:(UIFont *)normalFont
@@ -181,43 +181,43 @@
   UIFont *targetFont = normalFont;
   CGRect targetFrame = normalFrame;
   BOOL placeholderShouldHide = NO;
-  switch (placeholderState) {
-    case MDCContainedInputViewPlaceholderStateFloating:
+  switch (floatingLabelState) {
+    case MDCContainedInputViewFloatingLabelStateFloating:
       targetFont = floatingFont;
       targetFrame = floatingFrame;
       break;
-    case MDCContainedInputViewPlaceholderStateNormal:
+    case MDCContainedInputViewFloatingLabelStateNormal:
       break;
-    case MDCContainedInputViewPlaceholderStateNone:
+    case MDCContainedInputViewFloatingLabelStateNone:
       placeholderShouldHide = YES;
       break;
     default:
       break;
   }
 
-  CGRect currentFrame = placeholderLabel.frame;
+  CGRect currentFrame = floatingLabel.frame;
   CGAffineTransform trasformNeededToMakeTargetLookLikeCurrent =
       [self transformFromRect:targetFrame toRect:currentFrame];
   CATransform3D fromValueTransform3D =
       CATransform3DMakeAffineTransform(trasformNeededToMakeTargetLookLikeCurrent);
   CATransform3D toValueTransform3D = CATransform3DIdentity;
 
-  placeholderLabel.frame = targetFrame;
-  placeholderLabel.font = targetFont;
-  placeholderLabel.transform = CGAffineTransformIdentity;
+  floatingLabel.frame = targetFrame;
+  floatingLabel.font = targetFont;
+  floatingLabel.transform = CGAffineTransformIdentity;
 
   CABasicAnimation *preexistingAnimation =
-      (CABasicAnimation *)[placeholderLabel.layer animationForKey:self.transformAnimationKey];
+      (CABasicAnimation *)[floatingLabel.layer animationForKey:self.transformAnimationKey];
 
-  placeholderLabel.hidden = placeholderShouldHide;
+  floatingLabel.hidden = placeholderShouldHide;
 
   [CATransaction begin];
   {
     [CATransaction setCompletionBlock:^{
-      [placeholderLabel.layer removeAnimationForKey:self.transformAnimationKey];
+      [floatingLabel.layer removeAnimationForKey:self.transformAnimationKey];
     }];
     if (preexistingAnimation) {
-      [placeholderLabel.layer removeAnimationForKey:self.transformAnimationKey];
+      [floatingLabel.layer removeAnimationForKey:self.transformAnimationKey];
     } else {
       CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform"];
       animation.fromValue = [NSValue valueWithCATransform3D:fromValueTransform3D];
@@ -225,7 +225,7 @@
       animation.duration = self.animationDuration;
       animation.removedOnCompletion = NO;
       animation.fillMode = kCAFillModeForwards;
-      [placeholderLabel.layer addAnimation:animation forKey:self.transformAnimationKey];
+      [floatingLabel.layer addAnimation:animation forKey:self.transformAnimationKey];
     }
   }
   [CATransaction commit];
