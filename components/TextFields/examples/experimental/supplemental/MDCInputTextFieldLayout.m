@@ -254,7 +254,7 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
       CGRectMake(actualClearButtonMinX, clearButtonFloatingPlaceholderMinY,
                  kClearButtonTouchTargetSideLength, kClearButtonTouchTargetSideLength);
 
-  CGRect placeholderFrameNormal =
+  CGRect floatingLabelFrameNormal =
       [self placeholderFrameWithPlaceholder:placeholder
                              containerStyle:containerStyle
                          floatingLabelState:MDCContainedInputViewFloatingLabelStateNormal
@@ -265,7 +265,7 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
                      highestPlaceholderMaxX:placeholderNormalMaxX
                                textRectRect:textRectNormal
                                       isRTL:isRTL];
-  CGRect placeholderFrameFloating =
+  CGRect floatingLabelFrameFloating =
       [self placeholderFrameWithPlaceholder:placeholder
                              containerStyle:containerStyle
                          floatingLabelState:MDCContainedInputViewFloatingLabelStateFloating
@@ -346,8 +346,8 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
   self.clearButtonFrameFloatingPlaceholder = clearButtonFrameFloatingPlaceholder;
   self.textRect = textRectNormal;
   self.textRectFloatingPlaceholder = floatingLabelTextAreaRect;
-  self.placeholderFrameFloating = placeholderFrameFloating;
-  self.placeholderFrameNormal = placeholderFrameNormal;
+  self.floatingLabelFrameFloating = floatingLabelFrameFloating;
+  self.floatingLabelFrameNormal = floatingLabelFrameNormal;
   self.leftUnderlineLabelFrame = leftUnderlineLabelFrame;
   self.rightUnderlineLabelFrame = rightUnderlineLabelFrame;
   self.topRowBottomRowDividerY = topRowBottomRowDividerY;
@@ -532,13 +532,13 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
 
 - (CGFloat)calculatedHeight {
   CGFloat maxY = 0;
-  CGFloat placeholderFrameFloatingMaxY = CGRectGetMaxY(self.placeholderFrameFloating);
-  if (placeholderFrameFloatingMaxY > maxY) {
-    maxY = placeholderFrameFloatingMaxY;
+  CGFloat floatingLabelFrameFloatingMaxY = CGRectGetMaxY(self.floatingLabelFrameFloating);
+  if (floatingLabelFrameFloatingMaxY > maxY) {
+    maxY = floatingLabelFrameFloatingMaxY;
   }
-  CGFloat placeholderFrameNormalMaxY = CGRectGetMaxY(self.placeholderFrameNormal);
-  if (placeholderFrameFloatingMaxY > maxY) {
-    maxY = placeholderFrameNormalMaxY;
+  CGFloat floatingLabelFrameNormalMaxY = CGRectGetMaxY(self.floatingLabelFrameNormal);
+  if (floatingLabelFrameFloatingMaxY > maxY) {
+    maxY = floatingLabelFrameNormalMaxY;
   }
   CGFloat textRectMaxY = CGRectGetMaxY(self.textRect);
   if (textRectMaxY > maxY) {

@@ -29,10 +29,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, assign) BOOL leftViewHidden;
 @property(nonatomic, assign) BOOL rightViewHidden;
 @property(nonatomic, assign) BOOL clearButtonHidden;
-@property(nonatomic, assign) BOOL placeholderHidden;
+@property(nonatomic, assign) BOOL floatingLabelHidden;
 
-@property(nonatomic, assign) CGRect placeholderFrameFloating;
-@property(nonatomic, assign) CGRect placeholderFrameNormal;
+@property(nonatomic, assign) CGRect floatingLabelFrameFloating;
+@property(nonatomic, assign) CGRect floatingLabelFrameNormal;
 @property(nonatomic, assign) CGRect textRect;
 @property(nonatomic, assign) CGRect textRectFloatingPlaceholder;
 @property(nonatomic, assign) CGRect clearButtonFrame;

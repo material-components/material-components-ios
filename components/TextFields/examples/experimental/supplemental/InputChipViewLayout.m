@@ -112,13 +112,13 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
   CGFloat globalChipRowMinX = isRTL ? kTrailingMargin : kLeadingMargin;
   CGFloat globalChipRowMaxX = isRTL ? size.width - kLeadingMargin : size.width - kTrailingMargin;
   CGFloat maxTextWidth = globalChipRowMaxX - globalChipRowMinX;
-  CGRect placeholderFrameFloating = [self floatingLabelFrameWithPlaceholder:placeholder
+  CGRect floatingLabelFrameFloating = [self floatingLabelFrameWithPlaceholder:placeholder
                                                                        font:floatingFont
                                                           globalChipRowMinX:globalChipRowMinX
                                                           globalChipRowMaxX:globalChipRowMaxX
                                                              containerStyle:containerStyle
                                                                       isRTL:isRTL];
-  CGFloat floatingLabelMaxY = CGRectGetMaxY(placeholderFrameFloating);
+  CGFloat floatingLabelMaxY = CGRectGetMaxY(floatingLabelFrameFloating);
   CGFloat initialChipRowMinYWithFloatingPlaceholder = [containerStyle.densityInformer
       contentAreaTopPaddingFloatingPlaceholderWithFloatingPlaceholderMaxY:floatingLabelMaxY];
   CGFloat highestPossibleInitialChipRowMaxY =
@@ -133,8 +133,8 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
     contentAreaMaxY = intrinsicMainContentAreaHeight;
   }
 
-  CGRect placeholderFrameNormal =
-      [self normalPlaceholderFrameWithFloatingPlaceholderFrame:placeholderFrameFloating
+  CGRect floatingLabelFrameNormal =
+      [self normalPlaceholderFrameWithFloatingPlaceholderFrame:floatingLabelFrameFloating
                                                    placeholder:placeholder
                                                           font:font
                                              globalChipRowMinX:globalChipRowMinX
@@ -145,7 +145,7 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
                                                          isRTL:isRTL];
 
   CGFloat initialChipRowMinYNormal =
-      CGRectGetMidY(placeholderFrameNormal) - ((CGFloat)0.5 * chipRowHeight);
+      CGRectGetMidY(floatingLabelFrameNormal) - ((CGFloat)0.5 * chipRowHeight);
   if (chipsWrap) {
   } else {
     CGFloat center = contentAreaMaxY * (CGFloat)0.5;
@@ -203,8 +203,8 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
   self.scrollViewContentSize = contentSize;
   self.scrollViewContentViewTouchForwardingViewFrame =
       CGRectMake(0, 0, contentSize.width, contentSize.height);
-  self.placeholderFrameFloating = placeholderFrameFloating;
-  self.placeholderFrameNormal = placeholderFrameNormal;
+  self.floatingLabelFrameFloating = floatingLabelFrameFloating;
+  self.floatingLabelFrameNormal = floatingLabelFrameNormal;
   self.initialChipRowMinY = initialChipRowMinY;
   self.globalChipRowMinX = globalChipRowMinX;
   self.globalChipRowMaxX = globalChipRowMaxX;
@@ -225,9 +225,9 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
   //    self.scrollViewContentViewTouchForwardingViewFrame =
   //        MDFRectFlippedHorizontally(self.scrollViewContentViewTouchForwardingViewFrame,
   //        size.width);
-  //    self.placeholderFrameFloating = MDFRectFlippedHorizontally(placeholderFrameFloating,
-  //    size.width); self.placeholderFrameNormal =
-  //    MDFRectFlippedHorizontally(placeholderFrameNormal, size.width);
+  //    self.floatingLabelFrameFloating = MDFRectFlippedHorizontally(floatingLabelFrameFloating,
+  //    size.width); self.floatingLabelFrameNormal =
+  //    MDFRectFlippedHorizontally(floatingLabelFrameNormal, size.width);
   //    self.maskedScrollViewContainerViewFrame =
   //        MDFRectFlippedHorizontally(self.maskedScrollViewContainerViewFrame, size.width);
   //    self.scrollViewFrame = MDFRectFlippedHorizontally(scrollViewRect, size.width);
@@ -238,13 +238,13 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
 
 - (CGFloat)calculatedHeight {
   CGFloat maxY = 0;
-  CGFloat placeholderFrameFloatingMaxY = CGRectGetMaxY(self.placeholderFrameFloating);
-  if (placeholderFrameFloatingMaxY > maxY) {
-    maxY = placeholderFrameFloatingMaxY;
+  CGFloat floatingLabelFrameFloatingMaxY = CGRectGetMaxY(self.floatingLabelFrameFloating);
+  if (floatingLabelFrameFloatingMaxY > maxY) {
+    maxY = floatingLabelFrameFloatingMaxY;
   }
-  CGFloat placeholderFrameNormalMaxY = CGRectGetMaxY(self.placeholderFrameNormal);
-  if (placeholderFrameFloatingMaxY > maxY) {
-    maxY = placeholderFrameNormalMaxY;
+  CGFloat floatingLabelFrameNormalMaxY = CGRectGetMaxY(self.floatingLabelFrameNormal);
+  if (floatingLabelFrameFloatingMaxY > maxY) {
+    maxY = floatingLabelFrameNormalMaxY;
   }
   CGFloat textRectMaxY = self.contentAreaMaxY;
   if (textRectMaxY > maxY) {

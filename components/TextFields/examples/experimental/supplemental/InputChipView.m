@@ -556,8 +556,8 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
                                                                containerStyle:self.containerStyle];
   [self.floatingLabelManager layOutFloatingLabel:self.floatingLabel
                                            state:self.floatingLabelState
-                                     normalFrame:self.layout.placeholderFrameNormal
-                                   floatingFrame:self.layout.placeholderFrameFloating
+                                     normalFrame:self.layout.floatingLabelFrameNormal
+                                   floatingFrame:self.layout.floatingLabelFrameFloating
                                       normalFont:normalFont
                                     floatingFont:floatingFont];
   id<MDCContainedInputViewColorScheming> colorScheming =

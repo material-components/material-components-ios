@@ -225,8 +225,8 @@
                                                                containerStyle:self.containerStyle];
   [self.floatingLabelManager layOutFloatingLabel:self.floatingLabel
                                            state:self.floatingLabelState
-                                     normalFrame:self.layout.placeholderFrameNormal
-                                   floatingFrame:self.layout.placeholderFrameFloating
+                                     normalFrame:self.layout.floatingLabelFrameNormal
+                                   floatingFrame:self.layout.floatingLabelFrameFloating
                                       normalFont:normalFont
                                     floatingFont:floatingFont];
   id<MDCContainedInputViewColorScheming> colorScheming =
@@ -558,6 +558,13 @@
 
 - (CGRect)clearButtonRectForBounds:(CGRect)bounds {
   return CGRectZero;
+}
+
+-(CGRect)placeholderRectForBounds:(CGRect)bounds {
+  if (self.floatingLabelState == MDCContainedInputViewFloatingLabelStateNormal) {
+    return CGRectZero;
+  }
+  return [super placeholderRectForBounds:bounds];
 }
 
 #pragma mark Fonts
