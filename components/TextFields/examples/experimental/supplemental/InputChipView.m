@@ -631,7 +631,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
   CGFloat floatingLabelMaxY = CGRectGetMaxY(self.floatingLabel.frame);
   CGFloat topSpacing = [self.containerStyle.densityInformer
-      contentAreaTopPaddingFloatingPlaceholderWithFloatingPlaceholderMaxY:floatingLabelMaxY];
+      contentAreaTopPaddingFloatingLabelWithFloatingLabelMaxY:floatingLabelMaxY];
   CGFloat topFadeStart = (floatingLabelMaxY + ((CGFloat)0.0 * topSpacing)) / viewHeight;
   if (topFadeStart <= 0) {
     topFadeStart = 0;
@@ -641,7 +641,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
     topFadeEnd = 0;
   }
   CGFloat bottomSpacing = [self.containerStyle.densityInformer
-      contentAreaVerticalPaddingNormalWithFloatingPlaceholderMaxY:floatingLabelMaxY];
+      contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:floatingLabelMaxY];
   CGFloat bottomFadeStart = (viewHeight - bottomSpacing) / viewHeight;
   if (bottomFadeStart >= 1) {
     bottomFadeStart = 1;

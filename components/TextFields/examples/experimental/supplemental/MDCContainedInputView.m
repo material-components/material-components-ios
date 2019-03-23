@@ -137,15 +137,15 @@
   return self;
 }
 
-- (CGFloat)floatingLabelMinYWithFloatingPlaceholderHeight:(CGFloat)floatingLabelHeight {
+- (CGFloat)floatingLabelMinYWithFloatingLabelHeight:(CGFloat)floatingLabelHeight {
   return 10;
 }
 
-- (CGFloat)contentAreaVerticalPaddingNormalWithFloatingPlaceholderMaxY:(CGFloat)floatingLabelMaxY {
+- (CGFloat)contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:(CGFloat)floatingLabelMaxY {
   return 20;
 }
 
-- (CGFloat)contentAreaTopPaddingFloatingPlaceholderWithFloatingPlaceholderMaxY:
+- (CGFloat)contentAreaTopPaddingFloatingLabelWithFloatingLabelMaxY:
     (CGFloat)floatingLabelMaxY {
   return floatingLabelMaxY + 10;
 }
@@ -156,7 +156,7 @@
 
 @end
 
-// static const CGFloat kFloatingPlaceholderAnimationVelocityInPointsPerSecond = (CGFloat)200;
+// static const CGFloat kFloatingLabelAnimationVelocityInPointsPerSecond = (CGFloat)200;
 
 @interface MDCContainedInputViewFloatingLabelManager ()
 @end
@@ -245,7 +245,7 @@
   //  CGFloat higherMinY = MAX(CGRectGetMinY(currentFrame), CGRectGetMinY(targetFrame));
   //  CGFloat distanceTravelled = higherMinY - lowerMinY;
   CGFloat animationDuration = (CGFloat)0.2;
-  //      distanceTravelled / kFloatingPlaceholderAnimationVelocityInPointsPerSecond;
+  //      distanceTravelled / kFloatingLabelAnimationVelocityInPointsPerSecond;
   return animationDuration;
 }
 

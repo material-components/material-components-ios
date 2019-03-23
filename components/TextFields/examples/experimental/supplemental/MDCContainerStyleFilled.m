@@ -470,7 +470,7 @@ static const CGFloat kLayerAnimationDuration = (CGFloat)0.2;
 
 @implementation MDCContainerStyleFilledDensityInformer
 
-- (CGFloat)floatingPlaceholderMinYWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight {
+- (CGFloat)floatingLabelMinYWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight {
   CGFloat filledPlaceholderTopPaddingScaleHeuristic = ((CGFloat)50.0 / (CGFloat)70.0);
   return filledPlaceholderTopPaddingScaleHeuristic * floatingPlaceholderHeight;
 }

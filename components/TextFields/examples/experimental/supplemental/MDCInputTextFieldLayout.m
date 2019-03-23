@@ -19,7 +19,7 @@
 
 static const CGFloat kLeadingMargin = (CGFloat)12.0;
 static const CGFloat kTrailingMargin = (CGFloat)12.0;
-static const CGFloat kFloatingPlaceholderXOffsetFromTextArea = (CGFloat)3.0;
+static const CGFloat kFloatingLabelXOffsetFromTextArea = (CGFloat)3.0;
 static const CGFloat kClearButtonTouchTargetSideLength = (CGFloat)30.0;
 static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
 
@@ -147,18 +147,18 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
 
   CGFloat floatingLabelHeight = canFloatingLabelFloat ? [self textHeightWithFont:floatingFont] : 0;
   CGFloat floatingLabelMinY = [containerStyle.densityInformer
-      floatingLabelMinYWithFloatingPlaceholderHeight:floatingLabelHeight];
+      floatingLabelMinYWithFloatingLabelHeight:floatingLabelHeight];
   CGFloat floatingLabelMaxY = floatingLabelMinY + floatingLabelHeight;
-  CGFloat textRectMinYWithFloatingPlaceholder = [containerStyle.densityInformer
-      contentAreaTopPaddingFloatingPlaceholderWithFloatingPlaceholderMaxY:floatingLabelMaxY];
+  CGFloat textRectMinYWithFloatingLabel = [containerStyle.densityInformer
+      contentAreaTopPaddingFloatingLabelWithFloatingLabelMaxY:floatingLabelMaxY];
   CGFloat textRectHeight = [self textHeightWithFont:font];
-  CGFloat textRectCenterYWithFloatingPlaceholder =
-      textRectMinYWithFloatingPlaceholder + ((CGFloat)0.5 * textRectHeight);
-  CGFloat textRectMaxYWithFloatingPlaceholder =
-      textRectMinYWithFloatingPlaceholder + textRectHeight;
+  CGFloat textRectCenterYWithFloatingLabel =
+      textRectMinYWithFloatingLabel + ((CGFloat)0.5 * textRectHeight);
+  CGFloat textRectMaxYWithFloatingLabel =
+      textRectMinYWithFloatingLabel + textRectHeight;
   CGFloat bottomPadding = [containerStyle.densityInformer
-      contentAreaVerticalPaddingNormalWithFloatingPlaceholderMaxY:floatingLabelMaxY];
-  CGFloat intrinsicContentAreaHeight = textRectMaxYWithFloatingPlaceholder + bottomPadding;
+      contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:floatingLabelMaxY];
+  CGFloat intrinsicContentAreaHeight = textRectMaxYWithFloatingLabel + bottomPadding;
   CGFloat topRowBottomRowDividerY = intrinsicContentAreaHeight;
   if (preferredMainContentAreaHeight > intrinsicContentAreaHeight) {
     topRowBottomRowDividerY = preferredMainContentAreaHeight;
@@ -184,13 +184,13 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
   }
 
   CGFloat clearButtonMinY = 0;
-  CGFloat clearButtonFloatingPlaceholderMinY = 0;
+  CGFloat clearButtonFloatingLabelMinY = 0;
   if (shouldAttemptToDisplayClearButton) {
     clearButtonMinY = [self minYForSubviewWithHeight:kClearButtonTouchTargetSideLength
                                              centerY:textRectCenterYNormal];
-    clearButtonFloatingPlaceholderMinY =
+    clearButtonFloatingLabelMinY =
         [self minYForSubviewWithHeight:kClearButtonTouchTargetSideLength
-                               centerY:textRectCenterYWithFloatingPlaceholder];
+                               centerY:textRectCenterYWithFloatingLabel];
   }
 
   CGFloat textRectMinX = 0;
@@ -219,11 +219,11 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
       textRectMaxX = textFieldWidth - kLeadingMargin;
     }
     placeholderNormalMaxX = textRectMaxX;
-    placeholderFloatingMaxX = placeholderNormalMaxX - kFloatingPlaceholderXOffsetFromTextArea;
+    placeholderFloatingMaxX = placeholderNormalMaxX - kFloatingLabelXOffsetFromTextArea;
   } else {
     textRectMinX = shouldAttemptToDisplayLeftView ? leftViewMaxX + kLeadingMargin : kLeadingMargin;
     placeholderNormalMinX = textRectMinX;
-    placeholderFloatingMinX = placeholderNormalMinX + kFloatingPlaceholderXOffsetFromTextArea;
+    placeholderFloatingMinX = placeholderNormalMinX + kFloatingLabelXOffsetFromTextArea;
     if (shouldAttemptToDisplayClearButton) {
       textRectMaxX = apparentClearButtonMinX - kLeadingMargin;
     } else {
@@ -238,10 +238,10 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
   CGFloat textRectWidth = textRectMaxX - textRectMinX;
   CGRect textRectNormal =
       CGRectMake(textRectMinX, textRectMinYNormal, textRectWidth, textRectHeight);
-  CGFloat textRectMinYFloatingPlaceholder = (CGFloat)round(
-      (double)(textRectCenterYWithFloatingPlaceholder - (textRectHeight * (CGFloat)0.5)));
+  CGFloat textRectMinYFloatingLabel = (CGFloat)round(
+      (double)(textRectCenterYWithFloatingLabel - (textRectHeight * (CGFloat)0.5)));
   CGRect floatingLabelTextAreaRect =
-      CGRectMake(textRectMinX, textRectMinYFloatingPlaceholder, textRectWidth, textRectHeight);
+      CGRectMake(textRectMinX, textRectMinYFloatingLabel, textRectWidth, textRectHeight);
 
   CGRect leftViewFrame = CGRectMake(leftViewMinX, leftViewMinY, leftViewWidth, leftViewHeight);
   CGRect rightViewFrame =
@@ -249,8 +249,8 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
   CGRect clearButtonFrame =
       CGRectMake(actualClearButtonMinX, clearButtonMinY, kClearButtonTouchTargetSideLength,
                  kClearButtonTouchTargetSideLength);
-  CGRect clearButtonFrameFloatingPlaceholder =
-      CGRectMake(actualClearButtonMinX, clearButtonFloatingPlaceholderMinY,
+  CGRect clearButtonFrameFloatingLabel =
+      CGRectMake(actualClearButtonMinX, clearButtonFloatingLabelMinY,
                  kClearButtonTouchTargetSideLength, kClearButtonTouchTargetSideLength);
 
   CGRect floatingLabelFrameNormal =
@@ -342,9 +342,9 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
   self.leftViewFrame = leftViewFrame;
   self.rightViewFrame = rightViewFrame;
   self.clearButtonFrame = clearButtonFrame;
-  self.clearButtonFrameFloatingPlaceholder = clearButtonFrameFloatingPlaceholder;
+  self.clearButtonFrameFloatingLabel = clearButtonFrameFloatingLabel;
   self.textRect = textRectNormal;
-  self.textRectFloatingPlaceholder = floatingLabelTextAreaRect;
+  self.textRectFloatingLabel = floatingLabelTextAreaRect;
   self.floatingLabelFrameFloating = floatingLabelFrameFloating;
   self.floatingLabelFrameNormal = floatingLabelFrameNormal;
   self.leftUnderlineLabelFrame = leftUnderlineLabelFrame;

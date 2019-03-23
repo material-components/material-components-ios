@@ -21,7 +21,7 @@
 #import <Foundation/Foundation.h>
 
 static const CGFloat kOutlinedContainerStyleCornerRadius = (CGFloat)4.0;
-static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
+static const CGFloat kFloatingLabelOutlineSidePadding = (CGFloat)5.0;
 
 @implementation MDCContainedInputViewColorSchemeOutlined
 @end
@@ -84,14 +84,14 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
   }
   uiView = (UIView *)containedInputView;
   CGRect placeholderFrame = containedInputView.floatingLabel.frame;
-  BOOL isFloatingPlaceholder =
+  BOOL isFloatingLabelFloating =
       containedInputView.floatingLabelState == MDCContainedInputViewFloatingLabelStateFloating;
   CGFloat topRowBottomRowDividerY = CGRectGetMaxY(containedInputView.containerFrame);
   CGFloat lineWidth = [self outlineLineWidthForState:containedInputView.containedInputViewState];
   [self applyStyleTo:uiView
              placeholderFrame:placeholderFrame
       topRowBottomRowDividerY:topRowBottomRowDividerY
-        isFloatingPlaceholder:isFloatingPlaceholder
+        isFloatingLabelFloating:isFloatingLabelFloating
              outlineLineWidth:lineWidth];
   if ([colorScheme isKindOfClass:[MDCContainedInputViewColorSchemeOutlined class]]) {
     MDCContainedInputViewColorSchemeOutlined *outlinedScheme =
@@ -107,13 +107,13 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
 - (void)applyStyleTo:(UIView *)view
            placeholderFrame:(CGRect)placeholderFrame
     topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
-      isFloatingPlaceholder:(BOOL)isFloatingPlaceholder
+      isFloatingLabelFloating:(BOOL)isFloatingLabelFloating
            outlineLineWidth:(CGFloat)outlineLineWidth {
   UIBezierPath *path = [self outlinePathWithViewBounds:view.bounds
                                       placeholderFrame:placeholderFrame
                                topRowBottomRowDividerY:topRowBottomRowDividerY
                                              lineWidth:outlineLineWidth
-                                 isFloatingPlaceholder:isFloatingPlaceholder];
+                                 isFloatingLabelFloating:isFloatingLabelFloating];
   self.outlinedSublayer.path = path.CGPath;
   self.outlinedSublayer.lineWidth = outlineLineWidth;
   if (self.outlinedSublayer.superlayer != view.layer) {
@@ -125,7 +125,7 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
                            placeholderFrame:(CGRect)placeholderFrame
                     topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
                                   lineWidth:(CGFloat)lineWidth
-                      isFloatingPlaceholder:(BOOL)isFloatingPlaceholder {
+                      isFloatingLabelFloating:(BOOL)isFloatingLabelFloating {
   UIBezierPath *path = [[UIBezierPath alloc] init];
   CGFloat radius = kOutlinedContainerStyleCornerRadius;
   CGFloat textFieldWidth = CGRectGetWidth(viewBounds);
@@ -135,11 +135,11 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
   CGPoint startingPoint = CGPointMake(radius, sublayerMinY);
   CGPoint topRightCornerPoint1 = CGPointMake(textFieldWidth - radius, sublayerMinY);
   [path moveToPoint:startingPoint];
-  if (isFloatingPlaceholder) {
+  if (isFloatingLabelFloating) {
     CGFloat leftLineBreak =
-        CGRectGetMinX(placeholderFrame) - kFloatingPlaceholderOutlineSidePadding;
+        CGRectGetMinX(placeholderFrame) - kFloatingLabelOutlineSidePadding;
     CGFloat rightLineBreak =
-        CGRectGetMaxX(placeholderFrame) + kFloatingPlaceholderOutlineSidePadding;
+        CGRectGetMaxX(placeholderFrame) + kFloatingLabelOutlineSidePadding;
     [path addLineToPoint:CGPointMake(leftLineBreak, sublayerMinY)];
     [path moveToPoint:CGPointMake(rightLineBreak, sublayerMinY)];
     [path addLineToPoint:CGPointMake(rightLineBreak, sublayerMinY)];
@@ -207,13 +207,13 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
 
 @implementation MDCContainerStyleOutlinedDensityInformer
 
-- (CGFloat)floatingPlaceholderMinYWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight {
+- (CGFloat)floatingLabelMinYWithFloatingLabelHeight:(CGFloat)floatingPlaceholderHeight {
   return (CGFloat)0 - ((CGFloat)0.5 * floatingPlaceholderHeight);
 }
 
-- (CGFloat)contentAreaTopPaddingFloatingPlaceholderWithFloatingPlaceholderMaxY:
+- (CGFloat)contentAreaTopPaddingFloatingLabelWithFloatingLabelMaxY:
     (CGFloat)floatingPlaceholderMaxY {
-  return [self contentAreaVerticalPaddingNormalWithFloatingPlaceholderMaxY:floatingPlaceholderMaxY];
+  return [self contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:floatingPlaceholderMaxY];
 }
 
 @end

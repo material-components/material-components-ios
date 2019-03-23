@@ -157,6 +157,7 @@
 
 - (void)setUpFloatingLabel {
   self.floatingLabel = [[UILabel alloc] initWithFrame:self.bounds];
+  self.floatingLabel.backgroundColor = [UIColor yellowColor];
   [self addSubview:self.floatingLabel];
 }
 
@@ -247,7 +248,7 @@
                   floatingLabelState:(MDCContainedInputViewFloatingLabelState)floatingLabelState {
   CGRect clearButtonFrame = layout.clearButtonFrame;
   if (floatingLabelState == MDCContainedInputViewFloatingLabelStateFloating) {
-    clearButtonFrame = layout.clearButtonFrameFloatingPlaceholder;
+    clearButtonFrame = layout.clearButtonFrameFloatingLabel;
   }
   return clearButtonFrame;
 }
@@ -496,7 +497,7 @@
           floatingLabelState:(MDCContainedInputViewFloatingLabelState)floatingLabelState {
   CGRect textRect = layout.textRect;
   if (floatingLabelState == MDCContainedInputViewFloatingLabelStateFloating) {
-    textRect = layout.textRectFloatingPlaceholder;
+    textRect = layout.textRectFloatingLabel;
   }
   return textRect;
 }

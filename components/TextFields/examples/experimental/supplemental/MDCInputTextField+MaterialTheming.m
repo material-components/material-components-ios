@@ -269,14 +269,14 @@
 
 @implementation MDCInputTextFieldFilledDensityInformer
 
-- (CGFloat)floatingPlaceholderMinYWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight {
+- (CGFloat)floatingLabelMinYWithFloatingLabelHeight:(CGFloat)floatingPlaceholderHeight {
   CGFloat lowestMinY = 4;
   CGFloat highestMinY = 10;
   CGFloat difference = highestMinY - lowestMinY;
   return lowestMinY + (difference * (1 - self.verticalDensity));
 }
 
-- (CGFloat)contentAreaTopPaddingFloatingPlaceholderWithFloatingPlaceholderMaxY:
+- (CGFloat)contentAreaTopPaddingFloatingLabelWithFloatingLabelMaxY:
     (CGFloat)floatingPlaceholderMaxY {
   CGFloat minYAddition = 3;
   CGFloat maxYAddition = 8;
@@ -284,7 +284,7 @@
   return floatingPlaceholderMaxY + (minYAddition + (difference * (1 - self.verticalDensity)));
 }
 
-- (CGFloat)contentAreaVerticalPaddingNormalWithFloatingPlaceholderMaxY:
+- (CGFloat)contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:
     (CGFloat)floatingPlaceholderMaxY {
   CGFloat minYAddition = 5;
   CGFloat maxYAddition = 8;
@@ -303,11 +303,11 @@
 
 @implementation MDCInputTextFieldOutlinedDensityInformer
 
-- (CGFloat)floatingPlaceholderMinYWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight {
+- (CGFloat)floatingLabelMinYWithFloatingLabelHeight:(CGFloat)floatingPlaceholderHeight {
   return (CGFloat)0 - ((CGFloat)0.5 * floatingPlaceholderHeight);
 }
 
-- (CGFloat)contentAreaTopPaddingFloatingPlaceholderWithFloatingPlaceholderMaxY:
+- (CGFloat)contentAreaTopPaddingFloatingLabelWithFloatingLabelMaxY:
     (CGFloat)floatingPlaceholderMaxY {
   CGFloat minYAddition = 3;
   CGFloat maxYAddition = 15;
@@ -315,10 +315,10 @@
   return floatingPlaceholderMaxY + (minYAddition + (difference * (1 - self.verticalDensity)));
 }
 
-- (CGFloat)contentAreaVerticalPaddingNormalWithFloatingPlaceholderMaxY:
+- (CGFloat)contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:
     (CGFloat)floatingPlaceholderMaxY {
   return [self
-      contentAreaTopPaddingFloatingPlaceholderWithFloatingPlaceholderMaxY:floatingPlaceholderMaxY];
+      contentAreaTopPaddingFloatingLabelWithFloatingLabelMaxY:floatingPlaceholderMaxY];
 }
 
 - (CGFloat)containerBottomVerticalPadding {
