@@ -345,6 +345,7 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
   self.clearButtonFrameFloatingLabel = clearButtonFrameFloatingLabel;
   self.textRect = textRectNormal;
   self.textRectFloatingLabel = floatingLabelTextAreaRect;
+  self.placeholderLabelFrameNormal = floatingLabelTextAreaRect;
   self.floatingLabelFrameFloating = floatingLabelFrameFloating;
   self.floatingLabelFrameNormal = floatingLabelFrameNormal;
   self.leftUnderlineLabelFrame = leftUnderlineLabelFrame;
