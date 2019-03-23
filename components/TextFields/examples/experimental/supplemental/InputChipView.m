@@ -482,14 +482,14 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 - (InputChipViewLayout *)calculateLayoutWithSize:(CGSize)size {
   UIFont *normalFont = self.inputChipViewTextField.effectiveFont;
-  UIFont *floatingFont = [self.floatingLabelManager floatingLabelFontWithFont:normalFont
+  UIFont *floatingFont = [self.floatingLabelManager floatingFontWithFont:normalFont
                                                                containerStyle:self.containerStyle];
   return [[InputChipViewLayout alloc] initWithSize:size
                                     containerStyle:self.containerStyle
                                               text:self.inputChipViewTextField.text
                                        placeholder:self.inputChipViewTextField.placeholder
                                               font:self.inputChipViewTextField.effectiveFont
-                                 floatingLabelFont:floatingFont
+                                 floatingFont:floatingFont
                                 floatingLabelState:self.floatingLabelState
                                              chips:self.chips
                                     staleChipViews:self.chips
@@ -552,7 +552,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 - (void)postLayoutSubviews {
   UIFont *normalFont = self.inputChipViewTextField.effectiveFont;
-  UIFont *floatingFont = [self.floatingLabelManager floatingLabelFontWithFont:normalFont
+  UIFont *floatingFont = [self.floatingLabelManager floatingFontWithFont:normalFont
                                                                containerStyle:self.containerStyle];
   [self.floatingLabelManager layOutFloatingLabel:self.floatingLabel
                                            state:self.floatingLabelState

@@ -221,7 +221,7 @@
 
 - (void)postLayoutSubviews {
   UIFont *normalFont = [self determineEffectiveFont];
-  UIFont *floatingFont = [self.floatingLabelManager floatingLabelFontWithFont:normalFont
+  UIFont *floatingFont = [self.floatingLabelManager floatingFontWithFont:normalFont
                                                                containerStyle:self.containerStyle];
   [self.floatingLabelManager layOutFloatingLabel:self.floatingLabel
                                            state:self.floatingLabelState
@@ -254,7 +254,7 @@
 
 - (MDCInputTextFieldLayout *)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize {
   UIFont *effectiveFont = [self determineEffectiveFont];
-  UIFont *floatingFont = [self.floatingLabelManager floatingLabelFontWithFont:effectiveFont
+  UIFont *floatingFont = [self.floatingLabelManager floatingFontWithFont:effectiveFont
                                                                containerStyle:self.containerStyle];
   CGFloat normalizedCustomUnderlineLabelDrawPriority =
       [self normalizedCustomUnderlineLabelDrawPriority:self.customUnderlineLabelDrawPriority];
@@ -264,7 +264,8 @@
                                    text:self.text
                             placeholder:self.placeholder
                                    font:effectiveFont
-                      floatingLabelFont:floatingFont
+                          floatingFont:floatingFont
+                          floatingLabel:self.floatingLabel
                   canFloatingLabelFloat:self.canFloatingLabelFloat
                                leftView:self.leftView
                            leftViewMode:self.leftViewMode

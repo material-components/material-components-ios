@@ -218,7 +218,7 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
 - (void)applyStyleToContainedInputView:(nonnull id<MDCContainedInputView>)inputView
     withContainedInputViewColorScheming:(nonnull id<MDCContainedInputViewColorScheming>)colorScheme;
 - (void)removeStyleFrom:(nonnull id<MDCContainedInputView>)containedInputView;
-- (CGFloat)floatingLabelFontSizeScaleFactor;
+- (CGFloat)floatingFontSizeScaleFactor;
 @end
 
 @protocol MDCContainedInputViewStyleDensityInforming <NSObject>
@@ -239,7 +239,7 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
 @end
 
 @interface MDCContainedInputViewFloatingLabelManager : NSObject
-- (UIFont *_Nonnull)floatingLabelFontWithFont:(nonnull UIFont *)font
+- (UIFont *_Nonnull)floatingFontWithFont:(nonnull UIFont *)font
                                containerStyle:
                                    (nonnull id<MDCContainedInputViewStyle>)containerStyle;
 - (void)layOutFloatingLabel:(nonnull UILabel *)floatingLabel

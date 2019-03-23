@@ -40,7 +40,7 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
                                  text:(NSString *)text
                           placeholder:(NSString *)placeholder
                                  font:(UIFont *)font
-                    floatingLabelFont:(UIFont *)floatingLabelFont
+                    floatingFont:(UIFont *)floatingFont
                    floatingLabelState:(MDCContainedInputViewFloatingLabelState)floatingLabelState
                                 chips:(NSArray<UIView *> *)chips
                        staleChipViews:(NSArray<UIView *> *)staleChipViews
@@ -65,7 +65,7 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
                                      text:text
                               placeholder:placeholder
                                      font:font
-                        floatingLabelFont:floatingLabelFont
+                    floatingFont:floatingFont
                        floatingLabelState:floatingLabelState
                                     chips:chips
                            staleChipViews:staleChipViews
@@ -91,7 +91,7 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
                                  text:(NSString *)text
                           placeholder:(NSString *)placeholder
                                  font:(UIFont *)font
-                    floatingLabelFont:(UIFont *)floatingLabelFont
+                    floatingFont:(UIFont *)floatingFont
                    floatingLabelState:(MDCContainedInputViewFloatingLabelState)floatingLabelState
                                 chips:(NSArray<UIView *> *)chips
                        staleChipViews:(NSArray<UIView *> *)staleChipViews
@@ -113,7 +113,7 @@ static const CGFloat kFloatingPlaceholderXOffset = (CGFloat)3.0;
   CGFloat globalChipRowMaxX = isRTL ? size.width - kLeadingMargin : size.width - kTrailingMargin;
   CGFloat maxTextWidth = globalChipRowMaxX - globalChipRowMinX;
   CGRect placeholderFrameFloating = [self floatingLabelFrameWithPlaceholder:placeholder
-                                                                       font:floatingLabelFont
+                                                                       font:floatingFont
                                                           globalChipRowMinX:globalChipRowMinX
                                                           globalChipRowMaxX:globalChipRowMaxX
                                                              containerStyle:containerStyle

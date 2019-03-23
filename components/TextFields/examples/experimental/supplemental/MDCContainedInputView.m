@@ -120,7 +120,7 @@
   return [[MDCContainerStyleBaseDensityInformer alloc] init];
 }
 
-- (CGFloat)floatingLabelFontSizeScaleFactor {
+- (CGFloat)floatingFontSizeScaleFactor {
   return 0.75;
 }
 
@@ -163,11 +163,11 @@
 
 @implementation MDCContainedInputViewFloatingLabelManager
 
-- (UIFont *)floatingLabelFontWithFont:(UIFont *)font
+- (UIFont *)floatingFontWithFont:(UIFont *)font
                        containerStyle:(id<MDCContainedInputViewStyle>)containerStyle {
-  CGFloat scaleFactor = [containerStyle floatingLabelFontSizeScaleFactor];
-  CGFloat floatingLabelFontSize = font.pointSize * scaleFactor;
-  return [font fontWithSize:floatingLabelFontSize];
+  CGFloat scaleFactor = [containerStyle floatingFontSizeScaleFactor];
+  CGFloat floatingFontSize = font.pointSize * scaleFactor;
+  return [font fontWithSize:floatingFontSize];
 }
 
 - (void)layOutFloatingLabel:(UILabel *)floatingLabel
