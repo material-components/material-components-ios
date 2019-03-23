@@ -50,7 +50,7 @@ NS_ASSUME_NONNULL_BEGIN
                                  text:(NSString *)text
                           placeholder:(NSString *)placeholder
                                  font:(UIFont *)font
-                    floatingFont:(UIFont *)floatingFont
+                         floatingFont:(UIFont *)floatingFont
                         floatingLabel:(UILabel *)floatingLabel
                 canFloatingLabelFloat:(BOOL)canFloatingLabelFloat
                              leftView:(UIView *)leftView

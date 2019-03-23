@@ -35,7 +35,7 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
                                  text:(NSString *)text
                           placeholder:(NSString *)placeholder
                                  font:(UIFont *)font
-                    floatingFont:(UIFont *)floatingFont
+                         floatingFont:(UIFont *)floatingFont
                         floatingLabel:(UILabel *)floatingLabel
                 canFloatingLabelFloat:(BOOL)canFloatingLabelFloat
                              leftView:(UIView *)leftView
@@ -60,7 +60,7 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
                                       text:text
                                placeholder:placeholder
                                       font:font
-                         floatingFont:floatingFont
+                              floatingFont:floatingFont
                      canFloatingLabelFloat:canFloatingLabelFloat
                                   leftView:leftView
                               leftViewMode:leftViewMode
@@ -88,7 +88,7 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
                                     text:(NSString *)text
                              placeholder:(NSString *)placeholder
                                     font:(UIFont *)font
-                       floatingFont:(UIFont *)floatingFont
+                            floatingFont:(UIFont *)floatingFont
                    canFloatingLabelFloat:(BOOL)canFloatingLabelFloat
                                 leftView:(UIView *)leftView
                             leftViewMode:(UITextFieldViewMode)leftViewMode
@@ -145,8 +145,7 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
       (kClearButtonTouchTargetSideLength - kClearButtonInnerImageViewSideLength) * 0.5;
   CGFloat actualClearButtonMinX = apparentClearButtonMinX - clearButtonImageViewSideMargin;
 
-  CGFloat floatingLabelHeight =
-      canFloatingLabelFloat ? [self textHeightWithFont:floatingFont] : 0;
+  CGFloat floatingLabelHeight = canFloatingLabelFloat ? [self textHeightWithFont:floatingFont] : 0;
   CGFloat floatingLabelMinY = [containerStyle.densityInformer
       floatingLabelMinYWithFloatingPlaceholderHeight:floatingLabelHeight];
   CGFloat floatingLabelMaxY = floatingLabelMinY + floatingLabelHeight;
@@ -259,7 +258,7 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
                              containerStyle:containerStyle
                          floatingLabelState:MDCContainedInputViewFloatingLabelStateNormal
                                        font:font
-                          floatingFont:floatingFont
+                               floatingFont:floatingFont
                           floatingLabelMinY:floatingLabelMinY
                       lowestPlaceholderMinX:placeholderNormalMinX
                      highestPlaceholderMaxX:placeholderNormalMaxX
@@ -270,7 +269,7 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
                              containerStyle:containerStyle
                          floatingLabelState:MDCContainedInputViewFloatingLabelStateFloating
                                        font:font
-                          floatingFont:floatingFont
+                               floatingFont:floatingFont
                           floatingLabelMinY:floatingLabelMinY
                       lowestPlaceholderMinX:placeholderFloatingMinX
                      highestPlaceholderMaxX:placeholderFloatingMaxX
@@ -481,7 +480,7 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
                        floatingLabelState:
                            (MDCContainedInputViewFloatingLabelState)floatingLabelState
                                      font:(UIFont *)font
-                        floatingFont:(UIFont *)floatingFont
+                             floatingFont:(UIFont *)floatingFont
                         floatingLabelMinY:(CGFloat)floatingLabelMinY
                     lowestPlaceholderMinX:(CGFloat)lowestPlaceholderMinX
                    highestPlaceholderMaxX:(CGFloat)highestPlaceholderMaxX

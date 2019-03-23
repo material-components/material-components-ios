@@ -164,7 +164,7 @@
 @implementation MDCContainedInputViewFloatingLabelManager
 
 - (UIFont *)floatingFontWithFont:(UIFont *)font
-                       containerStyle:(id<MDCContainedInputViewStyle>)containerStyle {
+                  containerStyle:(id<MDCContainedInputViewStyle>)containerStyle {
   CGFloat scaleFactor = [containerStyle floatingFontSizeScaleFactor];
   CGFloat floatingFontSize = font.pointSize * scaleFactor;
   return [font fontWithSize:floatingFontSize];

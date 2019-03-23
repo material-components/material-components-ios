@@ -222,7 +222,7 @@
 - (void)postLayoutSubviews {
   UIFont *normalFont = [self determineEffectiveFont];
   UIFont *floatingFont = [self.floatingLabelManager floatingFontWithFont:normalFont
-                                                               containerStyle:self.containerStyle];
+                                                          containerStyle:self.containerStyle];
   [self.floatingLabelManager layOutFloatingLabel:self.floatingLabel
                                            state:self.floatingLabelState
                                      normalFrame:self.layout.floatingLabelFrameNormal
@@ -255,7 +255,7 @@
 - (MDCInputTextFieldLayout *)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize {
   UIFont *effectiveFont = [self determineEffectiveFont];
   UIFont *floatingFont = [self.floatingLabelManager floatingFontWithFont:effectiveFont
-                                                               containerStyle:self.containerStyle];
+                                                          containerStyle:self.containerStyle];
   CGFloat normalizedCustomUnderlineLabelDrawPriority =
       [self normalizedCustomUnderlineLabelDrawPriority:self.customUnderlineLabelDrawPriority];
   return [[MDCInputTextFieldLayout alloc]
@@ -264,7 +264,7 @@
                                    text:self.text
                             placeholder:self.placeholder
                                    font:effectiveFont
-                          floatingFont:floatingFont
+                           floatingFont:floatingFont
                           floatingLabel:self.floatingLabel
                   canFloatingLabelFloat:self.canFloatingLabelFloat
                                leftView:self.leftView
@@ -560,7 +560,7 @@
   return CGRectZero;
 }
 
--(CGRect)placeholderRectForBounds:(CGRect)bounds {
+- (CGRect)placeholderRectForBounds:(CGRect)bounds {
   if (self.floatingLabelState == MDCContainedInputViewFloatingLabelStateNormal) {
     return CGRectZero;
   }
