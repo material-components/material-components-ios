@@ -14,17 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MDCRippleLayer.h"
 #import "MaterialRipple.h"
-
-//@interface FakeMDCRippleViewAnimationDelegate : NSObject <MDCRippleViewDelegate>
-//@property(nonatomic, strong) MDCRippleView *rippleView;
-//@property(nonatomic, assign) BOOL rippleTouchDownDidBegin;
-//@property(nonatomic, assign) BOOL rippleTouchDownDidEnd;
-//@property(nonatomic, assign) BOOL rippleTouchUpDidBegin;
-//@property(nonatomic, assign) BOOL rippleTouchUpDidEnd;
-//
-//@end
 
 #pragma mark - Tests
 
