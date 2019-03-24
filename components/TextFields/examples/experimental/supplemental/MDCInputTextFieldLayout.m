@@ -239,7 +239,7 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
   CGRect textRectNormal =
       CGRectMake(textRectMinX, textRectMinYNormal, textRectWidth, textRectHeight);
   CGFloat textRectMinYFloatingLabel =
-      (CGFloat)round((double)(textRectCenterYWithFloatingLabel - (textRectHeight * (CGFloat)0.5)));
+      (CGFloat)floor((double)(textRectCenterYWithFloatingLabel - (textRectHeight * (CGFloat)0.5)));
   CGRect floatingLabelTextAreaRect =
       CGRectMake(textRectMinX, textRectMinYFloatingLabel, textRectWidth, textRectHeight);
 

@@ -235,6 +235,7 @@
                                                           containerStyle:self.containerStyle];
   CGRect adjustedPlaceholderFrame = [self adjustTextAreaFrame:self.layout.textRectFloatingLabel
                                  withParentClassTextAreaFrame:[super textRectForBounds:self.bounds]];
+  adjustedPlaceholderFrame = CGRectOffset(adjustedPlaceholderFrame, 0, -1);
   [self.floatingLabelManager layOutPlaceholderLabel:self.placeholderLabel
                                    placeholderFrame:adjustedPlaceholderFrame
                                isPlaceholderVisible:self.isPlaceholderVisible];
