@@ -73,7 +73,6 @@
  */
 - (nonnull instancetype)initWithView:(nonnull UIView *)view;
 
-
 /**
  Initializes the controller.
 
@@ -84,7 +83,6 @@
  @return a MDCRippleTouchController instance.
  */
 - (nonnull instancetype)init;
-
 
 /**
  Adds the ripple view as a subview to the provided view, and adds the ripple's gesture recognizer
