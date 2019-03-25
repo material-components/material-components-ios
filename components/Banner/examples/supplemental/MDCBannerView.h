@@ -36,14 +36,16 @@ __attribute__((objc_subclassing_restricted)) @interface MDCBannerView : UIView
 /**
  A leading button that displays on a @c MDCBannerView.
 
- This @c leadingButton is displayed on the leading edge of the view. If it does not fit on the same row as @c trailingButton, it will be placed above @c trailingButton.
+ This @c leadingButton is displayed on the leading edge of the view. If it does not fit on the same
+ row as @c trailingButton, it will be placed above @c trailingButton.
  */
 @property(nonatomic, readonly, strong, nonnull) MDCButton *leadingButton;
 
 /**s
  A trailing button that displays on a @c MDCBannerView.
 
- This @c trailingButton is displayed on the trailing edge of the view. If it does not fit on the same row as @c leadingButton, it will be placed shows below @c leadingButton.
+ This @c trailingButton is displayed on the trailing edge of the view. If it does not fit on the
+ same row as @c leadingButton, it will be placed shows below @c leadingButton.
  */
 @property(nonatomic, readonly, strong, nonnull) MDCButton *trailingButton;
 
