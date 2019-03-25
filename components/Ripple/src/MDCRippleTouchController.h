@@ -56,31 +56,23 @@
 @property(nonatomic, assign) BOOL shouldProcessRippleWithScrollViewGestures;
 
 /**
- Initializes the controller.
-
- @param view The view that responds to the touch events for the ripple, and the view which the
- ripple is added as a subview to.
- */
-
-/**
  Initializes the controller and adds the initialized ripple view as a subview of the provided view.
 
  Note: When using this initializer, calling `addRippleToView:` isn't needed.
 
- @param view The view that responds to the touch events for the ripple, and the view which the
- ripple is added as a subview to.
- @return a MDCRippleTouchController instance.
+ @param view The view that responds to the touch events for the ripple. The ripple
+ is added to it as a subview.
+ @return an MDCRippleTouchController instance.
  */
 - (nonnull instancetype)initWithView:(nonnull UIView *)view;
 
 /**
  Initializes the controller.
 
- Note: To effectively use the controller a call to `addRippleToView` is needed to provide a view
- that will respond to the touch events for the ripple, and to which the ripple is added as a
- subview to.
+ Note: To effectively use the controller a call to `addRippleToView:` is needed to provide a view
+ that responds to the touch events for the ripple. The ripple is added to the view as a subview.
 
- @return a MDCRippleTouchController instance.
+ @return an MDCRippleTouchController instance.
  */
 - (nonnull instancetype)init;
 
@@ -91,8 +83,8 @@
  Note: This needs to be called if using the `init` initialized rather than the `initWithView:`
  initializer.
 
- @param view The view that responds to the touch events for the ripple, and the view which the
- ripple is added as a subview to.
+ @param view The view that responds to the touch events for the ripple. The ripple
+ is added to it as a subview.
  */
 - (void)addRippleToView:(nonnull UIView *)view;
 
@@ -147,7 +139,7 @@
  @param view The view to add the ripple view to.
  */
 - (void)rippleTouchController:(nonnull MDCRippleTouchController *)rippleTouchController
-             insertRippleView:(nonnull UIView *)rippleView
+             insertRippleView:(nonnull MDCRippleView *)rippleView
                      intoView:(nonnull UIView *)view;
 
 @end

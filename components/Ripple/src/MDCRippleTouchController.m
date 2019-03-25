@@ -21,7 +21,7 @@
 - (instancetype)initWithView:(UIView *)view {
   self = [self init];
   if (self) {
-    [self addRippleToView:view];
+    [self configureRippleWithView:view];
   }
   return self;
 }
@@ -44,9 +44,10 @@
 }
 
 - (void)addRippleToView:(UIView *)view {
-  if (_view) {
-    return;
-  }
+  [self configureRippleWithView:view];
+}
+
+- (void)configureRippleWithView:(UIView *)view {
   _view = view;
   [_view addGestureRecognizer:_gestureRecognizer];
   _rippleView.frame = view.bounds;

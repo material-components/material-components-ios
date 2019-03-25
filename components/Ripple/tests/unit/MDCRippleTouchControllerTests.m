@@ -16,8 +16,7 @@
 
 #import "MaterialRipple.h"
 
-#pragma mark - Tests
-
+/** Unit tests for MDCRippleTouchController. */
 @interface MDCRippleTouchControllerTests : XCTestCase
 
 @end
@@ -25,7 +24,7 @@
 @implementation MDCRippleTouchControllerTests
 
 - (void)testInit {
-  // Given
+  // When
   MDCRippleTouchController *touchController = [[MDCRippleTouchController alloc] init];
 
   // Then
@@ -36,7 +35,7 @@
 }
 
 - (void)testInitWithView {
-  // Given
+  // When
   UIView *parentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
   MDCRippleTouchController *touchController =
       [[MDCRippleTouchController alloc] initWithView:parentView];
@@ -47,7 +46,10 @@
   XCTAssertEqualObjects(touchController.rippleView.superview, parentView);
   XCTAssertTrue(touchController.shouldProcessRippleWithScrollViewGestures);
   XCTAssertNotNil(touchController.gestureRecognizer);
-  XCTAssertTrue(CGRectEqualToRect(touchController.rippleView.frame, parentView.bounds));
+  XCTAssertTrue(CGRectEqualToRect(touchController.rippleView.frame, parentView.bounds),
+                @"(%@) is not equal to (%@)",
+                NSStringFromCGRect(touchController.rippleView.frame),
+                NSStringFromCGRect(parentView.bounds));
 }
 
 - (void)testAddRippleToView {
@@ -64,7 +66,10 @@
   XCTAssertEqualObjects(touchController.rippleView.superview, parentView);
   XCTAssertTrue(touchController.shouldProcessRippleWithScrollViewGestures);
   XCTAssertNotNil(touchController.gestureRecognizer);
-  XCTAssertTrue(CGRectEqualToRect(touchController.rippleView.frame, parentView.bounds));
+  XCTAssertTrue(CGRectEqualToRect(touchController.rippleView.frame, parentView.bounds),
+                @"(%@) is not equal to (%@)",
+                NSStringFromCGRect(touchController.rippleView.frame),
+                NSStringFromCGRect(parentView.bounds));
 }
 
 @end
