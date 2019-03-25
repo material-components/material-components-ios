@@ -228,7 +228,6 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
 - (CGFloat)floatingLabelMinYWithFloatingLabelHeight:(CGFloat)floatingLabelHeight;
 - (CGFloat)contentAreaTopPaddingFloatingLabelWithFloatingLabelMaxY:(CGFloat)floatingLabelMaxY;
 - (CGFloat)contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:(CGFloat)floatingLabelMaxY;
-- (CGFloat)containerBottomVerticalPadding;
 @end
 
 @interface MDCContainerStyleBase : NSObject <MDCContainedInputViewStyle>

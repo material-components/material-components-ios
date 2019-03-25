@@ -150,10 +150,6 @@
   return floatingLabelMaxY + 10;
 }
 
-- (CGFloat)containerBottomVerticalPadding {
-  return 9;
-}
-
 @end
 
 // static const CGFloat kFloatingLabelAnimationVelocityInPointsPerSecond = (CGFloat)200;
