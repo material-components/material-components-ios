@@ -47,8 +47,7 @@
   XCTAssertTrue(touchController.shouldProcessRippleWithScrollViewGestures);
   XCTAssertNotNil(touchController.gestureRecognizer);
   XCTAssertTrue(CGRectEqualToRect(touchController.rippleView.frame, parentView.bounds),
-                @"(%@) is not equal to (%@)",
-                NSStringFromCGRect(touchController.rippleView.frame),
+                @"(%@) is not equal to (%@)", NSStringFromCGRect(touchController.rippleView.frame),
                 NSStringFromCGRect(parentView.bounds));
 }
 
@@ -67,8 +66,7 @@
   XCTAssertTrue(touchController.shouldProcessRippleWithScrollViewGestures);
   XCTAssertNotNil(touchController.gestureRecognizer);
   XCTAssertTrue(CGRectEqualToRect(touchController.rippleView.frame, parentView.bounds),
-                @"(%@) is not equal to (%@)",
-                NSStringFromCGRect(touchController.rippleView.frame),
+                @"(%@) is not equal to (%@)", NSStringFromCGRect(touchController.rippleView.frame),
                 NSStringFromCGRect(parentView.bounds));
 }
 
