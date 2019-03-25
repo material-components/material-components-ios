@@ -220,18 +220,16 @@ static NSString *const exampleExtraLongText =
   [self.view addSubview:bannerView];
   self.bannerView = bannerView;
 
-  MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectZero];
+  MDCButton *button = bannerView.leadingButton;
   [button setTitle:@"Dismiss" forState:UIControlStateNormal];
   button.uppercaseTitle = YES;
   [button setTitleColor:self.colorScheme.primaryColor forState:UIControlStateNormal];
-  [button sizeToFit];
   button.backgroundColor = self.colorScheme.surfaceColor;
-  bannerView.leadingButton = button;
+  bannerView.trailingButton.hidden = YES;
 
   [button addTarget:self
                 action:@selector(dismissBanner)
       forControlEvents:UIControlEventTouchUpInside];
-  //  [bannerView sizeToFit];
 
   // Adjust bannerViewContainer's frame
   CGFloat topAreaInset = 0.0f;
@@ -270,7 +268,7 @@ static NSString *const exampleExtraLongText =
   [self.view addSubview:bannerView];
   self.bannerView = bannerView;
 
-  MDCButton *dismissButton = [[MDCButton alloc] initWithFrame:CGRectZero];
+  MDCButton *dismissButton = bannerView.leadingButton;
   [dismissButton setTitle:@"Dismiss" forState:UIControlStateNormal];
   dismissButton.uppercaseTitle = YES;
   [dismissButton setTitleColor:self.colorScheme.primaryColor forState:UIControlStateNormal];
@@ -279,17 +277,14 @@ static NSString *const exampleExtraLongText =
   [dismissButton addTarget:self
                     action:@selector(dismissBanner)
           forControlEvents:UIControlEventTouchUpInside];
-  MDCButton *changeTextButton = [[MDCButton alloc] initWithFrame:CGRectZero];
+  MDCButton *changeTextButton = bannerView.leadingButton;
   [changeTextButton setTitle:@"Long dismiss" forState:UIControlStateNormal];
   changeTextButton.uppercaseTitle = YES;
   [changeTextButton setTitleColor:self.colorScheme.primaryColor forState:UIControlStateNormal];
   changeTextButton.backgroundColor = self.colorScheme.surfaceColor;
-  [changeTextButton sizeToFit];
   [changeTextButton addTarget:self
                        action:@selector(dismissBanner)
              forControlEvents:UIControlEventTouchUpInside];
-  bannerView.leadingButton = dismissButton;
-  bannerView.trailingButton = changeTextButton;
 
   // Adjust bannerViewContainer's frame
   CGFloat topAreaInset = 0.0f;
@@ -327,26 +322,22 @@ static NSString *const exampleExtraLongText =
   [self.view addSubview:bannerView];
   self.bannerView = bannerView;
 
-  MDCButton *dismissButton = [[MDCButton alloc] initWithFrame:CGRectZero];
+  MDCButton *dismissButton = bannerView.leadingButton;
   [dismissButton setTitle:@"Dismiss" forState:UIControlStateNormal];
   dismissButton.uppercaseTitle = YES;
   [dismissButton setTitleColor:self.colorScheme.primaryColor forState:UIControlStateNormal];
   dismissButton.backgroundColor = self.colorScheme.surfaceColor;
-  [dismissButton sizeToFit];
   [dismissButton addTarget:self
                     action:@selector(dismissBanner)
           forControlEvents:UIControlEventTouchUpInside];
-  MDCButton *changeTextButton = [[MDCButton alloc] initWithFrame:CGRectZero];
+  MDCButton *changeTextButton = bannerView.trailingButton;
   [changeTextButton setTitle:@"Extra long long long dismiss" forState:UIControlStateNormal];
   changeTextButton.uppercaseTitle = YES;
   [changeTextButton setTitleColor:self.colorScheme.primaryColor forState:UIControlStateNormal];
   changeTextButton.backgroundColor = self.colorScheme.surfaceColor;
-  [changeTextButton sizeToFit];
   [changeTextButton addTarget:self
                        action:@selector(dismissBanner)
              forControlEvents:UIControlEventTouchUpInside];
-  bannerView.leadingButton = dismissButton;
-  bannerView.trailingButton = changeTextButton;
 
   // Adjust bannerViewContainer's frame
   CGFloat topAreaInset = 0.0f;

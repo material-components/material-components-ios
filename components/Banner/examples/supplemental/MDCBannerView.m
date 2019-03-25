@@ -102,26 +102,25 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
   imageView.clipsToBounds = YES;
   [containerView addSubview:imageView];
   _imageView = imageView;
+
+  // Create leadingButton and trailingButton
+  MDCButton *leadingButton = [[MDCButton alloc] init];
+  leadingButton.translatesAutoresizingMaskIntoConstraints = NO;
+  leadingButton.backgroundColor = UIColor.whiteColor;
+  [containerView addSubview:leadingButton];
+  _leadingButton = leadingButton;
+
+  MDCButton *trailingButton = [[MDCButton alloc] init];
+  trailingButton.translatesAutoresizingMaskIntoConstraints = NO;
+  trailingButton.backgroundColor = UIColor.whiteColor;
+  [containerView addSubview:trailingButton];
+  _trailingButton = trailingButton;
 }
 
 #pragma mark - Property Setter and Getter
 
 - (BOOL)isImageSet {
   return self.imageView.image != nil;
-}
-
-- (void)setLeadingButton:(MDCButton *)leadingButton {
-  _leadingButton = leadingButton;
-  leadingButton.translatesAutoresizingMaskIntoConstraints = NO;
-  [self addSubview:leadingButton];
-  [self invalidateIntrinsicContentSize];
-}
-
-- (void)setTrailingButton:(MDCButton *)trailingButton {
-  _trailingButton = trailingButton;
-  trailingButton.translatesAutoresizingMaskIntoConstraints = NO;
-  [self addSubview:trailingButton];
-  [self invalidateIntrinsicContentSize];
 }
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
@@ -132,12 +131,8 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
 // This is a method facilitate during the middle stage of refactoring.
 - (NSArray<MDCButton *> *)buttons {
   NSMutableArray<MDCButton *> *mutableArray = [NSMutableArray array];
-  if (self.leadingButton) {
-    [mutableArray addObject:self.leadingButton];
-  }
-  if (self.trailingButton) {
-    [mutableArray addObject:self.trailingButton];
-  }
+  [mutableArray addObject:self.leadingButton];
+  [mutableArray addObject:self.trailingButton];
   return [mutableArray copy];
 }
 
@@ -150,10 +145,6 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
                                  imageView:imageView
                                    buttons:self.buttons];
   return sizeThatFits;
-}
-
-- (CGSize)intrinsicContentSize {
-  return [self sizeThatFits:self.bounds.size];
 }
 
 - (void)updateConstraints {
@@ -539,8 +530,11 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
   MDCBannerViewLayoutStyle style = MDCBannerViewLayoutStyleInvalid;
   CGFloat remainingWidth = sizeToFit.width;
   remainingWidth -= (kLeadingPadding + kTrailingPadding);
-  if (buttons.count == 1) {
-    CGFloat buttonWidth = [self widthSumForButtons:buttons];
+//  for (MDCButton *button in buttons) {
+//    [button sizeToFit];
+//  }
+  if (buttons[1].hidden) {
+    CGFloat buttonWidth = CGRectGetWidth(buttons[0].frame);
     remainingWidth -= (buttonWidth + kHorizontalSpaceBetweenTextLabelAndButton);
     if (imageView) {
       remainingWidth -= imageView.frame.size.width;
