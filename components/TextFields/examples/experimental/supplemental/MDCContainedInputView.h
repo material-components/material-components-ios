@@ -16,14 +16,29 @@
 #import <UIKit/UIKit.h>
 
 /**
- A set of Contained Input View states outlined in the Material guidelines. These states overlap and
- extend UIControlState.
+ A set of Contained Input View states outlined in the Material guidelines. These states overlap with
+ and extend UIControlState.
  */
 typedef NS_OPTIONS(NSInteger, MDCContainedInputViewState) {
+  /**
+   The default state of the contained input view.
+   */
   MDCContainedInputViewStateNormal = 1 << 0,
+  /**
+   The state the view is in during normal editing.
+   */
   MDCContainedInputViewStateFocused = 1 << 1,
+  /**
+   This state most closely resembles the @c selected UIControlState.
+   */
   MDCContainedInputViewStateActivated = 1 << 2,
+  /**
+   The error state.
+   */
   MDCContainedInputViewStateErrored = 1 << 3,
+  /**
+   The disabled state.
+   */
   MDCContainedInputViewStateDisabled = 1 << 4,
 };
 
@@ -55,8 +70,7 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewUnderlineLabelDrawPriority) {
  */
 typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
   /**
-   The state of having no floating label. It's not visible and has no frame and does not affect
-   layout.
+   The state where the floating label is not visible.
    */
   MDCContainedInputViewFloatingLabelStateNone,
   /**
@@ -80,20 +94,20 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
 @property(nonatomic, strong, nonnull) id<MDCContainedInputViewStyle> containerStyle;
 
 /**
- Describes the current @c MDCContainerStyle of the text field based off its UIControlState and the
- current values for @c isActivated and @c isErrored.
+ Describes the current @c MDCContainedInputViewState of the view.
  */
 @property(nonatomic, assign, readonly) MDCContainedInputViewState containedInputViewState;
 
 /**
- Describes the current @c MDCContainedInputViewFloatingLabelState of the contained input view based
- off its UIControlState,  the value of the @c canFloatingLabelFloat property, and the value of its
- floating label's text.
+ Describes the current @c MDCContainedInputViewFloatingLabelState of the contained input view. This
+ value is affected by things like the view's state, the value for @c canFloatingLabelFloat, and the
+ text of the floating label.
  */
 @property(nonatomic, assign, readonly) MDCContainedInputViewFloatingLabelState floatingLabelState;
 
 /**
- The @c floatingLabel is the label.
+ The @c floatingLabel is a label that occupies the text area when there is no text and that floats
+ above the text once there is some. It is distinct from a placeholder.
  */
 @property(strong, nonatomic, readonly, nonnull) UILabel *floatingLabel;
 /**
@@ -109,9 +123,14 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
 /**
  This property is used to determine how much horizontal space to allot for each of the two underline
  labels.
+ 
+ @note The default value is MDCContainedInputViewUnderlineLabelDrawPriorityTrailing. The rationale
+ behind this is it is less likely to have long explanatory error text and more likely to have short
+ text, like a character counter. It is better to draw the short text first and use whatever space is
+ leftover for the longer text, which may wrap to new lines.
  */
 @property(nonatomic, assign)
-    MDCContainedInputViewUnderlineLabelDrawPriority underlineLabelDrawPriority;
+MDCContainedInputViewUnderlineLabelDrawPriority underlineLabelDrawPriority;
 
 /**
  When @c underlineLabelDrawPriority is set to @c .custom the value of this property helps determine
@@ -123,41 +142,38 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
 @property(nonatomic, assign) CGFloat customUnderlineLabelDrawPriority;
 
 /**
- When set to YES, the floating label floats above the input text instead of disappearing. When
+ When set to YES, the floating label floats when the view becomes the first responder. When
  set to NO it disappears.
-
+ 
  @note The default is YES.
- @note When set to YES, the text field will reserve space for the floating label in the
- layout, which will result in a text field that requires more height to render properly. Consider
- resizing the text field after setting this property, perhaps by calling @c -sizeToFit.
  */
 @property(nonatomic, assign) BOOL canFloatingLabelFloat;
 
 /**
- This property toggles a state (similar to @c isHighlighted, @c isEnabled, @c isSelected, etc.) that
- is part of a general interpretation of the states outlined in the Material guidelines for Text
- Fields. See the @c MDCContainedInputViewState enum for more information.
+ This property toggles the error state (similar to @c isHighlighted, @c isEnabled, @c isSelected,
+ etc.) that is part of a general interpretation of the states outlined in the Material guidelines
+ for Text Fields. See the @c MDCContainedInputViewState enum for more information.
  */
 @property(nonatomic, assign) BOOL isErrored;
 
 /**
- This property toggles a state (similar to @c isHighlighted, @c isEnabled, @c isSelected, etc.) that
- is part of a general interpretation of the states outlined in the Material guidelines for Text
- Fields. See the @c MDCContainedInputViewState enum for more information.
+ This property toggles the activated state (similar to @c isHighlighted, @c isEnabled, @c
+ isSelected, etc.) that is part of a general interpretation of the states outlined in the Material
+ guidelines for Text Fields. See the @c MDCContainedInputViewState enum for more information.
  */
 @property(nonatomic, assign) BOOL isActivated;
 
 /**
-  This method returns a color scheme for a given state.
+ This method returns a color scheme for a given state.
  */
 - (nonnull id<MDCContainedInputViewColorScheming>)containedInputViewColorSchemingForState:
-    (MDCContainedInputViewState)containedInputViewState;
+(MDCContainedInputViewState)containedInputViewState;
 
 /**
  This method sets a color scheme for a given state.
  */
 - (void)setContainedInputViewColorScheming:
-            (nonnull id<MDCContainedInputViewColorScheming>)containedInputViewColorScheming
+(nonnull id<MDCContainedInputViewColorScheming>)containedInputViewColorScheming
                                   forState:(MDCContainedInputViewState)textFieldState;
 
 /**
@@ -170,7 +186,7 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
  This API allows the user to override the default main content area height. The main content area is
  the part of the view where the where the data input happens. It is located above the underline
  label area. If this property is set to a value that's lower than the default main content area
- height the value will be ignored. Minimum heights are enforced.
+ height the value will be ignored in the calculation of the view's @c intrinsicContentSize.
  */
 @property(nonatomic, assign) CGFloat preferredMainContentAreaHeight;
 
@@ -178,7 +194,7 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
  This API allows the user to override the default underline label area height. The underline label
  area is the part of the view where the underline labels are. It is located below the main content
  area. If this property is set to a value that's lower than the default underline label area height
- the value will be ignored. Minimum heights are enforced.
+ the value will be ignored in the calculation of the view's @c intrinsicContentSize.
  */
 @property(nonatomic, assign) CGFloat preferredUnderlineLabelAreaHeight;
 
@@ -186,20 +202,39 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
 
 /**
  This protocol represents a set of colors that are semantically meaningful and specific to
- MDCContainedInputView. Each property corresponds to the color of a single view that an
+ MDCContainedInputView. Each property corresponds to the color of one or more views that an
  MDCContainedInputView manages at a given point of time.
  */
 @protocol MDCContainedInputViewColorScheming <NSObject>
+/**
+ The color of the contained input view's text.
+ */
 @property(strong, nonatomic, readonly, nonnull) UIColor *textColor;
+/**
+ The color of the contained input view's underline label.
+ */
 @property(strong, nonatomic, readonly, nonnull) UIColor *underlineLabelColor;
+/**
+ The color of the contained input view's floating label.
+ */
 @property(strong, nonatomic, readonly, nonnull) UIColor *floatingLabelColor;
+/**
+ The color of the contained input view's placeholder label.
+ */
 @property(strong, nonatomic, readonly, nonnull) UIColor *placeholderColor;
+/**
+ The tint color of the contained input view's clear button.
+ */
 @property(strong, nonatomic, readonly, nonnull) UIColor *clearButtonTintColor;
+/**
+ The color the contained input view should apply during an error state.
+ */
 @property(strong, nonatomic, readonly, nonnull) UIColor *errorColor;
 @end
 
 /**
- A base implementation of MDCContainedInputViewColorScheming. Intended to be subclassed.
+ A base implementation of MDCContainedInputViewColorScheming. Intended to be subclassed for styles
+ that include additional elements that need to be colored.
  */
 @interface MDCContainedInputViewColorScheme : NSObject <MDCContainedInputViewColorScheming>
 @property(strong, nonatomic, nonnull) UIColor *textColor;
@@ -213,29 +248,74 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
 @protocol MDCContainedInputViewStyleDensityInforming;
 
 @protocol MDCContainedInputViewStyle <NSObject>
+/**
+ The style's densityInformer. Different implementations of MDCContainedInputView may need different
+ density informers on a per style basis.
+ */
 @property(strong, nonatomic, nonnull) id<MDCContainedInputViewStyleDensityInforming>
-    densityInformer;
+densityInformer;
+/**
+ This method provides a default object conforming to MDCContainedInputViewColorScheming.
+ */
 - (nonnull id<MDCContainedInputViewColorScheming>)defaultColorSchemeForState:
-    (MDCContainedInputViewState)state;
+(MDCContainedInputViewState)state;
+/**
+ This method allows objects conforming to MDCContainedInputViewStyle to apply themselves to objects
+ conforming to MDCContainedInputView with a set of colors represented by an object conforming to
+ MDCContainedInputViewColorScheming.
+ */
 - (void)applyStyleToContainedInputView:(nonnull id<MDCContainedInputView>)inputView
-    withContainedInputViewColorScheming:(nonnull id<MDCContainedInputViewColorScheming>)colorScheme;
+   withContainedInputViewColorScheming:(nonnull id<MDCContainedInputViewColorScheming>)colorScheme;
+/**
+ This method allows objects conforming to MDCContainedInputViewStyle to remove the styling
+ previously applied to objects conforming to MDCContainedInputView.
+ */
 - (void)removeStyleFrom:(nonnull id<MDCContainedInputView>)containedInputView;
+/**
+ The value returned by this method determines how big the font of the floating label should be when
+ it's floating.
+ */
 - (CGFloat)floatingFontSizeScaleFactor;
 @end
 
+/**
+ Objects conforming to this protocol provide information about the vertical positions of views. This
+ helps achieve the variations in floating label position across the filled and outlined styles as
+ well as the general density of the views.
+ */
 @protocol MDCContainedInputViewStyleDensityInforming <NSObject>
+/**
+ This is a value between 0 and 1 that determines the visual vertical density of the view.
+ */
 @property(nonatomic, assign) CGFloat verticalDensity;
+/**
+ This method returns the mininum Y coordinate of the floating label given its height.
+ */
 - (CGFloat)floatingLabelMinYWithFloatingLabelHeight:(CGFloat)floatingLabelHeight;
+/**
+ This method returns the top padding of the main content area (where the text is) when the floating
+ label is floating.
+ */
 - (CGFloat)contentAreaTopPaddingFloatingLabelWithFloatingLabelMaxY:(CGFloat)floatingLabelMaxY;
+/**
+ This method returns the vertical (top and bottom) padding of the main content area (where the text
+ is) when the floating label is in the normal (not floating) state.
+ */
 - (CGFloat)contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:(CGFloat)floatingLabelMaxY;
 @end
 
+/**
+ A base implementation of MDCContainedInputViewStyle.
+ */
 @interface MDCContainerStyleBase : NSObject <MDCContainedInputViewStyle>
 - (nonnull instancetype)init NS_DESIGNATED_INITIALIZER;
 @end
 
+/**
+ A base implementation of MDCContainedInputViewStyleDensityInforming.
+ */
 @interface MDCContainerStyleBaseDensityInformer
-    : NSObject <MDCContainedInputViewStyleDensityInforming>
+: NSObject <MDCContainedInputViewStyleDensityInforming>
 @end
 
 @interface MDCContainedInputViewFloatingLabelManager : NSObject
@@ -245,7 +325,6 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
               placeholderFrame:(CGRect)placeholderFrame
           isPlaceholderVisible:(BOOL)isPlaceholderVisible;
 - (void)layOutFloatingLabel:(nonnull UILabel *)floatingLabel
-//           placeholderLabel:(nonnull UILabel *)placeholderLabel
                       state:(MDCContainedInputViewFloatingLabelState)floatingLabelState
                 normalFrame:(CGRect)normalFrame
               floatingFrame:(CGRect)floatingFrame

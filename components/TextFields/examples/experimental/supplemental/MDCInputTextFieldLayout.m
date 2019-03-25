@@ -283,7 +283,7 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
       underlineLabelsCombinedMaxX - underlineLabelsCombinedMinX;
 
   CGFloat underlineLabelsCombinedMinY =
-      topRowBottomRowDividerY + [containerStyle.densityInformer containerBottomVerticalPadding];
+      topRowBottomRowDividerY + [containerStyle.densityInformer contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:floatingLabelMaxY];
   CGFloat leadingUnderlineLabelWidth = 0;
   CGFloat trailingUnderlineLabelWidth = 0;
   CGSize leadingUnderlineLabelSize = CGSizeZero;
