@@ -1,3 +1,163 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+### Banner
+
+**New component.**
+
+### Typography
+
+#### MDCTextStyleButton
+
+*new* constant: `MDCTextStyleButton`
+
+#### MDCTextStyleCaption
+
+*new* constant: `MDCTextStyleCaption`
+
+#### MDCTextStyleSubtitle2
+
+*new* constant: `MDCTextStyleSubtitle2`
+
+#### MDCTextStyleSubtitle1
+
+*new* constant: `MDCTextStyleSubtitle1`
+
+#### MDCTextStyleBody1
+
+*new* constant: `MDCTextStyleBody1`
+
+#### UIFont(MaterialScalable)
+
+*new* method: `-mdc_scaledFontForCurrentSizeCategory` in `UIFont(MaterialScalable)`
+
+*new* method: `-mdc_scaledFontAtDefaultSize` in `UIFont(MaterialScalable)`
+
+*new* method: `-mdc_scaledFontForSizeCategory:` in `UIFont(MaterialScalable)`
+
+*new* category: `UIFont(MaterialScalable)`
+
+*new* property: `mdc_scalingCurve` in `UIFont(MaterialScalable)`
+
+#### MDCFontScaler
+
+*new* class method: `+scalerForMaterialTextStyle:` in `MDCFontScaler`
+
+*new* method: `-scaledValueForValue:` in `MDCFontScaler`
+
+*new* class: `MDCFontScaler`
+
+*new* method: `-init` in `MDCFontScaler`
+
+*new* method: `-initForMaterialTextStyle:` in `MDCFontScaler`
+
+*new* method: `-scaledFontWithFont:` in `MDCFontScaler`
+
+#### MDCTextStyleHeadline4
+
+*new* constant: `MDCTextStyleHeadline4`
+
+#### MDCTextStyleHeadline3
+
+*new* constant: `MDCTextStyleHeadline3`
+
+#### MDCTextStyleHeadline2
+
+*new* constant: `MDCTextStyleHeadline2`
+
+#### MDCTextStyleHeadline6
+
+*new* constant: `MDCTextStyleHeadline6`
+
+#### MDCTextStyleBody2
+
+*new* constant: `MDCTextStyleBody2`
+
+#### MDCTextStyle
+
+*new* typedef: `MDCTextStyle`
+
+#### MDCTextStyleOverline
+
+*new* constant: `MDCTextStyleOverline`
+
+#### MDCTextStyleHeadline1
+
+*new* constant: `MDCTextStyleHeadline1`
+
+#### MDCTextStyleHeadline5
+
+*new* constant: `MDCTextStyleHeadline5`
+
+### TypographyScheme
+
+#### MDCTypographySchemeDefaults
+
+*new* enum value: `MDCTypographySchemeDefaultsMaterial201902` in `MDCTypographySchemeDefaults`
+
+#### MDCTypographyScheme
+
+*new* property: `mdc_adjustsFontForContentSizeCategory` in `MDCTypographyScheme`
+
+#### MDCTypographyScheming
+
+*new* property: `mdc_adjustsFontForContentSizeCategory` in `MDCTypographyScheming`
+
+## Component changes
+
+## Changes
+
+### ActivityIndicator
+
+* [Deflake snapshot tests. (#6934)](https://github.com/material-components/material-components-ios/commit/63f0da31e5eb9cb98c7e342a0838c796a4620fc6) (Robert Moore)
+
+### AppBar
+
+* [Fix README code snippet (#6969)](https://github.com/material-components/material-components-ios/commit/b62e576b9c844be60d84f22207d2c41f0bb6a517) (Robert Moore)
+* [Refactor AppBar example table views (#6974)](https://github.com/material-components/material-components-ios/commit/b03820da60a136388993e8422f5523aec718f31c) (Brian Moore)
+
+### Buttons
+
+* [Fix `accessibilityTraits` in init. (#6948)](https://github.com/material-components/material-components-ios/commit/89858253e246652b94a58dfefe94971cee9b1140) (Robert Moore)
+
+### HeaderStackView
+
+* [Add basic Snapshot tests. (#6923)](https://github.com/material-components/material-components-ios/commit/02b52f29c437e3bf4208cc3fd0091d07f92b9121) (Robert Moore)
+
+### Ripple
+
+* [Remove manipulation of clipping for the ripple's superview (#6977)](https://github.com/material-components/material-components-ios/commit/d332652b7566c90695972fbca3949aedebbe819c) (Yarden Eitan)
+
+### ShapeLibrary
+
+* [Add basic Snapshot tests. (#6918)](https://github.com/material-components/material-components-ios/commit/d61d1b2ff8c5c052faa6c0a456637231b8f4b1fc) (Robert Moore)
+
+### Shapes
+
+* [Add basic Snapshot tests. (#6919)](https://github.com/material-components/material-components-ios/commit/ac4b4eafcdd8a6e87336737d349c0bb499770ac5) (Robert Moore)
+
+### Tabs
+
+* [Do not truncate badge text on MDCItemBarCell (#6916)](https://github.com/material-components/material-components-ios/commit/c4d823362e016061725dc5ebdf5b4a4970aaa6b0) (Andrew Overton)
+
+## Multi-component changes
+
+* [Add Font Scaler (#6871)](https://github.com/material-components/material-components-ios/commit/80db06984b36d5e00028a4016f05b136004f7540) (ianegordon)
+* [Add new typography scheme with scalable fonts (#6873)](https://github.com/material-components/material-components-ios/commit/96a741b3150ae583968e32c6ac096113e75af0de) (ianegordon)
+
+---
+
 # 79.3.0
 
 This minor release fixes a bug in MDCButton's `accessibilityTraits` value. A recent change introduced
