@@ -233,8 +233,9 @@
   UIFont *normalFont = [self determineEffectiveFont];
   UIFont *floatingFont = [self.floatingLabelManager floatingFontWithFont:normalFont
                                                           containerStyle:self.containerStyle];
-  CGRect adjustedPlaceholderFrame = [self adjustTextAreaFrame:self.layout.textRectFloatingLabel
-                                 withParentClassTextAreaFrame:[super textRectForBounds:self.bounds]];
+  CGRect adjustedPlaceholderFrame =
+      [self adjustTextAreaFrame:self.layout.textRectFloatingLabel
+          withParentClassTextAreaFrame:[super textRectForBounds:self.bounds]];
   adjustedPlaceholderFrame = CGRectOffset(adjustedPlaceholderFrame, 0, -1);
   [self.floatingLabelManager layOutPlaceholderLabel:self.placeholderLabel
                                    placeholderFrame:adjustedPlaceholderFrame
@@ -329,13 +330,13 @@
 - (void)setAttributedPlaceholder:(NSAttributedString *)attributedPlaceholder {
   [super setAttributedPlaceholder:attributedPlaceholder];
   //  self.floatingLabel.text = [attributedPlaceholder string];
-//  self.floatingLabel.attributedText = [attributedPlaceholder copy];
-//  NSLog(@"setting attributedPlaceholder is not currently supported.");
+  //  self.floatingLabel.attributedText = [attributedPlaceholder copy];
+  //  NSLog(@"setting attributedPlaceholder is not currently supported.");
   // TODO: Evaluate if attributedPlaceholder should be supported.
-//}
-//
-//- (NSAttributedString *)attributedPlaceholder {
-//  return self.floatingLabel.attributedText;
+  //}
+  //
+  //- (NSAttributedString *)attributedPlaceholder {
+  //  return self.floatingLabel.attributedText;
 }
 
 - (void)setLeftViewMode:(UITextFieldViewMode)leftViewMode {
@@ -586,11 +587,11 @@
 
 - (void)drawPlaceholderInRect:(CGRect)rect {
   id<MDCContainedInputViewColorScheming> colorScheme =
-  [self containedInputViewColorSchemingForState:self.containedInputViewState];
+      [self containedInputViewColorSchemingForState:self.containedInputViewState];
   NSDictionary *attributes = @{
-                               NSFontAttributeName : self.font,
-                               NSForegroundColorAttributeName : colorScheme.placeholderColor
-                               };
+    NSFontAttributeName : self.font,
+    NSForegroundColorAttributeName : colorScheme.placeholderColor
+  };
   [self.placeholder drawInRect:rect withAttributes:attributes];
 }
 
@@ -701,21 +702,21 @@
                                                isEditing:self.isEditing];
 }
 
-
 - (MDCContainedInputViewFloatingLabelState)determineCurrentFloatingLabelState {
   return [self floatingLabelStateWithFloatingLabel:self.floatingLabel
-                                            text:self.text
-                           canFloatingLabelFloat:self.canFloatingLabelFloat
-                                       isEditing:self.isEditing];
+                                              text:self.text
+                             canFloatingLabelFloat:self.canFloatingLabelFloat
+                                         isEditing:self.isEditing];
 }
 
 - (BOOL)shouldPlaceholderBeVisibleWithPlaceholder:(NSString *)placeholder
-                               floatingLabelState:(MDCContainedInputViewFloatingLabelState)floatingLabelState
+                               floatingLabelState:
+                                   (MDCContainedInputViewFloatingLabelState)floatingLabelState
                                              text:(NSString *)text
                                         isEditing:(BOOL)isEditing {
   BOOL hasPlaceholder = placeholder.length > 0;
   BOOL hasText = text.length > 0;
-  
+
   if (hasPlaceholder) {
     if (hasText) {
       return NO;
@@ -731,11 +732,11 @@
   }
 }
 
-- (MDCContainedInputViewFloatingLabelState)floatingLabelStateWithFloatingLabel:(UILabel *)floatingLabel
-                                                                          text:(NSString *)text
-                                                       canFloatingLabelFloat:
-                                                           (BOOL)canFloatingLabelFloat
-                                                                   isEditing:(BOOL)isEditing {
+- (MDCContainedInputViewFloatingLabelState)
+    floatingLabelStateWithFloatingLabel:(UILabel *)floatingLabel
+                                   text:(NSString *)text
+                  canFloatingLabelFloat:(BOOL)canFloatingLabelFloat
+                              isEditing:(BOOL)isEditing {
   BOOL hasFloatingLabelText = floatingLabel.text.length > 0;
   BOOL hasText = text.length > 0;
   if (hasFloatingLabelText) {
