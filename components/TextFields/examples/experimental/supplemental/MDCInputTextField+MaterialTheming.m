@@ -291,13 +291,6 @@
   return minYAddition + (difference * (1 - self.verticalDensity));
 }
 
-- (CGFloat)containerBottomVerticalPadding {
-  CGFloat minPadding = 3;
-  CGFloat maxPadding = 9;
-  CGFloat difference = maxPadding - minPadding;
-  return minPadding + (difference * (1 - self.verticalDensity));
-}
-
 @end
 
 @implementation MDCInputTextFieldOutlinedDensityInformer
@@ -316,13 +309,6 @@
 
 - (CGFloat)contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:(CGFloat)floatingPlaceholderMaxY {
   return [self contentAreaTopPaddingFloatingLabelWithFloatingLabelMaxY:floatingPlaceholderMaxY];
-}
-
-- (CGFloat)containerBottomVerticalPadding {
-  CGFloat minPadding = 3;
-  CGFloat maxPadding = 12;
-  CGFloat difference = maxPadding - minPadding;
-  return minPadding + (difference * (1 - self.verticalDensity));
 }
 
 @end
