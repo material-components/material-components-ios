@@ -1,20 +1,77 @@
-# #develop#
+# 80.0.0
 
-Replace this text with a summarized description of this release's contents.
+This major release introduces Dynamic Type support for Typography Schemes as well as
+UIFontMetrics-like support for Dynamic Type for Material Typography. It also includes snapshot tests
+for additional components and less-restrictive badging for Tabs.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+`MDCTypographyScheming` has a new non-optional API, `mdc_adjustsFontForContentSizeCategory` that is
+`YES` if the returned fonts should use the new Dynamic Type APIs available from Material Typography.
+Existing implementations may wish to migrate (at least initially) by returning `NO` as a read-only
+value until support can be added.
 
-Replace this text with links to deprecation guides.
+```objc
+- (void)mdc_adjustsFontForContentSizeCategory {
+  return NO;
+}
+```
+
+```swift
+public var mdc_adjustsFontForContentSizeCategory: Bool {
+  return NO;
+}
+```
+
 ## New features
 
-Replace this text with example code for each new feature.
+### Improved Dynamic Type Support
+
+The Typography and TypographyScheme components have been updated for improved Dynamic Type support.
+Most clients will make use of this support through MDCTypographyScheme, though it is possible
+to create scalable fonts manually via MDCFontScaler within Typography.  The new scaling curves have
+been updated for last year's refresh of Material Design typography and font values.
+
+#### Objective-C
+
+```objc
+// Typography Scheme is the most typical way to receive scalable fonts.
+MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+UIFont *scaledBody1Font = [typographyScheme.body1 mdc_scaledFontForCurrentSizeCategory];
+
+// If Typography Schemes aren't used, it's possible to create the fonts manually.
+// Initial set-up to apply scaling curves to a base UIFont.
+UIFont *baseFont = [UIFont systemFontOfSize:18.0];
+MDCFontScaler *body2Scaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleBody2];
+UIFont *scalableFont = [body2Scaler scaledFontWithFont:baseFont];
+
+// Now UIFonts appropriate for Dynamic Type size categories can be created anywhere.
+UIFont *baseFontScaledToDefault = [scalableFont mdc_scaledFontAtDefaultSize];
+UIFont *baseFontScaledForExtraLarge = [scalableFont mdc_scaledFontForSizeCategory:UIContentSizeCategoryExtraLarge];
+UIFont *baseFontScaledForCurrentSizeCategory = [scalableFont mdc_scaledFontForCurrentSizeCategory];
+
+```
+
+#### Swift
+
+```swift
+// Typography Scheme is the most typical way to receive scalable fonts.
+let typographyScheme = MDCTypographyScheme(defaults: .material201902)
+let scaledBody1Font = typographyScheme.body1.mdc_scaledFontForCurrentSizeCategory()
+
+// If Typography Schemes aren't used, it's possible to create the fonts manually.
+// Initial set-up to apply scaling curves to a base UIFont.
+let baseFont = UIFont.systemFont(ofSize: 18)
+let body2Scaler = MDCFontScaler(forMaterialTextStyle: .body2)
+let scalableFont = body2Scaler.scaledFont(with: baseFont)
+
+// Now UIFonts appropriate for Dynamic Type size categories can be created anywhere.
+let baseFontScaledToDefault = scalableFont.mdc_scaledFontAtDefaultSize()
+let baseFontScaledForExtraLarge = scalableFont.mdc_scaledFont(forSizeCategory: .extraLarge)
+let baseFontScaledForCurrentSizeCategory = scalableFont.mdc_scaledFontForCurrentSizeCategory()
+```
+
 ## API changes
-
-### Banner
-
-**New component.**
 
 ### Typography
 
@@ -151,9 +208,12 @@ Replace this text with example code for each new feature.
 
 * [Do not truncate badge text on MDCItemBarCell (#6916)](https://github.com/material-components/material-components-ios/commit/c4d823362e016061725dc5ebdf5b4a4970aaa6b0) (Andrew Overton)
 
-## Multi-component changes
+### Typography
 
 * [Add Font Scaler (#6871)](https://github.com/material-components/material-components-ios/commit/80db06984b36d5e00028a4016f05b136004f7540) (ianegordon)
+
+### schemes/Typography
+
 * [Add new typography scheme with scalable fonts (#6873)](https://github.com/material-components/material-components-ios/commit/96a741b3150ae583968e32c6ac096113e75af0de) (ianegordon)
 
 ---
