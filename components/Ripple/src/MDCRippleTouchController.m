@@ -48,6 +48,7 @@
 }
 
 - (void)configureRippleWithView:(UIView *)view {
+  [_view removeGestureRecognizer:_gestureRecognizer];
   _view = view;
   [_view addGestureRecognizer:_gestureRecognizer];
   _rippleView.frame = view.bounds;

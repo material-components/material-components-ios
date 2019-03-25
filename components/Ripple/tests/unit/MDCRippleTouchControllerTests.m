@@ -35,7 +35,7 @@
 }
 
 - (void)testInitWithView {
-  // When
+  // Given
   UIView *parentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
   MDCRippleTouchController *touchController =
       [[MDCRippleTouchController alloc] initWithView:parentView];

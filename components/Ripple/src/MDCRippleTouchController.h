@@ -136,7 +136,7 @@
 
  @param rippleTouchController The ripple touch controller.
  @param rippleView The ripple view.
- @param view The view to add the ripple view to.
+ @param view The requested superview of the ripple view.
  */
 - (void)rippleTouchController:(nonnull MDCRippleTouchController *)rippleTouchController
              insertRippleView:(nonnull MDCRippleView *)rippleView
