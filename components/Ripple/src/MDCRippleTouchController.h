@@ -128,7 +128,7 @@
               atTouchLocation:(CGPoint)location;
 
 /**
- Inserts the ripple view into the given view.
+ Provides an opportunity to add the rippleView anywhere in the given view's hierarchy.
 
  If this method is not implemented, the ripple view is added as a subview of the given view provided
  in the controller's `addRippleToView:` method or convenience initializer `initWithView:`.
