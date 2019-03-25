@@ -19,7 +19,7 @@ value until support can be added.
 
 ```swift
 public var mdc_adjustsFontForContentSizeCategory: Bool {
-  return NO;
+  return false;
 }
 ```
 
