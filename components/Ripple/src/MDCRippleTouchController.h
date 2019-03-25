@@ -56,17 +56,37 @@
 @property(nonatomic, assign) BOOL shouldProcessRippleWithScrollViewGestures;
 
 /**
- Unavailable, please use `initWithView` instead.
+ Initializes the controller and adds the initialized ripple view as a subview of the provided view.
+
+ Note: When using this initializer, calling `addRippleToView:` isn't needed.
+
+ @param view The view that responds to the touch events for the ripple. The ripple
+ is added to it as a subview.
+ @return an MDCRippleTouchController instance.
  */
-- (nonnull instancetype)init NS_UNAVAILABLE;
+- (nonnull instancetype)initWithView:(nonnull UIView *)view;
 
 /**
  Initializes the controller.
 
- @param view The view that responds to the touch events for the ripple, and the view which the
- ripple is added as a subview to.
+ Note: To effectively use the controller a call to `addRippleToView:` is needed to provide a view
+ that responds to the touch events for the ripple. The ripple is added to the view as a subview.
+
+ @return an MDCRippleTouchController instance.
  */
-- (nonnull instancetype)initWithView:(nonnull UIView *)view NS_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)init;
+
+/**
+ Adds the ripple view as a subview to the provided view, and adds the ripple's gesture recognizer
+ to it.
+
+ Note: This needs to be called if using the `init` initialized rather than the `initWithView:`
+ initializer.
+
+ @param view The view that responds to the touch events for the ripple. The ripple
+ is added to it as a subview.
+ */
+- (void)addRippleToView:(nonnull UIView *)view;
 
 @end
 
@@ -106,5 +126,20 @@
 - (void)rippleTouchController:(nonnull MDCRippleTouchController *)rippleTouchController
          didProcessRippleView:(nonnull MDCRippleView *)rippleView
               atTouchLocation:(CGPoint)location;
+
+/**
+ Provides an opportunity to add the rippleView anywhere in the given view's hierarchy.
+
+ If this method is not implemented, the ripple view is added as a subview of the given view provided
+ in the controller's `addRippleToView:` method or convenience initializer `initWithView:`.
+ Delegates can choose to insert the ripple view anywhere in the view hierarchy.
+
+ @param rippleTouchController The ripple touch controller.
+ @param rippleView The ripple view.
+ @param view The requested superview of the ripple view.
+ */
+- (void)rippleTouchController:(nonnull MDCRippleTouchController *)rippleTouchController
+             insertRippleView:(nonnull MDCRippleView *)rippleView
+                     intoView:(nonnull UIView *)view;
 
 @end

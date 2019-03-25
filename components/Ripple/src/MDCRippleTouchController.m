@@ -19,6 +19,14 @@
 }
 
 - (instancetype)initWithView:(UIView *)view {
+  self = [self init];
+  if (self) {
+    [self configureRippleWithView:view];
+  }
+  return self;
+}
+
+- (instancetype)init {
   self = [super init];
   if (self) {
     _gestureRecognizer =
@@ -30,13 +38,26 @@
     _gestureRecognizer.delaysTouchesEnded = NO;
 
     _shouldProcessRippleWithScrollViewGestures = YES;
-    _view = view;
-    [_view addGestureRecognizer:_gestureRecognizer];
-
-    _rippleView = [[MDCRippleView alloc] initWithFrame:view.bounds];
-    [_view addSubview:_rippleView];
+    _rippleView = [[MDCRippleView alloc] init];
   }
   return self;
+}
+
+- (void)addRippleToView:(UIView *)view {
+  [self configureRippleWithView:view];
+}
+
+- (void)configureRippleWithView:(UIView *)view {
+  [_view removeGestureRecognizer:_gestureRecognizer];
+  _view = view;
+  [_view addGestureRecognizer:_gestureRecognizer];
+  _rippleView.frame = view.bounds;
+
+  if ([_delegate respondsToSelector:@selector(rippleTouchController:insertRippleView:intoView:)]) {
+    [_delegate rippleTouchController:self insertRippleView:_rippleView intoView:_view];
+  } else {
+    [_view addSubview:_rippleView];
+  }
 }
 
 - (void)dealloc {
