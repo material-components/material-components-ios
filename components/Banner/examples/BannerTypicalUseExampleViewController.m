@@ -247,8 +247,8 @@ static NSString *const exampleExtraLongText =
   // TODO: https://github.com/material-components/material-components-ios/issues/6838
   NSBundle *bundle = [NSBundle bundleForClass:[BannerTypicalUseExampleViewController class]];
   self.bannerView.imageView.image = [[UIImage imageNamed:@"banner-email"
-                                     inBundle:bundle
-                compatibleWithTraitCollection:nil]
+                                                inBundle:bundle
+                           compatibleWithTraitCollection:nil]
       imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   self.bannerView.imageView.tintColor = self.colorScheme.primaryColor;
 }
@@ -301,8 +301,8 @@ static NSString *const exampleExtraLongText =
   // TODO: https://github.com/material-components/material-components-ios/issues/6838
   NSBundle *bundle = [NSBundle bundleForClass:[BannerTypicalUseExampleViewController class]];
   self.bannerView.imageView.image = [[UIImage imageNamed:@"banner-email"
-                                     inBundle:bundle
-                compatibleWithTraitCollection:nil]
+                                                inBundle:bundle
+                           compatibleWithTraitCollection:nil]
       imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   self.bannerView.imageView.tintColor = self.colorScheme.primaryColor;
 }
@@ -354,8 +354,8 @@ static NSString *const exampleExtraLongText =
   // TODO: https://github.com/material-components/material-components-ios/issues/6838
   NSBundle *bundle = [NSBundle bundleForClass:[BannerTypicalUseExampleViewController class]];
   self.bannerView.imageView.image = [[UIImage imageNamed:@"banner-email"
-                                     inBundle:bundle
-                compatibleWithTraitCollection:nil]
+                                                inBundle:bundle
+                           compatibleWithTraitCollection:nil]
       imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   self.bannerView.imageView.tintColor = self.colorScheme.primaryColor;
 }

@@ -24,7 +24,8 @@ static const NSInteger kTextNumberOfLineLimit = 3;
 typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
   MDCBannerViewLayoutSingleLineStyle = 0,              // All elements lays on the same line
   MDCBannerViewLayoutMultiLineStackedButtonStyle = 1,  // Multline, stacked button layout
-  MDCBannerViewLayoutMultiLineAlignedButtonStyle = 2,  // Multiline style with all buttons on the same line
+  MDCBannerViewLayoutMultiLineAlignedButtonStyle =
+      2,  // Multiline style with all buttons on the same line
 };
 
 @interface MDCBannerView ()
@@ -124,8 +125,8 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
       frameHeight += kTopPaddingSmall + kBottomPadding;
       [self.textLabel sizeToFit];
       [self.leadingButton sizeToFit];
-      CGFloat maximumHeight = MAX(CGRectGetHeight(self.textLabel.frame),
-                                  CGRectGetHeight(self.leadingButton.frame));
+      CGFloat maximumHeight =
+          MAX(CGRectGetHeight(self.textLabel.frame), CGRectGetHeight(self.leadingButton.frame));
       if (self.isImageSet) {
         maximumHeight = MAX(kImageViewSideLength, maximumHeight);
       }
@@ -146,7 +147,8 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
       frameHeight += [self getFrameHeightOfImageViewAndTextLabelWithSizeToFit:size];
       [self.leadingButton sizeToFit];
       [self.trailingButton sizeToFit];
-      frameHeight += CGRectGetHeight(self.leadingButton.frame) + CGRectGetHeight(self.trailingButton.frame) + kButtonVerticalIntervalSpace;
+      frameHeight += CGRectGetHeight(self.leadingButton.frame) +
+                     CGRectGetHeight(self.trailingButton.frame) + kButtonVerticalIntervalSpace;
       break;
     }
   }
@@ -174,39 +176,92 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
   // Set Elements
   if (layoutStyle == MDCBannerViewLayoutSingleLineStyle) {
     if (self.isImageSet) {
-      [self.imageView.leadingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.leadingAnchor constant:kLeadingPadding].active = YES;
-      [self.imageView.topAnchor constraintEqualToAnchor:self.layoutMarginsGuide.topAnchor constant:kTopPaddingSmall].active = YES;
-      [self.imageView.bottomAnchor constraintEqualToAnchor:self.layoutMarginsGuide.bottomAnchor constant:-kBottomPadding].active = YES;
-      [self.textLabel.leadingAnchor constraintEqualToAnchor:self.imageView.trailingAnchor constant:kSpaceBetweenIconImageAndTextLabel].active = YES;
+      [self.imageView.leadingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.leadingAnchor
+                                                   constant:kLeadingPadding]
+          .active = YES;
+      [self.imageView.topAnchor constraintEqualToAnchor:self.layoutMarginsGuide.topAnchor
+                                               constant:kTopPaddingSmall]
+          .active = YES;
+      [self.imageView.bottomAnchor constraintEqualToAnchor:self.layoutMarginsGuide.bottomAnchor
+                                                  constant:-kBottomPadding]
+          .active = YES;
+      [self.textLabel.leadingAnchor constraintEqualToAnchor:self.imageView.trailingAnchor
+                                                   constant:kSpaceBetweenIconImageAndTextLabel]
+          .active = YES;
     } else {
-      [self.textLabel.leadingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.leadingAnchor constant:kLeadingPadding].active = YES;
+      [self.textLabel.leadingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.leadingAnchor
+                                                   constant:kLeadingPadding]
+          .active = YES;
     }
-    [self.buttonContainerView.leadingAnchor constraintGreaterThanOrEqualToAnchor:self.textLabel.trailingAnchor constant:kHorizontalSpaceBetweenTextLabelAndButton].active = YES;
-    NSLayoutConstraint *buttonContainerLeadingConstraint = [self.buttonContainerView.leadingAnchor constraintEqualToAnchor:self.textLabel.trailingAnchor constant:kHorizontalSpaceBetweenTextLabelAndButton];
+    [self.buttonContainerView.leadingAnchor
+        constraintGreaterThanOrEqualToAnchor:self.textLabel.trailingAnchor
+                                    constant:kHorizontalSpaceBetweenTextLabelAndButton]
+        .active = YES;
+    NSLayoutConstraint *buttonContainerLeadingConstraint = [self.buttonContainerView.leadingAnchor
+        constraintEqualToAnchor:self.textLabel.trailingAnchor
+                       constant:kHorizontalSpaceBetweenTextLabelAndButton];
     buttonContainerLeadingConstraint.priority = UILayoutPriorityDefaultHigh;
     buttonContainerLeadingConstraint.active = YES;
-    [self.buttonContainerView.trailingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.trailingAnchor constant:-kTrailingPadding].active = YES;
-    [self.buttonContainerView.topAnchor constraintEqualToAnchor:self.layoutMarginsGuide.topAnchor constant:kTopPaddingSmall].active = YES;
-    [self.buttonContainerView.bottomAnchor constraintEqualToAnchor:self.layoutMarginsGuide.bottomAnchor constant:-kBottomPadding].active = YES;
-    [self.textLabel.centerYAnchor constraintEqualToAnchor:self.buttonContainerView.centerYAnchor].active = YES;
+    [self.buttonContainerView.trailingAnchor
+        constraintEqualToAnchor:self.layoutMarginsGuide.trailingAnchor
+                       constant:-kTrailingPadding]
+        .active = YES;
+    [self.buttonContainerView.topAnchor constraintEqualToAnchor:self.layoutMarginsGuide.topAnchor
+                                                       constant:kTopPaddingSmall]
+        .active = YES;
+    [self.buttonContainerView.bottomAnchor
+        constraintEqualToAnchor:self.layoutMarginsGuide.bottomAnchor
+                       constant:-kBottomPadding]
+        .active = YES;
+    [self.textLabel.centerYAnchor constraintEqualToAnchor:self.buttonContainerView.centerYAnchor]
+        .active = YES;
   } else {
     if (self.isImageSet) {
-      [self.imageView.leadingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.leadingAnchor constant:kLeadingPadding].active = YES;
-      [self.imageView.topAnchor constraintEqualToAnchor:self.layoutMarginsGuide.topAnchor constant:kTopPaddingLarge].active = YES;
-      [self.textLabel.leadingAnchor constraintEqualToAnchor:self.imageView.trailingAnchor constant:kSpaceBetweenIconImageAndTextLabel].active = YES;
-      [self.buttonContainerView.topAnchor constraintGreaterThanOrEqualToAnchor:self.imageView.bottomAnchor constant:kVerticalSpaceBetweenButtonAndTextLabel].active = YES;
+      [self.imageView.leadingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.leadingAnchor
+                                                   constant:kLeadingPadding]
+          .active = YES;
+      [self.imageView.topAnchor constraintEqualToAnchor:self.layoutMarginsGuide.topAnchor
+                                               constant:kTopPaddingLarge]
+          .active = YES;
+      [self.textLabel.leadingAnchor constraintEqualToAnchor:self.imageView.trailingAnchor
+                                                   constant:kSpaceBetweenIconImageAndTextLabel]
+          .active = YES;
+      [self.buttonContainerView.topAnchor
+          constraintGreaterThanOrEqualToAnchor:self.imageView.bottomAnchor
+                                      constant:kVerticalSpaceBetweenButtonAndTextLabel]
+          .active = YES;
     } else {
-      [self.textLabel.leadingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.leadingAnchor constant:kLeadingPadding].active = YES;
-      [self.buttonContainerView.topAnchor constraintGreaterThanOrEqualToAnchor:self.textLabel.bottomAnchor constant:kVerticalSpaceBetweenButtonAndTextLabel].active = YES;
+      [self.textLabel.leadingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.leadingAnchor
+                                                   constant:kLeadingPadding]
+          .active = YES;
+      [self.buttonContainerView.topAnchor
+          constraintGreaterThanOrEqualToAnchor:self.textLabel.bottomAnchor
+                                      constant:kVerticalSpaceBetweenButtonAndTextLabel]
+          .active = YES;
     }
-    [self.textLabel.topAnchor constraintEqualToAnchor:self.layoutMarginsGuide.topAnchor constant:kTopPaddingLarge].active = YES;
-    [self.textLabel.trailingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.trailingAnchor constant:-kTrailingPadding].active = YES;
-    NSLayoutConstraint *buttonContainerTopConstraint = [self.buttonContainerView.topAnchor constraintEqualToAnchor:self.textLabel.bottomAnchor constant:kVerticalSpaceBetweenButtonAndTextLabel];
+    [self.textLabel.topAnchor constraintEqualToAnchor:self.layoutMarginsGuide.topAnchor
+                                             constant:kTopPaddingLarge]
+        .active = YES;
+    [self.textLabel.trailingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.trailingAnchor
+                                                  constant:-kTrailingPadding]
+        .active = YES;
+    NSLayoutConstraint *buttonContainerTopConstraint = [self.buttonContainerView.topAnchor
+        constraintEqualToAnchor:self.textLabel.bottomAnchor
+                       constant:kVerticalSpaceBetweenButtonAndTextLabel];
     buttonContainerTopConstraint.priority = UILayoutPriorityDefaultLow;
     buttonContainerTopConstraint.active = YES;
-    [self.buttonContainerView.leadingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.leadingAnchor constant:kLeadingPadding].active = YES;
-    [self.buttonContainerView.trailingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.trailingAnchor constant:-kTrailingPadding].active = YES;
-    [self.buttonContainerView.bottomAnchor constraintEqualToAnchor:self.layoutMarginsGuide.bottomAnchor constant:-kBottomPadding].active = YES;
+    [self.buttonContainerView.leadingAnchor
+        constraintEqualToAnchor:self.layoutMarginsGuide.leadingAnchor
+                       constant:kLeadingPadding]
+        .active = YES;
+    [self.buttonContainerView.trailingAnchor
+        constraintEqualToAnchor:self.layoutMarginsGuide.trailingAnchor
+                       constant:-kTrailingPadding]
+        .active = YES;
+    [self.buttonContainerView.bottomAnchor
+        constraintEqualToAnchor:self.layoutMarginsGuide.bottomAnchor
+                       constant:-kBottomPadding]
+        .active = YES;
   }
 
   [self updateButtonsConstraintsWithLayoutStyle:layoutStyle];
@@ -216,19 +271,35 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
 
 - (void)updateButtonsConstraintsWithLayoutStyle:(MDCBannerViewLayoutStyle)layoutStyle {
   if (self.trailingButton.hidden) {
-    [self.leadingButton.trailingAnchor constraintEqualToAnchor:self.buttonContainerView.trailingAnchor].active = YES;
-    [self.leadingButton.centerYAnchor constraintEqualToAnchor:self.buttonContainerView.centerYAnchor].active = YES;
+    [self.leadingButton.trailingAnchor
+        constraintEqualToAnchor:self.buttonContainerView.trailingAnchor]
+        .active = YES;
+    [self.leadingButton.centerYAnchor
+        constraintEqualToAnchor:self.buttonContainerView.centerYAnchor]
+        .active = YES;
   } else {
     if (layoutStyle == MDCBannerViewLayoutMultiLineStackedButtonStyle) {
-      [self.leadingButton.trailingAnchor constraintEqualToAnchor:self.buttonContainerView.trailingAnchor].active = YES;
-      [self.trailingButton.topAnchor constraintEqualToAnchor:self.leadingButton.bottomAnchor constant:kButtonVerticalIntervalSpace].active = YES;
+      [self.leadingButton.trailingAnchor
+          constraintEqualToAnchor:self.buttonContainerView.trailingAnchor]
+          .active = YES;
+      [self.trailingButton.topAnchor constraintEqualToAnchor:self.leadingButton.bottomAnchor
+                                                    constant:kButtonVerticalIntervalSpace]
+          .active = YES;
     } else {
-      [self.leadingButton.trailingAnchor constraintEqualToAnchor:self.trailingButton.leadingAnchor constant:-kButtonHorizontalIntervalSpace].active = YES;
+      [self.leadingButton.trailingAnchor constraintEqualToAnchor:self.trailingButton.leadingAnchor
+                                                        constant:-kButtonHorizontalIntervalSpace]
+          .active = YES;
     }
-    [self.leadingButton.topAnchor constraintEqualToAnchor:self.buttonContainerView.topAnchor].active = YES;
-    [self.leadingButton.leadingAnchor constraintGreaterThanOrEqualToAnchor:self.buttonContainerView.leadingAnchor].active = YES;
-    [self.trailingButton.trailingAnchor constraintEqualToAnchor:self.buttonContainerView.trailingAnchor].active = YES;
-    [self.trailingButton.bottomAnchor constraintEqualToAnchor:self.buttonContainerView.bottomAnchor].active = YES;
+    [self.leadingButton.topAnchor constraintEqualToAnchor:self.buttonContainerView.topAnchor]
+        .active = YES;
+    [self.leadingButton.leadingAnchor
+        constraintGreaterThanOrEqualToAnchor:self.buttonContainerView.leadingAnchor]
+        .active = YES;
+    [self.trailingButton.trailingAnchor
+        constraintEqualToAnchor:self.buttonContainerView.trailingAnchor]
+        .active = YES;
+    [self.trailingButton.bottomAnchor constraintEqualToAnchor:self.buttonContainerView.bottomAnchor]
+        .active = YES;
   }
 }
 
@@ -246,17 +317,16 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
       remainingWidth -= kImageViewSideLength;
       remainingWidth -= kSpaceBetweenIconImageAndTextLabel;
     }
-    style = [self isAbleToFitTextLabel:self.textLabel
-                        withWidthLimit:remainingWidth]
-    ? MDCBannerViewLayoutSingleLineStyle
-    : MDCBannerViewLayoutMultiLineAlignedButtonStyle;
+    style = [self isAbleToFitTextLabel:self.textLabel withWidthLimit:remainingWidth]
+                ? MDCBannerViewLayoutSingleLineStyle
+                : MDCBannerViewLayoutMultiLineAlignedButtonStyle;
   } else {
     [self.leadingButton sizeToFit];
     [self.trailingButton sizeToFit];
-    CGFloat buttonWidth = [self widthSumForButtons:@[self.leadingButton, self.trailingButton]];
+    CGFloat buttonWidth = [self widthSumForButtons:@[ self.leadingButton, self.trailingButton ]];
     remainingWidth -= buttonWidth;
     style = (remainingWidth > 0) ? MDCBannerViewLayoutMultiLineAlignedButtonStyle
-    : MDCBannerViewLayoutMultiLineStackedButtonStyle;
+                                 : MDCBannerViewLayoutMultiLineStackedButtonStyle;
   }
   return style;
 }
@@ -288,10 +358,8 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
   return buttonsWidthSum;
 }
 
-- (BOOL)isAbleToFitTextLabel:(UILabel *)textLabel
-              withWidthLimit:(CGFloat)widthLimit {
-  CGSize size =
-  [textLabel.text sizeWithAttributes:@{NSFontAttributeName : textLabel.font}];
+- (BOOL)isAbleToFitTextLabel:(UILabel *)textLabel withWidthLimit:(CGFloat)widthLimit {
+  CGSize size = [textLabel.text sizeWithAttributes:@{NSFontAttributeName : textLabel.font}];
   return size.width <= widthLimit;
 }
 
