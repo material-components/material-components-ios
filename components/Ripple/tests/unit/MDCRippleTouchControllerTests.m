@@ -26,6 +26,17 @@
 
 @end
 
+@interface FakeGestureRecognizer : UILongPressGestureRecognizer
+@end
+
+@implementation FakeGestureRecognizer
+
+- (CGPoint)locationInView:(nullable UIView*)view {
+  return view.center;
+}
+
+@end
+
 @implementation FakeMDCRippleTouchControllerDelegate
 
 - (void)rippleTouchController:(MDCRippleTouchController *)rippleTouchController
@@ -137,8 +148,10 @@
   // When
   [parentView addSubview:[[UIView alloc] init]];
   [touchController addRippleToView:parentView];
-  touchController.gestureRecognizer.state = UIGestureRecognizerStateBegan;
-  [touchController handleRippleGesture:touchController.gestureRecognizer];
+  FakeGestureRecognizer *gestureRecognizer =
+      [[FakeGestureRecognizer alloc] initWithTarget:nil action:nil];
+  gestureRecognizer.state = UIGestureRecognizerStateBegan;
+  [touchController handleRippleGesture:gestureRecognizer];
 
   // Then
   XCTAssertTrue(delegate.didProcessRippleViewCalled);
@@ -157,8 +170,15 @@
   // When
   [parentView addSubview:[[UIView alloc] init]];
   [touchController addRippleToView:parentView];
-  touchController.gestureRecognizer.state = UIGestureRecognizerStateBegan;
-  [touchController handleRippleGesture:touchController.gestureRecognizer];
+  FakeGestureRecognizer *gestureRecognizer =
+      [[FakeGestureRecognizer alloc] initWithTarget:touchController action:@selector(handleRippleGesture:)];
+  gestureRecognizer.delegate = touchController;
+  gestureRecognizer.minimumPressDuration = 0;
+  gestureRecognizer.cancelsTouchesInView = NO;
+  gestureRecognizer.delaysTouchesEnded = NO;
+  [parentView addGestureRecognizer:gestureRecognizer];
+  gestureRecognizer.state = UIGestureRecognizerStateBegan;
+  [touchController handleRippleGesture:gestureRecognizer];
 
   // Then
   XCTAssertFalse(delegate.didProcessRippleViewCalled);
