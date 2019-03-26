@@ -14,7 +14,6 @@
 
 #import "MDCBannerView.h"
 
-#import "MDCBannerViewConstants.h"
 #import "MaterialButtons.h"
 #import "MaterialTypography.h"
 
@@ -27,6 +26,17 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
   MDCBannerViewLayoutMultiLineAlignedButtonStyle =
       2,  // Multiline style with all buttons on the same line
 };
+
+static const CGFloat kLeadingPadding = 16.0f;
+static const CGFloat kTrailingPadding = 8.0f;
+static const CGFloat kTopPaddingSmall = 10.0f;
+static const CGFloat kTopPaddingLarge = 24.0f;
+static const CGFloat kBottomPadding = 8.0f;
+static const CGFloat kButtonHorizontalIntervalSpace = 8.0f;
+static const CGFloat kButtonVerticalIntervalSpace = 8.0f;
+static const CGFloat kSpaceBetweenIconImageAndTextLabel = 16.0f;
+static const CGFloat kHorizontalSpaceBetweenTextLabelAndButton = 24.0f;
+static const CGFloat kVerticalSpaceBetweenButtonAndTextLabel = 12.0f;
 
 @interface MDCBannerView ()
 
