@@ -14,7 +14,11 @@ any other.
 From the point of view of the public, Beta components are not made available as part of our
 published pod. External clients that wish to use an Beta component in their Podfile will need to
 manually specify the MaterialComponentsBeta target and our repo.
+
+Because the Beta components are pointing to the `HEAD` of the `develop` branch, you need to also update your MaterialComponents pod to point to `develop` as well.
+
 ```
+   pod 'MaterialComponents', :git => 'https://github.com/material-components/material-components-ios.git', :branch => 'develop'
    pod 'MaterialComponentsBeta', :git => 'https://github.com/material-components/material-components-ios.git'
 ```
 When the component graduates to "Ready" clients will need to change their specs to point at the main pod.

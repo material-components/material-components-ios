@@ -34,9 +34,9 @@ class AppBarManualTabsExample: UIViewController {
   var colorScheme = MDCSemanticColorScheme()
   var typographyScheme = MDCTypographyScheme()
 
-  fileprivate let firstTab = SimpleTableViewController()
-  fileprivate let secondTab = SimpleTableViewController()
-  private var currentTab: SimpleTableViewController? = nil
+  fileprivate let firstTab = SimpleInheritedTableViewController()
+  fileprivate let secondTab = SimpleInheritedTableViewController()
+  private var currentTab: SimpleInheritedTableViewController? = nil
 
   lazy var tabBar: MDCTabBar = {
     let tabBar = MDCTabBar()
@@ -82,7 +82,7 @@ class AppBarManualTabsExample: UIViewController {
     switchToTab(firstTab)
   }
 
-  fileprivate func switchToTab(_ tab: SimpleTableViewController) {
+  fileprivate func switchToTab(_ tab: SimpleInheritedTableViewController) {
     appBarViewController.headerView.trackingScrollWillChange(toScroll: tab.tableView)
 
     if let currentTab = currentTab {
@@ -170,49 +170,5 @@ extension AppBarManualTabsExample {
 
   func catalogShouldHideNavigation() -> Bool {
     return true
-  }
-}
-
-private class SimpleTableViewController: UITableViewController {
-
-  var headerView: MDCFlexibleHeaderView?
-
-  override func viewDidLoad() {
-    super.viewDidLoad()
-
-    tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-    tableView.delegate = self
-    tableView.dataSource = self
-  }
-
-  override func numberOfSections(in tableView: UITableView) -> Int {
-    return 1
-  }
-
-  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 100
-  }
-
-  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-    let titleString = title ?? ""
-    cell.textLabel?.text = "\(titleString): Row \(indexPath.item)"
-    return cell
-  }
-
-  override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    headerView?.trackingScrollDidScroll()
-  }
-
-  override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-    headerView?.trackingScrollDidEndDecelerating()
-  }
-
-  override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-    headerView?.trackingScrollWillEndDragging(withVelocity: velocity, targetContentOffset: targetContentOffset)
-  }
-
-  override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-    headerView?.trackingScrollDidEndDraggingWillDecelerate(decelerate)
   }
 }

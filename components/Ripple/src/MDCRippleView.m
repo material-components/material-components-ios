@@ -82,12 +82,9 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
     if (self.superview.layer.shadowPath) {
       self.maskLayer.path = self.superview.layer.shadowPath;
       self.layer.mask = _maskLayer;
-    } else {
-      self.superview.clipsToBounds = YES;
     }
   } else {
     self.layer.mask = nil;
-    self.superview.clipsToBounds = NO;
   }
 }
 

@@ -17,7 +17,7 @@
 #import "MaterialButtons.h"
 #import "MaterialColorScheme.h"
 #import "MaterialTypography.h"
-#import "supplemental/MDCBannerView.h"
+#import "supplemental/MaterialBanner.h"
 
 static const CGFloat exampleListTableViewHeight = 300.0f;
 static const CGFloat exampleBannerContentMultiLineWidth = 320.0f;
