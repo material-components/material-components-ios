@@ -17,23 +17,13 @@ Major releases can contain breaking changes to clients, while minor and patch re
 
 We follow the guidelines defined by the [semver v2.0.0](https://semver.org/spec/v2.0.0.html#semantic-versioning-specification-semver) specification.
 
-## Roughly-speaking, what are breaking changes?
+Our public API includes the following:
 
-- Build-breaking modifications for either Objective-C or Swift code.
-- Visible changes to user interface components.
+- APIs that are present in non-private headers. A private header is one that is contained within a sub-directory named `private/` within a `src/` directory.
 
-## Roughly-speaking, what are non-breaking changes?
+We define "backwards incompatible changes" to include the following:
 
-- API additions.
-- Behavioral changes.
-
-## Roughly-speaking, how can a release be a patch release?
-
-Either:
-
-- There are *no changes to component sources* (changes to documentation—README.md or
-header docs—do not count), or
-- Component changes *only include bug fixes*.
+- Any change that will result in a build breakage from the previous release.
 
 ## What is the source of truth for MDC's version number?
 
