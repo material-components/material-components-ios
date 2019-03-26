@@ -15,8 +15,7 @@ Major releases can contain breaking changes to clients, while minor and patch re
 
 ## What are breaking changes?
 
-- API deletions or modifications.
-- Visible changes to user interface components.
+- Build-breaking modifications for either Objective-C or Swift code.
 
 ## What are non-breaking changes?
 
@@ -29,7 +28,7 @@ Either:
 
 - There are *no changes to component sources* (changes to documentation—README.md or
 header docs—do not count), or
-- Component changes *only include bug fixes with no apparent behavioral changes*.
+- Component changes *only include bug fixes*.
 
 ## What is the source of truth for MDC's version number?
 
