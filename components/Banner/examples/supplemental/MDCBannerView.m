@@ -48,8 +48,6 @@ static const CGFloat kVerticalSpaceBetweenButtonAndTextLabel = 12.0f;
 @property(nonatomic, readwrite, strong) MDCButton *trailingButton;
 @property(nonatomic, readwrite, strong) UIView *buttonContainerView;
 
-@property(nonatomic, readwrite, assign) MDCBannerViewLayoutStyle style;
-
 @end
 
 @implementation MDCBannerView
