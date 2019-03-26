@@ -18,7 +18,7 @@
 #import "MaterialTypography.h"
 
 typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
-  MDCBannerViewLayoutSingleLineStyle = 0,              // All elements lays on the same line
+  MDCBannerViewLayoutSingleLineStyle = 0,              // All elements on the same line
   MDCBannerViewLayoutMultiLineStackedButtonStyle = 1,  // Multline, stacked button layout
   MDCBannerViewLayoutMultiLineAlignedButtonStyle =
       2,  // Multiline style with all buttons on the same line
@@ -36,13 +36,14 @@ static const CGFloat kButtonVerticalIntervalSpace = 8.0f;
 static const CGFloat kSpaceBetweenIconImageAndTextLabel = 16.0f;
 static const CGFloat kHorizontalSpaceBetweenTextLabelAndButton = 24.0f;
 static const CGFloat kVerticalSpaceBetweenButtonAndTextLabel = 12.0f;
+static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 
 @interface MDCBannerView ()
 
 @property(nonatomic, readwrite, strong) UILabel *textLabel;
 
 @property(nonatomic, readwrite, strong) UIImageView *imageView;
-@property(nonatomic, readonly, assign) BOOL isImageSet;
+@property(nonatomic, readonly, assign) BOOL hasImage;
 
 @property(nonatomic, readwrite, strong) MDCButton *leadingButton;
 @property(nonatomic, readwrite, strong) MDCButton *trailingButton;
@@ -91,6 +92,7 @@ static const CGFloat kVerticalSpaceBetweenButtonAndTextLabel = 12.0f;
   }
   imageView.contentMode = UIViewContentModeCenter;
   imageView.clipsToBounds = YES;
+  imageView.hidden = YES;
   [self addSubview:imageView];
   _imageView = imageView;
 
@@ -112,15 +114,43 @@ static const CGFloat kVerticalSpaceBetweenButtonAndTextLabel = 12.0f;
   trailingButton.backgroundColor = UIColor.whiteColor;
   [buttonContainerView addSubview:trailingButton];
   _trailingButton = trailingButton;
+
+  [self addObserversToSubviews];
 }
 
-#pragma mark - Property Setter and Getter
+- (void)dealloc {
+  [self removeObservers];
+}
 
-- (BOOL)isImageSet {
+#pragma mark - Property Getter
+
+- (BOOL)hasImage {
   return self.imageView.image != nil && !self.imageView.hidden;
 }
 
 #pragma mark - KVO
+
+- (void)addObserversToSubviews {
+  [self.imageView addObserver:self
+                   forKeyPath:kMDCBannerViewImageViewImageKeyPath
+                      options:NSKeyValueObservingOptionNew
+                      context:nil];
+}
+
+- (void)removeObservers {
+  [self.imageView removeObserver:self forKeyPath:kMDCBannerViewImageViewImageKeyPath];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context {
+  if (!context) {
+    if ([keyPath isEqualToString:kMDCBannerViewImageViewImageKeyPath]) {
+      self.imageView.hidden = (change[NSKeyValueChangeNewKey] == [NSNull null]);
+    }
+  }
+}
 
 // TODO: KVO trailingButton.hidden and call `setNeedsUpdateConstraints:`.
 
@@ -132,11 +162,10 @@ static const CGFloat kVerticalSpaceBetweenButtonAndTextLabel = 12.0f;
   switch (style) {
     case MDCBannerViewLayoutSingleLineStyle: {
       frameHeight += kTopPaddingSmall + kBottomPadding;
-      [self.textLabel sizeToFit];
-      [self.leadingButton sizeToFit];
-      CGFloat maximumHeight =
-          MAX(CGRectGetHeight(self.textLabel.frame), CGRectGetHeight(self.leadingButton.frame));
-      if (self.isImageSet) {
+      CGSize textLabelSize = [self.textLabel sizeThatFits:CGSizeZero];
+      CGSize leadingButtonSize = [self.leadingButton sizeThatFits:CGSizeZero];
+      CGFloat maximumHeight = MAX(textLabelSize.height, leadingButtonSize.height);
+      if (self.hasImage) {
         maximumHeight = MAX(kImageViewSideLength, maximumHeight);
       }
       frameHeight += maximumHeight;
@@ -145,31 +174,22 @@ static const CGFloat kVerticalSpaceBetweenButtonAndTextLabel = 12.0f;
     case MDCBannerViewLayoutMultiLineAlignedButtonStyle: {
       frameHeight += kTopPaddingLarge + kBottomPadding;
       frameHeight += [self getFrameHeightOfImageViewAndTextLabelWithSizeToFit:size];
-      [self.leadingButton sizeToFit];
-      [self.trailingButton sizeToFit];
-      frameHeight += MAX(CGRectGetHeight(self.leadingButton.frame),
-                         CGRectGetHeight(self.trailingButton.frame));
+      CGSize leadingButtonSize = [self.leadingButton sizeThatFits:CGSizeZero];
+      CGSize trailingButtonSize = [self.trailingButton sizeThatFits:CGSizeZero];
+      frameHeight += MAX(leadingButtonSize.height, trailingButtonSize.height);
       break;
     }
     case MDCBannerViewLayoutMultiLineStackedButtonStyle: {
       frameHeight += kTopPaddingLarge + kBottomPadding;
       frameHeight += [self getFrameHeightOfImageViewAndTextLabelWithSizeToFit:size];
-      [self.leadingButton sizeToFit];
-      [self.trailingButton sizeToFit];
-      frameHeight += CGRectGetHeight(self.leadingButton.frame) +
-                     CGRectGetHeight(self.trailingButton.frame) + kButtonVerticalIntervalSpace;
+      CGSize leadingButtonSize = [self.leadingButton sizeThatFits:CGSizeZero];
+      CGSize trailingButtonSize = [self.trailingButton sizeThatFits:CGSizeZero];
+      frameHeight +=
+          leadingButtonSize.height + trailingButtonSize.height + kButtonVerticalIntervalSpace;
       break;
     }
   }
   return CGSizeMake(size.width, frameHeight);
-}
-
-- (void)layoutSubviews {
-  [super layoutSubviews];
-
-  if (![self isImageSet]) {
-    self.imageView.hidden = YES;
-  }
 }
 
 - (void)updateConstraints {
@@ -185,7 +205,7 @@ static const CGFloat kVerticalSpaceBetweenButtonAndTextLabel = 12.0f;
   // Set Elements
   if (@available(iOS 9.0, *)) {
     if (layoutStyle == MDCBannerViewLayoutSingleLineStyle) {
-      if (self.isImageSet) {
+      if (self.hasImage) {
         [self.imageView.leadingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.leadingAnchor
                                                      constant:kLeadingPadding]
             .active = YES;
@@ -226,7 +246,7 @@ static const CGFloat kVerticalSpaceBetweenButtonAndTextLabel = 12.0f;
       [self.textLabel.centerYAnchor constraintEqualToAnchor:self.buttonContainerView.centerYAnchor]
           .active = YES;
     } else {
-      if (self.isImageSet) {
+      if (self.hasImage) {
         [self.imageView.leadingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.leadingAnchor
                                                      constant:kLeadingPadding]
             .active = YES;
@@ -323,11 +343,11 @@ static const CGFloat kVerticalSpaceBetweenButtonAndTextLabel = 12.0f;
   CGFloat marginsPadding = self.layoutMargins.left + self.layoutMargins.right;
   remainingWidth -= marginsPadding;
   remainingWidth -= (kLeadingPadding + kTrailingPadding);
+  [self.leadingButton sizeToFit];
   if (self.trailingButton.hidden) {
-    [self.leadingButton sizeToFit];
     CGFloat buttonWidth = CGRectGetWidth(self.leadingButton.frame);
     remainingWidth -= (buttonWidth + kHorizontalSpaceBetweenTextLabelAndButton);
-    if (self.isImageSet) {
+    if (self.hasImage) {
       remainingWidth -= kImageViewSideLength;
       remainingWidth -= kSpaceBetweenIconImageAndTextLabel;
     }
@@ -335,7 +355,6 @@ static const CGFloat kVerticalSpaceBetweenButtonAndTextLabel = 12.0f;
                 ? MDCBannerViewLayoutSingleLineStyle
                 : MDCBannerViewLayoutMultiLineAlignedButtonStyle;
   } else {
-    [self.leadingButton sizeToFit];
     [self.trailingButton sizeToFit];
     CGFloat buttonWidth = [self widthSumForButtons:@[ self.leadingButton, self.trailingButton ]];
     remainingWidth -= buttonWidth;
@@ -349,7 +368,7 @@ static const CGFloat kVerticalSpaceBetweenButtonAndTextLabel = 12.0f;
   CGFloat frameHeight = 0;
   CGFloat remainingWidth = sizeToFit.width - kLeadingPadding - kTrailingPadding;
   CGSize textLabelSize = CGSizeZero;
-  if (self.isImageSet) {
+  if (self.hasImage) {
     remainingWidth -= (kImageViewSideLength + kSpaceBetweenIconImageAndTextLabel);
     textLabelSize = [self.textLabel sizeThatFits:CGSizeMake(remainingWidth, CGFLOAT_MAX)];
     frameHeight += MAX(textLabelSize.height, kImageViewSideLength);
