@@ -31,7 +31,7 @@
 
 @implementation FakeGestureRecognizer
 
-- (CGPoint)locationInView:(nullable UIView*)view {
+- (CGPoint)locationInView:(nullable UIView *)view {
   return view.center;
 }
 
@@ -148,8 +148,8 @@
   // When
   [parentView addSubview:[[UIView alloc] init]];
   [touchController addRippleToView:parentView];
-  FakeGestureRecognizer *gestureRecognizer =
-      [[FakeGestureRecognizer alloc] initWithTarget:nil action:nil];
+  FakeGestureRecognizer *gestureRecognizer = [[FakeGestureRecognizer alloc] initWithTarget:nil
+                                                                                    action:nil];
   gestureRecognizer.state = UIGestureRecognizerStateBegan;
   [touchController handleRippleGesture:gestureRecognizer];
 
@@ -171,7 +171,8 @@
   [parentView addSubview:[[UIView alloc] init]];
   [touchController addRippleToView:parentView];
   FakeGestureRecognizer *gestureRecognizer =
-      [[FakeGestureRecognizer alloc] initWithTarget:touchController action:@selector(handleRippleGesture:)];
+      [[FakeGestureRecognizer alloc] initWithTarget:touchController
+                                             action:@selector(handleRippleGesture:)];
   gestureRecognizer.delegate = touchController;
   gestureRecognizer.minimumPressDuration = 0;
   gestureRecognizer.cancelsTouchesInView = NO;
