@@ -17,9 +17,6 @@
 #import "MaterialButtons.h"
 #import "MaterialTypography.h"
 
-static const CGFloat kImageViewSideLength = 40;
-static const NSInteger kTextNumberOfLineLimit = 3;
-
 typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
   MDCBannerViewLayoutSingleLineStyle = 0,              // All elements lays on the same line
   MDCBannerViewLayoutMultiLineStackedButtonStyle = 1,  // Multline, stacked button layout
@@ -27,6 +24,8 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
       2,  // Multiline style with all buttons on the same line
 };
 
+static const NSInteger kTextNumberOfLineLimit = 3;
+static const CGFloat kImageViewSideLength = 40;
 static const CGFloat kLeadingPadding = 16.0f;
 static const CGFloat kTrailingPadding = 8.0f;
 static const CGFloat kTopPaddingSmall = 10.0f;
