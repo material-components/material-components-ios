@@ -16,6 +16,35 @@
 
 #import "MaterialRipple.h"
 
+@interface FakeMDCRippleTouchControllerDelegate : NSObject <MDCRippleTouchControllerDelegate>
+@property(nonatomic, strong) MDCRippleTouchController *rippleTouchController;
+@property(nonatomic, assign) BOOL insertRippleViewCalled;
+@property(nonatomic, assign) BOOL didProcessRippleViewCalled;
+@property(nonatomic, assign) BOOL shouldProcessRippleTouchesAtTouchLocation;
+
+@end
+
+@implementation FakeMDCRippleTouchControllerDelegate
+
+- (void)rippleTouchController:(MDCRippleTouchController *)rippleTouchController insertRippleView:(MDCRippleView *)rippleView intoView:(UIView *)view {
+  _insertRippleViewCalled = YES;
+  [view insertSubview:rippleView atIndex:0];
+}
+
+- (void)rippleTouchController:(MDCRippleTouchController *)rippleTouchController didProcessRippleView:(MDCRippleView *)rippleView atTouchLocation:(CGPoint)location {
+  _didProcessRippleViewCalled = YES;
+}
+
+- (BOOL)rippleTouchController:(MDCRippleTouchController *)rippleTouchController shouldProcessRippleTouchesAtTouchLocation:(CGPoint)location {
+  return _shouldProcessRippleTouchesAtTouchLocation;
+}
+
+@end
+
+@interface MDCRippleTouchController (UnitTests)
+- (void)handleRippleGesture:(UILongPressGestureRecognizer *)recognizer;
+@end
+
 /** Unit tests for MDCRippleTouchController. */
 @interface MDCRippleTouchControllerTests : XCTestCase
 
@@ -68,6 +97,64 @@
   XCTAssertTrue(CGRectEqualToRect(touchController.rippleView.frame, parentView.bounds),
                 @"(%@) is not equal to (%@)", NSStringFromCGRect(touchController.rippleView.frame),
                 NSStringFromCGRect(parentView.bounds));
+}
+
+- (void)testInsertRippleViewDelegateMethod {
+  // Given
+  UIView *parentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+  MDCRippleTouchController *touchController = [[MDCRippleTouchController alloc] init];
+  FakeMDCRippleTouchControllerDelegate *delegate =
+      [[FakeMDCRippleTouchControllerDelegate alloc] init];
+  touchController.delegate = delegate;
+  delegate.rippleTouchController = touchController;
+
+  // When
+  [parentView addSubview:[[UIView alloc] init]];
+  [touchController addRippleToView:parentView];
+
+  // Then
+  XCTAssertEqualObjects(parentView.subviews[0], touchController.rippleView);
+  XCTAssertTrue(delegate.insertRippleViewCalled);
+}
+
+- (void)testDidProcessRippleViewDelegateMethod {
+  // Given
+  UIView *parentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+  MDCRippleTouchController *touchController = [[MDCRippleTouchController alloc] init];
+  FakeMDCRippleTouchControllerDelegate *delegate =
+      [[FakeMDCRippleTouchControllerDelegate alloc] init];
+  touchController.delegate = delegate;
+  delegate.rippleTouchController = touchController;
+  delegate.shouldProcessRippleTouchesAtTouchLocation = YES;
+
+  // When
+  [parentView addSubview:[[UIView alloc] init]];
+  [touchController addRippleToView:parentView];
+  touchController.gestureRecognizer.state = UIGestureRecognizerStateBegan;
+  [touchController handleRippleGesture:touchController.gestureRecognizer];
+
+  // Then
+  XCTAssertTrue(delegate.didProcessRippleViewCalled);
+}
+
+- (void)testShouldProcessRippleViewDelegateMethod {
+  // Given
+  UIView *parentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+  MDCRippleTouchController *touchController = [[MDCRippleTouchController alloc] init];
+  FakeMDCRippleTouchControllerDelegate *delegate =
+  [[FakeMDCRippleTouchControllerDelegate alloc] init];
+  touchController.delegate = delegate;
+  delegate.rippleTouchController = touchController;
+  delegate.shouldProcessRippleTouchesAtTouchLocation = NO;
+
+  // When
+  [parentView addSubview:[[UIView alloc] init]];
+  [touchController addRippleToView:parentView];
+  touchController.gestureRecognizer.state = UIGestureRecognizerStateBegan;
+  [touchController handleRippleGesture:touchController.gestureRecognizer];
+
+  // Then
+  XCTAssertFalse(delegate.didProcessRippleViewCalled);
 }
 
 @end
