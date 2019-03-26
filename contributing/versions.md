@@ -1,6 +1,6 @@
 # Versions and releases
 
-MDC's version numbers strictly follow [semantic versioning](http://semver.org/):
+MDC's version numbers strictly follow [semantic versioning v2.0.0](https://semver.org/spec/v2.0.0.html):
 `MAJOR.minor.patch`. In short, if the current version is `1.1.1`, then:
 
 * A major release has a version number of `2.0.0`.
@@ -13,17 +13,21 @@ MDC's version numbers strictly follow [semantic versioning](http://semver.org/):
 
 Major releases can contain breaking changes to clients, while minor and patch releases cannot.
 
-## What are breaking changes?
+## How do we determine which numbers need to change?
+
+We follow the guidelines defined by the [semver v2.0.0](https://semver.org/spec/v2.0.0.html#semantic-versioning-specification-semver) specification.
+
+## Roughly-speaking, what are breaking changes?
 
 - Build-breaking modifications for either Objective-C or Swift code.
 - Visible changes to user interface components.
 
-## What are non-breaking changes?
+## Roughly-speaking, what are non-breaking changes?
 
 - API additions.
 - Behavioral changes.
 
-## How can a release be a patch release?
+## Roughly-speaking, how can a release be a patch release?
 
 Either:
 
