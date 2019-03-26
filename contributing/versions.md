@@ -16,6 +16,7 @@ Major releases can contain breaking changes to clients, while minor and patch re
 ## What are breaking changes?
 
 - Build-breaking modifications for either Objective-C or Swift code.
+- Visible changes to user interface components.
 
 ## What are non-breaking changes?
 
