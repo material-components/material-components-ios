@@ -72,8 +72,10 @@
   MDCStatefulRippleView *rippleView = [[MDCStatefulRippleView alloc] init];
 
   // Then
-  UIColor *selectionColor =
-      [UIColor colorWithRed:(CGFloat)0.384 green:0 blue:(CGFloat)0.933 alpha:1];
+  UIColor *selectionColor = [UIColor colorWithRed:(CGFloat)0.384
+                                            green:0
+                                             blue:(CGFloat)0.933
+                                            alpha:1];
   XCTAssertEqualObjects([rippleView rippleColorForState:MDCRippleStateNormal],
                         [UIColor colorWithWhite:0 alpha:(CGFloat)0.12]);
   XCTAssertEqualObjects([rippleView rippleColorForState:MDCRippleStateHighlighted],
@@ -83,17 +85,14 @@
   XCTAssertEqualObjects(
       [rippleView rippleColorForState:(MDCRippleStateSelected | MDCRippleStateHighlighted)],
       [selectionColor colorWithAlphaComponent:(CGFloat)0.12]);
-  XCTAssertEqualObjects(
-                        [rippleView rippleColorForState:MDCRippleStateDragged],
+  XCTAssertEqualObjects([rippleView rippleColorForState:MDCRippleStateDragged],
                         [UIColor colorWithWhite:0 alpha:(CGFloat)0.08]);
   XCTAssertEqualObjects(
-                        [rippleView rippleColorForState:
-                            (MDCRippleStateDragged | MDCRippleStateHighlighted)],
-                        [UIColor colorWithWhite:0 alpha:(CGFloat)0.08]);
+      [rippleView rippleColorForState:(MDCRippleStateDragged | MDCRippleStateHighlighted)],
+      [UIColor colorWithWhite:0 alpha:(CGFloat)0.08]);
   XCTAssertEqualObjects(
-                        [rippleView rippleColorForState:
-                         (MDCRippleStateDragged | MDCRippleStateSelected)],
-                        [selectionColor colorWithAlphaComponent:(CGFloat)0.08]);
+      [rippleView rippleColorForState:(MDCRippleStateDragged | MDCRippleStateSelected)],
+      [selectionColor colorWithAlphaComponent:(CGFloat)0.08]);
 }
 
 - (void)testSetRippleColorForStateAndFallbacks {
@@ -101,7 +100,7 @@
   MDCStatefulRippleView *rippleView = [[MDCStatefulRippleView alloc] init];
 
   // When
-  for (int i=0; i<8; i++) {
+  for (int i = 0; i < 8; i++) {
     [rippleView setRippleColor:nil forState:(NSInteger)i];
   }
   [rippleView setRippleColor:UIColor.blueColor forState:MDCRippleStateDragged];
@@ -109,16 +108,16 @@
   [rippleView setRippleColor:UIColor.redColor forState:MDCRippleStateNormal];
 
   // Then
-  XCTAssertEqualObjects([rippleView rippleColorForState:MDCRippleStateDragged],
-                        UIColor.blueColor);
+  XCTAssertEqualObjects([rippleView rippleColorForState:MDCRippleStateDragged], UIColor.blueColor);
   XCTAssertEqualObjects([rippleView rippleColorForState:MDCRippleStateSelected],
                         UIColor.greenColor);
-  XCTAssertEqualObjects([rippleView rippleColorForState:MDCRippleStateNormal],
-                        UIColor.redColor);
-  XCTAssertEqualObjects([rippleView rippleColorForState:(MDCRippleStateDragged | MDCRippleStateHighlighted)],
-                        UIColor.blueColor);
-  XCTAssertEqualObjects([rippleView rippleColorForState:(MDCRippleStateSelected | MDCRippleStateHighlighted)],
-                        UIColor.greenColor);
+  XCTAssertEqualObjects([rippleView rippleColorForState:MDCRippleStateNormal], UIColor.redColor);
+  XCTAssertEqualObjects(
+      [rippleView rippleColorForState:(MDCRippleStateDragged | MDCRippleStateHighlighted)],
+      UIColor.blueColor);
+  XCTAssertEqualObjects(
+      [rippleView rippleColorForState:(MDCRippleStateSelected | MDCRippleStateHighlighted)],
+      UIColor.greenColor);
   XCTAssertEqualObjects([rippleView rippleColorForState:MDCRippleStateHighlighted],
                         UIColor.redColor);
 }

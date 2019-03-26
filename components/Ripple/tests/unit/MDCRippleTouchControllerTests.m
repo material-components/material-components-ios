@@ -26,16 +26,21 @@
 
 @implementation FakeMDCRippleTouchControllerDelegate
 
-- (void)rippleTouchController:(MDCRippleTouchController *)rippleTouchController insertRippleView:(MDCRippleView *)rippleView intoView:(UIView *)view {
+- (void)rippleTouchController:(MDCRippleTouchController *)rippleTouchController
+             insertRippleView:(MDCRippleView *)rippleView
+                     intoView:(UIView *)view {
   _insertRippleViewCalled = YES;
   [view insertSubview:rippleView atIndex:0];
 }
 
-- (void)rippleTouchController:(MDCRippleTouchController *)rippleTouchController didProcessRippleView:(MDCRippleView *)rippleView atTouchLocation:(CGPoint)location {
+- (void)rippleTouchController:(MDCRippleTouchController *)rippleTouchController
+         didProcessRippleView:(MDCRippleView *)rippleView
+              atTouchLocation:(CGPoint)location {
   _didProcessRippleViewCalled = YES;
 }
 
-- (BOOL)rippleTouchController:(MDCRippleTouchController *)rippleTouchController shouldProcessRippleTouchesAtTouchLocation:(CGPoint)location {
+- (BOOL)rippleTouchController:(MDCRippleTouchController *)rippleTouchController
+    shouldProcessRippleTouchesAtTouchLocation:(CGPoint)location {
   return _shouldProcessRippleTouchesAtTouchLocation;
 }
 
@@ -142,7 +147,7 @@
   UIView *parentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
   MDCRippleTouchController *touchController = [[MDCRippleTouchController alloc] init];
   FakeMDCRippleTouchControllerDelegate *delegate =
-  [[FakeMDCRippleTouchControllerDelegate alloc] init];
+      [[FakeMDCRippleTouchControllerDelegate alloc] init];
   touchController.delegate = delegate;
   delegate.rippleTouchController = touchController;
   delegate.shouldProcessRippleTouchesAtTouchLocation = NO;
