@@ -26,6 +26,9 @@ licenses(["notice"])  # Apache 2.0
 
 mdc_public_objc_library(
     name = "Typography",
+    deps = [
+        "//components/Typography",
+    ],
 )
 
 mdc_examples_objc_library(
@@ -33,6 +36,7 @@ mdc_examples_objc_library(
     deps = [
         ":Typography",
         "//components/schemes/Color",
+        "//components/Typography",
     ],
 )
 
@@ -64,5 +68,6 @@ mdc_unit_test_suite(
     name = "unit_tests",
     deps = [
         ":unit_test_sources",
+        "//components/Typography",
     ],
 )

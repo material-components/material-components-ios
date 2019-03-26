@@ -35,6 +35,7 @@
 
   self.indicator = [[MDCActivityIndicator alloc] initWithFrame:CGRectMake(0, 0, 64, 64)];
   [self.indicator startAnimating];
+  self.indicator.layer.speed = 0;
 }
 
 - (void)tearDown {
@@ -44,6 +45,7 @@
 }
 
 - (void)generateSnapshotAndVerifyForView:(UIView *)view {
+  self.indicator.layer.timeOffset = 3000;
   UIView *snapshotView = [view mdc_addToBackgroundView];
   [self snapshotVerifyView:snapshotView];
 }

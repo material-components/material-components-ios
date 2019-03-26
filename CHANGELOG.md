@@ -1,3 +1,223 @@
+# 80.0.0
+
+This major release introduces Dynamic Type support for Typography Schemes as well as
+UIFontMetrics-like support for Dynamic Type for Material Typography. It also includes snapshot tests
+for additional components and less-restrictive badging for Tabs.
+
+## Breaking changes
+
+`MDCTypographyScheming` has a new non-optional API, `mdc_adjustsFontForContentSizeCategory` that is
+`YES` if the returned fonts should use the new Dynamic Type APIs available from Material Typography.
+Existing implementations may wish to migrate (at least initially) by returning `NO` as a read-only
+value until support can be added.
+
+```objc
+- (void)mdc_adjustsFontForContentSizeCategory {
+  return NO;
+}
+```
+
+```swift
+public var mdc_adjustsFontForContentSizeCategory: Bool {
+  return false;
+}
+```
+
+## New features
+
+### Improved Dynamic Type Support
+
+The Typography and TypographyScheme components have been updated for improved Dynamic Type support.
+Most clients will make use of this support through MDCTypographyScheme, though it is possible
+to create scalable fonts manually via MDCFontScaler within Typography.  The new scaling curves have
+been updated for last year's refresh of Material Design typography and font values.
+
+#### Objective-C
+
+```objc
+// Typography Scheme is the most typical way to receive scalable fonts.
+MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+UIFont *scaledBody1Font = [typographyScheme.body1 mdc_scaledFontForCurrentSizeCategory];
+
+// If Typography Schemes aren't used, it's possible to create the fonts manually.
+// Initial set-up to apply scaling curves to a base UIFont.
+UIFont *baseFont = [UIFont systemFontOfSize:18.0];
+MDCFontScaler *body2Scaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleBody2];
+UIFont *scalableFont = [body2Scaler scaledFontWithFont:baseFont];
+
+// Now UIFonts appropriate for Dynamic Type size categories can be created anywhere.
+UIFont *baseFontScaledToDefault = [scalableFont mdc_scaledFontAtDefaultSize];
+UIFont *baseFontScaledForExtraLarge = [scalableFont mdc_scaledFontForSizeCategory:UIContentSizeCategoryExtraLarge];
+UIFont *baseFontScaledForCurrentSizeCategory = [scalableFont mdc_scaledFontForCurrentSizeCategory];
+
+```
+
+#### Swift
+
+```swift
+// Typography Scheme is the most typical way to receive scalable fonts.
+let typographyScheme = MDCTypographyScheme(defaults: .material201902)
+let scaledBody1Font = typographyScheme.body1.mdc_scaledFontForCurrentSizeCategory()
+
+// If Typography Schemes aren't used, it's possible to create the fonts manually.
+// Initial set-up to apply scaling curves to a base UIFont.
+let baseFont = UIFont.systemFont(ofSize: 18)
+let body2Scaler = MDCFontScaler(forMaterialTextStyle: .body2)
+let scalableFont = body2Scaler.scaledFont(with: baseFont)
+
+// Now UIFonts appropriate for Dynamic Type size categories can be created anywhere.
+let baseFontScaledToDefault = scalableFont.mdc_scaledFontAtDefaultSize()
+let baseFontScaledForExtraLarge = scalableFont.mdc_scaledFont(forSizeCategory: .extraLarge)
+let baseFontScaledForCurrentSizeCategory = scalableFont.mdc_scaledFontForCurrentSizeCategory()
+```
+
+## API changes
+
+### Typography
+
+#### MDCTextStyleButton
+
+*new* constant: `MDCTextStyleButton`
+
+#### MDCTextStyleCaption
+
+*new* constant: `MDCTextStyleCaption`
+
+#### MDCTextStyleSubtitle2
+
+*new* constant: `MDCTextStyleSubtitle2`
+
+#### MDCTextStyleSubtitle1
+
+*new* constant: `MDCTextStyleSubtitle1`
+
+#### MDCTextStyleBody1
+
+*new* constant: `MDCTextStyleBody1`
+
+#### UIFont(MaterialScalable)
+
+*new* method: `-mdc_scaledFontForCurrentSizeCategory` in `UIFont(MaterialScalable)`
+
+*new* method: `-mdc_scaledFontAtDefaultSize` in `UIFont(MaterialScalable)`
+
+*new* method: `-mdc_scaledFontForSizeCategory:` in `UIFont(MaterialScalable)`
+
+*new* category: `UIFont(MaterialScalable)`
+
+*new* property: `mdc_scalingCurve` in `UIFont(MaterialScalable)`
+
+#### MDCFontScaler
+
+*new* class method: `+scalerForMaterialTextStyle:` in `MDCFontScaler`
+
+*new* method: `-scaledValueForValue:` in `MDCFontScaler`
+
+*new* class: `MDCFontScaler`
+
+*new* method: `-init` in `MDCFontScaler`
+
+*new* method: `-initForMaterialTextStyle:` in `MDCFontScaler`
+
+*new* method: `-scaledFontWithFont:` in `MDCFontScaler`
+
+#### MDCTextStyleHeadline4
+
+*new* constant: `MDCTextStyleHeadline4`
+
+#### MDCTextStyleHeadline3
+
+*new* constant: `MDCTextStyleHeadline3`
+
+#### MDCTextStyleHeadline2
+
+*new* constant: `MDCTextStyleHeadline2`
+
+#### MDCTextStyleHeadline6
+
+*new* constant: `MDCTextStyleHeadline6`
+
+#### MDCTextStyleBody2
+
+*new* constant: `MDCTextStyleBody2`
+
+#### MDCTextStyle
+
+*new* typedef: `MDCTextStyle`
+
+#### MDCTextStyleOverline
+
+*new* constant: `MDCTextStyleOverline`
+
+#### MDCTextStyleHeadline1
+
+*new* constant: `MDCTextStyleHeadline1`
+
+#### MDCTextStyleHeadline5
+
+*new* constant: `MDCTextStyleHeadline5`
+
+### TypographyScheme
+
+#### MDCTypographySchemeDefaults
+
+*new* enum value: `MDCTypographySchemeDefaultsMaterial201902` in `MDCTypographySchemeDefaults`
+
+#### MDCTypographyScheme
+
+*new* property: `mdc_adjustsFontForContentSizeCategory` in `MDCTypographyScheme`
+
+#### MDCTypographyScheming
+
+*new* property: `mdc_adjustsFontForContentSizeCategory` in `MDCTypographyScheming`
+
+## Component changes
+
+## Changes
+
+### ActivityIndicator
+
+* [Deflake snapshot tests. (#6934)](https://github.com/material-components/material-components-ios/commit/63f0da31e5eb9cb98c7e342a0838c796a4620fc6) (Robert Moore)
+
+### AppBar
+
+* [Fix README code snippet (#6969)](https://github.com/material-components/material-components-ios/commit/b62e576b9c844be60d84f22207d2c41f0bb6a517) (Robert Moore)
+* [Refactor AppBar example table views (#6974)](https://github.com/material-components/material-components-ios/commit/b03820da60a136388993e8422f5523aec718f31c) (Brian Moore)
+
+### Buttons
+
+* [Fix `accessibilityTraits` in init. (#6948)](https://github.com/material-components/material-components-ios/commit/89858253e246652b94a58dfefe94971cee9b1140) (Robert Moore)
+
+### HeaderStackView
+
+* [Add basic Snapshot tests. (#6923)](https://github.com/material-components/material-components-ios/commit/02b52f29c437e3bf4208cc3fd0091d07f92b9121) (Robert Moore)
+
+### Ripple
+
+* [Remove manipulation of clipping for the ripple's superview (#6977)](https://github.com/material-components/material-components-ios/commit/d332652b7566c90695972fbca3949aedebbe819c) (Yarden Eitan)
+
+### ShapeLibrary
+
+* [Add basic Snapshot tests. (#6918)](https://github.com/material-components/material-components-ios/commit/d61d1b2ff8c5c052faa6c0a456637231b8f4b1fc) (Robert Moore)
+
+### Shapes
+
+* [Add basic Snapshot tests. (#6919)](https://github.com/material-components/material-components-ios/commit/ac4b4eafcdd8a6e87336737d349c0bb499770ac5) (Robert Moore)
+
+### Tabs
+
+* [Do not truncate badge text on MDCItemBarCell (#6916)](https://github.com/material-components/material-components-ios/commit/c4d823362e016061725dc5ebdf5b4a4970aaa6b0) (Andrew Overton)
+
+### Typography
+
+* [Add Font Scaler (#6871)](https://github.com/material-components/material-components-ios/commit/80db06984b36d5e00028a4016f05b136004f7540) (ianegordon)
+
+### schemes/Typography
+
+* [Add new typography scheme with scalable fonts (#6873)](https://github.com/material-components/material-components-ios/commit/96a741b3150ae583968e32c6ac096113e75af0de) (ianegordon)
+
+---
+
 # 79.3.0
 
 This minor release fixes a bug in MDCButton's `accessibilityTraits` value. A recent change introduced

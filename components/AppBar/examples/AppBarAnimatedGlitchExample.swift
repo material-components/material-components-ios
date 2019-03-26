@@ -31,11 +31,11 @@ class AppBarAnimatedJumpExample: UIViewController {
   var typographyScheme = MDCTypographyScheme()
 
   fileprivate let tabs = [
-    SimpleTableViewController(title: "First"),
-    SimpleTableViewController(title: "Second"),
-    SimpleTableViewController(title: "Third"),
+    SimpleComposedTableViewController(title: "First"),
+    SimpleComposedTableViewController(title: "Second"),
+    SimpleComposedTableViewController(title: "Third"),
   ]
-  private var currentTab: SimpleTableViewController? = nil
+  private var currentTab: SimpleComposedTableViewController? = nil
 
   lazy var tabBar: MDCTabBar = {
     let tabBar = MDCTabBar()
@@ -82,7 +82,7 @@ class AppBarAnimatedJumpExample: UIViewController {
     switchToTab(tabs[0], animated: false)
   }
 
-  fileprivate func switchToTab(_ tab: SimpleTableViewController, animated: Bool = true) {
+  fileprivate func switchToTab(_ tab: SimpleComposedTableViewController, animated: Bool = true) {
 
     appBarViewController.headerView.trackingScrollWillChange(toScroll: tab.tableView)
 
@@ -204,81 +204,3 @@ extension AppBarAnimatedJumpExample {
   }
 }
 
-fileprivate class SimpleTableViewController: UIViewController {
-
-  init(title: String) {
-    super.init(nibName: nil, bundle: nil)
-    self.title = title
-  }
-
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("NSCoding unsupported")
-  }
-
-  var tableView = UITableView(frame: CGRect(), style: .plain)
-
-  var headerView: MDCFlexibleHeaderView?
-
-  override func viewDidLoad() {
-    super.viewDidLoad()
-
-    self.view.addSubview(tableView)
-    self.tableView.frame = self.view.bounds
-
-    tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-    tableView.delegate = self
-    tableView.dataSource = self
-
-    view.isOpaque = false
-    view.backgroundColor = .white
-  }
-}
-
-extension SimpleTableViewController: UITableViewDataSource {
-
-  func numberOfSections(in tableView: UITableView) -> Int {
-    return 1
-  }
-
-  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 100
-  }
-}
-
-extension SimpleTableViewController: UITableViewDelegate {
-
-  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-    let titleString = title ?? ""
-    cell.textLabel?.text = "\(titleString): Row \(indexPath.item)"
-    return cell
-  }
-
-  func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    headerView?.trackingScrollDidScroll()
-  }
-
-  func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-    headerView?.trackingScrollDidEndDecelerating()
-  }
-
-  func scrollViewWillEndDragging(
-    _ scrollView: UIScrollView,
-    withVelocity velocity: CGPoint,
-    targetContentOffset: UnsafeMutablePointer<CGPoint>
-  ) {
-    headerView?.trackingScrollWillEndDragging(
-      withVelocity: velocity,
-      targetContentOffset: targetContentOffset)
-  }
-
-  func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-    headerView?.trackingScrollDidEndDraggingWillDecelerate(decelerate)
-  }
-
-  func scrollViewDidChangeAdjustedContentInset(_ scrollView: UIScrollView) {
-    if #available(iOS 11.0, *) {
-      headerView?.trackingScrollDidChangeAdjustedContentInset(scrollView)
-    }
-  }
-}
