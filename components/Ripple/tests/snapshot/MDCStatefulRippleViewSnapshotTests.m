@@ -15,6 +15,7 @@
 #import "MaterialRipple.h"
 #import "MaterialSnapshot.h"
 
+/** Snapshot tests for MDCStatefulRippleView. */
 @interface MDCStatefulRippleViewSnapshotTests : MDCSnapshotTestCase
 
 @property(nonatomic, strong) MDCStatefulRippleView *rippleView;

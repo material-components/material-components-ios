@@ -17,39 +17,12 @@
 #import "MDCRippleLayer.h"
 #import "MaterialRipple.h"
 
-//@interface FakeMDCRippleViewAnimationDelegate : NSObject <MDCRippleViewDelegate>
-//@property(nonatomic, strong) MDCRippleView *rippleView;
-//@property(nonatomic, assign) BOOL rippleTouchDownDidBegin;
-//@property(nonatomic, assign) BOOL rippleTouchDownDidEnd;
-//@property(nonatomic, assign) BOOL rippleTouchUpDidBegin;
-//@property(nonatomic, assign) BOOL rippleTouchUpDidEnd;
-//
-//@end
-//
-//@implementation FakeMDCRippleViewAnimationDelegate
-//- (void)rippleTouchDownAnimationDidBegin:(nonnull MDCRippleView *)rippleView {
-//  _rippleTouchDownDidBegin = YES;
-//}
-//
-//- (void)rippleTouchDownAnimationDidEnd:(nonnull MDCRippleView *)rippleView {
-//  _rippleTouchDownDidEnd = YES;
-//}
-//
-//- (void)rippleTouchUpAnimationDidBegin:(nonnull MDCRippleView *)rippleView {
-//  _rippleTouchUpDidBegin = YES;
-//}
-//
-//- (void)rippleTouchUpAnimationDidEnd:(nonnull MDCRippleView *)rippleView {
-//  _rippleTouchUpDidEnd = YES;
-//}
-
-//@end
-
 @interface MDCStatefulRippleView (UnitTests)
 @property(nonatomic, strong) MDCRippleLayer *activeRippleLayer;
 @property(nonatomic, strong) CAShapeLayer *maskLayer;
 @end
 
+/** Unit tests for MDCStatefulRippleView. */
 @interface MDCStatefulRippleViewTests : XCTestCase
 
 @end
