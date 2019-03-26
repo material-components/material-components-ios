@@ -277,7 +277,7 @@ static NSString *const exampleExtraLongText =
   [dismissButton addTarget:self
                     action:@selector(dismissBanner)
           forControlEvents:UIControlEventTouchUpInside];
-  MDCButton *changeTextButton = bannerView.leadingButton;
+  MDCButton *changeTextButton = bannerView.trailingButton;
   [changeTextButton setTitle:@"Long dismiss" forState:UIControlStateNormal];
   changeTextButton.uppercaseTitle = YES;
   [changeTextButton setTitleColor:self.colorScheme.primaryColor forState:UIControlStateNormal];
