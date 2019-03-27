@@ -370,7 +370,7 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 - (void)updateImage {
   UIImage *image = [self imageForState:self.state];
   if (self.rippleView) {
-    // TODO(#6661): CardCollectionCell's state system doesn't incorporate multiple states occuring
+    // TODO(#6661): CardCollectionCell's state system doesn't incorporate multiple states occurring
     // simultaneously. When the card is selected and highlighted it should take the image of
     // MDCCardCellStateSelected.
     if (self.rippleView.selected) {
@@ -474,7 +474,7 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 - (void)updateImageTintColor {
   UIColor *imageTintColor = [self imageTintColorForState:self.state];
   if (self.rippleView) {
-    // TODO(#6661): CardCollectionCell's state system doesn't incorporate multiple states occuring
+    // TODO(#6661): CardCollectionCell's state system doesn't incorporate multiple states occurring
     // simultaneously. When the card is selected and highlighted it should take the image tint of
     // MDCCardCellStateSelected.
     if (self.rippleView.selected) {
