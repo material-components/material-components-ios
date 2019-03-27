@@ -142,16 +142,16 @@ static NSString *const exampleExtraLongText =
                  self.view.bounds.size.width, exampleListTableViewHeight);
   self.exampleListTableView.frame = exampleListTableViewFrame;
 
-
   CGSize bannerViewSize =
-  [self.bannerView sizeThatFits:CGSizeMake(CGRectGetWidth(self.view.bounds), CGFLOAT_MAX)];
+      [self.bannerView sizeThatFits:CGSizeMake(CGRectGetWidth(self.view.bounds), CGFLOAT_MAX)];
 
   // Adjust bannerViewContainer's frame
   CGFloat topAreaInset = 0.0f;
   if (@available(iOS 11.0, *)) {
     topAreaInset = self.view.safeAreaInsets.top;
   }
-  self.bannerView.frame = CGRectMake(0.0f, topAreaInset, bannerViewSize.width, bannerViewSize.height);
+  self.bannerView.frame =
+      CGRectMake(0.0f, topAreaInset, bannerViewSize.width, bannerViewSize.height);
 }
 
 #pragma mark - Internal helpers
