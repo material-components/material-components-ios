@@ -117,7 +117,7 @@
                 NSStringFromCGRect(parentView.bounds));
 }
 
-- (void)testInsertRippleViewDelegateMethod {
+- (void)testCallsInsertRippleViewDelegateMethodWhenAddedToView {
   // Given
   UIView *parentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
   MDCRippleTouchController *touchController = [[MDCRippleTouchController alloc] init];
@@ -135,7 +135,7 @@
   XCTAssertTrue(delegate.insertRippleViewCalled);
 }
 
-- (void)testDidProcessRippleViewDelegateMethod {
+- (void)testCallsDidProcessRippleViewDelegateMethod {
   // Given
   UIView *parentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
   MDCRippleTouchController *touchController = [[MDCRippleTouchController alloc] init];
@@ -157,7 +157,7 @@
   XCTAssertTrue(delegate.didProcessRippleViewCalled);
 }
 
-- (void)testShouldProcessRippleViewDelegateMethod {
+- (void)testCallsShouldProcessRippleViewDelegateMethodWhenProcessRippleIsDisabled {
   // Given
   UIView *parentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
   MDCRippleTouchController *touchController = [[MDCRippleTouchController alloc] init];
