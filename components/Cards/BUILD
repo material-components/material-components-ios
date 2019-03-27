@@ -28,29 +28,8 @@ load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
 
-# This is intentionally not using mdc_public_objc_library so we can exclude files from srcs and hdrs using native.glob functionality.
-mdc_objc_library(
+mdc_public_objc_library(
     name = "Cards",
-    srcs =
-        native.glob(
-            ["src/*.m"],
-            exclude = [
-                "src/MDCCard+Ripple.h", 
-                "src/MDCCardCollectionCell+Ripple.h",
-                "src/MDCCard+Ripple.m", 
-                "src/MDCCardCollectionCell+Ripple.m",
-            ],
-        ),
-    hdrs =
-        native.glob(
-            ["src/*.h"],
-            exclude = [
-                "src/MDCCard+Ripple.h",
-                "src/MDCCardCollectionCell+Ripple.h",
-            ],
-        ),
-    enable_modules = 1,
-    includes = ["src"],
     sdk_frameworks = [
         "CoreGraphics",
         "UIKit",
@@ -58,39 +37,12 @@ mdc_objc_library(
     visibility = ["//visibility:public"],
     deps = [
         "//components/Ink",
+        "//components/Ripple",
         "//components/ShadowLayer",
         "//components/ShapeLibrary",
         "//components/Shapes",
         "//components/private/Icons/icons/ic_check_circle",
         "//components/private/Math",
-        ":Private"
-    ],
-)
-
-mdc_objc_library(
-    name = "Private",
-    sdk_frameworks = [
-        "UIKit",
-    ],
-    hdrs = native.glob(["src/private/*.h"]),
-    includes = ["src/private"],
-    visibility = ["//visibility:public"],
-)
-
-# Ripple is currently a Beta component. Therefore, clients that wish to use Ripple in their app will need to manually 
-# clone the repo and add the code to their project. 
-mdc_objc_library(
-    name = "CardsRipple",
-    sdk_frameworks = [
-        "UIKit",
-    ],
-    hdrs = ["src/MDCCard+Ripple.h", "src/MDCCardCollectionCell+Ripple.h"],
-    srcs = ["src/MDCCard+Ripple.m", "src/MDCCardCollectionCell+Ripple.m"],
-    includes = ["src/MDCCard+Ripple.{h,m}", "src/MDCCardCollectionCell+Ripple.{h,m}"],
-    visibility = ["//visibility:public"],
-    deps = [
-        ":Cards",
-        "//components/Ripple",
     ],
 )
 
