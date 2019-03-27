@@ -257,7 +257,7 @@ rippleView.rippleColor = [UIColor redColor];
 You can also use MDCStatefulRippleView to display stateful ripples using your
 own touch processing. 
 To fully benefit from MDCStatefulRipple's capabilities in moving through states visually,
-the view that is adding the stateful ripple view will need to override 
+the view that is adding the stateful ripple view must override 
 UIView's `touchesBegan`, `touchesMoved`, `touchesEnded` and `touchesCancelled`
 and call the stateful ripple view's corresponding APIs before calling the super.
 Here is an example:
