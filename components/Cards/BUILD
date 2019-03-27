@@ -43,7 +43,6 @@ mdc_public_objc_library(
         "//components/Shapes",
         "//components/private/Icons/icons/ic_check_circle",
         "//components/private/Math",
-        ":Private"
     ],
 )
 
