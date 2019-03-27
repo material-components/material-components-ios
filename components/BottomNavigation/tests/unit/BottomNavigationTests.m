@@ -418,4 +418,38 @@
                 NSStringFromCGSize(finalSize), NSStringFromCGSize(initialSize));
 }
 
+#pragma mark - Property propagation
+
+- (void)testTitlesNumberOfLinesPassedToViewsBeforeItemsAssigned {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:0];
+  self.bottomNavBar.alignment = MDCBottomNavigationBarAlignmentJustified;
+
+  // When
+  self.bottomNavBar.titlesNumberOfLines = 7;
+  self.bottomNavBar.items = @[ item1, item2 ];
+
+  // Then
+  for (MDCBottomNavigationItemView *itemView in self.bottomNavBar.itemViews) {
+    XCTAssertEqual(itemView.titleNumberOfLines, self.bottomNavBar.titlesNumberOfLines);
+  }
+}
+
+- (void)testTitlesNumberOfLinesPassedToViewsAfterItemsAssigned {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:0];
+  self.bottomNavBar.alignment = MDCBottomNavigationBarAlignmentJustified;
+
+  // When
+  self.bottomNavBar.items = @[ item1, item2 ];
+  self.bottomNavBar.titlesNumberOfLines = 7;
+
+  // Then
+  for (MDCBottomNavigationItemView *itemView in self.bottomNavBar.itemViews) {
+    XCTAssertEqual(itemView.titleNumberOfLines, self.bottomNavBar.titlesNumberOfLines);
+  }
+}
+
 @end
