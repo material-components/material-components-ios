@@ -112,6 +112,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 
 - (void)commonMDCBottomNavigationItemViewInit {
   _truncatesTitle = YES;
+  _titleNumberOfLines = 1;
   if (!_selectedItemTintColor) {
     _selectedItemTintColor = [UIColor blackColor];
   }
@@ -584,11 +585,13 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 }
 
 - (void)setTitleNumberOfLines:(NSInteger)titleNumberOfLines {
-  self.label.numberOfLines = titleNumberOfLines;
+  _titleNumberOfLines = titleNumberOfLines;
+  self.label.numberOfLines = self.titleBelowIcon ? titleNumberOfLines : 1;
 }
 
-- (NSInteger)titleNumberOfLines {
-  return self.label.numberOfLines;
+- (void)setTitleBelowIcon:(BOOL)titleBelowIcon {
+  _titleBelowIcon = titleBelowIcon;
+  self.label.numberOfLines = self.titleBelowIcon ? self.titleNumberOfLines : 1;
 }
 
 #pragma mark - Resource bundle
