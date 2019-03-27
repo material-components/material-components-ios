@@ -61,26 +61,29 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 @property(nonatomic, readwrite, strong) NSLayoutConstraint *textLabelConstraintCenterY;
 // Buttons constraints
 @property(nonatomic, readwrite, strong) NSLayoutConstraint *buttonContainerConstraintLeading;
-@property(nonatomic, readwrite, strong) NSLayoutConstraint *buttonContainerConstraintLeadingWithTextLabel;
-@property(nonatomic, readwrite, strong) NSLayoutConstraint *buttonContainerConstraintLeadingWithTextLabelGreater;
+@property(nonatomic, readwrite, strong)
+    NSLayoutConstraint *buttonContainerConstraintLeadingWithTextLabel;
+@property(nonatomic, readwrite, strong)
+    NSLayoutConstraint *buttonContainerConstraintLeadingWithTextLabelGreater;
 @property(nonatomic, readwrite, strong) NSLayoutConstraint *buttonContainerConstraintTrailing;
 @property(nonatomic, readwrite, strong) NSLayoutConstraint *buttonContainerConstraintTopWithMargin;
-@property(nonatomic, readwrite, strong) NSLayoutConstraint *buttonContainerConstraintTopWithImageViewGreater;
-@property(nonatomic, readwrite, strong) NSLayoutConstraint *buttonContainerConstraintTopWithTextLabel;
-@property(nonatomic, readwrite, strong) NSLayoutConstraint *buttonContainerConstraintTopWithTextLabelGreater;
+@property(nonatomic, readwrite, strong)
+    NSLayoutConstraint *buttonContainerConstraintTopWithImageViewGreater;
+@property(nonatomic, readwrite, strong)
+    NSLayoutConstraint *buttonContainerConstraintTopWithTextLabel;
+@property(nonatomic, readwrite, strong)
+    NSLayoutConstraint *buttonContainerConstraintTopWithTextLabelGreater;
 @property(nonatomic, readwrite, strong) NSLayoutConstraint *buttonContainerConstraintBottom;
 
 @property(nonatomic, readwrite, strong) NSLayoutConstraint *leadingButtonConstraintLeading;
 @property(nonatomic, readwrite, strong) NSLayoutConstraint *leadingButtonConstraintTop;
 @property(nonatomic, readwrite, strong) NSLayoutConstraint *leadingButtonConstraintTrailing;
 @property(nonatomic, readwrite, strong) NSLayoutConstraint *leadingButtonConstraintCenterY;
-@property(nonatomic, readwrite, strong) NSLayoutConstraint *leadingButtonConstraintTrailingWithTrailingButton;
+@property(nonatomic, readwrite, strong)
+    NSLayoutConstraint *leadingButtonConstraintTrailingWithTrailingButton;
 @property(nonatomic, readwrite, strong) NSLayoutConstraint *trailingButtonConstraintBottom;
 @property(nonatomic, readwrite, strong) NSLayoutConstraint *trailingButtonConstraintTop;
 @property(nonatomic, readwrite, strong) NSLayoutConstraint *trailingButtonConstraintTrailing;
-
-
-
 
 @end
 
@@ -156,37 +159,83 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 
 - (void)setupConstraints {
   if (@available(iOS 9.0, *)) {
-    self.imageViewConstraintLeading = [self.imageView.leadingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.leadingAnchor constant:kLeadingPadding];
-    self.imageViewConstraintTopSmall = [self.imageView.topAnchor constraintEqualToAnchor:self.layoutMarginsGuide.topAnchor constant:kTopPaddingSmall];
-    self.imageViewConstraintTopLarge = [self.imageView.topAnchor constraintEqualToAnchor:self.layoutMarginsGuide.topAnchor constant:kTopPaddingLarge];
-    self.imageViewConstraintBottom = [self.imageView.bottomAnchor constraintEqualToAnchor:self.layoutMarginsGuide.bottomAnchor constant:-kBottomPadding];
+    self.imageViewConstraintLeading =
+        [self.imageView.leadingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.leadingAnchor
+                                                     constant:kLeadingPadding];
+    self.imageViewConstraintTopSmall =
+        [self.imageView.topAnchor constraintEqualToAnchor:self.layoutMarginsGuide.topAnchor
+                                                 constant:kTopPaddingSmall];
+    self.imageViewConstraintTopLarge =
+        [self.imageView.topAnchor constraintEqualToAnchor:self.layoutMarginsGuide.topAnchor
+                                                 constant:kTopPaddingLarge];
+    self.imageViewConstraintBottom =
+        [self.imageView.bottomAnchor constraintEqualToAnchor:self.layoutMarginsGuide.bottomAnchor
+                                                    constant:-kBottomPadding];
 
-    self.textLabelConstraintTop = [self.textLabel.topAnchor constraintEqualToAnchor:self.layoutMarginsGuide.topAnchor constant:kTopPaddingLarge];
-    self.textLabelConstraintCenterY = [self.textLabel.centerYAnchor constraintEqualToAnchor:self.buttonContainerView.centerYAnchor];
-    self.textLabelConstraintTrailing = [self.textLabel.trailingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.trailingAnchor constant:-kTrailingPadding];
-    self.textLabelConstraintLeadingWithImage = [self.textLabel.leadingAnchor constraintEqualToAnchor:self.imageView.trailingAnchor constant:kSpaceBetweenIconImageAndTextLabel];
-    self.textLabelConstraintLeadingWithMargin = [self.textLabel.leadingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.leadingAnchor constant:kLeadingPadding];
+    self.textLabelConstraintTop =
+        [self.textLabel.topAnchor constraintEqualToAnchor:self.layoutMarginsGuide.topAnchor
+                                                 constant:kTopPaddingLarge];
+    self.textLabelConstraintCenterY = [self.textLabel.centerYAnchor
+        constraintEqualToAnchor:self.buttonContainerView.centerYAnchor];
+    self.textLabelConstraintTrailing = [self.textLabel.trailingAnchor
+        constraintEqualToAnchor:self.layoutMarginsGuide.trailingAnchor
+                       constant:-kTrailingPadding];
+    self.textLabelConstraintLeadingWithImage =
+        [self.textLabel.leadingAnchor constraintEqualToAnchor:self.imageView.trailingAnchor
+                                                     constant:kSpaceBetweenIconImageAndTextLabel];
+    self.textLabelConstraintLeadingWithMargin =
+        [self.textLabel.leadingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.leadingAnchor
+                                                     constant:kLeadingPadding];
 
-    self.buttonContainerConstraintLeading = [self.buttonContainerView.leadingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.leadingAnchor constant:kLeadingPadding];
-    self.buttonContainerConstraintTrailing = [self.buttonContainerView.trailingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.trailingAnchor constant:-kTrailingPadding];
-    self.buttonContainerConstraintBottom = [self.buttonContainerView.bottomAnchor constraintEqualToAnchor:self.layoutMarginsGuide.bottomAnchor constant:-kBottomPadding];
-    self.buttonContainerConstraintLeadingWithTextLabel = [self.buttonContainerView.leadingAnchor constraintEqualToAnchor:self.textLabel.trailingAnchor constant:kHorizontalSpaceBetweenTextLabelAndButton];
+    self.buttonContainerConstraintLeading = [self.buttonContainerView.leadingAnchor
+        constraintEqualToAnchor:self.layoutMarginsGuide.leadingAnchor
+                       constant:kLeadingPadding];
+    self.buttonContainerConstraintTrailing = [self.buttonContainerView.trailingAnchor
+        constraintEqualToAnchor:self.layoutMarginsGuide.trailingAnchor
+                       constant:-kTrailingPadding];
+    self.buttonContainerConstraintBottom = [self.buttonContainerView.bottomAnchor
+        constraintEqualToAnchor:self.layoutMarginsGuide.bottomAnchor
+                       constant:-kBottomPadding];
+    self.buttonContainerConstraintLeadingWithTextLabel = [self.buttonContainerView.leadingAnchor
+        constraintEqualToAnchor:self.textLabel.trailingAnchor
+                       constant:kHorizontalSpaceBetweenTextLabelAndButton];
     self.buttonContainerConstraintLeadingWithTextLabel.priority = UILayoutPriorityDefaultHigh;
-    self.buttonContainerConstraintLeadingWithTextLabelGreater = [self.buttonContainerView.leadingAnchor constraintGreaterThanOrEqualToAnchor:self.textLabel.trailingAnchor constant:kHorizontalSpaceBetweenTextLabelAndButton];
-    self.buttonContainerConstraintTopWithMargin = [self.buttonContainerView.topAnchor constraintEqualToAnchor:self.layoutMarginsGuide.topAnchor constant:kTopPaddingSmall];
-    self.buttonContainerConstraintTopWithImageViewGreater = [self.buttonContainerView.topAnchor constraintGreaterThanOrEqualToAnchor:self.imageView.bottomAnchor constant:kVerticalSpaceBetweenButtonAndTextLabel];
-    self.buttonContainerConstraintTopWithTextLabel = [self.buttonContainerView.topAnchor constraintEqualToAnchor:self.textLabel.bottomAnchor constant:kVerticalSpaceBetweenButtonAndTextLabel];
+    self.buttonContainerConstraintLeadingWithTextLabelGreater =
+        [self.buttonContainerView.leadingAnchor
+            constraintGreaterThanOrEqualToAnchor:self.textLabel.trailingAnchor
+                                        constant:kHorizontalSpaceBetweenTextLabelAndButton];
+    self.buttonContainerConstraintTopWithMargin = [self.buttonContainerView.topAnchor
+        constraintEqualToAnchor:self.layoutMarginsGuide.topAnchor
+                       constant:kTopPaddingSmall];
+    self.buttonContainerConstraintTopWithImageViewGreater = [self.buttonContainerView.topAnchor
+        constraintGreaterThanOrEqualToAnchor:self.imageView.bottomAnchor
+                                    constant:kVerticalSpaceBetweenButtonAndTextLabel];
+    self.buttonContainerConstraintTopWithTextLabel = [self.buttonContainerView.topAnchor
+        constraintEqualToAnchor:self.textLabel.bottomAnchor
+                       constant:kVerticalSpaceBetweenButtonAndTextLabel];
     self.buttonContainerConstraintTopWithTextLabel.priority = UILayoutPriorityDefaultLow;
-    self.buttonContainerConstraintTopWithTextLabelGreater = [self.buttonContainerView.topAnchor constraintGreaterThanOrEqualToAnchor:self.textLabel.bottomAnchor constant:kVerticalSpaceBetweenButtonAndTextLabel];
+    self.buttonContainerConstraintTopWithTextLabelGreater = [self.buttonContainerView.topAnchor
+        constraintGreaterThanOrEqualToAnchor:self.textLabel.bottomAnchor
+                                    constant:kVerticalSpaceBetweenButtonAndTextLabel];
 
-    self.leadingButtonConstraintLeading = [self.leadingButton.leadingAnchor constraintGreaterThanOrEqualToAnchor:self.buttonContainerView.leadingAnchor];
-    self.leadingButtonConstraintTop = [self.leadingButton.topAnchor constraintEqualToAnchor:self.buttonContainerView.topAnchor];
-    self.leadingButtonConstraintTrailing = [self.leadingButton.trailingAnchor constraintEqualToAnchor:self.buttonContainerView.trailingAnchor];
-    self.leadingButtonConstraintCenterY = [self.leadingButton.centerYAnchor constraintEqualToAnchor:self.buttonContainerView.centerYAnchor];
-    self.leadingButtonConstraintTrailingWithTrailingButton = [self.leadingButton.trailingAnchor constraintEqualToAnchor:self.trailingButton.leadingAnchor constant:-kButtonHorizontalIntervalSpace];
-    self.trailingButtonConstraintBottom = [self.trailingButton.bottomAnchor constraintEqualToAnchor:self.buttonContainerView.bottomAnchor];
-    self.trailingButtonConstraintTop = [self.trailingButton.topAnchor constraintEqualToAnchor:self.leadingButton.bottomAnchor constant:kButtonVerticalIntervalSpace];
-    self.trailingButtonConstraintTrailing = [self.trailingButton.trailingAnchor constraintEqualToAnchor:self.buttonContainerView.trailingAnchor];
+    self.leadingButtonConstraintLeading = [self.leadingButton.leadingAnchor
+        constraintGreaterThanOrEqualToAnchor:self.buttonContainerView.leadingAnchor];
+    self.leadingButtonConstraintTop =
+        [self.leadingButton.topAnchor constraintEqualToAnchor:self.buttonContainerView.topAnchor];
+    self.leadingButtonConstraintTrailing = [self.leadingButton.trailingAnchor
+        constraintEqualToAnchor:self.buttonContainerView.trailingAnchor];
+    self.leadingButtonConstraintCenterY = [self.leadingButton.centerYAnchor
+        constraintEqualToAnchor:self.buttonContainerView.centerYAnchor];
+    self.leadingButtonConstraintTrailingWithTrailingButton =
+        [self.leadingButton.trailingAnchor constraintEqualToAnchor:self.trailingButton.leadingAnchor
+                                                          constant:-kButtonHorizontalIntervalSpace];
+    self.trailingButtonConstraintBottom = [self.trailingButton.bottomAnchor
+        constraintEqualToAnchor:self.buttonContainerView.bottomAnchor];
+    self.trailingButtonConstraintTop =
+        [self.trailingButton.topAnchor constraintEqualToAnchor:self.leadingButton.bottomAnchor
+                                                      constant:kButtonVerticalIntervalSpace];
+    self.trailingButtonConstraintTrailing = [self.trailingButton.trailingAnchor
+        constraintEqualToAnchor:self.buttonContainerView.trailingAnchor];
   }
 }
 
@@ -380,14 +429,14 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
       remainingWidth -= kSpaceBetweenIconImageAndTextLabel;
     }
     layoutMode = [self isAbleToFitTextLabel:self.textLabel withWidthLimit:remainingWidth]
-                ? MDCBannerViewLayoutModeSingleLine
-                : MDCBannerViewLayoutModeMultiLineAlignedButton;
+                     ? MDCBannerViewLayoutModeSingleLine
+                     : MDCBannerViewLayoutModeMultiLineAlignedButton;
   } else {
     [self.trailingButton sizeToFit];
     CGFloat buttonWidth = [self widthSumForButtons:@[ self.leadingButton, self.trailingButton ]];
     remainingWidth -= buttonWidth;
     layoutMode = (remainingWidth > 0) ? MDCBannerViewLayoutModeMultiLineAlignedButton
-                                 : MDCBannerViewLayoutModeMultiLineStackedButton;
+                                      : MDCBannerViewLayoutModeMultiLineStackedButton;
   }
   return layoutMode;
 }
