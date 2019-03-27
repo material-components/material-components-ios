@@ -134,12 +134,6 @@ typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
 @property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator;
 
 /**
- The state of the card cell.
- Default is MDCCardCellStateNormal.
- */
-@property(nonatomic, readonly) MDCCardCellState state;
-
-/**
  By setting this property to YES, you will enable and use inkView's successor rippleView as the
  main view to provide visual feedback for taps. It is recommended to set this property right after
  initializing the card.
@@ -318,5 +312,11 @@ typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
  */
 - (void)setImageTintColor:(nullable UIColor *)imageTintColor
                  forState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;
+
+/**
+ The state of the card cell.
+ Default is MDCCardCellStateNormal.
+ */
+@property(nonatomic, readonly) MDCCardCellState state;
 
 @end

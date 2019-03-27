@@ -52,19 +52,6 @@
  */
 @property(nonatomic, getter=isInteractable) IBInspectable BOOL interactable;
 
-/*
- The shape generator used to define the card's shape.
- When set, layer properties such as cornerRadius and other layer properties are nullified/zeroed.
- If a layer property is explicitly set after the shapeGenerator has been set, it will lead to
- unexpected behavior.
-
- When the shapeGenerator is nil, MDCCard will use the default underlying layer with
- its default settings.
-
- Default value for shapeGenerator is nil.
- */
-@property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator;
-
 /**
  By setting this property to YES, you will enable and use inkView's successor rippleView as the
  main view to provide visual feedback for taps. It is recommended to set this property right after
@@ -153,5 +140,18 @@
  @return The shadow color for the requested state.
  */
 - (nullable UIColor *)shadowColorForState:(UIControlState)state UI_APPEARANCE_SELECTOR;
+
+/*
+ The shape generator used to define the card's shape.
+ When set, layer properties such as cornerRadius and other layer properties are nullified/zeroed.
+ If a layer property is explicitly set after the shapeGenerator has been set, it will lead to
+ unexpected behavior.
+
+ When the shapeGenerator is nil, MDCCard will use the default underlying layer with
+ its default settings.
+
+ Default value for shapeGenerator is nil.
+ */
+@property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator;
 
 @end
