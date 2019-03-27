@@ -143,7 +143,9 @@ The `MDCRippleTouchControllerDelegate` gives you some control over aspects of th
 ripple/touch relationship and its placement in the view hierarchy.
 In the below example we are using the delegate to declare we want to only process ripple 
 touches if the touch is in a certain location, and also insert the Ripple view at the very bottom of
-the parent view's view hierarchy:
+the parent view's view hierarchy. The reason we insert the ripple view at the bottom of the parent view's
+hierarchy in this example, is so the ripple's overlay color would not affect the visibility and contrast
+of the view's subviews, which may be images conveying a message or text.
 
 <!--<div class="material-code-render" markdown="1">-->
 
@@ -259,7 +261,7 @@ own touch processing.
 To fully benefit from MDCStatefulRipple's capabilities in moving through states visually,
 the view that is adding the stateful ripple view will need to override 
 UIView's `touchesBegan`, `touchesMoved`, `touchesEnded` and `touchesCancelled`
-and call the stateful ripple views corresponding APIs before calling the super.
+and call the stateful ripple views corresponding APIs before calling the `super` implementation.
 Here is an example:
 
 <!--<div class="material-code-render" markdown="1">-->
