@@ -14,6 +14,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MaterialInk.h"
+#import "MaterialRipple.h"
 #import "MaterialShadowLayer.h"
 
 @protocol MDCShapeGenerating;
@@ -83,6 +84,8 @@ typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
  */
 @property(nonatomic, assign, getter=isSelectable) BOOL selectable;
 
+@property(nonatomic, getter=isDragged) BOOL dragged;
+
 /**
  The corner radius for the card
  Default is set to 4.
@@ -93,6 +96,12 @@ typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
  The inkView for the card that is initiated on tap
  */
 @property(nonatomic, readonly, strong, nonnull) MDCInkView *inkView;
+
+/**
+
+ */
+@property(nonatomic, readonly, strong, nonnull) MDCStatefulRippleView *rippleView;
+
 
 /**
  This property defines if a card as a whole should be interactable or not.
@@ -120,6 +129,17 @@ typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
  Default value for shapeGenerator is nil.
  */
 @property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator;
+
+/**
+ The state of the card cell.
+ Default is MDCCardCellStateNormal.
+ */
+@property(nonatomic, readonly) MDCCardCellState state;
+
+/**
+
+ */
+@property(nonatomic, assign) BOOL enableRippleBehavior;
 
 /**
  Sets the shadow elevation for an MDCCardViewState state
@@ -291,11 +311,5 @@ typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
  */
 - (void)setImageTintColor:(nullable UIColor *)imageTintColor
                  forState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;
-
-/**
- The state of the card cell.
- Default is MDCCardCellStateNormal.
- */
-@property(nonatomic, readonly) MDCCardCellState state;
 
 @end

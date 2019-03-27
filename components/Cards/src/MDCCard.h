@@ -14,6 +14,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MaterialInk.h"
+#import "MaterialRipple.h"
 #import "MaterialShadowLayer.h"
 
 @protocol MDCShapeGenerating;
@@ -32,6 +33,12 @@
 @property(nonatomic, readonly, strong, nonnull) MDCInkView *inkView;
 
 /**
+
+ */
+@property(nonatomic, readonly, strong, nonnull) MDCStatefulRippleView *rippleView;
+
+
+/**
  This property defines if a card as a whole should be interactable or not.
  What this means is that when isInteractable is set to NO, there will be no ink ripple and
  no change in shadow elevation when tapped or selected. Also the card container itself will not be
@@ -44,6 +51,24 @@
  the card's content, such as buttons or other tappable controls.
  */
 @property(nonatomic, getter=isInteractable) IBInspectable BOOL interactable;
+
+/*
+ The shape generator used to define the card's shape.
+ When set, layer properties such as cornerRadius and other layer properties are nullified/zeroed.
+ If a layer property is explicitly set after the shapeGenerator has been set, it will lead to
+ unexpected behavior.
+
+ When the shapeGenerator is nil, MDCCard will use the default underlying layer with
+ its default settings.
+
+ Default value for shapeGenerator is nil.
+ */
+@property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator;
+
+/**
+
+ */
+@property(nonatomic, assign) BOOL enableRippleBehavior;
 
 /**
  Sets the shadow elevation for an UIControlState state
@@ -124,18 +149,5 @@
  @return The shadow color for the requested state.
  */
 - (nullable UIColor *)shadowColorForState:(UIControlState)state UI_APPEARANCE_SELECTOR;
-
-/*
- The shape generator used to define the card's shape.
- When set, layer properties such as cornerRadius and other layer properties are nullified/zeroed.
- If a layer property is explicitly set after the shapeGenerator has been set, it will lead to
- unexpected behavior.
-
- When the shapeGenerator is nil, MDCCard will use the default underlying layer with
- its default settings.
-
- Default value for shapeGenerator is nil.
- */
-@property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator;
 
 @end

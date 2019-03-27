@@ -14,7 +14,6 @@
 
 import UIKit
 
-import MaterialComponents.MaterialCards_Private
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialTypographyScheme
 import MaterialComponentsBeta.MaterialCards_Theming
@@ -134,7 +133,7 @@ class CardCellsWithRippleExample: UIViewController,
 
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
     guard let cardCell = cell as? MDCCardCollectionCell else { return cell }
-    cardCell.enableBetaBehavior = true
+    cardCell.enableRippleBehavior = true
     cardCell.applyTheme(withScheme: containerScheme)
     cardCell.isSelectable = (toggle == .edit)
     cardCell.isAccessibilityElement = true
