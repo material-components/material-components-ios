@@ -141,7 +141,7 @@ MDCRippleTouchController *rippleTouchController = [[MDCRippleTouchController all
 
 The `MDCRippleTouchControllerDelegate` gives you some control over aspects of the
 ripple/touch relationship and its placement in the view hierarchy.
-In the below example we are using the delegate to declare we want to only process ripple 
+In the example below we are using the delegate to declare that we only want to process ripple 
 touches if the touch is in a certain location, and also insert the Ripple view at the very bottom of
 the parent view's view hierarchy:
 
