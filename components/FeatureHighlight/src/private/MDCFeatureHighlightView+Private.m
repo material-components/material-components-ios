@@ -182,8 +182,8 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   if (!_titleFont) {
     _titleFont = [MDCFeatureHighlightView defaultTitleFont];
   }
-  if (_mdc_adjustsFontForContentSizeCategory && !_mdc_legacyFontScaling) {
-    if (_titleFont.mdc_scalingCurve) {
+  if (_mdc_adjustsFontForContentSizeCategory) {
+    if (_titleFont.mdc_scalingCurve && !_mdc_legacyFontScaling) {
       // The font has an associated curve (M2+)
       _titleLabel.font = [_titleFont mdc_scaledFontForCurrentSizeCategory];
     } else {
@@ -215,8 +215,8 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   if (!_bodyFont) {
     _bodyFont = [MDCFeatureHighlightView defaultBodyFont];
   }
-  if (_mdc_adjustsFontForContentSizeCategory && !_mdc_legacyFontScaling) {
-    if (_bodyFont.mdc_scalingCurve) {
+  if (_mdc_adjustsFontForContentSizeCategory) {
+    if (_bodyFont.mdc_scalingCurve && !_mdc_legacyFontScaling) {
       // The font has an associated curve (M2+)
       _bodyLabel.font = [_bodyFont mdc_scaledFontForCurrentSizeCategory];
     } else {
