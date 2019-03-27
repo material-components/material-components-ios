@@ -103,6 +103,25 @@ static const CGFloat kContentHorizontalMargin = 12;
   [self generateAndVerifySnapshot];
 }
 
+- (void)testNarrowWidthTypicalHeightLongTitleManyLinesEmptyBadgeStackedLTR {
+  // When
+  self.itemView.titleNumberOfLines = 0;
+  self.itemView.titleBelowIcon = YES;
+  self.itemView.frame = CGRectMake(0, 0, kWidthNarrrow, kHeightTypical);
+
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testNarrowWidthTypicalHeightLongTitleManyLinesEmptyBadgeStackedRTL {
+  // When
+  self.itemView.titleNumberOfLines = 0;
+  [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleEmpty];
+  self.itemView.titleBelowIcon = YES;
+  self.itemView.frame = CGRectMake(0, 0, kWidthNarrrow, kHeightTypical);
+
+  [self generateAndVerifySnapshot];
+}
+
 - (void)testNarrowWidthTypicalHeightLongTitleSingleBadgeAdjacentLTR {
   // When
   self.itemView.titleBelowIcon = NO;

@@ -91,6 +91,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
         ++totalViewsProcessed;
       } else if ([view isKindOfClass:[UILabel class]]) {
         _label = (UILabel *)view;
+        _label.numberOfLines = 1;
         ++totalViewsProcessed;
       } else if ([view isKindOfClass:[MDCBottomNavigationItemBadge class]]) {
         _badge = (MDCBottomNavigationItemBadge *)view;
@@ -132,6 +133,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
     _label.textAlignment = NSTextAlignmentCenter;
     _label.textColor = _selectedItemTitleColor;
     _label.isAccessibilityElement = NO;
+    _label.numberOfLines = 1;
     [self addSubview:_label];
   }
 
@@ -575,6 +577,14 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
     _titlePositionAdjustment = titlePositionAdjustment;
     [self setNeedsLayout];
   }
+}
+
+- (void)setTitleNumberOfLines:(NSInteger)titleNumberOfLines {
+  self.label.numberOfLines = titleNumberOfLines;
+}
+
+- (NSInteger)titleNumberOfLines  {
+  return self.label.numberOfLines;
 }
 
 #pragma mark - Resource bundle

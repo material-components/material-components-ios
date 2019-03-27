@@ -28,6 +28,7 @@
 @property(nonatomic, copy) NSString *badgeValue;
 @property(nonatomic, copy) NSString *title;
 @property(nonatomic, strong) UIFont *itemTitleFont UI_APPEARANCE_SELECTOR;
+@property(nonatomic, assign) NSInteger titleNumberOfLines;
 // Default = YES
 @property(nonatomic, assign) BOOL truncatesTitle;
 

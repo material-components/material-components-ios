@@ -100,6 +100,7 @@ static NSString *const kOfAnnouncement = @"of";
   _barTintColor = [UIColor whiteColor];
   _truncatesLongTitles = YES;
   _sizeThatFitsIncludesSafeArea = YES;
+  _titlesNumberOfLines = 1;
 
   // Remove any unarchived subviews and reconfigure the view hierarchy
   if (self.subviews.count) {
