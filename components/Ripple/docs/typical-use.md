@@ -5,7 +5,7 @@ Before using Ripple, you'll need to import it:
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift
-import MaterialComponentsBeta.MaterialRipple
+import MaterialComponents.MaterialRipple
 ```
 
 #### Objective-C

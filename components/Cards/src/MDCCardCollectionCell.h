@@ -84,6 +84,9 @@ typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
  */
 @property(nonatomic, assign, getter=isSelectable) BOOL selectable;
 
+/**
+ A Boolean value indicating whether the card is in the dragged state.
+ */
 @property(nonatomic, getter=isDragged) BOOL dragged;
 
 /**
@@ -98,7 +101,8 @@ typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
 @property(nonatomic, readonly, strong, nonnull) MDCInkView *inkView;
 
 /**
-
+ The rippleView for the card that is initiated on tap. The ripple view is the successor of ink
+ view, and can be used by setting `enableRippleBehavior` to YES after initializing the card.
  */
 @property(nonatomic, readonly, strong, nonnull) MDCStatefulRippleView *rippleView;
 
@@ -137,7 +141,11 @@ typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
 @property(nonatomic, readonly) MDCCardCellState state;
 
 /**
+ By setting this property to YES, you will enable and use inkView's successor rippleView as the
+ main view to provide visual feedback for taps. It is recommended to set this property right after
+ initializing the card.
 
+ Defaults to NO.
  */
 @property(nonatomic, assign) BOOL enableRippleBehavior;
 

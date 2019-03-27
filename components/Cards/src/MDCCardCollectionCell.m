@@ -171,7 +171,6 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 
 - (void)setState:(MDCCardCellState)state animated:(BOOL)animated {
   if (self.rippleView) {
-    // Ripple behavior enabled
     return;
   }
   switch (state) {
@@ -207,7 +206,6 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 
 - (MDCCardCellState)state {
   if (self.rippleView) {
-    // Ripple behavior enabled
     if (self.selected && self.selectable) {
       return MDCCardCellStateSelected;
     } else if (self.dragged) {
@@ -224,7 +222,6 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 - (void)setSelected:(BOOL)selected {
   [super setSelected:selected];
   if (self.rippleView) {
-    // Ripple behavior enabled
     if (!self.selectable) {
       return;
     }
