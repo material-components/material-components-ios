@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #import "MDCCard.h"
-#import "private/MDCCard+Private.h"
 
 #import "MaterialMath.h"
 #import "MaterialShapes.h"
@@ -25,14 +24,6 @@ static const BOOL MDCCardIsInteractableDefault = YES;
 
 @interface MDCCard ()
 @property(nonatomic, readonly, strong) MDCShapedShadowLayer *layer;
-
-// Used for Ripple Beta
-@property(nonatomic, strong) UIView *rippleView;
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-@property(nonatomic, weak) id<MDCCardRippleDelegate> rippleDelegate;
-#pragma clang diagnostic pop
-@property(nonatomic, assign) BOOL enableBetaBehavior;
 @end
 
 @implementation MDCCard {
@@ -223,7 +214,7 @@ static const BOOL MDCCardIsInteractableDefault = YES;
 
 - (void)setHighlighted:(BOOL)highlighted {
   // Original logic for changing the state to highlighted.
-  if (self.rippleDelegate == nil) {
+  if (self.rippleView == nil) {
     if (highlighted && !self.highlighted) {
       [self.inkView startTouchBeganAnimationAtPoint:_lastTouch completion:nil];
     } else if (!highlighted && self.highlighted) {
@@ -232,7 +223,9 @@ static const BOOL MDCCardIsInteractableDefault = YES;
   }
   [super setHighlighted:highlighted];
   // Updated logic using Ripple for changing the state to highlighted.
-  [self.rippleDelegate cardRippleDelegateSetHighlighted:highlighted];
+  if (self.rippleView) {
+    self.rippleView.rippleHighlighted = highlighted;
+  }
 
   [self updateShadowElevation];
   [self updateBorderColor];
@@ -271,7 +264,7 @@ static const BOOL MDCCardIsInteractableDefault = YES;
   self.layer.shadowMaskEnabled = NO;
   [self updateBackgroundColor];
   // Original logic for configuring Ink prior to the Ripple integration.
-  if (self.rippleDelegate == nil) {
+  if (self.rippleView == nil) {
     [self updateInkForShape];
   }
 }
@@ -301,7 +294,9 @@ static const BOOL MDCCardIsInteractableDefault = YES;
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-  [self.rippleDelegate cardRippleDelegateTouchesBegan:touches withEvent:event];
+  if (self.rippleView) {
+    [self.rippleView touchesBegan:touches withEvent:event];
+  }
   [super touchesBegan:touches withEvent:event];
 }
 
@@ -309,33 +304,48 @@ static const BOOL MDCCardIsInteractableDefault = YES;
   // The ripple invocation must come before touchesMoved of the super, otherwise the setHighlighted
   // of the UIControl will be triggered before the ripple identifies that the highlighted was
   // trigerred from a long press entering the view and shouldn't invoke a ripple.
-  [self.rippleDelegate cardRippleDelegateTouchesMoved:touches withEvent:event];
+  if (self.rippleView) {
+    [self.rippleView touchesMoved:touches withEvent:event];
+  }
   [super touchesMoved:touches withEvent:event];
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-  [self.rippleDelegate cardRippleDelegateTouchesEnded:touches withEvent:event];
+  if (self.rippleView) {
+    [self.rippleView touchesEnded:touches withEvent:event];
+  }
   [super touchesEnded:touches withEvent:event];
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-  [self.rippleDelegate cardRippleDelegateTouchesCancelled:touches withEvent:event];
+  if (self.rippleView) {
+    [self.rippleView touchesCancelled:touches withEvent:event];
+  }
   [super touchesCancelled:touches withEvent:event];
 }
 
-- (void)setEnableBetaBehavior:(BOOL)enableBetaBehavior {
-  if (enableBetaBehavior == _enableBetaBehavior) {
+- (void)setEnableRippleBehavior:(BOOL)enableRippleBehavior {
+  if (enableRippleBehavior == _enableRippleBehavior) {
     return;
   }
-  _enableBetaBehavior = enableBetaBehavior;
-  // TODO: Remove this performSelector code once Ripple is no longer in Beta.
-  SEL cardRippleEnableBetaBehavior = NSSelectorFromString(@"cardRippleEnableBetaBehavior:");
-  if ([self respondsToSelector:cardRippleEnableBetaBehavior]) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-    NSNumber *enabled = [NSNumber numberWithBool:enableBetaBehavior];
-    [self performSelector:cardRippleEnableBetaBehavior withObject:enabled];
-#pragma clang diagnostic pop
+  _enableRippleBehavior = enableRippleBehavior;
+  if (enableRippleBehavior) {
+    if (_rippleView == nil) {
+      _rippleView = [[MDCStatefulRippleView alloc] initWithFrame:self.bounds];
+      _rippleView.layer.zPosition = FLT_MAX;
+      [self addSubview:_rippleView];
+    }
+    if (_inkView) {
+      [_inkView removeFromSuperview];
+      _inkView = nil;
+    }
+  } else {
+    if (_rippleView) {
+      [_rippleView removeFromSuperview];
+      _rippleView = nil;
+    }
+    [self addSubview:_inkView];
   }
 }
+
 @end

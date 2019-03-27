@@ -43,6 +43,7 @@ target "MDCCatalog" do
     'private/ThumbTrack/UnitTests',
     'private/UIMetrics/UnitTests',
     'ProgressView/UnitTests',
+    'Ripple/UnitTests',
     'schemes/Color/UnitTests',
     'schemes/Shape/UnitTests',
     'schemes/Typography/UnitTests',
@@ -68,7 +69,6 @@ target "MDCCatalog" do
     'Cards+Theming/UnitTests',
     'Chips+Theming/UnitTests',
     'Dialogs+Theming/UnitTests',
-    'Ripple/UnitTests',
     'TextFields+Theming/UnitTests',
     'schemes/Container/UnitTests',
   ]

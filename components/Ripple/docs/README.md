@@ -18,9 +18,6 @@ Ripple is a visual form of feedback for touch events providing users a clear sig
 
 Ripple is a material design implementation of touch feedback and is a successor of Ink.
 
-Ripple is currently a [beta component](../../../contributing/beta_components.md). Therefore, clients that
-wish to use Ripple in their app will need to manually clone the repo and add the code to their project. 
-
 ## Installation
 
 - [Typical installation](../../../docs/component-installation.md)

@@ -8,7 +8,7 @@ path: /catalog/ripple/
 api_doc_root: true
 -->
 
-<!-- This file was auto-generated using ./scripts/generate_readme Ripple -->
+<!-- This file was auto-generated using scripts/generate_readme Ripple -->
 
 # Ripple
 
@@ -26,6 +26,7 @@ Ripple is a visual form of feedback for touch events providing users a clear sig
   <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-ripple">Material Design guidelines: Ripple</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/ripple/api-docs/Classes/MDCRippleTouchController.html">MDCRippleTouchController</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/ripple/api-docs/Classes/MDCRippleView.html">MDCRippleView</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/ripple/api-docs/Classes/MDCStatefulRippleView.html">MDCStatefulRippleView</a></li>
   <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/ripple/api-docs/Protocols/MDCRippleTouchControllerDelegate.html">MDCRippleTouchControllerDelegate</a></li>
   <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/ripple/api-docs/Protocols/MDCRippleViewDelegate.html">MDCRippleViewDelegate</a></li>
   <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/ripple/api-docs/Enums.html">Enumerations</a></li>
@@ -40,15 +41,16 @@ Ripple is a visual form of feedback for touch events providing users a clear sig
   - [Installation with CocoaPods](#installation-with-cocoapods)
   - [Importing](#importing)
 - [Usage](#usage)
+  - [Importing](#importing)
+  - [MDCRippleTouchController](#mdcrippletouchcontroller)
+  - [MDCRippleView](#mdcrippleview)
+  - [MDCStatefulRippleView](#mdcstatefulrippleview)
 
 - - -
 
 ## Overview
 
 Ripple is a material design implementation of touch feedback and is a successor of Ink.
-
-Ripple is currently a [beta component](../../contributing/beta_components.md). Therefore, clients that
-wish to use Ripple in their app will need to manually clone the repo and add the code to their project. 
 
 ## Installation
 
@@ -59,7 +61,7 @@ wish to use Ripple in their app will need to manually clone the repo and add the
 Add the following to your `Podfile`:
 
 ```bash
-pod 'MaterialComponentsBeta/Ripple'
+pod 'MaterialComponents/Ripple'
 ```
 <!--{: .code-renderer.code-renderer--install }-->
 
@@ -69,7 +71,27 @@ Then, run the following command:
 pod install
 ```
 
+### Importing
+
+To import the component:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+import MaterialComponents.MaterialRipple
+```
+
+#### Objective-C
+
+```objc
+#import "MaterialRipple.h"
+```
+<!--</div>-->
+
+
 ## Usage
+
+<!-- Extracted from docs/typical-use.md -->
 
 ### Importing
 
@@ -78,7 +100,7 @@ Before using Ripple, you'll need to import it:
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift
-import MaterialComponentsBeta.MaterialRipple
+import MaterialComponents.MaterialRipple
 ```
 
 #### Objective-C
