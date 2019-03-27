@@ -38,7 +38,6 @@
  */
 @property(nonatomic, readonly, strong, nonnull) MDCStatefulRippleView *rippleView;
 
-
 /**
  This property defines if a card as a whole should be interactable or not.
  What this means is that when isInteractable is set to NO, there will be no ink ripple and
