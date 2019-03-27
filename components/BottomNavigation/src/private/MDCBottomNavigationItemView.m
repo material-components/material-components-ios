@@ -240,12 +240,14 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   }
 
   // Determine the position of the label and icon
-  CGFloat centerY = CGRectGetMidY(contentBoundingRect);
   CGFloat centerX = CGRectGetMidX(contentBoundingRect);
-  CGPoint iconImageViewCenter =
-      CGPointMake(centerX, centerY - totalContentHeight / 2 + iconHeight / 2);
+  CGFloat iconImageViewCenterY =
+      MAX(CGRectGetMidY(contentBoundingRect) - totalContentHeight / 2 + iconHeight / 2,  // Content centered
+          CGRectGetMinY(contentBoundingRect) + iconHeight / 2  // Pinned to top of bounding rect.
+          );
+  CGPoint iconImageViewCenter = CGPointMake(centerX, iconImageViewCenterY);
   // Ignore the horizontal titlePositionAdjustment in a vertical layout to match UITabBar behavior.
-  CGPoint labelCenter = CGPointMake(centerX, centerY + totalContentHeight / 2 - labelHeight / 2 +
+  CGPoint labelCenter = CGPointMake(centerX, iconImageViewCenter.y  + iconHeight / 2 + self.contentVerticalMargin + labelHeight / 2 +
                                                  self.titlePositionAdjustment.vertical);
   CGFloat availableContentWidth = CGRectGetWidth(contentBoundingRect);
   if (self.truncatesTitle && (labelSize.width > availableContentWidth)) {
