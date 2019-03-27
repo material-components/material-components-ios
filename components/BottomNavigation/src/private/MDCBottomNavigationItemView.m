@@ -242,13 +242,15 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   // Determine the position of the label and icon
   CGFloat centerX = CGRectGetMidX(contentBoundingRect);
   CGFloat iconImageViewCenterY =
-      MAX(CGRectGetMidY(contentBoundingRect) - totalContentHeight / 2 + iconHeight / 2,  // Content centered
+      MAX(CGRectGetMidY(contentBoundingRect) - totalContentHeight / 2 +
+              iconHeight / 2,                                  // Content centered
           CGRectGetMinY(contentBoundingRect) + iconHeight / 2  // Pinned to top of bounding rect.
-          );
+      );
   CGPoint iconImageViewCenter = CGPointMake(centerX, iconImageViewCenterY);
   // Ignore the horizontal titlePositionAdjustment in a vertical layout to match UITabBar behavior.
-  CGPoint labelCenter = CGPointMake(centerX, iconImageViewCenter.y  + iconHeight / 2 + self.contentVerticalMargin + labelHeight / 2 +
-                                                 self.titlePositionAdjustment.vertical);
+  CGPoint labelCenter =
+      CGPointMake(centerX, iconImageViewCenter.y + iconHeight / 2 + self.contentVerticalMargin +
+                               labelHeight / 2 + self.titlePositionAdjustment.vertical);
   CGFloat availableContentWidth = CGRectGetWidth(contentBoundingRect);
   if (self.truncatesTitle && (labelSize.width > availableContentWidth)) {
     labelSize = CGSizeMake(availableContentWidth, labelSize.height);
@@ -585,7 +587,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   self.label.numberOfLines = titleNumberOfLines;
 }
 
-- (NSInteger)titleNumberOfLines  {
+- (NSInteger)titleNumberOfLines {
   return self.label.numberOfLines;
 }
 
