@@ -147,6 +147,12 @@ typedef void (^MDCFeatureHighlightCompletion)(BOOL accepted);
     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
 
 /**
+ Enable legacy font scaling curves for Dynamic Type.
+ Default value is NO.
+ */
+@property(nonatomic, readwrite, setter=mdc_setLegacyFontScaling:) BOOL mdc_legacyFontScaling;
+
+/**
  Dismisses the feature highlight using the 'accept' style dismissal animation and triggers the
  completion block with accepted set to YES.
 
