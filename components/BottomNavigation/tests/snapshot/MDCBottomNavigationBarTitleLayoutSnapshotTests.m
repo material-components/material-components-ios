@@ -135,7 +135,7 @@ static NSString *const kBadgeTitleArabic = @"أورا";
   self.navigationBar.items[1].badgeValue = kBadgeTitleArabic;
 }
 
-#pragma mark - Title length
+#pragma mark - Title length tests
 
 - (void)testJustifiedUnspecifiedAlwaysWithFiveLongTitleItemsiPadWidthTypicalHeightLTR {
   // When
@@ -337,7 +337,7 @@ static NSString *const kBadgeTitleArabic = @"أورا";
   [self generateAndVerifySnapshot];
 }
 
-#pragma mark - Title visibility
+#pragma mark - Title visibility tests
 
 - (void)testJustifiedUnspecifiedSelectedWithThreeItemsTypicalWidthTypicalHeightLTR {
   // When

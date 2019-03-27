@@ -134,7 +134,7 @@ static NSString *const kBadgeTitleArabic = @"أورا";
   [self performInkTouchOnBar:navigationBar item:self.tabItem2];
 }
 
-#pragma mark - Transparent background and blur
+#pragma mark - Tests
 
 - (void)testTransparentBackgroundColor {
   // Given
