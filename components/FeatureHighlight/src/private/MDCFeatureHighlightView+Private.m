@@ -183,9 +183,15 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
     _titleFont = [MDCFeatureHighlightView defaultTitleFont];
   }
   if (_mdc_adjustsFontForContentSizeCategory) {
-    _titleLabel.font =
-        [_titleFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
-                                 scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+    if (_titleFont.mdc_scalingCurve && !_mdc_legacyFontScaling) {
+      // The font has an associated curve (M2+)
+      _titleLabel.font = [_titleFont mdc_scaledFontForCurrentSizeCategory];
+    } else {
+      // The original (M1) custom font + DT implementation
+      _titleLabel.font =
+          [_titleFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
+                                   scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+    }
   } else {
     _titleLabel.font = _titleFont;
   }
@@ -210,12 +216,19 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
     _bodyFont = [MDCFeatureHighlightView defaultBodyFont];
   }
   if (_mdc_adjustsFontForContentSizeCategory) {
-    _bodyLabel.font =
-        [_bodyFont mdc_fontSizedForMaterialTextStyle:kBodyTextStyle
-                                scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+    if (_bodyFont.mdc_scalingCurve && !_mdc_legacyFontScaling) {
+      // The font has an associated curve (M2+)
+      _bodyLabel.font = [_bodyFont mdc_scaledFontForCurrentSizeCategory];
+    } else {
+      // The original (M1) custom font + DT implementation
+      _bodyLabel.font =
+          [_bodyFont mdc_fontSizedForMaterialTextStyle:kBodyTextStyle
+                                  scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+    }
   } else {
     _bodyLabel.font = _bodyFont;
   }
+
   [self setNeedsLayout];
 }
 
