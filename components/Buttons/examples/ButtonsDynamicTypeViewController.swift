@@ -47,29 +47,43 @@ class ButtonsDynamicTypeViewController: UIViewController {
     flatButtonStatic.addTarget(self, action: #selector(tap), for: .touchUpInside)
     view.addSubview(flatButtonStatic)
 
-    let flatButtonDynamic = MDCButton()
-    flatButtonDynamic.applyContainedTheme(withScheme: containerScheme)
-    flatButtonDynamic.setTitleColor(titleColor, for: .normal)
-    flatButtonDynamic.setBackgroundColor(backgroundColor, for: .normal)
-    flatButtonDynamic.setTitle("Dynamic", for: UIControlState())
-    flatButtonDynamic.sizeToFit()
-    flatButtonDynamic.translatesAutoresizingMaskIntoConstraints = false
-    flatButtonDynamic.addTarget(self, action: #selector(tap), for: .touchUpInside)
-    flatButtonDynamic.mdc_adjustsFontForContentSizeCategory = true
-    view.addSubview(flatButtonDynamic)
+    containerScheme.typographyScheme = MDCTypographyScheme.init(defaults: .material201902)
+    let flatButtonDynamicM2 = MDCButton()
+    flatButtonDynamicM2.applyContainedTheme(withScheme: containerScheme)
+    flatButtonDynamicM2.setTitleColor(titleColor, for: .normal)
+    flatButtonDynamicM2.setBackgroundColor(backgroundColor, for: .normal)
+    flatButtonDynamicM2.setTitle("Dynamic", for: UIControlState())
+    flatButtonDynamicM2.sizeToFit()
+    flatButtonDynamicM2.translatesAutoresizingMaskIntoConstraints = false
+    flatButtonDynamicM2.addTarget(self, action: #selector(tap), for: .touchUpInside)
+    flatButtonDynamicM2.mdc_adjustsFontForContentSizeCategory = true
+    view.addSubview(flatButtonDynamicM2)
+
+    containerScheme.typographyScheme = MDCTypographyScheme.init(defaults: .material201804)
+    let flatButtonDynamicM1 = MDCButton()
+    flatButtonDynamicM1.applyContainedTheme(withScheme: containerScheme)
+    flatButtonDynamicM1.setTitleColor(titleColor, for: .normal)
+    flatButtonDynamicM1.setBackgroundColor(backgroundColor, for: .normal)
+    flatButtonDynamicM1.setTitle("Dynamic (legacy)", for: UIControlState())
+    flatButtonDynamicM1.sizeToFit()
+    flatButtonDynamicM1.translatesAutoresizingMaskIntoConstraints = false
+    flatButtonDynamicM1.addTarget(self, action: #selector(tap), for: .touchUpInside)
+    flatButtonDynamicM1.mdc_adjustsFontForContentSizeCategory = true
+    flatButtonDynamicM1.mdc_legacyFontScaling = true
+    view.addSubview(flatButtonDynamicM1)
 
     let views = [
       "flatStatic": flatButtonStatic,
-      "flatDynamic": flatButtonDynamic
+      "flatDynamicM2": flatButtonDynamicM2,
+      "flatDynamicM1": flatButtonDynamicM1,
     ]
 
-    centerView(view: flatButtonDynamic, onView: self.view)
+    centerView(view: flatButtonDynamicM2, onView: self.view)
 
     view.addConstraints(
-      NSLayoutConstraint.constraints(withVisualFormat: "V:[flatStatic]-40-[flatDynamic]",
-                                     options: .alignAllCenterX,
-                                     metrics: nil,
-                                     views: views))
+      NSLayoutConstraint.constraints(withVisualFormat:
+          "V:[flatStatic]-40-[flatDynamicM2]-40-[flatDynamicM1]", options: .alignAllCenterX,
+              metrics: nil, views: views))
   }
 
   // MARK: Private
