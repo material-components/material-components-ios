@@ -23,17 +23,8 @@
 #import "MaterialInk.h"
 #import "MaterialSnapshot.h"
 #import "supplemental/MDCBottomNavigationSnapshotTestMutableTraitCollection.h"
+#import "supplemental/MDCBottomNavigationSnapshotTestUtilities.h"
 #import "supplemental/MDCFakeBottomNavigationBar.h"
-
-static const CGFloat kWidthTypical = 360;
-static const CGFloat kHeightTypical = 56;
-static NSString *const kLongTitleLatin =
-    @"123456789012345678901234567890123456789012345678901234567890";
-static NSString *const kLongTitleArabic =
-    @"دول السيطرة استطاعوا ٣٠. مليون وفرنسا أوراقهم انه تم, نفس قد والديون العالمية. دون ما تنفّس.";
-static NSString *const kShortTitleArabic = @"ما تنفّس.";
-static NSString *const kBadgeTitleLatin = @"888+";
-static NSString *const kBadgeTitleArabic = @"أورا";
 
 @interface MDCBottomNavigationBarBlurEffectSnapshotTests : MDCSnapshotTestCase
 @property(nonatomic, strong) MDCFakeBottomNavigationBar *navigationBar;
@@ -66,7 +57,7 @@ static NSString *const kBadgeTitleArabic = @"أورا";
               image:[UIImage mdc_testImageOfSize:imageSize
                                        withStyle:MDCSnapshotTestImageStyleCheckerboard]
                 tag:2];
-  self.tabItem2.badgeValue = kBadgeTitleLatin;
+  self.tabItem2.badgeValue = MDCBottomNavigationTestBadgeTitleLatin;
   self.tabItem3 = [[UITabBarItem alloc]
       initWithTitle:@"Item 3"
               image:[UIImage mdc_testImageOfSize:imageSize
@@ -114,14 +105,18 @@ static NSString *const kBadgeTitleArabic = @"أورا";
       view.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
     }
   }
-  self.navigationBar.items[1].badgeValue = kBadgeTitleArabic;
+  self.navigationBar.items[1].badgeValue = MDCBottomNavigationTestBadgeTitleArabic;
 }
 
 - (UIView *)superviewForVisualBlurEffectWithNavigationBar:(MDCBottomNavigationBar *)navigationBar {
   UIView *barSuperview =
-      [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWidthTypical, kHeightTypical * 2)];
+      [[UIView alloc] initWithFrame:CGRectMake(0, 0, MDCBottomNavigationBarTestWidthTypical,
+                                               MDCBottomNavigationBarTestHeightTypical * 2)];
   UIColor *patternColor = [UIColor
-      colorWithPatternImage:[UIImage mdc_testImageOfSize:CGSizeMake(kWidthTypical, kWidthTypical)]];
+      colorWithPatternImage:[UIImage
+                                mdc_testImageOfSize:CGSizeMake(
+                                                        MDCBottomNavigationBarTestWidthTypical,
+                                                        MDCBottomNavigationBarTestWidthTypical)]];
   barSuperview.backgroundColor = patternColor;
   [barSuperview addSubview:navigationBar];
   return barSuperview;
@@ -130,7 +125,9 @@ static NSString *const kBadgeTitleArabic = @"أورا";
 - (void)configureNavigationBarForVisualBlurEffectTest:(MDCBottomNavigationBar *)navigationBar {
   navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   navigationBar.selectedItem = self.tabItem2;
-  navigationBar.frame = CGRectMake(0, kHeightTypical, kWidthTypical, kHeightTypical);
+  navigationBar.frame =
+      CGRectMake(0, MDCBottomNavigationBarTestHeightTypical, MDCBottomNavigationBarTestWidthTypical,
+                 MDCBottomNavigationBarTestHeightTypical);
   [self performInkTouchOnBar:navigationBar item:self.tabItem2];
 }
 
@@ -203,7 +200,8 @@ static NSString *const kBadgeTitleArabic = @"أورا";
     self.navigationBar.selectedItem = self.tabItem2;
 
     UIView *superView =
-        [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWidthTypical, kHeightTypical * 2)];
+        [[UIView alloc] initWithFrame:CGRectMake(0, 0, MDCBottomNavigationBarTestWidthTypical,
+                                                 MDCBottomNavigationBarTestHeightTypical * 2)];
     [superView addSubview:self.navigationBar];
     self.navigationBar.translatesAutoresizingMaskIntoConstraints = NO;
     [superView.bottomAnchor constraintEqualToAnchor:self.navigationBar.bottomAnchor].active = YES;
@@ -238,7 +236,8 @@ static NSString *const kBadgeTitleArabic = @"أورا";
     self.navigationBar.selectedItem = self.tabItem2;
 
     UIView *superView =
-        [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWidthTypical, kHeightTypical * 2)];
+        [[UIView alloc] initWithFrame:CGRectMake(0, 0, MDCBottomNavigationBarTestWidthTypical,
+                                                 MDCBottomNavigationBarTestHeightTypical * 2)];
     [superView addSubview:self.navigationBar];
     self.navigationBar.translatesAutoresizingMaskIntoConstraints = NO;
     [superView.bottomAnchor constraintEqualToAnchor:self.navigationBar.bottomAnchor].active = YES;
