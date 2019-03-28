@@ -12,17 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <MaterialComponents/MDCCard+Private.h>
-#import <MaterialComponents/MaterialCards.h>
+#import <UIKit/UIKit.h>
 
-/**
- This category implements the MDCCardRippleDelegate protocol to integrate Ripple and the states
- implementation that Ripple provides into the Card component. The reason for not implementing this
- code directly into the MDCCard implementation file is because Ripple is still a Beta component and
- therefore shouldn't be directly integrated into Cards, a ready component.
- */
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-@interface MDCCard (Ripple) <MDCCardRippleDelegate>
+@interface FeatureHighlightScalableDynamicTypeController : UIViewController
+
+@property(nonatomic) UIButton *featureButton;
+@property(nonatomic) UIButton *showStandardButton;
+@property(nonatomic) UIButton *showLegacyButton;
+
 @end
-#pragma clang diagnostic pop
