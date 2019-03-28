@@ -185,13 +185,15 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
 @property(nonatomic, assign) MDCShadowElevation elevation;
 
 /**
- The number of lines used for item titles.
+ The number of lines used for item titles. It is possible that long titles may cause the text to
+ extend beyond the safe area of the Bottom Navigation bar. It is recommended that short titles are
+ used before this value is changed.
 
  Defaults to 1.
 
- @note It is possible that long titles may cause the text to extend beyond the safe area of the
-       Bottom Navigation bar. It is recommended that short titles are used before this value is
-       changed.
+ @note This property has no effect if the bar items are laid-out with the image and title
+       side-by-side. This may be the case if the bar's @c alignment is
+       @c MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles.
  */
 @property(nonatomic, assign) NSInteger titlesNumberOfLines;
 
