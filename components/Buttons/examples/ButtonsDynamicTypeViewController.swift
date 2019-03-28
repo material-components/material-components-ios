@@ -25,6 +25,7 @@ class ButtonsDynamicTypeViewController: UIViewController {
       "breadcrumbs": ["Buttons", "Buttons (DynamicType)"],
       "primaryDemo": false,
       "presentable": false,
+      "debug": true, 
     ]
   }
 
@@ -48,42 +49,42 @@ class ButtonsDynamicTypeViewController: UIViewController {
     view.addSubview(flatButtonStatic)
 
     containerScheme.typographyScheme = MDCTypographyScheme.init(defaults: .material201902)
-    let flatButtonDynamicM2 = MDCButton()
-    flatButtonDynamicM2.applyContainedTheme(withScheme: containerScheme)
-    flatButtonDynamicM2.setTitleColor(titleColor, for: .normal)
-    flatButtonDynamicM2.setBackgroundColor(backgroundColor, for: .normal)
-    flatButtonDynamicM2.setTitle("Dynamic", for: UIControlState())
-    flatButtonDynamicM2.sizeToFit()
-    flatButtonDynamicM2.translatesAutoresizingMaskIntoConstraints = false
-    flatButtonDynamicM2.addTarget(self, action: #selector(tap), for: .touchUpInside)
-    flatButtonDynamicM2.mdc_adjustsFontForContentSizeCategory = true
-    view.addSubview(flatButtonDynamicM2)
+    let flatButtonDynamic = MDCButton()
+    flatButtonDynamic.applyContainedTheme(withScheme: containerScheme)
+    flatButtonDynamic.setTitleColor(titleColor, for: .normal)
+    flatButtonDynamic.setBackgroundColor(backgroundColor, for: .normal)
+    flatButtonDynamic.setTitle("Dynamic", for: UIControlState())
+    flatButtonDynamic.sizeToFit()
+    flatButtonDynamic.translatesAutoresizingMaskIntoConstraints = false
+    flatButtonDynamic.addTarget(self, action: #selector(tap), for: .touchUpInside)
+    flatButtonDynamic.mdc_adjustsFontForContentSizeCategory = true
+    view.addSubview(flatButtonDynamic)
 
     containerScheme.typographyScheme = MDCTypographyScheme.init(defaults: .material201804)
-    let flatButtonDynamicM1 = MDCButton()
-    flatButtonDynamicM1.applyContainedTheme(withScheme: containerScheme)
-    flatButtonDynamicM1.setTitleColor(titleColor, for: .normal)
-    flatButtonDynamicM1.setBackgroundColor(backgroundColor, for: .normal)
-    flatButtonDynamicM1.setTitle("Dynamic (legacy)", for: UIControlState())
-    flatButtonDynamicM1.sizeToFit()
-    flatButtonDynamicM1.translatesAutoresizingMaskIntoConstraints = false
-    flatButtonDynamicM1.addTarget(self, action: #selector(tap), for: .touchUpInside)
-    flatButtonDynamicM1.mdc_adjustsFontForContentSizeCategory = true
-    flatButtonDynamicM1.mdc_legacyFontScaling = true
-    view.addSubview(flatButtonDynamicM1)
+    let flatButtonDynamicLegacy = MDCButton()
+    flatButtonDynamicLegacy.applyContainedTheme(withScheme: containerScheme)
+    flatButtonDynamicLegacy.setTitleColor(titleColor, for: .normal)
+    flatButtonDynamicLegacy.setBackgroundColor(backgroundColor, for: .normal)
+    flatButtonDynamicLegacy.setTitle("Dynamic (legacy)", for: UIControlState())
+    flatButtonDynamicLegacy.sizeToFit()
+    flatButtonDynamicLegacy.translatesAutoresizingMaskIntoConstraints = false
+    flatButtonDynamicLegacy.addTarget(self, action: #selector(tap), for: .touchUpInside)
+    flatButtonDynamicLegacy.mdc_adjustsFontForContentSizeCategory = true
+    flatButtonDynamicLegacy.mdc_legacyFontScaling = true
+    view.addSubview(flatButtonDynamicLegacy)
 
     let views = [
       "flatStatic": flatButtonStatic,
-      "flatDynamicM2": flatButtonDynamicM2,
-      "flatDynamicM1": flatButtonDynamicM1,
+      "flatDynamic": flatButtonDynamic,
+      "flatDynamicLegacy": flatButtonDynamicLegacy,
     ]
 
-    centerView(view: flatButtonDynamicM2, onView: self.view)
+    centerView(view: flatButtonDynamic, onView: self.view)
 
     view.addConstraints(
       NSLayoutConstraint.constraints(withVisualFormat:
-          "V:[flatStatic]-40-[flatDynamicM2]-40-[flatDynamicM1]", options: .alignAllCenterX,
-              metrics: nil, views: views))
+          "V:[flatStatic]-40-[flatDynamic]-40-[flatDynamicLegacy]",
+              options: .alignAllCenterX, metrics: nil, views: views))
   }
 
   // MARK: Private
