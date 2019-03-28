@@ -234,6 +234,26 @@ static const CGFloat kContentHorizontalMargin = 12;
   [self generateAndVerifySnapshot];
 }
 
+- (void)testTypicalWidthTypicalHeightLongTitleManyLinesSingleBadgeStackedLTR {
+  // When
+  self.itemView.titleNumberOfLines = 0;
+  self.itemView.titleBelowIcon = YES;
+  self.itemView.badgeValue = kBadgeTitleSingleLatin;
+  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testTypicalWidthTypicalHeightLongTitleManyLinesSingleBadgeStackedRTL {
+  // When
+  self.itemView.titleNumberOfLines = 0;
+  [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleSingleArabic];
+  self.itemView.titleBelowIcon = YES;
+  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+
+  [self generateAndVerifySnapshot];
+}
+
 - (void)testTypicalWidthTypicalHeightLongTitleMaxBadgeAdjacentLTR {
   // When
   self.itemView.titleBelowIcon = NO;
@@ -245,6 +265,26 @@ static const CGFloat kContentHorizontalMargin = 12;
 
 - (void)testTypicalWidthTypicalHeightLongTitleMaxBadgeAdjacentRTL {
   // When
+  [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleMaxArabic];
+  self.itemView.titleBelowIcon = NO;
+  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testTypicalWidthTypicalHeightLongTitleManyLinesMaxBadgeAdjacentLTR {
+  // When
+  self.itemView.titleNumberOfLines = 0;
+  self.itemView.titleBelowIcon = NO;
+  self.itemView.badgeValue = kBadgeTitleMaxLatin;
+  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testTypicalWidthTypicalHeightLongTitleManyLinesMaxBadgeAdjacentRTL {
+  // When
+  self.itemView.titleNumberOfLines = 0;
   [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleMaxArabic];
   self.itemView.titleBelowIcon = NO;
   self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
