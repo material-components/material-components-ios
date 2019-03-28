@@ -819,7 +819,12 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
   if (_mdc_adjustsFontForContentSizeCategory) {
     // Dynamic type is enabled so apply scaling
-    font = [font mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleButton scaledForDynamicType:YES];
+    if (font.mdc_scalingCurve && !_mdc_legacyFontScaling) {
+      font = [font mdc_scaledFontForCurrentSizeCategory];
+    } else {
+      font = [font mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleButton
+                                scaledForDynamicType:YES];
+    }
   }
 
   self.titleLabel.font = font;
