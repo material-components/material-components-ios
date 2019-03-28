@@ -46,7 +46,7 @@ static NSString *const kBadgeTitleArabic = @"أورا";
 @property(nonatomic, strong) UITabBarItem *tabItem2;
 @property(nonatomic, strong) UITabBarItem *tabItem3;
 @property(nonatomic, strong) UITabBarItem *tabItem4;
-@property(nonatomic, strong) UITabBarItem *tabItem5;/Users/rsmoore/git/material-components-ios/components/BottomNavigation/tests/snapshot/MDCBottomNavigationBarSnapshotTests.m
+@property(nonatomic, strong) UITabBarItem *tabItem5;
 @end
 
 @implementation MDCBottomNavigationBarSnapshotTests
