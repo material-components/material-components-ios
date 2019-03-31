@@ -96,7 +96,7 @@
 }
 
 - (NSString *)mdc_extendedDescription {
-  NSMutableString *extendedDescription = [[NSMutableString alloc] init];
+  NSMutableString *extendedDescription = [[super description] mutableCopy];
   [extendedDescription appendFormat:@"%@ : ", self.fontName];
   [extendedDescription appendFormat:@"%@ : ", self.familyName];
   [extendedDescription appendFormat:@"%.1f pt : ", self.pointSize];

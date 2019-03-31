@@ -74,7 +74,6 @@ mdc_objc_library(
     deps = [
         ":Typography",
         ":private",
-        "//components/schemes/Typography",
     ],
 )
 

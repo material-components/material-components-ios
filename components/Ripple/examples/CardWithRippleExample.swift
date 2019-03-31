@@ -14,7 +14,6 @@
 
 import UIKit
 import MaterialComponents.MaterialButtons_ButtonThemer
-import MaterialComponents.MaterialCards_Private
 import MaterialComponentsBeta.MaterialCards_Theming
 import MaterialComponentsBeta.MaterialContainerScheme
 import MaterialComponentsBeta.MaterialButtons_Theming
@@ -26,7 +25,7 @@ class CardWithRippleExample: UIViewController {
   var containerScheme: MDCContainerScheming
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-    card.enableBetaBehavior = true
+    card.enableRippleBehavior = true
     containerScheme = MDCContainerScheme()
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }

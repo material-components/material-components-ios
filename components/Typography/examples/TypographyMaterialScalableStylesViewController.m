@@ -12,10 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "TypographyMaterialScalableStylesViewController.h"
-
 #import "MaterialTypography.h"
 #import "MaterialTypographyScheme.h"
+
+@interface TypographyMaterialScalableStyleViewController : UITableViewController
+@end
 
 @implementation TypographyMaterialScalableStyleViewController {
   NSArray<NSString *> *_strings;
@@ -32,10 +33,33 @@
   self.tableView.rowHeight = UITableViewAutomaticDimension;
   self.tableView.estimatedRowHeight = 50.0;
 
+  [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
+
   _strings = @[
     @"Material Design Components", @"A quick brown fox jumped over the lazy dog.",
     @"ABCDEFGHIJKLMNOPQRSTUVWXYZ", @"abcdefghijklmnopqrstuvwxyz", @"1234567890",
     @"!@#$%^&*()-=_+[]\\;',./<>?:\""
+  ];
+
+  _typography =
+      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+
+  // The following two dictionaries must match UIFont <> Font Name (String)
+
+  _styleFonts = @[
+    _typography.body1,     [_typography.body1 mdc_scaledFontForCurrentSizeCategory],
+    _typography.body2,     [_typography.body2 mdc_scaledFontForCurrentSizeCategory],
+    _typography.caption,   [_typography.caption mdc_scaledFontForCurrentSizeCategory],
+    _typography.button,    [_typography.button mdc_scaledFontForCurrentSizeCategory],
+    _typography.overline,  [_typography.overline mdc_scaledFontForCurrentSizeCategory],
+    _typography.subtitle1, [_typography.subtitle1 mdc_scaledFontForCurrentSizeCategory],
+    _typography.subtitle2, [_typography.subtitle2 mdc_scaledFontForCurrentSizeCategory],
+    _typography.headline1, [_typography.headline1 mdc_scaledFontForCurrentSizeCategory],
+    _typography.headline2, [_typography.headline2 mdc_scaledFontForCurrentSizeCategory],
+    _typography.headline3, [_typography.headline3 mdc_scaledFontForCurrentSizeCategory],
+    _typography.headline4, [_typography.headline4 mdc_scaledFontForCurrentSizeCategory],
+    _typography.headline5, [_typography.headline5 mdc_scaledFontForCurrentSizeCategory],
+    _typography.headline6, [_typography.headline6 mdc_scaledFontForCurrentSizeCategory],
   ];
 
   _styleNames = @[
@@ -47,38 +71,6 @@
     @"Headline2", @"Headline2 (Scalable)", @"Headline3", @"Headline3 (Scalable)",
     @"Headline4", @"Headline4 (Scalable)", @"Headline5", @"Headline5 (Scalable)",
     @"Headline6", @"Headline6 (Scalable)",
-  ];
-
-  _typography =
-      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
-
-  _styleFonts = @[
-    [_typography.body1 mdc_scaledFontAtDefaultSize],
-    [_typography.body1 mdc_scaledFontForCurrentSizeCategory],
-    [_typography.body2 mdc_scaledFontAtDefaultSize],
-    [_typography.body2 mdc_scaledFontForCurrentSizeCategory],
-    [_typography.caption mdc_scaledFontAtDefaultSize],
-    [_typography.caption mdc_scaledFontForCurrentSizeCategory],
-    [_typography.button mdc_scaledFontAtDefaultSize],
-    [_typography.button mdc_scaledFontForCurrentSizeCategory],
-    [_typography.overline mdc_scaledFontAtDefaultSize],
-    [_typography.overline mdc_scaledFontForCurrentSizeCategory],
-    [_typography.subtitle1 mdc_scaledFontAtDefaultSize],
-    [_typography.subtitle1 mdc_scaledFontForCurrentSizeCategory],
-    [_typography.subtitle2 mdc_scaledFontAtDefaultSize],
-    [_typography.subtitle2 mdc_scaledFontForCurrentSizeCategory],
-    [_typography.headline1 mdc_scaledFontAtDefaultSize],
-    [_typography.headline1 mdc_scaledFontForCurrentSizeCategory],
-    [_typography.headline2 mdc_scaledFontAtDefaultSize],
-    [_typography.headline2 mdc_scaledFontForCurrentSizeCategory],
-    [_typography.headline3 mdc_scaledFontAtDefaultSize],
-    [_typography.headline3 mdc_scaledFontForCurrentSizeCategory],
-    [_typography.headline4 mdc_scaledFontAtDefaultSize],
-    [_typography.headline4 mdc_scaledFontForCurrentSizeCategory],
-    [_typography.headline5 mdc_scaledFontAtDefaultSize],
-    [_typography.headline5 mdc_scaledFontForCurrentSizeCategory],
-    [_typography.headline6 mdc_scaledFontAtDefaultSize],
-    [_typography.headline6 mdc_scaledFontForCurrentSizeCategory],
   ];
 
   [[NSNotificationCenter defaultCenter] addObserver:self
@@ -93,32 +85,19 @@
 
   // Update font array to reflect new size category
   _styleFonts = @[
-    [_typography.body1 mdc_scaledFontAtDefaultSize],
-    [_typography.body1 mdc_scaledFontForCurrentSizeCategory],
-    [_typography.body2 mdc_scaledFontAtDefaultSize],
-    [_typography.body2 mdc_scaledFontForCurrentSizeCategory],
-    [_typography.caption mdc_scaledFontAtDefaultSize],
-    [_typography.caption mdc_scaledFontForCurrentSizeCategory],
-    [_typography.button mdc_scaledFontAtDefaultSize],
-    [_typography.button mdc_scaledFontForCurrentSizeCategory],
-    [_typography.overline mdc_scaledFontAtDefaultSize],
-    [_typography.overline mdc_scaledFontForCurrentSizeCategory],
-    [_typography.subtitle1 mdc_scaledFontAtDefaultSize],
-    [_typography.subtitle1 mdc_scaledFontForCurrentSizeCategory],
-    [_typography.subtitle2 mdc_scaledFontAtDefaultSize],
-    [_typography.subtitle2 mdc_scaledFontForCurrentSizeCategory],
-    [_typography.headline1 mdc_scaledFontAtDefaultSize],
-    [_typography.headline1 mdc_scaledFontForCurrentSizeCategory],
-    [_typography.headline2 mdc_scaledFontAtDefaultSize],
-    [_typography.headline2 mdc_scaledFontForCurrentSizeCategory],
-    [_typography.headline3 mdc_scaledFontAtDefaultSize],
-    [_typography.headline3 mdc_scaledFontForCurrentSizeCategory],
-    [_typography.headline4 mdc_scaledFontAtDefaultSize],
-    [_typography.headline4 mdc_scaledFontForCurrentSizeCategory],
-    [_typography.headline5 mdc_scaledFontAtDefaultSize],
-    [_typography.headline5 mdc_scaledFontForCurrentSizeCategory],
-    [_typography.headline6 mdc_scaledFontAtDefaultSize],
-    [_typography.headline6 mdc_scaledFontForCurrentSizeCategory],
+    _typography.body1,     [_typography.body1 mdc_scaledFontForCurrentSizeCategory],
+    _typography.body2,     [_typography.body2 mdc_scaledFontForCurrentSizeCategory],
+    _typography.caption,   [_typography.caption mdc_scaledFontForCurrentSizeCategory],
+    _typography.button,    [_typography.button mdc_scaledFontForCurrentSizeCategory],
+    _typography.overline,  [_typography.overline mdc_scaledFontForCurrentSizeCategory],
+    _typography.subtitle1, [_typography.subtitle1 mdc_scaledFontForCurrentSizeCategory],
+    _typography.subtitle2, [_typography.subtitle2 mdc_scaledFontForCurrentSizeCategory],
+    _typography.headline1, [_typography.headline1 mdc_scaledFontForCurrentSizeCategory],
+    _typography.headline2, [_typography.headline2 mdc_scaledFontForCurrentSizeCategory],
+    _typography.headline3, [_typography.headline3 mdc_scaledFontForCurrentSizeCategory],
+    _typography.headline4, [_typography.headline4 mdc_scaledFontForCurrentSizeCategory],
+    _typography.headline5, [_typography.headline5 mdc_scaledFontForCurrentSizeCategory],
+    _typography.headline6, [_typography.headline6 mdc_scaledFontForCurrentSizeCategory],
   ];
 
   [self.tableView reloadData];
@@ -137,10 +116,6 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"cell"];
-  if (cell == nil) {
-    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle
-                                  reuseIdentifier:@"cell"];
-  }
   cell.textLabel.text = _strings[indexPath.section];
   cell.textLabel.font = _styleFonts[indexPath.row];
   cell.textLabel.numberOfLines = 0;
@@ -153,7 +128,7 @@
   NSString *detail = [NSString
       stringWithFormat:@"%@ @ %.0f pt", _styleNames[indexPath.row], cell.textLabel.font.pointSize];
   cell.detailTextLabel.text = detail;
-  cell.detailTextLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
+  cell.detailTextLabel.font = [_typography.caption mdc_scaledFontAtDefaultSize];
 
   cell.selectionStyle = UITableViewCellSelectionStyleNone;
 

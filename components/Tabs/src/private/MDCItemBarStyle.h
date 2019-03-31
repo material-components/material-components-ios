@@ -68,6 +68,9 @@
 /** Font used for unselected item titles. */
 @property(nonatomic, strong, nonnull) UIFont *unselectedTitleFont;
 
+/** Color of the item bar badge. */
+@property(nonatomic, copy, nonnull) UIColor *badgeColor;
+
 /** Style of ink animations on item interaction. */
 @property(nonatomic) MDCInkStyle inkStyle;
 

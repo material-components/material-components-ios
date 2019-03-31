@@ -19,12 +19,19 @@
 @interface UIFont (MaterialScalable)
 
 /**
- An associated scaling curve that is a dictionary that maps UISizeCategory to fontsize
- A curve must include a complete set of size categories, from UIContentSizeCategoryExtraSmall to
- UIContentSizeCategoryExtraExtraExtraLarge AND all UIContentSizeCategoryAccessibility categories.
- Note that this curve MUST be immutable as it is retained, not copied.
+ An associated scaling curve that can be used to create resized versions of the font based on a
+ UIContentSizeCategory.
+
+ An associated scaling curve that is a dictionary that maps UISizeCategory to fontsize.
+ The dictionary keys MUST include a complete set of size categories, from
+ UIContentSizeCategoryExtraSmall to UIContentSizeCategoryExtraExtraExtraLarge AND all
+ UIContentSizeCategoryAccessibility categories.
+
+ The dictionary values are the desired pointSize stored as a CGFloat wrapped in an NSNumber.
+
+ Generally, clients will use MDCFontScaler to attach particular scaling curves to a font.
  */
-@property(nonatomic, strong, nullable, setter=mdc_setScalingCurve:)
+@property(nonatomic, copy, nullable, setter=mdc_setScalingCurve:)
     NSDictionary<UIContentSizeCategory, NSNumber *> *mdc_scalingCurve;
 
 /**
@@ -54,13 +61,5 @@
  @return Font sized for UIContentSizeCategoryLarge OR self if there is no associated curve
  */
 - (nonnull UIFont *)mdc_scaledFontAtDefaultSize;
-
-/**
- Scales an arbitrary value based on the current Dynamic Type settings and the scaling curve.
-
- @param value The original layout value.
- @return A value that has been scaled based on the
- */
-- (CGFloat)scaledValueForValue:(CGFloat)value;
 
 @end

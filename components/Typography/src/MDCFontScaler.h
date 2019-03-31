@@ -14,29 +14,33 @@
 
 #import <UIKit/UIKit.h>
 
-// Material's text styles, which are similar, but not quite equivalent to Apple's UIFontTextStyle.
+/**
+ Set of constants that describe Material's text styles.
+
+ These are similar, but not quite equivalent, to Apple's UIFontTextStyle.
+ */
 typedef NSString *_Nonnull MDCTextStyle NS_TYPED_EXTENSIBLE_ENUM;
 
-extern MDCTextStyle MDCTextStyleHeadline1;
-extern MDCTextStyle MDCTextStyleHeadline2;
-extern MDCTextStyle MDCTextStyleHeadline3;
-extern MDCTextStyle MDCTextStyleHeadline4;
-extern MDCTextStyle MDCTextStyleHeadline5;
-extern MDCTextStyle MDCTextStyleHeadline6;
-extern MDCTextStyle MDCTextStyleSubtitle1;
-extern MDCTextStyle MDCTextStyleSubtitle2;
-extern MDCTextStyle MDCTextStyleBody1;
-extern MDCTextStyle MDCTextStyleBody2;
-extern MDCTextStyle MDCTextStyleButton;
-extern MDCTextStyle MDCTextStyleCaption;
-extern MDCTextStyle MDCTextStyleOverline;
+UIKIT_EXTERN MDCTextStyle const MDCTextStyleHeadline1;
+UIKIT_EXTERN MDCTextStyle const MDCTextStyleHeadline2;
+UIKIT_EXTERN MDCTextStyle const MDCTextStyleHeadline3;
+UIKIT_EXTERN MDCTextStyle const MDCTextStyleHeadline4;
+UIKIT_EXTERN MDCTextStyle const MDCTextStyleHeadline5;
+UIKIT_EXTERN MDCTextStyle const MDCTextStyleHeadline6;
+UIKIT_EXTERN MDCTextStyle const MDCTextStyleSubtitle1;
+UIKIT_EXTERN MDCTextStyle const MDCTextStyleSubtitle2;
+UIKIT_EXTERN MDCTextStyle const MDCTextStyleBody1;
+UIKIT_EXTERN MDCTextStyle const MDCTextStyleBody2;
+UIKIT_EXTERN MDCTextStyle const MDCTextStyleButton;
+UIKIT_EXTERN MDCTextStyle const MDCTextStyleCaption;
+UIKIT_EXTERN MDCTextStyle const MDCTextStyleOverline;
 
 /**
  MDCFontScaler attaches a scaling curve to a UIFont via an associated object on that font instance.
 
  Instances of fonts processed through MDCFontScaler will have an associated dictionary that maps
- UIFontTextStyle to Font Size.  Category methods on UIFont allow clients to get instances of
- resized fonts based on this associated dictionary.  Note that an instance of MDCFontScaler is
+ UIFontTextStyle to Font Size. Category methods on UIFont allow clients to get instances of
+ resized fonts based on this associated dictionary. Note that an instance of MDCFontScaler is
  NOT attached to the processed font.
 
  This interface is similar to UIFontMetrics, but the fonts returned from MDCFontScaler do *not*
@@ -48,16 +52,16 @@ extern MDCTextStyle MDCTextStyleOverline;
  Initializes a font scaler object with the specified text style.
 
  @param textStyle The style that will be used to determine the scaling curver associated with the
-   returned font.  For example, MaterialTextStyleBody1.
+   returned font. For example, MaterialTextStyleBody1.
  @return An initialized font scaler object.
  */
-- (nonnull instancetype)initForMaterialTextStyle:(MDCTextStyle)textStyle;
+- (nonnull instancetype)initForMaterialTextStyle:(MDCTextStyle)textStyle NS_DESIGNATED_INITIALIZER;
 
 /**
  Creates and returns a font scaler object with the specified text style.
 
  @param textStyle The style that will be used to determine the scaling curver associated with the
- returned font.  For example, MaterialTextStyleBody1.
+ returned font. For example, MaterialTextStyleBody1.
  @return An initialized font scaler object.
  */
 + (nonnull instancetype)scalerForMaterialTextStyle:(MDCTextStyle)textStyle;
@@ -71,6 +75,21 @@ extern MDCTextStyle MDCTextStyleOverline;
  @return An instance of the specified font with an associated scaling curve, and scaled to the
    current Dynamic Type setting.
  */
-- (nonnull UIFont *)scalableFontWithFont:(nonnull UIFont *)font;
+- (nonnull UIFont *)scaledFontWithFont:(nonnull UIFont *)font;
+
+/**
+ Scales an arbitrary value based on the current Dynamic Type settings and the scaling curve.
+
+ This method calculates the current scale factor and multiplies it by the given value.
+
+ As an example, assume the metrics value for @c .Large is 12 and the current @c
+ UIContentCategorySize is
+ @c .ExtraLarge with a metrics value of 24.  When passed a @c value of 10, expect a return
+ value of 20.
+
+ @param value The original layout value.
+ @return A value that has been scaled based on the attached scaling curve
+ */
+- (CGFloat)scaledValueForValue:(CGFloat)value;
 
 @end

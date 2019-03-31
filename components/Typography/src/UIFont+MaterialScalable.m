@@ -17,11 +17,11 @@
 #import <objc/runtime.h>
 
 #import "MDCTypography.h"
-#import "UIApplication+AppExtensions.h"
+#import "private/MDCTypographyUtilities.h"
 
 static char MDCFontScaleObjectKey;
 
-@implementation UIFont (MaterialTypography)
+@implementation UIFont (MaterialScalable)
 
 - (UIFont *)mdc_scaledFontForSizeCategory:(UIContentSizeCategory)sizeCategory {
   if (!self.mdc_scalingCurve) {
@@ -39,25 +39,16 @@ static char MDCFontScaleObjectKey;
   }
 
   CGFloat fontSize = (CGFloat)fontSizeNumber.doubleValue;
+
+  // Guard against broken scaling curves encoded with 0.0 or negative values
+  if (fontSize <= 0.0) {
+    return self;
+  }
+
   UIFont *scaledFont = [UIFont fontWithDescriptor:self.fontDescriptor size:fontSize];
   scaledFont.mdc_scalingCurve = self.mdc_scalingCurve;
 
   return scaledFont;
-}
-
-/**
- @return Device's current UIContentSizeCategory or UIContentSizeCategoryLarge
-     if we are unable to query the device due to being in an extension.
- */
-static UIContentSizeCategory GetCurrentSizeCategory(void) {
-  UIContentSizeCategory sizeCategory = UIContentSizeCategoryLarge;
-  if ([UIApplication mdc_safeSharedApplication]) {
-    sizeCategory = [UIApplication mdc_safeSharedApplication].preferredContentSizeCategory;
-  } else if (@available(iOS 10.0, *)) {
-    sizeCategory = UIScreen.mainScreen.traitCollection.preferredContentSizeCategory;
-  }
-
-  return sizeCategory;
 }
 
 - (UIFont *)mdc_scaledFontForCurrentSizeCategory {
@@ -68,30 +59,6 @@ static UIContentSizeCategory GetCurrentSizeCategory(void) {
 
 - (nonnull UIFont *)mdc_scaledFontAtDefaultSize {
   return [self mdc_scaledFontForSizeCategory:UIContentSizeCategoryLarge];
-}
-
-- (CGFloat)scaledValueForValue:(CGFloat)value {
-  UIContentSizeCategory defaultSizeCategory = UIContentSizeCategoryLarge;
-  UIContentSizeCategory currentSizeCategory = GetCurrentSizeCategory();
-
-  NSNumber *defaultFontSizeNumber = self.mdc_scalingCurve[defaultSizeCategory];
-
-  NSNumber *currentFontSizeNumber = self.mdc_scalingCurve[currentSizeCategory];
-  // Guard against broken / incomplete scaling curves by returning self if fontSizeNumber is nil.
-  if (currentFontSizeNumber == nil || defaultFontSizeNumber == nil) {
-    return value;
-  }
-
-  CGFloat currentFontSize = (CGFloat)currentFontSizeNumber.doubleValue;
-  CGFloat defaultFontSize = (CGFloat)currentFontSizeNumber.doubleValue;
-
-  // Guard against broken / incomplete scaling curves by returning original value if the
-  // fontSize <= 0.0.
-  if (currentFontSize <= 0.0 || defaultFontSize <= 0.0) {
-    return value;
-  }
-
-  return currentFontSize / defaultFontSize;
 }
 
 - (NSDictionary<UIContentSizeCategory, NSNumber *> *)mdc_scalingCurve {

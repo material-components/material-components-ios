@@ -1,3 +1,455 @@
+# 80.0.0
+
+This major release introduces Dynamic Type support for Typography Schemes as well as
+UIFontMetrics-like support for Dynamic Type for Material Typography. It also includes snapshot tests
+for additional components and less-restrictive badging for Tabs.
+
+## Breaking changes
+
+`MDCTypographyScheming` has a new non-optional API, `mdc_adjustsFontForContentSizeCategory` that is
+`YES` if the returned fonts should use the new Dynamic Type APIs available from Material Typography.
+Existing implementations may wish to migrate (at least initially) by returning `NO` as a read-only
+value until support can be added.
+
+```objc
+- (void)mdc_adjustsFontForContentSizeCategory {
+  return NO;
+}
+```
+
+```swift
+public var mdc_adjustsFontForContentSizeCategory: Bool {
+  return false;
+}
+```
+
+## New features
+
+### Improved Dynamic Type Support
+
+The Typography and TypographyScheme components have been updated for improved Dynamic Type support.
+Most clients will make use of this support through MDCTypographyScheme, though it is possible
+to create scalable fonts manually via MDCFontScaler within Typography.  The new scaling curves have
+been updated for last year's refresh of Material Design typography and font values.
+
+#### Objective-C
+
+```objc
+// Typography Scheme is the most typical way to receive scalable fonts.
+MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+UIFont *scaledBody1Font = [typographyScheme.body1 mdc_scaledFontForCurrentSizeCategory];
+
+// If Typography Schemes aren't used, it's possible to create the fonts manually.
+// Initial set-up to apply scaling curves to a base UIFont.
+UIFont *baseFont = [UIFont systemFontOfSize:18.0];
+MDCFontScaler *body2Scaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleBody2];
+UIFont *scalableFont = [body2Scaler scaledFontWithFont:baseFont];
+
+// Now UIFonts appropriate for Dynamic Type size categories can be created anywhere.
+UIFont *baseFontScaledToDefault = [scalableFont mdc_scaledFontAtDefaultSize];
+UIFont *baseFontScaledForExtraLarge = [scalableFont mdc_scaledFontForSizeCategory:UIContentSizeCategoryExtraLarge];
+UIFont *baseFontScaledForCurrentSizeCategory = [scalableFont mdc_scaledFontForCurrentSizeCategory];
+
+```
+
+#### Swift
+
+```swift
+// Typography Scheme is the most typical way to receive scalable fonts.
+let typographyScheme = MDCTypographyScheme(defaults: .material201902)
+let scaledBody1Font = typographyScheme.body1.mdc_scaledFontForCurrentSizeCategory()
+
+// If Typography Schemes aren't used, it's possible to create the fonts manually.
+// Initial set-up to apply scaling curves to a base UIFont.
+let baseFont = UIFont.systemFont(ofSize: 18)
+let body2Scaler = MDCFontScaler(forMaterialTextStyle: .body2)
+let scalableFont = body2Scaler.scaledFont(with: baseFont)
+
+// Now UIFonts appropriate for Dynamic Type size categories can be created anywhere.
+let baseFontScaledToDefault = scalableFont.mdc_scaledFontAtDefaultSize()
+let baseFontScaledForExtraLarge = scalableFont.mdc_scaledFont(forSizeCategory: .extraLarge)
+let baseFontScaledForCurrentSizeCategory = scalableFont.mdc_scaledFontForCurrentSizeCategory()
+```
+
+## API changes
+
+### Typography
+
+#### MDCTextStyleButton
+
+*new* constant: `MDCTextStyleButton`
+
+#### MDCTextStyleCaption
+
+*new* constant: `MDCTextStyleCaption`
+
+#### MDCTextStyleSubtitle2
+
+*new* constant: `MDCTextStyleSubtitle2`
+
+#### MDCTextStyleSubtitle1
+
+*new* constant: `MDCTextStyleSubtitle1`
+
+#### MDCTextStyleBody1
+
+*new* constant: `MDCTextStyleBody1`
+
+#### UIFont(MaterialScalable)
+
+*new* method: `-mdc_scaledFontForCurrentSizeCategory` in `UIFont(MaterialScalable)`
+
+*new* method: `-mdc_scaledFontAtDefaultSize` in `UIFont(MaterialScalable)`
+
+*new* method: `-mdc_scaledFontForSizeCategory:` in `UIFont(MaterialScalable)`
+
+*new* category: `UIFont(MaterialScalable)`
+
+*new* property: `mdc_scalingCurve` in `UIFont(MaterialScalable)`
+
+#### MDCFontScaler
+
+*new* class method: `+scalerForMaterialTextStyle:` in `MDCFontScaler`
+
+*new* method: `-scaledValueForValue:` in `MDCFontScaler`
+
+*new* class: `MDCFontScaler`
+
+*new* method: `-init` in `MDCFontScaler`
+
+*new* method: `-initForMaterialTextStyle:` in `MDCFontScaler`
+
+*new* method: `-scaledFontWithFont:` in `MDCFontScaler`
+
+#### MDCTextStyleHeadline4
+
+*new* constant: `MDCTextStyleHeadline4`
+
+#### MDCTextStyleHeadline3
+
+*new* constant: `MDCTextStyleHeadline3`
+
+#### MDCTextStyleHeadline2
+
+*new* constant: `MDCTextStyleHeadline2`
+
+#### MDCTextStyleHeadline6
+
+*new* constant: `MDCTextStyleHeadline6`
+
+#### MDCTextStyleBody2
+
+*new* constant: `MDCTextStyleBody2`
+
+#### MDCTextStyle
+
+*new* typedef: `MDCTextStyle`
+
+#### MDCTextStyleOverline
+
+*new* constant: `MDCTextStyleOverline`
+
+#### MDCTextStyleHeadline1
+
+*new* constant: `MDCTextStyleHeadline1`
+
+#### MDCTextStyleHeadline5
+
+*new* constant: `MDCTextStyleHeadline5`
+
+### TypographyScheme
+
+#### MDCTypographySchemeDefaults
+
+*new* enum value: `MDCTypographySchemeDefaultsMaterial201902` in `MDCTypographySchemeDefaults`
+
+#### MDCTypographyScheme
+
+*new* property: `mdc_adjustsFontForContentSizeCategory` in `MDCTypographyScheme`
+
+#### MDCTypographyScheming
+
+*new* property: `mdc_adjustsFontForContentSizeCategory` in `MDCTypographyScheming`
+
+## Component changes
+
+## Changes
+
+### ActivityIndicator
+
+* [Deflake snapshot tests. (#6934)](https://github.com/material-components/material-components-ios/commit/63f0da31e5eb9cb98c7e342a0838c796a4620fc6) (Robert Moore)
+
+### AppBar
+
+* [Fix README code snippet (#6969)](https://github.com/material-components/material-components-ios/commit/b62e576b9c844be60d84f22207d2c41f0bb6a517) (Robert Moore)
+* [Refactor AppBar example table views (#6974)](https://github.com/material-components/material-components-ios/commit/b03820da60a136388993e8422f5523aec718f31c) (Brian Moore)
+
+### Buttons
+
+* [Fix `accessibilityTraits` in init. (#6948)](https://github.com/material-components/material-components-ios/commit/89858253e246652b94a58dfefe94971cee9b1140) (Robert Moore)
+
+### HeaderStackView
+
+* [Add basic Snapshot tests. (#6923)](https://github.com/material-components/material-components-ios/commit/02b52f29c437e3bf4208cc3fd0091d07f92b9121) (Robert Moore)
+
+### Ripple
+
+* [Remove manipulation of clipping for the ripple's superview (#6977)](https://github.com/material-components/material-components-ios/commit/d332652b7566c90695972fbca3949aedebbe819c) (Yarden Eitan)
+
+### ShapeLibrary
+
+* [Add basic Snapshot tests. (#6918)](https://github.com/material-components/material-components-ios/commit/d61d1b2ff8c5c052faa6c0a456637231b8f4b1fc) (Robert Moore)
+
+### Shapes
+
+* [Add basic Snapshot tests. (#6919)](https://github.com/material-components/material-components-ios/commit/ac4b4eafcdd8a6e87336737d349c0bb499770ac5) (Robert Moore)
+
+### Tabs
+
+* [Do not truncate badge text on MDCItemBarCell (#6916)](https://github.com/material-components/material-components-ios/commit/c4d823362e016061725dc5ebdf5b4a4970aaa6b0) (Andrew Overton)
+
+### Typography
+
+* [Add Font Scaler (#6871)](https://github.com/material-components/material-components-ios/commit/80db06984b36d5e00028a4016f05b136004f7540) (ianegordon)
+
+### schemes/Typography
+
+* [Add new typography scheme with scalable fonts (#6873)](https://github.com/material-components/material-components-ios/commit/96a741b3150ae583968e32c6ac096113e75af0de) (ianegordon)
+
+---
+
+# 79.3.0
+
+This minor release fixes a bug in MDCButton's `accessibilityTraits` value. A recent change introduced
+a bug that disabled the default behavior of `accessibilityTraits` and so they would not
+automatically be updated when the button was disabled.
+
+## Changes
+
+### Buttons
+
+* [Fix `accessibilityTraits` in init. (#6948)](https://github.com/material-components/material-components-ios/commit/f8ffee0ad992930e94e39155a6848546a4284d58) (Robert Moore)
+
+---
+
+# 79.2.0
+
+This minor release introduces a bug fix and new API to Flexible Header, Beta Theming Extensions for
+App Bar and Text Fields, and additional component snapshot tests.
+
+## New features
+
+MDCFlexibleHeaderView has a new API that can be called from UIScrollViewDelegates to notify it of
+updated adjusted content inset values.
+
+```swift
+func scrollViewDidChangeAdjustedContentInset(_ scrollView: UIScrollView) {
+    if #available(iOS 11.0, *) {
+      self.appBarViewController.headerView.trackingScrollDidChangeAdjustedContentInset(scrollView)
+    }
+  }
+```
+
+```objc
+- (void)scrollViewDidChangeAdjustedContentInset:(UIScrollView *)scrollView {
+  if (@available(iOS 11.0, *)) {
+    [self.appBarViewController.headerView
+        trackingScrollViewDidChangeAdjustedContentInset:scrollView];
+  }
+}
+```
+
+## API changes
+
+### AppBar+MaterialTheming
+
+**New extension.**
+
+### FlexibleHeader
+
+#### MDCFlexibleHeaderView
+
+*new* method: `-trackingScrollViewDidChangeAdjustedContentInset:` in `MDCFlexibleHeaderView`
+
+#### MDCFlexibleHeaderView()
+
+*new* category: `MDCFlexibleHeaderView()`
+
+*removed* category: `MDCFlexibleHeaderView()`
+
+*modified* property: `contentView` in `MDCFlexibleHeaderView()`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(ext)MDCFlexibleHeaderView@MDCFlexibleHeaderView.h@14987` |
+| To: | `c:objc(ext)MDCFlexibleHeaderView@MDCFlexibleHeaderView.h@15448` |
+
+### TextFields+Theming
+
+**New extension.**
+
+
+## Changes
+
+### ActionSheet
+
+* [Add basic Snapshot tests. (#6917)](https://github.com/material-components/material-components-ios/commit/a77ea5cd483b76374d4ee486f7d9f56bf414bd86) (Robert Moore)
+
+### AppBar
+
+* [Add theming extension for MDCAppBarViewController (#6903)](https://github.com/material-components/material-components-ios/commit/61e6c07f6a46f7e10cc68e3ea79ae2b66d890487) (Robert Moore)
+
+### BottomNavigation
+
+* [Fix image updates in ItemView (#6847)](https://github.com/material-components/material-components-ios/commit/5d699448d177b979003a73651ee3d96f9e4f324c) (Robert Moore)
+* [More snapshots for item icons. (#6855)](https://github.com/material-components/material-components-ios/commit/8ec03eba0523b08a9cdc60817a93cacce82c6469) (Robert Moore)
+* [Restore examples titles. (#6869)](https://github.com/material-components/material-components-ios/commit/0c51470c5b35c14596e4855f23786c7d19ad466e) (Robert Moore)
+* [Snapshot test for selection bug (#6843)](https://github.com/material-components/material-components-ios/commit/f8e7a0aa46d5e88eacfaec242d0b7bafa3ea1058) (Robert Moore)
+* [Split alignment snapshot tests. (#6856)](https://github.com/material-components/material-components-ios/commit/7e5c5eec22ffd138f5db4225a9d0d3cbfebc29f4) (Robert Moore)
+* [Use new test icons. (#6898)](https://github.com/material-components/material-components-ios/commit/b9151ecb2b35818dfb02f2f5c9f03d5bbf6be88f) (Robert Moore)
+
+### FlexibleHeader
+
+* [update contentInset when tracked view's adjustedContentInset is changed. (#6868)](https://github.com/material-components/material-components-ios/commit/38f364b8e9af98c765a5e33116617cddf9ddcf82) (Wenyu Zhang)
+* [refactor internal helper methods (#6862)](https://github.com/material-components/material-components-ios/commit/4269e8f06c76c53de41ce27b3e7f40b5b695b13a) (Wenyu Zhang)
+
+### Ink
+
+* [Add basic snapshot tests. (#6920)](https://github.com/material-components/material-components-ios/commit/aad941178ad2f3a857b5e6ecfa1aa0a39adc1d95) (Robert Moore)
+
+### ShadowElevations
+
+* [Add basic snapshot tests. (#6829)](https://github.com/material-components/material-components-ios/commit/04aa6c714a0a0493578570a946466d8d9d33c397) (Robert Moore)
+
+### ShadowLayer
+
+* [Add basic Snapshot tests. (#6921)](https://github.com/material-components/material-components-ios/commit/7176a923ed503102c72e2c68ee5f059d4295242f) (Robert Moore)
+
+### TextFields
+
+* [Add a Theming extension for MDCTextInputControllerFilled. (#6870)](https://github.com/material-components/material-components-ios/commit/b6a18f128b22e8a7f1007bdc2ac64c14b2c39cd9) (featherless)
+
+### private/Snapshot
+
+* [Fix test image scale and clipping. (#6899)](https://github.com/material-components/material-components-ios/commit/223a9963d20ff6b69b6164cf648af96304566707) (Robert Moore)
+* [Adding 4 more test image styles. (#6897)](https://github.com/material-components/material-components-ios/commit/8c5be9ded22e760d6047d29041949bcd81a40a28) (Robert Moore)
+
+## Multi-component changes
+
+* [Include snapshot tests in examples in Podspec (#6895)](https://github.com/material-components/material-components-ios/commit/f0d42d67df2cf87a373ef42cfb05fec161705ca0) (Wenyu Zhang)
+* [Removing nil-coalescing operators per issue #6827 (#6859)](https://github.com/material-components/material-components-ios/commit/1df965508593f68a6312752c54175f6a568e2e1a) (Joe Aguilar)
+* [Revert "[Typography] Dynamic Type 2.0 (#6733)" (#6848)](https://github.com/material-components/material-components-ios/commit/861cebe7e1ef77a15e4c1088cba839097da8195f) (ianegordon)
+
+---
+
+# 79.1.1
+
+This patch release fixes a bug in BottomNavigation where the icons were not showing up correctly.
+
+## Bugs closed in this release
+
+- https://github.com/material-components/material-components-ios/issues/6846
+
+## API changes
+
+## Component changes
+
+### BottomNavigation
+
+* [Fix image updates in ItemView (#6847)](https://github.com/material-components/material-components-ios/commit/5fc3a1a068f04ab421eacefd11d97773888a2733) (Robert Moore)
+* [More snapshots for item icons. (#6855)](https://github.com/material-components/material-components-ios/commit/3542473fa06251f443161e8522b4635b8a89248b) (Robert Moore)
+* [Snapshot test for selection bug (#6843)](https://github.com/material-components/material-components-ios/commit/a42e356a4be6e0227b2a463bdf285a6c7612f8bb) (Robert Moore)
+
+---
+
+# 79.1.0
+
+This minor release increases our snapshot testing coverage and introduces a migration flag for
+including `UIAccessibilityTraitButton` in MDCButton's accessibilityTraits.
+
+## New features
+
+It is now possible to set `accessibilityTraits` on MDCButton to a custom value that
+does not include `UIAccessibilityTraitButton`. To enable this new behavior you must first set
+accessibilityTraitsIncludesButton = NO. This flag will eventually default to NO and then be
+deprecated/deleted.
+
+## API changes
+
+### Buttons
+
+#### MDCButton
+
+*new* property: `accessibilityTraitsIncludesButton` in `MDCButton`
+
+## Changes
+
+### ActionSheet
+
+* [Fixes broken action sheet tests. (#6743)](https://github.com/material-components/material-components-ios/commit/fbcf5241615754f6678b80c754b28623e3d3ec2d) (Robert Moore)
+
+### ActivityIndicator
+
+* [Add basic Snapshot tests (#6826)](https://github.com/material-components/material-components-ios/commit/2e5df058e3434b36b7fcc57d4d21425d399ea5e8) (Robert Moore)
+
+### BottomNavigation
+
+* [Clean up internal constants (#6834)](https://github.com/material-components/material-components-ios/commit/585a5f4d30132131d6b8452fc782fe70b00b2828) (Robert Moore)
+* [Examples clean-up. (#6718)](https://github.com/material-components/material-components-ios/commit/10ed6188a58a99d2974b4051c67ad3df7a806802) (Robert Moore)
+* [Prevents the client from setting the navigation items directly when using the bottom navigation bar controller. (#6773)](https://github.com/material-components/material-components-ios/commit/d049bc882aee1c3ee7318e121630ca33db8a112f) (Eric Lee)
+
+### Buttons
+
+* [Allow setting `accessibilityTraits`. (#6766)](https://github.com/material-components/material-components-ios/commit/66c46649db84d8f772ad5e81abd48c2504cbdd1c) (Robert Moore)
+
+### Collections
+
+* [Clean up interface by removing NS_REQUIRES_SUPER (#6788)](https://github.com/material-components/material-components-ios/commit/921ad6e4db78e74da285413f72f164d2ca91cb5b) (dmaclach)
+
+### List
+
+* [Add basic snapshot tests. (#6822)](https://github.com/material-components/material-components-ios/commit/9e8fdc2d7fc27a3df47781f6ab15c605e3941fed) (Robert Moore)
+
+### NavigationBar
+
+* [Add basic Snapshot tests. (#6821)](https://github.com/material-components/material-components-ios/commit/b1cab54a4fc8c64d7ef2a1f57ddf1b9b8ac90d38) (Robert Moore)
+
+### PageControl
+
+* [Add basic Snapshot tests. (#6823)](https://github.com/material-components/material-components-ios/commit/1d058b155bef49da948bce3245656144f38550c7) (Robert Moore)
+
+### ProgressView
+
+* [Add basic Snapshot tests. (#6825)](https://github.com/material-components/material-components-ios/commit/018e72e3cf69363d85b85d0a87e4dce32b656631) (Robert Moore)
+
+### Ripple
+
+* [Added a fix for the ripple sometimes blinking when ending animation (#6792)](https://github.com/material-components/material-components-ios/commit/6f51d265ad16aab4e5180fe98dda5acaff3d06e9) (Yarden Eitan)
+* [update docs (#6772)](https://github.com/material-components/material-components-ios/commit/c2e912df8f7b86c8de47632a4e5b328ca6ad2d59) (Yarden Eitan)
+
+### Snackbar
+
+* [Add basic Snapshot tests. (#6824)](https://github.com/material-components/material-components-ios/commit/951cc57ba0ae83e31965095c1e956d478c9f6fd5) (Robert Moore)
+* [Make initialization threadsafe. (#6768)](https://github.com/material-components/material-components-ios/commit/530c7b9b616e0b2592c42682ad67cb79d7c83de0) (Robert Moore)
+
+### Tabs
+
+* [Add basic Snapshot tests. (#6801)](https://github.com/material-components/material-components-ios/commit/dd363f1118679086139f5a92325061ad9e77c8b8) (Robert Moore)
+* [Fix badge text truncation bug in MDCItemBarCell (#6786)](https://github.com/material-components/material-components-ios/commit/188f05a75eaec9a97c748dfd4f1e8337385c4d75) (Andrew Overton)
+
+### Typography
+
+* [Add basic Snapshot tests. (#6828)](https://github.com/material-components/material-components-ios/commit/32904609b0996244ec1c702fb1df42b310807e61) (Robert Moore)
+
+## Multi-component changes
+
+* [Dynamic Type 2.0 (#6733)](https://github.com/material-components/material-components-ios/commit/648f2499e80a02de28a545a223cc50f00c715097) (ianegordon)
+* [Enable -Wunguarded-availability. (#6776)](https://github.com/material-components/material-components-ios/commit/f17b01c584b02581c8b7fa3e1a03628b8191b0cf) (featherless)
+* [Revert "[Typography] Dynamic Type 2.0 (#6733)" (#6848)](https://github.com/material-components/material-components-ios/commit/7f52f35f07a8329f6ebf6a931b28d6acf158855a) (ianegordon)
+* [{Tests} Fix font comparison in Objective-C. (#6789)](https://github.com/material-components/material-components-ios/commit/3447c7b719bcdb9ddcbb566c7e491db46b21caeb) (Robert Moore)
+
+---
+
 # 79.0.1
 
 This patch release removes `NS_REQUIRES_SUPER` from several MDCCollectionViewController APIs, removing the requirement to call super.

@@ -43,6 +43,7 @@ target "MDCCatalog" do
     'private/ThumbTrack/UnitTests',
     'private/UIMetrics/UnitTests',
     'ProgressView/UnitTests',
+    'Ripple/UnitTests',
     'schemes/Color/UnitTests',
     'schemes/Shape/UnitTests',
     'schemes/Typography/UnitTests',
@@ -61,13 +62,14 @@ target "MDCCatalog" do
     'ActionSheet+ActionSheetThemer/UnitTests',
     'ActionSheet+ColorThemer/UnitTests',
     'ActionSheet+Theming/UnitTests',
+    'AppBar+Theming/UnitTests',
     'BottomNavigation/UnitTests',
     'ButtonBar+Theming/UnitTests',
     'Buttons+Theming/UnitTests',
     'Cards+Theming/UnitTests',
     'Chips+Theming/UnitTests',
     'Dialogs+Theming/UnitTests',
-    'Ripple/UnitTests',
+    'TextFields+Theming/UnitTests',
     'schemes/Container/UnitTests',
   ]
   pod 'MaterialComponentsSnapshotTests', :path => '../', :testspecs => [
