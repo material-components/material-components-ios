@@ -28,6 +28,9 @@ static const CGFloat kMaxSizeDimension = 1000000;
 static const CGFloat MDCBottomNavigationItemViewInkOpacity = (CGFloat)0.150;
 static const CGFloat MDCBottomNavigationItemViewTitleFontSize = 12;
 
+/** The default value for @c numberOfLines for the title label. */
+static const NSInteger kDefaultTitleNumberOfLines = 1;
+
 // The fonts available on iOS differ from that used on Material.io.  When trying to approximate
 // the position on iOS, it seems like a horizontal inset of 10 points looks pretty close.
 static const CGFloat kBadgeXOffsetFromIconEdgeWithTextLTR = -8;
@@ -91,7 +94,6 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
         ++totalViewsProcessed;
       } else if ([view isKindOfClass:[UILabel class]]) {
         _label = (UILabel *)view;
-        _label.numberOfLines = 1;
         ++totalViewsProcessed;
       } else if ([view isKindOfClass:[MDCBottomNavigationItemBadge class]]) {
         _badge = (MDCBottomNavigationItemBadge *)view;
@@ -112,7 +114,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 
 - (void)commonMDCBottomNavigationItemViewInit {
   _truncatesTitle = YES;
-  _titleNumberOfLines = 1;
+  _titleNumberOfLines = kDefaultTitleNumberOfLines;
   if (!_selectedItemTintColor) {
     _selectedItemTintColor = [UIColor blackColor];
   }
@@ -134,9 +136,9 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
     _label.textAlignment = NSTextAlignmentCenter;
     _label.textColor = _selectedItemTitleColor;
     _label.isAccessibilityElement = NO;
-    _label.numberOfLines = 1;
     [self addSubview:_label];
   }
+  _label.numberOfLines = kDefaultTitleNumberOfLines;
 
   if (!_badge) {
     _badge = [[MDCBottomNavigationItemBadge alloc] initWithFrame:CGRectZero];
@@ -584,14 +586,18 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   }
 }
 
+- (void)renderedTitleNumberOfLines {
+  return self.titleBelowIcon ? _titleNumberOfLines : kDefaultTitleNumberOfLines;
+}
+
 - (void)setTitleNumberOfLines:(NSInteger)titleNumberOfLines {
   _titleNumberOfLines = titleNumberOfLines;
-  self.label.numberOfLines = self.titleBelowIcon ? titleNumberOfLines : 1;
+  self.label.numberOfLines = [self renderedTitleNumberOfLines];
 }
 
 - (void)setTitleBelowIcon:(BOOL)titleBelowIcon {
   _titleBelowIcon = titleBelowIcon;
-  self.label.numberOfLines = self.titleBelowIcon ? self.titleNumberOfLines : 1;
+  self.label.numberOfLines = [self renderedTitleNumberOfLines];
 }
 
 #pragma mark - Resource bundle
