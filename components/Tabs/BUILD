@@ -36,6 +36,7 @@ mdc_public_objc_library(
     deps = [
         "//components/AnimationTiming",
         "//components/Ink",
+        "//components/Palettes",
         "//components/ShadowElevations",
         "//components/ShadowLayer",
         "//components/Typography",
