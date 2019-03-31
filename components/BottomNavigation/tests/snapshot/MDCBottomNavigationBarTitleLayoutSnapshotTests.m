@@ -243,9 +243,9 @@
                     withAlignment:MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles
                   titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
                   traitCollection:traitCollection
-                        allTitles:kLongTitleLatin];
+                        allTitles:MDCBottomNavigationTestLongTitleLatin];
   self.navigationBar.titlesNumberOfLines = 0;
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
+  self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthiPad, MDCBottomNavigationBarTestHeightTypical);
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
@@ -306,9 +306,9 @@
                     withAlignment:MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles
                   titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
                   traitCollection:traitCollection
-                        allTitles:kLongTitleLatin];
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
-  [self changeToRTLAndArabicWithTitle:kLongTitleArabic];
+                        allTitles:MDCBottomNavigationTestLongTitleLatin];
+  self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthiPad, MDCBottomNavigationBarTestHeightTypical);
+  [self changeToRTLAndArabicWithTitle:MDCBottomNavigationTestLongTitleArabic];
   self.navigationBar.titlesNumberOfLines = 0;
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
@@ -353,8 +353,8 @@
                     withAlignment:MDCBottomNavigationBarAlignmentCentered
                   titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
                   traitCollection:nil
-                        allTitles:kLongTitleLatin];
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
+                        allTitles:MDCBottomNavigationTestLongTitleLatin];
+  self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthiPad, MDCBottomNavigationBarTestHeightTypical);
   self.navigationBar.titlesNumberOfLines = 0;
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
@@ -401,9 +401,9 @@
                     withAlignment:MDCBottomNavigationBarAlignmentCentered
                   titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
                   traitCollection:nil
-                        allTitles:kLongTitleLatin];
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
-  [self changeToRTLAndArabicWithTitle:kLongTitleArabic];
+                        allTitles:MDCBottomNavigationTestLongTitleLatin];
+  self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthiPad, MDCBottomNavigationBarTestHeightTypical);
+  [self changeToRTLAndArabicWithTitle:MDCBottomNavigationTestLongTitleArabic];
   self.navigationBar.titlesNumberOfLines = 0;
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
