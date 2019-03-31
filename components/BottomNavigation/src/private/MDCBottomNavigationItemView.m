@@ -586,7 +586,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   }
 }
 
-- (void)renderedTitleNumberOfLines {
+- (NSInteger)renderedTitleNumberOfLines {
   return self.titleBelowIcon ? _titleNumberOfLines : kDefaultTitleNumberOfLines;
 }
 
