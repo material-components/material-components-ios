@@ -16,38 +16,36 @@
 
 #import "../../src/private/MDCBottomNavigationItemView.h"
 #import "MaterialBottomNavigation.h"
+#import "supplemental/MDCBottomNavigationSnapshotTestUtilities.h"
 
-static NSString *const kLongTitleLatin =
-    @"123456789012345678901234567890123456789012345678901234567890";
 static NSString *const kBadgeTitleEmpty = @"";
 static NSString *const kBadgeTitleSingleLatin = @"8";
 static NSString *const kBadgeTitleMaxLatin = @"888+";
-static NSString *const kLongTitleArabic =
-    @"دول السيطرة استطاعوا ٣٠. مليون وفرنسا أوراقهم انه تم, نفس قد والديون العالمية. دون ما تنفّس.";
 static NSString *const kBadgeTitleSingleArabic = @"أ";
 static NSString *const kBadgeTitleMaxArabic = @"أورا";
+
 /** The shortest acceptable height for correct layout. */
-static const CGFloat kHeightShort = 48;
+static const CGFloat kItemViewHeightShort = 48;
 
 /** Typical height for correct layout. */
-static const CGFloat kHeightTypical = 56;
+static const CGFloat kItemViewHeightTypical = 56;
 
 /** A height too tall for correct layout. */
-static const CGFloat kHeightTall = 120;
+static const CGFloat kItemViewHeightTall = 120;
 
 /** A width too narrow for correct layout */
-static const CGFloat kWidthNarrrow = 40;  // 64 - 12 points on leading/trailing edge
+static const CGFloat kItemViewWidthNarrrow = 40;  // 64 - 12 points on leading/trailing edge
 
 /** The minimum acceptable width for correct layout */
-static const CGFloat kWidthMinimum = 56;  // 80 - 12 points on leading/trailing edge
+static const CGFloat kItemViewWidthMinimum = 56;  // 80 - 12 points on leading/trailing edge
 
 /** The suggested width for correct layout */
-static const CGFloat kWidthTypical = 96;  // 120 - 12 points on leading/trailing edge
+static const CGFloat kItemViewWidthTypical = 96;  // 120 - 12 points on leading/trailing edge
 
 /** The maximum acceptable width for correct layout */
-static const CGFloat kWidthMaximum = 144;  // 168 - 12 points on leading/trailing edge
+static const CGFloat kItemViewWidthMaximum = 144;  // 168 - 12 points on leading/trailing edge
 
-static const CGFloat kContentHorizontalMargin = 12;
+static const CGFloat kItemViewContentHorizontalMargin = 12;
 
 @interface MDCBottomNavigationItemViewSnapshotTests : MDCSnapshotTestCase
 @property(nonatomic, strong) MDCBottomNavigationItemView *itemView;
@@ -65,8 +63,8 @@ static const CGFloat kContentHorizontalMargin = 12;
   self.itemView = [[MDCBottomNavigationItemView alloc] init];
   self.itemView.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   self.itemView.image = [UIImage mdc_testImageOfSize:CGSizeMake(24, 24)];
-  self.itemView.title = kLongTitleLatin;
-  self.itemView.contentHorizontalMargin = kContentHorizontalMargin;
+  self.itemView.title = MDCBottomNavigationTestLongTitleLatin;
+  self.itemView.contentHorizontalMargin = kItemViewContentHorizontalMargin;
   self.itemView.backgroundColor = UIColor.whiteColor;
   self.itemView.badgeValue = kBadgeTitleEmpty;
 }
@@ -80,7 +78,7 @@ static const CGFloat kContentHorizontalMargin = 12;
   if (@available(iOS 9.0, *)) {
     self.itemView.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
   }
-  self.itemView.title = kLongTitleArabic;
+  self.itemView.title = MDCBottomNavigationTestLongTitleArabic;
   self.itemView.badgeValue = badgeValue;
 }
 
@@ -89,7 +87,7 @@ static const CGFloat kContentHorizontalMargin = 12;
 - (void)testNarrowWidthTypicalHeightLongTitleEmptyBadgeStackedLTR {
   // When
   self.itemView.titleBelowIcon = YES;
-  self.itemView.frame = CGRectMake(0, 0, kWidthNarrrow, kHeightTypical);
+  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthNarrrow, kItemViewHeightTypical);
 
   [self generateAndVerifySnapshot];
 }
@@ -98,7 +96,7 @@ static const CGFloat kContentHorizontalMargin = 12;
   // When
   [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleEmpty];
   self.itemView.titleBelowIcon = YES;
-  self.itemView.frame = CGRectMake(0, 0, kWidthNarrrow, kHeightTypical);
+  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthNarrrow, kItemViewHeightTypical);
 
   [self generateAndVerifySnapshot];
 }
@@ -106,7 +104,7 @@ static const CGFloat kContentHorizontalMargin = 12;
 - (void)testNarrowWidthTypicalHeightLongTitleSingleBadgeAdjacentLTR {
   // When
   self.itemView.titleBelowIcon = NO;
-  self.itemView.frame = CGRectMake(0, 0, kWidthNarrrow, kHeightTypical);
+  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthNarrrow, kItemViewHeightTypical);
   self.itemView.badgeValue = kBadgeTitleSingleLatin;
 
   [self generateAndVerifySnapshot];
@@ -116,7 +114,7 @@ static const CGFloat kContentHorizontalMargin = 12;
   // When
   [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleSingleArabic];
   self.itemView.titleBelowIcon = NO;
-  self.itemView.frame = CGRectMake(0, 0, kWidthNarrrow, kHeightTypical);
+  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthNarrrow, kItemViewHeightTypical);
 
   [self generateAndVerifySnapshot];
 }
@@ -125,7 +123,7 @@ static const CGFloat kContentHorizontalMargin = 12;
   // When
   self.itemView.titleBelowIcon = YES;
   self.itemView.badgeValue = kBadgeTitleMaxLatin;
-  self.itemView.frame = CGRectMake(0, 0, kWidthMinimum, kHeightTypical);
+  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthMinimum, kItemViewHeightTypical);
 
   [self generateAndVerifySnapshot];
 }
@@ -134,7 +132,7 @@ static const CGFloat kContentHorizontalMargin = 12;
   // When
   [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleMaxArabic];
   self.itemView.titleBelowIcon = YES;
-  self.itemView.frame = CGRectMake(0, 0, kWidthMinimum, kHeightTypical);
+  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthMinimum, kItemViewHeightTypical);
 
   [self generateAndVerifySnapshot];
 }
@@ -142,7 +140,7 @@ static const CGFloat kContentHorizontalMargin = 12;
 - (void)testMinimumWidthTypicalHeightLongTitleEmptyBadgeAdjacentLTR {
   // When
   self.itemView.titleBelowIcon = NO;
-  self.itemView.frame = CGRectMake(0, 0, kWidthMinimum, kHeightTypical);
+  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthMinimum, kItemViewHeightTypical);
 
   [self generateAndVerifySnapshot];
 }
@@ -151,7 +149,7 @@ static const CGFloat kContentHorizontalMargin = 12;
   // When
   [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleEmpty];
   self.itemView.titleBelowIcon = NO;
-  self.itemView.frame = CGRectMake(0, 0, kWidthMinimum, kHeightTypical);
+  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthMinimum, kItemViewHeightTypical);
 
   [self generateAndVerifySnapshot];
 }
@@ -160,7 +158,7 @@ static const CGFloat kContentHorizontalMargin = 12;
   // When
   self.itemView.titleBelowIcon = YES;
   self.itemView.badgeValue = kBadgeTitleSingleLatin;
-  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthTypical, kItemViewHeightTypical);
 
   [self generateAndVerifySnapshot];
 }
@@ -169,7 +167,7 @@ static const CGFloat kContentHorizontalMargin = 12;
   // When
   [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleSingleArabic];
   self.itemView.titleBelowIcon = YES;
-  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthTypical, kItemViewHeightTypical);
 
   [self generateAndVerifySnapshot];
 }
@@ -178,7 +176,7 @@ static const CGFloat kContentHorizontalMargin = 12;
   // When
   self.itemView.titleBelowIcon = NO;
   self.itemView.badgeValue = kBadgeTitleMaxLatin;
-  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthTypical, kItemViewHeightTypical);
 
   [self generateAndVerifySnapshot];
 }
@@ -187,7 +185,7 @@ static const CGFloat kContentHorizontalMargin = 12;
   // When
   [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleMaxArabic];
   self.itemView.titleBelowIcon = NO;
-  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthTypical, kItemViewHeightTypical);
 
   [self generateAndVerifySnapshot];
 }
@@ -195,7 +193,7 @@ static const CGFloat kContentHorizontalMargin = 12;
 - (void)testMaximumWidthTypicalHeightLongTitleEmptyBadgeStackedLTR {
   // When
   self.itemView.titleBelowIcon = YES;
-  self.itemView.frame = CGRectMake(0, 0, kWidthMaximum, kHeightTypical);
+  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthMaximum, kItemViewHeightTypical);
 
   [self generateAndVerifySnapshot];
 }
@@ -204,7 +202,7 @@ static const CGFloat kContentHorizontalMargin = 12;
   // When
   [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleEmpty];
   self.itemView.titleBelowIcon = YES;
-  self.itemView.frame = CGRectMake(0, 0, kWidthMaximum, kHeightTypical);
+  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthMaximum, kItemViewHeightTypical);
 
   [self generateAndVerifySnapshot];
 }
@@ -213,7 +211,7 @@ static const CGFloat kContentHorizontalMargin = 12;
   // When
   self.itemView.titleBelowIcon = NO;
   self.itemView.badgeValue = kBadgeTitleSingleLatin;
-  self.itemView.frame = CGRectMake(0, 0, kWidthMaximum, kHeightTypical);
+  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthMaximum, kItemViewHeightTypical);
 
   [self generateAndVerifySnapshot];
 }
@@ -222,7 +220,7 @@ static const CGFloat kContentHorizontalMargin = 12;
   // When
   [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleSingleArabic];
   self.itemView.titleBelowIcon = NO;
-  self.itemView.frame = CGRectMake(0, 0, kWidthMaximum, kHeightTypical);
+  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthMaximum, kItemViewHeightTypical);
 
   [self generateAndVerifySnapshot];
 }
@@ -232,7 +230,7 @@ static const CGFloat kContentHorizontalMargin = 12;
 - (void)testTypicalWidthShortHeightLongTitleEmptyBadgeStackedLTR {
   // When
   self.itemView.titleBelowIcon = YES;
-  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightShort);
+  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthTypical, kItemViewHeightShort);
 
   [self generateAndVerifySnapshot];
 }
@@ -241,7 +239,7 @@ static const CGFloat kContentHorizontalMargin = 12;
   // When
   [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleEmpty];
   self.itemView.titleBelowIcon = YES;
-  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightShort);
+  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthTypical, kItemViewHeightShort);
 
   [self generateAndVerifySnapshot];
 }
@@ -250,7 +248,7 @@ static const CGFloat kContentHorizontalMargin = 12;
   // When
   self.itemView.titleBelowIcon = NO;
   self.itemView.badgeValue = kBadgeTitleSingleLatin;
-  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightShort);
+  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthTypical, kItemViewHeightShort);
 
   [self generateAndVerifySnapshot];
 }
@@ -259,7 +257,7 @@ static const CGFloat kContentHorizontalMargin = 12;
   // When
   [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleSingleArabic];
   self.itemView.titleBelowIcon = NO;
-  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightShort);
+  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthTypical, kItemViewHeightShort);
 
   [self generateAndVerifySnapshot];
 }
@@ -268,7 +266,7 @@ static const CGFloat kContentHorizontalMargin = 12;
   // When
   self.itemView.titleBelowIcon = YES;
   self.itemView.badgeValue = kBadgeTitleMaxLatin;
-  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTall);
+  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthTypical, kItemViewHeightTall);
 
   [self generateAndVerifySnapshot];
 }
@@ -277,7 +275,7 @@ static const CGFloat kContentHorizontalMargin = 12;
   // When
   [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleMaxArabic];
   self.itemView.titleBelowIcon = YES;
-  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTall);
+  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthTypical, kItemViewHeightTall);
 
   [self generateAndVerifySnapshot];
 }
@@ -285,7 +283,7 @@ static const CGFloat kContentHorizontalMargin = 12;
 - (void)testTypicalWidthTallHeightLongTitleEmptyBadgeAdjacentLTR {
   // When
   self.itemView.titleBelowIcon = NO;
-  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTall);
+  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthTypical, kItemViewHeightTall);
 
   [self generateAndVerifySnapshot];
 }
@@ -294,7 +292,7 @@ static const CGFloat kContentHorizontalMargin = 12;
   // When
   [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleEmpty];
   self.itemView.titleBelowIcon = NO;
-  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTall);
+  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthTypical, kItemViewHeightTall);
 
   [self generateAndVerifySnapshot];
 }
@@ -303,7 +301,7 @@ static const CGFloat kContentHorizontalMargin = 12;
 
 - (void)testChangeUnselectedImageWhenNotSelectedWithSelectedImage {
   // Given
-  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthTypical, kItemViewHeightTypical);
   self.itemView.selected = NO;
   self.itemView.selectedImage = [[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
                                                     withStyle:MDCSnapshotTestImageStyleEllipses]
@@ -321,7 +319,7 @@ static const CGFloat kContentHorizontalMargin = 12;
 
 - (void)testChangeUnselectedImageWhenNotSelectedWithoutSelectedImage {
   // Given
-  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthTypical, kItemViewHeightTypical);
   self.itemView.selected = NO;
   self.itemView.selectedImage = nil;
   self.itemView.selectedItemTintColor = UIColor.orangeColor;
@@ -338,7 +336,7 @@ static const CGFloat kContentHorizontalMargin = 12;
 
 - (void)testChangeUnselectedImageWhenSelectedWithSelectedImage {
   // Given
-  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthTypical, kItemViewHeightTypical);
   self.itemView.selected = YES;
   self.itemView.selectedImage = [[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
                                                     withStyle:MDCSnapshotTestImageStyleEllipses]
@@ -357,7 +355,7 @@ static const CGFloat kContentHorizontalMargin = 12;
 
 - (void)testChangeUnselectedImageWhenSelectedWithoutSelectedImage {
   // Given
-  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthTypical, kItemViewHeightTypical);
   self.itemView.selected = YES;
   self.itemView.selectedImage = nil;
   self.itemView.selectedItemTintColor = UIColor.orangeColor;
@@ -374,7 +372,7 @@ static const CGFloat kContentHorizontalMargin = 12;
 
 - (void)testChangeSelectedImageWhenNotSelected {
   // Given
-  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthTypical, kItemViewHeightTypical);
   self.itemView.selected = NO;
   self.itemView.selectedItemTintColor = UIColor.orangeColor;
   self.itemView.unselectedItemTintColor = UIColor.blackColor;
@@ -390,7 +388,7 @@ static const CGFloat kContentHorizontalMargin = 12;
 
 - (void)testChangeSelectedImageWhenSelected {
   // Given
-  self.itemView.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthTypical, kItemViewHeightTypical);
   self.itemView.selected = YES;
   self.itemView.selectedItemTintColor = UIColor.orangeColor;
   self.itemView.unselectedItemTintColor = UIColor.blackColor;

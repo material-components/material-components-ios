@@ -23,18 +23,8 @@
 #import "MaterialInk.h"
 #import "MaterialSnapshot.h"
 #import "supplemental/MDCBottomNavigationSnapshotTestMutableTraitCollection.h"
+#import "supplemental/MDCBottomNavigationSnapshotTestUtilities.h"
 #import "supplemental/MDCFakeBottomNavigationBar.h"
-
-static const CGFloat kWidthiPad = 1024;
-static const CGFloat kWidthTypical = 360;
-static const CGFloat kHeightTypical = 56;
-static NSString *const kLongTitleLatin =
-    @"123456789012345678901234567890123456789012345678901234567890";
-static NSString *const kLongTitleArabic =
-    @"دول السيطرة استطاعوا ٣٠. مليون وفرنسا أوراقهم انه تم, نفس قد والديون العالمية. دون ما تنفّس.";
-static NSString *const kShortTitleArabic = @"ما تنفّس.";
-static NSString *const kBadgeTitleLatin = @"888+";
-static NSString *const kBadgeTitleArabic = @"أورا";
 
 @interface MDCBottomNavigationBarTitleLayoutSnapshotTests : MDCSnapshotTestCase
 @property(nonatomic, strong) MDCFakeBottomNavigationBar *navigationBar;
@@ -67,7 +57,7 @@ static NSString *const kBadgeTitleArabic = @"أورا";
               image:[UIImage mdc_testImageOfSize:imageSize
                                        withStyle:MDCSnapshotTestImageStyleCheckerboard]
                 tag:2];
-  self.tabItem2.badgeValue = kBadgeTitleLatin;
+  self.tabItem2.badgeValue = MDCBottomNavigationTestBadgeTitleLatin;
   self.tabItem3 = [[UITabBarItem alloc]
       initWithTitle:@"Item 3"
               image:[UIImage mdc_testImageOfSize:imageSize
@@ -132,7 +122,7 @@ static NSString *const kBadgeTitleArabic = @"أورا";
       view.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
     }
   }
-  self.navigationBar.items[1].badgeValue = kBadgeTitleArabic;
+  self.navigationBar.items[1].badgeValue = MDCBottomNavigationTestBadgeTitleArabic;
 }
 
 #pragma mark - Title length tests
@@ -143,8 +133,9 @@ static NSString *const kBadgeTitleArabic = @"أورا";
                     withAlignment:MDCBottomNavigationBarAlignmentJustified
                   titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
                   traitCollection:nil
-                        allTitles:kLongTitleLatin];
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
+                        allTitles:MDCBottomNavigationTestLongTitleLatin];
+  self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthiPad,
+                                        MDCBottomNavigationBarTestHeightTypical);
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
@@ -157,8 +148,9 @@ static NSString *const kBadgeTitleArabic = @"أورا";
                     withAlignment:MDCBottomNavigationBarAlignmentJustified
                   titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
                   traitCollection:nil
-                        allTitles:kLongTitleLatin];
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
+                        allTitles:MDCBottomNavigationTestLongTitleLatin];
+  self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthiPad,
+                                        MDCBottomNavigationBarTestHeightTypical);
   self.navigationBar.truncatesLongTitles = NO;
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
@@ -172,9 +164,10 @@ static NSString *const kBadgeTitleArabic = @"أورا";
                     withAlignment:MDCBottomNavigationBarAlignmentJustified
                   titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
                   traitCollection:nil
-                        allTitles:kLongTitleLatin];
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
-  [self changeToRTLAndArabicWithTitle:kLongTitleArabic];
+                        allTitles:MDCBottomNavigationTestLongTitleLatin];
+  self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthiPad,
+                                        MDCBottomNavigationBarTestHeightTypical);
+  [self changeToRTLAndArabicWithTitle:MDCBottomNavigationTestLongTitleArabic];
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
@@ -187,9 +180,10 @@ static NSString *const kBadgeTitleArabic = @"أورا";
                     withAlignment:MDCBottomNavigationBarAlignmentJustified
                   titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
                   traitCollection:nil
-                        allTitles:kLongTitleLatin];
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
-  [self changeToRTLAndArabicWithTitle:kLongTitleArabic];
+                        allTitles:MDCBottomNavigationTestLongTitleLatin];
+  self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthiPad,
+                                        MDCBottomNavigationBarTestHeightTypical);
+  [self changeToRTLAndArabicWithTitle:MDCBottomNavigationTestLongTitleArabic];
   self.navigationBar.truncatesLongTitles = NO;
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
@@ -208,8 +202,9 @@ static NSString *const kBadgeTitleArabic = @"أورا";
                     withAlignment:MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles
                   titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
                   traitCollection:traitCollection
-                        allTitles:kLongTitleLatin];
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
+                        allTitles:MDCBottomNavigationTestLongTitleLatin];
+  self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthiPad,
+                                        MDCBottomNavigationBarTestHeightTypical);
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
@@ -227,8 +222,9 @@ static NSString *const kBadgeTitleArabic = @"أورا";
                     withAlignment:MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles
                   titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
                   traitCollection:traitCollection
-                        allTitles:kLongTitleLatin];
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
+                        allTitles:MDCBottomNavigationTestLongTitleLatin];
+  self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthiPad,
+                                        MDCBottomNavigationBarTestHeightTypical);
   self.navigationBar.truncatesLongTitles = NO;
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
@@ -247,9 +243,10 @@ static NSString *const kBadgeTitleArabic = @"أورا";
                     withAlignment:MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles
                   titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
                   traitCollection:traitCollection
-                        allTitles:kLongTitleLatin];
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
-  [self changeToRTLAndArabicWithTitle:kLongTitleArabic];
+                        allTitles:MDCBottomNavigationTestLongTitleLatin];
+  self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthiPad,
+                                        MDCBottomNavigationBarTestHeightTypical);
+  [self changeToRTLAndArabicWithTitle:MDCBottomNavigationTestLongTitleArabic];
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
@@ -267,9 +264,10 @@ static NSString *const kBadgeTitleArabic = @"أورا";
                     withAlignment:MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles
                   titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
                   traitCollection:traitCollection
-                        allTitles:kLongTitleLatin];
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
-  [self changeToRTLAndArabicWithTitle:kLongTitleArabic];
+                        allTitles:MDCBottomNavigationTestLongTitleLatin];
+  self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthiPad,
+                                        MDCBottomNavigationBarTestHeightTypical);
+  [self changeToRTLAndArabicWithTitle:MDCBottomNavigationTestLongTitleArabic];
   self.navigationBar.truncatesLongTitles = NO;
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
@@ -283,8 +281,9 @@ static NSString *const kBadgeTitleArabic = @"أورا";
                     withAlignment:MDCBottomNavigationBarAlignmentCentered
                   titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
                   traitCollection:nil
-                        allTitles:kLongTitleLatin];
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
+                        allTitles:MDCBottomNavigationTestLongTitleLatin];
+  self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthiPad,
+                                        MDCBottomNavigationBarTestHeightTypical);
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
@@ -297,8 +296,9 @@ static NSString *const kBadgeTitleArabic = @"أورا";
                     withAlignment:MDCBottomNavigationBarAlignmentCentered
                   titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
                   traitCollection:nil
-                        allTitles:kLongTitleLatin];
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
+                        allTitles:MDCBottomNavigationTestLongTitleLatin];
+  self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthiPad,
+                                        MDCBottomNavigationBarTestHeightTypical);
   self.navigationBar.truncatesLongTitles = NO;
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
@@ -312,9 +312,10 @@ static NSString *const kBadgeTitleArabic = @"أورا";
                     withAlignment:MDCBottomNavigationBarAlignmentCentered
                   titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
                   traitCollection:nil
-                        allTitles:kLongTitleLatin];
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
-  [self changeToRTLAndArabicWithTitle:kLongTitleArabic];
+                        allTitles:MDCBottomNavigationTestLongTitleLatin];
+  self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthiPad,
+                                        MDCBottomNavigationBarTestHeightTypical);
+  [self changeToRTLAndArabicWithTitle:MDCBottomNavigationTestLongTitleArabic];
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
@@ -327,9 +328,10 @@ static NSString *const kBadgeTitleArabic = @"أورا";
                     withAlignment:MDCBottomNavigationBarAlignmentCentered
                   titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
                   traitCollection:nil
-                        allTitles:kLongTitleLatin];
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
-  [self changeToRTLAndArabicWithTitle:kLongTitleArabic];
+                        allTitles:MDCBottomNavigationTestLongTitleLatin];
+  self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthiPad,
+                                        MDCBottomNavigationBarTestHeightTypical);
+  [self changeToRTLAndArabicWithTitle:MDCBottomNavigationTestLongTitleArabic];
   self.navigationBar.truncatesLongTitles = NO;
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
@@ -344,7 +346,8 @@ static NSString *const kBadgeTitleArabic = @"أورا";
   self.navigationBar.items = @[ self.tabItem1, self.tabItem2, self.tabItem3 ];
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
   self.navigationBar.selectedItem = self.tabItem2;
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+  self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthTypical,
+                                        MDCBottomNavigationBarTestHeightTypical);
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
@@ -356,8 +359,9 @@ static NSString *const kBadgeTitleArabic = @"أورا";
   self.navigationBar.items = @[ self.tabItem1, self.tabItem2, self.tabItem3 ];
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
   self.navigationBar.selectedItem = self.tabItem2;
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
-  [self changeToRTLAndArabicWithTitle:kShortTitleArabic];
+  self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthTypical,
+                                        MDCBottomNavigationBarTestHeightTypical);
+  [self changeToRTLAndArabicWithTitle:MDCBottomNavigationTestShortTitleArabic];
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
@@ -369,7 +373,8 @@ static NSString *const kBadgeTitleArabic = @"أورا";
   self.navigationBar.items = @[ self.tabItem1, self.tabItem2, self.tabItem3 ];
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   self.navigationBar.selectedItem = self.tabItem2;
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+  self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthTypical,
+                                        MDCBottomNavigationBarTestHeightTypical);
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
@@ -381,8 +386,9 @@ static NSString *const kBadgeTitleArabic = @"أورا";
   self.navigationBar.items = @[ self.tabItem1, self.tabItem2, self.tabItem3 ];
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   self.navigationBar.selectedItem = self.tabItem2;
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
-  [self changeToRTLAndArabicWithTitle:kShortTitleArabic];
+  self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthTypical,
+                                        MDCBottomNavigationBarTestHeightTypical);
+  [self changeToRTLAndArabicWithTitle:MDCBottomNavigationTestShortTitleArabic];
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
@@ -394,7 +400,8 @@ static NSString *const kBadgeTitleArabic = @"أورا";
   self.navigationBar.items = @[ self.tabItem1, self.tabItem2, self.tabItem3 ];
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityNever;
   self.navigationBar.selectedItem = self.tabItem2;
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+  self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthTypical,
+                                        MDCBottomNavigationBarTestHeightTypical);
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
@@ -406,8 +413,9 @@ static NSString *const kBadgeTitleArabic = @"أورا";
   self.navigationBar.items = @[ self.tabItem1, self.tabItem2, self.tabItem3 ];
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityNever;
   self.navigationBar.selectedItem = self.tabItem2;
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
-  [self changeToRTLAndArabicWithTitle:kShortTitleArabic];
+  self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthTypical,
+                                        MDCBottomNavigationBarTestHeightTypical);
+  [self changeToRTLAndArabicWithTitle:MDCBottomNavigationTestShortTitleArabic];
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
