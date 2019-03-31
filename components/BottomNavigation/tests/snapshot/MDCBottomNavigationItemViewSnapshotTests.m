@@ -106,7 +106,8 @@ static const CGFloat kItemViewContentHorizontalMargin = 12;
   self.itemView.titleNumberOfLines = 0;
   self.itemView.titleBelowIcon = YES;
   self.itemView.title = [MDCBottomNavigationTestLongTitleLatin substringToIndex:10];
-  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthNarrrow, MDCBottomNavigationBarTestHeightTypical);
+  self.itemView.frame =
+      CGRectMake(0, 0, kItemViewWidthNarrrow, MDCBottomNavigationBarTestHeightTypical);
 
   [self generateAndVerifySnapshot];
 }
@@ -117,7 +118,8 @@ static const CGFloat kItemViewContentHorizontalMargin = 12;
   [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleEmpty];
   self.itemView.title = [MDCBottomNavigationTestLongTitleArabic substringToIndex:10];
   self.itemView.titleBelowIcon = YES;
-  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthNarrrow, MDCBottomNavigationBarTestHeightTypical);
+  self.itemView.frame =
+      CGRectMake(0, 0, kItemViewWidthNarrrow, MDCBottomNavigationBarTestHeightTypical);
 
   [self generateAndVerifySnapshot];
 }
@@ -126,7 +128,8 @@ static const CGFloat kItemViewContentHorizontalMargin = 12;
   // When
   self.itemView.titleNumberOfLines = 0;
   self.itemView.titleBelowIcon = YES;
-  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthNarrrow, MDCBottomNavigationBarTestHeightTypical);
+  self.itemView.frame =
+      CGRectMake(0, 0, kItemViewWidthNarrrow, MDCBottomNavigationBarTestHeightTypical);
 
   [self generateAndVerifySnapshot];
 }
@@ -136,7 +139,8 @@ static const CGFloat kItemViewContentHorizontalMargin = 12;
   self.itemView.titleNumberOfLines = 0;
   [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleEmpty];
   self.itemView.titleBelowIcon = YES;
-  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthNarrrow, MDCBottomNavigationBarTestHeightTypical);
+  self.itemView.frame =
+      CGRectMake(0, 0, kItemViewWidthNarrrow, MDCBottomNavigationBarTestHeightTypical);
 
   [self generateAndVerifySnapshot];
 }
@@ -163,7 +167,8 @@ static const CGFloat kItemViewContentHorizontalMargin = 12;
   // When
   self.itemView.titleNumberOfLines = 0;
   self.itemView.titleBelowIcon = NO;
-  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthNarrrow, MDCBottomNavigationBarTestHeightTypical);
+  self.itemView.frame =
+      CGRectMake(0, 0, kItemViewWidthNarrrow, MDCBottomNavigationBarTestHeightTypical);
   self.itemView.badgeValue = kBadgeTitleSingleLatin;
 
   [self generateAndVerifySnapshot];
@@ -174,7 +179,8 @@ static const CGFloat kItemViewContentHorizontalMargin = 12;
   self.itemView.titleNumberOfLines = 0;
   [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleSingleArabic];
   self.itemView.titleBelowIcon = NO;
-  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthNarrrow, MDCBottomNavigationBarTestHeightTypical);
+  self.itemView.frame =
+      CGRectMake(0, 0, kItemViewWidthNarrrow, MDCBottomNavigationBarTestHeightTypical);
 
   [self generateAndVerifySnapshot];
 }
@@ -237,7 +243,8 @@ static const CGFloat kItemViewContentHorizontalMargin = 12;
   self.itemView.titleNumberOfLines = 0;
   self.itemView.titleBelowIcon = YES;
   self.itemView.badgeValue = kBadgeTitleSingleLatin;
-  self.itemView.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthTypical, MDCBottomNavigationBarTestHeightTypical);
+  self.itemView.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthTypical,
+                                   MDCBottomNavigationBarTestHeightTypical);
 
   [self generateAndVerifySnapshot];
 }
@@ -247,7 +254,8 @@ static const CGFloat kItemViewContentHorizontalMargin = 12;
   self.itemView.titleNumberOfLines = 0;
   [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleSingleArabic];
   self.itemView.titleBelowIcon = YES;
-  self.itemView.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthTypical, MDCBottomNavigationBarTestHeightTypical);
+  self.itemView.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthTypical,
+                                   MDCBottomNavigationBarTestHeightTypical);
 
   [self generateAndVerifySnapshot];
 }
@@ -275,7 +283,8 @@ static const CGFloat kItemViewContentHorizontalMargin = 12;
   self.itemView.titleNumberOfLines = 0;
   self.itemView.titleBelowIcon = NO;
   self.itemView.badgeValue = kBadgeTitleMaxLatin;
-  self.itemView.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthTypical, MDCBottomNavigationBarTestHeightTypical);
+  self.itemView.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthTypical,
+                                   MDCBottomNavigationBarTestHeightTypical);
 
   [self generateAndVerifySnapshot];
 }
@@ -285,7 +294,8 @@ static const CGFloat kItemViewContentHorizontalMargin = 12;
   self.itemView.titleNumberOfLines = 0;
   [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleMaxArabic];
   self.itemView.titleBelowIcon = NO;
-  self.itemView.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthTypical, MDCBottomNavigationBarTestHeightTypical);
+  self.itemView.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthTypical,
+                                   MDCBottomNavigationBarTestHeightTypical);
 
   [self generateAndVerifySnapshot];
 }
