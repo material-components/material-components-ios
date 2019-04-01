@@ -101,6 +101,46 @@ static const CGFloat kItemViewContentHorizontalMargin = 12;
   [self generateAndVerifySnapshot];
 }
 
+- (void)testNarrowWidthTypicalHeightFitTitleManyLinesEmptyBadgeStackedLTR {
+  // When
+  self.itemView.titleNumberOfLines = 0;
+  self.itemView.titleBelowIcon = YES;
+  self.itemView.title = [MDCBottomNavigationTestLongTitleLatin substringToIndex:10];
+  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthNarrrow, kItemViewHeightTypical);
+
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testNarrowWidthTypicalHeightFitTitleManyLinesEmptyBadgeStackedRTL {
+  // When
+  self.itemView.titleNumberOfLines = 0;
+  [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleEmpty];
+  self.itemView.title = [MDCBottomNavigationTestLongTitleArabic substringToIndex:10];
+  self.itemView.titleBelowIcon = YES;
+  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthNarrrow, kItemViewHeightTypical);
+
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testNarrowWidthTypicalHeightLongTitleManyLinesEmptyBadgeStackedLTR {
+  // When
+  self.itemView.titleNumberOfLines = 0;
+  self.itemView.titleBelowIcon = YES;
+  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthNarrrow, kItemViewHeightTypical);
+
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testNarrowWidthTypicalHeightLongTitleManyLinesEmptyBadgeStackedRTL {
+  // When
+  self.itemView.titleNumberOfLines = 0;
+  [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleEmpty];
+  self.itemView.titleBelowIcon = YES;
+  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthNarrrow, kItemViewHeightTypical);
+
+  [self generateAndVerifySnapshot];
+}
+
 - (void)testNarrowWidthTypicalHeightLongTitleSingleBadgeAdjacentLTR {
   // When
   self.itemView.titleBelowIcon = NO;
@@ -112,6 +152,26 @@ static const CGFloat kItemViewContentHorizontalMargin = 12;
 
 - (void)testNarrowWidthTypicalHeightLongTitleSingleBadgeAdjacentRTL {
   // When
+  [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleSingleArabic];
+  self.itemView.titleBelowIcon = NO;
+  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthNarrrow, kItemViewHeightTypical);
+
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testNarrowWidthTypicalHeightLongTitleManyLinesSingleBadgeAdjacentLTR {
+  // When
+  self.itemView.titleNumberOfLines = 0;
+  self.itemView.titleBelowIcon = NO;
+  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthNarrrow, kItemViewHeightTypical);
+  self.itemView.badgeValue = kBadgeTitleSingleLatin;
+
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testNarrowWidthTypicalHeightLongTitleManyLinesSingleBadgeAdjacentRTL {
+  // When
+  self.itemView.titleNumberOfLines = 0;
   [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleSingleArabic];
   self.itemView.titleBelowIcon = NO;
   self.itemView.frame = CGRectMake(0, 0, kItemViewWidthNarrrow, kItemViewHeightTypical);
@@ -172,6 +232,26 @@ static const CGFloat kItemViewContentHorizontalMargin = 12;
   [self generateAndVerifySnapshot];
 }
 
+- (void)testTypicalWidthTypicalHeightLongTitleManyLinesSingleBadgeStackedLTR {
+  // When
+  self.itemView.titleNumberOfLines = 0;
+  self.itemView.titleBelowIcon = YES;
+  self.itemView.badgeValue = kBadgeTitleSingleLatin;
+  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthTypical, kItemViewHeightTypical);
+
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testTypicalWidthTypicalHeightLongTitleManyLinesSingleBadgeStackedRTL {
+  // When
+  self.itemView.titleNumberOfLines = 0;
+  [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleSingleArabic];
+  self.itemView.titleBelowIcon = YES;
+  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthTypical, kItemViewHeightTypical);
+
+  [self generateAndVerifySnapshot];
+}
+
 - (void)testTypicalWidthTypicalHeightLongTitleMaxBadgeAdjacentLTR {
   // When
   self.itemView.titleBelowIcon = NO;
@@ -183,6 +263,26 @@ static const CGFloat kItemViewContentHorizontalMargin = 12;
 
 - (void)testTypicalWidthTypicalHeightLongTitleMaxBadgeAdjacentRTL {
   // When
+  [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleMaxArabic];
+  self.itemView.titleBelowIcon = NO;
+  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthTypical, kItemViewHeightTypical);
+
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testTypicalWidthTypicalHeightLongTitleManyLinesMaxBadgeAdjacentLTR {
+  // When
+  self.itemView.titleNumberOfLines = 0;
+  self.itemView.titleBelowIcon = NO;
+  self.itemView.badgeValue = kBadgeTitleMaxLatin;
+  self.itemView.frame = CGRectMake(0, 0, kItemViewWidthTypical, kItemViewHeightTypical);
+
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testTypicalWidthTypicalHeightLongTitleManyLinesMaxBadgeAdjacentRTL {
+  // When
+  self.itemView.titleNumberOfLines = 0;
   [self changeToRTLAndArabicWithBadgeValue:kBadgeTitleMaxArabic];
   self.itemView.titleBelowIcon = NO;
   self.itemView.frame = CGRectMake(0, 0, kItemViewWidthTypical, kItemViewHeightTypical);
