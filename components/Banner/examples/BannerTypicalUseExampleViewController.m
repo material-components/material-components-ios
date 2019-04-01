@@ -133,23 +133,17 @@ static NSString *const exampleExtraLongText =
 
 #pragma mark - UIViewController
 
-- (void)viewDidLayoutSubviews {
-  [super viewDidLayoutSubviews];
-
-  CGRect exampleListTableViewFrame =
-  CGRectMake(0, CGRectGetHeight(self.view.bounds) - exampleListTableViewHeight,
-             CGRectGetWidth(self.view.bounds), exampleListTableViewHeight);
-  self.exampleListTableView.frame = exampleListTableViewFrame;
+- (void)viewWillLayoutSubviews {
+  [super viewWillLayoutSubviews];
 
   CGSize bannerViewSize = [self.bannerView sizeThatFits:self.view.bounds.size];
-
   // Adjust bannerViewContainer's frame
   CGFloat topAreaInset = 0.0f;
   if (@available(iOS 11.0, *)) {
     topAreaInset = self.view.safeAreaInsets.top;
   }
   self.bannerView.frame =
-      CGRectMake(0.0f, topAreaInset, bannerViewSize.width, bannerViewSize.height);
+  CGRectMake(0.0f, topAreaInset, bannerViewSize.width, bannerViewSize.height);
 }
 
 #pragma mark - Internal helpers
@@ -228,15 +222,6 @@ static NSString *const exampleExtraLongText =
   [button addTarget:self
                 action:@selector(dismissBanner)
       forControlEvents:UIControlEventTouchUpInside];
-
-  // Adjust bannerViewContainer's frame
-  CGFloat topAreaInset = 0.0f;
-  if (@available(iOS 11.0, *)) {
-    topAreaInset = self.view.safeAreaInsets.top;
-  }
-
-  CGSize bannerViewSize = [bannerView sizeThatFits:self.view.bounds.size];
-  bannerView.frame = CGRectMake(0.0f, topAreaInset, bannerViewSize.width, bannerViewSize.height);
 }
 
 - (void)showSingleLineStyleBannerWithIcon {
@@ -281,14 +266,6 @@ static NSString *const exampleExtraLongText =
   [changeTextButton addTarget:self
                        action:@selector(dismissBanner)
              forControlEvents:UIControlEventTouchUpInside];
-
-  // Adjust bannerViewContainer's frame
-  CGFloat topAreaInset = 0.0f;
-  if (@available(iOS 11.0, *)) {
-    topAreaInset = self.view.safeAreaInsets.top;
-  }
-  CGSize bannerViewSize = [bannerView sizeThatFits:self.view.bounds.size];
-  bannerView.frame = CGRectMake(0.0f, topAreaInset, bannerViewSize.width, bannerViewSize.height);
 }
 
 - (void)showMultiLineAlignedButtonStyleBannerWithIcon {
@@ -332,14 +309,6 @@ static NSString *const exampleExtraLongText =
   [changeTextButton addTarget:self
                        action:@selector(dismissBanner)
              forControlEvents:UIControlEventTouchUpInside];
-
-  // Adjust bannerViewContainer's frame
-  CGFloat topAreaInset = 0.0f;
-  if (@available(iOS 11.0, *)) {
-    topAreaInset = self.view.safeAreaInsets.top;
-  }
-  CGSize bannerViewSize = [bannerView sizeThatFits:self.view.bounds.size];
-  bannerView.frame = CGRectMake(0.0f, topAreaInset, bannerViewSize.width, bannerViewSize.height);
 }
 
 - (void)showMultiLineStackedButtonStyleBannerWithIcon {
