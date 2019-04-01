@@ -230,8 +230,8 @@ static NSString *const exampleExtraLongText =
 
 - (void)showSingleLineStyleBannerWithIcon {
   [self showSingleLineStyleBanner];
-  NSBundle *bundle = [NSBundle bundleForClass:[BannerTypicalUseExampleViewController class]];
   if (@available(iOS 9_0, *)) {
+    NSBundle *bundle = [NSBundle bundleForClass:[BannerTypicalUseExampleViewController class]];
     self.bannerView.imageView.image = [[UIImage imageNamed:@"banner-email"
                                                   inBundle:bundle
                              compatibleWithTraitCollection:nil]
