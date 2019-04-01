@@ -103,8 +103,8 @@ static NSString *const exampleExtraLongText =
   [contentView addSubview:contentViewLabel];
   contentViewLabel.text = @"Content View";
   [contentViewLabel sizeToFit];
-  contentViewLabel.center = CGPointMake(CGRectGetMidX(contentView.bounds),
-                                        CGRectGetMidY(contentView.bounds));
+  contentViewLabel.center =
+      CGPointMake(CGRectGetMidX(contentView.bounds), CGRectGetMidY(contentView.bounds));
   self.contentViewLabel = contentViewLabel;
   self.contentView = contentView;
   [self.view addSubview:contentView];
@@ -112,8 +112,8 @@ static NSString *const exampleExtraLongText =
   // Set up example list table view
   self.exampleList = [self getBannerExampleList];
   CGRect exampleListTableViewFrame =
-  CGRectMake(0, CGRectGetHeight(self.view.bounds) - exampleListTableViewHeight,
-             CGRectGetWidth(self.view.bounds), exampleListTableViewHeight);
+      CGRectMake(0, CGRectGetHeight(self.view.bounds) - exampleListTableViewHeight,
+                 CGRectGetWidth(self.view.bounds), exampleListTableViewHeight);
   UITableView *exampleListTableView = [[UITableView alloc] initWithFrame:exampleListTableViewFrame
                                                                    style:UITableViewStylePlain];
   [self.view addSubview:exampleListTableView];
@@ -143,7 +143,7 @@ static NSString *const exampleExtraLongText =
     topAreaInset = self.view.safeAreaInsets.top;
   }
   self.bannerView.frame =
-  CGRectMake(0.0f, topAreaInset, bannerViewSize.width, bannerViewSize.height);
+      CGRectMake(0.0f, topAreaInset, bannerViewSize.width, bannerViewSize.height);
 }
 
 #pragma mark - Internal helpers
