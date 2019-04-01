@@ -103,7 +103,8 @@ static NSString *const exampleExtraLongText =
   [contentView addSubview:contentViewLabel];
   contentViewLabel.text = @"Content View";
   [contentViewLabel sizeToFit];
-  contentViewLabel.center = contentView.center;
+  contentViewLabel.center = CGPointMake(CGRectGetMidX(contentView.bounds),
+                                        CGRectGetMidY(contentView.bounds));
   self.contentViewLabel = contentViewLabel;
   self.contentView = contentView;
   [self.view addSubview:contentView];
@@ -111,8 +112,8 @@ static NSString *const exampleExtraLongText =
   // Set up example list table view
   self.exampleList = [self getBannerExampleList];
   CGRect exampleListTableViewFrame =
-      CGRectMake(0, self.view.bounds.size.height - exampleListTableViewHeight,
-                 self.view.bounds.size.width, exampleListTableViewHeight);
+  CGRectMake(0, CGRectGetHeight(self.view.bounds) - exampleListTableViewHeight,
+             CGRectGetWidth(self.view.bounds), exampleListTableViewHeight);
   UITableView *exampleListTableView = [[UITableView alloc] initWithFrame:exampleListTableViewFrame
                                                                    style:UITableViewStylePlain];
   [self.view addSubview:exampleListTableView];
@@ -135,11 +136,9 @@ static NSString *const exampleExtraLongText =
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
 
-  self.contentView.frame = self.view.bounds;
-  self.contentViewLabel.center = self.contentView.center;
   CGRect exampleListTableViewFrame =
-      CGRectMake(0, self.view.bounds.size.height - exampleListTableViewHeight,
-                 self.view.bounds.size.width, exampleListTableViewHeight);
+  CGRectMake(0, CGRectGetHeight(self.view.bounds) - exampleListTableViewHeight,
+             CGRectGetWidth(self.view.bounds), exampleListTableViewHeight);
   self.exampleListTableView.frame = exampleListTableViewFrame;
 
   CGSize bannerViewSize =
@@ -244,7 +243,6 @@ static NSString *const exampleExtraLongText =
 
 - (void)showSingleLineStyleBannerWithIcon {
   [self showSingleLineStyleBanner];
-  // TODO: https://github.com/material-components/material-components-ios/issues/6838
   NSBundle *bundle = [NSBundle bundleForClass:[BannerTypicalUseExampleViewController class]];
   self.bannerView.imageView.image = [[UIImage imageNamed:@"banner-email"
                                                 inBundle:bundle
@@ -298,7 +296,6 @@ static NSString *const exampleExtraLongText =
 
 - (void)showMultiLineAlignedButtonStyleBannerWithIcon {
   [self showMultiLineAlignedButtonStyleBanner];
-  // TODO: https://github.com/material-components/material-components-ios/issues/6838
   NSBundle *bundle = [NSBundle bundleForClass:[BannerTypicalUseExampleViewController class]];
   self.bannerView.imageView.image = [[UIImage imageNamed:@"banner-email"
                                                 inBundle:bundle
@@ -351,7 +348,6 @@ static NSString *const exampleExtraLongText =
 
 - (void)showMultiLineStackedButtonStyleBannerWithIcon {
   [self showMultiLineStackedButtonStyleBanner];
-  // TODO: https://github.com/material-components/material-components-ios/issues/6838
   NSBundle *bundle = [NSBundle bundleForClass:[BannerTypicalUseExampleViewController class]];
   self.bannerView.imageView.image = [[UIImage imageNamed:@"banner-email"
                                                 inBundle:bundle
