@@ -393,7 +393,8 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 
 #pragma mark - Layout helpers
 
-- (void)updateButtonsConstraintsWithLayoutMode:(MDCBannerViewLayoutMode)layoutMode NS_AVAILABLE_IOS(9_0) {
+- (void)updateButtonsConstraintsWithLayoutMode:(MDCBannerViewLayoutMode)layoutMode
+    NS_AVAILABLE_IOS(9_0) {
   if (self.trailingButton.hidden) {
     self.leadingButtonConstraintTrailing.active = YES;
     self.leadingButtonConstraintCenterY.active = YES;
