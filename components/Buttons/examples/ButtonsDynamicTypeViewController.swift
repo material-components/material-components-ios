@@ -25,7 +25,6 @@ class ButtonsDynamicTypeViewController: UIViewController {
       "breadcrumbs": ["Buttons", "Buttons (DynamicType)"],
       "primaryDemo": false,
       "presentable": false,
-      "debug": true, 
     ]
   }
 
