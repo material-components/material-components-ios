@@ -387,30 +387,27 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
       self.buttonContainerConstraintTrailing.active = YES;
       self.buttonContainerConstraintBottom.active = YES;
     }
+    [self updateButtonsConstraintsWithLayoutMode:layoutMode];
   }
-
-  [self updateButtonsConstraintsWithLayoutMode:layoutMode];
 }
 
 #pragma mark - Layout helpers
 
-- (void)updateButtonsConstraintsWithLayoutMode:(MDCBannerViewLayoutMode)layoutMode {
-  if (@available(iOS 9.0, *)) {
-    if (self.trailingButton.hidden) {
+- (void)updateButtonsConstraintsWithLayoutMode:(MDCBannerViewLayoutMode)layoutMode NS_AVAILABLE_IOS(9_0) {
+  if (self.trailingButton.hidden) {
+    self.leadingButtonConstraintTrailing.active = YES;
+    self.leadingButtonConstraintCenterY.active = YES;
+  } else {
+    if (layoutMode == MDCBannerViewLayoutModeMultiLineStackedButton) {
       self.leadingButtonConstraintTrailing.active = YES;
-      self.leadingButtonConstraintCenterY.active = YES;
+      self.trailingButtonConstraintTop.active = YES;
     } else {
-      if (layoutMode == MDCBannerViewLayoutModeMultiLineStackedButton) {
-        self.leadingButtonConstraintTrailing.active = YES;
-        self.trailingButtonConstraintTop.active = YES;
-      } else {
-        self.leadingButtonConstraintTrailingWithTrailingButton.active = YES;
-      }
-      self.leadingButtonConstraintTop.active = YES;
-      self.leadingButtonConstraintLeading.active = YES;
-      self.trailingButtonConstraintTrailing.active = YES;
-      self.trailingButtonConstraintBottom.active = YES;
+      self.leadingButtonConstraintTrailingWithTrailingButton.active = YES;
     }
+    self.leadingButtonConstraintTop.active = YES;
+    self.leadingButtonConstraintLeading.active = YES;
+    self.trailingButtonConstraintTrailing.active = YES;
+    self.trailingButtonConstraintBottom.active = YES;
   }
 }
 
