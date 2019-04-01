@@ -67,7 +67,8 @@
  controller. If a flexible header is already present in the view controller, this method will not
  be invoked.
  */
-- (nullable UIScrollView *)appBarNavigationController:(nonnull MDCAppBarNavigationController *)navigationController
+- (nullable UIScrollView *)appBarNavigationController:
+                               (nonnull MDCAppBarNavigationController *)navigationController
                   trackingScrollViewForViewController:(nonnull UIViewController *)viewController
                           suggestedTrackingScrollView:(nullable UIScrollView *)scrollView;
 
