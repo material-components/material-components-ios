@@ -39,8 +39,7 @@ static const CGFloat kBannerContentPadding = 10.0f;
   // test you wish to recreate the golden for).
 //    self.recordMode = YES;
 
-//  self.bannerView = [[MDCBannerView alloc] initWithFrame:CGRectMake(0, 0, 350, 51)];
-  self.bannerView = [[MDCBannerView alloc] init];
+  self.bannerView = [[MDCBannerView alloc] initWithFrame:CGRectZero];
   UIEdgeInsets margins = UIEdgeInsetsZero;
   margins.left = kBannerContentPadding;
   margins.right = kBannerContentPadding;
@@ -56,8 +55,6 @@ static const CGFloat kBannerContentPadding = 10.0f;
 - (void)generateSnapshotAndVerifyForView:(UIView *)view {
   CGSize aSize = [view sizeThatFits:CGSizeMake(350, INFINITY)];
   view.frame = CGRectMake(0, 0, aSize.width, aSize.height);
-  [view setNeedsUpdateConstraints];
-  [view updateConstraintsIfNeeded];
   [view layoutIfNeeded];
 
   UIView *snapshotView = [view mdc_addToBackgroundView];
@@ -81,6 +78,7 @@ static const CGFloat kBannerContentPadding = 10.0f;
   MDCButton *button = self.bannerView.leadingButton;
   [button setTitle:@"Action" forState:UIControlStateNormal];
   button.uppercaseTitle = YES;
+  [button setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
   self.bannerView.trailingButton.hidden = YES;
 
   // Then
@@ -92,6 +90,7 @@ static const CGFloat kBannerContentPadding = 10.0f;
   self.bannerView.textLabel.text = kBannerShortText;
   MDCButton *button = self.bannerView.leadingButton;
   [button setTitle:@"Action" forState:UIControlStateNormal];
+  [button setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
   button.uppercaseTitle = YES;
   self.bannerView.trailingButton.hidden = YES;
   [self changeViewToRTL:self.bannerView];
@@ -105,6 +104,7 @@ static const CGFloat kBannerContentPadding = 10.0f;
   self.bannerView.textLabel.text = kBannerLongText;
   MDCButton *button = self.bannerView.leadingButton;
   [button setTitle:@"Action" forState:UIControlStateNormal];
+  [button setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
   button.uppercaseTitle = YES;
   self.bannerView.trailingButton.hidden = YES;
 
@@ -117,6 +117,7 @@ static const CGFloat kBannerContentPadding = 10.0f;
   self.bannerView.textLabel.text = kBannerLongText;
   MDCButton *button = self.bannerView.leadingButton;
   [button setTitle:@"Action" forState:UIControlStateNormal];
+  [button setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
   button.uppercaseTitle = YES;
   self.bannerView.trailingButton.hidden = YES;
   [self changeViewToRTL:self.bannerView];
@@ -130,9 +131,11 @@ static const CGFloat kBannerContentPadding = 10.0f;
   self.bannerView.textLabel.text = kBannerLongText;
   MDCButton *button1 = self.bannerView.leadingButton;
   [button1 setTitle:@"Action1" forState:UIControlStateNormal];
+  [button1 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
   button1.uppercaseTitle = YES;
   MDCButton *button2 = self.bannerView.trailingButton;
   [button2 setTitle:@"Action2" forState:UIControlStateNormal];
+  [button2 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
   button2.uppercaseTitle = YES;
 
   // Then
@@ -144,9 +147,11 @@ static const CGFloat kBannerContentPadding = 10.0f;
   self.bannerView.textLabel.text = kBannerLongText;
   MDCButton *button1 = self.bannerView.leadingButton;
   [button1 setTitle:@"Action1" forState:UIControlStateNormal];
+  [button1 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
   button1.uppercaseTitle = YES;
   MDCButton *button2 = self.bannerView.trailingButton;
   [button2 setTitle:@"Action2" forState:UIControlStateNormal];
+  [button2 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
   button2.uppercaseTitle = YES;
   [self changeViewToRTL:self.bannerView];
 
