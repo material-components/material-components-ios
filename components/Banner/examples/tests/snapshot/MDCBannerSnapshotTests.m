@@ -37,7 +37,7 @@ static const CGFloat kBannerContentPadding = 10.0f;
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-//    self.recordMode = YES;
+  //  self.recordMode = YES;
 
   self.bannerView = [[MDCBannerView alloc] initWithFrame:CGRectZero];
   UIEdgeInsets margins = UIEdgeInsetsZero;
