@@ -343,52 +343,52 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 }
 
 - (void)updateConstraints {
-  MDCBannerViewLayoutMode layoutMode = [self layoutModeForSizeToFit:self.bounds.size];
-  [self updateConstraintsWithLayoutMode:layoutMode];
+  if (@available(iOS 9.0, *)) {
+    MDCBannerViewLayoutMode layoutMode = [self layoutModeForSizeToFit:self.bounds.size];
+    [self updateConstraintsWithLayoutMode:layoutMode];
+  }
 
   [super updateConstraints];
 }
 
 #pragma mark - Layout methods
 
-- (void)updateConstraintsWithLayoutMode:(MDCBannerViewLayoutMode)layoutMode {
+- (void)updateConstraintsWithLayoutMode:(MDCBannerViewLayoutMode)layoutMode NS_AVAILABLE_IOS(9_0) {
   [self deactivateAllConstraints];
   // Set Elements
-  if (@available(iOS 9.0, *)) {
-    if (layoutMode == MDCBannerViewLayoutModeSingleLine) {
-      if (self.hasImage) {
-        self.imageViewConstraintLeading.active = YES;
-        self.imageViewConstraintTopSmall.active = YES;
-        self.imageViewConstraintBottom.active = YES;
-        self.textLabelConstraintLeadingWithImage.active = YES;
-      } else {
-        self.textLabelConstraintLeadingWithMargin.active = YES;
-      }
-      self.textLabelConstraintCenterY.active = YES;
-      self.buttonContainerConstraintLeadingWithTextLabel.active = YES;
-      self.buttonContainerConstraintLeadingWithTextLabelGreater.active = YES;
-      self.buttonContainerConstraintTrailing.active = YES;
-      self.buttonContainerConstraintTopWithMargin.active = YES;
-      self.buttonContainerConstraintBottom.active = YES;
+  if (layoutMode == MDCBannerViewLayoutModeSingleLine) {
+    if (self.hasImage) {
+      self.imageViewConstraintLeading.active = YES;
+      self.imageViewConstraintTopSmall.active = YES;
+      self.imageViewConstraintBottom.active = YES;
+      self.textLabelConstraintLeadingWithImage.active = YES;
     } else {
-      if (self.hasImage) {
-        self.imageViewConstraintLeading.active = YES;
-        self.imageViewConstraintTopLarge.active = YES;
-        self.textLabelConstraintLeadingWithImage.active = YES;
-        self.buttonContainerConstraintTopWithImageViewGreater.active = YES;
-      } else {
-        self.textLabelConstraintLeadingWithMargin.active = YES;
-      }
-      self.textLabelConstraintTop.active = YES;
-      self.textLabelConstraintTrailing.active = YES;
-      self.buttonContainerConstraintTopWithTextLabelGreater.active = YES;
-      self.buttonContainerConstraintTopWithTextLabel.active = YES;
-      self.buttonContainerConstraintLeading.active = YES;
-      self.buttonContainerConstraintTrailing.active = YES;
-      self.buttonContainerConstraintBottom.active = YES;
+      self.textLabelConstraintLeadingWithMargin.active = YES;
     }
-    [self updateButtonsConstraintsWithLayoutMode:layoutMode];
+    self.textLabelConstraintCenterY.active = YES;
+    self.buttonContainerConstraintLeadingWithTextLabel.active = YES;
+    self.buttonContainerConstraintLeadingWithTextLabelGreater.active = YES;
+    self.buttonContainerConstraintTrailing.active = YES;
+    self.buttonContainerConstraintTopWithMargin.active = YES;
+    self.buttonContainerConstraintBottom.active = YES;
+  } else {
+    if (self.hasImage) {
+      self.imageViewConstraintLeading.active = YES;
+      self.imageViewConstraintTopLarge.active = YES;
+      self.textLabelConstraintLeadingWithImage.active = YES;
+      self.buttonContainerConstraintTopWithImageViewGreater.active = YES;
+    } else {
+      self.textLabelConstraintLeadingWithMargin.active = YES;
+    }
+    self.textLabelConstraintTop.active = YES;
+    self.textLabelConstraintTrailing.active = YES;
+    self.buttonContainerConstraintTopWithTextLabelGreater.active = YES;
+    self.buttonContainerConstraintTopWithTextLabel.active = YES;
+    self.buttonContainerConstraintLeading.active = YES;
+    self.buttonContainerConstraintTrailing.active = YES;
+    self.buttonContainerConstraintBottom.active = YES;
   }
+  [self updateButtonsConstraintsWithLayoutMode:layoutMode];
 }
 
 #pragma mark - Layout helpers
