@@ -16,7 +16,6 @@
 
 #import "MaterialButtons.h"
 
-NS_CLASS_AVAILABLE_IOS(9_0)
 __attribute__((objc_subclassing_restricted)) @interface MDCBannerView : UIView
 
 /**
