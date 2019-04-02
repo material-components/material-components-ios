@@ -16,6 +16,13 @@
 
 #import "MaterialButtons.h"
 
+
+
+/**
+ The MDCBannerView class creates and configures a view to represent a Materail Banner.
+
+ The [Material Guideline](https://material.io/design/components/banners.html) has more details on component usage.
+ */
 __attribute__((objc_subclassing_restricted)) @interface MDCBannerView : UIView
 
 /**
@@ -27,7 +34,7 @@ __attribute__((objc_subclassing_restricted)) @interface MDCBannerView : UIView
 /**
  A view that displays the image on a @c MDCBannerView.
  The properties of @c imageView can be used to configure the image shown on @c MDCBannerView.
- If @c imageView 's own property @c image is @c nil, this view won't show on the @c MDCBannerView.
+ If @c imageView 's own property @c image is @c nil, this view is hidden on the @c MDCBannerView.
  */
 @property(nonatomic, readonly, strong, nonnull) UIImageView *imageView;
 
