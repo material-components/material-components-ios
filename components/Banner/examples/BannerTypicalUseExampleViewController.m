@@ -14,10 +14,10 @@
 
 #import "BannerTypicalUseExampleViewController.h"
 
+#import "MaterialBanner.h"
 #import "MaterialButtons.h"
 #import "MaterialColorScheme.h"
 #import "MaterialTypography.h"
-#import "supplemental/MaterialBanner.h"
 
 static const CGFloat exampleListTableViewHeight = 160.0f;
 static const CGFloat exampleBannerContentPadding = 10.0f;

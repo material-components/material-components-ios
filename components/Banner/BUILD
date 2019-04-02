@@ -15,15 +15,29 @@
 load(
     "//:material_components_ios.bzl",
     "mdc_examples_objc_library",
+    "mdc_objc_library",
 )
 
 licenses(["notice"])  # Apache 2.0
 
-mdc_examples_objc_library(
-    name = "ObjcExamples",
+mdc_objc_library(
+    name = "Banner",
+    sdk_frameworks = ["UIKit"],
+    visibility = [
+    ],
+    srcs = native.glob(["src/*.m"]),
+    hdrs = native.glob(["src/*.h"]),
+    includes = ["src"],
     deps = [
         "//components/Buttons",
         "//components/Typography",
+    ],
+)
+
+mdc_examples_objc_library(
+    name = "ObjcExamples",
+    deps = [
+        ":Banner",
         "//components/schemes/Color",
     ],
 )
