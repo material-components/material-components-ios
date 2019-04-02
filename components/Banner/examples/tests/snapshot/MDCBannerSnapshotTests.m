@@ -40,10 +40,17 @@ static const CGFloat kBannerContentPadding = 10.0f;
   //  self.recordMode = YES;
 
   self.bannerView = [[MDCBannerView alloc] initWithFrame:CGRectZero];
-  UIEdgeInsets margins = UIEdgeInsetsZero;
-  margins.left = kBannerContentPadding;
-  margins.right = kBannerContentPadding;
-  self.bannerView.layoutMargins = margins;
+  if (@available(iOS 11.0, *)) {
+    NSDirectionalEdgeInsets directionalEdgeInsets = NSDirectionalEdgeInsetsZero;
+    directionalEdgeInsets.leading = kBannerContentPadding;
+    directionalEdgeInsets.trailing = kBannerContentPadding;
+    self.bannerView.directionalLayoutMargins = directionalEdgeInsets;
+  } else {
+    UIEdgeInsets margins = UIEdgeInsetsZero;
+    margins.left = kBannerContentPadding;
+    margins.right = kBannerContentPadding;
+    self.bannerView.layoutMargins = margins;
+  }
 }
 
 - (void)tearDown {
