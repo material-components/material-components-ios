@@ -14,19 +14,35 @@
 
 #import <UIKit/UIKit.h>
 
-@class MDCButton;
+#import "MaterialButtons.h"
 
 __attribute__((objc_subclassing_restricted)) @interface MDCBannerView : UIView
 
-@property(nonatomic, copy, nonnull) NSString *text;
-
-@property(nonatomic, strong, nullable) UIImage *image;  // default is nil
-
-@property(nonatomic, assign) NSUInteger numberOfButtons;  // default is 1
+/**
+ A view that displays the text on a @c MDCBannerView
+ The properties of @c textLabel can be used to configure the text shown on @c MDCBannerView.
+ */
+@property(nonatomic, readonly, strong, nonnull) UILabel *textLabel;
 
 /**
- The buttons representing the banner's actions.
+ A view that displays the image on a @c MDCBannerView.
+ The properties of @c imageView can be used to configure the image shown on @c MDCBannerView.
+ If @c imageView 's own property @c image is @c nil, this view won't show on the @c MDCBannerView.
  */
-@property(nonatomic, readonly, copy, nonnull) NSArray<MDCButton *> *buttons;
+@property(nonatomic, readonly, strong, nonnull) UIImageView *imageView;
+
+/**
+ A leading button that displays on a @c MDCBannerView.
+ This @c leadingButton is displayed on the leading edge of the view. If it does not fit on the same
+ row as @c trailingButton, it will be placed above @c trailingButton.
+ */
+@property(nonatomic, readonly, strong, nonnull) MDCButton *leadingButton;
+
+/**s
+ A trailing button that displays on a @c MDCBannerView.
+ This @c trailingButton is displayed on the trailing edge of the view. If it does not fit on the
+ same row as @c leadingButton, it will be placed shows below @c leadingButton.
+ */
+@property(nonatomic, readonly, strong, nonnull) MDCButton *trailingButton;
 
 @end

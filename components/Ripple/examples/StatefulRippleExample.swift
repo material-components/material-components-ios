@@ -14,7 +14,7 @@
 
 import Foundation
 import UIKit
-import MaterialComponentsBeta.MaterialRipple
+import MaterialComponents.MaterialRipple
 
 class RippleView : UIView {
   let statefulRippleView = MDCStatefulRippleView()

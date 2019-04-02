@@ -17,6 +17,7 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
+#import "MDCItemBarBadge.h"
 #import "MDCItemBarStringConstants.h"
 #import "MDCItemBarStyle.h"
 #import "MaterialAnimationTiming.h"
@@ -51,16 +52,20 @@ const CGFloat kSelectedNavigationImageYOffset = -2;
 /// Duration of selection animations in applicable content styles.
 static const NSTimeInterval kSelectionAnimationDuration = 0.3;
 
-@implementation MDCItemBarCell {
-  UIImageView *_imageView;
-  UILabel *_badgeLabel;
-  MDCInkTouchController *_inkTouchController;
+@interface MDCItemBarCell ()
 
-  MDCItemBarStyle *_style;
+@property(nonatomic, strong) UIImageView *imageView;
+@property(nonatomic, strong) MDCItemBarBadge *badge;
+@property(nonatomic, strong) MDCInkTouchController *inkTouchController;
 
-  NSInteger _itemIndex;
-  NSInteger _itemCount;
-}
+@property(nonatomic, strong) MDCItemBarStyle *style;
+
+@property(nonatomic) NSInteger itemIndex;
+@property(nonatomic) NSInteger itemCount;
+
+@end
+
+@implementation MDCItemBarCell
 
 #pragma mark - Init
 
@@ -164,7 +169,8 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
 
 - (void)setBadgeValue:(nullable NSString *)badgeValue {
   _badgeValue = [badgeValue copy];
-  _badgeLabel.text = badgeValue;
+  _badge.badgeValue = _badgeValue;
+  _badge.hidden = !_badgeValue;
   [self setNeedsLayout];
 }
 
@@ -190,9 +196,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
     _style = style;
 
     [self updateDisplayedTitle];
-    [self updateTitleTextColor];
-    [self updateImageTintColor];
-    [self updateInk];
+    [self updateColors];
     [self updateSubviews];
     [self updateTitleLines];
     [self updateTitleFont];
@@ -246,8 +250,8 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
   titleCenter.x = CGRectGetMidX(contentBounds);
   titleBounds.size = titleSize;
 
-  // Size badge
-  CGSize badgeSize = [self badgeLabelSizeWithText:_badgeLabel.text font:_badgeLabel.font];
+  // Size badge.
+  CGSize badgeSize = [_badge sizeThatFits:contentBounds.size];
   badgeBounds.size = badgeSize;
 
   // Determine badge center
@@ -290,8 +294,8 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
   _imageView.bounds = imageBounds;
   _imageView.center = MDCRoundCenterWithBoundsAndScale(imageCenter, _imageView.bounds, scale);
 
-  _badgeLabel.bounds = MDCRectAlignToScale(badgeBounds, scale);
-  _badgeLabel.center = MDCRoundCenterWithBoundsAndScale(badgeCenter, _badgeLabel.bounds, scale);
+  _badge.bounds = MDCRectAlignToScale(badgeBounds, scale);
+  _badge.center = MDCRoundCenterWithBoundsAndScale(badgeCenter, _badge.bounds, scale);
 
   self.titleLabel.bounds = MDCRectAlignToScale(titleBounds, scale);
   self.titleLabel.center =
@@ -354,7 +358,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
     [labelComponents addObject:titleComponent];
   }
 
-  if (_badgeValue.length > 0 && !_badgeLabel.hidden) {
+  if (_badgeValue.length > 0 && !_badge.hidden) {
     [labelComponents addObject:_badgeValue];
   }
 
@@ -449,22 +453,22 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
   }
 
   if (_style.shouldDisplayBadge) {
-    if (!_badgeLabel) {
-      _badgeLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-      _badgeLabel.numberOfLines = 1;
-      _badgeLabel.font = [[MDCTypography fontLoader] regularFontOfSize:kBadgeFontSize];
-      [self.contentView addSubview:_badgeLabel];
-      _badgeLabel.text = _badgeValue;
+    if (!_badge) {
+      _badge = [[MDCItemBarBadge alloc] initWithFrame:CGRectZero];
+      _badge.isAccessibilityElement = NO;
+      [self.contentView addSubview:_badge];
+      _badge.badgeValue = _badgeValue;
     }
-    _badgeLabel.hidden = NO;
+    _badge.hidden = !_badgeValue;
   } else {
-    _badgeLabel.hidden = YES;
+    _badge.hidden = YES;
   }
 }
 
 - (void)updateColors {
   [self updateTitleTextColor];
   [self updateImageTintColor];
+  [self updateBadgeColor];
   [self updateInk];
 }
 
@@ -474,7 +478,6 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
     textColor = _style.selectedTitleColor;
   }
   _titleLabel.textColor = textColor;
-  _badgeLabel.textColor = textColor;
 }
 
 - (void)updateImageTintColor {
@@ -483,6 +486,10 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
     imageTintColor = _style.selectedImageTintColor;
   }
   _imageView.tintColor = imageTintColor;
+}
+
+- (void)updateBadgeColor {
+  _badge.badgeColor = _style.badgeColor;
 }
 
 - (void)updateTransformsAnimated:(BOOL)animated {
@@ -523,7 +530,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
 
     // Set the transforms.
     self.titleLabel.transform = titleTransform;
-    self->_badgeLabel.transform = imageTransform;
+    self->_badge.transform = imageTransform;
     self->_imageView.transform = imageTransform;
   };
   void (^completeAnimations)(BOOL) = ^(__unused BOOL finished) {
@@ -577,18 +584,6 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
 
 - (void)updateDisplayedTitle {
   _titleLabel.text = [[self class] displayedTitleForTitle:_title style:_style];
-}
-
-- (CGSize)badgeLabelSizeWithText:(NSString *)string font:(UIFont *)font {
-  if (string.length <= 0) {
-    return CGSizeZero;
-  }
-
-  return [string boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)
-                              options:NSStringDrawingUsesLineFragmentOrigin
-                           attributes:@{NSFontAttributeName : font}
-                              context:nil]
-      .size;
 }
 
 @end

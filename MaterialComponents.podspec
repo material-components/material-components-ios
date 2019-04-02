@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponents"
-  mdc.version      = "80.0.0"
+  mdc.version      = "81.0.0"
   mdc.authors      = "The Material Components authors."
   mdc.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   mdc.homepage     = "https://github.com/material-components/material-components-ios"
@@ -498,8 +498,8 @@ Pod::Spec.new do |mdc|
         "components/#{component.base_name}/src/MDCCard+Ripple.{h,m}",
         "components/#{component.base_name}/src/MDCCardCollectionCell+Ripple.{h,m}"
     ]
-    component.dependency "MaterialComponents/Cards+Private"
     component.dependency "MaterialComponents/Ink"
+    component.dependency "MaterialComponents/Ripple"
     component.dependency "MaterialComponents/ShadowLayer"
     component.dependency "MaterialComponents/Shapes"
     component.dependency "MaterialComponents/private/Icons/ic_check_circle"
@@ -514,14 +514,6 @@ Pod::Spec.new do |mdc|
       unit_tests.dependency "MaterialComponents/#{component.base_name}+ColorThemer"
       unit_tests.dependency "MaterialComponents/#{component.base_name}+ShapeThemer"
     end
-  end
-
-  mdc.subspec "Cards+Private" do |extension|
-    extension.ios.deployment_target = '8.0'
-    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/private/*.h"
-    extension.source_files = [
-        "components/#{extension.base_name.split('+')[0]}/src/private/*.{h,m}"
-    ]
   end
 
   mdc.subspec "Cards+ColorThemer" do |extension|
@@ -1323,6 +1315,25 @@ Pod::Spec.new do |mdc|
 
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
     extension.dependency "MaterialComponents/Themes"
+  end
+
+  # Ripple
+
+  mdc.subspec "Ripple" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+
+    component.dependency "MaterialComponents/AnimationTiming"
+    component.dependency "MaterialComponents/private/Math"
+
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = [
+        "components/#{component.base_name}/tests/unit/*.{h,m,swift}",
+        "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+      ]
+      unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+    end
   end
 
   # ShadowElevations
