@@ -23,22 +23,13 @@
 #import "MaterialInk.h"
 #import "MaterialSnapshot.h"
 #import "supplemental/MDCBottomNavigationSnapshotTestMutableTraitCollection.h"
+#import "supplemental/MDCBottomNavigationSnapshotTestUtilities.h"
 #import "supplemental/MDCFakeBottomNavigationBar.h"
 
 static const CGFloat kWidthWide = 1600;
-static const CGFloat kWidthiPad = 1024;
-static const CGFloat kWidthTypical = 360;
 static const CGFloat kWidthNarrow = 240;
 static const CGFloat kHeightTall = 120;
-static const CGFloat kHeightTypical = 56;
 static const CGFloat kHeightShort = 48;
-static NSString *const kLongTitleLatin =
-    @"123456789012345678901234567890123456789012345678901234567890";
-static NSString *const kLongTitleArabic =
-    @"دول السيطرة استطاعوا ٣٠. مليون وفرنسا أوراقهم انه تم, نفس قد والديون العالمية. دون ما تنفّس.";
-static NSString *const kShortTitleArabic = @"ما تنفّس.";
-static NSString *const kBadgeTitleLatin = @"888+";
-static NSString *const kBadgeTitleArabic = @"أورا";
 
 @interface MDCBottomNavigationBarSnapshotTests : MDCSnapshotTestCase
 @property(nonatomic, strong) MDCFakeBottomNavigationBar *navigationBar;
@@ -47,7 +38,6 @@ static NSString *const kBadgeTitleArabic = @"أورا";
 @property(nonatomic, strong) UITabBarItem *tabItem3;
 @property(nonatomic, strong) UITabBarItem *tabItem4;
 @property(nonatomic, strong) UITabBarItem *tabItem5;
-@property(nonatomic, strong) UIImage *testImage;
 @end
 
 @implementation MDCBottomNavigationBarSnapshotTests
@@ -72,7 +62,7 @@ static NSString *const kBadgeTitleArabic = @"أورا";
               image:[UIImage mdc_testImageOfSize:imageSize
                                        withStyle:MDCSnapshotTestImageStyleCheckerboard]
                 tag:2];
-  self.tabItem2.badgeValue = kBadgeTitleLatin;
+  self.tabItem2.badgeValue = MDCBottomNavigationTestBadgeTitleLatin;
   self.tabItem3 = [[UITabBarItem alloc]
       initWithTitle:@"Item 3"
               image:[UIImage mdc_testImageOfSize:imageSize
@@ -138,306 +128,10 @@ static NSString *const kBadgeTitleArabic = @"أورا";
     }
   }
   if (self.navigationBar.items.count >= 2U) {
-    self.navigationBar.items[1].badgeValue = kBadgeTitleArabic;
+    self.navigationBar.items[1].badgeValue = MDCBottomNavigationTestBadgeTitleArabic;
   } else {
-    self.navigationBar.items.firstObject.badgeValue = kBadgeTitleArabic;
+    self.navigationBar.items.firstObject.badgeValue = MDCBottomNavigationTestBadgeTitleArabic;
   }
-}
-
-- (UIView *)superviewForVisualBlurEffectWithNavigationBar:(MDCBottomNavigationBar *)navigationBar {
-  UIView *barSuperview =
-      [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWidthTypical, kHeightTypical * 2)];
-  UIColor *patternColor = [UIColor
-      colorWithPatternImage:[UIImage mdc_testImageOfSize:CGSizeMake(kWidthTypical, kWidthTypical)]];
-  barSuperview.backgroundColor = patternColor;
-  [barSuperview addSubview:navigationBar];
-  return barSuperview;
-}
-
-- (void)configureNavigationBarForVisualBlurEffectTest:(MDCBottomNavigationBar *)navigationBar {
-  navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
-  navigationBar.selectedItem = self.tabItem2;
-  navigationBar.frame = CGRectMake(0, kHeightTypical, kWidthTypical, kHeightTypical);
-  [self performInkTouchOnBar:navigationBar item:self.tabItem2];
-}
-
-#pragma mark - Title length
-
-- (void)testJustifiedUnspecifiedAlwaysWithFiveLongTitleItemsiPadWidthTypicalHeightLTR {
-  // When
-  [self configureBottomNavigation:self.navigationBar
-                    withAlignment:MDCBottomNavigationBarAlignmentJustified
-                  titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
-                  traitCollection:nil
-                        allTitles:kLongTitleLatin];
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
-  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
-
-  // Then
-  [self generateAndVerifySnapshot];
-}
-
-- (void)testJustifiedUnspecifiedAlwaysWithFiveLongTitleItemsUnboundiPadWidthTypicalHeightLTR {
-  // When
-  [self configureBottomNavigation:self.navigationBar
-                    withAlignment:MDCBottomNavigationBarAlignmentJustified
-                  titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
-                  traitCollection:nil
-                        allTitles:kLongTitleLatin];
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
-  self.navigationBar.truncatesLongTitles = NO;
-  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
-
-  // Then
-  [self generateAndVerifySnapshot];
-}
-
-- (void)testJustifiedUnspecifiedAlwaysWithFiveLongTitleItemsiPadWidthTypicalHeightRTL {
-  // When
-  [self configureBottomNavigation:self.navigationBar
-                    withAlignment:MDCBottomNavigationBarAlignmentJustified
-                  titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
-                  traitCollection:nil
-                        allTitles:kLongTitleLatin];
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
-  [self changeToRTLAndArabicWithTitle:kLongTitleArabic];
-  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
-
-  // Then
-  [self generateAndVerifySnapshot];
-}
-
-- (void)testJustifiedUnspecifiedAlwaysWithFiveLongTitleItemsUnboundiPadWidthTypicalHeightRTL {
-  // When
-  [self configureBottomNavigation:self.navigationBar
-                    withAlignment:MDCBottomNavigationBarAlignmentJustified
-                  titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
-                  traitCollection:nil
-                        allTitles:kLongTitleLatin];
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
-  [self changeToRTLAndArabicWithTitle:kLongTitleArabic];
-  self.navigationBar.truncatesLongTitles = NO;
-  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
-
-  // Then
-  [self generateAndVerifySnapshot];
-}
-
-- (void)testJustifiedAdjacentRegularAlwaysWithFiveLongTitleItemsiPadWidthTypicalHeightLTR {
-  // Given
-  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection =
-      [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
-  traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassRegular;
-
-  // When
-  [self configureBottomNavigation:self.navigationBar
-                    withAlignment:MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles
-                  titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
-                  traitCollection:traitCollection
-                        allTitles:kLongTitleLatin];
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
-  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
-
-  // Then
-  [self generateAndVerifySnapshot];
-}
-
-- (void)testJustifiedAdjacentRegularAlwaysWithFiveLongTitleItemsUnboundiPadWidthTypicalHeightLTR {
-  // Given
-  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection =
-      [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
-  traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassRegular;
-
-  // When
-  [self configureBottomNavigation:self.navigationBar
-                    withAlignment:MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles
-                  titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
-                  traitCollection:traitCollection
-                        allTitles:kLongTitleLatin];
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
-  self.navigationBar.truncatesLongTitles = NO;
-  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
-
-  // Then
-  [self generateAndVerifySnapshot];
-}
-
-- (void)testJustifiedAdjacentRegularAlwaysWithFiveLongTitleItemsiPadWidthTypicalHeightRTL {
-  // Given
-  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection =
-      [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
-  traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassRegular;
-
-  // When
-  [self configureBottomNavigation:self.navigationBar
-                    withAlignment:MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles
-                  titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
-                  traitCollection:traitCollection
-                        allTitles:kLongTitleLatin];
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
-  [self changeToRTLAndArabicWithTitle:kLongTitleArabic];
-  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
-
-  // Then
-  [self generateAndVerifySnapshot];
-}
-
-- (void)testJustifiedAdjacentRegularAlwaysWithFiveLongTitleItemsUnboundiPadWidthTypicalHeightRTL {
-  // Given
-  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection =
-      [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
-  traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassRegular;
-
-  // When
-  [self configureBottomNavigation:self.navigationBar
-                    withAlignment:MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles
-                  titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
-                  traitCollection:traitCollection
-                        allTitles:kLongTitleLatin];
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
-  [self changeToRTLAndArabicWithTitle:kLongTitleArabic];
-  self.navigationBar.truncatesLongTitles = NO;
-  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
-
-  // Then
-  [self generateAndVerifySnapshot];
-}
-
-- (void)testCenteredUnspecifiedAlwaysWithFiveLongTitleItemsiPadWidthTypicalHeightLTR {
-  // When
-  [self configureBottomNavigation:self.navigationBar
-                    withAlignment:MDCBottomNavigationBarAlignmentCentered
-                  titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
-                  traitCollection:nil
-                        allTitles:kLongTitleLatin];
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
-  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
-
-  // Then
-  [self generateAndVerifySnapshot];
-}
-
-- (void)testCenteredUnspecifiedAlwaysWithFiveLongTitleItemsUnboundiPadWidthTypicalHeightLTR {
-  // When
-  [self configureBottomNavigation:self.navigationBar
-                    withAlignment:MDCBottomNavigationBarAlignmentCentered
-                  titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
-                  traitCollection:nil
-                        allTitles:kLongTitleLatin];
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
-  self.navigationBar.truncatesLongTitles = NO;
-  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
-
-  // Then
-  [self generateAndVerifySnapshot];
-}
-
-- (void)testCenteredUnspecifiedAlwaysWithFiveLongTitleItemsiPadWidthTypicalHeightRTL {
-  // When
-  [self configureBottomNavigation:self.navigationBar
-                    withAlignment:MDCBottomNavigationBarAlignmentCentered
-                  titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
-                  traitCollection:nil
-                        allTitles:kLongTitleLatin];
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
-  [self changeToRTLAndArabicWithTitle:kLongTitleArabic];
-  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
-
-  // Then
-  [self generateAndVerifySnapshot];
-}
-
-- (void)testCenteredUnspecifiedAlwaysWithFiveLongTitleItemsUnboundiPadWidthTypicalHeightRTL {
-  // When
-  [self configureBottomNavigation:self.navigationBar
-                    withAlignment:MDCBottomNavigationBarAlignmentCentered
-                  titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
-                  traitCollection:nil
-                        allTitles:kLongTitleLatin];
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
-  [self changeToRTLAndArabicWithTitle:kLongTitleArabic];
-  self.navigationBar.truncatesLongTitles = NO;
-  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
-
-  // Then
-  [self generateAndVerifySnapshot];
-}
-
-#pragma mark - Title visibility
-
-- (void)testJustifiedUnspecifiedSelectedWithThreeItemsTypicalWidthTypicalHeightLTR {
-  // When
-  self.navigationBar.items = @[ self.tabItem1, self.tabItem2, self.tabItem3 ];
-  self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
-  self.navigationBar.selectedItem = self.tabItem2;
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
-  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
-
-  // Then
-  [self generateAndVerifySnapshot];
-}
-
-- (void)testJustifiedUnspecifiedSelectedWithThreeItemsTypicalWidthTypicalHeightRTL {
-  // When
-  self.navigationBar.items = @[ self.tabItem1, self.tabItem2, self.tabItem3 ];
-  self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
-  self.navigationBar.selectedItem = self.tabItem2;
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
-  [self changeToRTLAndArabicWithTitle:kShortTitleArabic];
-  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
-
-  // Then
-  [self generateAndVerifySnapshot];
-}
-
-- (void)testJustifiedUnspecifiedAlwaysWithThreeItemsTypicalWidthTypicalHeightLTR {
-  // When
-  self.navigationBar.items = @[ self.tabItem1, self.tabItem2, self.tabItem3 ];
-  self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
-  self.navigationBar.selectedItem = self.tabItem2;
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
-  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
-
-  // Then
-  [self generateAndVerifySnapshot];
-}
-
-- (void)testJustifiedUnspecifiedAlwaysWithThreeItemsTypicalWidthTypicalHeightRTL {
-  // When
-  self.navigationBar.items = @[ self.tabItem1, self.tabItem2, self.tabItem3 ];
-  self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
-  self.navigationBar.selectedItem = self.tabItem2;
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
-  [self changeToRTLAndArabicWithTitle:kShortTitleArabic];
-  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
-
-  // Then
-  [self generateAndVerifySnapshot];
-}
-
-- (void)testJustifiedUnspecifiedNeverWithThreeItemsTypicalWidthTypicalHeightLTR {
-  // When
-  self.navigationBar.items = @[ self.tabItem1, self.tabItem2, self.tabItem3 ];
-  self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityNever;
-  self.navigationBar.selectedItem = self.tabItem2;
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
-  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
-
-  // Then
-  [self generateAndVerifySnapshot];
-}
-
-- (void)testJustifiedUnspecifiedNeverWithThreeItemsTypicalWidthTypicalHeightRTL {
-  // When
-  self.navigationBar.items = @[ self.tabItem1, self.tabItem2, self.tabItem3 ];
-  self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityNever;
-  self.navigationBar.selectedItem = self.tabItem2;
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
-  [self changeToRTLAndArabicWithTitle:kShortTitleArabic];
-  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
-
-  // Then
-  [self generateAndVerifySnapshot];
 }
 
 #pragma mark - Extreme sizes
@@ -458,7 +152,7 @@ static NSString *const kBadgeTitleArabic = @"أورا";
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   self.navigationBar.selectedItem = self.tabItem2;
   self.navigationBar.frame = CGRectMake(0, 0, kWidthNarrow, kHeightShort);
-  [self changeToRTLAndArabicWithTitle:kShortTitleArabic];
+  [self changeToRTLAndArabicWithTitle:MDCBottomNavigationTestShortTitleArabic];
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
@@ -481,7 +175,7 @@ static NSString *const kBadgeTitleArabic = @"أورا";
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   self.navigationBar.selectedItem = self.tabItem2;
   self.navigationBar.frame = CGRectMake(0, 0, kWidthWide, kHeightTall);
-  [self changeToRTLAndArabicWithTitle:kShortTitleArabic];
+  [self changeToRTLAndArabicWithTitle:MDCBottomNavigationTestShortTitleArabic];
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
@@ -523,7 +217,7 @@ static NSString *const kBadgeTitleArabic = @"أورا";
   CGSize fitSize = [self.navigationBar sizeThatFits:CGSizeMake(kWidthWide, kHeightTall)];
   self.navigationBar.frame = CGRectMake(0, 0, fitSize.width, fitSize.height);
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
-  [self changeToRTLAndArabicWithTitle:kShortTitleArabic];
+  [self changeToRTLAndArabicWithTitle:MDCBottomNavigationTestShortTitleArabic];
 
   // When
   self.tabItem1.titlePositionAdjustment = UIOffsetMake(20, -20);
@@ -566,7 +260,7 @@ static NSString *const kBadgeTitleArabic = @"أورا";
   CGSize fitSize = [self.navigationBar sizeThatFits:CGSizeMake(kWidthWide, kHeightTall)];
   self.navigationBar.frame = CGRectMake(0, 0, fitSize.width, fitSize.height);
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
-  [self changeToRTLAndArabicWithTitle:kShortTitleArabic];
+  [self changeToRTLAndArabicWithTitle:MDCBottomNavigationTestShortTitleArabic];
 
   // When
   self.tabItem1.titlePositionAdjustment = UIOffsetMake(20, -20);
@@ -593,7 +287,8 @@ static NSString *const kBadgeTitleArabic = @"أورا";
   self.navigationBar.items = @[ self.tabItem1, self.tabItem2, self.tabItem3 ];
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   self.navigationBar.selectedItem = self.tabItem2;
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+  self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthTypical,
+                                        MDCBottomNavigationBarTestHeightTypical);
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem2];
 
   // Then
@@ -626,133 +321,12 @@ static NSString *const kBadgeTitleArabic = @"أورا";
   self.navigationBar.items = @[ self.tabItem1, self.tabItem2, self.tabItem3 ];
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   self.navigationBar.selectedItem = self.tabItem2;
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthTypical, kHeightTypical);
+  self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthTypical,
+                                        MDCBottomNavigationBarTestHeightTypical);
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem2];
 
   // Then
   [self generateAndVerifySnapshot];
-}
-
-#pragma mark - Transparent background and blur
-
-- (void)testTransparentBackgroundColor {
-  // Given
-  UIView *barSuperview = [self superviewForVisualBlurEffectWithNavigationBar:self.navigationBar];
-  [self configureNavigationBarForVisualBlurEffectTest:self.navigationBar];
-
-  // When
-  self.navigationBar.backgroundColor = [UIColor.whiteColor colorWithAlphaComponent:(CGFloat)0.5];
-
-  // Then
-  UIView *backgroundView = [barSuperview mdc_addToBackgroundView];
-  [self snapshotVerifyView:backgroundView];
-}
-
-- (void)testTransparentBackgroundColorWithExtraLightBlur {
-  // Given
-  UIView *barSuperview = [self superviewForVisualBlurEffectWithNavigationBar:self.navigationBar];
-  [self configureNavigationBarForVisualBlurEffectTest:self.navigationBar];
-
-  // When
-  self.navigationBar.barTintColor =
-      [self.navigationBar.barTintColor colorWithAlphaComponent:(CGFloat).5];
-  self.navigationBar.backgroundBlurEnabled = YES;
-  self.navigationBar.backgroundBlurEffectStyle = UIBlurEffectStyleExtraLight;
-
-  // Then
-  UIView *backgroundView = [barSuperview mdc_addToBackgroundView];
-  [self snapshotVerifyView:backgroundView];
-}
-
-- (void)testTransparentBackgroundColorWithLightBlur {
-  // Given
-  UIView *barSuperview = [self superviewForVisualBlurEffectWithNavigationBar:self.navigationBar];
-  [self configureNavigationBarForVisualBlurEffectTest:self.navigationBar];
-
-  // When
-  self.navigationBar.backgroundColor = [UIColor.whiteColor colorWithAlphaComponent:(CGFloat)0.5];
-  self.navigationBar.backgroundBlurEnabled = YES;
-  self.navigationBar.backgroundBlurEffectStyle = UIBlurEffectStyleLight;
-
-  // Then
-  UIView *backgroundView = [barSuperview mdc_addToBackgroundView];
-  [self snapshotVerifyView:backgroundView];
-}
-
-- (void)testTransparentBackgroundColorWithDarkBlur {
-  // Given
-  UIView *barSuperview = [self superviewForVisualBlurEffectWithNavigationBar:self.navigationBar];
-  [self configureNavigationBarForVisualBlurEffectTest:self.navigationBar];
-
-  // When
-  self.navigationBar.backgroundColor = [UIColor.whiteColor colorWithAlphaComponent:(CGFloat)0.5];
-  self.navigationBar.backgroundBlurEnabled = YES;
-  self.navigationBar.backgroundBlurEffectStyle = UIBlurEffectStyleDark;
-
-  // Then
-  UIView *backgroundView = [barSuperview mdc_addToBackgroundView];
-  [self snapshotVerifyView:backgroundView];
-}
-
-- (void)testBarItemsBottomAnchorWithOffset {
-  if (@available(iOS 9.0, *)) {
-    // Given
-    self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
-    self.navigationBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles;
-    self.navigationBar.selectedItem = self.tabItem2;
-
-    UIView *superView =
-        [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWidthTypical, kHeightTypical * 2)];
-    [superView addSubview:self.navigationBar];
-    self.navigationBar.translatesAutoresizingMaskIntoConstraints = NO;
-    [superView.bottomAnchor constraintEqualToAnchor:self.navigationBar.bottomAnchor].active = YES;
-    [superView.leadingAnchor constraintEqualToAnchor:self.navigationBar.leadingAnchor].active = YES;
-    [superView.trailingAnchor constraintEqualToAnchor:self.navigationBar.trailingAnchor].active =
-        YES;
-
-    // When
-    [self.navigationBar.barItemsBottomAnchor constraintEqualToAnchor:superView.bottomAnchor
-                                                            constant:-20]
-        .active = YES;
-    [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
-    [self.navigationBar setNeedsLayout];
-    [self.navigationBar layoutIfNeeded];
-    [self.navigationBar setNeedsUpdateConstraints];
-    [self.navigationBar updateConstraintsIfNeeded];
-    [superView setNeedsUpdateConstraints];
-    [superView updateConstraintsIfNeeded];
-    [superView layoutIfNeeded];
-
-    // Then
-    UIView *backgroundView = [superView mdc_addToBackgroundView];
-    [self snapshotVerifyView:backgroundView];
-  }
-}
-
-- (void)testBarItemsBottomAnchorWithoutOffset {
-  if (@available(iOS 9.0, *)) {
-    // Given
-    self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
-    self.navigationBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles;
-    self.navigationBar.selectedItem = self.tabItem2;
-
-    UIView *superView =
-        [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWidthTypical, kHeightTypical * 2)];
-    [superView addSubview:self.navigationBar];
-    self.navigationBar.translatesAutoresizingMaskIntoConstraints = NO;
-    [superView.bottomAnchor constraintEqualToAnchor:self.navigationBar.bottomAnchor].active = YES;
-    [superView.leadingAnchor constraintEqualToAnchor:self.navigationBar.leadingAnchor].active = YES;
-    [superView.trailingAnchor constraintEqualToAnchor:self.navigationBar.trailingAnchor].active =
-        YES;
-
-    // When
-    [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
-    [superView layoutIfNeeded];
-
-    // Then
-    UIView *backgroundView = [superView mdc_addToBackgroundView];
-    [self snapshotVerifyView:backgroundView];
-  }
 }
 
 #pragma mark - KVO tests
@@ -763,8 +337,9 @@ static NSString *const kBadgeTitleArabic = @"أورا";
                     withAlignment:MDCBottomNavigationBarAlignmentJustified
                   titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
                   traitCollection:nil
-                        allTitles:kLongTitleLatin];
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
+                        allTitles:MDCBottomNavigationTestLongTitleLatin];
+  self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthiPad,
+                                        MDCBottomNavigationBarTestHeightTypical);
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
   self.navigationBar.selectedItemTintColor = UIColor.orangeColor;
   self.navigationBar.unselectedItemTintColor = UIColor.blackColor;
@@ -784,8 +359,9 @@ static NSString *const kBadgeTitleArabic = @"أورا";
                     withAlignment:MDCBottomNavigationBarAlignmentJustified
                   titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
                   traitCollection:nil
-                        allTitles:kLongTitleLatin];
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
+                        allTitles:MDCBottomNavigationTestLongTitleLatin];
+  self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthiPad,
+                                        MDCBottomNavigationBarTestHeightTypical);
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
   self.navigationBar.selectedItemTintColor = UIColor.orangeColor;
   self.navigationBar.unselectedItemTintColor = UIColor.blackColor;
@@ -805,8 +381,9 @@ static NSString *const kBadgeTitleArabic = @"أورا";
                     withAlignment:MDCBottomNavigationBarAlignmentJustified
                   titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
                   traitCollection:nil
-                        allTitles:kLongTitleLatin];
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
+                        allTitles:MDCBottomNavigationTestLongTitleLatin];
+  self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthiPad,
+                                        MDCBottomNavigationBarTestHeightTypical);
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
   self.navigationBar.selectedItemTintColor = UIColor.orangeColor;
   self.navigationBar.unselectedItemTintColor = UIColor.blackColor;
@@ -826,8 +403,9 @@ static NSString *const kBadgeTitleArabic = @"أورا";
                     withAlignment:MDCBottomNavigationBarAlignmentJustified
                   titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
                   traitCollection:nil
-                        allTitles:kLongTitleLatin];
-  self.navigationBar.frame = CGRectMake(0, 0, kWidthiPad, kHeightTypical);
+                        allTitles:MDCBottomNavigationTestLongTitleLatin];
+  self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthiPad,
+                                        MDCBottomNavigationBarTestHeightTypical);
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
   self.navigationBar.selectedItemTintColor = UIColor.orangeColor;
   self.navigationBar.unselectedItemTintColor = UIColor.blackColor;

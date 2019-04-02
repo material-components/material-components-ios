@@ -12,5 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCCard+Private.h"
-#import "MDCCardCollectionCell+Private.h"
+#import <UIKit/UIKit.h>
+
+@interface FeatureHighlightScalableDynamicTypeController : UIViewController
+
+@property(nonatomic) UIButton *featureButton;
+@property(nonatomic) UIButton *showStandardButton;
+@property(nonatomic) UIButton *showLegacyButton;
+
+@end

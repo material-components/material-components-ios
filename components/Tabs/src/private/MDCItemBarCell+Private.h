@@ -15,7 +15,6 @@
 #import "MDCItemBarCell.h"
 
 @interface MDCItemBarCell ()
-- (CGSize)badgeLabelSizeWithText:(NSString *)string font:(UIFont *)font;
 @property(nonatomic, strong) UILabel *titleLabel;
 @property(nonatomic, strong, readonly) UILabel *badgeLabel;
 @end

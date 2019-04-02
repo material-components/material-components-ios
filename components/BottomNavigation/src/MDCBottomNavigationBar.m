@@ -100,6 +100,7 @@ static NSString *const kOfAnnouncement = @"of";
   _barTintColor = [UIColor whiteColor];
   _truncatesLongTitles = YES;
   _sizeThatFitsIncludesSafeArea = YES;
+  _titlesNumberOfLines = 1;
 
   // Remove any unarchived subviews and reconfigure the view hierarchy
   if (self.subviews.count) {
@@ -524,6 +525,7 @@ static NSString *const kOfAnnouncement = @"of";
     MDCBottomNavigationItemView *itemView =
         [[MDCBottomNavigationItemView alloc] initWithFrame:CGRectZero];
     itemView.title = item.title;
+    itemView.titleNumberOfLines = self.titlesNumberOfLines;
     itemView.itemTitleFont = self.itemTitleFont;
     itemView.selectedItemTintColor = self.selectedItemTintColor;
     itemView.selectedItemTitleColor = self.selectedItemTitleColor;
@@ -673,6 +675,15 @@ static NSString *const kOfAnnouncement = @"of";
   _itemTitleFont = itemTitleFont;
   for (MDCBottomNavigationItemView *itemView in self.itemViews) {
     itemView.itemTitleFont = itemTitleFont;
+  }
+  [self invalidateIntrinsicContentSize];
+  [self setNeedsLayout];
+}
+
+- (void)setTitlesNumberOfLines:(NSInteger)titlesNumberOfLines {
+  _titlesNumberOfLines = titlesNumberOfLines;
+  for (MDCBottomNavigationItemView *itemView in self.itemViews) {
+    itemView.titleNumberOfLines = titlesNumberOfLines;
   }
   [self invalidateIntrinsicContentSize];
   [self setNeedsLayout];

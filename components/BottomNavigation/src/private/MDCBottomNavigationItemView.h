@@ -28,6 +28,13 @@
 @property(nonatomic, copy) NSString *badgeValue;
 @property(nonatomic, copy) NSString *title;
 @property(nonatomic, strong) UIFont *itemTitleFont UI_APPEARANCE_SELECTOR;
+
+/**
+ The number of lines available for rendering the title of this item.  Defaults to 1.
+
+ @note This property is only used when @c titleBelowIcon is @c true.
+ */
+@property(nonatomic, assign) NSInteger titleNumberOfLines;
 // Default = YES
 @property(nonatomic, assign) BOOL truncatesTitle;
 

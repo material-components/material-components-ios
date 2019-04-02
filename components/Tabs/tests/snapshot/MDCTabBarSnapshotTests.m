@@ -57,14 +57,39 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   // test you wish to recreate the golden for).
   //  self.recordMode = YES;
 
-  UIImage *image = [[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
-      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  CGSize imageSize = CGSizeMake(24, 24);
   self.tabBar = [[MDCTabBar alloc] init];
-  self.item1 = [[UITabBarItem alloc] initWithTitle:kItemTitleShort1Latin image:image tag:1];
-  self.item2 = [[UITabBarItem alloc] initWithTitle:kItemTitleShort2Latin image:image tag:2];
-  self.item3 = [[UITabBarItem alloc] initWithTitle:kItemTitleShort3Latin image:image tag:3];
-  self.item4 = [[UITabBarItem alloc] initWithTitle:kItemTitleShort1Latin image:image tag:4];
-  self.item5 = [[UITabBarItem alloc] initWithTitle:kItemTitleShort2Latin image:image tag:5];
+  self.item1 = [[UITabBarItem alloc]
+      initWithTitle:kItemTitleShort1Latin
+              image:[[UIImage mdc_testImageOfSize:imageSize
+                                        withStyle:MDCSnapshotTestImageStyleCheckerboard]
+                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+                tag:1];
+  self.item2 = [[UITabBarItem alloc]
+      initWithTitle:kItemTitleShort2Latin
+              image:[[UIImage mdc_testImageOfSize:imageSize
+                                        withStyle:MDCSnapshotTestImageStyleDiagonalLines]
+                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+                tag:2];
+  self.item3 = [[UITabBarItem alloc]
+      initWithTitle:kItemTitleShort3Latin
+              image:[[UIImage mdc_testImageOfSize:imageSize
+                                        withStyle:MDCSnapshotTestImageStyleFramedX]
+                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+                tag:3];
+  self.item3.badgeValue = kItemTitleShort1Latin;
+  self.item4 = [[UITabBarItem alloc]
+      initWithTitle:kItemTitleShort1Latin
+              image:[[UIImage mdc_testImageOfSize:imageSize
+                                        withStyle:MDCSnapshotTestImageStyleEllipses]
+                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+                tag:4];
+  self.item5 = [[UITabBarItem alloc]
+      initWithTitle:kItemTitleShort2Latin
+              image:[[UIImage mdc_testImageOfSize:imageSize
+                                        withStyle:MDCSnapshotTestImageStyleRectangles]
+                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+                tag:5];
   self.tabBar.items = @[ self.item1, self.item2, self.item3, self.item4, self.item5 ];
 }
 
@@ -101,6 +126,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   self.item1.title = kItemTitleLong1Latin;
   self.item2.title = kItemTitleLong2Latin;
   self.item3.title = kItemTitleLong3Latin;
+  self.item3.badgeValue = kItemTitleLong1Latin;
   self.item4.title = kItemTitleLong1Latin;
   self.item5.title = kItemTitleLong2Latin;
 }
@@ -109,6 +135,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   self.item1.title = kItemTitleShort1Arabic;
   self.item2.title = kItemTitleShort2Arabic;
   self.item3.title = kItemTitleShort3Arabic;
+  self.item3.badgeValue = kItemTitleShort1Arabic;
   self.item4.title = kItemTitleShort1Arabic;
   self.item5.title = kItemTitleShort2Arabic;
 }
@@ -117,6 +144,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   self.item1.title = kItemTitleLong1Arabic;
   self.item2.title = kItemTitleLong2Arabic;
   self.item3.title = kItemTitleLong3Arabic;
+  self.item3.badgeValue = kItemTitleLong1Arabic;
   self.item4.title = kItemTitleLong1Arabic;
   self.item5.title = kItemTitleLong2Arabic;
 }
@@ -126,7 +154,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   [self snapshotVerifyView:snapshotView];
 }
 
-#pragma mark - Tests
+#pragma mark - Alignment tests
 
 - (void)testTabBarDefaultItemsFitLatinLTR {
   // When
@@ -344,6 +372,74 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   self.tabBar.alignment = MDCTabBarAlignmentLeading;
   [self setTitlesToArabicLong];
   [self changeLayoutToRTL];
+  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
+  [self.tabBar sizeToFit];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBar];
+}
+
+#pragma mark - Style Tests
+
+- (void)testTabBarDefaultAlignmentTitledImagesAppearanceLatinLTR {
+  // When
+  self.tabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;
+  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
+  [self.tabBar sizeToFit];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBar];
+}
+
+- (void)testTabBarDefaultAlignmentTitledImagesAppearanceArabicRTL {
+  // When
+  self.tabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;
+  [self setTitlesToArabicShort];
+  [self changeLayoutToRTL];
+  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
+  [self.tabBar sizeToFit];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBar];
+}
+
+- (void)testTabBarDefaultAlignmentImagesAppearanceLatinLTR {
+  // When
+  self.tabBar.itemAppearance = MDCTabBarItemAppearanceImages;
+  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
+  [self.tabBar sizeToFit];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBar];
+}
+
+- (void)testTabBarDefaultAlignmentImagesAppearanceArabicRTL {
+  // When
+  self.tabBar.itemAppearance = MDCTabBarItemAppearanceImages;
+  [self setTitlesToArabicShort];
+  [self changeLayoutToRTL];
+  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
+  [self.tabBar sizeToFit];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBar];
+}
+
+- (void)testTabBarItemBadgeColors {
+  // When
+  self.tabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;
+  if (@available(iOS 10.0, *)) {
+    self.item1.badgeValue = kItemTitleShort3Latin;
+    self.item1.badgeColor = UIColor.cyanColor;
+    self.item2.badgeValue = kItemTitleShort1Latin;
+    self.item2.badgeColor = UIColor.orangeColor;
+    self.item3.badgeValue = kItemTitleShort2Latin;
+    self.item3.badgeColor = UIColor.blackColor;
+    self.item4.badgeValue = kItemTitleShort1Latin;
+    self.item4.badgeColor = UIColor.blueColor;
+    self.item5.badgeValue = kItemTitleShort3Latin;
+    self.item5.badgeColor = UIColor.whiteColor;
+  }
   self.tabBar.frame = CGRectMake(0, 0, 480, 100);
   [self.tabBar sizeToFit];
 

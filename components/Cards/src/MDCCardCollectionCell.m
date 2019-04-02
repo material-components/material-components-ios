@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #import "MDCCardCollectionCell.h"
-#import "private/MDCCardCollectionCell+Private.h"
 
 #import "MaterialIcons+ic_check_circle.h"
 #import "MaterialMath.h"
@@ -24,21 +23,12 @@ static const CGFloat MDCCardCellSelectedImagePadding = 8;
 static const CGFloat MDCCardCellShadowElevationHighlighted = 8;
 static const CGFloat MDCCardCellShadowElevationNormal = 1;
 static const CGFloat MDCCardCellShadowElevationSelected = 8;
-static const CGFloat MDCCardCellShadowElevationDragged = 8;  // Used for Ripple Beta
+static const CGFloat MDCCardCellShadowElevationDragged = 8;
 static const BOOL MDCCardCellIsInteractableDefault = YES;
 
 @interface MDCCardCollectionCell ()
 @property(nonatomic, strong, nullable) UIImageView *selectedImageView;
 @property(nonatomic, readonly, strong) MDCShapedShadowLayer *layer;
-
-// Used for Ripple Beta
-@property(nonatomic, strong) UIView *rippleView;
-@property(nonatomic, getter=isDragged) BOOL dragged;
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-@property(nonatomic, weak) id<MDCCardCollectionCellRippleDelegate> rippleDelegate;
-#pragma clang diagnostic pop
-@property(nonatomic, assign) BOOL enableBetaBehavior;
 @end
 
 @implementation MDCCardCollectionCell {
@@ -148,13 +138,7 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
     _backgroundColor = UIColor.whiteColor;
   }
 
-  [self updateShadowElevation];
-  [self updateBorderColor];
-  [self updateBorderWidth];
-  [self updateShadowColor];
-  [self updateImage];
-  [self updateImageTintColor];
-  [self updateBackgroundColor];
+  [self updateCardCellVisuals];
 }
 
 - (void)layoutSubviews {
@@ -163,6 +147,17 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
     self.layer.shadowPath = [self boundingPath].CGPath;
   }
   [self updateImageAlignment];
+}
+
+- (void)updateCardCellVisuals {
+  [self updateShadowElevation];
+  [self updateBorderColor];
+  [self updateBorderWidth];
+  [self updateShadowColor];
+  [self updateImage];
+  [self updateImageAlignment];
+  [self updateImageTintColor];
+  [self updateBackgroundColor];
 }
 
 - (void)setCornerRadius:(CGFloat)cornerRadius {
@@ -175,8 +170,7 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 }
 
 - (void)setState:(MDCCardCellState)state animated:(BOOL)animated {
-  if (self.rippleDelegate != nil) {
-    // Used for Ripple Beta
+  if (self.rippleView) {
     return;
   }
   switch (state) {
@@ -207,51 +201,69 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
       break;
   }
   _state = state;
-  [self updateShadowElevation];
-  [self updateBorderColor];
-  [self updateBorderWidth];
-  [self updateShadowColor];
-  [self updateImage];
-  [self updateImageAlignment];
-  [self updateImageTintColor];
+  [self updateCardCellVisuals];
 }
 
 - (MDCCardCellState)state {
-  return self.rippleDelegate ? [self.rippleDelegate cardCellRippleDelegateState] : _state;
+  if (self.rippleView) {
+    if (self.selected && self.selectable) {
+      return MDCCardCellStateSelected;
+    } else if (self.dragged) {
+      return MDCCardCellStateDragged;
+    } else if (self.highlighted) {
+      return MDCCardCellStateHighlighted;
+    } else {
+      return MDCCardCellStateNormal;
+    }
+  }
+  return _state;
 }
 
 - (void)setSelected:(BOOL)selected {
   [super setSelected:selected];
-  if (self.rippleDelegate != nil) {
-    [self.rippleDelegate cardCellRippleDelegateSetSelected:selected];
-    return;
-  }
-  if (self.selectable) {
-    if (selected) {
-      [self setState:MDCCardCellStateSelected animated:NO];
-    } else {
-      [self setState:MDCCardCellStateNormal animated:NO];
+  if (self.rippleView) {
+    if (!self.selectable) {
+      return;
+    }
+    self.rippleView.selected = selected;
+    [self updateCardCellVisuals];
+  } else {
+    if (self.selectable) {
+      if (selected) {
+        [self setState:MDCCardCellStateSelected animated:NO];
+      } else {
+        [self setState:MDCCardCellStateNormal animated:NO];
+      }
     }
   }
 }
 
 - (void)setHighlighted:(BOOL)highlighted {
   [super setHighlighted:highlighted];
-  [self.rippleDelegate cardCellRippleDelegateSetHighlighted:highlighted];
+  if (self.rippleView) {
+    self.rippleView.rippleHighlighted = highlighted;
+    [self updateCardCellVisuals];
+  }
 }
 
 - (void)setSelectable:(BOOL)selectable {
   _selectable = selectable;
-  if (self.rippleDelegate != nil) {
-    [self.rippleDelegate cardCellRippleDelegateSetSelectable:selectable];
-    return;
+  if (self.rippleView) {
+    self.rippleView.allowsSelection = selectable;
+  } else {
+    self.selectedImageView.hidden = !selectable;
   }
-  self.selectedImageView.hidden = !selectable;
 }
 
 - (void)setDragged:(BOOL)dragged {
   _dragged = dragged;
-  [self.rippleDelegate cardCellRippleDelegateSetDragged:dragged];
+  if (self.rippleView) {
+    self.rippleView.dragged = dragged;
+    if (dragged) {
+      self.highlighted = NO;
+    }
+    [self updateCardCellVisuals];
+  }
 }
 
 - (UIBezierPath *)boundingPath {
@@ -357,8 +369,13 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 
 - (void)updateImage {
   UIImage *image = [self imageForState:self.state];
-  if (self.rippleDelegate != nil) {
-    image = [self.rippleDelegate cardCellRippleDelegateUpdateImage:image];
+  if (self.rippleView) {
+    // TODO(#6661): CardCollectionCell's state system doesn't incorporate multiple states occurring
+    // simultaneously. When the card is selected and highlighted it should take the image of
+    // MDCCardCellStateSelected.
+    if (self.rippleView.selected) {
+      image = [self imageForState:MDCCardCellStateSelected];
+    }
   }
   [self.selectedImageView setImage:image];
   [self.selectedImageView sizeToFit];
@@ -456,9 +473,13 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 
 - (void)updateImageTintColor {
   UIColor *imageTintColor = [self imageTintColorForState:self.state];
-  if (self.rippleDelegate != nil) {
-    imageTintColor =
-        [self.rippleDelegate cardCellRippleDelegateUpdateImageTintColor:imageTintColor];
+  if (self.rippleView) {
+    // TODO(#6661): CardCollectionCell's state system doesn't incorporate multiple states occurring
+    // simultaneously. When the card is selected and highlighted it should take the image tint of
+    // MDCCardCellStateSelected.
+    if (self.rippleView.selected) {
+      imageTintColor = [self imageTintColorForState:MDCCardCellStateSelected];
+    }
   }
   [self.selectedImageView setTintColor:imageTintColor];
 }
@@ -487,7 +508,7 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
   self.layer.shadowMaskEnabled = NO;
   [self updateBackgroundColor];
   // Original logic for configuring Ink prior to the Ripple integration.
-  if (self.rippleDelegate == nil) {
+  if (self.rippleView == nil) {
     [self updateInkForShape];
   }
 }
@@ -527,9 +548,11 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-  [self.rippleDelegate cardCellRippleDelegateTouchesBegan:touches withEvent:event];
+  if (self.rippleView) {
+    [self.rippleView touchesBegan:touches withEvent:event];
+  }
   [super touchesBegan:touches withEvent:event];
-  if (self.rippleDelegate == nil) {
+  if (self.rippleView == nil) {
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInView:self];
     _lastTouch = location;
@@ -543,14 +566,21 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
   // The ripple invocation must come before touchesMoved of the super, otherwise the setHighlighted
   // of the UICollectionViewCell will be triggered before the ripple identifies that the highlighted
   // was trigerred from a long press entering the view and shouldn't invoke a ripple.
-  [self.rippleDelegate cardCellRippleDelegateTouchesMoved:touches withEvent:event];
+  if (self.rippleView) {
+    [self.rippleView touchesMoved:touches withEvent:event];
+  }
   [super touchesMoved:touches withEvent:event];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-  [self.rippleDelegate cardCellRippleDelegateTouchesEnded:touches withEvent:event];
+  if (self.rippleView) {
+    [self.rippleView touchesEnded:touches withEvent:event];
+    if (self.dragged) {
+      self.dragged = NO;
+    }
+  }
   [super touchesEnded:touches withEvent:event];
-  if (self.rippleDelegate == nil) {
+  if (self.rippleView == nil) {
     if (!self.selected || !self.selectable) {
       [self setState:MDCCardCellStateNormal animated:YES];
     }
@@ -558,28 +588,46 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-  [self.rippleDelegate cardCellRippleDelegateTouchesCancelled:touches withEvent:event];
+  if (self.rippleView) {
+    [self.rippleView touchesCancelled:touches withEvent:event];
+    if (self.dragged) {
+      self.dragged = NO;
+    }
+  }
   [super touchesCancelled:touches withEvent:event];
-  if (self.rippleDelegate == nil) {
+  if (self.rippleView == nil) {
     if (!self.selected || !self.selectable) {
       [self setState:MDCCardCellStateNormal animated:YES];
     }
   }
 }
 
-- (void)setEnableBetaBehavior:(BOOL)enableBetaBehavior {
-  if (enableBetaBehavior == _enableBetaBehavior) {
+- (void)setEnableRippleBehavior:(BOOL)enableRippleBehavior {
+  if (enableRippleBehavior == _enableRippleBehavior) {
     return;
   }
-  _enableBetaBehavior = enableBetaBehavior;
-  // TODO: Remove this performSelector code once Ripple is no longer in Beta.
-  SEL cardCellRippleEnableBetaBehavior = NSSelectorFromString(@"cardCellRippleEnableBetaBehavior:");
-  if ([self respondsToSelector:cardCellRippleEnableBetaBehavior]) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-    NSNumber *enabled = [NSNumber numberWithBool:enableBetaBehavior];
-    [self performSelector:cardCellRippleEnableBetaBehavior withObject:enabled];
-#pragma clang diagnostic pop
+  _enableRippleBehavior = enableRippleBehavior;
+  if (enableRippleBehavior) {
+    // With the new states implementation the selectedImageView doesn't need to be hidden as
+    // there can be an image apparent not only when the cell is selected, but rather
+    // depending on the setImage:ForState: API.
+    self.selectedImageView.hidden = NO;
+    if (_rippleView == nil) {
+      _rippleView = [[MDCStatefulRippleView alloc] initWithFrame:self.bounds];
+      _rippleView.layer.zPosition = FLT_MAX;
+      [self addSubview:_rippleView];
+    }
+    if (_inkView) {
+      [_inkView removeFromSuperview];
+      _inkView = nil;
+    }
+  } else {
+    self.selectedImageView.hidden = YES;
+    if (_rippleView) {
+      [_rippleView removeFromSuperview];
+      _rippleView = nil;
+    }
+    [self addSubview:_inkView];
   }
 }
 @end
