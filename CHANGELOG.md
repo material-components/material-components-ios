@@ -1,15 +1,83 @@
-# #develop#
+# 81.0.0
 
-Replace this text with a summarized description of this release's contents.
+This major release introduces the Ripple component and integrates it with Cards. There are also
+visual changes for badges on Tabs, multi-line title support for Bottom Navigation, and improved
+Dynamic Type support for Buttons and Feature Highlight.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+The appearance of badges on MDCTabBar has changed. Badges now appear similar to those on
+MDCBottomNavigationBar and are, by default, a red "pill" shape with white text. The color can be
+customized by assigning a value to `- UITabBarItem.badgeColor`.
 
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
+### Ripple integration with Cards
+
+Cards now support the latest iteration of the Material Design "ripple" effect. Clients can test this
+functionality by setting `enableRippleBehavior` to `YES`.
+
+#### Swift
+
+```swift
+myCard.enableRippleBehavior = true
+```
+
+#### Objective-C
+
+```objc
+self.myCard.enableRippleBehavior = YES;
+```
+
+### Multi-line title support in Bottom Navigation
+
+Clients can enable multi-line title support in MDCBottomNavigationBar by setting
+`titlesNumberOfLines` to a value other than 1. This API should be used only as a last resort, when
+it is not possible to provide shorter titles that fit within the available screen space.
+
+#### Swift
+
+```swift
+bottomNavigationBar.titlesNumberOfLines = 0
+```
+
+#### Objective-C
+
+```objc
+self.bottomNavigationBar.titlesNumberOfLines = 0;
+```
+
+### Automatic Dynamic Type font adjustment in Feature Highlight and Buttons
+
+Buttons and Feature Highlight now support enabling automatic font size adjustment for Dynamic Type
+when the fonts used by the components have scaling curves attached using MDCFontScaler. Both
+components use the new scaling if `mdc_adjustsFontForContentSizeCategory` is set to `YES`.
+
+#### Swift
+
+```swift
+// The new TypographyScheme defaults provide scaled fonts
+containerScheme.typographyScheme = MDCTypographyScheme.init(defaults: .material201902)
+let button = MDCButton()
+button.applyContainedTheme(withScheme: containerScheme)
+button.setTitle("Submit", for: UIControlState())
+// Enable automatic font adjustment
+button.mdc_adjustsFontForContentSizeCategory = true
+```
+
+#### Objective-C
+
+```objc
+// The new TypographyScheme defaults provide scaled fonts
+self.containerScheme.typographyScheme = 
+    [[MDCTypographyScheme alloc] initWithDefaults: MDCTypographySchemeDefaultsMaterial201804];
+MDCButton *button = [[MDCButton alloc] init];
+[button applyContainedThemeWithScheme:self.containerScheme];
+[button setTitle:@"Submit" forState:UIControlStateNormal];
+// Enable automatic font adjustment
+button.mdc_adjustsFontForContentSizeCategory = YES;
+```
+
 ## API changes
 
 ### Banner
@@ -143,16 +211,13 @@ Replace this text with example code for each new feature.
 * [Added additional unit and snapshot tests (#6992)](https://github.com/material-components/material-components-ios/commit/f7f792b513066fd68f77dd000f2f83d65fc6c240) (Yarden Eitan)
 * [Additional documentation for Ripple and its classes (#6996)](https://github.com/material-components/material-components-ios/commit/2f4a9b5a04fe15727b6690ef7603b6d04316dba6) (Yarden Eitan)
 * [Adds additional API of adding the Ripple to a view and its position in the view hierarchy. (#6983)](https://github.com/material-components/material-components-ios/commit/60c3eea9ceb89f2e8ec5dfe4dc894fc32dc92821) (Yarden Eitan)
+* [Graduate Ripple to Ready. (#7000)](https://github.com/material-components/material-components-ios/commit/ba8269c13ee7d7bb6b4441f83ca3c11a26829421) (Yarden Eitan)
 
 ### Tabs
 
 * [Add Badge view (#6980)](https://github.com/material-components/material-components-ios/commit/4922c65365d9f0dfb8dc533bf0b6c15365b01214) (Robert Moore)
 * [Add badge snapshot tests. (#6978)](https://github.com/material-components/material-components-ios/commit/9ecb30caf26feac2c68ab6bbdf31ac16d0f1660f) (Robert Moore)
 * [Add badgeColor snapshot tests (#6990)](https://github.com/material-components/material-components-ios/commit/5bf68ae1486a055146ef807a92525415c9564abb) (Robert Moore)
-
-## Multi-component changes
-
-* [Graduate Ripple to Ready. (#7000)](https://github.com/material-components/material-components-ios/commit/ba8269c13ee7d7bb6b4441f83ca3c11a26829421) (Yarden Eitan)
 
 ---
 
