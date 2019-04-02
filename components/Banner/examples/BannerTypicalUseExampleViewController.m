@@ -144,7 +144,7 @@ static NSString *const exampleExtraLongText =
       topAreaInset = self.view.safeAreaInsets.top;
     }
     self.bannerView.frame =
-        CGRectMake(0.0f, topAreaInset, bannerViewSize.width, bannerViewSize.height);
+    CGRectMake(0.0f, topAreaInset, bannerViewSize.width, bannerViewSize.height);
   }
 }
 
@@ -223,8 +223,8 @@ static NSString *const exampleExtraLongText =
     bannerView.trailingButton.hidden = YES;
 
     [button addTarget:self
-                  action:@selector(dismissBanner)
-        forControlEvents:UIControlEventTouchUpInside];
+               action:@selector(dismissBanner)
+     forControlEvents:UIControlEventTouchUpInside];
   }
 }
 
@@ -235,7 +235,7 @@ static NSString *const exampleExtraLongText =
     self.bannerView.imageView.image = [[UIImage imageNamed:@"banner-email"
                                                   inBundle:bundle
                              compatibleWithTraitCollection:nil]
-        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                                       imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     self.bannerView.imageView.tintColor = self.colorScheme.primaryColor;
   }
 }
@@ -283,7 +283,7 @@ static NSString *const exampleExtraLongText =
     self.bannerView.imageView.image = [[UIImage imageNamed:@"banner-email"
                                                   inBundle:bundle
                              compatibleWithTraitCollection:nil]
-        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                                       imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     self.bannerView.imageView.tintColor = self.colorScheme.primaryColor;
   }
 }
@@ -330,7 +330,7 @@ static NSString *const exampleExtraLongText =
     self.bannerView.imageView.image = [[UIImage imageNamed:@"banner-email"
                                                   inBundle:bundle
                              compatibleWithTraitCollection:nil]
-        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                                       imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     self.bannerView.imageView.tintColor = self.colorScheme.primaryColor;
   }
 }
