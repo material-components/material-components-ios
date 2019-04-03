@@ -15,8 +15,8 @@ Each release is driven by a single **release engineer**, who is also a Googler. 
 is expected to do the following, in order of priority:
 
 - Do not break Google.
-- Cut a release by first thing Wednesday morning, NYC time, without exception.
-- Land a release at least once a week.
+- Cut a release early in the working calendar week.
+- Land a release at least once every calendar week.
 
 If something is stopping the release engineer from achieving any of the above goals, the culprit
 code should be removed immediately from the release.

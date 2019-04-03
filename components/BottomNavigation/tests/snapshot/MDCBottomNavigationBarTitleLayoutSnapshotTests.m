@@ -232,6 +232,27 @@
   [self generateAndVerifySnapshot];
 }
 
+- (void)testJustifiedAdjacentRegularAlwaysWithFiveLongTitleItemsWrappediPadWidthTypicalHeightLTR {
+  // Given
+  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection =
+      [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
+  traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassRegular;
+
+  // When
+  [self configureBottomNavigation:self.navigationBar
+                    withAlignment:MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles
+                  titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
+                  traitCollection:traitCollection
+                        allTitles:MDCBottomNavigationTestLongTitleLatin];
+  self.navigationBar.titlesNumberOfLines = 0;
+  self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthiPad,
+                                        MDCBottomNavigationBarTestHeightTypical);
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
 - (void)testJustifiedAdjacentRegularAlwaysWithFiveLongTitleItemsiPadWidthTypicalHeightRTL {
   // Given
   MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection =
@@ -275,6 +296,28 @@
   [self generateAndVerifySnapshot];
 }
 
+- (void)testJustifiedAdjacentRegularAlwaysWithFiveLongTitleItemsWrappediPadWidthTypicalHeightRTL {
+  // Given
+  MDCBottomNavigationSnapshotTestMutableTraitCollection *traitCollection =
+      [[MDCBottomNavigationSnapshotTestMutableTraitCollection alloc] init];
+  traitCollection.horizontalSizeClassOverride = UIUserInterfaceSizeClassRegular;
+
+  // When
+  [self configureBottomNavigation:self.navigationBar
+                    withAlignment:MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles
+                  titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
+                  traitCollection:traitCollection
+                        allTitles:MDCBottomNavigationTestLongTitleLatin];
+  self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthiPad,
+                                        MDCBottomNavigationBarTestHeightTypical);
+  [self changeToRTLAndArabicWithTitle:MDCBottomNavigationTestLongTitleArabic];
+  self.navigationBar.titlesNumberOfLines = 0;
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
 - (void)testCenteredUnspecifiedAlwaysWithFiveLongTitleItemsiPadWidthTypicalHeightLTR {
   // When
   [self configureBottomNavigation:self.navigationBar
@@ -300,6 +343,22 @@
   self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthiPad,
                                         MDCBottomNavigationBarTestHeightTypical);
   self.navigationBar.truncatesLongTitles = NO;
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testCenteredUnspecifiedAlwaysWithFiveLongTitleItemsWrappediPadWidthTypicalHeightLTR {
+  // When
+  [self configureBottomNavigation:self.navigationBar
+                    withAlignment:MDCBottomNavigationBarAlignmentCentered
+                  titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
+                  traitCollection:nil
+                        allTitles:MDCBottomNavigationTestLongTitleLatin];
+  self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthiPad,
+                                        MDCBottomNavigationBarTestHeightTypical);
+  self.navigationBar.titlesNumberOfLines = 0;
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
@@ -333,6 +392,23 @@
                                         MDCBottomNavigationBarTestHeightTypical);
   [self changeToRTLAndArabicWithTitle:MDCBottomNavigationTestLongTitleArabic];
   self.navigationBar.truncatesLongTitles = NO;
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testCenteredUnspecifiedAlwaysWithFiveLongTitleItemsWrappediPadWidthTypicalHeightRTL {
+  // When
+  [self configureBottomNavigation:self.navigationBar
+                    withAlignment:MDCBottomNavigationBarAlignmentCentered
+                  titleVisibility:MDCBottomNavigationBarTitleVisibilityAlways
+                  traitCollection:nil
+                        allTitles:MDCBottomNavigationTestLongTitleLatin];
+  self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthiPad,
+                                        MDCBottomNavigationBarTestHeightTypical);
+  [self changeToRTLAndArabicWithTitle:MDCBottomNavigationTestLongTitleArabic];
+  self.navigationBar.titlesNumberOfLines = 0;
   [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
