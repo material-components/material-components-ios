@@ -19,7 +19,7 @@
 
 
 /**
- The MDCBannerView class creates and configures a view to represent a Materail Banner.
+ The MDCBannerView class creates and configures a view to represent a Material Banner.
 
  The [Material Guideline](https://material.io/design/components/banners.html) has more details on component usage.
  */
