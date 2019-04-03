@@ -151,14 +151,21 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   [buttonContainerView addSubview:trailingButton];
   _trailingButton = trailingButton;
 
-  if (@available(iOS 9_0, *)) {
-    [self setupConstraints];
-  }
+  [self setupConstraints];
 }
 
 #pragma mark - Constraints Helpers
 
-- (void)setupConstraints NS_AVAILABLE_IOS(9_0) {
+- (void)setupConstraints {
+  if (@available(iOS 9.0, *)) {
+    [self setUpImageViewConstraints];
+    [self setUpTextLabelConstraints];
+    [self setUpButtonContainerConstraints];
+    [self setUpButtonsConstraints];
+  }
+}
+
+- (void)setUpImageViewConstraints NS_AVAILABLE_IOS(9_0) {
   self.imageViewConstraintLeading =
   [self.imageView.leadingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.leadingAnchor
                                                constant:kLeadingPadding];
@@ -171,7 +178,9 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   self.imageViewConstraintBottom =
   [self.imageView.bottomAnchor constraintEqualToAnchor:self.layoutMarginsGuide.bottomAnchor
                                               constant:-kBottomPadding];
+}
 
+- (void)setUpTextLabelConstraints NS_AVAILABLE_IOS(9_0) {
   self.textLabelConstraintTop =
   [self.textLabel.topAnchor constraintEqualToAnchor:self.layoutMarginsGuide.topAnchor
                                            constant:kTopPaddingLarge];
@@ -186,7 +195,9 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   self.textLabelConstraintLeadingWithMargin =
   [self.textLabel.leadingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.leadingAnchor
                                                constant:kLeadingPadding];
+}
 
+- (void)setUpButtonContainerConstraints NS_AVAILABLE_IOS(9_0) {
   self.buttonContainerConstraintLeading = [self.buttonContainerView.leadingAnchor
                                            constraintEqualToAnchor:self.layoutMarginsGuide.leadingAnchor
                                            constant:kLeadingPadding];
@@ -217,7 +228,9 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   self.buttonContainerConstraintTopWithTextLabelGreater = [self.buttonContainerView.topAnchor
                                                            constraintGreaterThanOrEqualToAnchor:self.textLabel.bottomAnchor
                                                            constant:kVerticalSpaceBetweenButtonAndTextLabel];
+}
 
+- (void)setUpButtonsConstraints NS_AVAILABLE_IOS(9_0) {
   self.leadingButtonConstraintLeading = [self.leadingButton.leadingAnchor
                                          constraintGreaterThanOrEqualToAnchor:self.buttonContainerView.leadingAnchor];
   self.leadingButtonConstraintTop =
