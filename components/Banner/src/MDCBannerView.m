@@ -345,38 +345,35 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 
 - (void)updateConstraintsWithLayoutMode:(MDCBannerViewLayoutMode)layoutMode NS_AVAILABLE_IOS(9_0) {
   [self deactivateAllConstraints];
-  // Set Elements
+
+  if (self.hasImage) {
+      self.imageViewConstraintLeading.active = YES;
+      self.textLabelConstraintLeadingWithImage.active = YES;
+  } else {
+      self.textLabelConstraintLeadingWithMargin.active = YES;
+  }
+  self.buttonContainerConstraintTrailing.active = YES;
+  self.buttonContainerConstraintBottom.active = YES;
+
   if (layoutMode == MDCBannerViewLayoutModeSingleLine) {
     if (self.hasImage) {
-      self.imageViewConstraintLeading.active = YES;
       self.imageViewConstraintTopSmall.active = YES;
       self.imageViewConstraintBottom.active = YES;
-      self.textLabelConstraintLeadingWithImage.active = YES;
-    } else {
-      self.textLabelConstraintLeadingWithMargin.active = YES;
     }
     self.textLabelConstraintCenterY.active = YES;
     self.buttonContainerConstraintLeadingWithTextLabel.active = YES;
     self.buttonContainerConstraintLeadingWithTextLabelGreater.active = YES;
-    self.buttonContainerConstraintTrailing.active = YES;
     self.buttonContainerConstraintTopWithMargin.active = YES;
-    self.buttonContainerConstraintBottom.active = YES;
   } else {
     if (self.hasImage) {
-      self.imageViewConstraintLeading.active = YES;
       self.imageViewConstraintTopLarge.active = YES;
-      self.textLabelConstraintLeadingWithImage.active = YES;
       self.buttonContainerConstraintTopWithImageViewGreater.active = YES;
-    } else {
-      self.textLabelConstraintLeadingWithMargin.active = YES;
     }
     self.textLabelConstraintTop.active = YES;
     self.textLabelConstraintTrailing.active = YES;
     self.buttonContainerConstraintTopWithTextLabelGreater.active = YES;
     self.buttonContainerConstraintTopWithTextLabel.active = YES;
     self.buttonContainerConstraintLeading.active = YES;
-    self.buttonContainerConstraintTrailing.active = YES;
-    self.buttonContainerConstraintBottom.active = YES;
   }
   [self updateButtonsConstraintsWithLayoutMode:layoutMode];
 }
