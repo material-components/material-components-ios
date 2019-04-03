@@ -34,7 +34,6 @@ __attribute__((objc_subclassing_restricted)) @interface MDCBannerView : UIView
 /**
  A view that displays the image on a @c MDCBannerView.
  The properties of @c imageView can be used to configure the image shown on @c MDCBannerView.
- If @c imageView 's own property @c image is @c nil, this view is hidden on the @c MDCBannerView.
  */
 @property(nonatomic, readonly, strong, nonnull) UIImageView *imageView;
 

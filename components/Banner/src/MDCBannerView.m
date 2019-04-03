@@ -151,7 +151,6 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   [buttonContainerView addSubview:trailingButton];
   _trailingButton = trailingButton;
 
-  [self addObserversToSubviews];
   if (@available(iOS 9_0, *)) {
     [self setupConstraints];
   }
@@ -268,41 +267,11 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   self.trailingButtonConstraintTrailing.active = NO;
 }
 
-- (void)dealloc {
-  [self removeObservers];
-}
-
 #pragma mark - Property Getter
 
 - (BOOL)hasImage {
   return self.imageView.image != nil && !self.imageView.hidden;
 }
-
-#pragma mark - KVO
-
-- (void)addObserversToSubviews {
-  [self.imageView addObserver:self
-                   forKeyPath:kMDCBannerViewImageViewImageKeyPath
-                      options:NSKeyValueObservingOptionNew
-                      context:nil];
-}
-
-- (void)removeObservers {
-  [self.imageView removeObserver:self forKeyPath:kMDCBannerViewImageViewImageKeyPath];
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary *)change
-                       context:(void *)context {
-  if (!context) {
-    if ([keyPath isEqualToString:kMDCBannerViewImageViewImageKeyPath]) {
-      self.imageView.hidden = (change[NSKeyValueChangeNewKey] == [NSNull null]);
-    }
-  }
-}
-
-// TODO: KVO trailingButton.hidden and call `setNeedsUpdateConstraints:`.
 
 #pragma mark - UIView overrides
 
