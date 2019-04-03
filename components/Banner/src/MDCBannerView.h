@@ -16,12 +16,11 @@
 
 #import "MaterialButtons.h"
 
-
-
 /**
  The MDCBannerView class creates and configures a view to represent a Material Banner.
 
- The [Material Guideline](https://material.io/design/components/banners.html) has more details on component usage.
+ The [Material Guideline](https://material.io/design/components/banners.html) has more details on
+ component usage.
  */
 __attribute__((objc_subclassing_restricted)) @interface MDCBannerView : UIView
 
