@@ -42,7 +42,6 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 @property(nonatomic, readwrite, strong) UILabel *textLabel;
 
 @property(nonatomic, readwrite, strong) UIImageView *imageView;
-@property(nonatomic, readonly, assign) BOOL hasImage;
 
 @property(nonatomic, readwrite, strong) MDCButton *leadingButton;
 @property(nonatomic, readwrite, strong) MDCButton *trailingButton;
@@ -288,12 +287,6 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   self.trailingButtonConstraintTrailing.active = NO;
 }
 
-#pragma mark - Property Getter
-
-- (BOOL)hasImage {
-  return self.imageView.image != nil && !self.imageView.hidden;
-}
-
 #pragma mark - UIView overrides
 
 - (CGSize)sizeThatFits:(CGSize)size {
@@ -305,7 +298,7 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
       CGSize textLabelSize = [self.textLabel sizeThatFits:CGSizeZero];
       CGSize leadingButtonSize = [self.leadingButton sizeThatFits:CGSizeZero];
       CGFloat maximumHeight = MAX(textLabelSize.height, leadingButtonSize.height);
-      if (self.hasImage) {
+      if (!self.imageView.hidden) {
         maximumHeight = MAX(kImageViewSideLength, maximumHeight);
       }
       frameHeight += maximumHeight;
@@ -346,7 +339,7 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 - (void)updateConstraintsWithLayoutMode:(MDCBannerViewLayoutMode)layoutMode NS_AVAILABLE_IOS(9_0) {
   [self deactivateAllConstraints];
 
-  if (self.hasImage) {
+  if (!self.imageView.hidden) {
       self.imageViewConstraintLeading.active = YES;
       self.textLabelConstraintLeadingWithImage.active = YES;
   } else {
@@ -356,7 +349,7 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   self.buttonContainerConstraintBottom.active = YES;
 
   if (layoutMode == MDCBannerViewLayoutModeSingleLine) {
-    if (self.hasImage) {
+    if (!self.imageView.hidden) {
       self.imageViewConstraintTopSmall.active = YES;
       self.imageViewConstraintBottom.active = YES;
     }
@@ -365,7 +358,7 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
     self.buttonContainerConstraintLeadingWithTextLabelGreater.active = YES;
     self.buttonContainerConstraintTopWithMargin.active = YES;
   } else {
-    if (self.hasImage) {
+    if (!self.imageView.hidden) {
       self.imageViewConstraintTopLarge.active = YES;
       self.buttonContainerConstraintTopWithImageViewGreater.active = YES;
     }
@@ -409,7 +402,7 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   if (self.trailingButton.hidden) {
     CGFloat buttonWidth = CGRectGetWidth(self.leadingButton.frame);
     remainingWidth -= (buttonWidth + kHorizontalSpaceBetweenTextLabelAndButton);
-    if (self.hasImage) {
+    if (!self.imageView.hidden) {
       remainingWidth -= kImageViewSideLength;
       remainingWidth -= kSpaceBetweenIconImageAndTextLabel;
     }
@@ -430,7 +423,7 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   CGFloat frameHeight = 0;
   CGFloat remainingWidth = sizeToFit.width - kLeadingPadding - kTrailingPadding;
   CGSize textLabelSize = CGSizeZero;
-  if (self.hasImage) {
+  if (!self.imageView.hidden) {
     remainingWidth -= (kImageViewSideLength + kSpaceBetweenIconImageAndTextLabel);
     textLabelSize = [self.textLabel sizeThatFits:CGSizeMake(remainingWidth, CGFLOAT_MAX)];
     frameHeight += MAX(textLabelSize.height, kImageViewSideLength);
