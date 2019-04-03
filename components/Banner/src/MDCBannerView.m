@@ -340,10 +340,10 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   [self deactivateAllConstraints];
 
   if (!self.imageView.hidden) {
-      self.imageViewConstraintLeading.active = YES;
-      self.textLabelConstraintLeadingWithImage.active = YES;
+    self.imageViewConstraintLeading.active = YES;
+    self.textLabelConstraintLeadingWithImage.active = YES;
   } else {
-      self.textLabelConstraintLeadingWithMargin.active = YES;
+    self.textLabelConstraintLeadingWithMargin.active = YES;
   }
   self.buttonContainerConstraintTrailing.active = YES;
   self.buttonContainerConstraintBottom.active = YES;
