@@ -16,6 +16,7 @@
 #import <CoreGraphics/CoreGraphics.h>
 
 #import "MaterialMath.h"
+#import "MaterialPalettes.h"
 
 // This is very close to the material.io guidelines article considering the fonts differ.
 static const CGFloat kBadgeFontSize = 8;
@@ -44,7 +45,7 @@ static const CGFloat kMinDiameter = 9;
 
 - (void)commonMDCBottomNavigationItemBadgeInit {
   if (!_badgeColor) {
-    _badgeColor = [UIColor redColor];
+    _badgeColor = MDCPalette.redPalette.tint700;
   }
   self.layer.backgroundColor = _badgeColor.CGColor;
 
