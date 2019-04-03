@@ -456,6 +456,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
       NSStringFromSelector(@selector(title)),
       NSStringFromSelector(@selector(image)),
       NSStringFromSelector(@selector(badgeValue)),
+      NSStringFromSelector(@selector(badgeColor)),
       NSStringFromSelector(@selector(accessibilityIdentifier))
     ];
   });
