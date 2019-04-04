@@ -90,6 +90,20 @@ Pod::Spec.new do |mdc|
     end
   end
 
+  mdc.subspec "Banner" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}"
+    component.dependency "MaterialComponents/Buttons"
+    component.dependency "MaterialComponents/Typography"
+
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = [
+        "components/#{component.base_name}/tests/unit/*.m"
+      ]
+    end
+  end
+
   mdc.subspec "BottomNavigation" do |component|
     component.ios.deployment_target = '8.0'
     component.public_header_files = "components/#{component.base_name}/src/MDCBottomNavigationBarController.h", "components/#{component.base_name}/src/MaterialBottomNavigationBeta.h"

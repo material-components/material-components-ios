@@ -86,6 +86,7 @@ static const CGFloat kBannerContentPadding = 10.0f;
   [button setTitle:@"Action" forState:UIControlStateNormal];
   button.uppercaseTitle = YES;
   [button setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
+  self.bannerView.imageView.hidden = YES;
   self.bannerView.trailingButton.hidden = YES;
 
   // Then
@@ -100,6 +101,7 @@ static const CGFloat kBannerContentPadding = 10.0f;
   [button setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
   button.uppercaseTitle = YES;
   self.bannerView.trailingButton.hidden = YES;
+  self.bannerView.imageView.hidden = YES;
   [self changeViewToRTL:self.bannerView];
 
   // Then
@@ -114,6 +116,7 @@ static const CGFloat kBannerContentPadding = 10.0f;
   [button setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
   button.uppercaseTitle = YES;
   self.bannerView.trailingButton.hidden = YES;
+  self.bannerView.imageView.hidden = YES;
 
   // Then
   [self generateSnapshotAndVerifyForView:self.bannerView];
@@ -127,6 +130,7 @@ static const CGFloat kBannerContentPadding = 10.0f;
   [button setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
   button.uppercaseTitle = YES;
   self.bannerView.trailingButton.hidden = YES;
+  self.bannerView.imageView.hidden = YES;
   [self changeViewToRTL:self.bannerView];
 
   // Then
@@ -144,6 +148,7 @@ static const CGFloat kBannerContentPadding = 10.0f;
   [button2 setTitle:@"Action2" forState:UIControlStateNormal];
   [button2 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
   button2.uppercaseTitle = YES;
+  self.bannerView.imageView.hidden = YES;
 
   // Then
   [self generateSnapshotAndVerifyForView:self.bannerView];
@@ -161,6 +166,7 @@ static const CGFloat kBannerContentPadding = 10.0f;
   [button2 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
   button2.uppercaseTitle = YES;
   [self changeViewToRTL:self.bannerView];
+  self.bannerView.imageView.hidden = YES;
 
   // Then
   [self generateSnapshotAndVerifyForView:self.bannerView];
