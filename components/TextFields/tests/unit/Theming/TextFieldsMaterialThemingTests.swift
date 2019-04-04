@@ -73,4 +73,47 @@ class TextFieldsMaterialThemingTests: XCTestCase {
     XCTAssertEqual(CGFloat(textFieldControllerFilled.floatingPlaceholderScale.doubleValue),
                    placeholderScale)
   }
+
+  func testMDCTextInputControllerOutlinedThemingWithContainerScheme() {
+    // Given
+    let textFieldOutlined = MDCTextField()
+    let textFieldControllerOutlined = MDCTextInputControllerOutlined(textInput: textFieldOutlined)
+    let scheme: MDCContainerScheme = MDCContainerScheme()
+
+    // When
+    textFieldControllerOutlined.applyTheme(withScheme: scheme)
+
+    // Then
+    // Color
+    XCTAssertEqual(textFieldControllerOutlined.borderFillColor,
+                   scheme.colorScheme.onSurfaceColor.withAlphaComponent(filledSurfaceOverlayAlpha))
+    XCTAssertEqual(textFieldControllerOutlined.normalColor,
+                   scheme.colorScheme.onSurfaceColor.withAlphaComponent(filledIndicatorLineAlpha))
+    XCTAssertEqual(textFieldControllerOutlined.inlinePlaceholderColor,
+                   scheme.colorScheme.onSurfaceColor.withAlphaComponent(filledOnSurfaceAlpha))
+    XCTAssertEqual(textFieldControllerOutlined.leadingUnderlineLabelTextColor,
+                   scheme.colorScheme.onSurfaceColor.withAlphaComponent(filledOnSurfaceAlpha))
+    XCTAssertEqual(textFieldControllerOutlined.activeColor, scheme.colorScheme.primaryColor)
+    XCTAssertEqual(textFieldControllerOutlined.errorColor, scheme.colorScheme.errorColor)
+    XCTAssertEqual(textFieldControllerOutlined.disabledColor,
+                   scheme.colorScheme.onSurfaceColor.withAlphaComponent(filledDisabledAlpha))
+    XCTAssertEqual(textFieldControllerOutlined.floatingPlaceholderNormalColor,
+                   scheme.colorScheme.onSurfaceColor.withAlphaComponent(filledOnSurfaceAlpha))
+    XCTAssertEqual(textFieldControllerOutlined.floatingPlaceholderActiveColor,
+                   scheme.colorScheme.primaryColor.withAlphaComponent(filledActiveAlpha))
+    XCTAssertEqual(textFieldControllerOutlined.textInputClearButtonTintColor,
+                   scheme.colorScheme.onSurfaceColor.withAlphaComponent(filledIconAlpha))
+
+    // Typography
+    XCTAssertEqual(textFieldControllerOutlined.inlinePlaceholderFont,
+                   scheme.typographyScheme.subtitle1)
+    XCTAssertEqual(textFieldControllerOutlined.leadingUnderlineLabelFont,
+                   scheme.typographyScheme.caption)
+    XCTAssertEqual(textFieldControllerOutlined.trailingUnderlineLabelFont,
+                   scheme.typographyScheme.caption)
+    let placeholderScale: CGFloat =
+      scheme.typographyScheme.caption.pointSize / scheme.typographyScheme.subtitle1.pointSize
+    XCTAssertEqual(CGFloat(textFieldControllerOutlined.floatingPlaceholderScale.doubleValue),
+                   placeholderScale)
+  }
 }
