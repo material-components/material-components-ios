@@ -16,6 +16,8 @@ load(
     "//:material_components_ios.bzl",
     "mdc_examples_objc_library",
     "mdc_objc_library",
+    "mdc_snapshot_objc_library",
+    "mdc_snapshot_test",
 )
 
 licenses(["notice"])  # Apache 2.0
@@ -40,4 +42,17 @@ mdc_examples_objc_library(
         ":Banner",
         "//components/schemes/Color",
     ],
+)
+
+mdc_snapshot_objc_library(
+    name = "snapshot_test_lib",
+    deps = [
+        ":Banner",
+        "//components/Buttons",
+    ],
+)
+
+mdc_snapshot_test(
+    name = "snapshot_tests",
+    deps = [":snapshot_test_lib"],
 )
