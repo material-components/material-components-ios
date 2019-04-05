@@ -20,6 +20,7 @@
 static NSString *const kBannerShortText = @"tristique senectus et";
 static NSString *const kBannerLongText =
     @"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.";
+static const CGFloat kBannerContentPadding = 10.0f;
 
 /** Snapshot tests for MDCBannerView. */
 @interface MDCBannerViewSnapshotTests : MDCSnapshotTestCase
@@ -38,7 +39,18 @@ static NSString *const kBannerLongText =
   // test you wish to recreate the golden for).
   //  self.recordMode = YES;
 
-  self.bannerView = [[MDCBannerView alloc] initWithFrame:CGRectMake(0, 0, 350, 51)];
+  self.bannerView = [[MDCBannerView alloc] initWithFrame:CGRectZero];
+  if (@available(iOS 11.0, *)) {
+    NSDirectionalEdgeInsets directionalEdgeInsets = NSDirectionalEdgeInsetsZero;
+    directionalEdgeInsets.leading = kBannerContentPadding;
+    directionalEdgeInsets.trailing = kBannerContentPadding;
+    self.bannerView.directionalLayoutMargins = directionalEdgeInsets;
+  } else {
+    UIEdgeInsets margins = UIEdgeInsetsZero;
+    margins.left = kBannerContentPadding;
+    margins.right = kBannerContentPadding;
+    self.bannerView.layoutMargins = margins;
+  }
 }
 
 - (void)tearDown {
@@ -48,6 +60,10 @@ static NSString *const kBannerLongText =
 }
 
 - (void)generateSnapshotAndVerifyForView:(UIView *)view {
+  CGSize aSize = [view sizeThatFits:CGSizeMake(350, INFINITY)];
+  view.frame = CGRectMake(0, 0, aSize.width, aSize.height);
+  [view layoutIfNeeded];
+
   UIView *snapshotView = [view mdc_addToBackgroundView];
   [self snapshotVerifyView:snapshotView];
 }
@@ -65,11 +81,13 @@ static NSString *const kBannerLongText =
 
 - (void)testShortTextWithSingleActionLTR {
   // When
-  self.bannerView.text = kBannerShortText;
-  MDCButton *button = [self.bannerView.buttons firstObject];
+  self.bannerView.textLabel.text = kBannerShortText;
+  MDCButton *button = self.bannerView.leadingButton;
   [button setTitle:@"Action" forState:UIControlStateNormal];
   button.uppercaseTitle = YES;
-  [self.bannerView sizeToFit];
+  [button setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
+  self.bannerView.imageView.hidden = YES;
+  self.bannerView.trailingButton.hidden = YES;
 
   // Then
   [self generateSnapshotAndVerifyForView:self.bannerView];
@@ -77,11 +95,13 @@ static NSString *const kBannerLongText =
 
 - (void)testShortTextWithSingleActionRTL {
   // When
-  self.bannerView.text = kBannerShortText;
-  MDCButton *button = [self.bannerView.buttons firstObject];
+  self.bannerView.textLabel.text = kBannerShortText;
+  MDCButton *button = self.bannerView.leadingButton;
   [button setTitle:@"Action" forState:UIControlStateNormal];
+  [button setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
   button.uppercaseTitle = YES;
-  [self.bannerView sizeToFit];
+  self.bannerView.trailingButton.hidden = YES;
+  self.bannerView.imageView.hidden = YES;
   [self changeViewToRTL:self.bannerView];
 
   // Then
@@ -90,11 +110,13 @@ static NSString *const kBannerLongText =
 
 - (void)testLongTextWithSingleActionLTR {
   // When
-  self.bannerView.text = kBannerLongText;
-  MDCButton *button = [self.bannerView.buttons firstObject];
+  self.bannerView.textLabel.text = kBannerLongText;
+  MDCButton *button = self.bannerView.leadingButton;
   [button setTitle:@"Action" forState:UIControlStateNormal];
+  [button setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
   button.uppercaseTitle = YES;
-  [self.bannerView sizeToFit];
+  self.bannerView.trailingButton.hidden = YES;
+  self.bannerView.imageView.hidden = YES;
 
   // Then
   [self generateSnapshotAndVerifyForView:self.bannerView];
@@ -102,11 +124,13 @@ static NSString *const kBannerLongText =
 
 - (void)testLongTextWithSingleActionRTL {
   // When
-  self.bannerView.text = kBannerLongText;
-  MDCButton *button = [self.bannerView.buttons firstObject];
+  self.bannerView.textLabel.text = kBannerLongText;
+  MDCButton *button = self.bannerView.leadingButton;
   [button setTitle:@"Action" forState:UIControlStateNormal];
+  [button setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
   button.uppercaseTitle = YES;
-  [self.bannerView sizeToFit];
+  self.bannerView.trailingButton.hidden = YES;
+  self.bannerView.imageView.hidden = YES;
   [self changeViewToRTL:self.bannerView];
 
   // Then
@@ -115,15 +139,16 @@ static NSString *const kBannerLongText =
 
 - (void)testLongTextWithTwoActionsLTR {
   // When
-  self.bannerView.text = kBannerLongText;
-  self.bannerView.numberOfButtons = 2;
-  MDCButton *button1 = [self.bannerView.buttons firstObject];
+  self.bannerView.textLabel.text = kBannerLongText;
+  MDCButton *button1 = self.bannerView.leadingButton;
   [button1 setTitle:@"Action1" forState:UIControlStateNormal];
+  [button1 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
   button1.uppercaseTitle = YES;
-  MDCButton *button2 = [self.bannerView.buttons lastObject];
+  MDCButton *button2 = self.bannerView.trailingButton;
   [button2 setTitle:@"Action2" forState:UIControlStateNormal];
+  [button2 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
   button2.uppercaseTitle = YES;
-  [self.bannerView sizeToFit];
+  self.bannerView.imageView.hidden = YES;
 
   // Then
   [self generateSnapshotAndVerifyForView:self.bannerView];
@@ -131,16 +156,17 @@ static NSString *const kBannerLongText =
 
 - (void)testLongTextWithTwoActionsRTL {
   // When
-  self.bannerView.text = kBannerLongText;
-  self.bannerView.numberOfButtons = 2;
-  MDCButton *button1 = [self.bannerView.buttons firstObject];
+  self.bannerView.textLabel.text = kBannerLongText;
+  MDCButton *button1 = self.bannerView.leadingButton;
   [button1 setTitle:@"Action1" forState:UIControlStateNormal];
+  [button1 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
   button1.uppercaseTitle = YES;
-  MDCButton *button2 = [self.bannerView.buttons lastObject];
+  MDCButton *button2 = self.bannerView.trailingButton;
   [button2 setTitle:@"Action2" forState:UIControlStateNormal];
+  [button2 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
   button2.uppercaseTitle = YES;
-  [self.bannerView sizeToFit];
   [self changeViewToRTL:self.bannerView];
+  self.bannerView.imageView.hidden = YES;
 
   // Then
   [self generateSnapshotAndVerifyForView:self.bannerView];

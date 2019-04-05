@@ -60,6 +60,7 @@ mdc_objc_library(
     visibility = ["//visibility:public"],
     deps = [
         "//components/Ink",
+        "//components/Palettes",
         "//components/ShadowElevations",
         "//components/ShadowLayer",
         "//components/Typography",
