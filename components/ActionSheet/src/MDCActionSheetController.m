@@ -186,6 +186,12 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
   return MDCCeil(preferredHeight);
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+
+  [self.tableView flashScrollIndicators];
+}
+
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
 
