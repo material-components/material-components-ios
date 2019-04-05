@@ -16,9 +16,9 @@
 #import <MaterialComponentsBeta/MaterialContainerScheme.h>
 
 /**
- This category is used to style MDCTextInputControllerOutlined instances to a specific Material style
- which can be found within the
- [Material Guidelines](https://material.io/design/components/text-fields.html).
+ This category is used to style MDCTextInputControllerOutlined instances to a specific Material
+ style which can be found within the [Material
+ Guidelines](https://material.io/design/components/text-fields.html).
  */
 @interface MDCTextInputControllerOutlined (MaterialTheming)
 

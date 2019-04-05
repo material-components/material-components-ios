@@ -28,8 +28,7 @@
 }
 
 - (void)applyColorThemeWithScheme:(nonnull id<MDCColorScheming>)colorScheme {
-  [MDCOutlinedTextFieldColorThemer applySemanticColorScheme:colorScheme
-                                      toTextInputController:self];
+  [MDCOutlinedTextFieldColorThemer applySemanticColorScheme:colorScheme toTextInputController:self];
 }
 
 - (void)applyTypographyThemeWithScheme:(nonnull id<MDCTypographyScheming>)typographyScheme {
