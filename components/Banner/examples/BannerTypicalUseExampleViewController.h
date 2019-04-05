@@ -14,6 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
+NS_CLASS_AVAILABLE_IOS(9_0)
 @interface BannerTypicalUseExampleViewController : UIViewController
 
 @end

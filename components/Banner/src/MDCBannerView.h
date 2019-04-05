@@ -22,6 +22,7 @@
  The [Material Guideline](https://material.io/design/components/banners.html) has more details on
  component usage.
  */
+NS_CLASS_AVAILABLE_IOS(9_0)
 __attribute__((objc_subclassing_restricted)) @interface MDCBannerView : UIView
 
 /**
