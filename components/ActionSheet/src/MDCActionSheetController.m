@@ -189,7 +189,7 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
 
-  [self.tableView flashScrollIndicators];
+  [self.transitionController.trackingScrollView flashScrollIndicators];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
