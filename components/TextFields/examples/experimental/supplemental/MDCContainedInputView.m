@@ -228,7 +228,8 @@
 - (void)layOutPlaceholderLabel:(UILabel *)placeholderLabel
               placeholderFrame:(CGRect)placeholderFrame
           isPlaceholderVisible:(BOOL)isPlaceholderVisible {
-  CGRect hiddenFrame = CGRectOffset(placeholderFrame, 0, CGRectGetHeight(placeholderFrame) * 0.5);
+  CGRect hiddenFrame =
+      CGRectOffset(placeholderFrame, 0, CGRectGetHeight(placeholderFrame) * (CGFloat)0.5);
   CGRect targetFrame = hiddenFrame;
   CGFloat hiddenOpacity = 0;
   CGFloat targetOpacity = hiddenOpacity;
