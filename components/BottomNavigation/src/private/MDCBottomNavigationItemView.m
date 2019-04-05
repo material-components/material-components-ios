@@ -28,6 +28,9 @@ static const CGFloat kMaxSizeDimension = 1000000;
 static const CGFloat MDCBottomNavigationItemViewInkOpacity = (CGFloat)0.150;
 static const CGFloat MDCBottomNavigationItemViewTitleFontSize = 12;
 
+/** The default value for @c numberOfLines for the title label. */
+static const NSInteger kDefaultTitleNumberOfLines = 1;
+
 // The fonts available on iOS differ from that used on Material.io.  When trying to approximate
 // the position on iOS, it seems like a horizontal inset of 10 points looks pretty close.
 static const CGFloat kBadgeXOffsetFromIconEdgeWithTextLTR = -8;
@@ -111,6 +114,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 
 - (void)commonMDCBottomNavigationItemViewInit {
   _truncatesTitle = YES;
+  _titleNumberOfLines = kDefaultTitleNumberOfLines;
   if (!_selectedItemTintColor) {
     _selectedItemTintColor = [UIColor blackColor];
   }
@@ -134,6 +138,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
     _label.isAccessibilityElement = NO;
     [self addSubview:_label];
   }
+  _label.numberOfLines = kDefaultTitleNumberOfLines;
 
   if (!_badge) {
     _badge = [[MDCBottomNavigationItemBadge alloc] initWithFrame:CGRectZero];
@@ -238,13 +243,17 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   }
 
   // Determine the position of the label and icon
-  CGFloat centerY = CGRectGetMidY(contentBoundingRect);
   CGFloat centerX = CGRectGetMidX(contentBoundingRect);
-  CGPoint iconImageViewCenter =
-      CGPointMake(centerX, centerY - totalContentHeight / 2 + iconHeight / 2);
+  CGFloat iconImageViewCenterY =
+      MAX(CGRectGetMidY(contentBoundingRect) - totalContentHeight / 2 +
+              iconHeight / 2,                                  // Content centered
+          CGRectGetMinY(contentBoundingRect) + iconHeight / 2  // Pinned to top of bounding rect.
+      );
+  CGPoint iconImageViewCenter = CGPointMake(centerX, iconImageViewCenterY);
   // Ignore the horizontal titlePositionAdjustment in a vertical layout to match UITabBar behavior.
-  CGPoint labelCenter = CGPointMake(centerX, centerY + totalContentHeight / 2 - labelHeight / 2 +
-                                                 self.titlePositionAdjustment.vertical);
+  CGPoint labelCenter =
+      CGPointMake(centerX, iconImageViewCenter.y + iconHeight / 2 + self.contentVerticalMargin +
+                               labelHeight / 2 + self.titlePositionAdjustment.vertical);
   CGFloat availableContentWidth = CGRectGetWidth(contentBoundingRect);
   if (self.truncatesTitle && (labelSize.width > availableContentWidth)) {
     labelSize = CGSizeMake(availableContentWidth, labelSize.height);
@@ -514,17 +523,26 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 
 - (void)setImage:(UIImage *)image {
   _image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-  self.iconImageView.image = _image;
-  self.iconImageView.tintColor =
-      (self.selected) ? self.selectedItemTintColor : self.unselectedItemTintColor;
-  [self.iconImageView sizeToFit];
+
+  // _image updates unselected state
+  // _image updates selected state IF there is no selectedImage
+  if (!self.selected || (self.selected && !self.selectedImage)) {
+    self.iconImageView.image = _image;
+    self.iconImageView.tintColor =
+        (self.selected) ? self.selectedItemTintColor : self.unselectedItemTintColor;
+    [self.iconImageView sizeToFit];
+    [self setNeedsLayout];
+  }
 }
 
 - (void)setSelectedImage:(UIImage *)selectedImage {
   _selectedImage = [selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-  self.iconImageView.image = _selectedImage;
-  self.iconImageView.tintColor = self.selectedItemTintColor;
-  [self.iconImageView sizeToFit];
+  if (self.selected) {
+    self.iconImageView.image = _selectedImage;
+    self.iconImageView.tintColor = self.selectedItemTintColor;
+    [self.iconImageView sizeToFit];
+    [self setNeedsLayout];
+  }
 }
 
 - (void)setTitle:(NSString *)title {
@@ -566,6 +584,20 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
     _titlePositionAdjustment = titlePositionAdjustment;
     [self setNeedsLayout];
   }
+}
+
+- (NSInteger)renderedTitleNumberOfLines {
+  return self.titleBelowIcon ? _titleNumberOfLines : kDefaultTitleNumberOfLines;
+}
+
+- (void)setTitleNumberOfLines:(NSInteger)titleNumberOfLines {
+  _titleNumberOfLines = titleNumberOfLines;
+  self.label.numberOfLines = [self renderedTitleNumberOfLines];
+}
+
+- (void)setTitleBelowIcon:(BOOL)titleBelowIcon {
+  _titleBelowIcon = titleBelowIcon;
+  self.label.numberOfLines = [self renderedTitleNumberOfLines];
 }
 
 #pragma mark - Resource bundle

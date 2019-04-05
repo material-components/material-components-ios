@@ -14,6 +14,9 @@
 
 #import "MDCBottomNavigationBarController.h"
 
+// A context for Key Value Observing
+static void *const kObservationContext = (void *)&kObservationContext;
+
 @interface MDCBottomNavigationBarController ()
 
 /** The view that hosts the content for the selected view controller **/
@@ -30,9 +33,18 @@
     _content = [[UIView alloc] init];
     _viewControllers = @[];
     _selectedIndex = NSNotFound;
+
+    [_navigationBar addObserver:self
+                     forKeyPath:NSStringFromSelector(@selector(items))
+                        options:NSKeyValueObservingOptionNew
+                        context:kObservationContext];
   }
 
   return self;
+}
+
+- (void)dealloc {
+  [_navigationBar removeObserver:self forKeyPath:NSStringFromSelector(@selector(items))];
 }
 
 - (void)viewDidLoad {
@@ -94,8 +106,8 @@
 - (void)setViewControllers:(NSArray<UIViewController *> *)viewControllers {
   [self deselectCurrentItem];
   NSArray *viewControllersCopy = [viewControllers copy];
-  self.navigationBar.items = [self tabBarItemsForViewControllers:viewControllersCopy];
   _viewControllers = viewControllersCopy;
+  self.navigationBar.items = [self tabBarItemsForViewControllers:viewControllersCopy];
 
   self.selectedViewController = viewControllersCopy.firstObject;
 }
@@ -146,6 +158,41 @@
   }
 
   return YES;
+}
+
+#pragma mark - Key Value Observation Methods
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary<NSKeyValueChangeKey, id> *)change
+                       context:(void *)context {
+  if (context != kObservationContext) {
+    [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    return;
+  }
+
+  id newValue = [change objectForKey:NSKeyValueChangeNewKey];
+  if (object == self.navigationBar &&
+      [keyPath isEqualToString:NSStringFromSelector(@selector(items))] &&
+      [newValue isKindOfClass:[NSArray class]]) {
+    [self didUpdateNavigationBarItemsWithNewValue:(NSArray *)newValue];
+  }
+}
+
+- (void)didUpdateNavigationBarItemsWithNewValue:(NSArray *)items {
+  // Verify tab bar items correspond with the view controllers tab bar items.
+  if (items.count != self.viewControllers.count) {
+    [[self unauthorizedItemsChangedException] raise];
+  }
+
+  // Verify each new and the view controller's tab bar items are equal.
+  for (NSUInteger i = 0; i < self.viewControllers.count; i++) {
+    UITabBarItem *viewControllerTabBarItem = [self.viewControllers objectAtIndex:i].tabBarItem;
+    UITabBarItem *newTabBarItem = [items objectAtIndex:i];
+    if (![viewControllerTabBarItem isEqual:newTabBarItem]) {
+      [[self unauthorizedItemsChangedException] raise];
+    }
+  }
 }
 
 #pragma mark - Private Methods
@@ -276,23 +323,27 @@
 }
 
 - (void)loadiOS9PlusConstraints {
-  // Navigation Bar Constraints
-  [self.view.leftAnchor constraintEqualToAnchor:self.navigationBar.leftAnchor].active = YES;
-  [self.view.rightAnchor constraintEqualToAnchor:self.navigationBar.rightAnchor].active = YES;
+  if (@available(iOS 9.0, *)) {
+    // Navigation Bar Constraints
+    [self.view.leftAnchor constraintEqualToAnchor:self.navigationBar.leftAnchor].active = YES;
+    [self.view.rightAnchor constraintEqualToAnchor:self.navigationBar.rightAnchor].active = YES;
+    [self.navigationBar.topAnchor constraintEqualToAnchor:self.content.bottomAnchor].active = YES;
+    [self.navigationBar.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor].active = YES;
+  }
 
-  [self.navigationBar.topAnchor constraintEqualToAnchor:self.content.bottomAnchor].active = YES;
-  [self.navigationBar.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor].active = YES;
   if (@available(iOS 11.0, *)) {
     [self.navigationBar.barItemsBottomAnchor
         constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor]
         .active = YES;
   }
 
-  // Content View Constraints
-  [self.view.leftAnchor constraintEqualToAnchor:self.content.leftAnchor].active = YES;
-  [self.view.rightAnchor constraintEqualToAnchor:self.content.rightAnchor].active = YES;
+  if (@available(iOS 9.0, *)) {
+    // Content View Constraints
+    [self.view.leftAnchor constraintEqualToAnchor:self.content.leftAnchor].active = YES;
+    [self.view.rightAnchor constraintEqualToAnchor:self.content.rightAnchor].active = YES;
 
-  [self.view.topAnchor constraintEqualToAnchor:self.content.topAnchor].active = YES;
+    [self.view.topAnchor constraintEqualToAnchor:self.content.topAnchor].active = YES;
+  }
 }
 
 /**
@@ -358,6 +409,19 @@
   }
 
   return tabBarItems;
+}
+
+/**
+ * Returns an exception for when the navigation bar's items are changed from outside of this class.
+ */
+- (NSException *)unauthorizedItemsChangedException {
+  NSString *reason = [NSString
+      stringWithFormat:
+          @"Attempting to set %@'s navigation bar items.  Please instead use setViewControllers:",
+          NSStringFromClass([self class])];
+  return [NSException exceptionWithName:NSInternalInconsistencyException
+                                 reason:reason
+                               userInfo:nil];
 }
 
 @end

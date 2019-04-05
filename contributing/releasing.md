@@ -15,8 +15,8 @@ Each release is driven by a single **release engineer**, who is also a Googler. 
 is expected to do the following, in order of priority:
 
 - Do not break Google.
-- Cut a release by first thing Wednesday morning, NYC time, without exception.
-- Land a release at least once a week.
+- Cut a release early in the working calendar week.
+- Land a release at least once every calendar week.
 
 If something is stopping the release engineer from achieving any of the above goals, the culprit
 code should be removed immediately from the release.
@@ -33,6 +33,26 @@ For Googlers, also read [go/mdc-release-engineering](http://go/mdc-release-engin
 
 ## Before you start
 
+### First time setup
+
+Install [brew](https://brew.sh/), [sourcekitten](https://github.com/jpsim/SourceKitten), and [git-lfs](https://git-lfs.github.com/):
+
+    brew install sourcekitten
+    brew install git-lfs
+
+Please follow [using git-lfs instructions](https://github.com/material-components/material-components-ios/blob/2b6da5f10438081e5a7b2211e27336c6846433e5/contributing/tools.md#using-git-lfs) if you have already cloned the repository.
+
+Verify that xcode-select is pointing to an Xcode installation directory:
+
+    sudo xcode-select -p
+    
+    # Example output:
+    # /Applications/Xcode.app/Contents/Developer
+
+If not, select the Xcode you have installed. For example:
+
+    sudo xcode-select --switch /Applications/Xcode.app
+
 ### Create a clean clone
 
 Make sure you are working from a direct clone of the main Git repository.  The scripts involved 
@@ -41,10 +61,6 @@ will be working day-to-day with a fork, consider creating a separate clone just 
 
     git clone git@github.com:material-components/material-components-ios.git mdc-ios-release
     cd mdc-ios-release
-
-### Install git-lfs
-
-Please follow [using git-lfs instructions](https://github.com/material-components/material-components-ios/blob/2b6da5f10438081e5a7b2211e27336c6846433e5/contributing/tools.md#using-git-lfs)
 
 ### Configure the merge strategy for `.gitattributes`
 

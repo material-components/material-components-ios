@@ -88,7 +88,7 @@
   self.appBarViewController.headerView.minimumHeight = 56 + 72;
 
   UIFont *font;
-  if ([UIFont respondsToSelector:@selector(monospacedDigitSystemFontOfSize:weight:)]) {
+  if (@available(iOS 9.0, *)) {
     font = [UIFont monospacedDigitSystemFontOfSize:14 weight:UIFontWeightRegular];
   } else {
     font = [UIFont systemFontOfSize:14];
@@ -234,8 +234,8 @@
   [self.starPage addSubview:starView];
   [starView sizeToFit];
 
-  CGFloat x = centered ? 1 : (arc4random_uniform(199) + 1) / 100;  // 0 < x <=2
-  CGFloat y = centered ? 1 : (arc4random_uniform(199) + 1) / 100;  // 0 < y <=2
+  CGFloat x = centered ? 1 : (CGFloat)((arc4random_uniform(199) + 1) / 100.0);  // 0 < x <=2
+  CGFloat y = centered ? 1 : (CGFloat)((arc4random_uniform(199) + 1) / 100.0);  // 0 < y <=2
 
   [NSLayoutConstraint constraintWithItem:starView
                                attribute:NSLayoutAttributeCenterX

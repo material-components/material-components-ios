@@ -28,7 +28,23 @@ The Material Design top app bar displays information and actions relating to the
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBarContainerViewController.html">MDCAppBarContainerViewController</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBarNavigationController.html">MDCAppBarNavigationController</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBarViewController.html">MDCAppBarViewController</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCFlexibleHeaderContainerViewController.html">MDCFlexibleHeaderContainerViewController</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCFlexibleHeaderView.html">MDCFlexibleHeaderView</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCFlexibleHeaderViewController.html">MDCFlexibleHeaderViewController</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCHeaderStackView.html">MDCHeaderStackView</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCNavigationBar.html">MDCNavigationBar</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCNavigationBarTextColorAccessibilityMutator.html">MDCNavigationBarTextColorAccessibilityMutator</a></li>
   <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Protocols/MDCAppBarNavigationControllerDelegate.html">MDCAppBarNavigationControllerDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Protocols/MDCFlexibleHeaderSafeAreaDelegate.html">MDCFlexibleHeaderSafeAreaDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Protocols/MDCFlexibleHeaderViewDelegate.html">MDCFlexibleHeaderViewDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Protocols/MDCFlexibleHeaderViewLayoutDelegate.html">MDCFlexibleHeaderViewLayoutDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Protocols/MDCUINavigationItemObservables.html">MDCUINavigationItemObservables</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Enums.html">Enumerations</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Enums/MDCFlexibleHeaderContentImportance.html">MDCFlexibleHeaderContentImportance</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Enums/MDCFlexibleHeaderScrollPhase.html">MDCFlexibleHeaderScrollPhase</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Enums/MDCFlexibleHeaderShiftBehavior.html">MDCFlexibleHeaderShiftBehavior</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Enums/MDCNavigationBarTitleAlignment.html">MDCNavigationBarTitleAlignment</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Enums/MDCNavigationBarTitleViewLayoutBehavior.html">MDCNavigationBarTitleViewLayoutBehavior</a></li>
 </ul>
 
 ## Related components
@@ -62,6 +78,7 @@ The Material Design top app bar displays information and actions relating to the
 - [Extensions](#extensions)
   - [Color Theming](#color-theming)
   - [Typography Theming](#typography-theming)
+  - [Theming Extensions (Beta)](#theming-extensions-(beta))
 - [Accessibility](#accessibility)
   - [MDCAppBar Accessibility](#mdcappbar-accessibility)
 - [Migration guides](#migration-guides)
@@ -714,6 +731,58 @@ id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
 [MDCAppBarTypographyThemer applyTypographyScheme:colorScheme
      toAppBar:component];
 ```
+<!--</div>-->
+
+<!-- Extracted from docs/theming-extensions.md -->
+
+### Theming Extensions (Beta)
+
+`MDCAppBarViewController` supports Material Theming using a Container Scheme. The code is currently
+in Beta readiness, which means you will need to follow the [instructions for adding the
+MaterialComponentsBeta podspec to your
+project](https://github.com/material-components/material-components-ios/blob/73bdc03c2bd2abd032b0b69f05cd76928361aa37/contributing/beta_components.md#beta-program-for-components).
+There are two variants for Material Theming of an AppBar.  The Surface Variant colors the App Bar
+background to be `surfaceColor` and the Primary Variant colors the App Bar background to be
+`primaryColor`.
+
+<!--<div class="material-code-render" markdown="1">-->
+
+#### Swift
+
+```swift
+// Import the AppBar Theming Extensions module
+import MaterialComponentsBeta.MaterialAppBar_MaterialTheming
+
+...
+
+// Apply your app's Container Scheme to the App Bar controller
+let containerScheme = MDCContainerScheme()
+
+// Either Primary Theme
+appBarViewController.applyPrimaryTheme(withScheme: containerScheme)
+
+// Or Surface Theme
+appBarViewController.applySurfaceTheme(withScheme: containerScheme)
+```
+
+#### Objective-C
+
+```objc
+// Import the AppBar Theming Extensions header
+#import <MaterialComponentsBeta/MaterialAppBar+MaterialTheming.h>
+
+...
+
+// Apply your app's Container Scheme to the App Bar controller
+MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+
+// Either Primary Theme
+[self.appBarController applyPrimaryThemeWithScheme:containerScheme];
+
+// Or Surface Theme
+[self.appBarController applySurfaceThemeWithScheme:containerScheme];
+```
+
 <!--</div>-->
 
 

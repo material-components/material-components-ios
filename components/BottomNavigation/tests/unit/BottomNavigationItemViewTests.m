@@ -361,4 +361,88 @@ static UIImage *fakeImage(void) {
                 NSStringFromCGRect(itemView.label.frame));
 }
 
+- (void)testChangingSelectedImageWhenNotSelectedWontChangeDisplayedImage {
+  // Given
+  MDCBottomNavigationItemView *itemView = [[MDCBottomNavigationItemView alloc] init];
+  itemView.image = fakeImage();
+  itemView.selectedImage = fakeImage();
+  itemView.selected = NO;
+  UIImage *originalIconImageViewImage = itemView.iconImageView.image;
+
+  // When
+  itemView.selectedImage = fakeImage();
+
+  // Then
+  XCTAssertEqual(itemView.iconImageView.image, originalIconImageViewImage);
+}
+
+- (void)testChangingUnselectedImageWhenSelectedWithSelectedImageWontChangeDisplayedImage {
+  // Given
+  MDCBottomNavigationItemView *itemView = [[MDCBottomNavigationItemView alloc] init];
+  itemView.image = fakeImage();
+  itemView.selectedImage = fakeImage();
+  itemView.selected = YES;
+  UIImage *originalIconImageViewImage = itemView.iconImageView.image;
+
+  // When
+  itemView.image = fakeImage();
+
+  // Then
+  XCTAssertEqual(itemView.iconImageView.image, originalIconImageViewImage);
+}
+
+- (void)testTitleNumberOfLinesDefaultInStackedLayout {
+  // Given
+  MDCBottomNavigationItemView *itemView = [[MDCBottomNavigationItemView alloc] init];
+  itemView.title = @"title";
+  itemView.titleBelowIcon = YES;
+
+  // Then
+  XCTAssertEqual(itemView.titleNumberOfLines, 1);
+  XCTAssertEqual(itemView.label.numberOfLines, 1);
+}
+
+- (void)testTitleNumberOfLinesAppliesInStackedLayout {
+  // Given
+  MDCBottomNavigationItemView *itemView = [[MDCBottomNavigationItemView alloc] init];
+  itemView.title = @"title";
+  itemView.titleBelowIcon = YES;
+
+  // When
+  itemView.titleNumberOfLines = 7;
+
+  // Then
+  XCTAssertEqual(itemView.titleNumberOfLines, 7);
+  XCTAssertEqual(itemView.label.numberOfLines, itemView.titleNumberOfLines);
+}
+
+- (void)testTitleNumberOfLinesIgnoredInAdjacentLayout {
+  // Given
+  MDCBottomNavigationItemView *itemView = [[MDCBottomNavigationItemView alloc] init];
+  itemView.title = @"title";
+  itemView.titleBelowIcon = NO;
+
+  // When
+  itemView.titleNumberOfLines = 7;
+
+  // Then
+  XCTAssertEqual(itemView.titleNumberOfLines, 7);
+  XCTAssertEqual(itemView.label.numberOfLines, 1);
+}
+
+- (void)testTitleNumberOfLinesChangesWhenLayoutChanges {
+  // Given
+  MDCBottomNavigationItemView *itemView = [[MDCBottomNavigationItemView alloc] init];
+  itemView.title = @"title";
+  itemView.titleBelowIcon = NO;
+  itemView.titleNumberOfLines = 7;
+
+  // When
+  itemView.titleBelowIcon = YES;
+
+  // Then
+  XCTAssertEqual(itemView.titleNumberOfLines, 7);
+  XCTAssertEqual(itemView.label.numberOfLines, itemView.titleNumberOfLines);
+}
+
 @end
