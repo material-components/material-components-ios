@@ -15,7 +15,7 @@
 import XCTest
 import MaterialComponents.MaterialAppBar
 
-private class MockAppBarNavigationControllerDelete:
+private class MockAppBarNavigationControllerDelegate:
     NSObject, MDCAppBarNavigationControllerDelegate {
   var trackingScrollView: UIScrollView?
   func appBarNavigationController(_ navigationController: MDCAppBarNavigationController,
@@ -245,14 +245,14 @@ class AppBarNavigationControllerTests: XCTestCase {
     XCTAssertEqual(appBarViewController.headerView.trackingScrollView, scrollView1)
   }
 
-  func testDeleteCanReturnNilTrackingScrollView() {
+  func testDelegateCanReturnNilTrackingScrollView() {
     // Given
     let viewController = UIViewController()
     let scrollView1 = UIScrollView()
     viewController.view.addSubview(scrollView1)
     let scrollView2 = UIScrollView()
     viewController.view.addSubview(scrollView2)
-    let delegate = MockAppBarNavigationControllerDelete()
+    let delegate = MockAppBarNavigationControllerDelegate()
     navigationController.delegate = delegate
 
     // When
@@ -267,14 +267,14 @@ class AppBarNavigationControllerTests: XCTestCase {
     XCTAssertNil(appBarViewController.headerView.trackingScrollView)
   }
 
-  func testDeleteCanPickDifferentTrackingScrollView() {
+  func testDelegateCanPickDifferentTrackingScrollView() {
     // Given
     let viewController = UIViewController()
     let scrollView1 = UIScrollView()
     viewController.view.addSubview(scrollView1)
     let scrollView2 = UIScrollView()
     viewController.view.addSubview(scrollView2)
-    let delegate = MockAppBarNavigationControllerDelete()
+    let delegate = MockAppBarNavigationControllerDelegate()
     navigationController.delegate = delegate
 
     // When
