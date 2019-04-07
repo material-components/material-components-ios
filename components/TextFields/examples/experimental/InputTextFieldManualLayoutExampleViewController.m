@@ -189,13 +189,13 @@ static const NSUInteger kDefaultVerticalPadding = 20;
 
 - (MDCInputTextField *)createFilledTextFieldWithMaximalDensity {
   MDCInputTextField *textField = [self createFilledTextField];
-  textField.containerStyle.densityInformer.verticalDensity = 1.0;
+  textField.containerStyler.positioningDelegate.verticalDensity = 1.0;
   return textField;
 }
 
 - (MDCInputTextField *)createFilledTextFieldWithMinimalDensity {
   MDCInputTextField *textField = [self createFilledTextField];
-  textField.containerStyle.densityInformer.verticalDensity = 0.0;
+  textField.containerStyler.positioningDelegate.verticalDensity = 0.0;
   return textField;
 }
 
@@ -213,13 +213,13 @@ static const NSUInteger kDefaultVerticalPadding = 20;
 
 - (MDCInputTextField *)createOutlinedTextFieldWithMaximalDensity {
   MDCInputTextField *textField = [self createOutlinedTextField];
-  textField.containerStyle.densityInformer.verticalDensity = 1.0;
+  textField.containerStyler.positioningDelegate.verticalDensity = 1.0;
   return textField;
 }
 
 - (MDCInputTextField *)createOutlinedTextFieldWithMinimalDensity {
   MDCInputTextField *textField = [self createOutlinedTextField];
-  textField.containerStyle.densityInformer.verticalDensity = 0.0;
+  textField.containerStyler.positioningDelegate.verticalDensity = 0.0;
   return textField;
 }
 

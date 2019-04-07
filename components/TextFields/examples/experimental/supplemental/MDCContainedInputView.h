@@ -83,15 +83,15 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
   MDCContainedInputViewFloatingLabelStateNormal,
 };
 
-@protocol MDCContainedInputViewStyle;
+@protocol MDCContainedInputViewStyler;
 @protocol MDCContainedInputViewColorScheming;
 
 @protocol MDCContainedInputView <NSObject>
 /**
- Dictates the @c MDCContainerStyle of the text field. Defaults to an instance of
- MDCContainerStyleBase.
+ Dictates the @c MDCContainerStyler of the text field. Defaults to an instance of
+ MDCContainerStylerBase.
  */
-@property(nonatomic, strong, nonnull) id<MDCContainedInputViewStyle> containerStyle;
+@property(nonatomic, strong, nonnull) id<MDCContainedInputViewStyler> containerStyler;
 
 /**
  Describes the current @c MDCContainedInputViewState of the view.
@@ -245,29 +245,29 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
 @property(strong, nonatomic, nonnull) UIColor *errorColor;
 @end
 
-@protocol MDCContainedInputViewStyleDensityInforming;
+@protocol MDCContainedInputViewStylerPositioningDelegate;
 
-@protocol MDCContainedInputViewStyle <NSObject>
+@protocol MDCContainedInputViewStyler <NSObject>
 /**
- The style's densityInformer. Different implementations of MDCContainedInputView may need different
- density informers on a per style basis.
+ The style's positioningDelegate. Different implementations of MDCContainedInputView may need
+ different vertical positioning delegates for different stylers.
  */
-@property(strong, nonatomic, nonnull) id<MDCContainedInputViewStyleDensityInforming>
-    densityInformer;
+@property(strong, nonatomic, nonnull) id<MDCContainedInputViewStylerPositioningDelegate>
+    positioningDelegate;
 /**
  This method provides a default object conforming to MDCContainedInputViewColorScheming.
  */
 - (nonnull id<MDCContainedInputViewColorScheming>)defaultColorSchemeForState:
     (MDCContainedInputViewState)state;
 /**
- This method allows objects conforming to MDCContainedInputViewStyle to apply themselves to objects
+ This method allows objects conforming to MDCContainedInputViewStyler to apply themselves to objects
  conforming to MDCContainedInputView with a set of colors represented by an object conforming to
  MDCContainedInputViewColorScheming.
  */
 - (void)applyStyleToContainedInputView:(nonnull id<MDCContainedInputView>)inputView
     withContainedInputViewColorScheming:(nonnull id<MDCContainedInputViewColorScheming>)colorScheme;
 /**
- This method allows objects conforming to MDCContainedInputViewStyle to remove the styling
+ This method allows objects conforming to MDCContainedInputViewStyler to remove the styling
  previously applied to objects conforming to MDCContainedInputView.
  */
 - (void)removeStyleFrom:(nonnull id<MDCContainedInputView>)containedInputView;
@@ -283,7 +283,7 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
  helps achieve the variations in floating label position across the filled and outlined styles as
  well as the general density of the views.
  */
-@protocol MDCContainedInputViewStyleDensityInforming <NSObject>
+@protocol MDCContainedInputViewStylerPositioningDelegate <NSObject>
 /**
  This is a value between 0 and 1 that determines the visual vertical density of the view.
  */
@@ -305,22 +305,22 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
 @end
 
 /**
- A base implementation of MDCContainedInputViewStyle.
+ A base implementation of MDCContainedInputViewStyler.
  */
-@interface MDCContainerStyleBase : NSObject <MDCContainedInputViewStyle>
+@interface MDCContainerStylerBase : NSObject <MDCContainedInputViewStyler>
 - (nonnull instancetype)init NS_DESIGNATED_INITIALIZER;
 @end
 
 /**
- A base implementation of MDCContainedInputViewStyleDensityInforming.
+ A base implementation of MDCContainedInputViewStylerPositioningDelegate.
  */
-@interface MDCContainerStyleBaseDensityInformer
-    : NSObject <MDCContainedInputViewStyleDensityInforming>
+@interface MDCContainerStylerBasePositioningDelegate
+    : NSObject <MDCContainedInputViewStylerPositioningDelegate>
 @end
 
 @interface MDCContainedInputViewFloatingLabelManager : NSObject
 - (UIFont *_Nonnull)floatingFontWithFont:(nonnull UIFont *)font
-                          containerStyle:(nonnull id<MDCContainedInputViewStyle>)containerStyle;
+                         containerStyler:(nonnull id<MDCContainedInputViewStyler>)containerStyler;
 - (void)layOutPlaceholderLabel:(nonnull UILabel *)placeholderLabel
               placeholderFrame:(CGRect)placeholderFrame
           isPlaceholderVisible:(BOOL)isPlaceholderVisible;

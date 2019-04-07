@@ -17,7 +17,7 @@
 
 #import "MDCContainedInputView.h"
 
-@protocol MDCContainedInputViewStyle;
+@protocol MDCContainedInputViewStyler;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -48,7 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, assign) CGFloat topRowBottomRowDividerY;
 
 - (instancetype)initWithTextFieldSize:(CGSize)textFieldSize
-                       containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
+                      containerStyler:(id<MDCContainedInputViewStyler>)containerStyler
                                  text:(NSString *)text
                           placeholder:(NSString *)placeholder
                                  font:(UIFont *)font

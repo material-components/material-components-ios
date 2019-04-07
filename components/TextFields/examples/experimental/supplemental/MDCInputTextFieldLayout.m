@@ -31,7 +31,7 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
 #pragma mark Object Lifecycle
 
 - (instancetype)initWithTextFieldSize:(CGSize)textFieldSize
-                       containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
+                      containerStyler:(id<MDCContainedInputViewStyler>)containerStyler
                                  text:(NSString *)text
                           placeholder:(NSString *)placeholder
                                  font:(UIFont *)font
@@ -56,7 +56,7 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
   self = [super init];
   if (self) {
     [self calculateLayoutWithTextFieldSize:textFieldSize
-                            containerStyle:containerStyle
+                           containerStyler:containerStyler
                                       text:text
                                placeholder:placeholder
                                       font:font
@@ -85,7 +85,7 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
 #pragma mark Layout Calculation
 
 - (void)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize
-                          containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
+                         containerStyler:(id<MDCContainedInputViewStyler>)containerStyler
                                     text:(NSString *)text
                              placeholder:(NSString *)placeholder
                                     font:(UIFont *)font
@@ -148,16 +148,16 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
   CGFloat actualClearButtonMinX = apparentClearButtonMinX - clearButtonImageViewSideMargin;
 
   CGFloat floatingLabelHeight = canFloatingLabelFloat ? [self textHeightWithFont:floatingFont] : 0;
-  CGFloat floatingLabelMinY =
-      [containerStyle.densityInformer floatingLabelMinYWithFloatingLabelHeight:floatingLabelHeight];
+  CGFloat floatingLabelMinY = [containerStyler.positioningDelegate
+      floatingLabelMinYWithFloatingLabelHeight:floatingLabelHeight];
   CGFloat floatingLabelMaxY = floatingLabelMinY + floatingLabelHeight;
-  CGFloat textRectMinYWithFloatingLabel = [containerStyle.densityInformer
+  CGFloat textRectMinYWithFloatingLabel = [containerStyler.positioningDelegate
       contentAreaTopPaddingFloatingLabelWithFloatingLabelMaxY:floatingLabelMaxY];
   CGFloat textRectHeight = [self textHeightWithFont:font];
   CGFloat textRectCenterYWithFloatingLabel =
       textRectMinYWithFloatingLabel + ((CGFloat)0.5 * textRectHeight);
   CGFloat textRectMaxYWithFloatingLabel = textRectMinYWithFloatingLabel + textRectHeight;
-  CGFloat bottomPadding = [containerStyle.densityInformer
+  CGFloat bottomPadding = [containerStyler.positioningDelegate
       contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:floatingLabelMaxY];
   CGFloat intrinsicContentAreaHeight = textRectMaxYWithFloatingLabel + bottomPadding;
   CGFloat topRowBottomRowDividerY = intrinsicContentAreaHeight;
@@ -255,7 +255,7 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
 
   CGRect floatingLabelFrameNormal =
       [self floatingLabelFrameWithText:floatingLabel.text
-                        containerStyle:containerStyle
+                       containerStyler:containerStyler
                     floatingLabelState:MDCContainedInputViewFloatingLabelStateNormal
                                   font:font
                           floatingFont:floatingFont
@@ -266,7 +266,7 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
                                  isRTL:isRTL];
   CGRect floatingLabelFrameFloating =
       [self floatingLabelFrameWithText:floatingLabel.text
-                        containerStyle:containerStyle
+                       containerStyler:containerStyler
                     floatingLabelState:MDCContainedInputViewFloatingLabelStateFloating
                                   font:font
                           floatingFont:floatingFont
@@ -284,7 +284,7 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
 
   CGFloat underlineLabelsCombinedMinY =
       topRowBottomRowDividerY +
-      [containerStyle.densityInformer
+      [containerStyler.positioningDelegate
           contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:floatingLabelMaxY];
   CGFloat leadingUnderlineLabelWidth = 0;
   CGFloat trailingUnderlineLabelWidth = 0;
@@ -479,7 +479,7 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
 }
 
 - (CGRect)floatingLabelFrameWithText:(NSString *)text
-                      containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
+                     containerStyler:(id<MDCContainedInputViewStyler>)containerStyler
                   floatingLabelState:(MDCContainedInputViewFloatingLabelState)floatingLabelState
                                 font:(UIFont *)font
                         floatingFont:(UIFont *)floatingFont

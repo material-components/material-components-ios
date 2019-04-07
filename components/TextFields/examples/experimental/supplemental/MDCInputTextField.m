@@ -19,7 +19,7 @@
 #import <MDFInternationalization/MDFInternationalization.h>
 #import "MaterialTypography.h"
 
-#import "MDCContainerStylePathDrawingUtils.h"
+#import "MDCContainerStylerPathDrawingUtils.h"
 #import "MDCInputTextFieldLayout.h"
 #import "MaterialMath.h"
 
@@ -53,7 +53,7 @@
 @synthesize preferredUnderlineLabelAreaHeight = _preferredUnderlineLabelAreaHeight;
 @synthesize underlineLabelDrawPriority = _underlineLabelDrawPriority;
 @synthesize customUnderlineLabelDrawPriority = _customUnderlineLabelDrawPriority;
-@synthesize containerStyle = _containerStyle;
+@synthesize containerStyler = _containerStyler;
 @synthesize isActivated = _isActivated;
 @synthesize isErrored = _isErrored;
 @synthesize canFloatingLabelFloat = _canFloatingLabelFloat;
@@ -83,7 +83,7 @@
   [self setUpFloatingLabelManager];
   [self setUpUnderlineLabels];
   [self setUpClearButton];
-  [self setUpContainerStyle];
+  [self setUpContainerStyler];
 }
 
 #pragma mark View Setup
@@ -116,33 +116,33 @@
   self.colorSchemes = [[NSMutableDictionary alloc] init];
 }
 
-- (void)setUpContainerStyle {
-  self.containerStyle = [[MDCContainerStyleBase alloc] init];
+- (void)setUpContainerStyler {
+  self.containerStyler = [[MDCContainerStylerBase alloc] init];
 }
 
-- (void)setUpStateDependentColorSchemesForStyle:(id<MDCContainedInputViewStyle>)containerStyle {
+- (void)setUpStateDependentColorSchemesForStyle:(id<MDCContainedInputViewStyler>)containerStyler {
   id<MDCContainedInputViewColorScheming> normalColorScheme =
-      [containerStyle defaultColorSchemeForState:MDCContainedInputViewStateNormal];
+      [containerStyler defaultColorSchemeForState:MDCContainedInputViewStateNormal];
   [self setContainedInputViewColorScheming:normalColorScheme
                                   forState:MDCContainedInputViewStateNormal];
 
   id<MDCContainedInputViewColorScheming> focusedColorScheme =
-      [containerStyle defaultColorSchemeForState:MDCContainedInputViewStateFocused];
+      [containerStyler defaultColorSchemeForState:MDCContainedInputViewStateFocused];
   [self setContainedInputViewColorScheming:focusedColorScheme
                                   forState:MDCContainedInputViewStateFocused];
 
   id<MDCContainedInputViewColorScheming> activatedColorScheme =
-      [containerStyle defaultColorSchemeForState:MDCContainedInputViewStateActivated];
+      [containerStyler defaultColorSchemeForState:MDCContainedInputViewStateActivated];
   [self setContainedInputViewColorScheming:activatedColorScheme
                                   forState:MDCContainedInputViewStateActivated];
 
   id<MDCContainedInputViewColorScheming> erroredColorScheme =
-      [containerStyle defaultColorSchemeForState:MDCContainedInputViewStateErrored];
+      [containerStyler defaultColorSchemeForState:MDCContainedInputViewStateErrored];
   [self setContainedInputViewColorScheming:erroredColorScheme
                                   forState:MDCContainedInputViewStateErrored];
 
   id<MDCContainedInputViewColorScheming> disabledColorScheme =
-      [containerStyle defaultColorSchemeForState:MDCContainedInputViewStateDisabled];
+      [containerStyler defaultColorSchemeForState:MDCContainedInputViewStateDisabled];
   [self setContainedInputViewColorScheming:disabledColorScheme
                                   forState:MDCContainedInputViewStateDisabled];
 }
@@ -232,7 +232,7 @@
 - (void)postLayoutSubviews {
   UIFont *normalFont = [self determineEffectiveFont];
   UIFont *floatingFont = [self.floatingLabelManager floatingFontWithFont:normalFont
-                                                          containerStyle:self.containerStyle];
+                                                         containerStyler:self.containerStyler];
   CGRect adjustedPlaceholderFrame =
       [self adjustTextAreaFrame:self.layout.textRectFloatingLabel
           withParentClassTextAreaFrame:[super textRectForBounds:self.bounds]];
@@ -248,8 +248,8 @@
                                     floatingFont:floatingFont];
   id<MDCContainedInputViewColorScheming> colorScheming =
       [self containedInputViewColorSchemingForState:self.containedInputViewState];
-  [self.containerStyle applyStyleToContainedInputView:self
-                  withContainedInputViewColorScheming:colorScheming];
+  [self.containerStyler applyStyleToContainedInputView:self
+                   withContainedInputViewColorScheming:colorScheming];
   self.clearButton.frame = [self clearButtonFrameFromLayout:self.layout
                                          floatingLabelState:self.floatingLabelState];
   self.clearButton.hidden = self.layout.clearButtonHidden;
@@ -272,12 +272,12 @@
 - (MDCInputTextFieldLayout *)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize {
   UIFont *effectiveFont = [self determineEffectiveFont];
   UIFont *floatingFont = [self.floatingLabelManager floatingFontWithFont:effectiveFont
-                                                          containerStyle:self.containerStyle];
+                                                         containerStyler:self.containerStyler];
   CGFloat normalizedCustomUnderlineLabelDrawPriority =
       [self normalizedCustomUnderlineLabelDrawPriority:self.customUnderlineLabelDrawPriority];
   return [[MDCInputTextFieldLayout alloc]
                   initWithTextFieldSize:textFieldSize
-                         containerStyle:self.containerStyle
+                        containerStyler:self.containerStyler
                                    text:self.text
                             placeholder:self.placeholder
                                    font:effectiveFont
@@ -479,17 +479,17 @@
   [self setNeedsLayout];
 }
 
-- (void)setContainerStyle:(id<MDCContainedInputViewStyle>)containerStyle {
-  id<MDCContainedInputViewStyle> oldStyle = _containerStyle;
+- (void)setContainerStyler:(id<MDCContainedInputViewStyler>)containerStyler {
+  id<MDCContainedInputViewStyler> oldStyle = _containerStyler;
   if (oldStyle) {
     [oldStyle removeStyleFrom:self];
   }
-  _containerStyle = containerStyle;
-  [self setUpStateDependentColorSchemesForStyle:_containerStyle];
+  _containerStyler = containerStyler;
+  [self setUpStateDependentColorSchemesForStyle:_containerStyler];
   id<MDCContainedInputViewColorScheming> colorScheme =
       [self containedInputViewColorSchemingForState:self.containedInputViewState];
-  [_containerStyle applyStyleToContainedInputView:self
-              withContainedInputViewColorScheming:colorScheme];
+  [_containerStyler applyStyleToContainedInputView:self
+               withContainedInputViewColorScheming:colorScheme];
 }
 
 #pragma mark MDCContainedInputView accessors
@@ -568,7 +568,7 @@
 }
 
 - (CGRect)borderRectForBounds:(CGRect)bounds {
-  if (!self.containerStyle) {
+  if (!self.containerStyler) {
     return [super borderRectForBounds:bounds];
   }
   return CGRectZero;
@@ -686,7 +686,7 @@
   CGRect rect = CGRectMake(0, 0, sideLength, sideLength);
   UIGraphicsBeginImageContextWithOptions(rect.size, false, 0);
   [[UIColor blackColor] setFill];
-  [[MDCContainerStylePathDrawingUtils pathForClearButtonImageWithFrame:rect] fill];
+  [[MDCContainerStylerPathDrawingUtils pathForClearButtonImageWithFrame:rect] fill];
   UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
   UIGraphicsEndImageContext();
   image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
@@ -798,7 +798,7 @@
   id<MDCContainedInputViewColorScheming> colorScheme =
       self.colorSchemes[@(containedInputViewState)];
   if (!colorScheme) {
-    colorScheme = [self.containerStyle defaultColorSchemeForState:containedInputViewState];
+    colorScheme = [self.containerStyler defaultColorSchemeForState:containedInputViewState];
   }
   return colorScheme;
 }

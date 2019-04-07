@@ -17,8 +17,8 @@
 #import <Foundation/Foundation.h>
 
 #import "MDCContainedInputView.h"
-#import "MDCContainerStyleFilled.h"
-#import "MDCContainerStyleOutlined.h"
+#import "MDCContainerStylerFilled.h"
+#import "MDCContainerStylerOutlined.h"
 
 @implementation InputChipView (MaterialTheming)
 
@@ -47,27 +47,27 @@
 
 - (void)applyMDCColorScheming:(id<MDCColorScheming>)mdcColorScheming {
   MDCContainedInputViewColorScheme *normalColorScheme =
-      [self.containerStyle defaultColorSchemeForState:MDCContainedInputViewStateNormal];
+      [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateNormal];
   [self setContainedInputViewColorScheming:normalColorScheme
                                   forState:MDCContainedInputViewStateNormal];
 
   MDCContainedInputViewColorScheme *focusedColorScheme =
-      [self.containerStyle defaultColorSchemeForState:MDCContainedInputViewStateFocused];
+      [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateFocused];
   [self setContainedInputViewColorScheming:focusedColorScheme
                                   forState:MDCContainedInputViewStateFocused];
 
   MDCContainedInputViewColorScheme *activatedColorScheme =
-      [self.containerStyle defaultColorSchemeForState:MDCContainedInputViewStateActivated];
+      [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateActivated];
   [self setContainedInputViewColorScheming:activatedColorScheme
                                   forState:MDCContainedInputViewStateActivated];
 
   MDCContainedInputViewColorScheme *erroredColorScheme =
-      [self.containerStyle defaultColorSchemeForState:MDCContainedInputViewStateErrored];
+      [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateErrored];
   [self setContainedInputViewColorScheming:erroredColorScheme
                                   forState:MDCContainedInputViewStateErrored];
 
   MDCContainedInputViewColorScheme *disabledColorScheme =
-      [self.containerStyle defaultColorSchemeForState:MDCContainedInputViewStateDisabled];
+      [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateDisabled];
   [self setContainedInputViewColorScheming:disabledColorScheme
                                   forState:MDCContainedInputViewStateDisabled];
 
@@ -81,9 +81,9 @@
 }
 
 - (void)applyOutlinedThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
-  MDCContainerStyleOutlined *outlinedStyle = [[MDCContainerStyleOutlined alloc] init];
-  outlinedStyle.densityInformer = [[InputChipViewOutlinedDensityInformer alloc] init];
-  self.containerStyle = outlinedStyle;
+  MDCContainerStylerOutlined *outlinedStyle = [[MDCContainerStylerOutlined alloc] init];
+  outlinedStyle.positioningDelegate = [[InputChipViewOutlinedPositioningDelegate alloc] init];
+  self.containerStyler = outlinedStyle;
 
   [self applyTypographySchemeWith:containerScheme];
 
@@ -124,9 +124,9 @@
 }
 
 - (void)applyFilledThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
-  MDCContainerStyleFilled *filledStyle = [[MDCContainerStyleFilled alloc] init];
-  self.containerStyle = filledStyle;
-  self.containerStyle.densityInformer = [[InputChipViewFilledDensityInformer alloc] init];
+  MDCContainerStylerFilled *filledStyle = [[MDCContainerStylerFilled alloc] init];
+  self.containerStyler = filledStyle;
+  self.containerStyler.positioningDelegate = [[InputChipViewFilledPositioningDelegate alloc] init];
 
   [self applyTypographySchemeWith:containerScheme];
 
@@ -261,7 +261,7 @@
 
 @end
 
-@implementation InputChipViewFilledDensityInformer
+@implementation InputChipViewFilledPositioningDelegate
 
 - (CGFloat)floatingLabelMinYWithFloatingLabelHeight:(CGFloat)floatingPlaceholderHeight {
   CGFloat lowestMinY = 4;
@@ -287,7 +287,7 @@
 
 @end
 
-@implementation InputChipViewOutlinedDensityInformer
+@implementation InputChipViewOutlinedPositioningDelegate
 
 - (CGFloat)floatingLabelMinYWithFloatingLabelHeight:(CGFloat)floatingPlaceholderHeight {
   return (CGFloat)0 - ((CGFloat)0.5 * floatingPlaceholderHeight);

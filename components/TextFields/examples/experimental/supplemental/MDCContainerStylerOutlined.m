@@ -14,26 +14,26 @@
 
 #import "MDCContainedInputView.h"
 
-#import "MDCContainerStylePathDrawingUtils.h"
+#import "MDCContainerStylerPathDrawingUtils.h"
 
-#import "MDCContainerStyleOutlined.h"
+#import "MDCContainerStylerOutlined.h"
 
 #import <Foundation/Foundation.h>
 
-static const CGFloat kOutlinedContainerStyleCornerRadius = (CGFloat)4.0;
+static const CGFloat kOutlinedContainerStylerCornerRadius = (CGFloat)4.0;
 static const CGFloat kFloatingLabelOutlineSidePadding = (CGFloat)5.0;
 
 @implementation MDCContainedInputViewColorSchemeOutlined
 @end
 
-@interface MDCContainerStyleOutlined ()
+@interface MDCContainerStylerOutlined ()
 
 @property(strong, nonatomic) CAShapeLayer *outlinedSublayer;
 
 @end
 
-@implementation MDCContainerStyleOutlined
-@synthesize densityInformer = _densityInformer;
+@implementation MDCContainerStylerOutlined
+@synthesize positioningDelegate = _positioningDelegate;
 
 - (instancetype)init {
   self = [super init];
@@ -127,7 +127,7 @@ static const CGFloat kFloatingLabelOutlineSidePadding = (CGFloat)5.0;
                                   lineWidth:(CGFloat)lineWidth
                     isFloatingLabelFloating:(BOOL)isFloatingLabelFloating {
   UIBezierPath *path = [[UIBezierPath alloc] init];
-  CGFloat radius = kOutlinedContainerStyleCornerRadius;
+  CGFloat radius = kOutlinedContainerStylerCornerRadius;
   CGFloat textFieldWidth = CGRectGetWidth(viewBounds);
   CGFloat sublayerMinY = 0;
   CGFloat sublayerMaxY = topRowBottomRowDividerY;
@@ -146,34 +146,34 @@ static const CGFloat kFloatingLabelOutlineSidePadding = (CGFloat)5.0;
   }
 
   CGPoint topRightCornerPoint2 = CGPointMake(textFieldWidth, sublayerMinY + radius);
-  [MDCContainerStylePathDrawingUtils addTopRightCornerToPath:path
-                                                   fromPoint:topRightCornerPoint1
-                                                     toPoint:topRightCornerPoint2
-                                                  withRadius:radius];
+  [MDCContainerStylerPathDrawingUtils addTopRightCornerToPath:path
+                                                    fromPoint:topRightCornerPoint1
+                                                      toPoint:topRightCornerPoint2
+                                                   withRadius:radius];
 
   CGPoint bottomRightCornerPoint1 = CGPointMake(textFieldWidth, sublayerMaxY - radius);
   CGPoint bottomRightCornerPoint2 = CGPointMake(textFieldWidth - radius, sublayerMaxY);
   [path addLineToPoint:bottomRightCornerPoint1];
-  [MDCContainerStylePathDrawingUtils addBottomRightCornerToPath:path
-                                                      fromPoint:bottomRightCornerPoint1
-                                                        toPoint:bottomRightCornerPoint2
-                                                     withRadius:radius];
+  [MDCContainerStylerPathDrawingUtils addBottomRightCornerToPath:path
+                                                       fromPoint:bottomRightCornerPoint1
+                                                         toPoint:bottomRightCornerPoint2
+                                                      withRadius:radius];
 
   CGPoint bottomLeftCornerPoint1 = CGPointMake(radius, sublayerMaxY);
   CGPoint bottomLeftCornerPoint2 = CGPointMake(0, sublayerMaxY - radius);
   [path addLineToPoint:bottomLeftCornerPoint1];
-  [MDCContainerStylePathDrawingUtils addBottomLeftCornerToPath:path
-                                                     fromPoint:bottomLeftCornerPoint1
-                                                       toPoint:bottomLeftCornerPoint2
-                                                    withRadius:radius];
+  [MDCContainerStylerPathDrawingUtils addBottomLeftCornerToPath:path
+                                                      fromPoint:bottomLeftCornerPoint1
+                                                        toPoint:bottomLeftCornerPoint2
+                                                     withRadius:radius];
 
   CGPoint topLeftCornerPoint1 = CGPointMake(0, sublayerMinY + radius);
   CGPoint topLeftCornerPoint2 = CGPointMake(radius, sublayerMinY);
   [path addLineToPoint:topLeftCornerPoint1];
-  [MDCContainerStylePathDrawingUtils addTopLeftCornerToPath:path
-                                                  fromPoint:topLeftCornerPoint1
-                                                    toPoint:topLeftCornerPoint2
-                                                 withRadius:radius];
+  [MDCContainerStylerPathDrawingUtils addTopLeftCornerToPath:path
+                                                   fromPoint:topLeftCornerPoint1
+                                                     toPoint:topLeftCornerPoint2
+                                                  withRadius:radius];
 
   return path;
 }
@@ -194,16 +194,16 @@ static const CGFloat kFloatingLabelOutlineSidePadding = (CGFloat)5.0;
   return defaultLineWidth;
 }
 
-- (id<MDCContainedInputViewStyleDensityInforming>)densityInformer {
-  if (_densityInformer) {
-    return _densityInformer;
+- (id<MDCContainedInputViewStylerPositioningDelegate>)positioningDelegate {
+  if (_positioningDelegate) {
+    return _positioningDelegate;
   }
-  return [[MDCContainerStyleOutlinedDensityInformer alloc] init];
+  return [[MDCContainerStylerOutlinedPositioningDelegate alloc] init];
 }
 
 @end
 
-@implementation MDCContainerStyleOutlinedDensityInformer
+@implementation MDCContainerStylerOutlinedPositioningDelegate
 
 - (CGFloat)floatingLabelMinYWithFloatingLabelHeight:(CGFloat)floatingPlaceholderHeight {
   return (CGFloat)0 - ((CGFloat)0.5 * floatingPlaceholderHeight);

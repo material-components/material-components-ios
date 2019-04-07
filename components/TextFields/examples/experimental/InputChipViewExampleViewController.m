@@ -204,13 +204,13 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
 
 - (InputChipView *)createOutlinedNonWrappingInputChipViewWithMaximalDensity {
   InputChipView *inputChipView = [self createOutlinedNonWrappingInputChipView];
-  inputChipView.containerStyle.densityInformer.verticalDensity = 1.0;
+  inputChipView.containerStyler.positioningDelegate.verticalDensity = 1.0;
   return inputChipView;
 }
 
 - (InputChipView *)createOutlinedNonWrappingInputChipViewWithMinimalDensity {
   InputChipView *inputChipView = [self createOutlinedNonWrappingInputChipView];
-  inputChipView.containerStyle.densityInformer.verticalDensity = 0.0;
+  inputChipView.containerStyler.positioningDelegate.verticalDensity = 0.0;
   return inputChipView;
 }
 
@@ -241,13 +241,13 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
 
 - (InputChipView *)createFilledNonWrappingInputChipViewWithMaximalDensity {
   InputChipView *inputChipView = [self createFilledNonWrappingInputChipView];
-  inputChipView.containerStyle.densityInformer.verticalDensity = 1.0;
+  inputChipView.containerStyler.positioningDelegate.verticalDensity = 1.0;
   return inputChipView;
 }
 
 - (InputChipView *)createFilledNonWrappingInputChipViewWithMinimalDensity {
   InputChipView *inputChipView = [self createFilledNonWrappingInputChipView];
-  inputChipView.containerStyle.densityInformer.verticalDensity = 0.0;
+  inputChipView.containerStyler.positioningDelegate.verticalDensity = 0.0;
   return inputChipView;
 }
 

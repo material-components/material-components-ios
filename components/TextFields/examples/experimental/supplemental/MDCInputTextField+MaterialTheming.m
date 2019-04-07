@@ -17,8 +17,8 @@
 #import <Foundation/Foundation.h>
 
 #import "MDCContainedInputView.h"
-#import "MDCContainerStyleFilled.h"
-#import "MDCContainerStyleOutlined.h"
+#import "MDCContainerStylerFilled.h"
+#import "MDCContainerStylerOutlined.h"
 
 @implementation MDCInputTextField (MaterialTheming)
 
@@ -47,27 +47,27 @@
 
 - (void)applyMDCColorScheming:(id<MDCColorScheming>)mdcColorScheming {
   MDCContainedInputViewColorScheme *normalColorScheme =
-      [self.containerStyle defaultColorSchemeForState:MDCContainedInputViewStateNormal];
+      [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateNormal];
   [self setContainedInputViewColorScheming:normalColorScheme
                                   forState:MDCContainedInputViewStateNormal];
 
   MDCContainedInputViewColorScheme *focusedColorScheme =
-      [self.containerStyle defaultColorSchemeForState:MDCContainedInputViewStateFocused];
+      [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateFocused];
   [self setContainedInputViewColorScheming:focusedColorScheme
                                   forState:MDCContainedInputViewStateFocused];
 
   MDCContainedInputViewColorScheme *activatedColorScheme =
-      [self.containerStyle defaultColorSchemeForState:MDCContainedInputViewStateActivated];
+      [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateActivated];
   [self setContainedInputViewColorScheming:activatedColorScheme
                                   forState:MDCContainedInputViewStateActivated];
 
   MDCContainedInputViewColorScheme *erroredColorScheme =
-      [self.containerStyle defaultColorSchemeForState:MDCContainedInputViewStateErrored];
+      [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateErrored];
   [self setContainedInputViewColorScheming:erroredColorScheme
                                   forState:MDCContainedInputViewStateErrored];
 
   MDCContainedInputViewColorScheme *disabledColorScheme =
-      [self.containerStyle defaultColorSchemeForState:MDCContainedInputViewStateDisabled];
+      [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateDisabled];
   [self setContainedInputViewColorScheming:disabledColorScheme
                                   forState:MDCContainedInputViewStateDisabled];
 
@@ -81,11 +81,11 @@
 }
 
 - (void)applyOutlinedThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
-  MDCContainerStyleOutlined *outlinedStyle = [[MDCContainerStyleOutlined alloc] init];
-  MDCInputTextFieldOutlinedDensityInformer *densityInformer =
-      [[MDCInputTextFieldOutlinedDensityInformer alloc] init];
-  outlinedStyle.densityInformer = densityInformer;
-  self.containerStyle = outlinedStyle;
+  MDCContainerStylerOutlined *outlinedStyle = [[MDCContainerStylerOutlined alloc] init];
+  MDCInputTextFieldOutlinedPositioningDelegate *positioningDelegate =
+      [[MDCInputTextFieldOutlinedPositioningDelegate alloc] init];
+  outlinedStyle.positioningDelegate = positioningDelegate;
+  self.containerStyler = outlinedStyle;
 
   [self applyTypographySchemeWith:containerScheme];
 
@@ -126,11 +126,11 @@
 }
 
 - (void)applyFilledThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
-  MDCContainerStyleFilled *filledStyle = [[MDCContainerStyleFilled alloc] init];
-  MDCInputTextFieldFilledDensityInformer *densityInformer =
-      [[MDCInputTextFieldFilledDensityInformer alloc] init];
-  filledStyle.densityInformer = densityInformer;
-  self.containerStyle = filledStyle;
+  MDCContainerStylerFilled *filledStyle = [[MDCContainerStylerFilled alloc] init];
+  MDCInputTextFieldFilledPositioningDelegate *positioningDelegate =
+      [[MDCInputTextFieldFilledPositioningDelegate alloc] init];
+  filledStyle.positioningDelegate = positioningDelegate;
+  self.containerStyler = filledStyle;
 
   [self applyTypographySchemeWith:containerScheme];
 
@@ -264,10 +264,10 @@
 
 @end
 
-//@interface MDCInputTextFieldFilledDensityInformer ()
+//@interface MDCInputTextFieldFilledPositioningDelegate ()
 //@end
 
-@implementation MDCInputTextFieldFilledDensityInformer
+@implementation MDCInputTextFieldFilledPositioningDelegate
 
 - (CGFloat)floatingLabelMinYWithFloatingLabelHeight:(CGFloat)floatingPlaceholderHeight {
   CGFloat lowestMinY = 4;
@@ -293,7 +293,7 @@
 
 @end
 
-@implementation MDCInputTextFieldOutlinedDensityInformer
+@implementation MDCInputTextFieldOutlinedPositioningDelegate
 
 - (CGFloat)floatingLabelMinYWithFloatingLabelHeight:(CGFloat)floatingPlaceholderHeight {
   return (CGFloat)0 - ((CGFloat)0.5 * floatingPlaceholderHeight);

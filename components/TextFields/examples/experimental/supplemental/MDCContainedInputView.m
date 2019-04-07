@@ -45,8 +45,8 @@
 
 @end
 
-@implementation MDCContainerStyleBase
-@synthesize densityInformer = _densityInformer;
+@implementation MDCContainerStylerBase
+@synthesize positioningDelegate = _positioningDelegate;
 
 #pragma mark Object Lifecycle
 
@@ -59,11 +59,11 @@
 }
 
 - (void)setUp {
-  [self setUpDensityInformer];
+  [self setUpPositioningDelegate];
 }
 
-- (void)setUpDensityInformer {
-  self.densityInformer = [[MDCContainerStyleBaseDensityInformer alloc] init];
+- (void)setUpPositioningDelegate {
+  self.positioningDelegate = [[MDCContainerStylerBasePositioningDelegate alloc] init];
 }
 
 - (id<MDCContainedInputViewColorScheming>)defaultColorSchemeForState:
@@ -110,15 +110,16 @@
 
 #pragma mark Accessors
 
-- (void)setDensityInformer:(id<MDCContainedInputViewStyleDensityInforming>)densityInformer {
-  _densityInformer = densityInformer;
+- (void)setPositioningDelegate:
+    (id<MDCContainedInputViewStylerPositioningDelegate>)positioningDelegate {
+  _positioningDelegate = positioningDelegate;
 }
 
-- (id<MDCContainedInputViewStyleDensityInforming>)densityInformer {
-  if (_densityInformer) {
-    return _densityInformer;
+- (id<MDCContainedInputViewStylerPositioningDelegate>)positioningDelegate {
+  if (_positioningDelegate) {
+    return _positioningDelegate;
   }
-  return [[MDCContainerStyleBaseDensityInformer alloc] init];
+  return [[MDCContainerStylerBasePositioningDelegate alloc] init];
 }
 
 - (CGFloat)floatingFontSizeScaleFactor {
@@ -127,7 +128,7 @@
 
 @end
 
-@implementation MDCContainerStyleBaseDensityInformer
+@implementation MDCContainerStylerBasePositioningDelegate
 @synthesize verticalDensity = _verticalDensity;
 
 - (instancetype)init {
@@ -160,8 +161,8 @@
 @implementation MDCContainedInputViewFloatingLabelManager
 
 - (UIFont *)floatingFontWithFont:(UIFont *)font
-                  containerStyle:(id<MDCContainedInputViewStyle>)containerStyle {
-  CGFloat scaleFactor = [containerStyle floatingFontSizeScaleFactor];
+                 containerStyler:(id<MDCContainedInputViewStyler>)containerStyler {
+  CGFloat scaleFactor = [containerStyler floatingFontSizeScaleFactor];
   CGFloat floatingFontSize = font.pointSize * scaleFactor;
   return [font fontWithSize:floatingFontSize];
 }

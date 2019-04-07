@@ -15,17 +15,17 @@
 #import <UIKit/UIKit.h>
 
 #import "MDCContainedInputView.h"
-#import "MDCContainerStyleFilled.h"
-#import "MDCContainerStyleOutlined.h"
+#import "MDCContainerStylerFilled.h"
+#import "MDCContainerStylerOutlined.h"
 #import "MDCInputTextField.h"
 #import "MaterialContainerScheme.h"
 
-@interface MDCInputTextFieldFilledDensityInformer
-    : MDCContainerStyleFilledDensityInformer <MDCContainedInputViewStyleDensityInforming>
+@interface MDCInputTextFieldFilledPositioningDelegate
+    : MDCContainerStylerFilledPositioningDelegate <MDCContainedInputViewStylerPositioningDelegate>
 @end
 
-@interface MDCInputTextFieldOutlinedDensityInformer
-    : MDCContainerStyleOutlinedDensityInformer <MDCContainedInputViewStyleDensityInforming>
+@interface MDCInputTextFieldOutlinedPositioningDelegate
+    : MDCContainerStylerOutlinedPositioningDelegate <MDCContainedInputViewStylerPositioningDelegate>
 @end
 
 /**
@@ -41,7 +41,7 @@
 - (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
 
 /**
- Sets an MDCContainerStyleFilled instance as the containerStyle and then applies the container
+ Sets an MDCContainerStylerFilled instance as the containerStyler and then applies the container
  scheme's subsystem-specific schemes to the receiver.
 
  @param scheme A container scheme instance.
@@ -49,7 +49,7 @@
 - (void)applyFilledThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
 
 /**
- Sets an MDCContainerStyleOutlined instance as the containerStyle and then applies the container
+ Sets an MDCContainerStylerOutlined instance as the containerStyler and then applies the container
  scheme's subsystem-specific schemes to the receiver.
 
  @param scheme A container scheme instance.

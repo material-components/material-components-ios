@@ -36,7 +36,7 @@ static const CGFloat kFloatingLabelXOffset = (CGFloat)3.0;
 @implementation InputChipViewLayout
 
 - (instancetype)initWithSize:(CGSize)size
-                       containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
+                      containerStyler:(id<MDCContainedInputViewStyler>)containerStyler
                                  text:(NSString *)text
                           placeholder:(NSString *)placeholder
                                  font:(UIFont *)font
@@ -61,7 +61,7 @@ static const CGFloat kFloatingLabelXOffset = (CGFloat)3.0;
   self = [super init];
   if (self) {
     [self calculateLayoutWithSize:size
-                           containerStyle:containerStyle
+                          containerStyler:containerStyler
                                      text:text
                               placeholder:placeholder
                                      font:font
@@ -87,7 +87,7 @@ static const CGFloat kFloatingLabelXOffset = (CGFloat)3.0;
 }
 
 - (void)calculateLayoutWithSize:(CGSize)size
-                       containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
+                      containerStyler:(id<MDCContainedInputViewStyler>)containerStyler
                                  text:(NSString *)text
                           placeholder:(NSString *)placeholder
                                  font:(UIFont *)font
@@ -116,13 +116,13 @@ static const CGFloat kFloatingLabelXOffset = (CGFloat)3.0;
                                                                          font:floatingFont
                                                             globalChipRowMinX:globalChipRowMinX
                                                             globalChipRowMaxX:globalChipRowMaxX
-                                                               containerStyle:containerStyle
+                                                              containerStyler:containerStyler
                                                                         isRTL:isRTL];
   CGFloat floatingLabelMaxY = CGRectGetMaxY(floatingLabelFrameFloating);
-  CGFloat initialChipRowMinYWithFloatingLabel = [containerStyle.densityInformer
+  CGFloat initialChipRowMinYWithFloatingLabel = [containerStyler.positioningDelegate
       contentAreaTopPaddingFloatingLabelWithFloatingLabelMaxY:floatingLabelMaxY];
   CGFloat highestPossibleInitialChipRowMaxY = initialChipRowMinYWithFloatingLabel + chipRowHeight;
-  CGFloat bottomPadding = [containerStyle.densityInformer
+  CGFloat bottomPadding = [containerStyler.positioningDelegate
       contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:floatingLabelMaxY];
   CGFloat intrinsicMainContentAreaHeight = highestPossibleInitialChipRowMaxY + bottomPadding;
   CGFloat contentAreaMaxY = 0;
@@ -140,7 +140,7 @@ static const CGFloat kFloatingLabelXOffset = (CGFloat)3.0;
                                        globalChipRowMaxX:globalChipRowMaxX
                                                chipsWrap:chipsWrap
                                        contentAreaHeight:contentAreaMaxY
-                                          containerStyle:containerStyle
+                                         containerStyler:containerStyler
                                                    isRTL:isRTL];
 
   CGFloat initialChipRowMinYNormal =
@@ -271,8 +271,8 @@ static const CGFloat kFloatingLabelXOffset = (CGFloat)3.0;
                                      globalChipRowMaxX:(CGFloat)globalChipRowMaxX
                                              chipsWrap:(BOOL)chipsWrap
                                      contentAreaHeight:(CGFloat)contentAreaHeight
-                                        containerStyle:
-                                            (id<MDCContainedInputViewStyle>)containerStyle
+                                       containerStyler:
+                                           (id<MDCContainedInputViewStyler>)containerStyler
                                                  isRTL:(BOOL)isRTL {
   CGFloat maxTextWidth = globalChipRowMaxX - globalChipRowMinX;
   CGSize placeholderSize = [self textSizeWithText:placeholder font:font maxWidth:maxTextWidth];
@@ -282,7 +282,7 @@ static const CGFloat kFloatingLabelXOffset = (CGFloat)3.0;
   }
   CGFloat placeholderMinY = 0;
   if (chipsWrap) {
-    placeholderMinY = [containerStyle.densityInformer
+    placeholderMinY = [containerStyler.positioningDelegate
         contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:CGRectGetMaxY(floatingLabelFrame)];
   } else {
     CGFloat center = contentAreaHeight * (CGFloat)0.5;
@@ -296,11 +296,11 @@ static const CGFloat kFloatingLabelXOffset = (CGFloat)3.0;
                                        font:(UIFont *)font
                           globalChipRowMinX:(CGFloat)globalChipRowMinX
                           globalChipRowMaxX:(CGFloat)globalChipRowMaxX
-                             containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
+                            containerStyler:(id<MDCContainedInputViewStyler>)containerStyler
                                       isRTL:(BOOL)isRTL {
   CGFloat maxTextWidth = globalChipRowMaxX - globalChipRowMinX - kFloatingLabelXOffset;
   CGSize placeholderSize = [self textSizeWithText:placeholder font:font maxWidth:maxTextWidth];
-  CGFloat placeholderMinY = [containerStyle.densityInformer
+  CGFloat placeholderMinY = [containerStyler.positioningDelegate
       floatingLabelMinYWithFloatingLabelHeight:placeholderSize.height];
   CGFloat placeholderMinX = globalChipRowMinX + kFloatingLabelXOffset;
   if (isRTL) {
