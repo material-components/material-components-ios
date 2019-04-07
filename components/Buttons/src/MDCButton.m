@@ -206,6 +206,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
   _rippleView = [[MDCStatefulRippleView alloc] initWithFrame:self.bounds];
   _rippleView.rippleColor = GetDefaultInkColor();
+  _rippleView.allowsSelection = NO;
 
   // Uppercase all titles
   if (_uppercaseTitle) {
