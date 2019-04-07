@@ -60,6 +60,7 @@ static UIColor *GetDefaultInkColor(void) {
   XCTAssertEqual(self.button.rippleView.rippleStyle, MDCRippleStyleBounded);
   XCTAssertFalse(self.button.enableRippleBehavior);
   XCTAssertNil(self.button.rippleView.superview);
+  XCTAssertFalse(self.button.rippleView.allowsSelection);
 }
 
 /**
@@ -119,6 +120,14 @@ static UIColor *GetDefaultInkColor(void) {
 
   // Then
   XCTAssertEqual(self.button.rippleView.rippleStyle, MDCRippleStyleBounded);
+}
+
+- (void)testSetButtonToHighlighted {
+  // When
+  self.button.highlighted = YES;
+
+  // Then
+  XCTAssertTrue(self.button.rippleView.isRippleHighlighted);
 }
 
 @end

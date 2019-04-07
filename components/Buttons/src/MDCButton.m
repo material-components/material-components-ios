@@ -206,6 +206,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
   _rippleView = [[MDCStatefulRippleView alloc] initWithFrame:self.bounds];
   _rippleView.rippleColor = GetDefaultInkColor();
+  _rippleView.allowsSelection = NO;
 
   // Uppercase all titles
   if (_uppercaseTitle) {
@@ -370,7 +371,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (void)setSelected:(BOOL)selected {
   [super setSelected:selected];
 
-  self.rippleView.selected = selected;
   [self updateAfterStateChange:NO];
 }
 
