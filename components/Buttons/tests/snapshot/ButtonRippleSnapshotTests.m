@@ -30,9 +30,13 @@
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  self.recordMode = YES;
+   self.recordMode = YES;
 
   self.button = [[MDCButton alloc] initWithFrame:CGRectMake(0, 0, 64, 36)];
+  self.button.backgroundColor = UIColor.whiteColor;
+  self.button.inkColor = UIColor.blueColor;
+  [self.button setTitle:@"ABC" forState:UIControlStateNormal];
+  self.button.enableRippleBehavior = YES;
 }
 
 - (void)tearDown {
