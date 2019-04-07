@@ -317,18 +317,24 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 #pragma mark - UIResponder
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+  [self.rippleView touchesBegan:touches withEvent:event];
+
   [super touchesBegan:touches withEvent:event];
 
   [self handleBeginTouches:touches];
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+  [self.rippleView touchesMoved:touches withEvent:event];
+
   [super touchesMoved:touches withEvent:event];
 
   // Drag events handled by -touchDragExit:forEvent: and -touchDragEnter:forEvent:
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+  [self.rippleView touchesEnded:touches withEvent:event];
+
   [super touchesEnded:touches withEvent:event];
 
   CGPoint location = [self locationFromTouches:touches];
@@ -357,12 +363,14 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (void)setHighlighted:(BOOL)highlighted {
   [super setHighlighted:highlighted];
 
+  self.rippleView.rippleHighlighted = highlighted;
   [self updateAfterStateChange:NO];
 }
 
 - (void)setSelected:(BOOL)selected {
   [super setSelected:selected];
 
+  self.rippleView.selected = selected;
   [self updateAfterStateChange:NO];
 }
 
