@@ -532,7 +532,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)setEnableRippleBehavior:(BOOL)enableRippleBehavior {
   _enableRippleBehavior = enableRippleBehavior;
-  
+
   if (enableRippleBehavior) {
     [self.inkView removeFromSuperview];
     [self insertSubview:self.rippleView belowSubview:self.imageView];
