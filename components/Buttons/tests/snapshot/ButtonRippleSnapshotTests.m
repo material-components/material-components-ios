@@ -36,6 +36,7 @@
   self.button.backgroundColor = UIColor.whiteColor;
   self.button.inkColor = UIColor.blueColor;
   [self.button setTitle:@"ABC" forState:UIControlStateNormal];
+  [self.button setTitleColor:UIColor.blueColor forState:UIControlStateNormal];
   self.button.enableRippleBehavior = YES;
 }
 
@@ -65,6 +66,7 @@
 
   // When
   [self.button touchesBegan:[NSSet setWithObject:[[UITouch alloc] init]] withEvent:UIEventTypeTouches];
+  self.button.layer.timeOffset = 1000;
 
   // Then
   [self generateSnapshotAndVerifyForView:self.button];
