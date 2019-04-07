@@ -30,7 +30,7 @@
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-   self.recordMode = YES;
+  // self.recordMode = YES;
 
   self.button = [[MDCButton alloc] initWithFrame:CGRectMake(0, 0, 64, 36)];
   self.button.backgroundColor = UIColor.whiteColor;
@@ -55,6 +55,7 @@
 - (void)testButtonHighlighted {
   // When
   self.button.highlighted = YES;
+  self.button.inkColor = UIColor.greenColor;
 
   // Then
   [self generateSnapshotAndVerifyForView:self.button];
@@ -65,7 +66,8 @@
   self.button.layer.speed = 100;
 
   // When
-  [self.button touchesBegan:[NSSet setWithObject:[[UITouch alloc] init]] withEvent:UIEventTypeTouches];
+  [self.button touchesBegan:[NSSet setWithObject:[[UITouch alloc] init]]
+                  withEvent:UIEventTypeTouches];
   self.button.layer.timeOffset = 1000;
 
   // Then
