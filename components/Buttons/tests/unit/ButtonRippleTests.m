@@ -60,6 +60,7 @@ static UIColor *GetDefaultInkColor(void) {
   XCTAssertEqual(self.button.rippleView.rippleStyle, MDCRippleStyleBounded);
   XCTAssertFalse(self.button.enableRippleBehavior);
   XCTAssertNil(self.button.rippleView.superview);
+  XCTAssertFalse(self.button.rippleView.allowsSelection);
 }
 
 /**
