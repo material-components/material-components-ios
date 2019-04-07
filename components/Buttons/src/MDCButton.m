@@ -17,6 +17,7 @@
 #import <MDFTextAccessibility/MDFTextAccessibility.h>
 #import "MaterialInk.h"
 #import "MaterialMath.h"
+#import "MaterialRipple.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
@@ -38,6 +39,10 @@ static const CGFloat MDCButtonDisabledAlpha = (CGFloat)0.12;
 
 // Blue 500 from https://material.io/go/design-color-theming#color-color-palette .
 static const uint32_t MDCButtonDefaultBackgroundColor = 0x191919;
+
+static inline UIColor *GetDefaultInkColor(void) {
+  return [UIColor colorWithWhite:1 alpha:(CGFloat)0.2];
+}
 
 // Creates a UIColor from a 24-bit RGB color encoded as an integer.
 static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
@@ -93,6 +98,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
   BOOL _mdc_adjustsFontForContentSizeCategory;
 }
+@property(nonatomic, strong, readonly, nonnull) MDCStatefulRippleView *rippleView;
 @property(nonatomic, strong) MDCInkView *inkView;
 @property(nonatomic, readonly, strong) MDCShapedShadowLayer *layer;
 @end
@@ -196,7 +202,10 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   // Block users from activating multiple buttons simultaneously by default.
   self.exclusiveTouch = YES;
 
-  _inkView.inkColor = [UIColor colorWithWhite:1 alpha:(CGFloat)0.2];
+  _inkView.inkColor = GetDefaultInkColor();
+
+  _rippleView = [[MDCStatefulRippleView alloc] initWithFrame:self.bounds];
+  _rippleView.rippleColor = GetDefaultInkColor();
 
   // Uppercase all titles
   if (_uppercaseTitle) {
@@ -497,6 +506,11 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)setInkStyle:(MDCInkStyle)inkStyle {
   _inkView.inkStyle = inkStyle;
+  if (inkStyle == MDCInkStyleUnbounded) {
+    self.rippleView.rippleStyle = MDCRippleStyleUnbounded;
+  } else {
+    self.rippleView.rippleStyle = MDCRippleStyleBounded;
+  }
 }
 
 - (UIColor *)inkColor {
@@ -505,6 +519,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)setInkColor:(UIColor *)inkColor {
   _inkView.inkColor = inkColor;
+  self.rippleView.rippleColor = inkColor;
 }
 
 - (CGFloat)inkMaxRippleRadius {
@@ -513,6 +528,17 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)setInkMaxRippleRadius:(CGFloat)inkMaxRippleRadius {
   _inkView.maxRippleRadius = inkMaxRippleRadius;
+}
+
+- (void)setEnableRippleBehavior:(BOOL)enableRippleBehavior {
+  _enableRippleBehavior = enableRippleBehavior;
+  if (enableRippleBehavior) {
+    [self.inkView removeFromSuperview];
+    [self insertSubview:self.rippleView belowSubview:self.imageView];
+  } else {
+    [self.rippleView removeFromSuperview];
+    [self insertSubview:self.inkView belowSubview:self.rippleView];
+  }
 }
 
 #pragma mark - Shadows

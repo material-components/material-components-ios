@@ -48,7 +48,10 @@
 @property(nonatomic, assign) CGFloat inkMaxRippleRadius UI_APPEARANCE_SELECTOR;
 
 /**
- By setting this property to @c YES, @c MDCStatefulRippleView is used to provide the user visual touch feedback, instead of the legacy @c MDCInkView.
+ This property is used to determine if an @c MDCButton should use the legacy ripple behavior or not.
+ 
+ By setting this property to @c YES, @c MDCStatefulRippleView is used to provide the user visual
+ touch feedback, instead of the legacy @c MDCInkView.
 
  @note Defaults to @c NO.
  */
