@@ -24,7 +24,7 @@
 /**
  Applies the Material primary style to an MDCTabBar instance.
 
- @param scheme A container scheme instance containing any desired customizations to the theming
+ @param scheme A container scheme instance used for theming a MDCTabBar.
  system.
  */
 - (void)applyPrimaryThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
@@ -32,7 +32,7 @@
 /**
  Applies the Material surface themed style to an MDCTabBar instance.
 
- @param scheme A container scheme instance containing any desired customizations to the theming
+ @param scheme A container scheme instance used for theming a MDCTabBAr.
  system.
  */
 - (void)applySurfaceVariantThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
