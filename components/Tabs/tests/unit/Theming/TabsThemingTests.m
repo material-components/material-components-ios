@@ -17,8 +17,8 @@
 #import <MaterialComponents/MaterialColorScheme.h>
 #import <MaterialComponents/MaterialTabs.h>
 #import <MaterialComponents/MaterialTypographyScheme.h>
-#import <MaterialComponentsBeta/MaterialContainerScheme.h>
-#import <MaterialComponentsBeta/MaterialTabs+Theming.h>
+#import "MaterialContainerScheme.h"
+#import "MaterialTabs+Theming.h"
 
 static const CGFloat kUnselectedTitleOpacity = (CGFloat)0.6;
 static const CGFloat kUnselectedImageOpacity = (CGFloat)0.6;
