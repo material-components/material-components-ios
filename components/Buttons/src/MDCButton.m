@@ -257,7 +257,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
     CGFloat offsetX = contentCenterPoint.x - boundsCenterPoint.x;
     CGFloat offsetY = contentCenterPoint.y - boundsCenterPoint.y;
-    _inkView.frame = CGRectMake(offsetX, offsetY, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
+    _inkView.frame =
+        CGRectMake(offsetX, offsetY, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
   } else {
     CGRect bounds = CGRectStandardize(self.bounds);
     _inkView.frame = bounds;
@@ -528,7 +529,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)setInkStyle:(MDCInkStyle)inkStyle {
   _inkView.inkStyle = inkStyle;
-  self.rippleView.rippleStyle = (inkStyle == MDCInkStyleUnbounded) ? MDCRippleStyleUnbounded : MDCRippleStyleBounded;
+  self.rippleView.rippleStyle =
+      (inkStyle == MDCInkStyleUnbounded) ? MDCRippleStyleUnbounded : MDCRippleStyleBounded;
 }
 
 - (UIColor *)inkColor {
