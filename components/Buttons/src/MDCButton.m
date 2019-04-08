@@ -262,10 +262,12 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
     CGFloat offsetX = contentCenterPoint.x - boundsCenterPoint.x;
     CGFloat offsetY = contentCenterPoint.y - boundsCenterPoint.y;
-    _inkView.frame =
-        CGRectMake(offsetX, offsetY, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
+    CGRect inkFrame = CGRectMake(offsetX, offsetY, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
+    _inkView.frame = inkFrame;
+    self.rippleView.frame = inkFrame;
   } else {
-    _inkView.frame = self.bounds;
+    _inkView.frame = CGRectStandardize(self.bounds);
+    self.rippleView.frame = CGRectStandardize(self.bounds);
   }
   self.titleLabel.frame = MDCRectAlignToScale(self.titleLabel.frame, [UIScreen mainScreen].scale);
 }
@@ -318,29 +320,53 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 #pragma mark - UIResponder
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+  if (self.enableRippleBehavior) {
+    [self.rippleView touchesBegan:touches withEvent:event];
+  }
   [super touchesBegan:touches withEvent:event];
 
-  [self handleBeginTouches:touches];
+  if (self.enableRippleBehavior) {
+    self.rippleView.rippleHighlighted = YES;
+  } else {
+    [self handleBeginTouches:touches];
+  }
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+  if (self.enableRippleBehavior) {
+    [self.rippleView touchesMoved:touches withEvent:event];
+  }
   [super touchesMoved:touches withEvent:event];
 
   // Drag events handled by -touchDragExit:forEvent: and -touchDragEnter:forEvent:
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+  if (self.enableRippleBehavior) {
+    [self.rippleView touchesEnded:touches withEvent:event];
+  }
   [super touchesEnded:touches withEvent:event];
 
-  CGPoint location = [self locationFromTouches:touches];
-  [_inkView startTouchEndedAnimationAtPoint:location completion:nil];
+  if (self.enableRippleBehavior) {
+    self.rippleView.rippleHighlighted = NO;
+  } else {
+    CGPoint location = [self locationFromTouches:touches];
+    [_inkView startTouchEndedAnimationAtPoint:location completion:nil];
+  }
 }
 
 // Note - in some cases, event may be nil (e.g. view removed from window).
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
+  if (self.enableRippleBehavior) {
+    [self.rippleView touchesCancelled:touches withEvent:event];
+  }
   [super touchesCancelled:touches withEvent:event];
 
-  [self evaporateInkToPoint:[self locationFromTouches:touches]];
+  if (self.enableRippleBehavior) {
+    self.rippleView.rippleHighlighted = NO;
+  } else {
+    [self evaporateInkToPoint:[self locationFromTouches:touches]];
+  }
 }
 
 #pragma mark - UIControl methods
