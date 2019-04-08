@@ -24,7 +24,6 @@ load(
     "mdc_snapshot_test",
     "mdc_unit_test_suite",
 )
-load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
 
@@ -158,19 +157,22 @@ mdc_objc_library(
     ],
 )
 
-swift_library(
-    name = "unit_test_swift_sources",
+mdc_objc_library(
+    name = "unit_test_theming_sources",
+    testonly = 1,
     srcs = native.glob([
-        "tests/unit/*.swift",
-        "tests/unit/Theming/*.swift",
+        "tests/unit/Theming/*.m",
     ]),
-    copts = [
-        "-swift-version",
-        "3",
+    sdk_frameworks = [
+        "UIKit",
+        "XCTest",
     ],
-    visibility = ["//visibility:private"],
     deps = [
+        ":Tabs",
         ":Theming",
+        "//components/schemes/Container",
+        "//components/schemes/Color",
+        "//components/schemes/Typography",
     ],
 )
 
@@ -178,7 +180,7 @@ mdc_unit_test_suite(
     name = "unit_tests",
     deps = [
         ":unit_test_sources",
-        ":unit_test_swift_sources",
+        ":unit_test_theming_sources",
     ],
 )
 
