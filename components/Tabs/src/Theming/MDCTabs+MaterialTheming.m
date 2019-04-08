@@ -17,9 +17,9 @@
 #import <Foundation/Foundation.h>
 
 #import <MaterialComponents/MaterialColorScheme.h>
-#import <MaterialComponents/MaterialTypographyScheme.h>
 #import <MaterialComponents/MaterialTabs+ColorThemer.h>
 #import <MaterialComponents/MaterialTabs+TypographyThemer.h>
+#import <MaterialComponents/MaterialTypographyScheme.h>
 
 @implementation MDCTabBar (MaterialTheming)
 
@@ -27,14 +27,14 @@
   id<MDCColorScheming> colorScheme = scheme.colorScheme;
   if (!colorScheme) {
     colorScheme =
-    [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   }
   [self applySemanticThemeWithColorScheme:colorScheme];
 
   id<MDCTypographyScheming> typographyScheme = scheme.typographyScheme;
   if (!typographyScheme) {
     typographyScheme =
-    [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
   }
   [self applyThemeWithTypographyScheme:typographyScheme];
 }
@@ -43,14 +43,14 @@
   id<MDCColorScheming> colorScheme = scheme.colorScheme;
   if (!colorScheme) {
     colorScheme =
-    [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   }
   [self applySurfaceVariantThemeWithColorScheme:colorScheme];
 
   id<MDCTypographyScheming> typographyScheme = scheme.typographyScheme;
   if (!typographyScheme) {
     typographyScheme =
-    [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
   }
   [self applyThemeWithTypographyScheme:typographyScheme];
 }
