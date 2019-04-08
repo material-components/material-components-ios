@@ -55,7 +55,7 @@ static const CGFloat kBottomDividerOpacity = (CGFloat)0.12;
 
 - (void)testTabBarSemanticThemingDefault {
   // When
-  [self.tabBar applySemanticThemeWithScheme:self.containerScheme];
+  [self.tabBar applyPrimaryThemeWithScheme:self.containerScheme];
 
   // Then
   // Color
@@ -89,7 +89,7 @@ static const CGFloat kBottomDividerOpacity = (CGFloat)0.12;
   self.typographyScheme.button = [UIFont systemFontOfSize:14];
   self.containerScheme.colorScheme = self.colorScheme;
   self.containerScheme.typographyScheme = self.typographyScheme;
-  [self.tabBar applySemanticThemeWithScheme:self.containerScheme];
+  [self.tabBar applyPrimaryThemeWithScheme:self.containerScheme];
 
   // Then
   // Color

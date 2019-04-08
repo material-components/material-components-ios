@@ -23,7 +23,7 @@
 
 @implementation MDCTabBar (MaterialTheming)
 
-- (void)applySemanticThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme {
+- (void)applyPrimaryThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme {
   id<MDCColorScheming> colorScheme = scheme.colorScheme;
   if (!colorScheme) {
     colorScheme =
