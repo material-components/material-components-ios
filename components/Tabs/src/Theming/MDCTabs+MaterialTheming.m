@@ -25,33 +25,17 @@
 
 - (void)applyPrimaryThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme {
   id<MDCColorScheming> colorScheme = scheme.colorScheme;
-  if (!colorScheme) {
-    colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-  }
   [self applySemanticThemeWithColorScheme:colorScheme];
 
   id<MDCTypographyScheming> typographyScheme = scheme.typographyScheme;
-  if (!typographyScheme) {
-    typographyScheme =
-        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
-  }
   [self applyThemeWithTypographyScheme:typographyScheme];
 }
 
 - (void)applySurfaceVariantThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme {
   id<MDCColorScheming> colorScheme = scheme.colorScheme;
-  if (!colorScheme) {
-    colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-  }
   [self applySurfaceVariantThemeWithColorScheme:colorScheme];
 
   id<MDCTypographyScheming> typographyScheme = scheme.typographyScheme;
-  if (!typographyScheme) {
-    typographyScheme =
-        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
-  }
   [self applyThemeWithTypographyScheme:typographyScheme];
 }
 
