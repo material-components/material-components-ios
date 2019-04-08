@@ -799,6 +799,11 @@ static UIColor *DrawerShadowColor(void) {
 - (CGFloat)transitionPercentageForContentOffset:(CGPoint)contentOffset
                                          offset:(CGFloat)offset
                                        distance:(CGFloat)distance {
+  // If the distance is 0 or negative there is no distance for a transition to occur and therefore
+  // it is set to 1 (100%).
+  if (distance <= 0) {
+    return 1;
+  }
   return 1 - MAX(0, MIN(1, (self.transitionCompleteContentOffset - contentOffset.y - offset) /
                                distance));
 }
