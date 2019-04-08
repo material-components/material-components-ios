@@ -63,7 +63,8 @@ static UIColor *GetDefaultInkColor(void) {
   XCTAssertFalse(self.button.rippleView.allowsSelection);
   CGRect buttonBounds = CGRectStandardize(self.button.bounds);
   CGRect rippleBounds = CGRectStandardize(self.button.rippleView.bounds);
-  XCTAssertTrue(CGRectEqualToRect(buttonBounds, rippleBounds), @"%@ is not equal to %@", NSStringFromCGRect(buttonBounds), NSStringFromCGRect(rippleBounds));
+  XCTAssertTrue(CGRectEqualToRect(buttonBounds, rippleBounds), @"%@ is not equal to %@",
+                NSStringFromCGRect(buttonBounds), NSStringFromCGRect(rippleBounds));
 }
 
 /**

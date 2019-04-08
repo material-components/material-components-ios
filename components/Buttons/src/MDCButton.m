@@ -262,7 +262,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
     CGFloat offsetX = contentCenterPoint.x - boundsCenterPoint.x;
     CGFloat offsetY = contentCenterPoint.y - boundsCenterPoint.y;
-    CGRect inkFrame = CGRectMake(offsetX, offsetY, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
+    CGRect inkFrame =
+        CGRectMake(offsetX, offsetY, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
     _inkView.frame = inkFrame;
     self.rippleView.frame = inkFrame;
   } else {
