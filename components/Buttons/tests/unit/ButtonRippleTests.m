@@ -52,7 +52,7 @@ static UIColor *GetDefaultInkColor(void) {
 /**
  Test to confirm behavior of initializing a @c MDCButton without any customization.
  */
-- (void)testDefaults {
+- (void)testDefaultButtonBehaviorWithRipple {
   // Then
   XCTAssertNotNil(self.button.rippleView);
   XCTAssertEqualObjects(self.button.rippleView.rippleColor, GetDefaultInkColor());
@@ -66,7 +66,7 @@ static UIColor *GetDefaultInkColor(void) {
 /**
  Test to confirm that setting @c enableRippleBehavior adds the @c rippleView as a subview.
  */
-- (void)testEnableRippleBehavior {
+- (void)testEnableRippleBehaviorAddsRippleViewAsSubviewOfButton {
   // When
   self.button.enableRippleBehavior = YES;
 
@@ -78,7 +78,7 @@ static UIColor *GetDefaultInkColor(void) {
 /**
  Test to confirm toggling @c enableRippleBehavior removes the @c rippleView as a subview.
  */
-- (void)testSetEnableRippleBehaviorToYesThenNo {
+- (void)testSetEnableRippleBehaviorToYesThenNoRemovesRippleViewAsSubviewOfButton {
   // When
   self.button.enableRippleBehavior = YES;
   self.button.enableRippleBehavior = NO;
@@ -91,19 +91,22 @@ static UIColor *GetDefaultInkColor(void) {
 /**
  Test setting @c inkColor correctly sets the @c rippleColor on @c rippleView of the button.
  */
-- (void)testSetCustomInkColor {
-  // When
+- (void)testSetCustomInkColorUpdatesRippleViewForHighlightedState {
+  // Given
   UIColor *fakeColor = UIColor.redColor;
+
+  // When
   self.button.inkColor = fakeColor;
 
   // Then
-  XCTAssertEqualObjects(self.button.rippleView.rippleColor, fakeColor);
+  XCTAssertEqualObjects([self.button.rippleView rippleColorForState:MDCRippleStateHighlighted],
+                        fakeColor);
 }
 
 /**
  Test setting @c inkStyle correctly sets the @c rippleStyle on @c rippleView of the button.
  */
-- (void)testSetInkStyleUnbounded {
+- (void)testSetInkStyleUnboundedUpdatesRippleView {
   // When
   self.button.inkStyle = MDCInkStyleUnbounded;
 
@@ -114,7 +117,7 @@ static UIColor *GetDefaultInkColor(void) {
 /**
  Test setting @c inkStyle correctly sets the @c rippleStyle on @c rippleView of the button.
  */
-- (void)testSetInkStyleBounded {
+- (void)testSetInkStyleBoundedUpdatesRippleView {
   // When
   self.button.inkStyle = MDCInkStyleBounded;
 
