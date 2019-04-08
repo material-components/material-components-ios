@@ -53,36 +53,15 @@ static const CGFloat kBottomDividerOpacity = (CGFloat)0.12;
   [super tearDown];
 }
 
-- (void)testTabBarSemanticThemingDefault {
+- (void)testTabBarPrimaryThemingDefault {
   // When
   [self.tabBar applyPrimaryThemeWithScheme:self.containerScheme];
 
   // Then
-  // Color
-  XCTAssertEqualObjects(self.tabBar.barTintColor, self.colorScheme.primaryColor);
-  XCTAssertEqualObjects(self.tabBar.tintColor, self.colorScheme.onPrimaryColor);
-  XCTAssertEqualObjects([self.tabBar titleColorForState:MDCTabBarItemStateSelected],
-                        self.colorScheme.onPrimaryColor);
-  XCTAssertEqualObjects([self.tabBar imageTintColorForState:MDCTabBarItemStateSelected],
-                        self.colorScheme.onPrimaryColor);
-  UIColor *unselectedTitleColor =
-      [self.colorScheme.onPrimaryColor colorWithAlphaComponent:kUnselectedTitleOpacity];
-  UIColor *unselectedImageColor =
-      [self.colorScheme.onPrimaryColor colorWithAlphaComponent:kUnselectedImageOpacity];
-  XCTAssertEqualObjects([self.tabBar titleColorForState:MDCTabBarItemStateNormal],
-                        unselectedTitleColor);
-  XCTAssertEqualObjects([self.tabBar imageTintColorForState:MDCTabBarItemStateNormal],
-                        unselectedImageColor);
-  XCTAssertEqualObjects(
-      self.tabBar.bottomDividerColor,
-      [self.colorScheme.onPrimaryColor colorWithAlphaComponent:kBottomDividerOpacity]);
-
-  // Typography
-  XCTAssertEqualObjects(self.tabBar.selectedItemTitleFont, self.typographyScheme.button);
-  XCTAssertEqualObjects(self.tabBar.unselectedItemTitleFont, self.typographyScheme.button);
+  [self verifyTabBarPrimaryTheming];
 }
 
-- (void)testTabBarSemanticThemingCustom {
+- (void)testTabBarPrimaryThemingCustom {
   // When
   self.colorScheme.primaryColor = UIColor.redColor;
   self.colorScheme.onPrimaryColor = UIColor.blueColor;
@@ -92,6 +71,10 @@ static const CGFloat kBottomDividerOpacity = (CGFloat)0.12;
   [self.tabBar applyPrimaryThemeWithScheme:self.containerScheme];
 
   // Then
+  [self verifyTabBarPrimaryTheming];
+}
+
+- (void)verifyTabBarPrimaryTheming {
   // Color
   XCTAssertEqualObjects(self.tabBar.barTintColor, self.colorScheme.primaryColor);
   XCTAssertEqualObjects(self.tabBar.tintColor, self.colorScheme.onPrimaryColor);
@@ -100,16 +83,16 @@ static const CGFloat kBottomDividerOpacity = (CGFloat)0.12;
   XCTAssertEqualObjects([self.tabBar imageTintColorForState:MDCTabBarItemStateSelected],
                         self.colorScheme.onPrimaryColor);
   UIColor *unselectedTitleColor =
-      [self.colorScheme.onPrimaryColor colorWithAlphaComponent:kUnselectedTitleOpacity];
+  [self.colorScheme.onPrimaryColor colorWithAlphaComponent:kUnselectedTitleOpacity];
   UIColor *unselectedImageColor =
-      [self.colorScheme.onPrimaryColor colorWithAlphaComponent:kUnselectedImageOpacity];
+  [self.colorScheme.onPrimaryColor colorWithAlphaComponent:kUnselectedImageOpacity];
   XCTAssertEqualObjects([self.tabBar titleColorForState:MDCTabBarItemStateNormal],
                         unselectedTitleColor);
   XCTAssertEqualObjects([self.tabBar imageTintColorForState:MDCTabBarItemStateNormal],
                         unselectedImageColor);
   XCTAssertEqualObjects(
-      self.tabBar.bottomDividerColor,
-      [self.colorScheme.onPrimaryColor colorWithAlphaComponent:kBottomDividerOpacity]);
+                        self.tabBar.bottomDividerColor,
+                        [self.colorScheme.onPrimaryColor colorWithAlphaComponent:kBottomDividerOpacity]);
 
   // Typography
   XCTAssertEqualObjects(self.tabBar.selectedItemTitleFont, self.typographyScheme.button);
@@ -121,28 +104,7 @@ static const CGFloat kBottomDividerOpacity = (CGFloat)0.12;
   [self.tabBar applySurfaceVariantThemeWithScheme:self.containerScheme];
 
   // Then
-  // Color
-  XCTAssertEqualObjects(self.tabBar.barTintColor, self.colorScheme.surfaceColor);
-  XCTAssertEqualObjects(self.tabBar.tintColor, self.colorScheme.primaryColor);
-  XCTAssertEqualObjects([self.tabBar titleColorForState:MDCTabBarItemStateSelected],
-                        self.colorScheme.primaryColor);
-  XCTAssertEqualObjects([self.tabBar imageTintColorForState:MDCTabBarItemStateSelected],
-                        self.colorScheme.primaryColor);
-  UIColor *unselectedTitleColor =
-      [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kUnselectedTitleOpacity];
-  UIColor *unselectedImageColor =
-      [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kUnselectedImageOpacity];
-  XCTAssertEqualObjects([self.tabBar titleColorForState:MDCTabBarItemStateNormal],
-                        unselectedTitleColor);
-  XCTAssertEqualObjects([self.tabBar imageTintColorForState:MDCTabBarItemStateNormal],
-                        unselectedImageColor);
-  XCTAssertEqualObjects(
-      self.tabBar.bottomDividerColor,
-      [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kBottomDividerOpacity]);
-
-  // Typography
-  XCTAssertEqualObjects(self.tabBar.selectedItemTitleFont, self.typographyScheme.button);
-  XCTAssertEqualObjects(self.tabBar.unselectedItemTitleFont, self.typographyScheme.button);
+  [self verifyTabBarSurfaceVariantTheming];
 }
 
 - (void)testTabBarSurfaceVariantThemingCustom {
@@ -158,6 +120,10 @@ static const CGFloat kBottomDividerOpacity = (CGFloat)0.12;
   [self.tabBar applySurfaceVariantThemeWithScheme:self.containerScheme];
 
   // Then
+  [self verifyTabBarSurfaceVariantTheming];
+}
+
+- (void)verifyTabBarSurfaceVariantTheming {
   // Color
   XCTAssertEqualObjects(self.tabBar.barTintColor, self.colorScheme.surfaceColor);
   XCTAssertEqualObjects(self.tabBar.tintColor, self.colorScheme.primaryColor);
@@ -166,16 +132,16 @@ static const CGFloat kBottomDividerOpacity = (CGFloat)0.12;
   XCTAssertEqualObjects([self.tabBar imageTintColorForState:MDCTabBarItemStateSelected],
                         self.colorScheme.primaryColor);
   UIColor *unselectedTitleColor =
-      [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kUnselectedTitleOpacity];
+  [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kUnselectedTitleOpacity];
   UIColor *unselectedImageColor =
-      [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kUnselectedImageOpacity];
+  [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kUnselectedImageOpacity];
   XCTAssertEqualObjects([self.tabBar titleColorForState:MDCTabBarItemStateNormal],
                         unselectedTitleColor);
   XCTAssertEqualObjects([self.tabBar imageTintColorForState:MDCTabBarItemStateNormal],
                         unselectedImageColor);
   XCTAssertEqualObjects(
-      self.tabBar.bottomDividerColor,
-      [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kBottomDividerOpacity]);
+                        self.tabBar.bottomDividerColor,
+                        [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kBottomDividerOpacity]);
 
   // Typography
   XCTAssertEqualObjects(self.tabBar.selectedItemTitleFont, self.typographyScheme.button);
