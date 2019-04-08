@@ -21,7 +21,7 @@
 #import <MaterialComponentsBeta/MaterialTabs+Theming.h>
 
 static const CGFloat kUnselectedTitleOpacity = (CGFloat)0.6;
-static const CGFloat kUnselectedImageOpacity = (CGFloat)0.54;
+static const CGFloat kUnselectedImageOpacity = (CGFloat)0.6;
 static const CGFloat kBottomDividerOpacity = (CGFloat)0.12;
 
 @interface MDCTabsThemingTest : XCTestCase
