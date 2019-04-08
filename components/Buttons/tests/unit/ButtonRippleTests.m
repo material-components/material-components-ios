@@ -129,4 +129,41 @@ static UIColor *GetDefaultInkColor(void) {
   XCTAssertEqual(self.button.rippleView.rippleStyle, MDCRippleStyleBounded);
 }
 
+#pragma mark - Touch tests
+
+- (void)testTouchesBeganSetsRippleHighlightedToYES {
+  // Given
+  self.button.enableRippleBehavior = YES;
+
+  // When
+  [self.button touchesBegan:[NSSet setWithObject:[[UITouch alloc] init]] withEvent:nil];
+
+  // Then
+  XCTAssertTrue(self.button.rippleView.isRippleHighlighted);
+}
+
+- (void)testTouchesCancelledSetsRippleHighlightedToNO {
+  // Given
+  self.button.enableRippleBehavior = YES;
+  self.button.rippleView.rippleHighlighted = YES;
+
+  // When
+  [self.button touchesCancelled:[NSSet setWithObject:[[UITouch alloc] init]] withEvent:nil];
+
+  // Then
+  XCTAssertFalse(self.button.rippleView.isRippleHighlighted);
+}
+
+- (void)testTouchesEndedSetsRippleHighlightedToNO {
+  // Given
+  self.button.enableRippleBehavior = YES;
+  self.button.rippleView.rippleHighlighted = YES;
+
+  // When
+  [self.button touchesEnded:[NSSet setWithObject:[[UITouch alloc] init]] withEvent:nil];
+
+  // Then
+  XCTAssertFalse(self.button.rippleView.isRippleHighlighted);
+}
+
 @end
