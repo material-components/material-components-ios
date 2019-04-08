@@ -464,12 +464,11 @@ static NSString *const kOfAnnouncement = @"of";
 }
 
 - (UITabBarItem *)tabBarItemForPoint:(CGPoint)point {
-  for (NSUInteger i = 0; i < self.itemViews.count; i++) {
-    UIView *itemView = [self.itemViews objectAtIndex:i];
+  for (NSUInteger i = 0; (i < self.itemViews.count) && (i < self.items.count); i++) {
+    UIView *itemView = self.itemViews[i];
     BOOL isPointInView = CGRectContainsPoint(itemView.frame, point);
-    BOOL isInItemsBounds = i < self.items.count;
-    if (isPointInView && isInItemsBounds) {
-      return [self.items objectAtIndex:i];
+    if (isPointInView) {
+      return self.items[i];
     }
   }
 

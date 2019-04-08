@@ -19,7 +19,7 @@
 /**
  * Returns the tab bar item whose corresponding view contains the given point.
  * @param point CGPoint The point at which to get the corresponding tab bar item. The point must be
- * in the coordinate space of this view’s bounds.
+ * in the coordinate space of the receiver's bounds.
  */
 - (nullable UITabBarItem *)tabBarItemForPoint:(CGPoint)point;
 

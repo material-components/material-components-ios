@@ -453,7 +453,7 @@
   }
 }
 
-- (void)testItemForPointInsideItemView {
+- (void)testItemForPointInsideItemViewReturnsCorrespondingItem {
   // Given
   UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
   UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:0];
@@ -472,7 +472,7 @@
   XCTAssertEqualObjects(result2, item2);
 }
 
-- (void)testItemForPointOutsideOfItemView {
+- (void)testItemForPointOutsideNavigationBarReturnsNil {
   // Given
   UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
   UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:0];
@@ -489,7 +489,24 @@
   XCTAssertNil(result);
 }
 
-- (void)testItemForPointNoItems {
+- (void)testItemForPointInsideNavigationBarOutsideItemViewReturnsNil {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:0];
+  CGFloat navBarHeight = 200;
+  self.bottomNavBar.frame = CGRectMake(0, 0, 320, navBarHeight);
+  CGPoint testPoint = CGPointMake(0, navBarHeight - 10);
+
+  // When
+  self.bottomNavBar.items = @[ item1, item2 ];
+  [self.bottomNavBar layoutIfNeeded];
+  UITabBarItem *result = [self.bottomNavBar tabBarItemForPoint:testPoint];
+
+  // Then
+  XCTAssertNil(result);
+}
+
+- (void)testItemForPointInsideNavigationBarNoTabBarItemsReturnsNil {
   // Given
   self.bottomNavBar.frame = CGRectMake(0, 0, 320, 56);
 
