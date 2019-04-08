@@ -22,12 +22,12 @@
 @interface MDCTabBar (MaterialTheming)
 
 /**
- Applies the Material style to an MDCTabBar instance.
+ Applies the Material semantic style to an MDCTabBar instance.
 
  @param scheme A container scheme instance containing any desired customizations to the theming
  system.
  */
-- (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
+- (void)applySemanticThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
 
 /**
  Applies the Material surface themed style to an MDCTabBar instance.

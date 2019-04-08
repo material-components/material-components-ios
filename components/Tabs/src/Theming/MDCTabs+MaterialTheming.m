@@ -23,13 +23,13 @@
 
 @implementation MDCTabBar (MaterialTheming)
 
-- (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme {
+- (void)applySemanticThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme {
   id<MDCColorScheming> colorScheme = scheme.colorScheme;
   if (!colorScheme) {
     colorScheme =
     [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   }
-  [self applyThemeWithColorScheme:colorScheme];
+  [self applySemanticThemeWithColorScheme:colorScheme];
 
   id<MDCTypographyScheming> typographyScheme = scheme.typographyScheme;
   if (!typographyScheme) {
@@ -55,7 +55,7 @@
   [self applyThemeWithTypographyScheme:typographyScheme];
 }
 
-- (void)applyThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
+- (void)applySemanticThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
   [MDCTabBarColorThemer applySemanticColorScheme:colorScheme toTabs:self];
 }
 
