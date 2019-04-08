@@ -164,7 +164,6 @@ mdc_objc_library(
         "tests/unit/Theming/*.m",
     ]),
     sdk_frameworks = [
-        "UIKit",
         "XCTest",
     ],
     deps = [
