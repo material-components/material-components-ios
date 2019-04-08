@@ -206,7 +206,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
   _rippleView = [[MDCStatefulRippleView alloc] initWithFrame:self.bounds];
   _rippleView.rippleColor = GetDefaultInkColor();
-  _rippleView.allowsSelection = NO;
 
   // Uppercase all titles
   if (_uppercaseTitle) {
@@ -262,13 +261,11 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
     CGFloat offsetX = contentCenterPoint.x - boundsCenterPoint.x;
     CGFloat offsetY = contentCenterPoint.y - boundsCenterPoint.y;
-    CGRect inkFrame =
-        CGRectMake(offsetX, offsetY, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
-    _inkView.frame = inkFrame;
-    self.rippleView.frame = inkFrame;
+    _inkView.frame = CGRectMake(offsetX, offsetY, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
   } else {
-    _inkView.frame = CGRectStandardize(self.bounds);
-    self.rippleView.frame = CGRectStandardize(self.bounds);
+    CGRect bounds = CGRectStandardize(self.bounds);
+    _inkView.frame = bounds;
+    self.rippleView.frame = bounds;
   }
   self.titleLabel.frame = MDCRectAlignToScale(self.titleLabel.frame, [UIScreen mainScreen].scale);
 }
@@ -534,11 +531,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)setInkStyle:(MDCInkStyle)inkStyle {
   _inkView.inkStyle = inkStyle;
-  if (inkStyle == MDCInkStyleUnbounded) {
-    self.rippleView.rippleStyle = MDCRippleStyleUnbounded;
-  } else {
-    self.rippleView.rippleStyle = MDCRippleStyleBounded;
-  }
+  self.rippleView.rippleStyle = (inkStyle == MDCInkStyleUnbounded) ? MDCRippleStyleUnbounded : MDCRippleStyleBounded;
 }
 
 - (UIColor *)inkColor {
@@ -566,7 +559,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
     [self insertSubview:self.rippleView belowSubview:self.imageView];
   } else {
     [self.rippleView removeFromSuperview];
-    [self insertSubview:self.inkView belowSubview:self.rippleView];
+    [self insertSubview:self.inkView belowSubview:self.imageView];
   }
 }
 
