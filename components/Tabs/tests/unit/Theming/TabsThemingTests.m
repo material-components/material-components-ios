@@ -42,6 +42,8 @@ static const CGFloat kBottomDividerOpacity = (CGFloat)0.12;
   self.typographyScheme =
       [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
   self.containerScheme = [[MDCContainerScheme alloc] init];
+  self.containerScheme.colorScheme = self.colorScheme;
+  self.containerScheme.typographyScheme = self.typographyScheme;
 }
 
 - (void)tearDown {
