@@ -40,10 +40,6 @@ static const CGFloat MDCButtonDisabledAlpha = (CGFloat)0.12;
 // Blue 500 from https://material.io/go/design-color-theming#color-color-palette .
 static const uint32_t MDCButtonDefaultBackgroundColor = 0x191919;
 
-static inline UIColor *GetDefaultInkColor(void) {
-  return [UIColor colorWithWhite:1 alpha:(CGFloat)0.2];
-}
-
 // Creates a UIColor from a 24-bit RGB color encoded as an integer.
 static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   return [UIColor colorWithRed:((CGFloat)((rgbValue & 0xFF0000) >> 16)) / 255
@@ -202,10 +198,10 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   // Block users from activating multiple buttons simultaneously by default.
   self.exclusiveTouch = YES;
 
-  _inkView.inkColor = GetDefaultInkColor();
+  _inkView.inkColor = [UIColor colorWithWhite:1 alpha:(CGFloat)0.2];
 
   _rippleView = [[MDCStatefulRippleView alloc] initWithFrame:self.bounds];
-  _rippleView.rippleColor = GetDefaultInkColor();
+  _rippleView.rippleColor = [UIColor colorWithWhite:1 alpha:(CGFloat)0.12];
 
   // Uppercase all titles
   if (_uppercaseTitle) {
@@ -296,6 +292,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (void)willMoveToSuperview:(UIView *)newSuperview {
   [super willMoveToSuperview:newSuperview];
   [self.inkView cancelAllAnimationsAnimated:NO];
+  [self.rippleView cancelAllRipplesAnimated:NO completion:nil];
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
@@ -892,7 +889,11 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   // Because the inkView needs to go below the imageView, but above the colorLayer
   // we need to have the colorLayer be at the back
   [self.layer.colorLayer removeFromSuperlayer];
-  [self.layer insertSublayer:self.layer.colorLayer below:self.inkView.layer];
+  if (self.enableRippleBehavior) {
+    [self.layer insertSublayer:self.layer.colorLayer below:self.rippleView.layer];
+  } else {
+    [self.layer insertSublayer:self.layer.colorLayer below:self.inkView.layer];
+  }
   [self updateBackgroundColor];
   [self updateInkForShape];
 }
@@ -906,6 +907,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   self.inkView.maxRippleRadius =
       (CGFloat)(MDCHypot(CGRectGetHeight(boundingBox), CGRectGetWidth(boundingBox)) / 2 + 10);
   self.inkView.layer.masksToBounds = NO;
+  self.rippleView.layer.masksToBounds = NO;
 }
 
 #pragma mark - Dynamic Type
