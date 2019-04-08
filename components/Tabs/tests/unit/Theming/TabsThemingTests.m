@@ -65,9 +65,31 @@ static const CGFloat kBottomDividerOpacity = (CGFloat)0.12;
 
 - (void)testTabBarPrimaryThemingCustom {
   // When
-  self.colorScheme.primaryColor = UIColor.redColor;
-  self.colorScheme.onPrimaryColor = UIColor.blueColor;
-  self.typographyScheme.button = [UIFont systemFontOfSize:14];
+  self.colorScheme.primaryColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:0];
+  self.colorScheme.primaryColorVariant = [UIColor colorWithWhite:(CGFloat)0.8 alpha:(CGFloat)0.1];
+  self.colorScheme.secondaryColor = [UIColor colorWithWhite:(CGFloat)0.7 alpha:(CGFloat)0.2];
+  self.colorScheme.errorColor = [UIColor colorWithWhite:(CGFloat)0.6 alpha:(CGFloat)0.3];
+  self.colorScheme.surfaceColor = [UIColor colorWithWhite:(CGFloat)0.5 alpha:(CGFloat)0.4];
+  self.colorScheme.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.4 alpha:(CGFloat)0.5];
+  self.colorScheme.onPrimaryColor = [UIColor colorWithWhite:(CGFloat)0.3 alpha:(CGFloat)0.6];
+  self.colorScheme.onSecondaryColor = [UIColor colorWithWhite:(CGFloat)0.2 alpha:(CGFloat)0.7];
+  self.colorScheme.onSurfaceColor = [UIColor colorWithWhite:(CGFloat)0.1 alpha:(CGFloat)0.8];
+  self.colorScheme.onBackgroundColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.9];
+
+  self.typographyScheme.headline1 = [UIFont systemFontOfSize:1];
+  self.typographyScheme.headline2 = [UIFont systemFontOfSize:2];
+  self.typographyScheme.headline3 = [UIFont systemFontOfSize:3];
+  self.typographyScheme.headline4 = [UIFont systemFontOfSize:4];
+  self.typographyScheme.headline5 = [UIFont systemFontOfSize:5];
+  self.typographyScheme.headline6 = [UIFont systemFontOfSize:6];
+  self.typographyScheme.subtitle1 = [UIFont systemFontOfSize:7];
+  self.typographyScheme.subtitle2 = [UIFont systemFontOfSize:8];
+  self.typographyScheme.body1 = [UIFont systemFontOfSize:9];
+  self.typographyScheme.body2 = [UIFont systemFontOfSize:10];
+  self.typographyScheme.caption = [UIFont systemFontOfSize:11];
+  self.typographyScheme.button = [UIFont systemFontOfSize:12];
+  self.typographyScheme.overline = [UIFont systemFontOfSize:13];
+
   self.containerScheme.colorScheme = self.colorScheme;
   self.containerScheme.typographyScheme = self.typographyScheme;
   [self.tabBar applyPrimaryThemeWithScheme:self.containerScheme];
@@ -111,10 +133,32 @@ static const CGFloat kBottomDividerOpacity = (CGFloat)0.12;
 
 - (void)testTabBarSurfaceVariantThemingCustom {
   // When
-  self.colorScheme.surfaceColor = UIColor.redColor;
-  self.colorScheme.primaryColor = UIColor.blueColor;
-  self.colorScheme.onSurfaceColor = UIColor.yellowColor;
+  self.colorScheme.primaryColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:0];
+  self.colorScheme.primaryColorVariant = [UIColor colorWithWhite:(CGFloat)0.8 alpha:(CGFloat)0.1];
+  self.colorScheme.secondaryColor = [UIColor colorWithWhite:(CGFloat)0.7 alpha:(CGFloat)0.2];
+  self.colorScheme.errorColor = [UIColor colorWithWhite:(CGFloat)0.6 alpha:(CGFloat)0.3];
+  self.colorScheme.surfaceColor = [UIColor colorWithWhite:(CGFloat)0.5 alpha:(CGFloat)0.4];
+  self.colorScheme.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.4 alpha:(CGFloat)0.5];
+  self.colorScheme.onPrimaryColor = [UIColor colorWithWhite:(CGFloat)0.3 alpha:(CGFloat)0.6];
+  self.colorScheme.onSecondaryColor = [UIColor colorWithWhite:(CGFloat)0.2 alpha:(CGFloat)0.7];
+  self.colorScheme.onSurfaceColor = [UIColor colorWithWhite:(CGFloat)0.1 alpha:(CGFloat)0.8];
+  self.colorScheme.onBackgroundColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.9];
+
+  self.typographyScheme.headline1 = [UIFont systemFontOfSize:1];
+  self.typographyScheme.headline2 = [UIFont systemFontOfSize:2];
+  self.typographyScheme.headline3 = [UIFont systemFontOfSize:3];
+  self.typographyScheme.headline4 = [UIFont systemFontOfSize:4];
+  self.typographyScheme.headline5 = [UIFont systemFontOfSize:5];
+  self.typographyScheme.headline6 = [UIFont systemFontOfSize:6];
+  self.typographyScheme.subtitle1 = [UIFont systemFontOfSize:7];
+  self.typographyScheme.subtitle2 = [UIFont systemFontOfSize:8];
+  self.typographyScheme.body1 = [UIFont systemFontOfSize:9];
+  self.typographyScheme.body2 = [UIFont systemFontOfSize:10];
+  self.typographyScheme.caption = [UIFont systemFontOfSize:11];
+  self.typographyScheme.button = [UIFont systemFontOfSize:12];
+  self.typographyScheme.overline = [UIFont systemFontOfSize:13];
   self.typographyScheme.button = [UIFont systemFontOfSize:14];
+
   self.containerScheme.colorScheme = self.colorScheme;
   self.containerScheme.typographyScheme = self.typographyScheme;
 
