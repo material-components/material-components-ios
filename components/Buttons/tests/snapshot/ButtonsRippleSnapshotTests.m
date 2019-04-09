@@ -147,6 +147,7 @@
 
 - (void)testTouchesBegan {
   // Given
+  self.recordMode = YES;
   NSSet *touchesSet = [NSSet setWithObject:[[UITouch alloc] init]];
 
   // When
