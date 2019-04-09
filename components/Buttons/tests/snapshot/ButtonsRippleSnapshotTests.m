@@ -151,7 +151,7 @@
   NSSet *touchesSet = [NSSet setWithObject:[[UITouch alloc] init]];
 
   // When
-  [self.button touchesBegan:touchesSet withEvent:[[UIEvent alloc] init]];
+  [self.button touchesBegan:touchesSet withEvent:nil];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.button];
