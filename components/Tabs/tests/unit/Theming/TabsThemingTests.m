@@ -64,63 +64,15 @@ static const CGFloat kBottomDividerOpacity = (CGFloat)0.12;
 }
 
 - (void)testTabBarPrimaryThemingCustom {
+  // Given
+  self.containerScheme.colorScheme = [self customColorScheme];
+  self.containerScheme.typographyScheme = [self customTypographyScheme];
+
   // When
-  self.colorScheme.primaryColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:0];
-  self.colorScheme.primaryColorVariant = [UIColor colorWithWhite:(CGFloat)0.8 alpha:(CGFloat)0.1];
-  self.colorScheme.secondaryColor = [UIColor colorWithWhite:(CGFloat)0.7 alpha:(CGFloat)0.2];
-  self.colorScheme.errorColor = [UIColor colorWithWhite:(CGFloat)0.6 alpha:(CGFloat)0.3];
-  self.colorScheme.surfaceColor = [UIColor colorWithWhite:(CGFloat)0.5 alpha:(CGFloat)0.4];
-  self.colorScheme.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.4 alpha:(CGFloat)0.5];
-  self.colorScheme.onPrimaryColor = [UIColor colorWithWhite:(CGFloat)0.3 alpha:(CGFloat)0.6];
-  self.colorScheme.onSecondaryColor = [UIColor colorWithWhite:(CGFloat)0.2 alpha:(CGFloat)0.7];
-  self.colorScheme.onSurfaceColor = [UIColor colorWithWhite:(CGFloat)0.1 alpha:(CGFloat)0.8];
-  self.colorScheme.onBackgroundColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.9];
-
-  self.typographyScheme.headline1 = [UIFont systemFontOfSize:1];
-  self.typographyScheme.headline2 = [UIFont systemFontOfSize:2];
-  self.typographyScheme.headline3 = [UIFont systemFontOfSize:3];
-  self.typographyScheme.headline4 = [UIFont systemFontOfSize:4];
-  self.typographyScheme.headline5 = [UIFont systemFontOfSize:5];
-  self.typographyScheme.headline6 = [UIFont systemFontOfSize:6];
-  self.typographyScheme.subtitle1 = [UIFont systemFontOfSize:7];
-  self.typographyScheme.subtitle2 = [UIFont systemFontOfSize:8];
-  self.typographyScheme.body1 = [UIFont systemFontOfSize:9];
-  self.typographyScheme.body2 = [UIFont systemFontOfSize:10];
-  self.typographyScheme.caption = [UIFont systemFontOfSize:11];
-  self.typographyScheme.button = [UIFont systemFontOfSize:12];
-  self.typographyScheme.overline = [UIFont systemFontOfSize:13];
-
-  self.containerScheme.colorScheme = self.colorScheme;
-  self.containerScheme.typographyScheme = self.typographyScheme;
   [self.tabBar applyPrimaryThemeWithScheme:self.containerScheme];
 
   // Then
   [self verifyTabBarPrimaryTheming];
-}
-
-- (void)verifyTabBarPrimaryTheming {
-  // Color
-  XCTAssertEqualObjects(self.tabBar.barTintColor, self.colorScheme.primaryColor);
-  XCTAssertEqualObjects(self.tabBar.tintColor, self.colorScheme.onPrimaryColor);
-  XCTAssertEqualObjects([self.tabBar titleColorForState:MDCTabBarItemStateSelected],
-                        self.colorScheme.onPrimaryColor);
-  XCTAssertEqualObjects([self.tabBar imageTintColorForState:MDCTabBarItemStateSelected],
-                        self.colorScheme.onPrimaryColor);
-  UIColor *unselectedTitleColor =
-      [self.colorScheme.onPrimaryColor colorWithAlphaComponent:kUnselectedTitleOpacity];
-  UIColor *unselectedImageColor =
-      [self.colorScheme.onPrimaryColor colorWithAlphaComponent:kUnselectedImageOpacity];
-  XCTAssertEqualObjects([self.tabBar titleColorForState:MDCTabBarItemStateNormal],
-                        unselectedTitleColor);
-  XCTAssertEqualObjects([self.tabBar imageTintColorForState:MDCTabBarItemStateNormal],
-                        unselectedImageColor);
-  XCTAssertEqualObjects(
-      self.tabBar.bottomDividerColor,
-      [self.colorScheme.onPrimaryColor colorWithAlphaComponent:kBottomDividerOpacity]);
-
-  // Typography
-  XCTAssertEqualObjects(self.tabBar.selectedItemTitleFont, self.typographyScheme.button);
-  XCTAssertEqualObjects(self.tabBar.unselectedItemTitleFont, self.typographyScheme.button);
 }
 
 - (void)testTabBarSurfaceVariantThemingDefault {
@@ -132,41 +84,79 @@ static const CGFloat kBottomDividerOpacity = (CGFloat)0.12;
 }
 
 - (void)testTabBarSurfaceVariantThemingCustom {
-  // When
-  self.colorScheme.primaryColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:0];
-  self.colorScheme.primaryColorVariant = [UIColor colorWithWhite:(CGFloat)0.8 alpha:(CGFloat)0.1];
-  self.colorScheme.secondaryColor = [UIColor colorWithWhite:(CGFloat)0.7 alpha:(CGFloat)0.2];
-  self.colorScheme.errorColor = [UIColor colorWithWhite:(CGFloat)0.6 alpha:(CGFloat)0.3];
-  self.colorScheme.surfaceColor = [UIColor colorWithWhite:(CGFloat)0.5 alpha:(CGFloat)0.4];
-  self.colorScheme.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.4 alpha:(CGFloat)0.5];
-  self.colorScheme.onPrimaryColor = [UIColor colorWithWhite:(CGFloat)0.3 alpha:(CGFloat)0.6];
-  self.colorScheme.onSecondaryColor = [UIColor colorWithWhite:(CGFloat)0.2 alpha:(CGFloat)0.7];
-  self.colorScheme.onSurfaceColor = [UIColor colorWithWhite:(CGFloat)0.1 alpha:(CGFloat)0.8];
-  self.colorScheme.onBackgroundColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.9];
-
-  self.typographyScheme.headline1 = [UIFont systemFontOfSize:1];
-  self.typographyScheme.headline2 = [UIFont systemFontOfSize:2];
-  self.typographyScheme.headline3 = [UIFont systemFontOfSize:3];
-  self.typographyScheme.headline4 = [UIFont systemFontOfSize:4];
-  self.typographyScheme.headline5 = [UIFont systemFontOfSize:5];
-  self.typographyScheme.headline6 = [UIFont systemFontOfSize:6];
-  self.typographyScheme.subtitle1 = [UIFont systemFontOfSize:7];
-  self.typographyScheme.subtitle2 = [UIFont systemFontOfSize:8];
-  self.typographyScheme.body1 = [UIFont systemFontOfSize:9];
-  self.typographyScheme.body2 = [UIFont systemFontOfSize:10];
-  self.typographyScheme.caption = [UIFont systemFontOfSize:11];
-  self.typographyScheme.button = [UIFont systemFontOfSize:12];
-  self.typographyScheme.overline = [UIFont systemFontOfSize:13];
-  self.typographyScheme.button = [UIFont systemFontOfSize:14];
-
-  self.containerScheme.colorScheme = self.colorScheme;
-  self.containerScheme.typographyScheme = self.typographyScheme;
+  // Given
+  self.containerScheme.colorScheme = [self customColorScheme];
+  self.containerScheme.typographyScheme = [self customTypographyScheme];
 
   // When
   [self.tabBar applySurfaceVariantThemeWithScheme:self.containerScheme];
 
   // Then
   [self verifyTabBarSurfaceVariantTheming];
+}
+
+#pragma mark - Test helpers
+
+- (MDCSemanticColorScheme *)customColorScheme {
+  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+
+  colorScheme.primaryColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:0];
+  colorScheme.primaryColorVariant = [UIColor colorWithWhite:(CGFloat)0.8 alpha:(CGFloat)0.1];
+  colorScheme.secondaryColor = [UIColor colorWithWhite:(CGFloat)0.7 alpha:(CGFloat)0.2];
+  colorScheme.errorColor = [UIColor colorWithWhite:(CGFloat)0.6 alpha:(CGFloat)0.3];
+  colorScheme.surfaceColor = [UIColor colorWithWhite:(CGFloat)0.5 alpha:(CGFloat)0.4];
+  colorScheme.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.4 alpha:(CGFloat)0.5];
+  colorScheme.onPrimaryColor = [UIColor colorWithWhite:(CGFloat)0.3 alpha:(CGFloat)0.6];
+  colorScheme.onSecondaryColor = [UIColor colorWithWhite:(CGFloat)0.2 alpha:(CGFloat)0.7];
+  colorScheme.onSurfaceColor = [UIColor colorWithWhite:(CGFloat)0.1 alpha:(CGFloat)0.8];
+  colorScheme.onBackgroundColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.9];
+
+  return colorScheme;
+}
+
+- (MDCTypographyScheme *)customTypographyScheme {
+  MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
+
+  typographyScheme.headline1 = [UIFont systemFontOfSize:1];
+  typographyScheme.headline2 = [UIFont systemFontOfSize:2];
+  typographyScheme.headline3 = [UIFont systemFontOfSize:3];
+  typographyScheme.headline4 = [UIFont systemFontOfSize:4];
+  typographyScheme.headline5 = [UIFont systemFontOfSize:5];
+  typographyScheme.headline6 = [UIFont systemFontOfSize:6];
+  typographyScheme.subtitle1 = [UIFont systemFontOfSize:7];
+  typographyScheme.subtitle2 = [UIFont systemFontOfSize:8];
+  typographyScheme.body1 = [UIFont systemFontOfSize:9];
+  typographyScheme.body2 = [UIFont systemFontOfSize:10];
+  typographyScheme.caption = [UIFont systemFontOfSize:11];
+  typographyScheme.button = [UIFont systemFontOfSize:12];
+  typographyScheme.overline = [UIFont systemFontOfSize:13];
+
+  return typographyScheme;
+}
+
+- (void)verifyTabBarPrimaryTheming {
+  // Color
+  XCTAssertEqualObjects(self.tabBar.barTintColor, self.colorScheme.primaryColor);
+  XCTAssertEqualObjects(self.tabBar.tintColor, self.colorScheme.onPrimaryColor);
+  XCTAssertEqualObjects([self.tabBar titleColorForState:MDCTabBarItemStateSelected],
+                        self.colorScheme.onPrimaryColor);
+  XCTAssertEqualObjects([self.tabBar imageTintColorForState:MDCTabBarItemStateSelected],
+                        self.colorScheme.onPrimaryColor);
+  UIColor *unselectedTitleColor =
+  [self.colorScheme.onPrimaryColor colorWithAlphaComponent:kUnselectedTitleOpacity];
+  UIColor *unselectedImageColor =
+  [self.colorScheme.onPrimaryColor colorWithAlphaComponent:kUnselectedImageOpacity];
+  XCTAssertEqualObjects([self.tabBar titleColorForState:MDCTabBarItemStateNormal],
+                        unselectedTitleColor);
+  XCTAssertEqualObjects([self.tabBar imageTintColorForState:MDCTabBarItemStateNormal],
+                        unselectedImageColor);
+  XCTAssertEqualObjects(
+                        self.tabBar.bottomDividerColor,
+                        [self.colorScheme.onPrimaryColor colorWithAlphaComponent:kBottomDividerOpacity]);
+
+  // Typography
+  XCTAssertEqualObjects(self.tabBar.selectedItemTitleFont, self.typographyScheme.button);
+  XCTAssertEqualObjects(self.tabBar.unselectedItemTitleFont, self.typographyScheme.button);
 }
 
 - (void)verifyTabBarSurfaceVariantTheming {
