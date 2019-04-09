@@ -51,7 +51,7 @@
 - (void)testDefaultButtonBehaviorWithRipple {
   // Then
   XCTAssertNotNil(self.button.rippleView);
-  XCTAssertEqualObjects(self.button.rippleView.rippleColor, [UIColor colorWithWhite:1 
+  XCTAssertEqualObjects(self.button.rippleView.rippleColor, [UIColor colorWithWhite:1
                                                                               alpha:(CGFloat)0.12]);
   XCTAssertEqualObjects(self.button.rippleView.rippleColor, self.button.inkView.inkColor);
   XCTAssertEqual(self.button.rippleView.rippleStyle, MDCRippleStyleBounded);
