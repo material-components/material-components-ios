@@ -107,6 +107,42 @@
   [self generateSnapshotAndVerifyForView:self.button];
 }
 
+- (void)testTouchesMoved {
+  // Given
+  NSSet *touchesSet = [NSSet setWithObject:[[UITouch alloc] init]];
+
+  // When
+  [self.button touchesMoved:touchesSet withEvent:nil];
+  [self drainMainRunLoop];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.button];
+}
+
+- (void)testTouchesEnded {
+  // Given
+  NSSet *touchesSet = [NSSet setWithObject:[[UITouch alloc] init]];
+
+  // When
+  [self.button touchesEnded:touchesSet withEvent:nil];
+  [self drainMainRunLoop];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.button];
+}
+
+- (void)testTouchesCancelled {
+  // Given
+  NSSet *touchesSet = [NSSet setWithObject:[[UITouch alloc] init]];
+
+  // When
+  [self.button touchesCancelled:touchesSet withEvent:nil];
+  [self drainMainRunLoop];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.button];
+}
+
 /**
  Inserts a semaphore block into the main run loop and then waits for that sempahore to be executed.
  This enables other queued actions on the main loop to issue within unit tests.  For example, it can
