@@ -29,7 +29,7 @@ tabBar.applySurfaceVariantTheme(withScheme: containerScheme)
 // Import the TabBar Theming Extensions header
 #import <MaterialComponentsBeta/MaterialTabBar+MaterialTheming.h>
  ...
- // [[Apply]] your app's Container Scheme to the TabBar controller
+ // Apply your app's Container Scheme to the TabBar controller
 MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
  // Either Primary Theme
 [self.tabBar applyPrimaryThemeWithScheme:containerScheme];
