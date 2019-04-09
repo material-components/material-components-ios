@@ -47,13 +47,13 @@ static const CGFloat kBottomDividerOpacity = (CGFloat)0.12;
   [self setTitleColor:colorScheme.onPrimaryColor forState:MDCTabBarItemStateSelected];
   [self setImageTintColor:colorScheme.onPrimaryColor forState:MDCTabBarItemStateSelected];
   UIColor *unselectedTitleColor =
-  [colorScheme.onPrimaryColor colorWithAlphaComponent:kUnselectedTitleOpacity];
+      [colorScheme.onPrimaryColor colorWithAlphaComponent:kUnselectedTitleOpacity];
   UIColor *unselectedImageColor =
-  [colorScheme.onPrimaryColor colorWithAlphaComponent:kUnselectedImageOpacity];
+      [colorScheme.onPrimaryColor colorWithAlphaComponent:kUnselectedImageOpacity];
   [self setTitleColor:unselectedTitleColor forState:MDCTabBarItemStateNormal];
   [self setImageTintColor:unselectedImageColor forState:MDCTabBarItemStateNormal];
   self.bottomDividerColor =
-  [colorScheme.onPrimaryColor colorWithAlphaComponent:kBottomDividerOpacity];
+      [colorScheme.onPrimaryColor colorWithAlphaComponent:kBottomDividerOpacity];
 }
 
 - (void)applySurfaceVariantThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
@@ -62,13 +62,13 @@ static const CGFloat kBottomDividerOpacity = (CGFloat)0.12;
   [self setTitleColor:colorScheme.primaryColor forState:MDCTabBarItemStateSelected];
   [self setImageTintColor:colorScheme.primaryColor forState:MDCTabBarItemStateSelected];
   UIColor *unselectedTitleColor =
-  [colorScheme.onSurfaceColor colorWithAlphaComponent:kUnselectedTitleOpacity];
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:kUnselectedTitleOpacity];
   UIColor *unselectedImageColor =
-  [colorScheme.onSurfaceColor colorWithAlphaComponent:kUnselectedImageOpacity];
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:kUnselectedImageOpacity];
   [self setTitleColor:unselectedTitleColor forState:MDCTabBarItemStateNormal];
   [self setImageTintColor:unselectedImageColor forState:MDCTabBarItemStateNormal];
   self.bottomDividerColor =
-  [colorScheme.onSurfaceColor colorWithAlphaComponent:kBottomDividerOpacity];
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:kBottomDividerOpacity];
 }
 
 - (void)applyThemeWithTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {

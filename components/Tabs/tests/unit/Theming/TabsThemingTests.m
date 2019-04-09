@@ -147,16 +147,16 @@ static const CGFloat kBottomDividerOpacity = (CGFloat)0.12;
   XCTAssertEqualObjects([self.tabBar imageTintColorForState:MDCTabBarItemStateSelected],
                         self.colorScheme.onPrimaryColor);
   UIColor *unselectedTitleColor =
-  [self.colorScheme.onPrimaryColor colorWithAlphaComponent:kUnselectedTitleOpacity];
+      [self.colorScheme.onPrimaryColor colorWithAlphaComponent:kUnselectedTitleOpacity];
   UIColor *unselectedImageColor =
-  [self.colorScheme.onPrimaryColor colorWithAlphaComponent:kUnselectedImageOpacity];
+      [self.colorScheme.onPrimaryColor colorWithAlphaComponent:kUnselectedImageOpacity];
   XCTAssertEqualObjects([self.tabBar titleColorForState:MDCTabBarItemStateNormal],
                         unselectedTitleColor);
   XCTAssertEqualObjects([self.tabBar imageTintColorForState:MDCTabBarItemStateNormal],
                         unselectedImageColor);
   XCTAssertEqualObjects(
-                        self.tabBar.bottomDividerColor,
-                        [self.colorScheme.onPrimaryColor colorWithAlphaComponent:kBottomDividerOpacity]);
+      self.tabBar.bottomDividerColor,
+      [self.colorScheme.onPrimaryColor colorWithAlphaComponent:kBottomDividerOpacity]);
 
   // Typography
   XCTAssertEqualObjects(self.tabBar.selectedItemTitleFont, self.typographyScheme.button);
