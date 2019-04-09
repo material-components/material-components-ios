@@ -164,7 +164,7 @@ class AppBarInheritedAnimatedJumpExample: UIViewController {
 
     addChildViewController(appBarViewController)
 
-    // Give the tab bar enough height to accomodate all possible item appearances.
+    // Give the tab bar enough height to accommodate all possible item appearances.
     appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
     appBarViewController.inferTopSafeAreaInsetFromViewController = true
     appBarViewController.headerView.canAlwaysExpandToMaximumHeight = true

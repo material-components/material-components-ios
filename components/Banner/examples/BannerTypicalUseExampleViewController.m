@@ -14,10 +14,10 @@
 
 #import "BannerTypicalUseExampleViewController.h"
 
+#import "MaterialBanner.h"
 #import "MaterialButtons.h"
 #import "MaterialColorScheme.h"
 #import "MaterialTypography.h"
-#import "supplemental/MaterialBanner.h"
 
 static const CGFloat exampleListTableViewHeight = 160.0f;
 static const CGFloat exampleBannerContentPadding = 10.0f;
@@ -218,6 +218,7 @@ static NSString *const exampleExtraLongText =
   [button setTitleColor:self.colorScheme.primaryColor forState:UIControlStateNormal];
   button.backgroundColor = self.colorScheme.surfaceColor;
   bannerView.trailingButton.hidden = YES;
+  bannerView.imageView.hidden = YES;
 
   [button addTarget:self
                 action:@selector(dismissBanner)
@@ -226,6 +227,7 @@ static NSString *const exampleExtraLongText =
 
 - (void)showSingleLineStyleBannerWithIcon {
   [self showSingleLineStyleBanner];
+  self.bannerView.imageView.hidden = NO;
   NSBundle *bundle = [NSBundle bundleForClass:[BannerTypicalUseExampleViewController class]];
   self.bannerView.imageView.image = [[UIImage imageNamed:@"banner-email"
                                                 inBundle:bundle
@@ -246,6 +248,7 @@ static NSString *const exampleExtraLongText =
   margins.left = exampleBannerContentPadding;
   margins.right = exampleBannerContentPadding;
   bannerView.layoutMargins = margins;
+  bannerView.imageView.hidden = YES;
   [self.view addSubview:bannerView];
   self.bannerView = bannerView;
 
@@ -270,6 +273,7 @@ static NSString *const exampleExtraLongText =
 
 - (void)showMultiLineAlignedButtonStyleBannerWithIcon {
   [self showMultiLineAlignedButtonStyleBanner];
+  self.bannerView.imageView.hidden = NO;
   NSBundle *bundle = [NSBundle bundleForClass:[BannerTypicalUseExampleViewController class]];
   self.bannerView.imageView.image = [[UIImage imageNamed:@"banner-email"
                                                 inBundle:bundle
@@ -290,6 +294,7 @@ static NSString *const exampleExtraLongText =
   margins.left = exampleBannerContentPadding;
   margins.right = exampleBannerContentPadding;
   bannerView.layoutMargins = margins;
+  bannerView.imageView.hidden = YES;
   [self.view addSubview:bannerView];
   self.bannerView = bannerView;
 
@@ -313,6 +318,7 @@ static NSString *const exampleExtraLongText =
 
 - (void)showMultiLineStackedButtonStyleBannerWithIcon {
   [self showMultiLineStackedButtonStyleBanner];
+  self.bannerView.imageView.hidden = NO;
   NSBundle *bundle = [NSBundle bundleForClass:[BannerTypicalUseExampleViewController class]];
   self.bannerView.imageView.image = [[UIImage imageNamed:@"banner-email"
                                                 inBundle:bundle
