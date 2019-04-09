@@ -31,7 +31,7 @@
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-    self.recordMode = YES;
+  //  self.recordMode = YES;
 
   self.button = [[MDCButton alloc] init];
   self.button.enableRippleBehavior = YES;
@@ -102,7 +102,6 @@
 
   // When
   [self.button touchesBegan:touchesSet withEvent:nil];
-  [self drainMainRunLoop];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.button];
@@ -114,7 +113,6 @@
 
   // When
   [self.button touchesMoved:touchesSet withEvent:nil];
-  [self drainMainRunLoop];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.button];
@@ -126,7 +124,6 @@
 
   // When
   [self.button touchesEnded:touchesSet withEvent:nil];
-  [self drainMainRunLoop];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.button];
@@ -138,27 +135,9 @@
 
   // When
   [self.button touchesCancelled:touchesSet withEvent:nil];
-  [self drainMainRunLoop];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.button];
-}
-
-/**
- Inserts a semaphore block into the main run loop and then waits for that sempahore to be executed.
- This enables other queued actions on the main loop to issue within unit tests.  For example, it can
- allow animation blocks to execute, but does not necessarily wait for them to complete.
-
- Note: Although an imperfect solution, it unblocks snapshot testing for now and reduces flakiness.
- */
-- (void)drainMainRunLoop {
-  XCTestExpectation *expectation = [self expectationWithDescription:@"draining the main run loop"];
-
-  dispatch_async(dispatch_get_main_queue(), ^{
-    [expectation fulfill];
-  });
-
-  [self waitForExpectationsWithTimeout:1 handler:nil];
 }
 
 @end
