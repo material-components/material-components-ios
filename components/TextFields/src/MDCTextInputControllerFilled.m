@@ -55,7 +55,7 @@ static inline UIColor *MDCTextInputControllerFilledDefaultBorderFillColorDefault
 
 static UIColor *_borderFillColorDefault;
 
-static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
+static UIRectCorner _roundedCornersDefault = UIRectCornerTopLeft | UIRectCornerTopRight;
 
 static CGFloat _underlineHeightActiveDefault =
     MDCTextInputControllerFilledDefaultUnderlineActiveHeight;
