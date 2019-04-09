@@ -46,6 +46,8 @@ This pattern is not a delegation or data source-like relationship but rather a c
 
 ## Extensions
 
+- [Theming](theming.md)
+
 - [Color Theming](color-theming.md)
 
 - [Typography Theming](typography-theming.md)

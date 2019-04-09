@@ -12,5 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCTextInputControllerFilled+MaterialTheming.h"
-#import "MDCTextInputControllerOutlined+MaterialTheming.h"
+#import <MaterialComponents/MaterialTextFields.h>
+#import <MaterialComponentsBeta/MaterialContainerScheme.h>
+
+/**
+ This category is used to style MDCTextInputControllerOutlined instances to a specific Material
+ style which can be found within the [Material
+ Guidelines](https://material.io/design/components/text-fields.html).
+ */
+@interface MDCTextInputControllerOutlined (MaterialTheming)
+
+/**
+ Applies a container scheme to this instance.
+
+ @param scheme A container scheme instance containing any desired customizations to the theming
+ system.
+ */
+- (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
+
+@end
