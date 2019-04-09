@@ -31,7 +31,7 @@
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-    self.recordMode = YES;
+  //  self.recordMode = YES;
 
   self.button = [[MDCButton alloc] init];
   self.button.enableRippleBehavior = YES;
@@ -140,6 +140,17 @@
   // When
   self.button.highlighted = YES;
   self.button.selected = YES;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.button];
+}
+
+- (void)testTouchesBegan {
+  // Given
+  NSSet *touchesSet = [NSSet setWithObject:[[UITouch alloc] init]];
+
+  // When
+  [self.button touchesBegan:touchesSet withEvent:[[UIEvent alloc] init]];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.button];
