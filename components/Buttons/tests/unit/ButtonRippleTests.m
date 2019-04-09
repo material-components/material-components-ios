@@ -17,10 +17,6 @@
 #import "MaterialButtons.h"
 #import "MaterialRipple.h"
 
-static UIColor *GetDefaultInkColor(void) {
-  return [UIColor colorWithWhite:1 alpha:(CGFloat)0.2];
-}
-
 @interface MDCButton (Testing)
 @property(nonatomic, strong, readonly) MDCStatefulRippleView *rippleView;
 @property(nonatomic, strong) MDCInkView *inkView;
@@ -55,7 +51,7 @@ static UIColor *GetDefaultInkColor(void) {
 - (void)testDefaultButtonBehaviorWithRipple {
   // Then
   XCTAssertNotNil(self.button.rippleView);
-  XCTAssertEqualObjects(self.button.rippleView.rippleColor, GetDefaultInkColor());
+  XCTAssertEqualObjects(self.button.rippleView.rippleColor, [UIColor colorWithWhite:1 alpha:(CGFloat)0.12]);
   XCTAssertEqualObjects(self.button.rippleView.rippleColor, self.button.inkView.inkColor);
   XCTAssertEqual(self.button.rippleView.rippleStyle, MDCRippleStyleBounded);
   XCTAssertFalse(self.button.enableRippleBehavior);
