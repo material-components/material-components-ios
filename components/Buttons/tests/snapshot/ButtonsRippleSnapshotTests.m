@@ -41,6 +41,7 @@
   [self.button setTitleColor:UIColor.blueColor forState:UIControlStateNormal];
   self.button.backgroundColor = UIColor.whiteColor;
   [self.button sizeToFit];
+  self.button.layer.speed = 10000;
 }
 
 - (void)tearDown {
