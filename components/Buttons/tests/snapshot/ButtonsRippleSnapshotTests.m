@@ -18,6 +18,11 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialButtons.h"
+#import "MaterialRipple.h"
+
+@interface MDCButton (Testing)
+@property(nonatomic, strong, readonly, nonnull) MDCStatefulRippleView *rippleView;
+@end
 
 /** Snapshot tests for @c MDCButton when @c enableRippleBehavior is @c YES. */
 @interface ButtonsRippleSnapshotTests : MDCSnapshotTestCase
@@ -31,17 +36,66 @@
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  //  self.recordMode = YES;
+    self.recordMode = YES;
 
   self.button = [[MDCButton alloc] init];
   self.button.enableRippleBehavior = YES;
   UIImage *testImage = [[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
                         imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   [self.button setImage:testImage forState:UIControlStateNormal];
-  [self.button setTitleColor:UIColor.blueColor forState:UIControlStateNormal];
-  self.button.backgroundColor = UIColor.whiteColor;
+  self.button.inkColor= [UIColor.magentaColor colorWithAlphaComponent:0.25];
   [self.button sizeToFit];
-  self.button.layer.speed = 10000;
+  [self configureButton:self.button
+               forState:UIControlStateNormal
+              withTitle:@"Red"
+                    red:1
+                  green:0
+                   blue:0];
+  [self configureButton:self.button
+               forState:UIControlStateSelected
+              withTitle:@"Green"
+                    red:0
+                  green:1
+                   blue:0];
+  [self configureButton:self.button
+               forState:UIControlStateHighlighted
+              withTitle:@"Blue"
+                    red:0
+                  green:0
+                   blue:1];
+  [self configureButton:self.button
+               forState:UIControlStateDisabled
+              withTitle:@"Disabled"
+                    red:1
+                  green:1
+                   blue:0];
+  [self configureButton:self.button
+               forState:(UIControlStateHighlighted | UIControlStateSelected)
+              withTitle:@"H + S"
+                    red:0
+                  green:1
+                   blue:1];
+}
+
+- (void)configureButton:(MDCButton *)button
+               forState:(UIControlState)state
+              withTitle:(NSString *)title
+                    red:(CGFloat)red
+                  green:(CGFloat)green
+                   blue:(CGFloat)blue {
+  [button setTitleColor:[UIColor colorWithRed:(CGFloat)(0.5 * red)
+                                        green:(CGFloat)(0.5 * green)
+                                         blue:(CGFloat)(0.5 * blue)
+                                        alpha:1]
+               forState:state];
+  [button setTitle:title forState:state];
+  [button setBackgroundColor:[UIColor colorWithRed:red green:green blue:blue alpha:1]
+                    forState:state];
+  [button setImageTintColor:[UIColor colorWithRed:(CGFloat)(0.25 * red)
+                                            green:(CGFloat)(0.25 * green)
+                                             blue:(CGFloat)(0.25 * blue)
+                                            alpha:1]
+                   forState:state];
 }
 
 - (void)tearDown {
@@ -91,50 +145,6 @@
   // When
   self.button.highlighted = YES;
   self.button.selected = YES;
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.button];
-}
-
-- (void)testTouchesBegan {
-  // Given
-  NSSet *touchesSet = [NSSet setWithObject:[[UITouch alloc] init]];
-
-  // When
-  [self.button touchesBegan:touchesSet withEvent:nil];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.button];
-}
-
-- (void)testTouchesMoved {
-  // Given
-  NSSet *touchesSet = [NSSet setWithObject:[[UITouch alloc] init]];
-
-  // When
-  [self.button touchesMoved:touchesSet withEvent:nil];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.button];
-}
-
-- (void)testTouchesEnded {
-  // Given
-  NSSet *touchesSet = [NSSet setWithObject:[[UITouch alloc] init]];
-
-  // When
-  [self.button touchesEnded:touchesSet withEvent:nil];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.button];
-}
-
-- (void)testTouchesCancelled {
-  // Given
-  NSSet *touchesSet = [NSSet setWithObject:[[UITouch alloc] init]];
-
-  // When
-  [self.button touchesCancelled:touchesSet withEvent:nil];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.button];
