@@ -36,3 +36,5 @@ MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
  // Or Surface Theme
 [self.tabBar applySurfaceVariantThemeWithScheme:containerScheme];
 ```
+
+<!--</div>-->
