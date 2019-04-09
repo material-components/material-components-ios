@@ -14,9 +14,9 @@
 
 #import "MaterialSnapshot.h"
 
-#import "MaterialTabs.h"
-#import "MaterialTabs+Theming.h"
 #import "MaterialContainerScheme.h"
+#import "MaterialTabs+Theming.h"
+#import "MaterialTabs.h"
 
 static NSString *const kItemTitle1 = @"Item 1";
 static NSString *const kItemTitle2 = @"Item 2";
@@ -41,7 +41,7 @@ static NSString *const kItemBadgeValue = @"Badge";
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-    self.recordMode = YES;
+  self.recordMode = YES;
 
   CGSize imageSize = CGSizeMake(24, 24);
   self.tabBar = [[MDCTabBar alloc] init];
