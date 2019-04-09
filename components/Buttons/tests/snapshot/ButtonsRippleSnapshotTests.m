@@ -112,12 +112,12 @@
 
 #pragma mark - Tests
 
-- (void)testNormalState {
+- (void)testNormalStateGeneratesCorrectImage {
   // Then
   [self generateSnapshotAndVerifyForView:self.button];
 }
 
-- (void)testHighlightedState {
+- (void)testHighlightedStateGeneratesCorrectImage {
   // When
   self.button.highlighted = YES;
 
@@ -125,7 +125,7 @@
   [self generateSnapshotAndVerifyForView:self.button];
 }
 
-- (void)testSelectedState {
+- (void)testSelectedStateGeneratesCorrectImage {
   // When
   self.button.selected = YES;
 
@@ -133,7 +133,7 @@
   [self generateSnapshotAndVerifyForView:self.button];
 }
 
-- (void)testDisabledState {
+- (void)testDisabledStateGeneratesCorrectImage {
   // When
   self.button.enabled = NO;
 
@@ -141,10 +141,18 @@
   [self generateSnapshotAndVerifyForView:self.button];
 }
 
-- (void)testHighlightedSelectedState {
+- (void)testHighlightedSelectedStateGeneratesCorrectImage {
   // When
   self.button.highlighted = YES;
   self.button.selected = YES;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.button];
+}
+
+- (void)testButtonWhenRippleTouchDownAtPointIsCalledGeneratesCorrectImage {
+  // When
+  [self.button.rippleView beginRippleTouchDownAtPoint:self.button.center animated:NO completion:nil];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.button];
