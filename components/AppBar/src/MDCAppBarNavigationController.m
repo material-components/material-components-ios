@@ -126,6 +126,14 @@
   UIScrollView *trackingScrollView =
       [self findFirstInstanceOfUIScrollViewInView:viewControllerView];
 
+  if ([self.delegate respondsToSelector:@selector
+                     (appBarNavigationController:
+                         trackingScrollViewForViewController:suggestedTrackingScrollView:)]) {
+    trackingScrollView = [self.delegate appBarNavigationController:self
+                               trackingScrollViewForViewController:viewController
+                                       suggestedTrackingScrollView:trackingScrollView];
+  }
+
   MDCAppBar *appBar = [[MDCAppBar alloc] init];
 
   // Book-keeping so that we can do two things:
