@@ -21,7 +21,7 @@
 #import "MaterialTabs+Theming.h"
 
 static const CGFloat kUnselectedTitleOpacity = (CGFloat)0.6;
-static const CGFloat kUnselectedImageOpacity = (CGFloat)0.54;
+static const CGFloat kUnselectedImageOpacity = (CGFloat)0.6;
 static const CGFloat kBottomDividerOpacity = (CGFloat)0.12;
 
 @interface MDCTabsThemingTest : XCTestCase
@@ -65,8 +65,10 @@ static const CGFloat kBottomDividerOpacity = (CGFloat)0.12;
 
 - (void)testTabBarPrimaryThemingCustom {
   // Given
-  self.containerScheme.colorScheme = [self customColorScheme];
-  self.containerScheme.typographyScheme = [self customTypographyScheme];
+  self.colorScheme = [self customColorScheme];
+  self.typographyScheme = [self customTypographyScheme];
+  self.containerScheme.colorScheme = self.colorScheme;
+  self.containerScheme.typographyScheme = self.typographyScheme;
 
   // When
   [self.tabBar applyPrimaryThemeWithScheme:self.containerScheme];
@@ -85,8 +87,10 @@ static const CGFloat kBottomDividerOpacity = (CGFloat)0.12;
 
 - (void)testTabBarSurfaceVariantThemingCustom {
   // Given
-  self.containerScheme.colorScheme = [self customColorScheme];
-  self.containerScheme.typographyScheme = [self customTypographyScheme];
+  self.colorScheme = [self customColorScheme];
+  self.typographyScheme = [self customTypographyScheme];
+  self.containerScheme.colorScheme = self.colorScheme;
+  self.containerScheme.typographyScheme = self.typographyScheme;
 
   // When
   [self.tabBar applySurfaceVariantThemeWithScheme:self.containerScheme];
