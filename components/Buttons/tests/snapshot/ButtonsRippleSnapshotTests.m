@@ -31,44 +31,15 @@
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  //  self.recordMode = YES;
+    self.recordMode = YES;
 
   self.button = [[MDCButton alloc] init];
   self.button.enableRippleBehavior = YES;
   UIImage *testImage = [[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
                         imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   [self.button setImage:testImage forState:UIControlStateNormal];
-  [self.button setInkColor:[UIColor.magentaColor colorWithAlphaComponent:0.25]];
-  [self configureButton:self.button
-               forState:UIControlStateNormal
-              withTitle:@"Red"
-                    red:1
-                  green:0
-                   blue:0];
-  [self configureButton:self.button
-               forState:UIControlStateSelected
-              withTitle:@"Green"
-                    red:0
-                  green:1
-                   blue:0];
-  [self configureButton:self.button
-               forState:UIControlStateHighlighted
-              withTitle:@"Blue"
-                    red:0
-                  green:0
-                   blue:1];
-  [self configureButton:self.button
-               forState:UIControlStateDisabled
-              withTitle:@"Disabled"
-                    red:1
-                  green:1
-                   blue:0];
-  [self configureButton:self.button
-               forState:(UIControlStateHighlighted | UIControlStateSelected)
-              withTitle:@"H + S"
-                    red:0
-                  green:1
-                   blue:1];
+  [self.button setTitleColor:UIColor.blueColor forState:UIControlStateNormal];
+  self.button.backgroundColor = UIColor.whiteColor;
   [self.button sizeToFit];
 }
 
@@ -76,27 +47,6 @@
   self.button = nil;
 
   [super tearDown];
-}
-
-- (void)configureButton:(MDCButton *)button
-               forState:(UIControlState)state
-              withTitle:(NSString *)title
-                    red:(CGFloat)red
-                  green:(CGFloat)green
-                   blue:(CGFloat)blue {
-  [button setTitleColor:[UIColor colorWithRed:(CGFloat)(0.5 * red)
-                                        green:(CGFloat)(0.5 * green)
-                                         blue:(CGFloat)(0.5 * blue)
-                                        alpha:1]
-               forState:state];
-  [button setTitle:title forState:state];
-  [button setBackgroundColor:[UIColor colorWithRed:red green:green blue:blue alpha:1]
-                    forState:state];
-  [button setImageTintColor:[UIColor colorWithRed:(CGFloat)(0.25 * red)
-                                            green:(CGFloat)(0.25 * green)
-                                             blue:(CGFloat)(0.25 * blue)
-                                            alpha:1]
-                   forState:state];
 }
 
 - (void)generateSnapshotAndVerifyForView:(UIView *)view {
@@ -147,14 +97,31 @@
 
 - (void)testTouchesBegan {
   // Given
-  self.recordMode = YES;
   NSSet *touchesSet = [NSSet setWithObject:[[UITouch alloc] init]];
 
   // When
   [self.button touchesBegan:touchesSet withEvent:nil];
+  [self drainMainRunLoop];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.button];
+}
+
+/**
+ Inserts a semaphore block into the main run loop and then waits for that sempahore to be executed.
+ This enables other queued actions on the main loop to issue within unit tests.  For example, it can
+ allow animation blocks to execute, but does not necessarily wait for them to complete.
+
+ Note: Although an imperfect solution, it unblocks snapshot testing for now and reduces flakiness.
+ */
+- (void)drainMainRunLoop {
+  XCTestExpectation *expectation = [self expectationWithDescription:@"draining the main run loop"];
+
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [expectation fulfill];
+  });
+
+  [self waitForExpectationsWithTimeout:1 handler:nil];
 }
 
 @end
