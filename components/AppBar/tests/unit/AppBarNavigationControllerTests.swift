@@ -15,6 +15,16 @@
 import XCTest
 import MaterialComponents.MaterialAppBar
 
+private class MockAppBarNavigationControllerDelegate:
+    NSObject, MDCAppBarNavigationControllerDelegate {
+  var trackingScrollView: UIScrollView?
+  func appBarNavigationController(_ navigationController: MDCAppBarNavigationController,
+                                  trackingScrollViewFor trackingScrollViewForViewController: UIViewController,
+                                  suggestedTrackingScrollView: UIScrollView?) -> UIScrollView? {
+    return trackingScrollView
+  }
+}
+
 class AppBarNavigationControllerTests: XCTestCase {
 
   var navigationController: MDCAppBarNavigationController!
@@ -215,6 +225,67 @@ class AppBarNavigationControllerTests: XCTestCase {
                       + "header view controller for status bar style updates.")
     }
   }
+
+  func testInfersFirstTrackingScrollViewByDefault() {
+    // Given
+    let viewController = UIViewController()
+    let scrollView1 = UIScrollView()
+    viewController.view.addSubview(scrollView1)
+    let scrollView2 = UIScrollView()
+    viewController.view.addSubview(scrollView2)
+
+    // When
+    navigationController.pushViewController(viewController, animated: false)
+
+    // Then
+    guard let appBarViewController = navigationController.appBarViewController(for: viewController) else {
+      XCTFail("No app bar view controller found.")
+      return
+    }
+    XCTAssertEqual(appBarViewController.headerView.trackingScrollView, scrollView1)
+  }
+
+  func testDelegateCanReturnNilTrackingScrollView() {
+    // Given
+    let viewController = UIViewController()
+    let scrollView1 = UIScrollView()
+    viewController.view.addSubview(scrollView1)
+    let scrollView2 = UIScrollView()
+    viewController.view.addSubview(scrollView2)
+    let delegate = MockAppBarNavigationControllerDelegate()
+    navigationController.delegate = delegate
+
+    // When
+    delegate.trackingScrollView = nil
+    navigationController.pushViewController(viewController, animated: false)
+
+    // Then
+    guard let appBarViewController = navigationController.appBarViewController(for: viewController) else {
+      XCTFail("No app bar view controller found.")
+      return
+    }
+    XCTAssertNil(appBarViewController.headerView.trackingScrollView)
+  }
+
+  func testDelegateCanPickDifferentTrackingScrollView() {
+    // Given
+    let viewController = UIViewController()
+    let scrollView1 = UIScrollView()
+    viewController.view.addSubview(scrollView1)
+    let scrollView2 = UIScrollView()
+    viewController.view.addSubview(scrollView2)
+    let delegate = MockAppBarNavigationControllerDelegate()
+    navigationController.delegate = delegate
+
+    // When
+    delegate.trackingScrollView = scrollView2
+    navigationController.pushViewController(viewController, animated: false)
+
+    // Then
+    guard let appBarViewController = navigationController.appBarViewController(for: viewController) else {
+      XCTFail("No app bar view controller found.")
+      return
+    }
+    XCTAssertEqual(appBarViewController.headerView.trackingScrollView, scrollView2)
+  }
 }
-
-
