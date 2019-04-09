@@ -15,9 +15,9 @@ color and the Surface Variant.
 // Import the TabBar Theming Extensions module
 import MaterialComponentsBeta.MaterialTabs_MaterialTheming
  ...
- // Apply your app's Container Scheme to the TabBar controller
+ // Initialize your app's Container Scheme
 let containerScheme = MDCContainerScheme()
- // Either Primary Theme
+ // Apply the Container Scheme to either Primary Theme
 tabBar.applyPrimaryTheme(withScheme: containerScheme)
  // Or Surface Variant Theme
 tabBar.applySurfaceVariantTheme(withScheme: containerScheme)
@@ -29,9 +29,9 @@ tabBar.applySurfaceVariantTheme(withScheme: containerScheme)
 // Import the TabBar Theming Extensions header
 #import <MaterialComponentsBeta/MaterialTabBar+MaterialTheming.h>
  ...
- // Apply your app's Container Scheme to the TabBar controller
+ // Initialize your app's Container Scheme
 MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
- // Either Primary Theme
+ // Apply the Container Scheme to either Primary Theme
 [self.tabBar applyPrimaryThemeWithScheme:containerScheme];
  // Or Surface Theme
 [self.tabBar applySurfaceVariantThemeWithScheme:containerScheme];
