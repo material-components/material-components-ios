@@ -69,6 +69,13 @@
 @property(nonatomic, strong, nullable) UIColor *topHandleColor;
 
 /**
+ The fraction of the screen to which the drawer may expand initially.
+
+ Must be between 0 and 1 inclusive. Default is 0.5.
+ */
+@property(nonatomic, assign) CGFloat maximumInitialDrawerHeightFactor;
+
+/**
  The bottom drawer delegate.
  */
 @property(nonatomic, weak, nullable) id<MDCBottomDrawerViewControllerDelegate> delegate;

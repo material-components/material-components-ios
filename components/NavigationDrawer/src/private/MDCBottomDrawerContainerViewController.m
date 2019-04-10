@@ -139,15 +139,6 @@ static UIColor *DrawerShadowColor(void) {
 // Updates both the header and content based off content offset of the scroll view.
 - (void)updateViewWithContentOffset:(CGPoint)contentOffset;
 
-/**
- The height of the drawer at initial layout. This value is a percentage between 0-100% (0-1).
- - 1 or 100% indicates the drawer is full screen.
- - 0 or 0% indicates that drawer if hidden.
-
- @note In voiceover and landscape this value will be 1.
- */
-@property(nonatomic) CGFloat initialDrawerFactor;
-
 // Calculates the initial drawer factor.
 - (CGFloat)calculateInitialDrawerFactor;
 
@@ -232,7 +223,6 @@ static UIColor *DrawerShadowColor(void) {
     if (self.trackingScrollView != nil) {
       normalizedContentOffset.y = [self updateContentOffsetForPerformantScrolling:contentOffset.y];
     }
-
     [self updateViewWithContentOffset:normalizedContentOffset];
   }
 }
@@ -256,7 +246,6 @@ static UIColor *DrawerShadowColor(void) {
                             CGRectGetHeight(self.presentingViewBounds) + headerHeightWithoutInset -
                             kScrollViewBufferForPerformance;
   BOOL scrollingUpInFull = contentDiff < 0 && CGRectGetMinY(self.trackingScrollView.bounds) > 0;
-
   if (CGRectGetMinY(self.scrollView.bounds) >= drawerOffset || scrollingUpInFull) {
     // If we reach full screen or if we are scrolling up after being in full screen.
     if (CGRectGetMinY(self.trackingScrollView.bounds) < maxScrollOrigin || scrollingUpInFull) {
@@ -533,8 +522,9 @@ static UIColor *DrawerShadowColor(void) {
   CGFloat totalHeight = self.headerViewController.preferredContentSize.height +
                         _contentVCPreferredContentSizeHeightCached;
   CGFloat precentageOfFullScreen = totalHeight / self.presentingViewBounds.size.height;
-  if (precentageOfFullScreen > 0.5) {
-    precentageOfFullScreen = 0.5;
+  const CGFloat maximumFactor = _initialDrawerFactor;
+  if (precentageOfFullScreen > maximumFactor) {
+    precentageOfFullScreen = maximumFactor;
   }
   return precentageOfFullScreen;
 }
@@ -581,6 +571,7 @@ static UIColor *DrawerShadowColor(void) {
       [self transitionPercentageForContentOffset:contentOffset
                                           offset:0
                                         distance:self.headerAnimationDistance];
+
   CGFloat headerTransitionToTop =
       contentOffset.y >= self.transitionCompleteContentOffset ? 1 : transitionPercentage;
   [self.delegate bottomDrawerContainerViewControllerTopTransitionRatio:self
@@ -770,6 +761,14 @@ static UIColor *DrawerShadowColor(void) {
     // The content header top inset is only set once.
     if (contentScrollsToReveal || _shouldPresentAtFullscreen) {
       _contentHeaderTopInset = containerHeight * (1 - [self initialDrawerFactor]);
+      // In some cases, the contentHeaderTopInset calculation above which decides the
+      // drawer's initial offset will not align with the content offset UIKit provides
+      // for the scrollView, and there may be a slight delta between both numbers.
+      // This will cause unexpected behaviors in the
+      // `updateContentOffsetForPerformantScrolling` method because the contentDiff
+      // will not necessarily be 0 when there is no scrolling delta.
+      // Therefore by rounding we are able to align to a reasonable content offset.
+      _contentHeaderTopInset = MDCRound(_contentHeaderTopInset);
       // The minimum inset value should be the size of the safe area inset, as
       // kInitialDrawerHeightFactor discounts the safe area when receiving the height factor.
       if (_contentHeaderTopInset <= self.topHeaderHeight - self.contentHeaderHeight) {

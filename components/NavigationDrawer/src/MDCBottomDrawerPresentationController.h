@@ -88,6 +88,13 @@
 @property(nonatomic, strong, nullable) UIColor *topHandleColor;
 
 /**
+ The fraction of the screen to which the drawer may expand initially.
+
+ Must be between 0 and 1 inclusive. Default is 0.5.
+ */
+@property(nonatomic, assign) CGFloat maximumInitialDrawerHeightFactor;
+
+/**
  A boolean value that indicates whether the drawer is currently the full height of the window.
  */
 @property(nonatomic, readonly) BOOL contentReachesFullscreen;
