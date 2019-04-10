@@ -639,6 +639,43 @@
   XCTAssertEqualWithAccuracy(drawerFactor, 0.5, 0.001);
 }
 
+- (void)testSettingMaximumInitialDrawerFactor {
+  // Given
+  self.drawerViewController.maximumInitialDrawerHeightFactor = 0.25;
+
+  // Then
+  MDCBottomDrawerPresentationController *presentationController =
+      (MDCBottomDrawerPresentationController *)self.drawerViewController.presentationController;
+  XCTAssertEqualWithAccuracy(0.25,
+                             presentationController.maximumInitialDrawerHeightFactor,
+                             0.001);
+}
+
+- (void)testInitialDrawerFactor {
+  // Given
+  CGRect fakeRect = CGRectMake(0, 0, 250, 500);
+  self.fakeBottomDrawer.initialDrawerFactor = (CGFloat)0.3;
+  self.fakeBottomDrawer.originalPresentingViewController.view.bounds = fakeRect;
+  self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(250, 1000);
+
+  // When
+  CGFloat drawerFactor = [self.fakeBottomDrawer calculateInitialDrawerFactor];
+
+  // Then
+  XCTAssertEqualWithAccuracy(drawerFactor, 0.3, 0.001);
+}
+
+- (void)testDrawerFactorReasonableRounding {
+  // Given
+  CGRect fakeRect = CGRectMake(0, 0, 250, 500);
+  self.fakeBottomDrawer.initialDrawerFactor = (CGFloat)0.12314;
+  self.fakeBottomDrawer.originalPresentingViewController.view.bounds = fakeRect;
+  self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(250, 1000);
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 438, 0.001);
+}
+
 - (void)testExpandToFullScreen {
   // Given
   MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
