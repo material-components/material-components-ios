@@ -111,8 +111,7 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
 - (void)commonMDCFlexibleHeaderViewControllerInit {
   _inferPreferredStatusBarStyle = YES;
 
-  MDCFlexibleHeaderView *headerView =
-      [[MDCFlexibleHeaderView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+   MDCFlexibleHeaderView *headerView = [[MDCFlexibleHeaderView alloc] initWithFrame:CGRectZero];
   headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   headerView.delegate = self;
   _headerView = headerView;
@@ -136,6 +135,9 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
   if (shouldDisableAutomaticInsetting) {
     parent.automaticallyAdjustsScrollViewInsets = NO;
   }
+
+  // Size the header based on the parent view controller
+  _headerView.frame = parent.view.bounds;
 }
 
 - (void)didMoveToParentViewController:(UIViewController *)parent {
