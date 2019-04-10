@@ -111,7 +111,7 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
 - (void)commonMDCFlexibleHeaderViewControllerInit {
   _inferPreferredStatusBarStyle = YES;
 
-   MDCFlexibleHeaderView *headerView = [[MDCFlexibleHeaderView alloc] initWithFrame:CGRectZero];
+  MDCFlexibleHeaderView *headerView = [[MDCFlexibleHeaderView alloc] initWithFrame:CGRectZero];
   headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   headerView.delegate = self;
   _headerView = headerView;
