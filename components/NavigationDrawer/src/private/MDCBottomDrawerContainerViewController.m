@@ -223,6 +223,7 @@ static UIColor *DrawerShadowColor(void) {
     if (self.trackingScrollView != nil) {
       normalizedContentOffset.y = [self updateContentOffsetForPerformantScrolling:contentOffset.y];
     }
+
     [self updateViewWithContentOffset:normalizedContentOffset];
   }
 }
@@ -246,6 +247,7 @@ static UIColor *DrawerShadowColor(void) {
                             CGRectGetHeight(self.presentingViewBounds) + headerHeightWithoutInset -
                             kScrollViewBufferForPerformance;
   BOOL scrollingUpInFull = contentDiff < 0 && CGRectGetMinY(self.trackingScrollView.bounds) > 0;
+
   if (CGRectGetMinY(self.scrollView.bounds) >= drawerOffset || scrollingUpInFull) {
     // If we reach full screen or if we are scrolling up after being in full screen.
     if (CGRectGetMinY(self.trackingScrollView.bounds) < maxScrollOrigin || scrollingUpInFull) {
@@ -571,7 +573,6 @@ static UIColor *DrawerShadowColor(void) {
       [self transitionPercentageForContentOffset:contentOffset
                                           offset:0
                                         distance:self.headerAnimationDistance];
-
   CGFloat headerTransitionToTop =
       contentOffset.y >= self.transitionCompleteContentOffset ? 1 : transitionPercentage;
   [self.delegate bottomDrawerContainerViewControllerTopTransitionRatio:self

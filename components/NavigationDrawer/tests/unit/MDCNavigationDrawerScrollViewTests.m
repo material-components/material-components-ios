@@ -646,9 +646,7 @@
   // Then
   MDCBottomDrawerPresentationController *presentationController =
       (MDCBottomDrawerPresentationController *)self.drawerViewController.presentationController;
-  XCTAssertEqualWithAccuracy(0.25,
-                             presentationController.maximumInitialDrawerHeightFactor,
-                             0.001);
+  XCTAssertEqualWithAccuracy(0.25, presentationController.maximumInitialDrawerHeightFactor, 0.001);
 }
 
 - (void)testInitialDrawerFactor {

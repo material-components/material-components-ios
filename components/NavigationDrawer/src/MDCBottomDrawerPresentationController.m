@@ -72,8 +72,7 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
       [[MDCBottomDrawerContainerViewController alloc]
           initWithOriginalPresentingViewController:self.presentingViewController
                                 trackingScrollView:self.trackingScrollView];
-  bottomDrawerContainerViewController.initialDrawerFactor =
-      self.maximumInitialDrawerHeightFactor;
+  bottomDrawerContainerViewController.initialDrawerFactor = self.maximumInitialDrawerHeightFactor;
   if ([self.presentedViewController isKindOfClass:[MDCBottomDrawerViewController class]]) {
     // If in fact the presentedViewController is an MDCBottomDrawerViewController,
     // we then know there is a content and an (optional) header view controller.
