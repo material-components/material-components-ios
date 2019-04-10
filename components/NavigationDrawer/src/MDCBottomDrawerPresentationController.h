@@ -90,7 +90,10 @@
 /**
  The fraction of the screen to which the drawer may expand initially.
 
- Must be between 0 and 1 inclusive. Default is 0.5.
+ Must be between 0 (0%) and 1 (100%) inclusive. Default is 0.5 (50%).
+
+ Note: When TraitCollection is UIUserInterfaceSizeClassCompact or when using
+ VoiceOver or SwitchControl, the drawer will always present at full screen (100%).
  */
 @property(nonatomic, assign) CGFloat maximumInitialDrawerHeightFactor;
 
