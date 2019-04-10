@@ -314,7 +314,7 @@ import MaterialComponentsBeta.MaterialTabs_MaterialTheming
  ...
  // Create or use your app's Container Scheme
 let containerScheme = MDCContainerScheme()
- // Apply the Container Scheme to either Primary Theme
+ // Theme the tab bar with either Primary Theme
 tabBar.applyPrimaryTheme(withScheme: containerScheme)
  // Or Surface Theme
 tabBar.applySurfaceTheme(withScheme: containerScheme)
@@ -328,7 +328,7 @@ tabBar.applySurfaceTheme(withScheme: containerScheme)
  ...
  // Create or use your app's Container Scheme
 MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
- // Apply the Container Scheme to either Primary Theme
+ // Theme the tab bar with either Primary Theme
 [self.tabBar applyPrimaryThemeWithScheme:containerScheme];
  // Or Surface Theme
 [self.tabBar applySurfaceThemeWithScheme:containerScheme];

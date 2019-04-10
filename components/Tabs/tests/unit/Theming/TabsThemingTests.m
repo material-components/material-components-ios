@@ -21,7 +21,6 @@
 #import "MaterialTabs+Theming.h"
 
 static const CGFloat kUnselectedOpacity = (CGFloat)0.6;
-static const CGFloat kBottomDividerOpacity = (CGFloat)0.12;
 
 @interface MDCTabsThemingTest : XCTestCase
 @property(nonatomic, strong) MDCTabBar *tabBar;
@@ -153,9 +152,6 @@ static const CGFloat kBottomDividerOpacity = (CGFloat)0.12;
                         unselectedTitleColor);
   XCTAssertEqualObjects([self.tabBar imageTintColorForState:MDCTabBarItemStateNormal],
                         unselectedImageColor);
-  XCTAssertEqualObjects(
-      self.tabBar.bottomDividerColor,
-      [self.colorScheme.onPrimaryColor colorWithAlphaComponent:kBottomDividerOpacity]);
 
   // Typography
   XCTAssertEqualObjects(self.tabBar.selectedItemTitleFont, self.typographyScheme.button);
@@ -178,9 +174,6 @@ static const CGFloat kBottomDividerOpacity = (CGFloat)0.12;
                         unselectedTitleColor);
   XCTAssertEqualObjects([self.tabBar imageTintColorForState:MDCTabBarItemStateNormal],
                         unselectedImageColor);
-  XCTAssertEqualObjects(
-      self.tabBar.bottomDividerColor,
-      [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kBottomDividerOpacity]);
 
   // Typography
   XCTAssertEqualObjects(self.tabBar.selectedItemTitleFont, self.typographyScheme.button);

@@ -21,7 +21,6 @@
 #import <MaterialComponents/MaterialTypographyScheme.h>
 
 static const CGFloat kUnselectedOpacity = (CGFloat)0.6;
-static const CGFloat kBottomDividerOpacity = (CGFloat)0.12;
 
 @implementation MDCTabBar (MaterialTheming)
 
@@ -52,8 +51,6 @@ static const CGFloat kBottomDividerOpacity = (CGFloat)0.12;
       [colorScheme.onPrimaryColor colorWithAlphaComponent:kUnselectedOpacity];
   [self setTitleColor:unselectedTitleColor forState:MDCTabBarItemStateNormal];
   [self setImageTintColor:unselectedImageColor forState:MDCTabBarItemStateNormal];
-  self.bottomDividerColor =
-      [colorScheme.onPrimaryColor colorWithAlphaComponent:kBottomDividerOpacity];
 }
 
 - (void)applySurfaceThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
@@ -67,8 +64,6 @@ static const CGFloat kBottomDividerOpacity = (CGFloat)0.12;
       [colorScheme.onSurfaceColor colorWithAlphaComponent:kUnselectedOpacity];
   [self setTitleColor:unselectedTitleColor forState:MDCTabBarItemStateNormal];
   [self setImageTintColor:unselectedImageColor forState:MDCTabBarItemStateNormal];
-  self.bottomDividerColor =
-      [colorScheme.onSurfaceColor colorWithAlphaComponent:kBottomDividerOpacity];
 }
 
 - (void)applyThemeWithTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
