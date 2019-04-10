@@ -14,13 +14,13 @@
 
 #import "MDCTabs+MaterialTheming.h"
 
-#import <Foundation/Foundation.h>
+#import <CoreGraphics/CoreGraphics.h>
+#import <UIKit/UIKit.h>
 
 #import <MaterialComponents/MaterialColorScheme.h>
 #import <MaterialComponents/MaterialTypographyScheme.h>
 
-static const CGFloat kUnselectedTitleOpacity = (CGFloat)0.6;
-static const CGFloat kUnselectedImageOpacity = (CGFloat)0.6;
+static const CGFloat kUnselectedOpacity = (CGFloat)0.6;
 static const CGFloat kBottomDividerOpacity = (CGFloat)0.12;
 
 @implementation MDCTabBar (MaterialTheming)
@@ -33,9 +33,9 @@ static const CGFloat kBottomDividerOpacity = (CGFloat)0.12;
   [self applyThemeWithTypographyScheme:typographyScheme];
 }
 
-- (void)applySurfaceVariantThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme {
+- (void)applySurfaceThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme {
   id<MDCColorScheming> colorScheme = scheme.colorScheme;
-  [self applySurfaceVariantThemeWithColorScheme:colorScheme];
+  [self applySurfaceThemeWithColorScheme:colorScheme];
 
   id<MDCTypographyScheming> typographyScheme = scheme.typographyScheme;
   [self applyThemeWithTypographyScheme:typographyScheme];
@@ -47,24 +47,24 @@ static const CGFloat kBottomDividerOpacity = (CGFloat)0.12;
   [self setTitleColor:colorScheme.onPrimaryColor forState:MDCTabBarItemStateSelected];
   [self setImageTintColor:colorScheme.onPrimaryColor forState:MDCTabBarItemStateSelected];
   UIColor *unselectedTitleColor =
-      [colorScheme.onPrimaryColor colorWithAlphaComponent:kUnselectedTitleOpacity];
+      [colorScheme.onPrimaryColor colorWithAlphaComponent:kUnselectedOpacity];
   UIColor *unselectedImageColor =
-      [colorScheme.onPrimaryColor colorWithAlphaComponent:kUnselectedImageOpacity];
+      [colorScheme.onPrimaryColor colorWithAlphaComponent:kUnselectedOpacity];
   [self setTitleColor:unselectedTitleColor forState:MDCTabBarItemStateNormal];
   [self setImageTintColor:unselectedImageColor forState:MDCTabBarItemStateNormal];
   self.bottomDividerColor =
       [colorScheme.onPrimaryColor colorWithAlphaComponent:kBottomDividerOpacity];
 }
 
-- (void)applySurfaceVariantThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
+- (void)applySurfaceThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
   self.barTintColor = colorScheme.surfaceColor;
   self.tintColor = colorScheme.primaryColor;
   [self setTitleColor:colorScheme.primaryColor forState:MDCTabBarItemStateSelected];
   [self setImageTintColor:colorScheme.primaryColor forState:MDCTabBarItemStateSelected];
   UIColor *unselectedTitleColor =
-      [colorScheme.onSurfaceColor colorWithAlphaComponent:kUnselectedTitleOpacity];
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:kUnselectedOpacity];
   UIColor *unselectedImageColor =
-      [colorScheme.onSurfaceColor colorWithAlphaComponent:kUnselectedImageOpacity];
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:kUnselectedOpacity];
   [self setTitleColor:unselectedTitleColor forState:MDCTabBarItemStateNormal];
   [self setImageTintColor:unselectedImageColor forState:MDCTabBarItemStateNormal];
   self.bottomDividerColor =

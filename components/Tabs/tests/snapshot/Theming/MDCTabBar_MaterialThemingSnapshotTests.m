@@ -97,7 +97,7 @@ static NSString *const kItemBadgeValue = @"Badge";
 
 - (void)testTabBarSurfaceVariantTheme {
   // When
-  [self.tabBar applySurfaceVariantThemeWithScheme:self.containerScheme];
+  [self.tabBar applySurfaceThemeWithScheme:self.containerScheme];
   self.tabBar.frame = CGRectMake(0, 0, 250, 100);
   [self.tabBar sizeToFit];
 

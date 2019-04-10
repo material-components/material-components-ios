@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #import <MaterialComponents/MaterialTabs.h>
-#import <MaterialComponentsBeta/MaterialContainerScheme.h>
+#import "MaterialContainerScheme.h"
 
 /**
  This category is used to style MDCTabBar instances to a specific Material style which can be found
@@ -24,17 +24,15 @@
 /**
  Applies the Material primary style to an MDCTabBar instance.
 
- @param scheme A container scheme instance used for theming a MDCTabBar.
- system.
+ @param scheme A container scheme used for theming.
  */
 - (void)applyPrimaryThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
 
 /**
  Applies the Material surface themed style to an MDCTabBar instance.
 
- @param scheme A container scheme instance used for theming a MDCTabBAr.
- system.
+ @param scheme A container scheme used for theming.
  */
-- (void)applySurfaceVariantThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
+- (void)applySurfaceThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
 
 @end

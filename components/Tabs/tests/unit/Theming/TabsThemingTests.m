@@ -20,8 +20,7 @@
 #import "MaterialContainerScheme.h"
 #import "MaterialTabs+Theming.h"
 
-static const CGFloat kUnselectedTitleOpacity = (CGFloat)0.6;
-static const CGFloat kUnselectedImageOpacity = (CGFloat)0.6;
+static const CGFloat kUnselectedOpacity = (CGFloat)0.6;
 static const CGFloat kBottomDividerOpacity = (CGFloat)0.12;
 
 @interface MDCTabsThemingTest : XCTestCase
@@ -79,7 +78,7 @@ static const CGFloat kBottomDividerOpacity = (CGFloat)0.12;
 
 - (void)testTabBarSurfaceVariantThemingDefault {
   // When
-  [self.tabBar applySurfaceVariantThemeWithScheme:self.containerScheme];
+  [self.tabBar applySurfaceThemeWithScheme:self.containerScheme];
 
   // Then
   [self verifyTabBarSurfaceVariantTheming];
@@ -93,7 +92,7 @@ static const CGFloat kBottomDividerOpacity = (CGFloat)0.12;
   self.containerScheme.typographyScheme = self.typographyScheme;
 
   // When
-  [self.tabBar applySurfaceVariantThemeWithScheme:self.containerScheme];
+  [self.tabBar applySurfaceThemeWithScheme:self.containerScheme];
 
   // Then
   [self verifyTabBarSurfaceVariantTheming];
@@ -147,9 +146,9 @@ static const CGFloat kBottomDividerOpacity = (CGFloat)0.12;
   XCTAssertEqualObjects([self.tabBar imageTintColorForState:MDCTabBarItemStateSelected],
                         self.colorScheme.onPrimaryColor);
   UIColor *unselectedTitleColor =
-      [self.colorScheme.onPrimaryColor colorWithAlphaComponent:kUnselectedTitleOpacity];
+      [self.colorScheme.onPrimaryColor colorWithAlphaComponent:kUnselectedOpacity];
   UIColor *unselectedImageColor =
-      [self.colorScheme.onPrimaryColor colorWithAlphaComponent:kUnselectedImageOpacity];
+      [self.colorScheme.onPrimaryColor colorWithAlphaComponent:kUnselectedOpacity];
   XCTAssertEqualObjects([self.tabBar titleColorForState:MDCTabBarItemStateNormal],
                         unselectedTitleColor);
   XCTAssertEqualObjects([self.tabBar imageTintColorForState:MDCTabBarItemStateNormal],
@@ -172,9 +171,9 @@ static const CGFloat kBottomDividerOpacity = (CGFloat)0.12;
   XCTAssertEqualObjects([self.tabBar imageTintColorForState:MDCTabBarItemStateSelected],
                         self.colorScheme.primaryColor);
   UIColor *unselectedTitleColor =
-      [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kUnselectedTitleOpacity];
+      [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kUnselectedOpacity];
   UIColor *unselectedImageColor =
-      [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kUnselectedImageOpacity];
+      [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kUnselectedOpacity];
   XCTAssertEqualObjects([self.tabBar titleColorForState:MDCTabBarItemStateNormal],
                         unselectedTitleColor);
   XCTAssertEqualObjects([self.tabBar imageTintColorForState:MDCTabBarItemStateNormal],
