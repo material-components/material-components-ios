@@ -105,4 +105,26 @@ static NSString *const kItemBadgeValue = @"Badge";
   [self generateSnapshotAndVerifyForView:self.tabBar];
 }
 
+- (void)testTabBarPrimaryThemeWithImage {
+  // When
+  self.tabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;
+  [self.tabBar applyPrimaryThemeWithScheme:self.containerScheme];
+  self.tabBar.frame = CGRectMake(0, 0, 300, 100);
+  [self.tabBar sizeToFit];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBar];
+}
+
+- (void)testTabBarSurfaceVariantThemeWithImage {
+  // When
+  self.tabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;
+  [self.tabBar applySurfaceThemeWithScheme:self.containerScheme];
+  self.tabBar.frame = CGRectMake(0, 0, 300, 100);
+  [self.tabBar sizeToFit];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBar];
+}
+
 @end
