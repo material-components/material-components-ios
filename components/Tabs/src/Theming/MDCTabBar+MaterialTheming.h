@@ -22,14 +22,14 @@
 @interface MDCTabBar (MaterialTheming)
 
 /**
- Applies the Material Primary Style to an MDCTabBar receiver.
+ Applies the Material Primary Style to the receiver.
 
  @param scheme A container scheme used for theming.
  */
 - (void)applyPrimaryThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
 
 /**
- Applies the Material Surface Style to an MDCTabBar receiver.
+ Applies the Material Surface Style to the receiver.
 
  @param scheme A container scheme used for theming.
  */
