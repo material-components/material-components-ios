@@ -21,11 +21,11 @@
 #import "MaterialContainerScheme.h"
 
 @interface MDCInputTextFieldFilledPositioningDelegate
-    : MDCContainerStylerFilledPositioningDelegate <MDCContainedInputViewStylerPositioningDelegate>
+    : NSObject <MDCContainedInputViewStylerPositioningDelegate>
 @end
 
 @interface MDCInputTextFieldOutlinedPositioningDelegate
-    : MDCContainerStylerOutlinedPositioningDelegate <MDCContainedInputViewStylerPositioningDelegate>
+    : NSObject <MDCContainedInputViewStylerPositioningDelegate>
 @end
 
 /**

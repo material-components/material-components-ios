@@ -28,6 +28,7 @@ static const CGFloat kLayerAnimationDuration = (CGFloat)0.2;
 @end
 
 @interface MDCContainerStylerFilled () <CAAnimationDelegate>
+
 @property(strong, nonatomic) CAShapeLayer *filledSublayer;
 @property(strong, nonatomic) CAShapeLayer *thinUnderlineLayer;
 @property(strong, nonatomic) CAShapeLayer *thickUnderlineLayer;
@@ -43,21 +44,14 @@ static const CGFloat kLayerAnimationDuration = (CGFloat)0.2;
 
 @synthesize positioningDelegate = _positioningDelegate;
 
-- (instancetype)init {
-  self = [super init];
+- (instancetype)initWithPositioningDelegate:
+    (id<MDCContainedInputViewStylerPositioningDelegate>)positioningDelegate {
+  self = [super initWithPositioningDelegate:positioningDelegate];
   if (self) {
-    [self setUp];
+    _positioningDelegate = positioningDelegate;
+    [self setUpFilledSublayers];
   }
   return self;
-}
-
-- (void)setUp {
-  [self setUpPositioningDelegate];
-  [self setUpFilledSublayers];
-}
-
-- (void)setUpPositioningDelegate {
-  self.positioningDelegate = [[MDCContainerStylerFilledPositioningDelegate alloc] init];
 }
 
 - (void)setUpFilledSublayers {
@@ -446,13 +440,6 @@ static const CGFloat kLayerAnimationDuration = (CGFloat)0.2;
   return path;
 }
 
-- (id<MDCContainedInputViewStylerPositioningDelegate>)positioningDelegate {
-  if (_positioningDelegate) {
-    return _positioningDelegate;
-  }
-  return [[MDCContainerStylerFilledPositioningDelegate alloc] init];
-}
-
 + (NSString *)thinUnderlineShrinkKey {
   return @"thinUnderlineShrinkKey";
 }
@@ -464,20 +451,6 @@ static const CGFloat kLayerAnimationDuration = (CGFloat)0.2;
 }
 + (NSString *)thickUnderlineGrowKey {
   return @"thickUnderlineGrowKey";
-}
-
-@end
-
-@implementation MDCContainerStylerFilledPositioningDelegate
-
-- (CGFloat)floatingLabelMinYWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight {
-  CGFloat filledPlaceholderTopPaddingScaleHeuristic = ((CGFloat)50.0 / (CGFloat)70.0);
-  return filledPlaceholderTopPaddingScaleHeuristic * floatingPlaceholderHeight;
-}
-
-- (CGFloat)contentAreaTopPaddingFloatingPlaceholderWithFloatingPlaceholderMaxY:
-    (CGFloat)floatingPlaceholderMaxY {
-  return floatingPlaceholderMaxY + (CGFloat)6.5;
 }
 
 @end

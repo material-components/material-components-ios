@@ -20,12 +20,12 @@
 #import "MDCContainerStylerOutlined.h"
 #import "MaterialContainerScheme.h"
 
-@interface InputChipViewFilledPositioningDelegate
-    : MDCContainerStylerFilledPositioningDelegate <MDCContainedInputViewStylerPositioningDelegate>
+@interface InputChipViewOutlinedPositioningDelegate
+    : NSObject <MDCContainedInputViewStylerPositioningDelegate>
 @end
 
-@interface InputChipViewOutlinedPositioningDelegate
-    : MDCContainerStylerOutlinedPositioningDelegate <MDCContainedInputViewStylerPositioningDelegate>
+@interface InputChipViewFilledPositioningDelegate
+    : NSObject <MDCContainedInputViewStylerPositioningDelegate>
 @end
 
 /**

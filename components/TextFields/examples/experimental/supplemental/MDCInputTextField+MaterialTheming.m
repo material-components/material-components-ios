@@ -81,10 +81,10 @@
 }
 
 - (void)applyOutlinedThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
-  MDCContainerStylerOutlined *outlinedStyle = [[MDCContainerStylerOutlined alloc] init];
   MDCInputTextFieldOutlinedPositioningDelegate *positioningDelegate =
       [[MDCInputTextFieldOutlinedPositioningDelegate alloc] init];
-  outlinedStyle.positioningDelegate = positioningDelegate;
+  MDCContainerStylerOutlined *outlinedStyle =
+      [[MDCContainerStylerOutlined alloc] initWithPositioningDelegate:positioningDelegate];
   self.containerStyler = outlinedStyle;
 
   [self applyTypographySchemeWith:containerScheme];
@@ -126,10 +126,10 @@
 }
 
 - (void)applyFilledThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
-  MDCContainerStylerFilled *filledStyle = [[MDCContainerStylerFilled alloc] init];
   MDCInputTextFieldFilledPositioningDelegate *positioningDelegate =
       [[MDCInputTextFieldFilledPositioningDelegate alloc] init];
-  filledStyle.positioningDelegate = positioningDelegate;
+  MDCContainerStylerFilled *filledStyle =
+      [[MDCContainerStylerFilled alloc] initWithPositioningDelegate:positioningDelegate];
   self.containerStyler = filledStyle;
 
   [self applyTypographySchemeWith:containerScheme];
@@ -268,6 +268,7 @@
 //@end
 
 @implementation MDCInputTextFieldFilledPositioningDelegate
+@synthesize verticalDensity = _verticalDensity;
 
 - (CGFloat)floatingLabelMinYWithFloatingLabelHeight:(CGFloat)floatingPlaceholderHeight {
   CGFloat lowestMinY = 4;
@@ -294,6 +295,7 @@
 @end
 
 @implementation MDCInputTextFieldOutlinedPositioningDelegate
+@synthesize verticalDensity = _verticalDensity;
 
 - (CGFloat)floatingLabelMinYWithFloatingLabelHeight:(CGFloat)floatingPlaceholderHeight {
   return (CGFloat)0 - ((CGFloat)0.5 * floatingPlaceholderHeight);

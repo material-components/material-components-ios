@@ -202,6 +202,7 @@ static const NSUInteger kDefaultVerticalPadding = 20;
 - (MDCInputTextField *)createFilledTextField {
   MDCInputTextField *textField = [[MDCInputTextField alloc] init];
   [textField applyFilledThemeWithScheme:self.containerScheme];
+  textField.containerStyler.positioningDelegate.verticalDensity = 0.5;
   textField.mdc_adjustsFontForContentSizeCategory = YES;
   textField.placeholder = @"555-555-5555";
   textField.floatingLabel.text = @"Phone number";
@@ -226,6 +227,7 @@ static const NSUInteger kDefaultVerticalPadding = 20;
 - (MDCInputTextField *)createOutlinedTextField {
   MDCInputTextField *textField = [[MDCInputTextField alloc] init];
   [textField applyOutlinedThemeWithScheme:self.containerScheme];
+  textField.containerStyler.positioningDelegate.verticalDensity = 0.5;
   //  textField.placeholder = @"This is a placeholder";
   //  textField.floatingLabel.text = @"This is a floating label";
   textField.placeholder = @"555-555-5555";

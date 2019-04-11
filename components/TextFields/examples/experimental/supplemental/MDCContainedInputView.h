@@ -248,11 +248,12 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
 @protocol MDCContainedInputViewStylerPositioningDelegate;
 
 @protocol MDCContainedInputViewStyler <NSObject>
+
 /**
  The style's positioningDelegate. Different implementations of MDCContainedInputView may need
  different vertical positioning delegates for different stylers.
  */
-@property(strong, nonatomic, nonnull) id<MDCContainedInputViewStylerPositioningDelegate>
+@property(strong, nonatomic, nonnull, readonly) id<MDCContainedInputViewStylerPositioningDelegate>
     positioningDelegate;
 /**
  This method provides a default object conforming to MDCContainedInputViewColorScheming.
@@ -283,7 +284,7 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
  helps achieve the variations in floating label position across the filled and outlined styles as
  well as the general density of the views.
  */
-@protocol MDCContainedInputViewStylerPositioningDelegate <NSObject>
+@protocol MDCContainedInputViewStylerPositioningDelegate  // <NSObject>
 /**
  This is a value between 0 and 1 that determines the visual vertical density of the view.
  */
@@ -308,7 +309,8 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
  A base implementation of MDCContainedInputViewStyler.
  */
 @interface MDCContainerStylerBase : NSObject <MDCContainedInputViewStyler>
-- (nonnull instancetype)init NS_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithPositioningDelegate:
+    (nonnull id<MDCContainedInputViewStylerPositioningDelegate>)positioningDelegate;
 @end
 
 /**

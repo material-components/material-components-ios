@@ -23,6 +23,6 @@
 @interface MDCContainerStylerOutlined : MDCContainerStylerBase <MDCContainedInputViewStyler>
 @end
 
-@interface MDCContainerStylerOutlinedPositioningDelegate
-    : MDCContainerStylerBasePositioningDelegate <MDCContainedInputViewStylerPositioningDelegate>
-@end
+//@interface MDCContainerStylerOutlinedPositioningDelegate
+//    : MDCContainerStylerBasePositioningDelegate <MDCContainedInputViewStylerPositioningDelegate>
+//@end

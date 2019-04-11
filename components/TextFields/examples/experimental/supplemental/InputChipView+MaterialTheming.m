@@ -81,8 +81,10 @@
 }
 
 - (void)applyOutlinedThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
-  MDCContainerStylerOutlined *outlinedStyle = [[MDCContainerStylerOutlined alloc] init];
-  outlinedStyle.positioningDelegate = [[InputChipViewOutlinedPositioningDelegate alloc] init];
+  InputChipViewOutlinedPositioningDelegate *positioningDelegate =
+      [[InputChipViewOutlinedPositioningDelegate alloc] init];
+  MDCContainerStylerOutlined *outlinedStyle =
+      [[MDCContainerStylerOutlined alloc] initWithPositioningDelegate:positioningDelegate];
   self.containerStyler = outlinedStyle;
 
   [self applyTypographySchemeWith:containerScheme];
@@ -124,9 +126,11 @@
 }
 
 - (void)applyFilledThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
-  MDCContainerStylerFilled *filledStyle = [[MDCContainerStylerFilled alloc] init];
+  InputChipViewFilledPositioningDelegate *positioningDelegate =
+      [[InputChipViewFilledPositioningDelegate alloc] init];
+  MDCContainerStylerFilled *filledStyle =
+      [[MDCContainerStylerFilled alloc] initWithPositioningDelegate:positioningDelegate];
   self.containerStyler = filledStyle;
-  self.containerStyler.positioningDelegate = [[InputChipViewFilledPositioningDelegate alloc] init];
 
   [self applyTypographySchemeWith:containerScheme];
 
@@ -262,6 +266,7 @@
 @end
 
 @implementation InputChipViewFilledPositioningDelegate
+@synthesize verticalDensity = _verticalDensity;
 
 - (CGFloat)floatingLabelMinYWithFloatingLabelHeight:(CGFloat)floatingPlaceholderHeight {
   CGFloat lowestMinY = 4;
@@ -288,6 +293,7 @@
 @end
 
 @implementation InputChipViewOutlinedPositioningDelegate
+@synthesize verticalDensity = _verticalDensity;
 
 - (CGFloat)floatingLabelMinYWithFloatingLabelHeight:(CGFloat)floatingPlaceholderHeight {
   return (CGFloat)0 - ((CGFloat)0.5 * floatingPlaceholderHeight);
@@ -296,7 +302,7 @@
 - (CGFloat)contentAreaTopPaddingFloatingLabelWithFloatingLabelMaxY:
     (CGFloat)floatingPlaceholderMaxY {
   CGFloat minYAddition = 3;
-  CGFloat maxYAddition = 15;
+  CGFloat maxYAddition = 10;
   CGFloat difference = maxYAddition - minYAddition;
   return floatingPlaceholderMaxY + (minYAddition + (difference * (1 - self.verticalDensity)));
 }

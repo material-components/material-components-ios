@@ -35,9 +35,11 @@ static const CGFloat kFloatingLabelOutlineSidePadding = (CGFloat)5.0;
 @implementation MDCContainerStylerOutlined
 @synthesize positioningDelegate = _positioningDelegate;
 
-- (instancetype)init {
-  self = [super init];
+- (instancetype)initWithPositioningDelegate:
+    (id<MDCContainedInputViewStylerPositioningDelegate>)positioningDelegate {
+  self = [super initWithPositioningDelegate:positioningDelegate];
   if (self) {
+    _positioningDelegate = positioningDelegate;
     [self setUpOutlineSublayer];
   }
   return self;
@@ -192,26 +194,6 @@ static const CGFloat kFloatingLabelOutlineSidePadding = (CGFloat)5.0;
       break;
   }
   return defaultLineWidth;
-}
-
-- (id<MDCContainedInputViewStylerPositioningDelegate>)positioningDelegate {
-  if (_positioningDelegate) {
-    return _positioningDelegate;
-  }
-  return [[MDCContainerStylerOutlinedPositioningDelegate alloc] init];
-}
-
-@end
-
-@implementation MDCContainerStylerOutlinedPositioningDelegate
-
-- (CGFloat)floatingLabelMinYWithFloatingLabelHeight:(CGFloat)floatingPlaceholderHeight {
-  return (CGFloat)0 - ((CGFloat)0.5 * floatingPlaceholderHeight);
-}
-
-- (CGFloat)contentAreaTopPaddingFloatingLabelWithFloatingLabelMaxY:
-    (CGFloat)floatingPlaceholderMaxY {
-  return [self contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:floatingPlaceholderMaxY];
 }
 
 @end

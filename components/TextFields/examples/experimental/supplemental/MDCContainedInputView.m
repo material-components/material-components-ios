@@ -48,22 +48,13 @@
 @implementation MDCContainerStylerBase
 @synthesize positioningDelegate = _positioningDelegate;
 
-#pragma mark Object Lifecycle
-
-- (instancetype)init {
+- (instancetype)initWithPositioningDelegate:
+    (id<MDCContainedInputViewStylerPositioningDelegate>)positioningDelegate {
   self = [super init];
   if (self) {
-    [self setUp];
+    _positioningDelegate = positioningDelegate;
   }
   return self;
-}
-
-- (void)setUp {
-  [self setUpPositioningDelegate];
-}
-
-- (void)setUpPositioningDelegate {
-  self.positioningDelegate = [[MDCContainerStylerBasePositioningDelegate alloc] init];
 }
 
 - (id<MDCContainedInputViewColorScheming>)defaultColorSchemeForState:
@@ -108,20 +99,6 @@
 - (void)removeStyleFrom:(id<MDCContainedInputView>)containedInputView {
 }
 
-#pragma mark Accessors
-
-- (void)setPositioningDelegate:
-    (id<MDCContainedInputViewStylerPositioningDelegate>)positioningDelegate {
-  _positioningDelegate = positioningDelegate;
-}
-
-- (id<MDCContainedInputViewStylerPositioningDelegate>)positioningDelegate {
-  if (_positioningDelegate) {
-    return _positioningDelegate;
-  }
-  return [[MDCContainerStylerBasePositioningDelegate alloc] init];
-}
-
 - (CGFloat)floatingFontSizeScaleFactor {
   return 0.75;
 }
@@ -152,8 +129,6 @@
 }
 
 @end
-
-// static const CGFloat kFloatingLabelAnimationVelocityInPointsPerSecond = (CGFloat)200;
 
 @interface MDCContainedInputViewFloatingLabelManager ()
 @end
