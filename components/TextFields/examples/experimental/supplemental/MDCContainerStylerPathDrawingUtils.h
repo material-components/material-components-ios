@@ -15,7 +15,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@interface MDCContainerStylePathDrawingUtils : NSObject
+@interface MDCContainerStylerPathDrawingUtils : NSObject
 
 + (void)addTopRightCornerToPath:(UIBezierPath *)path
                       fromPoint:(CGPoint)point1

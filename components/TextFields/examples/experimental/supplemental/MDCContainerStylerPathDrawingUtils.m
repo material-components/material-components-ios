@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCContainerStylePathDrawingUtils.h"
+#import "MDCContainerStylerPathDrawingUtils.h"
 
 #import "MaterialMath.h"
 
-@implementation MDCContainerStylePathDrawingUtils
+@implementation MDCContainerStylerPathDrawingUtils
 
 + (void)addTopRightCornerToPath:(UIBezierPath *)path
                       fromPoint:(CGPoint)point1

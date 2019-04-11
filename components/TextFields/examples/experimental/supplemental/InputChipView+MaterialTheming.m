@@ -17,8 +17,8 @@
 #import <Foundation/Foundation.h>
 
 #import "MDCContainedInputView.h"
-#import "MDCContainerStyleFilled.h"
-#import "MDCContainerStyleOutlined.h"
+#import "MDCContainerStylerFilled.h"
+#import "MDCContainerStylerOutlined.h"
 
 @implementation InputChipView (MaterialTheming)
 
@@ -47,27 +47,27 @@
 
 - (void)applyMDCColorScheming:(id<MDCColorScheming>)mdcColorScheming {
   MDCContainedInputViewColorScheme *normalColorScheme =
-      [self.containerStyle defaultColorSchemeForState:MDCContainedInputViewStateNormal];
+      [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateNormal];
   [self setContainedInputViewColorScheming:normalColorScheme
                                   forState:MDCContainedInputViewStateNormal];
 
   MDCContainedInputViewColorScheme *focusedColorScheme =
-      [self.containerStyle defaultColorSchemeForState:MDCContainedInputViewStateFocused];
+      [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateFocused];
   [self setContainedInputViewColorScheming:focusedColorScheme
                                   forState:MDCContainedInputViewStateFocused];
 
   MDCContainedInputViewColorScheme *activatedColorScheme =
-      [self.containerStyle defaultColorSchemeForState:MDCContainedInputViewStateActivated];
+      [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateActivated];
   [self setContainedInputViewColorScheming:activatedColorScheme
                                   forState:MDCContainedInputViewStateActivated];
 
   MDCContainedInputViewColorScheme *erroredColorScheme =
-      [self.containerStyle defaultColorSchemeForState:MDCContainedInputViewStateErrored];
+      [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateErrored];
   [self setContainedInputViewColorScheming:erroredColorScheme
                                   forState:MDCContainedInputViewStateErrored];
 
   MDCContainedInputViewColorScheme *disabledColorScheme =
-      [self.containerStyle defaultColorSchemeForState:MDCContainedInputViewStateDisabled];
+      [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateDisabled];
   [self setContainedInputViewColorScheming:disabledColorScheme
                                   forState:MDCContainedInputViewStateDisabled];
 
@@ -81,9 +81,11 @@
 }
 
 - (void)applyOutlinedThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
-  MDCContainerStyleOutlined *outlinedStyle = [[MDCContainerStyleOutlined alloc] init];
-  outlinedStyle.densityInformer = [[InputChipViewOutlinedDensityInformer alloc] init];
-  self.containerStyle = outlinedStyle;
+  InputChipViewOutlinedPositioningDelegate *positioningDelegate =
+      [[InputChipViewOutlinedPositioningDelegate alloc] init];
+  MDCContainerStylerOutlined *outlinedStyle =
+      [[MDCContainerStylerOutlined alloc] initWithPositioningDelegate:positioningDelegate];
+  self.containerStyler = outlinedStyle;
 
   [self applyTypographySchemeWith:containerScheme];
 
@@ -124,9 +126,11 @@
 }
 
 - (void)applyFilledThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
-  MDCContainerStyleFilled *filledStyle = [[MDCContainerStyleFilled alloc] init];
-  self.containerStyle = filledStyle;
-  self.containerStyle.densityInformer = [[InputChipViewFilledDensityInformer alloc] init];
+  InputChipViewFilledPositioningDelegate *positioningDelegate =
+      [[InputChipViewFilledPositioningDelegate alloc] init];
+  MDCContainerStylerFilled *filledStyle =
+      [[MDCContainerStylerFilled alloc] initWithPositioningDelegate:positioningDelegate];
+  self.containerStyler = filledStyle;
 
   [self applyTypographySchemeWith:containerScheme];
 
@@ -172,8 +176,9 @@
   UIColor *textColor = colorScheming.onSurfaceColor;
   UIColor *underlineLabelColor =
       [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
-  UIColor *placeholderLabelColor =
+  UIColor *floatingLabelColor =
       [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
+  UIColor *placeholderColor = floatingLabelColor;
   UIColor *outlineColor = colorScheming.onSurfaceColor;
   UIColor *clearButtonTintColor =
       [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.20];
@@ -184,29 +189,30 @@
     case MDCContainedInputViewStateActivated:
       break;
     case MDCContainedInputViewStateDisabled:
-      placeholderLabelColor = [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.10];
+      floatingLabelColor = [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.10];
       break;
     case MDCContainedInputViewStateErrored:
-      placeholderLabelColor = colorScheming.errorColor;
+      floatingLabelColor = colorScheming.errorColor;
       underlineLabelColor = colorScheming.errorColor;
       outlineColor = colorScheming.errorColor;
       break;
     case MDCContainedInputViewStateFocused:
       outlineColor = colorScheming.primaryColor;
-      placeholderLabelColor = colorScheming.primaryColor;
+      floatingLabelColor = colorScheming.primaryColor;
       break;
     default:
       break;
   }
 
-  MDCContainedInputViewColorSchemeOutlined *simpleTextFieldColorScheme =
+  MDCContainedInputViewColorSchemeOutlined *colorScheme =
       [[MDCContainedInputViewColorSchemeOutlined alloc] init];
-  simpleTextFieldColorScheme.textColor = textColor;
-  simpleTextFieldColorScheme.underlineLabelColor = underlineLabelColor;
-  simpleTextFieldColorScheme.outlineColor = outlineColor;
-  simpleTextFieldColorScheme.placeholderLabelColor = placeholderLabelColor;
-  simpleTextFieldColorScheme.clearButtonTintColor = clearButtonTintColor;
-  return simpleTextFieldColorScheme;
+  colorScheme.textColor = textColor;
+  colorScheme.underlineLabelColor = underlineLabelColor;
+  colorScheme.outlineColor = outlineColor;
+  colorScheme.floatingLabelColor = floatingLabelColor;
+  colorScheme.clearButtonTintColor = clearButtonTintColor;
+  colorScheme.placeholderColor = placeholderColor;
+  return colorScheme;
 }
 
 - (MDCContainedInputViewColorSchemeFilled *)
@@ -215,9 +221,10 @@
   UIColor *textColor = colorScheming.onSurfaceColor;
   UIColor *underlineLabelColor =
       [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
-  UIColor *placeholderLabelColor =
+  UIColor *floatingLabelColor =
       [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
-  UIColor *filledSublayerUnderlineFillColor = colorScheming.onSurfaceColor;
+  UIColor *thinUnderlineFillColor = colorScheming.onBackgroundColor;
+  UIColor *thickUnderlineFillColor = colorScheming.primaryColor;
   UIColor *filledSublayerFillColor =
       [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.15];
   UIColor *clearButtonTintColor =
@@ -229,43 +236,79 @@
     case MDCContainedInputViewStateActivated:
       break;
     case MDCContainedInputViewStateDisabled:
-      placeholderLabelColor = [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.10];
+      floatingLabelColor = [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.10];
       break;
     case MDCContainedInputViewStateErrored:
-      placeholderLabelColor = colorScheming.errorColor;
+      floatingLabelColor = colorScheming.errorColor;
       underlineLabelColor = colorScheming.errorColor;
-      filledSublayerUnderlineFillColor = colorScheming.errorColor;
+      thinUnderlineFillColor = colorScheming.errorColor;
+      thickUnderlineFillColor = colorScheming.errorColor;
       break;
     case MDCContainedInputViewStateFocused:
-      placeholderLabelColor = colorScheming.primaryColor;
-      filledSublayerUnderlineFillColor = colorScheming.primaryColor;
+      floatingLabelColor = colorScheming.primaryColor;
       break;
     default:
       break;
   }
 
-  MDCContainedInputViewColorSchemeFilled *simpleTextFieldColorScheme =
+  MDCContainedInputViewColorSchemeFilled *colorScheme =
       [[MDCContainedInputViewColorSchemeFilled alloc] init];
-  simpleTextFieldColorScheme.textColor = textColor;
-  simpleTextFieldColorScheme.filledSublayerFillColor = filledSublayerFillColor;
-  simpleTextFieldColorScheme.filledSublayerUnderlineFillColor = filledSublayerUnderlineFillColor;
-  simpleTextFieldColorScheme.underlineLabelColor = underlineLabelColor;
-  simpleTextFieldColorScheme.placeholderLabelColor = placeholderLabelColor;
-  simpleTextFieldColorScheme.clearButtonTintColor = clearButtonTintColor;
-  return simpleTextFieldColorScheme;
+  colorScheme.textColor = textColor;
+  colorScheme.filledSublayerFillColor = filledSublayerFillColor;
+  colorScheme.thickUnderlineFillColor = thickUnderlineFillColor;
+  colorScheme.thinUnderlineFillColor = thinUnderlineFillColor;
+  colorScheme.underlineLabelColor = underlineLabelColor;
+  colorScheme.floatingLabelColor = floatingLabelColor;
+  colorScheme.clearButtonTintColor = clearButtonTintColor;
+  return colorScheme;
 }
 
 @end
 
-@implementation InputChipViewFilledDensityInformer
+@implementation InputChipViewFilledPositioningDelegate
+@synthesize verticalDensity = _verticalDensity;
+
+- (CGFloat)floatingLabelMinYWithFloatingLabelHeight:(CGFloat)floatingPlaceholderHeight {
+  CGFloat lowestMinY = 4;
+  CGFloat highestMinY = 15;
+  CGFloat difference = highestMinY - lowestMinY;
+  return lowestMinY + (difference * (1 - self.verticalDensity));
+}
+
+- (CGFloat)contentAreaTopPaddingFloatingLabelWithFloatingLabelMaxY:
+    (CGFloat)floatingPlaceholderMaxY {
+  CGFloat minYAddition = 3;
+  CGFloat maxYAddition = 8;
+  CGFloat difference = maxYAddition - minYAddition;
+  return floatingPlaceholderMaxY + (minYAddition + (difference * (1 - self.verticalDensity)));
+}
+
+- (CGFloat)contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:(CGFloat)floatingPlaceholderMaxY {
+  CGFloat minYAddition = 10;
+  CGFloat maxYAddition = 15;
+  CGFloat difference = maxYAddition - minYAddition;
+  return minYAddition + (difference * (1 - self.verticalDensity));
+}
 
 @end
 
-@implementation InputChipViewOutlinedDensityInformer
-- (CGFloat)normalContentAreaTopPadding {
-  return 12;
+@implementation InputChipViewOutlinedPositioningDelegate
+@synthesize verticalDensity = _verticalDensity;
+
+- (CGFloat)floatingLabelMinYWithFloatingLabelHeight:(CGFloat)floatingPlaceholderHeight {
+  return (CGFloat)0 - ((CGFloat)0.5 * floatingPlaceholderHeight);
 }
-- (CGFloat)normalContentAreaBottomPadding {
-  return 12;
+
+- (CGFloat)contentAreaTopPaddingFloatingLabelWithFloatingLabelMaxY:
+    (CGFloat)floatingPlaceholderMaxY {
+  CGFloat minYAddition = 3;
+  CGFloat maxYAddition = 10;
+  CGFloat difference = maxYAddition - minYAddition;
+  return floatingPlaceholderMaxY + (minYAddition + (difference * (1 - self.verticalDensity)));
 }
+
+- (CGFloat)contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:(CGFloat)floatingPlaceholderMaxY {
+  return [self contentAreaTopPaddingFloatingLabelWithFloatingLabelMaxY:floatingPlaceholderMaxY];
+}
+
 @end

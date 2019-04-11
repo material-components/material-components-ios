@@ -97,7 +97,7 @@ extension SimpleTextFieldStoryboardExampleViewController {
 extension SimpleTextFieldStoryboardExampleViewController {
   class func catalogMetadata() -> [String: Any] {
     return [
-      "breadcrumbs": ["Text Field", "Simple Text Field (Storyboard)"],
+      "breadcrumbs": ["Text Field", "Input Text Field (Storyboard)"],
       "description": "Text fields let users enter and edit text.",
       "primaryDemo": false,
       "presentable": false,
