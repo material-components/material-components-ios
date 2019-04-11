@@ -645,7 +645,7 @@
   // Then
   MDCBottomDrawerPresentationController *presentationController =
       (MDCBottomDrawerPresentationController *)self.drawerViewController.presentationController;
-  XCTAssertEqualWithAccuracy(500, presentationController.maximumInitialDrawerHeight, 0.001);
+  XCTAssertEqualWithAccuracy(presentationController.maximumInitialDrawerHeight, 500, 0.001);
 }
 
 - (void)testInitialDrawerHeight {
@@ -654,6 +654,20 @@
   self.fakeBottomDrawer.maximumInitialDrawerHeight = 320;
   self.fakeBottomDrawer.originalPresentingViewController.view.bounds = fakeRect;
   self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(250, 1000);
+
+  // When
+  CGFloat drawerHeight = [self.fakeBottomDrawer calculateMaximumInitialDrawerHeight];
+
+  // Then
+  XCTAssertEqualWithAccuracy(drawerHeight, 320, 0.001);
+}
+
+- (void)testInitialDrawerHeightWithMaximalHeightBiggerThanPreferredContentSize {
+  // Given
+  CGRect fakeRect = CGRectMake(0, 0, 250, 500);
+  self.fakeBottomDrawer.maximumInitialDrawerHeight = 1000;
+  self.fakeBottomDrawer.originalPresentingViewController.view.bounds = fakeRect;
+  self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(250, 320);
 
   // When
   CGFloat drawerHeight = [self.fakeBottomDrawer calculateMaximumInitialDrawerHeight];
