@@ -25,4 +25,23 @@
   XCTAssertTrue(YES);
 }
 
+- (void)testBottomSheetDefaults {
+  // Given
+  MDCBottomSheetController *bottomSheet = [[MDCBottomSheetController alloc] init];
+
+  // Then
+  XCTAssertFalse(bottomSheet.showScrollIndicatorsByDefault);
+}
+
+- (void)testSetShowScrollIndicatorsResultsInCorrectValue {
+  // Given
+  MDCBottomSheetController *bottomSheet = [[MDCBottomSheetController alloc] init];
+
+  // When
+  bottomSheet.showScrollIndicatorsByDefault = YES;
+
+  // Then
+  XCTAssertTrue(bottomSheet.showScrollIndicatorsByDefault);
+}
+
 @end
