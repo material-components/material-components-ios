@@ -507,7 +507,7 @@ static UIColor *DrawerShadowColor(void) {
     [self cacheLayoutCalculations];
   }
   CGFloat totalHeight = self.headerViewController.preferredContentSize.height +
-      _contentVCPreferredContentSizeHeightCached;
+                        _contentVCPreferredContentSizeHeightCached;
   const CGFloat maximumInitialHeight = _maximumInitialDrawerHeight;
   if (totalHeight > maximumInitialHeight) {
     totalHeight = maximumInitialHeight;
@@ -745,8 +745,8 @@ static UIColor *DrawerShadowColor(void) {
   if (_contentHeaderTopInset == NSNotFound) {
     // The content header top inset is only set once.
     if (contentScrollsToReveal || _shouldPresentAtFullscreen) {
-      _contentHeaderTopInset = MIN(containerHeight,
-                                   containerHeight - self.maximumInitialDrawerHeight);
+      _contentHeaderTopInset =
+          MIN(containerHeight, containerHeight - self.maximumInitialDrawerHeight);
       // In some cases, the contentHeaderTopInset calculation above which decides the
       // drawer's initial offset will not align with the content offset UIKit provides
       // for the scrollView, and there may be a slight delta between both numbers.
