@@ -80,6 +80,16 @@ mdc_extension_objc_library(
     ],
 )
 
+mdc_extension_objc_library(
+    name = "Theming",
+    deps = [
+        ":Tabs",
+        "//components/schemes/Container",
+        "//components/schemes/Color",
+        "//components/schemes/Typography",
+    ],
+)
+
 mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
@@ -144,17 +154,38 @@ mdc_objc_library(
     ],
 )
 
+mdc_objc_library(
+    name = "unit_test_theming_sources",
+    testonly = 1,
+    srcs = native.glob([
+        "tests/unit/Theming/*.m",
+    ]),
+    sdk_frameworks = [
+        "XCTest",
+    ],
+    deps = [
+        ":Tabs",
+        ":Theming",
+        "//components/schemes/Container",
+        "//components/schemes/Color",
+        "//components/schemes/Typography",
+    ],
+)
+
 mdc_unit_test_suite(
     name = "unit_tests",
     deps = [
         ":unit_test_sources",
+        ":unit_test_theming_sources",
     ],
 )
 
 mdc_snapshot_objc_library(
     name = "snapshot_test_lib",
+    extra_srcs = native.glob(["tests/snapshot/Theming/*.m"]),
     deps = [
         ":Tabs",
+        ":Theming",
     ],
 )
 
