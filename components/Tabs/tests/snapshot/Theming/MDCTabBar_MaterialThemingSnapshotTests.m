@@ -74,6 +74,7 @@ static NSString *const kItemBadgeValue = @"Badge";
   self.item1 = nil;
   self.item2 = nil;
   self.item3 = nil;
+  self.containerScheme = nil;
 
   [super tearDown];
 }
@@ -83,7 +84,7 @@ static NSString *const kItemBadgeValue = @"Badge";
   [self snapshotVerifyView:snapshotView];
 }
 
-#pragma mark - Alignment tests
+#pragma mark - Theme tests
 
 - (void)testTabBarPrimaryTheme {
   // When

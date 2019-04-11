@@ -20,7 +20,8 @@
 #import "MaterialContainerScheme.h"
 #import "MaterialTabs+Theming.h"
 
-static const CGFloat kUnselectedOpacity = (CGFloat)0.6;
+static const CGFloat kPrimaryThemeUnselectedOpacity = (CGFloat)0.74;
+static const CGFloat kSurfaceThemeUnselectedOpacity = (CGFloat)0.74;
 
 @interface MDCTabsThemingTest : XCTestCase
 @property(nonatomic, strong) MDCTabBar *tabBar;
@@ -145,9 +146,9 @@ static const CGFloat kUnselectedOpacity = (CGFloat)0.6;
   XCTAssertEqualObjects([self.tabBar imageTintColorForState:MDCTabBarItemStateSelected],
                         self.colorScheme.onPrimaryColor);
   UIColor *unselectedTitleColor =
-      [self.colorScheme.onPrimaryColor colorWithAlphaComponent:kUnselectedOpacity];
+      [self.colorScheme.onPrimaryColor colorWithAlphaComponent:kPrimaryThemeUnselectedOpacity];
   UIColor *unselectedImageColor =
-      [self.colorScheme.onPrimaryColor colorWithAlphaComponent:kUnselectedOpacity];
+      [self.colorScheme.onPrimaryColor colorWithAlphaComponent:kPrimaryThemeUnselectedOpacity];
   XCTAssertEqualObjects([self.tabBar titleColorForState:MDCTabBarItemStateNormal],
                         unselectedTitleColor);
   XCTAssertEqualObjects([self.tabBar imageTintColorForState:MDCTabBarItemStateNormal],
@@ -167,9 +168,9 @@ static const CGFloat kUnselectedOpacity = (CGFloat)0.6;
   XCTAssertEqualObjects([self.tabBar imageTintColorForState:MDCTabBarItemStateSelected],
                         self.colorScheme.primaryColor);
   UIColor *unselectedTitleColor =
-      [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kUnselectedOpacity];
+      [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kSurfaceThemeUnselectedOpacity];
   UIColor *unselectedImageColor =
-      [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kUnselectedOpacity];
+      [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kSurfaceThemeUnselectedOpacity];
   XCTAssertEqualObjects([self.tabBar titleColorForState:MDCTabBarItemStateNormal],
                         unselectedTitleColor);
   XCTAssertEqualObjects([self.tabBar imageTintColorForState:MDCTabBarItemStateNormal],

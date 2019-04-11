@@ -88,7 +88,6 @@ mdc_extension_objc_library(
         "//components/schemes/Color",
         "//components/schemes/Typography",
     ],
-
 )
 
 mdc_examples_objc_library(
