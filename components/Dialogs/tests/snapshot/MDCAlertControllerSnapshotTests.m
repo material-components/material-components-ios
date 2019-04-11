@@ -61,7 +61,7 @@ static NSString *const kMessageLongArabic =
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  //  self.recordMode = YES;
+    self.recordMode = YES;
 
   self.actionHigh = [MDCAlertAction actionWithTitle:@"High"
                                            emphasis:MDCActionEmphasisHigh
@@ -91,7 +91,8 @@ static NSString *const kMessageLongArabic =
 }
 
 - (void)generateSnapshotAndVerifyForView:(UIView *)view {
-  view.bounds = CGRectMake(0, 0, 300, 300);
+  CGSize preferredContentSize = self.alertController.preferredContentSize;
+  view.bounds = CGRectMake(0, 0, preferredContentSize.width, preferredContentSize.height);
   [view layoutIfNeeded];
 
   UIView *snapshotView = [view mdc_addToBackgroundView];
