@@ -16,14 +16,13 @@
 
 #import "MDCContainedInputView.h"
 
-@interface MDCContainedInputViewColorSchemeFilled : MDCContainedInputViewColorScheme
-@property(strong, nonatomic) UIColor *filledSublayerFillColor;
-@property(strong, nonatomic) UIColor *filledSublayerUnderlineFillColor;
+@interface MDCContainedInputViewColorSchemeOutlined : MDCContainedInputViewColorScheme
+@property(strong, nonatomic) UIColor *outlineColor;
 @end
 
-@interface MDCContainerStyleFilledDensityInformer
-    : MDCContainerStyleBaseDensityInformer <MDCContainedInputViewStyleDensityInforming>
+@interface MDCContainerStylerOutlined : MDCContainerStylerBase <MDCContainedInputViewStyler>
 @end
 
-@interface MDCContainerStyleFilled : MDCContainerStyleBase <MDCContainedInputViewStyle>
-@end
+//@interface MDCContainerStylerOutlinedPositioningDelegate
+//    : MDCContainerStylerBasePositioningDelegate <MDCContainedInputViewStylerPositioningDelegate>
+//@end
