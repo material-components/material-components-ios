@@ -53,7 +53,7 @@
   _topCornersRadius[@(MDCBottomDrawerStateCollapsed)] = @(0);
   _maskLayer = [[MDCBottomDrawerHeaderMask alloc] initWithMaximumCornerRadius:0
                                                           minimumCornerRadius:0];
-  _maximumInitialDrawerHeightFactor = 0.5;
+  _maximumInitialDrawerHeight = 0;
 }
 
 - (void)viewWillLayoutSubviews {
@@ -167,13 +167,12 @@
   }
 }
 
-- (void)setMaximumInitialDrawerHeightFactor:(CGFloat)maximumInitialDrawerHeightFactor {
-  _maximumInitialDrawerHeightFactor = maximumInitialDrawerHeightFactor;
+- (void)setMaximumInitialDrawerHeight:(CGFloat)maximumInitialDrawerHeight {
+  _maximumInitialDrawerHeight = maximumInitialDrawerHeight;
   if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
     MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
         (MDCBottomDrawerPresentationController *)self.presentationController;
-    bottomDrawerPresentationController.maximumInitialDrawerHeightFactor =
-        maximumInitialDrawerHeightFactor;
+    bottomDrawerPresentationController.maximumInitialDrawerHeight = maximumInitialDrawerHeight;
   }
 }
 

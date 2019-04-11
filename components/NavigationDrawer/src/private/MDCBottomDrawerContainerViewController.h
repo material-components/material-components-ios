@@ -121,13 +121,14 @@
 @property(nonatomic, assign) CGFloat addedHeight;
 
 /**
- The height of the drawer at initial layout. This value is a percentage between 0-100% (0-1).
- - 1 or 100% indicates the drawer is full screen.
- - 0 or 0% indicates that drawer if hidden.
+ The height of the drawer at initial layout. This is an absolute point-based value.
 
- @note In voiceover and landscape this value will be 1.
+ Defaults to 50% of the screens height.
+
+ @note In VoiceOver, SwitchControl, and UIUserInterfaceSizeClassCompact (mobile landscape) the
+ value will equal to 100% of the screens height.
  */
-@property(nonatomic) CGFloat initialDrawerFactor;
+@property(nonatomic, assign) CGFloat maximumInitialDrawerHeight;
 
 /**
  Sets the content offset Y of the drawer's content. If contentOffsetY is set to 0, the

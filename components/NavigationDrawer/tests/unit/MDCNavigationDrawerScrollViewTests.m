@@ -58,12 +58,11 @@
 @property(nonatomic, readonly) CGFloat contentHeightSurplus;
 @property(nonatomic, readonly) BOOL contentScrollsToReveal;
 @property(nonatomic) MDCBottomDrawerState drawerState;
-@property(nonatomic) CGFloat initialDrawerFactor;
 @property(nullable, nonatomic, readonly) UIPresentationController *presentationController;
 - (void)cacheLayoutCalculations;
 - (void)updateViewWithContentOffset:(CGPoint)contentOffset;
 - (void)updateDrawerState:(CGFloat)transitionPercentage;
-- (CGFloat)calculateInitialDrawerFactor;
+- (CGFloat)calculateMaximumInitialDrawerHeight;
 @end
 
 @interface MDCBottomDrawerPresentationController (ScrollViewTests) <
@@ -613,65 +612,65 @@
   XCTAssertEqualWithAccuracy(newContentViewControllerHeight, contentViewControllerHeight, 0.001);
 }
 
-- (void)testCalculateInitialDrawerFactorWithSmallHeight {
+- (void)testCalculateInitialDrawerHeightWithSmallHeight {
   // Given
   CGRect fakeRect = CGRectMake(0, 0, 250, 500);
   self.fakeBottomDrawer.originalPresentingViewController.view.bounds = fakeRect;
   self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(250, 100);
 
   // When
-  CGFloat drawerFactor = [self.fakeBottomDrawer calculateInitialDrawerFactor];
+  CGFloat drawerHeight = [self.fakeBottomDrawer calculateMaximumInitialDrawerHeight];
 
   // Then
-  XCTAssertEqualWithAccuracy(drawerFactor, 0.2, 0.001);
+  XCTAssertEqualWithAccuracy(drawerHeight, 100, 0.001);
 }
 
-- (void)testCalculateInitialDrawerFactorWithLargeHeight {
+- (void)testCalculateInitialDrawerHeightWithLargeHeight {
   // Given
   CGRect fakeRect = CGRectMake(0, 0, 250, 500);
   self.fakeBottomDrawer.originalPresentingViewController.view.bounds = fakeRect;
   self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(250, 1000);
 
   // When
-  CGFloat drawerFactor = [self.fakeBottomDrawer calculateInitialDrawerFactor];
+  CGFloat drawerHeight = [self.fakeBottomDrawer calculateMaximumInitialDrawerHeight];
 
   // Then
-  XCTAssertEqualWithAccuracy(drawerFactor, 0.5, 0.001);
+  XCTAssertEqualWithAccuracy(drawerHeight, 250, 0.001);
 }
 
-- (void)testSettingMaximumInitialDrawerFactor {
+- (void)testSettingMaximumInitialDrawerHeight {
   // Given
-  self.drawerViewController.maximumInitialDrawerHeightFactor = 0.25;
+  self.drawerViewController.maximumInitialDrawerHeight = 500;
 
   // Then
   MDCBottomDrawerPresentationController *presentationController =
       (MDCBottomDrawerPresentationController *)self.drawerViewController.presentationController;
-  XCTAssertEqualWithAccuracy(0.25, presentationController.maximumInitialDrawerHeightFactor, 0.001);
+  XCTAssertEqualWithAccuracy(500, presentationController.maximumInitialDrawerHeight, 0.001);
 }
 
-- (void)testInitialDrawerFactor {
+- (void)testInitialDrawerHeight {
   // Given
   CGRect fakeRect = CGRectMake(0, 0, 250, 500);
-  self.fakeBottomDrawer.initialDrawerFactor = (CGFloat)0.3;
+  self.fakeBottomDrawer.maximumInitialDrawerHeight = 320;
   self.fakeBottomDrawer.originalPresentingViewController.view.bounds = fakeRect;
   self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(250, 1000);
 
   // When
-  CGFloat drawerFactor = [self.fakeBottomDrawer calculateInitialDrawerFactor];
+  CGFloat drawerHeight = [self.fakeBottomDrawer calculateMaximumInitialDrawerHeight];
 
   // Then
-  XCTAssertEqualWithAccuracy(drawerFactor, 0.3, 0.001);
+  XCTAssertEqualWithAccuracy(drawerHeight, 320, 0.001);
 }
 
-- (void)testDrawerFactorReasonableRounding {
+- (void)testDrawerHeightReasonableRounding {
   // Given
   CGRect fakeRect = CGRectMake(0, 0, 250, 500);
-  self.fakeBottomDrawer.initialDrawerFactor = (CGFloat)0.12314;
+  self.fakeBottomDrawer.maximumInitialDrawerHeight = (CGFloat)412.3;
   self.fakeBottomDrawer.originalPresentingViewController.view.bounds = fakeRect;
   self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(250, 1000);
 
   // Then
-  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 438, 0.001);
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 88, 0.001);
 }
 
 - (void)testExpandToFullScreen {

@@ -34,6 +34,7 @@ static const CGFloat kEpsilon = (CGFloat)0.001;
 // smooth.
 static const CGFloat kScrollViewBufferForPerformance = 20;
 static const CGFloat kDragVelocityThresholdForHidingDrawer = -2;
+static const CGFloat kInitialDrawerHeightFactor = (CGFloat)0.5;
 static NSString *const kContentOffsetKeyPath = @"contentOffset";
 NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
     @"kMDCBottomDrawerScrollViewAccessibilityIdentifier";
@@ -139,9 +140,6 @@ static UIColor *DrawerShadowColor(void) {
 // Updates both the header and content based off content offset of the scroll view.
 - (void)updateViewWithContentOffset:(CGPoint)contentOffset;
 
-// Calculates the initial drawer factor.
-- (CGFloat)calculateInitialDrawerFactor;
-
 @end
 
 @implementation MDCBottomDrawerContainerViewController {
@@ -166,7 +164,8 @@ static UIColor *DrawerShadowColor(void) {
     _trackingScrollView = trackingScrollView;
     _drawerState = MDCBottomDrawerStateCollapsed;
     _scrollToContentOffsetY = 0;
-    _initialDrawerFactor = (CGFloat)0.5;
+    _maximumInitialDrawerHeight =
+        self.presentingViewBounds.size.height * kInitialDrawerHeightFactor;
     _shouldPresentAtFullscreen = NO;
   }
   return self;
@@ -300,20 +299,6 @@ static UIColor *DrawerShadowColor(void) {
 - (BOOL)contentReachesFullscreen {
   return [self shouldPresentFullScreen] ? YES
                                         : self.contentHeightSurplus >= self.contentHeaderTopInset;
-}
-
-/**
- The drawer height factor defines how much percentage of the screen space the drawer will take up
- when displayed. The expected range is 0 - 1 (0% - 100%).
-
- Default value is 0.5. If VoiceOver is enabled, or the mobile device is in landscape,
- the default value becomes 1.0.
- */
-- (CGFloat)initialDrawerFactor {
-  if ([self shouldPresentFullScreen]) {
-    return 1;
-  }
-  return _initialDrawerFactor;
 }
 
 - (void)addScrollViewObserver {
@@ -507,7 +492,7 @@ static UIColor *DrawerShadowColor(void) {
   if ([container isKindOfClass:[UIViewController class]]) {
     UIViewController *containerViewController = (UIViewController *)container;
     if (containerViewController == self.contentViewController) {
-      self.initialDrawerFactor = [self calculateInitialDrawerFactor];
+      self.maximumInitialDrawerHeight = [self calculateMaximumInitialDrawerHeight];
     }
   }
   _shouldPresentAtFullscreen = NO;
@@ -517,18 +502,17 @@ static UIColor *DrawerShadowColor(void) {
   [self.view setNeedsLayout];
 }
 
-- (CGFloat)calculateInitialDrawerFactor {
+- (CGFloat)calculateMaximumInitialDrawerHeight {
   if (MDCCGFloatEqual(_contentVCPreferredContentSizeHeightCached, 0)) {
     [self cacheLayoutCalculations];
   }
   CGFloat totalHeight = self.headerViewController.preferredContentSize.height +
-                        _contentVCPreferredContentSizeHeightCached;
-  CGFloat precentageOfFullScreen = totalHeight / self.presentingViewBounds.size.height;
-  const CGFloat maximumFactor = _initialDrawerFactor;
-  if (precentageOfFullScreen > maximumFactor) {
-    precentageOfFullScreen = maximumFactor;
+      _contentVCPreferredContentSizeHeightCached;
+  const CGFloat maximumInitialHeight = _maximumInitialDrawerHeight;
+  if (totalHeight > maximumInitialHeight) {
+    totalHeight = maximumInitialHeight;
   }
-  return precentageOfFullScreen;
+  return totalHeight;
 }
 
 #pragma mark Set ups (Private)
@@ -756,12 +740,13 @@ static UIColor *DrawerShadowColor(void) {
   _addedContentHeight = addedContentHeight;
 
   CGFloat totalHeight = contentHeight + contentHeaderHeight;
-  BOOL contentScrollsToReveal = totalHeight >= (containerHeight * [self initialDrawerFactor]);
+  BOOL contentScrollsToReveal = totalHeight >= self.maximumInitialDrawerHeight;
 
   if (_contentHeaderTopInset == NSNotFound) {
     // The content header top inset is only set once.
     if (contentScrollsToReveal || _shouldPresentAtFullscreen) {
-      _contentHeaderTopInset = containerHeight * (1 - [self initialDrawerFactor]);
+      _contentHeaderTopInset = MIN(containerHeight,
+                                   containerHeight - self.maximumInitialDrawerHeight);
       // In some cases, the contentHeaderTopInset calculation above which decides the
       // drawer's initial offset will not align with the content offset UIKit provides
       // for the scrollView, and there may be a slight delta between both numbers.
@@ -880,6 +865,13 @@ static UIColor *DrawerShadowColor(void) {
 - (CGFloat)addedContentHeightThreshold {
   // TODO: (#4900) change this to use safeAreaInsets as this is a soon to be deprecated API.
   return MDCDeviceTopSafeAreaInset();
+}
+
+- (CGFloat)maximumInitialDrawerHeight {
+  if ([self shouldPresentFullScreen]) {
+    return self.presentingViewBounds.size.height;
+  }
+  return _maximumInitialDrawerHeight;
 }
 
 @end
