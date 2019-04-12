@@ -75,6 +75,7 @@ static NSString *const kMessageLongArabic =
   self.iconImage = [[UIImage mdc_testImageOfSize:CGSizeMake(40, 40)]
       imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   self.alertController = [[MDCAlertController alloc] init];
+  self.alertController.view.bounds = CGRectMake(0, 0, 300, 300);
   [self.alertController addAction:self.actionHigh];
   [self.alertController addAction:self.actionMedium];
   [self.alertController addAction:self.actionLow];
@@ -91,7 +92,6 @@ static NSString *const kMessageLongArabic =
 }
 
 - (void)generateSnapshotAndVerifyForView:(UIView *)view {
-  view.bounds = CGRectMake(0, 0, 300, 300);
   [view layoutIfNeeded];
 
   UIView *snapshotView = [view mdc_addToBackgroundView];
@@ -209,6 +209,56 @@ static NSString *const kMessageLongArabic =
   self.alertController.titleIcon = self.iconImage;
   self.alertController.message = kMessageLongArabic;
   [self changeToRTL:self.alertController];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
+- (void)testPreferredContentSizeWithLargeIconLongTitleLongMessageLatin {
+  // When
+  self.alertController.title = kTitleLongLatin;
+  self.alertController.titleIcon = self.iconImage;
+  self.alertController.message = kMessageLongLatin;
+  CGSize preferredContentSize = self.alertController.preferredContentSize;
+  self.alertController.view.bounds =
+      CGRectMake(0, 0, preferredContentSize.width, preferredContentSize.height);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
+- (void)testPreferredContentSizeWithLargeIconLongTitleLongMessageArabic {
+  // When
+  self.alertController.title = kTitleLongArabic;
+  self.alertController.titleIcon = self.iconImage;
+  self.alertController.message = kMessageLongArabic;
+  [self changeToRTL:self.alertController];
+  CGSize preferredContentSize = self.alertController.preferredContentSize;
+  self.alertController.view.bounds =
+      CGRectMake(0, 0, preferredContentSize.width, preferredContentSize.height);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
+- (void)testSizeToFitWithLargeIconLongTitleLongMessageLatin {
+  // When
+  self.alertController.title = kTitleLongLatin;
+  self.alertController.titleIcon = self.iconImage;
+  self.alertController.message = kMessageLongLatin;
+  [self.alertController.view sizeToFit];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
+- (void)testSizeToFitWithLargeIconLongTitleLongMessageArabic {
+  // When
+  self.alertController.title = kTitleLongArabic;
+  self.alertController.titleIcon = self.iconImage;
+  self.alertController.message = kMessageLongArabic;
+  [self changeToRTL:self.alertController];
+  [self.alertController.view sizeToFit];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.alertController.view];

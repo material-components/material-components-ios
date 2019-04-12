@@ -12,22 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <MaterialComponents/MaterialTextFields.h>
-#import <MaterialComponentsBeta/MaterialContainerScheme.h>
+#import <UIKit/UIKit.h>
 
-/**
- This category is used to style MDCTextInputControllerFilled instances to a specific Material style
- which can be found within the
- [Material Guidelines](https://material.io/design/components/text-fields.html).
- */
-@interface MDCTextInputControllerFilled (MaterialTheming)
+#import "MDCContainedInputView.h"
 
-/**
- Applies the Material theme to this instance.
-
- @param scheme A container scheme instance containing any desired customizations to the theming
- system.
- */
-- (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
-
+@interface MDCContainedInputViewColorSchemeOutlined : MDCContainedInputViewColorScheme
+@property(strong, nonatomic) UIColor *outlineColor;
 @end
+
+@interface MDCContainerStylerOutlined : MDCContainerStylerBase <MDCContainedInputViewStyler>
+@end
+
+//@interface MDCContainerStylerOutlinedPositioningDelegate
+//    : MDCContainerStylerBasePositioningDelegate <MDCContainedInputViewStylerPositioningDelegate>
+//@end

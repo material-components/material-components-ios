@@ -69,6 +69,7 @@ target "MDCCatalog" do
     'Cards+Theming/UnitTests',
     'Chips+Theming/UnitTests',
     'Dialogs+Theming/UnitTests',
+    'Tabs+Theming/UnitTests',
     'TextFields+Theming/UnitTests',
     'schemes/Container/UnitTests',
   ]
