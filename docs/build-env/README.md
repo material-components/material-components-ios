@@ -42,7 +42,7 @@ Swift 4 support is added whenever possible and will be the standard when Xcode 8
 
 ### iOS
 
-Our components currently support **iOS 8.0 and up**.
+Our components currently support **iOS 9.0 and up**.
 
 ### CocoaPods
 
