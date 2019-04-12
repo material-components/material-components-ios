@@ -81,13 +81,6 @@
   self.bottomDrawerViewController.contentViewController = contentViewController;
   self.bottomDrawerViewController.headerViewController = headerViewController;
   self.presentingViewController = [[UIViewController alloc] init];
-  self.containerViewController = [[FakeBottomDrawerContainerViewController alloc]
-      initWithOriginalPresentingViewController:self.presentingViewController
-                            trackingScrollView:nil];
-  self.containerViewController.contentViewController =
-      self.bottomDrawerViewController.contentViewController;
-  self.containerViewController.headerViewController =
-      self.bottomDrawerViewController.headerViewController;
 }
 
 - (void)tearDown {
@@ -105,8 +98,17 @@
 #pragma mark - Tests
 
 - (void)testPresentedDrawerWithColoredViews {
-  // When
+  // Given
   self.presentingViewController.view.frame = CGRectMake(0, 0, 375, 667);
+  self.containerViewController = [[FakeBottomDrawerContainerViewController alloc]
+      initWithOriginalPresentingViewController:self.presentingViewController
+                            trackingScrollView:nil];
+  self.containerViewController.contentViewController =
+      self.bottomDrawerViewController.contentViewController;
+  self.containerViewController.headerViewController =
+      self.bottomDrawerViewController.headerViewController;
+
+  // When
   self.bottomDrawerViewController.view.bounds = CGRectMake(0, 0, 375, 667);
   self.bottomDrawerViewController.contentViewController.preferredContentSize =
       CGSizeMake(375, 1000);
@@ -120,6 +122,15 @@
 
 - (void)testPresentedDrawerWithColoredViewsWithVerticalSizeClassCompact {
   // Given
+  self.presentingViewController.view.frame = CGRectMake(0, 0, 667, 375);
+  self.containerViewController = [[FakeBottomDrawerContainerViewController alloc]
+      initWithOriginalPresentingViewController:self.presentingViewController
+                            trackingScrollView:nil];
+  self.containerViewController.contentViewController =
+      self.bottomDrawerViewController.contentViewController;
+  self.containerViewController.headerViewController =
+      self.bottomDrawerViewController.headerViewController;
+
   MDCBottomDrawerSnapshotTestMutableTraitCollection *traitCollection =
       [[MDCBottomDrawerSnapshotTestMutableTraitCollection alloc] init];
   traitCollection.verticalSizeClassOverride = UIUserInterfaceSizeClassCompact;
@@ -130,7 +141,6 @@
       self.bottomDrawerViewController.headerViewController;
 
   // When
-  self.presentingViewController.view.frame = CGRectMake(0, 0, 667, 375);
   self.bottomDrawerViewController.view.bounds = CGRectMake(0, 0, 667, 375);
   self.bottomDrawerViewController.contentViewController.preferredContentSize =
       CGSizeMake(667, 1000);
