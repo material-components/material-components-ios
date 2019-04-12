@@ -5,7 +5,7 @@ load("@build_bazel_rules_apple//apple/testing/default_runner:ios_test_runner.bzl
 load("@build_bazel_rules_apple//apple:ios.bzl", "ios_unit_test", "ios_unit_test_suite")
 load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
-IOS_MINIMUM_OS = "8.0"
+IOS_MINIMUM_OS = "9.0"
 SNAPSHOT_IOS_MINIMUM_OS = "10.0"
 
 DEFAULT_IOS_RUNNER_TARGETS = [
