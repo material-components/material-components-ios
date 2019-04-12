@@ -19,7 +19,7 @@
 #import "supplemental/MDCBottomDrawerSnapshotTestMutableTraitCollection.h"
 
 /** Fake MDCBottomDrawerContainerViewController for snapshot testing. */
-@interface FakeContainerViewController : MDCBottomDrawerContainerViewController
+@interface FakeBottomDrawerContainerViewController : MDCBottomDrawerContainerViewController
 
 /** Used to set the value of @c traitCollection. */
 @property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
@@ -35,14 +35,14 @@
 @end
 
 /** Fake view controller for the MDCBottomDrawer header for snapshot testing. */
-@interface FakeHeader : UIViewController <MDCBottomDrawerHeader>
+@interface FakeBottomDrawerHeader : UIViewController <MDCBottomDrawerHeader>
 @end
 
 @implementation FakeHeader
 @end
 
 /** Fake view controller for the MDCBottomDrawer content for snapshot testing. */
-@interface FakeContent : UIViewController
+@interface FakeBottomDrawerContent : UIViewController
 @end
 
 @implementation FakeContent
@@ -73,14 +73,14 @@
 - (void)testPresentedDrawerWithColoredViews {
   // Given
   MDCBottomDrawerViewController *viewController = [[MDCBottomDrawerViewController alloc] init];
-  FakeHeader *headerViewController = [[FakeHeader alloc] init];
+  FakeBottomDrawerHeader *headerViewController = [[FakeBottomDrawerHeader alloc] init];
   headerViewController.view.backgroundColor = UIColor.blueColor;
-  FakeContent *contentViewController = [[FakeContent alloc] init];
+  FakeBottomDrawerContent *contentViewController = [[FakeBottomDrawerContent alloc] init];
   contentViewController.view.backgroundColor = UIColor.greenColor;
   viewController.contentViewController = contentViewController;
   viewController.headerViewController = headerViewController;
-  FakeContainerViewController *container =
-      [[FakeContainerViewController alloc] initWithOriginalPresentingViewController:viewController
+  FakeBottomDrawerContainerViewController *container =
+      [[FakeBottomDrawerContainerViewController alloc] initWithOriginalPresentingViewController:viewController
                                                                  trackingScrollView:nil];
   container.contentViewController = viewController.contentViewController;
   container.headerViewController = viewController.headerViewController;
@@ -98,17 +98,17 @@
 - (void)testPresentedDrawerWithColoredViewsWithVerticalSizeClassCompact {
   // Given
   MDCBottomDrawerViewController *viewController = [[MDCBottomDrawerViewController alloc] init];
-  FakeHeader *headerViewController = [[FakeHeader alloc] init];
+  FakeBottomDrawerHeader *headerViewController = [[FakeBottomDrawerHeader alloc] init];
   headerViewController.view.backgroundColor = UIColor.blueColor;
-  FakeContent *contentViewController = [[FakeContent alloc] init];
+  FakeBottomDrawerContent *contentViewController = [[FakeBottomDrawerContent alloc] init];
   contentViewController.view.backgroundColor = UIColor.greenColor;
   viewController.contentViewController = contentViewController;
   viewController.headerViewController = headerViewController;
   MDCBottomDrawerSnapshotTestMutableTraitCollection *traitCollection =
       [[MDCBottomDrawerSnapshotTestMutableTraitCollection alloc] init];
   traitCollection.verticalSizeClassOverride = UIUserInterfaceSizeClassCompact;
-  FakeContainerViewController *container =
-      [[FakeContainerViewController alloc] initWithOriginalPresentingViewController:viewController
+  FakeBottomDrawerContainerViewController *container =
+      [[FakeBottomDrawerContainerViewController alloc] initWithOriginalPresentingViewController:viewController
                                                                  trackingScrollView:nil];
   container.traitCollectionOverride = traitCollection;
   container.contentViewController = viewController.contentViewController;
