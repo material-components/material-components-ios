@@ -26,7 +26,7 @@
 
 @end
 
-@implementation FakeContainerViewController
+@implementation FakeBottomDrawerContainerViewController
 
 - (UITraitCollection *)traitCollection {
   return self.traitCollectionOverride ?: [super traitCollection];
@@ -38,14 +38,14 @@
 @interface FakeBottomDrawerHeader : UIViewController <MDCBottomDrawerHeader>
 @end
 
-@implementation FakeHeader
+@implementation FakeBottomDrawerHeader
 @end
 
 /** Fake view controller for the MDCBottomDrawer content for snapshot testing. */
 @interface FakeBottomDrawerContent : UIViewController
 @end
 
-@implementation FakeContent
+@implementation FakeBottomDrawerContent
 @end
 
 /** Snapshot tests for MDCBottomDrawerController's view. */
@@ -80,8 +80,9 @@
   viewController.contentViewController = contentViewController;
   viewController.headerViewController = headerViewController;
   FakeBottomDrawerContainerViewController *container =
-      [[FakeBottomDrawerContainerViewController alloc] initWithOriginalPresentingViewController:viewController
-                                                                 trackingScrollView:nil];
+      [[FakeBottomDrawerContainerViewController alloc]
+          initWithOriginalPresentingViewController:viewController
+                                trackingScrollView:nil];
   container.contentViewController = viewController.contentViewController;
   container.headerViewController = viewController.headerViewController;
 
@@ -108,8 +109,9 @@
       [[MDCBottomDrawerSnapshotTestMutableTraitCollection alloc] init];
   traitCollection.verticalSizeClassOverride = UIUserInterfaceSizeClassCompact;
   FakeBottomDrawerContainerViewController *container =
-      [[FakeBottomDrawerContainerViewController alloc] initWithOriginalPresentingViewController:viewController
-                                                                 trackingScrollView:nil];
+      [[FakeBottomDrawerContainerViewController alloc]
+          initWithOriginalPresentingViewController:viewController
+                                trackingScrollView:nil];
   container.traitCollectionOverride = traitCollection;
   container.contentViewController = viewController.contentViewController;
   container.headerViewController = viewController.headerViewController;
