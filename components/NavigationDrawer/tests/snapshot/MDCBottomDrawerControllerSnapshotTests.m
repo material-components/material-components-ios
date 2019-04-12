@@ -35,21 +35,27 @@
 @end
 
 /** Fake view controller for the MDCBottomDrawer header for snapshot testing. */
-@interface FakeBottomDrawerHeader : UIViewController <MDCBottomDrawerHeader>
+@interface MDCBottomDrawerFakeHeaderController : UIViewController <MDCBottomDrawerHeader>
 @end
 
-@implementation FakeBottomDrawerHeader
+@implementation MDCBottomDrawerFakeHeaderController
 @end
 
 /** Fake view controller for the MDCBottomDrawer content for snapshot testing. */
-@interface FakeBottomDrawerContent : UIViewController
+@interface MDCBottomDrawerFakeContentController : UIViewController
 @end
 
-@implementation FakeBottomDrawerContent
+@implementation MDCBottomDrawerFakeContentController
 @end
 
 /** Snapshot tests for MDCBottomDrawerController's view. */
 @interface MDCBottomDrawerControllerSnapshotTests : MDCSnapshotTestCase
+
+/** The view controller of the snapshotted view. */
+@property(nonatomic, strong) MDCBottomDrawerViewController *bottomDrawerViewController;
+
+/** The container view controller for the header and content, used for mocking some properties. */
+@property(nonatomic, strong) FakeBottomDrawerContainerViewController *containerViewController;
 
 @end
 
@@ -61,6 +67,31 @@
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
   //  self.recordMode = YES;
+
+  self.bottomDrawerViewController = [[MDCBottomDrawerViewController alloc] init];
+  MDCBottomDrawerFakeHeaderController *headerViewController =
+      [[MDCBottomDrawerFakeHeaderController alloc] init];
+  headerViewController.view.backgroundColor = UIColor.blueColor;
+  MDCBottomDrawerFakeContentController *contentViewController =
+      [[MDCBottomDrawerFakeContentController alloc] init];
+  contentViewController.view.backgroundColor = UIColor.greenColor;
+  self.bottomDrawerViewController.contentViewController = contentViewController;
+  self.bottomDrawerViewController.headerViewController = headerViewController;
+  UIViewController *presentingViewController = [[UIViewController alloc] init];
+  self.containerViewController = [[FakeBottomDrawerContainerViewController alloc]
+      initWithOriginalPresentingViewController:presentingViewController
+                            trackingScrollView:nil];
+  self.containerViewController.contentViewController =
+      self.bottomDrawerViewController.contentViewController;
+  self.containerViewController.headerViewController =
+      self.bottomDrawerViewController.headerViewController;
+}
+
+- (void)tearDown {
+  self.bottomDrawerViewController = nil;
+  self.containerViewController = nil;
+
+  [super tearDown];
 }
 
 - (void)generateSnapshotAndVerifyForView:(UIView *)view {
@@ -71,61 +102,41 @@
 #pragma mark - Tests
 
 - (void)testPresentedDrawerWithColoredViews {
-  // Given
-  MDCBottomDrawerViewController *viewController = [[MDCBottomDrawerViewController alloc] init];
-  FakeBottomDrawerHeader *headerViewController = [[FakeBottomDrawerHeader alloc] init];
-  headerViewController.view.backgroundColor = UIColor.blueColor;
-  FakeBottomDrawerContent *contentViewController = [[FakeBottomDrawerContent alloc] init];
-  contentViewController.view.backgroundColor = UIColor.greenColor;
-  viewController.contentViewController = contentViewController;
-  viewController.headerViewController = headerViewController;
-  FakeBottomDrawerContainerViewController *container =
-      [[FakeBottomDrawerContainerViewController alloc]
-          initWithOriginalPresentingViewController:viewController
-                                trackingScrollView:nil];
-  container.contentViewController = viewController.contentViewController;
-  container.headerViewController = viewController.headerViewController;
-
   // When
-  viewController.view.bounds = CGRectMake(0, 0, 375, 667);
-  viewController.contentViewController.preferredContentSize = CGSizeMake(375, 1000);
-  viewController.headerViewController.preferredContentSize = CGSizeMake(375, 80);
-  [viewController.view addSubview:container.view];
-  [viewController addChildViewController:container];
+  self.containerViewController.presentingViewController.view.frame = CGRectMake(0, 0, 375, 667);
+  self.bottomDrawerViewController.view.bounds = CGRectMake(0, 0, 375, 667);
+  self.bottomDrawerViewController.contentViewController.preferredContentSize =
+      CGSizeMake(375, 1000);
+  self.bottomDrawerViewController.headerViewController.preferredContentSize = CGSizeMake(375, 80);
+  [self.bottomDrawerViewController.view addSubview:self.containerViewController.view];
+  [self.bottomDrawerViewController addChildViewController:self.containerViewController];
 
   // Then
-  [self generateSnapshotAndVerifyForView:viewController.view];
+  [self generateSnapshotAndVerifyForView:self.bottomDrawerViewController.view];
 }
 
 - (void)testPresentedDrawerWithColoredViewsWithVerticalSizeClassCompact {
   // Given
-  MDCBottomDrawerViewController *viewController = [[MDCBottomDrawerViewController alloc] init];
-  FakeBottomDrawerHeader *headerViewController = [[FakeBottomDrawerHeader alloc] init];
-  headerViewController.view.backgroundColor = UIColor.blueColor;
-  FakeBottomDrawerContent *contentViewController = [[FakeBottomDrawerContent alloc] init];
-  contentViewController.view.backgroundColor = UIColor.greenColor;
-  viewController.contentViewController = contentViewController;
-  viewController.headerViewController = headerViewController;
   MDCBottomDrawerSnapshotTestMutableTraitCollection *traitCollection =
       [[MDCBottomDrawerSnapshotTestMutableTraitCollection alloc] init];
   traitCollection.verticalSizeClassOverride = UIUserInterfaceSizeClassCompact;
-  FakeBottomDrawerContainerViewController *container =
-      [[FakeBottomDrawerContainerViewController alloc]
-          initWithOriginalPresentingViewController:viewController
-                                trackingScrollView:nil];
-  container.traitCollectionOverride = traitCollection;
-  container.contentViewController = viewController.contentViewController;
-  container.headerViewController = viewController.headerViewController;
+  self.containerViewController.traitCollectionOverride = traitCollection;
+  self.containerViewController.contentViewController =
+      self.bottomDrawerViewController.contentViewController;
+  self.containerViewController.headerViewController =
+      self.bottomDrawerViewController.headerViewController;
 
   // When
-  viewController.view.bounds = CGRectMake(0, 0, 667, 375);
-  viewController.contentViewController.preferredContentSize = CGSizeMake(667, 1000);
-  viewController.headerViewController.preferredContentSize = CGSizeMake(667, 80);
-  [viewController.view addSubview:container.view];
-  [viewController addChildViewController:container];
+  self.containerViewController.presentingViewController.view.frame = CGRectMake(0, 0, 667, 375);
+  self.bottomDrawerViewController.view.bounds = CGRectMake(0, 0, 667, 375);
+  self.bottomDrawerViewController.contentViewController.preferredContentSize =
+      CGSizeMake(667, 1000);
+  self.bottomDrawerViewController.headerViewController.preferredContentSize = CGSizeMake(667, 80);
+  [self.bottomDrawerViewController.view addSubview:self.containerViewController.view];
+  [self.bottomDrawerViewController addChildViewController:self.containerViewController];
 
   // Then
-  [self generateSnapshotAndVerifyForView:viewController.view];
+  [self generateSnapshotAndVerifyForView:self.bottomDrawerViewController.view];
 }
 
 @end
