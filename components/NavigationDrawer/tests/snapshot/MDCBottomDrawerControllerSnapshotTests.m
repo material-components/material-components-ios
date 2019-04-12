@@ -87,8 +87,9 @@
   container.headerViewController = viewController.headerViewController;
 
   // When
-  viewController.contentViewController.preferredContentSize = CGSizeMake(320, 1000);
-  viewController.headerViewController.preferredContentSize = CGSizeMake(320, 80);
+  viewController.view.bounds = CGRectMake(0, 0, 375, 667);
+  viewController.contentViewController.preferredContentSize = CGSizeMake(375, 1000);
+  viewController.headerViewController.preferredContentSize = CGSizeMake(375, 80);
   [viewController.view addSubview:container.view];
   [viewController addChildViewController:container];
 
@@ -117,8 +118,9 @@
   container.headerViewController = viewController.headerViewController;
 
   // When
-  viewController.contentViewController.preferredContentSize = CGSizeMake(480, 1000);
-  viewController.headerViewController.preferredContentSize = CGSizeMake(480, 80);
+  viewController.view.bounds = CGRectMake(0, 0, 667, 375);
+  viewController.contentViewController.preferredContentSize = CGSizeMake(667, 1000);
+  viewController.headerViewController.preferredContentSize = CGSizeMake(667, 80);
   [viewController.view addSubview:container.view];
   [viewController addChildViewController:container];
 
