@@ -861,7 +861,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 #endif
 
   // This is a simple "force" that's stronger the further we are from the destination.
-  _shiftAccumulator += kAttachmentCoefficient * distanceToDestination * duration;
+  _shiftAccumulator += (CGFloat)(kAttachmentCoefficient * distanceToDestination * duration);
 
   if (self.canAlwaysExpandToMaximumHeight) {
     _shiftAccumulator =
