@@ -14,8 +14,8 @@
 
 #import "MaterialSnapshot.h"
 
-#import "MaterialNavigationDrawer.h"
 #import "../../src/private/MDCBottomDrawerContainerViewController.h"
+#import "MaterialNavigationDrawer.h"
 #import "supplemental/MDCBottomDrawerSnapshotTestMutableTraitCollection.h"
 
 /** Fake MDCBottomDrawerContainerViewController for snapshot testing. */
@@ -60,7 +60,7 @@
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-    self.recordMode = YES;
+  self.recordMode = YES;
 }
 
 - (void)generateSnapshotAndVerifyForView:(UIView *)view {
@@ -80,8 +80,8 @@
   viewController.contentViewController = contentViewController;
   viewController.headerViewController = headerViewController;
   FakeContainerViewController *container =
-  [[FakeContainerViewController alloc] initWithOriginalPresentingViewController:viewController
-                                                             trackingScrollView:nil];
+      [[FakeContainerViewController alloc] initWithOriginalPresentingViewController:viewController
+                                                                 trackingScrollView:nil];
   container.contentViewController = viewController.contentViewController;
   container.headerViewController = viewController.headerViewController;
 
@@ -109,8 +109,8 @@
       [[MDCBottomDrawerSnapshotTestMutableTraitCollection alloc] init];
   traitCollection.verticalSizeClassOverride = UIUserInterfaceSizeClassCompact;
   FakeContainerViewController *container =
-  [[FakeContainerViewController alloc] initWithOriginalPresentingViewController:viewController
-                                                             trackingScrollView:nil];
+      [[FakeContainerViewController alloc] initWithOriginalPresentingViewController:viewController
+                                                                 trackingScrollView:nil];
   container.traitCollectionOverride = traitCollection;
   container.contentViewController = viewController.contentViewController;
   container.headerViewController = viewController.headerViewController;
