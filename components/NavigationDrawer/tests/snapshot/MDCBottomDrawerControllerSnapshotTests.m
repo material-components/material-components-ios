@@ -88,7 +88,6 @@
   // When
   viewController.contentViewController.preferredContentSize = CGSizeMake(320, 1000);
   viewController.headerViewController.preferredContentSize = CGSizeMake(320, 80);
-  viewController.view.bounds = CGRectMake(0, 0, 320, 480);
   [viewController.view addSubview:container.view];
   [viewController addChildViewController:container];
 
@@ -118,7 +117,6 @@
   // When
   viewController.contentViewController.preferredContentSize = CGSizeMake(480, 1000);
   viewController.headerViewController.preferredContentSize = CGSizeMake(480, 80);
-  viewController.view.bounds = CGRectMake(0, 0, 480, 320);
   [viewController.view addSubview:container.view];
   [viewController addChildViewController:container];
 
