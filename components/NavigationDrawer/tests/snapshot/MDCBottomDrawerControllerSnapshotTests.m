@@ -101,12 +101,12 @@
   // Given
   self.presentingViewController.view.frame = CGRectMake(0, 0, 375, 667);
   self.containerViewController = [[FakeBottomDrawerContainerViewController alloc]
-                                  initWithOriginalPresentingViewController:self.presentingViewController
-                                  trackingScrollView:nil];
+      initWithOriginalPresentingViewController:self.presentingViewController
+                            trackingScrollView:nil];
   self.containerViewController.contentViewController =
-  self.bottomDrawerViewController.contentViewController;
+      self.bottomDrawerViewController.contentViewController;
   self.containerViewController.headerViewController =
-  self.bottomDrawerViewController.headerViewController;
+      self.bottomDrawerViewController.headerViewController;
 
   // When
   self.bottomDrawerViewController.view.bounds = CGRectMake(0, 0, 375, 667);
@@ -124,12 +124,12 @@
   // Given
   self.presentingViewController.view.frame = CGRectMake(0, 0, 667, 375);
   self.containerViewController = [[FakeBottomDrawerContainerViewController alloc]
-                                  initWithOriginalPresentingViewController:self.presentingViewController
-                                  trackingScrollView:nil];
+      initWithOriginalPresentingViewController:self.presentingViewController
+                            trackingScrollView:nil];
   self.containerViewController.contentViewController =
-  self.bottomDrawerViewController.contentViewController;
+      self.bottomDrawerViewController.contentViewController;
   self.containerViewController.headerViewController =
-  self.bottomDrawerViewController.headerViewController;
+      self.bottomDrawerViewController.headerViewController;
 
   MDCBottomDrawerSnapshotTestMutableTraitCollection *traitCollection =
       [[MDCBottomDrawerSnapshotTestMutableTraitCollection alloc] init];
