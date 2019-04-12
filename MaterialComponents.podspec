@@ -11,7 +11,7 @@ Pod::Spec.new do |mdc|
                        :tag => "v#{mdc.version}" }
   mdc.platform     = :ios
   mdc.requires_arc = true
-  mdc.ios.deployment_target = '8.0'
+  mdc.ios.deployment_target = '9.0'
 
   # # Subspec explanation
   #
@@ -55,7 +55,7 @@ Pod::Spec.new do |mdc|
   # ActionSheet
 
   mdc.subspec "ActionSheet" do |component|
-    component.ios.deployment_target = '8.0'
+    component.ios.deployment_target = '9.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = [
       "components/#{component.base_name}/src/*.{h,m}",
@@ -76,7 +76,7 @@ Pod::Spec.new do |mdc|
   # ActivityIndicator
 
   mdc.subspec "ActivityIndicator" do |component|
-    component.ios.deployment_target = '8.0'
+    component.ios.deployment_target = '9.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = [
       "components/#{component.base_name}/src/*.{h,m}",
@@ -102,7 +102,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "ActivityIndicator+ColorThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -117,7 +117,7 @@ Pod::Spec.new do |mdc|
   # AnimationTiming
 
   mdc.subspec "AnimationTiming" do |component|
-    component.ios.deployment_target = '8.0'
+    component.ios.deployment_target = '9.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = [
       "components/#{component.base_name}/src/*.{h,m}",
@@ -136,7 +136,7 @@ Pod::Spec.new do |mdc|
   # AppBar
 
   mdc.subspec "AppBar" do |component|
-    component.ios.deployment_target = '8.0'
+    component.ios.deployment_target = '9.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = [
       "components/#{component.base_name}/src/*.{h,m}",
@@ -172,7 +172,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "AppBar+ColorThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -187,7 +187,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "AppBar+TypographyThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -202,7 +202,7 @@ Pod::Spec.new do |mdc|
   # BottomAppBar
 
   mdc.subspec "BottomAppBar" do |component|
-    component.ios.deployment_target = '8.0'
+    component.ios.deployment_target = '9.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = [
       "components/#{component.base_name}/src/*.{h,m}",
@@ -225,7 +225,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "BottomAppBar+ColorThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -239,7 +239,7 @@ Pod::Spec.new do |mdc|
   # BottomNavigation
 
   mdc.subspec "BottomNavigation" do |component|
-    component.ios.deployment_target = '8.0'
+    component.ios.deployment_target = '9.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = [
       "components/#{component.base_name}/src/*.{h,m}",
@@ -276,7 +276,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "BottomNavigation+ColorThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -288,7 +288,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "BottomNavigation+TypographyThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -302,7 +302,7 @@ Pod::Spec.new do |mdc|
   # BottomSheet
 
   mdc.subspec "BottomSheet" do |component|
-    component.ios.deployment_target = '8.0'
+    component.ios.deployment_target = '9.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = [
       "components/#{component.base_name}/src/*.{h,m}",
@@ -325,7 +325,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "BottomSheet+ShapeThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -340,7 +340,7 @@ Pod::Spec.new do |mdc|
   # Buttons
 
   mdc.subspec "Buttons" do |component|
-    component.ios.deployment_target = '8.0'
+    component.ios.deployment_target = '9.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = [
       "components/#{component.base_name}/src/*.{h,m}",
@@ -372,7 +372,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "Buttons+ColorThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -385,7 +385,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "Buttons+TitleColorAccessibilityMutator" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -399,7 +399,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "Buttons+ShapeThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -412,7 +412,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "Buttons+TypographyThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -425,7 +425,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "Buttons+ButtonThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -443,7 +443,7 @@ Pod::Spec.new do |mdc|
   # ButtonBar
 
   mdc.subspec "ButtonBar" do |component|
-    component.ios.deployment_target = '8.0'
+    component.ios.deployment_target = '9.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = [
       "components/#{component.base_name}/src/*.{h,m}",
@@ -465,7 +465,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "ButtonBar+ColorThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -478,7 +478,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "ButtonBar+TypographyThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -493,7 +493,7 @@ Pod::Spec.new do |mdc|
   # Cards
 
   mdc.subspec "Cards" do |component|
-    component.ios.deployment_target = '8.0'
+    component.ios.deployment_target = '9.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = "components/#{component.base_name}/src/*.{h,m}"
     component.exclude_files = [
@@ -519,7 +519,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "Cards+ColorThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -532,7 +532,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "Cards+ShapeThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -545,7 +545,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "Cards+CardThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -560,7 +560,7 @@ Pod::Spec.new do |mdc|
   # Chips
 
   mdc.subspec "Chips" do |component|
-    component.ios.deployment_target = '8.0'
+    component.ios.deployment_target = '9.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = [
       "components/#{component.base_name}/src/*.{h,m}",
@@ -589,7 +589,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "Chips+ChipThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -604,7 +604,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "Chips+ColorThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -617,7 +617,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "Chips+FontThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -630,7 +630,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "Chips+ShapeThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -643,7 +643,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "Chips+TypographyThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -658,7 +658,7 @@ Pod::Spec.new do |mdc|
   # CollectionCells
 
   mdc.subspec "CollectionCells" do |component|
-    component.ios.deployment_target = '8.0'
+    component.ios.deployment_target = '9.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = [
       "components/#{component.base_name}/src/*.{h,m}",
@@ -694,7 +694,7 @@ Pod::Spec.new do |mdc|
   # CollectionLayoutAttributes
 
   mdc.subspec "CollectionLayoutAttributes" do |component|
-    component.ios.deployment_target = '8.0'
+    component.ios.deployment_target = '9.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = "components/#{component.base_name}/src/*.{h,m}"
 
@@ -710,7 +710,7 @@ Pod::Spec.new do |mdc|
   # Collections
 
   mdc.subspec "Collections" do |component|
-    component.ios.deployment_target = '8.0'
+    component.ios.deployment_target = '9.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = [
       "components/#{component.base_name}/src/*.{h,m}",
@@ -741,7 +741,7 @@ Pod::Spec.new do |mdc|
   # Dialogs
 
   mdc.subspec "Dialogs" do |component|
-    component.ios.deployment_target = '8.0'
+    component.ios.deployment_target = '9.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = [
       "components/#{component.base_name}/src/*.{h,m}",
@@ -769,7 +769,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "Dialogs+ColorThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -783,7 +783,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "Dialogs+TypographyThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -797,7 +797,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "Dialogs+DialogThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -814,7 +814,7 @@ Pod::Spec.new do |mdc|
   # FeatureHighlight
 
   mdc.subspec "FeatureHighlight" do |component|
-    component.ios.deployment_target = '8.0'
+    component.ios.deployment_target = '9.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = [
       "components/#{component.base_name}/src/*.{h,m}",
@@ -841,7 +841,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "FeatureHighlight+ColorThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -854,7 +854,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "FeatureHighlight+FontThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -867,7 +867,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "FeatureHighlight+TypographyThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -880,7 +880,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "FeatureHighlight+FeatureHighlightAccessibilityMutator" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -895,7 +895,7 @@ Pod::Spec.new do |mdc|
   # FlexibleHeader
 
   mdc.subspec "FlexibleHeader" do |component|
-    component.ios.deployment_target = '8.0'
+    component.ios.deployment_target = '9.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = [
       "components/#{component.base_name}/src/*.{h,m}",
@@ -917,7 +917,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "FlexibleHeader+CanAlwaysExpandToMaximumHeight" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -929,7 +929,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "FlexibleHeader+ColorThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -944,7 +944,7 @@ Pod::Spec.new do |mdc|
   # HeaderStackView
 
   mdc.subspec "HeaderStackView" do |component|
-    component.ios.deployment_target = '8.0'
+    component.ios.deployment_target = '9.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = "components/#{component.base_name}/src/*.{h,m}"
 
@@ -958,7 +958,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "HeaderStackView+ColorThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -973,7 +973,7 @@ Pod::Spec.new do |mdc|
   # Ink
 
   mdc.subspec "Ink" do |component|
-    component.ios.deployment_target = '8.0'
+    component.ios.deployment_target = '9.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = [
       "components/#{component.base_name}/src/*.{h,m}",
@@ -992,7 +992,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "Ink+ColorThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -1007,7 +1007,7 @@ Pod::Spec.new do |mdc|
   # LibraryInfo
 
   mdc.subspec "LibraryInfo" do |component|
-    component.ios.deployment_target = '8.0'
+    component.ios.deployment_target = '9.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = [
       "components/#{component.base_name}/src/*.{h,m}",
@@ -1026,7 +1026,7 @@ Pod::Spec.new do |mdc|
   # List
 
   mdc.subspec "List" do |component|
-    component.ios.deployment_target = '8.0'
+    component.ios.deployment_target = '9.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = [
       "components/#{component.base_name}/src/*.{h,m}",
@@ -1053,7 +1053,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "List+TypographyThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -1066,7 +1066,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "List+ColorThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -1079,7 +1079,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "List+ListThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -1095,7 +1095,7 @@ Pod::Spec.new do |mdc|
   # MaskedTransition
 
   mdc.subspec "MaskedTransition" do |component|
-    component.ios.deployment_target = '8.0'
+    component.ios.deployment_target = '9.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = [
       "components/#{component.base_name}/src/*.{h,m}",
@@ -1118,7 +1118,7 @@ Pod::Spec.new do |mdc|
   # NavigationBar
 
   mdc.subspec "NavigationBar" do |component|
-    component.ios.deployment_target = '8.0'
+    component.ios.deployment_target = '9.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = "components/#{component.base_name}/src/*.{h,m}"
 
@@ -1142,7 +1142,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "NavigationBar+ColorThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -1155,7 +1155,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "NavigationBar+TypographyThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -1170,7 +1170,7 @@ Pod::Spec.new do |mdc|
   # NavigationDrawer
 
   mdc.subspec "NavigationDrawer" do |component|
-    component.ios.deployment_target = '8.0'
+    component.ios.deployment_target = '9.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = [
       "components/#{component.base_name}/src/*.{h,m}",
@@ -1194,7 +1194,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "NavigationDrawer+ColorThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -1209,7 +1209,7 @@ Pod::Spec.new do |mdc|
   # OverlayWindow
 
   mdc.subspec "OverlayWindow" do |component|
-    component.ios.deployment_target = '8.0'
+    component.ios.deployment_target = '9.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = [
       "components/#{component.base_name}/src/*.{h,m}",
@@ -1230,7 +1230,7 @@ Pod::Spec.new do |mdc|
   # PageControl
 
   mdc.subspec "PageControl" do |component|
-    component.ios.deployment_target = '8.0'
+    component.ios.deployment_target = '9.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = [
       "components/#{component.base_name}/src/*.{h,m}",
@@ -1251,7 +1251,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "PageControl+ColorThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -1266,7 +1266,7 @@ Pod::Spec.new do |mdc|
   # Palettes
 
   mdc.subspec "Palettes" do |component|
-    component.ios.deployment_target = '8.0'
+    component.ios.deployment_target = '9.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = [
       "components/#{component.base_name}/src/*.{h,m}",
@@ -1285,7 +1285,7 @@ Pod::Spec.new do |mdc|
   # ProgressView
 
   mdc.subspec "ProgressView" do |component|
-    component.ios.deployment_target = '8.0'
+    component.ios.deployment_target = '9.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = [
       "components/#{component.base_name}/src/*.{h,m}",
@@ -1307,7 +1307,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "ProgressView+ColorThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -1322,7 +1322,7 @@ Pod::Spec.new do |mdc|
   # Ripple
 
   mdc.subspec "Ripple" do |component|
-    component.ios.deployment_target = '8.0'
+    component.ios.deployment_target = '9.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
 
@@ -1341,7 +1341,7 @@ Pod::Spec.new do |mdc|
   # ShadowElevations
 
   mdc.subspec "ShadowElevations" do |component|
-    component.ios.deployment_target = '8.0'
+    component.ios.deployment_target = '9.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = "components/#{component.base_name}/src/*.{h,m}"
 
@@ -1357,7 +1357,7 @@ Pod::Spec.new do |mdc|
   # ShadowLayer
 
   mdc.subspec "ShadowLayer" do |component|
-    component.ios.deployment_target = '8.0'
+    component.ios.deployment_target = '9.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = "components/#{component.base_name}/src/*.{h,m}"
 
@@ -1375,7 +1375,7 @@ Pod::Spec.new do |mdc|
   # ShapeLibrary
 
   mdc.subspec "ShapeLibrary" do |component|
-    component.ios.deployment_target = '8.0'
+    component.ios.deployment_target = '9.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
 
@@ -1391,7 +1391,7 @@ Pod::Spec.new do |mdc|
   # Shapes
 
   mdc.subspec "Shapes" do |component|
-    component.ios.deployment_target = '8.0'
+    component.ios.deployment_target = '9.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
 
@@ -1407,7 +1407,7 @@ Pod::Spec.new do |mdc|
   # Slider
 
   mdc.subspec "Slider" do |component|
-    component.ios.deployment_target = '8.0'
+    component.ios.deployment_target = '9.0'
     component.public_header_files = [
       "components/#{component.base_name}/src/*.h"
     ]
@@ -1430,7 +1430,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "Slider+ColorThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -1446,7 +1446,7 @@ Pod::Spec.new do |mdc|
   # Snackbar
 
   mdc.subspec "Snackbar" do |component|
-    component.ios.deployment_target = '8.0'
+    component.ios.deployment_target = '9.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = [
       "components/#{component.base_name}/src/*.{h,m}",
@@ -1478,7 +1478,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "Snackbar+ColorThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -1491,7 +1491,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "Snackbar+FontThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -1504,7 +1504,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "Snackbar+TypographyThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -1519,7 +1519,7 @@ Pod::Spec.new do |mdc|
   # Tabs
 
   mdc.subspec "Tabs" do |component|
-    component.ios.deployment_target = '8.0'
+    component.ios.deployment_target = '9.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = [
       "components/#{component.base_name}/src/*.{h,m}",
@@ -1552,7 +1552,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "Tabs+ColorThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -1565,7 +1565,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "Tabs+FontThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -1578,7 +1578,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "Tabs+TypographyThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -1593,7 +1593,7 @@ Pod::Spec.new do |mdc|
   # TextFields
 
   mdc.subspec "TextFields" do |component|
-    component.ios.deployment_target = '8.0'
+    component.ios.deployment_target = '9.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = [
       "components/#{component.base_name}/src/*.{h,m}",
@@ -1621,7 +1621,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "TextFields+ColorThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -1634,7 +1634,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "TextFields+FontThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -1647,7 +1647,7 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "TextFields+TypographyThemer" do |extension|
-    extension.ios.deployment_target = '8.0'
+    extension.ios.deployment_target = '9.0'
     extension.public_header_files = [
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     ]
@@ -1662,7 +1662,7 @@ Pod::Spec.new do |mdc|
   # Themes
 
   mdc.subspec "Themes" do |component|
-    component.ios.deployment_target = '8.0'
+    component.ios.deployment_target = '9.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = [
       "components/#{component.base_name}/src/*.{h,m}",
@@ -1684,7 +1684,7 @@ Pod::Spec.new do |mdc|
   # Typography
 
   mdc.subspec "Typography" do |component|
-    component.ios.deployment_target = '8.0'
+    component.ios.deployment_target = '9.0'
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = [
       "components/#{component.base_name}/src/*.{h,m}",
@@ -1705,7 +1705,7 @@ Pod::Spec.new do |mdc|
 
   mdc.subspec "schemes" do |scheme_spec|
     scheme_spec.subspec "Color" do |scheme|
-      scheme.ios.deployment_target = '8.0'
+      scheme.ios.deployment_target = '9.0'
       scheme.public_header_files = "components/schemes/#{scheme.base_name}/src/*.h"
       scheme.source_files = "components/schemes/#{scheme.base_name}/src/*.{h,m}"
 
@@ -1719,7 +1719,7 @@ Pod::Spec.new do |mdc|
       end
     end
     scheme_spec.subspec "Shape" do |scheme|
-      scheme.ios.deployment_target = '8.0'
+      scheme.ios.deployment_target = '9.0'
       scheme.public_header_files = "components/schemes/#{scheme.base_name}/src/*.h"
       scheme.source_files = "components/schemes/#{scheme.base_name}/src/*.{h,m}"
       scheme.dependency "MaterialComponents/ShapeLibrary"
@@ -1734,7 +1734,7 @@ Pod::Spec.new do |mdc|
       end
     end
     scheme_spec.subspec "Typography" do |scheme|
-      scheme.ios.deployment_target = '8.0'
+      scheme.ios.deployment_target = '9.0'
       scheme.public_header_files = "components/schemes/#{scheme.base_name}/src/*.h"
       scheme.source_files = "components/schemes/#{scheme.base_name}/src/*.{h,m}"
       scheme.dependency "MaterialComponents/Typography"
@@ -1756,7 +1756,7 @@ Pod::Spec.new do |mdc|
     registerIcons(private_spec)
 
     private_spec.subspec "Application" do |component|
-      component.ios.deployment_target = '8.0'
+      component.ios.deployment_target = '9.0'
       component.public_header_files = "components/private/#{component.base_name}/src/*.h"
       component.source_files = "components/private/#{component.base_name}/src/*.{h,m}"
 
@@ -1770,7 +1770,7 @@ Pod::Spec.new do |mdc|
     end
 
     private_spec.subspec "KeyboardWatcher" do |component|
-      component.ios.deployment_target = '8.0'
+      component.ios.deployment_target = '9.0'
       component.public_header_files = "components/private/#{component.base_name}/src/*.h"
       component.source_files = "components/private/#{component.base_name}/src/*.{h,m}"
 
@@ -1786,7 +1786,7 @@ Pod::Spec.new do |mdc|
     end
 
     private_spec.subspec "Math" do |component|
-      component.ios.deployment_target = '8.0'
+      component.ios.deployment_target = '9.0'
       component.public_header_files = "components/private/#{component.base_name}/src/*.h"
       component.source_files = "components/private/#{component.base_name}/src/*.{h,m}"
 
@@ -1800,7 +1800,7 @@ Pod::Spec.new do |mdc|
     end
 
     private_spec.subspec "Overlay" do |component|
-      component.ios.deployment_target = '8.0'
+      component.ios.deployment_target = '9.0'
       component.public_header_files = "components/private/#{component.base_name}/src/*.h"
       component.source_files = [
         "components/private/#{component.base_name}/src/*.{h,m}",
@@ -1817,7 +1817,7 @@ Pod::Spec.new do |mdc|
     end
 
     private_spec.subspec "ThumbTrack" do |component|
-      component.ios.deployment_target = '8.0'
+      component.ios.deployment_target = '9.0'
       component.public_header_files = "components/private/#{component.base_name}/src/*.h"
       component.source_files = [
         "components/private/#{component.base_name}/src/*.{h,m}",
@@ -1841,7 +1841,7 @@ Pod::Spec.new do |mdc|
     end
 
     private_spec.subspec "UIMetrics" do |component|
-      component.ios.deployment_target = '8.0'
+      component.ios.deployment_target = '9.0'
       component.public_header_files = "components/private/#{component.base_name}/src/*.h"
       component.source_files = [
         "components/private/#{component.base_name}/src/*.{h,m}",
