@@ -57,6 +57,9 @@
 /** The container view controller for the header and content, used for mocking some properties. */
 @property(nonatomic, strong) FakeBottomDrawerContainerViewController *containerViewController;
 
+/** Presenting view controller of the Bottom Drawer Container view controller. */
+@property(nonatomic, strong) UIViewController *presentingViewController;
+
 @end
 
 @implementation MDCBottomDrawerControllerSnapshotTests
@@ -77,9 +80,9 @@
   contentViewController.view.backgroundColor = UIColor.greenColor;
   self.bottomDrawerViewController.contentViewController = contentViewController;
   self.bottomDrawerViewController.headerViewController = headerViewController;
-  UIViewController *presentingViewController = [[UIViewController alloc] init];
+  self.presentingViewController = [[UIViewController alloc] init];
   self.containerViewController = [[FakeBottomDrawerContainerViewController alloc]
-      initWithOriginalPresentingViewController:presentingViewController
+      initWithOriginalPresentingViewController:self.presentingViewController
                             trackingScrollView:nil];
   self.containerViewController.contentViewController =
       self.bottomDrawerViewController.contentViewController;
@@ -103,7 +106,7 @@
 
 - (void)testPresentedDrawerWithColoredViews {
   // When
-  self.containerViewController.presentingViewController.view.frame = CGRectMake(0, 0, 375, 667);
+  self.presentingViewController.view.frame = CGRectMake(0, 0, 375, 667);
   self.bottomDrawerViewController.view.bounds = CGRectMake(0, 0, 375, 667);
   self.bottomDrawerViewController.contentViewController.preferredContentSize =
       CGSizeMake(375, 1000);
@@ -127,7 +130,7 @@
       self.bottomDrawerViewController.headerViewController;
 
   // When
-  self.containerViewController.presentingViewController.view.frame = CGRectMake(0, 0, 667, 375);
+  self.presentingViewController.view.frame = CGRectMake(0, 0, 667, 375);
   self.bottomDrawerViewController.view.bounds = CGRectMake(0, 0, 667, 375);
   self.bottomDrawerViewController.contentViewController.preferredContentSize =
       CGSizeMake(667, 1000);
