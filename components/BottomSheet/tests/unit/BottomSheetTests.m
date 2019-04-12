@@ -30,7 +30,7 @@
   MDCBottomSheetController *bottomSheet = [[MDCBottomSheetController alloc] init];
 
   // Then
-  XCTAssertFalse(bottomSheet.showScrollIndicatorsByDefault);
+  XCTAssertFalse(bottomSheet.shouldFlashScrollIndicatorsOnAppearance);
 }
 
 - (void)testSetShowScrollIndicatorsResultsInCorrectValue {
@@ -38,10 +38,10 @@
   MDCBottomSheetController *bottomSheet = [[MDCBottomSheetController alloc] init];
 
   // When
-  bottomSheet.showScrollIndicatorsByDefault = YES;
+  bottomSheet.shouldFlashScrollIndicatorsOnAppearance = YES;
 
   // Then
-  XCTAssertTrue(bottomSheet.showScrollIndicatorsByDefault);
+  XCTAssertTrue(bottomSheet.shouldFlashScrollIndicatorsOnAppearance);
 }
 
 @end

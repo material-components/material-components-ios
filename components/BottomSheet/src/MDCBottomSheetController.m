@@ -76,7 +76,7 @@
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
 
-  if (self.showScrollIndicatorsByDefault && self.trackingScrollView) {
+  if (self.shouldFlashScrollIndicatorsOnAppearance) {
     [self.trackingScrollView flashScrollIndicators];
   }
 }

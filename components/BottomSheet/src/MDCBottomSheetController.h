@@ -51,7 +51,7 @@
 
  @note Defaults to @c NO.
  */
-@property(nonatomic, assign) BOOL showScrollIndicatorsByDefault;
+@property(nonatomic, assign) BOOL shouldFlashScrollIndicatorsOnAppearance;
 
 /**
  When set to false, the bottom sheet controller can't be dismissed by tapping outside of sheet area.
