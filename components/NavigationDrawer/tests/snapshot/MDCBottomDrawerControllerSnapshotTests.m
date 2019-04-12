@@ -60,10 +60,11 @@
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  //  self.recordMode = YES;
+  //   self.recordMode = YES;
 }
 
 - (void)generateSnapshotAndVerifyForView:(UIView *)view {
+  [view layoutIfNeeded];
   UIView *snapshotView = [view mdc_addToBackgroundView];
   [self snapshotVerifyView:snapshotView];
 }
@@ -72,6 +73,8 @@
 
 - (void)testPresentedDrawerWithColoredViews {
   // Given
+  UIViewController *presentingViewController = [[UIViewController alloc] init];
+  presentingViewController.view.frame = CGRectMake(0, 0, 375, 667);
   MDCBottomDrawerViewController *viewController = [[MDCBottomDrawerViewController alloc] init];
   FakeBottomDrawerHeader *headerViewController = [[FakeBottomDrawerHeader alloc] init];
   headerViewController.view.backgroundColor = UIColor.blueColor;
@@ -81,17 +84,17 @@
   viewController.headerViewController = headerViewController;
   FakeBottomDrawerContainerViewController *container =
       [[FakeBottomDrawerContainerViewController alloc]
-          initWithOriginalPresentingViewController:viewController
+          initWithOriginalPresentingViewController:presentingViewController
                                 trackingScrollView:nil];
   container.contentViewController = viewController.contentViewController;
   container.headerViewController = viewController.headerViewController;
 
   // When
-  viewController.view.bounds = CGRectMake(0, 0, 375, 667);
   viewController.contentViewController.preferredContentSize = CGSizeMake(375, 1000);
   viewController.headerViewController.preferredContentSize = CGSizeMake(375, 80);
   [viewController.view addSubview:container.view];
   [viewController addChildViewController:container];
+  viewController.view.frame = CGRectMake(0, 0, 375, 667);
 
   // Then
   [self generateSnapshotAndVerifyForView:viewController.view];
@@ -99,6 +102,8 @@
 
 - (void)testPresentedDrawerWithColoredViewsWithVerticalSizeClassCompact {
   // Given
+  UIViewController *presentingViewController = [[UIViewController alloc] init];
+  presentingViewController.view.frame = CGRectMake(0, 0, 667, 375);
   MDCBottomDrawerViewController *viewController = [[MDCBottomDrawerViewController alloc] init];
   FakeBottomDrawerHeader *headerViewController = [[FakeBottomDrawerHeader alloc] init];
   headerViewController.view.backgroundColor = UIColor.blueColor;
@@ -111,18 +116,18 @@
   traitCollection.verticalSizeClassOverride = UIUserInterfaceSizeClassCompact;
   FakeBottomDrawerContainerViewController *container =
       [[FakeBottomDrawerContainerViewController alloc]
-          initWithOriginalPresentingViewController:viewController
+          initWithOriginalPresentingViewController:presentingViewController
                                 trackingScrollView:nil];
   container.traitCollectionOverride = traitCollection;
   container.contentViewController = viewController.contentViewController;
   container.headerViewController = viewController.headerViewController;
 
   // When
-  viewController.view.bounds = CGRectMake(0, 0, 667, 375);
   viewController.contentViewController.preferredContentSize = CGSizeMake(667, 1000);
   viewController.headerViewController.preferredContentSize = CGSizeMake(667, 80);
   [viewController.view addSubview:container.view];
   [viewController addChildViewController:container];
+  viewController.view.bounds = CGRectMake(0, 0, 667, 375);
 
   // Then
   [self generateSnapshotAndVerifyForView:viewController.view];
