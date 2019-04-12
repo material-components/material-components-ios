@@ -223,7 +223,6 @@ static NSString *const kMessageLongArabic =
   self.alertController.view.bounds =
       CGRectMake(0, 0, preferredContentSize.width, preferredContentSize.height);
 
-
   // Then
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
