@@ -543,12 +543,12 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
     for (UIButton *button in buttons) {
       CGRect buttonRect = button.frame;
 
-      buttonCenter.y -= buttonRect.size.height * 0.5;
+      buttonCenter.y -= buttonRect.size.height * (CGFloat)0.5;
 
       button.center = buttonCenter;
 
       if (button != [buttons lastObject]) {
-        buttonCenter.y -= buttonRect.size.height * 0.5;
+        buttonCenter.y -= buttonRect.size.height * (CGFloat)0.5;
         buttonCenter.y -= MDCDialogActionsVerticalPadding;
       }
     }
