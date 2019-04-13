@@ -110,6 +110,7 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
  above the text once there is some. It is distinct from a placeholder.
  */
 @property(strong, nonatomic, readonly, nonnull) UILabel *floatingLabel;
+
 /**
  The @c leadingUnderlineLabel can be used to display helper or error text.
  */

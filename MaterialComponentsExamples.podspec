@@ -1,9 +1,11 @@
 experimental_sources = [
+  'components/*/examples/experimental/supplemental/private/*.{h,m,swift}',
   'components/*/examples/experimental/supplemental/*.{h,m,swift}',
   'components/*/examples/experimental/*.{h,m,swift}',
 ]
 
 experimental_headers = [
+  'components/*/examples/experimental/supplemental/private/*.h',
   'components/*/examples/experimental/supplemental/*.h',
   'components/*/examples/experimental/*.h',
 ]

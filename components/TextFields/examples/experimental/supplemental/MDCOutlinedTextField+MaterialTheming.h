@@ -14,15 +14,19 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCContainedInputView.h"
+#import "MDCOutlinedTextField.h"
+#import "MaterialContainerScheme.h"
 
-@interface MDCContainedInputViewColorSchemeOutlined : MDCContainedInputViewColorScheme
-@property(strong, nonatomic) UIColor *outlineColor;
+/**
+ This category is used to style MDCOutlinedTextField instances with an MDCContainerScheme.
+ */
+@interface MDCOutlinedTextField (MaterialTheming)
+
+/**
+ Applies a container scheme's subsystem-specific schemes to the receiver.
+ 
+ @param scheme A container scheme instance.
+ */
+- (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
+
 @end
-
-@interface MDCContainerStylerOutlined : MDCContainerStylerBase <MDCContainedInputViewStyler>
-@end
-
-//@interface MDCContainerStylerOutlinedPositioningDelegate
-//    : MDCContainerStylerBasePositioningDelegate <MDCContainedInputViewStylerPositioningDelegate>
-//@end

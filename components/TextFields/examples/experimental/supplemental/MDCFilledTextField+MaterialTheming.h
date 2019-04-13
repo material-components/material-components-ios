@@ -14,13 +14,13 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCInputTextField.h"
+#import "MDCFilledTextField.h"
 #import "MaterialContainerScheme.h"
 
 /**
- This category is used to style MDCInputTextField instances with an MDCContainerScheme.
+ This category is used to style MDCFilledTextField instances with an MDCContainerScheme.
  */
-@interface MDCInputTextField (MaterialTheming)
+@interface MDCFilledTextField (MaterialTheming)
 
 /**
  Applies a container scheme's subsystem-specific schemes to the receiver.

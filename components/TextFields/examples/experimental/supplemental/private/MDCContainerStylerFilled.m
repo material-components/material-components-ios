@@ -67,12 +67,14 @@ static const CGFloat kLayerAnimationDuration = (CGFloat)0.2;
     (MDCContainedInputViewState)state {
   MDCContainedInputViewColorSchemeFilled *colorScheme =
       [[MDCContainedInputViewColorSchemeFilled alloc] init];
-  UIColor *filledSublayerUnderlineFillColor =
+  UIColor *thinUnderlineFillColor =
+      [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.5];
+  UIColor *thickUnderlineFillColor =
       [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.06];
   UIColor *filledSublayerFillColor = [UIColor colorWithRed:(0xDD / 255)
                                                      green:(0xDD / 255)
                                                       blue:(0xDD / 255)
-                                                     alpha:1];
+                                                     alpha:0.25];
 
   switch (state) {
     case MDCContainedInputViewStateNormal:
@@ -82,17 +84,17 @@ static const CGFloat kLayerAnimationDuration = (CGFloat)0.2;
     case MDCContainedInputViewStateDisabled:
       break;
     case MDCContainedInputViewStateErrored:
-      filledSublayerUnderlineFillColor = colorScheme.errorColor;
+      thickUnderlineFillColor = colorScheme.errorColor;
       break;
     case MDCContainedInputViewStateFocused:
-      filledSublayerUnderlineFillColor = [UIColor blackColor];
+      thickUnderlineFillColor = [UIColor blackColor];
       break;
     default:
       break;
   }
   colorScheme.filledSublayerFillColor = filledSublayerFillColor;
-  colorScheme.thickUnderlineFillColor = filledSublayerUnderlineFillColor;
-  colorScheme.thinUnderlineFillColor = filledSublayerUnderlineFillColor;
+  colorScheme.thickUnderlineFillColor = thickUnderlineFillColor;
+  colorScheme.thinUnderlineFillColor = thinUnderlineFillColor;
   return (id<MDCContainedInputViewColorScheming>)colorScheme;
 }
 

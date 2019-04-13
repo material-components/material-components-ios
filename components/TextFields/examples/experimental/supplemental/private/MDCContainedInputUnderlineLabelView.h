@@ -12,21 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "MDCContainedInputView.h"
 
-#import "MDCInputTextField.h"
-#import "MaterialContainerScheme.h"
+#import "MDCContainedInputUnderlineLabelViewLayout.h"
 
-/**
- This category is used to style MDCInputTextField instances with an MDCContainerScheme.
- */
-@interface MDCInputTextField (MaterialTheming)
+NS_ASSUME_NONNULL_BEGIN
 
-/**
- Applies a container scheme's subsystem-specific schemes to the receiver.
+@interface MDCContainedInputUnderlineLabelView : UIView
 
- @param scheme A container scheme instance.
- */
-- (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
+@property(nonatomic, strong, readonly) UILabel *leftUnderlineLabel;
+@property(nonatomic, strong, readonly) UILabel *rightUnderlineLabel;
+@property(nonatomic, strong) MDCContainedInputUnderlineLabelViewLayout *layout;
 
 @end
+
+NS_ASSUME_NONNULL_END
