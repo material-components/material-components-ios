@@ -36,7 +36,7 @@ static NSString *const kActionLowUrdu = @"کم";
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  self.recordMode = YES;
+  // self.recordMode = YES;
 
   self.iconImage = [[UIImage mdc_testImageOfSize:CGSizeMake(40, 40)]
       imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
@@ -88,9 +88,6 @@ static NSString *const kActionLowUrdu = @"کم";
     // font for any given nominal point size.
     dialogBodyFont = [UIFont fontWithName:urduFontName size:20.0];
     dialogButtonFont = [UIFont fontWithName:urduFontName size:26.0];
-  } else {
-    dialogBodyFont = [UIFont systemFontOfSize:20.0];
-    dialogButtonFont = [UIFont systemFontOfSize:26.0];
   }
   self.alertController.messageFont = dialogBodyFont;
   self.alertController.buttonFont = dialogButtonFont;
