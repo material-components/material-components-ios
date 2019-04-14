@@ -46,6 +46,14 @@
 @property(nonatomic, weak, nullable) UIScrollView *trackingScrollView;
 
 /**
+ This property determines if @c showFlashIndicators is called by default when @c
+ MDCBottomSheetController calls @c viewDidAppear.
+
+ @note Defaults to @c NO.
+ */
+@property(nonatomic, assign) BOOL shouldFlashScrollIndicatorsOnAppearance;
+
+/**
  When set to false, the bottom sheet controller can't be dismissed by tapping outside of sheet area.
  */
 @property(nonatomic, assign) BOOL dismissOnBackgroundTap;
