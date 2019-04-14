@@ -307,6 +307,30 @@ static NSString *controlStateDescription(UIControlState controlState) {
   }
 }
 
+
+- (void)testBorderColorForState {
+  for (NSUInteger state  = 0; state <= kNumUIControlStates; ++state) {
+    // Given
+    UIColor *color = randomColor();
+
+    // When
+    [self.button setBorderColor:color forState:state];
+
+    // Then
+    XCTAssertEqualObjects([self.button borderColorForState:state], color);
+  }
+}
+
+- (void)testBorderColorForStateFallbackBehavior {
+  // When
+  [self.button setBorderColor:UIColor.redColor forState:UIControlStateNormal];
+
+  // Then
+  for (NSUInteger state = 0; state <= kNumUIControlStates; ++state) {
+    XCTAssertEqualObjects([self.button borderColorForState:state], UIColor.redColor);
+  }
+}
+
 - (void)testBackgroundColorForState {
   for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
     // Given

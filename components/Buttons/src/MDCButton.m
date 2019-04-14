@@ -667,7 +667,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 #pragma mark - Border Color
 
 - (UIColor *)borderColorForState:(UIControlState)state {
-  return _borderColors[@(state)];
+  return _borderColors[@(state)] ?: _borderColors[@(UIControlStateNormal)];
 }
 
 - (void)setBorderColor:(UIColor *)borderColor forState:(UIControlState)state {
