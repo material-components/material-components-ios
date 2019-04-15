@@ -94,16 +94,13 @@ static NSString *const kActionLowUrdu = @"کم";
   self.alertController.titleIcon = self.iconImage;
   self.alertController.message = kMessageUrdu;
   NSString *urduFontName = @"NotoNastaliqUrdu";
-  UIFont *dialogBodyFont;
-  UIFont *dialogButtonFont;
+  UIFont *dialogBodyFont = [UIFont systemFontOfSize:20.0];
+  UIFont *dialogButtonFont = [UIFont systemFontOfSize:26.0];
   if (@available(iOS 11, *)) {
     // Noto Nastaliq Urdu was added in iOS 11, and is an extremely tall
     // font for any given nominal point size.
     dialogBodyFont = [UIFont fontWithName:urduFontName size:20.0];
     dialogButtonFont = [UIFont fontWithName:urduFontName size:26.0];
-  } else {
-    dialogBodyFont = [UIFont systemFontOfSize:20.0];
-    dialogButtonFont = [UIFont systemFontOfSize:26.0];
   }
   self.alertController.messageFont = dialogBodyFont;
   self.alertController.buttonFont = dialogButtonFont;
@@ -116,6 +113,7 @@ static NSString *const kActionLowUrdu = @"کم";
   [self.alertController addAction:actionLow];
   [self.alertController addAction:actionMedium];
 
+  [self changeToRTL:self.alertController];
   CGSize preferredContentSize = self.alertController.preferredContentSize;
   self.alertController.view.bounds =
       CGRectMake(0, 0, preferredContentSize.width, preferredContentSize.height);
