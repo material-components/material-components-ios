@@ -14,6 +14,8 @@
 
 #import "MDCBottomNavigationSystemDialogView.h"
 
+#import <CoreGraphics/CoreGraphics.h>
+
 static const CGFloat kCornerRadius = 10;
 static const CGFloat kMargins = 10;
 
@@ -30,6 +32,10 @@ static UIVisualEffectView *MDCInitializeCompatibleBlurView() {
 
 @interface MDCBottomNavigationSystemDialogView ()
 
+/**
+ * The background blur view. This property is nil if on instantiation reduced transparency was
+ * enabled.
+ */
 @property(nonatomic, nullable) UIVisualEffectView *blurView;
 
 @end
@@ -65,96 +71,25 @@ static UIVisualEffectView *MDCInitializeCompatibleBlurView() {
     self.layoutMargins = layoutMargins;
   } else {
     _blurView = MDCInitializeCompatibleBlurView();
-    _blurView.translatesAutoresizingMaskIntoConstraints = NO;
     _blurView.contentView.layoutMargins = layoutMargins;
     [self addSubview:_blurView];
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:_blurView
-                                                     attribute:NSLayoutAttributeLeading
-                                                     relatedBy:NSLayoutRelationEqual
-                                                        toItem:self
-                                                     attribute:NSLayoutAttributeLeading
-                                                    multiplier:1
-                                                      constant:0]];
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:_blurView
-                                                     attribute:NSLayoutAttributeTrailing
-                                                     relatedBy:NSLayoutRelationEqual
-                                                        toItem:self
-                                                     attribute:NSLayoutAttributeTrailing
-                                                    multiplier:1
-                                                      constant:0]];
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:_blurView
-                                                     attribute:NSLayoutAttributeTop
-                                                     relatedBy:NSLayoutRelationEqual
-                                                        toItem:self
-                                                     attribute:NSLayoutAttributeTop
-                                                    multiplier:1
-                                                      constant:0]];
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:_blurView
-                                                     attribute:NSLayoutAttributeBottom
-                                                     relatedBy:NSLayoutRelationEqual
-                                                        toItem:self
-                                                     attribute:NSLayoutAttributeBottom
-                                                    multiplier:1
-                                                      constant:0]];
   }
 }
 
 - (UIView *)contentView {
-  if (UIAccessibilityIsReduceTransparencyEnabled()) {
-    return self;
+  if (self.blurView) {
+    return self.blurView.contentView;
   }
 
-  return self.blurView.contentView;
+  return self;
 }
 
-- (void)setContent:(UIView *)content {
-  if ([self.contentView.subviews containsObject:content]) {
-    return;
-  }
-
-  if (self.contentView.subviews.count > 0) {
-    [self removeContentViewSubviews];
-  }
-
-  [self.contentView addSubview:content];
-  content.translatesAutoresizingMaskIntoConstraints = NO;
-  NSMutableArray<NSLayoutConstraint *> *constraints = [NSMutableArray array];
-  [constraints addObject:[NSLayoutConstraint constraintWithItem:content
-                                                      attribute:NSLayoutAttributeLeading
-                                                      relatedBy:NSLayoutRelationEqual
-                                                         toItem:self
-                                                      attribute:NSLayoutAttributeLeadingMargin
-                                                     multiplier:1
-                                                       constant:0]];
-  [constraints addObject:[NSLayoutConstraint constraintWithItem:content
-                                                      attribute:NSLayoutAttributeTrailing
-                                                      relatedBy:NSLayoutRelationEqual
-                                                         toItem:self
-                                                      attribute:NSLayoutAttributeTrailingMargin
-                                                     multiplier:1
-                                                       constant:0]];
-  [constraints addObject:[NSLayoutConstraint constraintWithItem:content
-                                                      attribute:NSLayoutAttributeTop
-                                                      relatedBy:NSLayoutRelationEqual
-                                                         toItem:self
-                                                      attribute:NSLayoutAttributeTopMargin
-                                                     multiplier:1
-                                                       constant:0]];
-  [constraints addObject:[NSLayoutConstraint constraintWithItem:content
-                                                      attribute:NSLayoutAttributeBottom
-                                                      relatedBy:NSLayoutRelationEqual
-                                                         toItem:self
-                                                      attribute:NSLayoutAttributeBottomMargin
-                                                     multiplier:1
-                                                       constant:0]];
-  [self addConstraints:constraints];
-}
-
-#pragma mark - Private Methods
-
-- (void)removeContentViewSubviews {
-  for (UIView *subview in self.contentView.subviews) {
-    [subview removeFromSuperview];
+- (void)layoutSubviews {
+  [super layoutSubviews];
+  if (self.blurView) {
+    CGFloat height = CGRectGetHeight(self.bounds);
+    CGFloat width = CGRectGetWidth(self.bounds);
+    self.blurView.frame = CGRectMake(0, 0, width, height);
   }
 }
 

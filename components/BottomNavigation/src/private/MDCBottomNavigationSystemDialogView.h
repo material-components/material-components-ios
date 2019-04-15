@@ -14,10 +14,13 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ * A transient view that mimics a system dialog/popup view. This view may be used as is or
+ * subclassed. Do not add subviews directly to this view, but to its content view. Layout subviews
+ * within the contentView relative to the contentView's layout margins.
+ */
 @interface MDCBottomNavigationSystemDialogView : UIView
 
 @property(nonatomic, readonly, nonnull) UIView *contentView;
-
-- (void)setContent:(UIView *)content;
 
 @end

@@ -14,8 +14,18 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MDCBottomNavigationLargeItemView : UIView
+#import "MDCBottomNavigationSystemDialogView.h"
 
-- (instancetype)initWithTabBarItem:(UITabBarItem *)item;
+/**
+ * The transient dialog view that displays a UITabBarItem with a larger icon and title font size.
+ */
+@interface MDCBottomNavigationLargeItemDialogView : MDCBottomNavigationSystemDialogView
+
+/**
+ * Updates this view's image and title views with the corresponding properties of the given tab bar
+ * item. If the tab bar item's largeContentSizeImage is not nil that image will be used otherwise
+ * the item's image property may be scaled up.
+ */
+- (void)updateWithTabBarItem:(UITabBarItem *)item;
 
 @end
