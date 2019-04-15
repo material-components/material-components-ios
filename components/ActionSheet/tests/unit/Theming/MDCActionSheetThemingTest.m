@@ -62,7 +62,9 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
   // Given
   MDCTypographyScheme *typographyScheme =
       [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
-  MDCActionSheetAction *fakeActionOne = [MDCActionSheetAction actionWithTitle:@"Action 1" image:nil handler:nil];
+  MDCActionSheetAction *fakeActionOne = [MDCActionSheetAction actionWithTitle:@"Action 1"
+                                                                        image:nil
+                                                                      handler:nil];
   [self.actionSheet addAction:fakeActionOne];
   UITableView *table = self.actionSheet.tableView;
   NSIndexPath *fakeIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];

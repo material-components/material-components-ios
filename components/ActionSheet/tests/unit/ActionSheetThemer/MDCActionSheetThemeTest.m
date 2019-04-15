@@ -195,11 +195,13 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
 
 - (void)testApplyColorTheme {
   // Given
-  MDCActionSheetAction *fakeActionOne = [MDCActionSheetAction actionWithTitle:@"Action 1" image:nil handler:nil];
+  MDCActionSheetAction *fakeActionOne = [MDCActionSheetAction actionWithTitle:@"Action 1"
+                                                                        image:nil
+                                                                      handler:nil];
   [self.actionSheet addAction:fakeActionOne];
   UITableView *table = self.actionSheet.tableView;
   NSIndexPath *fakeIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-  
+
   // When
   [MDCActionSheetColorThemer applySemanticColorScheme:self.colorScheme
                               toActionSheetController:self.actionSheet];
@@ -219,7 +221,9 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
   // Given
   self.actionSheet.title = @"Test title";
   self.actionSheet.message = @"Test message";
-  MDCActionSheetAction *fakeActionOne = [MDCActionSheetAction actionWithTitle:@"Action 1" image:nil handler:nil];
+  MDCActionSheetAction *fakeActionOne = [MDCActionSheetAction actionWithTitle:@"Action 1"
+                                                                        image:nil
+                                                                      handler:nil];
   [self.actionSheet addAction:fakeActionOne];
   UITableView *table = self.actionSheet.tableView;
   NSIndexPath *fakeIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
@@ -229,7 +233,7 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
                                 toActionSheetController:self.actionSheet];
   UITableViewCell *cell = [table.dataSource tableView:table cellForRowAtIndexPath:fakeIndexPath];
   MDCActionSheetItemTableViewCell *actionCell = (MDCActionSheetItemTableViewCell *)cell;
-  
+
   // Then
   XCTAssertEqualObjects(self.actionSheet.header.titleLabel.font, self.typographyScheme.subtitle1);
   XCTAssertEqualObjects(self.actionSheet.header.messageLabel.font, self.typographyScheme.body2);
