@@ -71,10 +71,10 @@
     // Noto Nastaliq Urdu was added in iOS 11, and is an extremely tall
     // font for any given nominal point size.
     dialogBodyFont = [UIFont fontWithName:urduFontName size:20.0];
-    dialogButtonFont = [UIFont fontWithName:urduFontName size:26.0];
+    dialogButtonFont = [UIFont fontWithName:urduFontName size:20.0];
   } else {
     dialogBodyFont = [UIFont systemFontOfSize:20.0];
-    dialogButtonFont = [UIFont systemFontOfSize:26.0];
+    dialogButtonFont = [UIFont systemFontOfSize:20.0];
   }
   alert.messageFont = dialogBodyFont;
   alert.buttonFont = dialogButtonFont;
