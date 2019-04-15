@@ -63,10 +63,15 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
   // Given
   MDCTypographyScheme *typographyScheme =
       [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+  MDCActionSheetAction *fakeActionOne = [MDCActionSheetAction actionWithTitle:@"Action 1" image:nil handler:nil];
+  [self.actionSheet addAction:fakeActionOne];
+  UITableView *table = self.actionSheet.tableView;
+  NSIndexPath *fakeIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
 
   // When
   [self.actionSheet applyThemeWithScheme:self.containerScheme];
-  NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheet];
+  UITableViewCell *cell = [table.dataSource tableView:table cellForRowAtIndexPath:fakeIndexPath];
+  MDCActionSheetItemTableViewCell *actionCell = (MDCActionSheetItemTableViewCell *)cell;
 
   // Then
   // Color
@@ -77,16 +82,13 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
   XCTAssertEqualObjects(self.actionSheet.header.messageLabel.font, typographyScheme.body2);
 
   // Cells
-  XCTAssertNotEqual(cells.count, 0U);
-  for (MDCActionSheetItemTableViewCell *cell in cells) {
-    XCTAssertEqualObjects(cell.actionImageView.tintColor,
-                          [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kMediumAlpha]);
-    XCTAssertEqualObjects(cell.actionLabel.textColor,
-                          [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kHighAlpha]);
-    XCTAssertEqualObjects(cell.inkTouchController.defaultInkView.inkColor,
-                          [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kInkAlpha]);
-    XCTAssertEqualObjects(cell.actionLabel.font, typographyScheme.subtitle1);
-  }
+  XCTAssertEqualObjects(actionCell.actionImageView.tintColor,
+                        [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kMediumAlpha]);
+  XCTAssertEqualObjects(actionCell.actionLabel.textColor,
+                        [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kHighAlpha]);
+  XCTAssertEqualObjects(actionCell.inkTouchController.defaultInkView.inkColor,
+                        [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kInkAlpha]);
+  XCTAssertEqualObjects(actionCell.actionLabel.font, typographyScheme.subtitle1);
 }
 
 - (void)testActionSheetThemingTestWithHeaderOnly {
