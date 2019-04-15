@@ -12,9 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialSnapshot.h"
+#import <CoreGraphics/CoreGraphics.h>
+#import <UIKit/UIKit.h>
 
 #import "MaterialDialogs.h"
+#import "MaterialSnapshot.h"
 
 static NSString *const kTitleUrdu = @"عنوان";
 static NSString *const kMessageUrdu =
@@ -24,8 +26,19 @@ static NSString *const kMessageUrdu =
 static NSString *const kActionMediumUrdu = @"درمیانی";
 static NSString *const kActionLowUrdu = @"کم";
 
+/**
+ Snapshot tests of MDCAlertController for localization.
+ */
 @interface MDCAlertControllerLocalizationSnapshotTests : MDCSnapshotTestCase
+
+/**
+ The alert controller used during testing.
+ */
 @property(nonatomic, strong) MDCAlertController *alertController;
+
+/**
+ The icon image used during testing.
+ */
 @property(nonatomic, strong) UIImage *iconImage;
 @end
 
@@ -75,7 +88,7 @@ static NSString *const kActionLowUrdu = @"کم";
 
 #pragma mark - Tests
 
-- (void)testPreferredContentSizeWithUrduLargeFont {
+- (void)testPreferredContentSizeWithNotoNastaliqUrdu {
   // When
   self.alertController.title = kTitleUrdu;
   self.alertController.titleIcon = self.iconImage;
@@ -88,6 +101,9 @@ static NSString *const kActionLowUrdu = @"کم";
     // font for any given nominal point size.
     dialogBodyFont = [UIFont fontWithName:urduFontName size:20.0];
     dialogButtonFont = [UIFont fontWithName:urduFontName size:26.0];
+  } else {
+    dialogBodyFont = [UIFont systemFontOfSize:20.0];
+    dialogButtonFont = [UIFont systemFontOfSize:26.0];
   }
   self.alertController.messageFont = dialogBodyFont;
   self.alertController.buttonFont = dialogButtonFont;
