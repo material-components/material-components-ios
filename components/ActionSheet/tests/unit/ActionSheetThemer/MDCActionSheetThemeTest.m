@@ -29,7 +29,6 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
 @property(nonatomic, strong) MDCActionSheetHeaderView *header;
 @end
 
-
 @interface MDCActionSheetHeaderView (Testing)
 @property(nonatomic, strong) UILabel *titleLabel;
 @property(nonatomic, strong) UILabel *messageLabel;
