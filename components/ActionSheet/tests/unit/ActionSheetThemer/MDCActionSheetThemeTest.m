@@ -24,6 +24,12 @@ static const CGFloat kHighAlpha = (CGFloat)0.87;
 static const CGFloat kMediumAlpha = (CGFloat)0.6;
 static const CGFloat kInkAlpha = (CGFloat)0.16;
 
+@interface MDCActionSheetController (Testing)
+@property(nonatomic, strong) UITableView *tableView;
+@property(nonatomic, strong) MDCActionSheetHeaderView *header;
+@end
+
+
 @interface MDCActionSheetHeaderView (Testing)
 @property(nonatomic, strong) UILabel *titleLabel;
 @property(nonatomic, strong) UILabel *messageLabel;
