@@ -22,7 +22,7 @@
 
 @implementation MDCContainedInputUnderlineLabelView
 
--(instancetype)initWithFrame:(CGRect)frame {
+- (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
     [self commonMDCContainedInputUnderlineLabelViewInit];
@@ -30,7 +30,7 @@
   return self;
 }
 
--(instancetype)initWithCoder:(NSCoder *)aDecoder {
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
     [self commonMDCContainedInputUnderlineLabelViewInit];
@@ -45,7 +45,7 @@
   [self addSubview:self.rightUnderlineLabel];
 }
 
--(void)layoutSubviews {
+- (void)layoutSubviews {
   [super layoutSubviews];
   if (self.layout) {
     self.leftUnderlineLabel.frame = self.layout.leftUnderlineLabelFrame;

@@ -29,7 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
                     leftUnderlineLabel:(UILabel *)leftUnderlineLabel
                    rightUnderlineLabel:(UILabel *)rightUnderlineLabel
             underlineLabelDrawPriority:
-(MDCContainedInputViewUnderlineLabelDrawPriority)underlineLabelDrawPriority
+                (MDCContainedInputViewUnderlineLabelDrawPriority)underlineLabelDrawPriority
       customUnderlineLabelDrawPriority:(CGFloat)customUnderlineLabelDrawPriority
                      horizontalPadding:(CGFloat)horizontalPadding
                        verticalPadding:(CGFloat)verticalPadding
@@ -38,4 +38,3 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
-

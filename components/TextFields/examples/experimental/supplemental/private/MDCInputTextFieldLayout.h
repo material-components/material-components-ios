@@ -15,9 +15,9 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "MDCContainedInputView.h"
 #import "MDCContainedInputUnderlineLabelView.h"
 #import "MDCContainedInputUnderlineLabelViewLayout.h"
+#import "MDCContainedInputView.h"
 
 @protocol MDCContainedInputViewStyler;
 

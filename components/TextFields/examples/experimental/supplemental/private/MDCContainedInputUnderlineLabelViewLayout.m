@@ -30,7 +30,7 @@
                     leftUnderlineLabel:(UILabel *)leftUnderlineLabel
                    rightUnderlineLabel:(UILabel *)rightUnderlineLabel
             underlineLabelDrawPriority:
-(MDCContainedInputViewUnderlineLabelDrawPriority)underlineLabelDrawPriority
+                (MDCContainedInputViewUnderlineLabelDrawPriority)underlineLabelDrawPriority
       customUnderlineLabelDrawPriority:(CGFloat)customUnderlineLabelDrawPriority
                      horizontalPadding:(CGFloat)horizontalPadding
                        verticalPadding:(CGFloat)verticalPadding
@@ -55,12 +55,11 @@
                        leftUnderlineLabel:(UILabel *)leftUnderlineLabel
                       rightUnderlineLabel:(UILabel *)rightUnderlineLabel
                underlineLabelDrawPriority:
-(MDCContainedInputViewUnderlineLabelDrawPriority)underlineLabelDrawPriority
+                   (MDCContainedInputViewUnderlineLabelDrawPriority)underlineLabelDrawPriority
          customUnderlineLabelDrawPriority:(CGFloat)customUnderlineLabelDrawPriority
                         horizontalPadding:(CGFloat)horizontalPadding
                           verticalPadding:(CGFloat)verticalPadding
                                     isRTL:(BOOL)isRTL {
-
   CGFloat underlineLabelsCombinedMinX = horizontalPadding;
   CGFloat underlineLabelsCombinedMaxX = superviewWidth - horizontalPadding;
   CGFloat underlineLabelsCombinedMaxWidth =
@@ -95,7 +94,7 @@
         trailingUnderlineLabelSize =
             [self underlineLabelSizeWithLabel:trailingUnderlineLabel
                            constrainedToWidth:underlineLabelsCombinedMaxWidth -
-                                            leadingUnderlineLabelSize.width];
+                                              leadingUnderlineLabelSize.width];
       }
       break;
     case MDCContainedInputViewUnderlineLabelDrawPriorityTrailing:
@@ -108,7 +107,7 @@
         leadingUnderlineLabelSize =
             [self underlineLabelSizeWithLabel:leadingUnderlineLabel
                            constrainedToWidth:underlineLabelsCombinedMaxWidth -
-             trailingUnderlineLabelSize.width];
+                                              trailingUnderlineLabelSize.width];
       }
       break;
     default:
@@ -123,7 +122,7 @@
     self.calculatedHeight = 0;
     return;
   }
-  
+
   CGSize leftUnderlineLabelSize = isRTL ? trailingUnderlineLabelSize : leadingUnderlineLabelSize;
   CGSize rightUnderlineLabelSize = isRTL ? leadingUnderlineLabelSize : trailingUnderlineLabelSize;
   CGRect leftUnderlineLabelFrame = CGRectZero;
@@ -138,7 +137,7 @@
         underlineLabelsCombinedMaxX - rightUnderlineLabelSize.width, underlineLabelsCombinedMinY,
         rightUnderlineLabelSize.width, rightUnderlineLabelSize.height);
   }
-  
+
   CGFloat maxUnderlineLabelHeight =
       MAX(CGRectGetMaxY(leftUnderlineLabelFrame), CGRectGetMaxY(rightUnderlineLabelFrame));
   self.leftUnderlineLabelFrame = leftUnderlineLabelFrame;

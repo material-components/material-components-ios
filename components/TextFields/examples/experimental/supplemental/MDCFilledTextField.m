@@ -16,11 +16,12 @@
 
 #import <Foundation/Foundation.h>
 
-#import "MDCInputTextField+Private.h"
-#import "MDCContainerStylerFilled.h"
 #import "MDCContainedInputView.h"
+#import "MDCContainerStylerFilled.h"
+#import "MDCInputTextField+Private.h"
 
-@interface MDCFilledTextFieldPositioningDelegate : NSObject <MDCContainedInputViewStylerPositioningDelegate>
+@interface MDCFilledTextFieldPositioningDelegate
+    : NSObject <MDCContainedInputViewStylerPositioningDelegate>
 @end
 
 @interface MDCFilledTextField ()
@@ -80,4 +81,3 @@
 }
 
 @end
-

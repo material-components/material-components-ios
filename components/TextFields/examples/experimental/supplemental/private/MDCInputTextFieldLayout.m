@@ -218,7 +218,8 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
     floatingLabelNormalMaxX = textRectMaxX;
     floatingLabelFloatingMaxX = floatingLabelNormalMaxX - kFloatingLabelXOffsetFromTextArea;
   } else {
-    textRectMinX = shouldAttemptToDisplayLeftView ? leftViewMaxX + kHorizontalPadding : kHorizontalPadding;
+    textRectMinX =
+        shouldAttemptToDisplayLeftView ? leftViewMaxX + kHorizontalPadding : kHorizontalPadding;
     floatingLabelNormalMinX = textRectMinX;
     floatingLabelFloatingMinX = floatingLabelNormalMinX + kFloatingLabelXOffsetFromTextArea;
     if (shouldAttemptToDisplayClearButton) {
@@ -228,8 +229,9 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
                                                      : textFieldWidth - kHorizontalPadding;
     }
     floatingLabelNormalMaxX = textRectMaxX;
-    floatingLabelFloatingMaxX = shouldAttemptToDisplayRightView ? rightViewMinX - kHorizontalPadding
-                                                                : textFieldWidth - kHorizontalPadding;
+    floatingLabelFloatingMaxX = shouldAttemptToDisplayRightView
+                                    ? rightViewMinX - kHorizontalPadding
+                                    : textFieldWidth - kHorizontalPadding;
   }
 
   CGFloat textRectWidth = textRectMaxX - textRectMinX;
@@ -273,21 +275,20 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
                           textRectRect:textRectNormal
                                  isRTL:isRTL];
 
-  
-  CGFloat underlineLabelVerticalPadding =
-      [containerStyler.positioningDelegate contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:floatingLabelMaxY];
-  self.underlineLabelViewLayout =
-      [[MDCContainedInputUnderlineLabelViewLayout alloc] initWithSuperviewWidth:textFieldWidth
-                                                             leftUnderlineLabel:leftUnderlineLabel
-                                                            rightUnderlineLabel:rightUnderlineLabel
-                                                     underlineLabelDrawPriority:underlineLabelDrawPriority
-                                               customUnderlineLabelDrawPriority:customUnderlineLabelDrawPriority
-                                                              horizontalPadding:kHorizontalPadding
-                                                                verticalPadding:underlineLabelVerticalPadding
-                                                                          isRTL:isRTL];
-  self.underlineLabelViewFrame =
-      CGRectMake(0, topRowBottomRowDividerY, textFieldWidth, self.underlineLabelViewLayout.calculatedHeight);
-  
+  CGFloat underlineLabelVerticalPadding = [containerStyler.positioningDelegate
+      contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:floatingLabelMaxY];
+  self.underlineLabelViewLayout = [[MDCContainedInputUnderlineLabelViewLayout alloc]
+                initWithSuperviewWidth:textFieldWidth
+                    leftUnderlineLabel:leftUnderlineLabel
+                   rightUnderlineLabel:rightUnderlineLabel
+            underlineLabelDrawPriority:underlineLabelDrawPriority
+      customUnderlineLabelDrawPriority:customUnderlineLabelDrawPriority
+                     horizontalPadding:kHorizontalPadding
+                       verticalPadding:underlineLabelVerticalPadding
+                                 isRTL:isRTL];
+  self.underlineLabelViewFrame = CGRectMake(0, topRowBottomRowDividerY, textFieldWidth,
+                                            self.underlineLabelViewLayout.calculatedHeight);
+
   self.leftViewFrame = leftViewFrame;
   self.rightViewFrame = rightViewFrame;
   self.clearButtonFrame = clearButtonFrame;

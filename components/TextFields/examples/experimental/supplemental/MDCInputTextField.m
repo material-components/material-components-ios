@@ -18,10 +18,10 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
-#import "MaterialMath.h"
-#import "MaterialTypography.h"
 #import "MDCContainerStylerPathDrawingUtils.h"
 #import "MDCInputTextFieldLayout.h"
+#import "MaterialMath.h"
+#import "MaterialTypography.h"
 
 #import "MDCContainedInputUnderlineLabelView.h"
 
@@ -320,7 +320,8 @@
 
 - (CGSize)preferredSizeWithWidth:(CGFloat)width {
   CGSize fittingSize = CGSizeMake(width, CGFLOAT_MAX);
-  MDCInputTextFieldLayout *inputTextFieldLayout = [self calculateLayoutWithTextFieldSize:fittingSize];
+  MDCInputTextFieldLayout *inputTextFieldLayout =
+      [self calculateLayoutWithTextFieldSize:fittingSize];
   return CGSizeMake(width, inputTextFieldLayout.calculatedHeight);
 }
 

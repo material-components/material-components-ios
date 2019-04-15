@@ -24,10 +24,10 @@
 #import "MaterialAppBar+TypographyThemer.h"
 #import "MaterialButtons+ButtonThemer.h"
 
-#import "MDCFilledTextField.h"
 #import "MDCFilledTextField+MaterialTheming.h"
-#import "MDCOutlinedTextField.h"
+#import "MDCFilledTextField.h"
 #import "MDCOutlinedTextField+MaterialTheming.h"
+#import "MDCOutlinedTextField.h"
 
 #import "supplemental/MDCInputTextField+MaterialTheming.h"
 
@@ -92,20 +92,18 @@ static const NSUInteger kDefaultVerticalPadding = 20;
   self.scrollView = [[UIScrollView alloc] init];
   [self.view addSubview:self.scrollView];
   self.scrollViewSubviews = @[
-    [self createToggleErrorButton],
-    [self createFirstResponderButton],
-    [self createLabelWithText:@"Default MDCFilledTextField:"],
-    [self createDefaultFilledTextField],
+    [self createToggleErrorButton], [self createFirstResponderButton],
+    [self createLabelWithText:@"Default MDCFilledTextField:"], [self createDefaultFilledTextField],
     [self createLabelWithText:@"Material MDCFilledTextField:"],
     [self createMaterialFilledTextField],
     [self createLabelWithText:@"Default MDCOutlinedTextField:"],
     [self createDefaultOutlinedTextField],
     [self createLabelWithText:@"Material MDCOutlinedTextField:"],
     [self createMaterialOutlinedTextField],
-//    [self createLabelWithText:@"Default MDCInputTextField:"],
-//    [self createDefaultInputTextField],
-//    [self createLabelWithText:@"Material MDCInputTextField:"],
-//    [self createMaterialInputTextField],
+    //    [self createLabelWithText:@"Default MDCInputTextField:"],
+    //    [self createDefaultInputTextField],
+    //    [self createLabelWithText:@"Material MDCInputTextField:"],
+    //    [self createMaterialInputTextField],
   ];
   for (UIView *view in self.scrollViewSubviews) {
     [self.scrollView addSubview:view];
@@ -204,7 +202,7 @@ static const NSUInteger kDefaultVerticalPadding = 20;
 
 - (MDCFilledTextField *)createDefaultFilledTextField {
   MDCFilledTextField *textField = [[MDCFilledTextField alloc] init];
-//  textField.containerStyler.positioningDelegate.verticalDensity = 0.5;
+  //  textField.containerStyler.positioningDelegate.verticalDensity = 0.5;
   textField.mdc_adjustsFontForContentSizeCategory = YES;
   textField.placeholder = @"555-555-5555";
   textField.floatingLabel.text = @"Phone number";
@@ -234,7 +232,7 @@ static const NSUInteger kDefaultVerticalPadding = 20;
 
 - (MDCOutlinedTextField *)createDefaultOutlinedTextField {
   MDCOutlinedTextField *textField = [[MDCOutlinedTextField alloc] init];
-//  textField.containerStyler.positioningDelegate.verticalDensity = 0.5;
+  //  textField.containerStyler.positioningDelegate.verticalDensity = 0.5;
   //  textField.placeholder = @"This is a placeholder";
   //  textField.floatingLabel.text = @"This is a floating label";
   textField.placeholder = @"555-555-5555";

@@ -31,7 +31,7 @@
   id<MDCTypographyScheming> mdcTypographyScheming = containerScheme.typographyScheme;
   if (!mdcTypographyScheming) {
     mdcTypographyScheming =
-    [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
   }
   [self applyMDCTypographyScheming:mdcTypographyScheming];
 }
@@ -46,42 +46,42 @@
   id<MDCColorScheming> mdcColorScheme = containerScheme.colorScheme;
   if (!mdcColorScheme) {
     mdcColorScheme =
-    [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   }
   [self applyMDCColorScheming:mdcColorScheme];
 }
 
 - (void)applyMDCColorScheming:(id<MDCColorScheming>)mdcColorScheming {
   MDCContainedInputViewColorSchemeFilled *normalColorScheme =
-  [self filledColorSchemeWithMDCColorScheming:mdcColorScheming
-                      containedInputViewState:MDCContainedInputViewStateNormal];
+      [self filledColorSchemeWithMDCColorScheming:mdcColorScheming
+                          containedInputViewState:MDCContainedInputViewStateNormal];
   [self setContainedInputViewColorScheming:normalColorScheme
                                   forState:MDCContainedInputViewStateNormal];
-  
+
   MDCContainedInputViewColorSchemeFilled *focusedColorScheme =
-  [self filledColorSchemeWithMDCColorScheming:mdcColorScheming
-                      containedInputViewState:MDCContainedInputViewStateFocused];
+      [self filledColorSchemeWithMDCColorScheming:mdcColorScheming
+                          containedInputViewState:MDCContainedInputViewStateFocused];
   [self setContainedInputViewColorScheming:focusedColorScheme
                                   forState:MDCContainedInputViewStateFocused];
-  
+
   MDCContainedInputViewColorSchemeFilled *activatedColorScheme =
-  [self filledColorSchemeWithMDCColorScheming:mdcColorScheming
-                      containedInputViewState:MDCContainedInputViewStateActivated];
+      [self filledColorSchemeWithMDCColorScheming:mdcColorScheming
+                          containedInputViewState:MDCContainedInputViewStateActivated];
   [self setContainedInputViewColorScheming:activatedColorScheme
                                   forState:MDCContainedInputViewStateActivated];
-  
+
   MDCContainedInputViewColorSchemeFilled *erroredColorScheme =
-  [self filledColorSchemeWithMDCColorScheming:mdcColorScheming
-                      containedInputViewState:MDCContainedInputViewStateErrored];
+      [self filledColorSchemeWithMDCColorScheming:mdcColorScheming
+                          containedInputViewState:MDCContainedInputViewStateErrored];
   [self setContainedInputViewColorScheming:erroredColorScheme
                                   forState:MDCContainedInputViewStateErrored];
-  
+
   MDCContainedInputViewColorSchemeFilled *disabledColorScheme =
-  [self filledColorSchemeWithMDCColorScheming:mdcColorScheming
-                      containedInputViewState:MDCContainedInputViewStateDisabled];
+      [self filledColorSchemeWithMDCColorScheming:mdcColorScheming
+                          containedInputViewState:MDCContainedInputViewStateDisabled];
   [self setContainedInputViewColorScheming:disabledColorScheme
                                   forState:MDCContainedInputViewStateDisabled];
-  
+
   self.tintColor = mdcColorScheming.primaryColor;
 }
 

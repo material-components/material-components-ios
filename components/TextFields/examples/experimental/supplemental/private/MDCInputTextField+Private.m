@@ -20,10 +20,10 @@
 #import "MaterialTypography.h"
 
 #import "MDCContainerStylerPathDrawingUtils.h"
+#import "MDCInputTextField+Private.h"
+#import "MDCInputTextField.h"
 #import "MDCInputTextFieldLayout.h"
 #import "MaterialMath.h"
-#import "MDCInputTextField.h"
-#import "MDCInputTextField+Private.h"
 
 //#import "MDCInputTextField+Private.h"
 
