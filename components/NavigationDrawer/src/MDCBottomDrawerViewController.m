@@ -53,6 +53,7 @@
   _topCornersRadius[@(MDCBottomDrawerStateCollapsed)] = @(0);
   _maskLayer = [[MDCBottomDrawerHeaderMask alloc] initWithMaximumCornerRadius:0
                                                           minimumCornerRadius:0];
+  _maximumInitialDrawerHeight = 0;
 }
 
 - (void)viewWillLayoutSubviews {
@@ -163,6 +164,15 @@
     MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
         (MDCBottomDrawerPresentationController *)self.presentationController;
     bottomDrawerPresentationController.topHandleColor = topHandleColor;
+  }
+}
+
+- (void)setMaximumInitialDrawerHeight:(CGFloat)maximumInitialDrawerHeight {
+  _maximumInitialDrawerHeight = maximumInitialDrawerHeight;
+  if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
+        (MDCBottomDrawerPresentationController *)self.presentationController;
+    bottomDrawerPresentationController.maximumInitialDrawerHeight = maximumInitialDrawerHeight;
   }
 }
 

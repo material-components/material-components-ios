@@ -54,7 +54,7 @@ static void CancelGestureRecognizer(UIGestureRecognizer *gesture) {
   // translation. This gives the same effect as when you overscroll a scrollview.
   CGFloat newHeight = CGRectGetMaxY(self.superview.bounds) - CGRectGetMinY(self.frame);
   if (newHeight > [self.delegate maximumHeightForDraggableView:self]) {
-    point.y -= point.y / 1.2;
+    point.y -= point.y / (CGFloat)1.2;
   }
 
   self.center = CGPointMake(self.center.x, self.center.y + point.y);

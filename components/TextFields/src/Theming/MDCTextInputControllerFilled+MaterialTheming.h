@@ -23,7 +23,7 @@
 @interface MDCTextInputControllerFilled (MaterialTheming)
 
 /**
- Applies a container scheme to this instance.
+ Applies the Material theme to this instance.
 
  @param scheme A container scheme instance containing any desired customizations to the theming
  system.
