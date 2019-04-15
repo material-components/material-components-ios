@@ -94,7 +94,7 @@ static UIImage *_Nullable MDCImageForItem(UITabBarItem *_Nullable item) {
   CGFloat dialogHeight = MAX(0, CGRectGetHeight(self.bounds) - margins.top - margins.bottom);
   CGFloat dialogWidth = MAX(0, CGRectGetWidth(self.bounds) - margins.left - margins.right);
   CGFloat imageHeight =
-      self.imageView.image ? floor(dialogHeight * kImageViewHeightToDialogRatio) : 0;
+      self.imageView.image ? (CGFloat)floor(dialogHeight * kImageViewHeightToDialogRatio) : 0;
   CGFloat titleHeight = [self titleLabelHeight];
 
   CGFloat totalHeight = imageHeight + titleHeight;
