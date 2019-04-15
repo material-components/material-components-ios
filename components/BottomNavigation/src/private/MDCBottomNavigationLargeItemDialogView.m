@@ -16,9 +16,9 @@
 
 #import <CoreGraphics/CoreGraphics.h>
 
-static const CGFloat kTitleFontScaling = 0.5;
+static const CGFloat kTitleFontScaling = (CGFloat)0.5;
 static const CGFloat kTitleFontSize = 35;
-static const CGFloat kImageViewHeightToDialogRatio = 0.35;
+static const CGFloat kImageViewHeightToDialogRatio = (CGFloat)0.35;
 
 /**
  * Returns an image representing the given UITabBarItem. If the item has a largeContentSizeImage,
@@ -69,7 +69,7 @@ static UIImage *_Nullable MDCImageForItem(UITabBarItem *_Nullable item) {
 }
 
 - (void)commonInitMDCBottomNavigationLargeItemView {
-  UIColor *contentColor = [UIColor colorWithWhite:(CGFloat)0.15 alpha:(CGFloat)1];
+  UIColor *contentColor = [UIColor colorWithWhite:(CGFloat)0.15 alpha:1];
 
   _imageView = [[UIImageView alloc] init];
   _imageView.tintColor = contentColor;
@@ -99,7 +99,7 @@ static UIImage *_Nullable MDCImageForItem(UITabBarItem *_Nullable item) {
 
   CGFloat totalHeight = imageHeight + titleHeight;
   CGFloat imageX = margins.left;
-  CGFloat imageY = MAX(0, floor((dialogHeight - totalHeight) / 2.0)) + margins.top;
+  CGFloat imageY = MAX(0, floor((CGFloat)((dialogHeight - totalHeight) / 2.0))) + margins.top;
 
   CGFloat titleX = margins.left;
   CGFloat titleY = imageY + imageHeight;
