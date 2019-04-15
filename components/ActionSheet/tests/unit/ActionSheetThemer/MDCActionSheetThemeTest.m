@@ -16,7 +16,6 @@
 
 #import "../../../src/private/MDCActionSheetHeaderView.h"
 #import "../../../src/private/MDCActionSheetItemTableViewCell.h"
-#import "../MDCActionSheetTestHelper.h"
 #import "MaterialActionSheet+ActionSheetThemer.h"
 #import "MaterialActionSheet+ColorThemer.h"
 #import "MaterialActionSheet+TypographyThemer.h"
@@ -195,40 +194,46 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
 }
 
 - (void)testApplyColorTheme {
+  // Given
+  MDCActionSheetAction *fakeActionOne = [MDCActionSheetAction actionWithTitle:@"Action 1" image:nil handler:nil];
+  [self.actionSheet addAction:fakeActionOne];
+  UITableView *table = self.actionSheet.tableView;
+  NSIndexPath *fakeIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+  
   // When
   [MDCActionSheetColorThemer applySemanticColorScheme:self.colorScheme
                               toActionSheetController:self.actionSheet];
-  NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheet];
+  UITableViewCell *cell = [table.dataSource tableView:table cellForRowAtIndexPath:fakeIndexPath];
+  MDCActionSheetItemTableViewCell *actionCell = (MDCActionSheetItemTableViewCell *)cell;
 
   // Then
-  XCTAssertNotEqual(cells.count, 0U);
-  for (MDCActionSheetItemTableViewCell *cell in cells) {
-    XCTAssertEqualObjects(cell.actionImageView.tintColor,
-                          [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kMediumAlpha]);
-    XCTAssertEqualObjects(cell.actionLabel.textColor,
-                          [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kHighAlpha]);
-    XCTAssertEqualObjects(cell.inkTouchController.defaultInkView.inkColor,
-                          [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kInkAlpha]);
-  }
+  XCTAssertEqualObjects(actionCell.actionImageView.tintColor,
+                        [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kMediumAlpha]);
+  XCTAssertEqualObjects(actionCell.actionLabel.textColor,
+                        [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kHighAlpha]);
+  XCTAssertEqualObjects(actionCell.inkTouchController.defaultInkView.inkColor,
+                        [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kInkAlpha]);
 }
 
 - (void)testApplyTypographyTheme {
   // Given
   self.actionSheet.title = @"Test title";
   self.actionSheet.message = @"Test message";
+  MDCActionSheetAction *fakeActionOne = [MDCActionSheetAction actionWithTitle:@"Action 1" image:nil handler:nil];
+  [self.actionSheet addAction:fakeActionOne];
+  UITableView *table = self.actionSheet.tableView;
+  NSIndexPath *fakeIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
 
   // When
   [MDCActionSheetTypographyThemer applyTypographyScheme:self.typographyScheme
                                 toActionSheetController:self.actionSheet];
-  NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheet];
-
+  UITableViewCell *cell = [table.dataSource tableView:table cellForRowAtIndexPath:fakeIndexPath];
+  MDCActionSheetItemTableViewCell *actionCell = (MDCActionSheetItemTableViewCell *)cell;
+  
   // Then
   XCTAssertEqualObjects(self.actionSheet.header.titleLabel.font, self.typographyScheme.subtitle1);
   XCTAssertEqualObjects(self.actionSheet.header.messageLabel.font, self.typographyScheme.body2);
-  XCTAssertNotEqual(cells.count, 0U);
-  for (MDCActionSheetItemTableViewCell *cell in cells) {
-    XCTAssertEqualObjects(cell.actionLabel.font, self.typographyScheme.subtitle1);
-  }
+  XCTAssertEqualObjects(actionCell.actionLabel.font, self.typographyScheme.subtitle1);
 }
 
 @end
