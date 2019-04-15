@@ -16,11 +16,14 @@
 
 /**
  * A transient view that mimics a system dialog/popup view. This view may be used as is or
- * subclassed. Do not add subviews directly to this view, but to its content view. Layout subviews
- * within the contentView relative to the contentView's layout margins.
+ * subclassed. Do not add subviews directly to this view, but to its content view.
  */
 @interface MDCBottomNavigationSystemDialogView : UIView
 
+/**
+ * The view that hosts all the content of the dialog. Add all subviews to this view. Layout subviews
+ * within the contentView relative to the contentView's layout margins.
+ */
 @property(nonatomic, readonly, nonnull) UIView *contentView;
 
 @end

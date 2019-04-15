@@ -99,7 +99,7 @@ static UIImage *_Nullable MDCImageForItem(UITabBarItem *_Nullable item) {
 
   CGFloat totalHeight = imageHeight + titleHeight;
   CGFloat imageX = margins.left;
-  CGFloat imageY = MAX(margins.top, floor((dialogHeight - totalHeight) / 2.0));
+  CGFloat imageY = MAX(0, floor((dialogHeight - totalHeight) / 2.0)) + margins.top;
 
   CGFloat titleX = margins.left;
   CGFloat titleY = imageY + imageHeight;
@@ -125,7 +125,7 @@ static UIImage *_Nullable MDCImageForItem(UITabBarItem *_Nullable item) {
     return self.titleLabel.intrinsicContentSize.height;
   }
 
-  return CGRectGetHeight(self.bounds) - self.layoutMargins.top - self.layoutMargins.bottom;
+  return MAX(0, CGRectGetHeight(self.bounds) - self.layoutMargins.top - self.layoutMargins.bottom);
 }
 
 @end
