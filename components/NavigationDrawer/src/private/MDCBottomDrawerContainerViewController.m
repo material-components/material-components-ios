@@ -301,6 +301,13 @@ static UIColor *DrawerShadowColor(void) {
                                         : self.contentHeightSurplus >= self.contentHeaderTopInset;
 }
 
+- (CGFloat)maximumInitialDrawerHeight {
+  if ([self shouldPresentFullScreen]) {
+    return self.presentingViewBounds.size.height;
+  }
+  return _maximumInitialDrawerHeight;
+}
+
 - (void)addScrollViewObserver {
   if (self.scrollViewObserved) {
     return;
@@ -865,13 +872,6 @@ static UIColor *DrawerShadowColor(void) {
 - (CGFloat)addedContentHeightThreshold {
   // TODO: (#4900) change this to use safeAreaInsets as this is a soon to be deprecated API.
   return MDCDeviceTopSafeAreaInset();
-}
-
-- (CGFloat)maximumInitialDrawerHeight {
-  if ([self shouldPresentFullScreen]) {
-    return self.presentingViewBounds.size.height;
-  }
-  return _maximumInitialDrawerHeight;
 }
 
 @end
