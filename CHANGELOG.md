@@ -12,6 +12,8 @@ iOS 8 support has been dropped in all components. This change will require appli
 
 We added a method in delegate for clients to be able to customize the tracking scroll view detection logic. 
 
+#### Swift
+
 ```swift
 func appBarNavigationController(_ navigationController: MDCAppBarNavigationController,
                               trackingScrollViewFor trackingScrollViewForViewController: UIViewController,
@@ -19,6 +21,8 @@ func appBarNavigationController(_ navigationController: MDCAppBarNavigationContr
   return trackingScrollView
 }
 ```
+
+#### Objective-C
 
 ```objc
 - (UIScrollView *)appBarNavigationController:(MDCAppBarNavigationController *)navigationController
@@ -39,7 +43,7 @@ bottomSheet.shouldFlashScrollIndicatorsOnAppearance = true;
 
 ```
 
-### Objective-C
+#### Objective-C
 
 ```objc
 self.bottomSheet.shouldFlashScrollIndicatorsOnAppearance = YES;
@@ -57,7 +61,7 @@ bottomDrawer.maximumInitialDrawerHeight = 1000;
 
 ```
 
-### Objective-C
+#### Objective-C
 
 ```objc
 self.bottomDrawer.maximumInitialDrawerHeight = 1000;
