@@ -1,3 +1,94 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+### AppBar
+
+#### MDCAppBarNavigationControllerDelegate
+
+*new* method: `-appBarNavigationController:trackingScrollViewForViewController:suggestedTrackingScrollView:` in `MDCAppBarNavigationControllerDelegate`
+
+### BottomSheet
+
+#### MDCBottomSheetController
+
+*new* property: `shouldFlashScrollIndicatorsOnAppearance` in `MDCBottomSheetController`
+
+### NavigationDrawer
+
+#### MDCBottomDrawerViewController
+
+*new* property: `maximumInitialDrawerHeight` in `MDCBottomDrawerViewController`
+
+#### MDCBottomDrawerPresentationController
+
+*new* property: `maximumInitialDrawerHeight` in `MDCBottomDrawerPresentationController`
+
+### Tabs+Theming
+
+**New extension.**
+
+## Component changes
+
+## Multi-component breaking changes
+
+* [**Breaking**: Drop support for iOS 8 in all components. (#7135)](https://github.com/material-components/material-components-ios/commit/a3e215daa797b50e6a6b5afc2322892b0444cefe) (featherless)
+
+## Changes
+
+### AppBar
+
+* [Add support for MDCAppBarNavigationController delegate to pick a tracking scroll view. (#7015)](https://github.com/material-components/material-components-ios/commit/e3b1d17f76823f852395cc2062146ced10a1ed67) (featherless)
+* [Update AppBar theming extension docs. (#7125)](https://github.com/material-components/material-components-ios/commit/3adbf4ed9ab0e40875fbd0d069fa1d5801bbb20c) (Wenyu Zhang)
+
+### BottomNavigation
+
+* [Adds private method to retrieve tab bar item for point (#7086)](https://github.com/material-components/material-components-ios/commit/b8d1456ec63fa0f48faebe52e3abffa8f11d07e4) (Eric Lee)
+
+### BottomSheet
+
+* [Add API to flashScrollIndicators (#7127)](https://github.com/material-components/material-components-ios/commit/aa28d8516c5e104da221ef5b97ee119e0f9a4a3c) (Cody Weaver)
+
+### Buttons
+
+* [Add snapshot test for new Ripple behavior (#7104)](https://github.com/material-components/material-components-ios/commit/d8a8e2bf97f0dd8749492b0b399994045a16efe5) (Cody Weaver)
+
+### Dialogs
+
+* [Correct snapshot test layout (#7134)](https://github.com/material-components/material-components-ios/commit/81978d79361b36bfbfa99ca660e172dffe798c56) (Robert Moore)
+* [Dialog Urdu snapshot (#7139)](https://github.com/material-components/material-components-ios/commit/184ea7380c93b34d48cf879bceb8793e13dc2bee) (Wenyu Zhang)
+* [Layout MDC Dialogs correctly for tall fonts. (#7126)](https://github.com/material-components/material-components-ios/commit/8c407c22c4e3c810bfcb8a1786514f35c1d9593c) (Wenyu Zhang)
+* [fix dialog snapshot tests not using preferredContentSize. (#7128)](https://github.com/material-components/material-components-ios/commit/1ccd8f2bd7e916b6cf8ca589d9bc5f655f352a0d) (Wenyu Zhang)
+
+### NavigationDrawer
+
+* [Add snapshot tests (#7136)](https://github.com/material-components/material-components-ios/commit/aa02889f72edc2cfecdb17a7cf6d0eabf8599812) (Robert Moore)
+* [Added support for customizing the initial drawer height factor (#7112)](https://github.com/material-components/material-components-ios/commit/07417dfa71468be5000d2660702400be70b5cc46) (Yarden Eitan)
+* [remove dependency on MDCBottomDrawerContainerViewController (#7138)](https://github.com/material-components/material-components-ios/commit/c5c237fd0f98ca1312e854998133fc9a19ccfb2f) (Yarden Eitan)
+
+### TextFields
+
+* [Change wording on MDCTextInputController theming extensions doc comments (#7107)](https://github.com/material-components/material-components-ios/commit/4e7b4a64b478e6e5572cd6757dad01c5e44176a7) (Andrew Overton)
+* [Outlined Textfield Theming Extension (#7082)](https://github.com/material-components/material-components-ios/commit/ecbad697e8cad36c08229243d0381a6f1b333025) (Andrew Overton)
+* [Updates to MDCContainedInputView and SimpleTextField (#6904)](https://github.com/material-components/material-components-ios/commit/41428ef329477202dc9c7c56afb8e39ad4efd762) (Andrew Overton)
+
+## Multi-component changes
+
+* [Add theming extension for Tabs (#7089)](https://github.com/material-components/material-components-ios/commit/4eeeb90a93010ce70ce098979ed311b98f2b011c) (Wenyu Zhang)
+* [Fix some CGFloat conversion. (#7130)](https://github.com/material-components/material-components-ios/commit/a4e6886f226d4756e7194f6de48c9c85837d9920) (Wenyu Zhang)
+
+---
+
 # 81.1.0
 
 In this minor release we introduced a new beta component, Banner. We also added Ripple support for Buttons, along with text contrast improvements to Tabs and Bottom Navigation.
