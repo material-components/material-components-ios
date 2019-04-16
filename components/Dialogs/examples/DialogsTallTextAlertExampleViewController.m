@@ -12,7 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import <MaterialComponentsBeta/MaterialButtons+Theming.h>
+#import <MaterialComponentsBeta/MaterialContainerScheme.h>
+#import <MaterialComponentsBeta/MaterialDialogs+Theming.h>
 #import "MaterialButtons.h"
+#import "MaterialColorScheme.h"
 #import "MaterialDialogs.h"
 
 @interface DialogsTallTextAlertExampleViewController : UIViewController
@@ -23,12 +27,19 @@
 
 @property(nonatomic, strong) MDCDialogTransitionController *transitionController;
 
+@property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
+
 @end
 @implementation DialogsTallTextAlertExampleViewController
 
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+  if (!self.containerScheme) {
+    self.containerScheme = [[MDCContainerScheme alloc] init];
+  }
+
+  self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
   // We must create and store a strong reference to the transitionController.
   // A presented view controller will set this object as its transitioning delegate.
   self.transitionController = [[MDCDialogTransitionController alloc] init];
@@ -41,6 +52,7 @@
           forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:presentButton];
   presentButton.translatesAutoresizingMaskIntoConstraints = NO;
+  [presentButton applyOutlinedThemeWithScheme:self.containerScheme];
 
   [self.view addConstraints:@[
     [NSLayoutConstraint constraintWithItem:self.view
@@ -64,25 +76,25 @@
   NSString *networkFailureInUrdu = @"براہ کرم اپنا نیٹ ورک کنکشن چیک کریں اور دوبارہ کوشش کریں۔";
   MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:nil
                                                                    message:networkFailureInUrdu];
-  NSString *urduFontName = @"NotoNastaliqUrdu";
-  UIFont *dialogBodyFont;
-  UIFont *dialogButtonFont;
-  if (@available(iOS 11, *)) {
-    // Noto Nastaliq Urdu was added in iOS 11, and is an extremely tall
-    // font for any given nominal point size.
-    dialogBodyFont = [UIFont fontWithName:urduFontName size:20.0];
-    dialogButtonFont = [UIFont fontWithName:urduFontName size:20.0];
-  } else {
-    dialogBodyFont = [UIFont systemFontOfSize:20.0];
-    dialogButtonFont = [UIFont systemFontOfSize:20.0];
-  }
-  alert.messageFont = dialogBodyFont;
-  alert.buttonFont = dialogButtonFont;
 
   MDCAlertAction *retryAction = [MDCAlertAction actionWithTitle:@"دوبارہ کوشش کریں" handler:nil];
   MDCAlertAction *cancelAction = [MDCAlertAction actionWithTitle:@"منسوخ کریں" handler:nil];
   [alert addAction:retryAction];
   [alert addAction:cancelAction];
+  [alert applyThemeWithScheme:self.containerScheme];
+
+  NSString *urduFontName = @"NotoNastaliqUrdu";
+  UIFont *dialogBodyFont = [UIFont systemFontOfSize:20.0];
+  UIFont *dialogButtonFont = [UIFont systemFontOfSize:20.0];
+  if (@available(iOS 11, *)) {
+    // Noto Nastaliq Urdu was added in iOS 11, and is an extremely tall
+    // font for any given nominal point size.
+    dialogBodyFont = [UIFont fontWithName:urduFontName size:20.0];
+    dialogButtonFont = [UIFont fontWithName:urduFontName size:20.0];
+  }
+  alert.messageFont = dialogBodyFont;
+  alert.buttonFont = dialogButtonFont;
+
   [self presentViewController:alert animated:YES completion:nil];
 }
 
