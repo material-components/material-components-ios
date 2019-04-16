@@ -1,15 +1,71 @@
-# #develop#
+# 82.0.0
 
-Replace this text with a summarized description of this release's contents.
+In this major release, we dropped support for iOS 8 in all components. We also introduced new method and properties for AppBar, BottomSheet and NavigationDrawer.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+iOS 8 support has been dropped in all components. This change will require application bumping minimum depolyment target to iOS 9.
 
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
+### Add support for MDCAppBarNavigationController delegate to pick a tracking scroll view
+
+We added a method in delegate for clients to be able to customize the tracking scroll view detection logic. 
+
+```swift
+func appBarNavigationController(_ navigationController: MDCAppBarNavigationController,
+                              trackingScrollViewFor trackingScrollViewForViewController: UIViewController,
+                              suggestedTrackingScrollView: UIScrollView?) -> UIScrollView? {
+  return trackingScrollView
+}
+```
+
+```objc
+- (UIScrollView *)appBarNavigationController:(MDCAppBarNavigationController *)navigationController
+                  trackingScrollViewForViewController:(UIViewController *)viewController
+                          suggestedTrackingScrollView:(UIScrollView *)scrollView {
+  return self.trackingScrollView;
+}
+```
+
+### `flashScrollIndicators` in BottomSheet
+
+We added a behavioral flag for when clients want to flash scroll indicators so that clients can opt into this behavior.
+
+#### Swift
+
+```swift
+bottomSheet.shouldFlashScrollIndicatorsOnAppearance = true;
+
+```
+
+### Objective-C
+
+```objc
+self.bottomSheet.shouldFlashScrollIndicatorsOnAppearance = YES;
+
+```
+
+### `maximumInitialDrawerHeight` in NavigationDrawer
+
+We added this new property for NavigationDrawer's API, which allows clients to set the initial height of the drawer, rather than it always being 50% of the screen's height.
+
+#### Swift
+
+```swift
+bottomDrawer.maximumInitialDrawerHeight = 1000;
+
+```
+
+### Objective-C
+
+```objc
+self.bottomDrawer.maximumInitialDrawerHeight = 1000;
+
+```
+
+
+
 ## API changes
 
 ### AppBar
