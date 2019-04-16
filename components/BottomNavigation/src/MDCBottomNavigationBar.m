@@ -22,6 +22,7 @@
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
+#import "private/MDCBottomNavigationBar+Private.h"
 #import "private/MDCBottomNavigationItemView.h"
 #import "private/MaterialBottomNavigationStrings.h"
 #import "private/MaterialBottomNavigationStrings_table.h"
@@ -460,6 +461,18 @@ static NSString *const kOfAnnouncement = @"of";
     return nil;
   }
   return _itemViews[itemIndex];
+}
+
+- (UITabBarItem *)tabBarItemForPoint:(CGPoint)point {
+  for (NSUInteger i = 0; (i < self.itemViews.count) && (i < self.items.count); i++) {
+    UIView *itemView = self.itemViews[i];
+    BOOL isPointInView = CGRectContainsPoint(itemView.frame, point);
+    if (isPointInView) {
+      return self.items[i];
+    }
+  }
+
+  return nil;
 }
 
 #pragma mark - Touch handlers
