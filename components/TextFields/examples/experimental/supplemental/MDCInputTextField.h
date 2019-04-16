@@ -14,10 +14,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialColorScheme.h"
-
-#import "MDCContainedInputView.h"
-
 /**
  A UITextField subclass that attempts to do the following:
 
@@ -29,7 +25,23 @@
  - Enable easy set up and reliable and predictable behavior.
 
  */
-@interface MDCInputTextField : UITextField <MDCContainedInputView>
+@interface MDCInputTextField : UITextField
+
+/**
+ The @c floatingLabel is a label that occupies the text area when there is no text and that floats
+ above the text once there is some. It is distinct from a placeholder.
+ */
+@property(strong, nonatomic, readonly, nonnull) UILabel *floatingLabel;
+
+/**
+ The @c leadingUnderlineLabel can be used to display helper or error text.
+ */
+@property(strong, nonatomic, readonly, nonnull) UILabel *leadingUnderlineLabel;
+
+/**
+ The @c trailingUnderlineLabel can be used to display helper or error text.
+ */
+@property(strong, nonatomic, readonly, nonnull) UILabel *trailingUnderlineLabel;
 
 /**
  This is essentially an RTL-aware wrapper around UITextField's leftView/rightView class.
@@ -50,6 +62,20 @@
  This is essentially an RTL-aware wrapper around UITextField's leftViewMode/rightViewMode class.
  */
 @property(nonatomic, assign) UITextFieldViewMode trailingViewMode;
+
+/**
+ This property toggles the error state (similar to @c isHighlighted, @c isEnabled, @c isSelected,
+ etc.) that is part of a general interpretation of the states outlined in the Material guidelines
+ for Text Fields. See the @c MDCContainedInputViewState enum for more information.
+ */
+@property(nonatomic, assign) BOOL isErrored;
+
+/**
+ This property toggles the activated state (similar to @c isHighlighted, @c isEnabled, @c
+ isSelected, etc.) that is part of a general interpretation of the states outlined in the Material
+ guidelines for Text Fields. See the @c MDCContainedInputViewState enum for more information.
+ */
+@property(nonatomic, assign) BOOL isActivated;
 
 /**
  Indicates whether the text field should automatically update its font when the device’s

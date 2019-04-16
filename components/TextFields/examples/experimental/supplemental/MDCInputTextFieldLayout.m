@@ -17,11 +17,11 @@
 #import "MDCContainedInputView.h"
 #import "MDCInputTextField.h"
 
-static const CGFloat kLeadingMargin = (CGFloat)12.0;
-static const CGFloat kTrailingMargin = (CGFloat)12.0;
 static const CGFloat kFloatingLabelXOffsetFromTextArea = (CGFloat)3.0;
 static const CGFloat kClearButtonTouchTargetSideLength = (CGFloat)30.0;
 static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
+
+static const CGFloat kHorizontalPadding = (CGFloat)12.0;
 
 @interface MDCInputTextFieldLayout ()
 @end
@@ -122,24 +122,25 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
   CGFloat leftViewMinX = 0;
   CGFloat leftViewMaxX = 0;
   if (shouldAttemptToDisplayLeftView) {
-    leftViewMinX = [self minXForLeftView:leftView isRTL:isRTL];
+    leftViewMinX = kHorizontalPadding;
     leftViewMaxX = leftViewMinX + leftViewWidth;
   }
 
   CGFloat textFieldWidth = textFieldSize.width;
   CGFloat rightViewMinX = 0;
   if (shouldAttemptToDisplayRightView) {
-    rightViewMinX = [self minXForRightView:rightView textFieldWidth:textFieldWidth isRTL:isRTL];
+    CGFloat rightViewMaxX = textFieldWidth - kHorizontalPadding;
+    rightViewMinX = rightViewMaxX - CGRectGetWidth(rightView.frame);
   }
 
   CGFloat apparentClearButtonMinX = 0;
   if (isRTL) {
     apparentClearButtonMinX =
-        shouldAttemptToDisplayLeftView ? leftViewMaxX + kTrailingMargin : kTrailingMargin;
+        shouldAttemptToDisplayLeftView ? leftViewMaxX + kHorizontalPadding : kHorizontalPadding;
   } else {
     CGFloat apparentClearButtonMaxX = shouldAttemptToDisplayRightView
-                                          ? rightViewMinX - kTrailingMargin
-                                          : textFieldWidth - kTrailingMargin;
+                                          ? rightViewMinX - kHorizontalPadding
+                                          : textFieldWidth - kHorizontalPadding;
     apparentClearButtonMinX = apparentClearButtonMaxX - kClearButtonInnerImageViewSideLength;
   }
 
@@ -170,18 +171,14 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
 
   CGFloat leftViewHeight = CGRectGetHeight(leftView.frame);
   CGFloat leftViewMinY = 0;
-  CGFloat leftViewMaxY = 0;
   if (shouldAttemptToDisplayLeftView) {
     leftViewMinY = [self minYForSubviewWithHeight:leftViewHeight centerY:textRectCenterYNormal];
-    leftViewMaxY = leftViewMinY + leftViewHeight;
   }
 
   CGFloat rightViewHeight = CGRectGetHeight(rightView.frame);
   CGFloat rightViewMinY = 0;
-  CGFloat rightViewMaxY = 0;
   if (shouldAttemptToDisplayRightView) {
     rightViewMinY = [self minYForSubviewWithHeight:rightViewHeight centerY:textRectCenterYNormal];
-    rightViewMaxY = rightViewMinY + rightViewHeight;
   }
 
   CGFloat clearButtonMinY = 0;
@@ -204,35 +201,37 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
     if (shouldAttemptToDisplayClearButton) {
       CGFloat apparentClearButtonMaxX =
           apparentClearButtonMinX + kClearButtonInnerImageViewSideLength;
-      textRectMinX = apparentClearButtonMaxX + kTrailingMargin;
+      textRectMinX = apparentClearButtonMaxX + kHorizontalPadding;
       floatingLabelNormalMinX = textRectMinX;
       floatingLabelFloatingMinX = apparentClearButtonMinX;
     } else {
       textRectMinX =
-          shouldAttemptToDisplayLeftView ? leftViewMaxX + kTrailingMargin : kTrailingMargin;
+          shouldAttemptToDisplayLeftView ? leftViewMaxX + kHorizontalPadding : kHorizontalPadding;
       floatingLabelNormalMinX = textRectMinX;
       floatingLabelFloatingMinX = textRectMinX;
     }
     if (shouldAttemptToDisplayRightView) {
-      textRectMaxX = rightViewMinX - kLeadingMargin;
+      textRectMaxX = rightViewMinX - kHorizontalPadding;
     } else {
-      textRectMaxX = textFieldWidth - kLeadingMargin;
+      textRectMaxX = textFieldWidth - kHorizontalPadding;
     }
     floatingLabelNormalMaxX = textRectMaxX;
     floatingLabelFloatingMaxX = floatingLabelNormalMaxX - kFloatingLabelXOffsetFromTextArea;
   } else {
-    textRectMinX = shouldAttemptToDisplayLeftView ? leftViewMaxX + kLeadingMargin : kLeadingMargin;
+    textRectMinX =
+        shouldAttemptToDisplayLeftView ? leftViewMaxX + kHorizontalPadding : kHorizontalPadding;
     floatingLabelNormalMinX = textRectMinX;
     floatingLabelFloatingMinX = floatingLabelNormalMinX + kFloatingLabelXOffsetFromTextArea;
     if (shouldAttemptToDisplayClearButton) {
-      textRectMaxX = apparentClearButtonMinX - kLeadingMargin;
+      textRectMaxX = apparentClearButtonMinX - kHorizontalPadding;
     } else {
-      textRectMaxX = shouldAttemptToDisplayRightView ? rightViewMinX - kTrailingMargin
-                                                     : textFieldWidth - kTrailingMargin;
+      textRectMaxX = shouldAttemptToDisplayRightView ? rightViewMinX - kHorizontalPadding
+                                                     : textFieldWidth - kHorizontalPadding;
     }
     floatingLabelNormalMaxX = textRectMaxX;
-    floatingLabelFloatingMaxX = shouldAttemptToDisplayRightView ? rightViewMinX - kTrailingMargin
-                                                                : textFieldWidth - kTrailingMargin;
+    floatingLabelFloatingMaxX = shouldAttemptToDisplayRightView
+                                    ? rightViewMinX - kHorizontalPadding
+                                    : textFieldWidth - kHorizontalPadding;
   }
 
   CGFloat textRectWidth = textRectMaxX - textRectMinX;
@@ -276,70 +275,19 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
                           textRectRect:textRectNormal
                                  isRTL:isRTL];
 
-  CGFloat underlineLabelsCombinedMinX = isRTL ? kTrailingMargin : kLeadingMargin;
-  CGFloat underlineLabelsCombinedMaxX =
-      isRTL ? textFieldWidth - kLeadingMargin : textFieldWidth - kTrailingMargin;
-  CGFloat underlineLabelsCombinedMaxWidth =
-      underlineLabelsCombinedMaxX - underlineLabelsCombinedMinX;
-
-  CGFloat underlineLabelsCombinedMinY =
-      topRowBottomRowDividerY +
-      [containerStyler.positioningDelegate
-          contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:floatingLabelMaxY];
-  CGFloat leadingUnderlineLabelWidth = 0;
-  CGFloat trailingUnderlineLabelWidth = 0;
-  CGSize leadingUnderlineLabelSize = CGSizeZero;
-  CGSize trailingUnderlineLabelSize = CGSizeZero;
-  UILabel *leadingUnderlineLabel = isRTL ? rightUnderlineLabel : leftUnderlineLabel;
-  UILabel *trailingUnderlineLabel = isRTL ? leftUnderlineLabel : rightUnderlineLabel;
-  switch (underlineLabelDrawPriority) {
-    case MDCContainedInputViewUnderlineLabelDrawPriorityCustom:
-      leadingUnderlineLabelWidth = [self
-          leadingUnderlineLabelWidthWithCombinedUnderlineLabelsWidth:underlineLabelsCombinedMaxWidth
-                                                  customDrawPriority:
-                                                      customUnderlineLabelDrawPriority];
-      trailingUnderlineLabelWidth = underlineLabelsCombinedMaxWidth - leadingUnderlineLabelWidth;
-      leadingUnderlineLabelSize = [self underlineLabelSizeWithLabel:leadingUnderlineLabel
-                                                 constrainedToWidth:leadingUnderlineLabelWidth];
-      trailingUnderlineLabelSize = [self underlineLabelSizeWithLabel:trailingUnderlineLabel
-                                                  constrainedToWidth:trailingUnderlineLabelWidth];
-      break;
-    case MDCContainedInputViewUnderlineLabelDrawPriorityLeading:
-      leadingUnderlineLabelSize =
-          [self underlineLabelSizeWithLabel:leadingUnderlineLabel
-                         constrainedToWidth:underlineLabelsCombinedMaxWidth];
-      trailingUnderlineLabelSize =
-          [self underlineLabelSizeWithLabel:trailingUnderlineLabel
-                         constrainedToWidth:underlineLabelsCombinedMaxWidth -
-                                            leadingUnderlineLabelSize.width];
-      break;
-    case MDCContainedInputViewUnderlineLabelDrawPriorityTrailing:
-      trailingUnderlineLabelSize =
-          [self underlineLabelSizeWithLabel:trailingUnderlineLabel
-                         constrainedToWidth:underlineLabelsCombinedMaxWidth];
-      leadingUnderlineLabelSize =
-          [self underlineLabelSizeWithLabel:leadingUnderlineLabel
-                         constrainedToWidth:underlineLabelsCombinedMaxWidth -
-                                            trailingUnderlineLabelSize.width];
-      break;
-    default:
-      break;
-  }
-
-  CGSize leftUnderlineLabelSize = isRTL ? trailingUnderlineLabelSize : leadingUnderlineLabelSize;
-  CGSize rightUnderlineLabelSize = isRTL ? leadingUnderlineLabelSize : trailingUnderlineLabelSize;
-  CGRect leftUnderlineLabelFrame = CGRectZero;
-  CGRect rightUnderlineLabelFrame = CGRectZero;
-  if (!CGSizeEqualToSize(leftUnderlineLabelSize, CGSizeZero)) {
-    leftUnderlineLabelFrame =
-        CGRectMake(underlineLabelsCombinedMinX, underlineLabelsCombinedMinY,
-                   leftUnderlineLabelSize.width, leftUnderlineLabelSize.height);
-  }
-  if (!CGSizeEqualToSize(rightUnderlineLabelSize, CGSizeZero)) {
-    rightUnderlineLabelFrame = CGRectMake(
-        underlineLabelsCombinedMaxX - rightUnderlineLabelSize.width, underlineLabelsCombinedMinY,
-        rightUnderlineLabelSize.width, rightUnderlineLabelSize.height);
-  }
+  CGFloat underlineLabelVerticalPadding = [containerStyler.positioningDelegate
+      contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:floatingLabelMaxY];
+  self.underlineLabelViewLayout = [[MDCContainedInputUnderlineLabelViewLayout alloc]
+                initWithSuperviewWidth:textFieldWidth
+                    leftUnderlineLabel:leftUnderlineLabel
+                   rightUnderlineLabel:rightUnderlineLabel
+            underlineLabelDrawPriority:underlineLabelDrawPriority
+      customUnderlineLabelDrawPriority:customUnderlineLabelDrawPriority
+                     horizontalPadding:kHorizontalPadding
+                       verticalPadding:underlineLabelVerticalPadding
+                                 isRTL:isRTL];
+  self.underlineLabelViewFrame = CGRectMake(0, topRowBottomRowDividerY, textFieldWidth,
+                                            self.underlineLabelViewLayout.calculatedHeight);
 
   self.leftViewFrame = leftViewFrame;
   self.rightViewFrame = rightViewFrame;
@@ -350,24 +298,11 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
   self.placeholderLabelFrameNormal = floatingLabelTextAreaRect;
   self.floatingLabelFrameFloating = floatingLabelFrameFloating;
   self.floatingLabelFrameNormal = floatingLabelFrameNormal;
-  self.leftUnderlineLabelFrame = leftUnderlineLabelFrame;
-  self.rightUnderlineLabelFrame = rightUnderlineLabelFrame;
   self.topRowBottomRowDividerY = topRowBottomRowDividerY;
   self.clearButtonHidden = !shouldAttemptToDisplayClearButton;
   self.leftViewHidden = !shouldAttemptToDisplayLeftView;
   self.rightViewHidden = !shouldAttemptToDisplayRightView;
   self.topRowBottomRowDividerY = topRowBottomRowDividerY;
-}
-
-- (CGFloat)topRowSubviewMaxYWithTextAreaMaxY:(CGFloat)textRectMaxY
-                   floatingLabelTextAreaMaxY:(CGFloat)floatingLabelTextAreaMaxY
-                                leftViewMaxY:(CGFloat)leftViewMaxY
-                               rightViewMaxY:(CGFloat)rightViewMaxY {
-  CGFloat max = textRectMaxY;
-  max = MAX(max, floatingLabelTextAreaMaxY);
-  max = MAX(max, leftViewMaxY);
-  max = MAX(max, rightViewMaxY);
-  return max;
 }
 
 - (CGSize)underlineLabelSizeWithLabel:(UILabel *)label constrainedToWidth:(CGFloat)maxWidth {
@@ -386,26 +321,6 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
                (CGFloat)totalUnderlineLabelsWidth
                                                    customDrawPriority:(CGFloat)customDrawPriority {
   return customDrawPriority * totalUnderlineLabelsWidth;
-}
-
-- (CGFloat)minXForLeftUnderlineLabel:(UILabel *)label isRTL:(BOOL)isRTL {
-  return isRTL ? kTrailingMargin : kLeadingMargin;
-}
-
-- (CGFloat)maxXForRightUnderlineLabel:(UILabel *)label isRTL:(BOOL)isRTL {
-  return isRTL ? kTrailingMargin : kLeadingMargin;
-}
-
-- (CGFloat)minXForLeftView:(UIView *)leftView isRTL:(BOOL)isRTL {
-  return isRTL ? kTrailingMargin : kLeadingMargin;
-}
-
-- (CGFloat)minXForRightView:(UIView *)rightView
-             textFieldWidth:(CGFloat)textFieldWidth
-                      isRTL:(BOOL)isRTL {
-  CGFloat rightMargin = isRTL ? kLeadingMargin : kTrailingMargin;
-  CGFloat maxX = textFieldWidth - rightMargin;
-  return maxX - CGRectGetWidth(rightView.frame);
 }
 
 - (CGFloat)minYForSubviewWithHeight:(CGFloat)height centerY:(CGFloat)centerY {
@@ -553,16 +468,12 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
   if (rightViewFrameMaxY > maxY) {
     maxY = rightViewFrameMaxY;
   }
-  CGFloat leftUnderlineLabelFrameMaxY = CGRectGetMaxY(self.leftUnderlineLabelFrame);
-  if (leftUnderlineLabelFrameMaxY > maxY) {
-    maxY = leftUnderlineLabelFrameMaxY;
-  }
-  CGFloat rightUnderlineLabelFrameMaxY = CGRectGetMaxY(self.rightUnderlineLabelFrame);
-  if (rightUnderlineLabelFrameMaxY > maxY) {
-    maxY = rightUnderlineLabelFrameMaxY;
-  }
   if (self.topRowBottomRowDividerY > maxY) {
     maxY = self.topRowBottomRowDividerY;
+  }
+  CGFloat underlineLabelViewMaxY = CGRectGetMaxY(self.underlineLabelViewFrame);
+  if (underlineLabelViewMaxY > maxY) {
+    maxY = underlineLabelViewMaxY;
   }
   return maxY;
 }
