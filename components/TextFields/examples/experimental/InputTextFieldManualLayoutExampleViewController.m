@@ -24,10 +24,10 @@
 #import "MaterialAppBar+TypographyThemer.h"
 #import "MaterialButtons+ButtonThemer.h"
 
-#import "MDCFilledTextField+MaterialTheming.h"
-#import "MDCFilledTextField.h"
-#import "MDCOutlinedTextField+MaterialTheming.h"
-#import "MDCOutlinedTextField.h"
+#import "supplemental/MDCFilledTextField+MaterialTheming.h"
+#import "supplemental/MDCFilledTextField.h"
+#import "supplemental/MDCOutlinedTextField+MaterialTheming.h"
+#import "supplemental/MDCOutlinedTextField.h"
 
 #import "supplemental/MDCInputTextField+MaterialTheming.h"
 
