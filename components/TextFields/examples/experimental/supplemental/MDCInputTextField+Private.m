@@ -12,21 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <UIKit/UIKit.h>
-
 #import "MDCInputTextField.h"
-#import "MaterialContainerScheme.h"
 
-/**
- This category is used to style MDCInputTextField instances with an MDCContainerScheme.
- */
-@interface MDCInputTextField (MaterialTheming)
+#import <Foundation/Foundation.h>
 
-/**
- Applies a container scheme's subsystem-specific schemes to the receiver.
+#import <MDFInternationalization/MDFInternationalization.h>
+#import "MaterialTypography.h"
 
- @param scheme A container scheme instance.
- */
-- (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
+#import "MDCContainerStylerPathDrawingUtils.h"
+#import "MDCInputTextField+Private.h"
+#import "MDCInputTextField.h"
+#import "MDCInputTextFieldLayout.h"
+#import "MaterialMath.h"
 
-@end
+//#import "MDCInputTextField+Private.h"
+
+//@implementation MDCInputTextField (Private)
+//@end
