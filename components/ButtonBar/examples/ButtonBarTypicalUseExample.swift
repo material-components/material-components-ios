@@ -35,7 +35,7 @@ class ButtonBarTypicalUseSwiftExample: UIViewController {
     buttonBar.applyPrimaryTheme(withScheme: scheme)
 
     // MDCButtonBar ignores the style of UIBarButtonItem.
-    let ignored: UIBarButtonItemStyle = .done
+    let ignored: UIBarButtonItem.Style = .done
 
     let actionItem = UIBarButtonItem(
       title: "Action",

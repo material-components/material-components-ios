@@ -23,7 +23,7 @@ open class MaskedTransitionTypicalUseSwiftExample: UIViewController {
     let name: String
     let viewControllerType: UIViewController.Type
     let calculateFrame: ((UIPresentationController) -> CGRect)?
-    let autoresizingMask: UIViewAutoresizing
+    let autoresizingMask: UIView.AutoresizingMask
     let useSafeAreaInsets: Bool
   }
   var targets: [TargetInfo] = []
@@ -118,7 +118,7 @@ open class MaskedTransitionTypicalUseSwiftExample: UIViewController {
   }
 
   var transitionController: MDCMaskedTransitionController? = nil
-  func didTapFab(fab: UIView) {
+  @objc func didTapFab(fab: UIView) {
     guard let indexPathForSelectedRow = tableView.indexPathForSelectedRow else { return }
     let target = targets[indexPathForSelectedRow.row]
     let vc = target.viewControllerType.init()
@@ -169,7 +169,7 @@ private class ToolbarViewController: UIViewController {
     view.addSubview(toolbar)
   }
 
-  func didTap() {
+  @objc func didTap() {
     dismiss(animated: true)
   }
 }
@@ -238,7 +238,7 @@ private class ModalViewController: UIViewController {
                        constant: bottomOffset).isActive = true
   }
   
-  func didTap() {
+  @objc func didTap() {
     dismiss(animated: true)
   }
 }

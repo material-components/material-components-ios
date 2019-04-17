@@ -86,7 +86,7 @@ class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewContro
 
 extension BottomDrawerWithHeaderExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Navigation Drawer", "Bottom Drawer"],
       "primaryDemo": false,

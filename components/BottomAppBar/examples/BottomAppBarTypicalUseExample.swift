@@ -34,12 +34,13 @@ class BottomAppBarTypicalUseSwiftExample: UIViewController {
     super.init(nibName: nil, bundle: nil)
 
     self.title = "Bottom App Bar (Swift)"
-    self.addChildViewController(appBarViewController)
+    self.addChild(appBarViewController)
 
     let color = UIColor(white: 0.2, alpha:1)
     appBarViewController.headerView.backgroundColor = color
     appBarViewController.navigationBar.tintColor = .white
-    appBarViewController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
+    appBarViewController.navigationBar.titleTextAttributes =
+      [NSAttributedString.Key.foregroundColor : UIColor.white]
     commonInitBottomAppBarTypicalUseSwiftExample()
   }
 
@@ -52,11 +53,7 @@ class BottomAppBarTypicalUseSwiftExample: UIViewController {
     super.viewDidLoad()
 
     view.addSubview(appBarViewController.view)
-    #if swift(>=4.2)
     appBarViewController.didMove(toParent: self)
-    #else
-    appBarViewController.didMove(toParentViewController: self)
-    #endif
   }
 
   func commonInitBottomAppBarTypicalUseSwiftExample() {
@@ -133,14 +130,11 @@ class BottomAppBarTypicalUseSwiftExample: UIViewController {
     layoutBottomAppBar()
   }
 
-  #if swift(>=3.2)
   @available(iOS 11, *)
   override func viewSafeAreaInsetsDidChange() {
     super.viewSafeAreaInsetsDidChange()
     layoutBottomAppBar()
   }
-  #endif
-
 }
 
 // MARK: Catalog by convention

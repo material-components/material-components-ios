@@ -67,7 +67,7 @@ swift_library(
     srcs = native.glob(["examples/*.swift"]),
     copts = [
         "-swift-version",
-        "3",
+        "4.2",
     ],
     deps = [
         ":MaskedTransition",

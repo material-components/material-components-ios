@@ -60,11 +60,7 @@ class AppBarImagerySwiftExample: UITableViewController {
     headerView.trackingScrollView = self.tableView
 
     view.addSubview(appBarViewController.view)
-    #if swift(>=4.2)
     appBarViewController.didMove(toParent: self)
-    #else
-    appBarViewController.didMove(toParentViewController: self)
-    #endif
   }
 
   override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -83,7 +79,7 @@ class AppBarImagerySwiftExample: UITableViewController {
     appBarViewController.inferTopSafeAreaInsetFromViewController = true
     appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
 
-    self.addChildViewController(appBarViewController)
+    self.addChild(appBarViewController)
   }
 
   required init?(coder aDecoder: NSCoder) {

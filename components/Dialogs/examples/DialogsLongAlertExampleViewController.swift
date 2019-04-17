@@ -30,8 +30,8 @@ class DialogsLongAlertExampleViewController: UIViewController {
 
     view.backgroundColor = containerScheme.colorScheme.backgroundColor
 
-    textButton.setTitle("PRESENT ALERT", for: UIControlState())
-    textButton.setTitleColor(UIColor(white: 0.1, alpha:1), for: UIControlState())
+    textButton.setTitle("PRESENT ALERT", for: UIControl.State())
+    textButton.setTitleColor(UIColor(white: 0.1, alpha:1), for: UIControl.State())
     textButton.sizeToFit()
     textButton.translatesAutoresizingMaskIntoConstraints = false
     textButton.addTarget(self, action: #selector(tap), for: .touchUpInside)

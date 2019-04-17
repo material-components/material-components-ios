@@ -82,13 +82,11 @@ class BottomNavigationNilBadges : UIViewController {
     layoutBottomNavBar()
   }
 
-  #if swift(>=3.2)
   @available(iOS 11, *)
   override func viewSafeAreaInsetsDidChange() {
     super.viewSafeAreaInsetsDidChange()
     layoutBottomNavBar()
   }
-  #endif
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)

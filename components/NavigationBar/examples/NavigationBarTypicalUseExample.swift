@@ -40,19 +40,9 @@ open class NavigationBarTypicalUseSwiftExample: UIViewController {
 
     navBar.translatesAutoresizingMaskIntoConstraints = false
 
-    #if swift(>=3.2)
-      if #available(iOS 11.0, *) {
-        self.view.safeAreaLayoutGuide.topAnchor.constraint(equalTo: self.navBar.topAnchor).isActive = true
-      } else {
-        NSLayoutConstraint(item: self.topLayoutGuide,
-                           attribute: .bottom,
-                           relatedBy: .equal,
-                           toItem: self.navBar,
-                           attribute: .top,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-      }
-    #else
+    if #available(iOS 11.0, *) {
+      self.view.safeAreaLayoutGuide.topAnchor.constraint(equalTo: self.navBar.topAnchor).isActive = true
+    } else {
       NSLayoutConstraint(item: self.topLayoutGuide,
                          attribute: .bottom,
                          relatedBy: .equal,
@@ -60,7 +50,7 @@ open class NavigationBarTypicalUseSwiftExample: UIViewController {
                          attribute: .top,
                          multiplier: 1,
                          constant: 0).isActive = true
-    #endif
+    }
 
     let viewBindings = ["navBar": navBar]
 
@@ -140,14 +130,14 @@ class ExampleInstructionsViewNavigationBarTypicalUseSwift: UIView {
     style.alignment = .center
     style.lineBreakMode = .byWordWrapping
     let instructionsDictionary1 = [
-      NSFontAttributeName : UIFont.preferredFont(forTextStyle: .headline),
-      NSForegroundColorAttributeName : MDCPalette.grey.tint600.withAlphaComponent(0.87),
-      NSParagraphStyleAttributeName : style
+      NSAttributedString.Key.font : UIFont.preferredFont(forTextStyle: .headline),
+      NSAttributedString.Key.foregroundColor : MDCPalette.grey.tint600.withAlphaComponent(0.87),
+      NSAttributedString.Key.paragraphStyle : style
     ]
     let instructionsDictionary2 = [
-      NSFontAttributeName : UIFont.preferredFont(forTextStyle: .subheadline),
-      NSForegroundColorAttributeName : MDCPalette.grey.tint600.withAlphaComponent(0.87),
-      NSParagraphStyleAttributeName : style
+      NSAttributedString.Key.font : UIFont.preferredFont(forTextStyle: .subheadline),
+      NSAttributedString.Key.foregroundColor : MDCPalette.grey.tint600.withAlphaComponent(0.87),
+      NSAttributedString.Key.paragraphStyle : style
     ]
     let instructionText = "SWIPE RIGHT\n\n\nfrom left edge to go back\n\n\n\n\n"
     let instructionsAttributedString = NSMutableAttributedString(string: instructionText)

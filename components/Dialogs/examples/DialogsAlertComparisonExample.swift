@@ -87,7 +87,7 @@ class DialogsAlertComparisonExample: UIViewController {
       ])
 
       uikitButton.translatesAutoresizingMaskIntoConstraints = false
-      uikitButton.setTitle("UIKit Alert", for: UIControlState())
+      uikitButton.setTitle("UIKit Alert", for: UIControl.State())
       uikitButton.setTitleColor(UIColor(white: 0.1, alpha:1), for: .normal)
       uikitButton.sizeToFit()
       uikitButton.addTarget(self, action: #selector(tapUIKit), for: .touchUpInside)

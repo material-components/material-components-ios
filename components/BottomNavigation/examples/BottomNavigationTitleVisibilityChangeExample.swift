@@ -87,7 +87,7 @@ class BottomNavigationTitleVisibilityChangeExample: UIViewController, MDCBottomN
 
     var viewBounds = view.bounds;
     if #available(iOS 11.0, *) {
-      viewBounds = UIEdgeInsetsInsetRect(viewBounds, view.safeAreaInsets)
+      viewBounds = viewBounds.inset(by: view.safeAreaInsets)
     }
     let labelWidth = min(viewBounds.size.width - 32, 480);
     let labelSize = instructionLabel.sizeThatFits(CGSize(width: labelWidth,

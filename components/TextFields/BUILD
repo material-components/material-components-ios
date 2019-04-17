@@ -127,7 +127,7 @@ swift_library(
     srcs = glob(["examples/experimental/*.swift"]),
     copts = [
         "-swift-version",
-        "3",
+        "4.2",
     ],
     deps = [":ExperimentalExampleSource"],
 )
@@ -196,7 +196,7 @@ swift_library(
     ]),
     copts = [
         "-swift-version",
-        "3",
+        "4.2",
     ],
     visibility = ["//visibility:private"],
     deps = [
