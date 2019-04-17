@@ -45,7 +45,7 @@ static UIVisualEffectView *MDCInitializeCompatibleBlurView() {
 - (instancetype)init {
   self = [super init];
   if (self) {
-    [self commonInitMDCBottomNavigationSystemDialogView];
+    [self commonMDCBottomNavigationSystemDialogViewInit];
   }
 
   return self;
@@ -54,13 +54,13 @@ static UIVisualEffectView *MDCInitializeCompatibleBlurView() {
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    [self commonInitMDCBottomNavigationSystemDialogView];
+    [self commonMDCBottomNavigationSystemDialogViewInit];
   }
 
   return self;
 }
 
-- (void)commonInitMDCBottomNavigationSystemDialogView {
+- (void)commonMDCBottomNavigationSystemDialogViewInit {
   self.layer.cornerRadius = kCornerRadius;
   self.layer.masksToBounds = YES;
 
@@ -89,7 +89,11 @@ static UIVisualEffectView *MDCInitializeCompatibleBlurView() {
   if (self.blurView) {
     CGFloat height = CGRectGetHeight(self.bounds);
     CGFloat width = CGRectGetWidth(self.bounds);
-    self.blurView.frame = CGRectMake(0, 0, width, height);
+    CGFloat centerX = (CGFloat)floor(width / 2.0);
+    CGFloat centerY = (CGFloat)floor(height / 2.0);
+
+    self.blurView.bounds = CGRectMake(0, 0, width, height);
+    self.blurView.center = CGPointMake(centerX, centerY);
   }
 }
 

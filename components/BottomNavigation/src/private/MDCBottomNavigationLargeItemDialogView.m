@@ -18,14 +18,15 @@
 
 static const CGFloat kTitleFontScaling = (CGFloat)0.5;
 static const CGFloat kTitleFontSize = 35;
-static const CGFloat kImageViewHeightToDialogRatio = (CGFloat)0.35;
+static const CGFloat kImageTopMargin = 30;
+static const CGFloat kImageHeight = 75;
 
 /**
  * Returns an image representing the given UITabBarItem. If the item has a largeContentSizeImage,
  * this function will return that image, otherwise it returns the value of the item's image
  * property. This value may be nil.
  */
-static UIImage *_Nullable MDCImageForItem(UITabBarItem *_Nullable item) {
+static UIImage *_Nullable MDCImageForItem(UITabBarItem *item) {
   if (!item) {
     return nil;
   }
@@ -53,7 +54,7 @@ static UIImage *_Nullable MDCImageForItem(UITabBarItem *_Nullable item) {
 - (instancetype)init {
   self = [super init];
   if (self) {
-    [self commonInitMDCBottomNavigationLargeItemView];
+    [self commonMDCBottomNavigationLargeItemViewInit];
   }
 
   return self;
@@ -62,13 +63,13 @@ static UIImage *_Nullable MDCImageForItem(UITabBarItem *_Nullable item) {
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    [self commonInitMDCBottomNavigationLargeItemView];
+    [self commonMDCBottomNavigationLargeItemViewInit];
   }
 
   return self;
 }
 
-- (void)commonInitMDCBottomNavigationLargeItemView {
+- (void)commonMDCBottomNavigationLargeItemViewInit {
   UIColor *contentColor = [UIColor colorWithWhite:(CGFloat)0.15 alpha:1];
 
   _imageView = [[UIImageView alloc] init];
@@ -83,29 +84,38 @@ static UIImage *_Nullable MDCImageForItem(UITabBarItem *_Nullable item) {
   _titleLabel.minimumScaleFactor = kTitleFontScaling;
   _titleLabel.textColor = contentColor;
   _titleLabel.font = [UIFont systemFontOfSize:kTitleFontSize];
-  _titleLabel.numberOfLines = (_imageView.image) ? 1 : 0;
+  _titleLabel.numberOfLines = 0;
   [self.contentView addSubview:_titleLabel];
 }
 
 - (void)layoutSubviews {
   [super layoutSubviews];
 
+  BOOL hasText = self.titleLabel.text.length > 0;
+  BOOL hasImage = self.imageView.image != nil;
   UIEdgeInsets margins = self.layoutMargins;
-  CGFloat dialogHeight = MAX(0, CGRectGetHeight(self.bounds) - margins.top - margins.bottom);
-  CGFloat dialogWidth = MAX(0, CGRectGetWidth(self.bounds) - margins.left - margins.right);
-  CGFloat imageHeight =
-      self.imageView.image ? (CGFloat)floor(dialogHeight * kImageViewHeightToDialogRatio) : 0;
-  CGFloat titleHeight = [self titleLabelHeight];
 
-  CGFloat totalHeight = imageHeight + titleHeight;
+  CGFloat dialogHeight = CGRectGetHeight(self.bounds);
+  CGFloat dialogWidth = CGRectGetWidth(self.bounds);
+
+  CGFloat additionalTopImageMargin = hasImage ? kImageTopMargin : 0;
+  CGFloat imageHeight = hasImage ? kImageHeight : 0;
+  CGFloat imageWidth = MAX(0, dialogWidth - margins.left - margins.right);
   CGFloat imageX = margins.left;
-  CGFloat imageY = ((CGFloat)MAX(0, floor((dialogHeight - totalHeight) / 2.0))) + margins.top;
+  CGFloat imageY;
+  if (hasText) {
+    imageY = margins.top + additionalTopImageMargin;
+  } else {
+    imageY = (CGFloat)floor((dialogHeight - imageHeight) / 2.0);
+  }
 
-  CGFloat titleX = margins.left;
   CGFloat titleY = imageY + imageHeight;
+  CGFloat titleX = imageX;
+  CGFloat titleHeight = MAX(0, dialogHeight - titleY - margins.bottom);
+  CGFloat titleWidth = imageWidth;
 
-  self.imageView.frame = CGRectMake(imageX, imageY, dialogWidth, imageHeight);
-  self.titleLabel.frame = CGRectMake(titleX, titleY, dialogWidth, titleHeight);
+  self.imageView.frame = CGRectMake(imageX, imageY, imageWidth, imageHeight);
+  self.titleLabel.frame = CGRectMake(titleX, titleY, titleWidth, titleHeight);
 }
 
 - (void)updateWithTabBarItem:(UITabBarItem *)item {

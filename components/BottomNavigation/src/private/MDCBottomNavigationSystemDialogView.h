@@ -22,7 +22,7 @@
 
 /**
  * The view that hosts all the content of the dialog. Add all subviews to this view. Layout subviews
- * within the contentView relative to the contentView's layout margins.
+ * within the @c contentView relative to the contentView's layout margins.
  */
 @property(nonatomic, readonly, nonnull) UIView *contentView;
 
