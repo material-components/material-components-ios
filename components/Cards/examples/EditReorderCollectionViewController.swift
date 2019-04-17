@@ -15,8 +15,8 @@
 import UIKit
 
 import MaterialComponents.MaterialColorScheme
-import MaterialComponents.MaterialTypographyScheme
 import MaterialComponents.MaterialContainerScheme
+import MaterialComponents.MaterialTypographyScheme
 
 class EditReorderCollectionViewController: UIViewController,
   UICollectionViewDelegate,
