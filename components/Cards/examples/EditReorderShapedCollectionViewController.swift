@@ -121,7 +121,7 @@ class EditReorderShapedCollectionViewController: UIViewController,
                                                             views: ["view": collectionView]));
   }
 
-  func toggleModes() {
+  @objc func toggleModes() {
     if toggle == .edit {
       toggle = .reorder
       navigationItem.rightBarButtonItem?.title = "Reorder"

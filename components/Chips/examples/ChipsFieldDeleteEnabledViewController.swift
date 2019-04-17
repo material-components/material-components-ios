@@ -49,7 +49,7 @@ class ChipsFieldDeleteEnabledViewController : UIViewController, MDCChipFieldDele
 
     var frame = view.bounds
     if #available(iOS 11.0, *) {
-      frame = UIEdgeInsetsInsetRect(frame, view.safeAreaInsets)
+      frame = frame.inset(by: view.safeAreaInsets)
     }
     frame.size = chipField.sizeThatFits(frame.size)
     chipField.frame = frame
@@ -63,7 +63,7 @@ class ChipsFieldDeleteEnabledViewController : UIViewController, MDCChipFieldDele
     chip.applyTheme(withScheme: containerScheming)
     chip.sizeToFit()
     let chipVerticalInset = min(0, chip.bounds.height - 48 / 2)
-    chip.hitAreaInsets = UIEdgeInsetsMake(chipVerticalInset, 0, chipVerticalInset, 0)
+    chip.hitAreaInsets = UIEdgeInsets(top: chipVerticalInset, left: 0, bottom: chipVerticalInset, right: 0)
   }
 }
 // MARK - Catalog by Convention

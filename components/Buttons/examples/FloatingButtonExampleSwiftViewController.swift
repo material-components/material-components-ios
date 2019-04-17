@@ -52,7 +52,7 @@ class FloatingButtonExampleSwiftViewController: UIViewController {
     largeIconFloatingButton.translatesAutoresizingMaskIntoConstraints = false
     largeIconFloatingButton.setImage(plusImage36, for: .normal)
     largeIconFloatingButton.accessibilityLabel = "Create"
-    largeIconFloatingButton.setContentEdgeInsets(UIEdgeInsetsMake(-6, -6, -6, 0), for: .default,
+    largeIconFloatingButton.setContentEdgeInsets(UIEdgeInsets(top: -6, left: -6, bottom: -6, right: 0), for: .default,
                                                  in: .expanded)
     largeIconFloatingButton.applySecondaryTheme(withScheme: containerScheme)
 

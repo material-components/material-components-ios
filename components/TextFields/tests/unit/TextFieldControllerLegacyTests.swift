@@ -253,7 +253,7 @@ class TextFieldControllerDefaultLegacyTests: XCTestCase {
     textField.setNeedsLayout()
     textField.layoutIfNeeded()
 
-    let estimatedTextFrame = UIEdgeInsetsInsetRect(textField.bounds, controller.textInsets(UIEdgeInsets()))
+    let estimatedTextFrame = textField.bounds.inset(by: controller.textInsets(UIEdgeInsets()))
     XCTAssertFalse(textField.placeholderLabel.frame.intersects(estimatedTextFrame))
   }
 

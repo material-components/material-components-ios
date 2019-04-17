@@ -99,7 +99,7 @@ class CardsMaterialThemingTests: XCTestCase {
     }
 
     // Test remaining properties
-    [UIControlState.normal, .highlighted, .selected, .disabled].forEach {
+    [UIControl.State.normal, .highlighted, .selected, .disabled].forEach {
       XCTAssertEqual(card.shadowElevation(for: $0),
                      ShadowElevation.none,
                      "Shadow elevation incorrect for state \($0)")

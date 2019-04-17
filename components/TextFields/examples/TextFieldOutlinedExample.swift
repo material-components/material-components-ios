@@ -336,14 +336,14 @@ extension TextFieldOutlinedSwiftExample: UITextFieldDelegate {
 
     if textField == state {
       if let range = fullString.rangeOfCharacter(from: CharacterSet.letters.inverted),
-        fullString[range].characterCount > 0 {
+        String(fullString[range]).characterCount > 0 {
         stateController.setErrorText("Error: State can only contain letters",
                                      errorAccessibilityValue: nil)
       } else {
         stateController.setErrorText(nil, errorAccessibilityValue: nil)
       }
     } else if textField == zip {      if let range = fullString.rangeOfCharacter(from: CharacterSet.letters),
-        fullString[range].characterCount > 0 {
+      String(fullString[range]).characterCount > 0 {
         zipController.setErrorText("Error: Zip can only contain numbers",
                                    errorAccessibilityValue: nil)
       } else if fullString.characterCount > 5 {
@@ -354,7 +354,7 @@ extension TextFieldOutlinedSwiftExample: UITextFieldDelegate {
       }
     } else if textField == city {
       if let range = fullString.rangeOfCharacter(from: CharacterSet.decimalDigits),
-        fullString[range].characterCount > 0 {
+        String(fullString[range]).characterCount > 0 {
         cityController.setErrorText("Error: City can only contain letters",
                                     errorAccessibilityValue: nil)
       } else {
@@ -391,22 +391,22 @@ extension TextFieldOutlinedSwiftExample {
     notificationCenter.addObserver(
       self,
       selector: #selector(keyboardWillShow(notif:)),
-      name: .UIKeyboardWillChangeFrame,
+      name: UIResponder.keyboardWillChangeFrameNotification,
       object: nil)
     notificationCenter.addObserver(
       self,
       selector: #selector(keyboardWillShow(notif:)),
-      name: .UIKeyboardWillShow,
+      name: UIResponder.keyboardWillShowNotification,
       object: nil)
     notificationCenter.addObserver(
       self,
       selector: #selector(keyboardWillHide(notif:)),
-      name: .UIKeyboardWillHide,
+      name: UIResponder.keyboardWillHideNotification,
       object: nil)
   }
 
   @objc func keyboardWillShow(notif: Notification) {
-    guard let frame = notif.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else {
+    guard let frame = notif.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
       return
     }
     scrollView.contentInset = UIEdgeInsets(top: 0.0,

@@ -55,8 +55,8 @@ class AnimationTimingSwiftExampleViewController: UIViewController {
 
    }
 
-   func playAnimations() {
-      let linearCurve: CAMediaTimingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
+   @objc func playAnimations() {
+      let linearCurve: CAMediaTimingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
       applyAnimation(toView: linearView, withTimingFunction: linearCurve)
 
       if let materialStandard = CAMediaTimingFunction.mdc_function(withType: .standard) {

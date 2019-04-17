@@ -43,7 +43,7 @@ class ButtonsCustomFontViewController: UIViewController {
     view.backgroundColor = containerScheme.colorScheme.backgroundColor
     let flatButtonStatic = MDCButton()
     flatButtonStatic.applyContainedTheme(withScheme: containerScheme)
-    flatButtonStatic.setTitle("Static", for: UIControlState())
+    flatButtonStatic.setTitle("Static", for: UIControl.State())
     flatButtonStatic.sizeToFit()
     flatButtonStatic.translatesAutoresizingMaskIntoConstraints = false
     flatButtonStatic.addTarget(self, action: #selector(tap), for: .touchUpInside)
@@ -51,7 +51,7 @@ class ButtonsCustomFontViewController: UIViewController {
 
     let flatButtonDynamic = MDCButton()
     flatButtonDynamic.applyContainedTheme(withScheme: containerScheme)
-    flatButtonDynamic.setTitle("Dynamic", for: UIControlState())
+    flatButtonDynamic.setTitle("Dynamic", for: UIControl.State())
     flatButtonDynamic.sizeToFit()
     flatButtonDynamic.translatesAutoresizingMaskIntoConstraints = false
     flatButtonDynamic.addTarget(self, action: #selector(tap), for: .touchUpInside)

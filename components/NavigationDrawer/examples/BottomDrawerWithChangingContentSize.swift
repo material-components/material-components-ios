@@ -143,7 +143,7 @@ UICollectionViewDelegate, UICollectionViewDataSource {
     return 1
   }
 
-  func didTap(gestureRecognizer : UITapGestureRecognizer) {
+  @objc func didTap(gestureRecognizer : UITapGestureRecognizer) {
     longList = !longList
     collectionView.reloadData()
     self.preferredContentSize = CGSize(width: self.view.bounds.width,

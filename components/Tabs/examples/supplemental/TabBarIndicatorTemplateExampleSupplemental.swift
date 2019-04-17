@@ -44,7 +44,7 @@ extension TabBarIndicatorTemplateExample {
   func makeAppBar() -> MDCAppBarViewController {
     let appBarViewController = MDCAppBarViewController()
 
-    self.addChildViewController(appBarViewController)
+    self.addChild(appBarViewController)
 
     // Give the tab bar enough height to accomodate all possible item appearances.
     appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
@@ -58,7 +58,7 @@ extension TabBarIndicatorTemplateExample {
   func setupExampleViews() {
     view.backgroundColor = UIColor.white
     view.addSubview(appBarViewController.view)
-    appBarViewController.didMove(toParentViewController: self)
+    appBarViewController.didMove(toParent: self)
 
     // Set up buttons
     alignmentButton.translatesAutoresizingMaskIntoConstraints = false
@@ -117,7 +117,7 @@ extension TabBarIndicatorTemplateExample {
 }
 
 extension TabBarIndicatorTemplateExample {
-  override var childViewControllerForStatusBarStyle: UIViewController? {
+  override var childForStatusBarStyle: UIViewController? {
     return appBarViewController
   }
 }

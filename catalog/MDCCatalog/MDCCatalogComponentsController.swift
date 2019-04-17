@@ -27,7 +27,7 @@ import MaterialComponents.MaterialTypography
 
 import UIKit
 
-class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchControllerDelegate {
+class MDCCatalogComponentsController: UICollectionViewController, UICollectionViewDelegateFlowLayout, MDCInkTouchControllerDelegate {
 
   fileprivate struct Constants {
     static let headerScrollThreshold: CGFloat = 30
@@ -364,7 +364,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
   func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
-                      sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
+                      sizeForItemAt indexPath: IndexPath) -> CGSize {
     let dividerWidth: CGFloat = 1
     var safeInsets: CGFloat = 0
 #if swift(>=3.2)

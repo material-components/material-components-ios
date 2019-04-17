@@ -34,12 +34,13 @@ class BottomAppBarTypicalUseSwiftExample: UIViewController {
     super.init(nibName: nil, bundle: nil)
 
     self.title = "Bottom App Bar (Swift)"
-    self.addChildViewController(appBarViewController)
+    self.addChild(appBarViewController)
 
     let color = UIColor(white: 0.2, alpha:1)
     appBarViewController.headerView.backgroundColor = color
     appBarViewController.navigationBar.tintColor = .white
-    appBarViewController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
+    appBarViewController.navigationBar.titleTextAttributes =
+      [NSAttributedString.Key.foregroundColor : UIColor.white]
     commonInitBottomAppBarTypicalUseSwiftExample()
   }
 

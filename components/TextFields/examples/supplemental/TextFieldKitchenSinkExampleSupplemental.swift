@@ -52,7 +52,7 @@ extension TextFieldKitchenSinkSwiftExample {
 
     NotificationCenter.default.addObserver(self,
                                            selector: #selector(TextFieldKitchenSinkSwiftExample.contentSizeCategoryDidChange(notif:)),
-                                           name:.UIContentSizeCategoryDidChange,
+                                           name: UIContentSizeCategory.didChangeNotification,
                                            object: nil)
   }
 
@@ -184,7 +184,7 @@ extension TextFieldKitchenSinkSwiftExample {
       control
     }
 
-    let allTextFields = allTextFieldControllers.flatMap { $0.textInput }
+    let allTextFields = allTextFieldControllers.compactMap { $0.textInput }
     let textFieldsString = allTextFields.reduce("", concatenatingClosure)
 
     var textFields = [String: UIView]()
@@ -192,7 +192,7 @@ extension TextFieldKitchenSinkSwiftExample {
       textFields[unique(from: textInput, with: prefix)] = textInput
     }
 
-    let allTextViews = allMultilineTextFieldControllers.flatMap { $0.textInput }
+    let allTextViews = allMultilineTextFieldControllers.compactMap { $0.textInput }
     let textViewsString = allTextViews.reduce("", concatenatingClosure)
 
     var textViews = [String: UIView]()
@@ -228,7 +228,7 @@ extension TextFieldKitchenSinkSwiftExample {
                                          attribute: .leadingMargin,
                                          multiplier: 1.0,
                                          constant: 0.0)
-        leading.priority = 750.0
+        leading.priority = UILayoutPriority.defaultHigh
         leading.isActive = true
 
         let trailing = NSLayoutConstraint(item: value,
@@ -238,7 +238,7 @@ extension TextFieldKitchenSinkSwiftExample {
                                           attribute: .trailing,
                                           multiplier: 1.0,
                                           constant: 0.0)
-        trailing.priority = 750.0
+        trailing.priority = UILayoutPriority.defaultHigh
         trailing.isActive = true
       }
     }
@@ -339,22 +339,22 @@ extension TextFieldKitchenSinkSwiftExample {
     notificationCenter.addObserver(
       self,
       selector: #selector(TextFieldKitchenSinkSwiftExample.keyboardWillShow(notif:)),
-      name: .UIKeyboardWillShow,
+      name: UIResponder.keyboardWillShowNotification,
       object: nil)
     notificationCenter.addObserver(
       self,
       selector: #selector(TextFieldKitchenSinkSwiftExample.keyboardWillShow(notif:)),
-      name: .UIKeyboardWillChangeFrame,
+      name: UIResponder.keyboardWillChangeFrameNotification,
       object: nil)
     notificationCenter.addObserver(
       self,
       selector: #selector(TextFieldKitchenSinkSwiftExample.keyboardWillHide(notif:)),
-      name: .UIKeyboardWillHide,
+      name: UIResponder.keyboardWillHideNotification,
       object: nil)
   }
 
   @objc func keyboardWillShow(notif: Notification) {
-    guard let frame = notif.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else {
+    guard let frame = notif.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
       return
     }
     scrollView.contentInset = UIEdgeInsets(top: 0.0,
@@ -389,7 +389,7 @@ extension TextFieldKitchenSinkSwiftExample {
       partialTitle = "Underline View Mode"
     }
 
-    let closure: (UITextFieldViewMode, String) -> Void = { mode, title in
+    let closure: (UITextField.ViewMode, String) -> Void = { mode, title in
       controllersToChange.forEach { controller in
         if button == self.characterModeButton {
           controller.characterCountViewMode = mode
@@ -413,10 +413,10 @@ extension TextFieldKitchenSinkSwiftExample {
 
   func presentAlert (alert: UIAlertController,
                      partialTitle: String,
-                     closure: @escaping (_ mode: UITextFieldViewMode, _ title: String) -> Void) -> Void {
+                     closure: @escaping (_ mode: UITextField.ViewMode, _ title: String) -> Void) -> Void {
 
     for rawMode in 0...3 {
-      let mode = UITextFieldViewMode(rawValue: rawMode)!
+      let mode = UITextField.ViewMode(rawValue: rawMode)!
       alert.addAction(UIAlertAction(title: modeName(mode: mode),
                                     style: .default,
                                     handler: { _ in
@@ -427,7 +427,7 @@ extension TextFieldKitchenSinkSwiftExample {
     present(alert, animated: true, completion: nil)
   }
 
-  func modeName(mode: UITextFieldViewMode) -> String {
+  func modeName(mode: UITextField.ViewMode) -> String {
     switch mode {
     case .always:
       return "Always"

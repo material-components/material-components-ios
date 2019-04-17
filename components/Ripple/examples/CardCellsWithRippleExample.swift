@@ -117,7 +117,7 @@ class CardCellsWithRippleExample: UIViewController,
     }
   }
 
-  func toggleModes() {
+  @objc func toggleModes() {
     switch toggle {
     case .edit:
       toggle = .reorder

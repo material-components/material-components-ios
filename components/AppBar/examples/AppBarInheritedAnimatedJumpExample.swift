@@ -90,7 +90,7 @@ class AppBarInheritedAnimatedJumpExample: UIViewController {
     let removeOld: (() -> Void)
     let animateOut: (() -> Void)
     if let currentTab = currentTab {
-      currentTab.willMove(toParentViewController: nil)
+      currentTab.willMove(toParent: nil)
 
       animateOut = {
         currentTab.view.alpha = 0
@@ -99,7 +99,7 @@ class AppBarInheritedAnimatedJumpExample: UIViewController {
       removeOld = {
         currentTab.headerView = nil
         currentTab.view.removeFromSuperview()
-        currentTab.removeFromParentViewController()
+        currentTab.removeFromParent()
       }
     } else {
       removeOld = {}
@@ -162,7 +162,7 @@ class AppBarInheritedAnimatedJumpExample: UIViewController {
   private func makeAppBar() -> MDCAppBarViewController {
     let appBarViewController = MDCAppBarViewController()
 
-    addChildViewController(appBarViewController)
+    addChild(appBarViewController)
 
     // Give the tab bar enough height to accommodate all possible item appearances.
     appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
@@ -178,7 +178,7 @@ class AppBarInheritedAnimatedJumpExample: UIViewController {
     return appBarViewController
   }
 
-  override var childViewControllerForStatusBarStyle: UIViewController? {
+  override var childForStatusBarStyle: UIViewController? {
     return appBarViewController
   }
 }

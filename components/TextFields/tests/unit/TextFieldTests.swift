@@ -33,7 +33,7 @@ class TextFieldTests: XCTestCase {
     let textField = MDCTextField()
 
     for constraint in textField.constraints {
-      XCTAssertLessThanOrEqual(constraint.priority, UILayoutPriorityDefaultLow + 10, String(describing: constraint))
+      XCTAssertLessThanOrEqual(constraint.priority.rawValue, UILayoutPriority.defaultLow.rawValue + 10, String(describing: constraint))
     }
   }
 

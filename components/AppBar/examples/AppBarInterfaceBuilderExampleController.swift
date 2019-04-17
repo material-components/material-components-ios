@@ -45,7 +45,7 @@ class AppBarInterfaceBuilderSwiftExample: UIViewController, UIScrollViewDelegate
     appBarViewController.inferTopSafeAreaInsetFromViewController = true
     appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
 
-    addChildViewController(appBarViewController)
+    addChild(appBarViewController)
   }
 
   override func viewDidLoad() {

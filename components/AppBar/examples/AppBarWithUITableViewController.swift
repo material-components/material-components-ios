@@ -43,7 +43,7 @@ class AppBarWithUITableViewController: UITableViewController {
     commonInit()
   }
 
-  override init(style: UITableViewStyle) {
+  override init(style: UITableView.Style) {
     super.init(style: style)
     commonInit()
   }
@@ -54,7 +54,7 @@ class AppBarWithUITableViewController: UITableViewController {
     appBarViewController.inferTopSafeAreaInsetFromViewController = true
     appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
 
-    self.addChildViewController(appBarViewController)
+    self.addChild(appBarViewController)
   }
 
   override func viewDidLoad() {

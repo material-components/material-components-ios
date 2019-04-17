@@ -84,9 +84,9 @@ class AppBarJumpExample: UIViewController {
 
     if let currentTab = currentTab {
       currentTab.headerView = nil
-      currentTab.willMove(toParentViewController: nil)
+      currentTab.willMove(toParent: nil)
       currentTab.view.removeFromSuperview()
-      currentTab.removeFromParentViewController()
+      currentTab.removeFromParent()
     }
 
     if let tabView = tab.view {
@@ -95,7 +95,7 @@ class AppBarJumpExample: UIViewController {
     }
 
     view.addSubview(tab.view)
-    view.sendSubview(toBack: tab.view)
+    view.sendSubviewToBack(tab.view)
     #if swift(>=4.2)
     tab.didMove(toParent: self)
     #else
@@ -123,7 +123,7 @@ class AppBarJumpExample: UIViewController {
   private func makeAppBar() -> MDCAppBarViewController {
     let appBarViewController = MDCAppBarViewController()
 
-    addChildViewController(appBarViewController)
+    addChild(appBarViewController)
 
     // Give the tab bar enough height to accomodate all possible item appearances.
     appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
@@ -139,7 +139,7 @@ class AppBarJumpExample: UIViewController {
     return appBarViewController
   }
 
-  override var childViewControllerForStatusBarStyle: UIViewController? {
+  override var childForStatusBarStyle: UIViewController? {
     return appBarViewController
   }
 }

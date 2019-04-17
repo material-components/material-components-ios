@@ -84,7 +84,7 @@ class ZShadowViewController: UIViewController {
     
   }
   
-  func squaresTapped() {
+  @objc func squaresTapped() {
     greenBannerLeadingConstraintCollapsed.isActive = !greenBannerLeadingConstraintCollapsed.isActive
     blueBannerLeadingConstraintCollapsed.isActive = !blueBannerLeadingConstraintCollapsed.isActive
     

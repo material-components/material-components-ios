@@ -87,9 +87,9 @@ class AppBarManualTabsExample: UIViewController {
 
     if let currentTab = currentTab {
       currentTab.headerView = nil
-      currentTab.willMove(toParentViewController: nil)
+      currentTab.willMove(toParent: nil)
       currentTab.view.removeFromSuperview()
-      currentTab.removeFromParentViewController()
+      currentTab.removeFromParent()
     }
 
     if let tabView = tab.view {
@@ -98,7 +98,7 @@ class AppBarManualTabsExample: UIViewController {
     }
 
     view.addSubview(tab.tableView)
-    view.sendSubview(toBack: tab.tableView)
+    view.sendSubviewToBack(tab.tableView)
 
     #if swift(>=4.2)
     tab.didMove(toParent: self)
@@ -127,7 +127,7 @@ class AppBarManualTabsExample: UIViewController {
   private func makeAppBar() -> MDCAppBarViewController {
     let appBarViewController = MDCAppBarViewController()
 
-    addChildViewController(appBarViewController)
+    addChild(appBarViewController)
 
     // Give the tab bar enough height to accomodate all possible item appearances.
     appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
@@ -143,7 +143,7 @@ class AppBarManualTabsExample: UIViewController {
     return appBarViewController
   }
 
-  override var childViewControllerForStatusBarStyle: UIViewController? {
+  override var childForStatusBarStyle: UIViewController? {
     return appBarViewController
   }
 }
