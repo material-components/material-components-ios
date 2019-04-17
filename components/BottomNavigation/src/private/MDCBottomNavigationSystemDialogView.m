@@ -64,6 +64,8 @@ static UIVisualEffectView *MDCInitializeCompatibleBlurView() {
   self.layer.cornerRadius = kCornerRadius;
   self.layer.masksToBounds = YES;
 
+  // Determine the layout margins and set them on the content view.  The content view may change
+  // depending upon if reduced transparency is enabled.
   CGFloat margin = kCornerRadius + kMargins;
   UIEdgeInsets layoutMargins = UIEdgeInsetsMake(margin, margin, margin, margin);
   if (UIAccessibilityIsReduceTransparencyEnabled()) {

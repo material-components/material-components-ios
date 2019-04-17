@@ -89,7 +89,7 @@ static UIImage *_Nullable MDCImageForItem(UITabBarItem *_Nonnull item) {
 
   BOOL hasText = self.titleLabel.text.length > 0;
   BOOL hasImage = self.imageView.image != nil;
-  UIEdgeInsets margins = self.layoutMargins;
+  UIEdgeInsets margins = self.contentView.layoutMargins;
 
   CGFloat dialogHeight = CGRectGetHeight(self.bounds);
   CGFloat dialogWidth = CGRectGetWidth(self.bounds);
