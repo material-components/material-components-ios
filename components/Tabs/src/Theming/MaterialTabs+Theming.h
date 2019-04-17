@@ -12,18 +12,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <UIKit/UIKit.h>
-
-#import "MDCContainedInputView.h"
-
-@interface MDCContainedInputViewColorSchemeFilled : MDCContainedInputViewColorScheme
-@property(strong, nonatomic) UIColor *filledSublayerFillColor;
-@property(strong, nonatomic) UIColor *filledSublayerUnderlineFillColor;
-@end
-
-@interface MDCContainerStyleFilledDensityInformer
-    : MDCContainerStyleBaseDensityInformer <MDCContainedInputViewStyleDensityInforming>
-@end
-
-@interface MDCContainerStyleFilled : MDCContainerStyleBase <MDCContainedInputViewStyle>
-@end
+#import "MDCTabBar+MaterialTheming.h"

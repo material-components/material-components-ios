@@ -212,7 +212,7 @@ typedef enum : NSUInteger {
   CGFloat nextAngle = MDCAtan2(nextVector.y, nextVector.x);
   CGFloat angle = prevAngle - nextAngle;
   if (angle < 0)
-    angle += 2 * M_PI;
+    angle += (CGFloat)(2 * M_PI);
   return angle;
 }
 

@@ -64,6 +64,7 @@ class BottomDrawerInfiniteScrollingExample: UIViewController {
 
   @objc private func presentNavigationDrawer() {
     let bottomDrawerViewController = MDCBottomDrawerViewController()
+    bottomDrawerViewController.maximumInitialDrawerHeight = 400;
     bottomDrawerViewController.contentViewController = contentViewController
     contentViewController.drawerVC = bottomDrawerViewController
     bottomDrawerViewController.setTopCornersRadius(12, for: .collapsed)

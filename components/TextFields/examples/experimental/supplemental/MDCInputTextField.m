@@ -12,58 +12,58 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCSimpleTextField.h"
+#import "MDCInputTextField.h"
 
 #import <Foundation/Foundation.h>
 
 #import <MDFInternationalization/MDFInternationalization.h>
+#import "MaterialTypography.h"
 
-#import "MDCContainerStylePathDrawingUtils.h"
-#import "MDCSimpleTextFieldLayout.h"
+#import "MDCContainerStylerPathDrawingUtils.h"
+#import "MDCInputTextFieldLayout.h"
 #import "MaterialMath.h"
 
-static const CGFloat kFloatingPlaceholderAnimationVelocityInPointsPerSecond = (CGFloat)200;
-
-@interface MDCSimpleTextField ()
+@interface MDCInputTextField ()
 
 @property(strong, nonatomic) UIButton *clearButton;
 @property(strong, nonatomic) UIImageView *clearButtonImageView;
+@property(strong, nonatomic) UILabel *floatingLabel;
 @property(strong, nonatomic) UILabel *placeholderLabel;
 
 @property(strong, nonatomic) UILabel *leftUnderlineLabel;
 @property(strong, nonatomic) UILabel *rightUnderlineLabel;
 
-@property(strong, nonatomic) MDCSimpleTextFieldLayout *layout;
+@property(strong, nonatomic) MDCInputTextFieldLayout *layout;
 
 @property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
 
 @property(nonatomic, assign) MDCContainedInputViewState containedInputViewState;
-@property(nonatomic, assign) MDCContainedInputViewPlaceholderState placeholderState;
+@property(nonatomic, assign) MDCContainedInputViewFloatingLabelState floatingLabelState;
+@property(nonatomic, assign) BOOL isPlaceholderVisible;
 
 @property(nonatomic, strong)
     NSMutableDictionary<NSNumber *, id<MDCContainedInputViewColorScheming>> *colorSchemes;
 
-@property(nonatomic, assign) BOOL isAnimating;
+@property(nonatomic, strong) MDCContainedInputViewFloatingLabelManager *floatingLabelManager;
 
 @end
 
-// TODO: Go through UITextField.h and make sure you consider the entire public API
-@implementation MDCSimpleTextField
+@implementation MDCInputTextField
 @synthesize preferredMainContentAreaHeight = _preferredMainContentAreaHeight;
 @synthesize preferredUnderlineLabelAreaHeight = _preferredUnderlineLabelAreaHeight;
 @synthesize underlineLabelDrawPriority = _underlineLabelDrawPriority;
 @synthesize customUnderlineLabelDrawPriority = _customUnderlineLabelDrawPriority;
-@synthesize containerStyle = _containerStyle;
+@synthesize containerStyler = _containerStyler;
 @synthesize isActivated = _isActivated;
 @synthesize isErrored = _isErrored;
-@synthesize canPlaceholderFloat = _canPlaceholderFloat;
+@synthesize canFloatingLabelFloat = _canFloatingLabelFloat;
 
 #pragma mark Object Lifecycle
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    [self commonMDCSimpleTextFieldInit];
+    [self commonMDCInputTextFieldInit];
   }
   return self;
 }
@@ -71,39 +71,41 @@ static const CGFloat kFloatingPlaceholderAnimationVelocityInPointsPerSecond = (C
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    [self commonMDCSimpleTextFieldInit];
+    [self commonMDCInputTextFieldInit];
   }
   return self;
 }
 
-- (void)commonMDCSimpleTextFieldInit {
+- (void)commonMDCInputTextFieldInit {
   [self initializeProperties];
+  [self setUpFloatingLabel];
   [self setUpPlaceholderLabel];
+  [self setUpFloatingLabelManager];
   [self setUpUnderlineLabels];
   [self setUpClearButton];
-  [self setUpContainerStyle];
+  [self setUpContainerStyler];
 }
 
 #pragma mark View Setup
 
 - (void)initializeProperties {
-  [self setUpCanPlaceholderFloat];
+  [self setUpCanFloatingLabelFloat];
   [self setUpLayoutDirection];
-  [self setUpPlaceholderState];
+  [self setUpFloatingLabelState];
   [self setUpContainedInputViewState];
   [self setUpColorSchemesDictionary];
 }
 
-- (void)setUpCanPlaceholderFloat {
-  self.canPlaceholderFloat = YES;
+- (void)setUpCanFloatingLabelFloat {
+  self.canFloatingLabelFloat = YES;
 }
 
 - (void)setUpLayoutDirection {
   self.layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
 }
 
-- (void)setUpPlaceholderState {
-  self.placeholderState = [self determineCurrentPlaceholderState];
+- (void)setUpFloatingLabelState {
+  self.floatingLabelState = [self determineCurrentFloatingLabelState];
 }
 
 - (void)setUpContainedInputViewState {
@@ -114,33 +116,33 @@ static const CGFloat kFloatingPlaceholderAnimationVelocityInPointsPerSecond = (C
   self.colorSchemes = [[NSMutableDictionary alloc] init];
 }
 
-- (void)setUpContainerStyle {
-  self.containerStyle = [[MDCContainerStyleBase alloc] init];
+- (void)setUpContainerStyler {
+  self.containerStyler = [[MDCContainerStylerBase alloc] init];
 }
 
-- (void)setUpStateDependentColorSchemesForStyle:(id<MDCContainedInputViewStyle>)containerStyle {
+- (void)setUpStateDependentColorSchemesForStyle:(id<MDCContainedInputViewStyler>)containerStyler {
   id<MDCContainedInputViewColorScheming> normalColorScheme =
-      [containerStyle defaultColorSchemeForState:MDCContainedInputViewStateNormal];
+      [containerStyler defaultColorSchemeForState:MDCContainedInputViewStateNormal];
   [self setContainedInputViewColorScheming:normalColorScheme
                                   forState:MDCContainedInputViewStateNormal];
 
   id<MDCContainedInputViewColorScheming> focusedColorScheme =
-      [containerStyle defaultColorSchemeForState:MDCContainedInputViewStateFocused];
+      [containerStyler defaultColorSchemeForState:MDCContainedInputViewStateFocused];
   [self setContainedInputViewColorScheming:focusedColorScheme
                                   forState:MDCContainedInputViewStateFocused];
 
   id<MDCContainedInputViewColorScheming> activatedColorScheme =
-      [containerStyle defaultColorSchemeForState:MDCContainedInputViewStateActivated];
+      [containerStyler defaultColorSchemeForState:MDCContainedInputViewStateActivated];
   [self setContainedInputViewColorScheming:activatedColorScheme
                                   forState:MDCContainedInputViewStateActivated];
 
   id<MDCContainedInputViewColorScheming> erroredColorScheme =
-      [containerStyle defaultColorSchemeForState:MDCContainedInputViewStateErrored];
+      [containerStyler defaultColorSchemeForState:MDCContainedInputViewStateErrored];
   [self setContainedInputViewColorScheming:erroredColorScheme
                                   forState:MDCContainedInputViewStateErrored];
 
   id<MDCContainedInputViewColorScheming> disabledColorScheme =
-      [containerStyle defaultColorSchemeForState:MDCContainedInputViewStateDisabled];
+      [containerStyler defaultColorSchemeForState:MDCContainedInputViewStateDisabled];
   [self setContainedInputViewColorScheming:disabledColorScheme
                                   forState:MDCContainedInputViewStateDisabled];
 }
@@ -156,20 +158,29 @@ static const CGFloat kFloatingPlaceholderAnimationVelocityInPointsPerSecond = (C
   [self addSubview:self.rightUnderlineLabel];
 }
 
+- (void)setUpFloatingLabel {
+  self.floatingLabel = [[UILabel alloc] initWithFrame:self.bounds];
+  [self addSubview:self.floatingLabel];
+}
+
 - (void)setUpPlaceholderLabel {
   self.placeholderLabel = [[UILabel alloc] initWithFrame:self.bounds];
   [self addSubview:self.placeholderLabel];
 }
 
+- (void)setUpFloatingLabelManager {
+  self.floatingLabelManager = [[MDCContainedInputViewFloatingLabelManager alloc] init];
+}
+
 - (void)setUpClearButton {
-  CGFloat clearButtonSideLength = MDCSimpleTextFieldLayout.clearButtonSideLength;
+  CGFloat clearButtonSideLength = MDCInputTextFieldLayout.clearButtonSideLength;
   CGRect clearButtonFrame = CGRectMake(0, 0, clearButtonSideLength, clearButtonSideLength);
   self.clearButton = [[UIButton alloc] initWithFrame:clearButtonFrame];
   [self.clearButton addTarget:self
                        action:@selector(clearButtonPressed:)
              forControlEvents:UIControlEventTouchUpInside];
 
-  CGFloat clearButtonImageViewSideLength = MDCSimpleTextFieldLayout.clearButtonImageViewSideLength;
+  CGFloat clearButtonImageViewSideLength = MDCInputTextFieldLayout.clearButtonImageViewSideLength;
   CGRect clearButtonImageViewRect =
       CGRectMake(0, 0, clearButtonImageViewSideLength, clearButtonImageViewSideLength);
   self.clearButtonImageView = [[UIImageView alloc] initWithFrame:clearButtonImageViewRect];
@@ -208,7 +219,9 @@ static const CGFloat kFloatingPlaceholderAnimationVelocityInPointsPerSecond = (C
 
 - (void)preLayoutSubviews {
   self.containedInputViewState = [self determineCurrentContainedInputViewState];
-  self.placeholderState = [self determineCurrentPlaceholderState];
+  self.floatingLabelState = [self determineCurrentFloatingLabelState];
+  self.isPlaceholderVisible = [self shouldPlaceholderBeVisible];
+  self.placeholderLabel.font = [self determineEffectiveFont];
   id<MDCContainedInputViewColorScheming> colorScheming =
       [self containedInputViewColorSchemingForState:self.containedInputViewState];
   [self applyMDCContainedInputViewColorScheming:colorScheming];
@@ -218,17 +231,27 @@ static const CGFloat kFloatingPlaceholderAnimationVelocityInPointsPerSecond = (C
 
 - (void)postLayoutSubviews {
   UIFont *normalFont = [self determineEffectiveFont];
-  UIFont *floatingFont = [self floatingPlaceholderFontWithFont:normalFont
-                                                containerStyle:self.containerStyle];
-  [self layOutPlaceholderWithState:self.placeholderState
-                        normalFont:normalFont
-                      floatingFont:floatingFont];
+  UIFont *floatingFont = [self.floatingLabelManager floatingFontWithFont:normalFont
+                                                         containerStyler:self.containerStyler];
+  CGRect adjustedPlaceholderFrame =
+      [self adjustTextAreaFrame:self.layout.textRectFloatingLabel
+          withParentClassTextAreaFrame:[super textRectForBounds:self.bounds]];
+  adjustedPlaceholderFrame = CGRectOffset(adjustedPlaceholderFrame, 0, -1);
+  [self.floatingLabelManager layOutPlaceholderLabel:self.placeholderLabel
+                                   placeholderFrame:adjustedPlaceholderFrame
+                               isPlaceholderVisible:self.isPlaceholderVisible];
+  [self.floatingLabelManager layOutFloatingLabel:self.floatingLabel
+                                           state:self.floatingLabelState
+                                     normalFrame:self.layout.floatingLabelFrameNormal
+                                   floatingFrame:self.layout.floatingLabelFrameFloating
+                                      normalFont:normalFont
+                                    floatingFont:floatingFont];
   id<MDCContainedInputViewColorScheming> colorScheming =
       [self containedInputViewColorSchemingForState:self.containedInputViewState];
-  [self.containerStyle applyStyleToContainedInputView:self
-                  withContainedInputViewColorScheming:colorScheming];
+  [self.containerStyler applyStyleToContainedInputView:self
+                   withContainedInputViewColorScheming:colorScheming];
   self.clearButton.frame = [self clearButtonFrameFromLayout:self.layout
-                                           placeholderState:self.placeholderState];
+                                         floatingLabelState:self.floatingLabelState];
   self.clearButton.hidden = self.layout.clearButtonHidden;
   self.leftUnderlineLabel.frame = self.layout.leftUnderlineLabelFrame;
   self.rightUnderlineLabel.frame = self.layout.rightUnderlineLabelFrame;
@@ -237,29 +260,30 @@ static const CGFloat kFloatingPlaceholderAnimationVelocityInPointsPerSecond = (C
   // TODO: Consider hiding views that don't actually fit in the frame
 }
 
-- (CGRect)clearButtonFrameFromLayout:(MDCSimpleTextFieldLayout *)layout
-                    placeholderState:(MDCContainedInputViewPlaceholderState)placeholderState {
+- (CGRect)clearButtonFrameFromLayout:(MDCInputTextFieldLayout *)layout
+                  floatingLabelState:(MDCContainedInputViewFloatingLabelState)floatingLabelState {
   CGRect clearButtonFrame = layout.clearButtonFrame;
-  if (placeholderState == MDCContainedInputViewPlaceholderStateFloating) {
-    clearButtonFrame = layout.clearButtonFrameFloatingPlaceholder;
+  if (floatingLabelState == MDCContainedInputViewFloatingLabelStateFloating) {
+    clearButtonFrame = layout.clearButtonFrameFloatingLabel;
   }
   return clearButtonFrame;
 }
 
-- (MDCSimpleTextFieldLayout *)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize {
+- (MDCInputTextFieldLayout *)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize {
   UIFont *effectiveFont = [self determineEffectiveFont];
-  UIFont *floatingFont = [self floatingPlaceholderFontWithFont:effectiveFont
-                                                containerStyle:self.containerStyle];
+  UIFont *floatingFont = [self.floatingLabelManager floatingFontWithFont:effectiveFont
+                                                         containerStyler:self.containerStyler];
   CGFloat normalizedCustomUnderlineLabelDrawPriority =
       [self normalizedCustomUnderlineLabelDrawPriority:self.customUnderlineLabelDrawPriority];
-  return [[MDCSimpleTextFieldLayout alloc]
+  return [[MDCInputTextFieldLayout alloc]
                   initWithTextFieldSize:textFieldSize
-                         containerStyle:self.containerStyle
+                        containerStyler:self.containerStyler
                                    text:self.text
                             placeholder:self.placeholder
                                    font:effectiveFont
-                floatingPlaceholderFont:floatingFont
-                    canPlaceholderFloat:self.canPlaceholderFloat
+                           floatingFont:floatingFont
+                          floatingLabel:self.floatingLabel
+                  canFloatingLabelFloat:self.canFloatingLabelFloat
                                leftView:self.leftView
                            leftViewMode:self.leftViewMode
                               rightView:self.rightView
@@ -288,7 +312,7 @@ static const CGFloat kFloatingPlaceholderAnimationVelocityInPointsPerSecond = (C
 
 - (CGSize)preferredSizeWithWidth:(CGFloat)width {
   CGSize fittingSize = CGSizeMake(width, CGFLOAT_MAX);
-  MDCSimpleTextFieldLayout *layout = [self calculateLayoutWithTextFieldSize:fittingSize];
+  MDCInputTextFieldLayout *layout = [self calculateLayoutWithTextFieldSize:fittingSize];
   return CGSizeMake(width, layout.calculatedHeight);
 }
 
@@ -304,13 +328,15 @@ static const CGFloat kFloatingPlaceholderAnimationVelocityInPointsPerSecond = (C
 }
 
 - (void)setAttributedPlaceholder:(NSAttributedString *)attributedPlaceholder {
-  self.placeholderLabel.text = [attributedPlaceholder string];
-  self.placeholderLabel.attributedText = [attributedPlaceholder copy];
-  // TODO: Actually support this by incorporating it into the layout calculations
-}
-
-- (NSAttributedString *)attributedPlaceholder {
-  return self.placeholderLabel.attributedText;
+  [super setAttributedPlaceholder:attributedPlaceholder];
+  //  self.floatingLabel.text = [attributedPlaceholder string];
+  //  self.floatingLabel.attributedText = [attributedPlaceholder copy];
+  //  NSLog(@"setting attributedPlaceholder is not currently supported.");
+  // TODO: Evaluate if attributedPlaceholder should be supported.
+  //}
+  //
+  //- (NSAttributedString *)attributedPlaceholder {
+  //  return self.floatingLabel.attributedText;
 }
 
 - (void)setLeftViewMode:(UITextFieldViewMode)leftViewMode {
@@ -445,32 +471,50 @@ static const CGFloat kFloatingPlaceholderAnimationVelocityInPointsPerSecond = (C
   [self setNeedsLayout];
 }
 
-- (void)setCanPlaceholderFloat:(BOOL)canPlaceholderFloat {
-  if (_canPlaceholderFloat == canPlaceholderFloat) {
+- (void)setCanFloatingLabelFloat:(BOOL)canFloatingLabelFloat {
+  if (_canFloatingLabelFloat == canFloatingLabelFloat) {
     return;
   }
-  _canPlaceholderFloat = canPlaceholderFloat;
+  _canFloatingLabelFloat = canFloatingLabelFloat;
   [self setNeedsLayout];
 }
 
-- (void)setContainerStyle:(id<MDCContainedInputViewStyle>)containerStyle {
-  id<MDCContainedInputViewStyle> oldStyle = _containerStyle;
+- (void)setContainerStyler:(id<MDCContainedInputViewStyler>)containerStyler {
+  id<MDCContainedInputViewStyler> oldStyle = _containerStyler;
   if (oldStyle) {
     [oldStyle removeStyleFrom:self];
   }
-  _containerStyle = containerStyle;
-  [self setUpStateDependentColorSchemesForStyle:_containerStyle];
+  _containerStyler = containerStyler;
+  [self setUpStateDependentColorSchemesForStyle:_containerStyler];
   id<MDCContainedInputViewColorScheming> colorScheme =
       [self containedInputViewColorSchemingForState:self.containedInputViewState];
-  [_containerStyle applyStyleToContainedInputView:self
-              withContainedInputViewColorScheming:colorScheme];
+  [_containerStyler applyStyleToContainedInputView:self
+               withContainedInputViewColorScheming:colorScheme];
 }
 
-- (CGRect)textRectFromLayout:(MDCSimpleTextFieldLayout *)layout
-            placeholderState:(MDCContainedInputViewPlaceholderState)placeholderState {
+#pragma mark MDCContainedInputView accessors
+
+- (void)setIsErrored:(BOOL)isErrored {
+  if (_isErrored == isErrored) {
+    return;
+  }
+  _isErrored = isErrored;
+  [self setNeedsLayout];
+}
+
+- (void)setIsActivated:(BOOL)isActivated {
+  if (_isActivated == isActivated) {
+    return;
+  }
+  _isActivated = isActivated;
+  [self setNeedsLayout];
+}
+
+- (CGRect)textRectFromLayout:(MDCInputTextFieldLayout *)layout
+          floatingLabelState:(MDCContainedInputViewFloatingLabelState)floatingLabelState {
   CGRect textRect = layout.textRect;
-  if (placeholderState == MDCContainedInputViewPlaceholderStateFloating) {
-    textRect = layout.textRectFloatingPlaceholder;
+  if (floatingLabelState == MDCContainedInputViewFloatingLabelStateFloating) {
+    textRect = layout.textRectFloatingLabel;
   }
   return textRect;
 }
@@ -482,20 +526,22 @@ static const CGFloat kFloatingPlaceholderAnimationVelocityInPointsPerSecond = (C
   return CGRectMake(CGRectGetMinX(textRect), minY, CGRectGetWidth(textRect), systemDefinedHeight);
 }
 
-- (CGRect)containerRect {
+- (CGRect)containerFrame {
   return CGRectMake(0, 0, CGRectGetWidth(self.frame), self.layout.topRowBottomRowDividerY);
 }
 
 #pragma mark UITextField Layout Overrides
 
 - (CGRect)textRectForBounds:(CGRect)bounds {
-  CGRect textRect = [self textRectFromLayout:self.layout placeholderState:self.placeholderState];
+  CGRect textRect = [self textRectFromLayout:self.layout
+                          floatingLabelState:self.floatingLabelState];
   return [self adjustTextAreaFrame:textRect
       withParentClassTextAreaFrame:[super textRectForBounds:bounds]];
 }
 
 - (CGRect)editingRectForBounds:(CGRect)bounds {
-  CGRect textRect = [self textRectFromLayout:self.layout placeholderState:self.placeholderState];
+  CGRect textRect = [self textRectFromLayout:self.layout
+                          floatingLabelState:self.floatingLabelState];
   return [self adjustTextAreaFrame:textRect
       withParentClassTextAreaFrame:[super editingRectForBounds:bounds]];
 }
@@ -522,7 +568,7 @@ static const CGFloat kFloatingPlaceholderAnimationVelocityInPointsPerSecond = (C
 }
 
 - (CGRect)borderRectForBounds:(CGRect)bounds {
-  if (!self.containerStyle) {
+  if (!self.containerStyler) {
     return [super borderRectForBounds:bounds];
   }
   return CGRectZero;
@@ -530,6 +576,23 @@ static const CGFloat kFloatingPlaceholderAnimationVelocityInPointsPerSecond = (C
 
 - (CGRect)clearButtonRectForBounds:(CGRect)bounds {
   return CGRectZero;
+}
+
+- (CGRect)placeholderRectForBounds:(CGRect)bounds {
+  if (self.floatingLabelState == MDCContainedInputViewFloatingLabelStateNormal) {
+    return CGRectZero;
+  }
+  return [super placeholderRectForBounds:bounds];
+}
+
+- (void)drawPlaceholderInRect:(CGRect)rect {
+  id<MDCContainedInputViewColorScheming> colorScheme =
+      [self containedInputViewColorSchemingForState:self.containedInputViewState];
+  NSDictionary *attributes = @{
+    NSFontAttributeName : self.font,
+    NSForegroundColorAttributeName : colorScheme.placeholderColor
+  };
+  [self.placeholder drawInRect:rect withAttributes:attributes];
 }
 
 #pragma mark Fonts
@@ -545,6 +608,41 @@ static const CGFloat kFloatingPlaceholderAnimationVelocityInPointsPerSecond = (C
     font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
   });
   return font;
+}
+
+- (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
+  _mdc_adjustsFontForContentSizeCategory = adjusts;
+  if (_mdc_adjustsFontForContentSizeCategory) {
+    [self startObservingUIContentSizeCategory];
+  } else {
+    [self stopObservingUIContentSizeCategory];
+  }
+  [self updateFontsForDynamicType];
+}
+
+- (void)updateFontsForDynamicType {
+  if (self.mdc_adjustsFontForContentSizeCategory) {
+    UIFont *textFont = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
+    UIFont *helperFont = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleCaption];
+    self.font = textFont;
+    self.floatingLabel.font = textFont;
+    self.leadingUnderlineLabel.font = helperFont;
+    self.trailingUnderlineLabel.font = helperFont;
+  }
+  [self setNeedsLayout];
+}
+
+- (void)startObservingUIContentSizeCategory {
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(updateFontsForDynamicType)
+                                               name:UIContentSizeCategoryDidChangeNotification
+                                             object:nil];
+}
+
+- (void)stopObservingUIContentSizeCategory {
+  [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                  name:UIContentSizeCategoryDidChangeNotification
+                                                object:nil];
 }
 
 #pragma mark Text Field State
@@ -584,11 +682,11 @@ static const CGFloat kFloatingPlaceholderAnimationVelocityInPointsPerSecond = (C
 #pragma mark Clear Button
 
 - (UIImage *)untintedClearButtonImage {
-  CGFloat sideLength = MDCSimpleTextFieldLayout.clearButtonImageViewSideLength;
+  CGFloat sideLength = MDCInputTextFieldLayout.clearButtonImageViewSideLength;
   CGRect rect = CGRectMake(0, 0, sideLength, sideLength);
   UIGraphicsBeginImageContextWithOptions(rect.size, false, 0);
   [[UIColor blackColor] setFill];
-  [[MDCContainerStylePathDrawingUtils pathForClearButtonImageWithFrame:rect] fill];
+  [[MDCContainerStylerPathDrawingUtils pathForClearButtonImageWithFrame:rect] fill];
   UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
   UIGraphicsEndImageContext();
   image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
@@ -597,135 +695,78 @@ static const CGFloat kFloatingPlaceholderAnimationVelocityInPointsPerSecond = (C
 
 #pragma mark Placeholder
 
-- (MDCContainedInputViewPlaceholderState)determineCurrentPlaceholderState {
-  return [self placeholderStateWithPlaceholder:self.placeholder
-                                          text:self.text
-                           canPlaceholderFloat:self.canPlaceholderFloat
-                                     isEditing:self.isEditing];
+- (BOOL)shouldPlaceholderBeVisible {
+  return [self shouldPlaceholderBeVisibleWithPlaceholder:self.placeholder
+                                      floatingLabelState:self.floatingLabelState
+                                                    text:self.text
+                                               isEditing:self.isEditing];
 }
 
-- (MDCContainedInputViewPlaceholderState)placeholderStateWithPlaceholder:(NSString *)placeholder
-                                                                    text:(NSString *)text
-                                                     canPlaceholderFloat:(BOOL)canPlaceholderFloat
-                                                               isEditing:(BOOL)isEditing {
+- (MDCContainedInputViewFloatingLabelState)determineCurrentFloatingLabelState {
+  return [self floatingLabelStateWithFloatingLabel:self.floatingLabel
+                                              text:self.text
+                             canFloatingLabelFloat:self.canFloatingLabelFloat
+                                         isEditing:self.isEditing];
+}
+
+- (BOOL)shouldPlaceholderBeVisibleWithPlaceholder:(NSString *)placeholder
+                               floatingLabelState:
+                                   (MDCContainedInputViewFloatingLabelState)floatingLabelState
+                                             text:(NSString *)text
+                                        isEditing:(BOOL)isEditing {
   BOOL hasPlaceholder = placeholder.length > 0;
   BOOL hasText = text.length > 0;
+
   if (hasPlaceholder) {
-    if (canPlaceholderFloat) {
+    if (hasText) {
+      return NO;
+    } else {
+      if (floatingLabelState == MDCContainedInputViewFloatingLabelStateNormal) {
+        return NO;
+      } else {
+        return YES;
+      }
+    }
+  } else {
+    return NO;
+  }
+}
+
+- (MDCContainedInputViewFloatingLabelState)
+    floatingLabelStateWithFloatingLabel:(UILabel *)floatingLabel
+                                   text:(NSString *)text
+                  canFloatingLabelFloat:(BOOL)canFloatingLabelFloat
+                              isEditing:(BOOL)isEditing {
+  BOOL hasFloatingLabelText = floatingLabel.text.length > 0;
+  BOOL hasText = text.length > 0;
+  if (hasFloatingLabelText) {
+    if (canFloatingLabelFloat) {
       if (isEditing) {
-        return MDCContainedInputViewPlaceholderStateFloating;
+        return MDCContainedInputViewFloatingLabelStateFloating;
       } else {
         if (hasText) {
-          return MDCContainedInputViewPlaceholderStateFloating;
+          return MDCContainedInputViewFloatingLabelStateFloating;
         } else {
-          return MDCContainedInputViewPlaceholderStateNormal;
+          return MDCContainedInputViewFloatingLabelStateNormal;
         }
       }
     } else {
       if (hasText) {
-        return MDCContainedInputViewPlaceholderStateNone;
+        return MDCContainedInputViewFloatingLabelStateNone;
       } else {
-        return MDCContainedInputViewPlaceholderStateNormal;
+        return MDCContainedInputViewFloatingLabelStateNormal;
       }
     }
   } else {
-    return MDCContainedInputViewPlaceholderStateNone;
+    return MDCContainedInputViewFloatingLabelStateNone;
   }
-}
-
-- (void)layOutPlaceholderWithState:(MDCContainedInputViewPlaceholderState)placeholderState
-                        normalFont:(UIFont *)normalFont
-                      floatingFont:(UIFont *)floatingFont {
-  UIFont *targetFont = normalFont;
-
-  CGRect currentFrame = self.placeholderLabel.frame;
-  CGRect normalFrame = self.layout.placeholderFrameNormal;
-  CGRect floatingFrame = self.layout.placeholderFrameFloating;
-  CGRect targetFrame = normalFrame;
-
-  BOOL placeholderShouldHide = NO;
-
-  switch (placeholderState) {
-    case MDCContainedInputViewPlaceholderStateFloating:
-      targetFont = floatingFont;
-      targetFrame = floatingFrame;
-      break;
-    case MDCContainedInputViewPlaceholderStateNormal:
-      break;
-    case MDCContainedInputViewPlaceholderStateNone:
-      placeholderShouldHide = YES;
-      break;
-    default:
-      break;
-  }
-
-  CGAffineTransform currentTransform = self.placeholderLabel.transform;
-  CGAffineTransform targetTransform = CGAffineTransformIdentity;
-
-  if (self.isAnimating || CGRectEqualToRect(currentFrame, CGRectZero)) {
-    self.placeholderLabel.transform = CGAffineTransformIdentity;
-    self.placeholderLabel.frame = targetFrame;
-    self.placeholderLabel.font = targetFont;
-    return;
-  } else if (!CGRectEqualToRect(currentFrame, targetFrame)) {
-    targetTransform = [self transformFromRect:currentFrame toRect:targetFrame];
-  }
-
-  self.isAnimating = YES;
-  self.placeholderLabel.hidden = placeholderShouldHide;
-
-  CGFloat lowerMinY = MIN(CGRectGetMinY(currentFrame), CGRectGetMinY(targetFrame));
-  CGFloat higherMinY = MAX(CGRectGetMinY(currentFrame), CGRectGetMinY(targetFrame));
-  CGFloat distanceTravelled = higherMinY - lowerMinY;
-  CGFloat animationDuration =
-      distanceTravelled / kFloatingPlaceholderAnimationVelocityInPointsPerSecond;
-
-  __weak typeof(self) weakSelf = self;
-  [CATransaction begin];
-  {
-    [CATransaction setCompletionBlock:^{
-      weakSelf.placeholderLabel.transform = CGAffineTransformIdentity;
-      weakSelf.placeholderLabel.frame = targetFrame;
-      weakSelf.placeholderLabel.font = targetFont;
-      weakSelf.isAnimating = NO;
-    }];
-    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform"];
-    animation.fromValue =
-        [NSValue valueWithCATransform3D:CATransform3DMakeAffineTransform(currentTransform)];
-    animation.toValue =
-        [NSValue valueWithCATransform3D:CATransform3DMakeAffineTransform(targetTransform)];
-    animation.duration = animationDuration;
-    animation.removedOnCompletion = YES;
-    weakSelf.placeholderLabel.transform = targetTransform;
-    [weakSelf.placeholderLabel.layer addAnimation:animation forKey:animation.keyPath];
-  }
-  [CATransaction commit];
-}
-
-- (CGAffineTransform)transformFromRect:(CGRect)sourceRect toRect:(CGRect)finalRect {
-  CGAffineTransform transform = CGAffineTransformIdentity;
-  transform =
-      CGAffineTransformTranslate(transform, -(CGRectGetMidX(sourceRect) - CGRectGetMidX(finalRect)),
-                                 -(CGRectGetMidY(sourceRect) - CGRectGetMidY(finalRect)));
-  transform = CGAffineTransformScale(transform, finalRect.size.width / sourceRect.size.width,
-                                     finalRect.size.height / sourceRect.size.height);
-
-  return transform;
-}
-
-- (UIFont *)floatingPlaceholderFontWithFont:(UIFont *)font
-                             containerStyle:(id<MDCContainedInputViewStyle>)containerStyle {
-  CGFloat floatingPlaceholderFontSize =
-      [containerStyle.densityInformer floatingPlaceholderFontSize];
-  return [font fontWithSize:floatingPlaceholderFontSize];
 }
 
 #pragma mark User Actions
 
 - (void)clearButtonPressed:(UIButton *)clearButton {
   self.text = nil;
-  // TODO: I'm pretty sure there is a control event or notification UITextField sens or posts here.
-  // Add it!
+  [self sendActionsForControlEvents:UIControlEventEditingChanged];
 }
 
 #pragma mark Internationalization
@@ -741,7 +782,8 @@ static const CGFloat kFloatingPlaceholderAnimationVelocityInPointsPerSecond = (C
   self.textColor = colorScheming.textColor;
   self.leadingUnderlineLabel.textColor = colorScheming.underlineLabelColor;
   self.trailingUnderlineLabel.textColor = colorScheming.underlineLabelColor;
-  self.placeholderLabel.textColor = colorScheming.placeholderLabelColor;
+  self.floatingLabel.textColor = colorScheming.floatingLabelColor;
+  self.placeholderLabel.textColor = colorScheming.placeholderColor;
   self.clearButtonImageView.tintColor = colorScheming.clearButtonTintColor;
 }
 
@@ -756,7 +798,7 @@ static const CGFloat kFloatingPlaceholderAnimationVelocityInPointsPerSecond = (C
   id<MDCContainedInputViewColorScheming> colorScheme =
       self.colorSchemes[@(containedInputViewState)];
   if (!colorScheme) {
-    colorScheme = [self.containerStyle defaultColorSchemeForState:containedInputViewState];
+    colorScheme = [self.containerStyler defaultColorSchemeForState:containedInputViewState];
   }
   return colorScheme;
 }

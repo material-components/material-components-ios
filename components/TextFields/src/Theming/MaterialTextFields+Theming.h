@@ -13,3 +13,4 @@
 // limitations under the License.
 
 #import "MDCTextInputControllerFilled+MaterialTheming.h"
+#import "MDCTextInputControllerOutlined+MaterialTheming.h"

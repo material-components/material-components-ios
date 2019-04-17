@@ -73,6 +73,14 @@
   [self.contentViewController.view layoutIfNeeded];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+
+  if (self.shouldFlashScrollIndicatorsOnAppearance) {
+    [self.trackingScrollView flashScrollIndicators];
+  }
+}
+
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
   return self.contentViewController.supportedInterfaceOrientations;
 }
