@@ -30,7 +30,7 @@ class NodeViewTableViewDemoCell: UITableViewCell {
 
   let label = UILabel()
 
-  override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+  override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
     textLabel!.font = MDCTypography.subheadFont()
     imageView!.image = UIImage(named: "Demo")
@@ -95,7 +95,7 @@ class NodeViewTableViewPrimaryDemoCell: UITableViewCell {
 
   let containedButton = MDCButton()
 
-  override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+  override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     setupContainedButton()
   }
@@ -213,7 +213,7 @@ class MDCNodeListViewController: CBCNodeListViewController {
     additionalExamplesSectionHeader = createAdditionalExamplesSectionHeader()
     self.tableView.backgroundColor = UIColor.white
     self.tableView.separatorStyle = .none
-    self.tableView.sectionHeaderHeight = UITableViewAutomaticDimension
+    self.tableView.sectionHeaderHeight = UITableView.automaticDimension
 
     var charactersCount = 0
     #if swift(>=3.2)
@@ -239,7 +239,7 @@ class MDCNodeListViewController: CBCNodeListViewController {
     self.navigationController?.setNavigationBarHidden(true, animated: animated)
   }
 
-  func themeDidChange(notification: NSNotification) {
+  @objc func themeDidChange(notification: NSNotification) {
     setNeedsStatusBarAppearanceUpdate()
     self.tableView.reloadData()
   }
@@ -298,7 +298,7 @@ extension MDCNodeListViewController {
     sectionTitleLabel.translatesAutoresizingMaskIntoConstraints = false
     sectionTitleLabel.text = sectionNames[1]
     sectionTitleLabel.numberOfLines = 0
-    sectionTitleLabel.setContentCompressionResistancePriority(1000, for: .vertical)
+    sectionTitleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
 
     sectionView.addSubview(lineDivider)
     sectionView.addSubview(sectionTitleLabel)
@@ -405,7 +405,7 @@ extension MDCNodeListViewController {
     sectionTitleLabel.translatesAutoresizingMaskIntoConstraints = false
     sectionTitleLabel.text = sectionNames[0]
     sectionTitleLabel.numberOfLines = 0
-    sectionTitleLabel.setContentCompressionResistancePriority(1000, for: .vertical)
+    sectionTitleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
     mainSectionHeaderTitleLabel = sectionTitleLabel
 
     let descriptionLabel = UILabel()
@@ -413,14 +413,14 @@ extension MDCNodeListViewController {
 
     let paragraphStyle = NSMutableParagraphStyle()
     paragraphStyle.lineSpacing = descriptionLineHeight - descriptionLabel.font.lineHeight
-    let attrs = [NSParagraphStyleAttributeName: paragraphStyle]
+    let attrs = [NSAttributedString.Key.paragraphStyle: paragraphStyle]
 
     descriptionLabel.attributedText =
         NSAttributedString(string:componentDescription, attributes:attrs)
     descriptionLabel.alpha = MDCTypography.body1FontOpacity()
     descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
     descriptionLabel.numberOfLines = 0
-    descriptionLabel.setContentCompressionResistancePriority(1000, for: .vertical)
+    descriptionLabel.setContentCompressionResistancePriority(.required, for: .vertical)
     mainSectionHeaderDescriptionLabel = descriptionLabel
 
     sectionView.addSubview(sectionTitleLabel)
@@ -555,7 +555,7 @@ extension MDCNodeListViewController {
     return true
   }
 
-  func primaryDemoButtonClicked () {
+  @objc func primaryDemoButtonClicked () {
     let indexPath = IndexPath(row: 0, section: Section.description.rawValue)
     self.tableView(self.tableView, didSelectRowAt: indexPath)
   }

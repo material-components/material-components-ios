@@ -92,7 +92,7 @@ class MDCDragonsController: UIViewController,
   override func viewDidLoad() {
     super.viewDidLoad()
     title = "Material Dragons"
-    addChildViewController(headerViewController)
+    addChild(headerViewController)
     headerViewController.headerView.minMaxHeightIncludesSafeArea = false
     headerViewController.headerView.maximumHeight = Constants.headerViewMaxHeight
     headerViewController.headerView.minimumHeight = Constants.headerViewMinHeight
@@ -148,7 +148,7 @@ class MDCDragonsController: UIViewController,
     headerViewController.headerView.backgroundColor = Constants.headerColor
     headerViewController.headerView.trackingScrollView = tableView
     view.addSubview(headerViewController.view)
-    headerViewController.didMove(toParentViewController: self)
+    headerViewController.didMove(toParent: self)
   }
 
   func adjustLogoForScrollView(_ scrollView: UIScrollView) {
@@ -165,11 +165,11 @@ class MDCDragonsController: UIViewController,
     navigationController?.setNavigationBarHidden(true, animated: animated)
   }
 
-  override var childViewControllerForStatusBarStyle: UIViewController? {
+  override var childForStatusBarStyle: UIViewController? {
     return headerViewController
   }
 
-  override var childViewControllerForStatusBarHidden: UIViewController? {
+  override var childForStatusBarHidden: UIViewController? {
     return headerViewController
   }
 
@@ -251,8 +251,8 @@ class MDCDragonsController: UIViewController,
       container.appBar.headerViewController.headerView.backgroundColor = headerViewController.headerView.backgroundColor
       container.appBar.navigationBar.tintColor = .white
       container.appBar.navigationBar.titleTextAttributes =
-        [ NSForegroundColorAttributeName: UIColor.white,
-          NSFontAttributeName: UIFont.systemFont(ofSize: 16) ]
+        [ .foregroundColor: UIColor.white,
+          .font: UIFont.systemFont(ofSize: 16) ]
       container.isTopLayoutGuideAdjustmentEnabled = true
       vc.title = nodeData.node.title
 
@@ -381,17 +381,17 @@ extension MDCDragonsController {
     NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame(notification:)), name: .MDCKeyboardWatcherKeyboardWillChangeFrame, object: nil)
   }
 
-  func keyboardWillShow(notification: NSNotification) {
+  @objc func keyboardWillShow(notification: NSNotification) {
     guard let userInfo = notification.userInfo else { return }
     updateScrollViewWithKeyboardNotificationUserInfo(userInfo: userInfo)
   }
 
-  func keyboardWillHide(notification: NSNotification) {
+  @objc func keyboardWillHide(notification: NSNotification) {
     guard let userInfo = notification.userInfo else { return }
     updateScrollViewWithKeyboardNotificationUserInfo(userInfo: userInfo)
   }
 
-  func keyboardWillChangeFrame(notification: NSNotification) {
+  @objc func keyboardWillChangeFrame(notification: NSNotification) {
     guard let userInfo = notification.userInfo else { return }
     updateScrollViewWithKeyboardNotificationUserInfo(userInfo: userInfo)
   }

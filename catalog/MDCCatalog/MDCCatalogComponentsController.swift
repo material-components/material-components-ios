@@ -94,7 +94,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
     title = "Material Components for iOS"
 
-    addChildViewController(headerViewController)
+    addChild(headerViewController)
 
     headerViewController.isTopLayoutGuideAdjustmentEnabled = true
     headerViewController.inferTopSafeAreaInsetFromViewController = true
@@ -115,7 +115,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
       object: nil)
   }
 
-  func themeDidChange(notification: NSNotification) {
+  @objc func themeDidChange(notification: NSNotification) {
     let colorScheme = AppTheme.globalTheme.colorScheme
     MDCFlexibleHeaderColorThemer.applySemanticColorScheme(colorScheme,
                                                           to: headerViewController.headerView)
@@ -223,11 +223,11 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     collectionView?.collectionViewLayout.invalidateLayout()
   }
 
-  override var childViewControllerForStatusBarStyle: UIViewController? {
+  override var childForStatusBarStyle: UIViewController? {
     return headerViewController
   }
 
-  override var childViewControllerForStatusBarHidden: UIViewController? {
+  override var childForStatusBarHidden: UIViewController? {
     return headerViewController
   }
 
