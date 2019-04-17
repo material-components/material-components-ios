@@ -167,15 +167,11 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
     scrollView.addSubview(message)
     let messageController = MDCTextInputControllerOutlinedTextArea(textInput: message)
     message.textView?.delegate = self
-    #if swift(>=3.2)
-      message.text = """
-      This is where you could put a multi-line message like an email.
+    message.text = """
+    This is where you could put a multi-line message like an email.
 
-      It can even handle new lines.
-      """
-    #else
-      message.text = "This is where you could put a multi-line message like an email. It can even handle new lines./n"
-    #endif
+    It can even handle new lines.
+    """
     messageController.placeholderText = "Message"
     allTextFieldControllers.append(messageController)
 
@@ -220,39 +216,22 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
                                                   metrics: nil,
                                                   views: views)
 
-    #if swift(>=3.2)
-      if #available(iOS 11.0, *) {
-         constraints += [NSLayoutConstraint(item: name,
-                                            attribute: .top,
-                                            relatedBy: .equal,
-                                            toItem: scrollView.contentLayoutGuide,
-                                            attribute: .top,
-                                            multiplier: 1,
-                                            constant: 20),
-                         NSLayoutConstraint(item: message,
-                                            attribute: .bottom,
-                                            relatedBy: .equal,
-                                            toItem: scrollView.contentLayoutGuide,
-                                            attribute: .bottomMargin,
-                                            multiplier: 1,
-                                            constant: -20)]
-      } else {
-        constraints += [NSLayoutConstraint(item: name,
-                                          attribute: .top,
-                                          relatedBy: .equal,
-                                          toItem: scrollView,
-                                          attribute: .top,
-                                          multiplier: 1,
-                                          constant: 20),
-                       NSLayoutConstraint(item: message,
-                                          attribute: .bottom,
-                                          relatedBy: .equal,
-                                          toItem: scrollView,
-                                          attribute: .bottomMargin,
-                                          multiplier: 1,
-                                          constant: -20)]
-      }
-    #else
+    if #available(iOS 11.0, *) {
+      constraints += [NSLayoutConstraint(item: name,
+                                         attribute: .top,
+                                         relatedBy: .equal,
+                                         toItem: scrollView.contentLayoutGuide,
+                                         attribute: .top,
+                                         multiplier: 1,
+                                         constant: 20),
+                      NSLayoutConstraint(item: message,
+                                         attribute: .bottom,
+                                         relatedBy: .equal,
+                                         toItem: scrollView.contentLayoutGuide,
+                                         attribute: .bottomMargin,
+                                         multiplier: 1,
+                                         constant: -20)]
+    } else {
       constraints += [NSLayoutConstraint(item: name,
                                          attribute: .top,
                                          relatedBy: .equal,
@@ -267,7 +246,7 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
                                          attribute: .bottomMargin,
                                          multiplier: 1,
                                          constant: -20)]
-      #endif
+    }
 
     let stateZipViews = [ "state": state, "zip": zip ]
     constraints += NSLayoutConstraint.constraints(withVisualFormat: "H:|[state(80)]-[zip]|",
@@ -342,8 +321,9 @@ extension TextFieldOutlinedSwiftExample: UITextFieldDelegate {
       } else {
         stateController.setErrorText(nil, errorAccessibilityValue: nil)
       }
-    } else if textField == zip {      if let range = fullString.rangeOfCharacter(from: CharacterSet.letters),
-      String(fullString[range]).characterCount > 0 {
+    } else if textField == zip {
+      if let range = fullString.rangeOfCharacter(from: CharacterSet.letters),
+        String(fullString[range]).characterCount > 0 {
         zipController.setErrorText("Error: Zip can only contain numbers",
                                    errorAccessibilityValue: nil)
       } else if fullString.characterCount > 5 {

@@ -198,18 +198,12 @@ class MDCCatalogComponentsController: UICollectionViewController, UICollectionVi
     }
 
     view.addSubview(headerViewController.view)
-    #if swift(>=4.2)
     headerViewController.didMove(toParent: self)
-    #else
-    headerViewController.didMove(toParentViewController: self)
-    #endif
 
     collectionView?.accessibilityIdentifier = "collectionView"
-#if swift(>=3.2)
     if #available(iOS 11.0, *) {
       collectionView?.contentInsetAdjustmentBehavior = .always
     }
-#endif
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -231,7 +225,6 @@ class MDCCatalogComponentsController: UICollectionViewController, UICollectionVi
     return headerViewController
   }
 
-#if swift(>=3.2)
   @available(iOS 11, *)
   override func viewSafeAreaInsetsDidChange() {
     // Re-constraint the title label to account for changes in safeAreaInsets's left and right.
@@ -239,7 +232,6 @@ class MDCCatalogComponentsController: UICollectionViewController, UICollectionVi
     menuButtonRightPaddingConstraint?.constant = -1 * (Constants.inset + view.safeAreaInsets.right)
     menuTopPaddingConstraint?.constant = Constants.inset + view.safeAreaInsets.top
   }
-#endif
 
   func setupFlexibleHeaderContentConstraints() {
 
@@ -367,11 +359,9 @@ class MDCCatalogComponentsController: UICollectionViewController, UICollectionVi
                       sizeForItemAt indexPath: IndexPath) -> CGSize {
     let dividerWidth: CGFloat = 1
     var safeInsets: CGFloat = 0
-#if swift(>=3.2)
     if #available(iOS 11, *) {
       safeInsets = view.safeAreaInsets.left + view.safeAreaInsets.right
     }
-#endif
     var cellWidthHeight: CGFloat
 
     // iPhones have 2 columns in portrait and 3 in landscape

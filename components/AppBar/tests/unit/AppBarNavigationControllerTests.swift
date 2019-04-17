@@ -187,11 +187,7 @@ class AppBarNavigationControllerTests: XCTestCase {
     let fhvc = MDCFlexibleHeaderViewController()
     viewController.addChild(fhvc)
     viewController.view.addSubview(fhvc.view)
-    #if swift(>=4.2)
     fhvc.didMove(toParent: viewController)
-    #else
-    fhvc.didMove(toParentViewController: viewController)
-    #endif
 
     // When
     navigationController.pushViewController(viewController, animated: false)

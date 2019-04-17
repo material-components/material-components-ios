@@ -73,11 +73,7 @@ class AppBarInheritedAnimatedJumpExample: UIViewController {
     view.isOpaque = false
     view.backgroundColor = colorScheme.backgroundColor
     view.addSubview(appBarViewController.view)
-    #if swift(>=4.2)
     appBarViewController.didMove(toParent: self)
-    #else
-    appBarViewController.didMove(toParentViewController: self)
-    #endif
 
     switchToTab(tabs[0], animated: false)
   }
@@ -113,12 +109,8 @@ class AppBarInheritedAnimatedJumpExample: UIViewController {
 
     // Show new tab.
     view.addSubview(tab.view)
-    view.sendSubview(toBack: tab.view)
-    #if swift(>=4.2)
+    view.sendSubviewToBack(tab.view)
     tab.didMove(toParent: self)
-    #else
-    tab.didMove(toParentViewController: self)
-    #endif
     tab.headerView = self.appBarViewController.headerView
 
     tab.view.alpha = 0

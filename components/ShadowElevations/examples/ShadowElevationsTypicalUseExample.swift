@@ -52,7 +52,8 @@ class ShadowElevationsTypicalUseExample: UIViewController {
     let color = UIColor(white: 0.2, alpha:1)
     appBarViewController.headerView.backgroundColor = color
     appBarViewController.navigationBar.tintColor = .white
-    appBarViewController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
+    appBarViewController.navigationBar.titleTextAttributes =
+      [NSAttributedString.Key.foregroundColor : UIColor.white]
 
     let paperDim = CGFloat(200)
     paper.frame =

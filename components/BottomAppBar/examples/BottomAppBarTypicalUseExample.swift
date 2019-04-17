@@ -53,11 +53,7 @@ class BottomAppBarTypicalUseSwiftExample: UIViewController {
     super.viewDidLoad()
 
     view.addSubview(appBarViewController.view)
-    #if swift(>=4.2)
     appBarViewController.didMove(toParent: self)
-    #else
-    appBarViewController.didMove(toParentViewController: self)
-    #endif
   }
 
   func commonInitBottomAppBarTypicalUseSwiftExample() {
@@ -134,14 +130,11 @@ class BottomAppBarTypicalUseSwiftExample: UIViewController {
     layoutBottomAppBar()
   }
 
-  #if swift(>=3.2)
   @available(iOS 11, *)
   override func viewSafeAreaInsetsDidChange() {
     super.viewSafeAreaInsetsDidChange()
     layoutBottomAppBar()
   }
-  #endif
-
 }
 
 // MARK: Catalog by convention

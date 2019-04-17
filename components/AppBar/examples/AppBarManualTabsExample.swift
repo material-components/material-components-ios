@@ -73,11 +73,7 @@ class AppBarManualTabsExample: UIViewController {
 
     view.backgroundColor = colorScheme.backgroundColor
     view.addSubview(appBarViewController.view)
-    #if swift(>=4.2)
     appBarViewController.didMove(toParent: self)
-    #else
-    appBarViewController.didMove(toParentViewController: self)
-    #endif
 
     switchToTab(firstTab)
   }
@@ -100,11 +96,7 @@ class AppBarManualTabsExample: UIViewController {
     view.addSubview(tab.tableView)
     view.sendSubviewToBack(tab.tableView)
 
-    #if swift(>=4.2)
     tab.didMove(toParent: self)
-    #else
-    tab.didMove(toParentViewController: self)
-    #endif
 
     tab.headerView = appBarViewController.headerView
 

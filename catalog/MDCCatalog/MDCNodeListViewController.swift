@@ -216,11 +216,7 @@ class MDCNodeListViewController: CBCNodeListViewController {
     self.tableView.sectionHeaderHeight = UITableView.automaticDimension
 
     var charactersCount = 0
-    #if swift(>=3.2)
-      charactersCount = node.title.count
-    #else
-      charactersCount = node.title.characters.count
-    #endif
+    charactersCount = node.title.count
     if charactersCount > 0 {
       self.tableView.accessibilityIdentifier = "Table" + node.title
     } else {
@@ -368,7 +364,6 @@ extension MDCNodeListViewController {
         constant: self.padding).isActive = true
     }
     // Title Label to Section View
-    #if swift(>=3.2)
     if #available(iOS 11.0, *) {
       // Align to the safe area insets.
       sectionTitleLabel.leadingAnchor
@@ -380,9 +375,6 @@ extension MDCNodeListViewController {
     } else {
       preiOS11Behavior()
     }
-    #else
-    preiOS11Behavior()
-    #endif
 
      NSLayoutConstraint(
       item: sectionView,
@@ -445,7 +437,6 @@ extension MDCNodeListViewController {
         multiplier: 1.0,
         constant: self.padding).isActive = true
     }
-    #if swift(>=3.2)
     if #available(iOS 11.0, *) {
       // Align to the safe area insets.
       sectionTitleLabel.leadingAnchor
@@ -457,9 +448,6 @@ extension MDCNodeListViewController {
     } else {
       preiOS11Behavior()
     }
-    #else
-    preiOS11Behavior()
-    #endif
 
     NSLayoutConstraint(
       item: sectionTitleLabel,

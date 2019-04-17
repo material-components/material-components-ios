@@ -195,39 +195,22 @@ final class TextFieldUnderlineSwiftExample: UIViewController {
                                                   metrics: nil,
                                                   views: views)
 
-    #if swift(>=3.2)
-      if #available(iOS 11.0, *) {
-        constraints += [NSLayoutConstraint(item: name,
-                                           attribute: .top,
-                                           relatedBy: .equal,
-                                           toItem: scrollView.contentLayoutGuide,
-                                           attribute: .top,
-                                           multiplier: 1,
-                                           constant: 20),
-                        NSLayoutConstraint(item: message,
-                                           attribute: .bottom,
-                                           relatedBy: .equal,
-                                           toItem: scrollView.contentLayoutGuide,
-                                           attribute: .bottomMargin,
-                                           multiplier: 1,
-                                           constant: -20)]
-      } else {
-        constraints += [NSLayoutConstraint(item: name,
-                                           attribute: .top,
-                                           relatedBy: .equal,
-                                           toItem: scrollView,
-                                           attribute: .top,
-                                           multiplier: 1,
-                                           constant: 20),
-                        NSLayoutConstraint(item: message,
-                                           attribute: .bottom,
-                                           relatedBy: .equal,
-                                           toItem: scrollView,
-                                           attribute: .bottomMargin,
-                                           multiplier: 1,
-                                           constant: -20)]
-      }
-    #else
+    if #available(iOS 11.0, *) {
+      constraints += [NSLayoutConstraint(item: name,
+                                         attribute: .top,
+                                         relatedBy: .equal,
+                                         toItem: scrollView.contentLayoutGuide,
+                                         attribute: .top,
+                                         multiplier: 1,
+                                         constant: 20),
+                      NSLayoutConstraint(item: message,
+                                         attribute: .bottom,
+                                         relatedBy: .equal,
+                                         toItem: scrollView.contentLayoutGuide,
+                                         attribute: .bottomMargin,
+                                         multiplier: 1,
+                                         constant: -20)]
+    } else {
       constraints += [NSLayoutConstraint(item: name,
                                          attribute: .top,
                                          relatedBy: .equal,
@@ -242,7 +225,7 @@ final class TextFieldUnderlineSwiftExample: UIViewController {
                                          attribute: .bottomMargin,
                                          multiplier: 1,
                                          constant: -20)]
-    #endif
+    }
 
     let stateZipViews = [ "state": state, "zip": zip ]
     constraints += NSLayoutConstraint.constraints(withVisualFormat: "H:|[state(80)]-[zip]|",
@@ -443,10 +426,6 @@ extension TextFieldUnderlineSwiftExample {
 
 internal extension String {
   var characterCount: Int {
-    #if swift(>=3.2)
-      return self.count
-    #else
-      return self.characters.count
-    #endif
+    return self.count
   }
 }

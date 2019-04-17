@@ -248,7 +248,7 @@ extension TextFieldKitchenSinkSwiftExample {
                                                                metrics: nil,
                                                                views: views))
 
-    controllersFullWidth.flatMap { $0.textInput }.forEach { textInput in
+    controllersFullWidth.compactMap { $0.textInput }.forEach { textInput in
       NSLayoutConstraint(item: textInput,
                          attribute: .leading,
                          relatedBy: .equal,
@@ -275,54 +275,37 @@ extension TextFieldKitchenSinkSwiftExample {
     }
 
     // These used to be done in the visual format string but iOS 11 changed that.
-    #if swift(>=3.2)
-      if #available(iOS 11.0, *) {
-        NSLayoutConstraint(item: singleLabel,
-                           attribute: .topMargin,
-                           relatedBy: .equal,
-                           toItem: scrollView.contentLayoutGuide,
-                           attribute: .top,
-                           multiplier: 1.0,
-                           constant: 20).isActive = true
-        NSLayoutConstraint(item: allControls.last as Any,
-                           attribute: .bottom,
-                           relatedBy: .equal,
-                           toItem: scrollView.contentLayoutGuide,
-                           attribute: .bottomMargin,
-                           multiplier: 1.0,
-                           constant: -20).isActive = true
-      } else {
-        NSLayoutConstraint(item: singleLabel,
-                           attribute: .topMargin,
-                           relatedBy: .equal,
-                           toItem: scrollView,
-                           attribute: .top,
-                           multiplier: 1.0,
-                           constant: 20).isActive = true
-        NSLayoutConstraint(item: allControls.last as Any,
-                           attribute: .bottom,
-                           relatedBy: .equal,
-                           toItem: scrollView,
-                           attribute: .bottomMargin,
-                           multiplier: 1.0,
-                           constant: -20).isActive = true
-      }
-      #else
-        NSLayoutConstraint(item: singleLabel,
-                           attribute: .topMargin,
-                           relatedBy: .equal,
-                           toItem: scrollView,
-                           attribute: .top,
-                           multiplier: 1.0,
-                           constant: 20).isActive = true
-        NSLayoutConstraint(item: allControls.last as Any,
-                           attribute: .bottom,
-                           relatedBy: .equal,
-                           toItem: scrollView,
-                           attribute: .bottomMargin,
-                           multiplier: 1.0,
-                           constant: -20).isActive = true
-      #endif
+    if #available(iOS 11.0, *) {
+      NSLayoutConstraint(item: singleLabel,
+                         attribute: .topMargin,
+                         relatedBy: .equal,
+                         toItem: scrollView.contentLayoutGuide,
+                         attribute: .top,
+                         multiplier: 1.0,
+                         constant: 20).isActive = true
+      NSLayoutConstraint(item: allControls.last as Any,
+                         attribute: .bottom,
+                         relatedBy: .equal,
+                         toItem: scrollView.contentLayoutGuide,
+                         attribute: .bottomMargin,
+                         multiplier: 1.0,
+                         constant: -20).isActive = true
+    } else {
+      NSLayoutConstraint(item: singleLabel,
+                         attribute: .topMargin,
+                         relatedBy: .equal,
+                         toItem: scrollView,
+                         attribute: .top,
+                         multiplier: 1.0,
+                         constant: 20).isActive = true
+      NSLayoutConstraint(item: allControls.last as Any,
+                         attribute: .bottom,
+                         relatedBy: .equal,
+                         toItem: scrollView,
+                         attribute: .bottomMargin,
+                         multiplier: 1.0,
+                         constant: -20).isActive = true
+    }
 
     registerKeyboardNotifications()
     addGestureRecognizer()

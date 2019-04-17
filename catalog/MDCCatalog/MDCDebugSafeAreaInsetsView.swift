@@ -37,20 +37,16 @@ class MDCDebugSafeAreaInsetsView: UIView {
     fatalError("init(coder:) has not been implemented")
   }
 
-#if swift(>=3.2)
   override open func safeAreaInsetsDidChange() {
     setNeedsLayout()
     layoutIfNeeded()
   }
-#endif
 
   override func layoutSubviews() {
     var safeAreaInsets = UIEdgeInsets.zero
-#if swift(>=3.2)
     if #available(iOS 11, *) {
       safeAreaInsets = self.safeAreaInsets
     }
-#endif
 
     let width = frame.width
     let height = frame.height

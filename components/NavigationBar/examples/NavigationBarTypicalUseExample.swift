@@ -40,19 +40,9 @@ open class NavigationBarTypicalUseSwiftExample: UIViewController {
 
     navBar.translatesAutoresizingMaskIntoConstraints = false
 
-    #if swift(>=3.2)
-      if #available(iOS 11.0, *) {
-        self.view.safeAreaLayoutGuide.topAnchor.constraint(equalTo: self.navBar.topAnchor).isActive = true
-      } else {
-        NSLayoutConstraint(item: self.topLayoutGuide,
-                           attribute: .bottom,
-                           relatedBy: .equal,
-                           toItem: self.navBar,
-                           attribute: .top,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-      }
-    #else
+    if #available(iOS 11.0, *) {
+      self.view.safeAreaLayoutGuide.topAnchor.constraint(equalTo: self.navBar.topAnchor).isActive = true
+    } else {
       NSLayoutConstraint(item: self.topLayoutGuide,
                          attribute: .bottom,
                          relatedBy: .equal,
@@ -60,7 +50,7 @@ open class NavigationBarTypicalUseSwiftExample: UIViewController {
                          attribute: .top,
                          multiplier: 1,
                          constant: 0).isActive = true
-    #endif
+    }
 
     let viewBindings = ["navBar": navBar]
 
