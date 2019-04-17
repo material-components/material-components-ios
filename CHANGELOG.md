@@ -50,7 +50,7 @@ self.bottomSheet.shouldFlashScrollIndicatorsOnAppearance = YES;
 
 ### `maximumInitialDrawerHeight` in NavigationDrawer
 
-We added this new property for NavigationDrawer's API, which allows clients to set the initial height of the drawer, rather than it always being 50% of the screen's height.
+Clients can now override the initial drawer height on MDCBottomDrawerViewController with a desired height in points.
 
 #### Swift
 
