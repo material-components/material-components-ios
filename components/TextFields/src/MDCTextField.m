@@ -752,11 +752,6 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
   return self.inputLayoutStrut;
 }
 
-// TODO: (#4390) Remove when we drop iOS 9 support
-- (UIView *)viewForBaselineLayout {
-  return self.inputLayoutStrut;
-}
-
 #pragma mark - UITextField Notification Observation
 
 - (void)textFieldDidBeginEditing:(__unused NSNotification *)note {
