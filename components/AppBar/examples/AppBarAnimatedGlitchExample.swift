@@ -73,11 +73,7 @@ class AppBarAnimatedJumpExample: UIViewController {
     view.isOpaque = false
     view.backgroundColor = colorScheme.backgroundColor
     view.addSubview(appBarViewController.view)
-    #if swift(>=4.2)
     appBarViewController.didMove(toParent: self)
-    #else
-    appBarViewController.didMove(toParentViewController: self)
-    #endif
 
     switchToTab(tabs[0], animated: false)
   }
@@ -90,7 +86,7 @@ class AppBarAnimatedJumpExample: UIViewController {
     let removeOld: (() -> Void)
     let animateOut: (() -> Void)
     if let currentTab = currentTab {
-      currentTab.willMove(toParentViewController: nil)
+      currentTab.willMove(toParent: nil)
 
       animateOut = {
         currentTab.view.alpha = 0
@@ -99,7 +95,7 @@ class AppBarAnimatedJumpExample: UIViewController {
       removeOld = {
         currentTab.headerView = nil
         currentTab.view.removeFromSuperview()
-        currentTab.removeFromParentViewController()
+        currentTab.removeFromParent()
       }
     } else {
       removeOld = {}
@@ -113,12 +109,8 @@ class AppBarAnimatedJumpExample: UIViewController {
 
     // Show new tab.
     view.addSubview(tab.view)
-    view.sendSubview(toBack: tab.view)
-    #if swift(>=4.2)
+    view.sendSubviewToBack(tab.view)
     tab.didMove(toParent: self)
-    #else
-    tab.didMove(toParentViewController: self)
-    #endif
     tab.headerView = self.appBarViewController.headerView
 
     tab.view.alpha = 0
@@ -162,7 +154,7 @@ class AppBarAnimatedJumpExample: UIViewController {
   private func makeAppBar() -> MDCAppBarViewController {
     let appBarViewController = MDCAppBarViewController()
 
-    addChildViewController(appBarViewController)
+    addChild(appBarViewController)
 
     // Give the tab bar enough height to accomodate all possible item appearances.
     appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
@@ -178,7 +170,7 @@ class AppBarAnimatedJumpExample: UIViewController {
     return appBarViewController
   }
 
-  override var childViewControllerForStatusBarStyle: UIViewController? {
+  override var childForStatusBarStyle: UIViewController? {
     return appBarViewController
   }
 }

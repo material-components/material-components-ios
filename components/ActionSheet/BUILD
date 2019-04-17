@@ -113,7 +113,7 @@ swift_library(
     srcs = glob(["tests/unit/*.swift"]),
     copts = [
         "-swift-version",
-        "3",
+        "4.2",
     ],
     deps = [
         ":ActionSheet",
@@ -126,7 +126,7 @@ swift_library(
     srcs = glob(["tests/unit/ColorThemer/*.swift"]),
     copts = [
         "-swift-version",
-        "3",
+        "4.2",
     ],
     deps = [
         ":ActionSheet",

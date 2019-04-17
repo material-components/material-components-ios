@@ -119,7 +119,7 @@ class UITextFieldWithChipsExample: UIViewController {
         //lastmax = lastLabel.frame.maxX
       } else {
         leadingConstraint = label.leadingAnchor.constraint(equalTo: leftView.leadingAnchor)
-        leadingConstraint?.priority = UILayoutPriorityDefaultLow
+        leadingConstraint?.priority = UILayoutPriority.defaultLow
         leadingConstraint?.isActive = true
       }
     } else {
@@ -222,7 +222,7 @@ private class InsetTextField: UITextField {
   // text bounds
   override func textRect(forBounds bounds: CGRect) -> CGRect {
     let superbounds = super.textRect(forBounds: bounds)
-    var newbounds = UIEdgeInsetsInsetRect(superbounds, insetRect)
+    var newbounds = superbounds.inset(by: insetRect)
     newbounds.origin.x = insetX
     return newbounds
   }
@@ -230,7 +230,7 @@ private class InsetTextField: UITextField {
   // text bounds while editing
   override func editingRect(forBounds bounds: CGRect) -> CGRect {
     let superbounds = super.editingRect(forBounds: bounds)
-    var newbounds = UIEdgeInsetsInsetRect(superbounds, insetRect)
+    var newbounds = superbounds.inset(by: insetRect)
     newbounds.origin.x = insetX
     return newbounds
   }
@@ -252,14 +252,14 @@ class PlainTextField: UITextField {
   // text bounds
   override func textRect(forBounds bounds: CGRect) -> CGRect {
     let superbounds = super.textRect(forBounds: bounds)
-    let newbounds = UIEdgeInsetsInsetRect(superbounds, insetRect)
+    let newbounds = superbounds.inset(by: insetRect)
     return newbounds
   }
 
   // text bounds while editing
   override func editingRect(forBounds bounds: CGRect) -> CGRect {
     let superbounds = super.editingRect(forBounds: bounds)
-    let newbounds = UIEdgeInsetsInsetRect(superbounds, insetRect)
+    let newbounds = superbounds.inset(by: insetRect)
     return newbounds
   }
 }

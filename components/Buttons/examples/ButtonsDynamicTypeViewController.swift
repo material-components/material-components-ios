@@ -41,7 +41,7 @@ class ButtonsDynamicTypeViewController: UIViewController {
     flatButtonStatic.applyContainedTheme(withScheme: containerScheme)
     flatButtonStatic.setTitleColor(titleColor, for: .normal)
     flatButtonStatic.setBackgroundColor(backgroundColor, for: .normal)
-    flatButtonStatic.setTitle("Static", for: UIControlState())
+    flatButtonStatic.setTitle("Static", for: UIControl.State())
     flatButtonStatic.sizeToFit()
     flatButtonStatic.translatesAutoresizingMaskIntoConstraints = false
     flatButtonStatic.addTarget(self, action: #selector(tap), for: .touchUpInside)
@@ -52,7 +52,7 @@ class ButtonsDynamicTypeViewController: UIViewController {
     flatButtonDynamic.applyContainedTheme(withScheme: containerScheme)
     flatButtonDynamic.setTitleColor(titleColor, for: .normal)
     flatButtonDynamic.setBackgroundColor(backgroundColor, for: .normal)
-    flatButtonDynamic.setTitle("Dynamic", for: UIControlState())
+    flatButtonDynamic.setTitle("Dynamic", for: UIControl.State())
     flatButtonDynamic.sizeToFit()
     flatButtonDynamic.translatesAutoresizingMaskIntoConstraints = false
     flatButtonDynamic.addTarget(self, action: #selector(tap), for: .touchUpInside)
@@ -64,7 +64,7 @@ class ButtonsDynamicTypeViewController: UIViewController {
     flatButtonDynamicLegacy.applyContainedTheme(withScheme: containerScheme)
     flatButtonDynamicLegacy.setTitleColor(titleColor, for: .normal)
     flatButtonDynamicLegacy.setBackgroundColor(backgroundColor, for: .normal)
-    flatButtonDynamicLegacy.setTitle("Dynamic (legacy)", for: UIControlState())
+    flatButtonDynamicLegacy.setTitle("Dynamic (legacy)", for: UIControl.State())
     flatButtonDynamicLegacy.sizeToFit()
     flatButtonDynamicLegacy.translatesAutoresizingMaskIntoConstraints = false
     flatButtonDynamicLegacy.addTarget(self, action: #selector(tap), for: .touchUpInside)

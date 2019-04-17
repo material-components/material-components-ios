@@ -35,30 +35,30 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
     
     let containedButton = MDCButton()
     containedButton.applyContainedTheme(withScheme: containerScheme)
-    containedButton.setTitle("Tap Me Too", for: UIControlState())
+    containedButton.setTitle("Tap Me Too", for: UIControl.State())
     containedButton.sizeToFit()
     let containedButtonVerticalInset =
       min(0, -(kMinimumAccessibleButtonSize.height - containedButton.bounds.height) / 2);
     let containedButtonHorizontalInset =
       min(0, -(kMinimumAccessibleButtonSize.width - containedButton.bounds.width) / 2);
     containedButton.hitAreaInsets =
-      UIEdgeInsetsMake(containedButtonVerticalInset, containedButtonHorizontalInset,
-                       containedButtonVerticalInset, containedButtonHorizontalInset);
+      UIEdgeInsets(top: containedButtonVerticalInset, left: containedButtonHorizontalInset,
+                   bottom: containedButtonVerticalInset, right: containedButtonHorizontalInset)
     containedButton.translatesAutoresizingMaskIntoConstraints = false
     containedButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
     view.addSubview(containedButton)
 
     let textButton = MDCButton()
     textButton.applyTextTheme(withScheme: MDCContainerScheme())
-    textButton.setTitle("Touch me", for: UIControlState())
+    textButton.setTitle("Touch me", for: UIControl.State())
     textButton.sizeToFit()
     let textButtonVerticalInset =
       min(0, -(kMinimumAccessibleButtonSize.height - textButton.bounds.height) / 2);
     let textButtonHorizontalInset =
       min(0, -(kMinimumAccessibleButtonSize.width - textButton.bounds.width) / 2);
     textButton.hitAreaInsets =
-      UIEdgeInsetsMake(textButtonVerticalInset, textButtonHorizontalInset,
-                       textButtonVerticalInset, textButtonHorizontalInset);
+      UIEdgeInsets(top: textButtonVerticalInset, left: textButtonHorizontalInset,
+                   bottom: textButtonVerticalInset, right: textButtonHorizontalInset)
     textButton.translatesAutoresizingMaskIntoConstraints = false
     textButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
     view.addSubview(textButton)

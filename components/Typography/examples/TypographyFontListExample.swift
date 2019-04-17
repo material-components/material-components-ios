@@ -24,7 +24,7 @@ class TypographyFontListExampleViewController: UITableViewController {
 
     self.tableView.separatorStyle = .none
 
-    self.tableView.rowHeight = UITableViewAutomaticDimension
+    self.tableView.rowHeight = UITableView.automaticDimension
     self.tableView.estimatedRowHeight = 50
   }
 
@@ -64,7 +64,7 @@ class TypographyFontListExampleViewController: UITableViewController {
     self.init(style: .plain)
   }
 
-  override init(style: UITableViewStyle) {
+  override init(style: UITableView.Style) {
     super.init(style: style)
 
     self.title = "Font list"

@@ -66,7 +66,7 @@ swift_library(
     srcs = native.glob(["MDCCatalog/*.swift"]),
     copts = [
         "-swift-version",
-        "3",
+        "4.2",
     ],
     resources = ["MDCDragons/HeaderView.xib"],
     deps = [
@@ -120,7 +120,7 @@ swift_library(
     srcs = native.glob(["MDCDragons/*.swift"]),
     copts = [
         "-swift-version",
-        "3",
+        "4.2",
     ],
     data = glob(["MDCCatalog/Assets.xcassets/*.imageset/**"]),
     resources = ["MDCDragons/HeaderView.xib"],

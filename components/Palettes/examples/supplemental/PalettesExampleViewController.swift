@@ -60,7 +60,7 @@ class PalettesExampleViewController: UITableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     self.tableView.separatorStyle = .none
-    self.tableView.rowHeight = UITableViewAutomaticDimension
+    self.tableView.rowHeight = UITableView.automaticDimension
     self.tableView.estimatedRowHeight = 50
   }
 
@@ -109,7 +109,7 @@ class PalettesExampleViewController: UITableViewController {
     self.init(style: .grouped)
   }
 
-  override init(style: UITableViewStyle) {
+  override init(style: UITableView.Style) {
     super.init(style: style)
   }
 

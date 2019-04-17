@@ -158,7 +158,7 @@ def mdc_examples_swift_library(
       visibility = visibility,
       copts = [
           "-swift-version",
-          "3",
+          "4.2",
       ],
       srcs = native.glob([
           "examples/*.swift",
