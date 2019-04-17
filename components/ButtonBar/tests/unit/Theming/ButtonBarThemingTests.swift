@@ -18,7 +18,7 @@ import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialTypographyScheme
 import MaterialComponentsBeta.MaterialButtonBar_Theming
-import MaterialComponentsBeta.MaterialContainerScheme
+import MaterialComponents.MaterialContainerScheme
 
 class ButtonBarThemingTests: XCTestCase {
 

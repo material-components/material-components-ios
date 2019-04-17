@@ -17,7 +17,7 @@ import XCTest
 import MaterialComponents.MaterialTextFields
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialTypographyScheme
-import MaterialComponentsBeta.MaterialContainerScheme
+import MaterialComponents.MaterialContainerScheme
 import MaterialComponentsBeta.MaterialTextFields_Theming
 
 class TextFieldsMaterialThemingTests: XCTestCase {

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #import <MaterialComponents/MaterialTextFields.h>
-#import <MaterialComponentsBeta/MaterialContainerScheme.h>
+#import <MaterialComponents/MaterialContainerScheme.h>
 
 /**
  This category is used to style MDCTextInputControllerOutlined instances to a specific Material

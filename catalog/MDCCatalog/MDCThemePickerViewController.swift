@@ -16,7 +16,7 @@ import MDFTextAccessibility
 import MaterialComponents.MaterialIcons_ic_check
 import MaterialComponents.MaterialPalettes
 import MaterialComponents.MaterialThemes
-import MaterialComponentsBeta.MaterialContainerScheme
+import MaterialComponents.MaterialContainerScheme
 import UIKit
 
 private func schemeWithPalette(_ palette: MDCPalette) -> MDCContainerScheming {

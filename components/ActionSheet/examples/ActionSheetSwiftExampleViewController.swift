@@ -19,7 +19,7 @@ import MaterialComponents.MaterialTypographyScheme
 
 import MaterialComponents.MaterialActionSheet
 import MaterialComponentsBeta.MaterialActionSheet_Theming
-import MaterialComponentsBeta.MaterialContainerScheme
+import MaterialComponents.MaterialContainerScheme
 
 class ActionSheetSwiftExampleViewController: UIViewController {
 

@@ -19,7 +19,7 @@ import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialShapeLibrary
 import MaterialComponents.MaterialShapeScheme
 import MaterialComponentsBeta.MaterialCards_Theming
-import MaterialComponentsBeta.MaterialContainerScheme
+import MaterialComponents.MaterialContainerScheme
 
 class CardsMaterialThemingTests: XCTestCase {
 

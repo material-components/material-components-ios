@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #import <MaterialComponentsBeta/MaterialButtons+Theming.h>
-#import <MaterialComponentsBeta/MaterialContainerScheme.h>
+#import <MaterialComponents/MaterialContainerScheme.h>
 #import <MaterialComponentsBeta/MaterialDialogs+Theming.h>
 #import "MaterialButtons.h"
 #import "MaterialColorScheme.h"
