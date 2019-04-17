@@ -4,13 +4,13 @@ In this major release, we dropped support for iOS 8 in all components. We also i
 
 ## Breaking changes
 
-iOS 8 support has been dropped in all components. This change will require application bumping minimum depolyment target to iOS 9.
+This release drops support for iOS 8 and the library, catalog, examples, and demos may no longer build for iOS 8 targets or may crash even if building succeeds. Clients will need to set their minimum deployment targets to iOS 9 or later.
 
 ## New features
 
 ### Add support for MDCAppBarNavigationController delegate to pick a tracking scroll view
 
-We added a method in delegate for clients to be able to customize the tracking scroll view detection logic. 
+An optional delegate method was added to allow clients to specify the controller's tracking scroll view. The delegate may return `nil` if no appropriate tracking scroll view is present.
 
 #### Swift
 
@@ -34,20 +34,18 @@ func appBarNavigationController(_ navigationController: MDCAppBarNavigationContr
 
 ### `flashScrollIndicators` in BottomSheet
 
-We added a behavioral flag for when clients want to flash scroll indicators so that clients can opt into this behavior.
+`MDCBottomSheetController` has a new API that will flash the scroll indicators when the view appears.
 
 #### Swift
 
 ```swift
 bottomSheet.shouldFlashScrollIndicatorsOnAppearance = true;
-
 ```
 
 #### Objective-C
 
 ```objc
 self.bottomSheet.shouldFlashScrollIndicatorsOnAppearance = YES;
-
 ```
 
 ### `maximumInitialDrawerHeight` in NavigationDrawer
@@ -58,17 +56,13 @@ We added this new property for NavigationDrawer's API, which allows clients to s
 
 ```swift
 bottomDrawer.maximumInitialDrawerHeight = 1000;
-
 ```
 
 #### Objective-C
 
 ```objc
 self.bottomDrawer.maximumInitialDrawerHeight = 1000;
-
 ```
-
-
 
 ## API changes
 
@@ -136,6 +130,10 @@ self.bottomDrawer.maximumInitialDrawerHeight = 1000;
 * [Added support for customizing the initial drawer height factor (#7112)](https://github.com/material-components/material-components-ios/commit/07417dfa71468be5000d2660702400be70b5cc46) (Yarden Eitan)
 * [remove dependency on MDCBottomDrawerContainerViewController (#7138)](https://github.com/material-components/material-components-ios/commit/c5c237fd0f98ca1312e854998133fc9a19ccfb2f) (Yarden Eitan)
 
+### Tabs
+
+* [Add theming extension for Tabs (#7089)](https://github.com/material-components/material-components-ios/commit/4eeeb90a93010ce70ce098979ed311b98f2b011c) (Wenyu Zhang)
+
 ### TextFields
 
 * [Change wording on MDCTextInputController theming extensions doc comments (#7107)](https://github.com/material-components/material-components-ios/commit/4e7b4a64b478e6e5572cd6757dad01c5e44176a7) (Andrew Overton)
@@ -144,7 +142,6 @@ self.bottomDrawer.maximumInitialDrawerHeight = 1000;
 
 ## Multi-component changes
 
-* [Add theming extension for Tabs (#7089)](https://github.com/material-components/material-components-ios/commit/4eeeb90a93010ce70ce098979ed311b98f2b011c) (Wenyu Zhang)
 * [Fix some CGFloat conversion. (#7130)](https://github.com/material-components/material-components-ios/commit/a4e6886f226d4756e7194f6de48c9c85837d9920) (Wenyu Zhang)
 
 ---
