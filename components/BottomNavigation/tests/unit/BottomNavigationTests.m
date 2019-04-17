@@ -14,6 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
+#import "../../src/private/MDCBottomNavigationBar+Private.h"
 #import "../../src/private/MDCBottomNavigationItemView.h"
 #import "MaterialBottomNavigation.h"
 #import "MaterialShadowElevations.h"
@@ -450,6 +451,71 @@
   for (MDCBottomNavigationItemView *itemView in self.bottomNavBar.itemViews) {
     XCTAssertEqual(itemView.titleNumberOfLines, self.bottomNavBar.titlesNumberOfLines);
   }
+}
+
+- (void)testItemForPointInsideItemViewReturnsCorrespondingItem {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:0];
+  self.bottomNavBar.frame = CGRectMake(0, 0, 320, 56);
+
+  // When
+  self.bottomNavBar.items = @[ item1, item2 ];
+  [self.bottomNavBar layoutIfNeeded];
+  UIView *view1 = [self.bottomNavBar viewForItem:item1];
+  UIView *view2 = [self.bottomNavBar viewForItem:item2];
+  UITabBarItem *result1 = [self.bottomNavBar tabBarItemForPoint:view1.center];
+  UITabBarItem *result2 = [self.bottomNavBar tabBarItemForPoint:view2.center];
+
+  // Then
+  XCTAssertEqualObjects(result1, item1);
+  XCTAssertEqualObjects(result2, item2);
+}
+
+- (void)testItemForPointOutsideNavigationBarReturnsNil {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:0];
+  CGFloat navBarHeight = 56;
+  self.bottomNavBar.frame = CGRectMake(0, 0, 320, navBarHeight);
+  CGPoint testPoint = CGPointMake(0, navBarHeight + 10);
+
+  // When
+  self.bottomNavBar.items = @[ item1, item2 ];
+  [self.bottomNavBar layoutIfNeeded];
+  UITabBarItem *result = [self.bottomNavBar tabBarItemForPoint:testPoint];
+
+  // Then
+  XCTAssertNil(result);
+}
+
+- (void)testItemForPointInsideNavigationBarOutsideItemViewReturnsNil {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:0];
+  CGFloat navBarHeight = 200;
+  self.bottomNavBar.frame = CGRectMake(0, 0, 320, navBarHeight);
+  CGPoint testPoint = CGPointMake(0, navBarHeight - 10);
+
+  // When
+  self.bottomNavBar.items = @[ item1, item2 ];
+  [self.bottomNavBar layoutIfNeeded];
+  UITabBarItem *result = [self.bottomNavBar tabBarItemForPoint:testPoint];
+
+  // Then
+  XCTAssertNil(result);
+}
+
+- (void)testItemForPointInsideNavigationBarNoTabBarItemsReturnsNil {
+  // Given
+  self.bottomNavBar.frame = CGRectMake(0, 0, 320, 56);
+
+  // When
+  [self.bottomNavBar layoutIfNeeded];
+  UITabBarItem *result = [self.bottomNavBar tabBarItemForPoint:self.bottomNavBar.center];
+
+  // Then
+  XCTAssertNil(result);
 }
 
 @end

@@ -17,11 +17,11 @@
 
 #import "MDCContainedInputView.h"
 
-@protocol MDCContainedInputViewStyle;
+@protocol MDCContainedInputViewStyler;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MDCSimpleTextFieldLayout : NSObject
+@interface MDCInputTextFieldLayout : NSObject
 
 @property(nonatomic, readonly, class) CGFloat clearButtonSideLength;
 @property(nonatomic, readonly, class) CGFloat clearButtonImageViewSideLength;
@@ -29,14 +29,16 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, assign) BOOL leftViewHidden;
 @property(nonatomic, assign) BOOL rightViewHidden;
 @property(nonatomic, assign) BOOL clearButtonHidden;
-@property(nonatomic, assign) BOOL placeholderHidden;
+//@property(nonatomic, assign) BOOL floatingLabelHidden;
+//@property(nonatomic, assign) BOOL placeholderLabelHidden;
 
-@property(nonatomic, assign) CGRect placeholderFrameFloating;
-@property(nonatomic, assign) CGRect placeholderFrameNormal;
+@property(nonatomic, assign) CGRect floatingLabelFrameFloating;
+@property(nonatomic, assign) CGRect floatingLabelFrameNormal;
+@property(nonatomic, assign) CGRect placeholderLabelFrameNormal;
 @property(nonatomic, assign) CGRect textRect;
-@property(nonatomic, assign) CGRect textRectFloatingPlaceholder;
+@property(nonatomic, assign) CGRect textRectFloatingLabel;
 @property(nonatomic, assign) CGRect clearButtonFrame;
-@property(nonatomic, assign) CGRect clearButtonFrameFloatingPlaceholder;
+@property(nonatomic, assign) CGRect clearButtonFrameFloatingLabel;
 @property(nonatomic, assign) CGRect leftViewFrame;
 @property(nonatomic, assign) CGRect rightViewFrame;
 @property(nonatomic, assign) CGRect leftUnderlineLabelFrame;
@@ -46,12 +48,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, assign) CGFloat topRowBottomRowDividerY;
 
 - (instancetype)initWithTextFieldSize:(CGSize)textFieldSize
-                       containerStyle:(id<MDCContainedInputViewStyle>)containerStyle
+                      containerStyler:(id<MDCContainedInputViewStyler>)containerStyler
                                  text:(NSString *)text
                           placeholder:(NSString *)placeholder
                                  font:(UIFont *)font
-              floatingPlaceholderFont:(UIFont *)floatingPlaceholderFont
-                  canPlaceholderFloat:(BOOL)canPlaceholderFloat
+                         floatingFont:(UIFont *)floatingFont
+                        floatingLabel:(UILabel *)floatingLabel
+                canFloatingLabelFloat:(BOOL)canFloatingLabelFloat
                              leftView:(UIView *)leftView
                          leftViewMode:(UITextFieldViewMode)leftViewMode
                             rightView:(UIView *)rightView

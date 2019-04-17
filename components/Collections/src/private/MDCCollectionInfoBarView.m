@@ -135,7 +135,7 @@ static inline UIColor *CollectionInfoBarRedColor(void) {
   _kind = kind;
   _backgroundTransformY = CGRectGetHeight(self.bounds);
   if ([kind isEqualToString:MDCCollectionInfoBarKindHeader]) {
-    _backgroundTransformY *= -1.0;
+    _backgroundTransformY *= -1;
   }
   _backgroundView.transform = CGAffineTransformMakeTranslation(0, _backgroundTransformY);
 }

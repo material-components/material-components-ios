@@ -20,7 +20,7 @@ load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
 
-IOS_MINIMUM_OS = "8.0"
+IOS_MINIMUM_OS = "9.0"
 
 ios_application(
     name = "MDCCatalog",

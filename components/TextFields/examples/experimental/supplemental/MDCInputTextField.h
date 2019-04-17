@@ -29,7 +29,7 @@
  - Enable easy set up and reliable and predictable behavior.
 
  */
-@interface MDCSimpleTextField : UITextField <MDCContainedInputView>
+@interface MDCInputTextField : UITextField <MDCContainedInputView>
 
 /**
  This is essentially an RTL-aware wrapper around UITextField's leftView/rightView class.
@@ -50,5 +50,17 @@
  This is essentially an RTL-aware wrapper around UITextField's leftViewMode/rightViewMode class.
  */
 @property(nonatomic, assign) UITextFieldViewMode trailingViewMode;
+
+/**
+ Indicates whether the text field should automatically update its font when the device’s
+ UIContentSizeCategory is changed.
+
+ This property is modeled after the adjustsFontForContentSizeCategory property in the
+ UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
+
+ Defaults value is NO.
+ */
+@property(nonatomic, setter=mdc_setAdjustsFontForContentSizeCategory:)
+    BOOL mdc_adjustsFontForContentSizeCategory;
 
 @end

@@ -31,6 +31,8 @@
 
 - (CGSize)calculatePreferredContentSizeForBounds:(CGSize)boundsSize;
 
+- (CGSize)calculateActionsSizeThatFitsWidth:(CGFloat)boundingWidth;
+
 - (void)updateFonts;
 
 @end

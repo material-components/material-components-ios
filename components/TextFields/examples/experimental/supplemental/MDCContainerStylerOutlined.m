@@ -14,30 +14,32 @@
 
 #import "MDCContainedInputView.h"
 
-#import "MDCContainerStylePathDrawingUtils.h"
+#import "MDCContainerStylerPathDrawingUtils.h"
 
-#import "MDCContainerStyleOutlined.h"
+#import "MDCContainerStylerOutlined.h"
 
 #import <Foundation/Foundation.h>
 
-static const CGFloat kOutlinedContainerStyleCornerRadius = (CGFloat)4.0;
-static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
+static const CGFloat kOutlinedContainerStylerCornerRadius = (CGFloat)4.0;
+static const CGFloat kFloatingLabelOutlineSidePadding = (CGFloat)5.0;
 
 @implementation MDCContainedInputViewColorSchemeOutlined
 @end
 
-@interface MDCContainerStyleOutlined ()
+@interface MDCContainerStylerOutlined ()
 
 @property(strong, nonatomic) CAShapeLayer *outlinedSublayer;
 
 @end
 
-@implementation MDCContainerStyleOutlined
-@synthesize densityInformer = _densityInformer;
+@implementation MDCContainerStylerOutlined
+@synthesize positioningDelegate = _positioningDelegate;
 
-- (instancetype)init {
-  self = [super init];
+- (instancetype)initWithPositioningDelegate:
+    (id<MDCContainedInputViewStylerPositioningDelegate>)positioningDelegate {
+  self = [super initWithPositioningDelegate:positioningDelegate];
   if (self) {
+    _positioningDelegate = positioningDelegate;
     [self setUpOutlineSublayer];
   }
   return self;
@@ -83,15 +85,15 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
     return;
   }
   uiView = (UIView *)containedInputView;
-  CGRect placeholderFrame = containedInputView.placeholderLabel.frame;
-  BOOL isFloatingPlaceholder =
-      containedInputView.placeholderState == MDCContainedInputViewPlaceholderStateFloating;
-  CGFloat topRowBottomRowDividerY = CGRectGetMaxY(containedInputView.containerRect);
+  CGRect placeholderFrame = containedInputView.floatingLabel.frame;
+  BOOL isFloatingLabelFloating =
+      containedInputView.floatingLabelState == MDCContainedInputViewFloatingLabelStateFloating;
+  CGFloat topRowBottomRowDividerY = CGRectGetMaxY(containedInputView.containerFrame);
   CGFloat lineWidth = [self outlineLineWidthForState:containedInputView.containedInputViewState];
   [self applyStyleTo:uiView
              placeholderFrame:placeholderFrame
       topRowBottomRowDividerY:topRowBottomRowDividerY
-        isFloatingPlaceholder:isFloatingPlaceholder
+      isFloatingLabelFloating:isFloatingLabelFloating
              outlineLineWidth:lineWidth];
   if ([colorScheme isKindOfClass:[MDCContainedInputViewColorSchemeOutlined class]]) {
     MDCContainedInputViewColorSchemeOutlined *outlinedScheme =
@@ -107,13 +109,13 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
 - (void)applyStyleTo:(UIView *)view
            placeholderFrame:(CGRect)placeholderFrame
     topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
-      isFloatingPlaceholder:(BOOL)isFloatingPlaceholder
+    isFloatingLabelFloating:(BOOL)isFloatingLabelFloating
            outlineLineWidth:(CGFloat)outlineLineWidth {
   UIBezierPath *path = [self outlinePathWithViewBounds:view.bounds
                                       placeholderFrame:placeholderFrame
                                topRowBottomRowDividerY:topRowBottomRowDividerY
                                              lineWidth:outlineLineWidth
-                                 isFloatingPlaceholder:isFloatingPlaceholder];
+                               isFloatingLabelFloating:isFloatingLabelFloating];
   self.outlinedSublayer.path = path.CGPath;
   self.outlinedSublayer.lineWidth = outlineLineWidth;
   if (self.outlinedSublayer.superlayer != view.layer) {
@@ -125,9 +127,9 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
                            placeholderFrame:(CGRect)placeholderFrame
                     topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
                                   lineWidth:(CGFloat)lineWidth
-                      isFloatingPlaceholder:(BOOL)isFloatingPlaceholder {
+                    isFloatingLabelFloating:(BOOL)isFloatingLabelFloating {
   UIBezierPath *path = [[UIBezierPath alloc] init];
-  CGFloat radius = kOutlinedContainerStyleCornerRadius;
+  CGFloat radius = kOutlinedContainerStylerCornerRadius;
   CGFloat textFieldWidth = CGRectGetWidth(viewBounds);
   CGFloat sublayerMinY = 0;
   CGFloat sublayerMaxY = topRowBottomRowDividerY;
@@ -135,11 +137,9 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
   CGPoint startingPoint = CGPointMake(radius, sublayerMinY);
   CGPoint topRightCornerPoint1 = CGPointMake(textFieldWidth - radius, sublayerMinY);
   [path moveToPoint:startingPoint];
-  if (isFloatingPlaceholder) {
-    CGFloat leftLineBreak =
-        CGRectGetMinX(placeholderFrame) - kFloatingPlaceholderOutlineSidePadding;
-    CGFloat rightLineBreak =
-        CGRectGetMaxX(placeholderFrame) + kFloatingPlaceholderOutlineSidePadding;
+  if (isFloatingLabelFloating) {
+    CGFloat leftLineBreak = CGRectGetMinX(placeholderFrame) - kFloatingLabelOutlineSidePadding;
+    CGFloat rightLineBreak = CGRectGetMaxX(placeholderFrame) + kFloatingLabelOutlineSidePadding;
     [path addLineToPoint:CGPointMake(leftLineBreak, sublayerMinY)];
     [path moveToPoint:CGPointMake(rightLineBreak, sublayerMinY)];
     [path addLineToPoint:CGPointMake(rightLineBreak, sublayerMinY)];
@@ -148,34 +148,34 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
   }
 
   CGPoint topRightCornerPoint2 = CGPointMake(textFieldWidth, sublayerMinY + radius);
-  [MDCContainerStylePathDrawingUtils addTopRightCornerToPath:path
-                                                   fromPoint:topRightCornerPoint1
-                                                     toPoint:topRightCornerPoint2
-                                                  withRadius:radius];
+  [MDCContainerStylerPathDrawingUtils addTopRightCornerToPath:path
+                                                    fromPoint:topRightCornerPoint1
+                                                      toPoint:topRightCornerPoint2
+                                                   withRadius:radius];
 
   CGPoint bottomRightCornerPoint1 = CGPointMake(textFieldWidth, sublayerMaxY - radius);
   CGPoint bottomRightCornerPoint2 = CGPointMake(textFieldWidth - radius, sublayerMaxY);
   [path addLineToPoint:bottomRightCornerPoint1];
-  [MDCContainerStylePathDrawingUtils addBottomRightCornerToPath:path
-                                                      fromPoint:bottomRightCornerPoint1
-                                                        toPoint:bottomRightCornerPoint2
-                                                     withRadius:radius];
+  [MDCContainerStylerPathDrawingUtils addBottomRightCornerToPath:path
+                                                       fromPoint:bottomRightCornerPoint1
+                                                         toPoint:bottomRightCornerPoint2
+                                                      withRadius:radius];
 
   CGPoint bottomLeftCornerPoint1 = CGPointMake(radius, sublayerMaxY);
   CGPoint bottomLeftCornerPoint2 = CGPointMake(0, sublayerMaxY - radius);
   [path addLineToPoint:bottomLeftCornerPoint1];
-  [MDCContainerStylePathDrawingUtils addBottomLeftCornerToPath:path
-                                                     fromPoint:bottomLeftCornerPoint1
-                                                       toPoint:bottomLeftCornerPoint2
-                                                    withRadius:radius];
+  [MDCContainerStylerPathDrawingUtils addBottomLeftCornerToPath:path
+                                                      fromPoint:bottomLeftCornerPoint1
+                                                        toPoint:bottomLeftCornerPoint2
+                                                     withRadius:radius];
 
   CGPoint topLeftCornerPoint1 = CGPointMake(0, sublayerMinY + radius);
   CGPoint topLeftCornerPoint2 = CGPointMake(radius, sublayerMinY);
   [path addLineToPoint:topLeftCornerPoint1];
-  [MDCContainerStylePathDrawingUtils addTopLeftCornerToPath:path
-                                                  fromPoint:topLeftCornerPoint1
-                                                    toPoint:topLeftCornerPoint2
-                                                 withRadius:radius];
+  [MDCContainerStylerPathDrawingUtils addTopLeftCornerToPath:path
+                                                   fromPoint:topLeftCornerPoint1
+                                                     toPoint:topLeftCornerPoint2
+                                                  withRadius:radius];
 
   return path;
 }
@@ -194,30 +194,6 @@ static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
       break;
   }
   return defaultLineWidth;
-}
-
-- (id<MDCContainedInputViewStyleDensityInforming>)densityInformer {
-  if (_densityInformer) {
-    return _densityInformer;
-  }
-  return [[MDCContainerStyleOutlinedDensityInformer alloc] init];
-}
-
-@end
-
-@implementation MDCContainerStyleOutlinedDensityInformer
-
-- (CGFloat)floatingPlaceholderFontSize {
-  CGFloat scaleFactor = ((CGFloat)41 / (CGFloat)55);
-  return scaleFactor * [UIFont systemFontSize];
-}
-
-- (CGFloat)floatingPlaceholderMinYWithFloatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight {
-  return (CGFloat)0 - ((CGFloat)0.5 * floatingPlaceholderHeight);
-}
-
-- (CGFloat)contentAreaTopPaddingWithFloatingPlaceholderMaxY:(CGFloat)floatingPlaceholderMaxY {
-  return [self normalContentAreaTopPadding];
 }
 
 @end
