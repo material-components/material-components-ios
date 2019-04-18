@@ -17,8 +17,8 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKit.h>
 
-#import <MaterialComponents/MaterialColorScheme.h>
-#import <MaterialComponents/MaterialTypographyScheme.h>
+#import "MaterialColorScheme.h"
+#import "MaterialTypographyScheme.h"
 
 static const CGFloat kPrimaryThemeUnselectedOpacity = (CGFloat)0.74;
 static const CGFloat kSurfaceThemeUnselectedOpacity = (CGFloat)0.6;

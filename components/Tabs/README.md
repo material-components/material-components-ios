@@ -58,7 +58,7 @@ Tabs are bars of buttons used to navigate between groups of content.
 - [Extensions](#extensions)
   - [Color Theming](#color-theming)
   - [Typography Theming](#typography-theming)
-  - [Theming Extensions (Beta)](#theming-extensions-beta)
+  - [Theming Extensions (Beta)](#theming-extensions-(beta))
 
 - - -
 
@@ -297,10 +297,7 @@ id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
 
 ### Theming Extensions (Beta)
 
- `MDCTabBar` supports Material Theming using a Container Scheme. The code is currently
-in Beta readiness, which means you will need to follow the [instructions for adding the
-MaterialComponentsBeta podspec to your
-project](https://github.com/material-components/material-components-ios/blob/develop/contributing/beta_components.md).
+ `MDCTabBar` supports Material Theming using a Container Scheme.
 There are two variants for Material Theming of a MDCTabBar, which are the Primary Theme
 and the Surface Theme.
 
