@@ -15,11 +15,11 @@
 import UIKit
 
 import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialDialogs
 import MaterialComponents.MaterialList
 import MaterialComponents.MaterialTypographyScheme
 import MaterialComponentsBeta.MaterialButtons_Theming
-import MaterialComponentsBeta.MaterialContainerScheme
 import MaterialComponentsBeta.MaterialDialogs_Theming
 
 class CustomDialogViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {

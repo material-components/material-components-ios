@@ -45,6 +45,7 @@ target "MDCCatalog" do
     'ProgressView/UnitTests',
     'Ripple/UnitTests',
     'schemes/Color/UnitTests',
+    'schemes/Container/UnitTests',
     'schemes/Shape/UnitTests',
     'schemes/Typography/UnitTests',
     'ShadowElevations/UnitTests',
@@ -71,7 +72,6 @@ target "MDCCatalog" do
     'Dialogs+Theming/UnitTests',
     'Tabs+Theming/UnitTests',
     'TextFields+Theming/UnitTests',
-    'schemes/Container/UnitTests',
   ]
   pod 'MaterialComponentsSnapshotTests', :path => '../', :testspecs => [
     'SnapshotTests'

@@ -15,8 +15,8 @@
 import UIKit
 
 import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialContainerScheme
 import MaterialComponentsBeta.MaterialButtons_Theming
-import MaterialComponentsBeta.MaterialContainerScheme
 
 class ButtonsCustomFontViewController: UIViewController {
 

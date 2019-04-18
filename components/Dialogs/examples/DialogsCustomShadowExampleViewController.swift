@@ -15,9 +15,9 @@
 import UIKit
 
 import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialDialogs
 import MaterialComponentsBeta.MaterialButtons_Theming
-import MaterialComponentsBeta.MaterialContainerScheme
 import MaterialComponentsBeta.MaterialDialogs_Theming
 
 class CustomShadowViewController: UIViewController {

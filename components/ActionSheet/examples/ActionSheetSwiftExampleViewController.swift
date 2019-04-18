@@ -15,11 +15,11 @@
 import UIKit
 
 import MaterialComponents.MaterialColorScheme
+import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialTypographyScheme
 
 import MaterialComponents.MaterialActionSheet
 import MaterialComponentsBeta.MaterialActionSheet_Theming
-import MaterialComponentsBeta.MaterialContainerScheme
 
 class ActionSheetSwiftExampleViewController: UIViewController {
 
