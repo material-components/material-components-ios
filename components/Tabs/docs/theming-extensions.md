@@ -1,4 +1,4 @@
-### Theming Extensions (Beta)
+### Theming Extensions
 
  `MDCTabBar` supports Material Theming using a Container Scheme.
 There are two variants for Material Theming of a MDCTabBar, which are the Primary Theme
@@ -10,7 +10,7 @@ and the Surface Theme.
 
  ```swift
 // Import the Tabs Theming Extensions module
-import MaterialComponentsBeta.MaterialTabs_MaterialTheming
+import MaterialComponents.MaterialTabs_MaterialTheming
  ...
  // Create or use your app's Container Scheme
 let containerScheme = MDCContainerScheme()
@@ -24,7 +24,7 @@ tabBar.applySurfaceTheme(withScheme: containerScheme)
 
  ```objc
 // Import the Tabs Theming Extensions header
-#import <MaterialComponentsBeta/MaterialTabBar+MaterialTheming.h>
+#import <MaterialComponents/MaterialTabBar+MaterialTheming.h>
  ...
  // Create or use your app's Container Scheme
 MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
