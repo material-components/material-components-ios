@@ -677,9 +677,14 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   if ((state & UIControlStateHighlighted) == UIControlStateHighlighted) {
     state = state & ~UIControlStateDisabled;
   }
-  _borderColors[@(state)] = borderColor;
 
-  [self updateBorderColor];
+  // Only update the backing dictionary if:
+  // 1. The `state` argument is the same as the "storage" state, OR
+  // 2. There is already a value in the "storage" state.
+  if (storageState == state || _backgroundColors[@(storageState)] != nil) {
+    _borderColors[@(storageState)] = borderColor;
+    [self updateBorderColor];
+  }
 }
 
 #pragma mark - Border Width
