@@ -77,7 +77,7 @@ class CardWithRippleExample: UIViewController {
 
 extension CardWithRippleExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Ripple", "Card with Ripple"],
       "primaryDemo": false,

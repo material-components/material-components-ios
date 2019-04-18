@@ -183,7 +183,7 @@ extension AppBarAnimatedJumpExample: MDCTabBarDelegate {
 
 extension AppBarAnimatedJumpExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["App Bar", "Manual Tabs Jump (Animated)"],
       "primaryDemo": false,

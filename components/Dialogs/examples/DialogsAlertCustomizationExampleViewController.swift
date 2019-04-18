@@ -337,7 +337,7 @@ private extension MDCButton {
 // MARK: Catalog by convention
 extension DialogsAlertCustomizationExampleViewController {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Dialogs", "Alert Customization"],
       "primaryDemo": false,

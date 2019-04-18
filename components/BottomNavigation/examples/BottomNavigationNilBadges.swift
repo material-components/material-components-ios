@@ -97,7 +97,7 @@ class BottomNavigationNilBadges : UIViewController {
 // MARK: Catalog by convention
 extension BottomNavigationNilBadges {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Bottom Navigation", "Badge Value Test"],
       "primaryDemo": false,

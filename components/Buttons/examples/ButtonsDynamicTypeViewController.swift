@@ -20,7 +20,7 @@ import MaterialComponentsBeta.MaterialContainerScheme
 
 class ButtonsDynamicTypeViewController: UIViewController {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Buttons", "Buttons (DynamicType)"],
       "primaryDemo": false,

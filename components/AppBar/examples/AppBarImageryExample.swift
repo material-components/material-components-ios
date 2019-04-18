@@ -96,7 +96,7 @@ class AppBarImagerySwiftExample: UITableViewController {
 // MARK: Catalog by convention
 extension AppBarImagerySwiftExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["App Bar", "Imagery (Swift)"],
       "primaryDemo": false,

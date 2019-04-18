@@ -68,7 +68,7 @@ class ChipsFieldDeleteEnabledViewController : UIViewController, MDCChipFieldDele
 }
 // MARK - Catalog by Convention
 extension ChipsFieldDeleteEnabledViewController {
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs" : ["Chips", "Chips Input Delete Enabled (Swift)"],
       "primaryDemo" : false,

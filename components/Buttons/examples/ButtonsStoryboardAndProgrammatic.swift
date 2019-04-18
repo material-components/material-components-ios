@@ -207,7 +207,7 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
 
 extension ButtonsSwiftAndStoryboardController {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Buttons", "Buttons (Swift and Storyboard)"],
       "primaryDemo": false,

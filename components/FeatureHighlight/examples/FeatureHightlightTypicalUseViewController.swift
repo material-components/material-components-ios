@@ -70,7 +70,7 @@ class FeatureHighlightSwiftViewController: UIViewController {
 
 extension FeatureHighlightSwiftViewController {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Feature Highlight", "Feature Highlight (Swift)"],
       "primaryDemo": false,

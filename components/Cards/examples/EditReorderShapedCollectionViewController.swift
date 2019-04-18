@@ -211,7 +211,7 @@ class EditReorderShapedCollectionViewController: UIViewController,
 
 extension EditReorderShapedCollectionViewController {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Cards", "Shaped Edit/Reorder"],
       "primaryDemo": false,

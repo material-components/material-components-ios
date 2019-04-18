@@ -213,7 +213,7 @@ class ShapedCardViewController: UIViewController {
 @available(iOS 9.0, *)
 extension ShapedCardViewController {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Cards", "Shaped Card"],
       "primaryDemo": false,
