@@ -53,9 +53,9 @@ Pod::Spec.new do |mdc|
     extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}", "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/private/*.{h,m}"
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/schemes/Container"
     extension.dependency "MaterialComponentsBeta/#{extension.base_name.split('+')[0]}+ColorThemer"
     extension.dependency "MaterialComponentsBeta/#{extension.base_name.split('+')[0]}+TypographyThemer"
-    extension.dependency "MaterialComponentsBeta/schemes/Container"
 
     extension.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
@@ -79,7 +79,7 @@ Pod::Spec.new do |mdc|
     extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}", "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/private/*.{h,m}"
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
-    extension.dependency "MaterialComponentsBeta/schemes/Container"
+    extension.dependency "MaterialComponents/schemes/Container"
 
     extension.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
@@ -127,7 +127,7 @@ Pod::Spec.new do |mdc|
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}+ColorThemer"
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}+TypographyThemer"
-    extension.dependency "MaterialComponentsBeta/schemes/Container"
+    extension.dependency "MaterialComponents/schemes/Container"
 
     extension.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
@@ -150,7 +150,7 @@ Pod::Spec.new do |mdc|
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}+ShapeThemer"
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}+TypographyThemer"
     extension.dependency "MaterialComponents/ShadowElevations"
-    extension.dependency "MaterialComponentsBeta/schemes/Container"
+    extension.dependency "MaterialComponents/schemes/Container"
 
     extension.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
@@ -171,7 +171,7 @@ Pod::Spec.new do |mdc|
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}+ColorThemer"
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}+ShapeThemer"
-    extension.dependency "MaterialComponentsBeta/schemes/Container"
+    extension.dependency "MaterialComponents/schemes/Container"
 
     extension.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
@@ -193,7 +193,7 @@ Pod::Spec.new do |mdc|
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}+ColorThemer"
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}+ShapeThemer"
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}+TypographyThemer"
-    extension.dependency "MaterialComponentsBeta/schemes/Container"
+    extension.dependency "MaterialComponents/schemes/Container"
 
     extension.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
@@ -215,8 +215,8 @@ Pod::Spec.new do |mdc|
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}+ColorThemer"
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}+TypographyThemer"
     extension.dependency "MaterialComponents/ShadowElevations"
+    extension.dependency "MaterialComponents/schemes/Container"
     extension.dependency "MaterialComponentsBeta/Buttons+Theming"
-    extension.dependency "MaterialComponentsBeta/schemes/Container"
 
     extension.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
@@ -237,7 +237,7 @@ Pod::Spec.new do |mdc|
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}+ColorThemer"
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}+TypographyThemer"
-    extension.dependency "MaterialComponentsBeta/schemes/Container"
+    extension.dependency "MaterialComponents/schemes/Container"
 
     extension.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
@@ -258,7 +258,7 @@ Pod::Spec.new do |mdc|
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}+ColorThemer"
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}+TypographyThemer"
-    extension.dependency "MaterialComponentsBeta/schemes/Container"
+    extension.dependency "MaterialComponents/schemes/Container"
 
     extension.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
@@ -266,21 +266,6 @@ Pod::Spec.new do |mdc|
       "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/supplemental/*.{h,m,swift}"
       ]
       unit_tests.resources = "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/resources/*"
-    end
-  end
-
-  mdc.subspec "schemes" do |scheme_spec|
-    scheme_spec.subspec "Container" do |scheme|
-      scheme.ios.deployment_target = '9.0'
-      scheme.public_header_files = "components/schemes/#{scheme.base_name}/src/*.h"
-      scheme.source_files = "components/schemes/#{scheme.base_name}/src/*.{h,m}"
-      scheme.dependency "MaterialComponents/schemes/Color"
-      scheme.dependency "MaterialComponents/schemes/Typography"
-      scheme.dependency "MaterialComponents/schemes/Shape"
-
-      scheme.test_spec 'UnitTests' do |unit_tests|
-        unit_tests.source_files = "components/schemes/#{scheme.base_name}/tests/unit/*.{h,m,swift}", "components/schemes/#{scheme.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-      end
     end
   end
 

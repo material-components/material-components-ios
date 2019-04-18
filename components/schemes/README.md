@@ -51,8 +51,8 @@ By default, components have reasonable defaults for all of their customizable pr
 
 ```swift
 import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialContainerScheme
 import MaterialComponentsBeta.MaterialButtons_Theming
-import MaterialComponentsBeta.MaterialContainerScheme
 
 let containerScheme = MDCContainerScheme()
 let button = MDCButton()
@@ -62,9 +62,9 @@ button.applyTextTheme(withScheme: containerScheme)
 #### Objective-C
 
 ```objc
+#import <MaterialComponents/MaterialContainerScheme.h>
 #import <MaterialComponents/MaterialButtons.h>
 #import <MaterialComponents/MaterialButtons+Theming.h>
-#import <MaterialComponentsBeta/MaterialContainerScheme.h>
 
 MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
 MDCButton *button = [[MDCButton alloc] init];
@@ -79,9 +79,9 @@ MDCButton *button = [[MDCButton alloc] init];
 
 ```swift
 import MaterialComponents.MaterialColorScheme
+import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialTypographyScheme
 import MaterialComponents.MaterialShapeScheme
-import MaterialComponentsBeta.MaterialContainerScheme
 
 let containerScheme = MDCContainerScheme()
 containerScheme.colorScheme = myColorScheme
@@ -93,9 +93,9 @@ containerScheme.shapeScheme = myShapeScheme
 
 ```objc
 #import <MaterialComponents/MaterialColorScheme.h>
+#import <MaterialComponents/MaterialContainerScheme.h>
 #import <MaterialComponents/MaterialShapeScheme.h>
 #import <MaterialComponents/MaterialTypographyScheme.h>
-#import <MaterialComponentsBeta/MaterialContainerScheme.h>
 
 MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
 containerScheme.colorScheme = self.myColorScheme;
@@ -132,7 +132,7 @@ colorScheme.backgroundColor = UIColor.lightGrayColor
 
 #### Beta components
 
-In order to use the theming extensions and container scheme you'll need to follow [these](../../contributing/beta_components.md) 
+In order to use the theming extensions you'll need to follow [these](../../contributing/beta_components.md) 
 instructions since they are currently in beta.
 
 #### Cocoapods

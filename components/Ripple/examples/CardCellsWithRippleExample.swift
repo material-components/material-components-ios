@@ -15,9 +15,9 @@
 import UIKit
 
 import MaterialComponents.MaterialColorScheme
+import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialTypographyScheme
 import MaterialComponentsBeta.MaterialCards_Theming
-import MaterialComponentsBeta.MaterialContainerScheme
 
 class CardCellsWithRippleExample: UIViewController,
   UICollectionViewDelegate,

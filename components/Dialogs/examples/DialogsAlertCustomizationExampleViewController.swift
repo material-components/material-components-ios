@@ -17,11 +17,11 @@ import UIKit
 import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialCollections
 import MaterialComponents.MaterialColorScheme
+import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialDialogs
 import MaterialComponents.MaterialPalettes
 import MaterialComponents.MaterialTypographyScheme
 import MaterialComponentsBeta.MaterialButtons_Theming
-import MaterialComponentsBeta.MaterialContainerScheme
 import MaterialComponentsBeta.MaterialDialogs_Theming
 import MaterialComponents.MaterialPalettes
 
