@@ -20,7 +20,7 @@ import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialShapeScheme
 import MaterialComponents.MaterialShapeLibrary
 import MaterialComponents.MaterialTypographyScheme
-import MaterialComponentsBeta.MaterialChips_Theming
+import MaterialComponents.MaterialChips_Theming
 
 class ChipsMaterialThemingTests: XCTestCase {
 
