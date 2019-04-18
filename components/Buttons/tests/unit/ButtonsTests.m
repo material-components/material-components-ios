@@ -307,9 +307,8 @@ static NSString *controlStateDescription(UIControlState controlState) {
   }
 }
 
-
 - (void)testBorderColorForState {
-  for (NSUInteger state  = 0; state <= kNumUIControlStates; ++state) {
+  for (NSUInteger state = 0; state <= kNumUIControlStates; ++state) {
     // Given
     UIColor *color = randomColor();
 
@@ -338,7 +337,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
 
   // When
   UIControlState maxState = UIControlStateNormal | UIControlStateHighlighted |
-  UIControlStateDisabled | UIControlStateSelected;
+                            UIControlStateDisabled | UIControlStateSelected;
   for (UIControlState state = 0; state <= maxState; ++state) {
     UIColor *color = [UIColor colorWithWhite:0 alpha:(CGFloat)(state / (CGFloat)maxState)];
     [testButton setBorderColor:color forState:state];
