@@ -211,7 +211,7 @@ extension TextFieldSemanticColorThemer {
 
 extension TextFieldSemanticColorThemer {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Text Field", "Theming Text Fields"],
       "primaryDemo": false,

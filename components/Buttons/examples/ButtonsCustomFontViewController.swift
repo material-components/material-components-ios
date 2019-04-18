@@ -22,7 +22,7 @@ class ButtonsCustomFontViewController: UIViewController {
 
   var containerScheme = MDCContainerScheme()
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Buttons", "Buttons (Custom Font)"],
       "primaryDemo": false,

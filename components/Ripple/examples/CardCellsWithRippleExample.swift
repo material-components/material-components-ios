@@ -217,7 +217,7 @@ class CardCellsWithRippleExample: UIViewController,
 
 extension CardCellsWithRippleExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Ripple", "Card Cell with Ripple"],
       "primaryDemo": false,

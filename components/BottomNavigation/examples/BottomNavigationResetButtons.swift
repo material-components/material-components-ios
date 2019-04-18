@@ -124,7 +124,7 @@ class BottomNavigationResetExample: UIViewController {
 // MARK: Catalog by convention
 extension BottomNavigationResetExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Bottom Navigation", "Bottom Navigation Reorder (Swift)"],
       "primaryDemo": false,

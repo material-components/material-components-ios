@@ -106,7 +106,7 @@ class AppBarWithUITableViewController: UITableViewController {
 
 extension AppBarWithUITableViewController {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["App Bar", "AppBar+UITableViewController"],
       "primaryDemo": false,

@@ -145,7 +145,7 @@ class DrawerContentTableViewController: UITableViewController {
 
 extension BottomDrawerInfiniteScrollingExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Navigation Drawer", "Bottom Drawer Infinite Scrolling"],
       "description": "Navigation Drawer",

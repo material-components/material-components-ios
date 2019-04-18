@@ -183,7 +183,7 @@ extension AppBarInheritedAnimatedJumpExample: MDCTabBarDelegate {
 
 extension AppBarInheritedAnimatedJumpExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["App Bar", "Manual Tabs Jump (Animated, UITableViewController)"],
       "primaryDemo": false,

@@ -119,7 +119,7 @@ class PageControlSwiftExampleViewController: UIViewController, UIScrollViewDeleg
 
   // MARK: - CatalogByConvention
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Page Control", "Swift example"],
       "primaryDemo": false,

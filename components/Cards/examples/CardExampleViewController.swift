@@ -62,7 +62,7 @@ class CardExampleViewController: UIViewController {
 
 extension CardExampleViewController {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Cards", "Card (Swift)"],
       "description": "Cards contain content and actions about a single subject.",

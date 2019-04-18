@@ -74,7 +74,7 @@ class BottomDrawerNoHeaderExample: UIViewController {
 
 extension BottomDrawerNoHeaderExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Navigation Drawer", "Bottom Drawer No Header"],
       "primaryDemo": false,

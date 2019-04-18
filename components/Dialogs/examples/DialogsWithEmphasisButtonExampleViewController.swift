@@ -74,7 +74,7 @@ class DialogsWithEmphasisButtonExampleViewController: UIViewController {
 
 extension DialogsWithEmphasisButtonExampleViewController {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Dialogs", "Dialog with Themed Emphasis Buttons"],
       "primaryDemo": false,

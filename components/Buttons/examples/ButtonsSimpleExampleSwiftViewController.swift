@@ -120,7 +120,7 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
 
 extension ButtonsSimpleExampleSwiftViewController {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Buttons", "Buttons (Swift)"],
       "primaryDemo": false,

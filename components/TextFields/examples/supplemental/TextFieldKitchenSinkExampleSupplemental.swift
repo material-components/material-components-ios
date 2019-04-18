@@ -476,7 +476,7 @@ extension TextFieldKitchenSinkSwiftExample {
 
 extension TextFieldKitchenSinkSwiftExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Text Field", "Kitchen Sink"],
       "primaryDemo": false,

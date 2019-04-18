@@ -115,7 +115,7 @@ class BottomNavigationTitleVisibilityChangeExample: UIViewController, MDCBottomN
 // MARK: Catalog by convention
 extension BottomNavigationTitleVisibilityChangeExample {
   
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Bottom Navigation", "Bottom Navigation Title Visibility (Swift)"],
       "primaryDemo": false,

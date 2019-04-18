@@ -219,7 +219,7 @@ class DialogsThemedPresentationExampleViewController: UIViewController {
 
 extension DialogsThemedPresentationExampleViewController {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Dialogs", "Dialog Presentation Controller Theming"],
       "primaryDemo": false,
