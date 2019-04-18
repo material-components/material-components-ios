@@ -71,7 +71,7 @@ class AppBarInterfaceBuilderSwiftExample: UIViewController, UIScrollViewDelegate
 // MARK: Catalog by convention
 extension AppBarInterfaceBuilderSwiftExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["App Bar", "Interface Builder (Swift)"],
       "primaryDemo": false,

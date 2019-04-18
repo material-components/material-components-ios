@@ -245,7 +245,7 @@ private class ModalViewController: UIViewController {
 
 extension MaskedTransitionTypicalUseSwiftExample {
   // MARK: - CatalogByConvention
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs" : [ "Masked Transition", "Masked Transition (Swift)" ],
       "description" : "Examples of how the Floating Action Button can transition to other "

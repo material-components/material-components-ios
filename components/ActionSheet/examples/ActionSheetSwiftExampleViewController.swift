@@ -98,7 +98,7 @@ class ActionSheetSwiftExampleViewController: UIViewController {
 // MARK: Catalog by Convensions
 extension ActionSheetSwiftExampleViewController {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Action Sheet", "Action Sheet (Swift)"],
       "primaryDemo": false,

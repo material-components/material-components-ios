@@ -117,7 +117,7 @@ extension BaseCellExample: UICollectionViewDataSource {
 // MARK: Catalog By Convention
 extension BaseCellExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["List Items", "MDCBaseCell Example (Swift)"],
       "description": "MDCBaseCell Example (Swift)",

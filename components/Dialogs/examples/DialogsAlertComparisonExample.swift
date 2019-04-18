@@ -192,7 +192,7 @@ class DialogsAlertComparisonExample: UIViewController {
 // MARK: Catalog by convention
 extension DialogsAlertComparisonExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Dialogs", "Alert Comparison"],
       "primaryDemo": false,

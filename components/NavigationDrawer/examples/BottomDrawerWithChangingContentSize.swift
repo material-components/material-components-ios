@@ -153,7 +153,7 @@ UICollectionViewDelegate, UICollectionViewDataSource {
 
 extension BottomDrawerWithChangingContentSizeExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Navigation Drawer", "Bottom Drawer Changing Content Size"],
       "primaryDemo": false,

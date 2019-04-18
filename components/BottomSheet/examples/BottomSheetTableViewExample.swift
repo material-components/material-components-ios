@@ -109,7 +109,7 @@ private class BottomSheetTableViewMenu: UITableViewController {
 // MARK: Catalog by convention
 extension BottomSheetTableViewExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Bottom Sheet", "Table View Menu"],
       "primaryDemo": false,

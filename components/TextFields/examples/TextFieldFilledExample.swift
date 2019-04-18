@@ -435,7 +435,7 @@ extension TextFieldFilledSwiftExample {
 
 extension TextFieldFilledSwiftExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Text Field", "Filled Text Fields"],
       "primaryDemo": false,

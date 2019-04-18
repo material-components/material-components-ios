@@ -116,7 +116,7 @@ class FloatingButtonExampleSwiftViewController: UIViewController {
 
 extension FloatingButtonExampleSwiftViewController {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Buttons", "Floating Action Button (Swift)"],
       "primaryDemo": false,

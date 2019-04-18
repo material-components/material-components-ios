@@ -152,7 +152,7 @@ extension AppBarManualTabsExample: MDCTabBarDelegate {
 
 extension AppBarManualTabsExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["App Bar", "Manual tabs"],
       "primaryDemo": false,

@@ -69,7 +69,7 @@ extension ShapesShadowsController {
   
   // MARK: Catalog by convention
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Shadow", "Shape & Shadow"],
       "primaryDemo": false,

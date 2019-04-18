@@ -124,7 +124,7 @@ class ExpandFullscreenContentViewController: UITableViewController {
 
 extension BottomDrawerExpandFullscreenExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Navigation Drawer", "Expand to Fullscreen Example"],
       "description": "Navigation Drawer",

@@ -414,7 +414,7 @@ extension TextFieldUnderlineSwiftExample {
 
 extension TextFieldUnderlineSwiftExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Text Field", "Underline Style"],
       "description": "Text fields let users enter and edit text.",
