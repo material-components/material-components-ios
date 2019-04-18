@@ -17,41 +17,39 @@ Material Theming refers to the customization of your Material Design app to bett
 Our approach to theming relies on the relationships between the following concepts:
 
 1. Components
-2. Subsystem Schemes
-3. The Container Scheme
-4. Theming Extensions
+2. The Container Scheme
+3. Theming Extensions
 
 Components are expected to provide public APIs for a variety of parameters. An example of a component is [MDCButton](https://github.com/material-components/material-components-ios/tree/develop/components/Buttons).
 
-Subsystem schemes represent a set of opinionated properties that are intended to be mapped to component parameters. There is a scheme for each Material Theming subsystem. For example, there is a scheme for the color, shape, and typography subsystems.
+The Container scheme represents configurable theming data that can be applied to components via theming extensions. A container scheme consists of one scheme for each of the Material Theming subsystem schemes, including: color, shape, and typography.
 
-The Container scheme represents a single configurable entity that is applicable to all themeable components. A container scheme consists of all of the subsystem schemes.
-
-Theming extensions are component extensions that, when invoked with a default container scheme, will theme a component according to the [Material Design guidelines](https://material.io/design). When provided with subsystem schemes via a container scheme, the extension will map the subsystem scheme's values to the component’s parameters.
+Theming extensions are component extensions that, when invoked with a default container scheme, will theme a component according to the [Material Design guidelines](https://material.io/design). The extension will map each subsystem scheme's values to the component’s parameters.
 
 ### Sensible defaults, yet highly configurable
 
-By default, components have reasonable defaults for all of their customizable properties, e.g. `backgroundColor` or `titleFont`. You can use these defaults as a baseline, but we encourage you to theme your components to match your brand style using theming extensions.
+By default, components have reasonable defaults for all of their customizable properties, e.g.
+`backgroundColor` or `titleFont`. Theming extensions are the recommended way to express your brand
+through Material Theming.
 
 ### Schemes
 
 <ul class="icon-list">
-<li class="icon-list-item icon-list-item--link"><a href="Container/">Container scheme</a></li>
-<li class="icon-list-item icon-list-item--link"><a href="Color/">Color scheme</a></li>
-<li class="icon-list-item icon-list-item--link"><a href="Shape/">Shape scheme</a></li>
-<li class="icon-list-item icon-list-item--link"><a href="Typography/">Typography scheme</a></li>
+<li class="icon-list-item icon-list-item--link"><a href="../components/schemes/Container/">Container scheme</a></li>
+<li class="icon-list-item icon-list-item--link"><a href="../components/schemes/Color/">Color scheme</a></li>
+<li class="icon-list-item icon-list-item--link"><a href="../components/schemes/Shape/">Shape scheme</a></li>
+<li class="icon-list-item icon-list-item--link"><a href="../components/schemes/Typography/">Typography scheme</a></li>
 </ul>
 
 ## Examples
 
-### Theming a Component
+### How to theme a component with a container scheme
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
 ```swift
 import MaterialComponents.MaterialButtons
-import MaterialComponents.MaterialContainerScheme
 import MaterialComponentsBeta.MaterialButtons_Theming
 
 let containerScheme = MDCContainerScheme()
@@ -62,7 +60,6 @@ button.applyTextTheme(withScheme: containerScheme)
 #### Objective-C
 
 ```objc
-#import <MaterialComponents/MaterialContainerScheme.h>
 #import <MaterialComponents/MaterialButtons.h>
 #import <MaterialComponents/MaterialButtons+Theming.h>
 
@@ -72,59 +69,98 @@ MDCButton *button = [[MDCButton alloc] init];
 ```
 <!--</div>-->
 
-### Creating a container scheme
+### How to customize a container scheme
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
 ```swift
-import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialContainerScheme
-import MaterialComponents.MaterialTypographyScheme
-import MaterialComponents.MaterialShapeScheme
 
 let containerScheme = MDCContainerScheme()
-containerScheme.colorScheme = myColorScheme
-containerScheme.typographyScheme = myTypographyScheme
-containerScheme.shapeScheme = myShapeScheme
+
+// You can directly configure scheme properties:
+containerScheme.colorScheme.primaryColor = .red
+
+// Or assign a customized scheme instance:
+let shapeScheme = MDCShapeScheme()
+containerScheme.shapeScheme = shapeScheme
 ```
 
 #### Objective-C
 
 ```objc
-#import <MaterialComponents/MaterialColorScheme.h>
 #import <MaterialComponents/MaterialContainerScheme.h>
-#import <MaterialComponents/MaterialShapeScheme.h>
-#import <MaterialComponents/MaterialTypographyScheme.h>
 
 MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
-containerScheme.colorScheme = self.myColorScheme;
-containerScheme.shapeScheme = self.myShapeScheme;
-containerScheme.typographyScheme = self.myTypographyScheme;
+
+// You can directly configure scheme properties
+containerScheme.colorScheme.primaryColor = [UIColor redColor];
+
+// Or assign a customized scheme instance:
+let shapeScheme = MDCShapeScheme()
+containerScheme.shapeScheme = shapeScheme
 ```
 <!--</div>-->
 
-### Using a subsystem scheme
+### Recommended theming patterns
+
+The simplest solution to adopting container schemes and theming extensions is to create a singleton
+container scheme instance that is accessible throughout your app.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
 ```swift
-import MaterialComponents.MaterialColorScheme
+func globalContainerScheme() -> MDCContainerScheming {
+  let containerScheme = MDCContainerScheme()
+  // Customize containerScheme here...
+  return containerScheme
+}
 
-let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
-// Configure custom properties to match your brand
-colorScheme.backgroundColor = .lightGray
+// You can now access your global theme throughout your app:
+let containerScheme = globalContainerScheme()
 ```
 
 #### Objective-C
 
 ```objc
-#import <MaterialComponents/MaterialColorScheme.h>
+id<MDCContainerScheming> GlobalContainerScheme();
+  
+id<MDCContainerScheming> GlobalContainerScheme() {
+  MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+  // Customize containerScheme here...
+  return containerScheme;
+}
 
-MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-// Configure custom properties to match your brand
-colorScheme.backgroundColor = UIColor.lightGrayColor
+// You can now access your global theme throughout your app:
+id<MDCContainerScheming> containerScheme = GlobalContainerScheme();
+```
+<!--</div>-->
+
+If you need to support different themes in different contexts then we recommend a
+[dependency injection-based](https://en.wikipedia.org/wiki/Dependency_injection) approach. In short
+form: each view controller is provided the container scheme it should theme itself with.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+
+```swift
+extension MyViewController {
+  func applyTheme(with containerScheme: MDCContainerScheming) {
+    // Apply the theme where applicable.
+  }
+}
+```
+
+#### Objective-C
+
+```objc
+@interface MyViewController (Theming)
+
+- (void)applyThemeWithContainerScheme:(id<MDCContainerScheming>)containerScheme {
+  // Apply the theme where applicable.
+}
 ```
 <!--</div>-->
 
