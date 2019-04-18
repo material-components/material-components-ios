@@ -16,8 +16,8 @@
 
 #import "MaterialColorScheme.h"
 #import "MaterialContainerScheme.h"
-#import "MaterialTabs.h"
 #import "MaterialTabs+Theming.h"
+#import "MaterialTabs.h"
 #import "MaterialTypographyScheme.h"
 
 static const CGFloat kPrimaryThemeUnselectedOpacity = (CGFloat)0.74;
