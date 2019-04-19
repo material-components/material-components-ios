@@ -16,7 +16,7 @@
 
 #import <MaterialComponents/MaterialColorScheme.h>
 #import <MaterialComponents/MaterialTypographyScheme.h>
-#import "MaterialAppBar+MaterialTheming.h"
+#import "MaterialAppBar+Theming.h"
 #import "MaterialContainerScheme.h"
 
 @interface MDCAppBarViewController_MaterialThemingSnapshotTests : MDCSnapshotTestCase
