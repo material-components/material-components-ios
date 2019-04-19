@@ -50,6 +50,8 @@ For more information on text field styles, and animated images of each style in 
   <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Protocols/MDCTextInputController.html">MDCTextInputController</a></li>
   <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Protocols/MDCTextInputControllerFloatingPlaceholder.html">MDCTextInputControllerFloatingPlaceholder</a></li>
   <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Protocols/MDCTextInputPositioningDelegate.html">MDCTextInputPositioningDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Enums.html">Enumerations</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Enums/MDCTextInputTextInsetsMode.html">MDCTextInputTextInsetsMode</a></li>
 </ul>
 
 ## Table of contents
