@@ -71,12 +71,12 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
                                                                         image:nil
                                                                       handler:nil];
   [self.actionSheet addAction:fakeActionOne];
-  UITableView *table = self.actionSheet.tableView;
+  UITableView *tableView = self.actionSheet.tableView;
   NSIndexPath *fakeIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
 
   // When
   [self.actionSheet applyThemeWithScheme:self.containerScheme];
-  UITableViewCell *cell = [table.dataSource tableView:table cellForRowAtIndexPath:fakeIndexPath];
+  UITableViewCell *cell = [tableView.dataSource tableView:tableView cellForRowAtIndexPath:fakeIndexPath];
   MDCActionSheetItemTableViewCell *actionSheetCell = (MDCActionSheetItemTableViewCell *)cell;
 
   // Then
