@@ -242,7 +242,7 @@ theme your app.
 #### Swift
 ```swift
 // Step 1: Import the container scheme
-import MaterialComponents.MaterialConainerScheme
+import MaterialComponents.MaterialContainerScheme
 
 // Step 2: Create or get a container scheme
 let containerScheme = MDCContainerScheme()
