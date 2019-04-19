@@ -70,8 +70,6 @@ target "MDCCatalog" do
     'BottomNavigation/UnitTests',
     'ButtonBar+Theming/UnitTests',
     'Buttons+Theming/UnitTests',
-    'Cards+Theming/UnitTests',
-    'Chips+Theming/UnitTests',
     'Dialogs+Theming/UnitTests',
     'TextFields+Theming/UnitTests',
   ]
