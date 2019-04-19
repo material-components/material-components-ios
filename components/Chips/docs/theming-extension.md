@@ -14,7 +14,7 @@ import MaterialComponents.MaterialChips_MaterialTheming
  ...
  // Create or use your app's Container Scheme
 let containerScheme = MDCContainerScheme()
- // Theme the tab bar with either default theme
+ // Theme the chip with either default theme
 chip.applyTheme(withScheme: containerScheme)
  // Or outlined theme
 chip.applyOutlinedTheme(withScheme: containerScheme)
@@ -28,7 +28,7 @@ chip.applyOutlinedTheme(withScheme: containerScheme)
  ...
  // Create or use your app's Container Scheme
 MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
- // Theme the tab bar with either default theme
+ // Theme the chip with either default theme
 [self.chip applyThemeWithScheme:containerScheme];
  // Or outlined theme
 [self.chip applyOutlinedThemeWithScheme:containerScheme];
