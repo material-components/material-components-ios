@@ -16,7 +16,7 @@ import UIKit
 import MaterialComponents.MaterialButtons_ButtonThemer
 import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialCards_Theming
-import MaterialComponentsBeta.MaterialButtons_Theming
+import MaterialComponents.MaterialButtons_Theming
 
 class CardWithRippleExample: UIViewController {
   var card = MDCCard()

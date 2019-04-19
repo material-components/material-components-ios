@@ -16,7 +16,7 @@ import UIKit
 
 import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialContainerScheme
-import MaterialComponentsBeta.MaterialButtons_Theming
+import MaterialComponents.MaterialButtons_Theming
 
 class ButtonsDynamicTypeViewController: UIViewController {
 

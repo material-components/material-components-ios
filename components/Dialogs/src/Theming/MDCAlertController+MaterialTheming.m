@@ -16,7 +16,7 @@
 #import <MaterialComponents/MaterialDialogs+ColorThemer.h>
 #import <MaterialComponents/MaterialDialogs+TypographyThemer.h>
 #import <MaterialComponents/MaterialShadowElevations.h>
-#import <MaterialComponentsBeta/MaterialButtons+Theming.h>
+#import <MaterialComponents/MaterialButtons+Theming.h>
 
 static const CGFloat kCornerRadius = 4;
 

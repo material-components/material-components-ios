@@ -17,7 +17,7 @@ import UIKit
 import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialDialogs
-import MaterialComponentsBeta.MaterialButtons_Theming
+import MaterialComponents.MaterialButtons_Theming
 import MaterialComponentsBeta.MaterialDialogs_Theming
 
 class DialogsLongAlertExampleViewController: UIViewController {
