@@ -17,7 +17,7 @@ import UIKit
 import MaterialComponents.MaterialChips
 import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialTextFields
-import MaterialComponentsBeta.MaterialChips_Theming
+import MaterialComponents.MaterialChips_Theming
 
 class ChipsFieldDeleteEnabledViewController : UIViewController, MDCChipFieldDelegate {
   var containerScheming: MDCContainerScheming

@@ -21,6 +21,7 @@ target "MDCCatalog" do
     'Cards/UnitTests',
     'Cards+Theming/UnitTests',
     'Chips/UnitTests',
+    'Chips+Theming/UnitTests',
     'CollectionCells/UnitTests',
     'CollectionLayoutAttributes/UnitTests',
     'Collections/UnitTests',
@@ -69,7 +70,6 @@ target "MDCCatalog" do
     'BottomNavigation/UnitTests',
     'ButtonBar+Theming/UnitTests',
     'Buttons+Theming/UnitTests',
-    'Chips+Theming/UnitTests',
     'Dialogs+Theming/UnitTests',
     'TextFields+Theming/UnitTests',
   ]
