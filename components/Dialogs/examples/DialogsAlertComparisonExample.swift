@@ -15,12 +15,13 @@
 import UIKit
 
 import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialButtons_Theming
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialDialogs
+import MaterialComponents.MaterialDialogs_Theming
 import MaterialComponents.MaterialTypographyScheme
 import MaterialComponents.MaterialButtons_Theming
-import MaterialComponentsBeta.MaterialDialogs_Theming
 
 /// This interface allows a user to present a UIKit Alert Controller and a Material Alert
 /// Controller.

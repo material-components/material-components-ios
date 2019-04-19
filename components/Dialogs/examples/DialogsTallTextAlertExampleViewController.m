@@ -14,7 +14,7 @@
 
 #import <MaterialComponents/MaterialButtons+Theming.h>
 #import <MaterialComponents/MaterialContainerScheme.h>
-#import <MaterialComponentsBeta/MaterialDialogs+Theming.h>
+#import <MaterialComponents/MaterialDialogs+Theming.h>
 #import "MaterialButtons.h"
 #import "MaterialColorScheme.h"
 #import "MaterialDialogs.h"
