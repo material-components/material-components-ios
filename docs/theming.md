@@ -50,7 +50,8 @@ through Material Theming.
 
 ```swift
 import MaterialComponents.MaterialButtons
-import MaterialComponentsBeta.MaterialButtons_Theming
+import MaterialComponents.MaterialButtons_Theming
+import MaterialComponents.MaterialContainerScheme
 
 let containerScheme = MDCContainerScheme()
 let button = MDCButton()
@@ -62,6 +63,7 @@ button.applyTextTheme(withScheme: containerScheme)
 ```objc
 #import <MaterialComponents/MaterialButtons.h>
 #import <MaterialComponents/MaterialButtons+Theming.h>
+#import <MaterialComponents/MaterialContainerScheme.h>
 
 MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
 MDCButton *button = [[MDCButton alloc] init];
@@ -95,7 +97,7 @@ containerScheme.shapeScheme = shapeScheme
 MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
 
 // You can directly configure scheme properties
-containerScheme.colorScheme.primaryColor = [UIColor redColor];
+containerScheme.colorScheme.primaryColor = UIColor.redColor;
 
 // Or assign a customized scheme instance:
 let shapeScheme = MDCShapeScheme()
