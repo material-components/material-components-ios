@@ -359,7 +359,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
 
   // When
   UIControlState maxState = UIControlStateNormal | UIControlStateHighlighted |
-  UIControlStateDisabled | UIControlStateSelected;
+                            UIControlStateDisabled | UIControlStateSelected;
   for (NSInteger state = maxState; state >= 0; --state) {
     UIColor *color = [UIColor colorWithWhite:0 alpha:(CGFloat)(state / (CGFloat)maxState)];
     [testButton setBorderColor:color forState:state];
