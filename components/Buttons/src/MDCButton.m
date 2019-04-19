@@ -674,8 +674,9 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 - (void)setBorderColor:(UIColor *)borderColor forState:(UIControlState)state {
+  UIControlState storageState = state;
   if ((state & UIControlStateHighlighted) == UIControlStateHighlighted) {
-    state = state & ~UIControlStateDisabled;
+    storageState = state & ~UIControlStateDisabled;
   }
 
   // Only update the backing dictionary if:
