@@ -14,10 +14,10 @@
 
 #import "MaterialSnapshot.h"
 
-#import "MaterialColorScheme.h"
-#import "MaterialTypographyScheme.h"
 #import "MaterialAppBar+MaterialTheming.h"
+#import "MaterialColorScheme.h"
 #import "MaterialContainerScheme.h"
+#import "MaterialTypographyScheme.h"
 
 @interface MDCAppBarViewController_MaterialThemingSnapshotTests : MDCSnapshotTestCase
 

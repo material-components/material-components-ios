@@ -17,8 +17,8 @@
 #import <XCTest/XCTest.h>
 
 #import "MaterialColorScheme.h"
-#import "MaterialTypographyScheme.h"
 #import "MaterialContainerScheme.h"
+#import "MaterialTypographyScheme.h"
 
 /** Unit tests for MDCAppBarViewController's MaterialTheming category methods. */
 @interface MDCAppBarViewController_MaterialThemingTests : XCTestCase
