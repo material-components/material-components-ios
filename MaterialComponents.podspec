@@ -889,7 +889,7 @@ Pod::Spec.new do |mdc|
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}+TypographyThemer"
     extension.dependency "MaterialComponents/ShadowElevations"
     extension.dependency "MaterialComponents/schemes/Container"
-    extension.dependency "MaterialComponentsBeta/Buttons+Theming"
+    extension.dependency "MaterialComponents/Buttons+Theming"
 
     extension.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
