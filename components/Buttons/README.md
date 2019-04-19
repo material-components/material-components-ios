@@ -25,12 +25,22 @@ many distinct button styles including text buttons, contained buttons, and float
   <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-buttons">Material Design guidelines: Buttons</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/buttons/api-docs/Classes.html#/c:objc(cs)MDCRaisedButton">MDCRaisedButton</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/buttons/api-docs/Classes/MDCButton.html">MDCButton</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/buttons/api-docs/Classes/MDCCornerTreatment.html">MDCCornerTreatment</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/buttons/api-docs/Classes/MDCEdgeTreatment.html">MDCEdgeTreatment</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/buttons/api-docs/Classes/MDCFlatButton.html">MDCFlatButton</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/buttons/api-docs/Classes/MDCFloatingButton.html">MDCFloatingButton</a></li>
-  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/buttons/api-docs/Enums.html">Enumerations</a></li>
-  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/buttons/api-docs/Enums/MDCFloatingButtonImageLocation.html">MDCFloatingButtonImageLocation</a></li>
-  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/buttons/api-docs/Enums/MDCFloatingButtonMode.html">MDCFloatingButtonMode</a></li>
-  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/buttons/api-docs/Enums/MDCFloatingButtonShape.html">MDCFloatingButtonShape</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/buttons/api-docs/Classes/MDCInkGestureRecognizer.html">MDCInkGestureRecognizer</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/buttons/api-docs/Classes/MDCInkTouchController.html">MDCInkTouchController</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/buttons/api-docs/Classes/MDCInkView.html">MDCInkView</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/buttons/api-docs/Classes/MDCPathGenerator.html">MDCPathGenerator</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/buttons/api-docs/Classes/MDCRectangleShapeGenerator.html">MDCRectangleShapeGenerator</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/buttons/api-docs/Classes/MDCShadowLayer.html">MDCShadowLayer</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/buttons/api-docs/Classes/MDCShadowMetrics.html">MDCShadowMetrics</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/buttons/api-docs/Classes/MDCShapedShadowLayer.html">MDCShapedShadowLayer</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/buttons/api-docs/Classes/MDCShapedView.html">MDCShapedView</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/buttons/api-docs/Protocols/MDCInkTouchControllerDelegate.html">MDCInkTouchControllerDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/buttons/api-docs/Protocols/MDCInkViewDelegate.html">MDCInkViewDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/buttons/api-docs/Protocols/MDCShapeGenerating.html">MDCShapeGenerating</a></li>
 </ul>
 
 ## Table of contents
@@ -228,9 +238,13 @@ to "custom" in order for the button's highlight states to work as expected.
 ### Theming extensions
 
 You can theme an MDCButton to match one of the Material Design button styles using your app's
-schemes in the button theming extension.
+schemes in the button theming extension. To add it to your project add the following line to your Podfile:
 
-You must first import the extension and create an `MDCContainerScheme`
+```bash
+pod 'MaterialComponents/Buttons+Theming'
+```
+
+Then import the extension and create an `MDCContainerScheme`
 instance. A container scheme defines the design parameters that you can use to
 theme your app.
 
@@ -238,7 +252,7 @@ theme your app.
 #### Swift
 ```swift
 // Step 1: Import the container scheme
-import MaterialComponentsBeta.MaterialConainerScheme
+import MaterialComponents.MaterialConainerScheme
 
 // Step 2: Create or get a container scheme
 let containerScheme = MDCContainerScheme()
@@ -250,7 +264,7 @@ let containerScheme = MDCContainerScheme()
 
 ```objc
 // Step 1: Import the Container scheme
-#import <MaterialComponentsBeta/MaterialContainerScheme.h>
+#import <MaterialComponents/MaterialContainerScheme.h>
 
 // Step 2: Create or get a button scheme
 MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
@@ -270,7 +284,7 @@ First you will need to create a button. Additionally for theming you will need t
 ```swift
 // Step 1: Import Material Buttons
 import MaterialComponents.MaterialButtons
-import MaterialComponentsBeta.MaterialButtons_Theming
+import MaterialComponents.MaterialButtons_Theming
 
 // Step 2: Create a button
 let button = MDCButton()
@@ -281,7 +295,7 @@ let button = MDCButton()
 ```objc
 // Step 1: Import Material Buttons 
 #import <MaterialComponents/MaterialButtons.h>
-#import <MaterialComponentsBeta/MaterialButtons+Theming.h>
+#import <MaterialComponents/MaterialButtons+Theming.h>
 
 // Step 2: Create a button
 MDCButton *button = [[MDCButton alloc] init];
@@ -356,7 +370,7 @@ First you will need to create a button. Additionally for theming you will need t
 ```swift
 // Step 1: Import Material Buttons
 import MaterialComponents.MaterialButtons
-import MaterialComponentsBeta.MaterialButtons_Theming
+import MaterialComponents.MaterialButtons_Theming
 
 // Step 2: Create a button
 let floatingButton = MDCFloatingButton()
@@ -367,7 +381,7 @@ let floatingButton = MDCFloatingButton()
 ```objc
 // Step 1: Import Material Buttons 
 #import <MaterialComponents/MaterialButtons.h>
-#import <MaterialComponentsBeta/MaterialButtons+Theming.h>
+#import <MaterialComponents/MaterialButtons+Theming.h>
 
 // Step 2: Create a button
 MDCFloatingButton *floatingButton = [[MDCFloatingButton alloc] init];
