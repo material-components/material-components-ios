@@ -41,6 +41,12 @@ many distinct button styles including text buttons, contained buttons, and float
   <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/buttons/api-docs/Protocols/MDCInkTouchControllerDelegate.html">MDCInkTouchControllerDelegate</a></li>
   <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/buttons/api-docs/Protocols/MDCInkViewDelegate.html">MDCInkViewDelegate</a></li>
   <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/buttons/api-docs/Protocols/MDCShapeGenerating.html">MDCShapeGenerating</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/buttons/api-docs/Enums.html">Enumerations</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/buttons/api-docs/Enums/MDCCornerTreatmentValueType.html">MDCCornerTreatmentValueType</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/buttons/api-docs/Enums/MDCFloatingButtonImageLocation.html">MDCFloatingButtonImageLocation</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/buttons/api-docs/Enums/MDCFloatingButtonMode.html">MDCFloatingButtonMode</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/buttons/api-docs/Enums/MDCFloatingButtonShape.html">MDCFloatingButtonShape</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/buttons/api-docs/Enums/MDCInkStyle.html">MDCInkStyle</a></li>
 </ul>
 
 ## Table of contents
@@ -238,7 +244,7 @@ to "custom" in order for the button's highlight states to work as expected.
 ### Theming extensions
 
 You can theme an MDCButton to match one of the Material Design button styles using your app's
-schemes in the button theming extension. To add it to your project add the following line to your Podfile:
+schemes and the button theming extension. To add the theming extension to your project add the following line to your Podfile:
 
 ```bash
 pod 'MaterialComponents/Buttons+Theming'

@@ -1,7 +1,7 @@
 ### Theming extensions
 
 You can theme an MDCButton to match one of the Material Design button styles using your app's
-schemes in the button theming extension. To add it to your project add the following line to your Podfile:
+schemes and the button theming extension. To add the theming extension to your project add the following line to your Podfile:
 
 ```bash
 pod 'MaterialComponents/Buttons+Theming'
