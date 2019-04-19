@@ -76,7 +76,8 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
 
   // When
   [self.actionSheet applyThemeWithScheme:self.containerScheme];
-  UITableViewCell *cell = [tableView.dataSource tableView:tableView cellForRowAtIndexPath:fakeIndexPath];
+  UITableViewCell *cell = [tableView.dataSource tableView:tableView
+                                    cellForRowAtIndexPath:fakeIndexPath];
   MDCActionSheetItemTableViewCell *actionSheetCell = (MDCActionSheetItemTableViewCell *)cell;
 
   // Then
