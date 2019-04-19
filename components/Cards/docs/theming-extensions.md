@@ -1,7 +1,7 @@
 ### Theming Extensions
 
  `MDCCard` supports Material Theming using a Container Scheme.
-There are two variants for Material Theming of a MDCCard and MDCCardCollectionCell, which are the default theme
+There are two variants for Material Theming of an MDCCard or an MDCCardCollectionCell, which are the default theme
 and the outlined theme.
 
  <!--<div class="material-code-render" markdown="1">-->
