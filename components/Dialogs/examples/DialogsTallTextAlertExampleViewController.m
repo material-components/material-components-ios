@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <MaterialComponents/MaterialContainerScheme.h>
 #import <MaterialComponents/MaterialButtons+Theming.h>
+#import <MaterialComponents/MaterialContainerScheme.h>
 #import <MaterialComponentsBeta/MaterialDialogs+Theming.h>
 #import "MaterialButtons.h"
 #import "MaterialColorScheme.h"
