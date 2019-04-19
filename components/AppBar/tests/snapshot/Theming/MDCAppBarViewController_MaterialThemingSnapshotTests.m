@@ -14,8 +14,8 @@
 
 #import "MaterialSnapshot.h"
 
-#import <MaterialComponents/MaterialColorScheme.h>
-#import <MaterialComponents/MaterialTypographyScheme.h>
+#import "MaterialColorScheme.h"
+#import "MaterialTypographyScheme.h"
 #import "MaterialAppBar+MaterialTheming.h"
 #import "MaterialContainerScheme.h"
 
