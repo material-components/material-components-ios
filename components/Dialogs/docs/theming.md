@@ -4,7 +4,7 @@ You can theme an MDCDialog to match the Material Design Dialog using your app's 
 extension. To add the theming extension to your project add the following line to your Podfile:
 
 ```bash
-pod 'MaterialComponents/Buttons+Theming'
+pod 'MaterialComponents/Dialogs+Theming'
 ```
 
 Then import the theming extension and create an `MDCContainerScheme` instance. A container scheme 
