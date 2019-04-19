@@ -50,8 +50,6 @@ For more information on text field styles, and animated images of each style in 
   <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Protocols/MDCTextInputController.html">MDCTextInputController</a></li>
   <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Protocols/MDCTextInputControllerFloatingPlaceholder.html">MDCTextInputControllerFloatingPlaceholder</a></li>
   <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Protocols/MDCTextInputPositioningDelegate.html">MDCTextInputPositioningDelegate</a></li>
-  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Enums.html">Enumerations</a></li>
-  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Enums/MDCTextInputTextInsetsMode.html">MDCTextInputTextInsetsMode</a></li>
 </ul>
 
 ## Table of contents
@@ -293,10 +291,11 @@ self.textFieldControllerDefaultCharMax.floatingEnabled = NO;
 
 ### Theming Extensions
 
-You can theme an MDCTextField using the TextField theming extension.
+You can theme an MDCTextField using the TextField theming extension. To add it to your project add the following line to your Podfile:
 
-To use the theming extension, first add it to your project by following the
-[steps to use beta components](docs/../../../contributing/beta_components.md).
+```bash
+pod 'MaterialComponents/TextFields+Theming'
+```
 
 Then import the theming extension and create an `MDCContainerScheme` instance. A container scheme
 defines schemes for subsystems like Color and Typography.
@@ -307,8 +306,8 @@ Finally, call theming methods on the theming extension of your MDCTextInputContr
 #### Swift
 ```swift
 // Step 1: Import the TextField theming extension and container scheme
-import MaterialComponentsBeta.MaterialTextFields_Theming
-import MaterialComponentsBeta.MaterialContainerScheme
+import MaterialComponents.MaterialTextFields_Theming
+import MaterialComponents.MaterialContainerScheme
 
 // Step 2: Create or get a container scheme
 let containerScheme = MDCContainerScheme()
