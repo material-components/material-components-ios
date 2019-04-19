@@ -14,7 +14,7 @@
 
 import UIKit
 import MaterialComponents.MaterialTypographyScheme
-import MaterialComponentsBeta.MaterialCards_Theming
+import MaterialComponents.MaterialCards_Theming
 
 class CardEditReorderCollectionCell: MDCCardCollectionCell {
 
