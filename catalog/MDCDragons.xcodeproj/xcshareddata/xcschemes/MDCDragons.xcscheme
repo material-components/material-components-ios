@@ -674,9 +674,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B44ED38F9D474CF38FADA04FDF5D2690"
-               BuildableName = "MaterialComponents-Unit-schemes-Container-UnitTests.xctest"
-               BlueprintName = "MaterialComponents-Unit-schemes-Container-UnitTests"
+               BlueprintIdentifier = "5A4FC0F41A2DEB369D630388A554614F"
+               BuildableName = "MaterialComponents-Unit-Cards+Theming-UnitTests.xctest"
+               BlueprintName = "MaterialComponents-Unit-Cards+Theming-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
             </BuildableReference>
          </TestableReference>

@@ -58,7 +58,7 @@ Tabs are bars of buttons used to navigate between groups of content.
 - [Extensions](#extensions)
   - [Color Theming](#color-theming)
   - [Typography Theming](#typography-theming)
-  - [Theming Extensions (Beta)](#theming-extensions-beta)
+  - [Theming Extensions](#theming-extensions)
 
 - - -
 
@@ -295,12 +295,9 @@ id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
 
 <!-- Extracted from docs/theming-extensions.md -->
 
-### Theming Extensions (Beta)
+### Theming Extensions
 
- `MDCTabBar` supports Material Theming using a Container Scheme. The code is currently
-in Beta readiness, which means you will need to follow the [instructions for adding the
-MaterialComponentsBeta podspec to your
-project](https://github.com/material-components/material-components-ios/blob/develop/contributing/beta_components.md).
+ `MDCTabBar` supports Material Theming using a Container Scheme.
 There are two variants for Material Theming of a MDCTabBar, which are the Primary Theme
 and the Surface Theme.
 
@@ -310,7 +307,7 @@ and the Surface Theme.
 
  ```swift
 // Import the Tabs Theming Extensions module
-import MaterialComponentsBeta.MaterialTabs_MaterialTheming
+import MaterialComponents.MaterialTabs_MaterialTheming
  ...
  // Create or use your app's Container Scheme
 let containerScheme = MDCContainerScheme()
@@ -324,7 +321,7 @@ tabBar.applySurfaceTheme(withScheme: containerScheme)
 
  ```objc
 // Import the Tabs Theming Extensions header
-#import <MaterialComponentsBeta/MaterialTabBar+MaterialTheming.h>
+#import <MaterialComponents/MaterialTabBar+MaterialTheming.h>
  ...
  // Create or use your app's Container Scheme
 MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];

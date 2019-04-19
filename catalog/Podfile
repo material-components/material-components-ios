@@ -19,6 +19,7 @@ target "MDCCatalog" do
     'ButtonBar/UnitTests',
     'Buttons/UnitTests',
     'Cards/UnitTests',
+    'Cards+Theming/UnitTests',
     'Chips/UnitTests',
     'Chips+Theming/UnitTests',
     'CollectionCells/UnitTests',
@@ -56,6 +57,7 @@ target "MDCCatalog" do
     'Slider/UnitTests',
     'Snackbar/UnitTests',
     'Tabs/UnitTests',
+    'Tabs+Theming/UnitTests',
     'TextFields/UnitTests',
     'Themes/UnitTests',
     'Typography/UnitTests',
@@ -69,8 +71,8 @@ target "MDCCatalog" do
     'ButtonBar+Theming/UnitTests',
     'Buttons+Theming/UnitTests',
     'Cards+Theming/UnitTests',
+    'Chips+Theming/UnitTests',
     'Dialogs+Theming/UnitTests',
-    'Tabs+Theming/UnitTests',
     'TextFields+Theming/UnitTests',
   ]
   pod 'MaterialComponentsSnapshotTests', :path => '../', :testspecs => [
