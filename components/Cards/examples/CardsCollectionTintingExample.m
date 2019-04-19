@@ -14,7 +14,7 @@
 
 #import "CardsCollectionTintingExample.h"
 
-#import <MaterialComponentsBeta/MaterialCards+Theming.h>
+#import "MaterialCards+Theming.h"
 #import "MaterialInk.h"
 #import "supplemental/CardTintExampleCell.h"
 
