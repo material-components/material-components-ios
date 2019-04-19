@@ -675,6 +675,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)setBorderColor:(UIColor *)borderColor forState:(UIControlState)state {
   UIControlState storageState = state;
+  // If the `.highlighted` flag is set, turn off the `.disabled` flag
   if ((state & UIControlStateHighlighted) == UIControlStateHighlighted) {
     storageState = state & ~UIControlStateDisabled;
   }
