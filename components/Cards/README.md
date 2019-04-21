@@ -8,7 +8,7 @@ path: /catalog/cards/
 api_doc_root: true
 -->
 
-<!-- This file was auto-generated using ./scripts/generate_readme Cards -->
+<!-- This file was auto-generated using scripts/generate_readme Cards -->
 
 # Cards
 
@@ -28,25 +28,10 @@ purposes.
   <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-cards">Material Design guidelines: Cards</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/cards/api-docs/Classes/MDCCard.html">MDCCard</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/cards/api-docs/Classes/MDCCardCollectionCell.html">MDCCardCollectionCell</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/cards/api-docs/Classes/MDCInkGestureRecognizer.html">MDCInkGestureRecognizer</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/cards/api-docs/Classes/MDCInkTouchController.html">MDCInkTouchController</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/cards/api-docs/Classes/MDCInkView.html">MDCInkView</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/cards/api-docs/Classes/MDCRippleTouchController.html">MDCRippleTouchController</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/cards/api-docs/Classes/MDCRippleView.html">MDCRippleView</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/cards/api-docs/Classes/MDCShadowLayer.html">MDCShadowLayer</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/cards/api-docs/Classes/MDCShadowMetrics.html">MDCShadowMetrics</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/cards/api-docs/Classes/MDCStatefulRippleView.html">MDCStatefulRippleView</a></li>
-  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/cards/api-docs/Protocols/MDCInkTouchControllerDelegate.html">MDCInkTouchControllerDelegate</a></li>
-  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/cards/api-docs/Protocols/MDCInkViewDelegate.html">MDCInkViewDelegate</a></li>
-  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/cards/api-docs/Protocols/MDCRippleTouchControllerDelegate.html">MDCRippleTouchControllerDelegate</a></li>
-  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/cards/api-docs/Protocols/MDCRippleViewDelegate.html">MDCRippleViewDelegate</a></li>
   <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/cards/api-docs/Enums.html">Enumerations</a></li>
   <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/cards/api-docs/Enums/MDCCardCellHorizontalImageAlignment.html">MDCCardCellHorizontalImageAlignment</a></li>
   <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/cards/api-docs/Enums/MDCCardCellState.html">MDCCardCellState</a></li>
   <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/cards/api-docs/Enums/MDCCardCellVerticalImageAlignment.html">MDCCardCellVerticalImageAlignment</a></li>
-  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/cards/api-docs/Enums/MDCInkStyle.html">MDCInkStyle</a></li>
-  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/cards/api-docs/Enums/MDCRippleState.html">MDCRippleState</a></li>
-  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/cards/api-docs/Enums/MDCRippleStyle.html">MDCRippleStyle</a></li>
 </ul>
 
 ## Table of contents
