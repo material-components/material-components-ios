@@ -78,7 +78,8 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
                         [scheme.colorScheme.primaryColor colorWithAlphaComponent:(CGFloat)0.16]);
   XCTAssertEqualObjects([button borderColorForState:UIControlStateNormal],
                         [scheme.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.12]);
-  XCTAssertEqualObjects([button borderColorForState:UIControlStateDisabled], nil);
+  XCTAssertEqualObjects([button borderColorForState:UIControlStateDisabled],
+                        [button borderColorForState:UIControlStateNormal]);
 
   // Typography
   XCTAssertEqualObjects([button titleFontForState:UIControlStateNormal],
