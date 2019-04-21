@@ -667,13 +667,26 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 #pragma mark - Border Color
 
 - (UIColor *)borderColorForState:(UIControlState)state {
-  return _borderColors[@(state)];
+  if ((state & UIControlStateHighlighted) == UIControlStateHighlighted) {
+    state = state & ~UIControlStateDisabled;
+  }
+  return _borderColors[@(state)] ?: _borderColors[@(UIControlStateNormal)];
 }
 
 - (void)setBorderColor:(UIColor *)borderColor forState:(UIControlState)state {
-  _borderColors[@(state)] = borderColor;
+  UIControlState storageState = state;
+  // If the `.highlighted` flag is set, turn off the `.disabled` flag
+  if ((state & UIControlStateHighlighted) == UIControlStateHighlighted) {
+    storageState = state & ~UIControlStateDisabled;
+  }
 
-  [self updateBorderColor];
+  // Only update the backing dictionary if:
+  // 1. The `state` argument is the same as the "storage" state, OR
+  // 2. There is already a value in the "storage" state.
+  if (storageState == state || _borderColors[@(storageState)] != nil) {
+    _borderColors[@(storageState)] = borderColor;
+    [self updateBorderColor];
+  }
 }
 
 #pragma mark - Border Width
