@@ -637,7 +637,7 @@ See the [FlexibleHeader](../FlexibleHeader) documentation for additional usage g
 
 ## Extensions
 
-<!-- Extracted from docs/theming-extensions.md -->
+<!-- Extracted from docs/theming.md -->
 
 ### Theming Extensions
 
