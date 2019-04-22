@@ -1,15 +1,28 @@
-# #develop#
+# 83.0.0
 
-Replace this text with a summarized description of this release's contents.
+This major release graduates several Theming extensions from Beta and includes a breaking change for
+AppBar's imports. All Themer APIs have been annotated as "to be deprecated" in lieu of Theming
+extensions.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+AppBar's Theming extension header has changed, so you may need to update your import statements
+accordingly:
 
-Replace this text with links to deprecation guides.
-## New features
+#### Swift
 
-Replace this text with example code for each new feature.
+```diff
+- import MaterialComponents.MaterialAppBar_MaterialTheming
++ import MaterialComponents.MaterialAppBar_Theming
+```
+
+#### ObjC
+
+```diff
+- #import "MaterialAppBar+MaterialTheming.h"
++ #import "MaterialAppBar+Theming.h"
+```
+
 ## API changes
 
 ### ActivityIndicator+ColorThemer
@@ -40,10 +53,6 @@ Replace this text with example code for each new feature.
 |---|---|
 | From: | `c:objc(cs)MDCAppBarColorThemer` |
 | To: | `c:objc(cy)MDCAppBarColorThemer@ToBeDeprecated` |
-
-### AppBar+Theming
-
-**New extension.**
 
 ### AppBar+TypographyThemer
 
@@ -423,17 +432,6 @@ Replace this text with example code for each new feature.
 #### MDCAlertColorThemer(ToBeDeprecated)
 
 *removed* category: `MDCAlertColorThemer(ToBeDeprecated)`
-
-### Dialogs+DialogThemer
-
-#### MDCAlertControllerThemer
-
-*modified* class: `MDCAlertControllerThemer`
-
-| Type of change: | Declaration |
-|---|---|
-| From: | `@interface MDCAlertControllerThemer     : NSObject  /**  Applies a component scheme's properties to an MDCAlertController.   @param alertScheme The component scheme to apply to the alert dialog instance.  @param alertController An alert dialog instance to which the component scheme should be applied.  */ #pragma clang diagnostic push #pragma clang diagnostic ignored "-Wdeprecated-declarations" + (void)applyScheme:(nonnull id<MDCAlertScheming>)alertScheme     toAlertController:(nonnull MDCAlertController *)alertController; #pragma clang diagnostic pop @end` |
-| To: | ` @interface MDCAlertControllerThemer : NSObject` |
 
 ### FeatureHighlight+ColorThemer
 
