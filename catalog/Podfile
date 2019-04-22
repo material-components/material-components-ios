@@ -10,6 +10,7 @@ target "MDCCatalog" do
   pod 'MaterialComponentsExamples', :path => '../'
   pod 'MaterialComponents', :path => '../', :testspecs => [
     'ActionSheet/UnitTests',
+    'ActionSheet+Theming/UnitTests',
     'ActivityIndicator/UnitTests',
     'AnimationTiming/UnitTests',
     'AppBar/UnitTests',
@@ -68,7 +69,6 @@ target "MDCCatalog" do
   pod 'MaterialComponentsBeta', :path => '../', :testspecs => [
     'ActionSheet+ActionSheetThemer/UnitTests',
     'ActionSheet+ColorThemer/UnitTests',
-    'ActionSheet+Theming/UnitTests',
     'BottomNavigation/UnitTests',
     'ButtonBar+Theming/UnitTests',
     'Dialogs+Theming/UnitTests',

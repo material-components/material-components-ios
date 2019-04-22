@@ -8,7 +8,7 @@ path: /catalog/navigation-drawer/
 api_doc_root: true
 -->
 
-<!-- This file was auto-generated using scripts/generate_readme NavigationDrawer -->
+<!-- This file was auto-generated using ./scripts/generate_readme NavigationDrawer -->
 
 # Navigation Drawer
 
@@ -30,6 +30,10 @@ Navigation drawers are recommended for:
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/navigation-drawer/api-docs/Classes/MDCBottomDrawerTransitionController.html">MDCBottomDrawerTransitionController</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/navigation-drawer/api-docs/Classes/MDCBottomDrawerViewController.html">MDCBottomDrawerViewController</a></li>
   <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/navigation-drawer/api-docs/Protocols/MDCBottomDrawerHeader.html">MDCBottomDrawerHeader</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/navigation-drawer/api-docs/Protocols/MDCBottomDrawerPresentationControllerDelegate.html">MDCBottomDrawerPresentationControllerDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/navigation-drawer/api-docs/Protocols/MDCBottomDrawerViewControllerDelegate.html">MDCBottomDrawerViewControllerDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/navigation-drawer/api-docs/Enums.html">Enumerations</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/navigation-drawer/api-docs/Enums/MDCBottomDrawerState.html">MDCBottomDrawerState</a></li>
 </ul>
 
 ## Table of contents
@@ -67,6 +71,23 @@ Lastly, your headerViewController conforms to the `MDCBottomDrawerHeader` protoc
 `MDCBottomDrawerViewController` is a `UIViewController` that allows you to provide your drawer content via the `contentViewController` and your desired header (optional) through the `headerViewController` property.
 
 ## Installation
+
+<!-- Extracted from docs/../../../docs/component-installation.md -->
+
+### Installation with CocoaPods
+
+Add the following to your `Podfile`:
+
+```bash
+pod 'MaterialComponents/NavigationDrawer'
+```
+<!--{: .code-renderer.code-renderer--install }-->
+
+Then, run the following command:
+
+```bash
+pod install
+```
 
 ### Importing
 
