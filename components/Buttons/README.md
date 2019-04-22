@@ -54,9 +54,9 @@ many distinct button styles including text buttons, contained buttons, and float
   - [Set `-accessibilityLabel`](#set-`-accessibilitylabel`)
   - [Minimum touch size](#minimum-touch-size)
 - [To be deprecated](#to-be-deprecated)
-  - [Color Theming (To be deleted)](#color-theming-(to-be-deleted))
-  - [Typography Theming (To be deleted)](#typography-theming-(to-be-deleted))
-  - [Shape Theming (To be deleted)](#shape-theming-(to-be-deleted))
+  - [Color Theming](#color-theming)
+  - [Typography Theming](#typography-theming)
+  - [Shape Theming](#shape-theming)
 
 - - -
 
@@ -582,7 +582,10 @@ this day."
 
 <!-- Extracted from docs/color-theming.md -->
 
-### Color Theming (To be deleted)
+### Color Theming
+
+Note: This documentation refers to legacy APIs that will eventually be deprecated. Please consider
+reading the updated [theming documentation](docs/theming.md) instead.
 
 You can theme buttons with your app's color scheme using the ColorThemer extension.
 
@@ -628,7 +631,10 @@ id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] initWithDefau
 
 <!-- Extracted from docs/typography-theming.md -->
 
-### Typography Theming (To be deleted)
+### Typography Theming
+
+Note: This documentation refers to legacy APIs that will eventually be deprecated. Please consider
+reading the updated [theming documentation](docs/theming.md) instead.
 
 You can theme buttons with your app's typography scheme using the TypographyThemer extension.
 
@@ -668,7 +674,10 @@ id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
 
 <!-- Extracted from docs/shape-theming.md -->
 
-### Shape Theming (To be deleted)
+### Shape Theming
+
+Note: This documentation refers to legacy APIs that will eventually be deprecated. Please consider
+reading the updated [theming documentation](docs/theming.md) instead.
 
 You can theme buttons with your app's shape scheme using the ShapeThemer extension.
 

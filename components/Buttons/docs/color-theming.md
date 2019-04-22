@@ -1,4 +1,7 @@
-### Color Theming (To be deleted)
+### Color Theming
+
+Note: This documentation refers to legacy APIs that will eventually be deprecated. Please consider
+reading the updated [theming documentation](theming.md) instead.
 
 You can theme buttons with your app's color scheme using the ColorThemer extension.
 
