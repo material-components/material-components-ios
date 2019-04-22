@@ -60,9 +60,9 @@ The Material Design top app bar displays information and actions relating to the
   - [Enabling top layout guide adjustment](#enabling-top-layout-guide-adjustment)
   - [Enabling inferred top safe area insets](#enabling-inferred-top-safe-area-insets)
 - [Extensions](#extensions)
-  - [Color Theming](#color-theming)
-  - [Typography Theming](#typography-theming)
-  - [Theming Extensions (Beta)](#theming-extensions-(beta))
+  - [Theming](#theming)
+  - [Color Theming (To be deleted)](#color-theming-(to-be-deleted))
+  - [Typography Theming (To be deleted)](#typography-theming-(to-be-deleted))
 - [Accessibility](#accessibility)
   - [MDCAppBar Accessibility](#mdcappbar-accessibility)
 - [Migration guides](#migration-guides)
@@ -637,9 +637,58 @@ See the [FlexibleHeader](../FlexibleHeader) documentation for additional usage g
 
 ## Extensions
 
+<!-- Extracted from docs/theming.md -->
+
+### Theming
+
+`MDCAppBarViewController` supports Material Theming using a Container Scheme.
+There are two variants for Material Theming of an AppBar.  The Surface Variant colors the App Bar
+background to be `surfaceColor` and the Primary Variant colors the App Bar background to be
+`primaryColor`.
+
+<!--<div class="material-code-render" markdown="1">-->
+
+#### Swift
+
+```swift
+// Import the AppBar Theming Extensions module
+import MaterialComponents.MaterialAppBar_Theming
+
+...
+
+// Apply your app's Container Scheme to the App Bar controller
+let containerScheme = MDCContainerScheme()
+
+// Either Primary Theme
+appBarViewController.applyPrimaryTheme(withScheme: containerScheme)
+
+// Or Surface Theme
+appBarViewController.applySurfaceTheme(withScheme: containerScheme)
+```
+
+#### Objective-C
+
+```objc
+// Import the AppBar Theming Extensions header
+#import "MaterialAppBar+Theming.h"
+
+...
+
+// Apply your app's Container Scheme to the App Bar controller
+MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+
+// Either Primary Theme
+[self.appBarController applyPrimaryThemeWithScheme:containerScheme];
+
+// Or Surface Theme
+[self.appBarController applySurfaceThemeWithScheme:containerScheme];
+```
+
+<!--</div>-->
+
 <!-- Extracted from docs/color-theming.md -->
 
-### Color Theming
+### Color Theming (To be deleted)
 
 You can theme an app bar with your app's color scheme using the ColorThemer extension.
 
@@ -673,13 +722,13 @@ id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] initWithDefau
 
 // Step 3: Apply the color scheme to your component
 [MDCAppBarColorThemer applySemanticColorScheme:colorScheme
-     toAppBar:component];
+                                      toAppBar:component];
 ```
 <!--</div>-->
 
 <!-- Extracted from docs/typography-theming.md -->
 
-### Typography Theming
+### Typography Theming (To be deleted)
 
 You can theme an app bar with your app's typography scheme using the TypographyThemer extension.
 
@@ -713,60 +762,10 @@ id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
 
 // Step 3: Apply the typography scheme to your component
 [MDCAppBarTypographyThemer applyTypographyScheme:colorScheme
-     toAppBar:component];
+                                        toAppBar:component];
 ```
 <!--</div>-->
 
-<!-- Extracted from docs/theming-extensions.md -->
-
-### Theming Extensions (Beta)
-
-`MDCAppBarViewController` supports Material Theming using a Container Scheme. The code is currently
-in Beta readiness, which means you will need to follow the [instructions for adding the
-MaterialComponentsBeta podspec to your project](https://github.com/material-components/material-components-ios/blob/develop/contributing/beta_components.md).
-There are two variants for Material Theming of an AppBar.  The Surface Variant colors the App Bar
-background to be `surfaceColor` and the Primary Variant colors the App Bar background to be
-`primaryColor`.
-
-<!--<div class="material-code-render" markdown="1">-->
-
-#### Swift
-
-```swift
-// Import the AppBar Theming Extensions module
-import MaterialComponentsBeta.MaterialAppBar_MaterialTheming
-
-...
-
-// Apply your app's Container Scheme to the App Bar controller
-let containerScheme = MDCContainerScheme()
-
-// Either Primary Theme
-appBarViewController.applyPrimaryTheme(withScheme: containerScheme)
-
-// Or Surface Theme
-appBarViewController.applySurfaceTheme(withScheme: containerScheme)
-```
-
-#### Objective-C
-
-```objc
-// Import the AppBar Theming Extensions header
-#import <MaterialComponentsBeta/MaterialAppBar+MaterialTheming.h>
-
-...
-
-// Apply your app's Container Scheme to the App Bar controller
-MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
-
-// Either Primary Theme
-[self.appBarController applyPrimaryThemeWithScheme:containerScheme];
-
-// Or Surface Theme
-[self.appBarController applySurfaceThemeWithScheme:containerScheme];
-```
-
-<!--</div>-->
 
 
 ## Accessibility

@@ -69,9 +69,10 @@ See the [FlexibleHeader](../../FlexibleHeader) documentation for additional usag
 
 ## Extensions
 
+- [Theming](theming.md)
 - [Color Theming](color-theming.md)
 - [Typography Theming](typography-theming.md)
-- [Theming Extensions](theming-extensions.md)
+
 
 ## Accessibility
 
