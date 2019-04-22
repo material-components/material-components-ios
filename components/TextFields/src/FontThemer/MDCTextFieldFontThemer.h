@@ -24,16 +24,25 @@
 /**
  Used to apply a font scheme to theme a MDCTextField/MDCTextInputController.
 
- @warning This class will soon be deprecated. Please consider using
- MDCTextFieldTypographyThemer instead.
+ @warning This API will eventually be deprecated. See the individual method documentation for
+ details on replacement APIs.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 @interface MDCTextFieldFontThemer : NSObject
+@end
+
+@interface MDCTextFieldFontThemer (ToBeDeprecated)
 
 /**
  Applies a font scheme to theme a MDCTextInputController instance.
 
  @param fontScheme The font scheme that applies to a MDCTextInputController.
  @param textInputController A MDCTextInputController instance that font scheme will be applied to.
+
+ @warning This API will eventually be deprecated. The replacement API is:
+ `MDCTextInputControllerFilled`'s `-applyThemeWithScheme:` or
+ `MDCTextInputControllerOutlined`'s `-applyThemeWithScheme:`.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyFontScheme:(nonnull id<MDCFontScheme>)fontScheme
     toTextInputController:(nonnull id<MDCTextInputController>)textInputController;
@@ -44,6 +53,9 @@
 
  @param fontScheme The font scheme that applies to a MDCTextInputController.
  @param textInputControllerClass A MDCTextInputController class that font scheme will be applied to.
+
+ @warning This API will eventually be deprecated. There will be no replacement for this API.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyFontScheme:(nonnull id<MDCFontScheme>)fontScheme
     toAllTextInputControllersOfClass:(nonnull Class<MDCTextInputController>)textInputControllerClass
@@ -54,6 +66,9 @@
 
  @param fontScheme The font scheme that applies to MDCTextField.
  @param textField A MDCTextField instance that font scheme will be applied to.
+
+ @warning This API will eventually be deprecated. There will be no replacement for this API.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyFontScheme:(nonnull id<MDCFontScheme>)fontScheme
             toTextField:(nullable MDCTextField *)textField;
