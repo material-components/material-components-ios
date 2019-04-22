@@ -22,10 +22,14 @@
 /**
  Used to apply a font scheme to theme to MDCSnackbarMessageView.
 
- @warning This class will soon be deprecated. Please consider using MDCSnackbarTypographyThemer
- instead.
+ @warning This API will eventually be deprecated. See the individual method documentation for
+ details on replacement APIs.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 @interface MDCSnackbarFontThemer : NSObject
+@end
+
+@interface MDCSnackbarFontThemer (Deprecated)
 
 /**
  Applies a font scheme to theme to a MDCSnackbarMessageView.
@@ -35,6 +39,10 @@
 
  @param fontScheme The font scheme to apply to MDCSnackbarMessageView.
  @param snackbarMessageView A MDCSnackbarMessageView instance to apply a font scheme.
+
+ @warning This API will eventually be deprecated. There is no replacement yet.
+ Track progress here: https://github.com/material-components/material-components-ios/issues/7172
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyFontScheme:(nonnull id<MDCFontScheme>)fontScheme
     toSnackbarMessageView:(nonnull MDCSnackbarMessageView *)snackbarMessageView;
@@ -42,10 +50,11 @@
 /**
  Applies a font scheme to theme to a MDCSnackbarMessageView.
 
- @warning This API will soon be deprecated. Please consider using MDCSnackbarTypographyThemer
- instead.
-
  @param fontScheme The font scheme to apply to MDCSnackbarMessageView.
+
+ @warning This API will eventually be deprecated. There is no replacement yet.
+ Track progress here: https://github.com/material-components/material-components-ios/issues/7172
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyFontScheme:(nonnull id<MDCFontScheme>)fontScheme;
 
