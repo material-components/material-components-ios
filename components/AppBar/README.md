@@ -60,9 +60,9 @@ The Material Design top app bar displays information and actions relating to the
   - [Enabling top layout guide adjustment](#enabling-top-layout-guide-adjustment)
   - [Enabling inferred top safe area insets](#enabling-inferred-top-safe-area-insets)
 - [Extensions](#extensions)
-  - [Color Theming (To Be Deprecated)](#color-theming-(to-be-deprecated))
-  - [Typography Theming (To Be Deprecated)](#typography-theming-(to-be-deprecated))
   - [Theming Extensions](#theming-extensions)
+  - [Color Theming (To be deleted)](#color-theming-(to-be-deleted))
+  - [Typography Theming (To be deleted)](#typography-theming-(to-be-deleted))
 - [Accessibility](#accessibility)
   - [MDCAppBar Accessibility](#mdcappbar-accessibility)
 - [Migration guides](#migration-guides)
@@ -637,86 +637,6 @@ See the [FlexibleHeader](../FlexibleHeader) documentation for additional usage g
 
 ## Extensions
 
-<!-- Extracted from docs/color-theming.md -->
-
-### Color Theming (To Be Deprecated)
-
-You can theme an app bar with your app's color scheme using the ColorThemer extension.
-
-You must first add the Color Themer extension to your project:
-
-```bash
-pod 'MaterialComponents/AppBar+ColorThemer'
-```
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-// Step 1: Import the ColorThemer extension
-import MaterialComponents.MaterialAppBar_ColorThemer
-
-// Step 2: Create or get a color scheme
-let colorScheme = MDCSemanticColorScheme()
-
-// Step 3: Apply the color scheme to your component
-MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: component)
-```
-
-#### Objective-C
-
-```objc
-// Step 1: Import the ColorThemer extension
-#import "MaterialAppBar+ColorThemer.h"
-
-// Step 2: Create or get a color scheme
-id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-
-// Step 3: Apply the color scheme to your component
-[MDCAppBarColorThemer applySemanticColorScheme:colorScheme
-     toAppBar:component];
-```
-<!--</div>-->
-
-<!-- Extracted from docs/typography-theming.md -->
-
-### Typography Theming (To Be Deprecated)
-
-You can theme an app bar with your app's typography scheme using the TypographyThemer extension.
-
-You must first add the Typography Themer extension to your project:
-
-```bash
-pod 'MaterialComponents/AppBar+TypographyThemer'
-```
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-// Step 1: Import the TypographyThemer extension
-import MaterialComponents.MaterialAppBar_TypographyThemer
-
-// Step 2: Create or get a typography scheme
-let typographyScheme = MDCTypographyScheme()
-
-// Step 3: Apply the typography scheme to your component
-MDCAppBarTypographyThemer.applyTypographyScheme(typographyScheme, to: component)
-```
-
-#### Objective-C
-
-```objc
-// Step 1: Import the TypographyThemer extension
-#import "MaterialAppBar+TypographyThemer.h"
-
-// Step 2: Create or get a typography scheme
-id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
-
-// Step 3: Apply the typography scheme to your component
-[MDCAppBarTypographyThemer applyTypographyScheme:colorScheme
-     toAppBar:component];
-```
-<!--</div>-->
-
 <!-- Extracted from docs/theming-extensions.md -->
 
 ### Theming Extensions
@@ -765,6 +685,87 @@ MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
 ```
 
 <!--</div>-->
+
+<!-- Extracted from docs/color-theming.md -->
+
+### Color Theming (To be deleted)
+
+You can theme an app bar with your app's color scheme using the ColorThemer extension.
+
+You must first add the Color Themer extension to your project:
+
+```bash
+pod 'MaterialComponents/AppBar+ColorThemer'
+```
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+// Step 1: Import the ColorThemer extension
+import MaterialComponents.MaterialAppBar_ColorThemer
+
+// Step 2: Create or get a color scheme
+let colorScheme = MDCSemanticColorScheme()
+
+// Step 3: Apply the color scheme to your component
+MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: component)
+```
+
+#### Objective-C
+
+```objc
+// Step 1: Import the ColorThemer extension
+#import "MaterialAppBar+ColorThemer.h"
+
+// Step 2: Create or get a color scheme
+id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+
+// Step 3: Apply the color scheme to your component
+[MDCAppBarColorThemer applySemanticColorScheme:colorScheme
+                                      toAppBar:component];
+```
+<!--</div>-->
+
+<!-- Extracted from docs/typography-theming.md -->
+
+### Typography Theming (To be deleted)
+
+You can theme an app bar with your app's typography scheme using the TypographyThemer extension.
+
+You must first add the Typography Themer extension to your project:
+
+```bash
+pod 'MaterialComponents/AppBar+TypographyThemer'
+```
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+// Step 1: Import the TypographyThemer extension
+import MaterialComponents.MaterialAppBar_TypographyThemer
+
+// Step 2: Create or get a typography scheme
+let typographyScheme = MDCTypographyScheme()
+
+// Step 3: Apply the typography scheme to your component
+MDCAppBarTypographyThemer.applyTypographyScheme(typographyScheme, to: component)
+```
+
+#### Objective-C
+
+```objc
+// Step 1: Import the TypographyThemer extension
+#import "MaterialAppBar+TypographyThemer.h"
+
+// Step 2: Create or get a typography scheme
+id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
+
+// Step 3: Apply the typography scheme to your component
+[MDCAppBarTypographyThemer applyTypographyScheme:colorScheme
+                                        toAppBar:component];
+```
+<!--</div>-->
+
 
 
 ## Accessibility
