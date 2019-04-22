@@ -1,13 +1,9 @@
 ### Theming extensions
 
 You can theme an MDCButton to match one of the Material Design button styles using your app's
-schemes and the button theming extension. To add the theming extension to your project add the following line to your Podfile:
+schemes in the button theming extension.
 
-```bash
-pod 'MaterialComponents/Buttons+Theming'
-```
-
-Then import the extension and create an `MDCContainerScheme`
+You must first import the extension and create an `MDCContainerScheme`
 instance. A container scheme defines the design parameters that you can use to
 theme your app.
 
@@ -15,7 +11,7 @@ theme your app.
 #### Swift
 ```swift
 // Step 1: Import the container scheme
-import MaterialComponents.MaterialContainerScheme
+import MaterialComponentsBeta.MaterialConainerScheme
 
 // Step 2: Create or get a container scheme
 let containerScheme = MDCContainerScheme()
@@ -27,7 +23,7 @@ let containerScheme = MDCContainerScheme()
 
 ```objc
 // Step 1: Import the Container scheme
-#import <MaterialComponents/MaterialContainerScheme.h>
+#import <MaterialComponentsBeta/MaterialContainerScheme.h>
 
 // Step 2: Create or get a button scheme
 MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
@@ -47,7 +43,7 @@ First you will need to create a button. Additionally for theming you will need t
 ```swift
 // Step 1: Import Material Buttons
 import MaterialComponents.MaterialButtons
-import MaterialComponents.MaterialButtons_Theming
+import MaterialComponentsBeta.MaterialButtons_Theming
 
 // Step 2: Create a button
 let button = MDCButton()
@@ -58,7 +54,7 @@ let button = MDCButton()
 ```objc
 // Step 1: Import Material Buttons 
 #import <MaterialComponents/MaterialButtons.h>
-#import <MaterialComponents/MaterialButtons+Theming.h>
+#import <MaterialComponentsBeta/MaterialButtons+Theming.h>
 
 // Step 2: Create a button
 MDCButton *button = [[MDCButton alloc] init];
@@ -133,7 +129,7 @@ First you will need to create a button. Additionally for theming you will need t
 ```swift
 // Step 1: Import Material Buttons
 import MaterialComponents.MaterialButtons
-import MaterialComponents.MaterialButtons_Theming
+import MaterialComponentsBeta.MaterialButtons_Theming
 
 // Step 2: Create a button
 let floatingButton = MDCFloatingButton()
@@ -144,7 +140,7 @@ let floatingButton = MDCFloatingButton()
 ```objc
 // Step 1: Import Material Buttons 
 #import <MaterialComponents/MaterialButtons.h>
-#import <MaterialComponents/MaterialButtons+Theming.h>
+#import <MaterialComponentsBeta/MaterialButtons+Theming.h>
 
 // Step 2: Create a button
 MDCFloatingButton *floatingButton = [[MDCFloatingButton alloc] init];
