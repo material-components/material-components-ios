@@ -27,7 +27,6 @@
  components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
  */
 @interface MDCButtonColorThemer : NSObject
-
 @end
 
 @interface MDCButtonColorThemer (ToBeDeprecated)
