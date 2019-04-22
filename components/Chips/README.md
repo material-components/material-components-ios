@@ -49,6 +49,7 @@ Chips are compact elements that represent an input, attribute, or action.
 - [Examples](#examples)
   - [Create a single Chip](#create-a-single-chip)
 - [Extensions](#extensions)
+  - [Theming](#theming)
   - [Chip Color Theming](#chip-color-theming)
   - [Typography Theming](#typography-theming)
   - [Shape Theming](#shape-theming)

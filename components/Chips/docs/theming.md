@@ -1,4 +1,4 @@
-### Theming Extensions
+### Theming
 
  `MDCChipView` supports Material Theming using a Container Scheme.
 There are two variants for Material Theming of an MDCChipVIew, which are the default theme
