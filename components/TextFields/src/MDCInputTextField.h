@@ -81,22 +81,22 @@ typedef NS_OPTIONS(NSInteger, MDCContainedInputViewState) {
 @property(strong, nonatomic, readonly, nonnull) UILabel *trailingUnderlineLabel;
 
 /**
- This is essentially an RTL-aware wrapper around UITextField's leftView/rightView class.
+ This is essentially an RTL-aware wrapper around UITextField's leftView/rightView property.
  */
 @property(strong, nonatomic, nullable) UIView *leadingView;
 
 /**
- This is essentially an RTL-aware wrapper around UITextField's leftView/rightView class.
+ This is essentially an RTL-aware wrapper around UITextField's leftView/rightView property.
  */
 @property(strong, nonatomic, nullable) UIView *trailingView;
 
 /**
- This is essentially an RTL-aware wrapper around UITextField's leftViewMode/rightViewMode class.
+ This is essentially an RTL-aware wrapper around UITextField's leftViewMode/rightViewMode property.
  */
 @property(nonatomic, assign) UITextFieldViewMode leadingViewMode;
 
 /**
- This is essentially an RTL-aware wrapper around UITextField's leftViewMode/rightViewMode class.
+ This is essentially an RTL-aware wrapper around UITextField's leftViewMode/rightViewMode property.
  */
 @property(nonatomic, assign) UITextFieldViewMode trailingViewMode;
 
