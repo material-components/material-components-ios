@@ -38,7 +38,6 @@ the screen and displays actions a user can take.
 - [MDCActionSheetController vs. UIAlertControllerStyleActionSheet](#mdcactionsheetcontroller-vs.-uialertcontrollerstyleactionsheet)
 - [Extensions](#extensions)
   - [Theming](#theming)
-  - [How to theme an MDCActionSheet](#how-to-theme-an-mdcactionsheet)
 - [Accessibility](#accessibility)
   - [Set `-isScrimAccessibilityElement`](#set-`-isscrimaccessibilityelement`)
   - [Set `-scrimAccessibilityLabel`](#set-`-scrimaccessibilitylabel`)
@@ -174,15 +173,7 @@ Material UIAlertController please see the `MDCAlertController` class.
 
 You can theme an MDCActionSheet to match the Material Design style by using a theming extension. The content below assumes you have read the article on [Theming](../../docs/theming.md).
 
-### How to theme an MDCActionSheet
-
-First, add the pod extension to your project.
-
-```bash
-pod `MaterialComponents/ActionSheet+Theming`
-```
-
-Then, create an action sheet and import the theming extension header for Action Sheets.
+First, create an action sheet and import the theming extension header for Action Sheets.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
