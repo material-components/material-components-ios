@@ -296,7 +296,7 @@ self.textFieldControllerDefaultCharMax.floatingEnabled = NO;
 You can theme an MDCTextField using the TextField theming extension.
 
 To use the theming extension, first add it to your project by following the
-[steps to use beta components](docs/../../../contributing/beta_components.md).
+[steps to use beta components](../../../contributing/beta_components.md).
 
 Then import the theming extension and create an `MDCContainerScheme` instance. A container scheme
 defines schemes for subsystems like Color and Typography.
