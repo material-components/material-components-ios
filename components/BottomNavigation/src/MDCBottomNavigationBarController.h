@@ -60,6 +60,14 @@
  */
 @property(nonatomic) NSUInteger selectedIndex;
 
+/**
+ * If true, when the user long presses a tab bar item and dynamic type is enabled a large version of
+ * the tab bar item will be shown in a transient dialog that appears centered within the window.
+ * The default of this property is @c NO but will be set to @c YES in the future and then removed
+ * entirely.
+ */
+@property(nonatomic, getter=isDynamicTypeSupportEnabled) BOOL dynamicTypeSupportEnabled;
+
 - (void)viewDidLoad NS_REQUIRES_SUPER;
 
 #pragma mark - MDCBottomNavigationBarDelegate
