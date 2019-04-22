@@ -60,7 +60,7 @@ The Material Design top app bar displays information and actions relating to the
   - [Enabling top layout guide adjustment](#enabling-top-layout-guide-adjustment)
   - [Enabling inferred top safe area insets](#enabling-inferred-top-safe-area-insets)
 - [Extensions](#extensions)
-  - [Theming Extensions](#theming-extensions)
+  - [Theming](#theming)
   - [Color Theming (To be deleted)](#color-theming-(to-be-deleted))
   - [Typography Theming (To be deleted)](#typography-theming-(to-be-deleted))
 - [Accessibility](#accessibility)
@@ -639,7 +639,7 @@ See the [FlexibleHeader](../FlexibleHeader) documentation for additional usage g
 
 <!-- Extracted from docs/theming.md -->
 
-### Theming Extensions
+### Theming
 
 `MDCAppBarViewController` supports Material Theming using a Container Scheme.
 There are two variants for Material Theming of an AppBar.  The Surface Variant colors the App Bar

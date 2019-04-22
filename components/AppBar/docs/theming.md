@@ -1,4 +1,4 @@
-### Theming Extensions
+### Theming
 
 `MDCAppBarViewController` supports Material Theming using a Container Scheme.
 There are two variants for Material Theming of an AppBar.  The Surface Variant colors the App Bar
