@@ -37,8 +37,10 @@ the screen and displays actions a user can take.
   - [Typical use](#typical-use)
 - [MDCActionSheetController vs. UIAlertControllerStyleActionSheet](#mdcactionsheetcontroller-vs.-uialertcontrollerstyleactionsheet)
 - [Extensions](#extensions)
-  - [Color Theming](#color-theming)
-  - [Typography Theming](#typography-theming)
+  - [Theming](#theming)
+  - [How to theme an MDCActionSheet](#how-to-theme-an-mdcactionsheet)
+  - [Color Theming (To be deleted)](#color-theming-(to-be-deleted))
+  - [Typography Theming (To be deleted)](#typography-theming-(to-be-deleted))
 - [Accessibility](#accessibility)
   - [Set `-isScrimAccessibilityElement`](#set-`-isscrimaccessibilityelement`)
   - [Set `-scrimAccessibilityLabel`](#set-`-scrimaccessibilitylabel`)
@@ -165,9 +167,66 @@ Material UIAlertController please see the `MDCAlertController` class.
 
 ## Extensions
 
+<!-- Extracted from docs/theming.md -->
+
+### Theming
+
+You can theme an MDCActionSheet to match the Material Design style by using a theming extension. The content below assumes you have read the article on [Theming](docs/../../docs/theming.md).
+
+### How to theme an MDCActionSheet
+
+First, add the pod extension to your project.
+
+```bash
+pod `MaterialComponents/ActionSheet+Theming`
+```
+
+Then, create an action sheet and import the theming extension header for Action Sheets.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+import MaterialComponents.MaterialActionSheet
+import MaterialComponents.MaterialActionSheet_Theming
+
+let actionSheet = MDCActionSheetController()
+```
+
+#### Objective-C
+
+```objc
+#import <MaterialComponents/MaterialActionSheet.h>
+#import <MaterialComponents/MaterialActionSheet+Theming.h>
+
+MDCActionSheetController *actionSheet = [[MDCActionSheetController alloc] init];
+```
+<!--</div>-->
+
+You can then provide a container scheme instance to any of the MDCActionSheet theming extensions.
+
+Then, you can theme your action sheet.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+actionSheet.applyTheme(withScheme: containerScheme)
+```
+
+#### Objective-C
+
+```objc
+[self.actionSheet applyThemeWithScheme:self.containerScheme];
+```
+<!--</div>-->
+
+
+
+
+
+
 <!-- Extracted from docs/color-theming.md -->
 
-### Color Theming
+### Color Theming (To be deleted)
 
 You can theme an Action Sheet with your app's color scheme using the ColorThemer extension.
 
@@ -209,7 +268,7 @@ MDCActionSheetController *actionSheet = [[MDCActionSheetController alloc] init];
 
 <!-- Extracted from docs/typography-theming.md -->
 
-### Typography Theming
+### Typography Theming (To be deleted)
 
 You can theme an Action Sheet with your app's typography scheme using the TypographyThemer extension.
 
