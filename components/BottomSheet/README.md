@@ -8,7 +8,7 @@ path: /catalog/bottom-sheet/
 api_doc_root: true
 -->
 
-<!-- This file was auto-generated using scripts/generate_readme BottomSheet -->
+<!-- This file was auto-generated using ./scripts/generate_readme BottomSheet -->
 
 # Sheets: bottom
 

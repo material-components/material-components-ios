@@ -307,6 +307,73 @@ static NSString *controlStateDescription(UIControlState controlState) {
   }
 }
 
+- (void)testBorderColorForState {
+  for (NSUInteger state = 0; state <= kNumUIControlStates; ++state) {
+    // Given
+    UIColor *color = randomColor();
+
+    // When
+    [self.button setBorderColor:color forState:state];
+
+    // Then
+    XCTAssertEqualObjects([self.button borderColorForState:state], color);
+  }
+}
+
+- (void)testBorderColorForStateFallbackBehavior {
+  // When
+  [self.button setBorderColor:UIColor.redColor forState:UIControlStateNormal];
+
+  // Then
+  for (NSUInteger state = 0; state <= kNumUIControlStates; ++state) {
+    XCTAssertEqualObjects([self.button borderColorForState:state], UIColor.redColor);
+  }
+}
+
+- (void)testBorderColorForStateBehaviorMatchesTitleColorForStateForward {
+  // Given
+  MDCButton *testButton = [[MDCButton alloc] init];
+  UIButton *uiButton = [[UIButton alloc] init];
+
+  // When
+  UIControlState maxState = UIControlStateNormal | UIControlStateHighlighted |
+                            UIControlStateDisabled | UIControlStateSelected;
+  for (UIControlState state = 0; state <= maxState; ++state) {
+    UIColor *color = [UIColor colorWithWhite:0 alpha:(CGFloat)(state / (CGFloat)maxState)];
+    [testButton setBorderColor:color forState:state];
+    [uiButton setTitleColor:color forState:state];
+  }
+
+  // Then
+  for (UIControlState state = 0; state <= maxState; ++state) {
+    XCTAssertEqualObjects([testButton borderColorForState:state],
+                          [uiButton titleColorForState:state], @" for state (%lu)",
+                          (unsigned long)state);
+  }
+}
+
+- (void)testBorderColorForStateBehaviorMatchesTitleColorForStateBackward {
+  // Given
+  MDCButton *testButton = [[MDCButton alloc] init];
+  UIButton *uiButton = [[UIButton alloc] init];
+
+  // When
+  UIControlState maxState = UIControlStateNormal | UIControlStateHighlighted |
+                            UIControlStateDisabled | UIControlStateSelected;
+  for (NSInteger state = maxState; state >= 0; --state) {
+    UIColor *color = [UIColor colorWithWhite:0 alpha:(CGFloat)(state / (CGFloat)maxState)];
+    [testButton setBorderColor:color forState:state];
+    [uiButton setTitleColor:color forState:state];
+  }
+
+  // Then
+  for (UIControlState state = 0; state <= maxState; ++state) {
+    XCTAssertEqualObjects([testButton borderColorForState:state],
+                          [uiButton titleColorForState:state], @" for state (%lu)",
+                          (unsigned long)state);
+  }
+}
+
 - (void)testBackgroundColorForState {
   for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
     // Given
