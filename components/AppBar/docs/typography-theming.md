@@ -1,4 +1,4 @@
-### Typography Theming
+### Typography Theming (To be deleted)
 
 You can theme an app bar with your app's typography scheme using the TypographyThemer extension.
 
@@ -32,6 +32,6 @@ id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
 
 // Step 3: Apply the typography scheme to your component
 [MDCAppBarTypographyThemer applyTypographyScheme:colorScheme
-     toAppBar:component];
+                                        toAppBar:component];
 ```
 <!--</div>-->
