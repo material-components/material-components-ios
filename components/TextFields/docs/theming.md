@@ -1,12 +1,12 @@
 ### Theming Extensions
 
-You can theme an MDCTextField using the TextField theming extension. To add it to your project add the following line to your Podfile:
+You can theme an MDCTextField using the TextFields theming extension. To add the theming extension to your project add the following line to your Podfile:
 
 ```bash
 pod 'MaterialComponents/TextFields+Theming'
 ```
 
-Then import the theming extension and create an `MDCContainerScheme` instance. A container scheme
+Then import the theming extension and the `MDCContainerScheme` and create an `MDCContainerScheme` instance. A container scheme
 defines schemes for subsystems like Color and Typography.
 
 Finally, call theming methods on the theming extension of your MDCTextInputController instance.
@@ -14,7 +14,7 @@ Finally, call theming methods on the theming extension of your MDCTextInputContr
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift
-// Step 1: Import the TextField theming extension and container scheme
+// Step 1: Import the TextFields theming extension and container scheme
 import MaterialComponents.MaterialTextFields_Theming
 import MaterialComponents.MaterialContainerScheme
 

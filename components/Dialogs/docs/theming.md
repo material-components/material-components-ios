@@ -1,13 +1,13 @@
 ### Theming Extensions
 
-You can theme an MDCDialog to match the Material Design Dialog using your app's schemes in the Dialog theming
+You can theme an MDCDialog to match the Material Design Dialog using your app's schemes and the Dialogs theming
 extension. To add the theming extension to your project add the following line to your Podfile:
 
 ```bash
 pod 'MaterialComponents/Dialogs+Theming'
 ```
 
-Then import the theming extension and create an `MDCContainerScheme` instance. A container scheme 
+Then import the theming extension and the `MDCContainerScheme` and create an `MDCContainerScheme` instance. A container scheme 
 defines the design parameters that you can use to theme your dialogs.
 
 <!--<div class="material-code-render" markdown="1">-->
