@@ -24,6 +24,9 @@
 
  An instance of this protocol can be applied to an instance of MDCChipView using any of the
  MDCChipViewThemer APIs.
+
+ @warning This API will eventually be deprecated. The replacement API is: `MDCContainerScheming`.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 @protocol MDCChipViewScheming
 
@@ -46,6 +49,9 @@
 
 /**
  An MDCChipViewScheme is a mutable representation of the design parameters for an MDCChipView.
+
+ @warning This API will eventually be deprecated. The replacement API is: `MDCContainerScheme`.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 @interface MDCChipViewScheme : NSObject <MDCChipViewScheming>
 
