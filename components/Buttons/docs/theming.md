@@ -1,12 +1,12 @@
-### Theming extensions
+### Theming
 
-You can theme an MDCButton to match one of the Material Design button styles using button theming
-extensions. The content below assumes that you have read the article on
-[Theming](../../../docs/theming.md).
+You can theme an MDCButton to match a
+[Material Design button style](https://material.io/design/components/buttons.html) using theming
+extensions. [Learn more about theming extensions](../../../docs/theming.md).
 
 ### How to theme an MDCButton
 
-First, create a button and import the theming extension header for Buttons.
+First, import both Buttons and Buttons Theming and create an instance of MDCButton.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -28,6 +28,7 @@ MDCButton *button = [[MDCButton alloc] init];
 <!--</div>-->
 
 You can then provide a container scheme instance to any of the MDCButton theming extensions.
+[Learn more about container schemes](../../../docs/theming.md).
 
 #### Text buttons
 
@@ -50,7 +51,7 @@ button.applyTextTheme(withScheme: containerScheme)
 
 #### Outlined buttons
 
-[Learn more about outlined buttons](https://material.io/design/components/buttons.html#outlined-button).
+[Learn more](https://material.io/design/components/buttons.html#outlined-button).
 
 <img src="assets/outlined.gif" alt="An animation showing a Material Design outlined button." width="115">
 
@@ -69,7 +70,7 @@ button.applyOutlinedTheme(withScheme: containerScheme)
 
 #### Contained buttons
 
-[Learn more about contained buttons](https://material.io/design/components/buttons.html#contained-button).
+[Learn more](https://material.io/design/components/buttons.html#contained-button).
 
 <img src="assets/contained.gif" alt="An animation showing a Material Design contained button." width="128">
 
@@ -109,7 +110,7 @@ MDCFloatingButton *floatingButton = [[MDCFloatingButton alloc] init];
 ```
 <!--</div>-->
 
-[Learn more about floating action buttons](https://material.io/design/components/buttons-floating-action-button.html).
+[Learn more](https://material.io/design/components/buttons-floating-action-button.html).
 
 <img src="assets/fab.gif" alt="An animation showing a Material Design floating action button." width="99">
 
@@ -126,7 +127,7 @@ floatingButton.applySecondaryTheme(withScheme: containerScheme)
 ```
 <!--</div>-->
 
-### Legacy APIs: how to theme a button using a themer
+### How to theme a button using a themer (To be deleted)
 
 The following documentation refers to legacy theming APIs that will be deprecated and deleted in the
 future.

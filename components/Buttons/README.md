@@ -46,13 +46,13 @@ many distinct button styles including text buttons, contained buttons, and float
   - [Customizing floating action buttons](#customizing-floating-action-buttons)
   - [Interface Builder](#interface-builder)
 - [Extensions](#extensions)
-  - [Theming extensions](#theming-extensions)
+  - [Theming](#theming)
   - [How to theme an MDCButton](#how-to-theme-an-mdcbutton)
   - [How to theme an MDCFloatingButton](#how-to-theme-an-mdcfloatingbutton)
-  - [Legacy APIs: how to theme a button using a themer](#legacy-apis-how-to-theme-a-button-using-a-themer)
-  - [Color Theming](#color-theming)
-  - [Typography Theming](#typography-theming)
-  - [Shape Theming](#shape-theming)
+  - [How to theme a button using a themer (To be deleted)](#how-to-theme-a-button-using-a-themer-(to-be-deleted))
+  - [Color Theming (To be deleted)](#color-theming-(to-be-deleted))
+  - [Typography Theming (To be deleted)](#typography-theming-(to-be-deleted))
+  - [Shape Theming (To be deleted)](#shape-theming-(to-be-deleted))
 - [Accessibility](#accessibility)
   - [Set `-accessibilityLabel`](#set-`-accessibilitylabel`)
   - [Minimum touch size](#minimum-touch-size)
@@ -225,15 +225,15 @@ to "custom" in order for the button's highlight states to work as expected.
 
 <!-- Extracted from docs/theming.md -->
 
-### Theming extensions
+### Theming
 
-You can theme an MDCButton to match one of the Material Design button styles using button theming
-extensions. The content below assumes that you have read the article on
-[Theming](../../docs/theming.md).
+You can theme an MDCButton to match a
+[Material Design button style](https://material.io/design/components/buttons.html) using theming
+extensions. [Learn more about theming extensions](../../docs/theming.md).
 
 ### How to theme an MDCButton
 
-First, create a button and import the theming extension header for Buttons.
+First, import both Buttons and Buttons Theming and create an instance of MDCButton.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -255,6 +255,7 @@ MDCButton *button = [[MDCButton alloc] init];
 <!--</div>-->
 
 You can then provide a container scheme instance to any of the MDCButton theming extensions.
+[Learn more about container schemes](../../docs/theming.md).
 
 #### Text buttons
 
@@ -277,7 +278,7 @@ button.applyTextTheme(withScheme: containerScheme)
 
 #### Outlined buttons
 
-[Learn more about outlined buttons](https://material.io/design/components/buttons.html#outlined-button).
+[Learn more](https://material.io/design/components/buttons.html#outlined-button).
 
 <img src="docs/assets/outlined.gif" alt="An animation showing a Material Design outlined button." width="115">
 
@@ -296,7 +297,7 @@ button.applyOutlinedTheme(withScheme: containerScheme)
 
 #### Contained buttons
 
-[Learn more about contained buttons](https://material.io/design/components/buttons.html#contained-button).
+[Learn more](https://material.io/design/components/buttons.html#contained-button).
 
 <img src="docs/assets/contained.gif" alt="An animation showing a Material Design contained button." width="128">
 
@@ -336,7 +337,7 @@ MDCFloatingButton *floatingButton = [[MDCFloatingButton alloc] init];
 ```
 <!--</div>-->
 
-[Learn more about floating action buttons](https://material.io/design/components/buttons-floating-action-button.html).
+[Learn more](https://material.io/design/components/buttons-floating-action-button.html).
 
 <img src="docs/assets/fab.gif" alt="An animation showing a Material Design floating action button." width="99">
 
@@ -353,7 +354,7 @@ floatingButton.applySecondaryTheme(withScheme: containerScheme)
 ```
 <!--</div>-->
 
-### Legacy APIs: how to theme a button using a themer
+### How to theme a button using a themer (To be deleted)
 
 The following documentation refers to legacy theming APIs that will be deprecated and deleted in the
 future.
@@ -475,7 +476,7 @@ MDCFloatingActionButtonThemer.applyScheme(buttonScheme, to: button)
 
 <!-- Extracted from docs/color-theming.md -->
 
-### Color Theming
+### Color Theming (To be deleted)
 
 You can theme buttons with your app's color scheme using the ColorThemer extension.
 
@@ -521,7 +522,7 @@ id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] initWithDefau
 
 <!-- Extracted from docs/typography-theming.md -->
 
-### Typography Theming
+### Typography Theming (To be deleted)
 
 You can theme buttons with your app's typography scheme using the TypographyThemer extension.
 
@@ -561,7 +562,7 @@ id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
 
 <!-- Extracted from docs/shape-theming.md -->
 
-### Shape Theming
+### Shape Theming (To be deleted)
 
 You can theme buttons with your app's shape scheme using the ShapeThemer extension.
 

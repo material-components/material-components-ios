@@ -1,4 +1,4 @@
-### Typography Theming
+### Typography Theming (To be deleted)
 
 You can theme buttons with your app's typography scheme using the TypographyThemer extension.
 

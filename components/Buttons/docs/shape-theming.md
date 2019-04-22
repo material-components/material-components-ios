@@ -1,4 +1,4 @@
-### Shape Theming
+### Shape Theming (To be deleted)
 
 You can theme buttons with your app's shape scheme using the ShapeThemer extension.
 
