@@ -61,8 +61,8 @@ The Material Design top app bar displays information and actions relating to the
   - [Enabling inferred top safe area insets](#enabling-inferred-top-safe-area-insets)
 - [Extensions](#extensions)
   - [Theming](#theming)
-  - [Color Theming (To be deleted)](#color-theming-(to-be-deleted))
-  - [Typography Theming (To be deleted)](#typography-theming-(to-be-deleted))
+  - [Color Theming - to be deleted](#color-theming-to-be-deleted)
+  - [Typography Theming - to be deleted](#typography-theming-to-be-deleted)
 - [Accessibility](#accessibility)
   - [MDCAppBar Accessibility](#mdcappbar-accessibility)
 - [Migration guides](#migration-guides)
@@ -688,7 +688,7 @@ MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
 
 <!-- Extracted from docs/color-theming.md -->
 
-### Color Theming (To be deleted)
+### Color Theming - to be deleted
 
 You can theme an app bar with your app's color scheme using the ColorThemer extension.
 
@@ -728,7 +728,7 @@ id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] initWithDefau
 
 <!-- Extracted from docs/typography-theming.md -->
 
-### Typography Theming (To be deleted)
+### Typography Theming - to be deleted
 
 You can theme an app bar with your app's typography scheme using the TypographyThemer extension.
 

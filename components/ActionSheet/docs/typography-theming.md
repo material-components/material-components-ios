@@ -1,4 +1,4 @@
-### Typography Theming (To be deleted)
+### Typography Theming - to be deleted
 
 You can theme an Action Sheet with your app's typography scheme using the TypographyThemer extension.
 
