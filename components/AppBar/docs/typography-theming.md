@@ -1,4 +1,4 @@
-### Typography Theming - to be deleted
+### Typography Theming (To be deleted)
 
 You can theme an app bar with your app's typography scheme using the TypographyThemer extension.
 

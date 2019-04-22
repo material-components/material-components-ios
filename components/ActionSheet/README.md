@@ -40,7 +40,7 @@ the screen and displays actions a user can take.
   - [Theming](#theming)
   - [How to theme an MDCActionSheet](#how-to-theme-an-mdcactionsheet)
   - [Color Theming (To be deleted)](#color-theming-to-be-deleted)
-  - [Typography Theming - to be deleted](#typography-theming---to-be-deleted)
+  - [Typography Theming (To be deleted)](#typography-theming-to-be-deleted)
 - [Accessibility](#accessibility)
   - [Set `-isScrimAccessibilityElement`](#set-`-isscrimaccessibilityelement`)
   - [Set `-scrimAccessibilityLabel`](#set-`-scrimaccessibilitylabel`)
@@ -268,7 +268,7 @@ MDCActionSheetController *actionSheet = [[MDCActionSheetController alloc] init];
 
 <!-- Extracted from docs/typography-theming.md -->
 
-### Typography Theming - to be deleted
+### Typography Theming (To be deleted)
 
 You can theme an Action Sheet with your app's typography scheme using the TypographyThemer extension.
 

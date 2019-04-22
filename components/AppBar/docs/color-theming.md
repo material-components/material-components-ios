@@ -1,4 +1,4 @@
-### Color Theming - to be deleted
+### Color Theming (To be deleted)
 
 You can theme an app bar with your app's color scheme using the ColorThemer extension.
 
