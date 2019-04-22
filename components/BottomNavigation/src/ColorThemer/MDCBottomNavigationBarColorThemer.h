@@ -17,31 +17,37 @@
 
 /**
  The Material Design color system's themer for instances of MDCBottomNavigationBar.
+
+ @warning This API will eventually be deprecated. There is no replacement yet.
+ Track progress here: https://github.com/material-components/material-components-ios/issues/7172
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 @interface MDCBottomNavigationBarColorThemer : NSObject
+@end
+
+@interface MDCBottomNavigationBarColorThemer (ToBeDeprecated)
 
 /**
  Applies a color scheme's properties to an MDCBottomNavigationBar.
 
  @param colorScheme The color scheme to apply to the component instance.
  @param bottomNavigation A component instance to which the color scheme should be applied.
+
+ @warning This API will eventually be deprecated. There is no replacement yet.
+ Track progress here: https://github.com/material-components/material-components-ios/issues/7172
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
               toBottomNavigation:(nonnull MDCBottomNavigationBar *)bottomNavigation;
 
-@end
-
-@interface MDCBottomNavigationBarColorThemer (ToBeDeprecated)
-
 /**
  Applies a color scheme to theme a MDCBottomNavigationBar.
-
- @warning This method will soon be deprecated. Consider using
- @c +applySemanticColorScheme:toBottomNavigation: instead. Learn more at
- components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
-
  @param colorScheme The color scheme to apply to MDCBottomNavigationBar.
  @param bottomNavigationBar A MDCBottomNavigationBar instance to apply a color scheme.
+
+ @warning This API will eventually be deprecated. There is no replacement yet.
+ Track progress here: https://github.com/material-components/material-components-ios/issues/7172
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
     toBottomNavigationBar:(nonnull MDCBottomNavigationBar *)bottomNavigationBar;

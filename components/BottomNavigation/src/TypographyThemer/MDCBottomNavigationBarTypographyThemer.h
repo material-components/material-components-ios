@@ -19,14 +19,25 @@
 
 /**
  The Material Design typography system's themer for instances of MDCBottomNavigationBar.
+
+ @warning This API will eventually be deprecated. There is no replacement yet.
+ Track progress here: https://github.com/material-components/material-components-ios/issues/7172
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 @interface MDCBottomNavigationBarTypographyThemer : NSObject
+@end
+
+@interface MDCBottomNavigationBarTypographyThemer (ToBeDeprecated)
 
 /**
  Applies a typography scheme's properties to an MDCBottomNavigationBar.
 
  @param typographyScheme The typography scheme to apply to the component instance.
  @param bottomNavigationBar A component instance to which the typography scheme should be applied.
+
+ @warning This API will eventually be deprecated. There is no replacement yet.
+ Track progress here: https://github.com/material-components/material-components-ios/issues/7172
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme
         toBottomNavigationBar:(nonnull MDCBottomNavigationBar *)bottomNavigationBar;
