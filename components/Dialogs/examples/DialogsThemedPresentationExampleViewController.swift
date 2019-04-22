@@ -19,7 +19,7 @@ import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialDialogs
 import MaterialComponents.MaterialList
 import MaterialComponents.MaterialTypographyScheme
-import MaterialComponentsBeta.MaterialButtons_Theming
+import MaterialComponents.MaterialButtons_Theming
 import MaterialComponentsBeta.MaterialDialogs_Theming
 
 class CustomDialogViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {

@@ -8,7 +8,7 @@ path: /catalog/shapes/
 api_doc_root: true
 -->
 
-<!-- This file was auto-generated using scripts/generate_readme private/Shapes -->
+<!-- This file was auto-generated using ./scripts/generate_readme Shapes -->
 
 # Shapes Core
 

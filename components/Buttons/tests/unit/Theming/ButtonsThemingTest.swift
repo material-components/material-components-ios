@@ -21,7 +21,7 @@ import MaterialComponents.MaterialShadowElevations
 import MaterialComponents.MaterialShapeScheme
 import MaterialComponents.MaterialShapeLibrary
 import MaterialComponents.MaterialTypographyScheme
-import MaterialComponentsBeta.MaterialButtons_Theming
+import MaterialComponents.MaterialButtons_Theming
 
 class ButtonsThemingTest: XCTestCase {
 
