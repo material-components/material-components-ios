@@ -40,7 +40,7 @@ many distinct button styles including text buttons, contained buttons, and float
   - [Installation with CocoaPods](#installation-with-cocoapods)
   - [Importing](#importing)
 - [Usage](#usage)
-  - [Typical use: themed buttons](#typical-use-themed-buttons)
+  - [Typical use](#typical-use)
   - [Typical use: floating action buttons](#typical-use-floating-action-buttons)
   - [Customizing elevation](#customizing-elevation)
   - [Customizing floating action buttons](#customizing-floating-action-buttons)
@@ -50,12 +50,13 @@ many distinct button styles including text buttons, contained buttons, and float
   - [How to theme an MDCButton](#how-to-theme-an-mdcbutton)
   - [How to theme an MDCFloatingButton](#how-to-theme-an-mdcfloatingbutton)
   - [How to theme a button using a themer (To be deleted)](#how-to-theme-a-button-using-a-themer-(to-be-deleted))
-  - [Color Theming (To be deleted)](#color-theming-(to-be-deleted))
-  - [Typography Theming (To be deleted)](#typography-theming-(to-be-deleted))
-  - [Shape Theming (To be deleted)](#shape-theming-(to-be-deleted))
 - [Accessibility](#accessibility)
   - [Set `-accessibilityLabel`](#set-`-accessibilitylabel`)
   - [Minimum touch size](#minimum-touch-size)
+- [To be deprecated](#to-be-deprecated)
+  - [Color Theming (To be deleted)](#color-theming-(to-be-deleted))
+  - [Typography Theming (To be deleted)](#typography-theming-(to-be-deleted))
+  - [Shape Theming (To be deleted)](#shape-theming-(to-be-deleted))
 
 - - -
 
@@ -103,35 +104,29 @@ import MaterialComponents.MaterialButtons
 
 ## Usage
 
-<!-- Extracted from docs/typical-use-themed-buttons.md -->
+<!-- Extracted from docs/typical-use.md -->
 
-### Typical use: themed buttons
+### Typical use
 
-Create an instance of `MDCButton` and theme it with as one of the Material Design button styles
-using the ButtonThemer extension. Once themed, use the button like you would use a typical UIButton
-instance.
+`MDCButton` is designed to be a drop-in replacement for UIButton, but with more options for
+customizing the button's style and behavior.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift
 let button = MDCButton()
-
-// Themed as a text button:
-MDCTextButtonThemer.applyScheme(buttonScheme, to: button)
 ```
 
 #### Objective-C
 
 ```objc
 MDCButton *button = [[MDCButton alloc] init];
-
-// Themed as a text button:
-[MDCTextButtonThemer applyScheme:buttonScheme toButton:button];
 ```
 <!--</div>-->
 
-See the [ButtonThemer documentation](docs/theming.md) for a full list of supported Material Design
-button styles.
+See the
+[MDCButton API docs](https://material.io/develop/ios/components/buttons/api-docs/Classes/MDCButton.html)
+for a complete list of features that MDCButton provides in addition to UIButton's features.
 
 <!-- Extracted from docs/typical-use-floating-action-buttons.md -->
 
@@ -139,7 +134,7 @@ button styles.
 
 MDCFloatingButton is a subclass of MDCButton that implements the Material Design floating action
 button style and behavior. Floating action buttons should be provided with a templated image for
-their normal state.
+their normal state and then themed accordingly.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -149,7 +144,6 @@ their normal state.
 let plusImage = UIImage(named: "plus").withRenderingMode(.alwaysTemplate)
 let button = MDCFloatingButton()
 button.setImage(plusImage, forState: .normal)
-MDCFloatingActionButtonThemer.applyScheme(buttonScheme, to: button)
 ```
 
 #### Objective-C
@@ -160,7 +154,6 @@ UIImage *plusImage =
     [[UIImage imageNamed:@"plus"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 MDCFloatingButton *button = [[MDCFloatingButton alloc] init];
 [button setImage:plusImage forState:UIControlStateNormal];
-[MDCFloatingActionButtonThemer applyScheme:buttonScheme toButton:button];
 ```
 <!--</div>-->
 
@@ -474,6 +467,119 @@ MDCFloatingActionButtonThemer.applyScheme(buttonScheme, to: button)
 ```
 <!--</div>-->
 
+<!-- Extracted from docs/accessibility.md -->
+
+## Accessibility
+
+To help ensure your buttons are accessible to as many users as possible, please
+be sure to review the following recommendations:
+
+### Set `-accessibilityLabel`
+
+Set an appropriate
+[`accessibilityLabel`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619577-accessibilitylabel)
+value if your button does not have a title. This is often the case with Floating
+Action Button instances which typically only have an icon.
+
+#### Objective-C
+
+```objc
+button.accessibilityLabel = @"Create";
+```
+
+#### Swift
+
+```swift
+button.accessibilityLabel = "Create"
+```
+
+### Minimum touch size
+
+Make sure that your buttons have a minimum touch area. The Material spec
+for buttons calls for buttons that have a [visual height of
+36](https://material.io/design/components/buttons.html#specs)
+and that [touch areas should be at least 48 points high and 48
+wide](https://material.io/design/layout/spacing-methods.html#touch-click-targets).
+
+#### Set the touch size
+
+To keep a button's visual sizes small with larger touchable areas, set the
+`hitAreaInsets` to a negative value. Be careful to maintain sufficient distance
+between the button touch targets. This will allow your button to have [a large
+enough touch
+target](https://material.io/design/layout/spacing-methods.html#touch-click-targets)
+while maintaining the desired visual appearance. For more see the [Touch and click
+targets](https://material.io/design/layout/spacing-methods.html#touch-click-targets)
+in the spec.
+
+##### Objective-C
+
+```objc
+CGFloat verticalInset = MIN(0, -(48 - CGRectGetHeight(button.bounds)) / 2);
+CGFloat horizontalInset = MIN(0, -(48 - CGRectGetWidth(button.bounds)) / 2);
+button.hitAreaInsets = UIEdgeInsetsMake(verticalInset, horizontalInset, verticalInset, horizontalInset);
+```
+
+##### Swift
+
+```swift
+let buttonVerticalInset =
+min(0, -(kMinimumAccessibleButtonSize.height - button.bounds.height) / 2);
+let buttonHorizontalInset =
+min(0, -(kMinimumAccessibleButtonSize.width - button.bounds.width) / 2);
+button.hitAreaInsets =
+UIEdgeInsetsMake(buttonVerticalInset, buttonHorizontalInset,
+buttonVerticalInset, buttonHorizontalInset);
+```
+
+#### Set the minimum visual size of the button
+
+Set your buttons to have a minimum size. [Material Buttons
+guidelines](https://material.io/design/components/buttons.html#specs)
+typically recommend [a minimum height of 36 points and a minimum width of 64
+points](https://material.io/design/components/buttons.html#specs).
+
+##### Objective-C
+
+```objc
+button.minimumSize = CGSizeMake(64, 36);
+```
+
+##### Swift
+
+```swift
+button.minimumSize = CGSize(width: 64, height: 48)
+```
+
+##### Exceptions
+
+However there are
+[some](https://material.io/design/components/buttons.html#toggle-button) clear
+[exceptions](https://material.io/design/components/app-bars-bottom.html#specs)
+for these rules. Please adjust your buttons sizes accordingly.
+
+#### Using `accessibilityHint`
+
+Apple rarely recommends using the `accessibilityHint` because the label should
+already be clear enough to indicate what will happen. Before you consider
+setting an `-accessibilityHint` consider if you need it or if the rest of your
+UI could be adjusted to make it more contextually clear.
+
+A well-crafted, thoughtful user interface can remove the need for
+`accessibilityHint` in most situations. Examples for a selection dialog to
+choose one or more days of the week for a repeating calendar event:
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item">  (Good) The dialog includes a header above the list of days reading, "Event</li>
+repeats weekly on the following day(s)." The list items do not need
+`accessibilityHint` values.
+  <li class="icon-list-item icon-list-item">  (Bad) The dialog has no header above the list of days. Each list item</li>
+(representing a day of the week) has the `accessibilityHint` value, "Toggles
+this day."
+
+
+## To be deprecated
+
 <!-- Extracted from docs/color-theming.md -->
 
 ### Color Theming (To be deleted)
@@ -602,115 +708,4 @@ id<MDCShapeScheming> shapeScheme = [[MDCShapeScheme alloc] init];
      toButton:component];
 ```
 <!--</div>-->
-
-
-<!-- Extracted from docs/accessibility.md -->
-
-## Accessibility
-
-To help ensure your buttons are accessible to as many users as possible, please
-be sure to review the following recommendations:
-
-### Set `-accessibilityLabel`
-
-Set an appropriate
-[`accessibilityLabel`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619577-accessibilitylabel)
-value if your button does not have a title. This is often the case with Floating
-Action Button instances which typically only have an icon.
-
-#### Objective-C
-
-```objc
-button.accessibilityLabel = @"Create";
-```
-
-#### Swift
-
-```swift
-button.accessibilityLabel = "Create"
-```
-
-### Minimum touch size
-
-Make sure that your buttons have a minimum touch area. The Material spec
-for buttons calls for buttons that have a [visual height of
-36](https://material.io/design/components/buttons.html#specs)
-and that [touch areas should be at least 48 points high and 48
-wide](https://material.io/design/layout/spacing-methods.html#touch-click-targets).
-
-#### Set the touch size
-
-To keep a button's visual sizes small with larger touchable areas, set the
-`hitAreaInsets` to a negative value. Be careful to maintain sufficient distance
-between the button touch targets. This will allow your button to have [a large
-enough touch
-target](https://material.io/design/layout/spacing-methods.html#touch-click-targets)
-while maintaining the desired visual appearance. For more see the [Touch and click
-targets](https://material.io/design/layout/spacing-methods.html#touch-click-targets)
-in the spec.
-
-##### Objective-C
-
-```objc
-CGFloat verticalInset = MIN(0, -(48 - CGRectGetHeight(button.bounds)) / 2);
-CGFloat horizontalInset = MIN(0, -(48 - CGRectGetWidth(button.bounds)) / 2);
-button.hitAreaInsets = UIEdgeInsetsMake(verticalInset, horizontalInset, verticalInset, horizontalInset);
-```
-
-##### Swift
-
-```swift
-let buttonVerticalInset =
-min(0, -(kMinimumAccessibleButtonSize.height - button.bounds.height) / 2);
-let buttonHorizontalInset =
-min(0, -(kMinimumAccessibleButtonSize.width - button.bounds.width) / 2);
-button.hitAreaInsets =
-UIEdgeInsetsMake(buttonVerticalInset, buttonHorizontalInset,
-buttonVerticalInset, buttonHorizontalInset);
-```
-
-#### Set the minimum visual size of the button
-
-Set your buttons to have a minimum size. [Material Buttons
-guidelines](https://material.io/design/components/buttons.html#specs)
-typically recommend [a minimum height of 36 points and a minimum width of 64
-points](https://material.io/design/components/buttons.html#specs).
-
-##### Objective-C
-
-```objc
-button.minimumSize = CGSizeMake(64, 36);
-```
-
-##### Swift
-
-```swift
-button.minimumSize = CGSize(width: 64, height: 48)
-```
-
-##### Exceptions
-
-However there are
-[some](https://material.io/design/components/buttons.html#toggle-button) clear
-[exceptions](https://material.io/design/components/app-bars-bottom.html#specs)
-for these rules. Please adjust your buttons sizes accordingly.
-
-#### Using `accessibilityHint`
-
-Apple rarely recommends using the `accessibilityHint` because the label should
-already be clear enough to indicate what will happen. Before you consider
-setting an `-accessibilityHint` consider if you need it or if the rest of your
-UI could be adjusted to make it more contextually clear.
-
-A well-crafted, thoughtful user interface can remove the need for
-`accessibilityHint` in most situations. Examples for a selection dialog to
-choose one or more days of the week for a repeating calendar event:
-
-<ul class="icon-list">
-  <li class="icon-list-item icon-list-item">  (Good) The dialog includes a header above the list of days reading, "Event</li>
-repeats weekly on the following day(s)." The list items do not need
-`accessibilityHint` values.
-  <li class="icon-list-item icon-list-item">  (Bad) The dialog has no header above the list of days. Each list item</li>
-(representing a day of the week) has the `accessibilityHint` value, "Toggles
-this day."
 
