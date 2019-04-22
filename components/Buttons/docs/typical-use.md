@@ -1,7 +1,8 @@
 ### Typical use
 
-`MDCButton` is designed to be a drop-in replacement for UIButton, but with more options for
-customizing the button's style and behavior.
+`MDCButton` is a subclass of UIButton, but with more options for customizing the button's style and
+behavior. To initialize an MDCButton, you must alloc/init an instance directly instead of using
+`buttonWithType:`, which has been marked unavailable.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
