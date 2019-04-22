@@ -57,8 +57,6 @@ Material UIAlertController please see the `MDCAlertController` class.
 
 - [Theming](theming.md)
 
-## Accessibility
-
 - [Accessibility](accessibility.md)
 
 ## Unsupported

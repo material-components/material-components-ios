@@ -40,7 +40,6 @@ the screen and displays actions a user can take.
   - [Theming](#theming)
   - [How to theme an MDCActionSheet](#how-to-theme-an-mdcactionsheet)
 - [Accessibility](#accessibility)
-- [Accessibility](#accessibility)
   - [Set `-isScrimAccessibilityElement`](#set-`-isscrimaccessibilityelement`)
   - [Set `-scrimAccessibilityLabel`](#set-`-scrimaccessibilitylabel`)
   - [Set `-scrimAccessibilityHint`](#set-`-scrimaccessibilityhint`)
@@ -226,8 +225,6 @@ actionSheet.applyTheme(withScheme: containerScheme)
 
 
 
-
-## Accessibility
 
 <!-- Extracted from docs/accessibility.md -->
 
