@@ -20,19 +20,24 @@
 /**
  Used to apply a font scheme to theme MDCTabBar.
 
- @warning This class will soon be deprecated. Please consider using MDCTabBarTypographyThemer
- instead.
+ @warning This API will eventually be deprecated. See the individual method documentation for
+ details on replacement APIs.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 @interface MDCTabBarFontThemer : NSObject
+@end
+
+@interface MDCTabBarFontThemer (ToBeDeprecated)
 
 /**
  Applies a font scheme to theme a MDCTabBar.
 
- @warning This API will soon be deprecated. Please consider using MDCTabBarTypographyThemer
- instead.
-
  @param fontScheme The font scheme to apply to MDCTabBar.
  @param tabBar A MDCTabBar instance to apply a color scheme.
+
+ @warning This API will eventually be deprecated. The replacement API is any `MDCTabBar` theming
+ extension.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyFontScheme:(nonnull id<MDCFontScheme>)fontScheme toTabBar:(nonnull MDCTabBar *)tabBar;
 
