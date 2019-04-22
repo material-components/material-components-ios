@@ -4,7 +4,13 @@ You can theme an MDCActionSheet to match the Material Design style by using a th
 
 ### How to theme an MDCActionSheet
 
-First, create an action sheet and import the theming extension header for Action Sheets.
+First, add the pod extension to your project.
+
+```bash
+pod `MaterialComponents/ActionSheet+Theming`
+```
+
+Then, create an action sheet and import the theming extension header for Action Sheets.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -19,7 +25,7 @@ let actionSheet = MDCActionSheetController()
 
 ```objc
 #import <MaterialComponents/MaterialActionSheet.h>
-#import <MaterialComponentsBeta/MaterialActionSheet+Theming.h>
+#import <MaterialComponents/MaterialActionSheet+Theming.h>
 
 MDCActionSheetController *actionSheet = [[MDCActionSheetController alloc] init];
 ```
