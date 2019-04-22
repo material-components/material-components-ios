@@ -50,7 +50,7 @@ many distinct button styles including text buttons, contained buttons, and float
 - [Accessibility](#accessibility)
   - [Set `-accessibilityLabel`](#set-`-accessibilitylabel`)
   - [Minimum touch size](#minimum-touch-size)
-- [To be deprecated](#to-be-deprecated)
+- [Unsupported](#unsupported)
   - [How to theme a button using a themer](#how-to-theme-a-button-using-a-themer)
   - [Color Theming](#color-theming)
   - [Typography Theming](#typography-theming)
@@ -456,7 +456,7 @@ repeats weekly on the following day(s)." The list items do not need
 this day."
 
 
-## To be deprecated
+## Unsupported
 
 <!-- Extracted from docs/theming-with-themers.md -->
 

@@ -35,7 +35,7 @@ elevation, Material Design ripples, and other stateful design APIs.
 - [Theming](theming.md)
 - [Accessibility](accessibility.md)
 
-## To be deprecated
+## Unsupported
 
 - [How to theme a button using a themer](theming-with-themers.md)
 - [Color Theming](color-theming.md)
