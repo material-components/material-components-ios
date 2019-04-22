@@ -29,7 +29,7 @@ class DialogsAlertComparisonExample: UIViewController {
   private let materialButton = MDCButton()
   private let themedButton = MDCButton()
   private let uikitButton = MDCButton()
-  var containerScheme: MDCContainerScheming = MDCContainerScheme()
+  @objc var containerScheme: MDCContainerScheming = MDCContainerScheme()
 
   override func viewDidLoad() {
     super.viewDidLoad()
