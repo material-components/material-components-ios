@@ -36,7 +36,6 @@
  @param underlineColor the underline color.
  @param state the state.
  */
-- (void)setUnderlineColor:(UIColor *)underlineColor
-                 forState:(MDCContainedInputViewState)state;
+- (void)setUnderlineColor:(UIColor *)underlineColor forState:(MDCContainedInputViewState)state;
 
 @end
