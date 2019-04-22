@@ -98,7 +98,7 @@ MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
 containerScheme.colorScheme.primaryColor = [UIColor redColor];
 
 // Or assign a customized scheme instance:
-let shapeScheme = MDCShapeScheme()
+MDCShapeScheme *shapeScheme = [[MDCShapeScheme alloc] init];
 containerScheme.shapeScheme = shapeScheme
 ```
 <!--</div>-->

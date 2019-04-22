@@ -21,7 +21,7 @@ import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialDialogs
 import MaterialComponents.MaterialPalettes
 import MaterialComponents.MaterialTypographyScheme
-import MaterialComponentsBeta.MaterialButtons_Theming
+import MaterialComponents.MaterialButtons_Theming
 import MaterialComponentsBeta.MaterialDialogs_Theming
 import MaterialComponents.MaterialPalettes
 

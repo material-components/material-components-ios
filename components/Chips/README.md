@@ -8,7 +8,7 @@ path: /catalog/chips/
 api_doc_root: true
 -->
 
-<!-- This file was auto-generated using scripts/generate_readme Chips -->
+<!-- This file was auto-generated using ./scripts/generate_readme Chips -->
 
 # Chips
 
