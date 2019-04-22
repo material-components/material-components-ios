@@ -69,7 +69,7 @@ See the [FlexibleHeader](../../FlexibleHeader) documentation for additional usag
 
 ## Extensions
 
-- [Theming Extensions](theming-extensions.md)
+- [Theming](theming.md)
 - [Color Theming](color-theming.md)
 - [Typography Theming](typography-theming.md)
 
