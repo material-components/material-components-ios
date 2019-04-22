@@ -32,6 +32,27 @@ By default, components have reasonable defaults for all of their customizable pr
 `backgroundColor` or `titleFont`. Theming extensions are the recommended way to express your brand
 through Material Theming.
 
+### How to get the code
+
+#### Beta components
+
+In order to use the theming extensions you'll need to follow [these](../../contributing/beta_components.md) 
+instructions since they are currently in beta.
+
+#### Cocoapods
+
+In order to use the components and subsystem schemes you'll need to add both the component and its
+related Theming extension as a dependency. Theming extensions, when available, always have a suffix
+of `+Theming`. For example, to add Buttons and its Theming extension:
+
+<!--<div class="material-code-render" markdown="1">-->
+
+```bash
+pod 'MaterialComponents/Buttons'
+pod 'MaterialComponents/Buttons+Theming'
+```
+<!--</div>-->
+
 ### Schemes
 
 <ul class="icon-list">
@@ -161,25 +182,6 @@ extension MyViewController {
 - (void)applyThemeWithContainerScheme:(id<MDCContainerScheming>)containerScheme {
   // Apply the theme where applicable.
 }
-```
-<!--</div>-->
-
-### How to get the code
-
-#### Beta components
-
-In order to use the theming extensions you'll need to follow [these](../../contributing/beta_components.md) 
-instructions since they are currently in beta.
-
-#### Cocoapods
-
-In order to use the components and subsystem schemes you'll need to add the targets to your Podfile:
-
-<!--<div class="material-code-render" markdown="1">-->
-
-```bash
-pod 'MaterialComponents/Buttons'
-pod 'MaterialComponents/schemes/Color'
 ```
 <!--</div>-->
 
