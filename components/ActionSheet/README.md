@@ -171,7 +171,7 @@ Material UIAlertController please see the `MDCAlertController` class.
 
 ### Theming
 
-You can theme an MDCActionSheet to match the Material Design style by using a theming extension. The content below assumes you have read the article on [Theming](docs/../docs/theming.md).
+You can theme an MDCActionSheet to match the Material Design style by using a theming extension. The content below assumes you have read the article on [Theming](docs/../../docs/theming.md).
 
 ### How to theme an MDCActionSheet
 
