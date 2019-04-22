@@ -7,9 +7,7 @@ pod 'MaterialComponents/TextFields+Theming'
 ```
 
 Then import the theming extension and the `MDCContainerScheme` and create an `MDCContainerScheme` instance. A container scheme
-defines schemes for subsystems like Color and Typography.
-
-Finally, call theming methods on the theming extension of your MDCTextInputController instance.
+defines schemes for subsystems like Color and Typography. Finally, call theming methods on the theming extension of your MDCTextInputController instance.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
