@@ -2,7 +2,7 @@
 
 You can theme an MDCButton to match one of the Material Design button styles using button theming
 extensions. The content below assumes that you have read the article on
-[Theming](../../docs/theming.md).
+[Theming](../../../docs/theming.md).
 
 ### How to theme an MDCButton
 
