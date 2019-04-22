@@ -1,4 +1,4 @@
-### Color Theming (To be deleted)
+### Color Theming
 
 You can theme an Action Sheet with your app's color scheme using the ColorThemer extension.
 

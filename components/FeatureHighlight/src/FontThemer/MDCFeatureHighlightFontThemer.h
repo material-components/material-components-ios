@@ -22,19 +22,24 @@
 /**
  Used to apply a font scheme to theme to MDCFeatureHighlightView.
 
- @warning This class will soon be deprecated. Please consider using
- MDCFeatureHighlightTypographyThemer instead.
+ @warning This API will eventually be deprecated. See the individual method documentation for
+ details on replacement APIs.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 @interface MDCFeatureHighlightFontThemer : NSObject
+@end
+
+@interface MDCFeatureHighlightFontThemer (ToBeDeprecated)
 
 /**
  Applies a font scheme to theme to a MDCFeatureHighlightView.
 
- @warning This API will soon be deprecated. Please consider using
- MDCFeatureHighlightTypographyThemer instead.
-
  @param fontScheme The font scheme to apply to MDCFeatureHighlightView.
  @param featureHighlightView A MDCFeatureHighlightView instance to apply a font scheme.
+
+ @warning This API will eventually be deprecated. There is no replacement yet.
+ Track progress here: https://github.com/material-components/material-components-ios/issues/7172
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyFontScheme:(nonnull id<MDCFontScheme>)fontScheme
     toFeatureHighlightView:(nonnull MDCFeatureHighlightView *)featureHighlightView;

@@ -19,8 +19,15 @@
 
 /**
  The Material Design color system's themer for instances of MDCFeatureHighlightViewController.
+
+ @warning This API will eventually be deprecated. See the individual method documentation for
+ details on replacement APIs.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 @interface MDCFeatureHighlightColorThemer : NSObject
+@end
+
+@interface MDCFeatureHighlightColorThemer (ToBeDeprecated)
 
 /**
  Applies a color scheme's properties to an MDCFeatureHighlightViewController.
@@ -28,24 +35,24 @@
  @param colorScheme The color scheme to apply to the component instance.
  @param featureHighlightViewController A component instance to which the color scheme should be
  applied.
+
+ @warning This API will eventually be deprecated. There is no replacement yet.
+ Track progress here: https://github.com/material-components/material-components-ios/issues/7172
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
     toFeatureHighlightViewController:
         (nonnull MDCFeatureHighlightViewController *)featureHighlightViewController;
 
-@end
-
-@interface MDCFeatureHighlightColorThemer (ToBeDeprecated)
-
 /**
  Applies a color scheme to theme to a MDCFeatureHighlightView.
 
- @warning This method will soon be deprecated. Consider using
- @c applySemanticColorScheme:toFeatureHighlightViewController: instead. Learn more at
- components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
-
  @param colorScheme The color scheme to apply to MDCFeatureHighlightView.
  @param featureHighlightView A MDCFeatureHighlightView instance to apply a color scheme.
+
+ @warning This API will eventually be deprecated. There is no replacement yet.
+ Track progress here: https://github.com/material-components/material-components-ios/issues/7172
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
     toFeatureHighlightView:(nonnull MDCFeatureHighlightView *)featureHighlightView;

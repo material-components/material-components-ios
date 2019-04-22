@@ -19,6 +19,9 @@
 
 /**
  The Material Design typography system's themer for instances of MDCAlertController.
+
+ @warning This API is deprecated. Learn more at
+ docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 __deprecated_msg("Please use MaterialDialogs+Theming.") @interface MDCAlertTypographyThemer
     : NSObject

@@ -21,9 +21,14 @@
  A color themer for MDCBottomAppBarView. This API does not fully implement the Material Design color
  system.
 
- @seealso https://github.com/material-components/material-components-ios/issues/3929
+ @warning This API will eventually be deprecated. There is no replacement yet.
+ Track progress here: https://github.com/material-components/material-components-ios/issues/7172
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 @interface MDCBottomAppBarColorThemer : NSObject
+@end
+
+@interface MDCBottomAppBarColorThemer (ToBeDeprecated)
 
 /**
  Applies a color scheme to theme an MDCBottomAppBarView using the "surface" variant theming. The
@@ -32,23 +37,23 @@
 
  @param colorScheme a color scheme to apply to the bottom app bar.
  @param bottomAppBarView the bottom app bar to theme.
+
+ @warning This API will eventually be deprecated. There is no replacement yet.
+ Track progress here: https://github.com/material-components/material-components-ios/issues/7172
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applySurfaceVariantWithSemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                                 toBottomAppBarView:(nonnull MDCBottomAppBarView *)bottomAppBarView;
 
-@end
-
-@interface MDCBottomAppBarColorThemer (ToBeDeprecated)
-
 /**
  Applies a color scheme to theme a MDCBottomAppBarView.
 
- @warning This method will soon be deprecated. Use
- @c applySurfaceVariantWithSemanticColorScheme:toBottomAppBarView: instead. Learn more at
- components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
-
  @param colorScheme The color scheme to apply to the component instance.
  @param bottomAppBarView A component instance to which the color scheme should be applied.
+
+ @warning This API will eventually be deprecated. There is no replacement yet.
+ Track progress here: https://github.com/material-components/material-components-ios/issues/7172
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
       toBottomAppBarView:(nonnull MDCBottomAppBarView *)bottomAppBarView;
