@@ -51,7 +51,6 @@ through Material Theming.
 ```swift
 import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialButtons_Theming
-import MaterialComponents.MaterialContainerScheme
 
 let containerScheme = MDCContainerScheme()
 let button = MDCButton()
@@ -63,7 +62,6 @@ button.applyTextTheme(withScheme: containerScheme)
 ```objc
 #import <MaterialComponents/MaterialButtons.h>
 #import <MaterialComponents/MaterialButtons+Theming.h>
-#import <MaterialComponents/MaterialContainerScheme.h>
 
 MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
 MDCButton *button = [[MDCButton alloc] init];
