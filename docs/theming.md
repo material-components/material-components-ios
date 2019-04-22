@@ -71,7 +71,7 @@ pod 'MaterialComponents/Buttons+Theming'
 
 ```swift
 import MaterialComponents.MaterialButtons
-import MaterialComponentsBeta.MaterialButtons_Theming
+import MaterialComponents.MaterialButtons_Theming
 
 let containerScheme = MDCContainerScheme()
 let button = MDCButton()
@@ -116,7 +116,7 @@ containerScheme.shapeScheme = shapeScheme
 MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
 
 // You can directly configure scheme properties
-containerScheme.colorScheme.primaryColor = [UIColor redColor];
+containerScheme.colorScheme.primaryColor = UIColor.redColor;
 
 // Or assign a customized scheme instance:
 MDCShapeScheme *shapeScheme = [[MDCShapeScheme alloc] init];
