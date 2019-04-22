@@ -60,9 +60,9 @@ The Material Design top app bar displays information and actions relating to the
   - [Enabling top layout guide adjustment](#enabling-top-layout-guide-adjustment)
   - [Enabling inferred top safe area insets](#enabling-inferred-top-safe-area-insets)
 - [Extensions](#extensions)
-  - [Color Theming](#color-theming)
-  - [Typography Theming](#typography-theming)
-  - [Theming Extensions (Beta)](#theming-extensions-(beta))
+  - [Color Theming (To Be Deprecated)](#color-theming-(to-be-deprecated))
+  - [Typography Theming (To Be Deprecated)](#typography-theming-(to-be-deprecated))
+  - [Theming Extensions](#theming-extensions)
 - [Accessibility](#accessibility)
   - [MDCAppBar Accessibility](#mdcappbar-accessibility)
 - [Migration guides](#migration-guides)
@@ -639,7 +639,7 @@ See the [FlexibleHeader](../FlexibleHeader) documentation for additional usage g
 
 <!-- Extracted from docs/color-theming.md -->
 
-### Color Theming
+### Color Theming (To Be Deprecated)
 
 You can theme an app bar with your app's color scheme using the ColorThemer extension.
 
@@ -679,7 +679,7 @@ id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] initWithDefau
 
 <!-- Extracted from docs/typography-theming.md -->
 
-### Typography Theming
+### Typography Theming (To Be Deprecated)
 
 You can theme an app bar with your app's typography scheme using the TypographyThemer extension.
 
@@ -719,11 +719,9 @@ id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
 
 <!-- Extracted from docs/theming-extensions.md -->
 
-### Theming Extensions (Beta)
+### Theming Extensions
 
-`MDCAppBarViewController` supports Material Theming using a Container Scheme. The code is currently
-in Beta readiness, which means you will need to follow the [instructions for adding the
-MaterialComponentsBeta podspec to your project](https://github.com/material-components/material-components-ios/blob/develop/contributing/beta_components.md).
+`MDCAppBarViewController` supports Material Theming using a Container Scheme.
 There are two variants for Material Theming of an AppBar.  The Surface Variant colors the App Bar
 background to be `surfaceColor` and the Primary Variant colors the App Bar background to be
 `primaryColor`.
@@ -734,7 +732,7 @@ background to be `surfaceColor` and the Primary Variant colors the App Bar backg
 
 ```swift
 // Import the AppBar Theming Extensions module
-import MaterialComponentsBeta.MaterialAppBar_MaterialTheming
+import MaterialComponents.MaterialAppBar_MaterialTheming
 
 ...
 
@@ -752,7 +750,7 @@ appBarViewController.applySurfaceTheme(withScheme: containerScheme)
 
 ```objc
 // Import the AppBar Theming Extensions header
-#import <MaterialComponentsBeta/MaterialAppBar+MaterialTheming.h>
+#import "MaterialAppBar+MaterialTheming.h"
 
 ...
 
