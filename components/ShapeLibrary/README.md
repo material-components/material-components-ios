@@ -8,7 +8,7 @@ path: /catalog/shapelibrary/
 api_doc_root: true
 -->
 
-<!-- This file was auto-generated using scripts/generate_readme private/ShapeLibrary -->
+<!-- This file was auto-generated using ./scripts/generate_readme ShapeLibrary -->
 
 # Shape Library
 
