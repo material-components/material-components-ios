@@ -19,14 +19,25 @@
 
 /**
  The Material Design shape system's themer for instances of MDCCard and MDCCardCollectionCell.
+
+ @warning This API will eventually be deprecated. See the individual method documentation for
+ details on replacement APIs.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 @interface MDCCardsShapeThemer : NSObject
+@end
+
+@interface MDCCardsShapeThemer (ToBeDeprecated)
 
 /**
  Applies a shape scheme's properties to an MDCCard.
 
  @param shapeScheme The shape scheme to apply to the component instance.
  @param card A component instance to which the shape scheme should be applied.
+
+ @warning This API will eventually be deprecated. The replacement API is any of `MDCCard`'s theming
+ extensions.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyShapeScheme:(nonnull id<MDCShapeScheming>)shapeScheme toCard:(nonnull MDCCard *)card;
 
@@ -35,6 +46,10 @@
 
  @param shapeScheme The shape scheme to apply to the component instance.
  @param cardCell A component instance to which the shape scheme should be applied.
+
+ @warning This API will eventually be deprecated. The replacement API is any of
+ `MDCCardCollectionCell`'s theming extensions.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyShapeScheme:(nonnull id<MDCShapeScheming>)shapeScheme
               toCardCell:(nonnull MDCCardCollectionCell *)cardCell;
