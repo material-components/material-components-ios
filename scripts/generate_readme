@@ -204,7 +204,7 @@ echo "Rewriting paths..."
 # Rewrite relative paths
 perl -pi -e "s|\(\.\./|(|g" "$TMP_README_PATH"
 perl -pi -e "s|href=\"\.\./|href=\"|g" "$TMP_README_PATH"
-perl -pi -e "s|\[(.+)\]\((.+)\.md\)|[\1](docs/\2.md)|g" "$TMP_README_PATH"
+perl -pi -e "s|\[(.+)\]\((\w+)\.md\)|[\1](docs/\2.md)|g" "$TMP_README_PATH"
 
 # Rewrite asset paths
 perl -pi -e "s|src=\"assets|src=\"docs/assets|g" "$TMP_README_PATH"
