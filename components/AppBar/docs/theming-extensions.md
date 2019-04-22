@@ -11,7 +11,7 @@ background to be `surfaceColor` and the Primary Variant colors the App Bar backg
 
 ```swift
 // Import the AppBar Theming Extensions module
-import MaterialComponents.MaterialAppBar_MaterialTheming
+import MaterialComponents.MaterialAppBar_Theming
 
 ...
 
@@ -29,7 +29,7 @@ appBarViewController.applySurfaceTheme(withScheme: containerScheme)
 
 ```objc
 // Import the AppBar Theming Extensions header
-#import "MaterialAppBar+MaterialTheming.h"
+#import "MaterialAppBar+Theming.h"
 
 ...
 
