@@ -19,14 +19,25 @@
 
 /**
  The Material Design color system's themer for instances of MDCCard and MDCCardCollectionCell.
+
+ @warning This API will eventually be deprecated. See the individual method documentation for
+ details on replacement APIs.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 @interface MDCCardsColorThemer : NSObject
+@end
+
+@interface MDCCardsColorThemer (ToBeDeprecated)
 
 /**
  Applies a color scheme's properties to an MDCCard.
 
  @param colorScheme The color scheme to apply to the component instance.
  @param card A component instance to which the color scheme should be applied.
+
+ @warning This API will eventually be deprecated. The replacement API is:
+ `MDCCard`'s `-applyThemeWithScheme:`
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                           toCard:(nonnull MDCCard *)card;
@@ -36,6 +47,10 @@
 
  @param colorScheme The color scheme to apply to the component instance.
  @param cardCell A component instance to which the color scheme should be applied.
+
+ @warning This API will eventually be deprecated. The replacement API is:
+ `MDCCardCollectionCell`'s `-applyThemeWithScheme:`
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                       toCardCell:(nonnull MDCCardCollectionCell *)cardCell;
@@ -45,6 +60,10 @@
 
  @param colorScheme The color scheme to apply to MDCCard.
  @param card An MDCCard instance to which the color scheme should be applied.
+
+ @warning This API will eventually be deprecated. The replacement API is:
+ `MDCCard`'s `-applyOutlinedThemeWithScheme:`
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyOutlinedVariantWithColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                                      toCard:(nonnull MDCCard *)card;
@@ -54,6 +73,10 @@
 
  @param colorScheme The color scheme to apply to MDCCardCollectionCell.
  @param cardCell An MDCCardCollectionCell instance to which the color scheme should be applied.
+
+ @warning This API will eventually be deprecated. The replacement API is:
+ `MDCCardCollectionCell`'s `-applyOutlinedThemeWithScheme:`
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyOutlinedVariantWithColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                                  toCardCell:(nonnull MDCCardCollectionCell *)cardCell;

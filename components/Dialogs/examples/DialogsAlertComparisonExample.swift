@@ -16,10 +16,10 @@ import UIKit
 
 import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialColorScheme
+import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialDialogs
 import MaterialComponents.MaterialTypographyScheme
-import MaterialComponentsBeta.MaterialButtons_Theming
-import MaterialComponentsBeta.MaterialContainerScheme
+import MaterialComponents.MaterialButtons_Theming
 import MaterialComponentsBeta.MaterialDialogs_Theming
 
 /// This interface allows a user to present a UIKit Alert Controller and a Material Alert
@@ -29,7 +29,7 @@ class DialogsAlertComparisonExample: UIViewController {
   private let materialButton = MDCButton()
   private let themedButton = MDCButton()
   private let uikitButton = MDCButton()
-  var containerScheme: MDCContainerScheming = MDCContainerScheme()
+  @objc var containerScheme: MDCContainerScheming = MDCContainerScheme()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -87,7 +87,7 @@ class DialogsAlertComparisonExample: UIViewController {
       ])
 
       uikitButton.translatesAutoresizingMaskIntoConstraints = false
-      uikitButton.setTitle("UIKit Alert", for: UIControlState())
+      uikitButton.setTitle("UIKit Alert", for: UIControl.State())
       uikitButton.setTitleColor(UIColor(white: 0.1, alpha:1), for: .normal)
       uikitButton.sizeToFit()
       uikitButton.addTarget(self, action: #selector(tapUIKit), for: .touchUpInside)
@@ -192,7 +192,7 @@ class DialogsAlertComparisonExample: UIViewController {
 // MARK: Catalog by convention
 extension DialogsAlertComparisonExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Dialogs", "Alert Comparison"],
       "primaryDemo": false,

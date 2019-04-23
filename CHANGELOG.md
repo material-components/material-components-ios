@@ -1,3 +1,940 @@
+# 83.0.0
+
+This major release graduates most Theming Extensions from Beta and includes a breaking change for
+AppBar's imports. All Themer APIs have been annotated as "to be deprecated" in lieu of Theming
+extensions. The following Theming Extensions are now generally available:
+
+- ActionSheet
+- AppBar
+- Buttons
+- Cards
+- Chips
+- Tabs
+- TextFields
+- Container scheme
+
+## Breaking changes
+
+AppBar's Theming extension header has changed, so you may need to update your import statements
+accordingly:
+
+#### Swift
+
+```diff
+- import MaterialComponents.MaterialAppBar_MaterialTheming
++ import MaterialComponents.MaterialAppBar_Theming
+```
+
+#### ObjC
+
+```diff
+- #import "MaterialAppBar+MaterialTheming.h"
++ #import "MaterialAppBar+Theming.h"
+```
+
+## API changes
+
+### ActivityIndicator+ColorThemer
+
+#### MDCActivityIndicatorColorThemer(ToBeDeprecated)
+
+*modified* class method: `+applySemanticColorScheme:toActivityIndicator:` in `MDCActivityIndicatorColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCActivityIndicatorColorThemer` |
+| To: | `c:objc(cy)MDCActivityIndicatorColorThemer@ToBeDeprecated` |
+
+### AppBar+ColorThemer
+
+#### MDCAppBarColorThemer(ToBeDeprecated)
+
+*modified* class method: `+applySurfaceVariantWithColorScheme:toAppBarViewController:` in `MDCAppBarColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCAppBarColorThemer` |
+| To: | `c:objc(cy)MDCAppBarColorThemer@ToBeDeprecated` |
+
+*modified* class method: `+applyColorScheme:toAppBarViewController:` in `MDCAppBarColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCAppBarColorThemer` |
+| To: | `c:objc(cy)MDCAppBarColorThemer@ToBeDeprecated` |
+
+### AppBar+TypographyThemer
+
+#### MDCAppBarTypographyThemer(ToBeDeprecated)
+
+*modified* class method: `+applyTypographyScheme:toAppBarViewController:` in `MDCAppBarTypographyThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCAppBarTypographyThemer` |
+| To: | `c:objc(cy)MDCAppBarTypographyThemer@ToBeDeprecated` |
+
+### BottomAppBar+ColorThemer
+
+#### MDCBottomAppBarColorThemer(ToBeDeprecated)
+
+*modified* class method: `+applySurfaceVariantWithSemanticColorScheme:toBottomAppBarView:` in `MDCBottomAppBarColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCBottomAppBarColorThemer` |
+| To: | `c:objc(cy)MDCBottomAppBarColorThemer@ToBeDeprecated` |
+
+### BottomNavigation+ColorThemer
+
+#### MDCBottomNavigationBarColorThemer(ToBeDeprecated)
+
+*modified* class method: `+applySemanticColorScheme:toBottomNavigation:` in `MDCBottomNavigationBarColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCBottomNavigationBarColorThemer` |
+| To: | `c:objc(cy)MDCBottomNavigationBarColorThemer@ToBeDeprecated` |
+
+### BottomNavigation+TypographyThemer
+
+#### MDCBottomNavigationBarTypographyThemer(ToBeDeprecated)
+
+*new* category: `MDCBottomNavigationBarTypographyThemer(ToBeDeprecated)`
+
+*modified* class method: `+applyTypographyScheme:toBottomNavigationBar:` in `MDCBottomNavigationBarTypographyThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCBottomNavigationBarTypographyThemer` |
+| To: | `c:objc(cy)MDCBottomNavigationBarTypographyThemer@ToBeDeprecated` |
+
+### BottomSheet+ShapeThemer
+
+#### MDCBottomSheetControllerShapeThemer(ToBeDeprecated)
+
+*new* category: `MDCBottomSheetControllerShapeThemer(ToBeDeprecated)`
+
+*modified* class method: `+applyShapeScheme:toBottomSheetController:` in `MDCBottomSheetControllerShapeThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCBottomSheetControllerShapeThemer` |
+| To: | `c:objc(cy)MDCBottomSheetControllerShapeThemer@ToBeDeprecated` |
+
+### ButtonBar+ColorThemer
+
+#### MDCButtonBarColorThemer(ToBeDeprecated)
+
+*modified* class method: `+applySemanticColorScheme:toButtonBar:` in `MDCButtonBarColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCButtonBarColorThemer` |
+| To: | `c:objc(cy)MDCButtonBarColorThemer@ToBeDeprecated` |
+
+### ButtonBar+TypographyThemer
+
+#### MDCButtonBarTypographyThemer(ToBeDeprecated)
+
+*new* category: `MDCButtonBarTypographyThemer(ToBeDeprecated)`
+
+*modified* class method: `+applyTypographyScheme:toButtonBar:` in `MDCButtonBarTypographyThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCButtonBarTypographyThemer` |
+| To: | `c:objc(cy)MDCButtonBarTypographyThemer@ToBeDeprecated` |
+
+### Buttons+ButtonThemer
+
+#### MDCOutlinedButtonThemer(ToBeDeprecated)
+
+*new* category: `MDCOutlinedButtonThemer(ToBeDeprecated)`
+
+*modified* class method: `+applyScheme:toButton:` in `MDCOutlinedButtonThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCOutlinedButtonThemer` |
+| To: | `c:objc(cy)MDCOutlinedButtonThemer@ToBeDeprecated` |
+
+#### MDCContainedButtonThemer(ToBeDeprecated)
+
+*new* category: `MDCContainedButtonThemer(ToBeDeprecated)`
+
+*modified* class method: `+applyScheme:toButton:` in `MDCContainedButtonThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCContainedButtonThemer` |
+| To: | `c:objc(cy)MDCContainedButtonThemer@ToBeDeprecated` |
+
+#### MDCTextButtonThemer(ToBeDeprecated)
+
+*new* category: `MDCTextButtonThemer(ToBeDeprecated)`
+
+*modified* class method: `+applyScheme:toButton:` in `MDCTextButtonThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCTextButtonThemer` |
+| To: | `c:objc(cy)MDCTextButtonThemer@ToBeDeprecated` |
+
+#### MDCFloatingActionButtonThemer(ToBeDeprecated)
+
+*new* category: `MDCFloatingActionButtonThemer(ToBeDeprecated)`
+
+*modified* class method: `+applyScheme:toButton:` in `MDCFloatingActionButtonThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCFloatingActionButtonThemer` |
+| To: | `c:objc(cy)MDCFloatingActionButtonThemer@ToBeDeprecated` |
+
+### Buttons+ColorThemer
+
+#### MDCOutlinedButtonColorThemer(ToBeDeprecated)
+
+*new* category: `MDCOutlinedButtonColorThemer(ToBeDeprecated)`
+
+*modified* class method: `+applySemanticColorScheme:toButton:` in `MDCOutlinedButtonColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCOutlinedButtonColorThemer` |
+| To: | `c:objc(cy)MDCOutlinedButtonColorThemer@ToBeDeprecated` |
+
+#### MDCContainedButtonColorThemer(ToBeDeprecated)
+
+*new* category: `MDCContainedButtonColorThemer(ToBeDeprecated)`
+
+*modified* class method: `+applySemanticColorScheme:toButton:` in `MDCContainedButtonColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCContainedButtonColorThemer` |
+| To: | `c:objc(cy)MDCContainedButtonColorThemer@ToBeDeprecated` |
+
+#### MDCTextButtonColorThemer(ToBeDeprecated)
+
+*new* category: `MDCTextButtonColorThemer(ToBeDeprecated)`
+
+*modified* class method: `+applySemanticColorScheme:toButton:` in `MDCTextButtonColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCTextButtonColorThemer` |
+| To: | `c:objc(cy)MDCTextButtonColorThemer@ToBeDeprecated` |
+
+#### MDCFloatingButtonColorThemer(ToBeDeprecated)
+
+*new* category: `MDCFloatingButtonColorThemer(ToBeDeprecated)`
+
+*modified* class method: `+applySemanticColorScheme:toButton:` in `MDCFloatingButtonColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCFloatingButtonColorThemer` |
+| To: | `c:objc(cy)MDCFloatingButtonColorThemer@ToBeDeprecated` |
+
+### Buttons+ShapeThemer
+
+#### MDCFloatingButtonShapeThemer(ToBeDeprecated)
+
+*new* category: `MDCFloatingButtonShapeThemer(ToBeDeprecated)`
+
+*modified* class method: `+applyShapeScheme:toButton:` in `MDCFloatingButtonShapeThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCFloatingButtonShapeThemer` |
+| To: | `c:objc(cy)MDCFloatingButtonShapeThemer@ToBeDeprecated` |
+
+#### MDCButtonShapeThemer(ToBeDeprecated)
+
+*new* category: `MDCButtonShapeThemer(ToBeDeprecated)`
+
+*modified* class method: `+applyShapeScheme:toButton:` in `MDCButtonShapeThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCButtonShapeThemer` |
+| To: | `c:objc(cy)MDCButtonShapeThemer@ToBeDeprecated` |
+
+### Buttons+TypographyThemer
+
+#### MDCButtonTypographyThemer(ToBeDeprecated)
+
+*new* category: `MDCButtonTypographyThemer(ToBeDeprecated)`
+
+*modified* class method: `+applyTypographyScheme:toButton:` in `MDCButtonTypographyThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCButtonTypographyThemer` |
+| To: | `c:objc(cy)MDCButtonTypographyThemer@ToBeDeprecated` |
+
+### Cards+CardThemer
+
+#### MDCCardThemer(ToBeDeprecated)
+
+*new* category: `MDCCardThemer(ToBeDeprecated)`
+
+*modified* class method: `+applyOutlinedVariantWithScheme:toCardCell:` in `MDCCardThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCCardThemer` |
+| To: | `c:objc(cy)MDCCardThemer@ToBeDeprecated` |
+
+*modified* class method: `+applyScheme:toCard:` in `MDCCardThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCCardThemer` |
+| To: | `c:objc(cy)MDCCardThemer@ToBeDeprecated` |
+
+*modified* class method: `+applyOutlinedVariantWithScheme:toCard:` in `MDCCardThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCCardThemer` |
+| To: | `c:objc(cy)MDCCardThemer@ToBeDeprecated` |
+
+*modified* class method: `+applyScheme:toCardCell:` in `MDCCardThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCCardThemer` |
+| To: | `c:objc(cy)MDCCardThemer@ToBeDeprecated` |
+
+### Cards+ColorThemer
+
+#### MDCCardsColorThemer(ToBeDeprecated)
+
+*new* category: `MDCCardsColorThemer(ToBeDeprecated)`
+
+*modified* class method: `+applySemanticColorScheme:toCard:` in `MDCCardsColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCCardsColorThemer` |
+| To: | `c:objc(cy)MDCCardsColorThemer@ToBeDeprecated` |
+
+*modified* class method: `+applyOutlinedVariantWithColorScheme:toCardCell:` in `MDCCardsColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCCardsColorThemer` |
+| To: | `c:objc(cy)MDCCardsColorThemer@ToBeDeprecated` |
+
+*modified* class method: `+applyOutlinedVariantWithColorScheme:toCard:` in `MDCCardsColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCCardsColorThemer` |
+| To: | `c:objc(cy)MDCCardsColorThemer@ToBeDeprecated` |
+
+*modified* class method: `+applySemanticColorScheme:toCardCell:` in `MDCCardsColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCCardsColorThemer` |
+| To: | `c:objc(cy)MDCCardsColorThemer@ToBeDeprecated` |
+
+### Cards+ShapeThemer
+
+#### MDCCardsShapeThemer(ToBeDeprecated)
+
+*new* category: `MDCCardsShapeThemer(ToBeDeprecated)`
+
+*modified* class method: `+applyShapeScheme:toCardCell:` in `MDCCardsShapeThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCCardsShapeThemer` |
+| To: | `c:objc(cy)MDCCardsShapeThemer@ToBeDeprecated` |
+
+*modified* class method: `+applyShapeScheme:toCard:` in `MDCCardsShapeThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCCardsShapeThemer` |
+| To: | `c:objc(cy)MDCCardsShapeThemer@ToBeDeprecated` |
+
+### Chips+ChipThemer
+
+#### MDCChipViewThemer(ToBeDeprecated)
+
+*new* category: `MDCChipViewThemer(ToBeDeprecated)`
+
+*modified* class method: `+applyScheme:toChipView:` in `MDCChipViewThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCChipViewThemer` |
+| To: | `c:objc(cy)MDCChipViewThemer@ToBeDeprecated` |
+
+*modified* class method: `+applyOutlinedVariantWithScheme:toChipView:` in `MDCChipViewThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCChipViewThemer` |
+| To: | `c:objc(cy)MDCChipViewThemer@ToBeDeprecated` |
+
+### Chips+ColorThemer
+
+#### MDCChipViewColorThemer(ToBeDeprecated)
+
+*modified* class method: `+applySemanticColorScheme:toChipView:` in `MDCChipViewColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCChipViewColorThemer` |
+| To: | `c:objc(cy)MDCChipViewColorThemer@ToBeDeprecated` |
+
+*modified* class method: `+applyOutlinedVariantWithColorScheme:toChipView:` in `MDCChipViewColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCChipViewColorThemer` |
+| To: | `c:objc(cy)MDCChipViewColorThemer@ToBeDeprecated` |
+
+### Chips+FontThemer
+
+#### MDCChipViewFontThemer(ToBeDeprecated)
+
+*new* category: `MDCChipViewFontThemer(ToBeDeprecated)`
+
+*modified* class method: `+applyFontScheme:toChipView:` in `MDCChipViewFontThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCChipViewFontThemer` |
+| To: | `c:objc(cy)MDCChipViewFontThemer@ToBeDeprecated` |
+
+### Chips+ShapeThemer
+
+#### MDCChipViewShapeThemer(ToBeDeprecated)
+
+*new* category: `MDCChipViewShapeThemer(ToBeDeprecated)`
+
+*modified* class method: `+applyShapeScheme:toChipView:` in `MDCChipViewShapeThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCChipViewShapeThemer` |
+| To: | `c:objc(cy)MDCChipViewShapeThemer@ToBeDeprecated` |
+
+### Dialogs+ColorThemer
+
+#### MDCAlertColorThemer
+
+*modified* class method: `+applyColorScheme:` in `MDCAlertColorThemer`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cy)MDCAlertColorThemer@ToBeDeprecated` |
+| To: | `c:objc(cs)MDCAlertColorThemer` |
+
+#### MDCAlertColorThemer(ToBeDeprecated)
+
+*removed* category: `MDCAlertColorThemer(ToBeDeprecated)`
+
+### FeatureHighlight+ColorThemer
+
+#### MDCFeatureHighlightColorThemer(ToBeDeprecated)
+
+*modified* class method: `+applySemanticColorScheme:toFeatureHighlightViewController:` in `MDCFeatureHighlightColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCFeatureHighlightColorThemer` |
+| To: | `c:objc(cy)MDCFeatureHighlightColorThemer@ToBeDeprecated` |
+
+### FeatureHighlight+FontThemer
+
+#### MDCFeatureHighlightFontThemer(ToBeDeprecated)
+
+*new* category: `MDCFeatureHighlightFontThemer(ToBeDeprecated)`
+
+*modified* class method: `+applyFontScheme:toFeatureHighlightView:` in `MDCFeatureHighlightFontThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCFeatureHighlightFontThemer` |
+| To: | `c:objc(cy)MDCFeatureHighlightFontThemer@ToBeDeprecated` |
+
+### FeatureHighlight+TypographyThemer
+
+#### MDCFeatureHighlightTypographyThemer(ToBeDeprecated)
+
+*new* category: `MDCFeatureHighlightTypographyThemer(ToBeDeprecated)`
+
+*modified* class method: `+applyTypographyScheme:toFeatureHighlightViewController:` in `MDCFeatureHighlightTypographyThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCFeatureHighlightTypographyThemer` |
+| To: | `c:objc(cy)MDCFeatureHighlightTypographyThemer@ToBeDeprecated` |
+
+### FlexibleHeader+ColorThemer
+
+#### MDCFlexibleHeaderColorThemer(ToBeDeprecated)
+
+*modified* class method: `+applySemanticColorScheme:toFlexibleHeaderView:` in `MDCFlexibleHeaderColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCFlexibleHeaderColorThemer` |
+| To: | `c:objc(cy)MDCFlexibleHeaderColorThemer@ToBeDeprecated` |
+
+*modified* class method: `+applySurfaceVariantWithColorScheme:toFlexibleHeaderView:` in `MDCFlexibleHeaderColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCFlexibleHeaderColorThemer` |
+| To: | `c:objc(cy)MDCFlexibleHeaderColorThemer@ToBeDeprecated` |
+
+### List+ColorThemer
+
+#### MDCListColorThemer(ToBeDeprecated)
+
+*new* category: `MDCListColorThemer(ToBeDeprecated)`
+
+*modified* class method: `+applySemanticColorScheme:toBaseCell:` in `MDCListColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCListColorThemer` |
+| To: | `c:objc(cy)MDCListColorThemer@ToBeDeprecated` |
+
+*modified* class method: `+applySemanticColorScheme:toSelfSizingStereoCell:` in `MDCListColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCListColorThemer` |
+| To: | `c:objc(cy)MDCListColorThemer@ToBeDeprecated` |
+
+### List+ListThemer
+
+#### MDCListThemer(ToBeDeprecated)
+
+*new* category: `MDCListThemer(ToBeDeprecated)`
+
+*modified* class method: `+applyScheme:toSelfSizingStereoCell:` in `MDCListThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCListThemer` |
+| To: | `c:objc(cy)MDCListThemer@ToBeDeprecated` |
+
+*modified* class method: `+applyScheme:toBaseCell:` in `MDCListThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCListThemer` |
+| To: | `c:objc(cy)MDCListThemer@ToBeDeprecated` |
+
+### List+TypographyThemer
+
+#### MDCListTypographyThemer(ToBeDeprecated)
+
+*new* category: `MDCListTypographyThemer(ToBeDeprecated)`
+
+*modified* class method: `+applyTypographyScheme:toSelfSizingStereoCell:` in `MDCListTypographyThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCListTypographyThemer` |
+| To: | `c:objc(cy)MDCListTypographyThemer@ToBeDeprecated` |
+
+### NavigationBar+ColorThemer
+
+#### MDCNavigationBarColorThemer(ToBeDeprecated)
+
+*modified* class method: `+applySurfaceVariantWithColorScheme:toNavigationBar:` in `MDCNavigationBarColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCNavigationBarColorThemer` |
+| To: | `c:objc(cy)MDCNavigationBarColorThemer@ToBeDeprecated` |
+
+*modified* class method: `+applySemanticColorScheme:toNavigationBar:` in `MDCNavigationBarColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCNavigationBarColorThemer` |
+| To: | `c:objc(cy)MDCNavigationBarColorThemer@ToBeDeprecated` |
+
+### NavigationBar+TypographyThemer
+
+#### MDCNavigationBarTypographyThemer(ToBeDeprecated)
+
+*new* category: `MDCNavigationBarTypographyThemer(ToBeDeprecated)`
+
+*modified* class method: `+applyTypographyScheme:toNavigationBar:` in `MDCNavigationBarTypographyThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCNavigationBarTypographyThemer` |
+| To: | `c:objc(cy)MDCNavigationBarTypographyThemer@ToBeDeprecated` |
+
+### NavigationDrawer+ColorThemer
+
+#### MDCBottomDrawerColorThemer(ToBeDeprecated)
+
+*new* category: `MDCBottomDrawerColorThemer(ToBeDeprecated)`
+
+*modified* class method: `+applySemanticColorScheme:toBottomDrawer:` in `MDCBottomDrawerColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCBottomDrawerColorThemer` |
+| To: | `c:objc(cy)MDCBottomDrawerColorThemer@ToBeDeprecated` |
+
+### Slider+ColorThemer
+
+#### MDCSliderColorThemer(ToBeDeprecated)
+
+*modified* class method: `+applySemanticColorScheme:toSlider:` in `MDCSliderColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSliderColorThemer` |
+| To: | `c:objc(cy)MDCSliderColorThemer@ToBeDeprecated` |
+
+### Snackbar+ColorThemer
+
+#### MDCSnackbarColorThemer(Deprecated)
+
+*modified* class method: `+applySemanticColorScheme:` in `MDCSnackbarColorThemer(Deprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarColorThemer` |
+| To: | `c:objc(cy)MDCSnackbarColorThemer@Deprecated` |
+
+*modified* class method: `+applySemanticColorScheme:toSnackbarManager:` in `MDCSnackbarColorThemer(Deprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarColorThemer` |
+| To: | `c:objc(cy)MDCSnackbarColorThemer@Deprecated` |
+
+### Snackbar+FontThemer
+
+#### MDCSnackbarFontThemer(Deprecated)
+
+*new* category: `MDCSnackbarFontThemer(Deprecated)`
+
+*modified* class method: `+applyFontScheme:toSnackbarMessageView:` in `MDCSnackbarFontThemer(Deprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarFontThemer` |
+| To: | `c:objc(cy)MDCSnackbarFontThemer@Deprecated` |
+
+*modified* class method: `+applyFontScheme:` in `MDCSnackbarFontThemer(Deprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarFontThemer` |
+| To: | `c:objc(cy)MDCSnackbarFontThemer@Deprecated` |
+
+### Snackbar+TypographyThemer
+
+#### MDCSnackbarTypographyThemer(Deprecated)
+
+*new* category: `MDCSnackbarTypographyThemer(Deprecated)`
+
+*modified* class method: `+applyTypographyScheme:` in `MDCSnackbarTypographyThemer(Deprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarTypographyThemer` |
+| To: | `c:objc(cy)MDCSnackbarTypographyThemer@Deprecated` |
+
+### Tabs+ColorThemer
+
+#### MDCTabBarColorThemer(ToBeDeprecated)
+
+*modified* class method: `+applySemanticColorScheme:toTabs:` in `MDCTabBarColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCTabBarColorThemer` |
+| To: | `c:objc(cy)MDCTabBarColorThemer@ToBeDeprecated` |
+
+*modified* class method: `+applySurfaceVariantWithColorScheme:toTabs:` in `MDCTabBarColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCTabBarColorThemer` |
+| To: | `c:objc(cy)MDCTabBarColorThemer@ToBeDeprecated` |
+
+### Tabs+FontThemer
+
+#### MDCTabBarFontThemer(ToBeDeprecated)
+
+*new* category: `MDCTabBarFontThemer(ToBeDeprecated)`
+
+*modified* class method: `+applyFontScheme:toTabBar:` in `MDCTabBarFontThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCTabBarFontThemer` |
+| To: | `c:objc(cy)MDCTabBarFontThemer@ToBeDeprecated` |
+
+### Tabs+TypographyThemer
+
+#### MDCTabBarTypographyThemer(ToBeDeprecated)
+
+*new* category: `MDCTabBarTypographyThemer(ToBeDeprecated)`
+
+*modified* class method: `+applyTypographyScheme:toTabBar:` in `MDCTabBarTypographyThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCTabBarTypographyThemer` |
+| To: | `c:objc(cy)MDCTabBarTypographyThemer@ToBeDeprecated` |
+
+### TextFields+ColorThemer
+
+#### MDCFilledTextFieldColorThemer(ToBeDeprecated)
+
+*new* category: `MDCFilledTextFieldColorThemer(ToBeDeprecated)`
+
+*modified* class method: `+applySemanticColorScheme:toTextInputControllerFilled:` in `MDCFilledTextFieldColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCFilledTextFieldColorThemer` |
+| To: | `c:objc(cy)MDCFilledTextFieldColorThemer@ToBeDeprecated` |
+
+#### MDCTextFieldColorThemer(ToBeDeprecated)
+
+*modified* class method: `+applySemanticColorScheme:toTextInput:` in `MDCTextFieldColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCTextFieldColorThemer` |
+| To: | `c:objc(cy)MDCTextFieldColorThemer@ToBeDeprecated` |
+
+*modified* class method: `+applySemanticColorScheme:toAllTextInputControllersOfClass:` in `MDCTextFieldColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCTextFieldColorThemer` |
+| To: | `c:objc(cy)MDCTextFieldColorThemer@ToBeDeprecated` |
+
+*modified* class method: `+applySemanticColorScheme:toTextInputController:` in `MDCTextFieldColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCTextFieldColorThemer` |
+| To: | `c:objc(cy)MDCTextFieldColorThemer@ToBeDeprecated` |
+
+#### MDCOutlinedTextFieldColorThemer(ToBeDeprecated)
+
+*new* category: `MDCOutlinedTextFieldColorThemer(ToBeDeprecated)`
+
+*modified* class method: `+applySemanticColorScheme:toTextInputController:` in `MDCOutlinedTextFieldColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCOutlinedTextFieldColorThemer` |
+| To: | `c:objc(cy)MDCOutlinedTextFieldColorThemer@ToBeDeprecated` |
+
+### TextFields+FontThemer
+
+#### MDCTextFieldFontThemer(ToBeDeprecated)
+
+*new* category: `MDCTextFieldFontThemer(ToBeDeprecated)`
+
+*modified* class method: `+applyFontScheme:toAllTextInputControllersOfClass:` in `MDCTextFieldFontThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCTextFieldFontThemer` |
+| To: | `c:objc(cy)MDCTextFieldFontThemer@ToBeDeprecated` |
+
+*modified* class method: `+applyFontScheme:toTextInputController:` in `MDCTextFieldFontThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCTextFieldFontThemer` |
+| To: | `c:objc(cy)MDCTextFieldFontThemer@ToBeDeprecated` |
+
+*modified* class method: `+applyFontScheme:toTextField:` in `MDCTextFieldFontThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCTextFieldFontThemer` |
+| To: | `c:objc(cy)MDCTextFieldFontThemer@ToBeDeprecated` |
+
+### TextFields+TypographyThemer
+
+#### MDCTextFieldTypographyThemer(ToBeDeprecated)
+
+*new* category: `MDCTextFieldTypographyThemer(ToBeDeprecated)`
+
+*modified* class method: `+applyTypographyScheme:toAllTextInputControllersOfClass:` in `MDCTextFieldTypographyThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCTextFieldTypographyThemer` |
+| To: | `c:objc(cy)MDCTextFieldTypographyThemer@ToBeDeprecated` |
+
+*modified* class method: `+applyTypographyScheme:toTextInput:` in `MDCTextFieldTypographyThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCTextFieldTypographyThemer` |
+| To: | `c:objc(cy)MDCTextFieldTypographyThemer@ToBeDeprecated` |
+
+*modified* class method: `+applyTypographyScheme:toTextInputController:` in `MDCTextFieldTypographyThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCTextFieldTypographyThemer` |
+| To: | `c:objc(cy)MDCTextFieldTypographyThemer@ToBeDeprecated` |
+
+## Component changes
+
+## Breaking changes
+
+### AppBar
+
+* [**Breaking**: Rename umbrella header for the theming extension (#7185)](https://github.com/material-components/material-components-ios/commit/49bb401d2cf492cae23b7758f06eeefcdd76c56d) (Cody Weaver)
+
+## Changes
+
+### ActionSheet
+
+* [Remove dependency on helper methods in test. (#7183)](https://github.com/material-components/material-components-ios/commit/6a686ac6a39952a2a02644b6c52bb0b8e6b9e563) (Cody Weaver)
+
+### ActivityIndicator
+
+* [Annotate all themer APIs with the recommended new APIs. (#7211)](https://github.com/material-components/material-components-ios/commit/e5c5762c74634f7381726bc412495345a0c81833) (featherless)
+
+### AppBar
+
+* [Annotate themer APIs with the recommended APIs. (#7213)](https://github.com/material-components/material-components-ios/commit/6909bf1d2dd81f48840118a4dc5c08983e2b8411) (featherless)
+* [Update documentation around theming (#7197)](https://github.com/material-components/material-components-ios/commit/adf4b7e31ff0a6b7157a9b360baf0a589c10fa94) (Cody Weaver)
+
+### BottomAppBar
+
+* [Annotate themer APIs with the recommended APIs. (#7214)](https://github.com/material-components/material-components-ios/commit/5e8360e2fab07def892c4ce4475a9aa9052d46c4) (featherless)
+
+### BottomNavigation
+
+* [Adds a large item dialog view (#7146)](https://github.com/material-components/material-components-ios/commit/9e7848c625ece20697c76b98fa429f9badceb0de) (Eric Lee)
+* [Annotate themer APIs with the recommended APIs. (#7215)](https://github.com/material-components/material-components-ios/commit/617aa4fedf1d258407b2c82be3c9da613dcf37ca) (featherless)
+
+### BottomSheet
+
+* [Annotate themer APIs with the recommended APIs. (#7216)](https://github.com/material-components/material-components-ios/commit/699a621c7e2514d19f49817c4311d7ed5a70fa1a) (featherless)
+
+### ButtonBar
+
+* [Annotate themer APIs with the recommended APIs. (#7217)](https://github.com/material-components/material-components-ios/commit/59e1577ca314a5a2dc92c027799362969eaab0ee) (featherless)
+
+### Buttons
+
+* [Add fallback behavior to setBorderColor API. (#7140)](https://github.com/material-components/material-components-ios/commit/b5b4ecd95e4c247d8911529ea00842d30e5a2f71) (Wenyu Zhang)
+* [Annotate themer APIs with the recommended APIs. (#7218)](https://github.com/material-components/material-components-ios/commit/d15dcc2e3611a66d8316aa5f7b90352708f4e39b) (featherless)
+* [Copy-edit the documentation. (#7206)](https://github.com/material-components/material-components-ios/commit/0c175b46a3dd3ed73428165897a9506b3fe1efd0) (featherless)
+* [Copy-edits on the theming documentation for clarity. (#7192)](https://github.com/material-components/material-components-ios/commit/8a8ddc94d75befca384c4e934ea60e5ad321e452) (featherless)
+* [Fix broken link (#7198)](https://github.com/material-components/material-components-ios/commit/59541affa2fd361078ada187f127dbd83af745e3) (Cody Weaver)
+* [Fix theming headers and copy. (#7236)](https://github.com/material-components/material-components-ios/commit/172cf73a40f3c6d52d83051823b4a397eb1cd50b) (featherless)
+
+### Cards
+
+* [Annotate themer APIs with the recommended APIs. (#7219)](https://github.com/material-components/material-components-ios/commit/7a42c6f7c4258d3b74f63c9c28717e526bfc8aef) (featherless)
+
+### Chips
+
+* [Annotate themer APIs with the recommended APIs. (#7220)](https://github.com/material-components/material-components-ios/commit/b0747f45976c17d6f8187f1e973b2a4e7f8da942) (featherless)
+
+### Dialogs
+
+* [Annotate themer APIs with the recommended APIs. (#7221)](https://github.com/material-components/material-components-ios/commit/983b9609fe0b1424cbbce5a324e100254da77a2b) (featherless)
+* [Fix Tall Font example (#7151)](https://github.com/material-components/material-components-ios/commit/95705a7b6ff597c9176aa839b55b124f70afb68d) (Robert Moore)
+
+### FeatureHighlight
+
+* [Annotate themer APIs with the recommended APIs. (#7222)](https://github.com/material-components/material-components-ios/commit/7758aae05da705e9ee6de425ec5829ec84c360dd) (featherless)
+
+### FlexibleHeader
+
+* [Annotate themer APIs with the recommended APIs. (#7223)](https://github.com/material-components/material-components-ios/commit/be4f5ba37b32ebf6a375dbf5079b3ba992fe310c) (featherless)
+
+### HeaderStackView
+
+* [Annotate themer APIs with the recommended APIs. (#7224)](https://github.com/material-components/material-components-ios/commit/b7ea6d959e9ca0986ad98bce5d4f86c219d26b82) (featherless)
+
+### Ink
+
+* [Annotate themer APIs with the recommended APIs. (#7225)](https://github.com/material-components/material-components-ios/commit/ad894ac9f65478944406ca61f29ea6a240ed5981) (featherless)
+
+### List
+
+* [Annotate themer APIs with the recommended APIs. (#7226)](https://github.com/material-components/material-components-ios/commit/b834cd37d7008e2f8e9b4133914d374ead55cfc7) (featherless)
+
+### NavigationBar
+
+* [Annotate themer APIs with the recommended APIs. (#7228)](https://github.com/material-components/material-components-ios/commit/593d57f23c7821d8566f23cc798092f4dc3e110e) (featherless)
+
+### NavigationDrawer
+
+* [Annotate themer APIs with the recommended APIs. (#7229)](https://github.com/material-components/material-components-ios/commit/502849f3c2533cf4858f1cc6dee183595e9fe07e) (featherless)
+
+### PageControl
+
+* [Annotate themer APIs with the recommended APIs. (#7230)](https://github.com/material-components/material-components-ios/commit/de3f43e5ae36c1c6030cf9f6fcadcca5dfe6072c) (featherless)
+
+### ProgressView
+
+* [Annotate themer APIs with the recommended APIs. (#7231)](https://github.com/material-components/material-components-ios/commit/679870a13ff9e46c1209fa6a423c08f1008d2403) (featherless)
+
+### Slider
+
+* [Annotate themer APIs with the recommended APIs. (#7232)](https://github.com/material-components/material-components-ios/commit/a1226a9ff563fdc610c41487b96419f8381914db) (featherless)
+
+### Snackbar
+
+* [Annotate themer APIs with the recommended APIs. (#7233)](https://github.com/material-components/material-components-ios/commit/2d7dbfed79dd282fbb5fcadf0840cce85fcc8c9f) (featherless)
+
+### Tabs
+
+* [Annotate themer APIs with the recommended APIs. (#7234)](https://github.com/material-components/material-components-ios/commit/83a55418189bc1c11adf48b670437006e1ad386a) (featherless)
+
+### TextFields
+
+* [Annotate themer APIs with the recommended APIs. (#7235)](https://github.com/material-components/material-components-ios/commit/fde7c2e8cd6afc1949540ccf7a9b328ed5ab7391) (featherless)
+* [Create concrete MDCFilledTextField and MDCOutlinedTextField classes based on the Contained Input View architecture (#7144)](https://github.com/material-components/material-components-ios/commit/c924f58054fcd23bfd4fc3ccfb1758be1a8da437) (Andrew Overton)
+* [Graduate TextFields theming extension to ready (#7184)](https://github.com/material-components/material-components-ios/commit/a81878c263ea9cc4e6ce6d942e3189862d124758) (Andrew Overton)
+
+## Multi-component changes
+
+* [(automated) Regenerate all component readmes. (#7201)](https://github.com/material-components/material-components-ios/commit/e2550dbb55114de3a54c7a14edae31b297bf4a26) (featherless)
+* [Add @objc annotations to get examples to show up in Dragons (#7168)](https://github.com/material-components/material-components-ios/commit/c56d5d76d390cf0ef4f26412816dc2e1be63707a) (Andrew Overton)
+* [Fix links within documenation (#7208)](https://github.com/material-components/material-components-ios/commit/f46357b1fc0aeb38029b8c7f5798dcdee4872697) (Cody Weaver)
+* [Fix relative link rewriting. (#7205)](https://github.com/material-components/material-components-ios/commit/c8f3973d4a6e5438fb99f08cb3e61befed9da3a1) (featherless)
+* [Graduate Buttons+Theming to ready (#7187)](https://github.com/material-components/material-components-ios/commit/94e5a978d7a9dc957026a4483316f8b1f75704a5) (Andrew Overton)
+* [Graduate ContainerScheme to ready. (#7170)](https://github.com/material-components/material-components-ios/commit/5bed3961e6edaa2a15507b62aba3504f07d65d7d) (Yarden Eitan)
+* [Graduate theming extension to ready (#7181)](https://github.com/material-components/material-components-ios/commit/9696880a712b6880a7db42c3983126ffbaa8829f) (Cody Weaver)
+* [Graduate theming extension to ready (#7182)](https://github.com/material-components/material-components-ios/commit/bb61b245679c88a4677b23be24360812e6476ae1) (Cody Weaver)
+* [Move Cards theming extension to ready. (#7178)](https://github.com/material-components/material-components-ios/commit/9aa1d72bc7805e4d93e93102f6efc5a20643e7ef) (Wenyu Zhang)
+* [Move Chips Theming to Ready. (#7179)](https://github.com/material-components/material-components-ios/commit/cb4ffbc580416677cd2d8ac2691d7da5c59ecde7) (Wenyu Zhang)
+* [Move Tabs theming extension to ready. (#7176)](https://github.com/material-components/material-components-ios/commit/ebb9b84be845d34047656c9cc55e580ee4021508) (Wenyu Zhang)
+* [Update docs (#7209)](https://github.com/material-components/material-components-ios/commit/eaf24893031c02fafd6e5dbc927149cfe8c0309d) (Andrew Overton)
+* [Update to Swift 4.2 (#7166)](https://github.com/material-components/material-components-ios/commit/b38372192ff5f7d3273c87e901a2eab402cabef3) (Andrew Overton)
+
+---
+
 # 82.0.0
 
 In this major release, we dropped support for iOS 8 in all components. We also introduced new method and properties for AppBar, BottomSheet and NavigationDrawer.

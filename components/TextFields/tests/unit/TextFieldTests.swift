@@ -33,7 +33,9 @@ class TextFieldTests: XCTestCase {
     let textField = MDCTextField()
 
     for constraint in textField.constraints {
-      XCTAssertLessThanOrEqual(constraint.priority, UILayoutPriorityDefaultLow + 10, String(describing: constraint))
+      XCTAssertLessThanOrEqual(constraint.priority.rawValue,
+                               UILayoutPriority.defaultLow.rawValue + 10,
+                               String(describing: constraint))
     }
   }
 
@@ -47,7 +49,8 @@ class TextFieldTests: XCTestCase {
 
     textField.textInsetsMode = .never
     textField.borderView?.borderFillColor = .purple
-    textField.borderView?.borderPath = UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: 100, height: 100))
+    textField.borderView?.borderPath =
+      UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: 100, height: 100))
     textField.borderView?.borderStrokeColor = .yellow
     textField.clearButton.tintColor = .red
     textField.clearButtonMode = .always
@@ -67,9 +70,12 @@ class TextFieldTests: XCTestCase {
       XCTAssertEqual(textField.textInsetsMode, textFieldCopy.textInsetsMode)
       XCTAssertEqual(textField.attributedPlaceholder, textFieldCopy.attributedPlaceholder)
       XCTAssertEqual(textField.attributedText, textFieldCopy.attributedText)
-      XCTAssertEqual(textField.borderView?.borderFillColor, textFieldCopy.borderView?.borderFillColor)
-      XCTAssertEqual(textField.borderView?.borderPath?.bounds.integral, textFieldCopy.borderView?.borderPath?.bounds.integral)
-      XCTAssertEqual(textField.borderView?.borderStrokeColor, textFieldCopy.borderView?.borderStrokeColor)
+      XCTAssertEqual(textField.borderView?.borderFillColor,
+                     textFieldCopy.borderView?.borderFillColor)
+      XCTAssertEqual(textField.borderView?.borderPath?.bounds.integral,
+                     textFieldCopy.borderView?.borderPath?.bounds.integral)
+      XCTAssertEqual(textField.borderView?.borderStrokeColor,
+                     textFieldCopy.borderView?.borderStrokeColor)
       XCTAssertEqual(textField.clearButton.tintColor, textFieldCopy.clearButton.tintColor)
       XCTAssertEqual(textField.clearButtonMode, textFieldCopy.clearButtonMode)
       XCTAssertEqual(textField.cursorColor, textFieldCopy.cursorColor)

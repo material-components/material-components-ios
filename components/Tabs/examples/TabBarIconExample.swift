@@ -38,8 +38,8 @@ class TabBarIconSwiftExample: UIViewController {
   lazy var appBarViewController: MDCAppBarViewController = self.setupAppBar()
   lazy var scrollView: UIScrollView = self.setupScrollView()
   lazy var starPage: UIView = self.setupStarPage()
-  var colorScheme = MDCSemanticColorScheme()
-  var typographyScheme = MDCTypographyScheme()
+  @objc var colorScheme = MDCSemanticColorScheme()
+  @objc var typographyScheme = MDCTypographyScheme()
 
   lazy var tabBar: MDCTabBar = {
     let tabBar = MDCTabBar()

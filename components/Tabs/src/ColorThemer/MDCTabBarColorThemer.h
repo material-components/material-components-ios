@@ -17,8 +17,15 @@
 
 /**
  The Material Design color system's themer for instances of MDCTabBar.
+
+ @warning This API will eventually be deprecated. See the individual method documentation for
+ details on replacement APIs.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 @interface MDCTabBarColorThemer : NSObject
+@end
+
+@interface MDCTabBarColorThemer (ToBeDeprecated)
 
 /**
  Applies a color scheme's properties to an MDCTabBar using the primary mapping.
@@ -27,6 +34,10 @@
 
  @param colorScheme The color scheme to apply to the component instance.
  @param tabBar A component instance to which the color scheme should be applied.
+
+ @warning This API will eventually be deprecated. The replacement API is:
+ `MDCTabBar`'s `-applyPrimaryThemeWithScheme:`
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                           toTabs:(nonnull MDCTabBar *)tabBar;
@@ -38,22 +49,23 @@
 
  @param colorScheme The color scheme to apply to the component instance.
  @param tabBar A component instance to which the color scheme should be applied.
+
+ @warning This API will eventually be deprecated. The replacement API is:
+ `MDCTabBar`'s `-applySurfaceThemeWithScheme:`
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applySurfaceVariantWithColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                                     toTabs:(nonnull MDCTabBar *)tabBar;
 
-@end
-
-@interface MDCTabBarColorThemer (ToBeDeprecated)
-
 /**
  Applies a color scheme to theme a MDCTabBar.
 
- @warning This method will soon be deprecated. Consider using @c +applySemanticColorScheme:toTabs:
- instead. Learn more at components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
-
  @param colorScheme The color scheme to apply to MDCTabBar.
  @param tabBar A MDCTabBar instance to apply a color scheme.
+
+ @warning This API will eventually be deprecated. The replacement API is:
+ `MDCTabBar`'s `-applyPrimaryThemeWithScheme:`
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
                 toTabBar:(nonnull MDCTabBar *)tabBar;

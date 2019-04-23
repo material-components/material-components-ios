@@ -54,7 +54,7 @@ class MDCCatalogTileView: UIView {
     super.init(coder: aDecoder)
   }
 
-  func themeDidChange(notification: NSNotification) {
+  @objc func themeDidChange(notification: NSNotification) {
     imageCache.removeAllObjects()
   }
 

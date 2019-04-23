@@ -42,8 +42,8 @@ class ButtonBarIssue516Tests: XCTestCase {
     buttons = buttons.sorted { (button1, button2) -> Bool in
       return button1.frame.origin.x < button2.frame.origin.x
     }
-    XCTAssertEqual((buttons[0] as! MDCButton).title(for: UIControlState()), "LEFT")
-    XCTAssertEqual((buttons[1] as! MDCButton).title(for: UIControlState()), "RIGHT")
+    XCTAssertEqual((buttons[0] as! MDCButton).title(for: UIControl.State()), "LEFT")
+    XCTAssertEqual((buttons[1] as! MDCButton).title(for: UIControl.State()), "RIGHT")
   }
 
   func testLayoutPositionLeading() {
@@ -59,8 +59,8 @@ class ButtonBarIssue516Tests: XCTestCase {
     buttons = buttons.sorted { (button1, button2) -> Bool in
       return button1.frame.origin.x < button2.frame.origin.x
     }
-    XCTAssertEqual((buttons[0] as! MDCButton).title(for: UIControlState()), "LEFT")
-    XCTAssertEqual((buttons[1] as! MDCButton).title(for: UIControlState()), "RIGHT")
+    XCTAssertEqual((buttons[0] as! MDCButton).title(for: UIControl.State()), "LEFT")
+    XCTAssertEqual((buttons[1] as! MDCButton).title(for: UIControl.State()), "RIGHT")
   }
 
   func testLayoutPositionTrailing() {
@@ -76,7 +76,7 @@ class ButtonBarIssue516Tests: XCTestCase {
     buttons = buttons.sorted { (button1, button2) -> Bool in
       return button1.frame.origin.x < button2.frame.origin.x
     }
-    XCTAssertEqual((buttons[0] as! MDCButton).title(for: UIControlState()), "RIGHT")
-    XCTAssertEqual((buttons[1] as! MDCButton).title(for: UIControlState()), "LEFT")
+    XCTAssertEqual((buttons[0] as! MDCButton).title(for: UIControl.State()), "RIGHT")
+    XCTAssertEqual((buttons[1] as! MDCButton).title(for: UIControl.State()), "LEFT")
   }
 }

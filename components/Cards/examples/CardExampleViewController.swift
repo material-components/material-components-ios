@@ -14,16 +14,16 @@
 
 import UIKit
 import MaterialComponents.MaterialButtons_ButtonThemer
-import MaterialComponentsBeta.MaterialCards_Theming
-import MaterialComponentsBeta.MaterialContainerScheme
-import MaterialComponentsBeta.MaterialButtons_Theming
+import MaterialComponents.MaterialContainerScheme
+import MaterialComponents.MaterialCards_Theming
+import MaterialComponents.MaterialButtons_Theming
 
 class CardExampleViewController: UIViewController {
   @IBOutlet weak var imageView: CardImageView!
   @IBOutlet weak var card: MDCCard!
   @IBOutlet weak var button: MDCButton!
 
-  var containerScheme: MDCContainerScheming
+  @objc var containerScheme: MDCContainerScheming
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     containerScheme = MDCContainerScheme()
@@ -62,7 +62,7 @@ class CardExampleViewController: UIViewController {
 
 extension CardExampleViewController {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Cards", "Card (Swift)"],
       "description": "Cards contain content and actions about a single subject.",

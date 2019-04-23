@@ -17,17 +17,17 @@ import UIKit
 import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialCollections
 import MaterialComponents.MaterialColorScheme
+import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialDialogs
 import MaterialComponents.MaterialPalettes
 import MaterialComponents.MaterialTypographyScheme
-import MaterialComponentsBeta.MaterialButtons_Theming
-import MaterialComponentsBeta.MaterialContainerScheme
+import MaterialComponents.MaterialButtons_Theming
 import MaterialComponentsBeta.MaterialDialogs_Theming
 import MaterialComponents.MaterialPalettes
 
 class DialogsAlertCustomizationExampleViewController: MDCCollectionViewController {
 
-  var containerScheme: MDCContainerScheming = MDCContainerScheme()
+  @objc var containerScheme: MDCContainerScheming = MDCContainerScheme()
 
   let kReusableIdentifierItem = "customCell"
 
@@ -337,7 +337,7 @@ private extension MDCButton {
 // MARK: Catalog by convention
 extension DialogsAlertCustomizationExampleViewController {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Dialogs", "Alert Customization"],
       "primaryDemo": false,

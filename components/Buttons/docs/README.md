@@ -24,7 +24,7 @@ elevation, Material Design ripples, and other stateful design APIs.
 
 ## Usage
 
-- [Typical use: themed buttons](typical-use-themed-buttons.md)
+- [Typical use](typical-use.md)
 - [Typical use: floating action buttons](typical-use-floating-action-buttons.md)
 - [Customizing elevation](customizing-elevation.md)
 - [Customizing floating action buttons](customizing-floating-action-buttons.md)
@@ -33,8 +33,11 @@ elevation, Material Design ripples, and other stateful design APIs.
 ## Extensions
 
 - [Theming](theming.md)
+- [Accessibility](accessibility.md)
+
+## Unsupported
+
+- [How to theme a button using a themer](theming-with-themers.md)
 - [Color Theming](color-theming.md)
 - [Typography Theming](typography-theming.md)
 - [Shape Theming](shape-theming.md)
-
-- [Accessibility](accessibility.md)

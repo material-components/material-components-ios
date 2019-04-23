@@ -25,7 +25,7 @@ class BottomDrawerWithHeaderLessContentExample: BottomDrawerWithHeaderExample {
     super.presentNavigationDrawer()
   }
 
-  override class func catalogMetadata() -> [String: Any] {
+  @objc override class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Navigation Drawer", "Bottom Drawer Less Content"],
       "primaryDemo": false,

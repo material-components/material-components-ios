@@ -19,14 +19,25 @@
 
 /**
  The Material Design color system's filled text field themer.
+
+ @warning This API will eventually be deprecated. See the individual method documentation for
+ details on replacement APIs.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 @interface MDCFilledTextFieldColorThemer : NSObject
+@end
+
+@interface MDCFilledTextFieldColorThemer (ToBeDeprecated)
 
 /**
  Applies a color scheme's properties to a text field using the filled style.
 
  @param colorScheme The color scheme to apply to the component instance.
  @param textInputControllerFilled A component instance to which the color scheme should be applied.
+
+ @warning This API will eventually be deprecated. The replacement API is:
+ `MDCTextInputControllerFilled`'s `-applyThemeWithScheme:`
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
      toTextInputControllerFilled:(nonnull MDCTextInputControllerFilled *)textInputControllerFilled;

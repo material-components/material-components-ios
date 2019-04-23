@@ -148,7 +148,7 @@ class ShapedCardViewController: UIViewController {
     secondarySlider.sendActions(for: .valueChanged)
   }
 
-  func didChangeSliderValue(slider: UISlider) {
+  @objc func didChangeSliderValue(slider: UISlider) {
     if let shape = card.shapeGenerator as? MDCRectangleShapeGenerator {
       if slider == primarySlider {
         let cutCornerTreatment = MDCCutCornerTreatment(cut: CGFloat(slider.value))
@@ -170,7 +170,7 @@ class ShapedCardViewController: UIViewController {
     return super.traitCollection
   }
 
-  func changeShape() {
+  @objc func changeShape() {
     primarySlider.isHidden = true
     secondarySlider.isHidden = true
     switch(card.shapeGenerator) {
@@ -178,16 +178,16 @@ class ShapedCardViewController: UIViewController {
       let shapeGenerator = MDCCurvedRectShapeGenerator(cornerSize: CGSize(width: 50,
                                                                           height: 100))
       card.shapeGenerator = shapeGenerator
-      card.contentView.layoutMargins = UIEdgeInsetsMake(0, 40, 0, 40)
+      card.contentView.layoutMargins = UIEdgeInsets(top: 0, left: 40, bottom: 0, right: 40)
     case is MDCCurvedRectShapeGenerator:
       let shapeGenerator = MDCPillShapeGenerator()
       card.shapeGenerator = shapeGenerator
-      card.contentView.layoutMargins = UIEdgeInsetsMake(0, 80, 0, 80)
+      card.contentView.layoutMargins = UIEdgeInsets(top: 0, left: 80, bottom: 0, right: 80)
     case is MDCPillShapeGenerator:
       let shapeGenerator = MDCSlantedRectShapeGenerator()
       shapeGenerator.slant = 40
       card.shapeGenerator = shapeGenerator
-      card.contentView.layoutMargins = UIEdgeInsetsMake(0, 40, 0, 40)
+      card.contentView.layoutMargins = UIEdgeInsets(top: 0, left: 40, bottom: 0, right: 40)
     case is MDCSlantedRectShapeGenerator:
       fallthrough
     default:
@@ -206,14 +206,14 @@ class ShapedCardViewController: UIViewController {
     let triangleEdgeTreatment = MDCTriangleEdgeTreatment(size: 0, style: MDCTriangleEdgeStyleCut)
     shapeGenerator.setEdges(triangleEdgeTreatment)
     card.shapeGenerator = shapeGenerator
-    card.contentView.layoutMargins = UIEdgeInsetsMake(0, 5, 0, 5)
+    card.contentView.layoutMargins = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
   }
 }
 
 @available(iOS 9.0, *)
 extension ShapedCardViewController {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Cards", "Shaped Card"],
       "primaryDemo": false,

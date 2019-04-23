@@ -17,7 +17,7 @@ import MaterialComponents.MaterialBottomNavigation_ColorThemer
 
 class BottomNavigationNilBadges : UIViewController {
 
-  var colorScheme = MDCSemanticColorScheme()
+  @objc var colorScheme = MDCSemanticColorScheme()
 
   // Create a bottom navigation bar to add to a view.
   let bottomNavBar = MDCBottomNavigationBar()
@@ -82,13 +82,11 @@ class BottomNavigationNilBadges : UIViewController {
     layoutBottomNavBar()
   }
 
-  #if swift(>=3.2)
   @available(iOS 11, *)
   override func viewSafeAreaInsetsDidChange() {
     super.viewSafeAreaInsetsDidChange()
     layoutBottomNavBar()
   }
-  #endif
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
@@ -99,7 +97,7 @@ class BottomNavigationNilBadges : UIViewController {
 // MARK: Catalog by convention
 extension BottomNavigationNilBadges {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Bottom Navigation", "Badge Value Test"],
       "primaryDemo": false,

@@ -17,21 +17,20 @@
 #import <Foundation/Foundation.h>
 
 #import <MDFInternationalization/MDFInternationalization.h>
-#import "MaterialTypography.h"
 
 #import "MDCContainerStylerPathDrawingUtils.h"
 #import "MDCInputTextFieldLayout.h"
 #import "MaterialMath.h"
+#import "MaterialTypography.h"
 
-@interface MDCInputTextField ()
+#import "MDCContainedInputUnderlineLabelView.h"
+
+@interface MDCInputTextField () <MDCContainedInputView>
 
 @property(strong, nonatomic) UIButton *clearButton;
 @property(strong, nonatomic) UIImageView *clearButtonImageView;
 @property(strong, nonatomic) UILabel *floatingLabel;
 @property(strong, nonatomic) UILabel *placeholderLabel;
-
-@property(strong, nonatomic) UILabel *leftUnderlineLabel;
-@property(strong, nonatomic) UILabel *rightUnderlineLabel;
 
 @property(strong, nonatomic) MDCInputTextFieldLayout *layout;
 
@@ -45,6 +44,8 @@
     NSMutableDictionary<NSNumber *, id<MDCContainedInputViewColorScheming>> *colorSchemes;
 
 @property(nonatomic, strong) MDCContainedInputViewFloatingLabelManager *floatingLabelManager;
+
+@property(nonatomic, strong) MDCContainedInputUnderlineLabelView *underlineLabelView;
 
 @end
 
@@ -148,14 +149,21 @@
 }
 
 - (void)setUpUnderlineLabels {
+  self.underlineLabelDrawPriority = MDCContainedInputViewUnderlineLabelDrawPriorityTrailing;
+  self.underlineLabelView = [[MDCContainedInputUnderlineLabelView alloc] init];
   CGFloat underlineFontSize = MDCRound([UIFont systemFontSize] * (CGFloat)0.75);
   UIFont *underlineFont = [UIFont systemFontOfSize:underlineFontSize];
-  self.leftUnderlineLabel = [[UILabel alloc] init];
-  self.leftUnderlineLabel.font = underlineFont;
-  self.rightUnderlineLabel = [[UILabel alloc] init];
-  self.rightUnderlineLabel.font = underlineFont;
-  [self addSubview:self.leftUnderlineLabel];
-  [self addSubview:self.rightUnderlineLabel];
+  self.underlineLabelView.leftUnderlineLabel.font = underlineFont;
+  self.underlineLabelView.rightUnderlineLabel.font = underlineFont;
+  [self addSubview:self.underlineLabelView];
+}
+
+- (UILabel *)leftUnderlineLabel {
+  return self.underlineLabelView.leftUnderlineLabel;
+}
+
+- (UILabel *)rightUnderlineLabel {
+  return self.underlineLabelView.rightUnderlineLabel;
 }
 
 - (void)setUpFloatingLabel {
@@ -253,8 +261,8 @@
   self.clearButton.frame = [self clearButtonFrameFromLayout:self.layout
                                          floatingLabelState:self.floatingLabelState];
   self.clearButton.hidden = self.layout.clearButtonHidden;
-  self.leftUnderlineLabel.frame = self.layout.leftUnderlineLabelFrame;
-  self.rightUnderlineLabel.frame = self.layout.rightUnderlineLabelFrame;
+  self.underlineLabelView.frame = self.layout.underlineLabelViewFrame;
+  self.underlineLabelView.layout = self.layout.underlineLabelViewLayout;
   self.leftView.hidden = self.layout.leftViewHidden;
   self.rightView.hidden = self.layout.rightViewHidden;
   // TODO: Consider hiding views that don't actually fit in the frame
@@ -312,8 +320,9 @@
 
 - (CGSize)preferredSizeWithWidth:(CGFloat)width {
   CGSize fittingSize = CGSizeMake(width, CGFLOAT_MAX);
-  MDCInputTextFieldLayout *layout = [self calculateLayoutWithTextFieldSize:fittingSize];
-  return CGSizeMake(width, layout.calculatedHeight);
+  MDCInputTextFieldLayout *inputTextFieldLayout =
+      [self calculateLayoutWithTextFieldSize:fittingSize];
+  return CGSizeMake(width, inputTextFieldLayout.calculatedHeight);
 }
 
 #pragma mark UITextField Accessor Overrides
@@ -367,17 +376,17 @@
 
 - (UILabel *)leadingUnderlineLabel {
   if ([self isRTL]) {
-    return self.rightUnderlineLabel;
+    return self.underlineLabelView.rightUnderlineLabel;
   } else {
-    return self.leftUnderlineLabel;
+    return self.underlineLabelView.leftUnderlineLabel;
   }
 }
 
 - (UILabel *)trailingUnderlineLabel {
   if ([self isRTL]) {
-    return self.leftUnderlineLabel;
+    return self.underlineLabelView.leftUnderlineLabel;
   } else {
-    return self.rightUnderlineLabel;
+    return self.underlineLabelView.rightUnderlineLabel;
   }
 }
 

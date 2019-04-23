@@ -86,11 +86,9 @@ class PageControlSwiftExampleViewController: UIViewController, UIScrollViewDeleg
     scrollView.contentOffset = offset
 
     var edgeInsets = UIEdgeInsets.zero;
-    #if swift(>=3.2)
-      if #available(iOS 11, *) {
-        edgeInsets = self.view.safeAreaInsets
-      }
-    #endif
+    if #available(iOS 11, *) {
+      edgeInsets = self.view.safeAreaInsets
+    }
     let pageControlSize = pageControl.sizeThatFits(view.bounds.size)
     let yOffset = self.view.bounds.height - pageControlSize.height - 8 - edgeInsets.bottom;
     pageControl.frame =
@@ -121,7 +119,7 @@ class PageControlSwiftExampleViewController: UIViewController, UIScrollViewDeleg
 
   // MARK: - CatalogByConvention
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Page Control", "Swift example"],
       "primaryDemo": false,

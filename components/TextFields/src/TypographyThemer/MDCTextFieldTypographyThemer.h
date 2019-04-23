@@ -17,14 +17,26 @@
 
 /**
  The Material Design typography system's text field themer.
+
+ @warning This API will eventually be deprecated. See the individual method documentation for
+ details on replacement APIs.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 @interface MDCTextFieldTypographyThemer : NSObject
+@end
+
+@interface MDCTextFieldTypographyThemer (ToBeDeprecated)
 
 /**
  Applies a typography scheme's properties to a text input controller.
 
  @param typographyScheme The color scheme to apply to the component instance.
  @param textInputController A component instance to which the color scheme should be applied.
+
+ @warning This API will eventually be deprecated. The replacement API is:
+ `MDCTextInputControllerFilled`'s `-applyThemeWithScheme:` or
+ `MDCTextInputControllerOutlined`'s `-applyThemeWithScheme:`.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme
         toTextInputController:(nonnull id<MDCTextInputController>)textInputController;
@@ -36,6 +48,9 @@
  @param typographyScheme The typography scheme that applies to a MDCTextInputController.
  @param textInputControllerClass A MDCTextInputController class that typography scheme will be
  applied to.
+
+ @warning This API will eventually be deprecated. There will be no replacement for this API.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme
     toAllTextInputControllersOfClass:(nonnull Class<MDCTextInputController>)textInputControllerClass
@@ -46,6 +61,9 @@
 
  @param typographyScheme The color scheme to apply to the component instance.
  @param textInput A component instance to which the color scheme should be applied.
+
+ @warning This API will eventually be deprecated. There will be no replacement for this API.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme
                   toTextInput:(nonnull id<MDCTextInput>)textInput;

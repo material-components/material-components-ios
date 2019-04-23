@@ -55,7 +55,11 @@ Material UIAlertController please see the `MDCAlertController` class.
 
 ## Extensions
 
-- [Color Theming](color-theming.md)
-- [Typography Theming](typography-theming.md)
+- [Theming](theming.md)
 
 - [Accessibility](accessibility.md)
+
+## Unsupported
+
+- [Color Theming](color-theming.md)
+- [Typography Theming](typography-theming.md)

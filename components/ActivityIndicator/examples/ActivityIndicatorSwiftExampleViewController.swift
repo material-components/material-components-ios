@@ -84,7 +84,7 @@ extension ActivityIndicatorSwiftExampleViewController : MDCActivityIndicatorDele
    }
 
   // MARK: Catalog by convention
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Activity Indicator", "Activity Indicator (Swift)"],
       "primaryDemo": false,

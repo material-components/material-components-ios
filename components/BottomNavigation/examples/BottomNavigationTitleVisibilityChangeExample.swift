@@ -18,7 +18,7 @@ import MaterialComponents.MaterialColorScheme
 
 class BottomNavigationTitleVisibilityChangeExample: UIViewController, MDCBottomNavigationBarDelegate {
   
-  var colorScheme = MDCSemanticColorScheme()
+  @objc var colorScheme = MDCSemanticColorScheme()
   let instructionLabel = UILabel()
   
   // Create a bottom navigation bar to add to a view.
@@ -87,7 +87,7 @@ class BottomNavigationTitleVisibilityChangeExample: UIViewController, MDCBottomN
 
     var viewBounds = view.bounds;
     if #available(iOS 11.0, *) {
-      viewBounds = UIEdgeInsetsInsetRect(viewBounds, view.safeAreaInsets)
+      viewBounds = viewBounds.inset(by: view.safeAreaInsets)
     }
     let labelWidth = min(viewBounds.size.width - 32, 480);
     let labelSize = instructionLabel.sizeThatFits(CGSize(width: labelWidth,
@@ -115,7 +115,7 @@ class BottomNavigationTitleVisibilityChangeExample: UIViewController, MDCBottomN
 // MARK: Catalog by convention
 extension BottomNavigationTitleVisibilityChangeExample {
   
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Bottom Navigation", "Bottom Navigation Title Visibility (Swift)"],
       "primaryDemo": false,

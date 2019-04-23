@@ -15,9 +15,9 @@
 import Foundation
 import MaterialComponents.MaterialButtons_ButtonThemer
 import MaterialComponents.MaterialColorScheme
+import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialShapeScheme
 import MaterialComponents.MaterialTypographyScheme
-import MaterialComponentsBeta.MaterialContainerScheme
 
 final class AppTheme {
   let containerScheme: MDCContainerScheming

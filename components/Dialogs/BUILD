@@ -164,7 +164,7 @@ swift_library(
     ]),
     copts = [
         "-swift-version",
-        "3",
+        "4.2",
     ],
     visibility = ["//visibility:private"],
     deps = [

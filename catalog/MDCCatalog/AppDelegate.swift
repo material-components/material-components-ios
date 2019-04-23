@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MDCAppBarNavigationContro
   let navigationController = MDCAppBarNavigationController()
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions
-                   launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+                   launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     self.window = MDCCatalogWindow(frame: UIScreen.main.bounds)
 
     // The navigation tree will only take examples that implement
@@ -66,9 +66,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MDCAppBarNavigationContro
     return true
   }
 
-  func themeDidChange(notification: NSNotification) {
+  @objc func themeDidChange(notification: NSNotification) {
     let colorScheme = AppTheme.globalTheme.colorScheme
-    for viewController in navigationController.childViewControllers {
+    for viewController in navigationController.children {
       guard let appBar = navigationController.appBar(for: viewController) else {
         continue
       }
@@ -104,7 +104,7 @@ protocol CatalogAppBarInjectee {
 }
 
 extension UINavigationController {
-  func presentMenu() {
+  @objc func presentMenu() {
     let menuViewController = MDCMenuViewController(style: .plain)
     let bottomSheet = MDCBottomSheetController(contentViewController: menuViewController)
     self.present(bottomSheet, animated: true, completion: nil)

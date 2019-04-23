@@ -15,6 +15,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+#import "MDCContainedInputUnderlineLabelView.h"
+#import "MDCContainedInputUnderlineLabelViewLayout.h"
 #import "MDCContainedInputView.h"
 
 @protocol MDCContainedInputViewStyler;
@@ -29,8 +31,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, assign) BOOL leftViewHidden;
 @property(nonatomic, assign) BOOL rightViewHidden;
 @property(nonatomic, assign) BOOL clearButtonHidden;
-//@property(nonatomic, assign) BOOL floatingLabelHidden;
-//@property(nonatomic, assign) BOOL placeholderLabelHidden;
 
 @property(nonatomic, assign) CGRect floatingLabelFrameFloating;
 @property(nonatomic, assign) CGRect floatingLabelFrameNormal;
@@ -41,8 +41,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, assign) CGRect clearButtonFrameFloatingLabel;
 @property(nonatomic, assign) CGRect leftViewFrame;
 @property(nonatomic, assign) CGRect rightViewFrame;
-@property(nonatomic, assign) CGRect leftUnderlineLabelFrame;
-@property(nonatomic, assign) CGRect rightUnderlineLabelFrame;
+@property(nonatomic, assign) CGRect underlineLabelViewFrame;
+@property(nonatomic, strong) MDCContainedInputUnderlineLabelViewLayout *underlineLabelViewLayout;
 
 @property(nonatomic, readonly) CGFloat calculatedHeight;
 @property(nonatomic, assign) CGFloat topRowBottomRowDividerY;

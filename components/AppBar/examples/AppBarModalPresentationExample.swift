@@ -19,7 +19,7 @@ import MaterialComponents.MaterialAppBar_ColorThemer
 class AppBarModalPresentationSwiftExamplePresented: UITableViewController {
 
   let appBarViewController = MDCAppBarViewController()
-  var colorScheme = MDCSemanticColorScheme()
+  @objc var colorScheme = MDCSemanticColorScheme()
 
   deinit {
     // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
@@ -35,7 +35,7 @@ class AppBarModalPresentationSwiftExamplePresented: UITableViewController {
     appBarViewController.inferTopSafeAreaInsetFromViewController = true
     appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
 
-    self.addChildViewController(appBarViewController)
+    self.addChild(appBarViewController)
     self.modalPresentationStyle = .formSheet
     self.modalTransitionStyle = .coverVertical
   }
@@ -55,11 +55,7 @@ class AppBarModalPresentationSwiftExamplePresented: UITableViewController {
     appBarViewController.headerView.trackingScrollView = self.tableView
 
     view.addSubview(appBarViewController.view)
-    #if swift(>=4.2)
     appBarViewController.didMove(toParent: self)
-    #else
-    appBarViewController.didMove(toParentViewController: self)
-    #endif
 
     self.navigationItem.rightBarButtonItem =
       UIBarButtonItem(title: "Touch", style: .done, target: nil, action: nil)
@@ -68,11 +64,11 @@ class AppBarModalPresentationSwiftExamplePresented: UITableViewController {
       UIBarButtonItem(title: "Dismiss", style: .done, target: self, action: #selector(dismissSelf))
   }
 
-  override var childViewControllerForStatusBarHidden: UIViewController? {
+  override var childForStatusBarHidden: UIViewController? {
     return appBarViewController
   }
 
-  override var childViewControllerForStatusBarStyle: UIViewController? {
+  override var childForStatusBarStyle: UIViewController? {
     return appBarViewController
   }
 
@@ -104,14 +100,14 @@ class AppBarModalPresentationSwiftExamplePresented: UITableViewController {
 class AppBarModalPresentationSwiftExample: UITableViewController {
 
   let appBarViewController = MDCAppBarViewController()
-  var colorScheme = MDCSemanticColorScheme()
+  @objc var colorScheme = MDCSemanticColorScheme()
 
   init() {
     super.init(nibName: nil, bundle: nil)
 
     self.title = "Modal Presentation (Swift)"
 
-    self.addChildViewController(appBarViewController)
+    self.addChild(appBarViewController)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -127,21 +123,17 @@ class AppBarModalPresentationSwiftExample: UITableViewController {
     self.tableView.delegate = appBarViewController
 
     view.addSubview(appBarViewController.view)
-    #if swift(>=4.2)
     appBarViewController.didMove(toParent: self)
-    #else
-    appBarViewController.didMove(toParentViewController: self)
-    #endif
 
     self.navigationItem.rightBarButtonItem =
       UIBarButtonItem(title: "Detail", style: .done, target: self, action: #selector(presentModal))
   }
 
-  override var childViewControllerForStatusBarHidden: UIViewController? {
+  override var childForStatusBarHidden: UIViewController? {
     return appBarViewController
   }
 
-  override var childViewControllerForStatusBarStyle: UIViewController? {
+  override var childForStatusBarStyle: UIViewController? {
     return appBarViewController
   }
 
@@ -160,7 +152,7 @@ class AppBarModalPresentationSwiftExample: UITableViewController {
 // MARK: Catalog by convention
 extension AppBarModalPresentationSwiftExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["App Bar", "Modal Presentation (Swift)"],
       "primaryDemo": false,

@@ -37,13 +37,15 @@ the screen and displays actions a user can take.
   - [Typical use](#typical-use)
 - [MDCActionSheetController vs. UIAlertControllerStyleActionSheet](#mdcactionsheetcontroller-vs.-uialertcontrollerstyleactionsheet)
 - [Extensions](#extensions)
-  - [Color Theming](#color-theming)
-  - [Typography Theming](#typography-theming)
+  - [Theming](#theming)
 - [Accessibility](#accessibility)
   - [Set `-isScrimAccessibilityElement`](#set-`-isscrimaccessibilityelement`)
   - [Set `-scrimAccessibilityLabel`](#set-`-scrimaccessibilitylabel`)
   - [Set `-scrimAccessibilityHint`](#set-`-scrimaccessibilityhint`)
   - [Set `-scrimAccessibilityTraits`](#set-`-scrimaccessibilitytraits`)
+- [Unsupported](#unsupported)
+  - [Color Theming](#color-theming)
+  - [Typography Theming](#typography-theming)
 
 - - -
 
@@ -51,7 +53,7 @@ the screen and displays actions a user can take.
 
 `MDCActionSheetController` is a material design implementation of UIAlertControllerStyleActionSheet.
 
-Action Sheet is currently an [beta component](../../contributing/beta_components.md). Therefore, clients that
+Action Sheet is currently a [beta component](../../contributing/beta_components.md). Therefore, clients that
 wish to use Action Sheet in their app will need to manually clone the repo and add the code to their project. 
 
 
@@ -165,6 +167,139 @@ Material UIAlertController please see the `MDCAlertController` class.
 
 ## Extensions
 
+<!-- Extracted from docs/theming.md -->
+
+### Theming
+
+You can theme an MDCActionSheet to match the Material Design style by using a theming extension. The content below assumes you have read the article on [Theming](../../docs/theming.md).
+
+First, create an action sheet and import the theming extension header for Action Sheets.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+import MaterialComponents.MaterialActionSheet
+import MaterialComponents.MaterialActionSheet_Theming
+
+let actionSheet = MDCActionSheetController()
+```
+
+#### Objective-C
+
+```objc
+#import <MaterialComponents/MaterialActionSheet.h>
+#import <MaterialComponents/MaterialActionSheet+Theming.h>
+
+MDCActionSheetController *actionSheet = [[MDCActionSheetController alloc] init];
+```
+<!--</div>-->
+
+You can then provide a container scheme instance to any of the MDCActionSheet theming extensions.
+
+Then, you can theme your action sheet.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+actionSheet.applyTheme(withScheme: containerScheme)
+```
+
+#### Objective-C
+
+```objc
+[self.actionSheet applyThemeWithScheme:self.containerScheme];
+```
+<!--</div>-->
+
+
+
+
+
+
+
+<!-- Extracted from docs/accessibility.md -->
+
+## Accessibility
+
+To help ensure your Action Sheet is accessible to as many users as possible, please be sure to reivew the following
+recommendations:
+
+The scrim by default enables the "Z" gesture to dismiss. If `isScrimAccessibilityElement` is not set or is set to
+`false` then `scrimAccessibilityLabel`, `scrimAccessibilityHint`, and `scrimAccessibilityTraits` will
+have any effect.
+
+### Set `-isScrimAccessibilityElement`
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+let actionSheet = MDCActionSheetController()
+actionSheet.transitionController.isScrimAccessibilityElement = true
+```
+
+#### Objective-C
+
+```objc
+MDCActionSheetController *actionSheet = [MDCActionSheetController alloc] init];
+actionSheet.isScrimAccessibilityElement = YES;
+```
+<!--</div>-->
+
+### Set `-scrimAccessibilityLabel`
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+let actionSheet = MDCActionSheetController()
+actionSheet.transitionController.scrimAccessibilityLabel = "Cancel"
+```
+
+#### Objective-C
+
+```objc
+MDCActionSheetController *actionSheet = [MDCActionSheetController alloc] init];
+actionSheet.scrimAccessibilityLabel = @"Cancel";
+```
+<!--</div>-->
+
+### Set `-scrimAccessibilityHint`
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+let actionSheet = MDCActionSheetController()
+actionSheet.transitionController.scrimAccessibilityHint = "Dismiss the action sheet"
+```
+
+#### Objective-C
+
+```objc
+MDCActionSheetController *actionSheet = [MDCActionSheetController alloc] init];
+actionSheet.scrimAccessibilityHint = @"Dismiss the action sheet";
+```
+
+<!--</div>-->
+
+### Set `-scrimAccessibilityTraits`
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+let actionSheet = MDCActionSheetController()
+actionSheet.transitionController.scrimAccessibilityTraits = UIAccessibilityTraitButton
+```
+
+#### Objective-C
+
+```objc
+MDCActionSheetController *actionSheet = [MDCActionSheetController alloc] init];
+actionSheet.scrimAccessibilityTraits = UIAccessibilityTraitButton;
+```
+<!--</div>-->
+
+
+## Unsupported
+
 <!-- Extracted from docs/color-theming.md -->
 
 ### Color Theming
@@ -246,87 +381,6 @@ id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
 MDCActionSheetController *actionSheet = [[MDCActionSheetController alloc] init];
 [MDCActionSheetTypographyThemer applyTypographyScheme:self.typographyScheme
                               toActionSheetController:actionSheet];
-```
-<!--</div>-->
-
-
-<!-- Extracted from docs/accessibility.md -->
-
-## Accessibility
-
-To help ensure your Action Sheet is accessible to as many users as possible, please be sure to reivew the following
-recommendations:
-
-The scrim by default enables the "Z" gesture to dismiss. If `isScrimAccessibilityElement` is not set or is set to
-`false` then `scrimAccessibilityLabel`, `scrimAccessibilityHint`, and `scrimAccessibilityTraits` will
-have any effect.
-
-### Set `-isScrimAccessibilityElement`
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-let actionSheet = MDCActionSheetController()
-actionSheet.transitionController.isScrimAccessibilityElement = true
-```
-
-#### Objective-C
-
-```objc
-MDCActionSheetController *actionSheet = [MDCActionSheetController alloc] init];
-actionSheet.isScrimAccessibilityElement = YES;
-```
-<!--</div>-->
-
-### Set `-scrimAccessibilityLabel`
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-let actionSheet = MDCActionSheetController()
-actionSheet.transitionController.scrimAccessibilityLabel = "Cancel"
-```
-
-#### Objective-C
-
-```objc
-MDCActionSheetController *actionSheet = [MDCActionSheetController alloc] init];
-actionSheet.scrimAccessibilityLabel = @"Cancel";
-```
-<!--</div>-->
-
-### Set `-scrimAccessibilityHint`
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-let actionSheet = MDCActionSheetController()
-actionSheet.transitionController.scrimAccessibilityHint = "Dismiss the action sheet"
-```
-
-#### Objective-C
-
-```objc
-MDCActionSheetController *actionSheet = [MDCActionSheetController alloc] init];
-actionSheet.scrimAccessibilityHint = @"Dismiss the action sheet";
-```
-
-<!--</div>-->
-
-### Set `-scrimAccessibilityTraits`
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-let actionSheet = MDCActionSheetController()
-actionSheet.transitionController.scrimAccessibilityTraits = UIAccessibilityTraitButton
-```
-
-#### Objective-C
-
-```objc
-MDCActionSheetController *actionSheet = [MDCActionSheetController alloc] init];
-actionSheet.scrimAccessibilityTraits = UIAccessibilityTraitButton;
 ```
 <!--</div>-->
 

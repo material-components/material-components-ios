@@ -34,7 +34,7 @@ swift_library(
     srcs = glob(["src/*.swift"]),
     copts = [
         "-swift-version",
-        "3",
+        "4.2",
     ],
 )
 

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <MaterialComponents/MaterialTabs.h>
 #import "MaterialContainerScheme.h"
+#import "MaterialTabs.h"
 
 /**
  This category is used to style MDCTabBar instances to a specific Material style which can be found

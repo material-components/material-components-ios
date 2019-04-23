@@ -61,7 +61,7 @@ extension TabBarIconSwiftExample {
   func setupAppBar() -> MDCAppBarViewController {
     let appBarViewController = MDCAppBarViewController()
 
-    self.addChildViewController(appBarViewController)
+    self.addChild(appBarViewController)
     appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
     appBarViewController.headerView.minimumHeight = 56 + 72
     appBarViewController.headerView.tintColor = MDCPalette.blue.tint500
@@ -77,7 +77,7 @@ extension TabBarIconSwiftExample {
     view.backgroundColor = UIColor.white
 
     view.addSubview(appBarViewController.view)
-    appBarViewController.didMove(toParentViewController: self)
+    appBarViewController.didMove(toParent: self)
 
     let badgeIncrementItem = UIBarButtonItem(title: "Add",
                                              style: .plain,
@@ -233,7 +233,7 @@ extension TabBarIconSwiftExample {
 }
 
 extension TabBarIconSwiftExample {
-  override var childViewControllerForStatusBarStyle: UIViewController? {
+  override var childForStatusBarStyle: UIViewController? {
     return appBarViewController
   }
 
@@ -250,7 +250,7 @@ extension TabBarIconSwiftExample {
 // MARK: - Catalog by convention
 extension TabBarIconSwiftExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Tab Bar", "Tabs with Icons (Swift)"],
       "primaryDemo": false,

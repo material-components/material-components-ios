@@ -16,10 +16,10 @@ import XCTest
 
 import MaterialComponents.MaterialDialogs
 import MaterialComponents.MaterialColorScheme
+import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialTypographyScheme
 import MaterialComponents.MaterialShadowElevations
-import MaterialComponentsBeta.MaterialContainerScheme
-import MaterialComponentsBeta.MaterialButtons_Theming
+import MaterialComponents.MaterialButtons_Theming
 import MaterialComponentsBeta.MaterialDialogs_Theming
 
 class DialogsMaterialThemingTests: XCTestCase {

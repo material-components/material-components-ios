@@ -23,12 +23,12 @@ open class MaskedTransitionTypicalUseSwiftExample: UIViewController {
     let name: String
     let viewControllerType: UIViewController.Type
     let calculateFrame: ((UIPresentationController) -> CGRect)?
-    let autoresizingMask: UIViewAutoresizing
+    let autoresizingMask: UIView.AutoresizingMask
     let useSafeAreaInsets: Bool
   }
   var targets: [TargetInfo] = []
-  var colorScheme = MDCSemanticColorScheme()
-  var typographyScheme = MDCTypographyScheme()
+  @objc var colorScheme = MDCSemanticColorScheme()
+  @objc var typographyScheme = MDCTypographyScheme()
   let rightFAB = MDCFloatingButton()
   let leftFAB = MDCFloatingButton()
 
@@ -118,7 +118,7 @@ open class MaskedTransitionTypicalUseSwiftExample: UIViewController {
   }
 
   var transitionController: MDCMaskedTransitionController? = nil
-  func didTapFab(fab: UIView) {
+  @objc func didTapFab(fab: UIView) {
     guard let indexPathForSelectedRow = tableView.indexPathForSelectedRow else { return }
     let target = targets[indexPathForSelectedRow.row]
     let vc = target.viewControllerType.init()
@@ -169,7 +169,7 @@ private class ToolbarViewController: UIViewController {
     view.addSubview(toolbar)
   }
 
-  func didTap() {
+  @objc func didTap() {
     dismiss(animated: true)
   }
 }
@@ -238,14 +238,14 @@ private class ModalViewController: UIViewController {
                        constant: bottomOffset).isActive = true
   }
   
-  func didTap() {
+  @objc func didTap() {
     dismiss(animated: true)
   }
 }
 
 extension MaskedTransitionTypicalUseSwiftExample {
   // MARK: - CatalogByConvention
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs" : [ "Masked Transition", "Masked Transition (Swift)" ],
       "description" : "Examples of how the Floating Action Button can transition to other "

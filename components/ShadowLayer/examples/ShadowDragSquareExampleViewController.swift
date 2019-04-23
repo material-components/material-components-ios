@@ -70,7 +70,7 @@ class ShadowDragSquareExampleViewController: UIViewController {
 
   // MARK: - CatalogByConvention
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": [ "Shadow", "Shadow Layer"],
       "description": "Shadow Layer implements the Material Design specifications for "
