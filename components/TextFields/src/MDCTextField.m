@@ -792,6 +792,12 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
   [_fundament mdc_setAdjustsFontForContentSizeCategory:adjusts];
 }
 
+/*
+ Returns a combination of the following:
+ -  The superclass `accessibilityLabel` value
+ -  The placeholder label.
+ -  The leading underline label.
+ */
 - (NSString *)accessibilityLabel {
   NSMutableArray *accessibilityStrings = [[NSMutableArray alloc] init];
   if ([super accessibilityLabel].length > 0) {
@@ -807,6 +813,8 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
 }
 
 - (NSString *)accessibilityValue {
+  // If there is no text, return nothing. If there is placeholder text, we don't want it returning
+  // that as the `accessibilityValue`. Instead, we should only return user-input text.
   if (self.text.length > 0) {
     NSString *value = [super accessibilityValue];
     return value;

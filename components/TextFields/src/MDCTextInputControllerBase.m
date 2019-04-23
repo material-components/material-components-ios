@@ -1583,18 +1583,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
       UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, errorText);
     });
-//    self.textInput.accessibilityValue = valueString;
-//    self.textInput.leadingUnderlineLabel.accessibilityLabel = announcementString;
-  } else {
-//    self.textInput.accessibilityValue = nil;
-//    if ([self.textInput.leadingUnderlineLabel.text isEqualToString:self.helperText]) {
-//      self.textInput.leadingUnderlineLabel.accessibilityLabel = self.helperAccessibilityLabel;
-//    } else {
-//      self.textInput.leadingUnderlineLabel.accessibilityLabel = nil;
-//    }
   }
-
-
 }
 
 - (void)setHelperText:(NSString *)helperText
