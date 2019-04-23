@@ -31,7 +31,7 @@ class EditReorderCollectionViewController: UIViewController,
                                         collectionViewLayout: UICollectionViewFlowLayout())
   var toggle = ToggleMode.edit
 
-  var containerScheme: MDCContainerScheming
+  @objc var containerScheme: MDCContainerScheming
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     containerScheme = MDCContainerScheme()

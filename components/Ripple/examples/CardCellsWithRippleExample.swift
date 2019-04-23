@@ -32,7 +32,7 @@ class CardCellsWithRippleExample: UIViewController,
                                         collectionViewLayout: UICollectionViewFlowLayout())
   var toggle = ToggleMode.edit
 
-  var containerScheme: MDCContainerScheming
+  @objc var containerScheme: MDCContainerScheming
 
   var colorScheme: MDCColorScheming {
     return containerScheme.colorScheme
