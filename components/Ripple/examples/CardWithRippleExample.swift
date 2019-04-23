@@ -22,7 +22,7 @@ class CardWithRippleExample: UIViewController {
   var card = MDCCard()
   var button = MDCButton()
 
-  var containerScheme: MDCContainerScheming
+  @objc var containerScheme: MDCContainerScheming
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     card.enableRippleBehavior = true

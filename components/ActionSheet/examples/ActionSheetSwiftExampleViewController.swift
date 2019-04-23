@@ -23,7 +23,7 @@ import MaterialComponents.MaterialActionSheet_Theming
 
 class ActionSheetSwiftExampleViewController: UIViewController {
 
-  var containerScheme: MDCContainerScheming = MDCContainerScheme()
+  @objc var containerScheme: MDCContainerScheming = MDCContainerScheme()
   
   let tableView = UITableView()
   enum ActionSheetExampleType {
