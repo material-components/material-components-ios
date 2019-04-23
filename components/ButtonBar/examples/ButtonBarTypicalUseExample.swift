@@ -18,8 +18,8 @@ import MaterialComponents.MaterialContainerScheme
 import MaterialComponentsBeta.MaterialButtonBar_Theming
 
 class ButtonBarTypicalUseSwiftExample: UIViewController {
-  var colorScheme = MDCSemanticColorScheme(defaults: .material201804)
-  var typographyScheme = MDCTypographyScheme(defaults: .material201804)
+  @objc var colorScheme = MDCSemanticColorScheme(defaults: .material201804)
+  @objc var typographyScheme = MDCTypographyScheme(defaults: .material201804)
 
   var scheme: MDCContainerScheming {
     let scheme = MDCContainerScheme()

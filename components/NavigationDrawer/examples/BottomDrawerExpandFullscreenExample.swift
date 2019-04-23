@@ -20,7 +20,7 @@ import MaterialComponents.MaterialNavigationDrawer
 import MaterialComponents.MaterialNavigationDrawer_ColorThemer
 
 class BottomDrawerExpandFullscreenExample: UIViewController {
-  var colorScheme = MDCSemanticColorScheme()
+  @objc var colorScheme = MDCSemanticColorScheme()
   let bottomAppBar = MDCBottomAppBarView()
 
   let headerViewController = DrawerHeaderViewController()
@@ -75,7 +75,7 @@ class BottomDrawerExpandFullscreenExample: UIViewController {
 }
 
 class ExpandFullscreenContentViewController: UITableViewController {
-  var colorScheme: MDCSemanticColorScheme!
+  @objc var colorScheme: MDCSemanticColorScheme!
   weak var drawerVC: MDCBottomDrawerViewController!
 
   init() {

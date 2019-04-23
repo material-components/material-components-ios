@@ -18,7 +18,7 @@ import MaterialComponents.MaterialColorScheme
 
 class BottomNavigationTitleVisibilityChangeExample: UIViewController, MDCBottomNavigationBarDelegate {
   
-  var colorScheme = MDCSemanticColorScheme()
+  @objc var colorScheme = MDCSemanticColorScheme()
   let instructionLabel = UILabel()
   
   // Create a bottom navigation bar to add to a view.
