@@ -143,11 +143,12 @@
   self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
   self.scrollView.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:self.scrollView];
-  NSArray *constraints =
-      [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[scrollView]|"
-                                              options:0
-                                              metrics:nil
-                                                views:@{@"scrollView" : self.scrollView}];
+  id<UILayoutSupport> topGuide = self.topLayoutGuide;
+  NSArray *constraints = [NSLayoutConstraint
+      constraintsWithVisualFormat:@"V:|[topGuide]-[scrollView]|"
+                          options:0
+                          metrics:nil
+                            views:@{@"topGuide" : topGuide, @"scrollView" : self.scrollView}];
 
   [NSLayoutConstraint activateConstraints:constraints];
   constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scrollView]|"

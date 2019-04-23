@@ -29,6 +29,7 @@ target "MDCCatalog" do
     'CollectionLayoutAttributes/UnitTests',
     'Collections/UnitTests',
     'Dialogs/UnitTests',
+    'Dialogs+Theming/UnitTests',
     'FeatureHighlight/UnitTests',
     'FlexibleHeader/UnitTests',
     'HeaderStackView/UnitTests',
@@ -71,7 +72,6 @@ target "MDCCatalog" do
     'ActionSheet+ColorThemer/UnitTests',
     'BottomNavigation/UnitTests',
     'ButtonBar+Theming/UnitTests',
-    'Dialogs+Theming/UnitTests',
   ]
   pod 'MaterialComponentsSnapshotTests', :path => '../', :testspecs => [
     'SnapshotTests'

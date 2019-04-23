@@ -14,13 +14,13 @@
 
 import XCTest
 
+import MaterialComponents.MaterialButtons_Theming
 import MaterialComponents.MaterialDialogs
+import MaterialComponents.MaterialDialogs_Theming
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialTypographyScheme
 import MaterialComponents.MaterialShadowElevations
-import MaterialComponents.MaterialButtons_Theming
-import MaterialComponentsBeta.MaterialDialogs_Theming
 
 class DialogsMaterialThemingTests: XCTestCase {
 

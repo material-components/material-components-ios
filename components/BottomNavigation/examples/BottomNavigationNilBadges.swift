@@ -17,7 +17,7 @@ import MaterialComponents.MaterialBottomNavigation_ColorThemer
 
 class BottomNavigationNilBadges : UIViewController {
 
-  var colorScheme = MDCSemanticColorScheme()
+  @objc var colorScheme = MDCSemanticColorScheme()
 
   // Create a bottom navigation bar to add to a view.
   let bottomNavBar = MDCBottomNavigationBar()

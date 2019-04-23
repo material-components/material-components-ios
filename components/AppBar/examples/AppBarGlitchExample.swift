@@ -27,8 +27,8 @@ import MaterialComponents.MaterialFlexibleHeader_CanAlwaysExpandToMaximumHeight
 class AppBarJumpExample: UIViewController {
 
   lazy var appBarViewController: MDCAppBarViewController = self.makeAppBar()
-  var colorScheme = MDCSemanticColorScheme()
-  var typographyScheme = MDCTypographyScheme()
+  @objc var colorScheme = MDCSemanticColorScheme()
+  @objc var typographyScheme = MDCTypographyScheme()
 
   fileprivate let firstTab = SimpleComposedTableViewController()
   fileprivate let secondTab = SimpleComposedTableViewController()

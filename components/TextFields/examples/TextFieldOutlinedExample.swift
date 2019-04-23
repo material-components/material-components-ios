@@ -20,8 +20,8 @@ import MaterialComponents.MaterialTextFields_TypographyThemer
 final class TextFieldOutlinedSwiftExample: UIViewController {
 
   let scrollView = UIScrollView()
-  var colorScheme = MDCSemanticColorScheme()
-  var typographyScheme = MDCTypographyScheme()
+  @objc var colorScheme = MDCSemanticColorScheme()
+  @objc var typographyScheme = MDCTypographyScheme()
 
   let name: MDCTextField = {
     let name = MDCTextField()
@@ -270,10 +270,10 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
     scrollView.translatesAutoresizingMaskIntoConstraints = false
 
     NSLayoutConstraint.activate(NSLayoutConstraint.constraints(
-      withVisualFormat: "V:|[scrollView]|",
+      withVisualFormat: "V:|[topGuide]-[scrollView]|",
       options: [],
       metrics: nil,
-      views: ["scrollView": scrollView]))
+      views: ["scrollView": scrollView, "topGuide": topLayoutGuide]))
     NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "H:|[scrollView]|",
                                                                options: [],
                                                                metrics: nil,
