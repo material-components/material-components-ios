@@ -66,7 +66,7 @@
 
   int characterCountMax = 25;
   textFieldOutlined.delegate = self;
-  textFieldOutlined.clearButtonMode = UITextFieldViewModeNever;
+  textFieldOutlined.clearButtonMode = UITextFieldViewModeAlways;
 
   textFieldOutlined.leadingView = [[UIImageView alloc] initWithImage:self.leadingImage];
   textFieldOutlined.leadingViewMode = UITextFieldViewModeAlways;
@@ -86,7 +86,7 @@
   textFieldFilled.translatesAutoresizingMaskIntoConstraints = NO;
 
   textFieldFilled.delegate = self;
-  textFieldFilled.clearButtonMode = UITextFieldViewModeAlways;
+  textFieldFilled.clearButtonMode = UITextFieldViewModeUnlessEditing;
 
   textFieldFilled.leadingView = [[UIImageView alloc] initWithImage:self.leadingImage];
   textFieldFilled.leadingViewMode = UITextFieldViewModeAlways;
@@ -204,9 +204,9 @@
                                  attribute:NSLayoutAttributeTop
                                  relatedBy:NSLayoutRelationEqual
                                     toItem:self.scrollView
-                                 attribute:NSLayoutAttributeTopMargin
+                                 attribute:NSLayoutAttributeTop
                                 multiplier:1
-                                  constant:100]
+                                  constant:20]
         .active = YES;
     [NSLayoutConstraint constraintWithItem:textFieldOutlined
                                  attribute:NSLayoutAttributeBottom

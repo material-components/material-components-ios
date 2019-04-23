@@ -74,7 +74,6 @@
   textFieldName.delegate = self;
   textFieldName.clearButtonMode = UITextFieldViewModeUnlessEditing;
   textFieldName.backgroundColor = [UIColor whiteColor];
-//  textFieldName.isAccessibilityElement = NO;
 
   UIImage *leadingImage = [UIImage
                          imageNamed:@"ic_search"
@@ -103,7 +102,6 @@
   textFieldAddress.delegate = self;
   textFieldAddress.clearButtonMode = UITextFieldViewModeUnlessEditing;
   textFieldAddress.backgroundColor = [UIColor whiteColor];
-//  textFieldAddress.isAccessibilityElement = NO;
 
   self.addressController =
       [[MDCTextInputControllerOutlined alloc] initWithTextInput:textFieldAddress];
@@ -117,7 +115,6 @@
   textFieldCity.delegate = self;
   textFieldCity.clearButtonMode = UITextFieldViewModeUnlessEditing;
   textFieldCity.backgroundColor = [UIColor whiteColor];
-//  textFieldCity.isAccessibilityElement = NO;
 
   self.cityController = [[MDCTextInputControllerOutlined alloc] initWithTextInput:textFieldCity];
   self.cityController.placeholderText = @"City";
@@ -129,7 +126,6 @@
   textFieldState.delegate = self;
   textFieldState.clearButtonMode = UITextFieldViewModeUnlessEditing;
   textFieldState.backgroundColor = [UIColor whiteColor];
-//  textFieldState.isAccessibilityElement = NO;
 
   self.stateController = [[MDCTextInputControllerOutlined alloc] initWithTextInput:textFieldState];
   self.stateController.placeholderText = @"State";
@@ -141,7 +137,6 @@
   textFieldZip.delegate = self;
   textFieldZip.clearButtonMode = UITextFieldViewModeUnlessEditing;
   textFieldZip.backgroundColor = [UIColor whiteColor];
-//  textFieldZip.isAccessibilityElement = NO;
 
   self.zipController = [[MDCTextInputControllerOutlined alloc] initWithTextInput:textFieldZip];
   self.zipController.placeholderText = @"Zip Code";
@@ -151,7 +146,6 @@
   stateZip.translatesAutoresizingMaskIntoConstraints = NO;
   [self.scrollView addSubview:stateZip];
   stateZip.opaque = NO;
-//  stateZip.isAccessibilityElement = NO;
 
   [stateZip addSubview:textFieldState];
   [stateZip addSubview:textFieldZip];
@@ -161,7 +155,7 @@
   [self.scrollView addSubview:textFieldPhone];
 
   textFieldPhone.delegate = self;
-  textFieldPhone.clearButtonMode = UITextFieldViewModeNever;
+  textFieldPhone.clearButtonMode = UITextFieldViewModeUnlessEditing;
   textFieldPhone.backgroundColor = [UIColor whiteColor];
 
   self.phoneController = [[MDCTextInputControllerOutlined alloc] initWithTextInput:textFieldPhone];
@@ -174,7 +168,6 @@
   [self.scrollView addSubview:textFieldMessage];
 
   textFieldMessage.textView.delegate = self;
-//  textFieldMessage.isAccessibilityElement = NO;
 
   self.messageController =
       [[MDCTextInputControllerOutlinedTextArea alloc] initWithTextInput:textFieldMessage];
@@ -498,7 +491,6 @@
     @"breadcrumbs" : @[ @"Text Field", @"Outlined text fields" ],
     @"primaryDemo" : @YES,
     @"presentable" : @YES,
-//    @"debug" : @YES,
   };
 }
 
