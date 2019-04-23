@@ -33,7 +33,7 @@ static const NSUInteger kLongPressNumberOfTouchesRequired = 1;
  * dismissing).
  */
 static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
-  return CGAffineTransformScale(CGAffineTransformIdentity, 0.97, 0.97);
+  return CGAffineTransformScale(CGAffineTransformIdentity, (CGFloat)0.97, (CGFloat)0.97);
 }
 
 @interface MDCBottomNavigationBarController ()
@@ -88,7 +88,7 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
   [self.view addSubview:self.navigationBar];
   [self loadConstraints];
 
-  if (self.dynamicTypeSupportEnabled) {
+  if ([self isDynamicTypeSupportEnabled] && ![self isNavigationBarLongPressRecognizerRegistered]) {
     [self.navigationBar addGestureRecognizer:self.navigationBarLongPressRecognizer];
   }
 }
@@ -157,11 +157,10 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
 - (void)setDynamicTypeSupportEnabled:(BOOL)dynamicTypeSupportEnabled {
   _dynamicTypeSupportEnabled = dynamicTypeSupportEnabled;
 
-  BOOL isNavigationBarLongPressEnabled =
-      [self.navigationBar.gestureRecognizers containsObject:self.navigationBarLongPressRecognizer];
-  if (dynamicTypeSupportEnabled && !isNavigationBarLongPressEnabled) {
+  BOOL isNavigationBarLongPressRegistered = [self isNavigationBarLongPressRecognizerRegistered];
+  if (dynamicTypeSupportEnabled && !isNavigationBarLongPressRegistered) {
     [self.navigationBar addGestureRecognizer:self.navigationBarLongPressRecognizer];
-  } else if (!dynamicTypeSupportEnabled && isNavigationBarLongPressEnabled) {
+  } else if (!dynamicTypeSupportEnabled && isNavigationBarLongPressRegistered) {
     [self.navigationBar removeGestureRecognizer:self.navigationBarLongPressRecognizer];
   }
 }
@@ -311,7 +310,7 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
  * @param point CGPoint The point within @c navigationBar coordinate space.
  */
 - (void)handleNavigationBarLongPressEndedForPoint:(CGPoint)point {
-  if (!self.largeItemDialog || self.isDismissingLargeItemDialog) {
+  if (!self.largeItemDialog || [self isDismissingLargeItemDialog]) {
     return;
   }
 
@@ -591,6 +590,12 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
         [self.largeItemDialog removeFromSuperview];
         self.dismissingLargeItemView = NO;
       }];
+}
+
+/** Returns if the long press gesture recognizer has been added to the navigation bar. */
+- (BOOL)isNavigationBarLongPressRecognizerRegistered {
+  return
+      [self.navigationBar.gestureRecognizers containsObject:self.navigationBarLongPressRecognizer];
 }
 
 @end
