@@ -856,9 +856,6 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 - (void)setHelperAccessibilityLabel:(NSString *)helperAccessibilityLabel {
   _helperAccessibilityLabel = [helperAccessibilityLabel copy];
-//  if ([self.textInput.leadingUnderlineLabel.text isEqualToString:self.helperText]) {
-//    self.textInput.leadingUnderlineLabel.accessibilityLabel = _helperAccessibilityLabel;
-//  }
 }
 
 - (UIColor *)errorColor {
@@ -1486,15 +1483,13 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
   // Accessibility
   if (self.textInput.isEditing && self.characterCountMax > 0) {
-    NSUInteger charactersForTextInput = [self.characterCounter
-                                         characterCountForTextInput:self.textInput];
     NSString *announcementString;
     if (!announcementString.length) {
       announcementString = [NSString
-          stringWithFormat:@"%lu characters remaining", charactersForTextInput > self.characterCountMax ?
-                            0U : 
-                           (unsigned long)(MAX(0, self.characterCountMax -
-                                           charactersForTextInput))];
+          stringWithFormat:@"%lu characters remaining",
+                           (unsigned long)(self.characterCountMax -
+                                           [self.characterCounter
+                                               characterCountForTextInput:self.textInput])];
     }
 
     // Simply sending a layout change notification does not seem to
