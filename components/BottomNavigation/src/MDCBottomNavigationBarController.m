@@ -21,8 +21,8 @@
 
 // A context for Key Value Observing
 static void *const kObservationContext = (void *)&kObservationContext;
-static const CGFloat kLargeItemViewHeight = 225;
-static const CGFloat kLargeItemViewWidth = 225;
+static const CGFloat kLargeItemViewHeight = 210;
+static const CGFloat kLargeItemViewWidth = 210;
 static const CGFloat kMinimumLargeFontSize = 28;
 static const NSTimeInterval kLargeItemViewAnimationDuration = 0.1;
 static const NSTimeInterval kLongPressMinimumPressDuration = 0.2;
@@ -560,14 +560,11 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
   self.largeItemDialog.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:self.largeItemDialog];
 
+  UIWindow *window = self.largeItemDialog.window;
   [self.largeItemDialog.heightAnchor constraintEqualToConstant:kLargeItemViewHeight].active = YES;
   [self.largeItemDialog.widthAnchor constraintEqualToConstant:kLargeItemViewWidth].active = YES;
-  [self.largeItemDialog.centerXAnchor
-      constraintEqualToAnchor:self.largeItemDialog.window.centerXAnchor]
-      .active = YES;
-  [self.largeItemDialog.centerYAnchor
-      constraintEqualToAnchor:self.largeItemDialog.window.centerYAnchor]
-      .active = YES;
+  [self.largeItemDialog.centerXAnchor constraintEqualToAnchor:window.centerXAnchor].active = YES;
+  [self.largeItemDialog.centerYAnchor constraintEqualToAnchor:window.centerYAnchor].active = YES;
 
   self.largeItemDialog.layer.opacity = 0;
   self.largeItemDialog.transform = MDCLargeItemViewAnimationTransitionTransform();
