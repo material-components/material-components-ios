@@ -19,14 +19,25 @@
 
 /**
  The Material Design typography system's themer for List Item classes.
+
+ @warning This API will eventually be deprecated. See the individual method documentation for
+ details on replacement APIs.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 @interface MDCListTypographyThemer : NSObject
+@end
+
+@interface MDCListTypographyThemer (ToBeDeprecated)
 
 /**
  Applies a typography scheme's properties to an MDCSelfSizingStereoCell.
 
  @param typographyScheme The typography scheme to apply to the component instance.
  @param cell A component instance to which the typography scheme should be applied.
+
+ @warning This API will eventually be deprecated. There is no replacement yet.
+ Track progress here: https://github.com/material-components/material-components-ios/issues/7172
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyTypographyScheme:(id<MDCTypographyScheming>)typographyScheme
        toSelfSizingStereoCell:(MDCSelfSizingStereoCell *)cell;

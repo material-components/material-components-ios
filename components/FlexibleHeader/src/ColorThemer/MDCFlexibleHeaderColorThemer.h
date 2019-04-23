@@ -19,8 +19,15 @@
 
 /**
  The Material Design color system's themer for instances of MDCFlexibleHeaderView.
+
+ @warning This API will eventually be deprecated. See the individual method documentation for
+ details on replacement APIs.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 @interface MDCFlexibleHeaderColorThemer : NSObject
+@end
+
+@interface MDCFlexibleHeaderColorThemer (ToBeDeprecated)
 
 /**
  Applies a color scheme's properties to an MDCFlexibleHeaderView using the primary mapping.
@@ -29,6 +36,10 @@
 
  @param colorScheme The color scheme to apply to the component instance.
  @param flexibleHeaderView A component instance to which the color scheme should be applied.
+
+ @warning This API will eventually be deprecated. There is no replacement yet.
+ Track progress here: https://github.com/material-components/material-components-ios/issues/7172
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
             toFlexibleHeaderView:(nonnull MDCFlexibleHeaderView *)flexibleHeaderView;
@@ -40,23 +51,23 @@
 
  @param colorScheme The color scheme to apply to the component instance.
  @param flexibleHeaderView A component instance to which the color scheme should be applied.
+
+ @warning This API will eventually be deprecated. There is no replacement yet.
+ Track progress here: https://github.com/material-components/material-components-ios/issues/7172
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applySurfaceVariantWithColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                       toFlexibleHeaderView:(nonnull MDCFlexibleHeaderView *)flexibleHeaderView;
 
-@end
-
-@interface MDCFlexibleHeaderColorThemer (ToBeDeprecated)
-
 /**
  Applies a color scheme to theme a MDCFlexibleHeaderView.
 
- @warning This method will soon be deprecated. Consider using
- @c +applySemanticColorScheme:toFlexibleHeaderView: instead. Learn more at
- components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
-
  @param colorScheme The color scheme to apply to MDCFlexibleHeaderView.
  @param flexibleHeaderView A MDCFlexibleHeaderView instance to apply a color scheme.
+
+ @warning This API will eventually be deprecated. There is no replacement yet.
+ Track progress here: https://github.com/material-components/material-components-ios/issues/7172
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
     toFlexibleHeaderView:(nonnull MDCFlexibleHeaderView *)flexibleHeaderView;
@@ -64,12 +75,12 @@
 /**
  Applies a color scheme to theme a MDCFlexibleHeaderViewController.
 
- @warning This method will soon be deprecated. Consider using
- @c +applySemanticColorScheme:toFlexibleHeaderView: instead. Learn more at
- components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
-
  @param colorScheme The color scheme to apply to MDCFlexibleHeaderView.
  @param flexibleHeaderController A MDCFlexibleHeaderViewController instance to apply a color scheme.
+
+ @warning This API will eventually be deprecated. There is no replacement yet.
+ Track progress here: https://github.com/material-components/material-components-ios/issues/7172
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
     toMDCFlexibleHeaderController:

@@ -14,7 +14,7 @@
 
 import UIKit
 import MaterialComponents.MaterialTypographyScheme
-import MaterialComponentsBeta.MaterialCards_Theming
+import MaterialComponents.MaterialCards_Theming
 
 class CardEditReorderCollectionCell: MDCCardCollectionCell {
 
@@ -47,7 +47,8 @@ class CardEditReorderCollectionCell: MDCCardCollectionCell {
 
     self.contentView.addSubview(imageView)
     self.contentView.addSubview(titleLabel)
-    titleLabel.setContentCompressionResistancePriority(800, for: .vertical)
+    titleLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 800),
+                                                       for: .vertical)
 
     addConstraints()
   }

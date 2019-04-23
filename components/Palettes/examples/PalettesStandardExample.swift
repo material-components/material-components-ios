@@ -44,7 +44,7 @@ class PalettesStandardExampleViewController: PalettesExampleViewController {
 // MARK: - Catalog by convention
 extension PalettesStandardExampleViewController {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Palettes", "Standard Palettes"],
       "description": "The Palettes component provides sets of reference colors that work "

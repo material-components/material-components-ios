@@ -19,14 +19,25 @@
 
 /**
  The Material Design color system's themer for List Item classes.
+
+ @warning This API will eventually be deprecated. See the individual method documentation for
+ details on replacement APIs.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 @interface MDCListColorThemer : NSObject
+@end
+
+@interface MDCListColorThemer (ToBeDeprecated)
 
 /**
  Applies a color scheme's properties to an MDCSelfSizingStereoCell
 
  @param colorScheme The color scheme to apply to the component instance.
  @param cell A component instance to which the color scheme should be applied.
+
+ @warning This API will eventually be deprecated. There is no replacement yet.
+ Track progress here: https://github.com/material-components/material-components-ios/issues/7172
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
           toSelfSizingStereoCell:(MDCSelfSizingStereoCell *)cell;
@@ -36,6 +47,10 @@
 
  @param colorScheme The color scheme to apply to the component instance.
  @param cell A component instance to which the color scheme should be applied.
+
+ @warning This API will eventually be deprecated. There is no replacement yet.
+ Track progress here: https://github.com/material-components/material-components-ios/issues/7172
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme toBaseCell:(MDCBaseCell *)cell;
 

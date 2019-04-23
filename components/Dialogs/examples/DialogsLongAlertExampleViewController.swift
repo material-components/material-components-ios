@@ -15,23 +15,23 @@
 import UIKit
 
 import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialDialogs
-import MaterialComponentsBeta.MaterialButtons_Theming
-import MaterialComponentsBeta.MaterialContainerScheme
+import MaterialComponents.MaterialButtons_Theming
 import MaterialComponentsBeta.MaterialDialogs_Theming
 
 class DialogsLongAlertExampleViewController: UIViewController {
 
   let textButton = MDCButton()
-  var containerScheme: MDCContainerScheming = MDCContainerScheme()
+  @objc var containerScheme: MDCContainerScheming = MDCContainerScheme()
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
     view.backgroundColor = containerScheme.colorScheme.backgroundColor
 
-    textButton.setTitle("PRESENT ALERT", for: UIControlState())
-    textButton.setTitleColor(UIColor(white: 0.1, alpha:1), for: UIControlState())
+    textButton.setTitle("PRESENT ALERT", for: UIControl.State())
+    textButton.setTitleColor(UIColor(white: 0.1, alpha:1), for: UIControl.State())
     textButton.sizeToFit()
     textButton.translatesAutoresizingMaskIntoConstraints = false
     textButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
@@ -82,7 +82,7 @@ class DialogsLongAlertExampleViewController: UIViewController {
 // MARK: Catalog by convention
 extension DialogsLongAlertExampleViewController {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Dialogs", "Swift Alert Demo"],
       "primaryDemo": false,

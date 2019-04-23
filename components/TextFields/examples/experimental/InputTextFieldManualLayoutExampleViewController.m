@@ -24,6 +24,11 @@
 #import "MaterialAppBar+TypographyThemer.h"
 #import "MaterialButtons+ButtonThemer.h"
 
+#import "supplemental/MDCFilledTextField+MaterialTheming.h"
+#import "supplemental/MDCFilledTextField.h"
+#import "supplemental/MDCOutlinedTextField+MaterialTheming.h"
+#import "supplemental/MDCOutlinedTextField.h"
+
 #import "supplemental/MDCInputTextField+MaterialTheming.h"
 
 static const NSUInteger kDefaultHorizontalPadding = 20;
@@ -87,22 +92,18 @@ static const NSUInteger kDefaultVerticalPadding = 20;
   self.scrollView = [[UIScrollView alloc] init];
   [self.view addSubview:self.scrollView];
   self.scrollViewSubviews = @[
-    [self createToggleErrorButton],
-    [self createFirstResponderButton],
-    [self createLabelWithText:@"High density filled MDCInputTextField:"],
-    [self createFilledTextFieldWithMaximalDensity],
-    [self createLabelWithText:@"Average density filled MDCInputTextField:"],
-    [self createFilledTextField],
-    [self createLabelWithText:@"Low density filled MDCInputTextField:"],
-    [self createFilledTextFieldWithMinimalDensity],
-    [self createLabelWithText:@"High density outlined MDCInputTextField:"],
-    [self createOutlinedTextFieldWithMaximalDensity],
-    [self createLabelWithText:@"Average density outlined MDCInputTextField:"],
-    [self createOutlinedTextField],
-    [self createLabelWithText:@"Low density outlined MDCInputTextField:"],
-    [self createOutlinedTextFieldWithMinimalDensity],
-    [self createLabelWithText:@"Unstyled MDCInputTextField:"],
-    [self createUnthemedSimpleTextField],
+    [self createToggleErrorButton], [self createFirstResponderButton],
+    [self createLabelWithText:@"Default MDCFilledTextField:"], [self createDefaultFilledTextField],
+    [self createLabelWithText:@"Material MDCFilledTextField:"],
+    [self createMaterialFilledTextField],
+    [self createLabelWithText:@"Default MDCOutlinedTextField:"],
+    [self createDefaultOutlinedTextField],
+    [self createLabelWithText:@"Material MDCOutlinedTextField:"],
+    [self createMaterialOutlinedTextField],
+    //    [self createLabelWithText:@"Default MDCInputTextField:"],
+    //    [self createDefaultInputTextField],
+    //    [self createLabelWithText:@"Material MDCInputTextField:"],
+    //    [self createMaterialInputTextField],
   ];
   for (UIView *view in self.scrollViewSubviews) {
     [self.scrollView addSubview:view];
@@ -187,47 +188,51 @@ static const NSUInteger kDefaultVerticalPadding = 20;
   return label;
 }
 
-- (MDCInputTextField *)createFilledTextFieldWithMaximalDensity {
-  MDCInputTextField *textField = [self createFilledTextField];
-  textField.containerStyler.positioningDelegate.verticalDensity = 1.0;
-  return textField;
-}
+//- (MDCInputTextField *)createFilledTextFieldWithMaximalDensity {
+//  MDCInputTextField *textField = [self createFilledTextField];
+//  textField.containerStyler.positioningDelegate.verticalDensity = 1.0;
+//  return textField;
+//}
+//
+//- (MDCInputTextField *)createFilledTextFieldWithMinimalDensity {
+//  MDCInputTextField *textField = [self createFilledTextField];
+//  textField.containerStyler.positioningDelegate.verticalDensity = 0.0;
+//  return textField;
+//}
 
-- (MDCInputTextField *)createFilledTextFieldWithMinimalDensity {
-  MDCInputTextField *textField = [self createFilledTextField];
-  textField.containerStyler.positioningDelegate.verticalDensity = 0.0;
-  return textField;
-}
-
-- (MDCInputTextField *)createFilledTextField {
-  MDCInputTextField *textField = [[MDCInputTextField alloc] init];
-  [textField applyFilledThemeWithScheme:self.containerScheme];
-  textField.containerStyler.positioningDelegate.verticalDensity = 0.5;
+- (MDCFilledTextField *)createDefaultFilledTextField {
+  MDCFilledTextField *textField = [[MDCFilledTextField alloc] init];
+  //  textField.containerStyler.positioningDelegate.verticalDensity = 0.5;
   textField.mdc_adjustsFontForContentSizeCategory = YES;
   textField.placeholder = @"555-555-5555";
   textField.floatingLabel.text = @"Phone number";
   textField.clearButtonMode = UITextFieldViewModeWhileEditing;
   textField.leadingUnderlineLabel.numberOfLines = 0;
-  textField.leadingUnderlineLabel.text = @"This is helper text.";
+  textField.leadingUnderlineLabel.text = @"This is a string.";
   return textField;
 }
 
-- (MDCInputTextField *)createOutlinedTextFieldWithMaximalDensity {
-  MDCInputTextField *textField = [self createOutlinedTextField];
-  textField.containerStyler.positioningDelegate.verticalDensity = 1.0;
+- (MDCFilledTextField *)createMaterialFilledTextField {
+  MDCFilledTextField *textField = [self createDefaultFilledTextField];
+  [textField applyThemeWithScheme:self.containerScheme];
   return textField;
 }
 
-- (MDCInputTextField *)createOutlinedTextFieldWithMinimalDensity {
-  MDCInputTextField *textField = [self createOutlinedTextField];
-  textField.containerStyler.positioningDelegate.verticalDensity = 0.0;
-  return textField;
-}
+//- (MDCInputTextField *)createOutlinedTextFieldWithMaximalDensity {
+//  MDCInputTextField *textField = [self createOutlinedTextField];
+//  textField.containerStyler.positioningDelegate.verticalDensity = 1.0;
+//  return textField;
+//}
+//
+//- (MDCInputTextField *)createOutlinedTextFieldWithMinimalDensity {
+//  MDCInputTextField *textField = [self createOutlinedTextField];
+//  textField.containerStyler.positioningDelegate.verticalDensity = 0.0;
+//  return textField;
+//}
 
-- (MDCInputTextField *)createOutlinedTextField {
-  MDCInputTextField *textField = [[MDCInputTextField alloc] init];
-  [textField applyOutlinedThemeWithScheme:self.containerScheme];
-  textField.containerStyler.positioningDelegate.verticalDensity = 0.5;
+- (MDCOutlinedTextField *)createDefaultOutlinedTextField {
+  MDCOutlinedTextField *textField = [[MDCOutlinedTextField alloc] init];
+  //  textField.containerStyler.positioningDelegate.verticalDensity = 0.5;
   //  textField.placeholder = @"This is a placeholder";
   //  textField.floatingLabel.text = @"This is a floating label";
   textField.placeholder = @"555-555-5555";
@@ -237,11 +242,23 @@ static const NSUInteger kDefaultVerticalPadding = 20;
   return textField;
 }
 
-- (MDCInputTextField *)createUnthemedSimpleTextField {
+- (MDCOutlinedTextField *)createMaterialOutlinedTextField {
+  MDCOutlinedTextField *textField = [self createDefaultOutlinedTextField];
+  [textField applyThemeWithScheme:self.containerScheme];
+  return textField;
+}
+
+- (MDCInputTextField *)createDefaultInputTextField {
   MDCInputTextField *textField = [[MDCInputTextField alloc] init];
   textField.placeholder = @"This is a placeholder";
   textField.floatingLabel.text = @"This is a floating label";
   textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+  return textField;
+}
+
+- (MDCInputTextField *)createMaterialInputTextField {
+  MDCInputTextField *textField = [self createDefaultInputTextField];
+  [textField applyThemeWithScheme:self.containerScheme];
   return textField;
 }
 

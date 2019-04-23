@@ -32,6 +32,6 @@ id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] initWithDefau
 
 // Step 3: Apply the color scheme to your component
 [MDCAppBarColorThemer applySemanticColorScheme:colorScheme
-     toAppBar:component];
+                                      toAppBar:component];
 ```
 <!--</div>-->

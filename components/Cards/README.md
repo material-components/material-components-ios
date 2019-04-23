@@ -8,7 +8,7 @@ path: /catalog/cards/
 api_doc_root: true
 -->
 
-<!-- This file was auto-generated using scripts/generate_readme Cards -->
+<!-- This file was auto-generated using ./scripts/generate_readme Cards -->
 
 # Cards
 

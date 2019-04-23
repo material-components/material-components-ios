@@ -18,14 +18,25 @@
 
 /**
  The Material Design outlined button themer for instances of MDCButton.
+
+ @warning This API will eventually be deprecated. The replacement API is:
+ `MDCButton`'s `-applyOutlinedThemeWithScheme:`
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 @interface MDCOutlinedButtonThemer : NSObject
+@end
+
+@interface MDCOutlinedButtonThemer (ToBeDeprecated)
 
 /**
  Applies a button scheme's properties to an MDCButton using the outlined button style.
 
  @param scheme The button scheme to apply to the component instance.
  @param button A component instance to which the scheme should be applied.
+
+ @warning This API will eventually be deprecated. The replacement API is:
+ `MDCButton`'s `-applyOutlinedThemeWithScheme:`
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyScheme:(nonnull id<MDCButtonScheming>)scheme toButton:(nonnull MDCButton *)button;
 @end

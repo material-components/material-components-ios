@@ -15,11 +15,11 @@
 import UIKit
 
 import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialDialogs
 import MaterialComponents.MaterialList
 import MaterialComponents.MaterialTypographyScheme
-import MaterialComponentsBeta.MaterialButtons_Theming
-import MaterialComponentsBeta.MaterialContainerScheme
+import MaterialComponents.MaterialButtons_Theming
 import MaterialComponentsBeta.MaterialDialogs_Theming
 
 class CustomDialogViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
@@ -219,7 +219,7 @@ class DialogsThemedPresentationExampleViewController: UIViewController {
 
 extension DialogsThemedPresentationExampleViewController {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Dialogs", "Dialog Presentation Controller Theming"],
       "primaryDemo": false,

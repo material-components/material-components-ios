@@ -14,22 +14,11 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCContainedInputView.h"
-#import "MDCContainerStylerFilled.h"
-#import "MDCContainerStylerOutlined.h"
 #import "MDCInputTextField.h"
 #import "MaterialContainerScheme.h"
 
-@interface MDCInputTextFieldFilledPositioningDelegate
-    : NSObject <MDCContainedInputViewStylerPositioningDelegate>
-@end
-
-@interface MDCInputTextFieldOutlinedPositioningDelegate
-    : NSObject <MDCContainedInputViewStylerPositioningDelegate>
-@end
-
 /**
- This category is used to style SimpleTextField instances with an MDCContainerScheme.
+ This category is used to style MDCInputTextField instances with an MDCContainerScheme.
  */
 @interface MDCInputTextField (MaterialTheming)
 
@@ -39,21 +28,5 @@
  @param scheme A container scheme instance.
  */
 - (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
-
-/**
- Sets an MDCContainerStylerFilled instance as the containerStyler and then applies the container
- scheme's subsystem-specific schemes to the receiver.
-
- @param scheme A container scheme instance.
- */
-- (void)applyFilledThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
-
-/**
- Sets an MDCContainerStylerOutlined instance as the containerStyler and then applies the container
- scheme's subsystem-specific schemes to the receiver.
-
- @param scheme A container scheme instance.
- */
-- (void)applyOutlinedThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
 
 @end

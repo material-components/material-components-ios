@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialAppBar+MaterialTheming.h"
+#import "MaterialAppBar+Theming.h"
 
 #import <XCTest/XCTest.h>
 
-#import <MaterialComponents/MaterialColorScheme.h>
-#import <MaterialComponents/MaterialTypographyScheme.h>
+#import "MaterialColorScheme.h"
 #import "MaterialContainerScheme.h"
+#import "MaterialTypographyScheme.h"
 
 /** Unit tests for MDCAppBarViewController's MaterialTheming category methods. */
 @interface MDCAppBarViewController_MaterialThemingTests : XCTestCase

@@ -67,7 +67,7 @@ class ActionSheetTest: XCTestCase {
     actionSheet.addAction(action)
 
     // Then
-    let tableView = actionSheet.view.subviews.flatMap{ $0 as? UITableView }.first
+    let tableView = actionSheet.view.subviews.compactMap { $0 as? UITableView }.first
     if let table = tableView {
       XCTAssertEqual(table.numberOfRows(inSection: section), rowCount)
       if let dataSource = table.dataSource {

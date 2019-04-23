@@ -64,14 +64,12 @@ class BaseCellExample : UIViewController {
     var width = view.bounds.size.width
     var height = view.bounds.size.height
 
-    #if swift(>=3.2)
     if #available(iOS 11.0, *) {
       originX += view.safeAreaInsets.left
       originY += view.safeAreaInsets.top
       width -= (view.safeAreaInsets.left + view.safeAreaInsets.right)
       height -= (view.safeAreaInsets.top + view.safeAreaInsets.bottom)
     }
-    #endif
 
     let frame = CGRect(x: originX, y: originY, width: width, height: height);
     collectionView.frame = frame
@@ -119,7 +117,7 @@ extension BaseCellExample: UICollectionViewDataSource {
 // MARK: Catalog By Convention
 extension BaseCellExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["List Items", "MDCBaseCell Example (Swift)"],
       "description": "MDCBaseCell Example (Swift)",

@@ -19,8 +19,15 @@
 
 /**
  The Material Design typography system's themer for instances of MDCFeatureHighlightViewController.
+
+ @warning This API will eventually be deprecated. See the individual method documentation for
+ details on replacement APIs.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 @interface MDCFeatureHighlightTypographyThemer : NSObject
+@end
+
+@interface MDCFeatureHighlightTypographyThemer (ToBeDeprecated)
 
 /**
  Applies a typography scheme's properties to an MDCFeatureHighlightViewController.
@@ -28,6 +35,10 @@
  @param typographyScheme The typography scheme to apply to the component instance.
  @param featureHighlightViewController A component instance to which the typography scheme should be
  applied.
+
+ @warning This API will eventually be deprecated. There is no replacement yet.
+ Track progress here: https://github.com/material-components/material-components-ios/issues/7172
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme
     toFeatureHighlightViewController:

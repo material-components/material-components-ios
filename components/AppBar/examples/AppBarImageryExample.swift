@@ -18,7 +18,7 @@ import MaterialComponents.MaterialAppBar_ColorThemer
 
 class AppBarImagerySwiftExample: UITableViewController {
   let appBarViewController = MDCAppBarViewController()
-  var colorScheme = MDCSemanticColorScheme()
+  @objc var colorScheme = MDCSemanticColorScheme()
 
   deinit {
     // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
@@ -60,11 +60,7 @@ class AppBarImagerySwiftExample: UITableViewController {
     headerView.trackingScrollView = self.tableView
 
     view.addSubview(appBarViewController.view)
-    #if swift(>=4.2)
     appBarViewController.didMove(toParent: self)
-    #else
-    appBarViewController.didMove(toParentViewController: self)
-    #endif
   }
 
   override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -83,7 +79,7 @@ class AppBarImagerySwiftExample: UITableViewController {
     appBarViewController.inferTopSafeAreaInsetFromViewController = true
     appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
 
-    self.addChildViewController(appBarViewController)
+    self.addChild(appBarViewController)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -100,7 +96,7 @@ class AppBarImagerySwiftExample: UITableViewController {
 // MARK: Catalog by convention
 extension AppBarImagerySwiftExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["App Bar", "Imagery (Swift)"],
       "primaryDemo": false,

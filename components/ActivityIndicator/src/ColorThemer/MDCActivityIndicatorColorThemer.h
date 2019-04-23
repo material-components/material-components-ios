@@ -19,18 +19,12 @@
 
 /**
  The Material Design color system's themer for instances of MDCActivityIndicator.
+
+ @warning This API will eventually be deprecated. See the individual method documentation for
+ details on replacement APIs.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 @interface MDCActivityIndicatorColorThemer : NSObject
-
-/**
- Applies a color scheme's properties to an MDCActivityIndicator.
-
- @param colorScheme The color scheme to apply to the component instance.
- @param activityIndicator A component instance to which the color scheme should be applied.
- */
-+ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
-             toActivityIndicator:(nonnull MDCActivityIndicator *)activityIndicator;
-
 @end
 
 @interface MDCActivityIndicatorColorThemer (ToBeDeprecated)
@@ -38,9 +32,22 @@
 /**
  Applies a color scheme's properties to an MDCActivityIndicator.
 
- @warning This method will soon be deprecated. Consider using
- @c +applySemanticColorScheme:toActivityIndicator: instead. Learn more at
- components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
+ @param colorScheme The color scheme to apply to the component instance.
+ @param activityIndicator A component instance to which the color scheme should be applied.
+
+ @warning This API will eventually be deprecated. There is no replacement yet.
+ Track progress here: https://github.com/material-components/material-components-ios/issues/7172
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
+ */
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+             toActivityIndicator:(nonnull MDCActivityIndicator *)activityIndicator;
+
+/**
+ Applies a color scheme's properties to an MDCActivityIndicator.
+
+ @warning This API will eventually be deprecated. There is no replacement yet.
+ Track progress here: https://github.com/material-components/material-components-ios/issues/7172
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
 
  @param colorScheme The color scheme to apply to the component instance.
  @param activityIndicator A component instance to which the color scheme should be applied.

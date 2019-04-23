@@ -15,9 +15,9 @@
 import UIKit
 
 import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialDialogs
-import MaterialComponentsBeta.MaterialButtons_Theming
-import MaterialComponentsBeta.MaterialContainerScheme
+import MaterialComponents.MaterialButtons_Theming
 import MaterialComponentsBeta.MaterialDialogs_Theming
 
 class DialogsWithEmphasisButtonExampleViewController: UIViewController {
@@ -74,7 +74,7 @@ class DialogsWithEmphasisButtonExampleViewController: UIViewController {
 
 extension DialogsWithEmphasisButtonExampleViewController {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Dialogs", "Dialog with Themed Emphasis Buttons"],
       "primaryDemo": false,
