@@ -15,10 +15,10 @@
 import UIKit
 
 import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialButtons_Theming
 import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialDialogs
-import MaterialComponents.MaterialButtons_Theming
-import MaterialComponentsBeta.MaterialDialogs_Theming
+import MaterialComponents.MaterialDialogs_Theming
 
 class CustomShadowViewController: UIViewController {
 
