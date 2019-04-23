@@ -293,12 +293,63 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
   [textField resignFirstResponder];
 
-  if (textField == (UITextField *)self.phoneController.textInput &&
-      ![self isValidPhoneNumber:textField.text partially:NO]) {
-    [self.phoneController setErrorText:@"Invalid Phone Number" errorAccessibilityValue:nil];
+  if (textField == (UITextField *)self.nameController.textInput) {
+    if ([textField.text rangeOfCharacterFromSet:[NSCharacterSet decimalDigitCharacterSet]].length &&
+        ![self.nameController.errorText isEqualToString:@"Error: You cannot enter numbers"]) {
+      // The entered text contains numbers and we have not set an error
+      [self.nameController setErrorText:@"You cannot enter numbers" errorAccessibilityValue:nil];
+
+      // Since we are doing manual layout, we need to react to the expansion of the input that will
+      // come from setting an error.
+      [self.view setNeedsLayout];
+    } else if (self.nameController.errorText != nil) {
+      // There should be no error but error text is being shown.
+      [self.nameController setErrorText:nil errorAccessibilityValue:nil];
+
+      // Since we are doing manual layout, we need to react to the contraction of the input that
+      // will come from setting an error.
+      [self.view setNeedsLayout];
+    }
+  } else if (textField == (UITextField *)self.cityController.textInput) {
+    if ([textField.text rangeOfCharacterFromSet:[[NSCharacterSet letterCharacterSet] invertedSet]]
+            .length > 0) {
+      [self.cityController setErrorText:@"Error: City can only contain letters"
+                errorAccessibilityValue:nil];
+    } else {
+      [self.cityController setErrorText:nil errorAccessibilityValue:nil];
+    }
+  } else if (textField == (UITextField *)self.phoneController.textInput) {
+    if (![self isValidPhoneNumber:textField.text partially:NO]) {
+      [self.phoneController setErrorText:@"Invalid Phone Number" errorAccessibilityValue:nil];
+    } else if (self.phoneController.errorText != nil) {
+      [self.phoneController setErrorText:nil errorAccessibilityValue:nil];
+    }
+  } else if (textField == (UITextField *)self.zipController.textInput) {
+    if ([textField.text rangeOfCharacterFromSet:[NSCharacterSet letterCharacterSet]].length > 0) {
+      [self.zipController setErrorText:@"Error: Zip can only contain numbers"
+               errorAccessibilityValue:nil];
+    } else if (textField.text.length > 5) {
+      [self.zipController setErrorText:@"Error: Zip can only contain five digits"
+               errorAccessibilityValue:nil];
+    } else {
+      [self.zipController setErrorText:nil errorAccessibilityValue:nil];
+    }
   }
 
   return NO;
+}
+
+- (BOOL)textFieldShouldClear:(UITextField *)textField {
+  if (textField == (UITextField *)self.nameController.textInput) {
+    [self.nameController setErrorText:nil errorAccessibilityValue:nil];
+  } else if (textField == (UITextField *)self.cityController.textInput) {
+    [self.cityController setErrorText:nil errorAccessibilityValue:nil];
+  } else if (textField == (UITextField *)self.phoneController.textInput) {
+    [self.phoneController setErrorText:nil errorAccessibilityValue:nil];
+  } else if (textField == (UITextField *)self.zipController.textInput) {
+    [self.zipController setErrorText:nil errorAccessibilityValue:nil];
+  }
+  return YES;
 }
 
 - (BOOL)textField:(UITextField *)textField
