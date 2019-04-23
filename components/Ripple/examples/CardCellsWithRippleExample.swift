@@ -34,11 +34,11 @@ class CardCellsWithRippleExample: UIViewController,
 
   @objc var containerScheme: MDCContainerScheming
 
-  var colorScheme: MDCColorScheming {
+  @objc var colorScheme: MDCColorScheming {
     return containerScheme.colorScheme
   }
 
-  var typographyScheme: MDCTypographyScheming {
+  @objc var typographyScheme: MDCTypographyScheming {
     return containerScheme.typographyScheme
   }
 

@@ -27,8 +27,8 @@ open class MaskedTransitionTypicalUseSwiftExample: UIViewController {
     let useSafeAreaInsets: Bool
   }
   var targets: [TargetInfo] = []
-  var colorScheme = MDCSemanticColorScheme()
-  var typographyScheme = MDCTypographyScheme()
+  @objc var colorScheme = MDCSemanticColorScheme()
+  @objc var typographyScheme = MDCTypographyScheme()
   let rightFAB = MDCFloatingButton()
   let leftFAB = MDCFloatingButton()
 

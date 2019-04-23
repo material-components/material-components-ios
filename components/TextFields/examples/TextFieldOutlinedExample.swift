@@ -20,8 +20,8 @@ import MaterialComponents.MaterialTextFields_TypographyThemer
 final class TextFieldOutlinedSwiftExample: UIViewController {
 
   let scrollView = UIScrollView()
-  var colorScheme = MDCSemanticColorScheme()
-  var typographyScheme = MDCTypographyScheme()
+  @objc var colorScheme = MDCSemanticColorScheme()
+  @objc var typographyScheme = MDCTypographyScheme()
 
   let name: MDCTextField = {
     let name = MDCTextField()
