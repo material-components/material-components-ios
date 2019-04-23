@@ -343,7 +343,7 @@ colorScheme.primaryColor = UIColor.redColor;
 
 // New
 MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
-containerScheme.colorScheme.primaryColor = [UIColor redColor];
+containerScheme.colorScheme.primaryColor = UIColor.redColor;
 ```
 <!--</div>-->
 
