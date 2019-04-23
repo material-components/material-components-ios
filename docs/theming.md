@@ -187,7 +187,7 @@ extension MyViewController {
 
 ## Themers
 
-**Note** These will soon be deprecated for theming-extensions outlined above.
+**Note:** These will soon be deprecated for theming-extensions outlined above.
 
 Our approach to theming relies on the relationships between the following concepts:
 
@@ -201,33 +201,18 @@ Schemes represent a set of opinionated properties that are intended to be mapped
 
 Themers are objects that, when invoked with a scheme, will theme a component according to the [Material Design guidelines](https://material.io/design).
 
-## Examples
+### How to get the code
 
-### Theming a Component
+#### Cocoapods
+
+In order to use the components, themers and subsystem schemes you'll need to add the targets to your Podfile:
 
 <!--<div class="material-code-render" markdown="1">-->
-#### Swift
 
-```swift
-import MaterialComponents.MaterialBottomNavigation
-import MaterialComponents.MaterialBottomNavigation_ColorThemer
-
-let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
-let bottomNavBar = MDCBottomNavigationBar()
-MDCBottomNavigationBarColorThemer.applySemanticColorScheme(colorScheme,
-toBottomNavigation: bottomNavBar)
-```
-
-#### Objective-C
-
-```objc
-#import <MaterialComponents/MaterialBottomNavigation.h>
-#import <MaterialComponents/MaterialBottomNavigation+ColorThemer.h>
-
-MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-MDCBottomNavigation *bottomNavBar = [[MDCBottomNavigation alloc] init];
-[MDCBottomNavigationBarColorThemer applySemanticColorScheme:self.colorScheme
-toBottomNavigation:_bottomNavBar];
+```bash
+pod 'MaterialComponents/BottomNavigation'
+pod 'MaterialComponents/BottomNavigation+ColorThemer'
+pod 'MaterialComponents/schemes/Color'
 ```
 <!--</div>-->
 
@@ -255,20 +240,34 @@ colorScheme.backgroundColor = UIColor.lightGrayColor
 ```
 <!--</div>-->
 
-### How to get the code
-
-#### Cocoapods
-
-In order to use the components, themers and subsystem schemes you'll need to add the targets to your Podfile:
+### Examples
 
 <!--<div class="material-code-render" markdown="1">-->
+#### Swift
 
-```bash
-pod 'MaterialComponents/BottomNavigation'
-pod 'MaterialComponents/BottomNavigation+ColorThemer'
-pod 'MaterialComponents/schemes/Color'
+```swift
+import MaterialComponents.MaterialBottomNavigation
+import MaterialComponents.MaterialBottomNavigation_ColorThemer
+
+let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
+let bottomNavBar = MDCBottomNavigationBar()
+MDCBottomNavigationBarColorThemer.applySemanticColorScheme(colorScheme,
+toBottomNavigation: bottomNavBar)
+```
+
+#### Objective-C
+
+```objc
+#import <MaterialComponents/MaterialBottomNavigation.h>
+#import <MaterialComponents/MaterialBottomNavigation+ColorThemer.h>
+
+MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+MDCBottomNavigation *bottomNavBar = [[MDCBottomNavigation alloc] init];
+[MDCBottomNavigationBarColorThemer applySemanticColorScheme:self.colorScheme
+toBottomNavigation:_bottomNavBar];
 ```
 <!--</div>-->
+
 
 ## Additional links
 
