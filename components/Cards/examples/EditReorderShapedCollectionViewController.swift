@@ -41,7 +41,7 @@ class EditReorderShapedCollectionViewController: UIViewController,
   UICollectionViewDataSource,
   UICollectionViewDelegateFlowLayout {
 
-  var containerScheme: MDCContainerScheming
+  @objc var containerScheme: MDCContainerScheming
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     containerScheme = MDCContainerScheme()
