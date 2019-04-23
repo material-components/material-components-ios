@@ -1,8 +1,8 @@
 # 83.0.0
 
-This major release graduates most Theming extensions from Beta and includes a breaking change for
+This major release graduates most Theming Extensions from Beta and includes a breaking change for
 AppBar's imports. All Themer APIs have been annotated as "to be deprecated" in lieu of Theming
-extensions. The following Theming extensions are now generally available:
+extensions. The following Theming Extensions are now generally available:
 
 - ActionSheet
 - AppBar
