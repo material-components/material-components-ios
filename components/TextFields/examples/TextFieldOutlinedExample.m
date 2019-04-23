@@ -176,7 +176,9 @@
   self.messageController.placeholderText = @"Message";
   [self styleTextInputController:self.messageController];
 
+  id<UILayoutSupport> topGuide = self.topLayoutGuide;
   NSDictionary *views = @{
+    @"topGuide" : topGuide,
     @"name" : textFieldName,
     @"address" : textFieldAddress,
     @"city" : textFieldCity,
@@ -187,14 +189,14 @@
     @"message" : textFieldMessage
   };
   NSMutableArray<NSLayoutConstraint *> *constraints = [NSMutableArray
-      arrayWithArray:
-          [NSLayoutConstraint
-              constraintsWithVisualFormat:@"V:[name]-[address]-[city]-[stateZip]-[phone]-[message]"
+      arrayWithArray:[NSLayoutConstraint
+                         constraintsWithVisualFormat:
+                             @"V:[topGuide]-[name]-[address]-[city]-[stateZip]-[phone]-[message]"
 
-                                  options:NSLayoutFormatAlignAllLeading |
-                                          NSLayoutFormatAlignAllTrailing
-                                  metrics:nil
-                                    views:views]];
+                                             options:NSLayoutFormatAlignAllLeading |
+                                                     NSLayoutFormatAlignAllTrailing
+                                             metrics:nil
+                                               views:views]];
   [constraints addObject:[NSLayoutConstraint constraintWithItem:textFieldName
                                                       attribute:NSLayoutAttributeLeading
                                                       relatedBy:NSLayoutRelationEqual
