@@ -18,8 +18,8 @@ import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialButtons_ButtonThemer
 
 class BottomSheetTableViewExample: UIViewController {
-  var colorScheme = MDCSemanticColorScheme()
-  var typographyScheme = MDCTypographyScheme()
+  @objc var colorScheme = MDCSemanticColorScheme()
+  @objc var typographyScheme = MDCTypographyScheme()
 
   init() {
     super.init(nibName: nil, bundle: nil)

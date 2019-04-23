@@ -19,7 +19,7 @@ import MaterialComponents.MaterialBottomNavigation_ColorThemer
 
 class BottomNavigationExplicitlySetColorExample: UIViewController {
 
-  var colorScheme = MDCSemanticColorScheme()
+  @objc var colorScheme = MDCSemanticColorScheme()
 
   let bottomNavBar = MDCBottomNavigationBar()
 

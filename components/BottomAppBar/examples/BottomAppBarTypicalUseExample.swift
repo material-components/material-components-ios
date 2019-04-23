@@ -27,8 +27,8 @@ class BottomAppBarTypicalUseSwiftExample: UIViewController {
 
   let appBarViewController = MDCAppBarViewController()
   let bottomBarView = MDCBottomAppBarView()
-  var colorScheme = MDCSemanticColorScheme()
-  var typographyScheme = MDCTypographyScheme()
+  @objc var colorScheme = MDCSemanticColorScheme()
+  @objc var typographyScheme = MDCTypographyScheme()
 
   init() {
     super.init(nibName: nil, bundle: nil)

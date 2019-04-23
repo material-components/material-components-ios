@@ -20,7 +20,7 @@ import MaterialComponents.MaterialNavigationDrawer
 import MaterialComponents.MaterialNavigationDrawer_ColorThemer
 
 class BottomDrawerWithChangingContentSizeExample: UIViewController {
-  var colorScheme = MDCSemanticColorScheme()
+  @objc var colorScheme = MDCSemanticColorScheme()
   let bottomAppBar = MDCBottomAppBarView()
 
   let headerViewController = DrawerHeaderViewController()
@@ -78,7 +78,7 @@ class BottomDrawerWithChangingContentSizeExample: UIViewController {
 
 class DrawerChangingContentSizeViewController: UIViewController,
 UICollectionViewDelegate, UICollectionViewDataSource {
-  var colorScheme: MDCSemanticColorScheme!
+  @objc var colorScheme: MDCSemanticColorScheme!
   let numberOfRowsShort : Int = 2
   let numberOfRowsLong : Int = 12
   var longList = false
