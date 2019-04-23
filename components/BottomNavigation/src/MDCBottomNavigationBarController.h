@@ -65,6 +65,9 @@
  * the tab bar item will be shown in a transient dialog that appears centered within the window.
  * The default of this property is @c NO but will be set to @c YES in the future and then removed
  * entirely.
+ * A view controller may set the @c largeContentSizeImage on its @c tabBarItem. If the tab bar item
+ * does not provide a large content size image, its @c image may be scaled.
+ * @see UIBarItem#largeContentSizeImage
  */
 @property(nonatomic, getter=isDynamicTypeSupportEnabled) BOOL dynamicTypeSupportEnabled;
 
