@@ -856,9 +856,9 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 - (void)setHelperAccessibilityLabel:(NSString *)helperAccessibilityLabel {
   _helperAccessibilityLabel = [helperAccessibilityLabel copy];
-  if ([self.textInput.leadingUnderlineLabel.text isEqualToString:self.helperText]) {
-    self.textInput.leadingUnderlineLabel.accessibilityLabel = _helperAccessibilityLabel;
-  }
+//  if ([self.textInput.leadingUnderlineLabel.text isEqualToString:self.helperText]) {
+//    self.textInput.leadingUnderlineLabel.accessibilityLabel = _helperAccessibilityLabel;
+//  }
 }
 
 - (UIColor *)errorColor {
@@ -1486,13 +1486,15 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
   // Accessibility
   if (self.textInput.isEditing && self.characterCountMax > 0) {
+    NSUInteger charactersForTextInput = [self.characterCounter
+                                         characterCountForTextInput:self.textInput];
     NSString *announcementString;
     if (!announcementString.length) {
       announcementString = [NSString
-          stringWithFormat:@"%lu characters remaining",
-                           (unsigned long)(self.characterCountMax -
-                                           [self.characterCounter
-                                               characterCountForTextInput:self.textInput])];
+          stringWithFormat:@"%lu characters remaining", charactersForTextInput > self.characterCountMax ?
+                            0U : 
+                           (unsigned long)(MAX(0, self.characterCountMax -
+                                           charactersForTextInput))];
     }
 
     // Simply sending a layout change notification does not seem to
@@ -1578,18 +1580,21 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     }
     valueString = [valueString stringByAppendingString:@"."];
 
-    self.textInput.accessibilityValue = valueString;
-    self.textInput.leadingUnderlineLabel.accessibilityLabel = announcementString;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+      UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, errorText);
+    });
+//    self.textInput.accessibilityValue = valueString;
+//    self.textInput.leadingUnderlineLabel.accessibilityLabel = announcementString;
   } else {
-    self.textInput.accessibilityValue = nil;
-    if ([self.textInput.leadingUnderlineLabel.text isEqualToString:self.helperText]) {
-      self.textInput.leadingUnderlineLabel.accessibilityLabel = self.helperAccessibilityLabel;
-    } else {
-      self.textInput.leadingUnderlineLabel.accessibilityLabel = nil;
-    }
+//    self.textInput.accessibilityValue = nil;
+//    if ([self.textInput.leadingUnderlineLabel.text isEqualToString:self.helperText]) {
+//      self.textInput.leadingUnderlineLabel.accessibilityLabel = self.helperAccessibilityLabel;
+//    } else {
+//      self.textInput.leadingUnderlineLabel.accessibilityLabel = nil;
+//    }
   }
-  UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification,
-                                  self.textInput.leadingUnderlineLabel);
+
+
 }
 
 - (void)setHelperText:(NSString *)helperText

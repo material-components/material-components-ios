@@ -792,10 +792,10 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
   [_fundament mdc_setAdjustsFontForContentSizeCategory:adjusts];
 }
 
-- (NSString *)accessibilityValue {
+- (NSString *)accessibilityLabel {
   NSMutableArray *accessibilityStrings = [[NSMutableArray alloc] init];
-  if ([super accessibilityValue].length > 0) {
-    [accessibilityStrings addObject:[super accessibilityValue]];
+  if ([super accessibilityLabel].length > 0) {
+    [accessibilityStrings addObject:[super accessibilityLabel]];
   } else if (self.placeholderLabel.accessibilityLabel.length > 0) {
     [accessibilityStrings addObject:self.placeholderLabel.accessibilityLabel];
   }
@@ -803,13 +803,74 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
     [accessibilityStrings addObject:self.leadingUnderlineLabel.accessibilityLabel];
   }
   return accessibilityStrings.count > 0 ? [accessibilityStrings componentsJoinedByString:@" "]
-                                        : nil;
+  : nil;
 }
+
+- (NSString *)accessibilityValue {
+  if (self.text.length > 0) {
+    NSString *value = [super accessibilityValue];
+    return value;
+  }
+  return nil;
+}
+//
+//- (NSString *)accessibilityValue {
+//  NSMutableArray *accessibilityStrings = [[NSMutableArray alloc] init];
+//  if ([super accessibilityValue].length > 0) {
+//    [accessibilityStrings addObject:[super accessibilityValue]];
+//  } else if (self.placeholderLabel.accessibilityLabel.length > 0) {
+//    [accessibilityStrings addObject:self.placeholderLabel.accessibilityLabel];
+//  }
+//  if (self.leadingUnderlineLabel.accessibilityLabel.length > 0) {
+//    [accessibilityStrings addObject:self.leadingUnderlineLabel.accessibilityLabel];
+//  }
+//  return accessibilityStrings.count > 0 ? [accessibilityStrings componentsJoinedByString:@" "]
+//                                        : nil;
+//}
 
 #pragma mark - Testing
 
 - (void)clearButtonDidTouch {
   [_fundament clearButtonDidTouch];
 }
+/*
+- (NSArray *)orderedAccessibilityElements {
+  NSMutableArray *elements = [[super accessibilityElements] mutableCopy];
+  if (self.leadingUnderlineLabel.text != nil && self.leadingUnderlineLabel.isAccessibilityElement) {
+    [elements addObject:self.leadingUnderlineLabel];
+  }
+  if (self.trailingUnderlineLabel.text != nil && self.trailingUnderlineLabel.isAccessibilityElement) {
+    [elements addObject:self.trailingUnderlineLabel];
+  }
+  NSLog(@"%@", elements);
+  return [elements copy];
+}
 
+- (NSArray *)accessibilityElements {
+  return [self orderedAccessibilityElements];
+}
+
+- (NSInteger)accessibilityElementCount {
+  return (NSInteger)[self orderedAccessibilityElements].count;
+}
+
+- (id)accessibilityElementAtIndex:(NSInteger)index {
+  id parentElement = [super accessibilityElementAtIndex:index];
+  NSArray *elements = [self orderedAccessibilityElements];
+  id element;
+  if (index > 0 && index < (NSInteger)elements.count) {
+    element = elements[index];
+  }
+  NSLog(@"%ld: %@ / %@", index, parentElement, element);
+  return element;
+}
+
+- (NSInteger)indexOfAccessibilityElement:(id)element {
+  NSInteger parentIndex = [super indexOfAccessibilityElement:element];
+  NSArray *elements = [self orderedAccessibilityElements];
+  NSUInteger index = [elements indexOfObject:element];
+  NSLog(@"%@: %ld / %lu", element, parentIndex, (unsigned long)index);
+  return index;
+}
+*/
 @end
