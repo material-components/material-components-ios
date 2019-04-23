@@ -63,7 +63,7 @@ class DialogsCustomShadowExampleViewController: UIViewController {
 
   let textButton = MDCButton()
   let transitionController = MDCDialogTransitionController()
-  var containerScheme: MDCContainerScheming = MDCContainerScheme()
+  @objc var containerScheme: MDCContainerScheming = MDCContainerScheme()
 
   override func viewDidLoad() {
     super.viewDidLoad()

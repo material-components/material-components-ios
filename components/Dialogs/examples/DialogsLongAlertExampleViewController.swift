@@ -23,7 +23,7 @@ import MaterialComponentsBeta.MaterialDialogs_Theming
 class DialogsLongAlertExampleViewController: UIViewController {
 
   let textButton = MDCButton()
-  var containerScheme: MDCContainerScheming = MDCContainerScheme()
+  @objc var containerScheme: MDCContainerScheming = MDCContainerScheme()
 
   override func viewDidLoad() {
     super.viewDidLoad()
