@@ -15,14 +15,14 @@
 import UIKit
 
 import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialButtons_Theming
 import MaterialComponents.MaterialCollections
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialDialogs
+import MaterialComponents.MaterialDialogs_Theming
 import MaterialComponents.MaterialPalettes
 import MaterialComponents.MaterialTypographyScheme
-import MaterialComponents.MaterialButtons_Theming
-import MaterialComponentsBeta.MaterialDialogs_Theming
 import MaterialComponents.MaterialPalettes
 
 class DialogsAlertCustomizationExampleViewController: MDCCollectionViewController {

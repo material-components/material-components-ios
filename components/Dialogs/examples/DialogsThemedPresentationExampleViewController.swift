@@ -15,12 +15,12 @@
 import UIKit
 
 import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialButtons_Theming
 import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialDialogs
+import MaterialComponents.MaterialDialogs_Theming
 import MaterialComponents.MaterialList
 import MaterialComponents.MaterialTypographyScheme
-import MaterialComponents.MaterialButtons_Theming
-import MaterialComponentsBeta.MaterialDialogs_Theming
 
 class CustomDialogViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
   let dialogTitle: String = "Set backup account"
