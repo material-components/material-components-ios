@@ -185,9 +185,172 @@ extension MyViewController {
 ```
 <!--</div>-->
 
+## Migration guide: themers to theming extensions
+
+This migration guide covers the typical migration path from Themer usage to Theming extensions.
+Themers will eventually be deprecated and deleted. Theming extensions are the recommended
+replacement.
+
+Theming extensions are discussed in detail above. For [more information about Themers](#themers)
+see the section below.
+
+In general, every component's `Themer` targets will gradually be replaced by a single `Theming`
+extension target. This includes:
+
+- ColorThemer
+- FontThemer
+- ShapeThemer
+- TypographyThemer
+- Component Themers (e.g. CardThemer)
+
+Some Theming extensions are still in Beta. To add a Beta Theming extension to your project you will
+need to follow the instructions in
+[the Beta components documentation](../contributing/beta_components.md). Non-Beta Theming
+extensions can be added to your project like everything else in MDC-iOS.
+
+Some components do not have a Theming extension yet. We are prioritizing the remaining Theming
+extensions through
+[bug #7172](https://github.com/material-components/material-components-ios/issues/7172).
+
+### Typical migration
+
+When migrating from Themers to a Theming extension the first thing to understand is that a Theming
+extension will apply *all* of the Material Theming subsystems (Color, Typography, Shape) to a given
+component. If you were previously relying on the ability to apply only one subsystem (e.g. Color)
+to a component, please file a
+[feature request](https://github.com/material-components/material-components-ios/issues/new/choose)
+with a code snippet of your existing use case.
+
+The migration from a subsystem Themer to a Theming extension will involve the following steps:
+
+1. Update your dependencies.
+2. Update your imports.
+3. Make changes to your code.
+
+#### Update your dependencies
+
+When a component has a theming extension it will always be available as a `Theming` target
+alongside the component. For example:
+
+In CocoaPods:
+
+```ruby
+// Old
+pod 'MaterialComponents/Cards'
+pod 'MaterialComponents/Cards+ColorThemer'
+
+// New
+pod 'MaterialComponents/Cards'
+pod 'MaterialComponents/Cards+Theming'
+```
+
+In Bazel:
+
+```ruby
+// Old
+  deps = [
+      "//components/schemes/Cards",
+      "//components/schemes/Cards:ColorThemer",
+  ],
+
+// New
+  deps = [
+      "//components/schemes/Cards",
+      "//components/schemes/Cards:Theming",
+  ],
+```
+
+#### Update your imports
+
+Replace any Themer import with the component's Theming import:
+
+<!--<div class="material-code-render" markdown="1">-->
+##### Swift
+
+```swift
+// Old
+import MaterialComponents.MaterialCards_ColorThemer
+
+// New
+import MaterialComponents.MaterialCards_Theming
+```
+
+##### Objective-C
+
+```objc
+// Old
+#import <MaterialComponents/MaterialCards+ColorThemer.h>
+
+// New
+#import <MaterialComponents/MaterialCards+Theming.h>
+```
+<!--</div>-->
+
+#### Make changes to your code
+
+Replace any Themer code with the equivalent use of a component's Theming extension. Each Themer's
+equivalent Theming extension is described in the Themer's header documentation.
+
+<!--<div class="material-code-render" markdown="1">-->
+##### Swift
+
+```swift
+// Old
+let colorScheme = MDCSemanticColorScheme()
+MDCCardsColorThemer.applySemanticColorScheme(colorScheme, to: card)
+
+// New
+let scheme = MDCContainerScheme()
+card.applyTheme(withScheme: scheme)
+```
+
+##### Objective-C
+
+```objc
+// Old
+MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+[MDCCardsColorThemer applySemanticColorScheme:colorScheme toCard:card];
+
+// New
+MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+[card applyThemeWithScheme:containerScheme];
+```
+<!--</div>-->
+
+If you made customizations to one of the subsystem schemes, you can now customize the container
+scheme's subsystem instances instead. If you are using a shared container scheme throughout your app
+then you'll likely only need to make these customizations once.
+
+<!--<div class="material-code-render" markdown="1">-->
+##### Swift
+
+```swift
+// Old
+let colorScheme = MDCSemanticColorScheme()
+colorScheme.primaryColor = .red
+
+// New
+let scheme = MDCContainerScheme()
+scheme.colorScheme.primaryColor = .red
+```
+
+##### Objective-C
+
+```objc
+// Old
+MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+colorScheme.primaryColor = UIColor.redColor;
+
+// New
+MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+containerScheme.colorScheme.primaryColor = UIColor.redColor;
+```
+<!--</div>-->
+
+
 ## Themers
 
-**Note:** These will soon be deprecated for theming-extensions outlined above.
+**Note** These will soon be deprecated for Theming Extensions outlined above.
 
 Our approach to theming relies on the relationships between the following concepts:
 
