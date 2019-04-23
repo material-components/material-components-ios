@@ -26,7 +26,7 @@ class AppBarWithUITableViewController: UITableViewController {
 
   let appBarViewController = MDCAppBarViewController()
   var numberOfRows = 50
-  var colorScheme = MDCSemanticColorScheme()
+  @objc var colorScheme = MDCSemanticColorScheme()
 
   deinit {
     // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.

@@ -27,8 +27,8 @@ import MaterialComponents.MaterialTypographyScheme
 class AppBarInheritedAnimatedJumpExample: UIViewController {
 
   lazy var appBarViewController: MDCAppBarViewController = self.makeAppBar()
-  var colorScheme = MDCSemanticColorScheme()
-  var typographyScheme = MDCTypographyScheme()
+  @objc var colorScheme = MDCSemanticColorScheme()
+  @objc var typographyScheme = MDCTypographyScheme()
 
   fileprivate let tabs = [
     SimpleInheritedTableViewController(title: "First"),
