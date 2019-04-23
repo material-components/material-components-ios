@@ -1,8 +1,17 @@
 # 83.0.0
 
-This major release graduates several Theming extensions from Beta and includes a breaking change for
+This major release graduates most Theming extensions from Beta and includes a breaking change for
 AppBar's imports. All Themer APIs have been annotated as "to be deprecated" in lieu of Theming
-extensions.
+extensions. The following Theming extensions are now generally available:
+
+- ActionSheet
+- AppBar
+- Buttons
+- Cards
+- Chips
+- Tabs
+- TextFields
+- Container scheme
 
 ## Breaking changes
 
