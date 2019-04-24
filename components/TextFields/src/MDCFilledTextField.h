@@ -22,21 +22,33 @@
 @interface MDCFilledTextField : MDCInputTextField
 
 /**
- Sets the filled background color for a given state.
-
- @param filledBackgroundColor the filled background color.
- @param state the state.
+ The filled background color when the text field is enabled and not editing.
  */
-- (void)setFilledBackgroundColor:(UIColor *)filledBackgroundColor
-                        forState:(MDCContainedInputViewState)state;
+@property (strong, nonatomic) UIColor *filledBackgroundColorNormal;
 
 /**
- Sets the underline color for a given state.
-
- @param underlineColor the underline color.
- @param state the state.
+ The filled background color when the text field is enabled and editing.
  */
-- (void)setUnderlineColor:(UIColor *)underlineColor
-                 forState:(MDCContainedInputViewState)state;
+@property (strong, nonatomic) UIColor *filledBackgroundColorEditing;
+
+/**
+ The filled background color when the text field is disabled.
+ */
+@property (strong, nonatomic) UIColor *filledBackgroundColorDisabled;
+
+/**
+ The underline color when the text field is enabled and not editing.
+ */
+@property (strong, nonatomic) UIColor *underlineColorNormal;
+
+/**
+ The underline color when the text field is enabled and editing.
+ */
+@property (strong, nonatomic) UIColor *underlineColorEditing;
+
+/**
+ The underline color when the text field is disabled.
+ */
+@property (strong, nonatomic) UIColor *underlineColorDisabled;
 
 @end

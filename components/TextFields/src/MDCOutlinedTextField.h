@@ -21,6 +21,19 @@
  */
 @interface MDCOutlinedTextField : MDCInputTextField
 
-- (void)setOutlineColor:(UIColor *)outlineColor forState:(MDCContainedInputViewState)state;
+/**
+ The outline color when the text field is enabled and not editing.
+ */
+@property (strong, nonatomic) UIColor *outlineColorNormal;
+
+/**
+ The outline color when the text field is enabled and editing.
+ */
+@property (strong, nonatomic) UIColor *outlineColorEditing;
+
+/**
+ The outline color when the text field is disabled.
+ */
+@property (strong, nonatomic) UIColor *outlineColorDisabled;
 
 @end
