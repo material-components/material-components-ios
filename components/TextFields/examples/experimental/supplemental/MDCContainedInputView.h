@@ -199,27 +199,27 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
 /**
  The color of the contained input view's text.
  */
-@property(strong, nonatomic, readonly, nonnull) UIColor *textColor;
+@property(strong, nonatomic, nonnull) UIColor *textColor;
 /**
  The color of the contained input view's underline label.
  */
-@property(strong, nonatomic, readonly, nonnull) UIColor *underlineLabelColor;
+@property(strong, nonatomic, nonnull) UIColor *underlineLabelColor;
 /**
  The color of the contained input view's floating label.
  */
-@property(strong, nonatomic, readonly, nonnull) UIColor *floatingLabelColor;
+@property(strong, nonatomic, nonnull) UIColor *floatingLabelColor;
 /**
  The color of the contained input view's placeholder label.
  */
-@property(strong, nonatomic, readonly, nonnull) UIColor *placeholderColor;
+@property(strong, nonatomic, nonnull) UIColor *placeholderColor;
 /**
  The tint color of the contained input view's clear button.
  */
-@property(strong, nonatomic, readonly, nonnull) UIColor *clearButtonTintColor;
+@property(strong, nonatomic, nonnull) UIColor *clearButtonTintColor;
 /**
  The color the contained input view should apply during an error state.
  */
-@property(strong, nonatomic, readonly, nonnull) UIColor *errorColor;
+@property(strong, nonatomic, nonnull) UIColor *errorColor;
 @end
 
 /**

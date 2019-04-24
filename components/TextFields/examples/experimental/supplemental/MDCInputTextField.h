@@ -82,4 +82,12 @@
 @property(nonatomic, setter=mdc_setAdjustsFontForContentSizeCategory:)
     BOOL mdc_adjustsFontForContentSizeCategory;
 
+@property (strong, nonatomic, nonnull) UIColor *floatingLabelColorNormal;
+@property (strong, nonatomic, nonnull) UIColor *floatingLabelColorDisabled;
+@property (strong, nonatomic, nonnull) UIColor *floatingLabelColorEditing;
+
+@property (strong, nonatomic, nonnull) UIColor *textColorNormal;
+@property (strong, nonatomic, nonnull) UIColor *textColorDisabled;
+@property (strong, nonatomic, nonnull) UIColor *textColorEditing;
+
 @end

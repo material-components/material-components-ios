@@ -28,4 +28,10 @@
 
  */
 @interface MDCFilledTextField : MDCInputTextField
+
+@property (strong, nonatomic, nonnull) UIColor *filledBackgroundColor;
+@property (strong, nonatomic, nonnull) UIColor *underlineColorNormal;
+@property (strong, nonatomic, nonnull) UIColor *underlineColorDisabled;
+@property (strong, nonatomic, nonnull) UIColor *underlineColorEditing;
+
 @end

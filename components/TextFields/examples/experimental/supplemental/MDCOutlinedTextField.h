@@ -28,4 +28,9 @@
 
  */
 @interface MDCOutlinedTextField : MDCInputTextField
+
+@property (strong, nonatomic, nonnull) UIColor *outlineColorNormal;
+@property (strong, nonatomic, nonnull) UIColor *outlineColorDisabled;
+@property (strong, nonatomic, nonnull) UIColor *outlineColorEditing;
+
 @end
