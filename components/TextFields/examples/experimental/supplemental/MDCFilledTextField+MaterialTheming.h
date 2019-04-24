@@ -29,4 +29,12 @@
  */
 - (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
 
+/**
+ Applies a container scheme's subsystem-specific schemes to the receiver in a manner best suited to
+ convey an error state.
+ 
+ @param scheme A container scheme instance.
+ */
+- (void)applyErrorThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
+
 @end
