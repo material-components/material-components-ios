@@ -74,4 +74,14 @@
   self.tintColor = mdcColorScheming.primaryColor;
 }
 
+- (void)applyErrorThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme {
+  [self applyThemeWithScheme:scheme];
+  self.textColorNormal = [UIColor redColor];
+  self.textColorEditing = [UIColor redColor];
+  self.textColorDisabled = [[UIColor redColor] colorWithAlphaComponent:0.5];
+  self.floatingLabelColorNormal = [UIColor redColor];
+  self.floatingLabelColorEditing = [UIColor redColor];
+  self.floatingLabelColorDisabled = [[UIColor redColor] colorWithAlphaComponent:0.5];
+}
+
 @end

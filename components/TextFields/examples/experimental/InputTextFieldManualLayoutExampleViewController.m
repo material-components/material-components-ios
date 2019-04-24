@@ -251,6 +251,7 @@ static const NSUInteger kDefaultVerticalPadding = 20;
   textField.floatingLabel.text = @"Phone number";
   textField.clearButtonMode = UITextFieldViewModeWhileEditing;
   textField.mdc_adjustsFontForContentSizeCategory = YES;
+  
   return textField;
 }
 

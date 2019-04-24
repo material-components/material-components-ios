@@ -126,4 +126,38 @@
   return simpleTextFieldColorScheme;
 }
 
+- (void)applyErrorThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme {
+  /*
+   floatingLabelColor = colorScheming.errorColor;
+   underlineLabelColor = colorScheming.errorColor;
+   thinUnderlineFillColor = colorScheming.errorColor;
+   thickUnderlineFillColor = colorScheming.errorColor;
+   original error state deviations ^
+   */
+  [self applyThemeWithScheme:scheme];
+  id<MDCColorScheming> mdcColorScheme = scheme.colorScheme;
+  if (!mdcColorScheme) {
+    mdcColorScheme =
+    [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  }
+  UIColor *errorColor = mdcColorScheme.errorColor;
+  UIColor *errorColorDisabled = [mdcColorScheme.errorColor colorWithAlphaComponent:0.5];
+  self.floatingLabelColorNormal = errorColor;
+  self.floatingLabelColorEditing = errorColor;
+  self.floatingLabelColorDisabled = errorColorDisabled;
+  self.textColorNormal = errorColor;
+  self.textColorEditing = errorColor;
+  self.textColorDisabled = errorColorDisabled;
+  self.underlineColorNormal = errorColor;
+  self.underlineColorEditing = errorColor;
+  self.underlineColorDisabled = errorColorDisabled;
+  self.trailingUnderlineLabel.textColor = errorColorDisabled;
+  self.leadingUnderlineLabel.textColor = errorColorDisabled;
+  self.tintColor = errorColor;
+  self.tintColor = errorColor;
+
+}
+
+
+
 @end

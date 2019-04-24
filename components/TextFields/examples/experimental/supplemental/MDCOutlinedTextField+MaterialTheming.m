@@ -119,4 +119,36 @@
   return simpleTextFieldColorScheme;
 }
 
+- (void)applyErrorThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme {
+  /*
+   Original error state deviations:
+   floatingLabelColor = colorScheming.errorColor;
+   underlineLabelColor = colorScheming.errorColor;
+   outlineColor = colorScheming.errorColor;
+   */
+  
+  
+  [self applyThemeWithScheme:scheme];
+  id<MDCColorScheming> mdcColorScheme = scheme.colorScheme;
+  if (!mdcColorScheme) {
+    mdcColorScheme =
+    [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  }
+  UIColor *errorColor = mdcColorScheme.errorColor;
+  UIColor *errorColorDisabled = [mdcColorScheme.errorColor colorWithAlphaComponent:0.5];
+  self.floatingLabelColorNormal = errorColor;
+  self.floatingLabelColorEditing = errorColor;
+  self.floatingLabelColorDisabled = errorColorDisabled;
+  self.textColorNormal = errorColor;
+  self.textColorEditing = errorColor;
+  self.textColorDisabled = errorColorDisabled;
+  self.outlineColorNormal = errorColor;
+  self.outlineColorEditing = errorColor;
+  self.outlineColorDisabled = errorColorDisabled;
+  self.trailingUnderlineLabel.textColor = errorColorDisabled;
+  self.leadingUnderlineLabel.textColor = errorColorDisabled;
+  self.tintColor = errorColor;
+  self.tintColor = errorColor;
+}
+
 @end
