@@ -1579,9 +1579,11 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     }
     valueString = [valueString stringByAppendingString:@"."];
 
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kDefaultErrorAnnouncementDelay * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-      UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, errorText);
-    });
+    dispatch_after(
+        dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kDefaultErrorAnnouncementDelay * NSEC_PER_SEC)),
+        dispatch_get_main_queue(), ^{
+          UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, errorText);
+        });
   }
 }
 

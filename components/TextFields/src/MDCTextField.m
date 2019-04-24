@@ -813,7 +813,7 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
     [accessibilityStrings addObject:self.trailingUnderlineLabel.accessibilityLabel];
   }
   return accessibilityStrings.count > 0 ? [accessibilityStrings componentsJoinedByString:@", "]
-  : nil;
+                                        : nil;
 }
 
 - (NSString *)accessibilityValue {
