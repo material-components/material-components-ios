@@ -71,7 +71,11 @@ mdc_objc_library(
 
 mdc_objc_library(
     name = "BottomNavigationBeta",
-    srcs = ["src/MDCBottomNavigationBarController.m"],
+    srcs = native.glob([
+        "src/MDCBottomNavigationBarController.m",
+        "src/private/*.h",
+        "src/private/*.m",
+    ])
     hdrs = [
         "src/MDCBottomNavigationBarController.h",
         "src/MaterialBottomNavigationBeta.h",
