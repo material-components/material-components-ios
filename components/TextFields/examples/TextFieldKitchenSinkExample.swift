@@ -312,7 +312,8 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
       MDCTextInputControllerUnderline(textInput: textFieldCustomFontFloating)
     textFieldControllerUnderlineCustomFontFloating.characterCountMax = 40
     textFieldControllerUnderlineCustomFontFloating.placeholderText = "This is a custom font with the works"
-    textFieldControllerUnderlineCustomFontFloating.helperText = "Custom Font"
+    textFieldControllerUnderlineCustomFontFloating.setHelperText("Custom Font",
+                                                                 helperAccessibilityLabel: "Cyan custom font in leading underline label")
     textFieldControllerUnderlineCustomFontFloating.activeColor = .green
     textFieldControllerUnderlineCustomFontFloating.normalColor = .purple
     textFieldControllerUnderlineCustomFontFloating.leadingUnderlineLabelTextColor = .cyan
@@ -466,7 +467,8 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
 
     let textFieldControllerBase = MDCTextInputControllerBase(textInput: textFieldBase)
     textFieldControllerBase.placeholderText = "This is the common base class for controllers"
-    textFieldControllerBase.helperText = "It's expected that you'll subclass this."
+    textFieldControllerBase.setHelperText("It's expected that you'll subclass this.",
+                                          helperAccessibilityLabel: "You should subclass this.")
 
     unstyledTextField.translatesAutoresizingMaskIntoConstraints = false
     scrollView.addSubview(unstyledTextField)
@@ -679,7 +681,8 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
 
   @objc func helperSwitchDidChange(helperSwitch: UISwitch) {
     allInputControllers.forEach { controller in
-      controller.helperText = helperSwitch.isOn ? "This is helper text." : nil
+      controller.setHelperText(helperSwitch.isOn ? "This is helper text." : nil,
+                               helperAccessibilityLabel: helperSwitch.isOn ? "This is accessible helper text." : nil) 
     }
   }
 
