@@ -77,8 +77,6 @@ static const CGFloat kLayerAnimationDuration = (CGFloat)0.2;
   switch (state) {
     case MDCContainedInputViewStateNormal:
       break;
-    case MDCContainedInputViewStateActivated:
-      break;
     case MDCContainedInputViewStateDisabled:
       break;
     case MDCContainedInputViewStateErrored:
@@ -329,7 +327,6 @@ static const CGFloat kLayerAnimationDuration = (CGFloat)0.2;
 - (BOOL)shouldShowThickUnderlineWithState:(MDCContainedInputViewState)state {
   BOOL shouldShow = NO;
   switch (state) {
-    case MDCContainedInputViewStateActivated:
     case MDCContainedInputViewStateErrored:
     case MDCContainedInputViewStateFocused:
       shouldShow = YES;
