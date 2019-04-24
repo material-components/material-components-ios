@@ -99,7 +99,7 @@
   self.button.inkColor = fakeColor;
 
   // Then
-  XCTAssertEqualObjects([self.button.rippleView rippleColorForState:MDCRippleStateHighlighted],
+  XCTAssertEqualObjects([self.button.rippleView rippleColorForState:MaterialStateHighlighted],
                         fakeColor);
 }
 

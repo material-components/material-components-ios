@@ -13,11 +13,11 @@
 // limitations under the License.
 
 #import "MDCStatefulRippleView.h"
+#import "MaterialState.h"
 #import "private/MDCRippleLayer.h"
 
 static const CGFloat kDefaultRippleAlpha = (CGFloat)0.12;
 static const CGFloat kDefaultRippleSelectedAlpha = (CGFloat)0.08;
-static const CGFloat kDefaultRippleDraggedAlpha = (CGFloat)0.08;
 
 static UIColor *RippleSelectedColor(void) {
   return [UIColor colorWithRed:(CGFloat)0.384 green:0 blue:(CGFloat)0.933 alpha:1];
@@ -57,34 +57,26 @@ static UIColor *RippleSelectedColor(void) {
   if (_rippleColors == nil) {
     _rippleColors = [NSMutableDictionary dictionary];
     UIColor *selectionColor = RippleSelectedColor();
-    _rippleColors[@(MDCRippleStateNormal)] = [UIColor colorWithWhite:0 alpha:kDefaultRippleAlpha];
-    _rippleColors[@(MDCRippleStateHighlighted)] = [UIColor colorWithWhite:0
-                                                                    alpha:kDefaultRippleAlpha];
-    _rippleColors[@(MDCRippleStateSelected)] =
+    _rippleColors[@(MaterialStateNormal)] = [UIColor colorWithWhite:0 alpha:kDefaultRippleAlpha];
+    _rippleColors[@(MaterialStateHighlighted)] = [UIColor colorWithWhite:0
+                                                                   alpha:kDefaultRippleAlpha];
+    _rippleColors[@(MaterialStateSelected)] =
         [selectionColor colorWithAlphaComponent:kDefaultRippleSelectedAlpha];
-    _rippleColors[@(MDCRippleStateSelected | MDCRippleStateHighlighted)] =
-        [selectionColor colorWithAlphaComponent:kDefaultRippleAlpha];
-    _rippleColors[@(MDCRippleStateDragged)] = [UIColor colorWithWhite:0
-                                                                alpha:kDefaultRippleDraggedAlpha];
-    _rippleColors[@(MDCRippleStateDragged | MDCRippleStateHighlighted)] =
-        [UIColor colorWithWhite:0 alpha:kDefaultRippleDraggedAlpha];
-    _rippleColors[@(MDCRippleStateSelected | MDCRippleStateDragged)] =
-        [selectionColor colorWithAlphaComponent:kDefaultRippleDraggedAlpha];
   }
 }
 
-- (UIColor *)rippleColorForState:(MDCRippleState)state {
+- (UIColor *)rippleColorForState:(MaterialState)state {
   UIColor *rippleColor = _rippleColors[@(state)];
-  if (rippleColor == nil && (state & MDCRippleStateDragged) != 0) {
-    rippleColor = _rippleColors[@(MDCRippleStateDragged)];
-  } else if (rippleColor == nil && (state & MDCRippleStateSelected) != 0) {
-    rippleColor = _rippleColors[@(MDCRippleStateSelected)];
+  if (rippleColor == nil && (state & MaterialStateHighlighted) != 0) {
+    rippleColor = _rippleColors[@(MaterialStateHighlighted)];
   }
-
-  if (rippleColor == nil) {
-    rippleColor = _rippleColors[@(MDCRippleStateNormal)];
+  if (rippleColor == nil && (state & MaterialStateDragged) != 0) {
+    rippleColor = _rippleColors[@(MaterialStateDragged)];
   }
-  return rippleColor;
+  if (rippleColor == nil && (state & MaterialStateSelected) != 0) {
+    rippleColor = _rippleColors[@(MaterialStateSelected)];
+  }
+  return rippleColor ?: _rippleColors[@(MaterialStateNormal)];
 }
 
 - (void)updateRippleColor {
@@ -97,22 +89,22 @@ static UIColor *RippleSelectedColor(void) {
   [self setActiveRippleColor:rippleColor];
 }
 
-- (void)setRippleColor:(UIColor *)rippleColor forState:(MDCRippleState)state {
+- (void)setRippleColor:(UIColor *)rippleColor forState:(MaterialState)state {
   _rippleColors[@(state)] = rippleColor;
 
   [self updateRippleColor];
 }
 
-- (MDCRippleState)state {
+- (MaterialState)state {
   NSInteger state = 0;
   if (self.selected) {
-    state |= MDCRippleStateSelected;
+    state |= MaterialStateSelected;
   }
   if (self.rippleHighlighted) {
-    state |= MDCRippleStateHighlighted;
+    state |= MaterialStateHighlighted;
   }
   if (self.dragged) {
-    state |= MDCRippleStateDragged;
+    state |= MaterialStateDragged;
   }
   return state;
 }

@@ -539,7 +539,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)setInkColor:(UIColor *)inkColor {
   _inkView.inkColor = inkColor;
-  [self.rippleView setRippleColor:inkColor forState:MDCRippleStateHighlighted];
+  [self.rippleView setRippleColor:inkColor forState:MaterialStateHighlighted];
 }
 
 - (CGFloat)inkMaxRippleRadius {
