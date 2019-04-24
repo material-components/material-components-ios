@@ -29,10 +29,6 @@ typedef NS_OPTIONS(NSInteger, MDCContainedInputViewState) {
    */
   MDCContainedInputViewStateFocused = 1 << 1,
   /**
-   The error state.
-   */
-  MDCContainedInputViewStateErrored = 1 << 3,
-  /**
    The disabled state.
    */
   MDCContainedInputViewStateDisabled = 1 << 4,
