@@ -141,7 +141,7 @@ static const NSUInteger kDefaultVerticalPadding = 20;
     }
     CGRect viewFrame = CGRectMake(viewMinX, viewMinY, viewSize.width, viewSize.height);
     view.frame = viewFrame;
-    if ([view isKindOfClass:[MDCInputTextField class]]) {
+    if ([view isKindOfClass:[MDCInputTextField class]] || [view isKindOfClass:[UILabel class]]) {
       [view sizeToFit];
     }
     viewMinY = viewMinY + CGRectGetHeight(view.frame) + kDefaultVerticalPadding;
