@@ -310,10 +310,6 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
  * @param point CGPoint The point within @c navigationBar coordinate space.
  */
 - (void)handleNavigationBarLongPressEndedForPoint:(CGPoint)point {
-  if (!self.largeItemDialog || [self isDismissingLargeItemDialog]) {
-    return;
-  }
-
   UITabBarItem *item = [self.navigationBar tabBarItemForPoint:point];
   NSUInteger index = [self.navigationBar.items indexOfObject:item];
   if (index != NSNotFound && index < self.viewControllers.count) {
@@ -577,6 +573,10 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
 
 /** Removes the large item dialog from the view hierarchy and animates its dismissal. */
 - (void)dismissLargeItemDialog {
+  if (!self.largeItemDialog.superview || [self isDismissingLargeItemDialog]) {
+    return;
+  }
+
   self.dismissingLargeItemView = YES;
   [UIView animateWithDuration:kLargeItemViewAnimationDuration
       animations:^{
