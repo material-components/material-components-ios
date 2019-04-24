@@ -709,7 +709,7 @@ extension TextFieldKitchenSinkSwiftExample: UITextFieldDelegate {
         let finishedString = (textField.text as NSString?)?.replacingCharacters(in: range, with: string)
 
         if (finishedString?.rangeOfCharacter(from: CharacterSet.letters.inverted) != nil) {
-          controller.setErrorText("Only letters allowed.",
+          controller.setErrorText("Error: Only letters allowed.",
                                   errorAccessibilityValue: "Error: Only letters allowed.")
         } else {
           controller.setErrorText(nil, errorAccessibilityValue: nil)
