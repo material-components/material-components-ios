@@ -692,8 +692,8 @@ extension TextFieldKitchenSinkSwiftExample: UITextFieldDelegate {
   }
 
   func textFieldShouldClear(_ textField: UITextField) -> Bool {
-    for controller in self.allTextFieldControllers {
-      if (textField == controller.textInput) {
+    for controller in allTextFieldControllers {
+      if textField == controller.textInput {
         controller.setErrorText(nil, errorAccessibilityValue: nil)
         return true
       }
@@ -704,11 +704,11 @@ extension TextFieldKitchenSinkSwiftExample: UITextFieldDelegate {
   func textField(_ textField: UITextField,
                  shouldChangeCharactersIn range: NSRange,
                  replacementString string: String) -> Bool {
-    for controller in self.allTextFieldControllers {
-      if (textField == controller.textInput) {
+    for controller in allTextFieldControllers {
+      if textField == controller.textInput {
         let finishedString = (textField.text as NSString?)?.replacingCharacters(in: range, with: string)
 
-        if (finishedString?.rangeOfCharacter(from: CharacterSet.letters.inverted) != nil) {
+        if finishedString?.rangeOfCharacter(from: CharacterSet.letters.inverted) != nil {
           controller.setErrorText("Only letters allowed.",
                                   errorAccessibilityValue: "Error: Only letters allowed.")
         } else {
