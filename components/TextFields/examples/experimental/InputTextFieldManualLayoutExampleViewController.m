@@ -99,8 +99,7 @@ static const NSUInteger kDefaultVerticalPadding = 20;
     [self createLabelWithText:@"Default MDCOutlinedTextField:"],
     [self createDefaultOutlinedTextField],
     [self createLabelWithText:@"Material MDCOutlinedTextField:"],
-    [self createMaterialOutlinedTextField],
-    [self createLabelWithText:@"UITextField:"],
+    [self createMaterialOutlinedTextField], [self createLabelWithText:@"UITextField:"],
     [self createUiTextField],
     //    [self createLabelWithText:@"Default MDCInputTextField:"],
     //    [self createDefaultInputTextField],
@@ -251,7 +250,7 @@ static const NSUInteger kDefaultVerticalPadding = 20;
   textField.floatingLabel.text = @"Phone number";
   textField.clearButtonMode = UITextFieldViewModeWhileEditing;
   textField.mdc_adjustsFontForContentSizeCategory = YES;
-  
+
   return textField;
 }
 

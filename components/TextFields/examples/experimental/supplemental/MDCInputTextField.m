@@ -821,37 +821,37 @@
 
 - (UIColor *)textColorNormal {
   id<MDCContainedInputViewColorScheming> colorScheme =
-  [self containedInputViewColorSchemingForState:MDCContainedInputViewStateNormal];
+      [self containedInputViewColorSchemingForState:MDCContainedInputViewStateNormal];
   return colorScheme.textColor;
 }
 
 - (void)setTextColorNormal:(UIColor *)textColorNormal {
   id<MDCContainedInputViewColorScheming> colorScheme =
-  [self containedInputViewColorSchemingForState:MDCContainedInputViewStateNormal];
+      [self containedInputViewColorSchemingForState:MDCContainedInputViewStateNormal];
   colorScheme.textColor = textColorNormal;
 }
 
 - (UIColor *)textColorDisabled {
   id<MDCContainedInputViewColorScheming> colorScheme =
-  [self containedInputViewColorSchemingForState:MDCContainedInputViewStateDisabled];
+      [self containedInputViewColorSchemingForState:MDCContainedInputViewStateDisabled];
   return colorScheme.textColor;
 }
 
 - (void)setTextColorDisabled:(UIColor *)textColorDisabled {
   id<MDCContainedInputViewColorScheming> colorScheme =
-  [self containedInputViewColorSchemingForState:MDCContainedInputViewStateDisabled];
+      [self containedInputViewColorSchemingForState:MDCContainedInputViewStateDisabled];
   colorScheme.textColor = textColorDisabled;
 }
 
 - (UIColor *)textColorEditing {
   id<MDCContainedInputViewColorScheming> colorScheme =
-  [self containedInputViewColorSchemingForState:MDCContainedInputViewStateFocused];
+      [self containedInputViewColorSchemingForState:MDCContainedInputViewStateFocused];
   return colorScheme.textColor;
 }
 
 - (void)setTextColorEditing:(UIColor *)textColorEditing {
   id<MDCContainedInputViewColorScheming> colorScheme =
-  [self containedInputViewColorSchemingForState:MDCContainedInputViewStateFocused];
+      [self containedInputViewColorSchemingForState:MDCContainedInputViewStateFocused];
   colorScheme.textColor = textColorEditing;
 }
 

@@ -126,7 +126,7 @@
   id<MDCColorScheming> mdcColorScheme = scheme.colorScheme;
   if (!mdcColorScheme) {
     mdcColorScheme =
-    [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   }
   UIColor *errorColor = mdcColorScheme.errorColor;
   UIColor *errorColorDisabled = [mdcColorScheme.errorColor colorWithAlphaComponent:0.5];
@@ -143,9 +143,6 @@
   self.leadingUnderlineLabel.textColor = errorColorDisabled;
   self.tintColor = errorColor;
   self.tintColor = errorColor;
-
 }
-
-
 
 @end

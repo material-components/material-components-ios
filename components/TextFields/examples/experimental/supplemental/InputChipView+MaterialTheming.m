@@ -155,11 +155,11 @@
     case MDCContainedInputViewStateDisabled:
       floatingLabelColor = [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.10];
       break;
-//    case MDCContainedInputViewStateErrored:
-//      floatingLabelColor = colorScheming.errorColor;
-//      underlineLabelColor = colorScheming.errorColor;
-//      outlineColor = colorScheming.errorColor;
-//      break;
+      //    case MDCContainedInputViewStateErrored:
+      //      floatingLabelColor = colorScheming.errorColor;
+      //      underlineLabelColor = colorScheming.errorColor;
+      //      outlineColor = colorScheming.errorColor;
+      //      break;
     case MDCContainedInputViewStateFocused:
       outlineColor = colorScheming.primaryColor;
       floatingLabelColor = colorScheming.primaryColor;
@@ -200,12 +200,12 @@
     case MDCContainedInputViewStateDisabled:
       floatingLabelColor = [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.10];
       break;
-//    case MDCContainedInputViewStateErrored:
-//      floatingLabelColor = colorScheming.errorColor;
-//      underlineLabelColor = colorScheming.errorColor;
-//      thinUnderlineFillColor = colorScheming.errorColor;
-//      thickUnderlineFillColor = colorScheming.errorColor;
-//      break;
+      //    case MDCContainedInputViewStateErrored:
+      //      floatingLabelColor = colorScheming.errorColor;
+      //      underlineLabelColor = colorScheming.errorColor;
+      //      thinUnderlineFillColor = colorScheming.errorColor;
+      //      thickUnderlineFillColor = colorScheming.errorColor;
+      //      break;
     case MDCContainedInputViewStateFocused:
       floatingLabelColor = colorScheming.primaryColor;
       break;
