@@ -53,6 +53,82 @@
   self.containerStyler = filledStyle;
 }
 
+- (UIColor *)filledBackgroundColor {
+  id<MDCContainedInputViewColorScheming> normalScheme =
+      [self containedInputViewColorSchemingForState:MDCContainedInputViewStateNormal];
+  if ([normalScheme isKindOfClass:[MDCContainedInputViewColorSchemeFilled class]]) {
+    MDCContainedInputViewColorSchemeFilled *filledColorScheme = (MDCContainedInputViewColorSchemeFilled *)normalScheme;
+    return filledColorScheme.filledSublayerFillColor;
+  }
+  return nil;
+}
+
+- (void)setFilledBackgroundColor:(UIColor *)filledBackgroundColor {
+  id<MDCContainedInputViewColorScheming> normalScheme =
+      [self containedInputViewColorSchemingForState:MDCContainedInputViewStateNormal];
+  if ([normalScheme isKindOfClass:[MDCContainedInputViewColorSchemeFilled class]]) {
+    MDCContainedInputViewColorSchemeFilled *filledColorScheme = (MDCContainedInputViewColorSchemeFilled *)normalScheme;
+    filledColorScheme.filledSublayerFillColor = filledBackgroundColor;
+  }
+}
+
+- (UIColor *)underlineColorNormal {
+  id<MDCContainedInputViewColorScheming> normalScheme =
+      [self containedInputViewColorSchemingForState:MDCContainedInputViewStateNormal];
+  if ([normalScheme isKindOfClass:[MDCContainedInputViewColorSchemeFilled class]]) {
+    MDCContainedInputViewColorSchemeFilled *filledColorScheme = (MDCContainedInputViewColorSchemeFilled *)normalScheme;
+    return filledColorScheme.thinUnderlineFillColor;
+  }
+  return nil;
+}
+
+- (void)setUnderlineColorNormal:(UIColor *)underlineColorNormal {
+  id<MDCContainedInputViewColorScheming> normalScheme =
+      [self containedInputViewColorSchemingForState:MDCContainedInputViewStateNormal];
+  if ([normalScheme isKindOfClass:[MDCContainedInputViewColorSchemeFilled class]]) {
+    MDCContainedInputViewColorSchemeFilled *filledColorScheme = (MDCContainedInputViewColorSchemeFilled *)normalScheme;
+    filledColorScheme.thinUnderlineFillColor = underlineColorNormal;
+  }
+}
+
+- (UIColor *)underlineColorDisabled {
+  id<MDCContainedInputViewColorScheming> disabledScheme =
+  [self containedInputViewColorSchemingForState:MDCContainedInputViewStateDisabled];
+  if ([disabledScheme isKindOfClass:[MDCContainedInputViewColorSchemeFilled class]]) {
+    MDCContainedInputViewColorSchemeFilled *filledColorScheme = (MDCContainedInputViewColorSchemeFilled *)disabledScheme;
+    return filledColorScheme.thinUnderlineFillColor;
+  }
+  return nil;
+}
+
+- (void)setUnderlineColorDisabled:(UIColor *)underlineColorDisabled {
+  id<MDCContainedInputViewColorScheming> disabledScheme =
+  [self containedInputViewColorSchemingForState:MDCContainedInputViewStateDisabled];
+  if ([disabledScheme isKindOfClass:[MDCContainedInputViewColorSchemeFilled class]]) {
+    MDCContainedInputViewColorSchemeFilled *filledColorScheme = (MDCContainedInputViewColorSchemeFilled *)disabledScheme;
+    filledColorScheme.thinUnderlineFillColor = underlineColorDisabled;
+  }
+}
+
+- (UIColor *)underlineColorEditing {
+  id<MDCContainedInputViewColorScheming> normalScheme =
+  [self containedInputViewColorSchemingForState:MDCContainedInputViewStateFocused];
+  if ([normalScheme isKindOfClass:[MDCContainedInputViewColorSchemeFilled class]]) {
+    MDCContainedInputViewColorSchemeFilled *filledColorScheme = (MDCContainedInputViewColorSchemeFilled *)normalScheme;
+    return filledColorScheme.thickUnderlineFillColor;
+  }
+  return nil;
+}
+
+- (void)setUnderlineColorEditing:(UIColor *)underlineColorEditing {
+  id<MDCContainedInputViewColorScheming> normalScheme =
+  [self containedInputViewColorSchemingForState:MDCContainedInputViewStateFocused];
+  if ([normalScheme isKindOfClass:[MDCContainedInputViewColorSchemeFilled class]]) {
+    MDCContainedInputViewColorSchemeFilled *filledColorScheme = (MDCContainedInputViewColorSchemeFilled *)normalScheme;
+    filledColorScheme.thickUnderlineFillColor = underlineColorEditing;
+  }
+}
+
 @end
 
 @implementation MDCFilledTextFieldPositioningDelegate
