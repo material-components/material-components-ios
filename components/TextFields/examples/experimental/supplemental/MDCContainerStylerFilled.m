@@ -79,9 +79,6 @@ static const CGFloat kLayerAnimationDuration = (CGFloat)0.2;
       break;
     case MDCContainedInputViewStateDisabled:
       break;
-    case MDCContainedInputViewStateErrored:
-      thickUnderlineFillColor = colorScheme.errorColor;
-      break;
     case MDCContainedInputViewStateFocused:
       thickUnderlineFillColor = [UIColor blackColor];
       break;
@@ -327,7 +324,6 @@ static const CGFloat kLayerAnimationDuration = (CGFloat)0.2;
 - (BOOL)shouldShowThickUnderlineWithState:(MDCContainedInputViewState)state {
   BOOL shouldShow = NO;
   switch (state) {
-    case MDCContainedInputViewStateErrored:
     case MDCContainedInputViewStateFocused:
       shouldShow = YES;
       break;

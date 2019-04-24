@@ -71,11 +71,6 @@
     case MDCContainedInputViewStateDisabled:
       floatingLabelColor = [floatingLabelColor colorWithAlphaComponent:(CGFloat)0.10];
       break;
-    case MDCContainedInputViewStateErrored:
-      textColor = colorScheme.errorColor;
-      underlineLabelColor = colorScheme.errorColor;
-      floatingLabelColor = colorScheme.errorColor;
-      break;
     case MDCContainedInputViewStateFocused:
       floatingLabelColor = [UIColor blackColor];
       break;

@@ -56,11 +56,6 @@
   [self setContainedInputViewColorScheming:focusedColorScheme
                                   forState:MDCContainedInputViewStateFocused];
 
-//  MDCContainedInputViewColorScheme *erroredColorScheme =
-//      [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateErrored];
-//  [self setContainedInputViewColorScheming:erroredColorScheme
-//                                  forState:MDCContainedInputViewStateErrored];
-
   MDCContainedInputViewColorScheme *disabledColorScheme =
       [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateDisabled];
   [self setContainedInputViewColorScheming:disabledColorScheme
@@ -99,12 +94,6 @@
   [self setContainedInputViewColorScheming:focusedColorScheme
                                   forState:MDCContainedInputViewStateFocused];
 
-  MDCContainedInputViewColorSchemeOutlined *erroredColorScheme =
-      [self outlinedColorSchemeWithMDCColorScheming:mdcColorScheming
-                            containedInputViewState:MDCContainedInputViewStateErrored];
-  [self setContainedInputViewColorScheming:erroredColorScheme
-                                  forState:MDCContainedInputViewStateErrored];
-
   MDCContainedInputViewColorSchemeOutlined *disabledColorScheme =
       [self outlinedColorSchemeWithMDCColorScheming:mdcColorScheming
                             containedInputViewState:MDCContainedInputViewStateDisabled];
@@ -137,12 +126,6 @@
                           containedInputViewState:MDCContainedInputViewStateFocused];
   [self setContainedInputViewColorScheming:focusedColorScheme
                                   forState:MDCContainedInputViewStateFocused];
-
-  MDCContainedInputViewColorSchemeFilled *erroredColorScheme =
-      [self filledColorSchemeWithMDCColorScheming:mdcColorScheming
-                          containedInputViewState:MDCContainedInputViewStateErrored];
-  [self setContainedInputViewColorScheming:erroredColorScheme
-                                  forState:MDCContainedInputViewStateErrored];
 
   MDCContainedInputViewColorSchemeFilled *disabledColorScheme =
       [self filledColorSchemeWithMDCColorScheming:mdcColorScheming

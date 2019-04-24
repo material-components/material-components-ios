@@ -131,11 +131,6 @@
   [self setContainedInputViewColorScheming:focusedColorScheme
                                   forState:MDCContainedInputViewStateFocused];
 
-  id<MDCContainedInputViewColorScheming> erroredColorScheme =
-      [containerStyler defaultColorSchemeForState:MDCContainedInputViewStateErrored];
-  [self setContainedInputViewColorScheming:erroredColorScheme
-                                  forState:MDCContainedInputViewStateErrored];
-
   id<MDCContainedInputViewColorScheming> disabledColorScheme =
       [containerStyler defaultColorSchemeForState:MDCContainedInputViewStateDisabled];
   [self setContainedInputViewColorScheming:disabledColorScheme
@@ -652,14 +647,10 @@
                                                          isErrored:(BOOL)isErrored
                                                          isEditing:(BOOL)isEditing {
   if (isEnabled) {
-    if (isErrored) {
-      return MDCContainedInputViewStateErrored;
+    if (isEditing) {
+      return MDCContainedInputViewStateFocused;
     } else {
-      if (isEditing) {
-        return MDCContainedInputViewStateFocused;
-      } else {
-        return MDCContainedInputViewStateNormal;
-      }
+      return MDCContainedInputViewStateNormal;
     }
   } else {
     return MDCContainedInputViewStateDisabled;
