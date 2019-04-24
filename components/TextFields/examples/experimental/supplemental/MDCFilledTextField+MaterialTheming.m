@@ -64,12 +64,6 @@
   [self setContainedInputViewColorScheming:focusedColorScheme
                                   forState:MDCContainedInputViewStateFocused];
 
-  MDCContainedInputViewColorSchemeFilled *activatedColorScheme =
-      [self filledColorSchemeWithMDCColorScheming:mdcColorScheming
-                          containedInputViewState:MDCContainedInputViewStateActivated];
-  [self setContainedInputViewColorScheming:activatedColorScheme
-                                  forState:MDCContainedInputViewStateActivated];
-
   MDCContainedInputViewColorSchemeFilled *erroredColorScheme =
       [self filledColorSchemeWithMDCColorScheming:mdcColorScheming
                           containedInputViewState:MDCContainedInputViewStateErrored];
@@ -103,8 +97,6 @@
 
   switch (containedInputViewState) {
     case MDCContainedInputViewStateNormal:
-      break;
-    case MDCContainedInputViewStateActivated:
       break;
     case MDCContainedInputViewStateDisabled:
       floatingLabelColor = [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.10];

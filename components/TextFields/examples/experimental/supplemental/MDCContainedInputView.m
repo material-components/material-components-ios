@@ -68,8 +68,6 @@
   switch (state) {
     case MDCContainedInputViewStateNormal:
       break;
-    case MDCContainedInputViewStateActivated:
-      break;
     case MDCContainedInputViewStateDisabled:
       floatingLabelColor = [floatingLabelColor colorWithAlphaComponent:(CGFloat)0.10];
       break;

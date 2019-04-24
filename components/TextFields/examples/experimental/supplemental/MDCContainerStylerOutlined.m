@@ -60,8 +60,6 @@ static const CGFloat kFloatingLabelOutlineSidePadding = (CGFloat)5.0;
   switch (state) {
     case MDCContainedInputViewStateNormal:
       break;
-    case MDCContainedInputViewStateActivated:
-      break;
     case MDCContainedInputViewStateDisabled:
       break;
     case MDCContainedInputViewStateErrored:
@@ -183,7 +181,6 @@ static const CGFloat kFloatingLabelOutlineSidePadding = (CGFloat)5.0;
 - (CGFloat)outlineLineWidthForState:(MDCContainedInputViewState)containedInputViewState {
   CGFloat defaultLineWidth = 1;
   switch (containedInputViewState) {
-    case MDCContainedInputViewStateActivated:
     case MDCContainedInputViewStateErrored:
     case MDCContainedInputViewStateFocused:
       defaultLineWidth = 2;

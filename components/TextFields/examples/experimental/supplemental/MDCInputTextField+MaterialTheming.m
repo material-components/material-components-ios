@@ -61,11 +61,6 @@
   [self setContainedInputViewColorScheming:focusedColorScheme
                                   forState:MDCContainedInputViewStateFocused];
 
-  MDCContainedInputViewColorScheme *activatedColorScheme =
-      [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateActivated];
-  [self setContainedInputViewColorScheming:activatedColorScheme
-                                  forState:MDCContainedInputViewStateActivated];
-
   MDCContainedInputViewColorScheme *erroredColorScheme =
       [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateErrored];
   [self setContainedInputViewColorScheming:erroredColorScheme

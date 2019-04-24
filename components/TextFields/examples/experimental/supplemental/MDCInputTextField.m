@@ -55,7 +55,6 @@
 @synthesize underlineLabelDrawPriority = _underlineLabelDrawPriority;
 @synthesize customUnderlineLabelDrawPriority = _customUnderlineLabelDrawPriority;
 @synthesize containerStyler = _containerStyler;
-@synthesize isActivated = _isActivated;
 @synthesize isErrored = _isErrored;
 @synthesize canFloatingLabelFloat = _canFloatingLabelFloat;
 
@@ -131,11 +130,6 @@
       [containerStyler defaultColorSchemeForState:MDCContainedInputViewStateFocused];
   [self setContainedInputViewColorScheming:focusedColorScheme
                                   forState:MDCContainedInputViewStateFocused];
-
-  id<MDCContainedInputViewColorScheming> activatedColorScheme =
-      [containerStyler defaultColorSchemeForState:MDCContainedInputViewStateActivated];
-  [self setContainedInputViewColorScheming:activatedColorScheme
-                                  forState:MDCContainedInputViewStateActivated];
 
   id<MDCContainedInputViewColorScheming> erroredColorScheme =
       [containerStyler defaultColorSchemeForState:MDCContainedInputViewStateErrored];
@@ -511,14 +505,6 @@
   [self setNeedsLayout];
 }
 
-- (void)setIsActivated:(BOOL)isActivated {
-  if (_isActivated == isActivated) {
-    return;
-  }
-  _isActivated = isActivated;
-  [self setNeedsLayout];
-}
-
 - (CGRect)textRectFromLayout:(MDCInputTextFieldLayout *)layout
           floatingLabelState:(MDCContainedInputViewFloatingLabelState)floatingLabelState {
   CGRect textRect = layout.textRect;
@@ -659,16 +645,12 @@
 - (MDCContainedInputViewState)determineCurrentContainedInputViewState {
   return [self containedInputViewStateWithIsEnabled:self.isEnabled
                                           isErrored:self.isErrored
-                                          isEditing:self.isEditing
-                                         isSelected:self.isSelected
-                                        isActivated:self.isActivated];
+                                          isEditing:self.isEditing];
 }
 
 - (MDCContainedInputViewState)containedInputViewStateWithIsEnabled:(BOOL)isEnabled
                                                          isErrored:(BOOL)isErrored
-                                                         isEditing:(BOOL)isEditing
-                                                        isSelected:(BOOL)isSelected
-                                                       isActivated:(BOOL)isActivated {
+                                                         isEditing:(BOOL)isEditing {
   if (isEnabled) {
     if (isErrored) {
       return MDCContainedInputViewStateErrored;
@@ -676,11 +658,7 @@
       if (isEditing) {
         return MDCContainedInputViewStateFocused;
       } else {
-        if (isSelected || isActivated) {
-          return MDCContainedInputViewStateActivated;
-        } else {
-          return MDCContainedInputViewStateNormal;
-        }
+        return MDCContainedInputViewStateNormal;
       }
     }
   } else {

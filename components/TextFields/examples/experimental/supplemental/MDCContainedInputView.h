@@ -29,10 +29,6 @@ typedef NS_OPTIONS(NSInteger, MDCContainedInputViewState) {
    */
   MDCContainedInputViewStateFocused = 1 << 1,
   /**
-   This state most closely resembles the @c selected UIControlState.
-   */
-  MDCContainedInputViewStateActivated = 1 << 2,
-  /**
    The error state.
    */
   MDCContainedInputViewStateErrored = 1 << 3,
@@ -156,13 +152,6 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
  for Text Fields. See the @c MDCContainedInputViewState enum for more information.
  */
 @property(nonatomic, assign) BOOL isErrored;
-
-/**
- This property toggles the activated state (similar to @c isHighlighted, @c isEnabled, @c
- isSelected, etc.) that is part of a general interpretation of the states outlined in the Material
- guidelines for Text Fields. See the @c MDCContainedInputViewState enum for more information.
- */
-@property(nonatomic, assign) BOOL isActivated;
 
 /**
  This method returns a color scheme for a given state.
