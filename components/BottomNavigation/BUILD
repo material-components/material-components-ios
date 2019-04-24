@@ -75,7 +75,7 @@ mdc_objc_library(
         "src/MDCBottomNavigationBarController.m",
         "src/private/*.h",
         "src/private/*.m",
-    ])
+    ]),
     hdrs = [
         "src/MDCBottomNavigationBarController.h",
         "src/MaterialBottomNavigationBeta.h",
