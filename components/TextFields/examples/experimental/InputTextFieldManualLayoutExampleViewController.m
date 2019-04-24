@@ -100,6 +100,8 @@ static const NSUInteger kDefaultVerticalPadding = 20;
     [self createDefaultOutlinedTextField],
     [self createLabelWithText:@"Material MDCOutlinedTextField:"],
     [self createMaterialOutlinedTextField],
+    [self createLabelWithText:@"UITextField:"],
+    [self createUiTextField],
     //    [self createLabelWithText:@"Default MDCInputTextField:"],
     //    [self createDefaultInputTextField],
     //    [self createLabelWithText:@"Material MDCInputTextField:"],
@@ -134,10 +136,14 @@ static const NSUInteger kDefaultVerticalPadding = 20;
         CGRectGetWidth(self.scrollView.frame) - (2 * kDefaultHorizontalPadding);
     if ([view isKindOfClass:[MDCInputTextField class]]) {
       viewSize = CGSizeMake(textFieldWidth, CGRectGetHeight(view.frame));
+    } else if ([view isKindOfClass:[UITextField class]]) {
+      viewSize = CGSizeMake(textFieldWidth, 60);
     }
     CGRect viewFrame = CGRectMake(viewMinX, viewMinY, viewSize.width, viewSize.height);
     view.frame = viewFrame;
-    [view sizeToFit];
+    if ([view isKindOfClass:[MDCInputTextField class]]) {
+      [view sizeToFit];
+    }
     viewMinY = viewMinY + CGRectGetHeight(view.frame) + kDefaultVerticalPadding;
   }
 }
@@ -215,6 +221,12 @@ static const NSUInteger kDefaultVerticalPadding = 20;
 - (MDCFilledTextField *)createMaterialFilledTextField {
   MDCFilledTextField *textField = [self createDefaultFilledTextField];
   [textField applyThemeWithScheme:self.containerScheme];
+  return textField;
+}
+
+- (UITextField *)createUiTextField {
+  UITextField *textField = [[UITextField alloc] init];
+  textField.borderStyle = UITextBorderStyleRoundedRect;
   return textField;
 }
 
