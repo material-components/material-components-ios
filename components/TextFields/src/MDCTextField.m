@@ -820,8 +820,7 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
   // If there is no text, return nothing. If there is placeholder text, we don't want it returning
   // that as the `accessibilityValue`. Instead, we should only return user-input text.
   if (self.text.length > 0) {
-    NSString *value = [super accessibilityValue];
-    return value;
+    return [super accessibilityValue];
   }
   return nil;
 }
