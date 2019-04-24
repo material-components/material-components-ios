@@ -1572,11 +1572,12 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
           errorText.length > 0 ? [NSString stringWithFormat:@"Error: %@", errorText] : @"Error.";
     }
     self.textInput.leadingUnderlineLabel.accessibilityLabel = announcementString;
-    
+
     dispatch_after(
         dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kDefaultErrorAnnouncementDelay * NSEC_PER_SEC)),
         dispatch_get_main_queue(), ^{
-          UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, errorText);
+          UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification,
+                                          announcementString);
         });
   }
   // Restore the helper text accessibilityLabel.
