@@ -796,7 +796,8 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
  Returns a combination of the following:
  -  The superclass `accessibilityLabel` value
  -  The placeholder label.
- -  The leading underline label.
+ -  The leading underline label (if not nil).
+ -  The trailing underline label (if not nil).
  */
 - (NSString *)accessibilityLabel {
   NSMutableArray *accessibilityStrings = [[NSMutableArray alloc] init];
@@ -808,7 +809,10 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
   if (self.leadingUnderlineLabel.accessibilityLabel.length > 0) {
     [accessibilityStrings addObject:self.leadingUnderlineLabel.accessibilityLabel];
   }
-  return accessibilityStrings.count > 0 ? [accessibilityStrings componentsJoinedByString:@" "]
+  if (self.trailingUnderlineLabel.accessibilityLabel.length > 0) {
+    [accessibilityStrings addObject:self.trailingUnderlineLabel.accessibilityLabel];
+  }
+  return accessibilityStrings.count > 0 ? [accessibilityStrings componentsJoinedByString:@", "]
   : nil;
 }
 

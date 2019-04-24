@@ -41,6 +41,7 @@ static const NSTimeInterval
     MDCTextInputControllerBaseDefaultFloatingPlaceholderDownAnimationDuration = (CGFloat)0.266666;
 static const NSTimeInterval
     MDCTextInputControllerBaseDefaultFloatingPlaceholderUpAnimationDuration = (CGFloat)0.3;
+static const NSTimeInterval kDefaultErrorAnnouncementDelay = (CGFloat)0.500;
 
 static inline UIColor *MDCTextInputControllerBaseDefaultInlinePlaceholderTextColorDefault() {
   return [UIColor colorWithWhite:0 alpha:MDCTextInputControllerBaseDefaultHintTextOpacity];
@@ -1578,7 +1579,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     }
     valueString = [valueString stringByAppendingString:@"."];
 
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kDefaultErrorAnnouncementDelay * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
       UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, errorText);
     });
   }
