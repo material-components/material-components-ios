@@ -24,16 +24,16 @@
 /**
  The outline color when the text field is enabled and not editing.
  */
-@property (strong, nonatomic) UIColor *outlineColorNormal;
+@property(strong, nonatomic) UIColor *outlineColorNormal;
 
 /**
  The outline color when the text field is enabled and editing.
  */
-@property (strong, nonatomic) UIColor *outlineColorEditing;
+@property(strong, nonatomic) UIColor *outlineColorEditing;
 
 /**
  The outline color when the text field is disabled.
  */
-@property (strong, nonatomic) UIColor *outlineColorDisabled;
+@property(strong, nonatomic) UIColor *outlineColorDisabled;
 
 @end
