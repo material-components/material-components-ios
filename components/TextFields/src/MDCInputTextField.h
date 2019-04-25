@@ -15,33 +15,6 @@
 #import <UIKit/UIKit.h>
 
 /**
- A set of Contained Input View states outlined in the Material guidelines. These states overlap with
- and extend UIControlState.
- */
-typedef NS_OPTIONS(NSInteger, MDCContainedInputViewState) {
-  /**
-   The default state of the contained input view.
-   */
-  MDCContainedInputViewStateNormal = 1 << 0,
-  /**
-   The state the view is in during normal editing.
-   */
-  MDCContainedInputViewStateFocused = 1 << 1,
-  /**
-   This state most closely resembles the @c selected UIControlState.
-   */
-  MDCContainedInputViewStateActivated = 1 << 2,
-  /**
-   The error state.
-   */
-  MDCContainedInputViewStateErrored = 1 << 3,
-  /**
-   The disabled state.
-   */
-  MDCContainedInputViewStateDisabled = 1 << 4,
-};
-
-/**
  A UITextField subclass that attempts to do the following:
 
  - Earnestly interpret and actualize the Material guidelines for text fields, which can be found
@@ -101,20 +74,6 @@ typedef NS_OPTIONS(NSInteger, MDCContainedInputViewState) {
 @property(nonatomic, assign) UITextFieldViewMode trailingViewMode;
 
 /**
- This property toggles the error state (similar to @c isHighlighted, @c isEnabled, @c isSelected,
- etc.) that is part of a general interpretation of the states outlined in the Material guidelines
- for Text Fields. See the @c MDCContainedInputViewState enum for more information.
- */
-@property(nonatomic, assign) BOOL isErrored;
-
-/**
- This property toggles the activated state (similar to @c isHighlighted, @c isEnabled, @c
- isSelected, etc.) that is part of a general interpretation of the states outlined in the Material
- guidelines for Text Fields. See the @c MDCContainedInputViewState enum for more information.
- */
-@property(nonatomic, assign) BOOL isActivated;
-
-/**
  Indicates whether the text field should automatically update its font when the device’s
  UIContentSizeCategory is changed.
 
@@ -127,37 +86,33 @@ typedef NS_OPTIONS(NSInteger, MDCContainedInputViewState) {
     BOOL mdc_adjustsFontForContentSizeCategory;
 
 /**
- Sets the text color for a given state.
-
- @param textColor the text color.
- @param state the state.
+ The floating label color when the text field is enabled and not editing.
  */
-- (void)setTextColor:(UIColor *)textColor forState:(MDCContainedInputViewState)state;
+@property (strong, nonatomic) UIColor *floatingLabelColorNormal;
 
 /**
- Sets the underline label color for a given state.
-
- @param underlineLabelColor the underline label color.
- @param state the state.
+ The floating label color when the text field is enabled and editing.
  */
-- (void)setUnderlineLabelColor:(UIColor *)underlineLabelColor
-                      forState:(MDCContainedInputViewState)state;
+@property (strong, nonatomic) UIColor *floatingLabelColorEditing;
 
 /**
- Sets the floating label color for a given state.
-
- @param floatingLabelColor the floating label color.
- @param state the state.
+ The floating label color when the text field is disabled.
  */
-- (void)setFloatingLabelColor:(UIColor *)floatingLabelColor
-                     forState:(MDCContainedInputViewState)state;
+@property (strong, nonatomic) UIColor *floatingLabelColorDisabled;
 
 /**
- Sets the placeholder color for a given state.
-
- @param placeholderColor the placeholder color.
- @param state the state.
+ The text color when the text field is enabled and not editing.
  */
-- (void)setPlaceholderColor:(UIColor *)placeholderColor forState:(MDCContainedInputViewState)state;
+@property (strong, nonatomic) UIColor *textColorNormal;
+
+/**
+ The text color when the text field is enabled and editing.
+ */
+@property (strong, nonatomic) UIColor *textColorEditing;
+
+/**
+ The text color when the text field is disabled.
+ */
+@property (strong, nonatomic) UIColor *textColorDisabled;
 
 @end
