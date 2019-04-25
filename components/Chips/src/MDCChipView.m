@@ -18,6 +18,7 @@
 
 #import "MaterialInk.h"
 #import "MaterialMath.h"
+#import "MaterialRipple.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialShapes.h"
@@ -104,6 +105,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 @property(nonatomic, readonly) BOOL showSelectedImageView;
 @property(nonatomic, readonly) BOOL showAccessoryView;
 @property(nonatomic, strong) MDCInkView *inkView;
+@property(nonatomic, strong) MDCStatefulRippleView *rippleView;
 @property(nonatomic, readonly) CGFloat pixelScale;
 @end
 
@@ -170,6 +172,9 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
     _inkView.usesLegacyInkRipple = NO;
     _inkView.inkColor = [self inkColorForState:UIControlStateNormal];
     [self addSubview:_inkView];
+
+    _rippleView = [[MDCStatefulRippleView alloc] initWithFrame:self.bounds];
+    _rippleView.rippleColor = [self inkColorForState:UIControlStateNormal];
 
     _imageView = [[UIImageView alloc] init];
     [self addSubview:_imageView];
@@ -255,6 +260,18 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
 - (UIColor *)inkColor {
   return [self inkColorForState:UIControlStateNormal];
+}
+
+- (void)setEnableRippleBehavior:(BOOL)enableRippleBehavior {
+  _enableRippleBehavior = enableRippleBehavior;
+
+  if (enableRippleBehavior) {
+    [self.inkView removeFromSuperview];
+    [self insertSubview:self.rippleView belowSubview:self.imageView];
+  } else {
+    [self.rippleView removeFromSuperview];
+    [self insertSubview:self.inkView belowSubview:self.imageView];
+  }
 }
 
 #pragma mark - Dynamic Type Support
@@ -400,6 +417,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 - (void)updateInkColor {
   UIColor *inkColor = [self inkColorForState:self.state];
   self.inkView.inkColor = inkColor ? inkColor : self.inkView.defaultInkColor;
+  self.rippleView.rippleColor = inkColor ?: [UIColor colorWithWhite:1 alpha:(CGFloat)0.12];
 }
 
 - (nullable UIColor *)shadowColorForState:(UIControlState)state {
@@ -553,12 +571,14 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 - (void)setHighlighted:(BOOL)highlighted {
   [super setHighlighted:highlighted];
 
+  self.rippleView.rippleHighlighted = highlighted;
   [self updateState];
 }
 
 - (void)setSelected:(BOOL)selected {
   [super setSelected:selected];
 
+  self.rippleView.selected = selected;
   [self updateState];
   [self setNeedsLayout];
 }
@@ -569,6 +589,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   [super layoutSubviews];
 
   _inkView.frame = self.bounds;
+  _rippleView.frame = self.bounds;
   _imageView.frame = [self imageViewFrame];
   _selectedImageView.frame = [self selectedImageViewFrame];
   _accessoryView.frame = [self accessoryViewFrame];
@@ -744,6 +765,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 - (void)willMoveToSuperview:(UIView *)newSuperview {
   [super willMoveToSuperview:newSuperview];
   [self.inkView cancelAllAnimationsAnimated:NO];
+  [self.rippleView cancelAllRipplesAnimated:NO completion:nil];
 }
 
 - (BOOL)showImageView {
@@ -765,29 +787,55 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 #pragma mark - Ink Touches
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+  if (self.enableRippleBehavior) {
+    [self rippleViewTouchesBegan:touches withEvent:event];
+  }
   [super touchesBegan:touches withEvent:event];
 
-  [self startTouchBeganAnimationAtPoint:[self locationFromTouches:touches]];
+  if (!self.enableRippleBehavior) {
+    [self startTouchBeganAnimationAtPoint:[self locationFromTouches:touches]];
+  }
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+  if (self.enableRippleBehavior) {
+    [self rippleViewTouchesEnded:touches withEvent:event];
+  }
   [super touchesEnded:touches withEvent:event];
 
-  [self startTouchEndedAnimationAtPoint:[self locationFromTouches:touches]];
+  if (!self.enableRippleBehavior) {
+    [self startTouchEndedAnimationAtPoint:[self locationFromTouches:touches]];
+  }
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
+  if (self.enableRippleBehavior) {
+    [self rippleViewTouchesCancelled:touches withEvent:event];
+  }
   [super touchesCancelled:touches withEvent:event];
 
-  [self startTouchEndedAnimationAtPoint:[self locationFromTouches:touches]];
+  if (!self.enableRippleBehavior) {
+    [self startTouchEndedAnimationAtPoint:[self locationFromTouches:touches]];
+  }
+}
+
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  if (self.enableRippleBehavior) {
+    [self rippleViewTouchesMoved:touches withEvent:event];
+  }
+  [super touchesMoved:touches withEvent:event];
 }
 
 - (void)touchDragEnter:(__unused MDCChipView *)button forEvent:(UIEvent *)event {
-  [self startTouchBeganAnimationAtPoint:[self locationFromTouches:event.allTouches]];
+  if (!self.enableRippleBehavior) {
+    [self startTouchBeganAnimationAtPoint:[self locationFromTouches:event.allTouches]];
+  }
 }
 
 - (void)touchDragExit:(__unused MDCChipView *)button forEvent:(UIEvent *)event {
-  [self startTouchEndedAnimationAtPoint:[self locationFromTouches:event.allTouches]];
+  if (!self.enableRippleBehavior) {
+    [self startTouchEndedAnimationAtPoint:[self locationFromTouches:event.allTouches]];
+  }
 }
 
 - (CGPoint)locationFromTouches:(NSSet *)touches {
@@ -826,6 +874,22 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   BOOL hasSelectedImage = self.selectedImageView.image != nil;
 
   return !hasImage && hasSelectedImage;
+}
+
+- (void)rippleViewTouchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  [_rippleView touchesBegan:touches withEvent:event];
+}
+
+- (void)rippleViewTouchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  [_rippleView touchesEnded:touches withEvent:event];
+}
+
+- (void)rippleViewTouchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  [_rippleView touchesMoved:touches withEvent:event];
+}
+
+- (void)rippleViewTouchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  [_rippleView touchesCancelled:touches withEvent:event];
 }
 
 @end
