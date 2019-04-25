@@ -228,20 +228,21 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
 @implementation MDCRipplePendingAnimation
 
 - (void)runActionForKey:(NSString *)event object:(id)anObject arguments:(NSDictionary *)dict {
-  if ([anObject isKindOfClass:[CAShapeLayer class]]) {
-    CAShapeLayer *layer = (CAShapeLayer *)anObject;
+  if (![anObject isKindOfClass:[CAShapeLayer class]]) {
+    return;
+  }
 
-    // In order to synchronize our animation with UIKit animations we have to fetch the resizing
-    // animation created by UIKit and copy the configuration to our custom animation.
-    CAAnimation *boundsAction = [self.animationSourceLayer animationForKey:@"bounds.size"];
-    if ([boundsAction isKindOfClass:[CABasicAnimation class]]) {
-      CABasicAnimation *animation = (CABasicAnimation *)[boundsAction copy];
-      animation.keyPath = self.keyPath;
-      animation.fromValue = self.fromValue;
-      animation.toValue = self.toValue;
+  // In order to synchronize our animation with UIKit animations we have to fetch the resizing
+  // animation created by UIKit and copy the configuration to our custom animation.
+  CAShapeLayer *layer = (CAShapeLayer *)anObject;
+  CAAnimation *boundsAction = [self.animationSourceLayer animationForKey:@"bounds.size"];
+  if ([boundsAction isKindOfClass:[CABasicAnimation class]]) {
+    CABasicAnimation *animation = (CABasicAnimation *)[boundsAction copy];
+    animation.keyPath = self.keyPath;
+    animation.fromValue = self.fromValue;
+    animation.toValue = self.toValue;
 
-      [layer addAnimation:animation forKey:event];
-    }
+    [layer addAnimation:animation forKey:event];
   }
 }
 @end
