@@ -24,31 +24,21 @@
 /**
  The filled background color when the text field is enabled and not editing.
  */
-@property(strong, nonatomic) UIColor *filledBackgroundColorNormal;
-
-/**
- The filled background color when the text field is enabled and editing.
- */
-@property(strong, nonatomic) UIColor *filledBackgroundColorEditing;
-
-/**
- The filled background color when the text field is disabled.
- */
-@property(strong, nonatomic) UIColor *filledBackgroundColorDisabled;
+@property(strong, nonatomic, nonnull) UIColor *filledBackgroundColor;
 
 /**
  The underline color when the text field is enabled and not editing.
  */
-@property(strong, nonatomic) UIColor *underlineColorNormal;
+@property(strong, nonatomic, nonnull) UIColor *underlineColorNormal;
 
 /**
  The underline color when the text field is enabled and editing.
  */
-@property(strong, nonatomic) UIColor *underlineColorEditing;
+@property(strong, nonatomic, nonnull) UIColor *underlineColorEditing;
 
 /**
  The underline color when the text field is disabled.
  */
-@property(strong, nonatomic) UIColor *underlineColorDisabled;
+@property(strong, nonatomic, nonnull) UIColor *underlineColorDisabled;
 
 @end

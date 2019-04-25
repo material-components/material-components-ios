@@ -88,31 +88,31 @@
 /**
  The floating label color when the text field is enabled and not editing.
  */
-@property(strong, nonatomic) UIColor *floatingLabelColorNormal;
+@property(strong, nonatomic, nonnull) UIColor *floatingLabelColorNormal;
 
 /**
  The floating label color when the text field is enabled and editing.
  */
-@property(strong, nonatomic) UIColor *floatingLabelColorEditing;
+@property(strong, nonatomic, nonnull) UIColor *floatingLabelColorEditing;
 
 /**
  The floating label color when the text field is disabled.
  */
-@property(strong, nonatomic) UIColor *floatingLabelColorDisabled;
+@property(strong, nonatomic, nonnull) UIColor *floatingLabelColorDisabled;
 
 /**
  The text color when the text field is enabled and not editing.
  */
-@property(strong, nonatomic) UIColor *textColorNormal;
+@property(strong, nonatomic, nonnull) UIColor *textColorNormal;
 
 /**
  The text color when the text field is enabled and editing.
  */
-@property(strong, nonatomic) UIColor *textColorEditing;
+@property(strong, nonatomic, nonnull) UIColor *textColorEditing;
 
 /**
  The text color when the text field is disabled.
  */
-@property(strong, nonatomic) UIColor *textColorDisabled;
+@property(strong, nonatomic, nonnull) UIColor *textColorDisabled;
 
 @end
