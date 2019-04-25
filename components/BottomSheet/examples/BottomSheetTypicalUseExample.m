@@ -22,7 +22,7 @@
 #import "supplemental/BottomSheetDummyCollectionViewController.h"
 #import "supplemental/BottomSheetSupplemental.h"
 
-@interface BottomSheetTypicalUseExample ()
+@interface BottomSheetTypicalUseExample () <MDCBottomSheetControllerDelegate>
 @property(nonatomic, strong) MDCShapeScheme *shapeScheme;
 @end
 
@@ -59,7 +59,18 @@
   bottomSheet.isScrimAccessibilityElement = YES;
   bottomSheet.scrimAccessibilityLabel = @"Close";
   bottomSheet.trackingScrollView = viewController.collectionView;
+  bottomSheet.delegate = self;
   [self presentViewController:bottomSheet animated:YES completion:nil];
+}
+
+- (void)bottomSheetControllerDidChangeScrollOffset:(MDCBottomSheetController *)controller
+                                      scrollOffset:(CGFloat)scrollOffset {
+  NSLog(@"scroll offset: %f", scrollOffset);
+}
+
+- (void)bottomSheetControllerStateChanged:(MDCBottomSheetController *)controller
+                                    state:(MDCSheetState)state {
+  NSLog(@"state change: %lu", (unsigned long)state);
 }
 
 @end

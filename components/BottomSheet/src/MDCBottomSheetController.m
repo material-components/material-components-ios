@@ -137,6 +137,17 @@
                         sheetState:(MDCSheetState)sheetState {
   _state = sheetState;
   [self updateShapeGenerator];
+  if ([self.delegate respondsToSelector:@selector(bottomSheetControllerStateChanged:state:)]) {
+    [self.delegate bottomSheetControllerStateChanged:self state:sheetState];
+  }
+}
+
+- (void)bottomSheetDidChangeScrollOffset:(nonnull MDCBottomSheetPresentationController *)bottomSheet
+                            scrollOffset:(CGFloat)scrollOffset {
+  if ([self.delegate
+          respondsToSelector:@selector(bottomSheetControllerDidChangeScrollOffset:scrollOffset:)]) {
+    [self.delegate bottomSheetControllerDidChangeScrollOffset:self scrollOffset:scrollOffset];
+  }
 }
 
 - (id<MDCShapeGenerating>)shapeGeneratorForState:(MDCSheetState)state {
@@ -227,7 +238,9 @@
 - (void)bottomSheetPresentationControllerDidDismissBottomSheet:
     (nonnull __unused MDCBottomSheetPresentationController *)bottomSheet {
 #pragma clang diagnostic pop
-  [self.delegate bottomSheetControllerDidDismissBottomSheet:self];
+  if ([self.delegate respondsToSelector:@selector(bottomSheetControllerDidDismissBottomSheet:)]) {
+    [self.delegate bottomSheetControllerDidDismissBottomSheet:self];
+  }
 }
 
 @end

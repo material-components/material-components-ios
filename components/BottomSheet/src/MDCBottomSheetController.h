@@ -142,7 +142,7 @@
  Delegate for MDCBottomSheetController.
  */
 @protocol MDCBottomSheetControllerDelegate <NSObject>
-
+@optional
 /**
  Called when the user taps the dimmed background or swipes the bottom sheet off to dismiss the
  bottom sheet. Also called with accessibility escape "two finger Z" gestures.
@@ -153,4 +153,7 @@
  */
 - (void)bottomSheetControllerDidDismissBottomSheet:(nonnull MDCBottomSheetController *)controller;
 
+- (void)bottomSheetControllerStateChanged:(nonnull MDCBottomSheetController *)controller state:(MDCSheetState)state;
+
+- (void)bottomSheetControllerDidChangeScrollOffset:(nonnull MDCBottomSheetController *)controller scrollOffset:(CGFloat)scrollOffset;
 @end

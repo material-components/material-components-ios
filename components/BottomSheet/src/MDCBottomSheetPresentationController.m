@@ -294,4 +294,12 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   }
 }
 
+- (void)sheetContainerViewDidChangeScrollOffset:(nonnull MDCSheetContainerView *)containerView
+                                   scrollOffset:(CGFloat)scrollOffset {
+  id<MDCBottomSheetPresentationControllerDelegate> strongDelegate = self.delegate;
+  if ([strongDelegate respondsToSelector:@selector(bottomSheetDidChangeScrollOffset:scrollOffset:)]) {
+    [strongDelegate bottomSheetDidChangeScrollOffset:self scrollOffset:scrollOffset];
+  }
+}
+
 @end

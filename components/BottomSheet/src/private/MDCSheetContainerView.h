@@ -37,5 +37,7 @@
 - (void)sheetContainerViewDidHide:(nonnull MDCSheetContainerView *)containerView;
 - (void)sheetContainerViewWillChangeState:(nonnull MDCSheetContainerView *)containerView
                                sheetState:(MDCSheetState)sheetState;
+- (void)sheetContainerViewDidChangeScrollOffset:(nonnull MDCSheetContainerView *)containerView
+                               scrollOffset:(CGFloat)scrollOffset;
 
 @end
