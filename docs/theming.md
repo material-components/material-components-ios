@@ -34,11 +34,6 @@ through Material Theming.
 
 ### How to get the code
 
-#### Beta components
-
-In order to use the theming extensions you'll need to follow [these](../../contributing/beta_components.md) 
-instructions since they are currently in beta.
-
 #### Cocoapods
 
 In order to use the components and subsystem schemes you'll need to add both the component and its
@@ -202,11 +197,6 @@ extension target. This includes:
 - ShapeThemer
 - TypographyThemer
 - Component Themers (e.g. CardThemer)
-
-Some Theming extensions are still in Beta. To add a Beta Theming extension to your project you will
-need to follow the instructions in
-[the Beta components documentation](../contributing/beta_components.md). Non-Beta Theming
-extensions can be added to your project like everything else in MDC-iOS.
 
 Some components do not have a Theming extension yet. We are prioritizing the remaining Theming
 extensions through
