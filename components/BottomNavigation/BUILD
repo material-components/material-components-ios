@@ -89,7 +89,7 @@ mdc_objc_library(
     sdk_frameworks = ["CoreGraphics"],
     visibility = ["//:__subpackages__"],
     deps = [
-        ":BottomNavigation"
+        ":BottomNavigation",
         ":privateHeaders",
     ],
 )
