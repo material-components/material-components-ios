@@ -13,15 +13,9 @@
 // limitations under the License.
 
 #import "MDCStatefulRippleView.h"
-#import "MaterialState.h"
 #import "private/MDCRippleLayer.h"
 
 static const CGFloat kDefaultRippleAlpha = (CGFloat)0.12;
-static const CGFloat kDefaultRippleSelectedAlpha = (CGFloat)0.08;
-
-static UIColor *RippleSelectedColor(void) {
-  return [UIColor colorWithRed:(CGFloat)0.384 green:0 blue:(CGFloat)0.933 alpha:1];
-}
 
 @interface MDCStatefulRippleView ()
 @property(nonatomic, strong) MDCRippleLayer *activeRippleLayer;
@@ -56,12 +50,9 @@ static UIColor *RippleSelectedColor(void) {
 - (void)commonMDCStatefulRippleViewInit {
   if (_rippleColors == nil) {
     _rippleColors = [NSMutableDictionary dictionary];
-    UIColor *selectionColor = RippleSelectedColor();
     _rippleColors[@(MaterialStateNormal)] = [UIColor colorWithWhite:0 alpha:kDefaultRippleAlpha];
     _rippleColors[@(MaterialStateHighlighted)] = [UIColor colorWithWhite:0
                                                                    alpha:kDefaultRippleAlpha];
-    _rippleColors[@(MaterialStateSelected)] =
-        [selectionColor colorWithAlphaComponent:kDefaultRippleSelectedAlpha];
   }
 }
 

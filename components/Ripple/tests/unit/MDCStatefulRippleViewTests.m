@@ -45,16 +45,12 @@
   MDCStatefulRippleView *rippleView = [[MDCStatefulRippleView alloc] init];
 
   // Then
-  UIColor *selectionColor = [UIColor colorWithRed:(CGFloat)0.384
-                                            green:0
-                                             blue:(CGFloat)0.933
-                                            alpha:1];
   XCTAssertEqualObjects([rippleView rippleColorForState:MaterialStateNormal],
                         [UIColor colorWithWhite:0 alpha:(CGFloat)0.12]);
   XCTAssertEqualObjects([rippleView rippleColorForState:MaterialStateHighlighted],
                         [UIColor colorWithWhite:0 alpha:(CGFloat)0.12]);
   XCTAssertEqualObjects([rippleView rippleColorForState:MaterialStateSelected],
-                        [selectionColor colorWithAlphaComponent:(CGFloat)0.08]);
+                        [rippleView rippleColorForState:MaterialStateNormal]);
   XCTAssertEqualObjects(
       [rippleView rippleColorForState:(MaterialStateSelected | MaterialStateHighlighted)],
       [UIColor colorWithWhite:0 alpha:(CGFloat)0.12]);
@@ -65,7 +61,7 @@
       [UIColor colorWithWhite:0 alpha:(CGFloat)0.12]);
   XCTAssertEqualObjects(
       [rippleView rippleColorForState:(MaterialStateDragged | MaterialStateSelected)],
-      [selectionColor colorWithAlphaComponent:(CGFloat)0.08]);
+      [rippleView rippleColorForState:MaterialStateNormal]);
 }
 
 - (void)testSetRippleColorForStateAndFallbacksForCombinations {
