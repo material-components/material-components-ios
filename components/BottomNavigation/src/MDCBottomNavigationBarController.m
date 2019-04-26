@@ -93,13 +93,6 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
   }
 }
 
-- (void)viewDidLayoutSubviews {
-  [super viewDidLayoutSubviews];
-
-  self.navigationBarLongPressRecognizer.allowableMovement =
-      CGRectGetWidth(self.navigationBar.bounds);
-}
-
 - (void)setSelectedViewController:(nullable UIViewController *)selectedViewController {
   // Assert that the given VC is one of our view controllers or it is nil (we are unselecting)
   NSAssert(
