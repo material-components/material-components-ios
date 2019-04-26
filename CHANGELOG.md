@@ -1,3 +1,10 @@
+# 83.0.1
+
+This patch release resolves some missing content from the theming extension documentation and
+removes a broken link.
+
+---
+
 # 83.0.0
 
 This major release graduates most Theming Extensions from Beta and includes a breaking change for
