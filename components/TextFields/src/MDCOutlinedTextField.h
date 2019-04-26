@@ -22,18 +22,19 @@
 @interface MDCOutlinedTextField : MDCInputTextField
 
 /**
- The outline color when the text field is enabled and not editing.
- */
-@property(strong, nonatomic, nonnull) UIColor *outlineColorNormal;
+ Sets the outline color for a given state.
 
-/**
- The outline color when the text field is enabled and editing.
+ @param outlineColor The UIColor for the given state.
+ @param state The UIControlState. The accepted values are UIControlStateNormal,
+ UIControlStateDisabled, and UIControlStateEditing, which is a custom MDC
+ UIControlState value.
  */
-@property(strong, nonatomic, nonnull) UIColor *outlineColorEditing;
+- (void)setOutlineColor:(UIColor *)outlineColor forState:(UIControlState)state;
+/**
+ Returns the outline color for a given state.
 
-/**
- The outline color when the text field is disabled.
+ @param state The UIControlState.
  */
-@property(strong, nonatomic, nonnull) UIColor *outlineColorDisabled;
+- (UIColor *)outlineColorForState:(UIControlState)state;
 
 @end

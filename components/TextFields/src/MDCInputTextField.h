@@ -86,33 +86,35 @@
     BOOL mdc_adjustsFontForContentSizeCategory;
 
 /**
- The floating label color when the text field is enabled and not editing.
+ Sets the floating label color for a given state.
+
+ @param floatingLabelColor The UIColor for the given state.
+ @param state The UIControlState. The accepted values are UIControlStateNormal,
+ UIControlStateDisabled, and UIControlStateEditing, which is a custom MDC
+ UIControlState value.
  */
-@property(strong, nonatomic, nonnull) UIColor *floatingLabelColorNormal;
+- (void)setFLoatingLabelColor:(UIColor *)floatingLabelColor forState:(UIControlState)state;
+/**
+ Returns the floating label color for a given state.
+
+ @param state The UIControlState.
+ */
+- (UIColor *)floatingLabelColorForState:(UIControlState)state;
 
 /**
- The floating label color when the text field is enabled and editing.
- */
-@property(strong, nonatomic, nonnull) UIColor *floatingLabelColorEditing;
+ Sets the text color for a given state.
 
-/**
- The floating label color when the text field is disabled.
+ @param textColor The UIColor for the given state.
+ @param state The UIControlState. The accepted values are UIControlStateNormal,
+ UIControlStateDisabled, and UIControlStateEditing, which is a custom MDC
+ UIControlState value.
  */
-@property(strong, nonatomic, nonnull) UIColor *floatingLabelColorDisabled;
+- (void)setTextColor:(UIColor *)textColor forState:(UIControlState)state;
+/**
+ Returns the text color for a given state.
 
-/**
- The text color when the text field is enabled and not editing.
+ @param state The UIControlState.
  */
-@property(strong, nonatomic, nonnull) UIColor *textColorNormal;
-
-/**
- The text color when the text field is enabled and editing.
- */
-@property(strong, nonatomic, nonnull) UIColor *textColorEditing;
-
-/**
- The text color when the text field is disabled.
- */
-@property(strong, nonatomic, nonnull) UIColor *textColorDisabled;
+- (UIColor *)textColorForState:(UIControlState)state;
 
 @end
