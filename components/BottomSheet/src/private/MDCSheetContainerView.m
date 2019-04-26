@@ -302,7 +302,7 @@ static const CGFloat kSheetBounceBuffer = 150;
       targetPoint = CGPointMake(midX, bottomY);
       break;
   }
-  [self.delegate sheetContainerViewDidChangeScrollOffset:self scrollOffset:targetPoint.y];
+  [self.delegate sheetContainerViewDidChangeYOffset:self yOffset:targetPoint.y];
   return targetPoint;
 }
 
@@ -386,7 +386,7 @@ static const CGFloat kSheetBounceBuffer = 150;
 }
 
 - (void)draggableView:(nonnull MDCDraggableView *)view didPanToOffset:(CGFloat)offset {
-  [self.delegate sheetContainerViewDidChangeScrollOffset:self scrollOffset:offset];
+  [self.delegate sheetContainerViewDidChangeYOffset:self yOffset:offset];
 }
 
 - (void)setSheetState:(MDCSheetState)sheetState {

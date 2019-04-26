@@ -45,8 +45,8 @@
 - (void)bottomSheetWillChangeState:(nonnull MDCBottomSheetPresentationController *)bottomSheet
                         sheetState:(MDCSheetState)sheetState;
 
-- (void)bottomSheetDidChangeScrollOffset:(nonnull MDCBottomSheetPresentationController *)bottomSheet
-                        scrollOffset:(CGFloat)scrollOffset;
+- (void)bottomSheetDidChangeYOffset:(nonnull MDCBottomSheetPresentationController *)bottomSheet
+                        yOffset:(CGFloat)yOffset;
 @end
 
 /**

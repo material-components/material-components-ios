@@ -63,9 +63,9 @@
   [self presentViewController:bottomSheet animated:YES completion:nil];
 }
 
-- (void)bottomSheetControllerDidChangeScrollOffset:(MDCBottomSheetController *)controller
-                                      scrollOffset:(CGFloat)scrollOffset {
-  NSLog(@"scroll offset: %f", scrollOffset);
+- (void)bottomSheetControllerDidChangeYOffset:(MDCBottomSheetController *)controller
+                                      yOffset:(CGFloat)yOffset {
+  NSLog(@"bototm sheet Y offset: %f", yOffset);
 }
 
 - (void)bottomSheetControllerStateChanged:(MDCBottomSheetController *)controller

@@ -142,11 +142,11 @@
   }
 }
 
-- (void)bottomSheetDidChangeScrollOffset:(nonnull MDCBottomSheetPresentationController *)bottomSheet
-                            scrollOffset:(CGFloat)scrollOffset {
+- (void)bottomSheetDidChangeYOffset:(nonnull MDCBottomSheetPresentationController *)bottomSheet
+                            yOffset:(CGFloat)yOffset {
   if ([self.delegate
-          respondsToSelector:@selector(bottomSheetControllerDidChangeScrollOffset:scrollOffset:)]) {
-    [self.delegate bottomSheetControllerDidChangeScrollOffset:self scrollOffset:scrollOffset];
+          respondsToSelector:@selector(bottomSheetControllerDidChangeYOffset:yOffset:)]) {
+    [self.delegate bottomSheetControllerDidChangeYOffset:self yOffset:yOffset];
   }
 }
 
