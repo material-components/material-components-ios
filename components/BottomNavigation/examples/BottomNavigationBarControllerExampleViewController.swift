@@ -50,7 +50,6 @@ class BottomNavigationControllerExampleViewController: MDCBottomNavigationBarCon
     viewController3.tabBarItem = UITabBarItem(title: "Item 3", image: UIImage(named: "Search"), tag: 2)
 
     viewControllers = [ viewController1, viewController2, viewController3 ]
-    self.isDynamicTypeSupportEnabled = true
   }
 
   @objc class func catalogMetadata() -> [String: Any] {

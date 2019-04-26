@@ -61,15 +61,11 @@
 @property(nonatomic) NSUInteger selectedIndex;
 
 /**
- * If true, when the user long presses a tab bar item and dynamic type is enabled a large version of
- * the tab bar item will be shown in a transient dialog that appears centered within the window.
- * The default of this property is @c NO but will be set to @c YES in the future and then removed
- * entirely.
- * A view controller may set the @c largeContentSizeImage on its @c tabBarItem. If the tab bar item
- * does not provide a large content size image, its @c image may be scaled.
- * @see UIBarItem#largeContentSizeImage
+ * If enabled and the user has selected a @c UIContentSizeCategory of @c .AccessibilityMedium or
+ * larger, then when the user long-pressed on a tab item a view will be presented with a larger
+ * version of the image and title.
  */
-@property(nonatomic, getter=isDynamicTypeSupportEnabled) BOOL dynamicTypeSupportEnabled;
+@property(nonatomic, getter=isLongPressPopUpViewEnabled) BOOL longPressPopUpViewEnabled;
 
 - (void)viewDidLoad NS_REQUIRES_SUPER;
 

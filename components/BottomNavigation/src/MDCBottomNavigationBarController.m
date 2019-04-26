@@ -16,6 +16,7 @@
 
 #import <CoreGraphics/CoreGraphics.h>
 
+#import "MaterialApplication.h"
 #import "private/MDCBottomNavigationBar+Private.h"
 #import "private/MDCBottomNavigationLargeItemDialogView.h"
 
@@ -23,7 +24,6 @@
 static void *const kObservationContext = (void *)&kObservationContext;
 static const CGFloat kLargeItemViewHeight = 210;
 static const CGFloat kLargeItemViewWidth = 210;
-static const CGFloat kMinimumLargeFontSize = 28;
 static const NSTimeInterval kLargeItemViewAnimationDuration = 0.1;
 static const NSTimeInterval kLongPressMinimumPressDuration = 0.2;
 static const NSUInteger kLongPressNumberOfTouchesRequired = 1;
@@ -63,7 +63,7 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
     _viewControllers = @[];
     _selectedIndex = NSNotFound;
     _dismissingLargeItemView = NO;
-    _dynamicTypeSupportEnabled = NO;
+    _longPressPopUpViewEnabled = YES;
 
     [_navigationBar addObserver:self
                      forKeyPath:NSStringFromSelector(@selector(items))
@@ -88,7 +88,7 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
   [self.view addSubview:self.navigationBar];
   [self loadConstraints];
 
-  if ([self isDynamicTypeSupportEnabled] && ![self isNavigationBarLongPressRecognizerRegistered]) {
+  if ([self isLongPressPopUpViewEnabled] && ![self isNavigationBarLongPressRecognizerRegistered]) {
     [self.navigationBar addGestureRecognizer:self.navigationBarLongPressRecognizer];
   }
 }
@@ -154,8 +154,8 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
   self.selectedViewController = viewControllersCopy.firstObject;
 }
 
-- (void)setDynamicTypeSupportEnabled:(BOOL)dynamicTypeSupportEnabled {
-  _dynamicTypeSupportEnabled = dynamicTypeSupportEnabled;
+- (void)setLongPressPopUpViewEnabled:(BOOL)dynamicTypeSupportEnabled {
+  _longPressPopUpViewEnabled = dynamicTypeSupportEnabled;
 
   BOOL isNavigationBarLongPressRegistered = [self isNavigationBarLongPressRecognizerRegistered];
   if (dynamicTypeSupportEnabled && !isNavigationBarLongPressRegistered) {
@@ -282,8 +282,7 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
  * @param point CGPoint The point within @c navigationBar coordinate space.
  */
 - (void)handleNavigationBarLongPressUpdatedForPoint:(CGPoint)point {
-  UIFont *preferredFont = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
-  if (preferredFont.pointSize < kMinimumLargeFontSize) {
+  if (![self isContentSizeCategoryAccessibilityCategory]) {
     return;
   }
 
@@ -593,6 +592,26 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
 - (BOOL)isNavigationBarLongPressRecognizerRegistered {
   return
       [self.navigationBar.gestureRecognizers containsObject:self.navigationBarLongPressRecognizer];
+}
+
+/** Returns if the receiver's size category is an accessibility category. */
+- (BOOL)isContentSizeCategoryAccessibilityCategory {
+  UIContentSizeCategory sizeCategory = UIContentSizeCategoryLarge;
+  if (@available(iOS 10.0, *)) {
+    sizeCategory = self.traitCollection.preferredContentSizeCategory;
+  } else {
+    sizeCategory = UIApplication.mdc_safeSharedApplication.preferredContentSizeCategory;
+  }
+
+  if (@available(iOS 11.0, *)) {
+    return UIContentSizeCategoryIsAccessibilityCategory(sizeCategory);
+  }
+
+  return [sizeCategory isEqualToString:UIContentSizeCategoryAccessibilityMedium] ||
+         [sizeCategory isEqualToString:UIContentSizeCategoryAccessibilityLarge] ||
+         [sizeCategory isEqualToString:UIContentSizeCategoryAccessibilityExtraLarge] ||
+         [sizeCategory isEqualToString:UIContentSizeCategoryAccessibilityExtraExtraLarge] ||
+         [sizeCategory isEqualToString:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
 }
 
 @end
