@@ -27,5 +27,68 @@
  - Enable easy set up and reliable and predictable behavior.
 
  */
-@interface MDCFilledTextField : MDCInputTextField
+@interface MDCFilledTextField : UITextField
+
+/**
+ The @c floatingLabel is a label that occupies the text area when there is no text and that floats
+ above the text once there is some. It is distinct from a placeholder.
+ */
+@property(strong, nonatomic, readonly, nonnull) UILabel *floatingLabel;
+
+/**
+ The @c leadingUnderlineLabel can be used to display helper or error text.
+ */
+@property(strong, nonatomic, readonly, nonnull) UILabel *leadingUnderlineLabel;
+
+/**
+ The @c trailingUnderlineLabel can be used to display helper or error text.
+ */
+@property(strong, nonatomic, readonly, nonnull) UILabel *trailingUnderlineLabel;
+
+/**
+ This is essentially an RTL-aware wrapper around UITextField's leftView/rightView class.
+ */
+@property(strong, nonatomic, nullable) UIView *leadingView;
+
+/**
+ This is essentially an RTL-aware wrapper around UITextField's leftView/rightView class.
+ */
+@property(strong, nonatomic, nullable) UIView *trailingView;
+
+/**
+ This is essentially an RTL-aware wrapper around UITextField's leftViewMode/rightViewMode class.
+ */
+@property(nonatomic, assign) UITextFieldViewMode leadingViewMode;
+
+/**
+ This is essentially an RTL-aware wrapper around UITextField's leftViewMode/rightViewMode class.
+ */
+@property(nonatomic, assign) UITextFieldViewMode trailingViewMode;
+
+/**
+ This property toggles the error state (similar to @c isHighlighted, @c isEnabled, @c isSelected,
+ etc.) that is part of a general interpretation of the states outlined in the Material guidelines
+ for Text Fields. See the @c MDCContainedInputViewState enum for more information.
+ */
+@property(nonatomic, assign) BOOL isErrored;
+
+/**
+ This property toggles the activated state (similar to @c isHighlighted, @c isEnabled, @c
+ isSelected, etc.) that is part of a general interpretation of the states outlined in the Material
+ guidelines for Text Fields. See the @c MDCContainedInputViewState enum for more information.
+ */
+@property(nonatomic, assign) BOOL isActivated;
+
+/**
+ Indicates whether the text field should automatically update its font when the device’s
+ UIContentSizeCategory is changed.
+ 
+ This property is modeled after the adjustsFontForContentSizeCategory property in the
+ UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
+ 
+ Defaults value is NO.
+ */
+@property(nonatomic, setter=mdc_setAdjustsFontForContentSizeCategory:)
+BOOL mdc_adjustsFontForContentSizeCategory;
+
 @end

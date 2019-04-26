@@ -20,6 +20,9 @@
 #import "MDCContainerStylerFilled.h"
 #import "MDCInputTextField+Private.h"
 
+@interface MDCFilledTextField (Private) <MDCContainedInputView>
+@end
+
 @implementation MDCFilledTextField (MaterialTheming)
 
 - (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {

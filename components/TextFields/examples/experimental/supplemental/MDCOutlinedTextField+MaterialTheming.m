@@ -20,6 +20,9 @@
 #import "MDCContainerStylerOutlined.h"
 #import "MDCInputTextField+Private.h"
 
+@interface MDCOutlinedTextField (Private) <MDCContainedInputView>
+@end
+
 @implementation MDCOutlinedTextField (MaterialTheming)
 - (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
   [self applyTypographySchemeWith:containerScheme];
