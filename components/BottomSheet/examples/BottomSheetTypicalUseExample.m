@@ -65,12 +65,12 @@
 
 - (void)bottomSheetControllerDidChangeYOffset:(MDCBottomSheetController *)controller
                                       yOffset:(CGFloat)yOffset {
-  NSLog(@"bototm sheet Y offset: %f", yOffset);
+  NSLog(@"bottom sheet Y offset changed: %f", yOffset);
 }
 
 - (void)bottomSheetControllerStateChanged:(MDCBottomSheetController *)controller
                                     state:(MDCSheetState)state {
-  NSLog(@"state change: %lu", (unsigned long)state);
+  NSLog(@"bottom sheet state changed to: %lu", (unsigned long)state);
 }
 
 @end

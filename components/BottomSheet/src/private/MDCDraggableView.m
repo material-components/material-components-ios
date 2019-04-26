@@ -70,7 +70,7 @@ static void CancelGestureRecognizer(UIGestureRecognizer *gesture) {
   }
   if (recognizer.state == UIGestureRecognizerStateBegan ||
       recognizer.state == UIGestureRecognizerStateChanged) {
-    [self.delegate draggableView:self didPanToOffset:self.frame.origin.y];
+    [self.delegate draggableView:self didPanToOffset:CGRectGetMinY(self.frame)];
   }
 }
 
