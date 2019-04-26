@@ -788,6 +788,8 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
   if (self.enableRippleBehavior) {
+    // This method needs to be invoked before the super.
+    // Please see the `MDCStatefulRippleView` class header for more details.
     [self rippleViewTouchesBegan:touches withEvent:event];
   }
   [super touchesBegan:touches withEvent:event];
@@ -799,6 +801,8 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
   if (self.enableRippleBehavior) {
+    // This method needs to be invoked before the super.
+    // Please see the `MDCStatefulRippleView` class header for more details.
     [self rippleViewTouchesEnded:touches withEvent:event];
   }
   [super touchesEnded:touches withEvent:event];
@@ -810,6 +814,8 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
   if (self.enableRippleBehavior) {
+    // This method needs to be invoked before the super.
+    // Please see the `MDCStatefulRippleView` class header for more details.
     [self rippleViewTouchesCancelled:touches withEvent:event];
   }
   [super touchesCancelled:touches withEvent:event];
@@ -821,6 +827,8 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   if (self.enableRippleBehavior) {
+    // This method needs to be invoked before the super.
+    // Please see the `MDCStatefulRippleView` class header for more details.
     [self rippleViewTouchesMoved:touches withEvent:event];
   }
   [super touchesMoved:touches withEvent:event];
@@ -877,19 +885,19 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 }
 
 - (void)rippleViewTouchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-  [_rippleView touchesBegan:touches withEvent:event];
+  [self.rippleView touchesBegan:touches withEvent:event];
 }
 
 - (void)rippleViewTouchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-  [_rippleView touchesEnded:touches withEvent:event];
+  [self.rippleView touchesEnded:touches withEvent:event];
 }
 
 - (void)rippleViewTouchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-  [_rippleView touchesMoved:touches withEvent:event];
+  [self.rippleView touchesMoved:touches withEvent:event];
 }
 
 - (void)rippleViewTouchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-  [_rippleView touchesCancelled:touches withEvent:event];
+  [self.rippleView touchesCancelled:touches withEvent:event];
 }
 
 @end

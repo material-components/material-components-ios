@@ -101,6 +101,8 @@
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   if (self.chipView.enableRippleBehavior) {
+    // This method needs to be invoked before the super.
+    // Please see the `MDCStatefulRippleView` class header for more details.
     [_chipView rippleViewTouchesBegan:touches withEvent:event];
   }
   [super touchesBegan:touches withEvent:event];
@@ -112,6 +114,8 @@
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   if (self.chipView.enableRippleBehavior) {
+    // This method needs to be invoked before the super.
+    // Please see the `MDCStatefulRippleView` class header for more details.
     [_chipView rippleViewTouchesEnded:touches withEvent:event];
   }
   [super touchesEnded:touches withEvent:event];
@@ -123,6 +127,8 @@
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   if (self.chipView.enableRippleBehavior) {
+    // This method needs to be invoked before the super.
+    // Please see the `MDCStatefulRippleView` class header for more details.
     [_chipView rippleViewTouchesCancelled:touches withEvent:event];
   }
   [super touchesCancelled:touches withEvent:event];
@@ -134,6 +140,8 @@
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   if (self.chipView.enableRippleBehavior) {
+    // This method needs to be invoked before the super.
+    // Please see the `MDCStatefulRippleView` class header for more details.
     [_chipView rippleViewTouchesMoved:touches withEvent:event];
   }
   [super touchesMoved:touches withEvent:event];
