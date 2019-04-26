@@ -38,6 +38,6 @@
 - (void)sheetContainerViewWillChangeState:(nonnull MDCSheetContainerView *)containerView
                                sheetState:(MDCSheetState)sheetState;
 - (void)sheetContainerViewDidChangeYOffset:(nonnull MDCSheetContainerView *)containerView
-                               yOffset:(CGFloat)yOffset;
+                                   yOffset:(CGFloat)yOffset;
 
 @end

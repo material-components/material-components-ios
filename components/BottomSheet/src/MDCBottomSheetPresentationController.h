@@ -53,7 +53,6 @@
 - (void)bottomSheetWillChangeState:(nonnull MDCBottomSheetPresentationController *)bottomSheet
                         sheetState:(MDCSheetState)sheetState;
 
-
 /**
  Called when the Y offset of the sheet's changes in relation to the top of the screen.
 
@@ -61,7 +60,7 @@
  @param yOffset The Y offset the bottom sheet changed to.
  */
 - (void)bottomSheetDidChangeYOffset:(nonnull MDCBottomSheetPresentationController *)bottomSheet
-                        yOffset:(CGFloat)yOffset;
+                            yOffset:(CGFloat)yOffset;
 @end
 
 /**

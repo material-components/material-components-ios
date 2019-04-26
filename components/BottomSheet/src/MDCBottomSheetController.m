@@ -144,8 +144,8 @@
 
 - (void)bottomSheetDidChangeYOffset:(nonnull MDCBottomSheetPresentationController *)bottomSheet
                             yOffset:(CGFloat)yOffset {
-  if ([self.delegate
-          respondsToSelector:@selector(bottomSheetControllerDidChangeYOffset:yOffset:)]) {
+  if ([self.delegate respondsToSelector:@selector(bottomSheetControllerDidChangeYOffset:
+                                                                                yOffset:)]) {
     [self.delegate bottomSheetControllerDidChangeYOffset:self yOffset:yOffset];
   }
 }
