@@ -21,7 +21,7 @@
 #import "../../src/private/MDCSheetContainerView.h"
 
 @interface MDCBottomSheetDelegateTest
-: UIViewController <MDCBottomSheetPresentationControllerDelegate>
+    : UIViewController <MDCBottomSheetPresentationControllerDelegate>
 @property(nonatomic, assign) BOOL delegateWasCalled;
 @end
 
@@ -35,11 +35,13 @@
   return self;
 }
 
-- (void)bottomSheetDidChangeYOffset:(MDCBottomSheetPresentationController *)bottomSheet yOffset:(CGFloat)yOffset {
+- (void)bottomSheetDidChangeYOffset:(MDCBottomSheetPresentationController *)bottomSheet
+                            yOffset:(CGFloat)yOffset {
   _delegateWasCalled = YES;
 }
 
-- (void)bottomSheetWillChangeState:(MDCBottomSheetPresentationController *)bottomSheet sheetState:(MDCSheetState)sheetState {
+- (void)bottomSheetWillChangeState:(MDCBottomSheetPresentationController *)bottomSheet
+                        sheetState:(MDCSheetState)sheetState {
   _delegateWasCalled = YES;
 }
 
@@ -291,7 +293,8 @@
 - (void)testSheetStateChangeCallback {
   // Given
   self.presentationController.delegate = self.delegateTest;
-  self.presentationController.sheetView.delegate = (id<MDCSheetContainerViewDelegate>)self.presentationController;
+  self.presentationController.sheetView.delegate =
+      (id<MDCSheetContainerViewDelegate>)self.presentationController;
 
   // When
   self.sheetView.sheetState = MDCSheetStateExtended;
@@ -303,7 +306,8 @@
 - (void)testSheetYOffsetChangeCallbackFromTargetPoint {
   // Given
   self.presentationController.delegate = self.delegateTest;
-  self.presentationController.sheetView.delegate = (id<MDCSheetContainerViewDelegate>)self.presentationController;
+  self.presentationController.sheetView.delegate =
+      (id<MDCSheetContainerViewDelegate>)self.presentationController;
 
   // When
   [self.sheetView targetPoint];
@@ -315,7 +319,8 @@
 - (void)testSheetYOffsetChangeCallbackFromDidPanToOffset {
   // Given
   self.presentationController.delegate = self.delegateTest;
-  self.presentationController.sheetView.delegate = (id<MDCSheetContainerViewDelegate>)self.presentationController;
+  self.presentationController.sheetView.delegate =
+      (id<MDCSheetContainerViewDelegate>)self.presentationController;
 
   // When
   [self.sheetView draggableView:self.sheetView.sheet didPanToOffset:10];
@@ -323,6 +328,5 @@
   // Then
   XCTAssertEqual(self.delegateTest.delegateWasCalled, YES);
 }
-
 
 @end
