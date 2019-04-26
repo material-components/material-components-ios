@@ -30,7 +30,7 @@
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  //   self.recordMode = YES;
+     self.recordMode = YES;
 
   self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
   self.view.backgroundColor = UIColor.whiteColor;
@@ -89,7 +89,6 @@
 
 - (void)testRippleHighlightedIsNotDissolvedWhenSetToYES {
   // Given
-  self.rippleView.layer.speed = 10000;
   [self.rippleView setRippleColor:UIColor.orangeColor forState:MDCRippleStateHighlighted];
   self.rippleView.rippleHighlighted = YES;
   [self.rippleView setValue:@YES forKey:@"_tapWentInsideOfBounds"];
@@ -97,6 +96,7 @@
   self.rippleView.rippleHighlighted = NO;
   [self.rippleView setValue:@NO forKey:@"_tapWentOutsideOfBounds"];
   self.rippleView.rippleHighlighted = YES;
+  [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:2.0]];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.view];
