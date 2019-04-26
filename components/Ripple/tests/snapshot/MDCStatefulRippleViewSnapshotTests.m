@@ -87,4 +87,20 @@
   [self generateSnapshotAndVerifyForView:self.view];
 }
 
+- (void)testRippleHighlightedIsNotDissolvedWhenSetToYES {
+  // Given
+  self.rippleView.layer.speed = 10000;
+  [self.rippleView setRippleColor:UIColor.orangeColor forState:MDCRippleStateHighlighted];
+  self.rippleView.rippleHighlighted = YES;
+  [self.rippleView setValue:@YES forKey:@"_tapWentInsideOfBounds"];
+  [self.rippleView setValue:@YES forKey:@"_tapWentOutsideOfBounds"];
+  self.rippleView.rippleHighlighted = NO;
+  [self.rippleView setValue:@NO forKey:@"_tapWentOutsideOfBounds"];
+  self.rippleView.rippleHighlighted = YES;
+  [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.5]];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.view];
+}
+
 @end
