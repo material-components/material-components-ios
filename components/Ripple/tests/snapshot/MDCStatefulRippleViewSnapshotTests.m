@@ -97,7 +97,7 @@
   self.rippleView.rippleHighlighted = NO;
   [self.rippleView setValue:@NO forKey:@"_tapWentOutsideOfBounds"];
   self.rippleView.rippleHighlighted = YES;
-  [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.5]];
+  [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.05]];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.view];
