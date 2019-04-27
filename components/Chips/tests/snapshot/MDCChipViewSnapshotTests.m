@@ -32,7 +32,7 @@
   // test you wish to recreate the golden for).
   //   self.recordMode = YES;
 
-  self.chip = [[MDCChipView alloc] initWithFrame:CGRectMake(0, 0, 40, 120)];
+  self.chip = [[MDCChipView alloc] init];
   self.chip.titleLabel.text = @"A Chip";
   self.scheme = [[MDCContainerScheme alloc] init];
 }
