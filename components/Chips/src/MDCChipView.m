@@ -58,6 +58,7 @@ static const CGFloat MDCChipSelectedDarkenPercent = (CGFloat)0.16;
 static const CGFloat MDCChipDisabledLightenPercent = (CGFloat)0.38;
 static const CGFloat MDCChipTitleColorWhite = (CGFloat)0.13;
 static const CGFloat MDCChipTitleColorDisabledLightenPercent = (CGFloat)0.38;
+static const CGFloat MDCChipViewRippleDefaultOpacity = (CGFloat)0.12;
 
 static const UIEdgeInsets MDCChipContentPadding = {4, 4, 4, 4};
 static const UIEdgeInsets MDCChipImagePadding = {0, 0, 0, 0};
@@ -267,6 +268,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
   if (enableRippleBehavior) {
     [self.inkView removeFromSuperview];
+    self.rippleView.frame = self.bounds;
     [self insertSubview:self.rippleView belowSubview:self.imageView];
   } else {
     [self.rippleView removeFromSuperview];
@@ -417,7 +419,8 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 - (void)updateInkColor {
   UIColor *inkColor = [self inkColorForState:self.state];
   self.inkView.inkColor = inkColor ? inkColor : self.inkView.defaultInkColor;
-  self.rippleView.rippleColor = inkColor ?: [UIColor colorWithWhite:1 alpha:(CGFloat)0.12];
+  self.rippleView.rippleColor =
+      inkColor ?: [UIColor colorWithWhite:1 alpha:MDCChipViewRippleDefaultOpacity];
 }
 
 - (nullable UIColor *)shadowColorForState:(UIControlState)state {
@@ -589,7 +592,6 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   [super layoutSubviews];
 
   _inkView.frame = self.bounds;
-  _rippleView.frame = self.bounds;
   _imageView.frame = [self imageViewFrame];
   _selectedImageView.frame = [self selectedImageViewFrame];
   _accessoryView.frame = [self accessoryViewFrame];
