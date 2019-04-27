@@ -41,6 +41,7 @@ static const NSTimeInterval
     MDCTextInputControllerBaseDefaultFloatingPlaceholderDownAnimationDuration = (CGFloat)0.266666;
 static const NSTimeInterval
     MDCTextInputControllerBaseDefaultFloatingPlaceholderUpAnimationDuration = (CGFloat)0.3;
+static const NSTimeInterval kDefaultErrorAnnouncementDelay = (CGFloat)0.500;
 
 static inline UIColor *MDCTextInputControllerBaseDefaultInlinePlaceholderTextColorDefault() {
   return [UIColor colorWithWhite:0 alpha:MDCTextInputControllerBaseDefaultHintTextOpacity];
@@ -1570,29 +1571,23 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
       announcementString =
           errorText.length > 0 ? [NSString stringWithFormat:@"Error: %@", errorText] : @"Error.";
     }
-
-    NSString *valueString = @"";
-
-    if (self.textInput.text.length > 0) {
-      valueString = [self.textInput.text copy];
-    }
-    if (self.textInput.placeholder.length > 0) {
-      valueString = [NSString stringWithFormat:@"%@. %@", valueString, self.textInput.placeholder];
-    }
-    valueString = [valueString stringByAppendingString:@"."];
-
-    self.textInput.accessibilityValue = valueString;
     self.textInput.leadingUnderlineLabel.accessibilityLabel = announcementString;
-  } else {
-    self.textInput.accessibilityValue = nil;
+
+    dispatch_after(
+        dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kDefaultErrorAnnouncementDelay * NSEC_PER_SEC)),
+        dispatch_get_main_queue(), ^{
+          UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification,
+                                          announcementString);
+        });
+  }
+  // Restore the helper text accessibilityLabel.
+  else {
     if ([self.textInput.leadingUnderlineLabel.text isEqualToString:self.helperText]) {
       self.textInput.leadingUnderlineLabel.accessibilityLabel = self.helperAccessibilityLabel;
     } else {
       self.textInput.leadingUnderlineLabel.accessibilityLabel = nil;
     }
   }
-  UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification,
-                                  self.textInput.leadingUnderlineLabel);
 }
 
 - (void)setHelperText:(NSString *)helperText

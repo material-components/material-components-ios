@@ -20,6 +20,33 @@
 #import "../../src/private/MDCDraggableView.h"
 #import "../../src/private/MDCSheetContainerView.h"
 
+@interface MDCBottomSheetDelegateTest
+    : UIViewController <MDCBottomSheetPresentationControllerDelegate>
+@property(nonatomic, assign) BOOL delegateWasCalled;
+@end
+
+@implementation MDCBottomSheetDelegateTest
+
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    _delegateWasCalled = NO;
+  }
+  return self;
+}
+
+- (void)bottomSheetDidChangeYOffset:(MDCBottomSheetPresentationController *)bottomSheet
+                            yOffset:(CGFloat)yOffset {
+  _delegateWasCalled = YES;
+}
+
+- (void)bottomSheetWillChangeState:(MDCBottomSheetPresentationController *)bottomSheet
+                        sheetState:(MDCSheetState)sheetState {
+  _delegateWasCalled = YES;
+}
+
+@end
+
 // Exposing internal methods for unit testing
 @interface MDCBottomSheetPresentationController (Testing)
 @property(nonatomic, strong) MDCSheetContainerView *sheetView;
@@ -28,6 +55,9 @@
 
 @interface MDCSheetContainerView (Testing)
 @property(nonatomic) MDCDraggableView *sheet;
+@property(nonatomic) MDCSheetState sheetState;
+- (CGPoint)targetPoint;
+- (void)draggableView:(MDCDraggableView *)view didPanToOffset:(CGFloat)offset;
 @end
 
 /**
@@ -60,6 +90,7 @@
 @interface MDCBottomSheetPresentationControllerPreferredSheetHeightTests : XCTestCase
 @property(nonatomic, strong) FakeSheetView *sheetView;
 @property(nonatomic, strong) MDCBottomSheetPresentationController *presentationController;
+@property(nonatomic, strong, nullable) MDCBottomSheetDelegateTest *delegateTest;
 @end
 
 @implementation MDCBottomSheetPresentationControllerPreferredSheetHeightTests
@@ -82,12 +113,14 @@
       initWithPresentedViewController:stubPresentedViewController
              presentingViewController:stubPresentingViewController];
   self.presentationController.sheetView = self.sheetView;
+  self.delegateTest = [[MDCBottomSheetDelegateTest alloc] init];
 }
 
 - (void)tearDown {
   self.presentationController.sheetView = nil;
   self.presentationController = nil;
   self.sheetView = nil;
+  self.delegateTest = nil;
 
   [super tearDown];
 }
@@ -255,6 +288,45 @@
   // Then
   CGRect scrollViewFrame = CGRectStandardize(fakeSheet.sheet.frame);
   XCTAssertEqualWithAccuracy(scrollViewFrame.size.height, scrollViewHeight, 0.001);
+}
+
+- (void)testSheetStateChangeCallback {
+  // Given
+  self.presentationController.delegate = self.delegateTest;
+  self.presentationController.sheetView.delegate =
+      (id<MDCSheetContainerViewDelegate>)self.presentationController;
+
+  // When
+  self.sheetView.sheetState = MDCSheetStateExtended;
+
+  // Then
+  XCTAssertEqual(self.delegateTest.delegateWasCalled, YES);
+}
+
+- (void)testSheetYOffsetChangeCallbackFromTargetPoint {
+  // Given
+  self.presentationController.delegate = self.delegateTest;
+  self.presentationController.sheetView.delegate =
+      (id<MDCSheetContainerViewDelegate>)self.presentationController;
+
+  // When
+  [self.sheetView targetPoint];
+
+  // Then
+  XCTAssertEqual(self.delegateTest.delegateWasCalled, YES);
+}
+
+- (void)testSheetYOffsetChangeCallbackFromDidPanToOffset {
+  // Given
+  self.presentationController.delegate = self.delegateTest;
+  self.presentationController.sheetView.delegate =
+      (id<MDCSheetContainerViewDelegate>)self.presentationController;
+
+  // When
+  [self.sheetView draggableView:self.sheetView.sheet didPanToOffset:10];
+
+  // Then
+  XCTAssertEqual(self.delegateTest.delegateWasCalled, YES);
 }
 
 @end
