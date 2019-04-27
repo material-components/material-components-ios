@@ -175,7 +175,6 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
     [self addSubview:_inkView];
 
     _rippleView = [[MDCStatefulRippleView alloc] initWithFrame:self.bounds];
-    _rippleView.rippleColor = [self inkColorForState:UIControlStateNormal];
 
     _imageView = [[UIImageView alloc] init];
     [self addSubview:_imageView];
@@ -413,14 +412,46 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 - (void)setInkColor:(UIColor *)inkColor forState:(UIControlState)state {
   _inkColors[@(state)] = inkColor;
 
+  NSNumber *rippleState = [self rippleStateForControlState:state];
+  if (rippleState) {
+    [self.rippleView setRippleColor:inkColor forState:rippleState.integerValue];
+  }
+
   [self updateInkColor];
+  [self updateRippleColor];
 }
 
 - (void)updateInkColor {
   UIColor *inkColor = [self inkColorForState:self.state];
   self.inkView.inkColor = inkColor ? inkColor : self.inkView.defaultInkColor;
-  self.rippleView.rippleColor =
-      inkColor ?: [UIColor colorWithWhite:1 alpha:MDCChipViewRippleDefaultOpacity];
+}
+
+- (void)updateRippleColor {
+  UIColor *rippleColor = [self inkColorForState:self.state];
+  // MDCStatefulRippleView sets the ripple color internally when its state changes.
+  // If that specific state isn't supported by the stateful ripple, then we directly set the
+  // ripple view's color to the requested color.
+  if (![self rippleStateForControlState:self.state]) {
+    self.rippleView.rippleColor =
+        rippleColor ?: [UIColor colorWithWhite:1 alpha:MDCChipViewRippleDefaultOpacity];
+  }
+}
+
+- (NSNumber *)rippleStateForControlState:(UIControlState)state {
+  // We check to see if MDCRippleState conforms to a UIControlState and return it, otherwise
+  // we return nil for non-supported ripple states.
+  switch (state) {
+    case UIControlStateNormal:
+      return [NSNumber numberWithInteger:MDCRippleStateNormal];
+    case UIControlStateHighlighted:
+      return [NSNumber numberWithInteger:MDCRippleStateHighlighted];
+    case UIControlStateSelected:
+      return [NSNumber numberWithInteger:MDCRippleStateSelected];
+    case (UIControlStateHighlighted | UIControlStateSelected):
+      return [NSNumber numberWithInteger:(MDCRippleStateHighlighted | MDCRippleStateSelected)];
+    default:
+      return nil;
+  }
 }
 
 - (nullable UIColor *)shadowColorForState:(UIControlState)state {
@@ -550,6 +581,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   [self updateBorderWidth];
   [self updateElevation];
   [self updateInkColor];
+  [self updateRippleColor];
   [self updateShadowColor];
   [self updateTitleFont];
   [self updateTitleColor];

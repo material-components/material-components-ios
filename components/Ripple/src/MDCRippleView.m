@@ -69,6 +69,10 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
   _maskLayer.delegate = self;
 }
 
+- (void)setRippleColor:(UIColor *)rippleColor {
+  _rippleColor = rippleColor;
+}
+
 - (void)layoutSubviews {
   [super layoutSubviews];
   [self updateRippleStyle];
