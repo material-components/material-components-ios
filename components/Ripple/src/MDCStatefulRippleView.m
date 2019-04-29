@@ -62,14 +62,14 @@ static UIColor *RippleSelectedColor(void) {
 
     _rippleDefaultColors[@(MDCRippleStateNormal)] = [UIColor colorWithWhite:0
                                                                       alpha:kDefaultRippleAlpha];
-    _rippleDefaultColors[@(MDCRippleStateHighlighted)] = [UIColor colorWithWhite:0
-                                                                   alpha:kDefaultRippleAlpha];
+    _rippleDefaultColors[@(MDCRippleStateHighlighted)] =
+        [UIColor colorWithWhite:0 alpha:kDefaultRippleAlpha];
     _rippleDefaultColors[@(MDCRippleStateSelected)] =
         [selectionColor colorWithAlphaComponent:kDefaultRippleSelectedAlpha];
     _rippleDefaultColors[@(MDCRippleStateSelected | MDCRippleStateHighlighted)] =
         [selectionColor colorWithAlphaComponent:kDefaultRippleAlpha];
-    _rippleDefaultColors[@(MDCRippleStateDragged)] = [UIColor colorWithWhite:0
-                                                                alpha:kDefaultRippleDraggedAlpha];
+    _rippleDefaultColors[@(MDCRippleStateDragged)] =
+        [UIColor colorWithWhite:0 alpha:kDefaultRippleDraggedAlpha];
     _rippleDefaultColors[@(MDCRippleStateDragged | MDCRippleStateHighlighted)] =
         [UIColor colorWithWhite:0 alpha:kDefaultRippleDraggedAlpha];
     _rippleDefaultColors[@(MDCRippleStateSelected | MDCRippleStateDragged)] =
@@ -80,19 +80,20 @@ static UIColor *RippleSelectedColor(void) {
 - (UIColor *)rippleColorForState:(MDCRippleState)state {
   UIColor *rippleColor = _rippleColors[@(state)] ?: _rippleDefaultColors[@(state)];
   if (rippleColor == nil && (state & MDCRippleStateHighlighted) != 0) {
-    rippleColor = _rippleColors[@(MDCRippleStateHighlighted)] ?:
-        _rippleDefaultColors[@(MDCRippleStateHighlighted)];
+    rippleColor = _rippleColors[@(MDCRippleStateHighlighted)]
+                      ?: _rippleDefaultColors[@(MDCRippleStateHighlighted)];
   }
   if (rippleColor == nil && (state & MDCRippleStateDragged) != 0) {
-    rippleColor = _rippleColors[@(MDCRippleStateDragged)] ?:
-        _rippleDefaultColors[@(MDCRippleStateDragged)];
+    rippleColor =
+        _rippleColors[@(MDCRippleStateDragged)] ?: _rippleDefaultColors[@(MDCRippleStateDragged)];
   }
   if (rippleColor == nil && (state & MDCRippleStateSelected) != 0) {
-    rippleColor = _rippleColors[@(MDCRippleStateSelected)] ?:
-        _rippleDefaultColors[@(MDCRippleStateSelected)];
+    rippleColor =
+        _rippleColors[@(MDCRippleStateSelected)] ?: _rippleDefaultColors[@(MDCRippleStateSelected)];
   }
-  return rippleColor ?: _rippleColors[@(MDCRippleStateNormal)] ?:
-    _rippleDefaultColors[@(MDCRippleStateNormal)];
+  return rippleColor
+             ?: _rippleColors[@(MDCRippleStateNormal)]
+                    ?: _rippleDefaultColors[@(MDCRippleStateNormal)];
 }
 
 - (void)updateRippleColor {

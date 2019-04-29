@@ -53,7 +53,7 @@
                         [UIColor colorWithWhite:0 alpha:(CGFloat)0.12]);
   XCTAssertEqualObjects([rippleView rippleColorForState:MDCRippleStateHighlighted],
                         [UIColor colorWithWhite:0 alpha:(CGFloat)0.12]);
-  XCTAssertEqualObjects([rippleView rippleColorForState:MDCRippleStateSelected], 
+  XCTAssertEqualObjects([rippleView rippleColorForState:MDCRippleStateSelected],
                         [selectionColor colorWithAlphaComponent:(CGFloat)0.08]);
   XCTAssertEqualObjects(
       [rippleView rippleColorForState:(MDCRippleStateSelected | MDCRippleStateHighlighted)],
@@ -82,7 +82,8 @@
 
   // Then
   XCTAssertEqualObjects([rippleView rippleColorForState:MDCRippleStateDragged], UIColor.blueColor);
-  XCTAssertEqualObjects([rippleView rippleColorForState:MDCRippleStateSelected],UIColor.greenColor);
+  XCTAssertEqualObjects([rippleView rippleColorForState:MDCRippleStateSelected],
+                        UIColor.greenColor);
   XCTAssertEqualObjects([rippleView rippleColorForState:MDCRippleStateNormal], UIColor.redColor);
   XCTAssertEqualObjects(
       [rippleView rippleColorForState:(MDCRippleStateDragged | MDCRippleStateHighlighted)],
@@ -127,11 +128,13 @@
   XCTAssertEqualObjects([rippleView rippleColorForState:MDCRippleStateNormal], normalColor);
   XCTAssertEqualObjects([rippleView rippleColorForState:MDCRippleStateHighlighted], highColor);
   XCTAssertEqualObjects([rippleView rippleColorForState:MDCRippleStateDragged], normalColor);
-  XCTAssertEqualObjects([rippleView
-      rippleColorForState:MDCRippleStateDragged | MDCRippleStateHighlighted], highColor);
+  XCTAssertEqualObjects(
+      [rippleView rippleColorForState:MDCRippleStateDragged | MDCRippleStateHighlighted],
+      highColor);
   XCTAssertEqualObjects([rippleView rippleColorForState:MDCRippleStateSelected], selectedColor);
-  XCTAssertEqualObjects([rippleView
-      rippleColorForState:MDCRippleStateSelected | MDCRippleStateHighlighted], selectedColor);
+  XCTAssertEqualObjects(
+      [rippleView rippleColorForState:MDCRippleStateSelected | MDCRippleStateHighlighted],
+      selectedColor);
 }
 
 - (void)testAllowsSelection {
