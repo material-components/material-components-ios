@@ -69,6 +69,7 @@
                         compatibleWithTraitCollection:nil]
                 tag:0];
   tabBarItem4.badgeValue = @"88";
+  tabBarItem4.accessibilityHint = @"Shows the reader screen";
   UITabBarItem *tabBarItem5 = [[UITabBarItem alloc] initWithTitle:@"Birthday"
                                                             image:[UIImage imageNamed:@"Cake"]
                                                               tag:0];

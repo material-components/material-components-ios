@@ -162,6 +162,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   if (!_button) {
     _button = [[UIButton alloc] initWithFrame:self.bounds];
     _button.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+    _button.accessibilityHint = self.accessibilityHint;
     _button.accessibilityLabel = [self accessibilityLabelWithTitle:_title];
     _button.accessibilityTraits &= ~UIAccessibilityTraitButton;
     _button.accessibilityValue = self.accessibilityValue;
@@ -569,6 +570,15 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 
 - (NSString *)accessibilityValue {
   return self.button.accessibilityValue;
+}
+
+- (void)setAccessibilityHint:(NSString *)accessibilityHint {
+  [super setAccessibilityHint:accessibilityHint];
+  self.button.accessibilityHint = accessibilityHint;
+}
+
+- (NSString *)accessibilityHint {
+  return self.button.accessibilityHint;
 }
 
 - (void)setAccessibilityIdentifier:(NSString *)accessibilityIdentifier {
