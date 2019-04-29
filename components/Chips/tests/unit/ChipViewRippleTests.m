@@ -96,14 +96,14 @@
  */
 - (void)testSetCustomInkColorUpdatesRippleViewForHighlightedState {
   // Given
-  UIColor *fakeColor = UIColor.redColor;
+  UIColor *color = UIColor.redColor;
 
   // When
-  [self.chipView setInkColor:fakeColor forState:UIControlStateHighlighted];
+  [self.chipView setInkColor:color forState:UIControlStateHighlighted];
 
   // Then
   XCTAssertEqualObjects([self.chipView.rippleView rippleColorForState:MDCRippleStateHighlighted],
-                        fakeColor);
+                        color);
 }
 
 /**
@@ -112,14 +112,14 @@
  */
 - (void)testNonSupportedRippleStateStillUpdatesRippleColor {
   // Given
-  UIColor *fakeColor = UIColor.redColor;
+  UIColor *color = UIColor.redColor;
 
   // When
-  [self.chipView setInkColor:fakeColor forState:UIControlStateDisabled];
+  [self.chipView setInkColor:color forState:UIControlStateDisabled];
   self.chipView.enabled = NO;
 
   // Then
-  XCTAssertEqualObjects(self.chipView.rippleView.rippleColor, fakeColor);
+  XCTAssertEqualObjects(self.chipView.rippleView.rippleColor, color);
 }
 
 - (void)testChipViewHighlightedSetsRippleHighlightedToYES {
