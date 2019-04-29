@@ -12,8 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialState.h"
 #import "MDCRippleView.h"
+
+/**
+ Provides the current state of the ripple. The ripple is either in its normal state, or in the
+ selected state where the ripple remains spread on the view.
+ - MDCRippleStateNormal: The ripple isn't currently presented.
+ - MDCRippleStateHighlighted: The ripple is activated and shown.
+ - MDCRippleStateSelected: The ripple is in the selected state.
+ - MDCRippleStateDragged: The ripple is in the dragged state.
+ */
+typedef NS_OPTIONS(NSInteger, MDCRippleState) {
+  MDCRippleStateNormal = 0,
+  MDCRippleStateHighlighted = 1 << 0,
+  MDCRippleStateSelected = 1 << 1,
+  MDCRippleStateDragged = 1 << 2,
+};
 
 /**
  This class subclasses MDCRippleView which provides the Ripple functionality, and adds
@@ -76,7 +90,7 @@ __attribute__((objc_subclassing_restricted)) @interface MDCStatefulRippleView : 
  @param rippleColor The ripple color to set the ripple to.
  @param state The state of the ripple in which to set the ripple color.
  */
-- (void)setRippleColor:(nullable UIColor *)rippleColor forState:(MaterialState)state;
+- (void)setRippleColor:(nullable UIColor *)rippleColor forState:(MDCRippleState)state;
 
 /**
  Gets the ripple color for the given state.
@@ -84,7 +98,7 @@ __attribute__((objc_subclassing_restricted)) @interface MDCStatefulRippleView : 
  @param state The ripple's state.
  @return the color of the ripple for state.
  */
-- (nullable UIColor *)rippleColorForState:(MaterialState)state;
+- (nullable UIColor *)rippleColorForState:(MDCRippleState)state;
 
 /**
  The next three methods are important to get the correct behavior and functionality
