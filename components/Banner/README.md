@@ -20,7 +20,6 @@ A banner displays a prominent message and related optional actions.
   - [Installation with CocoaPods](#installation-with-cocoapods)
   - [Importing](#importing)
 - [Usage](#usage)
-  - [Importing](#importing)
   - [Appearance](#appearance)
   - [Styling](#styling)
   - [LayoutMargins](#layoutmargins)
@@ -31,21 +30,21 @@ A banner displays a prominent message and related optional actions.
 
 ## Overview
 
-`MDCBannerView` is a view that displays important, succinct message, and provides actions for users to address (or dismiss the banner). It requires a user action to be dismissed.
+`MDCBannerView` is a view that displays an important, succinct message, and provides actions for users to address (or dismiss the banner). It requires a user action to be dismissed.
 
 `MDCBannerView` is currently a [beta component](../../contributing/beta_components.md). Therefore, clients that
-wish to use MDCBannerView in their app will need to manually specify the MaterialComponentsBeta target and our repository. 
+wish to use MDCBannerView in their app will need to manually clone the repo and add the code to their project.
 
 ## Installation
 
-<!-- Extracted from docs/../../../docs/component-installation.md -->
+<!-- Extracted from docs/installation.md -->
 
 ### Installation with CocoaPods
 
 Add the following to your `Podfile`:
 
 ```bash
-pod 'MaterialComponents/Banner'
+pod 'MaterialComponentsBeta/Banner'
 ```
 <!--{: .code-renderer.code-renderer--install }-->
 
@@ -57,12 +56,13 @@ pod install
 
 ### Importing
 
-To import the component:
+To use the `MDCBannerView` in your code, import the MaterialBanner umbrella header (Objective-C) or MaterialComponentsBeta module (Swift).
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
+
 ```swift
-import MaterialComponents.MaterialBanner
+import MaterialComponentsBeta
 ```
 
 #### Objective-C
@@ -70,43 +70,27 @@ import MaterialComponents.MaterialBanner
 ```objc
 #import "MaterialBanner.h"
 ```
+
 <!--</div>-->
+
 
 
 ## Usage
 
 <!-- Extracted from docs/typical-use.md -->
 
-### Importing
-
-To use the `MDCBannerView` in your code, import the MaterialBanner umbrella header (Objective-C) or MaterialComponents module (Swift).
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-
-```swift
-import MaterialComponents
-```
-
-#### Objective-C
-
-```objc
-#import "MaterialBanner.h"
-```
-
-<!--</div>-->
-
 ### Appearance
 
-By default, the `MDCBannerView` is configured to display an image view, a text label and two buttons. To hide the image view on `MDCBannerView`, users can set the `hidden` property on `imageView` to be true. Similarly, users can hide a button on banner view by setting the `hidden` property on `trailingButton` to be true.
+By default, `MDCBannerView` is configured to display an image view, a text label and two buttons. To hide the image view on `MDCBannerView`, users can set the `hidden` property on `imageView` to be true. Similarly, users can hide a button on the banner view by setting the `hidden` property on `trailingButton` to be true.
 
 ### Styling
 
-By default, the `MDCBannerView` is configured to display items with black text and white background. To customize the color and style of the text, image view and buttons displayed on `MDCBannerView`, directly set relevant properties, such as `tintColor`, on `textLabel`, `imageView`, `leadingButton` and `trailingButton`.
+By default, `MDCBannerView` is configured to display items with black text and a white background. To customize the color and style of the text, image view and buttons displayed on `MDCBannerView`, directly set the relevant properties, such as `tintColor`, on `textLabel`, `imageView`, `leadingButton` and `trailingButton`.
 
 ### LayoutMargins
 
 `MDCBannerView` uses `layoutMargins` to manage the margins for elements on the banner view.
+<!--</div>-->
 
 
 ## Examples
