@@ -29,6 +29,7 @@ static UIColor *RippleSelectedColor(void) {
 
 @implementation MDCStatefulRippleView {
   NSMutableDictionary<NSNumber *, UIColor *> *_rippleColors;
+  NSMutableDictionary<NSNumber *, UIColor *> *_rippleDefaultColors;
   BOOL _tapWentOutsideOfBounds;
   BOOL _tapWentInsideOfBounds;
   BOOL _didReceiveTouch;
@@ -54,37 +55,44 @@ static UIColor *RippleSelectedColor(void) {
 }
 
 - (void)commonMDCStatefulRippleViewInit {
-  if (_rippleColors == nil) {
+  if (_rippleDefaultColors == nil) {
     _rippleColors = [NSMutableDictionary dictionary];
+    _rippleDefaultColors = [NSMutableDictionary dictionary];
     UIColor *selectionColor = RippleSelectedColor();
-    _rippleColors[@(MDCRippleStateNormal)] = [UIColor colorWithWhite:0 alpha:kDefaultRippleAlpha];
-    _rippleColors[@(MDCRippleStateHighlighted)] = [UIColor colorWithWhite:0
-                                                                    alpha:kDefaultRippleAlpha];
-    _rippleColors[@(MDCRippleStateSelected)] =
-    [selectionColor colorWithAlphaComponent:kDefaultRippleSelectedAlpha];
-    _rippleColors[@(MDCRippleStateSelected | MDCRippleStateHighlighted)] =
-    [selectionColor colorWithAlphaComponent:kDefaultRippleAlpha];
-    _rippleColors[@(MDCRippleStateDragged)] = [UIColor colorWithWhite:0
+
+    _rippleDefaultColors[@(MDCRippleStateNormal)] = [UIColor colorWithWhite:0
+                                                                      alpha:kDefaultRippleAlpha];
+    _rippleDefaultColors[@(MDCRippleStateHighlighted)] = [UIColor colorWithWhite:0
+                                                                   alpha:kDefaultRippleAlpha];
+    _rippleDefaultColors[@(MDCRippleStateSelected)] =
+        [selectionColor colorWithAlphaComponent:kDefaultRippleSelectedAlpha];
+    _rippleDefaultColors[@(MDCRippleStateSelected | MDCRippleStateHighlighted)] =
+        [selectionColor colorWithAlphaComponent:kDefaultRippleAlpha];
+    _rippleDefaultColors[@(MDCRippleStateDragged)] = [UIColor colorWithWhite:0
                                                                 alpha:kDefaultRippleDraggedAlpha];
-    _rippleColors[@(MDCRippleStateDragged | MDCRippleStateHighlighted)] =
-    [UIColor colorWithWhite:0 alpha:kDefaultRippleDraggedAlpha];
-    _rippleColors[@(MDCRippleStateSelected | MDCRippleStateDragged)] =
-    [selectionColor colorWithAlphaComponent:kDefaultRippleDraggedAlpha];
+    _rippleDefaultColors[@(MDCRippleStateDragged | MDCRippleStateHighlighted)] =
+        [UIColor colorWithWhite:0 alpha:kDefaultRippleDraggedAlpha];
+    _rippleDefaultColors[@(MDCRippleStateSelected | MDCRippleStateDragged)] =
+        [selectionColor colorWithAlphaComponent:kDefaultRippleDraggedAlpha];
   }
 }
 
 - (UIColor *)rippleColorForState:(MDCRippleState)state {
-  UIColor *rippleColor = _rippleColors[@(state)];
+  UIColor *rippleColor = _rippleColors[@(state)] ?: _rippleDefaultColors[@(state)];
+  if (rippleColor == nil && (state & MDCRippleStateHighlighted) != 0) {
+    rippleColor = _rippleColors[@(MDCRippleStateHighlighted)] ?:
+        _rippleDefaultColors[@(MDCRippleStateHighlighted)];
+  }
   if (rippleColor == nil && (state & MDCRippleStateDragged) != 0) {
-    rippleColor = _rippleColors[@(MDCRippleStateDragged)];
-  } else if (rippleColor == nil && (state & MDCRippleStateSelected) != 0) {
-    rippleColor = _rippleColors[@(MDCRippleStateSelected)];
+    rippleColor = _rippleColors[@(MDCRippleStateDragged)] ?:
+        _rippleDefaultColors[@(MDCRippleStateDragged)];
   }
-
-  if (rippleColor == nil) {
-    rippleColor = _rippleColors[@(MDCRippleStateNormal)];
+  if (rippleColor == nil && (state & MDCRippleStateSelected) != 0) {
+    rippleColor = _rippleColors[@(MDCRippleStateSelected)] ?:
+        _rippleDefaultColors[@(MDCRippleStateSelected)];
   }
-  return rippleColor;
+  return rippleColor ?: _rippleColors[@(MDCRippleStateNormal)] ?:
+    _rippleDefaultColors[@(MDCRippleStateNormal)];
 }
 
 - (void)updateRippleColor {
@@ -99,6 +107,7 @@ static UIColor *RippleSelectedColor(void) {
 
 - (void)setRippleColor:(UIColor *)rippleColor forState:(MDCRippleState)state {
   _rippleColors[@(state)] = rippleColor;
+  [_rippleDefaultColors removeAllObjects];
 
   [self updateRippleColor];
 }
