@@ -7,7 +7,7 @@
 A banner displays a prominent message and related optional actions.
 
 <div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/banner-example.png" alt="Banner" width="320">
+  <img src="docs/assets/banner.png" alt="Banner" width="320">
 </div>
 
 ## Design & API documentation
