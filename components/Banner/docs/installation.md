@@ -21,7 +21,7 @@ To use the `MDCBannerView` in your code, import the MaterialBanner umbrella head
 #### Swift
 
 ```swift
-import MaterialComponentsBeta
+import MaterialComponentsBeta.MaterialBanner
 ```
 
 #### Objective-C
