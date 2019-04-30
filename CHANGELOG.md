@@ -1,3 +1,15 @@
+# 83.0.2
+
+This patch release fixes a crashing bug with ActionSheet during rotation.
+
+## Component changes
+
+### ActionSheet
+
+* [Fix issue where rotation caused bug (#7303)](https://github.com/material-components/material-components-ios/commit/3d6f69eb7f9176a348d3b2d4b0c333ec26ae63ff) (Cody Weaver)
+
+---
+
 # 83.0.1
 
 This patch release resolves some missing content from the theming extension documentation and

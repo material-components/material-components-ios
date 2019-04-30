@@ -236,6 +236,10 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
   self.mdc_bottomSheetPresentationController.dismissOnBackgroundTap = dismissOnBackgroundTap;
 }
 
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+  return self.presentingViewController.supportedInterfaceOrientations;
+}
+
 /* Disable setter. Always use internal transition controller */
 - (void)setTransitioningDelegate:
     (__unused id<UIViewControllerTransitioningDelegate>)transitioningDelegate {
