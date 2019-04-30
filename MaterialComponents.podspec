@@ -644,6 +644,7 @@ Pod::Spec.new do |mdc|
     ]
     component.dependency "MDFInternationalization"
     component.dependency "MaterialComponents/Ink"
+    component.dependency "MaterialComponents/Ripple"
     component.dependency "MaterialComponents/ShadowLayer"
     component.dependency "MaterialComponents/ShadowElevations"
     component.dependency "MaterialComponents/ShapeLibrary"

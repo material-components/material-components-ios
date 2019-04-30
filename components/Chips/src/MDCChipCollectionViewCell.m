@@ -100,21 +100,51 @@
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  if (self.chipView.enableRippleBehavior) {
+    // This method needs to be invoked before the super.
+    // Please see the `MDCStatefulRippleView` class header for more details.
+    [_chipView rippleViewTouchesBegan:touches withEvent:event];
+  }
   [super touchesBegan:touches withEvent:event];
 
-  [_chipView startTouchBeganAnimationAtPoint:[self locationFromTouches:touches]];
+  if (!self.chipView.enableRippleBehavior) {
+    [_chipView startTouchBeganAnimationAtPoint:[self locationFromTouches:touches]];
+  }
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  if (self.chipView.enableRippleBehavior) {
+    // This method needs to be invoked before the super.
+    // Please see the `MDCStatefulRippleView` class header for more details.
+    [_chipView rippleViewTouchesEnded:touches withEvent:event];
+  }
   [super touchesEnded:touches withEvent:event];
 
-  [_chipView startTouchEndedAnimationAtPoint:[self locationFromTouches:touches]];
+  if (!self.chipView.enableRippleBehavior) {
+    [_chipView startTouchEndedAnimationAtPoint:[self locationFromTouches:touches]];
+  }
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  if (self.chipView.enableRippleBehavior) {
+    // This method needs to be invoked before the super.
+    // Please see the `MDCStatefulRippleView` class header for more details.
+    [_chipView rippleViewTouchesCancelled:touches withEvent:event];
+  }
   [super touchesCancelled:touches withEvent:event];
 
-  [_chipView startTouchEndedAnimationAtPoint:[self locationFromTouches:touches]];
+  if (!self.chipView.enableRippleBehavior) {
+    [_chipView startTouchEndedAnimationAtPoint:[self locationFromTouches:touches]];
+  }
+}
+
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  if (self.chipView.enableRippleBehavior) {
+    // This method needs to be invoked before the super.
+    // Please see the `MDCStatefulRippleView` class header for more details.
+    [_chipView rippleViewTouchesMoved:touches withEvent:event];
+  }
+  [super touchesMoved:touches withEvent:event];
 }
 
 - (CGPoint)locationFromTouches:(NSSet<UITouch *> *)touches {

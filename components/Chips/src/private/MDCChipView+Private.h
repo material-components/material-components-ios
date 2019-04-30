@@ -19,5 +19,9 @@
 - (void)startTouchBeganAnimationAtPoint:(CGPoint)point;
 - (void)startTouchEndedAnimationAtPoint:(CGPoint)point;
 - (BOOL)willChangeSizeWithSelectedValue:(BOOL)selected;
+- (void)rippleViewTouchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event;
+- (void)rippleViewTouchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event;
+- (void)rippleViewTouchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event;
+- (void)rippleViewTouchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event;
 
 @end
