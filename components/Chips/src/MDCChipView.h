@@ -111,7 +111,7 @@
 @property(nonatomic, strong, nullable) UIFont *titleFont UI_APPEARANCE_SELECTOR;
 
 /*
- This property determines if an @c MDCChipView should use the @c MDCInkView behavior or not.
+ This property determines if an @c MDCChipView should use the @c MDCRippleView behavior or not.
  By setting this property to @c YES, @c MDCStatefulRippleView is used to provide the user visual
  touch feedback, instead of the legacy @c MDCInkView.
  @note Defaults to @c NO.
