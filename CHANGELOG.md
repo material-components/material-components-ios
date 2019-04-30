@@ -1,18 +1,12 @@
 # #develop#
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
-
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
-## API changes
+This patch release fixes a crashing bug with ActionSheet during rotation.
 
 ## Component changes
+
+### ActionSheet
+
+* [Fix issue where rotation caused bug (#7303)](https://github.com/material-components/material-components-ios/commit/3d6f69eb7f9176a348d3b2d4b0c333ec26ae63ff) (Cody Weaver)
 
 ---
 
