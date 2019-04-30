@@ -295,4 +295,123 @@
   [self generateSnapshotAndVerifyForView:self.chip];
 }
 
+- (void)testDefaultChipWithRippleEnabledInHighlightedState {
+  // When
+  self.chip.enableRippleBehavior = YES;
+  self.chip.highlighted = YES;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chip];
+}
+
+- (void)testDefaultChipWithRippleEnabledInSelectedState {
+  // When
+  self.chip.enableRippleBehavior = YES;
+  self.chip.selected = YES;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chip];
+}
+
+- (void)testDefaultChipWithRippleEnabledInDisabledState {
+  // When
+  self.chip.enableRippleBehavior = YES;
+  self.chip.enabled = NO;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chip];
+}
+
+- (void)testDefaultChipWithRippleEnabledInHighlightedAndSelectedState {
+  // When
+  self.chip.enableRippleBehavior = YES;
+  self.chip.highlighted = YES;
+  self.chip.selected = YES;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chip];
+}
+
+- (void)testBaselineChipWithRippleEnabledInHighlightedState {
+  // When
+  self.chip.enableRippleBehavior = YES;
+  [self.chip applyThemeWithScheme:self.scheme];
+  self.chip.highlighted = YES;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chip];
+}
+
+- (void)testBaselineChipWithRippleEnabledInSelectedState {
+  // When
+  self.chip.enableRippleBehavior = YES;
+  [self.chip applyThemeWithScheme:self.scheme];
+  self.chip.selected = YES;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chip];
+}
+
+- (void)testBaselineChipWithRippleEnabledInDisabledState {
+  // When
+  self.chip.enableRippleBehavior = YES;
+  [self.chip applyThemeWithScheme:self.scheme];
+  self.chip.enabled = NO;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chip];
+}
+
+- (void)testBaselineChipWithRippleEnabledInHighlightedAndSelectedState {
+  // When
+  self.chip.enableRippleBehavior = YES;
+  [self.chip applyThemeWithScheme:self.scheme];
+  self.chip.highlighted = YES;
+  self.chip.selected = YES;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chip];
+}
+
+- (void)testOutlinedChipWithRippleEnabledInHighlightedState {
+  // When
+  self.chip.enableRippleBehavior = YES;
+  [self.chip applyOutlinedThemeWithScheme:self.scheme];
+  self.chip.highlighted = YES;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chip];
+}
+
+- (void)testOutlinedChipWithRippleEnabledInSelectedState {
+  // When
+  self.chip.enableRippleBehavior = YES;
+  [self.chip applyOutlinedThemeWithScheme:self.scheme];
+  self.chip.selected = YES;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chip];
+}
+
+- (void)testOutlinedChipWithRippleEnabledInDisabledState {
+  // When
+  self.chip.enableRippleBehavior = YES;
+  [self.chip applyOutlinedThemeWithScheme:self.scheme];
+  self.chip.enabled = NO;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chip];
+}
+
+- (void)testOutlinedChipWithRippleEnabledInHighlightedAndSelectedState {
+  // When
+  self.chip.enableRippleBehavior = YES;
+  [self.chip applyOutlinedThemeWithScheme:self.scheme];
+  self.chip.highlighted = YES;
+  self.chip.selected = YES;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chip];
+}
+
 @end
