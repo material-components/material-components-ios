@@ -1226,7 +1226,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
       // a lesser offset than this to pull the flexible header into the center of the scrollview on
       // focusing.
       CGPoint offset = self.trackingScrollView.contentOffset;
-      offset.y = MAX(offset.y, -self.maximumHeight);
+      offset.y = MAX(offset.y, -self.minMaxHeight.maximumHeightWithTopSafeArea);
       [self fhv_setContentOffset:offset forTrackingScrollView:self.trackingScrollView];
       // Setting the transform on the same run loop as the accessibility scroll can cause additional
       // incorrect scrolling as the scrollview attempts to resolve to a position that will place
