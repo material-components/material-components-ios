@@ -58,7 +58,7 @@ class NavigationBarTitleViewTests: XCTestCase {
   }
 
   // Designed to keep https://github.com/material-components/material-components-ios/issues/7207
-  // from regressing. Currently fails.
+  // from regressing.
   func testTitleViewAssignmentThenRemovalFromViewHierarchyThenReassignmentAddsItAsASubview() {
     // Given
     let navigationBar = MDCNavigationBar()
@@ -121,7 +121,7 @@ class NavigationBarTitleViewTests: XCTestCase {
   }
 
   // Designed to keep https://github.com/material-components/material-components-ios/issues/7207
-  // from regressing. Currently fails.
+  // from regressing.
   func testNavigationItemTitleViewAssignmentWithReassignmentThenTheftKeepsTitleViewAsSubview() {
     // Given
     let navigationBar = MDCNavigationBar()
