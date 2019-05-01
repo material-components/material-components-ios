@@ -109,7 +109,7 @@
   CGSize intrinsicSize = CGSizeZero;
   CGSize frameSize = CGSizeZero;
 
-  // Test both controls with 1 page.
+  // Test with one page.
   pageControl.numberOfPages = 1;
   [pageControl sizeToFit];
 
@@ -118,7 +118,7 @@
   XCTAssertEqual(frameSize.height, intrinsicSize.height);
   XCTAssertEqual(frameSize.width, intrinsicSize.width);
 
-  // Test both controls with 4 pages.
+  // Test with multiple pages.
   pageControl.numberOfPages = 4;
   [pageControl sizeToFit];
 
