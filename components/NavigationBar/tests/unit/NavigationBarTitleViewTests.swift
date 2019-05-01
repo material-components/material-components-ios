@@ -108,11 +108,11 @@ class NavigationBarTitleViewTests: XCTestCase {
     let navigationBar = MDCNavigationBar()
     let titleView = UIView()
     let navigationItem = UINavigationItem()
+    let simulatedThiefView = UIView()
 
     // When
     navigationItem.titleView = titleView
     navigationBar.observe(navigationItem)
-    let simulatedThiefView = UIView()
     simulatedThiefView.addSubview(navigationItem.titleView!)
 
     // Then
@@ -127,12 +127,12 @@ class NavigationBarTitleViewTests: XCTestCase {
 //    let navigationBar = MDCNavigationBar()
 //    let titleView = UIView()
 //    let navigationItem = UINavigationItem()
+//    let simulatedThiefView = UIView()
 //
 //    // When
 //    navigationItem.titleView = titleView
 //    navigationBar.observe(navigationItem)
 //    navigationItem.titleView = titleView
-//    let simulatedThiefView = UIView()
 //    simulatedThiefView.addSubview(navigationItem.titleView!)
 //
 //    // Then
