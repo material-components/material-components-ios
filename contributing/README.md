@@ -73,7 +73,7 @@ If you're new to iOS development and have a computer running OS X, these steps s
     1. [git lfs](https://github.com/material-components/material-components-ios/blob/develop/contributing/tools.md#using-git-lfs).
 1. To see your work within the catalog
     1. `pod install --project-directory=catalog/`
-    1. `open catalog/MDCCatalog.workspace`
+    1. `open catalog/MDCCatalog.xcworkspace`
     1. Navigate to the component you want to work on in Pods -> Development Pods -> Material Components -> <#component>.
     1. Run the `MDCDragons` target to see the full set of examples. 
     1. Tests can also be run from the Product menu.
