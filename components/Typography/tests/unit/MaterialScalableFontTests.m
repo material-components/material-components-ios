@@ -14,6 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
+#import "MDCFontScaler+Mutating.h"
 #import "MaterialTypography.h"
 
 #import "MaterialMath.h"
@@ -262,6 +263,32 @@
     // Then
     XCTAssert([defaultFont mdc_isSimplyEqual:largeFont]);
   }
+}
+
+- (void)testMutatingFontScaler {
+  // Given
+  MDCTextStyle textStyle = MDCTextStyleBody1;
+  MDCFontScaler *fontScaler = [[MDCFontScaler alloc] initForMaterialTextStyle:textStyle];
+
+  // When
+  UIFont *font = [UIFont systemFontOfSize:10.0];
+  UIFont *scalableFont = [fontScaler scaledFontWithFont:font];
+  UIFont *originalMediumFont =
+      [scalableFont mdc_scaledFontForSizeCategory:UIContentSizeCategoryMedium];
+
+  NSDictionary<UIContentSizeCategory, NSNumber *> *originalScalingCurve = fontScaler.scalingCurve;
+  NSNumber *originalFontSizeNumberForMedium = originalScalingCurve[UIContentSizeCategoryMedium];
+  NSMutableDictionary<UIContentSizeCategory, NSNumber *> *adjustedScalingCurve =
+      [originalScalingCurve mutableCopy];
+  NSNumber *adjustedFontSizeNumberForMedium = @([originalFontSizeNumberForMedium integerValue] + 1);
+  adjustedScalingCurve[UIContentSizeCategoryMedium] = adjustedFontSizeNumberForMedium;
+  fontScaler.scalingCurve = [adjustedScalingCurve copy];
+  scalableFont = [fontScaler scaledFontWithFont:font];
+  UIFont *adjustedMediumFont =
+      [scalableFont mdc_scaledFontForSizeCategory:UIContentSizeCategoryMedium];
+
+  // Then
+  XCTAssert(originalMediumFont.pointSize < adjustedMediumFont.pointSize);
 }
 
 // TODO: #6937 Identify why testValueScaling works locally but not on Kokoro

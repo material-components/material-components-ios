@@ -34,10 +34,14 @@ MDCTextStyle const MDCTextStyleButton = @"MDC.TextStyle.Button";
 MDCTextStyle const MDCTextStyleCaption = @"MDC.TextStyle.Caption";
 MDCTextStyle const MDCTextStyleOverline = @"MDC.TextStyle.Overline";
 
-@implementation MDCFontScaler {
-  NSDictionary<UIContentSizeCategory, NSNumber *> *_scalingCurve;
-  MDCTextStyle _textStyle;
-}
+@interface MDCFontScaler ()
+
+@property(nonatomic, readwrite) NSDictionary<UIContentSizeCategory, NSNumber *> *scalingCurve;
+@property(nonatomic, readwrite) MDCTextStyle textStyle;
+
+@end
+
+@implementation MDCFontScaler
 
 + (instancetype)scalerForMaterialTextStyle:(MDCTextStyle)textStyle {
   return [[MDCFontScaler alloc] initForMaterialTextStyle:textStyle];
