@@ -31,26 +31,26 @@ class NavigationBarTitleViewTests: XCTestCase {
     XCTAssertEqual(titleView.superview, navigationBar)
   }
 
-  func testTitleViewAssignmentAgainAddsItAsASubview() {
+  func testTitleViewAssignmentTwiceStillAddsItAsASubview() {
     // Given
     let navigationBar = MDCNavigationBar()
     let titleView = UIView()
-    navigationBar.titleView = titleView
 
     // When
+    navigationBar.titleView = titleView
     navigationBar.titleView = titleView
 
     // Then
     XCTAssertEqual(titleView.superview, navigationBar)
   }
 
-  func testTitleViewAssignmentAndThenRemovalFromViewHierarchyLeavesItWithoutAParent() {
+  func testTitleViewAssignmentAndThenRemovalFromViewHierarchyLeavesItWithoutASuperview() {
     // Given
     let navigationBar = MDCNavigationBar()
     let titleView = UIView()
-    navigationBar.titleView = titleView
 
     // When
+    navigationBar.titleView = titleView
     titleView.removeFromSuperview()
 
     // Then
@@ -61,9 +61,9 @@ class NavigationBarTitleViewTests: XCTestCase {
     // Given
     let navigationBar = MDCNavigationBar()
     let titleView = UIView()
-    navigationBar.titleView = titleView
 
     // When
+    navigationBar.titleView = titleView
     titleView.removeFromSuperview()
     navigationBar.titleView = titleView
 
@@ -78,9 +78,9 @@ class NavigationBarTitleViewTests: XCTestCase {
     let navigationBar = MDCNavigationBar()
     let titleView = UIView()
     let navigationItem = UINavigationItem()
-    navigationItem.titleView = titleView
 
     // When
+    navigationItem.titleView = titleView
     navigationBar.observe(navigationItem)
 
     // Then
@@ -92,9 +92,9 @@ class NavigationBarTitleViewTests: XCTestCase {
     let navigationBar = MDCNavigationBar()
     let titleView = UIView()
     let navigationItem = UINavigationItem()
-    navigationBar.observe(navigationItem)
 
     // When
+    navigationBar.observe(navigationItem)
     navigationItem.titleView = titleView
 
     // Then
@@ -106,10 +106,10 @@ class NavigationBarTitleViewTests: XCTestCase {
     let navigationBar = MDCNavigationBar()
     let titleView = UIView()
     let navigationItem = UINavigationItem()
-    navigationItem.titleView = titleView
-    navigationBar.observe(navigationItem)
 
     // When
+    navigationItem.titleView = titleView
+    navigationBar.observe(navigationItem)
     let simulatedThiefView = UIView()
     simulatedThiefView.addSubview(navigationItem.titleView!)
 
@@ -125,10 +125,10 @@ class NavigationBarTitleViewTests: XCTestCase {
     let navigationBar = MDCNavigationBar()
     let titleView = UIView()
     let navigationItem = UINavigationItem()
-    navigationItem.titleView = titleView
-    navigationBar.observe(navigationItem)
 
     // When
+    navigationItem.titleView = titleView
+    navigationBar.observe(navigationItem)
     navigationItem.titleView = titleView
     let simulatedThiefView = UIView()
     simulatedThiefView.addSubview(navigationItem.titleView!)
