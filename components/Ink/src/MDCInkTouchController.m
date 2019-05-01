@@ -225,7 +225,7 @@ static const NSTimeInterval kInkTouchDelayInterval = 0.1;
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
-shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
   if (self.requiresFailureOfScrollViewGestures &&
       [otherGestureRecognizer.view isKindOfClass:[UIScrollView class]] &&
       ![otherGestureRecognizer isKindOfClass:[UITapGestureRecognizer class]] &&
