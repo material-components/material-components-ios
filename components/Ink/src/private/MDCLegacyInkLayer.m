@@ -475,7 +475,8 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
 - (instancetype)init {
   self = [super init];
   if (self) {
-    [self _initLegacyInkLayer];
+    self.masksToBounds = YES;
+    [self commonMDCLegacyInkLayerInit];
   }
   return self;
 }
@@ -484,7 +485,6 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
   self = [super initWithCoder:aDecoder];
 
   if (self) {
-
     // Discard any sublayers, which should be the composite ripple and any active ripples
     if (self.sublayers.count > 0) {
       NSArray<CALayer *> *sublayers = [self.sublayers copy];
@@ -492,13 +492,13 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
         [sublayer removeFromSuperlayer];
       }
     }
-    [self _initLegacyInkLayer];
+    [self commonMDCLegacyInkLayerInit];
   }
 
   return self;
 }
 
-- (void)_initLegacyInkLayer {
+- (void)commonMDCLegacyInkLayerInit {
   _bounded = YES;
   _inkColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.08];
   _compositeRipple = [CAShapeLayer layer];
