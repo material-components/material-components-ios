@@ -9,7 +9,9 @@ We finished updating additional theming docs for multiple components including c
 
 ### Text Field
 
-We fixed the accessibilty behavior of MDCTextField. We were using the value instead of the label. More info [in PR](https://github.com/material-components/material-components-ios/pull/7256)
+We fixed the accessibilty behavior of MDCTextField. We were using the value instead of the label.
+There is now a `,` that results in a pause between the label and the helper text. More information
+can be found [in the PR](https://github.com/material-components/material-components-ios/pull/7256)
 
 ## New features
 
