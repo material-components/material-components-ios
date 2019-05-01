@@ -1,15 +1,46 @@
-# #develop#
+# 84.0.0
 
-Replace this text with a summarized description of this release's contents.
+In this release we corrected a text field accesssibility behavior added ripple to chips and added
+additional delegate calls to post bottom sheet's scrolling.
+
+We finished updating additional theming docs for multiple components including chips, dialogs, cards.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+### Text Field
 
-Replace this text with links to deprecation guides.
+We fixed the accessibilty behavior of MDCTextField. We were using the value instead of the label. More info [in PR](https://github.com/material-components/material-components-ios/pull/7256)
+
 ## New features
 
-Replace this text with example code for each new feature.
+### Dialog theming
+
+Moved from beta to ready
+
+### Bottom Sheet
+
+MDCBottomSheetControllerDelegate protocol methods become optional. We added additional hooks for scroll events.
+
+```objc
+- (void)bottomSheetControllerDidChangeYOffset:(MDCBottomSheetController *)controller
+                                      yOffset:(CGFloat)yOffset {
+  NSLog(@"bottom sheet Y offset changed: %f", yOffset);
+}
+
+- (void)bottomSheetControllerStateChanged:(MDCBottomSheetController *)controller
+                                    state:(MDCSheetState)state {
+  NSLog(@"bottom sheet state changed to: %lu", (unsigned long)state);
+}
+```
+
+### Chips
+
+We added ripple support.
+
+```objc
+  chipView.enableRippleBehavior = YES;
+```
+
 ## API changes
 
 ### BottomSheet
@@ -1351,7 +1382,7 @@ button.mdc_adjustsFontForContentSizeCategory = true
 
 ```objc
 // The new TypographyScheme defaults provide scaled fonts
-self.containerScheme.typographyScheme = 
+self.containerScheme.typographyScheme =
     [[MDCTypographyScheme alloc] initWithDefaults: MDCTypographySchemeDefaultsMaterial201804];
 MDCButton *button = [[MDCButton alloc] init];
 [button applyContainedThemeWithScheme:self.containerScheme];
@@ -2262,7 +2293,7 @@ In this release we made improvements to BottomNavigationBar and landed stateful 
 
 Removed a deprecated API:
 ```
-@property(nonatomic, assign) UIEdgeInsets itemsContentInsets 
+@property(nonatomic, assign) UIEdgeInsets itemsContentInsets
 ```
 
 ## New features
@@ -3618,7 +3649,7 @@ NavigationDrawer has the following changes:
    when the drawer goes to full screen or when there is no more to scroll.
 3. Added a way to customize the color of the top handle.
 4. The drawer's header height expands as it goes to full screen to cover the safe area and status
-   bar. We now provide a delegate to allow clients to be aware of the relevant top content inset so 
+   bar. We now provide a delegate to allow clients to be aware of the relevant top content inset so
    they lay out their header content appropriately based on height changes.
 5. Implemented performance improvements by removing some calls to preferredContentSize of the
    contentViewController within the drawer implementation.
@@ -3832,7 +3863,7 @@ In this minor release we have added a top corners API and a state system for Nav
 
 ## New features
 
-By using Navigation Drawer's `MDCBottomDrawerViewController`, you can now set the top corners radius of your drawer for each of its 
+By using Navigation Drawer's `MDCBottomDrawerViewController`, you can now set the top corners radius of your drawer for each of its
 different presentation states `MDCBottomDrawerState`.
 
 ```swift
@@ -4406,7 +4437,7 @@ Shapes updated its API. See [#5247](https://github.com/material-components/mater
 Bottom App Bar got a `floatingButtonVerticalOffset` property.
 ActionSheets continued work. (still in alpha).
 AlertController in dialogs: Incremental improvements to bring it up to the design guidelines and so that a themer can style it.
-Snackbar API for accessibility. 
+Snackbar API for accessibility.
 MDCAppBarTextColorAccessibilityMutator a deprecated class got deleted.
 
 ## Breaking changes
@@ -4593,7 +4624,7 @@ _scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentN
 }
 ```
 
-### ChipField added `showChipsDeleteButton` 
+### ChipField added `showChipsDeleteButton`
 
 Turns on the delete button on chips.
 
@@ -5072,7 +5103,7 @@ auto-uppercasing behavior of the buttons. By default this property is enabled.
 
 # 62.0.0
 
-This major release reverts the addition of the new canAlwaysExpandToMaximumHeight behavior for the FlexibleHeader introduced in v61.0.0. More details on the commit that was reverted: https://github.com/material-components/material-components-ios/commit/2b3722f7b8cc7df131a8b33695990c99931c0e1b 
+This major release reverts the addition of the new canAlwaysExpandToMaximumHeight behavior for the FlexibleHeader introduced in v61.0.0. More details on the commit that was reverted: https://github.com/material-components/material-components-ios/commit/2b3722f7b8cc7df131a8b33695990c99931c0e1b
 
 ### FlexibleHeader
 
@@ -5098,7 +5129,7 @@ No longer support Xcode 8.
 
 ### More accessibility APIs
 
-*new* property:  `accessibilityIdentifier` in `MDCAlertAction` 
+*new* property:  `accessibilityIdentifier` in `MDCAlertAction`
 *new* property: `accessibilityHint` in `MDCSnackbarMessageView`
 *new* property: `accessibilityLabel` in `MDCSnackbarMessageView`
 *new* property: `accessibilityHint` in `MDCSnackbarMessage`
@@ -6641,7 +6672,7 @@ func appBarNavigationController(_ navigationController: MDCAppBarNavigationContr
   let typographyScheme: MDCTypographyScheme = <# Fetch your typography scheme #>
   MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
   MDCAppBarTypographyThemer.applyTypographyScheme(typographyScheme, to: appBar)
-                                                  
+
   // Additional configuration of appBar if needed.
 }
 ```
@@ -6864,7 +6895,7 @@ MDCNavigationBar's deprecated `useFlexibleTopBottomInsets` has been removed.
 A variety of accessibility documentation has been added to many of the components.
 
 BottomNavigation has new parameters for the top padding of the nav bar items and the vertical
-spacing between the icon and title. 
+spacing between the icon and title.
 
 ## API changes
 
@@ -7256,7 +7287,7 @@ We now have a new component, List! See more information about the component here
 # 56.0.0
 
 In this release we updated the icon layout of `MDCTextField`s add accessibilty docs for `MDCButton`
-and some more `MDCBottomNavigation` examples. We also tweeked the `MDCChipView` and `MDCButtonBar` 
+and some more `MDCBottomNavigation` examples. We also tweeked the `MDCChipView` and `MDCButtonBar`
 buttons.
 
 ## Breaking changes
