@@ -69,6 +69,8 @@ static const NSTimeInterval kInkTouchDelayInterval = 0.1;
 - (instancetype)initWithView:(UIView *)view {
   self = [super init];
   if (self) {
+    _requiresFailureOfScrollViewGestures = NO;
+
     _gestureRecognizer =
         [[MDCInkGestureRecognizer alloc] initWithTarget:self action:@selector(handleInkGesture:)];
     _gestureRecognizer.delegate = self;
@@ -220,6 +222,17 @@ static const NSTimeInterval kInkTouchDelayInterval = 0.1;
 #pragma clang diagnostic pop
   }
   return YES;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
+    shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+  if (self.requiresFailureOfScrollViewGestures &&
+      [otherGestureRecognizer.view isKindOfClass:[UIScrollView class]] &&
+      ![otherGestureRecognizer isKindOfClass:[UITapGestureRecognizer class]] &&
+      ![otherGestureRecognizer isKindOfClass:[UILongPressGestureRecognizer class]]) {
+    return YES;
+  }
+  return NO;
 }
 
 #pragma mark - Deprecations
