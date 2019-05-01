@@ -29,7 +29,8 @@ __attribute__((objc_subclassing_restricted)) @interface MDCFilledTextField : MDC
  UIControlStateDisabled, and UIControlStateEditing, which is a custom MDC
  UIControlState value.
  */
-- (void)setFilledBackgroundColor:(nonnull UIColor *)filledBackgroundColor forState:(UIControlState)state;
+- (void)setFilledBackgroundColor:(nonnull UIColor *)filledBackgroundColor
+                        forState:(UIControlState)state;
 /**
  Returns the filled background color for a given state.
 
