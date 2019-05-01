@@ -102,6 +102,46 @@
   XCTAssertNotEqual(frame.size.width, nativePageControl.frame.size.width);
 }
 
+- (void)testIntrinsicContentSize {
+  // Tests that MDCPageControl's intrinsicContentSize matches its size after `sizeToFit`.
+  MDCPageControl *pageControl = [[MDCPageControl alloc] init];
+
+  CGSize intrinsicSize = CGSizeZero;
+  CGSize frameSize = CGSizeZero;
+
+  // Test with one page.
+  pageControl.numberOfPages = 1;
+  [pageControl sizeToFit];
+
+  intrinsicSize = pageControl.intrinsicContentSize;
+  frameSize = pageControl.frame.size;
+  XCTAssertEqual(frameSize.height, intrinsicSize.height);
+  XCTAssertEqual(frameSize.width, intrinsicSize.width);
+
+  // Test with multiple pages.
+  pageControl.numberOfPages = 4;
+  [pageControl sizeToFit];
+
+  intrinsicSize = pageControl.intrinsicContentSize;
+  frameSize = pageControl.frame.size;
+  XCTAssertEqual(frameSize.height, intrinsicSize.height);
+  XCTAssertEqual(frameSize.width, intrinsicSize.width);
+
+  // Test it isn't dependent on sizeToFit being called. Call ordering matters here, relying on the
+  // old frame still being set.
+  pageControl.numberOfPages = 3;
+
+  intrinsicSize = pageControl.intrinsicContentSize;
+  frameSize = pageControl.frame.size;
+  XCTAssertEqual(frameSize.height, intrinsicSize.height);  // Height shouldn't change.
+  XCTAssertNotEqual(frameSize.width, intrinsicSize.width);
+
+  [pageControl sizeToFit];
+  frameSize = pageControl.frame.size;
+  XCTAssertEqual(frameSize.height, intrinsicSize.height);
+  XCTAssertEqual(frameSize.width, intrinsicSize.width);
+}
+
 - (void)testScrollOffsetOutOfBoundsOfNumberOfPages {
   // Given
   CGRect frame = CGRectMake(0, 0, 100, 100);

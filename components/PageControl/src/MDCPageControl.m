@@ -207,6 +207,10 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
 
 #pragma mark - UIView(UIViewGeometry)
 
+- (CGSize)intrinsicContentSize {
+  return [MDCPageControl sizeForNumberOfPages:_numberOfPages];
+}
+
 - (CGSize)sizeThatFits:(__unused CGSize)size {
   return [MDCPageControl sizeForNumberOfPages:_numberOfPages];
 }
@@ -471,6 +475,8 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
 #pragma mark - Private
 
 - (void)resetControl {
+  [self invalidateIntrinsicContentSize];
+
   // Clear indicators.
   for (CALayer *layer in [_containerView.layer.sublayers copy]) {
     if (layer != _trackLayer) {
