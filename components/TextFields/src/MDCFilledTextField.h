@@ -19,7 +19,7 @@
 /**
  An implementation of a Material filled text field.
  */
-@interface MDCFilledTextField : MDCInputTextField
+__attribute__((objc_subclassing_restricted)) @interface MDCFilledTextField : MDCInputTextField
 
 /**
  Sets the filled background color for a given state.
@@ -29,13 +29,13 @@
  UIControlStateDisabled, and UIControlStateEditing, which is a custom MDC
  UIControlState value.
  */
-- (void)setFilledBackgroundColor:(UIColor *)filledBackgroundColor forState:(UIControlState)state;
+- (void)setFilledBackgroundColor:(nonnull UIColor *)filledBackgroundColor forState:(UIControlState)state;
 /**
  Returns the filled background color for a given state.
 
  @param state The UIControlState.
  */
-- (UIColor *)filledBackgroundColorForState:(UIControlState)state;
+- (nonnull UIColor *)filledBackgroundColorForState:(UIControlState)state;
 
 /**
  Sets the underline color for a given state.
@@ -45,13 +45,13 @@
  UIControlStateDisabled, and UIControlStateEditing, which is a custom MDC
  UIControlState value.
  */
-- (void)setUnderlineColor:(UIColor *)underlineColor forState:(UIControlState)state;
+- (void)setUnderlineColor:(nonnull UIColor *)underlineColor forState:(UIControlState)state;
 
 /**
  Returns the underline color for a given state.
 
  @param state The UIControlState.
  */
-- (UIColor *)underlineColorForState:(UIControlState)state;
+- (nonnull UIColor *)underlineColorForState:(UIControlState)state;
 
 @end

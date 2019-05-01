@@ -14,6 +14,14 @@
 
 #import <UIKit/UIKit.h>
 
+/** This type is used to configure the behavior of an MDCInputTextField's label. */
+typedef NS_ENUM(NSInteger, MDCInputTextFieldLabelBehavior) {
+  /** Indicates that the text field label animates to a position above the text when editing begins. */
+  MDCInputTextFieldLabelBehaviorFloats,
+  /** Indicates that the text field label disappears when editing begins. */
+  MDCInputTextFieldLabelBehaviorDisappears,
+};
+
 /**
  A UITextField subclass that attempts to do the following:
 
@@ -24,34 +32,34 @@
 
  - Enable easy set up and reliable and predictable behavior.
 
+ Caution: While not explicitly forbidden by the compiler, subclassing this class is highly discouraged and not supported. Please consider alternatives.
  */
 @interface MDCInputTextField : UITextField
 
 /**
- The @c floatingLabel is a label that occupies the area the text usually occupies when there is no
- text and that floats above the text once there is text. It is distinct from the placeholder.
+ The @c label is a label that occupies the area the text usually occupies when there is no
+ text. It is distinct from the placeholder in that it can move above the text area or disappear to reveal the placeholder when editing begins.
  */
-@property(strong, nonatomic, readonly, nonnull) UILabel *floatingLabel;
+@property(strong, nonatomic, readonly, nonnull) UILabel *label;
 
 /**
- When set to YES, the floating label floats when the view becomes the first responder. When
- set to NO it disappears.
+ This property determines the behavior of the textfield's label during editing.
 
- @note The default is YES.
+ @note The default is MDCInputTextFieldLabelBehaviorFloats.
  */
-@property(nonatomic, assign) BOOL canFloatingLabelFloat;
+@property(nonatomic, assign) MDCInputTextFieldLabelBehavior labelBehavior;
 
 /**
- The @c leadingUnderlineLabel is a label below the text on the leading edge of the view. It can be
+ The @c leadingAssistiveLabel is a label below the text on the leading edge of the view. It can be
  used to display helper or error text.
  */
-@property(strong, nonatomic, readonly, nonnull) UILabel *leadingUnderlineLabel;
+@property(strong, nonatomic, readonly, nonnull) UILabel *leadingAssistiveLabel;
 
 /**
- The @c trailingUnderlineLabel is a label below the text on the trailing edge of the view. It can be
+ The @c trailingAssistiveLabel is a label below the text on the trailing edge of the view. It can be
  used to display helper or error text.
  */
-@property(strong, nonatomic, readonly, nonnull) UILabel *trailingUnderlineLabel;
+@property(strong, nonatomic, readonly, nonnull) UILabel *trailingAssistiveLabel;
 
 /**
  This is essentially an RTL-aware wrapper around UITextField's leftView/rightView property.
@@ -86,20 +94,20 @@
     BOOL mdc_adjustsFontForContentSizeCategory;
 
 /**
- Sets the floating label color for a given state.
+ Sets the label color for a given state.
 
- @param floatingLabelColor The UIColor for the given state.
+ @param labelColor The UIColor for the given state.
  @param state The UIControlState. The accepted values are UIControlStateNormal,
  UIControlStateDisabled, and UIControlStateEditing, which is a custom MDC
  UIControlState value.
  */
-- (void)setFLoatingLabelColor:(UIColor *)floatingLabelColor forState:(UIControlState)state;
+- (void)setLabelColor:(nonnull UIColor *)labelColor forState:(UIControlState)state;
 /**
- Returns the floating label color for a given state.
+ Returns the label color for a given state.
 
  @param state The UIControlState.
  */
-- (UIColor *)floatingLabelColorForState:(UIControlState)state;
+- (nonnull UIColor *)labelColorForState:(UIControlState)state;
 
 /**
  Sets the text color for a given state.
@@ -109,12 +117,12 @@
  UIControlStateDisabled, and UIControlStateEditing, which is a custom MDC
  UIControlState value.
  */
-- (void)setTextColor:(UIColor *)textColor forState:(UIControlState)state;
+- (void)setTextColor:(nonnull UIColor *)textColor forState:(UIControlState)state;
 /**
  Returns the text color for a given state.
 
  @param state The UIControlState.
  */
-- (UIColor *)textColorForState:(UIControlState)state;
+- (nonnull UIColor *)textColorForState:(UIControlState)state;
 
 @end

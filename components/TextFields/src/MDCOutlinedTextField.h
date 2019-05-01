@@ -19,7 +19,7 @@
 /**
  An implementation of a Material outlined text field.
  */
-@interface MDCOutlinedTextField : MDCInputTextField
+__attribute__((objc_subclassing_restricted)) @interface MDCOutlinedTextField : MDCInputTextField
 
 /**
  Sets the outline color for a given state.
@@ -29,12 +29,12 @@
  UIControlStateDisabled, and UIControlStateEditing, which is a custom MDC
  UIControlState value.
  */
-- (void)setOutlineColor:(UIColor *)outlineColor forState:(UIControlState)state;
+- (void)setOutlineColor:(nonnull UIColor *)outlineColor forState:(UIControlState)state;
 /**
  Returns the outline color for a given state.
 
  @param state The UIControlState.
  */
-- (UIColor *)outlineColorForState:(UIControlState)state;
+- (nonnull UIColor *)outlineColorForState:(UIControlState)state;
 
 @end
