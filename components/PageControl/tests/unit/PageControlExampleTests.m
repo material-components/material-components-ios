@@ -126,6 +126,20 @@
   frameSize = pageControl.frame.size;
   XCTAssertEqual(frameSize.height, intrinsicSize.height);
   XCTAssertEqual(frameSize.width, intrinsicSize.width);
+
+  // Test it isn't dependent on sizeToFit being called. Call ordering matters here, relying on the
+  // old frame still being set.
+  pageControl.numberOfPages = 3;
+
+  intrinsicSize = pageControl.intrinsicContentSize;
+  frameSize = pageControl.frame.size;
+  XCTAssertEqual(frameSize.height, intrinsicSize.height);  // Height shouldn't change.
+  XCTAssertNotEqual(frameSize.width, intrinsicSize.width);
+
+  [pageControl sizeToFit];
+  frameSize = pageControl.frame.size;
+  XCTAssertEqual(frameSize.height, intrinsicSize.height);
+  XCTAssertEqual(frameSize.width, intrinsicSize.width);
 }
 
 - (void)testScrollOffsetOutOfBoundsOfNumberOfPages {
