@@ -563,9 +563,6 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 }
 
 - (void)setTitleView:(UIView *)titleView {
-  if (self.titleView == titleView) {
-    return;
-  }
   // Ignore sandbag KVO events
   if ([_observedNavigationItem.titleView isKindOfClass:[MDCNavigationBarSandbagView class]]) {
     return;
@@ -580,8 +577,10 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
     _observedNavigationItem.titleView = nil;
   }
 
-  [self.titleView removeFromSuperview];
-  _titleView = titleView;
+  if (self.titleView != titleView) {
+    [self.titleView removeFromSuperview];
+    _titleView = titleView;
+  }
 
   if (_titleView != nil) {
     [self addSubview:_titleView];
