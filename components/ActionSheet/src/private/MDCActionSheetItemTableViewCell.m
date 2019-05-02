@@ -82,10 +82,10 @@ static const CGFloat kActionItemTitleVerticalPadding = 18;
                                 constant:-kActionItemTitleVerticalPadding]
       .active = YES;
   _titleLeadingConstraint = [NSLayoutConstraint constraintWithItem:_actionLabel
-                                                         attribute:NSLayoutAttributeLeading
+                                                         attribute:NSLayoutAttributeLeadingMargin
                                                          relatedBy:NSLayoutRelationEqual
                                                             toItem:self.contentView
-                                                         attribute:NSLayoutAttributeLeading
+                                                         attribute:NSLayoutAttributeLeadingMargin
                                                         multiplier:1
                                                           constant:leadingConstant];
   _titleLeadingConstraint.active = YES;
@@ -115,10 +115,10 @@ static const CGFloat kActionItemTitleVerticalPadding = 18;
                                 constant:kImageTopPadding]
       .active = YES;
   [NSLayoutConstraint constraintWithItem:_actionImageView
-                               attribute:NSLayoutAttributeLeading
+                               attribute:NSLayoutAttributeLeadingMargin
                                relatedBy:NSLayoutRelationEqual
                                   toItem:self.contentView
-                               attribute:NSLayoutAttributeLeading
+                               attribute:NSLayoutAttributeLeadingMargin
                               multiplier:1
                                 constant:kImageLeadingPadding]
       .active = YES;
