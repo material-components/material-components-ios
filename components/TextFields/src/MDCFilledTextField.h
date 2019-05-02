@@ -14,12 +14,12 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCInputTextField.h"
+#import "MDCBaseTextField.h"
 
 /**
  An implementation of a Material filled text field.
  */
-__attribute__((objc_subclassing_restricted)) @interface MDCFilledTextField : MDCInputTextField
+__attribute__((objc_subclassing_restricted)) @interface MDCFilledTextField : MDCBaseTextField
 
 /**
  Sets the filled background color for a given state.

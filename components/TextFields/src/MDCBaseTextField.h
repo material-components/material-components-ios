@@ -14,13 +14,13 @@
 
 #import <UIKit/UIKit.h>
 
-/** This type is used to configure the behavior of an MDCInputTextField's label. */
-typedef NS_ENUM(NSInteger, MDCInputTextFieldLabelBehavior) {
+/** This type is used to configure the behavior of an MDCBaseTextField's label. */
+typedef NS_ENUM(NSInteger, MDCBaseTextFieldLabelBehavior) {
   /** Indicates that the text field label animates to a position above the text when editing begins.
    */
-  MDCInputTextFieldLabelBehaviorFloats,
+  MDCBaseTextFieldLabelBehaviorFloats,
   /** Indicates that the text field label disappears when editing begins. */
-  MDCInputTextFieldLabelBehaviorDisappears,
+  MDCBaseTextFieldLabelBehaviorDisappears,
 };
 
 /**
@@ -36,7 +36,7 @@ typedef NS_ENUM(NSInteger, MDCInputTextFieldLabelBehavior) {
  Caution: While not explicitly forbidden by the compiler, subclassing this class is highly
  discouraged and not supported. Please consider alternatives.
  */
-@interface MDCInputTextField : UITextField
+@interface MDCBaseTextField : UITextField
 
 /**
  The @c label is a label that occupies the area the text usually occupies when there is no
@@ -48,9 +48,9 @@ typedef NS_ENUM(NSInteger, MDCInputTextFieldLabelBehavior) {
 /**
  This property determines the behavior of the textfield's label during editing.
 
- @note The default is MDCInputTextFieldLabelBehaviorFloats.
+ @note The default is MDCBaseTextFieldLabelBehaviorFloats.
  */
-@property(nonatomic, assign) MDCInputTextFieldLabelBehavior labelBehavior;
+@property(nonatomic, assign) MDCBaseTextFieldLabelBehavior labelBehavior;
 
 /**
  The @c leadingAssistiveLabel is a label below the text on the leading edge of the view. It can be
