@@ -49,7 +49,8 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
 @property(nonatomic, strong, nullable) MDCBottomNavigationLargeItemDialogView *largeItemDialog;
 
 /** Returns if the long press gesture recognizer has been added to the navigation bar. */
-@property(nonatomic, readonly, getter=isNavigationBarLongPressRecognizerRegistered) BOOL navigationBarLongPressRecognizerRegistered;
+@property(nonatomic, readonly, getter=isNavigationBarLongPressRecognizerRegistered)
+    BOOL navigationBarLongPressRecognizerRegistered;
 
 /**
  * Indicates if the large item view is in the process of dismissing. This is to ensure that the
