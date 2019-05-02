@@ -281,7 +281,7 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
  * @param point CGPoint The point within @c navigationBar coordinate space.
  */
 - (void)handleNavigationBarLongPressUpdatedForPoint:(CGPoint)point {
-  if (![self isContentSizeCategoryAccessibilityCategory]) {
+  if (!self.isContentSizeCategoryAccessibilityCategory) {
     return;
   }
 
