@@ -464,16 +464,18 @@ static NSString *const kLongTitle5Arabic =
 
 - (void)testSafeAreaTopLeftBottomRightLTR {
   // Given
-  MDCActionSheetControllerSnapshotTestsSuperview *superview = [[MDCActionSheetControllerSnapshotTestsSuperview alloc] initWithFrame:CGRectMake(0, 0, 360, 240)];
+  MDCActionSheetControllerSnapshotTestsSuperview *superview =
+      [[MDCActionSheetControllerSnapshotTestsSuperview alloc]
+          initWithFrame:CGRectMake(0, 0, 360, 240)];
   MDCActionSheetAction *action1 = [MDCActionSheetAction
-                                   actionWithTitle:kLongTitle1Latin
-                                   image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                                            withStyle:MDCSnapshotTestImageStyleCheckerboard]
-                                   handler:nil];
+      actionWithTitle:kLongTitle1Latin
+                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
+                                         withStyle:MDCSnapshotTestImageStyleCheckerboard]
+              handler:nil];
 
   MDCActionSheetController *controller =
-  [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Latin
-                                                   message:kLongTitle2Latin];
+      [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Latin
+                                                       message:kLongTitle2Latin];
   [controller addAction:action1];
   [superview addSubview:controller.view];
   controller.view.frame = superview.bounds;
@@ -489,16 +491,18 @@ static NSString *const kLongTitle5Arabic =
 
 - (void)testSafeAreaTopLeftBottomRightRTL {
   // Given
-  MDCActionSheetControllerSnapshotTestsSuperview *superview = [[MDCActionSheetControllerSnapshotTestsSuperview alloc] initWithFrame:CGRectMake(0, 0, 360, 240)];
+  MDCActionSheetControllerSnapshotTestsSuperview *superview =
+      [[MDCActionSheetControllerSnapshotTestsSuperview alloc]
+          initWithFrame:CGRectMake(0, 0, 360, 240)];
   MDCActionSheetAction *action1 = [MDCActionSheetAction
-                                   actionWithTitle:kLongTitle1Arabic
-                                   image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                                            withStyle:MDCSnapshotTestImageStyleCheckerboard]
-                                   handler:nil];
+      actionWithTitle:kLongTitle1Arabic
+                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
+                                         withStyle:MDCSnapshotTestImageStyleCheckerboard]
+              handler:nil];
 
   MDCActionSheetController *controller =
-  [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Arabic
-                                                   message:kLongTitle2Arabic];
+      [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Arabic
+                                                       message:kLongTitle2Arabic];
   [controller addAction:action1];
   [superview addSubview:controller.view];
   controller.view.frame = superview.bounds;
@@ -515,16 +519,18 @@ static NSString *const kLongTitle5Arabic =
 
 - (void)testSafeAreaTopLeftLTR {
   // Given
-  MDCActionSheetControllerSnapshotTestsSuperview *superview = [[MDCActionSheetControllerSnapshotTestsSuperview alloc] initWithFrame:CGRectMake(0, 0, 360, 240)];
+  MDCActionSheetControllerSnapshotTestsSuperview *superview =
+      [[MDCActionSheetControllerSnapshotTestsSuperview alloc]
+          initWithFrame:CGRectMake(0, 0, 360, 240)];
   MDCActionSheetAction *action1 = [MDCActionSheetAction
-                                   actionWithTitle:kLongTitle1Latin
-                                   image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                                            withStyle:MDCSnapshotTestImageStyleCheckerboard]
-                                   handler:nil];
+      actionWithTitle:kLongTitle1Latin
+                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
+                                         withStyle:MDCSnapshotTestImageStyleCheckerboard]
+              handler:nil];
 
   MDCActionSheetController *controller =
-  [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Latin
-                                                   message:kLongTitle2Latin];
+      [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Latin
+                                                       message:kLongTitle2Latin];
   [controller addAction:action1];
   [superview addSubview:controller.view];
   controller.view.frame = superview.bounds;
@@ -540,16 +546,18 @@ static NSString *const kLongTitle5Arabic =
 
 - (void)testSafeAreaTopLeftRTL {
   // Given
-  MDCActionSheetControllerSnapshotTestsSuperview *superview = [[MDCActionSheetControllerSnapshotTestsSuperview alloc] initWithFrame:CGRectMake(0, 0, 360, 240)];
+  MDCActionSheetControllerSnapshotTestsSuperview *superview =
+      [[MDCActionSheetControllerSnapshotTestsSuperview alloc]
+          initWithFrame:CGRectMake(0, 0, 360, 240)];
   MDCActionSheetAction *action1 = [MDCActionSheetAction
-                                   actionWithTitle:kLongTitle1Arabic
-                                   image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                                            withStyle:MDCSnapshotTestImageStyleCheckerboard]
-                                   handler:nil];
+      actionWithTitle:kLongTitle1Arabic
+                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
+                                         withStyle:MDCSnapshotTestImageStyleCheckerboard]
+              handler:nil];
 
   MDCActionSheetController *controller =
-  [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Arabic
-                                                   message:kLongTitle2Arabic];
+      [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Arabic
+                                                       message:kLongTitle2Arabic];
   [controller addAction:action1];
   [superview addSubview:controller.view];
   controller.view.frame = superview.bounds;
@@ -566,16 +574,18 @@ static NSString *const kLongTitle5Arabic =
 
 - (void)testSafeAreaBottomRightLTR {
   // Given
-  MDCActionSheetControllerSnapshotTestsSuperview *superview = [[MDCActionSheetControllerSnapshotTestsSuperview alloc] initWithFrame:CGRectMake(0, 0, 360, 240)];
+  MDCActionSheetControllerSnapshotTestsSuperview *superview =
+      [[MDCActionSheetControllerSnapshotTestsSuperview alloc]
+          initWithFrame:CGRectMake(0, 0, 360, 240)];
   MDCActionSheetAction *action1 = [MDCActionSheetAction
-                                   actionWithTitle:kLongTitle1Latin
-                                   image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                                            withStyle:MDCSnapshotTestImageStyleCheckerboard]
-                                   handler:nil];
+      actionWithTitle:kLongTitle1Latin
+                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
+                                         withStyle:MDCSnapshotTestImageStyleCheckerboard]
+              handler:nil];
 
   MDCActionSheetController *controller =
-  [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Latin
-                                                   message:kLongTitle2Latin];
+      [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Latin
+                                                       message:kLongTitle2Latin];
   [controller addAction:action1];
   [superview addSubview:controller.view];
   controller.view.frame = superview.bounds;
@@ -591,16 +601,18 @@ static NSString *const kLongTitle5Arabic =
 
 - (void)testSafeAreaBottomRightRTL {
   // Given
-  MDCActionSheetControllerSnapshotTestsSuperview *superview = [[MDCActionSheetControllerSnapshotTestsSuperview alloc] initWithFrame:CGRectMake(0, 0, 360, 240)];
+  MDCActionSheetControllerSnapshotTestsSuperview *superview =
+      [[MDCActionSheetControllerSnapshotTestsSuperview alloc]
+          initWithFrame:CGRectMake(0, 0, 360, 240)];
   MDCActionSheetAction *action1 = [MDCActionSheetAction
-                                   actionWithTitle:kLongTitle1Arabic
-                                   image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                                            withStyle:MDCSnapshotTestImageStyleCheckerboard]
-                                   handler:nil];
+      actionWithTitle:kLongTitle1Arabic
+                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
+                                         withStyle:MDCSnapshotTestImageStyleCheckerboard]
+              handler:nil];
 
   MDCActionSheetController *controller =
-  [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Arabic
-                                                   message:kLongTitle2Arabic];
+      [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Arabic
+                                                       message:kLongTitle2Arabic];
   [controller addAction:action1];
   [superview addSubview:controller.view];
   controller.view.frame = superview.bounds;
