@@ -20,9 +20,9 @@
 static const CGFloat kTitleLabelAlpha = (CGFloat)0.87;
 static const CGFloat kMessageLabelAlpha = (CGFloat)0.6;
 static const CGFloat kMessageOnlyPadding = 23;
-static const CGFloat kLeadingPadding = 16;
+static const CGFloat kLeadingPadding = 8;
 static const CGFloat kTopStandardPadding = 16;
-static const CGFloat kTrailingPadding = 16;
+static const CGFloat kTrailingPadding = 8;
 static const CGFloat kTitleOnlyPadding = 18;
 static const CGFloat kMiddlePadding = 8;
 
