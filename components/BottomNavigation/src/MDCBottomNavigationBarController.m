@@ -48,7 +48,13 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
 /** The dialog view to display a large item view. */
 @property(nonatomic, strong, nullable) MDCBottomNavigationLargeItemDialogView *largeItemDialog;
 
-/** Indicates if the large item view is in the process of dismissing. */
+/** Returns if the long press gesture recognizer has been added to the navigation bar. */
+@property(nonatomic, readonly, getter=isNavigationBarLongPressRecognizerRegistered) BOOL navigationBarLongPressRecognizerRegistered;
+
+/**
+ * Indicates if the large item view is in the process of dismissing. This is to ensure that the
+ * dialog animation is not started again if it is already animating a dismissal.
+ */
 @property(nonatomic, getter=isDismissingLargeItemDialog) BOOL dismissingLargeItemView;
 
 @end
@@ -88,7 +94,7 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
   [self.view addSubview:self.navigationBar];
   [self loadConstraints];
 
-  if ([self isLongPressPopUpViewEnabled] && ![self isNavigationBarLongPressRecognizerRegistered]) {
+  if (self.isLongPressPopUpViewEnabled && !self.isNavigationBarLongPressRecognizerRegistered) {
     [self.navigationBar addGestureRecognizer:self.navigationBarLongPressRecognizer];
   }
 }
@@ -147,13 +153,12 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
   self.selectedViewController = viewControllersCopy.firstObject;
 }
 
-- (void)setLongPressPopUpViewEnabled:(BOOL)dynamicTypeSupportEnabled {
-  _longPressPopUpViewEnabled = dynamicTypeSupportEnabled;
+- (void)setLongPressPopUpViewEnabled:(BOOL)isLongPressPopUpViewEnabled {
+  _longPressPopUpViewEnabled = isLongPressPopUpViewEnabled;
 
-  BOOL isNavigationBarLongPressRegistered = [self isNavigationBarLongPressRecognizerRegistered];
-  if (dynamicTypeSupportEnabled && !isNavigationBarLongPressRegistered) {
+  if (isLongPressPopUpViewEnabled && !self.isNavigationBarLongPressRecognizerRegistered) {
     [self.navigationBar addGestureRecognizer:self.navigationBarLongPressRecognizer];
-  } else if (!dynamicTypeSupportEnabled && isNavigationBarLongPressRegistered) {
+  } else if (!isLongPressPopUpViewEnabled && self.isNavigationBarLongPressRecognizerRegistered) {
     [self.navigationBar removeGestureRecognizer:self.navigationBarLongPressRecognizer];
   }
 }
@@ -565,7 +570,7 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
 
 /** Removes the large item dialog from the view hierarchy and animates its dismissal. */
 - (void)dismissLargeItemDialog {
-  if (!self.largeItemDialog.superview || [self isDismissingLargeItemDialog]) {
+  if (!self.largeItemDialog.superview || self.isDismissingLargeItemDialog) {
     return;
   }
 
@@ -576,12 +581,13 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
         self.largeItemDialog.transform = MDCLargeItemViewAnimationTransitionTransform();
       }
       completion:^(BOOL finished) {
-        [self.largeItemDialog removeFromSuperview];
+        if (finished) {
+          [self.largeItemDialog removeFromSuperview];
+        }
         self.dismissingLargeItemView = NO;
       }];
 }
 
-/** Returns if the long press gesture recognizer has been added to the navigation bar. */
 - (BOOL)isNavigationBarLongPressRecognizerRegistered {
   return
       [self.navigationBar.gestureRecognizers containsObject:self.navigationBarLongPressRecognizer];
