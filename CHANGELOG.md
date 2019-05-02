@@ -1,17 +1,33 @@
 # 84.0.0
 
-In this release we corrected a text field accesssibility behavior added ripple to chips and added
-additional delegate calls to post bottom sheet's scrolling.
+This release corrected a TextFields accessibility behavior, added Ripple to Chips, and added
+additional delegate calls to BottomSheet.
 
-We finished updating additional theming docs for multiple components including chips, dialogs, cards.
+Theming docs for multiple components were added, including Chips, Dialogs, and Cards.
 
 ## Breaking changes
 
-### Text Field
+### TextField
 
-We fixed the accessibilty behavior of MDCTextField. We were using the value instead of the label.
-There is now a `,` that results in a pause between the label and the helper text. More information
-can be found [in the PR](https://github.com/material-components/material-components-ios/pull/7256)
+The VoiceOver behavior of MDCTextField was modified. Much of the information previously returned by
+`-accessibilityValue` is now being returned by `-accessibilityLabel`. There is now a `,` that
+results in a pause between the label and the helper text.
+
+Searches for MDCTextFields in your view hiearchy with accessiblity value must be changed to searches
+for the MDCTextField's accessibility label. The label now also has a inserted `,` too.
+
+For example an EarlGrey matcher needs to be adjusted from
+```swift
+EarlGrey
+      .selectElement(with: grey_accessibilityValue("Phone Number XXX-XXXX")
+```
+
+To:
+```swift
+EarlGrey
+      .selectElement(with: grey_accessibilityLabel("Phone Number, XXX-XXXX")
+```
+More information can be found [in the PR](https://github.com/material-components/material-components-ios/pull/7256)
 
 ## New features
 
@@ -21,14 +37,18 @@ Moved from beta to ready
 
 ### Bottom Sheet
 
-MDCBottomSheetControllerDelegate protocol methods become optional. We added additional hooks for scroll events.
+All methods in the MDCBottomSheetControllerDelegate protocol were marked optional.
+
+Two new methods were added to convey state changes and scroll events.
 
 ```objc
 - (void)bottomSheetControllerDidChangeYOffset:(MDCBottomSheetController *)controller
                                       yOffset:(CGFloat)yOffset {
   NSLog(@"bottom sheet Y offset changed: %f", yOffset);
 }
+```
 
+```objc
 - (void)bottomSheetControllerStateChanged:(MDCBottomSheetController *)controller
                                     state:(MDCSheetState)state {
   NSLog(@"bottom sheet state changed to: %lu", (unsigned long)state);
@@ -37,7 +57,7 @@ MDCBottomSheetControllerDelegate protocol methods become optional. We added addi
 
 ### Chips
 
-We added ripple support.
+Ripple support was added.
 
 ```objc
   chipView.enableRippleBehavior = YES;
@@ -134,7 +154,7 @@ We added ripple support.
 ## Multi-component changes
 
 * [ [Catalog] Add @objc annotations to our containerScheme instances in Swift (#7243)](https://github.com/material-components/material-components-ios/commit/52da482fd2665dfc66760f0f0880baa23ac16384) (Yarden Eitan)
-* [update (#7246)](https://github.com/material-components/material-components-ios/commit/efe61588a601606d3cdc48652f8d63c662b4fc9d) (Yarden Eitan)
+* [ [Catalog] Add @objc annotations to our color and typography scheme instances in Swift (#7246)](https://github.com/material-components/material-components-ios/commit/efe61588a601606d3cdc48652f8d63c662b4fc9d) (Yarden Eitan)
 
 ---
 
