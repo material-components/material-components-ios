@@ -109,19 +109,22 @@
   self.textFieldControllerFullWidth.characterCountMax = 140;
   self.textFieldControllerFullWidth.placeholderText = @"Full Width Controller";
 
+  id<UILayoutSupport> topGuide = self.topLayoutGuide;
   [NSLayoutConstraint
-      activateConstraints:
-          [NSLayoutConstraint
-              constraintsWithVisualFormat:@"V:[unstyled]-[area]-[floating]-[charMax]-[fullWidth]"
-                                  options:0
-                                  metrics:nil
-                                    views:@{
-                                      @"unstyled" : multilineTextFieldUnstyled,
-                                      @"area" : multilineTextFieldUnstyledArea,
-                                      @"charMax" : multilineTextFieldCharMaxDefault,
-                                      @"floating" : multilineTextFieldFloating,
-                                      @"fullWidth" : multilineTextFieldCharMaxFullWidth
-                                    }]];
+      activateConstraints:[NSLayoutConstraint
+                              constraintsWithVisualFormat:
+                                  @"V:[topGuide]-[unstyled]-[area]-[floating]-[charMax]-[fullWidth]"
+                                                  options:0
+                                                  metrics:nil
+                                                    views:@{
+                                                      @"topGuide" : topGuide,
+                                                      @"unstyled" : multilineTextFieldUnstyled,
+                                                      @"area" : multilineTextFieldUnstyledArea,
+                                                      @"charMax" : multilineTextFieldCharMaxDefault,
+                                                      @"floating" : multilineTextFieldFloating,
+                                                      @"fullWidth" :
+                                                          multilineTextFieldCharMaxFullWidth
+                                                    }]];
   [NSLayoutConstraint
       activateConstraints:[NSLayoutConstraint
                               constraintsWithVisualFormat:@"H:|-[unstyled]-|"

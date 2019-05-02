@@ -249,9 +249,9 @@ own touch processing:
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift
-let myCustomView = MyCustomView(frame: CGRect.zero)
+let myCustomView = MyCustomView(frame: .zero)
 let rippleView = MDCRippleView()
-rippleView.rippleColor = UIColor.red
+rippleView.rippleColor = .red
 myCustomView.addSubview(rippleView)
 ...
 // When the touches begin, there is one animation
@@ -265,7 +265,7 @@ rippleView.beginRippleTouchUpAnimated(animated: true, completion: nil)
 ```objc
 MyCustomView *myCustomView = [[MyCustomView alloc] initWithFrame:CGRectZero];
 MDCRippleView *rippleView = [[MDCRippleView alloc] init];
-rippleView.rippleColor = [UIColor redColor];
+rippleView.rippleColor = UIColor.redColor;
 [myCustomView addSubview:rippleView];
 ...
 // When the touches begin, there is one animation
@@ -289,9 +289,9 @@ Here is an example:
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift
-let myCustomView = MyCustomView(frame: CGRect.zero)
+let myCustomView = MyCustomView(frame: .zero)
 let statefulRippleView = MDCStatefulRippleView()
-statefulRippleView.setRippleColor(UIColor.blue, for: MDCRippleStateSelected)
+statefulRippleView.setRippleColor(.blue, for: .selected)
 myCustomView.addSubview(statefulRippleView)
 
 ...
@@ -327,7 +327,7 @@ override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
 ```objc
 MyCustomView *myCustomView = [[MyCustomView alloc] initWithFrame:CGRectZero];
 MDCStatefulRippleView *statefulRippleView = [[MDCStatefulRippleView alloc] init];
-[statefulRippleView setRippleColor:[UIColor blueColor] forState:MDCRippleStateSelected];
+[statefulRippleView setRippleColor:UIColor.blueColor forState:MDCRippleStateSelected];
 [myCustomView addSubview:statefulRippleView];
 
 ...

@@ -28,14 +28,14 @@
 /components/FlexibleHeader/       @jverkoey
 /components/HeaderStackView/      @jverkoey
 /components/Ink/                  @yarneo
-/components/LibraryInfo/          @ajsecord
+/components/LibraryInfo/          @featherless
 /components/List                  @andrewoverton
 /components/MaskedTransition/     @jverkoey
 /components/NavigationBar/        @yarneo @jverkoey
 /components/NavigationDrawer/     @yarneo
 /components/OverlayWindow/        @yarneo
 /components/PageControl/          @randallli
-/components/Palettes/             @ajsecord
+/components/Palettes/             @featherless
 /components/ProgressView/         @romoore
 /components/Ripple                @yarneo
 /components/ShadowElevations/     @ianegordon

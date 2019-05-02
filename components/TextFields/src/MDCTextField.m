@@ -792,18 +792,37 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
   [_fundament mdc_setAdjustsFontForContentSizeCategory:adjusts];
 }
 
-- (NSString *)accessibilityValue {
+/*
+ Returns a combination of the following:
+ -  The superclass `accessibilityLabel` value
+ -  The placeholder label.
+ -  The leading underline label (if not nil).
+ -  The trailing underline label (if not nil).
+ */
+- (NSString *)accessibilityLabel {
   NSMutableArray *accessibilityStrings = [[NSMutableArray alloc] init];
-  if ([super accessibilityValue].length > 0) {
-    [accessibilityStrings addObject:[super accessibilityValue]];
+  if ([super accessibilityLabel].length > 0) {
+    [accessibilityStrings addObject:[super accessibilityLabel]];
   } else if (self.placeholderLabel.accessibilityLabel.length > 0) {
     [accessibilityStrings addObject:self.placeholderLabel.accessibilityLabel];
   }
   if (self.leadingUnderlineLabel.accessibilityLabel.length > 0) {
     [accessibilityStrings addObject:self.leadingUnderlineLabel.accessibilityLabel];
   }
-  return accessibilityStrings.count > 0 ? [accessibilityStrings componentsJoinedByString:@" "]
+  if (self.trailingUnderlineLabel.accessibilityLabel.length > 0) {
+    [accessibilityStrings addObject:self.trailingUnderlineLabel.accessibilityLabel];
+  }
+  return accessibilityStrings.count > 0 ? [accessibilityStrings componentsJoinedByString:@", "]
                                         : nil;
+}
+
+- (NSString *)accessibilityValue {
+  // If there is no text, return nothing. If there is placeholder text, we don't want it returning
+  // that as the `accessibilityValue`. Instead, we should only return user-input text.
+  if (self.text.length > 0) {
+    return [super accessibilityValue];
+  }
+  return nil;
 }
 
 #pragma mark - Testing
