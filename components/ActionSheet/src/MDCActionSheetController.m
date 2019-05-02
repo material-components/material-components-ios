@@ -141,6 +141,7 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
 
   self.view.backgroundColor = self.backgroundColor;
   self.tableView.frame = self.view.bounds;
+  self.view.preservesSuperviewLayoutMargins = YES;
   [self.view addSubview:self.tableView];
   [self.view addSubview:self.header];
 }
