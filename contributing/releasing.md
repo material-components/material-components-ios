@@ -330,7 +330,7 @@ You can now publish the release to GitHub:
 ## Publish to Cocoapods
 
     git checkout stable
-    pod trunk push MaterialComponents.podspec --skip-tests
+    pod trunk push MaterialComponents.podspec --skip-tests --allow-warnings
 
 ## Coordinate with release-blocking clients to finish work
 
