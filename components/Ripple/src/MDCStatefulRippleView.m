@@ -171,7 +171,7 @@ static UIColor *RippleSelectedColor(void) {
     // If ripple becomes highlighted we initiate a ripple with animation.
     [self updateRippleColor];
     [self beginRippleTouchDownAtPoint:_lastTouch animated:_didReceiveTouch completion:nil];
-  } else {
+  } else if (!rippleHighlighted) {
     if (!self.allowsSelection && !self.dragged && !_tapWentOutsideOfBounds) {
       // We dissolve the ripple when highlighted is NO, unless we are going into
       // selection or dragging.

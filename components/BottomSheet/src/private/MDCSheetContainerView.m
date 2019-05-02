@@ -290,14 +290,20 @@ static const CGFloat kSheetBounceBuffer = 150;
   CGFloat midX = CGRectGetMidX(bounds);
   CGFloat bottomY = CGRectGetMaxY(bounds) - keyboardOffset;
 
+  CGPoint targetPoint;
   switch (self.sheetState) {
     case MDCSheetStatePreferred:
-      return CGPointMake(midX, bottomY - [self truncatedPreferredSheetHeight]);
+      targetPoint = CGPointMake(midX, bottomY - [self truncatedPreferredSheetHeight]);
+      break;
     case MDCSheetStateExtended:
-      return CGPointMake(midX, bottomY - [self maximumSheetHeight]);
+      targetPoint = CGPointMake(midX, bottomY - [self maximumSheetHeight]);
+      break;
     case MDCSheetStateClosed:
-      return CGPointMake(midX, bottomY);
+      targetPoint = CGPointMake(midX, bottomY);
+      break;
   }
+  [self.delegate sheetContainerViewDidChangeYOffset:self yOffset:targetPoint.y];
+  return targetPoint;
 }
 
 - (void)sheetBehaviorDidUpdate {
@@ -377,6 +383,10 @@ static const CGFloat kSheetBounceBuffer = 150;
 - (void)draggableViewBeganDragging:(__unused MDCDraggableView *)view {
   [self.animator removeAllBehaviors];
   self.isDragging = YES;
+}
+
+- (void)draggableView:(nonnull MDCDraggableView *)view didPanToOffset:(CGFloat)offset {
+  [self.delegate sheetContainerViewDidChangeYOffset:self yOffset:offset];
 }
 
 - (void)setSheetState:(MDCSheetState)sheetState {

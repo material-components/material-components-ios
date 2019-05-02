@@ -68,6 +68,10 @@ static void CancelGestureRecognizer(UIGestureRecognizer *gesture) {
   } else if (recognizer.state == UIGestureRecognizerStateEnded) {
     [self.delegate draggableView:self draggingEndedWithVelocity:velocity];
   }
+  if (recognizer.state == UIGestureRecognizerStateBegan ||
+      recognizer.state == UIGestureRecognizerStateChanged) {
+    [self.delegate draggableView:self didPanToOffset:CGRectGetMinY(self.frame)];
+  }
 }
 
 #pragma mark - UIGestureRecognizerDelegate

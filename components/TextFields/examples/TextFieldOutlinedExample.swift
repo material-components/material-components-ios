@@ -270,10 +270,10 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
     scrollView.translatesAutoresizingMaskIntoConstraints = false
 
     NSLayoutConstraint.activate(NSLayoutConstraint.constraints(
-      withVisualFormat: "V:|[scrollView]|",
+      withVisualFormat: "V:|[topGuide]-[scrollView]|",
       options: [],
       metrics: nil,
-      views: ["scrollView": scrollView]))
+      views: ["scrollView": scrollView, "topGuide": topLayoutGuide]))
     NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "H:|[scrollView]|",
                                                                options: [],
                                                                metrics: nil,
