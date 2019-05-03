@@ -13,12 +13,11 @@
 // limitations under the License.
 
 #import "MDCLegacyInkLayer.h"
-#import "MDCLegacyInkLayer+Testing.h"
+#import "MDCLegacyInkLayer+Private.h"
 
 #import <UIKit/UIKit.h>
 
-static inline CGPoint MDCLegacyInkLayerInterpolatePoint(CGPoint start,
-                                                        CGPoint end,
+static inline CGPoint MDCLegacyInkLayerInterpolatePoint(CGPoint start, CGPoint end,
                                                         CGFloat offsetPercent) {
   CGPoint centerOffsetPoint = CGPointMake(start.x + (end.x - start.x) * offsetPercent,
                                           start.y + (end.y - start.y) * offsetPercent);
@@ -165,6 +164,12 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
                                                      0.157:(float)0.72:(float)0.386:(float)0.987];
 }
 
+- (void)animationDidStart:(CAAnimation *)anim {
+  if (!self.isAnimationCleared) {
+    [self.animationDelegate animationDidStart:anim];
+  }
+}
+
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)finished {
   if (!self.isAnimationCleared) {
     [self.animationDelegate animationDidStop:anim shapeLayer:self finished:finished];
@@ -238,6 +243,12 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
                                           timingFunction:linearTimingFunction];
     _foregroundPositionAnim.keyTimes = @[ @(kInkLayerForegroundUnboundedEnterDelay), @1 ];
     [self addAnimation:_foregroundPositionAnim forKey:kInkLayerForegroundPositionAnim];
+  }
+
+  if (_foregroundOpacityAnim.duration < _foregroundScaleAnim.duration) {
+    _foregroundScaleAnim.delegate = self;
+  } else {
+    _foregroundOpacityAnim.delegate = self;
   }
 
   [CATransaction begin];
@@ -387,6 +398,7 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
   [super enter];
   _backgroundOpacityAnim = [self opacityAnimWithValues:@[ @0, @1 ] times:@[ @0, @1 ]];
   _backgroundOpacityAnim.duration = kInkLayerBackgroundOpacityEnterDuration;
+  _backgroundOpacityAnim.delegate = self;
   [self addAnimation:_backgroundOpacityAnim forKey:kInkLayerBackgroundOpacityAnim];
 }
 
@@ -477,6 +489,7 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
   if (self) {
     self.masksToBounds = YES;
     [self commonMDCLegacyInkLayerInit];
+    _animating = NO;
   }
   return self;
 }
@@ -485,6 +498,7 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
   self = [super initWithCoder:aDecoder];
 
   if (self) {
+    _animating = NO;
     // Discard any sublayers, which should be the composite ripple and any active ripples
     if (self.sublayers.count > 0) {
       NSArray<CALayer *> *sublayers = [self.sublayers copy];
@@ -521,6 +535,15 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
   UIBezierPath *ripplePath = [UIBezierPath bezierPathWithOvalInRect:rippleBounds];
   rippleMaskLayer.path = ripplePath.CGPath;
   _compositeRipple.mask = rippleMaskLayer;
+}
+
+- (void)enterAllInks {
+  for (MDCLegacyInkLayerForegroundRipple *foregroundRipple in self.foregroundRipples) {
+    [foregroundRipple enterWithCompletion:nil];
+  }
+  for (MDCLegacyInkLayerBackgroundRipple *backgroundRipple in self.backgroundRipples) {
+    [backgroundRipple enter];
+  }
 }
 
 - (void)resetAllInk:(BOOL)animated {
@@ -612,7 +635,17 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
   [self resetBottomInk:YES toPoint:point completion:completionBlock];
 }
 
-#pragma mark - MDCLegacyInkLayerRippleDelegate
+#pragma mark - MDCLegacyRippleInkLayerDelegate
+
+- (void)animationDidStart:(CAAnimation *)anim {
+  if (!self.isAnimating) {
+    self.animating = YES;
+
+    if ([self.animationDelegate respondsToSelector:@selector(legacyInkLayerAnimationDidStart:)]) {
+      [self.animationDelegate legacyInkLayerAnimationDidStart:self];
+    }
+  }
+}
 
 - (void)animationDidStop:(__unused CAAnimation *)anim
               shapeLayer:(CAShapeLayer *)shapeLayer
@@ -621,10 +654,17 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
   [shapeLayer removeFromSuperlayer];
   [shapeLayer removeAllAnimations];
 
-  if ([shapeLayer isMemberOfClass:[MDCLegacyInkLayerForegroundRipple class]]) {
+  if ([shapeLayer isKindOfClass:[MDCLegacyInkLayerForegroundRipple class]]) {
     [self.foregroundRipples removeObject:(MDCLegacyInkLayerForegroundRipple *)shapeLayer];
-  } else if ([shapeLayer isMemberOfClass:[MDCLegacyInkLayerBackgroundRipple class]]) {
+  } else if ([shapeLayer isKindOfClass:[MDCLegacyInkLayerBackgroundRipple class]]) {
     [self.backgroundRipples removeObject:(MDCLegacyInkLayerBackgroundRipple *)shapeLayer];
+  }
+
+  if (self.isAnimating && self.foregroundRipples.count == 0 && self.backgroundRipples.count == 0) {
+    self.animating = NO;
+    if ([self.animationDelegate respondsToSelector:@selector(legacyInkLayerAnimationDidEnd:)]) {
+      [self.animationDelegate legacyInkLayerAnimationDidEnd:self];
+    }
   }
 }
 

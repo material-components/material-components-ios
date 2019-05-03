@@ -14,17 +14,20 @@
 
 #import "MDCLegacyInkLayer.h"
 
-@protocol MDCLegacyInkLayerRippleDelegate <NSObject>
+NS_ASSUME_NONNULL_BEGIN
 
+@protocol MDCLegacyInkLayerRippleDelegate <MDCLegacyInkLayerDelegate>
 @optional
+- (void)animationDidStart:(nullable CAAnimation *)anim;
 
-- (void)animationDidStop:(CAAnimation *)anim
-              shapeLayer:(CAShapeLayer *)shapeLayer
+- (void)animationDidStop:(nullable CAAnimation *)anim
+              shapeLayer:(nullable CAShapeLayer *)shapeLayer
                 finished:(BOOL)finished;
-
 @end
 
 @interface MDCLegacyInkLayer () <MDCLegacyInkLayerRippleDelegate>
+@property(nonatomic, assign, getter=isAnimating) BOOL animating;
+- (void)enterAllInks;
 @end
 
 @interface MDCLegacyInkLayerRipple : CAShapeLayer
@@ -37,3 +40,5 @@
 @interface MDCLegacyInkLayerBackgroundRipple : MDCLegacyInkLayerRipple
 - (void)exit:(BOOL)animated;
 @end
+
+NS_ASSUME_NONNULL_END
