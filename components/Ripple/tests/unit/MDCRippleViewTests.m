@@ -177,7 +177,8 @@
   fakeView.bounds = fakeFrame;
 
   // Then
-  XCTAssertTrue(CGRectEqualToRect(fakeFrame, rippleView.frame), @"%@ not equal to %@", NSStringFromCGRect(fakeFrame), NSStringFromCGRect(rippleView.frame));
+  XCTAssertTrue(CGRectEqualToRect(fakeFrame, rippleView.frame), @"%@ not equal to %@",
+                NSStringFromCGRect(fakeFrame), NSStringFromCGRect(rippleView.frame));
 }
 
 - (void)testFrameRespondsToCustomization {
@@ -193,7 +194,8 @@
   rippleView.frame = fakeRippleFrame;
 
   // Then
-  XCTAssertTrue(CGRectEqualToRect(fakeRippleFrame, rippleView.frame), @"%@ not equal to %@", NSStringFromCGRect(fakeRippleFrame), NSStringFromCGRect(rippleView.frame));
+  XCTAssertTrue(CGRectEqualToRect(fakeRippleFrame, rippleView.frame), @"%@ not equal to %@",
+                NSStringFromCGRect(fakeRippleFrame), NSStringFromCGRect(rippleView.frame));
 }
 
 @end
