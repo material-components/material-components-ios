@@ -17,11 +17,11 @@
 #import <MaterialComponents/MaterialTypography.h>
 
 static const CGFloat kLabelAlpha = (CGFloat)0.87;
-static const CGFloat kImageLeadingPadding = 16;
+static const CGFloat kImageLeadingPadding = 8;
 static const CGFloat kImageTopPadding = 16;
 static const CGFloat kImageHeightAndWidth = 24;
-static const CGFloat kTitleLeadingPadding = 72;
-static const CGFloat kTitleTrailingPadding = 16;
+static const CGFloat kTitleLeadingPadding = 64;
+static const CGFloat kTitleTrailingPadding = 8;
 static const CGFloat kActionItemTitleVerticalPadding = 18;
 
 @interface MDCActionSheetItemTableViewCell ()
