@@ -14,13 +14,49 @@
 
 #import "MDCBottomNavigationBarController.h"
 
+#import <CoreGraphics/CoreGraphics.h>
+
+#import "MaterialApplication.h"
+#import "private/MDCBottomNavigationBar+Private.h"
+#import "private/MDCBottomNavigationLargeItemDialogView.h"
+
 // A context for Key Value Observing
 static void *const kObservationContext = (void *)&kObservationContext;
+static const CGFloat kLargeItemViewHeight = 210;
+static const CGFloat kLargeItemViewWidth = 210;
+static const NSTimeInterval kLargeItemViewAnimationDuration = 0.1;
+static const NSTimeInterval kLongPressMinimumPressDuration = 0.2;
+static const NSUInteger kLongPressNumberOfTouchesRequired = 1;
+
+/**
+ * The transform of the large item view when it is in a transitional state (appearing or
+ * dismissing).
+ */
+static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
+  return CGAffineTransformScale(CGAffineTransformIdentity, (CGFloat)0.97, (CGFloat)0.97);
+}
 
 @interface MDCBottomNavigationBarController ()
 
 /** The view that hosts the content for the selected view controller **/
 @property(nonatomic, strong) UIView *content;
+
+/** The gesture recognizer for detecting long presses on tab bar items. */
+@property(nonatomic, strong, nonnull)
+    UILongPressGestureRecognizer *navigationBarLongPressRecognizer;
+
+/** The dialog view to display a large item view. */
+@property(nonatomic, strong, nullable) MDCBottomNavigationLargeItemDialogView *largeItemDialog;
+
+/** Returns if the long press gesture recognizer has been added to the navigation bar. */
+@property(nonatomic, readonly, getter=isNavigationBarLongPressRecognizerRegistered)
+    BOOL navigationBarLongPressRecognizerRegistered;
+
+/**
+ * Indicates if the large item view is in the process of dismissing. This is to ensure that the
+ * dialog animation is not started again if it is already animating a dismissal.
+ */
+@property(nonatomic, getter=isDismissingLargeItemDialog) BOOL dismissingLargeItemView;
 
 @end
 
@@ -33,6 +69,8 @@ static void *const kObservationContext = (void *)&kObservationContext;
     _content = [[UIView alloc] init];
     _viewControllers = @[];
     _selectedIndex = NSNotFound;
+    _dismissingLargeItemView = NO;
+    _longPressPopUpViewEnabled = YES;
 
     [_navigationBar addObserver:self
                      forKeyPath:NSStringFromSelector(@selector(items))
@@ -56,6 +94,10 @@ static void *const kObservationContext = (void *)&kObservationContext;
   [self.view addSubview:self.content];
   [self.view addSubview:self.navigationBar];
   [self loadConstraints];
+
+  if (self.isLongPressPopUpViewEnabled && !self.isNavigationBarLongPressRecognizerRegistered) {
+    [self.navigationBar addGestureRecognizer:self.navigationBarLongPressRecognizer];
+  }
 }
 
 - (void)setSelectedViewController:(nullable UIViewController *)selectedViewController {
@@ -112,12 +154,34 @@ static void *const kObservationContext = (void *)&kObservationContext;
   self.selectedViewController = viewControllersCopy.firstObject;
 }
 
+- (void)setLongPressPopUpViewEnabled:(BOOL)isLongPressPopUpViewEnabled {
+  _longPressPopUpViewEnabled = isLongPressPopUpViewEnabled;
+
+  if (isLongPressPopUpViewEnabled && !self.isNavigationBarLongPressRecognizerRegistered) {
+    [self.navigationBar addGestureRecognizer:self.navigationBarLongPressRecognizer];
+  } else if (!isLongPressPopUpViewEnabled && self.isNavigationBarLongPressRecognizerRegistered) {
+    [self.navigationBar removeGestureRecognizer:self.navigationBarLongPressRecognizer];
+  }
+}
+
 - (UIViewController *)childViewControllerForStatusBarStyle {
   return self.selectedViewController;
 }
 
 - (UIViewController *)childViewControllerForStatusBarHidden {
   return self.selectedViewController;
+}
+
+- (UILongPressGestureRecognizer *)navigationBarLongPressRecognizer {
+  if (!_navigationBarLongPressRecognizer) {
+    _navigationBarLongPressRecognizer = [[UILongPressGestureRecognizer alloc]
+        initWithTarget:self
+                action:@selector(handleNavigationBarLongPress:)];
+    _navigationBarLongPressRecognizer.numberOfTouchesRequired = kLongPressNumberOfTouchesRequired;
+    _navigationBarLongPressRecognizer.minimumPressDuration = kLongPressMinimumPressDuration;
+  }
+
+  return _navigationBarLongPressRecognizer;
 }
 
 #pragma mark - MDCBottomNavigationBarDelegate
@@ -193,6 +257,63 @@ static void *const kObservationContext = (void *)&kObservationContext;
       [[self unauthorizedItemsChangedException] raise];
     }
   }
+}
+
+#pragma mark - Touch Events
+
+/** Handles long press gesture recognizer event updates. */
+- (void)handleNavigationBarLongPress:(UIGestureRecognizer *)recognizer {
+  CGPoint touchPoint = [recognizer locationInView:self.navigationBar];
+  switch (recognizer.state) {
+    case UIGestureRecognizerStateBegan:
+    case UIGestureRecognizerStateChanged:
+      [self handleNavigationBarLongPressUpdatedForPoint:touchPoint];
+      break;
+    default:
+      [self handleNavigationBarLongPressEndedForPoint:touchPoint];
+      break;
+  }
+}
+
+/**
+ * Handles when the navigation bar long press gesture recognizer gesture has been initiated or the
+ * touch point was updated.
+ * @param point CGPoint The point within @c navigationBar coordinate space.
+ */
+- (void)handleNavigationBarLongPressUpdatedForPoint:(CGPoint)point {
+  if (!self.isContentSizeCategoryAccessibilityCategory) {
+    return;
+  }
+
+  UITabBarItem *item = [self.navigationBar tabBarItemForPoint:point];
+  if (!item && CGRectContainsPoint(self.navigationBar.bounds, point)) {
+    // The item may be nil when the touch is still within the frame of the navigation bar, but not
+    // within the frame of an item view. In this case the large item view should still display the
+    // last long pressed item.
+    return;
+  } else if (!item) {
+    [self handleNavigationBarLongPressEndedForPoint:point];
+    return;
+  }
+
+  if (!self.largeItemDialog) {
+    self.largeItemDialog = [[MDCBottomNavigationLargeItemDialogView alloc] init];
+  }
+  [self.largeItemDialog updateWithTabBarItem:item];
+  [self showLargeItemDialog];
+}
+
+/**
+ * Handles when the navigation bar long press gesture recognizer gesture has concluded.
+ * @param point CGPoint The point within @c navigationBar coordinate space.
+ */
+- (void)handleNavigationBarLongPressEndedForPoint:(CGPoint)point {
+  UITabBarItem *item = [self.navigationBar tabBarItemForPoint:point];
+  NSUInteger index = [self.navigationBar.items indexOfObject:item];
+  if (index != NSNotFound && index < self.viewControllers.count) {
+    self.selectedIndex = index;
+  }
+  [self dismissLargeItemDialog];
 }
 
 #pragma mark - Private Methods
@@ -422,6 +543,75 @@ static void *const kObservationContext = (void *)&kObservationContext;
   return [NSException exceptionWithName:NSInternalInconsistencyException
                                  reason:reason
                                userInfo:nil];
+}
+
+/** Adds the large item dialog to the view hierarchy and animates its presentation. */
+- (void)showLargeItemDialog {
+  if (self.largeItemDialog.superview) {
+    return;
+  }
+
+  self.largeItemDialog.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.view addSubview:self.largeItemDialog];
+
+  UIWindow *window = self.largeItemDialog.window;
+  [self.largeItemDialog.heightAnchor constraintEqualToConstant:kLargeItemViewHeight].active = YES;
+  [self.largeItemDialog.widthAnchor constraintEqualToConstant:kLargeItemViewWidth].active = YES;
+  [self.largeItemDialog.centerXAnchor constraintEqualToAnchor:window.centerXAnchor].active = YES;
+  [self.largeItemDialog.centerYAnchor constraintEqualToAnchor:window.centerYAnchor].active = YES;
+
+  self.largeItemDialog.layer.opacity = 0;
+  self.largeItemDialog.transform = MDCLargeItemViewAnimationTransitionTransform();
+  [UIView animateWithDuration:kLargeItemViewAnimationDuration
+                   animations:^{
+                     self.largeItemDialog.layer.opacity = 1;
+                     self.largeItemDialog.transform = CGAffineTransformIdentity;
+                   }];
+}
+
+/** Removes the large item dialog from the view hierarchy and animates its dismissal. */
+- (void)dismissLargeItemDialog {
+  if (!self.largeItemDialog.superview || self.isDismissingLargeItemDialog) {
+    return;
+  }
+
+  self.dismissingLargeItemView = YES;
+  [UIView animateWithDuration:kLargeItemViewAnimationDuration
+      animations:^{
+        self.largeItemDialog.layer.opacity = 0;
+        self.largeItemDialog.transform = MDCLargeItemViewAnimationTransitionTransform();
+      }
+      completion:^(BOOL finished) {
+        if (finished) {
+          [self.largeItemDialog removeFromSuperview];
+        }
+        self.dismissingLargeItemView = NO;
+      }];
+}
+
+- (BOOL)isNavigationBarLongPressRecognizerRegistered {
+  return
+      [self.navigationBar.gestureRecognizers containsObject:self.navigationBarLongPressRecognizer];
+}
+
+/** Returns if the receiver's size category is an accessibility category. */
+- (BOOL)isContentSizeCategoryAccessibilityCategory {
+  UIContentSizeCategory sizeCategory = UIContentSizeCategoryLarge;
+  if (@available(iOS 10.0, *)) {
+    sizeCategory = self.traitCollection.preferredContentSizeCategory;
+  } else {
+    sizeCategory = UIApplication.mdc_safeSharedApplication.preferredContentSizeCategory;
+  }
+
+  if (@available(iOS 11.0, *)) {
+    return UIContentSizeCategoryIsAccessibilityCategory(sizeCategory);
+  }
+
+  return [sizeCategory isEqualToString:UIContentSizeCategoryAccessibilityMedium] ||
+         [sizeCategory isEqualToString:UIContentSizeCategoryAccessibilityLarge] ||
+         [sizeCategory isEqualToString:UIContentSizeCategoryAccessibilityExtraLarge] ||
+         [sizeCategory isEqualToString:UIContentSizeCategoryAccessibilityExtraExtraLarge] ||
+         [sizeCategory isEqualToString:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
 }
 
 @end
