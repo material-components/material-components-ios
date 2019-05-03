@@ -90,12 +90,12 @@ static const CGFloat kActionItemTitleVerticalPadding = 18;
                                                           constant:leadingConstant];
   _titleLeadingConstraint.active = YES;
   _titleTrailingConstraint = [NSLayoutConstraint constraintWithItem:self.contentView
-                                                         attribute:NSLayoutAttributeTrailingMargin
-                                                         relatedBy:NSLayoutRelationEqual
-                                                            toItem:_actionLabel
-                                                         attribute:NSLayoutAttributeTrailingMargin
-                                                        multiplier:1
-                                                          constant:kTitleTrailingPadding];
+                                                          attribute:NSLayoutAttributeTrailingMargin
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:_actionLabel
+                                                          attribute:NSLayoutAttributeTrailingMargin
+                                                         multiplier:1
+                                                           constant:kTitleTrailingPadding];
   _titleTrailingConstraint.active = YES;
   if (!_inkTouchController) {
     _inkTouchController = [[MDCInkTouchController alloc] initWithView:self];
