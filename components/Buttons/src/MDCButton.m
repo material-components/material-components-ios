@@ -379,13 +379,13 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)setHighlighted:(BOOL)highlighted {
   [super setHighlighted:highlighted];
-
+  self.rippleView.rippleHighlighted = highlighted;
   [self updateAfterStateChange:NO];
 }
 
 - (void)setSelected:(BOOL)selected {
   [super setSelected:selected];
-
+  self.rippleView.selected = selected;
   [self updateAfterStateChange:NO];
 }
 
