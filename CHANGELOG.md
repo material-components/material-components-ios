@@ -1,5 +1,7 @@
 # 84.1.0
 
+This minor release adds enhancements to PageControl and Ink, bug fixes for FlexibleHeader, Ink, NavigationBar, and Ripple, and additional test coverage for ActionSheet and NavigationBar.
+
 ## Breaking changes
 
 ## New deprecations
