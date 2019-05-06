@@ -69,6 +69,14 @@ mdc_objc_library(
     ],
 )
 
+# Should only be used by test targets or :BottomNavigationBeta until
+# that can be rolled-up into the main target.
+mdc_objc_library(
+    name = "privateHeaders",
+    hdrs = native.glob(["src/private/*.h"]),
+    visibility = ["//visibility:private"],
+)
+
 mdc_objc_library(
     name = "BottomNavigationBeta",
     srcs = ["src/MDCBottomNavigationBarController.m"],
@@ -80,7 +88,10 @@ mdc_objc_library(
     includes = ["src"],
     sdk_frameworks = ["CoreGraphics"],
     visibility = ["//:__subpackages__"],
-    deps = [":BottomNavigation"],
+    deps = [
+        ":BottomNavigation",
+        ":privateHeaders",
+    ],
 )
 
 filegroup(

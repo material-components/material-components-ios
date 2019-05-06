@@ -17,6 +17,7 @@ is expected to do the following, in order of priority:
 - Do not break Google.
 - Cut a release early in the working calendar week.
 - Land a release at least once every calendar week.
+- (Optional) Share something new with the team while you're waiting for tests to pass.
 
 If something is stopping the release engineer from achieving any of the above goals, the culprit
 code should be removed immediately from the release.
@@ -329,7 +330,7 @@ You can now publish the release to GitHub:
 ## Publish to Cocoapods
 
     git checkout stable
-    pod trunk push MaterialComponents.podspec --skip-tests
+    pod trunk push MaterialComponents.podspec --skip-tests --allow-warnings
 
 ## Coordinate with release-blocking clients to finish work
 
