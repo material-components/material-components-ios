@@ -1,3 +1,54 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+## Changes
+
+### ActionSheet
+
+* [Add Snapshot test for safe area. (#7334)](https://github.com/material-components/material-components-ios/commit/5be6551beb44e707afc3f6818afdc15fd9b6f72b) (Robert Moore)
+
+### BottomNavigation
+
+* [Adds .largeContentSizeImage support (#7249)](https://github.com/material-components/material-components-ios/commit/8d89c7d5c956ec23ca96db0128902ba221c18408) (Eric Lee)
+* [Removes code handling pre-iOS 9 constraints from the controller. (#7340)](https://github.com/material-components/material-components-ios/commit/53fe8f56e36f960fd217841a5c57684538bfa19a) (Eric Lee)
+
+### FlexibleHeader
+
+* [Fix voice over layout bug. (#7319)](https://github.com/material-components/material-components-ios/commit/fc09242db8ff20c014d8a516883fa313ff5a5474) (featherless)
+
+### Ink
+
+* [Add fail the ripple gesture when other scroll view gestures are competing unless they are tap or long press gestures to MDCInkTouchController (#7315)](https://github.com/material-components/material-components-ios/commit/780b9167485215bd60421af50999bf061ea18fad) (Michael Schneider)
+* [Combine initialization method for MDCLegacyInkLayer (#7316)](https://github.com/material-components/material-components-ios/commit/932c32f7c58b1837654ad7c1c160e91ccbe81f95) (Michael Schneider)
+
+### NavigationBar
+
+* [Add titleView tests. (#7309)](https://github.com/material-components/material-components-ios/commit/a71a338460a1fe6b2fd12d2eb9b35700833d5e0f) (featherless)
+* [Fix bug where titleView would disappear. (#7310)](https://github.com/material-components/material-components-ios/commit/aa62eeb107a7fe1a159d3ba11725bdf87ef65976) (featherless)
+
+### PageControl
+
+* [Adds intrinsic content size to MDCPageControl (#7307)](https://github.com/material-components/material-components-ios/commit/7d1a1b52cf5479dbd4acd338f8c1bd2ff0e750ce) (Josh Converse)
+
+### Ripple
+
+* [Remove setting frame based on superview (#7333)](https://github.com/material-components/material-components-ios/commit/8dc59e15a1b606db05fcf2cd6fc3c37db6220d58) (Cody Weaver)
+
+---
+
 # 84.0.0
 
 This release corrected a TextFields accessibility behavior, added Ripple to Chips, and added
