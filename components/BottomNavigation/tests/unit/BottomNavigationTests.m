@@ -157,9 +157,9 @@
   tabBarItem.accessibilityIdentifier = oldIdentifier;
   MDCBottomNavigationBar *bar = [[MDCBottomNavigationBar alloc] init];
   bar.items = @[ tabBarItem ];
-  XCTAssert([bar.itemViews.firstObject.accessibilityIdentifier isEqualToString:oldIdentifier]);
+  XCTAssertEqualObjects(bar.itemViews.firstObject.accessibilityIdentifier, oldIdentifier);
   tabBarItem.accessibilityIdentifier = newIdentifier;
-  XCTAssert([bar.itemViews.firstObject.accessibilityIdentifier isEqualToString:newIdentifier]);
+  XCTAssertEqualObjects(bar.itemViews.firstObject.accessibilityIdentifier, newIdentifier);
 }
 
 - (void)testAccessibilityLabelInitialValue {
@@ -172,7 +172,7 @@
   bar.items = @[ tabBarItem ];
 
   // Then
-  XCTAssert([bar.itemViews.firstObject.accessibilityLabel isEqualToString:initialLabel]);
+  XCTAssertEqualObjects(bar.itemViews.firstObject.accessibilityLabel, initialLabel);
 }
 
 - (void)testAccessibilityLabelValueChanged {
@@ -188,7 +188,7 @@
   tabBarItem.accessibilityLabel = newLabel;
 
   // Then
-  XCTAssert([bar.itemViews.firstObject.accessibilityLabel isEqualToString:newLabel]);
+  XCTAssertEqualObjects(bar.itemViews.firstObject.accessibilityLabel, newLabel);
 }
 
 - (void)testAccessibilityHintInitialValue {
@@ -201,7 +201,7 @@
   bar.items = @[ tabBarItem ];
 
   // Then
-  XCTAssert([bar.itemViews.firstObject.accessibilityHint isEqualToString:initialHint]);
+  XCTAssertEqualObjects(bar.itemViews.firstObject.accessibilityHint, initialHint);
 }
 
 - (void)testAccessibilityHintValueChanged {
@@ -217,7 +217,7 @@
   tabBarItem.accessibilityHint = newHint;
 
   // Then
-  XCTAssert([bar.itemViews.firstObject.accessibilityHint isEqualToString:newHint]);
+  XCTAssertEqualObjects(bar.itemViews.firstObject.accessibilityHint, newHint);
 }
 
 - (void)testIsAccessibilityElementInitialValue {
