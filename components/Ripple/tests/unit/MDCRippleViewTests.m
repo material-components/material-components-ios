@@ -166,4 +166,36 @@
   XCTAssertEqualObjects(rippleView.rippleColor, [UIColor blueColor]);
 }
 
+- (void)testFrameIsSizeOfSuperViewByDefault {
+  // Given
+  CGRect fakeFrame = CGRectMake(0, 0, 200, 200);
+  UIView *fakeView = [[UIView alloc] init];
+  MDCRippleView *rippleView = [[MDCRippleView alloc] init];
+  [fakeView addSubview:rippleView];
+
+  // When
+  fakeView.bounds = fakeFrame;
+
+  // Then
+  XCTAssertTrue(CGRectEqualToRect(fakeFrame, rippleView.frame), @"%@ not equal to %@",
+                NSStringFromCGRect(fakeFrame), NSStringFromCGRect(rippleView.frame));
+}
+
+- (void)testFrameRespondsToCustomization {
+  // Given
+  CGRect fakeViewFrame = CGRectMake(0, 0, 200, 200);
+  CGRect fakeRippleFrame = CGRectMake(0, 0, 50, 50);
+  UIView *fakeView = [[UIView alloc] init];
+  MDCRippleView *rippleView = [[MDCRippleView alloc] init];
+  [fakeView addSubview:rippleView];
+
+  // When
+  fakeView.bounds = fakeViewFrame;
+  rippleView.frame = fakeRippleFrame;
+
+  // Then
+  XCTAssertTrue(CGRectEqualToRect(fakeRippleFrame, rippleView.frame), @"%@ not equal to %@",
+                NSStringFromCGRect(fakeRippleFrame), NSStringFromCGRect(rippleView.frame));
+}
+
 @end

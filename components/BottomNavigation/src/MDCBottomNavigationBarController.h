@@ -60,6 +60,13 @@
  */
 @property(nonatomic) NSUInteger selectedIndex;
 
+/**
+ * If enabled and the user has selected a @c UIContentSizeCategory of @c .AccessibilityMedium or
+ * larger, then when the user long-pressed on a tab item a view will be presented with a larger
+ * version of the image and title.
+ */
+@property(nonatomic, getter=isLongPressPopUpViewEnabled) BOOL longPressPopUpViewEnabled;
+
 - (void)viewDidLoad NS_REQUIRES_SUPER;
 
 #pragma mark - MDCBottomNavigationBarDelegate
