@@ -1,18 +1,24 @@
 # #develop#
 
-Replace this text with a summarized description of this release's contents.
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
 ## New deprecations
 
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
+### Ink
+
+`MDCInkTouchController` now gives users the ability to require that UIScrollView gesture recognizers fail before the ink animation is triggered. [(#7315)](https://github.com/material-components/material-components-ios/commit/780b9167485215bd60421af50999bf061ea18fad)
+
+```objc
+inkTouchController.requiresFailureOfScrollViewGestures = YES;
+```
+
 ## API changes
 
-## Component changes
+### Ink
+
+*new* property: `requiresFailureOfScrollViewGestures` in `MDCInkTouchController`
 
 ## Changes
 
