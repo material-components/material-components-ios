@@ -43,6 +43,7 @@
 
 - (void)exit:(BOOL)animated {
   self.exitAnimationParameter = animated;
+  [super exit:animated];
 }
 
 @end
@@ -57,6 +58,7 @@
 
 - (void)exit:(BOOL)animated {
   self.exitAnimationParameter = animated;
+  [super exit:animated];
 }
 
 @end
@@ -65,7 +67,8 @@
 
 @interface MDCLegacyInkLayerTests : XCTestCase <MDCLegacyInkLayerRippleDelegate>
 @property(nonatomic, strong) XCTestExpectation *animationDidStartExpectation;
-@property(nonatomic, strong) XCTestExpectation *animationDidEndExpectation;
+@property(nonatomic, strong) XCTestExpectation *animationDidStopExpectation;
+
 @property(nonatomic, assign) NSInteger legacyInkLayerAnimationDidStartCount;
 @property(nonatomic, strong) XCTestExpectation *legacyInkLayerAnimationDidStartExpectation;
 @property(nonatomic, assign) NSInteger legacyInkLayerAnimationDidEndCount;
@@ -78,8 +81,8 @@
 
 #pragma mark - <MDCLegacyInkLayerDelegate>
 
-- (void)animationDidStart:(CAAnimation *)anim {
-  [self.inkLayer animationDidStart:anim];
+- (void)animationDidStart:(MDCLegacyInkLayerRipple *)shapeLayer {
+  [self.inkLayer animationDidStart:shapeLayer];
   [self.animationDidStartExpectation fulfill];
 }
 
@@ -87,7 +90,7 @@
               shapeLayer:(CAShapeLayer *)shapeLayer
                 finished:(BOOL)finished {
   [self.inkLayer animationDidStop:anim shapeLayer:shapeLayer finished:finished];
-  [self.animationDidEndExpectation fulfill];
+  [self.animationDidStopExpectation fulfill];
 }
 
 - (void)legacyInkLayerAnimationDidStart:(MDCLegacyInkLayer *)inkLayer {
@@ -104,7 +107,9 @@
 
 - (void)tearDown {
   self.animationDidStartExpectation = nil;
-  self.animationDidEndExpectation = nil;
+  self.animationDidStopExpectation = nil;
+  self.legacyInkLayerAnimationDidStartExpectation = nil;
+  self.legacyInkLayerAnimationDidEndExpectation = nil;
   self.inkLayer = nil;
 }
 
@@ -162,7 +167,7 @@
                 @"When calling without animation, the ripple should receive a 'NO' argument");
 }
 
-- (void)testForegroundRippleEnterWithAnimation {
+- (void)testForegroundRippleWillEnterWithAnimation {
   self.inkLayer = [[MDCLegacyInkLayer alloc] init];
   self.inkLayer.animationDelegate = self;
 
@@ -180,9 +185,14 @@
 
   // Then
   [self waitForExpectationsWithTimeout:5 handler:nil];
+
+  XCTAssertTrue(self.inkLayer.isAnimating,
+                @"When calling without animation, the ripple should receive a 'NO' argument");
+  XCTAssertEqual(self.inkLayer.foregroundRipples.count, 1U,
+                 @"There should be no foreground ripples at the start of the test.");
 }
 
-- (void)testBackgroundRippleEnterWithAnimation {
+- (void)testBackgroundRippleWillEnterWithAnimation {
   self.inkLayer = [[MDCLegacyInkLayer alloc] init];
 
   MDCLegacyInkLayerBackgroundRipple *backgroundRipple =
@@ -199,9 +209,14 @@
 
   // Then
   [self waitForExpectationsWithTimeout:5 handler:nil];
+
+  XCTAssertTrue(self.inkLayer.isAnimating,
+                @"When calling without animation, the ripple should receive a 'NO' argument");
+  XCTAssertEqual(self.inkLayer.backgroundRipples.count, 1U,
+                 @"There should be no foreground ripples at the start of the test.");
 }
 
-- (void)testForegroundRippleExitWithoutAnimation {
+- (void)testForegroundRippleDidExitWithoutAnimation {
   // Given
   self.inkLayer = [[MDCLegacyInkLayer alloc] init];
   MDCLegacyInkLayerForegroundRipple *foregroundRipple =
@@ -210,7 +225,7 @@
   XCTAssertEqual(self.inkLayer.backgroundRipples.count, 0U,
                  @"There should be no foreground ripples at the start of the test.");
   [self.inkLayer.foregroundRipples addObject:foregroundRipple];
-  self.animationDidEndExpectation =
+  self.animationDidStopExpectation =
       [self expectationWithDescription:@"Background ripple completion"];
 
   // When
@@ -222,7 +237,7 @@
                  @"After exiting the only foreround ripple, the array should be empty.");
 }
 
-- (void)testBackgroundRippleExitWithoutAnimation {
+- (void)testBackgroundRippleDidExitWithoutAnimation {
   // Given
   self.inkLayer = [[MDCLegacyInkLayer alloc] init];
   MDCLegacyInkLayerBackgroundRipple *backgroundRipple =
@@ -231,7 +246,7 @@
   XCTAssertEqual(self.inkLayer.backgroundRipples.count, 0U,
                  @"There should be no background ripples at the start of the test.");
   [self.inkLayer.backgroundRipples addObject:backgroundRipple];
-  self.animationDidEndExpectation =
+  self.animationDidStopExpectation =
       [self expectationWithDescription:@"Background ripple completion"];
 
   // When
@@ -252,13 +267,25 @@
   MDCFakeBackgroundRipple *fakeBackgroundRipple = [[MDCFakeBackgroundRipple alloc] init];
   fakeBackgroundRipple.animationDelegate = self;
 
-  self.legacyInkLayerAnimationDidEndExpectation =
-      [self expectationWithDescription:@"Legacy Ink Layer animation did end"];
-
-  // When
   [self.inkLayer.foregroundRipples addObject:fakeForegroundRipple];
   [self.inkLayer.backgroundRipples addObject:fakeBackgroundRipple];
+
+  // When
+  self.legacyInkLayerAnimationDidStartExpectation =
+  [self expectationWithDescription:@"Legacy Ink Layer animation did start"];
   [self.inkLayer enterAllInks];
+  [self waitForExpectationsWithTimeout:5 handler:nil];
+
+  XCTAssertTrue(self.inkLayer.isAnimating,
+                 @"After legacy ink animation did end callback there should be no animation.");
+  XCTAssertEqual(self.legacyInkLayerAnimationDidStartCount, 1U,
+                 @"The legacy ink animation did start callback should only be called once");
+
+  // When
+  self.legacyInkLayerAnimationDidEndExpectation =
+  [self expectationWithDescription:@"Legacy Ink Layer animation did end"];
+  [self.inkLayer resetAllInk:NO];
+  
 
   // Then
   [self waitForExpectationsWithTimeout:5 handler:nil];
@@ -270,8 +297,6 @@
   XCTAssertEqual(
       self.inkLayer.backgroundRipples.count, 0U,
       @"After legacy ink animation did end callback, the background ripples array should empty.");
-  XCTAssertEqual(self.legacyInkLayerAnimationDidStartCount, 1U,
-                 @"The legacy ink animation did start callback should only be called once");
   XCTAssertEqual(self.legacyInkLayerAnimationDidEndCount, 1U,
                  @"The legacy ink animation did end callback should only be called once");
 }

@@ -112,6 +112,8 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
 }
 
 - (void)enter {
+  [self.animationDelegate animationDidStart:self];
+
   _rippleState = kInkRippleSpreading;
   [_inkLayer addSublayer:self];
   _animationCleared = NO;
@@ -162,12 +164,6 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
   return
       [[CAMediaTimingFunction alloc] initWithControlPoints:(float)
                                                      0.157:(float)0.72:(float)0.386:(float)0.987];
-}
-
-- (void)animationDidStart:(CAAnimation *)anim {
-  if (!self.isAnimationCleared) {
-    [self.animationDelegate animationDidStart:anim];
-  }
 }
 
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)finished {
@@ -245,12 +241,6 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
     [self addAnimation:_foregroundPositionAnim forKey:kInkLayerForegroundPositionAnim];
   }
 
-  if (_foregroundOpacityAnim.duration < _foregroundScaleAnim.duration) {
-    _foregroundScaleAnim.delegate = self;
-  } else {
-    _foregroundOpacityAnim.delegate = self;
-  }
-
   [CATransaction begin];
   if (completionBlock) {
     __weak MDCLegacyInkLayerForegroundRipple *weakSelf = self;
@@ -283,11 +273,7 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
     [CATransaction setCompletionBlock:^(void) {
       MDCLegacyInkLayerForegroundRipple *strongSelf = weakSelf;
       [strongSelf removeFromSuperlayer];
-
-      if ([strongSelf.animationDelegate respondsToSelector:@selector(animationDidStop:
-                                                                           shapeLayer:finished:)]) {
-        [strongSelf.animationDelegate animationDidStop:nil shapeLayer:strongSelf finished:YES];
-      }
+      [strongSelf.animationDelegate animationDidStop:nil shapeLayer:strongSelf finished:YES];
     }];
     [CATransaction commit];
     return;
@@ -398,7 +384,6 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
   [super enter];
   _backgroundOpacityAnim = [self opacityAnimWithValues:@[ @0, @1 ] times:@[ @0, @1 ]];
   _backgroundOpacityAnim.duration = kInkLayerBackgroundOpacityEnterDuration;
-  _backgroundOpacityAnim.delegate = self;
   [self addAnimation:_backgroundOpacityAnim forKey:kInkLayerBackgroundOpacityAnim];
 }
 
@@ -414,11 +399,7 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
     [CATransaction setCompletionBlock:^(void) {
       MDCLegacyInkLayerBackgroundRipple *strongSelf = weakSelf;
       [strongSelf removeFromSuperlayer];
-
-      if ([strongSelf.animationDelegate respondsToSelector:@selector(animationDidStop:
-                                                                           shapeLayer:finished:)]) {
-        [strongSelf.animationDelegate animationDidStop:nil shapeLayer:strongSelf finished:YES];
-      }
+      [strongSelf.animationDelegate animationDidStop:nil shapeLayer:strongSelf finished:YES];
     }];
     [CATransaction commit];
     return;
@@ -637,7 +618,8 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
 
 #pragma mark - MDCLegacyRippleInkLayerDelegate
 
-- (void)animationDidStart:(CAAnimation *)anim {
+- (void)animationDidStart:(MDCLegacyInkLayerRipple *)layerRipple
+{
   if (!self.isAnimating) {
     self.animating = YES;
 
@@ -648,18 +630,19 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
 }
 
 - (void)animationDidStop:(__unused CAAnimation *)anim
-              shapeLayer:(CAShapeLayer *)shapeLayer
+              shapeLayer:(MDCLegacyInkLayerRipple *)layerRipple
                 finished:(__unused BOOL)finished {
   // Even when the ripple is "exited" without animation, we need to remove it from compositeRipple
-  [shapeLayer removeFromSuperlayer];
-  [shapeLayer removeAllAnimations];
+  [layerRipple removeFromSuperlayer];
+  [layerRipple removeAllAnimations];
 
-  if ([shapeLayer isKindOfClass:[MDCLegacyInkLayerForegroundRipple class]]) {
-    [self.foregroundRipples removeObject:(MDCLegacyInkLayerForegroundRipple *)shapeLayer];
-  } else if ([shapeLayer isKindOfClass:[MDCLegacyInkLayerBackgroundRipple class]]) {
-    [self.backgroundRipples removeObject:(MDCLegacyInkLayerBackgroundRipple *)shapeLayer];
+  if ([layerRipple isKindOfClass:[MDCLegacyInkLayerForegroundRipple class]]) {
+    [self.foregroundRipples removeObject:(MDCLegacyInkLayerForegroundRipple *)layerRipple];
+  } else if ([layerRipple isKindOfClass:[MDCLegacyInkLayerBackgroundRipple class]]) {
+    [self.backgroundRipples removeObject:(MDCLegacyInkLayerBackgroundRipple *)layerRipple];
   }
 
+  // Check if all ink layer animations did finish and call animation end callback
   if (self.isAnimating && self.foregroundRipples.count == 0 && self.backgroundRipples.count == 0) {
     self.animating = NO;
     if ([self.animationDelegate respondsToSelector:@selector(legacyInkLayerAnimationDidEnd:)]) {

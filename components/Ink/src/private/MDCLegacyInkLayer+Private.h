@@ -16,29 +16,43 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol MDCLegacyInkLayerRippleDelegate <MDCLegacyInkLayerDelegate>
-@optional
-- (void)animationDidStart:(nullable CAAnimation *)anim;
+@class MDCLegacyInkLayerRipple;
 
+@protocol MDCLegacyInkLayerRippleDelegate <MDCLegacyInkLayerDelegate>
+
+/// Called if MDCLegacyInkLayerRipple did start animating.
+- (void)animationDidStart:(MDCLegacyInkLayerRipple *)layerRipple;
+
+/// Called for every MDCLegacyInkLayerRipple if an animation did end.
 - (void)animationDidStop:(nullable CAAnimation *)anim
-              shapeLayer:(nullable CAShapeLayer *)shapeLayer
+              shapeLayer:(nullable CAShapeLayer *)layerRipple
                 finished:(BOOL)finished;
+
 @end
 
 @interface MDCLegacyInkLayer () <MDCLegacyInkLayerRippleDelegate>
+
+/// A Boolean value indicating whether animations of this layer are in progress.
 @property(nonatomic, assign, getter=isAnimating) BOOL animating;
+
+/// Enter any ink applied to the layer. Currently only exposed for testing.
 - (void)enterAllInks;
+
 @end
 
 @interface MDCLegacyInkLayerRipple : CAShapeLayer
 @end
 
 @interface MDCLegacyInkLayerForegroundRipple : MDCLegacyInkLayerRipple
+
 - (void)exit:(BOOL)animated;
+
 @end
 
 @interface MDCLegacyInkLayerBackgroundRipple : MDCLegacyInkLayerRipple
+
 - (void)exit:(BOOL)animated;
+
 @end
 
 NS_ASSUME_NONNULL_END
