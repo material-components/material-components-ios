@@ -1,18 +1,12 @@
-# #develop#
+# 84.1.1
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This patch release fixes ActionSheet to lay out its content correctly when there is a safe area present, for iOS 11 and newer.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+## Changes
 
-Replace this text with links to deprecation guides.
-## New features
+### ActionSheet
 
-Replace this text with example code for each new feature.
-## API changes
-
-## Component changes
+* [Have content positioned based on the layout margins of the container. (#7331)](https://github.com/material-components/material-components-ios/commit/87366d1f7b558d9547d1afceb8253b4386ce5f0e) (Yarden Eitan)
 
 ---
 
