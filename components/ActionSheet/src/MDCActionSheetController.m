@@ -141,6 +141,11 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
 
   self.view.backgroundColor = self.backgroundColor;
   self.tableView.frame = self.view.bounds;
+  self.view.preservesSuperviewLayoutMargins = YES;
+  if (@available(iOS 11.0, *)) {
+    self.view.insetsLayoutMarginsFromSafeArea = NO;
+    self.tableView.insetsLayoutMarginsFromSafeArea = NO;
+  }
   [self.view addSubview:self.tableView];
   [self.view addSubview:self.header];
 }
