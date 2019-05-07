@@ -43,9 +43,9 @@ static NSString *const kRippleLayerScaleString = @"transform.scale";
 }
 
 - (void)setPathFromRadii {
-  CGRect ovalRect =
-      CGRectMake(CGRectGetMidX(self.bounds) - self.rippleRadius,
-                 CGRectGetMidY(self.bounds) - self.rippleRadius, self.rippleRadius * 2, self.rippleRadius * 2);
+  CGRect ovalRect = CGRectMake(CGRectGetMidX(self.bounds) - self.rippleRadius,
+                               CGRectGetMidY(self.bounds) - self.rippleRadius,
+                               self.rippleRadius * 2, self.rippleRadius * 2);
   UIBezierPath *circlePath = [UIBezierPath bezierPathWithOvalInRect:ovalRect];
   self.path = circlePath.CGPath;
 }
