@@ -1,3 +1,15 @@
+# 84.1.1
+
+This patch release fixes ActionSheet to lay out its content correctly when there is a safe area present, for iOS 11 and newer.
+
+## Changes
+
+### ActionSheet
+
+* [Have content positioned based on the layout margins of the container. (#7331)](https://github.com/material-components/material-components-ios/commit/87366d1f7b558d9547d1afceb8253b4386ce5f0e) (Yarden Eitan)
+
+---
+
 # 84.1.0
 
 This minor release adds enhancements to PageControl and Ink, bug fixes for FlexibleHeader, Ink, NavigationBar, and Ripple, and additional test coverage for ActionSheet and NavigationBar.
