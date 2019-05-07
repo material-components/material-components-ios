@@ -20,9 +20,9 @@
 static const CGFloat kTitleLabelAlpha = (CGFloat)0.87;
 static const CGFloat kMessageLabelAlpha = (CGFloat)0.6;
 static const CGFloat kMessageOnlyPadding = 23;
-static const CGFloat kLeadingPadding = 16;
+static const CGFloat kLeadingPadding = 0;
 static const CGFloat kTopStandardPadding = 16;
-static const CGFloat kTrailingPadding = 16;
+static const CGFloat kTrailingPadding = 0;
 static const CGFloat kTitleOnlyPadding = 18;
 static const CGFloat kMiddlePadding = 8;
 
@@ -38,6 +38,7 @@ static const CGFloat kMiddlePadding = 8;
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
+    self.preservesSuperviewLayoutMargins = YES;
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     _messageLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     [self addSubview:_titleLabel];
@@ -63,7 +64,7 @@ static const CGFloat kMiddlePadding = 8;
 
   CGSize size = CGRectInfinite.size;
   size.width = CGRectGetWidth(self.bounds);
-  CGRect labelFrame = [self frameWithSafeAreaInsets:self.bounds];
+  CGRect labelFrame = [self frameWithLayoutMargins:self.bounds];
   labelFrame = CGRectStandardize(labelFrame);
   labelFrame.size.width = labelFrame.size.width - kLeadingPadding - kTrailingPadding;
   CGSize titleSize = [self.titleLabel sizeThatFits:labelFrame.size];
@@ -100,13 +101,8 @@ static const CGFloat kMiddlePadding = 8;
   return contentSize;
 }
 
-- (CGRect)frameWithSafeAreaInsets:(CGRect)frame {
-  UIEdgeInsets safeAreaInsets = UIEdgeInsetsZero;
-  if (@available(iOS 11.0, *)) {
-    safeAreaInsets = self.safeAreaInsets;
-    safeAreaInsets.top = 0;
-  }
-  return UIEdgeInsetsInsetRect(frame, safeAreaInsets);
+- (CGRect)frameWithLayoutMargins:(CGRect)frame {
+  return UIEdgeInsetsInsetRect(frame, self.layoutMargins);
 }
 
 - (void)setTitle:(NSString *)title {
