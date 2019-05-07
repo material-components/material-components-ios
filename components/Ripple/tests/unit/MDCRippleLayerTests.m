@@ -76,6 +76,7 @@
 
   // Then
   XCTAssertNil(rippleLayer.delegate);
+  XCTAssertEqual(rippleLayer.rippleRadius, 0);
   XCTAssertFalse(rippleLayer.isStartAnimationActive);
   XCTAssertEqualWithAccuracy(rippleLayer.rippleTouchDownStartTime, 0, 0.0001);
 }
@@ -266,4 +267,30 @@
                         basicAnimation.timingFunction);
   XCTAssertEqualWithAccuracy(basicAnimation.duration, (CGFloat)0.075, 0.0001);
 }
+
+- (void)testRippleRadiusAfterSetNeedsLayout {
+  // Given
+  CGRect fakeBounds = CGRectMake(0, 0, 18, 24);
+  MDCRippleLayer *rippleLayer = [[MDCRippleLayer alloc] init];
+  rippleLayer.bounds = fakeBounds;
+
+  // When
+  [rippleLayer setNeedsLayout];
+
+  // Then
+  XCTAssertEqual(rippleLayer.rippleRadius, 25);
+}
+
+- (void)testRippleRadiusSetToCustomValue {
+  // Given
+  MDCRippleLayer *rippleLayer = [[MDCRippleLayer alloc] init];
+  CGFloat fakeRadius = 25;
+
+  // When
+  rippleLayer.rippleRadius = fakeRadius;
+
+  // Then
+  XCTAssertEqual(rippleLayer.rippleRadius, fakeRadius);
+}
+
 @end

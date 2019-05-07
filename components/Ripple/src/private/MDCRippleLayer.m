@@ -28,9 +28,7 @@ static NSString *const kRippleLayerOpacityString = @"opacity";
 static NSString *const kRippleLayerPositionString = @"position";
 static NSString *const kRippleLayerScaleString = @"transform.scale";
 
-@implementation MDCRippleLayer {
-  CGFloat _rippleRadius;
-}
+@implementation MDCRippleLayer
 
 - (void)setNeedsLayout {
   [super setNeedsLayout];
@@ -40,14 +38,14 @@ static NSString *const kRippleLayerScaleString = @"transform.scale";
 }
 
 - (void)setRadiiWithRect:(CGRect)rect {
-  _rippleRadius =
+  self.rippleRadius =
       (CGFloat)(MDCHypot(CGRectGetMidX(rect), CGRectGetMidY(rect)) + kExpandRippleBeyondSurface);
 }
 
 - (void)setPathFromRadii {
   CGRect ovalRect =
-      CGRectMake(CGRectGetMidX(self.bounds) - _rippleRadius,
-                 CGRectGetMidY(self.bounds) - _rippleRadius, _rippleRadius * 2, _rippleRadius * 2);
+      CGRectMake(CGRectGetMidX(self.bounds) - self.rippleRadius,
+                 CGRectGetMidY(self.bounds) - self.rippleRadius, self.rippleRadius * 2, self.rippleRadius * 2);
   UIBezierPath *circlePath = [UIBezierPath bezierPathWithOvalInRect:ovalRect];
   self.path = circlePath.CGPath;
 }
