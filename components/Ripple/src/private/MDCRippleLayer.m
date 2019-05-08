@@ -32,7 +32,10 @@ static NSString *const kRippleLayerScaleString = @"transform.scale";
 
 - (void)setNeedsLayout {
   [super setNeedsLayout];
-  [self setRadiiWithRect:self.bounds];
+
+  if (self.rippleRadius <= 0) {
+    [self setRadiiWithRect:self.bounds];
+  }
   [self setPathFromRadii];
   self.position = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
 }
