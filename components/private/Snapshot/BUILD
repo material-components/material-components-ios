@@ -38,11 +38,32 @@ swift_library(
     ],
 )
 
-mdc_public_objc_library(
-    name = "Snapshot",
+mdc_objc_library(
+    name = "Supplemental",
+    testonly = 1,
+    srcs = glob(["src/Supplemental/*.m"]),
+    hdrs = glob(["src/Supplemental/*.h"]),
+    visibility = ["//visibility:public"],
+)
+
+mdc_objc_library(
+    name = "Implementation",
+    testonly = 1,
+    srcs = glob(["src/Implementation/*.m"]),
+    hdrs = glob(["src/Implementation/*.h"]),
+    visibility = ["//visibility:private"],
     deps = [
         "@ios_snapshot_test_case//:SnapshotTestCase",
+    ],
+)
+
+mdc_public_objc_library(
+    name = "Snapshot",
+    testonly = 1,
+    deps = [
+        ":Implementation",
         ":SnapshotSourceDummies",
         ":SnapshotSwiftLib",
+        ":Supplemental",
     ],
 )
