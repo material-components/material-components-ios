@@ -44,8 +44,7 @@ static CGFloat DefaultRippleRadius(CGRect rect) {
 - (void)setPathFromRadii {
   CGFloat radius = self.rippleRadius > 0 ? self.rippleRadius : DefaultRippleRadius(self.bounds);
   CGRect ovalRect = CGRectMake(CGRectGetMidX(self.bounds) - radius,
-                               CGRectGetMidY(self.bounds) - radius,
-                               radius * 2, radius * 2);
+                               CGRectGetMidY(self.bounds) - radius, radius * 2, radius * 2);
   UIBezierPath *circlePath = [UIBezierPath bezierPathWithOvalInRect:ovalRect];
   self.path = circlePath.CGPath;
 }
