@@ -156,7 +156,7 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
   rippleLayer.fillColor = self.rippleColor.CGColor;
   rippleLayer.frame = self.bounds;
   if (self.rippleStyle == MDCRippleStyleUnbounded) {
-    rippleLayer.rippleRadius = self.maximumRadius;
+    rippleLayer.maxRippleRadius = self.maxRippleRadius;
   }
   [self.layer addSublayer:rippleLayer];
   [rippleLayer startRippleAtPoint:point animated:animated completion:completion];

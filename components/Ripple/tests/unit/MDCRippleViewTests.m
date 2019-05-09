@@ -199,21 +199,21 @@
                 NSStringFromCGRect(fakeRippleFrame), NSStringFromCGRect(rippleView.frame));
 }
 
-/** Test that setting the @c maximumRadius on @c MDCRippleView correctly sets the property. */
+/** Test that setting the @c maxRippleRadius on @c MDCRippleView correctly sets the property. */
 - (void)testMaxRippleRadiusGetsSet {
   // Given
   MDCRippleView *rippleView = [[MDCRippleView alloc] init];
   CGFloat fakeRadius = 10;
 
   // When
-  rippleView.maximumRadius = fakeRadius;
+  rippleView.maxRippleRadius = fakeRadius;
 
   // Then
-  XCTAssertEqual(rippleView.maximumRadius, fakeRadius);
+  XCTAssertEqual(rippleView.maxRippleRadius, fakeRadius);
 }
 
 /**
- Test that setting the @c maximumRadius on the @c MDCRippleView does not impact how the ripple
+ Test that setting the @c maxRippleRadius on the @c MDCRippleView does not impact how the ripple
  acts when the @c rippleStyle is set to @c MDCRippleStyleBounded.
  */
 - (void)testMaxRadiusDoesNotImpactBoundedRipple {
@@ -222,16 +222,16 @@
   rippleView.rippleStyle = MDCRippleStyleBounded;
 
   // When
-  rippleView.maximumRadius = 10;
+  rippleView.maxRippleRadius = 10;
   // This must be called to set the @c activeRippleLayer.
   [rippleView beginRippleTouchDownAtPoint:CGPointZero animated:NO completion:nil];
 
   // Then
-  XCTAssertEqual(rippleView.activeRippleLayer.rippleRadius, 0);
+  XCTAssertEqual(rippleView.activeRippleLayer.maxRippleRadius, 0);
 }
 
 /**
- Test that setting the @c maximumRadius on the @c MDCRippleView does impact how the ripple acts
+ Test that setting the @c maxRippleRadius on the @c MDCRippleView does impact how the ripple acts
  when the @c rippleStyle is set to @c MDCrippleStyleUnbounded.
  */
 - (void)testMaxRippleRadiusImpactsUnboundedRipple {
@@ -241,12 +241,12 @@
   CGFloat fakeRippleRadius = 10;
 
   // When
-  rippleView.maximumRadius = fakeRippleRadius;
+  rippleView.maxRippleRadius = fakeRippleRadius;
   // This must be called to set the @c activeRippleLayer.
   [rippleView beginRippleTouchDownAtPoint:CGPointZero animated:NO completion:nil];
 
   // Then
-  XCTAssertEqual(rippleView.activeRippleLayer.rippleRadius, fakeRippleRadius);
+  XCTAssertEqual(rippleView.activeRippleLayer.maxRippleRadius, fakeRippleRadius);
 }
 
 @end
