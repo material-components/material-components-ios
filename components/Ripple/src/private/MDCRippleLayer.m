@@ -32,12 +32,6 @@ static CGFloat GetDefaultRippleRadius(CGRect rect) {
   return (CGFloat)(MDCHypot(CGRectGetMidX(rect), CGRectGetMidY(rect)) + kExpandRippleBeyondSurface);
 }
 
-@interface MDCRippleLayer ()
-
-- (void)setPathFromRadii;
-
-@end
-
 @implementation MDCRippleLayer
 
 - (void)setNeedsLayout {
