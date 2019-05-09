@@ -17,7 +17,8 @@
 
 #import <UIKit/UIKit.h>
 
-static inline CGPoint MDCLegacyInkLayerInterpolatePoint(CGPoint start, CGPoint end,
+static inline CGPoint MDCLegacyInkLayerInterpolatePoint(CGPoint start,
+                                                        CGPoint end,
                                                         CGFloat offsetPercent) {
   CGPoint centerOffsetPoint = CGPointMake(start.x + (end.x - start.x) * offsetPercent,
                                           start.y + (end.y - start.y) * offsetPercent);
@@ -618,8 +619,7 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
 
 #pragma mark - MDCLegacyRippleInkLayerDelegate
 
-- (void)animationDidStart:(MDCLegacyInkLayerRipple *)layerRipple
-{
+- (void)animationDidStart:(MDCLegacyInkLayerRipple *)layerRipple {
   if (!self.isAnimating) {
     self.animating = YES;
 
