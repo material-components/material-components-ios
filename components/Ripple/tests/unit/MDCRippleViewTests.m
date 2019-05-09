@@ -67,6 +67,7 @@
   XCTAssertEqualObjects(rippleView.rippleColor, [[UIColor alloc] initWithWhite:0
                                                                          alpha:(CGFloat)0.16]);
   XCTAssertEqual(rippleView.rippleStyle, MDCRippleStyleBounded);
+  XCTAssertEqual(rippleView.maxRippleRadius, 0);
 }
 
 - (void)testTouchDownDidBeginDelegate {
@@ -196,6 +197,47 @@
   // Then
   XCTAssertTrue(CGRectEqualToRect(fakeRippleFrame, rippleView.frame), @"%@ not equal to %@",
                 NSStringFromCGRect(fakeRippleFrame), NSStringFromCGRect(rippleView.frame));
+}
+
+- (void)testMaxRippleRadiusGetsSet {
+  // Given
+  MDCRippleView *rippleView = [[MDCRippleView alloc] init];
+  CGFloat fakeRadius = 10;
+
+  // When
+  rippleView.maxRippleRadius = fakeRadius;
+
+  // Then
+  XCTAssertEqual(rippleView.maxRippleRadius, fakeRadius);
+}
+
+- (void)testMaxRadiusDoesNotImpactBoundedRipple {
+  // Given
+  MDCRippleView *rippleView = [[MDCRippleView alloc] init];
+  rippleView.rippleStyle = MDCRippleStyleBounded;
+
+  // When
+  rippleView.maxRippleRadius = 10;
+  // This must be called to set the @c activeRippleLayer.
+  [rippleView beginRippleTouchDownAtPoint:CGPointZero animated:NO completion:nil];
+
+  // Then
+  XCTAssertEqual(rippleView.activeRippleLayer.rippleRadius, 0);
+}
+
+- (void)testMaxRippleRadiusImpactsUnboundedRipple {
+  // Given
+  MDCRippleView *rippleView = [[MDCRippleView alloc] init];
+  rippleView.rippleStyle = MDCRippleStyleUnbounded;
+  CGFloat fakeRippleRadius = 10;
+
+  // When
+  rippleView.maxRippleRadius = fakeRippleRadius;
+  // This must be called to set the @c activeRippleLayer.
+  [rippleView beginRippleTouchDownAtPoint:CGPointZero animated:NO completion:nil];
+
+  // Then
+  XCTAssertEqual(rippleView.activeRippleLayer.rippleRadius, fakeRippleRadius);
 }
 
 @end
