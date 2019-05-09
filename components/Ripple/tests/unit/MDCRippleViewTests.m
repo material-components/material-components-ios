@@ -206,10 +206,10 @@
   CGFloat fakeRadius = 10;
 
   // When
-  rippleView.maxRippleRadius = fakeRadius;
+  rippleView.maximumRadius = fakeRadius;
 
   // Then
-  XCTAssertEqual(rippleView.maxRippleRadius, fakeRadius);
+  XCTAssertEqual(rippleView.maximumRadius, fakeRadius);
 }
 
 /**
@@ -222,7 +222,7 @@
   rippleView.rippleStyle = MDCRippleStyleBounded;
 
   // When
-  rippleView.maxRippleRadius = 10;
+  rippleView.maximumRadius = 10;
   // This must be called to set the @c activeRippleLayer.
   [rippleView beginRippleTouchDownAtPoint:CGPointZero animated:NO completion:nil];
 
@@ -241,7 +241,7 @@
   CGFloat fakeRippleRadius = 10;
 
   // When
-  rippleView.maxRippleRadius = fakeRippleRadius;
+  rippleView.maximumRadius = fakeRippleRadius;
   // This must be called to set the @c activeRippleLayer.
   [rippleView beginRippleTouchDownAtPoint:CGPointZero animated:NO completion:nil];
 
