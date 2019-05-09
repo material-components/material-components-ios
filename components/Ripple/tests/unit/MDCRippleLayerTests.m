@@ -26,8 +26,6 @@
 
 @interface FakeMDCRippleLayer : MDCRippleLayer
 @property(nonatomic, strong) NSMutableArray *addedAnimations;
-@property(nonatomic, assign) BOOL fakePathFromRadii;
-- (void)setPathFromRadii;
 @end
 
 @implementation FakeMDCRippleLayer
@@ -38,12 +36,6 @@
   }
   [self.addedAnimations addObject:anim];
   [super addAnimation:anim forKey:key];
-}
-
-- (void)setPathFromRadii {
-  [super setPathFromRadii];
-
-  self.fakePathFromRadii = YES;
 }
 
 @end
@@ -292,7 +284,6 @@
 
   // Then
   XCTAssertEqual(rippleLayer.rippleRadius, fakeRadius);
-  XCTAssertEqual(rippleLayer.fakePathFromRadii, YES);
 }
 
 @end

@@ -55,11 +55,6 @@ static CGFloat DefaultRippleRadius(CGRect rect) {
   self.path = circlePath.CGPath;
 }
 
-- (void)setRippleRadius:(CGFloat)rippleRadius {
-  _rippleRadius = rippleRadius;
-  [self setPathFromRadii];
-}
-
 - (void)startRippleAtPoint:(CGPoint)point
                   animated:(BOOL)animated
                 completion:(MDCRippleCompletionBlock)completion {
