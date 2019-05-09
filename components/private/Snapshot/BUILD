@@ -14,6 +14,7 @@
 
 load(
     "//:material_components_ios.bzl",
+    "mdc_extension_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
 )
@@ -38,11 +39,28 @@ swift_library(
     ],
 )
 
-mdc_public_objc_library(
-    name = "Snapshot",
+mdc_extension_objc_library(
+    name = "SnapshotUtilities",
+    testonly = 1,
+    visibility = ["//visibility:public"],
+)
+
+mdc_extension_objc_library(
+    name = "SnapshotTestCase",
+    testonly = 1,
+    visibility = ["//visibility:private"],
     deps = [
         "@ios_snapshot_test_case//:SnapshotTestCase",
+    ],
+)
+
+mdc_public_objc_library(
+    name = "Snapshot",
+    testonly = 1,
+    deps = [
+        ":SnapshotTestCase",
         ":SnapshotSourceDummies",
         ":SnapshotSwiftLib",
+        ":SnapshotUtilities",
     ],
 )
