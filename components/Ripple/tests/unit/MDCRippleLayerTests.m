@@ -76,7 +76,7 @@
 
   // Then
   XCTAssertNil(rippleLayer.delegate);
-  XCTAssertEqual(rippleLayer.maxRippleRadius, 0);
+  XCTAssertEqual(rippleLayer.maximumRadius, 0);
   XCTAssertFalse(rippleLayer.isStartAnimationActive);
   XCTAssertEqualWithAccuracy(rippleLayer.rippleTouchDownStartTime, 0, 0.0001);
 }
@@ -268,16 +268,17 @@
   XCTAssertEqualWithAccuracy(basicAnimation.duration, (CGFloat)0.075, 0.0001);
 }
 
+/** Test that setting @c maximumRadius correctly sets the property on @c MDCRippleLayer. */
 - (void)testRippleRadiusSetToCustomValue {
   // Given
-  FakeMDCRippleLayer *rippleLayer = [[FakeMDCRippleLayer alloc] init];
+  MDCRippleLayer *rippleLayer = [[MDCRippleLayer alloc] init];
   CGFloat fakeRadius = 25;
 
   // When
-  rippleLayer.maxRippleRadius = fakeRadius;
+  rippleLayer.maximumRadius = fakeRadius;
 
   // Then
-  XCTAssertEqual(rippleLayer.maxRippleRadius, fakeRadius);
+  XCTAssertEqual(rippleLayer.maximumRadius, fakeRadius);
 }
 
 @end
