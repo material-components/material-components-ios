@@ -12,6 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCSnapshotTestCase.h"
-#import "UIImage+MDCSnapshot.h"
-#import "UIView+MDCSnapshot.h"
+#import "SnapshotTestCase/MDCSnapshotTestCase.h"
+#import "SnapshotUtilities/UIImage+MDCSnapshot.h"
+#import "SnapshotUtilities/UIView+MDCSnapshot.h"

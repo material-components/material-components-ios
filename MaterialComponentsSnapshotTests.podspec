@@ -32,7 +32,7 @@ module SnapshotPodspecHelper
   end
 
   def self.snapshot_sources
-    base_sources = ["components/private/Snapshot/src/*.{h,m,swift}"]
+    base_sources = ["components/private/Snapshot/src/*.{h,m,swift}", "components/private/Snapshot/src/*/*.{h,m,swift}"]
     return components.reduce(base_sources) do |sources_so_far, component|
       sources_so_far + component.source_files
     end
