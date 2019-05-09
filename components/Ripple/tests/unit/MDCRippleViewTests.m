@@ -199,6 +199,7 @@
                 NSStringFromCGRect(fakeRippleFrame), NSStringFromCGRect(rippleView.frame));
 }
 
+/** Test that setting the @c maxRippleRadius on @c MDCRippleView correctly sets the property. */
 - (void)testMaxRippleRadiusGetsSet {
   // Given
   MDCRippleView *rippleView = [[MDCRippleView alloc] init];
@@ -211,6 +212,10 @@
   XCTAssertEqual(rippleView.maxRippleRadius, fakeRadius);
 }
 
+/**
+ Test that setting the @c maxRippleRadius on the @c MDCRippleView does not impact how the ripple
+ acts when the @c rippleStyle is set to @c MDCRippleStyleBounded.
+ */
 - (void)testMaxRadiusDoesNotImpactBoundedRipple {
   // Given
   MDCRippleView *rippleView = [[MDCRippleView alloc] init];
@@ -225,6 +230,10 @@
   XCTAssertEqual(rippleView.activeRippleLayer.rippleRadius, 0);
 }
 
+/**
+ Test that setting the @c maxRippleRadius on the @c MDCRippleView does impact how the ripple acts
+ when the @c rippleStyle is set to @c MDCrippleStyleUnbounded.
+ */
 - (void)testMaxRippleRadiusImpactsUnboundedRipple {
   // Given
   MDCRippleView *rippleView = [[MDCRippleView alloc] init];
