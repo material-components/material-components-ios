@@ -272,20 +272,19 @@
 
   // When
   self.legacyInkLayerAnimationDidStartExpectation =
-  [self expectationWithDescription:@"Legacy Ink Layer animation did start"];
+      [self expectationWithDescription:@"Legacy Ink Layer animation did start"];
   [self.inkLayer enterAllInks];
   [self waitForExpectationsWithTimeout:5 handler:nil];
 
   XCTAssertTrue(self.inkLayer.isAnimating,
-                 @"After legacy ink animation did end callback there should be no animation.");
+                @"After legacy ink animation did end callback there should be no animation.");
   XCTAssertEqual(self.legacyInkLayerAnimationDidStartCount, 1U,
                  @"The legacy ink animation did start callback should only be called once");
 
   // When
   self.legacyInkLayerAnimationDidEndExpectation =
-  [self expectationWithDescription:@"Legacy Ink Layer animation did end"];
+      [self expectationWithDescription:@"Legacy Ink Layer animation did end"];
   [self.inkLayer resetAllInk:NO];
-  
 
   // Then
   [self waitForExpectationsWithTimeout:5 handler:nil];
