@@ -32,6 +32,12 @@ static CGFloat DefaultRippleRadius(CGRect rect) {
   return (CGFloat)(MDCHypot(CGRectGetMidX(rect), CGRectGetMidY(rect)) + kExpandRippleBeyondSurface);
 }
 
+@interface MDCRippleLayer ()
+
+- (void)setPathFromRadii;
+
+@end
+
 @implementation MDCRippleLayer
 
 - (void)setNeedsLayout {
@@ -47,6 +53,11 @@ static CGFloat DefaultRippleRadius(CGRect rect) {
                                CGRectGetMidY(self.bounds) - radius, radius * 2, radius * 2);
   UIBezierPath *circlePath = [UIBezierPath bezierPathWithOvalInRect:ovalRect];
   self.path = circlePath.CGPath;
+}
+
+- (void)setRippleRadius:(CGFloat)rippleRadius {
+  _rippleRadius = rippleRadius;
+  [self setPathFromRadii];
 }
 
 - (void)startRippleAtPoint:(CGPoint)point

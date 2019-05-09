@@ -16,13 +16,21 @@
 
 #import "MDCRippleLayer.h"
 
-#pragma mark - Fake classes
+@interface MDCRippleLayer (Testing)
 
-@interface CapturingAnimationsMDCRippleLayer : MDCRippleLayer
-@property(nonatomic, strong) NSMutableArray *addedAnimations;
+- (void)setPathFromRadii;
+
 @end
 
-@implementation CapturingAnimationsMDCRippleLayer
+#pragma mark - Fake classes
+
+@interface FakeMDCRippleLayer : MDCRippleLayer
+@property(nonatomic, strong) NSMutableArray *addedAnimations;
+@property(nonatomic, assign) BOOL fakePathFromRadii;
+- (void)setPathFromRadii;
+@end
+
+@implementation FakeMDCRippleLayer
 
 - (void)addAnimation:(CAAnimation *)anim forKey:(NSString *)key {
   if (!self.addedAnimations) {
@@ -30,6 +38,12 @@
   }
   [self.addedAnimations addObject:anim];
   [super addAnimation:anim forKey:key];
+}
+
+- (void)setPathFromRadii {
+  [super setPathFromRadii];
+  
+  self.fakePathFromRadii = YES;
 }
 
 @end
@@ -154,7 +168,7 @@
 
 - (void)testAnimationTimingInSpeedScaledLayer {
   // Given
-  CapturingAnimationsMDCRippleLayer *rippleLayer = [[CapturingAnimationsMDCRippleLayer alloc] init];
+  FakeMDCRippleLayer *rippleLayer = [[FakeMDCRippleLayer alloc] init];
   rippleLayer.bounds = CGRectMake(0, 0, 10, 10);
   rippleLayer.speed = (float)0.1;
   CGFloat expectedRippleFadeoutDelay = (CGFloat)0.150;
@@ -176,7 +190,7 @@
 
 - (void)testStartRippleAnimationCorrectness {
   // Given
-  CapturingAnimationsMDCRippleLayer *rippleLayer = [[CapturingAnimationsMDCRippleLayer alloc] init];
+  FakeMDCRippleLayer *rippleLayer = [[FakeMDCRippleLayer alloc] init];
   CGPoint point = CGPointMake(10, 10);
 
   // When
@@ -213,7 +227,7 @@
 
 - (void)testEndRippleAnimationCorrectness {
   // Given
-  CapturingAnimationsMDCRippleLayer *rippleLayer = [[CapturingAnimationsMDCRippleLayer alloc] init];
+  FakeMDCRippleLayer *rippleLayer = [[FakeMDCRippleLayer alloc] init];
 
   // When
   [rippleLayer endRippleAnimated:YES completion:nil];
@@ -232,7 +246,7 @@
 
 - (void)testFadeInRippleAnimationCorrectness {
   // Given
-  CapturingAnimationsMDCRippleLayer *rippleLayer = [[CapturingAnimationsMDCRippleLayer alloc] init];
+  FakeMDCRippleLayer *rippleLayer = [[FakeMDCRippleLayer alloc] init];
 
   // When
   [rippleLayer fadeInRippleAnimated:YES completion:nil];
@@ -251,7 +265,7 @@
 
 - (void)testFadeOutRippleAnimationCorrectness {
   // Given
-  CapturingAnimationsMDCRippleLayer *rippleLayer = [[CapturingAnimationsMDCRippleLayer alloc] init];
+  FakeMDCRippleLayer *rippleLayer = [[FakeMDCRippleLayer alloc] init];
 
   // When
   [rippleLayer fadeOutRippleAnimated:YES completion:nil];
@@ -270,7 +284,7 @@
 
 - (void)testRippleRadiusSetToCustomValue {
   // Given
-  MDCRippleLayer *rippleLayer = [[MDCRippleLayer alloc] init];
+  FakeMDCRippleLayer *rippleLayer = [[FakeMDCRippleLayer alloc] init];
   CGFloat fakeRadius = 25;
 
   // When
@@ -278,6 +292,7 @@
 
   // Then
   XCTAssertEqual(rippleLayer.rippleRadius, fakeRadius);
+  XCTAssertEqual(rippleLayer.fakePathFromRadii, YES);
 }
 
 @end
