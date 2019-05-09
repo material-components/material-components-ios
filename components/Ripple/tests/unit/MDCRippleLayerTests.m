@@ -16,12 +16,6 @@
 
 #import "MDCRippleLayer.h"
 
-@interface MDCRippleLayer (Testing)
-
-- (void)setPathFromRadii;
-
-@end
-
 #pragma mark - Fake classes
 
 @interface FakeMDCRippleLayer : MDCRippleLayer
