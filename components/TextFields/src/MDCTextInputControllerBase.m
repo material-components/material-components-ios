@@ -1495,7 +1495,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
           [NSString stringWithFormat:@"%lu characters remaining",
                                      charactersForTextInput > self.characterCountMax
                                          ? 0U
-                                         : (unsigned long)(MAX(0, self.characterCountMax -
+                                         : (unsigned long)(MAX(0U, self.characterCountMax -
                                                                       charactersForTextInput))];
     }
 
