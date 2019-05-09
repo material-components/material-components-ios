@@ -46,6 +46,11 @@ typedef void (^MDCRippleCompletionBlock)(void);
 @property(nonatomic, assign) CFTimeInterval rippleTouchDownStartTime;
 
 /**
+ The radius the ripple expands to when activated.
+ */
+@property(nonatomic, assign) CGFloat rippleRadius;
+
+/**
  Starts the ripple at the given point.
 
  @param point The point to start the ripple animation.
