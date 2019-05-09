@@ -48,7 +48,7 @@ typedef void (^MDCRippleCompletionBlock)(void);
 /**
  The radius the ripple expands to when activated.
  */
-@property(nonatomic, assign) CGFloat rippleRadius;
+@property(nonatomic, assign) CGFloat maxRippleRadius;
 
 /**
  Starts the ripple at the given point.

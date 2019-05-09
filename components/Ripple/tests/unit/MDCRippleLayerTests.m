@@ -82,7 +82,7 @@
 
   // Then
   XCTAssertNil(rippleLayer.delegate);
-  XCTAssertEqual(rippleLayer.rippleRadius, 0);
+  XCTAssertEqual(rippleLayer.maxRippleRadius, 0);
   XCTAssertFalse(rippleLayer.isStartAnimationActive);
   XCTAssertEqualWithAccuracy(rippleLayer.rippleTouchDownStartTime, 0, 0.0001);
 }
@@ -280,10 +280,10 @@
   CGFloat fakeRadius = 25;
 
   // When
-  rippleLayer.rippleRadius = fakeRadius;
+  rippleLayer.maxRippleRadius = fakeRadius;
 
   // Then
-  XCTAssertEqual(rippleLayer.rippleRadius, fakeRadius);
+  XCTAssertEqual(rippleLayer.maxRippleRadius, fakeRadius);
 }
 
 @end
