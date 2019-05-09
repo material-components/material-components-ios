@@ -66,7 +66,7 @@ typedef NS_ENUM(NSInteger, MDCRippleStyle) {
 
  @note This property is ignored if @c rippleStyle is set to @c MDCRippleStyleBounded.
  */
-@property(nonatomic, assign) CGFloat maxRippleRadius;
+@property(nonatomic, assign) CGFloat maximumRadius;
 
 /**
  Sets the ripple color of the currently active ripple.
