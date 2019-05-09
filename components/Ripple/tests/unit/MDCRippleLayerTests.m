@@ -42,7 +42,7 @@
 
 - (void)setPathFromRadii {
   [super setPathFromRadii];
-  
+
   self.fakePathFromRadii = YES;
 }
 
