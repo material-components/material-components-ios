@@ -38,7 +38,8 @@
  in a sheet from the bottom.
 
  */
-__attribute__((objc_subclassing_restricted)) @interface MDCActionSheetController : UIViewController <UIContentSizeCategoryAdjusting>
+__attribute__((objc_subclassing_restricted)) @interface MDCActionSheetController
+    : UIViewController<UIContentSizeCategoryAdjusting>
 
 /**
  Designated initializer to create and return a view controller for displaying an alert to the user.
