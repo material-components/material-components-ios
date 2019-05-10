@@ -33,7 +33,7 @@ static const CGFloat kMiddlePadding = 8;
 
 @implementation MDCActionSheetHeaderView
 
-@synthesize mdc_adjustsFontForContentSizeCategory = _mdc_adjustsFontForContentSizeCategory;
+@synthesize adjustsFontForContentSizeCategory = _adjustsFontForContentSizeCategory;
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
@@ -154,10 +154,10 @@ static const CGFloat kMiddlePadding = 8;
 - (void)updateTitleFont {
   UIFont *titleFont =
       self.titleFont ?: [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
-  if (self.mdc_adjustsFontForContentSizeCategory) {
+  if (self.adjustsFontForContentSizeCategory) {
     self.titleLabel.font =
         [titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
-                                scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
+                                scaledForDynamicType:self.adjustsFontForContentSizeCategory];
   } else {
     self.titleLabel.font = titleFont;
   }
@@ -167,10 +167,10 @@ static const CGFloat kMiddlePadding = 8;
 - (void)updateMessageFont {
   UIFont *messageFont =
       self.messageFont ?: [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody1];
-  if (self.mdc_adjustsFontForContentSizeCategory) {
+  if (self.adjustsFontForContentSizeCategory) {
     self.messageLabel.font =
         [messageFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleBody1
-                                  scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
+                                  scaledForDynamicType:self.adjustsFontForContentSizeCategory];
   } else {
     self.messageLabel.font = messageFont;
   }
@@ -178,9 +178,10 @@ static const CGFloat kMiddlePadding = 8;
   [self setNeedsLayout];
 }
 
-- (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
-  _mdc_adjustsFontForContentSizeCategory = adjusts;
-  if (_mdc_adjustsFontForContentSizeCategory) {
+- (void)setAdjustsFontForContentSizeCategory:(BOOL)adjustsFontForContentSizeCategory {
+  _adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
+
+  if (adjustsFontForContentSizeCategory) {
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(updateFonts)
                                                  name:UIContentSizeCategoryDidChangeNotification

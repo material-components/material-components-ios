@@ -71,7 +71,7 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
   NSMutableArray<MDCActionSheetAction *> *_actions;
 }
 
-@synthesize mdc_adjustsFontForContentSizeCategory = _mdc_adjustsFontForContentSizeCategory;
+@synthesize adjustsFontForContentSizeCategory = _adjustsFontForContentSizeCategory;
 
 + (instancetype)actionSheetControllerWithTitle:(NSString *)title message:(NSString *)message {
   return [[MDCActionSheetController alloc] initWithTitle:title message:message];
@@ -355,11 +355,14 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
 
 #pragma mark - Dynamic Type
 
-- (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
-  _mdc_adjustsFontForContentSizeCategory = adjusts;
-  self.header.mdc_adjustsFontForContentSizeCategory = adjusts;
+- (void)setAdjustsFontForContentSizeCategory:(BOOL)adjustsFontForContentSizeCategory {
+  _adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
+
+  self.header.adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
+
   [self updateFontsForDynamicType];
-  if (_mdc_adjustsFontForContentSizeCategory) {
+
+  if (adjustsFontForContentSizeCategory) {
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(updateFontsForDynamicType)
                                                  name:UIContentSizeCategoryDidChangeNotification
@@ -414,6 +417,16 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
 - (void)setInkColor:(UIColor *)inkColor {
   _inkColor = inkColor;
   [self.tableView reloadData];
+}
+
+#pragma mark - To be deprecated
+
+- (BOOL)mdc_adjustsFontForContentSizeCategory {
+  return self.adjustsFontForContentSizeCategory;
+}
+
+- (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjustsFontForContentSizeCategory {
+  self.adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
 }
 
 @end

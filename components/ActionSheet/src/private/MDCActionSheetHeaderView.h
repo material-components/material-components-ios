@@ -14,7 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MDCActionSheetHeaderView : UIView
+@interface MDCActionSheetHeaderView : UIView <UIContentSizeCategoryAdjusting>
 
 - (nonnull instancetype)initWithFrame:(CGRect)frame;
 
@@ -24,9 +24,6 @@
 @property(nonatomic, nullable, copy) NSString *title;
 
 @property(nonatomic, nullable, copy) NSString *message;
-
-@property(nonatomic, setter=mdc_setAdjustsFontForContentSizeCategory:)
-    BOOL mdc_adjustsFontForContentSizeCategory;
 
 @property(nonatomic, strong, nonnull) UIFont *titleFont;
 
