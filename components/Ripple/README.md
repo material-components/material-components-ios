@@ -376,59 +376,23 @@ For guidance, these are the current naming differences that you need to pay atte
 
 **`MDCInkView` vs `MDCRippleView`:**
 
-<table>
-  <tr>
-    <td>`MDCInkView`</td>
-    <td>`MDCRippleView`</td>
-  </tr>
-  <tr>
-    <td>`animationDelegate`</td>
-    <td>`rippleViewDelegate`</td>
-  </tr>
-  <tr>
-    <td>`maxRippleRadius`</td>
-    <td>`maximumRadius`</td>
-  </tr>
-  <tr>
-    <td>`startTouchBeganAtPoint:animated:completion:`</td>
-    <td>`beginRippleTouchDownAtPoint:animated:completion:`</td>
-  </tr>
-  <tr>
-    <td>`startTouchEndAtPoint:animated:completion:`</td>
-    <td>`beginRippleTouchUpAnimated:completion:`</td>
-  </tr>
-  <tr>
-    <td>`inkAnimationDidStart:inkView`</td>
-    <td>`rippleTouchDownAnimationDidBegin:rippleView`</td>
-  </tr>
-  <tr>
-    <td>`inkAnimationDidEnd:inkView`</td>
-    <td>`rippleTouchUpAnimationDidEnd:rippleView`</td>
-  </tr>
-</table>
-
+|`MDCInkView`|`MDCRippleView`|
+|---|---|
+|`animationDelegate`|`rippleViewDelegate`|
+|`maxRippleRadius`|`maximumRadius`|
+|`startTouchBeganAtPoint:animated:completion:`|`beginRippleTouchDownAtPoint:animated:completion:`|
+|`startTouchEndAtPoint:animated:completion:`|`beginRippleTouchUpAnimated:completion:`|
+|`inkAnimationDidStart:inkView`|`rippleTouchDownAnimationDidBegin:rippleView`|
+|`inkAnimationDidEnd:inkView`|`rippleTouchUpAnimationDidEnd:rippleView`|
 
 *Other API differences are simply a regex replacement of: (1)Ink(2) to (1)Ripple(2) where (1) and (2) are [a-zA-Z]\*.*
 
 **`MDCInkTouchController` vs `MDCRippleTouchController`:**
 
-<table>
-  <tr>
-    <td>`MDCInkTouchController`</td>
-    <td>`MDCRippleTouchController`</td>
-  </tr>
-  <tr>
-    <td>`defaultInkView`</td>
-    <td>`rippleView`</td>
-  </tr>
-  <tr>
-    <td>`initWithView:` → `addInkView`</td>
-    <td>2 ways:
-1. `initWithView:` 
-2. `init` → `addRippleToView:`</td>
-  </tr>
-</table>
-
+|`MDCInkTouchController`|`MDCRippleTouchController`|
+|---|---|
+|`defaultInkView`|`rippleView`|
+|`initWithView:` → `addInkView`|2 ways: <br> 1. `initWithView:`, <br> 2. `init` → `addRippleToView:`|
 
 *Other API differences are simply a regex replacement of: (1)Ink(2) to (1)Ripple(2) where (1) and (2) are [a-zA-Z]\*.*
 
@@ -456,10 +420,8 @@ For guidance, these are the current naming differences that you need to pay atte
 ```
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item">**If skipped to this step:** Replace all InkView/InkTouchController API calls with their RippleView/RippleTouchController counterparts.</li>
-</ul>
-
-  **If not:**Add the RippleView/RippleTouchController APIs beside their InkView/InkTouchController counterparts.
+  <li class="icon-list-item icon-list-item">**If skipped to this step:** Replace all InkView/InkTouchController API calls with their RippleView/RippleTouchController counterparts.<br></li>
+**If not:** Add the RippleView/RippleTouchController APIs beside their InkView/InkTouchController counterparts.
 
 <ul class="icon-list">
   <li class="icon-list-item icon-list-item">**(Optional)** If the component itself has public APIs that use the term "Ink" like “InkStyle” or “InkColor”, the developer can decide if to add/modify APIs to use the term “Ripple”. But for a quick migration, the existing exposed APIs could remain and be reused.</li>
