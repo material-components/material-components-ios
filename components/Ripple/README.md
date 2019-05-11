@@ -400,9 +400,7 @@ For guidance, these are the current naming differences that you need to pay atte
 
 *Skip to step 2 if we want to entirely replace Ink and not have Ripple as an opt-in feature*
 
-<ul class="icon-list">
-  <li class="icon-list-item icon-list-item">Provide an enableRippleBehavior bool property to allow to opt in to use Ripple instead of Ink (where the default to this property is NO). The setter of this Bool:</li>
-</ul>
+* Provide an enableRippleBehavior bool property to allow to opt in to use Ripple instead of Ink (where the default to this property is NO). The setter of this Bool:
 
 ```objc
 - (void)setEnableRippleBehavior:(BOOL)enableRippleBehavior {
@@ -419,11 +417,7 @@ For guidance, these are the current naming differences that you need to pay atte
 }
 ```
 
-<ul class="icon-list">
-  <li class="icon-list-item icon-list-item">**If skipped to this step:** Replace all InkView/InkTouchController API calls with their RippleView/RippleTouchController counterparts.<br></li>
+* **If skipped to this step:** Replace all InkView/InkTouchController API calls with their RippleView/RippleTouchController counterparts.<br>
 **If not:** Add the RippleView/RippleTouchController APIs beside their InkView/InkTouchController counterparts.
 
-<ul class="icon-list">
-  <li class="icon-list-item icon-list-item">**(Optional)** If the component itself has public APIs that use the term "Ink" like “InkStyle” or “InkColor”, the developer can decide if to add/modify APIs to use the term “Ripple”. But for a quick migration, the existing exposed APIs could remain and be reused.</li>
-</ul>
-
+* **(Optional)** If the component itself has public APIs that use the term "Ink" like “InkStyle” or “InkColor”, the developer can decide if to add/modify APIs to use the term “Ripple”. But for a quick migration, the existing exposed APIs could remain and be reused.
