@@ -46,8 +46,8 @@ For guidance, these are the current naming differences that you need to pay atte
 
 <table>
   <tr>
-    <td>`MDCInkTouchController`</td>
-    <td>`MDCRippleTouchController`</td>
+    <td> `MDCInkTouchController` </td>
+    <td> `MDCRippleTouchController` </td>
   </tr>
   <tr>
     <td>`defaultInkView`</td>
