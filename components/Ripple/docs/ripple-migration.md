@@ -44,23 +44,10 @@ For guidance, these are the current naming differences that you need to pay atte
 
 **`MDCInkTouchController` vs `MDCRippleTouchController`:**
 
-<table>
-  <tr>
-    <td> `MDCInkTouchController` </td>
-    <td> `MDCRippleTouchController` </td>
-  </tr>
-  <tr>
-    <td>`defaultInkView`</td>
-    <td>`rippleView`</td>
-  </tr>
-  <tr>
-    <td>`initWithView:` → `addInkView`</td>
-    <td>2 ways:
-1. `initWithView:` 
-2. `init` → `addRippleToView:`</td>
-  </tr>
-</table>
-
+|`MDCInkTouchController`|`MDCRippleTouchController`|
+|---|:---:|---:|
+|`defaultInkView`|`rippleView`|
+|`initWithView:` → `addInkView`|2 ways: 1. `initWithView:`, 2. `init` → `addRippleToView:`|
 
 *Other API differences are simply a regex replacement of: (1)Ink(2) to (1)Ripple(2) where (1) and (2) are [a-zA-Z]\*.*
 
