@@ -49,7 +49,7 @@ For guidance, these are the current naming differences that you need to pay atte
 }
 ```
 
-* **If skipped to this step:** Replace all InkView/InkTouchController API calls with their RippleView/RippleTouchController counterparts.
+* **If skipped to this step:** Replace all InkView/InkTouchController API calls with their RippleView/RippleTouchController counterparts.<br>
 **If not:** Add the RippleView/RippleTouchController APIs beside their InkView/InkTouchController counterparts.
 
 * **(Optional)** If the component itself has public APIs that use the term "Ink" like “InkStyle” or “InkColor”, the developer can decide if to add/modify APIs to use the term “Ripple”. But for a quick migration, the existing exposed APIs could remain and be reused.
