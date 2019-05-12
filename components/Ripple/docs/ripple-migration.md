@@ -39,7 +39,7 @@ For guidance, these are the current naming differences that you need to pay atte
 
 **Based on the above guidance, the overall strategy to migrate Ink to Ripple in each component is as follows:**
 
-* Provide an enableRippleBehavior bool property to allow to opt in to use Ripple instead of Ink (where the default to this property is NO).
+* Provide an enableRippleBehavior bool property to allow to opt-in to use Ripple instead of Ink (where the default to this property is NO).
 
 Component Header:
 ```objc
