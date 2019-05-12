@@ -28,4 +28,4 @@ Ripple is a material design implementation of touch feedback and is a successor 
 
 ## Migration guides
 
-- [Migration guide: Ink to Ripple](ripple-migration.md)
+- [Migration guide: Ink to Ripple](migration-guide-ink-to-ripple.md)

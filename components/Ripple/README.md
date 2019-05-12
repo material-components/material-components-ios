@@ -365,7 +365,7 @@ MDCStatefulRippleView *statefulRippleView = [[MDCStatefulRippleView alloc] init]
 
 ## Migration guides
 
-<!-- Extracted from docs/ripple-migration.md -->
+<!-- Extracted from docs/migration-guide-ink-to-ripple.md -->
 
 ### Migration guide: Ink to Ripple
 
