@@ -1,3 +1,69 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+### Ripple
+
+#### MDCRippleView
+
+*new* property: `maximumRadius` in `MDCRippleView`
+
+### ShadowElevations
+
+#### MDCShadowElevationNavDrawer
+
+*modified* constant: `MDCShadowElevationNavDrawer`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `static const MDCShadowElevation MDCShadowElevationNavDrawer = (CGFloat)16.` |
+| To: | `static const MDCShadowElevation MDCShadowElevationNavDrawer = (CGFloat)4.` |
+
+## Component changes
+
+## Changes
+
+### ActionSheet
+
+* [Fixing handler error and adding missing parenthesis (#7360)](https://github.com/material-components/material-components-ios/commit/f8bfd0051adf90a4fac0e9b4b9a613e4a0a073e5) (Justin Pritchard)
+* [Have content positioned based on the layout margins of the container. (#7331)](https://github.com/material-components/material-components-ios/commit/7b129e1b3b4014a36f4252b1dc63368cc6353618) (Yarden Eitan)
+
+### BottomNavigation
+
+* [Log accessibility string failure values in tests. (#7326)](https://github.com/material-components/material-components-ios/commit/c360a7db777f87062a1cc2a97c2ab8801ee6f6fe) (Robert Moore)
+
+### Ink
+
+* [Add animation delegate callbacks for MDCLegacyInkLayer (#7339)](https://github.com/material-components/material-components-ios/commit/c00921720b35d8faea6c2372377aaeb2a1a47b0a) (Michael Schneider)
+
+### Ripple
+
+* [Add a migration guide for components (#7367)](https://github.com/material-components/material-components-ios/commit/3c46c3e2677e6a9fe2e749b87fca11dc736bdec8) (Yarden Eitan)
+* [Add max ripple radius property (#7357)](https://github.com/material-components/material-components-ios/commit/22a4f2b72f2e816e3b643259115f302bde371dfd) (Cody Weaver)
+* [Make rippleRadius a property (#7350)](https://github.com/material-components/material-components-ios/commit/d42a3819c4ec9b0a4509c6a380dcb102178b7303) (Cody Weaver)
+
+### TextFields
+
+* [Quash -Wsign-compare triggers (#7358)](https://github.com/material-components/material-components-ios/commit/f4003b5982269b08643a9ad7b65ce69303f220fa) (featherless)
+
+## Multi-component changes
+
+* [Split implementation and supplemental. (#7356)](https://github.com/material-components/material-components-ios/commit/c9ad1c1cdc11a14fca8f7baf1f1a1954aad6c854) (Robert Moore)
+* [Update Readme to use the script generator and move migration guide. (#7370)](https://github.com/material-components/material-components-ios/commit/89cd08dc8831eb06b70991f05fbb6b8c33081e58) (Yarden Eitan)
+* [update (#7345)](https://github.com/material-components/material-components-ios/commit/4badd38cf5eb65fc9d7d88d6db252dd73dca354f) (Yarden Eitan)
+
+---
+
 # 84.1.1
 
 This patch release fixes ActionSheet to lay out its content correctly when there is a safe area present, for iOS 11 and newer.
