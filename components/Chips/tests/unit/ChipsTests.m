@@ -15,8 +15,11 @@
 #import "MaterialChips.h"
 
 #import <XCTest/XCTest.h>
+#import <objc/runtime.h>
 
 #import "../../src/MDCChipField.h"
+#import "MDCChipView+Testing.h"
+#import "MaterialTypography.h"
 
 // Expose internal methods for testing
 @interface MDCChipField (Testing)
@@ -392,6 +395,76 @@ static inline UIImage *TestImage(CGSize size) {
 
   // Then
   XCTAssertEqual(controlViewCount, (NSUInteger)1);
+}
+
+static Method original_TraitCollection_Method;
+static Method swizzled_TraitCollection_Method;
+
+- (void)testChipViewLegacyDynamicTypeBehavior {
+  // Given
+  MDCChipView *chipView = [[MDCChipView alloc] init];
+  chipView.titleFont = [UIFont systemFontOfSize:14.0 weight:UIFontWeightMedium];
+  chipView.mdc_adjustsFontForContentSizeCategory = YES;
+  chipView.mdc_legacyFontScaling = YES;
+  chipView.titleLabel.text = @"Chip";
+  [chipView updateTitleFont];
+  CGFloat defaultFontSize = chipView.titleLabel.font.pointSize;
+
+  // When
+  if (@available(iOS 10.0, *)) {
+    Class class = object_getClass(UIScreen.mainScreen.traitCollection);
+    SEL originalSelector = @selector(preferredContentSizeCategory);
+    SEL swizzledSelector = @selector(swizzled_preferredContentSizeCategory);
+    original_TraitCollection_Method = class_getInstanceMethod(class, originalSelector);
+    swizzled_TraitCollection_Method = class_getInstanceMethod([self class], swizzledSelector);
+    method_exchangeImplementations(original_TraitCollection_Method, swizzled_TraitCollection_Method);
+  }
+  [chipView updateTitleFont];
+  CGFloat fontSizeForExtraExtraLargeSizeCategory = chipView.titleLabel.font.pointSize;
+
+  // Then
+  if (@available(iOS 10.0, *)) {
+    XCTAssertGreaterThan(fontSizeForExtraExtraLargeSizeCategory, defaultFontSize);
+  } else {
+    XCTAssertEqual(fontSizeForExtraExtraLargeSizeCategory, defaultFontSize);
+  }
+}
+
+- (void)testChipViewDynamicTypeBehavior {
+  // Given
+  MDCChipView *chipView = [[MDCChipView alloc] init];
+  UIFont *titleFont = [UIFont systemFontOfSize:14.0 weight:UIFontWeightMedium];
+  MDCFontScaler *fontScaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleBody2];
+  titleFont = [fontScaler scaledFontWithFont:titleFont];
+  titleFont = [titleFont mdc_scaledFontAtDefaultSize];
+  chipView.titleFont = titleFont;
+  chipView.mdc_adjustsFontForContentSizeCategory = YES;
+  chipView.titleLabel.text = @"Chip";
+  [chipView updateTitleFont];
+  CGFloat defaultFontSize = chipView.titleLabel.font.pointSize;
+
+  // When
+  if (@available(iOS 10.0, *)) {
+    Class class = object_getClass(UIScreen.mainScreen.traitCollection);
+    SEL originalSelector = @selector(preferredContentSizeCategory);
+    SEL swizzledSelector = @selector(swizzled_preferredContentSizeCategory);
+    original_TraitCollection_Method = class_getInstanceMethod(class, originalSelector);
+    swizzled_TraitCollection_Method = class_getInstanceMethod([self class], swizzledSelector);
+    method_exchangeImplementations(original_TraitCollection_Method, swizzled_TraitCollection_Method);
+  }
+  [chipView updateTitleFont];
+  CGFloat fontSizeForExtraExtraLargeSizeCategory = chipView.titleLabel.font.pointSize;
+
+  // Then
+  if (@available(iOS 10.0, *)) {
+    XCTAssertGreaterThan(fontSizeForExtraExtraLargeSizeCategory, defaultFontSize);
+  } else {
+    XCTAssertEqual(fontSizeForExtraExtraLargeSizeCategory, defaultFontSize);
+  }
+}
+
+- (id)swizzled_preferredContentSizeCategory {
+  return UIContentSizeCategoryExtraExtraLarge;
 }
 
 @end

@@ -504,13 +504,17 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 - (void)updateTitleFont {
   // If we have a custom font apply it to the label.
   // If not, fall back to the Material specified font.
-  UIFont *titleFont = _titleFont ?: [[self class] defaultTitleFont];
+  UIFont *titleFont = _titleFont ?: [[self class] defaultTitleFont] ;
 
   // If we are automatically adjusting for Dynamic Type resize the font based on the text style
   if (self.mdc_adjustsFontForContentSizeCategory) {
-    titleFont =
-        [titleFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
-                                scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+    if (titleFont.mdc_scalingCurve && !self.mdc_legacyFontScaling) {
+      titleFont = [titleFont mdc_scaledFontForCurrentSizeCategory];
+    } else {
+      titleFont = [titleFont
+                   mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
+                   scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+    }
   }
   self.titleLabel.font = titleFont;
 
