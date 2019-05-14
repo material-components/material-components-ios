@@ -58,7 +58,8 @@
   [self resetTitleForAllStates];
 
   if (scheme.mdc_adjustsFontForContentSizeCategory) {
-    [self setTitleFont:[scheme.button mdc_scaledFontForCurrentSizeCategory] forState:UIControlStateNormal];
+    [self setTitleFont:[scheme.button mdc_scaledFontForCurrentSizeCategory]
+              forState:UIControlStateNormal];
   } else {
     [self setTitleFont:scheme.button forState:UIControlStateNormal];
   }
