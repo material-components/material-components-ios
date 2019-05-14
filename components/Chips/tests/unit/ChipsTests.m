@@ -417,7 +417,8 @@ static Method swizzled_TraitCollection_Method;
     SEL swizzledSelector = @selector(swizzled_preferredContentSizeCategory);
     original_TraitCollection_Method = class_getInstanceMethod(class, originalSelector);
     swizzled_TraitCollection_Method = class_getInstanceMethod([self class], swizzledSelector);
-    method_exchangeImplementations(original_TraitCollection_Method, swizzled_TraitCollection_Method);
+    method_exchangeImplementations(original_TraitCollection_Method,
+                                   swizzled_TraitCollection_Method);
   }
   [chipView updateTitleFont];
   CGFloat fontSizeForExtraExtraLargeSizeCategory = chipView.titleLabel.font.pointSize;
@@ -450,7 +451,8 @@ static Method swizzled_TraitCollection_Method;
     SEL swizzledSelector = @selector(swizzled_preferredContentSizeCategory);
     original_TraitCollection_Method = class_getInstanceMethod(class, originalSelector);
     swizzled_TraitCollection_Method = class_getInstanceMethod([self class], swizzledSelector);
-    method_exchangeImplementations(original_TraitCollection_Method, swizzled_TraitCollection_Method);
+    method_exchangeImplementations(original_TraitCollection_Method,
+                                   swizzled_TraitCollection_Method);
   }
   [chipView updateTitleFont];
   CGFloat fontSizeForExtraExtraLargeSizeCategory = chipView.titleLabel.font.pointSize;
