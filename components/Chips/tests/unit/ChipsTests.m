@@ -429,6 +429,7 @@ static Method swizzled_TraitCollection_Method;
   } else {
     XCTAssertEqual(fontSizeForExtraExtraLargeSizeCategory, defaultFontSize);
   }
+  [self swizzled_teardown];
 }
 
 - (void)testChipViewDynamicTypeBehavior {
@@ -463,10 +464,23 @@ static Method swizzled_TraitCollection_Method;
   } else {
     XCTAssertEqual(fontSizeForExtraExtraLargeSizeCategory, defaultFontSize);
   }
+  [self swizzled_teardown];
 }
 
 - (id)swizzled_preferredContentSizeCategory {
   return UIContentSizeCategoryExtraExtraLarge;
+}
+
+- (void)swizzled_teardown {
+  if (@available(iOS 10.0, *)) {
+    Class class = object_getClass(UIScreen.mainScreen.traitCollection);
+    SEL originalSelector = @selector(preferredContentSizeCategory);
+    SEL swizzledSelector = @selector(swizzled_preferredContentSizeCategory);
+    original_TraitCollection_Method = class_getInstanceMethod(class, originalSelector);
+    swizzled_TraitCollection_Method = class_getInstanceMethod([self class], swizzledSelector);
+    method_exchangeImplementations(original_TraitCollection_Method,
+                                   swizzled_TraitCollection_Method);
+  }
 }
 
 @end
