@@ -17,8 +17,8 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKit.h>
 
-#import "MaterialButtons.h"
 #import "MaterialButtons+Theming.h"
+#import "MaterialButtons.h"
 #import "MaterialContainerScheme.h"
 
 /** Snapshot tests for @c MDCButton when a theming extension has been applied. */
@@ -53,7 +53,6 @@
 }
 
 #pragma mark - Tests
-
 
 /** Test a @c MDCButton being themed with @c applyTextThemeWithScheme:. */
 - (void)testTextThemedButton {
