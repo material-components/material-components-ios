@@ -110,7 +110,7 @@ swift_library(
     deps = [
         ":List",
         ":ColorThemer",
-        ":ShapeThemer",
+        ":TypographyThemer",
         ":Theming",
     ],
 )
