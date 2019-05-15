@@ -225,7 +225,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B82E706BE7D3F6122041020CAE4AAD09"
+               BlueprintIdentifier = "3F985DA4F3E8B5459CD0DFC100BD0EC4"
                BuildableName = "MaterialComponents-Unit-Chips-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-Chips-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -345,7 +345,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "44E3EB03FEF6A5F5A0DE746FC91E7A9B"
+               BlueprintIdentifier = "390BDE9D8AF1E529B10ED3B8FEE3FAEB"
                BuildableName = "MaterialComponents-Unit-NavigationBar-UnitTests.xctest"
                BlueprintName = "MaterialComponents-Unit-NavigationBar-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -685,9 +685,19 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D42AEA9E148D0F2F94A6D0156E468051"
+               BlueprintIdentifier = "7B51C58E057D9802CAC4BFA380EF6078"
                BuildableName = "MaterialComponentsSnapshotTests-Unit-SnapshotTests.xctest"
                BlueprintName = "MaterialComponentsSnapshotTests-Unit-SnapshotTests"
+               ReferencedContainer = "container:Pods/Pods.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "BEFB959C8B8734803945286E9C2346C5"
+               BuildableName = "MaterialComponents-Unit-List+Theming-UnitTests.xctest"
+               BlueprintName = "MaterialComponents-Unit-List+Theming-UnitTests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
             </BuildableReference>
          </TestableReference>
