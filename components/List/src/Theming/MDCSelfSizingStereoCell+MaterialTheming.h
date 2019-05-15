@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialList.h"
 #import "MaterialContainerScheme.h"
+#import "MaterialList.h"
 
 /**
  This category is used to style MDCSelfSizingStereoCell instances to a specific Material style which

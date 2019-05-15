@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialList.h"
 #import "MaterialContainerScheme.h"
+#import "MaterialList.h"
 
 /**
- This category is used to style MDCBaseCell instances to a specific Material style which can be found
- within the [Material Guidelines](https://material.io/design/components/lists.html).
+ This category is used to style MDCBaseCell instances to a specific Material style which can be
+ found within the [Material Guidelines](https://material.io/design/components/lists.html).
  */
 @interface MDCBaseCell (MaterialTheming)
 

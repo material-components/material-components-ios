@@ -30,7 +30,7 @@
   id<MDCTypographyScheming> typographyScheme = scheme.typographyScheme;
   if (!typographyScheme) {
     typographyScheme =
-    [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
   }
   [self applyThemeWithTypographyScheme:typographyScheme];
 }
@@ -40,8 +40,7 @@
 }
 
 - (void)applyThemeWithTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
-  [MDCListTypographyThemer applyTypographyScheme:typographyScheme
-                          toSelfSizingStereoCell:self];
+  [MDCListTypographyThemer applyTypographyScheme:typographyScheme toSelfSizingStereoCell:self];
 }
 
 @end
