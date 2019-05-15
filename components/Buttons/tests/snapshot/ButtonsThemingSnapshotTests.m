@@ -37,6 +37,10 @@
   //  self.recordMode = YES;
 
   self.button = [[MDCButton alloc] init];
+  [self.button setTitle:@"Material" forState:UIControlStateNormal];
+  UIImage *buttonImage = [[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
+                          imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  [self.button setImage:buttonImage forState:UIControlStateNormal];
   self.containerScheme = [[MDCContainerScheme alloc] init];
 }
 
