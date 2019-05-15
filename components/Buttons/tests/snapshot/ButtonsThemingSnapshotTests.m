@@ -34,7 +34,7 @@
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-    self.recordMode = YES;
+  //  self.recordMode = YES;
 
   self.button = [[MDCButton alloc] init];
   [self.button setTitle:@"Material" forState:UIControlStateNormal];
