@@ -58,7 +58,7 @@ static const MDCShadowElevation MDCShadowElevationMenu = (CGFloat)8.0;
 static const MDCShadowElevation MDCShadowElevationModalBottomSheet = (CGFloat)16.0;
 
 /** The shadow elevation of the navigation drawer. */
-static const MDCShadowElevation MDCShadowElevationNavDrawer = (CGFloat)4.0;
+static const MDCShadowElevation MDCShadowElevationNavDrawer = (CGFloat)16.0;
 
 /** No shadow elevation at all. */
 static const MDCShadowElevation MDCShadowElevationNone = (CGFloat)0.0;

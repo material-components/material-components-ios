@@ -551,7 +551,7 @@ static UIColor *DrawerShadowColor(void) {
   }
 
   self.headerShadowLayer = [[MDCShadowLayer alloc] init];
-  self.headerShadowLayer.elevation = MDCShadowElevationNavDrawer;
+  self.headerShadowLayer.elevation = MDCShadowElevationAppBar;
   self.headerShadowLayer.shadowColor = DrawerShadowColor().CGColor;
   [self.headerViewController.view.layer addSublayer:self.headerShadowLayer];
   self.headerShadowLayer.hidden = YES;
