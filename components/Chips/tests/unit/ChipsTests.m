@@ -15,7 +15,6 @@
 #import "MaterialChips.h"
 
 #import <XCTest/XCTest.h>
-#import <objc/runtime.h>
 
 #import "../../src/MDCChipField.h"
 #import "MaterialTypography.h"
