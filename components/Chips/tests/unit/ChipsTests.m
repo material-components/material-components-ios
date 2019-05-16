@@ -25,6 +25,22 @@
 - (void)createNewChipFromInput;
 @end
 
+/** Fake MDCChipView for unit testing. */
+@interface FakeMDCChipView: MDCChipView
+
+/** Used to set the value of @c traitCollection. */
+@property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
+
+@end
+
+@implementation FakeMDCChipView
+
+- (UITraitCollection *)traitCollection {
+  return self.traitCollectionOverride ?: [super traitCollection];
+}
+
+@end
+
 static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   return [UIColor colorWithRed:((CGFloat)((rgbValue & 0xFF0000) >> 16)) / 255
                          green:((CGFloat)((rgbValue & 0x00FF00) >> 8)) / 255
@@ -396,47 +412,9 @@ static inline UIImage *TestImage(CGSize size) {
   XCTAssertEqual(controlViewCount, (NSUInteger)1);
 }
 
-static Method original_TraitCollection_Method;
-static Method swizzled_TraitCollection_Method;
-
-- (void)testChipViewLegacyDynamicTypeBehavior {
-  // Given
-  MDCChipView *chipView = [[MDCChipView alloc] init];
-  chipView.titleFont = [UIFont systemFontOfSize:14.0 weight:UIFontWeightMedium];
-  chipView.mdc_adjustsFontForContentSizeCategory = YES;
-  chipView.titleLabel.text = @"Chip";
-  [NSNotificationCenter.defaultCenter
-      postNotificationName:UIContentSizeCategoryDidChangeNotification
-                    object:nil];
-  CGFloat defaultFontSize = chipView.titleLabel.font.pointSize;
-
-  // When
-  if (@available(iOS 10.0, *)) {
-    Class class = object_getClass(UIScreen.mainScreen.traitCollection);
-    SEL originalSelector = @selector(preferredContentSizeCategory);
-    SEL swizzledSelector = @selector(swizzled_preferredContentSizeCategory);
-    original_TraitCollection_Method = class_getInstanceMethod(class, originalSelector);
-    swizzled_TraitCollection_Method = class_getInstanceMethod([self class], swizzledSelector);
-    method_exchangeImplementations(original_TraitCollection_Method,
-                                   swizzled_TraitCollection_Method);
-  }
-  [NSNotificationCenter.defaultCenter
-      postNotificationName:UIContentSizeCategoryDidChangeNotification
-                    object:nil];
-  CGFloat fontSizeForExtraExtraLargeSizeCategory = chipView.titleLabel.font.pointSize;
-
-  // Then
-  if (@available(iOS 10.0, *)) {
-    XCTAssertGreaterThan(fontSizeForExtraExtraLargeSizeCategory, defaultFontSize);
-  } else {
-    XCTAssertEqual(fontSizeForExtraExtraLargeSizeCategory, defaultFontSize);
-  }
-  [self swizzled_teardown];
-}
-
 - (void)testChipViewDynamicTypeBehavior {
   // Given
-  MDCChipView *chipView = [[MDCChipView alloc] init];
+  FakeMDCChipView *chipView = [[FakeMDCChipView alloc] init];
   UIFont *titleFont = [UIFont systemFontOfSize:14.0 weight:UIFontWeightMedium];
   MDCFontScaler *fontScaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleBody2];
   titleFont = [fontScaler scaledFontWithFont:titleFont];
@@ -452,13 +430,9 @@ static Method swizzled_TraitCollection_Method;
 
   // When
   if (@available(iOS 10.0, *)) {
-    Class class = object_getClass(UIScreen.mainScreen.traitCollection);
-    SEL originalSelector = @selector(preferredContentSizeCategory);
-    SEL swizzledSelector = @selector(swizzled_preferredContentSizeCategory);
-    original_TraitCollection_Method = class_getInstanceMethod(class, originalSelector);
-    swizzled_TraitCollection_Method = class_getInstanceMethod([self class], swizzledSelector);
-    method_exchangeImplementations(original_TraitCollection_Method,
-                                   swizzled_TraitCollection_Method);
+    UIContentSizeCategory size = UIContentSizeCategoryExtraExtraLarge;
+    UITraitCollection *traitCollection = [UITraitCollection traitCollectionWithPreferredContentSizeCategory:size];
+    chipView.traitCollectionOverride = traitCollection;
   }
   [NSNotificationCenter.defaultCenter
       postNotificationName:UIContentSizeCategoryDidChangeNotification
@@ -468,25 +442,6 @@ static Method swizzled_TraitCollection_Method;
   // Then
   if (@available(iOS 10.0, *)) {
     XCTAssertGreaterThan(fontSizeForExtraExtraLargeSizeCategory, defaultFontSize);
-  } else {
-    XCTAssertEqual(fontSizeForExtraExtraLargeSizeCategory, defaultFontSize);
-  }
-  [self swizzled_teardown];
-}
-
-- (id)swizzled_preferredContentSizeCategory {
-  return UIContentSizeCategoryExtraExtraLarge;
-}
-
-- (void)swizzled_teardown {
-  if (@available(iOS 10.0, *)) {
-    Class class = object_getClass(UIScreen.mainScreen.traitCollection);
-    SEL originalSelector = @selector(preferredContentSizeCategory);
-    SEL swizzledSelector = @selector(swizzled_preferredContentSizeCategory);
-    original_TraitCollection_Method = class_getInstanceMethod(class, originalSelector);
-    swizzled_TraitCollection_Method = class_getInstanceMethod([self class], swizzledSelector);
-    method_exchangeImplementations(original_TraitCollection_Method,
-                                   swizzled_TraitCollection_Method);
   }
 }
 
