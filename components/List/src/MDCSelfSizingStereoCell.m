@@ -73,6 +73,7 @@ static const CGFloat kDetailColorOpacity = (CGFloat)0.6;
 
 - (void)commonMDCSelfSizingStereoCellInit {
   self.cachedLayouts = [[NSMutableDictionary alloc] init];
+  self.mdc_legacyFontScaling = YES;
   [self createSubviews];
 }
 
@@ -219,12 +220,17 @@ static const CGFloat kDetailColorOpacity = (CGFloat)0.6;
   UIFont *titleFont = self.titleLabel.font ?: self.defaultTitleLabelFont;
   UIFont *detailFont = self.detailLabel.font ?: self.defaultDetailLabelFont;
   if (_mdc_adjustsFontForContentSizeCategory) {
-    titleFont =
-        [titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleTitle
-                                scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
-    detailFont =
-        [detailFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleCaption
-                                 scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+    if (self.mdc_legacyFontScaling) {
+      titleFont =
+      [titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleTitle
+                              scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+      detailFont =
+      [detailFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleCaption
+                               scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+    } else {
+      titleFont = [titleFont mdc_scaledFontForCurrentSizeCategory];
+      detailFont = [detailFont mdc_scaledFontForCurrentSizeCategory];
+    }
   }
   self.titleLabel.font = titleFont;
   self.detailLabel.font = detailFont;
