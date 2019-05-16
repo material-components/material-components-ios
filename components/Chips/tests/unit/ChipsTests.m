@@ -405,8 +405,9 @@ static Method swizzled_TraitCollection_Method;
   chipView.titleFont = [UIFont systemFontOfSize:14.0 weight:UIFontWeightMedium];
   chipView.mdc_adjustsFontForContentSizeCategory = YES;
   chipView.titleLabel.text = @"Chip";
-  [NSNotificationCenter.defaultCenter postNotificationName:UIContentSizeCategoryDidChangeNotification
-                                                    object:nil];
+  [NSNotificationCenter.defaultCenter
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
   CGFloat defaultFontSize = chipView.titleLabel.font.pointSize;
 
   // When
@@ -419,8 +420,9 @@ static Method swizzled_TraitCollection_Method;
     method_exchangeImplementations(original_TraitCollection_Method,
                                    swizzled_TraitCollection_Method);
   }
-  [NSNotificationCenter.defaultCenter postNotificationName:UIContentSizeCategoryDidChangeNotification
-                                                    object:nil];
+  [NSNotificationCenter.defaultCenter
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
   CGFloat fontSizeForExtraExtraLargeSizeCategory = chipView.titleLabel.font.pointSize;
 
   // Then
@@ -443,8 +445,9 @@ static Method swizzled_TraitCollection_Method;
   chipView.mdc_adjustsFontForContentSizeCategory = YES;
   chipView.mdc_legacyFontScaling = NO;
   chipView.titleLabel.text = @"Chip";
-  [NSNotificationCenter.defaultCenter postNotificationName:UIContentSizeCategoryDidChangeNotification
-                                                    object:nil];
+  [NSNotificationCenter.defaultCenter
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
   CGFloat defaultFontSize = chipView.titleLabel.font.pointSize;
 
   // When
@@ -457,8 +460,9 @@ static Method swizzled_TraitCollection_Method;
     method_exchangeImplementations(original_TraitCollection_Method,
                                    swizzled_TraitCollection_Method);
   }
-  [NSNotificationCenter.defaultCenter postNotificationName:UIContentSizeCategoryDidChangeNotification
-                                                    object:nil];
+  [NSNotificationCenter.defaultCenter
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
   CGFloat fontSizeForExtraExtraLargeSizeCategory = chipView.titleLabel.font.pointSize;
 
   // Then
