@@ -17,6 +17,7 @@
 #import "../../src/private/MDCBottomDrawerContainerViewController.h"
 #import "../../src/private/MDCBottomDrawerHeaderMask.h"
 #import "MDCNavigationDrawerFakes.h"
+#import "MaterialShadowLayer.h"
 
 @interface MDCBottomDrawerDelegateTest
     : UIViewController <MDCBottomDrawerPresentationControllerDelegate>
@@ -59,6 +60,7 @@
 @property(nonatomic, readonly) BOOL contentScrollsToReveal;
 @property(nonatomic) MDCBottomDrawerState drawerState;
 @property(nullable, nonatomic, readonly) UIPresentationController *presentationController;
+@property(nonatomic) MDCShadowLayer *headerShadowLayer;
 - (void)cacheLayoutCalculations;
 - (void)updateViewWithContentOffset:(CGPoint)contentOffset;
 - (void)updateDrawerState:(CGFloat)transitionPercentage;
@@ -710,6 +712,15 @@
       0.001);
   XCTAssertEqualWithAccuracy(CGRectGetMinY(self.fakeBottomDrawer.scrollView.frame), 0, 0.001);
   XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 20, 0.01);
+}
+
+- (void)testNavigationDrawerCorrectShadowValue {
+  // When
+  [self.fakeBottomDrawer viewWillLayoutSubviews];
+  [self.fakeBottomDrawer viewWillAppear:YES];
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.headerShadowLayer.elevation, 4, 0.001);
 }
 
 @end

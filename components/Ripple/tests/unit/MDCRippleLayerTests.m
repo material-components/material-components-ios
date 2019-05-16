@@ -18,11 +18,11 @@
 
 #pragma mark - Fake classes
 
-@interface CapturingAnimationsMDCRippleLayer : MDCRippleLayer
+@interface FakeMDCRippleLayer : MDCRippleLayer
 @property(nonatomic, strong) NSMutableArray *addedAnimations;
 @end
 
-@implementation CapturingAnimationsMDCRippleLayer
+@implementation FakeMDCRippleLayer
 
 - (void)addAnimation:(CAAnimation *)anim forKey:(NSString *)key {
   if (!self.addedAnimations) {
@@ -76,6 +76,7 @@
 
   // Then
   XCTAssertNil(rippleLayer.delegate);
+  XCTAssertEqual(rippleLayer.maximumRadius, 0);
   XCTAssertFalse(rippleLayer.isStartAnimationActive);
   XCTAssertEqualWithAccuracy(rippleLayer.rippleTouchDownStartTime, 0, 0.0001);
 }
@@ -153,7 +154,7 @@
 
 - (void)testAnimationTimingInSpeedScaledLayer {
   // Given
-  CapturingAnimationsMDCRippleLayer *rippleLayer = [[CapturingAnimationsMDCRippleLayer alloc] init];
+  FakeMDCRippleLayer *rippleLayer = [[FakeMDCRippleLayer alloc] init];
   rippleLayer.bounds = CGRectMake(0, 0, 10, 10);
   rippleLayer.speed = (float)0.1;
   CGFloat expectedRippleFadeoutDelay = (CGFloat)0.150;
@@ -175,7 +176,7 @@
 
 - (void)testStartRippleAnimationCorrectness {
   // Given
-  CapturingAnimationsMDCRippleLayer *rippleLayer = [[CapturingAnimationsMDCRippleLayer alloc] init];
+  FakeMDCRippleLayer *rippleLayer = [[FakeMDCRippleLayer alloc] init];
   CGPoint point = CGPointMake(10, 10);
 
   // When
@@ -212,7 +213,7 @@
 
 - (void)testEndRippleAnimationCorrectness {
   // Given
-  CapturingAnimationsMDCRippleLayer *rippleLayer = [[CapturingAnimationsMDCRippleLayer alloc] init];
+  FakeMDCRippleLayer *rippleLayer = [[FakeMDCRippleLayer alloc] init];
 
   // When
   [rippleLayer endRippleAnimated:YES completion:nil];
@@ -231,7 +232,7 @@
 
 - (void)testFadeInRippleAnimationCorrectness {
   // Given
-  CapturingAnimationsMDCRippleLayer *rippleLayer = [[CapturingAnimationsMDCRippleLayer alloc] init];
+  FakeMDCRippleLayer *rippleLayer = [[FakeMDCRippleLayer alloc] init];
 
   // When
   [rippleLayer fadeInRippleAnimated:YES completion:nil];
@@ -250,7 +251,7 @@
 
 - (void)testFadeOutRippleAnimationCorrectness {
   // Given
-  CapturingAnimationsMDCRippleLayer *rippleLayer = [[CapturingAnimationsMDCRippleLayer alloc] init];
+  FakeMDCRippleLayer *rippleLayer = [[FakeMDCRippleLayer alloc] init];
 
   // When
   [rippleLayer fadeOutRippleAnimated:YES completion:nil];
@@ -266,4 +267,18 @@
                         basicAnimation.timingFunction);
   XCTAssertEqualWithAccuracy(basicAnimation.duration, (CGFloat)0.075, 0.0001);
 }
+
+/** Test that setting @c maximumRadius correctly sets the property on @c MDCRippleLayer. */
+- (void)testRippleRadiusSetToCustomValue {
+  // Given
+  MDCRippleLayer *rippleLayer = [[MDCRippleLayer alloc] init];
+  CGFloat fakeRadius = 25;
+
+  // When
+  rippleLayer.maximumRadius = fakeRadius;
+
+  // Then
+  XCTAssertEqual(rippleLayer.maximumRadius, fakeRadius);
+}
+
 @end
