@@ -55,7 +55,6 @@ mdc_extension_objc_library(
         ":Buttons",
         ":ColorThemer",
         ":ShapeThemer",
-        ":TypographyThemer",
         "//components/ShadowElevations",
         "//components/schemes/Container",
     ],

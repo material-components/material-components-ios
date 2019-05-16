@@ -397,7 +397,6 @@ Pod::Spec.new do |mdc|
       unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
       unit_tests.dependency "MaterialComponents/Buttons+ShapeThemer"
       unit_tests.dependency "MaterialComponents/Buttons+ColorThemer"
-      unit_tests.dependency "MaterialComponents/Buttons+TypographyThemer"
       unit_tests.dependency "MaterialComponents/Buttons+TitleColorAccessibilityMutator"
       unit_tests.dependency "MaterialComponents/Buttons+ButtonThemer"
     end

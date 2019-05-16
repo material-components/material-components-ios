@@ -16,7 +16,6 @@
 
 #import <MaterialComponents/MaterialButtons+ColorThemer.h>
 #import <MaterialComponents/MaterialButtons+ShapeThemer.h>
-#import <MaterialComponents/MaterialButtons+TypographyThemer.h>
 #import <MaterialComponents/MaterialShadowElevations.h>
 
 @implementation MDCButton (MaterialTheming)
@@ -56,7 +55,8 @@
 }
 
 - (void)applyContainedThemeWithTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
-  [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:self];
+  [self resetTitleFontForAllStates];
+  [self setTitleFont:typographyScheme.button forState:UIControlStateNormal];
 }
 
 - (void)applyContainedThemeWithShapeScheme:(id<MDCShapeScheming>)shapeScheme {
@@ -100,7 +100,8 @@
 }
 
 - (void)applyOutlinedThemeWithTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
-  [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:self];
+  [self resetTitleFontForAllStates];
+  [self setTitleFont:typographyScheme.button forState:UIControlStateNormal];
 }
 
 - (void)applyOutlinedThemeWithShapeScheme:(id<MDCShapeScheming>)shapeScheme {
@@ -144,11 +145,22 @@
 }
 
 - (void)applyTextThemeWithTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
-  [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:self];
+  [self resetTitleFontForAllStates];
+  [self setTitleFont:typographyScheme.button forState:UIControlStateNormal];
 }
 
 - (void)applyTextThemeWithShapeScheme:(id<MDCShapeScheming>)shapeScheme {
   [MDCButtonShapeThemer applyShapeScheme:shapeScheme toButton:self];
+}
+
+#pragma mark - General helpers
+
+- (void)resetTitleFontForAllStates {
+  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
+                                 UIControlStateHighlighted | UIControlStateDisabled;
+  for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
+    [self setTitleFont:nil forState:state];
+  }
 }
 
 @end
