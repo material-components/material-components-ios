@@ -54,18 +54,12 @@
 }
 
 - (void)applySecondaryThemeWithTypographyScheme:(id<MDCTypographyScheming>)scheme {
-  [self resetTitleForAllStates];
-  [self setTitleFont:scheme.button forState:UIControlStateNormal];
-}
-
-#pragma mark - General helpers
-
-- (void)resetTitleForAllStates {
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
-                                 UIControlStateHighlighted | UIControlStateDisabled;
+  UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     [self setTitleFont:nil forState:state];
   }
+  [self setTitleFont:scheme.button forState:UIControlStateNormal];
 }
 
 @end

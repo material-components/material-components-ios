@@ -55,7 +55,7 @@
 }
 
 - (void)applyContainedThemeWithTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
-  [self resetTitleForAllStates];
+  [self resetTitleFontForAllStates];
   [self setTitleFont:typographyScheme.button forState:UIControlStateNormal];
 }
 
@@ -100,7 +100,7 @@
 }
 
 - (void)applyOutlinedThemeWithTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
-  [self resetTitleForAllStates];
+  [self resetTitleFontForAllStates];
   [self setTitleFont:typographyScheme.button forState:UIControlStateNormal];
 }
 
@@ -145,7 +145,7 @@
 }
 
 - (void)applyTextThemeWithTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
-  [self resetTitleForAllStates];
+  [self resetTitleFontForAllStates];
   [self setTitleFont:typographyScheme.button forState:UIControlStateNormal];
 }
 
@@ -155,7 +155,7 @@
 
 #pragma mark - General helpers
 
-- (void)resetTitleForAllStates {
+- (void)resetTitleFontForAllStates {
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
                                  UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
