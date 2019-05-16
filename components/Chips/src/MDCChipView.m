@@ -135,7 +135,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 - (void)commonMDCChipViewInit {
   _minimumSize = kMDCChipMinimumSizeDefault;
   self.isAccessibilityElement = YES;
-  self.mdc_legacyFontScaling = YES;
+  _mdc_legacyFontScaling = YES;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
