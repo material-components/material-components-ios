@@ -36,6 +36,7 @@ target "MDCCatalog" do
     'Ink/UnitTests',
     'LibraryInfo/UnitTests',
     'List/UnitTests',
+    'List+Theming/UnitTests',
     'MaskedTransition/UnitTests',
     'NavigationBar/UnitTests',
     'NavigationDrawer/UnitTests',
