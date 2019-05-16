@@ -641,7 +641,6 @@ Pod::Spec.new do |mdc|
       "components/#{component.base_name}/src/*.{h,m}",
       "components/#{component.base_name}/src/private/*.{h,m}"
     ]
-    component.exclude_files = "components/#{component.base_name}/src/private/MDCChipView+Testing.h"
 
     component.dependency "MDFInternationalization"
     component.dependency "MaterialComponents/Ink"
@@ -658,7 +657,6 @@ Pod::Spec.new do |mdc|
       unit_tests.source_files = [
         "components/#{component.base_name}/tests/unit/*.{h,m,swift}",
         "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}",
-        "components/#{component.base_name}/src/private/MDCChipView+Testing.h"
       ]
       unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
       unit_tests.dependency "MaterialComponents/Chips+ChipThemer"

@@ -18,7 +18,6 @@
 #import <objc/runtime.h>
 
 #import "../../src/MDCChipField.h"
-#import "MDCChipView+Testing.h"
 #import "MaterialTypography.h"
 
 // Expose internal methods for testing
@@ -407,7 +406,8 @@ static Method swizzled_TraitCollection_Method;
   chipView.mdc_adjustsFontForContentSizeCategory = YES;
   chipView.mdc_legacyFontScaling = YES;
   chipView.titleLabel.text = @"Chip";
-  [chipView updateTitleFont];
+  [NSNotificationCenter.defaultCenter postNotificationName:UIContentSizeCategoryDidChangeNotification
+                                                    object:nil];
   CGFloat defaultFontSize = chipView.titleLabel.font.pointSize;
 
   // When
@@ -420,7 +420,8 @@ static Method swizzled_TraitCollection_Method;
     method_exchangeImplementations(original_TraitCollection_Method,
                                    swizzled_TraitCollection_Method);
   }
-  [chipView updateTitleFont];
+  [NSNotificationCenter.defaultCenter postNotificationName:UIContentSizeCategoryDidChangeNotification
+                                                    object:nil];
   CGFloat fontSizeForExtraExtraLargeSizeCategory = chipView.titleLabel.font.pointSize;
 
   // Then
@@ -442,7 +443,8 @@ static Method swizzled_TraitCollection_Method;
   chipView.titleFont = titleFont;
   chipView.mdc_adjustsFontForContentSizeCategory = YES;
   chipView.titleLabel.text = @"Chip";
-  [chipView updateTitleFont];
+  [NSNotificationCenter.defaultCenter postNotificationName:UIContentSizeCategoryDidChangeNotification
+                                                    object:nil];
   CGFloat defaultFontSize = chipView.titleLabel.font.pointSize;
 
   // When
@@ -455,7 +457,8 @@ static Method swizzled_TraitCollection_Method;
     method_exchangeImplementations(original_TraitCollection_Method,
                                    swizzled_TraitCollection_Method);
   }
-  [chipView updateTitleFont];
+  [NSNotificationCenter.defaultCenter postNotificationName:UIContentSizeCategoryDidChangeNotification
+                                                    object:nil];
   CGFloat fontSizeForExtraExtraLargeSizeCategory = chipView.titleLabel.font.pointSize;
 
   // Then
