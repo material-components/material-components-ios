@@ -98,12 +98,12 @@
 - (void)applyOutlinedThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
   [self resetButtonColorsForAllStates];
 
-  UIColor *disabledContentColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38];
+  UIColor *disabledContentColor =
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38];
   UIColor *borderColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.12];
   [self setBackgroundColor:UIColor.clearColor forState:UIControlStateNormal];
   [self setTitleColor:colorScheme.primaryColor forState:UIControlStateNormal];
-  [self setTitleColor:disabledContentColor
-               forState:UIControlStateDisabled];
+  [self setTitleColor:disabledContentColor forState:UIControlStateDisabled];
   self.disabledAlpha = 1;
   [self setImageTintColor:colorScheme.primaryColor forState:UIControlStateNormal];
   [self setImageTintColor:disabledContentColor forState:UIControlStateDisabled];
@@ -177,7 +177,7 @@
 
 - (void)resetButtonColorsForAllStates {
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
-  UIControlStateHighlighted | UIControlStateDisabled;
+                                 UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     [self setBackgroundColor:nil forState:state];
     [self setTitleColor:nil forState:state];
