@@ -55,23 +55,17 @@
 }
 
 - (void)applySecondaryThemeWithTypographyScheme:(id<MDCTypographyScheming>)scheme {
-  [self resetTitleForAllStates];
+  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
+  UIControlStateHighlighted | UIControlStateDisabled;
+  for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
+    [self setTitleFont:nil forState:state];
+  }
 
   if (scheme.mdc_adjustsFontForContentSizeCategory) {
     [self setTitleFont:[scheme.button mdc_scaledFontForCurrentSizeCategory]
               forState:UIControlStateNormal];
   } else {
     [self setTitleFont:scheme.button forState:UIControlStateNormal];
-  }
-}
-
-#pragma mark - General helpers
-
-- (void)resetTitleForAllStates {
-  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
-                                 UIControlStateHighlighted | UIControlStateDisabled;
-  for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
-    [self setTitleFont:nil forState:state];
   }
 }
 
