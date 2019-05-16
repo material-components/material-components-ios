@@ -641,7 +641,6 @@ Pod::Spec.new do |mdc|
       "components/#{component.base_name}/src/*.{h,m}",
       "components/#{component.base_name}/src/private/*.{h,m}"
     ]
-
     component.dependency "MDFInternationalization"
     component.dependency "MaterialComponents/Ink"
     component.dependency "MaterialComponents/Ripple"
@@ -656,7 +655,7 @@ Pod::Spec.new do |mdc|
     component.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
         "components/#{component.base_name}/tests/unit/*.{h,m,swift}",
-        "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}",
+        "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
       ]
       unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
       unit_tests.dependency "MaterialComponents/Chips+ChipThemer"
