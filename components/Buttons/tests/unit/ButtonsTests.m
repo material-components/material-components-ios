@@ -521,7 +521,6 @@ static NSString *controlStateDescription(UIControlState controlState) {
   }
 }
 
-
 #pragma mark - shadowColor:forState:
 
 - (void)testRemovedShadowColorForState {
