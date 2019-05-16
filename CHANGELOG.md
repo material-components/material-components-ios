@@ -1,15 +1,19 @@
-# #develop#
+# 84.2.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This minor release adds support for a custom unbounded Ripple radius value. It also includes several
+bug fixes and documentation updates to multiple components.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
+`MDCRippleView` now supports a custom ripple radius for the `.unbounded` ripple style. This allows
+clients to customize how far outside (or within) a view the ripple effect will extend.
+
+```objc
+MDCRippleView *rippleView = [[MDCRippleView alloc] init];
+rippleView.rippleStyle = MDCRippleStyleUnbounded;
+rippleView.maximumRadius = 10;
+```
+
 ## API changes
 
 ### Ripple
@@ -46,6 +50,10 @@ Replace this text with example code for each new feature.
 
 * [Add animation delegate callbacks for MDCLegacyInkLayer (#7339)](https://github.com/material-components/material-components-ios/commit/c00921720b35d8faea6c2372377aaeb2a1a47b0a) (Michael Schneider)
 
+### NavigationDrawer
+
+* [update (#7345)](https://github.com/material-components/material-components-ios/commit/4badd38cf5eb65fc9d7d88d6db252dd73dca354f) (Yarden Eitan)
+
 ### Ripple
 
 * [Add a migration guide for components (#7367)](https://github.com/material-components/material-components-ios/commit/3c46c3e2677e6a9fe2e749b87fca11dc736bdec8) (Yarden Eitan)
@@ -56,11 +64,14 @@ Replace this text with example code for each new feature.
 
 * [Quash -Wsign-compare triggers (#7358)](https://github.com/material-components/material-components-ios/commit/f4003b5982269b08643a9ad7b65ce69303f220fa) (featherless)
 
-## Multi-component changes
+### Snapshot (private)
 
 * [Split implementation and supplemental. (#7356)](https://github.com/material-components/material-components-ios/commit/c9ad1c1cdc11a14fca8f7baf1f1a1954aad6c854) (Robert Moore)
+
+## Multi-component changes
+
+* [Roll-forward a shadow elevation issue. (#7396)](https://github.com/material-components/material-components-ios/commit/9a6c30405ba350f2aa16eb3d25c47d7fdbb8a8c6) (Yarden Eitan)
 * [Update Readme to use the script generator and move migration guide. (#7370)](https://github.com/material-components/material-components-ios/commit/89cd08dc8831eb06b70991f05fbb6b8c33081e58) (Yarden Eitan)
-* [update (#7345)](https://github.com/material-components/material-components-ios/commit/4badd38cf5eb65fc9d7d88d6db252dd73dca354f) (Yarden Eitan)
 
 ---
 
