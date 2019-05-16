@@ -14,11 +14,20 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialButtons.h"
+#import <MaterialComponents/MaterialButtons.h>
 #import "MaterialButtons+Theming.h"
+#import "MaterialTypography.h"
+
+@interface MDCButton (Testing)
+- (void)updateTitleFont;
+@end
 
 @interface MDCFakeDynamicTypeButton : MDCButton
 @property(nonatomic, strong, nonnull) UITraitCollection *traitCollection;
+@end
+
+@implementation MDCFakeDynamicTypeButton
+@synthesize traitCollection;
 @end
 
 @interface MDCButtonThemingDynamicTypeTest : XCTestCase
@@ -48,12 +57,35 @@
   } else {
     traitCollection = [[UITraitCollection alloc] init];
   }
+  self.button.mdc_adjustsFontForContentSizeCategory = YES;
+  MDCFontScaler *scaler = [MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleButton];
+  self.button.titleLabel.font = [scaler scaledFontWithFont:[UIFont systemFontOfSize:14]];
 
   // When
   self.button.traitCollection = traitCollection;
+  [self.button updateTitleFont];
 
   // Then
-  XCTAssertEqualObjects([self.button titleFontForState:UIControlStateNormal], nil);
+  XCTAssertEqualObjects(self.button.titleLabel.font, [UIFont systemFontOfSize:14]);
+}
+
+- (void)testSmallType {
+  // Given
+  UITraitCollection *traitCollection;
+  if (@available(iOS 10.0, *)) {
+    traitCollection = [UITraitCollection traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraExtraLarge];
+  } else {
+    traitCollection = [[UITraitCollection alloc] init];
+  }
+  self.button.mdc_legacyFontScaling = YES;
+  self.button.mdc_adjustsFontForContentSizeCategory = YES;
+
+  // When
+  self.button.traitCollection = traitCollection;
+  [self.button updateTitleFont];
+
+  // Then
+  XCTAssertEqualObjects(self.button.titleLabel.font, [UIFont systemFontOfSize:14]);
 }
 
 @end

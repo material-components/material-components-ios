@@ -865,7 +865,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)updateTitleFont {
   // Retreive any custom font that has been set
-  UIFont *font = _fonts[@(self.state)];
+  UIFont *font = self.titleLabel.font;
   if (!font && self.state != UIControlStateNormal) {
     // We fall back to UIControlStateNormal if there is no value for the current state.
     font = _fonts[@(UIControlStateNormal)];
@@ -879,6 +879,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
   if (_mdc_adjustsFontForContentSizeCategory) {
     // Dynamic type is enabled so apply scaling
+    NSLog(@"Scaler %@", font.mdc_scalingCurve);
+    NSLog(@"Legacy %id", _mdc_legacyFontScaling);
     if (font.mdc_scalingCurve && !_mdc_legacyFontScaling) {
       font = [font mdc_scaledFontForCurrentSizeCategory];
     } else {
