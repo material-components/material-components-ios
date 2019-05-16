@@ -16,7 +16,6 @@
 
 #import <MaterialComponents/MaterialButtons+ColorThemer.h>
 #import <MaterialComponents/MaterialButtons+ShapeThemer.h>
-#import <MaterialComponents/MaterialButtons+TypographyThemer.h>
 
 @implementation MDCFloatingButton (MaterialTheming)
 
@@ -55,7 +54,12 @@
 }
 
 - (void)applySecondaryThemeWithTypographyScheme:(id<MDCTypographyScheming>)scheme {
-  [MDCButtonTypographyThemer applyTypographyScheme:scheme toButton:self];
+  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
+                                 UIControlStateHighlighted | UIControlStateDisabled;
+  for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
+    [self setTitleFont:nil forState:state];
+  }
+  [self setTitleFont:scheme.button forState:UIControlStateNormal];
 }
 
 @end
