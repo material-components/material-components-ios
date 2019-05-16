@@ -18,9 +18,6 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
-#import "MaterialMath.h"
-#import "MaterialTypography.h"
-
 @interface MDCBaseTextField ()
 
 @property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
