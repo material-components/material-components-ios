@@ -96,7 +96,19 @@
 }
 
 - (void)applyOutlinedThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
-  [MDCOutlinedButtonColorThemer applySemanticColorScheme:colorScheme toButton:self];
+  [self resetButtonColorsForAllStates];
+
+  UIColor *disabledContentColor =
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38];
+  UIColor *borderColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.12];
+  [self setBackgroundColor:UIColor.clearColor forState:UIControlStateNormal];
+  [self setTitleColor:colorScheme.primaryColor forState:UIControlStateNormal];
+  [self setTitleColor:disabledContentColor forState:UIControlStateDisabled];
+  self.disabledAlpha = 1;
+  [self setImageTintColor:colorScheme.primaryColor forState:UIControlStateNormal];
+  [self setImageTintColor:disabledContentColor forState:UIControlStateDisabled];
+  self.inkColor = [colorScheme.primaryColor colorWithAlphaComponent:(CGFloat)0.12];
+  [self setBorderColor:borderColor forState:UIControlStateNormal];
 }
 
 - (void)applyOutlinedThemeWithTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
@@ -160,6 +172,17 @@
                                  UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     [self setTitleFont:nil forState:state];
+  }
+}
+
+- (void)resetButtonColorsForAllStates {
+  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
+                                 UIControlStateHighlighted | UIControlStateDisabled;
+  for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
+    [self setBackgroundColor:nil forState:state];
+    [self setTitleColor:nil forState:state];
+    [self setImageTintColor:nil forState:state];
+    [self setBorderColor:nil forState:state];
   }
 }
 
