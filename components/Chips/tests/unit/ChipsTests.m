@@ -25,7 +25,7 @@
 @end
 
 /** Fake MDCChipView for unit testing. */
-@interface FakeMDCChipView: MDCChipView
+@interface FakeMDCChipView : MDCChipView
 
 /** Used to set the value of @c traitCollection. */
 @property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
@@ -430,7 +430,8 @@ static inline UIImage *TestImage(CGSize size) {
   // When
   if (@available(iOS 10.0, *)) {
     UIContentSizeCategory size = UIContentSizeCategoryExtraExtraLarge;
-    UITraitCollection *traitCollection = [UITraitCollection traitCollectionWithPreferredContentSizeCategory:size];
+    UITraitCollection *traitCollection =
+        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:size];
     chipView.traitCollectionOverride = traitCollection;
   }
   [NSNotificationCenter.defaultCenter
