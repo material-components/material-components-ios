@@ -404,7 +404,6 @@ static Method swizzled_TraitCollection_Method;
   MDCChipView *chipView = [[MDCChipView alloc] init];
   chipView.titleFont = [UIFont systemFontOfSize:14.0 weight:UIFontWeightMedium];
   chipView.mdc_adjustsFontForContentSizeCategory = YES;
-  chipView.mdc_legacyFontScaling = YES;
   chipView.titleLabel.text = @"Chip";
   [NSNotificationCenter.defaultCenter postNotificationName:UIContentSizeCategoryDidChangeNotification
                                                     object:nil];
@@ -442,6 +441,7 @@ static Method swizzled_TraitCollection_Method;
   titleFont = [titleFont mdc_scaledFontAtDefaultSize];
   chipView.titleFont = titleFont;
   chipView.mdc_adjustsFontForContentSizeCategory = YES;
+  chipView.mdc_legacyFontScaling = NO;
   chipView.titleLabel.text = @"Chip";
   [NSNotificationCenter.defaultCenter postNotificationName:UIContentSizeCategoryDidChangeNotification
                                                     object:nil];

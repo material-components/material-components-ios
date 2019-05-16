@@ -147,9 +147,9 @@
  Enable legacy font scaling curves for Dynamic Type.
 
  Legacy font scaling uses the older [UIFont mdc_fontSizedForMaterialTextStyle:scaledForDynamicType:
- category instead of the current MDCFontScaler API.
+ category instead of the MDCFontScaler API.
 
- Default value is NO.
+ Default value is YES.
  */
 @property(nonatomic, readwrite, setter=mdc_setLegacyFontScaling:) BOOL mdc_legacyFontScaling;
 
