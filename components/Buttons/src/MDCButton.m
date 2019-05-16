@@ -733,7 +733,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   if ((state & UIControlStateHighlighted) == UIControlStateHighlighted) {
     state = state & ~UIControlStateDisabled;
   }
-  return _fonts[@(state)] ?: _fonts(UIControlStateNormal);
+  return _fonts[@(state)] ?: _fonts[@(UIControlStateNormal)];
 }
 
 - (void)setTitleFont:(nullable UIFont *)font forState:(UIControlState)state {
@@ -746,8 +746,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   // Only update the backing dictionary if:
   // 1. The `state` argument is the same as the "storage" state, OR
   // 2. There is already a value in the "storage" state.
-  if (storageState == state || _backgroundColors[@(storageState)] != nil) {
-    _backgroundColors[@(storageState)] = backgroundColor;
+  if (storageState == state || _fonts[@(storageState)] != nil) {
+    _fonts[@(storageState)] = font;
     [self updateTitleFont];
   }
 }
