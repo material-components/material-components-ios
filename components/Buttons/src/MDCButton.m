@@ -729,13 +729,27 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 #pragma mark - Title Font
 
 - (nullable UIFont *)titleFontForState:(UIControlState)state {
-  return _fonts[@(state)];
+  // If the `.highlighted` flag is set, turn off the `.disabled` flag
+  if ((state & UIControlStateHighlighted) == UIControlStateHighlighted) {
+    state = state & ~UIControlStateDisabled;
+  }
+  return _fonts[@(state)] ?: _fonts[@(UIControlStateNormal)];
 }
 
 - (void)setTitleFont:(nullable UIFont *)font forState:(UIControlState)state {
-  _fonts[@(state)] = font;
+  UIControlState storageState = state;
+  // If the `.highlighted` flag is set, turn off the `.disabled` flag
+  if ((state & UIControlStateHighlighted) == UIControlStateHighlighted) {
+    storageState = state & ~UIControlStateDisabled;
+  }
 
-  [self updateTitleFont];
+  // Only update the backing dictionary if:
+  // 1. The `state` argument is the same as the "storage" state, OR
+  // 2. There is already a value in the "storage" state.
+  if (storageState == state || _fonts[@(storageState)] != nil) {
+    _fonts[@(storageState)] = font;
+    [self updateTitleFont];
+  }
 }
 
 #pragma mark - Private methods
