@@ -17,6 +17,7 @@
 #import <MaterialComponents/MaterialButtons+ColorThemer.h>
 #import <MaterialComponents/MaterialButtons+ShapeThemer.h>
 #import <MaterialComponents/MaterialShadowElevations.h>
+#import "MaterialTypography.h"
 
 @implementation MDCButton (MaterialTheming)
 
@@ -57,11 +58,11 @@
 - (void)applyContainedThemeWithTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
   [self resetTitleFontForAllStates];
 
-  if (scheme.mdc_adjustsFontForContentSizeCategory) {
-    [self setTitleFont:[scheme.button mdc_scaledFontForCurrentSizeCategory]
+  if (typographyScheme.mdc_adjustsFontForContentSizeCategory) {
+    [self setTitleFont:[typographyScheme.button mdc_scaledFontForCurrentSizeCategory]
               forState:UIControlStateNormal];
   } else {
-    [self setTitleFont:scheme.button forState:UIControlStateNormal];
+    [self setTitleFont:typographyScheme.button forState:UIControlStateNormal];
   }
 }
 
@@ -108,11 +109,11 @@
 - (void)applyOutlinedThemeWithTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
   [self resetTitleFontForAllStates];
 
-  if (scheme.mdc_adjustsFontForContentSizeCategory) {
-    [self setTitleFont:[scheme.button mdc_scaledFontForCurrentSizeCategory]
+  if (typographyScheme.mdc_adjustsFontForContentSizeCategory) {
+    [self setTitleFont:[typographyScheme.button mdc_scaledFontForCurrentSizeCategory]
               forState:UIControlStateNormal];
   } else {
-    [self setTitleFont:scheme.button forState:UIControlStateNormal];
+    [self setTitleFont:typographyScheme.button forState:UIControlStateNormal];
   }
 }
 
@@ -159,11 +160,11 @@
 - (void)applyTextThemeWithTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
   [self resetTitleFontForAllStates];
 
-  if (scheme.mdc_adjustsFontForContentSizeCategory) {
-    [self setTitleFont:[scheme.button mdc_scaledFontForCurrentSizeCategory]
+  if (typographyScheme.mdc_adjustsFontForContentSizeCategory) {
+    [self setTitleFont:[typographyScheme.button mdc_scaledFontForCurrentSizeCategory]
               forState:UIControlStateNormal];
   } else {
-    [self setTitleFont:scheme.button forState:UIControlStateNormal];
+    [self setTitleFont:typographyScheme.button forState:UIControlStateNormal];
   }
 }
 
