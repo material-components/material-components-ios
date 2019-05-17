@@ -56,16 +56,14 @@ static const NSUInteger kDefaultVerticalPadding = 20;
 }
 
 - (void)positionTextField {
-  CGFloat textFieldWidth =
-      CGRectGetWidth(self.view.frame) - (2 * kDefaultHorizontalPadding);
+  CGFloat textFieldWidth = CGRectGetWidth(self.view.frame) - (2 * kDefaultHorizontalPadding);
   CGFloat textFieldMinY = 0;
   if (@available(iOS 11.0, *)) {
     textFieldMinY = self.view.safeAreaInsets.top + kDefaultVerticalPadding;
   } else {
     textFieldMinY = 120;
   }
-  CGRect initialFrame =
-      CGRectMake(kDefaultHorizontalPadding, textFieldMinY, textFieldWidth, 70);
+  CGRect initialFrame = CGRectMake(kDefaultHorizontalPadding, textFieldMinY, textFieldWidth, 70);
   self.textField.frame = initialFrame;
 }
 

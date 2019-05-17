@@ -36,7 +36,8 @@
   textField.layoutDirection = UIUserInterfaceLayoutDirectionLeftToRight;
   UIView *sideView = [self createSideView];
   textField.leadingView = sideView;
-  XCTAssertTrue(textField.leftView == textField.leadingView, @"The leading view should be the left view.");
+  XCTAssertTrue(textField.leftView == textField.leadingView,
+                @"The leading view should be the left view.");
 }
 
 - (void)testLeadingViewRTL {
@@ -44,7 +45,8 @@
   textField.layoutDirection = UIUserInterfaceLayoutDirectionRightToLeft;
   UIView *sideView = [self createSideView];
   textField.leadingView = sideView;
-  XCTAssertTrue(textField.rightView == textField.leadingView, @"The leading view should be the right view.");
+  XCTAssertTrue(textField.rightView == textField.leadingView,
+                @"The leading view should be the right view.");
 }
 
 - (void)testTrailingViewLTR {
@@ -52,7 +54,8 @@
   textField.layoutDirection = UIUserInterfaceLayoutDirectionLeftToRight;
   UIView *sideView = [self createSideView];
   textField.trailingView = sideView;
-  XCTAssertTrue(textField.rightView == textField.trailingView, @"The trailing view should be the right view.");
+  XCTAssertTrue(textField.rightView == textField.trailingView,
+                @"The trailing view should be the right view.");
 }
 
 - (void)testTrailingViewRTL {
@@ -60,35 +63,40 @@
   textField.layoutDirection = UIUserInterfaceLayoutDirectionRightToLeft;
   UIView *sideView = [self createSideView];
   textField.trailingView = sideView;
-  XCTAssertTrue(textField.leftView == textField.trailingView, @"The trailing view should be the left view.");
+  XCTAssertTrue(textField.leftView == textField.trailingView,
+                @"The trailing view should be the left view.");
 }
 
 - (void)testLeadingViewModeLTR {
   MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
   textField.layoutDirection = UIUserInterfaceLayoutDirectionLeftToRight;
   textField.leadingViewMode = UITextFieldViewModeAlways;
-  XCTAssertTrue(textField.leftViewMode == textField.leadingViewMode, @"The leading view mode should be equal to the left view mode.");
+  XCTAssertTrue(textField.leftViewMode == textField.leadingViewMode,
+                @"The leading view mode should be equal to the left view mode.");
 }
 
 - (void)testLeadingViewModeRTL {
   MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
   textField.layoutDirection = UIUserInterfaceLayoutDirectionRightToLeft;
   textField.leadingViewMode = UITextFieldViewModeAlways;
-  XCTAssertTrue(textField.rightViewMode == textField.leadingViewMode, @"The leading view mode should be equal to the right view mode.");
+  XCTAssertTrue(textField.rightViewMode == textField.leadingViewMode,
+                @"The leading view mode should be equal to the right view mode.");
 }
 
 - (void)testTrailingViewModeLTR {
   MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
   textField.layoutDirection = UIUserInterfaceLayoutDirectionLeftToRight;
   textField.trailingViewMode = UITextFieldViewModeAlways;
-  XCTAssertTrue(textField.rightView == textField.trailingView, @"The trailing view mode should be equal to the right view mode.");
+  XCTAssertTrue(textField.rightView == textField.trailingView,
+                @"The trailing view mode should be equal to the right view mode.");
 }
 
 - (void)testTrailingViewModeRTL {
   MDCBaseTextField *textField = [[MDCBaseTextField alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
   textField.layoutDirection = UIUserInterfaceLayoutDirectionRightToLeft;
   textField.trailingViewMode = UITextFieldViewModeAlways;
-  XCTAssertTrue(textField.leftViewMode == textField.trailingViewMode, @"The trailing view mode should be equal to left view mode.");
+  XCTAssertTrue(textField.leftViewMode == textField.trailingViewMode,
+                @"The trailing view mode should be equal to left view mode.");
 }
 
 @end
