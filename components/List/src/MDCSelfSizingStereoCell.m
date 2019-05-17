@@ -75,7 +75,7 @@ static const CGFloat kDetailColorOpacity = (CGFloat)0.6;
 
 - (void)commonMDCSelfSizingStereoCellInit {
   self.cachedLayouts = [[NSMutableDictionary alloc] init];
-  self.mdc_legacyFontScaling = YES;
+  _mdc_legacyFontScaling = YES;
   [self createSubviews];
 }
 
