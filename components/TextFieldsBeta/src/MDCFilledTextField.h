@@ -19,5 +19,5 @@
 /**
  An MDCBaseTextField subclass implementing the Material Filled style.
  */
-@interface MDCFilledTextField : MDCBaseTextField
+__attribute__((objc_subclassing_restricted)) @interface MDCFilledTextField : MDCBaseTextField
 @end

@@ -19,5 +19,5 @@
 /**
  An MDCBaseTextField subclass implementing the Material Outlined style.
  */
-@interface MDCOutlinedTextField : MDCBaseTextField
+__attribute__((objc_subclassing_restricted)) @interface MDCOutlinedTextField : MDCBaseTextField
 @end
