@@ -25,14 +25,14 @@
 @end
 
 /** Fake MDCChipView for unit testing. */
-@interface FakeMDCChipView : MDCChipView
+@interface MDCChipsTestsFakeChipView : MDCChipView
 
 /** Used to set the value of @c traitCollection. */
 @property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
 
 @end
 
-@implementation FakeMDCChipView
+@implementation MDCChipsTestsFakeChipView
 
 - (UITraitCollection *)traitCollection {
   return self.traitCollectionOverride ?: [super traitCollection];
@@ -413,7 +413,7 @@ static inline UIImage *TestImage(CGSize size) {
 
 - (void)testChipViewDynamicTypeBehavior {
   // Given
-  FakeMDCChipView *chipView = [[FakeMDCChipView alloc] init];
+  MDCChipsTestsFakeChipView *chipView = [[MDCChipsTestsFakeChipView alloc] init];
   UIFont *titleFont = [UIFont systemFontOfSize:14.0 weight:UIFontWeightMedium];
   MDCFontScaler *fontScaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleBody2];
   titleFont = [fontScaler scaledFontWithFont:titleFont];
