@@ -412,38 +412,31 @@ static inline UIImage *TestImage(CGSize size) {
 }
 
 - (void)testChipViewDynamicTypeBehavior {
-  // Given
-  MDCChipsTestsFakeChipView *chipView = [[MDCChipsTestsFakeChipView alloc] init];
-  UIFont *titleFont = [UIFont systemFontOfSize:14.0 weight:UIFontWeightMedium];
-  MDCFontScaler *fontScaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleBody2];
-  titleFont = [fontScaler scaledFontWithFont:titleFont];
-  titleFont = [titleFont mdc_scaledFontAtDefaultSize];
-  chipView.titleFont = titleFont;
-  chipView.mdc_adjustsFontForContentSizeCategory = YES;
-  chipView.mdc_legacyFontScaling = NO;
-  chipView.titleLabel.text = @"Chip";
-  [NSNotificationCenter.defaultCenter
-      postNotificationName:UIContentSizeCategoryDidChangeNotification
-                    object:nil];
-  CGFloat defaultFontSize = chipView.titleLabel.font.pointSize;
-
-  // When
   if (@available(iOS 10.0, *)) {
+    // Given
+    MDCChipsTestsFakeChipView *chipView = [[MDCChipsTestsFakeChipView alloc] init];
+    UIFont *titleFont = [UIFont systemFontOfSize:14.0 weight:UIFontWeightMedium];
+    MDCFontScaler *fontScaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleBody2];
+    titleFont = [fontScaler scaledFontWithFont:titleFont];
+    titleFont = [titleFont mdc_scaledFontAtDefaultSize];
+    chipView.titleFont = titleFont;
+    chipView.mdc_adjustsFontForContentSizeCategory = YES;
+    chipView.mdc_legacyFontScaling = NO;
+    chipView.titleLabel.text = @"Chip";
+    CGFloat originalFontSize = chipView.titleLabel.font.pointSize;
+
+    // When
     UIContentSizeCategory size = UIContentSizeCategoryExtraExtraLarge;
     UITraitCollection *traitCollection =
-        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:size];
+    [UITraitCollection traitCollectionWithPreferredContentSizeCategory:size];
     chipView.traitCollectionOverride = traitCollection;
-  }
-  [NSNotificationCenter.defaultCenter
-      postNotificationName:UIContentSizeCategoryDidChangeNotification
-                    object:nil];
-  CGFloat fontSizeForExtraExtraLargeSizeCategory = chipView.titleLabel.font.pointSize;
+    [NSNotificationCenter.defaultCenter
+     postNotificationName:UIContentSizeCategoryDidChangeNotification
+     object:nil];
 
-  // Then
-  if (@available(iOS 10.0, *)) {
-    XCTAssertGreaterThan(fontSizeForExtraExtraLargeSizeCategory, defaultFontSize);
-  } else {
-    XCTAssertEqual(fontSizeForExtraExtraLargeSizeCategory, defaultFontSize);
+    // Then
+    CGFloat actualFontSize = chipView.titleLabel.font.pointSize;
+    XCTAssertGreaterThan(actualFontSize, originalFontSize);
   }
 }
 
