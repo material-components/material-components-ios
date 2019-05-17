@@ -213,7 +213,7 @@ static const CGFloat kDetailColorOpacity = (CGFloat)0.6;
   [self adjustFontsForDynamicType];
 }
 
--(void)mdc_setLegacyFontScaling:(BOOL)mdc_legacyFontScaling {
+- (void)mdc_setLegacyFontScaling:(BOOL)mdc_legacyFontScaling {
   if (mdc_legacyFontScaling == _mdc_legacyFontScaling) {
     return;
   }
@@ -243,11 +243,11 @@ static const CGFloat kDetailColorOpacity = (CGFloat)0.6;
       detailFont = [detailFont mdc_scaledFontForSizeCategory:sizeCategory];
     } else {
       titleFont =
-      [titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleTitle
-                              scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+          [titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleTitle
+                                  scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
       detailFont =
-      [detailFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleCaption
-                              scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+          [detailFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleCaption
+                                   scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
     }
   }
   self.titleLabel.font = titleFont;

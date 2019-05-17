@@ -27,7 +27,7 @@
 
 @implementation MDCSelfSizingStereoCellTestsDynamicTypeContentSizeCategoryOverrideWindow
 
--(instancetype)init {
+- (instancetype)init {
   self = [super init];
   if (self) {
     self.contentSizeCategoryOverride = UIContentSizeCategoryLarge;
@@ -35,7 +35,8 @@
   return self;
 }
 
--(instancetype)initWithContentSizeCategoryOverride:(UIContentSizeCategory)contentSizeCategoryOverride {
+- (instancetype)initWithContentSizeCategoryOverride:
+    (UIContentSizeCategory)contentSizeCategoryOverride {
   self = [super init];
   if (self) {
     self.contentSizeCategoryOverride = contentSizeCategoryOverride;
@@ -45,8 +46,8 @@
 
 - (UITraitCollection *)traitCollection {
   if (@available(iOS 10.0, *)) {
-    UITraitCollection *traitCollection =
-    [UITraitCollection traitCollectionWithPreferredContentSizeCategory:self.contentSizeCategoryOverride];
+    UITraitCollection *traitCollection = [UITraitCollection
+        traitCollectionWithPreferredContentSizeCategory:self.contentSizeCategoryOverride];
     return traitCollection;
   }
   return [super traitCollection];
@@ -63,15 +64,19 @@
 - (void)testSelfSizingStereoCellDynamicTypeBehavior {
   // Given
   MDCSelfSizingStereoCellTestsDynamicTypeContentSizeCategoryOverrideWindow *largeContainer =
-      [[MDCSelfSizingStereoCellTestsDynamicTypeContentSizeCategoryOverrideWindow alloc] initWithContentSizeCategoryOverride:UIContentSizeCategoryLarge];
+      [[MDCSelfSizingStereoCellTestsDynamicTypeContentSizeCategoryOverrideWindow alloc]
+          initWithContentSizeCategoryOverride:UIContentSizeCategoryLarge];
   MDCSelfSizingStereoCellTestsDynamicTypeContentSizeCategoryOverrideWindow *extraLargeContainer =
-      [[MDCSelfSizingStereoCellTestsDynamicTypeContentSizeCategoryOverrideWindow alloc] initWithContentSizeCategoryOverride:UIContentSizeCategoryExtraLarge];
+      [[MDCSelfSizingStereoCellTestsDynamicTypeContentSizeCategoryOverrideWindow alloc]
+          initWithContentSizeCategoryOverride:UIContentSizeCategoryExtraLarge];
   MDCSelfSizingStereoCell *cell = [[MDCSelfSizingStereoCell alloc] init];
   [largeContainer addSubview:cell];
   UIFont *titleFont = cell.titleLabel.font;
   UIFont *detailFont = cell.detailLabel.font;
-  MDCFontScaler *headlineFontScaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleSubtitle1];
-  MDCFontScaler *detailFontScalar = [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleButton];
+  MDCFontScaler *headlineFontScaler =
+      [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleSubtitle1];
+  MDCFontScaler *detailFontScalar =
+      [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleButton];
   titleFont = [headlineFontScaler scaledFontWithFont:titleFont];
   titleFont = [titleFont mdc_scaledFontAtDefaultSize];
   detailFont = [detailFontScalar scaledFontWithFont:detailFont];
@@ -88,8 +93,8 @@
   // When
   [extraLargeContainer addSubview:cell];
   [NSNotificationCenter.defaultCenter
-   postNotificationName:UIContentSizeCategoryDidChangeNotification
-   object:nil];
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
   CGFloat fontTitleSizeForExtraExtraLargeSizeCategory = cell.titleLabel.font.pointSize;
   CGFloat fontDetailSizeForExtraExtraLargeSizeCategory = cell.detailLabel.font.pointSize;
 
