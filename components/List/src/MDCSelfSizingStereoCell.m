@@ -24,6 +24,8 @@
 
 #import "private/MDCSelfSizingStereoCellLayout.h"
 
+#import "UIApplication+AppExtensions.h"
+
 static const CGFloat kTitleColorOpacity = (CGFloat)0.87;
 static const CGFloat kDetailColorOpacity = (CGFloat)0.6;
 
@@ -73,6 +75,7 @@ static const CGFloat kDetailColorOpacity = (CGFloat)0.6;
 
 - (void)commonMDCSelfSizingStereoCellInit {
   self.cachedLayouts = [[NSMutableDictionary alloc] init];
+  self.mdc_legacyFontScaling = YES;
   [self createSubviews];
 }
 
@@ -207,24 +210,45 @@ static const CGFloat kDetailColorOpacity = (CGFloat)0.6;
                                                   object:nil];
   }
 
-  [self adjustFontsForContentSizeCategory];
+  [self adjustFontsForDynamicType];
+}
+
+- (void)mdc_setLegacyFontScaling:(BOOL)mdc_legacyFontScaling {
+  if (mdc_legacyFontScaling == _mdc_legacyFontScaling) {
+    return;
+  }
+
+  _mdc_legacyFontScaling = mdc_legacyFontScaling;
+
+  [self adjustFontsForDynamicType];
 }
 
 // Handles UIContentSizeCategoryDidChangeNotifications
 - (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
-  [self adjustFontsForContentSizeCategory];
+  [self adjustFontsForDynamicType];
 }
 
-- (void)adjustFontsForContentSizeCategory {
+- (void)adjustFontsForDynamicType {
   UIFont *titleFont = self.titleLabel.font ?: self.defaultTitleLabelFont;
   UIFont *detailFont = self.detailLabel.font ?: self.defaultDetailLabelFont;
-  if (_mdc_adjustsFontForContentSizeCategory) {
-    titleFont =
-        [titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleTitle
-                                scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
-    detailFont =
-        [detailFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleCaption
-                                 scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+  if (self.mdc_adjustsFontForContentSizeCategory) {
+    if (titleFont.mdc_scalingCurve && detailFont.mdc_scalingCurve && !self.mdc_legacyFontScaling) {
+      UIContentSizeCategory sizeCategory = UIContentSizeCategoryLarge;
+      if (@available(iOS 10.0, *)) {
+        sizeCategory = self.traitCollection.preferredContentSizeCategory;
+      } else if ([UIApplication mdc_safeSharedApplication]) {
+        sizeCategory = [UIApplication mdc_safeSharedApplication].preferredContentSizeCategory;
+      }
+      titleFont = [titleFont mdc_scaledFontForSizeCategory:sizeCategory];
+      detailFont = [detailFont mdc_scaledFontForSizeCategory:sizeCategory];
+    } else {
+      titleFont =
+          [titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleTitle
+                                  scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+      detailFont =
+          [detailFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleCaption
+                                   scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+    }
   }
   self.titleLabel.font = titleFont;
   self.detailLabel.font = detailFont;
