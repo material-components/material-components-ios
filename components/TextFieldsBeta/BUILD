@@ -39,6 +39,7 @@ mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
         ":TextFieldsBeta",
+        "//components/schemes/Container",
     ],
 )
 
