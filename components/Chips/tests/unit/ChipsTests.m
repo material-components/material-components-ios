@@ -428,11 +428,11 @@ static inline UIImage *TestImage(CGSize size) {
     // When
     UIContentSizeCategory size = UIContentSizeCategoryExtraExtraLarge;
     UITraitCollection *traitCollection =
-    [UITraitCollection traitCollectionWithPreferredContentSizeCategory:size];
+        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:size];
     chipView.traitCollectionOverride = traitCollection;
     [NSNotificationCenter.defaultCenter
-     postNotificationName:UIContentSizeCategoryDidChangeNotification
-     object:nil];
+        postNotificationName:UIContentSizeCategoryDidChangeNotification
+                      object:nil];
 
     // Then
     CGFloat actualFontSize = chipView.titleLabel.font.pointSize;
