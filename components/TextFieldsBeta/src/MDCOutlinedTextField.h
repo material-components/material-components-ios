@@ -12,6 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import <UIKit/UIKit.h>
+
 #import "MDCBaseTextField.h"
-#import "MDCOutlinedTextField.h"
-#import "MDCFilledTextField.h"
+
+/**
+ An MDCBaseTextField subclass implementing the Material Outlined style.
+ */
+@interface MDCOutlinedTextField : MDCBaseTextField
+@end

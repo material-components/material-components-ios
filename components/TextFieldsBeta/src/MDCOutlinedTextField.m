@@ -12,6 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCBaseTextField.h"
 #import "MDCOutlinedTextField.h"
-#import "MDCFilledTextField.h"
+
+#import <Foundation/Foundation.h>
+
+@interface MDCOutlinedTextField ()
+@end
+
+@implementation MDCOutlinedTextField
+@end
