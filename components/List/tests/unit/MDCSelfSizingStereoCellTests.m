@@ -66,9 +66,6 @@
   MDCSelfSizingStereoCellTestsDynamicTypeContentSizeCategoryOverrideWindow *largeContainer =
       [[MDCSelfSizingStereoCellTestsDynamicTypeContentSizeCategoryOverrideWindow alloc]
           initWithContentSizeCategoryOverride:UIContentSizeCategoryLarge];
-  MDCSelfSizingStereoCellTestsDynamicTypeContentSizeCategoryOverrideWindow *extraLargeContainer =
-      [[MDCSelfSizingStereoCellTestsDynamicTypeContentSizeCategoryOverrideWindow alloc]
-          initWithContentSizeCategoryOverride:UIContentSizeCategoryExtraLarge];
   MDCSelfSizingStereoCell *cell = [[MDCSelfSizingStereoCell alloc] init];
   [largeContainer addSubview:cell];
   UIFont *titleFont = cell.titleLabel.font;
@@ -91,7 +88,11 @@
   CGFloat defaultDetailSize = cell.detailLabel.font.pointSize;
 
   // When
-  [extraLargeContainer addSubview:cell];
+  MDCSelfSizingStereoCellTestsDynamicTypeContentSizeCategoryOverrideWindow
+      *extraExtraLargeContainer =
+          [[MDCSelfSizingStereoCellTestsDynamicTypeContentSizeCategoryOverrideWindow alloc]
+              initWithContentSizeCategoryOverride:UIContentSizeCategoryExtraLarge];
+  [extraExtraLargeContainer addSubview:cell];
   [NSNotificationCenter.defaultCenter
       postNotificationName:UIContentSizeCategoryDidChangeNotification
                     object:nil];
