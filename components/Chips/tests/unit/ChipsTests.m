@@ -442,6 +442,8 @@ static inline UIImage *TestImage(CGSize size) {
   // Then
   if (@available(iOS 10.0, *)) {
     XCTAssertGreaterThan(fontSizeForExtraExtraLargeSizeCategory, defaultFontSize);
+  } else {
+    XCTAssertEqual(fontSizeForExtraExtraLargeSizeCategory, defaultFontSize);
   }
 }
 
