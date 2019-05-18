@@ -72,7 +72,10 @@
   UIFont *detailFont = cell.detailLabel.font;
   MDCFontScaler *headlineFontScaler =
       [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleSubtitle1];
-  //TODO: Investigate what can be done about the line below failing when using .caption instead of .button. See https://github.com/material-components/material-components-ios/pull/7413/files#r285289332 for context.
+  // TODO: Investigate what can be done about the line below failing when using .caption instead of
+  // .button. See
+  // https://github.com/material-components/material-components-ios/pull/7413/files#r285289332 for
+  // context.
   MDCFontScaler *detailFontScalar =
       [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleButton];
   titleFont = [headlineFontScaler scaledFontWithFont:titleFont];
