@@ -146,6 +146,9 @@
 
 /**
  The status bar style that should be used for this view controller.
+
+ See inferPreferredStatusBarStyle for more details about how this property's setter and getter
+ should be interpreted.
  */
 @property(nonatomic) UIStatusBarStyle preferredStatusBarStyle;
 
