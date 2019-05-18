@@ -123,6 +123,17 @@ static const NSTimeInterval MDCProgressViewAnimationDuration = 0.25;
   self.trackView.backgroundColor = trackTintColor;
 }
 
+- (void)setProgressCornerRadius:(CGFloat)progressCornerRadius {
+  _progressView.layer.cornerRadius = progressCornerRadius;
+
+  BOOL hasNonZeroCornerRadius = progressCornerRadius != 0;
+  _progressView.clipsToBounds = hasNonZeroCornerRadius;
+}
+
+- (CGFloat)progressCornerRadius {
+  return _progressView.layer.cornerRadius;
+}
+
 - (void)setProgress:(float)progress {
   if (progress > 1)
     progress = 1;

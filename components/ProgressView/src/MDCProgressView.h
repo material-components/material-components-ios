@@ -47,6 +47,13 @@ IB_DESIGNABLE
 @property(nonatomic, strong, null_resettable) UIColor *trackTintColor UI_APPEARANCE_SELECTOR;
 
 /**
+ The corner radius for the portion of the progress view that is filled.
+
+ The default is 0.
+ */
+@property(nonatomic) CGFloat progressCornerRadius;
+
+/**
  The current progress.
 
  The current progress is represented by a floating-point value between 0.0 and 1.0, inclusive, where
