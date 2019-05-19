@@ -321,9 +321,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   }
   [super touchesBegan:touches withEvent:event];
 
-  if (self.enableRippleBehavior) {
-    self.rippleView.rippleHighlighted = YES;
-  } else {
+  if (!self.enableRippleBehavior) {
     [self handleBeginTouches:touches];
   }
 }
@@ -343,9 +341,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   }
   [super touchesEnded:touches withEvent:event];
 
-  if (self.enableRippleBehavior) {
-    self.rippleView.rippleHighlighted = NO;
-  } else {
+  if (!self.enableRippleBehavior) {
     CGPoint location = [self locationFromTouches:touches];
     [_inkView startTouchEndedAnimationAtPoint:location completion:nil];
   }
@@ -358,9 +354,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   }
   [super touchesCancelled:touches withEvent:event];
 
-  if (self.enableRippleBehavior) {
-    self.rippleView.rippleHighlighted = NO;
-  } else {
+  if (!self.enableRippleBehavior) {
     [self evaporateInkToPoint:[self locationFromTouches:touches]];
   }
 }
@@ -380,12 +374,14 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (void)setHighlighted:(BOOL)highlighted {
   [super setHighlighted:highlighted];
 
+  self.rippleView.rippleHighlighted = highlighted;
   [self updateAfterStateChange:NO];
 }
 
 - (void)setSelected:(BOOL)selected {
   [super setSelected:selected];
 
+  self.rippleView.selected = selected;
   [self updateAfterStateChange:NO];
 }
 
