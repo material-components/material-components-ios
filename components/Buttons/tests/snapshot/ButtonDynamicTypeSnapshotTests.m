@@ -84,44 +84,44 @@ NS_AVAILABLE_IOS(10_0) @interface ButtonDynamicTypeSnapshotTests : MDCSnapshotTe
   [self generateSnapshotAndVerifyForView:self.button];
 }
 
-  - (void)testContentSizeCategoryAccessibilityLarge {
-    // Given
-    [self setButtonTraitCollectionSizeToSize:UIContentSizeCategoryAccessibilityLarge];
+- (void)testContentSizeCategoryAccessibilityLarge {
+  // Given
+  [self setButtonTraitCollectionSizeToSize:UIContentSizeCategoryAccessibilityLarge];
 
-    // When
-    [NSNotificationCenter.defaultCenter
-     postNotificationName:UIContentSizeCategoryDidChangeNotification
-     object:nil];
+  // When
+  [NSNotificationCenter.defaultCenter
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
 
-    // Then
-    [self generateSnapshotAndVerifyForView:self.button];
-  }
+  // Then
+  [self generateSnapshotAndVerifyForView:self.button];
+}
 
-  - (void)testContentSizeCategoryAccessibilityExtraLarge {
-    // Given
-    [self setButtonTraitCollectionSizeToSize:UIContentSizeCategoryAccessibilityExtraLarge];
+- (void)testContentSizeCategoryAccessibilityExtraLarge {
+  // Given
+  [self setButtonTraitCollectionSizeToSize:UIContentSizeCategoryAccessibilityExtraLarge];
 
-    // When
-    [NSNotificationCenter.defaultCenter
-     postNotificationName:UIContentSizeCategoryDidChangeNotification
-     object:nil];
+  // When
+  [NSNotificationCenter.defaultCenter
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
 
-    // Then
-    [self generateSnapshotAndVerifyForView:self.button];
-  }
+  // Then
+  [self generateSnapshotAndVerifyForView:self.button];
+}
 
-  - (void)testContentSizeCategoryAccessibilityExtraExtraLarge {
-    // Given
-    [self setButtonTraitCollectionSizeToSize:UIContentSizeCategoryAccessibilityExtraExtraLarge];
+- (void)testContentSizeCategoryAccessibilityExtraExtraLarge {
+  // Given
+  [self setButtonTraitCollectionSizeToSize:UIContentSizeCategoryAccessibilityExtraExtraLarge];
 
-    // When
-    [NSNotificationCenter.defaultCenter
-     postNotificationName:UIContentSizeCategoryDidChangeNotification
-     object:nil];
+  // When
+  [NSNotificationCenter.defaultCenter
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
 
-    // Then
-    [self generateSnapshotAndVerifyForView:self.button];
-  }
+  // Then
+  [self generateSnapshotAndVerifyForView:self.button];
+}
 
 - (void)testContentSizeCategoryAccessibilityExtraExtraExtraLarge {
   // Given
