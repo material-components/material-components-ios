@@ -66,7 +66,8 @@ NS_AVAILABLE_IOS(10_0) @interface ButtonDynamicTypeSnapshotTests : MDCSnapshotTe
 }
 
 - (void)setButtonTraitCollectionSizeToSize:(UIContentSizeCategory)sizeCategory {
-  UITraitCollection *traitCollection = [UITraitCollection traitCollectionWithPreferredContentSizeCategory:sizeCategory];
+  UITraitCollection *traitCollection =
+      [UITraitCollection traitCollectionWithPreferredContentSizeCategory:sizeCategory];
   self.button.traitCollectionOverride = traitCollection;
 }
 
@@ -76,8 +77,8 @@ NS_AVAILABLE_IOS(10_0) @interface ButtonDynamicTypeSnapshotTests : MDCSnapshotTe
 
   // When
   [NSNotificationCenter.defaultCenter
-   postNotificationName:UIContentSizeCategoryDidChangeNotification
-   object:nil];
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.button];
