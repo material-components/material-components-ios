@@ -127,39 +127,48 @@
 
 #pragma mark - Touch tests
 
-- (void)testTouchesBeganSetsRippleHighlightedToYES {
+- (void)testSettingHighlightedUpdatesRippleTheming {
   // Given
   self.button.enableRippleBehavior = YES;
 
   // When
-  [self.button touchesBegan:[NSSet setWithObject:[[UITouch alloc] init]] withEvent:nil];
+  self.button.highlighted = YES;
 
   // Then
   XCTAssertTrue(self.button.rippleView.isRippleHighlighted);
-}
 
-- (void)testTouchesCancelledSetsRippleHighlightedToNO {
-  // Given
-  self.button.enableRippleBehavior = YES;
-  self.button.rippleView.rippleHighlighted = YES;
-
-  // When
-  [self.button touchesCancelled:[NSSet setWithObject:[[UITouch alloc] init]] withEvent:nil];
+  // And When
+  self.button.highlighted = NO;
 
   // Then
   XCTAssertFalse(self.button.rippleView.isRippleHighlighted);
 }
 
-- (void)testTouchesEndedSetsRippleHighlightedToNO {
+- (void)testSettingSelectedWhenNotAllowedDoesntUpdateRippleTheming {
   // Given
   self.button.enableRippleBehavior = YES;
-  self.button.rippleView.rippleHighlighted = YES;
 
   // When
-  [self.button touchesEnded:[NSSet setWithObject:[[UITouch alloc] init]] withEvent:nil];
+  self.button.selected = YES;
 
   // Then
-  XCTAssertFalse(self.button.rippleView.isRippleHighlighted);
+  XCTAssertFalse(self.button.rippleView.isSelected);
+}
+
+- (void)testSettingSelectedUpdatesRippleTheming {
+  // Given
+  self.button.enableRippleBehavior = YES;
+  self.button.rippleView.allowsSelection = YES;
+  self.button.selected = YES;
+
+  // Then
+  XCTAssertTrue(self.button.rippleView.isSelected);
+
+  // And When
+  self.button.selected = NO;
+
+  // Then
+  XCTAssertFalse(self.button.rippleView.isSelected);
 }
 
 @end

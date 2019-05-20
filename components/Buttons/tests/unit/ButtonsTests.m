@@ -494,6 +494,33 @@ static NSString *controlStateDescription(UIControlState controlState) {
   }
 }
 
+#pragma mark - titleFont:forState:
+
+- (void)testTitleFontForState {
+  for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
+    // Given
+    UIFont *randomFont = [UIFont systemFontOfSize:arc4random_uniform(100)];
+
+    // When
+    [self.button setTitleFont:randomFont forState:controlState];
+
+    // Then
+    XCTAssertEqualObjects([self.button titleFontForState:controlState], randomFont);
+  }
+}
+
+- (void)testTitleFontForStateFallbackBehavior {
+  // Given
+  UIFont *fakeFont = [UIFont systemFontOfSize:25];
+  // When
+  [self.button setTitleFont:fakeFont forState:UIControlStateNormal];
+
+  // Then
+  for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
+    XCTAssertEqualObjects([self.button titleFontForState:controlState], fakeFont);
+  }
+}
+
 #pragma mark - shadowColor:forState:
 
 - (void)testRemovedShadowColorForState {

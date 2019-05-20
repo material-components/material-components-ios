@@ -144,6 +144,16 @@
     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
 
 /**
+ Enable legacy font scaling curves for Dynamic Type.
+
+ Legacy font scaling uses the older [UIFont mdc_fontSizedForMaterialTextStyle:scaledForDynamicType:
+ category instead of the MDCFontScaler API.
+
+ Default value is YES.
+ */
+@property(nonatomic, readwrite, setter=mdc_setLegacyFontScaling:) BOOL mdc_legacyFontScaling;
+
+/**
  The minimum dimensions of the Chip. A non-positive value for either height or width is equivalent
  to no minimum for that dimension.
 
