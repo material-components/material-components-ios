@@ -56,7 +56,7 @@
 
 - (void)applySecondaryThemeWithTypographyScheme:(id<MDCTypographyScheming>)scheme {
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
-  UIControlStateHighlighted | UIControlStateDisabled;
+                                 UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     [self setTitleFont:nil forState:state];
   }
