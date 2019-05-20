@@ -56,7 +56,6 @@ mdc_extension_objc_library(
         ":ColorThemer",
         ":ShapeThemer",
         "//components/ShadowElevations",
-        "//components/Typography",
         "//components/schemes/Container",
     ],
 )

@@ -17,7 +17,6 @@
 #import <MaterialComponents/MaterialButtons+ColorThemer.h>
 #import <MaterialComponents/MaterialButtons+ShapeThemer.h>
 #import <MaterialComponents/MaterialShadowElevations.h>
-#import "MaterialTypography.h"
 
 @implementation MDCButton (MaterialTheming)
 
