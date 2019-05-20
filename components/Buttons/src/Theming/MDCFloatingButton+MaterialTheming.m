@@ -16,7 +16,6 @@
 
 #import <MaterialComponents/MaterialButtons+ColorThemer.h>
 #import <MaterialComponents/MaterialButtons+ShapeThemer.h>
-#import <MaterialComponents/MaterialTypography.h>
 
 @implementation MDCFloatingButton (MaterialTheming)
 
@@ -60,7 +59,6 @@
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     [self setTitleFont:nil forState:state];
   }
-
   [self setTitleFont:scheme.button forState:UIControlStateNormal];
 }
 
