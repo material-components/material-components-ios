@@ -30,8 +30,7 @@
   //  self.recordMode = YES;
 
   self.progressView = [[MDCProgressView alloc] initWithFrame:CGRectMake(0, 0, 100, 10)];
-  self.progressView.layer.cornerRadius = CGRectGetHeight(self.progressView.bounds) / 2;
-  self.progressView.progressCornerRadius = self.progressView.layer.cornerRadius;
+  self.progressView.cornerRadius = CGRectGetHeight(self.progressView.bounds) / 2;
 }
 
 - (void)tearDown {

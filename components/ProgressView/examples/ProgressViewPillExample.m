@@ -62,9 +62,8 @@ static const CGFloat kProgressViewHeight = 4;
   [self.container addSubview:_progressView];
   _progressView.progress = (float)0.25;
 
-  // Configure the "pill" effect by giving both the container and the progress a corner radius.
-  _progressView.layer.cornerRadius = kProgressViewHeight / 2;
-  _progressView.progressCornerRadius = _progressView.layer.cornerRadius;
+  // Configure the "pill" effect.
+  _progressView.cornerRadius = kProgressViewHeight / 2;
 
   [self setupConstraints];
 }
