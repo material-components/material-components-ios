@@ -23,7 +23,7 @@
 #import "MaterialShadowLayer.h"
 #import "MaterialShapes.h"
 #import "MaterialTypography.h"
-#import "UIApplication+AppExtensions.h"
+#import "MaterialApplication.h"
 
 static const MDCFontTextStyle kTitleTextStyle = MDCFontTextStyleBody2;
 
