@@ -61,7 +61,6 @@
     [self setTitleFont:nil forState:state];
   }
 
-  self.mdc_adjustsFontForContentSizeCategory = scheme.mdc_adjustsFontForContentSizeCategory;
   [self setTitleFont:scheme.button forState:UIControlStateNormal];
 }
 
