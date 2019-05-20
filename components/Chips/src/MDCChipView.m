@@ -16,6 +16,7 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
+#import "MaterialApplication.h"
 #import "MaterialInk.h"
 #import "MaterialMath.h"
 #import "MaterialRipple.h"
@@ -23,7 +24,6 @@
 #import "MaterialShadowLayer.h"
 #import "MaterialShapes.h"
 #import "MaterialTypography.h"
-#import "UIApplication+AppExtensions.h"
 
 static const MDCFontTextStyle kTitleTextStyle = MDCFontTextStyleBody2;
 
