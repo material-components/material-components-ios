@@ -53,12 +53,13 @@
 - (void)testFontThemerWithDynamicTypeSupport {
   if (@available(iOS 10.0, *)) {
     // Given
-    MDCChipsTypographyThemerTestsFakeChipView *chip = [[MDCChipsTypographyThemerTestsFakeChipView alloc] init];
+    MDCChipsTypographyThemerTestsFakeChipView *chip =
+        [[MDCChipsTypographyThemerTestsFakeChipView alloc] init];
     MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
     typographyScheme.mdc_adjustsFontForContentSizeCategory = YES;
     UIContentSizeCategory size = UIContentSizeCategoryExtraExtraLarge;
     UITraitCollection *traitCollection =
-    [UITraitCollection traitCollectionWithPreferredContentSizeCategory:size];
+        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:size];
     chip.traitCollectionOverride = traitCollection;
 
     // When
