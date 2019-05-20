@@ -129,7 +129,7 @@ static const NSTimeInterval MDCProgressViewAnimationDuration = 0.25;
   _progressView.layer.cornerRadius = cornerRadius;
   _trackView.layer.cornerRadius = cornerRadius;
 
-  BOOL hasNonZeroCornerRadius = cornerRadius != 0;
+  BOOL hasNonZeroCornerRadius = !MDCCGFloatIsExactlyZero(cornerRadius);
   _progressView.clipsToBounds = hasNonZeroCornerRadius;
   _trackView.clipsToBounds = hasNonZeroCornerRadius;
 }
