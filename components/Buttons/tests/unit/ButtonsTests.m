@@ -545,11 +545,11 @@ static NSString *controlStateDescription(UIControlState controlState) {
     // When
     UIContentSizeCategory size = UIContentSizeCategoryExtraExtraLarge;
     UITraitCollection *traitCollection =
-    [UITraitCollection traitCollectionWithPreferredContentSizeCategory:size];
+        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:size];
     fakeButton.traitCollectionOverride = traitCollection;
     [NSNotificationCenter.defaultCenter
-     postNotificationName:UIContentSizeCategoryDidChangeNotification
-     object:nil];
+        postNotificationName:UIContentSizeCategoryDidChangeNotification
+                      object:nil];
 
     // Then
     XCTAssertGreaterThan(fakeButton.titleLabel.font.pointSize, originalFontSize);

@@ -894,7 +894,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
       UIContentSizeCategory sizeCategory = UIContentSizeCategoryLarge;
       if (@available(iOS 10.0, *)) {
         sizeCategory = self.traitCollection.preferredContentSizeCategory;
-      } else if ([UIApplication mdc_safeSharedApplication]){
+      } else if ([UIApplication mdc_safeSharedApplication]) {
         sizeCategory = [UIApplication mdc_safeSharedApplication].preferredContentSizeCategory;
       }
       font = [font mdc_scaledFontForSizeCategory:sizeCategory];
