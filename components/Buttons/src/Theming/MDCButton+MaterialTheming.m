@@ -58,12 +58,8 @@
 - (void)applyContainedThemeWithTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
   [self resetTitleFontForAllStates];
 
-  if (typographyScheme.mdc_adjustsFontForContentSizeCategory) {
-    [self setTitleFont:[typographyScheme.button mdc_scaledFontForCurrentSizeCategory]
-              forState:UIControlStateNormal];
-  } else {
+  self.mdc_adjustsFontForContentSizeCategory = typographyScheme.mdc_adjustsFontForContentSizeCategory;
     [self setTitleFont:typographyScheme.button forState:UIControlStateNormal];
-  }
 }
 
 - (void)applyContainedThemeWithShapeScheme:(id<MDCShapeScheming>)shapeScheme {
@@ -109,12 +105,8 @@
 - (void)applyOutlinedThemeWithTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
   [self resetTitleFontForAllStates];
 
-  if (typographyScheme.mdc_adjustsFontForContentSizeCategory) {
-    [self setTitleFont:[typographyScheme.button mdc_scaledFontForCurrentSizeCategory]
-              forState:UIControlStateNormal];
-  } else {
-    [self setTitleFont:typographyScheme.button forState:UIControlStateNormal];
-  }
+  self.mdc_adjustsFontForContentSizeCategory = typographyScheme.mdc_adjustsFontForContentSizeCategory;
+  [self setTitleFont:typographyScheme.button forState:UIControlStateNormal];
 }
 
 - (void)applyOutlinedThemeWithShapeScheme:(id<MDCShapeScheming>)shapeScheme {
@@ -160,12 +152,8 @@
 - (void)applyTextThemeWithTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
   [self resetTitleFontForAllStates];
 
-  if (typographyScheme.mdc_adjustsFontForContentSizeCategory) {
-    [self setTitleFont:[typographyScheme.button mdc_scaledFontForCurrentSizeCategory]
-              forState:UIControlStateNormal];
-  } else {
+  self.mdc_adjustsFontForContentSizeCategory = typographyScheme.mdc_adjustsFontForContentSizeCategory;
     [self setTitleFont:typographyScheme.button forState:UIControlStateNormal];
-  }
 }
 
 - (void)applyTextThemeWithShapeScheme:(id<MDCShapeScheming>)shapeScheme {
