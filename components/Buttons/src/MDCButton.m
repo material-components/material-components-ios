@@ -15,6 +15,7 @@
 #import "MDCButton.h"
 
 #import <MDFTextAccessibility/MDFTextAccessibility.h>
+#import "MaterialApplication.h"
 #import "MaterialInk.h"
 #import "MaterialMath.h"
 #import "MaterialRipple.h"
@@ -890,7 +891,13 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   if (_mdc_adjustsFontForContentSizeCategory) {
     // Dynamic type is enabled so apply scaling
     if (font.mdc_scalingCurve && !_mdc_legacyFontScaling) {
-      font = [font mdc_scaledFontForCurrentSizeCategory];
+      UIContentSizeCategory sizeCategory = UIContentSizeCategoryLarge;
+      if (@available(iOS 10.0, *)) {
+        sizeCategory = self.traitCollection.preferredContentSizeCategory;
+      } else if ([UIApplication mdc_safeSharedApplication]){
+        sizeCategory = [UIApplication mdc_safeSharedApplication].preferredContentSizeCategory;
+      }
+      font = [font mdc_scaledFontForSizeCategory:sizeCategory];
     } else {
       font = [font mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleButton
                                 scaledForDynamicType:YES];

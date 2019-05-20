@@ -96,6 +96,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
 
 @interface TestButton : MDCButton
 @property(nonatomic, strong) FakeShadowLayer *shadowLayer;
+@property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
 @end
 
 @implementation TestButton
@@ -110,6 +111,11 @@ static NSString *controlStateDescription(UIControlState controlState) {
   }
   return self;
 }
+
+- (UITraitCollection *)traitCollection {
+  return self.traitCollectionOverride ?: [super traitCollection];
+}
+
 @end
 
 @interface ButtonsTests : XCTestCase
@@ -518,6 +524,35 @@ static NSString *controlStateDescription(UIControlState controlState) {
   // Then
   for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
     XCTAssertEqualObjects([self.button titleFontForState:controlState], fakeFont);
+  }
+}
+
+/** Test dynamic type responds to @c UIContentSizeCategoryDidChangeNotification. */
+- (void)testDynamicTypeBehavior {
+  if (@available(iOS 10.0, *)) {
+    // Given
+    TestButton *fakeButton = [[TestButton alloc] init];
+    fakeButton.mdc_adjustsFontForContentSizeCategory = YES;
+    fakeButton.mdc_legacyFontScaling = NO;
+    UIFont *titleFont = [UIFont systemFontOfSize:20];
+    MDCFontScaler *fontScaler = [MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleButton];
+    titleFont = [fontScaler scaledFontWithFont:titleFont];
+    titleFont = [titleFont mdc_scaledFontAtDefaultSize];
+    [fakeButton setTitle:@"Material" forState:UIControlStateNormal];
+    [fakeButton setTitleFont:titleFont forState:UIControlStateNormal];
+    CGFloat originalFontSize = fakeButton.titleLabel.font.pointSize;
+
+    // When
+    UIContentSizeCategory size = UIContentSizeCategoryExtraExtraLarge;
+    UITraitCollection *traitCollection =
+    [UITraitCollection traitCollectionWithPreferredContentSizeCategory:size];
+    fakeButton.traitCollectionOverride = traitCollection;
+    [NSNotificationCenter.defaultCenter
+     postNotificationName:UIContentSizeCategoryDidChangeNotification
+     object:nil];
+
+    // Then
+    XCTAssertGreaterThan(fakeButton.titleLabel.font.pointSize, originalFontSize);
   }
 }
 
