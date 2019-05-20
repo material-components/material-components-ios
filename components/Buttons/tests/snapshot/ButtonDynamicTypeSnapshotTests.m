@@ -32,7 +32,7 @@
 
 @end
 
-@interface ButtonDynamicTypeSnapshotTests : MDCSnapshotTestCase
+NS_AVAILABLE_IOS(10_0) @interface ButtonDynamicTypeSnapshotTests : MDCSnapshotTestCase
 @property(nonatomic, strong, nullable) FakeMDCButton *button;
 @end
 
@@ -65,21 +65,22 @@
   [self snapshotVerifyView:snapshotView];
 }
 
+- (void)setButtonTraitCollectionSizeToSize:(UIContentSizeCategory)sizeCategory {
+  UITraitCollection *traitCollection = [UITraitCollection traitCollectionWithPreferredContentSizeCategory:sizeCategory];
+  self.button.traitCollectionOverride = traitCollection;
+}
+
 - (void)testSmallContentSizeCategory {
-  if (@available(iOS 10.0, *)) {
-    // Given
-    UITraitCollection *traitCollection =
-    [UITraitCollection traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategorySmall];
-    self.button.traitCollectionOverride = traitCollection;
+  // Given
+  [self setButtonTraitCollectionSizeToSize:UIContentSizeCategorySmall];
 
-    // When
-    [NSNotificationCenter.defaultCenter
-     postNotificationName:UIContentSizeCategoryDidChangeNotification
-     object:nil];
+  // When
+  [NSNotificationCenter.defaultCenter
+   postNotificationName:UIContentSizeCategoryDidChangeNotification
+   object:nil];
 
-    // Then
-    [self generateSnapshotAndVerifyForView:self.button];
-  }
+  // Then
+  [self generateSnapshotAndVerifyForView:self.button];
 }
 
 @end
