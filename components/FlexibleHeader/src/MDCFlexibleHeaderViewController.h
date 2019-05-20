@@ -146,7 +146,7 @@
 
 /**
  The status bar style that should be used for this view controller.
- 
+
  If the header view controller has been added as aa child view controller then you will need to
  assign the header view controller to the parent's childViewControllerForStatusBarStyle property
  in order for preferredStatusBarStyle to have any effect.
