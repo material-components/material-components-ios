@@ -122,7 +122,7 @@ exception to our normal squash-and-merge procedure.
 
 ### Start internal testing
 
-You can now start the internal release testing process documented at [go/mdc-releasing](http://go/mdc-releasing#import-the-release-candidate).
+You can now start the internal release testing process documented at [go/mdc-releasing](http://go/mdc-releasing#requirements).
 
 ### Resolve any failures
 
