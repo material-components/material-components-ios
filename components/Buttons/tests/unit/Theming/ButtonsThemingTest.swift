@@ -68,10 +68,11 @@ class ButtonsThemingTest: XCTestCase {
     XCTAssertEqual(button.minimumSize.height, 36, accuracy: 0.001)
   }
 
-  func testContainedThemeWithShapeScheme() {
+  func testContainedThemeWithShapeSchemeAndDynamicType() {
     // Given
     let button = MDCButton()
     let scheme = MDCContainerScheme()
+    scheme.typographyScheme.mdc_adjustsFontForContentSizeCategory = true
     let shapeScheme = MDCShapeScheme()
     scheme.shapeScheme = shapeScheme
 
@@ -85,6 +86,7 @@ class ButtonsThemingTest: XCTestCase {
       XCTAssertEqual(buttonShape.bottomRightCorner,
                      shapeScheme.smallComponentShape.bottomRightCorner)
       XCTAssertEqual(buttonShape.bottomLeftCorner, shapeScheme.smallComponentShape.bottomLeftCorner)
+      XCTAssertTrue(button.mdc_adjustsFontForContentSizeCategory)
     } else {
       XCTFail("Button.shapeGenerator was not a MDCRectangularShapeGenerator")
     }
@@ -130,10 +132,11 @@ class ButtonsThemingTest: XCTestCase {
     XCTAssertEqual(button.borderWidth(for: .disabled), 1, accuracy: 0.001)
   }
 
-  func testOutlinedThemeWithShapeScheme() {
+  func testOutlinedThemeWithShapeSchemeAndDynamicType() {
     // Given
     let button = MDCButton()
     let scheme = MDCContainerScheme()
+    scheme.typographyScheme.mdc_adjustsFontForContentSizeCategory = true
     let shapeScheme = MDCShapeScheme()
     scheme.shapeScheme = shapeScheme
 
@@ -146,6 +149,7 @@ class ButtonsThemingTest: XCTestCase {
       XCTAssertEqual(buttonShape.topRightCorner, shapeScheme.smallComponentShape.topRightCorner)
       XCTAssertEqual(buttonShape.bottomRightCorner, shapeScheme.smallComponentShape.bottomRightCorner)
       XCTAssertEqual(buttonShape.bottomLeftCorner, shapeScheme.smallComponentShape.bottomLeftCorner)
+      XCTAssertTrue(button.mdc_adjustsFontForContentSizeCategory)
     } else {
       XCTFail("Button.shapeGenerator was not a MDCRectangularShapeGenerator")
     }
@@ -163,7 +167,7 @@ class ButtonsThemingTest: XCTestCase {
     helperAssertTextTheme(button: button)
   }
 
-  func testTextThemeWithColorScheme() {
+  func testTextThemeWithColorSchemeAndDynamicTypeEnabled() {
     // Given
     let button = MDCButton()
     let scheme = MDCContainerScheme()
@@ -171,6 +175,7 @@ class ButtonsThemingTest: XCTestCase {
     let customColor = UIColor.orange
     colorScheme.primaryColor = customColor
     scheme.colorScheme = colorScheme
+    scheme.typographyScheme.mdc_adjustsFontForContentSizeCategory = true
 
     // When
     button.applyTextTheme(withScheme: scheme)
@@ -178,6 +183,7 @@ class ButtonsThemingTest: XCTestCase {
     // Then
     XCTAssertEqual(button.titleColor(for: .normal), customColor)
     XCTAssertEqual(button.imageTintColor(for: .normal), customColor)
+    XCTAssertTrue(button.mdc_adjustsFontForContentSizeCategory)
   }
 
   func testConvertContainedToTextTheme() {
