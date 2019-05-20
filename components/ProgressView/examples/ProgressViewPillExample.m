@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKit.h>
 
 #import "MaterialContainerScheme.h"
@@ -89,30 +90,23 @@ static const CGFloat kProgressViewHeight = 4;
     @"progressView" : _progressView,
   };
   NSDictionary *metrics = @{
-    @"t" : @20,
-    @"p" : @0,
-    @"h" : @(kProgressViewHeight),
+    @"topMargin" : @20,
+    @"horizontalMargin" : @0,
+    @"progressViewHeight" : @(kProgressViewHeight),
   };
 
-  NSArray *verticalConstraints =
-      [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(t)-[progressView(==h)]"
-                                              options:0
-                                              metrics:metrics
-                                                views:views];
-  [self.view addConstraints:verticalConstraints];
-
-  NSMutableArray *horizontalConstraints = [NSMutableArray array];
-  NSArray *horizontalVisualFormats = @[
-    @"H:|-(p)-[progressView]-(p)-|",
-  ];
-  for (NSString *format in horizontalVisualFormats) {
-    [horizontalConstraints
-        addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:format
-                                                                    options:0
-                                                                    metrics:metrics
-                                                                      views:views]];
-  }
-  [self.view addConstraints:horizontalConstraints];
+  [NSLayoutConstraint activateConstraints:@[
+    [NSLayoutConstraint
+        constraintsWithVisualFormat:@"V:|-(topMargin)-[progressView(==progressViewHeight)]"
+                            options:0
+                            metrics:metrics
+                              views:views],
+    [NSLayoutConstraint
+        constraintsWithVisualFormat:@"H:|-(horizontalMargin)-[progressView]-(horizontalMargin)-|"
+                            options:0
+                            metrics:metrics
+                              views:views]
+  ]];
 }
 
 #pragma mark - CatalogByConvention
