@@ -25,6 +25,7 @@
 @property(nonatomic, nullable, strong) UIImageView *titleIconImageView;
 
 @property(nonatomic, nullable, weak) MDCAlertActionManager *actionManager;
+
 /** The scroll view that holds both the @c titleLabel and @c messageLabel. */
 @property(nonatomic, nonnull, strong) UIScrollView *contentScrollView;
 
