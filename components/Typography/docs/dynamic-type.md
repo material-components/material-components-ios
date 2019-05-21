@@ -14,7 +14,14 @@ Users configure text styles in source code. First, you call the `scalerForMateri
 ```objc
 UIFont *customFont = [UIFont fontWithName:@"CustomFontName" size:18.0];
 MDCFontScaler *fontScaler = [MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleBody1];
-UIFont *customScalableFont = [fontScaler fontWithCurveForFont:customFont];
+UIFont *customScalableFont = [fontScaler scaledFontWithFont:customFont];
+label.font = customScalingFont;
+```
+
+```swift
+let customFont = UIFont(name: "CustomFontName", size: 18.0)!
+let fontScaler = MDCFontScaler(forMaterialTextStyle:.body1);
+let customScalableFont = fontScaler.scaledFont(with:customFont);
 label.font = customScalingFont;
 ```
 
