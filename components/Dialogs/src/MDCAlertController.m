@@ -468,15 +468,8 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
 
-  if (self.alertView.contentScrollView.contentSize.height >
-      CGRectGetHeight(self.alertView.contentScrollView.bounds)) {
-    [self.alertView.contentScrollView flashScrollIndicators];
-  }
-
-  if (self.alertView.actionsScrollView.contentSize.height >
-      CGRectGetHeight(self.alertView.actionsScrollView.bounds)) {
-    [self.alertView.actionsScrollView flashScrollIndicators];
-  }
+  [self.alertView.contentScrollView flashScrollIndicators];
+  [self.alertView.actionsScrollView flashScrollIndicators];
 }
 
 #pragma mark - UIAccessibilityAction
