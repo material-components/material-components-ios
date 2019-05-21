@@ -20,11 +20,11 @@
 #import "MaterialButtons.h"
 #import "MaterialTypography.h"
 
-@interface FakeMDCButton : MDCButton
+@interface MDCFakeDynamicTypeButton : MDCButton
 @property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
 @end
 
-@implementation FakeMDCButton
+@implementation MDCFakeDynamicTypeButton
 
 - (UITraitCollection *)traitCollection {
   return self.traitCollectionOverride ?: [super traitCollection];
@@ -32,8 +32,8 @@
 
 @end
 
-NS_AVAILABLE_IOS(10_0) @interface ButtonDynamicTypeSnapshotTests : MDCSnapshotTestCase
-@property(nonatomic, strong, nullable) FakeMDCButton *button;
+@interface ButtonDynamicTypeSnapshotTests : MDCSnapshotTestCase
+@property(nonatomic, strong, nullable) MDCFakeDynamicTypeButton *button;
 @end
 
 @implementation ButtonDynamicTypeSnapshotTests
@@ -42,12 +42,12 @@ NS_AVAILABLE_IOS(10_0) @interface ButtonDynamicTypeSnapshotTests : MDCSnapshotTe
   [super setUp];
 
   self.recordMode = YES;
-  self.button = [[FakeMDCButton alloc] init];
+  self.button = [[MDCFakeDynamicTypeButton alloc] init];
   [self.button setTitle:@"Material" forState:UIControlStateNormal];
   self.button.mdc_adjustsFontForContentSizeCategory = YES;
   self.button.mdc_legacyFontScaling = NO;
   MDCFontScaler *fontScaler = [MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleHeadline1];
-  UIFont *buttonFont = [self.button titleFontForState:UIControlStateNormal];
+  UIFont *buttonFont = [UIFont systemFontOfSize:14];
   buttonFont = [fontScaler scaledFontWithFont:buttonFont];
   buttonFont = [buttonFont mdc_scaledFontAtDefaultSize];
   [self.button setTitleFont:buttonFont forState:UIControlStateNormal];
@@ -66,12 +66,16 @@ NS_AVAILABLE_IOS(10_0) @interface ButtonDynamicTypeSnapshotTests : MDCSnapshotTe
 }
 
 - (void)setButtonTraitCollectionSizeToSize:(UIContentSizeCategory)sizeCategory {
-  UITraitCollection *traitCollection =
-      [UITraitCollection traitCollectionWithPreferredContentSizeCategory:sizeCategory];
+  UITraitCollection *traitCollection = [[UITraitCollection alloc] init];
+  if (@available(iOS 10.0, *)) {
+    traitCollection =
+        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:sizeCategory];
+  }
+
   self.button.traitCollectionOverride = traitCollection;
 }
 
-- (void)testSmallContentSizeCategory {
+- (void)testContentSizeCategorySmall {
   // Given
   [self setButtonTraitCollectionSizeToSize:UIContentSizeCategorySmall];
 
@@ -79,6 +83,84 @@ NS_AVAILABLE_IOS(10_0) @interface ButtonDynamicTypeSnapshotTests : MDCSnapshotTe
   [NSNotificationCenter.defaultCenter
       postNotificationName:UIContentSizeCategoryDidChangeNotification
                     object:nil];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.button];
+}
+
+- (void)testContentSizeCategoryMedium {
+  // Given
+  [self setButtonTraitCollectionSizeToSize:UIContentSizeCategoryMedium];
+
+  // When
+  [NSNotificationCenter.defaultCenter
+   postNotificationName:UIContentSizeCategoryDidChangeNotification
+   object:nil];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.button];
+}
+
+- (void)testContentSizeCategoryLarge {
+  // Given
+  [self setButtonTraitCollectionSizeToSize:UIContentSizeCategoryLarge];
+
+  // When
+  [NSNotificationCenter.defaultCenter
+   postNotificationName:UIContentSizeCategoryDidChangeNotification
+   object:nil];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.button];
+}
+
+- (void)testContentSizeCategoryExtraLarge {
+  // Given
+  [self setButtonTraitCollectionSizeToSize:UIContentSizeCategoryExtraLarge];
+
+  // When
+  [NSNotificationCenter.defaultCenter
+   postNotificationName:UIContentSizeCategoryDidChangeNotification
+   object:nil];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.button];
+}
+
+- (void)testContentSizeCategoryExtraExtraLarge {
+  // Given
+  [self setButtonTraitCollectionSizeToSize:UIContentSizeCategoryExtraExtraLarge];
+
+  // When
+  [NSNotificationCenter.defaultCenter
+   postNotificationName:UIContentSizeCategoryDidChangeNotification
+   object:nil];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.button];
+}
+
+- (void)testContentSizeCategoryExtraExtraExtraLarge {
+  // Given
+  [self setButtonTraitCollectionSizeToSize:UIContentSizeCategoryExtraExtraExtraLarge];
+
+  // When
+  [NSNotificationCenter.defaultCenter
+   postNotificationName:UIContentSizeCategoryDidChangeNotification
+   object:nil];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.button];
+}
+
+- (void)testContentSizeCategoryAccessibilityMedium {
+  // Given
+  [self setButtonTraitCollectionSizeToSize:UIContentSizeCategoryAccessibilityMedium];
+
+  // When
+  [NSNotificationCenter.defaultCenter
+   postNotificationName:UIContentSizeCategoryDidChangeNotification
+   object:nil];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.button];
