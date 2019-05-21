@@ -43,9 +43,6 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
 
 @interface MDCAlertControllerView ()
 
-@property(nonatomic, nonnull, strong) UIScrollView *contentScrollView;
-@property(nonatomic, nonnull, strong) UIScrollView *actionsScrollView;
-
 @property(nonatomic, getter=isVerticalActionsLayout) BOOL verticalActionsLayout;
 
 @end
