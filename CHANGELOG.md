@@ -1,6 +1,6 @@
 # 84.3.0
 
-This minor release adds dynamic type support to Chips, new theming extensions for Lists, updates to Bottom Drawer elevation shadow. It also includes minior bug fixes and documentation updates to multiple components.
+This minor release adds new theming extensions for Listsz and minior bug fixes and documentation updates to multiple components.
 
 ## New features
 
