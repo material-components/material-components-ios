@@ -21,7 +21,7 @@
 
 + (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme
                    toChipView:(nonnull MDCChipView *)chipView {
-  chipView.titleFont = typographyScheme.body2;
+  UIFont *titleFont = typographyScheme.body2;
   if (typographyScheme.mdc_adjustsFontForContentSizeCategory) {
     UIContentSizeCategory sizeCategory = UIContentSizeCategoryLarge;
     if (@available(iOS 10.0, *)) {
@@ -29,8 +29,9 @@
     } else if ([UIApplication mdc_safeSharedApplication]) {
       sizeCategory = [UIApplication mdc_safeSharedApplication].preferredContentSizeCategory;
     }
-    chipView.titleFont = [chipView.titleFont mdc_scaledFontForSizeCategory:sizeCategory];
+    titleFont = [titleFont mdc_scaledFontForSizeCategory:sizeCategory];
   }
+  chipView.titleFont = titleFont;
 }
 
 @end
