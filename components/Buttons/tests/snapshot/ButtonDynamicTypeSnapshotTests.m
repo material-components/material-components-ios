@@ -21,11 +21,11 @@
 #import "MaterialTypography.h"
 
 /** A @c MDCButton test fake to override the @c traitCollection to test for dynamic type. */
-@interface MDCFakeDynamicTypeButton : MDCButton
+@interface ButtonDynamicTypeSnapshotTestFakeButton : MDCButton
 @property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
 @end
 
-@implementation MDCFakeDynamicTypeButton
+@implementation ButtonDynamicTypeSnapshotTestFakeButton
 
 - (UITraitCollection *)traitCollection {
   return self.traitCollectionOverride ?: [super traitCollection];
@@ -38,7 +38,7 @@
  values.
  */
 @interface ButtonDynamicTypeSnapshotTests : MDCSnapshotTestCase
-@property(nonatomic, strong, nullable) MDCFakeDynamicTypeButton *button;
+@property(nonatomic, strong, nullable) ButtonDynamicTypeSnapshotTestFakeButton *button;
 @end
 
 @implementation ButtonDynamicTypeSnapshotTests
@@ -50,7 +50,7 @@
   // test you wish to recreate the golden for).
   //  self.recordMode = YES;
 
-  self.button = [[MDCFakeDynamicTypeButton alloc] init];
+  self.button = [[ButtonDynamicTypeSnapshotTestFakeButton alloc] init];
   [self.button setTitle:@"Material" forState:UIControlStateNormal];
   self.button.mdc_adjustsFontForContentSizeCategory = YES;
   self.button.mdc_legacyFontScaling = NO;
@@ -76,7 +76,7 @@
 /**
  Used to set the @c UIContentSizeCategory on an @c MDCButton.
 
- @note On iOS 9 or below this method has now impact.
+ @note On iOS 9 or below this method has no impact.
  */
 - (void)setButtonTraitCollectionSizeToSize:(UIContentSizeCategory)sizeCategory {
   UITraitCollection *traitCollection = [[UITraitCollection alloc] init];
