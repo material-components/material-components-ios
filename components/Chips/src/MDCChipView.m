@@ -135,7 +135,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 - (void)commonMDCChipViewInit {
   _minimumSize = kMDCChipMinimumSizeDefault;
   self.isAccessibilityElement = YES;
-  _mdc_legacyFontScaling = YES;
+  _fontScalingShouldFallback = YES;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -510,7 +510,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
   // If we are automatically adjusting for Dynamic Type resize the font based on the text style
   if (self.mdc_adjustsFontForContentSizeCategory) {
-    if (titleFont.mdc_scalingCurve && !self.mdc_legacyFontScaling) {
+    if (titleFont.mdc_scalingCurve) {
       UIContentSizeCategory sizeCategory = UIContentSizeCategoryLarge;
       if (@available(iOS 10.0, *)) {
         sizeCategory = self.traitCollection.preferredContentSizeCategory;
@@ -518,7 +518,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
         sizeCategory = [UIApplication mdc_safeSharedApplication].preferredContentSizeCategory;
       }
       titleFont = [titleFont mdc_scaledFontForSizeCategory:sizeCategory];
-    } else {
+    } else if (self.fontScalingShouldFallback) {
       titleFont =
           [titleFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
                                   scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
