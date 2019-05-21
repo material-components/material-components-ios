@@ -54,7 +54,7 @@
   [self.button setTitle:@"Material" forState:UIControlStateNormal];
   self.button.mdc_adjustsFontForContentSizeCategory = YES;
   self.button.mdc_legacyFontScaling = NO;
-  MDCFontScaler *fontScaler = [MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleHeadline1];
+  MDCFontScaler *fontScaler = [MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleSubtitle1];
   UIFont *buttonFont = [UIFont systemFontOfSize:14];
   buttonFont = [fontScaler scaledFontWithFont:buttonFont];
   buttonFont = [buttonFont mdc_scaledFontAtDefaultSize];
