@@ -474,7 +474,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   }
 
   if (self.alertView.actionsScrollView.contentSize.height >
-      CGRectGetHeight(self.alertView.contentScrollView.frame)) {
+      CGRectGetHeight(self.alertView.actionsScrollView.frame)) {
     [self.alertView.actionsScrollView flashScrollIndicators];
   }
 }
