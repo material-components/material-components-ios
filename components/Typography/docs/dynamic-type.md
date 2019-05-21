@@ -1,5 +1,7 @@
 ### Dynamic Type
 
+Material Components for iOS supports the iOS Dynamic Type feature on all [Material-supported iOS versions](../../../docs/build-env#ios).
+
 #### Overview
 Typography library provides APIs that allow users to support Dynamic Type feature in Material Components. For those components with Dynamic Type feature supported, text size changes based on the Dynamic Type setting provided by the user.
 
