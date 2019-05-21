@@ -144,6 +144,17 @@
     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
 
 /**
+ Enable legacy font scaling curves for Dynamic Type.
+
+ Legacy font scaling uses the older [UIFont mdc_fontSizedForMaterialTextStyle:scaledForDynamicType:
+ category instead of the MDCFontScaler API.
+
+ Default value is YES.
+ */
+@property(nonatomic, readwrite, setter=mdc_setLegacyFontScaling:)
+    BOOL mdc_legacyFontScaling __deprecated;
+
+/**
  Enable font scaling curves fallback behavior for Dynamic Type.
 
  Scale font by calling the older [UIFont mdc_fontSizedForMaterialTextStyle:scaledForDynamicType:]
