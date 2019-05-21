@@ -20,6 +20,7 @@
 #import "MaterialButtons.h"
 #import "MaterialTypography.h"
 
+/** A @c MDCButton test fake to override the @c traitCollection to test for dynamic type. */
 @interface MDCFakeDynamicTypeButton : MDCButton
 @property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
 @end
@@ -32,6 +33,10 @@
 
 @end
 
+/**
+ Used to test dynamic type visual differences based on different @c UIContentSizeCategory
+ values.
+ */
 @interface ButtonDynamicTypeSnapshotTests : MDCSnapshotTestCase
 @property(nonatomic, strong, nullable) MDCFakeDynamicTypeButton *button;
 @end
@@ -41,7 +46,10 @@
 - (void)setUp {
   [super setUp];
 
-  self.recordMode = YES;
+  // Uncomment below to recreate all the goldens (or add the following line to the specific
+  // test you wish to recreate the golden for).
+  //  self.recordMode = YES;
+
   self.button = [[MDCFakeDynamicTypeButton alloc] init];
   [self.button setTitle:@"Material" forState:UIControlStateNormal];
   self.button.mdc_adjustsFontForContentSizeCategory = YES;
@@ -65,6 +73,12 @@
   [self snapshotVerifyView:snapshotView];
 }
 
+
+/**
+ Used to set the @c UIContentSizeCategory on an @c MDCButton.
+
+ @note On iOS 9 or below this method has now impact.
+ */
 - (void)setButtonTraitCollectionSizeToSize:(UIContentSizeCategory)sizeCategory {
   UITraitCollection *traitCollection = [[UITraitCollection alloc] init];
   if (@available(iOS 10.0, *)) {
@@ -75,6 +89,7 @@
   self.button.traitCollectionOverride = traitCollection;
 }
 
+/** Test when a @c MDCButton has a content size of @c UIContentSizeCategorySmall. */
 - (void)testContentSizeCategorySmall {
   // Given
   [self setButtonTraitCollectionSizeToSize:UIContentSizeCategorySmall];
@@ -88,6 +103,7 @@
   [self generateSnapshotAndVerifyForView:self.button];
 }
 
+  /** Test when a @c MDCButton has a content size of @c UIContentSizeCategoryMedium. */
 - (void)testContentSizeCategoryMedium {
   // Given
   [self setButtonTraitCollectionSizeToSize:UIContentSizeCategoryMedium];
@@ -101,6 +117,7 @@
   [self generateSnapshotAndVerifyForView:self.button];
 }
 
+/** Test when a @c MDCButton has a content size of @c UIContentSizeCategoryLarge. */
 - (void)testContentSizeCategoryLarge {
   // Given
   [self setButtonTraitCollectionSizeToSize:UIContentSizeCategoryLarge];
@@ -114,6 +131,7 @@
   [self generateSnapshotAndVerifyForView:self.button];
 }
 
+/** Test when a @c MDCButton has a content size of @c UIContentSizeCategoryExtraLarge. */
 - (void)testContentSizeCategoryExtraLarge {
   // Given
   [self setButtonTraitCollectionSizeToSize:UIContentSizeCategoryExtraLarge];
@@ -127,6 +145,7 @@
   [self generateSnapshotAndVerifyForView:self.button];
 }
 
+/** Test when a @c MDCButton has a content size of @c UIContentSizeCategoryExtraExtraLarge. */
 - (void)testContentSizeCategoryExtraExtraLarge {
   // Given
   [self setButtonTraitCollectionSizeToSize:UIContentSizeCategoryExtraExtraLarge];
@@ -140,6 +159,7 @@
   [self generateSnapshotAndVerifyForView:self.button];
 }
 
+/** Test when a @c MDCButton has a content size of @c UIContentSizeCategoryExtraExtraExtraLarge. */
 - (void)testContentSizeCategoryExtraExtraExtraLarge {
   // Given
   [self setButtonTraitCollectionSizeToSize:UIContentSizeCategoryExtraExtraExtraLarge];
@@ -153,6 +173,7 @@
   [self generateSnapshotAndVerifyForView:self.button];
 }
 
+/** Test when a @c MDCButton has a content size of @c UIContentSizeCategoryAccessibilityMedium. */
 - (void)testContentSizeCategoryAccessibilityMedium {
   // Given
   [self setButtonTraitCollectionSizeToSize:UIContentSizeCategoryAccessibilityMedium];
@@ -166,6 +187,7 @@
   [self generateSnapshotAndVerifyForView:self.button];
 }
 
+/** Test when a @c MDCButton has a content size of @c UIContentSizeCategoryAccessibilityLarge. */
 - (void)testContentSizeCategoryAccessibilityLarge {
   // Given
   [self setButtonTraitCollectionSizeToSize:UIContentSizeCategoryAccessibilityLarge];
@@ -179,6 +201,9 @@
   [self generateSnapshotAndVerifyForView:self.button];
 }
 
+/**
+ Test when a @c MDCButton has a content size of @c UIContentSizeCategoryAccessibilityExtraLarge.
+ */
 - (void)testContentSizeCategoryAccessibilityExtraLarge {
   // Given
   [self setButtonTraitCollectionSizeToSize:UIContentSizeCategoryAccessibilityExtraLarge];
@@ -192,6 +217,9 @@
   [self generateSnapshotAndVerifyForView:self.button];
 }
 
+/**
+ Test when a @c MDCButton has a content size of @c UIContentSizeCategoryAccessibilityExtraLarge.
+ */
 - (void)testContentSizeCategoryAccessibilityExtraExtraLarge {
   // Given
   [self setButtonTraitCollectionSizeToSize:UIContentSizeCategoryAccessibilityExtraExtraLarge];
@@ -205,6 +233,9 @@
   [self generateSnapshotAndVerifyForView:self.button];
 }
 
+/**
+ Test when a @c MDCButton has a content size of @c UIContentSizeCategoryAccessibilityExtraLarge.
+ */
 - (void)testContentSizeCategoryAccessibilityExtraExtraExtraLarge {
   // Given
   [self setButtonTraitCollectionSizeToSize:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
