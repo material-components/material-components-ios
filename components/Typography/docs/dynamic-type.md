@@ -18,6 +18,8 @@ UIFont *customScalableFont = [fontScaler scaledFontWithFont:customFont];
 label.font = customScalingFont;
 ```
 
+##### Swift
+
 ```swift
 let customFont = UIFont(name: "CustomFontName", size: 18.0)!
 let fontScaler = MDCFontScaler(forMaterialTextStyle:.body1);
