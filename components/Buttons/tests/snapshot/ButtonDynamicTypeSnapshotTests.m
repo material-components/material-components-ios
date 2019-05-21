@@ -73,7 +73,6 @@
   [self snapshotVerifyView:snapshotView];
 }
 
-
 /**
  Used to set the @c UIContentSizeCategory on an @c MDCButton.
 
@@ -103,15 +102,15 @@
   [self generateSnapshotAndVerifyForView:self.button];
 }
 
-  /** Test when a @c MDCButton has a content size of @c UIContentSizeCategoryMedium. */
+/** Test when a @c MDCButton has a content size of @c UIContentSizeCategoryMedium. */
 - (void)testContentSizeCategoryMedium {
   // Given
   [self setButtonTraitCollectionSizeToSize:UIContentSizeCategoryMedium];
 
   // When
   [NSNotificationCenter.defaultCenter
-   postNotificationName:UIContentSizeCategoryDidChangeNotification
-   object:nil];
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.button];
@@ -124,8 +123,8 @@
 
   // When
   [NSNotificationCenter.defaultCenter
-   postNotificationName:UIContentSizeCategoryDidChangeNotification
-   object:nil];
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.button];
@@ -138,8 +137,8 @@
 
   // When
   [NSNotificationCenter.defaultCenter
-   postNotificationName:UIContentSizeCategoryDidChangeNotification
-   object:nil];
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.button];
@@ -152,8 +151,8 @@
 
   // When
   [NSNotificationCenter.defaultCenter
-   postNotificationName:UIContentSizeCategoryDidChangeNotification
-   object:nil];
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.button];
@@ -166,8 +165,8 @@
 
   // When
   [NSNotificationCenter.defaultCenter
-   postNotificationName:UIContentSizeCategoryDidChangeNotification
-   object:nil];
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.button];
@@ -180,8 +179,8 @@
 
   // When
   [NSNotificationCenter.defaultCenter
-   postNotificationName:UIContentSizeCategoryDidChangeNotification
-   object:nil];
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.button];
