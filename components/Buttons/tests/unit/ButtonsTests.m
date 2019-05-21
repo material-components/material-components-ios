@@ -527,35 +527,6 @@ static NSString *controlStateDescription(UIControlState controlState) {
   }
 }
 
-/** Test dynamic type responds to @c UIContentSizeCategoryDidChangeNotification. */
-- (void)testDynamicTypeBehavior {
-  if (@available(iOS 10.0, *)) {
-    // Given
-    TestButton *fakeButton = [[TestButton alloc] init];
-    fakeButton.mdc_adjustsFontForContentSizeCategory = YES;
-    fakeButton.mdc_legacyFontScaling = NO;
-    UIFont *titleFont = [UIFont systemFontOfSize:20];
-    MDCFontScaler *fontScaler = [MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleButton];
-    titleFont = [fontScaler scaledFontWithFont:titleFont];
-    titleFont = [titleFont mdc_scaledFontAtDefaultSize];
-    [fakeButton setTitle:@"Material" forState:UIControlStateNormal];
-    [fakeButton setTitleFont:titleFont forState:UIControlStateNormal];
-    CGFloat originalFontSize = fakeButton.titleLabel.font.pointSize;
-
-    // When
-    UIContentSizeCategory size = UIContentSizeCategoryExtraExtraLarge;
-    UITraitCollection *traitCollection =
-        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:size];
-    fakeButton.traitCollectionOverride = traitCollection;
-    [NSNotificationCenter.defaultCenter
-        postNotificationName:UIContentSizeCategoryDidChangeNotification
-                      object:nil];
-
-    // Then
-    XCTAssertGreaterThan(fakeButton.titleLabel.font.pointSize, originalFontSize);
-  }
-}
-
 #pragma mark - shadowColor:forState:
 
 - (void)testRemovedShadowColorForState {

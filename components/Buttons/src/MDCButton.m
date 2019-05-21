@@ -890,7 +890,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
   if (_mdc_adjustsFontForContentSizeCategory) {
     // Dynamic type is enabled so apply scaling
-    if (font.mdc_scalingCurve && !_mdc_legacyFontScaling) {
+    if (font.mdc_scalingCurve) {
       UIContentSizeCategory sizeCategory = UIContentSizeCategoryLarge;
       if (@available(iOS 10.0, *)) {
         sizeCategory = self.traitCollection.preferredContentSizeCategory;
@@ -899,8 +899,10 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
       }
       font = [font mdc_scaledFontForSizeCategory:sizeCategory];
     } else {
-      font = [font mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleButton
-                                scaledForDynamicType:YES];
+      if (self.mdc_legacyFontScaling) {
+        font = [font mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleButton
+                                  scaledForDynamicType:YES];
+      }
     }
   }
 
