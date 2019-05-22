@@ -37,18 +37,18 @@
  Used to test dynamic type visual differences based on different @c UIContentSizeCategory
  values.
  */
-@interface MDCButtonLegacyDynamicTypeSnapshotTests : MDCSnapshotTestCase
+@interface ButtonLegacyDynamicTypeSnapshotTests : MDCSnapshotTestCase
 @property(nonatomic, strong, nullable) ButtonLegacyDynamicTypeSnapshotTestFakeButton *button;
 @end
 
-@implementation MDCButtonLegacyDynamicTypeSnapshotTests
+@implementation ButtonLegacyDynamicTypeSnapshotTests
 
 - (void)setUp {
   [super setUp];
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-    self.recordMode = YES;
+  //  self.recordMode = YES;
 
   self.button = [[ButtonLegacyDynamicTypeSnapshotTestFakeButton alloc] init];
   [self.button setTitle:@"Material" forState:UIControlStateNormal];
