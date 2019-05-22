@@ -75,7 +75,7 @@ static const CGFloat kDetailColorOpacity = (CGFloat)0.6;
 
 - (void)commonMDCSelfSizingStereoCellInit {
   self.cachedLayouts = [[NSMutableDictionary alloc] init];
-  self.mdc_legacyFontScaling = YES;
+  _mdc_legacyFontScaling = YES;
   [self createSubviews];
 }
 
@@ -232,7 +232,14 @@ static const CGFloat kDetailColorOpacity = (CGFloat)0.6;
   UIFont *titleFont = self.titleLabel.font ?: self.defaultTitleLabelFont;
   UIFont *detailFont = self.detailLabel.font ?: self.defaultDetailLabelFont;
   if (self.mdc_adjustsFontForContentSizeCategory) {
-    if (titleFont.mdc_scalingCurve && detailFont.mdc_scalingCurve && !self.mdc_legacyFontScaling) {
+    if (self.mdc_legacyFontScaling) {
+      titleFont =
+          [titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleTitle
+                                  scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+      detailFont =
+          [detailFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleCaption
+                                   scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+    } else if (titleFont.mdc_scalingCurve && detailFont.mdc_scalingCurve) {
       UIContentSizeCategory sizeCategory = UIContentSizeCategoryLarge;
       if (@available(iOS 10.0, *)) {
         sizeCategory = self.traitCollection.preferredContentSizeCategory;
@@ -241,13 +248,6 @@ static const CGFloat kDetailColorOpacity = (CGFloat)0.6;
       }
       titleFont = [titleFont mdc_scaledFontForSizeCategory:sizeCategory];
       detailFont = [detailFont mdc_scaledFontForSizeCategory:sizeCategory];
-    } else {
-      titleFont =
-          [titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleTitle
-                                  scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
-      detailFont =
-          [detailFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleCaption
-                                   scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
     }
   }
   self.titleLabel.font = titleFont;
