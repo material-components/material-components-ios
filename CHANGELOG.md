@@ -1,3 +1,14 @@
+# 84.2.1
+
+This patch release fixes a bug where dialogs were not indicating that their content was scrollable.
+
+## Changes
+
+### Dialogs
+
+* [Flash scroll indicators if content is larger than the scroll view. (#7434)](https://github.com/material-components/material-components-ios/commit/b4b6f8f5474e8b2307e602db7d7dc893b5416cbe) (Cody Weaver)
+* [Move the private property declaration to the header (#7433)](https://github.com/material-components/material-components-ios/commit/ca75f1dfe6b728896fe8768b17e8cd5f1805d0dd) (Cody Weaver)
+
 # 84.2.0
 
 This minor release adds support for a custom unbounded Ripple radius value. It also includes several
