@@ -17,8 +17,14 @@
 
 /**
  The Material Design color system's themer for instances of MDCAppBar.
+
+ @warning This API will eventually be deprecated. Learn more at
+ docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 @interface MDCAppBarColorThemer : NSObject
+@end
+
+@interface MDCAppBarColorThemer (ToBeDeprecated)
 
 /**
  Applies a color scheme's properties to an MDCAppBarViewController instance using the primary
@@ -28,9 +34,13 @@
 
  @param colorScheme The color scheme to apply to the component instance.
  @param appBarViewController A component instance to which the color scheme should be applied.
+
+ @warning This API will eventually be deprecated. The replacement API is:
+ `MDCAppBarViewController`'s `-applyPrimaryThemeWithScheme:`
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyColorScheme:(nonnull id<MDCColorScheming>)colorScheme
-  toAppBarViewController:(nonnull MDCAppBarViewController *)appBarViewController;
+    toAppBarViewController:(nonnull MDCAppBarViewController *)appBarViewController;
 
 /**
  Applies a color scheme's properties to an MDCAppBarViewController instance using the surface
@@ -40,9 +50,26 @@
 
  @param colorScheme The color scheme to apply to the component instance.
  @param appBarViewController A component instance to which the color scheme should be applied.
+
+ @warning This API will eventually be deprecated. The replacement API is:
+ `MDCAppBarViewController`'s `-applySurfaceThemeWithScheme:`
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applySurfaceVariantWithColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                     toAppBarViewController:(nonnull MDCAppBarViewController *)appBarViewController;
+
+/**
+ Applies a color scheme's properties to an MDCAppBar.
+
+ @param colorScheme The color scheme to apply to the component instance.
+ @param appBar A component instance to which the color scheme should be applied.
+
+ @warning This API will eventually be deprecated. The replacement API is:
+ `MDCAppBarViewController`'s `-applyPrimaryThemeWithScheme:`
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
+ */
++ (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
+                toAppBar:(nonnull MDCAppBar *)appBar;
 
 /**
  Applies a color scheme's properties to an MDCAppBar using the primary mapping.
@@ -51,6 +78,10 @@
 
  @param colorScheme The color scheme to apply to the component instance.
  @param appBar A component instance to which the color scheme should be applied.
+
+ @warning This API will eventually be deprecated. The replacement API is:
+ `MDCAppBarViewController`'s `-applyPrimaryThemeWithScheme:`
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                         toAppBar:(nonnull MDCAppBar *)appBar;
@@ -62,24 +93,12 @@
 
  @param colorScheme The color scheme to apply to the component instance.
  @param appBar A component instance to which the color scheme should be applied.
+
+ @warning This API will eventually be deprecated. The replacement API is:
+ `MDCAppBarViewController`'s `-applySurfaceThemeWithScheme:`
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applySurfaceVariantWithColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                                   toAppBar:(nonnull MDCAppBar *)appBar;
-
-@end
-
-@interface MDCAppBarColorThemer (ToBeDeprecated)
-
-/**
- Applies a color scheme's properties to an MDCAppBar.
-
- @warning This method will soon be deprecated. Consider using @c +applySemanticColorScheme:toAppBar:
- instead. Learn more at components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
-
- @param colorScheme The color scheme to apply to the component instance.
- @param appBar A component instance to which the color scheme should be applied.
- */
-+ (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
-                toAppBar:(nonnull MDCAppBar *)appBar;
 
 @end

@@ -32,7 +32,7 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  self.view.backgroundColor = [UIColor colorWithWhite:0.97f alpha:1.0f];
+  self.view.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.97 alpha:1];
 
   self.title = @"Legacy Multi-line Styles";
 
@@ -48,17 +48,13 @@
                               constraintsWithVisualFormat:@"V:|[scrollView]|"
                                                   options:0
                                                   metrics:nil
-                                                    views:@{
-                                                      @"scrollView" : self.scrollView
-                                                    }]];
+                                                    views:@{@"scrollView" : self.scrollView}]];
   [NSLayoutConstraint
       activateConstraints:[NSLayoutConstraint
                               constraintsWithVisualFormat:@"H:|[scrollView]|"
                                                   options:0
                                                   metrics:nil
-                                                    views:@{
-                                                      @"scrollView" : self.scrollView
-                                                    }]];
+                                                    views:@{@"scrollView" : self.scrollView}]];
 
   MDCMultilineTextField *multilineTextFieldUnstyled = [[MDCMultilineTextField alloc] init];
   [self.scrollView addSubview:multilineTextFieldUnstyled];
@@ -113,19 +109,22 @@
   self.textFieldControllerFullWidth.characterCountMax = 140;
   self.textFieldControllerFullWidth.placeholderText = @"Full Width Controller";
 
+  id<UILayoutSupport> topGuide = self.topLayoutGuide;
   [NSLayoutConstraint
-      activateConstraints:
-          [NSLayoutConstraint
-              constraintsWithVisualFormat:@"V:[unstyled]-[area]-[floating]-[charMax]-[fullWidth]"
-                                  options:0
-                                  metrics:nil
-                                    views:@{
-                                      @"unstyled" : multilineTextFieldUnstyled,
-                                      @"area" : multilineTextFieldUnstyledArea,
-                                      @"charMax" : multilineTextFieldCharMaxDefault,
-                                      @"floating" : multilineTextFieldFloating,
-                                      @"fullWidth" : multilineTextFieldCharMaxFullWidth
-                                    }]];
+      activateConstraints:[NSLayoutConstraint
+                              constraintsWithVisualFormat:
+                                  @"V:[topGuide]-[unstyled]-[area]-[floating]-[charMax]-[fullWidth]"
+                                                  options:0
+                                                  metrics:nil
+                                                    views:@{
+                                                      @"topGuide" : topGuide,
+                                                      @"unstyled" : multilineTextFieldUnstyled,
+                                                      @"area" : multilineTextFieldUnstyledArea,
+                                                      @"charMax" : multilineTextFieldCharMaxDefault,
+                                                      @"floating" : multilineTextFieldFloating,
+                                                      @"fullWidth" :
+                                                          multilineTextFieldCharMaxFullWidth
+                                                    }]];
   [NSLayoutConstraint
       activateConstraints:[NSLayoutConstraint
                               constraintsWithVisualFormat:@"H:|-[unstyled]-|"
@@ -236,9 +235,9 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Text Field", @"[Legacy] Multi-line" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Text Field", @"[Legacy] Multi-line" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

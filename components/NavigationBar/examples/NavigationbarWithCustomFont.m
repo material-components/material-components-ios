@@ -14,8 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialNavigationBar.h"
 #import "MaterialNavigationBar+ColorThemer.h"
+#import "MaterialNavigationBar.h"
 #import "supplemental/NavigationBarTypicalUseExampleSupplemental.h"
 
 @implementation NavigationBarWithCustomFontExample
@@ -23,7 +23,8 @@
 - (id)init {
   self = [super init];
   if (self) {
-    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   }
   return self;
 }
@@ -39,7 +40,7 @@
 
   UIFont *font = [UIFont fontWithName:@"Zapfino" size:18.0];
 
-  NSDictionary<NSAttributedStringKey,id> *titleTextAttributes = @{ NSFontAttributeName : font };
+  NSDictionary<NSAttributedStringKey, id> *titleTextAttributes = @{NSFontAttributeName : font};
 
   [self.navBar setTitleTextAttributes:titleTextAttributes];
 
@@ -55,7 +56,8 @@
   self.navBar.translatesAutoresizingMaskIntoConstraints = NO;
 
   if (@available(iOS 11.0, *)) {
-    [self.view.safeAreaLayoutGuide.topAnchor constraintEqualToAnchor:self.navBar.topAnchor].active = YES;
+    [self.view.safeAreaLayoutGuide.topAnchor constraintEqualToAnchor:self.navBar.topAnchor].active =
+        YES;
   } else {
     [NSLayoutConstraint constraintWithItem:self.topLayoutGuide
                                  attribute:NSLayoutAttributeBottom
@@ -63,16 +65,17 @@
                                     toItem:self.navBar
                                  attribute:NSLayoutAttributeTop
                                 multiplier:1.0
-                                  constant:0].active = YES;
+                                  constant:0]
+        .active = YES;
   }
 
-  NSDictionary *viewsBindings = @{@"navBar": self.navBar};
+  NSDictionary *viewsBindings = @{@"navBar" : self.navBar};
 
   [NSLayoutConstraint
-   activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[navBar]|"
-                                                               options:0
-                                                               metrics:nil
-                                                                 views:viewsBindings]];
+      activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[navBar]|"
+                                                                  options:0
+                                                                  metrics:nil
+                                                                    views:viewsBindings]];
 
   [self setupExampleViews];
 }
@@ -94,9 +97,9 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Navigation Bar", @"Navigation Bar with Custom Font" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Navigation Bar", @"Navigation Bar with Custom Font" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

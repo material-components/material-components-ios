@@ -18,18 +18,28 @@
 
 #import <Foundation/Foundation.h>
 
-/** Defines a readonly immutable interface for cards style data to be applied by a themer. */
+/**
+ Defines a readonly immutable interface for cards style data to be applied by a themer.
+
+ @warning This API will eventually be deprecated. The replacement API is: `MDCContainerScheming`.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
+ */
 @protocol MDCCardScheming
 
 /** The color scheme to apply to cards. */
-@property(nonnull, readonly, nonatomic) id <MDCColorScheming> colorScheme;
+@property(nonnull, readonly, nonatomic) id<MDCColorScheming> colorScheme;
 
 /** The shape scheme to apply to cards. */
 @property(nonnull, readonly, nonatomic) id<MDCShapeScheming> shapeScheme;
 
 @end
 
-/** Defines the cards style data that will be applied to a card by a themer. */
+/**
+ Defines the cards style data that will be applied to a card by a themer.
+
+ @warning This API will eventually be deprecated. The replacement API is: `MDCContainerScheme`.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
+ */
 @interface MDCCardScheme : NSObject <MDCCardScheming>
 
 // Redeclare protocol properties as readwrite
@@ -37,4 +47,3 @@
 @property(nonnull, readwrite, nonatomic) MDCShapeScheme *shapeScheme;
 
 @end
-

@@ -5,14 +5,14 @@ You can theme an Action Sheet with your app's color scheme using the ColorThemer
 You must first add the Color Themer extension to your project:
 
 ```bash
-pod `MaterialComponentsAlpha/ActionSheet+ColorThemer`
+pod `MaterialComponentsBeta/ActionSheet+ColorThemer`
 ```
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift
 // Step 1: Import the ColorThemer extension
-import MaterialComponentsAlpha.MaterialActionSheet_ColorThemer
+import MaterialComponentsBeta.MaterialActionSheet_ColorThemer
 
 // Step 2: Create or get a color scheme
 let colorScheme = MDCSemanticColorScheme()

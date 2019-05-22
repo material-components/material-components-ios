@@ -19,7 +19,7 @@ import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialNavigationDrawer
 
 class BottomDrawerNoHeaderExample: UIViewController {
-  var colorScheme = MDCSemanticColorScheme()
+  @objc var colorScheme = MDCSemanticColorScheme()
   let bottomAppBar = MDCBottomAppBarView()
   
   let contentViewController = DrawerContentViewController()
@@ -62,19 +62,19 @@ class BottomDrawerNoHeaderExample: UIViewController {
   }
 
   @objc func presentNavigationDrawer() {
-  // This shows that it is possible to present the content view controller directly without
-  // the need of the MDCBottomDrawerViewController wrapper. To present the view controller
-  // inside the drawer, both the transition controller and the custom presentation controller
-  // of the drawer need to be set.
-  contentViewController.transitioningDelegate = bottomDrawerTransitionController
-  contentViewController.modalPresentationStyle = .custom
-  present(contentViewController, animated: true, completion: nil)
+    // This shows that it is possible to present the content view controller directly without
+    // the need of the MDCBottomDrawerViewController wrapper. To present the view controller
+    // inside the drawer, both the transition controller and the custom presentation controller
+    // of the drawer need to be set.
+    contentViewController.transitioningDelegate = bottomDrawerTransitionController
+    contentViewController.modalPresentationStyle = .custom
+    present(contentViewController, animated: true, completion: nil)
   }
 }
 
 extension BottomDrawerNoHeaderExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Navigation Drawer", "Bottom Drawer No Header"],
       "primaryDemo": false,

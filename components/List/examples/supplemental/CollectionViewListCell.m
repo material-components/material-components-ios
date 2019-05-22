@@ -17,19 +17,19 @@
 #import "MaterialInk.h"
 #import "MaterialTypography.h"
 
-static const CGFloat kImagePadding = 16.f;
-static const CGFloat kImageHeight = 40.f;
-static const CGFloat kWithImageRightPadding = 12.f;
-static const CGFloat kTextVerticalPadding = 12.f;
-static const CGFloat kTitleColorOpacity = 0.87f;
-static const CGFloat kDetailsColorOpacity = 0.6f;
+static const CGFloat kImagePadding = 16;
+static const CGFloat kImageHeight = 40;
+static const CGFloat kWithImageRightPadding = 12;
+static const CGFloat kTextVerticalPadding = 12;
+static const CGFloat kTitleColorOpacity = (CGFloat)0.87;
+static const CGFloat kDetailsColorOpacity = (CGFloat)0.6;
 
 static inline UIFont *defaultTitleFont(void) {
-  return [UIFont systemFontOfSize:16.f];
+  return [UIFont systemFontOfSize:16];
 }
 
 static inline UIFont *defaultDetailsFont(void) {
-  return [UIFont systemFontOfSize:14.f];
+  return [UIFont systemFontOfSize:14];
 }
 
 @implementation CollectionViewListCell {
@@ -65,23 +65,21 @@ static inline UIFont *defaultDetailsFont(void) {
   [self addSubview:_inkView];
 
   _contentWrapper = [[UIView alloc] initWithFrame:self.contentView.bounds];
-  _contentWrapper.autoresizingMask = UIViewAutoresizingFlexibleWidth |
-      MDFTrailingMarginAutoresizingMaskForLayoutDirection(
-          self.mdf_effectiveUserInterfaceLayoutDirection);
+  _contentWrapper.autoresizingMask =
+      UIViewAutoresizingFlexibleWidth | MDFTrailingMarginAutoresizingMaskForLayoutDirection(
+                                            self.mdf_effectiveUserInterfaceLayoutDirection);
   _contentWrapper.clipsToBounds = YES;
   [self.contentView addSubview:_contentWrapper];
 
   // Text label.
   _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-  _titleLabel.autoresizingMask =
-      MDFTrailingMarginAutoresizingMaskForLayoutDirection(
-          self.mdf_effectiveUserInterfaceLayoutDirection);
+  _titleLabel.autoresizingMask = MDFTrailingMarginAutoresizingMaskForLayoutDirection(
+      self.mdf_effectiveUserInterfaceLayoutDirection);
 
   // Detail text label.
   _detailsTextLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-  _detailsTextLabel.autoresizingMask =
-      MDFTrailingMarginAutoresizingMaskForLayoutDirection(
-          self.mdf_effectiveUserInterfaceLayoutDirection);
+  _detailsTextLabel.autoresizingMask = MDFTrailingMarginAutoresizingMaskForLayoutDirection(
+      self.mdf_effectiveUserInterfaceLayoutDirection);
 
   [self resetCollectionViewListCell];
 
@@ -90,9 +88,8 @@ static inline UIFont *defaultDetailsFont(void) {
 
   // Image view.
   _imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
-  _imageView.autoresizingMask =
-      MDFTrailingMarginAutoresizingMaskForLayoutDirection(
-          self.mdf_effectiveUserInterfaceLayoutDirection);
+  _imageView.autoresizingMask = MDFTrailingMarginAutoresizingMaskForLayoutDirection(
+      self.mdf_effectiveUserInterfaceLayoutDirection);
   [self.contentView addSubview:_imageView];
 
   [self setupConstraints];
@@ -128,14 +125,16 @@ static inline UIFont *defaultDetailsFont(void) {
                                   toItem:self
                                attribute:NSLayoutAttributeCenterY
                               multiplier:1
-                                constant:1].active = YES;
+                                constant:1]
+      .active = YES;
   [NSLayoutConstraint constraintWithItem:self.contentView
                                attribute:NSLayoutAttributeCenterX
                                relatedBy:NSLayoutRelationEqual
                                   toItem:self
                                attribute:NSLayoutAttributeCenterX
                               multiplier:1
-                                constant:1].active = YES;
+                                constant:1]
+      .active = YES;
 
   _contentWrapper.translatesAutoresizingMaskIntoConstraints = NO;
   _titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
@@ -143,15 +142,15 @@ static inline UIFont *defaultDetailsFont(void) {
   _imageView.translatesAutoresizingMaskIntoConstraints = NO;
 
   NSDictionary *metrics = @{
-                            @"kTextVerticalPadding" : @(kTextVerticalPadding),
-                            };
+    @"kTextVerticalPadding" : @(kTextVerticalPadding),
+  };
 
   NSDictionary *views = @{
-                          @"contentWrapper": _contentWrapper,
-                          @"titleLabel": _titleLabel,
-                          @"detailsTextLabel": _detailsTextLabel,
-                          @"imageView": _imageView,
-                          };
+    @"contentWrapper" : _contentWrapper,
+    @"titleLabel" : _titleLabel,
+    @"detailsTextLabel" : _detailsTextLabel,
+    @"imageView" : _imageView,
+  };
 
   NSMutableArray *constraints = [[NSMutableArray alloc] init];
 
@@ -182,57 +181,54 @@ static inline UIFont *defaultDetailsFont(void) {
                                                         constant:0];
   _imageWidthConstraint.active = YES;
 
-  [constraints addObject:
-   [NSLayoutConstraint constraintWithItem:self.contentView
-                                attribute:NSLayoutAttributeRight
-                                relatedBy:NSLayoutRelationEqual
-                                   toItem:_contentWrapper
-                                attribute:NSLayoutAttributeRight
-                               multiplier:1
-                                 constant:kImagePadding]];
+  [constraints addObject:[NSLayoutConstraint constraintWithItem:self.contentView
+                                                      attribute:NSLayoutAttributeRight
+                                                      relatedBy:NSLayoutRelationEqual
+                                                         toItem:_contentWrapper
+                                                      attribute:NSLayoutAttributeRight
+                                                     multiplier:1
+                                                       constant:kImagePadding]];
 
-  [constraints addObjectsFromArray:
-   [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[contentWrapper]|"
-                                           options:0
-                                           metrics:nil
-                                             views:views]];
+  [constraints
+      addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[contentWrapper]|"
+                                                                  options:0
+                                                                  metrics:nil
+                                                                    views:views]];
 
-  [constraints addObjectsFromArray:
-   [NSLayoutConstraint constraintsWithVisualFormat:@"|[titleLabel]|"
-                                           options:0
-                                           metrics:nil
-                                             views:views]];
+  [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"|[titleLabel]|"
+                                                                           options:0
+                                                                           metrics:nil
+                                                                             views:views]];
 
-  [constraints addObjectsFromArray:
-   [NSLayoutConstraint constraintsWithVisualFormat:@"|[detailsTextLabel]|"
-                                           options:0
-                                           metrics:nil
-                                             views:views]];
+  [constraints
+      addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"|[detailsTextLabel]|"
+                                                                  options:0
+                                                                  metrics:nil
+                                                                    views:views]];
 
-  [constraints addObjectsFromArray:
-   [NSLayoutConstraint constraintsWithVisualFormat:
-        @"V:|-(kTextVerticalPadding)-[titleLabel][detailsTextLabel]-(kTextVerticalPadding)-|"
-                                           options:0
-                                           metrics:metrics
-                                             views:views]];
+  [constraints
+      addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:
+                                                  @"V:|-(kTextVerticalPadding)-[titleLabel]["
+                                                  @"detailsTextLabel]-(kTextVerticalPadding)-|"
+                                                                  options:0
+                                                                  metrics:metrics
+                                                                    views:views]];
 
-  [constraints addObject:
-   [NSLayoutConstraint constraintWithItem:_imageView
-                                attribute:NSLayoutAttributeCenterY
-                                relatedBy:NSLayoutRelationEqual
-                                   toItem:self.contentView
-                                attribute:NSLayoutAttributeCenterY
-                               multiplier:1
-                                 constant:0]];
+  [constraints addObject:[NSLayoutConstraint constraintWithItem:_imageView
+                                                      attribute:NSLayoutAttributeCenterY
+                                                      relatedBy:NSLayoutRelationEqual
+                                                         toItem:self.contentView
+                                                      attribute:NSLayoutAttributeCenterY
+                                                     multiplier:1
+                                                       constant:0]];
 
-  [constraints addObject:
-   [NSLayoutConstraint constraintWithItem:_imageView
-                                attribute:NSLayoutAttributeHeight
-                                relatedBy:NSLayoutRelationEqual
-                                   toItem:nil
-                                attribute:NSLayoutAttributeNotAnAttribute
-                               multiplier:1
-                                 constant:kImageHeight]];
+  [constraints addObject:[NSLayoutConstraint constraintWithItem:_imageView
+                                                      attribute:NSLayoutAttributeHeight
+                                                      relatedBy:NSLayoutRelationEqual
+                                                         toItem:nil
+                                                      attribute:NSLayoutAttributeNotAnAttribute
+                                                     multiplier:1
+                                                       constant:kImageHeight]];
 
   [NSLayoutConstraint activateConstraints:constraints];
 }
@@ -319,7 +315,6 @@ static inline UIFont *defaultDetailsFont(void) {
 - (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
   [self updateTitleFont];
   [self updateDetailsFont];
-
 }
 
 - (void)setTitleFont:(UIFont *)titleFont {
@@ -333,8 +328,8 @@ static inline UIFont *defaultDetailsFont(void) {
   }
   if (_mdc_adjustsFontForContentSizeCategory) {
     _titleLabel.font =
-    [_titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
-                             scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+        [_titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
+                                 scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
   } else {
     _titleLabel.font = _titleFont;
   }
@@ -352,8 +347,8 @@ static inline UIFont *defaultDetailsFont(void) {
   }
   if (_mdc_adjustsFontForContentSizeCategory) {
     _detailsTextLabel.font =
-    [_detailsFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleBody1
-                               scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+        [_detailsFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleBody1
+                                   scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
   } else {
     _detailsTextLabel.font = _detailsFont;
   }

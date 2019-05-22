@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <math.h>
-#import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
+#import <Foundation/Foundation.h>
+#import <math.h>
 
 static inline CGFloat MDCSin(CGFloat value) {
 #if CGFLOAT_IS_DOUBLE
@@ -60,7 +60,7 @@ static inline CGFloat MDCDegreesToRadians(CGFloat degrees) {
 #if CGFLOAT_IS_DOUBLE
   return degrees * (CGFloat)M_PI / 180.0;
 #else
-  return degrees * (CGFloat)M_PI / 180.f;
+  return degrees * (CGFloat)M_PI / 180;
 #endif
 }
 
@@ -94,7 +94,7 @@ static inline CGFloat MDCHypot(CGFloat x, CGFloat y) {
 
 // Checks whether the provided floating point number is exactly zero.
 static inline BOOL MDCCGFloatIsExactlyZero(CGFloat value) {
-  return (value == 0.f);
+  return (value == 0);
 }
 
 static inline CGFloat MDCPow(CGFloat value, CGFloat power) {
@@ -139,7 +139,7 @@ static inline CGFloat MDCSqrt(CGFloat value) {
  */
 static inline CGFloat MDCCeilScaled(CGFloat value, CGFloat scale) {
   if (MDCCGFloatEqual(scale, 0)) {
-    return 0.0f;
+    return 0;
   }
 
   return MDCCeil(value * scale) / scale;
@@ -155,7 +155,7 @@ static inline CGFloat MDCCeilScaled(CGFloat value, CGFloat scale) {
  */
 static inline CGFloat MDCFloorScaled(CGFloat value, CGFloat scale) {
   if (MDCCGFloatEqual(scale, 0)) {
-    return 0.0f;
+    return 0;
   }
 
   return MDCFloor(value * scale) / scale;

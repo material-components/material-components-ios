@@ -14,13 +14,15 @@
 
 #import "UIFont+MaterialTypographyPrivate.h"
 
+#import "UIFont+MaterialScalable.h"
+
 @implementation UIFont (MaterialTypographyPrivate)
 
 /*
  Returns a string indicating the weight of the font.  These weights were added in iOS 8.2.
  */
 + (NSString *)mdc_fontWeightDescription:(CGFloat)weight {
-// The UIFontWeight enumeration was added in iOS 8.2
+  // The UIFontWeight enumeration was added in iOS 8.2
   NSString *description = [NSString stringWithFormat:@"(%.3f)", weight];
 #if defined(__IPHONE_8_2)
 #pragma clang diagnostic push
@@ -94,11 +96,16 @@
 }
 
 - (NSString *)mdc_extendedDescription {
-  NSMutableString *extendedDescription = [[NSMutableString alloc] init];
+  NSMutableString *extendedDescription = [[super description] mutableCopy];
   [extendedDescription appendFormat:@"%@ : ", self.fontName];
   [extendedDescription appendFormat:@"%@ : ", self.familyName];
   [extendedDescription appendFormat:@"%.1f pt : ", self.pointSize];
-  [extendedDescription appendFormat:@"%@", [self mdc_weightString]];
+  [extendedDescription appendFormat:@"%@ : ", [self mdc_weightString]];
+  if (self.mdc_scalingCurve) {
+    [extendedDescription appendString:@"+ScalingCurve"];
+  } else {
+    [extendedDescription appendString:@"NoScalingCurve"];
+  }
 
   return extendedDescription;
 }

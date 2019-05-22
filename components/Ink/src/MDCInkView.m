@@ -27,7 +27,7 @@
 
 @end
 
-@interface MDCInkView () <CALayerDelegate, MDCInkLayerDelegate>
+@interface MDCInkView () <CALayerDelegate, MDCInkLayerDelegate, MDCLegacyInkLayerDelegate>
 
 @property(nonatomic, strong) CAShapeLayer *maskLayer;
 @property(nonatomic, copy) MDCInkCompletionBlock startInkRippleCompletionBlock;
@@ -74,6 +74,8 @@
   // Use mask layer when the superview has a shadowPath.
   _maskLayer = [CAShapeLayer layer];
   _maskLayer.delegate = self;
+
+  self.inkLayer.animationDelegate = self;
 }
 
 - (void)layoutSubviews {
@@ -111,7 +113,7 @@
         break;
     }
   } else {
-    switch(inkStyle) {
+    switch (inkStyle) {
       case MDCInkStyleBounded:
         self.inkLayer.maxRippleRadius = 0;
         break;
@@ -151,7 +153,7 @@
     [self setNeedsLayout];
   } else {
     // New Ink Bounded style ignores maxRippleRadius
-    switch(self.inkStyle) {
+    switch (self.inkStyle) {
       case MDCInkStyleUnbounded:
         self.inkLayer.maxRippleRadius = radius;
         break;
@@ -187,7 +189,8 @@
   [self startTouchBeganAtPoint:point animated:YES withCompletion:completionBlock];
 }
 
-- (void)startTouchBeganAtPoint:(CGPoint)point animated:(BOOL)animated
+- (void)startTouchBeganAtPoint:(CGPoint)point
+                      animated:(BOOL)animated
                 withCompletion:(nullable MDCInkCompletionBlock)completionBlock {
   if (self.usesLegacyInkRipple) {
     [self.inkLayer spreadFromPoint:point completion:completionBlock];
@@ -205,7 +208,8 @@
   }
 }
 
-- (void)startTouchEndAtPoint:(CGPoint)point animated:(BOOL)animated
+- (void)startTouchEndAtPoint:(CGPoint)point
+                    animated:(BOOL)animated
               withCompletion:(nullable MDCInkCompletionBlock)completionBlock {
   if (self.usesLegacyInkRipple) {
     [self.inkLayer evaporateWithCompletion:completionBlock];
@@ -239,7 +243,7 @@
 }
 
 - (UIColor *)defaultInkColor {
-  return [[UIColor alloc] initWithWhite:0 alpha:0.14f];
+  return [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.14];
 }
 
 + (MDCInkView *)injectedInkViewForView:(UIView *)view {
@@ -257,6 +261,20 @@
     [view addSubview:foundInkView];
   }
   return foundInkView;
+}
+
+#pragma mark - MDCLegacyInkLayerDelegate
+
+- (void)legacyInkLayerAnimationDidStart:(MDCLegacyInkLayer *)inkLayer {
+  if ([self.animationDelegate respondsToSelector:@selector(inkAnimationDidStart:)]) {
+    [self.animationDelegate inkAnimationDidStart:self];
+  }
+}
+
+- (void)legacyInkLayerAnimationDidEnd:(MDCLegacyInkLayer *)inkLayer {
+  if ([self.animationDelegate respondsToSelector:@selector(inkAnimationDidEnd:)]) {
+    [self.animationDelegate inkAnimationDidEnd:self];
+  }
 }
 
 #pragma mark - MDCInkLayerDelegate
@@ -283,7 +301,6 @@
 
 - (id<CAAction>)actionForLayer:(CALayer *)layer forKey:(NSString *)event {
   if ([event isEqualToString:@"path"] || [event isEqualToString:@"shadowPath"]) {
-
     // We have to create a pending animation because if we are inside a UIKit animation block we
     // won't know any properties of the animation block until it is commited.
     MDCInkPendingAnimation *pendingAnim = [[MDCInkPendingAnimation alloc] init];

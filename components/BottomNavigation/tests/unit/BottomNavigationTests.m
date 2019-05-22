@@ -14,8 +14,26 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialBottomNavigation.h"
+#import "../../src/private/MDCBottomNavigationBar+Private.h"
 #import "../../src/private/MDCBottomNavigationItemView.h"
+#import "MaterialBottomNavigation.h"
+#import "MaterialShadowElevations.h"
+
+/**
+ A testing MDCBottomNavigationBar that allows safeAreaInsets to be set programmatically.
+ */
+@interface MDCSafeAreaCustomizingBottomNavigationBar : MDCBottomNavigationBar
+/** Set this to override the value returned by @c safeAreaInsets. */
+@property(nonatomic, assign) UIEdgeInsets test_safeAreaInsets;
+@end
+
+@implementation MDCSafeAreaCustomizingBottomNavigationBar
+
+- (UIEdgeInsets)safeAreaInsets {
+  return self.test_safeAreaInsets;
+}
+
+@end
 
 @interface MDCBottomNavigationBar (Testing)
 @property(nonatomic, strong) NSMutableArray<MDCBottomNavigationItemView *> *itemViews;
@@ -45,6 +63,8 @@
 
   // Then
   XCTAssertEqualObjects(bar.backgroundColor, UIColor.whiteColor);
+  XCTAssertFalse(bar.isBackgroundBlurEnabled);
+  XCTAssertEqual(bar.backgroundBlurEffectStyle, UIBlurEffectStyleExtraLight);
 }
 
 #pragma mark - Fonts
@@ -61,11 +81,11 @@
 
   // When
   self.bottomNavBar.itemTitleFont = [UIFont systemFontOfSize:31];
-  self.bottomNavBar.items = @[item1, item2];
+  self.bottomNavBar.items = @[ item1, item2 ];
 
   // Then
   for (MDCBottomNavigationItemView *item in self.bottomNavBar.itemViews) {
-    XCTAssertEqual(item.itemTitleFont, self.bottomNavBar.itemTitleFont);
+    XCTAssertEqualObjects(item.itemTitleFont, self.bottomNavBar.itemTitleFont);
   }
 }
 
@@ -75,31 +95,31 @@
   UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:0];
 
   // When
-  self.bottomNavBar.items = @[item1, item2];
+  self.bottomNavBar.items = @[ item1, item2 ];
   self.bottomNavBar.itemTitleFont = [UIFont systemFontOfSize:31];
 
   // Then
   for (MDCBottomNavigationItemView *item in self.bottomNavBar.itemViews) {
-    XCTAssertEqual(item.itemTitleFont, self.bottomNavBar.itemTitleFont);
+    XCTAssertEqualObjects(item.itemTitleFont, self.bottomNavBar.itemTitleFont);
   }
 }
 
--(void)testItemReset {
+- (void)testItemReset {
   // Given
   UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
   UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:0];
   UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:0];
 
   // When
-  self.bottomNavBar.items = @[item1, item2];
-  self.bottomNavBar.items = @[item1, item2, item3];
+  self.bottomNavBar.items = @[ item1, item2 ];
+  self.bottomNavBar.items = @[ item1, item2, item3 ];
 
   // Then
   NSUInteger tabsCount = 3;
   XCTAssertEqual(self.bottomNavBar.itemViews.count, tabsCount);
 }
 
--(void)testFramesAfterReset {
+- (void)testFramesAfterReset {
   // Given
   UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
   UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:1];
@@ -108,23 +128,23 @@
   self.bottomNavBar.frame = CGRectMake(0, 0, 320, 56);
 
   // When
-  self.bottomNavBar.items = @[item1, item2];
-  self.bottomNavBar.items = @[item1, item2, item3];
+  self.bottomNavBar.items = @[ item1, item2 ];
+  self.bottomNavBar.items = @[ item1, item2, item3 ];
   [self.bottomNavBar layoutIfNeeded];
 
   // Then
   XCTAssertFalse(CGRectEqualToRect(self.bottomNavBar.itemViews[0].frame, CGRectZero));
 }
 
--(void)testSelectedItemAfterReset {
+- (void)testSelectedItemAfterReset {
   // Given
   UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
   UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:0];
   UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:0];
 
   // When
-  self.bottomNavBar.items = @[item1, item2];
-  self.bottomNavBar.items = @[item1, item2, item3];
+  self.bottomNavBar.items = @[ item1, item2 ];
+  self.bottomNavBar.items = @[ item1, item2, item3 ];
 
   // Then
   XCTAssertNil(self.bottomNavBar.selectedItem);
@@ -133,21 +153,103 @@
 - (void)testAccessibilityIdentifier {
   NSString *oldIdentifier = @"oldIdentifier";
   NSString *newIdentifier = @"newIdentifier";
-  UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home"
-                                                           image:nil
-                                                             tag:0];
+  UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home" image:nil tag:0];
   tabBarItem.accessibilityIdentifier = oldIdentifier;
   MDCBottomNavigationBar *bar = [[MDCBottomNavigationBar alloc] init];
   bar.items = @[ tabBarItem ];
-  XCTAssert([bar.itemViews.firstObject.accessibilityIdentifier isEqualToString:oldIdentifier]);
+  XCTAssertEqualObjects(bar.itemViews.firstObject.accessibilityIdentifier, oldIdentifier);
   tabBarItem.accessibilityIdentifier = newIdentifier;
-  XCTAssert([bar.itemViews.firstObject.accessibilityIdentifier isEqualToString:newIdentifier]);
+  XCTAssertEqualObjects(bar.itemViews.firstObject.accessibilityIdentifier, newIdentifier);
 }
 
--(void)testTitleVisibility {
+- (void)testAccessibilityLabelInitialValue {
+  // Given
+  NSString *initialLabel = @"initialLabel";
+  UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home" image:nil tag:0];
+  tabBarItem.accessibilityLabel = initialLabel;
+  MDCBottomNavigationBar *bar = [[MDCBottomNavigationBar alloc] init];
+  // When
+  bar.items = @[ tabBarItem ];
+
+  // Then
+  XCTAssertEqualObjects(bar.itemViews.firstObject.accessibilityLabel, initialLabel);
+}
+
+- (void)testAccessibilityLabelValueChanged {
+  // Given
+  NSString *oldLabel = @"oldLabel";
+  NSString *newLabel = @"newLabel";
+  UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home" image:nil tag:0];
+  tabBarItem.accessibilityLabel = oldLabel;
+  MDCBottomNavigationBar *bar = [[MDCBottomNavigationBar alloc] init];
+  bar.items = @[ tabBarItem ];
+
+  // When
+  tabBarItem.accessibilityLabel = newLabel;
+
+  // Then
+  XCTAssertEqualObjects(bar.itemViews.firstObject.accessibilityLabel, newLabel);
+}
+
+- (void)testAccessibilityHintInitialValue {
+  // Given
+  NSString *initialHint = @"initialHint";
+  UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home" image:nil tag:0];
+  tabBarItem.accessibilityHint = initialHint;
+  MDCBottomNavigationBar *bar = [[MDCBottomNavigationBar alloc] init];
+  // When
+  bar.items = @[ tabBarItem ];
+
+  // Then
+  XCTAssertEqualObjects(bar.itemViews.firstObject.accessibilityHint, initialHint);
+}
+
+- (void)testAccessibilityHintValueChanged {
+  // Given
+  NSString *oldHint = @"oldHint";
+  NSString *newHint = @"newHint";
+  UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home" image:nil tag:0];
+  tabBarItem.accessibilityHint = oldHint;
+  MDCBottomNavigationBar *bar = [[MDCBottomNavigationBar alloc] init];
+  bar.items = @[ tabBarItem ];
+
+  // When
+  tabBarItem.accessibilityHint = newHint;
+
+  // Then
+  XCTAssertEqualObjects(bar.itemViews.firstObject.accessibilityHint, newHint);
+}
+
+- (void)testIsAccessibilityElementInitialValue {
+  // Given
+  UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home" image:nil tag:0];
+  tabBarItem.isAccessibilityElement = NO;
+  MDCBottomNavigationBar *bar = [[MDCBottomNavigationBar alloc] init];
+  // When
+  bar.items = @[ tabBarItem ];
+
+  // Then
+  XCTAssert(!bar.itemViews.firstObject.isAccessibilityElement);
+}
+
+- (void)testIsAccessibilityElementValueChanged {
+  // Given
+  UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home" image:nil tag:0];
+  tabBarItem.isAccessibilityElement = NO;
+  MDCBottomNavigationBar *bar = [[MDCBottomNavigationBar alloc] init];
+  bar.items = @[ tabBarItem ];
+
+  // When
+  tabBarItem.isAccessibilityElement = YES;
+
+  // Then
+  XCTAssert(bar.itemViews.firstObject.isAccessibilityElement);
+}
+
+- (void)testTitleVisibility {
   UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
   UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:0];
-  self.bottomNavBar.items = @[item1, item2];
+  self.bottomNavBar.items = @[ item1, item2 ];
   self.bottomNavBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityNever;
   for (MDCBottomNavigationItemView *itemView in self.bottomNavBar.itemViews) {
     XCTAssert(itemView.label.isHidden);
@@ -161,6 +263,23 @@
   self.bottomNavBar.itemViews.lastObject.selected = NO;
   XCTAssert(!self.bottomNavBar.itemViews.firstObject.label.isHidden);
   XCTAssert(self.bottomNavBar.itemViews.lastObject.label.isHidden);
+}
+
+- (void)testDefaultElevation {
+  // Then
+  XCTAssertEqualWithAccuracy(self.bottomNavBar.elevation, MDCShadowElevationBottomNavigationBar,
+                             0.001);
+}
+
+- (void)testCustomElevation {
+  // Given
+  CGFloat customElevation = 20;
+
+  // When
+  self.bottomNavBar.elevation = customElevation;
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.bottomNavBar.elevation, customElevation, 0.001);
 }
 
 - (void)testViewForItemFound {
@@ -198,6 +317,205 @@
 
   // Then
   XCTAssert([self.bottomNavBar viewForItem:item3] == nil);
+}
+
+- (void)testSizeThatFitsDefaultIncludesSafeArea {
+  // Given
+  CGRect barFrame = CGRectMake(0, 0, 360, 56);
+  MDCSafeAreaCustomizingBottomNavigationBar *bottomNavBar =
+      [[MDCSafeAreaCustomizingBottomNavigationBar alloc] initWithFrame:barFrame];
+  bottomNavBar.test_safeAreaInsets = UIEdgeInsetsZero;
+  CGSize initialSize = [bottomNavBar sizeThatFits:barFrame.size];
+  UIEdgeInsets safeAreaInsets = UIEdgeInsetsMake(20, 20, 20, 20);
+  CGSize expectedSize = CGSizeMake(initialSize.width, initialSize.height + safeAreaInsets.bottom);
+
+  // When
+  bottomNavBar.test_safeAreaInsets = UIEdgeInsetsMake(20, 20, 20, 20);
+
+  // Then
+  CGSize finalSize = [bottomNavBar sizeThatFits:barFrame.size];
+  XCTAssertFalse(CGSizeEqualToSize(finalSize, CGSizeZero),
+                 "sizeThatFits: should not return CGSizeZero");
+  if (@available(iOS 11.0, *)) {
+    XCTAssertTrue(CGSizeEqualToSize(finalSize, expectedSize), @"(%@) is not equal to (%@)",
+                  NSStringFromCGSize(finalSize), NSStringFromCGSize(expectedSize));
+  } else {
+    XCTAssertTrue(CGSizeEqualToSize(finalSize, initialSize), @"(%@) is not equal to (%@)",
+                  NSStringFromCGSize(finalSize), NSStringFromCGSize(initialSize));
+  }
+}
+
+- (void)testSizeThatFitsExplicitlyIncludesSafeArea {
+  // Given
+  CGRect barFrame = CGRectMake(0, 0, 360, 56);
+  MDCSafeAreaCustomizingBottomNavigationBar *bottomNavBar =
+      [[MDCSafeAreaCustomizingBottomNavigationBar alloc] initWithFrame:barFrame];
+  bottomNavBar.test_safeAreaInsets = UIEdgeInsetsZero;
+  CGSize initialSize = [bottomNavBar sizeThatFits:barFrame.size];
+  UIEdgeInsets safeAreaInsets = UIEdgeInsetsMake(20, 20, 20, 20);
+  CGSize expectedSize = CGSizeMake(initialSize.width, initialSize.height + safeAreaInsets.bottom);
+
+  // When
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+  bottomNavBar.sizeThatFitsIncludesSafeArea = YES;
+#pragma clang diagnostic pop
+  bottomNavBar.test_safeAreaInsets = safeAreaInsets;
+
+  // Then
+  CGSize finalSize = [bottomNavBar sizeThatFits:barFrame.size];
+  XCTAssertFalse(CGSizeEqualToSize(finalSize, CGSizeZero),
+                 "sizeThatFits: should not return CGSizeZero");
+  if (@available(iOS 11.0, *)) {
+    XCTAssertTrue(CGSizeEqualToSize(finalSize, expectedSize), @"(%@) is not equal to (%@)",
+                  NSStringFromCGSize(finalSize), NSStringFromCGSize(expectedSize));
+  } else {
+    XCTAssertTrue(CGSizeEqualToSize(finalSize, initialSize), @"(%@) is not equal to (%@)",
+                  NSStringFromCGSize(finalSize), NSStringFromCGSize(initialSize));
+  }
+}
+
+- (void)testSizeThatFitsExplicitlyExcludesSafeArea {
+  // Given
+  CGRect barFrame = CGRectMake(0, 0, 360, 56);
+  MDCSafeAreaCustomizingBottomNavigationBar *bottomNavBar =
+      [[MDCSafeAreaCustomizingBottomNavigationBar alloc] initWithFrame:barFrame];
+  bottomNavBar.test_safeAreaInsets = UIEdgeInsetsZero;
+  CGSize initialSize = [bottomNavBar sizeThatFits:barFrame.size];
+
+  // When
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+  bottomNavBar.sizeThatFitsIncludesSafeArea = NO;
+#pragma clang diagnostic pop
+  bottomNavBar.test_safeAreaInsets = UIEdgeInsetsMake(20, 20, 20, 20);
+
+  // Then
+  CGSize finalSize = [bottomNavBar sizeThatFits:barFrame.size];
+  XCTAssertFalse(CGSizeEqualToSize(finalSize, CGSizeZero),
+                 "sizeThatFits: should not return CGSizeZero");
+  XCTAssertTrue(CGSizeEqualToSize(finalSize, initialSize), @"(%@) is not equal to (%@)",
+                NSStringFromCGSize(finalSize), NSStringFromCGSize(initialSize));
+}
+
+#pragma mark - Autolayout support
+
+- (void)testIntrinsicContentSizeIgnoresSafeArea {
+  // Given
+  CGRect barFrame = CGRectMake(0, 0, 360, 56);
+  MDCSafeAreaCustomizingBottomNavigationBar *bottomNavBar =
+      [[MDCSafeAreaCustomizingBottomNavigationBar alloc] initWithFrame:barFrame];
+  bottomNavBar.test_safeAreaInsets = UIEdgeInsetsZero;
+  CGSize initialSize = [bottomNavBar intrinsicContentSize];
+
+  // When
+  bottomNavBar.test_safeAreaInsets = UIEdgeInsetsMake(20, 20, 20, 20);
+
+  // Then
+  CGSize finalSize = [bottomNavBar intrinsicContentSize];
+  XCTAssertFalse(CGSizeEqualToSize(finalSize, CGSizeZero),
+                 "intrinsicContentSize should not return CGSizeZero");
+  XCTAssertTrue(CGSizeEqualToSize(finalSize, initialSize), @"(%@) is not equal to (%@)",
+                NSStringFromCGSize(finalSize), NSStringFromCGSize(initialSize));
+}
+
+#pragma mark - Property propagation
+
+- (void)testTitlesNumberOfLinesPassedToViewsBeforeItemsAssigned {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:0];
+  self.bottomNavBar.alignment = MDCBottomNavigationBarAlignmentJustified;
+
+  // When
+  self.bottomNavBar.titlesNumberOfLines = 7;
+  self.bottomNavBar.items = @[ item1, item2 ];
+
+  // Then
+  for (MDCBottomNavigationItemView *itemView in self.bottomNavBar.itemViews) {
+    XCTAssertEqual(itemView.titleNumberOfLines, self.bottomNavBar.titlesNumberOfLines);
+  }
+}
+
+- (void)testTitlesNumberOfLinesPassedToViewsAfterItemsAssigned {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:0];
+  self.bottomNavBar.alignment = MDCBottomNavigationBarAlignmentJustified;
+
+  // When
+  self.bottomNavBar.items = @[ item1, item2 ];
+  self.bottomNavBar.titlesNumberOfLines = 7;
+
+  // Then
+  for (MDCBottomNavigationItemView *itemView in self.bottomNavBar.itemViews) {
+    XCTAssertEqual(itemView.titleNumberOfLines, self.bottomNavBar.titlesNumberOfLines);
+  }
+}
+
+- (void)testItemForPointInsideItemViewReturnsCorrespondingItem {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:0];
+  self.bottomNavBar.frame = CGRectMake(0, 0, 320, 56);
+
+  // When
+  self.bottomNavBar.items = @[ item1, item2 ];
+  [self.bottomNavBar layoutIfNeeded];
+  UIView *view1 = [self.bottomNavBar viewForItem:item1];
+  UIView *view2 = [self.bottomNavBar viewForItem:item2];
+  UITabBarItem *result1 = [self.bottomNavBar tabBarItemForPoint:view1.center];
+  UITabBarItem *result2 = [self.bottomNavBar tabBarItemForPoint:view2.center];
+
+  // Then
+  XCTAssertEqualObjects(result1, item1);
+  XCTAssertEqualObjects(result2, item2);
+}
+
+- (void)testItemForPointOutsideNavigationBarReturnsNil {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:0];
+  CGFloat navBarHeight = 56;
+  self.bottomNavBar.frame = CGRectMake(0, 0, 320, navBarHeight);
+  CGPoint testPoint = CGPointMake(0, navBarHeight + 10);
+
+  // When
+  self.bottomNavBar.items = @[ item1, item2 ];
+  [self.bottomNavBar layoutIfNeeded];
+  UITabBarItem *result = [self.bottomNavBar tabBarItemForPoint:testPoint];
+
+  // Then
+  XCTAssertNil(result);
+}
+
+- (void)testItemForPointInsideNavigationBarOutsideItemViewReturnsNil {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:0];
+  CGFloat navBarHeight = 200;
+  self.bottomNavBar.frame = CGRectMake(0, 0, 320, navBarHeight);
+  CGPoint testPoint = CGPointMake(0, navBarHeight - 10);
+
+  // When
+  self.bottomNavBar.items = @[ item1, item2 ];
+  [self.bottomNavBar layoutIfNeeded];
+  UITabBarItem *result = [self.bottomNavBar tabBarItemForPoint:testPoint];
+
+  // Then
+  XCTAssertNil(result);
+}
+
+- (void)testItemForPointInsideNavigationBarNoTabBarItemsReturnsNil {
+  // Given
+  self.bottomNavBar.frame = CGRectMake(0, 0, 320, 56);
+
+  // When
+  [self.bottomNavBar layoutIfNeeded];
+  UITabBarItem *result = [self.bottomNavBar tabBarItemForPoint:self.bottomNavBar.center];
+
+  // Then
+  XCTAssertNil(result);
 }
 
 @end

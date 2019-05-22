@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #import "CardsCollectionExample.h"
+
+#import "MaterialCards+Theming.h"
 #import "MaterialInk.h"
 #import "UICollectionViewController+MDCCardReordering.h"
 
@@ -30,7 +32,11 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   defaultLayout.minimumInteritemSpacing = 0;
   defaultLayout.minimumLineSpacing = 1;
   defaultLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
-  return [self initWithCollectionViewLayout:defaultLayout];
+  self = [super initWithCollectionViewLayout:defaultLayout];
+  if (self) {
+    self.containerScheme = [[MDCContainerScheme alloc] init];
+  }
+  return self;
 }
 
 - (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout {
@@ -68,17 +74,21 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   MDCCardCollectionCell *cell =
-  [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
-                                            forIndexPath:indexPath];
-  [cell setBackgroundColor:[UIColor colorWithRed:107/255.f green:63/255.f blue:238/255.f alpha:1]];
+      [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
+                                                forIndexPath:indexPath];
+  [cell applyThemeWithScheme:self.containerScheme];
+  [cell setBackgroundColor:[UIColor colorWithRed:107 / (CGFloat)255
+                                           green:63 / (CGFloat)255
+                                            blue:238 / (CGFloat)255
+                                           alpha:1]];
   return cell;
 }
 
 #pragma mark - <UICollectionViewDelegateFlowLayout>
 
 - (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout *)collectionViewLayout
-  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+                    layout:(UICollectionViewLayout *)collectionViewLayout
+    sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
   CGFloat cardSize = (self.view.bounds.size.width / 3) - 12;
   return CGSizeMake(cardSize, cardSize);
 }
@@ -90,26 +100,26 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView
-                   layout:(UICollectionViewLayout*)collectionViewLayout
-minimumLineSpacingForSectionAtIndex:(NSInteger)section {
-  return 8.f;
+                                 layout:(UICollectionViewLayout *)collectionViewLayout
+    minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+  return 8;
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView
-                   layout:(UICollectionViewLayout*)collectionViewLayout
-minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
-  return 8.f;
+                                      layout:(UICollectionViewLayout *)collectionViewLayout
+    minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+  return 8;
 }
 
 #pragma mark - Reordering
 
 - (void)collectionView:(UICollectionView *)collectionView
-   moveItemAtIndexPath:(NSIndexPath *)sourceIndexPath
-           toIndexPath:(NSIndexPath *)destinationIndexPath {
+    moveItemAtIndexPath:(NSIndexPath *)sourceIndexPath
+            toIndexPath:(NSIndexPath *)destinationIndexPath {
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView
-canMoveItemAtIndexPath:(NSIndexPath *)indexPath {
+    canMoveItemAtIndexPath:(NSIndexPath *)indexPath {
   return YES;
 }
 
@@ -117,9 +127,9 @@ canMoveItemAtIndexPath:(NSIndexPath *)indexPath {
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Cards", @"Collection Card Cells" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Cards", @"Collection Card Cells" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

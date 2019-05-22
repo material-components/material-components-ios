@@ -443,7 +443,7 @@
                                     multiplier:1
                                       constant:self.textViewTrailing.constant];
   }
-  self.textViewTrailingTrailingViewLeading.active = !MDCCGFloatEqual([self trailingViewAlpha], 0.f);
+  self.textViewTrailingTrailingViewLeading.active = !MDCCGFloatEqual([self trailingViewAlpha], 0);
 }
 
 - (void)updateTrailingViewAlpha {
@@ -456,16 +456,16 @@
   CGFloat trailingViewAlpha;
   switch (self.trailingViewMode) {
     case UITextFieldViewModeAlways:
-      trailingViewAlpha = 1.f;
+      trailingViewAlpha = 1;
       break;
     case UITextFieldViewModeWhileEditing:
-      trailingViewAlpha = self.isEditing ? 1.f : 0.f;
+      trailingViewAlpha = self.isEditing ? 1 : 0;
       break;
     case UITextFieldViewModeUnlessEditing:
-      trailingViewAlpha = self.isEditing ? 0.f : 1.f;
+      trailingViewAlpha = self.isEditing ? 0 : 1;
       break;
     case UITextFieldViewModeNever:
-      trailingViewAlpha = 0.f;
+      trailingViewAlpha = 0;
       break;
     default:
       NSAssert(NO, @"Invalid enumeration value %li.", (long)self.trailingViewMode);
@@ -711,6 +711,14 @@
   return self.fundament.underline;
 }
 
+- (BOOL)hasTextContent {
+  return self.text.length > 0;
+}
+
+- (void)clearText {
+  self.text = nil;
+}
+
 #pragma mark - UITextView Notification Observation
 
 - (void)textViewDidBeginEditing:(__unused NSNotification *)note {
@@ -723,8 +731,8 @@
   CGSize currentSize = self.bounds.size;
   CGSize requiredSize = [self sizeThatFits:CGSizeMake(currentSize.width, CGFLOAT_MAX)];
   if (currentSize.height != requiredSize.height && self.textView.delegate &&
-      [self.layoutDelegate
-          respondsToSelector:@selector(multilineTextField:didChangeContentSize:)]) {
+      [self.layoutDelegate respondsToSelector:@selector(multilineTextField:
+                                                      didChangeContentSize:)]) {
     id<MDCMultilineTextInputLayoutDelegate> delegate =
         (id<MDCMultilineTextInputLayoutDelegate>)self.layoutDelegate;
     [delegate multilineTextField:self didChangeContentSize:requiredSize];

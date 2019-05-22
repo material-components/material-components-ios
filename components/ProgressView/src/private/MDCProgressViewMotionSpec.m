@@ -18,15 +18,16 @@
 
 + (MDMMotionTiming)willChangeProgress {
   return (MDMMotionTiming){
-    .duration = 0.250, .curve = MDMMotionCurveMakeBezier(0, 0, 1, 1),
+      .duration = 0.250,
+      .curve = MDMMotionCurveMakeBezier(0, 0, 1, 1),
   };
 }
 
 + (MDMMotionTiming)willChangeHidden {
   return (MDMMotionTiming){
-    .duration = 0.250, .curve = MDMMotionCurveMakeBezier(0, 0, 1, 1),
+      .duration = 0.250,
+      .curve = MDMMotionCurveMakeBezier(0, 0, 1, 1),
   };
 }
 
 @end
-

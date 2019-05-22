@@ -43,7 +43,7 @@ MDCBottomAppBarColorThemer.applySurfaceVariant(withSemanticColorScheme: colorSch
 #import "MaterialButtons+ButtonThemer.h"
 
 // Step 2: Create or get a color scheme and typography scheme
-id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
+id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
 MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
 buttonScheme.colorScheme = colorScheme;

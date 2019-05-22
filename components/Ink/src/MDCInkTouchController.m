@@ -34,7 +34,7 @@ static const NSTimeInterval kInkTouchDelayInterval = 0.1;
  has been migrated to the new delegate protocol.
  */
 - (BOOL)shouldInkTouchControllerProcessInkTouches:
-        (nonnull MDCInkTouchController *)inkTouchController
+    (nonnull MDCInkTouchController *)inkTouchController
     __deprecated_msg("shouldInkTouchControllerProcessInkTouches has been replaced with "
                      "inkTouchController:shouldProcessInkTouchesAtTouchLocation.");
 
@@ -69,6 +69,8 @@ static const NSTimeInterval kInkTouchDelayInterval = 0.1;
 - (instancetype)initWithView:(UIView *)view {
   self = [super init];
   if (self) {
+    _requiresFailureOfScrollViewGestures = NO;
+
     _gestureRecognizer =
         [[MDCInkGestureRecognizer alloc] initWithTarget:self action:@selector(handleInkGesture:)];
     _gestureRecognizer.delegate = self;
@@ -186,8 +188,8 @@ static const NSTimeInterval kInkTouchDelayInterval = 0.1;
 - (void)touchBeganAtPoint:(CGPoint)point touchLocation:(CGPoint)touchLocation {
   if (_shouldRespondToTouch) {
     [_addedInkView startTouchBeganAnimationAtPoint:point completion:nil];
-    if ([_delegate
-            respondsToSelector:@selector(inkTouchController:didProcessInkView:atTouchLocation:)]) {
+    if ([_delegate respondsToSelector:@selector(inkTouchController:
+                                                 didProcessInkView:atTouchLocation:)]) {
       [_delegate inkTouchController:self
                   didProcessInkView:_addedInkView
                     atTouchLocation:touchLocation];
@@ -220,6 +222,17 @@ static const NSTimeInterval kInkTouchDelayInterval = 0.1;
 #pragma clang diagnostic pop
   }
   return YES;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
+    shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+  if (self.requiresFailureOfScrollViewGestures &&
+      [otherGestureRecognizer.view isKindOfClass:[UIScrollView class]] &&
+      ![otherGestureRecognizer isKindOfClass:[UITapGestureRecognizer class]] &&
+      ![otherGestureRecognizer isKindOfClass:[UILongPressGestureRecognizer class]]) {
+    return YES;
+  }
+  return NO;
 }
 
 #pragma mark - Deprecations

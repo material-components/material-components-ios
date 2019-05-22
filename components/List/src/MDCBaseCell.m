@@ -17,14 +17,10 @@
 #import "MaterialInk.h"
 #import "MaterialShadowLayer.h"
 
-static NSString *const MDCListBaseCellInkViewKey = @"MDCListBaseCellInkViewKey";
-static NSString *const MDCListBaseCellCurrentInkColorKey = @"MDCListBaseCellCurrentInkColorKey";
-static NSString *const MDCListBaseCellCurrentElevationKey = @"MDCListBaseCellCurrentElevationKey";
-
 @interface MDCBaseCell ()
 
-@property (nonatomic, assign) CGPoint lastTouch;
-@property (strong, nonatomic, nonnull) MDCInkView *inkView;
+@property(nonatomic, assign) CGPoint lastTouch;
+@property(strong, nonatomic, nonnull) MDCInkView *inkView;
 
 @end
 
@@ -43,32 +39,9 @@ static NSString *const MDCListBaseCellCurrentElevationKey = @"MDCListBaseCellCur
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    MDCInkView *decodedInkView = [aDecoder decodeObjectOfClass:[MDCInkView class]
-                                                        forKey:MDCListBaseCellInkViewKey];
-    if (decodedInkView) {
-      self.inkView = decodedInkView;
-    }
-    UIColor *decodedColor = [aDecoder decodeObjectOfClass:[UIColor class]
-                                                   forKey:MDCListBaseCellCurrentInkColorKey];
-    if (decodedColor) {
-      self.inkView.inkColor = decodedColor;
-    }
-    NSNumber *decodedElevation = [aDecoder decodeObjectOfClass:[NSNumber class]
-                                                        forKey:MDCListBaseCellCurrentElevationKey];
-    if (decodedElevation) {
-      self.elevation = (CGFloat)[decodedElevation doubleValue];
-    }
     [self commonMDCBaseCellInit];
   }
   return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)coder {
-  [super encodeWithCoder:coder];
-  [coder encodeObject:_inkView forKey:MDCListBaseCellInkViewKey];
-  [coder encodeObject:_inkView.inkColor forKey:MDCListBaseCellCurrentInkColorKey];
-  [coder encodeObject:[NSNumber numberWithDouble:(double)_elevation]
-               forKey:MDCListBaseCellCurrentInkColorKey];
 }
 
 #pragma mark Setup
@@ -84,15 +57,11 @@ static NSString *const MDCListBaseCellCurrentElevationKey = @"MDCListBaseCellCur
 #pragma mark Ink
 
 - (void)startInk {
-  [self.inkView startTouchBeganAtPoint:_lastTouch
-                              animated:YES
-                        withCompletion:nil];
+  [self.inkView startTouchBeganAtPoint:_lastTouch animated:YES withCompletion:nil];
 }
 
 - (void)endInk {
-  [self.inkView startTouchEndAtPoint:_lastTouch
-                            animated:YES
-                      withCompletion:nil];
+  [self.inkView startTouchEndAtPoint:_lastTouch animated:YES withCompletion:nil];
 }
 
 #pragma mark Shadow

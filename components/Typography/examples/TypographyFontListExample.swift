@@ -24,7 +24,7 @@ class TypographyFontListExampleViewController: UITableViewController {
 
     self.tableView.separatorStyle = .none
 
-    self.tableView.rowHeight = UITableViewAutomaticDimension
+    self.tableView.rowHeight = UITableView.automaticDimension
     self.tableView.estimatedRowHeight = 50
   }
 
@@ -38,33 +38,33 @@ class TypographyFontListExampleViewController: UITableViewController {
 
   override func tableView(_ tableView: UITableView,
                           cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    var cell = tableView.dequeueReusableCell(withIdentifier: "cell")
-    if cell == nil {
-      cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
+    let cell = tableView.dequeueReusableCell(withIdentifier: "cell") ??
+        UITableViewCell(style: .default, reuseIdentifier: "cell")
+    
+    cell.textLabel?.text = strings[indexPath.section]
+    cell.textLabel?.font = fonts[indexPath.row]
+    cell.textLabel?.alpha = fontOpacities[indexPath.row]
+    cell.textLabel?.numberOfLines = 0
+    cell.textLabel?.lineBreakMode = .byWordWrapping
+    
+    // textLabel must be unwrapped to access 'font'.
+    if cell.textLabel!.font.pointSize > 100 && indexPath.section == 0 {
+      cell.textLabel?.text = "MDC"
     }
-    cell!.textLabel!.text = strings[indexPath.section]
-    cell!.textLabel!.font = fonts[indexPath.row]
-    cell!.textLabel!.alpha = fontOpacities[indexPath.row]
-    cell!.textLabel!.numberOfLines = 0
-    cell!.textLabel!.lineBreakMode = .byWordWrapping
 
-    if cell!.textLabel!.font.pointSize > 100 && indexPath.section == 0 {
-      cell!.textLabel!.text = "MDC"
-    }
+    cell.detailTextLabel?.text = fontStyleNames[indexPath.row]
+    cell.detailTextLabel?.font = MDCTypography.captionFont()
+    cell.detailTextLabel?.alpha = MDCTypography.captionFontOpacity()
+    cell.selectionStyle = .none
 
-    cell!.detailTextLabel!.text = fontStyleNames[indexPath.row]
-    cell!.detailTextLabel!.font = MDCTypography.captionFont()
-    cell!.detailTextLabel!.alpha = MDCTypography.captionFontOpacity()
-    cell!.selectionStyle = .none
-
-    return cell!
+    return cell
   }
 
   convenience init() {
     self.init(style: .plain)
   }
 
-  override init(style: UITableViewStyle) {
+  override init(style: UITableView.Style) {
     super.init(style: style)
 
     self.title = "Font list"
@@ -145,7 +145,7 @@ class TypographyFontListExampleViewController: UITableViewController {
 // MARK: - CatalogByConvention
 extension TypographyFontListExampleViewController {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Typography and Fonts", "Typography"],
       "description": "The Typography component provides methods for displaying text using the "

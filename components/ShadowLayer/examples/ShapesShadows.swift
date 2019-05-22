@@ -13,6 +13,8 @@
 // limitations under the License.
 
 import UIKit
+import MaterialComponents.MaterialShapeLibrary
+import MaterialComponents.MaterialShapes
 
 class ShapesShadows: UIView {
 
@@ -67,7 +69,7 @@ extension ShapesShadowsController {
   
   // MARK: Catalog by convention
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Shadow", "Shape & Shadow"],
       "primaryDemo": false,

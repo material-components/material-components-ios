@@ -22,7 +22,7 @@
 #import "supplemental/BottomSheetDummyCollectionViewController.h"
 #import "supplemental/BottomSheetSupplemental.h"
 
-@interface BottomSheetTypicalUseExample ()
+@interface BottomSheetTypicalUseExample () <MDCBottomSheetControllerDelegate>
 @property(nonatomic, strong) MDCShapeScheme *shapeScheme;
 @end
 
@@ -44,8 +44,7 @@
   MDCAppBarContainerViewController *container =
       [[MDCAppBarContainerViewController alloc] initWithContentViewController:viewController];
   container.preferredContentSize = CGSizeMake(500, 200);
-  container.appBarViewController.headerView.trackingScrollView =
-      viewController.collectionView;
+  container.appBarViewController.headerView.trackingScrollView = viewController.collectionView;
   container.topLayoutGuideAdjustmentEnabled = YES;
 
   [MDCAppBarColorThemer applyColorScheme:self.colorScheme
@@ -60,7 +59,18 @@
   bottomSheet.isScrimAccessibilityElement = YES;
   bottomSheet.scrimAccessibilityLabel = @"Close";
   bottomSheet.trackingScrollView = viewController.collectionView;
+  bottomSheet.delegate = self;
   [self presentViewController:bottomSheet animated:YES completion:nil];
+}
+
+- (void)bottomSheetControllerDidChangeYOffset:(MDCBottomSheetController *)controller
+                                      yOffset:(CGFloat)yOffset {
+  NSLog(@"bottom sheet Y offset changed: %f", yOffset);
+}
+
+- (void)bottomSheetControllerStateChanged:(MDCBottomSheetController *)controller
+                                    state:(MDCSheetState)state {
+  NSLog(@"bottom sheet state changed to: %lu", (unsigned long)state);
 }
 
 @end

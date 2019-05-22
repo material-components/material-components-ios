@@ -23,9 +23,9 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Flexible Header", @"Horizontal Paging" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Flexible Header", @"Horizontal Paging" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #import "MaterialButtons.h"
+#import "MaterialFeatureHighlight+FeatureHighlightAccessibilityMutator.h"
 #import "MaterialFeatureHighlight.h"
 #import "MaterialTypography.h"
-#import "MaterialFeatureHighlight+FeatureHighlightAccessibilityMutator.h"
 #import "supplemental/FeatureHighlightExampleSupplemental.h"
 
 @implementation FeatureHighlightCustomFontsExample
@@ -43,7 +43,7 @@
   [self.view addSubview:self.infoLabel];
 
   self.button = [[MDCRaisedButton alloc] init];
-  [self.button setBackgroundColor:[UIColor colorWithWhite:0.1f alpha:1]];
+  [self.button setBackgroundColor:[UIColor colorWithWhite:(CGFloat)0.1 alpha:1]];
   [self.button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   [self.button setTitle:@"Action" forState:UIControlStateNormal];
   [self.button sizeToFit];
@@ -55,8 +55,7 @@
 
 - (void)didTapButton:(id)sender {
   MDCFeatureHighlightViewController *vc =
-      [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:_button
-                                                              completion:nil];
+      [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:_button completion:nil];
   [MDCFeatureHighlightAccessibilityMutator mutate:vc];
 
   vc.titleText = @"Feature Highlight can use custom fonts";

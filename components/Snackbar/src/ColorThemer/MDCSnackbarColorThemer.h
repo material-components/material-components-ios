@@ -19,31 +19,52 @@
 
 /**
  The Material Design color system's themer for all snackbar messages.
+
+ @warning This API will eventually be deprecated. See the individual method documentation for
+ details on replacement APIs.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 @interface MDCSnackbarColorThemer : NSObject
-
-/**
- Applies a color scheme's properties to all snackbar messages.
-
- @param colorScheme The color scheme to apply to all snackbar messages.
- */
-+ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme;
-
 @end
 
 @interface MDCSnackbarColorThemer (Deprecated)
 
 /**
- Applies a color scheme to theme to a MDCSnackbarMessageView.
+ Applies a color scheme's properties to all snackbar messages.
 
- @warning This method is deprecated. Consider using applySemanticColorScheme:colorScheme. Learn more
- at components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
+ @param colorScheme The color scheme to apply to all snackbar messages.
+
+ @warning This API will eventually be deprecated. There is no replacement yet.
+ Track progress here: https://github.com/material-components/material-components-ios/issues/7172
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
+ */
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme;
+
+/**
+ Applies a color scheme's properties to all snackbar messages for an instance of MDCSnackbarManager.
+
+ @param colorScheme The color scheme to apply to all snackbar messages.
+ @param snackbarManager The MDCSnackbarManager instance to theme.
+
+ @warning This API will eventually be deprecated. There is no replacement yet.
+ Track progress here: https://github.com/material-components/material-components-ios/issues/7172
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
+ */
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+               toSnackbarManager:(nonnull MDCSnackbarManager *)snackbarManager;
+
+/**
+ Applies a color scheme to theme to a MDCSnackbarMessageView.
 
  @param colorScheme The color scheme to apply to MDCSnackbarMessageView.
  @param snackbarMessageView A MDCSnackbarMessageView instance to apply a color scheme.
+
+ @warning This API will eventually be deprecated. There is no replacement yet.
+ Track progress here: https://github.com/material-components/material-components-ios/issues/7172
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
-   toSnackbarMessageView:(nonnull MDCSnackbarMessageView *)snackbarMessageView
-       __deprecated_msg("use applySemanticColorScheme: instead.");
+    toSnackbarMessageView:(nonnull MDCSnackbarMessageView *)snackbarMessageView
+    __deprecated_msg("use applySemanticColorScheme: instead.");
 
 @end

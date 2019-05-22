@@ -41,6 +41,37 @@
        willAddAppBarViewController:(nonnull MDCAppBarViewController *)appBarViewController
            asChildOfViewController:(nonnull UIViewController *)viewController;
 
+/**
+ Asks the receiver to determine the tracking scroll view for a given view controller.
+
+ If this method is not implemented, the app bar navigation controller will extract the first
+ UIScrollView instance in the view controller's view hierarchy using a depth-first view traversal.
+
+ Implement this method when you need to change the default behavior of the tracking scroll view
+ detection. The suggested tracking scroll view will contain the scroll view that would have been
+ used; you can ignore this value.
+
+ Your implementation will likely return the suggested tracking scroll view by default, with custom
+ logic being implemented for specific view controllers that require it.
+
+ @param navigationController The app bar navigation controller instance that owns the view
+ controller.
+ @param viewController The view controller for which the tracking scroll view should be determined.
+ @param scrollView A suggested tracking scroll view. This is the first UIScrollView instance
+ detected by a depth-first view traversal of @c viewController's view hierarchy. This suggestion
+ can be ignored.
+ @return The tracking scroll view to be used for this view controller. If nil is returned then no
+ tracking scroll view will be set.
+
+ @note This method will only be invoked if a new App Bar instance is about to be added to the view
+ controller. If a flexible header is already present in the view controller, this method will not
+ be invoked.
+ */
+- (nullable UIScrollView *)appBarNavigationController:
+                               (nonnull MDCAppBarNavigationController *)navigationController
+                  trackingScrollViewForViewController:(nonnull UIViewController *)viewController
+                          suggestedTrackingScrollView:(nullable UIScrollView *)scrollView;
+
 #pragma mark - Will be deprecated
 
 /**
@@ -58,7 +89,8 @@
 
  @warning This method will soon be deprecated. Please use
  -appBarNavigationController:willAddAppBarViewController:asChildOfViewController: instead. Learn
- more at https://github.com/material-components/material-components-ios/blob/develop/components/AppBar/docs/migration-guide-appbar-appbarviewcontroller.md
+ more at
+ https://github.com/material-components/material-components-ios/blob/develop/components/AppBar/docs/migration-guide-appbar-appbarviewcontroller.md
  */
 - (void)appBarNavigationController:(nonnull MDCAppBarNavigationController *)navigationController
                      willAddAppBar:(nonnull MDCAppBar *)appBar
@@ -80,8 +112,8 @@
  delegate yet. In this case, use the -appBarForViewController: API to retrieve the injected App Bar
  for your root view controller and execute your delegate logic on the returned result, if any.
  */
-__attribute__((objc_subclassing_restricted))
-@interface MDCAppBarNavigationController : UINavigationController
+__attribute__((objc_subclassing_restricted)) @interface MDCAppBarNavigationController
+    : UINavigationController
 
 #pragma mark - Reacting to state changes
 
@@ -107,9 +139,9 @@ __attribute__((objc_subclassing_restricted))
  Returns the injected App Bar for a given view controller, if an App Bar was injected.
 
  @warning This method will eventually be deprecated. Use -appBarViewControllerForViewController:
- instead. Learn more at https://github.com/material-components/material-components-ios/blob/develop/components/AppBar/docs/migration-guide-appbar-appbarviewcontroller.md
+ instead. Learn more at
+ https://github.com/material-components/material-components-ios/blob/develop/components/AppBar/docs/migration-guide-appbar-appbarviewcontroller.md
  */
 - (nullable MDCAppBar *)appBarForViewController:(nonnull UIViewController *)viewController;
 
 @end
-

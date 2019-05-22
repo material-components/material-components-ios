@@ -19,7 +19,10 @@
 #import "MDCAlertTypographyThemer.h"
 #import "MaterialButtons+ButtonThemer.h"
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 @implementation MDCAlertControllerThemer
+#pragma clang diagnostic pop
 
 + (void)applyScheme:(nonnull id<MDCAlertScheming>)alertScheme
     toAlertController:(nonnull MDCAlertController *)alertController {

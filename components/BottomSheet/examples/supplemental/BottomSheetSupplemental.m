@@ -18,9 +18,9 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Bottom Sheet", @"Autolayout Content" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Bottom Sheet", @"Autolayout Content" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 
@@ -30,10 +30,26 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Bottom Sheet", @"Autolayout Safe Area Content" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Bottom Sheet", @"Autolayout Safe Area Content" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
+}
+
+@end
+
+@implementation BottomSheetPresentationExample (CatalogByConvention)
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Bottom Sheet", @"Presentation from Modal" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
++ (BOOL)catalogIsPresentable {
+  return NO;
 }
 
 @end
@@ -42,9 +58,9 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Bottom Sheet", @"Collection View (Short)" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Bottom Sheet", @"Collection View (Short)" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 
@@ -54,9 +70,9 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Bottom Sheet", @"Static Content" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Bottom Sheet", @"Static Content" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 
@@ -66,9 +82,9 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Bottom Sheet", @"Preferred Content Size" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Bottom Sheet", @"Preferred Content Size" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 
@@ -78,11 +94,11 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Bottom Sheet", @"Bottom Sheet" ],
-    @"description": @"Bottom sheets are surfaces anchored to the bottom of the screen "
-    @"containing supplementary content, actions, or navigation.",
-    @"primaryDemo": @YES,
-    @"presentable": @YES,
+    @"breadcrumbs" : @[ @"Bottom Sheet", @"Bottom Sheet" ],
+    @"description" : @"Bottom sheets are surfaces anchored to the bottom of the screen "
+                     @"containing supplementary content, actions, or navigation.",
+    @"primaryDemo" : @YES,
+    @"presentable" : @YES,
   };
 }
 
@@ -92,9 +108,9 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Bottom Sheet", @"Shaped Bottom Sheet" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Bottom Sheet", @"Shaped Bottom Sheet" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

@@ -21,8 +21,8 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
 
   // Step 1: Create and initialize an App Bar.
   let appBarViewController = MDCAppBarViewController()
-  var colorScheme = MDCSemanticColorScheme()
-  var typographyScheme = MDCTypographyScheme()
+  @objc var colorScheme = MDCSemanticColorScheme()
+  @objc var typographyScheme = MDCTypographyScheme()
 
   deinit {
     // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
@@ -39,7 +39,7 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
     appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
 
     // Step 2: Add the headerViewController as a child.
-    self.addChildViewController(appBarViewController)
+    self.addChild(appBarViewController)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -60,7 +60,7 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
 
     // Step 2: Register the App Bar views.
     view.addSubview(appBarViewController.view)
-    appBarViewController.didMove(toParentViewController: self)
+    appBarViewController.didMove(toParent: self)
 
     self.navigationItem.rightBarButtonItem =
       UIBarButtonItem(title: "Right", style: .done, target: nil, action: nil)
@@ -68,13 +68,13 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
 
   // Optional step: If you allow the header view to hide the status bar you must implement this
   //                method and return the headerViewController.
-  override var childViewControllerForStatusBarHidden: UIViewController? {
+  override var childForStatusBarHidden: UIViewController? {
     return appBarViewController
   }
 
   // Optional step: The Header View Controller does basic inspection of the header view's background
   //                color to identify whether the status bar should be light or dark-themed.
-  override var childViewControllerForStatusBarStyle: UIViewController? {
+  override var childForStatusBarStyle: UIViewController? {
     return appBarViewController
   }
 
@@ -88,7 +88,7 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
 // MARK: Catalog by convention
 extension AppBarTypicalUseSwiftExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["App Bar", "App Bar (Swift)"],
       "primaryDemo": false,
@@ -113,13 +113,12 @@ extension AppBarTypicalUseSwiftExample {
   override func tableView(
     _ tableView: UITableView,
     cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-      var cell = self.tableView.dequeueReusableCell(withIdentifier: "cell")
-      if cell == nil {
-        cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
-      }
-      cell!.layoutMargins = UIEdgeInsets.zero
-      cell!.selectionStyle = .none
-      return cell!
+    
+    let cell = self.tableView.dequeueReusableCell(withIdentifier: "cell") ??
+        UITableViewCell(style: .default, reuseIdentifier: "cell")
+      cell.layoutMargins = .zero
+      cell.selectionStyle = .none
+      return cell
   }
 
 }

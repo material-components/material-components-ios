@@ -14,9 +14,9 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialAppBar.h"
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar+TypographyThemer.h"
+#import "MaterialAppBar.h"
 
 @interface AppBarTypicalUseExample : UITableViewController
 
@@ -48,9 +48,11 @@
 
     [self addChildViewController:_appBarViewController];
 
-    _appBarViewController.navigationBar.inkColor = [UIColor colorWithWhite:0.9f alpha:0.1f];
+    _appBarViewController.navigationBar.inkColor = [UIColor colorWithWhite:(CGFloat)0.9
+                                                                     alpha:(CGFloat)0.1];
 
-    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
     self.typographyScheme = [[MDCTypographyScheme alloc] init];
   }
   return self;
@@ -108,11 +110,11 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"App Bar", @"App Bar" ],
-    @"description": @"The top app bar displays information and actions relating to "
-    @"the current view.",
-    @"primaryDemo": @YES,
-    @"presentable": @YES,
+    @"breadcrumbs" : @[ @"App Bar", @"App Bar" ],
+    @"description" : @"The top app bar displays information and actions relating to "
+                     @"the current view.",
+    @"primaryDemo" : @YES,
+    @"presentable" : @YES,
   };
 }
 
@@ -134,8 +136,8 @@
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"cell"];
   if (!cell) {
-    cell =
-        [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                  reuseIdentifier:@"cell"];
   }
   cell.layoutMargins = UIEdgeInsetsZero;
   cell.selectionStyle = UITableViewCellSelectionStyleNone;

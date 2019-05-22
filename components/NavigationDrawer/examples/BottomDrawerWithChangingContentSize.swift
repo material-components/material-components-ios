@@ -17,9 +17,10 @@ import MaterialComponents.MaterialBottomAppBar
 import MaterialComponents.MaterialBottomAppBar_ColorThemer
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialNavigationDrawer
+import MaterialComponents.MaterialNavigationDrawer_ColorThemer
 
 class BottomDrawerWithChangingContentSizeExample: UIViewController {
-  var colorScheme = MDCSemanticColorScheme()
+  @objc var colorScheme = MDCSemanticColorScheme()
   let bottomAppBar = MDCBottomAppBarView()
 
   let headerViewController = DrawerHeaderViewController()
@@ -63,6 +64,9 @@ class BottomDrawerWithChangingContentSizeExample: UIViewController {
 
   @objc func presentNavigationDrawer() {
     let bottomDrawerViewController = MDCBottomDrawerViewController()
+    bottomDrawerViewController.setTopCornersRadius(8, for: .collapsed)
+    bottomDrawerViewController.setTopCornersRadius(0, for: .expanded)
+    bottomDrawerViewController.isTopHandleHidden = false
     bottomDrawerViewController.contentViewController = contentViewController
     bottomDrawerViewController.headerViewController = headerViewController
     bottomDrawerViewController.trackingScrollView = contentViewController.collectionView
@@ -74,22 +78,13 @@ class BottomDrawerWithChangingContentSizeExample: UIViewController {
 
 class DrawerChangingContentSizeViewController: UIViewController,
 UICollectionViewDelegate, UICollectionViewDataSource {
-  var colorScheme: MDCSemanticColorScheme!
+  @objc var colorScheme: MDCSemanticColorScheme!
   let numberOfRowsShort : Int = 2
   let numberOfRowsLong : Int = 12
   var longList = false
 
   let collectionView: UICollectionView
   let layout = UICollectionViewFlowLayout()
-  override var preferredContentSize: CGSize {
-    get {
-      return CGSize(width: view.bounds.width,
-                    height: layout.collectionViewContentSize.height)
-    }
-    set {
-      super.preferredContentSize = newValue
-    }
-  }
 
   init() {
     collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -106,7 +101,6 @@ UICollectionViewDelegate, UICollectionViewDataSource {
     collectionView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width,
                                   height: self.view.bounds.height)
     collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
-    collectionView.isScrollEnabled = false
     collectionView.delegate = self
     collectionView.dataSource = self
     collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -122,6 +116,8 @@ UICollectionViewDelegate, UICollectionViewDataSource {
     super.viewWillLayoutSubviews()
     let s = self.view.frame.size.width / 3
     layout.itemSize = CGSize(width: s, height: s)
+    self.preferredContentSize = CGSize(width: view.bounds.width,
+                                       height: layout.collectionViewContentSize.height)
   }
 
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -147,16 +143,17 @@ UICollectionViewDelegate, UICollectionViewDataSource {
     return 1
   }
 
-  func didTap(gestureRecognizer : UITapGestureRecognizer) {
+  @objc func didTap(gestureRecognizer : UITapGestureRecognizer) {
     longList = !longList
     collectionView.reloadData()
-    self.view.setNeedsLayout()
+    self.preferredContentSize = CGSize(width: self.view.bounds.width,
+                                       height: self.layout.collectionViewContentSize.height)
   }
 }
 
 extension BottomDrawerWithChangingContentSizeExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Navigation Drawer", "Bottom Drawer Changing Content Size"],
       "primaryDemo": false,

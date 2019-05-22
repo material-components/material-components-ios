@@ -3,3 +3,4 @@ module: Collections
 umbrella_header: src/MaterialCollections.h
 objc: true
 sdk: iphonesimulator
+framework_root: ../

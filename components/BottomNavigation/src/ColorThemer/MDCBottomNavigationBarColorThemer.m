@@ -14,7 +14,7 @@
 
 #import "MDCBottomNavigationBarColorThemer.h"
 
-static const CGFloat kUnselectedOpacity = 0.6f;
+static const CGFloat kUnselectedOpacity = (CGFloat)0.6;
 
 @implementation MDCBottomNavigationBarColorThemer
 

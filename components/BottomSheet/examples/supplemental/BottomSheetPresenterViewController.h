@@ -14,11 +14,13 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialButtons.h"
 #import "MaterialColorScheme.h"
 #import "MaterialTypographyScheme.h"
 
 @interface BottomSheetPresenterViewController : UIViewController
 
+@property(nonatomic, strong, readonly) MDCButton *button;
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 

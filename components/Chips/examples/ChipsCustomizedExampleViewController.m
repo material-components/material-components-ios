@@ -12,8 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "ChipsExamplesSupplemental.h"
+#import "supplemental/ChipsExamplesSupplemental.h"
 
+#import "MaterialChips+Theming.h"
 #import "MaterialChips.h"
 
 @implementation ChipsCustomizedExampleViewController {
@@ -21,24 +22,33 @@
   MDCChipView *_sizingChip;
 }
 
+- (id)init {
+  self = [super init];
+  if (self) {
+    self.containerScheme = [[MDCContainerScheme alloc] init];
+  }
+  return self;
+}
+
 + (void)configureChip:(MDCChipView *)chip {
-  UIFont *customTitleFont = [UIFont fontWithName:@"ChalkDuster" size:14.0f];
+  UIFont *customTitleFont = [UIFont fontWithName:@"ChalkDuster" size:14];
   chip.titleFont = customTitleFont;
 
   UIColor *customColor = [UIColor blueColor];
   [chip setTitleColor:customColor forState:UIControlStateNormal];
   [chip setBorderColor:customColor forState:UIControlStateNormal];
-  [chip setBorderWidth:2.0f forState:UIControlStateNormal];
-  [chip setInkColor:[customColor colorWithAlphaComponent:0.2f] forState:UIControlStateNormal];
+  [chip setBorderWidth:2 forState:UIControlStateNormal];
+  [chip setInkColor:[customColor colorWithAlphaComponent:(CGFloat)0.2]
+           forState:UIControlStateNormal];
 
   UIColor *customSelectedColor = [UIColor orangeColor];
   [chip setTitleColor:customSelectedColor forState:UIControlStateSelected];
   [chip setBorderColor:customSelectedColor forState:UIControlStateSelected];
-  [chip setBorderWidth:4.0f forState:UIControlStateSelected];
-  [chip setInkColor:[customSelectedColor colorWithAlphaComponent:0.2f]
+  [chip setBorderWidth:4 forState:UIControlStateSelected];
+  [chip setInkColor:[customSelectedColor colorWithAlphaComponent:(CGFloat)0.2]
            forState:UIControlStateSelected];
-  [chip setInkColor:[customSelectedColor colorWithAlphaComponent:0.2f]
-           forState:UIControlStateSelected|UIControlStateHighlighted];
+  [chip setInkColor:[customSelectedColor colorWithAlphaComponent:(CGFloat)0.2]
+           forState:UIControlStateSelected | UIControlStateHighlighted];
 }
 
 - (void)loadView {
@@ -63,6 +73,12 @@
   [self.view addSubview:_collectionView];
 }
 
+- (void)viewDidLoad {
+  [super viewDidLoad];
+
+  [_sizingChip applyThemeWithScheme:self.containerScheme];
+}
+
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
 
@@ -84,13 +100,13 @@
   cell.chipView.titleLabel.text = self.titles[indexPath.row];
   cell.chipView.selectedImageView.image = [self doneImage];
   cell.alwaysAnimateResize = YES;
-
+  [cell.chipView applyThemeWithScheme:self.containerScheme];
   return cell;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout*)collectionViewLayout
-  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+                    layout:(UICollectionViewLayout *)collectionViewLayout
+    sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
   NSArray *selectedPaths = [collectionView indexPathsForSelectedItems];
   _sizingChip.selected = [selectedPaths containsObject:indexPath];
   _sizingChip.titleLabel.text = self.titles[indexPath.row];
@@ -128,4 +144,3 @@
 }
 
 @end
-

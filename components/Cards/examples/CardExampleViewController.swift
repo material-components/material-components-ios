@@ -14,16 +14,25 @@
 
 import UIKit
 import MaterialComponents.MaterialButtons_ButtonThemer
-import MaterialComponents.MaterialCards_CardThemer
+import MaterialComponents.MaterialContainerScheme
+import MaterialComponents.MaterialCards_Theming
+import MaterialComponents.MaterialButtons_Theming
 
 class CardExampleViewController: UIViewController {
   @IBOutlet weak var imageView: CardImageView!
   @IBOutlet weak var card: MDCCard!
   @IBOutlet weak var button: MDCButton!
 
-  var colorScheme = MDCSemanticColorScheme()
-  var shapeScheme = MDCShapeScheme()
-  var typographyScheme = MDCTypographyScheme()
+  @objc var containerScheme: MDCContainerScheming
+
+  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    containerScheme = MDCContainerScheme()
+    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+  }
+
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -34,15 +43,8 @@ class CardExampleViewController: UIViewController {
     bundle.loadNibNamed("CardExampleViewController", owner: self, options: nil)
     view.frame = self.view.bounds
 
-    let buttonScheme = MDCButtonScheme();
-    buttonScheme.colorScheme = colorScheme
-    buttonScheme.typographyScheme = typographyScheme
-    MDCTextButtonThemer.applyScheme(buttonScheme, to: button)
-
-    let cardScheme = MDCCardScheme();
-    cardScheme.colorScheme = colorScheme
-    cardScheme.shapeScheme = shapeScheme
-    MDCCardThemer.applyScheme(cardScheme, to: card)
+    button.applyTextTheme(withScheme: containerScheme)
+    card.applyTheme(withScheme: containerScheme)
     card.isInteractable = false
 
     imageView.isAccessibilityElement = true
@@ -56,12 +58,11 @@ class CardExampleViewController: UIViewController {
     }
     return super.traitCollection
   }
-
 }
 
 extension CardExampleViewController {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Cards", "Card (Swift)"],
       "description": "Cards contain content and actions about a single subject.",

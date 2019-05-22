@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <UIKit/UIKit.h>
 #import <CoreGraphics/CoreGraphics.h>
+#import <UIKit/UIKit.h>
 
 #import "MaterialShadowElevations.h"
 
@@ -37,7 +37,7 @@
      making the slider a snap to discrete values via @c numberOfDiscreteValues.
  */
 IB_DESIGNABLE
-@interface MDCSlider : UIControl <NSSecureCoding>
+@interface MDCSlider : UIControl
 
 /** When @c YES, the forState: APIs are enabled. Defaults to @c NO. */
 @property(nonatomic, assign, getter=isStatefulAPIEnabled) BOOL statefulAPIEnabled;

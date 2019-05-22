@@ -3,3 +3,4 @@ module: FlexibleHeader
 umbrella_header: src/MaterialFlexibleHeader.h
 objc: true
 sdk: iphonesimulator
+framework_root: ../

@@ -13,8 +13,7 @@
 // limitations under the License.
 
 import XCTest
-import MaterialComponentsAlpha.MaterialActionSheet
-import MaterialComponentsAlpha.MaterialActionSheet_ColorThemer
+import MaterialComponents.MaterialActionSheet
 
 class ActionSheetTest: XCTestCase {
 
@@ -68,7 +67,7 @@ class ActionSheetTest: XCTestCase {
     actionSheet.addAction(action)
 
     // Then
-    let tableView = actionSheet.view.subviews.flatMap{ $0 as? UITableView }.first
+    let tableView = actionSheet.view.subviews.compactMap { $0 as? UITableView }.first
     if let table = tableView {
       XCTAssertEqual(table.numberOfRows(inSection: section), rowCount)
       if let dataSource = table.dataSource {
@@ -108,20 +107,5 @@ class ActionSheetTest: XCTestCase {
     // Then
     XCTAssertEqual(actionSheet.view.backgroundColor, actionSheet.backgroundColor)
     XCTAssertEqual(actionSheet.view.backgroundColor, newBackgroundColor)
-  }
-
-  func testApplyThemerToBackgroundColor() {
-    // Given
-    let surfaceColor: UIColor = .blue
-    let colorScheme = MDCSemanticColorScheme()
-    colorScheme.surfaceColor = surfaceColor
-
-    // When
-    MDCActionSheetColorThemer.applySemanticColorScheme(colorScheme, to: actionSheet)
-    let _ = actionSheet.view
-
-    // Then
-    XCTAssertEqual(actionSheet.view.backgroundColor, surfaceColor)
-    XCTAssertEqual(actionSheet.backgroundColor, surfaceColor)
   }
 }

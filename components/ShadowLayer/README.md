@@ -141,7 +141,7 @@ addSubview(button)
 ShadowButton *button = [ShadowButton buttonWithType:UIButtonTypeSystem];
 button.frame = CGRectMake(100, 100, 200, 50);
 [button setTitle: @"Button" forState:UIControlStateNormal];
-[(MDCShadowLayer *)button.layer setElevation:6.f];
+[(MDCShadowLayer *)button.layer setElevation:6];
 [self addSubview:button];
 
 ```

@@ -16,8 +16,8 @@
 
 #import "MaterialColorScheme.h"
 #import "MaterialSlider.h"
-#import "MaterialTabs.h"
 #import "MaterialTabs+ColorThemer.h"
+#import "MaterialTabs.h"
 #import "supplemental/TabBarViewControllerExampleSupplemental.h"
 
 @implementation TabBarViewControllerExample
@@ -25,7 +25,8 @@
 - (id)init {
   self = [super init];
   if (self) {
-    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
     self.typographyScheme = [[MDCTypographyScheme alloc] init];
   }
   return self;

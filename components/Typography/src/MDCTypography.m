@@ -16,8 +16,8 @@
 #import "private/UIFont+MaterialTypographyPrivate.h"
 
 static id<MDCTypographyFontLoading> gFontLoader = nil;
-const CGFloat MDCTypographyStandardOpacity = 0.87f;
-const CGFloat MDCTypographySecondaryOpacity = 0.54f;
+const CGFloat MDCTypographyStandardOpacity = (CGFloat)0.87;
+const CGFloat MDCTypographySecondaryOpacity = (CGFloat)0.54;
 
 @implementation MDCTypography
 
@@ -290,7 +290,7 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
   } else {
     font = [UIFont boldSystemFontOfSize:fontSize];
   }
-  #pragma clang diagnostic pop
+#pragma clang diagnostic pop
 
   [self.fontCache setObject:font forKey:cacheKey];
 
@@ -319,7 +319,7 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
   }
 
   UIFont *regular = [self regularFontOfSize:fontSize];
-  UIFontDescriptor * _Nullable descriptor = [regular.fontDescriptor
+  UIFontDescriptor *_Nullable descriptor = [regular.fontDescriptor
       fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold | UIFontDescriptorTraitItalic];
   if (!descriptor) {
     return nil;

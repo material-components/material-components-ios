@@ -14,17 +14,16 @@
 
 #import <UIKit/UIKit.h>
 
-static CGFloat const kArbitraryCellHeight = 75.f;
+static CGFloat const kArbitraryCellHeight = 75;
 static NSString *const kBaseCellIdentifier = @"kBaseCellIdentifier";
 
 @interface MDCBaseCellExample : UIViewController
 @end
 
-@interface MDCBaseCellExample () <UICollectionViewDelegate,
-                                  UICollectionViewDataSource>
+@interface MDCBaseCellExample () <UICollectionViewDelegate, UICollectionViewDataSource>
 
-@property (strong, nonatomic) UICollectionView *collectionView;
-@property (strong, nonatomic) UICollectionViewFlowLayout *collectionViewLayout;
-@property (nonatomic, assign) NSInteger numberOfCells;
+@property(strong, nonatomic) UICollectionView *collectionView;
+@property(strong, nonatomic) UICollectionViewFlowLayout *collectionViewLayout;
+@property(nonatomic, assign) NSInteger numberOfCells;
 
 @end

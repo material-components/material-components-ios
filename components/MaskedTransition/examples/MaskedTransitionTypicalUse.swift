@@ -23,12 +23,12 @@ open class MaskedTransitionTypicalUseSwiftExample: UIViewController {
     let name: String
     let viewControllerType: UIViewController.Type
     let calculateFrame: ((UIPresentationController) -> CGRect)?
-    let autoresizingMask: UIViewAutoresizing
+    let autoresizingMask: UIView.AutoresizingMask
     let useSafeAreaInsets: Bool
   }
   var targets: [TargetInfo] = []
-  var colorScheme = MDCSemanticColorScheme()
-  var typographyScheme = MDCTypographyScheme()
+  @objc var colorScheme = MDCSemanticColorScheme()
+  @objc var typographyScheme = MDCTypographyScheme()
   let rightFAB = MDCFloatingButton()
   let leftFAB = MDCFloatingButton()
 
@@ -57,17 +57,19 @@ open class MaskedTransitionTypicalUseSwiftExample: UIViewController {
     view.addSubview(leftFAB)
 
     targets.append(.init(name: "Bottom sheet", viewControllerType: ModalViewController.self, calculateFrame: { info in
-      let size = CGSize(width: info.containerView!.bounds.width, height: 300)
-      return CGRect(x: info.containerView!.bounds.minX,
-                    y: info.containerView!.bounds.height - size.height,
+      let containerBounds = info.frameOfPresentedViewInContainerView
+      let size = CGSize(width: containerBounds.width, height: 300)
+      return CGRect(x: containerBounds.minX,
+                    y: containerBounds.height - size.height,
                     width: size.width,
                     height: size.height)
     }, autoresizingMask: [.flexibleWidth, .flexibleTopMargin], useSafeAreaInsets: true))
 
     targets.append(.init(name: "Centered card", viewControllerType: ModalViewController.self, calculateFrame: { info in
+      let containerBounds = info.frameOfPresentedViewInContainerView
       let size = CGSize(width: 200, height: 200)
-      return CGRect(x: (info.containerView!.bounds.width - size.width) / 2,
-                    y: (info.containerView!.bounds.height - size.height) / 2,
+      return CGRect(x: (containerBounds.width - size.width) / 2,
+                    y: (containerBounds.height - size.height) / 2,
                     width: size.width,
                     height: size.height)
     }, autoresizingMask: [.flexibleLeftMargin, .flexibleTopMargin,
@@ -116,8 +118,9 @@ open class MaskedTransitionTypicalUseSwiftExample: UIViewController {
   }
 
   var transitionController: MDCMaskedTransitionController? = nil
-  func didTapFab(fab: UIView) {
-    let target = targets[tableView.indexPathForSelectedRow!.row]
+  @objc func didTapFab(fab: UIView) {
+    guard let indexPathForSelectedRow = tableView.indexPathForSelectedRow else { return }
+    let target = targets[indexPathForSelectedRow.row]
     let vc = target.viewControllerType.init()
 
     if #available(iOS 11.0, *), target.useSafeAreaInsets {
@@ -166,7 +169,7 @@ private class ToolbarViewController: UIViewController {
     view.addSubview(toolbar)
   }
 
-  func didTap() {
+  @objc func didTap() {
     dismiss(animated: true)
   }
 }
@@ -235,14 +238,14 @@ private class ModalViewController: UIViewController {
                        constant: bottomOffset).isActive = true
   }
   
-  func didTap() {
+  @objc func didTap() {
     dismiss(animated: true)
   }
 }
 
 extension MaskedTransitionTypicalUseSwiftExample {
   // MARK: - CatalogByConvention
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs" : [ "Masked Transition", "Masked Transition (Swift)" ],
       "description" : "Examples of how the Floating Action Button can transition to other "

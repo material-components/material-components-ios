@@ -59,8 +59,8 @@
 
     // Run a nested animation. We'll use a token animation duration, which will be ignored because
     // this will be a nested animation.
-    [UIView animateWithDuration:1.0f
-                          delay:0.0f
+    [UIView animateWithDuration:1
+                          delay:0
                         options:optionsToUse
                      animations:animations
                      completion:nil];

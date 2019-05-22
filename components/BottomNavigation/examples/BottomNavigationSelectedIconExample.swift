@@ -18,12 +18,15 @@ import MaterialComponents.MaterialTypographyScheme
 
 // Example to show different icons for selected and unselected states
 class BottomNavigationSelectedIconExample: UIViewController {
-  var colorScheme = MDCSemanticColorScheme()
-  var typographyScheme = MDCTypographyScheme()
+  @objc var colorScheme = MDCSemanticColorScheme()
+  @objc var typographyScheme = MDCTypographyScheme()
 
   let bottomNavBar = MDCBottomNavigationBar()
 
   override func viewDidLoad() {
+    super.viewDidLoad()
+
+    bottomNavBar.sizeThatFitsIncludesSafeArea = false
     colorScheme.backgroundColor = .white
     view.backgroundColor = colorScheme.backgroundColor
 
@@ -42,10 +45,14 @@ class BottomNavigationSelectedIconExample: UIViewController {
 
   func layoutBottomNavBar() {
     let size = bottomNavBar.sizeThatFits(view.bounds.size)
-    let bottomNavBarFrame = CGRect(x: 0,
+    var bottomNavBarFrame = CGRect(x: 0,
                                    y: view.bounds.height - size.height,
                                    width: size.width,
                                    height: size.height)
+    if #available(iOS 11.0, *) {
+      bottomNavBarFrame.size.height += view.safeAreaInsets.bottom
+      bottomNavBarFrame.origin.y -= view.safeAreaInsets.bottom
+    }
     bottomNavBar.frame = bottomNavBarFrame
   }
 
@@ -54,20 +61,18 @@ class BottomNavigationSelectedIconExample: UIViewController {
     layoutBottomNavBar()
   }
 
-  #if swift(>=3.2)
   @available(iOS 11, *)
   override func viewSafeAreaInsetsDidChange() {
     super.viewSafeAreaInsetsDidChange()
     layoutBottomNavBar()
   }
-  #endif
 }
 
 
 // MARK: - Catalog by Conventions
 extension BottomNavigationSelectedIconExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Bottom Navigation", "Bottom Navigation Selected"],
       "primaryDemo": false,

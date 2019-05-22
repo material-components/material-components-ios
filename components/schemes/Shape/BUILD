@@ -14,17 +14,46 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("//:material_components_ios.bzl",
-     "mdc_objc_library",
-     "mdc_public_objc_library",
-     "mdc_unit_test_suite")
+load(
+    "//:material_components_ios.bzl",
+    "mdc_examples_objc_library",
+    "mdc_objc_library",
+    "mdc_public_objc_library",
+    "mdc_unit_test_suite",
+)
 
 licenses(["notice"])  # Apache 2.0
 
 mdc_public_objc_library(
     name = "Shape",
     deps = [
-        "//components/private/ShapeLibrary",
+        "//components/ShapeLibrary",
+    ],
+)
+
+mdc_examples_objc_library(
+    name = "ObjcExamples",
+    deps = [
+        "//components/AppBar",
+        "//components/AppBar:ColorThemer",
+        "//components/AppBar:TypographyThemer",
+        "//components/BottomSheet",
+        "//components/BottomSheet:ShapeThemer",
+        "//components/Buttons",
+        "//components/Buttons:ButtonThemer",
+        "//components/Buttons:ShapeThemer",
+        "//components/Buttons:Theming",
+        "//components/Cards",
+        "//components/Cards:ShapeThemer",
+        "//components/Cards:Theming",
+        "//components/Chips",
+        "//components/Chips:ShapeThemer",
+        "//components/Chips:Theming",
+        "//components/ShapeLibrary",
+        "//components/schemes/Color",
+        "//components/schemes/Container",
+        "//components/schemes/Shape",
+        "//components/schemes/Typography",
     ],
 )
 
@@ -46,14 +75,15 @@ mdc_objc_library(
         "UIKit",
         "XCTest",
     ],
+    visibility = ["//visibility:private"],
     deps = [
         ":Shape",
-   ],
-    visibility = ["//visibility:private"],
+    ],
 )
 
 mdc_unit_test_suite(
+    name = "unit_tests",
     deps = [
-      ":unit_test_sources",
+        ":unit_test_sources",
     ],
 )

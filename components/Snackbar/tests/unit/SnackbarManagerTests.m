@@ -41,7 +41,7 @@
     id<MDCSnackbarSuspensionToken> token = [MDCSnackbarManager suspendAllMessages];
     [MDCSnackbarManager showMessage:suspendedMessage];
 
-  // When
+    // When
     token = nil;
   }
 
@@ -64,6 +64,21 @@
   });
 
   [self waitForExpectationsWithTimeout:3.0 handler:nil];
+}
+
+- (void)testInstanceCreatedInBackgroundThread {
+  // Given
+  XCTestExpectation *expect = [self expectationWithDescription:@""];
+
+  // When
+  dispatch_async(dispatch_get_global_queue(QOS_CLASS_DEFAULT, 0), ^{
+    MDCSnackbarManager *manager = [[MDCSnackbarManager alloc] init];
+    (void)manager;
+    [expect fulfill];
+  });
+
+  // Then
+  [self waitForExpectations:@[ expect ] timeout:3];
 }
 
 @end

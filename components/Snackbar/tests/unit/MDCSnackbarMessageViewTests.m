@@ -64,9 +64,9 @@
 
   // Then
   XCTAssertEqualObjects(messageView.snackbarMessageViewBackgroundColor,
-                        [UIColor colorWithRed:(float)(0x32 / 255.0)
-                                        green:(float)(0x32 / 255.0)
-                                         blue:(float)(0x32 / 255.0)
+                        [UIColor colorWithRed:(CGFloat)(0x32 / 255.0)
+                                        green:(CGFloat)(0x32 / 255.0)
+                                         blue:(CGFloat)(0x32 / 255.0)
                                         alpha:1]);
   XCTAssertEqualObjects(messageView.snackbarMessageViewShadowColor, UIColor.blackColor);
   XCTAssertEqualObjects(messageView.messageTextColor, UIColor.whiteColor);
@@ -84,7 +84,11 @@
   // When
   self.message.accessibilityLabel = @"not message text";
   [self.manager showMessage:self.message];
-  [NSRunLoop.mainRunLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [expectation fulfill];
+  });
+  [self waitForExpectationsWithTimeout:3 handler:nil];
 
   // Then
   XCTAssertEqualObjects(self.delegate.presentedView.label.accessibilityLabel,
@@ -94,7 +98,11 @@
 - (void)testAccessibilityHintDefaultIsNotNil {
   // When
   [self.manager showMessage:self.message];
-  [NSRunLoop.mainRunLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [expectation fulfill];
+  });
+  [self waitForExpectationsWithTimeout:3 handler:nil];
 
   // Then
   XCTAssertNotNil(self.delegate.presentedView.label.accessibilityHint);
@@ -104,14 +112,53 @@
   // When
   self.message.accessibilityHint = @"a hint";
   [self.manager showMessage:self.message];
-  [NSRunLoop.mainRunLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [expectation fulfill];
+  });
+  [self waitForExpectationsWithTimeout:3 handler:nil];
 
   // Then
   XCTAssertEqualObjects(self.delegate.presentedView.label.accessibilityHint,
                         self.message.accessibilityHint);
 }
 
-- (void)testSnackbarSetAccessibiltyViewIsModalForActionSnacbars {
+- (void)testSnackbarAccessibiltyViewIsModalDefaultsToNoWithActions {
+  // Given
+  self.manager.internalManager.isVoiceOverRunningOverride = YES;
+  MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
+  action.title = @"Tap Me";
+  self.message.action = action;
+
+  // When
+  [self.manager showMessage:self.message];
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [expectation fulfill];
+  });
+  [self waitForExpectationsWithTimeout:3 handler:nil];
+
+  // Then
+  XCTAssertFalse(self.manager.internalManager.overlayView.accessibilityViewIsModal);
+}
+
+- (void)testSnackbarAccessibiltyViewIsModalDefaultsToNoWithNoActions {
+  // Given
+  self.manager.internalManager.isVoiceOverRunningOverride = YES;
+
+  // When
+  [self.manager showMessage:self.message];
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [expectation fulfill];
+  });
+  [self waitForExpectationsWithTimeout:3 handler:nil];
+
+  // Then
+  XCTAssertFalse(self.manager.internalManager.overlayView.accessibilityViewIsModal);
+}
+
+- (void)testWhenSnackbarAccessibiltyViewIsModalIsYesWithActions {
   // Given
   self.manager.internalManager.isVoiceOverRunningOverride = YES;
   MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
@@ -121,50 +168,87 @@
 
   // When
   [self.manager showMessage:self.message];
-  [NSRunLoop.mainRunLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [expectation fulfill];
+  });
+  [self waitForExpectationsWithTimeout:3 handler:nil];
 
   // Then
   XCTAssertTrue(self.manager.internalManager.overlayView.accessibilityViewIsModal);
 }
 
-- (void)testSnackbarAccessibiltyViewIsModalShouldBeNoWithNoActions {
+- (void)testWhenSnackbarAccessibiltyViewIsModalIsYesWithActionsAndWithoutVoiceOver {
   // Given
+  MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
+  action.title = @"Tap Me";
+  self.message.action = action;
   self.manager.shouldEnableAccessibilityViewIsModal = YES;
 
   // When
   [self.manager showMessage:self.message];
-  [NSRunLoop.mainRunLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [expectation fulfill];
+  });
+  [self waitForExpectationsWithTimeout:3 handler:nil];
 
   // Then
   XCTAssertFalse(self.manager.internalManager.overlayView.accessibilityViewIsModal);
 }
 
-- (void)testSnackbarSetAccessibiltyViewIsModalShouldBeNoForActionSnacbarsWhenManagerIsNo {
+- (void)testWhenSnackbarAccessibiltyViewIsModalIsYesWhenWithNoActions {
   // Given
+  self.manager.internalManager.isVoiceOverRunningOverride = YES;
+  self.manager.shouldEnableAccessibilityViewIsModal = YES;
+
+  // When
+  [self.manager showMessage:self.message];
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [expectation fulfill];
+  });
+  [self waitForExpectationsWithTimeout:3 handler:nil];
+
+  // Then
+  XCTAssertFalse(self.manager.internalManager.overlayView.accessibilityViewIsModal);
+}
+
+- (void)testSnackbarAccessibiltyViewIsModalWithSnackbarViewOverwriteWithActions {
+  // Given
+  self.delegate.shouldSetSnackbarViewAccessibilityViewIsModal = YES;
   self.manager.internalManager.isVoiceOverRunningOverride = YES;
   MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
   action.title = @"Tap Me";
   self.message.action = action;
-  self.manager.shouldEnableAccessibilityViewIsModal = NO;
 
   // When
   [self.manager showMessage:self.message];
-  [NSRunLoop.mainRunLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [expectation fulfill];
+  });
+  [self waitForExpectationsWithTimeout:3 handler:nil];
 
   // Then
-  XCTAssertFalse(self.manager.internalManager.overlayView.accessibilityViewIsModal);
+  XCTAssertTrue(self.manager.internalManager.overlayView.accessibilityViewIsModal);
 }
 
-- (void)testSnackbarAccessibiltyViewIsModalShouldBeNoByDefault {
+- (void)testSnackbarAccessibiltyViewIsModalWithSnackbarViewOverwriteWithNoActions {
   // Given
-  self.manager.shouldEnableAccessibilityViewIsModal = NO;
+  self.delegate.shouldSetSnackbarViewAccessibilityViewIsModal = YES;
+  self.manager.internalManager.isVoiceOverRunningOverride = YES;
 
   // When
   [self.manager showMessage:self.message];
-  [NSRunLoop.mainRunLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [expectation fulfill];
+  });
+  [self waitForExpectationsWithTimeout:3 handler:nil];
 
   // Then
-  XCTAssertFalse(self.manager.internalManager.overlayView.accessibilityViewIsModal);
+  XCTAssertTrue(self.manager.internalManager.overlayView.accessibilityViewIsModal);
 }
 
 @end

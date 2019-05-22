@@ -14,17 +14,17 @@
 
 #import "MDCActionSheetHeaderView.h"
 
-#import "MaterialMath.h"
-#import "MaterialTypography.h"
+#import <MaterialComponents/MaterialMath.h>
+#import <MaterialComponents/MaterialTypography.h>
 
-static const CGFloat kTitleLabelAlpha = 0.87f;
-static const CGFloat kMessageLabelAlpha = 0.6f;
-static const CGFloat kMessageOnlyPadding = 23.f;
-static const CGFloat kLeadingPadding = 16.f;
-static const CGFloat kTopStandardPadding = 16.f;
-static const CGFloat kTrailingPadding = 16.f;
-static const CGFloat kTitleOnlyPadding = 18.f;
-static const CGFloat kMiddlePadding = 8.f;
+static const CGFloat kTitleLabelAlpha = (CGFloat)0.87;
+static const CGFloat kMessageLabelAlpha = (CGFloat)0.6;
+static const CGFloat kMessageOnlyPadding = 23;
+static const CGFloat kLeadingPadding = 0;
+static const CGFloat kTopStandardPadding = 16;
+static const CGFloat kTrailingPadding = 0;
+static const CGFloat kTitleOnlyPadding = 18;
+static const CGFloat kMiddlePadding = 8;
 
 @interface MDCActionSheetHeaderView ()
 @property(nonatomic, strong) UILabel *titleLabel;
@@ -38,6 +38,7 @@ static const CGFloat kMiddlePadding = 8.f;
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
+    self.preservesSuperviewLayoutMargins = YES;
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     _messageLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     [self addSubview:_titleLabel];
@@ -63,7 +64,7 @@ static const CGFloat kMiddlePadding = 8.f;
 
   CGSize size = CGRectInfinite.size;
   size.width = CGRectGetWidth(self.bounds);
-  CGRect labelFrame = [self frameWithSafeAreaInsets:self.bounds];
+  CGRect labelFrame = [self frameWithLayoutMargins:self.bounds];
   labelFrame = CGRectStandardize(labelFrame);
   labelFrame.size.width = labelFrame.size.width - kLeadingPadding - kTrailingPadding;
   CGSize titleSize = [self.titleLabel sizeThatFits:labelFrame.size];
@@ -100,13 +101,8 @@ static const CGFloat kMiddlePadding = 8.f;
   return contentSize;
 }
 
-- (CGRect)frameWithSafeAreaInsets:(CGRect)frame {
-  UIEdgeInsets safeAreaInsets = UIEdgeInsetsZero;
-  if (@available(iOS 11.0, *)) {
-    safeAreaInsets = self.safeAreaInsets;
-    safeAreaInsets.top = 0.f;
-  }
-  return UIEdgeInsetsInsetRect(frame, safeAreaInsets);
+- (CGRect)frameWithLayoutMargins:(CGRect)frame {
+  return UIEdgeInsetsInsetRect(frame, self.layoutMargins);
 }
 
 - (void)setTitle:(NSString *)title {
@@ -152,8 +148,8 @@ static const CGFloat kMiddlePadding = 8.f;
 }
 
 - (void)updateTitleFont {
-  UIFont *titleFont = self.titleFont ?:
-      [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
+  UIFont *titleFont =
+      self.titleFont ?: [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
   if (self.mdc_adjustsFontForContentSizeCategory) {
     self.titleLabel.font =
         [titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
@@ -165,8 +161,8 @@ static const CGFloat kMiddlePadding = 8.f;
 }
 
 - (void)updateMessageFont {
-  UIFont *messageFont = self.messageFont ?:
-      [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody1];
+  UIFont *messageFont =
+      self.messageFont ?: [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody1];
   if (self.mdc_adjustsFontForContentSizeCategory) {
     self.messageLabel.font =
         [messageFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleBody1
@@ -181,14 +177,14 @@ static const CGFloat kMiddlePadding = 8.f;
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
   _mdc_adjustsFontForContentSizeCategory = adjusts;
   if (_mdc_adjustsFontForContentSizeCategory) {
-      [[NSNotificationCenter defaultCenter] addObserver:self
-                                               selector:@selector(updateFonts)
-                                                   name:UIContentSizeCategoryDidChangeNotification
-                                                 object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateFonts)
+                                                 name:UIContentSizeCategoryDidChangeNotification
+                                               object:nil];
   } else {
-      [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                      name:UIContentSizeCategoryDidChangeNotification
-                                                    object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIContentSizeCategoryDidChangeNotification
+                                                  object:nil];
   }
   [self updateFonts];
 }

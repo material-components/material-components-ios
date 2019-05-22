@@ -83,8 +83,12 @@
 /** The color applied to the button ink effect of Alert Controller.*/
 @property(nonatomic, strong, nullable) UIColor *buttonInkColor;
 
-/** The color applied to the Alert's background when presented by MDCDialogPresentationController.*/
+/** The semi-transparent color which is applied to the overlay covering the content
+     behind the Alert (the scrim) when presented by MDCDialogPresentationController.*/
 @property(nonatomic, strong, nullable) UIColor *scrimColor;
+
+/** The Alert's background color.*/
+@property(nonatomic, strong, nullable) UIColor *backgroundColor;
 
 /** The corner radius applied to the Alert Controller view. Default to 0 (no round corners) */
 @property(nonatomic, assign) CGFloat cornerRadius;
@@ -117,6 +121,18 @@
  */
 @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
     BOOL mdc_adjustsFontForContentSizeCategory;
+
+/**
+ Affects the fallback behavior for when a scaled font is not provided.
+
+ If @c YES, the font size will adjust even if a scaled font has not been provided for
+ a given @c UIFont property on this component.
+
+ If @c NO, the font size will only be adjusted if a scaled font has been provided.
+
+ Default value is @c YES.
+ */
+@property(nonatomic, assign) BOOL adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
 
 /** MDCAlertController handles its own transitioning delegate. */
 - (void)setTransitioningDelegate:

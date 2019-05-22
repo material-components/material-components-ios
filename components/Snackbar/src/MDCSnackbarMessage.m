@@ -16,7 +16,7 @@
 #import "MDCSnackbarMessageView.h"
 #import "private/MDCSnackbarMessageInternal.h"
 
-static const NSTimeInterval kDefaultDuration = 4.0f;
+static const NSTimeInterval kDefaultDuration = 4;
 
 const NSTimeInterval MDCSnackbarMessageDurationMax = 10;
 NSString *const MDCSnackbarMessageBoldAttributeName = @"MDCSnackbarMessageBoldAttributeName";
@@ -30,7 +30,7 @@ NSString *const MDCSnackbarMessageBoldAttributeName = @"MDCSnackbarMessageBoldAt
 @end
 
 @implementation MDCSnackbarMessage
-static BOOL _usesLegacySnackbar = YES;
+static BOOL _usesLegacySnackbar = NO;
 @synthesize accessibilityIdentifier;
 @dynamic text;
 

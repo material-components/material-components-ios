@@ -17,15 +17,14 @@
 #import "MaterialCards+ColorThemer.h"
 #import "MaterialCards+ShapeThemer.h"
 
-static const MDCShadowElevation kNormalElevation = 1.f;
-static const MDCShadowElevation kHighlightedElevation = 4.f;
-static const MDCShadowElevation kSelectedElevation = 4.f;
-static const CGFloat kBorderWidth = 1.f;
+static const MDCShadowElevation kNormalElevation = 1;
+static const MDCShadowElevation kHighlightedElevation = 4;
+static const MDCShadowElevation kSelectedElevation = 4;
+static const CGFloat kBorderWidth = 1;
 
 @implementation MDCCardThemer
 
-+ (void)applyScheme:(nonnull id<MDCCardScheming>)scheme
-             toCard:(nonnull MDCCard *)card {
++ (void)applyScheme:(nonnull id<MDCCardScheming>)scheme toCard:(nonnull MDCCard *)card {
   [card setShadowElevation:kNormalElevation forState:UIControlStateNormal];
   [card setShadowElevation:kHighlightedElevation forState:UIControlStateHighlighted];
   card.interactable = YES;
@@ -45,13 +44,13 @@ static const CGFloat kBorderWidth = 1.f;
 
 + (void)applyOutlinedVariantWithScheme:(nonnull id<MDCCardScheming>)scheme
                                 toCard:(nonnull MDCCard *)card {
-  NSUInteger maximumStateValue =
-      UIControlStateNormal | UIControlStateSelected | UIControlStateHighlighted |
-      UIControlStateDisabled;
+  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
+                                 UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     [card setBorderWidth:kBorderWidth forState:state];
+    [card setShadowElevation:0 forState:state];
   }
-  [card setShadowElevation:kHighlightedElevation forState:UIControlStateHighlighted];
+
   [MDCCardsColorThemer applyOutlinedVariantWithColorScheme:scheme.colorScheme toCard:card];
   [MDCCardsShapeThemer applyShapeScheme:scheme.shapeScheme toCard:card];
 }
@@ -61,14 +60,11 @@ static const CGFloat kBorderWidth = 1.f;
   for (MDCCardCellState state = MDCCardCellStateNormal; state <= MDCCardCellStateSelected;
        state++) {
     [cardCell setBorderWidth:kBorderWidth forState:state];
+    [cardCell setShadowElevation:0 forState:state];
   }
-  [cardCell setShadowElevation:kHighlightedElevation forState:MDCCardCellStateHighlighted];
-  [cardCell setShadowElevation:kSelectedElevation forState:MDCCardCellStateSelected];
-
 
   [MDCCardsColorThemer applyOutlinedVariantWithColorScheme:scheme.colorScheme toCardCell:cardCell];
   [MDCCardsShapeThemer applyShapeScheme:scheme.shapeScheme toCardCell:cardCell];
 }
 
 @end
-

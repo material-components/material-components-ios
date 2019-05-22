@@ -25,11 +25,19 @@
 
 @implementation FlexibleHeaderConfiguratorExample
 
+#pragma mark - MDCFlexibleHeaderViewLayoutDelegate
+
+- (void)flexibleHeaderViewController:(MDCFlexibleHeaderViewController *)flexibleHeaderViewController
+    flexibleHeaderViewFrameDidChange:(MDCFlexibleHeaderView *)flexibleHeaderView {
+  NSLog(@"Scroll phase: %@ percentage: %@ value: %@", @(flexibleHeaderView.scrollPhase),
+        @(flexibleHeaderView.scrollPhasePercentage), @(flexibleHeaderView.scrollPhaseValue));
+}
+
 // Invoked when the user has changed a control's value.
 - (void)field:(FlexibleHeaderConfiguratorField)field didChangeValue:(NSNumber *)value {
   MDCFlexibleHeaderView *headerView = self.fhvc.headerView;
   switch (field) {
-    // Basic behavior
+      // Basic behavior
 
     case FlexibleHeaderConfiguratorFieldCanOverExtend:
       headerView.canOverExtend = [value boolValue];
@@ -52,7 +60,7 @@
       break;
     }
 
-    // Shift behavior
+      // Shift behavior
 
     case FlexibleHeaderConfiguratorFieldShiftBehaviorEnabled: {
       BOOL isOn = [value boolValue];

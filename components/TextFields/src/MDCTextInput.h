@@ -124,7 +124,7 @@ typedef NS_ENUM(NSUInteger, MDCTextInputTextInsetsMode) {
  UIContentSizeCategory changes.
 
  This property is modeled after the adjustsFontForContentSizeCategory property in the
- UIConnectSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
+ UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
 
  Default value is NO.
  */
@@ -201,14 +201,20 @@ typedef NS_ENUM(NSUInteger, MDCTextInputTextInsetsMode) {
 /** The underline view */
 @property(nonatomic, nullable, strong, readonly) MDCTextInputUnderlineView *underline;
 
+/** A boolean value that indicates whether the text input contains content **/
+@property(nonatomic, assign, readonly) BOOL hasTextContent;
+
+/** Clear the text content in the text input **/
+- (void)clearText;
+
 @end
 
- /** 
- Common API for text inputs that support having a leading view.
- 
- MDCTextField implements this protocol but MDCMultilineTextField does not because the designers
- determined multiline text fields should only have trailing views.
- */
+/**
+Common API for text inputs that support having a leading view.
+
+MDCTextField implements this protocol but MDCMultilineTextField does not because the designers
+determined multiline text fields should only have trailing views.
+*/
 @protocol MDCLeadingViewTextInput <MDCTextInput>
 
 /**

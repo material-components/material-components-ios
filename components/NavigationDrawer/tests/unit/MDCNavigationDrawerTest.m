@@ -43,4 +43,23 @@
   [super tearDown];
 }
 
+- (void)testScrimColor {
+  // Given
+  UIColor *customColor = UIColor.blueColor;
+
+  // When
+  self.navigationDrawer.scrimColor = customColor;
+
+  // Then
+  if ([self.navigationDrawer.presentationController
+          isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *presentationController =
+        (MDCBottomDrawerPresentationController *)self.navigationDrawer.presentationController;
+    XCTAssertEqualObjects(presentationController.scrimColor, customColor);
+  } else {
+    XCTFail(@"Navigation Drawer isn't using MDCBottomDrawerPresentationController as it's "
+            @"presentationController");
+  }
+}
+
 @end

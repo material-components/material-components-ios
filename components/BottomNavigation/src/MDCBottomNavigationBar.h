@@ -14,6 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialShadowElevations.h"
+
 @protocol MDCBottomNavigationBarDelegate;
 
 /** States used to configure bottom navigation on when to show item titles. */
@@ -64,8 +66,8 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
  Configures when item titles should be displayed.
  Default is MDCBottomNavigationBarTitleVisibilitySelected.
  */
-@property(nonatomic, assign) MDCBottomNavigationBarTitleVisibility titleVisibility
-    UI_APPEARANCE_SELECTOR;
+@property(nonatomic, assign)
+    MDCBottomNavigationBarTitleVisibility titleVisibility UI_APPEARANCE_SELECTOR;
 
 /**
  Configures item space distribution and title orientation in landscape mode.
@@ -96,8 +98,8 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
  Color of selected item. Applies color to items' icons and text. If set also sets
  selectedItemTitleColor. Default color is black.
  */
-@property (nonatomic, strong, readwrite, nonnull) UIColor *selectedItemTintColor
-    UI_APPEARANCE_SELECTOR;
+@property(nonatomic, strong, readwrite, nonnull)
+    UIColor *selectedItemTintColor UI_APPEARANCE_SELECTOR;
 
 /**
  Color of the selected item's title text. Default color is black.
@@ -108,8 +110,8 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
  Color of unselected items. Applies color to items' icons. Text is not displayed in unselected mode.
  Default color is dark gray.
  */
-@property (nonatomic, strong, readwrite, nonnull) UIColor *unselectedItemTintColor
-    UI_APPEARANCE_SELECTOR;
+@property(nonatomic, strong, readwrite, nonnull)
+    UIColor *unselectedItemTintColor UI_APPEARANCE_SELECTOR;
 
 /**
  Color of the background of bottom navigation bar and the bar items.
@@ -119,14 +121,23 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
 /**
  To color the background of the view use -barTintColor instead.
  */
-@property(nullable, nonatomic,copy) UIColor *backgroundColor UI_APPEARANCE_SELECTOR;
+@property(nullable, nonatomic, copy) UIColor *backgroundColor UI_APPEARANCE_SELECTOR;
 
 /**
- The inset applied to each items bounds to determine the rect in which the items' contents will be
- centered. The contents are centered in this rect, but not compressed, so they may still extend
- beyond these bounds. Defaults to {0, 0, 0, 0}. The inset is flipped for RTL.
+ The blur effect style to use behind the Bottom Navigation bar.
+
+ Has no effect unless @backgroundBlurEnabled is @c YES and @c barTintColor has an @c alpha value
+ less than 1.
  */
-@property(nonatomic, assign) UIEdgeInsets itemsContentInsets;
+@property(nonatomic, assign) UIBlurEffectStyle backgroundBlurEffectStyle;
+
+/**
+ If @c YES, the background of the bar is masked by a UIBlurEffectView. Configure the blur effect
+ style using the @c backgroundBlurEffectStyle property.
+
+ Defaults to @c NO.
+ */
+@property(nonatomic, assign, getter=isBackgroundBlurEnabled) BOOL backgroundBlurEnabled;
 
 /**
  The margin between the item's icon and title when alignment is either Justified or Centered.
@@ -139,6 +150,52 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
  12.
  */
 @property(nonatomic, assign) CGFloat itemsContentHorizontalMargin;
+
+/**
+ Flag to allow clients to gradually correct the size/position of the Bottom Navigation bar relative
+ to the safe area on iOS 11+.
+
+ NOTE: In an upcoming release, this flag will be removed and the default behavior will be to exclude
+ the safe area in size calculations.
+
+ Defaults to @c YES.
+ */
+@property(nonatomic, assign) BOOL sizeThatFitsIncludesSafeArea;
+
+/**
+ NSLayoutAnchor for the bottom of the bar items.
+
+ @note It is recommended that this anchor be constrained to the bottom of the safe area layout guide
+ of the superview. This will allow the Bottom Navigation bar to extend to the bottom of the screen
+ and provide sufficient height for its content above the safe area.
+*/
+@property(nonatomic, readonly, nonnull)
+    NSLayoutYAxisAnchor *barItemsBottomAnchor NS_AVAILABLE_IOS(9_0);
+
+/**
+ If @c YES, it will truncate titles that don't fit within the bounds available to the item.
+
+ Default is @c YES.
+ */
+@property(nonatomic, assign) BOOL truncatesLongTitles;
+
+/**
+ The elevation of the bottom navigation bar. Defaults to @c MDCShadowElevationBottomNavigationBar .
+ */
+@property(nonatomic, assign) MDCShadowElevation elevation;
+
+/**
+ The number of lines used for item titles. It is possible that long titles may cause the text to
+ extend beyond the safe area of the Bottom Navigation bar. It is recommended that short titles are
+ used before this value is changed.
+
+ Defaults to 1.
+
+ @note This property has no effect if the bar items are laid-out with the image and title
+       side-by-side. This may be the case if the bar's @c alignment is
+       @c MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles.
+ */
+@property(nonatomic, assign) NSInteger titlesNumberOfLines;
 
 /**
  Returns the navigation bar subview associated with the specific item.

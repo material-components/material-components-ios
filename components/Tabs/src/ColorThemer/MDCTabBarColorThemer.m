@@ -14,9 +14,9 @@
 
 #import "MDCTabBarColorThemer.h"
 
-static const CGFloat kUnselectedTitleOpacity = 0.6f;
-static const CGFloat kUnselectedImageOpacity = 0.54f;
-static const CGFloat kBottomDividerOpacity = 0.12f;
+static const CGFloat kUnselectedTitleOpacity = (CGFloat)0.6;
+static const CGFloat kUnselectedImageOpacity = (CGFloat)0.54;
+static const CGFloat kBottomDividerOpacity = (CGFloat)0.12;
 
 @implementation MDCTabBarColorThemer
 
@@ -52,8 +52,7 @@ static const CGFloat kBottomDividerOpacity = 0.12f;
       [colorScheme.onSurfaceColor colorWithAlphaComponent:kBottomDividerOpacity];
 }
 
-+ (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
-                toTabBar:(MDCTabBar *)tabBar {
++ (void)applyColorScheme:(id<MDCColorScheme>)colorScheme toTabBar:(MDCTabBar *)tabBar {
   if ([colorScheme respondsToSelector:@selector(primaryLightColor)]) {
     tabBar.unselectedItemTintColor = colorScheme.primaryLightColor;
     tabBar.inkColor = colorScheme.primaryLightColor;

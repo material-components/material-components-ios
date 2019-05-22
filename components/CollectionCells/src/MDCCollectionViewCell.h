@@ -52,7 +52,7 @@ FOUNDATION_EXPORT NSString *_Nonnull const kDeselectedCellAccessibilityHintKey;
 /**
  The accessory inset for this cell. Only left/right insets are valid as top/bottom insets will
  be ignored. These insets are used for both accessories and editing mask controls.
- Defaults to {0, 16.0f, 0, 16.0f}.
+ Defaults to {0, 16, 0, 16}.
  */
 @property(nonatomic) UIEdgeInsets accessoryInset;
 

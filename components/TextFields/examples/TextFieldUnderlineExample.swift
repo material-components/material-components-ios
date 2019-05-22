@@ -151,15 +151,8 @@ final class TextFieldUnderlineSwiftExample: UIViewController {
     scrollView.addSubview(message)
     let messageController = MDCTextInputControllerUnderline(textInput: message)
     message.textView?.delegate = self
-    #if swift(>=3.2)
-      message.text = """
-      This is where you could put a multi-line message like an email.
-
-      It can even handle new lines.
-      """
-    #else
-      message.text = "This is where you could put a multi-line message like an email. It can even handle new lines./n"
-    #endif
+    message.text = "This is where you could put a multi-line message like an email." + "\n\n" +
+      "It can even handle new lines."
     message.multilineDelegate = self
     messageController.placeholderText = "Message"
     allTextFieldControllers.append(messageController)
@@ -202,39 +195,22 @@ final class TextFieldUnderlineSwiftExample: UIViewController {
                                                   metrics: nil,
                                                   views: views)
 
-    #if swift(>=3.2)
-      if #available(iOS 11.0, *) {
-        constraints += [NSLayoutConstraint(item: name,
-                                           attribute: .top,
-                                           relatedBy: .equal,
-                                           toItem: scrollView.contentLayoutGuide,
-                                           attribute: .top,
-                                           multiplier: 1,
-                                           constant: 20),
-                        NSLayoutConstraint(item: message,
-                                           attribute: .bottom,
-                                           relatedBy: .equal,
-                                           toItem: scrollView.contentLayoutGuide,
-                                           attribute: .bottomMargin,
-                                           multiplier: 1,
-                                           constant: -20)]
-      } else {
-        constraints += [NSLayoutConstraint(item: name,
-                                           attribute: .top,
-                                           relatedBy: .equal,
-                                           toItem: scrollView,
-                                           attribute: .top,
-                                           multiplier: 1,
-                                           constant: 20),
-                        NSLayoutConstraint(item: message,
-                                           attribute: .bottom,
-                                           relatedBy: .equal,
-                                           toItem: scrollView,
-                                           attribute: .bottomMargin,
-                                           multiplier: 1,
-                                           constant: -20)]
-      }
-    #else
+    if #available(iOS 11.0, *) {
+      constraints += [NSLayoutConstraint(item: name,
+                                         attribute: .top,
+                                         relatedBy: .equal,
+                                         toItem: scrollView.contentLayoutGuide,
+                                         attribute: .top,
+                                         multiplier: 1,
+                                         constant: 20),
+                      NSLayoutConstraint(item: message,
+                                         attribute: .bottom,
+                                         relatedBy: .equal,
+                                         toItem: scrollView.contentLayoutGuide,
+                                         attribute: .bottomMargin,
+                                         multiplier: 1,
+                                         constant: -20)]
+    } else {
       constraints += [NSLayoutConstraint(item: name,
                                          attribute: .top,
                                          relatedBy: .equal,
@@ -249,7 +225,7 @@ final class TextFieldUnderlineSwiftExample: UIViewController {
                                          attribute: .bottomMargin,
                                          multiplier: 1,
                                          constant: -20)]
-    #endif
+    }
 
     let stateZipViews = [ "state": state, "zip": zip ]
     constraints += NSLayoutConstraint.constraints(withVisualFormat: "H:|[state(80)]-[zip]|",
@@ -335,7 +311,7 @@ extension TextFieldUnderlineSwiftExample: UITextFieldDelegate {
 
     if textField == state {
       if let range = fullString.rangeOfCharacter(from: CharacterSet.letters.inverted),
-        fullString[range].characterCount > 0 {
+        String(fullString[range]).characterCount > 0 {
         stateController.setErrorText("Error: State can only contain letters",
                                    errorAccessibilityValue: nil)
       } else {
@@ -343,7 +319,7 @@ extension TextFieldUnderlineSwiftExample: UITextFieldDelegate {
       }
     } else if textField == zip {
       if let range = fullString.rangeOfCharacter(from: CharacterSet.letters),
-        fullString[range].characterCount > 0 {
+        String(fullString[range]).characterCount > 0 {
         zipController.setErrorText("Error: Zip can only contain numbers",
                                    errorAccessibilityValue: nil)
       } else if fullString.characterCount > 5 {
@@ -354,7 +330,7 @@ extension TextFieldUnderlineSwiftExample: UITextFieldDelegate {
       }
     } else if textField == city {
       if let range = fullString.rangeOfCharacter(from: CharacterSet.decimalDigits),
-        fullString[range].characterCount > 0 {
+        String(fullString[range]).characterCount > 0 {
         cityController.setErrorText("Error: City can only contain letters",
                                     errorAccessibilityValue: nil)
       } else {
@@ -397,22 +373,22 @@ extension TextFieldUnderlineSwiftExample {
     notificationCenter.addObserver(
       self,
       selector: #selector(keyboardWillShow(notif:)),
-      name: .UIKeyboardWillShow,
+      name: UIResponder.keyboardWillShowNotification,
       object: nil)
     notificationCenter.addObserver(
       self,
       selector: #selector(keyboardWillHide(notif:)),
-      name: .UIKeyboardWillHide,
+      name: UIResponder.keyboardWillHideNotification,
       object: nil)
     notificationCenter.addObserver(
       self,
       selector: #selector(keyboardWillShow(notif:)),
-      name: .UIKeyboardWillChangeFrame,
+      name: UIResponder.keyboardWillChangeFrameNotification,
       object: nil)
   }
 
   @objc func keyboardWillShow(notif: Notification) {
-    guard let frame = notif.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else {
+    guard let frame = notif.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
       return
     }
     scrollView.contentInset = UIEdgeInsets(top: 0.0,
@@ -438,7 +414,7 @@ extension TextFieldUnderlineSwiftExample {
 
 extension TextFieldUnderlineSwiftExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Text Field", "Underline Style"],
       "description": "Text fields let users enter and edit text.",
@@ -450,10 +426,6 @@ extension TextFieldUnderlineSwiftExample {
 
 internal extension String {
   var characterCount: Int {
-    #if swift(>=3.2)
-      return self.count
-    #else
-      return self.characters.count
-    #endif
+    return self.count
   }
 }

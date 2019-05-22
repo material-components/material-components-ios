@@ -14,8 +14,9 @@
 
 #import "FeatureHighlightExampleSupplemental.h"
 
-#import "MaterialButtons.h"
 #import "MaterialButtons+ButtonThemer.h"
+#import "MaterialButtons+Theming.h"
+#import "MaterialButtons.h"
 #import "MaterialMath.h"
 #import "MaterialPalettes.h"
 #import "MaterialTypography.h"
@@ -95,11 +96,11 @@ static NSString *const reuseIdentifier = @"Cell";
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Feature Highlight", @"Feature Highlight" ],
-    @"description": @"The Feature Highlight component is used to introduce users to new features "
-    @"and functionality at contextually relevant moments.",
-    @"primaryDemo": @YES,
-    @"presentable": @YES,
+    @"breadcrumbs" : @[ @"Feature Highlight", @"Feature Highlight" ],
+    @"description" : @"The Feature Highlight component is used to introduce users to new features "
+                     @"and functionality at contextually relevant moments.",
+    @"primaryDemo" : @YES,
+    @"presentable" : @YES,
   };
 }
 
@@ -153,14 +154,13 @@ static NSString *const reuseIdentifier = @"Cell";
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Feature Highlight", @"Colors" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Feature Highlight", @"Colors" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 
 @end
-
 
 @implementation FeatureHighlightCustomFontsExample (CatalogByConvention)
 
@@ -175,18 +175,18 @@ static NSString *const reuseIdentifier = @"Cell";
 
   CGSize labelSize = [self.infoLabel sizeThatFits:self.view.frame.size];
   self.infoLabel.frame =
-  MDCRectAlignToScale(CGRectMake(self.view.frame.size.width / 2 - labelSize.width / 2, 20,
-                                 labelSize.width, labelSize.height),
-                      [UIScreen mainScreen].scale);
+      MDCRectAlignToScale(CGRectMake(self.view.frame.size.width / 2 - labelSize.width / 2, 20,
+                                     labelSize.width, labelSize.height),
+                          [UIScreen mainScreen].scale);
 }
 
 #pragma mark - CatalogByConvention
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Feature Highlight", @"Custom Fonts" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Feature Highlight", @"Custom Fonts" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 
@@ -209,8 +209,7 @@ static NSString *const reuseIdentifier = @"Cell";
   self.button = fab;
   [self.view addSubview:self.button];
 
-  [MDCFloatingActionButtonThemer applyScheme:buttonScheme toButton:fab];
-
+  [fab applySecondaryThemeWithScheme:self.containerScheme];
 
   MDCButton *actionButton = [[MDCButton alloc] init];
   self.actionButton = actionButton;
@@ -244,9 +243,9 @@ static NSString *const reuseIdentifier = @"Cell";
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Feature Highlight", @"Shown Views" ],
-    @"primaryDemo": @NO,
-    @"presentable": @YES,
+    @"breadcrumbs" : @[ @"Feature Highlight", @"Shown Views" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @YES,
   };
 }
 

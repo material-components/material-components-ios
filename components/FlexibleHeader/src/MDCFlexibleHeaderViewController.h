@@ -16,6 +16,7 @@
 
 @class MDCFlexibleHeaderView;
 @protocol MDCFlexibleHeaderViewLayoutDelegate;
+@protocol MDCFlexibleHeaderSafeAreaDelegate;
 
 /**
  The MDCFlexibleHeaderViewController controller is a simple UIViewController-oriented interface
@@ -41,6 +42,9 @@
 
 /** The layout delegate will be notified of any changes to the flexible header view's frame. */
 @property(nonatomic, weak, nullable) id<MDCFlexibleHeaderViewLayoutDelegate> layoutDelegate;
+
+/** The safe area delegate can be queried for the correct way to calculate safe areas. */
+@property(nonatomic, weak, nullable) id<MDCFlexibleHeaderSafeAreaDelegate> safeAreaDelegate;
 
 #pragma mark - Enabling top layout guide adjustment behavior
 
@@ -142,6 +146,13 @@
 
 /**
  The status bar style that should be used for this view controller.
+
+ If the header view controller has been added as a child view controller then you will need to
+ assign the header view controller to the parent's childViewControllerForStatusBarStyle property
+ in order for preferredStatusBarStyle to have any effect.
+
+ See inferPreferredStatusBarStyle for more details about how this property's setter and getter
+ should be interpreted.
  */
 @property(nonatomic) UIStatusBarStyle preferredStatusBarStyle;
 
@@ -161,6 +172,15 @@
  */
 @property(nonatomic) BOOL inferPreferredStatusBarStyle;
 
+@end
+
+/**
+ This delegate makes it possible to customize which ancestor view controller is used when
+ inferTopSafeAreaInsetFromViewController is enabled on MDCFlexibleHeaderViewController.
+ */
+@protocol MDCFlexibleHeaderSafeAreaDelegate
+- (UIViewController *_Nullable)flexibleHeaderViewControllerTopSafeAreaInsetViewController:
+    (nonnull MDCFlexibleHeaderViewController *)flexibleHeaderViewController;
 @end
 
 /**

@@ -126,7 +126,6 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
     _manager = manager;
     _pendingMessages = [[NSMutableArray alloc] init];
     _suspensionTokens = [NSMutableDictionary dictionary];
-    _overlayView = [[MDCSnackbarOverlayView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
   }
   return self;
 }
@@ -228,10 +227,11 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   snackbarView = [[viewClass alloc] initWithMessage:message
                                      dismissHandler:dismissHandler
                                     snackbarManager:self.manager];
+  snackbarView.accessibilityViewIsModal =
+      self.manager.shouldEnableAccessibilityViewIsModal && ![self isSnackbarTransient:snackbarView];
   [self.delegate willPresentSnackbarWithMessageView:snackbarView];
   self.currentSnackbar = snackbarView;
-  self.overlayView.accessibilityViewIsModal =
-      self.manager.shouldEnableAccessibilityViewIsModal && ![self isSnackbarTransient:snackbarView];
+  self.overlayView.accessibilityViewIsModal = snackbarView.accessibilityViewIsModal;
   self.overlayView.hidden = NO;
   [self activateOverlay:self.overlayView];
 
@@ -241,14 +241,14 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
       showSnackbarView:snackbarView
               animated:YES
             completion:^{
-              if ([self isSnackbarTransient:snackbarView]) {
+              if (snackbarView.accessibilityViewIsModal ||
+                  ![self isSnackbarTransient:snackbarView]) {
+                UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification,
+                                                snackbarView);
+              } else {
                 snackbarView.accessibilityElementsHidden = YES;
                 UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification,
                                                 message.voiceNotificationText);
-
-              } else {
-                UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification,
-                                                snackbarView);
               }
 
               if ([self isSnackbarTransient:snackbarView]) {
@@ -268,6 +268,16 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
             }];
 }
 
+- (MDCSnackbarOverlayView *)overlayView {
+  if (!_overlayView) {
+    // Only initialize on the main thread.
+    NSAssert([NSThread isMainThread], @"Method is not called on main thread.");
+
+    _overlayView = [[MDCSnackbarOverlayView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+  }
+  return _overlayView;
+}
+
 - (void)hideSnackbarViewReally:(MDCSnackbarMessageView *)snackbarView
                     withAction:(MDCSnackbarMessageAction *)action
                   userPrompted:(BOOL)userPrompted {
@@ -280,22 +290,23 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   MDCSnackbarMessage *message = snackbarView.message;
 
   // Fire off the button action, if necessary. Always call the message's completion handler.
-  [message
-      executeActionHandler:action
-                completion:^{
-                  [message executeCompletionHandlerWithUserInteraction:userPrompted completion:nil];
-                }];
+  [message executeActionHandler:action
+                     completion:^{
+                       [message executeCompletionHandlerWithUserInteraction:userPrompted
+                                                                 completion:nil];
+                     }];
 
   [self.overlayView dismissSnackbarViewAnimated:YES
                                      completion:^{
                                        self.overlayView.hidden = YES;
                                        [self deactivateOverlay:self.overlayView];
 
-                                       // If VoiceOver had been enabled and the snackbarView was
-                                       // transient, the Snackbar was just announced (layout was not
-                                       // reported as changed) so there is no need to post a layout
-                                       // change here.
-                                       if (![self isSnackbarTransient:snackbarView]) {
+                                       // If the snackbarView was transient and
+                                       // accessibilityViewIsModal is NO, the Snackbar was just
+                                       // announced (layout was not reported as changed) so there is
+                                       // no need to post a layout change here.
+                                       if (self.overlayView.accessibilityViewIsModal ||
+                                           ![self isSnackbarTransient:snackbarView]) {
                                          UIAccessibilityPostNotification(
                                              UIAccessibilityLayoutChangedNotification, nil);
                                        }
@@ -432,18 +443,16 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   // through pending messages and fire off their completion blocks as we remove them from the
   // queue.
   NSMutableIndexSet *indexesToRemove = [NSMutableIndexSet indexSet];
-  [self.pendingMessages
-      enumerateObjectsUsingBlock:^(MDCSnackbarMessage *pendingMessage,
-                                   NSUInteger idx,
-                                   __unused BOOL *stop) {
-        if (!categoryToDismiss || [pendingMessage.category isEqualToString:categoryToDismiss]) {
-          // Mark the message for removal from the pending messages list.
-          [indexesToRemove addIndex:idx];
+  [self.pendingMessages enumerateObjectsUsingBlock:^(MDCSnackbarMessage *pendingMessage,
+                                                     NSUInteger idx, __unused BOOL *stop) {
+    if (!categoryToDismiss || [pendingMessage.category isEqualToString:categoryToDismiss]) {
+      // Mark the message for removal from the pending messages list.
+      [indexesToRemove addIndex:idx];
 
-          // Notify the outside world that this Snackbar has been completed.
-          [pendingMessage executeCompletionHandlerWithUserInteraction:NO completion:nil];
-        }
-      }];
+      // Notify the outside world that this Snackbar has been completed.
+      [pendingMessage executeCompletionHandlerWithUserInteraction:NO completion:nil];
+    }
+  }];
 
   // Make sure the queued up messages aren't shown.
   if ([indexesToRemove count]) {
@@ -522,7 +531,6 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   BOOL _mdc_adjustsFontForContentSizeCategory;
   BOOL _shouldApplyStyleChangesToVisibleSnackbars;
 }
-
 
 + (instancetype)defaultManager {
   static MDCSnackbarManager *defaultManager;
@@ -808,16 +816,16 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   [MDCSnackbarManager.defaultManager setBottomOffset:offset];
 }
 
-+ (nullable id <MDCSnackbarSuspensionToken>)suspendAllMessages {
++ (nullable id<MDCSnackbarSuspensionToken>)suspendAllMessages {
   return MDCSnackbarManager.defaultManager.suspendAllMessages;
 }
 
-+ (nullable id <MDCSnackbarSuspensionToken>)
-    suspendMessagesWithCategory:(nullable NSString *)category {
++ (nullable id<MDCSnackbarSuspensionToken>)suspendMessagesWithCategory:
+    (nullable NSString *)category {
   return [MDCSnackbarManager.defaultManager suspendMessagesWithCategory:category];
 }
 
-+ (void)resumeMessagesWithToken:(nullable id <MDCSnackbarSuspensionToken>)token {
++ (void)resumeMessagesWithToken:(nullable id<MDCSnackbarSuspensionToken>)token {
   [MDCSnackbarManager.defaultManager resumeMessagesWithToken:token];
 }
 
@@ -866,8 +874,8 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   return MDCSnackbarManager.defaultManager.shouldApplyStyleChangesToVisibleSnackbars;
 }
 
-+ (void)setShouldApplyStyleChangesToVisibleSnackbars:(BOOL)shouldApplyStyleChangesToVisibleSnackbars
-    {
++ (void)setShouldApplyStyleChangesToVisibleSnackbars:
+    (BOOL)shouldApplyStyleChangesToVisibleSnackbars {
   MDCSnackbarManager.defaultManager.shouldApplyStyleChangesToVisibleSnackbars =
       shouldApplyStyleChangesToVisibleSnackbars;
 }

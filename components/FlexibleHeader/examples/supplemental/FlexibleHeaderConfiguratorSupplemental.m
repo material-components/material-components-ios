@@ -27,9 +27,9 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Flexible Header", @"Configurator" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Flexible Header", @"Configurator" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 
@@ -78,12 +78,13 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
   self.minimumHeaderHeight = 0;
 
   self.fhvc.headerView.trackingScrollView = self.tableView;
+  self.fhvc.layoutDelegate = self;
 
   self.fhvc.view.frame = self.view.bounds;
   [self.view addSubview:self.fhvc.view];
   [self.fhvc didMoveToParentViewController:self];
 
-  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:0.1f alpha:1.0f];
+  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.1 alpha:1];
 
   self.titleLabel = [[UILabel alloc] init];
   self.titleLabel.text = self.title;
@@ -98,36 +99,36 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
   [self.fhvc.headerView addSubview:self.titleLabel];
 
   self.titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  [NSLayoutConstraint activateConstraints:
-   @[[NSLayoutConstraint constraintWithItem:self.titleLabel
-                                  attribute:NSLayoutAttributeTop
-                                  relatedBy:NSLayoutRelationEqual
-                                     toItem:self.fhvc.headerView.topSafeAreaGuide
-                                  attribute:NSLayoutAttributeBottom
-                                 multiplier:1.0
-                                   constant:0],
-     [NSLayoutConstraint constraintWithItem:self.titleLabel
-                                  attribute:NSLayoutAttributeBottom
-                                  relatedBy:NSLayoutRelationEqual
-                                     toItem:self.fhvc.headerView
-                                  attribute:NSLayoutAttributeBottom
-                                 multiplier:1.0
-                                   constant:0],
-     [NSLayoutConstraint constraintWithItem:self.titleLabel
-                                  attribute:NSLayoutAttributeLeft
-                                  relatedBy:NSLayoutRelationEqual
-                                     toItem:self.fhvc.headerView
-                                  attribute:NSLayoutAttributeLeft
-                                 multiplier:1.0
-                                   constant:0],
-     [NSLayoutConstraint constraintWithItem:self.titleLabel
-                                  attribute:NSLayoutAttributeRight
-                                  relatedBy:NSLayoutRelationEqual
-                                     toItem:self.fhvc.headerView
-                                  attribute:NSLayoutAttributeRight
-                                 multiplier:1.0
-                                   constant:0]
-     ]];
+  [NSLayoutConstraint activateConstraints:@[
+    [NSLayoutConstraint constraintWithItem:self.titleLabel
+                                 attribute:NSLayoutAttributeTop
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.fhvc.headerView.topSafeAreaGuide
+                                 attribute:NSLayoutAttributeBottom
+                                multiplier:1.0
+                                  constant:0],
+    [NSLayoutConstraint constraintWithItem:self.titleLabel
+                                 attribute:NSLayoutAttributeBottom
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.fhvc.headerView
+                                 attribute:NSLayoutAttributeBottom
+                                multiplier:1.0
+                                  constant:0],
+    [NSLayoutConstraint constraintWithItem:self.titleLabel
+                                 attribute:NSLayoutAttributeLeft
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.fhvc.headerView
+                                 attribute:NSLayoutAttributeLeft
+                                multiplier:1.0
+                                  constant:0],
+    [NSLayoutConstraint constraintWithItem:self.titleLabel
+                                 attribute:NSLayoutAttributeRight
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.fhvc.headerView
+                                 attribute:NSLayoutAttributeRight
+                                multiplier:1.0
+                                  constant:0]
+  ]];
 
   [self.fhvc.headerView hideViewWhenShifted:self.titleLabel];
 

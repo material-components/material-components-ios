@@ -21,35 +21,12 @@
 
 #pragma mark - Subclasses for testing
 
-static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertControllerSubclassValueKey";
-
 @interface MDCAlertController (Testing)
 @property(nonatomic, nullable, weak) MDCAlertControllerView *alertView;
 @end
 
-@interface MDCAlertControllerSubclass : MDCAlertController
-@property(nonatomic, assign) NSInteger value;
-@end
-
 @interface MDCDialogPresentationController (Testing)
 @property(nonatomic) MDCDialogShadowedView *trackingView;
-@end
-
-@implementation MDCAlertControllerSubclass
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  self = [super initWithCoder:aDecoder];
-  if (self) {
-    _value = [aDecoder decodeIntegerForKey:MDCAlertControllerSubclassValueKey];
-  }
-  return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-  [super encodeWithCoder:aCoder];
-  [aCoder encodeInteger:self.value forKey:MDCAlertControllerSubclassValueKey];
-}
-
 @end
 
 #pragma mark - Tests
@@ -77,6 +54,7 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
   XCTAssertNotNil(self.alert.actions);
   XCTAssertNotNil(self.alert.title);
   XCTAssertNotNil(self.alert.message);
+  XCTAssertTrue(self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
 }
 
 - (void)testAlertControllerWithTitleMessage {
@@ -84,26 +62,6 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
   XCTAssertNotNil(self.alert.actions);
   XCTAssertEqualObjects(self.alert.title, @"title");
   XCTAssertEqualObjects(self.alert.message, @"message");
-}
-
-- (void)testSubclassEncodingFails {
-  // Given
-  MDCAlertControllerSubclass *subclass = [[MDCAlertControllerSubclass alloc] init];
-  subclass.value = 7;
-  subclass.title = @"title";
-  subclass.message = @"message";
-  subclass.modalInPopover = YES;
-
-  // When
-  NSData *archive = [NSKeyedArchiver archivedDataWithRootObject:subclass];
-  MDCAlertControllerSubclass *unarchivedSubclass =
-      [NSKeyedUnarchiver unarchiveObjectWithData:archive];
-
-  // Then
-  XCTAssertEqual(unarchivedSubclass.value, subclass.value);
-  XCTAssertNil(unarchivedSubclass.title);
-  XCTAssertNil(unarchivedSubclass.message);
-  XCTAssertEqual(unarchivedSubclass.isModalInPopover, NO);
 }
 
 - (void)testAlertControllerTyphography {
@@ -117,10 +75,10 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
 
   // Then
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
-  XCTAssertEqual(view.titleLabel.font, testFont);
-  XCTAssertEqual(view.messageLabel.font, testFont);
+  XCTAssertEqualObjects(view.titleLabel.font, testFont);
+  XCTAssertEqualObjects(view.messageLabel.font, testFont);
   for (UIButton *button in view.actionManager.buttonsInActionOrder) {
-    XCTAssertEqual(button.titleLabel.font, testFont);
+    XCTAssertEqualObjects(button.titleLabel.font, testFont);
   }
 }
 
@@ -338,6 +296,34 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
   // Then
   MDCDialogShadowedView *shadowView = self.alert.mdc_dialogPresentationController.trackingView;
   XCTAssertEqual(shadowView.elevation, elevation);
+}
+
+- (void)testDialogBackgroundColorIsNotClearWhenNoThemingIsApllied {
+  // Then
+  XCTAssertNotNil(self.alert.view.backgroundColor);
+}
+
+- (void)testDialogCustomBackgroundColorAfterPresentation {
+  // Given
+  UIColor *testColor = UIColor.redColor;
+
+  // When
+  [self.alert setBackgroundColor:testColor];
+
+  // Then
+  XCTAssertEqualObjects(self.alert.view.backgroundColor, testColor);
+}
+
+/**
+ Test the setting @c adjustFontForContentSizeCategoryWhenScaledFontsIsUnavailable also sets the
+ property on the @c alertView.
+ */
+- (void)testAdjustFontForContentSizeCategoryWhenScaledFontIsUnavailableSetsTheAlertViewProperty {
+  // When
+  self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
+
+  // Then
+  XCTAssertFalse(self.alert.alertView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
 }
 
 @end

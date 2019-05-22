@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import UIKit
-import MaterialComponents.MaterialCards_CardThemer
 import MaterialComponents.MaterialTypographyScheme
+import MaterialComponents.MaterialCards_Theming
 
 class CardEditReorderCollectionCell: MDCCardCollectionCell {
 
@@ -47,13 +47,14 @@ class CardEditReorderCollectionCell: MDCCardCollectionCell {
 
     self.contentView.addSubview(imageView)
     self.contentView.addSubview(titleLabel)
-    titleLabel.setContentCompressionResistancePriority(800, for: .vertical)
+    titleLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 800),
+                                                       for: .vertical)
 
     addConstraints()
   }
 
-  func apply(cardScheme: MDCCardScheme, typographyScheme: MDCTypographyScheme) {
-    MDCCardThemer.applyScheme(cardScheme, toCardCell: self)
+  func apply(containerScheme: MDCContainerScheming, typographyScheme: MDCTypographyScheming) {
+    self.applyTheme(withScheme: containerScheme)
     self.titleLabel.font = typographyScheme.caption
   }
 

@@ -17,6 +17,9 @@
 @interface BottomSheetAutolayoutExample : BottomSheetPresenterViewController
 @end
 
+@interface BottomSheetPresentationExample : BottomSheetPresenterViewController
+@end
+
 @interface BottomSheetAutolayoutSafeAreaExample : BottomSheetPresenterViewController
 @end
 

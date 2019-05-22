@@ -15,12 +15,16 @@
 import UIKit
 
 import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialContainerScheme
+import MaterialComponents.MaterialButtons_Theming
 
 class FloatingButtonExampleSwiftViewController: UIViewController {
 
   let miniFloatingButton = MDCFloatingButton(frame: .zero, shape: .mini)
   let defaultFloatingButton = MDCFloatingButton()
   let largeIconFloatingButton = MDCFloatingButton()
+
+  var containerScheme = MDCContainerScheme()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -36,18 +40,21 @@ class FloatingButtonExampleSwiftViewController: UIViewController {
     miniFloatingButton.setMinimumSize(CGSize(width: 96, height: 40), for: .mini, in: .expanded)
     miniFloatingButton.setImage(plusImage, for: .normal)
     miniFloatingButton.accessibilityLabel = "Create"
+    miniFloatingButton.applySecondaryTheme(withScheme: containerScheme)
 
     defaultFloatingButton.sizeToFit()
     defaultFloatingButton.translatesAutoresizingMaskIntoConstraints = false
     defaultFloatingButton.setImage(plusImage, for: .normal)
     defaultFloatingButton.accessibilityLabel = "Create"
+    defaultFloatingButton.applySecondaryTheme(withScheme: containerScheme)
 
     largeIconFloatingButton.sizeToFit()
     largeIconFloatingButton.translatesAutoresizingMaskIntoConstraints = false
     largeIconFloatingButton.setImage(plusImage36, for: .normal)
     largeIconFloatingButton.accessibilityLabel = "Create"
-    largeIconFloatingButton.setContentEdgeInsets(UIEdgeInsetsMake(-6, -6, -6, 0), for: .default,
+    largeIconFloatingButton.setContentEdgeInsets(UIEdgeInsets(top: -6, left: -6, bottom: -6, right: 0), for: .default,
                                                  in: .expanded)
+    largeIconFloatingButton.applySecondaryTheme(withScheme: containerScheme)
 
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
@@ -109,7 +116,7 @@ class FloatingButtonExampleSwiftViewController: UIViewController {
 
 extension FloatingButtonExampleSwiftViewController {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Buttons", "Floating Action Button (Swift)"],
       "primaryDemo": false,

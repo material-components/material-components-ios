@@ -24,8 +24,8 @@
 // The Bundle for string resources.
 static NSString *const kMaterialFeatureHighlightBundle = @"MaterialFeatureHighlight.bundle";
 
-static const CGFloat kMDCFeatureHighlightLineSpacing = 1.0f;
-static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
+static const CGFloat kMDCFeatureHighlightLineSpacing = 1;
+static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = (CGFloat)1.5;
 
 @interface MDCFeatureHighlightViewController () <UIViewControllerTransitioningDelegate>
 @property(nonatomic, nullable, weak) MDCFeatureHighlightView *featureHighlightView;
@@ -71,6 +71,7 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   self.featureHighlightView.mdc_adjustsFontForContentSizeCategory =
       _mdc_adjustsFontForContentSizeCategory;
+  self.featureHighlightView.mdc_legacyFontScaling = _mdc_legacyFontScaling;
 
   __weak MDCFeatureHighlightViewController *weakSelf = self;
   self.featureHighlightView.interactionBlock = ^(BOOL accepted) {
@@ -93,7 +94,7 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 
 /* Disable setter. Always use internal transition controller */
 - (void)setTransitioningDelegate:
-      (__unused id<UIViewControllerTransitioningDelegate>)transitioningDelegate {
+    (__unused id<UIViewControllerTransitioningDelegate>)transitioningDelegate {
   NSAssert(NO, @"MDCAlertController.transitioningDelegate cannot be changed.");
   return;
 }
@@ -166,14 +167,14 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 - (void)viewWillTransitionToSize:(CGSize)size
        withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
   [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-  [coordinator animateAlongsideTransition:
-   ^(__unused id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
-     [self resetHighlightPoint];
-   }
-                               completion:
-   ^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
-     [self resetHighlightPoint];
-   }];
+  [coordinator
+      animateAlongsideTransition:^(
+          __unused id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
+        [self resetHighlightPoint];
+      }
+      completion:^(id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
+        [self resetHighlightPoint];
+      }];
 }
 
 - (void)resetHighlightPoint {
@@ -267,6 +268,14 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
   }
 }
 
+- (void)mdc_setLegacyFontScaling:(BOOL)legacyScaling {
+  _mdc_legacyFontScaling = legacyScaling;
+
+  if (self.isViewLoaded) {
+    self.featureHighlightView.mdc_legacyFontScaling = legacyScaling;
+  }
+}
+
 - (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
   [self updateFontsForDynamicType];
 }
@@ -298,7 +307,7 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 }
 
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:
-        (UIViewController *)dismissed {
+    (UIViewController *)dismissed {
   if (dismissed == self) {
     return _animationController;
   }
@@ -361,6 +370,5 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
   NSString *resourcePath = [(nil == bundle ? [NSBundle mainBundle] : bundle) resourcePath];
   return [resourcePath stringByAppendingPathComponent:bundleName];
 }
-
 
 @end

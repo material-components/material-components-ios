@@ -25,4 +25,23 @@
   XCTAssertTrue(YES);
 }
 
+- (void)testBottomSheetDefaults {
+  // Given
+  MDCBottomSheetController *bottomSheet = [[MDCBottomSheetController alloc] init];
+
+  // Then
+  XCTAssertFalse(bottomSheet.shouldFlashScrollIndicatorsOnAppearance);
+}
+
+- (void)testSetShowScrollIndicatorsResultsInCorrectValue {
+  // Given
+  MDCBottomSheetController *bottomSheet = [[MDCBottomSheetController alloc] init];
+
+  // When
+  bottomSheet.shouldFlashScrollIndicatorsOnAppearance = YES;
+
+  // Then
+  XCTAssertTrue(bottomSheet.shouldFlashScrollIndicatorsOnAppearance);
+}
+
 @end

@@ -8,7 +8,7 @@ path: /catalog/navigation-drawer/
 api_doc_root: true
 -->
 
-<!-- This file was auto-generated using scripts/generate_readme NavigationDrawer -->
+<!-- This file was auto-generated using ./scripts/generate_readme NavigationDrawer -->
 
 # Navigation Drawer
 
@@ -30,6 +30,10 @@ Navigation drawers are recommended for:
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/navigation-drawer/api-docs/Classes/MDCBottomDrawerTransitionController.html">MDCBottomDrawerTransitionController</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/navigation-drawer/api-docs/Classes/MDCBottomDrawerViewController.html">MDCBottomDrawerViewController</a></li>
   <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/navigation-drawer/api-docs/Protocols/MDCBottomDrawerHeader.html">MDCBottomDrawerHeader</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/navigation-drawer/api-docs/Protocols/MDCBottomDrawerPresentationControllerDelegate.html">MDCBottomDrawerPresentationControllerDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/navigation-drawer/api-docs/Protocols/MDCBottomDrawerViewControllerDelegate.html">MDCBottomDrawerViewControllerDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/navigation-drawer/api-docs/Enums.html">Enumerations</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/navigation-drawer/api-docs/Enums/MDCBottomDrawerState.html">MDCBottomDrawerState</a></li>
 </ul>
 
 ## Table of contents
@@ -47,8 +51,6 @@ Navigation drawers are recommended for:
 - - -
 
 ## Overview
-
-Navigation Drawer is currently an [alpha component](https://github.com/material-components/material-components-ios/blob/develop/contributing/alpha_components.md). Therefore, clients that wish to use Navigation Drawer in their app will need to manually clone the repo and add the code to their project.
 
 Navigation Drawer currently provides the [Bottom Drawer](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619577-accessibilitylabel) presentation style.
 
@@ -70,7 +72,22 @@ Lastly, your headerViewController conforms to the `MDCBottomDrawerHeader` protoc
 
 ## Installation
 
-**This component is an [alpha component](https://github.com/material-components/material-components-ios/blob/develop/contributing/alpha_components.md) and therefore doesn't support installation via CocoaPods. To install this component you will need to manually clone the repo and add the code to your project. This is intended.**
+<!-- Extracted from docs/../../../docs/component-installation.md -->
+
+### Installation with CocoaPods
+
+Add the following to your `Podfile`:
+
+```bash
+pod 'MaterialComponents/NavigationDrawer'
+```
+<!--{: .code-renderer.code-renderer--install }-->
+
+Then, run the following command:
+
+```bash
+pod install
+```
 
 ### Importing
 
@@ -79,7 +96,7 @@ To import the component:
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift
-import MaterialComponentsAlpha.MaterialNavigationDrawer
+import MaterialComponents.MaterialNavigationDrawer
 ```
 
 #### Objective-C

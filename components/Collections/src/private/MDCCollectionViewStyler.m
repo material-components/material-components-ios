@@ -30,41 +30,41 @@ typedef NS_OPTIONS(NSUInteger, BackgroundCacheKey) {
   BackgroundCacheKeyMax = 1 << 5,
 };
 
-const CGFloat MDCCollectionViewCellStyleCardSectionInset = 8.0f;
+const CGFloat MDCCollectionViewCellStyleCardSectionInset = 8;
 
 /** Cell content view insets for card-style cells */
-static const CGFloat kFourThirds = 4.0f / 3.0f;
+static const CGFloat kFourThirds = (CGFloat)4 / 3;
 static const UIEdgeInsets kCollectionViewCellContentInsetsRetina3x = {kFourThirds, kFourThirds,
                                                                       kFourThirds, kFourThirds};
 static const UIEdgeInsets kCollectionViewCellContentInsetsRetina = {1.5, 1.5, 1.5, 1.5};
 static const UIEdgeInsets kCollectionViewCellContentInsets = {1, 2, 1, 2};
 
 /** Default cell separator style settings */
-static const CGFloat kCollectionViewCellSeparatorDefaultHeightInPixels = 1.0f;
+static const CGFloat kCollectionViewCellSeparatorDefaultHeightInPixels = 1;
 
 /** Grid layout defaults */
 static const NSInteger kCollectionViewGridDefaultColumnCount = 2;
-static const CGFloat kCollectionViewGridDefaultPadding = 4.0f;
+static const CGFloat kCollectionViewGridDefaultPadding = 4;
 
 /** The drawn cell background */
 static const CGSize kCellImageSize = {44, 44};
-static const CGFloat kCollectionViewCellDefaultBorderWidth = 1.0f;
-static const CGFloat kCollectionViewCellDefaultBorderRadius = 1.5f;
+static const CGFloat kCollectionViewCellDefaultBorderWidth = 1;
+static const CGFloat kCollectionViewCellDefaultBorderRadius = (CGFloat)1.5;
 static inline UIColor *kCollectionViewCellDefaultBorderColor() {
-  return [UIColor colorWithWhite:0 alpha:0.05f];
+  return [UIColor colorWithWhite:0 alpha:(CGFloat)0.05];
 }
 
 /** Cell shadowing */
-static const CGFloat kCollectionViewCellDefaultShadowWidth = 1.0f;
+static const CGFloat kCollectionViewCellDefaultShadowWidth = 1;
 static inline CGSize kCollectionViewCellDefaultShadowOffset() {
   return CGSizeMake(0, 1);
 }
 static inline UIColor *kCollectionViewCellDefaultShadowColor() {
-  return [UIColor colorWithWhite:0 alpha:0.1f];
+  return [UIColor colorWithWhite:0 alpha:(CGFloat)0.1];
 }
 
 /** Animate cell on appearance settings */
-static const CGFloat kCollectionViewAnimatedAppearancePadding = 20.0f;
+static const CGFloat kCollectionViewAnimatedAppearancePadding = 20;
 static const NSTimeInterval kCollectionViewAnimatedAppearanceDelay = 0.1;
 static const NSTimeInterval kCollectionViewAnimatedAppearanceDuration = 0.3;
 
@@ -258,20 +258,20 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
   BOOL isSectionFooter =
       [attr.representedElementKind isEqualToString:UICollectionElementKindSectionFooter];
   if (isCell) {
-    if ([self.delegate
-            respondsToSelector:@selector(collectionView:shouldHideItemSeparatorAtIndexPath:)]) {
+    if ([self.delegate respondsToSelector:@selector(collectionView:
+                                              shouldHideItemSeparatorAtIndexPath:)]) {
       shouldHideSeparator = [self.delegate collectionView:_collectionView
                        shouldHideItemSeparatorAtIndexPath:indexPath];
     }
   } else if (isSectionHeader) {
-    if ([self.delegate
-            respondsToSelector:@selector(collectionView:shouldHideHeaderSeparatorForSection:)]) {
+    if ([self.delegate respondsToSelector:@selector(collectionView:
+                                              shouldHideHeaderSeparatorForSection:)]) {
       shouldHideSeparator = [self.delegate collectionView:_collectionView
                       shouldHideHeaderSeparatorForSection:indexPath.section];
     }
   } else if (isSectionFooter) {
-    if ([self.delegate
-            respondsToSelector:@selector(collectionView:shouldHideFooterSeparatorForSection:)]) {
+    if ([self.delegate respondsToSelector:@selector(collectionView:
+                                              shouldHideFooterSeparatorForSection:)]) {
       shouldHideSeparator = [self.delegate collectionView:_collectionView
                       shouldHideFooterSeparatorForSection:indexPath.section];
     }
@@ -282,7 +282,7 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
 #pragma mark - Public
 
 - (UIEdgeInsets)backgroundImageViewOutsetsForCellWithAttribute:
-        (MDCCollectionViewLayoutAttributes *)attr {
+    (MDCCollectionViewLayoutAttributes *)attr {
   // Inset contentView to allow for shadowed borders in cards.
   UIEdgeInsets insets = UIEdgeInsetsZero;
 
@@ -334,8 +334,8 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
 
 - (MDCCollectionViewCellStyle)cellStyleAtSectionIndex:(NSInteger)section {
   MDCCollectionViewCellStyle cellStyle = self.cellStyle;
-  if (self.delegate &&
-      [self.delegate respondsToSelector:@selector(collectionView:cellStyleForSection:)]) {
+  if (self.delegate && [self.delegate respondsToSelector:@selector(collectionView:
+                                                              cellStyleForSection:)]) {
     cellStyle = [self.delegate collectionView:_collectionView cellStyleForSection:section];
   }
   return cellStyle;
@@ -359,8 +359,8 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
     }
 
     void (^completionBlock)(BOOL finished) = ^(__unused BOOL finished) {
-      if ([self.delegate
-              respondsToSelector:@selector(collectionView:didApplyInlayToItemAtIndexPaths:)]) {
+      if ([self.delegate respondsToSelector:@selector(collectionView:
+                                                didApplyInlayToItemAtIndexPaths:)]) {
         [self.delegate collectionView:self.collectionView
             didApplyInlayToItemAtIndexPaths:@[ indexPath ]];
       }
@@ -376,8 +376,8 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
   [_inlaidIndexPathSet removeObject:indexPath];
 
   void (^completionBlock)(BOOL finished) = ^(__unused BOOL finished) {
-    if ([self.delegate
-            respondsToSelector:@selector(collectionView:didRemoveInlayFromItemAtIndexPaths:)]) {
+    if ([self.delegate respondsToSelector:@selector(collectionView:
+                                              didRemoveInlayFromItemAtIndexPaths:)]) {
       [self.delegate collectionView:self.collectionView
           didRemoveInlayFromItemAtIndexPaths:@[ indexPath ]];
     }
@@ -398,8 +398,8 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
     }
 
     void (^completionBlock)(BOOL finished) = ^(__unused BOOL finished) {
-      if ([self.delegate
-              respondsToSelector:@selector(collectionView:didApplyInlayToItemAtIndexPaths:)]) {
+      if ([self.delegate respondsToSelector:@selector(collectionView:
+                                                didApplyInlayToItemAtIndexPaths:)]) {
         [self.delegate collectionView:self.collectionView
             didApplyInlayToItemAtIndexPaths:[self.inlaidIndexPathSet allObjects]];
       }
@@ -415,9 +415,10 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
   [_inlaidIndexPathSet removeAllObjects];
 
   void (^completionBlock)(BOOL finished) = ^(__unused BOOL finished) {
-    if ([self.delegate
-            respondsToSelector:@selector(collectionView:didRemoveInlayFromItemAtIndexPaths:)]) {
-      [self.delegate collectionView:self.collectionView didRemoveInlayFromItemAtIndexPaths:indexPaths];
+    if ([self.delegate respondsToSelector:@selector(collectionView:
+                                              didRemoveInlayFromItemAtIndexPaths:)]) {
+      [self.delegate collectionView:self.collectionView
+          didRemoveInlayFromItemAtIndexPaths:indexPaths];
     }
   };
 
@@ -501,7 +502,7 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
     // If not card or grouped style, revert @c isBottom to allow drawing separator at bottom.
     isBottom = NO;
   }
-  CGFloat borderRadius = (isCardStyle) ? _cardBorderRadius : 0.0f;
+  CGFloat borderRadius = (isCardStyle) ? _cardBorderRadius : 0;
 
   // Allowance for grid decoration view.
   if (isGridLayout) {
@@ -514,8 +515,8 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
 
   // If no-background section header, return nil image.
   BOOL hidesHeaderBackground = NO;
-  if ([_delegate
-          respondsToSelector:@selector(collectionView:shouldHideHeaderBackgroundForSection:)]) {
+  if ([_delegate respondsToSelector:@selector(collectionView:
+                                        shouldHideHeaderBackgroundForSection:)]) {
     hidesHeaderBackground = [_delegate collectionView:_collectionView
                  shouldHideHeaderBackgroundForSection:attr.indexPath.section];
   }
@@ -525,8 +526,8 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
 
   // If no-background section footer, return nil image.
   BOOL hidesFooterBackground = NO;
-  if ([_delegate
-          respondsToSelector:@selector(collectionView:shouldHideFooterBackgroundForSection:)]) {
+  if ([_delegate respondsToSelector:@selector(collectionView:
+                                        shouldHideFooterBackgroundForSection:)]) {
     hidesFooterBackground = [_delegate collectionView:_collectionView
                  shouldHideFooterBackgroundForSection:attr.indexPath.section];
   }
@@ -536,8 +537,8 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
 
   // If no-background section item, return nil image.
   BOOL hidesBackground = NO;
-  if ([_delegate
-          respondsToSelector:@selector(collectionView:shouldHideItemBackgroundAtIndexPath:)]) {
+  if ([_delegate respondsToSelector:@selector(collectionView:
+                                        shouldHideItemBackgroundAtIndexPath:)]) {
     hidesBackground = [_delegate collectionView:_collectionView
             shouldHideItemBackgroundAtIndexPath:attr.indexPath];
   }
@@ -561,8 +562,8 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
   // Get cell color.
   UIColor *backgroundColor = _cellBackgroundColor;
   if ([_delegate respondsToSelector:@selector(collectionView:cellBackgroundColorAtIndexPath:)]) {
-    UIColor *customBackgroundColor =
-        [_delegate collectionView:_collectionView cellBackgroundColorAtIndexPath:attr.indexPath];
+    UIColor *customBackgroundColor = [_delegate collectionView:_collectionView
+                                cellBackgroundColorAtIndexPath:attr.indexPath];
     if (customBackgroundColor) {
       backgroundColor = customBackgroundColor;
     }
@@ -668,7 +669,7 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
 // We want to draw the borders and shadows on single retina-pixel boundaries if possible, but
 // we need to avoid doing this on non-retina devices because it'll look blurry.
 - (CGFloat)minPixelOffset {
-  return 1.0f / [[UIScreen mainScreen] scale];
+  return 1 / [[UIScreen mainScreen] scale];
 }
 
 - (UIImage *)resizableImage:(UIImage *)image {
@@ -686,7 +687,7 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
                               isCard:(BOOL)isCard
                         borderRadius:(CGFloat)borderRadius {
   // Draw background paths for cell.
-  CGFloat minPixelOffset = (isCard) ? [self minPixelOffset] : 0.0f;
+  CGFloat minPixelOffset = (isCard) ? [self minPixelOffset] : 0;
   CGFloat minX = CGRectGetMinX(rect) + minPixelOffset;
   CGFloat midX = CGRectGetMidX(rect) + minPixelOffset;
   CGFloat maxX = CGRectGetMaxX(rect) - minPixelOffset;
@@ -726,7 +727,7 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
                           isCard:(BOOL)isCard
                     borderRadius:(CGFloat)borderRadius {
   // Draw border paths for cell.
-  CGFloat minPixelOffset = (isCard) ? [self minPixelOffset] : 0.0f;
+  CGFloat minPixelOffset = (isCard) ? [self minPixelOffset] : 0;
   CGFloat minX = CGRectGetMinX(rect) + minPixelOffset;
   CGFloat midX = CGRectGetMidX(rect) + minPixelOffset;
   CGFloat maxX = CGRectGetMaxX(rect) - minPixelOffset;

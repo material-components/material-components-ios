@@ -47,12 +47,13 @@ class ShadowElevationsTypicalUseExample: UIViewController {
     super.init(nibName: nil, bundle: nil)
 
     self.title = "Shadow Elevations (Swift)"
-    self.addChildViewController(appBarViewController)
+    self.addChild(appBarViewController)
 
     let color = UIColor(white: 0.2, alpha:1)
     appBarViewController.headerView.backgroundColor = color
     appBarViewController.navigationBar.tintColor = .white
-    appBarViewController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
+    appBarViewController.navigationBar.titleTextAttributes =
+      [NSAttributedString.Key.foregroundColor : UIColor.white]
 
     let paperDim = CGFloat(200)
     paper.frame =
@@ -70,7 +71,7 @@ class ShadowElevationsTypicalUseExample: UIViewController {
     super.viewDidLoad()
 
     view.addSubview(appBarViewController.view)
-    appBarViewController.didMove(toParentViewController: self)
+    appBarViewController.didMove(toParent: self)
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -85,7 +86,7 @@ class ShadowElevationsTypicalUseExample: UIViewController {
 // MARK: Catalog by convention
 extension ShadowElevationsTypicalUseExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Shadow", "Shadow Elevations (Swift)"],
       "primaryDemo": false,

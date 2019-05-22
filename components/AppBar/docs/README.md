@@ -69,8 +69,7 @@ See the [FlexibleHeader](../../FlexibleHeader) documentation for additional usag
 
 ## Extensions
 
-- [Color Theming](color-theming.md)
-- [Typography Theming](typography-theming.md)
+- [Theming](theming.md)
 
 ## Accessibility
 
@@ -79,3 +78,8 @@ See the [FlexibleHeader](../../FlexibleHeader) documentation for additional usag
 ## Migration guides
 
 - [Migration guide: MDCAppBar to MDCAppBarViewController](migration-guide-appbar-appbarviewcontroller.md)
+
+## Unsupported
+
+- [Color Theming](color-theming.md)
+- [Typography Theming](typography-theming.md)

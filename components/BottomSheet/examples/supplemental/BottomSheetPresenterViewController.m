@@ -14,16 +14,13 @@
 
 #import "BottomSheetPresenterViewController.h"
 
-#import "MaterialButtons.h"
-
-@implementation BottomSheetPresenterViewController {
-  MDCButton *_button;
-}
+@implementation BottomSheetPresenterViewController
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
-    _colorScheme = [[MDCSemanticColorScheme alloc] init];
+    _colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
     _typographyScheme = [[MDCTypographyScheme alloc] init];
   }
   return self;
@@ -37,11 +34,11 @@
   _button = [[MDCButton alloc] initWithFrame:CGRectZero];
   [_button setTitle:@"Show Bottom Sheet" forState:UIControlStateNormal];
   _button.autoresizingMask =
-  UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin |
-  UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+      UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin |
+      UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
   [_button addTarget:self
-              action:@selector(presentBottomSheet)
-    forControlEvents:UIControlEventTouchUpInside];
+                action:@selector(presentBottomSheet)
+      forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:_button];
 }
 

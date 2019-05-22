@@ -31,4 +31,3 @@
 + (void)mutate:(MDCFeatureHighlightViewController *)featureHighlightViewController;
 
 @end
-

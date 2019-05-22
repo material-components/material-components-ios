@@ -160,8 +160,8 @@ static MDCOverlayObserver *_sOverlayObserver;
     return;
   }
 
-  NSValue *frame = userInfo[MDCOverlayFrameKey] ?
-                      userInfo[MDCOverlayFrameKey] : [NSValue valueWithCGRect:CGRectNull];
+  NSValue *frame = userInfo[MDCOverlayFrameKey] ? userInfo[MDCOverlayFrameKey]
+                                                : [NSValue valueWithCGRect:CGRectNull];
   NSNumber *duration = userInfo[MDCOverlayTransitionDurationKey];
 
   // Update the overlay frame.
@@ -217,10 +217,10 @@ static MDCOverlayObserver *_sOverlayObserver;
     return NSNotFound;
   }
 
-  return [invocations indexOfObjectPassingTest:
-          ^BOOL(NSInvocation *invocation, __unused NSUInteger idx, __unused BOOL *stop) {
-            return invocation.selector == action;
-          }];
+  return [invocations indexOfObjectPassingTest:^BOOL(NSInvocation *invocation,
+                                                     __unused NSUInteger idx, __unused BOOL *stop) {
+    return invocation.selector == action;
+  }];
 }
 
 - (void)addTarget:(id)target action:(SEL)action {

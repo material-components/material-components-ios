@@ -14,18 +14,28 @@
 
 #import <Foundation/Foundation.h>
 
-#import "MaterialDialogs.h"
 #import "MDCAlertScheme.h"
+#import "MaterialDialogs.h"
 
-@interface MDCAlertControllerThemer : NSObject
+/**
+ @warning This API is deprecated. Learn more at
+ docs/theming.md#migration-guide-themers-to-theming-extensions
+ */
+__deprecated_msg("Please use MaterialDialogs+Theming.") @interface MDCAlertControllerThemer
+    : NSObject
 
 /**
  Applies a component scheme's properties to an MDCAlertController.
 
  @param alertScheme The component scheme to apply to the alert dialog instance.
  @param alertController An alert dialog instance to which the component scheme should be applied.
+
+ @warning This API is deprecated. Learn more at
+ docs/theming.md#migration-guide-themers-to-theming-extensions
  */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 + (void)applyScheme:(nonnull id<MDCAlertScheming>)alertScheme
     toAlertController:(nonnull MDCAlertController *)alertController;
-
+#pragma clang diagnostic pop
 @end

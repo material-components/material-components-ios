@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialTypography.h"
 #import "supplemental/CollectionsHeaderFooterExample.h"
+#import "MaterialTypography.h"
 
 static const NSInteger kSectionCount = 3;
 static const NSInteger kSectionItemCount = 2;
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 @implementation CollectionsHeaderFooterExample {
-  NSMutableArray <NSMutableArray *>*_content;
+  NSMutableArray<NSMutableArray *> *_content;
 }
 
 - (void)viewDidLoad {
@@ -131,9 +131,9 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Collections", @"Header / Footer Demo" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Collections", @"Header / Footer Demo" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

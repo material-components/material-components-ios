@@ -24,6 +24,7 @@
 
 - (void)flexibleHeaderSafeAreaTopSafeAreaInsetDidChange:(MDCFlexibleHeaderTopSafeArea *)safeAreas {
   self.topSafeAreaInsetDidChangeWasCalled = YES;
+  [self.forwardingDelegate flexibleHeaderSafeAreaTopSafeAreaInsetDidChange:safeAreas];
 }
 
 - (CGFloat)flexibleHeaderSafeAreaDeviceTopSafeAreaInset:(MDCFlexibleHeaderTopSafeArea *)safeAreas {

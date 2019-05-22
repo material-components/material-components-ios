@@ -15,6 +15,10 @@
 #import "MDCNavigationDrawerFakes.h"
 
 @implementation MDCNavigationDrawerFakeHeaderViewController
+- (void)bottomDrawerControllerDidChangeTopInset:(nonnull MDCBottomDrawerViewController *)controller
+                                       topInset:(CGFloat)topInset {
+  self.topInset = topInset;
+}
 @end
 
 static NSString *const reuseIdentifier = @"FakeCell";

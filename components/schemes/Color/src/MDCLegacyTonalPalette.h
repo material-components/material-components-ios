@@ -22,42 +22,42 @@
  color and another of the color variations is designated as a dark color in relation to the main
  color.
  */
-@interface MDCTonalPalette : NSObject <NSCopying, NSSecureCoding>
+@interface MDCTonalPalette : NSObject <NSCopying>
 
 /**
  The colors that comprise a tonal palette.
  */
-@property (nonatomic, copy, nonnull, readonly) NSArray<UIColor *> *colors;
+@property(nonatomic, copy, nonnull, readonly) NSArray<UIColor *> *colors;
 
 /**
  The index of the main color of a tonal palette.
  */
-@property (nonatomic, readonly) NSUInteger mainColorIndex;
+@property(nonatomic, readonly) NSUInteger mainColorIndex;
 
 /**
  The index of the light color of a tonal palette.
  */
-@property (nonatomic, readonly) NSUInteger lightColorIndex;
+@property(nonatomic, readonly) NSUInteger lightColorIndex;
 
 /**
  The index of the dark color of a tonal palette.
  */
-@property (nonatomic, readonly) NSUInteger darkColorIndex;
+@property(nonatomic, readonly) NSUInteger darkColorIndex;
 
 /**
  The main color of a tonal palette.
  */
-@property (nonatomic, strong, nonnull, readonly) UIColor *mainColor;
+@property(nonatomic, strong, nonnull, readonly) UIColor *mainColor;
 
 /**
  The light color of a tonal palette in relation to the main color.
  */
-@property (nonatomic, strong, nonnull, readonly) UIColor *lightColor;
+@property(nonatomic, strong, nonnull, readonly) UIColor *lightColor;
 
 /**
  The dark color of a tonal palette in relation to the main color.
  */
-@property (nonatomic, strong, nonnull, readonly) UIColor *darkColor;
+@property(nonatomic, strong, nonnull, readonly) UIColor *darkColor;
 
 - (nonnull instancetype)init NS_UNAVAILABLE;
 
@@ -70,9 +70,6 @@
 - (nonnull instancetype)initWithColors:(nonnull NSArray<UIColor *> *)colors
                         mainColorIndex:(NSUInteger)mainColorIndex
                        lightColorIndex:(NSUInteger)lightColorIndex
-                        darkColorIndex:(NSUInteger)darkColorIndex
-    NS_DESIGNATED_INITIALIZER;
-
-- (nonnull instancetype)initWithCoder:(nonnull NSCoder *)coder NS_DESIGNATED_INITIALIZER;
+                        darkColorIndex:(NSUInteger)darkColorIndex NS_DESIGNATED_INITIALIZER;
 
 @end

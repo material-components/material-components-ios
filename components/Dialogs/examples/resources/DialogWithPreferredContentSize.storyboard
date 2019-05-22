@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13770" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13770"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--DialogWithPreferredContentSize-->
         <scene sceneID="5p6-Tx-aSb">
             <objects>
-                <viewController storyboardIdentifier="DialogID" title="DialogWithPreferredContentSize" useStoryboardIdentifierAsRestorationIdentifier="YES" id="qQc-Ib-5lF" customClass="DialogWithPreferredContentSizeViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DialogID" title="DialogWithPreferredContentSize" useStoryboardIdentifierAsRestorationIdentifier="YES" id="qQc-Ib-5lF" customClass="DialogWithPreferredContentSizeExampleViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Lz9-zD-HnT"/>
                         <viewControllerLayoutGuide type="bottom" id="nZN-FO-BR8"/>

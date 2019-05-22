@@ -5,14 +5,14 @@ You can theme an Action Sheet with your app's typography scheme using the Typogr
 You must first add the Typography Themer extension to your project:
 
 ```bash
-pod `MaterialComponentsAlpha/ActionSheet+TypographyThemer`
+pod `MaterialComponentsBeta/ActionSheet+TypographyThemer`
 ```
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift
 // Step 1: Import the ColorThemer extension
-import MaterialComponentsAlpha.MaterialActionSheet_TypographyThemer
+import MaterialComponentsBeta.MaterialActionSheet_TypographyThemer
 
 // Step 2: Create or get a color scheme
 let typographyScheme = MDCTypographyScheme()

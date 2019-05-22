@@ -21,17 +21,17 @@
   [self resetUIControlStatesForButtonTheming:button];
   [button setBackgroundColor:UIColor.clearColor forState:UIControlStateNormal];
   [button setTitleColor:colorScheme.primaryColor forState:UIControlStateNormal];
-  [button setTitleColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f]
+  [button setTitleColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38]
                forState:UIControlStateDisabled];
-  button.disabledAlpha = 1.f;
-  button.inkColor = [colorScheme.primaryColor colorWithAlphaComponent:0.16f];
-  UIColor *borderColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.12f];
+  button.disabledAlpha = 1;
+  button.inkColor = [colorScheme.primaryColor colorWithAlphaComponent:(CGFloat)0.16];
+  UIColor *borderColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.12];
   [button setBorderColor:borderColor forState:UIControlStateNormal];
 }
 
 + (void)resetUIControlStatesForButtonTheming:(nonnull MDCButton *)button {
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
-  UIControlStateHighlighted | UIControlStateDisabled;
+                                 UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     [button setBackgroundColor:nil forState:state];
     [button setTitleColor:nil forState:state];

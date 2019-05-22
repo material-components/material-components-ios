@@ -12,19 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "ChipsExamplesSupplemental.h"
+#import "supplemental/ChipsExamplesSupplemental.h"
 
+#import "MaterialChips+Theming.h"
 #import "MaterialChips.h"
-#import "MaterialChips+ChipThemer.h"
-#import "MaterialSlider.h"
-#import "MaterialSlider+ColorThemer.h"
-#import "MaterialShapes.h"
+#import "MaterialContainerScheme.h"
 #import "MaterialShapeLibrary.h"
-
-@interface ChipsShapingExampleViewController()
-@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
-@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
-@end
+#import "MaterialShapes.h"
+#import "MaterialSlider+ColorThemer.h"
+#import "MaterialSlider.h"
 
 @implementation ChipsShapingExampleViewController {
   MDCChipView *_chipView;
@@ -36,8 +32,7 @@
 - (id)init {
   self = [super init];
   if (self) {
-    _colorScheme = [[MDCSemanticColorScheme alloc] init];
-    _typographyScheme = [[MDCTypographyScheme alloc] init];
+    self.containerScheme = [[MDCContainerScheme alloc] init];
   }
   return self;
 }
@@ -53,16 +48,12 @@
   _chipView.titleLabel.text = @"Material";
   _chipView.imageView.image = [self faceImage];
   _chipView.accessoryView = [self deleteButton];
-  _chipView.imagePadding = UIEdgeInsetsMake(0, 10.f, 0, 0);
-  _chipView.accessoryPadding = UIEdgeInsetsMake(0, 0, 0, 10.f);
+  _chipView.imagePadding = UIEdgeInsetsMake(0, 10, 0, 0);
+  _chipView.accessoryPadding = UIEdgeInsetsMake(0, 0, 0, 10);
   CGSize chipSize = [_chipView sizeThatFits:self.view.bounds.size];
   _chipView.frame = CGRectMake(20, 20, chipSize.width + 20, chipSize.height + 20);
+  [_chipView applyThemeWithScheme:self.containerScheme];
   _chipView.shapeGenerator = _rectangleShapeGenerator;
-
-  MDCChipViewScheme *chipScheme = [[MDCChipViewScheme alloc] init];
-  chipScheme.colorScheme = _colorScheme;
-  chipScheme.typographyScheme = _typographyScheme;
-  [MDCChipViewThemer applyScheme:chipScheme toChipView:_chipView];
   [self.view addSubview:_chipView];
 
   _cornerSlider = [[MDCSlider alloc] initWithFrame:CGRectZero];
@@ -72,7 +63,14 @@
   [_cornerSlider addTarget:self
                     action:@selector(cornerSliderChanged:)
           forControlEvents:UIControlEventValueChanged];
-  [MDCSliderColorThemer applySemanticColorScheme:_colorScheme toSlider:_cornerSlider];
+  if (self.containerScheme.colorScheme) {
+    [MDCSliderColorThemer applySemanticColorScheme:self.containerScheme.colorScheme
+                                          toSlider:_cornerSlider];
+  } else {
+    MDCSemanticColorScheme *colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    [MDCSliderColorThemer applySemanticColorScheme:colorScheme toSlider:_cornerSlider];
+  }
   [self.view addSubview:_cornerSlider];
 
   _cornerStyleControl = [[UISegmentedControl alloc] initWithItems:@[ @"Rounded", @"Cut", @"None" ]];
@@ -88,15 +86,10 @@
 
   CGSize sliderSize = [_cornerSlider sizeThatFits:self.view.bounds.size];
   _cornerSlider.frame = CGRectMake(20, 140, self.view.bounds.size.width - 40, sliderSize.height);
-  _cornerSlider.frame =
-      CGRectMake(20,
-                 140 + sliderSize.height + 20,
-                 self.view.bounds.size.width - 40,
-                 sliderSize.height);
+  _cornerSlider.frame = CGRectMake(20, 140 + sliderSize.height + 20,
+                                   self.view.bounds.size.width - 40, sliderSize.height);
   _cornerStyleControl.frame =
-      CGRectMake(20,
-                 CGRectGetMaxY(_cornerSlider.frame) + 20,
-                 self.view.bounds.size.width - 40,
+      CGRectMake(20, CGRectGetMaxY(_cornerSlider.frame) + 20, self.view.bounds.size.width - 40,
                  _cornerStyleControl.frame.size.height);
 
   [self cornerSliderChanged:_cornerSlider];

@@ -23,10 +23,20 @@
 @property(nonatomic, assign) BOOL selected;
 @property(nonatomic, assign) MDCBottomNavigationBarTitleVisibility titleVisibility;
 @property(nonatomic, strong) MDCInkView *inkView;
+@property(nonatomic, assign) UIOffset titlePositionAdjustment;
 
 @property(nonatomic, copy) NSString *badgeValue;
 @property(nonatomic, copy) NSString *title;
 @property(nonatomic, strong) UIFont *itemTitleFont UI_APPEARANCE_SELECTOR;
+
+/**
+ The number of lines available for rendering the title of this item.  Defaults to 1.
+
+ @note This property is only used when @c titleBelowIcon is @c true.
+ */
+@property(nonatomic, assign) NSInteger titleNumberOfLines;
+// Default = YES
+@property(nonatomic, assign) BOOL truncatesTitle;
 
 @property(nonatomic, strong) UIButton *button;
 @property(nonatomic, strong) UIImage *image;
@@ -36,8 +46,6 @@
 @property(nonatomic, strong) UIColor *selectedItemTintColor UI_APPEARANCE_SELECTOR;
 @property(nonatomic, strong) UIColor *unselectedItemTintColor UI_APPEARANCE_SELECTOR;
 @property(nonatomic, strong) UIColor *selectedItemTitleColor;
-
-@property(nonatomic, assign) UIEdgeInsets contentInsets;
 
 @property(nonatomic, assign) CGFloat contentVerticalMargin;
 @property(nonatomic, assign) CGFloat contentHorizontalMargin;

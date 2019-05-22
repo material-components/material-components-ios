@@ -3,3 +3,4 @@ module: Tabs
 umbrella_header: src/MaterialTabs.h
 objc: true
 sdk: iphonesimulator
+framework_root: ../

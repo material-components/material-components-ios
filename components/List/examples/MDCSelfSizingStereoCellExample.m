@@ -19,7 +19,7 @@
 #import "MaterialList+ListThemer.h"
 #import "MaterialList.h"
 
-static CGFloat const kArbitraryCellHeight = 75.f;
+static CGFloat const kArbitraryCellHeight = 75;
 static NSString *const kSelfSizingStereoCellIdentifier = @"kSelfSizingStereoCellIdentifier";
 static NSString *const kSelfSizingStereoCellExampleComponent = @"List Items";
 static NSString *const kSelfSizingStereoCellExampleDescription =

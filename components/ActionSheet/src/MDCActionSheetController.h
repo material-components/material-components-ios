@@ -14,7 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialBottomSheet.h"
+#import <MaterialComponents/MaterialBottomSheet.h>
 
 @class MDCActionSheetAction;
 
@@ -24,19 +24,21 @@
 
  A Material Action Sheet consists of a title, message and a list of actions.
 
- Learn more about [Material bottom
- sheet](https://material.io/design/components/sheets-bottom.html)
- [Material spec list](https://material.io/design/components/lists.html)
+ The [Material Guidelines article for Bottom
+ Sheets](https://material.io/design/components/sheets-bottom.html) and the
+ [Material Guidelines article for Lists](https://material.io/design/components/lists.html) have more
+ detailed guidance about how to style and use Action Sheets.
 
  To learn more about
  [UIAlertController](https://developer.apple.com/documentation/uikit/uialertcontroller)
- or [UIAlertControllerStyleActionSheet](https://developer.apple.com/documentation/uikit/uialertcontrollerstyle/uialertcontrollerstyleactionsheet)
+ or
+ [UIAlertControllerStyleActionSheet](https://developer.apple.com/documentation/uikit/uialertcontrollerstyle/uialertcontrollerstyleactionsheet)
 
- MDCActionSheetController does not support UIPopoverController, instead it will always be presented in a sheet from the bottom.
+ MDCActionSheetController does not support UIPopoverController, instead it will always be presented
+ in a sheet from the bottom.
 
  */
-__attribute__((objc_subclassing_restricted))
-@interface MDCActionSheetController : UIViewController
+__attribute__((objc_subclassing_restricted)) @interface MDCActionSheetController : UIViewController
 
 /**
  Designated initializer to create and return a view controller for displaying an alert to the user.
@@ -92,7 +94,7 @@ __attribute__((objc_subclassing_restricted))
  The order of the actions in the array matches the order in which they were added
  to the action sheet.
  */
-@property (nonatomic, nonnull, readonly, copy) NSArray<MDCActionSheetAction *> *actions;
+@property(nonatomic, nonnull, readonly, copy) NSArray<MDCActionSheetAction *> *actions;
 
 /**
  The title of the action sheet controller.
@@ -100,14 +102,14 @@ __attribute__((objc_subclassing_restricted))
  If this is updated after presentation the view will be updated to match the
  new value.
  */
-@property (nonatomic, nullable, copy) NSString *title;
+@property(nonatomic, nullable, copy) NSString *title;
 
 /**
  The message of the action sheet controller.
 
  If this is updated after presentation the view will be updated to match the new value.
  */
-@property (nonatomic, nullable, copy) NSString *message;
+@property(nonatomic, nullable, copy) NSString *message;
 
 /**
  Indicates whether the button should automatically update its font when the device’s
@@ -201,7 +203,6 @@ typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
  */
 @interface MDCActionSheetAction : NSObject <NSCopying, UIAccessibilityIdentification>
 
-
 /**
  Returns an action sheet action with the populated given values.
 
@@ -225,7 +226,7 @@ typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
  Action sheet actions must have a title that will be set within actionWithTitle:image:handler:
  method.
  */
-@property (nonatomic, nonnull, readonly) NSString *title;
+@property(nonatomic, nonnull, readonly) NSString *title;
 
 /**
  Image of the list item shown on the action sheet.
@@ -233,7 +234,7 @@ typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
  Action sheet actions must have an image that will be set within actionWithTitle:image:handler:
  method.
 */
-@property (nonatomic, nullable, readonly) UIImage *image;
+@property(nonatomic, nullable, readonly) UIImage *image;
 
 /**
  The @c accessibilityIdentifier for the view associated with this action.

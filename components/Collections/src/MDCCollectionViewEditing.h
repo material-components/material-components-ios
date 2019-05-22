@@ -35,6 +35,12 @@
 @property(nonatomic, readonly, assign) NSInteger dismissingSection;
 
 /**
+  Sets the minimum press duration in seconds that will trigger the dragging behaviour.
+  By default, the long press recognizer sets this to 0.5s.
+ */
+@property(nonatomic, assign) NSTimeInterval minimumPressDuration;
+
+/**
  A Boolean value indicating whether the a visible cell within the collectionView is being
  edited.
 
@@ -54,5 +60,20 @@
  @param animated YES the transition will be animated; otherwise, NO.
  */
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated;
+
+/**
+ Updates the position of the cell being reordered to match the user's touch location. This method
+ is a no-op if a cell is not currently being reordered.
+
+ While the reordering cell's location is updated automatically to match the user's touch location,
+ this method allows for the explicit update of the cell's position which may be required when the
+ cell's location changes due to a layout update (such as performing collection view changes while
+ the user is reordering).
+
+ For example, you can call this in the MDCCollectionViewEditingDelegate's implementation of
+ -collectionView:willBeginDraggingItemAtIndexPath: after performing updates to the collection view
+ in preparation for the user's move of an item.
+ */
+- (void)updateReorderCellPosition;
 
 @end

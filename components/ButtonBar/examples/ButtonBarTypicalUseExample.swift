@@ -13,17 +13,29 @@
 // limitations under the License.
 
 import Foundation
-import MaterialComponents.MaterialButtonBar_ColorThemer
+import MaterialComponents.MaterialButtonBar
+import MaterialComponents.MaterialContainerScheme
+import MaterialComponentsBeta.MaterialButtonBar_Theming
 
 class ButtonBarTypicalUseSwiftExample: UIViewController {
-  var colorScheme = MDCSemanticColorScheme()
+  @objc var colorScheme = MDCSemanticColorScheme(defaults: .material201804)
+  @objc var typographyScheme = MDCTypographyScheme(defaults: .material201804)
+
+  var scheme: MDCContainerScheming {
+    let scheme = MDCContainerScheme()
+    scheme.colorScheme = colorScheme
+    scheme.typographyScheme = typographyScheme
+    return scheme
+  }
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
     let buttonBar = MDCButtonBar()
+    buttonBar.applyPrimaryTheme(withScheme: scheme)
+
     // MDCButtonBar ignores the style of UIBarButtonItem.
-    let ignored: UIBarButtonItemStyle = .done
+    let ignored: UIBarButtonItem.Style = .done
 
     let actionItem = UIBarButtonItem(
       title: "Action",
@@ -40,8 +52,6 @@ class ButtonBarTypicalUseSwiftExample: UIViewController {
     )
 
     buttonBar.items = [actionItem, secondActionItem]
-
-    MDCButtonBarColorThemer.applySemanticColorScheme(colorScheme, to: buttonBar)
 
     // MDCButtonBar's sizeThatFits gives a "best-fit" size of the provided items.
     let size = buttonBar.sizeThatFits(self.view.bounds.size)
@@ -75,7 +85,7 @@ class ButtonBarTypicalUseSwiftExample: UIViewController {
 // MARK: Catalog by convention
 extension ButtonBarTypicalUseSwiftExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Button Bar", "Button Bar (Swift)"],
       "primaryDemo": false,

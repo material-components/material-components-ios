@@ -8,7 +8,7 @@ path: /catalog/buttons/
 api_doc_root: true
 -->
 
-<!-- This file was auto-generated using scripts/generate_readme Buttons -->
+<!-- This file was auto-generated using ./scripts/generate_readme Buttons -->
 
 # Buttons
 
@@ -40,19 +40,23 @@ many distinct button styles including text buttons, contained buttons, and float
   - [Installation with CocoaPods](#installation-with-cocoapods)
   - [Importing](#importing)
 - [Usage](#usage)
-  - [Typical use: themed buttons](#typical-use-themed-buttons)
+  - [Typical use](#typical-use)
   - [Typical use: floating action buttons](#typical-use-floating-action-buttons)
   - [Customizing elevation](#customizing-elevation)
   - [Customizing floating action buttons](#customizing-floating-action-buttons)
   - [Interface Builder](#interface-builder)
 - [Extensions](#extensions)
   - [Theming](#theming)
-  - [Color Theming](#color-theming)
-  - [Typography Theming](#typography-theming)
-  - [Shape Theming](#shape-theming)
+  - [How to theme an MDCButton](#how-to-theme-an-mdcbutton)
+  - [How to theme an MDCFloatingButton](#how-to-theme-an-mdcfloatingbutton)
 - [Accessibility](#accessibility)
   - [Set `-accessibilityLabel`](#set-`-accessibilitylabel`)
   - [Minimum touch size](#minimum-touch-size)
+- [Unsupported](#unsupported)
+  - [How to theme a button using a themer](#how-to-theme-a-button-using-a-themer)
+  - [Color Theming](#color-theming)
+  - [Typography Theming](#typography-theming)
+  - [Shape Theming](#shape-theming)
 
 - - -
 
@@ -100,35 +104,30 @@ import MaterialComponents.MaterialButtons
 
 ## Usage
 
-<!-- Extracted from docs/typical-use-themed-buttons.md -->
+<!-- Extracted from docs/typical-use.md -->
 
-### Typical use: themed buttons
+### Typical use
 
-Create an instance of `MDCButton` and theme it with as one of the Material Design button styles
-using the ButtonThemer extension. Once themed, use the button like you would use a typical UIButton
-instance.
+`MDCButton` is a subclass of UIButton, but with more options for customizing the button's style and
+behavior. To initialize an MDCButton, you must alloc/init an instance directly instead of using
+`buttonWithType:`, which has been marked unavailable.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift
 let button = MDCButton()
-
-// Themed as a text button:
-MDCTextButtonThemer.applyScheme(buttonScheme, to: button)
 ```
 
 #### Objective-C
 
 ```objc
 MDCButton *button = [[MDCButton alloc] init];
-
-// Themed as a text button:
-[MDCTextButtonThemer applyScheme:buttonScheme toButton:button];
 ```
 <!--</div>-->
 
-See the [ButtonThemer documentation](docs/theming.md) for a full list of supported Material Design
-button styles.
+See the
+[MDCButton API docs](https://material.io/develop/ios/components/buttons/api-docs/Classes/MDCButton.html)
+for a complete list of features that MDCButton provides in addition to UIButton's features.
 
 <!-- Extracted from docs/typical-use-floating-action-buttons.md -->
 
@@ -136,7 +135,7 @@ button styles.
 
 MDCFloatingButton is a subclass of MDCButton that implements the Material Design floating action
 button style and behavior. Floating action buttons should be provided with a templated image for
-their normal state.
+their normal state and then themed accordingly.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -146,7 +145,6 @@ their normal state.
 let plusImage = UIImage(named: "plus").withRenderingMode(.alwaysTemplate)
 let button = MDCFloatingButton()
 button.setImage(plusImage, forState: .normal)
-MDCFloatingActionButtonThemer.applyScheme(buttonScheme, to: button)
 ```
 
 #### Objective-C
@@ -157,7 +155,6 @@ UIImage *plusImage =
     [[UIImage imageNamed:@"plus"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 MDCFloatingButton *button = [[MDCFloatingButton alloc] init];
 [button setImage:plusImage forState:UIControlStateNormal];
-[MDCFloatingActionButtonThemer applyScheme:buttonScheme toButton:button];
 ```
 <!--</div>-->
 
@@ -182,8 +179,8 @@ button.setElevation(12, for: .highlighted)
 #### Objective-C
 
 ```objc
-[button setElevation:6.0f forState:UIControlStateNormal];
-[button setElevation:12.0f forState:UIControlStateNormal];
+[button setElevation:6 forState:UIControlStateNormal];
+[button setElevation:12 forState:UIControlStateNormal];
 ```
 <!--</div>-->
 
@@ -223,6 +220,250 @@ to "custom" in order for the button's highlight states to work as expected.
 <!-- Extracted from docs/theming.md -->
 
 ### Theming
+
+You can theme an MDCButton to match a
+[Material Design button style](https://material.io/design/components/buttons.html) using theming
+extensions. [Learn more about theming extensions](../../docs/theming.md).
+
+### How to theme an MDCButton
+
+First, import both Buttons and Buttons Theming and create an instance of MDCButton.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialButtons_Theming
+
+let button = MDCButton()
+```
+
+#### Objective-C
+
+```objc
+#import <MaterialComponents/MaterialButtons.h>
+#import <MaterialComponentsBeta/MaterialButtons+Theming.h>
+
+MDCButton *button = [[MDCButton alloc] init];
+```
+<!--</div>-->
+
+You can then provide a container scheme instance to any of the MDCButton theming extensions.
+[Learn more about container schemes](../../docs/theming.md).
+
+[Material text button](https://material.io/design/components/buttons.html#text-button) theming:
+
+<img src="docs/assets/text.gif" alt="An animation showing a Material Design text button." width="128">
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+button.applyTextTheme(withScheme: containerScheme)
+```
+
+#### Objective-C
+
+```objc
+[self.button applyTextThemeWithScheme:self.containerScheme];
+```
+<!--</div>-->
+
+[Material outlined button](https://material.io/design/components/buttons.html#outlined-button)
+theming:
+
+<img src="docs/assets/outlined.gif" alt="An animation showing a Material Design outlined button." width="115">
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+button.applyOutlinedTheme(withScheme: containerScheme)
+```
+
+#### Objective-C
+
+```objc
+[self.button applyOutlinedThemeWithScheme:self.containerScheme];
+```
+<!--</div>-->
+
+[Material contained button](https://material.io/design/components/buttons.html#contained-button)
+theming:
+
+<img src="docs/assets/contained.gif" alt="An animation showing a Material Design contained button." width="128">
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+button.applyContainedTheme(withScheme: containerScheme)
+```
+
+#### Objective-C
+
+```objc
+[self.button applyContainedThemeWithScheme:self.containerScheme];
+```
+<!--</div>-->
+
+### How to theme an MDCFloatingButton
+
+First, create a button and import the theming extension header for Buttons.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+import MaterialComponents.MaterialButtons
+import MaterialComponentsBeta.MaterialButtons_Theming
+
+let floatingButton = MDCFloatingButton()
+```
+
+#### Objective-C
+
+```objc
+#import <MaterialComponents/MaterialButtons.h>
+#import <MaterialComponentsBeta/MaterialButtons+Theming.h>
+
+MDCFloatingButton *floatingButton = [[MDCFloatingButton alloc] init];
+```
+<!--</div>-->
+
+[Material floating action button](https://material.io/design/components/buttons-floating-action-button.html)
+theming:
+
+<img src="docs/assets/fab.gif" alt="An animation showing a Material Design floating action button." width="99">
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+floatingButton.applySecondaryTheme(withScheme: containerScheme)
+```
+
+#### Objective-C
+
+```objc
+[self.floatingButton applySecondaryThemeWithScheme: self.containerScheme];
+```
+<!--</div>-->
+
+<!-- Extracted from docs/accessibility.md -->
+
+## Accessibility
+
+To help ensure your buttons are accessible to as many users as possible, please
+be sure to review the following recommendations:
+
+### Set `-accessibilityLabel`
+
+Set an appropriate
+[`accessibilityLabel`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619577-accessibilitylabel)
+value if your button does not have a title. This is often the case with Floating
+Action Button instances which typically only have an icon.
+
+#### Objective-C
+
+```objc
+button.accessibilityLabel = @"Create";
+```
+
+#### Swift
+
+```swift
+button.accessibilityLabel = "Create"
+```
+
+### Minimum touch size
+
+Make sure that your buttons have a minimum touch area. The Material spec
+for buttons calls for buttons that have a [visual height of
+36](https://material.io/design/components/buttons.html#specs)
+and that [touch areas should be at least 48 points high and 48
+wide](https://material.io/design/layout/spacing-methods.html#touch-click-targets).
+
+#### Set the touch size
+
+To keep a button's visual sizes small with larger touchable areas, set the
+`hitAreaInsets` to a negative value. Be careful to maintain sufficient distance
+between the button touch targets. This will allow your button to have [a large
+enough touch
+target](https://material.io/design/layout/spacing-methods.html#touch-click-targets)
+while maintaining the desired visual appearance. For more see the [Touch and click
+targets](https://material.io/design/layout/spacing-methods.html#touch-click-targets)
+in the spec.
+
+##### Objective-C
+
+```objc
+CGFloat verticalInset = MIN(0, -(48 - CGRectGetHeight(button.bounds)) / 2);
+CGFloat horizontalInset = MIN(0, -(48 - CGRectGetWidth(button.bounds)) / 2);
+button.hitAreaInsets = UIEdgeInsetsMake(verticalInset, horizontalInset, verticalInset, horizontalInset);
+```
+
+##### Swift
+
+```swift
+let buttonVerticalInset =
+min(0, -(kMinimumAccessibleButtonSize.height - button.bounds.height) / 2);
+let buttonHorizontalInset =
+min(0, -(kMinimumAccessibleButtonSize.width - button.bounds.width) / 2);
+button.hitAreaInsets =
+UIEdgeInsetsMake(buttonVerticalInset, buttonHorizontalInset,
+buttonVerticalInset, buttonHorizontalInset);
+```
+
+#### Set the minimum visual size of the button
+
+Set your buttons to have a minimum size. [Material Buttons
+guidelines](https://material.io/design/components/buttons.html#specs)
+typically recommend [a minimum height of 36 points and a minimum width of 64
+points](https://material.io/design/components/buttons.html#specs).
+
+##### Objective-C
+
+```objc
+button.minimumSize = CGSizeMake(64, 36);
+```
+
+##### Swift
+
+```swift
+button.minimumSize = CGSize(width: 64, height: 48)
+```
+
+##### Exceptions
+
+However there are
+[some](https://material.io/design/components/buttons.html#toggle-button) clear
+[exceptions](https://material.io/design/components/app-bars-bottom.html#specs)
+for these rules. Please adjust your buttons sizes accordingly.
+
+#### Using `accessibilityHint`
+
+Apple rarely recommends using the `accessibilityHint` because the label should
+already be clear enough to indicate what will happen. Before you consider
+setting an `-accessibilityHint` consider if you need it or if the rest of your
+UI could be adjusted to make it more contextually clear.
+
+A well-crafted, thoughtful user interface can remove the need for
+`accessibilityHint` in most situations. Examples for a selection dialog to
+choose one or more days of the week for a repeating calendar event:
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item">  (Good) The dialog includes a header above the list of days reading, "Event</li>
+repeats weekly on the following day(s)." The list items do not need
+`accessibilityHint` values.
+  <li class="icon-list-item icon-list-item">  (Bad) The dialog has no header above the list of days. Each list item</li>
+(representing a day of the week) has the `accessibilityHint` value, "Toggles
+this day."
+
+
+## Unsupported
+
+<!-- Extracted from docs/theming-with-themers.md -->
+
+### How to theme a button using a themer
+
+Note: This documentation refers to legacy APIs that will eventually be deprecated. Please consider
+reading the updated [theming documentation](docs/theming.md) instead.
 
 You can theme an MDCButton to match one of the Material Design button styles using your app's
 schemes in the ButtonThemer extension.
@@ -343,6 +584,9 @@ MDCFloatingActionButtonThemer.applyScheme(buttonScheme, to: button)
 
 ### Color Theming
 
+Note: This documentation refers to legacy APIs that will eventually be deprecated. Please consider
+reading the updated [theming documentation](docs/theming.md) instead.
+
 You can theme buttons with your app's color scheme using the ColorThemer extension.
 
 You must first add the Color Themer extension to your project:
@@ -373,7 +617,7 @@ MDCTextButtonColorThemer.applySemanticColorScheme(colorScheme, to: component)
 #import "MaterialButtons+ColorThemer.h"
 
 // Step 2: Create or get a color scheme
-id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
+id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 
 // Step 3: Apply the color scheme to your component using the desired button style
 [MDCContainedButtonColorThemer applySemanticColorScheme:colorScheme
@@ -388,6 +632,9 @@ id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
 <!-- Extracted from docs/typography-theming.md -->
 
 ### Typography Theming
+
+Note: This documentation refers to legacy APIs that will eventually be deprecated. Please consider
+reading the updated [theming documentation](docs/theming.md) instead.
 
 You can theme buttons with your app's typography scheme using the TypographyThemer extension.
 
@@ -429,6 +676,9 @@ id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
 
 ### Shape Theming
 
+Note: This documentation refers to legacy APIs that will eventually be deprecated. Please consider
+reading the updated [theming documentation](docs/theming.md) instead.
+
 You can theme buttons with your app's shape scheme using the ShapeThemer extension.
 
 You must first add the ShapeThemer extension to your project:
@@ -467,115 +717,4 @@ id<MDCShapeScheming> shapeScheme = [[MDCShapeScheme alloc] init];
      toButton:component];
 ```
 <!--</div>-->
-
-
-<!-- Extracted from docs/accessibility.md -->
-
-## Accessibility
-
-To help ensure your buttons are accessible to as many users as possible, please
-be sure to review the following recommendations:
-
-### Set `-accessibilityLabel`
-
-Set an appropriate
-[`accessibilityLabel`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619577-accessibilitylabel)
-value if your button does not have a title. This is often the case with Floating
-Action Button instances which typically only have an icon.
-
-#### Objective-C
-
-```objc
-button.accessibilityLabel = @"Create";
-```
-
-#### Swift
-
-```swift
-button.accessibilityLabel = "Create"
-```
-
-### Minimum touch size
-
-Make sure that your buttons have a minimum touch area. The Material spec
-for buttons calls for buttons that have a [visual height of
-36](https://material.io/design/components/buttons.html#specs)
-and that [touch areas should be at least 48 points high and 48
-wide](https://material.io/design/layout/spacing-methods.html#touch-click-targets).
-
-#### Set the touch size
-
-To keep a button's visual sizes small with larger touchable areas, set the
-`hitAreaInsets` to a negative value. Be careful to maintain sufficient distance
-between the button touch targets. This will allow your button to have [a large
-enough touch
-target](https://material.io/design/layout/spacing-methods.html#touch-click-targets)
-while maintaining the desired visual appearance. For more see the [Touch and click
-targets](https://material.io/design/layout/spacing-methods.html#touch-click-targets)
-in the spec.
-
-##### Objective-C
-
-```objc
-CGFloat verticalInset = MIN(0, -(48 - CGRectGetHeight(button.bounds)) / 2);
-CGFloat horizontalInset = MIN(0, -(48 - CGRectGetWidth(button.bounds)) / 2);
-button.hitAreaInsets = UIEdgeInsetsMake(verticalInset, horizontalInset, verticalInset, horizontalInset);
-```
-
-##### Swift
-
-```swift
-let buttonVerticalInset =
-min(0, -(kMinimumAccessibleButtonSize.height - button.bounds.height) / 2);
-let buttonHorizontalInset =
-min(0, -(kMinimumAccessibleButtonSize.width - button.bounds.width) / 2);
-button.hitAreaInsets =
-UIEdgeInsetsMake(buttonVerticalInset, buttonHorizontalInset,
-buttonVerticalInset, buttonHorizontalInset);
-```
-
-#### Set the minimum visual size of the button
-
-Set your buttons to have a minimum size. [Material Buttons
-guidelines](https://material.io/design/components/buttons.html#specs)
-typically recommend [a minimum height of 36 points and a minimum width of 64
-points](https://material.io/design/components/buttons.html#specs).
-
-##### Objective-C
-
-```objc
-button.minimumSize = CGSizeMake(64, 36);
-```
-
-##### Swift
-
-```swift
-button.minimumSize = CGSize(width: 64, height: 48)
-```
-
-##### Exceptions
-
-However there are
-[some](https://material.io/design/components/buttons.html#toggle-button) clear
-[exceptions](https://material.io/design/components/app-bars-bottom.html#specs)
-for these rules. Please adjust your buttons sizes accordingly.
-
-#### Using `accessibilityHint`
-
-Apple rarely recommends using the `accessibilityHint` because the label should
-already be clear enough to indicate what will happen. Before you consider
-setting an `-accessibilityHint` consider if you need it or if the rest of your
-UI could be adjusted to make it more contextually clear.
-
-A well-crafted, thoughtful user interface can remove the need for
-`accessibilityHint` in most situations. Examples for a selection dialog to
-choose one or more days of the week for a repeating calendar event:
-
-<ul class="icon-list">
-  <li class="icon-list-item icon-list-item">  (Good) The dialog includes a header above the list of days reading, "Event</li>
-repeats weekly on the following day(s)." The list items do not need
-`accessibilityHint` values.
-  <li class="icon-list-item icon-list-item">  (Bad) The dialog has no header above the list of days. Each list item</li>
-(representing a day of the week) has the `accessibilityHint` value, "Toggles
-this day."
 

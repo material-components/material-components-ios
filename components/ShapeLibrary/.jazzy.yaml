@@ -1,0 +1,5 @@
+module: ShapeLibrary
+umbrella_header: src/MaterialShapeLibrary.h
+objc: true
+sdk: iphonesimulator
+framework_root: ../

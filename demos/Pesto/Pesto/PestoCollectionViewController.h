@@ -24,7 +24,8 @@
 
 @optional
 
-- (void)didSelectCell:(PestoCardCollectionViewCell *)cell completion:(void (^)(void))completionBlock;
+- (void)didSelectCell:(PestoCardCollectionViewCell *)cell
+           completion:(void (^)(void))completionBlock;
 
 @end
 

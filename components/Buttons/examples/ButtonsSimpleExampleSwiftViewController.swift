@@ -15,12 +15,16 @@
 import Foundation
 import UIKit
 
-import MaterialComponents.MaterialButtons_ButtonThemer
+import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialContainerScheme
+import MaterialComponents.MaterialButtons_Theming
 
 class ButtonsSimpleExampleSwiftViewController: UIViewController {
 
   let floatingButtonPlusDimension = CGFloat(24)
   let kMinimumAccessibleButtonSize = CGSize(width: 64, height: 48)
+
+  var containerScheme = MDCContainerScheme()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -28,34 +32,33 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
     view.backgroundColor = UIColor(white: 0.9, alpha: 1.0)
     //let titleColor = UIColor.white
     let backgroundColor = UIColor(white: 0.1, alpha: 1.0)
-    let buttonScheme = MDCButtonScheme()
     
     let containedButton = MDCButton()
-    MDCContainedButtonThemer.applyScheme(buttonScheme, to: containedButton)
-    containedButton.setTitle("Tap Me Too", for: UIControlState())
+    containedButton.applyContainedTheme(withScheme: containerScheme)
+    containedButton.setTitle("Tap Me Too", for: UIControl.State())
     containedButton.sizeToFit()
     let containedButtonVerticalInset =
       min(0, -(kMinimumAccessibleButtonSize.height - containedButton.bounds.height) / 2);
     let containedButtonHorizontalInset =
       min(0, -(kMinimumAccessibleButtonSize.width - containedButton.bounds.width) / 2);
     containedButton.hitAreaInsets =
-      UIEdgeInsetsMake(containedButtonVerticalInset, containedButtonHorizontalInset,
-                       containedButtonVerticalInset, containedButtonHorizontalInset);
+      UIEdgeInsets(top: containedButtonVerticalInset, left: containedButtonHorizontalInset,
+                   bottom: containedButtonVerticalInset, right: containedButtonHorizontalInset)
     containedButton.translatesAutoresizingMaskIntoConstraints = false
     containedButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
     view.addSubview(containedButton)
 
     let textButton = MDCButton()
-    MDCTextButtonThemer.applyScheme(buttonScheme, to: textButton)
-    textButton.setTitle("Touch me", for: UIControlState())
+    textButton.applyTextTheme(withScheme: MDCContainerScheme())
+    textButton.setTitle("Touch me", for: UIControl.State())
     textButton.sizeToFit()
     let textButtonVerticalInset =
       min(0, -(kMinimumAccessibleButtonSize.height - textButton.bounds.height) / 2);
     let textButtonHorizontalInset =
       min(0, -(kMinimumAccessibleButtonSize.width - textButton.bounds.width) / 2);
     textButton.hitAreaInsets =
-      UIEdgeInsetsMake(textButtonVerticalInset, textButtonHorizontalInset,
-                       textButtonVerticalInset, textButtonHorizontalInset);
+      UIEdgeInsets(top: textButtonVerticalInset, left: textButtonHorizontalInset,
+                   bottom: textButtonVerticalInset, right: textButtonHorizontalInset)
     textButton.translatesAutoresizingMaskIntoConstraints = false
     textButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
     view.addSubview(textButton)
@@ -117,7 +120,7 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
 
 extension ButtonsSimpleExampleSwiftViewController {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Buttons", "Buttons (Swift)"],
       "primaryDemo": false,

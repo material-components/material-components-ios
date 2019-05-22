@@ -14,15 +14,15 @@
 
 #import "MDCActionSheetItemTableViewCell.h"
 
-#import "MaterialTypography.h"
+#import <MaterialComponents/MaterialTypography.h>
 
-static const CGFloat kLabelAlpha = 0.87f;
-static const CGFloat kImageLeadingPadding = 16.f;
-static const CGFloat kImageTopPadding = 16.f;
-static const CGFloat kImageHeightAndWidth = 24.f;
-static const CGFloat kTitleLeadingPadding = 72.f;
-static const CGFloat kTitleTrailingPadding = 16.f;
-static const CGFloat kActionItemTitleVerticalPadding = 18.f;
+static const CGFloat kLabelAlpha = (CGFloat)0.87;
+static const CGFloat kImageLeadingPadding = 8;
+static const CGFloat kImageTopPadding = 16;
+static const CGFloat kImageHeightAndWidth = 24;
+static const CGFloat kTitleLeadingPadding = 64;
+static const CGFloat kTitleTrailingPadding = 8;
+static const CGFloat kActionItemTitleVerticalPadding = 18;
 
 @interface MDCActionSheetItemTableViewCell ()
 @property(nonatomic, strong) UILabel *actionLabel;
@@ -33,7 +33,7 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
 @implementation MDCActionSheetItemTableViewCell {
   MDCActionSheetAction *_itemAction;
   NSLayoutConstraint *_titleLeadingConstraint;
-  NSLayoutConstraint *_titleWidthConstraint;
+  NSLayoutConstraint *_titleTrailingConstraint;
 }
 
 @synthesize mdc_adjustsFontForContentSizeCategory = _mdc_adjustsFontForContentSizeCategory;
@@ -82,22 +82,21 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
                                 constant:-kActionItemTitleVerticalPadding]
       .active = YES;
   _titleLeadingConstraint = [NSLayoutConstraint constraintWithItem:_actionLabel
-                                                         attribute:NSLayoutAttributeLeading
+                                                         attribute:NSLayoutAttributeLeadingMargin
                                                          relatedBy:NSLayoutRelationEqual
                                                             toItem:self.contentView
-                                                         attribute:NSLayoutAttributeLeading
+                                                         attribute:NSLayoutAttributeLeadingMargin
                                                         multiplier:1
                                                           constant:leadingConstant];
   _titleLeadingConstraint.active = YES;
-  CGFloat width = CGRectGetWidth(self.contentView.frame) - leadingConstant - kTitleTrailingPadding;
-  _titleWidthConstraint = [NSLayoutConstraint constraintWithItem:_actionLabel
-                                                       attribute:NSLayoutAttributeWidth
-                                                       relatedBy:NSLayoutRelationEqual
-                                                          toItem:nil
-                                                       attribute:NSLayoutAttributeNotAnAttribute
-                                                      multiplier:1
-                                                        constant:width];
-  _titleWidthConstraint.active = YES;
+  _titleTrailingConstraint = [NSLayoutConstraint constraintWithItem:self.contentView
+                                                          attribute:NSLayoutAttributeTrailingMargin
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:_actionLabel
+                                                          attribute:NSLayoutAttributeTrailingMargin
+                                                         multiplier:1
+                                                           constant:kTitleTrailingPadding];
+  _titleTrailingConstraint.active = YES;
   if (!_inkTouchController) {
     _inkTouchController = [[MDCInkTouchController alloc] initWithView:self];
     [_inkTouchController addInkView];
@@ -115,10 +114,10 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
                                 constant:kImageTopPadding]
       .active = YES;
   [NSLayoutConstraint constraintWithItem:_actionImageView
-                               attribute:NSLayoutAttributeLeading
+                               attribute:NSLayoutAttributeLeadingMargin
                                relatedBy:NSLayoutRelationEqual
                                   toItem:self.contentView
-                               attribute:NSLayoutAttributeLeading
+                               attribute:NSLayoutAttributeLeadingMargin
                               multiplier:1
                                 constant:kImageLeadingPadding]
       .active = YES;
@@ -143,6 +142,7 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
 - (void)layoutSubviews {
   [super layoutSubviews];
 
+  self.actionLabel.accessibilityLabel = _itemAction.accessibilityLabel;
   self.actionLabel.text = _itemAction.title;
   CGFloat leadingConstant;
   if (_itemAction.image) {
@@ -151,14 +151,14 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
     leadingConstant = kImageLeadingPadding;
   }
   _titleLeadingConstraint.constant = leadingConstant;
-  CGFloat width = CGRectGetWidth(self.contentView.frame) - leadingConstant - kTitleTrailingPadding;
-  _titleWidthConstraint.constant = width;
+  _titleTrailingConstraint.constant = kTitleTrailingPadding;
 
   self.actionImageView.image = [_itemAction.image imageWithRenderingMode:self.imageRenderingMode];
 }
 
 - (void)setAction:(MDCActionSheetAction *)action {
   _itemAction = [action copy];
+  self.actionLabel.accessibilityLabel = _itemAction.accessibilityLabel;
   self.actionLabel.text = _itemAction.title;
   self.actionImageView.image = _itemAction.image;
   [self setNeedsLayout];
@@ -174,8 +174,8 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
 }
 
 - (void)updateTitleFont {
-  UIFont *titleFont = _actionFont ?:
-      [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
+  UIFont *titleFont =
+      _actionFont ?: [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
   if (self.mdc_adjustsFontForContentSizeCategory) {
     self.actionLabel.font =
         [titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
@@ -201,7 +201,7 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
   _inkColor = inkColor;
   // If no ink color then reset to the default ink color
   self.inkTouchController.defaultInkView.inkColor =
-      inkColor ?: [[UIColor alloc] initWithWhite:0 alpha:0.14f];
+      inkColor ?: [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.14];
 }
 
 - (void)setImageRenderingMode:(UIImageRenderingMode)imageRenderingMode {

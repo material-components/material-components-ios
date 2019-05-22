@@ -18,7 +18,7 @@ import MaterialComponents.MaterialAppBar_ColorThemer
 
 class AppBarImagerySwiftExample: UITableViewController {
   let appBarViewController = MDCAppBarViewController()
-  var colorScheme = MDCSemanticColorScheme()
+  @objc var colorScheme = MDCSemanticColorScheme()
 
   deinit {
     // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
@@ -60,7 +60,7 @@ class AppBarImagerySwiftExample: UITableViewController {
     headerView.trackingScrollView = self.tableView
 
     view.addSubview(appBarViewController.view)
-    appBarViewController.didMove(toParentViewController: self)
+    appBarViewController.didMove(toParent: self)
   }
 
   override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -79,7 +79,7 @@ class AppBarImagerySwiftExample: UITableViewController {
     appBarViewController.inferTopSafeAreaInsetFromViewController = true
     appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
 
-    self.addChildViewController(appBarViewController)
+    self.addChild(appBarViewController)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -96,7 +96,7 @@ class AppBarImagerySwiftExample: UITableViewController {
 // MARK: Catalog by convention
 extension AppBarImagerySwiftExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["App Bar", "Imagery (Swift)"],
       "primaryDemo": false,
@@ -121,11 +121,10 @@ extension AppBarImagerySwiftExample {
   override func tableView(
     _ tableView: UITableView,
     cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-      var cell = self.tableView.dequeueReusableCell(withIdentifier: "cell")
-      if cell == nil {
-        cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
-      }
-      cell!.selectionStyle = .none
-      return cell!
+    
+    let cell = self.tableView.dequeueReusableCell(withIdentifier: "cell") ??
+        UITableViewCell(style: .default, reuseIdentifier: "cell")
+    cell.selectionStyle = .none
+    return cell
   }
 }

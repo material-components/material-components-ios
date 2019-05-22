@@ -16,8 +16,8 @@
 
 #import "MaterialColorScheme.h"
 #import "MaterialPalettes.h"
-#import "MaterialTabs.h"
 #import "MaterialTabs+ColorThemer.h"
+#import "MaterialTabs.h"
 
 @interface TabBarInterfaceBuilderExample : UIViewController <MDCTabBarDelegate>
 
@@ -32,7 +32,8 @@
 - (id)init {
   self = [super init];
   if (self) {
-    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   }
   return self;
 }
@@ -48,12 +49,12 @@
   ];
 
   self.colors = @[
-    MDCPalette.bluePalette.tint500, MDCPalette.pinkPalette.tint500,
-    MDCPalette.redPalette.tint500, MDCPalette.greenPalette.tint500
+    MDCPalette.bluePalette.tint500, MDCPalette.pinkPalette.tint500, MDCPalette.redPalette.tint500,
+    MDCPalette.greenPalette.tint500
   ];
 
   [MDCTabBarColorThemer applySemanticColorScheme:self.colorScheme toTabs:self.tabBar];
-  
+
   self.view.backgroundColor = self.colors[0];
 }
 
@@ -111,10 +112,10 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Tab Bar", @"Interface Builder" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
-    @"storyboardName": @"TabBarInterfaceBuilderExample"
+    @"breadcrumbs" : @[ @"Tab Bar", @"Interface Builder" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
+    @"storyboardName" : @"TabBarInterfaceBuilderExample"
   };
 }
 

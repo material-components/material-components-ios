@@ -14,14 +14,16 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialButtons+Theming.h"
 #import "MaterialButtons.h"
-#import "MaterialButtons+ButtonThemer.h"
+#import "MaterialContainerScheme.h"
 
 @interface ButtonsContentEdgeInsetsExample : UIViewController
 @property(weak, nonatomic) IBOutlet MDCButton *textButton;
 @property(weak, nonatomic) IBOutlet MDCButton *containedButton;
 @property(weak, nonatomic) IBOutlet MDCFloatingButton *floatingActionButton;
 @property(weak, nonatomic) IBOutlet UISwitch *inkBoundingSwitch;
+@property(strong, nonatomic) MDCContainerScheme *containerScheme;
 @end
 
 @implementation ButtonsContentEdgeInsetsExample
@@ -30,21 +32,28 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Buttons", @"Buttons (Content Edge Insets)" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
-    @"storyboardName": @"ButtonsContentEdgeInsets",
+    @"breadcrumbs" : @[ @"Buttons", @"Buttons (Content Edge Insets)" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
+    @"storyboardName" : @"ButtonsContentEdgeInsets",
   };
 }
 
 #pragma mark - UIViewController
 
+- (id)init {
+  self = [super init];
+  if (self) {
+    _containerScheme = [[MDCContainerScheme alloc] init];
+  }
+  return self;
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
-  [MDCContainedButtonThemer applyScheme:buttonScheme toButton:self.containedButton];
-  [MDCTextButtonThemer applyScheme:buttonScheme toButton:self.textButton];
+  [self.textButton applyTextThemeWithScheme:self.containerScheme];
+  [self.containedButton applyContainedThemeWithScheme:[self containerScheme]];
 
   self.textButton.contentEdgeInsets = UIEdgeInsetsMake(64, 64, 0, 0);
   self.containedButton.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 64, 64);

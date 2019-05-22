@@ -22,11 +22,9 @@
 #import "MaterialMath.h"
 #import "MaterialTypography.h"
 
-
 static const NSUInteger kTitleFontSize = 20;
 static const CGFloat kNavigationBarDefaultHeight = 56;
 static const CGFloat kNavigationBarMinHeight = 24;
-static const UIEdgeInsets kTextInsets = {0, 16, 0, 16};
 
 // KVO contexts
 static char *const kKVOContextMDCNavigationBar = "kKVOContextMDCNavigationBar";
@@ -135,6 +133,7 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 }
 
 - (void)commonMDCNavigationBarInit {
+  _titleInsets = UIEdgeInsetsMake(0, 16, 0, 16);
   _uppercasesButtonTitles = YES;
   _observedNavigationItemLock = [[NSObject alloc] init];
   _titleFont = [MDCTypography titleFont];
@@ -238,39 +237,32 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   // values are zero. DO NOT use this to get the top or bottom Safe Area insets.
   UIEdgeInsets RTLFriendlySafeAreaInsets = UIEdgeInsetsZero;
   if (@available(iOS 11.0, *)) {
-    RTLFriendlySafeAreaInsets =
-        MDFInsetsMakeWithLayoutDirection(self.safeAreaInsets.top,
-                                         self.safeAreaInsets.left,
-                                         self.safeAreaInsets.bottom,
-                                         self.safeAreaInsets.right,
-                                         self.mdf_effectiveUserInterfaceLayoutDirection);
+    RTLFriendlySafeAreaInsets = MDFInsetsMakeWithLayoutDirection(
+        self.safeAreaInsets.top, self.safeAreaInsets.left, self.safeAreaInsets.bottom,
+        self.safeAreaInsets.right, self.mdf_effectiveUserInterfaceLayoutDirection);
   }
 
   CGSize leadingButtonBarSize = [_leadingButtonBar sizeThatFits:self.bounds.size];
-  CGRect leadingButtonBarFrame = CGRectMake(RTLFriendlySafeAreaInsets.left,
-                                            CGRectGetMinY(self.bounds),
-                                            leadingButtonBarSize.width,
-                                            leadingButtonBarSize.height);
+  CGRect leadingButtonBarFrame =
+      CGRectMake(RTLFriendlySafeAreaInsets.left, CGRectGetMinY(self.bounds),
+                 leadingButtonBarSize.width, leadingButtonBarSize.height);
   CGSize trailingButtonBarSize = [_trailingButtonBar sizeThatFits:self.bounds.size];
   CGFloat xOrigin =
       CGRectGetWidth(self.bounds) - RTLFriendlySafeAreaInsets.right - trailingButtonBarSize.width;
-  CGRect trailingButtonBarFrame = CGRectMake(xOrigin,
-                                             CGRectGetMinY(self.bounds),
-                                             trailingButtonBarSize.width,
-                                             trailingButtonBarSize.height);
+  CGRect trailingButtonBarFrame =
+      CGRectMake(xOrigin, CGRectGetMinY(self.bounds), trailingButtonBarSize.width,
+                 trailingButtonBarSize.height);
   if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
-    leadingButtonBarFrame = MDFRectFlippedHorizontally(leadingButtonBarFrame,
-                                                       CGRectGetWidth(self.bounds));
-    trailingButtonBarFrame = MDFRectFlippedHorizontally(trailingButtonBarFrame,
-                                                        CGRectGetWidth(self.bounds));
+    leadingButtonBarFrame =
+        MDFRectFlippedHorizontally(leadingButtonBarFrame, CGRectGetWidth(self.bounds));
+    trailingButtonBarFrame =
+        MDFRectFlippedHorizontally(trailingButtonBarFrame, CGRectGetWidth(self.bounds));
   }
   _leadingButtonBar.frame = leadingButtonBarFrame;
   _trailingButtonBar.frame = trailingButtonBarFrame;
 
-  UIEdgeInsets textInsets = kTextInsets;
-
   // textFrame is used to determine layout of both TitleLabel and TitleView
-  CGRect textFrame = UIEdgeInsetsInsetRect(self.bounds, textInsets);
+  CGRect textFrame = UIEdgeInsetsInsetRect(self.bounds, self.titleInsets);
   textFrame.origin.x += _leadingButtonBar.frame.size.width;
   textFrame.size.width -= _leadingButtonBar.frame.size.width + _trailingButtonBar.frame.size.width;
   if (@available(iOS 11.0, *)) {
@@ -315,9 +307,9 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
       break;
 
     case MDCNavigationBarTitleViewLayoutBehaviorCenter: {
-      CGFloat availableWidth = UIEdgeInsetsInsetRect(self.bounds, textInsets).size.width;
-      availableWidth -= MAX(_leadingButtonBar.frame.size.width,
-                            _trailingButtonBar.frame.size.width) * 2;
+      CGFloat availableWidth = UIEdgeInsetsInsetRect(self.bounds, self.titleInsets).size.width;
+      availableWidth -=
+          MAX(_leadingButtonBar.frame.size.width, _trailingButtonBar.frame.size.width) * 2;
       if (@available(iOS 11.0, *)) {
         availableWidth -= self.safeAreaInsets.left + self.safeAreaInsets.right;
       }
@@ -453,12 +445,13 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   switch (alignment) {
     case UIControlContentVerticalAlignmentBottom:
       return CGRectMake(CGRectGetMinX(frame), CGRectGetMaxY(bounds) - CGRectGetHeight(frame),
-                        CGRectGetWidth(frame),
-                        CGRectGetHeight(frame));
+                        CGRectGetWidth(frame), CGRectGetHeight(frame));
 
     case UIControlContentVerticalAlignmentCenter: {
-      CGFloat centeredY = MDCFloor((CGRectGetHeight(bounds) - CGRectGetHeight(frame)) / 2) + CGRectGetMinY(bounds);
-      return CGRectMake(CGRectGetMinX(frame), centeredY, CGRectGetWidth(frame), CGRectGetHeight(frame));
+      CGFloat centeredY =
+          MDCFloor((CGRectGetHeight(bounds) - CGRectGetHeight(frame)) / 2) + CGRectGetMinY(bounds);
+      return CGRectMake(CGRectGetMinX(frame), centeredY, CGRectGetWidth(frame),
+                        CGRectGetHeight(frame));
     }
 
     case UIControlContentVerticalAlignmentTop: {
@@ -488,15 +481,14 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 
       MDCButtonBar *leftButtonBar = self.leadingButtonBar;
       MDCButtonBar *rightButtonBar = self.trailingButtonBar;
-      UIEdgeInsets textInsets = kTextInsets;
-      CGFloat titleLeftInset = textInsets.left;
-      CGFloat titleRightInset = textInsets.right;
+      CGFloat titleLeftInset = self.titleInsets.left;
+      CGFloat titleRightInset = self.titleInsets.right;
 
       if (isRTL) {
         leftButtonBar = self.trailingButtonBar;
         rightButtonBar = self.leadingButtonBar;
-        titleLeftInset = textInsets.right;
-        titleRightInset = textInsets.left;
+        titleLeftInset = self.titleInsets.right;
+        titleRightInset = self.titleInsets.left;
       }
 
       // Determine how much space is available to the left/right of the navigation bar's midpoint
@@ -516,8 +508,7 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
       if (leftMidSpaceX >= halfFrameWidth) {
         CGFloat frameMaxX = CGRectGetMinX(rightButtonBar.frame) - titleRightInset;
         return CGRectMake(frameMaxX - CGRectGetWidth(frame), CGRectGetMinY(frame),
-                          CGRectGetWidth(frame),
-                          CGRectGetHeight(frame));
+                          CGRectGetWidth(frame), CGRectGetHeight(frame));
       }
       if (rightMidSpaceX >= halfFrameWidth) {
         CGFloat frameOriginX = CGRectGetMaxX(leftButtonBar.frame) + titleLeftInset;
@@ -559,8 +550,8 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 - (void)setTitle:(NSString *)title {
   // |self.titleTextAttributes| can only be set if |title| is set
   if (self.titleTextAttributes && title.length > 0) {
-    _titleLabel.attributedText =
-        [[NSAttributedString alloc] initWithString:title attributes:_titleTextAttributes];
+    _titleLabel.attributedText = [[NSAttributedString alloc] initWithString:title
+                                                                 attributes:_titleTextAttributes];
   } else {
     _titleLabel.text = title;
   }
@@ -572,9 +563,6 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 }
 
 - (void)setTitleView:(UIView *)titleView {
-  if (self.titleView == titleView) {
-    return;
-  }
   // Ignore sandbag KVO events
   if ([_observedNavigationItem.titleView isKindOfClass:[MDCNavigationBarSandbagView class]]) {
     return;
@@ -589,15 +577,17 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
     _observedNavigationItem.titleView = nil;
   }
 
-  [self.titleView removeFromSuperview];
-  _titleView = titleView;
+  if (self.titleView != titleView) {
+    [self.titleView removeFromSuperview];
+    _titleView = titleView;
+  }
 
   if (_titleView != nil) {
     [self addSubview:_titleView];
   }
 
   _titleLabel.hidden = _titleView != nil;
-    
+
   [self setNeedsLayout];
 }
 
@@ -613,8 +603,8 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
     // |_titleTextAttributes| can only be set if |self.title| is set
     if (_titleTextAttributes && self.title.length > 0) {
       // Set label text as newly created attributed string with attributes if non-nil
-      _titleLabel.attributedText =
-          [[NSAttributedString alloc] initWithString:self.title attributes:_titleTextAttributes];
+      _titleLabel.attributedText = [[NSAttributedString alloc] initWithString:self.title
+                                                                   attributes:_titleTextAttributes];
     } else {
       // Otherwise set titleLabel text property
       _titleLabel.text = self.title;

@@ -24,56 +24,56 @@
 /**
  Displayed most frequently across your app.
  */
-@property(nonnull, readonly, nonatomic) UIColor *primaryColor;
+@property(nonnull, readonly, copy, nonatomic) UIColor *primaryColor;
 
 /**
  A tonal variation of primary color.
  */
-@property(nonnull, readonly, nonatomic) UIColor *primaryColorVariant;
+@property(nonnull, readonly, copy, nonatomic) UIColor *primaryColorVariant;
 
 /**
  Accents select parts of your UI.
  */
-@property(nonnull, readonly, nonatomic) UIColor *secondaryColor;
+@property(nonnull, readonly, copy, nonatomic) UIColor *secondaryColor;
 
 /**
  The color used to indicate error status.
  */
-@property(nonnull, readonly, nonatomic) UIColor *errorColor;
+@property(nonnull, readonly, copy, nonatomic) UIColor *errorColor;
 
 /**
  The color of surfaces such as cards, sheets, menus.
  */
-@property(nonnull, readonly, nonatomic) UIColor *surfaceColor;
+@property(nonnull, readonly, copy, nonatomic) UIColor *surfaceColor;
 
 /**
  The underlying color of an app’s content.
  */
-@property(nonnull, readonly, nonatomic) UIColor *backgroundColor;
+@property(nonnull, readonly, copy, nonatomic) UIColor *backgroundColor;
 
 /**
  A color that passes accessibility guidelines for text/iconography when drawn on top of
  @c primaryColor.
  */
-@property(nonnull, readonly, nonatomic) UIColor *onPrimaryColor;
+@property(nonnull, readonly, copy, nonatomic) UIColor *onPrimaryColor;
 
 /**
  A color that passes accessibility guidelines for text/iconography when drawn on top of
  @c secondaryColor.
  */
-@property(nonnull, readonly, nonatomic) UIColor *onSecondaryColor;
+@property(nonnull, readonly, copy, nonatomic) UIColor *onSecondaryColor;
 
 /**
  A color that passes accessibility guidelines for text/iconography when drawn on top of
  @c surfaceColor.
  */
-@property(nonnull, readonly, nonatomic) UIColor *onSurfaceColor;
+@property(nonnull, readonly, copy, nonatomic) UIColor *onSurfaceColor;
 
 /**
  A color that passes accessibility guidelines for text/iconography when drawn on top of
  @c backgroundColor.
  */
-@property(nonnull, readonly, nonatomic) UIColor *onBackgroundColor;
+@property(nonnull, readonly, copy, nonatomic) UIColor *onBackgroundColor;
 @end
 
 /**
@@ -90,19 +90,19 @@ typedef NS_ENUM(NSInteger, MDCColorSchemeDefaults) {
  A simple implementation of @c MDCColorScheming that provides Material default color values from
  which basic customizations can be made.
  */
-@interface MDCSemanticColorScheme : NSObject <MDCColorScheming>
+@interface MDCSemanticColorScheme : NSObject <MDCColorScheming, NSCopying>
 
 // Redeclare protocol properties as readwrite
-@property(nonnull, readwrite, nonatomic) UIColor *primaryColor;
-@property(nonnull, readwrite, nonatomic) UIColor *primaryColorVariant;
-@property(nonnull, readwrite, nonatomic) UIColor *secondaryColor;
-@property(nonnull, readwrite, nonatomic) UIColor *errorColor;
-@property(nonnull, readwrite, nonatomic) UIColor *surfaceColor;
-@property(nonnull, readwrite, nonatomic) UIColor *backgroundColor;
-@property(nonnull, readwrite, nonatomic) UIColor *onPrimaryColor;
-@property(nonnull, readwrite, nonatomic) UIColor *onSecondaryColor;
-@property(nonnull, readwrite, nonatomic) UIColor *onSurfaceColor;
-@property(nonnull, readwrite, nonatomic) UIColor *onBackgroundColor;
+@property(nonnull, readwrite, copy, nonatomic) UIColor *primaryColor;
+@property(nonnull, readwrite, copy, nonatomic) UIColor *primaryColorVariant;
+@property(nonnull, readwrite, copy, nonatomic) UIColor *secondaryColor;
+@property(nonnull, readwrite, copy, nonatomic) UIColor *errorColor;
+@property(nonnull, readwrite, copy, nonatomic) UIColor *surfaceColor;
+@property(nonnull, readwrite, copy, nonatomic) UIColor *backgroundColor;
+@property(nonnull, readwrite, copy, nonatomic) UIColor *onPrimaryColor;
+@property(nonnull, readwrite, copy, nonatomic) UIColor *onSecondaryColor;
+@property(nonnull, readwrite, copy, nonatomic) UIColor *onSurfaceColor;
+@property(nonnull, readwrite, copy, nonatomic) UIColor *onBackgroundColor;
 
 /**
  Initializes the color scheme with the latest material defaults.

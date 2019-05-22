@@ -27,8 +27,8 @@
 #endif
 #endif
 
-static const CGFloat kHighAlpha = 0.87f;
-static const CGFloat kInkAlpha = 0.16f;
+static const CGFloat kHighAlpha = (CGFloat)0.87;
+static const CGFloat kInkAlpha = (CGFloat)0.16;
 
 @interface MDCListThemerTests : XCTestCase
 

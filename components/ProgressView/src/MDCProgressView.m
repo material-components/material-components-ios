@@ -25,7 +25,7 @@ static inline UIColor *MDCProgressViewDefaultTintColor(void) {
 }
 
 // The ratio by which to desaturate the progress tint color to obtain the default track tint color.
-static const CGFloat MDCProgressViewTrackColorDesaturation = 0.3f;
+static const CGFloat MDCProgressViewTrackColorDesaturation = (CGFloat)0.3;
 
 static const NSTimeInterval MDCProgressViewAnimationDuration = 0.25;
 
@@ -189,18 +189,18 @@ static const NSTimeInterval MDCProgressViewAnimationDuration = 0.25;
   }
 
   [UIView animateWithDuration:animated ? [[self class] animationDuration] : 0
-                         delay:0
-                       options:[[self class] animationOptions]
-                    animations:animations
-                    completion:^(BOOL finished) {
-                      if (hidden) {
-                        self.animatingHide = NO;
-                        self.hidden = YES;
-                      }
-                      if (userCompletion) {
-                        userCompletion(finished);
-                      }
-                    }];
+                        delay:0
+                      options:[[self class] animationOptions]
+                   animations:animations
+                   completion:^(BOOL finished) {
+                     if (hidden) {
+                       self.animatingHide = NO;
+                       self.hidden = YES;
+                     }
+                     if (userCompletion) {
+                       userCompletion(finished);
+                     }
+                   }];
 }
 
 #pragma mark Accessibility
@@ -261,7 +261,7 @@ static const NSTimeInterval MDCProgressViewAnimationDuration = 0.25;
 + (UIColor *)defaultTrackTintColorForProgressTintColor:(UIColor *)progressTintColor {
   CGFloat hue, saturation, brightness, alpha;
   if ([progressTintColor getHue:&hue saturation:&saturation brightness:&brightness alpha:&alpha]) {
-    CGFloat newSaturation = MIN(saturation * MDCProgressViewTrackColorDesaturation, 1.0f);
+    CGFloat newSaturation = MIN(saturation * MDCProgressViewTrackColorDesaturation, 1);
     return [UIColor colorWithHue:hue saturation:newSaturation brightness:brightness alpha:alpha];
   }
   return [UIColor clearColor];

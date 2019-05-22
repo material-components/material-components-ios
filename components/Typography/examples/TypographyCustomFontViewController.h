@@ -16,5 +16,4 @@
 
 @interface TypographyCustomFontViewController : UITableViewController
 
-
 @end

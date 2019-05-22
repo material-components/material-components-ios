@@ -19,8 +19,13 @@
 #import "MaterialShadowElevations.h"
 #import "MaterialTypographyScheme.h"
 
-/** Defines a readonly immutable interface for component style data to be applied by a themer. */
-@protocol MDCAlertScheming
+/**
+ Defines a readonly immutable interface for component style data to be applied by a themer.
+
+ @warning This API is deprecated. Learn more at
+ docs/theming.md#migration-guide-themers-to-theming-extensions
+ */
+__deprecated_msg("Please use MDCContainerScheming") @protocol MDCAlertScheming
 
 /** The color scheme to apply to Dialog. */
 @property(nonnull, readonly, nonatomic) id<MDCColorScheming> colorScheme;
@@ -39,9 +44,15 @@
 
 @end
 
-/**  A simple implementation of @c MDCAlertScheming that provides default color,
- typography and shape schemes, from which customizations can be made. */
-@interface MDCAlertScheme : NSObject <MDCAlertScheming>
+/**
+ A simple implementation of @c MDCAlertScheming that provides default color,
+ typography and shape schemes, from which customizations can be made.
+
+ @warning This API is deprecated. Learn more at
+ docs/theming.md#migration-guide-themers-to-theming-extensions
+ */
+__deprecated_msg("Please use MDCContainerScheme") @interface MDCAlertScheme
+    : NSObject<MDCAlertScheming>
 
 /** The color scheme to apply to Dialog. */
 @property(nonnull, readwrite, nonatomic) id<MDCColorScheming> colorScheme;

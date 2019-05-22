@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #import "MaterialColorScheme.h"
-#import "MaterialTabs.h"
 #import "MaterialTabs+ColorThemer.h"
+#import "MaterialTabs.h"
 
 @interface BottomNavigationBarExample : UIViewController <MDCTabBarDelegate>
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
@@ -28,7 +28,8 @@
 - (id)init {
   self = [super init];
   if (self) {
-    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   }
   return self;
 }
@@ -40,22 +41,29 @@
   _bottomNavigationBar.translatesAutoresizingMaskIntoConstraints = NO;
   _bottomNavigationBar.delegate = self;
   [MDCTabBarColorThemer applySemanticColorScheme:self.colorScheme toTabs:_bottomNavigationBar];
-  
-  _bottomNavigationBar.inkColor = [UIColor colorWithRed:0 green:0.5f blue:0 alpha:0.15f];
+
+  _bottomNavigationBar.inkColor = [UIColor colorWithRed:0
+                                                  green:(CGFloat)0.5
+                                                   blue:0
+                                                  alpha:(CGFloat)0.15];
 
   NSBundle *bundle = [NSBundle bundleForClass:[BottomNavigationBarExample class]];
-  UIImage *infoImage =
-      [UIImage imageNamed:@"TabBarDemo_ic_info" inBundle:bundle compatibleWithTraitCollection:nil];
-  UIImage *starImage =
-      [UIImage imageNamed:@"TabBarDemo_ic_star" inBundle:bundle compatibleWithTraitCollection:nil];
+  UIImage *infoImage = [UIImage imageNamed:@"TabBarDemo_ic_info"
+                                  inBundle:bundle
+             compatibleWithTraitCollection:nil];
+  UIImage *starImage = [UIImage imageNamed:@"TabBarDemo_ic_star"
+                                  inBundle:bundle
+             compatibleWithTraitCollection:nil];
   _bottomNavigationBar.items = @[
     [[UITabBarItem alloc] initWithTitle:@"Red" image:infoImage tag:0],
     [[UITabBarItem alloc] initWithTitle:@"Blue" image:starImage tag:0]
   ];
 
   _colors = @[
-    [UIColor colorWithRed:0.5 green:0 blue:0 alpha:1],
-    [UIColor colorWithRed:0 green:0 blue:0.5 alpha:1]
+    [UIColor colorWithRed:0.5 green:0 blue:0 alpha:1], [UIColor colorWithRed:0
+                                                                       green:0
+                                                                        blue:0.5
+                                                                       alpha:1]
   ];
 
   [self.view addSubview:_bottomNavigationBar];
@@ -67,21 +75,24 @@
                                   toItem:self.view
                                attribute:NSLayoutAttributeBottom
                               multiplier:1
-                                constant:0].active = YES;
+                                constant:0]
+      .active = YES;
   [NSLayoutConstraint constraintWithItem:_bottomNavigationBar
                                attribute:NSLayoutAttributeLeft
                                relatedBy:NSLayoutRelationEqual
                                   toItem:self.view
                                attribute:NSLayoutAttributeLeft
                               multiplier:1
-                                constant:0].active = YES;
+                                constant:0]
+      .active = YES;
   [NSLayoutConstraint constraintWithItem:_bottomNavigationBar
                                attribute:NSLayoutAttributeRight
                                relatedBy:NSLayoutRelationEqual
                                   toItem:self.view
                                attribute:NSLayoutAttributeRight
                               multiplier:1
-                                constant:0].active = YES;
+                                constant:0]
+      .active = YES;
 }
 
 #pragma mark - MDCTabBarDelegate
@@ -118,9 +129,9 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Tab Bar", @"Bottom Navigation" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Tab Bar", @"Bottom Navigation" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

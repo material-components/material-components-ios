@@ -13,11 +13,9 @@
 // limitations under the License.
 
 #import "MaterialButtons.h"
-#import "MaterialButtons+ButtonThemer.h"
-#import "MaterialButtons+ColorThemer.h"
-#import "MaterialButtons+TypographyThemer.h"
+#import "MaterialButtons+Theming.h"
+#import "MaterialContainerScheme.h"
 #import "MaterialTypography.h"
-#import "MDCTextButtonThemer.h"
 
 #import "supplemental/ButtonsTypicalUseSupplemental.h"
 
@@ -32,9 +30,16 @@ const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
 - (id)init {
   self = [super init];
   if (self) {
-    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
-    self.shapeScheme = [[MDCShapeScheme alloc] init];
-    self.typographyScheme = [[MDCTypographyScheme alloc] init];
+    self.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    self.shapeScheme =
+        [[MDCShapeScheme alloc] initWithDefaults:MDCShapeSchemeDefaultsMaterial201809];
+    self.typographyScheme =
+        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+    self.containerScheme = [[MDCContainerScheme alloc] init];
+    self.containerScheme.colorScheme = self.colorScheme;
+    self.containerScheme.shapeScheme = self.shapeScheme;
+    self.containerScheme.typographyScheme = self.typographyScheme;
   }
   return self;
 }
@@ -44,16 +49,11 @@ const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
 
   self.view.backgroundColor = [UIColor whiteColor];
 
-  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
-  buttonScheme.colorScheme = self.colorScheme;
-  buttonScheme.shapeScheme = self.shapeScheme;
-  buttonScheme.typographyScheme = self.typographyScheme;
-
   // Contained button
 
   MDCButton *containedButton = [[MDCButton alloc] init];
   [containedButton setTitle:@"Button" forState:UIControlStateNormal];
-  [MDCContainedButtonThemer applyScheme:buttonScheme toButton:containedButton];
+  [containedButton applyContainedThemeWithScheme:self.containerScheme];
   [containedButton sizeToFit];
   CGFloat containedButtonVerticalInset =
       MIN(0, -(kMinimumAccessibleButtonSize.height - CGRectGetHeight(containedButton.bounds)) / 2);
@@ -71,7 +71,7 @@ const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
 
   MDCButton *disabledContainedButton = [[MDCButton alloc] init];
   [disabledContainedButton setTitle:@"Button" forState:UIControlStateNormal];
-  [MDCContainedButtonThemer applyScheme:buttonScheme toButton:disabledContainedButton];
+  [disabledContainedButton applyContainedThemeWithScheme:self.containerScheme];
   [disabledContainedButton sizeToFit];
   [disabledContainedButton addTarget:self
                               action:@selector(didTap:)
@@ -82,16 +82,15 @@ const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
   // Text button
 
   MDCButton *textButton = [[MDCButton alloc] init];
-  [MDCTextButtonThemer applyScheme:buttonScheme toButton:textButton];
+  [textButton applyTextThemeWithScheme:self.containerScheme];
   [textButton setTitle:@"Button" forState:UIControlStateNormal];
   [textButton sizeToFit];
   CGFloat textButtonVerticalInset =
       MIN(0, -(kMinimumAccessibleButtonSize.height - CGRectGetHeight(textButton.bounds)) / 2);
   CGFloat textButtonHorizontalInset =
       MIN(0, -(kMinimumAccessibleButtonSize.width - CGRectGetWidth(textButton.bounds)) / 2);
-  textButton.hitAreaInsets =
-      UIEdgeInsetsMake(textButtonVerticalInset, textButtonHorizontalInset,
-                       textButtonVerticalInset, textButtonHorizontalInset);
+  textButton.hitAreaInsets = UIEdgeInsetsMake(textButtonVerticalInset, textButtonHorizontalInset,
+                                              textButtonVerticalInset, textButtonHorizontalInset);
   [textButton addTarget:self
                  action:@selector(didTap:)
        forControlEvents:UIControlEventTouchUpInside];
@@ -101,7 +100,7 @@ const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
 
   MDCButton *disabledTextButton = [[MDCButton alloc] init];
   [disabledTextButton setTitle:@"Button" forState:UIControlStateNormal];
-  [MDCTextButtonThemer applyScheme:buttonScheme toButton:disabledTextButton];
+  [disabledTextButton applyTextThemeWithScheme:self.containerScheme];
   [disabledTextButton sizeToFit];
   [disabledTextButton addTarget:self
                          action:@selector(didTap:)
@@ -113,7 +112,7 @@ const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
 
   MDCButton *outlinedButton = [[MDCButton alloc] init];
   [outlinedButton setTitle:@"Button" forState:UIControlStateNormal];
-  [MDCOutlinedButtonThemer applyScheme:buttonScheme toButton:outlinedButton];
+  [outlinedButton applyOutlinedThemeWithScheme:self.containerScheme];
   [outlinedButton sizeToFit];
   CGFloat outlineButtonVerticalInset =
       MIN(0, -(kMinimumAccessibleButtonSize.height - CGRectGetHeight(outlinedButton.frame)) / 2);
@@ -123,15 +122,15 @@ const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
       UIEdgeInsetsMake(outlineButtonVerticalInset, outlineButtonHorizontalInset,
                        outlineButtonVerticalInset, outlineButtonHorizontalInset);
   [outlinedButton addTarget:self
-                    action:@selector(didTap:)
-          forControlEvents:UIControlEventTouchUpInside];
+                     action:@selector(didTap:)
+           forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:outlinedButton];
 
   // Disabled outlined button
 
   MDCButton *disabledOutlinedButton = [[MDCButton alloc] init];
   [disabledOutlinedButton setTitle:@"Button" forState:UIControlStateNormal];
-  [MDCOutlinedButtonThemer applyScheme:buttonScheme toButton:disabledOutlinedButton];
+  [disabledOutlinedButton applyOutlinedThemeWithScheme:self.containerScheme];
   [disabledOutlinedButton sizeToFit];
   [disabledOutlinedButton addTarget:self
                              action:@selector(didTap:)
@@ -150,13 +149,13 @@ const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
   UIImage *plusImage =
       [[UIImage imageNamed:@"Plus"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   [self.floatingButton setImage:plusImage forState:UIControlStateNormal];
-  [MDCFloatingActionButtonThemer applyScheme:buttonScheme toButton:self.floatingButton];
+  [self.floatingButton applySecondaryThemeWithScheme:[self containerScheme]];
   self.floatingButton.accessibilityLabel = @"Create";
   [self.view addSubview:self.floatingButton];
 
   self.buttons = @[
     containedButton, disabledContainedButton, textButton, disabledTextButton, outlinedButton,
-    disabledOutlinedButton,self.floatingButton
+    disabledOutlinedButton, self.floatingButton
   ];
 
   [self setupExampleViews];

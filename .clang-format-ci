@@ -1,0 +1,56 @@
+#!/bin/bash
+#
+# Copyright 2018-present The Material Components for iOS Authors. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Fail on any error.
+set -e
+
+# The tagged version of https://github.com/material-foundation/clang-format-ci to check out.
+# A * wildcard can be used to check out the latest release of a given version.
+CLANG_FORMAT_CI_VERSION="v1.*"
+
+CLANG_FORMAT_CI_SRC_DIR=".clang-format-ci-src"
+
+# Will run git clang-format on the branch's changes, reporting a failure if the linter generated any
+# stylistic changes.
+#
+# For local runs, you must set the following environment variables:
+#
+#   GITHUB_API_TOKEN -> Create a token here: https://github.com/settings/tokens.
+#                       Must have public_repo scope.
+#   KOKORO_GITHUB_PULL_REQUEST_NUMBER="###" -> The PR # you want to post the API diff results to.
+#   KOKORO_GITHUB_PULL_REQUEST_COMMIT="..." -> The PR commit you want to post to.
+#
+# And install the following tools:
+#
+# - clang-format
+# - git-clang-format
+lint_clang_format() {
+  if [ ! -d "$CLANG_FORMAT_CI_SRC_DIR" ]; then
+    git clone --recurse-submodules https://github.com/material-foundation/clang-format-ci.git "$CLANG_FORMAT_CI_SRC_DIR"
+  fi
+
+  pushd "$CLANG_FORMAT_CI_SRC_DIR"
+  git fetch > /dev/null
+  TAG=$(git tag --sort=v:refname -l "$CLANG_FORMAT_CI_VERSION" | tail -n1)
+  git checkout "$TAG" > /dev/null
+  git submodule update --init --recursive
+  echo "Using clang-format-ci $TAG"
+  popd
+
+  .clang-format-ci-src/from-kokoro.sh "material-components/material-components-ios"
+}
+
+lint_clang_format

@@ -27,13 +27,12 @@
 #import "MaterialPalettes.h"
 #import "MaterialTypography.h"
 
-static const CGFloat MDCTextInputControllerLegacyFullWidthClearButtonImageSquareWidthHeight = 24.f;
+static const CGFloat MDCTextInputControllerLegacyFullWidthClearButtonImageSquareWidthHeight = 24;
 
 @interface MDCTextInputControllerFullWidth ()
 - (void)setupInput;
 @end
 @implementation MDCTextInputControllerLegacyFullWidth
-
 
 - (void)setupInput {
   [super setupInput];

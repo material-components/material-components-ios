@@ -69,6 +69,7 @@ For more information on text field styles, and animated images of each style in 
   - [Text Field with Floating Placeholder](#text-field-with-floating-placeholder)
   - [Text Field with Character Count and Inline Placeholder](#text-field-with-character-count-and-inline-placeholder)
 - [Extensions](#extensions)
+  - [Theming Extensions](#theming-extensions)
   - [Text Fields Color Theming](#text-fields-color-theming)
   - [Text Fields Typography Theming](#text-fields-typography-theming)
 - [Accessibility](#accessibility)
@@ -288,6 +289,49 @@ self.textFieldControllerDefaultCharMax.floatingEnabled = NO;
 
 ## Extensions
 
+<!-- Extracted from docs/theming.md -->
+
+### Theming Extensions
+
+You can theme an MDCTextField using the TextFields theming extension. To add the theming extension to your project add the following line to your Podfile:
+
+```bash
+pod 'MaterialComponents/TextFields+Theming'
+```
+
+Then import the theming extension and the `MDCContainerScheme` and create an `MDCContainerScheme` instance. A container scheme
+defines schemes for subsystems like Color and Typography. Finally, call theming methods on the theming extension of your MDCTextInputController instance.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+// Step 1: Import the TextFields theming extension and container scheme
+import MaterialComponents.MaterialTextFields_Theming
+import MaterialComponents.MaterialContainerScheme
+
+// Step 2: Create or get a container scheme
+let containerScheme = MDCContainerScheme()
+
+// Step 3: Apply the container scheme to your component using the desired alwert style
+textInputController.applyTheme(withScheme: containerScheme)
+```
+
+#### Objective-C
+
+```objc
+// Step 1: Import the TextField theming extension and container scheme
+#import "MaterialTextFields+Theming.h"
+#import "MaterialContainerScheme.h"
+
+// Step 2: Create or get a container scheme
+MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+
+// Step 3: Apply the container scheme to your component using the desired alert style
+[textInputController applyThemeWithScheme:containerScheme];
+```
+<!--</div>-->
+
+
 <!-- Extracted from docs/color-theming.md -->
 
 ### Text Fields Color Theming
@@ -329,7 +373,7 @@ MDCTextFieldColorThemer.applySemanticColorScheme(colorScheme,
 #import "MaterialTextFields+ColorThemer.h"
 
 // Step 2: Create or get a color scheme
-id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
+id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 
 // Step 3: Apply the color scheme to your component
 

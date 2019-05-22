@@ -20,25 +20,24 @@
 @implementation MDCTextFieldFontThemer
 
 + (void)applyFontScheme:(id<MDCFontScheme>)fontScheme
-  toTextInputController:(id<MDCTextInputController>)textInputController {
+    toTextInputController:(id<MDCTextInputController>)textInputController {
   textInputController.inlinePlaceholderFont = fontScheme.body1;
   textInputController.leadingUnderlineLabelFont = fontScheme.caption;
   textInputController.trailingUnderlineLabelFont = fontScheme.caption;
   if ([textInputController
-       conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
+          conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
     id<MDCTextInputControllerFloatingPlaceholder> textInputControllerFloatingPlaceholder =
         (id<MDCTextInputControllerFloatingPlaceholder>)textInputController;
     if (!fontScheme.body1 || !fontScheme.caption || fontScheme.caption.pointSize <= 0) {
       [textInputControllerFloatingPlaceholder setFloatingPlaceholderScaleDefault:0];
     } else {
       textInputControllerFloatingPlaceholder.floatingPlaceholderScale =
-          [NSNumber numberWithDouble:fontScheme.caption.pointSize/fontScheme.body1.pointSize];
+          [NSNumber numberWithDouble:fontScheme.caption.pointSize / fontScheme.body1.pointSize];
     }
   }
 }
 
-+ (void)applyFontScheme:(id<MDCFontScheme>)fontScheme
-            toTextField:(MDCTextField *)textField {
++ (void)applyFontScheme:(id<MDCFontScheme>)fontScheme toTextField:(MDCTextField *)textField {
   textField.font = fontScheme.body1;
   textField.placeholderLabel.font = fontScheme.body1;
   textField.leadingUnderlineLabel.font = fontScheme.caption;
@@ -52,18 +51,18 @@
 #pragma clang diagnostic ignored "-Wobjc-method-access"
 #endif
 + (void)applyFontScheme:(id<MDCFontScheme>)fontScheme
-toAllTextInputControllersOfClass:(Class<MDCTextInputController>)textInputControllerClass {
+    toAllTextInputControllersOfClass:(Class<MDCTextInputController>)textInputControllerClass {
   [textInputControllerClass setInlinePlaceholderFontDefault:fontScheme.body1];
   [textInputControllerClass setTrailingUnderlineLabelFontDefault:fontScheme.caption];
   [textInputControllerClass setLeadingUnderlineLabelFontDefault:fontScheme.caption];
   if ([textInputControllerClass
-       conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
+          conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
     Class<MDCTextInputControllerFloatingPlaceholder> textInputControllerFloatingPlaceholderClass =
         (Class<MDCTextInputControllerFloatingPlaceholder>)textInputControllerClass;
     if (!fontScheme.body1 || !fontScheme.caption || fontScheme.caption.pointSize <= 0) {
       [textInputControllerFloatingPlaceholderClass setFloatingPlaceholderScaleDefault:0.75];
     } else {
-      CGFloat scale = fontScheme.caption.pointSize/fontScheme.body1.pointSize;
+      CGFloat scale = fontScheme.caption.pointSize / fontScheme.body1.pointSize;
       [textInputControllerFloatingPlaceholderClass setFloatingPlaceholderScaleDefault:scale];
     }
   }
@@ -71,6 +70,5 @@ toAllTextInputControllersOfClass:(Class<MDCTextInputController>)textInputControl
 #if !defined(__IPHONE_11_0)
 #pragma clang diagnostic pop
 #endif
-
 
 @end
