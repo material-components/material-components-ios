@@ -54,6 +54,7 @@
   XCTAssertNotNil(self.alert.actions);
   XCTAssertNotNil(self.alert.title);
   XCTAssertNotNil(self.alert.message);
+  XCTAssertTrue(self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
 }
 
 - (void)testAlertControllerWithTitleMessage {
@@ -311,6 +312,18 @@
 
   // Then
   XCTAssertEqualObjects(self.alert.view.backgroundColor, testColor);
+}
+
+/**
+ Test the setting @c adjustFontForContentSizeCategoryWhenScaledFontsIsUnavailable also sets the
+ property on the @c alertView.
+ */
+- (void)testAdjustFontForContentSizeCategoryWhenScaledFontIsUnavailableSetsTheAlertViewProperty {
+  // When
+  self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
+
+  // Then
+  XCTAssertFalse(self.alert.alertView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
 }
 
 @end
