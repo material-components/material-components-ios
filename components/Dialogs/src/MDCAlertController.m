@@ -314,6 +314,15 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   }
 }
 
+- (BOOL)adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable {
+  return self.alertView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
+}
+
+- (void)setAdjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable:(BOOL)adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable {
+  self.alertView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
+}
+
+
 - (void)actionButtonPressed:(id)button {
   MDCAlertAction *action = [self.actionManager actionForButton:button];
 
