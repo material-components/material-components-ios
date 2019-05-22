@@ -18,6 +18,7 @@
 #import "MaterialColorScheme.h"
 #import "MaterialTabs+ColorThemer.h"
 #import "MaterialTabs.h"
+#import "MDCTabBarExtendedAlignment.h"
 
 @interface TabBarIconExample ()
 @property(nonatomic, strong) UIBarButtonItem *addStarButtonItem;
@@ -86,6 +87,12 @@
              compatibleWithTraitCollection:nil];
   tabBar.items = @[
     [[UITabBarItem alloc] initWithTitle:@"Info" image:infoImage tag:0],
+    [[UITabBarItem alloc] initWithTitle:@"Stars" image:starImage tag:0],
+    [[UITabBarItem alloc] initWithTitle:@"Info" image:infoImage tag:0],
+    [[UITabBarItem alloc] initWithTitle:@"Info" image:infoImage tag:0],
+    [[UITabBarItem alloc] initWithTitle:@"Stars" image:starImage tag:0],
+    [[UITabBarItem alloc] initWithTitle:@"Stars" image:starImage tag:0],
+    [[UITabBarItem alloc] initWithTitle:@"Info" image:infoImage tag:0],
     [[UITabBarItem alloc] initWithTitle:@"Stars" image:starImage tag:0]
   ];
 
@@ -128,6 +135,11 @@
                                             style:UIAlertActionStyleDefault
                                           handler:^(UIAlertAction *_Nonnull action) {
                                             [self setAlignment:MDCTabBarAlignmentCenterSelected];
+                                          }]];
+  [sheet addAction:[UIAlertAction actionWithTitle:@"Best Effort Justified"
+                                            style:UIAlertActionStyleDefault
+                                          handler:^(UIAlertAction *_Nonnull action) {
+                                            [self setAlignment:(MDCTabBarAlignment)MDCTabBarExtendedAlignmentBestEffortJustified];
                                           }]];
   [self presentViewController:sheet animated:YES completion:nil];
 }

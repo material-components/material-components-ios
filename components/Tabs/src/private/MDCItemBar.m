@@ -584,7 +584,6 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   CGSize size = CGSizeMake(CGFLOAT_MAX, self.bounds.size.height);
   for (UITabBarItem *item in _items) {
     const CGSize itemSize = [MDCItemBarCell sizeThatFits:size
-                                     horizontalSizeClass:[self horizontalSizeClass]
                                                     item:item
                                                    style:_style];
     const CGFloat itemWidth = itemSize.width;
