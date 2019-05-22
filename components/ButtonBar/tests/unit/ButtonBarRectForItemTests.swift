@@ -41,7 +41,10 @@ class ButtonBarRectForItemTests: XCTestCase {
 
   func testLongTextButtonMatchesExpectedSize() {
     // Given
-    let items = [UIBarButtonItem(title: "Text that is relatively long", style: .plain, target: nil, action: nil)]
+    let items = [UIBarButtonItem(title: "Text that is relatively long",
+                                 style: .plain,
+                                 target: nil,
+                                 action: nil)]
     buttonBar.items = items
     buttonBar.layoutIfNeeded()
 
