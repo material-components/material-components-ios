@@ -115,6 +115,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
     _message = [message copy];
     _titleAlignment = NSTextAlignmentNatural;
     _actionManager = [[MDCAlertActionManager alloc] init];
+    _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
 
     super.transitioningDelegate = _transitionController;
     super.modalPresentationStyle = UIModalPresentationCustom;
@@ -314,11 +315,8 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   }
 }
 
-- (BOOL)adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable {
-  return self.alertView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
-}
-
 - (void)setAdjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable:(BOOL)adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable {
+  _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
   self.alertView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
 }
 
