@@ -14,9 +14,9 @@
 
 #import "MDCFloatingButton+MaterialTheming.h"
 
-#import <MaterialComponents/MaterialButtons+ColorThemer.h>
-#import <MaterialComponents/MaterialButtons+ShapeThemer.h>
-#import <MaterialComponents/MaterialTypography.h>
+#import "MaterialButtons+ColorThemer.h"
+#import "MaterialButtons+ShapeThemer.h"
+#import "MaterialTypography.h"
 #import "MaterialApplication.h"
 
 @implementation MDCFloatingButton (MaterialTheming)

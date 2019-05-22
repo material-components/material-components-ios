@@ -14,11 +14,11 @@
 
 #import "MDCButton+MaterialTheming.h"
 
-#import <MaterialComponents/MaterialButtons+ColorThemer.h>
-#import <MaterialComponents/MaterialButtons+ShapeThemer.h>
-#import <MaterialComponents/MaterialShadowElevations.h>
-#import <MaterialComponents/MaterialApplication.h>
-#import <MaterialComponents/MaterialTypography.h>
+#import "MaterialButtons+ColorThemer.h"
+#import "MaterialButtons+ShapeThemer.h"
+#import "MaterialShadowElevations.h"
+#import "MaterialApplication.h"
+#import "MaterialTypography.h"
 
 @implementation MDCButton (MaterialTheming)
 
