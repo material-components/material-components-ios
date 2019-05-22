@@ -162,8 +162,8 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
   if (self.mdc_adjustsFontForContentSizeCategory) {
     if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
       self.titleLabel.font =
-      [titleFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
-                              scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
+          [titleFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
+                                  scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
     }
   } else {
     _titleLabel.font = titleFont;
@@ -237,9 +237,9 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
   UIFont *messageFont = _messageFont ?: [[self class] messageFontDefault];
   if (self.mdc_adjustsFontForContentSizeCategory) {
     if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
-      self.messageLabel.font =
-      [messageFont mdc_fontSizedForMaterialTextStyle:kMessageTextStyle
-                                scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
+      self.messageLabel.font = [messageFont
+          mdc_fontSizedForMaterialTextStyle:kMessageTextStyle
+                       scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
     }
   } else {
     _messageLabel.font = messageFont;
@@ -270,9 +270,9 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
   UIFont *finalButtonFont = self.buttonFont ?: [[self class] buttonFontDefault];
   if (self.mdc_adjustsFontForContentSizeCategory) {
     if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
-      finalButtonFont =
-      [finalButtonFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
-                                    scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
+      finalButtonFont = [finalButtonFont
+          mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
+                       scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
     }
   }
   for (MDCButton *button in self.actionManager.buttonsInActionOrder) {

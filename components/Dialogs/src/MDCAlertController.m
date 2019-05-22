@@ -315,11 +315,13 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   }
 }
 
-- (void)setAdjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable:(BOOL)adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable {
-  _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
-  self.alertView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
+- (void)setAdjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable:
+    (BOOL)adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable {
+  _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable =
+      adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
+  self.alertView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable =
+      adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
 }
-
 
 - (void)actionButtonPressed:(id)button {
   MDCAlertAction *action = [self.actionManager actionForButton:button];
