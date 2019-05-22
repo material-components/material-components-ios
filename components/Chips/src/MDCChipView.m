@@ -135,6 +135,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 - (void)commonMDCChipViewInit {
   _minimumSize = kMDCChipMinimumSizeDefault;
   self.isAccessibilityElement = YES;
+  _mdc_legacyFontScaling = YES;
   _fontScalingShouldFallback = YES;
 }
 
@@ -510,7 +511,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
   // If we are automatically adjusting for Dynamic Type resize the font based on the text style
   if (self.mdc_adjustsFontForContentSizeCategory) {
-    if (titleFont.mdc_scalingCurve) {
+    if (titleFont.mdc_scalingCurve && !self.mdc_legacyFontScaling) {
       UIContentSizeCategory sizeCategory = UIContentSizeCategoryLarge;
       if (@available(iOS 10.0, *)) {
         sizeCategory = self.traitCollection.preferredContentSizeCategory;
