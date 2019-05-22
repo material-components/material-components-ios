@@ -1,4 +1,4 @@
-// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2019-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,8 +22,16 @@ class ButtonBarRectForItemTests: XCTestCase {
   var buttonBar: MDCButtonBar!
 
   override func setUp() {
+    super.setUp()
+
     buttonBar = MDCButtonBar()
     buttonBar.frame = CGRect(x: 0, y: 0, width: 200, height: 100)
+  }
+
+  override func tearDown() {
+    buttonBar = nil
+
+    super.tearDown()
   }
 
   func testShortTextButtonMatchesExpectedSize() {
