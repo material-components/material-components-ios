@@ -17,6 +17,8 @@
 #import <MaterialComponents/MaterialButtons+ColorThemer.h>
 #import <MaterialComponents/MaterialButtons+ShapeThemer.h>
 #import <MaterialComponents/MaterialShadowElevations.h>
+#import <MaterialComponents/MaterialApplication.h>
+#import <MaterialComponents/MaterialTypography.h>
 
 @implementation MDCButton (MaterialTheming)
 
@@ -56,10 +58,7 @@
 
 - (void)applyContainedThemeWithTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
   [self resetTitleFontForAllStates];
-
-  self.mdc_adjustsFontForContentSizeCategory =
-      typographyScheme.mdc_adjustsFontForContentSizeCategory;
-  [self setTitleFont:typographyScheme.button forState:UIControlStateNormal];
+  [self applyTypographyScheme:typographyScheme];
 }
 
 - (void)applyContainedThemeWithShapeScheme:(id<MDCShapeScheming>)shapeScheme {
@@ -116,10 +115,7 @@
 
 - (void)applyOutlinedThemeWithTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
   [self resetTitleFontForAllStates];
-
-  self.mdc_adjustsFontForContentSizeCategory =
-      typographyScheme.mdc_adjustsFontForContentSizeCategory;
-  [self setTitleFont:typographyScheme.button forState:UIControlStateNormal];
+  [self applyTypographyScheme:typographyScheme];
 }
 
 - (void)applyOutlinedThemeWithShapeScheme:(id<MDCShapeScheming>)shapeScheme {
@@ -164,10 +160,7 @@
 
 - (void)applyTextThemeWithTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
   [self resetTitleFontForAllStates];
-
-  self.mdc_adjustsFontForContentSizeCategory =
-      typographyScheme.mdc_adjustsFontForContentSizeCategory;
-  [self setTitleFont:typographyScheme.button forState:UIControlStateNormal];
+  [self applyTypographyScheme:typographyScheme];
 }
 
 - (void)applyTextThemeWithShapeScheme:(id<MDCShapeScheming>)shapeScheme {
@@ -192,6 +185,20 @@
     [self setTitleColor:nil forState:state];
     [self setImageTintColor:nil forState:state];
     [self setBorderColor:nil forState:state];
+  }
+}
+
+- (void)applyTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
+  if (typographyScheme.mdc_adjustsFontForContentSizeCategory) {
+    UIContentSizeCategory sizeCategory = UIContentSizeCategoryLarge;
+    if (@available(iOS 10.0, *)) {
+      sizeCategory = self.traitCollection.preferredContentSizeCategory;
+    } else if ([UIApplication mdc_safeSharedApplication]) {
+      sizeCategory = [UIApplication mdc_safeSharedApplication].preferredContentSizeCategory;
+    }
+    [self setTitleFont:[typographyScheme.button mdc_scaledFontForSizeCategory:sizeCategory] forState:UIControlStateNormal];
+  } else {
+    [self setTitleFont:typographyScheme.button forState:UIControlStateNormal];
   }
 }
 
