@@ -67,10 +67,12 @@
   // When
   self.cell.titleLabel.text = @"Title";
   self.cell.detailLabel.text = @"Detail";
-  self.cell.leadingImageView.image = [UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                                   withStyle:MDCSnapshotTestImageStyleCheckerboard];
-  self.cell.trailingImageView.image = [UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                                        withStyle:MDCSnapshotTestImageStyleRectangles];
+  self.cell.leadingImageView.image =
+      [UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
+                         withStyle:MDCSnapshotTestImageStyleCheckerboard];
+  self.cell.trailingImageView.image =
+      [UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
+                         withStyle:MDCSnapshotTestImageStyleRectangles];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.cell];
