@@ -162,7 +162,7 @@
 
  Default value is YES.
  */
-@property(nonatomic, assign) BOOL fontScalingShouldFallback;
+@property(nonatomic, assign) BOOL adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
 
 /**
  The minimum dimensions of the Chip. A non-positive value for either height or width is equivalent

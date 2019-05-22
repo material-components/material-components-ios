@@ -136,7 +136,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   _minimumSize = kMDCChipMinimumSizeDefault;
   self.isAccessibilityElement = YES;
   _mdc_legacyFontScaling = YES;
-  _fontScalingShouldFallback = YES;
+  _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -519,7 +519,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
         sizeCategory = [UIApplication mdc_safeSharedApplication].preferredContentSizeCategory;
       }
       titleFont = [titleFont mdc_scaledFontForSizeCategory:sizeCategory];
-    } else if (self.fontScalingShouldFallback) {
+    } else if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
       titleFont =
           [titleFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
                                   scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
