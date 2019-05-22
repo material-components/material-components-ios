@@ -315,6 +315,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   }
 }
 
+<<<<<<< HEAD
 - (void)setAdjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable:
     (BOOL)adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable {
   _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable =
@@ -323,6 +324,17 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
       adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
 }
 
+=======
+- (BOOL)adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable {
+  return self.alertView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
+}
+
+- (void)setAdjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable:(BOOL)adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable {
+  self.alertView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
+}
+
+
+>>>>>>> Add flag for legacy behavior
 - (void)actionButtonPressed:(id)button {
   MDCAlertAction *action = [self.actionManager actionForButton:button];
 

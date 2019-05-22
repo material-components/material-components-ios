@@ -162,8 +162,13 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
   if (self.mdc_adjustsFontForContentSizeCategory) {
     if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
       self.titleLabel.font =
+<<<<<<< HEAD
           [titleFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
                                   scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
+=======
+      [titleFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
+                              scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
+>>>>>>> Add flag for legacy behavior
     }
   } else {
     _titleLabel.font = titleFont;
@@ -237,9 +242,15 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
   UIFont *messageFont = _messageFont ?: [[self class] messageFontDefault];
   if (self.mdc_adjustsFontForContentSizeCategory) {
     if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
+<<<<<<< HEAD
       self.messageLabel.font = [messageFont
           mdc_fontSizedForMaterialTextStyle:kMessageTextStyle
                        scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
+=======
+      self.messageLabel.font =
+      [messageFont mdc_fontSizedForMaterialTextStyle:kMessageTextStyle
+                                scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
+>>>>>>> Add flag for legacy behavior
     }
   } else {
     _messageLabel.font = messageFont;
@@ -270,9 +281,15 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
   UIFont *finalButtonFont = self.buttonFont ?: [[self class] buttonFontDefault];
   if (self.mdc_adjustsFontForContentSizeCategory) {
     if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
+<<<<<<< HEAD
       finalButtonFont = [finalButtonFont
           mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
                        scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
+=======
+      finalButtonFont =
+      [finalButtonFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
+                                    scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
+>>>>>>> Add flag for legacy behavior
     }
   }
   for (MDCButton *button in self.actionManager.buttonsInActionOrder) {
