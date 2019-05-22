@@ -1,12 +1,17 @@
 # 84.3.0
 
-This minor release adds new theming extensions for Listsz and minior bug fixes and documentation updates to multiple components.
+This minor release adds new theming extensions for Lists and minor bug fixes and documentation updates to multiple components.
 
 ## New features
 
-# Dynamic type support
+Theming extensions are now available for Lists:
 
-`MDCChipView` now support Dynamic font type.
+```swift
+let cell = MDCSelfSizingStereoCell()
+let scheme = MDCContainerScheme()
+
+cell.applyTheme(withScheme: scheme)
+```
 
 ## API changes
 
@@ -32,6 +37,7 @@ This minor release adds new theming extensions for Listsz and minior bug fixes a
 * [Remove dependency on TypographyThemer in theming extension.  (#7391)](https://github.com/material-components/material-components-ios/commit/daee4c058c2d52487689c56cf0822cbd5073a2d6) (Cody Weaver)
 * [Update titleFont:forState: API (#7402)](https://github.com/material-components/material-components-ios/commit/80037e4684ee65c55a38fa34161ae7aaf9630ec3) (Cody Weaver)
 * [[Ripple] fix button to update ripple states correctly (#7337)](https://github.com/material-components/material-components-ios/commit/7c481c023ef2fa01e8ab0824a58e3ae6bc648303) (Galia Kaufman)
+* [Update outline theming extension (#7403)](https://github.com/material-components/material-components-ios/commit/936d04ab3589ff6747798df6607c3d8d288edec0) (Cody Weaver)
 
 ### Chips
 
@@ -41,6 +47,10 @@ This minor release adds new theming extensions for Listsz and minior bug fixes a
 ### FlexibleHeader
 
 * [Clarify the docs for preferredStatusBarStyle. (#7415)](https://github.com/material-components/material-components-ios/commit/4f7145da2bf8b9cb1f6d854f67bf055dce00d1ae) (featherless)
+
+### List
+
+* [Add List theming extension (#7397)](https://github.com/material-components/material-components-ios/commit/36018edb6101c912edb59ca27128ef2e31bb72f1) (Andrew Overton)
 
 ### NavigationDrawer
 
@@ -52,9 +62,7 @@ This minor release adds new theming extensions for Listsz and minior bug fixes a
 
 ## Multi-component changes
 
-* [Add List theming extension (#7397)](https://github.com/material-components/material-components-ios/commit/36018edb6101c912edb59ca27128ef2e31bb72f1) (Andrew Overton)
 * [Roll-forward a shadow elevation issue. (#7396)](https://github.com/material-components/material-components-ios/commit/ab5e6f69c91ebb9d7cc0092d8641d585cfce1bee) (Yarden Eitan)
-* [Update outline theming extension (#7403)](https://github.com/material-components/material-components-ios/commit/936d04ab3589ff6747798df6607c3d8d288edec0) (Cody Weaver)
 
 ---
 
