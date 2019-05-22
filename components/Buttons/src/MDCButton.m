@@ -156,7 +156,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   _borderWidths = [NSMutableDictionary dictionary];
   _fonts = [NSMutableDictionary dictionary];
   _accessibilityTraitsIncludesButton = YES;
-  _mdc_legacyFontScaling = YES;
+  _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
 
   if (!_backgroundColors) {
     // _backgroundColors may have already been initialized by setting the backgroundColor setter.
@@ -900,7 +900,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
       }
       font = [font mdc_scaledFontForSizeCategory:sizeCategory];
     } else {
-      if (self.mdc_legacyFontScaling) {
+      if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
         font = [font mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleButton
                                   scaledForDynamicType:YES];
       }
@@ -971,6 +971,14 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [self updateTitleFont];
 
   [self sizeToFit];
+}
+
+- (BOOL)mdc_legacyFontScaling {
+  return self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
+}
+
+- (void)mdc_setLegacyFontScaling:(BOOL)mdc_legacyFontScaling {
+  self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = mdc_legacyFontScaling;
 }
 
 #pragma mark - Deprecations
