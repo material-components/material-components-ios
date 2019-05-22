@@ -389,9 +389,7 @@ static UIColor *DrawerShadowColor(void) {
       animations:^{
         [self setupLayout];
       }
-      completion:^(BOOL completed) {
-        completion(completed);
-      }];
+      completion:completion];
 }
 
 #pragma mark UIViewController
