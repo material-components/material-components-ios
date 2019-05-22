@@ -1,0 +1,264 @@
+// Copyright 2019-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+#import "MaterialSnapshot.h"
+
+#import <CoreGraphics/CoreGraphics.h>
+#import <UIKit/UIKit.h>
+
+#import "MaterialDialogs.h"
+#import "MaterialTypography.h"
+
+/** A @c MDCAlertController test fake to override the @c traitCollection to test for dynamic type.
+ */
+@interface AlertControllerDynamicTypeSnapshotTestFake : MDCAlertController
+@property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
+@end
+
+@implementation AlertControllerDynamicTypeSnapshotTestFake
+
+- (UITraitCollection *)traitCollection {
+  return self.traitCollectionOverride ?: [super traitCollection];
+}
+
+@end
+
+@interface MDCAlertControllerDynamicTypeTests : MDCSnapshotTestCase
+@property(nonatomic, strong, nullable) AlertControllerDynamicTypeSnapshotTestFake *alertController;
+@end
+
+@implementation MDCAlertControllerDynamicTypeTests
+
+- (void)setUp {
+  [super setUp];
+
+  // Uncomment below to recreate all the goldens (or add the following line to the specific
+  // test you wish to recreate the golden for).
+  //  self.recordMode = YES;
+
+  self.alertController = [[AlertControllerDynamicTypeSnapshotTestFake alloc] init];
+  self.alertController.title = @"Material";
+  self.alertController.message =
+      @"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt "
+      @"ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation "
+      @"ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in "
+      @"reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur "
+      @"sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id "
+      @"est laborum.";
+  self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
+  self.alertController.mdc_legacyFontScaling = NO;
+  MDCFontScaler *fontScaler = [MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleSubtitle1];
+  UIFont *titleFont = [UIFont systemFontOfSize:14];
+  titleFont = [fontScaler scaledFontWithFont:titleFont];
+  titleFont = [titleFont mdc_scaledFontAtDefaultSize];
+  self.alertController.titleFont = titleFont;
+}
+
+- (void)tearDown {
+  self.button = nil;
+
+  [super tearDown];
+}
+
+- (void)generateSnapshotAndVerifyForView:(UIView *)view {
+  [view sizeToFit];
+  UIView *snapshotView = [view mdc_addToBackgroundView];
+  [self snapshotVerifyView:snapshotView];
+}
+
+/**
+ Used to set the @c UIContentSizeCategory on an @c MDCAlertController.
+
+ @note On iOS 9 or below this method has no impact.
+ */
+- (void)setAlertControllerTraitCollectionSizeToSize:(UIContentSizeCategory)sizeCategory {
+  UITraitCollection *traitCollection = [[UITraitCollection alloc] init];
+  if (@available(iOS 10.0, *)) {
+    traitCollection =
+        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:sizeCategory];
+  }
+
+  self.button.traitCollectionOverride = traitCollection;
+}
+
+/** Test when a @c MDCAlertController has a content size of @c UIContentSizeCategorySmall. */
+- (void)testContentSizeCategorySmall {
+  // Given
+  [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategorySmall];
+
+  // When
+  [NSNotificationCenter.defaultCenter
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.button];
+}
+
+/** Test when a @c MDCAlertController has a content size of @c UIContentSizeCategoryMedium. */
+- (void)testContentSizeCategoryMedium {
+  // Given
+  [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryMedium];
+
+  // When
+  [NSNotificationCenter.defaultCenter
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.button];
+}
+
+/** Test when a @c MDCAlertController has a content size of @c UIContentSizeCategoryLarge. */
+- (void)testContentSizeCategoryLarge {
+  // Given
+  [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryLarge];
+
+  // When
+  [NSNotificationCenter.defaultCenter
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.button];
+}
+
+/** Test when a @c MDCAlertController has a content size of @c UIContentSizeCategoryExtraLarge. */
+- (void)testContentSizeCategoryExtraLarge {
+  // Given
+  [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryExtraLarge];
+
+  // When
+  [NSNotificationCenter.defaultCenter
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.button];
+}
+
+/** Test when a @c MDCAlertController has a content size of @c UIContentSizeCategoryExtraExtraLarge.
+ */
+- (void)testContentSizeCategoryExtraExtraLarge {
+  // Given
+  [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryExtraExtraLarge];
+
+  // When
+  [NSNotificationCenter.defaultCenter
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.button];
+}
+
+/** Test when a @c MDCAlertController has a content size of @c
+ * UIContentSizeCategoryExtraExtraExtraLarge. */
+- (void)testContentSizeCategoryExtraExtraExtraLarge {
+  // Given
+  [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryExtraExtraExtraLarge];
+
+  // When
+  [NSNotificationCenter.defaultCenter
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.button];
+}
+
+/** Test when a @c MDCAlertController has a content size of @c
+ * UIContentSizeCategoryAccessibilityMedium. */
+- (void)testContentSizeCategoryAccessibilityMedium {
+  // Given
+  [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryAccessibilityMedium];
+
+  // When
+  [NSNotificationCenter.defaultCenter
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.button];
+}
+
+/** Test when a @c MDCAlertController has a content size of @c
+ * UIContentSizeCategoryAccessibilityLarge. */
+- (void)testContentSizeCategoryAccessibilityLarge {
+  // Given
+  [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryAccessibilityLarge];
+
+  // When
+  [NSNotificationCenter.defaultCenter
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.button];
+}
+
+/**
+ Test when a @c MDCAlertController has a content size of @c
+ UIContentSizeCategoryAccessibilityExtraLarge.
+ */
+- (void)testContentSizeCategoryAccessibilityExtraLarge {
+  // Given
+  [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryAccessibilityExtraLarge];
+
+  // When
+  [NSNotificationCenter.defaultCenter
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.button];
+}
+
+/**
+ Test when a @c MDCAlertController has a content size of @c
+ UIContentSizeCategoryAccessibilityExtraLarge.
+ */
+- (void)testContentSizeCategoryAccessibilityExtraExtraLarge {
+  // Given
+  [self setAlertControllerTraitCollectionSizeToSize:
+            UIContentSizeCategoryAccessibilityExtraExtraLarge];
+
+  // When
+  [NSNotificationCenter.defaultCenter
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.button];
+}
+
+/**
+ Test when a @c MDCAlertController has a content size of @c
+ UIContentSizeCategoryAccessibilityExtraLarge.
+ */
+- (void)testContentSizeCategoryAccessibilityExtraExtraExtraLarge {
+  // Given
+  [self setAlertControllerTraitCollectionSizeToSize:
+            UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+
+  // When
+  [NSNotificationCenter.defaultCenter
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.button];
+}
+
+@end
