@@ -45,7 +45,7 @@
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  //  self.recordMode = YES;
+    self.recordMode = YES;
 
   self.alertController = [[AlertControllerDynamicTypeSnapshotTestFake alloc] init];
   self.alertController.title = @"Material";
@@ -56,17 +56,29 @@
       @"reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur "
       @"sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id "
       @"est laborum.";
+  MDCAlertAction *fakeAction = [MDCAlertAction actionWithTitle:@"Foo" handler:^(MDCAlertAction *action) {}];
+  [self.alertController addAction:fakeAction];
   self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
-  self.alertController.mdc_legacyFontScaling = NO;
-  MDCFontScaler *fontScaler = [MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleSubtitle1];
+  self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
+  MDCFontScaler *titleFontScaler = [MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleSubtitle1];
   UIFont *titleFont = [UIFont systemFontOfSize:14];
-  titleFont = [fontScaler scaledFontWithFont:titleFont];
+  titleFont = [titleFontScaler scaledFontWithFont:titleFont];
   titleFont = [titleFont mdc_scaledFontAtDefaultSize];
   self.alertController.titleFont = titleFont;
+  MDCFontScaler *messageFontScaler = [MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleSubtitle2];
+  UIFont *messageFont = [UIFont systemFontOfSize:15];
+  messageFont = [messageFontScaler scaledFontWithFont:messageFont];
+  messageFont = [messageFont mdc_scaledFontAtDefaultSize];
+  self.alertController.messageFont = messageFont;
+  MDCFontScaler *buttonFontScaler = [MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleBody1];
+  UIFont *buttonFont = [UIFont systemFontOfSize:15];
+  buttonFont = [buttonFontScaler scaledFontWithFont:buttonFont];
+  buttonFont = [buttonFont mdc_scaledFontAtDefaultSize];
+  self.alertController.buttonFont = buttonFont;
 }
 
 - (void)tearDown {
-  self.button = nil;
+  self.alertController = nil;
 
   [super tearDown];
 }
@@ -89,7 +101,7 @@
         [UITraitCollection traitCollectionWithPreferredContentSizeCategory:sizeCategory];
   }
 
-  self.button.traitCollectionOverride = traitCollection;
+  self.alertController.traitCollectionOverride = traitCollection;
 }
 
 /** Test when a @c MDCAlertController has a content size of @c UIContentSizeCategorySmall. */
@@ -103,7 +115,7 @@
                     object:nil];
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.button];
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
 /** Test when a @c MDCAlertController has a content size of @c UIContentSizeCategoryMedium. */
@@ -117,7 +129,7 @@
                     object:nil];
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.button];
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
 /** Test when a @c MDCAlertController has a content size of @c UIContentSizeCategoryLarge. */
@@ -131,7 +143,7 @@
                     object:nil];
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.button];
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
 /** Test when a @c MDCAlertController has a content size of @c UIContentSizeCategoryExtraLarge. */
@@ -145,7 +157,7 @@
                     object:nil];
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.button];
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
 /** Test when a @c MDCAlertController has a content size of @c UIContentSizeCategoryExtraExtraLarge.
@@ -160,7 +172,7 @@
                     object:nil];
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.button];
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
 /** Test when a @c MDCAlertController has a content size of @c
@@ -175,7 +187,7 @@
                     object:nil];
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.button];
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
 /** Test when a @c MDCAlertController has a content size of @c
@@ -190,7 +202,7 @@
                     object:nil];
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.button];
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
 /** Test when a @c MDCAlertController has a content size of @c
@@ -205,7 +217,7 @@
                     object:nil];
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.button];
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
 /**
@@ -222,7 +234,7 @@
                     object:nil];
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.button];
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
 /**
@@ -240,7 +252,7 @@
                     object:nil];
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.button];
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
 /**
@@ -258,7 +270,7 @@
                     object:nil];
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.button];
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
 @end
