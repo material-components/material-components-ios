@@ -53,11 +53,6 @@
   self.button = [[ButtonLegacyDynamicTypeSnapshotTestFakeButton alloc] init];
   [self.button setTitle:@"Material" forState:UIControlStateNormal];
   self.button.mdc_adjustsFontForContentSizeCategory = YES;
-  MDCFontScaler *fontScaler = [MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleSubtitle1];
-  UIFont *buttonFont = [UIFont systemFontOfSize:14];
-  buttonFont = [fontScaler scaledFontWithFont:buttonFont];
-  buttonFont = [buttonFont mdc_scaledFontAtDefaultSize];
-  [self.button setTitleFont:buttonFont forState:UIControlStateNormal];
 }
 
 - (void)tearDown {
