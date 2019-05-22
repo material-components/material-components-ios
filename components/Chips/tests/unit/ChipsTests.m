@@ -440,4 +440,12 @@ static inline UIImage *TestImage(CGSize size) {
   }
 }
 
+- (void)testChipViewAdjustsFontForContentSizeCategoryWhenScaledFontIsUnavailableDefaultValue {
+  // Given
+  MDCChipView *chipView = [[MDCChipView alloc] init];
+
+  // Then
+  XCTAssertTrue(chipView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
+}
+
 @end
