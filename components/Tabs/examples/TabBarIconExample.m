@@ -86,12 +86,6 @@
              compatibleWithTraitCollection:nil];
   tabBar.items = @[
     [[UITabBarItem alloc] initWithTitle:@"Info" image:infoImage tag:0],
-    [[UITabBarItem alloc] initWithTitle:@"Stars" image:starImage tag:0],
-    [[UITabBarItem alloc] initWithTitle:@"Info" image:infoImage tag:0],
-    [[UITabBarItem alloc] initWithTitle:@"Info" image:infoImage tag:0],
-    [[UITabBarItem alloc] initWithTitle:@"Stars" image:starImage tag:0],
-    [[UITabBarItem alloc] initWithTitle:@"Stars" image:starImage tag:0],
-    [[UITabBarItem alloc] initWithTitle:@"Info" image:infoImage tag:0],
     [[UITabBarItem alloc] initWithTitle:@"Stars" image:starImage tag:0]
   ];
 
