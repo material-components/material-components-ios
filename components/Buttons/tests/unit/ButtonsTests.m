@@ -82,10 +82,6 @@ static NSString *controlStateDescription(UIControlState controlState) {
   return [string copy];
 }
 
-@interface MDCButton (Testing)
-- (void)updateTitleFont;
-@end
-
 @interface FakeShadowLayer : MDCShapedShadowLayer
 @property(nonatomic, assign) NSInteger elevationAssignmentCount;
 @end
@@ -99,7 +95,6 @@ static NSString *controlStateDescription(UIControlState controlState) {
 @end
 
 @interface TestButton : MDCButton
-@property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
 @property(nonatomic, strong) FakeShadowLayer *shadowLayer;
 @end
 
@@ -114,10 +109,6 @@ static NSString *controlStateDescription(UIControlState controlState) {
     _shadowLayer = (FakeShadowLayer *)self.layer;
   }
   return self;
-}
-
-- (UITraitCollection *)traitCollection {
-  return self.traitCollectionOverride ?: [super traitCollection];
 }
 @end
 
@@ -1123,53 +1114,6 @@ static NSString *controlStateDescription(UIControlState controlState) {
   XCTAssertEqualWithAccuracy(self.button.titleLabel.font.pointSize, preferredFont.pointSize,
                              kEpsilonAccuracy,
                              @"Font size should be equal to MDCFontTextStyleButton's.");
-}
-
-- (void)testAdjustFontForContentSizeCategoryWhenScaledFontIsUnavailableDefaultBehavior {
-  // Then
-  XCTAssertTrue(self.button.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
-}
-
-- (void)testAdjustsFontForContentSizeCategoryWhenScaledFontIsUnavailableSetsValueCorrectly {
-  // When
-  self.button.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
-
-  // Then
-  XCTAssertFalse(self.button.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
-}
-
-- (void)testAdjustFontForContentSizeCategoryWhenScaledFontIsUnavailabeDoesNotScaleFontWhenFalse {
-  if (@available(iOS 10.0, *)) {
-    // Given
-    TestButton *button = [[TestButton alloc] init];
-    [button setTitleFont:[UIFont systemFontOfSize:14] forState:UIControlStateNormal];
-    UIFont *originalFont = [button titleFontForState:UIControlStateNormal];
-    button.traitCollectionOverride = [UITraitCollection traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
-
-    // When
-    button.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
-    button.mdc_adjustsFontForContentSizeCategory = YES;
-
-    // Then
-    XCTAssertEqualObjects([button titleFontForState:UIControlStateNormal], originalFont);
-  }
-}
-
-- (void)testAdjustFontForContentSizeCategoryWhenScaledFontIsUnavailabeDoesScaleFontWhenTrue {
-  if (@available(iOS 10.0, *)) {
-    // Given
-    TestButton *button = [[TestButton alloc] init];
-    [button setTitleFont:[UIFont systemFontOfSize:14] forState:UIControlStateNormal];
-    UIFont *originalFont = button.titleLabel.font;
-    button.traitCollectionOverride = [UITraitCollection traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
-
-    // When
-    button.mdc_adjustsFontForContentSizeCategory = YES;
-    [button updateTitleFont];
-
-    // Then
-    XCTAssertNotEqualObjects(button.titleLabel.font, originalFont);
-  }
 }
 
 #pragma mark - Size-related tests
