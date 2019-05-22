@@ -316,6 +316,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 - (void)setAdjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable:
     (BOOL)adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable {
   _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable =
@@ -329,7 +330,10 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   return self.alertView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
 }
 
+=======
+>>>>>>> clang
 - (void)setAdjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable:(BOOL)adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable {
+  _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
   self.alertView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
 }
 
