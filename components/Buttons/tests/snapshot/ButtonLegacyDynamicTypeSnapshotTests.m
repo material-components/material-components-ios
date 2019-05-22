@@ -34,8 +34,8 @@
 @end
 
 /**
- Used to test dynamic type visual differences based on different @c UIContentSizeCategory
- values.
+ Used to test visual differences in the legacy dynamic type behavior on @c MDCButton based on
+ different @c UIContentSizeCategory values.
  */
 @interface ButtonLegacyDynamicTypeSnapshotTests : MDCSnapshotTestCase
 @property(nonatomic, strong, nullable) ButtonLegacyDynamicTypeSnapshotTestFakeButton *button;
