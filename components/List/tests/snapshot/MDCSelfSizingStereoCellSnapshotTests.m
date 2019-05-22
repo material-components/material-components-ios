@@ -47,13 +47,6 @@
   [self snapshotVerifyView:snapshotView];
 }
 
-- (void)speedAllLayersOfView:(UIView *)view {
-  view.layer.speed = 100;
-  for (UIView *subview in view.subviews) {
-    [self speedAllLayersOfView:subview];
-  }
-}
-
 #pragma mark - Tests
 
 - (void)testDefaultCell {
