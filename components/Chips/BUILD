@@ -105,7 +105,9 @@ mdc_extension_objc_library(
     name = "TypographyThemer",
     deps = [
         ":Chips",
+        "//components/private/Application",
         "//components/schemes/Typography",
+        "//components/Typography",
     ],
 )
 

@@ -1,8 +1,10 @@
+<!-- This file was auto-generated using scripts/generate_readme Typography -->
+
 # Typography
 
 *Notice*: Much of this component, with exception of the UIFont and UIFontDescriptor APIs, will soon
-be deprecated. Please consider using the [schemes/Typography](../schemes/Typography) component and
-the [Material Theming](../../docs/theming) APIs instead.
+be deprecated. Please consider using the [schemes/Typography](schemes/Typography) component and
+the [Material Theming](../docs/theming) APIs instead.
 
 ---
 
@@ -40,6 +42,8 @@ pod install
 
 ## Usage
 
+<!-- Extracted from docs/typical-use.md -->
+
 ### Importing
 
 Before using Typography, you'll need to import it:
@@ -67,7 +71,10 @@ Each font has a respective opacity (alpha) value returned by class methods begin
 font's Material Design type style and ending with 'FontOpacity'. These CGFloats should be set on the
 label's alpha property. If animating alpha, it should be the maximum value reached.
 
+
 ## Type Sizes and Opacities
+
+<!-- Extracted from docs/type-size-opacity.md -->
 
 `MDCTypography` provides a `UIFont` font and a `CGFloat` opacity for each of the standard type
 settings in the Material Design specifications.
@@ -190,7 +197,10 @@ self.label.alpha = [MDCTypography captionFontOpacity];
 ```
 <!--</div>-->
 
+
 ## Advanced Usage
+
+<!-- Extracted from docs/advanced-use.md -->
 
 ### Custom Fonts
 Material Components for iOS allows you to set your own font for all of the components. Use the class
@@ -262,3 +272,4 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 }
 ```
 <!--</div>-->
+
