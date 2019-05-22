@@ -16,6 +16,34 @@
 
 #import "MaterialList.h"
 
+@interface MDCSelfSizingStereoCellSnapshotTestsContentSizeCategoryOverrideWindow : UIWindow
+
+/** Used to override the value of @c preferredContentSizeCategory. */
+@property(nonatomic, copy) UIContentSizeCategory contentSizeCategoryOverride;
+
+@end
+
+@implementation MDCSelfSizingStereoCellSnapshotTestsContentSizeCategoryOverrideWindow
+
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    self.contentSizeCategoryOverride = UIContentSizeCategoryLarge;
+  }
+  return self;
+}
+
+- (UITraitCollection *)traitCollection {
+  if (@available(iOS 10.0, *)) {
+    UITraitCollection *traitCollection = [UITraitCollection
+        traitCollectionWithPreferredContentSizeCategory:self.contentSizeCategoryOverride];
+    return traitCollection;
+  }
+  return [super traitCollection];
+}
+
+@end
+
 /** Snapshot tests for MDCBaseCell. */
 @interface MDCSelfSizingStereoCellSnapshotTests : MDCSnapshotTestCase
 
@@ -42,9 +70,39 @@
   [super tearDown];
 }
 
+- (UIWindow *)generateWindowWithView:(UIView *)view
+                 contentSizeCategory:(UIContentSizeCategory)sizeCategory
+                              insets:(UIEdgeInsets)insets {
+  MDCSelfSizingStereoCellSnapshotTestsContentSizeCategoryOverrideWindow *backgroundWindow =
+      [[MDCSelfSizingStereoCellSnapshotTestsContentSizeCategoryOverrideWindow alloc]
+          initWithFrame:CGRectMake(0, 0, CGRectGetWidth(view.bounds) + insets.left + insets.right,
+                                   CGRectGetHeight(view.bounds) + insets.top + insets.bottom)];
+  backgroundWindow.contentSizeCategoryOverride = sizeCategory;
+  backgroundWindow.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.8 alpha:1];
+  [backgroundWindow addSubview:view];
+  [backgroundWindow makeKeyAndVisible];
+
+  CGRect frame = view.frame;
+  frame.origin = CGPointMake(insets.left, insets.top);
+  view.frame = frame;
+
+  return backgroundWindow;
+}
+
 - (void)generateSnapshotAndVerifyForView:(UIView *)view {
   UIView *snapshotView = [view mdc_addToBackgroundView];
   [self snapshotVerifyView:snapshotView];
+}
+
+- (void)generateSnapshotWithContentSizeCategory:(UIContentSizeCategory)sizeCategory
+                               andVerifyForView:(UIView *)view {
+  UIWindow *snapshotWindow = [self generateWindowWithView:view
+                                      contentSizeCategory:sizeCategory
+                                                   insets:UIEdgeInsetsMake(10, 10, 10, 10)];
+  [NSNotificationCenter.defaultCenter
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
+  [self snapshotVerifyView:snapshotWindow];
 }
 
 #pragma mark - Tests
@@ -76,6 +134,32 @@
 
   // Then
   [self generateSnapshotAndVerifyForView:self.cell];
+}
+
+- (void)testCellWithDynamicTypeForContentSizeCategoryExtraSmallEnabledForTitle {
+  if (@available(iOS 10.0, *)) {
+    // When
+    self.cell.titleLabel.text = @"Title";
+    self.cell.detailLabel.text = @"Detail";
+    self.cell.mdc_adjustsFontForContentSizeCategory = YES;
+
+    // Then
+    [self generateSnapshotWithContentSizeCategory:UIContentSizeCategoryExtraSmall
+                                 andVerifyForView:self.cell];
+  }
+}
+
+- (void)testCellWithDynamicTypeForContentSizeCategoryExtraLargeEnabledForTitle {
+  if (@available(iOS 10.0, *)) {
+    // When
+    self.cell.titleLabel.text = @"Title";
+    self.cell.detailLabel.text = @"Detail";
+    self.cell.mdc_adjustsFontForContentSizeCategory = YES;
+
+    // Then
+    [self generateSnapshotWithContentSizeCategory:UIContentSizeCategoryExtraLarge
+                                 andVerifyForView:self.cell];
+  }
 }
 
 @end
