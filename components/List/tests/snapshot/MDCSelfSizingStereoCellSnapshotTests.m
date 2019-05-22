@@ -136,7 +136,7 @@
   [self generateSnapshotAndVerifyForView:self.cell];
 }
 
-- (void)testCellWithDynamicTypeForContentSizeCategoryExtraSmallEnabledForTitle {
+- (void)testCellWithDynamicTypeForContentSizeCategoryExtraSmallEnabledForTitleAndDetail {
   if (@available(iOS 10.0, *)) {
     // When
     self.cell.titleLabel.text = @"Title";
@@ -149,7 +149,7 @@
   }
 }
 
-- (void)testCellWithDynamicTypeForContentSizeCategoryExtraLargeEnabledForTitle {
+- (void)testCellWithDynamicTypeForContentSizeCategoryExtraLargeEnabledForTitleAndDetail {
   if (@available(iOS 10.0, *)) {
     // When
     self.cell.titleLabel.text = @"Title";
