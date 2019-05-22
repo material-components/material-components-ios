@@ -17,6 +17,7 @@
 #import <XCTest/XCTest.h>
 
 #import "MaterialTypography.h"
+#import "MaterialTypographyScheme.h"
 
 @interface MDCSelfSizingStereoCellTestsDynamicTypeContentSizeCategoryOverrideWindow : UIWindow
 
@@ -63,28 +64,16 @@
 
 - (void)testSelfSizingStereoCellDynamicTypeBehavior {
   // Given
-  MDCSelfSizingStereoCellTestsDynamicTypeContentSizeCategoryOverrideWindow *largeContainer =
-      [[MDCSelfSizingStereoCellTestsDynamicTypeContentSizeCategoryOverrideWindow alloc]
-          initWithContentSizeCategoryOverride:UIContentSizeCategoryLarge];
+  MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
   MDCSelfSizingStereoCell *cell = [[MDCSelfSizingStereoCell alloc] init];
-  [largeContainer addSubview:cell];
-  UIFont *titleFont = cell.titleLabel.font;
-  UIFont *detailFont = cell.detailLabel.font;
-  MDCFontScaler *headlineFontScaler =
-      [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleSubtitle1];
+  UIFont *titleFont = typographyScheme.subtitle1;
   // TODO: Investigate what can be done about the line below failing when using .caption instead of
   // .button. See
-  // https://github.com/material-components/material-components-ios/pull/7413/files#r285289332 for
+  // https://github.com/material-components/material-components-ios/issues/7424 for
   // context.
-  MDCFontScaler *detailFontScalar =
-      [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleButton];
-  titleFont = [headlineFontScaler scaledFontWithFont:titleFont];
-  titleFont = [titleFont mdc_scaledFontAtDefaultSize];
-  detailFont = [detailFontScalar scaledFontWithFont:detailFont];
-  detailFont = [detailFont mdc_scaledFontAtDefaultSize];
+  UIFont *detailFont = typographyScheme.button;
   cell.titleLabel.font = titleFont;
   cell.detailLabel.font = detailFont;
-  cell.mdc_legacyFontScaling = NO;
   cell.mdc_adjustsFontForContentSizeCategory = YES;
   cell.titleLabel.text = @"Title";
   cell.detailLabel.text = @"Detail";

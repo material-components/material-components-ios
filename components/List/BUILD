@@ -94,6 +94,7 @@ mdc_objc_library(
         ":List",
         ":ListThemer",
         ":TypographyThemer",
+        "//components/schemes/Typography",
     ],
 )
 
