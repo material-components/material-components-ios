@@ -33,7 +33,7 @@ class ButtonBarRectForItemTests: XCTestCase {
     buttonBar.layoutIfNeeded()
 
     // When
-    let rect = buttonBar.rectForItem(at: 0, in: buttonBar)
+    let rect = buttonBar.rect(for: items[0], in: buttonBar)
 
     // Then
     XCTAssertEqual(rect.size, CGSize(width: 60, height: 100))
@@ -46,7 +46,7 @@ class ButtonBarRectForItemTests: XCTestCase {
     buttonBar.layoutIfNeeded()
 
     // When
-    let rect = buttonBar.rectForItem(at: 0, in: buttonBar)
+    let rect = buttonBar.rect(for: items[0], in: buttonBar)
 
     // Then
     XCTAssertEqual(rect.size, CGSize(width: 244, height: 100))
@@ -61,8 +61,8 @@ class ButtonBarRectForItemTests: XCTestCase {
     buttonBar.layoutIfNeeded()
 
     // When
-    let origins = (0..<items.count).map { index in
-      buttonBar.rectForItem(at: UInt(index), in: buttonBar).origin
+    let origins = items.map { item in
+      buttonBar.rect(for: item, in: buttonBar).origin
     }
 
     // Then
@@ -78,8 +78,8 @@ class ButtonBarRectForItemTests: XCTestCase {
     buttonBar.layoutIfNeeded()
 
     // When
-    let origins = (0..<items.count).map { index in
-      buttonBar.rectForItem(at: UInt(index), in: buttonBar).origin
+    let origins = items.map { item in
+      buttonBar.rect(for: item, in: buttonBar).origin
     }
 
     // Then
@@ -97,7 +97,7 @@ class ButtonBarRectForItemTests: XCTestCase {
     containerView.addSubview(buttonBar)
 
     // When
-    let rect = buttonBar.rectForItem(at: 0, in: containerView)
+    let rect = buttonBar.rect(for: items[0], in: containerView)
 
     // Then
     XCTAssertEqual(rect, CGRect(x: 10, y: 20, width: 60, height: 100))
