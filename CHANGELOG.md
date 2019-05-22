@@ -6,7 +6,7 @@ This minor release adds new theming extensions for Listsz and minior bug fixes a
 
 # Dynamic type support
 
-'MDCChipView' now support Dynamic font type.
+`MDCChipView` now support Dynamic font type.
 
 ## API changes
 
