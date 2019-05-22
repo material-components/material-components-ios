@@ -17,6 +17,7 @@
 #import <MaterialComponents/MaterialButtons+ColorThemer.h>
 #import <MaterialComponents/MaterialButtons+ShapeThemer.h>
 #import <MaterialComponents/MaterialTypography.h>
+#import "MaterialApplication.h"
 
 @implementation MDCFloatingButton (MaterialTheming)
 
@@ -61,8 +62,17 @@
     [self setTitleFont:nil forState:state];
   }
 
-  self.mdc_adjustsFontForContentSizeCategory = scheme.mdc_adjustsFontForContentSizeCategory;
-  [self setTitleFont:scheme.button forState:UIControlStateNormal];
+  if (scheme.mdc_adjustsFontForContentSizeCategory) {
+    UIContentSizeCategory sizeCategory = UIContentSizeCategoryLarge;
+    if (@available(iOS 10.0, *)) {
+      sizeCategory = self.traitCollection.preferredContentSizeCategory;
+    } else if ([UIApplication mdc_safeSharedApplication]) {
+      sizeCategory = [UIApplication mdc_safeSharedApplication].preferredContentSizeCategory;
+    }
+    [self setTitleFont:[scheme.button mdc_scaledFontForSizeCategory:sizeCategory] forState:UIControlStateNormal];
+  } else {
+    [self setTitleFont:scheme.button forState:UIControlStateNormal];
+  }
 }
 
 @end

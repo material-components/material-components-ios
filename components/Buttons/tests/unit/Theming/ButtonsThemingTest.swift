@@ -21,6 +21,7 @@ import MaterialComponents.MaterialShadowElevations
 import MaterialComponents.MaterialShapeScheme
 import MaterialComponents.MaterialShapeLibrary
 import MaterialComponents.MaterialTypographyScheme
+import MaterialComponents.MaterialTypography
 import MaterialComponents.MaterialButtons_Theming
 
 class ButtonsThemingTest: XCTestCase {
@@ -72,7 +73,7 @@ class ButtonsThemingTest: XCTestCase {
     // Given
     let button = MDCButton()
     let scheme = MDCContainerScheme()
-    scheme.typographyScheme.mdc_adjustsFontForContentSizeCategory = true
+    scheme.typographyScheme = MDCTypographyScheme(defaults: .material201902)
     let shapeScheme = MDCShapeScheme()
     scheme.shapeScheme = shapeScheme
 
@@ -86,9 +87,13 @@ class ButtonsThemingTest: XCTestCase {
       XCTAssertEqual(buttonShape.bottomRightCorner,
                      shapeScheme.smallComponentShape.bottomRightCorner)
       XCTAssertEqual(buttonShape.bottomLeftCorner, shapeScheme.smallComponentShape.bottomLeftCorner)
-      XCTAssertTrue(button.mdc_adjustsFontForContentSizeCategory)
     } else {
       XCTFail("Button.shapeGenerator was not a MDCRectangularShapeGenerator")
+    }
+    if let font = button.titleFont(for: .normal) {
+      XCTAssertNotNil(font.mdc_scalingCurve)
+    } else {
+      XCTFail("Button.titleFont(for:) should never be `nil` after a theme has been applied.")
     }
   }
 
@@ -136,7 +141,7 @@ class ButtonsThemingTest: XCTestCase {
     // Given
     let button = MDCButton()
     let scheme = MDCContainerScheme()
-    scheme.typographyScheme.mdc_adjustsFontForContentSizeCategory = true
+    scheme.typographyScheme = MDCTypographyScheme(defaults: .material201902)
     let shapeScheme = MDCShapeScheme()
     scheme.shapeScheme = shapeScheme
 
@@ -149,9 +154,13 @@ class ButtonsThemingTest: XCTestCase {
       XCTAssertEqual(buttonShape.topRightCorner, shapeScheme.smallComponentShape.topRightCorner)
       XCTAssertEqual(buttonShape.bottomRightCorner, shapeScheme.smallComponentShape.bottomRightCorner)
       XCTAssertEqual(buttonShape.bottomLeftCorner, shapeScheme.smallComponentShape.bottomLeftCorner)
-      XCTAssertTrue(button.mdc_adjustsFontForContentSizeCategory)
     } else {
       XCTFail("Button.shapeGenerator was not a MDCRectangularShapeGenerator")
+    }
+    if let font = button.titleFont(for: .normal) {
+      XCTAssertNotNil(font.mdc_scalingCurve)
+    } else {
+      XCTFail("Button.titleFont(for:) should never be `nil` after a theme has been applied.")
     }
   }
 
@@ -175,7 +184,7 @@ class ButtonsThemingTest: XCTestCase {
     let customColor = UIColor.orange
     colorScheme.primaryColor = customColor
     scheme.colorScheme = colorScheme
-    scheme.typographyScheme.mdc_adjustsFontForContentSizeCategory = true
+    scheme.typographyScheme = MDCTypographyScheme(defaults: .material201902)
 
     // When
     button.applyTextTheme(withScheme: scheme)
@@ -183,7 +192,11 @@ class ButtonsThemingTest: XCTestCase {
     // Then
     XCTAssertEqual(button.titleColor(for: .normal), customColor)
     XCTAssertEqual(button.imageTintColor(for: .normal), customColor)
-    XCTAssertTrue(button.mdc_adjustsFontForContentSizeCategory)
+    if let font = button.titleFont(for: .normal) {
+      XCTAssertNotNil(font.mdc_scalingCurve)
+    } else {
+      XCTFail("Button.titleFont(for:) should never be `nil` after a theme has been applied.")
+    }
   }
 
   func testConvertContainedToTextTheme() {
@@ -318,13 +331,15 @@ class ButtonsThemingTest: XCTestCase {
     XCTAssertEqual(button.borderWidth(for: .disabled), 0, accuracy: 0.001)
   }
 
-  func testFloatingButtonSecondaryThemeWithCustomTypographyTheme() {
+  func testFloatingButtonSecondaryThemeWithCustomTypographyThemeAndDynamicTypeEnabled() {
     // Given
     let button = MDCFloatingButton()
     let defaultButton = MDCFloatingButton()
     let scheme = MDCContainerScheme()
-    let customTypographyScheme = MDCTypographyScheme()
-    customTypographyScheme.button = UIFont.systemFont(ofSize: 19)
+    let customTypographyScheme = MDCTypographyScheme(defaults: .material201902)
+    // TODO (https://github.com/material-components/material-components-ios/issues/7444): Uncomment
+    // this line when the bug is fixed.
+    // customTypographyScheme.button = UIFont.systemFont(ofSize: 19)
     scheme.typographyScheme = customTypographyScheme
     let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
 
@@ -338,7 +353,11 @@ class ButtonsThemingTest: XCTestCase {
     XCTAssertEqual(button.shadowColor(for: .normal), defaultButton.shadowColor(for: .normal))
     XCTAssertEqual(button.inkColor, defaultButton.inkColor)
 
-    XCTAssertEqual(button.titleFont(for: .normal), customTypographyScheme.button)
+    if let font = button.titleFont(for: .normal) {
+      XCTAssertNotNil(font.mdc_scalingCurve)
+    } else {
+      XCTFail("Button.titleFont(for:) should never be `nil` after a theme has been applied.")
+    }
 
     if let buttonShape = button.shapeGenerator as? MDCRectangleShapeGenerator {
       let corner = MDCCornerTreatment.corner(withRadius: 0.5)
