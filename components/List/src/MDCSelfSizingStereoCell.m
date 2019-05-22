@@ -18,13 +18,12 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
+#import "MaterialApplication.h"
 #import "MaterialInk.h"
 #import "MaterialMath.h"
 #import "MaterialTypography.h"
 
 #import "private/MDCSelfSizingStereoCellLayout.h"
-
-#import "UIApplication+AppExtensions.h"
 
 static const CGFloat kTitleColorOpacity = (CGFloat)0.87;
 static const CGFloat kDetailColorOpacity = (CGFloat)0.6;
