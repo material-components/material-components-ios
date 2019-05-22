@@ -56,7 +56,9 @@
       @"reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur "
       @"sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id "
       @"est laborum.";
-  MDCAlertAction *fakeAction = [MDCAlertAction actionWithTitle:@"Foo" handler:^(MDCAlertAction *action) {}];
+  MDCAlertAction *fakeAction = [MDCAlertAction actionWithTitle:@"Foo"
+                                                       handler:^(MDCAlertAction *action){
+                                                       }];
   [self.alertController addAction:fakeAction];
   self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
   self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
@@ -65,7 +67,8 @@
   titleFont = [titleFontScaler scaledFontWithFont:titleFont];
   titleFont = [titleFont mdc_scaledFontAtDefaultSize];
   self.alertController.titleFont = titleFont;
-  MDCFontScaler *messageFontScaler = [MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleSubtitle2];
+  MDCFontScaler *messageFontScaler =
+      [MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleSubtitle2];
   UIFont *messageFont = [UIFont systemFontOfSize:15];
   messageFont = [messageFontScaler scaledFontWithFont:messageFont];
   messageFont = [messageFont mdc_scaledFontAtDefaultSize];
