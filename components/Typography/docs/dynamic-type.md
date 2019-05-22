@@ -3,9 +3,9 @@
 Material Components for iOS supports the iOS Dynamic Type feature on all [Material-supported iOS versions](../../../docs/build-env#ios).
 
 #### Overview
-Typography library provides APIs that allow users to support Dynamic Type feature in Material Components. For those components with Dynamic Type feature supported, text size changes based on the Dynamic Type setting provided by the user.
+Typography library provides APIs that allow users to support Dynamic Type feature in Material Components.
 
-To support Dynamic Type in your component, you need to set up text styles represented by `MDCFontTextStyle` on text, such as `MDCFontTextStyleBody1` or `MDCFontTextStyleTitle`. These text styles describe how text size should be adjusted when Dynamic Type setting changes.
+To support Dynamic Type in your component, you need to set up text styles represented by `MDCFontTextStyle` on text, such as `MDCFontTextStyleBody1` or `MDCFontTextStyleTitle`. These text styles describe how text size should be adjusted when Dynamic Type setting changes. Next, enable `mdc_adjustsFontForContentSizeCategory` on components that have Dynamic Type support. This setting tells the component to adjust the text size based on user setting.
 
 #### Configure Text Styles
 
