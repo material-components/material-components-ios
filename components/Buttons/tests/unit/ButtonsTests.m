@@ -1120,9 +1120,11 @@ static NSString *controlStateDescription(UIControlState controlState) {
                              @"Font size should be equal to MDCFontTextStyleButton's.");
 }
 
-/** Test legacy dynamic type has no impact when @c
- * adjustFontForContentSizeCategoryWhenScaledFontIsUnavailable is set to @c NO that the font stays
- * the same. */
+/**
+ Test legacy dynamic type has no impact when @c
+ adjustFontForContentSizeCategoryWhenScaledFontIsUnavailable is set to @c NO that the font stays
+ the same.
+ */
 - (void)testLegacyDynamicTypeDisabled {
   // Given
   UIFont *fakeFont = [UIFont systemFontOfSize:55];
@@ -1138,9 +1140,10 @@ static NSString *controlStateDescription(UIControlState controlState) {
   XCTAssertTrue([self.button.titleLabel.font mdc_isSimplyEqual:originalFont]);
 }
 
-/** Test legacy dynamic type has no impact when @c
- * adjustFontForContentSizeCategoryWhenScaledFontIsUnavailable is set to @c YES that the font
- * changes. */
+/**
+ Test legacy dynamic type has no impact when @c
+ adjustFontForContentSizeCategoryWhenScaledFontIsUnavailable is set to @c YES that the font changes.
+ */
 - (void)testLegacyDynamicTypeEnabled {
   // Given
   UIFont *fakeFont = [UIFont systemFontOfSize:55];
