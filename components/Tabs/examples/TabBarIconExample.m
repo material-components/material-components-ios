@@ -18,7 +18,6 @@
 #import "MaterialColorScheme.h"
 #import "MaterialTabs+ColorThemer.h"
 #import "MaterialTabs.h"
-#import "MDCTabBarExtendedAlignment.h"
 
 @interface TabBarIconExample ()
 @property(nonatomic, strong) UIBarButtonItem *addStarButtonItem;
@@ -135,11 +134,6 @@
                                             style:UIAlertActionStyleDefault
                                           handler:^(UIAlertAction *_Nonnull action) {
                                             [self setAlignment:MDCTabBarAlignmentCenterSelected];
-                                          }]];
-  [sheet addAction:[UIAlertAction actionWithTitle:@"Best Effort Justified"
-                                            style:UIAlertActionStyleDefault
-                                          handler:^(UIAlertAction *_Nonnull action) {
-                                            [self setAlignment:(MDCTabBarAlignment)MDCTabBarExtendedAlignmentBestEffortJustified];
                                           }]];
   [self presentViewController:sheet animated:YES completion:nil];
 }
