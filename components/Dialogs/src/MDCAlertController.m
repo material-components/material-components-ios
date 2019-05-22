@@ -317,12 +317,16 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> clang
 - (void)setAdjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable:
     (BOOL)adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable {
   _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable =
       adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
   self.alertView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable =
       adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
+<<<<<<< HEAD
 }
 
 =======
@@ -339,6 +343,10 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 
 >>>>>>> Add flag for legacy behavior
+=======
+}
+
+>>>>>>> clang
 - (void)actionButtonPressed:(id)button {
   MDCAlertAction *action = [self.actionManager actionForButton:button];
 

@@ -163,12 +163,17 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
     if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
       self.titleLabel.font =
 <<<<<<< HEAD
+<<<<<<< HEAD
           [titleFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
                                   scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
 =======
       [titleFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
                               scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
 >>>>>>> Add flag for legacy behavior
+=======
+          [titleFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
+                                  scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
+>>>>>>> clang
     }
   } else {
     _titleLabel.font = titleFont;
@@ -243,6 +248,7 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
   if (self.mdc_adjustsFontForContentSizeCategory) {
     if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
 <<<<<<< HEAD
+<<<<<<< HEAD
       self.messageLabel.font = [messageFont
           mdc_fontSizedForMaterialTextStyle:kMessageTextStyle
                        scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
@@ -251,6 +257,11 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
       [messageFont mdc_fontSizedForMaterialTextStyle:kMessageTextStyle
                                 scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
 >>>>>>> Add flag for legacy behavior
+=======
+      self.messageLabel.font = [messageFont
+          mdc_fontSizedForMaterialTextStyle:kMessageTextStyle
+                       scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
+>>>>>>> clang
     }
   } else {
     _messageLabel.font = messageFont;
@@ -282,6 +293,7 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
   if (self.mdc_adjustsFontForContentSizeCategory) {
     if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
 <<<<<<< HEAD
+<<<<<<< HEAD
       finalButtonFont = [finalButtonFont
           mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
                        scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
@@ -290,6 +302,11 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
       [finalButtonFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
                                     scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
 >>>>>>> Add flag for legacy behavior
+=======
+      finalButtonFont = [finalButtonFont
+          mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
+                       scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
+>>>>>>> clang
     }
   }
   for (MDCButton *button in self.actionManager.buttonsInActionOrder) {
