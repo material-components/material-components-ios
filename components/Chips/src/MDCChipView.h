@@ -155,12 +155,16 @@
     BOOL mdc_legacyFontScaling __deprecated;
 
 /**
- Enable font scaling curves fallback behavior for Dynamic Type.
+ Affects the fallback behavior for when a scaled font is not provided.
 
- Scale font by calling the older [UIFont mdc_fontSizedForMaterialTextStyle:scaledForDynamicType:]
- category method when the font is not associated with a scaling curve.
+ If enabled, the font size will adjust even if a scaled font has not been provided for
+ a given UIFont property on this component.
 
- Default value is YES.
+ If disabled, the font size will only be adjusted if a scaled font has been provided.
+ This behavior most closely matches UIKit's.
+
+ Default value is YES, but this flag will eventually default to NO and then be deprecated
+ and deleted.
  */
 @property(nonatomic, assign) BOOL adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
 
