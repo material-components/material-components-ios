@@ -93,7 +93,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
                         imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
                 tag:5];
   self.tabBar.items = @[ self.item1, self.item2, self.item3, self.item4, self.item5 ];
-  [self.tabBar.alignment = (MDCTabBarAlignment)MDCTabBarExtendedAlignmentBestEffortJustified;
+  self.tabBar.alignment = (MDCTabBarAlignment)MDCTabBarExtendedAlignmentBestEffortJustified;
   self.tabBar.selectedItem = self.item2;
   [self.tabBar applyPrimaryThemeWithScheme:[[MDCContainerScheme alloc] init]];
 }
