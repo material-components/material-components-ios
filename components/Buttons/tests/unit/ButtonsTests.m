@@ -1116,6 +1116,19 @@ static NSString *controlStateDescription(UIControlState controlState) {
                              @"Font size should be equal to MDCFontTextStyleButton's.");
 }
 
+- (void)testAdjustFontForContentSizeCategoryWhenScaledFontIsUnavailableDefaultBehavior {
+  // Then
+  XCTAssertTrue(self.button.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
+}
+
+- (void)testAdjustsFontForContentSizeCategoryWhenScaledFontIsUnavailableSetsValueCorrectly {
+  // When
+  self.button.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
+
+  // Then
+  XCTAssertFalse(self.button.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
+}
+
 #pragma mark - Size-related tests
 
 - (void)testSizeThatFitsWithMinimumOnly {
