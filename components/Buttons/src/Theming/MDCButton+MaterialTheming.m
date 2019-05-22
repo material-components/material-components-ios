@@ -14,10 +14,10 @@
 
 #import "MDCButton+MaterialTheming.h"
 
+#import "MaterialApplication.h"
 #import "MaterialButtons+ColorThemer.h"
 #import "MaterialButtons+ShapeThemer.h"
 #import "MaterialShadowElevations.h"
-#import "MaterialApplication.h"
 #import "MaterialTypography.h"
 
 @implementation MDCButton (MaterialTheming)
@@ -196,7 +196,8 @@
     } else if ([UIApplication mdc_safeSharedApplication]) {
       sizeCategory = [UIApplication mdc_safeSharedApplication].preferredContentSizeCategory;
     }
-    [self setTitleFont:[typographyScheme.button mdc_scaledFontForSizeCategory:sizeCategory] forState:UIControlStateNormal];
+    [self setTitleFont:[typographyScheme.button mdc_scaledFontForSizeCategory:sizeCategory]
+              forState:UIControlStateNormal];
   } else {
     [self setTitleFont:typographyScheme.button forState:UIControlStateNormal];
   }

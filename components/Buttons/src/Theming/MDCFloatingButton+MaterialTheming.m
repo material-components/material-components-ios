@@ -14,10 +14,10 @@
 
 #import "MDCFloatingButton+MaterialTheming.h"
 
+#import "MaterialApplication.h"
 #import "MaterialButtons+ColorThemer.h"
 #import "MaterialButtons+ShapeThemer.h"
 #import "MaterialTypography.h"
-#import "MaterialApplication.h"
 
 @implementation MDCFloatingButton (MaterialTheming)
 
@@ -69,7 +69,8 @@
     } else if ([UIApplication mdc_safeSharedApplication]) {
       sizeCategory = [UIApplication mdc_safeSharedApplication].preferredContentSizeCategory;
     }
-    [self setTitleFont:[scheme.button mdc_scaledFontForSizeCategory:sizeCategory] forState:UIControlStateNormal];
+    [self setTitleFont:[scheme.button mdc_scaledFontForSizeCategory:sizeCategory]
+              forState:UIControlStateNormal];
   } else {
     [self setTitleFont:scheme.button forState:UIControlStateNormal];
   }
