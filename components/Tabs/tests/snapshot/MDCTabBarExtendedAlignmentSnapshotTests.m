@@ -15,6 +15,7 @@
 #import "MaterialSnapshot.h"
 
 #import "MaterialTabs.h"
+#import "MaterialTabs+Theming.h"
 #import "MDCTabBarExtendedAlignment.h"
 
 static NSString *const kItemTitleShort1Latin = @"Quando";
@@ -56,7 +57,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-    self.recordMode = YES;
+  //  self.recordMode = YES;
 
   CGSize imageSize = CGSizeMake(24, 24);
   self.tabBar = [[MDCTabBar alloc] init];
@@ -92,8 +93,9 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
                         imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
                 tag:5];
   self.tabBar.items = @[ self.item1, self.item2, self.item3, self.item4, self.item5 ];
-  self.tabBar.alignment = (MDCTabBarAlignment)MDCTabBarExtendedAlignmentBestEffortJustified;
+  [self.tabBar.alignment = (MDCTabBarAlignment)MDCTabBarExtendedAlignmentBestEffortJustified;
   self.tabBar.selectedItem = self.item2;
+  [self.tabBar applyPrimaryThemeWithScheme:[[MDCContainerScheme alloc] init]];
 }
 
 - (void)tearDown {
