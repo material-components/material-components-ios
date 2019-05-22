@@ -378,6 +378,8 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   self.alertView.messageFont = self.messageFont;
   self.alertView.titleColor = self.titleColor;
   self.alertView.messageColor = self.messageColor;
+  self.alertView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable =
+      self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
   if (self.backgroundColor) {
     // Avoid reset background color to transparent when self.backgroundColor is nil.
     self.alertView.backgroundColor = self.backgroundColor;
