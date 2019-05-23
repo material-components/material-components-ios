@@ -77,7 +77,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 @property(nonatomic, nullable, weak) MDCAlertControllerView *alertView;
 @property(nonatomic, strong) MDCDialogTransitionController *transitionController;
 @property(nonatomic, nonnull, strong) MDCAlertActionManager *actionManager;
-
+- (void)setupAlertView;
 - (nonnull instancetype)initWithTitle:(nullable NSString *)title
                               message:(nullable NSString *)message;
 
