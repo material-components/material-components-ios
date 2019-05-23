@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import "MDCTabBarAlignment.h"
+
 /**
  Alignment options that are not fully supported in MDC-iOS. These should map exactly back to
  `MDCTabBarAlignment` for values that semantically match.
