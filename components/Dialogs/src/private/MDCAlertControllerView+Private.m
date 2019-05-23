@@ -125,13 +125,15 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
 - (void)addActionButton:(nonnull MDCButton *)button {
   if (button.superview == nil) {
     button.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
+    button.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable =
+        self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
     [self.actionsScrollView addSubview:button];
     if (_buttonColor) {
       // We only set if _buttonColor since settingTitleColor to nil doesn't
       // reset the title to the default
       [button setTitleColor:_buttonColor forState:UIControlStateNormal];
     }
-    [button setTitleFont:_buttonFont forState:UIControlStateNormal];
+    [button setTitleFont:self.buttonFont forState:UIControlStateNormal];
     button.inkColor = self.buttonInkColor;
     // TODO(#1726): Determine default text color values for Normal and Disabled
     CGRect buttonRect = button.bounds;
