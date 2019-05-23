@@ -130,6 +130,7 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
       // reset the title to the default
       [button setTitleColor:_buttonColor forState:UIControlStateNormal];
     }
+    [button setTitleFont:[self buttonFontForDynamicType] forState:UIControlStateNormal];
     [button setTitleFont:_buttonFont forState:UIControlStateNormal];
     button.inkColor = self.buttonInkColor;
     // TODO(#1726): Determine default text color values for Normal and Disabled
@@ -265,17 +266,23 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
   [self updateButtonFont];
 }
 
-- (void)updateButtonFont {
-  UIFont *finalButtonFont = self.buttonFont ?: [[self class] buttonFontDefault];
+- (UIFont *)buttonFontForDynamicType {
+  UIFont *buttonFont = self.buttonFont ?: [[self class] buttonFontDefault];
   if (self.mdc_adjustsFontForContentSizeCategory) {
     if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
-      finalButtonFont = [finalButtonFont
-          mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
-                       scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
+      buttonFont = [buttonFont
+                         mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
+                         scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
     }
   }
+
+  return buttonFont;
+}
+
+- (void)updateButtonFont {
+  UIFont *buttonFont = [self buttonFontForDynamicType];
   for (MDCButton *button in self.actionManager.buttonsInActionOrder) {
-    [button setTitleFont:finalButtonFont forState:UIControlStateNormal];
+    [button setTitleFont:buttonFont forState:UIControlStateNormal];
   }
 
   [self setNeedsLayout];

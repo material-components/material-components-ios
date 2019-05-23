@@ -336,6 +336,12 @@
   // Given
   UIFont *fakeTitleFont = [UIFont systemFontOfSize:55];
   self.alert.titleFont = fakeTitleFont;
+  UIFont *fakeMessageFont = [UIFont systemFontOfSize:50];
+  self.alert.messageFont = fakeMessageFont;
+  MDCAlertAction *fakeAction = [MDCAlertAction actionWithTitle:@"Foo" handler:^(MDCAlertAction *action) {}];
+  [self.alert addAction:fakeAction];
+  UIFont *fakeButtonFont = [UIFont systemFontOfSize:45];
+  self.alert.buttonFont = fakeButtonFont;
   self.alert.mdc_adjustsFontForContentSizeCategory = YES;
 
   // When
@@ -345,6 +351,11 @@
   // Then
   XCTAssertTrue([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@, is not equal to %@",
                 view.titleLabel.font, fakeTitleFont);
+  XCTAssertTrue([view.messageLabel.font mdc_isSimplyEqual:fakeMessageFont],
+                @"%@ is not equal to %@", view.messageLabel.font, fakeMessageFont);
+  UIButton *button = [view.actionManager buttonForAction:fakeAction];
+  XCTAssertTrue([button.titleLabel.font mdc_isSimplyEqual:fakeButtonFont],
+                @"%@ is not equal to %@", button.titleLabel.font, fakeButtonFont);
 }
 
 /**
@@ -356,6 +367,12 @@
   // Given
   UIFont *fakeTitleFont = [UIFont systemFontOfSize:55];
   self.alert.titleFont = fakeTitleFont;
+  UIFont *fakeMessageFont = [UIFont systemFontOfSize:50];
+  self.alert.messageFont = fakeMessageFont;
+  MDCAlertAction *fakeAction = [MDCAlertAction actionWithTitle:@"Foo" handler:^(MDCAlertAction *action) {}];
+  [self.alert addAction:fakeAction];
+  UIFont *fakeButtonFont = [UIFont systemFontOfSize:45];
+  self.alert.buttonFont = fakeButtonFont;
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   self.alert.mdc_adjustsFontForContentSizeCategory = YES;
 
@@ -365,6 +382,11 @@
   // Then
   XCTAssertTrue([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@, is not equal to %@",
                 view.titleLabel.font, fakeTitleFont);
+  XCTAssertTrue([view.messageLabel.font mdc_isSimplyEqual:fakeMessageFont],
+                 @"%@ is not equal to %@", view.messageLabel.font, fakeMessageFont);
+  UIButton *button = [view.actionManager buttonForAction:fakeAction];
+  XCTAssertTrue([button.titleLabel.font mdc_isSimplyEqual:fakeButtonFont],
+                @"%@ is not equal to %@", button.titleLabel.font, fakeButtonFont);
 }
 
 /**
@@ -375,6 +397,12 @@
   // Given
   UIFont *fakeTitleFont = [UIFont systemFontOfSize:55];
   self.alert.titleFont = fakeTitleFont;
+  UIFont *fakeMessageFont = [UIFont systemFontOfSize:50];
+  self.alert.messageFont = fakeMessageFont;
+  MDCAlertAction *fakeAction = [MDCAlertAction actionWithTitle:@"Foo" handler:^(MDCAlertAction *action) {}];
+  [self.alert addAction:fakeAction];
+  UIFont *fakeButtonFont = [UIFont systemFontOfSize:45];
+  self.alert.buttonFont = fakeButtonFont;
   self.alert.mdc_adjustsFontForContentSizeCategory = YES;
 
   // When
@@ -384,6 +412,11 @@
   // Then
   XCTAssertFalse([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@ is equal to %@",
                  view.titleLabel.font, fakeTitleFont);
+  XCTAssertFalse([view.messageLabel.font mdc_isSimplyEqual:fakeMessageFont], @"%@ is equal to %@",
+                 view.messageLabel.font, fakeMessageFont);
+  UIButton *button = [view.actionManager buttonForAction:fakeAction];
+  XCTAssertFalse([button.titleLabel.font mdc_isSimplyEqual:fakeButtonFont], @"%@ is equal to %@",
+                 button.titleLabel.font, fakeMessageFont);
 }
 
 /**
@@ -395,6 +428,12 @@
   // Given
   UIFont *fakeTitleFont = [UIFont systemFontOfSize:55];
   self.alert.titleFont = fakeTitleFont;
+  UIFont *fakeMessageFont = [UIFont systemFontOfSize:50];
+  self.alert.messageFont = fakeMessageFont;
+  MDCAlertAction *fakeAction = [MDCAlertAction actionWithTitle:@"Foo" handler:^(MDCAlertAction *action) {}];
+  [self.alert addAction:fakeAction];
+  UIFont *fakeButtonFont = [UIFont systemFontOfSize:45];
+  self.alert.buttonFont = fakeButtonFont;
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   self.alert.mdc_adjustsFontForContentSizeCategory = YES;
 
@@ -404,6 +443,11 @@
   // Then
   XCTAssertFalse([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@ is equal to %@",
                  view.titleLabel.font, fakeTitleFont);
+  XCTAssertFalse([view.messageLabel.font mdc_isSimplyEqual:fakeMessageFont], @"%@ is equal to %@",
+                 view.messageLabel.font, fakeMessageFont);
+  UIButton *button = [view.actionManager buttonForAction:fakeAction];
+  XCTAssertFalse([button.titleLabel.font mdc_isSimplyEqual:fakeButtonFont], @"%@ is equal to %@",
+                 button.titleLabel.font, fakeButtonFont);
 }
 
 @end
