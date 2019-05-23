@@ -300,7 +300,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
 
 - (void)testTabBarTitlesOnlyWhenSizeChangesToNotFitLatinLTR {
   // Given
-  self.tabBar.selectedItem = self.item1; // Make it easier to see Leading alignment
+  self.tabBar.selectedItem = self.item1;  // Make it easier to see Leading alignment
   self.tabBar.frame = CGRectMake(0, 0, 480, 100);
   [self.tabBar sizeToFit];
   [self.tabBar layoutIfNeeded];
@@ -315,7 +315,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
 
 - (void)testTabBarTitlesOnlyWhenSizeChangesToNotFitArabicRTL {
   // Given
-  self.tabBar.selectedItem = self.item1; // Make it easier to see Leading alignment
+  self.tabBar.selectedItem = self.item1;  // Make it easier to see Leading alignment
   [self setTitlesToArabicShort];
   [self changeLayoutToRTL];
   self.tabBar.frame = CGRectMake(0, 0, 480, 100);
@@ -363,7 +363,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
 - (void)testTabBarImagesOnlyWhenSizeChangesToNotFitLatinLTR {
   // Given
   self.tabBar.itemAppearance = MDCTabBarItemAppearanceImages;
-  self.tabBar.selectedItem = self.item1; // Make it easier to see Leading alignment
+  self.tabBar.selectedItem = self.item1;  // Make it easier to see Leading alignment
   self.tabBar.frame = CGRectMake(0, 0, 480, 100);
   [self.tabBar sizeToFit];
   [self.tabBar layoutIfNeeded];
@@ -379,7 +379,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
 - (void)testTabBarImagesOnlyWhenSizeChangesToNotFitArabicRTL {
   // Given
   self.tabBar.itemAppearance = MDCTabBarItemAppearanceImages;
-  self.tabBar.selectedItem = self.item1; // Make it easier to see Leading alignment
+  self.tabBar.selectedItem = self.item1;  // Make it easier to see Leading alignment
   [self setTitlesToArabicShort];
   [self changeLayoutToRTL];
   self.tabBar.frame = CGRectMake(0, 0, 480, 100);
@@ -429,7 +429,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
 - (void)testTabBarTitledImagesWhenSizeChangesToNotFitLatinLTR {
   // Given
   self.tabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;
-  self.tabBar.selectedItem = self.item1; // Make it easier to see Leading alignment
+  self.tabBar.selectedItem = self.item1;  // Make it easier to see Leading alignment
   self.tabBar.frame = CGRectMake(0, 0, 480, 100);
   [self.tabBar sizeToFit];
   [self.tabBar layoutIfNeeded];
@@ -445,7 +445,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
 - (void)testTabBarTitledImagesWhenSizeChangesToNotFitArabicRTL {
   // Given
   self.tabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;
-  self.tabBar.selectedItem = self.item1; // Make it easier to see Leading alignment
+  self.tabBar.selectedItem = self.item1;  // Make it easier to see Leading alignment
   [self setTitlesToArabicShort];
   [self changeLayoutToRTL];
   self.tabBar.frame = CGRectMake(0, 0, 480, 100);
