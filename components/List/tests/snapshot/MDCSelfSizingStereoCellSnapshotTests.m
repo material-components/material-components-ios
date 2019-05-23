@@ -80,7 +80,7 @@
   backgroundWindow.contentSizeCategoryOverride = sizeCategory;
   backgroundWindow.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.8 alpha:1];
   [backgroundWindow addSubview:view];
-  [backgroundWindow makeKeyAndVisible];
+  backgroundWindow.hidden = NO;
 
   CGRect frame = view.frame;
   frame.origin = CGPointMake(insets.left, insets.top);
