@@ -17,6 +17,7 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
+#import "MaterialApplication.h"
 #import "MaterialButtons.h"
 #import "MaterialMath.h"
 #import "MaterialTypography.h"
@@ -160,13 +161,17 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
 - (void)updateTitleFont {
   UIFont *titleFont = self.titleFont ?: [[self class] titleFontDefault];
   if (self.mdc_adjustsFontForContentSizeCategory) {
-    if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
-      self.titleLabel.font =
-          [titleFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
-                                  scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
+    if (titleFont.mdc_scalingCurve) {
+      titleFont = [titleFont mdc_scaledFontForSizeCategory:[self sizeCategory]];
+    } else {
+      if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
+        self.titleLabel.font =
+        [titleFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
+                                scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
+      }
     }
   } else {
-    _titleLabel.font = titleFont;
+    self.titleLabel.font = titleFont;
   }
   [self setNeedsLayout];
 }
@@ -234,15 +239,19 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
 }
 
 - (void)updateMessageFont {
-  UIFont *messageFont = _messageFont ?: [[self class] messageFontDefault];
+  UIFont *messageFont = self.messageFont ?: [[self class] messageFontDefault];
   if (self.mdc_adjustsFontForContentSizeCategory) {
-    if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
-      self.messageLabel.font = [messageFont
-          mdc_fontSizedForMaterialTextStyle:kMessageTextStyle
-                       scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
+    if (messageFont.mdc_scalingCurve) {
+      messageFont = [messageFont mdc_scaledFontForSizeCategory:[self sizeCategory]];
+    } else {
+      if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
+        self.messageLabel.font = [messageFont
+                                  mdc_fontSizedForMaterialTextStyle:kMessageTextStyle
+                                  scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
+      }
     }
   } else {
-    _messageLabel.font = messageFont;
+    self.messageLabel.font = messageFont;
   }
   [self setNeedsLayout];
 }
@@ -269,10 +278,14 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
 - (void)updateButtonFont {
   UIFont *finalButtonFont = self.buttonFont ?: [[self class] buttonFontDefault];
   if (self.mdc_adjustsFontForContentSizeCategory) {
-    if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
-      finalButtonFont = [finalButtonFont
-          mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
-                       scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
+    if (finalButtonFont.mdc_scalingCurve) {
+      finalButtonFont = [finalButtonFont mdc_scaledFontForSizeCategory:[self sizeCategory]];
+    } else {
+      if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
+        finalButtonFont = [finalButtonFont
+                           mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
+                           scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
+      }
     }
   }
   for (MDCButton *button in self.actionManager.buttonsInActionOrder) {
@@ -635,6 +648,16 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
   [self updateButtonFont];
 
   [self setNeedsLayout];
+}
+
+- (UIContentSizeCategory)sizeCategory {
+  UIContentSizeCategory sizeCategory = UIContentSizeCategoryLarge;
+  if (@available(iOS 10.0, *)) {
+    sizeCategory = self.traitCollection.preferredContentSizeCategory;
+  } else if ([UIApplication mdc_safeSharedApplication]) {
+    sizeCategory = [UIApplication mdc_safeSharedApplication].preferredContentSizeCategory;
+  }
+  return sizeCategory;
 }
 
 @end
