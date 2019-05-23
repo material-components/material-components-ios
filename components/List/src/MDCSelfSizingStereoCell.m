@@ -232,16 +232,16 @@ static const CGFloat kDetailColorOpacity = (CGFloat)0.6;
       titleFont = [titleFont mdc_scaledFontForSizeCategory:sizeCategory];
     } else if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
       titleFont =
-      [titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleTitle
-                              scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
+          [titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleTitle
+                                  scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
     }
 
     if (detailFont.mdc_scalingCurve) {
       detailFont = [detailFont mdc_scaledFontForSizeCategory:sizeCategory];
     } else if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
       detailFont =
-      [detailFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleCaption
-                               scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
+          [detailFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleCaption
+                                   scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
     }
   }
   self.titleLabel.font = titleFont;
