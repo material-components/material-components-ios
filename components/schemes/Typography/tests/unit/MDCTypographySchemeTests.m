@@ -167,7 +167,8 @@
   XCTAssertTrue(scheme.useCurrentContentSizeCategoryWhenApplied);
 }
 
-- (void)testMdc_adjustsFontForContentSizeCategoryIsMappedToUseCurrentContentSizeCategoryWhenApplied {
+- (void)
+    testMdc_adjustsFontForContentSizeCategoryIsMappedToUseCurrentContentSizeCategoryWhenApplied {
   // Given
   MDCTypographyScheme *scheme =
       [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
