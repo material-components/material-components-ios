@@ -42,6 +42,7 @@ mdc_public_objc_library(
         "//components/ShadowElevations",
         "//components/ShadowLayer",
         "//components/Typography",
+        "//components/private/Application",
         "//components/private/KeyboardWatcher",
         "@material_internationalization_ios//:MDFInternationalization",
         "@motion_animator_objc//:MotionAnimator",

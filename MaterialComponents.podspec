@@ -854,6 +854,7 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/ShadowElevations"
     component.dependency "MaterialComponents/ShadowLayer"
     component.dependency "MaterialComponents/Typography"
+    component.dependency "MaterialComponents/private/Application"
     component.dependency "MaterialComponents/private/KeyboardWatcher"
     component.dependency "MDFInternationalization"
 
