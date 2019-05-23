@@ -167,9 +167,9 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
       titleFont = [titleFont mdc_scaledFontForSizeCategory:[self sizeCategory]];
     } else {
       if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
-        self.titleLabel.font =
-        [titleFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
-                                scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
+        self.titleLabel.font = [titleFont
+            mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
+                         scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
       }
     }
   } else {
@@ -248,8 +248,8 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
     } else {
       if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
         self.messageLabel.font = [messageFont
-                                  mdc_fontSizedForMaterialTextStyle:kMessageTextStyle
-                                  scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
+            mdc_fontSizedForMaterialTextStyle:kMessageTextStyle
+                         scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
       }
     }
   } else {
@@ -285,8 +285,8 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
     } else {
       if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
         finalButtonFont = [finalButtonFont
-                           mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
-                           scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
+            mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
+                         scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
       }
     }
   }
