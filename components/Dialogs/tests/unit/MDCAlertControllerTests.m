@@ -328,18 +328,52 @@
   XCTAssertFalse(self.alert.alertView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
 }
 
+<<<<<<< HEAD
 - (void)testLegacyDynamicTypeDisabledThenDynamicTypeEnabledDoesNotUpdateFonts {
   // Given
   UIFont *fakeTitleFont = [UIFont systemFontOfSize:55];
   self.alert.titleFont = fakeTitleFont;
   UIFont *fakeMessageFont = [UIFont systemFontOfSize:50];
   self.alert.messageFont = fakeMessageFont;
+=======
+/**
+ Test legacy dynamic type has no impact on a @c MDCButton when @c
+ adjustFontForContentSizeCategoryWhenScaledFontIsUnavailable is set to @c NO that the font stays
+ the same.
+ */
+- (void)testLegacyDynamicTypeDisabled {
+  // Given
+  UIFont *fakeTitleFont = [UIFont systemFontOfSize:55];
+  self.alert.titleFont = fakeTitleFont;
+  self.alert.mdc_adjustsFontForContentSizeCategory = YES;
+
+  // When
+  self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
+
+  // Then
+  XCTAssertTrue([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@, is not equal to %@",
+                view.titleLabel.font, fakeTitleFont);
+}
+
+/**
+ Test legacy dynamic type has no impact on a @c MDCButton when @c
+ adjustFontForContentSizeCategoryWhenScaledFontIsUnavailable is set to @c NO before setting @c
+ mdc_adjustsFontForContentSizeCategory to @c YES that the font stays the same.
+ */
+- (void)testLegacyDynamicTypeDisabledThenDynamicTypeTurnedOn {
+  // Given
+  UIFont *fakeTitleFont = [UIFont systemFontOfSize:55];
+  self.alert.titleFont = fakeTitleFont;
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
+>>>>>>> Test title font
   self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
 
   // When
   self.alert.mdc_adjustsFontForContentSizeCategory = YES;
 
   // Then
+<<<<<<< HEAD
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   XCTAssertTrue([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@ is not equal to %@",
                 view.titleLabel.font, fakeTitleFont);
@@ -353,17 +387,37 @@
   self.alert.titleFont = fakeTitleFont;
   UIFont *fakeMessageFont = [UIFont systemFontOfSize:50];
   self.alert.messageFont = fakeMessageFont;
+=======
+  XCTAssertTrue([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@, is not equal to %@",
+                view.titleLabel.font, fakeTitleFont);
+}
+
+/**
+ Test legacy dynamic type impacts a @c MDCButton when @c
+ adjustFontForContentSizeCategoryWhenScaledFontIsUnavailable is set to @c YES that the font changes.
+ */
+- (void)testLegacyDynamicTypeEnabled {
+  // Given
+  UIFont *fakeTitleFont = [UIFont systemFontOfSize:55];
+  self.alert.titleFont = fakeTitleFont;
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
+>>>>>>> Test title font
   self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
 
   // When
   self.alert.mdc_adjustsFontForContentSizeCategory = YES;
 
   // Then
+<<<<<<< HEAD
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   XCTAssertFalse([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@ is equal to %@",
                  view.titleLabel.font, fakeTitleFont);
   XCTAssertFalse([view.messageLabel.font mdc_isSimplyEqual:fakeMessageFont], @"%@ is equal to %@",
                  view.messageLabel.font, fakeMessageFont);
+=======
+  XCTAssertFalse([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@, is equal to %@",
+                view.titleLabel.font, fakeTitleFont);
+>>>>>>> Test title font
 }
 
 @end
