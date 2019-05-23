@@ -386,10 +386,10 @@ static UIColor *DrawerShadowColor(void) {
   _shouldPresentAtFullscreen = YES;
   [self cacheLayoutCalculations];
   [UIView animateWithDuration:duration
-      animations:^{
-        [self setupLayout];
-      }
-      completion:completion];
+                   animations:^{
+                     [self setupLayout];
+                   }
+                   completion:completion];
 }
 
 #pragma mark UIViewController
