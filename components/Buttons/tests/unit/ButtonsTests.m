@@ -82,10 +82,6 @@ static NSString *controlStateDescription(UIControlState controlState) {
   return [string copy];
 }
 
-@interface MDCButton (Testing)
-- (void)updateTitleFont;
-@end
-
 @interface FakeShadowLayer : MDCShapedShadowLayer
 @property(nonatomic, assign) NSInteger elevationAssignmentCount;
 @end
