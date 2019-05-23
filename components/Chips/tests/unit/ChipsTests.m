@@ -17,10 +17,27 @@
 #import <XCTest/XCTest.h>
 
 #import "../../src/MDCChipField.h"
+#import "MaterialTypography.h"
 
 // Expose internal methods for testing
 @interface MDCChipField (Testing)
 - (void)createNewChipFromInput;
+@end
+
+/** Fake MDCChipView for unit testing. */
+@interface MDCChipsTestsFakeChipView : MDCChipView
+
+/** Used to set the value of @c traitCollection. */
+@property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
+
+@end
+
+@implementation MDCChipsTestsFakeChipView
+
+- (UITraitCollection *)traitCollection {
+  return self.traitCollectionOverride ?: [super traitCollection];
+}
+
 @end
 
 static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
@@ -392,6 +409,35 @@ static inline UIImage *TestImage(CGSize size) {
 
   // Then
   XCTAssertEqual(controlViewCount, (NSUInteger)1);
+}
+
+- (void)testChipViewDynamicTypeBehavior {
+  if (@available(iOS 10.0, *)) {
+    // Given
+    MDCChipsTestsFakeChipView *chipView = [[MDCChipsTestsFakeChipView alloc] init];
+    chipView.mdc_adjustsFontForContentSizeCategory = YES;
+    chipView.mdc_legacyFontScaling = NO;
+    UIFont *titleFont = [UIFont systemFontOfSize:14.0 weight:UIFontWeightMedium];
+    MDCFontScaler *fontScaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleBody2];
+    titleFont = [fontScaler scaledFontWithFont:titleFont];
+    titleFont = [titleFont mdc_scaledFontAtDefaultSize];
+    chipView.titleFont = titleFont;
+    chipView.titleLabel.text = @"Chip";
+    CGFloat originalFontSize = chipView.titleLabel.font.pointSize;
+
+    // When
+    UIContentSizeCategory size = UIContentSizeCategoryExtraExtraLarge;
+    UITraitCollection *traitCollection =
+        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:size];
+    chipView.traitCollectionOverride = traitCollection;
+    [NSNotificationCenter.defaultCenter
+        postNotificationName:UIContentSizeCategoryDidChangeNotification
+                      object:nil];
+
+    // Then
+    CGFloat actualFontSize = chipView.titleLabel.font.pointSize;
+    XCTAssertGreaterThan(actualFontSize, originalFontSize);
+  }
 }
 
 @end

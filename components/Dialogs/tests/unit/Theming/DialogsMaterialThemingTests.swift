@@ -93,7 +93,7 @@ class DialogsMaterialThemingTests: XCTestCase {
         XCTAssertEqual(button.titleColor(for: .normal), colorScheme.primaryColor)
         XCTAssertEqual(button.titleColor(for: .disabled), colorScheme.onSurfaceColor.withAlphaComponent(0.38))
         XCTAssertEqual(button.disabledAlpha,1)
-        XCTAssertEqual(button.inkColor,colorScheme.primaryColor.withAlphaComponent(0.16))
+        XCTAssertEqual(button.inkColor,colorScheme.primaryColor.withAlphaComponent(0.12))
         XCTAssertEqual(button.borderColor(for: .normal), colorScheme.onSurfaceColor.withAlphaComponent(0.12))
         // Test shape
         XCTAssertEqual(button.layer.cornerRadius, kCornerRadius, accuracy: 0.001)

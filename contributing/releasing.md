@@ -45,7 +45,7 @@ Please follow [using git-lfs instructions](https://github.com/material-component
 
 Verify that xcode-select is pointing to an Xcode installation directory:
 
-    sudo xcode-select -p
+    xcode-select -p
     
     # Example output:
     # /Applications/Xcode.app/Contents/Developer

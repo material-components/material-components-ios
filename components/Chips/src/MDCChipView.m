@@ -23,6 +23,7 @@
 #import "MaterialShadowLayer.h"
 #import "MaterialShapes.h"
 #import "MaterialTypography.h"
+#import "UIApplication+AppExtensions.h"
 
 static const MDCFontTextStyle kTitleTextStyle = MDCFontTextStyleBody2;
 
@@ -134,6 +135,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 - (void)commonMDCChipViewInit {
   _minimumSize = kMDCChipMinimumSizeDefault;
   self.isAccessibilityElement = YES;
+  _mdc_legacyFontScaling = YES;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -502,47 +504,37 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 }
 
 - (void)updateTitleFont {
-  UIFont *customTitleFont = _titleFont;
-
   // If we have a custom font apply it to the label.
   // If not, fall back to the Material specified font.
-  if (customTitleFont) {
-    // If we are automatically adjusting for Dynamic Type resize the font based on the text style
-    if (_mdc_adjustsFontForContentSizeCategory) {
-      self.titleLabel.font = [customTitleFont
-          mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
-                       scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
-    } else {
-      self.titleLabel.font = customTitleFont;
-    }
-  } else {
-    // TODO(#2709): Migrate to a single source of truth for fonts
-    // There is no custom font, so use the default font.
-    if (_mdc_adjustsFontForContentSizeCategory) {
-      // If we are using the default (system) font loader, retrieve the
-      // font from the UIFont preferredFont API.
-      if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
-        _titleLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:kTitleTextStyle];
-      } else {
-        // There is a custom font loader, retrieve the font and scale it.
-        UIFont *customTypographyFont = [MDCTypography buttonFont];
-        _titleLabel.font = [customTypographyFont
-            mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
-                         scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+  UIFont *titleFont = _titleFont ?: [[self class] defaultTitleFont];
+
+  // If we are automatically adjusting for Dynamic Type resize the font based on the text style
+  if (self.mdc_adjustsFontForContentSizeCategory) {
+    if (titleFont.mdc_scalingCurve && !self.mdc_legacyFontScaling) {
+      UIContentSizeCategory sizeCategory = UIContentSizeCategoryLarge;
+      if (@available(iOS 10.0, *)) {
+        sizeCategory = self.traitCollection.preferredContentSizeCategory;
+      } else if ([UIApplication mdc_safeSharedApplication]) {
+        sizeCategory = [UIApplication mdc_safeSharedApplication].preferredContentSizeCategory;
       }
+      titleFont = [titleFont mdc_scaledFontForSizeCategory:sizeCategory];
     } else {
-      // If we are using the default (system) font loader, retrieve the
-      // font from the UIFont standardFont API.
-      if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
-        _titleLabel.font = [UIFont mdc_standardFontForMaterialTextStyle:kTitleTextStyle];
-      } else {
-        // There is a custom font loader, retrieve the font from it.
-        _titleLabel.font = [MDCTypography buttonFont];
-      }
+      titleFont =
+          [titleFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
+                                  scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
     }
   }
+  self.titleLabel.font = titleFont;
 
   [self setNeedsLayout];
+}
+
++ (UIFont *)defaultTitleFont {
+  // TODO(#2709): Migrate to a single source of truth for fonts
+  if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
+    return [UIFont mdc_standardFontForMaterialTextStyle:kTitleTextStyle];
+  }
+  return [MDCTypography buttonFont];
 }
 
 - (void)updateTitleColor {
