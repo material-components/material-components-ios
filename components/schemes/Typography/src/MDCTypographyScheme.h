@@ -106,9 +106,9 @@
  the component.
 
  @note This flag will become required in the future as a replacement for
- mdc_adjustsFontForContentSizeCategory.
+ @c mdc_adjustsFontForContentSizeCategory.
  */
-@property(nonatomic, readonly) BOOL useCurrentContentSizeCategoryWhenApplied;
+@property(nonatomic, assign, readonly) BOOL useCurrentContentSizeCategoryWhenApplied;
 
 @end
 
@@ -170,7 +170,7 @@ typedef NS_ENUM(NSInteger, MDCTypographySchemeDefaults) {
  - If this flag is disabled, make no changes to the font.
  - If this flag is enabled, adjust the font with respect to the current content size category.
  */
-@property(nonatomic, readwrite) BOOL useCurrentContentSizeCategoryWhenApplied;
+@property(nonatomic, assign, readwrite) BOOL useCurrentContentSizeCategoryWhenApplied;
 
 /**
  Initializes the typography scheme with the latest material defaults.
@@ -188,6 +188,6 @@ typedef NS_ENUM(NSInteger, MDCTypographySchemeDefaults) {
  @warning Will eventually be deprecated and removed. Please use
  useCurrentContentSizeCategoryWhenApplied instead.
  */
-@property(nonatomic, readwrite) BOOL mdc_adjustsFontForContentSizeCategory;
+@property(nonatomic, assign, readwrite) BOOL mdc_adjustsFontForContentSizeCategory;
 
 @end
