@@ -97,8 +97,8 @@
   [self snapshotVerifyView:snapshotView];
 }
 
-- (void)generateSnapshotWithContentSizeCategory:(UIContentSizeCategory)sizeCategory
-                               andVerifyForView:(UIView *)view {
+- (void)generateSnapshotWithContentSizeCategoryAndNotificationPost:(UIContentSizeCategory)sizeCategory
+                                                  andVerifyForView:(UIView *)view {
   UIWindow *snapshotWindow = [self generateWindowWithView:view
                                       contentSizeCategory:sizeCategory
                                                    insets:UIEdgeInsetsMake(10, 10, 10, 10)];
@@ -153,8 +153,8 @@
     self.cell.mdc_adjustsFontForContentSizeCategory = YES;
 
     // Then
-    [self generateSnapshotWithContentSizeCategory:UIContentSizeCategoryExtraSmall
-                                 andVerifyForView:self.cell];
+    [self generateSnapshotWithContentSizeCategoryAndNotificationPost:UIContentSizeCategoryExtraSmall
+                                                    andVerifyForView:self.cell];
   }
 }
 
@@ -172,8 +172,8 @@
     self.cell.mdc_adjustsFontForContentSizeCategory = YES;
 
     // Then
-    [self generateSnapshotWithContentSizeCategory:UIContentSizeCategoryExtraLarge
-                                 andVerifyForView:self.cell];
+    [self generateSnapshotWithContentSizeCategoryAndNotificationPost:UIContentSizeCategoryExtraLarge
+                                                    andVerifyForView:self.cell];
   }
 }
 
