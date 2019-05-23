@@ -124,7 +124,8 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
 - (void)addActionButton:(nonnull MDCButton *)button {
   if (button.superview == nil) {
     button.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
-    button.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
+    button.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable =
+        self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
     [self.actionsScrollView addSubview:button];
     if (_buttonColor) {
       // We only set if _buttonColor since settingTitleColor to nil doesn't
@@ -270,9 +271,9 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
   UIFont *buttonFont = self.buttonFont ?: [[self class] buttonFontDefault];
   if (self.mdc_adjustsFontForContentSizeCategory) {
     if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
-      buttonFont = [buttonFont
-                         mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
-                         scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
+      buttonFont =
+          [buttonFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
+                                   scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
     }
   }
 
@@ -283,7 +284,8 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
   UIFont *buttonFont = [self buttonFontForDynamicType];
   for (MDCButton *button in self.actionManager.buttonsInActionOrder) {
     button.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
-    button.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
+    button.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable =
+        self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
     [button setTitleFont:buttonFont forState:UIControlStateNormal];
   }
 
