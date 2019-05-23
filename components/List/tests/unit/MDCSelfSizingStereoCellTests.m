@@ -62,7 +62,7 @@
 
 @implementation MDCSelfSizingStereoCellTests
 
-- (void)testSelfSizingStereoCellDynamicTypeBehavior {
+- (void)testContentSizeCategoryNotificationCausesFontsToAdjustOniOS10AndUp {
   // Given
   MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
   MDCSelfSizingStereoCell *cell = [[MDCSelfSizingStereoCell alloc] init];
@@ -89,16 +89,13 @@
   [NSNotificationCenter.defaultCenter
       postNotificationName:UIContentSizeCategoryDidChangeNotification
                     object:nil];
-  CGFloat fontTitleSizeForExtraExtraLargeSizeCategory = cell.titleLabel.font.pointSize;
-  CGFloat fontDetailSizeForExtraExtraLargeSizeCategory = cell.detailLabel.font.pointSize;
 
   // Then
+  // We only test the behavior for iOS10.0+ because we are not able to
+  // simulate UIApplication in this test for iOS9.0 path.
   if (@available(iOS 10.0, *)) {
-    XCTAssertGreaterThan(fontTitleSizeForExtraExtraLargeSizeCategory, defaultTitleSize);
-    XCTAssertGreaterThan(fontDetailSizeForExtraExtraLargeSizeCategory, defaultDetailSize);
-  } else {
-    XCTAssertEqual(fontTitleSizeForExtraExtraLargeSizeCategory, defaultTitleSize);
-    XCTAssertEqual(fontDetailSizeForExtraExtraLargeSizeCategory, defaultDetailSize);
+    XCTAssertGreaterThan(cell.titleLabel.font.pointSize, defaultTitleSize);
+    XCTAssertGreaterThan(cell.detailLabel.font.pointSize, defaultDetailSize);
   }
 }
 
