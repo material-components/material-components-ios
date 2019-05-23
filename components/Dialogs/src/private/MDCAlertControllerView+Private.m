@@ -282,6 +282,8 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
 - (void)updateButtonFont {
   UIFont *buttonFont = [self buttonFontForDynamicType];
   for (MDCButton *button in self.actionManager.buttonsInActionOrder) {
+    button.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
+    button.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
     [button setTitleFont:buttonFont forState:UIControlStateNormal];
   }
 
