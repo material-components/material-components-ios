@@ -1136,8 +1136,9 @@ static NSString *controlStateDescription(UIControlState controlState) {
   self.button.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
   [self.button updateTitleFont];
 
-  // Given
-  XCTAssertTrue([self.button.titleLabel.font mdc_isSimplyEqual:originalFont]);
+  // Then
+  XCTAssertTrue([self.button.titleLabel.font mdc_isSimplyEqual:originalFont],
+                @"%@ is not equal to %@", self.button.titleLabel.font, originalFont);
 }
 
 /**
@@ -1155,8 +1156,9 @@ static NSString *controlStateDescription(UIControlState controlState) {
   self.button.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
   [self.button updateTitleFont];
 
-  // Given
-  XCTAssertFalse([self.button.titleLabel.font mdc_isSimplyEqual:originalFont]);
+  // Then
+  XCTAssertFalse([self.button.titleLabel.font mdc_isSimplyEqual:originalFont], @"%@ is equal to %@",
+                 self.button.titleLabel.font, originalFont);
 }
 
 #pragma mark - Size-related tests
