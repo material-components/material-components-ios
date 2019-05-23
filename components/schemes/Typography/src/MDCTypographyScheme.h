@@ -105,7 +105,7 @@
  should be adjusted for the current Dynamic Type content size category prior to being assigned to
  the component.
 
- This flag will become required in the future as a replacement for
+ @note This flag will become required in the future as a replacement for
  mdc_adjustsFontForContentSizeCategory.
  */
 @property(nonatomic, readonly) BOOL useCurrentContentSizeCategoryWhenApplied;
@@ -119,7 +119,8 @@ typedef NS_ENUM(NSInteger, MDCTypographySchemeDefaults) {
   /**
    The Material defaults, circa April 2018.
 
-   useCurrentContentSizeCategoryWhenApplied will be NO by default.
+   MDCTypographyScheming's useCurrentContentSizeCategoryWhenApplied is assigned to NO by default
+   with this version.
    */
   MDCTypographySchemeDefaultsMaterial201804,
 
@@ -130,7 +131,8 @@ typedef NS_ENUM(NSInteger, MDCTypographySchemeDefaults) {
    MDCTypographySchemeDefaultsMaterial201804 with the addition that vended fonts will have
    appropriate scalingCurves attached.
 
-   useCurrentContentSizeCategoryWhenApplied will be YES by default.
+   MDCTypographyScheming's useCurrentContentSizeCategoryWhenApplied is assigned to YES by default
+   with this version.
    */
   MDCTypographySchemeDefaultsMaterial201902,
 };
