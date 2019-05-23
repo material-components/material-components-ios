@@ -332,6 +332,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 - (void)testLegacyDynamicTypeDisabledThenDynamicTypeEnabledDoesNotUpdateFonts {
   // Given
   UIFont *fakeTitleFont = [UIFont systemFontOfSize:55];
@@ -354,6 +355,9 @@
 >>>>>>> Update test names and delete comments
 =======
 >>>>>>> Test title font
+=======
+- (void)testDynamicTypeEnabledThenLegacyDynamicTypeDisabledDoesNotUpdateFonts {
+>>>>>>> Update test names and delete comments
   // Given
   UIFont *fakeTitleFont = [UIFont systemFontOfSize:55];
   self.alert.titleFont = fakeTitleFont;
@@ -383,6 +387,7 @@
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> Revert setter for adjust...whenUnavailable
 - (void)testLegacyDynamicTypeDisabledThenDynamicTypeEnabledDoesNotUpdateFonts {
@@ -394,6 +399,9 @@
  */
 - (void)testLegacyDynamicTypeDisabledThenDynamicTypeTurnedOn {
 >>>>>>> Test title font
+=======
+- (void)testLegacyDynamicTypeDisabledThenDynamicTypeEnabledDoesNotUpdateFonts {
+>>>>>>> Update test names and delete comments
   // Given
   UIFont *fakeTitleFont = [UIFont systemFontOfSize:55];
   self.alert.titleFont = fakeTitleFont;
@@ -457,11 +465,7 @@
                 view.titleLabel.font, fakeTitleFont);
 }
 
-/**
- Test legacy dynamic type impacts a @c MDCButton when @c
- adjustFontForContentSizeCategoryWhenScaledFontIsUnavailable is set to @c YES that the font changes.
- */
-- (void)testLegacyDynamicTypeEnabled {
+- (void)testDynamicTypeEnabledAndLegacyEnabledUpdatesTheFonts {
   // Given
   UIFont *fakeTitleFont = [UIFont systemFontOfSize:55];
   self.alert.titleFont = fakeTitleFont;
