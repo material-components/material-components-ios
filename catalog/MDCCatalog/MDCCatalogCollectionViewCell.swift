@@ -40,7 +40,8 @@ class MDCCatalogCollectionViewCell: UICollectionViewCell {
     self.isAccessibilityElement = true
     let rawAccessibilityTraits =
       accessibilityTraits.rawValue | UIAccessibilityTraits.button.rawValue
-    self.accessibilityTraits = UIAccessibilityTraits(rawValue: rawAccessibilityTraits)
+    accessibilityTraits = UIAccessibilityTraits(rawValue: rawAccessibilityTraits)
+    accessibilityHint = "Opens the example"
 
     updateTheme()
 
