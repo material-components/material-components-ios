@@ -99,8 +99,7 @@
 @optional
 
 /**
- Whether applications of this scheme to components should apply fonts in respect to the current
- Dynamic Type setting.
+ A hint for how fonts in this scheme should be applied to components in relation to Dynamic Type.
 
  If this flag is enabled and the typography scheme's font is scalable with Dynamic Type, then fonts
  should be adjusted for the current Dynamic Type content size category prior to being assigned to
