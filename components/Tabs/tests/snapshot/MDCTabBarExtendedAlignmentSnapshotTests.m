@@ -300,12 +300,13 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
 
 - (void)testTabBarTitlesOnlyWhenSizeChangesToNotFitLatinLTR {
   // Given
+  self.tabBar.selectedItem = self.item1; // Make it easier to see Leading alignment
   self.tabBar.frame = CGRectMake(0, 0, 480, 100);
   [self.tabBar sizeToFit];
   [self.tabBar layoutIfNeeded];
 
   // When
-  self.tabBar.frame = CGRectMake(0, 0, 100, 100);
+  self.tabBar.frame = CGRectMake(0, 0, 200, CGRectGetHeight(self.tabBar.bounds));
   [self.tabBar layoutIfNeeded];
 
   // Then
@@ -314,6 +315,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
 
 - (void)testTabBarTitlesOnlyWhenSizeChangesToNotFitArabicRTL {
   // Given
+  self.tabBar.selectedItem = self.item1; // Make it easier to see Leading alignment
   [self setTitlesToArabicShort];
   [self changeLayoutToRTL];
   self.tabBar.frame = CGRectMake(0, 0, 480, 100);
@@ -321,7 +323,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   [self.tabBar layoutIfNeeded];
 
   // When
-  self.tabBar.frame = CGRectMake(0, 0, 100, 100);
+  self.tabBar.frame = CGRectMake(0, 0, 200, CGRectGetHeight(self.tabBar.bounds));
   [self.tabBar layoutIfNeeded];
 
   // Then
@@ -330,12 +332,12 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
 
 - (void)testTabBarTitlesOnlyWhenSizeChangesToFitLatinLTR {
   // Given
-  [self setTitlesToLatinLong];
   self.tabBar.frame = CGRectMake(0, 0, 100, 100);
+  [self.tabBar sizeToFit];
   [self.tabBar layoutIfNeeded];
 
   // When
-  [self.tabBar sizeToFit];
+  self.tabBar.frame = CGRectMake(0, 0, 480, CGRectGetHeight(self.tabBar.bounds));
   [self.tabBar layoutIfNeeded];
 
   // Then
@@ -344,13 +346,80 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
 
 - (void)testTabBarTitlesOnlyWhenSizeChangesToFitArabicRTL {
   // Given
-  [self setTitlesToArabicLong];
+  [self setTitlesToArabicShort];
   [self changeLayoutToRTL];
   self.tabBar.frame = CGRectMake(0, 0, 100, 100);
+  [self.tabBar sizeToFit];
   [self.tabBar layoutIfNeeded];
 
   // When
+  self.tabBar.frame = CGRectMake(0, 0, 480, CGRectGetHeight(self.tabBar.bounds));
+  [self.tabBar layoutIfNeeded];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBar];
+}
+
+- (void)testTabBarImagesOnlyWhenSizeChangesToNotFitLatinLTR {
+  // Given
+  self.tabBar.itemAppearance = MDCTabBarItemAppearanceImages;
+  self.tabBar.selectedItem = self.item1; // Make it easier to see Leading alignment
+  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
   [self.tabBar sizeToFit];
+  [self.tabBar layoutIfNeeded];
+
+  // When
+  self.tabBar.frame = CGRectMake(0, 0, 200, CGRectGetHeight(self.tabBar.bounds));
+  [self.tabBar layoutIfNeeded];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBar];
+}
+
+- (void)testTabBarImagesOnlyWhenSizeChangesToNotFitArabicRTL {
+  // Given
+  self.tabBar.itemAppearance = MDCTabBarItemAppearanceImages;
+  self.tabBar.selectedItem = self.item1; // Make it easier to see Leading alignment
+  [self setTitlesToArabicShort];
+  [self changeLayoutToRTL];
+  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
+  [self.tabBar sizeToFit];
+  [self.tabBar layoutIfNeeded];
+
+  // When
+  self.tabBar.frame = CGRectMake(0, 0, 200, CGRectGetHeight(self.tabBar.bounds));
+  [self.tabBar layoutIfNeeded];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBar];
+}
+
+- (void)testTabBarImagesOnlyWhenSizeChangesToFitLatinLTR {
+  // Given
+  self.tabBar.itemAppearance = MDCTabBarItemAppearanceImages;
+  self.tabBar.frame = CGRectMake(0, 0, 100, 100);
+  [self.tabBar sizeToFit];
+  [self.tabBar layoutIfNeeded];
+
+  // When
+  self.tabBar.frame = CGRectMake(0, 0, 480, CGRectGetHeight(self.tabBar.bounds));
+  [self.tabBar layoutIfNeeded];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBar];
+}
+
+- (void)testTabBarImagesOnlyWhenSizeChangesToFitArabicRTL {
+  // Given
+  self.tabBar.itemAppearance = MDCTabBarItemAppearanceImages;
+  [self setTitlesToArabicShort];
+  [self changeLayoutToRTL];
+  self.tabBar.frame = CGRectMake(0, 0, 100, 100);
+  [self.tabBar sizeToFit];
+  [self.tabBar layoutIfNeeded];
+
+  // When
+  self.tabBar.frame = CGRectMake(0, 0, 480, CGRectGetHeight(self.tabBar.bounds));
   [self.tabBar layoutIfNeeded];
 
   // Then
