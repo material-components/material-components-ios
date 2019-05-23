@@ -99,4 +99,59 @@
   }
 }
 
+
+- (void)testAdjustsFontForContentSizeCategoryWhenScaledFontIsUnavailableIsYES {
+  // Given
+  MDCSelfSizingStereoCell *cell = [[MDCSelfSizingStereoCell alloc] init];
+  UIFont *originalTitleFont = [UIFont systemFontOfSize:99];
+  UIFont *originalDetailFont = [UIFont systemFontOfSize:99];
+  cell.titleLabel.font = originalTitleFont;
+  cell.detailLabel.font = originalDetailFont;
+  cell.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
+  cell.mdc_adjustsFontForContentSizeCategory = YES;
+  cell.titleLabel.text = @"Title";
+  cell.detailLabel.text = @"Detail";
+
+  // When
+  MDCSelfSizingStereoCellTestsDynamicTypeContentSizeCategoryOverrideWindow
+  *extraExtraLargeContainer =
+  [[MDCSelfSizingStereoCellTestsDynamicTypeContentSizeCategoryOverrideWindow alloc]
+   initWithContentSizeCategoryOverride:UIContentSizeCategoryExtraLarge];
+  [extraExtraLargeContainer addSubview:cell];
+  [NSNotificationCenter.defaultCenter
+   postNotificationName:UIContentSizeCategoryDidChangeNotification
+   object:nil];
+
+  // Then
+  XCTAssertFalse([cell.titleLabel.font mdc_isSimplyEqual:originalTitleFont]);
+  XCTAssertFalse([cell.detailLabel.font mdc_isSimplyEqual:originalDetailFont]);
+}
+
+- (void)testAdjustsFontForContentSizeCategoryWhenScaledFontIsUnavailableIsNO {
+  // Given
+  MDCSelfSizingStereoCell *cell = [[MDCSelfSizingStereoCell alloc] init];
+  UIFont *originalTitleFont = [UIFont systemFontOfSize:99];
+  UIFont *originalDetailFont = [UIFont systemFontOfSize:99];
+  cell.titleLabel.font = originalTitleFont;
+  cell.detailLabel.font = originalDetailFont;
+  cell.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
+  cell.mdc_adjustsFontForContentSizeCategory = YES;
+  cell.titleLabel.text = @"Title";
+  cell.detailLabel.text = @"Detail";
+
+  // When
+  MDCSelfSizingStereoCellTestsDynamicTypeContentSizeCategoryOverrideWindow
+  *extraExtraLargeContainer =
+  [[MDCSelfSizingStereoCellTestsDynamicTypeContentSizeCategoryOverrideWindow alloc]
+   initWithContentSizeCategoryOverride:UIContentSizeCategoryExtraLarge];
+  [extraExtraLargeContainer addSubview:cell];
+  [NSNotificationCenter.defaultCenter
+   postNotificationName:UIContentSizeCategoryDidChangeNotification
+   object:nil];
+
+  // Then
+  XCTAssertTrue([cell.titleLabel.font mdc_isSimplyEqual:originalTitleFont]);
+  XCTAssertTrue([cell.detailLabel.font mdc_isSimplyEqual:originalDetailFont]);
+}
+
 @end

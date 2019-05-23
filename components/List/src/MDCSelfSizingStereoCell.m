@@ -212,6 +212,11 @@ static const CGFloat kDetailColorOpacity = (CGFloat)0.6;
   [self adjustFontsForDynamicType];
 }
 
+- (void)setAdjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable:(BOOL)adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable {
+  _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
+  [self adjustFontsForDynamicType];
+}
+
 // Handles UIContentSizeCategoryDidChangeNotifications
 - (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
   [self adjustFontsForDynamicType];
