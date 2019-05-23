@@ -416,7 +416,7 @@ static inline UIImage *TestImage(CGSize size) {
     // Given
     MDCChipsTestsFakeChipView *chipView = [[MDCChipsTestsFakeChipView alloc] init];
     chipView.mdc_adjustsFontForContentSizeCategory = YES;
-    chipView.mdc_legacyFontScaling = NO;
+    chipView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
     UIFont *titleFont = [UIFont systemFontOfSize:14.0 weight:UIFontWeightMedium];
     MDCFontScaler *fontScaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleBody2];
     titleFont = [fontScaler scaledFontWithFont:titleFont];
@@ -438,6 +438,14 @@ static inline UIImage *TestImage(CGSize size) {
     CGFloat actualFontSize = chipView.titleLabel.font.pointSize;
     XCTAssertGreaterThan(actualFontSize, originalFontSize);
   }
+}
+
+- (void)testChipViewAdjustsFontForContentSizeCategoryWhenScaledFontIsUnavailableDefaultValue {
+  // Given
+  MDCChipView *chipView = [[MDCChipView alloc] init];
+
+  // Then
+  XCTAssertTrue(chipView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
 }
 
 @end
