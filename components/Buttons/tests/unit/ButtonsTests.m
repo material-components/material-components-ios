@@ -1121,7 +1121,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
 }
 
 /**
- Test legacy dynamic type has no impact when @c
+ Test legacy dynamic type has no impact on a @c MDCButton when @c
  adjustFontForContentSizeCategoryWhenScaledFontIsUnavailable is set to @c NO that the font stays
  the same.
  */
@@ -1141,7 +1141,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
 }
 
 /**
- Test legacy dynamic type has no impact when @c
+ Test legacy dynamic type impacts a @c MDCButton when @c
  adjustFontForContentSizeCategoryWhenScaledFontIsUnavailable is set to @c YES that the font changes.
  */
 - (void)testLegacyDynamicTypeEnabled {
