@@ -90,8 +90,26 @@
 
  This can be used by client to communicate whether they support dynamic type to both our theming
  functionality and embedded frameworks that also render UI.
+
+ @warning This API will eventually be deprecated. Please use
+ @c useCurrentContentSizeCategoryWhenApplied instead.
 */
 @property(nonatomic, readonly) BOOL mdc_adjustsFontForContentSizeCategory;
+
+@optional
+
+/**
+ Whether applications of this scheme to components should apply fonts in respect to the current
+ Dynamic Type setting.
+
+ If this flag is enabled and the typography scheme's font is scalable with Dynamic Type, then fonts
+ should be adjusted for the current Dynamic Type content size category prior to being assigned to
+ the component.
+
+ This flag will become required in the future as a replacement for
+ mdc_adjustsFontForContentSizeCategory.
+ */
+@property(nonatomic, readonly) BOOL useCurrentContentSizeCategoryWhenApplied;
 
 @end
 
@@ -101,6 +119,8 @@
 typedef NS_ENUM(NSInteger, MDCTypographySchemeDefaults) {
   /**
    The Material defaults, circa April 2018.
+
+   useCurrentContentSizeCategoryWhenApplied will be NO by default.
    */
   MDCTypographySchemeDefaultsMaterial201804,
 
@@ -110,6 +130,8 @@ typedef NS_ENUM(NSInteger, MDCTypographySchemeDefaults) {
    This scheme implements fonts with the similar metrics as
    MDCTypographySchemeDefaultsMaterial201804 with the addition that vended fonts will have
    appropriate scalingCurves attached.
+
+   useCurrentContentSizeCategoryWhenApplied will be YES by default.
    */
   MDCTypographySchemeDefaultsMaterial201902,
 };
@@ -134,7 +156,19 @@ typedef NS_ENUM(NSInteger, MDCTypographySchemeDefaults) {
 @property(nonatomic, nonnull, readwrite, copy) UIFont *caption;
 @property(nonatomic, nonnull, readwrite, copy) UIFont *button;
 @property(nonatomic, nonnull, readwrite, copy) UIFont *overline;
-@property(nonatomic, readwrite) BOOL mdc_adjustsFontForContentSizeCategory;
+
+/**
+ Whether the application of this scheme to components should apply fonts in respect to the current
+ Dynamic Type setting.
+
+ This flag only has an effect if the fonts stored on this scheme are scalable.
+
+ When fonts are applied to components:
+
+ - If this flag is disabled, make no changes to the font.
+ - If this flag is enabled, adjust the font with respect to the current content size category.
+ */
+@property(nonatomic, readwrite) BOOL useCurrentContentSizeCategoryWhenApplied;
 
 /**
  Initializes the typography scheme with the latest material defaults.
@@ -145,5 +179,13 @@ typedef NS_ENUM(NSInteger, MDCTypographySchemeDefaults) {
  Initializes the typography scheme with the values associated with the given defaults.
  */
 - (nonnull instancetype)initWithDefaults:(MDCTypographySchemeDefaults)defaults;
+
+#pragma mark - To be deprecated
+
+/**
+ @warning Will eventually be deprecated and removed. Please use
+ useCurrentContentSizeCategoryWhenApplied instead.
+ */
+@property(nonatomic, readwrite) BOOL mdc_adjustsFontForContentSizeCategory;
 
 @end
