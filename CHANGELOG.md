@@ -27,8 +27,6 @@ cell.applyTheme(withScheme: scheme)
 
 **New extension.**
 
-## Component changes
-
 ## Changes
 
 ### Buttons
