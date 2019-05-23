@@ -375,6 +375,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   self.alertView.messageFont = self.messageFont;
   self.alertView.titleColor = self.titleColor;
   self.alertView.messageColor = self.messageColor;
+  self.alertView.buttonFont = self.buttonFont;  // b/117717380: Will be deprecated
   self.alertView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable =
       self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
   if (_mdc_adjustsFontForContentSizeCategory) {
@@ -388,7 +389,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
     // Avoid reset title color to white when setting it to nil. only set it for an actual UIColor.
     self.alertView.buttonColor = self.buttonTitleColor;  // b/117717380: Will be deprecated
   }
-  self.alertView.buttonFont = self.buttonFont;  // b/117717380: Will be deprecated
+  //self.alertView.buttonFont = self.buttonFont;  // b/117717380: Will be deprecated
   if (self.buttonInkColor) {
     // Avoid reset ink color to white when setting it to nil. only set it for an actual UIColor.
     self.alertView.buttonInkColor = self.buttonInkColor;  // b/117717380: Will be deprecated
@@ -401,6 +402,9 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   // Create buttons for the actions (if not already created) and apply default styling
   for (MDCAlertAction *action in self.actions) {
     [self addButtonToAlertViewForAction:action];
+  }
+  for (MDCButton *button in self.actionManager.buttonsInActionOrder) {
+    [button setTitleFont:self.buttonFont forState:UIControlStateNormal];
   }
 }
 
