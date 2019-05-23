@@ -627,8 +627,10 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
   [self updateFonts];
 }
 
-- (void)setAdjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable:(BOOL)adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable {
-  _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
+- (void)setAdjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable:
+    (BOOL)adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable {
+  _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable =
+      adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
   [self updateFonts];
 }
 

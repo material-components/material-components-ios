@@ -343,8 +343,8 @@
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
 
   // Then
-  XCTAssertTrue([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont],
-                @"%@, is not equal to %@", view.titleLabel.font, fakeTitleFont);
+  XCTAssertTrue([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@, is not equal to %@",
+                view.titleLabel.font, fakeTitleFont);
 }
 
 /**
@@ -363,8 +363,8 @@
   self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
 
   // Then
-  XCTAssertTrue([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont],
-                @"%@, is not equal to %@", view.titleLabel.font, fakeTitleFont);
+  XCTAssertTrue([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@, is not equal to %@",
+                view.titleLabel.font, fakeTitleFont);
 }
 
 /**
