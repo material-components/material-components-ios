@@ -342,6 +342,21 @@
                 @"%@, is not equal to %@", view.titleLabel.font, fakeTitleFont);
 }
 
+- (void)testLegacyDynamicTypeDisabledFoo {
+  // Given
+  UIFont *fakeTitleFont = [UIFont systemFontOfSize:55];
+  self.alert.titleFont = fakeTitleFont;
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
+  self.alert.mdc_adjustsFontForContentSizeCategory = YES;
+
+  // When
+  self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
+
+  // Then
+  XCTAssertTrue([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont],
+                @"%@, is not equal to %@", view.titleLabel.font, fakeTitleFont);
+}
+
 - (void)testLegacyDynamicTypeEnabled {
   // Given
   UIFont *fakeTitleFont = [UIFont systemFontOfSize:55];
