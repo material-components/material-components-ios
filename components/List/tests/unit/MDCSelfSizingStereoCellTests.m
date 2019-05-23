@@ -99,7 +99,6 @@
   }
 }
 
-
 - (void)testAdjustsFontForContentSizeCategoryWhenScaledFontIsUnavailableIsYES {
   // Given
   MDCSelfSizingStereoCell *cell = [[MDCSelfSizingStereoCell alloc] init];
@@ -114,13 +113,13 @@
 
   // When
   MDCSelfSizingStereoCellTestsDynamicTypeContentSizeCategoryOverrideWindow
-  *extraExtraLargeContainer =
-  [[MDCSelfSizingStereoCellTestsDynamicTypeContentSizeCategoryOverrideWindow alloc]
-   initWithContentSizeCategoryOverride:UIContentSizeCategoryExtraLarge];
+      *extraExtraLargeContainer =
+          [[MDCSelfSizingStereoCellTestsDynamicTypeContentSizeCategoryOverrideWindow alloc]
+              initWithContentSizeCategoryOverride:UIContentSizeCategoryExtraLarge];
   [extraExtraLargeContainer addSubview:cell];
   [NSNotificationCenter.defaultCenter
-   postNotificationName:UIContentSizeCategoryDidChangeNotification
-   object:nil];
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
 
   // Then
   XCTAssertFalse([cell.titleLabel.font mdc_isSimplyEqual:originalTitleFont]);
@@ -141,13 +140,13 @@
 
   // When
   MDCSelfSizingStereoCellTestsDynamicTypeContentSizeCategoryOverrideWindow
-  *extraExtraLargeContainer =
-  [[MDCSelfSizingStereoCellTestsDynamicTypeContentSizeCategoryOverrideWindow alloc]
-   initWithContentSizeCategoryOverride:UIContentSizeCategoryExtraLarge];
+      *extraExtraLargeContainer =
+          [[MDCSelfSizingStereoCellTestsDynamicTypeContentSizeCategoryOverrideWindow alloc]
+              initWithContentSizeCategoryOverride:UIContentSizeCategoryExtraLarge];
   [extraExtraLargeContainer addSubview:cell];
   [NSNotificationCenter.defaultCenter
-   postNotificationName:UIContentSizeCategoryDidChangeNotification
-   object:nil];
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
 
   // Then
   XCTAssertTrue([cell.titleLabel.font mdc_isSimplyEqual:originalTitleFont]);
