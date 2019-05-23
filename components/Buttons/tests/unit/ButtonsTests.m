@@ -1134,7 +1134,6 @@ static NSString *controlStateDescription(UIControlState controlState) {
 
   // When
   self.button.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
-  [self.button updateTitleFont];
 
   // Then
   XCTAssertTrue([self.button.titleLabel.font mdc_isSimplyEqual:originalFont],
@@ -1154,7 +1153,6 @@ static NSString *controlStateDescription(UIControlState controlState) {
 
   // When
   self.button.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
-  [self.button updateTitleFont];
 
   // Then
   XCTAssertFalse([self.button.titleLabel.font mdc_isSimplyEqual:originalFont], @"%@ is equal to %@",
