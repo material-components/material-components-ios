@@ -349,9 +349,9 @@
 
   // When
   self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
-  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
 
   // Then
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   XCTAssertTrue([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@, is not equal to %@",
                 view.titleLabel.font, fakeTitleFont);
 }
@@ -416,8 +416,12 @@
                  view.messageLabel.font, fakeMessageFont);
 =======
   XCTAssertFalse([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@, is equal to %@",
+<<<<<<< HEAD
                 view.titleLabel.font, fakeTitleFont);
 >>>>>>> Test title font
+=======
+                 view.titleLabel.font, fakeTitleFont);
+>>>>>>> clang
 }
 
 @end
