@@ -15,6 +15,7 @@
 #import "MaterialSnapshot.h"
 
 #import "MaterialList.h"
+#import "MaterialTypographyScheme.h"
 
 @interface MDCSelfSizingStereoCellSnapshotTestsContentSizeCategoryOverrideWindow : UIWindow
 
@@ -49,6 +50,7 @@
 
 /** The view being tested. */
 @property(nonatomic, strong) MDCSelfSizingStereoCell *cell;
+@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 
 @end
 
@@ -66,6 +68,7 @@
 
 - (void)tearDown {
   self.cell = nil;
+  self.typographyScheme = nil;
 
   [super tearDown];
 }
@@ -138,9 +141,14 @@
 
 - (void)testCellWithDynamicTypeForContentSizeCategoryExtraSmallEnabledForTitleAndDetail {
   if (@available(iOS 10.0, *)) {
+    // Given
+    self.typographyScheme = [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+
     // When
     self.cell.titleLabel.text = @"Title";
+    self.cell.titleLabel.font = self.typographyScheme.subtitle1;
     self.cell.detailLabel.text = @"Detail";
+    self.cell.detailLabel.font = self.typographyScheme.button;
     self.cell.mdc_adjustsFontForContentSizeCategory = YES;
 
     // Then
@@ -151,9 +159,14 @@
 
 - (void)testCellWithDynamicTypeForContentSizeCategoryExtraLargeEnabledForTitleAndDetail {
   if (@available(iOS 10.0, *)) {
+    // Given
+    self.typographyScheme = [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+
     // When
     self.cell.titleLabel.text = @"Title";
+    self.cell.titleLabel.font = self.typographyScheme.subtitle1;
     self.cell.detailLabel.text = @"Detail";
+    self.cell.detailLabel.font = self.typographyScheme.button;
     self.cell.mdc_adjustsFontForContentSizeCategory = YES;
 
     // Then
