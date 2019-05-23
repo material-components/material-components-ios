@@ -127,7 +127,7 @@
   XCTAssertFalse([cell.detailLabel.font mdc_isSimplyEqual:originalDetailFont]);
 }
 
-- (void)testAdjustsFontForContentSizeCategoryWhenScaledFontIsUnavailableIsNO {
+- (void)testDoesNotAdjustFontForContentSizeCategoryWhenScaledFontIsUnavailableIsNO {
   // Given
   MDCSelfSizingStereoCell *cell = [[MDCSelfSizingStereoCell alloc] init];
   UIFont *originalTitleFont = [UIFont systemFontOfSize:99];
