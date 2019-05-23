@@ -82,6 +82,10 @@ static NSString *controlStateDescription(UIControlState controlState) {
   return [string copy];
 }
 
+@interface MDCButton (Testing)
+- (void)updateTitleFont;
+@end
+
 @interface FakeShadowLayer : MDCShapedShadowLayer
 @property(nonatomic, assign) NSInteger elevationAssignmentCount;
 @end
@@ -1114,6 +1118,45 @@ static NSString *controlStateDescription(UIControlState controlState) {
   XCTAssertEqualWithAccuracy(self.button.titleLabel.font.pointSize, preferredFont.pointSize,
                              kEpsilonAccuracy,
                              @"Font size should be equal to MDCFontTextStyleButton's.");
+}
+
+/**
+ Test legacy dynamic type has no impact on a @c MDCButton when @c
+ adjustFontForContentSizeCategoryWhenScaledFontIsUnavailable is set to @c NO that the font stays
+ the same.
+ */
+- (void)testLegacyDynamicTypeDisabled {
+  // Given
+  UIFont *fakeFont = [UIFont systemFontOfSize:55];
+  [self.button setTitleFont:fakeFont forState:UIControlStateNormal];
+  UIFont *originalFont = self.button.titleLabel.font;
+  self.button.mdc_adjustsFontForContentSizeCategory = YES;
+
+  // When
+  self.button.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
+  [self.button updateTitleFont];
+
+  // Given
+  XCTAssertTrue([self.button.titleLabel.font mdc_isSimplyEqual:originalFont]);
+}
+
+/**
+ Test legacy dynamic type impacts a @c MDCButton when @c
+ adjustFontForContentSizeCategoryWhenScaledFontIsUnavailable is set to @c YES that the font changes.
+ */
+- (void)testLegacyDynamicTypeEnabled {
+  // Given
+  UIFont *fakeFont = [UIFont systemFontOfSize:55];
+  [self.button setTitleFont:fakeFont forState:UIControlStateNormal];
+  UIFont *originalFont = self.button.titleLabel.font;
+  self.button.mdc_adjustsFontForContentSizeCategory = YES;
+
+  // When
+  self.button.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
+  [self.button updateTitleFont];
+
+  // Given
+  XCTAssertFalse([self.button.titleLabel.font mdc_isSimplyEqual:originalFont]);
 }
 
 #pragma mark - Size-related tests
