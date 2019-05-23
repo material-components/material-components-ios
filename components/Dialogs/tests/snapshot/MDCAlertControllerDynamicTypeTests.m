@@ -67,8 +67,7 @@
   titleFont = [titleFontScaler scaledFontWithFont:titleFont];
   titleFont = [titleFont mdc_scaledFontAtDefaultSize];
   self.alertController.titleFont = titleFont;
-  MDCFontScaler *messageFontScaler =
-  [MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleBody2];
+  MDCFontScaler *messageFontScaler = [MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleBody2];
   UIFont *messageFont = [UIFont systemFontOfSize:15];
   messageFont = [messageFontScaler scaledFontWithFont:messageFont];
   messageFont = [messageFont mdc_scaledFontAtDefaultSize];
