@@ -54,7 +54,8 @@ static const CGFloat kBottomNavigationTitleImagePadding = 3;
 /// Height for the bottom divider.
 static const CGFloat kBottomNavigationBarDividerHeight = 1;
 
-static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarExtendedAlignment alignment) {
+static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(
+    MDCTabBarExtendedAlignment alignment) {
   switch (alignment) {
     case MDCTabBarExtendedAlignmentCenter:
       return MDCItemBarAlignmentCenter;
@@ -146,7 +147,8 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarExtend
   _itemBar = [[MDCItemBar alloc] initWithFrame:self.bounds];
   _itemBar.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
   _itemBar.delegate = self;
-  _itemBar.alignment = MDCItemBarAlignmentForTabBarAlignment((MDCTabBarExtendedAlignment)_alignment);
+  _itemBar.alignment =
+      MDCItemBarAlignmentForTabBarAlignment((MDCTabBarExtendedAlignment)_alignment);
   [self addSubview:_itemBar];
 
   CGFloat dividerTop = CGRectGetMaxY(self.bounds) - kBottomNavigationBarDividerHeight;
@@ -587,7 +589,9 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarExtend
 - (void)internalSetAlignment:(MDCTabBarAlignment)alignment animated:(BOOL)animated {
   if (_alignment != alignment) {
     _alignment = alignment;
-    [_itemBar setAlignment:MDCItemBarAlignmentForTabBarAlignment((MDCTabBarExtendedAlignment)_alignment) animated:animated];
+    [_itemBar
+        setAlignment:MDCItemBarAlignmentForTabBarAlignment((MDCTabBarExtendedAlignment)_alignment)
+            animated:animated];
   }
 }
 

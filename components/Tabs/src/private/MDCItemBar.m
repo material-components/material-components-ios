@@ -583,9 +583,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   const CGFloat widthPerJustifiedItem = [self adjustedCollectionViewWidth] / MAX(_items.count, 1ul);
   CGSize size = CGSizeMake(CGFLOAT_MAX, self.bounds.size.height);
   for (UITabBarItem *item in _items) {
-    const CGSize itemSize = [MDCItemBarCell sizeThatFits:size
-                                                    item:item
-                                                   style:_style];
+    const CGSize itemSize = [MDCItemBarCell sizeThatFits:size item:item style:_style];
     const CGFloat itemWidth = itemSize.width;
     // If any item cannot fit nicely in its portion of the width, fallback to Leading alignment.
     if (itemWidth >= widthPerJustifiedItem) {
