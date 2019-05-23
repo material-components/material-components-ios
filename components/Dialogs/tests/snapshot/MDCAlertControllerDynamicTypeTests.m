@@ -45,7 +45,7 @@
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-    self.recordMode = YES;
+  self.recordMode = YES;
 
   self.alertController = [[AlertControllerDynamicTypeSnapshotTestFake alloc] init];
   self.alertController.title = @"Material";
@@ -85,7 +85,7 @@
   titleFont = [titleFont mdc_scaledFontAtDefaultSize];
   self.alertController.titleFont = titleFont;
   MDCFontScaler *messageFontScaler =
-  [MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleSubtitle2];
+      [MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleSubtitle2];
   UIFont *messageFont = [UIFont systemFontOfSize:15];
   messageFont = [messageFontScaler scaledFontWithFont:messageFont];
   messageFont = [messageFont mdc_scaledFontAtDefaultSize];
@@ -278,7 +278,8 @@
  Test when a @c MDCAlertController has a content size of @c
  UIContentSizeCategoryAccessibilityExtraLarge and scaled fonts are attached.
  */
-- (void)testDynamicTypeWhenScaledFontsAreAttachedForContentSizeCategoryAccessibilityExtraExtraLarge {
+- (void)
+    testDynamicTypeWhenScaledFontsAreAttachedForContentSizeCategoryAccessibilityExtraExtraLarge {
   // Given
   [self setAlertControllerTraitCollectionSizeToSize:
             UIContentSizeCategoryAccessibilityExtraExtraLarge];
@@ -297,7 +298,8 @@
  Test when a @c MDCAlertController has a content size of @c
  UIContentSizeCategoryAccessibilityExtraLarge and scaled fonts are attached.
  */
-- (void)testDynamicTypeWhenScaledFontsAreAttachedForContentSizeCategoryAccessibilityExtraExtraExtraLarge {
+- (void)
+    testDynamicTypeWhenScaledFontsAreAttachedForContentSizeCategoryAccessibilityExtraExtraExtraLarge {
   // Given
   [self setAlertControllerTraitCollectionSizeToSize:
             UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
@@ -319,12 +321,12 @@
 - (void)testDynamicTypeWhenNoScaledFontsAreAttachedForContentSizeCategorySmall {
   // Given
   [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategorySmall];
-  
+
   // When
   [NSNotificationCenter.defaultCenter
-   postNotificationName:UIContentSizeCategoryDidChangeNotification
-   object:nil];
-  
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
+
   // Then
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
@@ -336,12 +338,12 @@
 - (void)testDynamicTypeWhenNoScaledFontsAreAttachedForContentSizeCategoryMedium {
   // Given
   [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryMedium];
-  
+
   // When
   [NSNotificationCenter.defaultCenter
-   postNotificationName:UIContentSizeCategoryDidChangeNotification
-   object:nil];
-  
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
+
   // Then
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
@@ -353,12 +355,12 @@
 - (void)testDynamicTypeWhenNoScaledFontsAreAttachedForContentSizeCategoryLarge {
   // Given
   [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryLarge];
-  
+
   // When
   [NSNotificationCenter.defaultCenter
-   postNotificationName:UIContentSizeCategoryDidChangeNotification
-   object:nil];
-  
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
+
   // Then
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
@@ -370,12 +372,12 @@
 - (void)testDynamicTypeWhenNoScaledFontsAreAttachedForContentSizeCategoryExtraLarge {
   // Given
   [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryExtraLarge];
-  
+
   // When
   [NSNotificationCenter.defaultCenter
-   postNotificationName:UIContentSizeCategoryDidChangeNotification
-   object:nil];
-  
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
+
   // Then
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
@@ -387,12 +389,12 @@
 - (void)testDynamicTypeWhenNoScaledFontsAreAttachedForContentSizeCategoryExtraExtraLarge {
   // Given
   [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryExtraExtraLarge];
-  
+
   // When
   [NSNotificationCenter.defaultCenter
-   postNotificationName:UIContentSizeCategoryDidChangeNotification
-   object:nil];
-  
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
+
   // Then
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
@@ -404,12 +406,12 @@
 - (void)testDynamicTypeWhenNoScaledFontsAreAttachedForContentSizeCategoryExtraExtraExtraLarge {
   // Given
   [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryExtraExtraExtraLarge];
-  
+
   // When
   [NSNotificationCenter.defaultCenter
-   postNotificationName:UIContentSizeCategoryDidChangeNotification
-   object:nil];
-  
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
+
   // Then
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
@@ -421,12 +423,12 @@
 - (void)testDynamicTypeWhenNoScaledFontsAreAttachedForContentSizeCategoryAccessibilityMedium {
   // Given
   [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryAccessibilityMedium];
-  
+
   // When
   [NSNotificationCenter.defaultCenter
-   postNotificationName:UIContentSizeCategoryDidChangeNotification
-   object:nil];
-  
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
+
   // Then
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
@@ -438,12 +440,12 @@
 - (void)testDynamicTypeWhenNoScaledFontsAreAttachedForContentSizeCategoryAccessibilityLarge {
   // Given
   [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryAccessibilityLarge];
-  
+
   // When
   [NSNotificationCenter.defaultCenter
-   postNotificationName:UIContentSizeCategoryDidChangeNotification
-   object:nil];
-  
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
+
   // Then
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
@@ -455,12 +457,12 @@
 - (void)testDynamicTypeWhenNoScaledFontsAreAttachedForContentSizeCategoryAccessibilityExtraLarge {
   // Given
   [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryAccessibilityExtraLarge];
-  
+
   // When
   [NSNotificationCenter.defaultCenter
-   postNotificationName:UIContentSizeCategoryDidChangeNotification
-   object:nil];
-  
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
+
   // Then
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
@@ -469,16 +471,17 @@
  Test when a @c MDCAlertController has a content size of @c
  UIContentSizeCategoryAccessibilityExtraLarge and no scaled fonts are attached.
  */
-- (void)testDynamicTypeWhenNoScaledFontsAreAttachedForContentSizeCategoryAccessibilityExtraExtraLarge {
+- (void)
+    testDynamicTypeWhenNoScaledFontsAreAttachedForContentSizeCategoryAccessibilityExtraExtraLarge {
   // Given
   [self setAlertControllerTraitCollectionSizeToSize:
-   UIContentSizeCategoryAccessibilityExtraExtraLarge];
-  
+            UIContentSizeCategoryAccessibilityExtraExtraLarge];
+
   // When
   [NSNotificationCenter.defaultCenter
-   postNotificationName:UIContentSizeCategoryDidChangeNotification
-   object:nil];
-  
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
+
   // Then
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
@@ -487,16 +490,17 @@
  Test when a @c MDCAlertController has a content size of @c
  UIContentSizeCategoryAccessibilityExtraLarge and no scaled fonts are attached.
  */
-- (void)testDynamicTypeWhenNoScaledFontsAreAttachedForContentSizeCategoryAccessibilityExtraExtraExtraLarge {
+- (void)
+    testDynamicTypeWhenNoScaledFontsAreAttachedForContentSizeCategoryAccessibilityExtraExtraExtraLarge {
   // Given
   [self setAlertControllerTraitCollectionSizeToSize:
-   UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
-  
+            UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+
   // When
   [NSNotificationCenter.defaultCenter
-   postNotificationName:UIContentSizeCategoryDidChangeNotification
-   object:nil];
-  
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
+
   // Then
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
