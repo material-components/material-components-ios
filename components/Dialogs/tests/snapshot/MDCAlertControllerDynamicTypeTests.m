@@ -45,7 +45,7 @@
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  self.recordMode = YES;
+    self.recordMode = YES;
 
   self.alertController = [[AlertControllerDynamicTypeSnapshotTestFake alloc] init];
   self.alertController.title = @"Material";
@@ -62,6 +62,22 @@
   [self.alertController addAction:fakeAction];
   self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
   self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
+  MDCFontScaler *titleFontScaler = [MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleSubtitle1];
+  UIFont *titleFont = [UIFont systemFontOfSize:14];
+  titleFont = [titleFontScaler scaledFontWithFont:titleFont];
+  titleFont = [titleFont mdc_scaledFontAtDefaultSize];
+  self.alertController.titleFont = titleFont;
+  MDCFontScaler *messageFontScaler =
+  [MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleBody2];
+  UIFont *messageFont = [UIFont systemFontOfSize:15];
+  messageFont = [messageFontScaler scaledFontWithFont:messageFont];
+  messageFont = [messageFont mdc_scaledFontAtDefaultSize];
+  self.alertController.messageFont = messageFont;
+  MDCFontScaler *buttonFontScaler = [MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleButton];
+  UIFont *buttonFont = [UIFont systemFontOfSize:16];
+  buttonFont = [buttonFontScaler scaledFontWithFont:buttonFont];
+  buttonFont = [buttonFont mdc_scaledFontAtDefaultSize];
+  self.alertController.buttonFont = buttonFont;
   self.alertController.view.bounds = CGRectMake(0, 0, 300, 300);
 }
 
@@ -75,26 +91,6 @@
   [view layoutIfNeeded];
   UIView *snapshotView = [view mdc_addToBackgroundView];
   [self snapshotVerifyView:snapshotView];
-}
-
-/** Attaches scaled fonts to the @c MDCAlertController. */
-- (void)attachScaledFonts {
-  MDCFontScaler *titleFontScaler = [MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleSubtitle1];
-  UIFont *titleFont = [UIFont systemFontOfSize:14];
-  titleFont = [titleFontScaler scaledFontWithFont:titleFont];
-  titleFont = [titleFont mdc_scaledFontAtDefaultSize];
-  self.alertController.titleFont = titleFont;
-  MDCFontScaler *messageFontScaler =
-      [MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleSubtitle2];
-  UIFont *messageFont = [UIFont systemFontOfSize:15];
-  messageFont = [messageFontScaler scaledFontWithFont:messageFont];
-  messageFont = [messageFont mdc_scaledFontAtDefaultSize];
-  self.alertController.messageFont = messageFont;
-  MDCFontScaler *buttonFontScaler = [MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleBody1];
-  UIFont *buttonFont = [UIFont systemFontOfSize:16];
-  buttonFont = [buttonFontScaler scaledFontWithFont:buttonFont];
-  buttonFont = [buttonFont mdc_scaledFontAtDefaultSize];
-  self.alertController.buttonFont = buttonFont;
 }
 
 /**
@@ -112,213 +108,8 @@
   self.alertController.traitCollectionOverride = traitCollection;
 }
 
-/**
- Test when a @c MDCAlertController has a content size of @c UIContentSizeCategorySmall and scaled
- fonts are attached.
- */
-- (void)testDynamicTypeWhenScaledFontsAreAttachedForContentSizeCategorySmall {
-  // Given
-  [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategorySmall];
-  [self attachScaledFonts];
-
-  // When
-  [NSNotificationCenter.defaultCenter
-      postNotificationName:UIContentSizeCategoryDidChangeNotification
-                    object:nil];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.alertController.view];
-}
-
-/**
- Test when a @c MDCAlertController has a content size of @c UIContentSizeCategoryMedium and scaled
- fonts are attached.
- */
-- (void)testDynamicTypeWhenScaledFontsAreAttachedForContentSizeCategoryMedium {
-  // Given
-  [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryMedium];
-  [self attachScaledFonts];
-
-  // When
-  [NSNotificationCenter.defaultCenter
-      postNotificationName:UIContentSizeCategoryDidChangeNotification
-                    object:nil];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.alertController.view];
-}
-
-/**
- Test when a @c MDCAlertController has a content size of @c UIContentSizeCategoryLarge and scaled
- fonts are attached.
- */
-- (void)testDynamicTypeWhenScaledFontsAreAttachedForContentSizeCategoryLarge {
-  // Given
-  [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryLarge];
-  [self attachScaledFonts];
-
-  // When
-  [NSNotificationCenter.defaultCenter
-      postNotificationName:UIContentSizeCategoryDidChangeNotification
-                    object:nil];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.alertController.view];
-}
-
-/**
- Test when a @c MDCAlertController has a content size of @c UIContentSizeCategoryExtraLarge and
- scaled fonts are attached.
- */
-- (void)testDynamicTypeWhenScaledFontsAreAttachedForContentSizeCategoryExtraLarge {
-  // Given
-  [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryExtraLarge];
-  [self attachScaledFonts];
-
-  // When
-  [NSNotificationCenter.defaultCenter
-      postNotificationName:UIContentSizeCategoryDidChangeNotification
-                    object:nil];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.alertController.view];
-}
-
-/**
- Test when a @c MDCAlertController has a content size of @c UIContentSizeCategoryExtraExtraLarge
- and scaled fonts are attached.
- */
-- (void)testDynamicTypeWhenScaledFontsAreAttachedForContentSizeCategoryExtraExtraLarge {
-  // Given
-  [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryExtraExtraLarge];
-  [self attachScaledFonts];
-
-  // When
-  [NSNotificationCenter.defaultCenter
-      postNotificationName:UIContentSizeCategoryDidChangeNotification
-                    object:nil];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.alertController.view];
-}
-
-/**
- Test when a @c MDCAlertController has a content size of @c
- UIContentSizeCategoryExtraExtraExtraLarge and scaled fonts are attached.
- */
-- (void)testDynamicTypeWhenScaledFontsAreAttachedForContentSizeCategoryExtraExtraExtraLarge {
-  // Given
-  [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryExtraExtraExtraLarge];
-  [self attachScaledFonts];
-
-  // When
-  [NSNotificationCenter.defaultCenter
-      postNotificationName:UIContentSizeCategoryDidChangeNotification
-                    object:nil];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.alertController.view];
-}
-
-/**
- Test when a @c MDCAlertController has a content size of @c
- UIContentSizeCategoryAccessibilityMedium and scaled fonts are attached.
- */
-- (void)testDynamicTypeWhenScaledFontsAreAttachedForContentSizeCategoryAccessibilityMedium {
-  // Given
-  [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryAccessibilityMedium];
-  [self attachScaledFonts];
-
-  // When
-  [NSNotificationCenter.defaultCenter
-      postNotificationName:UIContentSizeCategoryDidChangeNotification
-                    object:nil];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.alertController.view];
-}
-
-/**
- Test when a @c MDCAlertController has a content size of @c
- UIContentSizeCategoryAccessibilityLarge and scaled fonts are attached.
- */
-- (void)testDynamicTypeWhenScaledFontsAreAttachedForContentSizeCategoryAccessibilityLarge {
-  // Given
-  [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryAccessibilityLarge];
-  [self attachScaledFonts];
-
-  // When
-  [NSNotificationCenter.defaultCenter
-      postNotificationName:UIContentSizeCategoryDidChangeNotification
-                    object:nil];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.alertController.view];
-}
-
-/**
- Test when a @c MDCAlertController has a content size of @c
- UIContentSizeCategoryAccessibilityExtraLarge and scaled fonts are attached.
- */
-- (void)testDynamicTypeWhenScaledFontsAreAttachedForContentSizeCategoryAccessibilityExtraLarge {
-  // Given
-  [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryAccessibilityExtraLarge];
-  [self attachScaledFonts];
-
-  // When
-  [NSNotificationCenter.defaultCenter
-      postNotificationName:UIContentSizeCategoryDidChangeNotification
-                    object:nil];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.alertController.view];
-}
-
-/**
- Test when a @c MDCAlertController has a content size of @c
- UIContentSizeCategoryAccessibilityExtraLarge and scaled fonts are attached.
- */
-- (void)
-    testDynamicTypeWhenScaledFontsAreAttachedForContentSizeCategoryAccessibilityExtraExtraLarge {
-  // Given
-  [self setAlertControllerTraitCollectionSizeToSize:
-            UIContentSizeCategoryAccessibilityExtraExtraLarge];
-  [self attachScaledFonts];
-
-  // When
-  [NSNotificationCenter.defaultCenter
-      postNotificationName:UIContentSizeCategoryDidChangeNotification
-                    object:nil];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.alertController.view];
-}
-
-/**
- Test when a @c MDCAlertController has a content size of @c
- UIContentSizeCategoryAccessibilityExtraLarge and scaled fonts are attached.
- */
-- (void)
-    testDynamicTypeWhenScaledFontsAreAttachedForContentSizeCategoryAccessibilityExtraExtraExtraLarge {
-  // Given
-  [self setAlertControllerTraitCollectionSizeToSize:
-            UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
-  [self attachScaledFonts];
-
-  // When
-  [NSNotificationCenter.defaultCenter
-      postNotificationName:UIContentSizeCategoryDidChangeNotification
-                    object:nil];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.alertController.view];
-}
-
-/**
- Test when a @c MDCAlertController has a content size of @c UIContentSizeCategorySmall and no scaled
- fonts are attached.
- */
-- (void)testDynamicTypeWhenNoScaledFontsAreAttachedForContentSizeCategorySmall {
+/** Test when a @c MDCAlertController has a content size of @c UIContentSizeCategorySmall. */
+- (void)testScaledFontDynamicTypeForContentSizeCategorySmall {
   // Given
   [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategorySmall];
 
@@ -331,11 +122,8 @@
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
-/**
- Test when a @c MDCAlertController has a content size of @c UIContentSizeCategoryMedium and no
- scaled fonts are attached.
- */
-- (void)testDynamicTypeWhenNoScaledFontsAreAttachedForContentSizeCategoryMedium {
+/** Test when a @c MDCAlertController has a content size of @c UIContentSizeCategoryMedium. */
+- (void)testScaledFontDynamicTypeForContentSizeCategoryMedium {
   // Given
   [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryMedium];
 
@@ -348,11 +136,8 @@
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
-/**
- Test when a @c MDCAlertController has a content size of @c UIContentSizeCategoryLarge and no scaled
- fonts are attached.
- */
-- (void)testDynamicTypeWhenNoScaledFontsAreAttachedForContentSizeCategoryLarge {
+/** Test when a @c MDCAlertController has a content size of @c UIContentSizeCategoryLarge */
+- (void)testScaledFontDynamicTypeForContentSizeCategoryLarge {
   // Given
   [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryLarge];
 
@@ -365,11 +150,8 @@
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
-/**
- Test when a @c MDCAlertController has a content size of @c UIContentSizeCategoryExtraLarge and
- scaled fonts are attached.
- */
-- (void)testDynamicTypeWhenNoScaledFontsAreAttachedForContentSizeCategoryExtraLarge {
+/** Test when a @c MDCAlertController has a content size of @c UIContentSizeCategoryExtraLarge. */
+- (void)testScaledFontDynamicTypeForContentSizeCategoryExtraLarge {
   // Given
   [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryExtraLarge];
 
@@ -383,10 +165,9 @@
 }
 
 /**
- Test when a @c MDCAlertController has a content size of @c UIContentSizeCategoryExtraExtraLarge
- and no scaled fonts are attached.
+ Test when a @c MDCAlertController has a content size of @c UIContentSizeCategoryExtraExtraLarge.
  */
-- (void)testDynamicTypeWhenNoScaledFontsAreAttachedForContentSizeCategoryExtraExtraLarge {
+- (void)testScaledFontDynamicTypeForContentSizeCategoryExtraExtraLarge {
   // Given
   [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryExtraExtraLarge];
 
@@ -401,9 +182,9 @@
 
 /**
  Test when a @c MDCAlertController has a content size of @c
- UIContentSizeCategoryExtraExtraExtraLarge and no scaled fonts are attached.
+ UIContentSizeCategoryExtraExtraExtraLarge.
  */
-- (void)testDynamicTypeWhenNoScaledFontsAreAttachedForContentSizeCategoryExtraExtraExtraLarge {
+- (void)testScaledFontDynamicTypeForContentSizeCategoryExtraExtraExtraLarge {
   // Given
   [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryExtraExtraExtraLarge];
 
@@ -418,9 +199,9 @@
 
 /**
  Test when a @c MDCAlertController has a content size of @c
- UIContentSizeCategoryAccessibilityMedium and no scaled fonts are attached.
+ UIContentSizeCategoryAccessibilityMedium.
  */
-- (void)testDynamicTypeWhenNoScaledFontsAreAttachedForContentSizeCategoryAccessibilityMedium {
+- (void)testScaledFontDynamicTypeForContentSizeCategoryAccessibilityMedium {
   // Given
   [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryAccessibilityMedium];
 
@@ -435,9 +216,9 @@
 
 /**
  Test when a @c MDCAlertController has a content size of @c
- UIContentSizeCategoryAccessibilityLarge and no scaled fonts are attached.
+ UIContentSizeCategoryAccessibilityLarge.
  */
-- (void)testDynamicTypeWhenNoScaledFontsAreAttachedForContentSizeCategoryAccessibilityLarge {
+- (void)testScaledFontDynamicTypeForContentSizeCategoryAccessibilityLarge {
   // Given
   [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryAccessibilityLarge];
 
@@ -452,9 +233,9 @@
 
 /**
  Test when a @c MDCAlertController has a content size of @c
- UIContentSizeCategoryAccessibilityExtraLarge and no scaled fonts are attached.
+ UIContentSizeCategoryAccessibilityExtraLarge.
  */
-- (void)testDynamicTypeWhenNoScaledFontsAreAttachedForContentSizeCategoryAccessibilityExtraLarge {
+- (void)testScaledFontDynamicTypeForContentSizeCategoryAccessibilityExtraLarge {
   // Given
   [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryAccessibilityExtraLarge];
 
@@ -469,10 +250,9 @@
 
 /**
  Test when a @c MDCAlertController has a content size of @c
- UIContentSizeCategoryAccessibilityExtraLarge and no scaled fonts are attached.
+ UIContentSizeCategoryAccessibilityExtraExtraLarge.
  */
-- (void)
-    testDynamicTypeWhenNoScaledFontsAreAttachedForContentSizeCategoryAccessibilityExtraExtraLarge {
+- (void)testScaledFontDynamicTypeForContentSizeCategoryAccessibilityExtraExtraLarge {
   // Given
   [self setAlertControllerTraitCollectionSizeToSize:
             UIContentSizeCategoryAccessibilityExtraExtraLarge];
@@ -488,10 +268,9 @@
 
 /**
  Test when a @c MDCAlertController has a content size of @c
- UIContentSizeCategoryAccessibilityExtraLarge and no scaled fonts are attached.
+ UIContentSizeCategoryAccessibilityExtraExtraExtraLarge.
  */
-- (void)
-    testDynamicTypeWhenNoScaledFontsAreAttachedForContentSizeCategoryAccessibilityExtraExtraExtraLarge {
+- (void)testScaledFontDynamicTypeForContentSizeCategoryAccessibilityExtraExtraExtraLarge {
   // Given
   [self setAlertControllerTraitCollectionSizeToSize:
             UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
