@@ -57,7 +57,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-    self.recordMode = YES;
+  //  self.recordMode = YES;
 
   CGSize imageSize = CGSizeMake(24, 24);
   self.tabBar = [[MDCTabBar alloc] init];
@@ -412,6 +412,72 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
 - (void)testTabBarImagesOnlyWhenSizeChangesToFitArabicRTL {
   // Given
   self.tabBar.itemAppearance = MDCTabBarItemAppearanceImages;
+  [self setTitlesToArabicShort];
+  [self changeLayoutToRTL];
+  self.tabBar.frame = CGRectMake(0, 0, 100, 100);
+  [self.tabBar sizeToFit];
+  [self.tabBar layoutIfNeeded];
+
+  // When
+  self.tabBar.frame = CGRectMake(0, 0, 480, CGRectGetHeight(self.tabBar.bounds));
+  [self.tabBar layoutIfNeeded];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBar];
+}
+
+- (void)testTabBarTitledImagesWhenSizeChangesToNotFitLatinLTR {
+  // Given
+  self.tabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;
+  self.tabBar.selectedItem = self.item1; // Make it easier to see Leading alignment
+  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
+  [self.tabBar sizeToFit];
+  [self.tabBar layoutIfNeeded];
+
+  // When
+  self.tabBar.frame = CGRectMake(0, 0, 200, CGRectGetHeight(self.tabBar.bounds));
+  [self.tabBar layoutIfNeeded];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBar];
+}
+
+- (void)testTabBarTitledImagesWhenSizeChangesToNotFitArabicRTL {
+  // Given
+  self.tabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;
+  self.tabBar.selectedItem = self.item1; // Make it easier to see Leading alignment
+  [self setTitlesToArabicShort];
+  [self changeLayoutToRTL];
+  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
+  [self.tabBar sizeToFit];
+  [self.tabBar layoutIfNeeded];
+
+  // When
+  self.tabBar.frame = CGRectMake(0, 0, 200, CGRectGetHeight(self.tabBar.bounds));
+  [self.tabBar layoutIfNeeded];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBar];
+}
+
+- (void)testTabBarTitledImagesWhenSizeChangesToFitLatinLTR {
+  // Given
+  self.tabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;
+  self.tabBar.frame = CGRectMake(0, 0, 100, 100);
+  [self.tabBar sizeToFit];
+  [self.tabBar layoutIfNeeded];
+
+  // When
+  self.tabBar.frame = CGRectMake(0, 0, 480, CGRectGetHeight(self.tabBar.bounds));
+  [self.tabBar layoutIfNeeded];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBar];
+}
+
+- (void)testTabBarTitledImagesWhenSizeChangesToFitArabicRTL {
+  // Given
+  self.tabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;
   [self setTitlesToArabicShort];
   [self changeLayoutToRTL];
   self.tabBar.frame = CGRectMake(0, 0, 100, 100);
