@@ -159,10 +159,11 @@ typedef NS_ENUM(NSInteger, MDCTypographySchemeDefaults) {
 @property(nonatomic, nonnull, readwrite, copy) UIFont *overline;
 
 /**
- Whether the application of this scheme to components should apply fonts in respect to the current
- Dynamic Type setting.
+ A hint for how fonts in this scheme should be applied to components in relation to Dynamic Type.
 
- This flag only has an effect if the fonts stored on this scheme are scalable.
+ @note Enabling this flag only has an effect if the fonts stored on this scheme are scalable. See
+ MDCTypographySchemeDefaults for default versions that are scalable. Alternatively, you can specify
+ custom scalable fonts using the MDCFontScaler API.
 
  When fonts are applied to components:
 
