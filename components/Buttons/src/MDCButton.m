@@ -98,7 +98,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 @property(nonatomic, strong, readonly, nonnull) MDCStatefulRippleView *rippleView;
 @property(nonatomic, strong) MDCInkView *inkView;
 @property(nonatomic, readonly, strong) MDCShapedShadowLayer *layer;
-- (void)updateTitleFont;
 @end
 
 @implementation MDCButton
@@ -972,6 +971,13 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [self updateTitleFont];
 
   [self sizeToFit];
+}
+
+- (void)setAdjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable:
+    (BOOL)adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable {
+  _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable =
+      adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
+  [self updateTitleFont];
 }
 
 - (BOOL)mdc_legacyFontScaling {
