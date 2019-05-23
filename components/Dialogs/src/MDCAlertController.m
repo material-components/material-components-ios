@@ -77,7 +77,6 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 @property(nonatomic, nullable, weak) MDCAlertControllerView *alertView;
 @property(nonatomic, strong) MDCDialogTransitionController *transitionController;
 @property(nonatomic, nonnull, strong) MDCAlertActionManager *actionManager;
-- (void)setupAlertView;
 - (nonnull instancetype)initWithTitle:(nullable NSString *)title
                               message:(nullable NSString *)message;
 
@@ -369,9 +368,6 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 - (void)setupAlertView {
   // Explicitly overwrite the view default if true
-  if (_mdc_adjustsFontForContentSizeCategory) {
-    self.alertView.mdc_adjustsFontForContentSizeCategory = YES;
-  }
   self.alertView.titleLabel.text = self.title;
   self.alertView.messageLabel.text = self.message;
   self.alertView.titleFont = self.titleFont;
@@ -380,6 +376,9 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   self.alertView.messageColor = self.messageColor;
   self.alertView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable =
       self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
+  if (_mdc_adjustsFontForContentSizeCategory) {
+    self.alertView.mdc_adjustsFontForContentSizeCategory = YES;
+  }
   if (self.backgroundColor) {
     // Avoid reset background color to transparent when self.backgroundColor is nil.
     self.alertView.backgroundColor = self.backgroundColor;

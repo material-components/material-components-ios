@@ -24,7 +24,6 @@
 
 @interface MDCAlertController (Testing)
 @property(nonatomic, nullable, weak) MDCAlertControllerView *alertView;
-- (void)setupAlertView;
 @end
 
 @interface MDCDialogPresentationController (Testing)
@@ -332,32 +331,30 @@
   // Given
   UIFont *fakeTitleFont = [UIFont systemFontOfSize:55];
   self.alert.titleFont = fakeTitleFont;
-  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
-  [self.alert setupAlertView];
-  UIFont *originalTitleFont = view.titleLabel.font;
   self.alert.mdc_adjustsFontForContentSizeCategory = YES;
-  
+
   // When
   self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
-  [self.alert.alertView updateFonts];
-  
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
+
   // Then
-  XCTAssertTrue([view.titleLabel.font mdc_isSimplyEqual:originalTitleFont], @"%@, is not equal to %@", view.titleLabel.font, originalTitleFont);
+  XCTAssertTrue([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont],
+                @"%@, is not equal to %@", view.titleLabel.font, fakeTitleFont);
 }
 
 - (void)testLegacyDynamicTypeEnabled {
   // Given
   UIFont *fakeTitleFont = [UIFont systemFontOfSize:55];
   self.alert.titleFont = fakeTitleFont;
-  UIFont *originalFont = self.alert.alertView.titleLabel.font;
   self.alert.mdc_adjustsFontForContentSizeCategory = YES;
-  
+
   // When
   self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
-  [self.alert.alertView updateFonts];
-  
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
+
   // Then
-  XCTAssertFalse([self.alert.alertView.titleLabel.font mdc_isSimplyEqual:originalFont]);
+  XCTAssertFalse([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@ is equal to %@",
+                 view.titleLabel.font, fakeTitleFont);
 }
 
 @end
