@@ -97,7 +97,8 @@
   [self snapshotVerifyView:snapshotView];
 }
 
-- (void)generateSnapshotWithContentSizeCategoryAndNotificationPost:(UIContentSizeCategory)sizeCategory
+- (void)generateSnapshotWithContentSizeCategoryAndNotificationPost:
+            (UIContentSizeCategory)sizeCategory
                                                   andVerifyForView:(UIView *)view {
   UIWindow *snapshotWindow = [self generateWindowWithView:view
                                       contentSizeCategory:sizeCategory
