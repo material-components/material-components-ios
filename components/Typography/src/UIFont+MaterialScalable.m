@@ -68,7 +68,7 @@ static char MDCFontScaleObjectKey;
 
 - (void)mdc_setScalingCurve:(NSDictionary<UIContentSizeCategory, NSNumber *> *)scalingCurve {
   objc_setAssociatedObject(self, &MDCFontScaleObjectKey, scalingCurve,
-                           OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+                           OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
 @end
