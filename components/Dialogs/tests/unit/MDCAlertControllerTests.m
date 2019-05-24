@@ -328,21 +328,6 @@
   XCTAssertFalse(self.alert.alertView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
 }
 
-- (void)testDynamicTypeEnabledThenLegacyDynamicTypeDisabledDoesNotUpdateFonts {
-  // Given
-  UIFont *fakeTitleFont = [UIFont systemFontOfSize:55];
-  self.alert.titleFont = fakeTitleFont;
-  self.alert.mdc_adjustsFontForContentSizeCategory = YES;
-
-  // When
-  self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
-
-  // Then
-  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
-  XCTAssertTrue([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@, is not equal to %@",
-                view.titleLabel.font, fakeTitleFont);
-}
-
 - (void)testLegacyDynamicTypeDisabledThenDynamicTypeEnabledDoesNotUpdateFonts {
   // Given
   UIFont *fakeTitleFont = [UIFont systemFontOfSize:55];
