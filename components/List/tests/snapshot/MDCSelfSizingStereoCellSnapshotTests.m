@@ -148,7 +148,6 @@
     // Given
     self.typographyScheme =
         [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
-    self.typographyScheme.useCurrentContentSizeCategoryWhenApplied = YES;
 
     // When
     self.cell.titleLabel.text = @"Title";
@@ -169,7 +168,6 @@
     // Given
     self.typographyScheme =
         [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
-    self.typographyScheme.useCurrentContentSizeCategoryWhenApplied = YES;
 
     // When
     self.cell.titleLabel.text = @"Title";
