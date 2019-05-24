@@ -24,9 +24,11 @@
   UIFont *titleFont = typographyScheme.body2;
   BOOL useCurrentContentSizeCategoryWhenApplied = NO;
   if ([typographyScheme respondsToSelector:@selector(useCurrentContentSizeCategoryWhenApplied)]) {
-    useCurrentContentSizeCategoryWhenApplied = typographyScheme.useCurrentContentSizeCategoryWhenApplied;
+    useCurrentContentSizeCategoryWhenApplied =
+        typographyScheme.useCurrentContentSizeCategoryWhenApplied;
   } else {
-    useCurrentContentSizeCategoryWhenApplied = typographyScheme.mdc_adjustsFontForContentSizeCategory;
+    useCurrentContentSizeCategoryWhenApplied =
+        typographyScheme.mdc_adjustsFontForContentSizeCategory;
   }
 
   if (useCurrentContentSizeCategoryWhenApplied) {
