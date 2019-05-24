@@ -49,3 +49,5 @@ pod install
 ## Advanced Usage
 
 - [Advanced use](advanced-use.md)
+
+- [Dynamic Type](dynamic-type.md)
