@@ -890,6 +890,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   }
 
   if (_mdc_adjustsFontForContentSizeCategory) {
+    // Dynamic type is enabled so apply scaling
     [self updateFontForDynamicTypeWithFont:font];
   }
 
@@ -899,28 +900,20 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 - (void)updateFontForDynamicTypeWithFont:(UIFont *)font {
-  // Dynamic type is enabled so apply scaling
   if (font.mdc_scalingCurve) {
-    UIContentSizeCategory sizeCategory = UIContentSizeCategoryLarge;
-    if (@available(iOS 10.0, *)) {
-      sizeCategory = self.traitCollection.preferredContentSizeCategory;
-    } else if ([UIApplication mdc_safeSharedApplication]) {
-      sizeCategory = [UIApplication mdc_safeSharedApplication].preferredContentSizeCategory;
-    }
-    font = [font mdc_scaledFontForSizeCategory:sizeCategory];
+    font = [font mdc_scaledFontForTraitEnvironment:self];
   } else {
     if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
       font = [font mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleButton
                                 scaledForDynamicType:YES];
     }
   }
-}
-
-if (_fonts[@(self.state)] != nil) {
-  _fonts[@(self.state)] = font;
-} else {
-  _fonts[@(UIControlStateNormal)] = font;
-}
+  // Update the _font dictionary so that it returns the correct font.
+  if (_fonts[@(self.state)] != nil) {
+    _fonts[@(self.state)] = font;
+  } else {
+    _fonts[@(UIControlStateNormal)] = font;
+  }
 }
 
 - (void)setShapeGenerator:(id<MDCShapeGenerating>)shapeGenerator {

@@ -1116,43 +1116,36 @@ static NSString *controlStateDescription(UIControlState controlState) {
                              @"Font size should be equal to MDCFontTextStyleButton's.");
 }
 
-/**
- Test legacy dynamic type has no impact on a @c MDCButton when @c
- adjustFontForContentSizeCategoryWhenScaledFontIsUnavailable is set to @c NO before setting @c
- mdc_adjustsFontForContentSizeCategory to @c YES that the font stays the same.
- */
-- (void)testLegacyDynamicTypeDisabledThenDynamicTypeTurnedOn {
+- (void)testLegacyDynamicTypeDisabledDoesNotChangeTheFont {
   // Given
   UIFont *fakeFont = [UIFont systemFontOfSize:55];
   [self.button setTitleFont:fakeFont forState:UIControlStateNormal];
-  UIFont *originalFont = self.button.titleLabel.font;
   self.button.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
 
   // When
   self.button.mdc_adjustsFontForContentSizeCategory = YES;
 
   // Then
-  XCTAssertTrue([self.button.titleLabel.font mdc_isSimplyEqual:originalFont],
-                @"%@ is not equal to %@", self.button.titleLabel.font, originalFont);
+  XCTAssertTrue([[self.button titleFontForState:UIControlStateNormal] mdc_isSimplyEqual:fakeFont],
+                @"%@ is not equal to %@", [self.button titleFontForState:UIControlStateNormal],
+                fakeFont);
+  XCTAssertTrue([self.button.titleLabel.font mdc_isSimplyEqual:fakeFont], @"%@ is not equal to %@", self.button.titleLabel.font, fakeFont);
 }
 
-/**
- Test legacy dynamic type impacts a @c MDCButton when @c
- adjustFontForContentSizeCategoryWhenScaledFontIsUnavailable is set to @c YES that the font changes.
- */
-- (void)testLegacyDynamicTypeEnabled {
+- (void)testLegacyDynamicTypeEnabledDoesChangeTheFont {
   // Given
   UIFont *fakeFont = [UIFont systemFontOfSize:55];
   [self.button setTitleFont:fakeFont forState:UIControlStateNormal];
-  UIFont *originalFont = self.button.titleLabel.font;
   self.button.mdc_adjustsFontForContentSizeCategory = YES;
 
   // When
   self.button.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
 
   // Then
-  XCTAssertFalse([self.button.titleLabel.font mdc_isSimplyEqual:originalFont], @"%@ is equal to %@",
-                 self.button.titleLabel.font, originalFont);
+  XCTAssertFalse([[self.button titleFontForState:UIControlStateNormal] mdc_isSimplyEqual:fakeFont],
+                 @"%@ is equal to %@", [self.button titleFontForState:UIControlStateNormal],
+                 fakeFont);
+    XCTAssertFalse([self.button.titleLabel.font mdc_isSimplyEqual:fakeFont], @"%@ is equal to %@", self.button.titleLabel.font, fakeFont);
 }
 
 #pragma mark - Size-related tests
