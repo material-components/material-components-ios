@@ -30,6 +30,15 @@ typical weekly release.
 If you are not able to cut a release Wednesday morning, cut it Tuesday evening before you leave the
 office.
 
+Please post regular updates about the status of the release to the team's chat room. At minimum, the following
+inflection points should be noted:
+
+- The release is being initiated.
+- Testing the release has begun.
+- Testing the release has ended.
+- The release is being submitted.
+- The release has landed.
+
 For Googlers, also read [go/mdc-release-engineering](http://go/mdc-release-engineering) for additional details.
 
 ## Before you start
