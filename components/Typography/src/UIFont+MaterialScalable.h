@@ -41,8 +41,8 @@ typedef NSDictionary<UIContentSizeCategory, NSNumber *> *MDCScalingCurve;
  size category and the font's @c mdc_scalingCurve.
 
  @param sizeCategory The size category for which the font should be scaled.
- @return A font whose point size matches the @c mdc_scalingCurve's current size category value, or
- self if @c mdc_scalingCurve is nil.
+ @return A font whose point size is extracted from @c mdc_scalingCurve for the given size category,
+ or self if @c mdc_scalingCurve is nil.
  */
 - (nonnull UIFont *)mdc_scaledFontForSizeCategory:(nonnull UIContentSizeCategory)sizeCategory;
 
@@ -53,7 +53,8 @@ typedef NSDictionary<UIContentSizeCategory, NSNumber *> *MDCScalingCurve;
  This can be used to return a font for a text element that should *not* be scaled with Dynamic
  Type.
 
- @return Font sized for UIContentSizeCategoryLarge OR self if there is no associated curve
+ @return A font whose point size is extracted from @c mdc_scalingCurve for
+ UIContentSizeCategoryLarge, or self if @c mdc_scalingCurve is nil.
  */
 - (nonnull UIFont *)mdc_scaledFontAtDefaultSize;
 
@@ -64,7 +65,11 @@ typedef NSDictionary<UIContentSizeCategory, NSNumber *> *MDCScalingCurve;
  @note Prefer @c -mdc_scaledFontForSizeCategory: because it encourages use of trait collections
  instead.
 
- @return Font sized for the current size category OR self if there is no associated curve
+ @return If @c mdc_scalingCurve is nil, returns self. On iOS 10 and above, returns a font whose
+ point size is extracted from @c mdc_scalingCurve for UIScreen.mainScreen's
+ preferredContentSizeCategory. On iOS 9, returns a font whose point size is extracted from
+ @c mdc_scalingCurve for UIApplication.sharedApplication's preferredContentSizeCategory, if a shared
+ application is available, otherwise uses UIContentSizeCategoryLarge instead.
  */
 - (nonnull UIFont *)mdc_scaledFontForCurrentSizeCategory;
 
