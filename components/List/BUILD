@@ -38,6 +38,7 @@ mdc_public_objc_library(
         "//components/ShadowElevations",
         "//components/ShadowLayer",
         "//components/Typography",
+        "//components/private/Application",
         "@material_internationalization_ios//:MDFInternationalization",
     ],
 )
@@ -93,6 +94,7 @@ mdc_objc_library(
         ":List",
         ":ListThemer",
         ":TypographyThemer",
+        "//components/schemes/Typography",
     ],
 )
 
