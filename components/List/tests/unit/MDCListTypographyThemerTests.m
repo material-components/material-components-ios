@@ -85,8 +85,8 @@
 
     // Then
     XCTAssertNotNil(cell.titleLabel.font.mdc_scalingCurve);
-    XCTAssertFalse([cell.titleLabel.font mdc_isSimplyEqual:typographyScheme.subtitle1]);
-    XCTAssertFalse([cell.detailLabel.font mdc_isSimplyEqual:typographyScheme.body2]);
+    XCTAssertGreaterThan(cell.titleLabel.font.pointSize, typographyScheme.subtitle1.pointSize);
+    XCTAssertGreaterThan(cell.detailLabel.font.pointSize, typographyScheme.body2.pointSize);
   }
 }
 
