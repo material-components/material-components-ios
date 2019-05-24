@@ -118,9 +118,6 @@
 typedef NS_ENUM(NSInteger, MDCTypographySchemeDefaults) {
   /**
    The Material defaults, circa April 2018.
-
-   MDCTypographyScheming's useCurrentContentSizeCategoryWhenApplied is assigned to NO by default
-   with this version.
    */
   MDCTypographySchemeDefaultsMaterial201804,
 
@@ -130,9 +127,6 @@ typedef NS_ENUM(NSInteger, MDCTypographySchemeDefaults) {
    This scheme implements fonts with the similar metrics as
    MDCTypographySchemeDefaultsMaterial201804 with the addition that vended fonts will have
    appropriate scalingCurves attached.
-
-   MDCTypographyScheming's useCurrentContentSizeCategoryWhenApplied is assigned to YES by default
-   with this version.
    */
   MDCTypographySchemeDefaultsMaterial201902,
 };
@@ -169,6 +163,8 @@ typedef NS_ENUM(NSInteger, MDCTypographySchemeDefaults) {
 
  - If this flag is disabled, make no changes to the font.
  - If this flag is enabled, adjust the font with respect to the current content size category.
+
+ Default value is NO.
  */
 @property(nonatomic, assign, readwrite) BOOL useCurrentContentSizeCategoryWhenApplied;
 
@@ -187,6 +183,8 @@ typedef NS_ENUM(NSInteger, MDCTypographySchemeDefaults) {
 /**
  @warning Will eventually be deprecated and removed. Please use
  useCurrentContentSizeCategoryWhenApplied instead.
+
+ Modifying this property will also modify useCurrentContentSizeCategoryWhenApplied, and vice-versa.
  */
 @property(nonatomic, assign, readwrite) BOOL mdc_adjustsFontForContentSizeCategory;
 
