@@ -330,6 +330,7 @@
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 - (void)testLegacyDynamicTypeDisabledThenDynamicTypeEnabledDoesNotUpdateFonts {
   // Given
   UIFont *fakeTitleFont = [UIFont systemFontOfSize:55];
@@ -360,6 +361,8 @@
                 view.titleLabel.font, fakeTitleFont);
 }
 
+=======
+>>>>>>> Revert setter for adjust...whenUnavailable
 - (void)testLegacyDynamicTypeDisabledThenDynamicTypeEnabledDoesNotUpdateFonts {
   // Given
   UIFont *fakeTitleFont = [UIFont systemFontOfSize:55];
