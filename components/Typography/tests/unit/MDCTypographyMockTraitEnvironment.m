@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MockTraitEnvironment.h"
+#import "MDCTypographyMockTraitEnvironment.h"
 
-@implementation MockTraitEnvironment
+@implementation MDCTypographyMockTraitEnvironment
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
   // No-op.

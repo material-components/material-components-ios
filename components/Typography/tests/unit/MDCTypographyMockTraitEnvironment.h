@@ -15,6 +15,6 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@interface MockTraitEnvironment : NSObject <UITraitEnvironment>
+@interface MDCTypographyMockTraitEnvironment : NSObject <UITraitEnvironment>
 @property(nonatomic, strong) UITraitCollection *traitCollection;
 @end
