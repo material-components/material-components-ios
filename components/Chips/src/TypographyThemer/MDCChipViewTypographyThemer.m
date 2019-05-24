@@ -22,7 +22,16 @@
 + (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme
                    toChipView:(nonnull MDCChipView *)chipView {
   UIFont *titleFont = typographyScheme.body2;
-  if (typographyScheme.mdc_adjustsFontForContentSizeCategory) {
+  BOOL useCurrentContentSizeCategoryWhenApplied = NO;
+  if ([typographyScheme respondsToSelector:@selector(useCurrentContentSizeCategoryWhenApplied)]) {
+    useCurrentContentSizeCategoryWhenApplied =
+        typographyScheme.useCurrentContentSizeCategoryWhenApplied;
+  } else {
+    useCurrentContentSizeCategoryWhenApplied =
+        typographyScheme.mdc_adjustsFontForContentSizeCategory;
+  }
+
+  if (useCurrentContentSizeCategoryWhenApplied) {
     UIContentSizeCategory sizeCategory = UIContentSizeCategoryLarge;
     if (@available(iOS 10.0, *)) {
       sizeCategory = chipView.traitCollection.preferredContentSizeCategory;
