@@ -58,7 +58,7 @@ typedef NSDictionary<UIContentSizeCategory, NSNumber *> *MDCScalingCurve;
  ignored and the returned font will be scaled with UIContentSizeCategoryLarge.
 
  @param traitEnvironment The trait environment whose trait collection should be queried.
- @return A font whose point size is extracted from @c mdc_scalingCurve for the given trait
+ @return A font whose point size is determined by @c mdc_scalingCurve for the given trait
  environment's content size categorry, or self if @c mdc_scalingCurve is nil.
  */
 - (nonnull UIFont *)mdc_scaledFontForTraitEnvironment:

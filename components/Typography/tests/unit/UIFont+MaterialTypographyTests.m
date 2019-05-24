@@ -61,6 +61,12 @@
 }
 
 - (void)testScaledFontForTraitEnvironmentWithNoApplicationOniOS9DoesNothing {
+  // Only run this test on iOS 9
+  NSOperatingSystemVersion iOS10Version = {10, 0, 0};
+  if ([NSProcessInfo.processInfo isOperatingSystemAtLeastVersion:iOS10Version]) {
+    return;
+  }
+
   // Given
   UIFont *font = [UIFont systemFontOfSize:22.0];
   font = [[MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleHeadline1] scaledFontWithFont:font];
