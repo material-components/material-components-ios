@@ -22,7 +22,7 @@
  The values of this dictionary are CGFloat values represented as an NSNumber. Each value defines the
  font size to be used for a given content size category.
  */
-typedef NSDictionary<UIContentSizeCategory, NSNumber *> * MDCScalingCurve;
+typedef NSDictionary<UIContentSizeCategory, NSNumber *> *MDCScalingCurve;
 
 @interface UIFont (MaterialScalable)
 
