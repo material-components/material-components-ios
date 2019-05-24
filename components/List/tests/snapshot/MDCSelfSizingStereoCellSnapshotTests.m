@@ -152,6 +152,7 @@
     self.cell.detailLabel.text = @"Detail";
     self.cell.detailLabel.font = self.typographyScheme.button;
     self.cell.mdc_adjustsFontForContentSizeCategory = YES;
+    [self.cell setNeedsLayout];
 
     // Then
     [self generateSnapshotWithContentSizeCategoryAndNotificationPost:UIContentSizeCategoryExtraSmall
@@ -171,6 +172,7 @@
     self.cell.detailLabel.text = @"Detail";
     self.cell.detailLabel.font = self.typographyScheme.button;
     self.cell.mdc_adjustsFontForContentSizeCategory = YES;
+    [self.cell setNeedsLayout];
 
     // Then
     [self generateSnapshotWithContentSizeCategoryAndNotificationPost:UIContentSizeCategoryExtraLarge
