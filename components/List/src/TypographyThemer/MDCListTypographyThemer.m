@@ -25,10 +25,10 @@
   BOOL useCurrentContentSizeCategoryWhenApplied = NO;
   if ([typographyScheme respondsToSelector:@selector(useCurrentContentSizeCategoryWhenApplied)]) {
     useCurrentContentSizeCategoryWhenApplied =
-    typographyScheme.useCurrentContentSizeCategoryWhenApplied;
+        typographyScheme.useCurrentContentSizeCategoryWhenApplied;
   } else {
     useCurrentContentSizeCategoryWhenApplied =
-    typographyScheme.mdc_adjustsFontForContentSizeCategory;
+        typographyScheme.mdc_adjustsFontForContentSizeCategory;
   }
 
   if (useCurrentContentSizeCategoryWhenApplied) {

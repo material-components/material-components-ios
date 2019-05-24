@@ -36,7 +36,7 @@
 }
 
 - (instancetype)initWithContentSizeCategoryOverride:
-(UIContentSizeCategory)contentSizeCategoryOverride {
+    (UIContentSizeCategory)contentSizeCategoryOverride {
   self = [super init];
   if (self) {
     self.contentSizeCategoryOverride = contentSizeCategoryOverride;
@@ -47,7 +47,7 @@
 - (UITraitCollection *)traitCollection {
   if (@available(iOS 10.0, *)) {
     UITraitCollection *traitCollection = [UITraitCollection
-                                          traitCollectionWithPreferredContentSizeCategory:self.contentSizeCategoryOverride];
+        traitCollectionWithPreferredContentSizeCategory:self.contentSizeCategoryOverride];
     return traitCollection;
   }
   return [super traitCollection];
@@ -77,10 +77,9 @@
     typographyScheme.useCurrentContentSizeCategoryWhenApplied = YES;
 
     // When
-    MDCListTypographyThemerContentSizeCategoryOverrideWindow
-    *extraLargeContainer =
-    [[MDCListTypographyThemerContentSizeCategoryOverrideWindow alloc]
-     initWithContentSizeCategoryOverride:UIContentSizeCategoryExtraLarge];
+    MDCListTypographyThemerContentSizeCategoryOverrideWindow *extraLargeContainer =
+        [[MDCListTypographyThemerContentSizeCategoryOverrideWindow alloc]
+            initWithContentSizeCategoryOverride:UIContentSizeCategoryExtraLarge];
     [extraLargeContainer addSubview:cell];
     [MDCListTypographyThemer applyTypographyScheme:typographyScheme toSelfSizingStereoCell:cell];
 
@@ -99,10 +98,9 @@
     typographyScheme.useCurrentContentSizeCategoryWhenApplied = NO;
 
     // When
-    MDCListTypographyThemerContentSizeCategoryOverrideWindow
-    *extraLargeContainer =
-    [[MDCListTypographyThemerContentSizeCategoryOverrideWindow alloc]
-     initWithContentSizeCategoryOverride:UIContentSizeCategoryExtraLarge];
+    MDCListTypographyThemerContentSizeCategoryOverrideWindow *extraLargeContainer =
+        [[MDCListTypographyThemerContentSizeCategoryOverrideWindow alloc]
+            initWithContentSizeCategoryOverride:UIContentSizeCategoryExtraLarge];
     [extraLargeContainer addSubview:cell];
     [MDCListTypographyThemer applyTypographyScheme:typographyScheme toSelfSizingStereoCell:cell];
 
