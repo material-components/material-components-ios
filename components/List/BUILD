@@ -47,6 +47,7 @@ mdc_extension_objc_library(
     name = "TypographyThemer",
     deps = [
         ":List",
+        "//components/Typography",
         "//components/schemes/Typography",
     ],
 )
@@ -94,6 +95,7 @@ mdc_objc_library(
         ":List",
         ":ListThemer",
         ":TypographyThemer",
+        "//components/Typography",
         "//components/schemes/Typography",
     ],
 )
