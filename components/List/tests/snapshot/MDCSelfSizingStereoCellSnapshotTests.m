@@ -97,8 +97,9 @@
   [self snapshotVerifyView:snapshotView];
 }
 
-// TODO(#7487): The size of the cell view sent for snapshot is not correct because
-// Autolayout needs to be used as an environment.
+// TODO(https://github.com/material-components/material-components-ios/issues/7487):
+// The size of the cell view sent for snapshot is not correct because Autolayout needs
+// to be used as an environment.
 - (void)generateSnapshotWithContentSizeCategoryAndNotificationPost:
             (UIContentSizeCategory)sizeCategory
                                                   andVerifyForView:(UIView *)view {
