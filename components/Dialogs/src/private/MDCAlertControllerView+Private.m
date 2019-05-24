@@ -628,13 +628,6 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
   [self updateFonts];
 }
 
-- (void)setAdjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable:
-    (BOOL)adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable {
-  _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable =
-      adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
-  [self updateFonts];
-}
-
 // Update the fonts used based on whether Dynamic Type is enabled
 - (void)updateFonts {
   [self updateTitleFont];

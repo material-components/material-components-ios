@@ -333,6 +333,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 - (void)testLegacyDynamicTypeDisabledThenDynamicTypeEnabledDoesNotUpdateFonts {
   // Given
   UIFont *fakeTitleFont = [UIFont systemFontOfSize:55];
@@ -400,6 +401,8 @@
 - (void)testLegacyDynamicTypeDisabledThenDynamicTypeTurnedOn {
 >>>>>>> Test title font
 =======
+=======
+>>>>>>> Revert setter for adjust...whenUnavailable
 - (void)testLegacyDynamicTypeDisabledThenDynamicTypeEnabledDoesNotUpdateFonts {
 >>>>>>> Update test names and delete comments
   // Given
