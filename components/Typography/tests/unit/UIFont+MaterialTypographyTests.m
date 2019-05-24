@@ -78,7 +78,7 @@
   UIFont *scaledFont = [font mdc_scaledFontForTraitEnvironment:traitEnvironment];
 
   // Then
-  XCTAssertNil([UIApplication sharedApplication]);
+  XCTAssertNil(UIApplication.sharedApplication);
   XCTAssertTrue([scaledFont mdc_isSimplyEqual:font]);
 }
 
