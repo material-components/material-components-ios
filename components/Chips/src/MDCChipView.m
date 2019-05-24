@@ -16,7 +16,6 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
-#import "MaterialApplication.h"
 #import "MaterialInk.h"
 #import "MaterialMath.h"
 #import "MaterialRipple.h"
@@ -519,13 +518,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   // If we are automatically adjusting for Dynamic Type resize the font based on the text style
   if (self.mdc_adjustsFontForContentSizeCategory) {
     if (titleFont.mdc_scalingCurve && !self.mdc_legacyFontScaling) {
-      UIContentSizeCategory sizeCategory = UIContentSizeCategoryLarge;
-      if (@available(iOS 10.0, *)) {
-        sizeCategory = self.traitCollection.preferredContentSizeCategory;
-      } else if ([UIApplication mdc_safeSharedApplication]) {
-        sizeCategory = [UIApplication mdc_safeSharedApplication].preferredContentSizeCategory;
-      }
-      titleFont = [titleFont mdc_scaledFontForSizeCategory:sizeCategory];
+      titleFont = [titleFont mdc_scaledFontForTraitEnvironment:self];
     } else if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
       titleFont =
           [titleFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
