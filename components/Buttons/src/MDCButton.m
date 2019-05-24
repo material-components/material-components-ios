@@ -907,6 +907,12 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
     }
   }
 
+  if (_fonts[@(self.state)] != nil) {
+    _fonts[@(self.state)] = font;
+  } else {
+    _fonts[@(UIControlStateNormal)] = font;
+  }
+
   self.titleLabel.font = font;
 
   [self setNeedsLayout];
