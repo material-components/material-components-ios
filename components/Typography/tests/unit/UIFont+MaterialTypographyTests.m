@@ -14,9 +14,9 @@
 
 #import <XCTest/XCTest.h>
 #import "MaterialTypography.h"
+#import "MockTraitEnvironment.h"
 
 @interface UIFont_MaterialTypographyTests : XCTestCase
-
 @end
 
 @implementation UIFont_MaterialTypographyTests
@@ -40,6 +40,38 @@
     // Then
     XCTAssertEqualObjects(font1, font2);
   }
+}
+
+- (void)testScaledFontForTraitEnvironmentOniOS10AndAboveConsultsTheTraitEnvironment {
+  if (@available(iOS 10.0, *)) {
+    // Given
+    UIFont *font = [UIFont systemFontOfSize:22.0];
+    font =
+        [[MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleHeadline1] scaledFontWithFont:font];
+    MockTraitEnvironment *traitEnvironment = [[MockTraitEnvironment alloc] init];
+    traitEnvironment.traitCollection = [UITraitCollection
+        traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraLarge];
+
+    // When
+    UIFont *scaledFont = [font mdc_scaledFontForTraitEnvironment:traitEnvironment];
+
+    // Then
+    XCTAssertGreaterThan(scaledFont.pointSize, font.pointSize);
+  }
+}
+
+- (void)testScaledFontForTraitEnvironmentWithNoApplicationOniOS9DoesNothing {
+  // Given
+  UIFont *font = [UIFont systemFontOfSize:22.0];
+  font = [[MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleHeadline1] scaledFontWithFont:font];
+  MockTraitEnvironment *traitEnvironment = [[MockTraitEnvironment alloc] init];
+
+  // When
+  UIFont *scaledFont = [font mdc_scaledFontForTraitEnvironment:traitEnvironment];
+
+  // Then
+  XCTAssertNil([UIApplication sharedApplication]);
+  XCTAssertTrue([scaledFont mdc_isSimplyEqual:font]);
 }
 
 @end
