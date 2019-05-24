@@ -97,6 +97,9 @@
   [self snapshotVerifyView:snapshotView];
 }
 
+// TODO(https://github.com/material-components/material-components-ios/issues/7487):
+// The size of the cell view sent for snapshot is not correct because Autolayout needs
+// to be used as an environment.
 - (void)generateSnapshotWithContentSizeCategoryAndNotificationPost:
             (UIContentSizeCategory)sizeCategory
                                                   andVerifyForView:(UIView *)view {
@@ -152,6 +155,7 @@
     self.cell.detailLabel.text = @"Detail";
     self.cell.detailLabel.font = self.typographyScheme.button;
     self.cell.mdc_adjustsFontForContentSizeCategory = YES;
+    [self.cell setNeedsLayout];
 
     // Then
     [self generateSnapshotWithContentSizeCategoryAndNotificationPost:UIContentSizeCategoryExtraSmall
@@ -171,6 +175,7 @@
     self.cell.detailLabel.text = @"Detail";
     self.cell.detailLabel.font = self.typographyScheme.button;
     self.cell.mdc_adjustsFontForContentSizeCategory = YES;
+    [self.cell setNeedsLayout];
 
     // Then
     [self generateSnapshotWithContentSizeCategoryAndNotificationPost:UIContentSizeCategoryExtraLarge
