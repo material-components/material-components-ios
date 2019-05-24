@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #import <XCTest/XCTest.h>
-#import "MaterialTypography.h"
 #import "MDCTypographyMockTraitEnvironment.h"
+#import "MaterialTypography.h"
 
 @interface UIFont_MaterialTypographyTests : XCTestCase
 @end
@@ -48,7 +48,8 @@
     UIFont *font = [UIFont systemFontOfSize:22.0];
     font =
         [[MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleHeadline1] scaledFontWithFont:font];
-    MDCTypographyMockTraitEnvironment *traitEnvironment = [[MDCTypographyMockTraitEnvironment alloc] init];
+    MDCTypographyMockTraitEnvironment *traitEnvironment =
+        [[MDCTypographyMockTraitEnvironment alloc] init];
     traitEnvironment.traitCollection = [UITraitCollection
         traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraLarge];
 
@@ -70,7 +71,8 @@
   // Given
   UIFont *font = [UIFont systemFontOfSize:22.0];
   font = [[MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleHeadline1] scaledFontWithFont:font];
-  MDCTypographyMockTraitEnvironment *traitEnvironment = [[MDCTypographyMockTraitEnvironment alloc] init];
+  MDCTypographyMockTraitEnvironment *traitEnvironment =
+      [[MDCTypographyMockTraitEnvironment alloc] init];
 
   // When
   UIFont *scaledFont = [font mdc_scaledFontForTraitEnvironment:traitEnvironment];
