@@ -149,7 +149,7 @@
       mdc_isSimplyEqual:[scheme201902.overline mdc_scaledFontAtDefaultSize]]);
 }
 
-- (void)testTypographyScheme201804DisableUseCurrentContentSizeCategoryWhenAppliedByDefault {
+- (void)testTypographyScheme201804UseCurrentContentSizeCategoryWhenAppliedIsDisabledByDefault {
   // Given
   MDCTypographyScheme *scheme =
       [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
@@ -158,13 +158,13 @@
   XCTAssertFalse(scheme.useCurrentContentSizeCategoryWhenApplied);
 }
 
-- (void)testTypographyScheme201902EnablesUseCurrentContentSizeCategoryWhenAppliedByDefault {
+- (void)testTypographyScheme201902UseCurrentContentSizeCategoryWhenAppliedIsDisabledByDefault {
   // Given
   MDCTypographyScheme *scheme =
       [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
 
   // Then
-  XCTAssertTrue(scheme.useCurrentContentSizeCategoryWhenApplied);
+  XCTAssertFalse(scheme.useCurrentContentSizeCategoryWhenApplied);
 }
 
 - (void)

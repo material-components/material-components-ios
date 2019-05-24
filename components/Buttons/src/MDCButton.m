@@ -973,13 +973,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [self sizeToFit];
 }
 
-- (void)setAdjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable:
-    (BOOL)adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable {
-  _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable =
-      adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
-  [self updateTitleFont];
-}
-
 - (BOOL)mdc_legacyFontScaling {
   return self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
 }

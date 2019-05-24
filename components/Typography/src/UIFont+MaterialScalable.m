@@ -16,6 +16,8 @@
 
 #import <objc/runtime.h>
 
+#import "MaterialApplication.h"
+
 #import "MDCTypography.h"
 #import "private/MDCTypographyUtilities.h"
 
@@ -49,6 +51,16 @@ static char MDCFontScaleObjectKey;
   scaledFont.mdc_scalingCurve = self.mdc_scalingCurve;
 
   return scaledFont;
+}
+
+- (UIFont *)mdc_scaledFontForTraitEnvironment:(id<UITraitEnvironment>)traitEnvironment {
+  UIContentSizeCategory sizeCategory = UIContentSizeCategoryLarge;
+  if (@available(iOS 10.0, *)) {
+    sizeCategory = traitEnvironment.traitCollection.preferredContentSizeCategory;
+  } else if ([UIApplication mdc_safeSharedApplication]) {
+    sizeCategory = [UIApplication mdc_safeSharedApplication].preferredContentSizeCategory;
+  }
+  return [self mdc_scaledFontForSizeCategory:sizeCategory];
 }
 
 - (UIFont *)mdc_scaledFontForCurrentSizeCategory {
