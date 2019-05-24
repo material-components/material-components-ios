@@ -1129,7 +1129,8 @@ static NSString *controlStateDescription(UIControlState controlState) {
   XCTAssertTrue([[self.button titleFontForState:UIControlStateNormal] mdc_isSimplyEqual:fakeFont],
                 @"%@ is not equal to %@", [self.button titleFontForState:UIControlStateNormal],
                 fakeFont);
-  XCTAssertTrue([self.button.titleLabel.font mdc_isSimplyEqual:fakeFont], @"%@ is not equal to %@", self.button.titleLabel.font, fakeFont);
+  XCTAssertTrue([self.button.titleLabel.font mdc_isSimplyEqual:fakeFont], @"%@ is not equal to %@",
+                self.button.titleLabel.font, fakeFont);
 }
 
 - (void)testLegacyDynamicTypeEnabledDoesChangeTheFont {
@@ -1145,7 +1146,8 @@ static NSString *controlStateDescription(UIControlState controlState) {
   XCTAssertFalse([[self.button titleFontForState:UIControlStateNormal] mdc_isSimplyEqual:fakeFont],
                  @"%@ is equal to %@", [self.button titleFontForState:UIControlStateNormal],
                  fakeFont);
-    XCTAssertFalse([self.button.titleLabel.font mdc_isSimplyEqual:fakeFont], @"%@ is equal to %@", self.button.titleLabel.font, fakeFont);
+  XCTAssertFalse([self.button.titleLabel.font mdc_isSimplyEqual:fakeFont], @"%@ is equal to %@",
+                 self.button.titleLabel.font, fakeFont);
 }
 
 #pragma mark - Size-related tests
