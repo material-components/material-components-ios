@@ -22,7 +22,7 @@
 + (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme
                    toChipView:(nonnull MDCChipView *)chipView {
   UIFont *titleFont = typographyScheme.body2;
-  if (typographyScheme.useCurrentContentSizeCategoryWhenApplied) {
+  if ([typographyScheme respondsToSelector:@selector(useCurrentContentSizeCategoryWhenApplied)] && typographyScheme.useCurrentContentSizeCategoryWhenApplied) {
     UIContentSizeCategory sizeCategory = UIContentSizeCategoryLarge;
     if (@available(iOS 10.0, *)) {
       sizeCategory = chipView.traitCollection.preferredContentSizeCategory;
