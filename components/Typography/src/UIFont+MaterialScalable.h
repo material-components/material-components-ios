@@ -38,7 +38,7 @@ typedef NSDictionary<UIContentSizeCategory, NSNumber *> *MDCScalingCurve;
 
 /**
  Returns a font with the same family, weight and traits, but whose point size is based on the given
- size category and the font's @c mdc_scalingCurve.
+ size category and the corresponding value from @c mdc_scalingCurve.
 
  @param sizeCategory The size category for which the font should be scaled.
  @return A font whose point size is extracted from @c mdc_scalingCurve for the given size category,
@@ -47,8 +47,9 @@ typedef NSDictionary<UIContentSizeCategory, NSNumber *> *MDCScalingCurve;
 - (nonnull UIFont *)mdc_scaledFontForSizeCategory:(nonnull UIContentSizeCategory)sizeCategory;
 
 /**
- Returns a font with the same family, weight and traits, with a font size based on the default
- size category of UIContentSizeCategoryLarge.
+ Returns a font with the same family, weight and traits, but whose point size is based on the
+ default size category of UIContentSizeCategoryLarge and the corresponding value from
+ @c mdc_scalingCurve.
 
  This can be used to return a font for a text element that should *not* be scaled with Dynamic
  Type.
@@ -59,8 +60,8 @@ typedef NSDictionary<UIContentSizeCategory, NSNumber *> *MDCScalingCurve;
 - (nonnull UIFont *)mdc_scaledFontAtDefaultSize;
 
 /**
- Returns a font with the same family, weight and traits, but whose point size is the device's
- text size setting and the font's @c mdc_scalingCurve.
+ Returns a font with the same family, weight and traits, but whose point size is based on the
+ device's current content size category and the corresponding value from @c mdc_scalingCurve.
 
  @note Prefer @c -mdc_scaledFontForSizeCategory: because it encourages use of trait collections
  instead.
