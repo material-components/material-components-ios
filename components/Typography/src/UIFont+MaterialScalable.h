@@ -51,10 +51,11 @@ typedef NSDictionary<UIContentSizeCategory, NSNumber *> *MDCScalingCurve;
  trait environment's preferred content size category.
 
  If the device is running iOS 9 and not in an extension, then the provided traitEnvironment will be
- ignored and UIApplication's shared application's preferredContentSizeCategory will be used instead.
+ ignored and the UIApplication sharedApplication's preferredContentSizeCategory will be used
+ instead.
 
  If the device is running iOS 9 and in an extension, then the provided trait environment will be
- igorned and the returned font will be scaled with UIContentSizeCategoryLarge.
+ ignored and the returned font will be scaled with UIContentSizeCategoryLarge.
 
  @param traitEnvironment The trait environment whose trait collection should be queried.
  @return A font whose point size is extracted from @c mdc_scalingCurve for the given trait
