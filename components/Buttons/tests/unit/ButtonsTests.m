@@ -1137,10 +1137,9 @@ static NSString *controlStateDescription(UIControlState controlState) {
   // Given
   UIFont *fakeFont = [UIFont systemFontOfSize:55];
   [self.button setTitleFont:fakeFont forState:UIControlStateNormal];
-  self.button.mdc_adjustsFontForContentSizeCategory = YES;
 
   // When
-  self.button.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
+  self.button.mdc_adjustsFontForContentSizeCategory = YES;
 
   // Then
   XCTAssertFalse([[self.button titleFontForState:UIControlStateNormal] mdc_isSimplyEqual:fakeFont],

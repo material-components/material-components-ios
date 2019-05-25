@@ -891,7 +891,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
   if (_mdc_adjustsFontForContentSizeCategory) {
     // Dynamic type is enabled so apply scaling
-    [self updateFontForDynamicTypeWithFont:font];
+    font = [self updateFontForDynamicTypeWithFont:font];
   }
 
   self.titleLabel.font = font;
@@ -899,7 +899,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [self setNeedsLayout];
 }
 
-- (void)updateFontForDynamicTypeWithFont:(UIFont *)font {
+- (UIFont *)updateFontForDynamicTypeWithFont:(UIFont *)font {
   if (font.mdc_scalingCurve) {
     font = [font mdc_scaledFontForTraitEnvironment:self];
   } else {
@@ -914,6 +914,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   } else {
     _fonts[@(UIControlStateNormal)] = font;
   }
+  return font;
 }
 
 - (void)setShapeGenerator:(id<MDCShapeGenerating>)shapeGenerator {
