@@ -328,41 +328,12 @@
   XCTAssertFalse(self.alert.alertView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 - (void)testLegacyDynamicTypeDisabledThenDynamicTypeEnabledDoesNotUpdateFonts {
   // Given
   UIFont *fakeTitleFont = [UIFont systemFontOfSize:55];
   self.alert.titleFont = fakeTitleFont;
   UIFont *fakeMessageFont = [UIFont systemFontOfSize:50];
   self.alert.messageFont = fakeMessageFont;
-<<<<<<< HEAD
-=======
-=======
->>>>>>> Test title font
-/**
- Test legacy dynamic type has no impact on a @c MDCButton when @c
- adjustFontForContentSizeCategoryWhenScaledFontIsUnavailable is set to @c NO that the font stays
- the same.
- */
-- (void)testLegacyDynamicTypeDisabled {
-<<<<<<< HEAD
-=======
-- (void)testDynamicTypeEnabledThenLegacyDynamicTypeDisabledDoesNotUpdateFonts {
->>>>>>> Update test names and delete comments
-=======
->>>>>>> Test title font
-=======
-- (void)testDynamicTypeEnabledThenLegacyDynamicTypeDisabledDoesNotUpdateFonts {
->>>>>>> Update test names and delete comments
-  // Given
-  UIFont *fakeTitleFont = [UIFont systemFontOfSize:55];
-  self.alert.titleFont = fakeTitleFont;
-  self.alert.mdc_adjustsFontForContentSizeCategory = YES;
 
   // When
   self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
