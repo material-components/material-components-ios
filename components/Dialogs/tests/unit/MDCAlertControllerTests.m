@@ -380,6 +380,7 @@
   // Then
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   XCTAssertTrue([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@ is not equal to %@",
                 view.titleLabel.font, fakeTitleFont);
@@ -398,6 +399,9 @@
 =======
   XCTAssertTrue([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@ is not equal to %@",
 >>>>>>> Add tests
+=======
+  XCTAssertTrue([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@ is not equal to %@",
+>>>>>>> clean up test
                 view.titleLabel.font, fakeTitleFont);
   XCTAssertTrue([view.messageLabel.font mdc_isSimplyEqual:fakeMessageFont], @"%@ is not equal to %@", view.messageLabel.font, fakeMessageFont);
 }
@@ -421,6 +425,7 @@
   // Then
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   XCTAssertFalse([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@ is equal to %@",
                  view.titleLabel.font, fakeTitleFont);
@@ -435,6 +440,8 @@
                  view.titleLabel.font, fakeTitleFont);
 >>>>>>> clang
 =======
+=======
+>>>>>>> clean up test
   XCTAssertFalse([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@ is equal to %@",
                  view.titleLabel.font, fakeTitleFont);
     XCTAssertFalse([view.messageLabel.font mdc_isSimplyEqual:fakeMessageFont], @"%@ is equal to %@", view.messageLabel.font, fakeMessageFont);
