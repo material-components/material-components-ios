@@ -387,7 +387,6 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/ShadowLayer"
     component.dependency "MaterialComponents/Shapes"
     component.dependency "MaterialComponents/Typography"
-    component.dependency "MaterialComponents/private/Application"
     component.dependency "MaterialComponents/private/Math"
 
     component.test_spec 'UnitTests' do |unit_tests|
