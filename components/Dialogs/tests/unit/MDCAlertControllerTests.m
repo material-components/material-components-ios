@@ -20,6 +20,7 @@
 
 #import "../../src/private/MDCDialogShadowedView.h"
 #import "MDCAlertControllerView+Private.h"
+#import "MDCAlertController+ButtonForAction.h"
 
 #pragma mark - Subclasses for testing
 
@@ -332,85 +333,29 @@
   // Given
   UIFont *fakeTitleFont = [UIFont systemFontOfSize:55];
   self.alert.titleFont = fakeTitleFont;
-<<<<<<< HEAD
   UIFont *fakeMessageFont = [UIFont systemFontOfSize:50];
   self.alert.messageFont = fakeMessageFont;
-<<<<<<< HEAD
-
-  // When
-  self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-  // Then
-=======
->>>>>>> Add tests
-  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
-=======
-  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
-
-  // Then
->>>>>>> Test title font
-=======
-
-  // Then
-  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
->>>>>>> clang
-  XCTAssertTrue([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@, is not equal to %@",
-                view.titleLabel.font, fakeTitleFont);
-}
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> Revert setter for adjust...whenUnavailable
-- (void)testLegacyDynamicTypeDisabledThenDynamicTypeEnabledDoesNotUpdateFonts {
-=======
-/**
- Test legacy dynamic type has no impact on a @c MDCButton when @c
- adjustFontForContentSizeCategoryWhenScaledFontIsUnavailable is set to @c NO before setting @c
- mdc_adjustsFontForContentSizeCategory to @c YES that the font stays the same.
- */
-- (void)testLegacyDynamicTypeDisabledThenDynamicTypeTurnedOn {
->>>>>>> Test title font
-=======
-=======
->>>>>>> Revert setter for adjust...whenUnavailable
-- (void)testLegacyDynamicTypeDisabledThenDynamicTypeEnabledDoesNotUpdateFonts {
->>>>>>> Update test names and delete comments
-  // Given
-  UIFont *fakeTitleFont = [UIFont systemFontOfSize:55];
-  self.alert.titleFont = fakeTitleFont;
-  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
-<<<<<<< HEAD
->>>>>>> Test title font
-=======
->>>>>>> Test title font
-=======
-  //MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
->>>>>>> Fix broken test
-=======
->>>>>>> Fix issue and improve test
+  MDCAlertAction *fakeAction = [MDCAlertAction actionWithTitle:@"Foo"
+                                                       handler:^(MDCAlertAction *action){
+                                                       }];
+  [self.alert addAction:fakeAction];
+  UIFont *fakeButtonFont = [UIFont systemFontOfSize:45];
+  self.alert.buttonFont = fakeButtonFont;
   self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
 
   // When
   self.alert.mdc_adjustsFontForContentSizeCategory = YES;
 
   // Then
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> clang'
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   XCTAssertTrue([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@ is not equal to %@",
                 view.titleLabel.font, fakeTitleFont);
   XCTAssertTrue([view.messageLabel.font mdc_isSimplyEqual:fakeMessageFont],
                 @"%@ is not equal to %@", view.messageLabel.font, fakeMessageFont);
+  MDCButton *button = [self.alert buttonForAction:fakeAction];
+  XCTAssertTrue([[button titleFontForState:UIControlStateNormal] mdc_isSimplyEqual:fakeButtonFont],
+                @"%@ is not equal to %@", [button titleFontForState:UIControlStateNormal],
+                fakeButtonFont);
 }
 
 - (void)testDynamicTypeEnabledAndLegacyEnabledUpdatesTheFonts {
@@ -419,102 +364,28 @@
   self.alert.titleFont = fakeTitleFont;
   UIFont *fakeMessageFont = [UIFont systemFontOfSize:50];
   self.alert.messageFont = fakeMessageFont;
-<<<<<<< HEAD
-=======
-  XCTAssertTrue([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@, is not equal to %@",
-=======
-  XCTAssertTrue([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@ is not equal to %@",
->>>>>>> Add tests
-=======
-=======
-  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
->>>>>>> Fix issue and improve test
-  XCTAssertTrue([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@ is not equal to %@",
->>>>>>> clean up test
-=======
-  XCTAssertTrue([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@ is not equal to %@",
->>>>>>> clean up test
-                view.titleLabel.font, fakeTitleFont);
-  XCTAssertTrue([view.messageLabel.font mdc_isSimplyEqual:fakeMessageFont], @"%@ is not equal to %@", view.messageLabel.font, fakeMessageFont);
-}
-
-- (void)testDynamicTypeEnabledAndLegacyEnabledUpdatesTheFonts {
-  // Given
-  UIFont *fakeTitleFont = [UIFont systemFontOfSize:55];
-  self.alert.titleFont = fakeTitleFont;
-<<<<<<< HEAD
-  UIFont *fakeMessageFont = [UIFont systemFontOfSize:50];
-  self.alert.messageFont = fakeMessageFont;
-  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
-<<<<<<< HEAD
->>>>>>> Test title font
-=======
->>>>>>> Fix issue and improve test
-  self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
-=======
->>>>>>> Add tests
-=======
-  XCTAssertTrue([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@, is not equal to %@",
-                view.titleLabel.font, fakeTitleFont);
-}
-
-- (void)testDynamicTypeEnabledAndLegacyEnabledUpdatesTheFonts {
-  // Given
-  UIFont *fakeTitleFont = [UIFont systemFontOfSize:55];
-  self.alert.titleFont = fakeTitleFont;
-  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
-  self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
->>>>>>> Test title font
-=======
->>>>>>> Fix broken test
-
+  MDCAlertAction *fakeAction = [MDCAlertAction actionWithTitle:@"Foo"
+                                                       handler:^(MDCAlertAction *action){
+                                                       }];
+  [self.alert addAction:fakeAction];
+  UIFont *fakeButtonFont = [UIFont systemFontOfSize:45];
+  self.alert.buttonFont = fakeButtonFont;
+  
   // When
   self.alert.mdc_adjustsFontForContentSizeCategory = YES;
-
+  
   // Then
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> Fix broken test
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   XCTAssertFalse([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@ is equal to %@",
                  view.titleLabel.font, fakeTitleFont);
   XCTAssertFalse([view.messageLabel.font mdc_isSimplyEqual:fakeMessageFont], @"%@ is equal to %@",
                  view.messageLabel.font, fakeMessageFont);
-=======
-  XCTAssertFalse([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@, is equal to %@",
-<<<<<<< HEAD
-                view.titleLabel.font, fakeTitleFont);
->>>>>>> Test title font
-=======
-                 view.titleLabel.font, fakeTitleFont);
->>>>>>> clang
-=======
-=======
->>>>>>> clean up test
-  XCTAssertFalse([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@ is equal to %@",
-                 view.titleLabel.font, fakeTitleFont);
-    XCTAssertFalse([view.messageLabel.font mdc_isSimplyEqual:fakeMessageFont], @"%@ is equal to %@", view.messageLabel.font, fakeMessageFont);
->>>>>>> Add tests
-=======
-  XCTAssertFalse([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@, is equal to %@",
-<<<<<<< HEAD
-                view.titleLabel.font, fakeTitleFont);
->>>>>>> Test title font
-=======
-=======
-=======
-  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
->>>>>>> Fix issue and improve test
-  XCTAssertFalse([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@ is equal to %@",
->>>>>>> clean up test
-                 view.titleLabel.font, fakeTitleFont);
->>>>>>> clang
+  MDCButton *button = [self.alert buttonForAction:fakeAction];
+  XCTAssertFalse([[button titleFontForState:UIControlStateNormal] mdc_isSimplyEqual:fakeButtonFont],
+                 @"%@ is equal to %@", [button titleFontForState:UIControlStateNormal],
+                 fakeButtonFont);
 }
+
+
 
 @end

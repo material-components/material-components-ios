@@ -368,14 +368,6 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 }
 
 - (void)setupAlertView {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> Fix broken test
-=======
-
->>>>>>> Fix issue and improve test
   self.alertView.titleLabel.text = self.title;
   self.alertView.messageLabel.text = self.message;
   self.alertView.titleFont = self.titleFont;
@@ -407,17 +399,9 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
     [self addButtonToAlertViewForAction:action];
   }
   // Explicitly overwrite the view default if true
-<<<<<<< HEAD
-<<<<<<< HEAD
   // We set this last to make sure all other properties are set first and no overriden by setting
   // this.
   if (self.mdc_adjustsFontForContentSizeCategory) {
-=======
-  if (_mdc_adjustsFontForContentSizeCategory) {
->>>>>>> Fix broken test
-=======
-  if (_mdc_adjustsFontForContentSizeCategory) {
->>>>>>> Fix issue and improve test
     self.alertView.mdc_adjustsFontForContentSizeCategory = YES;
   }
 }
