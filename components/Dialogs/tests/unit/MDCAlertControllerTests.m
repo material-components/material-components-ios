@@ -332,6 +332,7 @@
   // Given
   UIFont *fakeTitleFont = [UIFont systemFontOfSize:55];
   self.alert.titleFont = fakeTitleFont;
+<<<<<<< HEAD
   UIFont *fakeMessageFont = [UIFont systemFontOfSize:50];
   self.alert.messageFont = fakeMessageFont;
 <<<<<<< HEAD
@@ -388,12 +389,15 @@
 =======
   //MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
 >>>>>>> Fix broken test
+=======
+>>>>>>> Fix issue and improve test
   self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
 
   // When
   self.alert.mdc_adjustsFontForContentSizeCategory = YES;
 
   // Then
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -422,6 +426,9 @@
   XCTAssertTrue([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@ is not equal to %@",
 >>>>>>> Add tests
 =======
+=======
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
+>>>>>>> Fix issue and improve test
   XCTAssertTrue([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@ is not equal to %@",
 >>>>>>> clean up test
 =======
@@ -435,11 +442,14 @@
   // Given
   UIFont *fakeTitleFont = [UIFont systemFontOfSize:55];
   self.alert.titleFont = fakeTitleFont;
+<<<<<<< HEAD
   UIFont *fakeMessageFont = [UIFont systemFontOfSize:50];
   self.alert.messageFont = fakeMessageFont;
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
 <<<<<<< HEAD
 >>>>>>> Test title font
+=======
+>>>>>>> Fix issue and improve test
   self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
 =======
 >>>>>>> Add tests
@@ -462,6 +472,7 @@
   self.alert.mdc_adjustsFontForContentSizeCategory = YES;
 
   // Then
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -497,6 +508,9 @@
 >>>>>>> Test title font
 =======
 =======
+=======
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
+>>>>>>> Fix issue and improve test
   XCTAssertFalse([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@ is equal to %@",
 >>>>>>> clean up test
                  view.titleLabel.font, fakeTitleFont);
