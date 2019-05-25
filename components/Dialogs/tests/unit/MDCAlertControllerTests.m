@@ -341,6 +341,7 @@
   self.alert.mdc_adjustsFontForContentSizeCategory = YES;
 
   // Then
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   XCTAssertTrue([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@ is not equal to %@",
                 view.titleLabel.font, fakeTitleFont);
   XCTAssertTrue([view.messageLabel.font mdc_isSimplyEqual:fakeMessageFont],
