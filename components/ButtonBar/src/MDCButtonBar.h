@@ -99,7 +99,7 @@ IB_DESIGNABLE
 @property(nonatomic, copy, nullable) NSArray<UIBarButtonItem *> *items;
 
 /**
- Returns the rect of the item's view within the coordinate space of @c view.
+ Returns the rect of the item's view within the given @c coordinateSpace.
 
  If the provided item is not contained in @c items, then the behavior is undefined.
 
