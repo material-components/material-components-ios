@@ -45,6 +45,7 @@
   NSArray *viewControllers = [self constructExampleViewControllers];
   self.viewControllers = viewControllers;
   self.selectedViewController = self.viewControllers.firstObject;
+  self.tabBar.enableRippleBehavior = YES;
   [MDCTabBarColorThemer applySemanticColorScheme:self.colorScheme toTabs:self.tabBar];
 }
 

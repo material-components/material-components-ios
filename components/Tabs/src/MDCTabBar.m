@@ -20,6 +20,7 @@
 #import "MDCTabBarIndicatorTemplate.h"
 #import "MDCTabBarUnderlineIndicatorTemplate.h"
 #import "MaterialInk.h"
+#import "MaterialRipple.h"
 #import "MaterialTypography.h"
 #import "private/MDCItemBar.h"
 #import "private/MDCItemBarAlignment.h"
@@ -96,6 +97,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(
 
   UIColor *_selectedTitleColor;
   UIColor *_unselectedTitleColor;
+  UIColor *_inkColor;
 }
 // Inherit UIView's tintColor logic.
 @dynamic tintColor;
@@ -129,6 +131,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(
   _selectedTitleColor = _selectedItemTintColor;
   _unselectedTitleColor = _unselectedItemTintColor;
   _inkColor = [UIColor colorWithWhite:1 alpha:(CGFloat)0.7];
+  _rippleColor = [UIColor colorWithWhite:1 alpha:(CGFloat)0.7];
 
   self.clipsToBounds = YES;
   _barPosition = UIBarPositionAny;
@@ -281,6 +284,14 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(
 - (void)setInkColor:(UIColor *)inkColor {
   if (_inkColor != inkColor && ![_inkColor isEqual:inkColor]) {
     _inkColor = inkColor;
+
+    [self updateItemBarStyle];
+  }
+}
+
+- (void)setRippleColor:(UIColor *)rippleColor {
+  if (_rippleColor != rippleColor && ![_rippleColor isEqual:rippleColor]) {
+    _rippleColor = rippleColor;
 
     [self updateItemBarStyle];
   }
@@ -455,6 +466,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(
     style.shouldDisplaySelectionIndicator = YES;
     style.shouldGrowOnSelection = NO;
     style.inkStyle = MDCInkStyleBounded;
+    style.rippleStyle = MDCRippleStyleBounded;
     style.titleImagePadding = (kImageTitleSpecPadding + kImageTitlePaddingAdjustment);
     style.textOnlyNumberOfLines = 2;
   } else {
@@ -463,6 +475,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(
     style.shouldGrowOnSelection = YES;
     style.maximumItemWidth = kBottomNavigationMaximumItemWidth;
     style.inkStyle = MDCInkStyleUnbounded;
+    style.rippleStyle = MDCRippleStyleUnbounded;
     style.titleImagePadding = kBottomNavigationTitleImagePadding;
     style.textOnlyNumberOfLines = 1;
   }
@@ -640,6 +653,8 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(
   style.selectionIndicatorTemplate = self.selectionIndicatorTemplate;
   style.selectionIndicatorColor = self.tintColor;
   style.inkColor = _inkColor;
+  style.rippleColor = _rippleColor;
+  style.enableRippleBehavior = _enableRippleBehavior;
   style.displaysUppercaseTitles = self.displaysUppercaseTitles;
 
   style.selectedTitleColor = _selectedTitleColor ?: self.tintColor;
@@ -651,6 +666,12 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(
 
   // Layout depends on -[MDCItemBar sizeThatFits], which depends on the style.
   [self setNeedsLayout];
+}
+
+- (void)setEnableRippleBehavior:(BOOL)enableRippleBehavior {
+  _enableRippleBehavior = enableRippleBehavior;
+
+  [self updateItemBarStyle];
 }
 
 @end
