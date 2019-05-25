@@ -343,7 +343,8 @@
   // Then
   XCTAssertTrue([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@ is not equal to %@",
                 view.titleLabel.font, fakeTitleFont);
-  XCTAssertTrue([view.messageLabel.font mdc_isSimplyEqual:fakeMessageFont], @"%@ is not equal to %@", view.messageLabel.font, fakeMessageFont);
+  XCTAssertTrue([view.messageLabel.font mdc_isSimplyEqual:fakeMessageFont],
+                @"%@ is not equal to %@", view.messageLabel.font, fakeMessageFont);
 }
 
 - (void)testDynamicTypeEnabledAndLegacyEnabledUpdatesTheFonts {
@@ -360,7 +361,8 @@
   // Then
   XCTAssertFalse([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@ is equal to %@",
                  view.titleLabel.font, fakeTitleFont);
-    XCTAssertFalse([view.messageLabel.font mdc_isSimplyEqual:fakeMessageFont], @"%@ is equal to %@", view.messageLabel.font, fakeMessageFont);
+  XCTAssertFalse([view.messageLabel.font mdc_isSimplyEqual:fakeMessageFont], @"%@ is equal to %@",
+                 view.messageLabel.font, fakeMessageFont);
 }
 
 @end
