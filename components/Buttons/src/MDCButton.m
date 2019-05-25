@@ -15,7 +15,6 @@
 #import "MDCButton.h"
 
 #import <MDFTextAccessibility/MDFTextAccessibility.h>
-#import "MaterialApplication.h"
 #import "MaterialInk.h"
 #import "MaterialMath.h"
 #import "MaterialRipple.h"
