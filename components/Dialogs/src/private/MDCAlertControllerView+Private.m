@@ -234,20 +234,25 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
 }
 
 - (void)updateMessageFont {
-  UIFont *messageFont = self.messageFont ?: [[self class] messageFontDefault];
+  UIFont *messageFont = _messageFont ?: [[self class] messageFontDefault];
   if (self.mdc_adjustsFontForContentSizeCategory) {
     if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
-      messageFont = [messageFont
+      self.messageLabel.font = [messageFont
           mdc_fontSizedForMaterialTextStyle:kMessageTextStyle
                        scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
     }
+  } else {
+    _messageLabel.font = messageFont;
   }
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 =======
   
 >>>>>>> Implementation
   self.messageLabel.font = messageFont;
+=======
+>>>>>>> Revert last commit
   [self setNeedsLayout];
 }
 
