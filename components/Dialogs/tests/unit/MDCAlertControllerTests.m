@@ -334,6 +334,7 @@
   self.alert.titleFont = fakeTitleFont;
   UIFont *fakeMessageFont = [UIFont systemFontOfSize:50];
   self.alert.messageFont = fakeMessageFont;
+<<<<<<< HEAD
 
   // When
   self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
@@ -384,6 +385,9 @@
 >>>>>>> Test title font
 =======
 >>>>>>> Test title font
+=======
+  //MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
+>>>>>>> Fix broken test
   self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
 
   // When
@@ -411,6 +415,7 @@
   self.alert.titleFont = fakeTitleFont;
   UIFont *fakeMessageFont = [UIFont systemFontOfSize:50];
   self.alert.messageFont = fakeMessageFont;
+<<<<<<< HEAD
 =======
   XCTAssertTrue([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@, is not equal to %@",
 =======
@@ -450,6 +455,8 @@
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
 >>>>>>> Test title font
+=======
+>>>>>>> Fix broken test
 
   // When
   self.alert.mdc_adjustsFontForContentSizeCategory = YES;
@@ -460,6 +467,9 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Fix broken test
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   XCTAssertFalse([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@ is equal to %@",
                  view.titleLabel.font, fakeTitleFont);
