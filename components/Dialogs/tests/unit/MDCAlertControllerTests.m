@@ -337,6 +337,7 @@
   self.alert.titleFont = fakeTitleFont;
   UIFont *fakeMessageFont = [UIFont systemFontOfSize:50];
   self.alert.messageFont = fakeMessageFont;
+<<<<<<< HEAD
 =======
 /**
  Test legacy dynamic type has no impact on a @c MDCButton when @c
@@ -356,6 +357,8 @@
   self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
 
   // Then
+=======
+>>>>>>> Add tests
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   XCTAssertTrue([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@, is not equal to %@",
                 view.titleLabel.font, fakeTitleFont);
@@ -376,6 +379,7 @@
 
   // Then
 <<<<<<< HEAD
+<<<<<<< HEAD
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   XCTAssertTrue([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@ is not equal to %@",
                 view.titleLabel.font, fakeTitleFont);
@@ -391,21 +395,31 @@
   self.alert.messageFont = fakeMessageFont;
 =======
   XCTAssertTrue([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@, is not equal to %@",
+=======
+  XCTAssertTrue([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@ is not equal to %@",
+>>>>>>> Add tests
                 view.titleLabel.font, fakeTitleFont);
+  XCTAssertTrue([view.messageLabel.font mdc_isSimplyEqual:fakeMessageFont], @"%@ is not equal to %@", view.messageLabel.font, fakeMessageFont);
 }
 
 - (void)testDynamicTypeEnabledAndLegacyEnabledUpdatesTheFonts {
   // Given
   UIFont *fakeTitleFont = [UIFont systemFontOfSize:55];
   self.alert.titleFont = fakeTitleFont;
+  UIFont *fakeMessageFont = [UIFont systemFontOfSize:50];
+  self.alert.messageFont = fakeMessageFont;
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
+<<<<<<< HEAD
 >>>>>>> Test title font
   self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
+=======
+>>>>>>> Add tests
 
   // When
   self.alert.mdc_adjustsFontForContentSizeCategory = YES;
 
   // Then
+<<<<<<< HEAD
 <<<<<<< HEAD
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   XCTAssertFalse([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@ is equal to %@",
@@ -420,6 +434,11 @@
 =======
                  view.titleLabel.font, fakeTitleFont);
 >>>>>>> clang
+=======
+  XCTAssertFalse([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@ is equal to %@",
+                 view.titleLabel.font, fakeTitleFont);
+    XCTAssertFalse([view.messageLabel.font mdc_isSimplyEqual:fakeMessageFont], @"%@ is equal to %@", view.messageLabel.font, fakeMessageFont);
+>>>>>>> Add tests
 }
 
 @end
