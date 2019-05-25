@@ -339,7 +339,7 @@
   self.alert.mdc_adjustsFontForContentSizeCategory = YES;
 
   // Then
-  XCTAssertTrue([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@, is not equal to %@",
+  XCTAssertTrue([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@ is not equal to %@",
                 view.titleLabel.font, fakeTitleFont);
 }
 
@@ -354,7 +354,7 @@
   self.alert.mdc_adjustsFontForContentSizeCategory = YES;
 
   // Then
-  XCTAssertFalse([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@, is equal to %@",
+  XCTAssertFalse([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@ is equal to %@",
                  view.titleLabel.font, fakeTitleFont);
 }
 
