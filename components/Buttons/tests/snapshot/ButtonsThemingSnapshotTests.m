@@ -33,6 +33,18 @@
 
 @end
 
+@interface MDCThemingDynamicTypeSnapshotFABFake : MDCFloatingButton
+@property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
+@end
+
+@implementation MDCThemingDynamicTypeSnapshotFABFake
+
+- (UITraitCollection *)traitCollection {
+  return self.traitCollectionOverride ?: [super traitCollection];
+}
+
+@end
+
 /** Snapshot tests for @c MDCButton when a theming extension has been applied. */
 @interface ButtonsThemingSnapshotTests : MDCSnapshotTestCase
 @property(nonatomic, strong, nullable) MDCButton *button;
@@ -192,6 +204,49 @@
 
   // Then
   [self generateSnapshotAndVerifyForView:self.dynamicTypeButton];
+}
+
+- (void)testSecondaryFABThemedButtonWithContentSizeSmall {
+  // Given
+  MDCThemingDynamicTypeSnapshotFABFake *dynamicTypeFAB =
+      [[MDCThemingDynamicTypeSnapshotFABFake alloc] init];
+  [dynamicTypeFAB setTitle:@"Material" forState:UIControlStateNormal];
+  [dynamicTypeFAB setImage:[[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
+                               imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+                  forState:UIControlStateNormal];
+  self.containerScheme.typographyScheme = self.dynamicTypeTypographyScheme;
+  if (@available(iOS 10.0, *)) {
+    dynamicTypeFAB.traitCollectionOverride = [UITraitCollection
+        traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategorySmall];
+  }
+
+  // When
+  [dynamicTypeFAB applySecondaryThemeWithScheme:self.containerScheme];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:dynamicTypeFAB];
+}
+
+- (void)testSecondaryFABThemedButtonWithContentSizeAccessibilityExtraExtraExtraLarge {
+  // Given
+  MDCThemingDynamicTypeSnapshotFABFake *dynamicTypeFAB =
+      [[MDCThemingDynamicTypeSnapshotFABFake alloc] init];
+  [dynamicTypeFAB setTitle:@"Material" forState:UIControlStateNormal];
+  [dynamicTypeFAB setImage:[[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
+                               imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+                  forState:UIControlStateNormal];
+  self.containerScheme.typographyScheme = self.dynamicTypeTypographyScheme;
+  if (@available(iOS 10.0, *)) {
+    dynamicTypeFAB.traitCollectionOverride =
+        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
+                               UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+  }
+
+  // When
+  [dynamicTypeFAB applySecondaryThemeWithScheme:self.containerScheme];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:dynamicTypeFAB];
 }
 
 @end
