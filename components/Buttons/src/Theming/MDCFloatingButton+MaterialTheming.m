@@ -16,6 +16,7 @@
 
 #import <MaterialComponents/MaterialButtons+ColorThemer.h>
 #import <MaterialComponents/MaterialButtons+ShapeThemer.h>
+#import "MaterialTypography.h"
 
 @implementation MDCFloatingButton (MaterialTheming)
 
@@ -59,7 +60,18 @@
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     [self setTitleFont:nil forState:state];
   }
-  [self setTitleFont:scheme.button forState:UIControlStateNormal];
+  BOOL dynamicTypeEnabled = NO;
+  if ([scheme respondsToSelector:@selector(useCurrentContentSizeCategoryWhenApplied)]) {
+    dynamicTypeEnabled = scheme.useCurrentContentSizeCategoryWhenApplied;
+  } else {
+    dynamicTypeEnabled = scheme.mdc_adjustsFontForContentSizeCategory;
+  }
+  if (dynamicTypeEnabled) {
+    [self setTitleFont:[scheme.button mdc_scaledFontForTraitEnvironment:self]
+              forState:UIControlStateNormal];
+  } else {
+    [self setTitleFont:scheme.button forState:UIControlStateNormal];
+  }
 }
 
 @end

@@ -17,6 +17,7 @@
 #import <MaterialComponents/MaterialButtons+ColorThemer.h>
 #import <MaterialComponents/MaterialButtons+ShapeThemer.h>
 #import <MaterialComponents/MaterialShadowElevations.h>
+#import "MaterialTypography.h"
 
 @implementation MDCButton (MaterialTheming)
 
@@ -56,7 +57,7 @@
 
 - (void)applyContainedThemeWithTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
   [self resetTitleFontForAllStates];
-  [self setTitleFont:typographyScheme.button forState:UIControlStateNormal];
+  [self applyTypographyScheme:typographyScheme]
 }
 
 - (void)applyContainedThemeWithShapeScheme:(id<MDCShapeScheming>)shapeScheme {
@@ -113,7 +114,7 @@
 
 - (void)applyOutlinedThemeWithTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
   [self resetTitleFontForAllStates];
-  [self setTitleFont:typographyScheme.button forState:UIControlStateNormal];
+  [self applyTypographyScheme:typographyScheme];
 }
 
 - (void)applyOutlinedThemeWithShapeScheme:(id<MDCShapeScheming>)shapeScheme {
@@ -158,7 +159,7 @@
 
 - (void)applyTextThemeWithTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
   [self resetTitleFontForAllStates];
-  [self setTitleFont:typographyScheme.button forState:UIControlStateNormal];
+  [self applyTypographyScheme:typographyScheme];
 }
 
 - (void)applyTextThemeWithShapeScheme:(id<MDCShapeScheming>)shapeScheme {
@@ -172,6 +173,21 @@
                                  UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     [self setTitleFont:nil forState:state];
+  }
+}
+
+- (void)applyTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
+  BOOL dynamicTypeEnabled = NO;
+  if ([typographyScheme respondsToSelector:@selector(useCurrentContentSizeCategoryWhenApplied)]) {
+    dynamicTypeEnabled = typographyScheme.useCurrentContentSizeCategoryWhenApplied;
+  } else {
+    dynamicTypeEnabled = typographyScheme.mdc_adjustsFontForContentSizeCategory;
+  }
+  if (dynamicTypeEnabled) {
+    [self setTitleFont:[typographyScheme.button mdc_scaledFontForTraitEnvironment:self]
+              forState:UIControlStateNormal];
+  } else {
+    [self setTitleFont:typographyScheme.button forState:UIControlStateNormal];
   }
 }
 
