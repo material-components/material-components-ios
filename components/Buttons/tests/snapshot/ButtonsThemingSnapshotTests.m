@@ -214,6 +214,7 @@
   [dynamicTypeFAB setImage:[[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
                                imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
                   forState:UIControlStateNormal];
+  dynamicTypeFAB.mode = MDCFloatingButtonModeExpanded;
   self.containerScheme.typographyScheme = self.dynamicTypeTypographyScheme;
   if (@available(iOS 10.0, *)) {
     dynamicTypeFAB.traitCollectionOverride = [UITraitCollection
@@ -235,6 +236,7 @@
   [dynamicTypeFAB setImage:[[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
                                imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
                   forState:UIControlStateNormal];
+  dynamicTypeFAB.mode = MDCFloatingButtonModeExpanded;
   self.containerScheme.typographyScheme = self.dynamicTypeTypographyScheme;
   if (@available(iOS 10.0, *)) {
     dynamicTypeFAB.traitCollectionOverride =
