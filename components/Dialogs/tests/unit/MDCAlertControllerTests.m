@@ -19,6 +19,7 @@
 #import "MaterialTypography.h"
 
 #import "../../src/private/MDCDialogShadowedView.h"
+#import "MDCAlertController+ButtonForAction.h"
 #import "MDCAlertControllerView+Private.h"
 #import "MDCAlertController+ButtonForAction.h"
 
@@ -370,7 +371,7 @@
   [self.alert addAction:fakeAction];
   UIFont *fakeButtonFont = [UIFont systemFontOfSize:45];
   self.alert.buttonFont = fakeButtonFont;
-  
+
   // When
   self.alert.mdc_adjustsFontForContentSizeCategory = YES;
   

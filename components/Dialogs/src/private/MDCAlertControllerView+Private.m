@@ -123,7 +123,6 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
 
 - (void)addActionButton:(nonnull MDCButton *)button {
   if (button.superview == nil) {
-    button.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
     [self.actionsScrollView addSubview:button];
     if (_buttonColor) {
       // We only set if _buttonColor since settingTitleColor to nil doesn't
@@ -132,6 +131,9 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
     }
     [button setTitleFont:_buttonFont forState:UIControlStateNormal];
     button.inkColor = self.buttonInkColor;
+    button.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable =
+        self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
+    button.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
     // TODO(#1726): Determine default text color values for Normal and Disabled
     CGRect buttonRect = button.bounds;
     buttonRect.size.height = MAX(buttonRect.size.height, MDCDialogActionButtonMinimumHeight);
@@ -242,20 +244,8 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
                        scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
     }
   }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
-  
->>>>>>> Implementation
   self.messageLabel.font = messageFont;
-=======
->>>>>>> Revert last commit
-=======
-  
-  self.messageLabel.font = messageFont;
->>>>>>> Imp
   [self setNeedsLayout];
 }
 
