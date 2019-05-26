@@ -242,7 +242,7 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
                        scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
     }
   }
-  
+
   self.messageLabel.font = messageFont;
   [self setNeedsLayout];
 }
