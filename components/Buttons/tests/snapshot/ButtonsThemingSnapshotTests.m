@@ -232,11 +232,11 @@
   // Given
   MDCThemingDynamicTypeSnapshotFABFake *dynamicTypeFAB =
       [[MDCThemingDynamicTypeSnapshotFABFake alloc] init];
+  dynamicTypeFAB.mode = MDCFloatingButtonModeExpanded;
   [dynamicTypeFAB setTitle:@"Material" forState:UIControlStateNormal];
   [dynamicTypeFAB setImage:[[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
                                imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
                   forState:UIControlStateNormal];
-  dynamicTypeFAB.mode = MDCFloatingButtonModeExpanded;
   self.containerScheme.typographyScheme = self.dynamicTypeTypographyScheme;
   if (@available(iOS 10.0, *)) {
     dynamicTypeFAB.traitCollectionOverride =
