@@ -22,8 +22,8 @@
 #import "MDCItemBarStyle.h"
 #import "MaterialAnimationTiming.h"
 #import "MaterialInk.h"
-#import "MaterialRipple.h"
 #import "MaterialMath.h"
+#import "MaterialRipple.h"
 #import "MaterialTypography.h"
 
 /// Size of image in points.

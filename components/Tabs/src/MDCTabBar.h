@@ -258,7 +258,8 @@ IB_DESIGNABLE
 /**
  Ink color for taps on tab bar items. Default: Semi-transparent white.
 
- @warning This method will eventually be deprecated. Opt-in to Ripple by setting enableRippleBehavior to YES, and then use rippleColor instead. Learn more at
+ @warning This method will eventually be deprecated. Opt-in to Ripple by setting
+ enableRippleBehavior to YES, and then use rippleColor instead. Learn more at
  https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple
  */
 @property(nonatomic, nonnull) UIColor *inkColor UI_APPEARANCE_SELECTOR;

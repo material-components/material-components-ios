@@ -59,9 +59,9 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
 @interface MDCItemBar () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 // Current style properties.
-@property (nonatomic, strong, nullable) MDCItemBarStyle *style;
+@property(nonatomic, strong, nullable) MDCItemBarStyle *style;
 // Collection view for items.
-@property (nonatomic, strong, nullable) UICollectionView *collectionView;
+@property(nonatomic, strong, nullable) UICollectionView *collectionView;
 
 @end
 
