@@ -38,6 +38,7 @@
 @property(nonatomic, strong, nullable) MDCButton *button;
 @property(nonatomic, strong, nullable) MDCThemingDynamicTypeSnapshotButtonFake *dynamicTypeButton;
 @property(nonatomic, strong, nullable) MDCContainerScheme *containerScheme;
+@property(nonatomic, strong, nullable) MDCTypographyScheme *dynamicTypeTypographyScheme;
 @end
 
 @implementation ButtonsThemingSnapshotTests
@@ -58,6 +59,9 @@
   [self.dynamicTypeButton setTitle:@"Material" forState:UIControlStateNormal];
   [self.dynamicTypeButton setImage:buttonImage forState:UIControlStateNormal];
   self.containerScheme = [[MDCContainerScheme alloc] init];
+  self.dynamicTypeTypographyScheme =
+      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+  self.dynamicTypeTypographyScheme.useCurrentContentSizeCategoryWhenApplied = YES;
 }
 
 - (void)tearDown {
@@ -121,8 +125,7 @@
 - (void)testTextThemedButtonWithContentSizeSmall {
   // Given
   [self setButtonTraitCollectionSizeToSize:UIContentSizeCategorySmall];
-  self.containerScheme.typographyScheme =
-      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+  self.containerScheme.typographyScheme = self.dynamicTypeTypographyScheme;
 
   // When
   [self.dynamicTypeButton applyTextThemeWithScheme:self.containerScheme];
@@ -134,8 +137,7 @@
 - (void)testTextThemedButtonWithContentSizeAccessibilityExtraExtraExtraLarge {
   // Given
   [self setButtonTraitCollectionSizeToSize:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
-  self.containerScheme.typographyScheme =
-      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+  self.containerScheme.typographyScheme = self.dynamicTypeTypographyScheme;
 
   // When
   [self.dynamicTypeButton applyTextThemeWithScheme:self.containerScheme];
@@ -147,8 +149,7 @@
 - (void)testContainedThemedButtonContentSizeSmall {
   // Given
   [self setButtonTraitCollectionSizeToSize:UIContentSizeCategorySmall];
-  self.containerScheme.typographyScheme =
-      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+  self.containerScheme.typographyScheme = self.dynamicTypeTypographyScheme;
 
   // When
   [self.dynamicTypeButton applyContainedThemeWithScheme:self.containerScheme];
@@ -160,8 +161,7 @@
 - (void)testContainedThemedButtonWithContentSizeAccessibilityExtraExtraExtraLarge {
   // Given
   [self setButtonTraitCollectionSizeToSize:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
-  self.containerScheme.typographyScheme =
-      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+  self.containerScheme.typographyScheme = self.dynamicTypeTypographyScheme;
 
   // When
   [self.dynamicTypeButton applyContainedThemeWithScheme:self.containerScheme];
@@ -173,8 +173,7 @@
 - (void)testOutlinedThemedButtonContentSizeSmall {
   // Given
   [self setButtonTraitCollectionSizeToSize:UIContentSizeCategorySmall];
-  self.containerScheme.typographyScheme =
-      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+  self.containerScheme.typographyScheme = self.dynamicTypeTypographyScheme;
 
   // When
   [self.dynamicTypeButton applyOutlinedThemeWithScheme:self.containerScheme];
@@ -186,8 +185,7 @@
 - (void)testOutlinedThemedButtonWithContentSizeAccessibilityExtraExtraExtraLarge {
   // Given
   [self setButtonTraitCollectionSizeToSize:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
-  self.containerScheme.typographyScheme =
-      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+  self.containerScheme.typographyScheme = self.dynamicTypeTypographyScheme;
 
   // When
   [self.dynamicTypeButton applyOutlinedThemeWithScheme:self.containerScheme];
