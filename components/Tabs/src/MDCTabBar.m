@@ -289,6 +289,10 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(
   }
 }
 
+- (UIColor *)inkColor {
+  return _inkColor;
+}
+
 - (void)setRippleColor:(UIColor *)rippleColor {
   if (_rippleColor != rippleColor && ![_rippleColor isEqual:rippleColor]) {
     _rippleColor = rippleColor;
