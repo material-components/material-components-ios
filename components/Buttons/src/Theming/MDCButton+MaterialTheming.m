@@ -57,7 +57,7 @@
 
 - (void)applyContainedThemeWithTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
   [self resetTitleFontForAllStates];
-  [self applyTypographyScheme:typographyScheme]
+  [self applyTypographyScheme:typographyScheme];
 }
 
 - (void)applyContainedThemeWithShapeScheme:(id<MDCShapeScheming>)shapeScheme {

@@ -74,16 +74,16 @@
 
 /**
  Used to set the @c UIContentSizeCategory on an @c MDCButton.
- 
+
  @note On iOS 9 or below this method has no impact.
  */
 - (void)setButtonTraitCollectionSizeToSize:(UIContentSizeCategory)sizeCategory {
   UITraitCollection *traitCollection = [[UITraitCollection alloc] init];
   if (@available(iOS 10.0, *)) {
     traitCollection =
-    [UITraitCollection traitCollectionWithPreferredContentSizeCategory:sizeCategory];
+        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:sizeCategory];
   }
-  
+
   self.dynamicTypeButton.traitCollectionOverride = traitCollection;
 }
 
@@ -121,11 +121,12 @@
 - (void)testTextThemedButtonWithContentSizeSmall {
   // Given
   [self setButtonTraitCollectionSizeToSize:UIContentSizeCategorySmall];
-  self.containerScheme.typographyScheme = [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
-  
+  self.containerScheme.typographyScheme =
+      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+
   // When
   [self.dynamicTypeButton applyTextThemeWithScheme:self.containerScheme];
-  
+
   // Then
   [self generateSnapshotAndVerifyForView:self.dynamicTypeButton];
 }
@@ -133,11 +134,12 @@
 - (void)testTextThemedButtonWithContentSizeAccessibilityExtraExtraExtraLarge {
   // Given
   [self setButtonTraitCollectionSizeToSize:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
-  self.containerScheme.typographyScheme = [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
-  
+  self.containerScheme.typographyScheme =
+      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+
   // When
   [self.dynamicTypeButton applyTextThemeWithScheme:self.containerScheme];
-  
+
   // Then
   [self generateSnapshotAndVerifyForView:self.dynamicTypeButton];
 }
@@ -145,11 +147,12 @@
 - (void)testContainedThemedButtonContentSizeSmall {
   // Given
   [self setButtonTraitCollectionSizeToSize:UIContentSizeCategorySmall];
-  self.containerScheme.typographyScheme = [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
-  
+  self.containerScheme.typographyScheme =
+      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+
   // When
   [self.dynamicTypeButton applyContainedThemeWithScheme:self.containerScheme];
-  
+
   // Then
   [self generateSnapshotAndVerifyForView:self.dynamicTypeButton];
 }
@@ -157,11 +160,12 @@
 - (void)testContainedThemedButtonWithContentSizeAccessibilityExtraExtraExtraLarge {
   // Given
   [self setButtonTraitCollectionSizeToSize:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
-  self.containerScheme.typographyScheme = [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
-  
+  self.containerScheme.typographyScheme =
+      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+
   // When
   [self.dynamicTypeButton applyContainedThemeWithScheme:self.containerScheme];
-  
+
   // Then
   [self generateSnapshotAndVerifyForView:self.dynamicTypeButton];
 }
@@ -169,11 +173,12 @@
 - (void)testOutlinedThemedButtonContentSizeSmall {
   // Given
   [self setButtonTraitCollectionSizeToSize:UIContentSizeCategorySmall];
-  self.containerScheme.typographyScheme = [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
-  
+  self.containerScheme.typographyScheme =
+      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+
   // When
   [self.dynamicTypeButton applyOutlinedThemeWithScheme:self.containerScheme];
-  
+
   // Then
   [self generateSnapshotAndVerifyForView:self.dynamicTypeButton];
 }
@@ -181,11 +186,12 @@
 - (void)testOutlinedThemedButtonWithContentSizeAccessibilityExtraExtraExtraLarge {
   // Given
   [self setButtonTraitCollectionSizeToSize:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
-  self.containerScheme.typographyScheme = [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
-  
+  self.containerScheme.typographyScheme =
+      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+
   // When
   [self.dynamicTypeButton applyOutlinedThemeWithScheme:self.containerScheme];
-  
+
   // Then
   [self generateSnapshotAndVerifyForView:self.dynamicTypeButton];
 }
