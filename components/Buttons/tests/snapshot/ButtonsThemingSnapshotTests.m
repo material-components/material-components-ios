@@ -21,9 +21,22 @@
 #import "MaterialButtons.h"
 #import "MaterialContainerScheme.h"
 
+@interface MDCThemingDynamicTypeSnapshotButtonFake : MDCButton
+@property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
+@end
+
+@implementation MDCThemingDynamicTypeSnapshotButtonFake
+
+- (UITraitCollection *)traitCollection {
+  return self.traitCollectionOverride ?: [super traitCollection];
+}
+
+@end
+
 /** Snapshot tests for @c MDCButton when a theming extension has been applied. */
 @interface ButtonsThemingSnapshotTests : MDCSnapshotTestCase
 @property(nonatomic, strong, nullable) MDCButton *button;
+@property(nonatomic, strong, nullable) MDCThemingDynamicTypeSnapshotButtonFake *dynamicTypeButton;
 @property(nonatomic, strong, nullable) MDCContainerScheme *containerScheme;
 @end
 
@@ -41,6 +54,9 @@
   UIImage *buttonImage = [[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
       imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   [self.button setImage:buttonImage forState:UIControlStateNormal];
+  self.dynamicTypeButton = [[MDCThemingDynamicTypeSnapshotButtonFake alloc] init];
+  [self.dynamicTypeButton setTitle:@"Material" forState:UIControlStateNormal];
+  [self.dynamicTypeButton setImage:buttonImage forState:UIControlStateNormal];
   self.containerScheme = [[MDCContainerScheme alloc] init];
 }
 
@@ -54,6 +70,21 @@
   [view sizeToFit];
   UIView *snapshotView = [view mdc_addToBackgroundView];
   [self snapshotVerifyView:snapshotView];
+}
+
+/**
+ Used to set the @c UIContentSizeCategory on an @c MDCButton.
+ 
+ @note On iOS 9 or below this method has no impact.
+ */
+- (void)setButtonTraitCollectionSizeToSize:(UIContentSizeCategory)sizeCategory {
+  UITraitCollection *traitCollection = [[UITraitCollection alloc] init];
+  if (@available(iOS 10.0, *)) {
+    traitCollection =
+    [UITraitCollection traitCollectionWithPreferredContentSizeCategory:sizeCategory];
+  }
+  
+  self.dynamicTypeButton.traitCollectionOverride = traitCollection;
 }
 
 #pragma mark - Tests
@@ -83,6 +114,80 @@
 
   // Then
   [self generateSnapshotAndVerifyForView:self.button];
+}
+
+#pragma mark - Dynamic type test
+
+- (void)testTextThemedButtonWithContentSizeSmall {
+  // Given
+  [self setButtonTraitCollectionSizeToSize:UIContentSizeCategorySmall];
+  self.containerScheme.typographyScheme = [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+  
+  // When
+  [self.dynamicTypeButton applyTextThemeWithScheme:self.containerScheme];
+  
+  // Then
+  [self generateSnapshotAndVerifyForView:self.dynamicTypeButton];
+}
+
+- (void)testTextThemedButtonWithContentSizeAccessibilityExtraExtraExtraLarge {
+  // Given
+  [self setButtonTraitCollectionSizeToSize:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+  self.containerScheme.typographyScheme = [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+  
+  // When
+  [self.dynamicTypeButton applyTextThemeWithScheme:self.containerScheme];
+  
+  // Then
+  [self generateSnapshotAndVerifyForView:self.dynamicTypeButton];
+}
+
+- (void)testContainedThemedButtonContentSizeSmall {
+  // Given
+  [self setButtonTraitCollectionSizeToSize:UIContentSizeCategorySmall];
+  self.containerScheme.typographyScheme = [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+  
+  // When
+  [self.dynamicTypeButton applyContainedThemeWithScheme:self.containerScheme];
+  
+  // Then
+  [self generateSnapshotAndVerifyForView:self.dynamicTypeButton];
+}
+
+- (void)testContainedThemedButtonWithContentSizeAccessibilityExtraExtraExtraLarge {
+  // Given
+  [self setButtonTraitCollectionSizeToSize:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+  self.containerScheme.typographyScheme = [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+  
+  // When
+  [self.dynamicTypeButton applyContainedThemeWithScheme:self.containerScheme];
+  
+  // Then
+  [self generateSnapshotAndVerifyForView:self.dynamicTypeButton];
+}
+
+- (void)testOutlinedThemedButtonContentSizeSmall {
+  // Given
+  [self setButtonTraitCollectionSizeToSize:UIContentSizeCategorySmall];
+  self.containerScheme.typographyScheme = [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+  
+  // When
+  [self.dynamicTypeButton applyOutlinedThemeWithScheme:self.containerScheme];
+  
+  // Then
+  [self generateSnapshotAndVerifyForView:self.dynamicTypeButton];
+}
+
+- (void)testOutlinedThemedButtonWithContentSizeAccessibilityExtraExtraExtraLarge {
+  // Given
+  [self setButtonTraitCollectionSizeToSize:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+  self.containerScheme.typographyScheme = [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+  
+  // When
+  [self.dynamicTypeButton applyOutlinedThemeWithScheme:self.containerScheme];
+  
+  // Then
+  [self generateSnapshotAndVerifyForView:self.dynamicTypeButton];
 }
 
 @end
