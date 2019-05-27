@@ -304,7 +304,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 }
 
 - (void)setUpClearButton {
-  //  CGFloat clearButtonSideLength = MDCInputTextFieldLayout.clearButtonSideLength;
+  //  CGFloat clearButtonSideLength = MDCBaseTextFieldLayout.clearButtonSideLength;
   //  CGRect clearButtonFrame = CGRectMake(0, 0, clearButtonSideLength, clearButtonSideLength);
   //  self.clearButton = [[UIButton alloc] initWithFrame:clearButtonFrame];
   //  [self.clearButton addTarget:self
@@ -312,7 +312,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   //             forControlEvents:UIControlEventTouchUpInside];
   //
   //  CGFloat clearButtonImageViewSideLength =
-  //  MDCInputTextFieldLayout.clearButtonImageViewSideLength; CGRect clearButtonImageViewRect =
+  //  MDCBaseTextFieldLayout.clearButtonImageViewSideLength; CGRect clearButtonImageViewRect =
   //  CGRectMake(0, 0, clearButtonImageViewSideLength, clearButtonImageViewSideLength);
   //  self.clearButtonImageView = [[UIImageView alloc] initWithFrame:clearButtonImageViewRect];
   //  UIImage *clearButtonImage =

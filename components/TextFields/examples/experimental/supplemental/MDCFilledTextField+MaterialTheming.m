@@ -18,7 +18,7 @@
 
 #import "MDCContainedInputView.h"
 #import "MDCContainerStylerFilled.h"
-#import "MDCInputTextField+Private.h"
+#import "MDCBaseTextField+Private.h"
 
 @implementation MDCFilledTextField (MaterialTheming)
 

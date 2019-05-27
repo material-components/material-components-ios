@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCInputTextFieldLayout.h"
+#import "MDCBaseTextFieldLayout.h"
 
 #import "MDCContainedInputView.h"
-#import "MDCInputTextField.h"
+#import "MDCBaseTextField.h"
 
 static const CGFloat kFloatingLabelXOffsetFromTextArea = (CGFloat)3.0;
 static const CGFloat kClearButtonTouchTargetSideLength = (CGFloat)30.0;
@@ -23,10 +23,10 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
 
 static const CGFloat kHorizontalPadding = (CGFloat)12.0;
 
-@interface MDCInputTextFieldLayout ()
+@interface MDCBaseTextFieldLayout ()
 @end
 
-@implementation MDCInputTextFieldLayout
+@implementation MDCBaseTextFieldLayout
 
 #pragma mark Object Lifecycle
 

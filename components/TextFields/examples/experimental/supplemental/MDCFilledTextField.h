@@ -14,7 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCInputTextField.h"
+#import "MDCBaseTextField.h"
 
 /**
  A UITextField subclass that attempts to do the following:
@@ -27,7 +27,7 @@
  - Enable easy set up and reliable and predictable behavior.
 
  */
-@interface MDCFilledTextField : MDCInputTextField
+@interface MDCFilledTextField : MDCBaseTextField
 
 @property(strong, nonatomic, nonnull) UIColor *filledBackgroundColor;
 @property(strong, nonatomic, nonnull) UIColor *underlineColorNormal;

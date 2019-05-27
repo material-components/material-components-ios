@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCInputTextField+MaterialTheming.h"
+#import "MDCBaseTextField+MaterialTheming.h"
 
 #import <Foundation/Foundation.h>
 
 #import "MDCContainedInputView.h"
-#import "MDCInputTextField+Private.h"
+#import "MDCBaseTextField+Private.h"
 
-@implementation MDCInputTextField (MaterialTheming)
+@implementation MDCBaseTextField (MaterialTheming)
 
 - (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
   [self applyTypographySchemeWith:containerScheme];
