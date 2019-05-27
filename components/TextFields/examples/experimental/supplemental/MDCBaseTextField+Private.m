@@ -12,20 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <UIKit/UIKit.h>
-#import "MDCContainedInputView.h"
-#import "MDCInputTextField.h"
+#import "MDCBaseTextField.h"
 
-/**
- A UITextField subclass that attempts to do the following:
+#import <Foundation/Foundation.h>
 
- - Earnestly interpret and actualize the Material guidelines for text fields, which can be found
- here: https://material.io/design/components/text-fields.html#outlined-text-field
+#import <MDFInternationalization/MDFInternationalization.h>
+#import "MaterialTypography.h"
 
- - Feel intuitive for someone used to the conventions of iOS development and UIKit controls.
+#import "MDCContainerStylerPathDrawingUtils.h"
+#import "MDCBaseTextField+Private.h"
+#import "MDCBaseTextField.h"
+#import "MDCBaseTextFieldLayout.h"
+#import "MaterialMath.h"
 
- - Enable easy set up and reliable and predictable behavior.
+//#import "MDCBaseTextField+Private.h"
 
- */
-@interface MDCInputTextField (Private) <MDCContainedInputView>
-@end
+//@implementation MDCBaseTextField (Private)
+//@end

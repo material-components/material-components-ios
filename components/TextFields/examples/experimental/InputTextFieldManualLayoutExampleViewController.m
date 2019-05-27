@@ -18,7 +18,7 @@
 
 #import "MaterialButtons+Theming.h"
 #import "MaterialColorScheme.h"
-#import "supplemental/MDCInputTextField.h"
+#import "supplemental/MDCBaseTextField.h"
 
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar+TypographyThemer.h"
@@ -29,7 +29,7 @@
 #import "supplemental/MDCOutlinedTextField+MaterialTheming.h"
 #import "supplemental/MDCOutlinedTextField.h"
 
-#import "supplemental/MDCInputTextField+MaterialTheming.h"
+#import "supplemental/MDCBaseTextField+MaterialTheming.h"
 
 static const NSUInteger kDefaultHorizontalPadding = 20;
 static const NSUInteger kDefaultVerticalPadding = 20;
@@ -101,9 +101,9 @@ static const NSUInteger kDefaultVerticalPadding = 20;
     [self createLabelWithText:@"Material MDCOutlinedTextField:"],
     [self createMaterialOutlinedTextField], [self createLabelWithText:@"UITextField:"],
     [self createUiTextField],
-    //    [self createLabelWithText:@"Default MDCInputTextField:"],
+    //    [self createLabelWithText:@"Default MDCBaseTextField:"],
     //    [self createDefaultInputTextField],
-    //    [self createLabelWithText:@"Material MDCInputTextField:"],
+    //    [self createLabelWithText:@"Material MDCBaseTextField:"],
     //    [self createMaterialInputTextField],
   ];
   for (UIView *view in self.scrollViewSubviews) {
@@ -133,14 +133,14 @@ static const NSUInteger kDefaultVerticalPadding = 20;
     CGSize viewSize = view.frame.size;
     CGFloat textFieldWidth =
         CGRectGetWidth(self.scrollView.frame) - (2 * kDefaultHorizontalPadding);
-    if ([view isKindOfClass:[MDCInputTextField class]]) {
+    if ([view isKindOfClass:[MDCBaseTextField class]]) {
       viewSize = CGSizeMake(textFieldWidth, CGRectGetHeight(view.frame));
     } else if ([view isKindOfClass:[UITextField class]]) {
       viewSize = CGSizeMake(textFieldWidth, 60);
     }
     CGRect viewFrame = CGRectMake(viewMinX, viewMinY, viewSize.width, viewSize.height);
     view.frame = viewFrame;
-    if ([view isKindOfClass:[MDCInputTextField class]] || [view isKindOfClass:[UILabel class]]) {
+    if ([view isKindOfClass:[MDCBaseTextField class]] || [view isKindOfClass:[UILabel class]]) {
       [view sizeToFit];
     }
     viewMinY = viewMinY + CGRectGetHeight(view.frame) + kDefaultVerticalPadding;
@@ -193,14 +193,14 @@ static const NSUInteger kDefaultVerticalPadding = 20;
   return label;
 }
 
-//- (MDCInputTextField *)createFilledTextFieldWithMaximalDensity {
-//  MDCInputTextField *textField = [self createFilledTextField];
+//- (MDCBaseTextField *)createFilledTextFieldWithMaximalDensity {
+//  MDCBaseTextField *textField = [self createFilledTextField];
 //  textField.containerStyler.positioningDelegate.verticalDensity = 1.0;
 //  return textField;
 //}
 //
-//- (MDCInputTextField *)createFilledTextFieldWithMinimalDensity {
-//  MDCInputTextField *textField = [self createFilledTextField];
+//- (MDCBaseTextField *)createFilledTextFieldWithMinimalDensity {
+//  MDCBaseTextField *textField = [self createFilledTextField];
 //  textField.containerStyler.positioningDelegate.verticalDensity = 0.0;
 //  return textField;
 //}
@@ -229,14 +229,14 @@ static const NSUInteger kDefaultVerticalPadding = 20;
   return textField;
 }
 
-//- (MDCInputTextField *)createOutlinedTextFieldWithMaximalDensity {
-//  MDCInputTextField *textField = [self createOutlinedTextField];
+//- (MDCBaseTextField *)createOutlinedTextFieldWithMaximalDensity {
+//  MDCBaseTextField *textField = [self createOutlinedTextField];
 //  textField.containerStyler.positioningDelegate.verticalDensity = 1.0;
 //  return textField;
 //}
 //
-//- (MDCInputTextField *)createOutlinedTextFieldWithMinimalDensity {
-//  MDCInputTextField *textField = [self createOutlinedTextField];
+//- (MDCBaseTextField *)createOutlinedTextFieldWithMinimalDensity {
+//  MDCBaseTextField *textField = [self createOutlinedTextField];
 //  textField.containerStyler.positioningDelegate.verticalDensity = 0.0;
 //  return textField;
 //}
@@ -260,16 +260,16 @@ static const NSUInteger kDefaultVerticalPadding = 20;
   return textField;
 }
 
-- (MDCInputTextField *)createDefaultInputTextField {
-  MDCInputTextField *textField = [[MDCInputTextField alloc] init];
+- (MDCBaseTextField *)createDefaultInputTextField {
+  MDCBaseTextField *textField = [[MDCBaseTextField alloc] init];
   textField.placeholder = @"This is a placeholder";
   textField.floatingLabel.text = @"This is a floating label";
   textField.clearButtonMode = UITextFieldViewModeWhileEditing;
   return textField;
 }
 
-- (MDCInputTextField *)createMaterialInputTextField {
-  MDCInputTextField *textField = [self createDefaultInputTextField];
+- (MDCBaseTextField *)createMaterialInputTextField {
+  MDCBaseTextField *textField = [self createDefaultInputTextField];
   [textField applyThemeWithScheme:self.containerScheme];
   return textField;
 }
@@ -292,7 +292,7 @@ static const NSUInteger kDefaultVerticalPadding = 20;
 
 - (void)updateTextFieldStates {
   [self.allTextFields
-      enumerateObjectsUsingBlock:^(MDCInputTextField *textField, NSUInteger idx, BOOL *stop) {
+      enumerateObjectsUsingBlock:^(MDCBaseTextField *textField, NSUInteger idx, BOOL *stop) {
         textField.isErrored = self.isErrored;
         BOOL isEven = idx % 2 == 0;
         if (textField.isErrored) {
@@ -322,8 +322,8 @@ static const NSUInteger kDefaultVerticalPadding = 20;
   }];
 }
 
-- (NSArray<MDCInputTextField *> *)allTextFields {
-  return [self allViewsOfClass:[MDCInputTextField class]];
+- (NSArray<MDCBaseTextField *> *)allTextFields {
+  return [self allViewsOfClass:[MDCBaseTextField class]];
 }
 
 - (NSArray<MDCButton *> *)allButtons {
@@ -355,7 +355,7 @@ static const NSUInteger kDefaultVerticalPadding = 20;
 
 - (void)resignFirstResponderButtonTapped:(UIButton *)button {
   [self.allTextFields
-      enumerateObjectsUsingBlock:^(MDCInputTextField *textField, NSUInteger idx, BOOL *stop) {
+      enumerateObjectsUsingBlock:^(MDCBaseTextField *textField, NSUInteger idx, BOOL *stop) {
         [textField resignFirstResponder];
       }];
 }

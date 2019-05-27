@@ -25,7 +25,7 @@
  - Enable easy set up and reliable and predictable behavior.
 
  */
-@interface MDCInputTextField : UITextField
+@interface MDCBaseTextField : UITextField
 
 /**
  The @c floatingLabel is a label that occupies the text area when there is no text and that floats

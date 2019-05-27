@@ -18,7 +18,7 @@
 
 #import "MDCContainedInputView.h"
 #import "MDCContainerStylerOutlined.h"
-#import "MDCInputTextField+Private.h"
+#import "MDCBaseTextField+Private.h"
 
 @implementation MDCOutlinedTextField (MaterialTheming)
 - (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {

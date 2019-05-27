@@ -12,27 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCInputTextField.h"
+#import "MDCBaseTextField.h"
 
 #import <Foundation/Foundation.h>
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
 #import "MDCContainerStylerPathDrawingUtils.h"
-#import "MDCInputTextFieldLayout.h"
+#import "MDCBaseTextFieldLayout.h"
 #import "MaterialMath.h"
 #import "MaterialTypography.h"
 
 #import "MDCContainedInputUnderlineLabelView.h"
 
-@interface MDCInputTextField () <MDCContainedInputView>
+@interface MDCBaseTextField () <MDCContainedInputView>
 
 @property(strong, nonatomic) UIButton *clearButton;
 @property(strong, nonatomic) UIImageView *clearButtonImageView;
 @property(strong, nonatomic) UILabel *floatingLabel;
 @property(strong, nonatomic) UILabel *placeholderLabel;
 
-@property(strong, nonatomic) MDCInputTextFieldLayout *layout;
+@property(strong, nonatomic) MDCBaseTextFieldLayout *layout;
 
 @property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
 
@@ -49,7 +49,7 @@
 
 @end
 
-@implementation MDCInputTextField
+@implementation MDCBaseTextField
 @synthesize preferredMainContentAreaHeight = _preferredMainContentAreaHeight;
 @synthesize preferredUnderlineLabelAreaHeight = _preferredUnderlineLabelAreaHeight;
 @synthesize underlineLabelDrawPriority = _underlineLabelDrawPriority;
@@ -63,7 +63,7 @@
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    [self commonMDCInputTextFieldInit];
+    [self commonMDCBaseTextFieldInit];
   }
   return self;
 }
@@ -71,12 +71,12 @@
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    [self commonMDCInputTextFieldInit];
+    [self commonMDCBaseTextFieldInit];
   }
   return self;
 }
 
-- (void)commonMDCInputTextFieldInit {
+- (void)commonMDCBaseTextFieldInit {
   [self initializeProperties];
   [self setUpFloatingLabel];
   [self setUpPlaceholderLabel];
@@ -170,14 +170,14 @@
 }
 
 - (void)setUpClearButton {
-  CGFloat clearButtonSideLength = MDCInputTextFieldLayout.clearButtonSideLength;
+  CGFloat clearButtonSideLength = MDCBaseTextFieldLayout.clearButtonSideLength;
   CGRect clearButtonFrame = CGRectMake(0, 0, clearButtonSideLength, clearButtonSideLength);
   self.clearButton = [[UIButton alloc] initWithFrame:clearButtonFrame];
   [self.clearButton addTarget:self
                        action:@selector(clearButtonPressed:)
              forControlEvents:UIControlEventTouchUpInside];
 
-  CGFloat clearButtonImageViewSideLength = MDCInputTextFieldLayout.clearButtonImageViewSideLength;
+  CGFloat clearButtonImageViewSideLength = MDCBaseTextFieldLayout.clearButtonImageViewSideLength;
   CGRect clearButtonImageViewRect =
       CGRectMake(0, 0, clearButtonImageViewSideLength, clearButtonImageViewSideLength);
   self.clearButtonImageView = [[UIImageView alloc] initWithFrame:clearButtonImageViewRect];
@@ -257,7 +257,7 @@
   // TODO: Consider hiding views that don't actually fit in the frame
 }
 
-- (CGRect)clearButtonFrameFromLayout:(MDCInputTextFieldLayout *)layout
+- (CGRect)clearButtonFrameFromLayout:(MDCBaseTextFieldLayout *)layout
                   floatingLabelState:(MDCContainedInputViewFloatingLabelState)floatingLabelState {
   CGRect clearButtonFrame = layout.clearButtonFrame;
   if (floatingLabelState == MDCContainedInputViewFloatingLabelStateFloating) {
@@ -266,13 +266,13 @@
   return clearButtonFrame;
 }
 
-- (MDCInputTextFieldLayout *)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize {
+- (MDCBaseTextFieldLayout *)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize {
   UIFont *effectiveFont = [self determineEffectiveFont];
   UIFont *floatingFont = [self.floatingLabelManager floatingFontWithFont:effectiveFont
                                                          containerStyler:self.containerStyler];
   CGFloat normalizedCustomUnderlineLabelDrawPriority =
       [self normalizedCustomUnderlineLabelDrawPriority:self.customUnderlineLabelDrawPriority];
-  return [[MDCInputTextFieldLayout alloc]
+  return [[MDCBaseTextFieldLayout alloc]
                   initWithTextFieldSize:textFieldSize
                         containerStyler:self.containerStyler
                                    text:self.text
@@ -309,7 +309,7 @@
 
 - (CGSize)preferredSizeWithWidth:(CGFloat)width {
   CGSize fittingSize = CGSizeMake(width, CGFLOAT_MAX);
-  MDCInputTextFieldLayout *inputTextFieldLayout =
+  MDCBaseTextFieldLayout *inputTextFieldLayout =
       [self calculateLayoutWithTextFieldSize:fittingSize];
   return CGSizeMake(width, inputTextFieldLayout.calculatedHeight);
 }
@@ -500,7 +500,7 @@
   [self setNeedsLayout];
 }
 
-- (CGRect)textRectFromLayout:(MDCInputTextFieldLayout *)layout
+- (CGRect)textRectFromLayout:(MDCBaseTextFieldLayout *)layout
           floatingLabelState:(MDCContainedInputViewFloatingLabelState)floatingLabelState {
   CGRect textRect = layout.textRect;
   if (floatingLabelState == MDCContainedInputViewFloatingLabelStateFloating) {
@@ -660,7 +660,7 @@
 #pragma mark Clear Button
 
 - (UIImage *)untintedClearButtonImage {
-  CGFloat sideLength = MDCInputTextFieldLayout.clearButtonImageViewSideLength;
+  CGFloat sideLength = MDCBaseTextFieldLayout.clearButtonImageViewSideLength;
   CGRect rect = CGRectMake(0, 0, sideLength, sideLength);
   UIGraphicsBeginImageContextWithOptions(rect.size, false, 0);
   [[UIColor blackColor] setFill];

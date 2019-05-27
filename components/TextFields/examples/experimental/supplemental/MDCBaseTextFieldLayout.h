@@ -23,7 +23,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MDCInputTextFieldLayout : NSObject
+@interface MDCBaseTextFieldLayout : NSObject
 
 @property(nonatomic, readonly, class) CGFloat clearButtonSideLength;
 @property(nonatomic, readonly, class) CGFloat clearButtonImageViewSideLength;
