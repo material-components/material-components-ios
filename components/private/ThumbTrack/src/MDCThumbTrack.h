@@ -57,6 +57,17 @@
 @property(nullable, nonatomic, strong) UIColor *inkColor;
 
 /**
+ This property determines if an @c MDCThumbTrack should use the @c MDCRippleView behavior or not.
+ By setting this property to @c YES, @c MDCRippleView is used to provide the user visual
+ touch feedback, instead of the legacy @c MDCInkView.
+ @note Defaults to @c NO.
+ */
+@property(nonatomic, assign) BOOL enableRippleBehavior;
+
+/** The color of the ripple. */
+@property(nullable, nonatomic, strong) UIColor *rippleColor;
+
+/**
  The color of the value label's text.
 
  Defaults and resets to white.
@@ -143,8 +154,14 @@
 /** The max radius of the ripple when the user touches the thumb. */
 @property(nonatomic, assign) CGFloat thumbMaxRippleRadius;
 
+/** The max radius of the ripple when the user touches the thumb. */
+@property(nonatomic, assign) CGFloat thumbRippleMaximumRadius;
+
 /** Whether the thumb should display ink splashes on touch. */
 @property(nonatomic, assign) BOOL shouldDisplayInk;
+
+/** Whether the thumb should display ripple splashes on touch. */
+@property(nonatomic, assign) BOOL shouldDisplayRipple;
 
 /** Whether or not to display dots indicating discrete locations. Default is NO. */
 @property(nonatomic, assign) BOOL shouldDisplayDiscreteDots;

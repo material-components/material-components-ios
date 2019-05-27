@@ -69,6 +69,8 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   _thumbTrack.thumbIsHollowAtStart = YES;
   _thumbTrack.thumbGrowsWhenDragging = YES;
   _thumbTrack.shouldDisplayInk = NO;
+  _thumbTrack.shouldDisplayRipple = YES;
+  _thumbTrack.enableRippleBehavior = YES;
   _thumbTrack.shouldDisplayDiscreteDots = YES;
   _thumbTrack.shouldDisplayDiscreteValueLabel = YES;
   _thumbTrack.trackOffColor = [[self class] defaultTrackOffColor];
@@ -223,6 +225,7 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   // trackOnColor is null_resettable, so explicitly set to `.clear` for the correct effect
   _thumbTrack.trackOnColor = [self trackFillColorForState:self.state] ?: UIColor.clearColor;
   _thumbTrack.inkColor = self.inkColor;
+  _thumbTrack.rippleColor = self.rippleColor;
   _thumbTrack.trackOnTickColor = [self filledTrackTickColorForState:self.state];
   _thumbTrack.trackOffTickColor = [self backgroundTrackTickColorForState:self.state];
 }
@@ -319,6 +322,22 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 
 - (UIColor *)inkColor {
   return _thumbTrack.inkColor;
+}
+
+- (void)setEnableRippleBehavior:(BOOL)enableRippleBehavior {
+  _thumbTrack.enableRippleBehavior = enableRippleBehavior;
+}
+
+- (BOOL)enableRippleBehavior {
+  return _thumbTrack.enableRippleBehavior;
+}
+
+- (void)setRippleColor:(UIColor *)rippleColor {
+  _thumbTrack.rippleColor = rippleColor;
+}
+
+- (UIColor *)rippleColor {
+  return _thumbTrack.rippleColor;
 }
 
 - (void)setValueLabelTextColor:(UIColor *)valueLabelTextColor {
