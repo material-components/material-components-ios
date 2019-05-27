@@ -124,18 +124,18 @@
   }
   UIColor *errorColor = mdcColorScheme.errorColor;
   UIColor *errorColorDisabled = [mdcColorScheme.errorColor colorWithAlphaComponent:0.5];
-  self.floatingLabelColorNormal = errorColor;
-  self.floatingLabelColorEditing = errorColor;
-  self.floatingLabelColorDisabled = errorColorDisabled;
-  self.textColorNormal = errorColor;
-  self.textColorEditing = errorColor;
-  self.textColorDisabled = errorColorDisabled;
-  self.outlineColorNormal = errorColor;
-  self.outlineColorEditing = errorColor;
-  self.outlineColorDisabled = errorColorDisabled;
+  
+  [self setLabelColor:errorColor forState:UIControlStateNormal];
+  [self setLabelColor:errorColor forState:UIControlStateEditing];
+  [self setLabelColor:errorColorDisabled forState:UIControlStateDisabled];
+  [self setTextColor:errorColor forState:UIControlStateNormal];
+  [self setTextColor:errorColor forState:UIControlStateEditing];
+  [self setTextColor:errorColorDisabled forState:UIControlStateDisabled];
+  [self setOutlineColor:errorColor forState:UIControlStateNormal];
+  [self setOutlineColor:errorColor forState:UIControlStateEditing];
+  [self setOutlineColor:errorColorDisabled forState:UIControlStateDisabled];
   self.trailingUnderlineLabel.textColor = errorColorDisabled;
   self.leadingUnderlineLabel.textColor = errorColorDisabled;
-  self.tintColor = errorColor;
   self.tintColor = errorColor;
 }
 

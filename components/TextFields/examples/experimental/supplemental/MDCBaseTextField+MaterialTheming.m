@@ -23,7 +23,7 @@
 
 - (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
   [self applyTypographySchemeWith:containerScheme];
-  [self applyColorSchemeWith:containerScheme];
+  [self applyDefaultColorScheme:[self colorSchemeWithContainerScheme:containerScheme]];
 }
 
 - (void)applyTypographySchemeWith:(id<MDCContainerScheming>)containerScheme {
@@ -35,22 +35,22 @@
   [self applyMDCTypographyScheming:mdcTypographyScheming];
 }
 
+- (id<MDCColorScheming>)colorSchemeWithContainerScheme:(nonnull id<MDCContainerScheming>)containerScheme {
+  id<MDCColorScheming> mdcColorScheme = containerScheme.colorScheme;
+  if (!mdcColorScheme) {
+    mdcColorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  }
+  return mdcColorScheme;
+}
+
 - (void)applyMDCTypographyScheming:(id<MDCTypographyScheming>)mdcTypographyScheming {
   self.font = mdcTypographyScheming.subtitle1;
   self.leadingUnderlineLabel.font = mdcTypographyScheming.caption;
   self.trailingUnderlineLabel.font = mdcTypographyScheming.caption;
 }
 
-- (void)applyColorSchemeWith:(id<MDCContainerScheming>)containerScheme {
-  id<MDCColorScheming> mdcColorScheme = containerScheme.colorScheme;
-  if (!mdcColorScheme) {
-    mdcColorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-  }
-  [self applyMDCColorScheming:mdcColorScheme];
-}
-
-- (void)applyMDCColorScheming:(id<MDCColorScheming>)mdcColorScheming {
+- (void)applyDefaultColorScheme:(id<MDCColorScheming>)mdcColorScheming {
   MDCContainedInputViewColorScheme *normalColorScheme =
       [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateNormal];
   [self setContainedInputViewColorScheming:normalColorScheme
@@ -69,14 +69,37 @@
   self.tintColor = mdcColorScheming.primaryColor;
 }
 
-- (void)applyErrorThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme {
-  [self applyThemeWithScheme:scheme];
-  self.textColorNormal = [UIColor redColor];
-  self.textColorEditing = [UIColor redColor];
-  self.textColorDisabled = [[UIColor redColor] colorWithAlphaComponent:0.5];
-  self.floatingLabelColorNormal = [UIColor redColor];
-  self.floatingLabelColorEditing = [UIColor redColor];
-  self.floatingLabelColorDisabled = [[UIColor redColor] colorWithAlphaComponent:0.5];
+- (void)applyErrorColorScheme:(id<MDCColorScheming>)mdcColorScheming {
+  MDCContainedInputViewColorScheme *normalColorScheme =
+  [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateNormal];
+  [self setContainedInputViewColorScheming:normalColorScheme
+                                  forState:MDCContainedInputViewStateNormal];
+  
+  MDCContainedInputViewColorScheme *focusedColorScheme =
+  [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateFocused];
+  [self setContainedInputViewColorScheming:focusedColorScheme
+                                  forState:MDCContainedInputViewStateFocused];
+  
+  MDCContainedInputViewColorScheme *disabledColorScheme =
+  [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateDisabled];
+  [self setContainedInputViewColorScheming:disabledColorScheme
+                                  forState:MDCContainedInputViewStateDisabled];
+  
+  self.tintColor = mdcColorScheming.primaryColor;
+}
+
+
+- (void)applyErrorThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
+  UIColor *errorColor = [UIColor redColor];
+  UIColor *errorColorLowAlpha = [[UIColor redColor] colorWithAlphaComponent:0.5];
+  [self applyTypographySchemeWith:containerScheme];
+  [self applyErrorColorScheme:[self colorSchemeWithContainerScheme:containerScheme]];
+  [self setTextColor:errorColor forState:UIControlStateNormal];
+  [self setTextColor:errorColor forState:UIControlStateDisabled];
+  [self setTextColor:errorColorLowAlpha forState:UIControlStateEditing];
+  [self setLabelColor:errorColor forState:UIControlStateNormal];
+  [self setLabelColor:errorColor forState:UIControlStateDisabled];
+  [self setLabelColor:errorColorLowAlpha forState:UIControlStateEditing];
 }
 
 @end

@@ -80,7 +80,7 @@ static const CGFloat kFloatingLabelOutlineSidePadding = (CGFloat)5.0;
     return;
   }
   uiView = (UIView *)containedInputView;
-  CGRect placeholderFrame = containedInputView.floatingLabel.frame;
+  CGRect placeholderFrame = containedInputView.label.frame;
   BOOL isFloatingLabelFloating =
       containedInputView.floatingLabelState == MDCContainedInputViewFloatingLabelStateFloating;
   CGFloat topRowBottomRowDividerY = CGRectGetMaxY(containedInputView.containerFrame);

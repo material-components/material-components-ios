@@ -53,88 +53,55 @@
   self.containerStyler = filledStyle;
 }
 
-- (UIColor *)filledBackgroundColor {
-  id<MDCContainedInputViewColorScheming> normalScheme =
-      [self containedInputViewColorSchemingForState:MDCContainedInputViewStateNormal];
-  if ([normalScheme isKindOfClass:[MDCContainedInputViewColorSchemeFilled class]]) {
-    MDCContainedInputViewColorSchemeFilled *filledColorScheme =
-        (MDCContainedInputViewColorSchemeFilled *)normalScheme;
-    return filledColorScheme.filledSublayerFillColor;
-  }
-  return nil;
-}
+#pragma mark Stateful Color APIs
 
-- (void)setFilledBackgroundColor:(UIColor *)filledBackgroundColor {
-  id<MDCContainedInputViewColorScheming> normalScheme =
-      [self containedInputViewColorSchemingForState:MDCContainedInputViewStateNormal];
-  if ([normalScheme isKindOfClass:[MDCContainedInputViewColorSchemeFilled class]]) {
-    MDCContainedInputViewColorSchemeFilled *filledColorScheme =
-        (MDCContainedInputViewColorSchemeFilled *)normalScheme;
+- (void)setFilledBackgroundColor:(nonnull UIColor *)filledBackgroundColor
+                        forState:(UIControlState)state {
+  MDCContainedInputViewState containedInputViewState = MDCContainedInputViewStateWithUIControlState(state);
+  id<MDCContainedInputViewColorScheming> colorScheme =
+      [self containedInputViewColorSchemingForState:containedInputViewState];
+  if ([colorScheme isKindOfClass:[MDCContainedInputViewColorSchemeFilled class]]) {
+    MDCContainedInputViewColorSchemeFilled *filledColorScheme = (MDCContainedInputViewColorSchemeFilled *)colorScheme;
     filledColorScheme.filledSublayerFillColor = filledBackgroundColor;
   }
 }
 
-- (UIColor *)underlineColorNormal {
-  id<MDCContainedInputViewColorScheming> normalScheme =
-      [self containedInputViewColorSchemingForState:MDCContainedInputViewStateNormal];
-  if ([normalScheme isKindOfClass:[MDCContainedInputViewColorSchemeFilled class]]) {
-    MDCContainedInputViewColorSchemeFilled *filledColorScheme =
-        (MDCContainedInputViewColorSchemeFilled *)normalScheme;
+- (nonnull UIColor *)filledBackgroundColorForState:(UIControlState)state {
+  MDCContainedInputViewState containedInputViewState = MDCContainedInputViewStateWithUIControlState(state);
+  id<MDCContainedInputViewColorScheming> colorScheme =
+      [self containedInputViewColorSchemingForState:containedInputViewState];
+  if ([colorScheme isKindOfClass:[MDCContainedInputViewColorSchemeFilled class]]) {
+    MDCContainedInputViewColorSchemeFilled *filledColorScheme = (MDCContainedInputViewColorSchemeFilled *)colorScheme;
+    return filledColorScheme.filledSublayerFillColor;
+  }
+  //TODO: Is it okay to return clear color here? Should it be nullable?
+  return [UIColor clearColor];
+}
+
+- (void)setUnderlineColor:(nonnull UIColor *)underlineColor forState:(UIControlState)state {
+  MDCContainedInputViewState containedInputViewState = MDCContainedInputViewStateWithUIControlState(state);
+  id<MDCContainedInputViewColorScheming> colorScheme =
+      [self containedInputViewColorSchemingForState:containedInputViewState];
+  if ([colorScheme isKindOfClass:[MDCContainedInputViewColorSchemeFilled class]]) {
+    MDCContainedInputViewColorSchemeFilled *filledColorScheme = (MDCContainedInputViewColorSchemeFilled *)colorScheme;
+    filledColorScheme.thinUnderlineFillColor = underlineColor;
+    filledColorScheme.thickUnderlineFillColor = underlineColor;
+    //TODO: Explore setting either the thick or thin depending on the state!
+  }
+}
+
+- (nonnull UIColor *)underlineColorForState:(UIControlState)state {
+  MDCContainedInputViewState containedInputViewState = MDCContainedInputViewStateWithUIControlState(state);
+  id<MDCContainedInputViewColorScheming> colorScheme =
+  [self containedInputViewColorSchemingForState:containedInputViewState];
+  if ([colorScheme isKindOfClass:[MDCContainedInputViewColorSchemeFilled class]]) {
+    MDCContainedInputViewColorSchemeFilled *filledColorScheme = (MDCContainedInputViewColorSchemeFilled *)colorScheme;
     return filledColorScheme.thinUnderlineFillColor;
+//    return filledColorScheme.thickUnderlineFillColor;
+    //TODO: Determine which one of these you should actually return!
   }
-  return nil;
-}
-
-- (void)setUnderlineColorNormal:(UIColor *)underlineColorNormal {
-  id<MDCContainedInputViewColorScheming> normalScheme =
-      [self containedInputViewColorSchemingForState:MDCContainedInputViewStateNormal];
-  if ([normalScheme isKindOfClass:[MDCContainedInputViewColorSchemeFilled class]]) {
-    MDCContainedInputViewColorSchemeFilled *filledColorScheme =
-        (MDCContainedInputViewColorSchemeFilled *)normalScheme;
-    filledColorScheme.thinUnderlineFillColor = underlineColorNormal;
-  }
-}
-
-- (UIColor *)underlineColorDisabled {
-  id<MDCContainedInputViewColorScheming> disabledScheme =
-      [self containedInputViewColorSchemingForState:MDCContainedInputViewStateDisabled];
-  if ([disabledScheme isKindOfClass:[MDCContainedInputViewColorSchemeFilled class]]) {
-    MDCContainedInputViewColorSchemeFilled *filledColorScheme =
-        (MDCContainedInputViewColorSchemeFilled *)disabledScheme;
-    return filledColorScheme.thinUnderlineFillColor;
-  }
-  return nil;
-}
-
-- (void)setUnderlineColorDisabled:(UIColor *)underlineColorDisabled {
-  id<MDCContainedInputViewColorScheming> disabledScheme =
-      [self containedInputViewColorSchemingForState:MDCContainedInputViewStateDisabled];
-  if ([disabledScheme isKindOfClass:[MDCContainedInputViewColorSchemeFilled class]]) {
-    MDCContainedInputViewColorSchemeFilled *filledColorScheme =
-        (MDCContainedInputViewColorSchemeFilled *)disabledScheme;
-    filledColorScheme.thinUnderlineFillColor = underlineColorDisabled;
-  }
-}
-
-- (UIColor *)underlineColorEditing {
-  id<MDCContainedInputViewColorScheming> normalScheme =
-      [self containedInputViewColorSchemingForState:MDCContainedInputViewStateFocused];
-  if ([normalScheme isKindOfClass:[MDCContainedInputViewColorSchemeFilled class]]) {
-    MDCContainedInputViewColorSchemeFilled *filledColorScheme =
-        (MDCContainedInputViewColorSchemeFilled *)normalScheme;
-    return filledColorScheme.thickUnderlineFillColor;
-  }
-  return nil;
-}
-
-- (void)setUnderlineColorEditing:(UIColor *)underlineColorEditing {
-  id<MDCContainedInputViewColorScheming> normalScheme =
-      [self containedInputViewColorSchemingForState:MDCContainedInputViewStateFocused];
-  if ([normalScheme isKindOfClass:[MDCContainedInputViewColorSchemeFilled class]]) {
-    MDCContainedInputViewColorSchemeFilled *filledColorScheme =
-        (MDCContainedInputViewColorSchemeFilled *)normalScheme;
-    filledColorScheme.thickUnderlineFillColor = underlineColorEditing;
-  }
+  //TODO: Is it okay to return clear color here? Should it be nullable?
+  return [UIColor clearColor];
 }
 
 @end

@@ -210,10 +210,10 @@ static const NSUInteger kDefaultVerticalPadding = 20;
   //  textField.containerStyler.positioningDelegate.verticalDensity = 0.5;
   textField.mdc_adjustsFontForContentSizeCategory = YES;
   textField.placeholder = @"555-555-5555";
-  textField.floatingLabel.text = @"Phone number";
+  textField.label.text = @"Phone number";
   textField.clearButtonMode = UITextFieldViewModeWhileEditing;
-  textField.leadingUnderlineLabel.numberOfLines = 0;
-  textField.leadingUnderlineLabel.text = @"This is a string.";
+  textField.leadingAssistiveLabel.numberOfLines = 0;
+  textField.leadingAssistiveLabel.text = @"This is a string.";
   return textField;
 }
 
@@ -245,9 +245,9 @@ static const NSUInteger kDefaultVerticalPadding = 20;
   MDCOutlinedTextField *textField = [[MDCOutlinedTextField alloc] init];
   //  textField.containerStyler.positioningDelegate.verticalDensity = 0.5;
   //  textField.placeholder = @"This is a placeholder";
-  //  textField.floatingLabel.text = @"This is a floating label";
+  //  textField.label.text = @"This is a floating label";
   textField.placeholder = @"555-555-5555";
-  textField.floatingLabel.text = @"Phone number";
+  textField.label.text = @"Phone number";
   textField.clearButtonMode = UITextFieldViewModeWhileEditing;
   textField.mdc_adjustsFontForContentSizeCategory = YES;
 
@@ -263,7 +263,7 @@ static const NSUInteger kDefaultVerticalPadding = 20;
 - (MDCBaseTextField *)createDefaultInputTextField {
   MDCBaseTextField *textField = [[MDCBaseTextField alloc] init];
   textField.placeholder = @"This is a placeholder";
-  textField.floatingLabel.text = @"This is a floating label";
+  textField.label.text = @"This is a floating label";
   textField.clearButtonMode = UITextFieldViewModeWhileEditing;
   return textField;
 }
@@ -293,21 +293,20 @@ static const NSUInteger kDefaultVerticalPadding = 20;
 - (void)updateTextFieldStates {
   [self.allTextFields
       enumerateObjectsUsingBlock:^(MDCBaseTextField *textField, NSUInteger idx, BOOL *stop) {
-        textField.isErrored = self.isErrored;
         BOOL isEven = idx % 2 == 0;
-        if (textField.isErrored) {
+        if (self.isErrored) {
           if (isEven) {
-            textField.leadingUnderlineLabel.text = @"Suspendisse quam elit, mattis sit amet justo "
+            textField.leadingAssistiveLabel.text = @"Suspendisse quam elit, mattis sit amet justo "
                                                    @"vel, venenatis lobortis massa. Donec metus "
                                                    @"dolor.";
           } else {
-            textField.leadingUnderlineLabel.text = @"This is an error.";
+            textField.leadingAssistiveLabel.text = @"This is an error.";
           }
         } else {
           if (isEven) {
-            textField.leadingUnderlineLabel.text = @"This is helper text.";
+            textField.leadingAssistiveLabel.text = @"This is helper text.";
           } else {
-            textField.leadingUnderlineLabel.text = nil;
+            textField.leadingAssistiveLabel.text = nil;
           }
         }
       }];

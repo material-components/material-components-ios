@@ -30,6 +30,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)addChip:(UIView *)chip;
 
+@property(nonatomic, assign) BOOL canFloatingLabelFloat;
+//TODO: This needs to be replaced with an InputChipView specific label behavior property
+
 @end
 
 NS_ASSUME_NONNULL_END

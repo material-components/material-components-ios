@@ -17,21 +17,38 @@
 #import "MDCBaseTextField.h"
 
 /**
- A UITextField subclass that attempts to do the following:
-
- - Earnestly interpret and actualize the Material guidelines for text fields, which can be found
- here: https://material.io/design/components/text-fields.html#outlined-text-field
-
- - Feel intuitive for someone used to the conventions of iOS development and UIKit controls.
-
- - Enable easy set up and reliable and predictable behavior.
-
+ An implementation of a Material filled text field.
  */
-@interface MDCFilledTextField : MDCBaseTextField
+__attribute__((objc_subclassing_restricted)) @interface MDCFilledTextField : MDCBaseTextField
 
-@property(strong, nonatomic, nonnull) UIColor *filledBackgroundColor;
-@property(strong, nonatomic, nonnull) UIColor *underlineColorNormal;
-@property(strong, nonatomic, nonnull) UIColor *underlineColorDisabled;
-@property(strong, nonatomic, nonnull) UIColor *underlineColorEditing;
+/**
+ Sets the filled background color for a given state.
+ @param filledBackgroundColor The UIColor for the given state.
+ @param state The UIControlState. The accepted values are UIControlStateNormal,
+ UIControlStateDisabled, and UIControlStateEditing, which is a custom MDC
+ UIControlState value.
+ */
+- (void)setFilledBackgroundColor:(nonnull UIColor *)filledBackgroundColor
+                        forState:(UIControlState)state;
+/**
+ Returns the filled background color for a given state.
+ @param state The UIControlState.
+ */
+- (nonnull UIColor *)filledBackgroundColorForState:(UIControlState)state;
+
+/**
+ Sets the underline color for a given state.
+ @param underlineColor The UIColor for the given state.
+ @param state The UIControlState. The accepted values are UIControlStateNormal,
+ UIControlStateDisabled, and UIControlStateEditing, which is a custom MDC
+ UIControlState value.
+ */
+- (void)setUnderlineColor:(nonnull UIColor *)underlineColor forState:(UIControlState)state;
+
+/**
+ Returns the underline color for a given state.
+ @param state The UIControlState.
+ */
+- (nonnull UIColor *)underlineColorForState:(UIControlState)state;
 
 @end
