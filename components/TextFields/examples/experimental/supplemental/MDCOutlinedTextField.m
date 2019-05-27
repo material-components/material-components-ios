@@ -53,68 +53,29 @@
   self.containerStyler = outlinedStyle;
 }
 
-- (UIColor *)outlineColorNormal {
-  id<MDCContainedInputViewColorScheming> normalScheme =
-      [self containedInputViewColorSchemingForState:MDCContainedInputViewStateNormal];
-  if ([normalScheme isKindOfClass:[MDCContainedInputViewColorSchemeOutlined class]]) {
-    MDCContainedInputViewColorSchemeOutlined *outlinedColorScheme =
-        (MDCContainedInputViewColorSchemeOutlined *)normalScheme;
+#pragma mark Stateful Color APIs
+
+- (void)setOutlineColor:(nonnull UIColor *)outlineColor forState:(UIControlState)state {
+  MDCContainedInputViewState containedInputViewState = MDCContainedInputViewStateWithUIControlState(state);
+  id<MDCContainedInputViewColorScheming> colorScheme =
+      [self containedInputViewColorSchemingForState:containedInputViewState];
+  if ([colorScheme isKindOfClass:[MDCContainedInputViewColorSchemeOutlined class]]) {
+    MDCContainedInputViewColorSchemeOutlined *outlinedColorScheme = (MDCContainedInputViewColorSchemeOutlined *)colorScheme;
+    outlinedColorScheme.outlineColor = outlineColor;
+  }
+}
+
+- (nonnull UIColor *)outlineColorForState:(UIControlState)state {
+  MDCContainedInputViewState containedInputViewState = MDCContainedInputViewStateWithUIControlState(state);
+  id<MDCContainedInputViewColorScheming> colorScheme =
+  [self containedInputViewColorSchemingForState:containedInputViewState];
+  if ([colorScheme isKindOfClass:[MDCContainedInputViewColorSchemeOutlined class]]) {
+    MDCContainedInputViewColorSchemeOutlined *outlinedColorScheme = (MDCContainedInputViewColorSchemeOutlined *)colorScheme;
     return outlinedColorScheme.outlineColor;
   }
-  return nil;
+  return [UIColor clearColor];
 }
 
-- (void)setOutlineColorNormal:(UIColor *)outlineColorNormal {
-  id<MDCContainedInputViewColorScheming> normalScheme =
-      [self containedInputViewColorSchemingForState:MDCContainedInputViewStateNormal];
-  if ([normalScheme isKindOfClass:[MDCContainedInputViewColorSchemeOutlined class]]) {
-    MDCContainedInputViewColorSchemeOutlined *outlinedColorScheme =
-        (MDCContainedInputViewColorSchemeOutlined *)normalScheme;
-    outlinedColorScheme.outlineColor = outlineColorNormal;
-  }
-}
-
-- (UIColor *)outlineColorDisabled {
-  id<MDCContainedInputViewColorScheming> disabledScheme =
-      [self containedInputViewColorSchemingForState:MDCContainedInputViewStateDisabled];
-  if ([disabledScheme isKindOfClass:[MDCContainedInputViewColorSchemeOutlined class]]) {
-    MDCContainedInputViewColorSchemeOutlined *outlinedColorScheme =
-        (MDCContainedInputViewColorSchemeOutlined *)disabledScheme;
-    return outlinedColorScheme.outlineColor;
-  }
-  return nil;
-}
-
-- (void)setOutlineColorDisabled:(UIColor *)outlineColorDisabled {
-  id<MDCContainedInputViewColorScheming> disabledScheme =
-      [self containedInputViewColorSchemingForState:MDCContainedInputViewStateDisabled];
-  if ([disabledScheme isKindOfClass:[MDCContainedInputViewColorSchemeOutlined class]]) {
-    MDCContainedInputViewColorSchemeOutlined *outlinedColorScheme =
-        (MDCContainedInputViewColorSchemeOutlined *)disabledScheme;
-    outlinedColorScheme.outlineColor = outlineColorDisabled;
-  }
-}
-
-- (UIColor *)outlineColorEditing {
-  id<MDCContainedInputViewColorScheming> normalScheme =
-      [self containedInputViewColorSchemingForState:MDCContainedInputViewStateFocused];
-  if ([normalScheme isKindOfClass:[MDCContainedInputViewColorSchemeOutlined class]]) {
-    MDCContainedInputViewColorSchemeOutlined *outlinedColorScheme =
-        (MDCContainedInputViewColorSchemeOutlined *)normalScheme;
-    return outlinedColorScheme.outlineColor;
-  }
-  return nil;
-}
-
-- (void)setOutlineColorEditing:(UIColor *)outlineColorEditing {
-  id<MDCContainedInputViewColorScheming> normalScheme =
-      [self containedInputViewColorSchemingForState:MDCContainedInputViewStateFocused];
-  if ([normalScheme isKindOfClass:[MDCContainedInputViewColorSchemeOutlined class]]) {
-    MDCContainedInputViewColorSchemeOutlined *outlinedColorScheme =
-        (MDCContainedInputViewColorSchemeOutlined *)normalScheme;
-    outlinedColorScheme.outlineColor = outlineColorEditing;
-  }
-}
 @end
 
 @implementation MDCOutlinedTextFieldPositioningDelegate

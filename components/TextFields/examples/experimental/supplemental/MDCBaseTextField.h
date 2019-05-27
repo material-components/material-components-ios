@@ -14,80 +14,107 @@
 
 #import <UIKit/UIKit.h>
 
+/** This type is used to configure the behavior of an MDCBaseTextField's label. */
+typedef NS_ENUM(NSInteger, MDCBaseTextFieldLabelBehavior) {
+  /** Indicates that the text field label animates to a position above the text when editing begins.
+   */
+  MDCBaseTextFieldLabelBehaviorFloats,
+  /** Indicates that the text field label disappears when editing begins. */
+  MDCBaseTextFieldLabelBehaviorDisappears,
+};
+
 /**
  A UITextField subclass that attempts to do the following:
-
  - Earnestly interpret and actualize the Material guidelines for text fields, which can be found
  here: https://material.io/design/components/text-fields.html#outlined-text-field
-
  - Feel intuitive for someone used to the conventions of iOS development and UIKit controls.
-
  - Enable easy set up and reliable and predictable behavior.
-
+ Caution: While not explicitly forbidden by the compiler, subclassing this class is highly
+ discouraged and not supported. Please consider alternatives.
  */
 @interface MDCBaseTextField : UITextField
 
 /**
- The @c floatingLabel is a label that occupies the text area when there is no text and that floats
- above the text once there is some. It is distinct from a placeholder.
+ The @c label is a label that occupies the area the text usually occupies when there is no
+ text. It is distinct from the placeholder in that it can move above the text area or disappear to
+ reveal the placeholder when editing begins.
  */
-@property(strong, nonatomic, readonly, nonnull) UILabel *floatingLabel;
+@property(strong, nonatomic, readonly, nonnull) UILabel *label;
 
 /**
- The @c leadingUnderlineLabel can be used to display helper or error text.
+ This property determines the behavior of the textfield's label during editing.
+ @note The default is MDCBaseTextFieldLabelBehaviorFloats.
  */
-@property(strong, nonatomic, readonly, nonnull) UILabel *leadingUnderlineLabel;
+@property(nonatomic, assign) MDCBaseTextFieldLabelBehavior labelBehavior;
 
 /**
- The @c trailingUnderlineLabel can be used to display helper or error text.
+ The @c leadingAssistiveLabel is a label below the text on the leading edge of the view. It can be
+ used to display helper or error text.
  */
-@property(strong, nonatomic, readonly, nonnull) UILabel *trailingUnderlineLabel;
+@property(strong, nonatomic, readonly, nonnull) UILabel *leadingAssistiveLabel;
 
 /**
- This is essentially an RTL-aware wrapper around UITextField's leftView/rightView class.
+ The @c trailingAssistiveLabel is a label below the text on the trailing edge of the view. It can be
+ used to display helper or error text.
+ */
+@property(strong, nonatomic, readonly, nonnull) UILabel *trailingAssistiveLabel;
+
+/**
+ This is an RTL-aware wrapper around UITextField's leftView/rightView property.
  */
 @property(strong, nonatomic, nullable) UIView *leadingView;
 
 /**
- This is essentially an RTL-aware wrapper around UITextField's leftView/rightView class.
+ This is an RTL-aware wrapper around UITextField's leftView/rightView property.
  */
 @property(strong, nonatomic, nullable) UIView *trailingView;
 
 /**
- This is essentially an RTL-aware wrapper around UITextField's leftViewMode/rightViewMode class.
+ This is an RTL-aware wrapper around UITextField's leftViewMode/rightViewMode property.
  */
 @property(nonatomic, assign) UITextFieldViewMode leadingViewMode;
 
 /**
- This is essentially an RTL-aware wrapper around UITextField's leftViewMode/rightViewMode class.
+ This is an RTL-aware wrapper around UITextField's leftViewMode/rightViewMode property.
  */
 @property(nonatomic, assign) UITextFieldViewMode trailingViewMode;
 
 /**
- This property toggles the error state (similar to @c isHighlighted, @c isEnabled, @c isSelected,
- etc.) that is part of a general interpretation of the states outlined in the Material guidelines
- for Text Fields. See the @c MDCContainedInputViewState enum for more information.
- */
-@property(nonatomic, assign) BOOL isErrored;
-
-/**
  Indicates whether the text field should automatically update its font when the device’s
  UIContentSizeCategory is changed.
-
  This property is modeled after the adjustsFontForContentSizeCategory property in the
  UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
-
  Defaults value is NO.
  */
 @property(nonatomic, setter=mdc_setAdjustsFontForContentSizeCategory:)
-    BOOL mdc_adjustsFontForContentSizeCategory;
+BOOL mdc_adjustsFontForContentSizeCategory;
 
-@property(strong, nonatomic, nonnull) UIColor *floatingLabelColorNormal;
-@property(strong, nonatomic, nonnull) UIColor *floatingLabelColorDisabled;
-@property(strong, nonatomic, nonnull) UIColor *floatingLabelColorEditing;
+/**
+ Sets the label color for a given state.
+ @param labelColor The UIColor for the given state.
+ @param state The UIControlState. The accepted values are UIControlStateNormal,
+ UIControlStateDisabled, and UIControlStateEditing, which is a custom MDC
+ UIControlState value.
+ */
+- (void)setLabelColor:(nonnull UIColor *)labelColor forState:(UIControlState)state;
+/**
+ Returns the label color for a given state.
+ @param state The UIControlState.
+ */
+- (nonnull UIColor *)labelColorForState:(UIControlState)state;
 
-@property(strong, nonatomic, nonnull) UIColor *textColorNormal;
-@property(strong, nonatomic, nonnull) UIColor *textColorDisabled;
-@property(strong, nonatomic, nonnull) UIColor *textColorEditing;
+/**
+ Sets the text color for a given state.
+ @param textColor The UIColor for the given state.
+ @param state The UIControlState. The accepted values are UIControlStateNormal,
+ UIControlStateDisabled, and UIControlStateEditing, which is a custom MDC
+ UIControlState value.
+ */
+- (void)setTextColor:(nonnull UIColor *)textColor forState:(UIControlState)state;
+/**
+ Returns the text color for a given state.
+ @param state The UIControlState.
+ */
+- (nonnull UIColor *)textColorForState:(UIControlState)state;
 
 @end

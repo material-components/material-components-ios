@@ -29,7 +29,7 @@
 
 @property(strong, nonatomic) UIButton *clearButton;
 @property(strong, nonatomic) UIImageView *clearButtonImageView;
-@property(strong, nonatomic) UILabel *floatingLabel;
+@property(strong, nonatomic) UILabel *label;
 @property(strong, nonatomic) UILabel *placeholderLabel;
 
 @property(strong, nonatomic) MDCBaseTextFieldLayout *layout;
@@ -56,7 +56,7 @@
 @synthesize customUnderlineLabelDrawPriority = _customUnderlineLabelDrawPriority;
 @synthesize containerStyler = _containerStyler;
 @synthesize isErrored = _isErrored;
-@synthesize canFloatingLabelFloat = _canFloatingLabelFloat;
+@synthesize labelBehavior = _labelBehavior;
 
 #pragma mark Object Lifecycle
 
@@ -89,15 +89,15 @@
 #pragma mark View Setup
 
 - (void)initializeProperties {
-  [self setUpCanFloatingLabelFloat];
+  [self setUpLabelBehavior];
   [self setUpLayoutDirection];
   [self setUpFloatingLabelState];
   [self setUpContainedInputViewState];
   [self setUpColorSchemesDictionary];
 }
 
-- (void)setUpCanFloatingLabelFloat {
-  self.canFloatingLabelFloat = YES;
+- (void)setUpLabelBehavior {
+  self.labelBehavior = MDCBaseTextFieldLabelBehaviorFloats;
 }
 
 - (void)setUpLayoutDirection {
@@ -156,8 +156,8 @@
 }
 
 - (void)setUpFloatingLabel {
-  self.floatingLabel = [[UILabel alloc] initWithFrame:self.bounds];
-  [self addSubview:self.floatingLabel];
+  self.label = [[UILabel alloc] initWithFrame:self.bounds];
+  [self addSubview:self.label];
 }
 
 - (void)setUpPlaceholderLabel {
@@ -237,7 +237,7 @@
   [self.floatingLabelManager layOutPlaceholderLabel:self.placeholderLabel
                                    placeholderFrame:adjustedPlaceholderFrame
                                isPlaceholderVisible:self.isPlaceholderVisible];
-  [self.floatingLabelManager layOutFloatingLabel:self.floatingLabel
+  [self.floatingLabelManager layOutFloatingLabel:self.label
                                            state:self.floatingLabelState
                                      normalFrame:self.layout.floatingLabelFrameNormal
                                    floatingFrame:self.layout.floatingLabelFrameFloating
@@ -279,8 +279,8 @@
                             placeholder:self.placeholder
                                    font:effectiveFont
                            floatingFont:floatingFont
-                          floatingLabel:self.floatingLabel
-                  canFloatingLabelFloat:self.canFloatingLabelFloat
+                          floatingLabel:self.label
+                          canFloatingLabelFloat:self.canFloatingLabelFloat
                                leftView:self.leftView
                            leftViewMode:self.leftViewMode
                               rightView:self.rightView
@@ -327,14 +327,14 @@
 
 - (void)setAttributedPlaceholder:(NSAttributedString *)attributedPlaceholder {
   [super setAttributedPlaceholder:attributedPlaceholder];
-  //  self.floatingLabel.text = [attributedPlaceholder string];
-  //  self.floatingLabel.attributedText = [attributedPlaceholder copy];
+  //  self.label.text = [attributedPlaceholder string];
+  //  self.label.attributedText = [attributedPlaceholder copy];
   //  NSLog(@"setting attributedPlaceholder is not currently supported.");
   // TODO: Evaluate if attributedPlaceholder should be supported.
   //}
   //
   //- (NSAttributedString *)attributedPlaceholder {
-  //  return self.floatingLabel.attributedText;
+  //  return self.label.attributedText;
 }
 
 - (void)setLeftViewMode:(UITextFieldViewMode)leftViewMode {
@@ -469,11 +469,11 @@
   [self setNeedsLayout];
 }
 
-- (void)setCanFloatingLabelFloat:(BOOL)canFloatingLabelFloat {
-  if (_canFloatingLabelFloat == canFloatingLabelFloat) {
+-(void)setLabelBehavior:(MDCBaseTextFieldLabelBehavior)labelBehavior {
+  if (_labelBehavior == labelBehavior) {
     return;
   }
-  _canFloatingLabelFloat = canFloatingLabelFloat;
+  _labelBehavior = labelBehavior;
   [self setNeedsLayout];
 }
 
@@ -615,7 +615,7 @@
     UIFont *textFont = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
     UIFont *helperFont = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleCaption];
     self.font = textFont;
-    self.floatingLabel.font = textFont;
+    self.label.font = textFont;
     self.leadingUnderlineLabel.font = helperFont;
     self.trailingUnderlineLabel.font = helperFont;
   }
@@ -669,7 +669,11 @@
   return image;
 }
 
-#pragma mark Placeholder
+#pragma mark Floating Label
+
+- (BOOL)canFloatingLabelFloat {
+  return self.labelBehavior == MDCBaseTextFieldLabelBehaviorFloats;
+}
 
 - (BOOL)shouldPlaceholderBeVisible {
   return [self shouldPlaceholderBeVisibleWithPlaceholder:self.placeholder
@@ -679,7 +683,7 @@
 }
 
 - (MDCContainedInputViewFloatingLabelState)determineCurrentFloatingLabelState {
-  return [self floatingLabelStateWithFloatingLabel:self.floatingLabel
+  return [self floatingLabelStateWithFloatingLabel:self.label
                                               text:self.text
                              canFloatingLabelFloat:self.canFloatingLabelFloat
                                          isEditing:self.isEditing];
@@ -758,7 +762,7 @@
   self.textColor = colorScheming.textColor;
   self.leadingUnderlineLabel.textColor = colorScheming.underlineLabelColor;
   self.trailingUnderlineLabel.textColor = colorScheming.underlineLabelColor;
-  self.floatingLabel.textColor = colorScheming.floatingLabelColor;
+  self.label.textColor = colorScheming.floatingLabelColor;
   self.placeholderLabel.textColor = colorScheming.placeholderColor;
   self.clearButtonImageView.tintColor = colorScheming.clearButtonTintColor;
 }
@@ -781,76 +785,32 @@
 
 #pragma mark Color Accessors
 
-- (UIColor *)floatingLabelColorNormal {
+- (void)setLabelColor:(nonnull UIColor *)labelColor forState:(UIControlState)state {
+  MDCContainedInputViewState containedInputViewState = MDCContainedInputViewStateWithUIControlState(state);
   id<MDCContainedInputViewColorScheming> colorScheme =
-      [self containedInputViewColorSchemingForState:MDCContainedInputViewStateNormal];
+      [self containedInputViewColorSchemingForState:containedInputViewState];
+  colorScheme.floatingLabelColor = labelColor;
+}
+
+-(UIColor *)labelColorForState:(UIControlState)state {
+  MDCContainedInputViewState containedInputViewState = MDCContainedInputViewStateWithUIControlState(state);
+  id<MDCContainedInputViewColorScheming> colorScheme =
+      [self containedInputViewColorSchemingForState:containedInputViewState];
   return colorScheme.floatingLabelColor;
 }
 
-- (void)setFloatingLabelColorNormal:(UIColor *)floatingLabelColorNormal {
+- (void)setTextColor:(nonnull UIColor *)labelColor forState:(UIControlState)state {
+  MDCContainedInputViewState containedInputViewState = MDCContainedInputViewStateWithUIControlState(state);
   id<MDCContainedInputViewColorScheming> colorScheme =
-      [self containedInputViewColorSchemingForState:MDCContainedInputViewStateNormal];
-  colorScheme.floatingLabelColor = floatingLabelColorNormal;
+      [self containedInputViewColorSchemingForState:containedInputViewState];
+  colorScheme.textColor = labelColor;
 }
 
-- (UIColor *)floatingLabelColorDisabled {
+-(UIColor *)textColorForState:(UIControlState)state {
+  MDCContainedInputViewState containedInputViewState = MDCContainedInputViewStateWithUIControlState(state);
   id<MDCContainedInputViewColorScheming> colorScheme =
-      [self containedInputViewColorSchemingForState:MDCContainedInputViewStateDisabled];
-  return colorScheme.floatingLabelColor;
-}
-
-- (void)setFloatingLabelColorDisabled:(UIColor *)floatingLabelColorDisabled {
-  id<MDCContainedInputViewColorScheming> colorScheme =
-      [self containedInputViewColorSchemingForState:MDCContainedInputViewStateDisabled];
-  colorScheme.floatingLabelColor = floatingLabelColorDisabled;
-}
-
-- (UIColor *)floatingLabelColorEditing {
-  id<MDCContainedInputViewColorScheming> colorScheme =
-      [self containedInputViewColorSchemingForState:MDCContainedInputViewStateFocused];
-  return colorScheme.floatingLabelColor;
-}
-
-- (void)setFloatingLabelColorEditing:(UIColor *)floatingLabelColorEditing {
-  id<MDCContainedInputViewColorScheming> colorScheme =
-      [self containedInputViewColorSchemingForState:MDCContainedInputViewStateFocused];
-  colorScheme.floatingLabelColor = floatingLabelColorEditing;
-}
-
-- (UIColor *)textColorNormal {
-  id<MDCContainedInputViewColorScheming> colorScheme =
-      [self containedInputViewColorSchemingForState:MDCContainedInputViewStateNormal];
+      [self containedInputViewColorSchemingForState:containedInputViewState];
   return colorScheme.textColor;
-}
-
-- (void)setTextColorNormal:(UIColor *)textColorNormal {
-  id<MDCContainedInputViewColorScheming> colorScheme =
-      [self containedInputViewColorSchemingForState:MDCContainedInputViewStateNormal];
-  colorScheme.textColor = textColorNormal;
-}
-
-- (UIColor *)textColorDisabled {
-  id<MDCContainedInputViewColorScheming> colorScheme =
-      [self containedInputViewColorSchemingForState:MDCContainedInputViewStateDisabled];
-  return colorScheme.textColor;
-}
-
-- (void)setTextColorDisabled:(UIColor *)textColorDisabled {
-  id<MDCContainedInputViewColorScheming> colorScheme =
-      [self containedInputViewColorSchemingForState:MDCContainedInputViewStateDisabled];
-  colorScheme.textColor = textColorDisabled;
-}
-
-- (UIColor *)textColorEditing {
-  id<MDCContainedInputViewColorScheming> colorScheme =
-      [self containedInputViewColorSchemingForState:MDCContainedInputViewStateFocused];
-  return colorScheme.textColor;
-}
-
-- (void)setTextColorEditing:(UIColor *)textColorEditing {
-  id<MDCContainedInputViewColorScheming> colorScheme =
-      [self containedInputViewColorSchemingForState:MDCContainedInputViewStateFocused];
-  colorScheme.textColor = textColorEditing;
 }
 
 @end

@@ -17,20 +17,22 @@
 #import "MDCBaseTextField.h"
 
 /**
- A UITextField subclass that attempts to do the following:
-
- - Earnestly interpret and actualize the Material guidelines for text fields, which can be found
- here: https://material.io/design/components/text-fields.html#outlined-text-field
-
- - Feel intuitive for someone used to the conventions of iOS development and UIKit controls.
-
- - Enable easy set up and reliable and predictable behavior.
-
+ An implementation of a Material outlined text field.
  */
-@interface MDCOutlinedTextField : MDCBaseTextField
+__attribute__((objc_subclassing_restricted)) @interface MDCOutlinedTextField : MDCBaseTextField
 
-@property(strong, nonatomic, nonnull) UIColor *outlineColorNormal;
-@property(strong, nonatomic, nonnull) UIColor *outlineColorDisabled;
-@property(strong, nonatomic, nonnull) UIColor *outlineColorEditing;
+/**
+ Sets the outline color for a given state.
+ @param outlineColor The UIColor for the given state.
+ @param state The UIControlState. The accepted values are UIControlStateNormal,
+ UIControlStateDisabled, and UIControlStateEditing, which is a custom MDC
+ UIControlState value.
+ */
+- (void)setOutlineColor:(nonnull UIColor *)outlineColor forState:(UIControlState)state;
+/**
+ Returns the outline color for a given state.
+ @param state The UIControlState.
+ */
+- (nonnull UIColor *)outlineColorForState:(UIControlState)state;
 
 @end

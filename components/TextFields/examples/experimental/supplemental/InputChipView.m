@@ -100,7 +100,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 #pragma mark MDCContainedInputView properties
 @property(strong, nonatomic) UIButton *clearButton;
 @property(strong, nonatomic) UIImageView *clearButtonImageView;
-@property(strong, nonatomic) UILabel *floatingLabel;
+@property(strong, nonatomic) UILabel *label;
 
 @property(strong, nonatomic) UILabel *leftUnderlineLabel;
 @property(strong, nonatomic) UILabel *rightUnderlineLabel;
@@ -151,6 +151,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 @synthesize containerStyler = _containerStyler;
 @synthesize isErrored = _isErrored;
 @synthesize canFloatingLabelFloat = _canFloatingLabelFloat;
+@synthesize label = _label;
 
 #pragma mark Object Lifecycle
 
@@ -258,8 +259,8 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   self.inputChipViewTextField.inputChipViewTextFieldDelegate = self;
   [self.scrollView addSubview:self.inputChipViewTextField];
 
-  self.floatingLabel = [[UILabel alloc] init];
-  [self addSubview:self.floatingLabel];
+  self.label = [[UILabel alloc] init];
+  [self addSubview:self.label];
 }
 
 - (void)setContainerStyler:(id<MDCContainedInputViewStyler>)containerStyler {
@@ -531,7 +532,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   UIFont *normalFont = self.inputChipViewTextField.effectiveFont;
   UIFont *floatingFont = [self.floatingLabelManager floatingFontWithFont:normalFont
                                                          containerStyler:self.containerStyler];
-  [self.floatingLabelManager layOutFloatingLabel:self.floatingLabel
+  [self.floatingLabelManager layOutFloatingLabel:self.label
                                            state:self.floatingLabelState
                                      normalFrame:self.layout.floatingLabelFrameNormal
                                    floatingFrame:self.layout.floatingLabelFrameFloating
@@ -606,7 +607,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
     @(1),
   ];
 
-  CGFloat floatingLabelMaxY = CGRectGetMaxY(self.floatingLabel.frame);
+  CGFloat floatingLabelMaxY = CGRectGetMaxY(self.label.frame);
   CGFloat topSpacing = [self.containerStyler.positioningDelegate
       contentAreaTopPaddingFloatingLabelWithFloatingLabelMaxY:floatingLabelMaxY];
   CGFloat topFadeStart = (floatingLabelMaxY + ((CGFloat)0.0 * topSpacing)) / viewHeight;
@@ -951,7 +952,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 }
 
 - (void)inputChipViewTextFieldDidSetPlaceholder:(NSString *)placeholder {
-  self.floatingLabel.text = placeholder;
+  self.label.text = placeholder;
   [self setNeedsLayout];
 }
 
@@ -962,7 +963,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   self.textField.textColor = colorScheming.textColor;
   self.leadingUnderlineLabel.textColor = colorScheming.underlineLabelColor;
   self.trailingUnderlineLabel.textColor = colorScheming.underlineLabelColor;
-  self.floatingLabel.textColor = colorScheming.floatingLabelColor;
+  self.label.textColor = colorScheming.floatingLabelColor;
   self.clearButtonImageView.tintColor = colorScheming.clearButtonTintColor;
 }
 

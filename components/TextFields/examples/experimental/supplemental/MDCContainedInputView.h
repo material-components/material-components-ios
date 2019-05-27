@@ -15,6 +15,9 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+//TODO: Remove this.
+static const UIControlState UIControlStateEditing = 0x00FF0001;
+
 /**
  A set of Contained Input View states outlined in the Material guidelines. These states overlap with
  and extend UIControlState.
@@ -33,6 +36,17 @@ typedef NS_OPTIONS(NSInteger, MDCContainedInputViewState) {
    */
   MDCContainedInputViewStateDisabled = 1 << 4,
 };
+
+//TODO: Get rid of __unused attribute
+__unused static MDCContainedInputViewState MDCContainedInputViewStateWithUIControlState(UIControlState controlState) {
+  if (controlState | UIControlStateDisabled) {
+    return MDCContainedInputViewStateDisabled;
+  } else if (controlState | UIControlStateEditing) {
+    return MDCContainedInputViewStateFocused;
+  } else {
+    return MDCContainedInputViewStateNormal;
+  }
+}
 
 /**
  Dictates the relative importance of the underline labels, and the order in which they are laid out.
@@ -98,10 +112,10 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
 @property(nonatomic, assign, readonly) MDCContainedInputViewFloatingLabelState floatingLabelState;
 
 /**
- The @c floatingLabel is a label that occupies the text area when there is no text and that floats
+ The @c label is a label that occupies the text area when there is no text and that floats
  above the text once there is some. It is distinct from a placeholder.
  */
-@property(strong, nonatomic, readonly, nonnull) UILabel *floatingLabel;
+@property(strong, nonatomic, readonly, nonnull) UILabel *label;
 
 /**
  The @c leadingUnderlineLabel can be used to display helper or error text.
@@ -133,14 +147,6 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
  A value of @c .5 would result in each underline label getting 50% of the available width.
  */
 @property(nonatomic, assign) CGFloat customUnderlineLabelDrawPriority;
-
-/**
- When set to YES, the floating label floats when the view becomes the first responder. When
- set to NO it disappears.
-
- @note The default is YES.
- */
-@property(nonatomic, assign) BOOL canFloatingLabelFloat;
 
 /**
  This property toggles the error state (similar to @c isHighlighted, @c isEnabled, @c isSelected,
