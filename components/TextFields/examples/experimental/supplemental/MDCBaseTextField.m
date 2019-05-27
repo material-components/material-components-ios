@@ -639,12 +639,10 @@
 
 - (MDCContainedInputViewState)determineCurrentContainedInputViewState {
   return [self containedInputViewStateWithIsEnabled:self.isEnabled
-                                          isErrored:self.isErrored
                                           isEditing:self.isEditing];
 }
 
 - (MDCContainedInputViewState)containedInputViewStateWithIsEnabled:(BOOL)isEnabled
-                                                         isErrored:(BOOL)isErrored
                                                          isEditing:(BOOL)isEditing {
   if (isEnabled) {
     if (isEditing) {
