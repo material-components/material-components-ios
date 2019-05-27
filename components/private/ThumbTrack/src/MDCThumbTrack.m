@@ -151,13 +151,13 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 #endif
 
 @interface MDCThumbTrack () <MDCInkTouchControllerDelegate>
+@property(nonatomic, strong, nullable) MDCRippleView *rippleView;
+@property(nonatomic, strong, nullable) MDCInkTouchController *touchController;
 @end
 
 @implementation MDCThumbTrack {
   CGFloat _lastDispatchedValue;
   UIColor *_clearColor;
-  MDCInkTouchController *_touchController;
-  MDCRippleView *_rippleView;
   UIView *_trackView;
   CAShapeLayer *_trackMaskLayer;
   CALayer *_trackOnLayer;
