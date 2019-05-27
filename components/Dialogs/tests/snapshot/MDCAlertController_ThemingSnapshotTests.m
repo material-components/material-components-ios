@@ -50,6 +50,18 @@ static NSString *const kMessageLongArabic =
     @"قد. أفاق بشرية الأخذ لكل مع, الشهير وبريطانيا عل شيء, ألمّ لإعادة المواد مدن إذ. إجلاء "
     @"للأراضي ضرب ما, عن لكون لعملة ويعزى تلك, الآلاف استدعى الثقيل بحق إذ. ٣٠ عدم وعُرفت الصفحات.";
 
+@interface MDCThemingDynamicTypeAlertControllerFake : MDCAlertController
+@property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
+@end
+
+@implementation MDCThemingDynamicTypeAlertControllerFake
+
+- (UITraitCollection *)traitCollection {
+  return self.traitCollectionOverride ?: [super traitCollection];
+}
+
+@end
+
 @interface MDCAlertController_ThemingSnapshotTests : MDCSnapshotTestCase
 @property(nonatomic, strong) MDCAlertController *alertController;
 @property(nonatomic, strong) MDCAlertAction *actionHigh;
@@ -334,6 +346,58 @@ static NSString *const kMessageLongArabic =
 
   // When
   [self.alertController applyThemeWithScheme:self.customScheme];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
+- (void)testAlertControllerThemedWithDynamicTypeAndContentSizeCategorySmall {
+  // Given
+  MDCThemingDynamicTypeAlertControllerFake *alertController =
+      [[MDCThemingDynamicTypeAlertControllerFake alloc] init];
+  alertController.title = kTitleLongLatin;
+  alertController.message = kMessageLongLatin;
+  [alertController addAction:self.actionHigh];
+  [alertController addAction:self.actionMedium];
+  [alertController addAction:self.actionLow];
+  if (@available(iOS 10.0, *)) {
+    alertController.traitCollectionOverride = [UITraitCollection
+        traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategorySmall];
+  }
+  MDCTypographyScheme *typographyScheme =
+      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+  typographyScheme.useCurrentContentSizeCategoryWhenApplied = YES;
+  self.defaultScheme.typographyScheme = typographyScheme;
+
+  // When
+  [alertController applyThemeWithScheme:self.defaultScheme];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
+- (void)
+    testAlertControllerThemedWithDynamicTypeAndContentSizeCategoryAccessibilityExtraExtraExtraLarge {
+  // Given
+  MDCThemingDynamicTypeAlertControllerFake *alertController =
+      [[MDCThemingDynamicTypeAlertControllerFake alloc] init];
+  alertController.title = kTitleLongLatin;
+  alertController.message = kMessageLongLatin;
+  [alertController addAction:self.actionHigh];
+  [alertController addAction:self.actionMedium];
+  [alertController addAction:self.actionLow];
+  if (@available(iOS 10.0, *)) {
+    alertController.traitCollectionOverride =
+        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
+                               UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+  }
+  MDCTypographyScheme *typographyScheme =
+      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+  typographyScheme.useCurrentContentSizeCategoryWhenApplied = YES;
+  self.defaultScheme.typographyScheme = typographyScheme;
+
+  // When
+  [alertController applyThemeWithScheme:self.defaultScheme];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.alertController.view];
