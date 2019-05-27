@@ -17,6 +17,7 @@
 #import <MaterialComponents/MaterialDialogs+TypographyThemer.h>
 #import <MaterialComponents/MaterialShadowElevations.h>
 #import "MaterialButtons+Theming.h"
+#import "MaterialTypography.h"
 
 static const CGFloat kCornerRadius = 4;
 
@@ -65,8 +66,19 @@ static const CGFloat kCornerRadius = 4;
     typographyScheme =
         [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
   }
-  self.titleFont = typographyScheme.headline6;
-  self.messageFont = typographyScheme.body1;
+  BOOL dynamicTypeEnabled = NO;
+  if ([typographyScheme respondsToSelector:@selector(useCurrentContentSizeCategoryWhenApplied)]) {
+    dynamicTypeEnabled = typographyScheme.useCurrentContentSizeCategoryWhenApplied;
+  } else {
+    dynamicTypeEnabled = typographyScheme.mdc_adjustsFontForContentSizeCategory;
+  }
+  if (dynamicTypeEnabled) {
+    self.titleFont = [typographyScheme.headline6 mdc_scaledFontForTraitEnvironment:self];
+    self.messageFont = [typographyScheme.body1 mdc_scaledFontForTraitEnvironment:self];
+  } else {
+    self.titleFont = typographyScheme.headline6;
+    self.messageFont = typographyScheme.body1;
+  }
 }
 
 - (void)applyColorThemeWithScheme:(id<MDCColorScheming>)colorScheme {
