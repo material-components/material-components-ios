@@ -70,7 +70,6 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   _thumbTrack.thumbGrowsWhenDragging = YES;
   _thumbTrack.shouldDisplayInk = NO;
   _thumbTrack.shouldDisplayRipple = YES;
-  _thumbTrack.enableRippleBehavior = YES;
   _thumbTrack.shouldDisplayDiscreteDots = YES;
   _thumbTrack.shouldDisplayDiscreteValueLabel = YES;
   _thumbTrack.trackOffColor = [[self class] defaultTrackOffColor];

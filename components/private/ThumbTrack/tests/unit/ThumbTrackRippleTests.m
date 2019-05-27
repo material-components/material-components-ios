@@ -14,13 +14,18 @@
 
 #import <XCTest/XCTest.h>
 
+#import "MDCRippleLayer.h"
 #import "MaterialInk.h"
 #import "MaterialRipple.h"
 #import "MaterialThumbTrack.h"
 
+@interface MDCRippleView (Testing)
+@property(nonatomic, strong) MDCRippleLayer *activeRippleLayer;
+@end
+
 @interface MDCThumbTrack (Testing)
-@property(nonatomic, strong, nullable) MDCRippleView *rippleView;
-@property(nonatomic, strong, nullable) MDCInkTouchController *touchController;
+@property(nonatomic, strong) MDCRippleView *rippleView;
+@property(nonatomic, strong) MDCInkTouchController *touchController;
 @end
 
 /**
@@ -56,6 +61,7 @@
                         [UIColor.blueColor colorWithAlphaComponent:(CGFloat)0.5]);
   XCTAssertEqual(self.thumbTrack.rippleView.rippleStyle, MDCRippleStyleUnbounded);
   XCTAssertFalse(self.thumbTrack.enableRippleBehavior);
+  XCTAssertTrue(self.thumbTrack.shouldDisplayRipple);
   XCTAssertNil(self.thumbTrack.rippleView.superview);
 }
 
@@ -101,6 +107,17 @@
 
   // Then
   XCTAssertEqualObjects(self.thumbTrack.rippleView.rippleColor, color);
+}
+
+- (void)testSettingShouldDisplayRippleToFalseDoesntCreateARippleOnTouch {
+  // When
+  self.thumbTrack.enableRippleBehavior = YES;
+  self.thumbTrack.shouldDisplayRipple = NO;
+  NSSet<UITouch *> *touches = [NSSet setWithArray:@[[[UITouch alloc] init]]];
+  [self.thumbTrack touchesBegan:touches withEvent:nil];
+
+  // Then
+  XCTAssertNil(self.thumbTrack.rippleView.activeRippleLayer);
 }
 
 @end

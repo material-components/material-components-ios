@@ -1113,7 +1113,8 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   }
 
   // This is to make sure that we only show a ripple when there is a thumb view visible.
-  if (CGRectGetWidth(_thumbView.frame) > 0 && CGRectGetHeight(_thumbView.frame) > 0) {
+  if (self.shouldDisplayRipple &&
+      CGRectGetWidth(_thumbView.frame) > 0 && CGRectGetHeight(_thumbView.frame) > 0) {
     [_rippleView beginRippleTouchDownAtPoint:_rippleView.center animated:YES completion:nil];
   }
   [self sendActionsForControlEvents:UIControlEventTouchDown];
