@@ -15,6 +15,7 @@
 import Foundation
 import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialButtons_ButtonThemer
+import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialMaskedTransition
 
 open class MaskedTransitionTypicalUseSwiftExample: UIViewController {
