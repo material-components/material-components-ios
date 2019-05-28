@@ -353,6 +353,7 @@
   self.alert.titleFont = fakeTitleFont;
   UIFont *fakeMessageFont = [UIFont systemFontOfSize:50];
   self.alert.messageFont = fakeMessageFont;
+  self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
 
   // When
   self.alert.mdc_adjustsFontForContentSizeCategory = YES;

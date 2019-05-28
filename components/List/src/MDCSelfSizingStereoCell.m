@@ -18,7 +18,6 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
-#import "MaterialApplication.h"
 #import "MaterialInk.h"
 #import "MaterialMath.h"
 #import "MaterialTypography.h"
@@ -228,15 +227,8 @@ static const CGFloat kDetailColorOpacity = (CGFloat)0.6;
   UIFont *titleFont = self.titleLabel.font ?: self.defaultTitleLabelFont;
   UIFont *detailFont = self.detailLabel.font ?: self.defaultDetailLabelFont;
   if (self.mdc_adjustsFontForContentSizeCategory) {
-    UIContentSizeCategory sizeCategory = UIContentSizeCategoryLarge;
-    if (@available(iOS 10.0, *)) {
-      sizeCategory = self.traitCollection.preferredContentSizeCategory;
-    } else if ([UIApplication mdc_safeSharedApplication]) {
-      sizeCategory = [UIApplication mdc_safeSharedApplication].preferredContentSizeCategory;
-    }
-
     if (titleFont.mdc_scalingCurve) {
-      titleFont = [titleFont mdc_scaledFontForSizeCategory:sizeCategory];
+      titleFont = [titleFont mdc_scaledFontForTraitEnvironment:self];
     } else if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
       titleFont =
           [titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleTitle
@@ -244,7 +236,7 @@ static const CGFloat kDetailColorOpacity = (CGFloat)0.6;
     }
 
     if (detailFont.mdc_scalingCurve) {
-      detailFont = [detailFont mdc_scaledFontForSizeCategory:sizeCategory];
+      detailFont = [detailFont mdc_scaledFontForTraitEnvironment:self];
     } else if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
       detailFont =
           [detailFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleCaption
