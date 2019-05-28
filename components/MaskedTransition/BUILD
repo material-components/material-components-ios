@@ -73,6 +73,7 @@ swift_library(
         ":MaskedTransition",
         "//components/Buttons",
         "//components/Buttons:ButtonThemer",
+        "//components/schemes/Container",
     ],
 )
 
