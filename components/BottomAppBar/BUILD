@@ -84,6 +84,7 @@ mdc_examples_swift_library(
         "//components/Buttons",
         "//components/Buttons:ButtonThemer",
         "//components/schemes/Color",
+        "//components/schemes/Container",
         "//components/schemes/Typography",
     ],
 )
