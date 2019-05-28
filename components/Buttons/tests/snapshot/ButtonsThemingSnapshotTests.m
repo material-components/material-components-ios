@@ -90,7 +90,7 @@
   // Given
   MDCFloatingButton *floatingButton = [[MDCFloatingButton alloc] init];
   UIImage *buttonImage = [[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
-                          imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   [floatingButton setImage:buttonImage forState:UIControlStateNormal];
   self.containerScheme = [[MDCContainerScheme alloc] init];
 
