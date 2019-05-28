@@ -1,6 +1,6 @@
 # 84.4.0
 
-In this minor release we added additional dynamic type support for Buttons, Chips, and List, as well as additional tests and bug fixes.
+In this minor release we have expanded our support for Dynamic Type in Buttons, Chips, and List, as well as additional tests and bug fixes.
 
 ## New deprecations
 
