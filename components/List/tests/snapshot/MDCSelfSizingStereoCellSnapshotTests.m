@@ -218,9 +218,8 @@ static NSString *const kSelfSizingStereoCellIdentifier = @"kSelfSizingStereoCell
   [self.collectionView addSubview:dequeuedCell];
   MDCSelfSizingStereoCell *cell = self.arrayOfCells[indexPath.item];
 
-  // Draw border to distinguish cell from the collection view.
-  dequeuedCell.layer.borderColor = UIColor.blackColor.CGColor;
-  dequeuedCell.layer.borderWidth = 1;
+  // Change backgroundColor to distinguish cell from the collection view.
+  dequeuedCell.backgroundColor = UIColor.grayColor;
   dequeuedCell.titleLabel.text = cell.titleLabel.text;
   dequeuedCell.titleLabel.font = cell.titleLabel.font;
   dequeuedCell.detailLabel.text = cell.detailLabel.text;
