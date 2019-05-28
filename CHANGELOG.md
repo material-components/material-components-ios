@@ -9,7 +9,7 @@ Please use `adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable` instea
 
 ## New features
 
-Buttons, Chips, and List, now support dynamic type when used with an MDCFontScaler:
+Buttons, Chips, and List, have expanded their support for Dynamic Type to allow custom scaling curves to be associated with fonts:
 
 ```objc
 MDCButton *button = [[MDCButton alloc] init];
@@ -30,7 +30,7 @@ let rect = buttonBar.rect(for: item, in: view)
 // Present an overlay pointing at `rect`
 ```
 
-As part of the typography component, we added a new method to UIFont `mdc_scaledFontForTraitEnvironment:traitEnvironment` that returns a font with the same family, weight and traits, but whose point size is based on the given trait environment's preferred content size category.
+As part of the typography component, we added a new method to UIFont `mdc_scaledFontForTraitEnvironment:` that returns a font with the same family, weight and traits, but whose point size is based on the given trait environment's preferred content size category.
 
 ## API changes
 
