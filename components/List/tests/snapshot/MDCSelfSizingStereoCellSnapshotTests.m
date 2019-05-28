@@ -73,7 +73,7 @@ static NSString *const kSelfSizingStereoCellIdentifier = @"kSelfSizingStereoCell
   self.collectionViewLayout.minimumLineSpacing = 0;
   self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, 240, 100)
                                            collectionViewLayout:self.collectionViewLayout];
-  self.collectionView.backgroundColor = [UIColor whiteColor];
+  self.collectionView.backgroundColor = UIColor.grayColor;
   [self.collectionView registerClass:[MDCSelfSizingStereoCell class]
           forCellWithReuseIdentifier:kSelfSizingStereoCellIdentifier];
   self.collectionView.dataSource = self;
@@ -219,7 +219,7 @@ static NSString *const kSelfSizingStereoCellIdentifier = @"kSelfSizingStereoCell
   MDCSelfSizingStereoCell *cell = self.arrayOfCells[indexPath.item];
 
   // Change backgroundColor to distinguish cell from the collection view.
-  dequeuedCell.backgroundColor = UIColor.grayColor;
+  dequeuedCell.backgroundColor = UIColor.whiteColor;
   dequeuedCell.titleLabel.text = cell.titleLabel.text;
   dequeuedCell.titleLabel.font = cell.titleLabel.font;
   dequeuedCell.detailLabel.text = cell.detailLabel.text;
