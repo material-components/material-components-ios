@@ -30,6 +30,16 @@ typical weekly release.
 If you are not able to cut a release Wednesday morning, cut it Tuesday evening before you leave the
 office.
 
+Please post regular updates about the status of the release to the team's chat room. This helps inform the
+team of the status of the release, and also encourages team problem solving in the event that something is
+stuck. At minimum, the following inflection points should be noted:
+
+- The release is being initiated.
+- Internal testing of the release has begun.
+- Internal testing of the release has ended.
+- The release has been submitted internally.
+- The release has been published to CocoaPods.
+
 For Googlers, also read [go/mdc-release-engineering](http://go/mdc-release-engineering) for additional details.
 
 ## Before you start
@@ -122,7 +132,7 @@ exception to our normal squash-and-merge procedure.
 
 ### Start internal testing
 
-You can now start the internal release testing process documented at [go/mdc-releasing](http://go/mdc-releasing#import-the-release-candidate).
+You can now start the internal release testing process documented at [go/mdc-releasing](http://go/mdc-releasing#requirements).
 
 ### Resolve any failures
 

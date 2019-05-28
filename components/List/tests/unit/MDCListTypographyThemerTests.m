@@ -14,8 +14,46 @@
 
 #import "MaterialList+TypographyThemer.h"
 #import "MaterialList.h"
+#import "MaterialTypography.h"
 
 #import <XCTest/XCTest.h>
+
+@interface MDCListTypographyThemerContentSizeCategoryOverrideWindow : UIWindow
+
+/** Used to override the value of @c preferredContentSizeCategory. */
+@property(nonatomic, copy) UIContentSizeCategory contentSizeCategoryOverride;
+
+@end
+
+@implementation MDCListTypographyThemerContentSizeCategoryOverrideWindow
+
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    self.contentSizeCategoryOverride = UIContentSizeCategoryLarge;
+  }
+  return self;
+}
+
+- (instancetype)initWithContentSizeCategoryOverride:
+    (UIContentSizeCategory)contentSizeCategoryOverride {
+  self = [super init];
+  if (self) {
+    self.contentSizeCategoryOverride = contentSizeCategoryOverride;
+  }
+  return self;
+}
+
+- (UITraitCollection *)traitCollection {
+  if (@available(iOS 10.0, *)) {
+    UITraitCollection *traitCollection = [UITraitCollection
+        traitCollectionWithPreferredContentSizeCategory:self.contentSizeCategoryOverride];
+    return traitCollection;
+  }
+  return [super traitCollection];
+}
+
+@end
 
 @interface MDCListTypographyThemerTests : XCTestCase
 
@@ -29,6 +67,48 @@
   [MDCListTypographyThemer applyTypographyScheme:typographyScheme toSelfSizingStereoCell:cell];
   XCTAssertEqualObjects(cell.titleLabel.font, typographyScheme.subtitle1);
   XCTAssertEqualObjects(cell.detailLabel.font, typographyScheme.body2);
+}
+
+- (void)testFontThemerWhenCurrentContentSizeCategoryIsUsed {
+  if (@available(iOS 10.0, *)) {
+    // Given
+    MDCSelfSizingStereoCell *cell = [[MDCSelfSizingStereoCell alloc] initWithFrame:CGRectZero];
+    MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
+    typographyScheme.useCurrentContentSizeCategoryWhenApplied = YES;
+
+    // When
+    MDCListTypographyThemerContentSizeCategoryOverrideWindow *extraLargeContainer =
+        [[MDCListTypographyThemerContentSizeCategoryOverrideWindow alloc]
+            initWithContentSizeCategoryOverride:UIContentSizeCategoryExtraLarge];
+    [extraLargeContainer addSubview:cell];
+    [MDCListTypographyThemer applyTypographyScheme:typographyScheme toSelfSizingStereoCell:cell];
+
+    // Then
+    XCTAssertNotNil(cell.titleLabel.font.mdc_scalingCurve);
+    XCTAssertGreaterThan(cell.titleLabel.font.pointSize, typographyScheme.subtitle1.pointSize);
+    XCTAssertGreaterThan(cell.detailLabel.font.pointSize, typographyScheme.body2.pointSize);
+  }
+}
+
+- (void)testFontThemerWhenCurrentContentSizeCategoryIsNotUsed {
+  if (@available(iOS 10.0, *)) {
+    // Given
+    MDCSelfSizingStereoCell *cell = [[MDCSelfSizingStereoCell alloc] initWithFrame:CGRectZero];
+    MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
+    typographyScheme.useCurrentContentSizeCategoryWhenApplied = NO;
+
+    // When
+    MDCListTypographyThemerContentSizeCategoryOverrideWindow *extraLargeContainer =
+        [[MDCListTypographyThemerContentSizeCategoryOverrideWindow alloc]
+            initWithContentSizeCategoryOverride:UIContentSizeCategoryExtraLarge];
+    [extraLargeContainer addSubview:cell];
+    [MDCListTypographyThemer applyTypographyScheme:typographyScheme toSelfSizingStereoCell:cell];
+
+    // Then
+    XCTAssertNotNil(cell.titleLabel.font.mdc_scalingCurve);
+    XCTAssertTrue([cell.titleLabel.font mdc_isSimplyEqual:typographyScheme.subtitle1]);
+    XCTAssertTrue([cell.detailLabel.font mdc_isSimplyEqual:typographyScheme.body2]);
+  }
 }
 
 @end

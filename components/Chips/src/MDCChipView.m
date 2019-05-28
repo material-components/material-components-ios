@@ -23,7 +23,6 @@
 #import "MaterialShadowLayer.h"
 #import "MaterialShapes.h"
 #import "MaterialTypography.h"
-#import "UIApplication+AppExtensions.h"
 
 static const MDCFontTextStyle kTitleTextStyle = MDCFontTextStyleBody2;
 
@@ -135,7 +134,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 - (void)commonMDCChipViewInit {
   _minimumSize = kMDCChipMinimumSizeDefault;
   self.isAccessibilityElement = YES;
-  _mdc_legacyFontScaling = YES;
+  _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -298,6 +297,14 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   }
 
   [self updateTitleFont];
+}
+
+- (void)mdc_setLegacyFontScaling:(BOOL)legacyScaling {
+  _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = legacyScaling;
+}
+
+- (BOOL)mdc_legacyFontScaling {
+  return _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
 }
 
 - (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
@@ -511,14 +518,8 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   // If we are automatically adjusting for Dynamic Type resize the font based on the text style
   if (self.mdc_adjustsFontForContentSizeCategory) {
     if (titleFont.mdc_scalingCurve && !self.mdc_legacyFontScaling) {
-      UIContentSizeCategory sizeCategory = UIContentSizeCategoryLarge;
-      if (@available(iOS 10.0, *)) {
-        sizeCategory = self.traitCollection.preferredContentSizeCategory;
-      } else if ([UIApplication mdc_safeSharedApplication]) {
-        sizeCategory = [UIApplication mdc_safeSharedApplication].preferredContentSizeCategory;
-      }
-      titleFont = [titleFont mdc_scaledFontForSizeCategory:sizeCategory];
-    } else {
+      titleFont = [titleFont mdc_scaledFontForTraitEnvironment:self];
+    } else if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
       titleFont =
           [titleFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
                                   scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];

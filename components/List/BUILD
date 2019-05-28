@@ -38,6 +38,7 @@ mdc_public_objc_library(
         "//components/ShadowElevations",
         "//components/ShadowLayer",
         "//components/Typography",
+        "//components/private/Application",
         "@material_internationalization_ios//:MDFInternationalization",
     ],
 )
@@ -46,6 +47,7 @@ mdc_extension_objc_library(
     name = "TypographyThemer",
     deps = [
         ":List",
+        "//components/Typography",
         "//components/schemes/Typography",
     ],
 )
@@ -93,6 +95,8 @@ mdc_objc_library(
         ":List",
         ":ListThemer",
         ":TypographyThemer",
+        "//components/Typography",
+        "//components/schemes/Typography",
     ],
 )
 
@@ -143,6 +147,7 @@ mdc_snapshot_objc_library(
     name = "snapshot_test_lib",
     deps = [
         ":List",
+        "//components/schemes/Typography",
     ],
 )
 

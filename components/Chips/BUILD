@@ -43,7 +43,6 @@ mdc_public_objc_library(
         "//components/Shapes",
         "//components/TextFields",
         "//components/Typography",
-        "//components/private/Application",
         "//components/private/Math",
         "@material_internationalization_ios//:MDFInternationalization",
     ],
@@ -106,6 +105,7 @@ mdc_extension_objc_library(
     deps = [
         ":Chips",
         "//components/schemes/Typography",
+        "//components/Typography",
     ],
 )
 
