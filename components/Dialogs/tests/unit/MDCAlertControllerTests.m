@@ -21,7 +21,6 @@
 #import "../../src/private/MDCDialogShadowedView.h"
 #import "MDCAlertController+ButtonForAction.h"
 #import "MDCAlertControllerView+Private.h"
-#import "MDCAlertController+ButtonForAction.h"
 
 #pragma mark - Subclasses for testing
 
