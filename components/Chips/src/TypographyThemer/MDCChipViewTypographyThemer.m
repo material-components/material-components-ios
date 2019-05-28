@@ -14,7 +14,6 @@
 
 #import "MDCChipViewTypographyThemer.h"
 
-#import "MaterialApplication.h"
 #import "MaterialTypography.h"
 
 @implementation MDCChipViewTypographyThemer
@@ -22,14 +21,17 @@
 + (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme
                    toChipView:(nonnull MDCChipView *)chipView {
   UIFont *titleFont = typographyScheme.body2;
-  if (typographyScheme.mdc_adjustsFontForContentSizeCategory) {
-    UIContentSizeCategory sizeCategory = UIContentSizeCategoryLarge;
-    if (@available(iOS 10.0, *)) {
-      sizeCategory = chipView.traitCollection.preferredContentSizeCategory;
-    } else if ([UIApplication mdc_safeSharedApplication]) {
-      sizeCategory = [UIApplication mdc_safeSharedApplication].preferredContentSizeCategory;
-    }
-    titleFont = [titleFont mdc_scaledFontForSizeCategory:sizeCategory];
+  BOOL useCurrentContentSizeCategoryWhenApplied = NO;
+  if ([typographyScheme respondsToSelector:@selector(useCurrentContentSizeCategoryWhenApplied)]) {
+    useCurrentContentSizeCategoryWhenApplied =
+        typographyScheme.useCurrentContentSizeCategoryWhenApplied;
+  } else {
+    useCurrentContentSizeCategoryWhenApplied =
+        typographyScheme.mdc_adjustsFontForContentSizeCategory;
+  }
+
+  if (useCurrentContentSizeCategoryWhenApplied) {
+    titleFont = [titleFont mdc_scaledFontForTraitEnvironment:chipView];
   }
   chipView.titleFont = titleFont;
 }
