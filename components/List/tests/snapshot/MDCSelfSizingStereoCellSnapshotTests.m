@@ -68,11 +68,10 @@ static NSString *const kSelfSizingStereoCellIdentifier = @"kSelfSizingStereoCell
   // self.recordMode = YES;
 
   self.collectionViewLayout = [[UICollectionViewFlowLayout alloc] init];
-  self.collectionViewLayout.estimatedItemSize =
-  CGSizeMake(240, 75);
+  self.collectionViewLayout.estimatedItemSize = CGSizeMake(240, 75);
   self.collectionViewLayout.minimumInteritemSpacing = 1;
   self.collectionViewLayout.minimumLineSpacing = 0;
-  self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, 240, 100 )
+  self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, 240, 100)
                                            collectionViewLayout:self.collectionViewLayout];
   self.collectionView.backgroundColor = [UIColor whiteColor];
   [self.collectionView registerClass:[MDCSelfSizingStereoCell class]
@@ -147,12 +146,10 @@ static NSString *const kSelfSizingStereoCellIdentifier = @"kSelfSizingStereoCell
   MDCSelfSizingStereoCell *cell = [[MDCSelfSizingStereoCell alloc] init];
   cell.titleLabel.text = @"Title";
   cell.detailLabel.text = @"Detail";
-  cell.leadingImageView.image =
-      [UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                         withStyle:MDCSnapshotTestImageStyleCheckerboard];
-  cell.trailingImageView.image =
-      [UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                         withStyle:MDCSnapshotTestImageStyleRectangles];
+  cell.leadingImageView.image = [UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
+                                                   withStyle:MDCSnapshotTestImageStyleCheckerboard];
+  cell.trailingImageView.image = [UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
+                                                    withStyle:MDCSnapshotTestImageStyleRectangles];
   self.arrayOfCells = @[ cell ];
 
   // Then
@@ -205,13 +202,16 @@ static NSString *const kSelfSizingStereoCellIdentifier = @"kSelfSizingStereoCell
   return 1;
 }
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+- (NSInteger)collectionView:(UICollectionView *)collectionView
+     numberOfItemsInSection:(NSInteger)section {
   return self.arrayOfCells.count;
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   MDCSelfSizingStereoCell *dequeuedCell =
-  [collectionView dequeueReusableCellWithReuseIdentifier:kSelfSizingStereoCellIdentifier forIndexPath:indexPath];
+      [collectionView dequeueReusableCellWithReuseIdentifier:kSelfSizingStereoCellIdentifier
+                                                forIndexPath:indexPath];
   // Temporarily add dequeuedCell as a subview of collectionView
   // to inherit traitCollection. The dequeuedCell will be removed
   // from parent at the end of this method.
