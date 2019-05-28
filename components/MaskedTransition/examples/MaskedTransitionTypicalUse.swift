@@ -27,8 +27,7 @@ open class MaskedTransitionTypicalUseSwiftExample: UIViewController {
     let useSafeAreaInsets: Bool
   }
   var targets: [TargetInfo] = []
-  @objc var colorScheme = MDCSemanticColorScheme()
-  @objc var typographyScheme = MDCTypographyScheme()
+  @objc var containerScheme = MDCContainerScheme()
   let rightFAB = MDCFloatingButton()
   let leftFAB = MDCFloatingButton()
 
@@ -43,16 +42,13 @@ open class MaskedTransitionTypicalUseSwiftExample: UIViewController {
     view.addSubview(tableView)
 
     let addImage = UIImage(named: "Add")
-    let buttonScheme = MDCButtonScheme()
-    buttonScheme.colorScheme = colorScheme
-    buttonScheme.typographyScheme = typographyScheme
     rightFAB.setImage(addImage, for: .normal)
-    MDCFloatingActionButtonThemer.applyScheme(buttonScheme, to: rightFAB)
+    rightFAB.applySecondaryTheme(withScheme: containerScheme)
     rightFAB.addTarget(self, action: #selector(didTapFab), for: .touchUpInside)
     view.addSubview(rightFAB)
 
     leftFAB.setImage(addImage, for: .normal)
-    MDCFloatingActionButtonThemer.applyScheme(buttonScheme, to: leftFAB)
+    leftFAB.applySecondaryTheme(withScheme: containerScheme)
     leftFAB.addTarget(self, action: #selector(didTapFab), for: .touchUpInside)
     view.addSubview(leftFAB)
 
