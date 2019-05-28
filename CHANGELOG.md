@@ -1,16 +1,86 @@
-# #develop#
+# 84.4.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+In this minor release we added additional dynamic type support for Buttons, Chips, and List, as well as additional tests and bug fixes.
 
-Replace this explanations for how to resolve the breaking changes.
 ## New deprecations
 
-Replace this text with links to deprecation guides.
+`mdc_legacyFontScaling` in `MDCButton` and `MDCChipView` has been deprecated. 
+Please use `adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable` instead.
+
 ## New features
 
-Replace this text with example code for each new feature.
+Buttons, Chips, and List, now support dynamic type when used with an MDCFontScaler:
+
+```objc
+MDCButton *button = [[MDCButton alloc] init];
+UIFont *customFont = [UIFont fontWithName:@"CustomFontName" size:18.0];
+MDCFontScaler *fontScaler = [MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleBody1];
+UIFont *customScalableFont = [fontScaler scaledFontWithFont:customFont];
+[button setTitleFont:customScalingFont forState:UIControlStateNormal];
+```
+
+Buttons, Chips, Dialogs, and List, now have a new property 
+`adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable` that affects the fallback behavior for when a scaled font is not provided.
+If set to YES the font size will adjust even if a scaled font has not been provided for a given UIFont property on this component. If set to NO, the font size will only be adjusted if a scaled font has been provided.
+
+ButtonBar now allows clients to present overlay views that point to views in an MDCButtonBar:
+
+```swift
+let rect = buttonBar.rect(for: item, in: view)
+// Present an overlay pointing at `rect`
+```
+
+As part of the typography component, we added a new method to UIFont `mdc_scaledFontForTraitEnvironment:traitEnvironment` that returns a font with the same family, weight and traits, but whose point size is based on the given trait environment's preferred content size category.
+
 ## API changes
+
+### ButtonBar
+
+#### MDCButtonBar
+
+*new* method: `-rectForItem:item:inCoordinateSpace` in `MDCButtonBar`
+
+### Buttons
+
+#### MDCButton
+
+*new* property: `adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable` in `MDCButton`
+
+*deprecated* property: `mdc_legacyFontScaling` in `MDCButton`
+
+### Chips
+
+#### MDCChipView
+
+*new* property: `adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable` in `MDCChipView`
+
+*deprecated* property: `mdc_legacyFontScaling` in `MDCChipView`
+
+### Dialogs
+
+#### MDCAlertController
+
+*new* property: `adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable` in `MDCAlertController`
+
+### List
+
+#### MDCSelfSizingStereoCell
+
+*new* property: `adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable` in `MDCSelfSizingStereoCell`
+
+### Typography
+
+#### UIFont+MaterialScalable
+
+*new* method: `mdc_scaledFontForTraitEnvironment:traitEnvironment` in `UIFont+MaterialScalable`
+
+### schemes/Typography
+
+#### MDCTypographyScheme
+
+*new* property: `useCurrentContentSizeCategoryWhenApplied` in `MDCTypographyScheming`
+
+*new* property: `useCurrentContentSizeCategoryWhenApplied` in `MDCTypographyScheme` 
 
 ## Component changes
 
