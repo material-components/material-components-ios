@@ -131,6 +131,8 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
     }
     [button setTitleFont:_buttonFont forState:UIControlStateNormal];
     button.inkColor = self.buttonInkColor;
+    // These two lines must be after @c setTitleFont:forState: in order to @c MDCButton to handle
+    // dynamic type correctly.
     button.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable =
         self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
     button.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;

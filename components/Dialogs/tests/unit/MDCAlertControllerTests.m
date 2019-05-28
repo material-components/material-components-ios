@@ -371,10 +371,11 @@
   [self.alert addAction:fakeAction];
   UIFont *fakeButtonFont = [UIFont systemFontOfSize:45];
   self.alert.buttonFont = fakeButtonFont;
+  self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
 
   // When
   self.alert.mdc_adjustsFontForContentSizeCategory = YES;
-  
+
   // Then
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   XCTAssertFalse([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@ is equal to %@",
@@ -386,7 +387,5 @@
                  @"%@ is equal to %@", [button titleFontForState:UIControlStateNormal],
                  fakeButtonFont);
 }
-
-
 
 @end
