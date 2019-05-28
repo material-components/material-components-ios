@@ -13,8 +13,10 @@
 // limitations under the License.
 
 #import <XCTest/XCTest.h>
+
 #import "MaterialButtons.h"
 #import "MaterialDialogs.h"
+#import "MaterialTypography.h"
 
 #import "../../src/private/MDCDialogShadowedView.h"
 #import "MDCAlertControllerView+Private.h"
@@ -324,6 +326,36 @@
 
   // Then
   XCTAssertFalse(self.alert.alertView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
+}
+
+- (void)testLegacyDynamicTypeDisabledThenDynamicTypeEnabledDoesNotUpdateFonts {
+  // Given
+  UIFont *fakeTitleFont = [UIFont systemFontOfSize:55];
+  self.alert.titleFont = fakeTitleFont;
+  self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
+
+  // When
+  self.alert.mdc_adjustsFontForContentSizeCategory = YES;
+
+  // Then
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
+  XCTAssertTrue([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@ is not equal to %@",
+                view.titleLabel.font, fakeTitleFont);
+}
+
+- (void)testDynamicTypeEnabledAndLegacyEnabledUpdatesTheFonts {
+  // Given
+  UIFont *fakeTitleFont = [UIFont systemFontOfSize:55];
+  self.alert.titleFont = fakeTitleFont;
+  self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
+
+  // When
+  self.alert.mdc_adjustsFontForContentSizeCategory = YES;
+
+  // Then
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
+  XCTAssertFalse([view.titleLabel.font mdc_isSimplyEqual:fakeTitleFont], @"%@ is equal to %@",
+                 view.titleLabel.font, fakeTitleFont);
 }
 
 @end

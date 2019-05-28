@@ -161,13 +161,13 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
   UIFont *titleFont = self.titleFont ?: [[self class] titleFontDefault];
   if (self.mdc_adjustsFontForContentSizeCategory) {
     if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
-      self.titleLabel.font =
+      titleFont =
           [titleFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
                                   scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
     }
-  } else {
-    _titleLabel.font = titleFont;
   }
+
+  self.titleLabel.font = titleFont;
   [self setNeedsLayout];
 }
 
