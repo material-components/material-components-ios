@@ -161,13 +161,13 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
   UIFont *titleFont = self.titleFont ?: [[self class] titleFontDefault];
   if (self.mdc_adjustsFontForContentSizeCategory) {
     if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
-      self.titleLabel.font =
+      titleFont =
           [titleFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
                                   scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
     }
-  } else {
-    _titleLabel.font = titleFont;
   }
+
+  self.titleLabel.font = titleFont;
   [self setNeedsLayout];
 }
 
@@ -234,16 +234,16 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
 }
 
 - (void)updateMessageFont {
-  UIFont *messageFont = _messageFont ?: [[self class] messageFontDefault];
+  UIFont *messageFont = self.messageFont ?: [[self class] messageFontDefault];
   if (self.mdc_adjustsFontForContentSizeCategory) {
     if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
-      self.messageLabel.font = [messageFont
+      messageFont = [messageFont
           mdc_fontSizedForMaterialTextStyle:kMessageTextStyle
                        scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
     }
-  } else {
-    _messageLabel.font = messageFont;
   }
+
+  self.messageLabel.font = messageFont;
   [self setNeedsLayout];
 }
 
