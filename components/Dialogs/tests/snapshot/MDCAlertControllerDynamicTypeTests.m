@@ -45,7 +45,7 @@
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  //  self.recordMode = YES;
+    self.recordMode = YES;
 
   self.alertController = [[AlertControllerDynamicTypeSnapshotTestFake alloc] init];
   self.alertController.title = @"Material";
@@ -107,7 +107,6 @@
   self.alertController.traitCollectionOverride = traitCollection;
 }
 
-/** Test when a @c MDCAlertController has a content size of @c UIContentSizeCategorySmall. */
 - (void)testScaledFontDynamicTypeForContentSizeCategorySmall {
   // Given
   [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategorySmall];
@@ -121,7 +120,6 @@
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
-/** Test when a @c MDCAlertController has a content size of @c UIContentSizeCategoryMedium. */
 - (void)testScaledFontDynamicTypeForContentSizeCategoryMedium {
   // Given
   [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryMedium];
@@ -135,7 +133,6 @@
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
-/** Test when a @c MDCAlertController has a content size of @c UIContentSizeCategoryLarge */
 - (void)testScaledFontDynamicTypeForContentSizeCategoryLarge {
   // Given
   [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryLarge];
@@ -149,7 +146,6 @@
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
-/** Test when a @c MDCAlertController has a content size of @c UIContentSizeCategoryExtraLarge. */
 - (void)testScaledFontDynamicTypeForContentSizeCategoryExtraLarge {
   // Given
   [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryExtraLarge];
@@ -163,9 +159,6 @@
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
-/**
- Test when a @c MDCAlertController has a content size of @c UIContentSizeCategoryExtraExtraLarge.
- */
 - (void)testScaledFontDynamicTypeForContentSizeCategoryExtraExtraLarge {
   // Given
   [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryExtraExtraLarge];
@@ -179,10 +172,6 @@
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
-/**
- Test when a @c MDCAlertController has a content size of @c
- UIContentSizeCategoryExtraExtraExtraLarge.
- */
 - (void)testScaledFontDynamicTypeForContentSizeCategoryExtraExtraExtraLarge {
   // Given
   [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryExtraExtraExtraLarge];
@@ -196,10 +185,6 @@
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
-/**
- Test when a @c MDCAlertController has a content size of @c
- UIContentSizeCategoryAccessibilityMedium.
- */
 - (void)testScaledFontDynamicTypeForContentSizeCategoryAccessibilityMedium {
   // Given
   [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryAccessibilityMedium];
@@ -213,10 +198,6 @@
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
-/**
- Test when a @c MDCAlertController has a content size of @c
- UIContentSizeCategoryAccessibilityLarge.
- */
 - (void)testScaledFontDynamicTypeForContentSizeCategoryAccessibilityLarge {
   // Given
   [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryAccessibilityLarge];
@@ -230,10 +211,6 @@
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
-/**
- Test when a @c MDCAlertController has a content size of @c
- UIContentSizeCategoryAccessibilityExtraLarge.
- */
 - (void)testScaledFontDynamicTypeForContentSizeCategoryAccessibilityExtraLarge {
   // Given
   [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryAccessibilityExtraLarge];
@@ -247,10 +224,6 @@
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
-/**
- Test when a @c MDCAlertController has a content size of @c
- UIContentSizeCategoryAccessibilityExtraExtraLarge.
- */
 - (void)testScaledFontDynamicTypeForContentSizeCategoryAccessibilityExtraExtraLarge {
   // Given
   [self setAlertControllerTraitCollectionSizeToSize:
@@ -265,10 +238,6 @@
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
-/**
- Test when a @c MDCAlertController has a content size of @c
- UIContentSizeCategoryAccessibilityExtraExtraExtraLarge.
- */
 - (void)testScaledFontDynamicTypeForContentSizeCategoryAccessibilityExtraExtraExtraLarge {
   // Given
   [self setAlertControllerTraitCollectionSizeToSize:
@@ -279,6 +248,36 @@
       postNotificationName:UIContentSizeCategoryDidChangeNotification
                     object:nil];
 
+  // Then
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
+- (void)testScaledFontDynamicTypeForContentSizeCategoryExtraSmallAndLegacyDisabled {
+  // Given
+  self.recordMode = YES;
+  [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryExtraSmall];
+  self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
+  
+  // When
+  [NSNotificationCenter.defaultCenter
+   postNotificationName:UIContentSizeCategoryDidChangeNotification
+   object:nil];
+  
+  // Then
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
+- (void)testScaledFontDynamicTypeForContentSizeCategoryAccessibilityExtraExtraExtraLargeAndLegacyDisabled {
+  // Given
+  self.recordMode = YES;
+  [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+  self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
+  
+  // When
+  [NSNotificationCenter.defaultCenter
+   postNotificationName:UIContentSizeCategoryDidChangeNotification
+   object:nil];
+  
   // Then
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
