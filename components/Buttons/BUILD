@@ -44,7 +44,6 @@ mdc_public_objc_library(
         "//components/ShapeLibrary",
         "//components/Shapes",
         "//components/Typography",
-        "//components/private/Application",
         "//components/private/Math",
         "@material_text_accessibility_ios//:MDFTextAccessibility",
     ],

@@ -18,7 +18,7 @@
  A simple typography scheme that provides semantic fonts. There are no optional
  properties, all fonts must be provided, supporting more reliable typography theming.
  */
-@protocol MDCTypographyScheming
+@protocol MDCTypographyScheming <NSObject>
 
 /**
  The headline 1 font.
@@ -90,8 +90,25 @@
 
  This can be used by client to communicate whether they support dynamic type to both our theming
  functionality and embedded frameworks that also render UI.
+
+ @warning This API will eventually be deprecated. Please use
+ @c useCurrentContentSizeCategoryWhenApplied instead.
 */
 @property(nonatomic, readonly) BOOL mdc_adjustsFontForContentSizeCategory;
+
+@optional
+
+/**
+ A hint for how fonts in this scheme should be applied to components in relation to Dynamic Type.
+
+ If this flag is enabled and the typography scheme's font is scalable with Dynamic Type, then fonts
+ should be adjusted for the current Dynamic Type content size category prior to being assigned to
+ the component.
+
+ @note This flag will become required in the future as a replacement for
+ @c mdc_adjustsFontForContentSizeCategory.
+ */
+@property(nonatomic, assign, readonly) BOOL useCurrentContentSizeCategoryWhenApplied;
 
 @end
 
@@ -134,7 +151,22 @@ typedef NS_ENUM(NSInteger, MDCTypographySchemeDefaults) {
 @property(nonatomic, nonnull, readwrite, copy) UIFont *caption;
 @property(nonatomic, nonnull, readwrite, copy) UIFont *button;
 @property(nonatomic, nonnull, readwrite, copy) UIFont *overline;
-@property(nonatomic, readwrite) BOOL mdc_adjustsFontForContentSizeCategory;
+
+/**
+ A hint for how fonts in this scheme should be applied to components in relation to Dynamic Type.
+
+ @note Enabling this flag only has an effect if the fonts stored on this scheme are scalable. See
+ MDCTypographySchemeDefaults for default versions that are scalable. Alternatively, you can specify
+ custom scalable fonts using the MDCFontScaler API.
+
+ When fonts are applied to components:
+
+ - If this flag is disabled, make no changes to the font.
+ - If this flag is enabled, adjust the font with respect to the current content size category.
+
+ Default value is NO.
+ */
+@property(nonatomic, assign, readwrite) BOOL useCurrentContentSizeCategoryWhenApplied;
 
 /**
  Initializes the typography scheme with the latest material defaults.
@@ -145,5 +177,15 @@ typedef NS_ENUM(NSInteger, MDCTypographySchemeDefaults) {
  Initializes the typography scheme with the values associated with the given defaults.
  */
 - (nonnull instancetype)initWithDefaults:(MDCTypographySchemeDefaults)defaults;
+
+#pragma mark - To be deprecated
+
+/**
+ @warning Will eventually be deprecated and removed. Please use
+ useCurrentContentSizeCategoryWhenApplied instead.
+
+ Modifying this property will also modify useCurrentContentSizeCategoryWhenApplied, and vice-versa.
+ */
+@property(nonatomic, assign, readwrite) BOOL mdc_adjustsFontForContentSizeCategory;
 
 @end
