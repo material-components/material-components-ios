@@ -243,8 +243,7 @@
 
 - (void)testScaledFontDynamicTypeForContentSizeCategoryAccessibilityExtraExtraLarge {
   // Given
-  [self setAlertControllerContentSizeCategory:
-            UIContentSizeCategoryAccessibilityExtraExtraLarge];
+  [self setAlertControllerContentSizeCategory:UIContentSizeCategoryAccessibilityExtraExtraLarge];
   self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
 
   // When
@@ -259,8 +258,8 @@
 
 - (void)testScaledFontDynamicTypeForContentSizeCategoryAccessibilityExtraExtraExtraLarge {
   // Given
-  [self setAlertControllerContentSizeCategory:
-            UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+  [self
+      setAlertControllerContentSizeCategory:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
   self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
 
   // When
@@ -291,8 +290,8 @@
 - (void)
     testScaledFontDynamicTypeForContentSizeCategoryAccessibilityExtraExtraExtraLargeAndLegacyEnabled {
   // Given
-  [self setAlertControllerContentSizeCategory:
-            UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+  [self
+      setAlertControllerContentSizeCategory:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
   self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
 
   // When
