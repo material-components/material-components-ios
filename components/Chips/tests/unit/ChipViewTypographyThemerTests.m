@@ -50,13 +50,13 @@
   XCTAssertEqualObjects(chip.titleLabel.font, typographyScheme.body2);
 }
 
-- (void)testFontThemerWithDynamicTypeSupport {
+- (void)testFontThemerWhenCurrentContentSizeCategoryIsUsed {
   if (@available(iOS 10.0, *)) {
     // Given
     MDCChipsTypographyThemerTestsFakeChipView *chip =
         [[MDCChipsTypographyThemerTestsFakeChipView alloc] init];
     MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
-    typographyScheme.mdc_adjustsFontForContentSizeCategory = YES;
+    typographyScheme.useCurrentContentSizeCategoryWhenApplied = YES;
     UIContentSizeCategory size = UIContentSizeCategoryExtraExtraLarge;
     UITraitCollection *traitCollection =
         [UITraitCollection traitCollectionWithPreferredContentSizeCategory:size];
@@ -68,6 +68,27 @@
     // Then
     XCTAssertNotNil(chip.titleFont.mdc_scalingCurve);
     XCTAssertGreaterThan(chip.titleFont.pointSize, typographyScheme.body2.pointSize);
+  }
+}
+
+- (void)testFontThemerWhenCurrentContentSizeCategoryIsNotUsed {
+  if (@available(iOS 10.0, *)) {
+    // Given
+    MDCChipsTypographyThemerTestsFakeChipView *chip =
+        [[MDCChipsTypographyThemerTestsFakeChipView alloc] init];
+    MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
+    typographyScheme.useCurrentContentSizeCategoryWhenApplied = NO;
+    UIContentSizeCategory size = UIContentSizeCategoryExtraExtraLarge;
+    UITraitCollection *traitCollection =
+        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:size];
+    chip.traitCollectionOverride = traitCollection;
+
+    // When
+    [MDCChipViewTypographyThemer applyTypographyScheme:typographyScheme toChipView:chip];
+
+    // Then
+    XCTAssertNotNil(chip.titleFont.mdc_scalingCurve);
+    XCTAssertTrue([chip.titleFont mdc_isSimplyEqual:typographyScheme.body2]);
   }
 }
 

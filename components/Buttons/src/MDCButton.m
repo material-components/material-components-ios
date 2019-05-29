@@ -15,7 +15,6 @@
 #import "MDCButton.h"
 
 #import <MDFTextAccessibility/MDFTextAccessibility.h>
-#import "MaterialApplication.h"
 #import "MaterialInk.h"
 #import "MaterialMath.h"
 #import "MaterialRipple.h"
@@ -156,7 +155,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   _borderWidths = [NSMutableDictionary dictionary];
   _fonts = [NSMutableDictionary dictionary];
   _accessibilityTraitsIncludesButton = YES;
-  _mdc_legacyFontScaling = YES;
+  _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
 
   if (!_backgroundColors) {
     // _backgroundColors may have already been initialized by setting the backgroundColor setter.
@@ -892,15 +891,9 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   if (_mdc_adjustsFontForContentSizeCategory) {
     // Dynamic type is enabled so apply scaling
     if (font.mdc_scalingCurve) {
-      UIContentSizeCategory sizeCategory = UIContentSizeCategoryLarge;
-      if (@available(iOS 10.0, *)) {
-        sizeCategory = self.traitCollection.preferredContentSizeCategory;
-      } else if ([UIApplication mdc_safeSharedApplication]) {
-        sizeCategory = [UIApplication mdc_safeSharedApplication].preferredContentSizeCategory;
-      }
-      font = [font mdc_scaledFontForSizeCategory:sizeCategory];
+      font = [font mdc_scaledFontForTraitEnvironment:self];
     } else {
-      if (self.mdc_legacyFontScaling) {
+      if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
         font = [font mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleButton
                                   scaledForDynamicType:YES];
       }
@@ -971,6 +964,14 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [self updateTitleFont];
 
   [self sizeToFit];
+}
+
+- (BOOL)mdc_legacyFontScaling {
+  return self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
+}
+
+- (void)mdc_setLegacyFontScaling:(BOOL)mdc_legacyFontScaling {
+  self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = mdc_legacyFontScaling;
 }
 
 #pragma mark - Deprecations

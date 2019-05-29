@@ -23,6 +23,14 @@ typedef NS_ENUM(NSInteger, MDCItemBarAlignment) {
   MDCItemBarAlignmentJustified,
 
   /**
+   * If the item bar items can be nicely justified, in an equal size across the width of the screen,
+   * then they will layout as if `MDCItemBarAlignmentJustified` were set. However if the tabs are
+   * too wide to be nicely justified, then the item bar items fall back to using a
+   * `MDCItemBarAlignmentLeading` layout.
+   */
+  MDCItemBarAlignmentBestEffortJustified,
+
+  /**
    * Items are sized to fit their content and center-aligned as a group. If they do not fit in view,
    * they will be leading-aligned instead.
    */
