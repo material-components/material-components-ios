@@ -15,6 +15,7 @@
 import XCTest
 import MaterialComponents.MaterialNavigationBar
 import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialTypography
 
 class NavigationBarButtonTitleFontTests: XCTestCase {
 
@@ -52,7 +53,7 @@ class NavigationBarButtonTitleFontTests: XCTestCase {
     // Then
     for view in recursiveSubviews(of: navigationBar) {
       if let button = view as? MDCButton {
-        XCTAssertNil(button.titleFont(for: .normal))
+        XCTAssertTrue(button.titleFont(for: .normal)!.mdc_isSimplyEqual(MDCTypography.buttonFont()))
       }
     }
   }

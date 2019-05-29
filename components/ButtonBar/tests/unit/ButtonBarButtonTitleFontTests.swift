@@ -15,6 +15,7 @@
 import XCTest
 import MaterialComponents.MaterialButtonBar
 import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialTypography
 
 class ButtonBarButtonTitleFontTests: XCTestCase {
 
@@ -32,7 +33,7 @@ class ButtonBarButtonTitleFontTests: XCTestCase {
     // Then
     for view in buttonBar.subviews {
       if let button = view as? MDCButton {
-        XCTAssertNil(button.titleFont(for: .normal))
+        XCTAssertTrue(button.titleFont(for: .normal)!.mdc_isSimplyEqual(MDCTypography.buttonFont()))
       }
     }
   }
