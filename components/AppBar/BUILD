@@ -110,11 +110,11 @@ mdc_examples_swift_library(
     name = "SwiftExamples",
     deps = [
         ":AppBar",
-        ":ColorThemer",
-        ":TypographyThemer",
+        ":Theming",
         "//components/FlexibleHeader:CanAlwaysExpandToMaximumHeight",
         "//components/Tabs",
         "//components/schemes/Color",
+        "//components/schemes/Container",
         "//components/schemes/Typography",
     ],
 )

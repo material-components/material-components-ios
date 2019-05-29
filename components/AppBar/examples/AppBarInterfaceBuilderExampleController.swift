@@ -14,12 +14,13 @@
 
 import Foundation
 import MaterialComponents.MaterialAppBar
-import MaterialComponents.MaterialAppBar_ColorThemer
+import MaterialComponents.MaterialAppBar_Theming
+import MaterialComponents.MaterialContainerScheme
 
 class AppBarInterfaceBuilderSwiftExample: UIViewController, UIScrollViewDelegate {
   @IBOutlet weak var scrollView: UIScrollView!
   let appBarViewController = MDCAppBarViewController()
-  @objc var colorScheme = MDCSemanticColorScheme()
+  @objc var containerScheme: MDCContainerScheming = MDCContainerScheme()
 
   deinit {
     // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
@@ -51,7 +52,7 @@ class AppBarInterfaceBuilderSwiftExample: UIViewController, UIScrollViewDelegate
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    MDCAppBarColorThemer.applyColorScheme(colorScheme, to: appBarViewController)
+    appBarViewController.applyPrimaryTheme(withScheme: containerScheme)
 
     // Allows us to avoid forwarding events, but means we can't enable shift behaviors.
     appBarViewController.headerView.observesTrackingScrollViewScrollEvents = true
