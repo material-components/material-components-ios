@@ -60,8 +60,6 @@
                                                        handler:^(MDCAlertAction *action){
                                                        }];
   [self.alertController addAction:fakeAction];
-  self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
-  self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
   MDCFontScaler *titleFontScaler = [MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleSubtitle1];
   UIFont *titleFont = [UIFont systemFontOfSize:14];
   titleFont = [titleFontScaler scaledFontWithFont:titleFont];
@@ -77,6 +75,8 @@
   buttonFont = [buttonFontScaler scaledFontWithFont:buttonFont];
   buttonFont = [buttonFont mdc_scaledFontAtDefaultSize];
   self.alertController.buttonFont = buttonFont;
+  self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
+  self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
   self.alertController.view.bounds = CGRectMake(0, 0, 300, 300);
 }
 
