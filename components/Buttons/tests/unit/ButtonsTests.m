@@ -523,11 +523,10 @@ static NSString *controlStateDescription(UIControlState controlState) {
 
 - (void)testTitleFontForStateFallbackBehaviorWithLegacyDynamicType {
   // Given
-  self.button.mdc_adjustsFontForContentSizeCategory = YES;
   self.button.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
-  UIFont *fakeFont = [UIFont systemFontOfSize:25];
+
   // When
-  [self.button setTitleFont:fakeFont forState:UIControlStateNormal];
+  self.button.mdc_adjustsFontForContentSizeCategory = YES;
 
   // Then
   for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
