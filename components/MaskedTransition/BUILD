@@ -72,7 +72,7 @@ swift_library(
     deps = [
         ":MaskedTransition",
         "//components/Buttons",
-        "//components/Buttons:ButtonThemer",
+        "//components/Buttons:Theming",
         "//components/schemes/Container",
     ],
 )
