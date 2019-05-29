@@ -45,7 +45,7 @@
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-    self.recordMode = YES;
+  //  self.recordMode = YES;
 
   self.alertController = [[AlertControllerDynamicTypeSnapshotTestFake alloc] init];
   self.alertController.title = @"Material";
@@ -254,7 +254,6 @@
 
 - (void)testScaledFontDynamicTypeForContentSizeCategoryExtraSmallAndLegacyDisabled {
   // Given
-  self.recordMode = YES;
   [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryExtraSmall];
   self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
   
@@ -269,7 +268,6 @@
 
 - (void)testScaledFontDynamicTypeForContentSizeCategoryAccessibilityExtraExtraExtraLargeAndLegacyDisabled {
   // Given
-  self.recordMode = YES;
   [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
   self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
   
