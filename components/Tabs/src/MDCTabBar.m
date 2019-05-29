@@ -445,6 +445,12 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(
 
 #pragma mark - Private
 
+// This method may be overriden by subclasses that wish to return a different size
+// class to be used by MDCItemBar.
++ (UIUserInterfaceSizeClass)horizontalSizeClassForObject:(id<UITraitEnvironment>)object {
+  return object.traitCollection.horizontalSizeClass;
+}
+
 + (MDCItemBarStyle *)defaultStyleForPosition:(UIBarPosition)position
                               itemAppearance:(MDCTabBarItemAppearance)appearance {
   MDCItemBarStyle *style = [[MDCItemBarStyle alloc] init];

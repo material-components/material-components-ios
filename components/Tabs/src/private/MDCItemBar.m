@@ -18,6 +18,7 @@
 
 #import "MDCItemBarCell.h"
 #import "MDCItemBarStyle.h"
+#import "MDCTabBar.h"
 #import "MDCTabBarIndicatorAttributes.h"
 #import "MDCTabBarIndicatorTemplate.h"
 #import "MDCTabBarIndicatorView.h"
@@ -56,6 +57,14 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 @end
 
 #pragma mark -
+
+// This class extension simply exposes a private method of MDCTabBar that is needed by
+// MDCItemBar. The method should be checked with `respondsToSelector:` before calling it
+// to ensure safety, and in the case that `respondsToSelector:` returns NO, a fallback
+// value must be used instead.
+@interface MDCTabBar ()
++ (UIUserInterfaceSizeClass)horizontalSizeClassForObject:(id<UITraitEnvironment>)object;
+@end
 
 @interface MDCItemBar () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 @end
@@ -489,6 +498,12 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 }
 
 - (UIUserInterfaceSizeClass)horizontalSizeClass {
+  // Return the size class from the MDCTabBar method, since it may be overriden by
+  // custom subclasses to return a custom size classes.
+  Class superviewClass = [self.superview class];
+  if ([superviewClass respondsToSelector:@selector(horizontalSizeClassForObject:)]) {
+    return [superviewClass horizontalSizeClassForObject:self];
+  }
   return self.traitCollection.horizontalSizeClass;
 }
 
