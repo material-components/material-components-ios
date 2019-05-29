@@ -20,7 +20,7 @@ import MaterialComponents.MaterialContainerScheme
 class AppBarModalPresentationSwiftExamplePresented: UITableViewController {
 
   let appBarViewController = MDCAppBarViewController()
-  @objc var containerScheme: MDCContainerScheming = MDCContainerScheme
+  @objc var containerScheme: MDCContainerScheming = MDCContainerScheme()
 
   deinit {
     // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
