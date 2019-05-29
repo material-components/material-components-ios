@@ -730,7 +730,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   if ((state & UIControlStateHighlighted) == UIControlStateHighlighted) {
     state = state & ~UIControlStateDisabled;
   }
-  UIFont *font =  _fonts[@(state)] ?: _fonts[@(UIControlStateNormal)];
+  UIFont *font = _fonts[@(state)] ?: _fonts[@(UIControlStateNormal)];
 
   if (!font) {
     // TODO(#2709): Have a single source of truth for fonts
