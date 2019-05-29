@@ -124,7 +124,7 @@
   // Given
   [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryMedium];
   self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
-  
+
   // When
   self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
   [NSNotificationCenter.defaultCenter
@@ -139,7 +139,7 @@
   // Given
   [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryLarge];
   self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
-  
+
   // When
   self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
   [NSNotificationCenter.defaultCenter
@@ -154,7 +154,7 @@
   // Given
   [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryExtraLarge];
   self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
-  
+
   // When
   self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
   [NSNotificationCenter.defaultCenter
@@ -169,7 +169,7 @@
   // Given
   [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryExtraExtraLarge];
   self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
-  
+
   // When
   self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
   [NSNotificationCenter.defaultCenter
@@ -184,7 +184,7 @@
   // Given
   [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryExtraExtraExtraLarge];
   self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
-  
+
   // When
   self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
   [NSNotificationCenter.defaultCenter
@@ -199,7 +199,7 @@
   // Given
   [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryAccessibilityMedium];
   self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
-  
+
   // When
   self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
   [NSNotificationCenter.defaultCenter
@@ -214,7 +214,7 @@
   // Given
   [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryAccessibilityLarge];
   self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
-  
+
   // When
   self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
   [NSNotificationCenter.defaultCenter
@@ -229,7 +229,7 @@
   // Given
   [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryAccessibilityExtraLarge];
   self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
-  
+
   // When
   self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
   [NSNotificationCenter.defaultCenter
@@ -245,7 +245,7 @@
   [self setAlertControllerTraitCollectionSizeToSize:
             UIContentSizeCategoryAccessibilityExtraExtraLarge];
   self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
-  
+
   // When
   self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
   [NSNotificationCenter.defaultCenter
@@ -261,7 +261,7 @@
   [self setAlertControllerTraitCollectionSizeToSize:
             UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
   self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
-  
+
   // When
   self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
   [NSNotificationCenter.defaultCenter
@@ -276,28 +276,30 @@
   // Given
   [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryExtraSmall];
   self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
-  
+
   // When
   self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
   [NSNotificationCenter.defaultCenter
-   postNotificationName:UIContentSizeCategoryDidChangeNotification
-   object:nil];
-  
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
+
   // Then
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
-- (void)testScaledFontDynamicTypeForContentSizeCategoryAccessibilityExtraExtraExtraLargeAndLegacyDisabled {
+- (void)
+    testScaledFontDynamicTypeForContentSizeCategoryAccessibilityExtraExtraExtraLargeAndLegacyDisabled {
   // Given
-  [self setAlertControllerTraitCollectionSizeToSize:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+  [self setAlertControllerTraitCollectionSizeToSize:
+            UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
   self.alertController.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
-  
+
   // When
   self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
   [NSNotificationCenter.defaultCenter
-   postNotificationName:UIContentSizeCategoryDidChangeNotification
-   object:nil];
-  
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
+
   // Then
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
