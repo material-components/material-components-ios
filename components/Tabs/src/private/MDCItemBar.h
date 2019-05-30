@@ -33,8 +33,7 @@
 
 /**
  Link back to this item bar's owning MDCTabBar so it can interrogate the tab bar's size class
- delegate for a horizontal
- size class.
+ delegate for a horizontal size class.
 
  @note This property may be removed in the near future.
  */
