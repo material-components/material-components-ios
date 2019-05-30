@@ -1196,7 +1196,11 @@ static NSString *controlStateDescription(UIControlState controlState) {
 
   // Then
   XCTAssertTrue([self.button.titleLabel.font mdc_isSimplyEqual:originalFont],
-                @"%@ is not equal to %@", self.button.titleLabel.font, originalFont);
+                @"(%@) is not equal to (%@)", self.button.titleLabel.font, originalFont);
+  XCTAssertTrue(
+      [[self.button titleFontForState:UIControlStateNormal] mdc_isSimplyEqual:originalFont],
+      @"(%@) is not equal to (%@)", [self.button titleFontForState:UIControlStateNormal],
+      originalFont);
 }
 
 /**
