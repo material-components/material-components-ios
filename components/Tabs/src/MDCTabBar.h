@@ -21,6 +21,7 @@
 @class MDCTabBarItem;
 @protocol MDCTabBarDelegate;
 @protocol MDCTabBarIndicatorTemplate;
+@protocol MDCTabBarSizeClassDelegate;
 
 typedef NS_ENUM(NSInteger, MDCTabBarItemState) {
   /** State for unselected tab bar item. */

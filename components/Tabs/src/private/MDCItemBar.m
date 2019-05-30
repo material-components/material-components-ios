@@ -22,6 +22,7 @@
 #import "MDCTabBarIndicatorTemplate.h"
 #import "MDCTabBarIndicatorView.h"
 #import "MDCTabBarPrivateIndicatorContext.h"
+#import "MDCTabBarSizeClassDelegate.h"
 #import "MaterialAnimationTiming.h"
 
 /// Cell reuse identifier for item bar cells.
@@ -489,6 +490,9 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 }
 
 - (UIUserInterfaceSizeClass)horizontalSizeClass {
+  if (self.tabBar && self.tabBar.sizeClassDelegate && [self.tabBar.sizeClassDelegate respondsToSelector:@selector(horizontalSizeClassForObject:)]) {
+    return [self.tabBar.sizeClassDelegate horizontalSizeClassForObject:self];
+  }
   return self.traitCollection.horizontalSizeClass;
 }
 
