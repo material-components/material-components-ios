@@ -490,7 +490,8 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 }
 
 - (UIUserInterfaceSizeClass)horizontalSizeClass {
-  if (self.tabBar && self.tabBar.sizeClassDelegate && [self.tabBar.sizeClassDelegate respondsToSelector:@selector(horizontalSizeClassForObject:)]) {
+  if (self.tabBar && self.tabBar.sizeClassDelegate &&
+      [self.tabBar.sizeClassDelegate respondsToSelector:@selector(horizontalSizeClassForObject:)]) {
     return [self.tabBar.sizeClassDelegate horizontalSizeClassForObject:self];
   }
   return self.traitCollection.horizontalSizeClass;
