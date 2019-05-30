@@ -246,11 +246,11 @@ IB_DESIGNABLE
 /**
  Called before a UITabBarItem is displayed.
  */
--(void)tabBar:(nonnull MDCTabBar *)tabBar willDisplayItem:(nonnull UITabBarItem *)item;
+- (void)tabBar:(nonnull MDCTabBar *)tabBar willDisplayItem:(nonnull UITabBarItem *)item;
 
 /**
  Called after a UITabBarItem stops being displayed.
  */
--(void)tabBar:(nonnull MDCTabBar *)tabBar didEndDisplayingItem:(nonnull UITabBarItem *)item;
+- (void)tabBar:(nonnull MDCTabBar *)tabBar didEndDisplayingItem:(nonnull UITabBarItem *)item;
 
 @end
