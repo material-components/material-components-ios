@@ -33,7 +33,11 @@ class ButtonBarButtonTitleFontTests: XCTestCase {
     // Then
     for view in buttonBar.subviews {
       if let button = view as? MDCButton {
-        XCTAssertTrue(button.titleFont(for: .normal)!.mdc_isSimplyEqual(MDCTypography.buttonFont()))
+        if let font = button.titleFont(for: .normal) {
+          XCTAssertTrue(font.mdc_isSimplyEqual(MDCTypography.buttonFont()))
+        } else {
+          XCTAssertTrue(false, "The button's titleFont for .normal should not be nil.")
+        }
       }
     }
   }
