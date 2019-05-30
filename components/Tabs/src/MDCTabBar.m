@@ -426,6 +426,20 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(
   return shouldSelect;
 }
 
+-(void)itemBar:(MDCItemBar *)itemBar willDisplayItem:(UITabBarItem *)item {
+  id<MDCTabBarDelegate> delegate = self.delegate;
+  if ([delegate respondsToSelector:@selector(tabBar:willDisplayItem:)]) {
+    [delegate tabBar:self willDisplayItem:item];
+  }
+}
+
+-(void)itemBar:(MDCItemBar *)itemBar didEndDisplayingItem:(UITabBarItem *)item {
+  id<MDCTabBarDelegate> delegate = self.delegate;
+  if ([delegate respondsToSelector:@selector(tabBar:didEndDisplayingItem:)]) {
+    [delegate tabBar:self didEndDisplayingItem:item];
+  }
+}
+
 #pragma mark - UIView
 
 - (void)tintColorDidChange {

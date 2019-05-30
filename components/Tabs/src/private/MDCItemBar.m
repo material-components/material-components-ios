@@ -408,6 +408,24 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   return itemCell;
 }
 
+-(void)collectionView:(UICollectionView *)collectionView
+      willDisplayCell:(UICollectionViewCell *)cell
+   forItemAtIndexPath:(NSIndexPath *)indexPath {
+  UITabBarItem *item = [self itemAtIndexPath:indexPath];
+  if ([item respondsToSelector:@selector(itemBar:willDisplayItem:)]) {
+    [self.delegate itemBar:self willDisplayItem:item];
+  }
+}
+
+-(void)collectionView:(UICollectionView *)collectionView
+ didEndDisplayingCell:(UICollectionViewCell *)cell
+   forItemAtIndexPath:(NSIndexPath *)indexPath {
+  UITabBarItem *item = [self itemAtIndexPath:indexPath];
+  if ([item respondsToSelector:@selector(itemBar:didEndDisplayingItem:)]) {
+    [self.delegate itemBar:self didEndDisplayingItem:item];
+  }
+}
+
 #pragma mark - UICollectionViewDelegateFlowLayout
 
 - (CGSize)collectionView:(UICollectionView *)collectionView
