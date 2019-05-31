@@ -23,32 +23,37 @@
 @implementation MDCFilledTextField (MaterialTheming)
 
 - (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
-  [self applyTypographySchemeWith:containerScheme];
-  [self applyColorSchemeWith:containerScheme];
+  [self applyTypographyScheme:[self typographySchemeWithContainerScheme:containerScheme]];
+  [self applyDefaultColorScheme:[self colorSchemeWithContainerScheme:containerScheme]];
 }
 
-- (void)applyTypographySchemeWith:(id<MDCContainerScheming>)containerScheme {
-  id<MDCTypographyScheming> mdcTypographyScheming = containerScheme.typographyScheme;
-  if (!mdcTypographyScheming) {
-    mdcTypographyScheming =
-        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
-  }
-  [self applyMDCTypographyScheming:mdcTypographyScheming];
+- (void)applyErrorThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
+  [self applyTypographyScheme:[self typographySchemeWithContainerScheme:containerScheme]];
+  [self applyErrorColorScheme:[self colorSchemeWithContainerScheme:containerScheme]];
 }
 
-- (void)applyMDCTypographyScheming:(id<MDCTypographyScheming>)mdcTypographyScheming {
-  self.font = mdcTypographyScheming.subtitle1;
-  self.leadingUnderlineLabel.font = mdcTypographyScheming.caption;
-  self.trailingUnderlineLabel.font = mdcTypographyScheming.caption;
-}
-
-- (void)applyColorSchemeWith:(id<MDCContainerScheming>)containerScheme {
+- (id<MDCColorScheming>)colorSchemeWithContainerScheme:(nonnull id<MDCContainerScheming>)containerScheme {
   id<MDCColorScheming> mdcColorScheme = containerScheme.colorScheme;
   if (!mdcColorScheme) {
     mdcColorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   }
-  [self applyMDCColorScheming:mdcColorScheme];
+  return mdcColorScheme;
+}
+
+- (id<MDCTypographyScheming>)typographySchemeWithContainerScheme:(nonnull id<MDCContainerScheming>)containerScheme {
+  id<MDCTypographyScheming> mdcTypographyScheme = containerScheme.typographyScheme;
+  if (!mdcTypographyScheme) {
+    mdcTypographyScheme =
+    [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+  }
+  return mdcTypographyScheme;
+}
+
+- (void)applyTypographyScheme:(id<MDCTypographyScheming>)mdcTypographyScheming {
+  self.font = mdcTypographyScheming.subtitle1;
+  self.leadingAssistiveLabel.font = mdcTypographyScheming.caption;
+  self.trailingAssistiveLabel.font = mdcTypographyScheming.caption;
 }
 
 - (void)applyMDCColorScheming:(id<MDCColorScheming>)mdcColorScheming {
@@ -114,23 +119,9 @@
   return simpleTextFieldColorScheme;
 }
 
-- (void)applyErrorThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme {
-  /*
-   floatingLabelColor = colorScheming.errorColor;
-   underlineLabelColor = colorScheming.errorColor;
-   thinUnderlineFillColor = colorScheming.errorColor;
-   thickUnderlineFillColor = colorScheming.errorColor;
-   original error state deviations ^
-   */
-  [self applyThemeWithScheme:scheme];
-  id<MDCColorScheming> mdcColorScheme = scheme.colorScheme;
-  if (!mdcColorScheme) {
-    mdcColorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-  }
-  UIColor *errorColor = mdcColorScheme.errorColor;
-  UIColor *errorColorDisabled = [mdcColorScheme.errorColor colorWithAlphaComponent:0.5];
-
+- (void)applyDefaultColorScheme:(id<MDCColorScheming>)mdcColorScheming {
+  UIColor *errorColor = mdcColorScheming.errorColor;
+  UIColor *errorColorDisabled = [mdcColorScheming.errorColor colorWithAlphaComponent:0.5];
   [self setLabelColor:errorColor forState:UIControlStateNormal];
   [self setLabelColor:errorColor forState:UIControlStateEditing];
   [self setLabelColor:errorColorDisabled forState:UIControlStateDisabled];
@@ -140,9 +131,41 @@
   [self setUnderlineColor:errorColor forState:UIControlStateNormal];
   [self setUnderlineColor:errorColor forState:UIControlStateEditing];
   [self setUnderlineColor:errorColorDisabled forState:UIControlStateDisabled];
-  self.trailingUnderlineLabel.textColor = errorColorDisabled;
-  self.leadingUnderlineLabel.textColor = errorColorDisabled;
+  self.trailingAssistiveLabel.textColor = errorColorDisabled;
+  self.leadingAssistiveLabel.textColor = errorColorDisabled;
   self.tintColor = errorColor;
+//  MDCContainedInputViewColorScheme *normalColorScheme =
+//  [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateNormal];
+//  [self setContainedInputViewColorScheming:normalColorScheme
+//                                  forState:MDCContainedInputViewStateNormal];
+//
+//  MDCContainedInputViewColorScheme *focusedColorScheme =
+//  [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateFocused];
+//  [self setContainedInputViewColorScheming:focusedColorScheme
+//                                  forState:MDCContainedInputViewStateFocused];
+//
+//  MDCContainedInputViewColorScheme *disabledColorScheme =
+//  [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateDisabled];
+//  [self setContainedInputViewColorScheming:disabledColorScheme
+//                                  forState:MDCContainedInputViewStateDisabled];
+//
+//  self.tintColor = mdcColorScheming.primaryColor;
+}
+
+- (void)applyErrorColorScheme:(id<MDCColorScheming>)mdcColorScheming {
+  UIColor *errorColor = mdcColorScheming.errorColor;
+  UIColor *errorColorDisabled = [mdcColorScheming.errorColor colorWithAlphaComponent:0.5];
+  [self setLabelColor:errorColor forState:UIControlStateNormal];
+  [self setLabelColor:errorColor forState:UIControlStateEditing];
+  [self setLabelColor:errorColorDisabled forState:UIControlStateDisabled];
+  [self setTextColor:errorColor forState:UIControlStateNormal];
+  [self setTextColor:errorColor forState:UIControlStateEditing];
+  [self setTextColor:errorColorDisabled forState:UIControlStateDisabled];
+  [self setUnderlineColor:errorColor forState:UIControlStateNormal];
+  [self setUnderlineColor:errorColor forState:UIControlStateEditing];
+  [self setUnderlineColor:errorColorDisabled forState:UIControlStateDisabled];
+  self.trailingAssistiveLabel.textColor = errorColorDisabled;
+  self.leadingAssistiveLabel.textColor = errorColorDisabled;
   self.tintColor = errorColor;
 }
 

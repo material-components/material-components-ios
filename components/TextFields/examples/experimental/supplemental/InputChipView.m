@@ -102,8 +102,8 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 @property(strong, nonatomic) UIImageView *clearButtonImageView;
 @property(strong, nonatomic) UILabel *label;
 
-@property(strong, nonatomic) UILabel *leftUnderlineLabel;
-@property(strong, nonatomic) UILabel *rightUnderlineLabel;
+@property(strong, nonatomic) UILabel *leftAssistiveLabel;
+@property(strong, nonatomic) UILabel *rightAssistiveLabel;
 
 @property(strong, nonatomic) UIView *maskedScrollViewContainerView;
 @property(strong, nonatomic) UIScrollView *scrollView;
@@ -126,8 +126,8 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 //@property(strong, nonatomic) UIImageView *clearButtonImageView;
 //@property(strong, nonatomic) UILabel *floatingLabel;
 //
-//@property(strong, nonatomic) UILabel *leftUnderlineLabel;
-//@property(strong, nonatomic) UILabel *rightUnderlineLabel;
+//@property(strong, nonatomic) UILabel *leftAssistiveLabel;
+//@property(strong, nonatomic) UILabel *rightAssistiveLabel;
 
 @property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
 
@@ -178,7 +178,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   [self setUpChipRowHeight];
   [self setUpGradientLayers];
   [self setUpColorSchemesDictionary];
-  [self setUpUnderlineLabels];
+  [self setUpAssistiveLabels];
   [self setUpClearButton];
   [self setUpContainerStyler];
 }
@@ -293,15 +293,15 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
                                   forState:MDCContainedInputViewStateDisabled];
 }
 
-- (void)setUpUnderlineLabels {
+- (void)setUpAssistiveLabels {
   //  CGFloat underlineFontSize = MDCRound([UIFont systemFontSize] * 0.75);
   //  UIFont *underlineFont = [UIFont systemFontOfSize:underlineFontSize];
-  //  self.leftUnderlineLabel = [[UILabel alloc] init];
-  //  self.leftUnderlineLabel.font = underlineFont;
-  //  self.rightUnderlineLabel = [[UILabel alloc] init];
-  //  self.rightUnderlineLabel.font = underlineFont;
-  //  [self addSubview:self.leftUnderlineLabel];
-  //  [self addSubview:self.rightUnderlineLabel];
+  //  self.leftAssistiveLabel = [[UILabel alloc] init];
+  //  self.leftAssistiveLabel.font = underlineFont;
+  //  self.rightAssistiveLabel = [[UILabel alloc] init];
+  //  self.rightAssistiveLabel.font = underlineFont;
+  //  [self addSubview:self.leftAssistiveLabel];
+  //  [self addSubview:self.rightAssistiveLabel];
 }
 
 - (void)setUpClearButton {
@@ -488,8 +488,8 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
                                   interChipSpacing:self.chipRowSpacing
                                        clearButton:self.clearButton
                                clearButtonViewMode:self.textField.clearButtonMode
-                                leftUnderlineLabel:self.leftUnderlineLabel
-                               rightUnderlineLabel:self.rightUnderlineLabel
+                                leftUnderlineLabel:self.leftAssistiveLabel
+                               rightUnderlineLabel:self.rightAssistiveLabel
                         underlineLabelDrawPriority:self.underlineLabelDrawPriority
                   customUnderlineLabelDrawPriority:self.customUnderlineLabelDrawPriority
                     preferredMainContentAreaHeight:self.preferredMainContentAreaHeight
@@ -546,8 +546,8 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   //  self.clearButton.frame = [self clearButtonFrameFromLayout:self.layout
   //                                           floatingLabelState:self.floatingLabelState];
   //  self.clearButton.hidden = self.layout.clearButtonHidden;
-  //  self.leftUnderlineLabel.frame = self.layout.leftUnderlineLabelFrame;
-  //  self.rightUnderlineLabel.frame = self.layout.rightUnderlineLabelFrame;
+  //  self.leftAssistiveLabel.frame = self.layout.leftAssistiveLabelFrame;
+  //  self.rightAssistiveLabel.frame = self.layout.rightAssistiveLabelFrame;
 
   self.maskedScrollViewContainerView.frame = self.layout.maskedScrollViewContainerViewFrame;
   self.scrollView.frame = self.layout.scrollViewFrame;
@@ -861,19 +861,19 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   return self.inputChipViewTextField;
 }
 
-- (UILabel *)leadingUnderlineLabel {
+- (UILabel *)leadingAssistiveLabel {
   if ([self isRTL]) {
-    return self.rightUnderlineLabel;
+    return self.rightAssistiveLabel;
   } else {
-    return self.leftUnderlineLabel;
+    return self.leftAssistiveLabel;
   }
 }
 
-- (UILabel *)trailingUnderlineLabel {
+- (UILabel *)trailingAssistiveLabel {
   if ([self isRTL]) {
-    return self.leftUnderlineLabel;
+    return self.leftAssistiveLabel;
   } else {
-    return self.rightUnderlineLabel;
+    return self.rightAssistiveLabel;
   }
 }
 
@@ -961,8 +961,8 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 - (void)applyMDCContainedInputViewColorScheming:
     (id<MDCContainedInputViewColorScheming>)colorScheming {
   self.textField.textColor = colorScheming.textColor;
-  self.leadingUnderlineLabel.textColor = colorScheming.underlineLabelColor;
-  self.trailingUnderlineLabel.textColor = colorScheming.underlineLabelColor;
+  self.leadingAssistiveLabel.textColor = colorScheming.underlineLabelColor;
+  self.trailingAssistiveLabel.textColor = colorScheming.underlineLabelColor;
   self.label.textColor = colorScheming.floatingLabelColor;
   self.clearButtonImageView.tintColor = colorScheming.clearButtonTintColor;
 }

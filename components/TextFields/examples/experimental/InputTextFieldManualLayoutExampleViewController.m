@@ -290,23 +290,32 @@ static const NSUInteger kDefaultVerticalPadding = 20;
   }];
 }
 
-- (void)updateTextFieldStates {
+- (void)updateTextFieldThemes {
   [self.allTextFields
-      enumerateObjectsUsingBlock:^(MDCBaseTextField *textField, NSUInteger idx, BOOL *stop) {
-        BOOL isEven = idx % 2 == 0;
-        if (self.isErrored) {
-          if (isEven) {
-            textField.leadingAssistiveLabel.text = @"Suspendisse quam elit, mattis sit amet justo "
-                                                   @"vel, venenatis lobortis massa. Donec metus "
-                                                   @"dolor.";
+      enumerateObjectsUsingBlock:^(UITextField *uiTextField, NSUInteger idx, BOOL *stop) {
+        if ([uiTextField isKindOfClass:[MDCBaseTextField class]]) {
+          MDCBaseTextField *textField = (MDCBaseTextField *)uiTextField;
+          BOOL isEven = idx % 2 == 0;
+          if (self.isErrored) {
+            if ([textField respondsToSelector:@selector(applyErrorThemeWithScheme:)]) {
+              [textField applyErrorThemeWithScheme:self.containerScheme];
+            }
+            if (isEven) {
+              textField.leadingAssistiveLabel.text = @"Suspendisse quam elit, mattis sit amet justo "
+              @"vel, venenatis lobortis massa. Donec metus "
+              @"dolor.";
+            } else {
+              textField.leadingAssistiveLabel.text = @"This is an error.";
+            }
           } else {
-            textField.leadingAssistiveLabel.text = @"This is an error.";
-          }
-        } else {
-          if (isEven) {
-            textField.leadingAssistiveLabel.text = @"This is helper text.";
-          } else {
-            textField.leadingAssistiveLabel.text = nil;
+            if ([textField respondsToSelector:@selector(applyThemeWithScheme:)]) {
+              [textField applyThemeWithScheme:self.containerScheme];
+            }
+            if (isEven) {
+              textField.leadingAssistiveLabel.text = @"This is helper text.";
+            } else {
+              textField.leadingAssistiveLabel.text = nil;
+            }
           }
         }
       }];
@@ -321,8 +330,8 @@ static const NSUInteger kDefaultVerticalPadding = 20;
   }];
 }
 
-- (NSArray<MDCBaseTextField *> *)allTextFields {
-  return [self allViewsOfClass:[MDCBaseTextField class]];
+- (NSArray<UITextField *> *)allTextFields {
+  return [self allViewsOfClass:[UITextField class]];
 }
 
 - (NSArray<MDCButton *> *)allButtons {
@@ -354,7 +363,7 @@ static const NSUInteger kDefaultVerticalPadding = 20;
 
 - (void)resignFirstResponderButtonTapped:(UIButton *)button {
   [self.allTextFields
-      enumerateObjectsUsingBlock:^(MDCBaseTextField *textField, NSUInteger idx, BOOL *stop) {
+      enumerateObjectsUsingBlock:^(UITextField *textField, NSUInteger idx, BOOL *stop) {
         [textField resignFirstResponder];
       }];
 }
@@ -362,7 +371,7 @@ static const NSUInteger kDefaultVerticalPadding = 20;
 - (void)toggleErrorButtonTapped:(UIButton *)button {
   self.isErrored = !self.isErrored;
   [self updateButtonThemes];
-  [self updateTextFieldStates];
+  [self updateTextFieldThemes];
   [self updateLabelColors];
 }
 

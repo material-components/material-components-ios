@@ -37,8 +37,8 @@
 
 - (void)applyMDCTypographyScheming:(id<MDCTypographyScheming>)mdcTypographyScheming {
   self.font = mdcTypographyScheming.subtitle1;
-  self.leadingUnderlineLabel.font = mdcTypographyScheming.caption;
-  self.trailingUnderlineLabel.font = mdcTypographyScheming.caption;
+  self.leadingAssistiveLabel.font = mdcTypographyScheming.caption;
+  self.trailingAssistiveLabel.font = mdcTypographyScheming.caption;
 }
 
 - (void)applyColorSchemeWith:(id<MDCContainerScheming>)containerScheme {
@@ -134,8 +134,8 @@
   [self setOutlineColor:errorColor forState:UIControlStateNormal];
   [self setOutlineColor:errorColor forState:UIControlStateEditing];
   [self setOutlineColor:errorColorDisabled forState:UIControlStateDisabled];
-  self.trailingUnderlineLabel.textColor = errorColorDisabled;
-  self.leadingUnderlineLabel.textColor = errorColorDisabled;
+  self.trailingAssistiveLabel.textColor = errorColorDisabled;
+  self.leadingAssistiveLabel.textColor = errorColorDisabled;
   self.tintColor = errorColor;
 }
 

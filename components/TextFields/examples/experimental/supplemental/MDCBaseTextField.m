@@ -142,17 +142,17 @@
   self.underlineLabelView = [[MDCContainedInputUnderlineLabelView alloc] init];
   CGFloat underlineFontSize = MDCRound([UIFont systemFontSize] * (CGFloat)0.75);
   UIFont *underlineFont = [UIFont systemFontOfSize:underlineFontSize];
-  self.underlineLabelView.leftUnderlineLabel.font = underlineFont;
-  self.underlineLabelView.rightUnderlineLabel.font = underlineFont;
+  self.underlineLabelView.leftAssistiveLabel.font = underlineFont;
+  self.underlineLabelView.rightAssistiveLabel.font = underlineFont;
   [self addSubview:self.underlineLabelView];
 }
 
 - (UILabel *)leftUnderlineLabel {
-  return self.underlineLabelView.leftUnderlineLabel;
+  return self.underlineLabelView.leftAssistiveLabel;
 }
 
 - (UILabel *)rightUnderlineLabel {
-  return self.underlineLabelView.rightUnderlineLabel;
+  return self.underlineLabelView.rightAssistiveLabel;
 }
 
 - (void)setUpFloatingLabel {
@@ -363,19 +363,19 @@
 
 #pragma mark Custom Accessors
 
-- (UILabel *)leadingUnderlineLabel {
+- (UILabel *)leadingAssistiveLabel {
   if ([self isRTL]) {
-    return self.underlineLabelView.rightUnderlineLabel;
+    return self.underlineLabelView.rightAssistiveLabel;
   } else {
-    return self.underlineLabelView.leftUnderlineLabel;
+    return self.underlineLabelView.leftAssistiveLabel;
   }
 }
 
-- (UILabel *)trailingUnderlineLabel {
+- (UILabel *)trailingAssistiveLabel {
   if ([self isRTL]) {
-    return self.underlineLabelView.leftUnderlineLabel;
+    return self.underlineLabelView.leftAssistiveLabel;
   } else {
-    return self.underlineLabelView.rightUnderlineLabel;
+    return self.underlineLabelView.rightAssistiveLabel;
   }
 }
 
@@ -616,8 +616,8 @@
     UIFont *helperFont = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleCaption];
     self.font = textFont;
     self.label.font = textFont;
-    self.leadingUnderlineLabel.font = helperFont;
-    self.trailingUnderlineLabel.font = helperFont;
+    self.leadingAssistiveLabel.font = helperFont;
+    self.leadingAssistiveLabel.font = helperFont;
   }
   [self setNeedsLayout];
 }
@@ -760,8 +760,8 @@
 - (void)applyMDCContainedInputViewColorScheming:
     (id<MDCContainedInputViewColorScheming>)colorScheming {
   self.textColor = colorScheming.textColor;
-  self.leadingUnderlineLabel.textColor = colorScheming.underlineLabelColor;
-  self.trailingUnderlineLabel.textColor = colorScheming.underlineLabelColor;
+  self.leadingAssistiveLabel.textColor = colorScheming.underlineLabelColor;
+  self.leadingAssistiveLabel.textColor = colorScheming.underlineLabelColor;
   self.label.textColor = colorScheming.floatingLabelColor;
   self.placeholderLabel.textColor = colorScheming.placeholderColor;
   self.clearButtonImageView.tintColor = colorScheming.clearButtonTintColor;
@@ -790,6 +790,7 @@
   id<MDCContainedInputViewColorScheming> colorScheme =
       [self containedInputViewColorSchemingForState:containedInputViewState];
   colorScheme.floatingLabelColor = labelColor;
+  [self setNeedsLayout];
 }
 
 -(UIColor *)labelColorForState:(UIControlState)state {
@@ -804,6 +805,7 @@
   id<MDCContainedInputViewColorScheming> colorScheme =
       [self containedInputViewColorSchemingForState:containedInputViewState];
   colorScheme.textColor = labelColor;
+  [self setNeedsLayout];
 }
 
 -(UIColor *)textColorForState:(UIControlState)state {

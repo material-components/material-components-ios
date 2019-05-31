@@ -64,6 +64,7 @@
     MDCContainedInputViewColorSchemeFilled *filledColorScheme = (MDCContainedInputViewColorSchemeFilled *)colorScheme;
     filledColorScheme.filledSublayerFillColor = filledBackgroundColor;
   }
+  [self setNeedsLayout];
 }
 
 - (nonnull UIColor *)filledBackgroundColorForState:(UIControlState)state {
@@ -88,6 +89,7 @@
     filledColorScheme.thickUnderlineFillColor = underlineColor;
     //TODO: Explore setting either the thick or thin depending on the state!
   }
+  [self setNeedsLayout];
 }
 
 - (nonnull UIColor *)underlineColorForState:(UIControlState)state {

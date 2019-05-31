@@ -66,8 +66,8 @@
 
 - (void)applyMDCTypographyScheming:(id<MDCTypographyScheming>)mdcTypographyScheming {
   self.textField.font = mdcTypographyScheming.subtitle1;
-  self.leadingUnderlineLabel.font = mdcTypographyScheming.caption;
-  self.trailingUnderlineLabel.font = mdcTypographyScheming.caption;
+  self.leadingAssistiveLabel.font = mdcTypographyScheming.caption;
+  self.trailingAssistiveLabel.font = mdcTypographyScheming.caption;
 }
 
 - (void)applyOutlinedThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
