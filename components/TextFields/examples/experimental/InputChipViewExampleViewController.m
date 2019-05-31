@@ -293,17 +293,17 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
     BOOL isEven = idx % 2 == 0;
     if (inputChipView.isErrored) {
       if (isEven) {
-        inputChipView.leadingUnderlineLabel.text = @"Suspendisse quam elit, mattis sit amet justo "
+        inputChipView.leadingAssistiveLabel.text = @"Suspendisse quam elit, mattis sit amet justo "
                                                    @"vel, venenatis lobortis massa. Donec metus "
                                                    @"dolor.";
       } else {
-        inputChipView.leadingUnderlineLabel.text = @"This is an error.";
+        inputChipView.leadingAssistiveLabel.text = @"This is an error.";
       }
     } else {
       if (isEven) {
-        inputChipView.leadingUnderlineLabel.text = @"This is helper text.";
+        inputChipView.leadingAssistiveLabel.text = @"This is helper text.";
       } else {
-        inputChipView.leadingUnderlineLabel.text = nil;
+        inputChipView.leadingAssistiveLabel.text = nil;
       }
     }
   }];

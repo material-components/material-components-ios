@@ -16,7 +16,7 @@
 #import <UIKit/UIKit.h>
 
 //TODO: Remove this.
-static const UIControlState UIControlStateEditing = 0x00FF0001;
+static const UIControlState UIControlStateEditing = 1 << 16;
 
 /**
  A set of Contained Input View states outlined in the Material guidelines. These states overlap with
@@ -34,14 +34,14 @@ typedef NS_OPTIONS(NSInteger, MDCContainedInputViewState) {
   /**
    The disabled state.
    */
-  MDCContainedInputViewStateDisabled = 1 << 4,
+  MDCContainedInputViewStateDisabled = 1 << 2,
 };
 
 //TODO: Get rid of __unused attribute
 __unused static MDCContainedInputViewState MDCContainedInputViewStateWithUIControlState(UIControlState controlState) {
-  if (controlState | UIControlStateDisabled) {
+  if ((controlState & UIControlStateDisabled) == UIControlStateDisabled) {
     return MDCContainedInputViewStateDisabled;
-  } else if (controlState | UIControlStateEditing) {
+  } else if ((controlState & UIControlStateEditing) == UIControlStateEditing) {
     return MDCContainedInputViewStateFocused;
   } else {
     return MDCContainedInputViewStateNormal;
@@ -118,14 +118,14 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
 @property(strong, nonatomic, readonly, nonnull) UILabel *label;
 
 /**
- The @c leadingUnderlineLabel can be used to display helper or error text.
+ The @c leadingAssistiveLabel can be used to display helper or error text.
  */
-@property(strong, nonatomic, readonly, nonnull) UILabel *leadingUnderlineLabel;
+@property(strong, nonatomic, readonly, nonnull) UILabel *leadingAssistiveLabel;
 
 /**
- The @c trailingUnderlineLabel can be used to display helper or error text.
+ The @c trailingAssistiveLabel can be used to display helper or error text.
  */
-@property(strong, nonatomic, readonly, nonnull) UILabel *trailingUnderlineLabel;
+@property(strong, nonatomic, readonly, nonnull) UILabel *trailingAssistiveLabel;
 
 /**
  This property is used to determine how much horizontal space to allot for each of the two underline

@@ -22,17 +22,13 @@
 @implementation MDCBaseTextField (MaterialTheming)
 
 - (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
-  [self applyTypographySchemeWith:containerScheme];
-  [self applyDefaultColorScheme:[self colorSchemeWithContainerScheme:containerScheme]];
+  [self applyTypographyScheme:[self typographySchemeWithContainerScheme:containerScheme]];
+  [self applyDefaultColorTheme:[self colorSchemeWithContainerScheme:containerScheme]];
 }
 
-- (void)applyTypographySchemeWith:(id<MDCContainerScheming>)containerScheme {
-  id<MDCTypographyScheming> mdcTypographyScheming = containerScheme.typographyScheme;
-  if (!mdcTypographyScheming) {
-    mdcTypographyScheming =
-        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
-  }
-  [self applyMDCTypographyScheming:mdcTypographyScheming];
+- (void)applyErrorThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
+  [self applyTypographyScheme:[self typographySchemeWithContainerScheme:containerScheme]];
+  [self applyErrorColorTheme:[self colorSchemeWithContainerScheme:containerScheme]];
 }
 
 - (id<MDCColorScheming>)colorSchemeWithContainerScheme:(nonnull id<MDCContainerScheming>)containerScheme {
@@ -44,13 +40,22 @@
   return mdcColorScheme;
 }
 
-- (void)applyMDCTypographyScheming:(id<MDCTypographyScheming>)mdcTypographyScheming {
-  self.font = mdcTypographyScheming.subtitle1;
-  self.leadingUnderlineLabel.font = mdcTypographyScheming.caption;
-  self.trailingUnderlineLabel.font = mdcTypographyScheming.caption;
+- (id<MDCTypographyScheming>)typographySchemeWithContainerScheme:(nonnull id<MDCContainerScheming>)containerScheme {
+  id<MDCTypographyScheming> mdcTypographyScheme = containerScheme.typographyScheme;
+  if (!mdcTypographyScheme) {
+    mdcTypographyScheme =
+    [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+  }
+  return mdcTypographyScheme;
 }
 
-- (void)applyDefaultColorScheme:(id<MDCColorScheming>)mdcColorScheming {
+- (void)applyTypographyScheme:(id<MDCTypographyScheming>)mdcTypographyScheming {
+  self.font = mdcTypographyScheming.subtitle1;
+  self.leadingAssistiveLabel.font = mdcTypographyScheming.caption;
+  self.trailingAssistiveLabel.font = mdcTypographyScheming.caption;
+}
+
+- (void)applyDefaultColorTheme:(id<MDCColorScheming>)mdcColorScheming {
   MDCContainedInputViewColorScheme *normalColorScheme =
       [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateNormal];
   [self setContainedInputViewColorScheming:normalColorScheme
@@ -69,37 +74,35 @@
   self.tintColor = mdcColorScheming.primaryColor;
 }
 
-- (void)applyErrorColorScheme:(id<MDCColorScheming>)mdcColorScheming {
-  MDCContainedInputViewColorScheme *normalColorScheme =
-  [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateNormal];
-  [self setContainedInputViewColorScheming:normalColorScheme
-                                  forState:MDCContainedInputViewStateNormal];
-  
-  MDCContainedInputViewColorScheme *focusedColorScheme =
-  [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateFocused];
-  [self setContainedInputViewColorScheming:focusedColorScheme
-                                  forState:MDCContainedInputViewStateFocused];
-  
-  MDCContainedInputViewColorScheme *disabledColorScheme =
-  [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateDisabled];
-  [self setContainedInputViewColorScheming:disabledColorScheme
-                                  forState:MDCContainedInputViewStateDisabled];
-  
-  self.tintColor = mdcColorScheming.primaryColor;
+- (void)applyErrorColorTheme:(id<MDCColorScheming>)mdcColorScheming {
+//  UIColor *errorColor = mdcColorScheming.errorColor;
+//  UIColor *errorColorLowAlpha = [errorColor colorWithAlphaComponent:0.5];
+//  [self setTextColor:errorColor forState:UIControlStateNormal];
+//  [self setTextColor:errorColor forState:UIControlStateDisabled];
+//  [self setTextColor:errorColorLowAlpha forState:UIControlStateEditing];
+//  [self setLabelColor:errorColor forState:UIControlStateNormal];
+//  [self setLabelColor:errorColor forState:UIControlStateDisabled];
+//  [self setLabelColor:errorColorLowAlpha forState:UIControlStateEditing];
+//
+//
+//  MDCContainedInputViewColorScheme *normalColorScheme =
+//  [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateNormal];
+//  [self setContainedInputViewColorScheming:normalColorScheme
+//                                  forState:MDCContainedInputViewStateNormal];
+//
+//  MDCContainedInputViewColorScheme *focusedColorScheme =
+//  [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateFocused];
+//  [self setContainedInputViewColorScheming:focusedColorScheme
+//                                  forState:MDCContainedInputViewStateFocused];
+//
+//  MDCContainedInputViewColorScheme *disabledColorScheme =
+//  [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateDisabled];
+//  [self setContainedInputViewColorScheming:disabledColorScheme
+//                                  forState:MDCContainedInputViewStateDisabled];
+//
+//  self.tintColor = mdcColorScheming.primaryColor;
 }
 
 
-- (void)applyErrorThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
-  UIColor *errorColor = [UIColor redColor];
-  UIColor *errorColorLowAlpha = [[UIColor redColor] colorWithAlphaComponent:0.5];
-  [self applyTypographySchemeWith:containerScheme];
-  [self applyErrorColorScheme:[self colorSchemeWithContainerScheme:containerScheme]];
-  [self setTextColor:errorColor forState:UIControlStateNormal];
-  [self setTextColor:errorColor forState:UIControlStateDisabled];
-  [self setTextColor:errorColorLowAlpha forState:UIControlStateEditing];
-  [self setLabelColor:errorColor forState:UIControlStateNormal];
-  [self setLabelColor:errorColor forState:UIControlStateDisabled];
-  [self setLabelColor:errorColorLowAlpha forState:UIControlStateEditing];
-}
 
 @end

@@ -22,8 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MDCContainedInputUnderlineLabelView : UIView
 
-@property(nonatomic, strong, readonly) UILabel *leftUnderlineLabel;
-@property(nonatomic, strong, readonly) UILabel *rightUnderlineLabel;
+@property(nonatomic, strong, readonly) UILabel *leftAssistiveLabel;
+@property(nonatomic, strong, readonly) UILabel *rightAssistiveLabel;
 @property(nonatomic, strong) MDCContainedInputUnderlineLabelViewLayout *layout;
 
 @end
