@@ -177,8 +177,8 @@ __attribute__((objc_subclassing_restricted)) @interface MDCActionSheetController
 @property(nonatomic, strong, nullable) UIColor *inkColor;
 
 /*
- This property determines if an @c MDCActionSheetController should use the @c MDCRippleView behavior or not.
- By setting this property to @c YES, @c MDCRippleView is used to provide the user visual
+ This property determines if an @c MDCActionSheetController should use the @c MDCRippleView behavior
+ or not. By setting this property to @c YES, @c MDCRippleView is used to provide the user visual
  touch feedback, instead of the legacy @c MDCInkView.
  @note Defaults to @c NO.
  */

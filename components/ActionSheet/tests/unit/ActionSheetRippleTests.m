@@ -14,11 +14,11 @@
 
 #import <XCTest/XCTest.h>
 
+#import "../../src/private/MDCActionSheetItemTableViewCell.h"
 #import "MDCActionSheetTestHelper.h"
 #import "MaterialActionSheet.h"
 #import "MaterialInk.h"
 #import "MaterialRipple.h"
-#import "../../src/private/MDCActionSheetItemTableViewCell.h"
 
 @interface MDCActionSheetController (TestingRipple)
 @property(nonatomic, strong) UITableView *tableView;
@@ -132,7 +132,8 @@
 }
 
 /**
- Test setting ActionSheet's RippleColor API updates the internal RippleTouchController's ripple color.
+ Test setting ActionSheet's RippleColor API updates the internal RippleTouchController's ripple
+ color.
  */
 - (void)testSetEnableRippleBehaviorToYesThenSetRippleColor {
   // When
