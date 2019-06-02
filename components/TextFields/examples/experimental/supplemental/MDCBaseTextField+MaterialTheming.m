@@ -16,8 +16,8 @@
 
 #import <Foundation/Foundation.h>
 
-#import "MDCContainedInputView.h"
 #import "MDCBaseTextField+Private.h"
+#import "MDCContainedInputView.h"
 
 @implementation MDCBaseTextField (MaterialTheming)
 
@@ -31,7 +31,8 @@
   [self applyErrorColorTheme:[self colorSchemeWithContainerScheme:containerScheme]];
 }
 
-- (id<MDCColorScheming>)colorSchemeWithContainerScheme:(nonnull id<MDCContainerScheming>)containerScheme {
+- (id<MDCColorScheming>)colorSchemeWithContainerScheme:
+    (nonnull id<MDCContainerScheming>)containerScheme {
   id<MDCColorScheming> mdcColorScheme = containerScheme.colorScheme;
   if (!mdcColorScheme) {
     mdcColorScheme =
@@ -40,11 +41,12 @@
   return mdcColorScheme;
 }
 
-- (id<MDCTypographyScheming>)typographySchemeWithContainerScheme:(nonnull id<MDCContainerScheming>)containerScheme {
+- (id<MDCTypographyScheming>)typographySchemeWithContainerScheme:
+    (nonnull id<MDCContainerScheming>)containerScheme {
   id<MDCTypographyScheming> mdcTypographyScheme = containerScheme.typographyScheme;
   if (!mdcTypographyScheme) {
     mdcTypographyScheme =
-    [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
   }
   return mdcTypographyScheme;
 }
@@ -75,34 +77,32 @@
 }
 
 - (void)applyErrorColorTheme:(id<MDCColorScheming>)mdcColorScheming {
-//  UIColor *errorColor = mdcColorScheming.errorColor;
-//  UIColor *errorColorLowAlpha = [errorColor colorWithAlphaComponent:0.5];
-//  [self setTextColor:errorColor forState:UIControlStateNormal];
-//  [self setTextColor:errorColor forState:UIControlStateDisabled];
-//  [self setTextColor:errorColorLowAlpha forState:UIControlStateEditing];
-//  [self setLabelColor:errorColor forState:UIControlStateNormal];
-//  [self setLabelColor:errorColor forState:UIControlStateDisabled];
-//  [self setLabelColor:errorColorLowAlpha forState:UIControlStateEditing];
-//
-//
-//  MDCContainedInputViewColorScheme *normalColorScheme =
-//  [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateNormal];
-//  [self setContainedInputViewColorScheming:normalColorScheme
-//                                  forState:MDCContainedInputViewStateNormal];
-//
-//  MDCContainedInputViewColorScheme *focusedColorScheme =
-//  [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateFocused];
-//  [self setContainedInputViewColorScheming:focusedColorScheme
-//                                  forState:MDCContainedInputViewStateFocused];
-//
-//  MDCContainedInputViewColorScheme *disabledColorScheme =
-//  [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateDisabled];
-//  [self setContainedInputViewColorScheming:disabledColorScheme
-//                                  forState:MDCContainedInputViewStateDisabled];
-//
-//  self.tintColor = mdcColorScheming.primaryColor;
+  //  UIColor *errorColor = mdcColorScheming.errorColor;
+  //  UIColor *errorColorLowAlpha = [errorColor colorWithAlphaComponent:0.5];
+  //  [self setTextColor:errorColor forState:UIControlStateNormal];
+  //  [self setTextColor:errorColor forState:UIControlStateDisabled];
+  //  [self setTextColor:errorColorLowAlpha forState:UIControlStateEditing];
+  //  [self setLabelColor:errorColor forState:UIControlStateNormal];
+  //  [self setLabelColor:errorColor forState:UIControlStateDisabled];
+  //  [self setLabelColor:errorColorLowAlpha forState:UIControlStateEditing];
+  //
+  //
+  //  MDCContainedInputViewColorScheme *normalColorScheme =
+  //  [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateNormal];
+  //  [self setContainedInputViewColorScheming:normalColorScheme
+  //                                  forState:MDCContainedInputViewStateNormal];
+  //
+  //  MDCContainedInputViewColorScheme *focusedColorScheme =
+  //  [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateFocused];
+  //  [self setContainedInputViewColorScheming:focusedColorScheme
+  //                                  forState:MDCContainedInputViewStateFocused];
+  //
+  //  MDCContainedInputViewColorScheme *disabledColorScheme =
+  //  [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateDisabled];
+  //  [self setContainedInputViewColorScheming:disabledColorScheme
+  //                                  forState:MDCContainedInputViewStateDisabled];
+  //
+  //  self.tintColor = mdcColorScheming.primaryColor;
 }
-
-
 
 @end

@@ -15,7 +15,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-//TODO: Remove this.
+// TODO: Remove this.
 static const UIControlState UIControlStateEditing = 1 << 16;
 
 /**
@@ -37,8 +37,9 @@ typedef NS_OPTIONS(NSInteger, MDCContainedInputViewState) {
   MDCContainedInputViewStateDisabled = 1 << 2,
 };
 
-//TODO: Get rid of __unused attribute
-__unused static MDCContainedInputViewState MDCContainedInputViewStateWithUIControlState(UIControlState controlState) {
+// TODO: Get rid of __unused attribute
+__unused static MDCContainedInputViewState MDCContainedInputViewStateWithUIControlState(
+    UIControlState controlState) {
   if ((controlState & UIControlStateDisabled) == UIControlStateDisabled) {
     return MDCContainedInputViewStateDisabled;
   } else if ((controlState & UIControlStateEditing) == UIControlStateEditing) {

@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
-#import "MDCContainedInputView.h"
 #import "MDCBaseTextField.h"
+#import "MDCContainedInputView.h"
 
 /**
  A UITextField subclass that attempts to do the following:
