@@ -54,7 +54,7 @@ static NSString *const kTitlePositionAdjustment = @"titlePositionAdjustment";
 
 static NSString *const kOfAnnouncement = @"of";
 
-@interface MDCBottomNavigationBar () <MDCInkTouchControllerDelegate>
+@interface MDCBottomNavigationBar () <MDCInkTouchControllerDelegate, MDCRippleTouchControllerDelegate>
 
 @property(nonatomic, assign) BOOL itemsDistributed;
 @property(nonatomic, readonly) BOOL isTitleBelowIcon;
@@ -477,13 +477,6 @@ static NSString *const kOfAnnouncement = @"of";
 
 #pragma mark - Touch handlers
 
-- (void)didTouchDownButton:(UIButton *)button {
-  MDCBottomNavigationItemView *itemView = (MDCBottomNavigationItemView *)button.superview;
-  CGPoint centerPoint =
-      CGPointMake(CGRectGetMidX(itemView.inkView.bounds), CGRectGetMidY(itemView.inkView.bounds));
-  [itemView.inkView startTouchBeganAnimationAtPoint:centerPoint completion:nil];
-}
-
 - (void)didTouchUpInsideButton:(UIButton *)button {
   for (NSUInteger i = 0; i < self.items.count; i++) {
     UITabBarItem *item = self.items[i];
@@ -501,16 +494,6 @@ static NSString *const kOfAnnouncement = @"of";
       }
     }
   }
-}
-
-- (void)didTouchUpOutsideButton:(UIButton *)button {
-  MDCBottomNavigationItemView *itemView = (MDCBottomNavigationItemView *)button.superview;
-  [itemView.inkView startTouchEndedAnimationAtPoint:CGPointZero completion:nil];
-}
-
-- (void)didCancelTouchesForButton:(UIButton *)button {
-  MDCBottomNavigationItemView *itemView = (MDCBottomNavigationItemView *)button.superview;
-  [itemView.inkView cancelAllAnimationsAnimated:NO];
 }
 
 #pragma mark - Setters
@@ -557,6 +540,7 @@ static NSString *const kOfAnnouncement = @"of";
     MDCInkTouchController *controller = [[MDCInkTouchController alloc] initWithView:itemView];
     controller.delegate = self;
     [self.inkControllers addObject:controller];
+    itemView.rippleTouchController.delegate = self;
 
     if (self.shouldPretendToBeATabBar) {
       NSString *key = kMaterialBottomNavigationStringTable
@@ -772,6 +756,22 @@ static NSString *const kOfAnnouncement = @"of";
     return ((MDCBottomNavigationItemView *)inkTouchController.view).inkView;
   }
   return nil;
+}
+
+- (BOOL)inkTouchController:(MDCInkTouchController *)inkTouchController shouldProcessInkTouchesAtTouchLocation:(CGPoint)location {
+  if (self.enableRippleBehavior) {
+    return NO;
+  }
+  return YES;
+}
+
+#pragma mark - MDCRippleTouchControllerDelegate methods
+
+- (BOOL)rippleTouchController:(MDCRippleTouchController *)rippleTouchController shouldProcessRippleTouchesAtTouchLocation:(CGPoint)location {
+  if (self.enableRippleBehavior) {
+    return YES;
+  }
+  return NO;
 }
 
 @end

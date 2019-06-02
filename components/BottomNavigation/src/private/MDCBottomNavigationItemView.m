@@ -88,9 +88,6 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
       if ([view isKindOfClass:[MDCInkView class]]) {
         _inkView = (MDCInkView *)view;
         ++totalViewsProcessed;
-      } else if ([view isKindOfClass:[MDCRippleView class]]) {
-        _rippleView = (MDCRippleView *)view;
-        ++totalViewsProcessed;
       } else if ([view isKindOfClass:[UIImageView class]]) {
         _iconImageView = (UIImageView *)view;
         _image = _iconImageView.image;
@@ -162,10 +159,9 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
     [self addSubview:_inkView];
   }
 
-  if (!_rippleView) {
-    _rippleView = [[MDCRippleView alloc] init];
-    _rippleView.clipsToBounds = NO;
-    [self addSubview:_rippleView];
+  if (!_rippleTouchController) {
+    _rippleTouchController = [[MDCRippleTouchController alloc] initWithView:self];
+    _rippleTouchController.rippleView.rippleStyle = MDCRippleStyleUnbounded;
   }
 
   if (!_button) {
@@ -492,7 +488,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   UIColor *rippleColor =
       [self.selectedItemTintColor colorWithAlphaComponent:MDCBottomNavigationItemViewInkOpacity];
   self.inkView.inkColor = rippleColor;
-  self.rippleView.rippleColor = rippleColor;
+  self.rippleTouchController.rippleView.rippleColor = rippleColor;
 }
 
 - (void)setUnselectedItemTintColor:(UIColor *)unselectedItemTintColor {

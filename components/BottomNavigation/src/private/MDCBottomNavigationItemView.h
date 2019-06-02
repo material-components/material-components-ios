@@ -24,7 +24,7 @@
 @property(nonatomic, assign) BOOL selected;
 @property(nonatomic, assign) MDCBottomNavigationBarTitleVisibility titleVisibility;
 @property(nonatomic, strong) MDCInkView *inkView;
-@property(nonatomic, strong) MDCRippleView *rippleView;
+@property(nonatomic, strong) MDCRippleTouchController *rippleTouchController;
 @property(nonatomic, assign) UIOffset titlePositionAdjustment;
 
 @property(nonatomic, copy) NSString *badgeValue;
