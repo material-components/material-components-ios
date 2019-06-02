@@ -14,16 +14,18 @@
 
 #import <XCTest/XCTest.h>
 
+#import "../../src/private/MDCBottomNavigationItemView.h"
+#import "MaterialBottomNavigation.h"
 #import "MaterialInk.h"
 #import "MaterialRipple.h"
-#import "MaterialBottomNavigation.h"
-#import "../../src/private/MDCBottomNavigationItemView.h"
 
 @interface MDCBottomNavigationBar (Testing)
 @property(nonatomic, strong) NSMutableArray<MDCBottomNavigationItemView *> *itemViews;
 @property(nonatomic, strong) NSMutableArray *inkControllers;
-- (BOOL)inkTouchController:(MDCInkTouchController *)inkTouchController shouldProcessInkTouchesAtTouchLocation:(CGPoint)location;
-- (BOOL)rippleTouchController:(MDCRippleTouchController *)rippleTouchController shouldProcessRippleTouchesAtTouchLocation:(CGPoint)location;
+- (BOOL)inkTouchController:(MDCInkTouchController *)inkTouchController
+    shouldProcessInkTouchesAtTouchLocation:(CGPoint)location;
+- (BOOL)rippleTouchController:(MDCRippleTouchController *)rippleTouchController
+    shouldProcessRippleTouchesAtTouchLocation:(CGPoint)location;
 @end
 
 /**
@@ -63,8 +65,7 @@
                           [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.15]);
     XCTAssertEqualObjects(itemView.inkView.inkColor,
                           [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.15]);
-    XCTAssertEqual(itemView.rippleTouchController.rippleView.rippleStyle,
-                   MDCRippleStyleUnbounded);
+    XCTAssertEqual(itemView.rippleTouchController.rippleView.rippleStyle, MDCRippleStyleUnbounded);
     XCTAssertNotNil(itemView.rippleTouchController.rippleView.superview);
     XCTAssertNotNil(itemView.inkView.superview);
     CGRect itemViewBounds = CGRectStandardize(itemView.bounds);
@@ -88,8 +89,7 @@
                           [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.15]);
     XCTAssertEqualObjects(itemView.inkView.inkColor,
                           [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.15]);
-    XCTAssertEqual(itemView.rippleTouchController.rippleView.rippleStyle,
-                   MDCRippleStyleUnbounded);
+    XCTAssertEqual(itemView.rippleTouchController.rippleView.rippleStyle, MDCRippleStyleUnbounded);
     XCTAssertNotNil(itemView.rippleTouchController.rippleView.superview);
     XCTAssertNotNil(itemView.inkView.superview);
     CGRect itemViewBounds = CGRectStandardize(itemView.bounds);
@@ -108,10 +108,12 @@
 
   // Then
   for (MDCBottomNavigationItemView *itemView in self.bottomNavigationBar.itemViews) {
-    XCTAssertTrue([self.bottomNavigationBar rippleTouchController:itemView.rippleTouchController shouldProcessRippleTouchesAtTouchLocation:CGPointZero]);
+    XCTAssertTrue([self.bottomNavigationBar rippleTouchController:itemView.rippleTouchController
+                        shouldProcessRippleTouchesAtTouchLocation:CGPointZero]);
   }
   for (MDCInkTouchController *controller in self.bottomNavigationBar.inkControllers) {
-    XCTAssertFalse([self.bottomNavigationBar inkTouchController:controller shouldProcessInkTouchesAtTouchLocation:CGPointZero]);
+    XCTAssertFalse([self.bottomNavigationBar inkTouchController:controller
+                         shouldProcessInkTouchesAtTouchLocation:CGPointZero]);
   }
 }
 
@@ -121,15 +123,18 @@
 - (void)testDefaultBottomNavigationBehaviorThenInvokeItemToCheckInkIsInvoked {
   // Then
   for (MDCBottomNavigationItemView *itemView in self.bottomNavigationBar.itemViews) {
-    XCTAssertFalse([self.bottomNavigationBar rippleTouchController:itemView.rippleTouchController shouldProcessRippleTouchesAtTouchLocation:CGPointZero]);
+    XCTAssertFalse([self.bottomNavigationBar rippleTouchController:itemView.rippleTouchController
+                         shouldProcessRippleTouchesAtTouchLocation:CGPointZero]);
   }
   for (MDCInkTouchController *controller in self.bottomNavigationBar.inkControllers) {
-    XCTAssertTrue([self.bottomNavigationBar inkTouchController:controller shouldProcessInkTouchesAtTouchLocation:CGPointZero]);
+    XCTAssertTrue([self.bottomNavigationBar inkTouchController:controller
+                        shouldProcessInkTouchesAtTouchLocation:CGPointZero]);
   }
 }
 
 /**
- Test setting BottomNavigation's selectedItemTintColor API updates the internal RippleTouchController's ripple color.
+ Test setting BottomNavigation's selectedItemTintColor API updates the internal
+ RippleTouchController's ripple color.
  */
 - (void)testSetEnableRippleBehaviorToYesThenSetSelectedItemTintColorToSetRippleColor {
   // When

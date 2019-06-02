@@ -54,7 +54,8 @@ static NSString *const kTitlePositionAdjustment = @"titlePositionAdjustment";
 
 static NSString *const kOfAnnouncement = @"of";
 
-@interface MDCBottomNavigationBar () <MDCInkTouchControllerDelegate, MDCRippleTouchControllerDelegate>
+@interface MDCBottomNavigationBar () <MDCInkTouchControllerDelegate,
+                                      MDCRippleTouchControllerDelegate>
 
 @property(nonatomic, assign) BOOL itemsDistributed;
 @property(nonatomic, readonly) BOOL isTitleBelowIcon;
@@ -758,7 +759,8 @@ static NSString *const kOfAnnouncement = @"of";
   return nil;
 }
 
-- (BOOL)inkTouchController:(MDCInkTouchController *)inkTouchController shouldProcessInkTouchesAtTouchLocation:(CGPoint)location {
+- (BOOL)inkTouchController:(MDCInkTouchController *)inkTouchController
+    shouldProcessInkTouchesAtTouchLocation:(CGPoint)location {
   if (self.enableRippleBehavior) {
     return NO;
   }
@@ -767,7 +769,8 @@ static NSString *const kOfAnnouncement = @"of";
 
 #pragma mark - MDCRippleTouchControllerDelegate methods
 
-- (BOOL)rippleTouchController:(MDCRippleTouchController *)rippleTouchController shouldProcessRippleTouchesAtTouchLocation:(CGPoint)location {
+- (BOOL)rippleTouchController:(MDCRippleTouchController *)rippleTouchController
+    shouldProcessRippleTouchesAtTouchLocation:(CGPoint)location {
   if (self.enableRippleBehavior) {
     return YES;
   }
