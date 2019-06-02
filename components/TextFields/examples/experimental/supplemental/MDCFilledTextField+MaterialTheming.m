@@ -16,9 +16,9 @@
 
 #import <Foundation/Foundation.h>
 
+#import "MDCBaseTextField+Private.h"
 #import "MDCContainedInputView.h"
 #import "MDCContainerStylerFilled.h"
-#import "MDCBaseTextField+Private.h"
 
 @implementation MDCFilledTextField (MaterialTheming)
 
@@ -32,20 +32,22 @@
   [self applyErrorColorScheme:[self colorSchemeWithContainerScheme:containerScheme]];
 }
 
-- (id<MDCColorScheming>)colorSchemeWithContainerScheme:(nonnull id<MDCContainerScheming>)containerScheme {
+- (id<MDCColorScheming>)colorSchemeWithContainerScheme:
+    (nonnull id<MDCContainerScheming>)containerScheme {
   id<MDCColorScheming> mdcColorScheme = containerScheme.colorScheme;
   if (!mdcColorScheme) {
     mdcColorScheme =
-    [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   }
   return mdcColorScheme;
 }
 
-- (id<MDCTypographyScheming>)typographySchemeWithContainerScheme:(nonnull id<MDCContainerScheming>)containerScheme {
+- (id<MDCTypographyScheming>)typographySchemeWithContainerScheme:
+    (nonnull id<MDCContainerScheming>)containerScheme {
   id<MDCTypographyScheming> mdcTypographyScheme = containerScheme.typographyScheme;
   if (!mdcTypographyScheme) {
     mdcTypographyScheme =
-    [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
   }
   return mdcTypographyScheme;
 }
@@ -121,24 +123,21 @@
 
 - (void)applyDefaultColorScheme:(id<MDCColorScheming>)colorScheme {
   UIColor *textColor = colorScheme.onSurfaceColor;
-  UIColor *assistiveLabelColor =
-      [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
-  UIColor *labelColor =
-      [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
-  UIColor *labelColorDisabled =
-      [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.10];
-  UIColor *labelColorFocused =
-      colorScheme.primaryColor;
-  
+  UIColor *assistiveLabelColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
+  UIColor *labelColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
+  UIColor *labelColorDisabled = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.10];
+  UIColor *labelColorFocused = colorScheme.primaryColor;
+
   UIColor *thinUnderlineFillColor = colorScheme.onBackgroundColor;
   UIColor *thickUnderlineFillColor = colorScheme.primaryColor;
-  
+
   UIColor *filledSublayerFillColor =
-     [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.15];
-//  UIColor *clearButtonTintColor =
-//  [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.20];
-  // TODO: Figure out what to do with this. There's no stateful API for it, it only exists on the color view model
-  
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.15];
+  //  UIColor *clearButtonTintColor =
+  //  [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.20];
+  // TODO: Figure out what to do with this. There's no stateful API for it, it only exists on the
+  // color view model
+
   [self setLabelColor:labelColor forState:UIControlStateNormal];
   [self setLabelColor:labelColorFocused forState:UIControlStateEditing];
   [self setLabelColor:labelColorDisabled forState:UIControlStateDisabled];
@@ -154,22 +153,22 @@
   self.trailingAssistiveLabel.textColor = assistiveLabelColor;
   self.leadingAssistiveLabel.textColor = assistiveLabelColor;
   self.tintColor = colorScheme.primaryColor;
-//  MDCContainedInputViewColorScheme *normalColorScheme =
-//  [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateNormal];
-//  [self setContainedInputViewColorScheming:normalColorScheme
-//                                  forState:MDCContainedInputViewStateNormal];
-//
-//  MDCContainedInputViewColorScheme *focusedColorScheme =
-//  [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateFocused];
-//  [self setContainedInputViewColorScheming:focusedColorScheme
-//                                  forState:MDCContainedInputViewStateFocused];
-//
-//  MDCContainedInputViewColorScheme *disabledColorScheme =
-//  [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateDisabled];
-//  [self setContainedInputViewColorScheming:disabledColorScheme
-//                                  forState:MDCContainedInputViewStateDisabled];
-//
-//  self.tintColor = mdcColorScheming.primaryColor;
+  //  MDCContainedInputViewColorScheme *normalColorScheme =
+  //  [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateNormal];
+  //  [self setContainedInputViewColorScheming:normalColorScheme
+  //                                  forState:MDCContainedInputViewStateNormal];
+  //
+  //  MDCContainedInputViewColorScheme *focusedColorScheme =
+  //  [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateFocused];
+  //  [self setContainedInputViewColorScheming:focusedColorScheme
+  //                                  forState:MDCContainedInputViewStateFocused];
+  //
+  //  MDCContainedInputViewColorScheme *disabledColorScheme =
+  //  [self.containerStyler defaultColorSchemeForState:MDCContainedInputViewStateDisabled];
+  //  [self setContainedInputViewColorScheming:disabledColorScheme
+  //                                  forState:MDCContainedInputViewStateDisabled];
+  //
+  //  self.tintColor = mdcColorScheming.primaryColor;
 }
 
 - (void)applyErrorColorScheme:(id<MDCColorScheming>)mdcColorScheming {

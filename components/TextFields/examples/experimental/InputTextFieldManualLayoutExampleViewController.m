@@ -291,34 +291,34 @@ static const NSUInteger kDefaultVerticalPadding = 20;
 }
 
 - (void)updateTextFieldThemes {
-  [self.allTextFields
-      enumerateObjectsUsingBlock:^(UITextField *uiTextField, NSUInteger idx, BOOL *stop) {
-        if ([uiTextField isKindOfClass:[MDCBaseTextField class]]) {
-          MDCBaseTextField *textField = (MDCBaseTextField *)uiTextField;
-          BOOL isEven = idx % 2 == 0;
-          if (self.isErrored) {
-            if ([textField respondsToSelector:@selector(applyErrorThemeWithScheme:)]) {
-              [textField applyErrorThemeWithScheme:self.containerScheme];
-            }
-            if (isEven) {
-              textField.leadingAssistiveLabel.text = @"Suspendisse quam elit, mattis sit amet justo "
-              @"vel, venenatis lobortis massa. Donec metus "
-              @"dolor.";
-            } else {
-              textField.leadingAssistiveLabel.text = @"This is an error.";
-            }
-          } else {
-            if ([textField respondsToSelector:@selector(applyThemeWithScheme:)]) {
-              [textField applyThemeWithScheme:self.containerScheme];
-            }
-            if (isEven) {
-              textField.leadingAssistiveLabel.text = @"This is helper text.";
-            } else {
-              textField.leadingAssistiveLabel.text = nil;
-            }
-          }
+  [self.allTextFields enumerateObjectsUsingBlock:^(UITextField *uiTextField, NSUInteger idx,
+                                                   BOOL *stop) {
+    if ([uiTextField isKindOfClass:[MDCBaseTextField class]]) {
+      MDCBaseTextField *textField = (MDCBaseTextField *)uiTextField;
+      BOOL isEven = idx % 2 == 0;
+      if (self.isErrored) {
+        if ([textField respondsToSelector:@selector(applyErrorThemeWithScheme:)]) {
+          [textField applyErrorThemeWithScheme:self.containerScheme];
         }
-      }];
+        if (isEven) {
+          textField.leadingAssistiveLabel.text = @"Suspendisse quam elit, mattis sit amet justo "
+                                                 @"vel, venenatis lobortis massa. Donec metus "
+                                                 @"dolor.";
+        } else {
+          textField.leadingAssistiveLabel.text = @"This is an error.";
+        }
+      } else {
+        if ([textField respondsToSelector:@selector(applyThemeWithScheme:)]) {
+          [textField applyThemeWithScheme:self.containerScheme];
+        }
+        if (isEven) {
+          textField.leadingAssistiveLabel.text = @"This is helper text.";
+        } else {
+          textField.leadingAssistiveLabel.text = nil;
+        }
+      }
+    }
+  }];
   [self.view setNeedsLayout];
 }
 

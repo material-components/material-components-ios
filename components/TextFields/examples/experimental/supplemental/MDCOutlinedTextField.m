@@ -16,9 +16,9 @@
 
 #import <Foundation/Foundation.h>
 
+#import "MDCBaseTextField+Private.h"
 #import "MDCContainedInputView.h"
 #import "MDCContainerStylerOutlined.h"
-#import "MDCBaseTextField+Private.h"
 
 @interface MDCOutlinedTextFieldPositioningDelegate
     : NSObject <MDCContainedInputViewStylerPositioningDelegate>
@@ -56,21 +56,25 @@
 #pragma mark Stateful Color APIs
 
 - (void)setOutlineColor:(nonnull UIColor *)outlineColor forState:(UIControlState)state {
-  MDCContainedInputViewState containedInputViewState = MDCContainedInputViewStateWithUIControlState(state);
+  MDCContainedInputViewState containedInputViewState =
+      MDCContainedInputViewStateWithUIControlState(state);
   id<MDCContainedInputViewColorScheming> colorScheme =
       [self containedInputViewColorSchemingForState:containedInputViewState];
   if ([colorScheme isKindOfClass:[MDCContainedInputViewColorSchemeOutlined class]]) {
-    MDCContainedInputViewColorSchemeOutlined *outlinedColorScheme = (MDCContainedInputViewColorSchemeOutlined *)colorScheme;
+    MDCContainedInputViewColorSchemeOutlined *outlinedColorScheme =
+        (MDCContainedInputViewColorSchemeOutlined *)colorScheme;
     outlinedColorScheme.outlineColor = outlineColor;
   }
 }
 
 - (nonnull UIColor *)outlineColorForState:(UIControlState)state {
-  MDCContainedInputViewState containedInputViewState = MDCContainedInputViewStateWithUIControlState(state);
+  MDCContainedInputViewState containedInputViewState =
+      MDCContainedInputViewStateWithUIControlState(state);
   id<MDCContainedInputViewColorScheming> colorScheme =
-  [self containedInputViewColorSchemingForState:containedInputViewState];
+      [self containedInputViewColorSchemingForState:containedInputViewState];
   if ([colorScheme isKindOfClass:[MDCContainedInputViewColorSchemeOutlined class]]) {
-    MDCContainedInputViewColorSchemeOutlined *outlinedColorScheme = (MDCContainedInputViewColorSchemeOutlined *)colorScheme;
+    MDCContainedInputViewColorSchemeOutlined *outlinedColorScheme =
+        (MDCContainedInputViewColorSchemeOutlined *)colorScheme;
     return outlinedColorScheme.outlineColor;
   }
   return [UIColor clearColor];

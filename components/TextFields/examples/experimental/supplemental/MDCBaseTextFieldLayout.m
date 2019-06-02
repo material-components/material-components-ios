@@ -14,8 +14,8 @@
 
 #import "MDCBaseTextFieldLayout.h"
 
-#import "MDCContainedInputView.h"
 #import "MDCBaseTextField.h"
+#import "MDCContainedInputView.h"
 
 static const CGFloat kFloatingLabelXOffsetFromTextArea = (CGFloat)3.0;
 static const CGFloat kClearButtonTouchTargetSideLength = (CGFloat)30.0;

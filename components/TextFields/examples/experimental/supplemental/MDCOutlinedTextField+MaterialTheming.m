@@ -16,9 +16,9 @@
 
 #import <Foundation/Foundation.h>
 
+#import "MDCBaseTextField+Private.h"
 #import "MDCContainedInputView.h"
 #import "MDCContainerStylerOutlined.h"
-#import "MDCBaseTextField+Private.h"
 
 @implementation MDCOutlinedTextField (MaterialTheming)
 - (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
@@ -124,7 +124,7 @@
   }
   UIColor *errorColor = mdcColorScheme.errorColor;
   UIColor *errorColorDisabled = [mdcColorScheme.errorColor colorWithAlphaComponent:0.5];
-  
+
   [self setLabelColor:errorColor forState:UIControlStateNormal];
   [self setLabelColor:errorColor forState:UIControlStateEditing];
   [self setLabelColor:errorColorDisabled forState:UIControlStateDisabled];

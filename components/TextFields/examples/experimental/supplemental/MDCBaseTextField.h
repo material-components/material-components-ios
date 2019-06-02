@@ -87,7 +87,7 @@ typedef NS_ENUM(NSInteger, MDCBaseTextFieldLabelBehavior) {
  Defaults value is NO.
  */
 @property(nonatomic, setter=mdc_setAdjustsFontForContentSizeCategory:)
-BOOL mdc_adjustsFontForContentSizeCategory;
+    BOOL mdc_adjustsFontForContentSizeCategory;
 
 /**
  Sets the label color for a given state.
