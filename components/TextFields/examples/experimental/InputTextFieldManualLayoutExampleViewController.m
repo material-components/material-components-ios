@@ -99,12 +99,12 @@ static const NSUInteger kDefaultVerticalPadding = 20;
     [self createLabelWithText:@"Default MDCOutlinedTextField:"],
     [self createDefaultOutlinedTextField],
     [self createLabelWithText:@"Material MDCOutlinedTextField:"],
+    [self createLabelWithText:@"Default MDCBaseTextField:"],
+    [self createDefaultInputTextField],
+    [self createLabelWithText:@"Material MDCBaseTextField:"],
+    [self createMaterialInputTextField],
     [self createMaterialOutlinedTextField], [self createLabelWithText:@"UITextField:"],
     [self createUiTextField],
-    //    [self createLabelWithText:@"Default MDCBaseTextField:"],
-    //    [self createDefaultInputTextField],
-    //    [self createLabelWithText:@"Material MDCBaseTextField:"],
-    //    [self createMaterialInputTextField],
   ];
   for (UIView *view in self.scrollViewSubviews) {
     [self.scrollView addSubview:view];

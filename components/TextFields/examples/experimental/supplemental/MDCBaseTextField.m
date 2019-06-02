@@ -116,7 +116,8 @@
 }
 
 - (void)setUpContainerStyler {
-  self.containerStyler = [[MDCContainerStylerBase alloc] init];
+  MDCContainerStylerBasePositioningDelegate *positioningDelegate = [[MDCContainerStylerBasePositioningDelegate alloc] init];
+  self.containerStyler = [[MDCContainerStylerBase alloc] initWithPositioningDelegate:positioningDelegate];
 }
 
 - (void)setUpStateDependentColorSchemesForStyle:(id<MDCContainedInputViewStyler>)containerStyler {
