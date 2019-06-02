@@ -21,122 +21,102 @@
 #import "MDCContainerStylerOutlined.h"
 
 @implementation MDCOutlinedTextField (MaterialTheming)
+
 - (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
-  [self applyTypographySchemeWith:containerScheme];
-  [self applyColorSchemeWith:containerScheme];
+  [self applyTypographyScheme:[self typographySchemeWithContainerScheme:containerScheme]];
+  [self applyDefaultColorScheme:[self colorSchemeWithContainerScheme:containerScheme]];
 }
 
-- (void)applyTypographySchemeWith:(id<MDCContainerScheming>)containerScheme {
-  id<MDCTypographyScheming> mdcTypographyScheming = containerScheme.typographyScheme;
-  if (!mdcTypographyScheming) {
-    mdcTypographyScheming =
-        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
-  }
-  [self applyMDCTypographyScheming:mdcTypographyScheming];
+- (void)applyErrorThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
+  [self applyTypographyScheme:[self typographySchemeWithContainerScheme:containerScheme]];
+  [self applyErrorColorScheme:[self colorSchemeWithContainerScheme:containerScheme]];
 }
 
-- (void)applyMDCTypographyScheming:(id<MDCTypographyScheming>)mdcTypographyScheming {
-  self.font = mdcTypographyScheming.subtitle1;
-  self.leadingAssistiveLabel.font = mdcTypographyScheming.caption;
-  self.trailingAssistiveLabel.font = mdcTypographyScheming.caption;
-}
-
-- (void)applyColorSchemeWith:(id<MDCContainerScheming>)containerScheme {
+- (id<MDCColorScheming>)colorSchemeWithContainerScheme:
+    (nonnull id<MDCContainerScheming>)containerScheme {
   id<MDCColorScheming> mdcColorScheme = containerScheme.colorScheme;
   if (!mdcColorScheme) {
     mdcColorScheme =
         [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   }
-  [self applyMDCColorScheming:mdcColorScheme];
+  return mdcColorScheme;
 }
 
-- (void)applyMDCColorScheming:(id<MDCColorScheming>)mdcColorScheming {
-  MDCContainedInputViewColorSchemeOutlined *normalColorScheme =
-      [self outlinedColorSchemeWithMDCColorScheming:mdcColorScheming
-                            containedInputViewState:MDCContainedInputViewStateNormal];
-  [self setContainedInputViewColorScheming:normalColorScheme
-                                  forState:MDCContainedInputViewStateNormal];
-
-  MDCContainedInputViewColorSchemeOutlined *focusedColorScheme =
-      [self outlinedColorSchemeWithMDCColorScheming:mdcColorScheming
-                            containedInputViewState:MDCContainedInputViewStateFocused];
-  [self setContainedInputViewColorScheming:focusedColorScheme
-                                  forState:MDCContainedInputViewStateFocused];
-
-  MDCContainedInputViewColorSchemeOutlined *disabledColorScheme =
-      [self outlinedColorSchemeWithMDCColorScheming:mdcColorScheming
-                            containedInputViewState:MDCContainedInputViewStateDisabled];
-  [self setContainedInputViewColorScheming:disabledColorScheme
-                                  forState:MDCContainedInputViewStateDisabled];
-
-  self.tintColor = mdcColorScheming.primaryColor;
-}
-
-- (MDCContainedInputViewColorSchemeOutlined *)
-    outlinedColorSchemeWithMDCColorScheming:(id<MDCColorScheming>)colorScheming
-                    containedInputViewState:(MDCContainedInputViewState)containedInputViewState {
-  UIColor *textColor = colorScheming.onSurfaceColor;
-  UIColor *underlineLabelColor =
-      [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
-  UIColor *floatingLabelColor =
-      [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
-  UIColor *outlineColor = colorScheming.onSurfaceColor;
-  UIColor *clearButtonTintColor =
-      [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.20];
-
-  switch (containedInputViewState) {
-    case MDCContainedInputViewStateNormal:
-      break;
-    case MDCContainedInputViewStateDisabled:
-      floatingLabelColor = [colorScheming.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.10];
-      break;
-    case MDCContainedInputViewStateFocused:
-      outlineColor = colorScheming.primaryColor;
-      floatingLabelColor = colorScheming.primaryColor;
-      break;
-    default:
-      break;
+- (id<MDCTypographyScheming>)typographySchemeWithContainerScheme:
+    (nonnull id<MDCContainerScheming>)containerScheme {
+  id<MDCTypographyScheming> mdcTypographyScheme = containerScheme.typographyScheme;
+  if (!mdcTypographyScheme) {
+    mdcTypographyScheme =
+        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
   }
-
-  MDCContainedInputViewColorSchemeOutlined *simpleTextFieldColorScheme =
-      [[MDCContainedInputViewColorSchemeOutlined alloc] init];
-  simpleTextFieldColorScheme.textColor = textColor;
-  simpleTextFieldColorScheme.underlineLabelColor = underlineLabelColor;
-  simpleTextFieldColorScheme.outlineColor = outlineColor;
-  simpleTextFieldColorScheme.floatingLabelColor = floatingLabelColor;
-  simpleTextFieldColorScheme.clearButtonTintColor = clearButtonTintColor;
-  return simpleTextFieldColorScheme;
+  return mdcTypographyScheme;
 }
 
-- (void)applyErrorThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme {
-  /*
-   Original error state deviations:
-   floatingLabelColor = colorScheming.errorColor;
-   underlineLabelColor = colorScheming.errorColor;
-   outlineColor = colorScheming.errorColor;
-   */
+- (void)applyTypographyScheme:(id<MDCTypographyScheming>)mdcTypographyScheming {
+  self.font = mdcTypographyScheming.subtitle1;
+  self.leadingAssistiveLabel.font = mdcTypographyScheming.caption;
+  self.trailingAssistiveLabel.font = mdcTypographyScheming.caption;
+}
 
-  [self applyThemeWithScheme:scheme];
-  id<MDCColorScheming> mdcColorScheme = scheme.colorScheme;
-  if (!mdcColorScheme) {
-    mdcColorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-  }
-  UIColor *errorColor = mdcColorScheme.errorColor;
-  UIColor *errorColorDisabled = [mdcColorScheme.errorColor colorWithAlphaComponent:0.5];
+- (void)applyDefaultColorScheme:(id<MDCColorScheming>)colorScheme {
+  UIColor *textColor = colorScheme.onSurfaceColor;
+  UIColor *assistiveLabelColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
+  UIColor *labelColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
+  UIColor *labelColorDisabled = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.10];
+  UIColor *labelColorFocused = colorScheme.primaryColor;
 
-  [self setLabelColor:errorColor forState:UIControlStateNormal];
-  [self setLabelColor:errorColor forState:UIControlStateEditing];
-  [self setLabelColor:errorColorDisabled forState:UIControlStateDisabled];
-  [self setTextColor:errorColor forState:UIControlStateNormal];
-  [self setTextColor:errorColor forState:UIControlStateEditing];
-  [self setTextColor:errorColorDisabled forState:UIControlStateDisabled];
-  [self setOutlineColor:errorColor forState:UIControlStateNormal];
-  [self setOutlineColor:errorColor forState:UIControlStateEditing];
-  [self setOutlineColor:errorColorDisabled forState:UIControlStateDisabled];
-  self.trailingAssistiveLabel.textColor = errorColorDisabled;
-  self.leadingAssistiveLabel.textColor = errorColorDisabled;
-  self.tintColor = errorColor;
+  UIColor *outlineColorNormal = colorScheme.onSurfaceColor;
+  UIColor *outlineColorEditing = colorScheme.primaryColor;
+  UIColor *outlineColorDisabled =
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
+
+  //  UIColor *clearButtonTintColor =
+  //  [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.20];
+  // TODO: Figure out what to do with this. There's no stateful API for it, it only exists on the
+  // color view model
+
+  [self setLabelColor:labelColor forState:UIControlStateNormal];
+  [self setLabelColor:labelColorFocused forState:UIControlStateEditing];
+  [self setLabelColor:labelColorDisabled forState:UIControlStateDisabled];
+  [self setTextColor:textColor forState:UIControlStateNormal];
+  [self setTextColor:textColor forState:UIControlStateEditing];
+  [self setTextColor:textColor forState:UIControlStateDisabled];
+  [self setOutlineColor:outlineColorNormal forState:UIControlStateNormal];
+  [self setOutlineColor:outlineColorEditing forState:UIControlStateEditing];
+  [self setOutlineColor:outlineColorDisabled forState:UIControlStateDisabled];
+  self.trailingAssistiveLabel.textColor = assistiveLabelColor;
+  self.leadingAssistiveLabel.textColor = assistiveLabelColor;
+  self.tintColor = colorScheme.primaryColor;
+}
+
+- (void)applyErrorColorScheme:(id<MDCColorScheming>)colorScheme {
+  UIColor *textColor = colorScheme.errorColor;
+  UIColor *assistiveLabelColor = [colorScheme.errorColor colorWithAlphaComponent:(CGFloat)0.60];
+  UIColor *labelColor = colorScheme.errorColor;
+  UIColor *labelColorDisabled = [colorScheme.errorColor colorWithAlphaComponent:(CGFloat)0.60];
+  UIColor *labelColorFocused = colorScheme.errorColor;
+
+  UIColor *outlineColorNormal = colorScheme.errorColor;
+  UIColor *outlineColorEditing = colorScheme.errorColor;
+  UIColor *outlineColorDisabled = [colorScheme.errorColor colorWithAlphaComponent:(CGFloat)0.60];
+
+  //  UIColor *clearButtonTintColor =
+  //  [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.20];
+  // TODO: Figure out what to do with this. There's no stateful API for it, it only exists on the
+  // color view model
+
+  [self setLabelColor:labelColor forState:UIControlStateNormal];
+  [self setLabelColor:labelColorFocused forState:UIControlStateEditing];
+  [self setLabelColor:labelColorDisabled forState:UIControlStateDisabled];
+  [self setTextColor:textColor forState:UIControlStateNormal];
+  [self setTextColor:textColor forState:UIControlStateEditing];
+  [self setTextColor:textColor forState:UIControlStateDisabled];
+  [self setOutlineColor:outlineColorNormal forState:UIControlStateNormal];
+  [self setOutlineColor:outlineColorEditing forState:UIControlStateEditing];
+  [self setOutlineColor:outlineColorDisabled forState:UIControlStateDisabled];
+  self.trailingAssistiveLabel.textColor = assistiveLabelColor;
+  self.leadingAssistiveLabel.textColor = assistiveLabelColor;
+  self.tintColor = colorScheme.errorColor;
 }
 
 @end
