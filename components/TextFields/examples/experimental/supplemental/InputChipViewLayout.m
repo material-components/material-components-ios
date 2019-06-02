@@ -49,13 +49,13 @@ static const CGFloat kFloatingLabelXOffset = (CGFloat)3.0;
                      interChipSpacing:(CGFloat)interChipSpacing
                           clearButton:(UIButton *)clearButton
                   clearButtonViewMode:(UITextFieldViewMode)clearButtonViewMode
-                   leftUnderlineLabel:(UILabel *)leftUnderlineLabel
-                  rightUnderlineLabel:(UILabel *)rightUnderlineLabel
+                   leftAssistiveLabel:(UILabel *)leftAssistiveLabel
+                  rightAssistiveLabel:(UILabel *)rightAssistiveLabel
            underlineLabelDrawPriority:
-               (MDCContainedInputViewUnderlineLabelDrawPriority)underlineLabelDrawPriority
-     customUnderlineLabelDrawPriority:(CGFloat)normalizedCustomUnderlineLabelDrawPriority
+               (MDCContainedInputViewAssistiveLabelDrawPriority)underlineLabelDrawPriority
+     customAssistiveLabelDrawPriority:(CGFloat)normalizedCustomAssistiveLabelDrawPriority
        preferredMainContentAreaHeight:(CGFloat)preferredMainContentAreaHeight
-    preferredUnderlineLabelAreaHeight:(CGFloat)preferredUnderlineLabelAreaHeight
+    preferredAssistiveLabelAreaHeight:(CGFloat)preferredAssistiveLabelAreaHeight
                                 isRTL:(BOOL)isRTL
                             isEditing:(BOOL)isEditing {
   self = [super init];
@@ -74,12 +74,12 @@ static const CGFloat kFloatingLabelXOffset = (CGFloat)3.0;
                          interChipSpacing:interChipSpacing
                               clearButton:clearButton
                       clearButtonViewMode:clearButtonViewMode
-                       leftUnderlineLabel:leftUnderlineLabel
-                      rightUnderlineLabel:rightUnderlineLabel
+                       leftAssistiveLabel:leftAssistiveLabel
+                      rightAssistiveLabel:rightAssistiveLabel
                underlineLabelDrawPriority:underlineLabelDrawPriority
-         customUnderlineLabelDrawPriority:normalizedCustomUnderlineLabelDrawPriority
+         customAssistiveLabelDrawPriority:normalizedCustomAssistiveLabelDrawPriority
            preferredMainContentAreaHeight:preferredMainContentAreaHeight
-        preferredUnderlineLabelAreaHeight:preferredUnderlineLabelAreaHeight
+        preferredAssistiveLabelAreaHeight:preferredAssistiveLabelAreaHeight
                                     isRTL:isRTL
                                 isEditing:isEditing];
   }
@@ -100,13 +100,13 @@ static const CGFloat kFloatingLabelXOffset = (CGFloat)3.0;
                      interChipSpacing:(CGFloat)interChipSpacing
                           clearButton:(UIButton *)clearButton
                   clearButtonViewMode:(UITextFieldViewMode)clearButtonViewMode
-                   leftUnderlineLabel:(UILabel *)leftUnderlineLabel
-                  rightUnderlineLabel:(UILabel *)rightUnderlineLabel
+                   leftAssistiveLabel:(UILabel *)leftAssistiveLabel
+                  rightAssistiveLabel:(UILabel *)rightAssistiveLabel
            underlineLabelDrawPriority:
-               (MDCContainedInputViewUnderlineLabelDrawPriority)underlineLabelDrawPriority
-     customUnderlineLabelDrawPriority:(CGFloat)normalizedCustomUnderlineLabelDrawPriority
+               (MDCContainedInputViewAssistiveLabelDrawPriority)underlineLabelDrawPriority
+     customAssistiveLabelDrawPriority:(CGFloat)normalizedCustomAssistiveLabelDrawPriority
        preferredMainContentAreaHeight:(CGFloat)preferredMainContentAreaHeight
-    preferredUnderlineLabelAreaHeight:(CGFloat)preferredUnderlineLabelAreaHeight
+    preferredAssistiveLabelAreaHeight:(CGFloat)preferredAssistiveLabelAreaHeight
                                 isRTL:(BOOL)isRTL
                             isEditing:(BOOL)isEditing {
   CGFloat globalChipRowMinX = isRTL ? kTrailingMargin : kLeadingMargin;
@@ -253,13 +253,13 @@ static const CGFloat kFloatingLabelXOffset = (CGFloat)3.0;
   //  if (clearButtonFrameMaxY > maxY) {
   //    maxY = clearButtonFrameMaxY;
   //  }
-  CGFloat leftUnderlineLabelFrameMaxY = CGRectGetMaxY(self.leftUnderlineLabelFrame);
-  if (leftUnderlineLabelFrameMaxY > maxY) {
-    maxY = leftUnderlineLabelFrameMaxY;
+  CGFloat leftAssistiveLabelFrameMaxY = CGRectGetMaxY(self.leftAssistiveLabelFrame);
+  if (leftAssistiveLabelFrameMaxY > maxY) {
+    maxY = leftAssistiveLabelFrameMaxY;
   }
-  CGFloat rightUnderlineLabelFrameMaxY = CGRectGetMaxY(self.rightUnderlineLabelFrame);
-  if (rightUnderlineLabelFrameMaxY > maxY) {
-    maxY = rightUnderlineLabelFrameMaxY;
+  CGFloat rightAssistiveLabelFrameMaxY = CGRectGetMaxY(self.rightAssistiveLabelFrame);
+  if (rightAssistiveLabelFrameMaxY > maxY) {
+    maxY = rightAssistiveLabelFrameMaxY;
   }
   return maxY;
 }

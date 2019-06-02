@@ -23,7 +23,7 @@
 #import "MaterialMath.h"
 #import "MaterialTypography.h"
 
-#import "MDCContainedInputUnderlineLabelView.h"
+#import "MDCContainedInputAssistiveLabelView.h"
 
 @interface MDCBaseTextField () <MDCContainedInputView>
 
@@ -45,15 +45,15 @@
 
 @property(nonatomic, strong) MDCContainedInputViewFloatingLabelManager *floatingLabelManager;
 
-@property(nonatomic, strong) MDCContainedInputUnderlineLabelView *underlineLabelView;
+@property(nonatomic, strong) MDCContainedInputAssistiveLabelView *underlineLabelView;
 
 @end
 
 @implementation MDCBaseTextField
 @synthesize preferredMainContentAreaHeight = _preferredMainContentAreaHeight;
-@synthesize preferredUnderlineLabelAreaHeight = _preferredUnderlineLabelAreaHeight;
+@synthesize preferredAssistiveLabelAreaHeight = _preferredAssistiveLabelAreaHeight;
 @synthesize underlineLabelDrawPriority = _underlineLabelDrawPriority;
-@synthesize customUnderlineLabelDrawPriority = _customUnderlineLabelDrawPriority;
+@synthesize customAssistiveLabelDrawPriority = _customAssistiveLabelDrawPriority;
 @synthesize containerStyler = _containerStyler;
 @synthesize isErrored = _isErrored;
 @synthesize labelBehavior = _labelBehavior;
@@ -81,7 +81,7 @@
   [self setUpFloatingLabel];
   [self setUpPlaceholderLabel];
   [self setUpFloatingLabelManager];
-  [self setUpUnderlineLabels];
+  [self setUpAssistiveLabels];
   [self setUpClearButton];
   [self setUpContainerStyler];
 }
@@ -137,9 +137,9 @@
                                   forState:MDCContainedInputViewStateDisabled];
 }
 
-- (void)setUpUnderlineLabels {
-  self.underlineLabelDrawPriority = MDCContainedInputViewUnderlineLabelDrawPriorityTrailing;
-  self.underlineLabelView = [[MDCContainedInputUnderlineLabelView alloc] init];
+- (void)setUpAssistiveLabels {
+  self.underlineLabelDrawPriority = MDCContainedInputViewAssistiveLabelDrawPriorityTrailing;
+  self.underlineLabelView = [[MDCContainedInputAssistiveLabelView alloc] init];
   CGFloat underlineFontSize = MDCRound([UIFont systemFontSize] * (CGFloat)0.75);
   UIFont *underlineFont = [UIFont systemFontOfSize:underlineFontSize];
   self.underlineLabelView.leftAssistiveLabel.font = underlineFont;
@@ -147,11 +147,11 @@
   [self addSubview:self.underlineLabelView];
 }
 
-- (UILabel *)leftUnderlineLabel {
+- (UILabel *)leftAssistiveLabel {
   return self.underlineLabelView.leftAssistiveLabel;
 }
 
-- (UILabel *)rightUnderlineLabel {
+- (UILabel *)rightAssistiveLabel {
   return self.underlineLabelView.rightAssistiveLabel;
 }
 
@@ -270,8 +270,8 @@
   UIFont *effectiveFont = [self determineEffectiveFont];
   UIFont *floatingFont = [self.floatingLabelManager floatingFontWithFont:effectiveFont
                                                          containerStyler:self.containerStyler];
-  CGFloat normalizedCustomUnderlineLabelDrawPriority =
-      [self normalizedCustomUnderlineLabelDrawPriority:self.customUnderlineLabelDrawPriority];
+  CGFloat normalizedCustomAssistiveLabelDrawPriority =
+      [self normalizedCustomAssistiveLabelDrawPriority:self.customAssistiveLabelDrawPriority];
   return [[MDCBaseTextFieldLayout alloc]
                   initWithTextFieldSize:textFieldSize
                         containerStyler:self.containerStyler
@@ -287,17 +287,17 @@
                           rightViewMode:self.rightViewMode
                             clearButton:self.clearButton
                         clearButtonMode:self.clearButtonMode
-                     leftUnderlineLabel:self.leftUnderlineLabel
-                    rightUnderlineLabel:self.rightUnderlineLabel
+                     leftAssistiveLabel:self.leftAssistiveLabel
+                    rightAssistiveLabel:self.rightAssistiveLabel
              underlineLabelDrawPriority:self.underlineLabelDrawPriority
-       customUnderlineLabelDrawPriority:normalizedCustomUnderlineLabelDrawPriority
+       customAssistiveLabelDrawPriority:normalizedCustomAssistiveLabelDrawPriority
          preferredMainContentAreaHeight:self.preferredMainContentAreaHeight
-      preferredUnderlineLabelAreaHeight:self.preferredUnderlineLabelAreaHeight
+      preferredAssistiveLabelAreaHeight:self.preferredAssistiveLabelAreaHeight
                                   isRTL:self.isRTL
                               isEditing:self.isEditing];
 }
 
-- (CGFloat)normalizedCustomUnderlineLabelDrawPriority:(CGFloat)customPriority {
+- (CGFloat)normalizedCustomAssistiveLabelDrawPriority:(CGFloat)customPriority {
   CGFloat value = customPriority;
   if (value < 0) {
     value = 0;

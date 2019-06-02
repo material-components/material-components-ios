@@ -15,8 +15,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "MDCContainedInputUnderlineLabelView.h"
-#import "MDCContainedInputUnderlineLabelViewLayout.h"
+#import "MDCContainedInputAssistiveLabelView.h"
 #import "MDCContainedInputView.h"
 
 @protocol MDCContainedInputViewStyler;
@@ -42,7 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, assign) CGRect leftViewFrame;
 @property(nonatomic, assign) CGRect rightViewFrame;
 @property(nonatomic, assign) CGRect underlineLabelViewFrame;
-@property(nonatomic, strong) MDCContainedInputUnderlineLabelViewLayout *underlineLabelViewLayout;
+@property(nonatomic, strong) MDCContainedInputAssistiveLabelViewLayout *underlineLabelViewLayout;
 
 @property(nonatomic, readonly) CGFloat calculatedHeight;
 @property(nonatomic, assign) CGFloat topRowBottomRowDividerY;
@@ -61,13 +60,13 @@ NS_ASSUME_NONNULL_BEGIN
                         rightViewMode:(UITextFieldViewMode)rightViewMode
                           clearButton:(UIButton *)clearButton
                       clearButtonMode:(UITextFieldViewMode)clearButtonMode
-                   leftUnderlineLabel:(UILabel *)leftUnderlineLabel
-                  rightUnderlineLabel:(UILabel *)rightUnderlineLabel
+                   leftAssistiveLabel:(UILabel *)leftAssistiveLabel
+                  rightAssistiveLabel:(UILabel *)rightAssistiveLabel
            underlineLabelDrawPriority:
-               (MDCContainedInputViewUnderlineLabelDrawPriority)underlineLabelDrawPriority
-     customUnderlineLabelDrawPriority:(CGFloat)customUnderlineLabelDrawPriority
+               (MDCContainedInputViewAssistiveLabelDrawPriority)underlineLabelDrawPriority
+     customAssistiveLabelDrawPriority:(CGFloat)customAssistiveLabelDrawPriority
        preferredMainContentAreaHeight:(CGFloat)preferredMainContentAreaHeight
-    preferredUnderlineLabelAreaHeight:(CGFloat)preferredUnderlineLabelAreaHeight
+    preferredAssistiveLabelAreaHeight:(CGFloat)preferredAssistiveLabelAreaHeight
                                 isRTL:(BOOL)isRTL
                             isEditing:(BOOL)isEditing;
 

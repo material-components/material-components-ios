@@ -44,13 +44,13 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
                         rightViewMode:(UITextFieldViewMode)rightViewMode
                           clearButton:(UIButton *)clearButton
                       clearButtonMode:(UITextFieldViewMode)clearButtonMode
-                   leftUnderlineLabel:(UILabel *)leftUnderlineLabel
-                  rightUnderlineLabel:(UILabel *)rightUnderlineLabel
+                   leftAssistiveLabel:(UILabel *)leftAssistiveLabel
+                  rightAssistiveLabel:(UILabel *)rightAssistiveLabel
            underlineLabelDrawPriority:
-               (MDCContainedInputViewUnderlineLabelDrawPriority)underlineLabelDrawPriority
-     customUnderlineLabelDrawPriority:(CGFloat)customUnderlineLabelDrawPriority
+               (MDCContainedInputViewAssistiveLabelDrawPriority)underlineLabelDrawPriority
+     customAssistiveLabelDrawPriority:(CGFloat)customAssistiveLabelDrawPriority
        preferredMainContentAreaHeight:(CGFloat)preferredMainContentAreaHeight
-    preferredUnderlineLabelAreaHeight:(CGFloat)preferredUnderlineLabelAreaHeight
+    preferredAssistiveLabelAreaHeight:(CGFloat)preferredAssistiveLabelAreaHeight
                                 isRTL:(BOOL)isRTL
                             isEditing:(BOOL)isEditing {
   self = [super init];
@@ -69,12 +69,12 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
                              rightViewMode:rightViewMode
                                clearButton:clearButton
                            clearButtonMode:clearButtonMode
-                        leftUnderlineLabel:leftUnderlineLabel
-                       rightUnderlineLabel:rightUnderlineLabel
+                        leftAssistiveLabel:leftAssistiveLabel
+                       rightAssistiveLabel:rightAssistiveLabel
                 underlineLabelDrawPriority:underlineLabelDrawPriority
-          customUnderlineLabelDrawPriority:customUnderlineLabelDrawPriority
+          customAssistiveLabelDrawPriority:customAssistiveLabelDrawPriority
             preferredMainContentAreaHeight:preferredMainContentAreaHeight
-         preferredUnderlineLabelAreaHeight:preferredUnderlineLabelAreaHeight
+         preferredAssistiveLabelAreaHeight:preferredAssistiveLabelAreaHeight
                                      isRTL:isRTL
                                  isEditing:isEditing];
     return self;
@@ -98,13 +98,13 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
                            rightViewMode:(UITextFieldViewMode)rightViewMode
                              clearButton:(UIButton *)clearButton
                          clearButtonMode:(UITextFieldViewMode)clearButtonMode
-                      leftUnderlineLabel:(UILabel *)leftUnderlineLabel
-                     rightUnderlineLabel:(UILabel *)rightUnderlineLabel
+                      leftAssistiveLabel:(UILabel *)leftAssistiveLabel
+                     rightAssistiveLabel:(UILabel *)rightAssistiveLabel
               underlineLabelDrawPriority:
-                  (MDCContainedInputViewUnderlineLabelDrawPriority)underlineLabelDrawPriority
-        customUnderlineLabelDrawPriority:(CGFloat)customUnderlineLabelDrawPriority
+                  (MDCContainedInputViewAssistiveLabelDrawPriority)underlineLabelDrawPriority
+        customAssistiveLabelDrawPriority:(CGFloat)customAssistiveLabelDrawPriority
           preferredMainContentAreaHeight:(CGFloat)preferredMainContentAreaHeight
-       preferredUnderlineLabelAreaHeight:(CGFloat)preferredUnderlineLabelAreaHeight
+       preferredAssistiveLabelAreaHeight:(CGFloat)preferredAssistiveLabelAreaHeight
                                    isRTL:(BOOL)isRTL
                                isEditing:(BOOL)isEditing {
   BOOL shouldAttemptToDisplayLeftView = [self shouldAttemptToDisplaySideView:leftView
@@ -277,12 +277,12 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
 
   CGFloat underlineLabelVerticalPadding = [containerStyler.positioningDelegate
       contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:floatingLabelMaxY];
-  self.underlineLabelViewLayout = [[MDCContainedInputUnderlineLabelViewLayout alloc]
+  self.underlineLabelViewLayout = [[MDCContainedInputAssistiveLabelViewLayout alloc]
                 initWithSuperviewWidth:textFieldWidth
-                    leftUnderlineLabel:leftUnderlineLabel
-                   rightUnderlineLabel:rightUnderlineLabel
+                    leftAssistiveLabel:leftAssistiveLabel
+                   rightAssistiveLabel:rightAssistiveLabel
             underlineLabelDrawPriority:underlineLabelDrawPriority
-      customUnderlineLabelDrawPriority:customUnderlineLabelDrawPriority
+      customAssistiveLabelDrawPriority:customAssistiveLabelDrawPriority
                      horizontalPadding:kHorizontalPadding
                        verticalPadding:underlineLabelVerticalPadding
                                  isRTL:isRTL];
@@ -317,10 +317,10 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
   return size;
 }
 
-- (CGFloat)leadingUnderlineLabelWidthWithCombinedUnderlineLabelsWidth:
-               (CGFloat)totalUnderlineLabelsWidth
+- (CGFloat)leadingAssistiveLabelWidthWithCombinedAssistiveLabelsWidth:
+               (CGFloat)totalAssistiveLabelsWidth
                                                    customDrawPriority:(CGFloat)customDrawPriority {
-  return customDrawPriority * totalUnderlineLabelsWidth;
+  return customDrawPriority * totalAssistiveLabelsWidth;
 }
 
 - (CGFloat)minYForSubviewWithHeight:(CGFloat)height centerY:(CGFloat)centerY {
