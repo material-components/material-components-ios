@@ -197,8 +197,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
 
   if (isRTL) {
     if (shouldAttemptToDisplayClearButton) {
-      CGFloat apparentClearButtonMaxX =
-          apparentClearButtonMinX + clearButton.imageViewSideLength;
+      CGFloat apparentClearButtonMaxX = apparentClearButtonMinX + clearButton.imageViewSideLength;
       textRectMinX = apparentClearButtonMaxX + kHorizontalPadding;
       floatingLabelNormalMinX = textRectMinX;
       floatingLabelFloatingMinX = apparentClearButtonMinX;
@@ -243,12 +242,11 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
   CGRect leftViewFrame = CGRectMake(leftViewMinX, leftViewMinY, leftViewWidth, leftViewHeight);
   CGRect rightViewFrame =
       CGRectMake(rightViewMinX, rightViewMinY, CGRectGetWidth(rightView.frame), rightViewHeight);
-  CGRect clearButtonFrame =
-      CGRectMake(actualClearButtonMinX, clearButtonMinY, clearButton.sideLength,
-                 clearButton.sideLength);
+  CGRect clearButtonFrame = CGRectMake(actualClearButtonMinX, clearButtonMinY,
+                                       clearButton.sideLength, clearButton.sideLength);
   CGRect clearButtonFrameFloatingLabel =
-      CGRectMake(actualClearButtonMinX, clearButtonFloatingLabelMinY,
-                 clearButton.sideLength, clearButton.sideLength);
+      CGRectMake(actualClearButtonMinX, clearButtonFloatingLabelMinY, clearButton.sideLength,
+                 clearButton.sideLength);
 
   CGRect floatingLabelFrameNormal =
       [self floatingLabelFrameWithText:floatingLabel.text

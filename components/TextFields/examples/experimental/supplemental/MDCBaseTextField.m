@@ -254,12 +254,11 @@
 }
 
 - (CGRect)adjustTextAreaFrame:(CGRect)textRect
- withParentClassTextAreaFrame:(CGRect)parentClassTextAreaFrame {
+    withParentClassTextAreaFrame:(CGRect)parentClassTextAreaFrame {
   CGFloat systemDefinedHeight = CGRectGetHeight(parentClassTextAreaFrame);
   CGFloat minY = CGRectGetMidY(textRect) - (systemDefinedHeight * (CGFloat)0.5);
   return CGRectMake(CGRectGetMinX(textRect), minY, CGRectGetWidth(textRect), systemDefinedHeight);
 }
-
 
 - (CGRect)clearButtonFrameFromLayout:(MDCBaseTextFieldLayout *)layout
                   floatingLabelState:(MDCContainedInputViewFloatingLabelState)floatingLabelState {

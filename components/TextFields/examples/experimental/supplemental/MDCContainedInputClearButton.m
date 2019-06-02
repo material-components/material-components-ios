@@ -20,22 +20,22 @@ static const CGFloat kClearButtonTouchTargetSideLength = (CGFloat)30.0;
 static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
 
 @interface MDCContainedInputClearButton ()
-@property (strong, nonatomic) UIImageView *clearButtonImageView;
+@property(strong, nonatomic) UIImageView *clearButtonImageView;
 @end
 
 @implementation MDCContainedInputClearButton
 
 #pragma mark Object Lifecycle
 
--(instancetype)initWithFrame:(CGRect)frame {
+- (instancetype)initWithFrame:(CGRect)frame {
   return [self init];
 }
 
--(instancetype)initWithCoder:(NSCoder *)aDecoder {
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
   return [self init];
 }
 
--(instancetype)init {
+- (instancetype)init {
   CGFloat clearButtonSideLength = kClearButtonTouchTargetSideLength;
   CGRect clearButtonFrame = CGRectMake(0, 0, clearButtonSideLength, clearButtonSideLength);
   self = [super initWithFrame:clearButtonFrame];
@@ -51,7 +51,7 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
   [super layoutSubviews];
 }
 
--(void)setTintColor:(UIColor *)tintColor {
+- (void)setTintColor:(UIColor *)tintColor {
   [super setTintColor:tintColor];
   self.clearButtonImageView.tintColor = tintColor;
 }
@@ -64,7 +64,7 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
       CGRectMake(0, 0, clearButtonImageViewSideLength, clearButtonImageViewSideLength);
   self.clearButtonImageView = [[UIImageView alloc] initWithFrame:clearButtonImageViewRect];
   UIImage *clearButtonImage =
-  [[self untintedClearButtonImage] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+      [[self untintedClearButtonImage] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   self.clearButtonImageView.image = clearButtonImage;
   [self addSubview:self.clearButtonImageView];
   self.clearButtonImageView.center = self.center;
@@ -84,109 +84,109 @@ static const CGFloat kClearButtonInnerImageViewSideLength = (CGFloat)18.0;
 
 - (UIBezierPath *)pathForClearButtonImageWithFrame:(CGRect)frame {
   CGRect innerBounds =
-  CGRectMake(CGRectGetMinX(frame) + 2, CGRectGetMinY(frame) + 2,
-             MDCFloor((frame.size.width - 2) * (CGFloat)0.90909 + (CGFloat)0.5),
-             MDCFloor((frame.size.height - 2) * (CGFloat)0.90909 + (CGFloat)0.5));
-  
+      CGRectMake(CGRectGetMinX(frame) + 2, CGRectGetMinY(frame) + 2,
+                 MDCFloor((frame.size.width - 2) * (CGFloat)0.90909 + (CGFloat)0.5),
+                 MDCFloor((frame.size.height - 2) * (CGFloat)0.90909 + (CGFloat)0.5));
+
   UIBezierPath *ic_clear_path = [UIBezierPath bezierPath];
   [ic_clear_path moveToPoint:CGPointMake(CGRectGetMinX(innerBounds) +
-                                         (CGFloat)0.50000 * innerBounds.size.width,
+                                             (CGFloat)0.50000 * innerBounds.size.width,
                                          CGRectGetMinY(innerBounds) + 0 * innerBounds.size.height)];
   [ic_clear_path
-   addCurveToPoint:CGPointMake(
-                               CGRectGetMinX(innerBounds) + 1 * innerBounds.size.width,
-                               CGRectGetMinY(innerBounds) + (CGFloat)0.50000 * innerBounds.size.height)
-   controlPoint1:CGPointMake(
-                             CGRectGetMinX(innerBounds) + (CGFloat)0.77600 * innerBounds.size.width,
-                             CGRectGetMinY(innerBounds) + 0 * innerBounds.size.height)
-   controlPoint2:CGPointMake(
-                             CGRectGetMinX(innerBounds) + 1 * innerBounds.size.width,
-                             CGRectGetMinY(innerBounds) + (CGFloat)0.22400 * innerBounds.size.height)];
+      addCurveToPoint:CGPointMake(
+                          CGRectGetMinX(innerBounds) + 1 * innerBounds.size.width,
+                          CGRectGetMinY(innerBounds) + (CGFloat)0.50000 * innerBounds.size.height)
+        controlPoint1:CGPointMake(
+                          CGRectGetMinX(innerBounds) + (CGFloat)0.77600 * innerBounds.size.width,
+                          CGRectGetMinY(innerBounds) + 0 * innerBounds.size.height)
+        controlPoint2:CGPointMake(
+                          CGRectGetMinX(innerBounds) + 1 * innerBounds.size.width,
+                          CGRectGetMinY(innerBounds) + (CGFloat)0.22400 * innerBounds.size.height)];
   [ic_clear_path
-   addCurveToPoint:CGPointMake(
-                               CGRectGetMinX(innerBounds) + (CGFloat)0.50000 * innerBounds.size.width,
-                               CGRectGetMinY(innerBounds) + 1 * innerBounds.size.height)
-   controlPoint1:CGPointMake(
-                             CGRectGetMinX(innerBounds) + 1 * innerBounds.size.width,
-                             CGRectGetMinY(innerBounds) + (CGFloat)0.77600 * innerBounds.size.height)
-   controlPoint2:CGPointMake(
-                             CGRectGetMinX(innerBounds) + (CGFloat)0.77600 * innerBounds.size.width,
-                             CGRectGetMinY(innerBounds) + 1 * innerBounds.size.height)];
+      addCurveToPoint:CGPointMake(
+                          CGRectGetMinX(innerBounds) + (CGFloat)0.50000 * innerBounds.size.width,
+                          CGRectGetMinY(innerBounds) + 1 * innerBounds.size.height)
+        controlPoint1:CGPointMake(
+                          CGRectGetMinX(innerBounds) + 1 * innerBounds.size.width,
+                          CGRectGetMinY(innerBounds) + (CGFloat)0.77600 * innerBounds.size.height)
+        controlPoint2:CGPointMake(
+                          CGRectGetMinX(innerBounds) + (CGFloat)0.77600 * innerBounds.size.width,
+                          CGRectGetMinY(innerBounds) + 1 * innerBounds.size.height)];
   [ic_clear_path
-   addCurveToPoint:CGPointMake(
-                               CGRectGetMinX(innerBounds) + 0 * innerBounds.size.width,
-                               CGRectGetMinY(innerBounds) + (CGFloat)0.50000 * innerBounds.size.height)
-   controlPoint1:CGPointMake(
-                             CGRectGetMinX(innerBounds) + (CGFloat)0.22400 * innerBounds.size.width,
-                             CGRectGetMinY(innerBounds) + 1 * innerBounds.size.height)
-   controlPoint2:CGPointMake(
-                             CGRectGetMinX(innerBounds) + 0 * innerBounds.size.width,
-                             CGRectGetMinY(innerBounds) + (CGFloat)0.77600 * innerBounds.size.height)];
+      addCurveToPoint:CGPointMake(
+                          CGRectGetMinX(innerBounds) + 0 * innerBounds.size.width,
+                          CGRectGetMinY(innerBounds) + (CGFloat)0.50000 * innerBounds.size.height)
+        controlPoint1:CGPointMake(
+                          CGRectGetMinX(innerBounds) + (CGFloat)0.22400 * innerBounds.size.width,
+                          CGRectGetMinY(innerBounds) + 1 * innerBounds.size.height)
+        controlPoint2:CGPointMake(
+                          CGRectGetMinX(innerBounds) + 0 * innerBounds.size.width,
+                          CGRectGetMinY(innerBounds) + (CGFloat)0.77600 * innerBounds.size.height)];
   [ic_clear_path
-   addCurveToPoint:CGPointMake(
-                               CGRectGetMinX(innerBounds) + (CGFloat)0.50000 * innerBounds.size.width,
-                               CGRectGetMinY(innerBounds) + 0 * innerBounds.size.height)
-   controlPoint1:CGPointMake(
-                             CGRectGetMinX(innerBounds) + 0 * innerBounds.size.width,
-                             CGRectGetMinY(innerBounds) + (CGFloat)0.22400 * innerBounds.size.height)
-   controlPoint2:CGPointMake(
-                             CGRectGetMinX(innerBounds) + (CGFloat)0.22400 * innerBounds.size.width,
-                             CGRectGetMinY(innerBounds) + 0 * innerBounds.size.height)];
+      addCurveToPoint:CGPointMake(
+                          CGRectGetMinX(innerBounds) + (CGFloat)0.50000 * innerBounds.size.width,
+                          CGRectGetMinY(innerBounds) + 0 * innerBounds.size.height)
+        controlPoint1:CGPointMake(
+                          CGRectGetMinX(innerBounds) + 0 * innerBounds.size.width,
+                          CGRectGetMinY(innerBounds) + (CGFloat)0.22400 * innerBounds.size.height)
+        controlPoint2:CGPointMake(
+                          CGRectGetMinX(innerBounds) + (CGFloat)0.22400 * innerBounds.size.width,
+                          CGRectGetMinY(innerBounds) + 0 * innerBounds.size.height)];
   [ic_clear_path closePath];
   [ic_clear_path
-   moveToPoint:CGPointMake(
-                           CGRectGetMinX(innerBounds) + (CGFloat)0.73417 * innerBounds.size.width,
-                           CGRectGetMinY(innerBounds) + (CGFloat)0.31467 * innerBounds.size.height)];
+      moveToPoint:CGPointMake(
+                      CGRectGetMinX(innerBounds) + (CGFloat)0.73417 * innerBounds.size.width,
+                      CGRectGetMinY(innerBounds) + (CGFloat)0.31467 * innerBounds.size.height)];
   [ic_clear_path
-   addLineToPoint:CGPointMake(
-                              CGRectGetMinX(innerBounds) + (CGFloat)0.68700 * innerBounds.size.width,
-                              CGRectGetMinY(innerBounds) + (CGFloat)0.26750 * innerBounds.size.height)];
+      addLineToPoint:CGPointMake(
+                         CGRectGetMinX(innerBounds) + (CGFloat)0.68700 * innerBounds.size.width,
+                         CGRectGetMinY(innerBounds) + (CGFloat)0.26750 * innerBounds.size.height)];
   [ic_clear_path
-   addLineToPoint:CGPointMake(
-                              CGRectGetMinX(innerBounds) + (CGFloat)0.50083 * innerBounds.size.width,
-                              CGRectGetMinY(innerBounds) + (CGFloat)0.45367 * innerBounds.size.height)];
+      addLineToPoint:CGPointMake(
+                         CGRectGetMinX(innerBounds) + (CGFloat)0.50083 * innerBounds.size.width,
+                         CGRectGetMinY(innerBounds) + (CGFloat)0.45367 * innerBounds.size.height)];
   [ic_clear_path
-   addLineToPoint:CGPointMake(
-                              CGRectGetMinX(innerBounds) + (CGFloat)0.31467 * innerBounds.size.width,
-                              CGRectGetMinY(innerBounds) + (CGFloat)0.26750 * innerBounds.size.height)];
+      addLineToPoint:CGPointMake(
+                         CGRectGetMinX(innerBounds) + (CGFloat)0.31467 * innerBounds.size.width,
+                         CGRectGetMinY(innerBounds) + (CGFloat)0.26750 * innerBounds.size.height)];
   [ic_clear_path
-   addLineToPoint:CGPointMake(
-                              CGRectGetMinX(innerBounds) + (CGFloat)0.26750 * innerBounds.size.width,
-                              CGRectGetMinY(innerBounds) + (CGFloat)0.31467 * innerBounds.size.height)];
+      addLineToPoint:CGPointMake(
+                         CGRectGetMinX(innerBounds) + (CGFloat)0.26750 * innerBounds.size.width,
+                         CGRectGetMinY(innerBounds) + (CGFloat)0.31467 * innerBounds.size.height)];
   [ic_clear_path
-   addLineToPoint:CGPointMake(
-                              CGRectGetMinX(innerBounds) + (CGFloat)0.45367 * innerBounds.size.width,
-                              CGRectGetMinY(innerBounds) + (CGFloat)0.50083 * innerBounds.size.height)];
+      addLineToPoint:CGPointMake(
+                         CGRectGetMinX(innerBounds) + (CGFloat)0.45367 * innerBounds.size.width,
+                         CGRectGetMinY(innerBounds) + (CGFloat)0.50083 * innerBounds.size.height)];
   [ic_clear_path
-   addLineToPoint:CGPointMake(
-                              CGRectGetMinX(innerBounds) + (CGFloat)0.26750 * innerBounds.size.width,
-                              CGRectGetMinY(innerBounds) + (CGFloat)0.68700 * innerBounds.size.height)];
+      addLineToPoint:CGPointMake(
+                         CGRectGetMinX(innerBounds) + (CGFloat)0.26750 * innerBounds.size.width,
+                         CGRectGetMinY(innerBounds) + (CGFloat)0.68700 * innerBounds.size.height)];
   [ic_clear_path
-   addLineToPoint:CGPointMake(
-                              CGRectGetMinX(innerBounds) + (CGFloat)0.31467 * innerBounds.size.width,
-                              CGRectGetMinY(innerBounds) + (CGFloat)0.73417 * innerBounds.size.height)];
+      addLineToPoint:CGPointMake(
+                         CGRectGetMinX(innerBounds) + (CGFloat)0.31467 * innerBounds.size.width,
+                         CGRectGetMinY(innerBounds) + (CGFloat)0.73417 * innerBounds.size.height)];
   [ic_clear_path
-   addLineToPoint:CGPointMake(
-                              CGRectGetMinX(innerBounds) + (CGFloat)0.50083 * innerBounds.size.width,
-                              CGRectGetMinY(innerBounds) + (CGFloat)0.54800 * innerBounds.size.height)];
+      addLineToPoint:CGPointMake(
+                         CGRectGetMinX(innerBounds) + (CGFloat)0.50083 * innerBounds.size.width,
+                         CGRectGetMinY(innerBounds) + (CGFloat)0.54800 * innerBounds.size.height)];
   [ic_clear_path
-   addLineToPoint:CGPointMake(
-                              CGRectGetMinX(innerBounds) + (CGFloat)0.68700 * innerBounds.size.width,
-                              CGRectGetMinY(innerBounds) + (CGFloat)0.73417 * innerBounds.size.height)];
+      addLineToPoint:CGPointMake(
+                         CGRectGetMinX(innerBounds) + (CGFloat)0.68700 * innerBounds.size.width,
+                         CGRectGetMinY(innerBounds) + (CGFloat)0.73417 * innerBounds.size.height)];
   [ic_clear_path
-   addLineToPoint:CGPointMake(
-                              CGRectGetMinX(innerBounds) + (CGFloat)0.73417 * innerBounds.size.width,
-                              CGRectGetMinY(innerBounds) + (CGFloat)0.68700 * innerBounds.size.height)];
+      addLineToPoint:CGPointMake(
+                         CGRectGetMinX(innerBounds) + (CGFloat)0.73417 * innerBounds.size.width,
+                         CGRectGetMinY(innerBounds) + (CGFloat)0.68700 * innerBounds.size.height)];
   [ic_clear_path
-   addLineToPoint:CGPointMake(
-                              CGRectGetMinX(innerBounds) + (CGFloat)0.54800 * innerBounds.size.width,
-                              CGRectGetMinY(innerBounds) + (CGFloat)0.50083 * innerBounds.size.height)];
+      addLineToPoint:CGPointMake(
+                         CGRectGetMinX(innerBounds) + (CGFloat)0.54800 * innerBounds.size.width,
+                         CGRectGetMinY(innerBounds) + (CGFloat)0.50083 * innerBounds.size.height)];
   [ic_clear_path
-   addLineToPoint:CGPointMake(
-                              CGRectGetMinX(innerBounds) + (CGFloat)0.73417 * innerBounds.size.width,
-                              CGRectGetMinY(innerBounds) + (CGFloat)0.31467 * innerBounds.size.height)];
+      addLineToPoint:CGPointMake(
+                         CGRectGetMinX(innerBounds) + (CGFloat)0.73417 * innerBounds.size.width,
+                         CGRectGetMinY(innerBounds) + (CGFloat)0.31467 * innerBounds.size.height)];
   [ic_clear_path closePath];
-  
+
   return ic_clear_path;
 }
 

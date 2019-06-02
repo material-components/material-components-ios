@@ -292,13 +292,13 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
     BOOL isEven = idx % 2 == 0;
     if (self.isErrored) {
       // TODO: Make InputChipView respond to error theme selector
-//      if ([inputChipView respondsToSelector:@selector(applyErrorThemeWithScheme:)]) {
-//        [inputChipView applyErrorThemeWithScheme:self.containerScheme];
-//      }
+      //      if ([inputChipView respondsToSelector:@selector(applyErrorThemeWithScheme:)]) {
+      //        [inputChipView applyErrorThemeWithScheme:self.containerScheme];
+      //      }
       if (isEven) {
         inputChipView.leadingAssistiveLabel.text = @"Suspendisse quam elit, mattis sit amet justo "
-        @"vel, venenatis lobortis massa. Donec metus "
-        @"dolor.";
+                                                   @"vel, venenatis lobortis massa. Donec metus "
+                                                   @"dolor.";
       } else {
         inputChipView.leadingAssistiveLabel.text = @"This is an error.";
       }
