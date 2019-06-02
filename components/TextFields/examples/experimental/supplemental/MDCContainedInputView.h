@@ -51,24 +51,24 @@ __unused static MDCContainedInputViewState MDCContainedInputViewStateWithUIContr
 /**
  Dictates the relative importance of the underline labels, and the order in which they are laid out.
  */
-typedef NS_ENUM(NSUInteger, MDCContainedInputViewUnderlineLabelDrawPriority) {
+typedef NS_ENUM(NSUInteger, MDCContainedInputViewAssistiveLabelDrawPriority) {
   /**
-   When the priority is @c .leading, the @c leadingUnderlineLabel will be laid out first within the
+   When the priority is @c .leading, the @c leadingAssistiveLabel will be laid out first within the
    horizontal space available for @b both underline labels. Any remaining space will then be given
-   for the @c trailingUnderlineLabel.
+   for the @c trailingAssistiveLabel.
    */
-  MDCContainedInputViewUnderlineLabelDrawPriorityLeading,
+  MDCContainedInputViewAssistiveLabelDrawPriorityLeading,
   /**
-   When the priority is @c .trailing, the @c trailingUnderlineLabel will be laid out first within
+   When the priority is @c .trailing, the @c trailingAssistiveLabel will be laid out first within
    the horizontal space available for @b both underline labels. Any remaining space will then be
-   given for the @c leadingUnderlineLabel.
+   given for the @c leadingAssistiveLabel.
    */
-  MDCContainedInputViewUnderlineLabelDrawPriorityTrailing,
+  MDCContainedInputViewAssistiveLabelDrawPriorityTrailing,
   /**
-   When the priority is @c .custom, the @c customUnderlineLabelDrawPriority property will be used to
+   When the priority is @c .custom, the @c customAssistiveLabelDrawPriority property will be used to
    divide the space available for the two underline labels.
    */
-  MDCContainedInputViewUnderlineLabelDrawPriorityCustom,
+  MDCContainedInputViewAssistiveLabelDrawPriorityCustom,
 };
 
 /**
@@ -131,13 +131,13 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
  This property is used to determine how much horizontal space to allot for each of the two underline
  labels.
 
- @note The default value is MDCContainedInputViewUnderlineLabelDrawPriorityTrailing. The rationale
+ @note The default value is MDCContainedInputViewAssistiveLabelDrawPriorityTrailing. The rationale
  behind this is it is less likely to have long explanatory error text and more likely to have short
  text, like a character counter. It is better to draw the short text first and use whatever space is
  leftover for the longer text, which may wrap to new lines.
  */
 @property(nonatomic, assign)
-    MDCContainedInputViewUnderlineLabelDrawPriority underlineLabelDrawPriority;
+    MDCContainedInputViewAssistiveLabelDrawPriority underlineLabelDrawPriority;
 
 /**
  When @c underlineLabelDrawPriority is set to @c .custom the value of this property helps determine
@@ -146,7 +146,7 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
  width. A value of @c 1 would result in the leading underline label getting all the available width.
  A value of @c .5 would result in each underline label getting 50% of the available width.
  */
-@property(nonatomic, assign) CGFloat customUnderlineLabelDrawPriority;
+@property(nonatomic, assign) CGFloat customAssistiveLabelDrawPriority;
 
 /**
  This property toggles the error state (similar to @c isHighlighted, @c isEnabled, @c isSelected,
@@ -188,7 +188,7 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
  area. If this property is set to a value that's lower than the default underline label area height
  the value will be ignored in the calculation of the view's @c intrinsicContentSize.
  */
-@property(nonatomic, assign) CGFloat preferredUnderlineLabelAreaHeight;
+@property(nonatomic, assign) CGFloat preferredAssistiveLabelAreaHeight;
 
 @end
 

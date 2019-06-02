@@ -145,9 +145,9 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 @implementation InputChipView
 @synthesize preferredMainContentAreaHeight = _preferredMainContentAreaHeight;
-@synthesize preferredUnderlineLabelAreaHeight = _preferredUnderlineLabelAreaHeight;
+@synthesize preferredAssistiveLabelAreaHeight = _preferredAssistiveLabelAreaHeight;
 @synthesize underlineLabelDrawPriority = _underlineLabelDrawPriority;
-@synthesize customUnderlineLabelDrawPriority = _customUnderlineLabelDrawPriority;
+@synthesize customAssistiveLabelDrawPriority = _customAssistiveLabelDrawPriority;
 @synthesize containerStyler = _containerStyler;
 @synthesize isErrored = _isErrored;
 @synthesize canFloatingLabelFloat = _canFloatingLabelFloat;
@@ -488,12 +488,12 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
                                   interChipSpacing:self.chipRowSpacing
                                        clearButton:self.clearButton
                                clearButtonViewMode:self.textField.clearButtonMode
-                                leftUnderlineLabel:self.leftAssistiveLabel
-                               rightUnderlineLabel:self.rightAssistiveLabel
+                                leftAssistiveLabel:self.leftAssistiveLabel
+                               rightAssistiveLabel:self.rightAssistiveLabel
                         underlineLabelDrawPriority:self.underlineLabelDrawPriority
-                  customUnderlineLabelDrawPriority:self.customUnderlineLabelDrawPriority
+                  customAssistiveLabelDrawPriority:self.customAssistiveLabelDrawPriority
                     preferredMainContentAreaHeight:self.preferredMainContentAreaHeight
-                 preferredUnderlineLabelAreaHeight:self.preferredUnderlineLabelAreaHeight
+                 preferredAssistiveLabelAreaHeight:self.preferredAssistiveLabelAreaHeight
                                              isRTL:self.isRTL
                                          isEditing:self.inputChipViewTextField.isEditing];
 }

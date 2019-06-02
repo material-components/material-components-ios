@@ -19,18 +19,18 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MDCContainedInputUnderlineLabelViewLayout : NSObject
+@interface MDCContainedInputAssistiveLabelViewLayout : NSObject
 
-@property(nonatomic, assign, readonly) CGRect leftUnderlineLabelFrame;
-@property(nonatomic, assign, readonly) CGRect rightUnderlineLabelFrame;
+@property(nonatomic, assign, readonly) CGRect leftAssistiveLabelFrame;
+@property(nonatomic, assign, readonly) CGRect rightAssistiveLabelFrame;
 @property(nonatomic, assign, readonly) CGFloat calculatedHeight;
 
 - (instancetype)initWithSuperviewWidth:(CGFloat)superviewWidth
-                    leftUnderlineLabel:(UILabel *)leftUnderlineLabel
-                   rightUnderlineLabel:(UILabel *)rightUnderlineLabel
+                    leftAssistiveLabel:(UILabel *)leftAssistiveLabel
+                   rightAssistiveLabel:(UILabel *)rightAssistiveLabel
             underlineLabelDrawPriority:
-                (MDCContainedInputViewUnderlineLabelDrawPriority)underlineLabelDrawPriority
-      customUnderlineLabelDrawPriority:(CGFloat)customUnderlineLabelDrawPriority
+                (MDCContainedInputViewAssistiveLabelDrawPriority)underlineLabelDrawPriority
+      customAssistiveLabelDrawPriority:(CGFloat)customAssistiveLabelDrawPriority
                      horizontalPadding:(CGFloat)horizontalPadding
                        verticalPadding:(CGFloat)verticalPadding
                                  isRTL:(BOOL)isRTL;

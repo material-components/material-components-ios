@@ -16,15 +16,15 @@
 #import <UIKit/UIKit.h>
 #import "MDCContainedInputView.h"
 
-#import "MDCContainedInputUnderlineLabelViewLayout.h"
+#import "MDCContainedInputAssistiveLabelViewLayout.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MDCContainedInputUnderlineLabelView : UIView
+@interface MDCContainedInputAssistiveLabelView : UIView
 
 @property(nonatomic, strong, readonly) UILabel *leftAssistiveLabel;
 @property(nonatomic, strong, readonly) UILabel *rightAssistiveLabel;
-@property(nonatomic, strong) MDCContainedInputUnderlineLabelViewLayout *layout;
+@property(nonatomic, strong) MDCContainedInputAssistiveLabelViewLayout *layout;
 
 @end
 

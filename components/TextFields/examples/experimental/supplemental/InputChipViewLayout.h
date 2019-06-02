@@ -36,8 +36,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, assign) CGRect textFieldFrame;
 
 @property(nonatomic, assign) CGRect underlineLabelFrame;
-@property(nonatomic, assign) CGRect leftUnderlineLabelFrame;
-@property(nonatomic, assign) CGRect rightUnderlineLabelFrame;
+@property(nonatomic, assign) CGRect leftAssistiveLabelFrame;
+@property(nonatomic, assign) CGRect rightAssistiveLabelFrame;
 
 @property(nonatomic, assign) CGRect maskedScrollViewContainerViewFrame;
 @property(nonatomic, assign) CGRect scrollViewFrame;
@@ -63,13 +63,13 @@ NS_ASSUME_NONNULL_BEGIN
                      interChipSpacing:(CGFloat)interChipSpacing
                           clearButton:(UIButton *)clearButton
                   clearButtonViewMode:(UITextFieldViewMode)clearButtonViewMode
-                   leftUnderlineLabel:(UILabel *)leftUnderlineLabel
-                  rightUnderlineLabel:(UILabel *)rightUnderlineLabel
+                   leftAssistiveLabel:(UILabel *)leftAssistiveLabel
+                  rightAssistiveLabel:(UILabel *)rightAssistiveLabel
            underlineLabelDrawPriority:
-               (MDCContainedInputViewUnderlineLabelDrawPriority)underlineLabelDrawPriority
-     customUnderlineLabelDrawPriority:(CGFloat)normalizedCustomUnderlineLabelDrawPriority
+               (MDCContainedInputViewAssistiveLabelDrawPriority)underlineLabelDrawPriority
+     customAssistiveLabelDrawPriority:(CGFloat)normalizedCustomAssistiveLabelDrawPriority
        preferredMainContentAreaHeight:(CGFloat)preferredMainContentAreaHeight
-    preferredUnderlineLabelAreaHeight:(CGFloat)preferredUnderlineLabelAreaHeight
+    preferredAssistiveLabelAreaHeight:(CGFloat)preferredAssistiveLabelAreaHeight
                                 isRTL:(BOOL)isRTL
                             isEditing:(BOOL)isEditing;
 @end
