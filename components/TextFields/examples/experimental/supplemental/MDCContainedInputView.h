@@ -150,13 +150,6 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
 @property(nonatomic, assign) CGFloat customAssistiveLabelDrawPriority;
 
 /**
- This property toggles the error state (similar to @c isHighlighted, @c isEnabled, @c isSelected,
- etc.) that is part of a general interpretation of the states outlined in the Material guidelines
- for Text Fields. See the @c MDCContainedInputViewState enum for more information.
- */
-@property(nonatomic, assign) BOOL isErrored;
-
-/**
  This method returns a color scheme for a given state.
  */
 - (nonnull id<MDCContainedInputViewColorScheming>)containedInputViewColorSchemingForState:

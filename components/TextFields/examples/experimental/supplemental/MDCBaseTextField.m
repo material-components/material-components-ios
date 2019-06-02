@@ -55,7 +55,6 @@
 @synthesize underlineLabelDrawPriority = _underlineLabelDrawPriority;
 @synthesize customAssistiveLabelDrawPriority = _customAssistiveLabelDrawPriority;
 @synthesize containerStyler = _containerStyler;
-@synthesize isErrored = _isErrored;
 @synthesize labelBehavior = _labelBehavior;
 
 #pragma mark Object Lifecycle
@@ -244,6 +243,23 @@
   self.rightView.hidden = self.layout.rightViewHidden;
   // TODO: Consider hiding views that don't actually fit in the frame
 }
+
+- (CGRect)textRectFromLayout:(MDCBaseTextFieldLayout *)layout
+          floatingLabelState:(MDCContainedInputViewFloatingLabelState)floatingLabelState {
+  CGRect textRect = layout.textRect;
+  if (floatingLabelState == MDCContainedInputViewFloatingLabelStateFloating) {
+    textRect = layout.textRectFloatingLabel;
+  }
+  return textRect;
+}
+
+- (CGRect)adjustTextAreaFrame:(CGRect)textRect
+ withParentClassTextAreaFrame:(CGRect)parentClassTextAreaFrame {
+  CGFloat systemDefinedHeight = CGRectGetHeight(parentClassTextAreaFrame);
+  CGFloat minY = CGRectGetMidY(textRect) - (systemDefinedHeight * (CGFloat)0.5);
+  return CGRectMake(CGRectGetMinX(textRect), minY, CGRectGetWidth(textRect), systemDefinedHeight);
+}
+
 
 - (CGRect)clearButtonFrameFromLayout:(MDCBaseTextFieldLayout *)layout
                   floatingLabelState:(MDCContainedInputViewFloatingLabelState)floatingLabelState {
@@ -479,30 +495,6 @@
 }
 
 #pragma mark MDCContainedInputView accessors
-
-- (void)setIsErrored:(BOOL)isErrored {
-  if (_isErrored == isErrored) {
-    return;
-  }
-  _isErrored = isErrored;
-  [self setNeedsLayout];
-}
-
-- (CGRect)textRectFromLayout:(MDCBaseTextFieldLayout *)layout
-          floatingLabelState:(MDCContainedInputViewFloatingLabelState)floatingLabelState {
-  CGRect textRect = layout.textRect;
-  if (floatingLabelState == MDCContainedInputViewFloatingLabelStateFloating) {
-    textRect = layout.textRectFloatingLabel;
-  }
-  return textRect;
-}
-
-- (CGRect)adjustTextAreaFrame:(CGRect)textRect
-    withParentClassTextAreaFrame:(CGRect)parentClassTextAreaFrame {
-  CGFloat systemDefinedHeight = CGRectGetHeight(parentClassTextAreaFrame);
-  CGFloat minY = CGRectGetMidY(textRect) - (systemDefinedHeight * (CGFloat)0.5);
-  return CGRectMake(CGRectGetMinX(textRect), minY, CGRectGetWidth(textRect), systemDefinedHeight);
-}
 
 - (CGRect)containerFrame {
   return CGRectMake(0, 0, CGRectGetWidth(self.frame), self.layout.topRowBottomRowDividerY);

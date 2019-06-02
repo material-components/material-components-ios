@@ -289,17 +289,23 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
 - (void)updateInputChipViewStates {
   [self.allInputChipViews enumerateObjectsUsingBlock:^(InputChipView *inputChipView, NSUInteger idx,
                                                        BOOL *stop) {
-    inputChipView.isErrored = self.isErrored;
     BOOL isEven = idx % 2 == 0;
-    if (inputChipView.isErrored) {
+    if (self.isErrored) {
+      // TODO: Make InputChipView respond to error theme selector
+//      if ([inputChipView respondsToSelector:@selector(applyErrorThemeWithScheme:)]) {
+//        [inputChipView applyErrorThemeWithScheme:self.containerScheme];
+//      }
       if (isEven) {
         inputChipView.leadingAssistiveLabel.text = @"Suspendisse quam elit, mattis sit amet justo "
-                                                   @"vel, venenatis lobortis massa. Donec metus "
-                                                   @"dolor.";
+        @"vel, venenatis lobortis massa. Donec metus "
+        @"dolor.";
       } else {
         inputChipView.leadingAssistiveLabel.text = @"This is an error.";
       }
     } else {
+      if ([inputChipView respondsToSelector:@selector(applyThemeWithScheme:)]) {
+        [inputChipView applyThemeWithScheme:self.containerScheme];
+      }
       if (isEven) {
         inputChipView.leadingAssistiveLabel.text = @"This is helper text.";
       } else {
