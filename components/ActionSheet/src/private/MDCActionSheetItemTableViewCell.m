@@ -15,6 +15,7 @@
 #import "MDCActionSheetItemTableViewCell.h"
 
 #import <MaterialComponents/MaterialTypography.h>
+#import "MaterialRipple.h"
 
 static const CGFloat kLabelAlpha = (CGFloat)0.87;
 static const CGFloat kImageLeadingPadding = 8;
@@ -28,6 +29,7 @@ static const CGFloat kActionItemTitleVerticalPadding = 18;
 @property(nonatomic, strong) UILabel *actionLabel;
 @property(nonatomic, strong) UIImageView *actionImageView;
 @property(nonatomic, strong) MDCInkTouchController *inkTouchController;
+@property(nonatomic, strong) MDCRippleTouchController *rippleTouchController;
 @end
 
 @implementation MDCActionSheetItemTableViewCell {
@@ -100,6 +102,10 @@ static const CGFloat kActionItemTitleVerticalPadding = 18;
   if (!_inkTouchController) {
     _inkTouchController = [[MDCInkTouchController alloc] initWithView:self];
     [_inkTouchController addInkView];
+  }
+
+  if (!_rippleTouchController) {
+    _rippleTouchController = [[MDCRippleTouchController alloc] init];
   }
 
   _actionImageView = [[UIImageView alloc] init];
@@ -202,6 +208,25 @@ static const CGFloat kActionItemTitleVerticalPadding = 18;
   // If no ink color then reset to the default ink color
   self.inkTouchController.defaultInkView.inkColor =
       inkColor ?: [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.14];
+}
+
+- (void)setRippleColor:(UIColor *)rippleColor {
+  _rippleColor = rippleColor;
+  // If no ripple color then reset to the default ripple color.
+  self.rippleTouchController.rippleView.rippleColor =
+      rippleColor ?: [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.14];
+}
+
+- (void)setEnableRippleBehavior:(BOOL)enableRippleBehavior {
+  _enableRippleBehavior = enableRippleBehavior;
+
+  if (enableRippleBehavior) {
+    [self.inkTouchController.defaultInkView removeFromSuperview];
+    [self.rippleTouchController addRippleToView:self];
+  } else {
+    [self.rippleTouchController.rippleView removeFromSuperview];
+    [self.inkTouchController addInkView];
+  }
 }
 
 - (void)setImageRenderingMode:(UIImageRenderingMode)imageRenderingMode {

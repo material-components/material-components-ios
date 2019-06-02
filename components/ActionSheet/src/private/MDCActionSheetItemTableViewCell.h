@@ -33,6 +33,10 @@
 
 @property(nonatomic, strong, nullable) UIColor *inkColor;
 
+@property(nonatomic, strong, nullable) UIColor *rippleColor;
+
+@property(nonatomic, assign) BOOL enableRippleBehavior;
+
 @property(nonatomic) UIImageRenderingMode imageRenderingMode;
 
 @end

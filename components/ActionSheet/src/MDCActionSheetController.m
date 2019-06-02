@@ -295,6 +295,8 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
   cell.actionFont = self.actionFont;
   cell.accessibilityIdentifier = action.accessibilityIdentifier;
   cell.inkColor = self.inkColor;
+  cell.rippleColor = self.rippleColor;
+  cell.enableRippleBehavior = self.enableRippleBehavior;
   cell.tintColor = self.actionTintColor;
   cell.imageRenderingMode = self.imageRenderingMode;
   cell.actionTextColor = self.actionTextColor;
@@ -418,6 +420,16 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
 
 - (void)setInkColor:(UIColor *)inkColor {
   _inkColor = inkColor;
+  [self.tableView reloadData];
+}
+
+- (void)setRippleColor:(UIColor *)rippleColor {
+  _rippleColor = rippleColor;
+  [self.tableView reloadData];
+}
+
+- (void)setEnableRippleBehavior:(BOOL)enableRippleBehavior {
+  _enableRippleBehavior = enableRippleBehavior;
   [self.tableView reloadData];
 }
 
