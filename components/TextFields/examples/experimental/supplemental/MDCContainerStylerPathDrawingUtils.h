@@ -34,6 +34,4 @@
                        toPoint:(CGPoint)point2
                     withRadius:(CGFloat)radius;
 
-+ (UIBezierPath *)pathForClearButtonImageWithFrame:(CGRect)frame;
-
 @end
