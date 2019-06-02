@@ -16,6 +16,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MDCContainedInputAssistiveLabelView.h"
+#import "MDCContainedInputClearButton.h"
 #import "MDCContainedInputView.h"
 
 @protocol MDCContainedInputViewStyler;
@@ -23,9 +24,6 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MDCBaseTextFieldLayout : NSObject
-
-@property(nonatomic, readonly, class) CGFloat clearButtonSideLength;
-@property(nonatomic, readonly, class) CGFloat clearButtonImageViewSideLength;
 
 @property(nonatomic, assign) BOOL leftViewHidden;
 @property(nonatomic, assign) BOOL rightViewHidden;
@@ -58,7 +56,7 @@ NS_ASSUME_NONNULL_BEGIN
                          leftViewMode:(UITextFieldViewMode)leftViewMode
                             rightView:(UIView *)rightView
                         rightViewMode:(UITextFieldViewMode)rightViewMode
-                          clearButton:(UIButton *)clearButton
+                          clearButton:(MDCContainedInputClearButton *)clearButton
                       clearButtonMode:(UITextFieldViewMode)clearButtonMode
                    leftAssistiveLabel:(UILabel *)leftAssistiveLabel
                   rightAssistiveLabel:(UILabel *)rightAssistiveLabel

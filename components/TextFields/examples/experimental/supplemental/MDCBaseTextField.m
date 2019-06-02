@@ -24,11 +24,11 @@
 #import "MaterialTypography.h"
 
 #import "MDCContainedInputAssistiveLabelView.h"
+#import "MDCContainedInputClearButton.h"
 
 @interface MDCBaseTextField () <MDCContainedInputView>
 
-@property(strong, nonatomic) UIButton *clearButton;
-@property(strong, nonatomic) UIImageView *clearButtonImageView;
+@property(strong, nonatomic) MDCContainedInputClearButton *clearButton;
 @property(strong, nonatomic) UILabel *label;
 @property(strong, nonatomic) UILabel *placeholderLabel;
 
@@ -170,23 +170,11 @@
 }
 
 - (void)setUpClearButton {
-  CGFloat clearButtonSideLength = MDCBaseTextFieldLayout.clearButtonSideLength;
-  CGRect clearButtonFrame = CGRectMake(0, 0, clearButtonSideLength, clearButtonSideLength);
-  self.clearButton = [[UIButton alloc] initWithFrame:clearButtonFrame];
+  self.clearButton = [[MDCContainedInputClearButton alloc] init];
   [self.clearButton addTarget:self
                        action:@selector(clearButtonPressed:)
              forControlEvents:UIControlEventTouchUpInside];
-
-  CGFloat clearButtonImageViewSideLength = MDCBaseTextFieldLayout.clearButtonImageViewSideLength;
-  CGRect clearButtonImageViewRect =
-      CGRectMake(0, 0, clearButtonImageViewSideLength, clearButtonImageViewSideLength);
-  self.clearButtonImageView = [[UIImageView alloc] initWithFrame:clearButtonImageViewRect];
-  UIImage *clearButtonImage =
-      [[self untintedClearButtonImage] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-  self.clearButtonImageView.image = clearButtonImage;
-  [self.clearButton addSubview:self.clearButtonImageView];
   [self addSubview:self.clearButton];
-  self.clearButtonImageView.center = self.clearButton.center;
 }
 
 #pragma mark UIView Overrides
@@ -654,20 +642,6 @@
   }
 }
 
-#pragma mark Clear Button
-
-- (UIImage *)untintedClearButtonImage {
-  CGFloat sideLength = MDCBaseTextFieldLayout.clearButtonImageViewSideLength;
-  CGRect rect = CGRectMake(0, 0, sideLength, sideLength);
-  UIGraphicsBeginImageContextWithOptions(rect.size, false, 0);
-  [[UIColor blackColor] setFill];
-  [[MDCContainerStylerPathDrawingUtils pathForClearButtonImageWithFrame:rect] fill];
-  UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-  UIGraphicsEndImageContext();
-  image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-  return image;
-}
-
 #pragma mark Floating Label
 
 - (BOOL)canFloatingLabelFloat {
@@ -763,7 +737,7 @@
   self.leadingAssistiveLabel.textColor = colorScheming.underlineLabelColor;
   self.label.textColor = colorScheming.floatingLabelColor;
   self.placeholderLabel.textColor = colorScheming.placeholderColor;
-  self.clearButtonImageView.tintColor = colorScheming.clearButtonTintColor;
+  self.clearButton.tintColor = colorScheming.clearButtonTintColor;
 }
 
 - (void)setContainedInputViewColorScheming:
