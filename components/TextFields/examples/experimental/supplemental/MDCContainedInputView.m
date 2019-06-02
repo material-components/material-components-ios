@@ -109,16 +109,26 @@
   return self;
 }
 
-- (CGFloat)floatingLabelMinYWithFloatingLabelHeight:(CGFloat)floatingLabelHeight {
-  return 10;
+- (CGFloat)floatingLabelMinYWithFloatingLabelHeight:(CGFloat)floatingPlaceholderHeight {
+  CGFloat lowestMinY = 4;
+  CGFloat highestMinY = 10;
+  CGFloat difference = highestMinY - lowestMinY;
+  return lowestMinY + (difference * (1 - self.verticalDensity));
 }
 
-- (CGFloat)contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:(CGFloat)floatingLabelMaxY {
-  return 20;
+- (CGFloat)contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:(CGFloat)floatingPlaceholderMaxY {
+  CGFloat minYAddition = 5;
+  CGFloat maxYAddition = 8;
+  CGFloat difference = maxYAddition - minYAddition;
+  return minYAddition + (difference * (1 - self.verticalDensity));
 }
 
-- (CGFloat)contentAreaTopPaddingFloatingLabelWithFloatingLabelMaxY:(CGFloat)floatingLabelMaxY {
-  return floatingLabelMaxY + 10;
+- (CGFloat)contentAreaTopPaddingFloatingLabelWithFloatingLabelMaxY:
+(CGFloat)floatingPlaceholderMaxY {
+  CGFloat minYAddition = 3;
+  CGFloat maxYAddition = 8;
+  CGFloat difference = maxYAddition - minYAddition;
+  return floatingPlaceholderMaxY + (minYAddition + (difference * (1 - self.verticalDensity)));
 }
 
 @end
