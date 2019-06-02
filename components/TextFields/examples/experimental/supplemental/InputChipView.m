@@ -149,7 +149,6 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 @synthesize underlineLabelDrawPriority = _underlineLabelDrawPriority;
 @synthesize customAssistiveLabelDrawPriority = _customAssistiveLabelDrawPriority;
 @synthesize containerStyler = _containerStyler;
-@synthesize isErrored = _isErrored;
 @synthesize canFloatingLabelFloat = _canFloatingLabelFloat;
 @synthesize label = _label;
 
@@ -510,12 +509,10 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 - (MDCContainedInputViewState)determineCurrentContainedInputViewState {
   return [self
       containedInputViewStateWithIsEnabled:(self.enabled && self.inputChipViewTextField.enabled)
-                                 isErrored:self.isErrored
                                  isEditing:self.inputChipViewTextField.isEditing];
 }
 
 - (MDCContainedInputViewState)containedInputViewStateWithIsEnabled:(BOOL)isEnabled
-                                                         isErrored:(BOOL)isErrored
                                                          isEditing:(BOOL)isEditing {
   if (isEnabled) {
     if (isEditing) {
@@ -875,14 +872,6 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   } else {
     return self.rightAssistiveLabel;
   }
-}
-
-- (void)setIsErrored:(BOOL)isErrored {
-  if (_isErrored == isErrored) {
-    return;
-  }
-  _isErrored = isErrored;
-  [self setNeedsLayout];
 }
 
 #pragma mark User Interaction
