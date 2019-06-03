@@ -22,7 +22,7 @@
 #import "MDCContainerStylerPathDrawingUtils.h"
 #import "MaterialMath.h"
 #import "MaterialTypography.h"
-
+#import "MDCContainedInputViewLabelAnimator.h"
 #import "MDCContainedInputAssistiveLabelView.h"
 #import "MDCContainedInputClearButton.h"
 
@@ -43,7 +43,7 @@
 @property(nonatomic, strong)
     NSMutableDictionary<NSNumber *, id<MDCContainedInputViewColorScheming>> *colorSchemes;
 
-@property(nonatomic, strong) MDCContainedInputViewFloatingLabelManager *floatingLabelManager;
+@property(nonatomic, strong) MDCContainedInputViewLabelAnimator *floatingLabelManager;
 
 @property(nonatomic, strong) MDCContainedInputAssistiveLabelView *underlineLabelView;
 
@@ -166,7 +166,7 @@
 }
 
 - (void)setUpFloatingLabelManager {
-  self.floatingLabelManager = [[MDCContainedInputViewFloatingLabelManager alloc] init];
+  self.floatingLabelManager = [[MDCContainedInputViewLabelAnimator alloc] init];
 }
 
 - (void)setUpClearButton {
