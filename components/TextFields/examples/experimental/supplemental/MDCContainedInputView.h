@@ -15,9 +15,6 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-// TODO: Remove this.
-static const UIControlState UIControlStateEditing = 1 << 16;
-
 /**
  A set of Contained Input View states outlined in the Material guidelines. These states overlap with
  and extend UIControlState.
@@ -36,6 +33,9 @@ typedef NS_OPTIONS(NSInteger, MDCContainedInputViewState) {
    */
   MDCContainedInputViewStateDisabled = 1 << 2,
 };
+
+// TODO: Remove this.
+static const UIControlState UIControlStateEditing = 1 << 16;
 
 // TODO: Get rid of __unused attribute
 __unused static MDCContainedInputViewState MDCContainedInputViewStateWithUIControlState(

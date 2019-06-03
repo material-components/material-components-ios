@@ -92,18 +92,21 @@ static const NSUInteger kDefaultVerticalPadding = 20;
   self.scrollView = [[UIScrollView alloc] init];
   [self.view addSubview:self.scrollView];
   self.scrollViewSubviews = @[
-    [self createToggleErrorButton], [self createFirstResponderButton],
-    [self createLabelWithText:@"Default MDCFilledTextField:"], [self createDefaultFilledTextField],
+    [self createToggleErrorButton],
+    [self createFirstResponderButton],
+    [self createLabelWithText:@"Default MDCFilledTextField:"],
+    [self createDefaultFilledTextField],
     [self createLabelWithText:@"Material MDCFilledTextField:"],
     [self createMaterialFilledTextField],
     [self createLabelWithText:@"Default MDCOutlinedTextField:"],
     [self createDefaultOutlinedTextField],
     [self createLabelWithText:@"Material MDCOutlinedTextField:"],
+    [self createMaterialOutlinedTextField],
     [self createLabelWithText:@"Default MDCBaseTextField:"],
     [self createDefaultInputTextField],
     [self createLabelWithText:@"Material MDCBaseTextField:"],
     [self createMaterialInputTextField],
-    [self createMaterialOutlinedTextField], [self createLabelWithText:@"UITextField:"],
+    [self createLabelWithText:@"UITextField:"],
     [self createUiTextField],
   ];
   for (UIView *view in self.scrollViewSubviews) {
