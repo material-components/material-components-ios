@@ -167,6 +167,21 @@ IB_DESIGNABLE
 @property(nonatomic, strong, nullable) UIColor *inkColor;
 
 /**
+ The rippleColor that is used for all buttons in trailing and leading button bars.
+
+ If set to nil, button bar buttons use default ripple color.
+ */
+@property(nonatomic, strong, nullable) UIColor *rippleColor;
+
+/*
+ This property determines if an @c MDCNavigationBar should use the @c MDCRippleView behavior or not.
+ By setting this property to @c YES, @c MDCRippleView is used to provide the user visual
+ touch feedback, instead of the legacy @c MDCInkView.
+ @note Defaults to @c NO.
+ */
+@property(nonatomic, assign) BOOL enableRippleBehavior;
+
+/**
  If true, all button titles will be converted to uppercase.
 
  Changing this property to NO will update the current title string for all buttons.

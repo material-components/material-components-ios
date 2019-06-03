@@ -182,6 +182,21 @@ IB_DESIGNABLE
 @property(nonatomic, strong, nullable) UIColor *inkColor;
 
 /**
+ The rippleColor that is used for all buttons in the button bar.
+
+ If set to nil, button bar buttons use default ripple color.
+ */
+@property(nonatomic, strong, nullable) UIColor *rippleColor;
+
+/*
+ This property determines if an @c MDCButtonBar should use the @c MDCRippleView behavior or not.
+ By setting this property to @c YES, @c MDCRippleView is used to provide the user visual
+ touch feedback, instead of the legacy @c MDCInkView.
+ @note Defaults to @c NO.
+ */
+@property(nonatomic, assign) BOOL enableRippleBehavior;
+
+/**
  Returns a height adhering to the Material spec for Bars and a width that is able to accommodate
  every item present in the `items` property. The provided size is ignored.
  */

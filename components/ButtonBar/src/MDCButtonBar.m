@@ -515,6 +515,25 @@ static NSString *const kEnabledSelector = @"enabled";
   [self updateButtonsWithInkColor:_inkColor];
 }
 
+- (void)setRippleColor:(UIColor *)rippleColor {
+  if (_rippleColor == rippleColor) {
+    return;
+  }
+  _rippleColor = rippleColor;
+  [self updateButtonsWithInkColor:_rippleColor];
+}
+
+- (void)setEnableRippleBehavior:(BOOL)enableRippleBehavior {
+  _enableRippleBehavior = enableRippleBehavior;
+
+  for (UIView *viewObj in _buttonViews) {
+    if ([viewObj isKindOfClass:[MDCButton class]]) {
+      MDCButton *buttonView = (MDCButton *)viewObj;
+      buttonView.enableRippleBehavior = enableRippleBehavior;
+    }
+  }
+}
+
 - (void)reloadButtonViews {
   // TODO(featherless): Recycle buttons.
   for (UIView *view in _buttonViews) {
