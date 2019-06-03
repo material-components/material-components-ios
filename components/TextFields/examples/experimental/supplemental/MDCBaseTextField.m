@@ -19,12 +19,12 @@
 #import <MDFInternationalization/MDFInternationalization.h>
 
 #import "MDCBaseTextFieldLayout.h"
+#import "MDCContainedInputAssistiveLabelView.h"
+#import "MDCContainedInputClearButton.h"
+#import "MDCContainedInputViewLabelAnimator.h"
 #import "MDCContainerStylerPathDrawingUtils.h"
 #import "MaterialMath.h"
 #import "MaterialTypography.h"
-#import "MDCContainedInputViewLabelAnimator.h"
-#import "MDCContainedInputAssistiveLabelView.h"
-#import "MDCContainedInputClearButton.h"
 
 @interface MDCBaseTextField () <MDCContainedInputView>
 
@@ -116,8 +116,10 @@
 }
 
 - (void)setUpContainerStyler {
-  MDCContainerStylerBasePositioningDelegate *positioningDelegate = [[MDCContainerStylerBasePositioningDelegate alloc] init];
-  self.containerStyler = [[MDCContainerStylerBase alloc] initWithPositioningDelegate:positioningDelegate];
+  MDCContainerStylerBasePositioningDelegate *positioningDelegate =
+      [[MDCContainerStylerBasePositioningDelegate alloc] init];
+  self.containerStyler =
+      [[MDCContainerStylerBase alloc] initWithPositioningDelegate:positioningDelegate];
 }
 
 - (void)setUpStateDependentColorSchemesForStyle:(id<MDCContainedInputViewStyler>)containerStyler {

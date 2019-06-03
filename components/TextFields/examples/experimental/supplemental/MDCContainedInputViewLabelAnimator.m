@@ -51,23 +51,23 @@
     default:
       break;
   }
-  
+
   CGRect currentFrame = floatingLabel.frame;
   CGAffineTransform trasformNeededToMakeTargetLookLikeCurrent =
-  [self transformFromRect:targetFrame toRect:currentFrame];
+      [self transformFromRect:targetFrame toRect:currentFrame];
   CATransform3D transformFromValueTransform3D =
-  CATransform3DMakeAffineTransform(trasformNeededToMakeTargetLookLikeCurrent);
+      CATransform3DMakeAffineTransform(trasformNeededToMakeTargetLookLikeCurrent);
   CATransform3D transformToValueTransform3D = CATransform3DIdentity;
-  
+
   floatingLabel.frame = targetFrame;
   floatingLabel.font = targetFont;
   floatingLabel.transform = CGAffineTransformIdentity;
-  
+
   CABasicAnimation *preexistingTransformAnimation = (CABasicAnimation *)[floatingLabel.layer
-                                                                         animationForKey:self.floatingLabelTransformAnimationKey];
-  
+      animationForKey:self.floatingLabelTransformAnimationKey];
+
   floatingLabel.hidden = floatingLabelShouldHide;
-  
+
   [CATransaction begin];
   {
     [CATransaction setCompletionBlock:^{
@@ -92,7 +92,7 @@
               placeholderFrame:(CGRect)placeholderFrame
           isPlaceholderVisible:(BOOL)isPlaceholderVisible {
   CGRect hiddenFrame =
-  CGRectOffset(placeholderFrame, 0, CGRectGetHeight(placeholderFrame) * (CGFloat)0.5);
+      CGRectOffset(placeholderFrame, 0, CGRectGetHeight(placeholderFrame) * (CGFloat)0.5);
   CGRect targetFrame = hiddenFrame;
   CGFloat hiddenOpacity = 0;
   CGFloat targetOpacity = hiddenOpacity;
@@ -100,33 +100,33 @@
     targetFrame = placeholderFrame;
     targetOpacity = 1;
   }
-  
+
   //  BOOL placeholderShouldHide = NO;
-  
+
   //  CGRect currentFrame = placeholderLabel.frame;
   //  CGAffineTransform trasformNeededToMakeTargetLookLikeCurrent =
   //  [self transformFromRect:targetFrame toRect:currentFrame];
   //  CATransform3D transformFromValueTransform3D =
   //  CATransform3DMakeAffineTransform(trasformNeededToMakeTargetLookLikeCurrent);
   //  CATransform3D transformToValueTransform3D = CATransform3DIdentity;
-  
+
   placeholderLabel.frame = targetFrame;
   placeholderLabel.transform = CGAffineTransformIdentity;
-  
+
   CABasicAnimation *preexistingTransformAnimation = (CABasicAnimation *)[placeholderLabel.layer
-                                                                         animationForKey:self.placeholderLabelTransformAnimationKey];
-  
+      animationForKey:self.placeholderLabelTransformAnimationKey];
+
   CGFloat currentOpacity = (CGFloat)placeholderLabel.layer.opacity;
   CGFloat opacityFromValue = currentOpacity;
   CGFloat opacityToValue = targetOpacity;
-  
+
   placeholderLabel.layer.opacity = (float)targetOpacity;
-  
+
   CABasicAnimation *preexistingOpacityAnimation = (CABasicAnimation *)[placeholderLabel.layer
-                                                                       animationForKey:self.placeholderLabelOpacityAnimationKey];
-  
+      animationForKey:self.placeholderLabelOpacityAnimationKey];
+
   //  placeholderLabel.hidden = placeholderShouldHide;
-  
+
   [CATransaction begin];
   {
     [CATransaction setCompletionBlock:^{
@@ -164,11 +164,11 @@
 - (CGAffineTransform)transformFromRect:(CGRect)sourceRect toRect:(CGRect)finalRect {
   CGAffineTransform transform = CGAffineTransformIdentity;
   transform =
-  CGAffineTransformTranslate(transform, -(CGRectGetMidX(sourceRect) - CGRectGetMidX(finalRect)),
-                             -(CGRectGetMidY(sourceRect) - CGRectGetMidY(finalRect)));
+      CGAffineTransformTranslate(transform, -(CGRectGetMidX(sourceRect) - CGRectGetMidX(finalRect)),
+                                 -(CGRectGetMidY(sourceRect) - CGRectGetMidY(finalRect)));
   transform = CGAffineTransformScale(transform, finalRect.size.width / sourceRect.size.width,
                                      finalRect.size.height / sourceRect.size.height);
-  
+
   return transform;
 }
 
