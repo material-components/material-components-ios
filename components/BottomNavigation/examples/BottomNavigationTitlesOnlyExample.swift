@@ -14,11 +14,11 @@
 
 import Foundation
 import MaterialComponents.MaterialBottomNavigation_ColorThemer
-import MaterialComponents.MaterialColorScheme
+import MaterialComponents.MaterialContainerScheme
 
 class BottomNavigationTitlesOnlySwiftExample: UIViewController {
 
-  @objc var colorScheme = MDCSemanticColorScheme()
+  @objc var containerScheme = MDCContainerScheme()
 
   // Create a bottom navigation bar to add to a view.
   let bottomNavBar = MDCBottomNavigationBar()
@@ -27,7 +27,7 @@ class BottomNavigationTitlesOnlySwiftExample: UIViewController {
     super.viewDidLoad()
 
     bottomNavBar.sizeThatFitsIncludesSafeArea = false
-    view.backgroundColor = colorScheme.backgroundColor
+    view.backgroundColor = containerScheme.colorScheme.backgroundColor
     view.addSubview(bottomNavBar)
 
     // Always show bottom navigation bar item titles.
