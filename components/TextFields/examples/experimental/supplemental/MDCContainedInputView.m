@@ -124,7 +124,7 @@
 }
 
 - (CGFloat)contentAreaTopPaddingFloatingLabelWithFloatingLabelMaxY:
-(CGFloat)floatingPlaceholderMaxY {
+    (CGFloat)floatingPlaceholderMaxY {
   CGFloat minYAddition = 3;
   CGFloat maxYAddition = 8;
   CGFloat difference = maxYAddition - minYAddition;
