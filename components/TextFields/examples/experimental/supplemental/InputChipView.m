@@ -20,7 +20,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import "MDCContainedInputView.h"
-
+#import "MDCContainedInputViewLabelAnimator.h"
 #import "MaterialMath.h"
 
 @class InputChipViewTextField;
@@ -137,7 +137,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 @property(nonatomic, strong)
     NSMutableDictionary<NSNumber *, id<MDCContainedInputViewColorScheming>> *colorSchemes;
 
-@property(nonatomic, strong) MDCContainedInputViewFloatingLabelManager *floatingLabelManager;
+@property(nonatomic, strong) MDCContainedInputViewLabelAnimator *floatingLabelManager;
 
 @property(nonatomic, assign) BOOL isAnimating;
 
@@ -229,7 +229,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 }
 
 - (void)setUpPlaceholderManager {
-  self.floatingLabelManager = [[MDCContainedInputViewFloatingLabelManager alloc] init];
+  self.floatingLabelManager = [[MDCContainedInputViewLabelAnimator alloc] init];
 }
 
 - (void)setUpLayoutDirection {

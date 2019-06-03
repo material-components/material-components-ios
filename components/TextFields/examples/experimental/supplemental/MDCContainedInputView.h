@@ -306,16 +306,3 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
     : NSObject <MDCContainedInputViewStylerPositioningDelegate>
 @end
 
-@interface MDCContainedInputViewFloatingLabelManager : NSObject
-- (UIFont *_Nonnull)floatingFontWithFont:(nonnull UIFont *)font
-                         containerStyler:(nonnull id<MDCContainedInputViewStyler>)containerStyler;
-- (void)layOutPlaceholderLabel:(nonnull UILabel *)placeholderLabel
-              placeholderFrame:(CGRect)placeholderFrame
-          isPlaceholderVisible:(BOOL)isPlaceholderVisible;
-- (void)layOutFloatingLabel:(nonnull UILabel *)floatingLabel
-                      state:(MDCContainedInputViewFloatingLabelState)floatingLabelState
-                normalFrame:(CGRect)normalFrame
-              floatingFrame:(CGRect)floatingFrame
-                 normalFont:(nonnull UIFont *)normalFont
-               floatingFont:(nonnull UIFont *)floatingFont;
-@end
