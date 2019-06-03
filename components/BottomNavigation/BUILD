@@ -168,6 +168,7 @@ swift_library(
         ":TypographyThemer",
         "//components/AppBar",
         "//components/Buttons",
+        "//components/schemes/Container",
         "//components/Palettes",
     ],
 )
