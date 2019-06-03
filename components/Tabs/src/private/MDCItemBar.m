@@ -412,7 +412,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
        willDisplayCell:(UICollectionViewCell *)cell
     forItemAtIndexPath:(NSIndexPath *)indexPath {
   UITabBarItem *item = [self itemAtIndexPath:indexPath];
-  if ([item respondsToSelector:@selector(itemBar:willDisplayItem:)]) {
+  if ([self.delegate respondsToSelector:@selector(itemBar:willDisplayItem:)]) {
     [self.delegate itemBar:self willDisplayItem:item];
   }
 }
@@ -421,7 +421,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
     didEndDisplayingCell:(UICollectionViewCell *)cell
       forItemAtIndexPath:(NSIndexPath *)indexPath {
   UITabBarItem *item = [self itemAtIndexPath:indexPath];
-  if ([item respondsToSelector:@selector(itemBar:didEndDisplayingItem:)]) {
+  if ([self.delegate respondsToSelector:@selector(itemBar:didEndDisplayingItem:)]) {
     [self.delegate itemBar:self didEndDisplayingItem:item];
   }
 }

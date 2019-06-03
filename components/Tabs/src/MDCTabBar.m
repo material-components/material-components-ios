@@ -16,6 +16,7 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
+#import "MDCTabBarDisplayDelegate.h"
 #import "MDCTabBarExtendedAlignment.h"
 #import "MDCTabBarIndicatorTemplate.h"
 #import "MDCTabBarSizeClassDelegate.h"
@@ -80,6 +81,10 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(
 
 @interface MDCTabBar ()
 @property(nonatomic, weak, nullable) id<MDCTabBarSizeClassDelegate> sizeClassDelegate;
+@end
+
+@interface MDCTabBar ()
+@property(nonatomic, weak, nullable) id<MDCTabBarDisplayDelegate> displayDelegate;
 @end
 
 @interface MDCTabBar () <MDCItemBarDelegate>
@@ -427,14 +432,14 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(
 }
 
 - (void)itemBar:(MDCItemBar *)itemBar willDisplayItem:(UITabBarItem *)item {
-  id<MDCTabBarDelegate> delegate = self.delegate;
+  id<MDCTabBarDisplayDelegate> delegate = self.displayDelegate;
   if ([delegate respondsToSelector:@selector(tabBar:willDisplayItem:)]) {
     [delegate tabBar:self willDisplayItem:item];
   }
 }
 
 - (void)itemBar:(MDCItemBar *)itemBar didEndDisplayingItem:(UITabBarItem *)item {
-  id<MDCTabBarDelegate> delegate = self.delegate;
+  id<MDCTabBarDisplayDelegate> delegate = self.displayDelegate;
   if ([delegate respondsToSelector:@selector(tabBar:didEndDisplayingItem:)]) {
     [delegate tabBar:self didEndDisplayingItem:item];
   }

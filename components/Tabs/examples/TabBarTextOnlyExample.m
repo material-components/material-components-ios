@@ -73,7 +73,7 @@
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
   [self.tabBar sizeToFit];
 
-  self.tabBar.delegate = self;
+  self.tabBar.displayDelegate = self;
 }
 
 - (void)changeAlignment:(id)sender {
@@ -134,7 +134,7 @@
   }
 }
 
-#pragma mark - MDCTabBarDelegate
+#pragma mark - MDCTabBarDisplayDelegate
 
 - (void)tabBar:(MDCTabBar *)tabBar willDisplayItem:(UITabBarItem *)item {
   NSLog(@"Will display item: %@", item.title);

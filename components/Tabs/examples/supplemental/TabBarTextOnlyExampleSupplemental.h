@@ -24,7 +24,7 @@
 #import "MaterialColorScheme.h"
 #import "MaterialTabs.h"
 
-@interface TabBarTextOnlyExample : MDCCollectionViewController <MDCTabBarDelegate>
+@interface TabBarTextOnlyExample : MDCCollectionViewController <MDCTabBarDisplayDelegate>
 
 @property(nonatomic, nullable) MDCAppBarViewController *appBarViewController;
 @property(nonatomic, nullable) MDCSemanticColorScheme *colorScheme;
