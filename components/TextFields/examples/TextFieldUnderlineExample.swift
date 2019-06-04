@@ -360,7 +360,7 @@ extension TextFieldUnderlineSwiftExample: UITextViewDelegate {
 }
 
 extension TextFieldUnderlineSwiftExample: MDCMultilineTextInputDelegate {
-  func multilineTextFieldShouldClear(_ textField: UIView!) -> Bool {
+  private func multilineTextFieldShouldClear(_ textField: UIView!) -> Bool {
     return true
   }
 }
