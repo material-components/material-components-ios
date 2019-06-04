@@ -28,4 +28,17 @@
  */
 @property(nonatomic, strong, nonnull) UIColor *inkColor;
 
+/*
+ This property determines if an @c MDCBaseCell should use the @c MDCRippleView behavior
+ or not. By setting this property to @c YES, @c MDCRippleView is used to provide the user visual
+ touch feedback, instead of the legacy @c MDCInkView.
+ @note Defaults to @c NO.
+ */
+@property(nonatomic, assign) BOOL enableRippleBehavior;
+
+/**
+ The color of the cell’s underlying Ripple.
+ */
+@property(nonatomic, strong, nullable) UIColor *rippleColor;
+
 @end
