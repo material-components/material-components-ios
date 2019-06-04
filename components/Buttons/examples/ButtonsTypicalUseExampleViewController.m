@@ -30,16 +30,7 @@ const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
 - (id)init {
   self = [super init];
   if (self) {
-    self.colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-    self.shapeScheme =
-        [[MDCShapeScheme alloc] initWithDefaults:MDCShapeSchemeDefaultsMaterial201809];
-    self.typographyScheme =
-        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
     self.containerScheme = [[MDCContainerScheme alloc] init];
-    self.containerScheme.colorScheme = self.colorScheme;
-    self.containerScheme.shapeScheme = self.shapeScheme;
-    self.containerScheme.typographyScheme = self.typographyScheme;
   }
   return self;
 }
@@ -47,7 +38,7 @@ const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.view.backgroundColor = [UIColor whiteColor];
+  self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
 
   // Contained button
 

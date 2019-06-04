@@ -65,7 +65,6 @@ class MDCCatalogComponentsController: UICollectionViewController, UICollectionVi
     return button
   }()
 
-
   private let node: CBCNode
   private lazy var titleLabel: UILabel = {
     let titleLabel = UILabel()
@@ -102,10 +101,6 @@ class MDCCatalogComponentsController: UICollectionViewController, UICollectionVi
     headerViewController.headerView.maximumHeight = 128
     headerViewController.headerView.minimumHeight = 56
 
-    collectionView?.register(MDCCatalogCollectionViewCell.self,
-      forCellWithReuseIdentifier: "MDCCatalogCollectionViewCell")
-    collectionView?.backgroundColor = UIColor(white: 0.9, alpha: 1)
-
     MDCIcons.ic_arrow_backUseNewStyle(true)
 
     NotificationCenter.default.addObserver(
@@ -137,6 +132,11 @@ class MDCCatalogComponentsController: UICollectionViewController, UICollectionVi
 
   override func viewDidLoad() {
     super.viewDidLoad()
+
+    view.backgroundColor = AppTheme.globalTheme.colorScheme.backgroundColor
+    collectionView?.register(MDCCatalogCollectionViewCell.self,
+                             forCellWithReuseIdentifier: "MDCCatalogCollectionViewCell")
+    collectionView?.backgroundColor = AppTheme.globalTheme.colorScheme.backgroundColor
 
     inkController.addInkView()
 
@@ -341,7 +341,6 @@ class MDCCatalogComponentsController: UICollectionViewController, UICollectionVi
     let cell =
         collectionView.dequeueReusableCell(withReuseIdentifier: "MDCCatalogCollectionViewCell",
                                            for: indexPath)
-    cell.backgroundColor = UIColor.white
 
     let componentName = node.children[indexPath.row].title
     if let catalogCell = cell as? MDCCatalogCollectionViewCell {

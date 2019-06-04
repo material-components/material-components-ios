@@ -61,7 +61,10 @@ class MDCDragonsController: UIViewController,
     cellsBySection = [filteredDragons.map { DragonCell(node: $0) },
                       filteredPresentable.map { DragonCell(node: $0) }]
     cellsBySection = cellsBySection.map { $0.sorted() { $0.node.title < $1.node.title } }
+
     super.init(nibName: nil, bundle: nil)
+
+    title = "Material Dragons"
     results = getLeafNodes(node: node)
     searched = results
 
@@ -91,11 +94,7 @@ class MDCDragonsController: UIViewController,
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    title = "Material Dragons"
-    addChild(headerViewController)
-    headerViewController.headerView.minMaxHeightIncludesSafeArea = false
-    headerViewController.headerView.maximumHeight = Constants.headerViewMaxHeight
-    headerViewController.headerView.minimumHeight = Constants.headerViewMinHeight
+
     tableView = UITableView(frame: self.view.bounds, style: .grouped)
     tableView.register(MDCDragonsTableViewCell.self,
                        forCellReuseIdentifier: "MDCDragonsTableViewCell")
@@ -104,6 +103,23 @@ class MDCDragonsController: UIViewController,
     tableView.dataSource = self
     view.addSubview(tableView)
     view.backgroundColor = Constants.bgColor
+
+    addChild(headerViewController)
+    headerViewController.headerView.minMaxHeightIncludesSafeArea = false
+    headerViewController.headerView.maximumHeight = Constants.headerViewMaxHeight
+    headerViewController.headerView.minimumHeight = Constants.headerViewMinHeight
+
+    headerView = HeaderView(frame: headerViewController.headerView.bounds)
+    headerView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    headerView.title.text = title!
+    headerView.searchBar.delegate = self
+
+    headerViewController.headerView.addSubview(headerView)
+    headerViewController.headerView.forwardTouchEvents(for: headerView)
+    headerViewController.headerView.backgroundColor = Constants.headerColor
+    headerViewController.headerView.trackingScrollView = tableView
+    view.addSubview(headerViewController.view)
+    headerViewController.didMove(toParent: self)
 
     if #available(iOS 11, *) {
       tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -117,7 +133,6 @@ class MDCDragonsController: UIViewController,
       preiOS11Constraints()
     }
 
-    setupHeaderView()
     let tapgesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
     tapgesture.delegate = self
     view.addGestureRecognizer(tapgesture)
@@ -129,20 +144,6 @@ class MDCDragonsController: UIViewController,
 
   func preiOS11Constraints() {
     tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-  }
-
-  func setupHeaderView() {
-    headerView = HeaderView(frame: headerViewController.headerView.bounds)
-    headerView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-    headerView.title.text = title!
-    headerView.searchBar.delegate = self
-
-    headerViewController.headerView.addSubview(headerView)
-    headerViewController.headerView.forwardTouchEvents(for: headerView)
-    headerViewController.headerView.backgroundColor = Constants.headerColor
-    headerViewController.headerView.trackingScrollView = tableView
-    view.addSubview(headerViewController.view)
-    headerViewController.didMove(toParent: self)
   }
 
   func adjustLogoForScrollView(_ scrollView: UIScrollView) {

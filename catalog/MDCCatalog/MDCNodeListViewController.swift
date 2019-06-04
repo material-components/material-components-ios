@@ -39,6 +39,8 @@ class NodeViewTableViewDemoCell: UITableViewCell {
     detailTextLabel?.alpha = MDCTypography.captionFontOpacity()
     detailTextLabel?.font = MDCTypography.body2Font()
 
+    self.backgroundColor = AppTheme.globalTheme.colorScheme.surfaceColor
+
     let lineDivider = UIView()
     lineDivider.backgroundColor = UIColor(white: 0.85, alpha: 1)
     lineDivider.translatesAutoresizingMaskIntoConstraints = false
@@ -211,7 +213,7 @@ class MDCNodeListViewController: CBCNodeListViewController {
 
     mainSectionHeader = MainSectionHeader()
     additionalExamplesSectionHeader = createAdditionalExamplesSectionHeader()
-    self.tableView.backgroundColor = UIColor.white
+    self.tableView.backgroundColor = AppTheme.globalTheme.colorScheme.backgroundColor
     self.tableView.separatorStyle = .none
     self.tableView.sectionHeaderHeight = UITableView.automaticDimension
 
@@ -284,7 +286,7 @@ extension MDCNodeListViewController {
 
   func createAdditionalExamplesSectionHeader() -> UIView {
     let sectionView = UIView()
-    sectionView.backgroundColor = UIColor.white
+    sectionView.backgroundColor = AppTheme.globalTheme.colorScheme.surfaceColor
     let lineDivider = UIView()
     lineDivider.backgroundColor = UIColor(white: 0.85, alpha: 1)
     lineDivider.translatesAutoresizingMaskIntoConstraints = false
@@ -390,7 +392,7 @@ extension MDCNodeListViewController {
 
   func MainSectionHeader() -> UIView {
     let sectionView = UIView()
-    sectionView.backgroundColor = UIColor.white
+    sectionView.backgroundColor = AppTheme.globalTheme.colorScheme.surfaceColor
 
     let sectionTitleLabel = UILabel()
     sectionTitleLabel.font = MDCTypography.body2Font()
