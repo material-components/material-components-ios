@@ -36,6 +36,7 @@ static CGFloat blendColorChannel(CGFloat value, CGFloat bValue, CGFloat alpha, C
 }
 
 static UIColor *DynamicColor(UIColor *defaultColor, UIColor *darkColor) {
+#if defined(__IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     return [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
       if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
@@ -47,6 +48,9 @@ static UIColor *DynamicColor(UIColor *defaultColor, UIColor *darkColor) {
   } else {
     return defaultColor;
   }
+#else
+  return defaultColor;
+#endif
 }
 
 @implementation MDCSemanticColorScheme
