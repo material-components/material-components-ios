@@ -1,10 +1,79 @@
+# 84.5.0
+
+In this minor release we have expanded our support for NavigationBar as well as additional tests and bug fixes.
+
+## New features
+
+NavigationBar now allows clients to present overlay views that point to views in an MDCNavigationBar:
+
+```swift
+let leadingRect = navigationBar.rect(forLeading: leadingItem, in: view)
+let trailingRect = navigationBar.rect(forTrailing: trailingItem, in: view)
+// Present an overlay pointing at `leadingRect` or `trailingRect`
+```
+
+## API changes
+
+### NavigationBar
+
+#### MDCNavigationBar
+
+*new* method: `-rectForLeadingBarButtonItem:inCoordinateSpace` in `MDCNavigationBar`
+*new* method: `-rectForTrailingBarButtonItem:inCoordinateSpace` in `MDCNavigationBar`
+
+## Component changes
+
+## Changes
+
+### AppBar
+
+* [Update swift examples to use theming extension (#7511)](https://github.com/material-components/material-components-ios/commit/1df302cd48b4384cbb27718070f6a84799cb24bd) (Cody Weaver)
+
+### Buttons
+
+* [Add snapshot tests for floating button theming. (#7506)](https://github.com/material-components/material-components-ios/commit/431988ba84df4d756222ac000523d338db58532b) (featherless)
+
+### Dialogs
+
+* [Add snapshot test for dynamic type (#7447)](https://github.com/material-components/material-components-ios/commit/3e46e5f7cd33105ef95e8334c1dc47cef0f162af) (Cody Weaver)
+* [Add test for legacy dynamic type behavior around `buttonFont` (#7509)](https://github.com/material-components/material-components-ios/commit/8eff3fd1b5223dfefca6734d54554a7f92c58b7b) (Cody Weaver)
+* [Add test for legacy dynamic type with the messageFont property (#7498)](https://github.com/material-components/material-components-ios/commit/2cae47ac2297de631600842e65b8ba71d87dfbfc) (Cody Weaver)
+* [Test title font legacy behavior when dynamic type is enabled. (#7468)](https://github.com/material-components/material-components-ios/commit/03e37c2f7a41e18f17a4b734a64b06ae48c91690) (Cody Weaver)
+
+### List
+
+* [Refactor dynamic type support to use mdc_scaledFontForTraitEnvironment. (#7495)](https://github.com/material-components/material-components-ios/commit/1edfca18d5ce2722fd256167347ffbb74bd09351) (featherless)
+* [Use UICollectionView as environment in List snapshot test. (#7508)](https://github.com/material-components/material-components-ios/commit/461d475a3d83c6c3e9522f9d06862ad2a78d3d37) (Wenyu Zhang)
+
+### NavigationBar
+
+* [Add rectFor*Item APIs. (#7504)](https://github.com/material-components/material-components-ios/commit/f60a0b6a5929e67b1d4d41fb9240659c0f22a499) (featherless)
+
+### Tabs
+
+* [Allow overriding internal size class. (#7517)](https://github.com/material-components/material-components-ios/commit/22699ace0add8f1921ddb6e9cb6e2d911d4c6c90) (Robert Moore)
+
+### TextFields
+
+* [Resolve some swift warnings. (#7529)](https://github.com/material-components/material-components-ios/commit/19a35ce6eeb18ee1cdf6148b6b26c746f03e40d7) (featherless)
+
+### Typography
+
+* [Add doc to explain fallback behavior. (#7493)](https://github.com/material-components/material-components-ios/commit/8735ebb8e8c57521a7b26b9bcfb7f370b6421a9d) (Wenyu Zhang)
+
+## Multi-component changes
+
+* [Fix fallback behavior for Dynamic Type. (#7514)](https://github.com/material-components/material-components-ios/commit/225decbfb07596f193e0e567c2b71dae852cfde9) (Robert Moore)
+
+---
+
 # 84.4.0
 
 In this minor release we have expanded our support for custom Dynamic Type scaling curves in Buttons, Chips, and List, as well as additional tests and bug fixes.
 
 ## New deprecations
 
-`mdc_legacyFontScaling` in `MDCButton` and `MDCChipView` has been deprecated. 
+`mdc_legacyFontScaling` in `MDCButton` and `MDCChipView` has been deprecated.
 Please use `adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable` instead.
 
 ## New features
@@ -19,7 +88,7 @@ UIFont *customScalableFont = [fontScaler scaledFontWithFont:customFont];
 [button setTitleFont:customScalingFont forState:UIControlStateNormal];
 ```
 
-Buttons, Chips, Dialogs, and List, now have a new property 
+Buttons, Chips, Dialogs, and List, now have a new property
 `adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable` that affects the fallback behavior for when a scaled font is not provided.
 If set to YES the font size will adjust even if a scaled font has not been provided for a given UIFont property on this component. If set to NO, the font size will only be adjusted if a scaled font has been provided.
 
@@ -80,7 +149,7 @@ As part of the typography component, we added a new method to UIFont `mdc_scaled
 
 *new* property: `useCurrentContentSizeCategoryWhenApplied` in `MDCTypographyScheming`
 
-*new* property: `useCurrentContentSizeCategoryWhenApplied` in `MDCTypographyScheme` 
+*new* property: `useCurrentContentSizeCategoryWhenApplied` in `MDCTypographyScheme`
 
 ## Component changes
 

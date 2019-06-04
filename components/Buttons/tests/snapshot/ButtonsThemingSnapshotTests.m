@@ -85,4 +85,20 @@
   [self generateSnapshotAndVerifyForView:self.button];
 }
 
+/** Test a @c MDCFloatingButton being themed with @c applySecondaryThemeWithScheme:. */
+- (void)testFloatingButtonWithDefaultContainerScheme {
+  // Given
+  MDCFloatingButton *floatingButton = [[MDCFloatingButton alloc] init];
+  UIImage *buttonImage = [[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  [floatingButton setImage:buttonImage forState:UIControlStateNormal];
+  self.containerScheme = [[MDCContainerScheme alloc] init];
+
+  // When
+  [floatingButton applySecondaryThemeWithScheme:self.containerScheme];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:floatingButton];
+}
+
 @end

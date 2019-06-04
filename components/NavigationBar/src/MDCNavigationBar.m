@@ -669,6 +669,16 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   return [self.trailingBarButtonItems firstObject];
 }
 
+- (CGRect)rectForLeadingBarButtonItem:(nonnull UIBarButtonItem *)item
+                    inCoordinateSpace:(nonnull id<UICoordinateSpace>)coordinateSpace {
+  return [self.leadingButtonBar rectForItem:item inCoordinateSpace:coordinateSpace];
+}
+
+- (CGRect)rectForTrailingBarButtonItem:(nonnull UIBarButtonItem *)item
+                     inCoordinateSpace:(nonnull id<UICoordinateSpace>)coordinateSpace {
+  return [self.trailingButtonBar rectForItem:item inCoordinateSpace:coordinateSpace];
+}
+
 - (void)setBackBarButtonItem:(UIBarButtonItem *)backBarButtonItem {
   self.backItem = backBarButtonItem;
 }
