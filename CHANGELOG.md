@@ -1,16 +1,25 @@
-# #develop#
+# 84.5.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+In this minor release we have expanded our support for NavigationBar as well as additional tests and bug fixes.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
+NavigationBar now allows clients to present overlay views that point to views in an MDCNavigationBar:
+
+```swift
+let leadingRect = navigationBar.rect(forLeading: leadingItem, in: view)
+let trailingRect = navigationBar.rect(forTrailing: trailingItem, in: view)
+// Present an overlay pointing at `leadingRect` or `trailingRect`
+```
+
 ## API changes
+
+### NavigationBar
+
+#### MDCNavigationBar
+
+*new* method: `rectForLeadingBarButtonItem:inCoordinateSpace` in `MDCNavigationBar`
+*new* method: `-rectForTrailingBarButtonItem:inCoordinateSpace` in `MDCNavigationBar`
 
 ## Component changes
 
@@ -64,7 +73,7 @@ In this minor release we have expanded our support for custom Dynamic Type scali
 
 ## New deprecations
 
-`mdc_legacyFontScaling` in `MDCButton` and `MDCChipView` has been deprecated. 
+`mdc_legacyFontScaling` in `MDCButton` and `MDCChipView` has been deprecated.
 Please use `adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable` instead.
 
 ## New features
@@ -79,7 +88,7 @@ UIFont *customScalableFont = [fontScaler scaledFontWithFont:customFont];
 [button setTitleFont:customScalingFont forState:UIControlStateNormal];
 ```
 
-Buttons, Chips, Dialogs, and List, now have a new property 
+Buttons, Chips, Dialogs, and List, now have a new property
 `adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable` that affects the fallback behavior for when a scaled font is not provided.
 If set to YES the font size will adjust even if a scaled font has not been provided for a given UIFont property on this component. If set to NO, the font size will only be adjusted if a scaled font has been provided.
 
@@ -140,7 +149,7 @@ As part of the typography component, we added a new method to UIFont `mdc_scaled
 
 *new* property: `useCurrentContentSizeCategoryWhenApplied` in `MDCTypographyScheming`
 
-*new* property: `useCurrentContentSizeCategoryWhenApplied` in `MDCTypographyScheme` 
+*new* property: `useCurrentContentSizeCategoryWhenApplied` in `MDCTypographyScheme`
 
 ## Component changes
 
