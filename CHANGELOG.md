@@ -18,7 +18,7 @@ let trailingRect = navigationBar.rect(forTrailing: trailingItem, in: view)
 
 #### MDCNavigationBar
 
-*new* method: `rectForLeadingBarButtonItem:inCoordinateSpace` in `MDCNavigationBar`
+*new* method: `-rectForLeadingBarButtonItem:inCoordinateSpace` in `MDCNavigationBar`
 *new* method: `-rectForTrailingBarButtonItem:inCoordinateSpace` in `MDCNavigationBar`
 
 ## Component changes
