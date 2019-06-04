@@ -545,6 +545,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)setInkMaxRippleRadius:(CGFloat)inkMaxRippleRadius {
   _inkView.maxRippleRadius = inkMaxRippleRadius;
+  self.rippleView.maximumRadius = inkMaxRippleRadius;
 }
 
 - (void)setEnableRippleBehavior:(BOOL)enableRippleBehavior {
