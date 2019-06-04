@@ -123,7 +123,6 @@ static const UIEdgeInsets kButtonInset = {0, 12, 0, 12};
   if (buttonBar.inkColor) {
     button.inkColor = buttonBar.inkColor;
   }
-  button.inkColor = UIColor.redColor;
 
   button.exclusiveTouch = YES;
 

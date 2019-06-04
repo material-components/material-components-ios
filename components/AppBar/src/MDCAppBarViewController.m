@@ -92,7 +92,6 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
 - (UIBarButtonItem *)backButtonItem {
   UIViewController *parent = self.parentViewController;
   UINavigationController *navigationController = parent.navigationController;
-
   NSArray<UIViewController *> *viewControllerStack = navigationController.viewControllers;
 
   // This will be zero if there is no navigation controller, so a view controller which is not
