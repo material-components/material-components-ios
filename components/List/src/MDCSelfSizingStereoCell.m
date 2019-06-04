@@ -142,8 +142,10 @@ static const CGFloat kDetailColorOpacity = (CGFloat)0.6;
   [super setNeedsLayout];
 }
 
--(UICollectionViewLayoutAttributes *)preferredLayoutAttributesFittingAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes {
-  UICollectionViewLayoutAttributes *attributes = [super preferredLayoutAttributesFittingAttributes:layoutAttributes];
+- (UICollectionViewLayoutAttributes *)preferredLayoutAttributesFittingAttributes:
+    (UICollectionViewLayoutAttributes *)layoutAttributes {
+  UICollectionViewLayoutAttributes *attributes =
+      [super preferredLayoutAttributesFittingAttributes:layoutAttributes];
   attributes.size = [self systemLayoutSizeFittingSize:layoutAttributes.size];
   return attributes;
 }
