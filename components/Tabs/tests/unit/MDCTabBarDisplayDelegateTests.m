@@ -14,9 +14,9 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialTabs.h"
 #import "MDCItemBar.h"
 #import "MDCTabBarDisplayDelegate.h"
+#import "MaterialTabs.h"
 
 @interface MDCTabBarDisplayDelegate : NSObject <MDCTabBarDisplayDelegate>
 @property(nonatomic, assign) BOOL willDisplayItemWasCalled;
