@@ -164,16 +164,14 @@
   cell.detailLabel.text = oneLineString;
   UICollectionViewLayoutAttributes *attributes = [[UICollectionViewLayoutAttributes alloc] init];
   attributes.size = estimatedCellSize;
-  attributes =
-      [cell preferredLayoutAttributesFittingAttributes:attributes];
+  attributes = [cell preferredLayoutAttributesFittingAttributes:attributes];
   CGSize initialAttributeSize = attributes.size;
 
   // When
   cell.titleLabel.text = twoLineString;
   cell.detailLabel.text = twoLineString;
   [cell setNeedsLayout];
-  attributes =
-      [cell preferredLayoutAttributesFittingAttributes:attributes];
+  attributes = [cell preferredLayoutAttributesFittingAttributes:attributes];
 
   // Then
   XCTAssert(attributes.size.height > initialAttributeSize.height);
