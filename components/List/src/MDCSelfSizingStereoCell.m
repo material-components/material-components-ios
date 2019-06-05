@@ -142,6 +142,14 @@ static const CGFloat kDetailColorOpacity = (CGFloat)0.6;
   [super setNeedsLayout];
 }
 
+- (UICollectionViewLayoutAttributes *)preferredLayoutAttributesFittingAttributes:
+    (UICollectionViewLayoutAttributes *)layoutAttributes {
+  UICollectionViewLayoutAttributes *attributes =
+      [super preferredLayoutAttributesFittingAttributes:layoutAttributes];
+  attributes.size = [self systemLayoutSizeFittingSize:layoutAttributes.size];
+  return attributes;
+}
+
 - (CGSize)systemLayoutSizeFittingSize:(CGSize)targetSize {
   MDCSelfSizingStereoCellLayout *layout = [self layoutForCellWidth:targetSize.width];
   return CGSizeMake(targetSize.width, layout.calculatedHeight);
