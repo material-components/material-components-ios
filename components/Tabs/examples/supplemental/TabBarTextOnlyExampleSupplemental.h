@@ -23,6 +23,7 @@
 #import "MaterialCollections.h"
 #import "MaterialColorScheme.h"
 #import "MaterialTabs.h"
+#import "MDCTabBarDisplayDelegate.h"
 
 @interface TabBarTextOnlyExample : MDCCollectionViewController <MDCTabBarDisplayDelegate>
 

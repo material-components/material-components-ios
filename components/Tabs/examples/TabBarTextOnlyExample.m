@@ -20,6 +20,7 @@
 #import "MaterialColorScheme.h"
 #import "MaterialTabs+ColorThemer.h"
 #import "MaterialTabs.h"
+#import "MDCTabBarDisplayDelegate.h"
 #import "supplemental/TabBarTextOnlyExampleSupplemental.h"
 
 @implementation TabBarTextOnlyExample
