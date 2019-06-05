@@ -13,29 +13,29 @@
 // limitations under the License.
 
 #import <XCTest/XCTest.h>
-#import "MaterialTabs.h"
-#import "MDCTabBarDisplayDelegate.h"
 #import "MDCItemBar.h"
+#import "MDCTabBarDisplayDelegate.h"
+#import "MaterialTabs.h"
 
 @interface MDCTabBarDisplayDelegate : NSObject <MDCTabBarDisplayDelegate>
-@property (nonatomic, assign) BOOL willDisplayItemWasCalled;
-@property (nonatomic, assign) BOOL didEndDisplayingItemWasCalled;
+@property(nonatomic, assign) BOOL willDisplayItemWasCalled;
+@property(nonatomic, assign) BOOL didEndDisplayingItemWasCalled;
 @end
 
 @implementation MDCTabBarDisplayDelegate
 
--(void)tabBar:(MDCTabBar *)tabBar willDisplayItem:(UITabBarItem *)item {
+- (void)tabBar:(MDCTabBar *)tabBar willDisplayItem:(UITabBarItem *)item {
   self.willDisplayItemWasCalled = YES;
 }
 
--(void)tabBar:(MDCTabBar *)tabBar didEndDisplayingItem:(UITabBarItem *)item {
+- (void)tabBar:(MDCTabBar *)tabBar didEndDisplayingItem:(UITabBarItem *)item {
   self.didEndDisplayingItemWasCalled = YES;
 }
 
 @end
 
 @interface MDCTabBarDisplayDelegateTests : XCTestCase
-@property (strong, nonatomic) MDCTabBarDisplayDelegate *displayDelegate;
+@property(strong, nonatomic) MDCTabBarDisplayDelegate *displayDelegate;
 @end
 
 @implementation MDCTabBarDisplayDelegateTests
@@ -51,7 +51,7 @@
   // When
   UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"first tab" image:nil tag:0];
   UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"second tab" image:nil tag:0];
-  tabBar.items = @[ item1, item2];
+  tabBar.items = @[ item1, item2 ];
   [tabBar setNeedsLayout];
   [tabBar layoutIfNeeded];
 
@@ -66,7 +66,7 @@
   tabBar.displayDelegate = displayDelegate;
   CGFloat tabBarHeight = [MDCTabBar defaultHeightForItemAppearance:tabBar.itemAppearance];
   tabBar.frame = CGRectMake(0, 0, 200, tabBarHeight);
-  
+
   // When
   UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"first tab" image:nil tag:0];
   UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"second tab" image:nil tag:0];

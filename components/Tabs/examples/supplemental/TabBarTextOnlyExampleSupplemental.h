@@ -19,11 +19,11 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MDCTabBarDisplayDelegate.h"
 #import "MaterialAppBar.h"
 #import "MaterialCollections.h"
 #import "MaterialColorScheme.h"
 #import "MaterialTabs.h"
-#import "MDCTabBarDisplayDelegate.h"
 
 @interface TabBarTextOnlyExample : MDCCollectionViewController <MDCTabBarDisplayDelegate>
 
