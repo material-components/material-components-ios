@@ -12,7 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCTabBarAlignment.h"
+#import <Foundation/Foundation.h>
+#import "MDCTabBar.h"
 
 /**
  An additional delegate protocol for MDCTabBar that provides information about when UITabBarItems

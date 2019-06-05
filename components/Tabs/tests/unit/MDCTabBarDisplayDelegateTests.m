@@ -13,9 +13,10 @@
 // limitations under the License.
 
 #import <XCTest/XCTest.h>
+
+#import "MaterialTabs.h"
 #import "MDCItemBar.h"
 #import "MDCTabBarDisplayDelegate.h"
-#import "MaterialTabs.h"
 
 @interface MDCTabBarDisplayDelegate : NSObject <MDCTabBarDisplayDelegate>
 @property(nonatomic, assign) BOOL willDisplayItemWasCalled;
@@ -35,7 +36,6 @@
 @end
 
 @interface MDCTabBarDisplayDelegateTests : XCTestCase
-@property(strong, nonatomic) MDCTabBarDisplayDelegate *displayDelegate;
 @end
 
 @implementation MDCTabBarDisplayDelegateTests
