@@ -84,5 +84,4 @@ import MaterialComponents.MaterialTypographyScheme
 
 <!-- Template: Extensions should be called out separately from Usage docs.
 
-- [Typography Theming](typography-theming.md)
 -->
