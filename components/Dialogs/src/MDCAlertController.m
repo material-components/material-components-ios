@@ -399,7 +399,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
     [self addButtonToAlertViewForAction:action];
   }
   // Explicitly overwrite the view default if true
-  // We set this last to make sure all other properties are set first and no overriden by setting
+  // We set this last to make sure all other properties are set first and no overridden by setting
   // this.
   if (self.mdc_adjustsFontForContentSizeCategory) {
     self.alertView.mdc_adjustsFontForContentSizeCategory = YES;
