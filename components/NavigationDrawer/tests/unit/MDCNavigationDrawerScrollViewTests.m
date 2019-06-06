@@ -736,4 +736,19 @@
   XCTAssertEqualWithAccuracy(drawerHeight, 250, 0.001);
 }
 
+- (void)testSettingShouldIncludeSafeAreaInContentHeight {
+  // Given
+  self.drawerViewController.shouldIncludeSafeAreaInContentHeight = YES;
+
+  // When
+  MDCBottomDrawerPresentationController *presentationController =
+      (MDCBottomDrawerPresentationController *)self.drawerViewController.presentationController;
+  [presentationController presentationTransitionWillBegin];
+
+  // Then
+  XCTAssertTrue(presentationController.shouldIncludeSafeAreaInContentHeight);
+  XCTAssertTrue(presentationController.bottomDrawerContainerViewController
+                    .shouldIncludeSafeAreaInContentHeight);
+}
+
 @end

@@ -515,13 +515,23 @@ static UIColor *DrawerShadowColor(void) {
                         _contentVCPreferredContentSizeHeightCached;
   const CGFloat maximumInitialHeight = _maximumInitialDrawerHeight;
   if (totalHeight > maximumInitialHeight ||
-      MDCCGFloatEqual(_contentVCPreferredContentSizeHeightCached, 0)) {
+      MDCCGFloatEqual(_contentVCPreferredContentSizeHeightCached,
+                      [self bottomSafeAreaInsetsToAdjustContainerHeight])) {
     // Have the drawer height stay its current size in cases where the content preferred content
     // size is still not updated, or when the content height and header height are bigger than the
     // initial height.
     totalHeight = maximumInitialHeight;
   }
   return totalHeight;
+}
+
+- (CGFloat)bottomSafeAreaInsetsToAdjustContainerHeight {
+  if (@available(iOS 11.0, *)) {
+    if (self.shouldIncludeSafeAreaInContentHeight) {
+      return self.view.safeAreaInsets.bottom;
+    }
+  }
+  return 0;
 }
 
 #pragma mark Set ups (Private)
@@ -740,7 +750,8 @@ static UIColor *DrawerShadowColor(void) {
 - (void)cacheLayoutCalculationsWithAddedContentHeight:(CGFloat)addedContentHeight {
   CGFloat contentHeaderHeight = self.contentHeaderHeight;
   CGFloat containerHeight = self.presentingViewBounds.size.height;
-  CGFloat contentHeight = self.contentViewController.preferredContentSize.height;
+  CGFloat contentHeight = self.contentViewController.preferredContentSize.height +
+                          [self bottomSafeAreaInsetsToAdjustContainerHeight];
   if ([self shouldPresentFullScreen]) {
     contentHeight = MAX(contentHeight, containerHeight - self.topHeaderHeight);
   }
