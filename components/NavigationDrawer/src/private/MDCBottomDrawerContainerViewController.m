@@ -514,7 +514,11 @@ static UIColor *DrawerShadowColor(void) {
   CGFloat totalHeight = self.headerViewController.preferredContentSize.height +
                         _contentVCPreferredContentSizeHeightCached;
   const CGFloat maximumInitialHeight = _maximumInitialDrawerHeight;
-  if (totalHeight > maximumInitialHeight) {
+  if (totalHeight > maximumInitialHeight ||
+      MDCCGFloatEqual(_contentVCPreferredContentSizeHeightCached, 0)) {
+    // Have the drawer height stay its current size in cases where the content preferred content
+    // size is still not updated, or when the content height and header height are bigger than the
+    // initial height.
     totalHeight = maximumInitialHeight;
   }
   return totalHeight;
