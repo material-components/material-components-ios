@@ -747,7 +747,8 @@
 
   // Then
   XCTAssertTrue(presentationController.shouldIncludeSafeAreaInContentHeight);
-  XCTAssertTrue(presentationController.bottomDrawerContainerViewController.shouldIncludeSafeAreaInContentHeight);
+  XCTAssertTrue(presentationController.bottomDrawerContainerViewController
+                    .shouldIncludeSafeAreaInContentHeight);
 }
 
 @end

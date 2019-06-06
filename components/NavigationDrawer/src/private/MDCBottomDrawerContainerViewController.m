@@ -750,9 +750,8 @@ static UIColor *DrawerShadowColor(void) {
 - (void)cacheLayoutCalculationsWithAddedContentHeight:(CGFloat)addedContentHeight {
   CGFloat contentHeaderHeight = self.contentHeaderHeight;
   CGFloat containerHeight = self.presentingViewBounds.size.height;
-  CGFloat contentHeight =
-      self.contentViewController.preferredContentSize.height +
-      [self bottomSafeAreaInsetsToAdjustContainerHeight];
+  CGFloat contentHeight = self.contentViewController.preferredContentSize.height +
+                          [self bottomSafeAreaInsetsToAdjustContainerHeight];
   if ([self shouldPresentFullScreen]) {
     contentHeight = MAX(contentHeight, containerHeight - self.topHeaderHeight);
   }

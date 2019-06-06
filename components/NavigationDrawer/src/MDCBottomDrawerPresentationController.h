@@ -102,9 +102,9 @@
 @property(nonatomic, assign) CGFloat maximumInitialDrawerHeight;
 
 /**
- A flag allowing clients to opt-in to the drawer adding additional height to the content to include the bottom safe area inset.
- This will remove the need for clients to calculate their content size with the bottom safe area when setting the preferredContentSize of
- the contentViewController.
+ A flag allowing clients to opt-in to the drawer adding additional height to the content to include
+ the bottom safe area inset. This will remove the need for clients to calculate their content size
+ with the bottom safe area when setting the preferredContentSize of the contentViewController.
  Defaults to NO.
  */
 @property(nonatomic, assign) BOOL shouldIncludeSafeAreaInContentHeight;
