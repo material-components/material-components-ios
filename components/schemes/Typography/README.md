@@ -37,7 +37,6 @@ font or button font.
   - [Importing](#importing)
 - [Usage](#usage)
   - [Dynamic Type](#dynamic-type)
-- [Extensions](#extensions)
 
 - - -
 
@@ -115,9 +114,3 @@ Users configure text styles on fonts, such as caption and overline, included in 
 
 `useCurrentContentSizeCategoryWhenApplied` is a property on MDCTypographyScheme. This property only has an effect if the fonts stored on the typography scheme are scalable. It indicates whether the scalable font on the scheme should be adjusted with respect to the current content size category when it is applied on a component.
 
-
-## Extensions
-
-<!-- Template: Extensions should be called out separately from Usage docs.
-
--->
