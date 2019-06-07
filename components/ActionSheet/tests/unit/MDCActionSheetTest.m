@@ -55,6 +55,11 @@ static const CGFloat kSafeAreaAmount = 20;
   [super tearDown];
 }
 
+- (void)testInitializerResultsInExpectedDefaults {
+  // Then
+  XCTAssertFalse(self.actionSheet.alignTitles);
+}
+
 - (void)testTitleColor {
   // When
   self.actionSheet.title = @"Test";
@@ -207,6 +212,40 @@ static const CGFloat kSafeAreaAmount = 20;
                         [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.87]);
   XCTAssertEqualObjects(self.actionSheet.header.messageLabel.textColor,
                         [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.6]);
+}
+
+- (void)testSetAlignTitles {
+  // When
+  self.actionSheet.alignTitles = YES;
+
+  // Then
+  XCTAssertTrue(self.actionSheet.alignTitles);
+}
+
+- (void)testSetAlignTitlesWhenSomeActionsHaveImages {
+  // Given
+  [self.actionSheet addAction:[MDCActionSheetAction actionWithTitle:@"Foo"
+                                                              image:[[UIImage alloc] init]
+                                                            handler:nil]];
+  [self.actionSheet addAction:[MDCActionSheetAction actionWithTitle:@"Bar" image:nil handler:nil]];
+
+  // When
+  self.actionSheet.alignTitles = YES;
+
+  // Then
+  XCTAssertTrue(self.actionSheet.addLeadingPaddingToCell);
+}
+
+- (void)testSetAlignTitlesWhenNoActionsHaveImages {
+  // Given
+  [self.actionSheet addAction:[MDCActionSheetAction actionWithTitle:@"Foo" image:nil handler:nil]];
+  [self.actionSheet addAction:[MDCActionSheetAction actionWithTitle:@"Bar" image:nil handler:nil]];
+
+  // When
+  self.actionSheet.alignTitles = YES;
+
+  // Then
+  XCTAssertFalse(self.actionSheet.addLeadingPaddingToCell);
 }
 
 #pragma mark - Opening height

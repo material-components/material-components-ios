@@ -181,6 +181,15 @@ __attribute__((objc_subclassing_restricted)) @interface MDCActionSheetController
  */
 @property(nonatomic) UIImageRenderingMode imageRenderingMode;
 
+/**
+ Determines if all titles are aligned or if the titles are aligned based on if there is an image
+ assocated with the given @c MDCActionSheetAction. Setting this to @c YES will align all titles
+ regardless of if all @c actions have images or not.
+
+ @note Defaults to @c NO.
+ */
+@property(nonatomic, assign) BOOL alignTitles;
+
 @property(nonatomic, strong, readonly, nonnull)
     MDCBottomSheetTransitionController *transitionController;
 
