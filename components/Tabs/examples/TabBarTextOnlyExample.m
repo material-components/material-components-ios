@@ -14,6 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MDCTabBarDisplayDelegate.h"
 #import "MaterialAppBar.h"
 #import "MaterialButtons.h"
 #import "MaterialCollections.h"
@@ -72,6 +73,8 @@
   self.tabBar.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
   [self.tabBar sizeToFit];
+
+  self.tabBar.displayDelegate = self;
 }
 
 - (void)changeAlignment:(id)sender {
@@ -130,6 +133,16 @@
       // Unsupported
       break;
   }
+}
+
+#pragma mark - MDCTabBarDisplayDelegate
+
+- (void)tabBar:(MDCTabBar *)tabBar willDisplayItem:(UITabBarItem *)item {
+  NSLog(@"Will display item: %@", item.title);
+}
+
+- (void)tabBar:(MDCTabBar *)tabBar didEndDisplayingItem:(nonnull UITabBarItem *)item {
+  NSLog(@"Did end displaying item: %@", item.title);
 }
 
 @end
