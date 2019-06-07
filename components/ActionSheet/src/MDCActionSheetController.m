@@ -426,13 +426,13 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
 
 - (void)setAlwaysAlignTitleLeadingEdges:(BOOL)alignTitles {
   _alwaysAlignTitleLeadingEdges = alignTitles;
-  // Check to make sure atleast one action has an image. If not then all actions will align already
+  // Check to make sure at least one action has an image. If not then all actions will align already
   // and we don't need to add padding.
-  self.addLeadingPaddingToCell = [self anyActionHaveImage];
+  self.addLeadingPaddingToCell = [self anyActionHasAnImage];
   [self.tableView reloadData];
 }
 
-- (BOOL)anyActionHaveImage {
+- (BOOL)anyActionHasAnImage {
   for (MDCActionSheetAction *action in self.actions) {
     if (action.image) {
       return YES;
