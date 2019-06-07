@@ -424,18 +424,21 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
   [self.tableView reloadData];
 }
 
-- (void)setAlignTitles:(BOOL)alignTitles {
-  _alignTitles = alignTitles;
-  BOOL addPaddingToCells = NO;
+- (void)setAlwaysAlignTitleLeadingEdges:(BOOL)alignTitles {
+  _alwaysAlignTitleLeadingEdges = alignTitles;
   // Check to make sure atleast one action has an image. If not then all actions will align already
   // and we don't need to add padding.
+  self.addLeadingPaddingToCell = [self anyActionHaveImage];
+  [self.tableView reloadData];
+}
+
+- (BOOL)anyActionHaveImage {
   for (MDCActionSheetAction *action in self.actions) {
     if (action.image) {
-      addPaddingToCells = YES;
+      return YES;
     }
   }
-  self.addLeadingPaddingToCell = addPaddingToCells;
-  [self.tableView reloadData];
+  return NO;
 }
 
 - (void)setInkColor:(UIColor *)inkColor {

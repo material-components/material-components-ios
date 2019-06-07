@@ -661,7 +661,7 @@ static NSString *const kLongTitle5Arabic =
   [controller addAction:action2];
 
   // When
-  controller.alignTitles = YES;
+  controller.alwaysAlignTitleLeadingEdges = YES;
   controller.view.bounds = CGRectMake(0, 0, 320, 200);
 
   // Then
@@ -705,7 +705,7 @@ static NSString *const kLongTitle5Arabic =
   [controller addAction:action2];
 
   // When
-  controller.alignTitles = YES;
+  controller.alwaysAlignTitleLeadingEdges = YES;
   controller.view.bounds = CGRectMake(0, 0, 320, 200);
 
   // Then

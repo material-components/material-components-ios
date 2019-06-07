@@ -57,7 +57,7 @@ static const CGFloat kSafeAreaAmount = 20;
 
 - (void)testInitializerResultsInExpectedDefaults {
   // Then
-  XCTAssertFalse(self.actionSheet.alignTitles);
+  XCTAssertFalse(self.actionSheet.alwaysAlignTitleLeadingEdges);
 }
 
 - (void)testTitleColor {
@@ -216,10 +216,10 @@ static const CGFloat kSafeAreaAmount = 20;
 
 - (void)testSetAlignTitles {
   // When
-  self.actionSheet.alignTitles = YES;
+  self.actionSheet.alwaysAlignTitleLeadingEdges = YES;
 
   // Then
-  XCTAssertTrue(self.actionSheet.alignTitles);
+  XCTAssertTrue(self.actionSheet.alwaysAlignTitleLeadingEdges);
 }
 
 - (void)testSetAlignTitlesWhenSomeActionsHaveImages {
@@ -230,7 +230,7 @@ static const CGFloat kSafeAreaAmount = 20;
   [self.actionSheet addAction:[MDCActionSheetAction actionWithTitle:@"Bar" image:nil handler:nil]];
 
   // When
-  self.actionSheet.alignTitles = YES;
+  self.actionSheet.alwaysAlignTitleLeadingEdges = YES;
 
   // Then
   XCTAssertTrue(self.actionSheet.addLeadingPaddingToCell);
@@ -242,7 +242,7 @@ static const CGFloat kSafeAreaAmount = 20;
   [self.actionSheet addAction:[MDCActionSheetAction actionWithTitle:@"Bar" image:nil handler:nil]];
 
   // When
-  self.actionSheet.alignTitles = YES;
+  self.actionSheet.alwaysAlignTitleLeadingEdges = YES;
 
   // Then
   XCTAssertFalse(self.actionSheet.addLeadingPaddingToCell);
