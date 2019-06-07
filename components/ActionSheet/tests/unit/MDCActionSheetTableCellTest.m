@@ -41,6 +41,16 @@
   [super tearDown];
 }
 
+- (void)testInitializerResultsInExpectedDefaults {
+  // When
+  NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheet];
+
+  // Then
+  for (MDCActionSheetItemTableViewCell *cell in cells) {
+    XCTAssertFalse(cell.addLeadingPadding);
+  }
+}
+
 - (void)testDefaultRenderingMode {
   // When
   NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheet];

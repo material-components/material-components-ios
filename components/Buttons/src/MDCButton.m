@@ -155,6 +155,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   _borderWidths = [NSMutableDictionary dictionary];
   _fonts = [NSMutableDictionary dictionary];
   _accessibilityTraitsIncludesButton = YES;
+  _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
 
   if (!_backgroundColors) {
     // _backgroundColors may have already been initialized by setting the backgroundColor setter.
@@ -321,9 +322,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   }
   [super touchesBegan:touches withEvent:event];
 
-  if (self.enableRippleBehavior) {
-    self.rippleView.rippleHighlighted = YES;
-  } else {
+  if (!self.enableRippleBehavior) {
     [self handleBeginTouches:touches];
   }
 }
@@ -343,9 +342,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   }
   [super touchesEnded:touches withEvent:event];
 
-  if (self.enableRippleBehavior) {
-    self.rippleView.rippleHighlighted = NO;
-  } else {
+  if (!self.enableRippleBehavior) {
     CGPoint location = [self locationFromTouches:touches];
     [_inkView startTouchEndedAnimationAtPoint:location completion:nil];
   }
@@ -358,9 +355,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   }
   [super touchesCancelled:touches withEvent:event];
 
-  if (self.enableRippleBehavior) {
-    self.rippleView.rippleHighlighted = NO;
-  } else {
+  if (!self.enableRippleBehavior) {
     [self evaporateInkToPoint:[self locationFromTouches:touches]];
   }
 }
@@ -380,12 +375,14 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (void)setHighlighted:(BOOL)highlighted {
   [super setHighlighted:highlighted];
 
+  self.rippleView.rippleHighlighted = highlighted;
   [self updateAfterStateChange:NO];
 }
 
 - (void)setSelected:(BOOL)selected {
   [super setSelected:selected];
 
+  self.rippleView.selected = selected;
   [self updateAfterStateChange:NO];
 }
 
@@ -542,12 +539,10 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [self.rippleView setRippleColor:inkColor forState:MDCRippleStateHighlighted];
 }
 
-- (CGFloat)inkMaxRippleRadius {
-  return _inkView.maxRippleRadius;
-}
-
 - (void)setInkMaxRippleRadius:(CGFloat)inkMaxRippleRadius {
+  _inkMaxRippleRadius = inkMaxRippleRadius;
   _inkView.maxRippleRadius = inkMaxRippleRadius;
+  self.rippleView.maximumRadius = inkMaxRippleRadius;
 }
 
 - (void)setEnableRippleBehavior:(BOOL)enableRippleBehavior {
@@ -733,7 +728,26 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   if ((state & UIControlStateHighlighted) == UIControlStateHighlighted) {
     state = state & ~UIControlStateDisabled;
   }
-  return _fonts[@(state)] ?: _fonts[@(UIControlStateNormal)];
+  UIFont *font = _fonts[@(state)] ?: _fonts[@(UIControlStateNormal)];
+
+  if (!font) {
+    // TODO(#2709): Have a single source of truth for fonts
+    // Migrate to [UIFont standardFont] when possible
+    font = [MDCTypography buttonFont];
+  }
+
+  if (_mdc_adjustsFontForContentSizeCategory) {
+    // Dynamic type is enabled so apply scaling
+    if (font.mdc_scalingCurve) {
+      font = [font mdc_scaledFontForTraitEnvironment:self];
+    } else {
+      if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
+        font = [font mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleButton
+                                  scaledForDynamicType:YES];
+      }
+    }
+  }
+  return font;
 }
 
 - (void)setTitleFont:(nullable UIFont *)font forState:(UIControlState)state {
@@ -878,30 +892,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 - (void)updateTitleFont {
-  // Retreive any custom font that has been set
-  UIFont *font = _fonts[@(self.state)];
-  if (!font && self.state != UIControlStateNormal) {
-    // We fall back to UIControlStateNormal if there is no value for the current state.
-    font = _fonts[@(UIControlStateNormal)];
-  }
-
-  if (!font) {
-    // TODO(#2709): Have a single source of truth for fonts
-    // Migrate to [UIFont standardFont] when possible
-    font = [MDCTypography buttonFont];
-  }
-
-  if (_mdc_adjustsFontForContentSizeCategory) {
-    // Dynamic type is enabled so apply scaling
-    if (font.mdc_scalingCurve && !_mdc_legacyFontScaling) {
-      font = [font mdc_scaledFontForCurrentSizeCategory];
-    } else {
-      font = [font mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleButton
-                                scaledForDynamicType:YES];
-    }
-  }
-
-  self.titleLabel.font = font;
+  self.titleLabel.font = [self titleFontForState:self.state];
 
   [self setNeedsLayout];
 }
@@ -965,6 +956,14 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [self updateTitleFont];
 
   [self sizeToFit];
+}
+
+- (BOOL)mdc_legacyFontScaling {
+  return self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
+}
+
+- (void)mdc_setLegacyFontScaling:(BOOL)mdc_legacyFontScaling {
+  self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = mdc_legacyFontScaling;
 }
 
 #pragma mark - Deprecations

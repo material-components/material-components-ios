@@ -521,6 +521,69 @@ static NSString *controlStateDescription(UIControlState controlState) {
   }
 }
 
+- (void)testTitleFontForStateFallbackBehaviorWithLegacyDynamicType {
+  // Given
+  self.button.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
+
+  // When
+  self.button.mdc_adjustsFontForContentSizeCategory = YES;
+
+  // Then
+  for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
+    XCTAssertTrue(
+        [[self.button titleFontForState:controlState]
+            mdc_isSimplyEqual:[[MDCTypography buttonFont]
+                                  mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleButton
+                                               scaledForDynamicType:YES]],
+        @"(%@) is not equal to (%@)", [self.button titleFontForState:UIControlStateNormal],
+        [[MDCTypography buttonFont] mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleButton
+                                                 scaledForDynamicType:YES]);
+  }
+}
+
+- (void)testTitleFontForStateWithLegacyDynamicTypeReturnsRenderedFonts {
+  // Given
+  UIFont *userFont = [UIFont systemFontOfSize:99];
+  [self.button setTitleFont:userFont forState:UIControlStateNormal];
+
+  // When
+  self.button.mdc_adjustsFontForContentSizeCategory = YES;
+  self.button.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
+
+  // Then
+  XCTAssertFalse([[self.button titleFontForState:UIControlStateNormal] mdc_isSimplyEqual:userFont],
+                 @"(%@) is equal to (%@)", [self.button titleFontForState:UIControlStateNormal],
+                 userFont);
+  XCTAssertFalse([self.button.titleLabel.font mdc_isSimplyEqual:userFont], @"(%@) is equal to (%@)",
+                 self.button.titleLabel.font, userFont);
+  XCTAssertTrue([[self.button titleFontForState:UIControlStateNormal]
+                    mdc_isSimplyEqual:self.button.titleLabel.font],
+                @"(%@) is not equal to (%@)", [self.button titleFontForState:UIControlStateNormal],
+                self.button.titleLabel.font);
+}
+
+- (void)testTitleFontForStateWithLegacyDynamicTypeRestoresUserFonts {
+  // Given
+  UIFont *userFont = [UIFont systemFontOfSize:99];
+  [self.button setTitleFont:userFont forState:UIControlStateNormal];
+  self.button.mdc_adjustsFontForContentSizeCategory = YES;
+  self.button.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
+
+  // When
+  self.button.mdc_adjustsFontForContentSizeCategory = NO;
+
+  // Then
+  XCTAssertTrue([[self.button titleFontForState:UIControlStateNormal] mdc_isSimplyEqual:userFont],
+                @"(%@) is not equal to (%@)", [self.button titleFontForState:UIControlStateNormal],
+                userFont);
+  XCTAssertTrue([self.button.titleLabel.font mdc_isSimplyEqual:userFont],
+                @"(%@) is not equal to (%@)", self.button.titleLabel.font, userFont);
+  XCTAssertTrue([[self.button titleFontForState:UIControlStateNormal]
+                    mdc_isSimplyEqual:self.button.titleLabel.font],
+                @"(%@) is not equal to (%@)", [self.button titleFontForState:UIControlStateNormal],
+                self.button.titleLabel.font);
+}
+
 #pragma mark - shadowColor:forState:
 
 - (void)testRemovedShadowColorForState {
@@ -1114,6 +1177,49 @@ static NSString *controlStateDescription(UIControlState controlState) {
   XCTAssertEqualWithAccuracy(self.button.titleLabel.font.pointSize, preferredFont.pointSize,
                              kEpsilonAccuracy,
                              @"Font size should be equal to MDCFontTextStyleButton's.");
+}
+
+/**
+ Test legacy dynamic type has no impact on a @c MDCButton when @c
+ adjustFontForContentSizeCategoryWhenScaledFontIsUnavailable is set to @c NO before setting @c
+ mdc_adjustsFontForContentSizeCategory to @c YES that the font stays the same.
+ */
+- (void)testLegacyDynamicTypeDisabledThenDynamicTypeTurnedOn {
+  // Given
+  UIFont *fakeFont = [UIFont systemFontOfSize:55];
+  [self.button setTitleFont:fakeFont forState:UIControlStateNormal];
+  UIFont *originalFont = self.button.titleLabel.font;
+  self.button.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
+
+  // When
+  self.button.mdc_adjustsFontForContentSizeCategory = YES;
+
+  // Then
+  XCTAssertTrue([self.button.titleLabel.font mdc_isSimplyEqual:originalFont],
+                @"(%@) is not equal to (%@)", self.button.titleLabel.font, originalFont);
+  XCTAssertTrue(
+      [[self.button titleFontForState:UIControlStateNormal] mdc_isSimplyEqual:originalFont],
+      @"(%@) is not equal to (%@)", [self.button titleFontForState:UIControlStateNormal],
+      originalFont);
+}
+
+/**
+ Test legacy dynamic type impacts a @c MDCButton when @c
+ adjustFontForContentSizeCategoryWhenScaledFontIsUnavailable is set to @c YES that the font changes.
+ */
+- (void)testLegacyDynamicTypeEnabled {
+  // Given
+  UIFont *fakeFont = [UIFont systemFontOfSize:55];
+  [self.button setTitleFont:fakeFont forState:UIControlStateNormal];
+  UIFont *originalFont = self.button.titleLabel.font;
+  self.button.mdc_adjustsFontForContentSizeCategory = YES;
+
+  // When
+  self.button.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
+
+  // Then
+  XCTAssertFalse([self.button.titleLabel.font mdc_isSimplyEqual:originalFont], @"%@ is equal to %@",
+                 self.button.titleLabel.font, originalFont);
 }
 
 #pragma mark - Size-related tests

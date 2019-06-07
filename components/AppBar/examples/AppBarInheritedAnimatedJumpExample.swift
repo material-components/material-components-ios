@@ -14,21 +14,17 @@
 
 import CoreGraphics
 import UIKit
-
 import MaterialComponents.MaterialAppBar
-import MaterialComponents.MaterialAppBar_ColorThemer
-import MaterialComponents.MaterialAppBar_TypographyThemer
-import MaterialComponents.MaterialColorScheme
+import MaterialComponents.MaterialAppBar_Theming
+import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialFlexibleHeader_CanAlwaysExpandToMaximumHeight
 import MaterialComponents.MaterialTabs
-import MaterialComponents.MaterialTypographyScheme
 
 // This example demonstrates issues with flexible header tabs and animations.
 class AppBarInheritedAnimatedJumpExample: UIViewController {
 
   lazy var appBarViewController: MDCAppBarViewController = self.makeAppBar()
-  @objc var colorScheme = MDCSemanticColorScheme()
-  @objc var typographyScheme = MDCTypographyScheme()
+  @objc var containerScheme: MDCContainerScheming = MDCContainerScheme()
 
   fileprivate let tabs = [
     SimpleInheritedTableViewController(title: "First"),
@@ -63,15 +59,14 @@ class AppBarInheritedAnimatedJumpExample: UIViewController {
       tab.tabBarItem.tag = offset
     }
 
-    MDCAppBarColorThemer.applyColorScheme(colorScheme, to: appBarViewController)
-    MDCAppBarTypographyThemer.applyTypographyScheme(typographyScheme, to: appBarViewController)
+    appBarViewController.applyPrimaryTheme(withScheme: containerScheme)
 
     // Need to update the status bar style after applying the theme.
     appBarViewController.view.isOpaque = false
     setNeedsStatusBarAppearanceUpdate()
 
     view.isOpaque = false
-    view.backgroundColor = colorScheme.backgroundColor
+    view.backgroundColor = containerScheme.colorScheme.backgroundColor
     view.addSubview(appBarViewController.view)
     appBarViewController.didMove(toParent: self)
 

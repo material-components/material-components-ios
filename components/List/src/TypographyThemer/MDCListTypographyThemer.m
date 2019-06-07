@@ -13,13 +13,31 @@
 // limitations under the License.
 
 #import "MDCListTypographyThemer.h"
+#import "MaterialTypography.h"
 
 @implementation MDCListTypographyThemer
 
 + (void)applyTypographyScheme:(id<MDCTypographyScheming>)typographyScheme
        toSelfSizingStereoCell:(MDCSelfSizingStereoCell *)cell {
-  cell.titleLabel.font = typographyScheme.subtitle1;
-  cell.detailLabel.font = typographyScheme.body2;
+  UIFont *titleFont = typographyScheme.subtitle1;
+  UIFont *detailFont = typographyScheme.body2;
+
+  BOOL useCurrentContentSizeCategoryWhenApplied = NO;
+  if ([typographyScheme respondsToSelector:@selector(useCurrentContentSizeCategoryWhenApplied)]) {
+    useCurrentContentSizeCategoryWhenApplied =
+        typographyScheme.useCurrentContentSizeCategoryWhenApplied;
+  } else {
+    useCurrentContentSizeCategoryWhenApplied =
+        typographyScheme.mdc_adjustsFontForContentSizeCategory;
+  }
+
+  if (useCurrentContentSizeCategoryWhenApplied) {
+    titleFont = [titleFont mdc_scaledFontForTraitEnvironment:cell];
+    detailFont = [detailFont mdc_scaledFontForTraitEnvironment:cell];
+  }
+
+  cell.titleLabel.font = titleFont;
+  cell.detailLabel.font = detailFont;
 }
 
 @end

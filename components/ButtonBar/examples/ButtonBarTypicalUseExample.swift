@@ -28,10 +28,10 @@ class ButtonBarTypicalUseSwiftExample: UIViewController {
     return scheme
   }
 
+  lazy var buttonBar = MDCButtonBar()
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    let buttonBar = MDCButtonBar()
     buttonBar.applyPrimaryTheme(withScheme: scheme)
 
     // MDCButtonBar ignores the style of UIBarButtonItem.
@@ -66,8 +66,10 @@ class ButtonBarTypicalUseSwiftExample: UIViewController {
     view.backgroundColor = .white
   }
 
-  @objc func didTapActionButton(_ sender: Any) {
-    print("Did tap action item: \(sender)")
+  @objc func didTapActionButton(_ item: UIBarButtonItem) {
+    let rect = buttonBar.rect(for: item, in: view)
+    print("\(rect)")
+    print("Did tap action item: \(item)")
   }
 
   // MARK: Typical application code (not Material-specific)

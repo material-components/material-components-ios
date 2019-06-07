@@ -99,6 +99,17 @@ IB_DESIGNABLE
 @property(nonatomic, copy, nullable) NSArray<UIBarButtonItem *> *items;
 
 /**
+ Returns the rect of the item's view within the given @c coordinateSpace.
+
+ If the provided item is not contained in @c items, then the behavior is undefined.
+
+ @param item The item within @c items whose rect should be computed.
+ @param coordinateSpace The coordinate space the returned rect should be in relation to.
+ */
+- (CGRect)rectForItem:(nonnull UIBarButtonItem *)item
+    inCoordinateSpace:(nonnull id<UICoordinateSpace>)coordinateSpace;
+
+/**
  If greater than zero, will ensure that any UIButton with a title is aligned to the provided
  baseline.
 

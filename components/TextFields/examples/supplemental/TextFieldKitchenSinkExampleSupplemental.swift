@@ -42,7 +42,7 @@ extension TextFieldKitchenSinkSwiftExample {
     allMultilineTextFieldControllers = [setupAreaTextFields(), setupUnderlineMultilineTextFields(),
                               multilineTextFieldControllersFullWidth,
                               setupFloatingMultilineTextFields(),
-                              setupSpecialMultilineTextFields()].flatMap { $0 as! [MDCTextInputController] }
+                              setupSpecialMultilineTextFields()].flatMap { $0 }
 
     controllersFullWidth = textFieldControllersFullWidth + multilineTextFieldControllersFullWidth
 
@@ -430,7 +430,7 @@ extension TextFieldKitchenSinkSwiftExample {
 
     let closure: (MDCTextInputTextInsetsMode, String) -> Void = { mode, title in
       self.allInputControllers.forEach { controller in
-        guard let input = controller.textInput as? MDCTextInput else {
+        guard let input = controller.textInput else {
           return
         }
         input.textInsetsMode = mode

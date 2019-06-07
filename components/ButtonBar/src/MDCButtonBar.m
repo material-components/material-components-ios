@@ -425,6 +425,13 @@ static NSString *const kEnabledSelector = @"enabled";
   }
 }
 
+- (CGRect)rectForItem:(nonnull UIBarButtonItem *)item
+    inCoordinateSpace:(nonnull id<UICoordinateSpace>)coordinateSpace {
+  NSUInteger itemIndex = [self.items indexOfObject:item];
+  UIView *buttonView = _buttonViews[itemIndex];
+  return [buttonView convertRect:buttonView.bounds toCoordinateSpace:coordinateSpace];
+}
+
 - (void)setUppercasesButtonTitles:(BOOL)uppercasesButtonTitles {
   _uppercasesButtonTitles = uppercasesButtonTitles;
 

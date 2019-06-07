@@ -105,6 +105,7 @@ mdc_extension_objc_library(
     deps = [
         ":Chips",
         "//components/schemes/Typography",
+        "//components/Typography",
     ],
 )
 

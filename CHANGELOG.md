@@ -1,3 +1,301 @@
+# 84.5.0
+
+In this minor release we have expanded our support for NavigationBar as well as additional tests and bug fixes.
+
+## New features
+
+NavigationBar now allows clients to present overlay views that point to views in an MDCNavigationBar:
+
+```swift
+let leadingRect = navigationBar.rect(forLeading: leadingItem, in: view)
+let trailingRect = navigationBar.rect(forTrailing: trailingItem, in: view)
+// Present an overlay pointing at `leadingRect` or `trailingRect`
+```
+
+## API changes
+
+### NavigationBar
+
+#### MDCNavigationBar
+
+*new* method: `-rectForLeadingBarButtonItem:inCoordinateSpace` in `MDCNavigationBar`
+*new* method: `-rectForTrailingBarButtonItem:inCoordinateSpace` in `MDCNavigationBar`
+
+## Component changes
+
+## Changes
+
+### AppBar
+
+* [Update swift examples to use theming extension (#7511)](https://github.com/material-components/material-components-ios/commit/1df302cd48b4384cbb27718070f6a84799cb24bd) (Cody Weaver)
+
+### Buttons
+
+* [Add snapshot tests for floating button theming. (#7506)](https://github.com/material-components/material-components-ios/commit/431988ba84df4d756222ac000523d338db58532b) (featherless)
+
+### Dialogs
+
+* [Add snapshot test for dynamic type (#7447)](https://github.com/material-components/material-components-ios/commit/3e46e5f7cd33105ef95e8334c1dc47cef0f162af) (Cody Weaver)
+* [Add test for legacy dynamic type behavior around `buttonFont` (#7509)](https://github.com/material-components/material-components-ios/commit/8eff3fd1b5223dfefca6734d54554a7f92c58b7b) (Cody Weaver)
+* [Add test for legacy dynamic type with the messageFont property (#7498)](https://github.com/material-components/material-components-ios/commit/2cae47ac2297de631600842e65b8ba71d87dfbfc) (Cody Weaver)
+* [Test title font legacy behavior when dynamic type is enabled. (#7468)](https://github.com/material-components/material-components-ios/commit/03e37c2f7a41e18f17a4b734a64b06ae48c91690) (Cody Weaver)
+
+### List
+
+* [Refactor dynamic type support to use mdc_scaledFontForTraitEnvironment. (#7495)](https://github.com/material-components/material-components-ios/commit/1edfca18d5ce2722fd256167347ffbb74bd09351) (featherless)
+* [Use UICollectionView as environment in List snapshot test. (#7508)](https://github.com/material-components/material-components-ios/commit/461d475a3d83c6c3e9522f9d06862ad2a78d3d37) (Wenyu Zhang)
+
+### NavigationBar
+
+* [Add rectFor*Item APIs. (#7504)](https://github.com/material-components/material-components-ios/commit/f60a0b6a5929e67b1d4d41fb9240659c0f22a499) (featherless)
+
+### Tabs
+
+* [Allow overriding internal size class. (#7517)](https://github.com/material-components/material-components-ios/commit/22699ace0add8f1921ddb6e9cb6e2d911d4c6c90) (Robert Moore)
+
+### TextFields
+
+* [Resolve some swift warnings. (#7529)](https://github.com/material-components/material-components-ios/commit/19a35ce6eeb18ee1cdf6148b6b26c746f03e40d7) (featherless)
+
+### Typography
+
+* [Add doc to explain fallback behavior. (#7493)](https://github.com/material-components/material-components-ios/commit/8735ebb8e8c57521a7b26b9bcfb7f370b6421a9d) (Wenyu Zhang)
+
+## Multi-component changes
+
+* [Fix fallback behavior for Dynamic Type. (#7514)](https://github.com/material-components/material-components-ios/commit/225decbfb07596f193e0e567c2b71dae852cfde9) (Robert Moore)
+
+---
+
+# 84.4.0
+
+In this minor release we have expanded our support for custom Dynamic Type scaling curves in Buttons, Chips, and List, as well as additional tests and bug fixes.
+
+## New deprecations
+
+`mdc_legacyFontScaling` in `MDCButton` and `MDCChipView` has been deprecated.
+Please use `adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable` instead.
+
+## New features
+
+Buttons, Chips, and List, have expanded their support for Dynamic Type to allow custom scaling curves to be associated with fonts:
+
+```objc
+MDCButton *button = [[MDCButton alloc] init];
+UIFont *customFont = [UIFont fontWithName:@"CustomFontName" size:18.0];
+MDCFontScaler *fontScaler = [MDCFontScaler scalerForMaterialTextStyle:MDCTextStyleBody1];
+UIFont *customScalableFont = [fontScaler scaledFontWithFont:customFont];
+[button setTitleFont:customScalingFont forState:UIControlStateNormal];
+```
+
+Buttons, Chips, Dialogs, and List, now have a new property
+`adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable` that affects the fallback behavior for when a scaled font is not provided.
+If set to YES the font size will adjust even if a scaled font has not been provided for a given UIFont property on this component. If set to NO, the font size will only be adjusted if a scaled font has been provided.
+
+ButtonBar now allows clients to present overlay views that point to views in an MDCButtonBar:
+
+```swift
+let rect = buttonBar.rect(for: item, in: view)
+// Present an overlay pointing at `rect`
+```
+
+As part of the typography component, we added a new method to UIFont `mdc_scaledFontForTraitEnvironment:` that returns a font with the same family, weight and traits, but whose point size is based on the given trait environment's preferred content size category.
+
+## API changes
+
+### ButtonBar
+
+#### MDCButtonBar
+
+*new* method: `-rectForItem:item:inCoordinateSpace` in `MDCButtonBar`
+
+### Buttons
+
+#### MDCButton
+
+*new* property: `adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable` in `MDCButton`
+
+*deprecated* property: `mdc_legacyFontScaling` in `MDCButton`
+
+### Chips
+
+#### MDCChipView
+
+*new* property: `adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable` in `MDCChipView`
+
+*deprecated* property: `mdc_legacyFontScaling` in `MDCChipView`
+
+### Dialogs
+
+#### MDCAlertController
+
+*new* property: `adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable` in `MDCAlertController`
+
+### List
+
+#### MDCSelfSizingStereoCell
+
+*new* property: `adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable` in `MDCSelfSizingStereoCell`
+
+### Typography
+
+#### UIFont+MaterialScalable
+
+*new* method: `mdc_scaledFontForTraitEnvironment:traitEnvironment` in `UIFont+MaterialScalable`
+
+### schemes/Typography
+
+#### MDCTypographyScheme
+
+*new* property: `useCurrentContentSizeCategoryWhenApplied` in `MDCTypographyScheming`
+
+*new* property: `useCurrentContentSizeCategoryWhenApplied` in `MDCTypographyScheme`
+
+## Component changes
+
+## Changes
+
+### ButtonBar
+
+* [Expose a rectForItem:inCoordinateSpace: API. (#7438)](https://github.com/material-components/material-components-ios/commit/631779545e6411a14435824d1f2a5407734cba2b) (featherless)
+* [Fix a typo in the docs for rectForItem:inCoordinateSpace:. (#7496)](https://github.com/material-components/material-components-ios/commit/0d8d010ed156a2f00fece577d5c9befb67150b8a) (featherless)
+
+### Buttons
+
+* [Add snapshot test for dynamic type (#7429)](https://github.com/material-components/material-components-ios/commit/03d1cbc9d582d1d490124fb8b65f560e9665d5ee) (Cody Weaver)
+* [Fix issue with legacy dynamic type (#7466)](https://github.com/material-components/material-components-ios/commit/6b5cf3f153131e161dc95c2a4ac1062f1849fa53) (Cody Weaver)
+* [Fix up test (#7461)](https://github.com/material-components/material-components-ios/commit/face6eac24ce2e21642e21a30cd52db755a1ebdd) (Cody Weaver)
+* [Refactor dynamic type support to use mdc_scaledFontForTraitEnvironment. (#7489)](https://github.com/material-components/material-components-ios/commit/b61bdde17cc66d03f87e3f3e1f5968ee717775f4) (featherless)
+* [Revert updating fonts after adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable has been updated  (#7480)](https://github.com/material-components/material-components-ios/commit/73adc97de9bcd63e52e9e227ef65f1ab032fddd8) (Cody Weaver)
+* [Update dynamic type to match other components (#7425)](https://github.com/material-components/material-components-ios/commit/f26673676d21ea5386bc762796996efac0d826ef) (Cody Weaver)
+* [Update name for fallback behavior. (#7452)](https://github.com/material-components/material-components-ios/commit/a085565d50fd855f0e0edd757a5c38e43cb239c6) (Cody Weaver)
+
+### Chips
+
+* [Add fallback behavior for M2 Dynamic Type. (#7432)](https://github.com/material-components/material-components-ios/commit/864621ca13f8d4641ab209268c47df4b8a61828c) (Wenyu Zhang)
+* [Apply Dynamic Type flag to typography themer. (#7414)](https://github.com/material-components/material-components-ios/commit/440a093a581842df2276d2f107bed6e64c75f5d7) (Wenyu Zhang)
+* [Fix a flag naming in Chip theming extension and added a missing test for this flag. (#7482)](https://github.com/material-components/material-components-ios/commit/cf27ec7c87efd5c112adeb4411e9aa065e080947) (Wenyu Zhang)
+* [Refactor dynamic type behavior by using a convenience method. (#7494)](https://github.com/material-components/material-components-ios/commit/49c7a73014145cc9e83a547da7244aaa9757d98b) (Wenyu Zhang)
+* [Use umbrella header (#7423)](https://github.com/material-components/material-components-ios/commit/f9a191abbcfe64a1bb3a370644ce3cd4756ac600) (Cody Weaver)
+
+### Dialogs
+
+* [Add flag for legacy behavior for dynamic type (#7446)](https://github.com/material-components/material-components-ios/commit/a1b7788a86563bbe9d2e3766e9d09136fea0e567) (Cody Weaver)
+* [Flash scroll indicators if content is larger than the scroll view. (#7434)](https://github.com/material-components/material-components-ios/commit/d71f9c50e5bc209505acd20ccc4abca504b11937) (Cody Weaver)
+* [Move the private property declaration to the header (#7433)](https://github.com/material-components/material-components-ios/commit/77d1e2e8e7d2e13ca7e83760a4ad998eebf27b55) (Cody Weaver)
+
+### List
+
+* [Add M2 Dynamic Type support for MDCSelfSizingStereoCell (#7440)](https://github.com/material-components/material-components-ios/commit/2f630d275a9acab1d1adb5da698066a5f31d8134) (Wenyu Zhang)
+* [Add basic snapshot tests for MDCSelfSizingStereoCell. (#7439)](https://github.com/material-components/material-components-ios/commit/32d8d4d789f86dcac9d251281f3a3a6b4180b9d7) (Wenyu Zhang)
+* [Fix copyright dates for Theming files. (#7430)](https://github.com/material-components/material-components-ios/commit/4b62dfbdde7fde8288db66d8ca8115f863f6799a) (Robert Moore)
+* [Snapshot tests for upcoming Scalable Font behavior. (#7458)](https://github.com/material-components/material-components-ios/commit/a21108979e53405ce1907f379aed17872869961d) (Wenyu Zhang)
+* [Update snapshot golden images for dynamic type change. (#7486)](https://github.com/material-components/material-components-ios/commit/13033cd0c74251f3aaf253be8da8a992953e93b6) (Wenyu Zhang)
+* [add Dynamic Type support on List Typography Themer. (#7491)](https://github.com/material-components/material-components-ios/commit/0db87df9cf53b039bc9be474af980860c16fbbfa) (Wenyu Zhang)
+
+### NavigationDrawer
+
+* [Prevent crash when passing nil completion block for a nullable method parameter. (#7450)](https://github.com/material-components/material-components-ios/commit/09b390f94a920f8281baa6f705e3b02eaacdc756) (Robbie Kirk)
+
+### Tabs
+
+* [Support a dynamic alignment for Justified and Leading (#7457)](https://github.com/material-components/material-components-ios/commit/27bc302c3ab894d65dd111aa49d437cd4295897c) (Robert Moore)
+
+### Typography
+
+* [Add mdc_scaledFontForTraitEnvironment. (#7471)](https://github.com/material-components/material-components-ios/commit/ec4b19d064aa6ffd40473adc37285e71646a7744) (featherless)
+* [Copy-edit of UIFont+MaterialScalable.h (#7475)](https://github.com/material-components/material-components-ios/commit/ca11c9b07991b26f0ee6a8327cf92e8d88295a4d) (featherless)
+* [Implement copy semantics on the UIFont's mdc_scalingCurve. (#7476)](https://github.com/material-components/material-components-ios/commit/50bd0a4dc54c6b85be09f49c8fa49d18cf0dccb3) (featherless)
+* [Split Typography doc into separate md files. (#7435)](https://github.com/material-components/material-components-ios/commit/a74886b91b7b4ffaf9ccc2176249ad4384d54bed) (Wenyu Zhang)
+* [Update Dynamic Type section in Typography doc. (#7469)](https://github.com/material-components/material-components-ios/commit/59b8de125441051b67c33dc136423ec96b999550) (Wenyu Zhang)
+* [add a brief doc for Dynamic Type support. (#7431)](https://github.com/material-components/material-components-ios/commit/14484e4efedc7027c3eda58f6c69b860cfd733f3) (Wenyu Zhang)
+
+### schemes/Typography
+
+* [Add a brief dynamic type doc for Typography scheme. (#7473)](https://github.com/material-components/material-components-ios/commit/8a398c6f5e68f23c847752045c9742705beaa9f9) (Wenyu Zhang)
+* [Add useCurrentContentSizeCategoryWhenApplied. (#7465)](https://github.com/material-components/material-components-ios/commit/27d855555402cff5ec867dbcce0449181100a8c1) (featherless)
+* [Align useCurrentContentSizeCategoryWhenApplied with internal behavior. (#7479)](https://github.com/material-components/material-components-ios/commit/8a139a87327eb9f8561944f59b0ee25f0b8d11c7) (featherless)
+* [make MDCTypographyScheme conform to NSObject. (#7485)](https://github.com/material-components/material-components-ios/commit/7af364f49bce9516e1bcbc71443ba2dec13452ce) (Wenyu Zhang)
+
+---
+
+# 84.3.0
+
+This minor release adds new theming extensions for Lists and minor bug fixes and documentation updates to multiple components.
+
+## New features
+
+Theming extensions are now available for Lists:
+
+```swift
+let cell = MDCSelfSizingStereoCell()
+let scheme = MDCContainerScheme()
+
+cell.applyTheme(withScheme: scheme)
+```
+
+## API changes
+
+### Chips
+
+#### MDCChipView
+
+*modified* class: `MDCChipView`
+
+*new* property: `mdc_legacyFontScaling` in `MDCChipView`
+
+### List+Theming
+
+**New extension.**
+
+## Changes
+
+### Buttons
+
+* [Add snapshot test for theming extensions (#7390)](https://github.com/material-components/material-components-ios/commit/62e747ea094681e779ca4b294c25637635a9101d) (Cody Weaver)
+* [Remove dependency on TypographyThemer in theming extension.  (#7391)](https://github.com/material-components/material-components-ios/commit/daee4c058c2d52487689c56cf0822cbd5073a2d6) (Cody Weaver)
+* [Update titleFont:forState: API (#7402)](https://github.com/material-components/material-components-ios/commit/80037e4684ee65c55a38fa34161ae7aaf9630ec3) (Cody Weaver)
+* [[Ripple] fix button to update ripple states correctly (#7337)](https://github.com/material-components/material-components-ios/commit/7c481c023ef2fa01e8ab0824a58e3ae6bc648303) (Galia Kaufman)
+* [Update outline theming extension (#7403)](https://github.com/material-components/material-components-ios/commit/936d04ab3589ff6747798df6607c3d8d288edec0) (Cody Weaver)
+
+### Chips
+
+* [Add M2 dynamic type support to Chips. (#7394)](https://github.com/material-components/material-components-ios/commit/2744b6c04817d2bb104d1d368bcc7fc92625d92e) (Wenyu Zhang)
+* [refactor chip title font. (#7406)](https://github.com/material-components/material-components-ios/commit/de3c751ba8034fd22371661bab058ff2b90c7fac) (Wenyu Zhang)
+
+### FlexibleHeader
+
+* [Clarify the docs for preferredStatusBarStyle. (#7415)](https://github.com/material-components/material-components-ios/commit/4f7145da2bf8b9cb1f6d854f67bf055dce00d1ae) (featherless)
+
+### List
+
+* [Add List theming extension (#7397)](https://github.com/material-components/material-components-ios/commit/36018edb6101c912edb59ca27128ef2e31bb72f1) (Andrew Overton)
+
+### NavigationDrawer
+
+* [Explain use of AppBar elevation (#7399)](https://github.com/material-components/material-components-ios/commit/a197368ffd3c7f402ddd76784922193576a1f347) (Robert Moore)
+
+### ProgressView
+
+* [Add cornerRadius snapshot tests. (#7416)](https://github.com/material-components/material-components-ios/commit/9664fce4b3cd3bec07c50d8e7a7a7720ac003332) (featherless)
+
+## Multi-component changes
+
+* [Roll-forward a shadow elevation issue. (#7396)](https://github.com/material-components/material-components-ios/commit/ab5e6f69c91ebb9d7cc0092d8641d585cfce1bee) (Yarden Eitan)
+
+---
+
+# 84.2.1
+
+This patch release fixes a bug where dialogs were not indicating that their content was scrollable.
+
+## Changes
+
+### Dialogs
+
+* [Flash scroll indicators if content is larger than the scroll view. (#7434)](https://github.com/material-components/material-components-ios/commit/b4b6f8f5474e8b2307e602db7d7dc893b5416cbe) (Cody Weaver)
+* [Move the private property declaration to the header (#7433)](https://github.com/material-components/material-components-ios/commit/ca75f1dfe6b728896fe8768b17e8cd5f1805d0dd) (Cody Weaver)
+
 # 84.2.0
 
 This minor release adds support for a custom unbounded Ripple radius value. It also includes several

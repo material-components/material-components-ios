@@ -43,9 +43,6 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
 
 @interface MDCAlertControllerView ()
 
-@property(nonatomic, nonnull, strong) UIScrollView *contentScrollView;
-@property(nonatomic, nonnull, strong) UIScrollView *actionsScrollView;
-
 @property(nonatomic, getter=isVerticalActionsLayout) BOOL verticalActionsLayout;
 
 @end
@@ -126,7 +123,6 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
 
 - (void)addActionButton:(nonnull MDCButton *)button {
   if (button.superview == nil) {
-    button.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
     [self.actionsScrollView addSubview:button];
     if (_buttonColor) {
       // We only set if _buttonColor since settingTitleColor to nil doesn't
@@ -135,6 +131,11 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
     }
     [button setTitleFont:_buttonFont forState:UIControlStateNormal];
     button.inkColor = self.buttonInkColor;
+    // These two lines must be after @c setTitleFont:forState: in order to @c MDCButton to handle
+    // dynamic type correctly.
+    button.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable =
+        self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
+    button.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
     // TODO(#1726): Determine default text color values for Normal and Disabled
     CGRect buttonRect = button.bounds;
     buttonRect.size.height = MAX(buttonRect.size.height, MDCDialogActionButtonMinimumHeight);
@@ -161,14 +162,16 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
 }
 
 - (void)updateTitleFont {
-  UIFont *titleFont = _titleFont ?: [[self class] titleFontDefault];
-  if (_mdc_adjustsFontForContentSizeCategory) {
-    _titleLabel.font =
-        [titleFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
-                                scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
-  } else {
-    _titleLabel.font = titleFont;
+  UIFont *titleFont = self.titleFont ?: [[self class] titleFontDefault];
+  if (self.mdc_adjustsFontForContentSizeCategory) {
+    if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
+      titleFont =
+          [titleFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
+                                  scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
+    }
   }
+
+  self.titleLabel.font = titleFont;
   [self setNeedsLayout];
 }
 
@@ -235,14 +238,16 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
 }
 
 - (void)updateMessageFont {
-  UIFont *messageFont = _messageFont ?: [[self class] messageFontDefault];
-  if (_mdc_adjustsFontForContentSizeCategory) {
-    _messageLabel.font =
-        [messageFont mdc_fontSizedForMaterialTextStyle:kMessageTextStyle
-                                  scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
-  } else {
-    _messageLabel.font = messageFont;
+  UIFont *messageFont = self.messageFont ?: [[self class] messageFontDefault];
+  if (self.mdc_adjustsFontForContentSizeCategory) {
+    if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
+      messageFont = [messageFont
+          mdc_fontSizedForMaterialTextStyle:kMessageTextStyle
+                       scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
+    }
   }
+
+  self.messageLabel.font = messageFont;
   [self setNeedsLayout];
 }
 
@@ -266,11 +271,13 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
 }
 
 - (void)updateButtonFont {
-  UIFont *finalButtonFont = _buttonFont ?: [[self class] buttonFontDefault];
-  if (_mdc_adjustsFontForContentSizeCategory) {
-    finalButtonFont =
-        [finalButtonFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
-                                      scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+  UIFont *finalButtonFont = self.buttonFont ?: [[self class] buttonFontDefault];
+  if (self.mdc_adjustsFontForContentSizeCategory) {
+    if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
+      finalButtonFont = [finalButtonFont
+          mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
+                       scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
+    }
   }
   for (MDCButton *button in self.actionManager.buttonsInActionOrder) {
     [button setTitleFont:finalButtonFont forState:UIControlStateNormal];

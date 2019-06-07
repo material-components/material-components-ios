@@ -57,7 +57,7 @@ open class MaskedTransitionTypicalUseSwiftExample: UIViewController {
     view.addSubview(leftFAB)
 
     targets.append(.init(name: "Bottom sheet", viewControllerType: ModalViewController.self, calculateFrame: { info in
-      let containerBounds = info.frameOfPresentedViewInContainerView
+      guard let containerBounds = info.containerView?.bounds else { return .zero }
       let size = CGSize(width: containerBounds.width, height: 300)
       return CGRect(x: containerBounds.minX,
                     y: containerBounds.height - size.height,
@@ -66,7 +66,7 @@ open class MaskedTransitionTypicalUseSwiftExample: UIViewController {
     }, autoresizingMask: [.flexibleWidth, .flexibleTopMargin], useSafeAreaInsets: true))
 
     targets.append(.init(name: "Centered card", viewControllerType: ModalViewController.self, calculateFrame: { info in
-      let containerBounds = info.frameOfPresentedViewInContainerView
+      guard let containerBounds = info.containerView?.bounds else { return .zero }
       let size = CGSize(width: 200, height: 200)
       return CGRect(x: (containerBounds.width - size.width) / 2,
                     y: (containerBounds.height - size.height) / 2,
