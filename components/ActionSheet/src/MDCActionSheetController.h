@@ -183,11 +183,11 @@ __attribute__((objc_subclassing_restricted)) @interface MDCActionSheetController
 
 /**
  Determines the alignment behavior of all title leading edges.
- 
+
  When YES, all title leading edges will be aligned with one another.
- 
+
  When NO, each title will be positioned individually based on whether it has an image or not.
- 
+
  Defaults to NO.
  */
 @property(nonatomic, assign) BOOL alwaysAlignTitleLeadingEdges;
