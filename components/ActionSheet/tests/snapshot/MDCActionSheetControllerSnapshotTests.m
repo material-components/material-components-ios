@@ -636,13 +636,13 @@ static NSString *const kLongTitle5Arabic =
                                                                   image:nil
                                                                 handler:nil];
   MDCActionSheetController *controller =
-  [MDCActionSheetController actionSheetControllerWithTitle:nil];
+      [MDCActionSheetController actionSheetControllerWithTitle:nil];
   [controller addAction:action1];
   [controller addAction:action2];
-  
+
   // When
   controller.view.bounds = CGRectMake(0, 0, 320, 200);
-  
+
   // Then
   [self generateSnapshotAndVerifyForView:controller.view];
 }
