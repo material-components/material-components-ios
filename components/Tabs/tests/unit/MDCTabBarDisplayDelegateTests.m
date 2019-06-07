@@ -40,7 +40,7 @@
 
 @implementation MDCTabBarDisplayDelegateTests
 
-- (void)testMDCTabBarDisplayDelegateTabBarWillDisplayItem {
+- (void)testMDCTabBarDisplayDelegateTabBarWillDisplayItemWhenViewHasBeenLaidOut {
   // Given
   MDCTabBar *tabBar = [[MDCTabBar alloc] initWithFrame:CGRectZero];
   MDCTabBarDisplayDelegate *displayDelegate = [[MDCTabBarDisplayDelegate alloc] init];
@@ -59,22 +59,22 @@
   XCTAssertTrue(displayDelegate.willDisplayItemWasCalled);
 }
 
-- (void)testMDCTabBarDisplayDelegateTabBarDidEndDisplayingItem {
+- (void)testMDCTabBarDisplayDelegateTabBarDidEndDisplayingItemWhenViewHasBeenLaidOut {
   // Given
   MDCTabBar *tabBar = [[MDCTabBar alloc] initWithFrame:CGRectZero];
   MDCTabBarDisplayDelegate *displayDelegate = [[MDCTabBarDisplayDelegate alloc] init];
   tabBar.displayDelegate = displayDelegate;
   CGFloat tabBarHeight = [MDCTabBar defaultHeightForItemAppearance:tabBar.itemAppearance];
   tabBar.frame = CGRectMake(0, 0, 200, tabBarHeight);
-
-  // When
   UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"first tab" image:nil tag:0];
   UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"second tab" image:nil tag:0];
-  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"third tab" image:nil tag:0];
-  UITabBarItem *item4 = [[UITabBarItem alloc] initWithTitle:@"fourth tab" image:nil tag:0];
   tabBar.items = @[ item1, item2 ];
   [tabBar setNeedsLayout];
   [tabBar layoutIfNeeded];
+
+  // When
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"third tab" image:nil tag:0];
+  UITabBarItem *item4 = [[UITabBarItem alloc] initWithTitle:@"fourth tab" image:nil tag:0];
   tabBar.items = @[ item3, item4 ];
   [tabBar setNeedsLayout];
   [tabBar layoutIfNeeded];

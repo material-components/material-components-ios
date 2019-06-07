@@ -101,15 +101,6 @@
  */
 - (void)itemBar:(nonnull MDCItemBar *)itemBar didSelectItem:(nonnull UITabBarItem *)item;
 
-/**
- Called before an item is displayed.
- */
-- (void)itemBar:(nonnull MDCItemBar *)itemBar willDisplayItem:(nonnull UITabBarItem *)item;
-
-/**
- Called after an item stops being displayed.
- */
-- (void)itemBar:(nonnull MDCItemBar *)itemBar didEndDisplayingItem:(nonnull UITabBarItem *)item;
 @end
 
 #pragma mark -
