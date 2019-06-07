@@ -627,6 +627,26 @@ static NSString *const kLongTitle5Arabic =
   [self generateSnapshotAndVerifyForView:superview];
 }
 
+- (void)testActionSheetWhenActionsOnlyHaveTitles {
+  // Given
+  MDCActionSheetAction *action1 = [MDCActionSheetAction actionWithTitle:kShortTitle1Latin
+                                                                  image:nil
+                                                                handler:nil];
+  MDCActionSheetAction *action2 = [MDCActionSheetAction actionWithTitle:kShortTitle2Latin
+                                                                  image:nil
+                                                                handler:nil];
+  MDCActionSheetController *controller =
+      [MDCActionSheetController actionSheetControllerWithTitle:nil];
+  [controller addAction:action1];
+  [controller addAction:action2];
+
+  // When
+  controller.view.bounds = CGRectMake(0, 0, 320, 200);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:controller.view];
+}
+
 - (void)testActionSheetWhenActionsOnlyHaveTitlesAndAlignTitlesEnabled {
   // Given
   MDCActionSheetAction *action1 = [MDCActionSheetAction actionWithTitle:kShortTitle1Latin
@@ -639,7 +659,28 @@ static NSString *const kLongTitle5Arabic =
       [MDCActionSheetController actionSheetControllerWithTitle:nil];
   [controller addAction:action1];
   [controller addAction:action2];
+
+  // When
   controller.alignTitles = YES;
+  controller.view.bounds = CGRectMake(0, 0, 320, 200);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:controller.view];
+}
+
+- (void)testActionSheetWhenSomeActionsHaveIconsAndTitlesAndSomeActionsOnlyHaveTitles {
+  // Given
+  MDCActionSheetAction *action1 =
+      [MDCActionSheetAction actionWithTitle:kShortTitle1Latin
+                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
+                                    handler:nil];
+  MDCActionSheetAction *action2 = [MDCActionSheetAction actionWithTitle:kShortTitle2Latin
+                                                                  image:nil
+                                                                handler:nil];
+  MDCActionSheetController *controller =
+      [MDCActionSheetController actionSheetControllerWithTitle:nil];
+  [controller addAction:action1];
+  [controller addAction:action2];
 
   // When
   controller.view.bounds = CGRectMake(0, 0, 320, 200);
@@ -662,9 +703,9 @@ static NSString *const kLongTitle5Arabic =
       [MDCActionSheetController actionSheetControllerWithTitle:nil];
   [controller addAction:action1];
   [controller addAction:action2];
-  controller.alignTitles = YES;
 
   // When
+  controller.alignTitles = YES;
   controller.view.bounds = CGRectMake(0, 0, 320, 200);
 
   // Then
