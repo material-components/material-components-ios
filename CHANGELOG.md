@@ -8,10 +8,20 @@ ActionSheet now allows clients to align all titles regardless of if an image is 
 
 ```swift
 let actionSheet = MDCActionSheetController()
+let acitonOne = MDCActionSheetAction(title: "Email",
+                                     image: nil) { (_) in
+                                       print("Email action") }
+let actionTwo = MDCActionSheetAction(title: "Cancel",
+                                     image: UIImage(named: "CancelImage")) { (_) in
+                                       print("Cancel action") }
+actionSheet.addAction(actionOne)
+actionSheet.addAction(actionTwo)
 actionSheet.alwaysAlignTitleLeadingEdges = true
 ```
 
-NavigationDrawer now allows clients to include the safeAreaInsets to the content height.
+NavigationDrawer now allows clients to automatically include the `safeAreaInsets` in the content height calculation.
+By enabling this flag the `MDCBottomDrawerViewController` will add the `safeAreaInsets.bottom` to the `preferredContentSize.height`
+of the `contentViewController`.
 
 ```swift
 let navigationDrawer = MDCBottomDrawerViewController()
