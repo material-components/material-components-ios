@@ -326,8 +326,6 @@
       [[MDCSafeAreaCustomizingBottomNavigationBar alloc] initWithFrame:barFrame];
   bottomNavBar.test_safeAreaInsets = UIEdgeInsetsZero;
   CGSize initialSize = [bottomNavBar sizeThatFits:barFrame.size];
-  UIEdgeInsets safeAreaInsets = UIEdgeInsetsMake(20, 20, 20, 20);
-  CGSize expectedSize = CGSizeMake(initialSize.width, initialSize.height + safeAreaInsets.bottom);
 
   // When
   bottomNavBar.test_safeAreaInsets = UIEdgeInsetsMake(20, 20, 20, 20);
@@ -336,13 +334,8 @@
   CGSize finalSize = [bottomNavBar sizeThatFits:barFrame.size];
   XCTAssertFalse(CGSizeEqualToSize(finalSize, CGSizeZero),
                  "sizeThatFits: should not return CGSizeZero");
-  if (@available(iOS 11.0, *)) {
-    XCTAssertTrue(CGSizeEqualToSize(finalSize, expectedSize), @"(%@) is not equal to (%@)",
-                  NSStringFromCGSize(finalSize), NSStringFromCGSize(expectedSize));
-  } else {
-    XCTAssertTrue(CGSizeEqualToSize(finalSize, initialSize), @"(%@) is not equal to (%@)",
-                  NSStringFromCGSize(finalSize), NSStringFromCGSize(initialSize));
-  }
+  XCTAssertTrue(CGSizeEqualToSize(finalSize, initialSize), @"(%@) is not equal to (%@)",
+                NSStringFromCGSize(finalSize), NSStringFromCGSize(initialSize));
 }
 
 - (void)testSizeThatFitsExplicitlyIncludesSafeArea {
