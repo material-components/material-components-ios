@@ -16,7 +16,6 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
-#import "MDCTabBarDisplayDelegate.h"
 #import "MDCTabBarExtendedAlignment.h"
 #import "MDCTabBarIndicatorTemplate.h"
 #import "MDCTabBarSizeClassDelegate.h"
@@ -81,10 +80,6 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(
 
 @interface MDCTabBar ()
 @property(nonatomic, weak, nullable) id<MDCTabBarSizeClassDelegate> sizeClassDelegate;
-@end
-
-@interface MDCTabBar ()
-@property(nonatomic, weak, nullable) id<MDCTabBarDisplayDelegate> displayDelegate;
 @end
 
 @interface MDCTabBar () <MDCItemBarDelegate>
