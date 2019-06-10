@@ -8,7 +8,7 @@ ActionSheet now allows clients to align all titles regardless of if an image is 
 
 ```swift
 let actionSheet = MDCActionSheetController()
-let acitonOne = MDCActionSheetAction(title: "Email",
+let actionOne = MDCActionSheetAction(title: "Email",
                                      image: nil) { (_) in
                                        print("Email action") }
 let actionTwo = MDCActionSheetAction(title: "Cancel",
