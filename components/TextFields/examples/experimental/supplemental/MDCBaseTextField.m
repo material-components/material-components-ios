@@ -208,7 +208,7 @@
   self.containedInputViewState = [self determineCurrentContainedInputViewState];
   self.floatingLabelState = [self determineCurrentFloatingLabelState];
   self.isPlaceholderVisible = [self shouldPlaceholderBeVisible];
-  self.placeholderLabel.font = [self determineEffectiveFont];
+  self.placeholderLabel.font = self.normalFont;
   id<MDCContainedInputViewColorScheming> colorScheming =
       [self containedInputViewColorSchemingForState:self.containedInputViewState];
   [self applyMDCContainedInputViewColorScheming:colorScheming];
@@ -217,9 +217,6 @@
 }
 
 - (void)postLayoutSubviews {
-  UIFont *normalFont = [self determineEffectiveFont];
-  UIFont *floatingFont = [self.floatingLabelManager floatingFontWithFont:normalFont
-                                                         containerStyler:self.containerStyler];
   CGRect adjustedPlaceholderFrame =
       [self adjustTextAreaFrame:self.layout.textRectFloatingLabel
           withParentClassTextAreaFrame:[super textRectForBounds:self.bounds]];
@@ -231,8 +228,8 @@
                                            state:self.floatingLabelState
                                      normalFrame:self.layout.floatingLabelFrameNormal
                                    floatingFrame:self.layout.floatingLabelFrameFloating
-                                      normalFont:normalFont
-                                    floatingFont:floatingFont];
+                                      normalFont:self.normalFont
+                                    floatingFont:self.floatingFont];
   id<MDCContainedInputViewColorScheming> colorScheming =
       [self containedInputViewColorSchemingForState:self.containedInputViewState];
   [self.containerStyler applyStyleToContainedInputView:self
@@ -273,9 +270,6 @@
 }
 
 - (MDCBaseTextFieldLayout *)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize {
-  UIFont *effectiveFont = [self determineEffectiveFont];
-  UIFont *floatingFont = [self.floatingLabelManager floatingFontWithFont:effectiveFont
-                                                         containerStyler:self.containerStyler];
   CGFloat normalizedCustomAssistiveLabelDrawPriority =
       [self normalizedCustomAssistiveLabelDrawPriority:self.customAssistiveLabelDrawPriority];
   return [[MDCBaseTextFieldLayout alloc]
@@ -283,8 +277,8 @@
                         containerStyler:self.containerStyler
                                    text:self.text
                             placeholder:self.placeholder
-                                   font:effectiveFont
-                           floatingFont:floatingFont
+                                   font:self.normalFont
+                           floatingFont:self.floatingFont
                           floatingLabel:self.label
                   canFloatingLabelFloat:self.canFloatingLabelFloat
                                leftView:self.leftView
@@ -569,8 +563,13 @@
 
 #pragma mark Fonts
 
-- (UIFont *)determineEffectiveFont {
+-(UIFont *)normalFont {
   return self.font ?: [self uiTextFieldDefaultFont];
+}
+
+-(UIFont *)floatingFont {
+  return [self.floatingLabelManager floatingFontWithFont:self.normalFont
+                                         containerStyler:self.containerStyler];
 }
 
 - (UIFont *)uiTextFieldDefaultFont {

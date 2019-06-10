@@ -119,6 +119,16 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
 @property(strong, nonatomic, readonly, nonnull) UILabel *label;
 
 /**
+ The @c normalFont is the contained input view's primary font. The text is this font. The label also has this font when it isn't floating.
+ */
+@property(strong, nonatomic, readonly, nonnull) UIFont *normalFont;
+
+/**
+ The @c floatingFont is the font of the label when it's floating.
+ */
+@property(strong, nonatomic, readonly, nonnull) UIFont *floatingFont;
+
+/**
  The @c leadingAssistiveLabel can be used to display helper or error text.
  */
 @property(strong, nonatomic, readonly, nonnull) UILabel *leadingAssistiveLabel;
