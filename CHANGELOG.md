@@ -69,10 +69,6 @@ navigationDrawer.shouldIncludeSafeAreaInContentHeight = true
 
 * [Add snapshot test for `maximumRadius` API. #7538](https://github.com/material-components/material-components-ios/commit/6deed96003240e9b7ad861e1174e122a6bfd679c) (Cody Weaver)
 
-### Tabs
-
-* [Give MDCTabBarDelegate pass through methods for "willDisplayCell"/"didEndDisplayingCell" (#7518)](https://github.com/material-components/material-components-ios/commit/08100bd8e16678eb271011a5a0bbf9e1e3e280c2) (Andrew Overton)
-
 ### schemes/Typography
 
 * [Fix issue within the docs (#7543)](https://github.com/material-components/material-components-ios/commit/e2ffbbf07573634bd23192a4ad1dbeb1f85d4057) (Cody Weaver)
