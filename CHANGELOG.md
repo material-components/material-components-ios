@@ -1,15 +1,31 @@
-# #develop#
+# 84.6.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+In this minor release we added new features to ActionSheet, Buttons, NavigationDrawer, as well as as additional tests and bug fixes.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
+ActionSheet now allows clients to align all titles regardless of if an image is present or not.
+
+```swift
+let actionSheet = MDCActionSheetController()
+actionSheet.alwaysAlignTitleLeadingEdges = true
+```
+
+Button now supports `inkMaxRippleRadius` when `enableRippleBehavior` is enabled.
+
+```swift
+let button = MDCButton()
+button.enableRippleBehavior = true
+button.inkMaxRippleRadius = 10
+```
+
+NavigationDrawer now allows clients to include the safeAreaInsets to the content height.
+
+```swift
+let navigationDrawer = MDCBottomDrawerViewController()
+navigationDrawer.shouldIncludeSafeAreaInContentHeight = true
+```
+
 ## API changes
 
 ## Component changes
