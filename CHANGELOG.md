@@ -1,3 +1,61 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+## Changes
+
+### ActionSheet
+
+* [Add snapshot test for when only some actions have images. (#7547)](https://github.com/material-components/material-components-ios/commit/fd142cc6c6ae524867884973eec63a063bc4c44d) (Cody Weaver)
+* [Allow clients to align titles if only some actions have images. (#7548)](https://github.com/material-components/material-components-ios/commit/b8ea0ba6dcb8a265edd18eb74d7076b8cbbe28d1) (Cody Weaver)
+
+### Buttons
+
+* [Add support for `inkMaxRippleRadius` when `enableRippleBehavior` is set to YES (#7539)](https://github.com/material-components/material-components-ios/commit/0563c907494ecae8d0e2948c95390369fffaa19b) (Cody Weaver)
+
+### List
+
+* [Fix self sizing layout in iOS 13 (#7536)](https://github.com/material-components/material-components-ios/commit/5836cd41caf9d423614f2a5b313523f7e667330b) (Andrew Overton)
+
+### MaskedTransition
+
+* [Fix infinite loops in masked transition example (#7519)](https://github.com/material-components/material-components-ios/commit/beead1eafd0bb932d7bbf1eaa82630adad64082b) (Andrew Overton)
+
+### NavigationDrawer
+
+* [Include safe area insets in content height (#7545)](https://github.com/material-components/material-components-ios/commit/37fbe0ba48f7df106ab50f1167a34feba3fd9b60) (Yarden Eitan)
+* [update (#7544)](https://github.com/material-components/material-components-ios/commit/bff29146de0278f19db9d6ffe77f20d5d33f188c) (Yarden Eitan)
+
+### Ripple
+
+* [Add snapshot test for `maximumRadius` API. #7538](https://github.com/material-components/material-components-ios/commit/6deed96003240e9b7ad861e1174e122a6bfd679c) (Cody Weaver)
+
+### Tabs
+
+* [Give MDCTabBarDelegate pass through methods for "willDisplayCell"/"didEndDisplayingCell" (#7518)](https://github.com/material-components/material-components-ios/commit/08100bd8e16678eb271011a5a0bbf9e1e3e280c2) (Andrew Overton)
+
+### schemes/Typography
+
+* [Fix issue within the docs (#7543)](https://github.com/material-components/material-components-ios/commit/e2ffbbf07573634bd23192a4ad1dbeb1f85d4057) (Cody Weaver)
+
+## Multi-component changes
+
+* [Fix typo (#7541)](https://github.com/material-components/material-components-ios/commit/01c00a86c0196a44d908389a7d188ebc65946f46) (Andrew Overton)
+
+---
+
 # 84.5.0
 
 In this minor release we have expanded our support for NavigationBar as well as additional tests and bug fixes.
