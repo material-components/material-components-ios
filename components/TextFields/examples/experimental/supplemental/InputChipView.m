@@ -470,15 +470,12 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 #pragma mark Layout
 
 - (InputChipViewLayout *)calculateLayoutWithSize:(CGSize)size {
-  UIFont *normalFont = self.inputChipViewTextField.effectiveFont;
-  UIFont *floatingFont = [self.floatingLabelManager floatingFontWithFont:normalFont
-                                                         containerStyler:self.containerStyler];
   return [[InputChipViewLayout alloc] initWithSize:size
                                    containerStyler:self.containerStyler
                                               text:self.inputChipViewTextField.text
                                        placeholder:self.inputChipViewTextField.placeholder
-                                              font:self.inputChipViewTextField.effectiveFont
-                                      floatingFont:floatingFont
+                                              font:self.normalFont
+                                      floatingFont:self.floatingFont
                                 floatingLabelState:self.floatingLabelState
                                              chips:self.chips
                                     staleChipViews:self.chips
@@ -526,15 +523,12 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 }
 
 - (void)postLayoutSubviews {
-  UIFont *normalFont = self.inputChipViewTextField.effectiveFont;
-  UIFont *floatingFont = [self.floatingLabelManager floatingFontWithFont:normalFont
-                                                         containerStyler:self.containerStyler];
   [self.floatingLabelManager layOutFloatingLabel:self.label
                                            state:self.floatingLabelState
                                      normalFrame:self.layout.floatingLabelFrameNormal
                                    floatingFrame:self.layout.floatingLabelFrameFloating
-                                      normalFont:normalFont
-                                    floatingFont:floatingFont];
+                                      normalFont:self.normalFont
+                                    floatingFont:self.floatingFont];
   id<MDCContainedInputViewColorScheming> colorScheming =
       [self containedInputViewColorSchemingForState:self.containedInputViewState];
   [self.containerStyler applyStyleToContainedInputView:self
@@ -887,6 +881,15 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 }
 
 #pragma mark Fonts
+
+-(UIFont *)normalFont {
+  return self.inputChipViewTextField.effectiveFont;
+}
+
+-(UIFont *)floatingFont {
+  return [self.floatingLabelManager floatingFontWithFont:self.normalFont
+                                         containerStyler:self.containerStyler];
+}
 
 - (UIFont *)uiTextFieldDefaultFont {
   static dispatch_once_t onceToken;

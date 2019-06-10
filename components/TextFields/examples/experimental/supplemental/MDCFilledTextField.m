@@ -119,6 +119,21 @@
 @implementation MDCFilledTextFieldPositioningDelegate
 @synthesize verticalDensity = _verticalDensity;
 
+- (CGFloat)floatingLabelMinYWithContainedInputView:(id<MDCContainedInputView>)containedInputView
+                               floatingLabelHeight:(CGFloat)floatingLabelHeight {
+
+}
+
+- (CGFloat)textMinYWithFloatingLabelWithContainedInputView:(id<MDCContainedInputView>)containedInputView
+                                         floatingLabelMaxY:(CGFloat)floatingLabelMaxY {
+  return 5;
+}
+
+- (CGFloat)textMinYWithoutFloatingLabelWithContainedInputView:(id<MDCContainedInputView>)containedInputView {
+return 5;
+}
+
+
 - (CGFloat)floatingLabelMinYWithFloatingLabelHeight:(CGFloat)floatingPlaceholderHeight {
   CGFloat lowestMinY = 4;
   CGFloat highestMinY = 10;
