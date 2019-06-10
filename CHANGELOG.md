@@ -43,6 +43,8 @@ navigationDrawer.shouldIncludeSafeAreaInContentHeight = true
 
 ## Changes
 
+## Changes
+
 ### ActionSheet
 
 * [Add snapshot test for when only some actions have images. (#7547)](https://github.com/material-components/material-components-ios/commit/fd142cc6c6ae524867884973eec63a063bc4c44d) (Cody Weaver)
@@ -69,12 +71,18 @@ navigationDrawer.shouldIncludeSafeAreaInContentHeight = true
 
 * [Add snapshot test for `maximumRadius` API. #7538](https://github.com/material-components/material-components-ios/commit/6deed96003240e9b7ad861e1174e122a6bfd679c) (Cody Weaver)
 
+### Tabs
+
+* [Give MDCTabBarDelegate pass through methods for "willDisplayCell"/"didEndDisplayingCell" (#7518)](https://github.com/material-components/material-components-ios/commit/08100bd8e16678eb271011a5a0bbf9e1e3e280c2) (Andrew Overton)
+* [Revert "[Tabs] Give MDCTabBarDelegate pass through methods for "willDisplayCell"/"didEndDisplayingCell" (#7518)"](https://github.com/material-components/material-components-ios/commit/1a716e77b24ad22a90b02b0d3a30868e95314898) (Cody Weaver)
+
 ### schemes/Typography
 
 * [Fix issue within the docs (#7543)](https://github.com/material-components/material-components-ios/commit/e2ffbbf07573634bd23192a4ad1dbeb1f85d4057) (Cody Weaver)
 
 ## Multi-component changes
 
+* [Bumped version number to 84.6.0.](https://github.com/material-components/material-components-ios/commit/7b2f12422989c3b9ae5351c761a70a901980dde1) (Cody Weaver)
 * [Fix typo (#7541)](https://github.com/material-components/material-components-ios/commit/01c00a86c0196a44d908389a7d188ebc65946f46) (Andrew Overton)
 
 ---
