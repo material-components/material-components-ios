@@ -119,8 +119,13 @@ static const CGFloat kFloatingLabelXOffset = (CGFloat)3.0;
                                                               containerStyler:containerStyler
                                                                         isRTL:isRTL];
   CGFloat floatingLabelMaxY = CGRectGetMaxY(floatingLabelFrameFloating);
-  CGFloat initialChipRowMinYWithFloatingLabel = [containerStyler.positioningDelegate
-      contentAreaTopPaddingFloatingLabelWithFloatingLabelMaxY:floatingLabelMaxY];
+  CGFloat initialChipRowMinYWithFloatingLabel = 0;
+  if ([containerStyler.positioningDelegate respondsToSelector:@selector(textMinYWithoutFloatingLabelWithNormalFont:floatingFont:preferredMainContentAreaHeight:)]) {
+    initialChipRowMinYWithFloatingLabel = [containerStyler.positioningDelegate textMinYWithoutFloatingLabelWithNormalFont:font floatingFont:floatingFont preferredMainContentAreaHeight:preferredMainContentAreaHeight];
+  } else {
+    initialChipRowMinYWithFloatingLabel = [containerStyler.positioningDelegate
+                                           contentAreaTopPaddingFloatingLabelWithFloatingLabelMaxY:floatingLabelMaxY];
+  }
   CGFloat highestPossibleInitialChipRowMaxY = initialChipRowMinYWithFloatingLabel + chipRowHeight;
   CGFloat bottomPadding = [containerStyler.positioningDelegate
       contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:floatingLabelMaxY];
