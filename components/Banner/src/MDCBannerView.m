@@ -278,10 +278,13 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 }
 
 - (void)setUpDividerConstraints {
-  self.dividerConstraintBottom = [self.divider.bottomAnchor constraintEqualToAnchor:self.bottomAnchor];
-  self.dividerConstraintHeight = [self.divider.heightAnchor constraintEqualToConstant:self.dividerHeight];
+  self.dividerConstraintBottom =
+      [self.divider.bottomAnchor constraintEqualToAnchor:self.bottomAnchor];
+  self.dividerConstraintHeight =
+      [self.divider.heightAnchor constraintEqualToConstant:self.dividerHeight];
   self.dividerConstraintWidth = [self.divider.widthAnchor constraintEqualToAnchor:self.widthAnchor];
-  self.dividerConstraintLeading = [self.divider.leadingAnchor constraintEqualToAnchor:self.leadingAnchor];
+  self.dividerConstraintLeading =
+      [self.divider.leadingAnchor constraintEqualToAnchor:self.leadingAnchor];
 }
 
 - (void)deactivateAllConstraints {

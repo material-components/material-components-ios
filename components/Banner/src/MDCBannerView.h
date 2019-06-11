@@ -51,7 +51,6 @@ __attribute__((objc_subclassing_restricted)) @interface MDCBannerView : UIView
  */
 @property(nonatomic, readonly, strong, nonnull) MDCButton *trailingButton;
 
-
 /**
  A Boolean value that controls whether the divider below the banner is visible.
  */
