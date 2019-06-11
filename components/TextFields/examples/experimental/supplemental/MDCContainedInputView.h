@@ -280,7 +280,7 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
  helps achieve the variations in floating label position across the filled and outlined styles as
  well as the general density of the views.
  */
-@protocol MDCContainedInputViewStylerPositioningDelegate  // <NSObject>
+@protocol MDCContainedInputViewStylerPositioningDelegate <NSObject>
 /**
  This is a value between 0 and 1 that determines the visual vertical density of the view.
  */
@@ -299,6 +299,17 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
  is) when the floating label is in the normal (not floating) state.
  */
 - (CGFloat)contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:(CGFloat)floatingLabelMaxY;
+@optional
+- (CGFloat)floatingLabelMinYWithNormalFont:(nonnull UIFont *)normalFont
+                              floatingFont:(nonnull UIFont *)floatingFont
+            preferredMainContentAreaHeight:(CGFloat)preferredMainContentAreaHeight;
+- (CGFloat)textMinYWithFloatingLabelWithNormalFont:(nonnull UIFont *)normalFont
+                                      floatingFont:(nonnull UIFont *)floatingFont
+                    preferredMainContentAreaHeight:(CGFloat)preferredMainContentAreaHeight;
+- (CGFloat)textMinYWithoutFloatingLabelWithNormalFont:(nonnull UIFont *)normalFont
+                                         floatingFont:(nonnull UIFont *)floatingFont
+                       preferredMainContentAreaHeight:(CGFloat)preferredMainContentAreaHeight;
+
 @end
 
 /**
