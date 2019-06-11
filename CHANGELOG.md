@@ -43,8 +43,6 @@ navigationDrawer.shouldIncludeSafeAreaInContentHeight = true
 
 ## Changes
 
-## Changes
-
 ### ActionSheet
 
 * [Add snapshot test for when only some actions have images. (#7547)](https://github.com/material-components/material-components-ios/commit/fd142cc6c6ae524867884973eec63a063bc4c44d) (Cody Weaver)
