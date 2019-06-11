@@ -35,6 +35,8 @@ static const CGFloat kButtonVerticalIntervalSpace = 8.0f;
 static const CGFloat kSpaceBetweenIconImageAndTextLabel = 16.0f;
 static const CGFloat kHorizontalSpaceBetweenTextLabelAndButton = 24.0f;
 static const CGFloat kVerticalSpaceBetweenButtonAndTextLabel = 12.0f;
+static const CGFloat kDividerDefaultOpacity = 0.12f;
+static const CGFloat kDividerDefaultHeight = 1.0f;
 static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 
 @interface MDCBannerView ()
@@ -46,6 +48,9 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 @property(nonatomic, readwrite, strong) MDCButton *leadingButton;
 @property(nonatomic, readwrite, strong) MDCButton *trailingButton;
 @property(nonatomic, readwrite, strong) UIView *buttonContainerView;
+
+@property(nonatomic, readwrite, strong) UIView *divider;
+@property(nonatomic, readwrite, assign) CGFloat dividerHeight;
 
 // Image constraints
 @property(nonatomic, readwrite, strong) NSLayoutConstraint *imageViewConstraintLeading;
@@ -83,6 +88,11 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 @property(nonatomic, readwrite, strong) NSLayoutConstraint *trailingButtonConstraintBottom;
 @property(nonatomic, readwrite, strong) NSLayoutConstraint *trailingButtonConstraintTop;
 @property(nonatomic, readwrite, strong) NSLayoutConstraint *trailingButtonConstraintTrailing;
+
+@property(nonatomic, readwrite, strong) NSLayoutConstraint *dividerConstraintHeight;
+@property(nonatomic, readwrite, strong) NSLayoutConstraint *dividerConstraintBottom;
+@property(nonatomic, readwrite, strong) NSLayoutConstraint *dividerConstraintLeading;
+@property(nonatomic, readwrite, strong) NSLayoutConstraint *dividerConstraintWidth;
 
 @end
 
@@ -150,6 +160,14 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   [buttonContainerView addSubview:trailingButton];
   _trailingButton = trailingButton;
 
+  // Create Divider
+  UIView *divider = [[UIView alloc] init];
+  divider.translatesAutoresizingMaskIntoConstraints = NO;
+  divider.backgroundColor = [UIColor.blackColor colorWithAlphaComponent:kDividerDefaultOpacity];
+  _dividerHeight = kDividerDefaultHeight;
+  [self addSubview:divider];
+  _divider = divider;
+
   [self setupConstraints];
 }
 
@@ -161,6 +179,7 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
     [self setUpTextLabelConstraints];
     [self setUpButtonContainerConstraints];
     [self setUpButtonsConstraints];
+    [self setUpDividerConstraints];
   }
 }
 
@@ -258,6 +277,13 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   }
 }
 
+- (void)setUpDividerConstraints {
+  self.dividerConstraintBottom = [self.divider.bottomAnchor constraintEqualToAnchor:self.bottomAnchor];
+  self.dividerConstraintHeight = [self.divider.heightAnchor constraintEqualToConstant:self.dividerHeight];
+  self.dividerConstraintWidth = [self.divider.widthAnchor constraintEqualToAnchor:self.widthAnchor];
+  self.dividerConstraintLeading = [self.divider.leadingAnchor constraintEqualToAnchor:self.leadingAnchor];
+}
+
 - (void)deactivateAllConstraints {
   self.imageViewConstraintLeading.active = NO;
   self.imageViewConstraintTopSmall.active = NO;
@@ -285,6 +311,10 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   self.trailingButtonConstraintBottom.active = NO;
   self.trailingButtonConstraintTop.active = NO;
   self.trailingButtonConstraintTrailing.active = NO;
+  self.dividerConstraintBottom.active = NO;
+  self.dividerConstraintHeight.active = NO;
+  self.dividerConstraintLeading.active = NO;
+  self.dividerConstraintWidth.active = NO;
 }
 
 #pragma mark - UIView overrides
@@ -321,6 +351,9 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
           leadingButtonSize.height + trailingButtonSize.height + kButtonVerticalIntervalSpace;
       break;
     }
+  }
+  if (self.showsDivider) {
+    frameHeight += self.dividerHeight;
   }
   return CGSizeMake(size.width, frameHeight);
 }
@@ -369,6 +402,13 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
     self.buttonContainerConstraintLeading.active = YES;
   }
   [self updateButtonsConstraintsWithLayoutMode:layoutMode];
+
+  if (self.showsDivider) {
+    self.dividerConstraintWidth.active = YES;
+    self.dividerConstraintLeading.active = YES;
+    self.dividerConstraintHeight.active = YES;
+    self.dividerConstraintBottom.active = YES;
+  }
 }
 
 #pragma mark - Layout helpers
