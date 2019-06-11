@@ -50,7 +50,7 @@
 @end
 
 @implementation MDCBaseTextField
-@synthesize preferredMainContentAreaHeight = _preferredMainContentAreaHeight;
+@synthesize preferredContainerHeight = _preferredContainerHeight;
 @synthesize preferredAssistiveLabelAreaHeight = _preferredAssistiveLabelAreaHeight;
 @synthesize underlineLabelDrawPriority = _underlineLabelDrawPriority;
 @synthesize customAssistiveLabelDrawPriority = _customAssistiveLabelDrawPriority;
@@ -291,7 +291,7 @@
                     rightAssistiveLabel:self.rightAssistiveLabel
              underlineLabelDrawPriority:self.underlineLabelDrawPriority
        customAssistiveLabelDrawPriority:normalizedCustomAssistiveLabelDrawPriority
-         preferredMainContentAreaHeight:self.preferredMainContentAreaHeight
+         preferredContainerHeight:self.preferredContainerHeight
       preferredAssistiveLabelAreaHeight:self.preferredAssistiveLabelAreaHeight
                                   isRTL:self.isRTL
                               isEditing:self.isEditing];

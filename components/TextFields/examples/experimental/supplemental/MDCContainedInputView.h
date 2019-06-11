@@ -184,7 +184,7 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
  label area. If this property is set to a value that's lower than the default main content area
  height the value will be ignored in the calculation of the view's @c intrinsicContentSize.
  */
-@property(nonatomic, assign) CGFloat preferredMainContentAreaHeight;
+@property(nonatomic, assign) CGFloat preferredContainerHeight;
 
 /**
  This API allows the user to override the default underline label area height. The underline label
@@ -302,13 +302,13 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
 @optional
 - (CGFloat)floatingLabelMinYWithNormalFont:(nonnull UIFont *)normalFont
                               floatingFont:(nonnull UIFont *)floatingFont
-            preferredMainContentAreaHeight:(CGFloat)preferredMainContentAreaHeight;
+            preferredContainerHeight:(CGFloat)preferredContainerHeight;
 - (CGFloat)textMinYWithFloatingLabelWithNormalFont:(nonnull UIFont *)normalFont
                                       floatingFont:(nonnull UIFont *)floatingFont
-                    preferredMainContentAreaHeight:(CGFloat)preferredMainContentAreaHeight;
+                    preferredContainerHeight:(CGFloat)preferredContainerHeight;
 - (CGFloat)textMinYWithoutFloatingLabelWithNormalFont:(nonnull UIFont *)normalFont
                                          floatingFont:(nonnull UIFont *)floatingFont
-                       preferredMainContentAreaHeight:(CGFloat)preferredMainContentAreaHeight;
+                       preferredContainerHeight:(CGFloat)preferredContainerHeight;
 
 @end
 
