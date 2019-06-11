@@ -80,7 +80,6 @@ navigationDrawer.shouldIncludeSafeAreaInContentHeight = true
 
 ## Multi-component changes
 
-* [Bumped version number to 84.6.0.](https://github.com/material-components/material-components-ios/commit/7b2f12422989c3b9ae5351c761a70a901980dde1) (Cody Weaver)
 * [Fix typo (#7541)](https://github.com/material-components/material-components-ios/commit/01c00a86c0196a44d908389a7d188ebc65946f46) (Andrew Overton)
 
 ---
