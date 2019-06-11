@@ -60,7 +60,7 @@ static const CGFloat kActionItemTitleVerticalPadding = 18;
   _actionLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
   _actionLabel.textColor = [UIColor.blackColor colorWithAlphaComponent:kLabelAlpha];
   CGFloat leadingConstant;
-  if (_itemAction.image) {
+  if (_itemAction.image || _addLeadingPadding) {
     leadingConstant = kTitleLeadingPadding;
   } else {
     leadingConstant = kImageLeadingPadding;
@@ -145,7 +145,7 @@ static const CGFloat kActionItemTitleVerticalPadding = 18;
   self.actionLabel.accessibilityLabel = _itemAction.accessibilityLabel;
   self.actionLabel.text = _itemAction.title;
   CGFloat leadingConstant;
-  if (_itemAction.image) {
+  if (_itemAction.image || self.addLeadingPadding) {
     leadingConstant = kTitleLeadingPadding;
   } else {
     leadingConstant = kImageLeadingPadding;
