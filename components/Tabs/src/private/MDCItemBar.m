@@ -413,14 +413,18 @@ static void *kItemPropertyContext = &kItemPropertyContext;
        willDisplayCell:(UICollectionViewCell *)cell
     forItemAtIndexPath:(NSIndexPath *)indexPath {
   UITabBarItem *item = [self itemAtIndexPath:indexPath];
-  [self.tabBar.displayDelegate tabBar:self.tabBar willDisplayItem:item];
+  if (item) {
+    [self.tabBar.displayDelegate tabBar:self.tabBar willDisplayItem:item];
+  }
 }
 
 - (void)collectionView:(UICollectionView *)collectionView
     didEndDisplayingCell:(UICollectionViewCell *)cell
       forItemAtIndexPath:(NSIndexPath *)indexPath {
   UITabBarItem *item = [self itemAtIndexPath:indexPath];
-  [self.tabBar.displayDelegate tabBar:self.tabBar didEndDisplayingItem:item];
+  if (item) {
+    [self.tabBar.displayDelegate tabBar:self.tabBar didEndDisplayingItem:item];
+  }
 }
 
 #pragma mark - UICollectionViewDelegateFlowLayout
