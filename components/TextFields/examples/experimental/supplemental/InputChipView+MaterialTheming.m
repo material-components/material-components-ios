@@ -232,10 +232,10 @@
 
 - (CGFloat)floatingLabelMinYWithNormalFont:(UIFont *)normalFont
                               floatingFont:(UIFont *)floatingFont
-            preferredMainContentAreaHeight:(CGFloat)preferredMainContentAreaHeight {
+            preferredContainerHeight:(CGFloat)preferredContainerHeight {
   CGFloat normalFontLineHeight = normalFont.lineHeight;
   CGFloat minimumContentAreaHeight = normalFontLineHeight * 2.25;
-  CGFloat contentAreaHeight = preferredMainContentAreaHeight > minimumContentAreaHeight ? preferredMainContentAreaHeight : minimumContentAreaHeight;
+  CGFloat contentAreaHeight = preferredContainerHeight > minimumContentAreaHeight ? preferredContainerHeight : minimumContentAreaHeight;
   CGFloat offset = contentAreaHeight * 0.3;
   CGFloat floatingFontLineHeight = floatingFont.lineHeight;
   return offset - (0.5 * floatingFontLineHeight);
@@ -243,20 +243,20 @@
 
 - (CGFloat)textMinYWithFloatingLabelWithNormalFont:(UIFont *)normalFont
                                       floatingFont:(UIFont *)floatingFont
-                    preferredMainContentAreaHeight:(CGFloat)preferredMainContentAreaHeight {
+                    preferredContainerHeight:(CGFloat)preferredContainerHeight {
   CGFloat normalFontLineHeight = normalFont.lineHeight;
   CGFloat minimumContentAreaHeight = normalFontLineHeight * 2.25;
-  CGFloat contentAreaHeight = preferredMainContentAreaHeight > minimumContentAreaHeight ? preferredMainContentAreaHeight : minimumContentAreaHeight;
+  CGFloat contentAreaHeight = preferredContainerHeight > minimumContentAreaHeight ? preferredContainerHeight : minimumContentAreaHeight;
   CGFloat offset = contentAreaHeight * 0.85;
   return offset - (0.5 * normalFontLineHeight);
 }
 
 - (CGFloat)textMinYWithoutFloatingLabelWithNormalFont:(UIFont *)normalFont
                                          floatingFont:(UIFont *)floatingFont
-                       preferredMainContentAreaHeight:(CGFloat)preferredMainContentAreaHeight {
+                       preferredContainerHeight:(CGFloat)preferredContainerHeight {
   CGFloat normalFontLineHeight = normalFont.lineHeight;
   CGFloat minimumContentAreaHeight = normalFontLineHeight * 2.25;
-  CGFloat contentAreaHeight = preferredMainContentAreaHeight > minimumContentAreaHeight ? preferredMainContentAreaHeight : minimumContentAreaHeight;
+  CGFloat contentAreaHeight = preferredContainerHeight > minimumContentAreaHeight ? preferredContainerHeight : minimumContentAreaHeight;
   CGFloat offset = contentAreaHeight * 0.5;
   return offset - (0.5 * normalFontLineHeight);
 }

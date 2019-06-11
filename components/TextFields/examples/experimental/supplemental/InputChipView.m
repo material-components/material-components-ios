@@ -144,7 +144,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 @end
 
 @implementation InputChipView
-@synthesize preferredMainContentAreaHeight = _preferredMainContentAreaHeight;
+@synthesize preferredContainerHeight = _preferredContainerHeight;
 @synthesize preferredAssistiveLabelAreaHeight = _preferredAssistiveLabelAreaHeight;
 @synthesize underlineLabelDrawPriority = _underlineLabelDrawPriority;
 @synthesize customAssistiveLabelDrawPriority = _customAssistiveLabelDrawPriority;
@@ -488,7 +488,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
                                rightAssistiveLabel:self.rightAssistiveLabel
                         underlineLabelDrawPriority:self.underlineLabelDrawPriority
                   customAssistiveLabelDrawPriority:self.customAssistiveLabelDrawPriority
-                    preferredMainContentAreaHeight:self.preferredMainContentAreaHeight
+                    preferredContainerHeight:self.preferredContainerHeight
                  preferredAssistiveLabelAreaHeight:self.preferredAssistiveLabelAreaHeight
                                              isRTL:self.isRTL
                                          isEditing:self.inputChipViewTextField.isEditing];
