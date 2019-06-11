@@ -122,9 +122,9 @@
                               floatingFont:(UIFont *)floatingFont
             preferredMainContentAreaHeight:(CGFloat)preferredMainContentAreaHeight {
   CGFloat normalFontLineHeight = normalFont.lineHeight;
-  CGFloat minimumContentAreaHeight = normalFontLineHeight * 2.5;
+  CGFloat minimumContentAreaHeight = normalFontLineHeight * 2.25;
   CGFloat contentAreaHeight = preferredMainContentAreaHeight > minimumContentAreaHeight ? preferredMainContentAreaHeight : minimumContentAreaHeight;
-  CGFloat offset = contentAreaHeight * 0.28;
+  CGFloat offset = contentAreaHeight * 0.3;
   CGFloat floatingFontLineHeight = floatingFont.lineHeight;
   return offset - (0.5 * floatingFontLineHeight);
 }
@@ -133,9 +133,9 @@
                                       floatingFont:(UIFont *)floatingFont
                     preferredMainContentAreaHeight:(CGFloat)preferredMainContentAreaHeight {
   CGFloat normalFontLineHeight = normalFont.lineHeight;
-  CGFloat minimumContentAreaHeight = normalFontLineHeight * 2.5;
+  CGFloat minimumContentAreaHeight = normalFontLineHeight * 2.25;
   CGFloat contentAreaHeight = preferredMainContentAreaHeight > minimumContentAreaHeight ? preferredMainContentAreaHeight : minimumContentAreaHeight;
-  CGFloat offset = contentAreaHeight * 0.666;
+  CGFloat offset = contentAreaHeight * 0.85;
   return offset - (0.5 * normalFontLineHeight);
 }
 
@@ -143,9 +143,9 @@
                                          floatingFont:(UIFont *)floatingFont
                        preferredMainContentAreaHeight:(CGFloat)preferredMainContentAreaHeight {
   CGFloat normalFontLineHeight = normalFont.lineHeight;
-  CGFloat minimumContentAreaHeight = normalFontLineHeight * 2.5;
+  CGFloat minimumContentAreaHeight = normalFontLineHeight * 2.25;
   CGFloat contentAreaHeight = preferredMainContentAreaHeight > minimumContentAreaHeight ? preferredMainContentAreaHeight : minimumContentAreaHeight;
-  CGFloat offset = contentAreaHeight * 0.555;
+  CGFloat offset = contentAreaHeight * 0.5;
   return offset - (0.5 * normalFontLineHeight);
 }
 
