@@ -94,6 +94,15 @@ mdc_objc_library(
     ],
 )
 
+mdc_extension_objc_library(
+name = "Theming",
+deps = [
+":BottomNavigation",
+"//components/ShadowElevations",
+"//components/schemes/Container",
+],
+)
+
 filegroup(
     name = "BundleFiles",
     srcs = glob([
