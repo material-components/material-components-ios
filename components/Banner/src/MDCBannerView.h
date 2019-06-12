@@ -53,6 +53,8 @@ __attribute__((objc_subclassing_restricted)) @interface MDCBannerView : UIView
 
 /**
  A Boolean value that controls whether the divider below the banner is visible.
+
+ The default value is NO.
  */
 @property(nonatomic, readwrite, assign) BOOL showsDivider;
 
