@@ -16,6 +16,13 @@
 
 #import "MaterialButtons.h"
 
+typedef NS_ENUM(NSInteger, MDCBannerViewLayoutMode) {
+  MDCBannerViewLayoutModeAutomatic,               // Layout is set automatically based on how elements are configured on banner view
+  MDCBannerViewLayoutModeSingleLine,              // All elements on the same line, only supports one button
+  MDCBannerViewLayoutModeMultiLineStackedButton,  // Multiline, stacked button layout
+  MDCBannerViewLayoutModeMultiLineAlignedButton,  // Multiline, all buttons on the same line
+};
+
 /**
  The MDCBannerView class creates and configures a view to represent a Material Banner.
 
@@ -23,6 +30,13 @@
  component usage.
  */
 __attribute__((objc_subclassing_restricted)) @interface MDCBannerView : UIView
+
+/**
+ The layout mode of a @c MDCBannerView.
+
+ The default value is MDCBannerViewLayoutModeAutomatic.
+ */
+@property(nonatomic, readwrite, assign) MDCBannerViewLayoutMode bannerViewLayoutMode;
 
 /**
  A view that displays the text on a @c MDCBannerView
@@ -62,6 +76,6 @@ __attribute__((objc_subclassing_restricted)) @interface MDCBannerView : UIView
 
  The default value is light grey.
  */
-@property(nonatomic, nonnull, strong) UIColor *dividerColor;
+@property(nonatomic, readwrite, strong, nonnull) UIColor *dividerColor;
 
 @end
