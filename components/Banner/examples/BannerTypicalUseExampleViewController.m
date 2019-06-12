@@ -219,6 +219,7 @@ static NSString *const exampleExtraLongText =
   button.backgroundColor = self.colorScheme.surfaceColor;
   bannerView.trailingButton.hidden = YES;
   bannerView.imageView.hidden = YES;
+  bannerView.showsDivider = YES;
 
   [button addTarget:self
                 action:@selector(dismissBanner)
