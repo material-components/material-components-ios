@@ -169,6 +169,14 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   [self setupConstraints];
 }
 
+- (void)setDividerColor:(UIColor *)dividerColor {
+  self.divider.backgroundColor = dividerColor;
+}
+
+- (UIColor *)dividerColor {
+  return self.divider.backgroundColor;
+}
+
 #pragma mark - Constraints Helpers
 
 - (void)setupConstraints {
