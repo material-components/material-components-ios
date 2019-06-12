@@ -89,11 +89,11 @@
   if (!self.dismissOnBackgroundTap) {
     return NO;
   }
-  __weak __typeof(self) weakSelf = self;
+  __weak MDCBottomSheetController *weakSelf = self;
   [self
       dismissViewControllerAnimated:YES
                          completion:^{
-                           __strong __typeof(weakSelf) strongSelf = weakSelf;
+                           __strong MDCBottomSheetController *strongSelf = weakSelf;
                            if ([strongSelf.delegate respondsToSelector:@selector
                                                   (bottomSheetControllerDidDismissBottomSheet:)]) {
                              [strongSelf.delegate
