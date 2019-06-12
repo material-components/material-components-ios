@@ -118,53 +118,31 @@
 
 @implementation MDCFilledTextFieldPositioningDelegate
 @synthesize verticalDensity = _verticalDensity;
-- (CGFloat)floatingLabelMinYWithNormalFont:(UIFont *)normalFont
-                              floatingFont:(UIFont *)floatingFont
-            preferredContainerHeight:(CGFloat)preferredContainerHeight {
-  CGFloat normalFontLineHeight = normalFont.lineHeight;
-  CGFloat minimumContentAreaHeight = normalFontLineHeight * 2.25;
+- (CGFloat)floatingLabelMinYWithTextHeight:(CGFloat)textHeight
+                       floatingLabelHeight:(CGFloat)floatingLabelHeight
+                  preferredContainerHeight:(CGFloat)preferredContainerHeight {
+  CGFloat minimumContentAreaHeight = textHeight * 2.25;
   CGFloat contentAreaHeight = preferredContainerHeight > minimumContentAreaHeight ? preferredContainerHeight : minimumContentAreaHeight;
   CGFloat offset = contentAreaHeight * 0.3;
-  CGFloat floatingFontLineHeight = floatingFont.lineHeight;
-  return offset - (0.5 * floatingFontLineHeight);
+  return offset - (0.5 * floatingLabelHeight);
 }
 
-- (CGFloat)textMinYWithFloatingLabelWithNormalFont:(UIFont *)normalFont
-                                      floatingFont:(UIFont *)floatingFont
-                    preferredContainerHeight:(CGFloat)preferredContainerHeight {
-  CGFloat normalFontLineHeight = normalFont.lineHeight;
-  CGFloat minimumContentAreaHeight = normalFontLineHeight * 2.25;
+- (CGFloat)textMinYWithFloatingLabelWithTextHeight:(CGFloat)textHeight
+                               floatingLabelHeight:(CGFloat)floatingLabelHeight
+                          preferredContainerHeight:(CGFloat)preferredContainerHeight {
+  CGFloat minimumContentAreaHeight = textHeight * 2.25;
   CGFloat contentAreaHeight = preferredContainerHeight > minimumContentAreaHeight ? preferredContainerHeight : minimumContentAreaHeight;
   CGFloat offset = contentAreaHeight * 0.85;
-  return offset - (0.5 * normalFontLineHeight);
+  return offset - (0.5 * textHeight);
 }
 
-- (CGFloat)textMinYWithoutFloatingLabelWithNormalFont:(UIFont *)normalFont
-                                         floatingFont:(UIFont *)floatingFont
-                       preferredContainerHeight:(CGFloat)preferredContainerHeight {
-  CGFloat normalFontLineHeight = normalFont.lineHeight;
-  CGFloat minimumContentAreaHeight = normalFontLineHeight * 2.25;
+- (CGFloat)textMinYWithoutFloatingLabelWithTextHeight:(CGFloat)textHeight
+                                  floatingLabelHeight:(CGFloat)floatingLabelHeight
+                             preferredContainerHeight:(CGFloat)preferredContainerHeight {
+  CGFloat minimumContentAreaHeight = textHeight * 2.25;
   CGFloat contentAreaHeight = preferredContainerHeight > minimumContentAreaHeight ? preferredContainerHeight : minimumContentAreaHeight;
   CGFloat offset = contentAreaHeight * 0.5;
-  return offset - (0.5 * normalFontLineHeight);
-}
-
-
-- (CGFloat)textMinYWithFloatingLabelWithContainedInputView:(id<MDCContainedInputView>)containedInputView
-                                         floatingLabelMaxY:(CGFloat)floatingLabelMaxY {
-  CGFloat normalFontLineHeight = containedInputView.normalFont.lineHeight;
-  CGFloat minimumContentAreaHeight = normalFontLineHeight * 2.5;
-  CGFloat contentAreaHeight = containedInputView.preferredContainerHeight > minimumContentAreaHeight ? containedInputView.preferredContainerHeight : minimumContentAreaHeight;
-  CGFloat twoThirds = contentAreaHeight * 0.666;
-  return twoThirds - (0.5 * normalFontLineHeight);
-}
-
-- (CGFloat)textMinYWithoutFloatingLabelWithContainedInputView:(id<MDCContainedInputView>)containedInputView {
-  CGFloat normalFontLineHeight = containedInputView.normalFont.lineHeight;
-  CGFloat minimumContentAreaHeight = normalFontLineHeight * 2.5;
-  CGFloat contentAreaHeight = containedInputView.preferredContainerHeight > minimumContentAreaHeight ? containedInputView.preferredContainerHeight : minimumContentAreaHeight;
-  CGFloat oneHalf = contentAreaHeight * 0.5;
-  return oneHalf - (0.5 * normalFontLineHeight);
+  return offset - (0.5 * textHeight);
 }
 
 - (CGFloat)floatingLabelMinYWithFloatingLabelHeight:(CGFloat)floatingPlaceholderHeight {

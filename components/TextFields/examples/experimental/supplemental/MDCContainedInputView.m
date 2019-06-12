@@ -99,37 +99,65 @@
 @end
 
 @implementation MDCContainerStylerBasePositioningDelegate
+
+- (CGFloat)floatingLabelMinYWithTextHeight:(CGFloat)textHeight
+                       floatingLabelHeight:(CGFloat)floatingLabelHeight
+                  preferredContainerHeight:(CGFloat)preferredContainerHeight {
+  CGFloat minimumContentAreaHeight = textHeight * 2.25;
+  CGFloat contentAreaHeight = preferredContainerHeight > minimumContentAreaHeight ? preferredContainerHeight : minimumContentAreaHeight;
+  CGFloat offset = contentAreaHeight * 0.15;
+  return offset - (0.5 * floatingLabelHeight);
+}
+
+-(CGFloat)textMinYWithFloatingLabelWithTextHeight:(CGFloat)textHeight
+                              floatingLabelHeight:(CGFloat)floatingLabelHeight
+                         preferredContainerHeight:(CGFloat)preferredContainerHeight {
+  CGFloat minimumContentAreaHeight = textHeight * 2.25;
+  CGFloat contentAreaHeight = preferredContainerHeight > minimumContentAreaHeight ? preferredContainerHeight : minimumContentAreaHeight;
+  CGFloat offset = contentAreaHeight * 0.5;
+  return offset - (0.5 * textHeight);
+}
+
+-(CGFloat)textMinYWithoutFloatingLabelWithTextHeight:(CGFloat)textHeight
+                                 floatingLabelHeight:(CGFloat)floatingLabelHeight
+                            preferredContainerHeight:(CGFloat)preferredContainerHeight {
+  CGFloat minimumContentAreaHeight = textHeight * 2.25;
+  CGFloat contentAreaHeight = preferredContainerHeight > minimumContentAreaHeight ? preferredContainerHeight : minimumContentAreaHeight;
+  CGFloat offset = contentAreaHeight * 0.5;
+  return offset - (0.5 * textHeight);
+}
+
 @synthesize verticalDensity = _verticalDensity;
-
-- (instancetype)init {
-  self = [super init];
-  if (self) {
-    self.verticalDensity = 0.5;
-  }
-  return self;
-}
-
-- (CGFloat)floatingLabelMinYWithFloatingLabelHeight:(CGFloat)floatingPlaceholderHeight {
-  CGFloat lowestMinY = 4;
-  CGFloat highestMinY = 10;
-  CGFloat difference = highestMinY - lowestMinY;
-  return lowestMinY + (difference * (1 - self.verticalDensity));
-}
-
-- (CGFloat)contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:(CGFloat)floatingPlaceholderMaxY {
-  CGFloat minYAddition = 5;
-  CGFloat maxYAddition = 8;
-  CGFloat difference = maxYAddition - minYAddition;
-  return minYAddition + (difference * (1 - self.verticalDensity));
-}
-
-- (CGFloat)contentAreaTopPaddingFloatingLabelWithFloatingLabelMaxY:
-    (CGFloat)floatingPlaceholderMaxY {
-  CGFloat minYAddition = 3;
-  CGFloat maxYAddition = 8;
-  CGFloat difference = maxYAddition - minYAddition;
-  return floatingPlaceholderMaxY + (minYAddition + (difference * (1 - self.verticalDensity)));
-}
+//
+//- (instancetype)init {
+//  self = [super init];
+//  if (self) {
+//    self.verticalDensity = 0.5;
+//  }
+//  return self;
+//}
+//
+//- (CGFloat)floatingLabelMinYWithFloatingLabelHeight:(CGFloat)floatingPlaceholderHeight {
+//  CGFloat lowestMinY = 4;
+//  CGFloat highestMinY = 10;
+//  CGFloat difference = highestMinY - lowestMinY;
+//  return lowestMinY + (difference * (1 - self.verticalDensity));
+//}
+//
+//- (CGFloat)contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:(CGFloat)floatingPlaceholderMaxY {
+//  CGFloat minYAddition = 5;
+//  CGFloat maxYAddition = 8;
+//  CGFloat difference = maxYAddition - minYAddition;
+//  return minYAddition + (difference * (1 - self.verticalDensity));
+//}
+//
+//- (CGFloat)contentAreaTopPaddingFloatingLabelWithFloatingLabelMaxY:
+//    (CGFloat)floatingPlaceholderMaxY {
+//  CGFloat minYAddition = 3;
+//  CGFloat maxYAddition = 8;
+//  CGFloat difference = maxYAddition - minYAddition;
+//  return floatingPlaceholderMaxY + (minYAddition + (difference * (1 - self.verticalDensity)));
+//}
 
 @end
 
