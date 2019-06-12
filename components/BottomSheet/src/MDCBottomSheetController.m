@@ -93,10 +93,11 @@
   [self
       dismissViewControllerAnimated:YES
                          completion:^{
-                           if ([weakSelf.delegate respondsToSelector:@selector
+                           __strong typeof(weakSelf) strongSelf = weakSelf;
+                           if ([strongSelf.delegate respondsToSelector:@selector
                                                   (bottomSheetControllerDidDismissBottomSheet:)]) {
-                             [weakSelf.delegate
-                                 bottomSheetControllerDidDismissBottomSheet:weakSelf];
+                             [strongSelf.delegate
+                                 bottomSheetControllerDidDismissBottomSheet:strongSelf];
                            }
                          }];
   return YES;
