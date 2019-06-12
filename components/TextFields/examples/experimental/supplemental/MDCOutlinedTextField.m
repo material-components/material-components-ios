@@ -83,6 +83,35 @@
 @end
 
 @implementation MDCOutlinedTextFieldPositioningDelegate
+
+- (CGFloat)floatingLabelMinYWithTextHeight:(CGFloat)textHeight
+                       floatingLabelHeight:(CGFloat)floatingLabelHeight
+                  preferredContainerHeight:(CGFloat)preferredContainerHeight {
+  CGFloat minimumContentAreaHeight = textHeight * 2.25;
+  CGFloat contentAreaHeight = preferredContainerHeight > minimumContentAreaHeight ? preferredContainerHeight : minimumContentAreaHeight;
+  CGFloat offset = contentAreaHeight * 0.15;
+  return offset - (0.5 * floatingLabelHeight);
+}
+
+-(CGFloat)textMinYWithFloatingLabelWithTextHeight:(CGFloat)textHeight
+                              floatingLabelHeight:(CGFloat)floatingLabelHeight
+                         preferredContainerHeight:(CGFloat)preferredContainerHeight {
+  CGFloat minimumContentAreaHeight = textHeight * 2.25;
+  CGFloat contentAreaHeight = preferredContainerHeight > minimumContentAreaHeight ? preferredContainerHeight : minimumContentAreaHeight;
+  CGFloat offset = contentAreaHeight * 0.5;
+  return offset - (0.5 * textHeight);
+}
+
+-(CGFloat)textMinYWithoutFloatingLabelWithTextHeight:(CGFloat)textHeight
+                                 floatingLabelHeight:(CGFloat)floatingLabelHeight
+                            preferredContainerHeight:(CGFloat)preferredContainerHeight {
+  CGFloat minimumContentAreaHeight = textHeight * 2.25;
+  CGFloat contentAreaHeight = preferredContainerHeight > minimumContentAreaHeight ? preferredContainerHeight : minimumContentAreaHeight;
+  CGFloat offset = contentAreaHeight * 0.5;
+  return offset - (0.5 * textHeight);
+}
+
+
 @synthesize verticalDensity = _verticalDensity;
 
 - (CGFloat)floatingLabelMinYWithFloatingLabelHeight:(CGFloat)floatingPlaceholderHeight {
