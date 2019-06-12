@@ -76,6 +76,8 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
     bottomDrawerContainerViewController.maximumInitialDrawerHeight =
         self.maximumInitialDrawerHeight;
   }
+  bottomDrawerContainerViewController.shouldIncludeSafeAreaInContentHeight =
+      self.shouldIncludeSafeAreaInContentHeight;
   if ([self.presentedViewController isKindOfClass:[MDCBottomDrawerViewController class]]) {
     // If in fact the presentedViewController is an MDCBottomDrawerViewController,
     // we then know there is a content and an (optional) header view controller.
