@@ -192,18 +192,18 @@ static NSString *const exampleExtraLongText =
       exampleUseSelector:@selector(showMultiLineStackedButtonStyleBannerWithIcon)];
   [bannerExampleList addObject:exampleUseInfo6];
 
-  BannerExampleUseInfo *exampleUseInfo7 = [BannerExampleUseInfo
-                                           infoWithIdentifier:@"example7"
-                                           displayName:@"Long Text with One Action (Single Line Style)"
-                                           exampleUseTarget:self
-                                           exampleUseSelector:@selector(showSingleLineLongTextStyleBanner)];
+  BannerExampleUseInfo *exampleUseInfo7 =
+      [BannerExampleUseInfo infoWithIdentifier:@"example7"
+                                   displayName:@"Long Text with One Action (Single Line Style)"
+                              exampleUseTarget:self
+                            exampleUseSelector:@selector(showSingleLineLongTextStyleBanner)];
   [bannerExampleList addObject:exampleUseInfo7];
 
-  BannerExampleUseInfo *exampleUseInfo8 = [BannerExampleUseInfo
-                                           infoWithIdentifier:@"example8"
-                                           displayName:@"Long Text with One Action (Automatic Style)"
-                                           exampleUseTarget:self
-                                           exampleUseSelector:@selector(showMultilineLongTextStyleBanner)];
+  BannerExampleUseInfo *exampleUseInfo8 =
+      [BannerExampleUseInfo infoWithIdentifier:@"example8"
+                                   displayName:@"Long Text with One Action (Automatic Style)"
+                              exampleUseTarget:self
+                            exampleUseSelector:@selector(showMultilineLongTextStyleBanner)];
   [bannerExampleList addObject:exampleUseInfo8];
 
   return [bannerExampleList copy];
@@ -368,8 +368,8 @@ static NSString *const exampleExtraLongText =
   bannerView.showsDivider = YES;
 
   [button addTarget:self
-             action:@selector(dismissBanner)
-   forControlEvents:UIControlEventTouchUpInside];
+                action:@selector(dismissBanner)
+      forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)showMultilineLongTextStyleBanner {
@@ -397,8 +397,8 @@ static NSString *const exampleExtraLongText =
   bannerView.showsDivider = YES;
 
   [button addTarget:self
-             action:@selector(dismissBanner)
-   forControlEvents:UIControlEventTouchUpInside];
+                action:@selector(dismissBanner)
+      forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)dismissBanner {

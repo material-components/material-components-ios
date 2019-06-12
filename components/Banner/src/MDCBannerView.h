@@ -17,8 +17,9 @@
 #import "MaterialButtons.h"
 
 typedef NS_ENUM(NSInteger, MDCBannerViewLayoutMode) {
-  MDCBannerViewLayoutModeAutomatic,               // Layout is set automatically based on how elements are configured on banner view
-  MDCBannerViewLayoutModeSingleLine,              // All elements on the same line, only supports one button
+  MDCBannerViewLayoutModeAutomatic,   // Layout is set automatically based on how elements are
+                                      // configured on banner view
+  MDCBannerViewLayoutModeSingleLine,  // All elements on the same line, only supports one button
   MDCBannerViewLayoutModeMultiLineStackedButton,  // Multiline, stacked button layout
   MDCBannerViewLayoutModeMultiLineAlignedButton,  // Multiline, all buttons on the same line
 };

@@ -357,8 +357,8 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
       frameHeight +=
           leadingButtonSize.height + trailingButtonSize.height + kButtonVerticalIntervalSpace;
       break;
-    default:
-      break;
+      default:
+        break;
     }
   }
   if (self.showsDivider) {
