@@ -357,7 +357,9 @@ static void *kItemPropertyContext = &kItemPropertyContext;
     id<MDCItemBarDelegate> delegate = self.delegate;
     if ([delegate respondsToSelector:@selector(itemBar:shouldSelectItem:)]) {
       UITabBarItem *item = [self itemAtIndexPath:indexPath];
-      return [delegate itemBar:self shouldSelectItem:item];
+      if (item) {
+        return [delegate itemBar:self shouldSelectItem:item];
+      }
     }
   }
   return YES;
@@ -368,6 +370,9 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   if (_collectionView == collectionView) {
     // Update selected item.
     UITabBarItem *item = [self itemAtIndexPath:indexPath];
+    if (!item) {
+      return;
+    }
     _selectedItem = item;
 
     // Notify delegate of new selection.
@@ -400,10 +405,12 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
   MDCItemBarCell *itemCell = [collectionView dequeueReusableCellWithReuseIdentifier:kItemReuseID
                                                                        forIndexPath:indexPath];
-  UITabBarItem *item = [self itemAtIndexPath:indexPath];
-
   [self configureCell:itemCell];
-  [itemCell updateWithItem:item atIndex:indexPath.item count:_items.count];
+
+  UITabBarItem *item = [self itemAtIndexPath:indexPath];
+  if (item) {
+    [itemCell updateWithItem:item atIndex:indexPath.item count:_items.count];
+  }
 
   return itemCell;
 }
@@ -416,6 +423,9 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   NSParameterAssert(_collectionView == collectionView);
 
   UITabBarItem *item = [self itemAtIndexPath:indexPath];
+  if (!item) {
+    return CGSizeZero;
+  }
 
   const CGFloat itemHeight = CGRectGetHeight(self.bounds);
   CGSize size = CGSizeMake(CGFLOAT_MAX, itemHeight);
@@ -631,6 +641,9 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
   // Construct a context object describing the selected tab.
   UITabBarItem *item = [self itemAtIndexPath:indexPath];
+  if (!item) {
+    return;
+  }
   MDCTabBarPrivateIndicatorContext *context =
       [[MDCTabBarPrivateIndicatorContext alloc] initWithItem:item
                                                       bounds:selectionIndicatorBounds
