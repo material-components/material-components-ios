@@ -90,16 +90,16 @@
     return NO;
   }
   __weak MDCBottomSheetController *weakSelf = self;
-  [self
-      dismissViewControllerAnimated:YES
-                         completion:^{
-                           __strong MDCBottomSheetController *strongSelf = weakSelf;
-                           if ([strongSelf.delegate respondsToSelector:@selector
-                                                  (bottomSheetControllerDidDismissBottomSheet:)]) {
-                             [strongSelf.delegate
-                                 bottomSheetControllerDidDismissBottomSheet:strongSelf];
-                           }
-                         }];
+  [self dismissViewControllerAnimated:YES
+                           completion:^{
+                             __strong MDCBottomSheetController *strongSelf = weakSelf;
+                             if ([strongSelf.delegate
+                                     respondsToSelector:@selector
+                                     (bottomSheetControllerDidDismissBottomSheet:)]) {
+                               [strongSelf.delegate
+                                   bottomSheetControllerDidDismissBottomSheet:strongSelf];
+                             }
+                           }];
   return YES;
 }
 
