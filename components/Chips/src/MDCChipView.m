@@ -584,6 +584,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 - (void)setEnabled:(BOOL)enabled {
   [super setEnabled:enabled];
 
+  self.rippleView.enabled = enabled;
   [self updateState];
 }
 

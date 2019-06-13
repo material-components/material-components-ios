@@ -54,6 +54,7 @@ static UIColor *RippleSelectedColor(void) {
 }
 
 - (void)commonMDCStatefulRippleViewInit {
+  _enabled = YES;
   if (_rippleColors == nil) {
     _rippleColors = [NSMutableDictionary dictionary];
     UIColor *selectionColor = RippleSelectedColor();
@@ -108,6 +109,9 @@ static UIColor *RippleSelectedColor(void) {
   }
   if (self.dragged) {
     state |= MDCRippleStateDragged;
+  }
+  if (!self.enabled) {
+    state |= MDCRippleStateDisabled;
   }
   return state;
 }
@@ -198,6 +202,27 @@ static UIColor *RippleSelectedColor(void) {
   }
 }
 
+- (void)setEnabled:(BOOL)enabled {
+  if (enabled == _enabled) {
+    return;
+  }
+  _enabled = enabled;
+  if (enabled) {
+    if (!self.activeRippleLayer) {
+      // If we go into the enabled state manually, without coming from the highlighted state,
+      // We present the ripple overlay instantly without animation.
+      [self updateRippleColor];
+      [self beginRippleTouchDownAtPoint:_lastTouch animated:NO completion:nil];
+    } else {
+      [self updateActiveRippleColor];
+    }
+  } else {
+    // If we are disabled, we cancel all the ripples.
+    [self updateRippleColor];
+    [self cancelAllRipplesAnimated:YES completion:nil];
+  }
+}
+
 - (NSNumber *)rippleStateForControlState:(UIControlState)state {
   // We check to see if MDCRippleState conforms to a UIControlState and return it, otherwise
   // we return nil for non-supported ripple states.
@@ -208,8 +233,12 @@ static UIColor *RippleSelectedColor(void) {
       return [NSNumber numberWithInteger:MDCRippleStateHighlighted];
     case UIControlStateSelected:
       return [NSNumber numberWithInteger:MDCRippleStateSelected];
+    case UIControlStateDisabled:
+      return [NSNumber numberWithInteger:MDCRippleStateDisabled];
     case (UIControlStateHighlighted | UIControlStateSelected):
       return [NSNumber numberWithInteger:(MDCRippleStateHighlighted | MDCRippleStateSelected)];
+    case (UIControlStateDisabled | UIControlStateSelected):
+      return [NSNumber numberWithInteger:(MDCRippleStateDisabled | MDCRippleStateSelected)];
     default:
       return nil;
   }

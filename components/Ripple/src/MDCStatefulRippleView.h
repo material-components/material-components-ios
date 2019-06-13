@@ -22,12 +22,14 @@
  - MDCRippleStateHighlighted: The ripple is activated and shown.
  - MDCRippleStateSelected: The ripple is in the selected state.
  - MDCRippleStateDragged: The ripple is in the dragged state.
+ - MDCRippleStateDisabled: The ripple is in the disabled state.
  */
 typedef NS_OPTIONS(NSInteger, MDCRippleState) {
   MDCRippleStateNormal = 0,
   MDCRippleStateHighlighted = 1 << 0,
   MDCRippleStateSelected = 1 << 1,
   MDCRippleStateDragged = 1 << 2,
+  MDCRippleStateDisabled = 1 << 3,
 };
 
 /**
@@ -46,6 +48,14 @@ typedef NS_OPTIONS(NSInteger, MDCRippleState) {
  configured/set alongside the UIKit APIs (i.e. UIControlState or cell's setSelected/setHighlighted).
  */
 __attribute__((objc_subclassing_restricted)) @interface MDCStatefulRippleView : MDCRippleView
+
+/**
+ This BOOL is set to YES if the ripple is currently enabled, or NO otherwise.
+ Setting this property to NO enables theming of disabled state combinations.
+
+ Defaults to YES.
+ */
+@property(nonatomic, getter=isEnabled) BOOL enabled;
 
 /**
  This BOOL is set to YES if the ripple is currently selected, or NO otherwise.
