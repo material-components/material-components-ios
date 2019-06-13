@@ -63,6 +63,7 @@ mdc_objc_library(
     deps = [
         ":ThumbTrack",
         ":private_headers",
+        "//components/Ripple:private",
     ],
 )
 
