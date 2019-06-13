@@ -153,4 +153,28 @@
   XCTAssertTrue([cell.detailLabel.font mdc_isSimplyEqual:originalDetailFont]);
 }
 
+- (void)testSizingWithPreferredLayoutAttributesFittingAttributes {
+  // Given
+  NSString *oneLineString = @"Text spanning one line";
+  NSString *twoLineString = @"Text spanning\ntwo lines";
+  CGSize estimatedCellSize = CGSizeMake(100, 40);
+  CGRect initialCellFrame = CGRectMake(0, 0, estimatedCellSize.width, estimatedCellSize.height);
+  MDCSelfSizingStereoCell *cell = [[MDCSelfSizingStereoCell alloc] initWithFrame:initialCellFrame];
+  cell.titleLabel.text = oneLineString;
+  cell.detailLabel.text = oneLineString;
+  UICollectionViewLayoutAttributes *attributes = [[UICollectionViewLayoutAttributes alloc] init];
+  attributes.size = estimatedCellSize;
+  attributes = [cell preferredLayoutAttributesFittingAttributes:attributes];
+  CGSize initialAttributeSize = attributes.size;
+
+  // When
+  cell.titleLabel.text = twoLineString;
+  cell.detailLabel.text = twoLineString;
+  [cell setNeedsLayout];
+  attributes = [cell preferredLayoutAttributesFittingAttributes:attributes];
+
+  // Then
+  XCTAssert(attributes.size.height > initialAttributeSize.height);
+}
+
 @end

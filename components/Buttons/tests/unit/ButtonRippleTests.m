@@ -125,6 +125,17 @@
   XCTAssertEqual(self.button.rippleView.rippleStyle, MDCRippleStyleBounded);
 }
 
+- (void)testSetInkMaxRippleRadiusSetsRippleViewMaximumRadius {
+  // Given
+  CGFloat fakeRadius = 10;
+
+  // When
+  self.button.inkMaxRippleRadius = fakeRadius;
+
+  // Then
+  XCTAssertEqual(self.button.rippleView.maximumRadius, fakeRadius);
+}
+
 #pragma mark - Touch tests
 
 - (void)testSettingHighlightedUpdatesRippleTheming {

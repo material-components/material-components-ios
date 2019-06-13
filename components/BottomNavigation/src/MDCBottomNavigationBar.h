@@ -152,17 +152,6 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
 @property(nonatomic, assign) CGFloat itemsContentHorizontalMargin;
 
 /**
- Flag to allow clients to gradually correct the size/position of the Bottom Navigation bar relative
- to the safe area on iOS 11+.
-
- NOTE: In an upcoming release, this flag will be removed and the default behavior will be to exclude
- the safe area in size calculations.
-
- Defaults to @c YES.
- */
-@property(nonatomic, assign) BOOL sizeThatFitsIncludesSafeArea;
-
-/**
  NSLayoutAnchor for the bottom of the bar items.
 
  @note It is recommended that this anchor be constrained to the bottom of the safe area layout guide
@@ -203,6 +192,22 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
  @param item A UITabBarItem
  */
 - (nullable UIView *)viewForItem:(nonnull UITabBarItem *)item;
+
+@end
+
+/** APIs that will be deprecated in the near future. No new code should rely on these APIs. */
+@interface MDCBottomNavigationBar (ToBeDeprecated)
+
+/**
+ Flag to allow clients to gradually correct the size/position of the Bottom Navigation bar relative
+ to the safe area on iOS 11+.
+
+ NOTE: In an upcoming release, this flag will be removed and the default behavior will be to exclude
+ the safe area in size calculations.
+
+ Defaults to @c NO.
+ */
+@property(nonatomic, assign) BOOL sizeThatFitsIncludesSafeArea;
 
 @end
 

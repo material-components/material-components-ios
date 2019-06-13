@@ -61,8 +61,11 @@
 
  You must set the view controller-to-be-presented's modalPresentationStyle property to
  `UIModalPresentationCustom` in order to use this property.
+
+ Avoid calling -frameOfPresentedViewInContainerView on the UIPresentationController parameter of
+ this block, because this block is called from an overridden implementation of that method that
+ passes self in as a parameter, and doing this can result in an infinite loop.
  */
 @property(nonatomic, copy, nullable) CGRect (^calculateFrameOfPresentedView)
     (UIPresentationController *_Nonnull);
-
 @end

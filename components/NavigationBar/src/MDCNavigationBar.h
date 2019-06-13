@@ -262,6 +262,30 @@ IB_DESIGNABLE
 @property(nonatomic, strong, nullable) UIBarButtonItem *trailingBarButtonItem;
 
 /**
+ Returns the rect of the leading item's view within the given @c coordinateSpace.
+
+ If the provided item is not contained in @c leadingBarButtonItems, then the behavior is undefined.
+
+ @param item The item within @c leadingBarButtonItems whose rect should be computed.
+ @param coordinateSpace The coordinate space the returned rect should be in relation to.
+ */
+- (CGRect)rectForLeadingBarButtonItem:(nonnull UIBarButtonItem *)item
+                    inCoordinateSpace:(nonnull id<UICoordinateSpace>)coordinateSpace
+    NS_SWIFT_NAME(rect(forLeading:in:));
+
+/**
+ Returns the rect of the trailing item's view within the given @c coordinateSpace.
+
+ If the provided item is not contained in @c trailingBarButtonItems, then the behavior is undefined.
+
+ @param item The item within @c trailingBarButtonItems whose rect should be computed.
+ @param coordinateSpace The coordinate space the returned rect should be in relation to.
+ */
+- (CGRect)rectForTrailingBarButtonItem:(nonnull UIBarButtonItem *)item
+                     inCoordinateSpace:(nonnull id<UICoordinateSpace>)coordinateSpace
+    NS_SWIFT_NAME(rect(forTrailing:in:));
+
+/**
  The horizontal text alignment of the navigation bar title. Defaults to
  MDCNavigationBarTitleAlignmentLeading.
  */

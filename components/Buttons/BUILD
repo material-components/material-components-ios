@@ -169,6 +169,7 @@ mdc_objc_library(
         ":TypographyThemer",
         ":private",
         "//components/Palettes",
+        "//components/Typography",
     ],
 )
 

@@ -14,13 +14,10 @@
 
 import UIKit
 import CoreGraphics
-
-import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialAppBar
-import MaterialComponents.MaterialAppBar_ColorThemer
-import MaterialComponents.MaterialAppBar_TypographyThemer
+import MaterialComponents.MaterialAppBar_Theming
+import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialTabs
-import MaterialComponents.MaterialTypographyScheme
 import MaterialComponents.MaterialFlexibleHeader_CanAlwaysExpandToMaximumHeight
 
 // An example that demonstrates the behavior of an App Bar with Tabs and manually swapped tab view
@@ -31,8 +28,7 @@ import MaterialComponents.MaterialFlexibleHeader_CanAlwaysExpandToMaximumHeight
 class AppBarManualTabsExample: UIViewController {
 
   lazy var appBarViewController: MDCAppBarViewController = self.makeAppBar()
-  @objc var colorScheme = MDCSemanticColorScheme()
-  @objc var typographyScheme = MDCTypographyScheme()
+  @objc var containerScheme: MDCContainerScheming = MDCContainerScheme()
 
   fileprivate let firstTab = SimpleInheritedTableViewController()
   fileprivate let secondTab = SimpleInheritedTableViewController()
@@ -65,13 +61,12 @@ class AppBarManualTabsExample: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    MDCAppBarColorThemer.applyColorScheme(colorScheme, to: appBarViewController)
-    MDCAppBarTypographyThemer.applyTypographyScheme(typographyScheme, to: appBarViewController)
+    appBarViewController.applyPrimaryTheme(withScheme: containerScheme)
 
     // Need to update the status bar style after applying the theme.
     setNeedsStatusBarAppearanceUpdate()
 
-    view.backgroundColor = colorScheme.backgroundColor
+    view.backgroundColor = containerScheme.colorScheme.backgroundColor
     view.addSubview(appBarViewController.view)
     appBarViewController.didMove(toParent: self)
 

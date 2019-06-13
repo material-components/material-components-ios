@@ -127,6 +127,7 @@ swift_library(
     visibility = ["//visibility:private"],
     deps = [
         ":Theming",
+        "//components/Typography",
     ],
 )
 
