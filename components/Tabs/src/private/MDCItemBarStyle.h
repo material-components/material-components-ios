@@ -104,7 +104,7 @@
 @property(nonatomic) BOOL displaysUppercaseTitles;
 
 /*
- This property determines if an @c MDCItemBarStyle should use the @c MDCRippleView behavior or not.
+ Determines if an @c MDCItemBarStyle should use the @c MDCRippleView behavior or not.
  By setting this property to @c YES, @c MDCRippleView is used to provide the user visual
  touch feedback, instead of the legacy @c MDCInkView.
  @note Defaults to @c NO.
