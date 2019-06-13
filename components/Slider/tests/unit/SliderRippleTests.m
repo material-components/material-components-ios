@@ -73,7 +73,8 @@
 
   // Then
   XCTAssertNil(self.slider.thumbTrack.touchController.defaultInkView.superview);
-  XCTAssertEqualObjects(self.slider.thumbTrack.rippleView.superview, self.slider.thumbTrack.thumbView);
+  XCTAssertEqualObjects(self.slider.thumbTrack.rippleView.superview,
+                        self.slider.thumbTrack.thumbView);
   CGRect thumbViewBounds = CGRectStandardize(self.slider.thumbTrack.thumbView.bounds);
   CGRect rippleBounds = CGRectStandardize(self.slider.thumbTrack.rippleView.bounds);
   XCTAssertTrue(CGRectEqualToRect(thumbViewBounds, rippleBounds), @"%@ is not equal to %@",

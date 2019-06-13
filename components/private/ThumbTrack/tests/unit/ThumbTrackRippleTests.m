@@ -113,7 +113,7 @@
   // When
   self.thumbTrack.enableRippleBehavior = YES;
   self.thumbTrack.shouldDisplayRipple = NO;
-  NSSet<UITouch *> *touches = [NSSet setWithArray:@[[[UITouch alloc] init]]];
+  NSSet<UITouch *> *touches = [NSSet setWithArray:@[ [[UITouch alloc] init] ]];
   [self.thumbTrack touchesBegan:touches withEvent:nil];
 
   // Then
