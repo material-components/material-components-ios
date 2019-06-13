@@ -319,7 +319,7 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   MDCBannerViewLayoutMode layoutMode = [self layoutModeForSizeToFit:size];
   CGFloat frameHeight = 0.0f;
   switch (layoutMode) {
-    case MDCBannerViewLayoutModeSingleLine: {
+    case MDCBannerViewLayoutModeSingleRow: {
       frameHeight += kTopPaddingSmall + kBottomPadding;
       CGFloat widthLimit = size.width;
       CGFloat marginsPadding = self.layoutMargins.left + self.layoutMargins.right;
@@ -341,7 +341,7 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
       frameHeight += maximumHeight;
       break;
     }
-    case MDCBannerViewLayoutModeMultiLineAlignedButton: {
+    case MDCBannerViewLayoutModeMultiRowAlignedButton: {
       frameHeight += kTopPaddingLarge + kBottomPadding;
       frameHeight += [self getFrameHeightOfImageViewAndTextLabelWithSizeToFit:size];
       CGSize leadingButtonSize = [self.leadingButton sizeThatFits:CGSizeZero];
@@ -349,7 +349,7 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
       frameHeight += MAX(leadingButtonSize.height, trailingButtonSize.height);
       break;
     }
-    case MDCBannerViewLayoutModeMultiLineStackedButton: {
+    case MDCBannerViewLayoutModeMultiRowStackedButton: {
       frameHeight += kTopPaddingLarge + kBottomPadding;
       frameHeight += [self getFrameHeightOfImageViewAndTextLabelWithSizeToFit:size];
       CGSize leadingButtonSize = [self.leadingButton sizeThatFits:CGSizeZero];
@@ -388,7 +388,7 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   self.buttonContainerConstraintTrailing.active = YES;
   self.buttonContainerConstraintBottom.active = YES;
 
-  if (layoutMode == MDCBannerViewLayoutModeSingleLine) {
+  if (layoutMode == MDCBannerViewLayoutModeSingleRow) {
     if (!self.imageView.hidden) {
       self.imageViewConstraintTopSmall.active = YES;
       self.imageViewConstraintBottom.active = YES;
@@ -426,7 +426,7 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
     self.leadingButtonConstraintTrailing.active = YES;
     self.leadingButtonConstraintCenterY.active = YES;
   } else {
-    if (layoutMode == MDCBannerViewLayoutModeMultiLineStackedButton) {
+    if (layoutMode == MDCBannerViewLayoutModeMultiRowStackedButton) {
       self.leadingButtonConstraintTrailing.active = YES;
       self.trailingButtonConstraintTop.active = YES;
     } else {
@@ -458,14 +458,14 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
       remainingWidth -= kSpaceBetweenIconImageAndTextLabel;
     }
     layoutMode = [self isAbleToFitTextLabel:self.textLabel withWidthLimit:remainingWidth]
-                     ? MDCBannerViewLayoutModeSingleLine
-                     : MDCBannerViewLayoutModeMultiLineAlignedButton;
+                     ? MDCBannerViewLayoutModeSingleRow
+                     : MDCBannerViewLayoutModeMultiRowAlignedButton;
   } else {
     [self.trailingButton sizeToFit];
     CGFloat buttonWidth = [self widthSumForButtons:@[ self.leadingButton, self.trailingButton ]];
     remainingWidth -= buttonWidth;
-    layoutMode = (remainingWidth > 0) ? MDCBannerViewLayoutModeMultiLineAlignedButton
-                                      : MDCBannerViewLayoutModeMultiLineStackedButton;
+    layoutMode = (remainingWidth > 0) ? MDCBannerViewLayoutModeMultiRowAlignedButton
+                                      : MDCBannerViewLayoutModeMultiRowStackedButton;
   }
   return layoutMode;
 }
