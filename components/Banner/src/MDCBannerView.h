@@ -62,6 +62,6 @@ __attribute__((objc_subclassing_restricted)) @interface MDCBannerView : UIView
 
  The default value is light grey.
  */
-@property(nonatomic, nonnull, strong) UIColor *dividerColor;
+@property(nonatomic, readwrite, strong, nonnull) UIColor *dividerColor;
 
 @end
