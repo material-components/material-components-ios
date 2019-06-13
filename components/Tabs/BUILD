@@ -37,6 +37,7 @@ mdc_public_objc_library(
         "//components/AnimationTiming",
         "//components/Ink",
         "//components/Palettes",
+        "//components/Ripple",
         "//components/ShadowElevations",
         "//components/ShadowLayer",
         "//components/Typography",
