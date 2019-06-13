@@ -89,12 +89,17 @@
   if (!self.dismissOnBackgroundTap) {
     return NO;
   }
-  __weak __typeof(self) weakSelf = self;
-  [self
-      dismissViewControllerAnimated:YES
-                         completion:^{
-                           [weakSelf.delegate bottomSheetControllerDidDismissBottomSheet:weakSelf];
-                         }];
+  __weak MDCBottomSheetController *weakSelf = self;
+  [self dismissViewControllerAnimated:YES
+                           completion:^{
+                             __strong MDCBottomSheetController *strongSelf = weakSelf;
+                             if ([strongSelf.delegate
+                                     respondsToSelector:@selector
+                                     (bottomSheetControllerDidDismissBottomSheet:)]) {
+                               [strongSelf.delegate
+                                   bottomSheetControllerDidDismissBottomSheet:strongSelf];
+                             }
+                           }];
   return YES;
 }
 
