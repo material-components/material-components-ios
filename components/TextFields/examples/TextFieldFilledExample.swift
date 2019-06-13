@@ -123,7 +123,7 @@ final class TextFieldFilledSwiftExample: UIViewController {
   func style(textInputController:MDCTextInputControllerFilled) {
     MDCFilledTextFieldColorThemer.applySemanticColorScheme(colorScheme, to: textInputController)
     MDCTextFieldTypographyThemer.applyTypographyScheme(typographyScheme, to: textInputController)
-    if let textInput = textInputController.textInput as? MDCTextInput {
+    if let textInput = textInputController.textInput {
       MDCTextFieldTypographyThemer.applyTypographyScheme(typographyScheme, to: textInput)
     }
   }

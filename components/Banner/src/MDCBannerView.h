@@ -17,13 +17,31 @@
 #import "MaterialButtons.h"
 
 /**
+ @c MDCBannerViewLayoutMode specifies the layout mode of an MDCBannerView.
+ */
+typedef NS_ENUM(NSInteger, MDCBannerViewLayoutMode) {
+  MDCBannerViewLayoutModeAutomatic,  // Layout is set automatically based on how elements are
+                                     // configured on banner view. One of three other layouts will
+                                     // be used internally.
+  MDCBannerViewLayoutModeSingleRow,  // All elements on the same row, only supports one button
+  MDCBannerViewLayoutModeMultiRowStackedButton,  // Multilple rows with stacked button layout
+  MDCBannerViewLayoutModeMultiRowAlignedButton,  // Multiple rows with aligned buttons horizontally
+};
+
+/**
  The MDCBannerView class creates and configures a view to represent a Material Banner.
 
  The [Material Guideline](https://material.io/design/components/banners.html) has more details on
  component usage.
  */
-NS_CLASS_AVAILABLE_IOS(9_0)
 __attribute__((objc_subclassing_restricted)) @interface MDCBannerView : UIView
+
+/**
+ The layout mode of a @c MDCBannerView.
+
+ The default value is MDCBannerViewLayoutModeAutomatic.
+ */
+@property(nonatomic, readwrite, assign) MDCBannerViewLayoutMode bannerViewLayoutMode;
 
 /**
  A view that displays the text on a @c MDCBannerView
@@ -50,5 +68,19 @@ __attribute__((objc_subclassing_restricted)) @interface MDCBannerView : UIView
  same row as @c leadingButton, it will be placed shows below @c leadingButton.
  */
 @property(nonatomic, readonly, strong, nonnull) MDCButton *trailingButton;
+
+/**
+ A Boolean value that controls whether the divider of the banner is visible.
+
+ The default value is @c NO.
+ */
+@property(nonatomic, readwrite, assign) BOOL showsDivider;
+
+/**
+ The color applied to the divider of the banner.
+
+ The default value is light grey.
+ */
+@property(nonatomic, readwrite, strong, nonnull) UIColor *dividerColor;
 
 @end

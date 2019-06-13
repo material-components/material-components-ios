@@ -22,6 +22,7 @@
 @interface MDCActionSheetController (Testing)
 @property(nonatomic, strong) UITableView *tableView;
 @property(nonatomic, strong) MDCActionSheetHeaderView *header;
+@property(nonatomic, assign) BOOL addLeadingPaddingToCell;
 - (CGFloat)openingSheetHeight;
 @end
 

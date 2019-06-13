@@ -18,6 +18,7 @@
 
 #import "MDCTabBarExtendedAlignment.h"
 #import "MDCTabBarIndicatorTemplate.h"
+#import "MDCTabBarSizeClassDelegate.h"
 #import "MDCTabBarUnderlineIndicatorTemplate.h"
 #import "MaterialInk.h"
 #import "MaterialTypography.h"
@@ -76,6 +77,10 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(
   NSCAssert(0, @"Invalid alignment value %ld", (long)alignment);
   return MDCItemBarAlignmentLeading;
 }
+
+@interface MDCTabBar ()
+@property(nonatomic, weak, nullable) id<MDCTabBarSizeClassDelegate> sizeClassDelegate;
+@end
 
 @interface MDCTabBar () <MDCItemBarDelegate>
 @end
@@ -145,6 +150,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(
 
   // Create item bar.
   _itemBar = [[MDCItemBar alloc] initWithFrame:self.bounds];
+  _itemBar.tabBar = self;
   _itemBar.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
   _itemBar.delegate = self;
   _itemBar.alignment =
