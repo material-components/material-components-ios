@@ -57,7 +57,7 @@
 }
 
 /**
- Test to confirm behavior of initializing a @c MDCAppBarViewController without any customization.
+ Test to confirm behavior of initializing a @c MDCButtonBar without any customization.
  */
 - (void)testDefaultButtonBarBehaviorWithInkEnabled {
   // Then
@@ -72,7 +72,7 @@
 }
 
 /**
- Test to confirm behavior of initializing a @c MDCActionSheetController with Ripple enabled.
+ Test to confirm behavior of initializing a @c MDCButtonBar with Ripple enabled.
  */
 - (void)testDefaultButtonBarBehaviorWithRippleEnabled {
   // When

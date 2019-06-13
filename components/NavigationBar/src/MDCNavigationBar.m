@@ -113,7 +113,7 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 @implementation MDCNavigationBar {
   id _observedNavigationItemLock;
   UINavigationItem *_observedNavigationItem;
-
+  UIColor *_inkColor;
   UILabel *_titleLabel;
 
   MDCButtonBar *_leadingButtonBar;
@@ -712,6 +712,10 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   _leadingItemsSupplementBackButton = leadingItemsSupplementBackButton;
   _leadingButtonBar.items = [self mdc_buttonItemsForLeadingBar];
   [self setNeedsLayout];
+}
+
+- (UIColor *)inkColor {
+  return _inkColor;
 }
 
 - (void)setInkColor:(UIColor *)inkColor {

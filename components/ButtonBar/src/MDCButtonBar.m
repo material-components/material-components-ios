@@ -32,7 +32,7 @@ static NSString *const kEnabledSelector = @"enabled";
 @implementation MDCButtonBar {
   id _buttonItemsLock;
   NSArray<__kindof UIView *> *_buttonViews;
-
+  UIColor *_inkColor;
   MDCAppBarButtonBarBuilder *_defaultBuilder;
 }
 
@@ -507,6 +507,10 @@ static NSString *const kEnabledSelector = @"enabled";
   [self setNeedsLayout];
 }
 
+- (UIColor *)inkColor {
+  return _inkColor;
+}
+
 - (void)setInkColor:(UIColor *)inkColor {
   if (_inkColor == inkColor) {
     return;
@@ -524,6 +528,9 @@ static NSString *const kEnabledSelector = @"enabled";
 }
 
 - (void)setEnableRippleBehavior:(BOOL)enableRippleBehavior {
+  if (_enableRippleBehavior == enableRippleBehavior) {
+    return;
+  }
   _enableRippleBehavior = enableRippleBehavior;
 
   for (UIView *viewObj in _buttonViews) {

@@ -25,7 +25,7 @@
 @end
 
 /**
- This class confirms behavior of @c MDCAppBarViewController when used with Ripple.
+ This class confirms behavior of @c MDCNavigationBar when used with Ripple.
  */
 @interface NavigationBarRippleTests : XCTestCase
 
@@ -48,7 +48,7 @@
 }
 
 /**
- Test to confirm behavior of initializing a @c MDCAppBarViewController without any customization.
+ Test to confirm behavior of initializing a @c MDCNavigationBar without any customization.
  */
 - (void)testDefaultNavBarBehaviorWithInkEnabled {
   // Then
@@ -62,7 +62,7 @@
 }
 
 /**
- Test to confirm behavior of initializing a @c MDCActionSheetController with Ripple enabled.
+ Test to confirm behavior of initializing a @c MDCNavigationBar with Ripple enabled.
  */
 - (void)testDefaultNavBarBehaviorWithRippleEnabled {
   // When
