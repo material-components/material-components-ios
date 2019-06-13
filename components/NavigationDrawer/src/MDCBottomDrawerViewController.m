@@ -176,6 +176,16 @@
   }
 }
 
+- (void)setShouldIncludeSafeAreaInContentHeight:(BOOL)shouldIncludeSafeAreaInContentHeight {
+  _shouldIncludeSafeAreaInContentHeight = shouldIncludeSafeAreaInContentHeight;
+  if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
+        (MDCBottomDrawerPresentationController *)self.presentationController;
+    bottomDrawerPresentationController.shouldIncludeSafeAreaInContentHeight =
+        shouldIncludeSafeAreaInContentHeight;
+  }
+}
+
 #pragma mark UIAccessibilityAction
 
 // Adds the Z gesture for dismissal.

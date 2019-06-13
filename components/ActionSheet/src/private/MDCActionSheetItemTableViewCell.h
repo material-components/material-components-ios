@@ -39,4 +39,11 @@
 
 @property(nonatomic) UIImageRenderingMode imageRenderingMode;
 
+/**
+ Determines if padding needs to be added to the titleLabel.
+
+ @note Defaults to @c NO.
+ */
+@property(nonatomic, assign) BOOL addLeadingPadding;
+
 @end
