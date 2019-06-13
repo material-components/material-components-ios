@@ -323,6 +323,9 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
 }
 
 - (void)setEnableRippleBehavior:(BOOL)enableRippleBehavior {
+  if (_enableRippleBehavior == enableRippleBehavior) {
+    return;
+  }
   _enableRippleBehavior = enableRippleBehavior;
 
   for (MDCButton *button in self.actionManager.buttonsInActionOrder) {
