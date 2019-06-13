@@ -20,9 +20,9 @@
  @c MDCBannerViewLayoutMode specifies the layout mode of an MDCBannerView.
  */
 typedef NS_ENUM(NSInteger, MDCBannerViewLayoutMode) {
-  MDCBannerViewLayoutModeAutomatic,   // Layout is set automatically based on how elements are
-                                      // configured on banner view. One of three other layouts will
-                                      // be used internally.
+  MDCBannerViewLayoutModeAutomatic,  // Layout is set automatically based on how elements are
+                                     // configured on banner view. One of three other layouts will
+                                     // be used internally.
   MDCBannerViewLayoutModeSingleRow,  // All elements on the same row, only supports one button
   MDCBannerViewLayoutModeMultiRowStackedButton,  // Multilple rows with stacked button layout
   MDCBannerViewLayoutModeMultiRowAlignedButton,  // Multiple rows with aligned buttons horizontally
