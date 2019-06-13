@@ -16,7 +16,6 @@
 
 #import "MaterialButtons.h"
 
-
 /**
  @c MDCBannerViewLayoutMode specifies the layout mode of an MDCBannerView.
  */
