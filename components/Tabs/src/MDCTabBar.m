@@ -18,6 +18,7 @@
 
 #import "MDCTabBarExtendedAlignment.h"
 #import "MDCTabBarIndicatorTemplate.h"
+#import "MDCTabBarSizeClassDelegate.h"
 #import "MDCTabBarUnderlineIndicatorTemplate.h"
 #import "MaterialInk.h"
 #import "MaterialRipple.h"
@@ -81,6 +82,10 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(
 static inline UIColor *kRippleColor() {
   return [UIColor colorWithWhite:1 alpha:(CGFloat)0.7];
 }
+
+@interface MDCTabBar ()
+@property(nonatomic, weak, nullable) id<MDCTabBarSizeClassDelegate> sizeClassDelegate;
+@end
 
 @interface MDCTabBar () <MDCItemBarDelegate>
 @end
@@ -152,6 +157,7 @@ static inline UIColor *kRippleColor() {
 
   // Create item bar.
   _itemBar = [[MDCItemBar alloc] initWithFrame:self.bounds];
+  _itemBar.tabBar = self;
   _itemBar.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
   _itemBar.delegate = self;
   _itemBar.alignment =

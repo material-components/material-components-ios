@@ -32,7 +32,7 @@ class CustomShadowViewController: UIViewController {
     // Setting the corner radius of the view's layer will propagate to the shadow
     // layer when the view is presented by MDCDailogPresentationController.
     // Note that setting the corner radius in viewDidLoad is not recommended, since it
-    // will be overriden if callers apply a themer to the MDCDailogPresentationController instance.
+    // will be overridden if callers apply a themer to the MDCDailogPresentationController instance.
     self.view.layer.cornerRadius = 32.0
 
     bodyLabel.text =

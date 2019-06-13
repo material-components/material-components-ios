@@ -14,11 +14,11 @@
 
 import Foundation
 import MaterialComponents.MaterialAppBar
-import MaterialComponents.MaterialAppBar_ColorThemer
+import MaterialComponents.MaterialAppBar_Theming
 
 class AppBarImagerySwiftExample: UITableViewController {
   let appBarViewController = MDCAppBarViewController()
-  @objc var colorScheme = MDCSemanticColorScheme()
+  @objc var containerScheme: MDCContainerScheming = MDCContainerScheme()
 
   deinit {
     // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
@@ -46,7 +46,7 @@ class AppBarImagerySwiftExample: UITableViewController {
     // The header view does not clip to bounds by default so we ensure that the image is clipped.
     imageView.clipsToBounds = true
 
-    MDCAppBarColorThemer.applyColorScheme(colorScheme, to: appBarViewController)
+    appBarViewController.applyPrimaryTheme(withScheme: containerScheme)
 
     // Make sure navigation bar background color is clear so the image view is visible.
     appBarViewController.navigationBar.backgroundColor = UIColor.clear

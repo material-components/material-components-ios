@@ -71,4 +71,16 @@
   [self generateSnapshotAndVerifyForView:self.view];
 }
 
+- (void)testMaximumRadius {
+  // Given
+  self.rippleView.rippleStyle = MDCRippleStyleUnbounded;
+  self.rippleView.maximumRadius = 20;
+
+  // When
+  [self.rippleView beginRippleTouchDownAtPoint:self.rippleView.center animated:NO completion:nil];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.view];
+}
+
 @end

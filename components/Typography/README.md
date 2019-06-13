@@ -315,3 +315,7 @@ The text control doesn't adjust the font size automatically when the user adjust
 
 In your source code, set `mdc_adjustsFontForContentSizeCategory` to `YES` on components that have Dynamic Type support. When the user makes Dynamic Type changes in Settings, components will respond automatically.
 
+#### Fallback behavior to handle legacy Dynamic Type behavior in Material Components
+
+If `adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable` is set to `YES`, the font size will adjust even if a scalable font has not been provided for a given UIFont property on this component. It needs to be set before `mdc_adjustsFontForContentSizeCategory` is configured to let the component know whether the fallback behavior should be applied.
+
