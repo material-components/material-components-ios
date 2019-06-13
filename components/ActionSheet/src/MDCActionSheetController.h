@@ -14,7 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import <MaterialComponents/MaterialBottomSheet.h>
+#import "MaterialBottomSheet.h"
 
 @class MDCActionSheetAction;
 
@@ -180,6 +180,17 @@ __attribute__((objc_subclassing_restricted)) @interface MDCActionSheetController
  The image rendering mode for all actions within an action sheet.
  */
 @property(nonatomic) UIImageRenderingMode imageRenderingMode;
+
+/**
+ Determines the alignment behavior of all title leading edges.
+
+ When YES, all title leading edges will be aligned with one another.
+
+ When NO, each title will be positioned individually based on whether it has an image or not.
+
+ Defaults to NO.
+ */
+@property(nonatomic, assign) BOOL alwaysAlignTitleLeadingEdges;
 
 @property(nonatomic, strong, readonly, nonnull)
     MDCBottomSheetTransitionController *transitionController;
