@@ -14,12 +14,13 @@
 
 import Foundation
 import MaterialComponents.MaterialAppBar
-import MaterialComponents.MaterialAppBar_ColorThemer
+import MaterialComponents.MaterialAppBar_Theming
+import MaterialComponents.MaterialContainerScheme
 
 class AppBarModalPresentationSwiftExamplePresented: UITableViewController {
 
   let appBarViewController = MDCAppBarViewController()
-  @objc var colorScheme = MDCSemanticColorScheme()
+  @objc var containerScheme: MDCContainerScheming = MDCContainerScheme()
 
   deinit {
     // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
@@ -47,7 +48,7 @@ class AppBarModalPresentationSwiftExamplePresented: UITableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    MDCAppBarColorThemer.applyColorScheme(colorScheme, to: appBarViewController)
+    appBarViewController.applyPrimaryTheme(withScheme: containerScheme)
 
     // Allows us to avoid forwarding events, but means we can't enable shift behaviors.
     appBarViewController.headerView.observesTrackingScrollViewScrollEvents = true
@@ -100,7 +101,7 @@ class AppBarModalPresentationSwiftExamplePresented: UITableViewController {
 class AppBarModalPresentationSwiftExample: UITableViewController {
 
   let appBarViewController = MDCAppBarViewController()
-  @objc var colorScheme = MDCSemanticColorScheme()
+  @objc var containerScheme: MDCContainerScheming = MDCContainerScheme()
 
   init() {
     super.init(nibName: nil, bundle: nil)
@@ -117,8 +118,8 @@ class AppBarModalPresentationSwiftExample: UITableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    MDCAppBarColorThemer.applyColorScheme(colorScheme, to: appBarViewController)
-
+    appBarViewController.applyPrimaryTheme(withScheme: containerScheme)
+    
     appBarViewController.headerView.trackingScrollView = self.tableView
     self.tableView.delegate = appBarViewController
 

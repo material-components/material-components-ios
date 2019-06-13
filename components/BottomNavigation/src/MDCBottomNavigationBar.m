@@ -57,6 +57,9 @@ static NSString *const kOfAnnouncement = @"of";
 @interface MDCBottomNavigationBar () <MDCInkTouchControllerDelegate,
                                       MDCRippleTouchControllerDelegate>
 
+// Declared in MDCBottomNavigationBar (ToBeDeprecated)
+@property(nonatomic, assign) BOOL sizeThatFitsIncludesSafeArea;
+
 @property(nonatomic, assign) BOOL itemsDistributed;
 @property(nonatomic, readonly) BOOL isTitleBelowIcon;
 @property(nonatomic, assign) CGFloat maxLandscapeClusterContainerWidth;
@@ -101,7 +104,7 @@ static NSString *const kOfAnnouncement = @"of";
   _itemsDistributed = YES;
   _barTintColor = [UIColor whiteColor];
   _truncatesLongTitles = YES;
-  _sizeThatFitsIncludesSafeArea = YES;
+  _sizeThatFitsIncludesSafeArea = NO;
   _titlesNumberOfLines = 1;
 
   // Remove any unarchived subviews and reconfigure the view hierarchy

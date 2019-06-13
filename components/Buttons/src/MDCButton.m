@@ -539,12 +539,10 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [self.rippleView setRippleColor:inkColor forState:MDCRippleStateHighlighted];
 }
 
-- (CGFloat)inkMaxRippleRadius {
-  return _inkView.maxRippleRadius;
-}
-
 - (void)setInkMaxRippleRadius:(CGFloat)inkMaxRippleRadius {
+  _inkMaxRippleRadius = inkMaxRippleRadius;
   _inkView.maxRippleRadius = inkMaxRippleRadius;
+  self.rippleView.maximumRadius = inkMaxRippleRadius;
 }
 
 - (void)setEnableRippleBehavior:(BOOL)enableRippleBehavior {
@@ -730,7 +728,26 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   if ((state & UIControlStateHighlighted) == UIControlStateHighlighted) {
     state = state & ~UIControlStateDisabled;
   }
-  return _fonts[@(state)] ?: _fonts[@(UIControlStateNormal)];
+  UIFont *font = _fonts[@(state)] ?: _fonts[@(UIControlStateNormal)];
+
+  if (!font) {
+    // TODO(#2709): Have a single source of truth for fonts
+    // Migrate to [UIFont standardFont] when possible
+    font = [MDCTypography buttonFont];
+  }
+
+  if (_mdc_adjustsFontForContentSizeCategory) {
+    // Dynamic type is enabled so apply scaling
+    if (font.mdc_scalingCurve) {
+      font = [font mdc_scaledFontForTraitEnvironment:self];
+    } else {
+      if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
+        font = [font mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleButton
+                                  scaledForDynamicType:YES];
+      }
+    }
+  }
+  return font;
 }
 
 - (void)setTitleFont:(nullable UIFont *)font forState:(UIControlState)state {
@@ -875,32 +892,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 - (void)updateTitleFont {
-  // Retreive any custom font that has been set
-  UIFont *font = _fonts[@(self.state)];
-  if (!font && self.state != UIControlStateNormal) {
-    // We fall back to UIControlStateNormal if there is no value for the current state.
-    font = _fonts[@(UIControlStateNormal)];
-  }
-
-  if (!font) {
-    // TODO(#2709): Have a single source of truth for fonts
-    // Migrate to [UIFont standardFont] when possible
-    font = [MDCTypography buttonFont];
-  }
-
-  if (_mdc_adjustsFontForContentSizeCategory) {
-    // Dynamic type is enabled so apply scaling
-    if (font.mdc_scalingCurve) {
-      font = [font mdc_scaledFontForTraitEnvironment:self];
-    } else {
-      if (self.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable) {
-        font = [font mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleButton
-                                  scaledForDynamicType:YES];
-      }
-    }
-  }
-
-  self.titleLabel.font = font;
+  self.titleLabel.font = [self titleFontForState:self.state];
 
   [self setNeedsLayout];
 }

@@ -17,6 +17,8 @@
 #import "MaterialList.h"
 #import "MaterialTypographyScheme.h"
 
+static NSString *const kSelfSizingStereoCellIdentifier = @"kSelfSizingStereoCellIdentifier";
+
 @interface MDCSelfSizingStereoCellSnapshotTestsContentSizeCategoryOverrideWindow : UIWindow
 
 /** Used to override the value of @c preferredContentSizeCategory. */
@@ -46,10 +48,12 @@
 @end
 
 /** Snapshot tests for MDCBaseCell. */
-@interface MDCSelfSizingStereoCellSnapshotTests : MDCSnapshotTestCase
+@interface MDCSelfSizingStereoCellSnapshotTests : MDCSnapshotTestCase <UICollectionViewDataSource>
 
 /** The view being tested. */
-@property(nonatomic, strong) MDCSelfSizingStereoCell *cell;
+@property(nonatomic, strong) UICollectionView *collectionView;
+@property(nonatomic, strong) UICollectionViewFlowLayout *collectionViewLayout;
+@property(nonatomic, strong) NSArray *arrayOfCells;
 @property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 
 @end
@@ -63,11 +67,22 @@
   // test you wish to recreate the golden for).
   // self.recordMode = YES;
 
-  self.cell = [[MDCSelfSizingStereoCell alloc] initWithFrame:CGRectMake(0, 0, 240, 60)];
+  self.collectionViewLayout = [[UICollectionViewFlowLayout alloc] init];
+  self.collectionViewLayout.estimatedItemSize = CGSizeMake(240, 75);
+  self.collectionViewLayout.minimumInteritemSpacing = 1;
+  self.collectionViewLayout.minimumLineSpacing = 0;
+  self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, 240, 100)
+                                           collectionViewLayout:self.collectionViewLayout];
+  self.collectionView.backgroundColor = UIColor.grayColor;
+  [self.collectionView registerClass:[MDCSelfSizingStereoCell class]
+          forCellWithReuseIdentifier:kSelfSizingStereoCellIdentifier];
+  self.collectionView.dataSource = self;
 }
 
 - (void)tearDown {
-  self.cell = nil;
+  [self.collectionView removeFromSuperview];
+  self.collectionView = nil;
+  self.collectionViewLayout = nil;
   self.typographyScheme = nil;
 
   [super tearDown];
@@ -109,78 +124,111 @@
   [NSNotificationCenter.defaultCenter
       postNotificationName:UIContentSizeCategoryDidChangeNotification
                     object:nil];
+  [self.collectionView reloadData];
   [self snapshotVerifyView:snapshotWindow];
 }
 
 #pragma mark - Tests
 
-- (void)testDefaultCell {
-  // Then
-  [self generateSnapshotAndVerifyForView:self.cell];
-}
-
 - (void)testCellWithTitleAndDetail {
   // When
-  self.cell.titleLabel.text = @"Title";
-  self.cell.detailLabel.text = @"Detail";
+  MDCSelfSizingStereoCell *cell = [[MDCSelfSizingStereoCell alloc] init];
+  cell.titleLabel.text = @"Title";
+  cell.detailLabel.text = @"Detail";
+  self.arrayOfCells = @[ cell ];
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.cell];
+  [self generateSnapshotAndVerifyForView:self.collectionView];
 }
 
 - (void)testCellWithTitleAndDetailAndImage {
   // When
-  self.cell.titleLabel.text = @"Title";
-  self.cell.detailLabel.text = @"Detail";
-  self.cell.leadingImageView.image =
-      [UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                         withStyle:MDCSnapshotTestImageStyleCheckerboard];
-  self.cell.trailingImageView.image =
-      [UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                         withStyle:MDCSnapshotTestImageStyleRectangles];
+  MDCSelfSizingStereoCell *cell = [[MDCSelfSizingStereoCell alloc] init];
+  cell.titleLabel.text = @"Title";
+  cell.detailLabel.text = @"Detail";
+  cell.leadingImageView.image = [UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
+                                                   withStyle:MDCSnapshotTestImageStyleCheckerboard];
+  cell.trailingImageView.image = [UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
+                                                    withStyle:MDCSnapshotTestImageStyleRectangles];
+  self.arrayOfCells = @[ cell ];
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.cell];
+  [self generateSnapshotAndVerifyForView:self.collectionView];
 }
 
 - (void)testCellWithDynamicTypeForContentSizeCategoryExtraSmallEnabledForTitleAndDetail {
   if (@available(iOS 10.0, *)) {
     // Given
+    MDCSelfSizingStereoCell *cell = [[MDCSelfSizingStereoCell alloc] init];
     self.typographyScheme =
         [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
 
     // When
-    self.cell.titleLabel.text = @"Title";
-    self.cell.titleLabel.font = self.typographyScheme.subtitle1;
-    self.cell.detailLabel.text = @"Detail";
-    self.cell.detailLabel.font = self.typographyScheme.button;
-    self.cell.mdc_adjustsFontForContentSizeCategory = YES;
-    [self.cell setNeedsLayout];
+    cell.titleLabel.text = @"Title";
+    cell.titleLabel.font = self.typographyScheme.subtitle1;
+    cell.detailLabel.text = @"Detail";
+    cell.detailLabel.font = self.typographyScheme.button;
+    cell.mdc_adjustsFontForContentSizeCategory = YES;
+    self.arrayOfCells = @[ cell ];
 
     // Then
     [self generateSnapshotWithContentSizeCategoryAndNotificationPost:UIContentSizeCategoryExtraSmall
-                                                    andVerifyForView:self.cell];
+                                                    andVerifyForView:self.collectionView];
   }
 }
 
 - (void)testCellWithDynamicTypeForContentSizeCategoryExtraLargeEnabledForTitleAndDetail {
   if (@available(iOS 10.0, *)) {
     // Given
+    MDCSelfSizingStereoCell *cell = [[MDCSelfSizingStereoCell alloc] init];
     self.typographyScheme =
         [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
 
     // When
-    self.cell.titleLabel.text = @"Title";
-    self.cell.titleLabel.font = self.typographyScheme.subtitle1;
-    self.cell.detailLabel.text = @"Detail";
-    self.cell.detailLabel.font = self.typographyScheme.button;
-    self.cell.mdc_adjustsFontForContentSizeCategory = YES;
-    [self.cell setNeedsLayout];
+    cell.titleLabel.text = @"Title";
+    cell.titleLabel.font = self.typographyScheme.subtitle1;
+    cell.detailLabel.text = @"Detail";
+    cell.detailLabel.font = self.typographyScheme.button;
+    cell.mdc_adjustsFontForContentSizeCategory = YES;
+    self.arrayOfCells = @[ cell ];
 
     // Then
     [self generateSnapshotWithContentSizeCategoryAndNotificationPost:UIContentSizeCategoryExtraLarge
-                                                    andVerifyForView:self.cell];
+                                                    andVerifyForView:self.collectionView];
   }
+}
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+  return 1;
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView
+     numberOfItemsInSection:(NSInteger)section {
+  return self.arrayOfCells.count;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+  MDCSelfSizingStereoCell *dequeuedCell =
+      [collectionView dequeueReusableCellWithReuseIdentifier:kSelfSizingStereoCellIdentifier
+                                                forIndexPath:indexPath];
+  // Temporarily add dequeuedCell as a subview of collectionView
+  // to inherit traitCollection. The dequeuedCell will be removed
+  // from parent at the end of this method.
+  [self.collectionView addSubview:dequeuedCell];
+  MDCSelfSizingStereoCell *cell = self.arrayOfCells[indexPath.item];
+
+  // Change backgroundColor to distinguish cell from the collection view.
+  dequeuedCell.backgroundColor = UIColor.whiteColor;
+  dequeuedCell.titleLabel.text = cell.titleLabel.text;
+  dequeuedCell.titleLabel.font = cell.titleLabel.font;
+  dequeuedCell.detailLabel.text = cell.detailLabel.text;
+  dequeuedCell.detailLabel.font = cell.detailLabel.font;
+  dequeuedCell.leadingImageView.image = cell.leadingImageView.image;
+  dequeuedCell.trailingImageView.image = cell.trailingImageView.image;
+  dequeuedCell.mdc_adjustsFontForContentSizeCategory = cell.mdc_adjustsFontForContentSizeCategory;
+  [dequeuedCell removeFromSuperview];
+  return dequeuedCell;
 }
 
 @end

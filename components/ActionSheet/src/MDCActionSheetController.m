@@ -65,6 +65,13 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
                                         UITableViewDataSource>
 @property(nonatomic, strong) UITableView *tableView;
 @property(nonatomic, strong) MDCActionSheetHeaderView *header;
+
+/**
+ Determines if a @c MDCActionSheetItemTableViewCell should add leading padding or not.
+
+ @note Defaults to @c NO.
+ */
+@property(nonatomic, assign) BOOL addLeadingPaddingToCell;
 @end
 
 @implementation MDCActionSheetController {
@@ -297,6 +304,7 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
   cell.inkColor = self.inkColor;
   cell.tintColor = self.actionTintColor;
   cell.imageRenderingMode = self.imageRenderingMode;
+  cell.addLeadingPadding = self.addLeadingPaddingToCell;
   cell.actionTextColor = self.actionTextColor;
   return cell;
 }
@@ -414,6 +422,23 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
 - (void)setImageRenderingMode:(UIImageRenderingMode)imageRenderingMode {
   _imageRenderingMode = imageRenderingMode;
   [self.tableView reloadData];
+}
+
+- (void)setAlwaysAlignTitleLeadingEdges:(BOOL)alignTitles {
+  _alwaysAlignTitleLeadingEdges = alignTitles;
+  // Check to make sure at least one action has an image. If not then all actions will align already
+  // and we don't need to add padding.
+  self.addLeadingPaddingToCell = [self anyActionHasAnImage];
+  [self.tableView reloadData];
+}
+
+- (BOOL)anyActionHasAnImage {
+  for (MDCActionSheetAction *action in self.actions) {
+    if (action.image) {
+      return YES;
+    }
+  }
+  return NO;
 }
 
 - (void)setInkColor:(UIColor *)inkColor {
