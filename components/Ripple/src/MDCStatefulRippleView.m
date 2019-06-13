@@ -75,11 +75,6 @@ static UIColor *RippleSelectedColor(void) {
 
 - (UIColor *)rippleColorForState:(MDCRippleState)state {
   UIColor *rippleColor = _rippleColors[@(state)];
-  if (rippleColor == nil && (state & MDCRippleStateDragged) != 0) {
-    rippleColor = _rippleColors[@(MDCRippleStateDragged)];
-  } else if (rippleColor == nil && (state & MDCRippleStateSelected) != 0) {
-    rippleColor = _rippleColors[@(MDCRippleStateSelected)];
-  }
 
   if (rippleColor == nil) {
     rippleColor = _rippleColors[@(MDCRippleStateNormal)];
@@ -172,7 +167,7 @@ static UIColor *RippleSelectedColor(void) {
     [self updateRippleColor];
     [self beginRippleTouchDownAtPoint:_lastTouch animated:_didReceiveTouch completion:nil];
   } else if (!rippleHighlighted) {
-    if (!self.allowsSelection && !self.dragged && !_tapWentOutsideOfBounds) {
+    if ((!self.allowsSelection || self.selected) && !self.dragged && !_tapWentOutsideOfBounds) {
       // We dissolve the ripple when highlighted is NO, unless we are going into
       // selection or dragging.
       [self updateRippleColor];
@@ -200,6 +195,23 @@ static UIColor *RippleSelectedColor(void) {
     // If we are no longer dragging, we cancel all the ripples.
     [self updateRippleColor];
     [self cancelAllRipplesAnimated:YES completion:nil];
+  }
+}
+
+- (NSNumber *)rippleStateForControlState:(UIControlState)state {
+  // We check to see if MDCRippleState conforms to a UIControlState and return it, otherwise
+  // we return nil for non-supported ripple states.
+  switch (state) {
+    case UIControlStateNormal:
+      return [NSNumber numberWithInteger:MDCRippleStateNormal];
+    case UIControlStateHighlighted:
+      return [NSNumber numberWithInteger:MDCRippleStateHighlighted];
+    case UIControlStateSelected:
+      return [NSNumber numberWithInteger:MDCRippleStateSelected];
+    case (UIControlStateHighlighted | UIControlStateSelected):
+      return [NSNumber numberWithInteger:(MDCRippleStateHighlighted | MDCRippleStateSelected)];
+    default:
+      return nil;
   }
 }
 

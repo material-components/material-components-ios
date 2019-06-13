@@ -86,6 +86,21 @@ __attribute__((objc_subclassing_restricted)) @interface MDCStatefulRippleView : 
 @property(nonatomic) BOOL allowsSelection;
 
 /**
+ Returns the matching MDCRippleState combination corresponding to the given UIControlState
+ combination.
+
+ Only states shared by both MDCRippleState and UIControlState are considered. If the given
+ UIControlState is not a valid Ripple state, nil is returned. In the given state is a combination
+ that includes both valid and non-valid states, the non valid Ripple states are ignored, returning
+ a Ripple state that reflects only the valid states.
+
+ @param state The UIControlState state combination for which a matcing Ripple state is requested.
+ @return The matching MDCRippleState state (or combination). Use .integerValue to get the integer
+         value of the state out of the returned Number value.
+ */
+- (nullable NSNumber *)rippleStateForControlState:(UIControlState)state;
+
+/**
  Sets the color of the ripple for state.
 
  @param rippleColor The ripple color to set the ripple to.

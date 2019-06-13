@@ -87,10 +87,10 @@
   XCTAssertEqualObjects([rippleView rippleColorForState:MDCRippleStateNormal], UIColor.redColor);
   XCTAssertEqualObjects(
       [rippleView rippleColorForState:(MDCRippleStateDragged | MDCRippleStateHighlighted)],
-      UIColor.blueColor);
+      [rippleView rippleColorForState:MDCRippleStateNormal]);
   XCTAssertEqualObjects(
       [rippleView rippleColorForState:(MDCRippleStateSelected | MDCRippleStateHighlighted)],
-      UIColor.greenColor);
+      [rippleView rippleColorForState:MDCRippleStateNormal]);
   XCTAssertEqualObjects([rippleView rippleColorForState:MDCRippleStateHighlighted],
                         UIColor.redColor);
 }

@@ -276,6 +276,14 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   }
 }
 
+- (BOOL)allowsSelection {
+  return !self.enableRippleBehavior || self.rippleView.allowsSelection;
+}
+
+- (void)setAllowsSelection:(BOOL)allowsSelection {
+  self.rippleView.allowsSelection = allowsSelection;
+}
+
 #pragma mark - Dynamic Type Support
 
 - (BOOL)mdc_adjustsFontForContentSizeCategory {
@@ -421,7 +429,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 - (void)setInkColor:(UIColor *)inkColor forState:(UIControlState)state {
   _inkColors[@(state)] = inkColor;
 
-  NSNumber *rippleState = [self rippleStateForControlState:state];
+  NSNumber *rippleState = [self.rippleView rippleStateForControlState:state];
   if (rippleState) {
     [self.rippleView setRippleColor:inkColor forState:rippleState.integerValue];
   }
@@ -432,7 +440,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
 - (void)updateInkColor {
   UIColor *inkColor = [self inkColorForState:self.state];
-  self.inkView.inkColor = inkColor ? inkColor : self.inkView.defaultInkColor;
+  self.inkView.inkColor = inkColor ?: self.inkView.defaultInkColor;
 }
 
 - (void)updateRippleColor {
@@ -440,26 +448,9 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   // MDCStatefulRippleView sets the ripple color internally when its state changes.
   // If that specific state isn't supported by the stateful ripple, then we directly set the
   // ripple view's color to the requested color.
-  if (![self rippleStateForControlState:self.state]) {
+  if (![self.rippleView rippleStateForControlState:self.state]) {
     self.rippleView.rippleColor =
         rippleColor ?: [UIColor colorWithWhite:1 alpha:MDCChipViewRippleDefaultOpacity];
-  }
-}
-
-- (NSNumber *)rippleStateForControlState:(UIControlState)state {
-  // We check to see if MDCRippleState conforms to a UIControlState and return it, otherwise
-  // we return nil for non-supported ripple states.
-  switch (state) {
-    case UIControlStateNormal:
-      return [NSNumber numberWithInteger:MDCRippleStateNormal];
-    case UIControlStateHighlighted:
-      return [NSNumber numberWithInteger:MDCRippleStateHighlighted];
-    case UIControlStateSelected:
-      return [NSNumber numberWithInteger:MDCRippleStateSelected];
-    case (UIControlStateHighlighted | UIControlStateSelected):
-      return [NSNumber numberWithInteger:(MDCRippleStateHighlighted | MDCRippleStateSelected)];
-    default:
-      return nil;
   }
 }
 
