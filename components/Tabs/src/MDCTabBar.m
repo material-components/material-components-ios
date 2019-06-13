@@ -78,6 +78,10 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(
   return MDCItemBarAlignmentLeading;
 }
 
+static inline UIColor *kRippleColor() {
+  return [UIColor colorWithWhite:1 alpha:(CGFloat)0.7];
+}
+
 @interface MDCTabBar () <MDCItemBarDelegate>
 @end
 
@@ -130,8 +134,8 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(
   _unselectedItemTintColor = [UIColor colorWithWhite:1 alpha:(CGFloat)0.7];
   _selectedTitleColor = _selectedItemTintColor;
   _unselectedTitleColor = _unselectedItemTintColor;
-  _inkColor = [UIColor colorWithWhite:1 alpha:(CGFloat)0.7];
-  _rippleColor = [UIColor colorWithWhite:1 alpha:(CGFloat)0.7];
+  _inkColor = kRippleColor();
+  _rippleColor = kRippleColor();
 
   self.clipsToBounds = YES;
   _barPosition = UIBarPositionAny;
@@ -673,6 +677,9 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(
 }
 
 - (void)setEnableRippleBehavior:(BOOL)enableRippleBehavior {
+  if (_enableRippleBehavior == enableRippleBehavior) {
+    return;
+  }
   _enableRippleBehavior = enableRippleBehavior;
 
   [self updateItemBarStyle];
