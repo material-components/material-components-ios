@@ -79,10 +79,3 @@ import MaterialComponents.MaterialTypographyScheme
 ## Usage
 
 - [Dynamic Type](dynamic-type.md)
-
-## Extensions
-
-<!-- Template: Extensions should be called out separately from Usage docs.
-
-- [Typography Theming](typography-theming.md)
--->
