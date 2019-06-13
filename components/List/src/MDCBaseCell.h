@@ -23,13 +23,8 @@
  */
 @property(nonatomic, assign) MDCShadowElevation elevation;
 
-/**
- The color of the cell’s underlying Ripple.
- */
-@property(nonatomic, strong, nonnull) UIColor *inkColor;
-
 /*
- This property determines if an @c MDCBaseCell should use the @c MDCRippleView behavior
+ Determines if an @c MDCBaseCell should use the @c MDCRippleView behavior
  or not. By setting this property to @c YES, @c MDCRippleView is used to provide the user visual
  touch feedback, instead of the legacy @c MDCInkView.
  @note Defaults to @c NO.
@@ -40,5 +35,17 @@
  The color of the cell’s underlying Ripple.
  */
 @property(nonatomic, strong, nullable) UIColor *rippleColor;
+
+@end
+
+@interface MDCBaseCell (ToBeDeprecated)
+
+/**
+ The color of the cell’s underlying Ripple.
+ @warning This method will eventually be deprecated. Opt-in to Ripple by setting
+ enableRippleBehavior to YES, and then use rippleColor instead. Learn more at
+ https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple
+ */
+@property(nonatomic, strong, nonnull) UIColor *inkColor;
 
 @end
