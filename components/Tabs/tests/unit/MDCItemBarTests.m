@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import <XCTest/XCTest.h>
+#import <UIKit/UIKit.h>
 
 #import "MDCItemBar.h"
 
@@ -28,22 +29,23 @@
 - (void)testItemAtIndexPath {
   // Given
   MDCItemBar *itemBar = [[MDCItemBar alloc] init];
-
-  // When
   UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"first tab" image:nil tag:0];
   UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"second tab" image:nil tag:0];
+
+  // When
   itemBar.items = @[ item1, item2 ];
-  NSIndexPath *indexPathForFirstItem = [NSIndexPath indexPathForItem:0 inSection:0];
-  NSIndexPath *indexPathForSecondItem = [NSIndexPath indexPathForItem:1 inSection:0];
-  NSIndexPath *indexPathForThirdItem = [NSIndexPath indexPathForItem:2 inSection:0];
 
   // Then
-  NSAssert([itemBar itemAtIndexPath:indexPathForFirstItem] != nil,
-           @"There should be an item for the NSIndexPath with item equal to 0");
-  NSAssert([itemBar itemAtIndexPath:indexPathForSecondItem] != nil,
-           @"There should be an item for the NSIndexPath with item equal to 1");
-  NSAssert([itemBar itemAtIndexPath:indexPathForThirdItem] == nil,
-           @"There should NOT be an item for the NSIndexPath with item equal to 2");
+  NSIndexPath *indexPathForFirstItem = [NSIndexPath indexPathForItem:0 inSection:0];
+  XCTAssertNotNil([itemBar itemAtIndexPath:indexPathForFirstItem]);
+  NSIndexPath *indexPathForSecondItem = [NSIndexPath indexPathForItem:1 inSection:0];
+  XCTAssertNotNil([itemBar itemAtIndexPath:indexPathForSecondItem]);
+  NSIndexPath *indexPathForThirdItem = [NSIndexPath indexPathForItem:2 inSection:0];
+  XCTAssertNil([itemBar itemAtIndexPath:indexPathForThirdItem]);
+  NSIndexPath *indexPathWithNonZeroSection = [NSIndexPath indexPathForItem:0 inSection:1];
+  XCTAssertNil([itemBar itemAtIndexPath:indexPathWithNonZeroSection]);
+  NSIndexPath *indexPathWithItemEqualToNegativeOne = [NSIndexPath indexPathForItem:-1 inSection:0];
+  XCTAssertNil([itemBar itemAtIndexPath:indexPathWithItemEqualToNegativeOne]);
 }
 
 @end
