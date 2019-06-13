@@ -33,9 +33,18 @@
 
 @property(nonatomic, strong, nullable) UIColor *inkColor;
 
-@property(nonatomic, strong, nullable) UIColor *rippleColor;
-
+/*
+ Determines if an @c MDCActionSheetItemTableViewCell should use the @c MDCRippleView behavior
+ or not. By setting this property to @c YES, @c MDCRippleView is used to provide the user visual
+ touch feedback, instead of the legacy @c MDCInkView.
+ @note Defaults to @c NO.
+ */
 @property(nonatomic, assign) BOOL enableRippleBehavior;
+
+/**
+ The ripple color for the action items within an action sheet.
+ */
+@property(nonatomic, strong, nullable) UIColor *rippleColor;
 
 @property(nonatomic) UIImageRenderingMode imageRenderingMode;
 

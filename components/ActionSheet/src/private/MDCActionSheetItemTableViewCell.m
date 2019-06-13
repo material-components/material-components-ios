@@ -218,6 +218,9 @@ static const CGFloat kActionItemTitleVerticalPadding = 18;
 }
 
 - (void)setEnableRippleBehavior:(BOOL)enableRippleBehavior {
+  if (_enableRippleBehavior == enableRippleBehavior) {
+    return;
+  }
   _enableRippleBehavior = enableRippleBehavior;
 
   if (enableRippleBehavior) {

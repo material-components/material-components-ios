@@ -30,7 +30,7 @@
 @end
 
 /**
- This class confirms behavior of @c MDCTabBar when used with Ripple.
+ This class confirms behavior of @c MDCActionSheetController when used with Ripple.
  */
 @interface ActionSheetRippleTests : XCTestCase
 

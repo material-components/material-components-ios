@@ -171,13 +171,8 @@ __attribute__((objc_subclassing_restricted)) @interface MDCActionSheetController
  */
 @property(nonatomic, strong, nullable) UIColor *actionTintColor;
 
-/**
- The ink color for the action items within an action sheet.
- */
-@property(nonatomic, strong, nullable) UIColor *inkColor;
-
 /*
- This property determines if an @c MDCActionSheetController should use the @c MDCRippleView behavior
+ Determines if an @c MDCActionSheetController should use the @c MDCRippleView behavior
  or not. By setting this property to @c YES, @c MDCRippleView is used to provide the user visual
  touch feedback, instead of the legacy @c MDCInkView.
  @note Defaults to @c NO.
@@ -264,5 +259,17 @@ typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
  The @c accessibilityIdentifier for the view associated with this action.
  */
 @property(nonatomic, nullable, copy) NSString *accessibilityIdentifier;
+
+@end
+
+@interface MDCActionSheetController (ToBeDeprecated)
+
+/**
+ The ink color for the action items within an action sheet.
+ @warning This method will eventually be deprecated. Opt-in to Ripple by setting
+ enableRippleBehavior to YES, and then use rippleColor instead. Learn more at
+ https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple
+ */
+@property(nonatomic, strong, nullable) UIColor *inkColor;
 
 @end

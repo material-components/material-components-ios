@@ -76,6 +76,7 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
 
 @implementation MDCActionSheetController {
   NSMutableArray<MDCActionSheetAction *> *_actions;
+  UIColor *_inkColor;
 }
 
 @synthesize mdc_adjustsFontForContentSizeCategory = _mdc_adjustsFontForContentSizeCategory;
@@ -443,6 +444,10 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
   return NO;
 }
 
+- (UIColor *)inkColor {
+  return _inkColor;
+}
+
 - (void)setInkColor:(UIColor *)inkColor {
   _inkColor = inkColor;
   [self.tableView reloadData];
@@ -454,7 +459,11 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
 }
 
 - (void)setEnableRippleBehavior:(BOOL)enableRippleBehavior {
+  if (_enableRippleBehavior == enableRippleBehavior) {
+    return;
+  }
   _enableRippleBehavior = enableRippleBehavior;
+
   [self.tableView reloadData];
 }
 
