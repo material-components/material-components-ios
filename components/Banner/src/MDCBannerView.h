@@ -17,12 +17,31 @@
 #import "MaterialButtons.h"
 
 /**
+ @c MDCBannerViewLayoutMode specifies the layout mode of an MDCBannerView.
+ */
+typedef NS_ENUM(NSInteger, MDCBannerViewLayoutMode) {
+  MDCBannerViewLayoutModeAutomatic,  // Layout is set automatically based on how elements are
+                                     // configured on banner view. One of three other layouts will
+                                     // be used internally.
+  MDCBannerViewLayoutModeSingleRow,  // All elements on the same row, only supports one button
+  MDCBannerViewLayoutModeMultiRowStackedButton,  // Multilple rows with stacked button layout
+  MDCBannerViewLayoutModeMultiRowAlignedButton,  // Multiple rows with aligned buttons horizontally
+};
+
+/**
  The MDCBannerView class creates and configures a view to represent a Material Banner.
 
  The [Material Guideline](https://material.io/design/components/banners.html) has more details on
  component usage.
  */
 __attribute__((objc_subclassing_restricted)) @interface MDCBannerView : UIView
+
+/**
+ The layout mode of a @c MDCBannerView.
+
+ The default value is MDCBannerViewLayoutModeAutomatic.
+ */
+@property(nonatomic, readwrite, assign) MDCBannerViewLayoutMode bannerViewLayoutMode;
 
 /**
  A view that displays the text on a @c MDCBannerView
