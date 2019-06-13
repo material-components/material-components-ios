@@ -1,3 +1,4 @@
+require_relative "podspec_helpers/mixed_readiness_podspec_helper"
 load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |mdc|
@@ -1737,6 +1738,7 @@ Pod::Spec.new do |mdc|
 
   mdc.subspec "TextFields" do |component|
     component.ios.deployment_target = '9.0'
+    component.exclude_files = MixedReadinessPodspecHelper.mixed_readiness_component("#{component.base_name}").beta_source_and_header_files
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = [
       "components/#{component.base_name}/src/*.{h,m}",
@@ -1751,6 +1753,7 @@ Pod::Spec.new do |mdc|
     component.dependency "MDFInternationalization"
 
     component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.exclude_files = MixedReadinessPodspecHelper.mixed_readiness_component("TextFields").beta_unit_test_source_files
       unit_tests.source_files = [
         "components/#{component.base_name}/tests/unit/*.{h,m,swift}",
         "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"

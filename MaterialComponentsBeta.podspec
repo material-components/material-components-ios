@@ -1,3 +1,5 @@
+require_relative "podspec_helpers/mixed_readiness_podspec_helper"
+
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponentsBeta"
   mdc.version      = "84.1.1"
@@ -101,6 +103,15 @@ Pod::Spec.new do |mdc|
       "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/supplemental/*.{h,m,swift}"
       ]
       unit_tests.resources = "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/resources/*"
+    end
+  end
+
+  mdc.subspec "TextFields+Beta" do |extension|
+    extension.ios.deployment_target = '9.0'
+    extension.public_header_files = MixedReadinessPodspecHelper.mixed_readiness_component("TextFields").beta_public_header_files
+    extension.source_files = MixedReadinessPodspecHelper.mixed_readiness_component("TextFields").beta_source_files
+    extension.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = MixedReadinessPodspecHelper.mixed_readiness_component("TextFields").beta_unit_test_source_files
     end
   end
 
