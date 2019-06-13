@@ -50,7 +50,7 @@
 }
 
 /**
- Test to confirm behavior of initializing a @c MDCChipView without any customization.
+ Test to confirm behavior of initializing a @c MDCSlider without any customization.
  */
 - (void)testDefaultSliderBehaviorWithRipple {
   // Then
@@ -95,7 +95,7 @@
 }
 
 /**
- Test setting @c inkColor correctly sets the @c rippleColor on @c rippleView of the chip view.
+ Test setting @c inkColor correctly sets the @c rippleColor on @c rippleView of the slider.
  */
 - (void)testSetCustomInkColorUpdatesRippleView {
   // Given

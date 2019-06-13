@@ -159,15 +159,8 @@ IB_DESIGNABLE
  */
 - (nullable UIColor *)backgroundTrackTickColorForState:(UIControlState)state;
 
-/**
- The color of the Ink ripple.
-
- Defaults to transparent blue.
- */
-@property(nonatomic, strong, nullable) UIColor *inkColor;
-
 /*
- This property determines if an @c MDCSlider should use the @c MDCRippleView behavior or not.
+ Determines if an @c MDCSlider should use the @c MDCRippleView behavior or not.
  By setting this property to @c YES, @c MDCRippleView is used to provide the user visual
  touch feedback, instead of the legacy @c MDCInkView.
  @note Defaults to @c NO.
@@ -337,6 +330,20 @@ IB_DESIGNABLE
  @note Has no effect if @c statefulAPIEnabled is @c YES.
  */
 @property(nonatomic, strong, null_resettable) UIColor *trackBackgroundColor UI_APPEARANCE_SELECTOR;
+
+@end
+
+@interface MDCSlider (ToBeDeprecated)
+
+/**
+ The color of the Ink ripple.
+
+ Defaults to transparent blue.
+ @warning This method will eventually be deprecated. Opt-in to Ripple by setting
+ enableRippleBehavior to YES, and then use rippleColor instead. Learn more at
+ https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple
+ */
+@property(nonatomic, strong, nullable) UIColor *inkColor;
 
 @end
 
