@@ -16,9 +16,16 @@
 
 #import "MaterialButtons.h"
 
+
+/**
+ @c MDCBannerViewLayoutMode specifies the layout mode of an MDCBannerView.
+ */
+// TODO: Replace Line with Row in MDCBannerViewLayoutMode enumeration.
+// https://github.com/material-components/material-components-ios/pull/7572#discussion_r293167592
 typedef NS_ENUM(NSInteger, MDCBannerViewLayoutMode) {
   MDCBannerViewLayoutModeAutomatic,   // Layout is set automatically based on how elements are
-                                      // configured on banner view
+                                      // configured on banner view. One of three other layouts will
+                                      // be used internally.
   MDCBannerViewLayoutModeSingleLine,  // All elements on the same line, only supports one button
   MDCBannerViewLayoutModeMultiLineStackedButton,  // Multiline, stacked button layout
   MDCBannerViewLayoutModeMultiLineAlignedButton,  // Multiline, all buttons on the same line
