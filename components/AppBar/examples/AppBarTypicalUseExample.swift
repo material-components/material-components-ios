@@ -115,6 +115,7 @@ extension AppBarTypicalUseSwiftExample {
     let cell = self.tableView.dequeueReusableCell(withIdentifier: "cell") ??
         UITableViewCell(style: .default, reuseIdentifier: "cell")
       cell.layoutMargins = .zero
+      cell.textLabel?.text = "\(indexPath.row)"
       cell.selectionStyle = .none
       return cell
   }

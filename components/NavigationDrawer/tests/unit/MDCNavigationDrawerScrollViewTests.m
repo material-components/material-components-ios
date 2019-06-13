@@ -723,4 +723,32 @@
   XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.headerShadowLayer.elevation, 4, 0.001);
 }
 
+- (void)testMaximumInitialDrawerHeightWhenPreferredContentSizeIsntUpdatedYet {
+  // Given
+  CGRect fakeRect = CGRectMake(0, 0, 250, 500);
+  self.fakeBottomDrawer.originalPresentingViewController.view.bounds = fakeRect;
+  self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(250, 0);
+
+  // When
+  CGFloat drawerHeight = [self.fakeBottomDrawer calculateMaximumInitialDrawerHeight];
+
+  // Then
+  XCTAssertEqualWithAccuracy(drawerHeight, 250, 0.001);
+}
+
+- (void)testSettingShouldIncludeSafeAreaInContentHeight {
+  // Given
+  self.drawerViewController.shouldIncludeSafeAreaInContentHeight = YES;
+
+  // When
+  MDCBottomDrawerPresentationController *presentationController =
+      (MDCBottomDrawerPresentationController *)self.drawerViewController.presentationController;
+  [presentationController presentationTransitionWillBegin];
+
+  // Then
+  XCTAssertTrue(presentationController.shouldIncludeSafeAreaInContentHeight);
+  XCTAssertTrue(presentationController.bottomDrawerContainerViewController
+                    .shouldIncludeSafeAreaInContentHeight);
+}
+
 @end

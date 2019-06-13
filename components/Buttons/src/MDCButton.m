@@ -539,12 +539,10 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [self.rippleView setRippleColor:inkColor forState:MDCRippleStateHighlighted];
 }
 
-- (CGFloat)inkMaxRippleRadius {
-  return _inkView.maxRippleRadius;
-}
-
 - (void)setInkMaxRippleRadius:(CGFloat)inkMaxRippleRadius {
+  _inkMaxRippleRadius = inkMaxRippleRadius;
   _inkView.maxRippleRadius = inkMaxRippleRadius;
+  self.rippleView.maximumRadius = inkMaxRippleRadius;
 }
 
 - (void)setEnableRippleBehavior:(BOOL)enableRippleBehavior {

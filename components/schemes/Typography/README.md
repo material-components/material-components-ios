@@ -8,7 +8,7 @@ path: /catalog/theming/typography/
 api_doc_root: true
 -->
 
-<!-- This file was auto-generated using scripts/generate_readme schemes/Typography -->
+<!-- This file was auto-generated using ./scripts/generate_readme schemes/Typography -->
 
 # Typography Scheme
 
@@ -37,7 +37,6 @@ font or button font.
   - [Importing](#importing)
 - [Usage](#usage)
   - [Dynamic Type](#dynamic-type)
-- [Extensions](#extensions)
 
 - - -
 
@@ -107,18 +106,11 @@ import MaterialComponents.MaterialTypographyScheme
 
 ### Dynamic Type
 
- #### Overview
- Users configure text styles on fonts, such as caption and overline, included in a typography scheme. Then, these scalable fonts can be used for [Dynamic Type](../../Typography) for components. Some default versions of MDCTypographyScheme include scalable fonts. The inline documentation indicates whether a default version of MDCTypographyScheme consists of scalable fonts or not.
- 
- #### useCurrentContentSizeCategoryWhenApplied
- `useCurrentContentSizeCategoryWhenApplied` is a property on MDCTypographyScheme. This property only has an effect if the fonts stored on the typography scheme are scalable. It indicates whether the scalable font on the scheme should be adjusted with respect to the current content size category when it is applied on a component.
+#### Overview
 
+Users configure text styles on fonts, such as caption and overline, included in a typography scheme. Then, these scalable fonts can be used for [Dynamic Type](../../Typography) for components. Some default versions of MDCTypographyScheme include scalable fonts. The inline documentation indicates whether a default version of MDCTypographyScheme consists of scalable fonts or not.
 
-## Extensions
+#### useCurrentContentSizeCategoryWhenApplied
 
-<!-- Template: Extensions should be called out separately from Usage docs.
+`useCurrentContentSizeCategoryWhenApplied` is a property on MDCTypographyScheme. This property only has an effect if the fonts stored on the typography scheme are scalable. It indicates whether the scalable font on the scheme should be adjusted with respect to the current content size category when it is applied on a component.
 
-<!-- Extracted from docs/typography-theming.md -->
-
-
--->

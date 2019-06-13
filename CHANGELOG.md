@@ -1,10 +1,165 @@
+# 84.6.0
+
+In this minor release we added new features to ActionSheet and NavigationDrawer, as well as additional tests and bug fixes.
+
+## New features
+
+ActionSheet now allows clients to align all titles regardless of if an image is present or not.
+
+```swift
+let actionSheet = MDCActionSheetController()
+let actionOne = MDCActionSheetAction(title: "Email",
+                                     image: nil) { (_) in
+                                       print("Email action") }
+let actionTwo = MDCActionSheetAction(title: "Cancel",
+                                     image: UIImage(named: "CancelImage")) { (_) in
+                                       print("Cancel action") }
+actionSheet.addAction(actionOne)
+actionSheet.addAction(actionTwo)
+actionSheet.alwaysAlignTitleLeadingEdges = true
+```
+
+NavigationDrawer now allows clients to automatically include the `safeAreaInsets` in the content height calculation.
+By enabling this flag the `MDCBottomDrawerViewController` will add the `safeAreaInsets.bottom` to the `preferredContentSize.height`
+of the `contentViewController`.
+
+```swift
+let navigationDrawer = MDCBottomDrawerViewController()
+navigationDrawer.shouldIncludeSafeAreaInContentHeight = true
+```
+
+## API changes
+
+### ActionSheet
+
+*new* property: `alwaysAlignTitleLeadingEdges` in `MDCActionSheetController`
+
+### NavigationDrawer
+
+*new* property: `shouldIncludeSafeAreaInContentHeight` in `MDCBottomDrawerViewController`
+*new* property: `shouldIncludeSafeAreaInContentHeight` in `MDCBottomDrawerPresentationController`
+
+## Component changes
+
+## Changes
+
+### ActionSheet
+
+* [Add snapshot test for when only some actions have images. (#7547)](https://github.com/material-components/material-components-ios/commit/fd142cc6c6ae524867884973eec63a063bc4c44d) (Cody Weaver)
+* [Allow clients to align titles if only some actions have images. (#7548)](https://github.com/material-components/material-components-ios/commit/b8ea0ba6dcb8a265edd18eb74d7076b8cbbe28d1) (Cody Weaver)
+
+### Buttons
+
+* [Add support for `inkMaxRippleRadius` when `enableRippleBehavior` is set to YES (#7539)](https://github.com/material-components/material-components-ios/commit/0563c907494ecae8d0e2948c95390369fffaa19b) (Cody Weaver)
+
+### List
+
+* [Fix self sizing layout in iOS 13 (#7536)](https://github.com/material-components/material-components-ios/commit/5836cd41caf9d423614f2a5b313523f7e667330b) (Andrew Overton)
+
+### MaskedTransition
+
+* [Fix infinite loops in masked transition example (#7519)](https://github.com/material-components/material-components-ios/commit/beead1eafd0bb932d7bbf1eaa82630adad64082b) (Andrew Overton)
+
+### NavigationDrawer
+
+* [Include safe area insets in content height (#7545)](https://github.com/material-components/material-components-ios/commit/37fbe0ba48f7df106ab50f1167a34feba3fd9b60) (Yarden Eitan)
+* [update (#7544)](https://github.com/material-components/material-components-ios/commit/bff29146de0278f19db9d6ffe77f20d5d33f188c) (Yarden Eitan)
+
+### Ripple
+
+* [Add snapshot test for `maximumRadius` API. #7538](https://github.com/material-components/material-components-ios/commit/6deed96003240e9b7ad861e1174e122a6bfd679c) (Cody Weaver)
+
+### Tabs
+
+* [Give MDCTabBarDelegate pass through methods for "willDisplayCell"/"didEndDisplayingCell" (#7518)](https://github.com/material-components/material-components-ios/commit/08100bd8e16678eb271011a5a0bbf9e1e3e280c2) (Andrew Overton)
+* [Revert "[Tabs] Give MDCTabBarDelegate pass through methods for "willDisplayCell"/"didEndDisplayingCell" (#7518)"](https://github.com/material-components/material-components-ios/commit/1a716e77b24ad22a90b02b0d3a30868e95314898) (Cody Weaver)
+
+### schemes/Typography
+
+* [Fix issue within the docs (#7543)](https://github.com/material-components/material-components-ios/commit/e2ffbbf07573634bd23192a4ad1dbeb1f85d4057) (Cody Weaver)
+
+## Multi-component changes
+
+* [Fix typo (#7541)](https://github.com/material-components/material-components-ios/commit/01c00a86c0196a44d908389a7d188ebc65946f46) (Andrew Overton)
+
+---
+
+# 84.5.0
+
+In this minor release we have expanded our support for NavigationBar as well as additional tests and bug fixes.
+
+## New features
+
+NavigationBar now allows clients to present overlay views that point to views in an MDCNavigationBar:
+
+```swift
+let leadingRect = navigationBar.rect(forLeading: leadingItem, in: view)
+let trailingRect = navigationBar.rect(forTrailing: trailingItem, in: view)
+// Present an overlay pointing at `leadingRect` or `trailingRect`
+```
+
+## API changes
+
+### NavigationBar
+
+#### MDCNavigationBar
+
+*new* method: `-rectForLeadingBarButtonItem:inCoordinateSpace` in `MDCNavigationBar`
+*new* method: `-rectForTrailingBarButtonItem:inCoordinateSpace` in `MDCNavigationBar`
+
+## Component changes
+
+## Changes
+
+### AppBar
+
+* [Update swift examples to use theming extension (#7511)](https://github.com/material-components/material-components-ios/commit/1df302cd48b4384cbb27718070f6a84799cb24bd) (Cody Weaver)
+
+### Buttons
+
+* [Add snapshot tests for floating button theming. (#7506)](https://github.com/material-components/material-components-ios/commit/431988ba84df4d756222ac000523d338db58532b) (featherless)
+
+### Dialogs
+
+* [Add snapshot test for dynamic type (#7447)](https://github.com/material-components/material-components-ios/commit/3e46e5f7cd33105ef95e8334c1dc47cef0f162af) (Cody Weaver)
+* [Add test for legacy dynamic type behavior around `buttonFont` (#7509)](https://github.com/material-components/material-components-ios/commit/8eff3fd1b5223dfefca6734d54554a7f92c58b7b) (Cody Weaver)
+* [Add test for legacy dynamic type with the messageFont property (#7498)](https://github.com/material-components/material-components-ios/commit/2cae47ac2297de631600842e65b8ba71d87dfbfc) (Cody Weaver)
+* [Test title font legacy behavior when dynamic type is enabled. (#7468)](https://github.com/material-components/material-components-ios/commit/03e37c2f7a41e18f17a4b734a64b06ae48c91690) (Cody Weaver)
+
+### List
+
+* [Refactor dynamic type support to use mdc_scaledFontForTraitEnvironment. (#7495)](https://github.com/material-components/material-components-ios/commit/1edfca18d5ce2722fd256167347ffbb74bd09351) (featherless)
+* [Use UICollectionView as environment in List snapshot test. (#7508)](https://github.com/material-components/material-components-ios/commit/461d475a3d83c6c3e9522f9d06862ad2a78d3d37) (Wenyu Zhang)
+
+### NavigationBar
+
+* [Add rectFor*Item APIs. (#7504)](https://github.com/material-components/material-components-ios/commit/f60a0b6a5929e67b1d4d41fb9240659c0f22a499) (featherless)
+
+### Tabs
+
+* [Allow overriding internal size class. (#7517)](https://github.com/material-components/material-components-ios/commit/22699ace0add8f1921ddb6e9cb6e2d911d4c6c90) (Robert Moore)
+
+### TextFields
+
+* [Resolve some swift warnings. (#7529)](https://github.com/material-components/material-components-ios/commit/19a35ce6eeb18ee1cdf6148b6b26c746f03e40d7) (featherless)
+
+### Typography
+
+* [Add doc to explain fallback behavior. (#7493)](https://github.com/material-components/material-components-ios/commit/8735ebb8e8c57521a7b26b9bcfb7f370b6421a9d) (Wenyu Zhang)
+
+## Multi-component changes
+
+* [Fix fallback behavior for Dynamic Type. (#7514)](https://github.com/material-components/material-components-ios/commit/225decbfb07596f193e0e567c2b71dae852cfde9) (Robert Moore)
+
+---
+
 # 84.4.0
 
 In this minor release we have expanded our support for custom Dynamic Type scaling curves in Buttons, Chips, and List, as well as additional tests and bug fixes.
 
 ## New deprecations
 
-`mdc_legacyFontScaling` in `MDCButton` and `MDCChipView` has been deprecated. 
+`mdc_legacyFontScaling` in `MDCButton` and `MDCChipView` has been deprecated.
 Please use `adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable` instead.
 
 ## New features
@@ -19,7 +174,7 @@ UIFont *customScalableFont = [fontScaler scaledFontWithFont:customFont];
 [button setTitleFont:customScalingFont forState:UIControlStateNormal];
 ```
 
-Buttons, Chips, Dialogs, and List, now have a new property 
+Buttons, Chips, Dialogs, and List, now have a new property
 `adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable` that affects the fallback behavior for when a scaled font is not provided.
 If set to YES the font size will adjust even if a scaled font has not been provided for a given UIFont property on this component. If set to NO, the font size will only be adjusted if a scaled font has been provided.
 
@@ -80,7 +235,7 @@ As part of the typography component, we added a new method to UIFont `mdc_scaled
 
 *new* property: `useCurrentContentSizeCategoryWhenApplied` in `MDCTypographyScheming`
 
-*new* property: `useCurrentContentSizeCategoryWhenApplied` in `MDCTypographyScheme` 
+*new* property: `useCurrentContentSizeCategoryWhenApplied` in `MDCTypographyScheme`
 
 ## Component changes
 
