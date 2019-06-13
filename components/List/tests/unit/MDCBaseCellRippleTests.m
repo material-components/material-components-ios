@@ -24,7 +24,6 @@
 @property(nonatomic, strong) MDCInkView *inkView;
 @end
 
-
 @interface MDCBaseCellRippleTests : XCTestCase
 
 @property(nonatomic, strong, nullable) MDCBaseCell *baseCell;
