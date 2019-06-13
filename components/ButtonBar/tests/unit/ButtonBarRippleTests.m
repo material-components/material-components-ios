@@ -43,11 +43,10 @@
   [super setUp];
 
   self.buttonBar = [[MDCButtonBar alloc] init];
-  self.buttonBar.items =
-      @[[[UIBarButtonItem alloc] initWithTitle:@"Test"
-                                         style:UIBarButtonItemStylePlain
-                                        target:nil
-                                        action:nil]];
+  self.buttonBar.items = @[ [[UIBarButtonItem alloc] initWithTitle:@"Test"
+                                                             style:UIBarButtonItemStylePlain
+                                                            target:nil
+                                                            action:nil] ];
 }
 
 - (void)tearDown {
