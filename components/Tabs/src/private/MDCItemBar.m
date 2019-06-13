@@ -523,7 +523,8 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 }
 
 - (UITabBarItem *)itemAtIndexPath:(NSIndexPath *)indexPath {
-  if (indexPath && indexPath.section == 0 && indexPath.item >= 0 && (NSInteger)_items.count > indexPath.item) {
+  if (indexPath && indexPath.section == 0 && indexPath.item >= 0 &&
+      (NSInteger)_items.count > indexPath.item) {
     return _items[indexPath.item];
   }
   return nil;
