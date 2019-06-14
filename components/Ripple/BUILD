@@ -43,7 +43,7 @@ mdc_objc_library(
     name = "private",
     hdrs = native.glob(["src/private/*.h"]),
     includes = ["src/private"],
-    visibility = ["//visibility:private"],
+    visibility = ["//:__subpackages__"],
     deps = [":Ripple"],
 )
 
