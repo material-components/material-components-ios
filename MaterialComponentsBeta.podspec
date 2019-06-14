@@ -1,4 +1,4 @@
-require_relative "podspec_helpers/mixed_readiness_podspec_helper"
+require_relative "podspec_helpers/mixed_readiness_components"
 
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponentsBeta"

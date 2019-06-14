@@ -1,4 +1,4 @@
-require_relative "podspec_helpers/mixed_readiness_podspec_helper"
+require_relative "podspec_helpers/mixed_readiness_components"
 load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |mdc|
