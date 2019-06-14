@@ -50,7 +50,7 @@
 /**
  Test to confirm behavior of initializing a @c MDCNavigationBar without any customization.
  */
-- (void)testDefaultNavBarBehaviorWithInkEnabled {
+- (void)testRippleIsDisabledForButtonBarAndRippleColorIsNil {
   // Then
   XCTAssertFalse(self.navBar.enableRippleBehavior);
   XCTAssertFalse([self.navBar leadingButtonBar].enableRippleBehavior);
@@ -64,7 +64,7 @@
 /**
  Test to confirm behavior of initializing a @c MDCNavigationBar with Ripple enabled.
  */
-- (void)testDefaultNavBarBehaviorWithRippleEnabled {
+- (void)testRippleIsEnabledForButtonBarAndRippleColorIsNilWhenRippleBehaviorIsEnabled {
   // When
   self.navBar.enableRippleBehavior = YES;
 

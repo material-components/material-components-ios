@@ -58,7 +58,7 @@
 /**
  Test to confirm behavior of initializing a @c MDCButtonBar without any customization.
  */
-- (void)testDefaultButtonBarBehaviorWithInkEnabled {
+- (void)testRippleIsDisabledForButtonsAndRippleColorIsNil {
   // Then
   XCTAssertFalse(self.buttonBar.enableRippleBehavior);
   for (UIView *view in self.buttonBar.subviews) {
@@ -73,7 +73,7 @@
 /**
  Test to confirm behavior of initializing a @c MDCButtonBar with Ripple enabled.
  */
-- (void)testDefaultButtonBarBehaviorWithRippleEnabled {
+- (void)testRippleIsEnabledForButtonsAndRippleColorIsNilWhenRippleBehaviorIsEnabled {
   // When
   self.buttonBar.enableRippleBehavior = YES;
 

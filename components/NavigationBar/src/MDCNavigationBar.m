@@ -728,15 +728,19 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 }
 
 - (void)setRippleColor:(UIColor *)rippleColor {
-  if (_rippleColor == rippleColor) {
+  if (_rippleColor == rippleColor || [_rippleColor isEqual:rippleColor]) {
     return;
   }
   _rippleColor = rippleColor;
+
   _leadingButtonBar.rippleColor = rippleColor;
   _trailingButtonBar.rippleColor = rippleColor;
 }
 
 - (void)setEnableRippleBehavior:(BOOL)enableRippleBehavior {
+  if (_enableRippleBehavior == enableRippleBehavior) {
+    return;
+  }
   _enableRippleBehavior = enableRippleBehavior;
 
   _leadingButtonBar.enableRippleBehavior = enableRippleBehavior;

@@ -50,7 +50,7 @@
 
     _appBarViewController.navigationBar.inkColor = [UIColor colorWithWhite:(CGFloat)0.9
                                                                      alpha:(CGFloat)0.1];
-    _appBarViewController.navigationBar.enableRippleBehavior = YES;
+
     self.colorScheme =
         [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
     self.typographyScheme = [[MDCTypographyScheme alloc] init];

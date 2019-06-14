@@ -520,7 +520,7 @@ static NSString *const kEnabledSelector = @"enabled";
 }
 
 - (void)setRippleColor:(UIColor *)rippleColor {
-  if (_rippleColor == rippleColor) {
+  if (_rippleColor == rippleColor || [_rippleColor isEqual:rippleColor]) {
     return;
   }
   _rippleColor = rippleColor;

@@ -181,11 +181,15 @@ IB_DESIGNABLE
  */
 @property(nonatomic, strong, nullable) UIColor *rippleColor;
 
-/*
- Determines if an @c MDCButtonBar should use the @c MDCRippleView behavior or not.
- By setting this property to @c YES, @c MDCRippleView is used to provide the user visual
- touch feedback, instead of the legacy @c MDCInkView.
- @note Defaults to @c NO.
+/**
+ By setting this property to @c YES, the Ripple component will be used instead of Ink
+ to display visual feedback to the user.
+
+ @note This property will eventually be enabled by default, deprecated, and then deleted as part
+ of our migration to Ripple. Learn more at
+ https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple
+
+ Defaults to NO.
  */
 @property(nonatomic, assign) BOOL enableRippleBehavior;
 
