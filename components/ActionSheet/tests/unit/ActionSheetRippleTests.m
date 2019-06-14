@@ -55,7 +55,7 @@
 /**
  Test to confirm behavior of initializing a @c MDCActionSheetController without any customization.
  */
-- (void)testDefaultActionSheetBehaviorWithInkEnabled {
+- (void)testRippleIsDisabledAndInkIsEnabledForAllCellsAndTheirPropertiesAreCorrect {
   // When
   NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheetController];
 
@@ -86,7 +86,7 @@
 /**
  Test to confirm behavior of initializing a @c MDCActionSheetController with Ripple enabled.
  */
-- (void)testDefaultTabBarBehaviorWithRippleEnabled {
+- (void)testRippleIsEnabledAndInkIsDisabledForAllCellsAndTheirPropertiesAreCorrectWhenRippleBehaviorIsEnabled {
   // When
   self.actionSheetController.enableRippleBehavior = YES;
   NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheetController];

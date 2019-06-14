@@ -211,7 +211,11 @@ static const CGFloat kActionItemTitleVerticalPadding = 18;
 }
 
 - (void)setRippleColor:(UIColor *)rippleColor {
+  if (_rippleColor == rippleColor || [_rippleColor isEqual:rippleColor]) {
+    return;
+  }
   _rippleColor = rippleColor;
+
   // If no ripple color then reset to the default ripple color.
   self.rippleTouchController.rippleView.rippleColor =
       rippleColor ?: [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.14];

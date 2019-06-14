@@ -454,7 +454,11 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
 }
 
 - (void)setRippleColor:(UIColor *)rippleColor {
+  if (_rippleColor == rippleColor || [_rippleColor isEqual:rippleColor]) {
+    return;
+  }
   _rippleColor = rippleColor;
+
   [self.tableView reloadData];
 }
 
