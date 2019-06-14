@@ -18,6 +18,7 @@
 
 #import "MDCItemBarCell.h"
 #import "MDCItemBarStyle.h"
+#import "MDCTabBarDisplayDelegate.h"
 #import "MDCTabBarIndicatorAttributes.h"
 #import "MDCTabBarIndicatorTemplate.h"
 #import "MDCTabBarIndicatorView.h"
@@ -413,6 +414,24 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   }
 
   return itemCell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView
+       willDisplayCell:(UICollectionViewCell *)cell
+    forItemAtIndexPath:(NSIndexPath *)indexPath {
+  UITabBarItem *item = [self itemAtIndexPath:indexPath];
+  if (item) {
+    [self.tabBar.displayDelegate tabBar:self.tabBar willDisplayItem:item];
+  }
+}
+
+- (void)collectionView:(UICollectionView *)collectionView
+    didEndDisplayingCell:(UICollectionViewCell *)cell
+      forItemAtIndexPath:(NSIndexPath *)indexPath {
+  UITabBarItem *item = [self itemAtIndexPath:indexPath];
+  if (item) {
+    [self.tabBar.displayDelegate tabBar:self.tabBar didEndDisplayingItem:item];
+  }
 }
 
 #pragma mark - UICollectionViewDelegateFlowLayout
