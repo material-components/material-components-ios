@@ -42,17 +42,56 @@ package_group(
     ],
 )
 
-mdc_public_objc_library(
+mdc_objc_library(
     name = "TextFields",
+    srcs =
+        native.glob(
+            [
+                "src/*.m",
+                "src/private/*.h",
+                "src/private/*.m",
+            ],
+            exclude = [
+                "src/MDCBaseTextField.h",
+                "src/MDCBaseTextField.m",
+            ],
+        ),
+    hdrs =
+        native.glob(
+            ["src/*.h"],
+            exclude = [
+                "src/MDCBaseTextField.h",
+            ],
+        ),
+    enable_modules = 1,
+    includes = ["src"],
     sdk_frameworks = [
         "QuartzCore",
         "UIKit",
     ],
+    visibility = ["//visibility:public"],
     deps = [
         "//components/AnimationTiming",
         "//components/Palettes",
         "//components/Typography",
         "//components/private/Math",
+    ],
+)
+
+mdc_objc_library(
+    name = "TextFieldsBeta",
+    srcs = [
+        "src/MDCBaseTextField.h",
+        "src/MDCBaseTextField.m",
+    ],
+    hdrs = [
+        "src/MDCBaseTextField.h",
+    ],
+    enable_modules = 1,
+    includes = ["src"],
+    sdk_frameworks = ["CoreGraphics"],
+    visibility = ["//:__subpackages__"],
+    deps = [
     ],
 )
 
@@ -148,7 +187,13 @@ mdc_objc_library(
 mdc_objc_library(
     name = "unit_test_sources",
     testonly = 1,
-    srcs = glob(["tests/unit/*.m"]),
+    srcs = native.glob(
+        [
+            "tests/unit/*.m",
+            "tests/unit/*.h",
+        ],
+        exclude = ["tests/unit/MDCBaseTextFieldTests.m"],
+    ),
     hdrs = glob(["tests/unit/*.h"]),
     sdk_frameworks = [
         "UIKit",
@@ -161,6 +206,30 @@ mdc_objc_library(
         ":TextFields",
         ":TypographyThemer",
     ],
+)
+
+mdc_objc_library(
+    name = "unit_test_beta_sources",
+    testonly = 1,
+    srcs = [
+        "tests/unit/MDCBaseTextFieldTests.m",
+    ],
+    sdk_frameworks = [
+        "CoreGraphics",
+        "XCTest",
+    ],
+    visibility = ["//visibility:private"],
+    deps = [
+        ":TextFieldsBeta",
+    ],
+)
+
+ios_unit_test(
+    name = "unit_tests_beta",
+    flaky = 1,
+    minimum_os_version = "9.0",
+    test_host = "//components/private/Snapshot/TestHost",
+    deps = [":unit_test_beta_sources"],
 )
 
 mdc_snapshot_objc_library(
@@ -192,7 +261,7 @@ swift_library(
     name = "unit_test_swift_sources",
     srcs = glob([
         "tests/unit/*.swift",
-        "tests/unit/Theming/*.swift"
+        "tests/unit/Theming/*.swift",
     ]),
     copts = [
         "-swift-version",
