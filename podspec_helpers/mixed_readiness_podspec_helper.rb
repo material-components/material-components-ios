@@ -40,23 +40,20 @@ module MixedReadinessComponents
       "components/TextFields/tests/unit/MDCBaseTextFieldTests.m"
     ])
 
-    public_header_files = [
+    public_header_files = Dir.glob([
       "components/TextFields/src/*.h"
-    ]
-    public_header_files = Dir.glob(public_header_files) - beta_public_header_files
+    ]) - beta_public_header_files
 
-    source_files = [
+    source_files = Dir.glob([
       "components/TextFields/src/*.{h,m}",
       "components/TextFields/src/private/*.{h,m}"
-    ]
-    source_files = Dir.glob(source_files) - beta_source_files
+    ]) - beta_source_files
 
-    unit_test_source_files = [
+    unit_test_source_files = Dir.glob([
       "components/TextFields/tests/unit/*.{h,m,swift}",
       "components/TextFields/tests/unit/MDCBaseTextFieldTests.m",
       "components/TextFields/tests/unit/supplemental/*.{h,m,swift}",
-    ]
-    unit_test_source_files = Dir.glob(unit_test_source_files) - beta_unit_test_source_files
+    ]) - beta_unit_test_source_files
 
     return MixedReadinessComponent.new(
       public_header_files,
