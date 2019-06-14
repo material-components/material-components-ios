@@ -17,16 +17,16 @@
 #import "MaterialButtons.h"
 
 /**
- @c MDCBannerViewLayoutMode specifies the layout mode of an MDCBannerView.
+ @c MDCBannerViewLayoutStyle specifies the layout style of an MDCBannerView.
  */
-typedef NS_ENUM(NSInteger, MDCBannerViewLayoutMode) {
-  MDCBannerViewLayoutModeAutomatic,  // Layout is set automatically based on how elements are
-                                     // configured on banner view. One of three other layouts will
-                                     // be used internally.
-  MDCBannerViewLayoutModeSingleRow,  // All elements on the same row, only supports one button.
-                                     // trailingButton is hidden under this layout mode.
-  MDCBannerViewLayoutModeMultiRowStackedButton,  // Multilple rows with stacked button layout
-  MDCBannerViewLayoutModeMultiRowAlignedButton,  // Multiple rows with aligned buttons horizontally
+typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
+  MDCBannerViewLayoutStyleAutomatic,  // Layout is set automatically based on how elements are
+                                      // configured on banner view. One of three other layouts will
+                                      // be used internally.
+  MDCBannerViewLayoutStyleSingleRow,  // All elements on the same row, only supports one button.
+                                      // trailingButton is hidden under this layout style.
+  MDCBannerViewLayoutStyleMultiRowStackedButton,  // Multilple rows with stacked button layout
+  MDCBannerViewLayoutStyleMultiRowAlignedButton,  // Multiple rows with aligned buttons horizontally
 };
 
 /**
@@ -38,11 +38,11 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutMode) {
 __attribute__((objc_subclassing_restricted)) @interface MDCBannerView : UIView
 
 /**
- The layout mode of a @c MDCBannerView.
+ The layout style of a @c MDCBannerView.
 
- The default value is MDCBannerViewLayoutModeAutomatic.
+ The default value is MDCBannerViewLayoutStyleAutomatic.
  */
-@property(nonatomic, readwrite, assign) MDCBannerViewLayoutMode bannerViewLayoutMode;
+@property(nonatomic, readwrite, assign) MDCBannerViewLayoutStyle bannerViewLayoutStyle;
 
 /**
  A view that displays the text on a @c MDCBannerView

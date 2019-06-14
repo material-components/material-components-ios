@@ -348,7 +348,7 @@ static NSString *const exampleExtraLongText =
   }
 
   MDCBannerView *bannerView = [[MDCBannerView alloc] init];
-  bannerView.bannerViewLayoutMode = MDCBannerViewLayoutModeSingleRow;
+  bannerView.bannerViewLayoutStyle = MDCBannerViewLayoutStyleSingleRow;
   bannerView.textLabel.text = exampleLongText;
   bannerView.backgroundColor = self.colorScheme.surfaceColor;
   UIEdgeInsets margins = UIEdgeInsetsZero;
