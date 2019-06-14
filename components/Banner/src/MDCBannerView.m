@@ -164,6 +164,14 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   [self setupConstraints];
 }
 
+- (void)setBannerViewLayoutMode:(MDCBannerViewLayoutMode)bannerViewLayoutMode {
+  _bannerViewLayoutMode = bannerViewLayoutMode;
+  if (bannerViewLayoutMode == MDCBannerViewLayoutModeSingleRow) {
+    // Only leadingButton is supported in MDCBannerViewLayoutModeSingleRow mode.
+    self.trailingButton.hidden = YES;
+  }
+}
+
 - (void)setDividerColor:(UIColor *)dividerColor {
   self.divider.backgroundColor = dividerColor;
 }
