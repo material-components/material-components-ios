@@ -57,7 +57,7 @@
 /**
  Test to confirm behavior of initializing a @c MDCBottomNavigationBar without any customization.
  */
-- (void)testDefaultBottomNavigationBarBehaviorWithInkEnabled {
+- (void)testEnabledInkAndDisabledRippleColorsAndSuperviewsAndBounds {
   // Then
   XCTAssertFalse(self.bottomNavigationBar.enableRippleBehavior);
   for (MDCBottomNavigationItemView *itemView in self.bottomNavigationBar.itemViews) {
@@ -78,7 +78,7 @@
 /**
  Test to confirm behavior of initializing a @c MDCBottomNavigationBar with Ripple enabled.
  */
-- (void)testDefaultBottomNavigationBarBehaviorWithRippleEnabled {
+- (void)testEnabledRippleAndDisabledInkColorsAndSuperviewsAndBoundsWithRippleBehaviorEnabled {
   // When
   self.bottomNavigationBar.enableRippleBehavior = YES;
 
@@ -120,7 +120,7 @@
 /**
  Test to confirm that default behavior triggers ink on touch and not ripple.
  */
-- (void)testDefaultBottomNavigationBehaviorThenInvokeItemToCheckInkIsInvoked {
+- (void)testTouchingItemToCheckInkIsInvokedAndNotRipple {
   // Then
   for (MDCBottomNavigationItemView *itemView in self.bottomNavigationBar.itemViews) {
     XCTAssertFalse([self.bottomNavigationBar rippleTouchController:itemView.rippleTouchController
