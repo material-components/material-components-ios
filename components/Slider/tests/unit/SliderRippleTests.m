@@ -52,7 +52,7 @@
 /**
  Test to confirm behavior of initializing a @c MDCSlider without any customization.
  */
-- (void)testDefaultSliderBehaviorWithRipple {
+- (void)testRippleIsDisabledAndThatItsPropertiesAreSetUpCorrectly {
   // Then
   XCTAssertNotNil(self.slider.thumbTrack.rippleView);
   XCTAssertEqualObjects(self.slider.thumbTrack.rippleView.rippleColor,
@@ -67,7 +67,7 @@
 /**
  Test to confirm that setting @c enableRippleBehavior adds the @c rippleView as a subview.
  */
-- (void)testEnableRippleBehaviorAddsRippleViewAsSubviewOfThumbView {
+- (void)testRippleIsEnabledAndThatItsPropertiesAreSetUpCorrectlyWhenRippleBehaviorIsEnabled {
   // When
   self.slider.enableRippleBehavior = YES;
 
