@@ -224,12 +224,11 @@ mdc_objc_library(
     ],
 )
 
-ios_unit_test(
+mdc_unit_test_suite(
     name = "unit_tests_beta",
-    flaky = 1,
-    minimum_os_version = "9.0",
-    test_host = "//components/private/Snapshot/TestHost",
-    deps = [":unit_test_beta_sources"],
+    deps = [
+        ":unit_test_beta_sources",
+    ],
 )
 
 mdc_snapshot_objc_library(
