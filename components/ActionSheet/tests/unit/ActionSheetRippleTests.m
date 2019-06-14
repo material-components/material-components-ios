@@ -86,7 +86,8 @@
 /**
  Test to confirm behavior of initializing a @c MDCActionSheetController with Ripple enabled.
  */
-- (void)testRippleIsEnabledAndInkIsDisabledForAllCellsAndTheirPropertiesAreCorrectWhenRippleBehaviorIsEnabled {
+- (void)
+    testRippleIsEnabledAndInkIsDisabledForAllCellsAndTheirPropertiesAreCorrectWhenRippleBehaviorIsEnabled {
   // When
   self.actionSheetController.enableRippleBehavior = YES;
   NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheetController];
