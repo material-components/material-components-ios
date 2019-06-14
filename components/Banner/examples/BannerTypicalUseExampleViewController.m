@@ -363,7 +363,6 @@ static NSString *const exampleExtraLongText =
   button.uppercaseTitle = YES;
   [button setTitleColor:self.colorScheme.primaryColor forState:UIControlStateNormal];
   button.backgroundColor = self.colorScheme.surfaceColor;
-  bannerView.trailingButton.hidden = YES;
   bannerView.imageView.hidden = YES;
   bannerView.showsDivider = YES;
 

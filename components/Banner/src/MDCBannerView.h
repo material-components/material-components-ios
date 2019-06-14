@@ -23,7 +23,8 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutMode) {
   MDCBannerViewLayoutModeAutomatic,  // Layout is set automatically based on how elements are
                                      // configured on banner view. One of three other layouts will
                                      // be used internally.
-  MDCBannerViewLayoutModeSingleRow,  // All elements on the same row, only supports one button
+  MDCBannerViewLayoutModeSingleRow,  // All elements on the same row, only supports one button.
+                                     // trailingButton is hidden under this layout mode.
   MDCBannerViewLayoutModeMultiRowStackedButton,  // Multilple rows with stacked button layout
   MDCBannerViewLayoutModeMultiRowAlignedButton,  // Multiple rows with aligned buttons horizontally
 };
