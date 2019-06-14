@@ -79,7 +79,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(
   return MDCItemBarAlignmentLeading;
 }
 
-static inline UIColor *kRippleColor() {
+static inline UIColor *RippleColor() {
   return [UIColor colorWithWhite:1 alpha:(CGFloat)0.7];
 }
 
@@ -139,8 +139,8 @@ static inline UIColor *kRippleColor() {
   _unselectedItemTintColor = [UIColor colorWithWhite:1 alpha:(CGFloat)0.7];
   _selectedTitleColor = _selectedItemTintColor;
   _unselectedTitleColor = _unselectedItemTintColor;
-  _inkColor = kRippleColor();
-  _rippleColor = kRippleColor();
+  _inkColor = RippleColor();
+  _rippleColor = RippleColor();
 
   self.clipsToBounds = YES;
   _barPosition = UIBarPositionAny;
@@ -304,11 +304,12 @@ static inline UIColor *kRippleColor() {
 }
 
 - (void)setRippleColor:(UIColor *)rippleColor {
-  if (_rippleColor != rippleColor && ![_rippleColor isEqual:rippleColor]) {
-    _rippleColor = rippleColor;
-
-    [self updateItemBarStyle];
+  if (_rippleColor == rippleColor || [_rippleColor isEqual:rippleColor]) {
+    return;
   }
+  _rippleColor = rippleColor;
+
+  [self updateItemBarStyle];
 }
 
 - (void)setUnselectedItemTitleFont:(UIFont *)unselectedItemTitleFont {

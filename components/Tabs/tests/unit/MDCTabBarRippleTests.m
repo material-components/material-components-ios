@@ -88,7 +88,7 @@
 /**
  Test to confirm behavior of initializing a @c MDCTabBar without any customization.
  */
-- (void)testDefaultTabBarBehaviorWithInkEnabled {
+- (void)testEnabledInkAndDisabledRipplePropertiesAndBehavior {
   // Given
   NSArray<MDCItemBarCell *> *itemBarCells = [self getItemBarCells];
 
@@ -122,7 +122,7 @@
 /**
  Test to confirm behavior of initializing a @c MDCTabBar with Ripple enabled.
  */
-- (void)testDefaultTabBarBehaviorWithRippleEnabled {
+- (void)testEnabledRippleAndDisabledInkPropertiesAndBehaviorWhenEnabledRippleBehavior {
   // Given
   NSArray<MDCItemBarCell *> *itemBarCells = [self getItemBarCells];
 
