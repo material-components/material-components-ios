@@ -105,6 +105,11 @@ static const CGFloat kMinimumHeight = 48;
  */
 static const NSInteger kButtonTagStart = 20000;
 
+/**
+ The ink radius of the action button.
+ */
+static const CGFloat kButtonInkRadius = 64;
+
 static const MDCFontTextStyle kMessageTextStyle = MDCFontTextStyleBody1;
 static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 
@@ -165,7 +170,9 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
+    self.inkMaxRippleRadius = kButtonInkRadius;
     self.inkColor = [UIColor colorWithWhite:1 alpha:(CGFloat)0.06];
+    self.inkStyle = MDCInkStyleUnbounded;
 
     CGFloat buttonContentPadding =
         MDCSnackbarMessage.usesLegacySnackbar ? kLegacyButtonPadding : kButtonPadding;
