@@ -1,4 +1,4 @@
-// Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2019-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -49,7 +49,7 @@
 /**
  Test to confirm behavior of initializing a @c MDCAlerController without any customization.
  */
-- (void)testDefaultAlertControllerBehaviorWithInkEnabled {
+- (void)testRippleIsDisabledForButtons {
   // Then
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   XCTAssertFalse(self.alert.enableRippleBehavior);
@@ -63,7 +63,7 @@
 /**
  Test to confirm behavior of initializing a @c MDCAlerController with Ripple enabled.
  */
-- (void)testDefaultAlertControllerBehaviorWithRippleEnabled {
+- (void)testRippleIsEnabledForButtonsWhenRippleBehaviorIsEnabled {
   // When
   self.alert.enableRippleBehavior = YES;
 
