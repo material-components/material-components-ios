@@ -466,14 +466,14 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
       remainingWidth -= kSpaceBetweenIconImageAndTextLabel;
     }
     layoutStyle = [self isAbleToFitTextLabel:self.textLabel withWidthLimit:remainingWidth]
-                     ? MDCBannerViewLayoutStyleSingleRow
-                     : MDCBannerViewLayoutStyleMultiRowAlignedButton;
+                      ? MDCBannerViewLayoutStyleSingleRow
+                      : MDCBannerViewLayoutStyleMultiRowAlignedButton;
   } else {
     [self.trailingButton sizeToFit];
     CGFloat buttonWidth = [self widthSumForButtons:@[ self.leadingButton, self.trailingButton ]];
     remainingWidth -= buttonWidth;
     layoutStyle = (remainingWidth > 0) ? MDCBannerViewLayoutStyleMultiRowAlignedButton
-                                      : MDCBannerViewLayoutStyleMultiRowStackedButton;
+                                       : MDCBannerViewLayoutStyleMultiRowStackedButton;
   }
   return layoutStyle;
 }
