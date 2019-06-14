@@ -1738,12 +1738,8 @@ Pod::Spec.new do |mdc|
 
   mdc.subspec "TextFields" do |component|
     component.ios.deployment_target = '9.0'
-    component.exclude_files = MixedReadinessPodspecHelper.mixed_readiness_component("#{component.base_name}").beta_source_and_header_files
-    component.public_header_files = "components/#{component.base_name}/src/*.h"
-    component.source_files = [
-      "components/#{component.base_name}/src/*.{h,m}",
-      "components/#{component.base_name}/src/private/*.{h,m}"
-    ]
+    component.public_header_files = MixedReadinessComponents.text_fields.public_header_files
+    component.source_files = MixedReadinessComponents.text_fields.source_files
 
     component.dependency "MaterialComponents/AnimationTiming"
     component.dependency "MaterialComponents/Palettes"
@@ -1753,11 +1749,7 @@ Pod::Spec.new do |mdc|
     component.dependency "MDFInternationalization"
 
     component.test_spec 'UnitTests' do |unit_tests|
-      unit_tests.exclude_files = MixedReadinessPodspecHelper.mixed_readiness_component("TextFields").beta_unit_test_source_files
-      unit_tests.source_files = [
-        "components/#{component.base_name}/tests/unit/*.{h,m,swift}",
-        "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-      ]
+      unit_tests.source_files = MixedReadinessComponents.text_fields.unit_test_source_files
       unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
       unit_tests.dependency "MaterialComponents/TextFields+ColorThemer"
       unit_tests.dependency "MaterialComponents/TextFields+FontThemer"

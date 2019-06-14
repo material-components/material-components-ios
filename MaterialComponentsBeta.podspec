@@ -106,12 +106,13 @@ Pod::Spec.new do |mdc|
     end
   end
 
-  mdc.subspec "TextFields+Beta" do |extension|
-    extension.ios.deployment_target = '9.0'
-    extension.public_header_files = MixedReadinessPodspecHelper.mixed_readiness_component("TextFields").beta_public_header_files
-    extension.source_files = MixedReadinessPodspecHelper.mixed_readiness_component("TextFields").beta_source_files
-    extension.test_spec 'UnitTests' do |unit_tests|
-      unit_tests.source_files = MixedReadinessPodspecHelper.mixed_readiness_component("TextFields").beta_unit_test_source_files
+  mdc.subspec "TextFields+Beta" do |component|
+    component.ios.deployment_target = '9.0'
+    component.public_header_files = MixedReadinessComponents.text_fields.beta_public_header_files
+    component.source_files = MixedReadinessComponents.text_fields.beta_source_files
+
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = MixedReadinessComponents.text_fields.beta_unit_test_source_files
     end
   end
 
