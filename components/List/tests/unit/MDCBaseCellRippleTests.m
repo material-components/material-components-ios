@@ -47,7 +47,7 @@
 /**
  Test to confirm behavior of initializing a @c MDCBaseCell without any customization.
  */
-- (void)testDefaultBaseCellBehaviorWithRipple {
+- (void)testRippleIsDisabledAndRipplePropertiesAreCorrect {
   // Then
   XCTAssertNotNil(self.baseCell.rippleView);
   XCTAssertEqualObjects(self.baseCell.rippleView.rippleColor,
@@ -64,7 +64,7 @@
 /**
  Test to confirm that setting @c enableRippleBehavior adds the @c rippleView as a subview.
  */
-- (void)testEnableRippleBehaviorAddsRippleViewAsSubviewOfButton {
+- (void)testRippleIsEnabledAndRipplePropertiesAreCorrectWhenRippleBehaviorIsEnabled {
   // When
   self.baseCell.enableRippleBehavior = YES;
 
