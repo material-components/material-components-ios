@@ -160,23 +160,11 @@ IB_DESIGNABLE
 @property(nonatomic, strong, nullable) UIColor *titleTextColor;
 
 /**
- The rippleColor that is used for all buttons in trailing and leading button bars.
+ The inkColor that is used for all buttons in trailing and leading button bars.
 
- If set to nil, button bar buttons use default ripple color.
+ If set to nil, button bar buttons use default ink color.
  */
-@property(nonatomic, strong, nullable) UIColor *rippleColor;
-
-/**
- By setting this property to @c YES, the Ripple component will be used instead of Ink
- to display visual feedback to the user.
-
- @note This property will eventually be enabled by default, deprecated, and then deleted as part
- of our migration to Ripple. Learn more at
- https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple
-
- Defaults to NO.
- */
-@property(nonatomic, assign) BOOL enableRippleBehavior;
+@property(nonatomic, strong, nullable) UIColor *inkColor;
 
 /**
  If true, all button titles will be converted to uppercase.
@@ -360,19 +348,5 @@ IB_DESIGNABLE
 
 /** The text alignment of the navigation bar title. Defaults to NSTextAlignmentLeft. */
 @property(nonatomic) NSTextAlignment textAlignment __deprecated_msg("Use titleAlignment instead.");
-
-@end
-
-@interface MDCNavigationBar (ToBeDeprecated)
-
-/**
- The inkColor that is used for all buttons in trailing and leading button bars.
-
- If set to nil, button bar buttons use default ink color.
- @warning This method will eventually be deprecated. Opt-in to Ripple by setting
- enableRippleBehavior to YES, and then use rippleColor instead. Learn more at
- https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple
- */
-@property(nonatomic, strong, nullable) UIColor *inkColor;
 
 @end
