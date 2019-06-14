@@ -160,23 +160,11 @@ IB_DESIGNABLE
 - (nullable UIColor *)backgroundTrackTickColorForState:(UIControlState)state;
 
 /**
- By setting this property to @c YES, the Ripple component will be used instead of Ink
- to display visual feedback to the user.
-
- @note This property will eventually be enabled by default, deprecated, and then deleted as part
- of our migration to Ripple. Learn more at
- https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple
-
- Defaults to NO.
- */
-@property(nonatomic, assign) BOOL enableRippleBehavior;
-
-/**
- The color of the ripple.
+ The color of the Ink ripple.
 
  Defaults to transparent blue.
  */
-@property(nonatomic, strong, nullable) UIColor *rippleColor;
+@property(nonatomic, strong, nullable) UIColor *inkColor;
 
 /**
  The radius of the cursor (thumb).
@@ -334,20 +322,6 @@ IB_DESIGNABLE
  @note Has no effect if @c statefulAPIEnabled is @c YES.
  */
 @property(nonatomic, strong, null_resettable) UIColor *trackBackgroundColor UI_APPEARANCE_SELECTOR;
-
-@end
-
-@interface MDCSlider (ToBeDeprecated)
-
-/**
- The color of the Ink ripple.
-
- Defaults to transparent blue.
- @warning This method will eventually be deprecated. Opt-in to Ripple by setting
- enableRippleBehavior to YES, and then use rippleColor instead. Learn more at
- https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple
- */
-@property(nonatomic, strong, nullable) UIColor *inkColor;
 
 @end
 
