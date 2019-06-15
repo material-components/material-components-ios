@@ -48,7 +48,9 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
   self.imageRenderingMode = UIImageRenderingModeAlwaysTemplate;
   self.actionTintColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kMediumAlpha];
   self.actionTextColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kHighAlpha];
-  self.inkColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kInkAlpha];
+  UIColor *rippleColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kInkAlpha];
+  self.inkColor = rippleColor;
+  self.rippleColor = rippleColor;
 }
 
 - (void)applyThemeWithTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
