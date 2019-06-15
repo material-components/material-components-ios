@@ -86,7 +86,7 @@
   MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:titleString
                                                                    message:messageString];
   alert.mdc_adjustsFontForContentSizeCategory = YES;
-
+  alert.enableRippleBehavior = YES;
   MDCActionHandler handler = ^(MDCAlertAction *action) {
     NSLog(@"action pressed: %@", action.title);
   };

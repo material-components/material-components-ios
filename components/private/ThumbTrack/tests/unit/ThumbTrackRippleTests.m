@@ -14,10 +14,11 @@
 
 #import <XCTest/XCTest.h>
 
-#import "../../../../../components/Ripple/src/private/MDCRippleLayer.h"
 #import "MaterialInk.h"
 #import "MaterialRipple.h"
 #import "MaterialThumbTrack.h"
+
+@class MDCRippleLayer;
 
 @interface MDCRippleView (Testing)
 @property(nonatomic, strong) MDCRippleLayer *activeRippleLayer;
@@ -54,7 +55,7 @@
 /**
  Test to confirm behavior of initializing a @c MDCThumbTrack without any customization.
  */
-- (void)testDefaultThumbTrackBehaviorWithRipple {
+- (void)testRippleIsDisabledByDefaultAndItsColorAndStyleAreCorrect {
   // Then
   XCTAssertNotNil(self.thumbTrack.rippleView);
   XCTAssertEqualObjects(self.thumbTrack.rippleView.rippleColor,
@@ -68,7 +69,7 @@
 /**
  Test to confirm that setting @c enableRippleBehavior adds the @c rippleView as a subview.
  */
-- (void)testEnableRippleBehaviorAddsRippleViewAsSubviewOfThumbView {
+- (void)testRippleIsEnabledAndItsColorAndStyleAndBoundsAreCorrectWhenRippleBehaviorIsEnabled {
   // When
   self.thumbTrack.enableRippleBehavior = YES;
 

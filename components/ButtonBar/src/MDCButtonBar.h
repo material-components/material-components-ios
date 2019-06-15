@@ -175,17 +175,43 @@ IB_DESIGNABLE
 @property(nonatomic) MDCButtonBarLayoutPosition layoutPosition;
 
 /**
- The inkColor that is used for all buttons in the button bar.
+ The rippleColor that is used for all buttons in the button bar.
 
- If set to nil, button bar buttons use default ink color.
+ If set to nil, button bar buttons use default ripple color.
  */
-@property(nonatomic, strong, nullable) UIColor *inkColor;
+@property(nonatomic, strong, nullable) UIColor *rippleColor;
+
+/**
+ By setting this property to @c YES, the Ripple component will be used instead of Ink
+ to display visual feedback to the user.
+
+ @note This property will eventually be enabled by default, deprecated, and then deleted as part
+ of our migration to Ripple. Learn more at
+ https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple
+
+ Defaults to NO.
+ */
+@property(nonatomic, assign) BOOL enableRippleBehavior;
 
 /**
  Returns a height adhering to the Material spec for Bars and a width that is able to accommodate
  every item present in the `items` property. The provided size is ignored.
  */
 - (CGSize)sizeThatFits:(CGSize)size;
+
+@end
+
+@interface MDCButtonBar (ToBeDeprecated)
+
+/**
+ The inkColor that is used for all buttons in the button bar.
+
+ If set to nil, button bar buttons use default ink color.
+ @warning This method will eventually be deprecated. Opt-in to Ripple by setting
+ enableRippleBehavior to YES, and then use rippleColor instead. Learn more at
+ https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple
+ */
+@property(nonatomic, strong, nullable) UIColor *inkColor;
 
 @end
 
