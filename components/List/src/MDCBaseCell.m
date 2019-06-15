@@ -15,12 +15,14 @@
 #import "MDCBaseCell.h"
 
 #import "MaterialInk.h"
+#import "MaterialRipple.h"
 #import "MaterialShadowLayer.h"
 
 @interface MDCBaseCell ()
 
 @property(nonatomic, assign) CGPoint lastTouch;
 @property(strong, nonatomic, nonnull) MDCInkView *inkView;
+@property(strong, nonatomic, nonnull) MDCRippleView *rippleView;
 
 @end
 
@@ -52,6 +54,9 @@
   }
   _inkView.usesLegacyInkRipple = NO;
   [self addSubview:_inkView];
+  if (!self.rippleView) {
+    self.rippleView = [[MDCRippleView alloc] initWithFrame:self.bounds];
+  }
 }
 
 #pragma mark Ink
@@ -103,8 +108,10 @@
   [super setHighlighted:highlighted];
   if (highlighted) {
     [self startInk];
+    [self.rippleView beginRippleTouchDownAtPoint:_lastTouch animated:YES completion:nil];
   } else {
     [self endInk];
+    [self.rippleView beginRippleTouchUpAnimated:YES completion:nil];
   }
 }
 
@@ -112,6 +119,7 @@
   [super prepareForReuse];
   self.elevation = 0;
   [self.inkView cancelAllAnimationsAnimated:NO];
+  [self.rippleView cancelAllRipplesAnimated:NO completion:nil];
 }
 
 #pragma mark Accessors
@@ -135,11 +143,38 @@
   return self.inkView.inkColor;
 }
 
+- (void)setRippleColor:(UIColor *)rippleColor {
+  if ([self.rippleColor isEqual:rippleColor]) {
+    return;
+  }
+  self.rippleView.rippleColor = rippleColor;
+}
+
+- (UIColor *)rippleColor {
+  return self.rippleView.rippleColor;
+}
+
 - (MDCShadowLayer *)shadowLayer {
   if ([self.layer isMemberOfClass:[MDCShadowLayer class]]) {
     return (MDCShadowLayer *)self.layer;
   }
   return nil;
+}
+
+- (void)setEnableRippleBehavior:(BOOL)enableRippleBehavior {
+  if (_enableRippleBehavior == enableRippleBehavior) {
+    return;
+  }
+  _enableRippleBehavior = enableRippleBehavior;
+
+  if (enableRippleBehavior) {
+    [self.inkView removeFromSuperview];
+    self.rippleView.frame = self.bounds;
+    [self addSubview:self.rippleView];
+  } else {
+    [self.rippleView removeFromSuperview];
+    [self addSubview:self.inkView];
+  }
 }
 
 @end

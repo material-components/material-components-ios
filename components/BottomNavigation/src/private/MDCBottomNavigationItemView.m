@@ -159,6 +159,11 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
     [self addSubview:_inkView];
   }
 
+  if (!_rippleTouchController) {
+    _rippleTouchController = [[MDCRippleTouchController alloc] initWithView:self];
+    _rippleTouchController.rippleView.rippleStyle = MDCRippleStyleUnbounded;
+  }
+
   if (!_button) {
     _button = [[UIButton alloc] initWithFrame:self.bounds];
     _button.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
@@ -480,8 +485,10 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
     self.iconImageView.tintColor = self.selectedItemTintColor;
     self.label.textColor = self.selectedItemTitleColor;
   }
-  self.inkView.inkColor =
+  UIColor *rippleColor =
       [self.selectedItemTintColor colorWithAlphaComponent:MDCBottomNavigationItemViewInkOpacity];
+  self.inkView.inkColor = rippleColor;
+  self.rippleTouchController.rippleView.rippleColor = rippleColor;
 }
 
 - (void)setUnselectedItemTintColor:(UIColor *)unselectedItemTintColor {

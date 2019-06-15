@@ -14,6 +14,7 @@
 
 #import "MDCActionSheetItemTableViewCell.h"
 
+#import <MaterialComponents/MaterialRipple.h>
 #import <MaterialComponents/MaterialTypography.h>
 
 static const CGFloat kLabelAlpha = (CGFloat)0.87;
@@ -24,10 +25,15 @@ static const CGFloat kTitleLeadingPadding = 64;
 static const CGFloat kTitleTrailingPadding = 8;
 static const CGFloat kActionItemTitleVerticalPadding = 18;
 
+static inline UIColor *RippleColor() {
+  return [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.14];
+}
+
 @interface MDCActionSheetItemTableViewCell ()
 @property(nonatomic, strong) UILabel *actionLabel;
 @property(nonatomic, strong) UIImageView *actionImageView;
 @property(nonatomic, strong) MDCInkTouchController *inkTouchController;
+@property(nonatomic, strong) MDCRippleTouchController *rippleTouchController;
 @end
 
 @implementation MDCActionSheetItemTableViewCell {
@@ -100,6 +106,10 @@ static const CGFloat kActionItemTitleVerticalPadding = 18;
   if (!_inkTouchController) {
     _inkTouchController = [[MDCInkTouchController alloc] initWithView:self];
     [_inkTouchController addInkView];
+  }
+
+  if (!_rippleTouchController) {
+    _rippleTouchController = [[MDCRippleTouchController alloc] init];
   }
 
   _actionImageView = [[UIImageView alloc] init];
@@ -200,8 +210,32 @@ static const CGFloat kActionItemTitleVerticalPadding = 18;
 - (void)setInkColor:(UIColor *)inkColor {
   _inkColor = inkColor;
   // If no ink color then reset to the default ink color
-  self.inkTouchController.defaultInkView.inkColor =
-      inkColor ?: [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.14];
+  self.inkTouchController.defaultInkView.inkColor = inkColor ?: RippleColor();
+}
+
+- (void)setRippleColor:(UIColor *)rippleColor {
+  if (rippleColor != nil && (_rippleColor == rippleColor || [_rippleColor isEqual:rippleColor])) {
+    return;
+  }
+  _rippleColor = rippleColor;
+
+  // If no ripple color then reset to the default ripple color.
+  self.rippleTouchController.rippleView.rippleColor = rippleColor ?: RippleColor();
+}
+
+- (void)setEnableRippleBehavior:(BOOL)enableRippleBehavior {
+  if (_enableRippleBehavior == enableRippleBehavior) {
+    return;
+  }
+  _enableRippleBehavior = enableRippleBehavior;
+
+  if (enableRippleBehavior) {
+    [self.inkTouchController.defaultInkView removeFromSuperview];
+    [self.rippleTouchController addRippleToView:self];
+  } else {
+    [self.rippleTouchController.rippleView removeFromSuperview];
+    [self.inkTouchController addInkView];
+  }
 }
 
 - (void)setImageRenderingMode:(UIImageRenderingMode)imageRenderingMode {
