@@ -480,13 +480,6 @@ static NSString *const kOfAnnouncement = @"of";
 
 #pragma mark - Touch handlers
 
-- (void)didTouchDownButton:(UIButton *)button {
-  MDCBottomNavigationItemView *itemView = (MDCBottomNavigationItemView *)button.superview;
-  CGPoint centerPoint =
-      CGPointMake(CGRectGetMidX(itemView.inkView.bounds), CGRectGetMidY(itemView.inkView.bounds));
-  [itemView.inkView startTouchBeganAnimationAtPoint:centerPoint completion:nil];
-}
-
 - (void)didTouchUpInsideButton:(UIButton *)button {
   for (NSUInteger i = 0; i < self.items.count; i++) {
     UITabBarItem *item = self.items[i];
@@ -504,16 +497,6 @@ static NSString *const kOfAnnouncement = @"of";
       }
     }
   }
-}
-
-- (void)didTouchUpOutsideButton:(UIButton *)button {
-  MDCBottomNavigationItemView *itemView = (MDCBottomNavigationItemView *)button.superview;
-  [itemView.inkView startTouchEndedAnimationAtPoint:CGPointZero completion:nil];
-}
-
-- (void)didCancelTouchesForButton:(UIButton *)button {
-  MDCBottomNavigationItemView *itemView = (MDCBottomNavigationItemView *)button.superview;
-  [itemView.inkView cancelAllAnimationsAnimated:NO];
 }
 
 #pragma mark - Setters
