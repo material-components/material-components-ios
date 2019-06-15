@@ -14,8 +14,8 @@
 
 #import "MDCActionSheetItemTableViewCell.h"
 
+#import <MaterialComponents/MaterialRipple.h>
 #import <MaterialComponents/MaterialTypography.h>
-#import "MaterialRipple.h"
 
 static const CGFloat kLabelAlpha = (CGFloat)0.87;
 static const CGFloat kImageLeadingPadding = 8;
@@ -24,6 +24,10 @@ static const CGFloat kImageHeightAndWidth = 24;
 static const CGFloat kTitleLeadingPadding = 64;
 static const CGFloat kTitleTrailingPadding = 8;
 static const CGFloat kActionItemTitleVerticalPadding = 18;
+
+static inline UIColor *RippleColor() {
+  return [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.14];
+}
 
 @interface MDCActionSheetItemTableViewCell ()
 @property(nonatomic, strong) UILabel *actionLabel;
@@ -206,19 +210,17 @@ static const CGFloat kActionItemTitleVerticalPadding = 18;
 - (void)setInkColor:(UIColor *)inkColor {
   _inkColor = inkColor;
   // If no ink color then reset to the default ink color
-  self.inkTouchController.defaultInkView.inkColor =
-      inkColor ?: [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.14];
+  self.inkTouchController.defaultInkView.inkColor = inkColor ?: RippleColor();
 }
 
 - (void)setRippleColor:(UIColor *)rippleColor {
-  if (_rippleColor == rippleColor || [_rippleColor isEqual:rippleColor]) {
+  if (rippleColor != nil && (_rippleColor == rippleColor || [_rippleColor isEqual:rippleColor])) {
     return;
   }
   _rippleColor = rippleColor;
 
   // If no ripple color then reset to the default ripple color.
-  self.rippleTouchController.rippleView.rippleColor =
-      rippleColor ?: [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.14];
+  self.rippleTouchController.rippleView.rippleColor = rippleColor ?: RippleColor();
 }
 
 - (void)setEnableRippleBehavior:(BOOL)enableRippleBehavior {

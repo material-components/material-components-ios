@@ -136,9 +136,8 @@
  Test setting ActionSheet's RippleColor API updates the internal RippleTouchController's ripple
  color.
  */
-- (void)testSetEnableRippleBehaviorToYesThenSetRippleColor {
+- (void)testSettingRippleColor {
   // When
-  self.actionSheetController.enableRippleBehavior = YES;
   self.actionSheetController.rippleColor = UIColor.redColor;
   NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheetController];
 
