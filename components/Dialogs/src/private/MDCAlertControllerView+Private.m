@@ -130,6 +130,7 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
       [button setTitleColor:_buttonColor forState:UIControlStateNormal];
     }
     [button setTitleFont:_buttonFont forState:UIControlStateNormal];
+    button.enableRippleBehavior = self.enableRippleBehavior;
     button.inkColor = self.buttonInkColor;
     // These two lines must be after @c setTitleFont:forState: in order to @c MDCButton to handle
     // dynamic type correctly.
@@ -319,6 +320,17 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
   }
   self.layer.cornerRadius = cornerRadius;
   [self setNeedsLayout];
+}
+
+- (void)setEnableRippleBehavior:(BOOL)enableRippleBehavior {
+  if (_enableRippleBehavior == enableRippleBehavior) {
+    return;
+  }
+  _enableRippleBehavior = enableRippleBehavior;
+
+  for (MDCButton *button in self.actionManager.buttonsInActionOrder) {
+    button.enableRippleBehavior = enableRippleBehavior;
+  }
 }
 
 #pragma mark - Internal
