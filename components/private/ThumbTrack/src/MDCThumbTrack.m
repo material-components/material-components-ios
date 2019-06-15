@@ -21,6 +21,7 @@
 #import "MDCThumbView.h"
 #import "MaterialInk.h"
 #import "MaterialMath.h"
+#import "MaterialRipple.h"
 
 #pragma mark - ThumbTrack constants
 
@@ -150,17 +151,19 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 #endif
 
 @interface MDCThumbTrack () <MDCInkTouchControllerDelegate>
+@property(nonatomic, strong, nullable) MDCRippleView *rippleView;
+@property(nonatomic, strong, nullable) MDCInkTouchController *touchController;
 @end
 
 @implementation MDCThumbTrack {
   CGFloat _lastDispatchedValue;
   UIColor *_clearColor;
-  MDCInkTouchController *_touchController;
   UIView *_trackView;
   CAShapeLayer *_trackMaskLayer;
   CALayer *_trackOnLayer;
   MDCDiscreteDotView *_discreteDots;
   BOOL _shouldDisplayInk;
+  BOOL _shouldDisplayRipple;
   MDCNumericValueLabel *_valueLabel;
   UIPanGestureRecognizer *_dummyPanRecognizer;
 
@@ -193,6 +196,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     _thumbRadius = kDefaultThumbRadius;
     _filledTrackAnchorValue = kDefaultFilledTrackAnchorValue;
     _shouldDisplayInk = YES;
+    _shouldDisplayRipple = YES;
 
     // Default thumb view.
     CGRect thumbFrame = CGRectMake(0, 0, self.thumbRadius * 2, self.thumbRadius * 2);
@@ -216,17 +220,21 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     // Set up ink layer.
     _touchController = [[MDCInkTouchController alloc] initWithView:_thumbView];
     _touchController.delegate = self;
-
     [_touchController addInkView];
-
     _touchController.defaultInkView.inkStyle = MDCInkStyleUnbounded;
+
+    // Set up ripple layer.
+    _rippleView = [[MDCRippleView alloc] init];
+    _rippleView.rippleStyle = MDCRippleStyleUnbounded;
 
     _primaryColor = onTintColor ?: TrackOnColorDefault();
     _thumbEnabledColor = onTintColor ?: ThumbEnabledColorDefault();
     _trackOnColor = onTintColor ?: TrackOnColorDefault();
     _valueLabelBackgroundColor = onTintColor ?: ValueLabelBackgroundColorDefault();
-    _touchController.defaultInkView.inkColor =
+    UIColor *rippleColor =
         onTintColor ? [onTintColor colorWithAlphaComponent:kTrackOnAlpha] : InkColorDefault();
+    _touchController.defaultInkView.inkColor = rippleColor;
+    _rippleView.rippleColor = rippleColor;
     _clearColor = UIColor.clearColor;
     _valueLabelTextColor = ValueLabelTextColorDefault();
     _trackOnTickColor = UIColor.blackColor;
@@ -275,8 +283,9 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   _thumbEnabledColor = self.primaryColor;
   _trackOnColor = self.primaryColor;
 
-  _touchController.defaultInkView.inkColor =
-      [self.primaryColor colorWithAlphaComponent:kTrackOnAlpha];
+  UIColor *rippleColor = [self.primaryColor colorWithAlphaComponent:kTrackOnAlpha];
+  _touchController.defaultInkView.inkColor = rippleColor;
+  _rippleView.rippleColor = rippleColor;
   _valueLabelBackgroundColor = self.primaryColor;
   [self setNeedsLayout];
 }
@@ -288,6 +297,23 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
 - (UIColor *)inkColor {
   return _touchController.defaultInkView.inkColor;
+}
+
+- (void)setShouldDisplayInk:(BOOL)shouldDisplayInk {
+  _shouldDisplayInk = shouldDisplayInk;
+}
+
+- (BOOL)shouldDisplayInk {
+  return _shouldDisplayInk;
+}
+
+- (void)setRippleColor:(UIColor *)rippleColor {
+  _rippleView.rippleColor = rippleColor;
+  [self setNeedsLayout];
+}
+
+- (UIColor *)rippleColor {
+  return _rippleView.rippleColor;
 }
 
 - (void)setThumbEnabledColor:(UIColor *)thumbEnabledColor {
@@ -516,6 +542,14 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   _touchController.defaultInkView.maxRippleRadius = thumbMaxRippleRadius;
 }
 
+- (CGFloat)thumbRippleMaximumRadius {
+  return _rippleView.maximumRadius;
+}
+
+- (void)setThumbRippleMaximumRadius:(CGFloat)thumbRippleMaximumRadius {
+  _rippleView.maximumRadius = thumbRippleMaximumRadius;
+}
+
 - (void)setIcon:(nullable UIImage *)icon {
   [_thumbView setIcon:icon];
 }
@@ -526,6 +560,22 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     [self setPrimaryColor:_primaryColor];
   }
   [self setNeedsLayout];
+}
+
+- (void)setEnableRippleBehavior:(BOOL)enableRippleBehavior {
+  if (_enableRippleBehavior == enableRippleBehavior) {
+    return;
+  }
+  _enableRippleBehavior = enableRippleBehavior;
+
+  if (self.enableRippleBehavior) {
+    [self.touchController.defaultInkView removeFromSuperview];
+    _rippleView.frame = self.thumbView.bounds;
+    [self.thumbView addSubview:_rippleView];
+  } else {
+    [_rippleView removeFromSuperview];
+    [self.touchController addInkView];
+  }
 }
 
 #pragma mark - MDCInkTouchControllerDelegate
@@ -1073,6 +1123,11 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
                         completion:nil];
   }
 
+  // This is to make sure that we only show a ripple when there is a thumb view visible.
+  if (self.shouldDisplayRipple && CGRectGetWidth(_thumbView.frame) > 0 &&
+      CGRectGetHeight(_thumbView.frame) > 0) {
+    [_rippleView beginRippleTouchDownAtPoint:_rippleView.center animated:YES completion:nil];
+  }
   [self sendActionsForControlEvents:UIControlEventTouchDown];
 }
 
@@ -1127,6 +1182,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
                           completion:nil];
     }
 
+    [_rippleView cancelAllRipplesAnimated:YES completion:nil];
     [self sendActionsForControlEvents:UIControlEventTouchCancel];
 
     if (!_continuousUpdateEvents && wasDragging) {
@@ -1152,6 +1208,8 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
                      previousValue:_value
                         completion:nil];
   }
+
+  [_rippleView beginRippleTouchUpAnimated:YES completion:nil];
 
   CGPoint touchLoc = [touch locationInView:self];
   if ([self pointInside:touchLoc withEvent:nil]) {
