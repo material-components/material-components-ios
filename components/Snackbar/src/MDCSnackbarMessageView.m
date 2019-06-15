@@ -378,6 +378,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     }
 #pragma clang diagnostic pop
 
+    button.enableRippleBehavior = message.enableRippleBehavior;
     [buttonView addSubview:button];
     [_actionButtons addObject:button];
 
