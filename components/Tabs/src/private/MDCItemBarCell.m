@@ -23,6 +23,7 @@
 #import "MaterialAnimationTiming.h"
 #import "MaterialInk.h"
 #import "MaterialMath.h"
+#import "MaterialRipple.h"
 #import "MaterialTypography.h"
 
 /// Size of image in points.
@@ -57,6 +58,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
 @property(nonatomic, strong) UIImageView *imageView;
 @property(nonatomic, strong) MDCItemBarBadge *badge;
 @property(nonatomic, strong) MDCInkTouchController *inkTouchController;
+@property(nonatomic, strong) MDCRippleTouchController *rippleTouchController;
 
 @property(nonatomic, strong) MDCItemBarStyle *style;
 
@@ -85,7 +87,10 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
     _inkTouchController = [[MDCInkTouchController alloc] initWithView:self];
     [_inkTouchController addInkView];  // Ink should always be on top of other views
 
+    _rippleTouchController = [[MDCRippleTouchController alloc] init];
+
     [self updateInk];
+    [self updateRipple];
     [self updateColors];
     [self updateTransformsAnimated:NO];
   }
@@ -195,6 +200,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
   if (style != _style && ![style isEqual:_style]) {
     _style = style;
 
+    [self updateEnableRippleBehavior];
     [self updateDisplayedTitle];
     [self updateColors];
     [self updateSubviews];
@@ -331,6 +337,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
   [self updateImageTintColor];
   [self updateAccessibilityTraits];
   [_inkTouchController cancelInkTouchProcessing];
+  [_rippleTouchController.rippleView cancelAllRipplesAnimated:YES completion:nil];
 }
 
 #pragma mark - UICollectionViewCell
@@ -476,6 +483,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
   [self updateImageTintColor];
   [self updateBadgeColor];
   [self updateInk];
+  [self updateRipple];
 }
 
 - (void)updateTitleTextColor {
@@ -574,6 +582,23 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
   inkView.inkStyle = _style.inkStyle;
   inkView.usesLegacyInkRipple = NO;
   inkView.clipsToBounds = (inkView.inkStyle == MDCInkStyleBounded) ? YES : NO;
+}
+
+- (void)updateRipple {
+  MDCRippleView *rippleView = self.rippleTouchController.rippleView;
+  rippleView.rippleColor = _style.rippleColor;
+  rippleView.rippleStyle = _style.rippleStyle;
+  rippleView.clipsToBounds = (rippleView.rippleStyle == MDCRippleStyleBounded) ? YES : NO;
+}
+
+- (void)updateEnableRippleBehavior {
+  if (_style.enableRippleBehavior) {
+    [self.inkTouchController.defaultInkView removeFromSuperview];
+    [self.rippleTouchController addRippleToView:self];
+  } else {
+    [self.rippleTouchController.rippleView removeFromSuperview];
+    [self.inkTouchController addInkView];
+  }
 }
 
 - (void)updateAccessibilityTraits {

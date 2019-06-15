@@ -18,6 +18,7 @@
 
 #import "MDCItemBarCell.h"
 #import "MDCItemBarStyle.h"
+#import "MDCTabBarDisplayDelegate.h"
 #import "MDCTabBarIndicatorAttributes.h"
 #import "MDCTabBarIndicatorTemplate.h"
 #import "MDCTabBarIndicatorView.h"
@@ -59,11 +60,15 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 #pragma mark -
 
 @interface MDCItemBar () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
+// Current style properties.
+@property(nonatomic, strong, nullable) MDCItemBarStyle *style;
+// Collection view for items.
+@property(nonatomic, strong, nullable) UICollectionView *collectionView;
+
 @end
 
 @implementation MDCItemBar {
-  // Collection view and layout for items.
-  UICollectionView *_collectionView;
+  // Collection layout for items.
   UICollectionViewFlowLayout *_flowLayout;
 
   /// Indicator layered under the active item.
@@ -74,9 +79,6 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
   /// Width of the collection view accounting for SafeAreaInsets at last layout.
   CGFloat _lastAdjustedCollectionViewWidth;
-
-  /// Current style properties.
-  MDCItemBarStyle *_style;
 
   /// The current alignment to use for item bar. This may vary from `_alignment` in cases where
   /// the actual alignment is determined on-the-fly.
@@ -357,7 +359,9 @@ static void *kItemPropertyContext = &kItemPropertyContext;
     id<MDCItemBarDelegate> delegate = self.delegate;
     if ([delegate respondsToSelector:@selector(itemBar:shouldSelectItem:)]) {
       UITabBarItem *item = [self itemAtIndexPath:indexPath];
-      return [delegate itemBar:self shouldSelectItem:item];
+      if (item) {
+        return [delegate itemBar:self shouldSelectItem:item];
+      }
     }
   }
   return YES;
@@ -368,6 +372,9 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   if (_collectionView == collectionView) {
     // Update selected item.
     UITabBarItem *item = [self itemAtIndexPath:indexPath];
+    if (!item) {
+      return;
+    }
     _selectedItem = item;
 
     // Notify delegate of new selection.
@@ -400,12 +407,32 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
   MDCItemBarCell *itemCell = [collectionView dequeueReusableCellWithReuseIdentifier:kItemReuseID
                                                                        forIndexPath:indexPath];
-  UITabBarItem *item = [self itemAtIndexPath:indexPath];
-
   [self configureCell:itemCell];
-  [itemCell updateWithItem:item atIndex:indexPath.item count:_items.count];
+
+  UITabBarItem *item = [self itemAtIndexPath:indexPath];
+  if (item) {
+    [itemCell updateWithItem:item atIndex:indexPath.item count:_items.count];
+  }
 
   return itemCell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView
+       willDisplayCell:(UICollectionViewCell *)cell
+    forItemAtIndexPath:(NSIndexPath *)indexPath {
+  UITabBarItem *item = [self itemAtIndexPath:indexPath];
+  if (item) {
+    [self.tabBar.displayDelegate tabBar:self.tabBar willDisplayItem:item];
+  }
+}
+
+- (void)collectionView:(UICollectionView *)collectionView
+    didEndDisplayingCell:(UICollectionViewCell *)cell
+      forItemAtIndexPath:(NSIndexPath *)indexPath {
+  UITabBarItem *item = [self itemAtIndexPath:indexPath];
+  if (item) {
+    [self.tabBar.displayDelegate tabBar:self.tabBar didEndDisplayingItem:item];
+  }
 }
 
 #pragma mark - UICollectionViewDelegateFlowLayout
@@ -416,6 +443,9 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   NSParameterAssert(_collectionView == collectionView);
 
   UITabBarItem *item = [self itemAtIndexPath:indexPath];
+  if (!item) {
+    return CGSizeZero;
+  }
 
   const CGFloat itemHeight = CGRectGetHeight(self.bounds);
   CGSize size = CGSizeMake(CGFLOAT_MAX, itemHeight);
@@ -513,7 +543,11 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 }
 
 - (UITabBarItem *)itemAtIndexPath:(NSIndexPath *)indexPath {
-  return _items[indexPath.item];
+  if (indexPath && indexPath.section == 0 && indexPath.item >= 0 &&
+      (NSInteger)_items.count > indexPath.item) {
+    return _items[indexPath.item];
+  }
+  return nil;
 }
 
 - (NSInteger)indexForItem:(nullable UITabBarItem *)item {
@@ -628,6 +662,9 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
   // Construct a context object describing the selected tab.
   UITabBarItem *item = [self itemAtIndexPath:indexPath];
+  if (!item) {
+    return;
+  }
   MDCTabBarPrivateIndicatorContext *context =
       [[MDCTabBarPrivateIndicatorContext alloc] initWithItem:item
                                                       bounds:selectionIndicatorBounds

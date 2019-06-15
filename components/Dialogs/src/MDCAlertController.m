@@ -393,6 +393,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   self.alertView.titleIcon = self.titleIcon;
   self.alertView.titleIconTintColor = self.titleIconTintColor;
   self.alertView.cornerRadius = self.cornerRadius;
+  self.alertView.enableRippleBehavior = self.enableRippleBehavior;
 
   // Create buttons for the actions (if not already created) and apply default styling
   for (MDCAlertAction *action in self.actions) {

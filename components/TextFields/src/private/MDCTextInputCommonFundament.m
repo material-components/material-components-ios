@@ -427,7 +427,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 - (void)setupBorder {
   if (!_borderView) {
     _borderView = [[MDCTextInputBorderView alloc] initWithFrame:CGRectZero];
-    ;
     [self.textInput addSubview:_borderView];
     [self.textInput sendSubviewToBack:_borderView];
     _borderView.translatesAutoresizingMaskIntoConstraints = NO;
