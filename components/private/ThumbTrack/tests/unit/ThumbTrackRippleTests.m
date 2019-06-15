@@ -14,10 +14,11 @@
 
 #import <XCTest/XCTest.h>
 
-#import "../../../../../components/Ripple/src/private/MDCRippleLayer.h"
 #import "MaterialInk.h"
 #import "MaterialRipple.h"
 #import "MaterialThumbTrack.h"
+
+@class MDCRippleLayer;
 
 @interface MDCRippleView (Testing)
 @property(nonatomic, strong) MDCRippleLayer *activeRippleLayer;
