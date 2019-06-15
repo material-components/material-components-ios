@@ -299,6 +299,14 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   return _touchController.defaultInkView.inkColor;
 }
 
+- (void)setShouldDisplayInk:(BOOL)shouldDisplayInk {
+  _shouldDisplayInk = shouldDisplayInk;
+}
+
+- (BOOL)shouldDisplayInk {
+  return _shouldDisplayInk;
+}
+
 - (void)setRippleColor:(UIColor *)rippleColor {
   _rippleView.rippleColor = rippleColor;
   [self setNeedsLayout];
