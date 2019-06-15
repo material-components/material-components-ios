@@ -90,8 +90,20 @@ IB_DESIGNABLE
  */
 @property(nonatomic, nonnull) UIColor *unselectedItemTintColor UI_APPEARANCE_SELECTOR;
 
-/** Ink color for taps on tab bar items. Default: Semi-transparent white. */
-@property(nonatomic, nonnull) UIColor *inkColor UI_APPEARANCE_SELECTOR;
+/**
+ By setting this property to @c YES, the Ripple component will be used instead of Ink
+ to display visual feedback to the user.
+
+ @note This property will eventually be enabled by default, deprecated, and then deleted as part
+ of our migration to Ripple. Learn more at
+ https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple
+
+ Defaults to NO.
+ */
+@property(nonatomic, assign) BOOL enableRippleBehavior;
+
+/** Ripple color for taps on tab bar items. Default: Semi-transparent white. */
+@property(nonatomic, nonnull) UIColor *rippleColor;
 
 /** Color for the bottom divider. Default: Clear. */
 @property(nonatomic, nonnull) UIColor *bottomDividerColor;
@@ -242,5 +254,18 @@ IB_DESIGNABLE
  changes to the tab bar's selected item.
  */
 - (void)tabBar:(nonnull MDCTabBar *)tabBar didSelectItem:(nonnull UITabBarItem *)item;
+
+@end
+
+@interface MDCTabBar (ToBeDeprecated)
+
+/**
+ Ink color for taps on tab bar items. Default: Semi-transparent white.
+
+ @warning This method will eventually be deprecated. Opt-in to Ripple by setting
+ enableRippleBehavior to YES, and then use rippleColor instead. Learn more at
+ https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple
+ */
+@property(nonatomic, nonnull) UIColor *inkColor UI_APPEARANCE_SELECTOR;
 
 @end

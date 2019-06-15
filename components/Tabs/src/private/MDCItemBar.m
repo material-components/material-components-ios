@@ -60,11 +60,15 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 #pragma mark -
 
 @interface MDCItemBar () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
+// Current style properties.
+@property(nonatomic, strong, nullable) MDCItemBarStyle *style;
+// Collection view for items.
+@property(nonatomic, strong, nullable) UICollectionView *collectionView;
+
 @end
 
 @implementation MDCItemBar {
-  // Collection view and layout for items.
-  UICollectionView *_collectionView;
+  // Collection layout for items.
   UICollectionViewFlowLayout *_flowLayout;
 
   /// Indicator layered under the active item.
@@ -75,9 +79,6 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
   /// Width of the collection view accounting for SafeAreaInsets at last layout.
   CGFloat _lastAdjustedCollectionViewWidth;
-
-  /// Current style properties.
-  MDCItemBarStyle *_style;
 
   /// The current alignment to use for item bar. This may vary from `_alignment` in cases where
   /// the actual alignment is determined on-the-fly.
