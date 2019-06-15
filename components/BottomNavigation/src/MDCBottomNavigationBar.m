@@ -54,7 +54,8 @@ static NSString *const kTitlePositionAdjustment = @"titlePositionAdjustment";
 
 static NSString *const kOfAnnouncement = @"of";
 
-@interface MDCBottomNavigationBar () <MDCInkTouchControllerDelegate>
+@interface MDCBottomNavigationBar () <MDCInkTouchControllerDelegate,
+                                      MDCRippleTouchControllerDelegate>
 
 // Declared in MDCBottomNavigationBar (ToBeDeprecated)
 @property(nonatomic, assign) BOOL sizeThatFitsIncludesSafeArea;
@@ -543,6 +544,7 @@ static NSString *const kOfAnnouncement = @"of";
     MDCInkTouchController *controller = [[MDCInkTouchController alloc] initWithView:itemView];
     controller.delegate = self;
     [self.inkControllers addObject:controller];
+    itemView.rippleTouchController.delegate = self;
 
     if (self.shouldPretendToBeATabBar) {
       NSString *key = kMaterialBottomNavigationStringTable
@@ -758,6 +760,24 @@ static NSString *const kOfAnnouncement = @"of";
     return ((MDCBottomNavigationItemView *)inkTouchController.view).inkView;
   }
   return nil;
+}
+
+- (BOOL)inkTouchController:(MDCInkTouchController *)inkTouchController
+    shouldProcessInkTouchesAtTouchLocation:(CGPoint)location {
+  if (self.enableRippleBehavior) {
+    return NO;
+  }
+  return YES;
+}
+
+#pragma mark - MDCRippleTouchControllerDelegate methods
+
+- (BOOL)rippleTouchController:(MDCRippleTouchController *)rippleTouchController
+    shouldProcessRippleTouchesAtTouchLocation:(CGPoint)location {
+  if (self.enableRippleBehavior) {
+    return YES;
+  }
+  return NO;
 }
 
 @end
