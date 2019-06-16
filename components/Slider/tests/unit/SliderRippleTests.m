@@ -73,8 +73,8 @@
 
   // Then
   XCTAssertNil(self.slider.thumbTrack.touchController.defaultInkView.superview);
-  XCTAssertEqualObjects(self.slider.thumbTrack.rippleView.superview,
-                        self.slider.thumbTrack.thumbView);
+  XCTAssertEqual(self.slider.thumbTrack.rippleView.superview,
+                 self.slider.thumbTrack.thumbView);
   CGRect thumbViewBounds = CGRectStandardize(self.slider.thumbTrack.thumbView.bounds);
   CGRect rippleBounds = CGRectStandardize(self.slider.thumbTrack.rippleView.bounds);
   XCTAssertTrue(CGRectEqualToRect(thumbViewBounds, rippleBounds), @"%@ is not equal to %@",
@@ -90,20 +90,20 @@
   self.slider.enableRippleBehavior = NO;
 
   // Then
-  XCTAssertEqualObjects(self.slider.thumbTrack.touchController.defaultInkView.superview,
-                        self.slider.thumbTrack.thumbView);
+  XCTAssertEqual(self.slider.thumbTrack.touchController.defaultInkView.superview,
+                 self.slider.thumbTrack.thumbView);
   XCTAssertNil(self.slider.thumbTrack.rippleView.superview);
 }
 
 /**
- Test setting @c inkColor correctly sets the @c rippleColor on @c rippleView of the slider.
+ Test setting @c rippleColor correctly sets the @c rippleColor on @c rippleView of the slider.
  */
 - (void)testSetCustomInkColorUpdatesRippleView {
   // Given
   UIColor *color = UIColor.redColor;
 
   // When
-  [self.slider setRippleColor:color];
+  self.slider.rippleColor = color;
 
   // Then
   XCTAssertEqualObjects(self.slider.thumbTrack.rippleView.rippleColor, color);
