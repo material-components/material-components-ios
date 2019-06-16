@@ -97,7 +97,7 @@
 /**
  Test setting @c rippleColor correctly sets the @c rippleColor on @c rippleView of the slider.
  */
-- (void)testSetCustomInkColorUpdatesRippleView {
+- (void)testSetCustomRippleColorUpdatesRippleView {
   // Given
   UIColor *color = UIColor.redColor;
 
