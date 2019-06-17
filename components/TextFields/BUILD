@@ -42,6 +42,15 @@ package_group(
     ],
 )
 
+text_fields_beta_srcs = [
+    "src/MDCBaseTextField.h",
+    "src/MDCBaseTextField.m",
+]
+
+text_fields_beta_hdrs = [
+    "src/MDCBaseTextField.h",
+]
+
 mdc_objc_library(
     name = "TextFields",
     srcs =
@@ -51,17 +60,12 @@ mdc_objc_library(
                 "src/private/*.h",
                 "src/private/*.m",
             ],
-            exclude = [
-                "src/MDCBaseTextField.h",
-                "src/MDCBaseTextField.m",
-            ],
+            exclude = text_fields_beta_srcs,
         ),
     hdrs =
         native.glob(
             ["src/*.h"],
-            exclude = [
-                "src/MDCBaseTextField.h",
-            ],
+            exclude = text_fields_beta_hdrs,
         ),
     enable_modules = 1,
     includes = ["src"],
@@ -80,13 +84,8 @@ mdc_objc_library(
 
 mdc_objc_library(
     name = "TextFieldsBeta",
-    srcs = [
-        "src/MDCBaseTextField.h",
-        "src/MDCBaseTextField.m",
-    ],
-    hdrs = [
-        "src/MDCBaseTextField.h",
-    ],
+    srcs = text_fields_beta_srcs,
+    hdrs = text_fields_beta_hdrs,
     enable_modules = 1,
     includes = ["src"],
     sdk_frameworks = ["CoreGraphics"],
@@ -184,6 +183,10 @@ mdc_objc_library(
     ],
 )
 
+text_fields_beta_unit_test_srcs = [
+    "tests/unit/MDCBaseTextFieldTests.m",
+]
+
 mdc_objc_library(
     name = "unit_test_sources",
     testonly = 1,
@@ -192,7 +195,7 @@ mdc_objc_library(
             "tests/unit/*.m",
             "tests/unit/*.h",
         ],
-        exclude = ["tests/unit/MDCBaseTextFieldTests.m"],
+        exclude = text_fields_beta_unit_test_srcs,
     ),
     hdrs = glob(["tests/unit/*.h"]),
     sdk_frameworks = [
@@ -211,9 +214,7 @@ mdc_objc_library(
 mdc_objc_library(
     name = "unit_test_beta_sources",
     testonly = 1,
-    srcs = [
-        "tests/unit/MDCBaseTextFieldTests.m",
-    ],
+    srcs = text_fields_beta_unit_test_srcs,
     sdk_frameworks = [
         "CoreGraphics",
         "XCTest",
