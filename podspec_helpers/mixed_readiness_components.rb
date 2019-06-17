@@ -12,7 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# This module vends MixedReadinessComponent instances that contain lists of file
+# paths for the beta and non-beta header files, source files, and unit test
+# files. The rationale for having it is that it allows us to maintain one list
+# of beta file paths that our beta and non-beta podspecs refers to, rather than
+# manually maintain that list in two different places. This module does not have
+# to be a permanent fixture, but will be useful as long as there are components
+# with mixed readiness states.
 module MixedReadinessComponents
+  # A data structure with lists of header file paths, source file paths, and
+  # unit test source file paths, for both beta and non-beta parts of a given
+  # component.
   class MixedReadinessComponent
     attr_accessor :public_header_files
     attr_accessor :source_files
@@ -34,10 +44,6 @@ module MixedReadinessComponents
       @beta_public_header_files = beta_public_header_files
       @beta_source_files = beta_source_files
       @beta_unit_test_source_files = beta_unit_test_source_files
-    end
-
-    def beta_source_and_header_files
-      return beta_public_header_files + beta_source_files
     end
   end
 
