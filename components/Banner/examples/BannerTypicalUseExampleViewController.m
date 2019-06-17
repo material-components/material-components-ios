@@ -70,7 +70,8 @@ static NSString *const exampleExtraLongText =
 
 @end
 
-@interface BannerTypicalUseExampleViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface BannerTypicalUseExampleViewController
+    : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 @property(nonatomic, strong) UITableView *exampleListTableView;
 @property(nonatomic, strong) NSArray<BannerExampleUseInfo *> *exampleList;
