@@ -19,7 +19,7 @@ import MaterialComponents.MaterialPalettes
 import MaterialComponents.MaterialThemes
 import UIKit
 
-private func schemeWithPalette(_ palette: MDCPalette) -> MDCContainerScheming {
+private func schemeWithPalette(_ palette: MDCPalette) -> MDCContainerScheme {
   let containerScheme = DefaultContainerScheme()
 
   let scheme = MDCSemanticColorScheme()
@@ -50,9 +50,9 @@ private func schemeWithPalette(_ palette: MDCPalette) -> MDCContainerScheming {
 private struct MDCColorThemeCellConfiguration {
   let name: String
   let mainColor: UIColor
-  let scheme: MDCContainerScheming
+  let scheme: MDCContainerScheme
 
-  init(name: String, mainColor: UIColor, scheme: MDCContainerScheming) {
+  init(name: String, mainColor: UIColor, scheme: MDCContainerScheme) {
     self.name = name
     self.mainColor = mainColor
     self.scheme = scheme
@@ -100,7 +100,6 @@ class MDCThemePickerViewController: UIViewController, UICollectionViewDataSource
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -129,6 +128,15 @@ class MDCThemePickerViewController: UIViewController, UICollectionViewDataSource
     palettesCollectionView.dataSource = self
     palettesCollectionView.backgroundColor = .white
     view.addSubview(palettesCollectionView)
+  }
+
+  override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+    super.traitCollectionDidChange(previousTraitCollection)
+
+    colorSchemeConfigurations.forEach { config in
+      config.scheme.typographyScheme = MDCTypographyScheme.resolve(config.scheme.typographyScheme,
+                                                                   for: traitCollection)
+    }
   }
 
   func positionCollectionView() {

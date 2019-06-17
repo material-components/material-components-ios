@@ -180,6 +180,33 @@ typedef NS_ENUM(NSInteger, MDCTypographySchemeDefaults) {
 
 @end
 
+@interface MDCTypographyScheme (TraitCollectionSupport)
+
+/**
+ Returns a copy of this typography scheme configured with the given trait collection.
+
+ Each font will be adjusted to the same family, weight and traits, but their point size will be
+ based on the given trait collection's preferred content size category and each font's attached
+ @c mdc_scalingCurve.
+
+ If the device is running iOS 9 and not in an extension, then @c traitCollection will be
+ ignored and the UIApplication sharedApplication's preferredContentSizeCategory will be used
+ instead.
+
+ If the device is running iOS 9 and in an extension, then @c traitCollection will be
+ ignored and the returned font will be scaled with UIContentSizeCategoryLarge.
+
+ @param traitCollection The trait collection that should be used to resolve the fonts.
+ @return A copy of this instance where each font's point size is determined by its
+ @c mdc_scalingCurve for the @c traitCollection's corresponding content size category, or if the
+ font has no @c mdc_scalingCurve then the font will not be modified.
+ @seealso MDCFontScaler
+ */
++ (nonnull MDCTypographyScheme *)resolveScheme:(nonnull id<MDCTypographyScheming>)scheme
+                            forTraitCollection:(nonnull UITraitCollection *)traitCollection;
+
+@end
+
 @interface MDCTypographyScheme (ToBeDeprecated)
 
 /**

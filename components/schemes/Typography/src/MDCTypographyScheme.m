@@ -148,4 +148,24 @@
   self.useCurrentContentSizeCategoryWhenApplied = mdc_adjustsFontForContentSizeCategory;
 }
 
++ (MDCTypographyScheme *)resolveScheme:(id<MDCTypographyScheming>)scheme
+                    forTraitCollection:(UITraitCollection *)traitCollection {
+  MDCTypographyScheme *resolved =
+      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+  resolved.headline1 = [scheme.headline1 mdc_scaledFontForTraitCollection:traitCollection];
+  resolved.headline2 = [scheme.headline2 mdc_scaledFontForTraitCollection:traitCollection];
+  resolved.headline3 = [scheme.headline3 mdc_scaledFontForTraitCollection:traitCollection];
+  resolved.headline4 = [scheme.headline4 mdc_scaledFontForTraitCollection:traitCollection];
+  resolved.headline5 = [scheme.headline5 mdc_scaledFontForTraitCollection:traitCollection];
+  resolved.headline6 = [scheme.headline6 mdc_scaledFontForTraitCollection:traitCollection];
+  resolved.subtitle1 = [scheme.subtitle1 mdc_scaledFontForTraitCollection:traitCollection];
+  resolved.subtitle2 = [scheme.subtitle2 mdc_scaledFontForTraitCollection:traitCollection];
+  resolved.body1 = [scheme.body1 mdc_scaledFontForTraitCollection:traitCollection];
+  resolved.body2 = [scheme.body2 mdc_scaledFontForTraitCollection:traitCollection];
+  resolved.caption = [scheme.caption mdc_scaledFontForTraitCollection:traitCollection];
+  resolved.button = [scheme.button mdc_scaledFontForTraitCollection:traitCollection];
+  resolved.overline = [scheme.overline mdc_scaledFontForTraitCollection:traitCollection];
+  return resolved;
+}
+
 @end

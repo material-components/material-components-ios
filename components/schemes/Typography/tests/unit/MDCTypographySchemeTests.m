@@ -192,4 +192,77 @@
   XCTAssertTrue(scheme.useCurrentContentSizeCategoryWhenApplied);
 }
 
+- (void)test201902ScalesOniOS10AndUpWhenTraitEnvironmentIsProvided {
+  if (@available(iOS 10.0, *)) {
+    // Given
+    MDCTypographyScheme *schemeWithNoTraitCollection =
+        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+
+    // When
+    UITraitCollection *traitCollection = [UITraitCollection
+        traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraExtraExtraLarge];
+    id<MDCTypographyScheming> scheme =
+        [MDCTypographyScheme resolveScheme:schemeWithNoTraitCollection
+                        forTraitCollection:traitCollection];
+
+    // Then
+    XCTAssertGreaterThanOrEqual(scheme.headline1.pointSize,
+                                schemeWithNoTraitCollection.headline1.pointSize);
+    XCTAssertGreaterThanOrEqual(scheme.headline2.pointSize,
+                                schemeWithNoTraitCollection.headline2.pointSize);
+    XCTAssertGreaterThanOrEqual(scheme.headline3.pointSize,
+                                schemeWithNoTraitCollection.headline3.pointSize);
+    XCTAssertGreaterThanOrEqual(scheme.headline4.pointSize,
+                                schemeWithNoTraitCollection.headline4.pointSize);
+    XCTAssertGreaterThanOrEqual(scheme.headline5.pointSize,
+                                schemeWithNoTraitCollection.headline5.pointSize);
+    XCTAssertGreaterThanOrEqual(scheme.headline6.pointSize,
+                                schemeWithNoTraitCollection.headline6.pointSize);
+    XCTAssertGreaterThanOrEqual(scheme.subtitle1.pointSize,
+                                schemeWithNoTraitCollection.subtitle1.pointSize);
+    XCTAssertGreaterThanOrEqual(scheme.subtitle2.pointSize,
+                                schemeWithNoTraitCollection.subtitle2.pointSize);
+    XCTAssertGreaterThanOrEqual(scheme.body1.pointSize,
+                                schemeWithNoTraitCollection.body1.pointSize);
+    XCTAssertGreaterThanOrEqual(scheme.body2.pointSize,
+                                schemeWithNoTraitCollection.body2.pointSize);
+    XCTAssertGreaterThanOrEqual(scheme.caption.pointSize,
+                                schemeWithNoTraitCollection.caption.pointSize);
+    XCTAssertGreaterThanOrEqual(scheme.button.pointSize,
+                                schemeWithNoTraitCollection.button.pointSize);
+    XCTAssertGreaterThanOrEqual(scheme.overline.pointSize,
+                                schemeWithNoTraitCollection.overline.pointSize);
+  }
+}
+
+- (void)test201804DoesNotScaleOniOS10AndUpWhenTraitEnvironmentIsProvided {
+  if (@available(iOS 10.0, *)) {
+    // Given
+    MDCTypographyScheme *schemeWithNoTraitCollection =
+        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+
+    // When
+    UITraitCollection *traitCollection = [UITraitCollection
+        traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraLarge];
+    id<MDCTypographyScheming> scheme =
+        [MDCTypographyScheme resolveScheme:schemeWithNoTraitCollection
+                        forTraitCollection:traitCollection];
+
+    // Then
+    XCTAssertEqual(scheme.headline1.pointSize, schemeWithNoTraitCollection.headline1.pointSize);
+    XCTAssertEqual(scheme.headline2.pointSize, schemeWithNoTraitCollection.headline2.pointSize);
+    XCTAssertEqual(scheme.headline3.pointSize, schemeWithNoTraitCollection.headline3.pointSize);
+    XCTAssertEqual(scheme.headline4.pointSize, schemeWithNoTraitCollection.headline4.pointSize);
+    XCTAssertEqual(scheme.headline5.pointSize, schemeWithNoTraitCollection.headline5.pointSize);
+    XCTAssertEqual(scheme.headline6.pointSize, schemeWithNoTraitCollection.headline6.pointSize);
+    XCTAssertEqual(scheme.subtitle1.pointSize, schemeWithNoTraitCollection.subtitle1.pointSize);
+    XCTAssertEqual(scheme.subtitle2.pointSize, schemeWithNoTraitCollection.subtitle2.pointSize);
+    XCTAssertEqual(scheme.body1.pointSize, schemeWithNoTraitCollection.body1.pointSize);
+    XCTAssertEqual(scheme.body2.pointSize, schemeWithNoTraitCollection.body2.pointSize);
+    XCTAssertEqual(scheme.caption.pointSize, schemeWithNoTraitCollection.caption.pointSize);
+    XCTAssertEqual(scheme.button.pointSize, schemeWithNoTraitCollection.button.pointSize);
+    XCTAssertEqual(scheme.overline.pointSize, schemeWithNoTraitCollection.overline.pointSize);
+  }
+}
+
 @end

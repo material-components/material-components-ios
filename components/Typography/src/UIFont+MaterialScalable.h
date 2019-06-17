@@ -65,6 +65,23 @@ typedef NSDictionary<UIContentSizeCategory, NSNumber *> *MDCScalingCurve;
     (nonnull id<UITraitEnvironment>)traitEnvironment;
 
 /**
+ Returns a font with the same family, weight and traits, but whose point size is based on the given
+ trait collection's preferred content size category.
+
+ If the device is running iOS 9 and not in an extension, then @c traitCollection will be
+ ignored and the UIApplication sharedApplication's preferredContentSizeCategory will be used
+ instead.
+
+ If the device is running iOS 9 and in an extension, then @c traitCollection will be
+ ignored and the returned font will be scaled with UIContentSizeCategoryLarge.
+
+ @param traitCollection The trait collection that should be used to resolve the fonts.
+ @return A font whose point size is determined by @c mdc_scalingCurve for the
+ @c traitCollection's corresponding content size category, or self if @c mdc_scalingCurve is nil.
+ */
+- (nonnull UIFont *)mdc_scaledFontForTraitCollection:(nonnull UITraitCollection *)traitCollection;
+
+/**
  Returns a font with the same family, weight and traits, but whose point size is based on the
  default size category of UIContentSizeCategoryLarge and the corresponding value from
  @c mdc_scalingCurve.

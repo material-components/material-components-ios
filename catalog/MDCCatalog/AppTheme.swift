@@ -28,6 +28,13 @@ final class AppTheme {
     }
   }
 
+  static func containerScheme(resolvedWith traitCollection: UITraitCollection) -> MDCContainerScheming {
+    let resolved = DefaultContainerScheme()
+    resolved.typographyScheme = MDCTypographyScheme.resolve(resolved.typographyScheme,
+                                                            for: traitCollection)
+    return resolved
+  }
+
   static let didChangeGlobalThemeNotificationName =
     Notification.Name("MDCCatalogDidChangeGlobalTheme")
 

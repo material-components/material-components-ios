@@ -59,9 +59,13 @@ static char MDCFontScaleObjectKey;
 }
 
 - (UIFont *)mdc_scaledFontForTraitEnvironment:(id<UITraitEnvironment>)traitEnvironment {
+  return [self mdc_scaledFontForTraitCollection:traitEnvironment.traitCollection];
+}
+
+- (nonnull UIFont *)mdc_scaledFontForTraitCollection:(nonnull UITraitCollection *)traitCollection {
   UIContentSizeCategory sizeCategory = UIContentSizeCategoryLarge;
   if (@available(iOS 10.0, *)) {
-    sizeCategory = traitEnvironment.traitCollection.preferredContentSizeCategory;
+    sizeCategory = traitCollection.preferredContentSizeCategory;
   } else if ([UIApplication mdc_safeSharedApplication]) {
     sizeCategory = [UIApplication mdc_safeSharedApplication].preferredContentSizeCategory;
   }

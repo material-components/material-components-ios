@@ -100,6 +100,12 @@ class MDCCatalogWindow: MDCOverlayWindow {
                    animations: { view?.alpha = 0 },
                    completion: { _ in view?.removeFromSuperview() })
   }
+
+  override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+    super.traitCollectionDidChange(previousTraitCollection)
+
+    AppTheme.containerScheme = AppTheme.containerScheme(resolvedWith: traitCollection)
+  }
 }
 
 /** A circular view that represents a user's touch. */
