@@ -82,7 +82,7 @@ mdc_examples_swift_library(
         ":ColorThemer",
         "//components/AppBar",
         "//components/Buttons",
-        "//components/Buttons:ButtonThemer",
+        "//components/Buttons:Theming",
         "//components/schemes/Color",
         "//components/schemes/Container",
         "//components/schemes/Typography",
