@@ -1,10 +1,10 @@
 # 85.0.0
 
-In this major release we updated sizeThatFits calculation for MDCBottomNavigationBar to not include safe area, added Ripple support to all our interactable components, more layout customization for Banner, and additional callback support for TabBar items.
+In this major release we updated `sizeThatFits:` calculation for MDCBottomNavigationBar to not include safe area, added Ripple support to all our interactable components, and more layout customization for Banner.
 
 ## Breaking changes
 
-We have changed the sizeThatFits behavior for BottomNavigation's bar to not include the safe area by default. This is a breaking change as prior we did include the safe area as part of the calculation, but we should not since the view controller (or parent view) should worry about positioning the BottomNavigationBar within the unsafe area (if it desires).
+We have changed the `sizeThatFits:` behavior for BottomNavigation's bar to not include the safe area by default. This is a breaking change as prior we did include the safe area as part of the calculation, but we should not since the view controller (or parent view) should worry about positioning the BottomNavigationBar within the unsafe area (if it desires).
 
 If you still wish to include the safe area in the sizeThatFits calculation:
 ```objc
@@ -19,22 +19,6 @@ Enable the new Ripple behavior in components by setting `enableRippleBehavior` t
 MDCTabBar *tabBar = [[MDCTabBar alloc] init];
 tabBar.enableRippleBehavior = YES;
 tabBar.rippleColor = UIColor.blueColor;
-```
-
-MDCTabBar now supports additional delegate callbacks for when UITabBarItems are displayed:
-
-```objc
-self.tabBar.displayDelegate = self;
-...
-#pragma mark - MDCTabBarDisplayDelegate
-
-- (void)tabBar:(MDCTabBar *)tabBar willDisplayItem:(UITabBarItem *)item {
-  NSLog(@"Will display item: %@", item.title);
-}
-
-- (void)tabBar:(MDCTabBar *)tabBar didEndDisplayingItem:(nonnull UITabBarItem *)item {
-  NSLog(@"Did end displaying item: %@", item.title);
-}
 ```
 
 MDCBanner supports different layout styles using the `MDCBannerViewLayoutStyle` enum:
