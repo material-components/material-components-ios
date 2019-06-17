@@ -178,7 +178,9 @@ typedef NS_ENUM(NSInteger, MDCTypographySchemeDefaults) {
  */
 - (nonnull instancetype)initWithDefaults:(MDCTypographySchemeDefaults)defaults;
 
-#pragma mark - To be deprecated
+@end
+
+@interface MDCTypographyScheme (ToBeDeprecated)
 
 /**
  @warning Will eventually be deprecated and removed. Please use
