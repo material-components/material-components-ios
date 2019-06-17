@@ -1,15 +1,56 @@
-# #develop#
+# 85.0.0
 
-Replace this text with a summarized description of this release's contents.
+In this major release we updated sizeThatFits calculation for MDCBottomNavigationBar to not include safe area, added Ripple support to all our interactable components, more layout customization for Banner, and additional callback support for TabBar items.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+We have changed the sizeThatFits behavior for BottomNavigation's bar to not include the safe area by default. This is a breaking change as prior we did include the safe area as part of the calculation, but we should not since the view controller (or parent view) should worry about positioning the BottomNavigationBar within the unsafe area (if it desires).
 
-Replace this text with links to deprecation guides.
+If you still wish to include the safe area in the sizeThatFits calculation:
+```objc
+self.bottomNavigationBar.sizeThatFitsIncludesSafeArea = YES;
+```
+
 ## New features
 
-Replace this text with example code for each new feature.
+Enable the new Ripple behavior in components by setting `enableRippleBehavior` to YES, and easily set its color using the `rippleColor` API:
+
+```objc
+MDCTabBar *tabBar = [[MDCTabBar alloc] init];
+tabBar.enableRippleBehavior = YES;
+tabBar.rippleColor = UIColor.blueColor;
+```
+
+MDCTabBar now supports additional delegate callbacks for when UITabBarItems are displayed:
+
+```objc
+self.tabBar.displayDelegate = self;
+...
+#pragma mark - MDCTabBarDisplayDelegate
+
+- (void)tabBar:(MDCTabBar *)tabBar willDisplayItem:(UITabBarItem *)item {
+  NSLog(@"Will display item: %@", item.title);
+}
+
+- (void)tabBar:(MDCTabBar *)tabBar didEndDisplayingItem:(nonnull UITabBarItem *)item {
+  NSLog(@"Did end displaying item: %@", item.title);
+}
+```
+
+MDCBanner supports different layout styles using the `MDCBannerViewLayoutStyle` enum:
+
+```objc
+MDCBannerView *bannerView = [[MDCBannerView alloc] init];
+bannerView.bannerViewLayoutStyle = MDCBannerViewLayoutStyleSingleRow;
+```
+
+MDCBanner now allows you to show/hide a divider:
+
+```objc
+MDCBannerView *bannerView = [[MDCBannerView alloc] init];
+bannerView.showsDivider = YES;
+```
+
 ## API changes
 
 ### ActionSheet
