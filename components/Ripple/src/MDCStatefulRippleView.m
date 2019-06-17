@@ -75,6 +75,11 @@ static UIColor *RippleSelectedColor(void) {
 
 - (UIColor *)rippleColorForState:(MDCRippleState)state {
   UIColor *rippleColor = _rippleColors[@(state)];
+  if (rippleColor == nil && (state & MDCRippleStateDragged) != 0) {
+    rippleColor = _rippleColors[@(MDCRippleStateDragged)];
+  } else if (rippleColor == nil && (state & MDCRippleStateSelected) != 0) {
+    rippleColor = _rippleColors[@(MDCRippleStateSelected)];
+  }
 
   if (rippleColor == nil) {
     rippleColor = _rippleColors[@(MDCRippleStateNormal)];
