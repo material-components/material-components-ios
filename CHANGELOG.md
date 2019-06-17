@@ -13,7 +13,7 @@ self.bottomNavigationBar.sizeThatFitsIncludesSafeArea = YES;
 
 ## New features
 
-Enable the new Ripple behavior in components by setting `enableRippleBehavior` to YES, and easily set its color using the `rippleColor` API:
+Enable the new Ripple behavior in components by setting `enableRippleBehavior` to YES, and set its color using the `rippleColor` API:
 
 ```objc
 MDCTabBar *tabBar = [[MDCTabBar alloc] init];
