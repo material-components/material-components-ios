@@ -138,13 +138,6 @@ bannerView.showsDivider = YES;
 
 *new* property: `enableRippleBehavior` in `MDCAlertControllerView`
 
-*modified* class: `MDCAlertControllerView`
-
-| Type of change: | Declaration |
-|---|---|
-| From: | `@interface MDCAlertControllerView : UIView  @property(nonatomic, strong, nullable) UIFont *titleFont UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *titleColor UI_APPEARANCE_SELECTOR;  @property(nonatomic, assign) NSTextAlignment titleAlignment; @property(nonatomic, strong, nullable) UIImage *titleIcon; @property(nonatomic, strong, nullable) UIColor *titleIconTintColor;  @property(nonatomic, strong, nullable) UIFont *messageFont UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *messageColor UI_APPEARANCE_SELECTOR;  // b/117717380: Will be deprecated (x3) @property(nonatomic, strong, nullable) UIFont *buttonFont UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *buttonColor UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *buttonInkColor UI_APPEARANCE_SELECTOR;  @property(nonatomic, assign) CGFloat cornerRadius;  /*  Indicates whether the view's contents should automatically update their font when the device’s  UIContentSizeCategory changes.   This property is modeled after the adjustsFontForContentSizeCategory property in the  UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.   Default value is NO.  */ @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;  @end` |
-| To: | `@interface MDCAlertControllerView : UIView  @property(nonatomic, strong, nullable) UIFont *titleFont UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *titleColor UI_APPEARANCE_SELECTOR;  @property(nonatomic, assign) NSTextAlignment titleAlignment; @property(nonatomic, strong, nullable) UIImage *titleIcon; @property(nonatomic, strong, nullable) UIColor *titleIconTintColor;  @property(nonatomic, strong, nullable) UIFont *messageFont UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *messageColor UI_APPEARANCE_SELECTOR;  // b/117717380: Will be deprecated (x3) @property(nonatomic, strong, nullable) UIFont *buttonFont UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *buttonColor UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *buttonInkColor UI_APPEARANCE_SELECTOR;  @property(nonatomic, assign) CGFloat cornerRadius;  /*  Indicates whether the view's contents should automatically update their font when the device’s  UIContentSizeCategory changes.   This property is modeled after the adjustsFontForContentSizeCategory property in the  UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.   Default value is NO.  */ @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;  /**  By setting this property to @c YES, the Ripple component will be used instead of Ink  to display visual feedback to the user.   @note This property will eventually be enabled by default, deprecated, and then deleted as part  of our migration to Ripple. Learn more at  https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple   Defaults to NO.  */ @property(nonatomic, assign) BOOL enableRippleBehavior;  @end` |
-
 #### MDCAlertController
 
 *new* property: `enableRippleBehavior` in `MDCAlertController`
@@ -156,13 +149,6 @@ bannerView.showsDivider = YES;
 *new* property: `rippleColor` in `MDCBaseCell`
 
 *new* property: `enableRippleBehavior` in `MDCBaseCell`
-
-*modified* class: `MDCBaseCell`
-
-| Type of change: | Declaration |
-|---|---|
-| From: | `@interface MDCBaseCell : UICollectionViewCell  /**  The current elevation of the cell.  */ @property(nonatomic, assign) MDCShadowElevation elevation;  /**  The color of the cell’s underlying Ripple.  */ @property(nonatomic, strong, nonnull) UIColor *inkColor;  @end` |
-| To: | `@interface MDCBaseCell : UICollectionViewCell  /**  The current elevation of the cell.  */ @property(nonatomic, assign) MDCShadowElevation elevation;  /**  By setting this property to @c YES, the Ripple component will be used instead of Ink  to display visual feedback to the user.   @note This property will eventually be enabled by default, deprecated, and then deleted as part  of our migration to Ripple. Learn more at  https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple   Defaults to NO.  */ @property(nonatomic, assign) BOOL enableRippleBehavior;  /**  The color of the cell’s underlying Ripple.  */ @property(nonatomic, strong, nullable) UIColor *rippleColor;  @end` |
 
 #### MDCBaseCell(ToBeDeprecated)
 
