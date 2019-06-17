@@ -18,7 +18,6 @@ import UIKit
 import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialBottomAppBar
 import MaterialComponents.MaterialBottomAppBar_ColorThemer
-import MaterialComponents.MaterialBottomAppBar_Theming
 import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialContainerScheme
