@@ -133,6 +133,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
 - (void)commonMDCChipViewInit {
   _minimumSize = kMDCChipMinimumSizeDefault;
+  self.allowsSelection = YES;
   self.isAccessibilityElement = YES;
   _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
 }
@@ -274,6 +275,14 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
     [self.rippleView removeFromSuperview];
     [self insertSubview:self.inkView belowSubview:self.imageView];
   }
+}
+
+- (BOOL)allowsSelection {
+  return self.rippleView.allowsSelection;
+}
+
+- (void)setAllowsSelection:(BOOL)allowsSelection {
+  self.rippleView.allowsSelection = allowsSelection;
 }
 
 #pragma mark - Dynamic Type Support
@@ -432,7 +441,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
 - (void)updateInkColor {
   UIColor *inkColor = [self inkColorForState:self.state];
-  self.inkView.inkColor = inkColor ? inkColor : self.inkView.defaultInkColor;
+  self.inkView.inkColor = inkColor ?: self.inkView.defaultInkColor;
 }
 
 - (void)updateRippleColor {
@@ -604,6 +613,11 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 }
 
 - (void)setSelected:(BOOL)selected {
+  if (!self.allowsSelection) {
+    // If we disallow selection we don't want to apply any visual or state changes for selection.
+    return;
+  }
+
   [super setSelected:selected];
 
   self.rippleView.selected = selected;

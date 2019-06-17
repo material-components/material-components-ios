@@ -118,6 +118,17 @@
  */
 @property(nonatomic, assign) BOOL enableRippleBehavior;
 
+/**
+ Set this flag to YES/true to allow the chip to be in the selected state when tapped.
+ When selection is allowed, tapping a chip automatically (after a momentary ripple animation)
+ toggles the chip's selected state, applying all custom theming related to the selected state (or
+ combination of). When selection is not allowed, tapping a chip creates a momentary ripple
+ animation while the chip remains unselected.
+
+ Defaults to: Yes.
+ */
+@property(nonatomic) BOOL allowsSelection;
+
 /*
  The color of the ink ripple.
  */
