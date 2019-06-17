@@ -375,11 +375,21 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   return CGSizeMake(size.width, frameHeight);
 }
 
+- (CGSize)intrinsicContentSize {
+  CGFloat intrinsicContentHeight = [self sizeThatFits:self.bounds.size].height;
+  return CGSizeMake(UIViewNoIntrinsicMetric, intrinsicContentHeight);
+}
+
 - (void)updateConstraints {
   MDCBannerViewLayoutMode layoutMode = [self layoutModeForSizeToFit:self.bounds.size];
   [self updateConstraintsWithLayoutMode:layoutMode];
 
   [super updateConstraints];
+}
+
+- (void)layoutSubviews {
+  [super layoutSubviews];
+  [self invalidateIntrinsicContentSize];
 }
 
 #pragma mark - Layout methods
