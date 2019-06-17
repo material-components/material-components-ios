@@ -18,11 +18,14 @@
 
 #import "private/MDCChipView+Private.h"
 
-@implementation MDCChipCollectionViewCell
+@implementation MDCChipCollectionViewCell {
+  BOOL _isSelected;
+}
 
 - (instancetype)initWithFrame:(CGRect)rect {
   if (self = [super initWithFrame:rect]) {
     _chipView = [self createChipView];
+    _isSelected = NO;
     [self.contentView addSubview:_chipView];
   }
   return self;
@@ -71,7 +74,11 @@
 }
 
 - (void)setSelected:(BOOL)selected {
-  [super setSelected:selected];
+  // Skipping state management in the current cell. States is managed in self.chipView instead.
+  if (!self.chipView.enableRippleBehavior) {
+    [super setSelected:selected];
+  }
+  _isSelected = selected;
 
   if (self.alwaysAnimateResize && [_chipView willChangeSizeWithSelectedValue:selected]) {
     // Since MDCChipView can resize when it is selected, if a resize will occur we need to delay our
@@ -82,10 +89,22 @@
   }
 }
 
-- (void)setHighlighted:(BOOL)highlighted {
-  [super setHighlighted:highlighted];
+- (BOOL)isSelected {
+  // Using self.chipView as the "source of truth" for states when ripple is enabled.
+  return self.chipView.enableRippleBehavior ? _isSelected : [super isSelected];
+}
 
+- (void)setHighlighted:(BOOL)highlighted {
+  // Skipping state management in the current cell. States is managed in self.chipView instead.
+  if (!self.chipView.enableRippleBehavior) {
+    [super setHighlighted:highlighted];
+  }
   _chipView.highlighted = highlighted;
+}
+
+- (BOOL)isHighlighted {
+  // Using self.chipView as the "source of truth" for states when ripple is enabled.
+  return self.chipView.enableRippleBehavior ? self.chipView.highlighted : [super isHighlighted];
 }
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
