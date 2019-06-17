@@ -15,17 +15,17 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialBanner.h"
-#import "MaterialButtons.h"
 #import "MaterialButtons+Theming.h"
-#import "MaterialContainerScheme.h"
+#import "MaterialButtons.h"
 #import "MaterialColorScheme.h"
+#import "MaterialContainerScheme.h"
 
 static NSString *const exampleText = @"Lorem ipsum dolor";
 
 @interface BannerAutolayoutExampleViewController : UIViewController
 
-@property (nonatomic, readwrite, strong) MDCContainerScheme *containerScheme;
-@property (nonatomic, readwrite, strong) MDCBannerView *bannerView;
+@property(nonatomic, readwrite, strong) MDCContainerScheme *containerScheme;
+@property(nonatomic, readwrite, strong) MDCBannerView *bannerView;
 
 @end
 
@@ -42,11 +42,15 @@ static NSString *const exampleText = @"Lorem ipsum dolor";
   button.translatesAutoresizingMaskIntoConstraints = NO;
   [button applyTextThemeWithScheme:self.containerScheme];
   [button setTitle:@"Material Banner" forState:UIControlStateNormal];
-  [button addTarget:self action:@selector(didTapButton) forControlEvents:UIControlEventTouchUpInside];
+  [button addTarget:self
+                action:@selector(didTapButton)
+      forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:button];
-  NSLayoutConstraint *buttonConstraintCenterX = [button.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor];
+  NSLayoutConstraint *buttonConstraintCenterX =
+      [button.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor];
   buttonConstraintCenterX.active = YES;
-  NSLayoutConstraint *buttonConstraintCenterY = [button.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor];
+  NSLayoutConstraint *buttonConstraintCenterY =
+      [button.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor];
   buttonConstraintCenterY.active = YES;
 
   // Prepare Banner
@@ -59,13 +63,18 @@ static NSString *const exampleText = @"Lorem ipsum dolor";
   MDCButton *actionButton = bannerView.leadingButton;
   [actionButton applyTextThemeWithScheme:self.containerScheme];
   [actionButton setTitle:@"Dismiss" forState:UIControlStateNormal];
-  [actionButton addTarget:self action:@selector(didTapDismissOnBannerView) forControlEvents:UIControlEventTouchUpInside];
+  [actionButton addTarget:self
+                   action:@selector(didTapDismissOnBannerView)
+         forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:bannerView];
-  NSLayoutConstraint *bannerViewConstraintTop = [bannerView.topAnchor constraintEqualToAnchor:self.view.layoutMarginsGuide.topAnchor];
+  NSLayoutConstraint *bannerViewConstraintTop =
+      [bannerView.topAnchor constraintEqualToAnchor:self.view.layoutMarginsGuide.topAnchor];
   bannerViewConstraintTop.active = YES;
-  NSLayoutConstraint *bannerViewConstraintLeft = [bannerView.leftAnchor constraintEqualToAnchor:self.view.leftAnchor];
+  NSLayoutConstraint *bannerViewConstraintLeft =
+      [bannerView.leftAnchor constraintEqualToAnchor:self.view.leftAnchor];
   bannerViewConstraintLeft.active = YES;
-  NSLayoutConstraint *bannerViewConstraintRight = [bannerView.rightAnchor constraintEqualToAnchor:self.view.rightAnchor];
+  NSLayoutConstraint *bannerViewConstraintRight =
+      [bannerView.rightAnchor constraintEqualToAnchor:self.view.rightAnchor];
   bannerViewConstraintRight.active = YES;
   bannerView.hidden = YES;
   self.bannerView = bannerView;
@@ -83,10 +92,10 @@ static NSString *const exampleText = @"Lorem ipsum dolor";
 
 + (NSDictionary *)catalogMetadata {
   return @{
-           @"breadcrumbs" : @[ @"Banner", @"Banner (Autolayout)" ],
-           @"primaryDemo" : @NO,
-           @"presentable" : @YES,
-           };
+    @"breadcrumbs" : @[ @"Banner", @"Banner (Autolayout)" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @YES,
+  };
 }
 
 @end
