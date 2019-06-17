@@ -198,23 +198,6 @@ static UIColor *RippleSelectedColor(void) {
   }
 }
 
-- (NSNumber *)rippleStateForControlState:(UIControlState)state {
-  // We check to see if MDCRippleState conforms to a UIControlState and return it, otherwise
-  // we return nil for non-supported ripple states.
-  switch (state) {
-    case UIControlStateNormal:
-      return [NSNumber numberWithInteger:MDCRippleStateNormal];
-    case UIControlStateHighlighted:
-      return [NSNumber numberWithInteger:MDCRippleStateHighlighted];
-    case UIControlStateSelected:
-      return [NSNumber numberWithInteger:MDCRippleStateSelected];
-    case (UIControlStateHighlighted | UIControlStateSelected):
-      return [NSNumber numberWithInteger:(MDCRippleStateHighlighted | MDCRippleStateSelected)];
-    default:
-      return nil;
-  }
-}
-
 #pragma mark - Superview Touch Handling
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
