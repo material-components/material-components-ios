@@ -277,7 +277,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 }
 
 - (BOOL)allowsSelection {
-  return !self.enableRippleBehavior || self.rippleView.allowsSelection;
+  return self.rippleView.allowsSelection;
 }
 
 - (void)setAllowsSelection:(BOOL)allowsSelection {
