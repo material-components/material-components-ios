@@ -149,6 +149,7 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
 
   self.view.backgroundColor = self.backgroundColor;
   self.tableView.frame = self.view.bounds;
+  self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
   self.view.preservesSuperviewLayoutMargins = YES;
   if (@available(iOS 11.0, *)) {
     self.view.insetsLayoutMarginsFromSafeArea = NO;
