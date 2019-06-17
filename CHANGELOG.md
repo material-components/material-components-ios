@@ -1,3 +1,288 @@
+# 85.0.0
+
+In this major release we updated `sizeThatFits:` calculation for MDCBottomNavigationBar to not include safe area, added Ripple support to all our interactable components, and more layout customization for Banner.
+
+## Breaking changes
+
+We have changed the `sizeThatFits:` behavior for BottomNavigation's bar to not include the safe area by default. This is a breaking change as prior we did include the safe area as part of the calculation, but we should not since the view controller (or parent view) should worry about positioning the BottomNavigationBar within the unsafe area (if it desires).
+
+If you still wish to include the safe area in the sizeThatFits calculation:
+```objc
+self.bottomNavigationBar.sizeThatFitsIncludesSafeArea = YES;
+```
+
+## New features
+
+Enable the new Ripple behavior in components by setting `enableRippleBehavior` to YES, and set its color using the `rippleColor` API:
+
+```objc
+MDCTabBar *tabBar = [[MDCTabBar alloc] init];
+tabBar.enableRippleBehavior = YES;
+tabBar.rippleColor = UIColor.blueColor;
+```
+
+MDCBanner supports different layout styles using the `MDCBannerViewLayoutStyle` enum:
+
+```objc
+MDCBannerView *bannerView = [[MDCBannerView alloc] init];
+bannerView.bannerViewLayoutStyle = MDCBannerViewLayoutStyleSingleRow;
+```
+
+MDCBanner now allows you to show/hide a divider:
+
+```objc
+MDCBannerView *bannerView = [[MDCBannerView alloc] init];
+bannerView.showsDivider = YES;
+```
+
+## API changes
+
+### ActionSheet
+
+#### MDCActionSheetController
+
+*new* property: `rippleColor` in `MDCActionSheetController`
+
+*new* property: `enableRippleBehavior` in `MDCActionSheetController`
+
+#### MDCActionSheetController(ToBeDeprecated)
+
+*new* category: `MDCActionSheetController(ToBeDeprecated)`
+
+*modified* property: `inkColor` in `MDCActionSheetController(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCActionSheetController` |
+| To: | `c:objc(cy)MDCActionSheetController@ToBeDeprecated` |
+
+### Banner
+
+#### MDCBannerViewLayoutStyle
+
+*new* enum value: `MDCBannerViewLayoutStyleAutomatic` in `MDCBannerViewLayoutStyle`
+
+*new* enum value: `MDCBannerViewLayoutStyleMultiRowAlignedButton` in `MDCBannerViewLayoutStyle`
+
+*new* enum value: `MDCBannerViewLayoutStyleMultiRowStackedButton` in `MDCBannerViewLayoutStyle`
+
+*new* enum value: `MDCBannerViewLayoutStyleSingleRow` in `MDCBannerViewLayoutStyle`
+
+*new* enum: `MDCBannerViewLayoutStyle`
+
+*new* typedef: `MDCBannerViewLayoutStyle`
+
+#### MDCBannerView
+
+*new* property: `bannerViewLayoutStyle` in `MDCBannerView`
+
+*new* property: `showsDivider` in `MDCBannerView`
+
+*new* property: `dividerColor` in `MDCBannerView`
+
+### BottomNavigation
+
+#### MDCBottomNavigationBar(ToBeDeprecated)
+
+*new* category: `MDCBottomNavigationBar(ToBeDeprecated)`
+
+*modified* property: `sizeThatFitsIncludesSafeArea` in `MDCBottomNavigationBar(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCBottomNavigationBar` |
+| To: | `c:objc(cy)MDCBottomNavigationBar@ToBeDeprecated` |
+
+#### MDCBottomNavigationBar
+
+*new* property: `enableRippleBehavior` in `MDCBottomNavigationBar`
+
+### ButtonBar
+
+#### MDCButtonBar
+
+*new* property: `enableRippleBehavior` in `MDCButtonBar`
+
+*new* property: `rippleColor` in `MDCButtonBar`
+
+#### MDCButtonBar(ToBeDeprecated)
+
+*new* category: `MDCButtonBar(ToBeDeprecated)`
+
+*modified* property: `inkColor` in `MDCButtonBar(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCButtonBar` |
+| To: | `c:objc(cy)MDCButtonBar@ToBeDeprecated` |
+
+### Dialogs
+
+#### MDCAlertControllerView
+
+*new* property: `enableRippleBehavior` in `MDCAlertControllerView`
+
+#### MDCAlertController
+
+*new* property: `enableRippleBehavior` in `MDCAlertController`
+
+### List
+
+#### MDCBaseCell
+
+*new* property: `rippleColor` in `MDCBaseCell`
+
+*new* property: `enableRippleBehavior` in `MDCBaseCell`
+
+#### MDCBaseCell(ToBeDeprecated)
+
+*new* category: `MDCBaseCell(ToBeDeprecated)`
+
+*modified* property: `inkColor` in `MDCBaseCell(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCBaseCell` |
+| To: | `c:objc(cy)MDCBaseCell@ToBeDeprecated` |
+
+### NavigationBar
+
+#### MDCNavigationBar
+
+*new* property: `enableRippleBehavior` in `MDCNavigationBar`
+
+*new* property: `rippleColor` in `MDCNavigationBar`
+
+#### MDCNavigationBar(ToBeDeprecated)
+
+*new* category: `MDCNavigationBar(ToBeDeprecated)`
+
+*modified* property: `inkColor` in `MDCNavigationBar(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCNavigationBar` |
+| To: | `c:objc(cy)MDCNavigationBar@ToBeDeprecated` |
+
+### Slider
+
+#### MDCSlider(ToBeDeprecated)
+
+*new* category: `MDCSlider(ToBeDeprecated)`
+
+*modified* property: `inkColor` in `MDCSlider(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSlider` |
+| To: | `c:objc(cy)MDCSlider@ToBeDeprecated` |
+
+#### MDCSlider
+
+*new* property: `enableRippleBehavior` in `MDCSlider`
+
+*new* property: `rippleColor` in `MDCSlider`
+
+### Snackbar
+
+#### MDCSnackbarMessage
+
+*new* property: `enableRippleBehavior` in `MDCSnackbarMessage`
+
+### Tabs
+
+#### MDCTabBar
+
+*new* property: `enableRippleBehavior` in `MDCTabBar`
+
+*new* property: `rippleColor` in `MDCTabBar`
+
+#### MDCTabBar(ToBeDeprecated)
+
+*new* category: `MDCTabBar(ToBeDeprecated)`
+
+*modified* property: `inkColor` in `MDCTabBar(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCTabBar` |
+| To: | `c:objc(cy)MDCTabBar@ToBeDeprecated` |
+
+## Component changes
+
+## Changes
+
+### ActionSheet
+
+* [Adds the Ripple behavior to ActionSheet. (#7594)](https://github.com/material-components/material-components-ios/commit/c64b90d844113d2f0000a4cac9066a04a485ffd7) (Yarden Eitan)
+* [Fixes incorrect layout margins in MDCActionSheetController's table view pre iOS 12. (#7607)](https://github.com/material-components/material-components-ios/commit/67a48ac4933f19cb54389b374abffcbb3775f8eb) (Cody Weaver)
+* [Simplify BottomSheet import. (#7552)](https://github.com/material-components/material-components-ios/commit/0e702ccf3279edeaffb785a14f6cd1c5dfd9e547) (Robert Moore)
+
+### AppBar
+
+* [Update example to have accessibility elements (#7574)](https://github.com/material-components/material-components-ios/commit/c8d9ab92ab37f243198a581e2845b4122fa6cc16) (Cody Weaver)
+
+### Banner
+
+* [Add support for divider in MDCBannerView. (#7567)](https://github.com/material-components/material-components-ios/commit/2c47d9514ee52af89f2d09d3ae5cd5e9aff0f817) (Wenyu Zhang)
+* [Drop iOS 9 annotation from MDCBannerView. (#7568)](https://github.com/material-components/material-components-ios/commit/91722b9f521d1f93b458157c7fc94b66f9546eb6) (Wenyu Zhang)
+* [Expose LayoutMode and add an automatic layout mode. (#7572)](https://github.com/material-components/material-components-ios/commit/9aa61a98a60f29d745d4016f60b5275051220a1a) (Wenyu Zhang)
+* [Rename layoutMode to layoutStyle. (#7605)](https://github.com/material-components/material-components-ios/commit/23497ebc8071752880039b16a548b112214c6738) (Wenyu Zhang)
+* [set trailingButton default to hidden under SingleRow layout (#7604)](https://github.com/material-components/material-components-ios/commit/f717bd3b3790e4985cad6a3d4e84db4875af96a6) (Wenyu Zhang)
+* [standardize dividerColor API. (#7575)](https://github.com/material-components/material-components-ios/commit/293510a32b6ebbf5f27feeaa880116046d26a7c2) (Wenyu Zhang)
+
+### BottomNavigation
+
+* [Adds the Ripple behavior to BottomNavigation.  (#7589)](https://github.com/material-components/material-components-ios/commit/9246b77e5eff09c88904def40bfffc57f68fa79f) (Yarden Eitan)
+* [Default `sizeThatFitsIncludesSafeArea` to `NO`. (#7554)](https://github.com/material-components/material-components-ios/commit/3d6549c941311e138f8d3168cd367f0ad43f3815) (Robert Moore)
+* [Remove old and unused methods. (#7606)](https://github.com/material-components/material-components-ios/commit/37c6a92641022a05f78825869018cfa79b257fcf) (Yarden Eitan)
+
+### BottomSheet
+
+* [Add respondsToSelector check in BottomSheet accessibility escape (#7570)](https://github.com/material-components/material-components-ios/commit/395290fed4484364bf4bd073cc6e85798e96be9a) (Andrew Overton)
+
+### ButtonBar
+
+* [Adds the Ripple behavior to ButtonBar. (#7593)](https://github.com/material-components/material-components-ios/commit/19ef3dd2c2fad74395b2e58b707ad3232365115b) (Yarden Eitan)
+
+### Dialogs
+
+* [Adds the Ripple behavior to Dialogs. (#7595)](https://github.com/material-components/material-components-ios/commit/90938fe59f6290a4ab400fa7d83d42b7cbed0978) (Yarden Eitan)
+* [Update DialogWithInputFieldExample storyboard to reference correct class (#7524)](https://github.com/material-components/material-components-ios/commit/0ca3a4fe64a5a9dc63c88a773faa561d497ef6d4) (Bryan Oltman)
+
+### List
+
+* [Adds the Ripple behavior to List. (#7591)](https://github.com/material-components/material-components-ios/commit/b9ad888e6d1ef3bbcabe46c7880cfe1cec44489c) (Yarden Eitan)
+
+### NavigationBar
+
+* [Adds the Ripple behavior to NavigationBar. (#7602)](https://github.com/material-components/material-components-ios/commit/3b4bc76524f7908d7474e3d2eed81a604ca3d68d) (Yarden Eitan)
+
+### Slider
+
+* [Adds the Ripple behavior to Slider. (#7600)](https://github.com/material-components/material-components-ios/commit/e9ac3ee70d21b85c9b4a9a3fa0c92ad5ebdc9fd8) (Yarden Eitan)
+
+### Snackbar
+
+* [Adds the Ripple behavior to Snackbar. (#7596)](https://github.com/material-components/material-components-ios/commit/3f0c25789c63c4161630b69d881753d940d50ee6) (Yarden Eitan)
+* [Remove dead code from Ink (#7599)](https://github.com/material-components/material-components-ios/commit/0f1fed0207aa3f57a0fa16d78be35347eef4861f) (Yarden Eitan)
+
+### Tabs
+
+* [Adds the Ripple behavior to Tabs. (#7583)](https://github.com/material-components/material-components-ios/commit/e78713078a38a3a1ee683194d17e1900459e543a) (Yarden Eitan)
+* [Make `-itemAtIndexPath:` safe (#7555)](https://github.com/material-components/material-components-ios/commit/cb9ec4f16056979d75ef014a9c0fc272ea3ac3f3) (Andrew Overton)
+* [Revert revert of #7518 (#7566)](https://github.com/material-components/material-components-ios/commit/2607ee1aaa90127235056185a99757c1e21daf7f) (Andrew Overton)
+
+### TextFields
+
+* [Remove extra semicolon. (#7573)](https://github.com/material-components/material-components-ios/commit/58940425c3e16d5e806a1f899c80d32bc5c4c319) (Cody Weaver)
+
+### private/ThumbTrack
+
+* [Adds the Ripple behavior to Thumbtrack. (#7590)](https://github.com/material-components/material-components-ios/commit/4a498855074d738bd57756f2e6e04acec45ab294) (Yarden Eitan)
+
+---
+
 # 84.6.0
 
 In this minor release we added new features to ActionSheet and NavigationDrawer, as well as additional tests and bug fixes.

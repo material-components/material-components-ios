@@ -192,6 +192,20 @@ static NSString *const exampleExtraLongText =
       exampleUseSelector:@selector(showMultiLineStackedButtonStyleBannerWithIcon)];
   [bannerExampleList addObject:exampleUseInfo6];
 
+  BannerExampleUseInfo *exampleUseInfo7 =
+      [BannerExampleUseInfo infoWithIdentifier:@"example7"
+                                   displayName:@"Long Text with One Action (Single Line Style)"
+                              exampleUseTarget:self
+                            exampleUseSelector:@selector(showSingleLineLongTextStyleBanner)];
+  [bannerExampleList addObject:exampleUseInfo7];
+
+  BannerExampleUseInfo *exampleUseInfo8 =
+      [BannerExampleUseInfo infoWithIdentifier:@"example8"
+                                   displayName:@"Long Text with One Action (Automatic Style)"
+                              exampleUseTarget:self
+                            exampleUseSelector:@selector(showMultilineLongTextStyleBanner)];
+  [bannerExampleList addObject:exampleUseInfo8];
+
   return [bannerExampleList copy];
 }
 
@@ -219,6 +233,7 @@ static NSString *const exampleExtraLongText =
   button.backgroundColor = self.colorScheme.surfaceColor;
   bannerView.trailingButton.hidden = YES;
   bannerView.imageView.hidden = YES;
+  bannerView.showsDivider = YES;
 
   [button addTarget:self
                 action:@selector(dismissBanner)
@@ -325,6 +340,64 @@ static NSString *const exampleExtraLongText =
                            compatibleWithTraitCollection:nil]
       imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   self.bannerView.imageView.tintColor = self.colorScheme.primaryColor;
+}
+
+- (void)showSingleLineLongTextStyleBanner {
+  if (self.bannerView) {
+    [self.bannerView removeFromSuperview];
+  }
+
+  MDCBannerView *bannerView = [[MDCBannerView alloc] init];
+  bannerView.bannerViewLayoutStyle = MDCBannerViewLayoutStyleSingleRow;
+  bannerView.textLabel.text = exampleLongText;
+  bannerView.backgroundColor = self.colorScheme.surfaceColor;
+  UIEdgeInsets margins = UIEdgeInsetsZero;
+  margins.left = exampleBannerContentPadding;
+  margins.right = exampleBannerContentPadding;
+  bannerView.layoutMargins = margins;
+  [self.view addSubview:bannerView];
+  self.bannerView = bannerView;
+
+  MDCButton *button = bannerView.leadingButton;
+  [button setTitle:@"Dismiss" forState:UIControlStateNormal];
+  button.uppercaseTitle = YES;
+  [button setTitleColor:self.colorScheme.primaryColor forState:UIControlStateNormal];
+  button.backgroundColor = self.colorScheme.surfaceColor;
+  bannerView.imageView.hidden = YES;
+  bannerView.showsDivider = YES;
+
+  [button addTarget:self
+                action:@selector(dismissBanner)
+      forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)showMultilineLongTextStyleBanner {
+  if (self.bannerView) {
+    [self.bannerView removeFromSuperview];
+  }
+
+  MDCBannerView *bannerView = [[MDCBannerView alloc] init];
+  bannerView.textLabel.text = exampleLongText;
+  bannerView.backgroundColor = self.colorScheme.surfaceColor;
+  UIEdgeInsets margins = UIEdgeInsetsZero;
+  margins.left = exampleBannerContentPadding;
+  margins.right = exampleBannerContentPadding;
+  bannerView.layoutMargins = margins;
+  [self.view addSubview:bannerView];
+  self.bannerView = bannerView;
+
+  MDCButton *button = bannerView.leadingButton;
+  [button setTitle:@"Dismiss" forState:UIControlStateNormal];
+  button.uppercaseTitle = YES;
+  [button setTitleColor:self.colorScheme.primaryColor forState:UIControlStateNormal];
+  button.backgroundColor = self.colorScheme.surfaceColor;
+  bannerView.trailingButton.hidden = YES;
+  bannerView.imageView.hidden = YES;
+  bannerView.showsDivider = YES;
+
+  [button addTarget:self
+                action:@selector(dismissBanner)
+      forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)dismissBanner {

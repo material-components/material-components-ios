@@ -113,7 +113,7 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 @implementation MDCNavigationBar {
   id _observedNavigationItemLock;
   UINavigationItem *_observedNavigationItem;
-
+  UIColor *_inkColor;
   UILabel *_titleLabel;
 
   MDCButtonBar *_leadingButtonBar;
@@ -714,6 +714,10 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   [self setNeedsLayout];
 }
 
+- (UIColor *)inkColor {
+  return _inkColor;
+}
+
 - (void)setInkColor:(UIColor *)inkColor {
   if (_inkColor == inkColor) {
     return;
@@ -721,6 +725,26 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   _inkColor = inkColor;
   _leadingButtonBar.inkColor = inkColor;
   _trailingButtonBar.inkColor = inkColor;
+}
+
+- (void)setRippleColor:(UIColor *)rippleColor {
+  if (_rippleColor == rippleColor || [_rippleColor isEqual:rippleColor]) {
+    return;
+  }
+  _rippleColor = rippleColor;
+
+  _leadingButtonBar.rippleColor = rippleColor;
+  _trailingButtonBar.rippleColor = rippleColor;
+}
+
+- (void)setEnableRippleBehavior:(BOOL)enableRippleBehavior {
+  if (_enableRippleBehavior == enableRippleBehavior) {
+    return;
+  }
+  _enableRippleBehavior = enableRippleBehavior;
+
+  _leadingButtonBar.enableRippleBehavior = enableRippleBehavior;
+  _trailingButtonBar.enableRippleBehavior = enableRippleBehavior;
 }
 
 - (void)setObservedNavigationItem:(UINavigationItem *)navigationItem {

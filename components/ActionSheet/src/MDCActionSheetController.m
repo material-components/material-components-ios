@@ -76,6 +76,7 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
 
 @implementation MDCActionSheetController {
   NSMutableArray<MDCActionSheetAction *> *_actions;
+  UIColor *_inkColor;
 }
 
 @synthesize mdc_adjustsFontForContentSizeCategory = _mdc_adjustsFontForContentSizeCategory;
@@ -148,6 +149,7 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
 
   self.view.backgroundColor = self.backgroundColor;
   self.tableView.frame = self.view.bounds;
+  self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
   self.view.preservesSuperviewLayoutMargins = YES;
   if (@available(iOS 11.0, *)) {
     self.view.insetsLayoutMarginsFromSafeArea = NO;
@@ -302,6 +304,8 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
   cell.actionFont = self.actionFont;
   cell.accessibilityIdentifier = action.accessibilityIdentifier;
   cell.inkColor = self.inkColor;
+  cell.rippleColor = self.rippleColor;
+  cell.enableRippleBehavior = self.enableRippleBehavior;
   cell.tintColor = self.actionTintColor;
   cell.imageRenderingMode = self.imageRenderingMode;
   cell.addLeadingPadding = self.addLeadingPaddingToCell;
@@ -441,8 +445,30 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
   return NO;
 }
 
+- (UIColor *)inkColor {
+  return _inkColor;
+}
+
 - (void)setInkColor:(UIColor *)inkColor {
   _inkColor = inkColor;
+  [self.tableView reloadData];
+}
+
+- (void)setRippleColor:(UIColor *)rippleColor {
+  if (_rippleColor == rippleColor || [_rippleColor isEqual:rippleColor]) {
+    return;
+  }
+  _rippleColor = rippleColor;
+
+  [self.tableView reloadData];
+}
+
+- (void)setEnableRippleBehavior:(BOOL)enableRippleBehavior {
+  if (_enableRippleBehavior == enableRippleBehavior) {
+    return;
+  }
+  _enableRippleBehavior = enableRippleBehavior;
+
   [self.tableView reloadData];
 }
 
