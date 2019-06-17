@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "BannerTypicalUseExampleViewController.h"
-
 #import "MaterialBanner.h"
 #import "MaterialButtons.h"
 #import "MaterialColorScheme.h"
@@ -72,7 +70,8 @@ static NSString *const exampleExtraLongText =
 
 @end
 
-@interface BannerTypicalUseExampleViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface BannerTypicalUseExampleViewController
+    : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 @property(nonatomic, strong) UITableView *exampleListTableView;
 @property(nonatomic, strong) NSArray<BannerExampleUseInfo *> *exampleList;
