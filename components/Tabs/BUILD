@@ -212,6 +212,7 @@ mdc_snapshot_objc_library(
         "tests/snapshot/Theming/*.m",
     ]),
     deps = [
+        ":TabBarView",
         ":Tabs",
         ":Theming",
     ],
