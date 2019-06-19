@@ -426,7 +426,6 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 
 - (void)updateButtonsConstraintsWithLayoutStyle:(MDCBannerViewLayoutStyle)layoutStyle {
   if (self.trailingButton.hidden) {
-    self.leadingButtonConstraintLeading.active = YES;
     self.leadingButtonConstraintTrailing.active = YES;
     self.leadingButtonConstraintCenterY.active = YES;
   } else {
@@ -437,10 +436,10 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
       self.leadingButtonConstraintTrailingWithTrailingButton.active = YES;
     }
     self.leadingButtonConstraintTop.active = YES;
-    self.leadingButtonConstraintLeading.active = YES;
-    self.trailingButtonConstraintTrailing.active = YES;
-    self.trailingButtonConstraintBottom.active = YES;
   }
+  self.leadingButtonConstraintLeading.active = YES;
+  self.trailingButtonConstraintTrailing.active = YES;
+  self.trailingButtonConstraintBottom.active = YES;
 }
 
 - (MDCBannerViewLayoutStyle)layoutStyleForSizeToFit:(CGSize)sizeToFit {
