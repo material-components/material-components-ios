@@ -95,9 +95,6 @@ mdc_extension_objc_library(
     name = "TabBarView",
     # Visibility restricted because this target is in Beta.
     visibility = ["//visibility:private"],
-    deps = [
-        ":Tabs",
-    ],
 )
 
 mdc_examples_objc_library(
