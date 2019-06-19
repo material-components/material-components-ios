@@ -91,12 +91,6 @@ mdc_extension_objc_library(
     ],
 )
 
-mdc_extension_objc_library(
-    name = "TabBarView",
-    # Visibility restricted because this target is in Beta.
-    visibility = ["//visibility:private"],
-)
-
 mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
@@ -179,20 +173,6 @@ mdc_objc_library(
     ],
 )
 
-mdc_objc_library(
-    name = "unit_test_tabbarview_sources",
-    testonly = 1,
-    srcs = native.glob([
-        "tests/unit/TabBarView/*.m",
-    ]),
-    sdk_frameworks = [
-        "XCTest",
-    ],
-    deps = [
-        ":TabBarView",
-    ],
-)
-
 mdc_unit_test_suite(
     name = "unit_tests",
     deps = [
@@ -204,12 +184,8 @@ mdc_unit_test_suite(
 
 mdc_snapshot_objc_library(
     name = "snapshot_test_lib",
-    extra_srcs = native.glob([
-        "tests/snapshot/TabBarView/*.m",
-        "tests/snapshot/Theming/*.m",
-    ]),
+    extra_srcs = native.glob(["tests/snapshot/Theming/*.m"]),
     deps = [
-        ":TabBarView",
         ":Tabs",
         ":Theming",
     ],
