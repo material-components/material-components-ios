@@ -30,7 +30,9 @@ static const CGFloat kMinHeight = 48;
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
-  return CGSizeMake(MIN(kMaxWidth, MAX(kMinWidth, size.width)), MAX(kMinHeight, size.height));
+  const CGFloat width = MIN(kMaxWidth, MAX(kMinWidth, size.width));
+  const CGFloat height = MAX(kMinHeight, size.height);
+  return CGSizeMake(width, height);
 }
 
 @end
