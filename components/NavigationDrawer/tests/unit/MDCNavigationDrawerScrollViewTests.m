@@ -323,7 +323,7 @@
   XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeightSurplus, 0, 0.001);
 }
 
-- (void)testContentHeightSurplusWithScrollabelContent {
+- (void)testContentHeightSurplusWithScrollableContent {
   // Given
   CGSize fakePreferredContentSize = CGSizeMake(200, 1000);
   [self setupHeaderWithPreferredContentSize:fakePreferredContentSize];

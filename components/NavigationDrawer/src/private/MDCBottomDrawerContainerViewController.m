@@ -795,8 +795,7 @@ static UIColor *DrawerShadowColor(void) {
   } else {
     self.drawerState = MDCBottomDrawerStateCollapsed;
   }
-  if (addedContentHeight < kEpsilon &&
-      (_contentHeaderTopInset <= self.topHeaderHeight - self.contentHeaderHeight) &&
+  if (addedContentHeight < kEpsilon && containerHeight > totalHeight &&
       (_contentHeaderTopInset - _contentHeightSurplus < self.addedContentHeightThreshold)) {
     CGFloat addedContentheight = _contentHeaderTopInset - _contentHeightSurplus;
     [self cacheLayoutCalculationsWithAddedContentHeight:addedContentheight];
