@@ -17,6 +17,6 @@
 /**
  An implementation of Material Tabs (https://material.io/design/components/tabs.html).
  */
-__attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIView
+__attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScrollView
 
 @end
