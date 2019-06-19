@@ -751,4 +751,21 @@
                     .shouldIncludeSafeAreaInContentHeight);
 }
 
+- (void)testFullScreenContentLayoutCalculationsComplete {
+  // Given
+  UIViewController *fakeViewController = [[UIViewController alloc] init];
+  fakeViewController.view.frame = CGRectMake(0, 0, 200, UIScreen.mainScreen.bounds.size.height);
+  self.drawerViewController.contentViewController = fakeViewController;
+  [self.drawerViewController expandToFullscreenWithDuration:0 completion:nil];
+
+  // When
+  MDCBottomDrawerPresentationController *presentationController =
+      (MDCBottomDrawerPresentationController *)self.drawerViewController.presentationController;
+  [presentationController.bottomDrawerContainerViewController cacheLayoutCalculations];
+
+  // Then
+  // This test was put in place to validate that cacheLayoutCalculations doesn't infinitely recurse
+  // It has no visible side effects, so as long as this test finishes, it passes
+}
+
 @end
