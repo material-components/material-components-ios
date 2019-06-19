@@ -150,9 +150,12 @@ static const CGFloat kFloatingLabelXOffset = (CGFloat)3.0;
       [self normalPlaceholderFrameWithFloatingLabelFrame:floatingLabelFrameFloating
                                              placeholder:placeholder
                                                     font:font
+                                            floatingFont:floatingFont
                                        globalChipRowMinX:globalChipRowMinX
                                        globalChipRowMaxX:globalChipRowMaxX
                                                chipsWrap:chipsWrap
+                                           chipRowHeight:chipRowHeight
+                                preferredContainerHeight:preferredContainerHeight
                                        contentAreaHeight:contentAreaMaxY
                                          containerStyler:containerStyler
                                                    isRTL:isRTL];
@@ -281,9 +284,12 @@ static const CGFloat kFloatingLabelXOffset = (CGFloat)3.0;
 - (CGRect)normalPlaceholderFrameWithFloatingLabelFrame:(CGRect)floatingLabelFrame
                                            placeholder:(NSString *)placeholder
                                                   font:(UIFont *)font
+                                          floatingFont:(UIFont *)floatingFont
                                      globalChipRowMinX:(CGFloat)globalChipRowMinX
                                      globalChipRowMaxX:(CGFloat)globalChipRowMaxX
                                              chipsWrap:(BOOL)chipsWrap
+                                         chipRowHeight:(CGFloat)chipRowHeight
+                              preferredContainerHeight:(CGFloat)preferredContainerHeight
                                      contentAreaHeight:(CGFloat)contentAreaHeight
                                        containerStyler:
                                            (id<MDCContainedInputViewStyler>)containerStyler
@@ -296,9 +302,12 @@ static const CGFloat kFloatingLabelXOffset = (CGFloat)3.0;
   }
   CGFloat placeholderMinY = 0;
   if (chipsWrap) {
-    placeholderMinY = [containerStyler.positioningDelegate textMinYWithoutFloatingLabelWithTextHeight:<#(CGFloat)#> floatingLabelHeight:<#(CGFloat)#> preferredContainerHeight:<#(CGFloat)#>];
-//    [containerStyler.positioningDelegate
-//        contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:CGRectGetMaxY(floatingLabelFrame)];
+    if ([containerStyler.positioningDelegate respondsToSelector:@selector(textMinYWithoutFloatingLabelWithTextHeight:floatingLabelHeight:preferredContainerHeight:)]) {
+      placeholderMinY = [containerStyler.positioningDelegate textMinYWithoutFloatingLabelWithTextHeight:chipRowHeight floatingLabelHeight:floatingFont.lineHeight preferredContainerHeight:preferredContainerHeight];
+    } else {
+      placeholderMinY = [containerStyler.positioningDelegate
+       contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:CGRectGetMaxY(floatingLabelFrame)];
+    }
   } else {
     CGFloat center = contentAreaHeight * (CGFloat)0.5;
     placeholderMinY = center - (placeholderSize.height * (CGFloat)0.5);
