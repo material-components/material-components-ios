@@ -104,19 +104,14 @@ Pod::Spec.new do |mdc|
     end
   end
 
-  mdc.subspec "Tabs+TabBarView" do |extension|
-    extension.ios.deployment_target = '9.0'
-    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
-    extension.source_files = [
-      "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}",
-      "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/private/*.{h,m}"
-    ]
-    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+  mdc.subspec "Tabs2" do |component|
+    component.ios.deployment_target = '9.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}"
 
-    extension.test_spec 'UnitTests' do |unit_tests|
+    component.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
-      "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/*.{h,m,swift}",
-      "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/supplemental/*.{h,m,swift}"
+        "components/#{component.base_name}/tests/unit/*.m"
       ]
     end
   end
