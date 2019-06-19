@@ -226,17 +226,17 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   self.buttonContainerConstraintLeading = [self.buttonContainerView.leadingAnchor
       constraintEqualToAnchor:self.layoutMarginsGuide.leadingAnchor
                      constant:kLeadingPadding];
-  self.buttonContainerConstraintWidthWithLeadingButton = [self.buttonContainerView.widthAnchor constraintEqualToAnchor:self.leadingButton.widthAnchor];
+  self.buttonContainerConstraintWidthWithLeadingButton =
+      [self.buttonContainerView.widthAnchor constraintEqualToAnchor:self.leadingButton.widthAnchor];
   self.buttonContainerConstraintTrailing = [self.buttonContainerView.trailingAnchor
       constraintEqualToAnchor:self.layoutMarginsGuide.trailingAnchor
                      constant:-kTrailingPadding];
   self.buttonContainerConstraintBottom = [self.buttonContainerView.bottomAnchor
       constraintEqualToAnchor:self.layoutMarginsGuide.bottomAnchor
                      constant:-kBottomPadding];
-  self.buttonContainerConstraintLeadingWithTextLabel =
-      [self.buttonContainerView.leadingAnchor
-          constraintEqualToAnchor:self.textLabel.trailingAnchor
-       constant:kHorizontalSpaceBetweenTextLabelAndButton];
+  self.buttonContainerConstraintLeadingWithTextLabel = [self.buttonContainerView.leadingAnchor
+      constraintEqualToAnchor:self.textLabel.trailingAnchor
+                     constant:kHorizontalSpaceBetweenTextLabelAndButton];
   self.buttonContainerConstraintTopWithMargin =
       [self.buttonContainerView.topAnchor constraintEqualToAnchor:self.layoutMarginsGuide.topAnchor
                                                          constant:kTopPaddingSmall];
@@ -267,7 +267,7 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   [self.leadingButton setContentCompressionResistancePriority:UILayoutPriorityRequired
                                                       forAxis:UILayoutConstraintAxisHorizontal];
   [self.leadingButton setContentHuggingPriority:UILayoutPriorityRequired
-                                         forAxis:UILayoutConstraintAxisHorizontal];
+                                        forAxis:UILayoutConstraintAxisHorizontal];
   self.trailingButtonConstraintBottom = [self.trailingButton.bottomAnchor
       constraintEqualToAnchor:self.buttonContainerView.bottomAnchor];
   self.trailingButtonConstraintTop =
@@ -276,7 +276,7 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   self.trailingButtonConstraintTrailing = [self.trailingButton.trailingAnchor
       constraintEqualToAnchor:self.buttonContainerView.trailingAnchor];
   [self.trailingButton setContentCompressionResistancePriority:UILayoutPriorityRequired
-                                                      forAxis:UILayoutConstraintAxisHorizontal];
+                                                       forAxis:UILayoutConstraintAxisHorizontal];
   [self.trailingButton setContentHuggingPriority:UILayoutPriorityRequired
                                          forAxis:UILayoutConstraintAxisHorizontal];
 }
