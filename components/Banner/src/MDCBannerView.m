@@ -48,9 +48,9 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 
 // Image constraints
 @property(nonatomic, readwrite, strong) NSLayoutConstraint *imageViewConstraintLeading;
-@property(nonatomic, readwrite, strong) NSLayoutConstraint *imageViewConstraintTopSmall;
+@property(nonatomic, readwrite, strong) NSLayoutConstraint *imageViewConstraintCenterY;
 @property(nonatomic, readwrite, strong) NSLayoutConstraint *imageViewConstraintTopLarge;
-@property(nonatomic, readwrite, strong) NSLayoutConstraint *imageViewConstraintBottom;
+
 // Text Label constraints
 @property(nonatomic, readwrite, strong) NSLayoutConstraint *textLabelConstraintLeadingWithMargin;
 @property(nonatomic, readwrite, strong) NSLayoutConstraint *textLabelConstraintLeadingWithImage;
@@ -195,15 +195,11 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   self.imageViewConstraintLeading =
       [self.imageView.leadingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.leadingAnchor
                                                    constant:kLeadingPadding];
-  self.imageViewConstraintTopSmall =
-      [self.imageView.topAnchor constraintEqualToAnchor:self.layoutMarginsGuide.topAnchor
-                                               constant:kTopPaddingSmall];
   self.imageViewConstraintTopLarge =
       [self.imageView.topAnchor constraintEqualToAnchor:self.layoutMarginsGuide.topAnchor
                                                constant:kTopPaddingLarge];
-  self.imageViewConstraintBottom =
-      [self.imageView.bottomAnchor constraintEqualToAnchor:self.layoutMarginsGuide.bottomAnchor
-                                                  constant:-kBottomPadding];
+  self.imageViewConstraintCenterY =
+      [self.imageView.centerYAnchor constraintEqualToAnchor:self.buttonContainerView.centerYAnchor];
 }
 
 - (void)setUpTextLabelConstraints {
@@ -294,9 +290,8 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 
 - (void)deactivateAllConstraints {
   self.imageViewConstraintLeading.active = NO;
-  self.imageViewConstraintTopSmall.active = NO;
   self.imageViewConstraintTopLarge.active = NO;
-  self.imageViewConstraintBottom.active = NO;
+  self.imageViewConstraintCenterY.active = NO;
   self.textLabelConstraintLeadingWithMargin.active = NO;
   self.textLabelConstraintLeadingWithImage.active = NO;
   self.textLabelConstraintTrailing.active = NO;
@@ -391,8 +386,8 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 - (void)updateConstraintsWithLayoutStyle:(MDCBannerViewLayoutStyle)layoutStyle {
   [self deactivateAllConstraints];
 
+  self.imageViewConstraintLeading.active = YES;
   if (!self.imageView.hidden) {
-    self.imageViewConstraintLeading.active = YES;
     self.textLabelConstraintLeadingWithImage.active = YES;
   } else {
     self.textLabelConstraintLeadingWithMargin.active = YES;
@@ -401,17 +396,14 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   self.buttonContainerConstraintBottom.active = YES;
 
   if (layoutStyle == MDCBannerViewLayoutStyleSingleRow) {
-    if (!self.imageView.hidden) {
-      self.imageViewConstraintTopSmall.active = YES;
-      self.imageViewConstraintBottom.active = YES;
-    }
+    self.imageViewConstraintCenterY.active = YES;
     self.textLabelConstraintCenterY.active = YES;
     self.buttonContainerConstraintWidthWithLeadingButton.active = YES;
     self.buttonContainerConstraintLeadingWithTextLabel.active = YES;
     self.buttonContainerConstraintTopWithMargin.active = YES;
   } else {
+    self.imageViewConstraintTopLarge.active = YES;
     if (!self.imageView.hidden) {
-      self.imageViewConstraintTopLarge.active = YES;
       self.buttonContainerConstraintTopWithImageViewGreater.active = YES;
     }
     self.textLabelConstraintTop.active = YES;
