@@ -16,7 +16,7 @@ module SnapshotPodspecHelper
         supplemental_files = Dir["components/#{@name}/tests/snapshot/supplemental/*.{h,m,swift}"]
         example_files = Dir["components/#{@name}/examples/tests/snapshot/*.{h,m,swift}"]
         theming_files = Dir["components/#{@name}/tests/snapshot/Theming/*.{h,m,swift}"]
-        return source_files + supplemental_files + example_files + theming_files 
+        return source_files + supplemental_files + example_files + theming_files
       end
       return []
     end
