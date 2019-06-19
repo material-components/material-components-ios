@@ -7,6 +7,7 @@ load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
 IOS_MINIMUM_OS = "9.0"
 SNAPSHOT_IOS_MINIMUM_OS = "10.0"
+SWIFT_VERSION = "4.2"
 
 DEFAULT_IOS_RUNNER_TARGETS = [
     "//components/testing/runners:IPAD_PRO_12_9_IN_9_3",
@@ -165,6 +166,47 @@ def mdc_examples_swift_library(
           "examples/supplemental/*.swift",
       ]),
       **kwargs)
+
+def mdc_unit_test_objc_library(
+    name,
+    extra_srcs = [],
+    deps = [],
+    sdk_frameworks = [],
+    visibility = ["//visibility:private"],
+    testonly = 1,
+    **kwargs):
+    """Declare an mdc_objc_library for unit test sources."""
+    mdc_objc_library(
+        name = name,
+        srcs = native.glob([
+            "tests/unit/*.m",
+            "tests/unit/*.h",
+        ]) + extra_srcs,
+        deps = deps,
+        sdk_frameworks = ["XCTest"] + sdk_frameworks,
+        visibility = visibility,
+        testonly = testonly,
+        **kwargs)
+
+def mdc_unit_test_swift_library(
+    name,
+    extra_srcs = [],
+    deps = [],
+    visibility = ["//visibility:private"],
+    testonly = 1,
+    **kwargs):
+    """Declare a swift_library for unit test sources."""
+    swift_library(
+        name = name,
+        srcs = native.glob(["tests/unit/*.swift"]) + extra_srcs,
+        deps = deps,
+        visibility = visibility,
+        testonly = testonly,
+        copts = [
+            "-swift-version",
+            SWIFT_VERSION,
+        ],
+        **kwargs)
 
 def mdc_snapshot_objc_library(
     name,
