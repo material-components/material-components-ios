@@ -19,7 +19,7 @@
 @interface MDCTabBarViewTests : XCTestCase
 @end
 
-@implementation MDCTabBarViewTests{
+@implementation MDCTabBarViewTests {
   MDCTabBarView *_tabBarView;
   UITabBarItem *_itemA;
   UITabBarItem *_itemB;
