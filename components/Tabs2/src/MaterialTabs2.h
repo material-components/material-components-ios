@@ -12,11 +12,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <UIKit/UIKit.h>
-
-/**
- An implementation of Material Tabs (https://material.io/design/components/tabs.html).
- */
-__attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIView
-
-@end
+#import "MDCTabBarView.h"
