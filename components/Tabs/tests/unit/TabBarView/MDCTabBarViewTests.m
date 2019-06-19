@@ -22,7 +22,7 @@
 @implementation MDCTabBarViewTests
 
 - (void)testInitCreatesObject {
-    XCTAssertNotNil([[MDCTabBarView alloc] init]);
+  XCTAssertNotNil([[MDCTabBarView alloc] init]);
 }
 
 @end
