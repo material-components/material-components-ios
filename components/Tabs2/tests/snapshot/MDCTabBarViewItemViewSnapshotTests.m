@@ -14,9 +14,9 @@
 
 #import <XCTest/XCTest.h>
 
+#import <CoreGraphics/CoreGraphics.h>
 #import "../../src/private/MDCTabBarViewItemView.h"
 #import "MaterialSnapshot.h"
-#import <CoreGraphics/CoreGraphics.h>
 
 @interface MDCTabBarViewItemViewSnapshotTests : MDCSnapshotTestCase
 

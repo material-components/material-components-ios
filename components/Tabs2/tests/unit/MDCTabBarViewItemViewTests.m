@@ -14,8 +14,8 @@
 
 #import <XCTest/XCTest.h>
 
-#import "../../src/private/MDCTabBarViewItemView.h"
 #import <CoreGraphics/CoreGraphics.h>
+#import "../../src/private/MDCTabBarViewItemView.h"
 
 // Minimum width of an item view.
 static const CGFloat kMinWidth = 90;
