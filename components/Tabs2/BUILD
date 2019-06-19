@@ -16,6 +16,7 @@
 load(
     "//:material_components_ios.bzl",
     "mdc_objc_library",
+    "mdc_public_objc_library",
     "mdc_snapshot_objc_library",
     "mdc_snapshot_test",
     "mdc_unit_test_suite",
@@ -23,8 +24,9 @@ load(
 
 licenses(["notice"])  # Apache 2.0
 
-mdc_objc_library(
+mdc_public_objc_library(
     name = "Tabs2",
+    visibility = ["//visibility:private"],
 )
 
 mdc_objc_library(
