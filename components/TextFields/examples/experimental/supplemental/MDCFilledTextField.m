@@ -118,30 +118,43 @@
 
 @implementation MDCFilledTextFieldPositioningDelegate
 @synthesize verticalDensity = _verticalDensity;
+
+- (CGFloat)assistiveLabelPaddingWithContainerHeight:(CGFloat)containerHeight {
+  return 0.13 * containerHeight;
+}
+
+- (CGFloat)containerHeightWithTextHeight:(CGFloat)textHeight
+                preferredContainerHeight:(CGFloat)preferredContainerHeight {
+  if (preferredContainerHeight > 0) {
+    return preferredContainerHeight;
+  }
+  return 3.3 * textHeight;
+}
+
 - (CGFloat)floatingLabelMinYWithTextHeight:(CGFloat)textHeight
                        floatingLabelHeight:(CGFloat)floatingLabelHeight
                   preferredContainerHeight:(CGFloat)preferredContainerHeight {
-  CGFloat minimumContentAreaHeight = textHeight * 2.25;
-  CGFloat contentAreaHeight = preferredContainerHeight > minimumContentAreaHeight ? preferredContainerHeight : minimumContentAreaHeight;
-  CGFloat offset = contentAreaHeight * 0.3;
+  CGFloat containerHeight = [self containerHeightWithTextHeight:textHeight
+                                       preferredContainerHeight:preferredContainerHeight];
+  CGFloat offset = containerHeight * 0.28;
   return offset - (0.5 * floatingLabelHeight);
 }
 
 - (CGFloat)textMinYWithFloatingLabelWithTextHeight:(CGFloat)textHeight
                                floatingLabelHeight:(CGFloat)floatingLabelHeight
                           preferredContainerHeight:(CGFloat)preferredContainerHeight {
-  CGFloat minimumContentAreaHeight = textHeight * 2.25;
-  CGFloat contentAreaHeight = preferredContainerHeight > minimumContentAreaHeight ? preferredContainerHeight : minimumContentAreaHeight;
-  CGFloat offset = contentAreaHeight * 0.85;
+  CGFloat containerHeight = [self containerHeightWithTextHeight:textHeight
+                                       preferredContainerHeight:preferredContainerHeight];
+  CGFloat offset = containerHeight * 0.64;
   return offset - (0.5 * textHeight);
 }
 
 - (CGFloat)textMinYWithoutFloatingLabelWithTextHeight:(CGFloat)textHeight
                                   floatingLabelHeight:(CGFloat)floatingLabelHeight
                              preferredContainerHeight:(CGFloat)preferredContainerHeight {
-  CGFloat minimumContentAreaHeight = textHeight * 2.25;
-  CGFloat contentAreaHeight = preferredContainerHeight > minimumContentAreaHeight ? preferredContainerHeight : minimumContentAreaHeight;
-  CGFloat offset = contentAreaHeight * 0.5;
+  CGFloat containerHeight = [self containerHeightWithTextHeight:textHeight
+                                       preferredContainerHeight:preferredContainerHeight];
+  CGFloat offset = containerHeight * 0.5;
   return offset - (0.5 * textHeight);
 }
 

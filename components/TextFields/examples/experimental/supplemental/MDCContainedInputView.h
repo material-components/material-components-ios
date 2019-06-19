@@ -284,22 +284,25 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
 /**
  This is a value between 0 and 1 that determines the visual vertical density of the view.
  */
-//@property(nonatomic, assign) CGFloat verticalDensity;
+@property(nonatomic, assign) CGFloat verticalDensity;
 /**
  This method returns the mininum Y coordinate of the floating label given its height.
  */
-//- (CGFloat)floatingLabelMinYWithFloatingLabelHeight:(CGFloat)floatingLabelHeight;
+- (CGFloat)floatingLabelMinYWithFloatingLabelHeight:(CGFloat)floatingLabelHeight;
 /**
  This method returns the top padding of the main content area (where the text is) when the floating
  label is floating.
  */
-//- (CGFloat)contentAreaTopPaddingFloatingLabelWithFloatingLabelMaxY:(CGFloat)floatingLabelMaxY;
+- (CGFloat)contentAreaTopPaddingFloatingLabelWithFloatingLabelMaxY:(CGFloat)floatingLabelMaxY;
 /**
  This method returns the vertical (top and bottom) padding of the main content area (where the text
  is) when the floating label is in the normal (not floating) state.
  */
-//- (CGFloat)contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:(CGFloat)floatingLabelMaxY;
-//@optional
+- (CGFloat)contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:(CGFloat)floatingLabelMaxY;
+@optional
+- (CGFloat)assistiveLabelPaddingWithContainerHeight:(CGFloat)containerHeight;
+- (CGFloat)containerHeightWithTextHeight:(CGFloat)textHeight
+                preferredContainerHeight:(CGFloat)preferredContainerHeight;
 - (CGFloat)floatingLabelMinYWithTextHeight:(CGFloat)textHeight
                        floatingLabelHeight:(CGFloat)floatingLabelHeight
                   preferredContainerHeight:(CGFloat)preferredContainerHeight;
