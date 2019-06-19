@@ -104,6 +104,18 @@ Pod::Spec.new do |mdc|
     end
   end
 
+  mdc.subspec "Tabs2" do |component|
+    component.ios.deployment_target = '9.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}"
+
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = [
+        "components/#{component.base_name}/tests/unit/*.m"
+      ]
+    end
+  end
+
   # Private
 
   mdc.subspec "private" do |private_spec|

@@ -226,7 +226,7 @@ def mdc_snapshot_objc_library(
           "tests/snapshot/supplemental/*.h",
       ]) + extra_srcs,
       deps = ["//components/private/Snapshot"] + deps,
-      sdk_frameworks = ["XCTest"] + sdk_frameworks,
+      sdk_frameworks = ["XCTest", "CoreGraphics"] + sdk_frameworks,
       visibility = visibility,
       testonly = testonly,
       **kwargs)
