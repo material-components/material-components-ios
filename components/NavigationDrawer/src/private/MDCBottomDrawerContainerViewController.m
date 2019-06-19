@@ -786,7 +786,7 @@ static UIColor *DrawerShadowColor(void) {
     }
   }
 
-  CGFloat scrollingDistance = _contentHeaderTopInset + contentHeaderHeight + contentHeight;
+  CGFloat scrollingDistance = _contentHeaderTopInset + totalHeight;
   _contentHeightSurplus = scrollingDistance - containerHeight;
   if ([self shouldPresentFullScreen]) {
     self.drawerState = MDCBottomDrawerStateFullScreen;
@@ -795,7 +795,7 @@ static UIColor *DrawerShadowColor(void) {
   } else {
     self.drawerState = MDCBottomDrawerStateCollapsed;
   }
-  if (addedContentHeight < kEpsilon && (_contentHeaderTopInset > _contentHeightSurplus) &&
+  if (addedContentHeight < kEpsilon && containerHeight > totalHeight &&
       (_contentHeaderTopInset - _contentHeightSurplus < self.addedContentHeightThreshold)) {
     CGFloat addedContentheight = _contentHeaderTopInset - _contentHeightSurplus;
     [self cacheLayoutCalculationsWithAddedContentHeight:addedContentheight];
