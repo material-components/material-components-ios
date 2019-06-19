@@ -64,6 +64,7 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 @property(nonatomic, readwrite, strong) NSLayoutConstraint
     *buttonContainerConstraintLeadingWithTextLabel;  // The horizontal constraint between button
                                                      // container and text label.
+
 @property(nonatomic, readwrite, strong) NSLayoutConstraint *buttonContainerConstraintTrailing;
 @property(nonatomic, readwrite, strong) NSLayoutConstraint *buttonContainerConstraintTopWithMargin;
 @property(nonatomic, readwrite, strong)
