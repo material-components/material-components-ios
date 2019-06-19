@@ -15,6 +15,7 @@
 
 load(
     "//:material_components_ios.bzl",
+    "mdc_objc_library",
     "mdc_public_objc_library",
     "mdc_snapshot_objc_library",
     "mdc_snapshot_test",
@@ -29,10 +30,18 @@ mdc_public_objc_library(
     visibility = ["//visibility:private"],
 )
 
+mdc_objc_library(
+    name = "privateHeaders",
+    hdrs = glob(["src/private/*.h"]),
+    testonly = 1,
+)
+
 mdc_unit_test_objc_library(
     name = "unit_test_sources",
+    sdk_frameworks = ["CoreGraphics"],
     deps = [
         ":Tabs2",
+        ":privateHeaders",
     ],
 )
 
@@ -47,6 +56,7 @@ mdc_snapshot_objc_library(
     name = "snapshot_test_lib",
     deps = [
         ":Tabs2",
+        ":privateHeaders",
     ],
 )
 
