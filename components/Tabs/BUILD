@@ -177,7 +177,6 @@ mdc_unit_test_suite(
     name = "unit_tests",
     deps = [
         ":unit_test_sources",
-        ":unit_test_tabbarview_sources",
         ":unit_test_theming_sources",
     ],
 )
