@@ -172,4 +172,33 @@ static const CGFloat kBannerContentPadding = 10.0f;
   [self generateSnapshotAndVerifyForView:self.bannerView];
 }
 
+- (void)testSingleRowStyleLongTextWithSingleActionLTR {
+  // When
+  self.bannerView.textLabel.text = kBannerLongText;
+  MDCButton *button1 = self.bannerView.leadingButton;
+  [button1 setTitle:@"Action1" forState:UIControlStateNormal];
+  [button1 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
+  button1.uppercaseTitle = YES;
+  self.bannerView.bannerViewLayoutStyle = MDCBannerViewLayoutStyleSingleRow;
+  self.bannerView.imageView.hidden = YES;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.bannerView];
+}
+
+- (void)testSingleRowStyleLongTextWithSingleActionRTL {
+  // When
+  self.bannerView.textLabel.text = kBannerLongText;
+  MDCButton *button1 = self.bannerView.leadingButton;
+  [button1 setTitle:@"Action1" forState:UIControlStateNormal];
+  [button1 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
+  button1.uppercaseTitle = YES;
+  self.bannerView.bannerViewLayoutStyle = MDCBannerViewLayoutStyleSingleRow;
+  [self changeViewToRTL:self.bannerView];
+  self.bannerView.imageView.hidden = YES;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.bannerView];
+}
+
 @end
