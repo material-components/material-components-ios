@@ -16,4 +16,51 @@
 
 @implementation MDCTabBarView
 
+#pragma mark - Properties
+
+- (void)setItems:(NSArray<UITabBarItem *> *)items {
+  NSAssert([NSThread isMainThread], @"Item array may only be set on the main thread");
+  NSParameterAssert(items != nil);
+
+  if (_items != items && ![_items isEqual:items]) {
+    _items = [items copy];
+
+    // Determine new selected item, defaulting to the first item.
+    UITabBarItem *newSelectedItem = _items.firstObject;
+    if (_selectedItem && [_items containsObject:_selectedItem]) {
+      // Previously-selected item still around: Preserve selection.
+      newSelectedItem = _selectedItem;
+    }
+
+    // Update _selectedItem directly so it's available for -reload.
+    _selectedItem = newSelectedItem;
+  }
+}
+
+- (void)setSelectedItem:(nullable UITabBarItem *)selectedItem {
+  [self setSelectedItem:selectedItem animated:NO];
+}
+
+- (void)setSelectedItem:(nullable UITabBarItem *)selectedItem animated:(BOOL)animated {
+  if (_selectedItem != selectedItem) {
+    NSUInteger itemIndex = [self indexForItem:selectedItem];
+    if (selectedItem && (itemIndex == NSNotFound)) {
+      [[NSException exceptionWithName:NSInvalidArgumentException
+                               reason:@"Invalid item"
+                             userInfo:nil] raise];
+    }
+
+    _selectedItem = selectedItem;
+  }
+}
+
+#pragma mark - Private
+
+- (NSInteger)indexForItem:(nullable UITabBarItem *)item {
+  if (item) {
+    return [_items indexOfObject:item];
+  }
+  return NSNotFound;
+}
+
 @end
