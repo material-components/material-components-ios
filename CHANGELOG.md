@@ -1,18 +1,18 @@
-# #develop#
+# 85.0.1
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This patch release fixes a bug that Banner doesn't layout correctly in landscape mode on some devices and a floating point rounding issue in NavigationDrawer.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+## Changes
 
-Replace this text with links to deprecation guides.
-## New features
+### Banner
 
-Replace this text with example code for each new feature.
-## API changes
+* [Fix horizontal constraint between text label and button. (#7648)](https://github.com/material-components/material-components-ios/commit/e90426bb0a7091b43b890ab34fbd25d1d37d46bb) (Wenyu Zhang)
+* [Fix image constraint when it is hidden and on single row mode (#7649)](https://github.com/material-components/material-components-ios/commit/3f436f9944d1b6bbe83c6ebf717e387ce4d4841b) (Wenyu Zhang)
+* [Apply constraints to trailingButton even it is hidden. (#7652)](https://github.com/material-components/material-components-ios/commit/973d4e1ff2bda8be44f5929e022bf6eff60b5e97) (Wenyu Zhang)
 
-## Component changes
+### NavigationDrawer
+
+* [Update cacheLayoutCalculationsWithAddedContentHeight recursion check to factor out floating point rounding issues (#7654)](https://github.com/material-components/material-components-ios/commit/b243d5e8426f970da3c83f2fe2979be426b01256) (Bryan Oltman))
 
 ---
 
