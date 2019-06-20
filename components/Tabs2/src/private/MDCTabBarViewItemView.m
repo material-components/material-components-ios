@@ -23,9 +23,6 @@ static const CGFloat kMaxWidth = 360;
 /** The minimum height of any item view. */
 static const CGFloat kMinHeight = 48;
 
-/// Size of image in points.
-//static const CGSize kImageSize = {24, 24};
-
 /// Outer edge padding from spec: https://material.io/go/design-tabs#spec.
 static const UIEdgeInsets kEdgeInsets = {.top = 12, .right = 16, .bottom = 12, .left = 16};
 
@@ -73,12 +70,9 @@ const CGFloat kSelectedNavigationImageYOffset = -2;
 
   CGRect contentBounds = UIEdgeInsetsInsetRect(self.bounds, kEdgeInsets);
   self.contentView.frame = contentBounds;
-  
 }
 
 #pragma mark - UIAccessibility
-
-
 
 #pragma mark - Private
 
