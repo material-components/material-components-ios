@@ -1,3 +1,21 @@
+# 85.0.1
+
+This patch release fixes a bug that Banner doesn't layout correctly in landscape mode on some devices and a floating point rounding issue in NavigationDrawer.
+
+## Changes
+
+### Banner
+
+* [Fix horizontal constraint between text label and button. (#7648)](https://github.com/material-components/material-components-ios/commit/e90426bb0a7091b43b890ab34fbd25d1d37d46bb) (Wenyu Zhang)
+* [Fix image constraint when it is hidden and on single row mode (#7649)](https://github.com/material-components/material-components-ios/commit/3f436f9944d1b6bbe83c6ebf717e387ce4d4841b) (Wenyu Zhang)
+* [Apply constraints to trailingButton even it is hidden. (#7652)](https://github.com/material-components/material-components-ios/commit/973d4e1ff2bda8be44f5929e022bf6eff60b5e97) (Wenyu Zhang)
+
+### NavigationDrawer
+
+* [Update cacheLayoutCalculationsWithAddedContentHeight recursion check to factor out floating point rounding issues (#7654)](https://github.com/material-components/material-components-ios/commit/b243d5e8426f970da3c83f2fe2979be426b01256) (Bryan Oltman))
+
+---
+
 # 85.0.0
 
 In this major release we updated `sizeThatFits:` calculation for MDCBottomNavigationBar to not include safe area, added Ripple support to all our interactable components, and more layout customization for Banner.
