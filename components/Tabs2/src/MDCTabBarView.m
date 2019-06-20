@@ -16,4 +16,12 @@
 
 @implementation MDCTabBarView
 
+- (CGSize)intrinsicContentSize {
+  return CGSizeMake(UIViewNoIntrinsicMetric, 48);
+}
+
+- (CGSize)sizeThatFits:(CGSize)size {
+  return CGSizeMake(size.width, MAX(size.height, 48));
+}
+
 @end
