@@ -44,8 +44,7 @@
     NSString *itemTitle = selectedItem.title;
     NSString *exceptionMessage =
         [NSString stringWithFormat:@"%@ is not a member of the tab bar's `items`.", itemTitle];
-    [[NSException exceptionWithName:NSInvalidArgumentException
-                             reason:exceptionMessage
+    [[NSException exceptionWithName:NSInvalidArgumentException reason:exceptionMessage
                            userInfo:nil] raise];
   }
 
