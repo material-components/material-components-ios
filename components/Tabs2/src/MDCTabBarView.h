@@ -20,12 +20,9 @@
 __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScrollView
 
 /** The set of items displayed in the Tab bar. */
-@property(nonnull, nonatomic, copy) NSArray<__kindof UITabBarItem *> *items;
+@property(nonnull, nonatomic, copy) NSArray<UITabBarItem *> *items;
 
 /** The currently-selected item in the Tab bar. */
-@property(nullable, nonatomic, strong) __kindof UITabBarItem *selectedItem;
-
-/** Selects one of the items with optional animation. */
-- (void)setSelectedItem:(__kindof UITabBarItem *)selectedItem animated:(BOOL)animated;
+@property(nullable, nonatomic, strong) UITabBarItem *selectedItem;
 
 @end

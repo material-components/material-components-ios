@@ -19,48 +19,37 @@
 #pragma mark - Properties
 
 - (void)setItems:(NSArray<UITabBarItem *> *)items {
-  NSAssert([NSThread isMainThread], @"Item array may only be set on the main thread");
-  NSParameterAssert(items != nil);
+  NSParameterAssert(items);
 
   if (_items != items && ![_items isEqual:items]) {
     _items = [items copy];
 
-    // Determine new selected item, defaulting to the first item.
-    UITabBarItem *newSelectedItem = _items.firstObject;
+    // Determine new selected item, defaulting to nil.
+    UITabBarItem *newSelectedItem = nil;
     if (_selectedItem && [_items containsObject:_selectedItem]) {
       // Previously-selected item still around: Preserve selection.
       newSelectedItem = _selectedItem;
     }
 
-    // Update _selectedItem directly so it's available for -reload.
     _selectedItem = newSelectedItem;
   }
 }
 
-- (void)setSelectedItem:(nullable UITabBarItem *)selectedItem {
-  [self setSelectedItem:selectedItem animated:NO];
-}
-
-- (void)setSelectedItem:(nullable UITabBarItem *)selectedItem animated:(BOOL)animated {
-  if (_selectedItem != selectedItem) {
-    NSUInteger itemIndex = [self indexForItem:selectedItem];
-    if (selectedItem && (itemIndex == NSNotFound)) {
-      [[NSException exceptionWithName:NSInvalidArgumentException
-                               reason:@"Invalid item"
-                             userInfo:nil] raise];
-    }
-
-    _selectedItem = selectedItem;
+- (void)setSelectedItem:(UITabBarItem *)selectedItem {
+  if (_selectedItem == selectedItem) {
+    return;
   }
-}
-
-#pragma mark - Private
-
-- (NSInteger)indexForItem:(nullable UITabBarItem *)item {
-  if (item) {
-    return [_items indexOfObject:item];
+  NSUInteger itemIndex = [_items indexOfObject:selectedItem];
+  if (selectedItem && (itemIndex == NSNotFound)) {
+    NSString *itemTitle = selectedItem.title;
+    NSString *exceptionMessage =
+    [NSString stringWithFormat:@"%@ is not a member of the tab bar's `items`.", itemTitle];
+    [[NSException exceptionWithName:NSInvalidArgumentException
+                             reason:exceptionMessage
+                           userInfo:nil] raise];
   }
-  return NSNotFound;
+
+  _selectedItem = selectedItem;
 }
 
 @end
