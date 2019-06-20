@@ -175,9 +175,10 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
   CGFloat textRectMaxYWithFloatingLabel = textRectMinYWithFloatingLabel + textRectHeight;
   
   CGFloat topRowBottomRowDividerY = 0;
-  if ([containerStyler.positioningDelegate respondsToSelector:@selector(containerHeightWithTextHeight:preferredContainerHeight:)]) {
-    topRowBottomRowDividerY = [containerStyler.positioningDelegate containerHeightWithTextHeight:font.lineHeight
-                                                                        preferredContainerHeight:preferredContainerHeight];
+  if (preferredContainerHeight > 0) {
+    topRowBottomRowDividerY = preferredContainerHeight;
+  } else if ([containerStyler.positioningDelegate respondsToSelector:@selector(defaultContainerHeightWithTextHeight:)]) {
+    topRowBottomRowDividerY = [containerStyler.positioningDelegate defaultContainerHeightWithTextHeight:font.lineHeight];
   } else {
     CGFloat bottomPadding =
     [containerStyler.positioningDelegate contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:floatingLabelMaxY];
