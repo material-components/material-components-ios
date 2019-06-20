@@ -136,6 +136,8 @@ static NSString *const exampleExtraLongText =
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
 
+  self.contentView.frame = self.view.bounds;
+
   CGSize bannerViewSize = [self.bannerView sizeThatFits:self.view.bounds.size];
   // Adjust bannerViewContainer's frame
   CGFloat topAreaInset = 0.0f;
@@ -144,6 +146,7 @@ static NSString *const exampleExtraLongText =
   }
   self.bannerView.frame =
       CGRectMake(0.0f, topAreaInset, bannerViewSize.width, bannerViewSize.height);
+  [self.bannerView setNeedsUpdateConstraints];
 }
 
 #pragma mark - Internal helpers
