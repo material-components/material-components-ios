@@ -59,7 +59,7 @@
   XCTAssertEqual(self.chipView.rippleView.rippleStyle, MDCRippleStyleBounded);
   XCTAssertFalse(self.chipView.enableRippleBehavior);
   XCTAssertNil(self.chipView.rippleView.superview);
-  XCTAssertTrue(self.chipView.allowsSelection);
+  XCTAssertTrue(self.chipView.rippleAllowsSelection);
   XCTAssertTrue(self.chipView.rippleView.allowsSelection);
   CGRect chipViewBounds = CGRectStandardize(self.chipView.bounds);
   CGRect rippleBounds = CGRectStandardize(self.chipView.rippleView.bounds);
@@ -94,7 +94,7 @@
 
 - (void)testAllowsSelectionDefaultState {
   // Then
-  XCTAssertTrue(self.chipView.allowsSelection);
+  XCTAssertTrue(self.chipView.rippleAllowsSelection);
   XCTAssertFalse(self.chipView.selected);
   XCTAssertFalse(self.chipView.highlighted);
 }
@@ -104,19 +104,20 @@
   self.chipView.selected = YES;
 
   // Then
-  XCTAssertTrue(self.chipView.allowsSelection);
+  XCTAssertTrue(self.chipView.rippleAllowsSelection);
   XCTAssertTrue(self.chipView.selected);
   XCTAssertFalse(self.chipView.highlighted);
 }
 
 - (void)testNotAllowingSelection {
   // When
-  self.chipView.allowsSelection = NO;
+  self.chipView.rippleAllowsSelection = NO;
   self.chipView.selected = YES;
 
   // Then
-  XCTAssertFalse(self.chipView.allowsSelection);
-  XCTAssertFalse(self.chipView.selected);
+  XCTAssertFalse(self.chipView.rippleAllowsSelection);
+  XCTAssertFalse(self.chipView.rippleView.allowsSelection);
+  XCTAssertTrue(self.chipView.selected);
   XCTAssertFalse(self.chipView.highlighted);
 }
 

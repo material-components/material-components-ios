@@ -133,7 +133,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
 - (void)commonMDCChipViewInit {
   _minimumSize = kMDCChipMinimumSizeDefault;
-  self.allowsSelection = YES;
+  self.rippleAllowsSelection = YES;
   self.isAccessibilityElement = YES;
   _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
 }
@@ -277,11 +277,11 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   }
 }
 
-- (BOOL)allowsSelection {
+- (BOOL)rippleAllowsSelection {
   return self.rippleView.allowsSelection;
 }
 
-- (void)setAllowsSelection:(BOOL)allowsSelection {
+- (void)setRippleAllowsSelection:(BOOL)allowsSelection {
   self.rippleView.allowsSelection = allowsSelection;
 }
 
@@ -613,11 +613,6 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 }
 
 - (void)setSelected:(BOOL)selected {
-  if (!self.allowsSelection) {
-    // If we disallow selection we don't want to apply any visual or state changes for selection.
-    return;
-  }
-
   [super setSelected:selected];
 
   self.rippleView.selected = selected;
