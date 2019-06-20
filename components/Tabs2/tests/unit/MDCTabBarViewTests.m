@@ -56,13 +56,10 @@
 /// with the UIKit
 - (void)testSelectsNilByDefault {
   // Given
-  UITabBar *tabBar = [[UITabBar alloc] initWithFrame:CGRectZero];
-  tabBar.items = @[ _itemA, _itemB, _itemC ];
   _tabBarView.items = @[ _itemA, _itemB, _itemC ];
 
   // Then
   XCTAssertNil(_tabBarView.selectedItem);
-  XCTAssertNil(tabBar.selectedItem);
 }
 
 /// Tab bars should preserve their selection if possible when changing items.
