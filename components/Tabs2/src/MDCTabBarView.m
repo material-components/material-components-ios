@@ -16,6 +16,16 @@
 
 @implementation MDCTabBarView
 
+#pragma mark - Initialization
+
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    self.items = @[];
+  }
+  return self;
+}
+
 #pragma mark - Properties
 
 - (void)setItems:(NSArray<UITabBarItem *> *)items {

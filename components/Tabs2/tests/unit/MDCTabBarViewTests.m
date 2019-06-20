@@ -49,7 +49,12 @@
 }
 
 - (void)testInitCreatesObject {
-  XCTAssertNotNil([[MDCTabBarView alloc] init]);
+  // Given
+  MDCTabBarView *tabBarView = [[MDCTabBarView alloc] init];
+
+  // Then
+  XCTAssertNotNil(tabBarView);
+  XCTAssertNotNil(tabBarView.items);
 }
 
 /// Tab bars should by default select nil in their items array. The behavior should also consistent
