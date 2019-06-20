@@ -27,9 +27,6 @@
 - (void)setUp {
   [super setUp];
 
-  // Uncomment below to recreate all the goldens (or add the following line to the specific
-  // test you wish to recreate the golden for).
-  //  self.recordMode = YES;
 }
 
 #pragma mark - Helpers
@@ -51,6 +48,19 @@
   itemView.bounds = CGRectMake(0, 0, intrinsicContentSize.width, intrinsicContentSize.height);
 
   // Then
+  [self generateSnapshotAndVerifyForView:itemView];
+}
+
+- (void)testItemViewLongTitleRegularImageIntrinsicContentSize {
+  // Given
+  MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
+  itemView.image = [UIImage mdc_testImageOfSize:CGSizeMake(24, 24)];
+  itemView.title = @"123456789012345678901234567890";
+  itemView.backgroundColor = UIColor.brownColor;
+  CGSize intrinsicContentSize = itemView.intrinsicContentSize;
+
+  itemView.bounds = CGRectMake(0, 0, intrinsicContentSize.width, intrinsicContentSize.height);
+
   [self generateSnapshotAndVerifyForView:itemView];
 }
 

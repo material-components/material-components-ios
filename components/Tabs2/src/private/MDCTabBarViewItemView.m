@@ -23,7 +23,87 @@ static const CGFloat kMaxWidth = 360;
 /** The minimum height of any item view. */
 static const CGFloat kMinHeight = 48;
 
+/// Size of image in points.
+//static const CGSize kImageSize = {24, 24};
+
+/// Outer edge padding from spec: https://material.io/go/design-tabs#spec.
+static const UIEdgeInsets kEdgeInsets = {.top = 12, .right = 16, .bottom = 12, .left = 16};
+
+/// File name of the bundle (without the '.bundle' extension) containing resources.
+static NSString *const kResourceBundleName = @"MaterialTabs";
+
+/// String table name containing localized strings.
+static NSString *const kStringTableName = @"MaterialTabs";
+
+/// Scale factor applied to the title of bottom navigation items when selected.
+const CGFloat kSelectedNavigationTitleScaleFactor = (16.0f / 14.0f);
+
+/// Vertical translation applied to image components bottom navigation items when selected.
+const CGFloat kSelectedNavigationImageYOffset = -2;
+
+@interface MDCTabBarViewItemView ()
+
+@property(nonatomic, strong) UIStackView *contentView;
+@property(nonatomic, strong) UIImageView *iconImageView;
+@property(nonatomic, strong) UILabel *titleLabel;
+
+@end
+
 @implementation MDCTabBarViewItemView
+
+#pragma mark - Init
+
+- (instancetype)initWithFrame:(CGRect)frame {
+  self = [super initWithFrame:frame];
+  if (self) {
+    _title = @"";
+
+    self.isAccessibilityElement = YES;
+
+    // Create initial subviews
+    [self initSubviews];
+  }
+  return self;
+}
+
+#pragma mark - UIView
+
+- (void)layoutSubviews {
+  [super layoutSubviews];
+
+  CGRect contentBounds = UIEdgeInsetsInsetRect(self.bounds, kEdgeInsets);
+  self.contentView.frame = contentBounds;
+  
+}
+
+#pragma mark - UIAccessibility
+
+
+
+#pragma mark - Private
+
+- (void)initSubviews {
+  if (!_contentView) {
+    _contentView = [[UIStackView alloc] initWithFrame:CGRectZero];
+    _contentView.axis = UILayoutConstraintAxisVertical;
+    _contentView.alignment = UIStackViewAlignmentCenter;
+    _contentView.distribution = UIStackViewDistributionFillEqually;
+    [self addSubview:_contentView];
+  }
+  if (!_iconImageView) {
+    _iconImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+    _iconImageView.contentMode = UIViewContentModeScaleAspectFit;
+    _iconImageView.isAccessibilityElement = NO;
+    [_contentView addArrangedSubview:_iconImageView];
+  }
+  if (!_titleLabel) {
+    _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    _titleLabel.textAlignment = NSTextAlignmentCenter;
+    _titleLabel.numberOfLines = 2;
+    _titleLabel.isAccessibilityElement = NO;
+    [_contentView addArrangedSubview:_titleLabel];
+  }
+}
 
 - (CGSize)intrinsicContentSize {
   return CGSizeMake(kMinWidth, kMinHeight);
@@ -33,6 +113,18 @@ static const CGFloat kMinHeight = 48;
   const CGFloat width = MIN(kMaxWidth, MAX(kMinWidth, size.width));
   const CGFloat height = MAX(kMinHeight, size.height);
   return CGSizeMake(width, height);
+}
+
+- (void)setTitle:(NSString *)title {
+  _title = [title copy];
+  self.titleLabel.text = _title;
+  [self setNeedsLayout];
+}
+
+- (void)setImage:(nullable UIImage *)image {
+  _image = image;
+  self.iconImageView.image = _image;
+  [self setNeedsLayout];
 }
 
 @end
