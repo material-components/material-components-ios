@@ -91,22 +91,14 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
   self.scrollViewSubviews = @[
     [self createToggleErrorButton],
     [self createResignFirstResponderButton],
-    [self createLabelWithText:@"High density outlined InputChipView:"],
-    [self createOutlinedNonWrappingInputChipViewWithMaximalDensity],
-    [self createLabelWithText:@"Average density outlined InputChipView:"],
-    [self createOutlinedNonWrappingInputChipView],
-    [self createLabelWithText:@"Low density outlined InputChipView:"],
-    [self createOutlinedNonWrappingInputChipViewWithMinimalDensity],
-    [self createLabelWithText:@"Wrapping outlined InputChipView:"],
-    [self createOutlinedWrappingInputChipView],
-    [self createLabelWithText:@"High density filled InputChipView:"],
-    [self createFilledNonWrappingInputChipViewWithMaximalDensity],
-    [self createLabelWithText:@"Average density filled InputChipView:"],
+    [self createLabelWithText:@"Filled InputChipView:"],
     [self createFilledNonWrappingInputChipView],
-    [self createLabelWithText:@"Low density filled InputChipView:"],
-    [self createFilledNonWrappingInputChipViewWithMinimalDensity],
     [self createLabelWithText:@"Wrapping filled InputChipView:"],
     [self createFilledWrappingInputChipView],
+    [self createLabelWithText:@"Outlined InputChipView:"],
+    [self createOutlinedNonWrappingInputChipView],
+    [self createLabelWithText:@"Wrapping outlined InputChipView:"],
+    [self createOutlinedWrappingInputChipView],
   ];
   for (UIView *view in self.scrollViewSubviews) {
     [self.scrollView addSubview:view];
@@ -202,28 +194,12 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
   return inputChipView;
 }
 
-- (InputChipView *)createOutlinedNonWrappingInputChipViewWithMaximalDensity {
-  InputChipView *inputChipView = [self createOutlinedNonWrappingInputChipView];
-  inputChipView.containerStyler.positioningDelegate.verticalDensity = 1.0;
-  return inputChipView;
-}
-
-- (InputChipView *)createOutlinedNonWrappingInputChipViewWithMinimalDensity {
-  InputChipView *inputChipView = [self createOutlinedNonWrappingInputChipView];
-  inputChipView.containerStyler.positioningDelegate.verticalDensity = 0.0;
-  return inputChipView;
-}
-
 - (InputChipView *)createOutlinedWrappingInputChipView {
-  InputChipView *inputChipView = [[InputChipView alloc] init];
+  InputChipView *inputChipView = [self createOutlinedNonWrappingInputChipView];
   inputChipView.textField.placeholder = @"Outlined wrapping";
-  [inputChipView applyOutlinedThemeWithScheme:self.containerScheme];
   inputChipView.chipsWrap = YES;
-  inputChipView.preferredContainerHeight = 120;
-  inputChipView.canFloatingLabelFloat = YES;
-  inputChipView.chipRowHeight = self.chipHeight;
+//  inputChipView.preferredContainerHeight = 120;
   [inputChipView sizeToFit];
-  inputChipView.textField.delegate = self;
   return inputChipView;
 }
 
@@ -239,30 +215,18 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
   return inputChipView;
 }
 
-- (InputChipView *)createFilledNonWrappingInputChipViewWithMaximalDensity {
-  InputChipView *inputChipView = [self createFilledNonWrappingInputChipView];
-  inputChipView.containerStyler.positioningDelegate.verticalDensity = 1.0;
-  return inputChipView;
-}
-
-- (InputChipView *)createFilledNonWrappingInputChipViewWithMinimalDensity {
-  InputChipView *inputChipView = [self createFilledNonWrappingInputChipView];
-  inputChipView.containerStyler.positioningDelegate.verticalDensity = 0.0;
-  return inputChipView;
-}
-
 - (InputChipView *)createFilledWrappingInputChipView {
-  InputChipView *inputChipView = [[InputChipView alloc] init];
-  inputChipView.textField.placeholder = @"Outlined wrapping";
-  [inputChipView applyFilledThemeWithScheme:self.containerScheme];
+  InputChipView *inputChipView = [self createFilledNonWrappingInputChipView];
+  inputChipView.textField.placeholder = @"Filled wrapping";
   inputChipView.chipsWrap = YES;
-  inputChipView.preferredContainerHeight = 120;
-  inputChipView.canFloatingLabelFloat = YES;
+//  inputChipView.preferredContainerHeight = 120;
   inputChipView.chipRowHeight = self.chipHeight;
   [inputChipView sizeToFit];
-  inputChipView.textField.delegate = self;
   return inputChipView;
 }
+
+
+
 
 - (CGFloat)chipHeight {
   MDCChipView *chip = [self createChipWithText:@"Test"

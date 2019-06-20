@@ -123,12 +123,16 @@
   return 0.13 * containerHeight;
 }
 
+- (CGFloat)defaultContainerHeightWithTextHeight:(CGFloat)textHeight {
+  return 3.3 * textHeight;
+}
+
 - (CGFloat)containerHeightWithTextHeight:(CGFloat)textHeight
                 preferredContainerHeight:(CGFloat)preferredContainerHeight {
   if (preferredContainerHeight > 0) {
     return preferredContainerHeight;
   }
-  return 3.3 * textHeight;
+  return [self defaultContainerHeightWithTextHeight:textHeight];
 }
 
 - (CGFloat)floatingLabelMinYWithTextHeight:(CGFloat)textHeight

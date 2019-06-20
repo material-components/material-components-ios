@@ -49,6 +49,11 @@ NS_ASSUME_NONNULL_BEGIN
 //@property(nonatomic, readonly) CGFloat minimumHeight;
 @property(nonatomic, readonly) CGFloat contentAreaMaxY;
 
+@property(nonatomic, strong) NSArray<NSNumber *> *verticalGradientLocations;
+@property(nonatomic, strong) NSArray<NSNumber *> *horizontalGradientLocations;
+
+
+
 - (instancetype)initWithSize:(CGSize)size
                       containerStyler:(id<MDCContainedInputViewStyler>)containerStyler
                                  text:(NSString *)text

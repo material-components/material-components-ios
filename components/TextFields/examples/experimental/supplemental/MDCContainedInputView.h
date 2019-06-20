@@ -301,8 +301,9 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
 - (CGFloat)contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:(CGFloat)floatingLabelMaxY;
 @optional
 - (CGFloat)assistiveLabelPaddingWithContainerHeight:(CGFloat)containerHeight;
-- (CGFloat)containerHeightWithTextHeight:(CGFloat)textHeight
-                preferredContainerHeight:(CGFloat)preferredContainerHeight;
+- (CGFloat)defaultContainerHeightWithTextHeight:(CGFloat)textHeight;
+//- (CGFloat)containerHeightWithTextHeight:(CGFloat)textHeight
+//                preferredContainerHeight:(CGFloat)preferredContainerHeight;
 - (CGFloat)floatingLabelMinYWithTextHeight:(CGFloat)textHeight
                        floatingLabelHeight:(CGFloat)floatingLabelHeight
                   preferredContainerHeight:(CGFloat)preferredContainerHeight;

@@ -567,68 +567,8 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   CGRect gradientLayerFrame = self.layout.maskedScrollViewContainerViewFrame;
   self.horizontalGradient.frame = gradientLayerFrame;
   self.verticalGradient.frame = gradientLayerFrame;
-  CGFloat viewWidth = CGRectGetWidth(gradientLayerFrame);
-  CGFloat viewHeight = CGRectGetHeight(gradientLayerFrame);
-
-  CGFloat magicNumber = 6;
-
-  CGFloat leftFadeStart = (self.layout.globalChipRowMinX - magicNumber) / viewWidth;
-  if (leftFadeStart < 0) {
-    leftFadeStart = 0;
-  }
-  CGFloat leftFadeEnd = self.layout.globalChipRowMinX / viewWidth;
-  if (leftFadeEnd < 0) {
-    leftFadeEnd = 0;
-  }
-  CGFloat rightFadeStart = (self.layout.globalChipRowMaxX) / viewWidth;
-  if (rightFadeStart >= 1) {
-    rightFadeStart = 1;
-  }
-  CGFloat rightFadeEnd = (self.layout.globalChipRowMaxX + magicNumber) / viewWidth;
-  if (rightFadeEnd >= 1) {
-    rightFadeEnd = 1;
-  }
-
-  self.horizontalGradient.locations = @[
-    @(0),
-    @(leftFadeStart),
-    @(leftFadeEnd),
-    @(rightFadeStart),
-    @(rightFadeEnd),
-    @(1),
-  ];
-
-  CGFloat floatingLabelMaxY = CGRectGetMaxY(self.label.frame);
-  CGFloat topSpacing = [self.containerStyler.positioningDelegate
-      contentAreaTopPaddingFloatingLabelWithFloatingLabelMaxY:floatingLabelMaxY];
-  CGFloat topFadeStart = (floatingLabelMaxY + ((CGFloat)0.0 * topSpacing)) / viewHeight;
-  if (topFadeStart <= 0) {
-    topFadeStart = 0;
-  }
-  CGFloat topFadeEnd = (floatingLabelMaxY + magicNumber) / viewHeight;
-  if (topFadeEnd <= 0) {
-    topFadeEnd = 0;
-  }
-  CGFloat bottomSpacing = [self.containerStyler.positioningDelegate
-      contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:floatingLabelMaxY];
-  CGFloat bottomFadeStart = (viewHeight - bottomSpacing) / viewHeight;
-  if (bottomFadeStart >= 1) {
-    bottomFadeStart = 1;
-  }
-  CGFloat bottomFadeEnd = (viewHeight - magicNumber) / viewHeight;
-  if (bottomFadeEnd >= 1) {
-    bottomFadeEnd = 1;
-  }
-
-  self.verticalGradient.locations = @[
-    @(0),
-    @(topFadeStart),
-    @(topFadeEnd),
-    @(bottomFadeStart),
-    @(bottomFadeEnd),
-    @(1),
-  ];
-
+  self.horizontalGradient.locations = self.layout.horizontalGradientLocations;
+  self.verticalGradient.locations = self.layout.verticalGradientLocations;
   CALayer *scrollViewBorderGradient = [self layerCombiningHorizontalGradient:self.horizontalGradient
                                                         withVerticalGradient:self.verticalGradient];
   self.maskedScrollViewContainerView.layer.mask = scrollViewBorderGradient;
