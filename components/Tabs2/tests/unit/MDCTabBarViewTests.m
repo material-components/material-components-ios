@@ -126,8 +126,8 @@
   _tabBarView.selectedItem = _itemA;
   XCTAssertEqual(_tabBarView.selectedItem, _itemA);
 
-  // When set selected item to C, then should rise exception.
-  XCTAssertThrowsSpecific(_tabBarView.selectedItem = _itemC, NSException);
+  // When set selected item to C, then should raise exception.
+  XCTAssertThrows(_tabBarView.selectedItem = _itemC);
 }
 
 // Setting items to the same set of items should change nothing.
