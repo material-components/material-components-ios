@@ -21,7 +21,7 @@
 - (instancetype)init {
   self = [super init];
   if (self) {
-    self.items = @[];
+    _items = @[];
   }
   return self;
 }
@@ -31,25 +31,26 @@
 - (void)setItems:(NSArray<UITabBarItem *> *)items {
   NSParameterAssert(items);
 
-  if (_items != items && ![_items isEqual:items]) {
-    _items = [items copy];
-
-    // Determine new selected item, defaulting to nil.
-    UITabBarItem *newSelectedItem = nil;
-    if (_selectedItem && [_items containsObject:_selectedItem]) {
-      // Previously-selected item still around: Preserve selection.
-      newSelectedItem = _selectedItem;
-    }
-
-    _selectedItem = newSelectedItem;
+  if (self.items == items || [self.items isEqual:items]) {
+    return;
   }
+  _items = [items copy];
+
+  // Determine new selected item, defaulting to nil.
+  UITabBarItem *newSelectedItem = nil;
+  if (self.selectedItem && [self.items containsObject:self.selectedItem]) {
+    // Previously-selected item still around: Preserve selection.
+    newSelectedItem = self.selectedItem;
+  }
+
+  self.selectedItem = newSelectedItem;
 }
 
 - (void)setSelectedItem:(UITabBarItem *)selectedItem {
-  if (_selectedItem == selectedItem) {
+  if (self.selectedItem == selectedItem) {
     return;
   }
-  NSUInteger itemIndex = [_items indexOfObject:selectedItem];
+  NSUInteger itemIndex = [self.items indexOfObject:selectedItem];
   if (selectedItem && (itemIndex == NSNotFound)) {
     NSString *itemTitle = selectedItem.title;
     NSString *exceptionMessage =
