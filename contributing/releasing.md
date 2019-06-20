@@ -247,11 +247,7 @@ Once this is done, send the PR out for review. Add "material-components/core-ios
 list of Reviewers. Also add anyone else you think might need to review specific changes in the 
 release candidate.
 
-#### Verify CocoaPods podspec and trunk access
-
-Send our local podspec through the CocoaPods linter:
-
-    pod lib lint MaterialComponents.podspec --skip-tests
+#### Verify CocoaPods podspec access
 
 CocoaPods publishes a directory of publicly available pods through its **trunk** service.
 Note: Ensure that you can [push the podspec](#publish-to-cocoapods) later by checking for `MaterialComponents` in your list of available `Pods` when you:
