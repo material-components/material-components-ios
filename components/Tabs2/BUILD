@@ -15,6 +15,7 @@
 
 load(
     "//:material_components_ios.bzl",
+    "mdc_examples_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
     "mdc_snapshot_objc_library",
@@ -34,6 +35,14 @@ mdc_objc_library(
     name = "privateHeaders",
     hdrs = glob(["src/private/*.h"]),
     testonly = 1,
+)
+
+mdc_examples_objc_library(
+    name = "ObjcExamples",
+    deps = [
+        ":Tabs2",
+        "//components/schemes/Container",
+    ],
 )
 
 mdc_unit_test_objc_library(

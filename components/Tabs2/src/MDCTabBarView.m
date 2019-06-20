@@ -14,6 +14,9 @@
 
 #import "MDCTabBarView.h"
 
+/** Minimum (typical) height of a Material Tab bar. */
+static const CGFloat kMinHeight = 48;
+
 @implementation MDCTabBarView
 
 #pragma mark - Initialization
@@ -60,6 +63,14 @@
   }
 
   _selectedItem = selectedItem;
+}
+
+- (CGSize)intrinsicContentSize {
+  return CGSizeMake(UIViewNoIntrinsicMetric, kMinHeight);
+}
+
+- (CGSize)sizeThatFits:(CGSize)size {
+  return CGSizeMake(size.width, MAX(size.height, kMinHeight));
 }
 
 @end
