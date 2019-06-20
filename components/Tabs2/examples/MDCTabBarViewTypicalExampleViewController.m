@@ -45,7 +45,8 @@ static NSString *const kExampleTitle = @"TabBarView";
   self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
 
   self.tabBar = [[MDCTabBarView alloc] init];
-  self.tabBar.bounds = CGRectMake(0, 0, 48, 48);
+  CGSize barIntrinsicContentSize = self.tabBar.intrinsicContentSize;
+  self.tabBar.bounds = CGRectMake(0, 0, 0, barIntrinsicContentSize.width);
   // TODO: Change this to theming (or at least .primaryColor) once we have content.
   self.tabBar.backgroundColor = self.containerScheme.colorScheme.primaryColorVariant;
   self.tabBar.translatesAutoresizingMaskIntoConstraints = NO;
