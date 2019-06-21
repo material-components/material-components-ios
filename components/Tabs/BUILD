@@ -213,8 +213,10 @@ mdc_snapshot_objc_library(
     name = "snapshot_test_lib",
     extra_srcs = native.glob(["tests/snapshot/*/*.m"]),
     deps = [
+        ":TabBarView",
         ":Tabs",
         ":Theming",
+        ":privateTabBarView",
     ],
 )
 
