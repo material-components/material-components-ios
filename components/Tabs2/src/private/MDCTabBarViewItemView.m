@@ -40,7 +40,7 @@ const CGFloat kSelectedNavigationImageYOffset = -2;
 
 @interface MDCTabBarViewItemView ()
 
-@property(nonatomic, strong) UIStackView *contentView;
+@property(nonatomic, strong) UIView *contentView;
 @property(nonatomic, strong) UIImageView *iconImageView;
 @property(nonatomic, strong) UILabel *titleLabel;
 
@@ -68,8 +68,22 @@ const CGFloat kSelectedNavigationImageYOffset = -2;
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  CGRect contentBounds = UIEdgeInsetsInsetRect(self.bounds, kEdgeInsets);
-  self.contentView.frame = contentBounds;
+  CGRect contentFrame = UIEdgeInsetsInsetRect(self.bounds, kEdgeInsets);
+  self.contentView.frame = contentFrame;
+
+  CGSize iconSize = [self.iconImageView sizeThatFits:contentFrame.size];
+  CGSize labelSize = [self.titleLabel sizeThatFits:contentFrame.size];
+  CGFloat centerX = CGRectGetMidX(self.contentView.bounds);
+  CGFloat labelCenterY = CGRectGetMaxY(self.contentView.bounds) - labelSize.height / 2;
+  self.titleLabel.frame = CGRectMake(centerX - labelSize.width / 2,
+                                     labelCenterY - labelSize.height / 2,
+                                     labelSize.width,
+                                     labelSize.height);
+  CGFloat iconCenterY = CGRectGetMinY(self.titleLabel.frame) / 2;
+  self.iconImageView.frame = CGRectMake(centerX - iconSize.width / 2,
+                                        iconCenterY - iconSize.height / 2,
+                                        iconSize.width,
+                                        iconSize.height);
 }
 
 #pragma mark - UIAccessibility
@@ -78,34 +92,42 @@ const CGFloat kSelectedNavigationImageYOffset = -2;
 
 - (void)initSubviews {
   if (!_contentView) {
-    _contentView = [[UIStackView alloc] initWithFrame:CGRectZero];
-    _contentView.axis = UILayoutConstraintAxisVertical;
-    _contentView.alignment = UIStackViewAlignmentCenter;
-    _contentView.distribution = UIStackViewDistributionFillEqually;
+    _contentView = [[UIView alloc] initWithFrame:CGRectZero];
     [self addSubview:_contentView];
   }
   if (!_iconImageView) {
     _iconImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
     _iconImageView.contentMode = UIViewContentModeScaleAspectFit;
     _iconImageView.isAccessibilityElement = NO;
-    [_contentView addArrangedSubview:_iconImageView];
+    [_contentView addSubview:_iconImageView];
   }
   if (!_titleLabel) {
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     _titleLabel.textAlignment = NSTextAlignmentCenter;
     _titleLabel.numberOfLines = 2;
     _titleLabel.isAccessibilityElement = NO;
-    [_contentView addArrangedSubview:_titleLabel];
+    [_contentView addSubview:_titleLabel];
   }
 }
 
 - (CGSize)intrinsicContentSize {
-  return CGSizeMake(kMinWidth, kMinHeight);
+  return [self sizeThatFits:CGSizeMake(kMaxWidth, CGFLOAT_MAX)];
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
-  const CGFloat width = MIN(kMaxWidth, MAX(kMinWidth, size.width));
-  const CGFloat height = MAX(kMinHeight, size.height);
+  CGFloat horizontalPadding = kEdgeInsets.left + kEdgeInsets.right;
+  CGFloat verticalPadding = kEdgeInsets.top + kEdgeInsets.bottom;
+  // The size of the content view should be smaller that the size passed in.
+  size = CGSizeMake(size.width - horizontalPadding, size.height - verticalPadding);
+  const CGFloat maxWidth = MIN(kMaxWidth, MAX(kMinWidth, size.width));
+  const CGFloat maxHeight = MAX(kMinHeight, size.height);
+  const CGSize maxSize = CGSizeMake(maxWidth, maxHeight);
+
+  // Calculate the sizes of icon and label. Use them to calculate the total item view size.
+  CGSize iconSize = [self.iconImageView sizeThatFits:maxSize];
+  CGSize labelSize = [self.titleLabel sizeThatFits:maxSize];
+  CGFloat width = MAX(iconSize.width, labelSize.width) + horizontalPadding;
+  CGFloat height = iconSize.height + labelSize.height + verticalPadding;
   return CGSizeMake(width, height);
 }
 
