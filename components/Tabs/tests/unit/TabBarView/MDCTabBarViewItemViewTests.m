@@ -53,9 +53,35 @@ static UIImage *fakeImage(CGFloat width, CGFloat height) {
   XCTAssertEqualWithAccuracy(intrinsicContentSize.height, kMinHeight, 0.001);
 }
 
+- (void)testIntrinsicContentSizeForLargeImage {
+  // Given
+  MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
+
+  // When
+  itemView.image = fakeImage(1000, 1000);
+  CGSize intrinsicContentSize = itemView.intrinsicContentSize;
+
+  // Then
+  XCTAssertEqualWithAccuracy(intrinsicContentSize.width, kMaxWidth, 0.001);
+  XCTAssertEqualWithAccuracy(intrinsicContentSize.height, 1024, 0.001);
+}
+
+- (void)testIntrinsicContentSizeForLongTitle {
+  // Given
+  MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
+
+  // When
+  itemView.title =
+      @"123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
+  CGSize intrinsicContentSize = itemView.intrinsicContentSize;
+
+  // Then
+  XCTAssertLessThan(intrinsicContentSize.width, kMaxWidth);
+}
+
 #pragma mark - -sizeThatFits:
 
-- (void)testNoContentSizeThatFitsForTooSmallReturnsMinimumSize {
+- (void)testSizeThatFitsForNoContentWithSmallDimensions {
   // Given
   MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
 
@@ -67,7 +93,7 @@ static UIImage *fakeImage(CGFloat width, CGFloat height) {
   XCTAssertEqualWithAccuracy(fitSize.height, kMinHeight, 0.001);
 }
 
-- (void)testNoContentSizeThatFitsForReasonableDimensionsReturnsMinimumSize {
+- (void)testSizeThatFitsForNoContentWithReasonableDimensions {
   // Given
   MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
   CGSize requestedSize = CGSizeMake(kMinWidth + (kMaxWidth - kMinWidth) / 2, kMinHeight + 10);
@@ -80,7 +106,7 @@ static UIImage *fakeImage(CGFloat width, CGFloat height) {
   XCTAssertEqualWithAccuracy(fitSize.height, kMinHeight, 0.001);
 }
 
-- (void)testNoContentSizeThatFitsWithTooLargeWidthReturnsMinimumSize {
+- (void)testSizeThatFitsForNoContentWithLargeDimensions {
   // Given
   MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
   CGSize requestedSize = CGSizeMake(kMaxWidth + 10, kMinHeight + 10);
@@ -93,6 +119,32 @@ static UIImage *fakeImage(CGFloat width, CGFloat height) {
   XCTAssertEqualWithAccuracy(fitSize.height, kMinHeight, 0.001);
 }
 
-- (void)testLargeContentSize
+- (void)testSizeThatFitsForLargeImageWithSmallerDimensions {
+  // Given
+  MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
+  CGSize requestedSize = CGSizeMake(kMaxWidth, kMinHeight);
+
+  // When
+  itemView.image = fakeImage(1000, 1000);
+  CGSize fitSize = [itemView sizeThatFits:requestedSize];
+
+  // Then
+  XCTAssertEqualWithAccuracy(fitSize.width, kMaxWidth, 0.001);
+  XCTAssertEqualWithAccuracy(fitSize.height, 1024, 0.001);
+}
+
+- (void)testSizeThatFitsForLargeImageWithLargerDimensions {
+  // Given
+  MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
+  CGSize requestedSize = CGSizeMake(2000, 2000);
+
+  // When
+  itemView.image = fakeImage(1000, 1000);
+  CGSize fitSize = [itemView sizeThatFits:requestedSize];
+
+  // Then
+  XCTAssertEqualWithAccuracy(fitSize.width, kMaxWidth, 0.001);
+  XCTAssertEqualWithAccuracy(fitSize.height, 1024, 0.001);
+}
 
 @end
