@@ -46,7 +46,9 @@ static const CGFloat kMinHeight = 48;
   if (self.items == items || [self.items isEqual:items]) {
     return;
   }
+
   _items = [items copy];
+  [self setUpItemViews];
 
   // Determine new selected item, defaulting to nil.
   UITabBarItem *newSelectedItem = nil;
@@ -78,25 +80,21 @@ static const CGFloat kMinHeight = 48;
   self.backgroundColor = UIColor.whiteColor;
 
   [self setUpStackView];
-
-  for (UIView *item in _items) {
-    [_stackView addArrangedSubview:item];
-  }
+  [self setUpItemViews];
 
   [NSLayoutConstraint activateConstraints:@[
-                                            [self.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
-                                            [self.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
-                                            [self.topAnchor constraintEqualToAnchor:self.topAnchor],
-                                            [self.bottomAnchor constraintEqualToAnchor:self.bottomAnchor],
+    [self.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
+    [self.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
+    [self.topAnchor constraintEqualToAnchor:self.topAnchor],
+    [self.bottomAnchor constraintEqualToAnchor:self.bottomAnchor],
 
-                                            [_stackView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
-                                            [_stackView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
-                                            [_stackView.widthAnchor constraintGreaterThanOrEqualToAnchor:self.widthAnchor],
-                                            [_stackView.topAnchor constraintEqualToAnchor:self.topAnchor],
-                                            [_stackView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor],
-                                            ]];
+    [_stackView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
+    [_stackView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
+    [_stackView.widthAnchor constraintGreaterThanOrEqualToAnchor:self.widthAnchor],
+    [_stackView.topAnchor constraintEqualToAnchor:self.topAnchor],
+    [_stackView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor],
+  ]];
 }
-
 
 - (void)setUpStackView {
   _stackView = [[UIStackView alloc] init];
@@ -106,13 +104,16 @@ static const CGFloat kMinHeight = 48;
 }
 
 - (void)setUpItemViews {
-  for (UITabBarItem *item in self.items) {
-    MDCTabBarViewItemView *itemView = MDCTabBarViewItemView
+  for (UIView *view in self.stackView.arrangedSubviews) {
+    [view removeFromSuperview];
+    [_stackView removeArrangedSubview:view];
   }
-  _stackView = [[UIStackView alloc] init];
-  _stackView.axis = UILayoutConstraintAxisHorizontal;
-  _stackView.translatesAutoresizingMaskIntoConstraints = NO;
-  [self addSubview:_stackView];
+
+  for (UITabBarItem *item in self.items) {
+    MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] initWithFrame:CGRectZero];
+    item.title = @"Test";
+    [_stackView addArrangedSubview:itemView];
+  }
 }
 
 - (void)layoutSubviews {
@@ -120,16 +121,16 @@ static const CGFloat kMinHeight = 48;
 
   CGFloat availableWidth = self.frame.size.width;
   CGFloat maxWidth = 0;
-  for (UIView *item in self.items) {
-    CGSize contentSize = item.intrinsicContentSize;
+  for (UIView *itemView in self.stackView.arrangedSubviews) {
+    CGSize contentSize = itemView.intrinsicContentSize;
     if (contentSize.width > maxWidth) {
       maxWidth = contentSize.width;
     }
   }
   CGFloat requiredWidth = maxWidth * self.items.count;
   BOOL canBeJustified = requiredWidth > availableWidth;
-  self.stackView.distribution = canBeJustified ?
-  UIStackViewDistributionFillProportionally : UIStackViewDistributionFillEqually;
+  self.stackView.distribution = canBeJustified ? UIStackViewDistributionFillProportionally
+                                               : UIStackViewDistributionFillEqually;
 }
 
 - (CGSize)intrinsicContentSize {
