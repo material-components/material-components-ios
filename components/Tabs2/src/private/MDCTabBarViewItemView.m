@@ -63,15 +63,13 @@ static const UIEdgeInsets kEdgeInsets = {.top = 12, .right = 16, .bottom = 12, .
   CGSize labelSize = [self.titleLabel sizeThatFits:contentFrame.size];
   CGFloat centerX = CGRectGetMidX(self.contentView.bounds);
   CGFloat labelCenterY = CGRectGetMaxY(self.contentView.bounds) - labelSize.height / 2;
-  self.titleLabel.frame = CGRectMake(centerX - labelSize.width / 2,
-                                     labelCenterY - labelSize.height / 2,
-                                     labelSize.width,
-                                     labelSize.height);
+  self.titleLabel.frame =
+      CGRectMake(centerX - labelSize.width / 2, labelCenterY - labelSize.height / 2,
+                 labelSize.width, labelSize.height);
   CGFloat iconCenterY = CGRectGetMinY(self.titleLabel.frame) / 2;
-  self.iconImageView.frame = CGRectMake(centerX - iconSize.width / 2,
-                                        iconCenterY - iconSize.height / 2,
-                                        iconSize.width,
-                                        iconSize.height);
+  self.iconImageView.frame =
+      CGRectMake(centerX - iconSize.width / 2, iconCenterY - iconSize.height / 2,
+                 iconSize.width, iconSize.height);
 }
 
 #pragma mark - UIAccessibility
