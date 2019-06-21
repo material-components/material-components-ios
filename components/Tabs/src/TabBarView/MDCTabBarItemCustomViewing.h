@@ -12,7 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCTabBarItem.h"
-#import "MDCTabBarItemCustomViewing.h"
+#import <Foundation/Foundation.h>
+
 #import "MDCTabBarSelectionIndicatorSupporting.h"
-#import "MDCTabBarView.h"
+
+@protocol MDCTabBarItemCustomViewing
+
+/** A custom view to be displayed for a tab bar item. */
+@property(nullable, nonatomic, strong)
+    __kindof UIView<MDCTabBarSelectionIndicatorSupporting> *mdc_customView;
+
+@end
