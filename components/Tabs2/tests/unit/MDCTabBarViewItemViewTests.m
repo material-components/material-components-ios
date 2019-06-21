@@ -45,7 +45,7 @@ static const CGFloat kMinHeight = 48;
 
 #pragma mark - -sizeThatFits:
 
-- (void)testSizeThatFitsForTooSmallReturnsMinimumSize {
+- (void)testNoContentSizeThatFitsForTooSmallReturnsMinimumSize {
   // Given
   MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
 
@@ -57,7 +57,7 @@ static const CGFloat kMinHeight = 48;
   XCTAssertEqualWithAccuracy(fitSize.height, kMinHeight, 0.001);
 }
 
-- (void)testSizeThatFitsForReasonableDimensionsReturnsSameDimensions {
+- (void)testNoContentSizeThatFitsForReasonableDimensionsReturnsMinimumSize {
   // Given
   MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
   CGSize requestedSize = CGSizeMake(kMinWidth + (kMaxWidth - kMinWidth) / 2, kMinHeight + 10);
@@ -66,11 +66,11 @@ static const CGFloat kMinHeight = 48;
   CGSize fitSize = [itemView sizeThatFits:requestedSize];
 
   // Then
-  XCTAssertEqualWithAccuracy(fitSize.width, requestedSize.width, 0.001);
-  XCTAssertEqualWithAccuracy(fitSize.height, requestedSize.height, 0.001);
+  XCTAssertEqualWithAccuracy(fitSize.width, kMinWidth, 0.001);
+  XCTAssertEqualWithAccuracy(fitSize.height, kMinHeight, 0.001);
 }
 
-- (void)testSizeThatFitsWithTooLargeWidthReturnsMaxWidth {
+- (void)testNoContentSizeThatFitsWithTooLargeWidthReturnsMinimumSize {
   // Given
   MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
   CGSize requestedSize = CGSizeMake(kMaxWidth + 10, kMinHeight + 10);
@@ -79,8 +79,8 @@ static const CGFloat kMinHeight = 48;
   CGSize fitSize = [itemView sizeThatFits:requestedSize];
 
   // Then
-  XCTAssertEqualWithAccuracy(fitSize.width, kMaxWidth, 0.001);
-  XCTAssertEqualWithAccuracy(fitSize.height, requestedSize.height, 0.001);
+  XCTAssertEqualWithAccuracy(fitSize.width, kMinWidth, 0.001);
+  XCTAssertEqualWithAccuracy(fitSize.height, kMinHeight, 0.001);
 }
 
 @end

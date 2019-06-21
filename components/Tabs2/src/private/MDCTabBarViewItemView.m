@@ -46,7 +46,20 @@ static const UIEdgeInsets kEdgeInsets = {.top = 12, .right = 16, .bottom = 12, .
     self.isAccessibilityElement = YES;
 
     // Create initial subviews
-    [self initSubviews];
+    [self commonMDCTabBarViewItemViewInit];
+  }
+  return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+  self = [super initWithCoder:aDecoder];
+  if (self) {
+    _title = @"";
+
+    self.isAccessibilityElement = YES;
+
+    // Create initial subviews
+    [self commonMDCTabBarViewItemViewInit];
   }
   return self;
 }
@@ -76,23 +89,23 @@ static const UIEdgeInsets kEdgeInsets = {.top = 12, .right = 16, .bottom = 12, .
 
 #pragma mark - Private
 
-- (void)initSubviews {
+- (void)commonMDCTabBarViewItemViewInit {
   if (!_contentView) {
-    self.contentView = [[UIView alloc] initWithFrame:CGRectZero];
-    [self addSubview:self.contentView];
+    _contentView = [[UIView alloc] initWithFrame:CGRectZero];
+    [self addSubview:_contentView];
   }
   if (!_iconImageView) {
-    self.iconImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
-    self.iconImageView.contentMode = UIViewContentModeScaleAspectFit;
-    self.iconImageView.isAccessibilityElement = NO;
-    [self.contentView addSubview:self.iconImageView];
+    _iconImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+    _iconImageView.contentMode = UIViewContentModeScaleAspectFit;
+    _iconImageView.isAccessibilityElement = NO;
+    [_contentView addSubview:_iconImageView];
   }
   if (!_titleLabel) {
-    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    self.titleLabel.textAlignment = NSTextAlignmentCenter;
-    self.titleLabel.numberOfLines = 2;
-    self.titleLabel.isAccessibilityElement = NO;
-    [self.contentView addSubview:self.titleLabel];
+    _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    _titleLabel.textAlignment = NSTextAlignmentCenter;
+    _titleLabel.numberOfLines = 2;
+    _titleLabel.isAccessibilityElement = NO;
+    [_contentView addSubview:_titleLabel];
   }
 }
 
@@ -104,16 +117,17 @@ static const UIEdgeInsets kEdgeInsets = {.top = 12, .right = 16, .bottom = 12, .
   CGFloat horizontalPadding = kEdgeInsets.left + kEdgeInsets.right;
   CGFloat verticalPadding = kEdgeInsets.top + kEdgeInsets.bottom;
   // The size of the content view should be smaller that the size passed in.
-  size = CGSizeMake(size.width - horizontalPadding, size.height - verticalPadding);
   const CGFloat maxWidth = MIN(kMaxWidth, MAX(kMinWidth, size.width));
   const CGFloat maxHeight = MAX(kMinHeight, size.height);
-  const CGSize maxSize = CGSizeMake(maxWidth, maxHeight);
+  const CGSize maxSize = CGSizeMake(maxWidth - horizontalPadding, maxHeight - verticalPadding);
 
   // Calculate the sizes of icon and label. Use them to calculate the total item view size.
   CGSize iconSize = [self.iconImageView sizeThatFits:maxSize];
   CGSize labelSize = [self.titleLabel sizeThatFits:maxSize];
-  CGFloat width = MAX(iconSize.width, labelSize.width) + horizontalPadding;
-  CGFloat height = iconSize.height + labelSize.height + verticalPadding;
+  CGFloat width = ceil(MAX(iconSize.width, labelSize.width) + horizontalPadding);
+  width = MAX(kMinWidth, width);
+  CGFloat height = ceil(iconSize.height + labelSize.height + verticalPadding);
+  height = MAX(kMinHeight, height);
   return CGSizeMake(width, height);
 }
 
