@@ -28,7 +28,7 @@ import MaterialComponentsBeta.MaterialTabs_TabBarView
 let tabBarView = MDCTabBarView()
 addSubview(tabBarView)
 
-configureTabBarViewConstraints()
+// Configure constraints
 ```
 
 #### Objective-C
@@ -37,7 +37,7 @@ configureTabBarViewConstraints()
 MDCTabBarView *tabBarView = [[MDCTabBarView alloc] init];
 [self.view addSubview:tabBarView];
 
-[self configureTabBarViewConstraints];
+// Configure constraints
 ```
 <!--</div>-->
 
