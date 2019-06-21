@@ -57,13 +57,15 @@
 - (void)testItemViewLongTitleRegularImageIntrinsicContentSize {
   // Given
   MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
+  itemView.backgroundColor = UIColor.brownColor;
+
+  // When
   itemView.image = [UIImage mdc_testImageOfSize:CGSizeMake(24, 24)];
   itemView.title = @"123456789012345678901234567890";
-  itemView.backgroundColor = UIColor.brownColor;
   CGSize intrinsicContentSize = itemView.intrinsicContentSize;
-
   itemView.bounds = CGRectMake(0, 0, intrinsicContentSize.width, intrinsicContentSize.height);
 
+  // Then
   [self generateSnapshotAndVerifyForView:itemView];
 }
 
