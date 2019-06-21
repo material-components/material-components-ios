@@ -19,4 +19,10 @@
  */
 __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScrollView
 
+/** The set of items displayed in the Tab bar. */
+@property(nonnull, nonatomic, copy) NSArray<UITabBarItem *> *items;
+
+/** The currently-selected item in the Tab bar. */
+@property(nullable, nonatomic, strong) UITabBarItem *selectedItem;
+
 @end
