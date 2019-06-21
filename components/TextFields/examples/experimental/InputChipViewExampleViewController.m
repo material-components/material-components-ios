@@ -219,7 +219,7 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
   InputChipView *inputChipView = [self createFilledNonWrappingInputChipView];
   inputChipView.textField.placeholder = @"Filled wrapping";
   inputChipView.chipsWrap = YES;
-  inputChipView.preferredContainerHeight = 150;
+  inputChipView.preferredContainerHeight = 60;
   inputChipView.chipRowHeight = self.chipHeight;
   [inputChipView sizeToFit];
   return inputChipView;
