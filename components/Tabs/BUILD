@@ -91,10 +91,15 @@ mdc_extension_objc_library(
     ],
 )
 
+mdc_extension_objc_library(
+    name = "TabBarView",
+)
+
 mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
         ":ColorThemer",
+        ":TabBarView",
         ":Tabs",
         ":TypographyThemer",
         "//components/AppBar",
@@ -130,6 +135,13 @@ mdc_objc_library(
     name = "private",
     hdrs = native.glob(["src/private/*.h"]),
     includes = ["src/private"],
+    visibility = ["//visibility:private"],
+)
+
+mdc_objc_library(
+    name = "privateTabBarView",
+    hdrs = native.glob(["src/TabBarView/private/*.h"]),
+    includes = ["src/TabBarView/private"],
     visibility = ["//visibility:private"],
 )
 
@@ -173,20 +185,38 @@ mdc_objc_library(
     ],
 )
 
+mdc_objc_library(
+    name = "unit_test_tabbarview_sources",
+    srcs = native.glob([
+        "tests/unit/TabBarView/*.m",
+    ]),
+    sdk_frameworks = [
+        "CoreGraphics",
+        "XCTest",
+    ],
+    deps = [
+        ":TabBarView",
+        ":privateTabBarView",
+    ],
+)
+
 mdc_unit_test_suite(
     name = "unit_tests",
     deps = [
         ":unit_test_sources",
+        ":unit_test_tabbarview_sources",
         ":unit_test_theming_sources",
     ],
 )
 
 mdc_snapshot_objc_library(
     name = "snapshot_test_lib",
-    extra_srcs = native.glob(["tests/snapshot/Theming/*.m"]),
+    extra_srcs = native.glob(["tests/snapshot/*/*.m"]),
     deps = [
+        ":TabBarView",
         ":Tabs",
         ":Theming",
+        ":privateTabBarView",
     ],
 )
 
