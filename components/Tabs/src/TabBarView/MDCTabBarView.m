@@ -14,6 +14,8 @@
 
 #import "MDCTabBarView.h"
 
+#import "private/MDCTabBarViewItemView.h"
+
 /** Minimum (typical) height of a Material Tab bar. */
 static const CGFloat kMinHeight = 48;
 

@@ -14,8 +14,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCTabBarViewItemView.h"
-
 /**
  An implementation of Material Tabs (https://material.io/design/components/tabs.html).
  */
