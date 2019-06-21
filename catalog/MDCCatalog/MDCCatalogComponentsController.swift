@@ -219,6 +219,7 @@ class MDCCatalogComponentsController: UICollectionViewController, UICollectionVi
   
   override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
     super.traitCollectionDidChange(previousTraitCollection)
+    print("hello")
   }
 
   override func willAnimateRotation(

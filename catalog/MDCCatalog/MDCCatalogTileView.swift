@@ -60,10 +60,12 @@ class MDCCatalogTileView: UIView {
   
   override func draw(_ rect: CGRect) {
     super.draw(rect)
+    imageCache.removeAllObjects()
   }
 
   override func layoutSubviews() {
     super.layoutSubviews()
+    print("whats uppp")
     guard !bounds.isEmpty else {
       return
     }
