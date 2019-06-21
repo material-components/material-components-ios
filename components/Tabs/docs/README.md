@@ -42,3 +42,7 @@ Tabs can also show a badge (usually a number) like UITabBar.
 - [Typography Theming](typography-theming.md)
 
 - [Theming Extensions](theming-extensions.md)
+
+## MDCTabBarView
+
+- [MDCTabBarView](tabbarview.md)
