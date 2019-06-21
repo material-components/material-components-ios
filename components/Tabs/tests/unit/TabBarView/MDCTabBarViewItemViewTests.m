@@ -24,6 +24,16 @@ static const CGFloat kMaxWidth = 360;
 // Minimum (expected) height of an item view.
 static const CGFloat kMinHeight = 48;
 
+static UIImage *fakeImage(CGFloat width, CGFloat height) {
+  CGSize imageSize = CGSizeMake(width, height);
+  UIGraphicsBeginImageContext(imageSize);
+  [UIColor.whiteColor setFill];
+  UIRectFill(CGRectMake(0, 0, imageSize.width, imageSize.height));
+  UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+  UIGraphicsEndImageContext();
+  return image;
+}
+
 @interface MDCTabBarViewItemViewTests : XCTestCase
 @end
 
@@ -82,5 +92,7 @@ static const CGFloat kMinHeight = 48;
   XCTAssertEqualWithAccuracy(fitSize.width, kMinWidth, 0.001);
   XCTAssertEqualWithAccuracy(fitSize.height, kMinHeight, 0.001);
 }
+
+- (void)testLargeContentSize
 
 @end
