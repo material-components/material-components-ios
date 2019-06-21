@@ -83,7 +83,15 @@ typedef NS_ENUM(NSInteger, MDCColorSchemeDefaults) {
   /**
    The Material defaults, circa April 2018.
    */
-  MDCColorSchemeDefaultsMaterial201804
+  MDCColorSchemeDefaultsMaterial201804,
+  /**
+   The Material defaults, circa June 2019 with Dark Mode.
+   */
+  MDCColorSchemeDefaultsMaterialDarkMode201906,
+  /**
+   The Material defaults, circa June 2019 supporting dynamic color with Dark Mode for iOS 13.
+   */
+  MDCColorSchemeDefaultsMaterial201906,
 };
 
 /**

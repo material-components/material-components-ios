@@ -86,6 +86,7 @@ class MDCCatalogCollectionViewCell: UICollectionViewCell {
   func updateTheme() {
     label.font = AppTheme.globalTheme.typographyScheme.button
     label.textColor = AppTheme.globalTheme.colorScheme.onBackgroundColor
+    contentView.backgroundColor = AppTheme.globalTheme.colorScheme.backgroundColor;
   }
 
   @objc func themeDidChange(notification: NSNotification) {

@@ -35,6 +35,24 @@ static CGFloat blendColorChannel(CGFloat value, CGFloat bValue, CGFloat alpha, C
   return ((1 - alpha) * bValue * bAlpha + alpha * value) / (alpha + bAlpha * (1 - alpha));
 }
 
+static UIColor *DynamicColor(UIColor *defaultColor, UIColor *darkColor) {
+#if defined(__IPHONE_13_0)
+  if (@available(iOS 13.0, *)) {
+    return [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
+      if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+        return darkColor;
+      } else {
+        return defaultColor;
+      }
+    }];
+  } else {
+    return defaultColor;
+  }
+#else
+  return defaultColor;
+#endif
+}
+
 @implementation MDCSemanticColorScheme
 
 - (instancetype)init {
@@ -56,6 +74,30 @@ static CGFloat blendColorChannel(CGFloat value, CGFloat bValue, CGFloat alpha, C
         _onSecondaryColor = ColorFromRGB(0x000000);
         _onSurfaceColor = ColorFromRGB(0x000000);
         _onBackgroundColor = ColorFromRGB(0x000000);
+        break;
+      case MDCColorSchemeDefaultsMaterialDarkMode201906:
+        _primaryColor = ColorFromRGB(0xBB86FC);
+        _primaryColorVariant = ColorFromRGB(0x3700B3);
+        _secondaryColor = ColorFromRGB(0x03DAC6);
+        _errorColor = ColorFromRGB(0xCF6679);
+        _surfaceColor = ColorFromRGB(0x121212);
+        _backgroundColor = ColorFromRGB(0x121212);
+        _onPrimaryColor = ColorFromRGB(0x000000);
+        _onSecondaryColor = ColorFromRGB(0x000000);
+        _onSurfaceColor = ColorFromRGB(0xFFFFFF);
+        _onBackgroundColor = ColorFromRGB(0xFFFFFF);
+        break;
+      case MDCColorSchemeDefaultsMaterial201906:
+        _primaryColor = DynamicColor(ColorFromRGB(0x6200EE), ColorFromRGB(0xBB86FC));
+        _primaryColorVariant = DynamicColor(ColorFromRGB(0x3700B3), ColorFromRGB(0x3700B3));
+        _secondaryColor = DynamicColor(ColorFromRGB(0x03DAC6), ColorFromRGB(0x03DAC6));
+        _errorColor = DynamicColor(ColorFromRGB(0xB00020), ColorFromRGB(0xCF6679));
+        _surfaceColor = DynamicColor(ColorFromRGB(0xFFFFFF), ColorFromRGB(0x121212));
+        _backgroundColor = DynamicColor(ColorFromRGB(0xFFFFFF), ColorFromRGB(0x121212));
+        _onPrimaryColor = DynamicColor(ColorFromRGB(0xFFFFFF), ColorFromRGB(0x000000));
+        _onSecondaryColor = DynamicColor(ColorFromRGB(0x000000), ColorFromRGB(0x000000));
+        _onSurfaceColor = DynamicColor(ColorFromRGB(0x000000), ColorFromRGB(0xFFFFFF));
+        _onBackgroundColor = DynamicColor(ColorFromRGB(0x000000), ColorFromRGB(0xFFFFFF));
         break;
     }
   }

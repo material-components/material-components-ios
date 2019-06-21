@@ -57,6 +57,10 @@ class MDCCatalogTileView: UIView {
   @objc func themeDidChange(notification: NSNotification) {
     imageCache.removeAllObjects()
   }
+  
+  override func draw(_ rect: CGRect) {
+    super.draw(rect)
+  }
 
   override func layoutSubviews() {
     super.layoutSubviews()

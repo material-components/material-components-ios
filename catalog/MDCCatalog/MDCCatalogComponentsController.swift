@@ -104,7 +104,7 @@ class MDCCatalogComponentsController: UICollectionViewController, UICollectionVi
 
     collectionView?.register(MDCCatalogCollectionViewCell.self,
       forCellWithReuseIdentifier: "MDCCatalogCollectionViewCell")
-    collectionView?.backgroundColor = UIColor(white: 0.9, alpha: 1)
+    collectionView?.backgroundColor = AppTheme.globalTheme.colorScheme.backgroundColor
 
     MDCIcons.ic_arrow_backUseNewStyle(true)
 
@@ -210,6 +210,15 @@ class MDCCatalogComponentsController: UICollectionViewController, UICollectionVi
     super.viewWillAppear(animated)
     collectionView?.collectionViewLayout.invalidateLayout()
     navigationController?.setNavigationBarHidden(true, animated: animated)
+  }
+  
+  override func viewWillLayoutSubviews() {
+    super.viewWillLayoutSubviews()
+    
+  }
+  
+  override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+    super.traitCollectionDidChange(previousTraitCollection)
   }
 
   override func willAnimateRotation(
