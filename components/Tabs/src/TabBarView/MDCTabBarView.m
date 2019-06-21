@@ -17,14 +17,23 @@
 /** Minimum (typical) height of a Material Tab bar. */
 static const CGFloat kMinHeight = 48;
 
+@interface MDCTabBarView ()
+
+/** The stack view that contains all tab items. */
+@property(nonatomic) UIStackView *stackView;
+
+@end
+
 @implementation MDCTabBarView
 
 #pragma mark - Initialization
 
 - (instancetype)init {
-  self = [super init];
+  self = [super initWithFrame:CGRectZero];
+  self.translatesAutoresizingMaskIntoConstraints = NO;
   if (self) {
     _items = @[];
+    [self setUpSubviews];
   }
   return self;
 }
@@ -63,6 +72,64 @@ static const CGFloat kMinHeight = 48;
   }
 
   _selectedItem = selectedItem;
+}
+
+- (void)setUpSubviews {
+  self.backgroundColor = UIColor.whiteColor;
+
+  [self setUpStackView];
+
+  for (UIView *item in _items) {
+    [_stackView addArrangedSubview:item];
+  }
+
+  [NSLayoutConstraint activateConstraints:@[
+                                            [self.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
+                                            [self.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
+                                            [self.topAnchor constraintEqualToAnchor:self.topAnchor],
+                                            [self.bottomAnchor constraintEqualToAnchor:self.bottomAnchor],
+
+                                            [_stackView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
+                                            [_stackView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
+                                            [_stackView.widthAnchor constraintGreaterThanOrEqualToAnchor:self.widthAnchor],
+                                            [_stackView.topAnchor constraintEqualToAnchor:self.topAnchor],
+                                            [_stackView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor],
+                                            ]];
+}
+
+
+- (void)setUpStackView {
+  _stackView = [[UIStackView alloc] init];
+  _stackView.axis = UILayoutConstraintAxisHorizontal;
+  _stackView.translatesAutoresizingMaskIntoConstraints = NO;
+  [self addSubview:_stackView];
+}
+
+- (void)setUpItemViews {
+  for (UITabBarItem *item in self.items) {
+    MDCTabBarViewItemView *itemView = MDCTabBarViewItemView
+  }
+  _stackView = [[UIStackView alloc] init];
+  _stackView.axis = UILayoutConstraintAxisHorizontal;
+  _stackView.translatesAutoresizingMaskIntoConstraints = NO;
+  [self addSubview:_stackView];
+}
+
+- (void)layoutSubviews {
+  [super layoutSubviews];
+
+  CGFloat availableWidth = self.frame.size.width;
+  CGFloat maxWidth = 0;
+  for (UIView *item in self.items) {
+    CGSize contentSize = item.intrinsicContentSize;
+    if (contentSize.width > maxWidth) {
+      maxWidth = contentSize.width;
+    }
+  }
+  CGFloat requiredWidth = maxWidth * self.items.count;
+  BOOL canBeJustified = requiredWidth > availableWidth;
+  self.stackView.distribution = canBeJustified ?
+  UIStackViewDistributionFillProportionally : UIStackViewDistributionFillEqually;
 }
 
 - (CGSize)intrinsicContentSize {
