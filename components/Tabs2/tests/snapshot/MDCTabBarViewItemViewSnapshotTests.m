@@ -27,6 +27,8 @@
 - (void)setUp {
   [super setUp];
 
+  // Uncomment below to recreate all the goldens (or add the following line to the specific
+
 }
 
 #pragma mark - Helpers

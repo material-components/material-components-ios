@@ -26,18 +26,6 @@ static const CGFloat kMinHeight = 48;
 /// Outer edge padding from spec: https://material.io/go/design-tabs#spec.
 static const UIEdgeInsets kEdgeInsets = {.top = 12, .right = 16, .bottom = 12, .left = 16};
 
-/// File name of the bundle (without the '.bundle' extension) containing resources.
-static NSString *const kResourceBundleName = @"MaterialTabs";
-
-/// String table name containing localized strings.
-static NSString *const kStringTableName = @"MaterialTabs";
-
-/// Scale factor applied to the title of bottom navigation items when selected.
-const CGFloat kSelectedNavigationTitleScaleFactor = (16.0f / 14.0f);
-
-/// Vertical translation applied to image components bottom navigation items when selected.
-const CGFloat kSelectedNavigationImageYOffset = -2;
-
 @interface MDCTabBarViewItemView ()
 
 @property(nonatomic, strong) UIView *contentView;
@@ -92,21 +80,21 @@ const CGFloat kSelectedNavigationImageYOffset = -2;
 
 - (void)initSubviews {
   if (!_contentView) {
-    _contentView = [[UIView alloc] initWithFrame:CGRectZero];
-    [self addSubview:_contentView];
+    self.contentView = [[UIView alloc] initWithFrame:CGRectZero];
+    [self addSubview:self.contentView];
   }
   if (!_iconImageView) {
-    _iconImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
-    _iconImageView.contentMode = UIViewContentModeScaleAspectFit;
-    _iconImageView.isAccessibilityElement = NO;
-    [_contentView addSubview:_iconImageView];
+    self.iconImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+    self.iconImageView.contentMode = UIViewContentModeScaleAspectFit;
+    self.iconImageView.isAccessibilityElement = NO;
+    [self.contentView addSubview:self.iconImageView];
   }
   if (!_titleLabel) {
-    _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    _titleLabel.textAlignment = NSTextAlignmentCenter;
-    _titleLabel.numberOfLines = 2;
-    _titleLabel.isAccessibilityElement = NO;
-    [_contentView addSubview:_titleLabel];
+    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    self.titleLabel.textAlignment = NSTextAlignmentCenter;
+    self.titleLabel.numberOfLines = 2;
+    self.titleLabel.isAccessibilityElement = NO;
+    [self.contentView addSubview:self.titleLabel];
   }
 }
 
