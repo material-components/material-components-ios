@@ -76,7 +76,6 @@ static NSString *const exampleText = @"Lorem ipsum dolor";
   NSLayoutConstraint *bannerViewConstraintRight =
       [bannerView.rightAnchor constraintEqualToAnchor:self.view.rightAnchor];
   bannerViewConstraintRight.active = YES;
-  bannerView.preferredMaxLayoutWidth = CGRectGetWidth(self.view.bounds);
   bannerView.hidden = YES;
   self.bannerView = bannerView;
 }

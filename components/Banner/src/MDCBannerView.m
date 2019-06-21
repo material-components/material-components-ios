@@ -111,7 +111,6 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 - (void)commonBannerViewInit {
   self.backgroundColor = UIColor.whiteColor;
   _bannerViewLayoutMode = MDCBannerViewLayoutModeAutomatic;
-  _preferredMaxLayoutWidth = 0;
 
   // Create textLabel
   UILabel *textLabel = [[UILabel alloc] init];
@@ -179,11 +178,6 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 
 - (UIColor *)dividerColor {
   return self.divider.backgroundColor;
-}
-
-- (void)setPreferredMaxLayoutWidth:(CGFloat)preferredMaxLayoutWidth {
-  _preferredMaxLayoutWidth = preferredMaxLayoutWidth;
-  [self invalidateIntrinsicContentSize];
 }
 
 #pragma mark - Constraints Helpers
@@ -382,32 +376,20 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 }
 
 - (CGSize)intrinsicContentSize {
-  CGSize sizeToFit = CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX);
-  if (self.preferredMaxLayoutWidth > 0) {
-    sizeToFit.width = self.preferredMaxLayoutWidth;
-  }
-  CGFloat intrinsicContentHeight = [self sizeThatFits:sizeToFit].height;
-  if (self.preferredMaxLayoutWidth > 0) {
-    return CGSizeMake(self.preferredMaxLayoutWidth, intrinsicContentHeight);
-  } else {
-    return CGSizeMake(UIViewNoIntrinsicMetric, intrinsicContentHeight);
-  }
+  CGFloat intrinsicContentHeight = [self sizeThatFits:self.bounds.size].height;
+  return CGSizeMake(UIViewNoIntrinsicMetric, intrinsicContentHeight);
 }
 
 - (void)updateConstraints {
-  CGSize sizeToFit = CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX);
-  if (self.translatesAutoresizingMaskIntoConstraints) {
-    sizeToFit = self.bounds.size;
-  } else {
-    if (self.preferredMaxLayoutWidth > 0) {
-      sizeToFit.width = self.preferredMaxLayoutWidth;
-    }
-  }
-
-  MDCBannerViewLayoutMode layoutMode = [self layoutModeForSizeToFit:sizeToFit];
+  MDCBannerViewLayoutMode layoutMode = [self layoutModeForSizeToFit:self.bounds.size];
   [self updateConstraintsWithLayoutMode:layoutMode];
 
   [super updateConstraints];
+}
+
+- (void)layoutSubviews {
+  [super layoutSubviews];
+  [self invalidateIntrinsicContentSize];
 }
 
 #pragma mark - Layout methods

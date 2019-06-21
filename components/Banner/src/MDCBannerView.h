@@ -84,13 +84,4 @@ __attribute__((objc_subclassing_restricted)) @interface MDCBannerView : UIView
  */
 @property(nonatomic, readwrite, strong, nonnull) UIColor *dividerColor;
 
-/**
- The preferred maximum width for a @c MDCBannerView
- If the value of this property is not zero, it will be used when calculating the -intrinsicContentSize
- for constraint-based layout.
-
- The default value is zero.
- */
-@property(nonatomic, readwrite, assign) CGFloat preferredMaxLayoutWidth;
-
 @end
