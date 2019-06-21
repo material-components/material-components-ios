@@ -15,7 +15,7 @@
 #import <UIKit/UIKit.h>
 
 #import <MaterialComponents/MaterialContainerScheme.h>
-#import "MaterialTabs2.h"
+#import "MaterialTabs+TabBarView.h"
 
 static NSString *const kExampleTitle = @"TabBarView";
 
