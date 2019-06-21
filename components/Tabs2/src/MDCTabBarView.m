@@ -19,6 +19,52 @@ static const CGFloat kMinHeight = 48;
 
 @implementation MDCTabBarView
 
+#pragma mark - Initialization
+
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    _items = @[];
+  }
+  return self;
+}
+
+#pragma mark - Properties
+
+- (void)setItems:(NSArray<UITabBarItem *> *)items {
+  NSParameterAssert(items);
+
+  if (self.items == items || [self.items isEqual:items]) {
+    return;
+  }
+  _items = [items copy];
+
+  // Determine new selected item, defaulting to nil.
+  UITabBarItem *newSelectedItem = nil;
+  if (self.selectedItem && [self.items containsObject:self.selectedItem]) {
+    // Previously-selected item still around: Preserve selection.
+    newSelectedItem = self.selectedItem;
+  }
+
+  self.selectedItem = newSelectedItem;
+}
+
+- (void)setSelectedItem:(UITabBarItem *)selectedItem {
+  if (self.selectedItem == selectedItem) {
+    return;
+  }
+  NSUInteger itemIndex = [self.items indexOfObject:selectedItem];
+  if (selectedItem && (itemIndex == NSNotFound)) {
+    NSString *itemTitle = selectedItem.title;
+    NSString *exceptionMessage =
+        [NSString stringWithFormat:@"%@ is not a member of the tab bar's `items`.", itemTitle];
+    [[NSException exceptionWithName:NSInvalidArgumentException reason:exceptionMessage
+                           userInfo:nil] raise];
+  }
+
+  _selectedItem = selectedItem;
+}
+
 - (CGSize)intrinsicContentSize {
   return CGSizeMake(UIViewNoIntrinsicMetric, kMinHeight);
 }

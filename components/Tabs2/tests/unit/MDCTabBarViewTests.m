@@ -17,12 +17,131 @@
 #import "MDCTabBarView.h"
 
 @interface MDCTabBarViewTests : XCTestCase
+
+@property(nonatomic, strong) MDCTabBarView *tabBarView;
+
+@property(nonatomic, strong) UITabBarItem *itemA;
+
+@property(nonatomic, strong) UITabBarItem *itemB;
+
+@property(nonatomic, strong) UITabBarItem *itemC;
+
 @end
 
 @implementation MDCTabBarViewTests
 
+- (void)setUp {
+  [super setUp];
+
+  self.tabBarView = [[MDCTabBarView alloc] init];
+  self.itemA = [[UITabBarItem alloc] initWithTitle:@"A" image:nil tag:0];
+  self.itemB = [[UITabBarItem alloc] initWithTitle:@"B" image:nil tag:0];
+  self.itemC = [[UITabBarItem alloc] initWithTitle:@"C" image:nil tag:0];
+}
+
+- (void)tearDown {
+  self.itemA = nil;
+  self.itemB = nil;
+  self.itemC = nil;
+  self.tabBarView = nil;
+
+  [super tearDown];
+}
+
 - (void)testInitCreatesObject {
-  XCTAssertNotNil([[MDCTabBarView alloc] init]);
+  // When
+  MDCTabBarView *tabBarView = [[MDCTabBarView alloc] init];
+
+  // Then
+  XCTAssertNotNil(tabBarView);
+  XCTAssertNotNil(tabBarView.items);
+}
+
+/// Tab bars should by default select nil in their items array. The behavior should also be
+/// consistent with the UIKit
+- (void)testSelectsNilByDefault {
+  // Given
+  self.tabBarView.items = @[ self.itemA, self.itemB, self.itemC ];
+
+  // Then
+  XCTAssertNil(self.tabBarView.selectedItem);
+}
+
+/// Tab bars should preserve their selection if possible when changing items.
+- (void)testPreservesSelectedItem {
+  // Given items {A, B} which selected item A
+  self.tabBarView.items = @[ self.itemA, self.itemB ];
+  self.tabBarView.selectedItem = self.itemA;
+  XCTAssertEqual(self.tabBarView.selectedItem, self.itemA);
+
+  // When
+  self.tabBarView.items = @[ self.itemC, self.itemA ];
+
+  // Then should preserve the selection of A.
+  XCTAssertEqual(self.tabBarView.selectedItem, self.itemA);
+}
+
+/// Tab bars should select nil if the old selection is no longer present.
+- (void)testSelectsNilWhenSelectedItemMissing {
+  // Given items {A, B} which selected item A.
+  self.tabBarView.items = @[ self.itemA, self.itemB ];
+  self.tabBarView.selectedItem = self.itemA;
+  XCTAssertEqual(self.tabBarView.selectedItem, self.itemA);
+
+  // When
+  self.tabBarView.items = @[ self.itemB, self.itemC ];
+
+  // Then set items not including A, which should select nil.
+  XCTAssertNil(self.tabBarView.selectedItem);
+}
+
+/// Tab bars should safely accept having their items set to the empty array.
+- (void)testSafelyHandlesEmptyItems {
+  // Given
+  self.tabBarView.items = @[];
+  XCTAssertNil(self.tabBarView.selectedItem);
+
+  // When
+  self.tabBarView.items = @[ self.itemA ];
+  self.tabBarView.items = @[];
+
+  // Then
+  XCTAssertNil(self.tabBarView.selectedItem);
+}
+
+// Tab bar should throw error when select the item that doesn't belongs to items.
+- (void)testSafelyHandlesNonExistItem {
+  // Given
+  self.tabBarView.items = @[];
+  XCTAssertNil(self.tabBarView.selectedItem);
+
+  // When set selected item to nil.
+  self.tabBarView.selectedItem = nil;
+
+  // Then should make no difference to the selection.
+  XCTAssertNil(self.tabBarView.selectedItem);
+
+  // Given items {A, B} which selected item A.
+  self.tabBarView.items = @[ self.itemA, self.itemB ];
+  self.tabBarView.selectedItem = self.itemA;
+  XCTAssertEqual(self.tabBarView.selectedItem, self.itemA);
+
+  // When set selected item to C, then should raise exception.
+  XCTAssertThrows(self.tabBarView.selectedItem = self.itemC);
+}
+
+// Setting items to the same set of items should change nothing.
+- (void)testItemsUpdateIsIdempotent {
+  // Given items {A, B} which selected item A.
+  self.tabBarView.items = @[ self.itemA, self.itemB ];
+  self.tabBarView.selectedItem = self.itemA;
+  XCTAssertEqual(self.tabBarView.selectedItem, self.itemA);
+
+  // When set same set of items.
+  self.tabBarView.items = @[ self.itemA, self.itemB ];
+
+  // Then should make no difference to the selection.
+  XCTAssertEqual(self.tabBarView.selectedItem, self.itemA);
 }
 
 @end
