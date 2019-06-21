@@ -111,6 +111,7 @@ mdc_examples_objc_library(
         "//components/Palettes",
         "//components/Slider",
         "//components/schemes/Color",
+        "//components/schemes/Container",
         "//components/schemes/Typography",
     ],
 )
