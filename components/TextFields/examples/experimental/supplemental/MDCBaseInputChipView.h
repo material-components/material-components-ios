@@ -20,7 +20,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface InputChipView : UIControl <MDCContainedInputView>
+@interface MDCBaseInputChipView : UIControl <MDCContainedInputView>
 @property(strong, nonatomic, readonly) UITextField *textField;
 @property(strong, nonatomic, readonly) UILabel *label;
 

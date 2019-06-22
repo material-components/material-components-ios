@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "InputChipViewLayout.h"
+#import "MDCBaseInputChipViewLayout.h"
 
 #import <MDFInternationalization/MDFInternationalization.h>
-#import "InputChipView.h"
+#import "MDCBaseInputChipView.h"
 #import "MaterialMath.h"
 
 static const CGFloat kEstimatedCursorWidth = (CGFloat)2.0;
@@ -27,7 +27,7 @@ static const CGFloat kFloatingLabelXOffset = (CGFloat)3.0;
 
 static const CGFloat kGradientBlurLength = 6;
 
-@interface InputChipViewLayout ()
+@interface MDCBaseInputChipViewLayout ()
 
 @property(nonatomic, assign) CGFloat calculatedHeight;
 @property(nonatomic, assign) CGFloat minimumHeight;
@@ -35,7 +35,7 @@ static const CGFloat kGradientBlurLength = 6;
 
 @end
 
-@implementation InputChipViewLayout
+@implementation MDCBaseInputChipViewLayout
 
 - (instancetype)initWithSize:(CGSize)size
                       containerStyler:(id<MDCContainedInputViewStyler>)containerStyler

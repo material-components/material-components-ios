@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "InputChipView+MaterialTheming.h"
+#import "MDCBaseInputChipView+MaterialTheming.h"
 
 #import <Foundation/Foundation.h>
 
@@ -20,7 +20,7 @@
 #import "MDCContainerStylerFilled.h"
 #import "MDCContainerStylerOutlined.h"
 
-@implementation InputChipView (MaterialTheming)
+@implementation MDCBaseInputChipView (MaterialTheming)
 
 - (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
   [self applyTypographySchemeWith:containerScheme];
