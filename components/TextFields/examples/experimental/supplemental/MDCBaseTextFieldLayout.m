@@ -47,8 +47,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
            underlineLabelDrawPriority:
                (MDCContainedInputViewAssistiveLabelDrawPriority)underlineLabelDrawPriority
      customAssistiveLabelDrawPriority:(CGFloat)customAssistiveLabelDrawPriority
-       preferredContainerHeight:(CGFloat)preferredContainerHeight
-    preferredAssistiveLabelAreaHeight:(CGFloat)preferredAssistiveLabelAreaHeight
+            preferredContainerHeight:(CGFloat)preferredContainerHeight
                                 isRTL:(BOOL)isRTL
                             isEditing:(BOOL)isEditing {
   self = [super init];
@@ -71,8 +70,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
                        rightAssistiveLabel:rightAssistiveLabel
                 underlineLabelDrawPriority:underlineLabelDrawPriority
           customAssistiveLabelDrawPriority:customAssistiveLabelDrawPriority
-            preferredContainerHeight:preferredContainerHeight
-         preferredAssistiveLabelAreaHeight:preferredAssistiveLabelAreaHeight
+                  preferredContainerHeight:preferredContainerHeight
                                      isRTL:isRTL
                                  isEditing:isEditing];
     return self;
@@ -101,8 +99,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
               underlineLabelDrawPriority:
                   (MDCContainedInputViewAssistiveLabelDrawPriority)underlineLabelDrawPriority
         customAssistiveLabelDrawPriority:(CGFloat)customAssistiveLabelDrawPriority
-          preferredContainerHeight:(CGFloat)preferredContainerHeight
-       preferredAssistiveLabelAreaHeight:(CGFloat)preferredAssistiveLabelAreaHeight
+                preferredContainerHeight:(CGFloat)preferredContainerHeight
                                    isRTL:(BOOL)isRTL
                                isEditing:(BOOL)isEditing {
   BOOL shouldAttemptToDisplayLeftView = [self shouldAttemptToDisplaySideView:leftView

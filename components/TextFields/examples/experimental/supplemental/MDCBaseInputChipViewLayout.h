@@ -23,8 +23,6 @@ NS_ASSUME_NONNULL_BEGIN
 //};
 
 @interface MDCBaseInputChipViewLayout : NSObject
-@property(nonatomic, assign) CGFloat initialChipRowMinY;
-@property(nonatomic, assign) CGFloat finalChipRowMaxY;
 @property(nonatomic, assign) CGFloat globalChipRowMinX;
 @property(nonatomic, assign) CGFloat globalChipRowMaxX;
 
@@ -73,8 +71,7 @@ NS_ASSUME_NONNULL_BEGIN
            underlineLabelDrawPriority:
                (MDCContainedInputViewAssistiveLabelDrawPriority)underlineLabelDrawPriority
      customAssistiveLabelDrawPriority:(CGFloat)normalizedCustomAssistiveLabelDrawPriority
-       preferredContainerHeight:(CGFloat)preferredContainerHeight
-    preferredAssistiveLabelAreaHeight:(CGFloat)preferredAssistiveLabelAreaHeight
+             preferredContainerHeight:(CGFloat)preferredContainerHeight
                                 isRTL:(BOOL)isRTL
                             isEditing:(BOOL)isEditing;
 @end

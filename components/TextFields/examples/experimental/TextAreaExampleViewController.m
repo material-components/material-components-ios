@@ -12,24 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "InputChipViewExampleViewController.h"
+#import "TextAreaExampleViewController.h"
 
 #import "MaterialButtons.h"
 
 #import "MaterialButtons+Theming.h"
 #import "MaterialColorScheme.h"
-#import "supplemental/MDCBaseInputChipView.h"
+#import "supplemental/MDCBaseTextArea.h"
+#import "supplemental/MDCBaseTextArea+MaterialTheming.h"
 
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar+TypographyThemer.h"
 #import "MaterialButtons+ButtonThemer.h"
-#import "MaterialChips.h"
 
-#import "supplemental/MDCBaseInputChipView+MaterialTheming.h"
+//#import "supplemental/MDCBaseTextArea+MaterialTheming.h"
 
 static const CGFloat kSideMargin = (CGFloat)20.0;
 
-@interface InputChipViewExampleViewController () <UITextFieldDelegate>
+@interface TextAreaExampleViewController () <UITextViewDelegate>
 
 @property(strong, nonatomic) UIScrollView *scrollView;
 
@@ -41,7 +41,7 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
 
 @end
 
-@implementation InputChipViewExampleViewController
+@implementation TextAreaExampleViewController
 
 - (instancetype)init {
   self = [super init];
@@ -91,14 +91,14 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
   self.scrollViewSubviews = @[
     [self createToggleErrorButton],
     [self createResignFirstResponderButton],
-    [self createLabelWithText:@"Filled InputChipView:"],
-    [self createFilledNonWrappingInputChipView],
-    [self createLabelWithText:@"Wrapping filled InputChipView:"],
-    [self createFilledWrappingInputChipView],
-    [self createLabelWithText:@"Outlined InputChipView:"],
-    [self createOutlinedNonWrappingInputChipView],
-    [self createLabelWithText:@"Wrapping outlined InputChipView:"],
-    [self createOutlinedWrappingInputChipView],
+    [self createLabelWithText:@"Filled TextArea:"],
+    [self createFilledNonWrappingTextArea],
+    [self createLabelWithText:@"Wrapping filled TextArea:"],
+    [self createFilledWrappingTextArea],
+    [self createLabelWithText:@"Outlined TextArea:"],
+    [self createOutlinedNonWrappingTextArea],
+    [self createLabelWithText:@"Wrapping outlined TextArea:"],
+    [self createOutlinedWrappingTextArea],
   ];
   for (UIView *view in self.scrollViewSubviews) {
     [self.scrollView addSubview:view];
@@ -126,7 +126,7 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
   for (UIView *view in self.scrollViewSubviews) {
     CGSize viewSize = view.frame.size;
     CGFloat textFieldWidth = CGRectGetWidth(self.scrollView.frame) - (2 * kSideMargin);
-    if ([view isKindOfClass:[MDCBaseInputChipView class]]) {
+    if ([view isKindOfClass:[MDCBaseTextArea class]]) {
       viewSize = CGSizeMake(textFieldWidth, CGRectGetHeight(view.frame));
     }
     CGRect viewFrame = CGRectMake(viewMinX, viewMinY, viewSize.width, viewSize.height);
@@ -182,57 +182,40 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
   return label;
 }
 
-- (MDCBaseInputChipView *)createOutlinedNonWrappingInputChipView {
-  MDCBaseInputChipView *inputChipView = [[MDCBaseInputChipView alloc] init];
-  inputChipView.textField.placeholder = @"Outlined non-wrapping";
+- (MDCBaseTextArea *)createOutlinedNonWrappingTextArea {
+  MDCBaseTextArea *inputChipView = [[MDCBaseTextArea alloc] init];
   [inputChipView applyOutlinedThemeWithScheme:self.containerScheme];
-  inputChipView.chipsWrap = NO;
   inputChipView.canFloatingLabelFloat = YES;
-  inputChipView.chipRowHeight = self.chipHeight;
   [inputChipView sizeToFit];
-  inputChipView.textField.delegate = self;
+  inputChipView.textView.delegate = self;
   return inputChipView;
 }
 
-- (MDCBaseInputChipView *)createOutlinedWrappingInputChipView {
-  MDCBaseInputChipView *inputChipView = [self createOutlinedNonWrappingInputChipView];
-  inputChipView.textField.placeholder = @"Outlined wrapping";
-  inputChipView.chipsWrap = YES;
+- (MDCBaseTextArea *)createOutlinedWrappingTextArea {
+  MDCBaseTextArea *inputChipView = [self createOutlinedNonWrappingTextArea];
   inputChipView.preferredContainerHeight = 150;
   [inputChipView sizeToFit];
   return inputChipView;
 }
 
-- (MDCBaseInputChipView *)createFilledNonWrappingInputChipView {
-  MDCBaseInputChipView *inputChipView = [[MDCBaseInputChipView alloc] init];
-  inputChipView.textField.placeholder = @"Filled non-wrapping";
+- (MDCBaseTextArea *)createFilledNonWrappingTextArea {
+  MDCBaseTextArea *inputChipView = [[MDCBaseTextArea alloc] init];
   [inputChipView applyFilledThemeWithScheme:self.containerScheme];
-  inputChipView.chipsWrap = NO;
   inputChipView.canFloatingLabelFloat = YES;
-  inputChipView.chipRowHeight = self.chipHeight;
   [inputChipView sizeToFit];
-  inputChipView.textField.delegate = self;
+  inputChipView.textView.delegate = self;
   return inputChipView;
 }
 
-- (MDCBaseInputChipView *)createFilledWrappingInputChipView {
-  MDCBaseInputChipView *inputChipView = [self createFilledNonWrappingInputChipView];
-  inputChipView.textField.placeholder = @"Filled wrapping";
-  inputChipView.chipsWrap = YES;
+- (MDCBaseTextArea *)createFilledWrappingTextArea {
+  MDCBaseTextArea *inputChipView = [self createFilledNonWrappingTextArea];
   inputChipView.preferredContainerHeight = 150;
-  inputChipView.chipRowHeight = self.chipHeight;
   [inputChipView sizeToFit];
   return inputChipView;
 }
 
 
 
-
-- (CGFloat)chipHeight {
-  MDCChipView *chip = [self createChipWithText:@"Test"
-                                          font:self.allInputChipViews.firstObject.textField.font];
-  return CGRectGetHeight(chip.frame);
-}
 
 #pragma mark Private
 
@@ -250,12 +233,12 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
   }];
 }
 
-- (void)updateInputChipViewStates {
-  [self.allInputChipViews enumerateObjectsUsingBlock:^(MDCBaseInputChipView *inputChipView, NSUInteger idx,
+- (void)updateTextAreaStates {
+  [self.allInputTextAreas enumerateObjectsUsingBlock:^(MDCBaseTextArea *inputChipView, NSUInteger idx,
                                                        BOOL *stop) {
     BOOL isEven = idx % 2 == 0;
     if (self.isErrored) {
-      // TODO: Make InputChipView respond to error theme selector
+      // TODO: Make TextArea respond to error theme selector
       //      if ([inputChipView respondsToSelector:@selector(applyErrorThemeWithScheme:)]) {
       //        [inputChipView applyErrorThemeWithScheme:self.containerScheme];
       //      }
@@ -287,19 +270,9 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
     label.textColor = textColor;
   }];
 }
-- (MDCChipView *)createChipWithText:(NSString *)text font:(UIFont *)font {
-  MDCChipView *chipView = [[MDCChipView alloc] init];
-  chipView.titleLabel.text = text;
-  chipView.titleLabel.font = font;
-  [chipView sizeToFit];
-  [chipView addTarget:self
-                action:@selector(selectedChip:)
-      forControlEvents:UIControlEventTouchUpInside];
-  return chipView;
-}
 
-- (NSArray<MDCBaseInputChipView *> *)allInputChipViews {
-  return [self allViewsOfClass:[MDCBaseInputChipView class]];
+- (NSArray<MDCBaseTextArea *> *)allInputTextAreas {
+  return [self allViewsOfClass:[MDCBaseTextArea class]];
 }
 
 - (NSArray<MDCButton *> *)allButtons {
@@ -330,8 +303,8 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
 #pragma mark IBActions
 
 - (void)resignFirstResponderButtonTapped:(UIButton *)button {
-  [self.allInputChipViews
-      enumerateObjectsUsingBlock:^(MDCBaseInputChipView *inputChipView, NSUInteger idx, BOOL *stop) {
+  [self.allInputTextAreas
+      enumerateObjectsUsingBlock:^(MDCBaseTextArea *inputChipView, NSUInteger idx, BOOL *stop) {
         [inputChipView resignFirstResponder];
       }];
 }
@@ -339,43 +312,19 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
 - (void)toggleErrorButtonTapped:(UIButton *)button {
   self.isErrored = !self.isErrored;
   [self updateButtonThemes];
-  [self updateInputChipViewStates];
+  [self updateTextAreaStates];
   [self updateLabelColors];
 }
 
-#pragma mark UITextFieldDelegate
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-  if (textField.text.length <= 0) {
-    return NO;
-  }
-  MDCChipView *chipView = [self createChipWithText:textField.text font:textField.font];
-  MDCBaseInputChipView *inputChipView = [self inputChipViewWithTextField:textField];
-  [inputChipView addChip:chipView];
-  return NO;
-}
-
-- (MDCBaseInputChipView *)inputChipViewWithTextField:(UITextField *)textField {
-  for (MDCBaseInputChipView *inputChipView in self.allInputChipViews) {
-    if (inputChipView.textField == textField) {
-      return inputChipView;
-    }
-  }
-  return nil;
-}
+#pragma mark UITextViewDelegate
 
 #pragma mark User Interaction
-
-- (void)selectedChip:(MDCChipView *)chip {
-  chip.selected = !chip.selected;
-  NSLog(@"%@", @(chip.isHighlighted));
-}
 
 #pragma mark Catalog By Convention
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs" : @[ @"Text Field", @"Input Chip View" ],
+    @"breadcrumbs" : @[ @"Text Field", @"Text Area" ],
     @"primaryDemo" : @NO,
     @"presentable" : @NO,
   };
