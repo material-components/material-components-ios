@@ -124,9 +124,9 @@ static const UIEdgeInsets kEdgeInsets = {.top = 12, .right = 16, .bottom = 12, .
   // Calculate the sizes of icon and label. Use them to calculate the total item view size.
   CGSize iconSize = [self.iconImageView sizeThatFits:maxSize];
   CGSize labelSize = [self.titleLabel sizeThatFits:maxSize];
-  CGFloat width = ceil(MAX(iconSize.width, labelSize.width) + horizontalPadding);
+  CGFloat width = (CGFloat)ceil(MAX(iconSize.width, labelSize.width) + horizontalPadding);
   width = MIN(kMaxWidth, MAX(kMinWidth, width));
-  CGFloat height = ceil(iconSize.height + labelSize.height + verticalPadding);
+  CGFloat height = (CGFloat)ceil(iconSize.height + labelSize.height + verticalPadding);
   height = MAX(kMinHeight, height);
   return CGSizeMake(width, height);
 }
