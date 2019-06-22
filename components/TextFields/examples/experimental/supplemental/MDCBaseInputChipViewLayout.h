@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 // typedef NS_ENUM(NSUInteger, InputChipViewOrien) {
 //};
 
-@interface InputChipViewLayout : NSObject
+@interface MDCBaseInputChipViewLayout : NSObject
 @property(nonatomic, assign) CGFloat initialChipRowMinY;
 @property(nonatomic, assign) CGFloat finalChipRowMaxY;
 @property(nonatomic, assign) CGFloat globalChipRowMinX;

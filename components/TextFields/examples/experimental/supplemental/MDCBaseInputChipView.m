@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "InputChipView.h"
-#import "InputChipViewLayout.h"
+#import "MDCBaseInputChipView.h"
+#import "MDCBaseInputChipViewLayout.h"
 
 #import <CoreGraphics/CoreGraphics.h>
 #import <MDFInternationalization/MDFInternationalization.h>
@@ -23,9 +23,9 @@
 #import "MDCContainedInputViewLabelAnimator.h"
 #import "MaterialMath.h"
 
-@class InputChipViewTextField;
-@protocol InputChipViewTextFieldDelegate <NSObject>
-- (void)inputChipViewTextFieldDidDeleteBackward:(InputChipViewTextField *)textField
+@class MDCBaseInputChipViewTextField;
+@protocol MDCBaseInputChipViewTextFieldDelegate <NSObject>
+- (void)inputChipViewTextFieldDidDeleteBackward:(MDCBaseInputChipViewTextField *)textField
                                         oldText:(NSString *)oldText
                                         newText:(NSString *)newText;
 - (void)inputChipViewTextFieldDidBecomeFirstResponder:(BOOL)didBecome;
@@ -33,12 +33,12 @@
 - (void)inputChipViewTextFieldDidSetPlaceholder:(NSString *)placeholder;
 @end
 
-@interface InputChipViewTextField : UITextField
-@property(nonatomic, weak) id<InputChipViewTextFieldDelegate> inputChipViewTextFieldDelegate;
+@interface MDCBaseInputChipViewTextField : UITextField
+@property(nonatomic, weak) id<MDCBaseInputChipViewTextFieldDelegate> inputChipViewTextFieldDelegate;
 @property(strong, nonatomic, readonly) UIFont *effectiveFont;
 @end
 
-@implementation InputChipViewTextField
+@implementation MDCBaseInputChipViewTextField
 
 - (UIFont *)effectiveFont {
   return self.font ?: [UIFont systemFontOfSize:[UIFont systemFontSize]];
@@ -95,7 +95,7 @@
 
 static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
-@interface InputChipView () <InputChipViewTextFieldDelegate, UIGestureRecognizerDelegate>
+@interface MDCBaseInputChipView () <MDCBaseInputChipViewTextFieldDelegate, UIGestureRecognizerDelegate>
 
 #pragma mark MDCContainedInputView properties
 @property(strong, nonatomic) UIButton *clearButton;
@@ -108,12 +108,12 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 @property(strong, nonatomic) UIView *maskedScrollViewContainerView;
 @property(strong, nonatomic) UIScrollView *scrollView;
 @property(strong, nonatomic) UIView *scrollViewContentViewTouchForwardingView;
-@property(strong, nonatomic) InputChipViewTextField *inputChipViewTextField;
+@property(strong, nonatomic) MDCBaseInputChipViewTextField *inputChipViewTextField;
 
 @property(strong, nonatomic) NSMutableArray *chips;
 @property(strong, nonatomic) NSMutableArray *chipsToRemove;
 
-@property(strong, nonatomic) InputChipViewLayout *layout;
+@property(strong, nonatomic) MDCBaseInputChipViewLayout *layout;
 
 @property(strong, nonatomic) UITouch *lastTouch;
 @property(nonatomic, assign) CGPoint lastTouchInitialContentOffset;
@@ -143,7 +143,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 @end
 
-@implementation InputChipView
+@implementation MDCBaseInputChipView
 @synthesize preferredContainerHeight = _preferredContainerHeight;
 @synthesize preferredAssistiveLabelAreaHeight = _preferredAssistiveLabelAreaHeight;
 @synthesize underlineLabelDrawPriority = _underlineLabelDrawPriority;
@@ -254,7 +254,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   self.scrollViewContentViewTouchForwardingView = [[UIView alloc] init];
   [self.scrollView addSubview:self.scrollViewContentViewTouchForwardingView];
 
-  self.inputChipViewTextField = [[InputChipViewTextField alloc] init];
+  self.inputChipViewTextField = [[MDCBaseInputChipViewTextField alloc] init];
   self.inputChipViewTextField.inputChipViewTextFieldDelegate = self;
   [self.scrollView addSubview:self.inputChipViewTextField];
 
@@ -382,7 +382,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 - (CGSize)preferredSizeWithWidth:(CGFloat)width {
   CGSize fittingSize = CGSizeMake(width, CGFLOAT_MAX);
-  InputChipViewLayout *layout = [self calculateLayoutWithSize:fittingSize];
+  MDCBaseInputChipViewLayout *layout = [self calculateLayoutWithSize:fittingSize];
   return CGSizeMake(width, layout.calculatedHeight);
 }
 
@@ -469,8 +469,8 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 #pragma mark Layout
 
-- (InputChipViewLayout *)calculateLayoutWithSize:(CGSize)size {
-  return [[InputChipViewLayout alloc] initWithSize:size
+- (MDCBaseInputChipViewLayout *)calculateLayoutWithSize:(CGSize)size {
+  return [[MDCBaseInputChipViewLayout alloc] initWithSize:size
                                    containerStyler:self.containerStyler
                                               text:self.inputChipViewTextField.text
                                        placeholder:self.inputChipViewTextField.placeholder
@@ -858,7 +858,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 #pragma mark InputChipViewTextFieldDelegate
 
-- (void)inputChipViewTextFieldDidDeleteBackward:(InputChipViewTextField *)textField
+- (void)inputChipViewTextFieldDidDeleteBackward:(MDCBaseInputChipViewTextField *)textField
                                         oldText:(NSString *)oldText
                                         newText:(NSString *)newText {
   BOOL isEmpty = newText.length == 0;

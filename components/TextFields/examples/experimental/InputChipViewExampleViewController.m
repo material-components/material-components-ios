@@ -18,14 +18,14 @@
 
 #import "MaterialButtons+Theming.h"
 #import "MaterialColorScheme.h"
-#import "supplemental/InputChipView.h"
+#import "supplemental/MDCBaseInputChipView.h"
 
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar+TypographyThemer.h"
 #import "MaterialButtons+ButtonThemer.h"
 #import "MaterialChips.h"
 
-#import "supplemental/InputChipView+MaterialTheming.h"
+#import "supplemental/MDCBaseInputChipView+MaterialTheming.h"
 
 static const CGFloat kSideMargin = (CGFloat)20.0;
 
@@ -126,7 +126,7 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
   for (UIView *view in self.scrollViewSubviews) {
     CGSize viewSize = view.frame.size;
     CGFloat textFieldWidth = CGRectGetWidth(self.scrollView.frame) - (2 * kSideMargin);
-    if ([view isKindOfClass:[InputChipView class]]) {
+    if ([view isKindOfClass:[MDCBaseInputChipView class]]) {
       viewSize = CGSizeMake(textFieldWidth, CGRectGetHeight(view.frame));
     }
     CGRect viewFrame = CGRectMake(viewMinX, viewMinY, viewSize.width, viewSize.height);
@@ -182,8 +182,8 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
   return label;
 }
 
-- (InputChipView *)createOutlinedNonWrappingInputChipView {
-  InputChipView *inputChipView = [[InputChipView alloc] init];
+- (MDCBaseInputChipView *)createOutlinedNonWrappingInputChipView {
+  MDCBaseInputChipView *inputChipView = [[MDCBaseInputChipView alloc] init];
   inputChipView.textField.placeholder = @"Outlined non-wrapping";
   [inputChipView applyOutlinedThemeWithScheme:self.containerScheme];
   inputChipView.chipsWrap = NO;
@@ -194,8 +194,8 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
   return inputChipView;
 }
 
-- (InputChipView *)createOutlinedWrappingInputChipView {
-  InputChipView *inputChipView = [self createOutlinedNonWrappingInputChipView];
+- (MDCBaseInputChipView *)createOutlinedWrappingInputChipView {
+  MDCBaseInputChipView *inputChipView = [self createOutlinedNonWrappingInputChipView];
   inputChipView.textField.placeholder = @"Outlined wrapping";
   inputChipView.chipsWrap = YES;
   inputChipView.preferredContainerHeight = 150;
@@ -203,8 +203,8 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
   return inputChipView;
 }
 
-- (InputChipView *)createFilledNonWrappingInputChipView {
-  InputChipView *inputChipView = [[InputChipView alloc] init];
+- (MDCBaseInputChipView *)createFilledNonWrappingInputChipView {
+  MDCBaseInputChipView *inputChipView = [[MDCBaseInputChipView alloc] init];
   inputChipView.textField.placeholder = @"Filled non-wrapping";
   [inputChipView applyFilledThemeWithScheme:self.containerScheme];
   inputChipView.chipsWrap = NO;
@@ -215,8 +215,8 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
   return inputChipView;
 }
 
-- (InputChipView *)createFilledWrappingInputChipView {
-  InputChipView *inputChipView = [self createFilledNonWrappingInputChipView];
+- (MDCBaseInputChipView *)createFilledWrappingInputChipView {
+  MDCBaseInputChipView *inputChipView = [self createFilledNonWrappingInputChipView];
   inputChipView.textField.placeholder = @"Filled wrapping";
   inputChipView.chipsWrap = YES;
   inputChipView.preferredContainerHeight = 60;
@@ -251,7 +251,7 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
 }
 
 - (void)updateInputChipViewStates {
-  [self.allInputChipViews enumerateObjectsUsingBlock:^(InputChipView *inputChipView, NSUInteger idx,
+  [self.allInputChipViews enumerateObjectsUsingBlock:^(MDCBaseInputChipView *inputChipView, NSUInteger idx,
                                                        BOOL *stop) {
     BOOL isEven = idx % 2 == 0;
     if (self.isErrored) {
@@ -298,8 +298,8 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
   return chipView;
 }
 
-- (NSArray<InputChipView *> *)allInputChipViews {
-  return [self allViewsOfClass:[InputChipView class]];
+- (NSArray<MDCBaseInputChipView *> *)allInputChipViews {
+  return [self allViewsOfClass:[MDCBaseInputChipView class]];
 }
 
 - (NSArray<MDCButton *> *)allButtons {
@@ -331,7 +331,7 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
 
 - (void)resignFirstResponderButtonTapped:(UIButton *)button {
   [self.allInputChipViews
-      enumerateObjectsUsingBlock:^(InputChipView *inputChipView, NSUInteger idx, BOOL *stop) {
+      enumerateObjectsUsingBlock:^(MDCBaseInputChipView *inputChipView, NSUInteger idx, BOOL *stop) {
         [inputChipView resignFirstResponder];
       }];
 }
@@ -350,13 +350,13 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
     return NO;
   }
   MDCChipView *chipView = [self createChipWithText:textField.text font:textField.font];
-  InputChipView *inputChipView = [self inputChipViewWithTextField:textField];
+  MDCBaseInputChipView *inputChipView = [self inputChipViewWithTextField:textField];
   [inputChipView addChip:chipView];
   return NO;
 }
 
-- (InputChipView *)inputChipViewWithTextField:(UITextField *)textField {
-  for (InputChipView *inputChipView in self.allInputChipViews) {
+- (MDCBaseInputChipView *)inputChipViewWithTextField:(UITextField *)textField {
+  for (MDCBaseInputChipView *inputChipView in self.allInputChipViews) {
     if (inputChipView.textField == textField) {
       return inputChipView;
     }
