@@ -51,7 +51,6 @@
 
 @implementation MDCBaseTextField
 @synthesize preferredContainerHeight = _preferredContainerHeight;
-@synthesize preferredAssistiveLabelAreaHeight = _preferredAssistiveLabelAreaHeight;
 @synthesize underlineLabelDrawPriority = _underlineLabelDrawPriority;
 @synthesize customAssistiveLabelDrawPriority = _customAssistiveLabelDrawPriority;
 @synthesize containerStyler = _containerStyler;
@@ -291,8 +290,7 @@
                     rightAssistiveLabel:self.rightAssistiveLabel
              underlineLabelDrawPriority:self.underlineLabelDrawPriority
        customAssistiveLabelDrawPriority:normalizedCustomAssistiveLabelDrawPriority
-         preferredContainerHeight:self.preferredContainerHeight
-      preferredAssistiveLabelAreaHeight:self.preferredAssistiveLabelAreaHeight
+               preferredContainerHeight:self.preferredContainerHeight
                                   isRTL:self.isRTL
                               isEditing:self.isEditing];
 }

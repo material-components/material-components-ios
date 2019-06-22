@@ -57,7 +57,6 @@ static const CGFloat kGradientBlurLength = 6;
                (MDCContainedInputViewAssistiveLabelDrawPriority)underlineLabelDrawPriority
      customAssistiveLabelDrawPriority:(CGFloat)normalizedCustomAssistiveLabelDrawPriority
        preferredContainerHeight:(CGFloat)preferredContainerHeight
-    preferredAssistiveLabelAreaHeight:(CGFloat)preferredAssistiveLabelAreaHeight
                                 isRTL:(BOOL)isRTL
                             isEditing:(BOOL)isEditing {
   self = [super init];
@@ -81,7 +80,6 @@ static const CGFloat kGradientBlurLength = 6;
                underlineLabelDrawPriority:underlineLabelDrawPriority
          customAssistiveLabelDrawPriority:normalizedCustomAssistiveLabelDrawPriority
            preferredContainerHeight:preferredContainerHeight
-        preferredAssistiveLabelAreaHeight:preferredAssistiveLabelAreaHeight
                                     isRTL:isRTL
                                 isEditing:isEditing];
   }
@@ -107,8 +105,7 @@ static const CGFloat kGradientBlurLength = 6;
            underlineLabelDrawPriority:
                (MDCContainedInputViewAssistiveLabelDrawPriority)underlineLabelDrawPriority
      customAssistiveLabelDrawPriority:(CGFloat)normalizedCustomAssistiveLabelDrawPriority
-       preferredContainerHeight:(CGFloat)preferredContainerHeight
-    preferredAssistiveLabelAreaHeight:(CGFloat)preferredAssistiveLabelAreaHeight
+             preferredContainerHeight:(CGFloat)preferredContainerHeight
                                 isRTL:(BOOL)isRTL
                             isEditing:(BOOL)isEditing {
   CGFloat globalChipRowMinX = isRTL ? kTrailingMargin : kLeadingMargin;
@@ -228,7 +225,6 @@ static const CGFloat kGradientBlurLength = 6;
       CGRectMake(0, 0, contentSize.width, contentSize.height);
   self.floatingLabelFrameFloating = floatingLabelFrameFloating;
   self.floatingLabelFrameNormal = floatingLabelFrameNormal;
-  self.initialChipRowMinY = initialChipRowMinY;
   self.globalChipRowMinX = globalChipRowMinX;
   self.globalChipRowMaxX = globalChipRowMaxX;
   CGRect scrollViewRect = CGRectMake(0, 0, size.width, contentAreaMaxY);
@@ -243,7 +239,6 @@ static const CGFloat kGradientBlurLength = 6;
                                                                                globalChipRowMaxX:globalChipRowMaxX
                                                                                        viewWidth:size.width
                                                                                       viewHeight:contentAreaMaxY
-                                                                                   chipRowHeight:chipRowHeight
                                                                                floatingLabelMaxY:floatingLabelMaxY
                                                                                    bottomPadding:bottomPadding
                                                                              positioningDelegate:containerStyler.positioningDelegate];
@@ -718,7 +713,6 @@ static const CGFloat kGradientBlurLength = 6;
                                                                globalChipRowMaxX:(CGFloat)globalChipRowMaxX
                                                                        viewWidth:(CGFloat)viewWidth
                                                                       viewHeight:(CGFloat)viewHeight
-                                                                   chipRowHeight:(CGFloat)chipRowHeight
                                                                floatingLabelMaxY:(CGFloat)floatingLabelMaxY
                                                                    bottomPadding:(CGFloat)bottomPadding
                                                              positioningDelegate:(id<MDCContainedInputViewStylerPositioningDelegate>)positioningDelegate

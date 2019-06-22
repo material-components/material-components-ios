@@ -186,14 +186,6 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
  */
 @property(nonatomic, assign) CGFloat preferredContainerHeight;
 
-/**
- This API allows the user to override the default underline label area height. The underline label
- area is the part of the view where the underline labels are. It is located below the main content
- area. If this property is set to a value that's lower than the default underline label area height
- the value will be ignored in the calculation of the view's @c intrinsicContentSize.
- */
-@property(nonatomic, assign) CGFloat preferredAssistiveLabelAreaHeight;
-
 @end
 
 /**

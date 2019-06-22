@@ -12,61 +12,60 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "MDCContainedInputAssistiveLabelView.h"
-#import "MDCContainedInputClearButton.h"
 #import "MDCContainedInputView.h"
-
-@protocol MDCContainedInputViewStyler;
+#import "MaterialChips.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MDCBaseTextFieldLayout : NSObject
+// typedef NS_ENUM(NSUInteger, InputChipViewOrien) {
+//};
 
-@property(nonatomic, assign) BOOL leftViewHidden;
-@property(nonatomic, assign) BOOL rightViewHidden;
-@property(nonatomic, assign) BOOL clearButtonHidden;
+@interface MDCBaseTextAreaLayout : NSObject
+@property(nonatomic, assign) CGFloat globalTextMinX;
+@property(nonatomic, assign) CGFloat globalTextMaxX;
 
 @property(nonatomic, assign) CGRect floatingLabelFrameFloating;
 @property(nonatomic, assign) CGRect floatingLabelFrameNormal;
-@property(nonatomic, assign) CGRect placeholderLabelFrameNormal;
-@property(nonatomic, assign) CGRect textRect;
-@property(nonatomic, assign) CGRect textRectFloatingLabel;
-@property(nonatomic, assign) CGRect clearButtonFrame;
-@property(nonatomic, assign) CGRect clearButtonFrameFloatingLabel;
-@property(nonatomic, assign) CGRect leftViewFrame;
-@property(nonatomic, assign) CGRect rightViewFrame;
-@property(nonatomic, assign) CGRect underlineLabelViewFrame;
-@property(nonatomic, strong) MDCContainedInputAssistiveLabelViewLayout *underlineLabelViewLayout;
+
+@property(nonatomic, assign) CGRect textViewFrame;
+
+@property(nonatomic, assign) CGRect underlineLabelFrame;
+@property(nonatomic, assign) CGRect leftAssistiveLabelFrame;
+@property(nonatomic, assign) CGRect rightAssistiveLabelFrame;
+
+@property(nonatomic, assign) CGRect maskedScrollViewContainerViewFrame;
+@property(nonatomic, assign) CGRect scrollViewFrame;
+@property(nonatomic, assign) CGRect scrollViewContentViewTouchForwardingViewFrame;
+@property(nonatomic, assign) CGSize scrollViewContentSize;
+@property(nonatomic, assign) CGPoint scrollViewContentOffset;
 
 @property(nonatomic, readonly) CGFloat calculatedHeight;
-@property(nonatomic, assign) CGFloat topRowBottomRowDividerY;
+//@property(nonatomic, readonly) CGFloat minimumHeight;
+@property(nonatomic, readonly) CGFloat contentAreaMaxY;
 
-- (instancetype)initWithTextFieldSize:(CGSize)textFieldSize
+@property(nonatomic, strong) NSArray<NSNumber *> *verticalGradientLocations;
+@property(nonatomic, strong) NSArray<NSNumber *> *horizontalGradientLocations;
+
+
+
+- (instancetype)initWithSize:(CGSize)size
                       containerStyler:(id<MDCContainedInputViewStyler>)containerStyler
                                  text:(NSString *)text
                           placeholder:(NSString *)placeholder
                                  font:(UIFont *)font
                          floatingFont:(UIFont *)floatingFont
-                        floatingLabel:(UILabel *)floatingLabel
-                canFloatingLabelFloat:(BOOL)canFloatingLabelFloat
-                             leftView:(UIView *)leftView
-                         leftViewMode:(UITextFieldViewMode)leftViewMode
-                            rightView:(UIView *)rightView
-                        rightViewMode:(UITextFieldViewMode)rightViewMode
-                          clearButton:(MDCContainedInputClearButton *)clearButton
-                      clearButtonMode:(UITextFieldViewMode)clearButtonMode
+                   floatingLabelState:(MDCContainedInputViewFloatingLabelState)floatingLabelState
+                          clearButton:(UIButton *)clearButton
                    leftAssistiveLabel:(UILabel *)leftAssistiveLabel
                   rightAssistiveLabel:(UILabel *)rightAssistiveLabel
            underlineLabelDrawPriority:
                (MDCContainedInputViewAssistiveLabelDrawPriority)underlineLabelDrawPriority
-     customAssistiveLabelDrawPriority:(CGFloat)customAssistiveLabelDrawPriority
+     customAssistiveLabelDrawPriority:(CGFloat)normalizedCustomAssistiveLabelDrawPriority
              preferredContainerHeight:(CGFloat)preferredContainerHeight
                                 isRTL:(BOOL)isRTL
                             isEditing:(BOOL)isEditing;
-
 @end
 
 NS_ASSUME_NONNULL_END
