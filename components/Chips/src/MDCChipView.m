@@ -133,6 +133,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
 - (void)commonMDCChipViewInit {
   _minimumSize = kMDCChipMinimumSizeDefault;
+  self.rippleAllowsSelection = YES;
   self.isAccessibilityElement = YES;
   _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
 }
@@ -274,6 +275,14 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
     [self.rippleView removeFromSuperview];
     [self insertSubview:self.inkView belowSubview:self.imageView];
   }
+}
+
+- (BOOL)rippleAllowsSelection {
+  return self.rippleView.allowsSelection;
+}
+
+- (void)setRippleAllowsSelection:(BOOL)allowsSelection {
+  self.rippleView.allowsSelection = allowsSelection;
 }
 
 #pragma mark - Dynamic Type Support
@@ -432,7 +441,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
 - (void)updateInkColor {
   UIColor *inkColor = [self inkColorForState:self.state];
-  self.inkView.inkColor = inkColor ? inkColor : self.inkView.defaultInkColor;
+  self.inkView.inkColor = inkColor ?: self.inkView.defaultInkColor;
 }
 
 - (void)updateRippleColor {
