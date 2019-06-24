@@ -191,6 +191,7 @@ mdc_objc_library(
         [
             "tests/unit/*.m",
             "tests/unit/*.h",
+            "tests/Theming/*.m",
         ],
         exclude = ["tests/unit/MDCBottomNavigationBarControllerTests.m"],
     ),
