@@ -1,3 +1,57 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+## Changes
+
+### AppBar
+
+* [Use new unit test Bazel rules (#7642)](https://github.com/material-components/material-components-ios/commit/82725a6c01f7894e95c009f293ba72dcc9765ded) (Robert Moore)
+
+### Banner
+
+* [Fix horizontal constraint between text label and button. (#7648)](https://github.com/material-components/material-components-ios/commit/e90426bb0a7091b43b890ab34fbd25d1d37d46bb) (Wenyu Zhang)
+* [Remove a redundant header file of a typical example. (#7610)](https://github.com/material-components/material-components-ios/commit/5f2399562030e1fadeb328866b36e2310873fd96) (Wenyu Zhang)
+* [apply constraints to trailingButton even it is hidden. (#7652)](https://github.com/material-components/material-components-ios/commit/973d4e1ff2bda8be44f5929e022bf6eff60b5e97) (Wenyu Zhang)
+* [fix image constraint when it is hidden and on single row mode. (#7649)](https://github.com/material-components/material-components-ios/commit/3f436f9944d1b6bbe83c6ebf717e387ce4d4841b) (Wenyu Zhang)
+
+### Chips
+
+* [New rippleAllowsSelection API in MDCChipView (#7613)](https://github.com/material-components/material-components-ios/commit/af731d1ad41e83065a4826656a193b0014826aca) (Galia Kaufman)
+
+### NavigationDrawer
+
+* [Update cacheLayoutCalculationsWithAddedContentHeight recursion check to factor out floating point rounding issues (#7654)](https://github.com/material-components/material-components-ios/commit/b243d5e8426f970da3c83f2fe2979be426b01256) (Bryan Oltman)
+
+### Tabs
+
+* [Update README for MDCTabBarView. (#7673)](https://github.com/material-components/material-components-ios/commit/2dea42f1d6d31a03c8b208d1b530d43ef841b371) (Robert Moore)
+
+### schemes/Typography
+
+* [Annotate mdc_adjustsFontForContentSizeCategory as to-be-deprecated. (#7619)](https://github.com/material-components/material-components-ios/commit/ee0943cbbdab48fd9637baf60957113e5e9e205e) (featherless)
+
+## Multi-component changes
+
+* [Add missing example. (#7671)](https://github.com/material-components/material-components-ios/commit/d0f3843388506d3aa5257faa267c58ea8a86d9b1) (Robert Moore)
+* [Move "Tabs2" into an extension. (#7663)](https://github.com/material-components/material-components-ios/commit/83797d1cab8402e38f5e612271c4ae5b7b4a4c91) (Robert Moore)
+* [Remove all example references to MDCFloatingActionButtonThemer. (#7505)](https://github.com/material-components/material-components-ios/commit/9c8e34138af0d02f568bff4ff8f0c0341b5cd860) (featherless)
+* [{Bazel} Create dedicated unit test rules to reduce boilerplate (#7641)](https://github.com/material-components/material-components-ios/commit/2b125fcd935bde8f707ce6e0f96503555d8da6ad) (Robert Moore)
+
+---
+
 # 85.0.1
 
 This patch release fixes a bug that Banner doesn't layout correctly in landscape mode on some devices and a floating point rounding issue in NavigationDrawer.
