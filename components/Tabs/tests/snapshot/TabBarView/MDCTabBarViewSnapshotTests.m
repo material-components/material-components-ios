@@ -16,6 +16,7 @@
 
 #import "MDCTabBarView.h"
 
+<<<<<<< HEAD
 /** The typical size of an image in a Tab bar. */
 static const CGSize kTypicalImageSize = (CGSize){24, 24};
 
