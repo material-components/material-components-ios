@@ -67,6 +67,26 @@ static const UIEdgeInsets kEdgeInsets = {.top = 12, .right = 16, .bottom = 12, .
   return self;
 }
 
+- (void)commonMDCTabBarViewItemViewInit {
+  if (!_contentView) {
+    _contentView = [[UIView alloc] initWithFrame:CGRectZero];
+    [self addSubview:_contentView];
+  }
+  if (!_iconImageView) {
+    _iconImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+    _iconImageView.contentMode = UIViewContentModeScaleAspectFit;
+    _iconImageView.isAccessibilityElement = NO;
+    [_contentView addSubview:_iconImageView];
+  }
+  if (!_titleLabel) {
+    _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    _titleLabel.textAlignment = NSTextAlignmentCenter;
+    _titleLabel.numberOfLines = 2;
+    _titleLabel.isAccessibilityElement = NO;
+    [_contentView addSubview:_titleLabel];
+  }
+}
+
 #pragma mark - UIView
 
 - (void)layoutSubviews {
@@ -86,30 +106,6 @@ static const UIEdgeInsets kEdgeInsets = {.top = 12, .right = 16, .bottom = 12, .
   self.iconImageView.frame =
       CGRectMake(centerX - iconSize.width / 2, iconCenterY - iconSize.height / 2, iconSize.width,
                  iconSize.height);
-}
-
-#pragma mark - UIAccessibility
-
-#pragma mark - Private
-
-- (void)commonMDCTabBarViewItemViewInit {
-  if (!_contentView) {
-    _contentView = [[UIView alloc] initWithFrame:CGRectZero];
-    [self addSubview:_contentView];
-  }
-  if (!_iconImageView) {
-    _iconImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
-    _iconImageView.contentMode = UIViewContentModeScaleAspectFit;
-    _iconImageView.isAccessibilityElement = NO;
-    [_contentView addSubview:_iconImageView];
-  }
-  if (!_titleLabel) {
-    _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    _titleLabel.textAlignment = NSTextAlignmentCenter;
-    _titleLabel.numberOfLines = 2;
-    _titleLabel.isAccessibilityElement = NO;
-    [_contentView addSubview:_titleLabel];
-  }
 }
 
 - (CGSize)intrinsicContentSize {
@@ -136,6 +132,8 @@ static const UIEdgeInsets kEdgeInsets = {.top = 12, .right = 16, .bottom = 12, .
   height = MAX(minHeight, height);
   return CGSizeMake(width, height);
 }
+
+#pragma mark - Public API
 
 - (void)setTitle:(NSString *)title {
   _title = [title copy];
