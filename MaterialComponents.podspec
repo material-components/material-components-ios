@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponents"
-  mdc.version      = "84.6.0"
+  mdc.version      = "85.0.1"
   mdc.authors      = "The Material Components authors."
   mdc.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   mdc.homepage     = "https://github.com/material-components/material-components-ios"
@@ -64,6 +64,7 @@ Pod::Spec.new do |mdc|
 
     component.dependency "MaterialComponents/BottomSheet"
     component.dependency "MaterialComponents/Ink"
+    component.dependency "MaterialComponents/Ripple"
     component.dependency "MaterialComponents/Typography"
 
     component.test_spec 'UnitTests' do |unit_tests|
@@ -287,6 +288,7 @@ Pod::Spec.new do |mdc|
 
     component.dependency "MDFInternationalization"
     component.dependency "MaterialComponents/Ink"
+    component.dependency "MaterialComponents/Ripple"
     component.dependency "MaterialComponents/Palettes"
     component.dependency "MaterialComponents/ShadowElevations"
     component.dependency "MaterialComponents/ShadowLayer"
@@ -1177,6 +1179,7 @@ Pod::Spec.new do |mdc|
     ]
 
     component.dependency "MaterialComponents/Ink"
+    component.dependency "MaterialComponents/Ripple"
     component.dependency "MaterialComponents/ShadowElevations"
     component.dependency "MaterialComponents/ShadowLayer"
     component.dependency "MaterialComponents/Typography"
@@ -1697,6 +1700,7 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/AnimationTiming"
     component.dependency "MaterialComponents/Ink"
     component.dependency "MaterialComponents/Palettes"
+    component.dependency "MaterialComponents/Ripple"
     component.dependency "MaterialComponents/ShadowElevations"
     component.dependency "MaterialComponents/ShadowLayer"
     component.dependency "MaterialComponents/Typography"
@@ -2046,6 +2050,7 @@ Pod::Spec.new do |mdc|
       ]
 
       component.dependency "MaterialComponents/Ink"
+      component.dependency "MaterialComponents/Ripple"
       component.dependency "MaterialComponents/ShadowElevations"
       component.dependency "MaterialComponents/ShadowLayer"
       component.dependency "MaterialComponents/Typography"

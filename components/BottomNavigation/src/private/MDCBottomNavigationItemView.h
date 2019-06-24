@@ -16,6 +16,7 @@
 
 #import "MDCBottomNavigationBar.h"
 #import "MaterialInk.h"
+#import "MaterialRipple.h"
 
 @interface MDCBottomNavigationItemView : UIView
 
@@ -23,6 +24,7 @@
 @property(nonatomic, assign) BOOL selected;
 @property(nonatomic, assign) MDCBottomNavigationBarTitleVisibility titleVisibility;
 @property(nonatomic, strong) MDCInkView *inkView;
+@property(nonatomic, strong) MDCRippleTouchController *rippleTouchController;
 @property(nonatomic, assign) UIOffset titlePositionAdjustment;
 
 @property(nonatomic, copy) NSString *badgeValue;

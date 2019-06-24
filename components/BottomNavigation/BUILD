@@ -61,6 +61,7 @@ mdc_objc_library(
     deps = [
         "//components/Ink",
         "//components/Palettes",
+        "//components/Ripple",
         "//components/ShadowElevations",
         "//components/ShadowLayer",
         "//components/Typography",

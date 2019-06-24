@@ -56,6 +56,7 @@ static const CGFloat kBottomDividerOpacity = (CGFloat)0.12;
   if ([colorScheme respondsToSelector:@selector(primaryLightColor)]) {
     tabBar.unselectedItemTintColor = colorScheme.primaryLightColor;
     tabBar.inkColor = colorScheme.primaryLightColor;
+    tabBar.rippleColor = colorScheme.primaryLightColor;
   }
   if ([colorScheme respondsToSelector:@selector(primaryDarkColor)]) {
     tabBar.selectedItemTintColor = colorScheme.primaryDarkColor;

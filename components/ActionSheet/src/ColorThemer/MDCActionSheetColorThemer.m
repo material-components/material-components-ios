@@ -38,7 +38,9 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
       [colorScheme.onSurfaceColor colorWithAlphaComponent:kMediumAlpha];
   actionSheetController.actionTextColor =
       [colorScheme.onSurfaceColor colorWithAlphaComponent:kHighAlpha];
-  actionSheetController.inkColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kInkAlpha];
+  UIColor *rippleColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kInkAlpha];
+  actionSheetController.inkColor = rippleColor;
+  actionSheetController.rippleColor = rippleColor;
 }
 
 @end

@@ -26,11 +26,15 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
   cell.leadingImageView.tintColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kHighAlpha];
   cell.trailingImageView.tintColor =
       [colorScheme.onSurfaceColor colorWithAlphaComponent:kHighAlpha];
-  cell.inkColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kInkAlpha];
+  UIColor *rippleColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kInkAlpha];
+  cell.inkColor = rippleColor;
+  cell.rippleColor = rippleColor;
 }
 
 + (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme toBaseCell:(MDCBaseCell *)cell {
-  cell.inkColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kInkAlpha];
+  UIColor *rippleColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kInkAlpha];
+  cell.inkColor = rippleColor;
+  cell.rippleColor = rippleColor;
 }
 
 @end
