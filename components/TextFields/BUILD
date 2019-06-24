@@ -57,7 +57,7 @@ mdc_public_objc_library(
 )
 
 mdc_extension_objc_library(
-    name = "Beta",
+    name = "ContainedInputView",
 )
 
 mdc_extension_objc_library(
@@ -154,7 +154,7 @@ mdc_objc_library(
     testonly = 1,
     srcs = glob([
         "tests/unit/*.m",
-        "tests/unit/Beta/*.m",
+        "tests/unit/ContainedInputView/*.m",
     ]),
     hdrs = glob(["tests/unit/*.h"]),
     sdk_frameworks = [
@@ -163,7 +163,7 @@ mdc_objc_library(
     ],
     visibility = ["//visibility:private"],
     deps = [
-        ":Beta",
+        ":ContainedInputView",
         ":ColorThemer",
         ":FontThemer",
         ":TextFields",
