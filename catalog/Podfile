@@ -17,6 +17,7 @@ target "MDCCatalog" do
     'AppBar+Theming/UnitTests',
     'BottomAppBar/UnitTests',
     'BottomNavigation/UnitTests',
+    'BottomNavigation+Theming/UnitTests',
     'BottomSheet/UnitTests',
     'ButtonBar/UnitTests',
     'Buttons/UnitTests',
