@@ -80,7 +80,7 @@ static const CGFloat kMinHeight = 48;
   if (self.selectedItem == selectedItem) {
     return;
   }
-  
+
   NSUInteger itemIndex = [self.items indexOfObject:selectedItem];
   if (selectedItem && (itemIndex == NSNotFound)) {
     NSString *itemTitle = selectedItem.title;
@@ -95,7 +95,8 @@ static const CGFloat kMinHeight = 48;
 
 #pragma mark - UIView
 
-// TODO(#7645): Temporary layout until https://github.com/material-components/material-components-ios/issues/7645 lands
+// TODO(#7645): Temporary layout until
+// https://github.com/material-components/material-components-ios/issues/7645 lands
 - (void)layoutSubviews {
   [super layoutSubviews];
 

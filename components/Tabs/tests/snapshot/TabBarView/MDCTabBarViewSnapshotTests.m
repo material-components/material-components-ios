@@ -54,9 +54,15 @@ static const CGFloat kExpectedHeightTitlesAndIcons = 72;
   self.tabBarView.backgroundColor = UIColor.whiteColor;
   self.tabBarView.bounds = CGRectMake(0, 0, 360, kExpectedHeightTitlesOrIconsOnly);
 
-  self.typicalIcon1 = [[UIImage mdc_testImageOfSize:kTypicalImageSize withStyle:MDCSnapshotTestImageStyleFramedX] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-  self.typicalIcon2 = [[UIImage mdc_testImageOfSize:kTypicalImageSize withStyle:MDCSnapshotTestImageStyleDiagonalLines] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-  self.typicalIcon3 = [[UIImage mdc_testImageOfSize:kTypicalImageSize withStyle:MDCSnapshotTestImageStyleEllipses] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  self.typicalIcon1 = [[UIImage mdc_testImageOfSize:kTypicalImageSize
+                                          withStyle:MDCSnapshotTestImageStyleFramedX]
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  self.typicalIcon2 = [[UIImage mdc_testImageOfSize:kTypicalImageSize
+                                          withStyle:MDCSnapshotTestImageStyleDiagonalLines]
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  self.typicalIcon3 = [[UIImage mdc_testImageOfSize:kTypicalImageSize
+                                          withStyle:MDCSnapshotTestImageStyleEllipses]
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 }
 
 - (void)tearDown {
