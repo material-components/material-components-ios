@@ -14,7 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialTextFields+Beta.h"
+#import "MaterialTextFields+ContainedInputView.h"
 
 @interface MDCBaseTextFieldTests : XCTestCase
 
