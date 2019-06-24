@@ -15,12 +15,15 @@
 #import "MDCTabBarView.h"
 #import "private/MDCTabBarViewItemView.h"
 
+// KVO contexts
+static char *const kKVOContextMDCTabBarView = "kKVOContextMDCTabBarView";
+
 /** Minimum (typical) height of a Material Tab bar. */
 static const CGFloat kMinHeight = 48;
 
-static NSString *const kImageString = @"image";
-static NSString *const kSelectedImageString = @"selectedImage";
-static NSString *const kTitleString = @"title";
+static NSString *const kImageKeyPath = @"image";
+static NSString *const kSelectedImageKeyPath = @"selectedImage";
+static NSString *const kTitleKeyPath = @"title";
 
 @interface MDCTabBarView ()
 
@@ -40,6 +43,10 @@ static NSString *const kTitleString = @"title";
     _itemViews = @[];
   }
   return self;
+}
+
+- (void)dealloc {
+  [self removeObserversFromTabBarItems];
 }
 
 #pragma mark - Properties
@@ -111,31 +118,25 @@ static NSString *const kTitleString = @"title";
 - (void)addObserversToTabBarItems {
   for (UITabBarItem *item in self.items) {
     [item addObserver:self
-           forKeyPath:kImageString
+           forKeyPath:kImageKeyPath
               options:NSKeyValueObservingOptionNew
-              context:nil];
+              context:kKVOContextMDCTabBarView];
     [item addObserver:self
-           forKeyPath:kSelectedImageString
+           forKeyPath:kSelectedImageKeyPath
               options:NSKeyValueObservingOptionNew
-              context:nil];
+              context:kKVOContextMDCTabBarView];
     [item addObserver:self
-           forKeyPath:kTitleString
+           forKeyPath:kTitleKeyPath
               options:NSKeyValueObservingOptionNew
-              context:nil];
+              context:kKVOContextMDCTabBarView];
   }
 }
 
 - (void)removeObserversFromTabBarItems {
   for (UITabBarItem *item in self.items) {
-    @try {
-      [item removeObserver:self forKeyPath:kImageString];
-      [item removeObserver:self forKeyPath:kSelectedImageString];
-      [item removeObserver:self forKeyPath:kTitleString];
-    } @catch (NSException *exception) {
-      if (exception) {
-        // No need to do anything if there are no observers.
-      }
-    }
+    [item removeObserver:self forKeyPath:kImageKeyPath context:kKVOContextMDCTabBarView];
+    [item removeObserver:self forKeyPath:kSelectedImageKeyPath context:kKVOContextMDCTabBarView];
+    [item removeObserver:self forKeyPath:kTitleKeyPath context:kKVOContextMDCTabBarView];
   }
 }
 
@@ -143,7 +144,7 @@ static NSString *const kTitleString = @"title";
                       ofObject:(id)object
                         change:(NSDictionary<NSKeyValueChangeKey, id> *)change
                        context:(void *)context {
-  if (!context) {
+  if (context == kKVOContextMDCTabBarView) {
     NSInteger selectedItemNum = 0;
     for (NSUInteger i = 0; i < self.items.count; i++) {
       UITabBarItem *item = self.items[i];
@@ -159,13 +160,15 @@ static NSString *const kTitleString = @"title";
     }
     MDCTabBarViewItemView *tabBarItemView = (MDCTabBarViewItemView *)itemView;
 
-    if ([keyPath isEqualToString:kImageString]) {
+    if ([keyPath isEqualToString:kImageKeyPath]) {
       tabBarItemView.image = change[NSKeyValueChangeNewKey];
-    } else if ([keyPath isEqualToString:kSelectedImageString] && self.selectedItem == object) {
+    } else if ([keyPath isEqualToString:kSelectedImageKeyPath] && self.selectedItem == object) {
       tabBarItemView.image = change[NSKeyValueChangeNewKey];
-    } else if ([keyPath isEqualToString:kTitleString]) {
+    } else if ([keyPath isEqualToString:kTitleKeyPath]) {
       tabBarItemView.title = change[NSKeyValueChangeNewKey];
     }
+  } else {
+    [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
   }
 }
 
