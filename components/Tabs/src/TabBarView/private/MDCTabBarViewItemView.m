@@ -20,8 +20,11 @@ static const CGFloat kMinWidth = 90;
 /** The maximum width of any item view. */
 static const CGFloat kMaxWidth = 360;
 
-/** The minimum height of any item view. */
-static const CGFloat kMinHeight = 48;
+/** The minimum height of any item view with only a title or image (not both). */
+static const CGFloat kMinHeightTitleOrImageOnly = 48;
+
+/** The minimum height of any item view with both a title and image. */
+static const CGFloat kMinHeightTitleAndImage = 72;
 
 /// Outer edge padding from spec: https://material.io/go/design-tabs#spec.
 static const UIEdgeInsets kEdgeInsets = {.top = 12, .right = 16, .bottom = 12, .left = 16};
@@ -114,20 +117,23 @@ static const UIEdgeInsets kEdgeInsets = {.top = 12, .right = 16, .bottom = 12, .
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
+  const CGFloat minHeight =
+      (self.title && self.image) ? kMinHeightTitleAndImage : kMinHeightTitleOrImageOnly;
   CGFloat horizontalPadding = kEdgeInsets.left + kEdgeInsets.right;
   CGFloat verticalPadding = kEdgeInsets.top + kEdgeInsets.bottom;
   // The size of the content view should be smaller that the size passed in.
   const CGFloat maxWidth = MIN(kMaxWidth, MAX(kMinWidth, size.width));
-  const CGFloat maxHeight = MAX(kMinHeight, size.height);
-  const CGSize maxSize = CGSizeMake(maxWidth - horizontalPadding, maxHeight - verticalPadding);
+  const CGFloat maxHeight = MAX(minHeight, size.height);
+  CGSize maxSize = CGSizeMake(maxWidth - horizontalPadding, maxHeight - verticalPadding);
 
   // Calculate the sizes of icon and label. Use them to calculate the total item view size.
   CGSize iconSize = [self.iconImageView sizeThatFits:maxSize];
+  maxSize = CGSizeMake(maxSize.width, maxSize.height - iconSize.height);
   CGSize labelSize = [self.titleLabel sizeThatFits:maxSize];
   CGFloat width = (CGFloat)ceil(MAX(iconSize.width, labelSize.width) + horizontalPadding);
   width = MIN(kMaxWidth, MAX(kMinWidth, width));
   CGFloat height = (CGFloat)ceil(iconSize.height + labelSize.height + verticalPadding);
-  height = MAX(kMinHeight, height);
+  height = MAX(minHeight, height);
   return CGSizeMake(width, height);
 }
 
