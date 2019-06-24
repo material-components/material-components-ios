@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import "MDCTabBarView.h"
+#import "private/MDCTabBarViewItemView.h"
 
 #import "private/MDCTabBarViewItemView.h"
 
@@ -23,6 +24,10 @@ static const CGFloat kMinHeight = 48;
 
 /** The stack view that contains all tab items. */
 @property(nonatomic) UIStackView *stackView;
+
+/** The views representing the items of this tab bar. */
+@property(nonatomic, strong) NSArray<UIView *> *itemViews;
+
 
 @end
 
@@ -35,6 +40,7 @@ static const CGFloat kMinHeight = 48;
   self.translatesAutoresizingMaskIntoConstraints = NO;
   if (self) {
     _items = @[];
+    _itemViews = @[];
     [self setUpSubviews];
   }
   return self;
@@ -49,6 +55,10 @@ static const CGFloat kMinHeight = 48;
     return;
   }
 
+  for (UIView *itemView in self.itemViews) {
+    [itemView removeFromSuperview];
+  }
+
   _items = [items copy];
   [self setUpItemViews];
 
@@ -60,12 +70,14 @@ static const CGFloat kMinHeight = 48;
   }
 
   self.selectedItem = newSelectedItem;
+  [self setNeedsLayout];
 }
 
 - (void)setSelectedItem:(UITabBarItem *)selectedItem {
   if (self.selectedItem == selectedItem) {
     return;
   }
+
   NSUInteger itemIndex = [self.items indexOfObject:selectedItem];
   if (selectedItem && (itemIndex == NSNotFound)) {
     NSString *itemTitle = selectedItem.title;
@@ -113,7 +125,9 @@ static const CGFloat kMinHeight = 48;
 
   for (UITabBarItem *item in self.items) {
     MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] initWithFrame:CGRectZero];
-    item.title = @"Test";
+    itemView.translatesAutoresizingMaskIntoConstraints = NO;
+    itemView.title = item.title;
+    itemView.image = item.image;
     [_stackView addArrangedSubview:itemView];
   }
 }

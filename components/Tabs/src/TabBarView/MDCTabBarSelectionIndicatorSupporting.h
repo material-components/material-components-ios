@@ -12,7 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCTabBarItem.h"
-#import "MDCTabBarItemCustomViewing.h"
-#import "MDCTabBarSelectionIndicatorSupporting.h"
-#import "MDCTabBarView.h"
+#import <Foundation/Foundation.h>
+
+/**
+ A simple protocol that indicates the responder can be targeted by an
+ @c MDCTabBarSelectionIndicatorTemplate.
+
+ @seealso MDCTabBarIndicatorTemplate
+ */
+@protocol MDCTabBarSelectionIndicatorSupporting
+
+/**
+ The bounds of the receiver.
+ */
+@property(readonly) CGRect bounds;
+
+/**
+ The frame of the content of the receiver. Used to position the Selection Indicator relative to
+ the content.
+ */
+@property(readonly) CGRect contentFrame;
+
+@end
