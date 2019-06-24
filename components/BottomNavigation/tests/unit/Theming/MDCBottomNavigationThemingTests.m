@@ -73,8 +73,32 @@ static const CGFloat kUnselectedSurfaceAlpha = 0.6f;
   XCTAssertTrue(
       [bottomNav.itemTitleFont mdc_isSimplyEqual:containerScheme.typographyScheme.caption],
       @"%@ is not equal to %@", bottomNav.itemTitleFont, containerScheme.typographyScheme.caption);
-  XCTAssertEqual(bottomNav.elevation, MDCShadowElevationBottomNavigationBar);
-  XCTAssertEqual(bottomNav.itemsContentVerticalMargin, 0);
+  [self helperTestNonsubsytemValuesForBottomNavigationBar:bottomNav];
+}
+
+- (void)testPrimaryThemeWithCustomContainerScheme {
+  // Given
+  MDCBottomNavigationBar *bottomNav = self.bottomNavigationBar;
+  MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+  containerScheme.typographyScheme = [self customTypographyScheme];
+  containerScheme.colorScheme = [self customColorScheme];
+
+  // When
+  [bottomNav applyPrimaryThemeWithScheme:[[MDCContainerScheme alloc] init]];
+
+  // Then
+  XCTAssertEqualObjects(bottomNav.barTintColor, containerScheme.colorScheme.primaryColor);
+  XCTAssertEqualObjects(bottomNav.selectedItemTintColor,
+                        containerScheme.colorScheme.onPrimaryColor);
+  XCTAssertEqualObjects(bottomNav.selectedItemTitleColor,
+                        containerScheme.colorScheme.onPrimaryColor);
+  XCTAssertEqualObjects(
+      bottomNav.unselectedItemTintColor,
+      [containerScheme.colorScheme.onPrimaryColor colorWithAlphaComponent:kUnselectedPrimaryAlpha]);
+  XCTAssertTrue(
+      [bottomNav.itemTitleFont mdc_isSimplyEqual:containerScheme.typographyScheme.caption],
+      @"%@ is not equal to %@", bottomNav.itemTitleFont, containerScheme.typographyScheme.caption);
+  [self helperTestNonsubsytemValuesForBottomNavigationBar:bottomNav];
 }
 
 - (void)testSurfaceThemeWithDefaultScheme {
@@ -87,18 +111,54 @@ static const CGFloat kUnselectedSurfaceAlpha = 0.6f;
 
   // Then
   XCTAssertEqualObjects(bottomNav.barTintColor, containerScheme.colorScheme.surfaceColor);
-  XCTAssertEqualObjects(bottomNav.selectedItemTintColor,
-                        containerScheme.colorScheme.primaryColor);
-  XCTAssertEqualObjects(bottomNav.selectedItemTitleColor,
-                        containerScheme.colorScheme.primaryColor);
+  XCTAssertEqualObjects(bottomNav.selectedItemTintColor, containerScheme.colorScheme.primaryColor);
+  XCTAssertEqualObjects(bottomNav.selectedItemTitleColor, containerScheme.colorScheme.primaryColor);
   XCTAssertEqualObjects(
-                        bottomNav.unselectedItemTintColor,
-                        [containerScheme.colorScheme.onSurfaceColor colorWithAlphaComponent:kUnselectedSurfaceAlpha]);
+      bottomNav.unselectedItemTintColor,
+      [containerScheme.colorScheme.onSurfaceColor colorWithAlphaComponent:kUnselectedSurfaceAlpha]);
   XCTAssertTrue(
-                [bottomNav.itemTitleFont mdc_isSimplyEqual:containerScheme.typographyScheme.caption],
-                @"%@ is not equal to %@", bottomNav.itemTitleFont, containerScheme.typographyScheme.caption);
-  XCTAssertEqual(bottomNav.elevation, MDCShadowElevationBottomNavigationBar);
-  XCTAssertEqual(bottomNav.itemsContentVerticalMargin, 0);
+      [bottomNav.itemTitleFont mdc_isSimplyEqual:containerScheme.typographyScheme.caption],
+      @"%@ is not equal to %@", bottomNav.itemTitleFont, containerScheme.typographyScheme.caption);
+  [self helperTestNonsubsytemValuesForBottomNavigationBar:bottomNav];
+}
+
+- (void)helperTestNonsubsytemValuesForBottomNavigationBar:
+    (MDCBottomNavigationBar *)bottomNavigationBar {
+  XCTAssertEqual(bottomNavigationBar.elevation, MDCShadowElevationBottomNavigationBar);
+  XCTAssertEqual(bottomNavigationBar.itemsContentVerticalMargin, 0);
+}
+
+- (MDCTypographyScheme *)customTypographyScheme {
+  MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
+  typographyScheme.headline1 = [UIFont systemFontOfSize:10];
+  typographyScheme.headline2 = [UIFont systemFontOfSize:11];
+  typographyScheme.headline3 = [UIFont systemFontOfSize:12];
+  typographyScheme.headline4 = [UIFont systemFontOfSize:13];
+  typographyScheme.headline5 = [UIFont systemFontOfSize:14];
+  typographyScheme.headline6 = [UIFont systemFontOfSize:15];
+  typographyScheme.subtitle1 = [UIFont systemFontOfSize:16];
+  typographyScheme.subtitle2 = [UIFont systemFontOfSize:17];
+  typographyScheme.body1 = [UIFont systemFontOfSize:18];
+  typographyScheme.body2 = [UIFont systemFontOfSize:19];
+  typographyScheme.caption = [UIFont systemFontOfSize:20];
+  typographyScheme.button = [UIFont systemFontOfSize:21];
+  typographyScheme.overline = [UIFont systemFontOfSize:22];
+  return typographyScheme;
+}
+
+- (MDCSemanticColorScheme *)customColorScheme {
+  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  colorScheme.primaryColor = UIColor.blueColor;
+  colorScheme.primaryColorVariant = UIColor.greenColor;
+  colorScheme.secondaryColor = UIColor.redColor;
+  colorScheme.errorColor = UIColor.brownColor;
+  colorScheme.surfaceColor = UIColor.cyanColor;
+  colorScheme.backgroundColor = UIColor.grayColor;
+  colorScheme.onPrimaryColor = UIColor.magentaColor;
+  colorScheme.onSecondaryColor = UIColor.orangeColor;
+  colorScheme.onSurfaceColor = UIColor.purpleColor;
+  colorScheme.onBackgroundColor = UIColor.yellowColor;
+  return colorScheme;
 }
 
 @end
