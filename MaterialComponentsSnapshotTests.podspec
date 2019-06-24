@@ -15,8 +15,8 @@ module SnapshotPodspecHelper
         source_files = Dir["components/#{@name}/tests/snapshot/*.{h,m,swift}"]
         supplemental_files = Dir["components/#{@name}/tests/snapshot/supplemental/*.{h,m,swift}"]
         example_files = Dir["components/#{@name}/examples/tests/snapshot/*.{h,m,swift}"]
-        theming_files = Dir["components/#{@name}/tests/snapshot/Theming/*.{h,m,swift}"]
-        return source_files + supplemental_files + example_files + theming_files
+        extension_files = Dir["components/#{@name}/tests/snapshot/*/*.{h,m,swift}"]
+        return source_files + supplemental_files + example_files + extension_files
       end
       return []
     end
@@ -53,7 +53,7 @@ end
 
 Pod::Spec.new do |s|
   s.name         = "MaterialComponentsSnapshotTests"
-  s.version      = "85.0.1"
+  s.version      = "85.1.0"
   s.authors      = "The Material Components authors."
   s.summary      = "This spec is an aggregate of all the Material Components snapshot tests."
   s.homepage     = "https://github.com/material-components/material-components-ios"
