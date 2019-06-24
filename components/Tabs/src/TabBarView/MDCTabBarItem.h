@@ -19,5 +19,6 @@
 /**
  A subclass of @c UITabBarItem that supports a custom view property.
  */
-@interface MDCTabBarItem : UITabBarItem <MDCTabBarItemCustomViewing>
+__attribute__((objc_subclassing_restricted)) @interface MDCTabBarItem
+    : UITabBarItem<MDCTabBarItemCustomViewing>
 @end

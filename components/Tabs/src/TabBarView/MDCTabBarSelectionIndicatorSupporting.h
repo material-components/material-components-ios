@@ -18,7 +18,7 @@
  A simple protocol that indicates the responder can be targeted by an
  @c MDCTabBarSelectionIndicatorTemplate.
 
- @seealso MDCTabBarSelectionIndicatorTemplate
+ @seealso MDCTabBarIndicatorTemplate
  */
 @protocol MDCTabBarSelectionIndicatorSupporting
 
