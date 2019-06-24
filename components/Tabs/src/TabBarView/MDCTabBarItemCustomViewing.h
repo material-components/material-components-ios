@@ -20,6 +20,6 @@
 
 /** A custom view to be displayed for a tab bar item. */
 @property(nullable, nonatomic, strong)
-    __kindof UIView<MDCTabBarSelectionIndicatorSupporting> *mdc_customView;
+    UIView<MDCTabBarSelectionIndicatorSupporting> *mdc_customView;
 
 @end
