@@ -15,7 +15,8 @@
 #import <UIKit/UIKit.h>
 
 /**
- A UITextField subclass that provides the foundation for Material TextFields.
+ A UITextField subclass that will potentially provide the foundation for Material TextFields in the
+ future. This class is under active development and should be used with caution.
  */
 @interface MDCBaseTextField : UITextField
 @end
