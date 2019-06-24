@@ -28,7 +28,6 @@ static const CGFloat kMinHeight = 48;
 /** The views representing the items of this tab bar. */
 @property(nonatomic, strong) NSArray<UIView *> *itemViews;
 
-
 @end
 
 @implementation MDCTabBarView
