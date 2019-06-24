@@ -163,6 +163,7 @@ mdc_objc_library(
     ],
     visibility = ["//visibility:private"],
     deps = [
+        ":Beta",
         ":ColorThemer",
         ":FontThemer",
         ":TextFields",
