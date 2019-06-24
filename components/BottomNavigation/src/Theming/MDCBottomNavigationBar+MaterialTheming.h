@@ -34,5 +34,3 @@
 - (void)applySurfaceThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
 
 @end
-
-

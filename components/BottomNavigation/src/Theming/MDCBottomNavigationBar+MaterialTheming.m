@@ -34,7 +34,8 @@ static const CGFloat kUnselectedSurfaceAlpha = 0.6f;
   self.barTintColor = colorScheme.primaryColor;
   self.selectedItemTintColor = colorScheme.onPrimaryColor;
   self.selectedItemTitleColor = colorScheme.onPrimaryColor;
-  self.unselectedItemTintColor = [colorScheme.onPrimaryColor colorWithAlphaComponent:kUnselectedPrimaryAlpha];
+  self.unselectedItemTintColor =
+      [colorScheme.onPrimaryColor colorWithAlphaComponent:kUnselectedPrimaryAlpha];
 }
 
 - (void)applySurfaceThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme {
@@ -48,7 +49,8 @@ static const CGFloat kUnselectedSurfaceAlpha = 0.6f;
   self.barTintColor = colorScheme.surfaceColor;
   self.selectedItemTintColor = colorScheme.primaryColor;
   self.selectedItemTitleColor = colorScheme.primaryColor;
-  self.unselectedItemTintColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kUnselectedSurfaceAlpha];
+  self.unselectedItemTintColor =
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:kUnselectedSurfaceAlpha];
 }
 
 - (void)applyThemeWithTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme {
