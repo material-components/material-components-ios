@@ -340,7 +340,9 @@ Pod::Spec.new do |mdc|
     ]
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
     extension.dependency "MaterialComponents/ShadowElevations"
+    extension.dependency "MaterialComponents/schemes/Color"
     extension.dependency "MaterialComponents/schemes/Container"
+    extension.dependency "MaterialComponents/schemes/Typography"
 
     extension.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
