@@ -20,8 +20,8 @@ static const CGFloat kMinHeight = 48;
 
 @interface MDCTabBarView ()
 
-/** The views representing the items of this tab bar. */
-@property(nonatomic, strong) NSArray<UIView *> *itemViews;
+/** The stack view that contains all tab items. */
+@property(nonatomic) UIStackView *stackView;
 
 @end
 
@@ -30,10 +30,11 @@ static const CGFloat kMinHeight = 48;
 #pragma mark - Initialization
 
 - (instancetype)init {
-  self = [super init];
+  self = [super initWithFrame:CGRectZero];
+  self.translatesAutoresizingMaskIntoConstraints = NO;
   if (self) {
     _items = @[];
-    _itemViews = @[];
+    [self setUpSubviews];
   }
   return self;
 }
@@ -47,23 +48,8 @@ static const CGFloat kMinHeight = 48;
     return;
   }
 
-  for (UIView *itemView in self.itemViews) {
-    [itemView removeFromSuperview];
-  }
-
   _items = [items copy];
-
-  NSMutableArray<UIView *> *itemViews = [NSMutableArray array];
-  for (UITabBarItem *item in self.items) {
-    MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
-    // TODO(#7645): Remove this if autoresizing masks are used.
-    itemView.translatesAutoresizingMaskIntoConstraints = NO;
-    itemView.title = item.title;
-    itemView.image = item.image;
-    [itemViews addObject:itemView];
-    [self addSubview:itemView];
-  }
-  _itemViews = [itemViews copy];
+  [self setUpItemViews];
 
   // Determine new selected item, defaulting to nil.
   UITabBarItem *newSelectedItem = nil;
@@ -93,24 +79,63 @@ static const CGFloat kMinHeight = 48;
   _selectedItem = selectedItem;
 }
 
-#pragma mark - UIView
+- (void)setUpSubviews {
+  self.backgroundColor = UIColor.whiteColor;
 
-// TODO(#7645): Temporary layout until
-// https://github.com/material-components/material-components-ios/issues/7645 lands
+  [self setUpStackView];
+  [self setUpItemViews];
+
+  [NSLayoutConstraint activateConstraints:@[
+    [self.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
+    [self.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
+    [self.topAnchor constraintEqualToAnchor:self.topAnchor],
+    [self.bottomAnchor constraintEqualToAnchor:self.bottomAnchor],
+
+    [_stackView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
+    [_stackView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
+    [_stackView.widthAnchor constraintGreaterThanOrEqualToAnchor:self.widthAnchor],
+    [_stackView.topAnchor constraintEqualToAnchor:self.topAnchor],
+    [_stackView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor],
+  ]];
+}
+
+- (void)setUpStackView {
+  _stackView = [[UIStackView alloc] init];
+  _stackView.axis = UILayoutConstraintAxisHorizontal;
+  _stackView.translatesAutoresizingMaskIntoConstraints = NO;
+  [self addSubview:_stackView];
+}
+
+- (void)setUpItemViews {
+  for (UIView *view in self.stackView.arrangedSubviews) {
+    [view removeFromSuperview];
+    [_stackView removeArrangedSubview:view];
+  }
+
+  for (UITabBarItem *item in self.items) {
+    MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] initWithFrame:CGRectZero];
+    itemView.translatesAutoresizingMaskIntoConstraints = NO;
+    itemView.title = item.title;
+    itemView.image = item.image;
+    [_stackView addArrangedSubview:itemView];
+  }
+}
+
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  if (self.items.count == 0) {
-    return;
+  CGFloat availableWidth = self.frame.size.width;
+  CGFloat maxWidth = 0;
+  for (UIView *itemView in self.stackView.arrangedSubviews) {
+    CGSize contentSize = itemView.intrinsicContentSize;
+    if (contentSize.width > maxWidth) {
+      maxWidth = contentSize.width;
+    }
   }
-  CGSize boundsSize = CGSizeMake(CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
-  CGSize itemSize = CGSizeMake(boundsSize.width / self.items.count, boundsSize.height);
-
-  CGPoint itemOrigin = CGPointMake(CGRectGetMinX(self.bounds), CGRectGetMinY(self.bounds));
-  for (UIView *itemView in self.itemViews) {
-    itemView.frame = CGRectMake(itemOrigin.x, itemOrigin.y, itemSize.width, itemSize.height);
-    itemOrigin = CGPointMake(itemOrigin.x + itemSize.width, itemOrigin.y);
-  }
+  CGFloat requiredWidth = maxWidth * self.items.count;
+  BOOL canBeJustified = requiredWidth > availableWidth;
+  self.stackView.distribution = canBeJustified ? UIStackViewDistributionFillProportionally
+                                               : UIStackViewDistributionFillEqually;
 }
 
 - (CGSize)intrinsicContentSize {
