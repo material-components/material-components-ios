@@ -17,4 +17,10 @@
 /** A basic view that displays a title and image for a tab bar item within MDCTabBarView. */
 @interface MDCTabBarViewItemView : UIView
 
+/** Title for the tab. Defaults to the empty string. */
+@property(nonatomic, copy, nullable) NSString *title;
+
+/** Image shown on the tab. Defaults to nil. */
+@property(nonatomic, strong, nullable) UIImage *image;
+
 @end
