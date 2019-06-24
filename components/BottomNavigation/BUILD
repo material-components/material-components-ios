@@ -100,7 +100,9 @@ mdc_extension_objc_library(
     deps = [
         ":BottomNavigation",
         "//components/ShadowElevations",
+        "//components/schemes/Color",
         "//components/schemes/Container",
+        "//components/schemes/Typography",
     ],
 )
 
@@ -200,8 +202,10 @@ mdc_objc_library(
     deps = [
         ":BottomNavigation",
         ":ColorThemer",
+        ":Theming",
         ":TypographyThemer",
         ":private",
+        "//components/Typography",
     ],
 )
 
@@ -239,6 +243,7 @@ mdc_snapshot_objc_library(
     deps = [
         ":BottomNavigation",
         ":ColorThemer",
+        ":Theming",
         ":TypographyThemer",
         ":private",
     ],
