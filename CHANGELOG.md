@@ -1,16 +1,30 @@
-# #develop#
+# 85.1.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+In this minor release we have begun development of a new Tab component, as well as additional tests and bug fixes.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
+Chips now support selection for ripple when in the selected state.
+
+```objc
+MDCChipView *chipView = [[MDCChipView alloc] init];
+chipView.enableRippleBehavior = YES;
+chipView.rippleAllowsSelection = YES;
+```
+
 ## API changes
+
+### Chips
+
+#### MDCChipView
+
+*new* property: `rippleAllowsSelection` in `MDCChipView`
+
+### Tabs
+
+#### MDCTabBarView
+
+*new* class: `MDCTabBarView`
 
 ## Component changes
 
@@ -38,6 +52,8 @@ Replace this text with example code for each new feature.
 ### Tabs
 
 * [Update README for MDCTabBarView. (#7673)](https://github.com/material-components/material-components-ios/commit/2dea42f1d6d31a03c8b208d1b530d43ef841b371) (Robert Moore)
+* [Add missing example. (#7671)](https://github.com/material-components/material-components-ios/commit/d0f3843388506d3aa5257faa267c58ea8a86d9b1) (Robert Moore)
+* [Move "Tabs2" into an extension. (#7663)](https://github.com/material-components/material-components-ios/commit/83797d1cab8402e38f5e612271c4ae5b7b4a4c91) (Robert Moore)
 
 ### schemes/Typography
 
@@ -45,8 +61,7 @@ Replace this text with example code for each new feature.
 
 ## Multi-component changes
 
-* [Add missing example. (#7671)](https://github.com/material-components/material-components-ios/commit/d0f3843388506d3aa5257faa267c58ea8a86d9b1) (Robert Moore)
-* [Move "Tabs2" into an extension. (#7663)](https://github.com/material-components/material-components-ios/commit/83797d1cab8402e38f5e612271c4ae5b7b4a4c91) (Robert Moore)
+
 * [Remove all example references to MDCFloatingActionButtonThemer. (#7505)](https://github.com/material-components/material-components-ios/commit/9c8e34138af0d02f568bff4ff8f0c0341b5cd860) (featherless)
 * [{Bazel} Create dedicated unit test rules to reduce boilerplate (#7641)](https://github.com/material-components/material-components-ios/commit/2b125fcd935bde8f707ce6e0f96503555d8da6ad) (Robert Moore)
 
