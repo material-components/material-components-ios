@@ -45,9 +45,7 @@ static UIImage *fakeImage(void) {
   [super setUp];
 
   self.bottomNavigationBar = [[MDCBottomNavigationBar alloc] init];
-  UITabBarItem *tabBarItem1 = [[UITabBarItem alloc] initWithTitle:@"Home"
-                                                            image:fakeImage()
-                                                              tag:0];
+  UITabBarItem *tabBarItem1 = [[UITabBarItem alloc] initWithTitle:@"Home" image:fakeImage() tag:0];
   UITabBarItem *tabBarItem2 = [[UITabBarItem alloc] initWithTitle:@"Messages"
                                                             image:fakeImage()
                                                               tag:0];
