@@ -116,7 +116,7 @@ static const CGFloat kExpectedHeightTitlesAndIcons = 72;
   UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:self.typicalIcon1 tag:0];
   UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:self.typicalIcon2 tag:2];
   UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:self.typicalIcon3 tag:5];
-
+dd
   // When
   self.tabBarView.items = @[ item1, item2, item3 ];
 
