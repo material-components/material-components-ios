@@ -142,12 +142,12 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
   [super didMoveToParentViewController:parent];
 
 #if TARGET_OS_UIKITFORMAC
-    // When running under UIKit for Mac, the window size may not match the value returned by
-    // `[UIScreen mainScreen].bounds` when `commonMDCFlexibleHeaderViewControllerInit` was
-    // called, so the width will be updated here to match the hosting view.
-    CGRect headerFrame = _headerView.frame;
-    headerFrame.size.width = CGRectGetWidth(_headerView.superview.bounds);
-    _headerView.frame = headerFrame;
+  // When running under UIKit for Mac, the window size may not match the value returned by
+  // `[UIScreen mainScreen].bounds` when `commonMDCFlexibleHeaderViewControllerInit` was
+  // called, so the width will be updated here to match the hosting view.
+  CGRect headerFrame = _headerView.frame;
+  headerFrame.size.width = CGRectGetWidth(_headerView.superview.bounds);
+  _headerView.frame = headerFrame;
 #endif
 
   // The header depends on the tracking scroll view to know how tall it should be.
