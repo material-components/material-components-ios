@@ -41,6 +41,7 @@ mdc_examples_objc_library(
     deps = [
         ":Banner",
         "//components/schemes/Color",
+        "//components/schemes/Typography",
     ],
 )
 
