@@ -36,9 +36,9 @@ static const CGFloat kFakeHeight = 75;
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  self.recordMode = YES;
+  // self.recordMode = YES;
 
-  [self.bottomNavigationBar = [MDCBottomNavigationBar alloc] init];
+  self.bottomNavigationBar = [[MDCBottomNavigationBar alloc] init];
   CGSize imageSize = CGSizeMake(24, 24);
   self.tabItem1 = [[UITabBarItem alloc]
       initWithTitle:@"Item 1"
@@ -57,6 +57,7 @@ static const CGFloat kFakeHeight = 75;
                 tag:3];
   self.bottomNavigationBar.items = @[ self.tabItem1, self.tabItem2, self.tabItem3 ];
   self.bottomNavigationBar.frame = CGRectMake(0, 0, kFakeWidth, kFakeHeight);
+  self.bottomNavigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
 }
 
 - (void)tearDown {
