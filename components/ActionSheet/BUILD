@@ -34,6 +34,7 @@ mdc_public_objc_library(
     deps = [
         "//components/BottomSheet",
         "//components/Ink",
+        "//components/Ripple",
         "//components/Typography",
     ],
 )

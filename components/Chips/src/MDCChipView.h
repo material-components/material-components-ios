@@ -118,6 +118,18 @@
  */
 @property(nonatomic, assign) BOOL enableRippleBehavior;
 
+/**
+ Enabling the selection of the Chip on tap (when RippleBehavior is enabled).
+ When rippleAllowsSelection is enabled, tapping a chip automatically toggles the chip's selected
+ state (after a short ripple animation). When disabled, tapping a chip creates a momentary ripple
+ animation while the chip remains unselected.
+
+ @note: This property is ignored when RippleBehavior is disabled.
+
+ Defaults to: Yes.
+ */
+@property(nonatomic) BOOL rippleAllowsSelection;
+
 /*
  The color of the ink ripple.
  */

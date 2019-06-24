@@ -119,6 +119,7 @@ static const UIEdgeInsets kButtonInset = {0, 12, 0, 12};
   MDCButtonBarButton *button = [[MDCButtonBarButton alloc] init];
   [button setBackgroundColor:[UIColor clearColor] forState:UIControlStateNormal];
   button.disabledAlpha = kDisabledButtonAlpha;
+  button.enableRippleBehavior = buttonBar.enableRippleBehavior;
   if (buttonBar.inkColor) {
     button.inkColor = buttonBar.inkColor;
   }

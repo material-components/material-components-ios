@@ -19,16 +19,16 @@ import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialBottomAppBar
 import MaterialComponents.MaterialBottomAppBar_ColorThemer
 import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialButtons_Theming
 import MaterialComponents.MaterialColorScheme
+import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialTypographyScheme
-import MaterialComponents.MaterialButtons_ButtonThemer
 
 class BottomAppBarTypicalUseSwiftExample: UIViewController {
 
   let appBarViewController = MDCAppBarViewController()
   let bottomBarView = MDCBottomAppBarView()
-  @objc var colorScheme = MDCSemanticColorScheme()
-  @objc var typographyScheme = MDCTypographyScheme()
+  @objc var containerScheme = MDCContainerScheme()
 
   init() {
     super.init(nibName: nil, bundle: nil)
@@ -75,12 +75,10 @@ class BottomAppBarTypicalUseSwiftExample: UIViewController {
     bottomBarView.floatingButtonPosition = .center
 
     // Theme the floating button.
-    let buttonScheme = MDCButtonScheme()
-    buttonScheme.colorScheme = colorScheme
-    buttonScheme.typographyScheme = typographyScheme
-    MDCFloatingActionButtonThemer.applyScheme(buttonScheme, to: bottomBarView.floatingButton)
-    MDCBottomAppBarColorThemer.applySurfaceVariant(withSemanticColorScheme: colorScheme,
-                                                   to: bottomBarView)
+    bottomBarView.floatingButton.applySecondaryTheme(withScheme: containerScheme)
+    MDCBottomAppBarColorThemer
+      .applySurfaceVariant(withSemanticColorScheme: containerScheme.colorScheme,
+                           to: bottomBarView)
 
     // Configure the navigation buttons to be shown on the bottom app bar.
     let barButtonLeadingItem = UIBarButtonItem()

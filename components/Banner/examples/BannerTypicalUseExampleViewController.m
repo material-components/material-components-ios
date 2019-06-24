@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "BannerTypicalUseExampleViewController.h"
-
 #import "MaterialBanner.h"
 #import "MaterialButtons.h"
 #import "MaterialColorScheme.h"
@@ -72,7 +70,8 @@ static NSString *const exampleExtraLongText =
 
 @end
 
-@interface BannerTypicalUseExampleViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface BannerTypicalUseExampleViewController
+    : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 @property(nonatomic, strong) UITableView *exampleListTableView;
 @property(nonatomic, strong) NSArray<BannerExampleUseInfo *> *exampleList;
@@ -136,6 +135,8 @@ static NSString *const exampleExtraLongText =
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
 
+  self.contentView.frame = self.view.bounds;
+
   CGSize bannerViewSize = [self.bannerView sizeThatFits:self.view.bounds.size];
   // Adjust bannerViewContainer's frame
   CGFloat topAreaInset = 0.0f;
@@ -144,6 +145,7 @@ static NSString *const exampleExtraLongText =
   }
   self.bannerView.frame =
       CGRectMake(0.0f, topAreaInset, bannerViewSize.width, bannerViewSize.height);
+  [self.bannerView setNeedsUpdateConstraints];
 }
 
 #pragma mark - Internal helpers
@@ -348,7 +350,7 @@ static NSString *const exampleExtraLongText =
   }
 
   MDCBannerView *bannerView = [[MDCBannerView alloc] init];
-  bannerView.bannerViewLayoutMode = MDCBannerViewLayoutModeSingleRow;
+  bannerView.bannerViewLayoutStyle = MDCBannerViewLayoutStyleSingleRow;
   bannerView.textLabel.text = exampleLongText;
   bannerView.backgroundColor = self.colorScheme.surfaceColor;
   UIEdgeInsets margins = UIEdgeInsetsZero;
@@ -363,7 +365,6 @@ static NSString *const exampleExtraLongText =
   button.uppercaseTitle = YES;
   [button setTitleColor:self.colorScheme.primaryColor forState:UIControlStateNormal];
   button.backgroundColor = self.colorScheme.surfaceColor;
-  bannerView.trailingButton.hidden = YES;
   bannerView.imageView.hidden = YES;
   bannerView.showsDivider = YES;
 

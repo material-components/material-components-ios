@@ -81,7 +81,8 @@
                                                                 forIndexPath:indexPath];
   cell.layer.borderColor = [UIColor darkGrayColor].CGColor;
   cell.layer.borderWidth = 1;
-  cell.inkColor = [UIColor colorWithRed:0 green:(CGFloat)0 blue:(CGFloat)0 alpha:(CGFloat)0.1];
+  cell.enableRippleBehavior = YES;
+  cell.rippleColor = [UIColor colorWithRed:0 green:(CGFloat)0 blue:(CGFloat)0 alpha:(CGFloat)0.1];
   return cell;
 }
 

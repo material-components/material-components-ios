@@ -89,6 +89,7 @@
   MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
   action.title = @"Tap Me";
   message.action = action;
+  message.enableRippleBehavior = YES;
   [MDCSnackbarManager showMessage:message];
 }
 
