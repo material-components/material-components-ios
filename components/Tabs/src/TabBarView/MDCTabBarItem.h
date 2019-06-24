@@ -12,7 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCTabBarItem.h"
+#import <UIKit/UIKit.h>
+
 #import "MDCTabBarItemCustomViewing.h"
-#import "MDCTabBarSelectionIndicatorSupporting.h"
-#import "MDCTabBarView.h"
+
+/**
+ A subclass of @c UITabBarItem that supports a custom view property.
+ */
+__attribute__((objc_subclassing_restricted)) @interface MDCTabBarItem
+    : UITabBarItem<MDCTabBarItemCustomViewing>
+@end

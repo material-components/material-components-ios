@@ -44,7 +44,12 @@ static NSString *const kExampleTitle = @"TabBarView";
 
   self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
 
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"Home" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Favorite" image:nil tag:1];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Cake" image:nil tag:2];
+
   self.tabBar = [[MDCTabBarView alloc] init];
+  self.tabBar.items = @[ item1, item2, item3 ];
   CGSize barIntrinsicContentSize = self.tabBar.intrinsicContentSize;
   self.tabBar.bounds = CGRectMake(0, 0, 0, barIntrinsicContentSize.width);
   // TODO: Change this to theming (or at least .primaryColor) once we have content.

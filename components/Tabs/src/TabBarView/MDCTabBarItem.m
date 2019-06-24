@@ -13,6 +13,9 @@
 // limitations under the License.
 
 #import "MDCTabBarItem.h"
-#import "MDCTabBarItemCustomViewing.h"
-#import "MDCTabBarSelectionIndicatorSupporting.h"
-#import "MDCTabBarView.h"
+
+@implementation MDCTabBarItem
+
+@synthesize mdc_customView = _mdc_customView;
+
+@end
