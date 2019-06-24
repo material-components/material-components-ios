@@ -25,6 +25,16 @@
 static const CGFloat kUnselectedPrimaryAlpha = 0.74f;
 static const CGFloat kUnselectedSurfaceAlpha = 0.6f;
 
+static UIImage *fakeImage(void) {
+  CGSize imageSize = CGSizeMake(24, 24);
+  UIGraphicsBeginImageContext(imageSize);
+  [UIColor.whiteColor setFill];
+  UIRectFill(CGRectMake(0, 0, imageSize.width, imageSize.height));
+  UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+  UIGraphicsEndImageContext();
+  return image;
+}
+
 @interface MDCBottomNavigationThemingTests : XCTestCase
 @property(nonatomic, strong, nullable) MDCBottomNavigationBar *bottomNavigationBar;
 @end
@@ -36,13 +46,13 @@ static const CGFloat kUnselectedSurfaceAlpha = 0.6f;
 
   self.bottomNavigationBar = [[MDCBottomNavigationBar alloc] init];
   UITabBarItem *tabBarItem1 = [[UITabBarItem alloc] initWithTitle:@"Home"
-                                                            image:[UIImage imageNamed:@"Home"]
+                                                            image:fakeImage()
                                                               tag:0];
   UITabBarItem *tabBarItem2 = [[UITabBarItem alloc] initWithTitle:@"Messages"
-                                                            image:[UIImage imageNamed:@"Email"]
+                                                            image:fakeImage()
                                                               tag:0];
   UITabBarItem *tabBarItem3 = [[UITabBarItem alloc] initWithTitle:@"Favorites"
-                                                            image:[UIImage imageNamed:@"Favorite"]
+                                                            image:fakeImage()
                                                               tag:0];
   self.bottomNavigationBar.items = @[ tabBarItem1, tabBarItem2, tabBarItem3 ];
 }
@@ -102,7 +112,7 @@ static const CGFloat kUnselectedSurfaceAlpha = 0.6f;
   [bottomNav applySurfaceThemeWithScheme:containerScheme];
 
   // Then
-  [self helperTextSecondaryThemeColorForColorScheme:containerScheme.colorScheme];
+  [self assertSecondaryThemeColorForColorScheme:containerScheme.colorScheme];
   [self helperTestItemTitleFontEqualsFont:containerScheme.typographyScheme.caption];
   [self helperTestNonsubsytemValuesForBottomNavigationBar:bottomNav];
 }
@@ -118,12 +128,12 @@ static const CGFloat kUnselectedSurfaceAlpha = 0.6f;
   [bottomNav applySurfaceThemeWithScheme:containerScheme];
 
   // Then
-  [self helperTextSecondaryThemeColorForColorScheme:containerScheme.colorScheme];
+  [self assertSecondaryThemeColorForColorScheme:containerScheme.colorScheme];
   [self helperTestItemTitleFontEqualsFont:containerScheme.typographyScheme.caption];
   [self helperTestNonsubsytemValuesForBottomNavigationBar:bottomNav];
 }
 
-- (void)helperTextSecondaryThemeColorForColorScheme:(id<MDCColorScheming>)colorScheme {
+- (void)assertSecondaryThemeColorForColorScheme:(id<MDCColorScheming>)colorScheme {
   MDCBottomNavigationBar *bottomNav = self.bottomNavigationBar;
   XCTAssertEqualObjects(bottomNav.barTintColor, colorScheme.surfaceColor);
   XCTAssertEqualObjects(bottomNav.selectedItemTintColor, colorScheme.primaryColor);
@@ -135,7 +145,7 @@ static const CGFloat kUnselectedSurfaceAlpha = 0.6f;
 
 - (void)helperTestItemTitleFontEqualsFont:(UIFont *)font {
   XCTAssertTrue([self.bottomNavigationBar.itemTitleFont mdc_isSimplyEqual:font],
-                @"%@ is not equal to %@", self.bottomNavigationBar.itemTitleFont, font);
+                @"(%@) is not equal to (%@)", self.bottomNavigationBar.itemTitleFont, font);
 }
 
 - (void)helperTestNonsubsytemValuesForBottomNavigationBar:
