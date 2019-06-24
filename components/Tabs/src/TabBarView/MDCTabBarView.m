@@ -13,9 +13,17 @@
 // limitations under the License.
 
 #import "MDCTabBarView.h"
+#import "private/MDCTabBarViewItemView.h"
 
 /** Minimum (typical) height of a Material Tab bar. */
 static const CGFloat kMinHeight = 48;
+
+@interface MDCTabBarView ()
+
+/** The views representing the items of this tab bar. */
+@property(nonatomic, strong) NSArray<UIView *> *itemViews;
+
+@end
 
 @implementation MDCTabBarView
 
@@ -25,6 +33,7 @@ static const CGFloat kMinHeight = 48;
   self = [super init];
   if (self) {
     _items = @[];
+    _itemViews = @[];
   }
   return self;
 }
@@ -37,7 +46,24 @@ static const CGFloat kMinHeight = 48;
   if (self.items == items || [self.items isEqual:items]) {
     return;
   }
+
+  for (UIView *itemView in self.itemViews) {
+    [itemView removeFromSuperview];
+  }
+
   _items = [items copy];
+
+  NSMutableArray<UIView *> *itemViews = [NSMutableArray array];
+  for (UITabBarItem *item in self.items) {
+    MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
+    // TODO(#7645): Remove this if autoresizing masks are used.
+    itemView.translatesAutoresizingMaskIntoConstraints = NO;
+    itemView.title = item.title;
+    itemView.image = item.image;
+    [itemViews addObject:itemView];
+    [self addSubview:itemView];
+  }
+  _itemViews = [itemViews copy];
 
   // Determine new selected item, defaulting to nil.
   UITabBarItem *newSelectedItem = nil;
@@ -47,12 +73,14 @@ static const CGFloat kMinHeight = 48;
   }
 
   self.selectedItem = newSelectedItem;
+  [self setNeedsLayout];
 }
 
 - (void)setSelectedItem:(UITabBarItem *)selectedItem {
   if (self.selectedItem == selectedItem) {
     return;
   }
+
   NSUInteger itemIndex = [self.items indexOfObject:selectedItem];
   if (selectedItem && (itemIndex == NSNotFound)) {
     NSString *itemTitle = selectedItem.title;
@@ -63,6 +91,26 @@ static const CGFloat kMinHeight = 48;
   }
 
   _selectedItem = selectedItem;
+}
+
+#pragma mark - UIView
+
+// TODO(#7645): Temporary layout until
+// https://github.com/material-components/material-components-ios/issues/7645 lands
+- (void)layoutSubviews {
+  [super layoutSubviews];
+
+  if (self.items.count == 0) {
+    return;
+  }
+  CGSize boundsSize = CGSizeMake(CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
+  CGSize itemSize = CGSizeMake(boundsSize.width / self.items.count, boundsSize.height);
+
+  CGPoint itemOrigin = CGPointMake(CGRectGetMinX(self.bounds), CGRectGetMinY(self.bounds));
+  for (UIView *itemView in self.itemViews) {
+    itemView.frame = CGRectMake(itemOrigin.x, itemOrigin.y, itemSize.width, itemSize.height);
+    itemOrigin = CGPointMake(itemOrigin.x + itemSize.width, itemOrigin.y);
+  }
 }
 
 - (CGSize)intrinsicContentSize {
