@@ -16,6 +16,12 @@
 
 #import "MDCTabBarSelectionIndicatorSupporting.h"
 
+/**
+ Defines the necessary APIs for MDCTabBarView to use a UITabBarItem for a custom view property.
+
+ @note Although UIKit defines such a property on @c UIBarButtonItem, no similar property is publicly
+ documented on @c UITabBarItem.
+ */
 @protocol MDCTabBarItemCustomViewing
 
 /** A custom view to be displayed for a tab bar item. */
