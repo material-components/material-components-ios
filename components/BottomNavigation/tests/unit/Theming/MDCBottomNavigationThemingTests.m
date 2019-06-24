@@ -44,7 +44,7 @@ static const CGFloat kUnselectedSurfaceAlpha = 0.6f;
   UITabBarItem *tabBarItem3 = [[UITabBarItem alloc] initWithTitle:@"Favorites"
                                                             image:[UIImage imageNamed:@"Favorite"]
                                                               tag:0];
-  self.bottomNavBar.items = @[ tabBarItem1, tabBarItem2, tabBarItem3 ];
+  self.bottomNavigationBar.items = @[ tabBarItem1, tabBarItem2, tabBarItem3 ];
 }
 
 - (void)tearDown {
@@ -73,6 +73,30 @@ static const CGFloat kUnselectedSurfaceAlpha = 0.6f;
   XCTAssertTrue(
       [bottomNav.itemTitleFont mdc_isSimplyEqual:containerScheme.typographyScheme.caption],
       @"%@ is not equal to %@", bottomNav.itemTitleFont, containerScheme.typographyScheme.caption);
+  XCTAssertEqual(bottomNav.elevation, MDCShadowElevationBottomNavigationBar);
+  XCTAssertEqual(bottomNav.itemsContentVerticalMargin, 0);
+}
+
+- (void)testSurfaceThemeWithDefaultScheme {
+  // Given
+  MDCBottomNavigationBar *bottomNav = self.bottomNavigationBar;
+  MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
+
+  // When
+  [bottomNav applySurfaceThemeWithScheme:[[MDCContainerScheme alloc] init]];
+
+  // Then
+  XCTAssertEqualObjects(bottomNav.barTintColor, containerScheme.colorScheme.surfaceColor);
+  XCTAssertEqualObjects(bottomNav.selectedItemTintColor,
+                        containerScheme.colorScheme.primaryColor);
+  XCTAssertEqualObjects(bottomNav.selectedItemTitleColor,
+                        containerScheme.colorScheme.primaryColor);
+  XCTAssertEqualObjects(
+                        bottomNav.unselectedItemTintColor,
+                        [containerScheme.colorScheme.onSurfaceColor colorWithAlphaComponent:kUnselectedSurfaceAlpha]);
+  XCTAssertTrue(
+                [bottomNav.itemTitleFont mdc_isSimplyEqual:containerScheme.typographyScheme.caption],
+                @"%@ is not equal to %@", bottomNav.itemTitleFont, containerScheme.typographyScheme.caption);
   XCTAssertEqual(bottomNav.elevation, MDCShadowElevationBottomNavigationBar);
   XCTAssertEqual(bottomNav.itemsContentVerticalMargin, 0);
 }
