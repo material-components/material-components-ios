@@ -16,8 +16,11 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialSnapshot.h"
 #import "../../src/private/MDCBottomNavigationItemView.h"
+#import "MaterialSnapshot.h"
+
+static const CGFloat kFakeWidth = 500;
+static const CGFloat kFakeHeight = 75;
 
 @interface MDCBottomNavigationThemingSnapshotTests : MDCSnapshotTestCase
 @property(nonatomic, strong, nullable) MDCBottomNavigationBar *bottomNavigationBar;
@@ -33,26 +36,27 @@
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  //  self.recordMode = YES;
+  self.recordMode = YES;
 
+  [self.bottomNavigationBar = [MDCBottomNavigationBar alloc] init];
   CGSize imageSize = CGSizeMake(24, 24);
   self.tabItem1 = [[UITabBarItem alloc]
-                   initWithTitle:@"Item 1"
-                   image:[UIImage mdc_testImageOfSize:imageSize
-                                            withStyle:MDCSnapshotTestImageStyleEllipses]
-                   tag:1];
+      initWithTitle:@"Item 1"
+              image:[UIImage mdc_testImageOfSize:imageSize
+                                       withStyle:MDCSnapshotTestImageStyleEllipses]
+                tag:1];
   self.tabItem2 = [[UITabBarItem alloc]
-                   initWithTitle:@"Item 2"
-                   image:[UIImage mdc_testImageOfSize:imageSize
-                                            withStyle:MDCSnapshotTestImageStyleCheckerboard]
-                   tag:2];
+      initWithTitle:@"Item 2"
+              image:[UIImage mdc_testImageOfSize:imageSize
+                                       withStyle:MDCSnapshotTestImageStyleCheckerboard]
+                tag:2];
   self.tabItem3 = [[UITabBarItem alloc]
-                   initWithTitle:@"Item 3"
-                   image:[UIImage mdc_testImageOfSize:imageSize
-                                            withStyle:MDCSnapshotTestImageStyleFramedX]
-                   tag:3];
-  self.bottomNavigationBar.items =
-  @[ self.tabItem1, self.tabItem2, self.tabItem3 ];
+      initWithTitle:@"Item 3"
+              image:[UIImage mdc_testImageOfSize:imageSize
+                                       withStyle:MDCSnapshotTestImageStyleFramedX]
+                tag:3];
+  self.bottomNavigationBar.items = @[ self.tabItem1, self.tabItem2, self.tabItem3 ];
+  self.bottomNavigationBar.frame = CGRectMake(0, 0, kFakeWidth, kFakeHeight);
 }
 
 - (void)tearDown {
@@ -74,7 +78,7 @@
 - (void)performInkTouchOnBar:(MDCBottomNavigationBar *)navigationBar item:(UITabBarItem *)item {
   [navigationBar layoutIfNeeded];
   MDCBottomNavigationItemView *itemView =
-  (MDCBottomNavigationItemView *)[self.bottomNavigationBar viewForItem:item];
+      (MDCBottomNavigationItemView *)[self.bottomNavigationBar viewForItem:item];
   [itemView.inkView startTouchBeganAtPoint:CGPointMake(CGRectGetMidX(itemView.bounds),
                                                        CGRectGetMidY(itemView.bounds))
                                   animated:NO
@@ -121,6 +125,7 @@
 
   // When
   [bottomNav applyPrimaryThemeWithScheme:containerScheme];
+  [self performInkTouchOnBar:bottomNav item:self.tabItem1];
 
   // Then
   [self generateAndVerifySnapshot];
@@ -147,6 +152,7 @@
 
   // When
   [bottomNav applySurfaceThemeWithScheme:containerScheme];
+  [self performInkTouchOnBar:bottomNav item:self.tabItem1];
 
   // Then
   [self generateAndVerifySnapshot];
