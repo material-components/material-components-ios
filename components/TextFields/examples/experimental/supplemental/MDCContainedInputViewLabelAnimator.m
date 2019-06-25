@@ -22,6 +22,14 @@
 
 @implementation MDCContainedInputViewLabelAnimator
 
+-(instancetype)init {
+  self = [super init];
+  if (self) {
+    self.animationDuration = 0.2;
+  }
+  return self;
+}
+
 - (UIFont *)floatingFontWithFont:(UIFont *)font
                  containerStyler:(id<MDCContainedInputViewStyler>)containerStyler {
   CGFloat scaleFactor = [containerStyler floatingFontSizeScaleFactor];
@@ -170,15 +178,6 @@
                                      finalRect.size.height / sourceRect.size.height);
 
   return transform;
-}
-
-- (CGFloat)animationDuration {
-  //  CGFloat lowerMinY = MIN(CGRectGetMinY(currentFrame), CGRectGetMinY(targetFrame));
-  //  CGFloat higherMinY = MAX(CGRectGetMinY(currentFrame), CGRectGetMinY(targetFrame));
-  //  CGFloat distanceTravelled = higherMinY - lowerMinY;
-  CGFloat animationDuration = (CGFloat)0.2;
-  //      distanceTravelled / kFloatingLabelAnimationVelocityInPointsPerSecond;
-  return animationDuration;
 }
 
 - (NSString *)floatingLabelTransformAnimationKey {
