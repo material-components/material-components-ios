@@ -68,7 +68,7 @@
     MDCBannerView *bannerView = [[MDCBannerView alloc] init];
     bannerView.trailingButton.hidden = YES;
     bannerView.mdc_adjustsFontForContentSizeCategory = YES;
-    UIFont *font = [UIFont systemFontOfSize:10.0 weight:UIFontWeightMedium];
+    UIFont *font = [UIFont systemFontOfSize:10.0 weight:UIFontWeightRegular];
     MDCFontScaler *fontScaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleBody2];
     UIFont *scalableFont = [fontScaler scaledFontWithFont:font];
     scalableFont = [scalableFont mdc_scaledFontAtDefaultSize];
