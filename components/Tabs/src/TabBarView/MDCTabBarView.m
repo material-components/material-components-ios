@@ -22,7 +22,6 @@ static char *const kKVOContextMDCTabBarView = "kKVOContextMDCTabBarView";
 static const CGFloat kMinHeight = 48;
 
 static NSString *const kImageKeyPath = @"image";
-static NSString *const kSelectedImageKeyPath = @"selectedImage";
 static NSString *const kTitleKeyPath = @"title";
 
 @interface MDCTabBarView ()
@@ -111,7 +110,7 @@ static NSString *const kTitleKeyPath = @"title";
   UIView *itemView = self.itemViews[itemIndex];
   if ([itemView isKindOfClass:[MDCTabBarViewItemView class]]) {
     MDCTabBarViewItemView *selectedItemView = (MDCTabBarViewItemView *)itemView;
-    selectedItemView.iconImageView.image = selectedItem.selectedImage ?: selectedItem.image;
+    selectedItemView.iconImageView.image = selectedItem.image;
   }
 }
 
@@ -124,10 +123,6 @@ static NSString *const kTitleKeyPath = @"title";
               options:NSKeyValueObservingOptionNew
               context:kKVOContextMDCTabBarView];
     [item addObserver:self
-           forKeyPath:kSelectedImageKeyPath
-              options:NSKeyValueObservingOptionNew
-              context:kKVOContextMDCTabBarView];
-    [item addObserver:self
            forKeyPath:kTitleKeyPath
               options:NSKeyValueObservingOptionNew
               context:kKVOContextMDCTabBarView];
@@ -137,7 +132,6 @@ static NSString *const kTitleKeyPath = @"title";
 - (void)removeObserversFromTabBarItems {
   for (UITabBarItem *item in self.items) {
     [item removeObserver:self forKeyPath:kImageKeyPath context:kKVOContextMDCTabBarView];
-    [item removeObserver:self forKeyPath:kSelectedImageKeyPath context:kKVOContextMDCTabBarView];
     [item removeObserver:self forKeyPath:kTitleKeyPath context:kKVOContextMDCTabBarView];
   }
 }
@@ -159,15 +153,7 @@ static NSString *const kTitleKeyPath = @"title";
     MDCTabBarViewItemView *tabBarItemView = (MDCTabBarViewItemView *)updatedItemView;
 
     if ([keyPath isEqualToString:kImageKeyPath]) {
-      if (self.selectedItem != object) {
-        tabBarItemView.iconImageView.image = change[NSKeyValueChangeNewKey];
-      } else {
-        tabBarItemView.iconImageView.image = self.selectedItem.selectedImage;
-      }
-    } else if ([keyPath isEqualToString:kSelectedImageKeyPath]) {
-      if (self.selectedItem == object) {
-        tabBarItemView.iconImageView.image = change[NSKeyValueChangeNewKey];
-      }
+      tabBarItemView.iconImageView.image = change[NSKeyValueChangeNewKey];
     } else if ([keyPath isEqualToString:kTitleKeyPath]) {
       tabBarItemView.titleLabel.text = change[NSKeyValueChangeNewKey];
     }

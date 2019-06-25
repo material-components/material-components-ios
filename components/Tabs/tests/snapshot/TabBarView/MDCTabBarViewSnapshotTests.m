@@ -143,7 +143,7 @@ static const CGFloat kExpectedHeightTitlesAndIcons = 72;
 
 #pragma mark - Selection
 
-- (void)testChangingSelectedItemShowsSelectedIcon {
+- (void)testChangingSelectedItemIgnoresSelectedImage {
   // Given
   self.tabBarView.bounds = CGRectMake(0, 0, 360, kExpectedHeightTitlesAndIcons);
   UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:self.typicalIcon1 tag:0];
@@ -195,7 +195,6 @@ static const CGFloat kExpectedHeightTitlesAndIcons = 72;
 }
 
 - (void)testChangingImageOfSelectedItemAfterAddingToBar {
-  self.recordMode = YES;
   // Given
   self.tabBarView.bounds = CGRectMake(0, 0, 360, kExpectedHeightTitlesAndIcons);
   UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:self.typicalIcon1 tag:0];
@@ -211,7 +210,7 @@ static const CGFloat kExpectedHeightTitlesAndIcons = 72;
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
-- (void)testChangingSelectedImageOfUnselectedItemAfterAddingToBar {
+- (void)testChangingSelectedImageOfUnselectedItemAfterAddingToBarDoesNothing {
   // Given
   self.tabBarView.bounds = CGRectMake(0, 0, 360, kExpectedHeightTitlesAndIcons);
   UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:self.typicalIcon1 tag:0];
@@ -227,7 +226,7 @@ static const CGFloat kExpectedHeightTitlesAndIcons = 72;
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
-- (void)testChangingSelectedImageOfSelectedItemAfterAddingToBar {
+- (void)testChangingSelectedImageOfSelectedItemAfterAddingToBarDoesNothing {
   // Given
   self.tabBarView.bounds = CGRectMake(0, 0, 360, kExpectedHeightTitlesAndIcons);
   UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:self.typicalIcon1 tag:0];
