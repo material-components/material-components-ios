@@ -307,7 +307,7 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs" : @[ @"Text Field", @"Text Area" ],
+    @"breadcrumbs" : @[ @"Text Field", @"CIV Text Areas" ],
     @"primaryDemo" : @NO,
     @"presentable" : @NO,
   };
