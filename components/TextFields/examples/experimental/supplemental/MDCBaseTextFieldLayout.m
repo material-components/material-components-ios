@@ -140,7 +140,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
   }
 
   CGFloat clearButtonImageViewSideMargin =
-      (clearButton.sideLength - clearButton.imageViewSideLength) * 0.5;
+      (clearButton.sideLength - clearButton.imageViewSideLength) * (CGFloat)0.5;
   CGFloat actualClearButtonMinX = apparentClearButtonMinX - clearButtonImageViewSideMargin;
 
   

@@ -19,9 +19,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-// typedef NS_ENUM(NSUInteger, InputChipViewOrien) {
-//};
-
 @interface MDCBaseTextAreaLayout : NSObject
 @property(nonatomic, assign) CGFloat globalTextMinX;
 @property(nonatomic, assign) CGFloat globalTextMaxX;
@@ -42,13 +39,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, assign) CGPoint scrollViewContentOffset;
 
 @property(nonatomic, readonly) CGFloat calculatedHeight;
-//@property(nonatomic, readonly) CGFloat minimumHeight;
 @property(nonatomic, readonly) CGFloat contentAreaMaxY;
 
 @property(nonatomic, strong) NSArray<NSNumber *> *verticalGradientLocations;
 @property(nonatomic, strong) NSArray<NSNumber *> *horizontalGradientLocations;
-
-
 
 - (instancetype)initWithSize:(CGSize)size
                       containerStyler:(id<MDCContainedInputViewStyler>)containerStyler

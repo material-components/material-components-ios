@@ -19,6 +19,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MDCContainedInputViewLabelAnimator : NSObject
+
+@property (nonatomic, assign) NSTimeInterval animationDuration;
+
 - (UIFont *_Nonnull)floatingFontWithFont:(nonnull UIFont *)font
                          containerStyler:(nonnull id<MDCContainedInputViewStyler>)containerStyler;
 - (void)layOutPlaceholderLabel:(nonnull UILabel *)placeholderLabel

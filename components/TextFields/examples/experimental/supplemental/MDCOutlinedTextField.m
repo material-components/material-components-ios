@@ -85,11 +85,11 @@
 @implementation MDCOutlinedTextFieldPositioningDelegate
 
 - (CGFloat)assistiveLabelPaddingWithContainerHeight:(CGFloat)containerHeight {
-  return 0.13 * containerHeight;
+  return (CGFloat)0.13 * containerHeight;
 }
 
 - (CGFloat)defaultContainerHeightWithTextHeight:(CGFloat)textHeight {
-  return 3.3 * textHeight;
+  return (CGFloat)3.3 * textHeight;
 }
 
 - (CGFloat)containerHeightWithTextHeight:(CGFloat)textHeight
@@ -103,7 +103,7 @@
 - (CGFloat)floatingLabelMinYWithTextHeight:(CGFloat)textHeight
                        floatingLabelHeight:(CGFloat)floatingLabelHeight
                   preferredContainerHeight:(CGFloat)preferredContainerHeight {
-  return 0 - (0.5 * floatingLabelHeight);
+  return 0 - ((CGFloat)0.5 * floatingLabelHeight);
 }
 
 - (CGFloat)textMinYWithFloatingLabelWithTextHeight:(CGFloat)textHeight
@@ -111,8 +111,8 @@
                           preferredContainerHeight:(CGFloat)preferredContainerHeight {
   CGFloat containerHeight = [self containerHeightWithTextHeight:textHeight
                                        preferredContainerHeight:preferredContainerHeight];
-  CGFloat offset = containerHeight * 0.5;
-  return offset - (0.5 * textHeight);
+  CGFloat offset = containerHeight * (CGFloat)0.5;
+  return offset - ((CGFloat)0.5 * textHeight);
 }
 
 - (CGFloat)textMinYWithoutFloatingLabelWithTextHeight:(CGFloat)textHeight
@@ -120,8 +120,8 @@
                              preferredContainerHeight:(CGFloat)preferredContainerHeight {
   CGFloat containerHeight = [self containerHeightWithTextHeight:textHeight
                                        preferredContainerHeight:preferredContainerHeight];
-  CGFloat offset = containerHeight * 0.5;
-  return offset - (0.5 * textHeight);
+  CGFloat offset = containerHeight * (CGFloat)0.5;
+  return offset - ((CGFloat)0.5 * textHeight);
 }
 
 @end
