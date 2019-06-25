@@ -48,7 +48,7 @@ static const CGFloat kExpectedHeightTitlesAndIcons = 72;
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  //  self.recordMode = YES;
+  self.recordMode = YES;
 
   self.tabBarView = [[MDCTabBarView alloc] init];
   self.tabBarView.backgroundColor = UIColor.whiteColor;
@@ -137,4 +137,63 @@ static const CGFloat kExpectedHeightTitlesAndIcons = 72;
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
+- (void)testMultipleLineItemViewToFitInTheSingleScreen {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:nil tag:2];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:nil tag:5];
+  UITabBarItem *item4 = [[UITabBarItem alloc] initWithTitle:@"Four" image:nil tag:6];
+  UITabBarItem *item5 = [[UITabBarItem alloc] initWithTitle:@"Five" image:nil tag:7];
+  UITabBarItem *item6 = [[UITabBarItem alloc] initWithTitle:@"Six" image:nil tag:8];
+
+  // When
+  self.tabBarView.items = @[ item1, item2, item3, item4, item5, item6 ];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testTooManyItemsInScrollView {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:nil tag:2];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:nil tag:5];
+  UITabBarItem *item4 = [[UITabBarItem alloc] initWithTitle:@"Four" image:nil tag:6];
+  UITabBarItem *item5 = [[UITabBarItem alloc] initWithTitle:@"Five" image:nil tag:7];
+  UITabBarItem *item6 = [[UITabBarItem alloc] initWithTitle:@"Six" image:nil tag:8];
+  UITabBarItem *item7 = [[UITabBarItem alloc] initWithTitle:@"Seven" image:nil tag:8];
+  UITabBarItem *item8 = [[UITabBarItem alloc] initWithTitle:@"Eight" image:nil tag:8];
+
+  // When
+  self.tabBarView.items = @[ item1, item2, item3, item4, item5, item6, item7, item8 ];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testSuperLongItemViewInScrollView {
+  // Given
+  NSString *longString = @"This is a super long tab bar string.";
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:longString image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:nil tag:2];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:nil tag:5];
+
+  // When
+  self.tabBarView.items = @[ item1, item2, item3 ];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testTinyItemViewInJustifiedView {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:2];
+
+  // When
+  self.tabBarView.items = @[ item1, item2 ];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
 @end

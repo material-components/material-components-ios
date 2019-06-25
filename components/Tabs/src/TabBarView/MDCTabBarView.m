@@ -33,7 +33,6 @@ static const CGFloat kMinHeight = 48;
 
 - (instancetype)init {
   self = [super initWithFrame:CGRectZero];
-  self.translatesAutoresizingMaskIntoConstraints = NO;
   if (self) {
     _items = @[];
     [self setUpSubviews];
@@ -88,11 +87,6 @@ static const CGFloat kMinHeight = 48;
   [self setUpItemViews];
 
   [NSLayoutConstraint activateConstraints:@[
-    [self.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
-    [self.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
-    [self.topAnchor constraintEqualToAnchor:self.topAnchor],
-    [self.bottomAnchor constraintEqualToAnchor:self.bottomAnchor],
-
     [_stackView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
     [_stackView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
     [_stackView.widthAnchor constraintGreaterThanOrEqualToAnchor:self.widthAnchor],
@@ -115,7 +109,7 @@ static const CGFloat kMinHeight = 48;
   }
 
   for (UITabBarItem *item in self.items) {
-    MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] initWithFrame:CGRectZero];
+    MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
     itemView.translatesAutoresizingMaskIntoConstraints = NO;
     itemView.title = item.title;
     itemView.image = item.image;
@@ -126,7 +120,7 @@ static const CGFloat kMinHeight = 48;
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  CGFloat availableWidth = self.frame.size.width;
+  CGFloat availableWidth = self.bounds.size.width;
   CGFloat maxWidth = 0;
   for (UIView *itemView in self.stackView.arrangedSubviews) {
     CGSize contentSize = itemView.intrinsicContentSize;
@@ -135,13 +129,13 @@ static const CGFloat kMinHeight = 48;
     }
   }
   CGFloat requiredWidth = maxWidth * self.items.count;
-  BOOL canBeJustified = requiredWidth > availableWidth;
-  self.stackView.distribution = canBeJustified ? UIStackViewDistributionFillProportionally
-                                               : UIStackViewDistributionFillEqually;
+  BOOL canBeJustified = availableWidth > requiredWidth;
+  self.stackView.distribution = canBeJustified ? UIStackViewDistributionFillEqually
+                                               : UIStackViewDistributionFillProportionally;
 }
 
 - (CGSize)intrinsicContentSize {
-  return CGSizeMake(UIViewNoIntrinsicMetric, kMinHeight);
+  return CGSizeMake(self.bounds.size.width, kMinHeight);
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
