@@ -48,7 +48,6 @@ static const CGFloat kMinHeight = 48;
   return self.backgroundColor;
 }
 
-
 - (void)setItems:(NSArray<UITabBarItem *> *)items {
   NSParameterAssert(items);
 
