@@ -140,7 +140,10 @@ static NSString *const kTitleKeyPath = @"title";
                       ofObject:(id)object
                         change:(NSDictionary<NSKeyValueChangeKey, id> *)change
                        context:(void *)context {
-  if (context == kKVOContextMDCTabBarView && object) {
+  if (context == kKVOContextMDCTabBarView) {
+    if (!object) {
+      return;
+    }
     NSUInteger indexOfObject = [self.items indexOfObject:object];
     if (indexOfObject == NSNotFound) {
       return;
