@@ -153,7 +153,25 @@ static const CGFloat kExpectedHeightTitlesAndIcons = 72;
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
-- (void)testTooManyItemsInScrollView {
+- (void)testItemViewWithIntrinsicSizeToFitInTheSingleScreen {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:nil tag:2];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:nil tag:5];
+  UITabBarItem *item4 = [[UITabBarItem alloc] initWithTitle:@"Four" image:nil tag:6];
+  UITabBarItem *item5 = [[UITabBarItem alloc] initWithTitle:@"Five" image:nil tag:7];
+  UITabBarItem *item6 = [[UITabBarItem alloc] initWithTitle:@"Six" image:nil tag:8];
+
+  // When
+  self.tabBarView.items = @[ item1, item2, item3, item4, item5, item6 ];
+  CGSize size = self.tabBarView.intrinsicContentSize;
+  self.tabBarView.bounds = CGRectMake(0, 0, size.width, kExpectedHeightTitlesOrIconsOnly);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testItemsLargerThanBoundsChangesToScrollableLayout {
   // Given
   UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:nil tag:0];
   UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:nil tag:2];
@@ -171,9 +189,11 @@ static const CGFloat kExpectedHeightTitlesAndIcons = 72;
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
-- (void)testSuperLongItemViewInScrollView {
+- (void)testVeryLongItemLimitsWidth {
   // Given
-  NSString *longString = @"This is a super long tab bar string.";
+  self.tabBarView.bounds = CGRectMake(0, 0, 720, kExpectedHeightTitlesAndIcons);
+  NSString *longString =
+    @"This is a super long tab bar string. And it should be longer than 360 and be multipl line.";
   UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:longString image:nil tag:0];
   UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:nil tag:2];
   UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:nil tag:5];

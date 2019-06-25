@@ -20,8 +20,11 @@ static const CGFloat kMinHeight = 48;
 
 @interface MDCTabBarView ()
 
-/** The stack view that contains all tab items. */
+/** The stack view that contains all tab item views. */
 @property(nonatomic) UIStackView *stackView;
+
+/** The constraints managing this view. */
+@property(nonatomic, strong) NSArray *viewConstraints;
 
 @end
 
@@ -33,7 +36,7 @@ static const CGFloat kMinHeight = 48;
   self = [super init];
   if (self) {
     _items = @[];
-    [self setUpSubviews];
+    [self commonMDCTabBarViewInit];
   }
   return self;
 }
@@ -78,19 +81,11 @@ static const CGFloat kMinHeight = 48;
   _selectedItem = selectedItem;
 }
 
-- (void)setUpSubviews {
+- (void)commonMDCTabBarViewInit {
   self.backgroundColor = UIColor.whiteColor;
 
   [self setUpStackView];
   [self setUpItemViews];
-
-  [NSLayoutConstraint activateConstraints:@[
-    [_stackView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
-    [_stackView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
-    [_stackView.widthAnchor constraintGreaterThanOrEqualToAnchor:self.widthAnchor],
-    [_stackView.topAnchor constraintEqualToAnchor:self.topAnchor],
-    [_stackView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor],
-  ]];
 }
 
 - (void)setUpStackView {
@@ -132,12 +127,42 @@ static const CGFloat kMinHeight = 48;
                                                : UIStackViewDistributionFillProportionally;
 }
 
+- (void)updateConstraints {
+  [super updateConstraints];
+
+  if (self.viewConstraints) {
+    return;
+  }
+
+  NSMutableArray *constraints = [NSMutableArray array];
+  [constraints addObjectsFromArray:@[
+    [_stackView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
+    [_stackView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
+    [_stackView.widthAnchor constraintGreaterThanOrEqualToAnchor:self.widthAnchor],
+    [_stackView.topAnchor constraintEqualToAnchor:self.topAnchor],
+    [_stackView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor],
+  ]];
+
+  [self addConstraints:constraints];
+  self.viewConstraints = constraints;
+}
+
 - (CGSize)intrinsicContentSize {
-  return CGSizeMake(self.bounds.size.width, kMinHeight);
+  CGFloat totalWidth = 0;
+  CGFloat maxHeight = 0;
+  for (UIView *itemView in self.stackView.arrangedSubviews) {
+    CGSize contentSize = itemView.intrinsicContentSize;
+    totalWidth += contentSize.width;
+    if (contentSize.height > maxHeight) {
+      maxHeight = contentSize.height;
+    }
+  }
+  return CGSizeMake(totalWidth, MAX(kMinHeight, maxHeight));
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
-  return CGSizeMake(size.width, MAX(size.height, kMinHeight));
+  CGSize intrinsicSize = self.intrinsicContentSize;
+  return CGSizeMake(MIN(intrinsicSize.width, size.width), MAX(intrinsicSize.height, size.height));
 }
 
 @end
