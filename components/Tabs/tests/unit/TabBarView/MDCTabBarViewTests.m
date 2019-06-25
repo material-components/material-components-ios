@@ -137,4 +137,30 @@
   XCTAssertEqual(self.tabBarView.selectedItem, self.itemA);
 }
 
+#pragma mark - Properties
+
+- (void)testSettingBarTintColorUpdatesBackgroundColor {
+  // Given
+  self.tabBarView.backgroundColor = nil;
+
+  // When
+  self.tabBarView.barTintColor = UIColor.orangeColor;
+
+  // Then
+  XCTAssertEqual(self.tabBarView.barTintColor, UIColor.orangeColor);
+  XCTAssertEqual(self.tabBarView.backgroundColor, self.tabBarView.barTintColor);
+}
+
+- (void)testSettingBackgroundColorUpdatesBarTintColor {
+  // Given
+  self.tabBarView.barTintColor = nil;
+
+  // When
+  self.tabBarView.backgroundColor = UIColor.purpleColor;
+
+  // Then
+  XCTAssertEqual(self.tabBarView.backgroundColor, UIColor.purpleColor);
+  XCTAssertEqual(self.tabBarView.barTintColor, self.tabBarView.backgroundColor);
+}
+
 @end

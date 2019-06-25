@@ -40,6 +40,14 @@ static const CGFloat kMinHeight = 48;
 
 #pragma mark - Properties
 
+- (void)setBarTintColor:(UIColor *)barTintColor {
+  self.backgroundColor = barTintColor;
+}
+
+- (UIColor *)barTintColor {
+  return self.backgroundColor;
+}
+
 - (void)setItems:(NSArray<UITabBarItem *> *)items {
   NSParameterAssert(items);
 
