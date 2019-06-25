@@ -382,7 +382,7 @@ static const NSUInteger kDefaultVerticalPadding = 20;
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs" : @[ @"Text Field", @"Input Text Field (Manual Layout)" ],
+    @"breadcrumbs" : @[ @"Text Field", @"CIV TextFields" ],
     @"primaryDemo" : @NO,
     @"presentable" : @NO,
   };
