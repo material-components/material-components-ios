@@ -49,11 +49,11 @@ static NSString *const kLongTitleArabic =
   //  self.recordMode = YES;
 
   self.itemView = [[MDCTabBarViewItemView alloc] init];
-  self.itemView.title = kShortTitleLatin;
+  self.itemView.titleLabel.text = kShortTitleLatin;
   // Default to white since in actual use the background would be transparent.
   self.itemView.backgroundColor = UIColor.whiteColor;
-  self.itemView.image = [UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
-                                           withStyle:MDCSnapshotTestImageStyleFramedX];
+  self.itemView.iconImageView.image =
+      [UIImage mdc_testImageOfSize:CGSizeMake(24, 24) withStyle:MDCSnapshotTestImageStyleFramedX];
 }
 
 - (void)tearDown {
@@ -79,8 +79,8 @@ static NSString *const kLongTitleArabic =
 
 - (void)testNoTitleNoImageIntrinsicContentSize {
   // When
-  self.itemView.title = nil;
-  self.itemView.image = nil;
+  self.itemView.titleLabel.text = nil;
+  self.itemView.iconImageView.image = nil;
   CGSize intrinsicContentSize = self.itemView.intrinsicContentSize;
   self.itemView.bounds = CGRectMake(0, 0, intrinsicContentSize.width, intrinsicContentSize.height);
 
@@ -99,7 +99,7 @@ static NSString *const kLongTitleArabic =
 
 - (void)testShortTitleRegularImageIntrinsicContentSizeRTLArabic {
   // When
-  self.itemView.title = kShortTitleArabic;
+  self.itemView.titleLabel.text = kShortTitleArabic;
   [self changeToRTL];
   CGSize intrinsicContentSize = self.itemView.intrinsicContentSize;
   self.itemView.bounds = CGRectMake(0, 0, intrinsicContentSize.width, intrinsicContentSize.height);
@@ -110,9 +110,10 @@ static NSString *const kLongTitleArabic =
 
 - (void)testLongTitleLargeImageIntrinsicContentSizeLTRLatin {
   // When
-  self.itemView.title = kLongTitleLatin;
-  self.itemView.image = [UIImage mdc_testImageOfSize:CGSizeMake(48, 48)
-                                           withStyle:MDCSnapshotTestImageStyleRectangles];
+  self.itemView.titleLabel.text = kLongTitleLatin;
+  self.itemView.iconImageView.image =
+      [UIImage mdc_testImageOfSize:CGSizeMake(48, 48)
+                         withStyle:MDCSnapshotTestImageStyleRectangles];
   CGSize intrinsicContentSize = self.itemView.intrinsicContentSize;
   self.itemView.bounds = CGRectMake(0, 0, intrinsicContentSize.width, intrinsicContentSize.height);
 
@@ -122,9 +123,10 @@ static NSString *const kLongTitleArabic =
 
 - (void)testLongTitleLargeImageIntrinsicContentSizeRTLArabic {
   // When
-  self.itemView.title = kLongTitleArabic;
-  self.itemView.image = [UIImage mdc_testImageOfSize:CGSizeMake(48, 48)
-                                           withStyle:MDCSnapshotTestImageStyleRectangles];
+  self.itemView.titleLabel.text = kLongTitleArabic;
+  self.itemView.iconImageView.image =
+      [UIImage mdc_testImageOfSize:CGSizeMake(48, 48)
+                         withStyle:MDCSnapshotTestImageStyleRectangles];
   [self changeToRTL];
   CGSize intrinsicContentSize = self.itemView.intrinsicContentSize;
   self.itemView.bounds = CGRectMake(0, 0, intrinsicContentSize.width, intrinsicContentSize.height);
@@ -135,9 +137,10 @@ static NSString *const kLongTitleArabic =
 
 - (void)testLongTitleLargeImageTooSmallSizeLTRLatin {
   // When
-  self.itemView.title = kLongTitleLatin;
-  self.itemView.image = [UIImage mdc_testImageOfSize:CGSizeMake(48, 48)
-                                           withStyle:MDCSnapshotTestImageStyleRectangles];
+  self.itemView.titleLabel.text = kLongTitleLatin;
+  self.itemView.iconImageView.image =
+      [UIImage mdc_testImageOfSize:CGSizeMake(48, 48)
+                         withStyle:MDCSnapshotTestImageStyleRectangles];
   self.itemView.bounds = CGRectMake(0, 0, 36, 36);
 
   // Then
@@ -146,9 +149,10 @@ static NSString *const kLongTitleArabic =
 
 - (void)testLongTitleLargeImageTooSmallSizeRTLArabic {
   // When
-  self.itemView.title = kLongTitleArabic;
-  self.itemView.image = [UIImage mdc_testImageOfSize:CGSizeMake(48, 48)
-                                           withStyle:MDCSnapshotTestImageStyleRectangles];
+  self.itemView.titleLabel.text = kLongTitleArabic;
+  self.itemView.iconImageView.image =
+      [UIImage mdc_testImageOfSize:CGSizeMake(48, 48)
+                         withStyle:MDCSnapshotTestImageStyleRectangles];
   [self changeToRTL];
   self.itemView.bounds = CGRectMake(0, 0, 36, 40);
 
@@ -158,9 +162,10 @@ static NSString *const kLongTitleArabic =
 
 - (void)testLongTitleLargeImageVeryTallSizeLTRLatin {
   // When
-  self.itemView.title = kLongTitleLatin;
-  self.itemView.image = [UIImage mdc_testImageOfSize:CGSizeMake(48, 48)
-                                           withStyle:MDCSnapshotTestImageStyleRectangles];
+  self.itemView.titleLabel.text = kLongTitleLatin;
+  self.itemView.iconImageView.image =
+      [UIImage mdc_testImageOfSize:CGSizeMake(48, 48)
+                         withStyle:MDCSnapshotTestImageStyleRectangles];
   self.itemView.bounds = CGRectMake(0, 0, 36, 360);
 
   // Then
@@ -169,9 +174,10 @@ static NSString *const kLongTitleArabic =
 
 - (void)testLongTitleLargeImageVeryTallSizeRTLArabic {
   // When
-  self.itemView.title = kLongTitleArabic;
-  self.itemView.image = [UIImage mdc_testImageOfSize:CGSizeMake(48, 48)
-                                           withStyle:MDCSnapshotTestImageStyleRectangles];
+  self.itemView.titleLabel.text = kLongTitleArabic;
+  self.itemView.iconImageView.image =
+      [UIImage mdc_testImageOfSize:CGSizeMake(48, 48)
+                         withStyle:MDCSnapshotTestImageStyleRectangles];
   [self changeToRTL];
   self.itemView.bounds = CGRectMake(0, 0, 36, 360);
 
@@ -181,9 +187,10 @@ static NSString *const kLongTitleArabic =
 
 - (void)testLongTitleLargeImageWidestSizeLTRLatin {
   // When
-  self.itemView.title = kLongTitleLatin;
-  self.itemView.image = [UIImage mdc_testImageOfSize:CGSizeMake(48, 48)
-                                           withStyle:MDCSnapshotTestImageStyleRectangles];
+  self.itemView.titleLabel.text = kLongTitleLatin;
+  self.itemView.iconImageView.image =
+      [UIImage mdc_testImageOfSize:CGSizeMake(48, 48)
+                         withStyle:MDCSnapshotTestImageStyleRectangles];
   self.itemView.bounds = CGRectMake(0, 0, 1200, 36);
 
   // Then
@@ -192,9 +199,10 @@ static NSString *const kLongTitleArabic =
 
 - (void)testLongTitleLargeImageWidestSizeRTLArabic {
   // When
-  self.itemView.title = kLongTitleArabic;
-  self.itemView.image = [UIImage mdc_testImageOfSize:CGSizeMake(48, 48)
-                                           withStyle:MDCSnapshotTestImageStyleRectangles];
+  self.itemView.titleLabel.text = kLongTitleArabic;
+  self.itemView.iconImageView.image =
+      [UIImage mdc_testImageOfSize:CGSizeMake(48, 48)
+                         withStyle:MDCSnapshotTestImageStyleRectangles];
   [self changeToRTL];
   self.itemView.bounds = CGRectMake(0, 0, 1200, 36);
 
