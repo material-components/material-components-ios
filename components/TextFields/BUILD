@@ -57,6 +57,10 @@ mdc_public_objc_library(
 )
 
 mdc_extension_objc_library(
+    name = "ContainedInputView",
+)
+
+mdc_extension_objc_library(
     name = "Theming",
     deps = [
         ":ColorThemer",
@@ -148,7 +152,10 @@ mdc_objc_library(
 mdc_objc_library(
     name = "unit_test_sources",
     testonly = 1,
-    srcs = glob(["tests/unit/*.m"]),
+    srcs = glob([
+        "tests/unit/*.m",
+        "tests/unit/ContainedInputView/*.m",
+    ]),
     hdrs = glob(["tests/unit/*.h"]),
     sdk_frameworks = [
         "UIKit",
@@ -156,6 +163,7 @@ mdc_objc_library(
     ],
     visibility = ["//visibility:private"],
     deps = [
+        ":ContainedInputView",
         ":ColorThemer",
         ":FontThemer",
         ":TextFields",

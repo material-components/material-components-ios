@@ -12,20 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <UIKit/UIKit.h>
+#import "MDCBaseTextField.h"
 
-/**
- An implementation of Material Tabs (https://material.io/design/components/tabs.html).
- */
-__attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScrollView
-
-/** The set of items displayed in the Tab bar. */
-@property(nonnull, nonatomic, copy) NSArray<UITabBarItem *> *items;
-
-/** The currently-selected item in the Tab bar. */
-@property(nullable, nonatomic, strong) UITabBarItem *selectedItem;
-
-/** The color of the Tab bar's background. */
-@property(nullable, nonatomic, copy) UIColor *barTintColor;
-
+@implementation MDCBaseTextField
 @end

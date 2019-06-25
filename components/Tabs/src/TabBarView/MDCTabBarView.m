@@ -43,6 +43,14 @@ static const CGFloat kMinHeight = 48;
 
 #pragma mark - Properties
 
+- (void)setBarTintColor:(UIColor *)barTintColor {
+  self.backgroundColor = barTintColor;
+}
+
+- (UIColor *)barTintColor {
+  return self.backgroundColor;
+}
+
 - (void)setItems:(NSArray<UITabBarItem *> *)items {
   NSParameterAssert(items);
 
@@ -70,12 +78,10 @@ static const CGFloat kMinHeight = 48;
   }
 
   NSUInteger itemIndex = [self.items indexOfObject:selectedItem];
+  // Don't crash, just ignore if `selectedItem` isn't present in `_items`. This is the same behavior
+  // as UITabBar.
   if (selectedItem && (itemIndex == NSNotFound)) {
-    NSString *itemTitle = selectedItem.title;
-    NSString *exceptionMessage =
-        [NSString stringWithFormat:@"%@ is not a member of the tab bar's `items`.", itemTitle];
-    [[NSException exceptionWithName:NSInvalidArgumentException reason:exceptionMessage
-                           userInfo:nil] raise];
+    return;
   }
 
   _selectedItem = selectedItem;

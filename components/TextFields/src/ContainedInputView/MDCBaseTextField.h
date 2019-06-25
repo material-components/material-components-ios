@@ -15,17 +15,8 @@
 #import <UIKit/UIKit.h>
 
 /**
- An implementation of Material Tabs (https://material.io/design/components/tabs.html).
+ A UITextField subclass that will potentially provide the foundation for Material TextFields in the
+ future. This class is under active development and should be used with caution.
  */
-__attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScrollView
-
-/** The set of items displayed in the Tab bar. */
-@property(nonnull, nonatomic, copy) NSArray<UITabBarItem *> *items;
-
-/** The currently-selected item in the Tab bar. */
-@property(nullable, nonatomic, strong) UITabBarItem *selectedItem;
-
-/** The color of the Tab bar's background. */
-@property(nullable, nonatomic, copy) UIColor *barTintColor;
-
+@interface MDCBaseTextField : UITextField
 @end

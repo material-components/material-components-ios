@@ -109,25 +109,18 @@
   XCTAssertNil(self.tabBarView.selectedItem);
 }
 
-// Tab bar should throw error when select the item that doesn't belongs to items.
+// Tab bar should ignore setting a `selectedItem` to something not in the `items` array.
 - (void)testSafelyHandlesNonExistItem {
   // Given
   self.tabBarView.items = @[];
-  XCTAssertNil(self.tabBarView.selectedItem);
-
-  // When set selected item to nil.
   self.tabBarView.selectedItem = nil;
 
-  // Then should make no difference to the selection.
-  XCTAssertNil(self.tabBarView.selectedItem);
-
-  // Given items {A, B} which selected item A.
+  // When
   self.tabBarView.items = @[ self.itemA, self.itemB ];
-  self.tabBarView.selectedItem = self.itemA;
-  XCTAssertEqual(self.tabBarView.selectedItem, self.itemA);
+  self.tabBarView.selectedItem = self.itemC;
 
-  // When set selected item to C, then should raise exception.
-  XCTAssertThrows(self.tabBarView.selectedItem = self.itemC);
+  // Then
+  XCTAssertNil(self.tabBarView.selectedItem);
 }
 
 // Setting items to the same set of items should change nothing.
@@ -142,6 +135,32 @@
 
   // Then should make no difference to the selection.
   XCTAssertEqual(self.tabBarView.selectedItem, self.itemA);
+}
+
+#pragma mark - Properties
+
+- (void)testSettingBarTintColorUpdatesBackgroundColor {
+  // Given
+  self.tabBarView.backgroundColor = nil;
+
+  // When
+  self.tabBarView.barTintColor = UIColor.orangeColor;
+
+  // Then
+  XCTAssertEqual(self.tabBarView.barTintColor, UIColor.orangeColor);
+  XCTAssertEqual(self.tabBarView.backgroundColor, self.tabBarView.barTintColor);
+}
+
+- (void)testSettingBackgroundColorUpdatesBarTintColor {
+  // Given
+  self.tabBarView.barTintColor = nil;
+
+  // When
+  self.tabBarView.backgroundColor = UIColor.purpleColor;
+
+  // Then
+  XCTAssertEqual(self.tabBarView.backgroundColor, UIColor.purpleColor);
+  XCTAssertEqual(self.tabBarView.barTintColor, self.tabBarView.backgroundColor);
 }
 
 @end

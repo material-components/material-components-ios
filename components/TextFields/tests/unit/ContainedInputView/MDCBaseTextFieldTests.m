@@ -12,20 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <UIKit/UIKit.h>
+#import <XCTest/XCTest.h>
 
-/**
- An implementation of Material Tabs (https://material.io/design/components/tabs.html).
- */
-__attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScrollView
+#import "MaterialTextFields+ContainedInputView.h"
 
-/** The set of items displayed in the Tab bar. */
-@property(nonnull, nonatomic, copy) NSArray<UITabBarItem *> *items;
+@interface MDCBaseTextFieldTests : XCTestCase
 
-/** The currently-selected item in the Tab bar. */
-@property(nullable, nonatomic, strong) UITabBarItem *selectedItem;
+@end
 
-/** The color of the Tab bar's background. */
-@property(nullable, nonatomic, copy) UIColor *barTintColor;
-
+@implementation MDCBaseTextFieldTests
 @end
