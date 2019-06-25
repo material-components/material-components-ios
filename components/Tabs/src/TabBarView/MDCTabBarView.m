@@ -95,16 +95,16 @@ static const CGFloat kMinHeight = 48;
 }
 
 - (void)setUpStackView {
-  _stackView = [[UIStackView alloc] init];
-  _stackView.axis = UILayoutConstraintAxisHorizontal;
-  _stackView.translatesAutoresizingMaskIntoConstraints = NO;
-  [self addSubview:_stackView];
+  _containerView = [[UIStackView alloc] init];
+  _containerView.axis = UILayoutConstraintAxisHorizontal;
+  _containerView.translatesAutoresizingMaskIntoConstraints = NO;
+  [self addSubview:_containerView];
 }
 
 - (void)setUpItemViews {
-  for (UIView *view in self.stackView.arrangedSubviews) {
+  for (UIView *view in self.containerView.arrangedSubviews) {
     [view removeFromSuperview];
-    [_stackView removeArrangedSubview:view];
+    [_containerView removeArrangedSubview:view];
   }
 
   for (UITabBarItem *item in self.items) {
@@ -112,7 +112,7 @@ static const CGFloat kMinHeight = 48;
     itemView.translatesAutoresizingMaskIntoConstraints = NO;
     itemView.titleLabel.text = item.title;
     itemView.iconImageView.image = item.image;
-    [_stackView addArrangedSubview:itemView];
+    [_containerView addArrangedSubview:itemView];
   }
 }
 
@@ -121,7 +121,7 @@ static const CGFloat kMinHeight = 48;
 
   CGFloat availableWidth = self.bounds.size.width;
   CGFloat maxWidth = 0;
-  for (UIView *itemView in self.stackView.arrangedSubviews) {
+  for (UIView *itemView in self.containerView.arrangedSubviews) {
     CGSize contentSize = itemView.intrinsicContentSize;
     if (contentSize.width > maxWidth) {
       maxWidth = contentSize.width;
@@ -129,8 +129,8 @@ static const CGFloat kMinHeight = 48;
   }
   CGFloat requiredWidth = maxWidth * self.items.count;
   BOOL canBeJustified = availableWidth > requiredWidth;
-  self.stackView.distribution = canBeJustified ? UIStackViewDistributionFillEqually
-                                               : UIStackViewDistributionFillProportionally;
+  self.containerView.distribution = canBeJustified ? UIStackViewDistributionFillEqually
+                                                   : UIStackViewDistributionFillProportionally;
 }
 
 - (void)updateConstraints {
@@ -142,11 +142,11 @@ static const CGFloat kMinHeight = 48;
 
   NSMutableArray *constraints = [NSMutableArray array];
   [constraints addObjectsFromArray:@[
-    [_stackView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
-    [_stackView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
-    [_stackView.widthAnchor constraintGreaterThanOrEqualToAnchor:self.widthAnchor],
-    [_stackView.topAnchor constraintEqualToAnchor:self.topAnchor],
-    [_stackView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor],
+    [_containerView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
+    [_containerView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
+    [_containerView.widthAnchor constraintGreaterThanOrEqualToAnchor:self.widthAnchor],
+    [_containerView.topAnchor constraintEqualToAnchor:self.topAnchor],
+    [_containerView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor],
   ]];
 
   [self addConstraints:constraints];
@@ -156,7 +156,7 @@ static const CGFloat kMinHeight = 48;
 - (CGSize)intrinsicContentSize {
   CGFloat totalWidth = 0;
   CGFloat maxHeight = 0;
-  for (UIView *itemView in self.stackView.arrangedSubviews) {
+  for (UIView *itemView in self.containerView.arrangedSubviews) {
     CGSize contentSize = itemView.intrinsicContentSize;
     totalWidth += contentSize.width;
     if (contentSize.height > maxHeight) {
