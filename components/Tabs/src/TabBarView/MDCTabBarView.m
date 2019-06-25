@@ -24,7 +24,7 @@ static const CGFloat kMinHeight = 48;
 @property(nonnull, nonatomic, strong) NSArray<UIView *> *itemViews;
 
 /** The title colors for bar items. */
-@property(nonnull, nonatomic, strong) NSMutableDictionary<NSNumber *, UIColor *> *titleColors;
+@property(nonnull, nonatomic, strong) NSMutableDictionary<NSNumber *, UIColor *> *stateToTitleColor;
 
 @end
 
@@ -128,14 +128,14 @@ static const CGFloat kMinHeight = 48;
 }
 
 - (void)setTitleColor:(UIColor *)titleColor forState:(UIControlState)state {
-  self.titleColors[@(state)] = titleColor;
+  self.stateToTitleColor[@(state)] = titleColor;
   [self updateTitleColorForAllViews];
 }
 
 - (UIColor *)titleColorForState:(UIControlState)state {
-  UIColor *titleColor = self.titleColors[@(state)];
+  UIColor *titleColor = self.stateToTitleColor[@(state)];
   if (!titleColor) {
-    titleColor = self.titleColors[@(UIControlStateNormal)];
+    titleColor = self.stateToTitleColor[@(UIControlStateNormal)];
   }
   return titleColor;
 }
