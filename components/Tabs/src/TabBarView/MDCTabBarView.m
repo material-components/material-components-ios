@@ -21,7 +21,7 @@ static const CGFloat kMinHeight = 48;
 @interface MDCTabBarView ()
 
 /** The stack view that contains all tab item views. */
-@property(nonatomic) UIStackView *stackView;
+@property(nonnull, nonatomic, strong) UIStackView *containerView;
 
 /** The constraints managing this view. */
 @property(nonatomic, strong) NSArray *viewConstraints;
