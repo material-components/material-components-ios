@@ -106,7 +106,7 @@ static NSString *const kTitleKeyPath = @"title";
   if (itemIndex == NSNotFound) {
     return;
   }
-  
+
   UIView *itemView = self.itemViews[itemIndex];
   if ([itemView isKindOfClass:[MDCTabBarViewItemView class]]) {
     MDCTabBarViewItemView *selectedItemView = (MDCTabBarViewItemView *)itemView;
