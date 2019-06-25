@@ -173,7 +173,6 @@ static const CGFloat kExpectedHeightTitlesAndIcons = 72;
 }
 
 - (void)testSetTitleColorExplicitlyToNilRendersSomeDefault {
-  self.recordMode = YES;
   // Given
   self.tabBarView.bounds = CGRectMake(0, 0, 360, kExpectedHeightTitlesAndIcons);
   UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:self.typicalIcon1 tag:0];

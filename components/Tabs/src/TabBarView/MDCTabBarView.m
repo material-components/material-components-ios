@@ -37,7 +37,7 @@ static const CGFloat kMinHeight = 48;
   if (self) {
     _items = @[];
     _itemViews = @[];
-    _titleColors = [NSMutableDictionary dictionary];
+    _stateToTitleColor = [NSMutableDictionary dictionary];
   }
   return self;
 }
