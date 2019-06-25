@@ -26,6 +26,9 @@ static const CGFloat kMinHeight = 48;
 /** The constraints managing this view. */
 @property(nonatomic, strong) NSArray *viewConstraints;
 
+/** The title colors for bar items. */
+@property(nonnull, nonatomic, strong) NSMutableDictionary<NSNumber *, UIColor *> *stateToTitleColor;
+
 @end
 
 @implementation MDCTabBarView
@@ -36,6 +39,7 @@ static const CGFloat kMinHeight = 48;
   self = [super init];
   if (self) {
     _items = @[];
+    _stateToTitleColor = [NSMutableDictionary dictionary];
     [self commonMDCTabBarViewInit];
   }
   return self;
@@ -85,6 +89,42 @@ static const CGFloat kMinHeight = 48;
   }
 
   _selectedItem = selectedItem;
+  [self updateTitleColorForAllViews];
+}
+
+- (void)updateTitleColorForAllViews {
+  for (UITabBarItem *item in self.items) {
+    NSUInteger indexOfItem = [self.items indexOfObject:item];
+    // This is a significant error, but defensive coding is preferred.
+    if (indexOfItem == NSNotFound || indexOfItem >= self.containerView.arrangedSubviews.count) {
+      NSAssert(NO, @"Unable to find associated item view for (%@)", item);
+      continue;
+    }
+    UIView *itemView = self.containerView.arrangedSubviews[indexOfItem];
+    // Skip custom views
+    if (![itemView isKindOfClass:[MDCTabBarViewItemView class]]) {
+      continue;
+    }
+    MDCTabBarViewItemView *tabBarViewItemView = (MDCTabBarViewItemView *)itemView;
+    if (item == self.selectedItem) {
+      tabBarViewItemView.titleLabel.textColor = [self titleColorForState:UIControlStateSelected];
+    } else {
+      tabBarViewItemView.titleLabel.textColor = [self titleColorForState:UIControlStateNormal];
+    }
+  }
+}
+
+- (void)setTitleColor:(UIColor *)titleColor forState:(UIControlState)state {
+  self.stateToTitleColor[@(state)] = titleColor;
+  [self updateTitleColorForAllViews];
+}
+
+- (UIColor *)titleColorForState:(UIControlState)state {
+  UIColor *titleColor = self.stateToTitleColor[@(state)];
+  if (!titleColor) {
+    titleColor = self.stateToTitleColor[@(UIControlStateNormal)];
+  }
+  return titleColor;
 }
 
 #pragma mark - UIView
@@ -170,6 +210,7 @@ static const CGFloat kMinHeight = 48;
     MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
     itemView.translatesAutoresizingMaskIntoConstraints = NO;
     itemView.titleLabel.text = item.title;
+    itemView.titleLabel.textColor = [self titleColorForState:UIControlStateNormal];
     itemView.iconImageView.image = item.image;
     [_containerView addArrangedSubview:itemView];
   }
