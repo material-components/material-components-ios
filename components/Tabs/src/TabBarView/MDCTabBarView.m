@@ -128,14 +128,14 @@ static const CGFloat kMinHeight = 48;
 }
 
 - (void)setTitleColor:(UIColor *)titleColor forState:(UIControlState)state {
-  _titleColors[@(state)] = titleColor;
+  self.titleColors[@(state)] = titleColor;
   [self updateTitleColorForAllViews];
 }
 
 - (UIColor *)titleColorForState:(UIControlState)state {
-  UIColor *titleColor = _titleColors[@(state)];
+  UIColor *titleColor = self.titleColors[@(state)];
   if (!titleColor) {
-    titleColor = _titleColors[@(UIControlStateNormal)];
+    titleColor = self.titleColors[@(UIControlStateNormal)];
   }
   return titleColor;
 }
