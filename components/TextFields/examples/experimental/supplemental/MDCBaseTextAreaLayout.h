@@ -23,8 +23,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, assign) CGFloat globalTextMinX;
 @property(nonatomic, assign) CGFloat globalTextMaxX;
 
-@property(nonatomic, assign) CGRect floatingLabelFrameFloating;
-@property(nonatomic, assign) CGRect floatingLabelFrameNormal;
+@property(nonatomic, assign) CGRect floatingLabelFrame;
+@property(nonatomic, assign) CGRect normalLabelFrame;
 
 @property(nonatomic, assign) CGRect textViewFrame;
 
@@ -47,10 +47,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithSize:(CGSize)size
                       containerStyler:(id<MDCContainedInputViewStyler>)containerStyler
                                  text:(NSString *)text
-                          placeholder:(NSString *)placeholder
                                  font:(UIFont *)font
                          floatingFont:(UIFont *)floatingFont
-                   floatingLabelState:(MDCContainedInputViewFloatingLabelState)floatingLabelState
+                                label:(UILabel *)label
+                   floatingLabelState:(MDCContainedInputViewLabelState)floatingLabelState
                    leftAssistiveLabel:(UILabel *)leftAssistiveLabel
                   rightAssistiveLabel:(UILabel *)rightAssistiveLabel
            underlineLabelDrawPriority:

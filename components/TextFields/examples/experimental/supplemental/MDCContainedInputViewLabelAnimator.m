@@ -30,30 +30,23 @@
   return self;
 }
 
-- (UIFont *)floatingFontWithFont:(UIFont *)font
-                 containerStyler:(id<MDCContainedInputViewStyler>)containerStyler {
-  CGFloat scaleFactor = [containerStyler floatingFontSizeScaleFactor];
-  CGFloat floatingFontSize = font.pointSize * scaleFactor;
-  return [font fontWithSize:floatingFontSize];
-}
-
-- (void)layOutFloatingLabel:(UILabel *)floatingLabel
-                      state:(MDCContainedInputViewFloatingLabelState)floatingLabelState
-                normalFrame:(CGRect)normalFrame
-              floatingFrame:(CGRect)floatingFrame
-                 normalFont:(UIFont *)normalFont
-               floatingFont:(UIFont *)floatingFont {
+- (void)layOutLabel:(nonnull UILabel *)floatingLabel
+              state:(MDCContainedInputViewLabelState)floatingLabelState
+   normalLabelFrame:(CGRect)normalLabelFrame
+ floatingLabelFrame:(CGRect)floatingLabelFrame
+         normalFont:(nonnull UIFont *)normalFont
+       floatingFont:(nonnull UIFont *)floatingFont {
   UIFont *targetFont = normalFont;
-  CGRect targetFrame = normalFrame;
+  CGRect targetFrame = normalLabelFrame;
   BOOL floatingLabelShouldHide = NO;
   switch (floatingLabelState) {
-    case MDCContainedInputViewFloatingLabelStateFloating:
+    case MDCContainedInputViewLabelStateFloating:
       targetFont = floatingFont;
-      targetFrame = floatingFrame;
+      targetFrame = floatingLabelFrame;
       break;
-    case MDCContainedInputViewFloatingLabelStateNormal:
+    case MDCContainedInputViewLabelStateNormal:
       break;
-    case MDCContainedInputViewFloatingLabelStateNone:
+    case MDCContainedInputViewLabelStateNone:
       floatingLabelShouldHide = YES;
       break;
     default:

@@ -249,7 +249,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
   CGRect floatingLabelFrameNormal =
       [self floatingLabelFrameWithText:label.text
                        containerStyler:containerStyler
-                    floatingLabelState:MDCContainedInputViewFloatingLabelStateNormal
+                    floatingLabelState:MDCContainedInputViewLabelStateNormal
                                   font:font
                           floatingFont:floatingFont
                      floatingLabelMinY:floatingLabelMinY
@@ -260,7 +260,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
   CGRect floatingLabelFrameFloating =
       [self floatingLabelFrameWithText:label.text
                        containerStyler:containerStyler
-                    floatingLabelState:MDCContainedInputViewFloatingLabelStateFloating
+                    floatingLabelState:MDCContainedInputViewLabelStateFloating
                                   font:font
                           floatingFont:floatingFont
                      floatingLabelMinY:floatingLabelMinY
@@ -389,7 +389,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
 
 - (CGRect)floatingLabelFrameWithText:(NSString *)text
                      containerStyler:(id<MDCContainedInputViewStyler>)containerStyler
-                  floatingLabelState:(MDCContainedInputViewFloatingLabelState)floatingLabelState
+                  floatingLabelState:(MDCContainedInputViewLabelState)floatingLabelState
                                 font:(UIFont *)font
                         floatingFont:(UIFont *)floatingFont
                    floatingLabelMinY:(CGFloat)floatingLabelMinY
@@ -404,9 +404,9 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
   CGFloat originX = 0;
   CGFloat originY = 0;
   switch (floatingLabelState) {
-    case MDCContainedInputViewFloatingLabelStateNone:
+    case MDCContainedInputViewLabelStateNone:
       break;
-    case MDCContainedInputViewFloatingLabelStateFloating:
+    case MDCContainedInputViewLabelStateFloating:
       size = [self floatingLabelSizeWithText:text maxWidth:maxWidth font:floatingFont];
       originY = floatingLabelMinY;
       if (isRTL) {
@@ -416,7 +416,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
       }
       rect = CGRectMake(originX, originY, size.width, size.height);
       break;
-    case MDCContainedInputViewFloatingLabelStateNormal:
+    case MDCContainedInputViewLabelStateNormal:
       size = [self floatingLabelSizeWithText:text maxWidth:maxWidth font:font];
       originY = textRectMidY - ((CGFloat)0.5 * size.height);
       if (isRTL) {

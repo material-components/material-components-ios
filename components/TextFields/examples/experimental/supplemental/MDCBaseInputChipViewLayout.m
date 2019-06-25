@@ -43,7 +43,7 @@ static const CGFloat kGradientBlurLength = 6;
                           placeholder:(NSString *)placeholder
                                  font:(UIFont *)font
                          floatingFont:(UIFont *)floatingFont
-                   floatingLabelState:(MDCContainedInputViewFloatingLabelState)floatingLabelState
+                   floatingLabelState:(MDCContainedInputViewLabelState)floatingLabelState
                                 chips:(NSArray<UIView *> *)chips
                        staleChipViews:(NSArray<UIView *> *)staleChipViews
                             chipsWrap:(BOOL)chipsWrap
@@ -92,7 +92,7 @@ static const CGFloat kGradientBlurLength = 6;
                           placeholder:(NSString *)placeholder
                                  font:(UIFont *)font
                          floatingFont:(UIFont *)floatingFont
-                   floatingLabelState:(MDCContainedInputViewFloatingLabelState)floatingLabelState
+                   floatingLabelState:(MDCContainedInputViewLabelState)floatingLabelState
                                 chips:(NSArray<UIView *> *)chips
                        staleChipViews:(NSArray<UIView *> *)staleChipViews
                             chipsWrap:(BOOL)chipsWrap
@@ -159,7 +159,7 @@ static const CGFloat kGradientBlurLength = 6;
     initialChipRowMinYNormal = center - (chipRowHeight * (CGFloat)0.5);
   }
   CGFloat initialChipRowMinY = initialChipRowMinYNormal;
-  if (floatingLabelState == MDCContainedInputViewFloatingLabelStateFloating) {
+  if (floatingLabelState == MDCContainedInputViewLabelStateFloating) {
     initialChipRowMinY = initialChipRowMinYWithFloatingLabel;
   }
 
