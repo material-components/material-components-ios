@@ -193,7 +193,7 @@ static const CGFloat kExpectedHeightTitlesAndIcons = 72;
   // Given
   self.tabBarView.bounds = CGRectMake(0, 0, 720, kExpectedHeightTitlesAndIcons);
   NSString *longString =
-    @"This is a super long tab bar string. And it should be longer than 360 and be multipl line.";
+      @"This is a super long tab bar string. And it should be longer than 360 and be multipl line.";
   UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:longString image:nil tag:0];
   UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:nil tag:2];
   UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:nil tag:5];
