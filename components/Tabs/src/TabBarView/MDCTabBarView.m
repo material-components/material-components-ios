@@ -21,7 +21,10 @@ static const CGFloat kMinHeight = 48;
 @interface MDCTabBarView ()
 
 /** The views representing the items of this tab bar. */
-@property(nonatomic, strong) NSArray<UIView *> *itemViews;
+@property(nonnull, nonatomic, strong) NSArray<UIView *> *itemViews;
+
+/** The title colors for bar items. */
+@property(nonnull, nonatomic, strong) NSMutableDictionary<NSNumber *, UIColor *> *titleColors;
 
 @end
 
@@ -34,6 +37,7 @@ static const CGFloat kMinHeight = 48;
   if (self) {
     _items = @[];
     _itemViews = @[];
+    _titleColors = [NSMutableDictionary dictionary];
   }
   return self;
 }
@@ -59,6 +63,7 @@ static const CGFloat kMinHeight = 48;
     // TODO(#7645): Remove this if autoresizing masks are used.
     itemView.translatesAutoresizingMaskIntoConstraints = NO;
     itemView.titleLabel.text = item.title;
+    itemView.titleLabel.textColor = [self titleColorForState:UIControlStateNormal];
     itemView.iconImageView.image = item.image;
     [itemViews addObject:itemView];
     [self addSubview:itemView];
@@ -89,6 +94,42 @@ static const CGFloat kMinHeight = 48;
   }
 
   _selectedItem = selectedItem;
+  [self updateTitleColorForAllViews];
+}
+
+- (void)updateTitleColorForAllViews {
+  for (UITabBarItem *item in self.items) {
+    NSUInteger indexOfItem = [self.items indexOfObject:item];
+    // This is a significant error, but defensive coding is preferred.
+    if (indexOfItem == NSNotFound || indexOfItem >= self.itemViews.count) {
+      NSAssert(NO, @"Unable to find associated item view for (%@)", item);
+      continue;
+    }
+    UIView *itemView = self.itemViews[indexOfItem];
+    // Skip custom views
+    if (![itemView isKindOfClass:[MDCTabBarViewItemView class]]) {
+      continue;
+    }
+    MDCTabBarViewItemView *tabBarViewItemView = (MDCTabBarViewItemView *)itemView;
+    if (item == self.selectedItem) {
+      tabBarViewItemView.titleLabel.textColor = [self titleColorForState:UIControlStateSelected];
+    } else {
+      tabBarViewItemView.titleLabel.textColor = [self titleColorForState:UIControlStateNormal];
+    }
+  }
+}
+
+- (void)setTitleColor:(UIColor *)titleColor forState:(UIControlState)state {
+  _titleColors[@(state)] = titleColor;
+  [self updateTitleColorForAllViews];
+}
+
+- (UIColor *)titleColorForState:(UIControlState)state {
+  UIColor *titleColor = _titleColors[@(state)];
+  if (!titleColor) {
+    titleColor = _titleColors[@(UIControlStateNormal)];
+  }
+  return titleColor;
 }
 
 #pragma mark - UIView
