@@ -25,4 +25,7 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
 /** The currently-selected item in the Tab bar. */
 @property(nullable, nonatomic, strong) UITabBarItem *selectedItem;
 
+/** The color of the Tab bar's background. */
+@property(nullable, nonatomic, copy) UIColor *barTintColor;
+
 @end
