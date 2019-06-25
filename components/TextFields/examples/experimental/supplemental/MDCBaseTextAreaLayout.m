@@ -44,7 +44,6 @@ static const CGFloat kGradientBlurLength = 6;
                                  font:(UIFont *)font
                          floatingFont:(UIFont *)floatingFont
                    floatingLabelState:(MDCContainedInputViewFloatingLabelState)floatingLabelState
-                          clearButton:(UIButton *)clearButton
                    leftAssistiveLabel:(UILabel *)leftAssistiveLabel
                   rightAssistiveLabel:(UILabel *)rightAssistiveLabel
            underlineLabelDrawPriority:
@@ -62,7 +61,6 @@ static const CGFloat kGradientBlurLength = 6;
                                      font:font
                              floatingFont:floatingFont
                        floatingLabelState:floatingLabelState
-                              clearButton:clearButton
                        leftAssistiveLabel:leftAssistiveLabel
                       rightAssistiveLabel:rightAssistiveLabel
                underlineLabelDrawPriority:underlineLabelDrawPriority
@@ -81,7 +79,6 @@ static const CGFloat kGradientBlurLength = 6;
                                  font:(UIFont *)font
                          floatingFont:(UIFont *)floatingFont
                    floatingLabelState:(MDCContainedInputViewFloatingLabelState)floatingLabelState
-                          clearButton:(UIButton *)clearButton
                    leftAssistiveLabel:(UILabel *)leftAssistiveLabel
                   rightAssistiveLabel:(UILabel *)rightAssistiveLabel
            underlineLabelDrawPriority:
@@ -92,21 +89,21 @@ static const CGFloat kGradientBlurLength = 6;
                             isEditing:(BOOL)isEditing {
   CGFloat globalTextMinX = isRTL ? kTrailingMargin : kLeadingMargin;
   CGFloat globalTextMaxX = isRTL ? size.width - kLeadingMargin : size.width - kTrailingMargin;
-  CGRect floatingLabelFrameFloating = [self floatingLabelFrameWithPlaceholder:placeholder
-                                                                         font:floatingFont
-                                                                 floatingFont:floatingFont
-                                                               globalTextMinX:globalTextMinX
-                                                               globalTextMaxX:globalTextMaxX
-                                                     preferredContainerHeight:preferredContainerHeight
-                                                              containerStyler:containerStyler
-                                                                        isRTL:isRTL];
+  CGRect floatingLabelFrameFloating = [self floatingLabelFrameWithText:placeholder
+                                                                  font:floatingFont
+                                                          floatingFont:floatingFont
+                                                        globalTextMinX:globalTextMinX
+                                                        globalTextMaxX:globalTextMaxX
+                                              preferredContainerHeight:preferredContainerHeight
+                                                       containerStyler:containerStyler
+                                                                 isRTL:isRTL];
   CGFloat floatingLabelMaxY = CGRectGetMaxY(floatingLabelFrameFloating);
   CGFloat heightToCalculateNormalLabelMinY = [containerStyler.positioningDelegate defaultContainerHeightWithTextHeight:font.lineHeight];
   CGFloat textViewMinYWithFloatingLabel =
   [containerStyler.positioningDelegate textMinYWithFloatingLabelWithTextHeight:font.lineHeight
                                                            floatingLabelHeight:floatingFont.lineHeight
                                                       preferredContainerHeight:heightToCalculateNormalLabelMinY];
-  CGFloat highestPossibleInitialChipRowMaxY = textViewMinYWithFloatingLabel + font.lineHeight;
+  CGFloat textViewFirstLineMaxYWithFloatingLabel = textViewMinYWithFloatingLabel + font.lineHeight;
   
   CGFloat bottomPadding = 0;
   CGFloat contentAreaMaxY = 0;
@@ -116,7 +113,7 @@ static const CGFloat kGradientBlurLength = 6;
   } else {
     contentAreaMaxY = defaultContainerHeight;
   }
-  bottomPadding = defaultContainerHeight - highestPossibleInitialChipRowMaxY;
+  bottomPadding = defaultContainerHeight - textViewFirstLineMaxYWithFloatingLabel;
   
   CGRect floatingLabelFrameNormal =
       [self normalPlaceholderFrameWithFloatingLabelFrame:floatingLabelFrameFloating
@@ -140,7 +137,8 @@ static const CGFloat kGradientBlurLength = 6;
 
   CGSize scrollViewSize = CGSizeMake(size.width, contentAreaMaxY);
 
-  CGRect textViewFrame = CGRectZero;
+  CGFloat textViewHeight = contentAreaMaxY - bottomPadding - textViewMinYWithFloatingLabel;
+  CGRect textViewFrame = CGRectMake(globalTextMinX, textViewMinYWithFloatingLabel, globalTextMaxX - globalTextMinX, textViewHeight);
 
   CGPoint contentOffset = [self scrollViewContentOffsetWithSize:scrollViewSize
                                                  textViewFrame:textViewFrame
@@ -217,10 +215,6 @@ static const CGFloat kGradientBlurLength = 6;
   if (textRectMaxY > maxY) {
     maxY = textRectMaxY;
   }
-  //  CGFloat clearButtonFrameMaxY = CGRectGetMaxY(self.clearButtonFrame);
-  //  if (clearButtonFrameMaxY > maxY) {
-  //    maxY = clearButtonFrameMaxY;
-  //  }
   CGFloat leftAssistiveLabelFrameMaxY = CGRectGetMaxY(self.leftAssistiveLabelFrame);
   if (leftAssistiveLabelFrameMaxY > maxY) {
     maxY = leftAssistiveLabelFrameMaxY;
@@ -262,7 +256,7 @@ static const CGFloat kGradientBlurLength = 6;
                     placeholderSize.height);
 }
 
-- (CGRect)floatingLabelFrameWithPlaceholder:(NSString *)placeholder
+- (CGRect)floatingLabelFrameWithText:(NSString *)text
                                        font:(UIFont *)font
                                floatingFont:(UIFont *)floatingFont
                              globalTextMinX:(CGFloat)globalTextMinX
@@ -271,23 +265,21 @@ static const CGFloat kGradientBlurLength = 6;
                             containerStyler:(id<MDCContainedInputViewStyler>)containerStyler
                                       isRTL:(BOOL)isRTL {
   CGFloat maxTextWidth = globalTextMaxX - globalTextMinX - kFloatingLabelXOffset;
-  CGSize placeholderSize = [self textSizeWithText:placeholder font:floatingFont maxWidth:maxTextWidth];
-  CGFloat placeholderMinY = 0;
-  
+  CGSize floatingLabelSize = [self textSizeWithText:text font:floatingFont maxWidth:maxTextWidth];
   CGFloat heightToCalculateFloatingLabelMinY = [containerStyler.positioningDelegate defaultContainerHeightWithTextHeight:font.lineHeight];
   if (preferredContainerHeight < heightToCalculateFloatingLabelMinY) {
     heightToCalculateFloatingLabelMinY = preferredContainerHeight;
   }
-  placeholderMinY = [containerStyler.positioningDelegate floatingLabelMinYWithTextHeight:font.lineHeight
-                                                                     floatingLabelHeight:floatingFont.lineHeight
-                                                                preferredContainerHeight:heightToCalculateFloatingLabelMinY];
+  CGFloat textMinY = [containerStyler.positioningDelegate floatingLabelMinYWithTextHeight:font.lineHeight
+                                                                      floatingLabelHeight:floatingFont.lineHeight
+                                                                 preferredContainerHeight:heightToCalculateFloatingLabelMinY];
 
-  CGFloat placeholderMinX = globalTextMinX + kFloatingLabelXOffset;
+  CGFloat textMinX = globalTextMinX + kFloatingLabelXOffset;
   if (isRTL) {
-    placeholderMinX = globalTextMaxX - kFloatingLabelXOffset - placeholderSize.width;
+    textMinX = globalTextMaxX - kFloatingLabelXOffset - floatingLabelSize.width;
   }
-  return CGRectMake(placeholderMinX, placeholderMinY, placeholderSize.width,
-                    placeholderSize.height);
+  return CGRectMake(textMinX, textMinY, floatingLabelSize.width,
+                    floatingLabelSize.height);
 }
 
 - (CGFloat)textHeightWithFont:(UIFont *)font {

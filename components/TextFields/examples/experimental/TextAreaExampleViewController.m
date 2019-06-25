@@ -92,13 +92,9 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
     [self createToggleErrorButton],
     [self createResignFirstResponderButton],
     [self createLabelWithText:@"Filled TextArea:"],
-    [self createFilledNonWrappingTextArea],
-    [self createLabelWithText:@"Wrapping filled TextArea:"],
-    [self createFilledWrappingTextArea],
-    [self createLabelWithText:@"Outlined TextArea:"],
-    [self createOutlinedNonWrappingTextArea],
-    [self createLabelWithText:@"Wrapping outlined TextArea:"],
-    [self createOutlinedWrappingTextArea],
+    [self createFilledTextArea],
+//    [self createLabelWithText:@"Outlined TextArea:"],
+//    [self createOutlinedTextArea],
   ];
   for (UIView *view in self.scrollViewSubviews) {
     [self.scrollView addSubview:view];
@@ -182,40 +178,27 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
   return label;
 }
 
-- (MDCBaseTextArea *)createOutlinedNonWrappingTextArea {
-  MDCBaseTextArea *inputChipView = [[MDCBaseTextArea alloc] init];
-  [inputChipView applyOutlinedThemeWithScheme:self.containerScheme];
-  inputChipView.canFloatingLabelFloat = YES;
-  [inputChipView sizeToFit];
-  inputChipView.textView.delegate = self;
-  return inputChipView;
+- (MDCBaseTextArea *)createOutlinedTextArea {
+  MDCBaseTextArea *textArea = [[MDCBaseTextArea alloc] init];
+  [textArea applyOutlinedThemeWithScheme:self.containerScheme];
+  textArea.textView.delegate = self;
+  textArea.label.text = @"Stuff";
+  textArea.canFloatingLabelFloat = YES;
+  textArea.preferredContainerHeight = 150;
+  [textArea sizeToFit];
+  return textArea;
 }
 
-- (MDCBaseTextArea *)createOutlinedWrappingTextArea {
-  MDCBaseTextArea *inputChipView = [self createOutlinedNonWrappingTextArea];
-  inputChipView.preferredContainerHeight = 150;
-  [inputChipView sizeToFit];
-  return inputChipView;
+- (MDCBaseTextArea *)createFilledTextArea {
+  MDCBaseTextArea *textArea = [[MDCBaseTextArea alloc] init];
+  [textArea applyFilledThemeWithScheme:self.containerScheme];
+  textArea.textView.delegate = self;
+  textArea.label.text = @"Stuff";
+  textArea.canFloatingLabelFloat = YES;
+  textArea.preferredContainerHeight = 150;
+  [textArea sizeToFit];
+  return textArea;
 }
-
-- (MDCBaseTextArea *)createFilledNonWrappingTextArea {
-  MDCBaseTextArea *inputChipView = [[MDCBaseTextArea alloc] init];
-  [inputChipView applyFilledThemeWithScheme:self.containerScheme];
-  inputChipView.canFloatingLabelFloat = YES;
-  [inputChipView sizeToFit];
-  inputChipView.textView.delegate = self;
-  return inputChipView;
-}
-
-- (MDCBaseTextArea *)createFilledWrappingTextArea {
-  MDCBaseTextArea *inputChipView = [self createFilledNonWrappingTextArea];
-  inputChipView.preferredContainerHeight = 150;
-  [inputChipView sizeToFit];
-  return inputChipView;
-}
-
-
-
 
 #pragma mark Private
 
@@ -234,29 +217,29 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
 }
 
 - (void)updateTextAreaStates {
-  [self.allInputTextAreas enumerateObjectsUsingBlock:^(MDCBaseTextArea *inputChipView, NSUInteger idx,
+  [self.allInputTextAreas enumerateObjectsUsingBlock:^(MDCBaseTextArea *textArea, NSUInteger idx,
                                                        BOOL *stop) {
     BOOL isEven = idx % 2 == 0;
     if (self.isErrored) {
       // TODO: Make TextArea respond to error theme selector
-      //      if ([inputChipView respondsToSelector:@selector(applyErrorThemeWithScheme:)]) {
-      //        [inputChipView applyErrorThemeWithScheme:self.containerScheme];
+      //      if ([textArea respondsToSelector:@selector(applyErrorThemeWithScheme:)]) {
+      //        [textArea applyErrorThemeWithScheme:self.containerScheme];
       //      }
       if (isEven) {
-        inputChipView.leadingAssistiveLabel.text = @"Suspendisse quam elit, mattis sit amet justo "
+        textArea.leadingAssistiveLabel.text = @"Suspendisse quam elit, mattis sit amet justo "
                                                    @"vel, venenatis lobortis massa. Donec metus "
                                                    @"dolor.";
       } else {
-        inputChipView.leadingAssistiveLabel.text = @"This is an error.";
+        textArea.leadingAssistiveLabel.text = @"This is an error.";
       }
     } else {
-      if ([inputChipView respondsToSelector:@selector(applyThemeWithScheme:)]) {
-        [inputChipView applyThemeWithScheme:self.containerScheme];
+      if ([textArea respondsToSelector:@selector(applyThemeWithScheme:)]) {
+        [textArea applyThemeWithScheme:self.containerScheme];
       }
       if (isEven) {
-        inputChipView.leadingAssistiveLabel.text = @"This is helper text.";
+        textArea.leadingAssistiveLabel.text = @"This is helper text.";
       } else {
-        inputChipView.leadingAssistiveLabel.text = nil;
+        textArea.leadingAssistiveLabel.text = nil;
       }
     }
   }];
@@ -304,8 +287,8 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
 
 - (void)resignFirstResponderButtonTapped:(UIButton *)button {
   [self.allInputTextAreas
-      enumerateObjectsUsingBlock:^(MDCBaseTextArea *inputChipView, NSUInteger idx, BOOL *stop) {
-        [inputChipView resignFirstResponder];
+      enumerateObjectsUsingBlock:^(MDCBaseTextArea *textArea, NSUInteger idx, BOOL *stop) {
+        [textArea resignFirstResponder];
       }];
 }
 
