@@ -51,7 +51,7 @@ static const CGFloat kExpectedHeightTitlesAndIcons = 72;
   //  self.recordMode = YES;
 
   self.tabBarView = [[MDCTabBarView alloc] init];
-  self.tabBarView.backgroundColor = UIColor.whiteColor;
+  self.tabBarView.barTintColor = UIColor.whiteColor;
   self.tabBarView.bounds = CGRectMake(0, 0, 360, kExpectedHeightTitlesOrIconsOnly);
 
   self.typicalIcon1 = [[UIImage mdc_testImageOfSize:kTypicalImageSize
@@ -185,6 +185,14 @@ static const CGFloat kExpectedHeightTitlesAndIcons = 72;
 
   // When
   self.tabBarView.selectedItem = item3;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testBarTintColor {
+  // When
+  self.tabBarView.barTintColor = UIColor.purpleColor;
 
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBarView];
