@@ -37,19 +37,20 @@
 @property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
 
 @property(nonatomic, assign) MDCContainedInputViewState containedInputViewState;
-@property(nonatomic, assign) MDCContainedInputViewFloatingLabelState floatingLabelState;
+@property(nonatomic, assign) MDCContainedInputViewLabelState floatingLabelState;
 @property(nonatomic, assign) BOOL isPlaceholderVisible;
 
 @property(nonatomic, strong)
     NSMutableDictionary<NSNumber *, id<MDCContainedInputViewColorScheming>> *colorSchemes;
 
-@property(nonatomic, strong) MDCContainedInputViewLabelAnimator *labelAnimator;
+//@property(nonatomic, strong) MDCContainedInputViewLabelAnimator *labelAnimator;
 
 @property(nonatomic, strong) MDCContainedInputAssistiveLabelView *underlineLabelView;
 
 @end
 
 @implementation MDCBaseTextField
+@synthesize labelAnimator = _labelAnimator;
 @synthesize preferredContainerHeight = _preferredContainerHeight;
 @synthesize underlineLabelDrawPriority = _underlineLabelDrawPriority;
 @synthesize customAssistiveLabelDrawPriority = _customAssistiveLabelDrawPriority;
@@ -223,12 +224,12 @@
   [self.labelAnimator layOutPlaceholderLabel:self.placeholderLabel
                                    placeholderFrame:adjustedPlaceholderFrame
                                isPlaceholderVisible:self.isPlaceholderVisible];
-  [self.labelAnimator layOutFloatingLabel:self.label
-                                           state:self.floatingLabelState
-                                     normalFrame:self.layout.floatingLabelFrameNormal
-                                   floatingFrame:self.layout.floatingLabelFrameFloating
-                                      normalFont:self.normalFont
-                                    floatingFont:self.floatingFont];
+  [self.labelAnimator layOutLabel:self.label
+                            state:self.floatingLabelState
+                 normalLabelFrame:self.layout.floatingLabelFrameNormal
+               floatingLabelFrame:self.layout.floatingLabelFrameFloating
+                       normalFont:self.normalFont
+                     floatingFont:self.floatingFont];
   id<MDCContainedInputViewColorScheming> colorScheming =
       [self containedInputViewColorSchemingForState:self.containedInputViewState];
   [self.containerStyler applyStyleToContainedInputView:self
@@ -244,9 +245,9 @@
 }
 
 - (CGRect)textRectFromLayout:(MDCBaseTextFieldLayout *)layout
-          floatingLabelState:(MDCContainedInputViewFloatingLabelState)floatingLabelState {
+          floatingLabelState:(MDCContainedInputViewLabelState)floatingLabelState {
   CGRect textRect = layout.textRect;
-  if (floatingLabelState == MDCContainedInputViewFloatingLabelStateFloating) {
+  if (floatingLabelState == MDCContainedInputViewLabelStateFloating) {
     textRect = layout.textRectFloatingLabel;
   }
   return textRect;
@@ -260,9 +261,9 @@
 }
 
 - (CGRect)clearButtonFrameFromLayout:(MDCBaseTextFieldLayout *)layout
-                  floatingLabelState:(MDCContainedInputViewFloatingLabelState)floatingLabelState {
+                  floatingLabelState:(MDCContainedInputViewLabelState)floatingLabelState {
   CGRect clearButtonFrame = layout.clearButtonFrame;
-  if (floatingLabelState == MDCContainedInputViewFloatingLabelStateFloating) {
+  if (floatingLabelState == MDCContainedInputViewLabelStateFloating) {
     clearButtonFrame = layout.clearButtonFrameFloatingLabel;
   }
   return clearButtonFrame;
@@ -543,7 +544,7 @@
 }
 
 - (CGRect)placeholderRectForBounds:(CGRect)bounds {
-  if (self.floatingLabelState == MDCContainedInputViewFloatingLabelStateNormal) {
+  if (self.floatingLabelState == MDCContainedInputViewLabelStateNormal) {
     return CGRectZero;
   }
   return [super placeholderRectForBounds:bounds];
@@ -566,8 +567,7 @@
 }
 
 -(UIFont *)floatingFont {
-  return [self.labelAnimator floatingFontWithFont:self.normalFont
-                                         containerStyler:self.containerStyler];
+  return [self.containerStyler floatingFontWithFont:self.normalFont];
 }
 
 - (UIFont *)uiTextFieldDefaultFont {
@@ -646,7 +646,7 @@
                                                isEditing:self.isEditing];
 }
 
-- (MDCContainedInputViewFloatingLabelState)determineCurrentFloatingLabelState {
+- (MDCContainedInputViewLabelState)determineCurrentFloatingLabelState {
   return [self floatingLabelStateWithFloatingLabel:self.label
                                               text:self.text
                              canFloatingLabelFloat:self.canFloatingLabelFloat
@@ -655,7 +655,7 @@
 
 - (BOOL)shouldPlaceholderBeVisibleWithPlaceholder:(NSString *)placeholder
                                floatingLabelState:
-                                   (MDCContainedInputViewFloatingLabelState)floatingLabelState
+                                   (MDCContainedInputViewLabelState)floatingLabelState
                                              text:(NSString *)text
                                         isEditing:(BOOL)isEditing {
   BOOL hasPlaceholder = placeholder.length > 0;
@@ -665,7 +665,7 @@
     if (hasText) {
       return NO;
     } else {
-      if (floatingLabelState == MDCContainedInputViewFloatingLabelStateNormal) {
+      if (floatingLabelState == MDCContainedInputViewLabelStateNormal) {
         return NO;
       } else {
         return YES;
@@ -676,7 +676,7 @@
   }
 }
 
-- (MDCContainedInputViewFloatingLabelState)
+- (MDCContainedInputViewLabelState)
     floatingLabelStateWithFloatingLabel:(UILabel *)floatingLabel
                                    text:(NSString *)text
                   canFloatingLabelFloat:(BOOL)canFloatingLabelFloat
@@ -686,23 +686,23 @@
   if (hasFloatingLabelText) {
     if (canFloatingLabelFloat) {
       if (isEditing) {
-        return MDCContainedInputViewFloatingLabelStateFloating;
+        return MDCContainedInputViewLabelStateFloating;
       } else {
         if (hasText) {
-          return MDCContainedInputViewFloatingLabelStateFloating;
+          return MDCContainedInputViewLabelStateFloating;
         } else {
-          return MDCContainedInputViewFloatingLabelStateNormal;
+          return MDCContainedInputViewLabelStateNormal;
         }
       }
     } else {
       if (hasText) {
-        return MDCContainedInputViewFloatingLabelStateNone;
+        return MDCContainedInputViewLabelStateNone;
       } else {
-        return MDCContainedInputViewFloatingLabelStateNormal;
+        return MDCContainedInputViewLabelStateNormal;
       }
     }
   } else {
-    return MDCContainedInputViewFloatingLabelStateNone;
+    return MDCContainedInputViewLabelStateNone;
   }
 }
 

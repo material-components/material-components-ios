@@ -14,7 +14,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "MDCContainedInputView.h"
+#import "MDCContainedInputViewLabelState.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -22,17 +22,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign) NSTimeInterval animationDuration;
 
-- (UIFont *_Nonnull)floatingFontWithFont:(nonnull UIFont *)font
-                         containerStyler:(nonnull id<MDCContainedInputViewStyler>)containerStyler;
 - (void)layOutPlaceholderLabel:(nonnull UILabel *)placeholderLabel
               placeholderFrame:(CGRect)placeholderFrame
           isPlaceholderVisible:(BOOL)isPlaceholderVisible;
-- (void)layOutFloatingLabel:(nonnull UILabel *)floatingLabel
-                      state:(MDCContainedInputViewFloatingLabelState)floatingLabelState
-                normalFrame:(CGRect)normalFrame
-              floatingFrame:(CGRect)floatingFrame
-                 normalFont:(nonnull UIFont *)normalFont
-               floatingFont:(nonnull UIFont *)floatingFont;
+- (void)layOutLabel:(nonnull UILabel *)floatingLabel
+              state:(MDCContainedInputViewLabelState)floatingLabelState
+   normalLabelFrame:(CGRect)normalLabelFrame
+ floatingLabelFrame:(CGRect)floatingLabelFrame
+         normalFont:(nonnull UIFont *)normalFont
+       floatingFont:(nonnull UIFont *)floatingFont;
 @end
 
 NS_ASSUME_NONNULL_END

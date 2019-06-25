@@ -58,7 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
                           placeholder:(NSString *)placeholder
                                  font:(UIFont *)font
                          floatingFont:(UIFont *)floatingFont
-                   floatingLabelState:(MDCContainedInputViewFloatingLabelState)floatingLabelState
+                   floatingLabelState:(MDCContainedInputViewLabelState)floatingLabelState
                                 chips:(NSArray<UIView *> *)chips
                        staleChipViews:(NSArray<UIView *> *)staleChipViews
                             chipsWrap:(BOOL)chipsWrap

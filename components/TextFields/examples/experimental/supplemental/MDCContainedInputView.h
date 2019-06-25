@@ -15,6 +15,9 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+#import "MDCContainedInputViewLabelAnimator.h"
+#import "MDCContainedInputViewLabelState.h"
+
 /**
  A set of Contained Input View states outlined in the Material guidelines. These states overlap with
  and extend UIControlState.
@@ -72,32 +75,15 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewAssistiveLabelDrawPriority) {
   MDCContainedInputViewAssistiveLabelDrawPriorityCustom,
 };
 
-/**
- This enum represents different states the floating label can be in.
- */
-typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
-  /**
-   The state where the floating label is not visible.
-   */
-  MDCContainedInputViewFloatingLabelStateNone,
-  /**
-   The state where the floating label is floating.
-   */
-  MDCContainedInputViewFloatingLabelStateFloating,
-  /**
-   The state where the floating label is occupying the normal text area.
-   */
-  MDCContainedInputViewFloatingLabelStateNormal,
-};
+
 
 @protocol MDCContainedInputViewStyler;
 @protocol MDCContainedInputViewColorScheming;
 
 @protocol MDCContainedInputView <NSObject>
 /**
- Dictates the @c MDCContainerStyler of the text field. Defaults to an instance of
- MDCContainerStylerBase.
  */
+//TODO: Add property docs
 @property(nonatomic, strong, nonnull) MDCContainedInputViewLabelAnimator *labelAnimator;
 
 /**
@@ -112,11 +98,11 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
 @property(nonatomic, assign, readonly) MDCContainedInputViewState containedInputViewState;
 
 /**
- Describes the current @c MDCContainedInputViewFloatingLabelState of the contained input view. This
+ Describes the current @c MDCContainedInputViewLabelState of the contained input view. This
  value is affected by things like the view's state, the value for @c canFloatingLabelFloat, and the
  text of the floating label.
  */
-@property(nonatomic, assign, readonly) MDCContainedInputViewFloatingLabelState floatingLabelState;
+@property(nonatomic, assign, readonly) MDCContainedInputViewLabelState floatingLabelState;
 
 /**
  The @c label is a label that occupies the text area when there is no text and that floats
@@ -271,6 +257,9 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
  it's floating.
  */
 - (CGFloat)floatingFontSizeScaleFactor;
+
+- (UIFont *_Nonnull)floatingFontWithFont:(nonnull UIFont *)font;
+
 @end
 
 /**

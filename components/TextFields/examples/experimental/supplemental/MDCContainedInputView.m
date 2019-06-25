@@ -57,6 +57,12 @@
   return self;
 }
 
+- (UIFont *)floatingFontWithFont:(UIFont *)font {
+  CGFloat scaleFactor = [self floatingFontSizeScaleFactor];
+  CGFloat floatingFontSize = font.pointSize * scaleFactor;
+  return [font fontWithSize:floatingFontSize];
+}
+
 - (id<MDCContainedInputViewColorScheming>)defaultColorSchemeForState:
     (MDCContainedInputViewState)state {
   MDCContainedInputViewColorScheme *colorScheme = [[MDCContainedInputViewColorScheme alloc] init];
