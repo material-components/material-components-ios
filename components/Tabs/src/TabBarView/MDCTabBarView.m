@@ -87,34 +87,7 @@ static const CGFloat kMinHeight = 48;
   _selectedItem = selectedItem;
 }
 
-- (void)commonMDCTabBarViewInit {
-  self.backgroundColor = UIColor.whiteColor;
-
-  [self setUpStackView];
-  [self setUpItemViews];
-}
-
-- (void)setUpStackView {
-  _containerView = [[UIStackView alloc] init];
-  _containerView.axis = UILayoutConstraintAxisHorizontal;
-  _containerView.translatesAutoresizingMaskIntoConstraints = NO;
-  [self addSubview:_containerView];
-}
-
-- (void)setUpItemViews {
-  for (UIView *view in self.containerView.arrangedSubviews) {
-    [view removeFromSuperview];
-    [_containerView removeArrangedSubview:view];
-  }
-
-  for (UITabBarItem *item in self.items) {
-    MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
-    itemView.translatesAutoresizingMaskIntoConstraints = NO;
-    itemView.titleLabel.text = item.title;
-    itemView.iconImageView.image = item.image;
-    [_containerView addArrangedSubview:itemView];
-  }
-}
+#pragma mark - UIView
 
 - (void)layoutSubviews {
   [super layoutSubviews];
@@ -169,6 +142,37 @@ static const CGFloat kMinHeight = 48;
 - (CGSize)sizeThatFits:(CGSize)size {
   CGSize intrinsicSize = self.intrinsicContentSize;
   return CGSizeMake(MIN(intrinsicSize.width, size.width), MAX(intrinsicSize.height, size.height));
+}
+
+#pragma mark - Private Functions
+
+- (void)commonMDCTabBarViewInit {
+  self.backgroundColor = UIColor.whiteColor;
+
+  [self setUpStackView];
+  [self setUpItemViews];
+}
+
+- (void)setUpStackView {
+  _containerView = [[UIStackView alloc] init];
+  _containerView.axis = UILayoutConstraintAxisHorizontal;
+  _containerView.translatesAutoresizingMaskIntoConstraints = NO;
+  [self addSubview:_containerView];
+}
+
+- (void)setUpItemViews {
+  for (UIView *view in self.containerView.arrangedSubviews) {
+    [view removeFromSuperview];
+    [_containerView removeArrangedSubview:view];
+  }
+
+  for (UITabBarItem *item in self.items) {
+    MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
+    itemView.translatesAutoresizingMaskIntoConstraints = NO;
+    itemView.titleLabel.text = item.title;
+    itemView.iconImageView.image = item.image;
+    [_containerView addArrangedSubview:itemView];
+  }
 }
 
 @end
