@@ -131,6 +131,9 @@ static const UIEdgeInsets kEdgeInsets = {.top = 12, .right = 16, .bottom = 12, .
 #pragma mark - Properties
 
 - (void)setSelected:(BOOL)selected {
+  if (self.selected == selected) {
+    return;
+  }
   _selected = selected;
   // Update the UI component based on the status.
   // Change the following code later to fix the UI change.
