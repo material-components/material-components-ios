@@ -117,7 +117,6 @@
 @end
 
 @implementation MDCFilledTextFieldPositioningDelegate
-@synthesize verticalDensity = _verticalDensity;
 
 - (CGFloat)assistiveLabelPaddingWithContainerHeight:(CGFloat)containerHeight {
   return 0.13 * containerHeight;
@@ -160,28 +159,6 @@
                                        preferredContainerHeight:preferredContainerHeight];
   CGFloat offset = containerHeight * 0.5;
   return offset - (0.5 * textHeight);
-}
-
-- (CGFloat)floatingLabelMinYWithFloatingLabelHeight:(CGFloat)floatingPlaceholderHeight {
-  CGFloat lowestMinY = 4;
-  CGFloat highestMinY = 10;
-  CGFloat difference = highestMinY - lowestMinY;
-  return lowestMinY + (difference * (1 - self.verticalDensity));
-}
-
-- (CGFloat)contentAreaTopPaddingFloatingLabelWithFloatingLabelMaxY:
-    (CGFloat)floatingPlaceholderMaxY {
-  CGFloat minYAddition = 3;
-  CGFloat maxYAddition = 8;
-  CGFloat difference = maxYAddition - minYAddition;
-  return floatingPlaceholderMaxY + (minYAddition + (difference * (1 - self.verticalDensity)));
-}
-
-- (CGFloat)contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:(CGFloat)floatingPlaceholderMaxY {
-  CGFloat minYAddition = 5;
-  CGFloat maxYAddition = 8;
-  CGFloat difference = maxYAddition - minYAddition;
-  return minYAddition + (difference * (1 - self.verticalDensity));
 }
 
 @end

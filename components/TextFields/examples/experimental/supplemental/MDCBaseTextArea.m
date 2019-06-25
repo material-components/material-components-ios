@@ -83,8 +83,6 @@
 @interface MDCBaseTextArea () <MDCBaseInputChipViewTextViewDelegate, UIGestureRecognizerDelegate>
 
 #pragma mark MDCContainedInputView properties
-//@property(strong, nonatomic) UIButton *clearButton;
-//@property(strong, nonatomic) UIImageView *clearButtonImageView;
 @property(strong, nonatomic) UILabel *label;
 
 @property(strong, nonatomic) UILabel *leftAssistiveLabel;

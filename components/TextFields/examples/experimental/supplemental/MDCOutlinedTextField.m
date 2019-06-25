@@ -124,22 +124,4 @@
   return offset - (0.5 * textHeight);
 }
 
-@synthesize verticalDensity = _verticalDensity;
-
-- (CGFloat)floatingLabelMinYWithFloatingLabelHeight:(CGFloat)floatingPlaceholderHeight {
-  return (CGFloat)0 - ((CGFloat)0.5 * floatingPlaceholderHeight);
-}
-
-- (CGFloat)contentAreaTopPaddingFloatingLabelWithFloatingLabelMaxY:
-    (CGFloat)floatingPlaceholderMaxY {
-  CGFloat minYAddition = 3;
-  CGFloat maxYAddition = 15;
-  CGFloat difference = maxYAddition - minYAddition;
-  return floatingPlaceholderMaxY + (minYAddition + (difference * (1 - self.verticalDensity)));
-}
-
-- (CGFloat)contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:(CGFloat)floatingPlaceholderMaxY {
-  return [self contentAreaTopPaddingFloatingLabelWithFloatingLabelMaxY:floatingPlaceholderMaxY];
-}
-
 @end
