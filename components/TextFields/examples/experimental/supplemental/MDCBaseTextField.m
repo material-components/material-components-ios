@@ -278,7 +278,7 @@
                             placeholder:self.placeholder
                                    font:self.normalFont
                            floatingFont:self.floatingFont
-                          floatingLabel:self.label
+                                  label:self.label
                   canFloatingLabelFloat:self.canFloatingLabelFloat
                                leftView:self.leftView
                            leftViewMode:self.leftViewMode

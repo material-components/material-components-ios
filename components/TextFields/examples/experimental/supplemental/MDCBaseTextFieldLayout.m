@@ -34,7 +34,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
                           placeholder:(NSString *)placeholder
                                  font:(UIFont *)font
                          floatingFont:(UIFont *)floatingFont
-                        floatingLabel:(UILabel *)floatingLabel
+                                label:(UILabel *)label
                 canFloatingLabelFloat:(BOOL)canFloatingLabelFloat
                              leftView:(UIView *)leftView
                          leftViewMode:(UITextFieldViewMode)leftViewMode
@@ -58,7 +58,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
                                placeholder:placeholder
                                       font:font
                               floatingFont:floatingFont
-                             floatingLabel:floatingLabel
+                                     label:label
                      canFloatingLabelFloat:canFloatingLabelFloat
                                   leftView:leftView
                               leftViewMode:leftViewMode
@@ -86,7 +86,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
                              placeholder:(NSString *)placeholder
                                     font:(UIFont *)font
                             floatingFont:(UIFont *)floatingFont
-                           floatingLabel:(UILabel *)floatingLabel
+                                   label:(UILabel *)label
                    canFloatingLabelFloat:(BOOL)canFloatingLabelFloat
                                 leftView:(UIView *)leftView
                             leftViewMode:(UITextFieldViewMode)leftViewMode
@@ -247,7 +247,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
                  clearButton.sideLength);
 
   CGRect floatingLabelFrameNormal =
-      [self floatingLabelFrameWithText:floatingLabel.text
+      [self floatingLabelFrameWithText:label.text
                        containerStyler:containerStyler
                     floatingLabelState:MDCContainedInputViewFloatingLabelStateNormal
                                   font:font
@@ -258,7 +258,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
                           textRectRect:textRectNormal
                                  isRTL:isRTL];
   CGRect floatingLabelFrameFloating =
-      [self floatingLabelFrameWithText:floatingLabel.text
+      [self floatingLabelFrameWithText:label.text
                        containerStyler:containerStyler
                     floatingLabelState:MDCContainedInputViewFloatingLabelStateFloating
                                   font:font
