@@ -98,6 +98,12 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewFloatingLabelState) {
  Dictates the @c MDCContainerStyler of the text field. Defaults to an instance of
  MDCContainerStylerBase.
  */
+@property(nonatomic, strong, nonnull) MDCContainedInputViewLabelAnimator *labelAnimator;
+
+/**
+ Dictates the @c MDCContainerStyler of the text field. Defaults to an instance of
+ MDCContainerStylerBase.
+ */
 @property(nonatomic, strong, nonnull) id<MDCContainedInputViewStyler> containerStyler;
 
 /**

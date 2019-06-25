@@ -117,9 +117,7 @@
 @property(nonatomic, strong)
     NSMutableDictionary<NSNumber *, id<MDCContainedInputViewColorScheming>> *colorSchemes;
 
-@property(nonatomic, strong) MDCContainedInputViewLabelAnimator *floatingLabelManager;
-
-@property(nonatomic, assign) BOOL isAnimating;
+@property(nonatomic, strong) MDCContainedInputViewLabelAnimator *labelAnimator;
 
 @end
 
@@ -198,7 +196,7 @@
 
 
 - (void)setUpPlaceholderManager {
-  self.floatingLabelManager = [[MDCContainedInputViewLabelAnimator alloc] init];
+  self.labelAnimator = [[MDCContainedInputViewLabelAnimator alloc] init];
 }
 
 - (void)setUpLayoutDirection {
@@ -461,7 +459,7 @@
 }
 
 - (void)postLayoutSubviews {
-  [self.floatingLabelManager layOutFloatingLabel:self.label
+  [self.labelAnimator layOutFloatingLabel:self.label
                                            state:self.floatingLabelState
                                      normalFrame:self.layout.floatingLabelFrameNormal
                                    floatingFrame:self.layout.floatingLabelFrameFloating
@@ -636,7 +634,7 @@
 }
 
 -(UIFont *)floatingFont {
-  return [self.floatingLabelManager floatingFontWithFont:self.normalFont
+  return [self.labelAnimator floatingFontWithFont:self.normalFont
                                          containerStyler:self.containerStyler];
 }
 

@@ -43,7 +43,7 @@
 @property(nonatomic, strong)
     NSMutableDictionary<NSNumber *, id<MDCContainedInputViewColorScheming>> *colorSchemes;
 
-@property(nonatomic, strong) MDCContainedInputViewLabelAnimator *floatingLabelManager;
+@property(nonatomic, strong) MDCContainedInputViewLabelAnimator *labelAnimator;
 
 @property(nonatomic, strong) MDCContainedInputAssistiveLabelView *underlineLabelView;
 
@@ -78,7 +78,7 @@
   [self initializeProperties];
   [self setUpFloatingLabel];
   [self setUpPlaceholderLabel];
-  [self setUpFloatingLabelManager];
+  [self setUpLabelAnimator];
   [self setUpAssistiveLabels];
   [self setUpClearButton];
   [self setUpContainerStyler];
@@ -166,8 +166,8 @@
   [self addSubview:self.placeholderLabel];
 }
 
-- (void)setUpFloatingLabelManager {
-  self.floatingLabelManager = [[MDCContainedInputViewLabelAnimator alloc] init];
+- (void)setUpLabelAnimator {
+  self.labelAnimator = [[MDCContainedInputViewLabelAnimator alloc] init];
 }
 
 - (void)setUpClearButton {
@@ -220,10 +220,10 @@
       [self adjustTextAreaFrame:self.layout.textRectFloatingLabel
           withParentClassTextAreaFrame:[super textRectForBounds:self.bounds]];
   adjustedPlaceholderFrame = CGRectOffset(adjustedPlaceholderFrame, 0, -1);
-  [self.floatingLabelManager layOutPlaceholderLabel:self.placeholderLabel
+  [self.labelAnimator layOutPlaceholderLabel:self.placeholderLabel
                                    placeholderFrame:adjustedPlaceholderFrame
                                isPlaceholderVisible:self.isPlaceholderVisible];
-  [self.floatingLabelManager layOutFloatingLabel:self.label
+  [self.labelAnimator layOutFloatingLabel:self.label
                                            state:self.floatingLabelState
                                      normalFrame:self.layout.floatingLabelFrameNormal
                                    floatingFrame:self.layout.floatingLabelFrameFloating
@@ -566,7 +566,7 @@
 }
 
 -(UIFont *)floatingFont {
-  return [self.floatingLabelManager floatingFontWithFont:self.normalFont
+  return [self.labelAnimator floatingFontWithFont:self.normalFont
                                          containerStyler:self.containerStyler];
 }
 

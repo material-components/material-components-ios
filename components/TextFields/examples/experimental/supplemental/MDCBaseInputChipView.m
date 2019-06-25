@@ -137,9 +137,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 @property(nonatomic, strong)
     NSMutableDictionary<NSNumber *, id<MDCContainedInputViewColorScheming>> *colorSchemes;
 
-@property(nonatomic, strong) MDCContainedInputViewLabelAnimator *floatingLabelManager;
-
-@property(nonatomic, assign) BOOL isAnimating;
+@property(nonatomic, strong) MDCContainedInputViewLabelAnimator *labelAnimator;
 
 @end
 
@@ -228,7 +226,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 }
 
 - (void)setUpPlaceholderManager {
-  self.floatingLabelManager = [[MDCContainedInputViewLabelAnimator alloc] init];
+  self.labelAnimator = [[MDCContainedInputViewLabelAnimator alloc] init];
 }
 
 - (void)setUpLayoutDirection {
@@ -521,7 +519,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 }
 
 - (void)postLayoutSubviews {
-  [self.floatingLabelManager layOutFloatingLabel:self.label
+  [self.labelAnimator layOutFloatingLabel:self.label
                                            state:self.floatingLabelState
                                      normalFrame:self.layout.floatingLabelFrameNormal
                                    floatingFrame:self.layout.floatingLabelFrameFloating
@@ -825,7 +823,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 }
 
 -(UIFont *)floatingFont {
-  return [self.floatingLabelManager floatingFontWithFont:self.normalFont
+  return [self.labelAnimator floatingFontWithFont:self.normalFont
                                          containerStyler:self.containerStyler];
 }
 
