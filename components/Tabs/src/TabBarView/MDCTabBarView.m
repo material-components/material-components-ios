@@ -71,8 +71,8 @@ static NSString *const kTitleKeyPath = @"title";
     MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
     // TODO(#7645): Remove this if autoresizing masks are used.
     itemView.translatesAutoresizingMaskIntoConstraints = NO;
-    itemView.title = item.title;
-    itemView.image = item.image;
+    itemView.titleLabel.text = item.title;
+    itemView.iconImageView.image = item.image;
     [itemViews addObject:itemView];
     [self addSubview:itemView];
   }

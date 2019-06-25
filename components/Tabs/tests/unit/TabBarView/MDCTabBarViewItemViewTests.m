@@ -66,7 +66,7 @@ static UIImage *fakeImage(CGFloat width, CGFloat height) {
   MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
 
   // When
-  itemView.image = fakeImage(1000, 1000);
+  itemView.iconImageView.image = fakeImage(1000, 1000);
   CGSize intrinsicContentSize = itemView.intrinsicContentSize;
 
   // Then
@@ -79,7 +79,7 @@ static UIImage *fakeImage(CGFloat width, CGFloat height) {
   MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
 
   // When
-  itemView.title = kLongTitle;
+  itemView.titleLabel.text = kLongTitle;
   CGSize intrinsicContentSize = itemView.intrinsicContentSize;
 
   // Then
@@ -93,8 +93,8 @@ static UIImage *fakeImage(CGFloat width, CGFloat height) {
   MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
 
   // When
-  itemView.image = fakeImage(24, 24);
-  itemView.title = @"Favorites";
+  itemView.iconImageView.image = fakeImage(24, 24);
+  itemView.titleLabel.text = @"Favorites";
   CGSize intrinsicContentSize = itemView.intrinsicContentSize;
 
   // Then
@@ -150,7 +150,7 @@ static UIImage *fakeImage(CGFloat width, CGFloat height) {
   CGSize requestedSize = CGSizeMake(kMaxWidth, kMinHeightOfTitleOrImageOnlyView);
 
   // When
-  itemView.image = fakeImage(1000, 1000);
+  itemView.iconImageView.image = fakeImage(1000, 1000);
   CGSize fitSize = [itemView sizeThatFits:requestedSize];
 
   // Then
@@ -164,7 +164,7 @@ static UIImage *fakeImage(CGFloat width, CGFloat height) {
   CGSize requestedSize = CGSizeMake(2000, 2000);
 
   // When
-  itemView.image = fakeImage(1000, 1000);
+  itemView.iconImageView.image = fakeImage(1000, 1000);
   CGSize fitSize = [itemView sizeThatFits:requestedSize];
 
   // Then
@@ -177,7 +177,7 @@ static UIImage *fakeImage(CGFloat width, CGFloat height) {
   MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
 
   // When
-  itemView.title = kLongTitle;
+  itemView.titleLabel.text = kLongTitle;
   CGSize fitSize = [itemView sizeThatFits:CGSizeZero];
 
   // Then
@@ -191,7 +191,7 @@ static UIImage *fakeImage(CGFloat width, CGFloat height) {
   MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
 
   // When
-  itemView.title = kLongTitle;
+  itemView.titleLabel.text = kLongTitle;
   CGSize fitSize = [itemView sizeThatFits:CGSizeMake(1000, 1000)];
 
   // Then
@@ -207,8 +207,8 @@ static UIImage *fakeImage(CGFloat width, CGFloat height) {
   MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
 
   // When
-  itemView.image = fakeImage(24, 24);
-  itemView.title = @"Favorites";
+  itemView.iconImageView.image = fakeImage(24, 24);
+  itemView.titleLabel.text = @"Favorites";
   CGSize fitSize = [itemView sizeThatFits:CGSizeMake(1000, 1000)];
 
   // Then
