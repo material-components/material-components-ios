@@ -18,6 +18,7 @@ load(
     "mdc_objc_library",
     "mdc_snapshot_objc_library",
     "mdc_snapshot_test",
+    "mdc_unit_test_suite",
 )
 
 licenses(["notice"])  # Apache 2.0
@@ -56,4 +57,30 @@ mdc_snapshot_objc_library(
 mdc_snapshot_test(
     name = "snapshot_tests",
     deps = [":snapshot_test_lib"],
+)
+
+mdc_objc_library(
+    name = "unit_test_sources",
+    testonly = 1,
+    srcs = native.glob([
+        "tests/unit/*.m",
+        "tests/unit/*.h",
+    ]),
+    sdk_frameworks = [
+        "UIKit",
+        "XCTest",
+    ],
+    visibility = ["//visibility:private"],
+    deps = [
+        ":Banner",
+        "//components/Buttons",
+        "//components/Typography",
+    ],
+)
+
+mdc_unit_test_suite(
+    name = "unit_tests",
+    deps = [
+        ":unit_test_sources",
+    ],
 )
