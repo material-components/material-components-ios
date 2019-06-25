@@ -272,30 +272,6 @@
   return offset - (0.5 * textHeight);
 }
 
-@synthesize verticalDensity = _verticalDensity;
-
-- (CGFloat)floatingLabelMinYWithFloatingLabelHeight:(CGFloat)floatingPlaceholderHeight {
-  CGFloat lowestMinY = 4;
-  CGFloat highestMinY = 15;
-  CGFloat difference = highestMinY - lowestMinY;
-  return lowestMinY + (difference * (1 - self.verticalDensity));
-}
-
-- (CGFloat)contentAreaTopPaddingFloatingLabelWithFloatingLabelMaxY:
-    (CGFloat)floatingPlaceholderMaxY {
-  CGFloat minYAddition = 3;
-  CGFloat maxYAddition = 8;
-  CGFloat difference = maxYAddition - minYAddition;
-  return floatingPlaceholderMaxY + (minYAddition + (difference * (1 - self.verticalDensity)));
-}
-
-- (CGFloat)contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:(CGFloat)floatingPlaceholderMaxY {
-  CGFloat minYAddition = 10;
-  CGFloat maxYAddition = 15;
-  CGFloat difference = maxYAddition - minYAddition;
-  return minYAddition + (difference * (1 - self.verticalDensity));
-}
-
 @end
 
 @implementation TextAreaOutlinedPositioningDelegate
@@ -338,30 +314,6 @@
                                        preferredContainerHeight:preferredContainerHeight];
   CGFloat offset = containerHeight * 0.5;
   return offset - (0.5 * textHeight);
-}
-
-
-
-
-
-
-
-@synthesize verticalDensity = _verticalDensity;
-
-- (CGFloat)floatingLabelMinYWithFloatingLabelHeight:(CGFloat)floatingPlaceholderHeight {
-  return (CGFloat)0 - ((CGFloat)0.5 * floatingPlaceholderHeight);
-}
-
-- (CGFloat)contentAreaTopPaddingFloatingLabelWithFloatingLabelMaxY:
-    (CGFloat)floatingPlaceholderMaxY {
-  CGFloat minYAddition = 3;
-  CGFloat maxYAddition = 10;
-  CGFloat difference = maxYAddition - minYAddition;
-  return floatingPlaceholderMaxY + (minYAddition + (difference * (1 - self.verticalDensity)));
-}
-
-- (CGFloat)contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:(CGFloat)floatingPlaceholderMaxY {
-  return [self contentAreaTopPaddingFloatingLabelWithFloatingLabelMaxY:floatingPlaceholderMaxY];
 }
 
 @end

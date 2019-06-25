@@ -143,43 +143,23 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
       (clearButton.sideLength - clearButton.imageViewSideLength) * 0.5;
   CGFloat actualClearButtonMinX = apparentClearButtonMinX - clearButtonImageViewSideMargin;
 
-  CGFloat floatingLabelHeight = canFloatingLabelFloat ? [self textHeightWithFont:floatingFont] : 0;
   
-  CGFloat floatingLabelMinY = 0;
-  if ([containerStyler.positioningDelegate respondsToSelector:@selector(floatingLabelMinYWithTextHeight:floatingLabelHeight:preferredContainerHeight:)]) {
-    floatingLabelMinY = [containerStyler.positioningDelegate floatingLabelMinYWithTextHeight:font.lineHeight
-                                                                                floatingLabelHeight:floatingFont.lineHeight
-                                                              preferredContainerHeight:preferredContainerHeight];
-  } else {
-    floatingLabelMinY = [containerStyler.positioningDelegate
-                         floatingLabelMinYWithFloatingLabelHeight:floatingLabelHeight];
-  }
-  CGFloat floatingLabelMaxY = floatingLabelMinY + floatingLabelHeight;
-  CGFloat textRectMinYWithFloatingLabel = 0;
-  if ([containerStyler.positioningDelegate respondsToSelector:@selector( textMinYWithFloatingLabelWithTextHeight:floatingLabelHeight:preferredContainerHeight:)]) {
-    textRectMinYWithFloatingLabel =
+  CGFloat floatingLabelMinY = [containerStyler.positioningDelegate floatingLabelMinYWithTextHeight:font.lineHeight
+                                                                               floatingLabelHeight:floatingFont.lineHeight
+                                                                          preferredContainerHeight:preferredContainerHeight];
+  CGFloat textRectMinYWithFloatingLabel =
         [containerStyler.positioningDelegate textMinYWithFloatingLabelWithTextHeight:font.lineHeight
                                                                  floatingLabelHeight:floatingFont.lineHeight
                                                       preferredContainerHeight:preferredContainerHeight];
-  } else {
-    textRectMinYWithFloatingLabel = [containerStyler.positioningDelegate
-                                     contentAreaTopPaddingFloatingLabelWithFloatingLabelMaxY:floatingLabelMaxY];
-
-  }
   CGFloat textRectHeight = [self textHeightWithFont:font];
   CGFloat textRectCenterYWithFloatingLabel =
       textRectMinYWithFloatingLabel + ((CGFloat)0.5 * textRectHeight);
-  CGFloat textRectMaxYWithFloatingLabel = textRectMinYWithFloatingLabel + textRectHeight;
   
   CGFloat topRowBottomRowDividerY = 0;
   if (preferredContainerHeight > 0) {
     topRowBottomRowDividerY = preferredContainerHeight;
-  } else if ([containerStyler.positioningDelegate respondsToSelector:@selector(defaultContainerHeightWithTextHeight:)]) {
-    topRowBottomRowDividerY = [containerStyler.positioningDelegate defaultContainerHeightWithTextHeight:font.lineHeight];
   } else {
-    CGFloat bottomPadding =
-    [containerStyler.positioningDelegate contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:floatingLabelMaxY];
-    topRowBottomRowDividerY = textRectMaxYWithFloatingLabel + bottomPadding;
+    topRowBottomRowDividerY = [containerStyler.positioningDelegate defaultContainerHeightWithTextHeight:font.lineHeight];
   }
 
   CGFloat textRectCenterYNormal = topRowBottomRowDividerY * (CGFloat)0.5;
@@ -289,14 +269,8 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
                           textRectRect:textRectNormal
                                  isRTL:isRTL];
 
-  CGFloat assistiveLabelVerticalPadding = 0;
-  if ([containerStyler.positioningDelegate respondsToSelector:@selector(assistiveLabelPaddingWithContainerHeight:)]) {
-    assistiveLabelVerticalPadding = [containerStyler.positioningDelegate
-                                     assistiveLabelPaddingWithContainerHeight:topRowBottomRowDividerY];
-  } else {
-    assistiveLabelVerticalPadding =
-        [containerStyler.positioningDelegate contentAreaVerticalPaddingNormalWithFloatingLabelMaxY:floatingLabelMaxY];
-  }
+  CGFloat assistiveLabelVerticalPadding = [containerStyler.positioningDelegate
+                                           assistiveLabelPaddingWithContainerHeight:topRowBottomRowDividerY];
   self.underlineLabelViewLayout = [[MDCContainedInputAssistiveLabelViewLayout alloc]
                 initWithSuperviewWidth:textFieldWidth
                     leftAssistiveLabel:leftAssistiveLabel
