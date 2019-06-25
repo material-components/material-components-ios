@@ -14,13 +14,9 @@
 
 #import <UIKit/UIKit.h>
 
-/** A basic view that displays a title and image for a tab bar item within MDCTabBarView. */
-@interface MDCTabBarViewItemView : UIView
-
-/** The image view to display the icon. */
-@property(nonatomic, strong) UIImageView *iconImageView;
-
-/** The label to display the title. */
-@property(nonatomic, strong) UILabel *titleLabel;
-
+/**
+ A UITextField subclass that will potentially provide the foundation for Material TextFields in the
+ future. This class is under active development and should be used with caution.
+ */
+@interface MDCBaseTextField : UITextField
 @end

@@ -58,8 +58,8 @@ static const CGFloat kMinHeight = 48;
     MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
     // TODO(#7645): Remove this if autoresizing masks are used.
     itemView.translatesAutoresizingMaskIntoConstraints = NO;
-    itemView.title = item.title;
-    itemView.image = item.image;
+    itemView.titleLabel.text = item.title;
+    itemView.iconImageView.image = item.image;
     [itemViews addObject:itemView];
     [self addSubview:itemView];
   }
@@ -82,12 +82,10 @@ static const CGFloat kMinHeight = 48;
   }
 
   NSUInteger itemIndex = [self.items indexOfObject:selectedItem];
+  // Don't crash, just ignore if `selectedItem` isn't present in `_items`. This is the same behavior
+  // as UITabBar.
   if (selectedItem && (itemIndex == NSNotFound)) {
-    NSString *itemTitle = selectedItem.title;
-    NSString *exceptionMessage =
-        [NSString stringWithFormat:@"%@ is not a member of the tab bar's `items`.", itemTitle];
-    [[NSException exceptionWithName:NSInvalidArgumentException reason:exceptionMessage
-                           userInfo:nil] raise];
+    return;
   }
 
   _selectedItem = selectedItem;

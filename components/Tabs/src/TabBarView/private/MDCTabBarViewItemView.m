@@ -32,8 +32,6 @@ static const UIEdgeInsets kEdgeInsets = {.top = 12, .right = 16, .bottom = 12, .
 @interface MDCTabBarViewItemView ()
 
 @property(nonatomic, strong) UIView *contentView;
-@property(nonatomic, strong) UIImageView *iconImageView;
-@property(nonatomic, strong) UILabel *titleLabel;
 
 @end
 
@@ -44,8 +42,6 @@ static const UIEdgeInsets kEdgeInsets = {.top = 12, .right = 16, .bottom = 12, .
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    _title = @"";
-
     self.isAccessibilityElement = YES;
 
     // Create initial subviews
@@ -57,8 +53,6 @@ static const UIEdgeInsets kEdgeInsets = {.top = 12, .right = 16, .bottom = 12, .
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    _title = @"";
-
     self.isAccessibilityElement = YES;
 
     // Create initial subviews
@@ -113,8 +107,9 @@ static const UIEdgeInsets kEdgeInsets = {.top = 12, .right = 16, .bottom = 12, .
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
-  const CGFloat minHeight =
-      (self.title && self.image) ? kMinHeightTitleAndImage : kMinHeightTitleOrImageOnly;
+  NSString *title = self.titleLabel.text;
+  UIImage *icon = self.iconImageView.image;
+  const CGFloat minHeight = (title && icon) ? kMinHeightTitleAndImage : kMinHeightTitleOrImageOnly;
   CGFloat horizontalPadding = kEdgeInsets.left + kEdgeInsets.right;
   CGFloat verticalPadding = kEdgeInsets.top + kEdgeInsets.bottom;
   // The size of the content view should be smaller that the size passed in.
@@ -134,17 +129,5 @@ static const UIEdgeInsets kEdgeInsets = {.top = 12, .right = 16, .bottom = 12, .
 }
 
 #pragma mark - Public API
-
-- (void)setTitle:(NSString *)title {
-  _title = [title copy];
-  self.titleLabel.text = _title;
-  [self setNeedsLayout];
-}
-
-- (void)setImage:(nullable UIImage *)image {
-  _image = image;
-  self.iconImageView.image = _image;
-  [self setNeedsLayout];
-}
 
 @end
