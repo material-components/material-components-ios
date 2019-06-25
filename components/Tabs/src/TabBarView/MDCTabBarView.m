@@ -60,6 +60,9 @@ static const CGFloat kMinHeight = 48;
     itemView.translatesAutoresizingMaskIntoConstraints = NO;
     itemView.titleLabel.text = item.title;
     itemView.iconImageView.image = item.image;
+    UITapGestureRecognizer *tapGesture =
+        [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapItemView:)];
+    [itemView addGestureRecognizer:tapGesture];
     [itemViews addObject:itemView];
     [self addSubview:itemView];
   }
@@ -81,6 +84,7 @@ static const CGFloat kMinHeight = 48;
     return;
   }
 
+  NSUInteger oldItemIndex = [self.items indexOfObject:self.selectedItem];
   NSUInteger itemIndex = [self.items indexOfObject:selectedItem];
   // Don't crash, just ignore if `selectedItem` isn't present in `_items`. This is the same behavior
   // as UITabBar.
@@ -89,6 +93,11 @@ static const CGFloat kMinHeight = 48;
   }
 
   _selectedItem = selectedItem;
+  if (oldItemIndex != NSNotFound) {
+    MDCTabBarViewItemView *itemView = (MDCTabBarViewItemView *)self.itemViews[oldItemIndex];
+    itemView.selected = NO;
+  }
+  ((MDCTabBarViewItemView *)self.itemViews[itemIndex]).selected = YES;
 }
 
 #pragma mark - UIView
@@ -117,6 +126,16 @@ static const CGFloat kMinHeight = 48;
 
 - (CGSize)sizeThatFits:(CGSize)size {
   return CGSizeMake(size.width, MAX(size.height, kMinHeight));
+}
+
+#pragma mark - Actions
+
+- (void)didTapItemView:(UITapGestureRecognizer *)tap {
+  NSUInteger index = [self.itemViews indexOfObject:tap.view];
+  if (index == NSNotFound) {
+    return;
+  }
+  self.selectedItem = self.items[index];
 }
 
 @end
