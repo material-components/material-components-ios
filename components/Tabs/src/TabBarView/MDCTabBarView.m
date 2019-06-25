@@ -111,8 +111,8 @@ static const CGFloat kMinHeight = 48;
   for (UITabBarItem *item in self.items) {
     MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
     itemView.translatesAutoresizingMaskIntoConstraints = NO;
-    itemView.title = item.title;
-    itemView.image = item.image;
+    itemView.titleLabel.text = item.title;
+    itemView.iconImageView.image = item.image;
     [_stackView addArrangedSubview:itemView];
   }
 }
