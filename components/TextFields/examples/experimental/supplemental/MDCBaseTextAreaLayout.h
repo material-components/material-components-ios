@@ -57,7 +57,6 @@ NS_ASSUME_NONNULL_BEGIN
                                  font:(UIFont *)font
                          floatingFont:(UIFont *)floatingFont
                    floatingLabelState:(MDCContainedInputViewFloatingLabelState)floatingLabelState
-                          clearButton:(UIButton *)clearButton
                    leftAssistiveLabel:(UILabel *)leftAssistiveLabel
                   rightAssistiveLabel:(UILabel *)rightAssistiveLabel
            underlineLabelDrawPriority:

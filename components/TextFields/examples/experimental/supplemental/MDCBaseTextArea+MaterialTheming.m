@@ -234,7 +234,7 @@
 }
 
 - (CGFloat)defaultContainerHeightWithTextHeight:(CGFloat)textHeight {
-  return 2 * textHeight;
+  return 3 * textHeight;
 }
 
 - (CGFloat)containerHeightWithTextHeight:(CGFloat)textHeight

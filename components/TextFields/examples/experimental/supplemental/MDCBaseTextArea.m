@@ -36,6 +36,26 @@
 
 @implementation MDCBaseInputChipViewTextView
 
+-(instancetype)init {
+  self = [super init];
+  if (self) {
+    [self commonMDCBaseInputChipViewTextViewInit];
+  }
+  return self;
+}
+
+-(instancetype)initWithFrame:(CGRect)frame {
+  self = [super initWithFrame:frame];
+  if (self) {
+    [self commonMDCBaseInputChipViewTextViewInit];
+  }
+  return self;
+}
+
+- (void)commonMDCBaseInputChipViewTextViewInit {
+  self.backgroundColor = [UIColor clearColor];
+}
+
 - (UIFont *)effectiveFont {
   return self.font ?: [UIFont systemFontOfSize:[UIFont systemFontSize]];
 }
@@ -48,6 +68,10 @@
 }
 
 - (BOOL)becomeFirstResponder {
+
+  self.layer.borderColor = [UIColor redColor].CGColor;
+  self.layer.borderWidth = 1;
+  
   BOOL didBecomeFirstResponder = [super becomeFirstResponder];
   [self.inputChipViewTextViewDelegate
       inputChipViewTextViewDidBecomeFirstResponder:didBecomeFirstResponder];
@@ -56,12 +80,11 @@
 
 @end
 
-
 @interface MDCBaseTextArea () <MDCBaseInputChipViewTextViewDelegate, UIGestureRecognizerDelegate>
 
 #pragma mark MDCContainedInputView properties
-@property(strong, nonatomic) UIButton *clearButton;
-@property(strong, nonatomic) UIImageView *clearButtonImageView;
+//@property(strong, nonatomic) UIButton *clearButton;
+//@property(strong, nonatomic) UIImageView *clearButtonImageView;
 @property(strong, nonatomic) UILabel *label;
 
 @property(strong, nonatomic) UILabel *leftAssistiveLabel;
@@ -245,23 +268,7 @@
 }
 
 - (void)setUpClearButton {
-  //  CGFloat clearButtonSideLength = MDCBaseTextViewLayout.clearButtonSideLength;
-  //  CGRect clearButtonFrame = CGRectMake(0, 0, clearButtonSideLength, clearButtonSideLength);
-  //  self.clearButton = [[UIButton alloc] initWithFrame:clearButtonFrame];
-  //  [self.clearButton addTarget:self
-  //                       action:@selector(clearButtonPressed:)
-  //             forControlEvents:UIControlEventTouchUpInside];
-  //
-  //  CGFloat clearButtonImageViewSideLength =
-  //  MDCBaseTextViewLayout.clearButtonImageViewSideLength; CGRect clearButtonImageViewRect =
-  //  CGRectMake(0, 0, clearButtonImageViewSideLength, clearButtonImageViewSideLength);
-  //  self.clearButtonImageView = [[UIImageView alloc] initWithFrame:clearButtonImageViewRect];
-  //  UIImage *clearButtonImage =
-  //  [[self untintedClearButtonImage] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-  //  self.clearButtonImageView.image = clearButtonImage;
-  //  [self.clearButton addSubview:self.clearButtonImageView];
-  //  [self addSubview:self.clearButton];
-  //  self.clearButtonImageView.center = self.clearButton.center;
+  //TODO: Use CIV clear button
 }
 
 - (void)setUpGradientLayers {
@@ -284,12 +291,12 @@
 #pragma mark UIResponder Overrides
 
 - (BOOL)resignFirstResponder {
-  BOOL textFieldDidResign = [self.textField resignFirstResponder];
+  BOOL textFieldDidResign = [self.textView resignFirstResponder];
   return textFieldDidResign;
 }
 
 - (BOOL)becomeFirstResponder {
-  BOOL textFieldDidBecome = [self.textField becomeFirstResponder];
+  BOOL textFieldDidBecome = [self.textView becomeFirstResponder];
   return textFieldDidBecome;
 }
 
@@ -418,7 +425,6 @@
                                               font:self.normalFont
                                       floatingFont:self.floatingFont
                                 floatingLabelState:self.floatingLabelState
-                                       clearButton:self.clearButton
                                 leftAssistiveLabel:self.leftAssistiveLabel
                                rightAssistiveLabel:self.rightAssistiveLabel
                         underlineLabelDrawPriority:self.underlineLabelDrawPriority
@@ -536,7 +542,7 @@
 }
 
 - (void)textViewDidChangeWithNotification:(NSNotification *)notification {
-  if (notification.object != self.textField) {
+  if (notification.object != self.textView) {
     return;
   }
   //  NSLog(@"text did change");
@@ -593,7 +599,7 @@
 
 #pragma mark Accessors
 
-- (UITextView *)textField {
+- (UITextView *)textView {
   return self.inputChipViewTextView;
 }
 
@@ -675,11 +681,10 @@
 
 - (void)applyMDCContainedInputViewColorScheming:
     (id<MDCContainedInputViewColorScheming>)colorScheming {
-  self.textField.textColor = colorScheming.textColor;
+  self.textView.textColor = colorScheming.textColor;
   self.leadingAssistiveLabel.textColor = colorScheming.underlineLabelColor;
   self.trailingAssistiveLabel.textColor = colorScheming.underlineLabelColor;
   self.label.textColor = colorScheming.floatingLabelColor;
-  self.clearButtonImageView.tintColor = colorScheming.clearButtonTintColor;
 }
 
 - (void)setContainedInputViewColorScheming:
