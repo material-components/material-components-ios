@@ -15,8 +15,8 @@
 #import "MaterialBanner.h"
 #import "MaterialButtons.h"
 #import "MaterialColorScheme.h"
-#import "MaterialTypographyScheme.h"
 #import "MaterialTypography.h"
+#import "MaterialTypographyScheme.h"
 
 static const CGFloat exampleListTableViewHeight = 160.0f;
 static const CGFloat exampleBannerContentPadding = 10.0f;

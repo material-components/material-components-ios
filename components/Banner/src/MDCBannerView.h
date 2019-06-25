@@ -88,10 +88,12 @@ __attribute__((objc_subclassing_restricted)) @interface MDCBannerView : UIView
  Indicates whether the banner should automatically update its font when the device’s
  UIContentSizeCategory is changed.
 
- If set to YES, the text fonts and buttons font will be based on the scalable fonts set on this banner.
+ If set to YES, the text fonts and buttons font will be based on the scalable fonts set on this
+ banner.
 
  Default value is NO.
  */
-@property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:, assign) BOOL mdc_adjustsFontForContentSizeCategory;
+@property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:, assign)
+    BOOL mdc_adjustsFontForContentSizeCategory;
 
 @end

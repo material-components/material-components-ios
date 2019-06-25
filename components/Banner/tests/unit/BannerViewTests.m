@@ -36,7 +36,7 @@
 }
 
 - (instancetype)initWithContentSizeCategoryOverride:
-(UIContentSizeCategory)contentSizeCategoryOverride {
+    (UIContentSizeCategory)contentSizeCategoryOverride {
   self = [super init];
   if (self) {
     self.contentSizeCategoryOverride = contentSizeCategoryOverride;
@@ -47,14 +47,13 @@
 - (UITraitCollection *)traitCollection {
   if (@available(iOS 10.0, *)) {
     UITraitCollection *traitCollection = [UITraitCollection
-                                          traitCollectionWithPreferredContentSizeCategory:self.contentSizeCategoryOverride];
+        traitCollectionWithPreferredContentSizeCategory:self.contentSizeCategoryOverride];
     return traitCollection;
   }
   return [super traitCollection];
 }
 
 @end
-
 
 @interface BannerViewTests : XCTestCase
 
@@ -77,22 +76,23 @@
     CGFloat originalTextFontSize = bannerView.textLabel.font.pointSize;
     MDCButton *leadingButton = bannerView.leadingButton;
     [leadingButton setTitleFont:scalableFont forState:UIControlStateNormal];
-    CGFloat originalButtonFontSize = [bannerView.leadingButton titleFontForState:UIControlStateNormal].pointSize;
+    CGFloat originalButtonFontSize =
+        [bannerView.leadingButton titleFontForState:UIControlStateNormal].pointSize;
 
     // When
-    MDCBannerViewTestsDynamicTypeContentSizeCategoryOverrideWindow
-    *extraExtraLargeContainer =
-    [[MDCBannerViewTestsDynamicTypeContentSizeCategoryOverrideWindow alloc]
-     initWithContentSizeCategoryOverride:UIContentSizeCategoryExtraExtraLarge];
+    MDCBannerViewTestsDynamicTypeContentSizeCategoryOverrideWindow *extraExtraLargeContainer =
+        [[MDCBannerViewTestsDynamicTypeContentSizeCategoryOverrideWindow alloc]
+            initWithContentSizeCategoryOverride:UIContentSizeCategoryExtraExtraLarge];
     [extraExtraLargeContainer addSubview:bannerView];
     [NSNotificationCenter.defaultCenter
-     postNotificationName:UIContentSizeCategoryDidChangeNotification
-     object:nil];
+        postNotificationName:UIContentSizeCategoryDidChangeNotification
+                      object:nil];
 
     // Then
     CGFloat actualTextFontSize = bannerView.textLabel.font.pointSize;
     XCTAssertGreaterThan(actualTextFontSize, originalTextFontSize);
-    CGFloat actualButtonFontSize =  [bannerView.leadingButton titleFontForState:UIControlStateNormal].pointSize;
+    CGFloat actualButtonFontSize =
+        [bannerView.leadingButton titleFontForState:UIControlStateNormal].pointSize;
     XCTAssertGreaterThan(actualButtonFontSize, originalButtonFontSize);
   }
 }
