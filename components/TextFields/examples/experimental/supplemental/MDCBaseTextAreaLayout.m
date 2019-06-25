@@ -176,28 +176,6 @@ static const CGFloat kGradientBlurLength = 6;
                                                                                floatingLabelMaxY:floatingLabelMaxY
                                                                                    bottomPadding:bottomPadding
                                                                              positioningDelegate:containerStyler.positioningDelegate];
-
-  //  if (isRTL) {
-  //    NSMutableArray<NSValue *> *rtlChips =
-  //        [[NSMutableArray alloc] initWithCapacity:chipFrames.count];
-  //    for (NSValue *chipFrame in chipFrames) {
-  //      CGRect frame = [chipFrame CGRectValue];
-  //      frame = MDFRectFlippedHorizontally(frame, size.width);
-  //      [rtlChips addObject:[NSValue valueWithCGRect:frame]];
-  //    }
-  //    self.chipFrames = [rtlChips copy];
-  //    self.textViewFrame = MDFRectFlippedHorizontally(textViewFrame, size.width);
-  //    self.scrollViewContentViewTouchForwardingViewFrame =
-  //        MDFRectFlippedHorizontally(self.scrollViewContentViewTouchForwardingViewFrame,
-  //        size.width);
-  //    self.floatingLabelFrame = MDFRectFlippedHorizontally(floatingLabelFrame,
-  //    size.width); self.normalLabelFrame =
-  //    MDFRectFlippedHorizontally(normalLabelFrame, size.width);
-  //    self.maskedScrollViewContainerViewFrame =
-  //        MDFRectFlippedHorizontally(self.maskedScrollViewContainerViewFrame, size.width);
-  //    self.scrollViewFrame = MDFRectFlippedHorizontally(scrollViewRect, size.width);
-  //  }
-
   return;
 }
 
