@@ -23,6 +23,9 @@ static const CGFloat kMinHeight = 48;
 /** The views representing the items of this tab bar. */
 @property(nonatomic, strong) NSArray<UIView *> *itemViews;
 
+/** The image tint colors for bar items. */
+@property(nonnull, nonatomic, strong)
+    NSMutableDictionary<NSNumber *, UIColor *> *stateToImageTintColor;
 @end
 
 @implementation MDCTabBarView
@@ -34,6 +37,7 @@ static const CGFloat kMinHeight = 48;
   if (self) {
     _items = @[];
     _itemViews = @[];
+    _stateToImageTintColor = [NSMutableDictionary dictionary];
   }
   return self;
 }
@@ -68,6 +72,7 @@ static const CGFloat kMinHeight = 48;
     itemView.translatesAutoresizingMaskIntoConstraints = NO;
     itemView.titleLabel.text = item.title;
     itemView.iconImageView.image = item.image;
+    itemView.iconImageView.tintColor = [self imageTintColorForState:UIControlStateNormal];
     [itemViews addObject:itemView];
     [self addSubview:itemView];
   }
@@ -97,6 +102,43 @@ static const CGFloat kMinHeight = 48;
   }
 
   _selectedItem = selectedItem;
+  [self updateImageTintColorForAllItems];
+}
+
+- (void)updateImageTintColorForAllItems {
+  for (UITabBarItem *item in self.items) {
+    NSUInteger indexOfItem = [self.items indexOfObject:item];
+    // This is a significant error, but defensive coding is preferred.
+    if (indexOfItem == NSNotFound || indexOfItem >= self.itemViews.count) {
+      NSAssert(NO, @"Unable to find associated item view for (%@)", item);
+      continue;
+    }
+    UIView *itemView = self.itemViews[indexOfItem];
+    // Skip custom views
+    if (![itemView isKindOfClass:[MDCTabBarViewItemView class]]) {
+      continue;
+    }
+    MDCTabBarViewItemView *tabBarViewItemView = (MDCTabBarViewItemView *)itemView;
+    if (item == self.selectedItem) {
+      tabBarViewItemView.iconImageView.tintColor =
+          [self imageTintColorForState:UIControlStateSelected];
+    } else {
+      tabBarViewItemView.iconImageView.tintColor =
+          [self imageTintColorForState:UIControlStateNormal];
+    }
+  }
+}
+
+- (void)setImageTintColor:(UIColor *)imageTintColor forState:(UIControlState)state {
+  self.stateToImageTintColor[@(state)] = imageTintColor;
+}
+
+- (UIColor *)imageTintColorForState:(UIControlState)state {
+  UIColor *color = self.stateToImageTintColor[@(state)];
+  if (color == nil) {
+    color = self.stateToImageTintColor[@(UIControlStateNormal)];
+  }
+  return color;
 }
 
 #pragma mark - UIView

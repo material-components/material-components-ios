@@ -147,4 +147,6 @@ static const CGFloat kExpectedHeightTitlesAndIcons = 72;
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
+
+
 @end
