@@ -117,7 +117,6 @@ static const UIEdgeInsets kEdgeInsets = {.top = 12, .right = 16, .bottom = 12, .
   const CGFloat maxHeight = MAX(minHeight, size.height);
   CGSize maxSize = CGSizeMake(kMaxWidth - horizontalPadding, maxHeight - verticalPadding);
   CGSize labelFitSize = self.titleLabel.intrinsicContentSize;
-  NSLog(@"debug");
   if (labelFitSize.width > maxSize.width) {
     labelFitSize = [self.titleLabel sizeThatFits:CGSizeMake(maxSize.width, CGFLOAT_MAX)];
   }
