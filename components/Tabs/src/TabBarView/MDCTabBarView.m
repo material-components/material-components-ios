@@ -88,16 +88,23 @@ static const CGFloat kMinHeight = 48;
   NSUInteger itemIndex = [self.items indexOfObject:selectedItem];
   // Don't crash, just ignore if `selectedItem` isn't present in `_items`. This is the same behavior
   // as UITabBar.
-  if (selectedItem && (itemIndex == NSNotFound)) {
+  if (itemIndex == NSNotFound) {
     return;
   }
 
   _selectedItem = selectedItem;
+
   if (oldItemIndex != NSNotFound) {
-    MDCTabBarViewItemView *itemView = (MDCTabBarViewItemView *)self.itemViews[oldItemIndex];
-    itemView.selected = NO;
+    UIView *oldItemView = self.itemViews[oldItemIndex];
+    if ([oldItemView isKindOfClass:[MDCTabBarViewItemView class]]) {
+      MDCTabBarViewItemView *itemView = (MDCTabBarViewItemView *)oldItemView;
+      itemView.selected = NO;
+    }
   }
-  ((MDCTabBarViewItemView *)self.itemViews[itemIndex]).selected = YES;
+  if ([self.itemViews[itemIndex] isKindOfClass:[MDCTabBarViewItemView class]]) {
+    MDCTabBarViewItemView *itemView = (MDCTabBarViewItemView *)self.itemViews[itemIndex];
+    itemView.selected = YES;
+  }
 }
 
 #pragma mark - UIView
