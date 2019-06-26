@@ -53,7 +53,7 @@ static NSString *const kExampleTitle = @"TabBarView";
   CGSize barIntrinsicContentSize = self.tabBar.intrinsicContentSize;
   self.tabBar.bounds = CGRectMake(0, 0, 0, barIntrinsicContentSize.width);
   // TODO: Change this to theming (or at least .primaryColor) once we have content.
-  self.tabBar.backgroundColor = self.containerScheme.colorScheme.primaryColorVariant;
+  self.tabBar.barTintColor = self.containerScheme.colorScheme.primaryColorVariant;
   self.tabBar.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:self.tabBar];
 
