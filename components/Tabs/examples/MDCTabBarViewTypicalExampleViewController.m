@@ -53,7 +53,9 @@ static NSString *const kExampleTitle = @"TabBarView";
   self.tabBar = [[MDCTabBarView alloc] init];
   self.tabBar.items = @[ item1, item2, item3, item4, item5 ];
   // TODO: Change this to theming (or at least .primaryColor) once we have content.
-  self.tabBar.barTintColor = self.containerScheme.colorScheme.primaryColorVariant;
+  self.tabBar.barTintColor = self.containerScheme.colorScheme.secondaryColor;
+  [self.tabBar setTitleColor:self.containerScheme.colorScheme.onSecondaryColor
+                    forState:UIControlStateNormal];
   self.tabBar.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:self.tabBar];
 
