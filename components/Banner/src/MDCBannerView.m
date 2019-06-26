@@ -523,6 +523,10 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
                                                   object:nil];
   }
 
+  // Set mdc_adjustsFontForContentSizeCategory on buttons
+  self.leadingButton.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
+  self.trailingButton.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
+
   [self updateBannerFont];
 }
 
@@ -536,7 +540,6 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 
 - (void)updateBannerFont {
   [self updateTextFont];
-  [self updateButtonFont];
 
   [self invalidateIntrinsicContentSize];
   [self setNeedsUpdateConstraints];
@@ -548,13 +551,6 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
     textFont = [textFont mdc_scaledFontForTraitEnvironment:self];
   }
   self.textLabel.font = textFont;
-}
-
-- (void)updateButtonFont {
-  self.leadingButton.mdc_adjustsFontForContentSizeCategory =
-      self.mdc_adjustsFontForContentSizeCategory;
-  self.trailingButton.mdc_adjustsFontForContentSizeCategory =
-      self.mdc_adjustsFontForContentSizeCategory;
 }
 
 @end
