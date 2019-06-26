@@ -136,12 +136,6 @@ static NSString *const kTitleKeyPath = @"title";
     return;
   }
 
-  UIView *itemView = self.itemViews[itemIndex];
-  if ([itemView isKindOfClass:[MDCTabBarViewItemView class]]) {
-    MDCTabBarViewItemView *selectedItemView = (MDCTabBarViewItemView *)itemView;
-    selectedItemView.iconImageView.image = selectedItem.image;
-  }
-
   [self updateTitleColorForAllViews];
   [self updateImageTintColorForAllViews];
 }
