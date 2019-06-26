@@ -16,6 +16,20 @@
 
 #import "MDCTabBarView.h"
 
+// Minimum height of the MDCTabBar view.
+static const CGFloat kMinHeight = 48;
+
+// Maximum width of a single item in the tab bar.
+static const CGFloat kMaxWidthTabBarItem = 360;
+
+/** Returns a generated image of the given size. */
+static UIImage *fakeImage(CGSize size) {
+  UIGraphicsBeginImageContext(size);
+  UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+  UIGraphicsEndImageContext();
+  return image;
+}
+
 @interface MDCTabBarViewTests : XCTestCase
 
 @property(nonatomic, strong) MDCTabBarView *tabBarView;
@@ -109,25 +123,18 @@
   XCTAssertNil(self.tabBarView.selectedItem);
 }
 
-// Tab bar should throw error when select the item that doesn't belongs to items.
+// Tab bar should ignore setting a `selectedItem` to something not in the `items` array.
 - (void)testSafelyHandlesNonExistItem {
   // Given
   self.tabBarView.items = @[];
-  XCTAssertNil(self.tabBarView.selectedItem);
-
-  // When set selected item to nil.
   self.tabBarView.selectedItem = nil;
 
-  // Then should make no difference to the selection.
-  XCTAssertNil(self.tabBarView.selectedItem);
-
-  // Given items {A, B} which selected item A.
+  // When
   self.tabBarView.items = @[ self.itemA, self.itemB ];
-  self.tabBarView.selectedItem = self.itemA;
-  XCTAssertEqual(self.tabBarView.selectedItem, self.itemA);
+  self.tabBarView.selectedItem = self.itemC;
 
-  // When set selected item to C, then should raise exception.
-  XCTAssertThrows(self.tabBarView.selectedItem = self.itemC);
+  // Then
+  XCTAssertNil(self.tabBarView.selectedItem);
 }
 
 // Setting items to the same set of items should change nothing.
@@ -142,6 +149,234 @@
 
   // Then should make no difference to the selection.
   XCTAssertEqual(self.tabBarView.selectedItem, self.itemA);
+}
+
+#pragma mark - Properties
+
+- (void)testSettingBarTintColorUpdatesBackgroundColor {
+  // Given
+  self.tabBarView.backgroundColor = nil;
+
+  // When
+  self.tabBarView.barTintColor = UIColor.orangeColor;
+
+  // Then
+  XCTAssertEqual(self.tabBarView.barTintColor, UIColor.orangeColor);
+  XCTAssertEqual(self.tabBarView.backgroundColor, self.tabBarView.barTintColor);
+}
+
+- (void)testSettingBackgroundColorUpdatesBarTintColor {
+  // Given
+  self.tabBarView.barTintColor = nil;
+
+  // When
+  self.tabBarView.backgroundColor = UIColor.purpleColor;
+
+  // Then
+  XCTAssertEqual(self.tabBarView.backgroundColor, UIColor.purpleColor);
+  XCTAssertEqual(self.tabBarView.barTintColor, self.tabBarView.backgroundColor);
+}
+
+- (void)testImageTintColorForStateFallsBackToNormalState {
+  // Given
+  [self.tabBarView setImageTintColor:nil forState:UIControlStateNormal];
+  [self.tabBarView setImageTintColor:nil forState:UIControlStateSelected];
+
+  // When
+  [self.tabBarView setImageTintColor:UIColor.purpleColor forState:UIControlStateNormal];
+
+  // Then
+  XCTAssertEqualObjects([self.tabBarView imageTintColorForState:UIControlStateSelected],
+                        UIColor.purpleColor);
+}
+
+- (void)testImageTintColorForStateReturnsExpectedValue {
+  // Given
+  [self.tabBarView setImageTintColor:nil forState:UIControlStateNormal];
+  [self.tabBarView setImageTintColor:nil forState:UIControlStateSelected];
+
+  // When
+  [self.tabBarView setImageTintColor:UIColor.purpleColor forState:UIControlStateNormal];
+  [self.tabBarView setImageTintColor:UIColor.orangeColor forState:UIControlStateSelected];
+
+  // Then
+  XCTAssertEqualObjects([self.tabBarView imageTintColorForState:UIControlStateNormal],
+                        UIColor.purpleColor);
+  XCTAssertEqualObjects([self.tabBarView imageTintColorForState:UIControlStateSelected],
+                        UIColor.orangeColor);
+}
+
+- (void)testImageTintColorColorForStateSetToNilFallsBackToNormal {
+  // Given
+  [self.tabBarView setImageTintColor:nil forState:UIControlStateNormal];
+  [self.tabBarView setImageTintColor:UIColor.cyanColor forState:UIControlStateSelected];
+
+  // When
+  [self.tabBarView setImageTintColor:UIColor.purpleColor forState:UIControlStateNormal];
+  [self.tabBarView setImageTintColor:nil forState:UIControlStateSelected];
+
+  // Then
+  XCTAssertEqualObjects([self.tabBarView imageTintColorForState:UIControlStateNormal],
+                        UIColor.purpleColor);
+  XCTAssertEqualObjects([self.tabBarView imageTintColorForState:UIControlStateSelected],
+                        UIColor.purpleColor);
+}
+
+- (void)testImageTintColorForStateWithNoValuesReturnsNil {
+  // When
+  [self.tabBarView setImageTintColor:nil forState:UIControlStateNormal];
+  [self.tabBarView setImageTintColor:nil forState:UIControlStateSelected];
+
+  // Then
+  XCTAssertNil([self.tabBarView imageTintColorForState:UIControlStateNormal]);
+  XCTAssertNil([self.tabBarView imageTintColorForState:UIControlStateSelected]);
+}
+
+- (void)testTitleColorForStateFallsBackToNormalState {
+  // Given
+  [self.tabBarView setTitleColor:nil forState:UIControlStateNormal];
+  [self.tabBarView setTitleColor:nil forState:UIControlStateSelected];
+
+  // When
+  [self.tabBarView setTitleColor:UIColor.purpleColor forState:UIControlStateNormal];
+
+  // Then
+  XCTAssertEqualObjects([self.tabBarView titleColorForState:UIControlStateSelected],
+                        UIColor.purpleColor);
+}
+
+- (void)testTitleColorForStateReturnsExpectedValue {
+  // Given
+  [self.tabBarView setTitleColor:nil forState:UIControlStateNormal];
+  [self.tabBarView setTitleColor:nil forState:UIControlStateSelected];
+
+  // When
+  [self.tabBarView setTitleColor:UIColor.purpleColor forState:UIControlStateNormal];
+  [self.tabBarView setTitleColor:UIColor.orangeColor forState:UIControlStateSelected];
+
+  // Then
+  XCTAssertEqualObjects([self.tabBarView titleColorForState:UIControlStateNormal],
+                        UIColor.purpleColor);
+  XCTAssertEqualObjects([self.tabBarView titleColorForState:UIControlStateSelected],
+                        UIColor.orangeColor);
+}
+
+- (void)testTitleColorForStateSetToNilFallsBackToNormal {
+  // Given
+  [self.tabBarView setTitleColor:nil forState:UIControlStateNormal];
+  [self.tabBarView setTitleColor:UIColor.cyanColor forState:UIControlStateSelected];
+
+  // When
+  [self.tabBarView setTitleColor:UIColor.purpleColor forState:UIControlStateNormal];
+  [self.tabBarView setTitleColor:nil forState:UIControlStateSelected];
+
+  // Then
+  XCTAssertEqualObjects([self.tabBarView titleColorForState:UIControlStateNormal],
+                        UIColor.purpleColor);
+  XCTAssertEqualObjects([self.tabBarView titleColorForState:UIControlStateSelected],
+                        UIColor.purpleColor);
+}
+
+- (void)testTitleColorForStateWithNoValuesReturnsNil {
+  // When
+  [self.tabBarView setTitleColor:nil forState:UIControlStateNormal];
+  [self.tabBarView setTitleColor:nil forState:UIControlStateSelected];
+
+  // Then
+  XCTAssertNil([self.tabBarView titleColorForState:UIControlStateNormal]);
+  XCTAssertNil([self.tabBarView titleColorForState:UIControlStateSelected]);
+}
+
+#pragma mark - UIView
+
+- (void)testIntrinsicContentSizeForNoItemsHasMinimumHeightAndZeroWidth {
+  // When
+  self.tabBarView.items = @[];
+
+  // Then
+  CGSize size = self.tabBarView.intrinsicContentSize;
+  XCTAssertEqualWithAccuracy(size.width, 0.0, 0.001);
+  XCTAssertEqualWithAccuracy(size.height, kMinHeight, 0.001);
+}
+
+- (void)testIntrinsicContentSizeForSingleItemMeetsMinimumExpectations {
+  // When
+  self.tabBarView.items = @[ self.itemA ];
+
+  // Then
+  CGSize size = self.tabBarView.intrinsicContentSize;
+  XCTAssertGreaterThan(size.width, 0.0);
+  XCTAssertGreaterThanOrEqual(size.height, kMinHeight);
+}
+
+- (void)testIntrinsicContentSizeForVeryLargeImageHasGreaterHeightThanTypicalImageSize {
+  // Given
+  UIImage *typicalImage = fakeImage(CGSizeMake(24, 24));
+  UIImage *largeImage = fakeImage(CGSizeMake(48, 48));
+  self.itemA.image = typicalImage;
+  self.tabBarView.items = @[ self.itemA ];
+  CGSize intrinsicContentSizeWithTypicalImage = [self.tabBarView intrinsicContentSize];
+
+  // When
+  self.itemA.image = largeImage;
+
+  // Then
+  CGSize intrinsicContentSizeWithLargeImage = [self.tabBarView intrinsicContentSize];
+  XCTAssertGreaterThan(intrinsicContentSizeWithLargeImage.height,
+                       intrinsicContentSizeWithTypicalImage.height);
+  XCTAssertGreaterThanOrEqual(intrinsicContentSizeWithLargeImage.width,
+                              intrinsicContentSizeWithTypicalImage.width);
+}
+
+- (void)testIntrinsicContentSizeDeterminedByJustifiedViewNotScrollableView {
+  // Given
+  self.tabBarView.items = @[ self.itemA, self.itemB, self.itemC ];
+
+  // When
+  self.itemA.title = @".";
+  self.itemB.title = @".................................................................."
+                      ".................................................................."
+                      ".................................................................."
+                      ".................................................................."
+                      ".................................................................."
+                      "..................................................................";
+  self.itemC.title = @".";
+
+  // Then
+  CGSize intrinsicSizeMinimalSize =
+      CGSizeMake(kMaxWidthTabBarItem * self.tabBarView.items.count, kMinHeight);
+  CGSize actualIntrinsicContentSize = self.tabBarView.intrinsicContentSize;
+  // Verify that it's at least 90% of the naïvely-calculated expected size. Due to truncation or
+  // internal details, it may be slightly less (or greater).
+  XCTAssertGreaterThanOrEqual(actualIntrinsicContentSize.width,
+                              intrinsicSizeMinimalSize.width * 0.9);
+  XCTAssertGreaterThanOrEqual(actualIntrinsicContentSize.height, intrinsicSizeMinimalSize.height);
+}
+
+- (void)testSizeThatFitsExpandsToFitContent {
+  // Given
+  self.tabBarView.items = @[ self.itemA ];
+
+  // When
+  CGSize size = [self.tabBarView sizeThatFits:CGSizeZero];
+
+  // Then
+  XCTAssertGreaterThan(size.width, 0);
+  XCTAssertEqualWithAccuracy(size.height, kMinHeight, 0.001);
+}
+
+- (void)testSizeThatFitsDoesntShrinkToFitContent {
+  // Given
+  self.tabBarView.items = @[ self.itemA ];
+  CGSize intrinsicSize = self.tabBarView.intrinsicContentSize;
+  CGSize biggerSize = CGSizeMake(intrinsicSize.width + 10, intrinsicSize.height + 10);
+
+  // When
+  CGSize size = [self.tabBarView sizeThatFits:biggerSize];
+
+  // Then
+  XCTAssertEqualWithAccuracy(size.width, biggerSize.width, 0.001);
+  XCTAssertEqualWithAccuracy(size.height, biggerSize.height, 0.001);
 }
 
 @end

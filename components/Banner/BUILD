@@ -41,7 +41,10 @@ mdc_examples_objc_library(
     name = "ObjcExamples",
     deps = [
         ":Banner",
+        "//components/Buttons",
+        "//components/Buttons:Theming",
         "//components/schemes/Color",
+        "//components/schemes/Container",
         "//components/schemes/Typography",
     ],
 )

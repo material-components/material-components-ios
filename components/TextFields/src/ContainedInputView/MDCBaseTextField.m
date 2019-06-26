@@ -12,15 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <UIKit/UIKit.h>
+#import "MDCBaseTextField.h"
 
-/** A basic view that displays a title and image for a tab bar item within MDCTabBarView. */
-@interface MDCTabBarViewItemView : UIView
-
-/** The image view to display the icon. */
-@property(nonatomic, strong) UIImageView *iconImageView;
-
-/** The label to display the title. */
-@property(nonatomic, strong) UILabel *titleLabel;
-
+@implementation MDCBaseTextField
 @end
