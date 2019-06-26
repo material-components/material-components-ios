@@ -23,8 +23,8 @@ static const CGFloat kMinHeight = 48;
 /** The stack view that contains all tab item views. */
 @property(nonnull, nonatomic, strong) UIStackView *containerView;
 
-/** The constraints managing this view. */
-@property(nonatomic, strong) NSArray *viewConstraints;
+/** Used to avoid duplicating containerView's constraints twice. */
+@property(nonatomic, assign) BOOL containerViewConstraintsActive;
 
 /** The title colors for bar items. */
 @property(nonnull, nonatomic, strong) NSMutableDictionary<NSNumber *, UIColor *> *stateToTitleColor;
@@ -40,7 +40,12 @@ static const CGFloat kMinHeight = 48;
   if (self) {
     _items = @[];
     _stateToTitleColor = [NSMutableDictionary dictionary];
-    [self commonMDCTabBarViewInit];
+    self.backgroundColor = UIColor.whiteColor;
+
+    _containerView = [[UIStackView alloc] init];
+    _containerView.axis = UILayoutConstraintAxisHorizontal;
+    _containerView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview:_containerView];
   }
   return self;
 }
@@ -63,7 +68,18 @@ static const CGFloat kMinHeight = 48;
   }
 
   _items = [items copy];
-  [self setUpItemViews];
+  for (UIView *view in self.containerView.arrangedSubviews) {
+    [view removeFromSuperview];
+  }
+
+  for (UITabBarItem *item in self.items) {
+    MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
+    itemView.translatesAutoresizingMaskIntoConstraints = NO;
+    itemView.titleLabel.text = item.title;
+    itemView.titleLabel.textColor = [self titleColorForState:UIControlStateNormal];
+    itemView.iconImageView.image = item.image;
+    [_containerView addArrangedSubview:itemView];
+  }
 
   // Determine new selected item, defaulting to nil.
   UITabBarItem *newSelectedItem = nil;
@@ -73,6 +89,7 @@ static const CGFloat kMinHeight = 48;
   }
 
   self.selectedItem = newSelectedItem;
+  [self invalidateIntrinsicContentSize];
   [self setNeedsLayout];
 }
 
@@ -132,7 +149,7 @@ static const CGFloat kMinHeight = 48;
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  CGFloat availableWidth = self.bounds.size.width;
+  CGFloat availableWidth = CGRectGetWidth(self.bounds);
   CGFloat maxWidth = 0;
   for (UIView *itemView in self.containerView.arrangedSubviews) {
     CGSize contentSize = itemView.intrinsicContentSize;
@@ -141,29 +158,25 @@ static const CGFloat kMinHeight = 48;
     }
   }
   CGFloat requiredWidth = maxWidth * self.items.count;
-  BOOL canBeJustified = availableWidth > requiredWidth;
+  BOOL canBeJustified = availableWidth >= requiredWidth;
   self.containerView.distribution = canBeJustified ? UIStackViewDistributionFillEqually
                                                    : UIStackViewDistributionFillProportionally;
 }
 
 - (void)updateConstraints {
-  [super updateConstraints];
-
-  if (self.viewConstraints) {
+  if (self.containerViewConstraintsActive) {
+    [super updateConstraints];
     return;
   }
 
-  NSMutableArray *constraints = [NSMutableArray array];
-  [constraints addObjectsFromArray:@[
-    [_containerView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
-    [_containerView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
-    [_containerView.widthAnchor constraintGreaterThanOrEqualToAnchor:self.widthAnchor],
-    [_containerView.topAnchor constraintEqualToAnchor:self.topAnchor],
-    [_containerView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor],
-  ]];
+  [_containerView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor].active = YES;
+  [_containerView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor].active = YES;
+  [_containerView.widthAnchor constraintGreaterThanOrEqualToAnchor:self.widthAnchor].active = YES;
+  [_containerView.topAnchor constraintEqualToAnchor:self.topAnchor].active = YES;
+  [_containerView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor].active = YES;
 
-  [self addConstraints:constraints];
-  self.viewConstraints = constraints;
+  // Must always be called last according to the documentation.
+  [super updateConstraints];
 }
 
 - (CGSize)intrinsicContentSize {
@@ -182,38 +195,6 @@ static const CGFloat kMinHeight = 48;
 - (CGSize)sizeThatFits:(CGSize)size {
   CGSize intrinsicSize = self.intrinsicContentSize;
   return CGSizeMake(MIN(intrinsicSize.width, size.width), MAX(intrinsicSize.height, size.height));
-}
-
-#pragma mark - Private Functions
-
-- (void)commonMDCTabBarViewInit {
-  self.backgroundColor = UIColor.whiteColor;
-
-  [self setUpStackView];
-  [self setUpItemViews];
-}
-
-- (void)setUpStackView {
-  _containerView = [[UIStackView alloc] init];
-  _containerView.axis = UILayoutConstraintAxisHorizontal;
-  _containerView.translatesAutoresizingMaskIntoConstraints = NO;
-  [self addSubview:_containerView];
-}
-
-- (void)setUpItemViews {
-  for (UIView *view in self.containerView.arrangedSubviews) {
-    [view removeFromSuperview];
-    [_containerView removeArrangedSubview:view];
-  }
-
-  for (UITabBarItem *item in self.items) {
-    MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
-    itemView.translatesAutoresizingMaskIntoConstraints = NO;
-    itemView.titleLabel.text = item.title;
-    itemView.titleLabel.textColor = [self titleColorForState:UIControlStateNormal];
-    itemView.iconImageView.image = item.image;
-    [_containerView addArrangedSubview:itemView];
-  }
 }
 
 @end

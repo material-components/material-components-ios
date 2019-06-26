@@ -47,9 +47,11 @@ static NSString *const kExampleTitle = @"TabBarView";
   UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"Home" image:nil tag:0];
   UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Favorite" image:nil tag:1];
   UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Cake" image:nil tag:2];
+  UITabBarItem *item4 = [[UITabBarItem alloc] initWithTitle:@"Email" image:nil tag:3];
+  UITabBarItem *item5 = [[UITabBarItem alloc] initWithTitle:@"Search" image:nil tag:4];
 
   self.tabBar = [[MDCTabBarView alloc] init];
-  self.tabBar.items = @[ item1, item2, item3 ];
+  self.tabBar.items = @[ item1, item2, item3, item4, item5 ];
   // TODO: Change this to theming (or at least .primaryColor) once we have content.
   self.tabBar.barTintColor = self.containerScheme.colorScheme.primaryColorVariant;
   self.tabBar.translatesAutoresizingMaskIntoConstraints = NO;
