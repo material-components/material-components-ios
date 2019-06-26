@@ -1,4 +1,4 @@
-// Copyright 2019-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,25 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-/**
- A simple protocol that indicates the responder can be targeted by an
- @c MDCTabBarSelectionIndicatorTemplate.
+/** Defines how a tab bar indicator should appear in a specific context. */
+@interface MDCTabBarViewIndicatorAttributes : NSObject <NSCopying>
 
- @seealso MDCTabBarIndicatorTemplate
- */
-@protocol MDCTabBarSelectionIndicatorSupporting
-
-/**
- The bounds of the receiver.
- */
-@property(readonly) CGRect bounds;
-
-/**
- The frame of the content of the receiver. Used to position the Selection Indicator relative to
- the content.
- */
-@property(readonly) CGRect contentFrame;
+/** If non-nil, a path that should be filled with the indicator tint color. */
+@property(nonatomic, nullable) UIBezierPath *path;
 
 @end
