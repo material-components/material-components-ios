@@ -218,4 +218,59 @@
   XCTAssertNil([self.tabBarView imageTintColorForState:UIControlStateSelected]);
 }
 
+- (void)testTitleColorForStateFallsBackToNormalState {
+  // Given
+  [self.tabBarView setTitleColor:nil forState:UIControlStateNormal];
+  [self.tabBarView setTitleColor:nil forState:UIControlStateSelected];
+
+  // When
+  [self.tabBarView setTitleColor:UIColor.purpleColor forState:UIControlStateNormal];
+
+  // Then
+  XCTAssertEqualObjects([self.tabBarView titleColorForState:UIControlStateSelected],
+                        UIColor.purpleColor);
+}
+
+- (void)testTitleColorForStateReturnsExpectedValue {
+  // Given
+  [self.tabBarView setTitleColor:nil forState:UIControlStateNormal];
+  [self.tabBarView setTitleColor:nil forState:UIControlStateSelected];
+
+  // When
+  [self.tabBarView setTitleColor:UIColor.purpleColor forState:UIControlStateNormal];
+  [self.tabBarView setTitleColor:UIColor.orangeColor forState:UIControlStateSelected];
+
+  // Then
+  XCTAssertEqualObjects([self.tabBarView titleColorForState:UIControlStateNormal],
+                        UIColor.purpleColor);
+  XCTAssertEqualObjects([self.tabBarView titleColorForState:UIControlStateSelected],
+                        UIColor.orangeColor);
+}
+
+- (void)testTitleColorForStateSetToNilFallsBackToNormal {
+  // Given
+  [self.tabBarView setTitleColor:nil forState:UIControlStateNormal];
+  [self.tabBarView setTitleColor:UIColor.cyanColor forState:UIControlStateSelected];
+
+  // When
+  [self.tabBarView setTitleColor:UIColor.purpleColor forState:UIControlStateNormal];
+  [self.tabBarView setTitleColor:nil forState:UIControlStateSelected];
+
+  // Then
+  XCTAssertEqualObjects([self.tabBarView titleColorForState:UIControlStateNormal],
+                        UIColor.purpleColor);
+  XCTAssertEqualObjects([self.tabBarView titleColorForState:UIControlStateSelected],
+                        UIColor.purpleColor);
+}
+
+- (void)testTitleColorForStateWithNoValuesReturnsNil {
+  // When
+  [self.tabBarView setTitleColor:nil forState:UIControlStateNormal];
+  [self.tabBarView setTitleColor:nil forState:UIControlStateSelected];
+
+  // Then
+  XCTAssertNil([self.tabBarView titleColorForState:UIControlStateNormal]);
+  XCTAssertNil([self.tabBarView titleColorForState:UIControlStateSelected]);
+}
+
 @end

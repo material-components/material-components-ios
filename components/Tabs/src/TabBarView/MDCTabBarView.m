@@ -15,13 +15,22 @@
 #import "MDCTabBarView.h"
 #import "private/MDCTabBarViewItemView.h"
 
+// KVO contexts
+static char *const kKVOContextMDCTabBarView = "kKVOContextMDCTabBarView";
+
 /** Minimum (typical) height of a Material Tab bar. */
 static const CGFloat kMinHeight = 48;
+
+static NSString *const kImageKeyPath = @"image";
+static NSString *const kTitleKeyPath = @"title";
 
 @interface MDCTabBarView ()
 
 /** The views representing the items of this tab bar. */
-@property(nonatomic, strong) NSArray<UIView *> *itemViews;
+@property(nonnull, nonatomic, strong) NSArray<UIView *> *itemViews;
+
+/** The title colors for bar items. */
+@property(nonnull, nonatomic, strong) NSMutableDictionary<NSNumber *, UIColor *> *stateToTitleColor;
 
 /** The image tint colors for bar items. */
 @property(nonnull, nonatomic, strong)
@@ -38,8 +47,13 @@ static const CGFloat kMinHeight = 48;
     _items = @[];
     _itemViews = @[];
     _stateToImageTintColor = [NSMutableDictionary dictionary];
+    _stateToTitleColor = [NSMutableDictionary dictionary];
   }
   return self;
+}
+
+- (void)dealloc {
+  [self removeObserversFromTabBarItems];
 }
 
 #pragma mark - Properties
@@ -59,6 +73,8 @@ static const CGFloat kMinHeight = 48;
     return;
   }
 
+  [self removeObserversFromTabBarItems];
+
   for (UIView *itemView in self.itemViews) {
     [itemView removeFromSuperview];
   }
@@ -71,6 +87,7 @@ static const CGFloat kMinHeight = 48;
     // TODO(#7645): Remove this if autoresizing masks are used.
     itemView.translatesAutoresizingMaskIntoConstraints = NO;
     itemView.titleLabel.text = item.title;
+    itemView.titleLabel.textColor = [self titleColorForState:UIControlStateNormal];
     itemView.iconImageView.image = item.image;
     itemView.iconImageView.tintColor = [self imageTintColorForState:UIControlStateNormal];
     [itemViews addObject:itemView];
@@ -86,6 +103,8 @@ static const CGFloat kMinHeight = 48;
   }
 
   self.selectedItem = newSelectedItem;
+
+  [self addObserversToTabBarItems];
   [self setNeedsLayout];
 }
 
@@ -102,10 +121,22 @@ static const CGFloat kMinHeight = 48;
   }
 
   _selectedItem = selectedItem;
-  [self updateImageTintColorForAllItems];
+
+  if (itemIndex == NSNotFound) {
+    return;
+  }
+
+  UIView *itemView = self.itemViews[itemIndex];
+  if ([itemView isKindOfClass:[MDCTabBarViewItemView class]]) {
+    MDCTabBarViewItemView *selectedItemView = (MDCTabBarViewItemView *)itemView;
+    selectedItemView.iconImageView.image = selectedItem.image;
+  }
+
+  [self updateTitleColorForAllViews];
+  [self updateImageTintColorForAllViews];
 }
 
-- (void)updateImageTintColorForAllItems {
+- (void)updateImageTintColorForAllViews {
   for (UITabBarItem *item in self.items) {
     NSUInteger indexOfItem = [self.items indexOfObject:item];
     // This is a significant error, but defensive coding is preferred.
@@ -131,6 +162,7 @@ static const CGFloat kMinHeight = 48;
 
 - (void)setImageTintColor:(UIColor *)imageTintColor forState:(UIControlState)state {
   self.stateToImageTintColor[@(state)] = imageTintColor;
+  [self updateImageTintColorForAllViews];
 }
 
 - (UIColor *)imageTintColorForState:(UIControlState)state {
@@ -139,6 +171,93 @@ static const CGFloat kMinHeight = 48;
     color = self.stateToImageTintColor[@(UIControlStateNormal)];
   }
   return color;
+}
+
+- (void)updateTitleColorForAllViews {
+  for (UITabBarItem *item in self.items) {
+    NSUInteger indexOfItem = [self.items indexOfObject:item];
+    // This is a significant error, but defensive coding is preferred.
+    if (indexOfItem == NSNotFound || indexOfItem >= self.itemViews.count) {
+      NSAssert(NO, @"Unable to find associated item view for (%@)", item);
+      continue;
+    }
+    UIView *itemView = self.itemViews[indexOfItem];
+    // Skip custom views
+    if (![itemView isKindOfClass:[MDCTabBarViewItemView class]]) {
+      continue;
+    }
+    MDCTabBarViewItemView *tabBarViewItemView = (MDCTabBarViewItemView *)itemView;
+    if (item == self.selectedItem) {
+      tabBarViewItemView.titleLabel.textColor = [self titleColorForState:UIControlStateSelected];
+    } else {
+      tabBarViewItemView.titleLabel.textColor = [self titleColorForState:UIControlStateNormal];
+    }
+  }
+}
+
+- (void)setTitleColor:(UIColor *)titleColor forState:(UIControlState)state {
+  self.stateToTitleColor[@(state)] = titleColor;
+  [self updateTitleColorForAllViews];
+}
+
+- (UIColor *)titleColorForState:(UIControlState)state {
+  UIColor *titleColor = self.stateToTitleColor[@(state)];
+  if (!titleColor) {
+    titleColor = self.stateToTitleColor[@(UIControlStateNormal)];
+  }
+  return titleColor;
+}
+
+#pragma mark - Key-Value Observing (KVO)
+
+- (void)addObserversToTabBarItems {
+  for (UITabBarItem *item in self.items) {
+    [item addObserver:self
+           forKeyPath:kImageKeyPath
+              options:NSKeyValueObservingOptionNew
+              context:kKVOContextMDCTabBarView];
+    [item addObserver:self
+           forKeyPath:kTitleKeyPath
+              options:NSKeyValueObservingOptionNew
+              context:kKVOContextMDCTabBarView];
+  }
+}
+
+- (void)removeObserversFromTabBarItems {
+  for (UITabBarItem *item in self.items) {
+    [item removeObserver:self forKeyPath:kImageKeyPath context:kKVOContextMDCTabBarView];
+    [item removeObserver:self forKeyPath:kTitleKeyPath context:kKVOContextMDCTabBarView];
+  }
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary<NSKeyValueChangeKey, id> *)change
+                       context:(void *)context {
+  if (context == kKVOContextMDCTabBarView) {
+    if (!object) {
+      return;
+    }
+    NSUInteger indexOfObject = [self.items indexOfObject:object];
+    if (indexOfObject == NSNotFound) {
+      return;
+    }
+    // Don't try to update custom views
+    UIView *updatedItemView = self.itemViews[indexOfObject];
+    if (![updatedItemView isKindOfClass:[MDCTabBarViewItemView class]]) {
+      return;
+    }
+    MDCTabBarViewItemView *tabBarItemView = (MDCTabBarViewItemView *)updatedItemView;
+
+    if ([keyPath isEqualToString:kImageKeyPath]) {
+      tabBarItemView.iconImageView.image = change[NSKeyValueChangeNewKey];
+    } else if ([keyPath isEqualToString:kTitleKeyPath]) {
+      tabBarItemView.titleLabel.text = change[NSKeyValueChangeNewKey];
+    }
+  } else {
+    [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+  }
+  [self updateTitleColorForAllViews];
 }
 
 #pragma mark - UIView

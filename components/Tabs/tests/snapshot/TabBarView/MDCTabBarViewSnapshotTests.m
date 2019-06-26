@@ -91,6 +91,7 @@ static const CGFloat kExpectedHeightTitlesAndIcons = 72;
 
   // When
   self.tabBarView.items = @[ item1, item2, item3 ];
+  self.tabBarView.selectedItem = item2;
 
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBarView];
@@ -104,6 +105,7 @@ static const CGFloat kExpectedHeightTitlesAndIcons = 72;
 
   // When
   self.tabBarView.items = @[ item1, item2, item3 ];
+  self.tabBarView.selectedItem = item2;
 
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBarView];
@@ -118,6 +120,7 @@ static const CGFloat kExpectedHeightTitlesAndIcons = 72;
 
   // When
   self.tabBarView.items = @[ item1, item2, item3 ];
+  self.tabBarView.selectedItem = item2;
 
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBarView];
@@ -132,12 +135,182 @@ static const CGFloat kExpectedHeightTitlesAndIcons = 72;
 
   // When
   self.tabBarView.items = @[ item1, item2, item3 ];
+  self.tabBarView.selectedItem = item2;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+#pragma mark - Selection
+
+- (void)testChangingSelectedItemIgnoresSelectedImage {
+  // Given
+  self.tabBarView.bounds = CGRectMake(0, 0, 360, kExpectedHeightTitlesAndIcons);
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:self.typicalIcon1 tag:0];
+  item1.selectedImage = self.typicalIcon2;
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:self.typicalIcon1 tag:2];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:self.typicalIcon1 tag:5];
+  self.tabBarView.items = @[ item1, item2, item3 ];
+  self.tabBarView.selectedItem = item2;
+
+  // When
+  self.tabBarView.selectedItem = item1;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+#pragma mark - Key-Value Observing (KVO)
+
+- (void)testChangingTitleAfterAddingToBar {
+  // Given
+  self.tabBarView.bounds = CGRectMake(0, 0, 360, kExpectedHeightTitlesAndIcons);
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:self.typicalIcon1 tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:self.typicalIcon1 tag:2];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:self.typicalIcon1 tag:5];
+  self.tabBarView.items = @[ item1, item2, item3 ];
+  self.tabBarView.selectedItem = item2;
+
+  // When
+  item2.title = @"2";
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testChangingImageOfUnselectedItemAfterAddingToBar {
+  // Given
+  self.tabBarView.bounds = CGRectMake(0, 0, 360, kExpectedHeightTitlesAndIcons);
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:self.typicalIcon1 tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:self.typicalIcon1 tag:2];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:self.typicalIcon1 tag:5];
+  self.tabBarView.items = @[ item1, item2, item3 ];
+  self.tabBarView.selectedItem = item2;
+
+  // When
+  item1.image = self.typicalIcon2;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testChangingImageOfSelectedItemAfterAddingToBar {
+  // Given
+  self.tabBarView.bounds = CGRectMake(0, 0, 360, kExpectedHeightTitlesAndIcons);
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:self.typicalIcon1 tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:self.typicalIcon1 tag:2];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:self.typicalIcon1 tag:5];
+  self.tabBarView.items = @[ item1, item2, item3 ];
+  self.tabBarView.selectedItem = item2;
+
+  // When
+  item2.image = self.typicalIcon2;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testChangingSelectedImageOfUnselectedItemAfterAddingToBarDoesNothing {
+  // Given
+  self.tabBarView.bounds = CGRectMake(0, 0, 360, kExpectedHeightTitlesAndIcons);
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:self.typicalIcon1 tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:self.typicalIcon1 tag:2];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:self.typicalIcon1 tag:5];
+  self.tabBarView.items = @[ item1, item2, item3 ];
+  self.tabBarView.selectedItem = item2;
+
+  // When
+  item1.selectedImage = self.typicalIcon2;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testChangingSelectedImageOfSelectedItemAfterAddingToBarDoesNothing {
+  // Given
+  self.tabBarView.bounds = CGRectMake(0, 0, 360, kExpectedHeightTitlesAndIcons);
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:self.typicalIcon1 tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:self.typicalIcon1 tag:2];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:self.typicalIcon1 tag:5];
+  self.tabBarView.items = @[ item1, item2, item3 ];
+  self.tabBarView.selectedItem = item2;
+
+  // When
+  item2.selectedImage = self.typicalIcon2;
 
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
 #pragma mark - MDCTabBarView Properties
+
+- (void)testSetTitleColorForExplicitItemStates {
+  // Given
+  self.tabBarView.bounds = CGRectMake(0, 0, 360, kExpectedHeightTitlesAndIcons);
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:self.typicalIcon1 tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:self.typicalIcon2 tag:2];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:self.typicalIcon3 tag:3];
+  self.tabBarView.items = @[ item1, item2, item3 ];
+  self.tabBarView.selectedItem = item2;
+
+  // When
+  [self.tabBarView setTitleColor:UIColor.brownColor forState:UIControlStateSelected];
+  [self.tabBarView setTitleColor:UIColor.purpleColor forState:UIControlStateNormal];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testSetTitleColorForNormalStateAppliesToSelectedItem {
+  // Given
+  self.tabBarView.bounds = CGRectMake(0, 0, 360, kExpectedHeightTitlesAndIcons);
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:self.typicalIcon1 tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:self.typicalIcon2 tag:2];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:self.typicalIcon3 tag:3];
+  self.tabBarView.items = @[ item1, item2, item3 ];
+  self.tabBarView.selectedItem = item2;
+
+  // When
+  [self.tabBarView setTitleColor:UIColor.purpleColor forState:UIControlStateNormal];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testSetTitleColorExplicitlyToNilRendersSomeDefault {
+  // Given
+  self.tabBarView.bounds = CGRectMake(0, 0, 360, kExpectedHeightTitlesAndIcons);
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:self.typicalIcon1 tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:self.typicalIcon2 tag:2];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:self.typicalIcon3 tag:3];
+  self.tabBarView.items = @[ item1, item2, item3 ];
+  self.tabBarView.selectedItem = item2;
+
+  // When
+  [self.tabBarView setTitleColor:nil forState:UIControlStateNormal];
+  [self.tabBarView setTitleColor:nil forState:UIControlStateSelected];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testChangingSelectionUpdatesItemStyle {
+  // Given
+  self.tabBarView.bounds = CGRectMake(0, 0, 360, kExpectedHeightTitlesAndIcons);
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:self.typicalIcon1 tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:self.typicalIcon2 tag:2];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:self.typicalIcon3 tag:3];
+  self.tabBarView.items = @[ item1, item2, item3 ];
+  self.tabBarView.selectedItem = item2;
+  [self.tabBarView setTitleColor:UIColor.purpleColor forState:UIControlStateNormal];
+  [self.tabBarView setTitleColor:UIColor.brownColor forState:UIControlStateSelected];
+
+  // When
+  self.tabBarView.selectedItem = item3;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
 
 - (void)testBarTintColor {
   // When
