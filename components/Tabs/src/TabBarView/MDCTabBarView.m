@@ -132,10 +132,6 @@ static NSString *const kTitleKeyPath = @"title";
 
   _selectedItem = selectedItem;
 
-  if (itemIndex == NSNotFound) {
-    return;
-  }
-
   [self updateTitleColorForAllViews];
   [self updateImageTintColorForAllViews];
 }
