@@ -23,7 +23,4 @@
 /** The label to display the title. */
 @property(nonatomic, strong) UILabel *titleLabel;
 
-/** The select status of the item view. */
-@property(nonatomic) BOOL selected;
-
 @end
