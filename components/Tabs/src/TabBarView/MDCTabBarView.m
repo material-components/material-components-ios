@@ -151,14 +151,7 @@ static const CGFloat kMinHeight = 48;
   [super layoutSubviews];
 
   CGFloat availableWidth = CGRectGetWidth(self.bounds);
-  CGFloat maxWidth = 0;
-  for (UIView *itemView in self.containerView.arrangedSubviews) {
-    CGSize contentSize = itemView.intrinsicContentSize;
-    if (contentSize.width > maxWidth) {
-      maxWidth = contentSize.width;
-    }
-  }
-  CGFloat requiredWidth = maxWidth * self.items.count;
+  CGFloat requiredWidth = [self justifiedWidth];
   BOOL canBeJustified = availableWidth >= requiredWidth;
   self.containerView.distribution = canBeJustified ? UIStackViewDistributionFillEqually
                                                    : UIStackViewDistributionFillProportionally;
@@ -182,11 +175,10 @@ static const CGFloat kMinHeight = 48;
 }
 
 - (CGSize)intrinsicContentSize {
-  CGFloat totalWidth = 0;
+  CGFloat totalWidth = [self justifiedWidth];
   CGFloat maxHeight = 0;
   for (UIView *itemView in self.containerView.arrangedSubviews) {
     CGSize contentSize = itemView.intrinsicContentSize;
-    totalWidth += contentSize.width;
     if (contentSize.height > maxHeight) {
       maxHeight = contentSize.height;
     }
@@ -196,7 +188,21 @@ static const CGFloat kMinHeight = 48;
 
 - (CGSize)sizeThatFits:(CGSize)size {
   CGSize intrinsicSize = self.intrinsicContentSize;
-  return CGSizeMake(MIN(intrinsicSize.width, size.width), MAX(intrinsicSize.height, size.height));
+  return CGSizeMake(MAX(intrinsicSize.width, size.width), MAX(intrinsicSize.height, size.height));
+}
+
+#pragma mark - Helpers
+
+- (CGFloat)justifiedWidth {
+  CGFloat maxWidth = 0;
+  for (UIView *itemView in self.containerView.arrangedSubviews) {
+    CGSize contentSize = itemView.intrinsicContentSize;
+    if (contentSize.width > maxWidth) {
+      maxWidth = contentSize.width;
+    }
+  }
+  CGFloat requiredWidth = maxWidth * self.items.count;
+  return requiredWidth;
 }
 
 @end

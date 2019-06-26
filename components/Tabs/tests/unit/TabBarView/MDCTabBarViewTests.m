@@ -16,6 +16,9 @@
 
 #import "MDCTabBarView.h"
 
+// Minimum height of the MDCTabBar view.
+static const CGFloat kMinHeight = 48;
+
 @interface MDCTabBarViewTests : XCTestCase
 
 @property(nonatomic, strong) MDCTabBarView *tabBarView;
@@ -216,6 +219,54 @@
   // Then
   XCTAssertNil([self.tabBarView titleColorForState:UIControlStateNormal]);
   XCTAssertNil([self.tabBarView titleColorForState:UIControlStateSelected]);
+}
+
+#pragma mark - UIView
+
+- (void)testEmptyItemsIntrinsicSize {
+  // When
+  self.tabBarView.items = @[];
+
+  // Then
+  CGSize size = self.tabBarView.intrinsicContentSize;
+  XCTAssertEqualWithAccuracy(size.width, 0.0, 0.001);
+  XCTAssertEqualWithAccuracy(size.height, kMinHeight, 0.001);
+}
+
+- (void)testNonEmptyItemsIntrinsicSize {
+  // When
+  self.tabBarView.items = @[ self.itemA ];
+
+  // Then
+  CGSize size = self.tabBarView.intrinsicContentSize;
+  XCTAssertGreaterThan(size.width, 0.0);
+  XCTAssertGreaterThanOrEqual(size.height, kMinHeight);
+}
+
+- (void)testSizeThatFitsSmallerThanNeeds {
+  // Given
+  self.tabBarView.items = @[ self.itemA ];
+
+  // When
+  CGSize size = [self.tabBarView sizeThatFits:CGSizeZero];
+
+  // Then
+  XCTAssertGreaterThan(size.width, CGSizeZero.width);
+  XCTAssertEqualWithAccuracy(size.height, kMinHeight, 0.001);
+}
+
+- (void)testSizeThatFitsBiggerThanNeeds {
+  // Given
+  self.tabBarView.items = @[ self.itemA ];
+  CGSize intrinsicSize = self.tabBarView.intrinsicContentSize;
+  CGSize biggerSize = CGSizeMake(intrinsicSize.width + 10.0, intrinsicSize.height + 10.0);
+
+  // When
+  CGSize size = [self.tabBarView sizeThatFits:biggerSize];
+
+  // Then
+  XCTAssertEqualWithAccuracy(size.width, biggerSize.width, 0.001);
+  XCTAssertEqualWithAccuracy(size.height, biggerSize.height, 0.001);
 }
 
 @end

@@ -191,7 +191,7 @@ static const CGFloat kExpectedHeightTitlesAndIcons = 72;
 
 - (void)testVeryLongItemLimitsWidth {
   // Given
-  self.tabBarView.bounds = CGRectMake(0, 0, 720, kExpectedHeightTitlesAndIcons);
+  self.tabBarView.bounds = CGRectMake(0, 0, 720, kExpectedHeightTitlesOrIconsOnly);
   NSString *longString =
       @"This is a super long tab bar string. And it should be longer than 360 and be multipl line.";
   UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:longString image:nil tag:0];
@@ -200,6 +200,19 @@ static const CGFloat kExpectedHeightTitlesAndIcons = 72;
 
   // When
   self.tabBarView.items = @[ item1, item2, item3 ];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testTinyItemLimitsWidth {
+  // Given
+  self.tabBarView.bounds = CGRectMake(0, 0, 1000, kExpectedHeightTitlesOrIconsOnly);
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:2];
+
+  // When
+  self.tabBarView.items = @[ item1, item2 ];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBarView];
