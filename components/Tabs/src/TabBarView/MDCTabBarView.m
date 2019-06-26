@@ -98,7 +98,7 @@ static NSString *const kTitleKeyPath = @"title";
         [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapItemView:)];
     [itemView addGestureRecognizer:tapGesture];
 
-    [_containerView addArrangedSubview:itemView];
+    [self.containerView addArrangedSubview:itemView];
   }
 
   // Determine new selected item, defaulting to nil.
@@ -282,11 +282,12 @@ static NSString *const kTitleKeyPath = @"title";
     return;
   }
 
-  [_containerView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor].active = YES;
-  [_containerView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor].active = YES;
-  [_containerView.widthAnchor constraintGreaterThanOrEqualToAnchor:self.widthAnchor].active = YES;
-  [_containerView.topAnchor constraintEqualToAnchor:self.topAnchor].active = YES;
-  [_containerView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor].active = YES;
+  [self.containerView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor].active = YES;
+  [self.containerView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor].active = YES;
+  [self.containerView.widthAnchor constraintGreaterThanOrEqualToAnchor:self.widthAnchor].active =
+      YES;
+  [self.containerView.topAnchor constraintEqualToAnchor:self.topAnchor].active = YES;
+  [self.containerView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor].active = YES;
   self.containerViewConstraintsActive = YES;
 
   // Must always be called last according to the documentation.
