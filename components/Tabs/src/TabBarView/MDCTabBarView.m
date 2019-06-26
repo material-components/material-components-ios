@@ -84,6 +84,8 @@ static const CGFloat kMinHeight = 48;
     return;
   }
 
+  _selectedItem = selectedItem;
+
   NSUInteger oldItemIndex = [self.items indexOfObject:self.selectedItem];
   NSUInteger itemIndex = [self.items indexOfObject:selectedItem];
   // Don't crash, just ignore if `selectedItem` isn't present in `_items`. This is the same behavior
@@ -91,8 +93,6 @@ static const CGFloat kMinHeight = 48;
   if (itemIndex == NSNotFound) {
     return;
   }
-
-  _selectedItem = selectedItem;
 
   if (oldItemIndex != NSNotFound) {
     UIView *oldItemView = self.itemViews[oldItemIndex];
