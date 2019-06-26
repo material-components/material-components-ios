@@ -14,6 +14,30 @@
 
 #import <UIKit/UIKit.h>
 
+@class MDCTabBarView;
+
+/**
+ Delegate protocol for MDCTabBarView. Clients may implement this protocol to receive notifications
+ of selection changes by user action in the tab bar.
+ */
+@protocol MDCTabBarViewDelegate <UIScrollViewDelegate>
+
+@optional
+
+/**
+ Called before the selected item changes by user action. Return YES to allow the selection. If not
+ implemented all items changes are allowed.
+ */
+- (BOOL)tabBarView:(nonnull MDCTabBarView *)tabBarView
+  shouldSelectItem:(nonnull UITabBarItem *)item;
+
+/**
+ Called when the selected item changes by user action.
+ */
+- (BOOL)tabBarView:(nonnull MDCTabBarView *)tabBarView didSelectItem:(nonnull UITabBarItem *)item;
+
+@end
+
 /**
  An implementation of Material Tabs (https://material.io/design/components/tabs.html).
  */
@@ -27,6 +51,9 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
 
 /** The color of the Tab bar's background. */
 @property(nullable, nonatomic, copy) UIColor *barTintColor;
+
+/** The tab bar view delegate. */
+@property(nullable, nonatomic, weak) id<MDCTabBarViewDelegate> delegate;
 
 /**
  Sets the color of the bar items' title for the given control state.  Supports

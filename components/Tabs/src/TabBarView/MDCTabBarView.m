@@ -35,6 +35,7 @@ static NSString *const kTitleKeyPath = @"title";
 @end
 
 @implementation MDCTabBarView
+@dynamic delegate;
 
 #pragma mark - Initialization
 
@@ -261,7 +262,16 @@ static NSString *const kTitleKeyPath = @"title";
   if (index == NSNotFound) {
     return;
   }
+
+  if ([self.delegate respondsToSelector:@selector(tabBarView:shouldSelectItem:)] &&
+      ![self.delegate tabBarView:self shouldSelectItem:self.items[index]]) {
+    return;
+  }
+
   self.selectedItem = self.items[index];
+  if ([self.delegate respondsToSelector:@selector(tabBarView:didSelectItem:)]) {
+    [self.delegate tabBarView:self didSelectItem:self.items[index]];
+  }
 }
 
 @end
