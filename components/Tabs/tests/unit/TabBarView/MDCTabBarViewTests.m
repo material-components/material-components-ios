@@ -16,6 +16,20 @@
 
 #import "MDCTabBarView.h"
 
+// Minimum height of the MDCTabBar view.
+static const CGFloat kMinHeight = 48;
+
+// Maximum width of a single item in the tab bar.
+static const CGFloat kMaxWidthTabBarItem = 360;
+
+/** Returns a generated image of the given size. */
+static UIImage *fakeImage(CGSize size) {
+  UIGraphicsBeginImageContext(size);
+  UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+  UIGraphicsEndImageContext();
+  return image;
+}
+
 @interface MDCTabBarViewTests : XCTestCase
 
 @property(nonatomic, strong) MDCTabBarView *tabBarView;
@@ -271,6 +285,98 @@
   // Then
   XCTAssertNil([self.tabBarView titleColorForState:UIControlStateNormal]);
   XCTAssertNil([self.tabBarView titleColorForState:UIControlStateSelected]);
+}
+
+#pragma mark - UIView
+
+- (void)testIntrinsicContentSizeForNoItemsHasMinimumHeightAndZeroWidth {
+  // When
+  self.tabBarView.items = @[];
+
+  // Then
+  CGSize size = self.tabBarView.intrinsicContentSize;
+  XCTAssertEqualWithAccuracy(size.width, 0.0, 0.001);
+  XCTAssertEqualWithAccuracy(size.height, kMinHeight, 0.001);
+}
+
+- (void)testIntrinsicContentSizeForSingleItemMeetsMinimumExpectations {
+  // When
+  self.tabBarView.items = @[ self.itemA ];
+
+  // Then
+  CGSize size = self.tabBarView.intrinsicContentSize;
+  XCTAssertGreaterThan(size.width, 0.0);
+  XCTAssertGreaterThanOrEqual(size.height, kMinHeight);
+}
+
+- (void)testIntrinsicContentSizeForVeryLargeImageHasGreaterHeightThanTypicalImageSize {
+  // Given
+  UIImage *typicalImage = fakeImage(CGSizeMake(24, 24));
+  UIImage *largeImage = fakeImage(CGSizeMake(48, 48));
+  self.itemA.image = typicalImage;
+  self.tabBarView.items = @[ self.itemA ];
+  CGSize intrinsicContentSizeWithTypicalImage = [self.tabBarView intrinsicContentSize];
+
+  // When
+  self.itemA.image = largeImage;
+
+  // Then
+  CGSize intrinsicContentSizeWithLargeImage = [self.tabBarView intrinsicContentSize];
+  XCTAssertGreaterThan(intrinsicContentSizeWithLargeImage.height,
+                       intrinsicContentSizeWithTypicalImage.height);
+  XCTAssertGreaterThanOrEqual(intrinsicContentSizeWithLargeImage.width,
+                              intrinsicContentSizeWithTypicalImage.width);
+}
+
+- (void)testIntrinsicContentSizeDeterminedByJustifiedViewNotScrollableView {
+  // Given
+  self.tabBarView.items = @[ self.itemA, self.itemB, self.itemC ];
+
+  // When
+  self.itemA.title = @".";
+  self.itemB.title = @".................................................................."
+                      ".................................................................."
+                      ".................................................................."
+                      ".................................................................."
+                      ".................................................................."
+                      "..................................................................";
+  self.itemC.title = @".";
+
+  // Then
+  CGSize intrinsicSizeMinimalSize =
+      CGSizeMake(kMaxWidthTabBarItem * self.tabBarView.items.count, kMinHeight);
+  CGSize actualIntrinsicContentSize = self.tabBarView.intrinsicContentSize;
+  // Verify that it's at least 90% of the naïvely-calculated expected size. Due to truncation or
+  // internal details, it may be slightly less (or greater).
+  XCTAssertGreaterThanOrEqual(actualIntrinsicContentSize.width,
+                              intrinsicSizeMinimalSize.width * 0.9);
+  XCTAssertGreaterThanOrEqual(actualIntrinsicContentSize.height, intrinsicSizeMinimalSize.height);
+}
+
+- (void)testSizeThatFitsExpandsToFitContent {
+  // Given
+  self.tabBarView.items = @[ self.itemA ];
+
+  // When
+  CGSize size = [self.tabBarView sizeThatFits:CGSizeZero];
+
+  // Then
+  XCTAssertGreaterThan(size.width, 0);
+  XCTAssertEqualWithAccuracy(size.height, kMinHeight, 0.001);
+}
+
+- (void)testSizeThatFitsDoesntShrinkToFitContent {
+  // Given
+  self.tabBarView.items = @[ self.itemA ];
+  CGSize intrinsicSize = self.tabBarView.intrinsicContentSize;
+  CGSize biggerSize = CGSizeMake(intrinsicSize.width + 10, intrinsicSize.height + 10);
+
+  // When
+  CGSize size = [self.tabBarView sizeThatFits:biggerSize];
+
+  // Then
+  XCTAssertEqualWithAccuracy(size.width, biggerSize.width, 0.001);
+  XCTAssertEqualWithAccuracy(size.height, biggerSize.height, 0.001);
 }
 
 @end

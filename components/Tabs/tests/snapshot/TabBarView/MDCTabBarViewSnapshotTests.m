@@ -25,6 +25,12 @@ static const CGFloat kExpectedHeightTitlesOrIconsOnly = 48;
 /** The expected height of Tabs with titles and icons. */
 static const CGFloat kExpectedHeightTitlesAndIcons = 72;
 
+/** The minimum width of a tab bar item. */
+static const CGFloat kMinItemWidth = 90;
+
+/** The maximum width of a tab bar item. */
+static const CGFloat kMaxItemWidth = 360;
+
 @interface MDCTabBarViewSnapshotTests : MDCSnapshotTestCase
 
 /** The view being snapshotted. */
@@ -242,6 +248,124 @@ static const CGFloat kExpectedHeightTitlesAndIcons = 72;
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
+// TODO(https://github.com/material-components/material-components-ios/issues/7717): This golden
+// is incorrect due to a suspected bug in MDCTabBarViewItemView.
+- (void)testSettingBoundsTooNarrowWithItemsLessThanMinimumWidthResultsInScrollableLayout {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:nil tag:2];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:nil tag:5];
+  UITabBarItem *item4 = [[UITabBarItem alloc] initWithTitle:@"Four" image:nil tag:6];
+  UITabBarItem *item5 = [[UITabBarItem alloc] initWithTitle:@"Five" image:nil tag:7];
+  UITabBarItem *item6 = [[UITabBarItem alloc] initWithTitle:@"Six" image:nil tag:8];
+
+  // When
+  self.tabBarView.items = @[ item1, item2, item3, item4, item5, item6 ];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testSettingBoundsToIntrinsicContentSizeResultsInJustifiedLayout {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:nil tag:2];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:nil tag:5];
+  UITabBarItem *item4 = [[UITabBarItem alloc] initWithTitle:@"Four" image:nil tag:6];
+  UITabBarItem *item5 = [[UITabBarItem alloc] initWithTitle:@"Five" image:nil tag:7];
+  UITabBarItem *item6 = [[UITabBarItem alloc] initWithTitle:@"Six" image:nil tag:8];
+
+  // When
+  self.tabBarView.items = @[ item1, item2, item3, item4, item5, item6 ];
+  CGSize intrinsicContentSize = self.tabBarView.intrinsicContentSize;
+  self.tabBarView.bounds =
+      CGRectMake(0, 0, intrinsicContentSize.width, intrinsicContentSize.height);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testItemsLargerThanBoundsChangesToScrollableLayout {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:nil tag:2];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:nil tag:5];
+
+  // When
+  self.tabBarView.items = @[ item1, item2, item3 ];
+  self.tabBarView.bounds =
+      CGRectMake(0, 0, kMinItemWidth * (self.tabBarView.items.count - (CGFloat)0.5),
+                 kExpectedHeightTitlesOrIconsOnly);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testVeryLongItemLimitsItemWidthToItemMaximumWhenBoundsTooNarrow {
+  // Given
+  NSString *longString = @"This is a super long tab bar string. And it should be longer than 360 "
+                         @"and wrap to multiple lines.";
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:longString image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:nil tag:2];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:nil tag:5];
+
+  // When
+  self.tabBarView.items = @[ item1, item2, item3 ];
+  self.tabBarView.bounds = CGRectMake(0, 0, kMaxItemWidth * self.tabBarView.items.count / 2,
+                                      kExpectedHeightTitlesOrIconsOnly);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testVeryLongItemLimitsItemWidthToItemMaximumWhenBoundsAreIntrinsicContentSize {
+  // Given
+  NSString *longString = @"This is a super long tab bar string. And it should be longer than 360 "
+                         @"and wrap to multiple lines.";
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:longString image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:nil tag:2];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:nil tag:5];
+
+  // When
+  self.tabBarView.items = @[ item1, item2, item3 ];
+  CGSize intrinsicContentSize = self.tabBarView.intrinsicContentSize;
+  self.tabBarView.bounds =
+      CGRectMake(0, 0, intrinsicContentSize.width, intrinsicContentSize.height);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testLayoutBehaviorWhenBoundsExceedsMaximumWidthForNumberOfItems {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:2];
+
+  // When
+  self.tabBarView.items = @[ item1, item2 ];
+  self.tabBarView.bounds = CGRectMake(0, 0, kMaxItemWidth * (self.tabBarView.items.count + 1),
+                                      kExpectedHeightTitlesOrIconsOnly);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testLayoutBehaviorWhenBoundsExceedsIntrinsicContentSizeAndRemainsLessThanMaximum {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:2];
+
+  // When
+  self.tabBarView.items = @[ item1, item2 ];
+  CGSize intrinsicContentSize = self.tabBarView.intrinsicContentSize;
+  self.tabBarView.bounds = CGRectMake(
+      0, 0, MIN(kMaxItemWidth * self.tabBarView.items.count, intrinsicContentSize.width * 2),
+      intrinsicContentSize.height);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
 #pragma mark - MDCTabBarView Properties
 
 - (void)testSetTitleColorForExplicitItemStates {
@@ -372,5 +496,4 @@ static const CGFloat kExpectedHeightTitlesAndIcons = 72;
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
-
 @end

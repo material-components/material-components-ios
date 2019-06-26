@@ -59,11 +59,19 @@ static NSString *const kExampleTitle = @"TabBarView";
               image:[[UIImage imageNamed:@"Cake"]
                         imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
                 tag:2];
+  UITabBarItem *item4 = [[UITabBarItem alloc]
+      initWithTitle:@"Email"
+              image:[[UIImage imageNamed:@"Email"]
+                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+                tag:3];
+  UITabBarItem *item5 = [[UITabBarItem alloc]
+      initWithTitle:@"Search"
+              image:[[UIImage imageNamed:@"Search"]
+                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+                tag:4];
 
   self.tabBar = [[MDCTabBarView alloc] init];
-  self.tabBar.items = @[ item1, item2, item3 ];
-  CGSize barIntrinsicContentSize = self.tabBar.intrinsicContentSize;
-  self.tabBar.bounds = CGRectMake(0, 0, 0, barIntrinsicContentSize.width);
+  self.tabBar.items = @[ item1, item2, item3, item4, item5 ];
   self.tabBar.barTintColor = self.containerScheme.colorScheme.secondaryColor;
   [self.tabBar setTitleColor:self.containerScheme.colorScheme.onSecondaryColor
                     forState:UIControlStateNormal];

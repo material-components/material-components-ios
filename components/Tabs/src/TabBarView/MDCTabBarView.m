@@ -26,8 +26,11 @@ static NSString *const kTitleKeyPath = @"title";
 
 @interface MDCTabBarView ()
 
-/** The views representing the items of this tab bar. */
-@property(nonnull, nonatomic, strong) NSArray<UIView *> *itemViews;
+/** The stack view that contains all tab item views. */
+@property(nonnull, nonatomic, strong) UIStackView *containerView;
+
+/** Used to avoid duplicating containerView's constraints twice. */
+@property(nonatomic, assign) BOOL containerViewConstraintsActive;
 
 /** The title colors for bar items. */
 @property(nonnull, nonatomic, strong) NSMutableDictionary<NSNumber *, UIColor *> *stateToTitleColor;
@@ -45,9 +48,14 @@ static NSString *const kTitleKeyPath = @"title";
   self = [super init];
   if (self) {
     _items = @[];
-    _itemViews = @[];
     _stateToImageTintColor = [NSMutableDictionary dictionary];
     _stateToTitleColor = [NSMutableDictionary dictionary];
+    self.backgroundColor = UIColor.whiteColor;
+
+    _containerView = [[UIStackView alloc] init];
+    _containerView.axis = UILayoutConstraintAxisHorizontal;
+    _containerView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview:_containerView];
   }
   return self;
 }
@@ -74,29 +82,24 @@ static NSString *const kTitleKeyPath = @"title";
   }
 
   [self removeObserversFromTabBarItems];
-
-  for (UIView *itemView in self.itemViews) {
-    [itemView removeFromSuperview];
+  for (UIView *view in self.containerView.arrangedSubviews) {
+    [view removeFromSuperview];
   }
 
   _items = [items copy];
 
-  NSMutableArray<UIView *> *itemViews = [NSMutableArray array];
   for (UITabBarItem *item in self.items) {
     MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
-    // TODO(#7645): Remove this if autoresizing masks are used.
     itemView.translatesAutoresizingMaskIntoConstraints = NO;
     itemView.titleLabel.text = item.title;
     itemView.titleLabel.textColor = [self titleColorForState:UIControlStateNormal];
     itemView.iconImageView.image = item.image;
-    itemView.iconImageView.tintColor = [self imageTintColorForState:UIControlStateNormal];
     UITapGestureRecognizer *tapGesture =
         [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapItemView:)];
     [itemView addGestureRecognizer:tapGesture];
-    [itemViews addObject:itemView];
-    [self addSubview:itemView];
+
+    [self.containerView addArrangedSubview:itemView];
   }
-  _itemViews = [itemViews copy];
 
   // Determine new selected item, defaulting to nil.
   UITabBarItem *newSelectedItem = nil;
@@ -106,8 +109,9 @@ static NSString *const kTitleKeyPath = @"title";
   }
 
   self.selectedItem = newSelectedItem;
-
   [self addObserversToTabBarItems];
+
+  [self invalidateIntrinsicContentSize];
   [self setNeedsLayout];
 }
 
@@ -140,11 +144,11 @@ static NSString *const kTitleKeyPath = @"title";
   for (UITabBarItem *item in self.items) {
     NSUInteger indexOfItem = [self.items indexOfObject:item];
     // This is a significant error, but defensive coding is preferred.
-    if (indexOfItem == NSNotFound || indexOfItem >= self.itemViews.count) {
+    if (indexOfItem == NSNotFound || indexOfItem >= self.containerView.arrangedSubviews.count) {
       NSAssert(NO, @"Unable to find associated item view for (%@)", item);
       continue;
     }
-    UIView *itemView = self.itemViews[indexOfItem];
+    UIView *itemView = self.containerView.arrangedSubviews[indexOfItem];
     // Skip custom views
     if (![itemView isKindOfClass:[MDCTabBarViewItemView class]]) {
       continue;
@@ -177,11 +181,11 @@ static NSString *const kTitleKeyPath = @"title";
   for (UITabBarItem *item in self.items) {
     NSUInteger indexOfItem = [self.items indexOfObject:item];
     // This is a significant error, but defensive coding is preferred.
-    if (indexOfItem == NSNotFound || indexOfItem >= self.itemViews.count) {
+    if (indexOfItem == NSNotFound || indexOfItem >= self.containerView.arrangedSubviews.count) {
       NSAssert(NO, @"Unable to find associated item view for (%@)", item);
       continue;
     }
-    UIView *itemView = self.itemViews[indexOfItem];
+    UIView *itemView = self.containerView.arrangedSubviews[indexOfItem];
     // Skip custom views
     if (![itemView isKindOfClass:[MDCTabBarViewItemView class]]) {
       continue;
@@ -243,7 +247,7 @@ static NSString *const kTitleKeyPath = @"title";
       return;
     }
     // Don't try to update custom views
-    UIView *updatedItemView = self.itemViews[indexOfObject];
+    UIView *updatedItemView = self.containerView.arrangedSubviews[indexOfObject];
     if (![updatedItemView isKindOfClass:[MDCTabBarViewItemView class]]) {
       return;
     }
@@ -262,36 +266,69 @@ static NSString *const kTitleKeyPath = @"title";
 
 #pragma mark - UIView
 
-// TODO(#7645): Temporary layout until
-// https://github.com/material-components/material-components-ios/issues/7645 lands
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  if (self.items.count == 0) {
+  CGFloat availableWidth = CGRectGetWidth(self.bounds);
+  CGFloat requiredWidth = [self justifiedWidth];
+  BOOL canBeJustified = availableWidth >= requiredWidth;
+  self.containerView.distribution = canBeJustified ? UIStackViewDistributionFillEqually
+                                                   : UIStackViewDistributionFillProportionally;
+}
+
+- (void)updateConstraints {
+  if (self.containerViewConstraintsActive) {
+    [super updateConstraints];
     return;
   }
-  CGSize boundsSize = CGSizeMake(CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
-  CGSize itemSize = CGSizeMake(boundsSize.width / self.items.count, boundsSize.height);
 
-  CGPoint itemOrigin = CGPointMake(CGRectGetMinX(self.bounds), CGRectGetMinY(self.bounds));
-  for (UIView *itemView in self.itemViews) {
-    itemView.frame = CGRectMake(itemOrigin.x, itemOrigin.y, itemSize.width, itemSize.height);
-    itemOrigin = CGPointMake(itemOrigin.x + itemSize.width, itemOrigin.y);
-  }
+  [self.containerView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor].active = YES;
+  [self.containerView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor].active = YES;
+  [self.containerView.widthAnchor constraintGreaterThanOrEqualToAnchor:self.widthAnchor].active =
+      YES;
+  [self.containerView.topAnchor constraintEqualToAnchor:self.topAnchor].active = YES;
+  [self.containerView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor].active = YES;
+  self.containerViewConstraintsActive = YES;
+
+  // Must always be called last according to the documentation.
+  [super updateConstraints];
 }
 
 - (CGSize)intrinsicContentSize {
-  return CGSizeMake(UIViewNoIntrinsicMetric, kMinHeight);
+  CGFloat totalWidth = [self justifiedWidth];
+  CGFloat maxHeight = 0;
+  for (UIView *itemView in self.containerView.arrangedSubviews) {
+    CGSize contentSize = itemView.intrinsicContentSize;
+    if (contentSize.height > maxHeight) {
+      maxHeight = contentSize.height;
+    }
+  }
+  return CGSizeMake(totalWidth, MAX(kMinHeight, maxHeight));
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
-  return CGSizeMake(size.width, MAX(size.height, kMinHeight));
+  CGSize intrinsicSize = self.intrinsicContentSize;
+  return CGSizeMake(MAX(intrinsicSize.width, size.width), MAX(intrinsicSize.height, size.height));
+}
+
+#pragma mark - Helpers
+
+- (CGFloat)justifiedWidth {
+  CGFloat maxWidth = 0;
+  for (UIView *itemView in self.containerView.arrangedSubviews) {
+    CGSize contentSize = itemView.intrinsicContentSize;
+    if (contentSize.width > maxWidth) {
+      maxWidth = contentSize.width;
+    }
+  }
+  CGFloat requiredWidth = maxWidth * self.items.count;
+  return requiredWidth;
 }
 
 #pragma mark - Actions
 
 - (void)didTapItemView:(UITapGestureRecognizer *)tap {
-  NSUInteger index = [self.itemViews indexOfObject:tap.view];
+  NSUInteger index = [self.containerView.arrangedSubviews indexOfObject:tap.view];
   if (index == NSNotFound) {
     return;
   }
