@@ -29,6 +29,22 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
 @property(nullable, nonatomic, copy) UIColor *barTintColor;
 
 /**
+ Sets the color of the bar items' image @c tintColor for the given control state.  Supports
+ @c UIControlStateNormal and @c UIControlStateSelected.
+
+ If no value for a control state is set, the value for @c UIControlStateNormal is used. If no value
+ for @c UIControlStateNormal is set, then a default value is used.
+ */
+- (void)setImageTintColor:(nullable UIColor *)imageTintColor forState:(UIControlState)state;
+
+/**
+ Returns the color of the bar items' image @c tintColor for the given control state.
+
+ If no value for a control state is set, the value for @c UIControlStateNormal is returned.
+ */
+- (nullable UIColor *)imageTintColorForState:(UIControlState)state;
+
+/**
  Sets the color of the bar items' title for the given control state.  Supports
  @c UIControlStateNormal and @c UIControlStateSelected.
 

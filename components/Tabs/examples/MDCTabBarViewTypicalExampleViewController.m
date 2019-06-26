@@ -44,20 +44,36 @@ static NSString *const kExampleTitle = @"TabBarView";
 
   self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
 
-  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"Home" image:nil tag:0];
-  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Favorite" image:nil tag:1];
-  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Cake" image:nil tag:2];
+  UITabBarItem *item1 = [[UITabBarItem alloc]
+      initWithTitle:@"Home"
+              image:[[UIImage imageNamed:@"Home"]
+                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+                tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc]
+      initWithTitle:@"Favorite"
+              image:[[UIImage imageNamed:@"Favorite"]
+                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+                tag:1];
+  UITabBarItem *item3 = [[UITabBarItem alloc]
+      initWithTitle:@"Cake"
+              image:[[UIImage imageNamed:@"Cake"]
+                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+                tag:2];
 
   self.tabBar = [[MDCTabBarView alloc] init];
   self.tabBar.items = @[ item1, item2, item3 ];
   CGSize barIntrinsicContentSize = self.tabBar.intrinsicContentSize;
   self.tabBar.bounds = CGRectMake(0, 0, 0, barIntrinsicContentSize.width);
-  // TODO: Change this to theming (or at least .primaryColor) once we have content.
   self.tabBar.barTintColor = self.containerScheme.colorScheme.secondaryColor;
   [self.tabBar setTitleColor:self.containerScheme.colorScheme.onSecondaryColor
                     forState:UIControlStateNormal];
   [self.tabBar setTitleColor:self.containerScheme.colorScheme.primaryColor
                     forState:UIControlStateSelected];
+  [self.tabBar setImageTintColor:self.containerScheme.colorScheme.onSecondaryColor
+                        forState:UIControlStateNormal];
+  [self.tabBar setImageTintColor:self.containerScheme.colorScheme.primaryColor
+                        forState:UIControlStateSelected];
+  self.tabBar.selectedItem = item1;
   self.tabBar.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:self.tabBar];
 

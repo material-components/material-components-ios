@@ -163,6 +163,61 @@
   XCTAssertEqual(self.tabBarView.barTintColor, self.tabBarView.backgroundColor);
 }
 
+- (void)testImageTintColorForStateFallsBackToNormalState {
+  // Given
+  [self.tabBarView setImageTintColor:nil forState:UIControlStateNormal];
+  [self.tabBarView setImageTintColor:nil forState:UIControlStateSelected];
+
+  // When
+  [self.tabBarView setImageTintColor:UIColor.purpleColor forState:UIControlStateNormal];
+
+  // Then
+  XCTAssertEqualObjects([self.tabBarView imageTintColorForState:UIControlStateSelected],
+                        UIColor.purpleColor);
+}
+
+- (void)testImageTintColorForStateReturnsExpectedValue {
+  // Given
+  [self.tabBarView setImageTintColor:nil forState:UIControlStateNormal];
+  [self.tabBarView setImageTintColor:nil forState:UIControlStateSelected];
+
+  // When
+  [self.tabBarView setImageTintColor:UIColor.purpleColor forState:UIControlStateNormal];
+  [self.tabBarView setImageTintColor:UIColor.orangeColor forState:UIControlStateSelected];
+
+  // Then
+  XCTAssertEqualObjects([self.tabBarView imageTintColorForState:UIControlStateNormal],
+                        UIColor.purpleColor);
+  XCTAssertEqualObjects([self.tabBarView imageTintColorForState:UIControlStateSelected],
+                        UIColor.orangeColor);
+}
+
+- (void)testImageTintColorColorForStateSetToNilFallsBackToNormal {
+  // Given
+  [self.tabBarView setImageTintColor:nil forState:UIControlStateNormal];
+  [self.tabBarView setImageTintColor:UIColor.cyanColor forState:UIControlStateSelected];
+
+  // When
+  [self.tabBarView setImageTintColor:UIColor.purpleColor forState:UIControlStateNormal];
+  [self.tabBarView setImageTintColor:nil forState:UIControlStateSelected];
+
+  // Then
+  XCTAssertEqualObjects([self.tabBarView imageTintColorForState:UIControlStateNormal],
+                        UIColor.purpleColor);
+  XCTAssertEqualObjects([self.tabBarView imageTintColorForState:UIControlStateSelected],
+                        UIColor.purpleColor);
+}
+
+- (void)testImageTintColorForStateWithNoValuesReturnsNil {
+  // When
+  [self.tabBarView setImageTintColor:nil forState:UIControlStateNormal];
+  [self.tabBarView setImageTintColor:nil forState:UIControlStateSelected];
+
+  // Then
+  XCTAssertNil([self.tabBarView imageTintColorForState:UIControlStateNormal]);
+  XCTAssertNil([self.tabBarView imageTintColorForState:UIControlStateSelected]);
+}
+
 - (void)testTitleColorForStateFallsBackToNormalState {
   // Given
   [self.tabBarView setTitleColor:nil forState:UIControlStateNormal];

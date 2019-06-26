@@ -32,6 +32,9 @@ static NSString *const kTitleKeyPath = @"title";
 /** The title colors for bar items. */
 @property(nonnull, nonatomic, strong) NSMutableDictionary<NSNumber *, UIColor *> *stateToTitleColor;
 
+/** The image tint colors for bar items. */
+@property(nonnull, nonatomic, strong)
+    NSMutableDictionary<NSNumber *, UIColor *> *stateToImageTintColor;
 @end
 
 @implementation MDCTabBarView
@@ -43,6 +46,7 @@ static NSString *const kTitleKeyPath = @"title";
   if (self) {
     _items = @[];
     _itemViews = @[];
+    _stateToImageTintColor = [NSMutableDictionary dictionary];
     _stateToTitleColor = [NSMutableDictionary dictionary];
   }
   return self;
@@ -85,6 +89,7 @@ static NSString *const kTitleKeyPath = @"title";
     itemView.titleLabel.text = item.title;
     itemView.titleLabel.textColor = [self titleColorForState:UIControlStateNormal];
     itemView.iconImageView.image = item.image;
+    itemView.iconImageView.tintColor = [self imageTintColorForState:UIControlStateNormal];
     UITapGestureRecognizer *tapGesture =
         [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapItemView:)];
     [itemView addGestureRecognizer:tapGesture];
@@ -126,6 +131,7 @@ static NSString *const kTitleKeyPath = @"title";
   }
 
   _selectedItem = selectedItem;
+
   if (itemIndex == NSNotFound) {
     return;
   }
@@ -137,6 +143,79 @@ static NSString *const kTitleKeyPath = @"title";
   }
 
   [self updateTitleColorForAllViews];
+  [self updateImageTintColorForAllViews];
+}
+
+- (void)updateImageTintColorForAllViews {
+  for (UITabBarItem *item in self.items) {
+    NSUInteger indexOfItem = [self.items indexOfObject:item];
+    // This is a significant error, but defensive coding is preferred.
+    if (indexOfItem == NSNotFound || indexOfItem >= self.itemViews.count) {
+      NSAssert(NO, @"Unable to find associated item view for (%@)", item);
+      continue;
+    }
+    UIView *itemView = self.itemViews[indexOfItem];
+    // Skip custom views
+    if (![itemView isKindOfClass:[MDCTabBarViewItemView class]]) {
+      continue;
+    }
+    MDCTabBarViewItemView *tabBarViewItemView = (MDCTabBarViewItemView *)itemView;
+    if (item == self.selectedItem) {
+      tabBarViewItemView.iconImageView.tintColor =
+          [self imageTintColorForState:UIControlStateSelected];
+    } else {
+      tabBarViewItemView.iconImageView.tintColor =
+          [self imageTintColorForState:UIControlStateNormal];
+    }
+  }
+}
+
+- (void)setImageTintColor:(UIColor *)imageTintColor forState:(UIControlState)state {
+  self.stateToImageTintColor[@(state)] = imageTintColor;
+  [self updateImageTintColorForAllViews];
+}
+
+- (UIColor *)imageTintColorForState:(UIControlState)state {
+  UIColor *color = self.stateToImageTintColor[@(state)];
+  if (color == nil) {
+    color = self.stateToImageTintColor[@(UIControlStateNormal)];
+  }
+  return color;
+}
+
+- (void)updateTitleColorForAllViews {
+  for (UITabBarItem *item in self.items) {
+    NSUInteger indexOfItem = [self.items indexOfObject:item];
+    // This is a significant error, but defensive coding is preferred.
+    if (indexOfItem == NSNotFound || indexOfItem >= self.itemViews.count) {
+      NSAssert(NO, @"Unable to find associated item view for (%@)", item);
+      continue;
+    }
+    UIView *itemView = self.itemViews[indexOfItem];
+    // Skip custom views
+    if (![itemView isKindOfClass:[MDCTabBarViewItemView class]]) {
+      continue;
+    }
+    MDCTabBarViewItemView *tabBarViewItemView = (MDCTabBarViewItemView *)itemView;
+    if (item == self.selectedItem) {
+      tabBarViewItemView.titleLabel.textColor = [self titleColorForState:UIControlStateSelected];
+    } else {
+      tabBarViewItemView.titleLabel.textColor = [self titleColorForState:UIControlStateNormal];
+    }
+  }
+}
+
+- (void)setTitleColor:(UIColor *)titleColor forState:(UIControlState)state {
+  self.stateToTitleColor[@(state)] = titleColor;
+  [self updateTitleColorForAllViews];
+}
+
+- (UIColor *)titleColorForState:(UIControlState)state {
+  UIColor *titleColor = self.stateToTitleColor[@(state)];
+  if (!titleColor) {
+    titleColor = self.stateToTitleColor[@(UIControlStateNormal)];
+  }
+  return titleColor;
 }
 
 #pragma mark - Key-Value Observing (KVO)
@@ -189,41 +268,6 @@ static NSString *const kTitleKeyPath = @"title";
     [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
   }
   [self updateTitleColorForAllViews];
-}
-
-- (void)updateTitleColorForAllViews {
-  for (UITabBarItem *item in self.items) {
-    NSUInteger indexOfItem = [self.items indexOfObject:item];
-    // This is a significant error, but defensive coding is preferred.
-    if (indexOfItem == NSNotFound || indexOfItem >= self.itemViews.count) {
-      NSAssert(NO, @"Unable to find associated item view for (%@)", item);
-      continue;
-    }
-    UIView *itemView = self.itemViews[indexOfItem];
-    // Skip custom views
-    if (![itemView isKindOfClass:[MDCTabBarViewItemView class]]) {
-      continue;
-    }
-    MDCTabBarViewItemView *tabBarViewItemView = (MDCTabBarViewItemView *)itemView;
-    if (item == self.selectedItem) {
-      tabBarViewItemView.titleLabel.textColor = [self titleColorForState:UIControlStateSelected];
-    } else {
-      tabBarViewItemView.titleLabel.textColor = [self titleColorForState:UIControlStateNormal];
-    }
-  }
-}
-
-- (void)setTitleColor:(UIColor *)titleColor forState:(UIControlState)state {
-  self.stateToTitleColor[@(state)] = titleColor;
-  [self updateTitleColorForAllViews];
-}
-
-- (UIColor *)titleColorForState:(UIControlState)state {
-  UIColor *titleColor = self.stateToTitleColor[@(state)];
-  if (!titleColor) {
-    titleColor = self.stateToTitleColor[@(UIControlStateNormal)];
-  }
-  return titleColor;
 }
 
 #pragma mark - UIView
