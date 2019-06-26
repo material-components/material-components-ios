@@ -15,8 +15,14 @@
 #import "MDCTabBarView.h"
 #import "private/MDCTabBarViewItemView.h"
 
+// KVO contexts
+static char *const kKVOContextMDCTabBarView = "kKVOContextMDCTabBarView";
+
 /** Minimum (typical) height of a Material Tab bar. */
 static const CGFloat kMinHeight = 48;
+
+static NSString *const kImageKeyPath = @"image";
+static NSString *const kTitleKeyPath = @"title";
 
 @interface MDCTabBarView ()
 
@@ -29,6 +35,9 @@ static const CGFloat kMinHeight = 48;
 /** The title colors for bar items. */
 @property(nonnull, nonatomic, strong) NSMutableDictionary<NSNumber *, UIColor *> *stateToTitleColor;
 
+/** The image tint colors for bar items. */
+@property(nonnull, nonatomic, strong)
+    NSMutableDictionary<NSNumber *, UIColor *> *stateToImageTintColor;
 @end
 
 @implementation MDCTabBarView
@@ -39,6 +48,7 @@ static const CGFloat kMinHeight = 48;
   self = [super init];
   if (self) {
     _items = @[];
+    _stateToImageTintColor = [NSMutableDictionary dictionary];
     _stateToTitleColor = [NSMutableDictionary dictionary];
     self.backgroundColor = UIColor.whiteColor;
 
@@ -48,6 +58,10 @@ static const CGFloat kMinHeight = 48;
     [self addSubview:_containerView];
   }
   return self;
+}
+
+- (void)dealloc {
+  [self removeObserversFromTabBarItems];
 }
 
 #pragma mark - Properties
@@ -67,6 +81,7 @@ static const CGFloat kMinHeight = 48;
     return;
   }
 
+  [self removeObserversFromTabBarItems];
   for (UIView *view in self.containerView.arrangedSubviews) {
     [view removeFromSuperview];
   }
@@ -79,6 +94,10 @@ static const CGFloat kMinHeight = 48;
     itemView.titleLabel.text = item.title;
     itemView.titleLabel.textColor = [self titleColorForState:UIControlStateNormal];
     itemView.iconImageView.image = item.image;
+    UITapGestureRecognizer *tapGesture =
+        [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapItemView:)];
+    [itemView addGestureRecognizer:tapGesture];
+
     [_containerView addArrangedSubview:itemView];
   }
 
@@ -90,6 +109,8 @@ static const CGFloat kMinHeight = 48;
   }
 
   self.selectedItem = newSelectedItem;
+  [self addObserversToTabBarItems];
+
   [self invalidateIntrinsicContentSize];
   [self setNeedsLayout];
 }
@@ -99,15 +120,71 @@ static const CGFloat kMinHeight = 48;
     return;
   }
 
+  // Handle setting to `nil` without passing it to the nonnull parameter in `indexOfObject:`
+  if (!selectedItem) {
+    _selectedItem = selectedItem;
+    [self updateTitleColorForAllViews];
+    return;
+  }
+
   NSUInteger itemIndex = [self.items indexOfObject:selectedItem];
   // Don't crash, just ignore if `selectedItem` isn't present in `_items`. This is the same behavior
   // as UITabBar.
-  if (selectedItem && (itemIndex == NSNotFound)) {
+  if (itemIndex == NSNotFound) {
     return;
   }
 
   _selectedItem = selectedItem;
+
+  if (itemIndex == NSNotFound) {
+    return;
+  }
+
+  UIView *itemView = self.containerView.arrangedSubviews[itemIndex];
+  if ([itemView isKindOfClass:[MDCTabBarViewItemView class]]) {
+    MDCTabBarViewItemView *selectedItemView = (MDCTabBarViewItemView *)itemView;
+    selectedItemView.iconImageView.image = selectedItem.image;
+  }
+
   [self updateTitleColorForAllViews];
+  [self updateImageTintColorForAllViews];
+}
+
+- (void)updateImageTintColorForAllViews {
+  for (UITabBarItem *item in self.items) {
+    NSUInteger indexOfItem = [self.items indexOfObject:item];
+    // This is a significant error, but defensive coding is preferred.
+    if (indexOfItem == NSNotFound || indexOfItem >= self.containerView.arrangedSubviews.count) {
+      NSAssert(NO, @"Unable to find associated item view for (%@)", item);
+      continue;
+    }
+    UIView *itemView = self.containerView.arrangedSubviews[indexOfItem];
+    // Skip custom views
+    if (![itemView isKindOfClass:[MDCTabBarViewItemView class]]) {
+      continue;
+    }
+    MDCTabBarViewItemView *tabBarViewItemView = (MDCTabBarViewItemView *)itemView;
+    if (item == self.selectedItem) {
+      tabBarViewItemView.iconImageView.tintColor =
+          [self imageTintColorForState:UIControlStateSelected];
+    } else {
+      tabBarViewItemView.iconImageView.tintColor =
+          [self imageTintColorForState:UIControlStateNormal];
+    }
+  }
+}
+
+- (void)setImageTintColor:(UIColor *)imageTintColor forState:(UIControlState)state {
+  self.stateToImageTintColor[@(state)] = imageTintColor;
+  [self updateImageTintColorForAllViews];
+}
+
+- (UIColor *)imageTintColorForState:(UIControlState)state {
+  UIColor *color = self.stateToImageTintColor[@(state)];
+  if (color == nil) {
+    color = self.stateToImageTintColor[@(UIControlStateNormal)];
+  }
+  return color;
 }
 
 - (void)updateTitleColorForAllViews {
@@ -143,6 +220,58 @@ static const CGFloat kMinHeight = 48;
     titleColor = self.stateToTitleColor[@(UIControlStateNormal)];
   }
   return titleColor;
+}
+
+#pragma mark - Key-Value Observing (KVO)
+
+- (void)addObserversToTabBarItems {
+  for (UITabBarItem *item in self.items) {
+    [item addObserver:self
+           forKeyPath:kImageKeyPath
+              options:NSKeyValueObservingOptionNew
+              context:kKVOContextMDCTabBarView];
+    [item addObserver:self
+           forKeyPath:kTitleKeyPath
+              options:NSKeyValueObservingOptionNew
+              context:kKVOContextMDCTabBarView];
+  }
+}
+
+- (void)removeObserversFromTabBarItems {
+  for (UITabBarItem *item in self.items) {
+    [item removeObserver:self forKeyPath:kImageKeyPath context:kKVOContextMDCTabBarView];
+    [item removeObserver:self forKeyPath:kTitleKeyPath context:kKVOContextMDCTabBarView];
+  }
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary<NSKeyValueChangeKey, id> *)change
+                       context:(void *)context {
+  if (context == kKVOContextMDCTabBarView) {
+    if (!object) {
+      return;
+    }
+    NSUInteger indexOfObject = [self.items indexOfObject:object];
+    if (indexOfObject == NSNotFound) {
+      return;
+    }
+    // Don't try to update custom views
+    UIView *updatedItemView = self.containerView.arrangedSubviews[indexOfObject];
+    if (![updatedItemView isKindOfClass:[MDCTabBarViewItemView class]]) {
+      return;
+    }
+    MDCTabBarViewItemView *tabBarItemView = (MDCTabBarViewItemView *)updatedItemView;
+
+    if ([keyPath isEqualToString:kImageKeyPath]) {
+      tabBarItemView.iconImageView.image = change[NSKeyValueChangeNewKey];
+    } else if ([keyPath isEqualToString:kTitleKeyPath]) {
+      tabBarItemView.titleLabel.text = change[NSKeyValueChangeNewKey];
+    }
+  } else {
+    [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+  }
+  [self updateTitleColorForAllViews];
 }
 
 #pragma mark - UIView
@@ -203,6 +332,16 @@ static const CGFloat kMinHeight = 48;
   }
   CGFloat requiredWidth = maxWidth * self.items.count;
   return requiredWidth;
+}
+
+#pragma mark - Actions
+
+- (void)didTapItemView:(UITapGestureRecognizer *)tap {
+  NSUInteger index = [self.containerView.arrangedSubviews indexOfObject:tap.view];
+  if (index == NSNotFound) {
+    return;
+  }
+  self.selectedItem = self.items[index];
 }
 
 @end
