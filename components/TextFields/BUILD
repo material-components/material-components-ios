@@ -185,6 +185,7 @@ mdc_snapshot_objc_library(
     ],
     deps = [
         ":ColorThemer",
+        ":ContainedInputView",
         ":FontThemer",
         ":TextFields",
         ":TypographyThemer",
