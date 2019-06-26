@@ -125,6 +125,8 @@ static NSString *const kTitleKeyPath = @"title";
     MDCTabBarViewItemView *selectedItemView = (MDCTabBarViewItemView *)itemView;
     selectedItemView.iconImageView.image = selectedItem.image;
   }
+
+  [self updateTitleColorForAllViews];
 }
 
 #pragma mark - Key-Value Observing (KVO)
