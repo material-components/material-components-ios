@@ -97,6 +97,13 @@ static const CGFloat kMinHeight = 48;
     return;
   }
 
+  // Handle setting to `nil` without passing it to the nonnull parameter in `indexOfObject:`
+  if (!selectedItem) {
+    _selectedItem = selectedItem;
+    [self updateTitleColorForAllViews];
+    return;
+  }
+
   NSUInteger itemIndex = [self.items indexOfObject:selectedItem];
   // Don't crash, just ignore if `selectedItem` isn't present in `_items`. This is the same behavior
   // as UITabBar.
