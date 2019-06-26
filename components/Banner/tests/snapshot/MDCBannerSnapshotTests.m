@@ -41,7 +41,7 @@ static const CGFloat kBannerContentPadding = 10.0f;
 }
 
 - (instancetype)initWithContentSizeCategoryOverride:
-(UIContentSizeCategory)contentSizeCategoryOverride {
+    (UIContentSizeCategory)contentSizeCategoryOverride {
   self = [super init];
   if (self) {
     self.contentSizeCategoryOverride = contentSizeCategoryOverride;
@@ -52,7 +52,7 @@ static const CGFloat kBannerContentPadding = 10.0f;
 - (UITraitCollection *)traitCollection {
   if (@available(iOS 10.0, *)) {
     UITraitCollection *traitCollection = [UITraitCollection
-                                          traitCollectionWithPreferredContentSizeCategory:self.contentSizeCategoryOverride];
+        traitCollectionWithPreferredContentSizeCategory:self.contentSizeCategoryOverride];
     return traitCollection;
   }
   return [super traitCollection];
@@ -76,7 +76,7 @@ static const CGFloat kBannerContentPadding = 10.0f;
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-    self.recordMode = YES;
+  self.recordMode = YES;
 
   self.bannerView = [[MDCBannerView alloc] initWithFrame:CGRectZero];
   if (@available(iOS 11.0, *)) {
@@ -102,9 +102,9 @@ static const CGFloat kBannerContentPadding = 10.0f;
                  contentSizeCategory:(UIContentSizeCategory)sizeCategory
                               insets:(UIEdgeInsets)insets {
   MDCBannerViewSnapshotDynamicTypeContentSizeCategoryOverrideWindow *backgroundWindow =
-  [[MDCBannerViewSnapshotDynamicTypeContentSizeCategoryOverrideWindow alloc]
-   initWithFrame:CGRectMake(0, 0, CGRectGetWidth(view.bounds) + insets.left + insets.right,
-                            CGRectGetHeight(view.bounds) + insets.top + insets.bottom)];
+      [[MDCBannerViewSnapshotDynamicTypeContentSizeCategoryOverrideWindow alloc]
+          initWithFrame:CGRectMake(0, 0, CGRectGetWidth(view.bounds) + insets.left + insets.right,
+                                   CGRectGetHeight(view.bounds) + insets.top + insets.bottom)];
   backgroundWindow.contentSizeCategoryOverride = sizeCategory;
   backgroundWindow.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.8 alpha:1];
   [backgroundWindow addSubview:view];
@@ -130,7 +130,7 @@ static const CGFloat kBannerContentPadding = 10.0f;
 // The size of the cell view sent for snapshot is not correct because Autolayout needs
 // to be used as an environment.
 - (void)generateSnapshotWithContentSizeCategoryAndNotificationPost:
-(UIContentSizeCategory)sizeCategory
+            (UIContentSizeCategory)sizeCategory
                                                   andVerifyForView:(UIView *)view {
   CGSize aSize = [view sizeThatFits:CGSizeMake(350, INFINITY)];
   view.frame = CGRectMake(0, 0, aSize.width, aSize.height);
@@ -140,8 +140,8 @@ static const CGFloat kBannerContentPadding = 10.0f;
                                       contentSizeCategory:sizeCategory
                                                    insets:UIEdgeInsetsMake(10, 10, 10, 10)];
   [NSNotificationCenter.defaultCenter
-   postNotificationName:UIContentSizeCategoryDidChangeNotification
-   object:nil];
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
   [self snapshotVerifyView:snapshotWindow];
 }
 
@@ -283,7 +283,7 @@ static const CGFloat kBannerContentPadding = 10.0f;
     // Given
     self.bannerView = [[MDCBannerView alloc] init];
     self.typographyScheme =
-    [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
 
     // When
     self.bannerView.textLabel.text = kBannerShortText;
@@ -297,7 +297,8 @@ static const CGFloat kBannerContentPadding = 10.0f;
     self.bannerView.mdc_adjustsFontForContentSizeCategory = YES;
 
     // Then
-    [self generateSnapshotWithContentSizeCategoryAndNotificationPost:UIContentSizeCategoryExtraExtraLarge
+    [self generateSnapshotWithContentSizeCategoryAndNotificationPost:
+              UIContentSizeCategoryExtraExtraLarge
                                                     andVerifyForView:self.bannerView];
   }
 }

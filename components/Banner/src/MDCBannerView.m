@@ -524,8 +524,10 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   }
 
   // Set mdc_adjustsFontForContentSizeCategory on buttons
-  self.leadingButton.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
-  self.trailingButton.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
+  self.leadingButton.mdc_adjustsFontForContentSizeCategory =
+      self.mdc_adjustsFontForContentSizeCategory;
+  self.trailingButton.mdc_adjustsFontForContentSizeCategory =
+      self.mdc_adjustsFontForContentSizeCategory;
 
   [self updateBannerFont];
 }
