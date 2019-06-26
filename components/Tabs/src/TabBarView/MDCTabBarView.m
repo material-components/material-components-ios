@@ -70,7 +70,7 @@ static const CGFloat kMinHeight = 48;
   for (UIView *view in self.containerView.arrangedSubviews) {
     [view removeFromSuperview];
   }
-  
+
   _items = [items copy];
 
   for (UITabBarItem *item in self.items) {
