@@ -85,6 +85,9 @@ static NSString *const kTitleKeyPath = @"title";
     itemView.titleLabel.text = item.title;
     itemView.titleLabel.textColor = [self titleColorForState:UIControlStateNormal];
     itemView.iconImageView.image = item.image;
+    UITapGestureRecognizer *tapGesture =
+        [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapItemView:)];
+    [itemView addGestureRecognizer:tapGesture];
     [itemViews addObject:itemView];
     [self addSubview:itemView];
   }
@@ -108,10 +111,17 @@ static NSString *const kTitleKeyPath = @"title";
     return;
   }
 
+  // Handle setting to `nil` without passing it to the nonnull parameter in `indexOfObject:`
+  if (!selectedItem) {
+    _selectedItem = selectedItem;
+    [self updateTitleColorForAllViews];
+    return;
+  }
+
   NSUInteger itemIndex = [self.items indexOfObject:selectedItem];
   // Don't crash, just ignore if `selectedItem` isn't present in `_items`. This is the same behavior
   // as UITabBar.
-  if (selectedItem && (itemIndex == NSNotFound)) {
+  if (itemIndex == NSNotFound) {
     return;
   }
 
@@ -242,6 +252,16 @@ static NSString *const kTitleKeyPath = @"title";
 
 - (CGSize)sizeThatFits:(CGSize)size {
   return CGSizeMake(size.width, MAX(size.height, kMinHeight));
+}
+
+#pragma mark - Actions
+
+- (void)didTapItemView:(UITapGestureRecognizer *)tap {
+  NSUInteger index = [self.itemViews indexOfObject:tap.view];
+  if (index == NSNotFound) {
+    return;
+  }
+  self.selectedItem = self.items[index];
 }
 
 @end
