@@ -278,7 +278,8 @@ static const CGFloat kMaxItemWidth = 360;
   // When
   self.tabBarView.items = @[ item1, item2, item3, item4, item5, item6 ];
   CGSize intrinsicContentSize = self.tabBarView.intrinsicContentSize;
-  self.tabBarView.bounds = CGRectMake(0, 0, intrinsicContentSize.width, intrinsicContentSize.height);
+  self.tabBarView.bounds =
+      CGRectMake(0, 0, intrinsicContentSize.width, intrinsicContentSize.height);
 
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBarView];
@@ -301,15 +302,16 @@ static const CGFloat kMaxItemWidth = 360;
 
 - (void)testVeryLongItemLimitsItemWidthToItemMaximumWhenBoundsTooNarrow {
   // Given
-  NSString *longString =
-      @"This is a super long tab bar string. And it should be longer than 360 and wrap to multiple lines.";
+  NSString *longString = @"This is a super long tab bar string. And it should be longer than 360 "
+                         @"and wrap to multiple lines.";
   UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:longString image:nil tag:0];
   UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:nil tag:2];
   UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:nil tag:5];
 
   // When
   self.tabBarView.items = @[ item1, item2, item3 ];
-  self.tabBarView.bounds = CGRectMake(0, 0, kMaxItemWidth * self.tabBarView.items.count / 2, kExpectedHeightTitlesOrIconsOnly);
+  self.tabBarView.bounds = CGRectMake(0, 0, kMaxItemWidth * self.tabBarView.items.count / 2,
+                                      kExpectedHeightTitlesOrIconsOnly);
 
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBarView];
@@ -317,8 +319,8 @@ static const CGFloat kMaxItemWidth = 360;
 
 - (void)testVeryLongItemLimitsItemWidthToItemMaximumWhenBoundsAreIntrinsicContentSize {
   // Given
-  NSString *longString =
-  @"This is a super long tab bar string. And it should be longer than 360 and wrap to multiple lines.";
+  NSString *longString = @"This is a super long tab bar string. And it should be longer than 360 "
+                         @"and wrap to multiple lines.";
   UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:longString image:nil tag:0];
   UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:nil tag:2];
   UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:nil tag:5];
@@ -326,8 +328,8 @@ static const CGFloat kMaxItemWidth = 360;
   // When
   self.tabBarView.items = @[ item1, item2, item3 ];
   CGSize intrinsicContentSize = self.tabBarView.intrinsicContentSize;
-  self.tabBarView.bounds = CGRectMake(0, 0, intrinsicContentSize.width,
-                                      intrinsicContentSize.height);
+  self.tabBarView.bounds =
+      CGRectMake(0, 0, intrinsicContentSize.width, intrinsicContentSize.height);
 
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBarView];
@@ -355,8 +357,9 @@ static const CGFloat kMaxItemWidth = 360;
   // When
   self.tabBarView.items = @[ item1, item2 ];
   CGSize intrinsicContentSize = self.tabBarView.intrinsicContentSize;
-  self.tabBarView.bounds = CGRectMake(0, 0, MIN(kMaxItemWidth * self.tabBarView.items.count,
-                                                intrinsicContentSize.width * 2), intrinsicContentSize.height);
+  self.tabBarView.bounds = CGRectMake(
+      0, 0, MIN(kMaxItemWidth * self.tabBarView.items.count, intrinsicContentSize.width * 2),
+      intrinsicContentSize.height);
 
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBarView];
