@@ -293,8 +293,9 @@ static const CGFloat kMaxItemWidth = 360;
 
   // When
   self.tabBarView.items = @[ item1, item2, item3 ];
-  self.tabBarView.bounds = CGRectMake(0, 0, kMinItemWidth * (self.tabBarView.items.count - 0.5),
-                                      kExpectedHeightTitlesOrIconsOnly);
+  self.tabBarView.bounds =
+      CGRectMake(0, 0, kMinItemWidth * (self.tabBarView.items.count - (CGFloat)0.5),
+                 kExpectedHeightTitlesOrIconsOnly);
 
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBarView];

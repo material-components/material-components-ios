@@ -369,7 +369,7 @@ static UIImage *fakeImage(CGSize size) {
   // Given
   self.tabBarView.items = @[ self.itemA ];
   CGSize intrinsicSize = self.tabBarView.intrinsicContentSize;
-  CGSize biggerSize = CGSizeMake(intrinsicSize.width + 10.0, intrinsicSize.height + 10.0);
+  CGSize biggerSize = CGSizeMake(intrinsicSize.width + 10, intrinsicSize.height + 10);
 
   // When
   CGSize size = [self.tabBarView sizeThatFits:biggerSize];
