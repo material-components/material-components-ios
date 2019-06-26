@@ -67,10 +67,11 @@ static const CGFloat kMinHeight = 48;
     return;
   }
 
-  _items = [items copy];
   for (UIView *view in self.containerView.arrangedSubviews) {
     [view removeFromSuperview];
   }
+  
+  _items = [items copy];
 
   for (UITabBarItem *item in self.items) {
     MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
@@ -175,7 +176,7 @@ static const CGFloat kMinHeight = 48;
   [_containerView.topAnchor constraintEqualToAnchor:self.topAnchor].active = YES;
   [_containerView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor].active = YES;
   self.containerViewConstraintsActive = YES;
-  
+
   // Must always be called last according to the documentation.
   [super updateConstraints];
 }
