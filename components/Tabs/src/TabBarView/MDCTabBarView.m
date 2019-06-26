@@ -174,7 +174,8 @@ static const CGFloat kMinHeight = 48;
   [_containerView.widthAnchor constraintGreaterThanOrEqualToAnchor:self.widthAnchor].active = YES;
   [_containerView.topAnchor constraintEqualToAnchor:self.topAnchor].active = YES;
   [_containerView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor].active = YES;
-
+  self.containerViewConstraintsActive = YES;
+  
   // Must always be called last according to the documentation.
   [super updateConstraints];
 }
