@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #import "MDCSemanticColorScheme.h"
+#import "MDCDarkMode.h"
+#import "UIColor+MaterialElevation.h"
 
 static UIColor *ColorFromRGB(uint32_t colorValue) {
   return [UIColor colorWithRed:(CGFloat)(((colorValue >> 16) & 0xFF) / 255.0)
@@ -40,6 +42,29 @@ static UIColor *DynamicColor(UIColor *defaultColor, UIColor *darkColor) {
   if (@available(iOS 13.0, *)) {
     return [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
       if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+        return darkColor;
+      } else {
+        return defaultColor;
+      }
+    }];
+  } else {
+    return defaultColor;
+  }
+#else
+  return defaultColor;
+#endif
+}
+
+static UIColor *DynamicColorWithElevationForSurfaces(UIColor *defaultColor, UIColor *darkColor) {
+#if defined(__IPHONE_13_0)
+  if (@available(iOS 13.0, *)) {
+    return [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
+      NSLog(@"HELLO IM HERE");
+      if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+        if (darkColor.mdc_elevation > 0) {
+          return [MDCDarkMode lightenBackgroundColor:darkColor
+                                       withElevation:darkColor.mdc_elevation];
+        }
         return darkColor;
       } else {
         return defaultColor;
@@ -86,18 +111,22 @@ static UIColor *DynamicColor(UIColor *defaultColor, UIColor *darkColor) {
         _onSecondaryColor = ColorFromRGB(0x000000);
         _onSurfaceColor = ColorFromRGB(0xFFFFFF);
         _onBackgroundColor = ColorFromRGB(0xFFFFFF);
+        _shouldLightenElevatedSurfacesWithDarkMode = YES;
         break;
       case MDCColorSchemeDefaultsMaterial201906:
         _primaryColor = DynamicColor(ColorFromRGB(0x6200EE), ColorFromRGB(0xBB86FC));
         _primaryColorVariant = DynamicColor(ColorFromRGB(0x3700B3), ColorFromRGB(0x3700B3));
         _secondaryColor = DynamicColor(ColorFromRGB(0x03DAC6), ColorFromRGB(0x03DAC6));
         _errorColor = DynamicColor(ColorFromRGB(0xB00020), ColorFromRGB(0xCF6679));
-        _surfaceColor = DynamicColor(ColorFromRGB(0xFFFFFF), ColorFromRGB(0x121212));
-        _backgroundColor = DynamicColor(ColorFromRGB(0xFFFFFF), ColorFromRGB(0x121212));
+        _surfaceColor = DynamicColorWithElevationForSurfaces(ColorFromRGB(0xFFFFFF),
+                                                             ColorFromRGB(0x121212));
+        _backgroundColor = DynamicColorWithElevationForSurfaces(ColorFromRGB(0xFFFFFF),
+                                                                ColorFromRGB(0x121212));
         _onPrimaryColor = DynamicColor(ColorFromRGB(0xFFFFFF), ColorFromRGB(0x000000));
         _onSecondaryColor = DynamicColor(ColorFromRGB(0x000000), ColorFromRGB(0x000000));
         _onSurfaceColor = DynamicColor(ColorFromRGB(0x000000), ColorFromRGB(0xFFFFFF));
         _onBackgroundColor = DynamicColor(ColorFromRGB(0x000000), ColorFromRGB(0xFFFFFF));
+        _shouldLightenElevatedSurfacesWithDarkMode = YES;
         break;
     }
   }
@@ -132,6 +161,16 @@ static UIColor *DynamicColor(UIColor *defaultColor, UIColor *darkColor) {
   copy.onBackgroundColor = self.onBackgroundColor;
 
   return copy;
+}
+
+#pragma mark - Custom Color Getters
+
+- (UIColor *)surfaceColorWithElevation:(CGFloat)elevation {
+  return [MDCDarkMode lightenBackgroundColor:_surfaceColor withElevation:elevation];
+}
+
+- (UIColor *)backgroundColorWithElevation:(CGFloat)elevation {
+  return [MDCDarkMode lightenBackgroundColor:_backgroundColor withElevation:elevation];
 }
 
 @end

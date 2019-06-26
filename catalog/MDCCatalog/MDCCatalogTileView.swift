@@ -65,7 +65,6 @@ class MDCCatalogTileView: UIView {
 
   override func layoutSubviews() {
     super.layoutSubviews()
-    print("whats uppp")
     guard !bounds.isEmpty else {
       return
     }

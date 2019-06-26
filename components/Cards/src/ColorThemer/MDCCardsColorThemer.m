@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import "MDCCardsColorThemer.h"
+#import "MDCDarkMode.h"
 
 static const CGFloat kStrokeVariantBorderOpacity = (CGFloat)0.37;
 
@@ -20,12 +21,24 @@ static const CGFloat kStrokeVariantBorderOpacity = (CGFloat)0.37;
 
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                           toCard:(nonnull MDCCard *)card {
+//  if (colorScheme.shouldLightenElevatedSurfacesWithDarkMode) {
+//    card.backgroundColor = colorScheme.surfaceColor;
+//        [colorScheme surfaceColorWithElevation:[card shadowElevationForState:UIControlStateNormal]];
+//  } else {
+//    card.backgroundColor = colorScheme.surfaceColor;
+//  }
   card.backgroundColor = colorScheme.surfaceColor;
+  card.backgroundColor.mdc_elevation = 4;
 }
 
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                       toCardCell:(nonnull MDCCardCollectionCell *)cardCell {
-  cardCell.backgroundColor = colorScheme.surfaceColor;
+  if (colorScheme.shouldLightenElevatedSurfacesWithDarkMode) {
+    cardCell.backgroundColor = [colorScheme surfaceColorWithElevation:
+                            [cardCell shadowElevationForState:MDCCardCellStateNormal]];
+  } else {
+    cardCell.backgroundColor = colorScheme.surfaceColor;
+  }
   [cardCell setImageTintColor:colorScheme.primaryColor forState:MDCCardCellStateNormal];
 }
 

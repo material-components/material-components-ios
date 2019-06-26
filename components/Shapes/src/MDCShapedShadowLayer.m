@@ -100,8 +100,21 @@
     self.borderColor = nil;
     self.borderWidth = 0;
 
-    _colorLayer.fillColor = self.shapedBackgroundColor.CGColor;
-    _colorLayer.strokeColor = self.shapedBorderColor.CGColor;
+    if ([self.delegate isKindOfClass:[UIView class]]) {
+      UIView *view = (UIView *)self.delegate;
+      if (@available(iOS 13.0, *)) {
+        [view.traitCollection performAsCurrentTraitCollection:^{
+          _colorLayer.fillColor = self.shapedBackgroundColor.CGColor;
+          _colorLayer.strokeColor = self.shapedBorderColor.CGColor;
+        }];
+      } else {
+        _colorLayer.fillColor = self.shapedBackgroundColor.CGColor;
+        _colorLayer.strokeColor = self.shapedBorderColor.CGColor;
+      }
+    } else {
+      _colorLayer.fillColor = self.shapedBackgroundColor.CGColor;
+      _colorLayer.strokeColor = self.shapedBorderColor.CGColor;
+    }
     _colorLayer.lineWidth = self.shapedBorderWidth;
   }
 }

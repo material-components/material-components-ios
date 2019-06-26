@@ -43,6 +43,7 @@ class CardExampleViewController: UIViewController {
     bundle.loadNibNamed("CardExampleViewController", owner: self, options: nil)
     view.frame = self.view.bounds
 
+    self.view.backgroundColor = containerScheme.colorScheme.backgroundColor;
     button.applyTextTheme(withScheme: containerScheme)
     card.applyTheme(withScheme: containerScheme)
     card.isInteractable = false
@@ -50,6 +51,12 @@ class CardExampleViewController: UIViewController {
     imageView.isAccessibilityElement = true
     imageView.accessibilityLabel = "Missing Dish"
   }
+
+//  override func viewWillLayoutSubviews() {
+//    super.viewWillLayoutSubviews()
+//    button.applyTextTheme(withScheme: containerScheme)
+//    card.applyTheme(withScheme: containerScheme)
+//  }
 
   override public var traitCollection: UITraitCollection {
     if UIDevice.current.userInterfaceIdiom == .pad && UIDevice.current.orientation.isPortrait {

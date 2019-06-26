@@ -1,4 +1,4 @@
-// Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2019-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,11 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCLegacyColorScheme.h"
-#import "MDCLegacyTonalColorScheme.h"
-#import "MDCLegacyTonalPalette.h"
+#import <objc/runtime.h>
 
-#import "MDCSemanticColorScheme.h"
-#import "MDCDarkMode.h"
 #import "UIColor+MaterialElevation.h"
-//#import "MDCDarkModeElevationLightening.h"
+
+@implementation UIColor (MaterialElevation)
+
+- (void)setMdc_elevation:(CGFloat)mdc_elevation {
+  objc_setAssociatedObject(self, @selector(mdc_elevation), [NSNumber numberWithDouble:mdc_elevation], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (CGFloat)mdc_elevation {
+  return [objc_getAssociatedObject(self, @selector(mdc_elevation)) doubleValue];
+}
+
+@end

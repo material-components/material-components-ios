@@ -74,6 +74,13 @@
  @c backgroundColor.
  */
 @property(nonnull, readonly, copy, nonatomic) UIColor *onBackgroundColor;
+
+
+@property(assign, readonly, nonatomic) BOOL shouldLightenElevatedSurfacesWithDarkMode;
+
+- (nonnull UIColor *)surfaceColorWithElevation:(CGFloat)elevation;
+
+- (nonnull UIColor *)backgroundColorWithElevation:(CGFloat)elevation;
 @end
 
 /**
@@ -111,6 +118,8 @@ typedef NS_ENUM(NSInteger, MDCColorSchemeDefaults) {
 @property(nonnull, readwrite, copy, nonatomic) UIColor *onSecondaryColor;
 @property(nonnull, readwrite, copy, nonatomic) UIColor *onSurfaceColor;
 @property(nonnull, readwrite, copy, nonatomic) UIColor *onBackgroundColor;
+
+@property(assign, readwrite, nonatomic) BOOL shouldLightenElevatedSurfacesWithDarkMode;
 
 /**
  Initializes the color scheme with the latest material defaults.
