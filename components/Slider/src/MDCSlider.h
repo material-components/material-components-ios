@@ -45,6 +45,7 @@ IB_DESIGNABLE
 /** The delegate for the slider. */
 @property(nullable, nonatomic, weak) id<MDCSliderDelegate> delegate;
 
+
 /**
  Sets the color of the thumb for the specified state.
 
@@ -334,6 +335,14 @@ IB_DESIGNABLE
  @note Has no effect if @c statefulAPIEnabled is @c YES.
  */
 @property(nonatomic, strong, null_resettable) UIColor *trackBackgroundColor UI_APPEARANCE_SELECTOR;
+
+/** When @c YES, haptics are enabled. The haptics casue a light impact reaction when the slider
+ reaches the minimum or maximum value.
+
+ Defaults to @c YES in iOS 10 or later, @c NO otherwise
+ */
+@property(nonatomic, assign) BOOL hapticsEnabled;
+
 
 @end
 
