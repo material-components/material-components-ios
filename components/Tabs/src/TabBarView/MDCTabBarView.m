@@ -23,6 +23,7 @@ static const CGFloat kMinHeight = 48;
 
 static NSString *const kImageKeyPath = @"image";
 static NSString *const kTitleKeyPath = @"title";
+static NSString *const kAccessibilityLabelKeyPath = @"accessibilityLabel";
 
 @interface MDCTabBarView ()
 
@@ -92,6 +93,7 @@ static NSString *const kTitleKeyPath = @"title";
     MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
     itemView.translatesAutoresizingMaskIntoConstraints = NO;
     itemView.titleLabel.text = item.title;
+    itemView.accessibilityLabel = item.accessibilityLabel;
     itemView.titleLabel.textColor = [self titleColorForState:UIControlStateNormal];
     itemView.iconImageView.image = item.image;
     [itemView setContentCompressionResistancePriority:UILayoutPriorityRequired
@@ -226,6 +228,10 @@ static NSString *const kTitleKeyPath = @"title";
            forKeyPath:kTitleKeyPath
               options:NSKeyValueObservingOptionNew
               context:kKVOContextMDCTabBarView];
+    [item addObserver:self
+           forKeyPath:kAccessibilityLabelKeyPath
+              options:NSKeyValueObservingOptionNew
+              context:kKVOContextMDCTabBarView];
   }
 }
 
@@ -233,6 +239,9 @@ static NSString *const kTitleKeyPath = @"title";
   for (UITabBarItem *item in self.items) {
     [item removeObserver:self forKeyPath:kImageKeyPath context:kKVOContextMDCTabBarView];
     [item removeObserver:self forKeyPath:kTitleKeyPath context:kKVOContextMDCTabBarView];
+    [item removeObserver:self
+              forKeyPath:kAccessibilityLabelKeyPath
+                 context:kKVOContextMDCTabBarView];
   }
 }
 
@@ -259,6 +268,8 @@ static NSString *const kTitleKeyPath = @"title";
       tabBarItemView.iconImageView.image = change[NSKeyValueChangeNewKey];
     } else if ([keyPath isEqualToString:kTitleKeyPath]) {
       tabBarItemView.titleLabel.text = change[NSKeyValueChangeNewKey];
+    } else if ([keyPath isEqualToString:kAccessibilityLabelKeyPath]) {
+      tabBarItemView.accessibilityLabel = change[NSKeyValueChangeNewKey];
     }
   } else {
     [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
