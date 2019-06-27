@@ -62,6 +62,10 @@ static const UIEdgeInsets kEdgeInsets = {.top = 12, .right = 16, .bottom = 12, .
 }
 
 - (void)commonMDCTabBarViewItemViewInit {
+  // Make sure the ripple is positioned behind the content.
+  if (!_rippleTouchController) {
+    _rippleTouchController = [[MDCRippleTouchController alloc] initWithView:self];
+  }
   if (!_contentView) {
     _contentView = [[UIView alloc] initWithFrame:CGRectZero];
     [self addSubview:_contentView];

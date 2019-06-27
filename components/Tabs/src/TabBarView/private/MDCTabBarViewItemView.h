@@ -14,6 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import <MaterialComponents/MaterialRipple.h>
+
 /** A basic view that displays a title and image for a tab bar item within MDCTabBarView. */
 @interface MDCTabBarViewItemView : UIView
 
@@ -22,5 +24,8 @@
 
 /** The label to display the title. */
 @property(nonatomic, strong) UILabel *titleLabel;
+
+/** The ripple contronller to display the ripple touch effect. */
+@property(nonatomic, strong) MDCRippleTouchController *rippleTouchController;
 
 @end
