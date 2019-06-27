@@ -84,7 +84,6 @@ static NSString *const kExampleTitle = @"TabBarView";
                         forState:UIControlStateSelected];
   self.tabBar.selectedItem = item1;
   self.tabBar.translatesAutoresizingMaskIntoConstraints = NO;
-  self.tabBar.edgeInsets = UIEdgeInsetsMake(0, 120, 0, 20);
   [self.view addSubview:self.tabBar];
 
   if (@available(iOS 11.0, *)) {
@@ -95,6 +94,8 @@ static NSString *const kExampleTitle = @"TabBarView";
   }
   [self.view.leftAnchor constraintEqualToAnchor:self.tabBar.leftAnchor].active = YES;
   [self.view.rightAnchor constraintEqualToAnchor:self.tabBar.rightAnchor].active = YES;
+
+  self.tabBar.contentEdgeInsets = UIEdgeInsetsMake(0, 120, 0, 20);
 }
 
 #pragma mark - MDCTabBarViewDelegate

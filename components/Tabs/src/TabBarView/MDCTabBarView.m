@@ -14,6 +14,7 @@
 
 #import "MDCTabBarView.h"
 #import "MDCTabBarViewDelegate.h"
+#import "UIView+MaterialRTL.h"
 #import "private/MDCTabBarViewItemView.h"
 
 // KVO contexts
@@ -45,6 +46,11 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
 /** The image tint colors for bar items. */
 @property(nonnull, nonatomic, strong)
     NSMutableDictionary<NSNumber *, UIColor *> *stateToImageTintColor;
+
+@property(nonatomic) NSLayoutConstraint *leadingConstraint;
+@property(nonatomic) NSLayoutConstraint *trailingConstraint;
+@property(nonatomic) NSLayoutConstraint *topConstraint;
+@property(nonatomic) NSLayoutConstraint *bottomConstraint;
 @end
 
 @implementation MDCTabBarView
@@ -154,6 +160,17 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
 
   [self updateTitleColorForAllViews];
   [self updateImageTintColorForAllViews];
+}
+
+- (void)setContentEdgeInsets:(UIEdgeInsets)contentEdgeInsets {
+  UIEdgeInsets adjustedInset = contentEdgeInsets;
+  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+    adjustedInset.left = contentEdgeInsets.right;
+    adjustedInset.right = contentEdgeInsets.left;
+  }
+  _contentEdgeInsets = adjustedInset;
+  [self invalidateIntrinsicContentSize];
+  [self setNeedsLayout];
 }
 
 - (void)updateImageTintColorForAllViews {
@@ -315,15 +332,30 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
   CGFloat availableWidth = CGRectGetWidth(self.bounds);
   CGFloat requiredWidth = [self justifiedWidth];
   BOOL canBeJustified = availableWidth >= requiredWidth;
+  UIEdgeInsets paddingInsets = UIEdgeInsetsZero;
   if (canBeJustified) {
     self.containerView.distribution = UIStackViewDistributionFillEqually;
-    self.containerView.layoutMargins =  self.edgeInsets;
   } else {
     self.containerView.distribution = UIStackViewDistributionFillProportionally;
-    UIEdgeInsets newInsets = self.edgeInsets;
-    newInsets.left += kScrollablePadding;
-    self.containerView.layoutMargins = newInsets;
+    if (self.mdf_effectiveUserInterfaceLayoutDirection ==
+        UIUserInterfaceLayoutDirectionLeftToRight) {
+      paddingInsets.left = kScrollablePadding;
+    } else {
+      paddingInsets.right = kScrollablePadding;
+    }
   }
+
+  if (@available(iOS 11.0, *)) {
+    UIEdgeInsets safeAreaInsets = self.safeAreaInsets;
+    paddingInsets.left = MAX(safeAreaInsets.left, paddingInsets.left);
+    paddingInsets.right = MAX(safeAreaInsets.right, paddingInsets.right);
+    paddingInsets.top = MAX(safeAreaInsets.top, paddingInsets.top);
+    paddingInsets.bottom = MAX(safeAreaInsets.bottom, paddingInsets.bottom);
+  }
+  self.leadingConstraint.constant = paddingInsets.left + self.contentEdgeInsets.left;
+  self.trailingConstraint.constant = -(paddingInsets.right + self.contentEdgeInsets.right);
+  self.topConstraint.constant = paddingInsets.top + self.contentEdgeInsets.top;
+  self.bottomConstraint.constant = -(paddingInsets.bottom + self.contentEdgeInsets.bottom);
 }
 
 - (void)updateConstraints {
@@ -332,13 +364,21 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
     return;
   }
 
-  [self.containerView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor].active = YES;
-  [self.containerView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor].active = YES;
-  [self.containerView.widthAnchor constraintGreaterThanOrEqualToAnchor:self.widthAnchor].active =
-      YES;
-  [self.containerView.topAnchor constraintEqualToAnchor:self.topAnchor].active = YES;
-  [self.containerView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor].active = YES;
-  self.containerViewConstraintsActive = YES;
+  self.leadingConstraint =
+      [self.containerView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor];
+  self.trailingConstraint =
+      [self.containerView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor];
+  self.topConstraint = [self.containerView.topAnchor constraintEqualToAnchor:self.topAnchor];
+  self.bottomConstraint =
+      [self.containerView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor];
+
+  [NSLayoutConstraint activateConstraints:@[
+    [self.containerView.widthAnchor constraintGreaterThanOrEqualToAnchor:self.widthAnchor],
+    self.leadingConstraint,
+    self.trailingConstraint,
+    self.topConstraint,
+    self.bottomConstraint,
+  ]];
 
   // Must always be called last according to the documentation.
   [super updateConstraints];
@@ -353,8 +393,8 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
       maxHeight = contentSize.height;
     }
   }
-  maxHeight += self.edgeInsets.top + self.edgeInsets.bottom;
-  totalWidth += self.edgeInsets.left + self.edgeInsets.right;
+  maxHeight += self.contentEdgeInsets.top + self.contentEdgeInsets.bottom;
+  totalWidth += self.contentEdgeInsets.left + self.contentEdgeInsets.right;
   return CGSizeMake(totalWidth, MAX(kMinHeight, maxHeight));
 }
 
@@ -374,6 +414,7 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
     }
   }
   CGFloat requiredWidth = maxWidth * self.items.count;
+  requiredWidth += self.contentEdgeInsets.left + self.contentEdgeInsets.right;
   return requiredWidth;
 }
 

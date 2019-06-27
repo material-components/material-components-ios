@@ -27,8 +27,8 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
 /** The currently-selected item in the Tab bar. */
 @property(nullable, nonatomic, strong) UITabBarItem *selectedItem;
 
-/** The content edge insets of the UITabBar. */
-@property(nonatomic) UIEdgeInsets edgeInsets;
+/** The content edge insets of the UITabBar. This edge insets will flip in RTL. */
+@property(nonatomic) UIEdgeInsets contentEdgeInsets;
 
 /** The color of the Tab bar's background. */
 @property(nullable, nonatomic, copy) UIColor *barTintColor;
