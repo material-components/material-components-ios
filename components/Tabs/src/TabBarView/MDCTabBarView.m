@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import "MDCTabBarView.h"
+#import "MDCTabBarViewDelegate.h"
 #import "private/MDCTabBarViewItemView.h"
 
 // KVO contexts
@@ -44,6 +45,9 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
 @end
 
 @implementation MDCTabBarView
+// We're overriding UIScrollViewDelegate's delegate solely to change its type (we don't provide
+// a getter or setter implementation), thus the @dynamic.
+@dynamic delegate;
 
 #pragma mark - Initialization
 
@@ -367,7 +371,16 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
   if (index == NSNotFound) {
     return;
   }
+
+  if ([self.tabBarDelegate respondsToSelector:@selector(tabBarView:shouldSelectItem:)] &&
+      ![self.tabBarDelegate tabBarView:self shouldSelectItem:self.items[index]]) {
+    return;
+  }
+
   self.selectedItem = self.items[index];
+  if ([self.tabBarDelegate respondsToSelector:@selector(tabBarView:didSelectItem:)]) {
+    [self.tabBarDelegate tabBarView:self didSelectItem:self.items[index]];
+  }
 }
 
 @end

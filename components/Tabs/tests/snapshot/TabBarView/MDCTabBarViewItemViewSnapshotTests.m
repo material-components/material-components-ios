@@ -65,7 +65,8 @@ static NSString *const kLongTitleArabic =
   // Default to white since in actual use the background would be transparent.
   self.itemView.backgroundColor = UIColor.whiteColor;
   self.itemView.iconImageView.image =
-      [UIImage mdc_testImageOfSize:CGSizeMake(24, 24) withStyle:MDCSnapshotTestImageStyleFramedX];
+      [[UIImage mdc_testImageOfSize:CGSizeMake(24, 24) withStyle:MDCSnapshotTestImageStyleFramedX]
+          imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 }
 
 - (void)tearDown {
