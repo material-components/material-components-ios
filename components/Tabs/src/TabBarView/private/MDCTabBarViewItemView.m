@@ -110,12 +110,16 @@ static const UIEdgeInsets kEdgeInsets = {.top = 12, .right = 16, .bottom = 12, .
   NSString *title = self.titleLabel.text;
   UIImage *icon = self.iconImageView.image;
   const CGFloat minHeight = (title && icon) ? kMinHeightTitleAndImage : kMinHeightTitleOrImageOnly;
-  CGFloat horizontalPadding = kEdgeInsets.left + kEdgeInsets.right;
-  CGFloat verticalPadding = kEdgeInsets.top + kEdgeInsets.bottom;
-  // The size of the content view should be smaller that the size passed in.
-  const CGFloat maxWidth = MIN(kMaxWidth, MAX(kMinWidth, size.width));
+
+  const CGFloat horizontalPadding = kEdgeInsets.left + kEdgeInsets.right;
+  const CGFloat verticalPadding = kEdgeInsets.top + kEdgeInsets.bottom;
+
   const CGFloat maxHeight = MAX(minHeight, size.height);
-  CGSize maxSize = CGSizeMake(maxWidth - horizontalPadding, maxHeight - verticalPadding);
+  CGSize maxSize = CGSizeMake(kMaxWidth - horizontalPadding, maxHeight - verticalPadding);
+  CGSize labelFitSize = self.titleLabel.intrinsicContentSize;
+  if (labelFitSize.width > maxSize.width) {
+    labelFitSize = [self.titleLabel sizeThatFits:CGSizeMake(maxSize.width, CGFLOAT_MAX)];
+  }
 
   // Calculate the sizes of icon and label. Use them to calculate the total item view size.
   CGSize iconSize = [self.iconImageView sizeThatFits:maxSize];
