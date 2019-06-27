@@ -228,7 +228,10 @@ static NSString *const kAccessibilityLabelKeyPath = @"accessibilityLabel";
            forKeyPath:kTitleKeyPath
               options:NSKeyValueObservingOptionNew
               context:kKVOContextMDCTabBarView];
-    [item addObserver:self forKeyPath:kAccessibilityLabelKeyPath options:NSKeyValueObservingOptionNew context:kKVOContextMDCTabBarView];
+    [item addObserver:self
+           forKeyPath:kAccessibilityLabelKeyPath
+              options:NSKeyValueObservingOptionNew
+              context:kKVOContextMDCTabBarView];
   }
 }
 
@@ -236,7 +239,9 @@ static NSString *const kAccessibilityLabelKeyPath = @"accessibilityLabel";
   for (UITabBarItem *item in self.items) {
     [item removeObserver:self forKeyPath:kImageKeyPath context:kKVOContextMDCTabBarView];
     [item removeObserver:self forKeyPath:kTitleKeyPath context:kKVOContextMDCTabBarView];
-    [item removeObserver:self forKeyPath:kAccessibilityLabelKeyPath context:kKVOContextMDCTabBarView];
+    [item removeObserver:self
+              forKeyPath:kAccessibilityLabelKeyPath
+                 context:kKVOContextMDCTabBarView];
   }
 }
 
