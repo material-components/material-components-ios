@@ -16,7 +16,7 @@
 
 #import "MaterialTabs+TabBarView.h"
 
-@interface MDCTabBarItemTestCustomViewTestFake : UIView <MDCTabBarSelectionIndicatorSupporting>
+@interface MDCTabBarItemTestCustomViewTestFake : UIView <MDCTabBarViewIndicatorSupporting>
 @end
 
 @implementation MDCTabBarItemTestCustomViewTestFake

@@ -1,4 +1,4 @@
-// Copyright 2019-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,7 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCTabBarItem.h"
-#import "MDCTabBarItemCustomViewing.h"
-#import "MDCTabBarView.h"
-#import "MDCTabBarViewIndicatorSupporting.h"
+#import <UIKit/UIKit.h>
+
+@class MDCTabBarViewIndicatorAttributes;
+
+/** View responsible for drawing the indicator behind tab content and animating changes. */
+@interface MDCTabBarViewIndicatorView : UIView
+
+/**
+ Called to indicate that the indicator should update to display new attributes. This method may be
+ called from an implicit animation block.
+ */
+- (void)applySelectionIndicatorAttributes:(MDCTabBarViewIndicatorAttributes *)attributes;
+
+@end

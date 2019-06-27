@@ -14,17 +14,23 @@
 
 #import <Foundation/Foundation.h>
 
-#import "MDCTabBarViewIndicatorSupporting.h"
+/**
+ A simple protocol that indicates the responder can be targeted by an
+ @c MDCTabBarViewIndicatorTemplate.
+
+ @seealso MDCTabBarViewIndicatorTemplate
+ */
+@protocol MDCTabBarViewIndicatorSupporting
 
 /**
- Defines the necessary APIs for MDCTabBarView to use a UITabBarItem for a custom view property.
-
- @note Although UIKit defines such a property on @c UIBarButtonItem, no similar property is publicly
- documented on @c UITabBarItem.
+ The bounds of the receiver.
  */
-@protocol MDCTabBarItemCustomViewing
+@property(readonly) CGRect bounds;
 
-/** A custom view to be displayed for a tab bar item. */
-@property(nullable, nonatomic, strong) UIView<MDCTabBarViewIndicatorSupporting> *mdc_customView;
+/**
+ The frame of the content of the receiver. Used to position the Selection Indicator relative to
+ the content.
+ */
+@property(readonly) CGRect contentFrame;
 
 @end
