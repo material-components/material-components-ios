@@ -413,7 +413,9 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     x += self.containerView.arrangedSubviews[i].intrinsicContentSize.width;
   }
   UIView *selectedItemView = self.containerView.arrangedSubviews[index];
-  CGRect itemFrame = CGRectMake(x, self.containerView.bounds.origin.y, selectedItemView.intrinsicContentSize.width, selectedItemView.intrinsicContentSize.height);
+  CGRect itemFrame =
+      CGRectMake(x, self.containerView.bounds.origin.y, selectedItemView.intrinsicContentSize.width,
+                 selectedItemView.intrinsicContentSize.height);
   [self scrollRectToVisible:itemFrame animated:NO];
 }
 
