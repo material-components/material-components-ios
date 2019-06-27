@@ -37,6 +37,9 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 /** Used to avoid duplicating containerView's constraints twice. */
 @property(nonatomic, assign) BOOL containerViewConstraintsActive;
 
+/** Used to scroll the tab bar view at layout subviews step. */
+@property(nonatomic, assign) BOOL initialScrollDone;
+
 /** The title colors for bar items. */
 @property(nonnull, nonatomic, strong) NSMutableDictionary<NSNumber *, UIColor *> *stateToTitleColor;
 
@@ -153,6 +156,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
   [self updateTitleColorForAllViews];
   [self updateImageTintColorForAllViews];
+  [self scrollRectToVisible:self.containerView.arrangedSubviews[itemIndex].frame animated:YES];
 }
 
 - (void)updateImageTintColorForAllViews {
@@ -325,6 +329,12 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   BOOL canBeJustified = availableWidth >= requiredWidth;
   self.containerView.distribution = canBeJustified ? UIStackViewDistributionFillEqually
                                                    : UIStackViewDistributionFillProportionally;
+
+  if (self.initialScrollDone) {
+    return;
+  }
+  [self scrollToSelectedItemVisible];
+  self.initialScrollDone = YES;
 }
 
 - (void)updateConstraints {
@@ -374,6 +384,21 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   }
   CGFloat requiredWidth = maxWidth * self.items.count;
   return requiredWidth;
+}
+
+- (void)scrollToSelectedItemVisible {
+  NSUInteger index = [self.items indexOfObject:self.selectedItem];
+  if (index == NSNotFound) {
+    return;
+  }
+
+  CGFloat x = 0.0;
+  for (NSUInteger i = 0; i < index; i++) {
+    x += self.containerView.arrangedSubviews[i].intrinsicContentSize.width;
+  }
+  UIView *selectedItemView = self.containerView.arrangedSubviews[index];
+  CGRect itemFrame = CGRectMake(x, self.containerView.bounds.origin.y, selectedItemView.intrinsicContentSize.width, selectedItemView.intrinsicContentSize.height);
+  [self scrollRectToVisible:itemFrame animated:NO];
 }
 
 #pragma mark - Actions
