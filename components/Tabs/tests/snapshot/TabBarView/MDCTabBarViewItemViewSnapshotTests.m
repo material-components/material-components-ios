@@ -553,10 +553,10 @@ static NSString *const kLongTitleArabic =
 
   // When
   [self.itemView.rippleTouchController.rippleView
-   beginRippleTouchDownAtPoint:CGPointMake(CGRectGetMidX(self.itemView.bounds),
-                                           CGRectGetMidY(self.itemView.bounds))
-   animated:NO
-   completion:nil];
+      beginRippleTouchDownAtPoint:CGPointMake(CGRectGetMidX(self.itemView.bounds),
+                                              CGRectGetMidY(self.itemView.bounds))
+                         animated:NO
+                       completion:nil];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.itemView];
