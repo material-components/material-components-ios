@@ -49,6 +49,7 @@ static NSString *const kExampleTitle = @"TabBarView";
               image:[[UIImage imageNamed:@"Home"]
                         imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
                 tag:0];
+  item1.accessibilityTraits = UIAccessibilityTraitButton;
   UITabBarItem *item2 = [[UITabBarItem alloc]
       initWithTitle:@"Unselectable"
               image:[[UIImage imageNamed:@"Favorite"]

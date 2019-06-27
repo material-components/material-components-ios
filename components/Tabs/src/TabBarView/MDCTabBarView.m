@@ -27,6 +27,7 @@ static NSString *const kTitleKeyPath = @"title";
 static NSString *const kAccessibilityLabelKeyPath = @"accessibilityLabel";
 static NSString *const kAccessibilityHintKeyPath = @"accessibilityHint";
 static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifier";
+static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
 @interface MDCTabBarView ()
 
@@ -103,6 +104,7 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
     itemView.accessibilityLabel = item.accessibilityLabel;
     itemView.accessibilityHint = item.accessibilityHint;
     itemView.accessibilityIdentifier = item.accessibilityIdentifier;
+    itemView.accessibilityTraits = item.accessibilityTraits;
     itemView.titleLabel.textColor = [self titleColorForState:UIControlStateNormal];
     itemView.iconImageView.image = item.image;
     [itemView setContentCompressionResistancePriority:UILayoutPriorityRequired
@@ -249,6 +251,10 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
            forKeyPath:kAccessibilityIdentifierKeyPath
               options:NSKeyValueObservingOptionNew
               context:kKVOContextMDCTabBarView];
+    [item addObserver:self
+           forKeyPath:kAccessibilityTraitsKeyPath
+              options:NSKeyValueObservingOptionNew
+              context:kKVOContextMDCTabBarView];
   }
 }
 
@@ -264,6 +270,9 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
                  context:kKVOContextMDCTabBarView];
     [item removeObserver:self
               forKeyPath:kAccessibilityIdentifierKeyPath
+                 context:kKVOContextMDCTabBarView];
+    [item removeObserver:self
+              forKeyPath:kAccessibilityTraitsKeyPath
                  context:kKVOContextMDCTabBarView];
   }
 }
@@ -297,6 +306,8 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
       tabBarItemView.accessibilityHint = change[NSKeyValueChangeNewKey];
     } else if ([keyPath isEqualToString:kAccessibilityIdentifierKeyPath]) {
       tabBarItemView.accessibilityIdentifier = change[NSKeyValueChangeNewKey];
+    } else if ([keyPath isEqualToString:kAccessibilityTraitsKeyPath]) {
+      tabBarItemView.accessibilityTraits = [change[NSKeyValueChangeNewKey] unsignedLongLongValue];
     }
   } else {
     [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
