@@ -99,7 +99,7 @@ static NSString *const kExampleTitle = @"TabBarView";
 #pragma mark - MDCTabBarViewDelegate
 
 - (BOOL)tabBarView:(MDCTabBarView *)tabBarView shouldSelectItem:(nonnull UITabBarItem *)item {
-  // Just to demonstrate prevent selection of the second item.
+  // Just to demonstrate preventing selection of an item.
   if ([self.tabBar.items indexOfObject:item] == 1) {
     return NO;
   }
