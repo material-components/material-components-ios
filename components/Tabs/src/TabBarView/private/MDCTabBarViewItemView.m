@@ -35,7 +35,9 @@ static const UIEdgeInsets kEdgeInsets = {.top = 12, .right = 16, .bottom = 12, .
 
 @end
 
-@implementation MDCTabBarViewItemView
+@implementation MDCTabBarViewItemView {
+  NSString *_accessibilityLabel;
+}
 
 #pragma mark - Init
 
@@ -130,6 +132,16 @@ static const UIEdgeInsets kEdgeInsets = {.top = 12, .right = 16, .bottom = 12, .
   CGFloat height = (CGFloat)ceil(iconSize.height + labelSize.height + verticalPadding);
   height = MAX(minHeight, height);
   return CGSizeMake(width, height);
+}
+
+#pragma mark - Accessibility
+
+- (NSString *)accessibilityLabel {
+  return _accessibilityLabel ?: self.titleLabel.text;
+}
+
+- (void)setAccessibilityLabel:(NSString *)accessibilityLabel {
+  _accessibilityLabel = accessibilityLabel;
 }
 
 @end
