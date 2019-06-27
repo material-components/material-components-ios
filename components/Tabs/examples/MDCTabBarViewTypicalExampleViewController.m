@@ -100,10 +100,7 @@ static NSString *const kExampleTitle = @"TabBarView";
 
 - (BOOL)tabBarView:(MDCTabBarView *)tabBarView shouldSelectItem:(nonnull UITabBarItem *)item {
   // Just to demonstrate preventing selection of an item.
-  if ([self.tabBar.items indexOfObject:item] == 1) {
-    return NO;
-  }
-  return YES;
+  return [self.tabBar.items indexOfObject:item] != 1;
 }
 
 - (void)tabBarView:(MDCTabBarView *)tabBarView didSelectItem:(nonnull UITabBarItem *)item {
