@@ -58,6 +58,7 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
     _stateToImageTintColor = [NSMutableDictionary dictionary];
     _stateToTitleColor = [NSMutableDictionary dictionary];
     self.backgroundColor = UIColor.whiteColor;
+    self.showsHorizontalScrollIndicator = NO;
 
     _containerView = [[UIStackView alloc] init];
     _containerView.axis = UILayoutConstraintAxisHorizontal;
