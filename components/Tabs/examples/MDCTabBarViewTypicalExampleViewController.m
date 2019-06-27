@@ -22,7 +22,7 @@ static NSString *const kExampleTitle = @"TabBarView";
 /**
  Typical use example showing how to place an @c MDCTabBarView within another view.
  */
-@interface MDCTabBarViewTypicalExampleViewController : UIViewController
+@interface MDCTabBarViewTypicalExampleViewController : UIViewController <MDCTabBarViewDelegate>
 
 /** The tab bar for this example. */
 @property(nonatomic, strong) MDCTabBarView *tabBar;
@@ -50,7 +50,7 @@ static NSString *const kExampleTitle = @"TabBarView";
                         imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
                 tag:0];
   UITabBarItem *item2 = [[UITabBarItem alloc]
-      initWithTitle:@"Favorite"
+      initWithTitle:@"Unselectable"
               image:[[UIImage imageNamed:@"Favorite"]
                         imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
                 tag:1];
@@ -71,6 +71,7 @@ static NSString *const kExampleTitle = @"TabBarView";
                 tag:4];
 
   self.tabBar = [[MDCTabBarView alloc] init];
+  self.tabBar.tabBarDelegate = self;
   self.tabBar.items = @[ item1, item2, item3, item4, item5 ];
   self.tabBar.barTintColor = self.containerScheme.colorScheme.secondaryColor;
   [self.tabBar setTitleColor:self.containerScheme.colorScheme.onSecondaryColor
@@ -93,6 +94,17 @@ static NSString *const kExampleTitle = @"TabBarView";
   }
   [self.view.leftAnchor constraintEqualToAnchor:self.tabBar.leftAnchor].active = YES;
   [self.view.rightAnchor constraintEqualToAnchor:self.tabBar.rightAnchor].active = YES;
+}
+
+#pragma mark - MDCTabBarViewDelegate
+
+- (BOOL)tabBarView:(MDCTabBarView *)tabBarView shouldSelectItem:(nonnull UITabBarItem *)item {
+  // Just to demonstrate preventing selection of an item.
+  return [self.tabBar.items indexOfObject:item] != 1;
+}
+
+- (void)tabBarView:(MDCTabBarView *)tabBarView didSelectItem:(nonnull UITabBarItem *)item {
+  NSLog(@"Item (%@) was selected.", item.title);
 }
 
 @end

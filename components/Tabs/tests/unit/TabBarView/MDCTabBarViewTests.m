@@ -14,7 +14,9 @@
 
 #import <XCTest/XCTest.h>
 
+#import "../../../src/TabBarView/private/MDCTabBarViewItemView.h"
 #import "MDCTabBarView.h"
+#import "MDCTabBarViewDelegate.h"
 
 // Minimum height of the MDCTabBar view.
 static const CGFloat kMinHeight = 48;
@@ -30,14 +32,107 @@ static UIImage *fakeImage(CGSize size) {
   return image;
 }
 
+#pragma mark - Test Doubles
+
+/** A fake @c UITapGestureRecognizer subclass that allows the @c view property to be set. */
+@interface MDCTabBarViewFakeTapGestureRecognizer : UITapGestureRecognizer
+
+/** The returned value for @c view. */
+@property(nonatomic, strong) UIView *settableView;
+
+@end
+
+@implementation MDCTabBarViewFakeTapGestureRecognizer
+
+- (UIView *)view {
+  return _settableView ?: [super view];
+}
+
+@end
+
+/** Category exposing implementation methods to aid testing. */
+@interface MDCTabBarView (UnitTestingExposesPrivateMethods)
+- (void)didTapItemView:(UITapGestureRecognizer *)tap;
+@end
+
+/** A test fake for responding to all delegate methods of MDCTabBarView. */
+@interface MDCTabBarViewTestsFullDelegate : NSObject <MDCTabBarViewDelegate>
+
+/** The item passed by the last invocation of @c tabBarView:didSelectedItem: . */
+@property(nonatomic, strong) UITabBarItem *selectedItem;
+
+/** The item passed by the last invocation of @c tabBarView:shouldSelectItem:` . */
+@property(nonatomic, strong) UITabBarItem *attemptedSelectedItem;
+
+/** Controls whether this delegate will return @c YES for @c tabBarView:shouldSelectItem: . */
+@property(nonatomic, assign) BOOL shouldAllowSelection;
+
+@end
+
+@implementation MDCTabBarViewTestsFullDelegate
+
+- (BOOL)tabBarView:(MDCTabBarView *)tabBarView shouldSelectItem:(UITabBarItem *)item {
+  self.attemptedSelectedItem = item;
+  return self.shouldAllowSelection;
+}
+
+- (void)tabBarView:(MDCTabBarView *)tabBarView didSelectItem:(UITabBarItem *)item {
+  self.selectedItem = item;
+}
+
+@end
+
+/** A test fake for responding only to @c tabBarView:shouldSelectItem: . */
+@interface MDCTabBarViewTestsShouldSelectDelegate : NSObject <MDCTabBarViewDelegate>
+
+/** The item passed by the last invocation of @c tabBarView:shouldSelectItem:` . */
+@property(nonatomic, strong) UITabBarItem *attemptedSelectedItem;
+
+/** Controls whether this delegate will return @c YES for @c tabBarView:shouldSelectItem: . */
+@property(nonatomic, assign) BOOL shouldAllowSelection;
+
+@end
+
+@implementation MDCTabBarViewTestsShouldSelectDelegate
+
+- (BOOL)tabBarView:(MDCTabBarView *)tabBarView shouldSelectItem:(UITabBarItem *)item {
+  self.attemptedSelectedItem = item;
+  return self.shouldAllowSelection;
+}
+
+@end
+
+/** A test fake for responding only to @c tabBarView:didSelectItem: . */
+@interface MDCTabBarViewTestsDidSelectDelegate : NSObject <MDCTabBarViewDelegate>
+
+/** The item passed by the last invocation of @c tabBarView:didSelectedItem: . */
+@property(nonatomic, strong) UITabBarItem *selectedItem;
+
+@end
+
+@implementation MDCTabBarViewTestsDidSelectDelegate
+
+- (void)tabBarView:(MDCTabBarView *)tabBarView didSelectItem:(UITabBarItem *)item {
+  self.selectedItem = item;
+}
+
+@end
+
+#pragma mark - Test Class
+
+/** Unit tests for MDCTabBarView. */
 @interface MDCTabBarViewTests : XCTestCase
 
+/** The view being tested. */
 @property(nonatomic, strong) MDCTabBarView *tabBarView;
 
+/** A tab bar item. */
 @property(nonatomic, strong) UITabBarItem *itemA;
 
+/** A tab bar item. */
 @property(nonatomic, strong) UITabBarItem *itemB;
 
+/** A tab bar item. */
 @property(nonatomic, strong) UITabBarItem *itemC;
 
 @end
@@ -151,7 +246,7 @@ static UIImage *fakeImage(CGSize size) {
   XCTAssertEqual(self.tabBarView.selectedItem, self.itemA);
 }
 
-#pragma mark - Properties
+#pragma mark - Theming Properties
 
 - (void)testSettingBarTintColorUpdatesBackgroundColor {
   // Given
@@ -285,6 +380,137 @@ static UIImage *fakeImage(CGSize size) {
   // Then
   XCTAssertNil([self.tabBarView titleColorForState:UIControlStateNormal]);
   XCTAssertNil([self.tabBarView titleColorForState:UIControlStateSelected]);
+}
+
+#pragma mark - Delegate
+
+- (void)testReturnNoForShouldSelectItemPreventsSelection {
+  // Given
+  MDCTabBarViewTestsFullDelegate *delegate = [[MDCTabBarViewTestsFullDelegate alloc] init];
+  self.tabBarView.tabBarDelegate = delegate;
+  self.tabBarView.items = @[ self.itemA, self.itemB ];
+  self.tabBarView.bounds = CGRectMake(0, 0, 180, 72);
+  [self.tabBarView layoutIfNeeded];
+  // Retrieve the view bound to `itemA`.
+  UIView *hitView = [self.tabBarView hitTest:CGPointMake(0, 0) withEvent:nil];
+  while (hitView && ![hitView isKindOfClass:[MDCTabBarViewItemView class]]) {
+    hitView = hitView.superview;
+  }
+  MDCTabBarViewFakeTapGestureRecognizer *tapRecognizer =
+      [[MDCTabBarViewFakeTapGestureRecognizer alloc] init];
+  tapRecognizer.settableView = hitView;
+
+  // When
+  delegate.shouldAllowSelection = NO;
+  [self.tabBarView didTapItemView:tapRecognizer];
+
+  // Then
+  XCTAssertEqual(delegate.attemptedSelectedItem, self.itemA);
+  XCTAssertNil(delegate.selectedItem);
+  XCTAssertNil(self.tabBarView.selectedItem);
+}
+
+- (void)testReturnYESForShouldSelectItemAllowsSelection {
+  // Given
+  MDCTabBarViewTestsFullDelegate *delegate = [[MDCTabBarViewTestsFullDelegate alloc] init];
+  self.tabBarView.tabBarDelegate = delegate;
+  self.tabBarView.items = @[ self.itemA, self.itemB ];
+  self.tabBarView.bounds = CGRectMake(0, 0, 180, 72);
+  [self.tabBarView layoutIfNeeded];
+  // Retrieve the view bound to `itemA`.
+  UIView *hitView = [self.tabBarView hitTest:CGPointMake(0, 0) withEvent:nil];
+  while (hitView && ![hitView isKindOfClass:[MDCTabBarViewItemView class]]) {
+    hitView = hitView.superview;
+  }
+  MDCTabBarViewFakeTapGestureRecognizer *tapRecognizer =
+      [[MDCTabBarViewFakeTapGestureRecognizer alloc] init];
+  tapRecognizer.settableView = hitView;
+
+  // When
+  delegate.shouldAllowSelection = YES;
+  [self.tabBarView didTapItemView:tapRecognizer];
+
+  // Then
+  XCTAssertEqual(delegate.attemptedSelectedItem, self.itemA);
+  XCTAssertEqual(delegate.selectedItem, self.itemA);
+  XCTAssertEqual(self.tabBarView.selectedItem, self.itemA);
+}
+
+- (void)testReturnNoForShouldSelectItemWithoutDidSelectImplementationPreventsSelection {
+  // Given
+  MDCTabBarViewTestsShouldSelectDelegate *delegate =
+      [[MDCTabBarViewTestsShouldSelectDelegate alloc] init];
+  self.tabBarView.tabBarDelegate = delegate;
+  self.tabBarView.items = @[ self.itemA, self.itemB ];
+  self.tabBarView.bounds = CGRectMake(0, 0, 180, 72);
+  [self.tabBarView layoutIfNeeded];
+  // Retrieve the view bound to `itemA`.
+  UIView *hitView = [self.tabBarView hitTest:CGPointMake(0, 0) withEvent:nil];
+  while (hitView && ![hitView isKindOfClass:[MDCTabBarViewItemView class]]) {
+    hitView = hitView.superview;
+  }
+  MDCTabBarViewFakeTapGestureRecognizer *tapRecognizer =
+      [[MDCTabBarViewFakeTapGestureRecognizer alloc] init];
+  tapRecognizer.settableView = hitView;
+
+  // When
+  delegate.shouldAllowSelection = NO;
+  [self.tabBarView didTapItemView:tapRecognizer];
+
+  // Then
+  XCTAssertEqual(delegate.attemptedSelectedItem, self.itemA);
+  XCTAssertNil(self.tabBarView.selectedItem);
+}
+
+- (void)testReturnYESForShouldSelectItemWithoutDidSelectImplementationAllowsSelection {
+  // Given
+  MDCTabBarViewTestsShouldSelectDelegate *delegate =
+      [[MDCTabBarViewTestsShouldSelectDelegate alloc] init];
+  self.tabBarView.tabBarDelegate = delegate;
+  self.tabBarView.items = @[ self.itemA, self.itemB ];
+  self.tabBarView.bounds = CGRectMake(0, 0, 180, 72);
+  [self.tabBarView layoutIfNeeded];
+  // Retrieve the view bound to `itemA`.
+  UIView *hitView = [self.tabBarView hitTest:CGPointMake(0, 0) withEvent:nil];
+  while (hitView && ![hitView isKindOfClass:[MDCTabBarViewItemView class]]) {
+    hitView = hitView.superview;
+  }
+  MDCTabBarViewFakeTapGestureRecognizer *tapRecognizer =
+      [[MDCTabBarViewFakeTapGestureRecognizer alloc] init];
+  tapRecognizer.settableView = hitView;
+
+  // When
+  delegate.shouldAllowSelection = YES;
+  [self.tabBarView didTapItemView:tapRecognizer];
+
+  // Then
+  XCTAssertEqual(delegate.attemptedSelectedItem, self.itemA);
+  XCTAssertEqual(self.tabBarView.selectedItem, self.itemA);
+}
+
+- (void)testReturnNoForShouldSelectItemWithoutShouldSelectImplementationAllowsSelection {
+  // Given
+  MDCTabBarViewTestsDidSelectDelegate *delegate =
+      [[MDCTabBarViewTestsDidSelectDelegate alloc] init];
+  self.tabBarView.tabBarDelegate = delegate;
+  self.tabBarView.items = @[ self.itemA, self.itemB ];
+  self.tabBarView.bounds = CGRectMake(0, 0, 180, 72);
+  [self.tabBarView layoutIfNeeded];
+  // Retrieve the view bound to `itemA`.
+  UIView *hitView = [self.tabBarView hitTest:CGPointMake(0, 0) withEvent:nil];
+  while (hitView && ![hitView isKindOfClass:[MDCTabBarViewItemView class]]) {
+    hitView = hitView.superview;
+  }
+  MDCTabBarViewFakeTapGestureRecognizer *tapRecognizer =
+      [[MDCTabBarViewFakeTapGestureRecognizer alloc] init];
+  tapRecognizer.settableView = hitView;
+
+  // When
+  [self.tabBarView didTapItemView:tapRecognizer];
+
+  // Then
+  XCTAssertEqual(delegate.selectedItem, self.itemA);
+  XCTAssertEqual(self.tabBarView.selectedItem, self.itemA);
 }
 
 #pragma mark - UIView
