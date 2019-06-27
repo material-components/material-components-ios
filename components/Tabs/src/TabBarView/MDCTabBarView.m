@@ -35,6 +35,8 @@ static NSString *const kTitleKeyPath = @"title";
 @end
 
 @implementation MDCTabBarView
+// We're overriding UIScrollViewDelegate's delegate solely to change its type (we don't provide
+// a getter or setter implementation), thus the @dynamic.
 @dynamic delegate;
 
 #pragma mark - Initialization

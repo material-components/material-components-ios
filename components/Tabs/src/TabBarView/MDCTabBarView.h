@@ -25,14 +25,14 @@
 @optional
 
 /**
- Called before the selected item changes by user action. Return YES to allow the selection. If not
- implemented all items changes are allowed.
+ Asks the delegate whether the specified item should be selected.
  */
 - (BOOL)tabBarView:(nonnull MDCTabBarView *)tabBarView
-  shouldSelectItem:(nonnull UITabBarItem *)item;
+    shouldSelectItem:(nonnull UITabBarItem *)item;
 
 /**
- Called when the selected item changes by user action.
+ Called when the selected item changes by user action. This method is not called for programmatic
+ changes to the tab bar's selected item.
  */
 - (BOOL)tabBarView:(nonnull MDCTabBarView *)tabBarView didSelectItem:(nonnull UITabBarItem *)item;
 
