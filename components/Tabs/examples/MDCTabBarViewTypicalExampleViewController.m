@@ -22,17 +22,13 @@ static NSString *const kExampleTitle = @"TabBarView";
 /**
  Typical use example showing how to place an @c MDCTabBarView within another view.
  */
-@interface MDCTabBarViewTypicalExampleViewController : UIViewController
+@interface MDCTabBarViewTypicalExampleViewController : UIViewController <MDCTabBarViewDelegate>
 
 /** The tab bar for this example. */
 @property(nonatomic, strong) MDCTabBarView *tabBar;
 
 /** The container scheme injected into this example. */
 @property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
-
-@end
-
-@interface MDCTabBarViewTypicalExampleViewController () <MDCTabBarViewDelegate>
 
 @end
 
@@ -100,10 +96,7 @@ static NSString *const kExampleTitle = @"TabBarView";
   [self.view.rightAnchor constraintEqualToAnchor:self.tabBar.rightAnchor].active = YES;
 }
 
-@end
-
 #pragma mark - MDCTabBarViewDelegate
-@implementation MDCTabBarViewTypicalExampleViewController (MDCTabBarViewDelegate)
 
 - (BOOL)tabBarView:(MDCTabBarView *)tabBarView shouldSelectItem:(nonnull UITabBarItem *)item {
   // Just to demonstrate prevent selection of the second item.
