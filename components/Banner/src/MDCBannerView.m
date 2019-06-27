@@ -145,12 +145,14 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   MDCButton *leadingButton = [[MDCButton alloc] init];
   leadingButton.translatesAutoresizingMaskIntoConstraints = NO;
   leadingButton.backgroundColor = UIColor.whiteColor;
+  leadingButton.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
   [buttonContainerView addSubview:leadingButton];
   _leadingButton = leadingButton;
 
   MDCButton *trailingButton = [[MDCButton alloc] init];
   trailingButton.translatesAutoresizingMaskIntoConstraints = NO;
   trailingButton.backgroundColor = UIColor.whiteColor;
+  trailingButton.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
   [buttonContainerView addSubview:trailingButton];
   _trailingButton = trailingButton;
 
@@ -513,6 +515,54 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 - (BOOL)isAbleToFitTextLabel:(UILabel *)textLabel withWidthLimit:(CGFloat)widthLimit {
   CGSize size = [textLabel.text sizeWithAttributes:@{NSFontAttributeName : textLabel.font}];
   return size.width <= widthLimit;
+}
+
+#pragma mark - Font
+
+- (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)mdc_adjustsFontForContentSizeCategory {
+  _mdc_adjustsFontForContentSizeCategory = mdc_adjustsFontForContentSizeCategory;
+
+  if (mdc_adjustsFontForContentSizeCategory) {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(contentSizeCategoryDidChange:)
+                                                 name:UIContentSizeCategoryDidChangeNotification
+                                               object:nil];
+  } else {
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIContentSizeCategoryDidChangeNotification
+                                                  object:nil];
+  }
+
+  // Set mdc_adjustsFontForContentSizeCategory on buttons
+  self.leadingButton.mdc_adjustsFontForContentSizeCategory =
+      self.mdc_adjustsFontForContentSizeCategory;
+  self.trailingButton.mdc_adjustsFontForContentSizeCategory =
+      self.mdc_adjustsFontForContentSizeCategory;
+
+  [self updateBannerFont];
+}
+
+- (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
+  [self updateBannerFont];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [self updateBannerFont];
+}
+
+- (void)updateBannerFont {
+  [self updateTextFont];
+
+  [self invalidateIntrinsicContentSize];
+  [self setNeedsUpdateConstraints];
+}
+
+- (void)updateTextFont {
+  UIFont *textFont = self.textLabel.font;
+  if (self.mdc_adjustsFontForContentSizeCategory && textFont.mdc_scalingCurve) {
+    textFont = [textFont mdc_scaledFontForTraitEnvironment:self];
+  }
+  self.textLabel.font = textFont;
 }
 
 @end

@@ -310,9 +310,16 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   self.layer.shadowRadius = 4;
   self.layer.shadowOpacity = 0;
 
+  NSString *voiceOverNotification;
+  if (@available(iOS 11.0, *)) {
+    voiceOverNotification = UIAccessibilityVoiceOverStatusDidChangeNotification;
+  } else {
+    voiceOverNotification = UIAccessibilityVoiceOverStatusChanged;
+  }
+
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(fhv_updateLayout)
-                                               name:UIAccessibilityVoiceOverStatusChanged
+                                               name:voiceOverNotification
                                              object:nil];
 }
 
