@@ -23,6 +23,7 @@ static const CGFloat kMinHeight = 48;
 
 static NSString *const kImageKeyPath = @"image";
 static NSString *const kTitleKeyPath = @"title";
+static NSString *const kAccessibilityLabelKeyPath = @"accessibilityLabel";
 static NSString *const kAccessibilityHintKeyPath = @"accessibilityHint";
 static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifier";
 
@@ -94,6 +95,7 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
     MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
     itemView.translatesAutoresizingMaskIntoConstraints = NO;
     itemView.titleLabel.text = item.title;
+    itemView.accessibilityLabel = item.accessibilityLabel;
     itemView.accessibilityHint = item.accessibilityHint;
     itemView.accessibilityIdentifier = item.accessibilityIdentifier;
     itemView.titleLabel.textColor = [self titleColorForState:UIControlStateNormal];
@@ -231,6 +233,10 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
               options:NSKeyValueObservingOptionNew
               context:kKVOContextMDCTabBarView];
     [item addObserver:self
+           forKeyPath:kAccessibilityLabelKeyPath
+              options:NSKeyValueObservingOptionNew
+              context:kKVOContextMDCTabBarView];
+    [item addObserver:self
            forKeyPath:kAccessibilityHintKeyPath
               options:NSKeyValueObservingOptionNew
               context:kKVOContextMDCTabBarView];
@@ -245,6 +251,7 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
   for (UITabBarItem *item in self.items) {
     [item removeObserver:self forKeyPath:kImageKeyPath context:kKVOContextMDCTabBarView];
     [item removeObserver:self forKeyPath:kTitleKeyPath context:kKVOContextMDCTabBarView];
+    [item removeObserver:self forKeyPath:kAccessibilityLabelKeyPath context:kKVOContextMDCTabBarView];
     [item removeObserver:self
               forKeyPath:kAccessibilityHintKeyPath
                  context:kKVOContextMDCTabBarView];
@@ -277,6 +284,8 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
       tabBarItemView.iconImageView.image = change[NSKeyValueChangeNewKey];
     } else if ([keyPath isEqualToString:kTitleKeyPath]) {
       tabBarItemView.titleLabel.text = change[NSKeyValueChangeNewKey];
+    } else if ([keyPath isEqualToString:kAccessibilityLabelKeyPath]) {
+      tabBarItemView.accessibilityLabel = change[NSKeyValueChangeNewKey];
     } else if ([keyPath isEqualToString:kAccessibilityHintKeyPath]) {
       tabBarItemView.accessibilityHint = change[NSKeyValueChangeNewKey];
     } else if ([keyPath isEqualToString:kAccessibilityIdentifierKeyPath]) {
