@@ -24,6 +24,8 @@ static const CGFloat kMinHeight = 48;
 static NSString *const kImageKeyPath = @"image";
 static NSString *const kTitleKeyPath = @"title";
 static NSString *const kAccessibilityLabelKeyPath = @"accessibilityLabel";
+static NSString *const kAccessibilityHintKeyPath = @"accessibilityHint";
+static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifier";
 
 @interface MDCTabBarView ()
 
@@ -94,6 +96,8 @@ static NSString *const kAccessibilityLabelKeyPath = @"accessibilityLabel";
     itemView.translatesAutoresizingMaskIntoConstraints = NO;
     itemView.titleLabel.text = item.title;
     itemView.accessibilityLabel = item.accessibilityLabel;
+    itemView.accessibilityHint = item.accessibilityHint;
+    itemView.accessibilityIdentifier = item.accessibilityIdentifier;
     itemView.titleLabel.textColor = [self titleColorForState:UIControlStateNormal];
     itemView.iconImageView.image = item.image;
     [itemView setContentCompressionResistancePriority:UILayoutPriorityRequired
@@ -232,6 +236,14 @@ static NSString *const kAccessibilityLabelKeyPath = @"accessibilityLabel";
            forKeyPath:kAccessibilityLabelKeyPath
               options:NSKeyValueObservingOptionNew
               context:kKVOContextMDCTabBarView];
+    [item addObserver:self
+           forKeyPath:kAccessibilityHintKeyPath
+              options:NSKeyValueObservingOptionNew
+              context:kKVOContextMDCTabBarView];
+    [item addObserver:self
+           forKeyPath:kAccessibilityIdentifierKeyPath
+              options:NSKeyValueObservingOptionNew
+              context:kKVOContextMDCTabBarView];
   }
 }
 
@@ -241,6 +253,12 @@ static NSString *const kAccessibilityLabelKeyPath = @"accessibilityLabel";
     [item removeObserver:self forKeyPath:kTitleKeyPath context:kKVOContextMDCTabBarView];
     [item removeObserver:self
               forKeyPath:kAccessibilityLabelKeyPath
+                 context:kKVOContextMDCTabBarView];
+    [item removeObserver:self
+              forKeyPath:kAccessibilityHintKeyPath
+                 context:kKVOContextMDCTabBarView];
+    [item removeObserver:self
+              forKeyPath:kAccessibilityIdentifierKeyPath
                  context:kKVOContextMDCTabBarView];
   }
 }
@@ -270,6 +288,10 @@ static NSString *const kAccessibilityLabelKeyPath = @"accessibilityLabel";
       tabBarItemView.titleLabel.text = change[NSKeyValueChangeNewKey];
     } else if ([keyPath isEqualToString:kAccessibilityLabelKeyPath]) {
       tabBarItemView.accessibilityLabel = change[NSKeyValueChangeNewKey];
+    } else if ([keyPath isEqualToString:kAccessibilityHintKeyPath]) {
+      tabBarItemView.accessibilityHint = change[NSKeyValueChangeNewKey];
+    } else if ([keyPath isEqualToString:kAccessibilityIdentifierKeyPath]) {
+      tabBarItemView.accessibilityIdentifier = change[NSKeyValueChangeNewKey];
     }
   } else {
     [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
