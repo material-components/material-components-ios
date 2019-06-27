@@ -543,4 +543,24 @@ static NSString *const kLongTitleArabic =
   [self generateSnapshotAndVerifyForView:self.itemView];
 }
 
+#pragma mark - Ripple
+
+- (void)testRippleAppearanceWhenFullyPressed {
+  // Given
+  self.itemView.titleLabel.textColor = UIColor.yellowColor;
+  self.itemView.iconImageView.tintColor = UIColor.magentaColor;
+  self.itemView.rippleTouchController.rippleView.rippleColor = UIColor.blueColor;
+  [self.itemView sizeToFit];
+
+  // When
+  [self.itemView.rippleTouchController.rippleView
+      beginRippleTouchDownAtPoint:CGPointMake(CGRectGetMidX(self.itemView.bounds),
+                                              CGRectGetMidY(self.itemView.bounds))
+                         animated:NO
+                       completion:nil];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.itemView];
+}
+
 @end
