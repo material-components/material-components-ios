@@ -79,6 +79,11 @@ static const UIEdgeInsets kEdgeInsets = {.top = 12, .right = 16, .bottom = 12, .
     _titleLabel.isAccessibilityElement = NO;
     [_contentView addSubview:_titleLabel];
   }
+
+  if (!_rippleTouchController) {
+    _rippleTouchController = [[MDCRippleTouchController alloc] initWithView:self];
+    _rippleTouchController.rippleView.rippleStyle = MDCRippleStyleBounded;
+  }
 }
 
 #pragma mark - UIView
