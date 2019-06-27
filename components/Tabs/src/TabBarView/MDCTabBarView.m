@@ -94,6 +94,8 @@ static NSString *const kTitleKeyPath = @"title";
     itemView.titleLabel.text = item.title;
     itemView.titleLabel.textColor = [self titleColorForState:UIControlStateNormal];
     itemView.iconImageView.image = item.image;
+    [itemView setContentCompressionResistancePriority:UILayoutPriorityRequired
+                                              forAxis:UILayoutConstraintAxisHorizontal];
     UITapGestureRecognizer *tapGesture =
         [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapItemView:)];
     [itemView addGestureRecognizer:tapGesture];
