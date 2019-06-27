@@ -16,3 +16,4 @@
 #import "MDCTabBarItemCustomViewing.h"
 #import "MDCTabBarSelectionIndicatorSupporting.h"
 #import "MDCTabBarView.h"
+#import "MDCTabBarViewDelegate.h"

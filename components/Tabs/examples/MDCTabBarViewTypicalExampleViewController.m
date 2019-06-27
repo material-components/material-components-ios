@@ -32,6 +32,10 @@ static NSString *const kExampleTitle = @"TabBarView";
 
 @end
 
+@interface MDCTabBarViewTypicalExampleViewController () <MDCTabBarViewDelegate>
+
+@end
+
 @implementation MDCTabBarViewTypicalExampleViewController
 
 - (void)viewDidLoad {
@@ -45,10 +49,11 @@ static NSString *const kExampleTitle = @"TabBarView";
   self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
 
   UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"Home" image:nil tag:0];
-  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Favorite" image:nil tag:1];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Unselectable" image:nil tag:1];
   UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Cake" image:nil tag:2];
 
   self.tabBar = [[MDCTabBarView alloc] init];
+  self.tabBar.tabBarDelegate = self;
   self.tabBar.items = @[ item1, item2, item3 ];
   CGSize barIntrinsicContentSize = self.tabBar.intrinsicContentSize;
   self.tabBar.bounds = CGRectMake(0, 0, 0, barIntrinsicContentSize.width);
@@ -69,6 +74,23 @@ static NSString *const kExampleTitle = @"TabBarView";
   }
   [self.view.leftAnchor constraintEqualToAnchor:self.tabBar.leftAnchor].active = YES;
   [self.view.rightAnchor constraintEqualToAnchor:self.tabBar.rightAnchor].active = YES;
+}
+
+@end
+
+#pragma mark - MDCTabBarViewDelegate
+@implementation MDCTabBarViewTypicalExampleViewController (MDCTabBarViewDelegate)
+
+- (BOOL)tabBarView:(MDCTabBarView *)tabBarView shouldSelectItem:(nonnull UITabBarItem *)item {
+  // Just to demonstrate prevent selection of the second item.
+  if ([self.tabBar.items indexOfObject:item] == 1) {
+    return NO;
+  }
+  return YES;
+}
+
+- (void)tabBarView:(MDCTabBarView *)tabBarView didSelectItem:(nonnull UITabBarItem *)item {
+  NSLog(@"Item (%@) was selected.", item.title);
 }
 
 @end

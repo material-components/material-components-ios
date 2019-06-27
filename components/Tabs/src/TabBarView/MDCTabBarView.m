@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import "MDCTabBarView.h"
+#import "MDCTabBarViewDelegate.h"
 #import "private/MDCTabBarViewItemView.h"
 
 // KVO contexts
@@ -265,14 +266,14 @@ static NSString *const kTitleKeyPath = @"title";
     return;
   }
 
-  if ([self.delegate respondsToSelector:@selector(tabBarView:shouldSelectItem:)] &&
-      ![self.delegate tabBarView:self shouldSelectItem:self.items[index]]) {
+  if ([self.tabBarDelegate respondsToSelector:@selector(tabBarView:shouldSelectItem:)] &&
+      ![self.tabBarDelegate tabBarView:self shouldSelectItem:self.items[index]]) {
     return;
   }
 
   self.selectedItem = self.items[index];
-  if ([self.delegate respondsToSelector:@selector(tabBarView:didSelectItem:)]) {
-    [self.delegate tabBarView:self didSelectItem:self.items[index]];
+  if ([self.tabBarDelegate respondsToSelector:@selector(tabBarView:didSelectItem:)]) {
+    [self.tabBarDelegate tabBarView:self didSelectItem:self.items[index]];
   }
 }
 
