@@ -94,8 +94,6 @@ static NSString *const kExampleTitle = @"TabBarView";
   }
   [self.view.leftAnchor constraintEqualToAnchor:self.tabBar.leftAnchor].active = YES;
   [self.view.rightAnchor constraintEqualToAnchor:self.tabBar.rightAnchor].active = YES;
-
-  self.tabBar.contentEdgeInsets = UIEdgeInsetsMake(0, 120, 0, 20);
 }
 
 #pragma mark - MDCTabBarViewDelegate

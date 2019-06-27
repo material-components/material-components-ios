@@ -103,6 +103,66 @@ static const CGFloat kMaxItemWidth = 360;
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
+- (void)testItemsWithOnlyTitlesWithInsets {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:nil tag:2];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:nil tag:5];
+
+  // When
+  self.tabBarView.items = @[ item1, item2, item3 ];
+  self.tabBarView.selectedItem = item2;
+  self.tabBarView.contentEdgeInsets = UIEdgeInsetsMake(0.0, 10.0, 0.0, 10.0);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testItemsWithOnlyTitlesWithInsetsResultsInScrollableLayout {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:nil tag:2];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:nil tag:5];
+
+  // When
+  self.tabBarView.items = @[ item1, item2, item3 ];
+  self.tabBarView.selectedItem = item2;
+  self.tabBarView.contentEdgeInsets = UIEdgeInsetsMake(0.0, 200.0, 0.0, 0.0);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testItemsWithOnlyTitlesWithVerticalInsets {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:nil tag:2];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:nil tag:5];
+
+  // When
+  self.tabBarView.items = @[ item1, item2, item3 ];
+  self.tabBarView.selectedItem = item2;
+  self.tabBarView.contentEdgeInsets = UIEdgeInsetsMake(2.0, 0.0, 2.0, 0.0);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testItemsWithOnlyTitlesWithVerticalInsetsResultsInScrollableLayout {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:nil tag:2];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:nil tag:5];
+
+  // When
+  self.tabBarView.items = @[ item1, item2, item3 ];
+  self.tabBarView.selectedItem = item2;
+  self.tabBarView.contentEdgeInsets = UIEdgeInsetsMake(20.0, 0.0, 0.0, 0.0);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
 - (void)testItemsWithOnlyImages {
   // Given
   UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:nil image:self.typicalIcon1 tag:0];
