@@ -132,14 +132,4 @@ static const UIEdgeInsets kEdgeInsets = {.top = 12, .right = 16, .bottom = 12, .
   return CGSizeMake(width, height);
 }
 
-#pragma mark - UIAccessibility
-
-- (NSString *)accessibilityHint {
-  return [super accessibilityLabel];
-}
-
-- (NSString *)accessibilityIdentifier {
-  return [super accessibilityIdentifier];
-}
-
 @end
