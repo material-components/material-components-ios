@@ -22,6 +22,9 @@ static char *const kKVOContextMDCTabBarView = "kKVOContextMDCTabBarView";
 /** Minimum (typical) height of a Material Tab bar. */
 static const CGFloat kMinHeight = 48;
 
+/** Leading padding for tab bar in a scrollable set up. */
+static const CGFloat kScrollablePadding = 52;
+
 static NSString *const kImageKeyPath = @"image";
 static NSString *const kTitleKeyPath = @"title";
 static NSString *const kAccessibilityLabelKeyPath = @"accessibilityLabel";
@@ -311,8 +314,15 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
   CGFloat availableWidth = CGRectGetWidth(self.bounds);
   CGFloat requiredWidth = [self justifiedWidth];
   BOOL canBeJustified = availableWidth >= requiredWidth;
-  self.containerView.distribution = canBeJustified ? UIStackViewDistributionFillEqually
-                                                   : UIStackViewDistributionFillProportionally;
+  if (canBeJustified) {
+    self.containerView.distribution = UIStackViewDistributionFillEqually;
+    self.containerView.layoutMargins =  self.edgeInsets;
+  } else {
+    self.containerView.distribution = UIStackViewDistributionFillProportionally;
+    UIEdgeInsets newInsets = self.edgeInsets;
+    newInsets.left += kScrollablePadding;
+    self.containerView.layoutMargins = newInsets;
+  }
 }
 
 - (void)updateConstraints {
@@ -342,6 +352,8 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
       maxHeight = contentSize.height;
     }
   }
+  maxHeight += self.edgeInsets.top + self.edgeInsets.bottom;
+  totalWidth += self.edgeInsets.left + self.edgeInsets.right;
   return CGSizeMake(totalWidth, MAX(kMinHeight, maxHeight));
 }
 

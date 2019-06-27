@@ -84,6 +84,7 @@ static NSString *const kExampleTitle = @"TabBarView";
                         forState:UIControlStateSelected];
   self.tabBar.selectedItem = item1;
   self.tabBar.translatesAutoresizingMaskIntoConstraints = NO;
+  self.tabBar.edgeInsets = UIEdgeInsetsMake(0, 120, 0, 20);
   [self.view addSubview:self.tabBar];
 
   if (@available(iOS 11.0, *)) {
