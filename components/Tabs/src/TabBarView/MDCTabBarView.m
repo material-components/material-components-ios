@@ -251,7 +251,9 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
   for (UITabBarItem *item in self.items) {
     [item removeObserver:self forKeyPath:kImageKeyPath context:kKVOContextMDCTabBarView];
     [item removeObserver:self forKeyPath:kTitleKeyPath context:kKVOContextMDCTabBarView];
-    [item removeObserver:self forKeyPath:kAccessibilityLabelKeyPath context:kKVOContextMDCTabBarView];
+    [item removeObserver:self
+              forKeyPath:kAccessibilityLabelKeyPath
+                 context:kKVOContextMDCTabBarView];
     [item removeObserver:self
               forKeyPath:kAccessibilityHintKeyPath
                  context:kKVOContextMDCTabBarView];
