@@ -18,4 +18,6 @@
 
 @synthesize mdc_customView = _mdc_customView;
 
+@synthesize rippleTouchController = _rippleTouchController;
+
 @end

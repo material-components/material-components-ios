@@ -15,6 +15,7 @@
 #import <Foundation/Foundation.h>
 
 #import "MDCTabBarSelectionIndicatorSupporting.h"
+#import <MaterialComponents/MaterialRipple.h>
 
 /**
  Defines the necessary APIs for MDCTabBarView to use a UITabBarItem for a custom view property.
@@ -27,5 +28,8 @@
 /** A custom view to be displayed for a tab bar item. */
 @property(nullable, nonatomic, strong)
     UIView<MDCTabBarSelectionIndicatorSupporting> *mdc_customView;
+
+/** The ripple contronller to display the ripple touch effect. */
+@property(nullable, nonatomic, strong) MDCRippleTouchController *rippleTouchController;
 
 @end
