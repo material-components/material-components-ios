@@ -54,8 +54,8 @@ static NSString *const kExampleTitle = @"TabBarView";
                         imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
                 tag:0];
   UITabBarItem *item2 = [[UITabBarItem alloc]
-      initWithTitle:@"Favorite"
-              image:[[UIImage imageNamed:@"Unselectable"]
+      initWithTitle:@"Unselectable"
+              image:[[UIImage imageNamed:@"Favorite"]
                         imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
                 tag:1];
   UITabBarItem *item3 = [[UITabBarItem alloc]
