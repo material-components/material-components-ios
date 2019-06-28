@@ -31,6 +31,26 @@ static const CGFloat kMinItemWidth = 90;
 /** The maximum width of a tab bar item. */
 static const CGFloat kMaxItemWidth = 360;
 
+static NSString *const kItemTitleShort1Latin = @"Quando";
+static NSString *const kItemTitleShort2Latin = @"No";
+static NSString *const kItemTitleShort3Latin = @"Facer";
+
+static NSString *const kItemTitleLong1Latin =
+    @"Quando volumus maluisset cum ei, ad zril quodsi cum.";
+static NSString *const kItemTitleLong2Latin = @"No quis modo nam, sea ea dicit tollit.";
+static NSString *const kItemTitleLong3Latin =
+    @"Facer maluisset torquatos ad has, ad vix audiam assueverit mediocritatem.";
+
+static NSString *const kItemTitleShort1Arabic = @"عل";
+static NSString *const kItemTitleShort2Arabic = @"قد";
+static NSString *const kItemTitleShort3Arabic = @"وتم";
+
+static NSString *const kItemTitleLong1Arabic =
+    @"عل أخذ استطاعوا الانجليزية. قد وحتّى بزمام التبرعات مكن.";
+static NSString *const kItemTitleLong2Arabic =
+    @"وتم عل والقرى إتفاقية, عن هذا وباءت الغالي وفرنسا.";
+static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقامة. ودول بشرية اليابانية لان ما.";
+
 @interface MDCTabBarViewSnapshotTests : MDCSnapshotTestCase
 
 /** The view being snapshotted. */
@@ -45,6 +65,15 @@ static const CGFloat kMaxItemWidth = 360;
 /** A typically-sized icon image. */
 @property(nonatomic, strong) UIImage *typicalIcon3;
 
+/** A tab bar item with a title and image. */
+@property(nonatomic, strong) UITabBarItem *item1;
+
+/** A tab bar item with a title and image. */
+@property(nonatomic, strong) UITabBarItem *item2;
+
+/** A tab bar item with a title and image. */
+@property(nonatomic, strong) UITabBarItem *item3;
+
 @end
 
 @implementation MDCTabBarViewSnapshotTests
@@ -54,7 +83,7 @@ static const CGFloat kMaxItemWidth = 360;
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  //  self.recordMode = YES;
+  self.recordMode = YES;
 
   self.tabBarView = [[MDCTabBarView alloc] init];
   self.tabBarView.barTintColor = UIColor.whiteColor;
@@ -69,9 +98,22 @@ static const CGFloat kMaxItemWidth = 360;
   self.typicalIcon3 = [[UIImage mdc_testImageOfSize:kTypicalImageSize
                                           withStyle:MDCSnapshotTestImageStyleEllipses]
       imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+
+  self.item1 = [[UITabBarItem alloc] initWithTitle:kItemTitleShort1Latin
+                                             image:self.typicalIcon1
+                                               tag:0];
+  self.item2 = [[UITabBarItem alloc] initWithTitle:kItemTitleShort2Latin
+                                             image:self.typicalIcon2
+                                               tag:1];
+  self.item3 = [[UITabBarItem alloc] initWithTitle:kItemTitleShort3Latin
+                                             image:self.typicalIcon3
+                                               tag:2];
 }
 
 - (void)tearDown {
+  self.item1 = nil;
+  self.item2 = nil;
+  self.item3 = nil;
   self.typicalIcon1 = nil;
   self.typicalIcon2 = nil;
   self.typicalIcon3 = nil;
@@ -82,6 +124,40 @@ static const CGFloat kMaxItemWidth = 360;
 
 #pragma mark - Helpers
 
+- (void)changeToLatinStringsWithLongTitles:(BOOL)useLongTitles {
+  if (useLongTitles) {
+    self.item1.title = kItemTitleLong1Latin;
+    self.item2.title = kItemTitleLong2Latin;
+    self.item3.title = kItemTitleLong3Latin;
+  } else {
+    self.item1.title = kItemTitleShort1Latin;
+    self.item2.title = kItemTitleShort2Latin;
+    self.item3.title = kItemTitleShort3Latin;
+  }
+}
+
+- (void)changeToArabicStringsWithLongTitles:(BOOL)useLongTitles {
+  if (useLongTitles) {
+    self.item1.title = kItemTitleLong1Arabic;
+    self.item2.title = kItemTitleLong2Arabic;
+    self.item3.title = kItemTitleLong3Arabic;
+  } else {
+    self.item1.title = kItemTitleShort1Arabic;
+    self.item2.title = kItemTitleShort2Arabic;
+    self.item3.title = kItemTitleShort3Arabic;
+  }
+}
+
+- (void)changeViewToRTL:(UIView *)view {
+  for (UIView *subview in view.subviews) {
+    if ([view isKindOfClass:[UIImageView class]]) {
+      continue;
+    }
+    [self changeViewToRTL:subview];
+  }
+  view.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
+}
+
 - (void)generateSnapshotAndVerifyForView:(UIView *)view {
   UIView *snapshotView = [view mdc_addToBackgroundView];
   [self snapshotVerifyView:snapshotView];
@@ -89,15 +165,31 @@ static const CGFloat kMaxItemWidth = 360;
 
 #pragma mark - UITabBarItem properties
 
-- (void)testItemsWithOnlyTitles {
+- (void)testItemsWithOnlyTitlesLTRLatin {
   // Given
-  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:nil tag:0];
-  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:nil tag:2];
-  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:nil tag:5];
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:kItemTitleShort1Latin image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:kItemTitleShort2Latin image:nil tag:2];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:kItemTitleShort3Latin image:nil tag:5];
 
   // When
   self.tabBarView.items = @[ item1, item2, item3 ];
   self.tabBarView.selectedItem = item2;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testItemsWithOnlyTitlesRTLArabic {
+  // Given
+  self.item1.image = nil;
+  self.item2.image = nil;
+  self.item3.image = nil;
+
+  // When
+  [self changeToArabicStringsWithLongTitles:NO];
+  [self changeViewToRTL:self.tabBarView];
+  self.tabBarView.items = @[ self.item1, self.item2, self.item3 ];
+  self.tabBarView.selectedItem = self.item2;
 
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBarView];
