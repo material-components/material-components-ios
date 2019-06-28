@@ -23,7 +23,7 @@ static char *const kKVOContextMDCTabBarView = "kKVOContextMDCTabBarView";
 /** Minimum (typical) height of a Material Tab bar. */
 static const CGFloat kMinHeight = 48;
 
-/** Leading padding for tab bar in a scrollable set up. */
+/** Leading padding for tab bar in a scrollable layout style. */
 static const CGFloat kScrollablePadding = 52;
 
 static NSString *const kImageKeyPath = @"image";
@@ -47,10 +47,18 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
 @property(nonnull, nonatomic, strong)
     NSMutableDictionary<NSNumber *, UIColor *> *stateToImageTintColor;
 
-@property(nonatomic) NSLayoutConstraint *leadingConstraint;
-@property(nonatomic) NSLayoutConstraint *trailingConstraint;
-@property(nonatomic) NSLayoutConstraint *topConstraint;
-@property(nonatomic) NSLayoutConstraint *bottomConstraint;
+/** Constrains @c containerView's leading edge. */
+@property(nonnull, nonatomic, strong) NSLayoutConstraint *leadingConstraint;
+
+/** Constrains @c containerView's trailing edge. */
+@property(nonnull, nonatomic, strong) NSLayoutConstraint *trailingConstraint;
+
+/** Constrains @c containerView's top edge. */
+@property(nonnull, nonatomic, strong) NSLayoutConstraint *topConstraint;
+
+/** Constrains @c containerView's bottom edge. */
+@property(nonnull, nonatomic, strong) NSLayoutConstraint *bottomConstraint;
+
 @end
 
 @implementation MDCTabBarView
@@ -163,14 +171,18 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
 }
 
 - (void)setContentEdgeInsets:(UIEdgeInsets)contentEdgeInsets {
-  UIEdgeInsets adjustedInset = contentEdgeInsets;
-  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
-    adjustedInset.left = contentEdgeInsets.right;
-    adjustedInset.right = contentEdgeInsets.left;
-  }
-  _contentEdgeInsets = adjustedInset;
+  _contentEdgeInsets = contentEdgeInsets;
   [self invalidateIntrinsicContentSize];
   [self setNeedsLayout];
+}
+
+- (UIEdgeInsets)directionalContentEdgeInsets {
+  UIEdgeInsets effectiveInsets = self.contentEdgeInsets;
+  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+    effectiveInsets.left = self.contentEdgeInsets.right;
+    effectiveInsets.right = self.contentEdgeInsets.left;
+  }
+  return effectiveInsets;
 }
 
 - (void)updateImageTintColorForAllViews {
@@ -352,10 +364,11 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
     paddingInsets.top = MAX(safeAreaInsets.top, paddingInsets.top);
     paddingInsets.bottom = MAX(safeAreaInsets.bottom, paddingInsets.bottom);
   }
-  self.leadingConstraint.constant = paddingInsets.left + self.contentEdgeInsets.left;
-  self.trailingConstraint.constant = -(paddingInsets.right + self.contentEdgeInsets.right);
-  self.topConstraint.constant = paddingInsets.top + self.contentEdgeInsets.top;
-  self.bottomConstraint.constant = -(paddingInsets.bottom + self.contentEdgeInsets.bottom);
+  UIEdgeInsets directionalContentEdgeInsets = [self directionalContentEdgeInsets];
+  self.leadingConstraint.constant = paddingInsets.left + directionalContentEdgeInsets.left;
+  self.trailingConstraint.constant = -(paddingInsets.right + directionalContentEdgeInsets.right);
+  self.topConstraint.constant = paddingInsets.top + directionalContentEdgeInsets.top;
+  self.bottomConstraint.constant = -(paddingInsets.bottom + directionalContentEdgeInsets.bottom);
 }
 
 - (void)updateConstraints {
@@ -393,8 +406,9 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
       maxHeight = contentSize.height;
     }
   }
-  maxHeight += self.contentEdgeInsets.top + self.contentEdgeInsets.bottom;
-  totalWidth += self.contentEdgeInsets.left + self.contentEdgeInsets.right;
+  UIEdgeInsets directionalContentEdgeInsets = [self directionalContentEdgeInsets];
+  maxHeight += directionalContentEdgeInsets.top + directionalContentEdgeInsets.bottom;
+  totalWidth += directionalContentEdgeInsets.left + directionalContentEdgeInsets.right;
   return CGSizeMake(totalWidth, MAX(kMinHeight, maxHeight));
 }
 
@@ -414,7 +428,8 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
     }
   }
   CGFloat requiredWidth = maxWidth * self.items.count;
-  requiredWidth += self.contentEdgeInsets.left + self.contentEdgeInsets.right;
+  UIEdgeInsets directionalContentEdgeInsets = [self directionalContentEdgeInsets];
+  requiredWidth += directionalContentEdgeInsets.left + directionalContentEdgeInsets.right;
   return requiredWidth;
 }
 
