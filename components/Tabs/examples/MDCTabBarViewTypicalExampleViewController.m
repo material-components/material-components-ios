@@ -46,29 +46,24 @@ static NSString *const kExampleTitle = @"TabBarView";
 
   UITabBarItem *item1 = [[UITabBarItem alloc]
       initWithTitle:@"Home"
-              image:[[UIImage imageNamed:@"Home"]
-                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+              image:nil
                 tag:0];
   UITabBarItem *item2 = [[UITabBarItem alloc]
       initWithTitle:@"Unselectable"
-              image:[[UIImage imageNamed:@"Favorite"]
-                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+              image:nil
                 tag:1];
   item2.accessibilityTraits = UIAccessibilityTraitStaticText;
   UITabBarItem *item3 = [[UITabBarItem alloc]
       initWithTitle:@"Cake"
-              image:[[UIImage imageNamed:@"Cake"]
-                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+              image:nil
                 tag:2];
   UITabBarItem *item4 = [[UITabBarItem alloc]
       initWithTitle:@"Email"
-              image:[[UIImage imageNamed:@"Email"]
-                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+              image:nil
                 tag:3];
   UITabBarItem *item5 = [[UITabBarItem alloc]
       initWithTitle:@"Search"
-              image:[[UIImage imageNamed:@"Search"]
-                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+              image:nil
                 tag:4];
 
   self.tabBar = [[MDCTabBarView alloc] init];

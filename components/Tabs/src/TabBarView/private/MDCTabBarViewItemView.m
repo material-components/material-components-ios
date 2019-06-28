@@ -26,8 +26,11 @@ static const CGFloat kMinHeightTitleOrImageOnly = 48;
 /** The minimum height of any item view with both a title and image. */
 static const CGFloat kMinHeightTitleAndImage = 72;
 
+/** The vertical padding between the image view and the title label. */
+static const CGFloat kImageTitlePadding = 8;
+
 /// Outer edge padding from spec: https://material.io/go/design-tabs#spec.
-static const UIEdgeInsets kEdgeInsets = {.top = 12, .right = 16, .bottom = 12, .left = 16};
+static const UIEdgeInsets kEdgeInsets = {.top = 0, .right = 16, .bottom = 0, .left = 16};
 
 @interface MDCTabBarViewItemView ()
 
@@ -96,11 +99,17 @@ static const UIEdgeInsets kEdgeInsets = {.top = 12, .right = 16, .bottom = 12, .
   CGSize iconSize = [self.iconImageView sizeThatFits:contentFrame.size];
   CGSize labelSize = [self.titleLabel sizeThatFits:contentFrame.size];
   CGFloat centerX = CGRectGetMidX(self.contentView.bounds);
-  CGFloat labelCenterY = CGRectGetMaxY(self.contentView.bounds) - labelSize.height / 2;
+  CGFloat labelCenterY = CGRectGetMidY(self.contentView.bounds);
+  CGFloat iconCenterY = CGRectGetMidY(self.contentView.bounds);
+
+  if (iconSize.height != 0 && labelSize.height != 0) {
+    CGFloat verticalPadding = (CGRectGetHeight(self.contentView.bounds) - iconSize.height - labelSize.height - kImageTitlePadding) / 2;
+    labelCenterY = CGRectGetMaxY(self.contentView.bounds) - verticalPadding - labelSize.height / 2;
+    iconCenterY = verticalPadding + iconSize.height / 2;
+  }
   self.titleLabel.frame =
       CGRectMake(centerX - labelSize.width / 2, labelCenterY - labelSize.height / 2,
                  labelSize.width, labelSize.height);
-  CGFloat iconCenterY = CGRectGetMinY(self.titleLabel.frame) / 2;
   self.iconImageView.frame =
       CGRectMake(centerX - iconSize.width / 2, iconCenterY - iconSize.height / 2, iconSize.width,
                  iconSize.height);
@@ -127,6 +136,7 @@ static const UIEdgeInsets kEdgeInsets = {.top = 12, .right = 16, .bottom = 12, .
   CGFloat width = (CGFloat)ceil(MAX(iconSize.width, labelSize.width) + horizontalPadding);
   width = MIN(kMaxWidth, MAX(kMinWidth, width));
   CGFloat height = (CGFloat)ceil(iconSize.height + labelSize.height + verticalPadding);
+  height += (title && icon) ? kImageTitlePadding : 0;
   height = MAX(minHeight, height);
   return CGSizeMake(width, height);
 }
