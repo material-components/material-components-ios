@@ -320,6 +320,9 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
       tabBarItemView.accessibilityIdentifier = change[NSKeyValueChangeNewKey];
     } else if ([keyPath isEqualToString:kAccessibilityTraitsKeyPath]) {
       tabBarItemView.accessibilityTraits = [change[NSKeyValueChangeNewKey] unsignedLongLongValue];
+      if (tabBarItemView.accessibilityTraits == UIAccessibilityTraitNone) {
+        tabBarItemView.accessibilityTraits = UIAccessibilityTraitButton;
+      }
       if (object == self.selectedItem) {
         tabBarItemView.accessibilityTraits =
             (tabBarItemView.accessibilityTraits | UIAccessibilityTraitSelected);
