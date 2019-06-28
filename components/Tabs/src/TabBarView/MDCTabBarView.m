@@ -104,8 +104,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     itemView.accessibilityLabel = item.accessibilityLabel;
     itemView.accessibilityHint = item.accessibilityHint;
     itemView.accessibilityIdentifier = item.accessibilityIdentifier;
-    itemView.accessibilityTraits =
-    item.accessibilityTraits == UIAccessibilityTraitNone
+    itemView.accessibilityTraits = item.accessibilityTraits == UIAccessibilityTraitNone
                                        ? UIAccessibilityTraitButton
                                        : item.accessibilityTraits;
     itemView.titleLabel.textColor = [self titleColorForState:UIControlStateNormal];
