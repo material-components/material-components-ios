@@ -340,10 +340,15 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
 
 - (void)layoutSubviews {
   [super layoutSubviews];
-
-  CGFloat availableWidth = CGRectGetWidth(self.bounds);
+  UIEdgeInsets directionalContentEdgeInsets = [self directionalContentEdgeInsets];
+  CGRect availableBounds =
+      UIEdgeInsetsInsetRect(CGRectStandardize(self.bounds), directionalContentEdgeInsets);
+  if (@available(iOS 11.0, *)) {
+    availableBounds = UIEdgeInsetsInsetRect(availableBounds, self.safeAreaInsets);
+  }
   CGFloat requiredWidth = [self justifiedWidth];
-  BOOL canBeJustified = availableWidth >= requiredWidth;
+
+  BOOL canBeJustified = CGRectGetWidth(availableBounds) >= requiredWidth;
   UIEdgeInsets paddingInsets = UIEdgeInsetsZero;
   if (canBeJustified) {
     self.containerView.distribution = UIStackViewDistributionFillEqually;
@@ -367,7 +372,6 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
     paddingInsets.bottom = MAX(safeAreaInsets.bottom, paddingInsets.bottom);
   }
   // Apply any user-provided contentEdgeInsets to the padding and safe area insets.
-  UIEdgeInsets directionalContentEdgeInsets = [self directionalContentEdgeInsets];
   self.leadingConstraint.constant = paddingInsets.left + directionalContentEdgeInsets.left;
   self.trailingConstraint.constant = -(paddingInsets.right + directionalContentEdgeInsets.right);
   self.topConstraint.constant = paddingInsets.top + directionalContentEdgeInsets.top;
@@ -389,12 +393,19 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
       [self.containerView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor];
 
   [NSLayoutConstraint activateConstraints:@[
-    [self.containerView.widthAnchor constraintGreaterThanOrEqualToAnchor:self.widthAnchor],
     self.leadingConstraint,
     self.trailingConstraint,
     self.topConstraint,
     self.bottomConstraint,
   ]];
+  if (@available(iOS 11.0, *)) {
+    [self.containerView.widthAnchor
+        constraintGreaterThanOrEqualToAnchor:self.safeAreaLayoutGuide.widthAnchor]
+        .active = YES;
+  } else {
+    [self.containerView.widthAnchor constraintGreaterThanOrEqualToAnchor:self.widthAnchor].active =
+        YES;
+  }
 
   // Must always be called last according to the documentation.
   [super updateConstraints];
@@ -433,6 +444,9 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
   CGFloat requiredWidth = maxWidth * self.items.count;
   UIEdgeInsets directionalContentEdgeInsets = [self directionalContentEdgeInsets];
   requiredWidth += directionalContentEdgeInsets.left + directionalContentEdgeInsets.right;
+  if (@available(iOS 11.0, *)) {
+    requiredWidth += self.safeAreaInsets.left + self.safeAreaInsets.right;
+  }
   return requiredWidth;
 }
 
