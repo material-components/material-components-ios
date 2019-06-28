@@ -36,7 +36,7 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
 /** Used to avoid duplicating containerView's constraints twice. */
 @property(nonatomic, assign) BOOL containerViewConstraintsActive;
 
-/** Used to scroll the tab bar view at layout subviews step. */
+/** Used to scroll to the selected item during the first call to @c layoutSubviews. */
 @property(nonatomic, assign) BOOL initialScrollDone;
 
 /** The title colors for bar items. */
