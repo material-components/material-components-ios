@@ -36,6 +36,9 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
 /** Used to avoid duplicating containerView's constraints twice. */
 @property(nonatomic, assign) BOOL containerViewConstraintsActive;
 
+/** Used to scroll to the selected item during the first call to @c layoutSubviews. */
+@property(nonatomic, assign) BOOL initialScrollDone;
+
 /** The title colors for bar items. */
 @property(nonnull, nonatomic, strong) NSMutableDictionary<NSNumber *, UIColor *> *stateToTitleColor;
 
@@ -146,11 +149,14 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
   if (itemIndex == NSNotFound) {
     return;
   }
-
   _selectedItem = selectedItem;
 
   [self updateTitleColorForAllViews];
   [self updateImageTintColorForAllViews];
+  CGRect itemFrameInScrollViewBounds =
+      [self convertRect:self.containerView.arrangedSubviews[itemIndex].frame
+               fromView:self.containerView];
+  [self scrollRectToVisible:itemFrameInScrollViewBounds animated:YES];
 }
 
 - (void)updateImageTintColorForAllViews {
@@ -314,6 +320,26 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
   BOOL canBeJustified = availableWidth >= requiredWidth;
   self.containerView.distribution = canBeJustified ? UIStackViewDistributionFillEqually
                                                    : UIStackViewDistributionFillProportionally;
+
+  if (!self.initialScrollDone) {
+    self.initialScrollDone = YES;
+    [self scrollUntilSelectedItemIsVisibleWithoutAnimation];
+  }
+}
+
+- (void)willMoveToSuperview:(UIView *)newSuperview {
+  [super willMoveToSuperview:newSuperview];
+  self.initialScrollDone = NO;
+}
+
+- (void)setBounds:(CGRect)bounds {
+  BOOL shouldScroll =
+      !CGSizeEqualToSize(CGSizeMake(CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds)),
+                         CGSizeMake(CGRectGetWidth(bounds), CGRectGetHeight(bounds)));
+  [super setBounds:bounds];
+  if (shouldScroll) {
+    [self scrollUntilSelectedItemIsVisibleWithoutAnimation];
+  }
 }
 
 - (void)updateConstraints {
@@ -363,6 +389,35 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
   }
   CGFloat requiredWidth = maxWidth * self.items.count;
   return requiredWidth;
+}
+
+- (void)scrollUntilSelectedItemIsVisibleWithoutAnimation {
+  NSUInteger index = [self.items indexOfObject:self.selectedItem];
+  if (index == NSNotFound || index > self.containerView.arrangedSubviews.count) {
+    return;
+  }
+
+  CGFloat selectedItemOriginX = 0;
+  for (NSUInteger i = 0; i < index; ++i) {
+    CGSize expectedItemSize = [self expectedSizeForView:self.containerView.arrangedSubviews[i]];
+    selectedItemOriginX += expectedItemSize.width;
+  }
+  CGSize expectedSelectedItemSize =
+      [self expectedSizeForView:self.containerView.arrangedSubviews[index]];
+  CGRect expectedItemFrame =
+      CGRectMake(CGRectGetMinX(self.bounds) + selectedItemOriginX, CGRectGetMinY(self.bounds),
+                 expectedSelectedItemSize.width, expectedSelectedItemSize.height);
+  [self scrollRectToVisible:expectedItemFrame animated:NO];
+}
+
+- (CGSize)expectedSizeForView:(UIView *)view {
+  CGSize expectedItemSize = view.intrinsicContentSize;
+  if (expectedItemSize.width == UIViewNoIntrinsicMetric) {
+    NSAssert(expectedItemSize.width != UIViewNoIntrinsicMetric,
+             @"All tab bar item views must define an intrinsic content size.");
+    expectedItemSize = [view sizeThatFits:self.contentSize];
+  }
+  return expectedItemSize;
 }
 
 #pragma mark - Actions
