@@ -321,11 +321,20 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
   self.containerView.distribution = canBeJustified ? UIStackViewDistributionFillEqually
                                                    : UIStackViewDistributionFillProportionally;
 
-  if (self.initialScrollDone) {
-    return;
+  if (!self.initialScrollDone) {
+    self.initialScrollDone = YES;
+    [self scrollUntilSelectedItemIsVisibleWithoutAnimation];
   }
-  [self scrollToSelectedItemVisible];
-  self.initialScrollDone = YES;
+}
+
+- (void)setBounds:(CGRect)bounds {
+  BOOL shouldScroll =
+      !CGSizeEqualToSize(CGSizeMake(CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds)),
+                         CGSizeMake(CGRectGetWidth(bounds), CGRectGetHeight(bounds)));
+  [super setBounds:bounds];
+  if (shouldScroll) {
+    [self scrollUntilSelectedItemIsVisibleWithoutAnimation];
+  }
 }
 
 - (void)updateConstraints {
@@ -377,21 +386,33 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
   return requiredWidth;
 }
 
-- (void)scrollToSelectedItemVisible {
+- (void)scrollUntilSelectedItemIsVisibleWithoutAnimation {
   NSUInteger index = [self.items indexOfObject:self.selectedItem];
-  if (index == NSNotFound) {
+  if (index == NSNotFound || index > self.containerView.arrangedSubviews.count) {
     return;
   }
 
-  CGFloat x = 0.0;
-  for (NSUInteger i = 0; i < index; i++) {
-    x += self.containerView.arrangedSubviews[i].intrinsicContentSize.width;
+  CGFloat selectedItemOriginX = 0;
+  for (NSUInteger i = 0; i < index; ++i) {
+    CGSize expectedItemSize = [self expectedSizeForView:self.containerView.arrangedSubviews[i]];
+    selectedItemOriginX += expectedItemSize.width;
   }
-  UIView *selectedItemView = self.containerView.arrangedSubviews[index];
-  CGRect itemFrame =
-      CGRectMake(x, self.containerView.bounds.origin.y, selectedItemView.intrinsicContentSize.width,
-                 selectedItemView.intrinsicContentSize.height);
-  [self scrollRectToVisible:itemFrame animated:NO];
+  CGSize expectedSelectedItemSize =
+      [self expectedSizeForView:self.containerView.arrangedSubviews[index]];
+  CGRect expectedItemFrame =
+      CGRectMake(CGRectGetMinX(self.bounds) + selectedItemOriginX, CGRectGetMinY(self.bounds),
+                 expectedSelectedItemSize.width, expectedSelectedItemSize.height);
+  [self scrollRectToVisible:expectedItemFrame animated:NO];
+}
+
+- (CGSize)expectedSizeForView:(UIView *)view {
+  CGSize expectedItemSize = view.intrinsicContentSize;
+  if (expectedItemSize.width == UIViewNoIntrinsicMetric) {
+    NSAssert(expectedItemSize.width != UIViewNoIntrinsicMetric,
+             @"All tab bar item views must define an intrinsic content size.");
+    expectedItemSize = [view sizeThatFits:self.contentSize];
+  }
+  return expectedItemSize;
 }
 
 #pragma mark - Actions
