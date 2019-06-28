@@ -104,7 +104,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     itemView.accessibilityLabel = item.accessibilityLabel;
     itemView.accessibilityHint = item.accessibilityHint;
     itemView.accessibilityIdentifier = item.accessibilityIdentifier;
-    itemView.accessibilityTraits = item.accessibilityTraits;
+    itemView.accessibilityTraits = (item.accessibilityTraits == UIAccessibilityTraitNone) ? UIAccessibilityTraitButton : item.accessibilityTraits;
     itemView.titleLabel.textColor = [self titleColorForState:UIControlStateNormal];
     itemView.iconImageView.image = item.image;
     [itemView setContentCompressionResistancePriority:UILayoutPriorityRequired
@@ -135,6 +135,13 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     return;
   }
 
+  // Sets the old selected item view's traits back.
+  NSUInteger oldSelectedItemIndex = [self.items indexOfObject:self.selectedItem];
+  if (oldSelectedItemIndex != NSNotFound) {
+    UIView *oldSelectedItemView = self.containerView.arrangedSubviews[oldSelectedItemIndex];
+    oldSelectedItemView.accessibilityTraits = self.selectedItem.accessibilityTraits == UIAccessibilityTraitNone ? UIAccessibilityTraitButton : self.selectedItem.accessibilityTraits;
+  }
+
   // Handle setting to `nil` without passing it to the nonnull parameter in `indexOfObject:`
   if (!selectedItem) {
     _selectedItem = selectedItem;
@@ -148,9 +155,10 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   if (itemIndex == NSNotFound) {
     return;
   }
-
   _selectedItem = selectedItem;
 
+  UIView *newSelectedItemView = self.containerView.arrangedSubviews[itemIndex];
+  newSelectedItemView.accessibilityTraits = self.selectedItem.accessibilityTraits == UIAccessibilityTraitNone ? UIAccessibilityTraitSelected : self.selectedItem.accessibilityTraits;
   [self updateTitleColorForAllViews];
   [self updateImageTintColorForAllViews];
 }
