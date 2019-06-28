@@ -349,7 +349,11 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  CGFloat availableWidth = CGRectGetWidth(self.bounds);
+  CGRect availableBounds = self.bounds;
+  if (@available(iOS 11.0, *)) {
+    availableBounds = UIEdgeInsetsInsetRect(availableBounds, self.safeAreaInsets);
+  }
+  CGFloat availableWidth = CGRectGetWidth(availableBounds);
   CGFloat requiredWidth = [self justifiedWidth];
   BOOL canBeJustified = availableWidth >= requiredWidth;
   self.containerView.distribution = canBeJustified ? UIStackViewDistributionFillEqually
@@ -382,12 +386,19 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     return;
   }
 
-  [self.containerView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor].active = YES;
-  [self.containerView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor].active = YES;
-  [self.containerView.widthAnchor constraintGreaterThanOrEqualToAnchor:self.widthAnchor].active =
-      YES;
-  [self.containerView.topAnchor constraintEqualToAnchor:self.topAnchor].active = YES;
-  [self.containerView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor].active = YES;
+  UILayoutGuide *layout;
+  if (@available(iOS 11.0, *)) {
+    layout = self.safeAreaLayoutGuide;
+  } else {
+    layout = self.layoutMarginsGuide;
+  }
+  [self.containerView.leadingAnchor constraintEqualToAnchor:layout.leadingAnchor].active = YES;
+  [self.containerView.trailingAnchor constraintEqualToAnchor:layout.trailingAnchor].active = YES;
+  [self.containerView.widthAnchor constraintGreaterThanOrEqualToAnchor:layout.widthAnchor].active =
+  YES;
+  [self.containerView.topAnchor constraintEqualToAnchor:layout.topAnchor].active = YES;
+  [self.containerView.bottomAnchor constraintEqualToAnchor:layout.bottomAnchor].active = YES;
+
   self.containerViewConstraintsActive = YES;
 
   // Must always be called last according to the documentation.
@@ -403,8 +414,6 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
       maxHeight = contentSize.height;
     }
   }
-  maxHeight += self.edgeInsets.top + self.edgeInsets.bottom;
-  totalWidth += self.edgeInsets.left + self.edgeInsets.right;
   return CGSizeMake(totalWidth, MAX(kMinHeight, maxHeight));
 }
 
