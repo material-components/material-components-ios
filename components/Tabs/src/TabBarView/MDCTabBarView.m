@@ -392,11 +392,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  CGFloat availableWidth = CGRectGetWidth(self.bounds);
-  CGFloat requiredWidth = [self justifiedWidth];
-  BOOL canBeJustified = availableWidth >= requiredWidth;
-  self.containerView.distribution = canBeJustified ? UIStackViewDistributionFillEqually
-                                                   : UIStackViewDistributionFillProportionally;
+  [self updateStackviewLayout];
 
   if (self.selectionIndicatorView) {
     [self updateSelectionIndicatorToIndex:[self.items indexOfObject:self.selectedItem]];
@@ -404,6 +400,17 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   if (!self.initialScrollDone) {
     self.initialScrollDone = YES;
     [self scrollUntilSelectedItemIsVisibleWithoutAnimation];
+  }
+}
+
+- (void)updateStackviewLayout {
+  CGFloat availableWidth = CGRectGetWidth(self.bounds);
+  CGFloat requiredWidth = [self justifiedWidth];
+  UIStackViewDistribution distribution = availableWidth >= requiredWidth ? UIStackViewDistributionFillEqually
+  : UIStackViewDistributionFillProportionally;
+  if (self.containerView.distribution != distribution) {
+    self.containerView.distribution = distribution;
+    [self.containerView layoutIfNeeded];
   }
 }
 
@@ -417,6 +424,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
       !CGSizeEqualToSize(CGSizeMake(CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds)),
                          CGSizeMake(CGRectGetWidth(bounds), CGRectGetHeight(bounds)));
   [super setBounds:bounds];
+  [self updateStackviewLayout];
   if (shouldScroll) {
     [self scrollUntilSelectedItemIsVisibleWithoutAnimation];
     if (self.selectedItem) {
