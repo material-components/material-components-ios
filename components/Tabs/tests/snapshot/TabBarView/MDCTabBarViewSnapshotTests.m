@@ -150,9 +150,10 @@ static const CGFloat kMaxItemWidth = 360;
 
 - (void)testItemsWithOnlyTitlesWithVerticalInsetsResultsInScrollableLayout {
   // Given
+  self.tabBarView.bounds = CGRectMake(0, 0, 120, kExpectedHeightTitlesOrIconsOnly);
   UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:nil tag:0];
   UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:nil tag:2];
-  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:nil tag:5];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:nil tag:3];
 
   // When
   self.tabBarView.items = @[ item1, item2, item3 ];
