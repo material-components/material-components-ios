@@ -38,6 +38,9 @@ static const UIEdgeInsets kEdgeInsets = {.top = 12, .right = 16, .bottom = 12, .
  */
 static const UIEdgeInsets kEdgeInsetsTextOnly = {.top = 8, .right = 16, .bottom = 8, .left = 16};
 
+/** Edge insets for image-only Tabs. */
+static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .bottom = 12, .left = 16};
+
 @interface MDCTabBarViewItemView ()
 
 @property(nonatomic, strong) UIView *contentView;
@@ -102,6 +105,9 @@ static const UIEdgeInsets kEdgeInsetsTextOnly = {.top = 8, .right = 16, .bottom 
   if (self.titleLabel.text && !self.iconImageView.image) {
     [self layoutSubviewsTextOnly];
     return;
+  } else if (!self.titleLabel.text && self.iconImageView.image) {
+    [self layoutSubviewsImageOnly];
+    return;
   }
   CGRect contentFrame = UIEdgeInsetsInsetRect(self.bounds, kEdgeInsets);
   self.contentView.frame = contentFrame;
@@ -141,6 +147,20 @@ static const UIEdgeInsets kEdgeInsetsTextOnly = {.top = 8, .right = 16, .bottom 
       CGPointMake(CGRectGetMidX(self.contentView.bounds), CGRectGetMidY(self.contentView.bounds));
 }
 
+- (void)layoutSubviewsImageOnly {
+  CGRect contentFrame = UIEdgeInsetsInsetRect(self.bounds, kEdgeInsetsImageOnly);
+  self.contentView.frame = contentFrame;
+
+  CGSize contentSize =
+      CGSizeMake(CGRectGetWidth(self.contentView.bounds), CGRectGetHeight(self.contentView.bounds));
+  CGSize imageIntrinsicContentSize = self.iconImageView.intrinsicContentSize;
+  CGSize imageFinalSize = CGSizeMake(MIN(contentSize.width, imageIntrinsicContentSize.width),
+                                     MIN(contentSize.height, imageIntrinsicContentSize.height));
+  self.iconImageView.bounds = CGRectMake(0, 0, imageFinalSize.width, imageFinalSize.height);
+  self.iconImageView.center =
+      CGPointMake(CGRectGetMidX(self.contentView.bounds), CGRectGetMidY(self.contentView.bounds));
+}
+
 - (CGSize)intrinsicContentSize {
   return [self sizeThatFits:CGSizeMake(kMaxWidth, CGFLOAT_MAX)];
 }
@@ -148,6 +168,8 @@ static const UIEdgeInsets kEdgeInsetsTextOnly = {.top = 8, .right = 16, .bottom 
 - (CGSize)sizeThatFits:(CGSize)size {
   if (self.titleLabel.text && !self.iconImageView.image) {
     return [self sizeThatFitsTextOnly:size];
+  } else if (!self.titleLabel && self.iconImageView.image) {
+    return [self sizeThatFitsImageOnly:size];
   }
   NSString *title = self.titleLabel.text;
   UIImage *icon = self.iconImageView.image;
@@ -179,6 +201,13 @@ static const UIEdgeInsets kEdgeInsetsTextOnly = {.top = 8, .right = 16, .bottom 
   return CGSizeMake(labelSize.width + kEdgeInsetsTextOnly.left + kEdgeInsetsTextOnly.right,
                     MAX(kMinHeightTitleOrImageOnly,
                         labelSize.height + kEdgeInsetsTextOnly.top + kEdgeInsetsTextOnly.bottom));
+}
+
+- (CGSize)sizeThatFitsImageOnly:(CGSize)size {
+  CGSize imageIntrinsicContentSize = self.iconImageView.intrinsicContentSize;
+  return CGSizeMake(
+      imageIntrinsicContentSize.width + kEdgeInsetsImageOnly.left + kEdgeInsetsImageOnly.right,
+      imageIntrinsicContentSize.height + kEdgeInsetsImageOnly.top + kEdgeInsetsImageOnly.bottom);
 }
 
 #pragma mark - UIAccessibility
