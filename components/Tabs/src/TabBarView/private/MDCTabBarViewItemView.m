@@ -122,7 +122,8 @@ static const UIEdgeInsets kEdgeInsets = {.top = 0, .right = 16, .bottom = 0, .le
 - (CGSize)sizeThatFits:(CGSize)size {
   NSString *title = self.titleLabel.text;
   UIImage *icon = self.iconImageView.image;
-  const CGFloat minHeight = (title && icon) ? kMinHeightTitleAndImage : kMinHeightTitleOrImageOnly;
+  BOOL hasMultipleContents = title && title.length > 0 && icon;
+  const CGFloat minHeight = hasMultipleContents ? kMinHeightTitleAndImage : kMinHeightTitleOrImageOnly;
   const CGFloat maxHeight = MAX(minHeight, size.height);
 
   const CGFloat horizontalPadding = kEdgeInsets.left + kEdgeInsets.right;
@@ -136,7 +137,7 @@ static const UIEdgeInsets kEdgeInsets = {.top = 0, .right = 16, .bottom = 0, .le
   CGFloat width = (CGFloat)ceil(MAX(iconSize.width, labelSize.width) + horizontalPadding);
   width = MIN(kMaxWidth, MAX(kMinWidth, width));
   CGFloat height = (CGFloat)ceil(iconSize.height + labelSize.height + verticalPadding);
-  height += (title && icon) ? kImageTitlePadding : 0;
+  height += hasMultipleContents ? kImageTitlePadding : 0;
   height = MAX(minHeight, height);
   return CGSizeMake(width, height);
 }
