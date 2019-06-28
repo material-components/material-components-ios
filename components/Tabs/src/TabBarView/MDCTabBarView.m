@@ -26,6 +26,8 @@
 #import <MaterialComponents/MaterialAnimationTiming.h>
 #import <QuartzCore/QuartzCore.h>
 
+#import <CoreGraphics/CoreGraphics.h>
+
 // KVO contexts
 static char *const kKVOContextMDCTabBarView = "kKVOContextMDCTabBarView";
 
