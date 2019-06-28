@@ -169,6 +169,10 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 }
 
 - (void)setSelectedItem:(UITabBarItem *)selectedItem {
+  [self setSelectedItem:selectedItem animated:YES];
+}
+
+- (void)setSelectedItem:(UITabBarItem *)selectedItem animated:(BOOL)animated {
   if (self.selectedItem == selectedItem) {
     return;
   }
@@ -204,8 +208,8 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   CGRect itemFrameInScrollViewBounds =
       [self convertRect:self.containerView.arrangedSubviews[itemIndex].frame
                fromView:self.containerView];
-  [self didSelectItemAtIndex:itemIndex animateTransition:YES];
-  [self scrollRectToVisible:itemFrameInScrollViewBounds animated:YES];
+  [self didSelectItemAtIndex:itemIndex animateTransition:animated];
+  [self scrollRectToVisible:itemFrameInScrollViewBounds animated:animated];
 }
 
 - (void)updateImageTintColorForAllViews {
@@ -470,20 +474,12 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     return;
   }
 
-  CGFloat selectedItemOriginX = 0;
-  for (NSUInteger i = 0; i < index; ++i) {
-    CGSize expectedItemSize = [self expectedSizeForView:self.containerView.arrangedSubviews[i]];
-    selectedItemOriginX += expectedItemSize.width;
-  }
-  CGSize expectedSelectedItemSize =
-      [self expectedSizeForView:self.containerView.arrangedSubviews[index]];
-  CGRect expectedItemFrame =
-      CGRectMake(CGRectGetMinX(self.bounds) + selectedItemOriginX, CGRectGetMinY(self.bounds),
-                 expectedSelectedItemSize.width, expectedSelectedItemSize.height);
-  [self scrollRectToVisible:expectedItemFrame animated:NO];
+  CGRect estimatedItemFrame = [self estimatedFrameInContainerViewForItemAtIndex:index];
+  [self scrollRectToVisible:[self convertRect:estimatedItemFrame fromView:self.containerView]
+                   animated:NO];
 }
 
-- (CGRect)estimatedFrameForItemAtIndex:(NSUInteger)index {
+- (CGRect)estimatedFrameInContainerViewForItemAtIndex:(NSUInteger)index {
   if (index == NSNotFound || index > self.containerView.arrangedSubviews.count) {
     return CGRectZero;
   }
@@ -528,13 +524,15 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     return;
   }
 
-  MDCTabBarViewPositioningTuple *selectedItemViewPosition = [self positionForItemAtIndex:index];
+  MDCTabBarViewPositioningTuple *selectedItemViewPositionInContainerView =
+      [self positionInContainerViewForItemAtIndex:index];
 
   // Place selection indicator under the item's cell.
-  CGRect selectionIndicatorBounds = selectedItemViewPosition.bounds;
-  CGPoint selectionIndicatorCenter = selectedItemViewPosition.center;
+  CGRect selectionIndicatorBounds = selectedItemViewPositionInContainerView.bounds;
+  CGPoint selectionIndicatorCenter = selectedItemViewPositionInContainerView.center;
   self.selectionIndicatorView.bounds = selectionIndicatorBounds;
-  self.selectionIndicatorView.center = selectionIndicatorCenter;
+  self.selectionIndicatorView.center = [self convertPoint:selectionIndicatorCenter
+                                                 fromView:self.containerView];
 
   // Extract content frame from item view.
   CGRect contentFrame = selectionIndicatorBounds;
@@ -588,7 +586,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   }
 }
 
-- (MDCTabBarViewPositioningTuple *)positionForItemAtIndex:(NSUInteger)index {
+- (MDCTabBarViewPositioningTuple *)positionInContainerViewForItemAtIndex:(NSUInteger)index {
   if (index == NSNotFound || index > self.containerView.arrangedSubviews.count) {
     return nil;
   }
@@ -598,7 +596,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   position.bounds = CGRectStandardize(itemView.bounds);
   position.center = [self convertPoint:itemView.center fromView:self.containerView];
   if (CGRectEqualToRect(position.bounds, CGRectZero)) {
-    CGRect estimatedFrame = [self estimatedFrameForItemAtIndex:index];
+    CGRect estimatedFrame = [self estimatedFrameInContainerViewForItemAtIndex:index];
     position.bounds =
         CGRectMake(0, 0, CGRectGetWidth(estimatedFrame), CGRectGetHeight(estimatedFrame));
     position.center = CGPointMake(CGRectGetMidX(estimatedFrame), CGRectGetMidY(estimatedFrame));

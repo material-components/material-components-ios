@@ -85,6 +85,10 @@ static const UIEdgeInsets kEdgeInsets = {.top = 12, .right = 16, .bottom = 12, .
   }
 }
 
+- (CGRect)contentFrame {
+  return self.contentView.frame;
+}
+
 #pragma mark - UIView
 
 - (void)layoutSubviews {

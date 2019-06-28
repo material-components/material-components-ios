@@ -54,7 +54,7 @@ static const CGFloat kMaxItemWidth = 360;
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  //  self.recordMode = YES;
+    self.recordMode = YES;
 
   self.tabBarView = [[MDCTabBarView alloc] init];
   self.tabBarView.barTintColor = UIColor.whiteColor;
@@ -97,7 +97,7 @@ static const CGFloat kMaxItemWidth = 360;
 
   // When
   self.tabBarView.items = @[ item1, item2, item3 ];
-  self.tabBarView.selectedItem = item2;
+  [self.tabBarView setSelectedItem:item2 animated:NO];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBarView];
@@ -111,7 +111,7 @@ static const CGFloat kMaxItemWidth = 360;
 
   // When
   self.tabBarView.items = @[ item1, item2, item3 ];
-  self.tabBarView.selectedItem = item2;
+  [self.tabBarView setSelectedItem:item2 animated:NO];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBarView];
@@ -126,7 +126,7 @@ static const CGFloat kMaxItemWidth = 360;
 
   // When
   self.tabBarView.items = @[ item1, item2, item3 ];
-  self.tabBarView.selectedItem = item2;
+  [self.tabBarView setSelectedItem:item2 animated:NO];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBarView];
@@ -141,7 +141,7 @@ static const CGFloat kMaxItemWidth = 360;
 
   // When
   self.tabBarView.items = @[ item1, item2, item3 ];
-  self.tabBarView.selectedItem = item2;
+  [self.tabBarView setSelectedItem:item2 animated:NO];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBarView];
@@ -157,7 +157,7 @@ static const CGFloat kMaxItemWidth = 360;
   UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:self.typicalIcon1 tag:2];
   UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:self.typicalIcon1 tag:5];
   self.tabBarView.items = @[ item1, item2, item3 ];
-  self.tabBarView.selectedItem = item2;
+  [self.tabBarView setSelectedItem:item2 animated:NO];
 
   // When
   self.tabBarView.selectedItem = item1;
