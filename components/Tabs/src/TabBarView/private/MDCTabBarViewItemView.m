@@ -103,6 +103,10 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
 - (void)layoutSubviews {
   [super layoutSubviews];
 
+  if (!self.titleLabel.text.length && !self.iconImageView.image) {
+    return;
+  }
+
   if (self.titleLabel.text.length && !self.iconImageView.image) {
     [self layoutSubviewsTextOnly];
     return;
@@ -176,6 +180,9 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
+  if (!self.titleLabel.text.length && !self.iconImageView.image) {
+    return CGSizeMake(kMinWidth, kMinHeightTitleOrImageOnly);
+  }
   if (self.titleLabel.text.length && !self.iconImageView.image) {
     return [self sizeThatFitsTextOnly:size];
   } else if (!self.titleLabel.text.length && self.iconImageView.image) {
