@@ -180,20 +180,24 @@ static const CGFloat kMaxItemWidth = 360;
 
 #pragma mark - safeAreaInsets and contentEdgeInsets
 
+// TODO(https://github.com/material-components/material-components-ios/issues/7733): This shows that
+// safeAreaInsets are repositioning the UIStackView but are not causing the Tab Bar to switch to a
+// "scrolling" layout style.
 - (void)testItemsWithOnlyTitlesWithSafeAreaInsets {
-  self.recordMode = YES;
   // Given
   UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:nil tag:0];
   UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:nil tag:2];
   UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:nil tag:5];
-  MDCTabBarViewSnapshotTestsFakeSuperview *superview = [[MDCTabBarViewSnapshotTestsFakeSuperview alloc] init];
+  MDCTabBarViewSnapshotTestsFakeSuperview *superview =
+      [[MDCTabBarViewSnapshotTestsFakeSuperview alloc] init];
 
   // When
   self.tabBarView.items = @[ item1, item2, item3 ];
   self.tabBarView.selectedItem = item2;
   CGSize barIntrinsicContentSize = self.tabBarView.intrinsicContentSize;
-  superview.bounds = CGRectMake(0, 0, barIntrinsicContentSize.width, barIntrinsicContentSize.height);
-  superview.settableSafeAreaInsets = UIEdgeInsetsMake(20, 20, 0, 0);
+  superview.bounds =
+      CGRectMake(0, 0, barIntrinsicContentSize.width, barIntrinsicContentSize.height);
+  //  superview.settableSafeAreaInsets = UIEdgeInsetsMake(10, 20, 0, 0);
   [superview addSubview:self.tabBarView];
   self.tabBarView.frame = superview.bounds;
 
