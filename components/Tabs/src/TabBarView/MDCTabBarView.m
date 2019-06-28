@@ -14,7 +14,7 @@
 
 #import "MDCTabBarView.h"
 #import "MDCTabBarViewDelegate.h"
-#import "UIView+MaterialRTL.h"
+#import "MDFInternationalization.h"
 #import "private/MDCTabBarViewItemView.h"
 
 // KVO contexts
