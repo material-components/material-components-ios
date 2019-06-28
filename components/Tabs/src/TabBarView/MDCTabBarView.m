@@ -142,9 +142,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   if (oldSelectedItemIndex != NSNotFound) {
     UIView *oldSelectedItemView = self.containerView.arrangedSubviews[oldSelectedItemIndex];
     oldSelectedItemView.accessibilityTraits =
-        self.selectedItem.accessibilityTraits == UIAccessibilityTraitNone
-            ? UIAccessibilityTraitButton
-            : self.selectedItem.accessibilityTraits;
+        (oldSelectedItemView.accessibilityTraits & ~UIAccessibilityTraitSelected);
   }
 
   // Handle setting to `nil` without passing it to the nonnull parameter in `indexOfObject:`
@@ -164,9 +162,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
   UIView *newSelectedItemView = self.containerView.arrangedSubviews[itemIndex];
   newSelectedItemView.accessibilityTraits =
-      self.selectedItem.accessibilityTraits == UIAccessibilityTraitNone
-          ? UIAccessibilityTraitSelected
-          : self.selectedItem.accessibilityTraits;
+      (newSelectedItemView.accessibilityTraits | UIAccessibilityTraitSelected);
   [self updateTitleColorForAllViews];
   [self updateImageTintColorForAllViews];
 }
@@ -324,6 +320,10 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
       tabBarItemView.accessibilityIdentifier = change[NSKeyValueChangeNewKey];
     } else if ([keyPath isEqualToString:kAccessibilityTraitsKeyPath]) {
       tabBarItemView.accessibilityTraits = [change[NSKeyValueChangeNewKey] unsignedLongLongValue];
+      if (object == self.selectedItem) {
+        tabBarItemView.accessibilityTraits =
+            (tabBarItemView.accessibilityTraits | UIAccessibilityTraitSelected);
+      }
     }
   } else {
     [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
