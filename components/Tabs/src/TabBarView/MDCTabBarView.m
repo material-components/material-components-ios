@@ -27,6 +27,7 @@ static NSString *const kTitleKeyPath = @"title";
 static NSString *const kAccessibilityLabelKeyPath = @"accessibilityLabel";
 static NSString *const kAccessibilityHintKeyPath = @"accessibilityHint";
 static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifier";
+static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
 @interface MDCTabBarView ()
 
@@ -106,6 +107,9 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
     itemView.accessibilityLabel = item.accessibilityLabel;
     itemView.accessibilityHint = item.accessibilityHint;
     itemView.accessibilityIdentifier = item.accessibilityIdentifier;
+    itemView.accessibilityTraits = item.accessibilityTraits == UIAccessibilityTraitNone
+                                       ? UIAccessibilityTraitButton
+                                       : item.accessibilityTraits;
     itemView.titleLabel.textColor = [self titleColorForState:UIControlStateNormal];
     itemView.iconImageView.image = item.image;
     [itemView setContentCompressionResistancePriority:UILayoutPriorityRequired
@@ -136,6 +140,14 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
     return;
   }
 
+  // Sets the old selected item view's traits back.
+  NSUInteger oldSelectedItemIndex = [self.items indexOfObject:self.selectedItem];
+  if (oldSelectedItemIndex != NSNotFound) {
+    UIView *oldSelectedItemView = self.containerView.arrangedSubviews[oldSelectedItemIndex];
+    oldSelectedItemView.accessibilityTraits =
+        (oldSelectedItemView.accessibilityTraits & ~UIAccessibilityTraitSelected);
+  }
+
   // Handle setting to `nil` without passing it to the nonnull parameter in `indexOfObject:`
   if (!selectedItem) {
     _selectedItem = selectedItem;
@@ -151,6 +163,9 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
   }
   _selectedItem = selectedItem;
 
+  UIView *newSelectedItemView = self.containerView.arrangedSubviews[itemIndex];
+  newSelectedItemView.accessibilityTraits =
+      (newSelectedItemView.accessibilityTraits | UIAccessibilityTraitSelected);
   [self updateTitleColorForAllViews];
   [self updateImageTintColorForAllViews];
   CGRect itemFrameInScrollViewBounds =
@@ -255,6 +270,10 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
            forKeyPath:kAccessibilityIdentifierKeyPath
               options:NSKeyValueObservingOptionNew
               context:kKVOContextMDCTabBarView];
+    [item addObserver:self
+           forKeyPath:kAccessibilityTraitsKeyPath
+              options:NSKeyValueObservingOptionNew
+              context:kKVOContextMDCTabBarView];
   }
 }
 
@@ -270,6 +289,9 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
                  context:kKVOContextMDCTabBarView];
     [item removeObserver:self
               forKeyPath:kAccessibilityIdentifierKeyPath
+                 context:kKVOContextMDCTabBarView];
+    [item removeObserver:self
+              forKeyPath:kAccessibilityTraitsKeyPath
                  context:kKVOContextMDCTabBarView];
   }
 }
@@ -303,6 +325,15 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
       tabBarItemView.accessibilityHint = change[NSKeyValueChangeNewKey];
     } else if ([keyPath isEqualToString:kAccessibilityIdentifierKeyPath]) {
       tabBarItemView.accessibilityIdentifier = change[NSKeyValueChangeNewKey];
+    } else if ([keyPath isEqualToString:kAccessibilityTraitsKeyPath]) {
+      tabBarItemView.accessibilityTraits = [change[NSKeyValueChangeNewKey] unsignedLongLongValue];
+      if (tabBarItemView.accessibilityTraits == UIAccessibilityTraitNone) {
+        tabBarItemView.accessibilityTraits = UIAccessibilityTraitButton;
+      }
+      if (object == self.selectedItem) {
+        tabBarItemView.accessibilityTraits =
+            (tabBarItemView.accessibilityTraits | UIAccessibilityTraitSelected);
+      }
     }
   } else {
     [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];

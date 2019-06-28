@@ -54,6 +54,7 @@ static NSString *const kExampleTitle = @"TabBarView";
               image:[[UIImage imageNamed:@"Favorite"]
                         imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
                 tag:1];
+  item2.accessibilityTraits = UIAccessibilityTraitStaticText;
   UITabBarItem *item3 = [[UITabBarItem alloc]
       initWithTitle:@"Cake"
               image:[[UIImage imageNamed:@"Cake"]
