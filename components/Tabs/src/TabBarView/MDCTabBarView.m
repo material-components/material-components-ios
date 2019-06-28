@@ -392,7 +392,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   [self.containerView.leadingAnchor constraintEqualToAnchor:layout.leadingAnchor].active = YES;
   [self.containerView.trailingAnchor constraintEqualToAnchor:layout.trailingAnchor].active = YES;
   [self.containerView.widthAnchor constraintGreaterThanOrEqualToAnchor:layout.widthAnchor].active =
-      YES;
+  YES;
   [self.containerView.topAnchor constraintEqualToAnchor:layout.topAnchor].active = YES;
   [self.containerView.bottomAnchor constraintEqualToAnchor:layout.bottomAnchor].active = YES;
 
