@@ -83,7 +83,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  self.recordMode = YES;
+  //  self.recordMode = YES;
 
   self.tabBarView = [[MDCTabBarView alloc] init];
   self.tabBarView.barTintColor = UIColor.whiteColor;
@@ -167,13 +167,13 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
 
 - (void)testItemsWithOnlyTitlesLTRLatin {
   // Given
-  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:kItemTitleShort1Latin image:nil tag:0];
-  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:kItemTitleShort2Latin image:nil tag:2];
-  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:kItemTitleShort3Latin image:nil tag:5];
+  self.item1.image = nil;
+  self.item2.image = nil;
+  self.item3.image = nil;
 
   // When
-  self.tabBarView.items = @[ item1, item2, item3 ];
-  self.tabBarView.selectedItem = item2;
+  self.tabBarView.items = @[ self.item1, self.item2, self.item3 ];
+  self.tabBarView.selectedItem = self.item2;
 
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBarView];
@@ -195,45 +195,86 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
-- (void)testItemsWithOnlyImages {
+- (void)testItemsWithOnlyImagesLTR {
   // Given
-  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:nil image:self.typicalIcon1 tag:0];
-  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:nil image:self.typicalIcon2 tag:2];
-  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:nil image:self.typicalIcon3 tag:5];
+  self.item1.title = nil;
+  self.item2.title = nil;
+  self.item3.title = nil;
 
   // When
-  self.tabBarView.items = @[ item1, item2, item3 ];
-  self.tabBarView.selectedItem = item2;
+  self.tabBarView.items = @[ self.item1, self.item2, self.item3 ];
+  self.tabBarView.selectedItem = self.item2;
 
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
-- (void)testItemsWithTitlesAndImages {
+- (void)testItemsWithOnlyImagesRTL {
   // Given
-  self.tabBarView.bounds = CGRectMake(0, 0, 360, kExpectedHeightTitlesAndIcons);
-  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:self.typicalIcon1 tag:0];
-  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:self.typicalIcon2 tag:2];
-  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:self.typicalIcon3 tag:5];
+  self.item1.title = nil;
+  self.item2.title = nil;
+  self.item3.title = nil;
 
   // When
-  self.tabBarView.items = @[ item1, item2, item3 ];
-  self.tabBarView.selectedItem = item2;
+  [self changeViewToRTL:self.tabBarView];
+  self.tabBarView.items = @[ self.item1, self.item2, self.item3 ];
+  self.tabBarView.selectedItem = self.item2;
 
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
-- (void)testItemsWithMixedTitlesAndImages {
+- (void)testItemsWithTitlesAndImagesLTRLatin {
   // Given
   self.tabBarView.bounds = CGRectMake(0, 0, 360, kExpectedHeightTitlesAndIcons);
-  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:nil tag:0];
-  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:nil image:self.typicalIcon2 tag:2];
-  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:self.typicalIcon3 tag:5];
 
   // When
-  self.tabBarView.items = @[ item1, item2, item3 ];
-  self.tabBarView.selectedItem = item2;
+  self.tabBarView.items = @[ self.item1, self.item2, self.item3 ];
+  self.tabBarView.selectedItem = self.item2;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testItemsWithTitlesAndImagesRTLArabic {
+  // Given
+  self.tabBarView.bounds = CGRectMake(0, 0, 360, kExpectedHeightTitlesAndIcons);
+
+  // When
+  [self changeToArabicStringsWithLongTitles:NO];
+  [self changeViewToRTL:self.tabBarView];
+  self.tabBarView.items = @[ self.item1, self.item2, self.item3 ];
+  self.tabBarView.selectedItem = self.item2;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testItemsWithMixedTitlesAndImagesLTRLatin {
+  // Given
+  self.tabBarView.bounds = CGRectMake(0, 0, 360, kExpectedHeightTitlesAndIcons);
+  self.item1.image = nil;
+  self.item2.title = nil;
+
+  // When
+  self.tabBarView.items = @[ self.item1, self.item2, self.item3 ];
+  self.tabBarView.selectedItem = self.item2;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testItemsWithMixedTitlesAndImagesRTLArabic {
+  // Given
+  self.tabBarView.bounds = CGRectMake(0, 0, 360, kExpectedHeightTitlesAndIcons);
+  [self changeToArabicStringsWithLongTitles:NO];
+  self.item1.image = nil;
+  self.item2.title = nil;
+
+  // When
+  [self changeToArabicStringsWithLongTitles:NO];
+  self.tabBarView.items = @[ self.item1, self.item2, self.item3 ];
+  self.tabBarView.selectedItem = self.item2;
 
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBarView];
@@ -244,34 +285,50 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
 - (void)testChangingSelectedItemIgnoresSelectedImage {
   // Given
   self.tabBarView.bounds = CGRectMake(0, 0, 360, kExpectedHeightTitlesAndIcons);
-  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:self.typicalIcon1 tag:0];
-  item1.selectedImage = self.typicalIcon2;
-  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:self.typicalIcon1 tag:2];
-  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:self.typicalIcon1 tag:5];
-  self.tabBarView.items = @[ item1, item2, item3 ];
-  self.tabBarView.selectedItem = item2;
+  self.item1.image = self.typicalIcon1;
+  self.item1.selectedImage = self.typicalIcon2;
+  self.item2.image = self.typicalIcon2;
+  self.item3.image = self.typicalIcon1;
+  self.tabBarView.items = @[ self.item1, self.item2, self.item3 ];
+  self.tabBarView.selectedItem = self.item2;
 
   // When
-  self.tabBarView.selectedItem = item1;
+  self.tabBarView.selectedItem = self.item1;
 
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
-- (void)testSelectedItemInitiallyVisible {
+- (void)testSelectedItemInitiallyVisibleLTRLatin {
   // Given
   self.tabBarView.bounds =
       CGRectMake(0, 0, kMinItemWidth * (CGFloat)1.5, kExpectedHeightTitlesOrIconsOnly);
-  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:nil tag:0];
-  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:nil tag:1];
-  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:nil tag:2];
-  UITabBarItem *item4 = [[UITabBarItem alloc] initWithTitle:@"Four" image:nil tag:3];
-  UITabBarItem *item5 = [[UITabBarItem alloc] initWithTitle:@"Five" image:nil tag:4];
-  UITabBarItem *item6 = [[UITabBarItem alloc] initWithTitle:@"Six" image:nil tag:5];
-  self.tabBarView.items = @[ item1, item2, item3, item4, item5, item6 ];
+  [self changeToLatinStringsWithLongTitles:YES];
+  self.item1.image = nil;
+  self.item2.image = nil;
+  self.item3.image = nil;
+  self.tabBarView.items = @[ self.item1, self.item2, self.item3 ];
 
   // When
-  self.tabBarView.selectedItem = item5;
+  self.tabBarView.selectedItem = self.item3;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testSelectedItemInitiallyVisibleRTLArabic {
+  // Given
+  self.tabBarView.bounds =
+      CGRectMake(0, 0, kMinItemWidth * (CGFloat)1.5, kExpectedHeightTitlesOrIconsOnly);
+  [self changeToArabicStringsWithLongTitles:YES];
+  self.item1.image = nil;
+  self.item2.image = nil;
+  self.item3.image = nil;
+  self.tabBarView.items = @[ self.item1, self.item2, self.item3 ];
+
+  // When
+  [self changeViewToRTL:self.tabBarView];
+  self.tabBarView.selectedItem = self.item3;
 
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBarView];
@@ -359,9 +416,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
-// TODO(https://github.com/material-components/material-components-ios/issues/7717): This golden
-// is incorrect due to a suspected bug in MDCTabBarViewItemView.
-- (void)testSettingBoundsTooNarrowWithItemsLessThanMinimumWidthResultsInScrollableLayout {
+- (void)testSettingBoundsTooNarrowWithItemsLessThanMinimumWidthResultsInScrollableLayoutLTRLatin {
   // Given
   UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:nil tag:0];
   UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:nil tag:2];
@@ -377,7 +432,24 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
-- (void)testSettingBoundsToIntrinsicContentSizeResultsInJustifiedLayout {
+- (void)testSettingBoundsTooNarrowWithItemsLessThanMinimumWidthResultsInScrollableLayoutRTLArabic {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:kItemTitleShort1Arabic image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:kItemTitleShort2Arabic image:nil tag:2];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:kItemTitleShort3Arabic image:nil tag:5];
+  UITabBarItem *item4 = [[UITabBarItem alloc] initWithTitle:kItemTitleShort1Arabic image:nil tag:6];
+  UITabBarItem *item5 = [[UITabBarItem alloc] initWithTitle:kItemTitleShort2Arabic image:nil tag:7];
+  UITabBarItem *item6 = [[UITabBarItem alloc] initWithTitle:kItemTitleShort3Arabic image:nil tag:8];
+
+  // When
+  [self changeViewToRTL:self.tabBarView];
+  self.tabBarView.items = @[ item1, item2, item3, item4, item5, item6 ];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testSettingBoundsToIntrinsicContentSizeResultsInJustifiedLayoutLTRLatin {
   // Given
   UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:nil tag:0];
   UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:nil tag:2];
@@ -387,6 +459,26 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   UITabBarItem *item6 = [[UITabBarItem alloc] initWithTitle:@"Six" image:nil tag:8];
 
   // When
+  self.tabBarView.items = @[ item1, item2, item3, item4, item5, item6 ];
+  CGSize intrinsicContentSize = self.tabBarView.intrinsicContentSize;
+  self.tabBarView.bounds =
+      CGRectMake(0, 0, intrinsicContentSize.width, intrinsicContentSize.height);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testSettingBoundsToIntrinsicContentSizeResultsInJustifiedLayoutRTLArabic {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:kItemTitleShort1Arabic image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:kItemTitleShort2Arabic image:nil tag:2];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:kItemTitleShort3Arabic image:nil tag:5];
+  UITabBarItem *item4 = [[UITabBarItem alloc] initWithTitle:kItemTitleShort1Arabic image:nil tag:6];
+  UITabBarItem *item5 = [[UITabBarItem alloc] initWithTitle:kItemTitleShort2Arabic image:nil tag:7];
+  UITabBarItem *item6 = [[UITabBarItem alloc] initWithTitle:kItemTitleShort3Arabic image:nil tag:8];
+
+  // When
+  [self changeViewToRTL:self.tabBarView];
   self.tabBarView.items = @[ item1, item2, item3, item4, item5, item6 ];
   CGSize intrinsicContentSize = self.tabBarView.intrinsicContentSize;
   self.tabBarView.bounds =
