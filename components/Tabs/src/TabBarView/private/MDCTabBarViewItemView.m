@@ -103,7 +103,9 @@ static const UIEdgeInsets kEdgeInsets = {.top = 0, .right = 16, .bottom = 0, .le
   CGFloat iconCenterY = CGRectGetMidY(self.contentView.bounds);
 
   if (iconSize.height != 0 && labelSize.height != 0) {
-    CGFloat verticalPadding = (CGRectGetHeight(self.contentView.bounds) - iconSize.height - labelSize.height - kImageTitlePadding) / 2;
+    CGFloat verticalPadding = (CGRectGetHeight(self.contentView.bounds) - iconSize.height -
+                               labelSize.height - kImageTitlePadding) /
+                              2;
     labelCenterY = CGRectGetMaxY(self.contentView.bounds) - verticalPadding - labelSize.height / 2;
     iconCenterY = verticalPadding + iconSize.height / 2;
   }
@@ -123,7 +125,8 @@ static const UIEdgeInsets kEdgeInsets = {.top = 0, .right = 16, .bottom = 0, .le
   NSString *title = self.titleLabel.text;
   UIImage *icon = self.iconImageView.image;
   BOOL hasMultipleContents = title && title.length > 0 && icon;
-  const CGFloat minHeight = hasMultipleContents ? kMinHeightTitleAndImage : kMinHeightTitleOrImageOnly;
+  const CGFloat minHeight =
+      hasMultipleContents ? kMinHeightTitleAndImage : kMinHeightTitleOrImageOnly;
   const CGFloat maxHeight = MAX(minHeight, size.height);
 
   const CGFloat horizontalPadding = kEdgeInsets.left + kEdgeInsets.right;
