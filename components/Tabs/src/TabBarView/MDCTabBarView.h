@@ -37,7 +37,7 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
 /**
  The template for the selection indicator.
  */
-@property(null_resettable, nonatomic, strong) id<MDCTabBarViewIndicatorTemplate> selectionIndicatorTemplate;
+@property(nonnull, nonatomic, strong) id<MDCTabBarViewIndicatorTemplate> selectionIndicatorTemplate;
 
 /**
  Sets the color of the bar items' image @c tintColor for the given control state.  Supports
