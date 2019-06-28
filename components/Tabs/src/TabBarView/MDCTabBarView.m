@@ -22,6 +22,9 @@ static char *const kKVOContextMDCTabBarView = "kKVOContextMDCTabBarView";
 /** Minimum (typical) height of a Material Tab bar. */
 static const CGFloat kMinHeight = 48;
 
+/** Leading padding for tab bar in a scrollable set up. */
+static const CGFloat kScrollablePadding = 52;
+
 static NSString *const kImageKeyPath = @"image";
 static NSString *const kTitleKeyPath = @"title";
 static NSString *const kAccessibilityLabelKeyPath = @"accessibilityLabel";
@@ -346,12 +349,24 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  CGFloat availableWidth = CGRectGetWidth(self.bounds);
+  CGRect availableBounds = self.bounds;
+  if (@available(iOS 11.0, *)) {
+    availableBounds = UIEdgeInsetsInsetRect(availableBounds, self.safeAreaInsets);
+  }
+  CGFloat availableWidth = CGRectGetWidth(availableBounds);
   CGFloat requiredWidth = [self justifiedWidth];
   BOOL canBeJustified = availableWidth >= requiredWidth;
-  self.containerView.distribution = canBeJustified ? UIStackViewDistributionFillEqually
-                                                   : UIStackViewDistributionFillProportionally;
-
+  if (canBeJustified) {
+    self.containerView.distribution = UIStackViewDistributionFillEqually;
+  } else {
+    self.containerView.distribution = UIStackViewDistributionFillProportionally;
+    // Inset the content insets if it is a scrollable view.
+    if (@available(iOS 11.0, *)) {
+      self.contentInset = UIEdgeInsetsMake(self.contentInset.top, self.safeAreaInsets.left,
+                                           self.contentInset.bottom, self.safeAreaInsets.right);
+    }
+  }
+  
   if (!self.initialScrollDone) {
     self.initialScrollDone = YES;
     [self scrollUntilSelectedItemIsVisibleWithoutAnimation];
@@ -400,6 +415,8 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
       maxHeight = contentSize.height;
     }
   }
+  maxHeight += self.edgeInsets.top + self.edgeInsets.bottom;
+  totalWidth += self.edgeInsets.left + self.edgeInsets.right;
   return CGSizeMake(totalWidth, MAX(kMinHeight, maxHeight));
 }
 
