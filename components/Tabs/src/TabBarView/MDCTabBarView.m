@@ -15,6 +15,9 @@
 #import "MDCTabBarView.h"
 #import "MDCTabBarViewDelegate.h"
 #import "private/MDCTabBarViewItemView.h"
+#import "MDCTabBarViewIndicatorTemplate.h"
+#import "private/MDCTabBarViewIndicatorView.h"
+#import "private/MDCTabBarViewPrivateIndicatorContext.h"
 
 // KVO contexts
 static char *const kKVOContextMDCTabBarView = "kKVOContextMDCTabBarView";
@@ -46,6 +49,10 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 /** The image tint colors for bar items. */
 @property(nonnull, nonatomic, strong)
     NSMutableDictionary<NSNumber *, UIColor *> *stateToImageTintColor;
+
+/** The view that renders @c selectionIndicatorTemplate. */
+@property(nonnull, nonatomic, strong) MDCTabBarViewIndicatorView *selectionIndicatorView;
+
 @end
 
 @implementation MDCTabBarView
@@ -64,10 +71,15 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     self.backgroundColor = UIColor.whiteColor;
     self.showsHorizontalScrollIndicator = NO;
 
+    _selectionIndicatorTemplate = [MDCTaDefa]
+
     _containerView = [[UIStackView alloc] init];
     _containerView.axis = UILayoutConstraintAxisHorizontal;
     _containerView.translatesAutoresizingMaskIntoConstraints = NO;
+    _selectionIndicatorView = [[MDCTabBarViewIndicatorView alloc] init];
+    _selectionIndicatorView.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:_containerView];
+    [self addSubview:_selectionIndicatorView];
   }
   return self;
 }
@@ -449,6 +461,54 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     expectedItemSize = [view sizeThatFits:self.contentSize];
   }
   return expectedItemSize;
+}
+
+/// Sets _selectionIndicator's bounds and center to display under the item at the given index with
+/// no animation. May be called from an animation block to animate the transition.
+- (void)updateSelectionIndicatorToIndex:(NSInteger)index {
+  if (index == NSNotFound || index > self.items.count) {
+    // Hide selection indicator.
+    _selectionIndicator.bounds = CGRectZero;
+    return;
+  }
+
+
+
+  // Place selection indicator under the item's cell.
+  CGRect selectionIndicatorBounds = layoutAttributes.bounds;
+  CGPoint selectionIndicatorCenter = layoutAttributes.center;
+  _selectionIndicator.bounds = selectionIndicatorBounds;
+  _selectionIndicator.center = selectionIndicatorCenter;
+
+  // Extract content frame from cell.
+  CGRect contentFrame = selectionIndicatorBounds;
+  UICollectionViewCell *cell = [_collectionView cellForItemAtIndexPath:indexPath];
+  if ([cell isKindOfClass:[MDCItemBarCell class]]) {
+    MDCItemBarCell *itemBarCell = (MDCItemBarCell *)cell;
+    contentFrame = [cell convertRect:itemBarCell.contentFrame fromView:cell];
+  }
+
+  // Construct a context object describing the selected tab.
+  UITabBarItem *item = [self itemAtIndexPath:indexPath];
+  if (!item) {
+    return;
+  }
+  MDCTabBarPrivateIndicatorContext *context =
+  [[MDCTabBarPrivateIndicatorContext alloc] initWithItem:item
+                                                  bounds:selectionIndicatorBounds
+                                            contentFrame:contentFrame];
+
+  // Ask the template for attributes.
+  id<MDCTabBarIndicatorTemplate> template = _style.selectionIndicatorTemplate;
+  MDCTabBarIndicatorAttributes *indicatorAttributes =
+  [template indicatorAttributesForContext:context];
+
+  // Update the selection indicator.
+  [_selectionIndicator applySelectionIndicatorAttributes:indicatorAttributes];
+}
+
+- (CGRect)viewFrameForItemAtIndex:(NSUInteger)index {
+
 }
 
 #pragma mark - Actions
