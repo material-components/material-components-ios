@@ -27,7 +27,6 @@ static NSString *const kTitleKeyPath = @"title";
 static NSString *const kAccessibilityLabelKeyPath = @"accessibilityLabel";
 static NSString *const kAccessibilityHintKeyPath = @"accessibilityHint";
 static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifier";
-static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
 @interface MDCTabBarView ()
 
@@ -107,9 +106,6 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     itemView.accessibilityLabel = item.accessibilityLabel;
     itemView.accessibilityHint = item.accessibilityHint;
     itemView.accessibilityIdentifier = item.accessibilityIdentifier;
-    itemView.accessibilityTraits = item.accessibilityTraits == UIAccessibilityTraitNone
-                                       ? UIAccessibilityTraitButton
-                                       : item.accessibilityTraits;
     itemView.titleLabel.textColor = [self titleColorForState:UIControlStateNormal];
     itemView.iconImageView.image = item.image;
     [itemView setContentCompressionResistancePriority:UILayoutPriorityRequired
@@ -140,16 +136,6 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     return;
   }
 
-  // Sets the old selected item view's traits back.
-  NSUInteger oldSelectedItemIndex = [self.items indexOfObject:self.selectedItem];
-  if (oldSelectedItemIndex != NSNotFound) {
-    UIView *oldSelectedItemView = self.containerView.arrangedSubviews[oldSelectedItemIndex];
-    oldSelectedItemView.accessibilityTraits =
-        self.selectedItem.accessibilityTraits == UIAccessibilityTraitNone
-            ? UIAccessibilityTraitButton
-            : self.selectedItem.accessibilityTraits;
-  }
-
   // Handle setting to `nil` without passing it to the nonnull parameter in `indexOfObject:`
   if (!selectedItem) {
     _selectedItem = selectedItem;
@@ -165,14 +151,12 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   }
   _selectedItem = selectedItem;
 
-  UIView *newSelectedItemView = self.containerView.arrangedSubviews[itemIndex];
-  newSelectedItemView.accessibilityTraits =
-      self.selectedItem.accessibilityTraits == UIAccessibilityTraitNone
-          ? UIAccessibilityTraitSelected
-          : self.selectedItem.accessibilityTraits;
   [self updateTitleColorForAllViews];
   [self updateImageTintColorForAllViews];
-  [self scrollRectToVisible:self.containerView.arrangedSubviews[itemIndex].frame animated:YES];
+  CGRect itemFrameInScrollViewBounds =
+      [self convertRect:self.containerView.arrangedSubviews[itemIndex].frame
+               fromView:self.containerView];
+  [self scrollRectToVisible:itemFrameInScrollViewBounds animated:YES];
 }
 
 - (void)updateImageTintColorForAllViews {
@@ -271,10 +255,6 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
            forKeyPath:kAccessibilityIdentifierKeyPath
               options:NSKeyValueObservingOptionNew
               context:kKVOContextMDCTabBarView];
-    [item addObserver:self
-           forKeyPath:kAccessibilityTraitsKeyPath
-              options:NSKeyValueObservingOptionNew
-              context:kKVOContextMDCTabBarView];
   }
 }
 
@@ -290,9 +270,6 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
                  context:kKVOContextMDCTabBarView];
     [item removeObserver:self
               forKeyPath:kAccessibilityIdentifierKeyPath
-                 context:kKVOContextMDCTabBarView];
-    [item removeObserver:self
-              forKeyPath:kAccessibilityTraitsKeyPath
                  context:kKVOContextMDCTabBarView];
   }
 }
@@ -326,8 +303,6 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
       tabBarItemView.accessibilityHint = change[NSKeyValueChangeNewKey];
     } else if ([keyPath isEqualToString:kAccessibilityIdentifierKeyPath]) {
       tabBarItemView.accessibilityIdentifier = change[NSKeyValueChangeNewKey];
-    } else if ([keyPath isEqualToString:kAccessibilityTraitsKeyPath]) {
-      tabBarItemView.accessibilityTraits = [change[NSKeyValueChangeNewKey] unsignedLongLongValue];
     }
   } else {
     [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
