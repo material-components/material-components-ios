@@ -54,6 +54,7 @@ static NSString *const kExampleTitle = @"TabBarView";
               image:[[UIImage imageNamed:@"Favorite"]
                         imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
                 tag:1];
+  item2.accessibilityTraits = UIAccessibilityTraitStaticText;
   UITabBarItem *item3 = [[UITabBarItem alloc]
       initWithTitle:@"Cake"
               image:[[UIImage imageNamed:@"Cake"]
@@ -82,7 +83,7 @@ static NSString *const kExampleTitle = @"TabBarView";
                         forState:UIControlStateNormal];
   [self.tabBar setImageTintColor:self.containerScheme.colorScheme.primaryColor
                         forState:UIControlStateSelected];
-  self.tabBar.selectedItem = item1;
+  self.tabBar.selectedItem = item4;
   self.tabBar.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:self.tabBar];
 
