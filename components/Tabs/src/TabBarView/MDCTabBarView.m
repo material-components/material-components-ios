@@ -407,12 +407,14 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 - (void)updateStackviewLayout {
   CGFloat availableWidth = CGRectGetWidth(self.bounds);
   CGFloat requiredWidth = [self justifiedWidth];
-  UIStackViewDistribution distribution = availableWidth >= requiredWidth ? UIStackViewDistributionFillEqually
-  : UIStackViewDistributionFillProportionally;
+  UIStackViewDistribution distribution = availableWidth >= requiredWidth
+                                             ? UIStackViewDistributionFillEqually
+                                             : UIStackViewDistributionFillProportionally;
   if (self.containerView.distribution != distribution) {
     self.containerView.distribution = distribution;
-    [self.containerView layoutIfNeeded];
+    [self.containerView setNeedsLayout];
   }
+  [self.containerView layoutIfNeeded];
 }
 
 - (void)willMoveToSuperview:(UIView *)newSuperview {
@@ -500,13 +502,13 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   }
 
   if (CGRectGetWidth(self.containerView.bounds) > 0) {
-    NSLog(@"(%@) is located at (%@)", self.items[index].title, NSStringFromCGRect(CGRectStandardize(self.containerView.arrangedSubviews[index].frame)));
     return CGRectStandardize(self.containerView.arrangedSubviews[index].frame);
   }
 
   BOOL isRTL =
       [self mdf_effectiveUserInterfaceLayoutDirection] == UIUserInterfaceLayoutDirectionRightToLeft;
-  CGFloat viewOriginX = isRTL ? CGRectGetMaxX(self.containerView.bounds) : CGRectGetMinX(self.containerView.bounds);
+  CGFloat viewOriginX =
+      isRTL ? CGRectGetMaxX(self.containerView.bounds) : CGRectGetMinX(self.containerView.bounds);
 
   for (NSUInteger i = 0; i < index; ++i) {
     CGSize viewSize = [self expectedSizeForView:self.containerView.arrangedSubviews[i]];
@@ -522,16 +524,16 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   }
   CGRect itemFrameInContainerView = CGRectMake(
       viewOriginX, CGRectGetMinY(self.containerView.bounds), viewSize.width, viewSize.height);
-  CGRect convertedRect =  [self convertRect:itemFrameInContainerView fromView:self.containerView];
-  NSLog(@"(%@) is located at (%@)", self.items[index].title, NSStringFromCGRect(convertedRect));
+  CGRect convertedRect = [self convertRect:itemFrameInContainerView fromView:self.containerView];
   return convertedRect;
 }
 
 - (CGSize)expectedSizeForView:(UIView *)view {
   if (self.containerView.distribution == UIStackViewDistributionFillEqually) {
     if (CGRectGetWidth(self.containerView.bounds) < 0) {
-      return CGSizeMake(CGRectGetWidth(self.containerView.bounds) / self.containerView.arrangedSubviews.count,
-                        CGRectGetHeight(self.containerView.bounds));
+      return CGSizeMake(
+          CGRectGetWidth(self.containerView.bounds) / self.containerView.arrangedSubviews.count,
+          CGRectGetHeight(self.containerView.bounds));
     }
   }
   CGSize expectedItemSize = view.intrinsicContentSize;
