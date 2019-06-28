@@ -99,6 +99,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     _containerView.translatesAutoresizingMaskIntoConstraints = NO;
     _selectionIndicatorView = [[MDCTabBarViewIndicatorView alloc] init];
     _selectionIndicatorView.translatesAutoresizingMaskIntoConstraints = NO;
+    _selectionIndicatorView.userInteractionEnabled = NO;
     [self addSubview:_containerView];
     [self addSubview:_selectionIndicatorView];
   }
