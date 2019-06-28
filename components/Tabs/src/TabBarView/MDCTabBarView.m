@@ -327,6 +327,11 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
   }
 }
 
+- (void)willMoveToSuperview:(UIView *)newSuperview {
+  [super willMoveToSuperview:newSuperview];
+  self.initialScrollDone = NO;
+}
+
 - (void)setBounds:(CGRect)bounds {
   BOOL shouldScroll =
       !CGSizeEqualToSize(CGSizeMake(CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds)),
