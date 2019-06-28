@@ -65,7 +65,8 @@ static NSString *const kLongTitleArabic =
   // Default to white since in actual use the background would be transparent.
   self.itemView.backgroundColor = UIColor.whiteColor;
   self.itemView.iconImageView.image =
-      [UIImage mdc_testImageOfSize:CGSizeMake(24, 24) withStyle:MDCSnapshotTestImageStyleFramedX];
+      [[UIImage mdc_testImageOfSize:CGSizeMake(24, 24) withStyle:MDCSnapshotTestImageStyleFramedX]
+          imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 }
 
 - (void)tearDown {
@@ -537,6 +538,26 @@ static NSString *const kLongTitleArabic =
   [self changeToRTL];
   self.itemView.bounds = CGRectMake(0, 0, kMinimumWidth * (CGFloat)1.5,
                                     kMinimumHeightOnlyTitleOrOnlyImage * (CGFloat)1.5);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.itemView];
+}
+
+#pragma mark - Ripple
+
+- (void)testRippleAppearanceWhenFullyPressed {
+  // Given
+  self.itemView.titleLabel.textColor = UIColor.yellowColor;
+  self.itemView.iconImageView.tintColor = UIColor.magentaColor;
+  self.itemView.rippleTouchController.rippleView.rippleColor = UIColor.blueColor;
+  [self.itemView sizeToFit];
+
+  // When
+  [self.itemView.rippleTouchController.rippleView
+      beginRippleTouchDownAtPoint:CGPointMake(CGRectGetMidX(self.itemView.bounds),
+                                              CGRectGetMidY(self.itemView.bounds))
+                         animated:NO
+                       completion:nil];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.itemView];
