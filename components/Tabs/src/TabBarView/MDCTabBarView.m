@@ -357,6 +357,8 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
     }
   }
 
+  // The padding insets should not be added to the safe area insets. Instead, allow the design-based
+  // padding insets to overlap the safe are insets if possible.
   if (@available(iOS 11.0, *)) {
     UIEdgeInsets safeAreaInsets = self.safeAreaInsets;
     paddingInsets.left = MAX(safeAreaInsets.left, paddingInsets.left);
@@ -364,6 +366,7 @@ static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifi
     paddingInsets.top = MAX(safeAreaInsets.top, paddingInsets.top);
     paddingInsets.bottom = MAX(safeAreaInsets.bottom, paddingInsets.bottom);
   }
+  // Apply any user-provided contentEdgeInsets to the padding and safe area insets.
   UIEdgeInsets directionalContentEdgeInsets = [self directionalContentEdgeInsets];
   self.leadingConstraint.constant = paddingInsets.left + directionalContentEdgeInsets.left;
   self.trailingConstraint.constant = -(paddingInsets.right + directionalContentEdgeInsets.right);
