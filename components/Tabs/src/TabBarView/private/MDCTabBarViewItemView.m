@@ -27,10 +27,10 @@ static const CGFloat kMinHeightTitleOrImageOnly = 48;
 static const CGFloat kMinHeightTitleAndImage = 72;
 
 /** The vertical padding between the image view and the title label. */
-static const CGFloat kImageTitlePadding = 8;
+static const CGFloat kImageTitlePadding = 3;
 
 /// Outer edge padding from spec: https://material.io/go/design-tabs#spec.
-static const UIEdgeInsets kEdgeInsets = {.top = 0, .right = 16, .bottom = 0, .left = 16};
+static const UIEdgeInsets kEdgeInsets = {.top = 12, .right = 16, .bottom = 12, .left = 16};
 
 @interface MDCTabBarViewItemView ()
 
@@ -104,8 +104,7 @@ static const UIEdgeInsets kEdgeInsets = {.top = 0, .right = 16, .bottom = 0, .le
 
   if (iconSize.height != 0 && labelSize.height != 0) {
     CGFloat verticalPadding = (CGRectGetHeight(self.contentView.bounds) - iconSize.height -
-                               labelSize.height - kImageTitlePadding) /
-                              2;
+                               labelSize.height - kImageTitlePadding) / 2;
     labelCenterY = CGRectGetMaxY(self.contentView.bounds) - verticalPadding - labelSize.height / 2;
     iconCenterY = verticalPadding + iconSize.height / 2;
   }
