@@ -16,6 +16,8 @@
 #import "MDCTabBarViewDelegate.h"
 #import "private/MDCTabBarViewItemView.h"
 
+#import <CoreGraphics/CoreGraphics.h>
+
 // KVO contexts
 static char *const kKVOContextMDCTabBarView = "kKVOContextMDCTabBarView";
 
@@ -136,6 +138,10 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 }
 
 - (void)setSelectedItem:(UITabBarItem *)selectedItem {
+  [self setSelectedItem:selectedItem animated:YES];
+}
+
+- (void)setSelectedItem:(UITabBarItem *)selectedItem animated:(BOOL)animated {
   if (self.selectedItem == selectedItem) {
     return;
   }
@@ -171,7 +177,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   CGRect itemFrameInScrollViewBounds =
       [self convertRect:self.containerView.arrangedSubviews[itemIndex].frame
                fromView:self.containerView];
-  [self scrollRectToVisible:itemFrameInScrollViewBounds animated:YES];
+  [self scrollRectToVisible:itemFrameInScrollViewBounds animated:animated];
 }
 
 - (void)updateImageTintColorForAllViews {
@@ -424,7 +430,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
 - (void)scrollUntilSelectedItemIsVisibleWithoutAnimation {
   NSUInteger index = [self.items indexOfObject:self.selectedItem];
-  if (index == NSNotFound || index > self.containerView.arrangedSubviews.count) {
+  if (index == NSNotFound || index >= self.containerView.arrangedSubviews.count) {
     return;
   }
 
