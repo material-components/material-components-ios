@@ -32,6 +32,12 @@ static const CGFloat kImageTitlePadding = 3;
 /// Outer edge padding from spec: https://material.io/go/design-tabs#spec.
 static const UIEdgeInsets kEdgeInsets = {.top = 12, .right = 16, .bottom = 12, .left = 16};
 
+/**
+ Edge insets for text-only Tabs. Although top and bottom are not specified, we insert some
+ minimal (8 points) padding so things don't look awful.
+ */
+static const UIEdgeInsets kEdgeInsetsTextOnly = {.top = 8, .right = 16, .bottom = 8, .left = 16};
+
 @interface MDCTabBarViewItemView ()
 
 @property(nonatomic, strong) UIView *contentView;
@@ -93,6 +99,10 @@ static const UIEdgeInsets kEdgeInsets = {.top = 12, .right = 16, .bottom = 12, .
 - (void)layoutSubviews {
   [super layoutSubviews];
 
+  if (self.titleLabel.text && !self.iconImageView.image) {
+    [self layoutSubviewsTextOnly];
+    return;
+  }
   CGRect contentFrame = UIEdgeInsetsInsetRect(self.bounds, kEdgeInsets);
   self.contentView.frame = contentFrame;
 
@@ -104,7 +114,8 @@ static const UIEdgeInsets kEdgeInsets = {.top = 12, .right = 16, .bottom = 12, .
 
   if (iconSize.height != 0 && labelSize.height != 0) {
     CGFloat verticalPadding = (CGRectGetHeight(self.contentView.bounds) - iconSize.height -
-                               labelSize.height - kImageTitlePadding) / 2;
+                               labelSize.height - kImageTitlePadding) /
+                              2;
     labelCenterY = CGRectGetMaxY(self.contentView.bounds) - verticalPadding - labelSize.height / 2;
     iconCenterY = verticalPadding + iconSize.height / 2;
   }
@@ -116,11 +127,28 @@ static const UIEdgeInsets kEdgeInsets = {.top = 12, .right = 16, .bottom = 12, .
                  iconSize.height);
 }
 
+- (void)layoutSubviewsTextOnly {
+  CGRect contentFrame = UIEdgeInsetsInsetRect(self.bounds, kEdgeInsetsTextOnly);
+  self.contentView.frame = contentFrame;
+
+  CGSize contentSize =
+      CGSizeMake(CGRectGetWidth(self.contentView.bounds), CGRectGetHeight(self.contentView.bounds));
+  CGSize labelWidthFitSize = [self.titleLabel sizeThatFits:contentSize];
+  CGSize labelSize =
+      CGSizeMake(contentSize.width, MIN(contentSize.height, labelWidthFitSize.height));
+  self.titleLabel.bounds = CGRectMake(0, 0, labelSize.width, labelSize.height);
+  self.titleLabel.center =
+      CGPointMake(CGRectGetMidX(self.contentView.bounds), CGRectGetMidY(self.contentView.bounds));
+}
+
 - (CGSize)intrinsicContentSize {
   return [self sizeThatFits:CGSizeMake(kMaxWidth, CGFLOAT_MAX)];
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
+  if (self.titleLabel.text && !self.iconImageView.image) {
+    return [self sizeThatFitsTextOnly:size];
+  }
   NSString *title = self.titleLabel.text;
   UIImage *icon = self.iconImageView.image;
   BOOL hasMultipleContents = title && title.length > 0 && icon;
@@ -142,6 +170,15 @@ static const UIEdgeInsets kEdgeInsets = {.top = 12, .right = 16, .bottom = 12, .
   height += hasMultipleContents ? kImageTitlePadding : 0;
   height = MAX(minHeight, height);
   return CGSizeMake(width, height);
+}
+
+- (CGSize)sizeThatFitsTextOnly:(CGSize)size {
+  CGSize maxSize =
+      CGSizeMake(kMaxWidth - kEdgeInsetsTextOnly.left - kEdgeInsetsTextOnly.right, CGFLOAT_MAX);
+  CGSize labelSize = [self.titleLabel sizeThatFits:maxSize];
+  return CGSizeMake(labelSize.width + kEdgeInsetsTextOnly.left + kEdgeInsetsTextOnly.right,
+                    MAX(kMinHeightTitleOrImageOnly,
+                        labelSize.height + kEdgeInsetsTextOnly.top + kEdgeInsetsTextOnly.bottom));
 }
 
 #pragma mark - UIAccessibility
