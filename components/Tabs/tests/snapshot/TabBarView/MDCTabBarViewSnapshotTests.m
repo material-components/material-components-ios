@@ -166,6 +166,25 @@ static const CGFloat kMaxItemWidth = 360;
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
+- (void)testSelectedItemInitiallyVisible {
+  // Given
+  self.tabBarView.bounds =
+      CGRectMake(0, 0, kMinItemWidth * (CGFloat)1.5, kExpectedHeightTitlesOrIconsOnly);
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:nil tag:1];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:nil tag:2];
+  UITabBarItem *item4 = [[UITabBarItem alloc] initWithTitle:@"Four" image:nil tag:3];
+  UITabBarItem *item5 = [[UITabBarItem alloc] initWithTitle:@"Five" image:nil tag:4];
+  UITabBarItem *item6 = [[UITabBarItem alloc] initWithTitle:@"Six" image:nil tag:5];
+  self.tabBarView.items = @[ item1, item2, item3, item4, item5, item6 ];
+
+  // When
+  self.tabBarView.selectedItem = item5;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
 #pragma mark - Key-Value Observing (KVO)
 
 - (void)testChangingTitleAfterAddingToBar {
