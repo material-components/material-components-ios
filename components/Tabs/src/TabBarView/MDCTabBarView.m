@@ -358,14 +358,11 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   } else {
     self.containerView.distribution = UIStackViewDistributionFillProportionally;
     // Inset the content insets if it is a scrollable view.
-    if (@available(iOS 11.0, *) ) {
-      self.contentInset = UIEdgeInsetsMake(self.contentInset.top,
-                                           self.safeAreaInsets.left,
-                                           self.contentInset.bottom,
-                                           self.safeAreaInsets.right);
+    if (@available(iOS 11.0, *)) {
+      self.contentInset = UIEdgeInsetsMake(self.contentInset.top, self.safeAreaInsets.left,
+                                           self.contentInset.bottom, self.safeAreaInsets.right);
     }
   }
-
 
   if (!self.initialScrollDone) {
     self.initialScrollDone = YES;
@@ -400,7 +397,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   [self.containerView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor].active = YES;
 
   [self.containerView.widthAnchor constraintGreaterThanOrEqualToAnchor:self.widthAnchor].active =
-  YES;
+      YES;
 
   self.containerViewConstraintsActive = YES;
 
