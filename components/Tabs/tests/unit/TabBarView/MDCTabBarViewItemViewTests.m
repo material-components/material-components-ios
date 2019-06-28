@@ -58,7 +58,7 @@ static UIImage *fakeImage(CGFloat width, CGFloat height) {
 
   // Then
   XCTAssertEqualWithAccuracy(intrinsicContentSize.width, kMinWidth, 0.001);
-  XCTAssertEqualWithAccuracy(intrinsicContentSize.height, kMinHeightOfTitleOrImageOnlyView, 0.001);
+  XCTAssertEqualWithAccuracy(intrinsicContentSize.height, kMinHeightOfTitleAndImageView, 0.001);
 }
 
 - (void)testIntrinsicContentSizeForLargeImageLimitsWidth {
@@ -114,7 +114,7 @@ static UIImage *fakeImage(CGFloat width, CGFloat height) {
 
   // Then
   XCTAssertEqualWithAccuracy(fitSize.width, kMinWidth, 0.001);
-  XCTAssertEqualWithAccuracy(fitSize.height, kMinHeightOfTitleOrImageOnlyView, 0.001);
+  XCTAssertEqualWithAccuracy(fitSize.height, kMinHeightOfTitleAndImageView, 0.001);
 }
 
 - (void)testSizeThatFitsForNoContentWithReasonableDimensionsIsMinimumSize {
@@ -128,7 +128,7 @@ static UIImage *fakeImage(CGFloat width, CGFloat height) {
 
   // Then
   XCTAssertEqualWithAccuracy(fitSize.width, kMinWidth, 0.001);
-  XCTAssertEqualWithAccuracy(fitSize.height, kMinHeightOfTitleOrImageOnlyView, 0.001);
+  XCTAssertEqualWithAccuracy(fitSize.height, kMinHeightOfTitleAndImageView, 0.001);
 }
 
 - (void)testSizeThatFitsForNoContentWithLargeDimensionsIsMinimumSize {
@@ -141,7 +141,7 @@ static UIImage *fakeImage(CGFloat width, CGFloat height) {
 
   // Then
   XCTAssertEqualWithAccuracy(fitSize.width, kMinWidth, 0.001);
-  XCTAssertEqualWithAccuracy(fitSize.height, kMinHeightOfTitleOrImageOnlyView, 0.001);
+  XCTAssertEqualWithAccuracy(fitSize.height, kMinHeightOfTitleAndImageView, 0.001);
 }
 
 - (void)testSizeThatFitsForLargeImageWithSmallerDimensionsLimitsWidth {
