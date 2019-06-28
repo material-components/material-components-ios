@@ -90,11 +90,13 @@ static NSString *const kExampleTitle = @"TabBarView";
   if (@available(iOS 11.0, *)) {
     [self.view.layoutMarginsGuide.topAnchor constraintEqualToAnchor:self.tabBar.topAnchor].active =
         YES;
+    [self.view.safeAreaLayoutGuide.leadingAnchor constraintEqualToAnchor:self.tabBar.leadingAnchor].active = YES;
+    [self.view.safeAreaLayoutGuide.trailingAnchor constraintEqualToAnchor:self.tabBar.trailingAnchor].active = YES;
   } else {
     [self.topLayoutGuide.bottomAnchor constraintEqualToAnchor:self.tabBar.topAnchor].active = YES;
   }
-  [self.view.leftAnchor constraintEqualToAnchor:self.tabBar.leftAnchor].active = YES;
-  [self.view.rightAnchor constraintEqualToAnchor:self.tabBar.rightAnchor].active = YES;
+//  [self.view.leftAnchor constraintEqualToAnchor:self.tabBar.leftAnchor].active = YES;
+//  [self.view.rightAnchor constraintEqualToAnchor:self.tabBar.rightAnchor].active = YES;
 }
 
 #pragma mark - MDCTabBarViewDelegate

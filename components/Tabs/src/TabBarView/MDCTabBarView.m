@@ -385,16 +385,28 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
   UILayoutGuide *layout;
   if (@available(iOS 11.0, *)) {
-    layout = self.safeAreaLayoutGuide;
+    [self.containerView.leadingAnchor constraintEqualToAnchor:self.contentLayoutGuide.leadingAnchor].active = YES;
+    [self.containerView.trailingAnchor constraintEqualToAnchor:self.contentLayoutGuide.trailingAnchor].active = YES;
+    [self.containerView.heightAnchor constraintEqualToAnchor:self.contentLayoutGuide.heightAnchor].active =
+    YES;
+    [self.containerView.topAnchor constraintEqualToAnchor:self.contentLayoutGuide.topAnchor].active = YES;
+    [self.containerView.bottomAnchor constraintEqualToAnchor:self.contentLayoutGuide.bottomAnchor].active = YES;
+
+    [self.containerView.widthAnchor constraintGreaterThanOrEqualToAnchor:self.frameLayoutGuide.widthAnchor].active =
+    YES;
+
+//    [self.superview.safeAreaLayoutGuide.leadingAnchor constraintGreaterThanOrEqualToAnchor:self.frameLayoutGuide.leadingAnchor].active =
+//    YES;
+//    [self.superview.safeAreaLayoutGuide.trailingAnchor constraintGreaterThanOrEqualToAnchor:self.frameLayoutGuide.trailingAnchor].active =
+//    YES;
+//    [self.superview.safeAreaLayoutGuide.topAnchor constraintGreaterThanOrEqualToAnchor:self.frameLayoutGuide.topAnchor].active =
+//    YES;
+//    [self.superview.safeAreaLayoutGuide.bottomAnchor constraintGreaterThanOrEqualToAnchor:self.frameLayoutGuide.bottomAnchor].active =
+//    YES;
   } else {
     layout = self.layoutMarginsGuide;
   }
-  [self.containerView.leadingAnchor constraintEqualToAnchor:layout.leadingAnchor].active = YES;
-  [self.containerView.trailingAnchor constraintEqualToAnchor:layout.trailingAnchor].active = YES;
-  [self.containerView.widthAnchor constraintGreaterThanOrEqualToAnchor:layout.widthAnchor].active =
-      YES;
-  [self.containerView.topAnchor constraintEqualToAnchor:layout.topAnchor].active = YES;
-  [self.containerView.bottomAnchor constraintEqualToAnchor:layout.bottomAnchor].active = YES;
+
 
   self.containerViewConstraintsActive = YES;
 
