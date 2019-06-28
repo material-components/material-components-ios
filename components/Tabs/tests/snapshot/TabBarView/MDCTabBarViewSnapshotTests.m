@@ -31,22 +31,6 @@ static const CGFloat kMinItemWidth = 90;
 /** The maximum width of a tab bar item. */
 static const CGFloat kMaxItemWidth = 360;
 
-/** A test double for setting @c safeAreaInsets within MDCTabBarView . */
-@interface MDCTabBarViewSnapshotTestsFakeSuperview : UIView
-
-/** Custom @c safeAreaInsets for this view and is subviews. */
-@property(nonatomic, assign) UIEdgeInsets settableSafeAreaInsets;
-
-@end
-
-@implementation MDCTabBarViewSnapshotTestsFakeSuperview
-
-- (UIEdgeInsets)safeAreaInsets {
-  return self.settableSafeAreaInsets;
-}
-
-@end
-
 @interface MDCTabBarViewSnapshotTests : MDCSnapshotTestCase
 
 /** The view being snapshotted. */
