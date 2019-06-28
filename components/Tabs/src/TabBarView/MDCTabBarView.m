@@ -22,9 +22,6 @@ static char *const kKVOContextMDCTabBarView = "kKVOContextMDCTabBarView";
 /** Minimum (typical) height of a Material Tab bar. */
 static const CGFloat kMinHeight = 48;
 
-/** Leading padding for tab bar in a scrollable set up. */
-static const CGFloat kScrollablePadding = 52;
-
 static NSString *const kImageKeyPath = @"image";
 static NSString *const kTitleKeyPath = @"title";
 static NSString *const kAccessibilityLabelKeyPath = @"accessibilityLabel";
@@ -366,7 +363,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
                                            self.contentInset.bottom, self.safeAreaInsets.right);
     }
   }
-  
+
   if (!self.initialScrollDone) {
     self.initialScrollDone = YES;
     [self scrollUntilSelectedItemIsVisibleWithoutAnimation];
@@ -415,8 +412,6 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
       maxHeight = contentSize.height;
     }
   }
-  maxHeight += self.edgeInsets.top + self.edgeInsets.bottom;
-  totalWidth += self.edgeInsets.left + self.edgeInsets.right;
   return CGSizeMake(totalWidth, MAX(kMinHeight, maxHeight));
 }
 
