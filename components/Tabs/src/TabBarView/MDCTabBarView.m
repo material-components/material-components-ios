@@ -353,8 +353,19 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   CGFloat availableWidth = CGRectGetWidth(availableBounds);
   CGFloat requiredWidth = [self justifiedWidth];
   BOOL canBeJustified = availableWidth >= requiredWidth;
-  self.containerView.distribution = canBeJustified ? UIStackViewDistributionFillEqually
-                                                   : UIStackViewDistributionFillProportionally;
+  if (canBeJustified) {
+    self.containerView.distribution = UIStackViewDistributionFillEqually;
+  } else {
+    self.containerView.distribution = UIStackViewDistributionFillProportionally;
+    // Inset the content insets if it is a scrollable view.
+    if (@available(iOS 11.0, *) ) {
+      self.contentInset = UIEdgeInsetsMake(self.contentInset.top,
+                                           self.safeAreaInsets.left,
+                                           self.contentInset.bottom,
+                                           self.safeAreaInsets.right);
+    }
+  }
+
 
   if (!self.initialScrollDone) {
     self.initialScrollDone = YES;
@@ -383,30 +394,13 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     return;
   }
 
-  UILayoutGuide *layout;
-  if (@available(iOS 11.0, *)) {
-    [self.containerView.leadingAnchor constraintEqualToAnchor:self.contentLayoutGuide.leadingAnchor].active = YES;
-    [self.containerView.trailingAnchor constraintEqualToAnchor:self.contentLayoutGuide.trailingAnchor].active = YES;
-    [self.containerView.heightAnchor constraintEqualToAnchor:self.contentLayoutGuide.heightAnchor].active =
-    YES;
-    [self.containerView.topAnchor constraintEqualToAnchor:self.contentLayoutGuide.topAnchor].active = YES;
-    [self.containerView.bottomAnchor constraintEqualToAnchor:self.contentLayoutGuide.bottomAnchor].active = YES;
+  [self.containerView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor].active = YES;
+  [self.containerView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor].active = YES;
+  [self.containerView.topAnchor constraintEqualToAnchor:self.topAnchor].active = YES;
+  [self.containerView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor].active = YES;
 
-    [self.containerView.widthAnchor constraintGreaterThanOrEqualToAnchor:self.frameLayoutGuide.widthAnchor].active =
-    YES;
-
-//    [self.superview.safeAreaLayoutGuide.leadingAnchor constraintGreaterThanOrEqualToAnchor:self.frameLayoutGuide.leadingAnchor].active =
-//    YES;
-//    [self.superview.safeAreaLayoutGuide.trailingAnchor constraintGreaterThanOrEqualToAnchor:self.frameLayoutGuide.trailingAnchor].active =
-//    YES;
-//    [self.superview.safeAreaLayoutGuide.topAnchor constraintGreaterThanOrEqualToAnchor:self.frameLayoutGuide.topAnchor].active =
-//    YES;
-//    [self.superview.safeAreaLayoutGuide.bottomAnchor constraintGreaterThanOrEqualToAnchor:self.frameLayoutGuide.bottomAnchor].active =
-//    YES;
-  } else {
-    layout = self.layoutMarginsGuide;
-  }
-
+  [self.containerView.widthAnchor constraintGreaterThanOrEqualToAnchor:self.widthAnchor].active =
+  YES;
 
   self.containerViewConstraintsActive = YES;
 

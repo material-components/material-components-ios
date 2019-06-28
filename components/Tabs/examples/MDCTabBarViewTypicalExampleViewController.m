@@ -50,7 +50,7 @@ static NSString *const kExampleTitle = @"TabBarView";
                         imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
                 tag:0];
   UITabBarItem *item2 = [[UITabBarItem alloc]
-      initWithTitle:@"Unselectable"
+      initWithTitle:@"UnselectableLongLongLong"
               image:[[UIImage imageNamed:@"Favorite"]
                         imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
                 tag:1];
@@ -83,20 +83,18 @@ static NSString *const kExampleTitle = @"TabBarView";
                         forState:UIControlStateNormal];
   [self.tabBar setImageTintColor:self.containerScheme.colorScheme.primaryColor
                         forState:UIControlStateSelected];
-  self.tabBar.selectedItem = item4;
+  self.tabBar.selectedItem = item1;
   self.tabBar.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:self.tabBar];
 
   if (@available(iOS 11.0, *)) {
     [self.view.layoutMarginsGuide.topAnchor constraintEqualToAnchor:self.tabBar.topAnchor].active =
         YES;
-    [self.view.safeAreaLayoutGuide.leadingAnchor constraintEqualToAnchor:self.tabBar.leadingAnchor].active = YES;
-    [self.view.safeAreaLayoutGuide.trailingAnchor constraintEqualToAnchor:self.tabBar.trailingAnchor].active = YES;
   } else {
     [self.topLayoutGuide.bottomAnchor constraintEqualToAnchor:self.tabBar.topAnchor].active = YES;
   }
-//  [self.view.leftAnchor constraintEqualToAnchor:self.tabBar.leftAnchor].active = YES;
-//  [self.view.rightAnchor constraintEqualToAnchor:self.tabBar.rightAnchor].active = YES;
+  [self.view.leftAnchor constraintEqualToAnchor:self.tabBar.leftAnchor].active = YES;
+  [self.view.rightAnchor constraintEqualToAnchor:self.tabBar.rightAnchor].active = YES;
 }
 
 #pragma mark - MDCTabBarViewDelegate
