@@ -398,6 +398,9 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   self.containerView.distribution = canBeJustified ? UIStackViewDistributionFillEqually
                                                    : UIStackViewDistributionFillProportionally;
 
+  if (self.selectionIndicatorView) {
+    [self updateSelectionIndicatorToIndex:[self.items indexOfObject:self.selectedItem]];
+  }
   if (!self.initialScrollDone) {
     self.initialScrollDone = YES;
     [self scrollUntilSelectedItemIsVisibleWithoutAnimation];
@@ -416,6 +419,9 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   [super setBounds:bounds];
   if (shouldScroll) {
     [self scrollUntilSelectedItemIsVisibleWithoutAnimation];
+    if (self.selectedItem) {
+      [self updateSelectionIndicatorToIndex:[self.items indexOfObject:self.selectedItem]];
+    }
   }
 }
 
@@ -470,7 +476,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
 - (void)scrollUntilSelectedItemIsVisibleWithoutAnimation {
   NSUInteger index = [self.items indexOfObject:self.selectedItem];
-  if (index == NSNotFound || index > self.containerView.arrangedSubviews.count) {
+  if (index == NSNotFound || index >= self.containerView.arrangedSubviews.count) {
     return;
   }
 
@@ -480,13 +486,18 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 }
 
 - (CGRect)estimatedFrameInContainerViewForItemAtIndex:(NSUInteger)index {
-  if (index == NSNotFound || index > self.containerView.arrangedSubviews.count) {
+  if (index == NSNotFound || index >= self.containerView.arrangedSubviews.count) {
     return CGRectZero;
+  }
+
+  if (CGRectGetWidth(self.containerView.bounds) > 0) {
+    NSLog(@"(%@) is located at (%@)", self.items[index].title, NSStringFromCGRect(CGRectStandardize(self.containerView.arrangedSubviews[index].frame)));
+    return CGRectStandardize(self.containerView.arrangedSubviews[index].frame);
   }
 
   BOOL isRTL =
       [self mdf_effectiveUserInterfaceLayoutDirection] == UIUserInterfaceLayoutDirectionRightToLeft;
-  CGFloat viewOriginX = isRTL ? CGRectGetMaxX(self.containerView.bounds) : 0;
+  CGFloat viewOriginX = isRTL ? CGRectGetMaxX(self.containerView.bounds) : CGRectGetMinX(self.containerView.bounds);
 
   for (NSUInteger i = 0; i < index; ++i) {
     CGSize viewSize = [self expectedSizeForView:self.containerView.arrangedSubviews[i]];
@@ -502,10 +513,18 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   }
   CGRect itemFrameInContainerView = CGRectMake(
       viewOriginX, CGRectGetMinY(self.containerView.bounds), viewSize.width, viewSize.height);
-  return [self convertRect:itemFrameInContainerView fromView:self.containerView];
+  CGRect convertedRect =  [self convertRect:itemFrameInContainerView fromView:self.containerView];
+  NSLog(@"(%@) is located at (%@)", self.items[index].title, NSStringFromCGRect(convertedRect));
+  return convertedRect;
 }
 
 - (CGSize)expectedSizeForView:(UIView *)view {
+  if (self.containerView.distribution == UIStackViewDistributionFillEqually) {
+    if (CGRectGetWidth(self.containerView.bounds) < 0) {
+      return CGSizeMake(CGRectGetWidth(self.containerView.bounds) / self.containerView.arrangedSubviews.count,
+                        CGRectGetHeight(self.containerView.bounds));
+    }
+  }
   CGSize expectedItemSize = view.intrinsicContentSize;
   if (expectedItemSize.width == UIViewNoIntrinsicMetric) {
     NSAssert(expectedItemSize.width != UIViewNoIntrinsicMetric,
@@ -518,7 +537,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 /// Sets _selectionIndicator's bounds and center to display under the item at the given index with
 /// no animation. May be called from an animation block to animate the transition.
 - (void)updateSelectionIndicatorToIndex:(NSUInteger)index {
-  if (index == NSNotFound || index > self.items.count) {
+  if (index == NSNotFound || index >= self.items.count) {
     // Hide selection indicator.
     self.selectionIndicatorView.bounds = CGRectZero;
     return;
@@ -587,14 +606,14 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 }
 
 - (MDCTabBarViewPositioningTuple *)positionInContainerViewForItemAtIndex:(NSUInteger)index {
-  if (index == NSNotFound || index > self.containerView.arrangedSubviews.count) {
+  if (index == NSNotFound || index >= self.containerView.arrangedSubviews.count) {
     return nil;
   }
 
   UIView *itemView = self.containerView.arrangedSubviews[index];
   MDCTabBarViewPositioningTuple *position = [[MDCTabBarViewPositioningTuple alloc] init];
   position.bounds = CGRectStandardize(itemView.bounds);
-  position.center = [self convertPoint:itemView.center fromView:self.containerView];
+  position.center = itemView.center;
   if (CGRectEqualToRect(position.bounds, CGRectZero)) {
     CGRect estimatedFrame = [self estimatedFrameInContainerViewForItemAtIndex:index];
     position.bounds =
