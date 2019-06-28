@@ -31,6 +31,22 @@ static const CGFloat kMinItemWidth = 90;
 /** The maximum width of a tab bar item. */
 static const CGFloat kMaxItemWidth = 360;
 
+/** A test double for setting @c safeAreaInsets within MDCTabBarView . */
+@interface MDCTabBarViewSnapshotTestsFakeSuperview : UIView
+
+/** Custom @c safeAreaInsets for this view and is subviews. */
+@property(nonatomic, assign) UIEdgeInsets settableSafeAreaInsets;
+
+@end
+
+@implementation MDCTabBarViewSnapshotTestsFakeSuperview
+
+- (UIEdgeInsets)safeAreaInsets {
+  return self.settableSafeAreaInsets;
+}
+
+@end
+
 @interface MDCTabBarViewSnapshotTests : MDCSnapshotTestCase
 
 /** The view being snapshotted. */
@@ -103,21 +119,6 @@ static const CGFloat kMaxItemWidth = 360;
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
-- (void)testItemsWithOnlyTitlesWithInsets {
-  // Given
-  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:nil tag:0];
-  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:nil tag:2];
-  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:nil tag:5];
-
-  // When
-  self.tabBarView.items = @[ item1, item2, item3 ];
-  self.tabBarView.selectedItem = item2;
-  self.tabBarView.contentEdgeInsets = UIEdgeInsetsMake(0.0, 10.0, 0.0, 10.0);
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.tabBarView];
-}
-
 - (void)testItemsWithOnlyTitlesWithInsetsResultsInScrollableLayout {
   // Given
   UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:nil tag:0];
@@ -128,37 +129,6 @@ static const CGFloat kMaxItemWidth = 360;
   self.tabBarView.items = @[ item1, item2, item3 ];
   self.tabBarView.selectedItem = item2;
   self.tabBarView.contentEdgeInsets = UIEdgeInsetsMake(0.0, 200.0, 0.0, 0.0);
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.tabBarView];
-}
-
-- (void)testItemsWithOnlyTitlesWithVerticalInsets {
-  // Given
-  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:nil tag:0];
-  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:nil tag:2];
-  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:nil tag:5];
-
-  // When
-  self.tabBarView.items = @[ item1, item2, item3 ];
-  self.tabBarView.selectedItem = item2;
-  self.tabBarView.contentEdgeInsets = UIEdgeInsetsMake(2.0, 0.0, 2.0, 0.0);
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.tabBarView];
-}
-
-- (void)testItemsWithOnlyTitlesWithVerticalInsetsResultsInScrollableLayout {
-  // Given
-  self.tabBarView.bounds = CGRectMake(0, 0, 120, kExpectedHeightTitlesOrIconsOnly);
-  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:nil tag:0];
-  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:nil tag:2];
-  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:nil tag:3];
-
-  // When
-  self.tabBarView.items = @[ item1, item2, item3 ];
-  self.tabBarView.selectedItem = item2;
-  self.tabBarView.contentEdgeInsets = UIEdgeInsetsMake(20.0, 0.0, 0.0, 0.0);
 
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBarView];
@@ -203,6 +173,75 @@ static const CGFloat kMaxItemWidth = 360;
   // When
   self.tabBarView.items = @[ item1, item2, item3 ];
   self.tabBarView.selectedItem = item2;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+#pragma mark - safeAreaInsets and contentEdgeInsets
+
+- (void)testItemsWithOnlyTitlesWithSafeAreaInsets {
+  self.recordMode = YES;
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:nil tag:2];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:nil tag:5];
+  MDCTabBarViewSnapshotTestsFakeSuperview *superview = [[MDCTabBarViewSnapshotTestsFakeSuperview alloc] init];
+
+  // When
+  self.tabBarView.items = @[ item1, item2, item3 ];
+  self.tabBarView.selectedItem = item2;
+  CGSize barIntrinsicContentSize = self.tabBarView.intrinsicContentSize;
+  superview.bounds = CGRectMake(0, 0, barIntrinsicContentSize.width, barIntrinsicContentSize.height);
+  superview.settableSafeAreaInsets = UIEdgeInsetsMake(20, 20, 0, 0);
+  [superview addSubview:self.tabBarView];
+  self.tabBarView.frame = superview.bounds;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:superview];
+}
+
+- (void)testItemsWithOnlyTitlesWithInsets {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:nil tag:2];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:nil tag:5];
+
+  // When
+  self.tabBarView.items = @[ item1, item2, item3 ];
+  self.tabBarView.selectedItem = item2;
+  self.tabBarView.contentEdgeInsets = UIEdgeInsetsMake(0.0, 10.0, 0.0, 10.0);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testItemsWithOnlyTitlesWithVerticalInsets {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:nil tag:2];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:nil tag:5];
+
+  // When
+  self.tabBarView.items = @[ item1, item2, item3 ];
+  self.tabBarView.selectedItem = item2;
+  self.tabBarView.contentEdgeInsets = UIEdgeInsetsMake(2.0, 0.0, 2.0, 0.0);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testItemsWithOnlyTitlesWithVerticalInsetsResultsInScrollableLayout {
+  // Given
+  self.tabBarView.bounds = CGRectMake(0, 0, 120, kExpectedHeightTitlesOrIconsOnly);
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:nil tag:2];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:nil tag:3];
+
+  // When
+  self.tabBarView.items = @[ item1, item2, item3 ];
+  self.tabBarView.selectedItem = item2;
+  self.tabBarView.contentEdgeInsets = UIEdgeInsetsMake(20.0, 0.0, 0.0, 0.0);
 
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBarView];
