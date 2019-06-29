@@ -432,6 +432,9 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 - (void)scrollUntilSelectedItemIsVisibleWithoutAnimation {
   NSUInteger index = [self.items indexOfObject:self.selectedItem];
   if (index == NSNotFound || index >= self.containerView.arrangedSubviews.count) {
+    index = 0;
+  }
+  if (self.containerView.arrangedSubviews.count == 0) {
     return;
   }
 
