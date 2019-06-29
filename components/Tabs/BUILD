@@ -95,6 +95,7 @@ mdc_extension_objc_library(
     name = "TabBarView",
     deps = [
         "//components/Ripple",
+        "@material_internationalization_ios//:MDFInternationalization",
     ],
 )
 
