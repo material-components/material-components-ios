@@ -47,8 +47,10 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 @property(nonnull, nonatomic, strong)
     NSMutableDictionary<NSNumber *, UIColor *> *stateToImageTintColor;
 
+/** The constraints that used to set up justified view propertly inseted by safe area. */
 @property(nullable, nonatomic) NSArray<NSLayoutConstraint *> *justifiedSafeAreaInsetConstraints;
 
+/** The constraints that used to set up scrollable views */
 @property(nullable, nonatomic) NSArray<NSLayoutConstraint *> *widthConstraints;
 
 @end
@@ -413,7 +415,6 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
           constraintEqualToAnchor:self.safeAreaLayoutGuide.leadingAnchor],
       [self.containerView.trailingAnchor
           constraintEqualToAnchor:self.safeAreaLayoutGuide.trailingAnchor],
-      [self.containerView.widthAnchor constraintEqualToAnchor:self.safeAreaLayoutGuide.widthAnchor],
     ];
   }
   [self.containerView.topAnchor constraintEqualToAnchor:self.topAnchor].active = YES;
