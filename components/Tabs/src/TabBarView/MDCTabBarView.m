@@ -434,7 +434,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   if (index == NSNotFound || index >= self.containerView.arrangedSubviews.count) {
     index = 0;
   }
-  if (self.containerView.arrangedSubviews.count == 0) {
+  if (self.containerView.arrangedSubviews.count == 0U) {
     return;
   }
 
