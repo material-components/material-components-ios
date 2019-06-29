@@ -425,7 +425,6 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   }
   [self.containerView.topAnchor constraintEqualToAnchor:self.topAnchor].active = YES;
   [self.containerView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor].active = YES;
-  [self.containerView.heightAnchor constraintEqualToAnchor:self.heightAnchor].active = YES;
   self.containerViewConstraintsActive = YES;
 
   // Must always be called last according to the documentation.
