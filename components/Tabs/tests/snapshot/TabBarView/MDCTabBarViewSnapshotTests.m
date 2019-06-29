@@ -166,6 +166,25 @@ static const CGFloat kMaxItemWidth = 360;
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
+- (void)testRemovingSelectedItemUpdatesColors {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:self.typicalIcon1 tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:self.typicalIcon2 tag:1];
+  self.tabBarView.items = @[ item1, item2 ];
+  [self.tabBarView sizeToFit];
+  [self.tabBarView setSelectedItem:item1 animated:NO];
+  [self.tabBarView setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
+  [self.tabBarView setImageTintColor:UIColor.blackColor forState:UIControlStateNormal];
+  [self.tabBarView setTitleColor:UIColor.whiteColor forState:UIControlStateSelected];
+  [self.tabBarView setImageTintColor:UIColor.whiteColor forState:UIControlStateSelected];
+
+  // When
+  [self.tabBarView setSelectedItem:nil animated:NO];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
 - (void)testSelectedItemInitiallyVisible {
   // Given
   self.tabBarView.bounds =

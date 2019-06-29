@@ -158,6 +158,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   if (!selectedItem) {
     _selectedItem = selectedItem;
     [self updateTitleColorForAllViews];
+    [self updateImageTintColorForAllViews];
     return;
   }
 
@@ -344,7 +345,6 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   } else {
     [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
   }
-  [self updateTitleColorForAllViews];
 }
 
 #pragma mark - UIView
