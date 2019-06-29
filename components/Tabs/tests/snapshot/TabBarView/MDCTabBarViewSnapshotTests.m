@@ -112,7 +112,6 @@ static const CGFloat kMaxItemWidth = 360;
   // When
   self.tabBarView.items = @[ item1, item2, item3 ];
   self.tabBarView.selectedItem = item2;
-  self.tabBarView.contentEdgeInsets = UIEdgeInsetsMake(0.0, 200.0, 0.0, 0.0);
 
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBarView];
@@ -162,7 +161,7 @@ static const CGFloat kMaxItemWidth = 360;
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
-#pragma mark - contentEdgeInsets
+#pragma mark - safeArea
 
 - (void)testItemsWithOnlyTitlesWithInsets {
   // Given
@@ -172,8 +171,7 @@ static const CGFloat kMaxItemWidth = 360;
 
   // When
   self.tabBarView.items = @[ item1, item2, item3 ];
-  self.tabBarView.selectedItem = item2;
-  self.tabBarView.contentEdgeInsets = UIEdgeInsetsMake(0.0, 10.0, 0.0, 10.0);
+  self.tabBarView.selectedItem = item1;
 
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBarView];
@@ -188,7 +186,6 @@ static const CGFloat kMaxItemWidth = 360;
   // When
   self.tabBarView.items = @[ item1, item2, item3 ];
   self.tabBarView.selectedItem = item2;
-  self.tabBarView.contentEdgeInsets = UIEdgeInsetsMake(2.0, 0.0, 2.0, 0.0);
 
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBarView];
@@ -204,7 +201,6 @@ static const CGFloat kMaxItemWidth = 360;
   // When
   self.tabBarView.items = @[ item1, item2, item3 ];
   self.tabBarView.selectedItem = item2;
-  self.tabBarView.contentEdgeInsets = UIEdgeInsetsMake(20.0, 0.0, 0.0, 0.0);
 
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBarView];

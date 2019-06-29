@@ -46,6 +46,11 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 /** The image tint colors for bar items. */
 @property(nonnull, nonatomic, strong)
     NSMutableDictionary<NSNumber *, UIColor *> *stateToImageTintColor;
+
+@property(nullable, nonatomic) NSArray<NSLayoutConstraint *> *justifiedSafeAreaInsetConstraints;
+
+@property(nullable, nonatomic) NSArray<NSLayoutConstraint *> *widthConstraints;
+
 @end
 
 @implementation MDCTabBarView
@@ -355,13 +360,19 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   BOOL canBeJustified = availableWidth >= requiredWidth;
   if (canBeJustified) {
     self.containerView.distribution = UIStackViewDistributionFillEqually;
+    if (@available(iOS 11.0, *)) {
+      [NSLayoutConstraint deactivateConstraints:self.widthConstraints];
+      [NSLayoutConstraint activateConstraints:self.justifiedSafeAreaInsetConstraints];
+    }
   } else {
     self.containerView.distribution = UIStackViewDistributionFillProportionally;
-    // Inset the content insets if it is a scrollable view.
+    // Inset the safe area insets if it is a scrollable view.
     if (@available(iOS 11.0, *)) {
+      [NSLayoutConstraint deactivateConstraints:self.justifiedSafeAreaInsetConstraints];
       self.contentInset = UIEdgeInsetsMake(self.contentInset.top, self.safeAreaInsets.left,
                                            self.contentInset.bottom, self.safeAreaInsets.right);
     }
+    [NSLayoutConstraint activateConstraints:self.widthConstraints];
   }
 
   if (!self.initialScrollDone) {
@@ -391,12 +402,23 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     return;
   }
 
-  [self.containerView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor].active = YES;
-  [self.containerView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor].active = YES;
-  [self.containerView.widthAnchor constraintGreaterThanOrEqualToAnchor:self.widthAnchor].active =
-      YES;
+  self.widthConstraints = @[
+    [self.containerView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
+    [self.containerView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
+    [self.containerView.widthAnchor constraintGreaterThanOrEqualToAnchor:self.widthAnchor],
+  ];
+  if (@available(iOS 11.0, *)) {
+    self.justifiedSafeAreaInsetConstraints = @[
+      [self.containerView.leadingAnchor
+          constraintEqualToAnchor:self.safeAreaLayoutGuide.leadingAnchor],
+      [self.containerView.trailingAnchor
+          constraintEqualToAnchor:self.safeAreaLayoutGuide.trailingAnchor],
+      [self.containerView.widthAnchor constraintEqualToAnchor:self.safeAreaLayoutGuide.widthAnchor],
+    ];
+  }
   [self.containerView.topAnchor constraintEqualToAnchor:self.topAnchor].active = YES;
   [self.containerView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor].active = YES;
+  [self.containerView.heightAnchor constraintEqualToAnchor:self.heightAnchor].active = YES;
   self.containerViewConstraintsActive = YES;
 
   // Must always be called last according to the documentation.
