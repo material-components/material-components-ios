@@ -16,14 +16,13 @@
 
 #import "MaterialMath.h"
 #import "MaterialShapes.h"
-#import "../../../components/schemes/Color/src/MDCDarkModeElevationLightening.h"
 
 static const CGFloat MDCCardShadowElevationNormal = 1;
 static const CGFloat MDCCardShadowElevationHighlighted = 8;
 static const CGFloat MDCCardCornerRadiusDefault = 4;
 static const BOOL MDCCardIsInteractableDefault = YES;
 
-@interface MDCCard () <MDCDarkModeElevationLightening>
+@interface MDCCard ()
 @property(nonatomic, readonly, strong) MDCShapedShadowLayer *layer;
 @end
 
@@ -48,8 +47,16 @@ static const BOOL MDCCardIsInteractableDefault = YES;
 
 - (void)updateElevationLightening {
   NSLog(@"update elevation lightening");
-  // call traitcollectiondidchange somehow
-  [self traitCollectionDidChange:self.traitCollection];
+  if (self.themeDidChange) {
+    self.themeDidChange();
+  }
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+  if (self.themeDidChange) {
+    self.themeDidChange();
+  }
 }
 
 - (instancetype)initWithCoder:(NSCoder *)coder {
@@ -157,6 +164,7 @@ static const BOOL MDCCardIsInteractableDefault = YES;
       self.layer.shadowPath = [self boundingPath].CGPath;
     }
     [(MDCShadowLayer *)self.layer setElevation:elevation];
+
     [self updateElevationLightening];
   }
 }

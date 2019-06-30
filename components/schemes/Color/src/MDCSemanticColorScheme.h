@@ -81,6 +81,9 @@
 - (nonnull UIColor *)surfaceColorWithElevation:(CGFloat)elevation;
 
 - (nonnull UIColor *)backgroundColorWithElevation:(CGFloat)elevation;
+
+- (nonnull id<MDCColorScheming>)resolvedSchemeForElevation:(CGFloat)elevation;
+
 @end
 
 /**

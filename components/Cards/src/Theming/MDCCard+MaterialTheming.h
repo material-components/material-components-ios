@@ -29,6 +29,8 @@
  */
 - (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
 
+- (void)applyThemeWithColorScheme:(nonnull id<MDCColorScheming>)colorScheme;
+
 /**
  Applies the Material Outlined Card style to an MDCCard instance.
 

@@ -55,28 +55,28 @@ static UIColor *DynamicColor(UIColor *defaultColor, UIColor *darkColor) {
 #endif
 }
 
-static UIColor *DynamicColorWithElevationForSurfaces(UIColor *defaultColor, UIColor *darkColor) {
-#if defined(__IPHONE_13_0)
-  if (@available(iOS 13.0, *)) {
-    return [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
-      NSLog(@"HELLO IM HERE");
-      if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
-        if (darkColor.mdc_elevation > 0) {
-          return [MDCDarkMode lightenBackgroundColor:darkColor
-                                       withElevation:darkColor.mdc_elevation];
-        }
-        return darkColor;
-      } else {
-        return defaultColor;
-      }
-    }];
-  } else {
-    return defaultColor;
-  }
-#else
-  return defaultColor;
-#endif
-}
+//static UIColor *DynamicColorWithElevationForSurfaces(UIColor *defaultColor, UIColor *darkColor) {
+//#if defined(__IPHONE_13_0)
+//  if (@available(iOS 13.0, *)) {
+//    return [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
+//      NSLog(@"HELLO IM HERE");
+//      if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+////        if (darkColor.mdc_elevation > 0) {
+////          return [MDCDarkMode lightenBackgroundColor:darkColor
+////                                       withElevation:darkColor.mdc_elevation];
+////        }
+//        return darkColor;
+//      } else {
+//        return defaultColor;
+//      }
+//    }];
+//  } else {
+//    return defaultColor;
+//  }
+//#else
+//  return defaultColor;
+//#endif
+//}
 
 @implementation MDCSemanticColorScheme
 
@@ -118,10 +118,10 @@ static UIColor *DynamicColorWithElevationForSurfaces(UIColor *defaultColor, UICo
         _primaryColorVariant = DynamicColor(ColorFromRGB(0x3700B3), ColorFromRGB(0x3700B3));
         _secondaryColor = DynamicColor(ColorFromRGB(0x03DAC6), ColorFromRGB(0x03DAC6));
         _errorColor = DynamicColor(ColorFromRGB(0xB00020), ColorFromRGB(0xCF6679));
-        _surfaceColor = DynamicColorWithElevationForSurfaces(ColorFromRGB(0xFFFFFF),
-                                                             ColorFromRGB(0x121212));
-        _backgroundColor = DynamicColorWithElevationForSurfaces(ColorFromRGB(0xFFFFFF),
-                                                                ColorFromRGB(0x121212));
+        _surfaceColor = DynamicColor(ColorFromRGB(0xFFFFFF),
+                                     ColorFromRGB(0x121212));
+        _backgroundColor = DynamicColor(ColorFromRGB(0xFFFFFF),
+                                        ColorFromRGB(0x121212));
         _onPrimaryColor = DynamicColor(ColorFromRGB(0xFFFFFF), ColorFromRGB(0x000000));
         _onSecondaryColor = DynamicColor(ColorFromRGB(0x000000), ColorFromRGB(0x000000));
         _onSurfaceColor = DynamicColor(ColorFromRGB(0x000000), ColorFromRGB(0xFFFFFF));
@@ -131,6 +131,25 @@ static UIColor *DynamicColorWithElevationForSurfaces(UIColor *defaultColor, UICo
     }
   }
   return self;
+}
+
+- (MDCSemanticColorScheme *)resolvedSchemeForElevation:(CGFloat)elevation {
+  MDCSemanticColorScheme *copy = [self copy];
+  if (@available(iOS 13.0, *)) {
+    UITraitCollection *darkThemeTraitCollection =
+        [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
+    UIColor *resolvedDarkSurfaceColor = [copy.surfaceColor resolvedColorWithTraitCollection:darkThemeTraitCollection];
+    copy.surfaceColor = DynamicColor(ColorFromRGB(0xFFFFFF),
+                                     [MDCDarkMode lightenBackgroundColor:resolvedDarkSurfaceColor
+                                                           withElevation:elevation]);
+    UIColor *resolvedDarkBackgroundColor =
+        [copy.backgroundColor resolvedColorWithTraitCollection:darkThemeTraitCollection];
+    copy.backgroundColor =
+        DynamicColor(ColorFromRGB(0xFFFFFF),
+                     [MDCDarkMode lightenBackgroundColor:resolvedDarkBackgroundColor
+                                           withElevation:elevation]);
+  }
+  return copy;
 }
 
 + (UIColor *)blendColor:(UIColor *)color withBackgroundColor:(UIColor *)backgroundColor {

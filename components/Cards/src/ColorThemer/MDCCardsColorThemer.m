@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #import "MDCCardsColorThemer.h"
-#import "MDCDarkMode.h"
 
 static const CGFloat kStrokeVariantBorderOpacity = (CGFloat)0.37;
 
@@ -21,24 +20,23 @@ static const CGFloat kStrokeVariantBorderOpacity = (CGFloat)0.37;
 
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                           toCard:(nonnull MDCCard *)card {
-//  if (colorScheme.shouldLightenElevatedSurfacesWithDarkMode) {
-//    card.backgroundColor = colorScheme.surfaceColor;
-//        [colorScheme surfaceColorWithElevation:[card shadowElevationForState:UIControlStateNormal]];
-//  } else {
-//    card.backgroundColor = colorScheme.surfaceColor;
-//  }
-  card.backgroundColor = colorScheme.surfaceColor;
-  card.backgroundColor.mdc_elevation = 4;
+  if (colorScheme.shouldLightenElevatedSurfacesWithDarkMode) {
+    CGFloat finalElevation = card.mdc_absoluteElevation + card.mdc_elevation;
+    id<MDCColorScheming> resolvedColorScheme = [colorScheme resolvedSchemeForElevation:finalElevation];
+    card.backgroundColor = resolvedColorScheme.surfaceColor;
+    if (@available(iOS 13.0, *)) {
+      UIColor *lolz = [card.backgroundColor resolvedColorWithTraitCollection:card.traitCollection];
+      NSLog(@"%@", lolz);
+    } else {
+      // Fallback on earlier versions
+    }
+  }
+//  card.backgroundColor = colorScheme.surfaceColor;
 }
 
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                       toCardCell:(nonnull MDCCardCollectionCell *)cardCell {
-  if (colorScheme.shouldLightenElevatedSurfacesWithDarkMode) {
-    cardCell.backgroundColor = [colorScheme surfaceColorWithElevation:
-                            [cardCell shadowElevationForState:MDCCardCellStateNormal]];
-  } else {
-    cardCell.backgroundColor = colorScheme.surfaceColor;
-  }
+  cardCell.backgroundColor = colorScheme.surfaceColor;
   [cardCell setImageTintColor:colorScheme.primaryColor forState:MDCCardCellStateNormal];
 }
 

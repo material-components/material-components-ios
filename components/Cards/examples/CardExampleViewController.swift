@@ -45,9 +45,13 @@ class CardExampleViewController: UIViewController {
 
     self.view.backgroundColor = containerScheme.colorScheme.backgroundColor;
     button.applyTextTheme(withScheme: containerScheme)
+    button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+    card.mdc_absoluteElevation = 1;
     card.applyTheme(withScheme: containerScheme)
     card.isInteractable = false
-
+    card.themeDidChange = {
+      self.card.applyTheme(withColorScheme: self.containerScheme.colorScheme)
+    };
     imageView.isAccessibilityElement = true
     imageView.accessibilityLabel = "Missing Dish"
   }
@@ -57,6 +61,16 @@ class CardExampleViewController: UIViewController {
 //    button.applyTextTheme(withScheme: containerScheme)
 //    card.applyTheme(withScheme: containerScheme)
 //  }
+
+  override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+    super.traitCollectionDidChange(previousTraitCollection)
+  }
+
+  @objc func buttonTapped() {
+    card.setShadowElevation(ShadowElevation(rawValue: 15), for: .normal)
+    // How do i remove this line below
+//    card.applyTheme(withScheme: containerScheme)
+  }
 
   override public var traitCollection: UITraitCollection {
     if UIDevice.current.userInterfaceIdiom == .pad && UIDevice.current.orientation.isPortrait {

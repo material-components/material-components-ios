@@ -16,10 +16,11 @@
 #import "MaterialInk.h"
 #import "MaterialRipple.h"
 #import "MaterialShadowLayer.h"
+#import "MDCDarkModeElevationLightening.h"
 
 @protocol MDCShapeGenerating;
 
-@interface MDCCard : UIControl
+@interface MDCCard : UIControl <MDCDarkModeElevationLightening>
 
 /**
  The corner radius for the card
@@ -153,5 +154,7 @@
  Default value for shapeGenerator is nil.
  */
 @property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator;
+
+@property (nonatomic, copy, nullable) void (^themeDidChange)(void);
 
 @end
