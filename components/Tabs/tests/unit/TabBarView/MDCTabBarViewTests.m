@@ -425,7 +425,7 @@ static UIImage *fakeImage(CGSize size) {
 
   // Then
   [self assertTitleFontForState:UIControlStateNormal equalsFont:fakeNormalFont];
-  [self assertTitleFontForState:UIControlStateSelected equalsFont:fakeSelectedFont];
+  [self assertTitleFontForState:UIControlStateSelected equalsFont:fakeNormalFont];
 }
 
 - (void)testTitleFontForStateWithNoValuesReturnsNil {

@@ -66,6 +66,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     _items = @[];
     _stateToImageTintColor = [NSMutableDictionary dictionary];
     _stateToTitleColor = [NSMutableDictionary dictionary];
+    _stateToTitleFont = [NSMutableDictionary dictionary];
     self.backgroundColor = UIColor.whiteColor;
     self.showsHorizontalScrollIndicator = NO;
 
