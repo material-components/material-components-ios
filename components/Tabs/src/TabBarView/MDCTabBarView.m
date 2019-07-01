@@ -211,7 +211,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     [self updateTitleColorForAllViews];
     [self updateImageTintColorForAllViews];
     [self updateTitleFontForAllViews];
-    [self updateSelectionIndicatorForView:nil Animated:animated];
+    [self didSelectItemAtIndex:NSNotFound animateTransition:animated];
     return;
   }
 
@@ -230,7 +230,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   [self updateImageTintColorForAllViews];
   [self updateTitleFontForAllViews];
   [self scrollRectToVisible:self.itemViews[itemIndex].frame animated:animated];
-  [self updateSelectionIndicatorForView:self.itemViews[itemIndex] Animated:animated];
+  [self didSelectItemAtIndex:itemIndex animateTransition:animated];
 }
 
 - (void)updateImageTintColorForAllViews {
@@ -672,15 +672,57 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   [self.selectionIndicatorView applySelectionIndicatorAttributes:indicatorAttributes];
 }
 
-- (void)updateSelectionIndicatorForView:(UIView *)itemView Animated:(BOOL)animated {
+/// Sets _selectionIndicator's bounds and center to display under the item at the given index with
+/// no animation. May be called from an animation block to animate the transition.
+- (void)updateSelectionIndicatorToIndex:(NSUInteger)index {
+  if (index == NSNotFound || index >= self.items.count) {
+    // Hide selection indicator.
+    self.selectionIndicatorView.bounds = CGRectZero;
+    return;
+  }
+
+  // Place selection indicator under the item's cell.
+  self.selectionIndicatorView.frame = [self selectedItemView].frame;
+  CGRect selectionIndicatorBounds =
+      CGRectMake(0, 0, CGRectGetWidth(self.selectionIndicatorView.bounds),
+                 CGRectGetHeight(self.selectionIndicatorView.bounds));
+
+  // Extract content frame from item view.
+  CGRect contentFrame = selectionIndicatorBounds;
+  UIView *itemView = self.itemViews[index];
+  if ([itemView conformsToProtocol:@protocol(MDCTabBarViewIndicatorSupporting)]) {
+    UIView<MDCTabBarViewIndicatorSupporting> *supportingView =
+        (UIView<MDCTabBarViewIndicatorSupporting> *)itemView;
+    contentFrame = supportingView.contentFrame;
+  }
+
+  // Construct a context object describing the selected tab.
+  UITabBarItem *item = self.items[index];
+  MDCTabBarViewPrivateIndicatorContext *context =
+      [[MDCTabBarViewPrivateIndicatorContext alloc] initWithItem:item
+                                                          bounds:selectionIndicatorBounds
+                                                    contentFrame:contentFrame];
+
+  // Ask the template for attributes.
+  id<MDCTabBarViewIndicatorTemplate> template = self.selectionIndicatorTemplate;
+  MDCTabBarViewIndicatorAttributes *indicatorAttributes =
+      [template indicatorAttributesForContext:context];
+
+  // Update the selection indicator.
+  [self.selectionIndicatorView applySelectionIndicatorAttributes:indicatorAttributes];
+}
+
+- (void)didSelectItemAtIndex:(NSUInteger)index animateTransition:(BOOL)animate {
   void (^animationBlock)(void) = ^{
-    if (itemView) {
-      [self applySelectionTemplateToSelectionViewForItemView:itemView];
-      [self.selectionIndicatorView layoutIfNeeded];
+    UIView *itemView;
+    if (index != NSNotFound || index <= self.itemViews.count) {
+      itemView = self.itemViews[index];
     }
+    [self applySelectionTemplateToSelectionViewForItemView:itemView];
+    [self.selectionIndicatorView layoutIfNeeded];
   };
 
-  if (animated) {
+  if (animate) {
     CAMediaTimingFunction *easeInOutFunction =
         [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
     // Wrap in explicit CATransaction to allow layer-based animations with the correct duration.
