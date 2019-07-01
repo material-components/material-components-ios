@@ -95,7 +95,6 @@ mdc_extension_objc_library(
     name = "TabBarView",
     deps = [
         "//components/Ripple",
-        "//components/Typography",
     ],
 )
 
@@ -202,6 +201,7 @@ mdc_objc_library(
     deps = [
         ":TabBarView",
         ":privateTabBarView",
+        "//components/Typography",
     ],
 )
 

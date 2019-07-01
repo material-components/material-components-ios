@@ -49,7 +49,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 @property(nonnull, nonatomic, strong)
     NSMutableDictionary<NSNumber *, UIColor *> *stateToImageTintColor;
 
-/** The title font for bar tiems. */
+/** The title font for bar items. */
 @property(nonnull, nonatomic, strong) NSMutableDictionary<NSNumber *, UIFont *> *stateToTitleFont;
 @end
 
