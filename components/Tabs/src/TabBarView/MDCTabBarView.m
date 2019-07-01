@@ -35,9 +35,6 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
 @interface MDCTabBarView ()
 
-/** The view that contains all tab item views. */
-@property(nonnull, nonatomic, strong) UIView *containerView;
-
 /** The views representing each tab bar item. */
 @property(nonnull, nonatomic, copy) NSArray<UIView *> *itemViews;
 
@@ -75,15 +72,11 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     self.backgroundColor = UIColor.whiteColor;
     self.showsHorizontalScrollIndicator = NO;
 
-    _containerView = [[UIView alloc] init];
-    _containerView.translatesAutoresizingMaskIntoConstraints = NO;
-
     // By deafult, inset the content within the safe area. This is generally the desired behavior,
     // but clients can override it if they want.
     if (@available(iOS 11.0, *)) {
       [super setContentInsetAdjustmentBehavior:UIScrollViewContentInsetAdjustmentAlways];
     }
-//    [self addSubview:_containerView];
   }
   return self;
 }
@@ -204,10 +197,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   [self updateTitleColorForAllViews];
   [self updateImageTintColorForAllViews];
   [self updateTitleFontForAllViews];
-  CGRect itemFrameInScrollViewBounds =
-      [self convertRect:self.itemViews[itemIndex].frame
-               fromView:self.containerView];
-  [self scrollRectToVisible:itemFrameInScrollViewBounds animated:animated];
+  [self scrollRectToVisible:self.itemViews[itemIndex].frame animated:animated];
 }
 
 - (void)updateImageTintColorForAllViews {
@@ -443,12 +433,10 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   if (@available(iOS 11.0, *)) {
     availableBounds = UIEdgeInsetsInsetRect(availableBounds, self.safeAreaInsets);
   }
-  self.containerView.frame = CGRectMake(0, 0, CGRectGetWidth(availableBounds), CGRectGetHeight(availableBounds));
-
-  CGFloat itemViewWidth = CGRectGetWidth(self.containerView.bounds) / self.itemViews.count;
-  CGFloat itemViewOriginX = CGRectGetMinX(self.containerView.bounds);
-  CGFloat itemViewOriginY = CGRectGetMinY(self.containerView.bounds);
-  CGFloat itemViewHeight = CGRectGetHeight(self.containerView.bounds);
+  CGFloat itemViewWidth = CGRectGetWidth(availableBounds) / self.itemViews.count;
+  CGFloat itemViewOriginX = 0;
+  CGFloat itemViewOriginY = 0;
+  CGFloat itemViewHeight = CGRectGetHeight(availableBounds);
   for (UIView *itemView in self.itemViews) {
     itemView.frame = CGRectMake(itemViewOriginX, itemViewOriginY, itemViewWidth, itemViewHeight);
     itemViewOriginX += itemViewWidth;
@@ -469,8 +457,6 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     view.frame = CGRectMake(itemViewOriginX, itemViewOriginY, intrinsicContentSize.width, itemViewHeight);
     itemViewOriginX += intrinsicContentSize.width;
   }
-
-  self.containerView.frame = CGRectMake(0, 0, itemViewOriginX, itemViewHeight);
 }
 
 - (void)willMoveToSuperview:(UIView *)newSuperview {
@@ -540,8 +526,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   }
 
   CGRect estimatedItemFrame = [self estimatedFrameInContainerViewForItemAtIndex:index];
-  [self scrollRectToVisible:[self convertRect:estimatedItemFrame fromView:self.containerView]
-                   animated:NO];
+  [self scrollRectToVisible:estimatedItemFrame animated:NO];
 }
 
 - (CGRect)estimatedFrameInContainerViewForItemAtIndex:(NSUInteger)index {
@@ -549,10 +534,14 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     return CGRectZero;
   }
 
+  CGRect contentRect = self.bounds;
+  if (@available(iOS 11.0, *)) {
+    contentRect = UIEdgeInsetsInsetRect(contentRect, self.safeAreaInsets);
+  }
+
   BOOL isRTL =
       [self mdf_effectiveUserInterfaceLayoutDirection] == UIUserInterfaceLayoutDirectionRightToLeft;
-  CGFloat viewOriginX =
-      isRTL ? CGRectGetMaxX(self.containerView.bounds) : CGRectGetMinX(self.containerView.bounds);
+  CGFloat viewOriginX = isRTL ? CGRectGetWidth(contentRect) : 0;
 
   for (NSUInteger i = 0; i < index; ++i) {
     CGSize viewSize = [self expectedSizeForView:self.itemViews[i]];
@@ -566,10 +555,8 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   if (isRTL) {
     viewOriginX -= viewSize.width;
   }
-  CGRect itemFrameInContainerView = CGRectMake(
-      viewOriginX, CGRectGetMinY(self.containerView.bounds), viewSize.width, viewSize.height);
-  CGRect convertedRect = [self convertRect:itemFrameInContainerView fromView:self.containerView];
-  return convertedRect;
+  CGRect itemFrameInContainerView = CGRectMake(viewOriginX, 0, viewSize.width, viewSize.height);
+  return itemFrameInContainerView;
 }
 
 - (CGSize)expectedSizeForView:(UIView *)view {
@@ -579,10 +566,14 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   // as a more defensive bit of code that quickly dividing the containerView's bounds is more
   // efficient (and accurate) than computing every other view's size.
   if (self.isJustifiedLayoutStyle &&
-      CGRectGetWidth(self.containerView.bounds) > 0) {
+      CGRectGetWidth(self.bounds) > 0) {
+    CGRect contentRect = self.bounds;
+    if (@available(iOS 11.0, *)) {
+      contentRect = UIEdgeInsetsInsetRect(contentRect, self.safeAreaInsets);
+    }
     return CGSizeMake(
-        CGRectGetWidth(self.containerView.bounds) / self.itemViews.count,
-        CGRectGetHeight(self.containerView.bounds));
+        CGRectGetWidth(contentRect) / self.itemViews.count,
+        CGRectGetHeight(contentRect));
   }
   CGSize expectedItemSize = view.intrinsicContentSize;
   if (expectedItemSize.width == UIViewNoIntrinsicMetric) {
