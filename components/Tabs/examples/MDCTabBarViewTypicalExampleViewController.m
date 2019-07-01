@@ -74,6 +74,9 @@ static NSString *const kExampleTitle = @"TabBarView";
   [super viewDidLoad];
   self.title = kExampleTitle;
 
+  UIScrollView *dummyScrollView = [[UIScrollView alloc] init];
+  [self.view addSubview:dummyScrollView];
+
   if (!self.containerScheme) {
     self.containerScheme = [[MDCContainerScheme alloc] init];
   }
@@ -138,6 +141,7 @@ static NSString *const kExampleTitle = @"TabBarView";
   }
   [self.view.leftAnchor constraintEqualToAnchor:self.tabBar.leftAnchor].active = YES;
   [self.view.rightAnchor constraintEqualToAnchor:self.tabBar.rightAnchor].active = YES;
+  [self.tabBar.heightAnchor constraintEqualToConstant:72].active = YES;
 }
 
 #pragma mark - MDCTabBarViewDelegate

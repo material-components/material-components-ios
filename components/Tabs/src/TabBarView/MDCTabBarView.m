@@ -160,8 +160,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   self.selectedItem = newSelectedItem;
   [self addObserversToTabBarItems];
 
-  self.contentSize = self.intrinsicContentSize;
-  [self invalidateIntrinsicContentSize];
+  self.contentSize = [self computedIntrinsicContentSize];
   [self setNeedsLayout];
 }
 
@@ -468,17 +467,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   self.initialScrollDone = NO;
 }
 
-- (void)setBounds:(CGRect)bounds {
-  BOOL shouldScroll =
-      !CGSizeEqualToSize(CGSizeMake(CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds)),
-                         CGSizeMake(CGRectGetWidth(bounds), CGRectGetHeight(bounds)));
-  [super setBounds:bounds];
-  if (shouldScroll) {
-    [self scrollUntilSelectedItemIsVisibleWithoutAnimation];
-  }
-}
-
-- (CGSize)intrinsicContentSize {
+- (CGSize)computedIntrinsicContentSize {
   if (self.isJustifiedLayoutStyle) {
     return [self intrinsicContentSizeForJustifiedLayout];
   } else {
@@ -490,7 +479,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   CGFloat totalWidth = [self justifiedWidth];
   CGFloat maxHeight = 0;
   for (UIView *itemView in self.itemViews) {
-    CGSize contentSize = itemView.intrinsicContentSize;
+    CGSize contentSize = [itemView sizeThatFits:CGSizeMake(360, CGFLOAT_MAX)];
     if (contentSize.height > maxHeight) {
       maxHeight = contentSize.height;
     }
@@ -499,7 +488,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
-  CGSize intrinsicSize = self.intrinsicContentSize;
+  CGSize intrinsicSize = self.computedIntrinsicContentSize;
   return CGSizeMake(MAX(intrinsicSize.width, size.width), MAX(intrinsicSize.height, size.height));
 }
 
@@ -508,7 +497,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 - (CGFloat)justifiedWidth {
   CGFloat maxWidth = 0;
   for (UIView *itemView in self.itemViews) {
-    CGSize contentSize = itemView.intrinsicContentSize;
+    CGSize contentSize = [itemView sizeThatFits:CGSizeMake(360, CGFLOAT_MAX)];
     if (contentSize.width > maxWidth) {
       maxWidth = contentSize.width;
     }
@@ -571,7 +560,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
         CGRectGetWidth(self.containerView.bounds) / self.itemViews.count,
         CGRectGetHeight(self.containerView.bounds));
   }
-  CGSize expectedItemSize = view.intrinsicContentSize;
+  CGSize expectedItemSize = [view sizeThatFits:CGSizeMake(360, CGFLOAT_MAX)];
   if (expectedItemSize.width == UIViewNoIntrinsicMetric) {
     NSAssert(expectedItemSize.width != UIViewNoIntrinsicMetric,
              @"All tab bar item views must define an intrinsic content size.");
