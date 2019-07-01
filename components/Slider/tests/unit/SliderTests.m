@@ -1137,7 +1137,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
       self.slider.fullHapticsEnabled = YES;
 
       // Then
-      if (i == 0 || i == 1){
+      if (i == 0 || i == 1) {
         XCTAssertFalse(self.slider.fullHapticsEnabled);
       } else {
         XCTAssertTrue(self.slider.fullHapticsEnabled);

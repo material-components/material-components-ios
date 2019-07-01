@@ -335,7 +335,7 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 
 - (void)setFullHapticsEnabled:(BOOL)fullHapticsEnabled {
   if (@available(iOS 10.0, *)) {
-    if (_thumbTrack.numDiscreteValues >= 2){
+    if (_thumbTrack.numDiscreteValues >= 2) {
       _fullHapticsEnabled = fullHapticsEnabled;
     }
   }
@@ -555,9 +555,8 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   if (@available(iOS 10.0, *)) {
     if (self.fullHapticsEnabled) {
       [self.feedbackGenerator impactOccurred];
-    }
-    else if (self.hapticsEnabled && (_thumbTrack.value == _thumbTrack.minimumValue ||
-                                _thumbTrack.value == _thumbTrack.maximumValue)) {
+    } else if (self.hapticsEnabled && (_thumbTrack.value == _thumbTrack.minimumValue ||
+                                       _thumbTrack.value == _thumbTrack.maximumValue)) {
       [self.feedbackGenerator impactOccurred];
     }
   }
