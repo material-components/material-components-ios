@@ -45,7 +45,6 @@ IB_DESIGNABLE
 /** The delegate for the slider. */
 @property(nullable, nonatomic, weak) id<MDCSliderDelegate> delegate;
 
-
 /**
  Sets the color of the thumb for the specified state.
 
@@ -342,7 +341,6 @@ IB_DESIGNABLE
  Defaults to @c YES in iOS 10 or later, @c NO otherwise
  */
 @property(nonatomic, assign) BOOL hapticsEnabled;
-
 
 @end
 

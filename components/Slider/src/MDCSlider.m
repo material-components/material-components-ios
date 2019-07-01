@@ -31,9 +31,9 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   return MDCPalette.bluePalette.tint500;
 }
 
-API_AVAILABLE(ios(10.0))
 @interface MDCSlider () <MDCThumbTrackDelegate>
-@property(nonnull, nonatomic, strong)   UIImpactFeedbackGenerator *feedbackGenerator API_AVAILABLE(ios(10.0));
+@property(nonnull, nonatomic, strong)
+    UIImpactFeedbackGenerator *feedbackGenerator API_AVAILABLE(ios(10.0));
 @end
 
 @implementation MDCSlider {
@@ -107,11 +107,11 @@ API_AVAILABLE(ios(10.0))
   _backgroundTickColorsForState[@(UIControlStateNormal)] = UIColor.blackColor;
   [self addSubview:_thumbTrack];
 
-  if (@available(iOS 10.0, *)){
+  if (@available(iOS 10.0, *)) {
     _hapticsEnabled = YES;
-    self.feedbackGenerator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleLight];
-  }
-  else {
+    self.feedbackGenerator =
+        [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleLight];
+  } else {
     _hapticsEnabled = NO;
   }
 }
@@ -325,11 +325,9 @@ API_AVAILABLE(ios(10.0))
 }
 
 - (void)setHapticsEnabled:(BOOL)hapticsEnabled {
-
-  if(@available(iOS 10.0, *)){
+  if (@available(iOS 10.0, *)) {
     _hapticsEnabled = hapticsEnabled;
-  }
-  else {
+  } else {
     _hapticsEnabled = NO;
   }
 }
@@ -545,15 +543,18 @@ API_AVAILABLE(ios(10.0))
 - (void)thumbTrackValueChanged:(__unused MDCThumbTrack *)thumbTrack {
   [self sendActionsForControlEvents:UIControlEventValueChanged];
   UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, self.accessibilityValue);
-  if (@available(iOS 10.0, *)){
-    if (self.hapticsEnabled && (_thumbTrack.value == _thumbTrack.minimumValue || _thumbTrack.value == _thumbTrack.maximumValue)){
-      [self.feedbackGenerator prepare];
+  if (@available(iOS 10.0, *)) {
+    if (self.hapticsEnabled && (_thumbTrack.value == _thumbTrack.minimumValue ||
+                                _thumbTrack.value == _thumbTrack.maximumValue)) {
       [self.feedbackGenerator impactOccurred];
     }
   }
 }
 
 - (void)thumbTrackTouchDown:(__unused MDCThumbTrack *)thumbTrack {
+  if (@available(iOS 10.0, *)) {
+    [self.feedbackGenerator prepare];
+  }
   [self sendActionsForControlEvents:UIControlEventTouchDown];
 }
 
@@ -590,7 +591,6 @@ API_AVAILABLE(ios(10.0))
 
 - (void)setDisabledColor:(UIColor *)disabledColor {
   if (self.isStatefulAPIEnabled) {
-
     return;
   }
   _thumbTrack.trackDisabledColor = disabledColor ?: [[self class] defaultDisabledColor];

@@ -18,15 +18,14 @@
 
 - (instancetype)init {
   self = [super init];
-  if (self){
+  if (self) {
     _impactHasOccurred = NO;
   }
   return self;
 }
 
-- (void)impactOccurred{
+- (void)impactOccurred {
   _impactHasOccurred = YES;
 }
-
 
 @end
