@@ -160,7 +160,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   self.selectedItem = newSelectedItem;
   [self addObserversToTabBarItems];
 
-//  self.contentSize = [self computedIntrinsicContentSize];
+  self.contentSize = self.intrinsicContentSize;
   [self setNeedsLayout];
 }
 
@@ -443,9 +443,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   if (@available(iOS 11.0, *)) {
     availableBounds = UIEdgeInsetsInsetRect(availableBounds, self.safeAreaInsets);
   }
-  self.containerView.frame = availableBounds;
-  NSLog(@"CONTAINER: %@", self.containerView);
-  NSLog(@"TAB BAR: %@", self);
+  self.containerView.frame = CGRectMake(0, 0, CGRectGetWidth(availableBounds), CGRectGetHeight(availableBounds));
 
   CGFloat itemViewWidth = CGRectGetWidth(self.containerView.bounds) / self.itemViews.count;
   CGFloat itemViewOriginX = CGRectGetMinX(self.containerView.bounds);
@@ -458,8 +456,21 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 }
 
 - (void)layoutSubviewsForScrollableLayout {
-  [self layoutSubviewsForJustifiedLayout];
 
+  CGRect availableBounds = self.bounds;
+  if (@available(iOS 11.0, *)) {
+    availableBounds = UIEdgeInsetsInsetRect(availableBounds, self.safeAreaInsets);
+  }
+  CGFloat itemViewOriginX = 0;
+  CGFloat itemViewOriginY = 0;
+  CGFloat itemViewHeight = CGRectGetHeight(availableBounds);
+  for (UIView *view in self.itemViews) {
+    CGSize intrinsicContentSize = view.intrinsicContentSize;
+    view.frame = CGRectMake(itemViewOriginX, itemViewOriginY, intrinsicContentSize.width, itemViewHeight);
+    itemViewOriginX += intrinsicContentSize.width;
+  }
+
+  self.containerView.frame = CGRectMake(0, 0, itemViewOriginX, itemViewHeight);
 }
 
 - (void)willMoveToSuperview:(UIView *)newSuperview {
@@ -471,7 +482,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   if (self.isJustifiedLayoutStyle) {
     return [self intrinsicContentSizeForJustifiedLayout];
   } else {
-    return [self intrinsicContentSizeForJustifiedLayout];
+    return [self intrinsicContentSizeForScrollableLayout];
   }
 }
 
@@ -483,6 +494,19 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     if (contentSize.height > maxHeight) {
       maxHeight = contentSize.height;
     }
+  }
+  return CGSizeMake(totalWidth, MAX(kMinHeight, maxHeight));
+}
+
+- (CGSize)intrinsicContentSizeForScrollableLayout {
+  CGFloat totalWidth = 0;
+  CGFloat maxHeight = 0;
+  for (UIView *itemView in self.itemViews) {
+    CGSize contentSize = itemView.intrinsicContentSize;
+    if (contentSize.height > maxHeight) {
+      maxHeight = contentSize.height;
+    }
+    totalWidth += contentSize.width;
   }
   return CGSizeMake(totalWidth, MAX(kMinHeight, maxHeight));
 }
