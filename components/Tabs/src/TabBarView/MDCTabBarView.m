@@ -49,11 +49,11 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 @property(nonnull, nonatomic, strong)
     NSMutableDictionary<NSNumber *, UIColor *> *stateToImageTintColor;
 
-/** The constraints that used to set up justified view propertly inseted by safe area. */
-@property(nullable, nonatomic) NSArray<NSLayoutConstraint *> *justifiedSafeAreaInsetConstraints;
+/** The constraints for the justified layout style. */
+@property(nullable, nonatomic) NSArray<NSLayoutConstraint *> *justifiedLayoutConstraints;
 
-/** The constraints that used to set up scrollable views */
-@property(nullable, nonatomic) NSArray<NSLayoutConstraint *> *widthConstraints;
+/** The constraints for the scrollable layout style. */
+@property(nullable, nonatomic) NSArray<NSLayoutConstraint *> *scrollableLayoutConstraints;
 
 @end
 
@@ -76,6 +76,12 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     _containerView = [[UIStackView alloc] init];
     _containerView.axis = UILayoutConstraintAxisHorizontal;
     _containerView.translatesAutoresizingMaskIntoConstraints = NO;
+
+    // By deafult, inset the content within the safe area. This is generally the desired behavior,
+    // but clients can override it if they want.
+    if (@available(iOS 11.0, *)) {
+      [super setContentInsetAdjustmentBehavior:UIScrollViewContentInsetAdjustmentAlways];
+    }
     [self addSubview:_containerView];
   }
   return self;
@@ -123,6 +129,8 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     itemView.iconImageView.image = item.image;
     [itemView setContentCompressionResistancePriority:UILayoutPriorityRequired
                                               forAxis:UILayoutConstraintAxisHorizontal];
+    [itemView setContentCompressionResistancePriority:UILayoutPriorityRequired
+                                              forAxis:UILayoutConstraintAxisVertical];
     UITapGestureRecognizer *tapGesture =
         [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapItemView:)];
     [itemView addGestureRecognizer:tapGesture];
@@ -367,20 +375,13 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   CGFloat requiredWidth = [self justifiedWidth];
   BOOL canBeJustified = availableWidth >= requiredWidth;
   if (canBeJustified) {
+    [NSLayoutConstraint deactivateConstraints:self.scrollableLayoutConstraints];
     self.containerView.distribution = UIStackViewDistributionFillEqually;
-    if (@available(iOS 11.0, *)) {
-      [NSLayoutConstraint deactivateConstraints:self.widthConstraints];
-      [NSLayoutConstraint activateConstraints:self.justifiedSafeAreaInsetConstraints];
-    }
+    [NSLayoutConstraint activateConstraints:self.justifiedLayoutConstraints];
   } else {
+    [NSLayoutConstraint deactivateConstraints:self.justifiedLayoutConstraints];
     self.containerView.distribution = UIStackViewDistributionFillProportionally;
-    // Inset the safe area insets if it is a scrollable view.
-    if (@available(iOS 11.0, *)) {
-      [NSLayoutConstraint deactivateConstraints:self.justifiedSafeAreaInsetConstraints];
-      self.contentInset = UIEdgeInsetsMake(self.contentInset.top, self.safeAreaInsets.left,
-                                           self.contentInset.bottom, self.safeAreaInsets.right);
-    }
-    [NSLayoutConstraint activateConstraints:self.widthConstraints];
+    [NSLayoutConstraint activateConstraints:self.scrollableLayoutConstraints];
   }
 
   if (!self.initialScrollDone) {
@@ -410,21 +411,39 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     return;
   }
 
-  self.widthConstraints = @[
-    [self.containerView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
-    [self.containerView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
-    [self.containerView.widthAnchor constraintGreaterThanOrEqualToAnchor:self.widthAnchor],
-  ];
   if (@available(iOS 11.0, *)) {
-    self.justifiedSafeAreaInsetConstraints = @[
-      [self.containerView.leadingAnchor
-          constraintEqualToAnchor:self.safeAreaLayoutGuide.leadingAnchor],
-      [self.containerView.trailingAnchor
-          constraintEqualToAnchor:self.safeAreaLayoutGuide.trailingAnchor],
+    self.justifiedLayoutConstraints = @[
+      [self.safeAreaLayoutGuide.leadingAnchor
+          constraintEqualToAnchor:self.containerView.leadingAnchor],
+      [self.safeAreaLayoutGuide.topAnchor constraintEqualToAnchor:self.containerView.topAnchor],
+      [self.safeAreaLayoutGuide.trailingAnchor
+          constraintEqualToAnchor:self.containerView.trailingAnchor],
+      [self.safeAreaLayoutGuide.bottomAnchor
+          constraintEqualToAnchor:self.containerView.bottomAnchor],
     ];
+    self.scrollableLayoutConstraints = @[
+      [self.contentLayoutGuide.topAnchor constraintEqualToAnchor:self.containerView.topAnchor],
+      [self.contentLayoutGuide.bottomAnchor
+          constraintEqualToAnchor:self.containerView.bottomAnchor],
+      [self.contentLayoutGuide.leadingAnchor
+          constraintEqualToAnchor:self.containerView.leadingAnchor],
+      [self.contentLayoutGuide.trailingAnchor
+          constraintEqualToAnchor:self.containerView.trailingAnchor],
+      [self.contentLayoutGuide.widthAnchor constraintEqualToAnchor:self.containerView.widthAnchor],
+      [self.contentLayoutGuide.heightAnchor
+          constraintEqualToAnchor:self.containerView.heightAnchor],
+    ];
+  } else {
+    self.justifiedLayoutConstraints = @[
+      [self.heightAnchor constraintEqualToAnchor:self.containerView.heightAnchor],
+      [self.widthAnchor constraintEqualToAnchor:self.containerView.widthAnchor],
+    ];
+    self.scrollableLayoutConstraints = @[];
+    [self.leadingAnchor constraintEqualToAnchor:self.containerView.leadingAnchor].active = YES;
+    [self.topAnchor constraintEqualToAnchor:self.containerView.topAnchor].active = YES;
+    [self.trailingAnchor constraintEqualToAnchor:self.containerView.trailingAnchor].active = YES;
+    [self.bottomAnchor constraintEqualToAnchor:self.containerView.bottomAnchor].active = YES;
   }
-  [self.containerView.topAnchor constraintEqualToAnchor:self.topAnchor].active = YES;
-  [self.containerView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor].active = YES;
   self.containerViewConstraintsActive = YES;
 
   // Must always be called last according to the documentation.
