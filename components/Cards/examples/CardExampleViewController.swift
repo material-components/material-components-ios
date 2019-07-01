@@ -17,6 +17,7 @@ import MaterialComponents.MaterialButtons_ButtonThemer
 import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialCards_Theming
 import MaterialComponents.MaterialButtons_Theming
+import MaterialComponents.UITraitCollection_MaterialElevationUpdating
 
 class CardExampleViewController: UIViewController {
   @IBOutlet weak var imageView: CardImageView!
@@ -49,7 +50,7 @@ class CardExampleViewController: UIViewController {
     card.mdc_absoluteElevation = 1;
     card.applyTheme(withScheme: containerScheme)
     card.isInteractable = false
-    card.themeDidChange = {
+    card.traitCollectionDidChangeBlock = { newTraitCollection in
       self.card.applyTheme(withColorScheme: self.containerScheme.colorScheme)
     };
     imageView.isAccessibilityElement = true

@@ -18,38 +18,38 @@
 
 @implementation MDCDarkMode
 
-static CGFloat ElevationToWhiteOverlayOpacity(CGFloat elevation) {
-  static NSDictionary *opacityLookup = nil;
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    opacityLookup = @{
-            [NSNumber numberWithDouble:0]  : [NSNumber numberWithDouble:0],
-            [NSNumber numberWithDouble:1]  : [NSNumber numberWithDouble:0.05],
-            [NSNumber numberWithDouble:2]  : [NSNumber numberWithDouble:0.07],
-            [NSNumber numberWithDouble:3]  : [NSNumber numberWithDouble:0.08],
-            [NSNumber numberWithDouble:4]  : [NSNumber numberWithDouble:0.09],
-            [NSNumber numberWithDouble:6]  : [NSNumber numberWithDouble:0.11],
-            [NSNumber numberWithDouble:8]  : [NSNumber numberWithDouble:0.12],
-            [NSNumber numberWithDouble:12] : [NSNumber numberWithDouble:0.14],
-            [NSNumber numberWithDouble:16] : [NSNumber numberWithDouble:0.15],
-            [NSNumber numberWithDouble:24] : [NSNumber numberWithDouble:0.16],
-            };
-  });
-
-  NSNumber *index = opacityLookup[[NSNumber numberWithDouble:elevation]];
-  if (index != nil) {
-    return [index doubleValue];
-  } else {
-    NSCAssert(NO, @"%f is not a valid elevation value.", elevation);
-    return 0;
-  }
-}
+//static CGFloat ElevationToWhiteOverlayOpacity(CGFloat elevation) {
+//  static NSDictionary *opacityLookup = nil;
+//  static dispatch_once_t onceToken;
+//  dispatch_once(&onceToken, ^{
+//    opacityLookup = @{
+//            [NSNumber numberWithDouble:0]  : [NSNumber numberWithDouble:0],
+//            [NSNumber numberWithDouble:1]  : [NSNumber numberWithDouble:0.05],
+//            [NSNumber numberWithDouble:2]  : [NSNumber numberWithDouble:0.07],
+//            [NSNumber numberWithDouble:3]  : [NSNumber numberWithDouble:0.08],
+//            [NSNumber numberWithDouble:4]  : [NSNumber numberWithDouble:0.09],
+//            [NSNumber numberWithDouble:6]  : [NSNumber numberWithDouble:0.11],
+//            [NSNumber numberWithDouble:8]  : [NSNumber numberWithDouble:0.12],
+//            [NSNumber numberWithDouble:12] : [NSNumber numberWithDouble:0.14],
+//            [NSNumber numberWithDouble:16] : [NSNumber numberWithDouble:0.15],
+//            [NSNumber numberWithDouble:24] : [NSNumber numberWithDouble:0.16],
+//            };
+//  });
+//
+//  NSNumber *index = opacityLookup[[NSNumber numberWithDouble:elevation]];
+//  if (index != nil) {
+//    return [index doubleValue];
+//  } else {
+//    NSCAssert(NO, @"%f is not a valid elevation value.", elevation);
+//    return 0;
+//  }
+//}
 
 
 + (nonnull UIColor *)lightenBackgroundColor:(nonnull UIColor *)color
                               withElevation:(CGFloat)elevation {
-  CGFloat alphaValue = ElevationToWhiteOverlayOpacity(elevation);
-  return [MDCSemanticColorScheme blendColor:[UIColor colorWithWhite:1 alpha:alphaValue]
+  CGFloat alphaValue = 4.5 * log(elevation + 1) + 2;
+  return [MDCSemanticColorScheme blendColor:[UIColor colorWithWhite:1 alpha:alphaValue * 0.01]
                         withBackgroundColor:color];
 }
 

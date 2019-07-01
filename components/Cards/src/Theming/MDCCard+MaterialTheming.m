@@ -53,6 +53,13 @@ static const CGFloat kBorderWidth = 1;
   [MDCCardsShapeThemer applyShapeScheme:shapeScheme toCard:self];
 }
 
+//- (void)elevationDidChange:(UIView *)view {
+//  [self applyThemeWithColorScheme:]
+//}
+
+//- (void)setElevationWithScheme:(
+
+
 #pragma mark - Outlined Card
 
 - (void)applyOutlinedThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme {

@@ -15,11 +15,13 @@
 #import "MaterialCards.h"
 #import "MaterialContainerScheme.h"
 
+
+
 /**
  This category is used to style MDCCard instances to a specific Material style which can be found
  within the [Material Guidelines](https://material.io/design/components/cards.html).
  */
-@interface MDCCard (MaterialTheming)
+@interface MDCCard (MaterialTheming) <MDCThemingElevationDelegate>
 
 /**
  Applies the Material Card style to an MDCCard instance.

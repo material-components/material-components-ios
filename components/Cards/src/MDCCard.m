@@ -16,6 +16,7 @@
 
 #import "MaterialMath.h"
 #import "MaterialShapes.h"
+#import "UITraitCollection+MaterialElevationUpdating.h"
 
 static const CGFloat MDCCardShadowElevationNormal = 1;
 static const CGFloat MDCCardShadowElevationHighlighted = 8;
@@ -46,16 +47,15 @@ static const BOOL MDCCardIsInteractableDefault = YES;
 }
 
 - (void)updateElevationLightening {
+//  [NSNotificationCenter.defaultCenter postNotificationName:@"ElevationDidChange" object:nil userInfo:nil];
   NSLog(@"update elevation lightening");
-  if (self.themeDidChange) {
-    self.themeDidChange();
-  }
+
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
   [super traitCollectionDidChange:previousTraitCollection];
-  if (self.themeDidChange) {
-    self.themeDidChange();
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self.traitCollection);
   }
 }
 
@@ -165,6 +165,15 @@ static const BOOL MDCCardIsInteractableDefault = YES;
     }
     [(MDCShadowLayer *)self.layer setElevation:elevation];
 
+    if (self.traitCollectionDidChangeBlock) {
+      UITraitCollection *traitCollection = [UITraitCollection traitCollectionWithMaterialElevation:elevation];
+      NSLog(@"%f", traitCollection.materialElevation);
+      traitCollection =
+          [UITraitCollection traitCollectionWithTraitsFromCollectionsIncludingElevation:
+            @[self.traitCollection, traitCollection]];
+      NSLog(@"%f", traitCollection.materialElevation);
+      self.traitCollectionDidChangeBlock(traitCollection);
+    }
     [self updateElevationLightening];
   }
 }
