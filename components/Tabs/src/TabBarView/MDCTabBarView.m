@@ -83,6 +83,8 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
 /** The title font for bar items. */
 @property(nonnull, nonatomic, strong) NSMutableDictionary<NSNumber *, UIFont *> *stateToTitleFont;
+
+@property(nullable, nonatomic, strong) NSArray<NSLayoutConstraint *> *selectionIndicatorConstraints;
 @end
 
 @implementation MDCTabBarView
@@ -221,6 +223,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     [self updateTitleColorForAllViews];
     [self updateImageTintColorForAllViews];
     [self updateTitleFontForAllViews];
+    [self updateSelectionIndicatorForView:nil Animated:animated];
     return;
   }
 
@@ -241,7 +244,8 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   CGRect itemFrameInScrollViewBounds =
       [self convertRect:self.containerView.arrangedSubviews[itemIndex].frame
                fromView:self.containerView];
-  [self didSelectItemAtIndex:itemIndex animateTransition:animated];
+//  [self didSelectItemAtIndex:itemIndex animateTransition:animated];
+  [self updateSelectionIndicatorForView:self.containerView.arrangedSubviews[itemIndex] Animated:animated];
   [self scrollRectToVisible:itemFrameInScrollViewBounds animated:animated];
 }
 
@@ -321,7 +325,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     (id<MDCTabBarViewIndicatorTemplate>)selectionIndicatorTemplate {
   _selectionIndicatorTemplate = selectionIndicatorTemplate;
   if (self.selectedItem) {
-    [self updateSelectionIndicatorToIndex:[self.items indexOfObject:self.selectedItem]];
+    [self.selectionIndicatorView setNeedsLayout];
   }
 }
 
@@ -457,12 +461,13 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 #pragma mark - UIView
 
 - (void)layoutSubviews {
-  [super layoutSubviews];
 
   [self updateStackviewLayout];
-  if (self.selectionIndicatorView) {
-    [self updateSelectionIndicatorToIndex:[self.items indexOfObject:self.selectedItem]];
-  }
+//  if (self.selectionIndicatorView) {
+//    [self updateSelectionIndicatorToIndex:[self.items indexOfObject:self.selectedItem]];
+//  }
+  [super layoutSubviews];
+
   if (!self.initialScrollDone) {
     self.initialScrollDone = YES;
     [self scrollUntilSelectedItemIsVisibleWithoutAnimation];
@@ -488,12 +493,87 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     [NSLayoutConstraint activateConstraints:self.scrollableLayoutConstraints];
   }
 
-  [self.containerView layoutIfNeeded];
+//  [self.containerView layoutIfNeeded];
 }
 
 - (void)willMoveToSuperview:(UIView *)newSuperview {
   [super willMoveToSuperview:newSuperview];
   self.initialScrollDone = NO;
+}
+
+- (void)applySelectionTemplateToSelectionViewForItemView:(UIView *)itemView {
+  if (!itemView) {
+    return;
+  }
+  // Extract content frame from item view.
+  CGRect selectionIndicatorBounds = CGRectStandardize(itemView.bounds);
+  CGRect contentFrame = selectionIndicatorBounds;
+  if ([itemView conformsToProtocol:@protocol(MDCTabBarViewIndicatorSupporting)]) {
+    UIView<MDCTabBarViewIndicatorSupporting> *supportingView =
+    (UIView<MDCTabBarViewIndicatorSupporting> *)itemView;
+    contentFrame = supportingView.contentFrame;
+  }
+
+  // Construct a context object describing the selected tab.
+  UITabBarItem *item = self.items[[self.containerView.arrangedSubviews indexOfObject:itemView]];
+  MDCTabBarViewPrivateIndicatorContext *context =
+  [[MDCTabBarViewPrivateIndicatorContext alloc] initWithItem:item
+                                                      bounds:selectionIndicatorBounds
+                                                contentFrame:contentFrame];
+
+  // Ask the template for attributes.
+  id<MDCTabBarViewIndicatorTemplate> template = self.selectionIndicatorTemplate;
+  MDCTabBarViewIndicatorAttributes *indicatorAttributes =
+  [template indicatorAttributesForContext:context];
+
+  // Update the selection indicator.
+  [self.selectionIndicatorView applySelectionIndicatorAttributes:indicatorAttributes];
+}
+
+- (void)updateSelectionIndicatorForView:(UIView *)itemView Animated:(BOOL)animated {
+  void (^animationBlock)(void) = ^{
+    [NSLayoutConstraint deactivateConstraints:self.selectionIndicatorConstraints];
+    self.selectionIndicatorConstraints = nil;
+
+    if (itemView) {
+      self.selectionIndicatorConstraints = @[
+        [self.selectionIndicatorView.topAnchor constraintEqualToAnchor:itemView.topAnchor],
+        [self.selectionIndicatorView.leftAnchor constraintEqualToAnchor:itemView.leftAnchor],
+        [self.selectionIndicatorView.bottomAnchor constraintEqualToAnchor:itemView.bottomAnchor],
+        [self.selectionIndicatorView.rightAnchor constraintEqualToAnchor:itemView.rightAnchor],
+      ];
+      [self applySelectionTemplateToSelectionViewForItemView:itemView];
+      [NSLayoutConstraint activateConstraints:self.selectionIndicatorConstraints];
+      [self.selectionIndicatorView layoutIfNeeded];
+    }
+
+  };
+
+  if (animated) {
+    CAMediaTimingFunction *easeInOutFunction =
+        [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
+    // Wrap in explicit CATransaction to allow layer-based animations with the correct duration.
+    [CATransaction begin];
+    [CATransaction setAnimationDuration:kSelectionChangeAnimationDuration];
+    [CATransaction setAnimationTimingFunction:easeInOutFunction];
+    [UIView animateWithDuration:kSelectionChangeAnimationDuration
+                          delay:0
+                        options:UIViewAnimationOptionBeginFromCurrentState
+                     animations:animationBlock
+                     completion:nil];
+    [CATransaction commit];
+
+  } else {
+    animationBlock();
+  }
+}
+
+- (UIView *)selectedItemView {
+  if (!self.selectedItem) {
+    return nil;
+  }
+
+  return self.containerView.arrangedSubviews[[self.items indexOfObject:self.selectedItem]];
 }
 
 - (void)setBounds:(CGRect)bounds {
@@ -502,10 +582,11 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
                          CGSizeMake(CGRectGetWidth(bounds), CGRectGetHeight(bounds)));
   [super setBounds:bounds];
   [self updateStackviewLayout];
+
   if (shouldScroll) {
     [self scrollUntilSelectedItemIsVisibleWithoutAnimation];
     if (self.selectedItem) {
-      [self updateSelectionIndicatorToIndex:[self.items indexOfObject:self.selectedItem]];
+[self updateSelectionIndicatorForView:self.containerView.arrangedSubviews[[self.items indexOfObject:self.selectedItem]] Animated:NO];
     }
   }
 }
@@ -556,6 +637,9 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     [self.bottomAnchor constraintEqualToAnchor:self.containerView.bottomAnchor].active = YES;
   }
   self.containerViewConstraintsActive = YES;
+  if (self.selectedItem) {
+    [self updateSelectionIndicatorForView:self.containerView.arrangedSubviews[[self.items indexOfObject:self.selectedItem]] Animated:NO];
+  }
 
   // Must always be called last according to the documentation.
   [super updateConstraints];
@@ -657,77 +741,6 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     expectedItemSize = [view sizeThatFits:self.contentSize];
   }
   return expectedItemSize;
-}
-
-/// Sets _selectionIndicator's bounds and center to display under the item at the given index with
-/// no animation. May be called from an animation block to animate the transition.
-- (void)updateSelectionIndicatorToIndex:(NSUInteger)index {
-  if (index == NSNotFound || index >= self.items.count) {
-    // Hide selection indicator.
-    self.selectionIndicatorView.bounds = CGRectZero;
-    return;
-  }
-
-  MDCTabBarViewPositioningTuple *selectedItemViewPositionInContainerView =
-      [self positionInContainerViewForItemAtIndex:index];
-
-  // Place selection indicator under the item's cell.
-  CGRect selectionIndicatorBounds = selectedItemViewPositionInContainerView.bounds;
-  CGPoint selectionIndicatorCenter = selectedItemViewPositionInContainerView.center;
-  self.selectionIndicatorView.bounds = selectionIndicatorBounds;
-  self.selectionIndicatorView.center = [self convertPoint:selectionIndicatorCenter
-                                                 fromView:self.containerView];
-
-  // Extract content frame from item view.
-  CGRect contentFrame = selectionIndicatorBounds;
-  UIView *itemView = self.containerView.arrangedSubviews[index];
-  if ([itemView conformsToProtocol:@protocol(MDCTabBarViewIndicatorSupporting)]) {
-    UIView<MDCTabBarViewIndicatorSupporting> *supportingView =
-        (UIView<MDCTabBarViewIndicatorSupporting> *)itemView;
-    contentFrame = supportingView.contentFrame;
-  }
-
-  // Construct a context object describing the selected tab.
-  UITabBarItem *item = self.items[index];
-  MDCTabBarViewPrivateIndicatorContext *context =
-      [[MDCTabBarViewPrivateIndicatorContext alloc] initWithItem:item
-                                                          bounds:selectionIndicatorBounds
-                                                    contentFrame:contentFrame];
-
-  // Ask the template for attributes.
-  id<MDCTabBarViewIndicatorTemplate> template = self.selectionIndicatorTemplate;
-  MDCTabBarViewIndicatorAttributes *indicatorAttributes =
-      [template indicatorAttributesForContext:context];
-
-  // Update the selection indicator.
-  [self.selectionIndicatorView applySelectionIndicatorAttributes:indicatorAttributes];
-}
-
-- (void)didSelectItemAtIndex:(NSUInteger)index animateTransition:(BOOL)animate {
-  void (^animationBlock)(void) = ^{
-    [self updateSelectionIndicatorToIndex:index];
-
-    // Force layout so any changes to the selection indicator are captured by the animation block.
-    [self.selectionIndicatorView layoutIfNeeded];
-  };
-
-  if (animate) {
-    CAMediaTimingFunction *easeInOutFunction =
-        [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
-    // Wrap in explicit CATransaction to allow layer-based animations with the correct duration.
-    [CATransaction begin];
-    [CATransaction setAnimationDuration:kSelectionChangeAnimationDuration];
-    [CATransaction setAnimationTimingFunction:easeInOutFunction];
-    [UIView animateWithDuration:kSelectionChangeAnimationDuration
-                          delay:0
-                        options:UIViewAnimationOptionBeginFromCurrentState
-                     animations:animationBlock
-                     completion:nil];
-    [CATransaction commit];
-
-  } else {
-    animationBlock();
-  }
 }
 
 - (MDCTabBarViewPositioningTuple *)positionInContainerViewForItemAtIndex:(NSUInteger)index {
