@@ -16,17 +16,56 @@
 
 #import "MDCBannerView.h"
 #import "MaterialButtons.h"
+#import "MaterialTypographyScheme.h"
 
 static NSString *const kBannerShortText = @"tristique senectus et";
 static NSString *const kBannerLongText =
     @"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.";
 static const CGFloat kBannerContentPadding = 10.0f;
 
+@interface MDCBannerViewSnapshotDynamicTypeContentSizeCategoryOverrideWindow : UIWindow
+
+/** Used to override the value of @c preferredContentSizeCategory. */
+@property(nonatomic, copy) UIContentSizeCategory contentSizeCategoryOverride;
+
+@end
+
+@implementation MDCBannerViewSnapshotDynamicTypeContentSizeCategoryOverrideWindow
+
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    self.contentSizeCategoryOverride = UIContentSizeCategoryLarge;
+  }
+  return self;
+}
+
+- (instancetype)initWithContentSizeCategoryOverride:
+    (UIContentSizeCategory)contentSizeCategoryOverride {
+  self = [super init];
+  if (self) {
+    self.contentSizeCategoryOverride = contentSizeCategoryOverride;
+  }
+  return self;
+}
+
+- (UITraitCollection *)traitCollection {
+  if (@available(iOS 10.0, *)) {
+    UITraitCollection *traitCollection = [UITraitCollection
+        traitCollectionWithPreferredContentSizeCategory:self.contentSizeCategoryOverride];
+    return traitCollection;
+  }
+  return [super traitCollection];
+}
+
+@end
+
 /** Snapshot tests for MDCBannerView. */
 @interface MDCBannerViewSnapshotTests : MDCSnapshotTestCase
 
 /** The view being tested. */
 @property(nonatomic, strong) MDCBannerView *bannerView;
+@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 
 @end
 
@@ -37,7 +76,7 @@ static const CGFloat kBannerContentPadding = 10.0f;
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  //  self.recordMode = YES;
+  // self.recordMode = YES;
 
   self.bannerView = [[MDCBannerView alloc] initWithFrame:CGRectZero];
   if (@available(iOS 11.0, *)) {
@@ -59,6 +98,25 @@ static const CGFloat kBannerContentPadding = 10.0f;
   [super tearDown];
 }
 
+- (UIWindow *)generateWindowWithView:(UIView *)view
+                 contentSizeCategory:(UIContentSizeCategory)sizeCategory
+                              insets:(UIEdgeInsets)insets {
+  MDCBannerViewSnapshotDynamicTypeContentSizeCategoryOverrideWindow *backgroundWindow =
+      [[MDCBannerViewSnapshotDynamicTypeContentSizeCategoryOverrideWindow alloc]
+          initWithFrame:CGRectMake(0, 0, CGRectGetWidth(view.bounds) + insets.left + insets.right,
+                                   CGRectGetHeight(view.bounds) + insets.top + insets.bottom)];
+  backgroundWindow.contentSizeCategoryOverride = sizeCategory;
+  backgroundWindow.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.8 alpha:1];
+  [backgroundWindow addSubview:view];
+  backgroundWindow.hidden = NO;
+
+  CGRect frame = view.frame;
+  frame.origin = CGPointMake(insets.left, insets.top);
+  view.frame = frame;
+
+  return backgroundWindow;
+}
+
 - (void)generateSnapshotAndVerifyForView:(UIView *)view {
   CGSize aSize = [view sizeThatFits:CGSizeMake(350, INFINITY)];
   view.frame = CGRectMake(0, 0, aSize.width, aSize.height);
@@ -66,6 +124,25 @@ static const CGFloat kBannerContentPadding = 10.0f;
 
   UIView *snapshotView = [view mdc_addToBackgroundView];
   [self snapshotVerifyView:snapshotView];
+}
+
+// TODO(https://github.com/material-components/material-components-ios/issues/7487):
+// The size of the cell view sent for snapshot is not correct because Autolayout needs
+// to be used as an environment.
+- (void)generateSnapshotWithContentSizeCategoryAndNotificationPost:
+            (UIContentSizeCategory)sizeCategory
+                                                  andVerifyForView:(UIView *)view {
+  CGSize aSize = [view sizeThatFits:CGSizeMake(350, INFINITY)];
+  view.frame = CGRectMake(0, 0, aSize.width, aSize.height);
+  [view layoutIfNeeded];
+
+  UIWindow *snapshotWindow = [self generateWindowWithView:view
+                                      contentSizeCategory:sizeCategory
+                                                   insets:UIEdgeInsetsMake(10, 10, 10, 10)];
+  [NSNotificationCenter.defaultCenter
+      postNotificationName:UIContentSizeCategoryDidChangeNotification
+                    object:nil];
+  [self snapshotVerifyView:snapshotWindow];
 }
 
 - (void)changeViewToRTL:(UIView *)view {
@@ -199,6 +276,31 @@ static const CGFloat kBannerContentPadding = 10.0f;
 
   // Then
   [self generateSnapshotAndVerifyForView:self.bannerView];
+}
+
+- (void)testDynamicTypeForContentSizeCategoryExtraExtraLarge {
+  if (@available(iOS 10.0, *)) {
+    // Given
+    self.bannerView = [[MDCBannerView alloc] init];
+    self.typographyScheme =
+        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+
+    // When
+    self.bannerView.textLabel.text = kBannerShortText;
+    self.bannerView.textLabel.font = self.typographyScheme.body2;
+    MDCButton *button = self.bannerView.leadingButton;
+    [button setTitle:@"Action" forState:UIControlStateNormal];
+    [button setTitleFont:self.typographyScheme.button forState:UIControlStateNormal];
+    button.uppercaseTitle = YES;
+    [button setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
+    self.bannerView.trailingButton.hidden = YES;
+    self.bannerView.mdc_adjustsFontForContentSizeCategory = YES;
+
+    // Then
+    [self generateSnapshotWithContentSizeCategoryAndNotificationPost:
+              UIContentSizeCategoryExtraExtraLarge
+                                                    andVerifyForView:self.bannerView];
+  }
 }
 
 @end

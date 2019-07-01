@@ -19,10 +19,46 @@
 
 static NSString *const kExampleTitle = @"TabBarView";
 
+/** A custom view to place in an MDCTabBarView. */
+@interface MDCTabBarViewTypicalExampleViewControllerCustomView
+    : UIView <MDCTabBarViewIndicatorSupporting>
+/** A switch shown in the view. */
+@property(nonatomic, strong) UISwitch *aSwitch;
+@end
+
+@implementation MDCTabBarViewTypicalExampleViewControllerCustomView
+
+- (CGRect)contentFrame {
+  return CGRectStandardize(self.aSwitch.frame);
+}
+
+- (UISwitch *)aSwitch {
+  if (!_aSwitch) {
+    _aSwitch = [[UISwitch alloc] init];
+    [self addSubview:_aSwitch];
+  }
+  return _aSwitch;
+}
+
+- (void)layoutSubviews {
+  [super layoutSubviews];
+  self.aSwitch.center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
+}
+
+- (CGSize)intrinsicContentSize {
+  return self.aSwitch.intrinsicContentSize;
+}
+
+- (CGSize)sizeThatFits:(CGSize)size {
+  return [self.aSwitch sizeThatFits:size];
+}
+
+@end
+
 /**
  Typical use example showing how to place an @c MDCTabBarView within another view.
  */
-@interface MDCTabBarViewTypicalExampleViewController : UIViewController
+@interface MDCTabBarViewTypicalExampleViewController : UIViewController <MDCTabBarViewDelegate>
 
 /** The tab bar for this example. */
 @property(nonatomic, strong) MDCTabBarView *tabBar;
@@ -44,11 +80,53 @@ static NSString *const kExampleTitle = @"TabBarView";
 
   self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
 
+  UITabBarItem *item1 = [[UITabBarItem alloc]
+      initWithTitle:@"Home"
+              image:[[UIImage imageNamed:@"Home"]
+                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+                tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc]
+      initWithTitle:@"Unselectable"
+              image:[[UIImage imageNamed:@"Favorite"]
+                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+                tag:1];
+  item2.accessibilityTraits = UIAccessibilityTraitStaticText;
+  UITabBarItem *item3 = [[UITabBarItem alloc]
+      initWithTitle:@"Cake"
+              image:[[UIImage imageNamed:@"Cake"]
+                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+                tag:2];
+  UITabBarItem *item4 = [[UITabBarItem alloc]
+      initWithTitle:@"Email"
+              image:[[UIImage imageNamed:@"Email"]
+                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+                tag:3];
+  UITabBarItem *item5 = [[UITabBarItem alloc]
+      initWithTitle:@"Search"
+              image:[[UIImage imageNamed:@"Search"]
+                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+                tag:4];
+  MDCTabBarItem *item6 = [[MDCTabBarItem alloc] initWithTitle:@"A switch" image:nil tag:5];
+  MDCTabBarViewTypicalExampleViewControllerCustomView *switchView =
+      [[MDCTabBarViewTypicalExampleViewControllerCustomView alloc] init];
+  item6.mdc_customView = switchView;
+  switchView.aSwitch.onTintColor = self.containerScheme.colorScheme.primaryColor;
+
   self.tabBar = [[MDCTabBarView alloc] init];
-  CGSize barIntrinsicContentSize = self.tabBar.intrinsicContentSize;
-  self.tabBar.bounds = CGRectMake(0, 0, 0, barIntrinsicContentSize.width);
-  // TODO: Change this to theming (or at least .primaryColor) once we have content.
-  self.tabBar.backgroundColor = self.containerScheme.colorScheme.primaryColorVariant;
+  self.tabBar.tabBarDelegate = self;
+  self.tabBar.items = @[ item1, item2, item3, item4, item5, item6 ];
+  self.tabBar.barTintColor = self.containerScheme.colorScheme.secondaryColor;
+  [self.tabBar setTitleColor:self.containerScheme.colorScheme.onSecondaryColor
+                    forState:UIControlStateNormal];
+  [self.tabBar setTitleColor:self.containerScheme.colorScheme.primaryColor
+                    forState:UIControlStateSelected];
+  [self.tabBar setImageTintColor:self.containerScheme.colorScheme.onSecondaryColor
+                        forState:UIControlStateNormal];
+  [self.tabBar setImageTintColor:self.containerScheme.colorScheme.primaryColor
+                        forState:UIControlStateSelected];
+  [self.tabBar setTitleFont:self.containerScheme.typographyScheme.button
+                   forState:UIControlStateNormal];
+  self.tabBar.selectedItem = item4;
   self.tabBar.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:self.tabBar];
 
@@ -60,6 +138,17 @@ static NSString *const kExampleTitle = @"TabBarView";
   }
   [self.view.leftAnchor constraintEqualToAnchor:self.tabBar.leftAnchor].active = YES;
   [self.view.rightAnchor constraintEqualToAnchor:self.tabBar.rightAnchor].active = YES;
+}
+
+#pragma mark - MDCTabBarViewDelegate
+
+- (BOOL)tabBarView:(MDCTabBarView *)tabBarView shouldSelectItem:(nonnull UITabBarItem *)item {
+  // Just to demonstrate preventing selection of an item.
+  return [self.tabBar.items indexOfObject:item] != 1;
+}
+
+- (void)tabBarView:(MDCTabBarView *)tabBarView didSelectItem:(nonnull UITabBarItem *)item {
+  NSLog(@"Item (%@) was selected.", item.title);
 }
 
 @end

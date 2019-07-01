@@ -12,4 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import "MDCTabBarItem.h"
+#import "MDCTabBarItemCustomViewing.h"
 #import "MDCTabBarView.h"
+#import "MDCTabBarViewDelegate.h"
+#import "MDCTabBarViewIndicatorSupporting.h"

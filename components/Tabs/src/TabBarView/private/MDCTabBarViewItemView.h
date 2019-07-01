@@ -14,13 +14,20 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MDCTabBarViewIndicatorSupporting.h"
+
+#import <MaterialComponents/MaterialRipple.h>
+
 /** A basic view that displays a title and image for a tab bar item within MDCTabBarView. */
-@interface MDCTabBarViewItemView : UIView
+@interface MDCTabBarViewItemView : UIView <MDCTabBarViewIndicatorSupporting>
 
-/** Title for the tab. Defaults to the empty string. */
-@property(nonatomic, copy, nullable) NSString *title;
+/** The image view to display the icon. */
+@property(nonatomic, strong) UIImageView *iconImageView;
 
-/** Image shown on the tab. Defaults to nil. */
-@property(nonatomic, strong, nullable) UIImage *image;
+/** The label to display the title. */
+@property(nonatomic, strong) UILabel *titleLabel;
+
+/** The ripple contronller to display the ripple touch effect. */
+@property(nonatomic, strong) MDCRippleTouchController *rippleTouchController;
 
 @end
