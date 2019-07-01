@@ -18,6 +18,7 @@
 #import "private/MDCTabBarViewItemView.h"
 
 #import <CoreGraphics/CoreGraphics.h>
+#import <MDFInternationalization/MDFInternationalization.h>
 
 // KVO contexts
 static char *const kKVOContextMDCTabBarView = "kKVOContextMDCTabBarView";
@@ -49,6 +50,15 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 /** The image tint colors for bar items. */
 @property(nonnull, nonatomic, strong)
     NSMutableDictionary<NSNumber *, UIColor *> *stateToImageTintColor;
+
+/** The constraints for the justified layout style. */
+@property(nullable, nonatomic) NSArray<NSLayoutConstraint *> *justifiedLayoutConstraints;
+
+/** The constraints for the scrollable layout style. */
+@property(nullable, nonatomic) NSArray<NSLayoutConstraint *> *scrollableLayoutConstraints;
+
+/** The title font for bar items. */
+@property(nonnull, nonatomic, strong) NSMutableDictionary<NSNumber *, UIFont *> *stateToTitleFont;
 @end
 
 @implementation MDCTabBarView
@@ -64,12 +74,19 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     _items = @[];
     _stateToImageTintColor = [NSMutableDictionary dictionary];
     _stateToTitleColor = [NSMutableDictionary dictionary];
+    _stateToTitleFont = [NSMutableDictionary dictionary];
     self.backgroundColor = UIColor.whiteColor;
     self.showsHorizontalScrollIndicator = NO;
 
     _containerView = [[UIStackView alloc] init];
     _containerView.axis = UILayoutConstraintAxisHorizontal;
     _containerView.translatesAutoresizingMaskIntoConstraints = NO;
+
+    // By deafult, inset the content within the safe area. This is generally the desired behavior,
+    // but clients can override it if they want.
+    if (@available(iOS 11.0, *)) {
+      [super setContentInsetAdjustmentBehavior:UIScrollViewContentInsetAdjustmentAlways];
+    }
     [self addSubview:_containerView];
   }
   return self;
@@ -266,6 +283,41 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   return titleColor;
 }
 
+- (void)updateTitleFontForAllViews {
+  for (UITabBarItem *item in self.items) {
+    NSUInteger indexOfItem = [self.items indexOfObject:item];
+    // This is a significant error, but defensive coding is preferred.
+    if (indexOfItem == NSNotFound || indexOfItem >= self.containerView.arrangedSubviews.count) {
+      NSAssert(NO, @"Unable to find associated item view for (%@)", item);
+      continue;
+    }
+    UIView *itemView = self.containerView.arrangedSubviews[indexOfItem];
+    // Skip custom views
+    if (![itemView isKindOfClass:[MDCTabBarViewItemView class]]) {
+      continue;
+    }
+    MDCTabBarViewItemView *tabBarViewItemView = (MDCTabBarViewItemView *)itemView;
+    if (item == self.selectedItem) {
+      tabBarViewItemView.titleLabel.font = [self titleFontForState:UIControlStateSelected];
+    } else {
+      tabBarViewItemView.titleLabel.font = [self titleFontForState:UIControlStateNormal];
+    }
+  }
+}
+
+- (void)setTitleFont:(UIFont *)titleFont forState:(UIControlState)state {
+  self.stateToTitleFont[@(state)] = titleFont;
+  [self updateTitleFontForAllViews];
+}
+
+- (UIFont *)titleFontForState:(UIControlState)state {
+  UIFont *titleFont = self.stateToTitleFont[@(state)];
+  if (!titleFont) {
+    titleFont = self.stateToTitleFont[@(UIControlStateNormal)];
+  }
+  return titleFont;
+}
+
 #pragma mark - Key-Value Observing (KVO)
 
 - (void)addObserversToTabBarItems {
@@ -366,11 +418,22 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  CGFloat availableWidth = CGRectGetWidth(self.bounds);
+  CGRect availableBounds = self.bounds;
+  if (@available(iOS 11.0, *)) {
+    availableBounds = UIEdgeInsetsInsetRect(availableBounds, self.safeAreaInsets);
+  }
+  CGFloat availableWidth = CGRectGetWidth(availableBounds);
   CGFloat requiredWidth = [self justifiedWidth];
   BOOL canBeJustified = availableWidth >= requiredWidth;
-  self.containerView.distribution = canBeJustified ? UIStackViewDistributionFillEqually
-                                                   : UIStackViewDistributionFillProportionally;
+  if (canBeJustified) {
+    [NSLayoutConstraint deactivateConstraints:self.scrollableLayoutConstraints];
+    self.containerView.distribution = UIStackViewDistributionFillEqually;
+    [NSLayoutConstraint activateConstraints:self.justifiedLayoutConstraints];
+  } else {
+    [NSLayoutConstraint deactivateConstraints:self.justifiedLayoutConstraints];
+    self.containerView.distribution = UIStackViewDistributionFillProportionally;
+    [NSLayoutConstraint activateConstraints:self.scrollableLayoutConstraints];
+  }
 
   if (!self.initialScrollDone) {
     self.initialScrollDone = YES;
@@ -399,12 +462,42 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     return;
   }
 
-  [self.containerView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor].active = YES;
-  [self.containerView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor].active = YES;
-  [self.containerView.widthAnchor constraintGreaterThanOrEqualToAnchor:self.widthAnchor].active =
-      YES;
-  [self.containerView.topAnchor constraintEqualToAnchor:self.topAnchor].active = YES;
-  [self.containerView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor].active = YES;
+  if (@available(iOS 11.0, *)) {
+    self.justifiedLayoutConstraints = @[
+      [self.safeAreaLayoutGuide.leadingAnchor
+          constraintEqualToAnchor:self.containerView.leadingAnchor],
+      [self.safeAreaLayoutGuide.topAnchor constraintEqualToAnchor:self.containerView.topAnchor],
+      [self.safeAreaLayoutGuide.trailingAnchor
+          constraintEqualToAnchor:self.containerView.trailingAnchor],
+      [self.safeAreaLayoutGuide.bottomAnchor
+          constraintEqualToAnchor:self.containerView.bottomAnchor],
+    ];
+    self.scrollableLayoutConstraints = @[
+      [self.contentLayoutGuide.topAnchor constraintEqualToAnchor:self.containerView.topAnchor],
+      [self.contentLayoutGuide.bottomAnchor
+          constraintEqualToAnchor:self.containerView.bottomAnchor],
+      [self.contentLayoutGuide.leadingAnchor
+          constraintEqualToAnchor:self.containerView.leadingAnchor],
+      [self.contentLayoutGuide.trailingAnchor
+          constraintEqualToAnchor:self.containerView.trailingAnchor],
+      [self.contentLayoutGuide.widthAnchor constraintEqualToAnchor:self.containerView.widthAnchor],
+      [self.contentLayoutGuide.heightAnchor
+          constraintEqualToAnchor:self.containerView.heightAnchor],
+      // Ensures items are never larger than the bar.
+      [self.frameLayoutGuide.heightAnchor
+          constraintGreaterThanOrEqualToAnchor:self.containerView.heightAnchor],
+    ];
+  } else {
+    self.justifiedLayoutConstraints = @[
+      [self.heightAnchor constraintEqualToAnchor:self.containerView.heightAnchor],
+      [self.widthAnchor constraintEqualToAnchor:self.containerView.widthAnchor],
+    ];
+    self.scrollableLayoutConstraints = @[];
+    [self.leadingAnchor constraintEqualToAnchor:self.containerView.leadingAnchor].active = YES;
+    [self.topAnchor constraintEqualToAnchor:self.containerView.topAnchor].active = YES;
+    [self.trailingAnchor constraintEqualToAnchor:self.containerView.trailingAnchor].active = YES;
+    [self.bottomAnchor constraintEqualToAnchor:self.containerView.bottomAnchor].active = YES;
+  }
   self.containerViewConstraintsActive = YES;
 
   // Must always be called last according to the documentation.
@@ -445,23 +538,57 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 - (void)scrollUntilSelectedItemIsVisibleWithoutAnimation {
   NSUInteger index = [self.items indexOfObject:self.selectedItem];
   if (index == NSNotFound || index >= self.containerView.arrangedSubviews.count) {
+    index = 0;
+  }
+  if (self.containerView.arrangedSubviews.count == 0U) {
     return;
   }
 
-  CGFloat selectedItemOriginX = 0;
-  for (NSUInteger i = 0; i < index; ++i) {
-    CGSize expectedItemSize = [self expectedSizeForView:self.containerView.arrangedSubviews[i]];
-    selectedItemOriginX += expectedItemSize.width;
+  CGRect estimatedItemFrame = [self estimatedFrameInContainerViewForItemAtIndex:index];
+  [self scrollRectToVisible:[self convertRect:estimatedItemFrame fromView:self.containerView]
+                   animated:NO];
+}
+
+- (CGRect)estimatedFrameInContainerViewForItemAtIndex:(NSUInteger)index {
+  if (index == NSNotFound || index >= self.containerView.arrangedSubviews.count) {
+    return CGRectZero;
   }
-  CGSize expectedSelectedItemSize =
-      [self expectedSizeForView:self.containerView.arrangedSubviews[index]];
-  CGRect expectedItemFrame =
-      CGRectMake(CGRectGetMinX(self.bounds) + selectedItemOriginX, CGRectGetMinY(self.bounds),
-                 expectedSelectedItemSize.width, expectedSelectedItemSize.height);
-  [self scrollRectToVisible:expectedItemFrame animated:NO];
+
+  BOOL isRTL =
+      [self mdf_effectiveUserInterfaceLayoutDirection] == UIUserInterfaceLayoutDirectionRightToLeft;
+  CGFloat viewOriginX =
+      isRTL ? CGRectGetMaxX(self.containerView.bounds) : CGRectGetMinX(self.containerView.bounds);
+
+  for (NSUInteger i = 0; i < index; ++i) {
+    CGSize viewSize = [self expectedSizeForView:self.containerView.arrangedSubviews[i]];
+    if (isRTL) {
+      viewOriginX -= viewSize.width;
+    } else {
+      viewOriginX += viewSize.width;
+    }
+  }
+  CGSize viewSize = [self expectedSizeForView:self.containerView.arrangedSubviews[index]];
+  if (isRTL) {
+    viewOriginX -= viewSize.width;
+  }
+  CGRect itemFrameInContainerView = CGRectMake(
+      viewOriginX, CGRectGetMinY(self.containerView.bounds), viewSize.width, viewSize.height);
+  CGRect convertedRect = [self convertRect:itemFrameInContainerView fromView:self.containerView];
+  return convertedRect;
 }
 
 - (CGSize)expectedSizeForView:(UIView *)view {
+  // TODO(https://github.com/material-components/material-components-ios/issues/7748): This
+  // condition is potentially dead code. It's not clear if it can be triggered in a view controller
+  // because the stack view defaults to `.Proportionally`.  However, it is being left here for now
+  // as a more defensive bit of code that quickly dividing the containerView's bounds is more
+  // efficient (and accurate) than computing every other view's size.
+  if (self.containerView.distribution == UIStackViewDistributionFillEqually &&
+      CGRectGetWidth(self.containerView.bounds) > 0) {
+    return CGSizeMake(
+        CGRectGetWidth(self.containerView.bounds) / self.containerView.arrangedSubviews.count,
+        CGRectGetHeight(self.containerView.bounds));
+  }
   CGSize expectedItemSize = view.intrinsicContentSize;
   if (expectedItemSize.width == UIViewNoIntrinsicMetric) {
     NSAssert(expectedItemSize.width != UIViewNoIntrinsicMetric,

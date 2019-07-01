@@ -68,4 +68,20 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
  */
 - (nullable UIColor *)titleColorForState:(UIControlState)state;
 
+/**
+ Sets the font of the bar items' title for the given control state.  Supports
+ @c UIControlStateNormal and @c UIControlStateSelected.
+
+ If no value for a control state is set, the value for @c UIControlStateNormal is used. If no value
+ for @c UIControlStateNormal is set, then a default value is used.
+ */
+- (void)setTitleFont:(nullable UIFont *)titleFont forState:(UIControlState)state;
+
+/**
+ Returns the font of the bar items' title for the given control state.
+
+ If no value for a control state is set, the value for @c UIControlStateNormal is returned.
+ */
+- (nullable UIFont *)titleFontForState:(UIControlState)state;
+
 @end
