@@ -35,11 +35,14 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
 @interface MDCTabBarView ()
 
-/** The stack view that contains all tab item views. */
-@property(nonnull, nonatomic, strong) UIStackView *containerView;
+/** The view that contains all tab item views. */
+@property(nonnull, nonatomic, strong) UIView *containerView;
 
-/** Used to avoid duplicating containerView's constraints twice. */
-@property(nonatomic, assign) BOOL containerViewConstraintsActive;
+/** The views representing each tab bar item. */
+@property(nonnull, nonatomic, copy) NSArray<UIView *> *itemViews;
+
+/** @c YES if the items are laid-out in a justified style. */
+@property(nonatomic, readonly) BOOL isJustifiedLayoutStyle;
 
 /** Used to scroll to the selected item during the first call to @c layoutSubviews. */
 @property(nonatomic, assign) BOOL initialScrollDone;
@@ -50,12 +53,6 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 /** The image tint colors for bar items. */
 @property(nonnull, nonatomic, strong)
     NSMutableDictionary<NSNumber *, UIColor *> *stateToImageTintColor;
-
-/** The constraints for the justified layout style. */
-@property(nullable, nonatomic) NSArray<NSLayoutConstraint *> *justifiedLayoutConstraints;
-
-/** The constraints for the scrollable layout style. */
-@property(nullable, nonatomic) NSArray<NSLayoutConstraint *> *scrollableLayoutConstraints;
 
 /** The title font for bar items. */
 @property(nonnull, nonatomic, strong) NSMutableDictionary<NSNumber *, UIFont *> *stateToTitleFont;
@@ -78,8 +75,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     self.backgroundColor = UIColor.whiteColor;
     self.showsHorizontalScrollIndicator = NO;
 
-    _containerView = [[UIStackView alloc] init];
-    _containerView.axis = UILayoutConstraintAxisHorizontal;
+    _containerView = [[UIView alloc] init];
     _containerView.translatesAutoresizingMaskIntoConstraints = NO;
 
     // By deafult, inset the content within the safe area. This is generally the desired behavior,
@@ -87,7 +83,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     if (@available(iOS 11.0, *)) {
       [super setContentInsetAdjustmentBehavior:UIScrollViewContentInsetAdjustmentAlways];
     }
-    [self addSubview:_containerView];
+//    [self addSubview:_containerView];
   }
   return self;
 }
@@ -114,11 +110,12 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   }
 
   [self removeObserversFromTabBarItems];
-  for (UIView *view in self.containerView.arrangedSubviews) {
+  for (UIView *view in self.itemViews) {
     [view removeFromSuperview];
   }
 
   _items = [items copy];
+  NSMutableArray<UIView *> *itemViews = [NSMutableArray array];
 
   for (UITabBarItem *item in self.items) {
     UIView *itemView;
@@ -142,17 +139,16 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
       mdcItemView.iconImageView.image = item.image;
       itemView = mdcItemView;
     }
-    [itemView setContentCompressionResistancePriority:UILayoutPriorityRequired
-                                              forAxis:UILayoutConstraintAxisHorizontal];
-    [itemView setContentCompressionResistancePriority:UILayoutPriorityRequired
-                                              forAxis:UILayoutConstraintAxisVertical];
     itemView.translatesAutoresizingMaskIntoConstraints = NO;
     UITapGestureRecognizer *tapGesture =
         [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapItemView:)];
     [itemView addGestureRecognizer:tapGesture];
 
-    [self.containerView addArrangedSubview:itemView];
+    [self addSubview:itemView];
+    [itemViews addObject:itemView];
   }
+
+  self.itemViews = itemViews;
 
   // Determine new selected item, defaulting to nil.
   UITabBarItem *newSelectedItem = nil;
@@ -164,6 +160,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   self.selectedItem = newSelectedItem;
   [self addObserversToTabBarItems];
 
+  self.contentSize = self.intrinsicContentSize;
   [self invalidateIntrinsicContentSize];
   [self setNeedsLayout];
 }
@@ -180,7 +177,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   // Sets the old selected item view's traits back.
   NSUInteger oldSelectedItemIndex = [self.items indexOfObject:self.selectedItem];
   if (oldSelectedItemIndex != NSNotFound) {
-    UIView *oldSelectedItemView = self.containerView.arrangedSubviews[oldSelectedItemIndex];
+    UIView *oldSelectedItemView = self.itemViews[oldSelectedItemIndex];
     oldSelectedItemView.accessibilityTraits =
         (oldSelectedItemView.accessibilityTraits & ~UIAccessibilityTraitSelected);
   }
@@ -202,14 +199,14 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   }
   _selectedItem = selectedItem;
 
-  UIView *newSelectedItemView = self.containerView.arrangedSubviews[itemIndex];
+  UIView *newSelectedItemView = self.itemViews[itemIndex];
   newSelectedItemView.accessibilityTraits =
       (newSelectedItemView.accessibilityTraits | UIAccessibilityTraitSelected);
   [self updateTitleColorForAllViews];
   [self updateImageTintColorForAllViews];
   [self updateTitleFontForAllViews];
   CGRect itemFrameInScrollViewBounds =
-      [self convertRect:self.containerView.arrangedSubviews[itemIndex].frame
+      [self convertRect:self.itemViews[itemIndex].frame
                fromView:self.containerView];
   [self scrollRectToVisible:itemFrameInScrollViewBounds animated:animated];
 }
@@ -218,11 +215,11 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   for (UITabBarItem *item in self.items) {
     NSUInteger indexOfItem = [self.items indexOfObject:item];
     // This is a significant error, but defensive coding is preferred.
-    if (indexOfItem == NSNotFound || indexOfItem >= self.containerView.arrangedSubviews.count) {
+    if (indexOfItem == NSNotFound || indexOfItem >= self.itemViews.count) {
       NSAssert(NO, @"Unable to find associated item view for (%@)", item);
       continue;
     }
-    UIView *itemView = self.containerView.arrangedSubviews[indexOfItem];
+    UIView *itemView = self.itemViews[indexOfItem];
     // Skip custom views
     if (![itemView isKindOfClass:[MDCTabBarViewItemView class]]) {
       continue;
@@ -255,11 +252,11 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   for (UITabBarItem *item in self.items) {
     NSUInteger indexOfItem = [self.items indexOfObject:item];
     // This is a significant error, but defensive coding is preferred.
-    if (indexOfItem == NSNotFound || indexOfItem >= self.containerView.arrangedSubviews.count) {
+    if (indexOfItem == NSNotFound || indexOfItem >= self.itemViews.count) {
       NSAssert(NO, @"Unable to find associated item view for (%@)", item);
       continue;
     }
-    UIView *itemView = self.containerView.arrangedSubviews[indexOfItem];
+    UIView *itemView = self.itemViews[indexOfItem];
     // Skip custom views
     if (![itemView isKindOfClass:[MDCTabBarViewItemView class]]) {
       continue;
@@ -290,11 +287,11 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   for (UITabBarItem *item in self.items) {
     NSUInteger indexOfItem = [self.items indexOfObject:item];
     // This is a significant error, but defensive coding is preferred.
-    if (indexOfItem == NSNotFound || indexOfItem >= self.containerView.arrangedSubviews.count) {
+    if (indexOfItem == NSNotFound || indexOfItem >= self.itemViews.count) {
       NSAssert(NO, @"Unable to find associated item view for (%@)", item);
       continue;
     }
-    UIView *itemView = self.containerView.arrangedSubviews[indexOfItem];
+    UIView *itemView = self.itemViews[indexOfItem];
     // Skip custom views
     if (![itemView isKindOfClass:[MDCTabBarViewItemView class]]) {
       continue;
@@ -384,7 +381,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
       return;
     }
     // Don't try to update custom views
-    UIView *updatedItemView = self.containerView.arrangedSubviews[indexOfObject];
+    UIView *updatedItemView = self.itemViews[indexOfObject];
     if (![updatedItemView isKindOfClass:[MDCTabBarViewItemView class]]) {
       return;
     }
@@ -420,27 +417,50 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  CGRect availableBounds = self.bounds;
-  if (@available(iOS 11.0, *)) {
-    availableBounds = UIEdgeInsetsInsetRect(availableBounds, self.safeAreaInsets);
-  }
-  CGFloat availableWidth = CGRectGetWidth(availableBounds);
-  CGFloat requiredWidth = [self justifiedWidth];
-  BOOL canBeJustified = availableWidth >= requiredWidth;
-  if (canBeJustified) {
-    [NSLayoutConstraint deactivateConstraints:self.scrollableLayoutConstraints];
-    self.containerView.distribution = UIStackViewDistributionFillEqually;
-    [NSLayoutConstraint activateConstraints:self.justifiedLayoutConstraints];
+  if (self.isJustifiedLayoutStyle) {
+    [self layoutSubviewsForJustifiedLayout];
   } else {
-    [NSLayoutConstraint deactivateConstraints:self.justifiedLayoutConstraints];
-    self.containerView.distribution = UIStackViewDistributionFillProportionally;
-    [NSLayoutConstraint activateConstraints:self.scrollableLayoutConstraints];
+    [self layoutSubviewsForScrollableLayout];
   }
 
   if (!self.initialScrollDone) {
     self.initialScrollDone = YES;
     [self scrollUntilSelectedItemIsVisibleWithoutAnimation];
   }
+}
+
+- (BOOL)isJustifiedLayoutStyle {
+  CGRect availableBounds = self.bounds;
+  if (@available(iOS 11.0, *)) {
+    availableBounds = UIEdgeInsetsInsetRect(availableBounds, self.safeAreaInsets);
+  }
+  CGFloat availableWidth = CGRectGetWidth(availableBounds);
+  CGFloat requiredWidth = [self justifiedWidth];
+  return availableWidth >= requiredWidth;
+}
+
+- (void)layoutSubviewsForJustifiedLayout {
+  CGRect availableBounds = self.bounds;
+  if (@available(iOS 11.0, *)) {
+    availableBounds = UIEdgeInsetsInsetRect(availableBounds, self.safeAreaInsets);
+  }
+  self.containerView.frame = availableBounds;
+  NSLog(@"CONTAINER: %@", self.containerView);
+  NSLog(@"TAB BAR: %@", self);
+
+  CGFloat itemViewWidth = CGRectGetWidth(self.containerView.bounds) / self.itemViews.count;
+  CGFloat itemViewOriginX = CGRectGetMinX(self.containerView.bounds);
+  CGFloat itemViewOriginY = CGRectGetMinY(self.containerView.bounds);
+  CGFloat itemViewHeight = CGRectGetHeight(self.containerView.bounds);
+  for (UIView *itemView in self.itemViews) {
+    itemView.frame = CGRectMake(itemViewOriginX, itemViewOriginY, itemViewWidth, itemViewHeight);
+    itemViewOriginX += itemViewWidth;
+  }
+}
+
+- (void)layoutSubviewsForScrollableLayout {
+  [self layoutSubviewsForJustifiedLayout];
+
 }
 
 - (void)willMoveToSuperview:(UIView *)newSuperview {
@@ -458,58 +478,18 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   }
 }
 
-- (void)updateConstraints {
-  if (self.containerViewConstraintsActive) {
-    [super updateConstraints];
-    return;
-  }
-
-  if (@available(iOS 11.0, *)) {
-    self.justifiedLayoutConstraints = @[
-      [self.safeAreaLayoutGuide.leadingAnchor
-          constraintEqualToAnchor:self.containerView.leadingAnchor],
-      [self.safeAreaLayoutGuide.topAnchor constraintEqualToAnchor:self.containerView.topAnchor],
-      [self.safeAreaLayoutGuide.trailingAnchor
-          constraintEqualToAnchor:self.containerView.trailingAnchor],
-      [self.safeAreaLayoutGuide.bottomAnchor
-          constraintEqualToAnchor:self.containerView.bottomAnchor],
-    ];
-    self.scrollableLayoutConstraints = @[
-      [self.contentLayoutGuide.topAnchor constraintEqualToAnchor:self.containerView.topAnchor],
-      [self.contentLayoutGuide.bottomAnchor
-          constraintEqualToAnchor:self.containerView.bottomAnchor],
-      [self.contentLayoutGuide.leadingAnchor
-          constraintEqualToAnchor:self.containerView.leadingAnchor],
-      [self.contentLayoutGuide.trailingAnchor
-          constraintEqualToAnchor:self.containerView.trailingAnchor],
-      [self.contentLayoutGuide.widthAnchor constraintEqualToAnchor:self.containerView.widthAnchor],
-      [self.contentLayoutGuide.heightAnchor
-          constraintEqualToAnchor:self.containerView.heightAnchor],
-      // Ensures items are never larger than the bar.
-      [self.frameLayoutGuide.heightAnchor
-          constraintGreaterThanOrEqualToAnchor:self.containerView.heightAnchor],
-    ];
+- (CGSize)intrinsicContentSize {
+  if (self.isJustifiedLayoutStyle) {
+    return [self intrinsicContentSizeForJustifiedLayout];
   } else {
-    self.justifiedLayoutConstraints = @[
-      [self.heightAnchor constraintEqualToAnchor:self.containerView.heightAnchor],
-      [self.widthAnchor constraintEqualToAnchor:self.containerView.widthAnchor],
-    ];
-    self.scrollableLayoutConstraints = @[];
-    [self.leadingAnchor constraintEqualToAnchor:self.containerView.leadingAnchor].active = YES;
-    [self.topAnchor constraintEqualToAnchor:self.containerView.topAnchor].active = YES;
-    [self.trailingAnchor constraintEqualToAnchor:self.containerView.trailingAnchor].active = YES;
-    [self.bottomAnchor constraintEqualToAnchor:self.containerView.bottomAnchor].active = YES;
+    return [self intrinsicContentSizeForJustifiedLayout];
   }
-  self.containerViewConstraintsActive = YES;
-
-  // Must always be called last according to the documentation.
-  [super updateConstraints];
 }
 
-- (CGSize)intrinsicContentSize {
+- (CGSize)intrinsicContentSizeForJustifiedLayout {
   CGFloat totalWidth = [self justifiedWidth];
   CGFloat maxHeight = 0;
-  for (UIView *itemView in self.containerView.arrangedSubviews) {
+  for (UIView *itemView in self.itemViews) {
     CGSize contentSize = itemView.intrinsicContentSize;
     if (contentSize.height > maxHeight) {
       maxHeight = contentSize.height;
@@ -527,7 +507,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
 - (CGFloat)justifiedWidth {
   CGFloat maxWidth = 0;
-  for (UIView *itemView in self.containerView.arrangedSubviews) {
+  for (UIView *itemView in self.itemViews) {
     CGSize contentSize = itemView.intrinsicContentSize;
     if (contentSize.width > maxWidth) {
       maxWidth = contentSize.width;
@@ -539,10 +519,10 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
 - (void)scrollUntilSelectedItemIsVisibleWithoutAnimation {
   NSUInteger index = [self.items indexOfObject:self.selectedItem];
-  if (index == NSNotFound || index >= self.containerView.arrangedSubviews.count) {
+  if (index == NSNotFound || index >= self.itemViews.count) {
     index = 0;
   }
-  if (self.containerView.arrangedSubviews.count == 0U) {
+  if (self.itemViews.count == 0U) {
     return;
   }
 
@@ -552,7 +532,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 }
 
 - (CGRect)estimatedFrameInContainerViewForItemAtIndex:(NSUInteger)index {
-  if (index == NSNotFound || index >= self.containerView.arrangedSubviews.count) {
+  if (index == NSNotFound || index >= self.itemViews.count) {
     return CGRectZero;
   }
 
@@ -562,14 +542,14 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
       isRTL ? CGRectGetMaxX(self.containerView.bounds) : CGRectGetMinX(self.containerView.bounds);
 
   for (NSUInteger i = 0; i < index; ++i) {
-    CGSize viewSize = [self expectedSizeForView:self.containerView.arrangedSubviews[i]];
+    CGSize viewSize = [self expectedSizeForView:self.itemViews[i]];
     if (isRTL) {
       viewOriginX -= viewSize.width;
     } else {
       viewOriginX += viewSize.width;
     }
   }
-  CGSize viewSize = [self expectedSizeForView:self.containerView.arrangedSubviews[index]];
+  CGSize viewSize = [self expectedSizeForView:self.itemViews[index]];
   if (isRTL) {
     viewOriginX -= viewSize.width;
   }
@@ -585,10 +565,10 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   // because the stack view defaults to `.Proportionally`.  However, it is being left here for now
   // as a more defensive bit of code that quickly dividing the containerView's bounds is more
   // efficient (and accurate) than computing every other view's size.
-  if (self.containerView.distribution == UIStackViewDistributionFillEqually &&
+  if (self.isJustifiedLayoutStyle &&
       CGRectGetWidth(self.containerView.bounds) > 0) {
     return CGSizeMake(
-        CGRectGetWidth(self.containerView.bounds) / self.containerView.arrangedSubviews.count,
+        CGRectGetWidth(self.containerView.bounds) / self.itemViews.count,
         CGRectGetHeight(self.containerView.bounds));
   }
   CGSize expectedItemSize = view.intrinsicContentSize;
@@ -603,7 +583,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 #pragma mark - Actions
 
 - (void)didTapItemView:(UITapGestureRecognizer *)tap {
-  NSUInteger index = [self.containerView.arrangedSubviews indexOfObject:tap.view];
+  NSUInteger index = [self.itemViews indexOfObject:tap.view];
   if (index == NSNotFound) {
     return;
   }
