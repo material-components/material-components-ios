@@ -17,6 +17,7 @@
 #import "../../../src/TabBarView/private/MDCTabBarViewItemView.h"
 #import "MDCTabBarView.h"
 #import "MDCTabBarViewDelegate.h"
+#import "MaterialTypography.h"
 
 // Minimum height of the MDCTabBar view.
 static const CGFloat kMinHeight = 48;
@@ -380,6 +381,67 @@ static UIImage *fakeImage(CGSize size) {
   // Then
   XCTAssertNil([self.tabBarView titleColorForState:UIControlStateNormal]);
   XCTAssertNil([self.tabBarView titleColorForState:UIControlStateSelected]);
+}
+
+- (void)testTitleFontForStateFallsBackToNormalState {
+  // Given
+  UIFont *fakeFont = [UIFont systemFontOfSize:25];
+  [self.tabBarView setTitleFont:nil forState:UIControlStateNormal];
+  [self.tabBarView setTitleFont:nil forState:UIControlStateSelected];
+
+  // When
+  [self.tabBarView setTitleFont:fakeFont forState:UIControlStateNormal];
+
+  // Then
+  [self assertTitleFontForState:UIControlStateSelected equalsFont:fakeFont];
+}
+
+- (void)testTitleFontForStateReturnsExpectedValue {
+  // Given
+  UIFont *fakeNormalFont = [UIFont systemFontOfSize:25];
+  UIFont *fakeSelectedFont = [UIFont systemFontOfSize:24];
+  [self.tabBarView setTitleFont:nil forState:UIControlStateNormal];
+  [self.tabBarView setTitleFont:nil forState:UIControlStateSelected];
+
+  // When
+  [self.tabBarView setTitleFont:fakeNormalFont forState:UIControlStateNormal];
+  [self.tabBarView setTitleFont:fakeSelectedFont forState:UIControlStateSelected];
+
+  // Then
+  [self assertTitleFontForState:UIControlStateNormal equalsFont:fakeNormalFont];
+  [self assertTitleFontForState:UIControlStateSelected equalsFont:fakeSelectedFont];
+}
+
+- (void)testTitleFontForStateSetToNilFallsBackToNormal {
+  // Given
+  UIFont *fakeNormalFont = [UIFont systemFontOfSize:25];
+  UIFont *fakeSelectedFont = [UIFont systemFontOfSize:24];
+  [self.tabBarView setTitleFont:nil forState:UIControlStateNormal];
+  [self.tabBarView setTitleFont:fakeSelectedFont forState:UIControlStateSelected];
+
+  // When
+  [self.tabBarView setTitleFont:fakeNormalFont forState:UIControlStateNormal];
+  [self.tabBarView setTitleFont:nil forState:UIControlStateSelected];
+
+  // Then
+  [self assertTitleFontForState:UIControlStateNormal equalsFont:fakeNormalFont];
+  [self assertTitleFontForState:UIControlStateSelected equalsFont:fakeNormalFont];
+}
+
+- (void)testTitleFontForStateWithNoValuesReturnsNil {
+  // When
+  [self.tabBarView setTitleFont:nil forState:UIControlStateNormal];
+  [self.tabBarView setTitleFont:nil forState:UIControlStateSelected];
+
+  // Then
+  XCTAssertNil([self.tabBarView titleColorForState:UIControlStateNormal]);
+  XCTAssertNil([self.tabBarView titleColorForState:UIControlStateSelected]);
+}
+
+- (void)assertTitleFontForState:(UIControlState)state equalsFont:(UIFont *)font {
+  UIFont *statefulTitleFont = [self.tabBarView titleFontForState:state];
+  XCTAssertTrue([statefulTitleFont mdc_isSimplyEqual:font], @"(%@) is not equal to (%@)",
+                statefulTitleFont, font);
 }
 
 #pragma mark - Delegate
