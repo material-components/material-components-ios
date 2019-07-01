@@ -147,8 +147,6 @@ static const CGFloat kMaxItemWidth = 360;
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
-#pragma mark - Safe Area
-
 #pragma mark - Selection
 
 - (void)testChangingSelectedItemIgnoresSelectedImage {
