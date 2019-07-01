@@ -141,7 +141,6 @@ static NSString *const kExampleTitle = @"TabBarView";
   }
   [self.view.leftAnchor constraintEqualToAnchor:self.tabBar.leftAnchor].active = YES;
   [self.view.rightAnchor constraintEqualToAnchor:self.tabBar.rightAnchor].active = YES;
-  [self.tabBar.heightAnchor constraintEqualToConstant:72].active = YES;
 }
 
 #pragma mark - MDCTabBarViewDelegate
