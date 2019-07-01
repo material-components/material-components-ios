@@ -104,6 +104,9 @@ static const CGFloat kMaxItemWidth = 360;
 #pragma mark - Helpers
 
 - (void)generateSnapshotAndVerifyForView:(UIView *)view {
+  // Needed so that the stack view can be constrained correctly and then allow any "scrolling" to
+  // take place for the selected item to be visible.
+  [self.tabBarView layoutIfNeeded];
   UIView *snapshotView = [view mdc_addToBackgroundView];
   [self snapshotVerifyView:snapshotView];
 }
@@ -488,7 +491,7 @@ static const CGFloat kMaxItemWidth = 360;
       [[MDCTabBarViewSnapshotTestsSuperview alloc] init];
   [superview addSubview:self.tabBarView];
   self.tabBarView.items = @[ item1, item2, item3, item4 ];
-  [self.tabBarView setSelectedItem:item2 animated:NO];
+  [self.tabBarView setSelectedItem:item4 animated:NO];
 
   // When
   superview.customSafeAreaInsets = UIEdgeInsetsMake(0, 0, 16, 44);
