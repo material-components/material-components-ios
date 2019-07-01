@@ -153,7 +153,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   self.selectedItem = newSelectedItem;
   [self addObserversToTabBarItems];
 
-  self.contentSize = self.intrinsicContentSize;
+  self.contentSize = [self calculatedContentSize];
   [self setNeedsLayout];
 }
 
@@ -433,13 +433,23 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   if (@available(iOS 11.0, *)) {
     availableBounds = UIEdgeInsetsInsetRect(availableBounds, self.safeAreaInsets);
   }
+
+  BOOL isRTL =
+      [self mdf_effectiveUserInterfaceLayoutDirection] == UIUserInterfaceLayoutDirectionRightToLeft;
+
   CGFloat itemViewWidth = CGRectGetWidth(availableBounds) / self.itemViews.count;
-  CGFloat itemViewOriginX = 0;
+  CGFloat itemViewOriginX = isRTL ? CGRectGetWidth(availableBounds) : 0;
   CGFloat itemViewOriginY = 0;
   CGFloat itemViewHeight = CGRectGetHeight(availableBounds);
   for (UIView *itemView in self.itemViews) {
-    itemView.frame = CGRectMake(itemViewOriginX, itemViewOriginY, itemViewWidth, itemViewHeight);
-    itemViewOriginX += itemViewWidth;
+    if (isRTL) {
+      itemView.frame = CGRectMake(itemViewOriginX - itemViewWidth, itemViewOriginY, itemViewWidth,
+                                  itemViewHeight);
+      itemViewOriginX -= itemViewWidth;
+    } else {
+      itemView.frame = CGRectMake(itemViewOriginX, itemViewOriginY, itemViewWidth, itemViewHeight);
+      itemViewOriginX += itemViewWidth;
+    }
   }
 }
 
@@ -448,14 +458,23 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   if (@available(iOS 11.0, *)) {
     availableBounds = UIEdgeInsetsInsetRect(availableBounds, self.safeAreaInsets);
   }
-  CGFloat itemViewOriginX = 0;
+  BOOL isRTL =
+      [self mdf_effectiveUserInterfaceLayoutDirection] == UIUserInterfaceLayoutDirectionRightToLeft;
+
+  CGFloat itemViewOriginX = isRTL ? CGRectGetWidth(availableBounds) : 0;
   CGFloat itemViewOriginY = 0;
   CGFloat itemViewHeight = CGRectGetHeight(availableBounds);
   for (UIView *view in self.itemViews) {
     CGSize intrinsicContentSize = view.intrinsicContentSize;
-    view.frame =
-        CGRectMake(itemViewOriginX, itemViewOriginY, intrinsicContentSize.width, itemViewHeight);
-    itemViewOriginX += intrinsicContentSize.width;
+    if (isRTL) {
+      view.frame = CGRectMake(itemViewOriginX - intrinsicContentSize.width, itemViewOriginY,
+                              intrinsicContentSize.width, itemViewHeight);
+      itemViewOriginX -= intrinsicContentSize.width;
+    } else {
+      view.frame =
+          CGRectMake(itemViewOriginX, itemViewOriginY, intrinsicContentSize.width, itemViewHeight);
+      itemViewOriginX += intrinsicContentSize.width;
+    }
   }
 }
 
@@ -465,6 +484,14 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 }
 
 - (CGSize)intrinsicContentSize {
+  //  if (self.isJustifiedLayoutStyle) {
+  return [self intrinsicContentSizeForJustifiedLayout];
+  //  } else {
+  //    return [self intrinsicContentSizeForScrollableLayout];
+  //  }
+}
+
+- (CGSize)calculatedContentSize {
   if (self.isJustifiedLayoutStyle) {
     return [self intrinsicContentSizeForJustifiedLayout];
   } else {
