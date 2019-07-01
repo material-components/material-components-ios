@@ -525,11 +525,11 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     return;
   }
 
-  CGRect estimatedItemFrame = [self estimatedFrameInContainerViewForItemAtIndex:index];
+  CGRect estimatedItemFrame = [self estimatedFrameForItemAtIndex:index];
   [self scrollRectToVisible:estimatedItemFrame animated:NO];
 }
 
-- (CGRect)estimatedFrameInContainerViewForItemAtIndex:(NSUInteger)index {
+- (CGRect)estimatedFrameForItemAtIndex:(NSUInteger)index {
   if (index == NSNotFound || index >= self.itemViews.count) {
     return CGRectZero;
   }
@@ -555,16 +555,10 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   if (isRTL) {
     viewOriginX -= viewSize.width;
   }
-  CGRect itemFrameInContainerView = CGRectMake(viewOriginX, 0, viewSize.width, viewSize.height);
-  return itemFrameInContainerView;
+  return CGRectMake(viewOriginX, 0, viewSize.width, viewSize.height);
 }
 
 - (CGSize)expectedSizeForView:(UIView *)view {
-  // TODO(https://github.com/material-components/material-components-ios/issues/7748): This
-  // condition is potentially dead code. It's not clear if it can be triggered in a view controller
-  // because the stack view defaults to `.Proportionally`.  However, it is being left here for now
-  // as a more defensive bit of code that quickly dividing the containerView's bounds is more
-  // efficient (and accurate) than computing every other view's size.
   if (self.isJustifiedLayoutStyle && CGRectGetWidth(self.bounds) > 0) {
     CGRect contentRect = self.bounds;
     if (@available(iOS 11.0, *)) {
