@@ -47,9 +47,9 @@ static const BOOL MDCCardIsInteractableDefault = YES;
 }
 
 - (void)updateElevationLightening {
-//  [NSNotificationCenter.defaultCenter postNotificationName:@"ElevationDidChange" object:nil userInfo:nil];
+  //  [NSNotificationCenter.defaultCenter postNotificationName:@"ElevationDidChange" object:nil
+  //  userInfo:nil];
   NSLog(@"update elevation lightening");
-
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -166,11 +166,13 @@ static const BOOL MDCCardIsInteractableDefault = YES;
     [(MDCShadowLayer *)self.layer setElevation:elevation];
 
     if (self.traitCollectionDidChangeBlock) {
-      UITraitCollection *traitCollection = [UITraitCollection traitCollectionWithMaterialElevation:elevation];
+      UITraitCollection *traitCollection =
+          [UITraitCollection traitCollectionWithMaterialElevation:elevation];
       NSLog(@"%f", traitCollection.materialElevation);
       traitCollection =
-          [UITraitCollection traitCollectionWithTraitsFromCollectionsIncludingElevation:
-            @[self.traitCollection, traitCollection]];
+          [UITraitCollection traitCollectionWithTraitsFromCollectionsIncludingElevation:@[
+            self.traitCollection, traitCollection
+          ]];
       NSLog(@"%f", traitCollection.materialElevation);
       self.traitCollectionDidChangeBlock(traitCollection);
     }

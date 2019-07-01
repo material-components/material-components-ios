@@ -19,7 +19,9 @@
 @implementation UIView (DarkModeElevatable)
 
 - (void)setMdc_absoluteElevation:(CGFloat)mdc_absoluteElevation {
-  objc_setAssociatedObject(self, @selector(mdc_absoluteElevation), [NSNumber numberWithDouble:mdc_absoluteElevation], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+  objc_setAssociatedObject(self, @selector(mdc_absoluteElevation),
+                           [NSNumber numberWithDouble:mdc_absoluteElevation],
+                           OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (CGFloat)mdc_absoluteElevation {

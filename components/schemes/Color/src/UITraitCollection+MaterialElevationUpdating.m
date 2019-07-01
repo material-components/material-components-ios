@@ -17,7 +17,7 @@
 #import "UITraitCollection+MaterialElevationUpdating.h"
 
 @interface UITraitCollection ()
-@property (nonatomic, readwrite) CGFloat materialElevation;
+@property(nonatomic, readwrite) CGFloat materialElevation;
 @end
 
 @implementation UITraitCollection (MaterialElevationUpdating)
@@ -28,8 +28,10 @@
   return traitCollection;
 }
 
-+ (UITraitCollection *)traitCollectionWithTraitsFromCollectionsIncludingElevation:(NSArray<UITraitCollection *> *)traitCollections {
-  UITraitCollection *traitCollection = [self traitCollectionWithTraitsFromCollections:traitCollections];
++ (UITraitCollection *)traitCollectionWithTraitsFromCollectionsIncludingElevation:
+    (NSArray<UITraitCollection *> *)traitCollections {
+  UITraitCollection *traitCollection =
+      [self traitCollectionWithTraitsFromCollections:traitCollections];
   for (UITraitCollection *collection in traitCollections) {
     if (collection.materialElevation > 0) {
       traitCollection.materialElevation = collection.materialElevation;
@@ -38,17 +40,17 @@
   return traitCollection;
 }
 
-
 - (void)setMaterialElevation:(CGFloat)materialElevation {
-  objc_setAssociatedObject(self, @selector(materialElevation), @(materialElevation), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+  objc_setAssociatedObject(self, @selector(materialElevation), @(materialElevation),
+                           OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (CGFloat)materialElevation {
-    NSNumber *number = objc_getAssociatedObject(self, @selector(materialElevation));
-    if (number == nil) {
-      return 0;
-    }
-    return number.doubleValue;
+  NSNumber *number = objc_getAssociatedObject(self, @selector(materialElevation));
+  if (number == nil) {
+    return 0;
+  }
+  return number.doubleValue;
 }
 
 @end

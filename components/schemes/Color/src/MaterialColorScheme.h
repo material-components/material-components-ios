@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import "MDCDarkMode.h"
 #import "MDCLegacyColorScheme.h"
 #import "MDCLegacyTonalColorScheme.h"
 #import "MDCLegacyTonalPalette.h"
-
 #import "MDCSemanticColorScheme.h"
-#import "MDCDarkMode.h"
 //#import "UIColor+MaterialElevation.h"
 //#import "MDCDarkModeElevationLightening.h"
-#import "UIView+DarkModeElevatable.h"
 #import "MDCThemingElevationDelegate.h"
+#import "UIView+DarkModeElevatable.h"

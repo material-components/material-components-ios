@@ -16,8 +16,9 @@
 
 @interface UITraitCollection (MaterialElevationUpdating)
 
-+ (UITraitCollection *)traitCollectionWithTraitsFromCollectionsIncludingElevation:(NSArray<UITraitCollection *> *)traitCollections;
++ (UITraitCollection *)traitCollectionWithTraitsFromCollectionsIncludingElevation:
+    (NSArray<UITraitCollection *> *)traitCollections;
 + (UITraitCollection *)traitCollectionWithMaterialElevation:(CGFloat)materialElevation;
-@property (nonatomic, readonly, assign) CGFloat materialElevation;
+@property(nonatomic, readonly, assign) CGFloat materialElevation;
 
 @end

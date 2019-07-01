@@ -16,7 +16,7 @@
 
 @protocol MDCDarkModeElevationLightening <NSObject>
 
-@property (nonatomic, assign, readonly) CGFloat mdc_elevation;
+@property(nonatomic, assign, readonly) CGFloat mdc_elevation;
 
 - (void)updateElevationLightening;
 @end

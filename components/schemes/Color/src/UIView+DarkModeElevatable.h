@@ -16,6 +16,6 @@
 
 @interface UIView (DarkModeElevatable)
 
-@property (nonatomic, assign) CGFloat mdc_absoluteElevation;
+@property(nonatomic, assign) CGFloat mdc_absoluteElevation;
 
 @end

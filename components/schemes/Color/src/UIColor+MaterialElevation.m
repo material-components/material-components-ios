@@ -19,7 +19,9 @@
 @implementation UIColor (MaterialElevation)
 
 - (void)setMdc_elevation:(CGFloat)mdc_elevation {
-  objc_setAssociatedObject(self, @selector(mdc_elevation), [NSNumber numberWithDouble:mdc_elevation], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+  objc_setAssociatedObject(self, @selector(mdc_elevation),
+                           [NSNumber numberWithDouble:mdc_elevation],
+                           OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (CGFloat)mdc_elevation {

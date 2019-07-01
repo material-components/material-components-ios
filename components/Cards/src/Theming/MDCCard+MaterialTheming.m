@@ -59,7 +59,6 @@ static const CGFloat kBorderWidth = 1;
 
 //- (void)setElevationWithScheme:(
 
-
 #pragma mark - Outlined Card
 
 - (void)applyOutlinedThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme {

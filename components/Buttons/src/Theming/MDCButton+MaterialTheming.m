@@ -39,15 +39,18 @@
 }
 
 - (void)setMdc_containerScheme:(id<MDCContainerScheming>)mdc_containerScheme {
-  objc_setAssociatedObject(self, @selector(mdc_containerScheme), mdc_containerScheme, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+  objc_setAssociatedObject(self, @selector(mdc_containerScheme), mdc_containerScheme,
+                           OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (id<MDCContainerScheming>)mdc_effectiveContainerScheme {
   return objc_getAssociatedObject(self, @selector(mdc_effectiveContainerScheme));
 }
 
-- (void)setMdc_effectiveContainerScheme:(id<MDCContainerScheming> _Nullable)mdc_effectiveContainerScheme {
-  objc_setAssociatedObject(self, @selector(mdc_effectiveContainerScheme), mdc_effectiveContainerScheme, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setMdc_effectiveContainerScheme:
+    (id<MDCContainerScheming> _Nullable)mdc_effectiveContainerScheme {
+  objc_setAssociatedObject(self, @selector(mdc_effectiveContainerScheme),
+                           mdc_effectiveContainerScheme, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 //- (id)initContainerTheme {

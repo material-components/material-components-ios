@@ -13,10 +13,10 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
+#import "MDCDarkModeElevationLightening.h"
 #import "MaterialInk.h"
 #import "MaterialRipple.h"
 #import "MaterialShadowLayer.h"
-#import "MDCDarkModeElevationLightening.h"
 
 @protocol MDCShapeGenerating;
 
@@ -155,9 +155,9 @@
  */
 @property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator;
 
-@property (nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)(UITraitCollection * _Nonnull newTraitCollection);
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (UITraitCollection *_Nonnull newTraitCollection);
 
 //@property(nonatomic, weak, nullable) id<MDCThemingElevationDelegate> elevationDelegate;
-
 
 @end

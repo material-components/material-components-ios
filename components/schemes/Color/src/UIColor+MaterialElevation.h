@@ -16,6 +16,6 @@
 
 @interface UIColor (MaterialElevation)
 
-@property (nonatomic, assign) CGFloat mdc_elevation;
+@property(nonatomic, assign) CGFloat mdc_elevation;
 
 @end

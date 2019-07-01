@@ -18,7 +18,7 @@
 
 @implementation MDCDarkMode
 
-//static CGFloat ElevationToWhiteOverlayOpacity(CGFloat elevation) {
+// static CGFloat ElevationToWhiteOverlayOpacity(CGFloat elevation) {
 //  static NSDictionary *opacityLookup = nil;
 //  static dispatch_once_t onceToken;
 //  dispatch_once(&onceToken, ^{
@@ -44,7 +44,6 @@
 //    return 0;
 //  }
 //}
-
 
 + (nonnull UIColor *)lightenBackgroundColor:(nonnull UIColor *)color
                               withElevation:(CGFloat)elevation {

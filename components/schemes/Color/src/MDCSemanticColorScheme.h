@@ -75,7 +75,6 @@
  */
 @property(nonnull, readonly, copy, nonatomic) UIColor *onBackgroundColor;
 
-
 @property(assign, readonly, nonatomic) BOOL shouldLightenElevatedSurfacesWithDarkMode;
 
 - (nonnull UIColor *)surfaceColorWithElevation:(CGFloat)elevation;

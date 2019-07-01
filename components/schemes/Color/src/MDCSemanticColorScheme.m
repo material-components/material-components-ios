@@ -55,7 +55,7 @@ static UIColor *DynamicColor(UIColor *defaultColor, UIColor *darkColor) {
 #endif
 }
 
-//static UIColor *DynamicColorWithElevationForSurfaces(UIColor *defaultColor, UIColor *darkColor) {
+// static UIColor *DynamicColorWithElevationForSurfaces(UIColor *defaultColor, UIColor *darkColor) {
 //#if defined(__IPHONE_13_0)
 //  if (@available(iOS 13.0, *)) {
 //    return [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
@@ -118,10 +118,8 @@ static UIColor *DynamicColor(UIColor *defaultColor, UIColor *darkColor) {
         _primaryColorVariant = DynamicColor(ColorFromRGB(0x3700B3), ColorFromRGB(0x3700B3));
         _secondaryColor = DynamicColor(ColorFromRGB(0x03DAC6), ColorFromRGB(0x03DAC6));
         _errorColor = DynamicColor(ColorFromRGB(0xB00020), ColorFromRGB(0xCF6679));
-        _surfaceColor = DynamicColor(ColorFromRGB(0xFFFFFF),
-                                     ColorFromRGB(0x121212));
-        _backgroundColor = DynamicColor(ColorFromRGB(0xFFFFFF),
-                                        ColorFromRGB(0x121212));
+        _surfaceColor = DynamicColor(ColorFromRGB(0xFFFFFF), ColorFromRGB(0x121212));
+        _backgroundColor = DynamicColor(ColorFromRGB(0xFFFFFF), ColorFromRGB(0x121212));
         _onPrimaryColor = DynamicColor(ColorFromRGB(0xFFFFFF), ColorFromRGB(0x000000));
         _onSecondaryColor = DynamicColor(ColorFromRGB(0x000000), ColorFromRGB(0x000000));
         _onSurfaceColor = DynamicColor(ColorFromRGB(0x000000), ColorFromRGB(0xFFFFFF));
@@ -146,8 +144,10 @@ static UIColor *DynamicColor(UIColor *defaultColor, UIColor *darkColor) {
         [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleLight];
 
     // Surface Color
-    UIColor *resolvedDarkSurfaceColor = [copy.surfaceColor resolvedColorWithTraitCollection:darkThemeTraitCollection];
-    UIColor *resolvedLightSurfaceColor = [copy.surfaceColor resolvedColorWithTraitCollection:lightThemeTraitCollection];
+    UIColor *resolvedDarkSurfaceColor =
+        [copy.surfaceColor resolvedColorWithTraitCollection:darkThemeTraitCollection];
+    UIColor *resolvedLightSurfaceColor =
+        [copy.surfaceColor resolvedColorWithTraitCollection:lightThemeTraitCollection];
     copy.surfaceColor = DynamicColor(resolvedLightSurfaceColor,
                                      [MDCDarkMode lightenBackgroundColor:resolvedDarkSurfaceColor
                                                            withElevation:elevation]);
@@ -157,15 +157,14 @@ static UIColor *DynamicColor(UIColor *defaultColor, UIColor *darkColor) {
         [copy.backgroundColor resolvedColorWithTraitCollection:darkThemeTraitCollection];
     UIColor *resolvedLightBackgroundColor =
         [copy.backgroundColor resolvedColorWithTraitCollection:lightThemeTraitCollection];
-    copy.backgroundColor =
-        DynamicColor(resolvedLightBackgroundColor,
-                     [MDCDarkMode lightenBackgroundColor:resolvedDarkBackgroundColor
-                                           withElevation:elevation]);
+    copy.backgroundColor = DynamicColor(
+        resolvedLightBackgroundColor,
+        [MDCDarkMode lightenBackgroundColor:resolvedDarkBackgroundColor withElevation:elevation]);
   } else {
     copy.surfaceColor = [MDCDarkMode lightenBackgroundColor:copy.surfaceColor
                                               withElevation:elevation];
     copy.backgroundColor = [MDCDarkMode lightenBackgroundColor:copy.backgroundColor
-                                              withElevation:elevation];
+                                                 withElevation:elevation];
   }
   return copy;
 }

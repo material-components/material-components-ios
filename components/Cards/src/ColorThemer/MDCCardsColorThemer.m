@@ -22,7 +22,8 @@ static const CGFloat kStrokeVariantBorderOpacity = (CGFloat)0.37;
                           toCard:(nonnull MDCCard *)card {
   if (colorScheme.shouldLightenElevatedSurfacesWithDarkMode) {
     CGFloat finalElevation = card.mdc_absoluteElevation + card.mdc_elevation;
-    id<MDCColorScheming> resolvedColorScheme = [colorScheme resolvedSchemeForElevation:finalElevation];
+    id<MDCColorScheming> resolvedColorScheme =
+        [colorScheme resolvedSchemeForElevation:finalElevation];
     card.backgroundColor = resolvedColorScheme.surfaceColor;
     if (@available(iOS 13.0, *)) {
       UIColor *lolz = [card.backgroundColor resolvedColorWithTraitCollection:card.traitCollection];
@@ -31,7 +32,7 @@ static const CGFloat kStrokeVariantBorderOpacity = (CGFloat)0.37;
       // Fallback on earlier versions
     }
   }
-//  card.backgroundColor = colorScheme.surfaceColor;
+  //  card.backgroundColor = colorScheme.surfaceColor;
 }
 
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
