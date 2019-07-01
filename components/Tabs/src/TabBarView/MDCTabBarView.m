@@ -48,6 +48,9 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 /** The image tint colors for bar items. */
 @property(nonnull, nonatomic, strong)
     NSMutableDictionary<NSNumber *, UIColor *> *stateToImageTintColor;
+
+/** The title font for bar items. */
+@property(nonnull, nonatomic, strong) NSMutableDictionary<NSNumber *, UIFont *> *stateToTitleFont;
 @end
 
 @implementation MDCTabBarView
@@ -63,6 +66,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     _items = @[];
     _stateToImageTintColor = [NSMutableDictionary dictionary];
     _stateToTitleColor = [NSMutableDictionary dictionary];
+    _stateToTitleFont = [NSMutableDictionary dictionary];
     self.backgroundColor = UIColor.whiteColor;
     self.showsHorizontalScrollIndicator = NO;
 
@@ -250,6 +254,41 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     titleColor = self.stateToTitleColor[@(UIControlStateNormal)];
   }
   return titleColor;
+}
+
+- (void)updateTitleFontForAllViews {
+  for (UITabBarItem *item in self.items) {
+    NSUInteger indexOfItem = [self.items indexOfObject:item];
+    // This is a significant error, but defensive coding is preferred.
+    if (indexOfItem == NSNotFound || indexOfItem >= self.containerView.arrangedSubviews.count) {
+      NSAssert(NO, @"Unable to find associated item view for (%@)", item);
+      continue;
+    }
+    UIView *itemView = self.containerView.arrangedSubviews[indexOfItem];
+    // Skip custom views
+    if (![itemView isKindOfClass:[MDCTabBarViewItemView class]]) {
+      continue;
+    }
+    MDCTabBarViewItemView *tabBarViewItemView = (MDCTabBarViewItemView *)itemView;
+    if (item == self.selectedItem) {
+      tabBarViewItemView.titleLabel.font = [self titleFontForState:UIControlStateSelected];
+    } else {
+      tabBarViewItemView.titleLabel.font = [self titleFontForState:UIControlStateNormal];
+    }
+  }
+}
+
+- (void)setTitleFont:(UIFont *)titleFont forState:(UIControlState)state {
+  self.stateToTitleFont[@(state)] = titleFont;
+  [self updateTitleFontForAllViews];
+}
+
+- (UIFont *)titleFontForState:(UIControlState)state {
+  UIFont *titleFont = self.stateToTitleFont[@(state)];
+  if (!titleFont) {
+    titleFont = self.stateToTitleFont[@(UIControlStateNormal)];
+  }
+  return titleFont;
 }
 
 #pragma mark - Key-Value Observing (KVO)
