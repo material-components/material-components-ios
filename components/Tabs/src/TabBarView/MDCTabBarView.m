@@ -444,7 +444,6 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 }
 
 - (void)layoutSubviewsForScrollableLayout {
-
   CGRect availableBounds = self.bounds;
   if (@available(iOS 11.0, *)) {
     availableBounds = UIEdgeInsetsInsetRect(availableBounds, self.safeAreaInsets);
@@ -454,7 +453,8 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   CGFloat itemViewHeight = CGRectGetHeight(availableBounds);
   for (UIView *view in self.itemViews) {
     CGSize intrinsicContentSize = view.intrinsicContentSize;
-    view.frame = CGRectMake(itemViewOriginX, itemViewOriginY, intrinsicContentSize.width, itemViewHeight);
+    view.frame =
+        CGRectMake(itemViewOriginX, itemViewOriginY, intrinsicContentSize.width, itemViewHeight);
     itemViewOriginX += intrinsicContentSize.width;
   }
 }
@@ -565,15 +565,13 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   // because the stack view defaults to `.Proportionally`.  However, it is being left here for now
   // as a more defensive bit of code that quickly dividing the containerView's bounds is more
   // efficient (and accurate) than computing every other view's size.
-  if (self.isJustifiedLayoutStyle &&
-      CGRectGetWidth(self.bounds) > 0) {
+  if (self.isJustifiedLayoutStyle && CGRectGetWidth(self.bounds) > 0) {
     CGRect contentRect = self.bounds;
     if (@available(iOS 11.0, *)) {
       contentRect = UIEdgeInsetsInsetRect(contentRect, self.safeAreaInsets);
     }
-    return CGSizeMake(
-        CGRectGetWidth(contentRect) / self.itemViews.count,
-        CGRectGetHeight(contentRect));
+    return CGSizeMake(CGRectGetWidth(contentRect) / self.itemViews.count,
+                      CGRectGetHeight(contentRect));
   }
   CGSize expectedItemSize = view.intrinsicContentSize;
   if (expectedItemSize.width == UIViewNoIntrinsicMetric) {
