@@ -421,7 +421,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 - (BOOL)isJustifiedLayoutStyle {
   CGRect availableBounds = self.bounds;
   if (@available(iOS 11.0, *)) {
-    availableBounds = UIEdgeInsetsInsetRect(availableBounds, self.safeAreaInsets);
+    availableBounds = UIEdgeInsetsInsetRect(availableBounds, self.adjustedContentInset);
   }
   CGFloat availableWidth = CGRectGetWidth(availableBounds);
   CGFloat requiredWidth = [self justifiedWidth];
@@ -431,7 +431,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 - (void)layoutSubviewsForJustifiedLayout {
   CGRect availableBounds = self.bounds;
   if (@available(iOS 11.0, *)) {
-    availableBounds = UIEdgeInsetsInsetRect(availableBounds, self.safeAreaInsets);
+    availableBounds = UIEdgeInsetsInsetRect(availableBounds, self.adjustedContentInset);
   }
 
   BOOL isRTL =
@@ -456,7 +456,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 - (void)layoutSubviewsForScrollableLayout {
   CGRect availableBounds = self.bounds;
   if (@available(iOS 11.0, *)) {
-    availableBounds = UIEdgeInsetsInsetRect(availableBounds, self.safeAreaInsets);
+    availableBounds = UIEdgeInsetsInsetRect(availableBounds, self.adjustedContentInset);
   }
   BOOL isRTL =
       [self mdf_effectiveUserInterfaceLayoutDirection] == UIUserInterfaceLayoutDirectionRightToLeft;
@@ -563,7 +563,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
   CGRect contentRect = self.bounds;
   if (@available(iOS 11.0, *)) {
-    contentRect = UIEdgeInsetsInsetRect(contentRect, self.safeAreaInsets);
+    contentRect = UIEdgeInsetsInsetRect(contentRect, self.adjustedContentInset);
   }
 
   BOOL isRTL =
@@ -589,7 +589,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   if (self.isJustifiedLayoutStyle && CGRectGetWidth(self.bounds) > 0) {
     CGRect contentRect = self.bounds;
     if (@available(iOS 11.0, *)) {
-      contentRect = UIEdgeInsetsInsetRect(contentRect, self.safeAreaInsets);
+      contentRect = UIEdgeInsetsInsetRect(contentRect, self.adjustedContentInset);
     }
     return CGSizeMake(CGRectGetWidth(contentRect) / self.itemViews.count,
                       CGRectGetHeight(contentRect));
