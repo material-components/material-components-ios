@@ -1166,15 +1166,6 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   }
 }
 
-- (void)testDefaultHapticsEnabledValues {
-  NSOperatingSystemVersion iOS10Version = {10, 0, 0};
-  if ([NSProcessInfo.processInfo isOperatingSystemAtLeastVersion:iOS10Version]) {
-    XCTAssertTrue(self.slider.hapticsEnabled);
-  } else {
-    XCTAssertFalse(self.slider.hapticsEnabled);
-  }
-}
-
 #pragma mark Private test helpers
 
 - (CGFloat)randomNumber {
