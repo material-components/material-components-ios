@@ -19,6 +19,42 @@
 
 static NSString *const kExampleTitle = @"TabBarView";
 
+/** A custom view to place in an MDCTabBarView. */
+@interface MDCTabBarViewTypicalExampleViewControllerCustomView
+    : UIView <MDCTabBarViewIndicatorSupporting>
+/** A switch shown in the view. */
+@property(nonatomic, strong) UISwitch *aSwitch;
+@end
+
+@implementation MDCTabBarViewTypicalExampleViewControllerCustomView
+
+- (CGRect)contentFrame {
+  return CGRectStandardize(self.aSwitch.frame);
+}
+
+- (UISwitch *)aSwitch {
+  if (!_aSwitch) {
+    _aSwitch = [[UISwitch alloc] init];
+    [self addSubview:_aSwitch];
+  }
+  return _aSwitch;
+}
+
+- (void)layoutSubviews {
+  [super layoutSubviews];
+  self.aSwitch.center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
+}
+
+- (CGSize)intrinsicContentSize {
+  return self.aSwitch.intrinsicContentSize;
+}
+
+- (CGSize)sizeThatFits:(CGSize)size {
+  return [self.aSwitch sizeThatFits:size];
+}
+
+@end
+
 /**
  Typical use example showing how to place an @c MDCTabBarView within another view.
  */
@@ -70,10 +106,15 @@ static NSString *const kExampleTitle = @"TabBarView";
               image:[[UIImage imageNamed:@"Search"]
                         imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
                 tag:4];
+  MDCTabBarItem *item6 = [[MDCTabBarItem alloc] initWithTitle:@"A switch" image:nil tag:5];
+  MDCTabBarViewTypicalExampleViewControllerCustomView *switchView =
+      [[MDCTabBarViewTypicalExampleViewControllerCustomView alloc] init];
+  item6.mdc_customView = switchView;
+  switchView.aSwitch.onTintColor = self.containerScheme.colorScheme.primaryColor;
 
   self.tabBar = [[MDCTabBarView alloc] init];
   self.tabBar.tabBarDelegate = self;
-  self.tabBar.items = @[ item1, item2, item3, item4, item5 ];
+  self.tabBar.items = @[ item1, item2, item3, item4, item5, item6 ];
   self.tabBar.barTintColor = self.containerScheme.colorScheme.secondaryColor;
   [self.tabBar setTitleColor:self.containerScheme.colorScheme.onSecondaryColor
                     forState:UIControlStateNormal];
