@@ -18,6 +18,6 @@
 
 + (UITraitCollection *)traitCollectionWithTraitsFromCollectionsIncludingElevation:(NSArray<UITraitCollection *> *)traitCollections;
 + (UITraitCollection *)traitCollectionWithMaterialElevation:(CGFloat)materialElevation;
-@property (nonatomic, readwrite, assign) CGFloat materialElevation; // unspecified: 0.0
+@property (nonatomic, readonly, assign) CGFloat materialElevation;
 
 @end

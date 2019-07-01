@@ -15,6 +15,6 @@
 #import <Foundation/Foundation.h>
 #import "MDCContainerScheme.h"
 
-@protocol MDCThemeable <NSObject>
-- (void)mdc_applyThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme;
-@end
+//@protocol MDCThemeable <NSObject>
+//- (void)mdc_applyThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme;
+//@end

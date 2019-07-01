@@ -16,11 +16,9 @@
 
 #import "UITraitCollection+MaterialElevationUpdating.h"
 
-//@interface UITraitCollection ()
-//@property (nonatomic, readwrite) CGFloat materialElevation;
-//@end
-static char * lolz;
-
+@interface UITraitCollection ()
+@property (nonatomic, readwrite) CGFloat materialElevation;
+@end
 
 @implementation UITraitCollection (MaterialElevationUpdating)
 
@@ -42,13 +40,11 @@ static char * lolz;
 
 
 - (void)setMaterialElevation:(CGFloat)materialElevation {
-//  NSNumber *elevationNumber = [NSNumber numberWithDouble:materialElevation];
-  objc_setAssociatedObject(self, lolz, @(materialElevation), OBJC_ASSOCIATION_COPY_NONATOMIC);
-  NSLog(@"lolz");
+  objc_setAssociatedObject(self, @selector(materialElevation), @(materialElevation), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (CGFloat)materialElevation {
-    NSNumber *number = objc_getAssociatedObject(self, lolz);
+    NSNumber *number = objc_getAssociatedObject(self, @selector(materialElevation));
     if (number == nil) {
       return 0;
     }

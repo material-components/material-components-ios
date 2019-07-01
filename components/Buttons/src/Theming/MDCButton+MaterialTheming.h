@@ -19,7 +19,7 @@
  This category is used to style MDCButtons instances to a specific Material style which can be found
  within the [Material Guidelines](https://material.io/design/components/buttons.html).
  */
-@interface MDCButton (MaterialTheming) <MDCThemeable>
+@interface MDCButton (MaterialTheming)
 
 @property(nonatomic, strong, nullable)  id<MDCContainerScheming> mdc_containerScheme; // If nil, inherit from superview.
 @property(nonatomic, readonly, nullable) id<MDCContainerScheming> mdc_effectiveContainerScheme; // The resolved theme.
