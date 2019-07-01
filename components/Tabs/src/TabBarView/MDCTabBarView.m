@@ -472,12 +472,16 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 }
 
 - (CGSize)expectedSizeForView:(UIView *)view {
-  if (self.containerView.distribution == UIStackViewDistributionFillEqually) {
-    if (CGRectGetWidth(self.containerView.bounds) < 0) {
-      return CGSizeMake(
-          CGRectGetWidth(self.containerView.bounds) / self.containerView.arrangedSubviews.count,
-          CGRectGetHeight(self.containerView.bounds));
-    }
+  // TODO(https://github.com/material-components/material-components-ios/issues/7748): This
+  // condition is potentially dead code. It's not clear if it can be triggered in a view controller
+  // because the stack view defaults to `.Proportionally`.  However, it is being left here for now
+  // as a more defensive bit of code that quickly dividing the containerView's bounds is more
+  // efficient (and accurate) than computing every other view's size.
+  if (self.containerView.distribution == UIStackViewDistributionFillEqually &&
+      CGRectGetWidth(self.containerView.bounds) > 0) {
+    return CGSizeMake(
+        CGRectGetWidth(self.containerView.bounds) / self.containerView.arrangedSubviews.count,
+        CGRectGetHeight(self.containerView.bounds));
   }
   CGSize expectedItemSize = view.intrinsicContentSize;
   if (expectedItemSize.width == UIViewNoIntrinsicMetric) {
