@@ -1,16 +1,88 @@
-# #develop#
+# 85.2.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+In this release we have added new features to Banner and Tabs, fixed bugs in Buttons and FlexibleHeader, and improved test coverage in BottomSheet. Additionally, we have added a TextField extension that will eventually house an MDCTextField alternative.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
+MDCBanner now supports `intrinsicContentSize`.
+
+```objc
+MDCBannerView *myBanner = ...
+CGSize validIntrinsicContentSize = myBanner.intrinsicContentSize;
+```
+
+MDCTabBarView has several new core features implemented.
+
+```objc
+MDCTabBarView *myTabBarView = ...
+myTabBarView.delegate = self;
+[myTabBarView setTitleFont:myFont forState:UIControlStateNormal];
+[myTabBarView setTitleColor:myColor forState:UIControlStateNormal];
+```
+
 ## API changes
+
+### Banner
+
+#### MDCBannerView
+
+*new* property: `mdc_adjustsFontForContentSizeCategory` in `MDCBannerView`
+
+### BottomNavigation+Theming
+
+**New extension.**
+
+### Tabs+TabBarView
+
+#### MDCTabBarViewIndicatorSupporting
+
+*new* protocol: `MDCTabBarViewIndicatorSupporting`
+
+*new* property: `contentFrame` in `MDCTabBarViewIndicatorSupporting`
+
+*new* property: `bounds` in `MDCTabBarViewIndicatorSupporting`
+
+#### MDCTabBarView
+
+*new* method: `-setTitleFont:forState:` in `MDCTabBarView`
+
+*new* method: `-titleColorForState:` in `MDCTabBarView`
+
+*new* method: `-setImageTintColor:forState:` in `MDCTabBarView`
+
+*new* method: `-titleFontForState:` in `MDCTabBarView`
+
+*new* method: `-imageTintColorForState:` in `MDCTabBarView`
+
+*new* property: `tabBarDelegate` in `MDCTabBarView`
+
+*new* method: `-setSelectedItem:animated:` in `MDCTabBarView`
+
+*new* method: `-setTitleColor:forState:` in `MDCTabBarView`
+
+*new* property: `barTintColor` in `MDCTabBarView`
+
+#### MDCTabBarItem
+
+*new* class: `MDCTabBarItem`
+
+#### MDCTabBarItemCustomViewing
+
+*new* protocol: `MDCTabBarItemCustomViewing`
+
+*new* property: `mdc_customView` in `MDCTabBarItemCustomViewing`
+
+#### MDCTabBarViewDelegate
+
+*new* method: `-tabBarView:shouldSelectItem:` in `MDCTabBarViewDelegate`
+
+*new* protocol: `MDCTabBarViewDelegate`
+
+*new* method: `-tabBarView:didSelectItem:` in `MDCTabBarViewDelegate`
+
+### TextFields+ContainedInputView
+
+**New extension.**
 
 ## Component changes
 
