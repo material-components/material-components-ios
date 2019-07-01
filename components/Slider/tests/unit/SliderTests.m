@@ -1143,7 +1143,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   }
 }
 
-- (void)testNotEnabledHapticFeedbackAtMax {
+- (void)testNotEnabledHapticFeedback {
   // Given
   self.slider.minimumValue = 0;
   self.slider.maximumValue = 5;
