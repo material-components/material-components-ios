@@ -473,6 +473,9 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
           constraintEqualToAnchor:self.containerView.trailingAnchor],
       [self.safeAreaLayoutGuide.bottomAnchor
           constraintEqualToAnchor:self.containerView.bottomAnchor],
+      [self.contentLayoutGuide.widthAnchor constraintEqualToAnchor:self.containerView.widthAnchor],
+      [self.contentLayoutGuide.heightAnchor
+          constraintEqualToAnchor:self.containerView.heightAnchor],
     ];
     self.scrollableLayoutConstraints = @[
       [self.contentLayoutGuide.topAnchor constraintEqualToAnchor:self.containerView.topAnchor],
