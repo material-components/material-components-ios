@@ -1117,6 +1117,35 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   }
 }
 
+- (void)testDefaultFullHapticsEnabledValue {
+  if (@available(iOS 10.0, *)) {
+    for (NSUInteger i = 0; i < 5; ++i) {
+      // When
+      self.slider.numberOfDiscreteValues = i;
+
+      // Then
+      XCTAssertFalse(self.slider.fullHapticsEnabled);
+    }
+  }
+}
+
+- (void)testSettingFullHapticsEnabledValue {
+  if (@available(iOS 10.0, *)) {
+    for (NSUInteger i = 0; i < 5; ++i) {
+      // When
+      self.slider.numberOfDiscreteValues = i;
+      self.slider.fullHapticsEnabled = YES;
+
+      // Then
+      if (i == 0 || i == 1){
+        XCTAssertFalse(self.slider.fullHapticsEnabled);
+      } else {
+        XCTAssertTrue(self.slider.fullHapticsEnabled);
+      }
+    }
+  }
+}
+
 - (void)testEnabledHapticFeedback {
   // Given
   self.slider.minimumValue = 0;
@@ -1160,6 +1189,31 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 
       // Then
       XCTAssertFalse(_mockFeedbackGenerator.impactHasOccurred);
+
+      _mockFeedbackGenerator.impactHasOccurred = NO;
+    }
+  }
+}
+
+- (void)testEnabledFullHapticFeedback {
+  // Given
+  self.slider.minimumValue = 0;
+  self.slider.maximumValue = 5;
+  self.slider.hapticsEnabled = NO;
+  self.slider.numberOfDiscreteValues = 2;
+  self.slider.fullHapticsEnabled = YES;
+
+  if (@available(iOS 10.0, *)) {
+    _mockFeedbackGenerator = [[MockUIImpactFeedbackGenerator alloc] init];
+    self.slider.feedbackGenerator = _mockFeedbackGenerator;
+    for (NSUInteger i = 0; i < 6; ++i) {
+      self.slider.value = i;
+
+      // When
+      [self.slider thumbTrackValueChanged:self.slider.thumbTrack];
+
+      // Then
+      XCTAssertTrue(_mockFeedbackGenerator.impactHasOccurred);
 
       _mockFeedbackGenerator.impactHasOccurred = NO;
     }
