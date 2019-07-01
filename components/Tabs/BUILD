@@ -203,6 +203,7 @@ mdc_objc_library(
     deps = [
         ":TabBarView",
         ":privateTabBarView",
+        "//components/Typography",
     ],
 )
 
