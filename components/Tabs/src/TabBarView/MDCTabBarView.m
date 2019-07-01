@@ -26,9 +26,6 @@
 #import <MaterialComponents/MaterialAnimationTiming.h>
 #import <QuartzCore/QuartzCore.h>
 
-#import <CoreGraphics/CoreGraphics.h>
-#import <MDFInternationalization/MDFInternationalization.h>
-
 // KVO contexts
 static char *const kKVOContextMDCTabBarView = "kKVOContextMDCTabBarView";
 
@@ -448,23 +445,6 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  CGRect availableBounds = self.bounds;
-  if (@available(iOS 11.0, *)) {
-    availableBounds = UIEdgeInsetsInsetRect(availableBounds, self.safeAreaInsets);
-  }
-  CGFloat availableWidth = CGRectGetWidth(availableBounds);
-  CGFloat requiredWidth = [self justifiedWidth];
-  BOOL canBeJustified = availableWidth >= requiredWidth;
-  if (canBeJustified) {
-    [NSLayoutConstraint deactivateConstraints:self.scrollableLayoutConstraints];
-    self.containerView.distribution = UIStackViewDistributionFillEqually;
-    [NSLayoutConstraint activateConstraints:self.justifiedLayoutConstraints];
-  } else {
-    [NSLayoutConstraint deactivateConstraints:self.justifiedLayoutConstraints];
-    self.containerView.distribution = UIStackViewDistributionFillProportionally;
-    [NSLayoutConstraint activateConstraints:self.scrollableLayoutConstraints];
-  }
-
   [self updateStackviewLayout];
   if (self.selectionIndicatorView) {
     [self updateSelectionIndicatorToIndex:[self.items indexOfObject:self.selectedItem]];
@@ -476,15 +456,24 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 }
 
 - (void)updateStackviewLayout {
-  CGFloat availableWidth = CGRectGetWidth(self.bounds);
-  CGFloat requiredWidth = [self justifiedWidth];
-  UIStackViewDistribution distribution = availableWidth >= requiredWidth
-                                             ? UIStackViewDistributionFillEqually
-                                             : UIStackViewDistributionFillProportionally;
-  if (self.containerView.distribution != distribution) {
-    self.containerView.distribution = distribution;
-    [self.containerView setNeedsLayout];
+  CGRect availableBounds = self.bounds;
+  if (@available(iOS 11.0, *)) {
+    availableBounds = UIEdgeInsetsInsetRect(availableBounds, self.safeAreaInsets);
   }
+  CGFloat availableWidth = CGRectGetWidth(availableBounds);
+  CGFloat requiredWidth = [self justifiedWidth];
+  BOOL canBeJustified = availableWidth >= requiredWidth;
+
+  if (canBeJustified) {
+    [NSLayoutConstraint deactivateConstraints:self.scrollableLayoutConstraints];
+    self.containerView.distribution = UIStackViewDistributionFillEqually;
+    [NSLayoutConstraint activateConstraints:self.justifiedLayoutConstraints];
+  } else {
+    [NSLayoutConstraint deactivateConstraints:self.justifiedLayoutConstraints];
+    self.containerView.distribution = UIStackViewDistributionFillProportionally;
+    [NSLayoutConstraint activateConstraints:self.scrollableLayoutConstraints];
+  }
+
   [self.containerView layoutIfNeeded];
 }
 
