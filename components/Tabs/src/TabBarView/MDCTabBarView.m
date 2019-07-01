@@ -189,6 +189,8 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   if (!selectedItem) {
     _selectedItem = selectedItem;
     [self updateTitleColorForAllViews];
+    [self updateImageTintColorForAllViews];
+    [self updateTitleFontForAllViews];
     return;
   }
 
@@ -205,6 +207,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
       (newSelectedItemView.accessibilityTraits | UIAccessibilityTraitSelected);
   [self updateTitleColorForAllViews];
   [self updateImageTintColorForAllViews];
+  [self updateTitleFontForAllViews];
   CGRect itemFrameInScrollViewBounds =
       [self convertRect:self.containerView.arrangedSubviews[itemIndex].frame
                fromView:self.containerView];
@@ -410,7 +413,6 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   } else {
     [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
   }
-  [self updateTitleColorForAllViews];
 }
 
 #pragma mark - UIView
