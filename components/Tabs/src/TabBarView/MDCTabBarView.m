@@ -456,7 +456,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 }
 
 - (void)updateStackviewLayout {
-  CGRect availableBounds = self.bounds;
+  CGRect availableBounds = CGRectStandardize(self.bounds);
   if (@available(iOS 11.0, *)) {
     availableBounds = UIEdgeInsetsInsetRect(availableBounds, self.safeAreaInsets);
   }
@@ -473,12 +473,11 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     self.containerView.distribution = UIStackViewDistributionFillProportionally;
     [NSLayoutConstraint activateConstraints:self.scrollableLayoutConstraints];
   }
-
-  [self.containerView layoutIfNeeded];
 }
 
 - (void)willMoveToSuperview:(UIView *)newSuperview {
   [super willMoveToSuperview:newSuperview];
+
   self.initialScrollDone = NO;
 }
 
@@ -487,6 +486,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
       !CGSizeEqualToSize(CGSizeMake(CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds)),
                          CGSizeMake(CGRectGetWidth(bounds), CGRectGetHeight(bounds)));
   [super setBounds:bounds];
+
   [self updateStackviewLayout];
   if (shouldScroll) {
     [self scrollUntilSelectedItemIsVisibleWithoutAnimation];
@@ -653,6 +653,8 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
   MDCTabBarViewPositioningTuple *selectedItemViewPositionInContainerView =
       [self positionInContainerViewForItemAtIndex:index];
+
+  [self.containerView layoutIfNeeded];
 
   // Place selection indicator under the item's cell.
   CGRect selectionIndicatorBounds = selectedItemViewPositionInContainerView.bounds;
