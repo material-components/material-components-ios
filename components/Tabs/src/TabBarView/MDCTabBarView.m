@@ -470,6 +470,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
       [self.contentLayoutGuide.widthAnchor constraintEqualToAnchor:self.containerView.widthAnchor],
       [self.contentLayoutGuide.heightAnchor
           constraintEqualToAnchor:self.containerView.heightAnchor],
+      // Ensures items are never larger than the bar.
       [self.frameLayoutGuide.heightAnchor
           constraintGreaterThanOrEqualToAnchor:self.containerView.heightAnchor],
     ];
