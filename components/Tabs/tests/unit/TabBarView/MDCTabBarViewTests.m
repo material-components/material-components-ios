@@ -440,7 +440,8 @@ static UIImage *fakeImage(CGSize size) {
 
 - (void)assertTitleFontForState:(UIControlState)state equalsFont:(UIFont *)font {
   UIFont *statefulTitleFont = [self.tabBarView titleFontForState:state];
-  XCTAssertTrue([statefulTitleFont mdc_isSimplyEqual:font], @"(%@) is not equal to (%@)", statefulTitleFont, font);
+  XCTAssertTrue([statefulTitleFont mdc_isSimplyEqual:font], @"(%@) is not equal to (%@)",
+                statefulTitleFont, font);
 }
 
 #pragma mark - Delegate
