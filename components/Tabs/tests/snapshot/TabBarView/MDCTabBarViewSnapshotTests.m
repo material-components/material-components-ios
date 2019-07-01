@@ -323,7 +323,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
-- (void)testRemovingSelectedItemUpdatesColors {
+- (void)testRemovingSelectedItemUpdatesStyle {
   // Given
   UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:self.typicalIcon1 tag:0];
   UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:self.typicalIcon2 tag:1];
@@ -332,8 +332,10 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   [self.tabBarView setSelectedItem:item1 animated:NO];
   [self.tabBarView setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
   [self.tabBarView setImageTintColor:UIColor.blackColor forState:UIControlStateNormal];
+  [self.tabBarView setTitleFont:[UIFont systemFontOfSize:8] forState:UIControlStateNormal];
   [self.tabBarView setTitleColor:UIColor.whiteColor forState:UIControlStateSelected];
   [self.tabBarView setImageTintColor:UIColor.whiteColor forState:UIControlStateSelected];
+  [self.tabBarView setTitleFont:[UIFont systemFontOfSize:24] forState:UIControlStateSelected];
 
   // When
   [self.tabBarView setSelectedItem:nil animated:NO];
@@ -875,8 +877,10 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   [self.tabBarView setSelectedItem:item2 animated:NO];
   [self.tabBarView setTitleColor:UIColor.purpleColor forState:UIControlStateNormal];
   [self.tabBarView setImageTintColor:UIColor.redColor forState:UIControlStateNormal];
+  [self.tabBarView setTitleFont:[UIFont systemFontOfSize:8] forState:UIControlStateNormal];
   [self.tabBarView setTitleColor:UIColor.brownColor forState:UIControlStateSelected];
   [self.tabBarView setImageTintColor:UIColor.blueColor forState:UIControlStateSelected];
+  [self.tabBarView setTitleFont:[UIFont systemFontOfSize:24] forState:UIControlStateSelected];
 
   // When
   [self.tabBarView setSelectedItem:item3 animated:NO];
