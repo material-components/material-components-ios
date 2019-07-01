@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import "MDCTabBarView.h"
+#import "MDCTabBarItemCustomViewing.h"
 #import "MDCTabBarViewDelegate.h"
 #import "private/MDCTabBarViewItemView.h"
 
@@ -120,21 +121,32 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   _items = [items copy];
 
   for (UITabBarItem *item in self.items) {
-    MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
-    itemView.translatesAutoresizingMaskIntoConstraints = NO;
-    itemView.titleLabel.text = item.title;
-    itemView.accessibilityLabel = item.accessibilityLabel;
-    itemView.accessibilityHint = item.accessibilityHint;
-    itemView.accessibilityIdentifier = item.accessibilityIdentifier;
-    itemView.accessibilityTraits = item.accessibilityTraits == UIAccessibilityTraitNone
-                                       ? UIAccessibilityTraitButton
-                                       : item.accessibilityTraits;
-    itemView.titleLabel.textColor = [self titleColorForState:UIControlStateNormal];
-    itemView.iconImageView.image = item.image;
+    UIView *itemView;
+    if ([item conformsToProtocol:@protocol(MDCTabBarItemCustomViewing)]) {
+      UITabBarItem<MDCTabBarItemCustomViewing> *customItem =
+          (UITabBarItem<MDCTabBarItemCustomViewing> *)item;
+      if (customItem.mdc_customView) {
+        itemView = customItem.mdc_customView;
+      }
+    }
+    if (!itemView) {
+      MDCTabBarViewItemView *mdcItemView = [[MDCTabBarViewItemView alloc] init];
+      mdcItemView.titleLabel.text = item.title;
+      mdcItemView.accessibilityLabel = item.accessibilityLabel;
+      mdcItemView.accessibilityHint = item.accessibilityHint;
+      mdcItemView.accessibilityIdentifier = item.accessibilityIdentifier;
+      mdcItemView.accessibilityTraits = item.accessibilityTraits == UIAccessibilityTraitNone
+                                            ? UIAccessibilityTraitButton
+                                            : item.accessibilityTraits;
+      mdcItemView.titleLabel.textColor = [self titleColorForState:UIControlStateNormal];
+      mdcItemView.iconImageView.image = item.image;
+      itemView = mdcItemView;
+    }
     [itemView setContentCompressionResistancePriority:UILayoutPriorityRequired
                                               forAxis:UILayoutConstraintAxisHorizontal];
     [itemView setContentCompressionResistancePriority:UILayoutPriorityRequired
                                               forAxis:UILayoutConstraintAxisVertical];
+    itemView.translatesAutoresizingMaskIntoConstraints = NO;
     UITapGestureRecognizer *tapGesture =
         [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapItemView:)];
     [itemView addGestureRecognizer:tapGesture];

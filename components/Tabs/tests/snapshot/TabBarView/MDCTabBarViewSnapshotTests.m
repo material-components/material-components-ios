@@ -14,7 +14,9 @@
 
 #import "MaterialSnapshot.h"
 
+#import "MDCTabBarItem.h"
 #import "MDCTabBarView.h"
+#import "MDCTabBarViewIndicatorSupporting.h"
 
 /** The typical size of an image in a Tab bar. */
 static const CGSize kTypicalImageSize = (CGSize){24, 24};
@@ -30,6 +32,41 @@ static const CGFloat kMinItemWidth = 90;
 
 /** The maximum width of a tab bar item. */
 static const CGFloat kMaxItemWidth = 360;
+
+/** A custom view to place in an MDCTabBarView. */
+@interface MDCTabBarViewSnapshotTestsCustomView : UIView <MDCTabBarViewIndicatorSupporting>
+/** A switch shown in the view. */
+@property(nonatomic, strong) UISwitch *aSwitch;
+@end
+
+@implementation MDCTabBarViewSnapshotTestsCustomView
+
+- (CGRect)contentFrame {
+  return CGRectStandardize(self.aSwitch.frame);
+}
+
+- (UISwitch *)aSwitch {
+  if (!_aSwitch) {
+    _aSwitch = [[UISwitch alloc] init];
+    [self addSubview:_aSwitch];
+  }
+  return _aSwitch;
+}
+
+- (void)layoutSubviews {
+  [super layoutSubviews];
+  self.aSwitch.center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
+}
+
+- (CGSize)intrinsicContentSize {
+  return self.aSwitch.intrinsicContentSize;
+}
+
+- (CGSize)sizeThatFits:(CGSize)size {
+  return [self.aSwitch sizeThatFits:size];
+}
+
+@end
 
 static NSString *const kItemTitleShort1Latin = @"Quando";
 static NSString *const kItemTitleShort2Latin = @"No";
@@ -873,4 +910,24 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
+
+#pragma mark - Custom View support
+
+- (void)testCustomView {
+  // Given
+  MDCTabBarViewSnapshotTestsCustomView *customView =
+      [[MDCTabBarViewSnapshotTestsCustomView alloc] init];
+  MDCTabBarItem *customViewItem = [[MDCTabBarItem alloc] initWithTitle:@"Title" image:nil tag:0];
+  customViewItem.mdc_customView = customView;
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:self.typicalIcon1 tag:0];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:self.typicalIcon3 tag:3];
+
+  // When
+  self.tabBarView.items = @[ item1, customViewItem, item3 ];
+  [self.tabBarView sizeToFit];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
 @end
