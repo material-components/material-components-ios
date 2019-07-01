@@ -267,6 +267,8 @@ static const CGFloat kMaxItemWidth = 360;
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
+#pragma mark - Layout Sizes
+
 // TODO(https://github.com/material-components/material-components-ios/issues/7717): This golden
 // is incorrect due to a suspected bug in MDCTabBarViewItemView.
 - (void)testSettingBoundsTooNarrowWithItemsLessThanMinimumWidthResultsInScrollableLayout {
@@ -484,6 +486,58 @@ static const CGFloat kMaxItemWidth = 360;
   // When
   [self.tabBarView setImageTintColor:nil forState:UIControlStateNormal];
   [self.tabBarView setImageTintColor:nil forState:UIControlStateSelected];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testSetTitleFontForExplicitItemStates {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:self.typicalIcon1 tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:self.typicalIcon2 tag:2];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:self.typicalIcon3 tag:3];
+  self.tabBarView.items = @[ item1, item2, item3 ];
+  [self.tabBarView setSelectedItem:item2 animated:NO];
+
+  // When
+  [self.tabBarView setTitleFont:[UIFont systemFontOfSize:8] forState:UIControlStateNormal];
+  [self.tabBarView setTitleFont:[UIFont systemFontOfSize:24] forState:UIControlStateSelected];
+  [self.tabBarView sizeToFit];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testSetTitleFontForNormalStateAppliesToSelectedItem {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:self.typicalIcon1 tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:self.typicalIcon2 tag:2];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:self.typicalIcon3 tag:3];
+  self.tabBarView.items = @[ item1, item2, item3 ];
+  [self.tabBarView setSelectedItem:item2 animated:NO];
+
+  // When
+  [self.tabBarView setTitleFont:[UIFont systemFontOfSize:8] forState:UIControlStateNormal];
+  [self.tabBarView sizeToFit];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testSetTitleFontExplicitlyToNilUsesDefaultFont {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:self.typicalIcon1 tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:self.typicalIcon2 tag:2];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:self.typicalIcon3 tag:3];
+  self.tabBarView.items = @[ item1, item2, item3 ];
+  [self.tabBarView setSelectedItem:item2 animated:NO];
+  [self.tabBarView setTitleFont:[UIFont systemFontOfSize:8] forState:UIControlStateNormal];
+  [self.tabBarView setTitleFont:[UIFont systemFontOfSize:24] forState:UIControlStateSelected];
+
+  // When
+  [self.tabBarView setTitleFont:nil forState:UIControlStateNormal];
+  [self.tabBarView setTitleFont:nil forState:UIControlStateSelected];
+  [self.tabBarView sizeToFit];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBarView];
