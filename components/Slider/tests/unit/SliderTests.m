@@ -1138,7 +1138,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
       } else {
         XCTAssertFalse(_mockFeedbackGenerator.impactHasOccurred);
       }
-      _mockFeedbackGenerator.impactHasOccurred = nil;
+      _mockFeedbackGenerator.impactHasOccurred = NO;
     }
   }
 }
@@ -1161,7 +1161,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
       // Then
       XCTAssertFalse(_mockFeedbackGenerator.impactHasOccurred);
 
-      _mockFeedbackGenerator.impactHasOccurred = nil;
+      _mockFeedbackGenerator.impactHasOccurred = NO;
     }
   }
 }
