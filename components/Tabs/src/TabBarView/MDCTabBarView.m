@@ -432,6 +432,8 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
       [self.contentLayoutGuide.widthAnchor constraintEqualToAnchor:self.containerView.widthAnchor],
       [self.contentLayoutGuide.heightAnchor
           constraintEqualToAnchor:self.containerView.heightAnchor],
+      [self.frameLayoutGuide.heightAnchor
+          constraintGreaterThanOrEqualToAnchor:self.containerView.heightAnchor],
     ];
   } else {
     self.justifiedLayoutConstraints = @[
