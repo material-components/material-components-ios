@@ -135,19 +135,37 @@ static UIColor *DynamicColor(UIColor *defaultColor, UIColor *darkColor) {
 
 - (MDCSemanticColorScheme *)resolvedSchemeForElevation:(CGFloat)elevation {
   MDCSemanticColorScheme *copy = [self copy];
+  if (!self.shouldLightenElevatedSurfacesWithDarkMode) {
+    return copy;
+  }
+
   if (@available(iOS 13.0, *)) {
     UITraitCollection *darkThemeTraitCollection =
         [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
+    UITraitCollection *lightThemeTraitCollection =
+        [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleLight];
+
+    // Surface Color
     UIColor *resolvedDarkSurfaceColor = [copy.surfaceColor resolvedColorWithTraitCollection:darkThemeTraitCollection];
-    copy.surfaceColor = DynamicColor(ColorFromRGB(0xFFFFFF),
+    UIColor *resolvedLightSurfaceColor = [copy.surfaceColor resolvedColorWithTraitCollection:lightThemeTraitCollection];
+    copy.surfaceColor = DynamicColor(resolvedLightSurfaceColor,
                                      [MDCDarkMode lightenBackgroundColor:resolvedDarkSurfaceColor
                                                            withElevation:elevation]);
+
+    // Background Color
     UIColor *resolvedDarkBackgroundColor =
         [copy.backgroundColor resolvedColorWithTraitCollection:darkThemeTraitCollection];
+    UIColor *resolvedLightBackgroundColor =
+        [copy.backgroundColor resolvedColorWithTraitCollection:lightThemeTraitCollection];
     copy.backgroundColor =
-        DynamicColor(ColorFromRGB(0xFFFFFF),
+        DynamicColor(resolvedLightBackgroundColor,
                      [MDCDarkMode lightenBackgroundColor:resolvedDarkBackgroundColor
                                            withElevation:elevation]);
+  } else {
+    copy.surfaceColor = [MDCDarkMode lightenBackgroundColor:copy.surfaceColor
+                                              withElevation:elevation];
+    copy.backgroundColor = [MDCDarkMode lightenBackgroundColor:copy.backgroundColor
+                                              withElevation:elevation];
   }
   return copy;
 }
