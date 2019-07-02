@@ -462,20 +462,16 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   BOOL isRTL =
       [self mdf_effectiveUserInterfaceLayoutDirection] == UIUserInterfaceLayoutDirectionRightToLeft;
 
-  CGFloat itemViewOriginX = isRTL ? CGRectGetWidth(availableBounds) : 0;
+  CGFloat itemViewOriginX = 0;
   CGFloat itemViewOriginY = 0;
   CGFloat itemViewHeight = CGRectGetHeight(availableBounds);
-  for (UIView *view in self.itemViews) {
+  NSEnumerator<UIView *> *itemViewEnumerator =
+      isRTL ? [self.itemViews reverseObjectEnumerator] : [self.itemViews objectEnumerator];
+  for (UIView *view in itemViewEnumerator) {
     CGSize intrinsicContentSize = view.intrinsicContentSize;
-    if (isRTL) {
-      view.frame = CGRectMake(itemViewOriginX - intrinsicContentSize.width, itemViewOriginY,
-                              intrinsicContentSize.width, itemViewHeight);
-      itemViewOriginX -= intrinsicContentSize.width;
-    } else {
-      view.frame =
-          CGRectMake(itemViewOriginX, itemViewOriginY, intrinsicContentSize.width, itemViewHeight);
-      itemViewOriginX += intrinsicContentSize.width;
-    }
+    view.frame =
+        CGRectMake(itemViewOriginX, itemViewOriginY, intrinsicContentSize.width, itemViewHeight);
+    itemViewOriginX += intrinsicContentSize.width;
   }
 }
 
@@ -545,14 +541,9 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     return CGRectZero;
   }
 
-  CGRect contentRect = self.bounds;
-  if (@available(iOS 11.0, *)) {
-    contentRect = UIEdgeInsetsInsetRect(contentRect, self.adjustedContentInset);
-  }
-
   BOOL isRTL =
       [self mdf_effectiveUserInterfaceLayoutDirection] == UIUserInterfaceLayoutDirectionRightToLeft;
-  CGFloat viewOriginX = isRTL ? CGRectGetWidth(contentRect) : 0;
+  CGFloat viewOriginX = isRTL ? self.contentSize.width : 0;
 
   for (NSUInteger i = 0; i < index; ++i) {
     CGSize viewSize = [self expectedSizeForView:self.itemViews[i]];
