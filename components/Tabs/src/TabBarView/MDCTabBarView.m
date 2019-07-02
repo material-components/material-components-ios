@@ -439,33 +439,28 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
       [self mdf_effectiveUserInterfaceLayoutDirection] == UIUserInterfaceLayoutDirectionRightToLeft;
 
   CGFloat itemViewWidth = CGRectGetWidth(availableBounds) / self.itemViews.count;
-  CGFloat itemViewOriginX = isRTL ? CGRectGetWidth(availableBounds) : 0;
+  CGFloat itemViewOriginX = 0;
   CGFloat itemViewOriginY = 0;
   CGFloat itemViewHeight = CGRectGetHeight(availableBounds);
-  for (UIView *itemView in self.itemViews) {
-    if (isRTL) {
-      itemView.frame = CGRectMake(itemViewOriginX - itemViewWidth, itemViewOriginY, itemViewWidth,
-                                  itemViewHeight);
-      itemViewOriginX -= itemViewWidth;
-    } else {
-      itemView.frame = CGRectMake(itemViewOriginX, itemViewOriginY, itemViewWidth, itemViewHeight);
-      itemViewOriginX += itemViewWidth;
-    }
+  NSEnumerator<UIView *> *itemViewEnumerator =
+      isRTL ? [self.itemViews reverseObjectEnumerator] : [self.itemViews objectEnumerator];
+
+  for (UIView *itemView in itemViewEnumerator) {
+    itemView.frame = CGRectMake(itemViewOriginX, itemViewOriginY, itemViewWidth, itemViewHeight);
+    itemViewOriginX += itemViewWidth;
   }
 }
 
 - (void)layoutSubviewsForScrollableLayout {
   CGRect availableBounds = self.bounds;
-  UIEdgeInsets originInsets = self.contentInset;
   if (@available(iOS 11.0, *)) {
-    originInsets = self.adjustedContentInset;
     availableBounds = UIEdgeInsetsInsetRect(availableBounds, self.adjustedContentInset);
   }
   BOOL isRTL =
       [self mdf_effectiveUserInterfaceLayoutDirection] == UIUserInterfaceLayoutDirectionRightToLeft;
 
-  CGFloat itemViewOriginX = originInsets.left;
-  CGFloat itemViewOriginY = originInsets.top;
+  CGFloat itemViewOriginX = 0;
+  CGFloat itemViewOriginY = 0;
   CGFloat itemViewHeight = CGRectGetHeight(availableBounds);
   NSEnumerator<UIView *> *itemViewEnumerator =
       isRTL ? [self.itemViews reverseObjectEnumerator] : [self.itemViews objectEnumerator];
