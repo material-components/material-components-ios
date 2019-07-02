@@ -105,6 +105,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     _selectionIndicatorTemplate = [[MDCTabBarViewUnderlineIndicatorTemplate alloc] init];
 
     [self addSubview:_selectionIndicatorView];
+
     // By default, inset the content within the safe area. This is generally the desired behavior,
     // but clients can override it if they want.
     if (@available(iOS 11.0, *)) {

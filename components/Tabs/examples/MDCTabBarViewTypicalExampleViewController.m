@@ -74,6 +74,8 @@ static NSString *const kExampleTitle = @"TabBarView";
   [super viewDidLoad];
   self.title = kExampleTitle;
 
+  [self applyFixForInjectedAppBar];
+
   if (!self.containerScheme) {
     self.containerScheme = [[MDCContainerScheme alloc] init];
   }
@@ -152,9 +154,22 @@ static NSString *const kExampleTitle = @"TabBarView";
   NSLog(@"Item (%@) was selected.", item.title);
 }
 
+#pragma mark - Errata
+
+- (void)applyFixForInjectedAppBar {
+  // The injected AppBar has a bug where it will attempt to manipulate the Tab bar. To prevent
+  // that bug, we need to inject a scroll view into the view hierarchy before the tab bar. The App
+  // Bar will manipulate with that one instead.
+  UIScrollView *bugFixScrollView = [[UIScrollView alloc] init];
+  bugFixScrollView.userInteractionEnabled = NO;
+  bugFixScrollView.hidden = YES;
+  [self.view addSubview:bugFixScrollView];
+}
+
 @end
 
 #pragma mark - CatalogByConvention
+
 @implementation MDCTabBarViewTypicalExampleViewController (CatalogByConvention)
 
 + (NSDictionary *)catalogMetadata {
