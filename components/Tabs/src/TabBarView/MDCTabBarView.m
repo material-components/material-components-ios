@@ -44,17 +44,6 @@ static NSString *const kAccessibilityHintKeyPath = @"accessibilityHint";
 static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifier";
 static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
-/** A simple object that holds a bounds and center for positioning a view. */
-@interface MDCTabBarViewPositioningTuple : NSObject
-/** A bounds rect. */
-@property(nonatomic, assign) CGRect bounds;
-/** A center point. */
-@property(nonatomic, assign) CGPoint center;
-@end
-
-@implementation MDCTabBarViewPositioningTuple
-@end
-
 @interface MDCTabBarView ()
 
 /** The views representing each tab bar item. */
