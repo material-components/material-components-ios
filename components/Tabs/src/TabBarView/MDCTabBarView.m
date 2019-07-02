@@ -121,7 +121,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
 - (void)setSelectionIndicatorStrokeColor:(UIColor *)selectionIndicatorStrokeColor {
   _selectionIndicatorStrokeColor = selectionIndicatorStrokeColor ?: UIColor.blackColor;
-  self.selectionIndicatorView.tintColor = selectionIndicatorStrokeColor;
+  self.selectionIndicatorView.tintColor = self.selectionIndicatorStrokeColor;
 }
 
 - (void)setItems:(NSArray<UITabBarItem *> *)items {
