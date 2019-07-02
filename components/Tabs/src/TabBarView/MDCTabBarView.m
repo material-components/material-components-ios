@@ -102,6 +102,8 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     _selectionIndicatorView.translatesAutoresizingMaskIntoConstraints = NO;
     _selectionIndicatorView.userInteractionEnabled = NO;
 
+    _selectionIndicatorTemplate = [[MDCTabBarViewUnderlineIndicatorTemplate alloc] init];
+
     [self addSubview:_selectionIndicatorView];
     // By default, inset the content within the safe area. This is generally the desired behavior,
     // but clients can override it if they want.
@@ -455,6 +457,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     [self layoutSubviewsForScrollableLayout];
   }
   self.contentSize = [self calculatedContentSize];
+  [self updateSelectionIndicatorToIndex:[self.items indexOfObject:self.selectedItem]];
 
   if (self.needsScrollToSelectedItem) {
     self.needsScrollToSelectedItem = NO;
@@ -682,7 +685,13 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   }
 
   // Place selection indicator under the item's cell.
-  self.selectionIndicatorView.frame = [self selectedItemView].frame;
+  CGRect selectedItemFrame = [self selectedItemView].frame;
+  if (CGRectEqualToRect(selectedItemFrame, CGRectZero)) {
+    selectedItemFrame =
+        [self estimatedFrameForItemAtIndex:[self.items indexOfObject:self.selectedItem]];
+  }
+  self.selectionIndicatorView.frame = selectedItemFrame;
+
   CGRect selectionIndicatorBounds =
       CGRectMake(0, 0, CGRectGetWidth(self.selectionIndicatorView.bounds),
                  CGRectGetHeight(self.selectionIndicatorView.bounds));
