@@ -1,6 +1,6 @@
 # 85.2.0
 
-In this release we have added new features to Banner and Tabs, fixed bugs in Buttons and FlexibleHeader, and improved test coverage in BottomSheet. Additionally, we have added a TextField extension that will eventually house an MDCTextField alternative.
+In this minor release we have fixed bugs in Buttons and FlexibleHeader, added new features to Banner, added a theming extension for BottomNavigation, and improved test coverage in BottomSheet.
 
 ## New features
 
@@ -9,15 +9,6 @@ MDCBanner now supports `intrinsicContentSize`.
 ```objc
 MDCBannerView *myBanner = ...
 CGSize validIntrinsicContentSize = myBanner.intrinsicContentSize;
-```
-
-MDCTabBarView has several new core features implemented.
-
-```objc
-MDCTabBarView *myTabBarView = ...
-myTabBarView.delegate = self;
-[myTabBarView setTitleFont:myFont forState:UIControlStateNormal];
-[myTabBarView setTitleColor:myColor forState:UIControlStateNormal];
 ```
 
 ## API changes
