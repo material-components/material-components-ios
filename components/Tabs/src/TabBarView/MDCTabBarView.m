@@ -431,7 +431,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     return;
   }
   BOOL isRTL =
-      [self mdf_effectiveUserInterfaceLayoutDirection] == UIUserInterfaceLayoutDirectionRightToLeft;
+      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
 
   CGSize contentSize = [self availableSizeForSubviewLayout];
   CGFloat itemViewWidth = contentSize.width / self.itemViews.count;
@@ -449,7 +449,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
 - (void)layoutSubviewsForScrollableLayout {
   BOOL isRTL =
-      [self mdf_effectiveUserInterfaceLayoutDirection] == UIUserInterfaceLayoutDirectionRightToLeft;
+      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
 
   CGFloat itemViewOriginX = 0;
   CGFloat itemViewOriginY = 0;
@@ -531,7 +531,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   }
 
   BOOL isRTL =
-      [self mdf_effectiveUserInterfaceLayoutDirection] == UIUserInterfaceLayoutDirectionRightToLeft;
+      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
   CGFloat viewOriginX = isRTL ? self.contentSize.width : 0;
 
   for (NSUInteger i = 0; i < index; ++i) {
