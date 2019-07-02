@@ -723,11 +723,9 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
 - (void)didSelectItemAtIndex:(NSUInteger)index animateTransition:(BOOL)animate {
   void (^animationBlock)(void) = ^{
-    UIView *itemView;
-    if (index != NSNotFound || index <= self.itemViews.count) {
-      itemView = self.itemViews[index];
-    }
-    [self applySelectionTemplateToSelectionViewForItemView:itemView];
+    [self updateSelectionIndicatorToIndex:index];
+
+    // Force layout so any changes to the selection indicator are captured by the animation block.
     [self.selectionIndicatorView layoutIfNeeded];
   };
 
