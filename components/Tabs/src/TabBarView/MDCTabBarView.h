@@ -14,6 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol MDCTabBarViewDelegate;
+
 /**
  An implementation of Material Tabs (https://material.io/design/components/tabs.html).
  */
@@ -24,5 +26,62 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
 
 /** The currently-selected item in the Tab bar. */
 @property(nullable, nonatomic, strong) UITabBarItem *selectedItem;
+
+/** Set the selected item with or without animation. */
+- (void)setSelectedItem:(nullable UITabBarItem *)selectedItem animated:(BOOL)animated;
+
+/** The color of the Tab bar's background. */
+@property(nullable, nonatomic, copy) UIColor *barTintColor;
+
+/** The tab bar view delegate. */
+@property(nullable, nonatomic, weak) id<MDCTabBarViewDelegate> tabBarDelegate;
+
+/**
+ Sets the color of the bar items' image @c tintColor for the given control state.  Supports
+ @c UIControlStateNormal and @c UIControlStateSelected.
+
+ If no value for a control state is set, the value for @c UIControlStateNormal is used. If no value
+ for @c UIControlStateNormal is set, then a default value is used.
+ */
+- (void)setImageTintColor:(nullable UIColor *)imageTintColor forState:(UIControlState)state;
+
+/**
+ Returns the color of the bar items' image @c tintColor for the given control state.
+
+ If no value for a control state is set, the value for @c UIControlStateNormal is returned.
+ */
+- (nullable UIColor *)imageTintColorForState:(UIControlState)state;
+
+/**
+ Sets the color of the bar items' title for the given control state.  Supports
+ @c UIControlStateNormal and @c UIControlStateSelected.
+
+ If no value for a control state is set, the value for @c UIControlStateNormal is used. If no value
+ for @c UIControlStateNormal is set, then a default value is used.
+ */
+- (void)setTitleColor:(nullable UIColor *)titleColor forState:(UIControlState)state;
+
+/**
+ Returns the color of the bar items' title for the given control state.
+
+ If no value for a control state is set, the value for @c UIControlStateNormal is returned.
+ */
+- (nullable UIColor *)titleColorForState:(UIControlState)state;
+
+/**
+ Sets the font of the bar items' title for the given control state.  Supports
+ @c UIControlStateNormal and @c UIControlStateSelected.
+
+ If no value for a control state is set, the value for @c UIControlStateNormal is used. If no value
+ for @c UIControlStateNormal is set, then a default value is used.
+ */
+- (void)setTitleFont:(nullable UIFont *)titleFont forState:(UIControlState)state;
+
+/**
+ Returns the font of the bar items' title for the given control state.
+
+ If no value for a control state is set, the value for @c UIControlStateNormal is returned.
+ */
+- (nullable UIFont *)titleFontForState:(UIControlState)state;
 
 @end

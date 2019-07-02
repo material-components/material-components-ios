@@ -17,6 +17,7 @@ target "MDCCatalog" do
     'AppBar+Theming/UnitTests',
     'BottomAppBar/UnitTests',
     'BottomNavigation/UnitTests',
+    'BottomNavigation+Theming/UnitTests',
     'BottomSheet/UnitTests',
     'ButtonBar/UnitTests',
     'Buttons/UnitTests',
@@ -64,6 +65,7 @@ target "MDCCatalog" do
     'Tabs/UnitTests',
     'Tabs+Theming/UnitTests',
     'TextFields/UnitTests',
+    'TextFields+ContainedInputView/UnitTests',
     'TextFields+Theming/UnitTests',
     'Themes/UnitTests',
     'Typography/UnitTests',
@@ -71,6 +73,7 @@ target "MDCCatalog" do
   pod 'MaterialComponentsBeta', :path => '../', :testspecs => [
     'ActionSheet+ActionSheetThemer/UnitTests',
     'ActionSheet+ColorThemer/UnitTests',
+    'Banner/UnitTests',
     'BottomNavigation/UnitTests',
     'ButtonBar+Theming/UnitTests',
     'Tabs+TabBarView/UnitTests',
