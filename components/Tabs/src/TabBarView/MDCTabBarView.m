@@ -90,6 +90,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     _selectionIndicatorView = [[MDCTabBarViewIndicatorView alloc] init];
     _selectionIndicatorView.translatesAutoresizingMaskIntoConstraints = NO;
     _selectionIndicatorView.userInteractionEnabled = NO;
+    _selectionIndicatorView.tintColor = UIColor.blackColor;
 
     _selectionIndicatorTemplate = [[MDCTabBarViewUnderlineIndicatorTemplate alloc] init];
 
@@ -116,6 +117,11 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
 - (UIColor *)barTintColor {
   return self.backgroundColor;
+}
+
+- (void)setSelectionIndicatorStrokeColor:(UIColor *)selectionIndicatorStrokeColor {
+  _selectionIndicatorStrokeColor = selectionIndicatorStrokeColor ?: UIColor.blackColor;
+  self.selectionIndicatorView.tintColor = self.selectionIndicatorStrokeColor;
 }
 
 - (void)setItems:(NSArray<UITabBarItem *> *)items {
