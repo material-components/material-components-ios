@@ -38,7 +38,8 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
 @property(nullable, nonatomic, weak) id<MDCTabBarViewDelegate> tabBarDelegate;
 
 /**
- The template for the selection indicator.
+ The template for the selection indicator. Provides rendering information for the selection
+ indicator in this tab bar.
  */
 @property(nonnull, nonatomic, strong) id<MDCTabBarViewIndicatorTemplate> selectionIndicatorTemplate;
 

@@ -711,6 +711,13 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   [self.selectionIndicatorView applySelectionIndicatorAttributes:indicatorAttributes];
 }
 
+/**
+ Updates the selection indicator with or without animation. Passing @c NSNotFound for @c index will
+ cause the indicator to become invisible.
+
+ @param index The index of the selected item.
+ @param animate @c YES if the change should be animated, @c NO if it should be immediate.
+ */
 - (void)didSelectItemAtIndex:(NSUInteger)index animateTransition:(BOOL)animate {
   void (^animationBlock)(void) = ^{
     [self updateSelectionIndicatorToIndex:index];
