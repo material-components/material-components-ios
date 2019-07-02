@@ -422,7 +422,9 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     if (self.mdf_effectiveUserInterfaceLayoutDirection ==
         UIUserInterfaceLayoutDirectionRightToLeft) {
       CGFloat viewWidth = CGRectGetWidth(self.bounds);
-      self.contentOffset = CGPointMake(self.contentSize.width - viewWidth, self.contentOffset.y);
+      if (viewWidth < self.contentSize.width) {
+        self.contentOffset = CGPointMake(self.contentSize.width - viewWidth, self.contentOffset.y);
+      }
     }
     [self scrollUntilSelectedItemIsVisibleWithoutAnimation];
   }
