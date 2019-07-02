@@ -416,6 +416,12 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
   if (self.needsScrollToSelectedItem) {
     self.needsScrollToSelectedItem = NO;
+    // In RTL layouts, make sure we "begin" the selected item scroll offset from the leading edge.
+    if (self.mdf_effectiveUserInterfaceLayoutDirection ==
+        UIUserInterfaceLayoutDirectionRightToLeft) {
+      CGFloat viewWidth = CGRectGetWidth(self.bounds);
+      self.contentOffset = CGPointMake(self.contentSize.width - viewWidth, self.contentOffset.y);
+    }
     [self scrollUntilSelectedItemIsVisibleWithoutAnimation];
   }
 }
