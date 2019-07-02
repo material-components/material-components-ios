@@ -75,8 +75,6 @@ CGSize validIntrinsicContentSize = myBanner.intrinsicContentSize;
 
 **New extension.**
 
-## Component changes
-
 ## Changes
 
 ### Banner
