@@ -34,6 +34,9 @@ static char *const kKVOContextMDCTabBarView = "kKVOContextMDCTabBarView";
 /** Minimum (typical) height of a Material Tab bar. */
 static const CGFloat kMinHeight = 48;
 
+/** The leading edge inset for scrollable tabs. */
+static const CGFloat kScrollableTabsLeadingEdgeInset = 52;
+
 /// Default duration in seconds for selection change animations.
 static const NSTimeInterval kSelectionChangeAnimationDuration = 0.3;
 
@@ -500,7 +503,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   BOOL isRTL =
       self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
 
-  CGFloat itemViewOriginX = 0;
+  CGFloat itemViewOriginX = isRTL ? 0 : kScrollableTabsLeadingEdgeInset;
   CGFloat itemViewOriginY = 0;
   CGFloat itemViewHeight = [self availableSizeForSubviewLayout].height;
   NSEnumerator<UIView *> *itemViewEnumerator =
@@ -542,7 +545,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 }
 
 - (CGSize)intrinsicContentSizeForScrollableLayout {
-  CGFloat totalWidth = 0;
+  CGFloat totalWidth = kScrollableTabsLeadingEdgeInset;
   CGFloat maxHeight = 0;
   for (UIView *itemView in self.itemViews) {
     CGSize contentSize = itemView.intrinsicContentSize;
@@ -581,7 +584,8 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
   BOOL isRTL =
       self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
-  CGFloat viewOriginX = isRTL ? self.contentSize.width : 0;
+  CGFloat originAdjustment = [self isJustifiedLayoutStyle] ? 0 : kScrollableTabsLeadingEdgeInset;
+  CGFloat viewOriginX = isRTL ? self.contentSize.width - originAdjustment : originAdjustment;
 
   for (NSUInteger i = 0; i < index; ++i) {
     CGSize viewSize = [self expectedSizeForView:self.itemViews[i]];
