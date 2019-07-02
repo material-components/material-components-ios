@@ -74,9 +74,6 @@ static NSString *const kExampleTitle = @"TabBarView";
   [super viewDidLoad];
   self.title = kExampleTitle;
 
-  UIScrollView *dummyScrollView = [[UIScrollView alloc] init];
-  [self.view addSubview:dummyScrollView];
-
   if (!self.containerScheme) {
     self.containerScheme = [[MDCContainerScheme alloc] init];
   }

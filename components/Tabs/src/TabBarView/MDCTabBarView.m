@@ -42,7 +42,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 @property(nonatomic, readonly) BOOL isJustifiedLayoutStyle;
 
 /** Used to scroll to the selected item during the first call to @c layoutSubviews. */
-@property(nonatomic, assign) BOOL initialScrollDone;
+@property(nonatomic, assign) BOOL needsScrollToSelectedItem;
 
 /** The title colors for bar items. */
 @property(nonnull, nonatomic, strong) NSMutableDictionary<NSNumber *, UIColor *> *stateToTitleColor;
@@ -65,6 +65,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 - (instancetype)init {
   self = [super init];
   if (self) {
+    _needsScrollToSelectedItem = YES;
     _items = @[];
     _stateToImageTintColor = [NSMutableDictionary dictionary];
     _stateToTitleColor = [NSMutableDictionary dictionary];
@@ -72,7 +73,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     self.backgroundColor = UIColor.whiteColor;
     self.showsHorizontalScrollIndicator = NO;
 
-    // By deafult, inset the content within the safe area. This is generally the desired behavior,
+    // By default, inset the content within the safe area. This is generally the desired behavior,
     // but clients can override it if they want.
     if (@available(iOS 11.0, *)) {
       [super setContentInsetAdjustmentBehavior:UIScrollViewContentInsetAdjustmentAlways];
@@ -413,35 +414,30 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   }
   self.contentSize = [self calculatedContentSize];
 
-  if (!self.initialScrollDone) {
-    self.initialScrollDone = YES;
+  if (self.needsScrollToSelectedItem) {
+    self.needsScrollToSelectedItem = NO;
     [self scrollUntilSelectedItemIsVisibleWithoutAnimation];
   }
 }
 
 - (BOOL)isJustifiedLayoutStyle {
-  CGRect availableBounds = self.bounds;
-  if (@available(iOS 11.0, *)) {
-    availableBounds = UIEdgeInsetsInsetRect(availableBounds, self.adjustedContentInset);
-  }
-  CGFloat availableWidth = CGRectGetWidth(availableBounds);
+  CGSize contentSize = [self availableSizeForSubviewLayout];
   CGFloat requiredWidth = [self intrinsicContentSizeForJustifiedLayout].width;
-  return availableWidth >= requiredWidth;
+  return contentSize.width >= requiredWidth;
 }
 
 - (void)layoutSubviewsForJustifiedLayout {
-  CGRect availableBounds = self.bounds;
-  if (@available(iOS 11.0, *)) {
-    availableBounds = UIEdgeInsetsInsetRect(availableBounds, self.adjustedContentInset);
+  if (self.itemViews.count == 0) {
+    return;
   }
-
   BOOL isRTL =
       [self mdf_effectiveUserInterfaceLayoutDirection] == UIUserInterfaceLayoutDirectionRightToLeft;
 
-  CGFloat itemViewWidth = CGRectGetWidth(availableBounds) / self.itemViews.count;
+  CGSize contentSize = [self availableSizeForSubviewLayout];
+  CGFloat itemViewWidth = contentSize.width / self.itemViews.count;
   CGFloat itemViewOriginX = 0;
   CGFloat itemViewOriginY = 0;
-  CGFloat itemViewHeight = CGRectGetHeight(availableBounds);
+  CGFloat itemViewHeight = contentSize.height;
   NSEnumerator<UIView *> *itemViewEnumerator =
       isRTL ? [self.itemViews reverseObjectEnumerator] : [self.itemViews objectEnumerator];
 
@@ -452,16 +448,12 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 }
 
 - (void)layoutSubviewsForScrollableLayout {
-  CGRect availableBounds = self.bounds;
-  if (@available(iOS 11.0, *)) {
-    availableBounds = UIEdgeInsetsInsetRect(availableBounds, self.adjustedContentInset);
-  }
   BOOL isRTL =
       [self mdf_effectiveUserInterfaceLayoutDirection] == UIUserInterfaceLayoutDirectionRightToLeft;
 
   CGFloat itemViewOriginX = 0;
   CGFloat itemViewOriginY = 0;
-  CGFloat itemViewHeight = CGRectGetHeight(availableBounds);
+  CGFloat itemViewHeight = [self availableSizeForSubviewLayout].height;
   NSEnumerator<UIView *> *itemViewEnumerator =
       isRTL ? [self.itemViews reverseObjectEnumerator] : [self.itemViews objectEnumerator];
   for (UIView *view in itemViewEnumerator) {
@@ -474,7 +466,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
 - (void)willMoveToSuperview:(UIView *)newSuperview {
   [super willMoveToSuperview:newSuperview];
-  self.initialScrollDone = NO;
+  self.needsScrollToSelectedItem = YES;
 }
 
 - (CGSize)intrinsicContentSize {
@@ -558,13 +550,12 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 }
 
 - (CGSize)expectedSizeForView:(UIView *)view {
+  if (self.itemViews.count == 0) {
+    return CGSizeZero;
+  }
   if (self.isJustifiedLayoutStyle && CGRectGetWidth(self.bounds) > 0) {
-    CGRect contentRect = self.bounds;
-    if (@available(iOS 11.0, *)) {
-      contentRect = UIEdgeInsetsInsetRect(contentRect, self.adjustedContentInset);
-    }
-    return CGSizeMake(CGRectGetWidth(contentRect) / self.itemViews.count,
-                      CGRectGetHeight(contentRect));
+    CGSize contentSize = [self availableSizeForSubviewLayout];
+    return CGSizeMake(contentSize.width / self.itemViews.count, contentSize.height);
   }
   CGSize expectedItemSize = view.intrinsicContentSize;
   if (expectedItemSize.width == UIViewNoIntrinsicMetric) {
@@ -573,6 +564,14 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     expectedItemSize = [view sizeThatFits:self.contentSize];
   }
   return expectedItemSize;
+}
+
+- (CGSize)availableSizeForSubviewLayout {
+  CGRect availableBounds = self.bounds;
+  if (@available(iOS 11.0, *)) {
+    availableBounds = UIEdgeInsetsInsetRect(availableBounds, self.adjustedContentInset);
+  }
+  return CGSizeMake(CGRectGetWidth(availableBounds), CGRectGetHeight(availableBounds));
 }
 
 #pragma mark - Actions
