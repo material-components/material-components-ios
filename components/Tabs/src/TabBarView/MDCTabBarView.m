@@ -456,14 +456,16 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
 - (void)layoutSubviewsForScrollableLayout {
   CGRect availableBounds = self.bounds;
+  UIEdgeInsets originInsets = self.contentInset;
   if (@available(iOS 11.0, *)) {
+    originInsets = self.adjustedContentInset;
     availableBounds = UIEdgeInsetsInsetRect(availableBounds, self.adjustedContentInset);
   }
   BOOL isRTL =
       [self mdf_effectiveUserInterfaceLayoutDirection] == UIUserInterfaceLayoutDirectionRightToLeft;
 
-  CGFloat itemViewOriginX = 0;
-  CGFloat itemViewOriginY = 0;
+  CGFloat itemViewOriginX = originInsets.left;
+  CGFloat itemViewOriginY = originInsets.top;
   CGFloat itemViewHeight = CGRectGetHeight(availableBounds);
   NSEnumerator<UIView *> *itemViewEnumerator =
       isRTL ? [self.itemViews reverseObjectEnumerator] : [self.itemViews objectEnumerator];
