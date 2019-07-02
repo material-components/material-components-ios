@@ -111,6 +111,7 @@ Pod::Spec.new do |mdc|
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}",
       "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/private/*.{h,m}"
     ]
+    extension.dependency "MaterialComponents/AnimationTiming"
     extension.dependency "MaterialComponents/Ripple"
     extension.dependency "MDFInternationalization"
 

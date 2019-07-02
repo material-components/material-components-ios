@@ -94,6 +94,7 @@ mdc_extension_objc_library(
 mdc_extension_objc_library(
     name = "TabBarView",
     deps = [
+        "//components/AnimationTiming",
         "//components/Ripple",
         "@material_internationalization_ios//:MDFInternationalization",
     ],
