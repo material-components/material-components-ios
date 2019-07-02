@@ -126,6 +126,7 @@ static NSString *const kExampleTitle = @"TabBarView";
                         forState:UIControlStateSelected];
   [self.tabBar setTitleFont:self.containerScheme.typographyScheme.button
                    forState:UIControlStateNormal];
+  [self.tabBar setTitleFont:[UIFont systemFontOfSize:16] forState:UIControlStateSelected];
   self.tabBar.selectedItem = item4;
   self.tabBar.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:self.tabBar];
