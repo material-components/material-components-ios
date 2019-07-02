@@ -53,4 +53,11 @@
   return number.doubleValue;
 }
 
+- (BOOL)hasDifferentElevationComparedToTraitCollection:(UITraitCollection *)traitCollection {
+  if (self.materialElevation != traitCollection.materialElevation) {
+    return YES;
+  }
+  return NO;
+}
+
 @end

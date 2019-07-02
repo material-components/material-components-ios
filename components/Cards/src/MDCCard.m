@@ -55,7 +55,7 @@ static const BOOL MDCCardIsInteractableDefault = YES;
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
   [super traitCollectionDidChange:previousTraitCollection];
   if (self.traitCollectionDidChangeBlock) {
-    self.traitCollectionDidChangeBlock(self.traitCollection);
+    self.traitCollectionDidChangeBlock(previousTraitCollection, self.traitCollection);
   }
 }
 
@@ -174,7 +174,7 @@ static const BOOL MDCCardIsInteractableDefault = YES;
             self.traitCollection, traitCollection
           ]];
       NSLog(@"%f", traitCollection.materialElevation);
-      self.traitCollectionDidChangeBlock(traitCollection);
+      self.traitCollectionDidChangeBlock(self.traitCollection, traitCollection);
     }
     [self updateElevationLightening];
   }

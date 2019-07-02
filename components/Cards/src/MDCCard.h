@@ -156,7 +156,7 @@
 @property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator;
 
 @property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
-    (UITraitCollection *_Nonnull newTraitCollection);
+    (UITraitCollection *_Nonnull previousTraitCollection, UITraitCollection *_Nonnull currentTraitCollection);
 
 //@property(nonatomic, weak, nullable) id<MDCThemingElevationDelegate> elevationDelegate;
 

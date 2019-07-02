@@ -21,4 +21,6 @@
 + (UITraitCollection *)traitCollectionWithMaterialElevation:(CGFloat)materialElevation;
 @property(nonatomic, readonly, assign) CGFloat materialElevation;
 
+- (BOOL)hasDifferentElevationComparedToTraitCollection:(UITraitCollection *)traitCollection;
+
 @end

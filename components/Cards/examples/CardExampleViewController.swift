@@ -50,8 +50,9 @@ class CardExampleViewController: UIViewController {
     card.mdc_absoluteElevation = 1;
     card.applyTheme(withScheme: containerScheme)
     card.isInteractable = false
-    card.traitCollectionDidChangeBlock = { newTraitCollection in
+    card.traitCollectionDidChangeBlock = { previousTraitCollection, currentTraitCollection in
       self.card.applyTheme(withColorScheme: self.containerScheme.colorScheme)
+//      self.card.
     };
     imageView.isAccessibilityElement = true
     imageView.accessibilityLabel = "Missing Dish"
