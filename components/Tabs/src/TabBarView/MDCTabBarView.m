@@ -292,6 +292,8 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     } else {
       tabBarViewItemView.titleLabel.font = [self titleFontForState:UIControlStateNormal];
     }
+    [itemView invalidateIntrinsicContentSize];
+    [itemView setNeedsLayout];
   }
 }
 
