@@ -653,7 +653,7 @@ static UIImage *fakeImage(CGSize size) {
   XCTAssertEqualWithAccuracy(size.height, kMinHeight, 0.001);
 }
 
-- (void)testSizeThatFitsDoesntShrinkToFitContent {
+- (void)testSizeThatFitsShrinksToFitContentVerticallyButNotHorizontally {
   // Given
   self.tabBarView.items = @[ self.itemA ];
   CGSize intrinsicSize = self.tabBarView.intrinsicContentSize;
@@ -664,7 +664,7 @@ static UIImage *fakeImage(CGSize size) {
 
   // Then
   XCTAssertEqualWithAccuracy(size.width, biggerSize.width, 0.001);
-  XCTAssertEqualWithAccuracy(size.height, biggerSize.height, 0.001);
+  XCTAssertEqualWithAccuracy(size.height, intrinsicSize.height, 0.001);
 }
 
 @end
