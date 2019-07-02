@@ -485,11 +485,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 }
 
 - (CGSize)intrinsicContentSize {
-  //  if (self.isJustifiedLayoutStyle) {
   return [self intrinsicContentSizeForJustifiedLayout];
-  //  } else {
-  //    return [self intrinsicContentSizeForScrollableLayout];
-  //  }
 }
 
 - (CGSize)calculatedContentSize {
