@@ -82,6 +82,11 @@ CGSize validIntrinsicContentSize = myBanner.intrinsicContentSize;
 ### Banner
 
 * [Add intrinsicContentSize support with an example. (#7620)](https://github.com/material-components/material-components-ios/commit/37a495b04a4e17cdd78e76071fba5c9fc275c3cc) (Wenyu Zhang)
+* [Support Dynamic Type in Banner (#7709)](https://github.com/material-components/material-components-ios/commit/7c1b055ab943539fe104a5fbad75000c66c0e0f2) (Wenyu Zhang)
+
+### BottomNavigation
+
+* [Add theming extension (#7691)](https://github.com/material-components/material-components-ios/commit/f7ac1dbbbb1e4eff09e6f51d1145b5b00fd85cc5) (Cody Weaver)
 
 ### BottomSheet
 
@@ -138,11 +143,6 @@ CGSize validIntrinsicContentSize = myBanner.intrinsicContentSize;
 ### private/ThumbTrack
 
 * [Uses @synthesize for touchController to avoid warning (#7670)](https://github.com/material-components/material-components-ios/commit/d0d08d422bccd7246981fdb7c8c829657caa37a9) (Sylvain Defresne)
-
-## Multi-component changes
-
-* [Add theming extension (#7691)](https://github.com/material-components/material-components-ios/commit/f7ac1dbbbb1e4eff09e6f51d1145b5b00fd85cc5) (Cody Weaver)
-* [Support Dynamic Type in Banner (#7709)](https://github.com/material-components/material-components-ios/commit/7c1b055ab943539fe104a5fbad75000c66c0e0f2) (Wenyu Zhang)
 
 ---
 
@@ -208,7 +208,6 @@ chipView.rippleAllowsSelection = YES;
 * [Annotate mdc_adjustsFontForContentSizeCategory as to-be-deprecated. (#7619)](https://github.com/material-components/material-components-ios/commit/ee0943cbbdab48fd9637baf60957113e5e9e205e) (featherless)
 
 ## Multi-component changes
-
 
 * [Remove all example references to MDCFloatingActionButtonThemer. (#7505)](https://github.com/material-components/material-components-ios/commit/9c8e34138af0d02f568bff4ff8f0c0341b5cd860) (featherless)
 * [{Bazel} Create dedicated unit test rules to reduce boilerplate (#7641)](https://github.com/material-components/material-components-ios/commit/2b125fcd935bde8f707ce6e0f96503555d8da6ad) (Robert Moore)
