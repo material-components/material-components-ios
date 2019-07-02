@@ -153,7 +153,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   self.selectedItem = newSelectedItem;
   [self addObserversToTabBarItems];
 
-  self.contentSize = [self calculatedContentSize];
+  [self invalidateIntrinsicContentSize];
   [self setNeedsLayout];
 }
 
@@ -411,6 +411,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   } else {
     [self layoutSubviewsForScrollableLayout];
   }
+  self.contentSize = [self calculatedContentSize];
 
   if (!self.initialScrollDone) {
     self.initialScrollDone = YES;
@@ -424,7 +425,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     availableBounds = UIEdgeInsetsInsetRect(availableBounds, self.adjustedContentInset);
   }
   CGFloat availableWidth = CGRectGetWidth(availableBounds);
-  CGFloat requiredWidth = [self justifiedWidth];
+  CGFloat requiredWidth = [self intrinsicContentSizeForJustifiedLayout].width;
   return availableWidth >= requiredWidth;
 }
 
@@ -500,15 +501,14 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 }
 
 - (CGSize)intrinsicContentSizeForJustifiedLayout {
-  CGFloat totalWidth = [self justifiedWidth];
-  CGFloat maxHeight = 0;
+  CGFloat maxWidth = 0;
+  CGFloat maxHeight = kMinHeight;
   for (UIView *itemView in self.itemViews) {
     CGSize contentSize = itemView.intrinsicContentSize;
-    if (contentSize.height > maxHeight) {
-      maxHeight = contentSize.height;
-    }
+    maxHeight = MAX(maxHeight, contentSize.height);
+    maxWidth = MAX(maxWidth, contentSize.width);
   }
-  return CGSizeMake(totalWidth, MAX(kMinHeight, maxHeight));
+  return CGSizeMake(maxWidth * self.items.count, maxHeight);
 }
 
 - (CGSize)intrinsicContentSizeForScrollableLayout {
@@ -530,18 +530,6 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 }
 
 #pragma mark - Helpers
-
-- (CGFloat)justifiedWidth {
-  CGFloat maxWidth = 0;
-  for (UIView *itemView in self.itemViews) {
-    CGSize contentSize = itemView.intrinsicContentSize;
-    if (contentSize.width > maxWidth) {
-      maxWidth = contentSize.width;
-    }
-  }
-  CGFloat requiredWidth = maxWidth * self.items.count;
-  return requiredWidth;
-}
 
 - (void)scrollUntilSelectedItemIsVisibleWithoutAnimation {
   NSUInteger index = [self.items indexOfObject:self.selectedItem];
