@@ -1,3 +1,149 @@
+# 85.2.0
+
+In this minor release we have fixed bugs in Buttons and FlexibleHeader, added new features to Banner, added a theming extension for BottomNavigation, and improved test coverage in BottomSheet.
+
+## New features
+
+MDCBanner now supports `intrinsicContentSize`.
+
+```objc
+MDCBannerView *myBanner = ...
+CGSize validIntrinsicContentSize = myBanner.intrinsicContentSize;
+```
+
+## API changes
+
+### Banner
+
+#### MDCBannerView
+
+*new* property: `mdc_adjustsFontForContentSizeCategory` in `MDCBannerView`
+
+### BottomNavigation+Theming
+
+**New extension.**
+
+### Tabs+TabBarView
+
+#### MDCTabBarViewIndicatorSupporting
+
+*new* protocol: `MDCTabBarViewIndicatorSupporting`
+
+*new* property: `contentFrame` in `MDCTabBarViewIndicatorSupporting`
+
+*new* property: `bounds` in `MDCTabBarViewIndicatorSupporting`
+
+#### MDCTabBarView
+
+*new* method: `-setTitleFont:forState:` in `MDCTabBarView`
+
+*new* method: `-titleColorForState:` in `MDCTabBarView`
+
+*new* method: `-setImageTintColor:forState:` in `MDCTabBarView`
+
+*new* method: `-titleFontForState:` in `MDCTabBarView`
+
+*new* method: `-imageTintColorForState:` in `MDCTabBarView`
+
+*new* property: `tabBarDelegate` in `MDCTabBarView`
+
+*new* method: `-setSelectedItem:animated:` in `MDCTabBarView`
+
+*new* method: `-setTitleColor:forState:` in `MDCTabBarView`
+
+*new* property: `barTintColor` in `MDCTabBarView`
+
+#### MDCTabBarItem
+
+*new* class: `MDCTabBarItem`
+
+#### MDCTabBarItemCustomViewing
+
+*new* protocol: `MDCTabBarItemCustomViewing`
+
+*new* property: `mdc_customView` in `MDCTabBarItemCustomViewing`
+
+#### MDCTabBarViewDelegate
+
+*new* method: `-tabBarView:shouldSelectItem:` in `MDCTabBarViewDelegate`
+
+*new* protocol: `MDCTabBarViewDelegate`
+
+*new* method: `-tabBarView:didSelectItem:` in `MDCTabBarViewDelegate`
+
+### TextFields+ContainedInputView
+
+**New extension.**
+
+## Changes
+
+### Banner
+
+* [Add intrinsicContentSize support with an example. (#7620)](https://github.com/material-components/material-components-ios/commit/37a495b04a4e17cdd78e76071fba5c9fc275c3cc) (Wenyu Zhang)
+* [Support Dynamic Type in Banner (#7709)](https://github.com/material-components/material-components-ios/commit/7c1b055ab943539fe104a5fbad75000c66c0e0f2) (Wenyu Zhang)
+
+### BottomNavigation
+
+* [Add theming extension (#7691)](https://github.com/material-components/material-components-ios/commit/f7ac1dbbbb1e4eff09e6f51d1145b5b00fd85cc5) (Cody Weaver)
+
+### BottomSheet
+
+* [Added test to avoid referencing UIWebView under UIKit for Mac (#7679)](https://github.com/material-components/material-components-ios/commit/4354bfc284210119a3c1be094079633f98784154) (Mark Aufflick)
+
+### Buttons
+
+* [Resolved inifinite loop in FloatingButtonExampleViewController. (#7675)](https://github.com/material-components/material-components-ios/commit/b3290cd14da46e062641c2196380bd4889e3722b) (Mark Aufflick)
+
+### FlexibleHeader
+
+* [Ensures the frame is correct under UIKit for Mac (#7668)](https://github.com/material-components/material-components-ios/commit/3fa4749b0272204dd81266b3c84bfad7858af5ac) (Mark Aufflick)
+* [Use updated voiceover status change notification (#7571)](https://github.com/material-components/material-components-ios/commit/b322b55e6f966b3849cb2888c75d62b0ed6ca584) (Josh Converse)
+
+### Tabs
+
+* [Add `barTintColor` API. (#7711)](https://github.com/material-components/material-components-ios/commit/41369ecc17281591444cee3db074a95b57fd2de4) (Robert Moore)
+* [Add accessibility hint and identifier (#7729)](https://github.com/material-components/material-components-ios/commit/5050a53de55d50994b442b7be573c5f5dbae85d5) (Cody Weaver)
+* [Add accessibility label (#7727)](https://github.com/material-components/material-components-ios/commit/1d36b079d7e40888058bc0a9c44e6ba13b79f93e) (Cody Weaver)
+* [Add accessibility traits support (#7739)](https://github.com/material-components/material-components-ios/commit/c3fe63e5e206b19097ce5fc01cceed5d9465f848) (mikefan1991)
+* [Add delegate support to MDCTabBarView (#7725)](https://github.com/material-components/material-components-ios/commit/46c8e51ae358373911e3f970068fb75a4f4a02f3) (mikefan1991)
+* [Add imageTintColorForState APIs. (#7714)](https://github.com/material-components/material-components-ios/commit/88e145c62b3229ac64e80776e34568f0f56f1a77) (Robert Moore)
+* [Add initial support for custom view. (#7678)](https://github.com/material-components/material-components-ios/commit/325e269eb4b795d58d38a0dc6c52b60c1023dae3) (Robert Moore)
+* [Add ripple effect (#7726)](https://github.com/material-components/material-components-ios/commit/99ec5aa6917b4b3ff855f6e61127e9eed1f1f640) (Ang)
+* [Add the user selection visible logic  (#7740)](https://github.com/material-components/material-components-ios/commit/ca5afce4417415ffbede4a42cbf1dd53760a6542) (mikefan1991)
+* [Add titleColorForState: API. (#7712)](https://github.com/material-components/material-components-ios/commit/af0fe795a64d952bfc294b11d796e8f0b9e079fd) (Robert Moore)
+* [Add titleFontForState APIs (#7757)](https://github.com/material-components/material-components-ios/commit/029692a0ba9e8d9503d2f3f7389e5a5ee97d3c2d) (Cody Weaver)
+* [Add user selection support to the MDCTabBarView (#7713)](https://github.com/material-components/material-components-ios/commit/e243456b42ba6de0f162f9e12518f077e7989d47) (mikefan1991)
+* [Adds justified and scrollable layout to MDCTabBarView (#7704)](https://github.com/material-components/material-components-ios/commit/60d5f0dbef6c92fe295a4aed0e03848b83bce426) (Ang)
+* [Adds safe area inset (#7753)](https://github.com/material-components/material-components-ios/commit/079c42e65b010745686cd0442e8d6b3ca22c7e42) (Ang)
+* [Adds support for rendering custom views. (#7755)](https://github.com/material-components/material-components-ios/commit/febf914e97be63c7027595aaa364a275dd37756b) (Robert Moore)
+* [Allow setting selected item without animation. (#7749)](https://github.com/material-components/material-components-ios/commit/8d82d5e9d04ac74d6958b9ff02503d6c76528d5c) (Robert Moore)
+* [Create default selection indicator template. (#7751)](https://github.com/material-components/material-components-ios/commit/ee7c89c4ff140b4b586b1e6d966e585b0e19a07f) (Robert Moore)
+* [Expose the the iconImageView and the titleLabel of the item view (#7703)](https://github.com/material-components/material-components-ios/commit/1008ad3945d4b784131d6024e5c5a6551c7c08c5) (mikefan1991)
+* [Fix MDCTabBarViewItemView sizing. (#7718)](https://github.com/material-components/material-components-ios/commit/609d76a2255b98b6aca040715987080e057101bf) (Robert Moore)
+* [Fix bugs (#7735)](https://github.com/material-components/material-components-ios/commit/1a38f2af4630af5477085cde76efa5ecf3d9d456) (mikefan1991)
+* [Fix image tint color when unselecting an item. (#7756)](https://github.com/material-components/material-components-ios/commit/0e97389a5c65b46f3ef85c92da9d8d9e8c4e375e) (Robert Moore)
+* [Fix scroll-to-item for RTL.  (#7754)](https://github.com/material-components/material-components-ios/commit/c2b400f6ff3cf0e83854108ed02d41df67f5a4a7) (Robert Moore)
+* [Fix the layout of MDCTabBarViewItemView (#7747)](https://github.com/material-components/material-components-ios/commit/494feaeb7c41ef3a67f82821bb26454745fa7f8b) (mikefan1991)
+* [Fork selection indicator. (#7723)](https://github.com/material-components/material-components-ios/commit/2703d006efdf646877c65dbe2392275e54953900) (Robert Moore)
+* [Ignore `selectedItem` values not in `items`. (#7702)](https://github.com/material-components/material-components-ios/commit/cc5cce89d0c5402a84200144e42be816f19b2404) (Robert Moore)
+* [Initial MDCTabBarViewItemView version (#7665)](https://github.com/material-components/material-components-ios/commit/4bb8a7cb345dc1f09e60d0b5c44fadd98c60f22e) (mikefan1991)
+* [KVO UITabBarItem's `title` and `image` properties (#7700)](https://github.com/material-components/material-components-ios/commit/fc96bbbe4915ad54bfea584639b446d41b0603ed) (Robert Moore)
+* [Make itemView conform to the selection indicator protocol. (#7750)](https://github.com/material-components/material-components-ios/commit/bd1ab6eadcded6091fd970845c274587dbfba33c) (Robert Moore)
+* [Rearrange MDCTabBarView internals. (#7696)](https://github.com/material-components/material-components-ios/commit/b13f7813e0f9240af4448c267b7a2bbbd4774177) (Robert Moore)
+* [Remove redundant code. (#7716)](https://github.com/material-components/material-components-ios/commit/f55facb659c63bbf624a29141b36885bc12fdca4) (Robert Moore)
+* [Send tab item title/image to views (#7698)](https://github.com/material-components/material-components-ios/commit/d202640cd384666fd872aaeef5d50d81fa60d5a1) (Robert Moore)
+* [Use templated image in snapshot test. (#7730)](https://github.com/material-components/material-components-ios/commit/b46aa91c6d07d4d002972bdb5a66c04f58607248) (Robert Moore)
+
+### TextFields
+
+* [Add MDCBaseTextField as extension (#7694)](https://github.com/material-components/material-components-ios/commit/eadb2e18fe57f5be0ec1b8dd1ea122ba445fb966) (Andrew Overton)
+
+### private/ThumbTrack
+
+* [Uses @synthesize for touchController to avoid warning (#7670)](https://github.com/material-components/material-components-ios/commit/d0d08d422bccd7246981fdb7c8c829657caa37a9) (Sylvain Defresne)
+
+---
+
 # 85.1.0
 
 In this minor release we have begun development of a new Tab component, as well as additional tests and bug fixes.
@@ -60,7 +206,6 @@ chipView.rippleAllowsSelection = YES;
 * [Annotate mdc_adjustsFontForContentSizeCategory as to-be-deprecated. (#7619)](https://github.com/material-components/material-components-ios/commit/ee0943cbbdab48fd9637baf60957113e5e9e205e) (featherless)
 
 ## Multi-component changes
-
 
 * [Remove all example references to MDCFloatingActionButtonThemer. (#7505)](https://github.com/material-components/material-components-ios/commit/9c8e34138af0d02f568bff4ff8f0c0341b5cd860) (featherless)
 * [{Bazel} Create dedicated unit test rules to reduce boilerplate (#7641)](https://github.com/material-components/material-components-ios/commit/2b125fcd935bde8f707ce6e0f96503555d8da6ad) (Robert Moore)

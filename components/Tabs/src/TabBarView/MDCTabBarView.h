@@ -15,6 +15,7 @@
 #import <UIKit/UIKit.h>
 
 @protocol MDCTabBarViewDelegate;
+@protocol MDCTabBarViewIndicatorTemplate;
 
 /**
  An implementation of Material Tabs (https://material.io/design/components/tabs.html).
@@ -35,6 +36,12 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
 
 /** The tab bar view delegate. */
 @property(nullable, nonatomic, weak) id<MDCTabBarViewDelegate> tabBarDelegate;
+
+/**
+ The template for the selection indicator. Provides rendering information for the selection
+ indicator in this tab bar.
+ */
+@property(nonnull, nonatomic, strong) id<MDCTabBarViewIndicatorTemplate> selectionIndicatorTemplate;
 
 /**
  Sets the color of the bar items' image @c tintColor for the given control state.  Supports

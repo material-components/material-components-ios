@@ -18,6 +18,7 @@
 #import "MaterialPalettes.h"
 #import "MaterialSlider.h"
 #import "MaterialThumbTrack.h"
+#import "MockUIImpactFeedbackGenerator.h"
 
 static const int kNumberOfRepeats = 20;
 static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
@@ -25,7 +26,9 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 @interface MDCSlider (TestInterface)
 
 - (NSString *)thumbTrack:(MDCThumbTrack *)thumbTrack stringForValue:(CGFloat)value;
-
+- (void)thumbTrackValueChanged:(__unused MDCThumbTrack *)thumbTrack;
+@property(nonnull, nonatomic, strong)
+    UIImpactFeedbackGenerator *feedbackGenerator API_AVAILABLE(ios(10.0));
 @end
 
 @interface SliderTests : XCTestCase
@@ -35,7 +38,9 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 @property(nonatomic, nullable) UIColor *defaultGray;
 @end
 
-@implementation SliderTests
+@implementation SliderTests {
+  MockUIImpactFeedbackGenerator *_mockFeedbackGenerator API_AVAILABLE(ios(10.0));
+}
 
 - (void)setUp {
   [super setUp];
@@ -1100,6 +1105,64 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
     XCTAssertEqualWithAccuracy(self.slider.value, expectedValue, kEpsilonAccuracy,
                                @"A slider with (%lu) discrete values should have step of '%.3f'.",
                                (unsigned long)self.slider.numberOfDiscreteValues, stepValue);
+  }
+}
+
+- (void)testDefaultHapticsEnabledValue {
+  if (@available(iOS 10.0, *)) {
+    // Then
+    XCTAssertTrue(self.slider.hapticsEnabled);
+  } else {
+    XCTAssertFalse(self.slider.hapticsEnabled);
+  }
+}
+
+- (void)testEnabledHapticFeedback {
+  // Given
+  self.slider.minimumValue = 0;
+  self.slider.maximumValue = 5;
+  self.slider.hapticsEnabled = YES;
+
+  if (@available(iOS 10.0, *)) {
+    _mockFeedbackGenerator = [[MockUIImpactFeedbackGenerator alloc] init];
+    self.slider.feedbackGenerator = _mockFeedbackGenerator;
+    for (NSUInteger i = 0; i < 6; ++i) {
+      self.slider.value = i;
+
+      // When
+      [self.slider thumbTrackValueChanged:self.slider.thumbTrack];
+
+      // Then
+      if (i == 0 || i == 5) {
+        XCTAssertTrue(_mockFeedbackGenerator.impactHasOccurred);
+      } else {
+        XCTAssertFalse(_mockFeedbackGenerator.impactHasOccurred);
+      }
+      _mockFeedbackGenerator.impactHasOccurred = NO;
+    }
+  }
+}
+
+- (void)testNotEnabledHapticFeedback {
+  // Given
+  self.slider.minimumValue = 0;
+  self.slider.maximumValue = 5;
+  self.slider.hapticsEnabled = NO;
+
+  if (@available(iOS 10.0, *)) {
+    _mockFeedbackGenerator = [[MockUIImpactFeedbackGenerator alloc] init];
+    self.slider.feedbackGenerator = _mockFeedbackGenerator;
+    for (NSUInteger i = 0; i < 6; ++i) {
+      self.slider.value = i;
+
+      // When
+      [self.slider thumbTrackValueChanged:self.slider.thumbTrack];
+
+      // Then
+      XCTAssertFalse(_mockFeedbackGenerator.impactHasOccurred);
+
+      _mockFeedbackGenerator.impactHasOccurred = NO;
+    }
   }
 }
 
