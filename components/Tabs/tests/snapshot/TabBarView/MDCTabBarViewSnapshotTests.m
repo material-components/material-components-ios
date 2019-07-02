@@ -654,7 +654,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
-#pragma mark - Safe Area Support
+#pragma mark - Safe Area/Inset Support
 
 - (void)testSafeAreaTopAndLeftInsetsForJustifiedLayoutStyle {
   // Given
@@ -746,6 +746,24 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
 
   // Then
   [self generateSnapshotAndVerifyForView:superview];
+}
+
+- (void)testCustomInsetsToNegateInternalLeadingInset {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:1];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"3" image:nil tag:2];
+  UITabBarItem *item4 = [[UITabBarItem alloc] initWithTitle:@"4" image:nil tag:3];
+  self.tabBarView.items = @[ item1, item2, item3, item4 ];
+  [self.tabBarView setSelectedItem:item1 animated:NO];
+  self.tabBarView.bounds = CGRectMake(0, 0, 120, 48);
+
+  // When
+  self.tabBarView.contentInset = UIEdgeInsetsMake(0, -52, 0, 0);
+  [self.tabBarView layoutIfNeeded];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
 #pragma mark - MDCTabBarView Properties
@@ -929,6 +947,39 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
 - (void)testBarTintColor {
   // When
   self.tabBarView.barTintColor = UIColor.purpleColor;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testCustomSelectionIndicatorStrokeColor {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:self.typicalIcon1 tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:self.typicalIcon2 tag:2];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:self.typicalIcon3 tag:3];
+  self.tabBarView.items = @[ item1, item2, item3 ];
+  [self.tabBarView setSelectedItem:item2 animated:NO];
+  [self.tabBarView sizeToFit];
+
+  // When
+  self.tabBarView.selectionIndicatorStrokeColor = UIColor.purpleColor;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testSelectionIndicatorStrokeColorResetsToDefault {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:self.typicalIcon1 tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:self.typicalIcon2 tag:2];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:self.typicalIcon3 tag:3];
+  self.tabBarView.items = @[ item1, item2, item3 ];
+  [self.tabBarView setSelectedItem:item2 animated:NO];
+  [self.tabBarView sizeToFit];
+  self.tabBarView.selectionIndicatorStrokeColor = UIColor.purpleColor;
+
+  // When
+  self.tabBarView.selectionIndicatorStrokeColor = nil;
 
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBarView];
