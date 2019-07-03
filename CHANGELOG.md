@@ -2,6 +2,40 @@
 
 This minor release includes changes to the MDCTabBarView Beta component.
 
+## API Changes
+
+### Tabs+TabBarView
+
+#### MDCTabBarViewIndicatorTemplate
+
+*new* protocol: `MDCTabBarViewIndicatorTemplate`
+
+*new* method: `-indicatorAttributesForContext:` in `MDCTabBarViewIndicatorTemplate`
+
+#### MDCTabBarViewIndicatorAttributes
+
+*new* class: `MDCTabBarViewIndicatorAttributes`
+
+*new* property: `path` in `MDCTabBarViewIndicatorAttributes`
+
+#### MDCTabBarViewIndicatorContext
+
+*new* property: `contentFrame` in `MDCTabBarViewIndicatorContext`
+
+*new* protocol: `MDCTabBarViewIndicatorContext`
+
+*new* property: `item` in `MDCTabBarViewIndicatorContext`
+
+*new* property: `bounds` in `MDCTabBarViewIndicatorContext`
+
+#### MDCTabBarView
+
+*new* property: `rippleColor` in `MDCTabBarView`
+
+#### MDCTabBarViewUnderlineIndicatorTemplate
+
+*new* class: `MDCTabBarViewUnderlineIndicatorTemplate`
+
 ## Component changes
 
 ### Tabs
