@@ -563,4 +563,71 @@ static NSString *const kLongTitleArabic =
   [self generateSnapshotAndVerifyForView:self.itemView];
 }
 
+#pragma mark - Selection Indicator Support
+
+- (void)testContentFrameForTextOnly {
+  // Given
+  self.itemView.titleLabel.text = @"1";
+  self.itemView.iconImageView.image = nil;
+  [self.itemView sizeToFit];
+  CGRect contentFrame = self.itemView.contentFrame;
+
+  // When
+  UIView *contentFrameOverlayView = [[UIView alloc] init];
+  contentFrameOverlayView.translatesAutoresizingMaskIntoConstraints = NO;
+  contentFrameOverlayView.backgroundColor =
+      [UIColor.blueColor colorWithAlphaComponent:(CGFloat)0.25];
+  contentFrameOverlayView.bounds =
+      CGRectMake(0, 0, CGRectGetWidth(contentFrame), CGRectGetHeight(contentFrame));
+  contentFrameOverlayView.center =
+      CGPointMake(CGRectGetMidX(contentFrame), CGRectGetMidY(contentFrame));
+  [self.itemView addSubview:contentFrameOverlayView];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.itemView];
+}
+
+- (void)testContentFrameForImageOnly {
+  // Given
+  self.itemView.titleLabel.text = @"1";
+  self.itemView.titleLabel.text = nil;
+  [self.itemView sizeToFit];
+  CGRect contentFrame = self.itemView.contentFrame;
+
+  // When
+  UIView *contentFrameOverlayView = [[UIView alloc] init];
+  contentFrameOverlayView.translatesAutoresizingMaskIntoConstraints = NO;
+  contentFrameOverlayView.backgroundColor =
+      [UIColor.blueColor colorWithAlphaComponent:(CGFloat)0.25];
+  contentFrameOverlayView.bounds =
+      CGRectMake(0, 0, CGRectGetWidth(contentFrame), CGRectGetHeight(contentFrame));
+  contentFrameOverlayView.center =
+      CGPointMake(CGRectGetMidX(contentFrame), CGRectGetMidY(contentFrame));
+  [self.itemView addSubview:contentFrameOverlayView];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.itemView];
+}
+
+- (void)testContentFrameForTextAndImage {
+  // Given
+  self.itemView.titleLabel.text = @"1";
+  [self.itemView sizeToFit];
+  CGRect contentFrame = self.itemView.contentFrame;
+
+  // When
+  UIView *contentFrameOverlayView = [[UIView alloc] init];
+  contentFrameOverlayView.translatesAutoresizingMaskIntoConstraints = NO;
+  contentFrameOverlayView.backgroundColor =
+      [UIColor.blueColor colorWithAlphaComponent:(CGFloat)0.25];
+  contentFrameOverlayView.bounds =
+      CGRectMake(0, 0, CGRectGetWidth(contentFrame), CGRectGetHeight(contentFrame));
+  contentFrameOverlayView.center =
+      CGPointMake(CGRectGetMidX(contentFrame), CGRectGetMidY(contentFrame));
+  [self.itemView addSubview:contentFrameOverlayView];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.itemView];
+}
+
 @end
