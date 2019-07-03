@@ -273,6 +273,12 @@ static UIImage *fakeImage(CGSize size) {
   XCTAssertEqual(self.tabBarView.barTintColor, self.tabBarView.backgroundColor);
 }
 
+- (void)testDefaultRippleColor {
+  // Then
+  XCTAssertEqualObjects(self.tabBarView.rippleColor, [[UIColor alloc] initWithWhite:0
+                                                                              alpha:(CGFloat)0.16]);
+}
+
 - (void)testImageTintColorForStateFallsBackToNormalState {
   // Given
   [self.tabBarView setImageTintColor:nil forState:UIControlStateNormal];

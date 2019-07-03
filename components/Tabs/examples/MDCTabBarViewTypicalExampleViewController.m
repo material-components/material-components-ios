@@ -130,6 +130,8 @@ static NSString *const kExampleTitle = @"TabBarView";
                    forState:UIControlStateNormal];
   [self.tabBar setTitleFont:[UIFont systemFontOfSize:16] forState:UIControlStateSelected];
   self.tabBar.selectionIndicatorStrokeColor = self.containerScheme.colorScheme.onSecondaryColor;
+  self.tabBar.rippleColor =
+      [self.containerScheme.colorScheme.primaryColor colorWithAlphaComponent:(CGFloat)0.1];
   self.tabBar.selectedItem = item4;
   self.tabBar.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:self.tabBar];

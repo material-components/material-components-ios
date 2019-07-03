@@ -17,6 +17,7 @@
 #import "MDCTabBarItem.h"
 #import "MDCTabBarView.h"
 #import "MDCTabBarViewIndicatorSupporting.h"
+#import "MDCTabBarViewItemView.h"
 
 /** The typical size of an image in a Tab bar. */
 static const CGSize kTypicalImageSize = (CGSize){24, 24};
@@ -87,6 +88,11 @@ static NSString *const kItemTitleLong1Arabic =
 static NSString *const kItemTitleLong2Arabic =
     @"وتم عل والقرى إتفاقية, عن هذا وباءت الغالي وفرنسا.";
 static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقامة. ودول بشرية اليابانية لان ما.";
+
+/** Exposing some internal properties to aid in testing. */
+@interface MDCTabBarView (SnapshotTesting)
+@property(nonnull, nonatomic, copy) NSArray<UIView *> *itemViews;
+@end
 
 /** A test class that allows setting safe area insets. */
 @interface MDCTabBarViewSnapshotTestsSuperview : UIView
@@ -181,6 +187,24 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
 }
 
 #pragma mark - Helpers
+
+- (void)activateRippleInView:(MDCTabBarView *)tabBarView forItem:(UITabBarItem *)item {
+  NSUInteger indexOfItem = [tabBarView.items indexOfObject:item];
+  if (indexOfItem == NSNotFound || indexOfItem >= tabBarView.itemViews.count) {
+    NSAssert(NO, @"(%@) has no associated item view.", item);
+    return;
+  }
+  UIView *itemView = tabBarView.itemViews[indexOfItem];
+  if (![itemView isKindOfClass:[MDCTabBarViewItemView class]]) {
+    return;
+  }
+  MDCTabBarViewItemView *mdcItemView = (MDCTabBarViewItemView *)itemView;
+  [mdcItemView.rippleTouchController.rippleView
+      beginRippleTouchDownAtPoint:CGPointMake(CGRectGetMidX(mdcItemView.bounds),
+                                              CGRectGetMidY(mdcItemView.bounds))
+                         animated:NO
+                       completion:nil];
+}
 
 - (void)changeToLatinStringsWithLongTitles:(BOOL)useLongTitles {
   if (useLongTitles) {
@@ -947,6 +971,23 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
 - (void)testBarTintColor {
   // When
   self.tabBarView.barTintColor = UIColor.purpleColor;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testRippleColor {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:self.typicalIcon1 tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:self.typicalIcon2 tag:2];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:self.typicalIcon3 tag:3];
+  self.tabBarView.items = @[ item1, item2, item3 ];
+  [self.tabBarView setSelectedItem:item2 animated:NO];
+  [self.tabBarView sizeToFit];
+
+  // When
+  self.tabBarView.rippleColor = [UIColor.orangeColor colorWithAlphaComponent:(CGFloat)0.25];
+  [self activateRippleInView:self.tabBarView forItem:item1];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBarView];
