@@ -217,4 +217,70 @@ static UIImage *fakeImage(CGFloat width, CGFloat height) {
   XCTAssertEqualWithAccuracy(fitSize.height, kMinHeightOfTitleAndImageView, 0.001);
 }
 
+#pragma mark - -contentFrame
+
+- (void)testContentFrameForTextOnlyViewReturnsTitleLabelFittingFrame {
+  // Given
+  MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
+
+  // When
+  itemView.titleLabel.text = @"Favorites";
+  itemView.bounds = CGRectMake(0, 0, 90, 48);
+
+  // Then
+  // Grab the `contentFrame` before layout to be sure it's calculated correctly at any time.
+  CGRect contentFrame = itemView.contentFrame;
+  [itemView layoutIfNeeded];
+  XCTAssertFalse(
+      CGRectEqualToRect(contentFrame, CGRectZero),
+      @"The `contentFrame` of an item view must not return CGRectZero when a title is set.");
+  XCTAssertEqualWithAccuracy(CGRectGetHeight(contentFrame),
+                             CGRectGetHeight(itemView.titleLabel.bounds), 0.001);
+  XCTAssertLessThanOrEqual(CGRectGetWidth(contentFrame),
+                           CGRectGetWidth(itemView.titleLabel.bounds));
+}
+
+- (void)testContentFrameForIconOnlyViewReturnsIconImageViewFittingFrame {
+  // Given
+  MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
+
+  // When
+  itemView.iconImageView.image = fakeImage(24, 24);
+  itemView.bounds = CGRectMake(0, 0, 90, 48);
+
+  // Then
+  // Grab the `contentFrame` before layout to be sure it's calculated correctly at any time.
+  CGRect contentFrame = itemView.contentFrame;
+  [itemView layoutIfNeeded];
+  XCTAssertFalse(
+      CGRectEqualToRect(contentFrame, CGRectZero),
+      @"The `contentFrame` of an item view must not return CGRectZero when an image is set.");
+  XCTAssertEqualWithAccuracy(CGRectGetHeight(contentFrame),
+                             CGRectGetHeight(itemView.iconImageView.bounds), 0.001);
+  XCTAssertLessThanOrEqual(CGRectGetWidth(contentFrame),
+                           CGRectGetWidth(itemView.iconImageView.bounds));
+}
+
+- (void)testContentFramForTextAndIconViewReturnsTitleLabelFittingFrame {
+  // Given
+  MDCTabBarViewItemView *itemView = [[MDCTabBarViewItemView alloc] init];
+
+  // When
+  itemView.iconImageView.image = fakeImage(24, 24);
+  itemView.titleLabel.text = @"Favorites";
+  itemView.bounds = CGRectMake(0, 0, 90, 48);
+
+  // Then
+  // Grab the `contentFrame` before layout to be sure it's calculated correctly at any time.
+  CGRect contentFrame = itemView.contentFrame;
+  [itemView layoutIfNeeded];
+  XCTAssertFalse(CGRectEqualToRect(contentFrame, CGRectZero),
+                 @"The `contentFrame` of an item view must not return CGRectZero when a title and "
+                 @"image are set.");
+  XCTAssertEqualWithAccuracy(CGRectGetHeight(contentFrame),
+                             CGRectGetHeight(itemView.titleLabel.bounds), 0.001);
+  XCTAssertLessThanOrEqual(CGRectGetWidth(contentFrame),
+                           CGRectGetWidth(itemView.titleLabel.bounds));
+}
+
 @end
