@@ -70,6 +70,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
 /** The title font for bar items. */
 @property(nonnull, nonatomic, strong) NSMutableDictionary<NSNumber *, UIFont *> *stateToTitleFont;
+
 @end
 
 @implementation MDCTabBarView
@@ -82,6 +83,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 - (instancetype)init {
   self = [super init];
   if (self) {
+    _rippleColor = [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.16];
     _needsScrollToSelectedItem = YES;
     _items = @[];
     _stateToImageTintColor = [NSMutableDictionary dictionary];
@@ -120,6 +122,21 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
 - (UIColor *)barTintColor {
   return self.backgroundColor;
+}
+
+- (void)updateRippleColorForAllViews {
+  for (UIView *subview in self.itemViews) {
+    if (![subview isKindOfClass:[MDCTabBarViewItemView class]]) {
+      continue;
+    }
+    MDCTabBarViewItemView *itemView = (MDCTabBarViewItemView *)subview;
+    itemView.rippleTouchController.rippleView.rippleColor = self.rippleColor;
+  }
+}
+
+- (void)setRippleColor:(UIColor *)rippleColor {
+  _rippleColor = [rippleColor copy];
+  [self updateRippleColorForAllViews];
 }
 
 - (void)setSelectionIndicatorStrokeColor:(UIColor *)selectionIndicatorStrokeColor {
@@ -162,9 +179,9 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
                                             : item.accessibilityTraits;
       mdcItemView.titleLabel.textColor = [self titleColorForState:UIControlStateNormal];
       mdcItemView.iconImageView.image = item.image;
+      mdcItemView.rippleTouchController.rippleView.rippleColor = self.rippleColor;
       itemView = mdcItemView;
     }
-    itemView.translatesAutoresizingMaskIntoConstraints = NO;
     UITapGestureRecognizer *tapGesture =
         [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapItemView:)];
     [itemView addGestureRecognizer:tapGesture];
