@@ -225,7 +225,7 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
       CGPointMake(CGRectGetMidX(self.contentView.bounds),
                   CGRectGetMinY(self.contentView.bounds) + imageFinalSize.height / 2);
 
-  // Now position the label from the bottom.g
+  // Now position the label from the bottom.
   CGSize availableLabelSize = CGSizeMake(
       contentSize.width, contentSize.height - (imageFinalSize.height + kImageTitlePadding));
   CGSize finalLabelSize = [self.titleLabel sizeThatFits:availableLabelSize];
