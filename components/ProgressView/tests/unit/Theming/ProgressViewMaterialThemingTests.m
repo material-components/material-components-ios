@@ -67,15 +67,15 @@ static const CGFloat MDCProgressViewTrackColorDesaturation = (CGFloat)0.3;
 - (void)testProgressViewMaterialThemingWithACustomColorScheme {
   MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
   scheme.colorScheme = [self customColorScheme];
-  
+
   // When
   [self.progressView applyThemeWithScheme:scheme];
-  
+
   // Then
   // Test Colors
   XCTAssertEqualObjects(
-                        self.progressView.trackTintColor,
-                        [self defaultTrackTintColorForProgressTintColor:scheme.colorScheme.primaryColor]);
+      self.progressView.trackTintColor,
+      [self defaultTrackTintColorForProgressTintColor:scheme.colorScheme.primaryColor]);
   XCTAssertEqualObjects(self.progressView.progressTintColor, scheme.colorScheme.primaryColor);
 }
 

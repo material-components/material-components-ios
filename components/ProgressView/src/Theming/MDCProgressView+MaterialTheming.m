@@ -24,8 +24,7 @@ static const CGFloat MDCProgressViewTrackColorDesaturation = (CGFloat)0.3;
 }
 
 - (void)applyThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
-  self.trackTintColor =
-      [self defaultTrackTintColorForProgressTintColor:colorScheme.primaryColor];
+  self.trackTintColor = [self defaultTrackTintColorForProgressTintColor:colorScheme.primaryColor];
   self.progressTintColor = colorScheme.primaryColor;
 }
 
