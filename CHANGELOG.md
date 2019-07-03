@@ -1,18 +1,15 @@
-# #develop#
+# 85.4.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
-
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
-## API changes
+This minor release includes changes to the MDCTabBarView Beta component.
 
 ## Component changes
+
+### Tabs
+
+* [Allow setting ripple color. (#7784)](https://github.com/material-components/material-components-ios/commit/196e2fc524ac42f0d5e09bbbe4906b29c0da6aea) (Robert Moore)
+* [Fix `contentFrame` for item view. (#7782)](https://github.com/material-components/material-components-ios/commit/f008d405ff112cbf585a9753e6c26f4d69c13e4c) (Robert Moore)
+* [Include public headers in umbrella header. (#7783)](https://github.com/material-components/material-components-ios/commit/59e6c2c2558b7514eb8b4e3080c39e764456caf6) (Robert Moore)
+* [Item views should translate their autoresizing mask into constraints](https://github.com/material-components/material-components-ios/commit/708f42f772dd2ac08350f8a2ac3415efe8373be2) (Ang)
 
 ---
 
