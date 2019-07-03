@@ -18,9 +18,8 @@
 #import "MaterialProgressView+Theming.h"
 #import "MaterialProgressView.h"
 
-@interface MDCProgressView (DefaultTrackTintColor)
-+ (UIColor *)defaultTrackTintColorForProgressTintColor:(UIColor *)progressTintColor;
-@end
+// The ratio by which to desaturate the progress tint color to obtain the default track tint color.
+static const CGFloat MDCProgressViewTrackColorDesaturation = (CGFloat)0.3;
 
 @interface ProgressViewMaterialThemingTests : XCTestCase
 @property(strong, nonatomic) MDCProgressView *progressView;
@@ -53,8 +52,17 @@
   // Test Colors
   XCTAssertEqualObjects(
       self.progressView.trackTintColor,
-      [MDCProgressView defaultTrackTintColorForProgressTintColor:colorScheme.primaryColor]);
+      [self defaultTrackTintColorForProgressTintColor:colorScheme.primaryColor]);
   XCTAssertEqualObjects(self.progressView.progressTintColor, colorScheme.primaryColor);
+}
+
+- (UIColor *)defaultTrackTintColorForProgressTintColor:(UIColor *)progressTintColor {
+  CGFloat hue, saturation, brightness, alpha;
+  if ([progressTintColor getHue:&hue saturation:&saturation brightness:&brightness alpha:&alpha]) {
+    CGFloat newSaturation = MIN(saturation * MDCProgressViewTrackColorDesaturation, 1);
+    return [UIColor colorWithHue:hue saturation:newSaturation brightness:brightness alpha:alpha];
+  }
+  return [UIColor clearColor];
 }
 
 @end

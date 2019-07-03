@@ -16,7 +16,7 @@
 #import "MaterialProgressView.h"
 
 /**
- Applies an MDCContainerScheme to theme a MDCProgressView.
+ Applies an object conforming to MDCContainerScheming to theme a MDCProgressView.
  */
 @interface MDCProgressView (MaterialTheming)
 

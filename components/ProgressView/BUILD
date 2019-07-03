@@ -67,10 +67,6 @@ mdc_objc_library(
 mdc_objc_library(
     name = "unit_test_sources",
     testonly = 1,
-    hdrs = native.glob([
-        "tests/unit/*.h",
-        "tests/unit/Theming/*.h",
-    ]),
     srcs = native.glob([
         "tests/unit/*.m",
         "tests/unit/Theming/*.m",
