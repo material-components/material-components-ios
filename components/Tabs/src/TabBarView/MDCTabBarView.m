@@ -164,7 +164,6 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
       mdcItemView.iconImageView.image = item.image;
       itemView = mdcItemView;
     }
-    itemView.translatesAutoresizingMaskIntoConstraints = NO;
     UITapGestureRecognizer *tapGesture =
         [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapItemView:)];
     [itemView addGestureRecognizer:tapGesture];
