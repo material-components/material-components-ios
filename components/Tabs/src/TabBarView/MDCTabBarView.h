@@ -34,6 +34,11 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
 /** The color of the Tab bar's background. */
 @property(nullable, nonatomic, copy) UIColor *barTintColor;
 
+/**
+ The color for the Ripple effect for touch feedback.
+ */
+@property(nonnull, nonatomic, copy) UIColor *rippleColor;
+
 /** The tab bar view delegate. */
 @property(nullable, nonatomic, weak) id<MDCTabBarViewDelegate> tabBarDelegate;
 
