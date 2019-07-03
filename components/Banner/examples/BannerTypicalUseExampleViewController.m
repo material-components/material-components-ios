@@ -16,6 +16,7 @@
 #import "MaterialButtons.h"
 #import "MaterialColorScheme.h"
 #import "MaterialTypography.h"
+#import "MaterialTypographyScheme.h"
 
 static const CGFloat exampleListTableViewHeight = 160.0f;
 static const CGFloat exampleBannerContentPadding = 10.0f;
@@ -80,6 +81,7 @@ static NSString *const exampleExtraLongText =
 @property(nonatomic, weak) MDCBannerView *bannerView;
 
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 
 @end
 
@@ -89,6 +91,7 @@ static NSString *const exampleExtraLongText =
   self = [super init];
   if (self) {
     self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.typographyScheme = [[MDCTypographyScheme alloc] init];
   }
   return self;
 }
@@ -220,6 +223,8 @@ static NSString *const exampleExtraLongText =
 
   MDCBannerView *bannerView = [[MDCBannerView alloc] init];
   bannerView.textLabel.text = exampleShortText;
+  bannerView.textLabel.font = self.typographyScheme.body2;
+  bannerView.mdc_adjustsFontForContentSizeCategory = YES;
   bannerView.backgroundColor = self.colorScheme.surfaceColor;
   UIEdgeInsets margins = UIEdgeInsetsZero;
   margins.left = exampleBannerContentPadding;
@@ -232,6 +237,7 @@ static NSString *const exampleExtraLongText =
   [button setTitle:@"Dismiss" forState:UIControlStateNormal];
   button.uppercaseTitle = YES;
   [button setTitleColor:self.colorScheme.primaryColor forState:UIControlStateNormal];
+  [button setTitleFont:self.typographyScheme.button forState:UIControlStateNormal];
   button.backgroundColor = self.colorScheme.surfaceColor;
   bannerView.trailingButton.hidden = YES;
   bannerView.imageView.hidden = YES;
