@@ -42,6 +42,14 @@ mdc_public_objc_library(
 )
 
 mdc_extension_objc_library(
+    name = "Theming",
+    deps = [
+        ":ProgressView",
+        "//components/schemes/Container",
+    ],
+)
+
+mdc_extension_objc_library(
     name = "ColorThemer",
     deps = [
         ":ProgressView",
@@ -59,9 +67,13 @@ mdc_objc_library(
 mdc_objc_library(
     name = "unit_test_sources",
     testonly = 1,
+    hdrs = native.glob([
+        "tests/unit/*.h",
+        "tests/unit/Theming/*.h",
+    ]),
     srcs = native.glob([
         "tests/unit/*.m",
-        "tests/unit/*.h",
+        "tests/unit/Theming/*.m",
     ]),
     sdk_frameworks = [
         "UIKit",
@@ -72,6 +84,7 @@ mdc_objc_library(
         ":ColorThemer",
         ":ProgressView",
         ":private",
+        ":Theming",
     ],
 )
 
