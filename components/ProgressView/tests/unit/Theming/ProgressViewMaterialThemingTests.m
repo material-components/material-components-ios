@@ -14,16 +14,16 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialProgressView.h"
-#import "MaterialProgressView+Theming.h"
 #import "MaterialContainerScheme.h"
+#import "MaterialProgressView+Theming.h"
+#import "MaterialProgressView.h"
 
 @interface MDCProgressView (DefaultTrackTintColor)
 + (UIColor *)defaultTrackTintColorForProgressTintColor:(UIColor *)progressTintColor;
 @end
 
 @interface ProgressViewMaterialThemingTests : XCTestCase
-@property (strong, nonatomic) MDCProgressView *progressView;
+@property(strong, nonatomic) MDCProgressView *progressView;
 @end
 
 @implementation ProgressViewMaterialThemingTests
@@ -42,7 +42,8 @@
 
 - (void)testProgressViewMaterialTheming {
   MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   scheme.colorScheme = colorScheme;
 
   // When
@@ -50,7 +51,9 @@
 
   // Then
   // Test Colors
-  XCTAssertEqualObjects(self.progressView.trackTintColor, [MDCProgressView defaultTrackTintColorForProgressTintColor:colorScheme.primaryColor]);
+  XCTAssertEqualObjects(
+      self.progressView.trackTintColor,
+      [MDCProgressView defaultTrackTintColorForProgressTintColor:colorScheme.primaryColor]);
   XCTAssertEqualObjects(self.progressView.progressTintColor, colorScheme.primaryColor);
 }
 

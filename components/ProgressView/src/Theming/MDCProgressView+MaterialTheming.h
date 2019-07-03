@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialProgressView.h"
 #import "MaterialContainerScheme.h"
+#import "MaterialProgressView.h"
 
 /**
  Applies an MDCContainerScheme to theme a MDCProgressView.
