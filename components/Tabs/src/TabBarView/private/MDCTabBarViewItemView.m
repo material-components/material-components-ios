@@ -99,7 +99,16 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
 }
 
 - (CGRect)contentFrame {
-  return self.contentView.frame;
+  if (!self.iconImageView.image) {
+    if (self.titleLabel.text.length) {
+      return [self contentFrameForTitleLabelInTextOnlyLayout];
+    }
+    return CGRectZero;
+  }
+  if (self.titleLabel.text.length) {
+    return [self contentFrameForTitleLabelInTextAndImageLayout];
+  }
+  return [self contentFrameForImageViewInImageOnlyLayout];
 }
 
 #pragma mark - UIView
@@ -122,6 +131,18 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
   }
 }
 
+- (CGRect)contentFrameForTitleLabelInTextOnlyLayout {
+  CGRect contentFrame = UIEdgeInsetsInsetRect(self.bounds, kEdgeInsetsTextOnly);
+
+  CGSize contentSize = CGSizeMake(CGRectGetWidth(contentFrame), CGRectGetHeight(contentFrame));
+  CGSize labelWidthFitSize = [self.titleLabel sizeThatFits:contentSize];
+  CGSize labelSize =
+      CGSizeMake(labelWidthFitSize.width, MIN(contentSize.height, labelWidthFitSize.height));
+  return CGRectMake(CGRectGetMidX(contentFrame) - (labelWidthFitSize.width / 2),
+                    CGRectGetMidY(contentFrame) - (labelWidthFitSize.height / 2), labelSize.width,
+                    labelSize.height);
+}
+
 - (void)layoutSubviewsTextOnly {
   CGRect contentFrame = UIEdgeInsetsInsetRect(self.bounds, kEdgeInsetsTextOnly);
   self.contentView.frame = contentFrame;
@@ -134,6 +155,18 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
   self.titleLabel.bounds = CGRectMake(0, 0, labelSize.width, labelSize.height);
   self.titleLabel.center =
       CGPointMake(CGRectGetMidX(self.contentView.bounds), CGRectGetMidY(self.contentView.bounds));
+}
+
+- (CGRect)contentFrameForImageViewInImageOnlyLayout {
+  CGRect contentFrame = UIEdgeInsetsInsetRect(self.bounds, kEdgeInsetsImageOnly);
+
+  CGSize contentSize = CGSizeMake(CGRectGetWidth(contentFrame), CGRectGetHeight(contentFrame));
+  CGSize imageIntrinsicContentSize = self.iconImageView.intrinsicContentSize;
+  CGSize imageFinalSize = CGSizeMake(MIN(contentSize.width, imageIntrinsicContentSize.width),
+                                     MIN(contentSize.height, imageIntrinsicContentSize.height));
+  return CGRectMake(CGRectGetMidX(contentFrame) - (imageFinalSize.width / 2),
+                    CGRectGetMidY(contentFrame) - (imageFinalSize.height / 2), imageFinalSize.width,
+                    imageFinalSize.height);
 }
 
 - (void)layoutSubviewsImageOnly {
@@ -150,6 +183,28 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
       CGPointMake(CGRectGetMidX(self.contentView.bounds), CGRectGetMidY(self.contentView.bounds));
 }
 
+- (CGRect)contentFrameForTitleLabelInTextAndImageLayout {
+  CGRect contentFrame = UIEdgeInsetsInsetRect(self.bounds, kEdgeInsetsTextAndImage);
+
+  CGSize contentSize = CGSizeMake(CGRectGetWidth(contentFrame), CGRectGetHeight(contentFrame));
+  CGSize labelSingleLineSize = self.titleLabel.intrinsicContentSize;
+  CGSize availableIconSize = CGSizeMake(
+      contentSize.width, contentSize.height - (kImageTitlePadding + labelSingleLineSize.height));
+
+  // Position the image, limiting it so that at least 1 line of text remains.
+  CGSize imageIntrinsicContentSize = self.iconImageView.intrinsicContentSize;
+  CGSize imageFinalSize =
+      CGSizeMake(MIN(imageIntrinsicContentSize.width, availableIconSize.width),
+                 MIN(imageIntrinsicContentSize.height, availableIconSize.height));
+
+  // Now position the label from the bottom.
+  CGSize availableLabelSize = CGSizeMake(
+      contentSize.width, contentSize.height - (imageFinalSize.height + kImageTitlePadding));
+  CGSize finalLabelSize = [self.titleLabel sizeThatFits:availableLabelSize];
+  return CGRectMake(CGRectGetMidX(contentFrame) - (finalLabelSize.width / 2),
+                    CGRectGetMinY(contentFrame), finalLabelSize.width, contentSize.height);
+}
+
 - (void)layoutSubviewsTextAndImage {
   CGRect contentFrame = UIEdgeInsetsInsetRect(self.bounds, kEdgeInsetsTextAndImage);
   self.contentView.frame = contentFrame;
@@ -157,7 +212,7 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
   CGSize contentSize = CGSizeMake(CGRectGetWidth(contentFrame), CGRectGetHeight(contentFrame));
   CGSize labelSingleLineSize = self.titleLabel.intrinsicContentSize;
   CGSize availableIconSize = CGSizeMake(
-      contentSize.width, contentSize.height - kImageTitlePadding - labelSingleLineSize.height);
+      contentSize.width, contentSize.height - (kImageTitlePadding + labelSingleLineSize.height));
 
   // Position the image, limiting it so that at least 1 line of text remains.
   CGSize imageIntrinsicContentSize = self.iconImageView.intrinsicContentSize;
@@ -169,9 +224,9 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
       CGPointMake(CGRectGetMidX(self.contentView.bounds),
                   CGRectGetMinY(self.contentView.bounds) + imageFinalSize.height / 2);
 
-  // Now position the label from the bottom.g
+  // Now position the label from the bottom.
   CGSize availableLabelSize = CGSizeMake(
-      contentSize.width, contentSize.height - imageFinalSize.height - kImageTitlePadding);
+      contentSize.width, contentSize.height - (imageFinalSize.height + kImageTitlePadding));
   CGSize finalLabelSize = [self.titleLabel sizeThatFits:availableLabelSize];
   self.titleLabel.bounds = CGRectMake(0, 0, finalLabelSize.width, finalLabelSize.height);
   self.titleLabel.center =
@@ -197,7 +252,7 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
 
 - (CGSize)sizeThatFitsTextOnly:(CGSize)size {
   CGSize maxSize =
-      CGSizeMake(kMaxWidth - kEdgeInsetsTextOnly.left - kEdgeInsetsTextOnly.right, CGFLOAT_MAX);
+      CGSizeMake(kMaxWidth - (kEdgeInsetsTextOnly.left + kEdgeInsetsTextOnly.right), CGFLOAT_MAX);
   CGSize labelSize = [self.titleLabel sizeThatFits:maxSize];
   return CGSizeMake(
       MAX(kMinWidth, labelSize.width + kEdgeInsetsTextOnly.left + kEdgeInsetsTextOnly.right),
@@ -216,7 +271,7 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
 
 - (CGSize)sizeThatFitsTextAndImage:(CGSize)size {
   CGSize maxSize = CGSizeMake(
-      kMaxWidth - kEdgeInsetsTextAndImage.left - kEdgeInsetsTextAndImage.right, CGFLOAT_MAX);
+      kMaxWidth - (kEdgeInsetsTextAndImage.left + kEdgeInsetsTextAndImage.right), CGFLOAT_MAX);
   CGSize labelFitSize = [self.titleLabel sizeThatFits:maxSize];
   CGSize imageFitSize = self.iconImageView.intrinsicContentSize;
   return CGSizeMake(MAX(kMinWidth, MIN(kMaxWidth, kEdgeInsetsTextAndImage.left +
