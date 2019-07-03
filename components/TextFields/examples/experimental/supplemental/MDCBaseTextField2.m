@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCBaseTextField.h"
+#import "MDCBaseTextField2.h"
 
 #import <Foundation/Foundation.h>
 
@@ -26,7 +26,7 @@
 #import "MaterialMath.h"
 #import "MaterialTypography.h"
 
-@interface MDCBaseTextField () <MDCContainedInputView>
+@interface MDCBaseTextField2 () <MDCContainedInputView>
 
 @property(strong, nonatomic) MDCContainedInputClearButton *clearButton;
 @property(strong, nonatomic) UILabel *label;
@@ -49,7 +49,7 @@
 
 @end
 
-@implementation MDCBaseTextField
+@implementation MDCBaseTextField2
 @synthesize labelAnimator = _labelAnimator;
 @synthesize preferredContainerHeight = _preferredContainerHeight;
 @synthesize underlineLabelDrawPriority = _underlineLabelDrawPriority;

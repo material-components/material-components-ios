@@ -19,7 +19,7 @@
 #import "MDCBaseTextField+Private.h"
 #import "MDCContainedInputView.h"
 
-@implementation MDCBaseTextField (MaterialTheming)
+@implementation MDCBaseTextField2 (MaterialTheming)
 
 - (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
   [self applyTypographyScheme:[self typographySchemeWithContainerScheme:containerScheme]];

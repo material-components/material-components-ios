@@ -14,12 +14,12 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCBaseTextField.h"
+#import "MDCBaseTextField2.h"
 
 /**
  An implementation of a Material outlined text field.
  */
-__attribute__((objc_subclassing_restricted)) @interface MDCOutlinedTextField : MDCBaseTextField
+__attribute__((objc_subclassing_restricted)) @interface MDCOutlinedTextField : MDCBaseTextField2
 
 /**
  Sets the outline color for a given state.

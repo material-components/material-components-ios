@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
-#import "MDCBaseTextField.h"
+#import "MDCBaseTextField2.h"
 #import "MDCContainedInputView.h"
 
 /**
@@ -27,5 +27,5 @@
  - Enable easy set up and reliable and predictable behavior.
 
  */
-@interface MDCBaseTextField (Private) <MDCContainedInputView>
+@interface MDCBaseTextField2 (Private) <MDCContainedInputView>
 @end

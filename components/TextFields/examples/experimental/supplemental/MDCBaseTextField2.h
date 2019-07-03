@@ -32,7 +32,7 @@ typedef NS_ENUM(NSInteger, MDCBaseTextFieldLabelBehavior) {
  Caution: While not explicitly forbidden by the compiler, subclassing this class is highly
  discouraged and not supported. Please consider alternatives.
  */
-@interface MDCBaseTextField : UITextField
+@interface MDCBaseTextField2 : UITextField
 
 /**
  The @c label is a label that occupies the area the text usually occupies when there is no

@@ -18,7 +18,7 @@
 
 #import "MaterialButtons+Theming.h"
 #import "MaterialColorScheme.h"
-#import "supplemental/MDCBaseTextField.h"
+#import "supplemental/MDCBaseTextField2.h"
 
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar+TypographyThemer.h"
@@ -136,14 +136,14 @@ static const NSUInteger kDefaultVerticalPadding = 20;
     CGSize viewSize = view.frame.size;
     CGFloat textFieldWidth =
         CGRectGetWidth(self.scrollView.frame) - (2 * kDefaultHorizontalPadding);
-    if ([view isKindOfClass:[MDCBaseTextField class]]) {
+    if ([view isKindOfClass:[MDCBaseTextField2 class]]) {
       viewSize = CGSizeMake(textFieldWidth, CGRectGetHeight(view.frame));
     } else if ([view isKindOfClass:[UITextField class]]) {
       viewSize = CGSizeMake(textFieldWidth, 60);
     }
     CGRect viewFrame = CGRectMake(viewMinX, viewMinY, viewSize.width, viewSize.height);
     view.frame = viewFrame;
-    if ([view isKindOfClass:[MDCBaseTextField class]] || [view isKindOfClass:[UILabel class]]) {
+    if ([view isKindOfClass:[MDCBaseTextField2 class]] || [view isKindOfClass:[UILabel class]]) {
       [view sizeToFit];
     }
     viewMinY = viewMinY + CGRectGetHeight(view.frame) + kDefaultVerticalPadding;
@@ -196,14 +196,14 @@ static const NSUInteger kDefaultVerticalPadding = 20;
   return label;
 }
 
-//- (MDCBaseTextField *)createFilledTextFieldWithMaximalDensity {
-//  MDCBaseTextField *textField = [self createFilledTextField];
+//- (MDCBaseTextField2 *)createFilledTextFieldWithMaximalDensity {
+//  MDCBaseTextField2 *textField = [self createFilledTextField];
 //  textField.containerStyler.positioningDelegate.verticalDensity = 1.0;
 //  return textField;
 //}
 //
-//- (MDCBaseTextField *)createFilledTextFieldWithMinimalDensity {
-//  MDCBaseTextField *textField = [self createFilledTextField];
+//- (MDCBaseTextField2 *)createFilledTextFieldWithMinimalDensity {
+//  MDCBaseTextField2 *textField = [self createFilledTextField];
 //  textField.containerStyler.positioningDelegate.verticalDensity = 0.0;
 //  return textField;
 //}
@@ -232,13 +232,13 @@ static const NSUInteger kDefaultVerticalPadding = 20;
   return textField;
 }
 
-//- (MDCBaseTextField *)createOutlinedTextFieldWithMaximalDensity {
-//  MDCBaseTextField *textField = [self createOutlinedTextField];
+//- (MDCBaseTextField2 *)createOutlinedTextFieldWithMaximalDensity {
+//  MDCBaseTextField2 *textField = [self createOutlinedTextField];
 //  textField.containerStyler.positioningDelegate.verticalDensity = 1.0;
 //  return textField;
 //}
 //
-//- (MDCBaseTextField *)createOutlinedTextFieldWithMinimalDensity {
+//- (MDCBaseTextField2 *)createOutlinedTextFieldWithMinimalDensity {
 //  MDCBaseTextField *textField = [self createOutlinedTextField];
 //  textField.containerStyler.positioningDelegate.verticalDensity = 0.0;
 //  return textField;
@@ -263,16 +263,16 @@ static const NSUInteger kDefaultVerticalPadding = 20;
   return textField;
 }
 
-- (MDCBaseTextField *)createDefaultInputTextField {
-  MDCBaseTextField *textField = [[MDCBaseTextField alloc] init];
+- (MDCBaseTextField2 *)createDefaultInputTextField {
+  MDCBaseTextField2 *textField = [[MDCBaseTextField2 alloc] init];
   textField.placeholder = @"This is a placeholder";
   textField.label.text = @"This is a floating label";
   textField.clearButtonMode = UITextFieldViewModeWhileEditing;
   return textField;
 }
 
-- (MDCBaseTextField *)createMaterialInputTextField {
-  MDCBaseTextField *textField = [self createDefaultInputTextField];
+- (MDCBaseTextField2 *)createMaterialInputTextField {
+  MDCBaseTextField2 *textField = [self createDefaultInputTextField];
   [textField applyThemeWithScheme:self.containerScheme];
   return textField;
 }
@@ -296,8 +296,8 @@ static const NSUInteger kDefaultVerticalPadding = 20;
 - (void)updateTextFieldThemes {
   [self.allTextFields enumerateObjectsUsingBlock:^(UITextField *uiTextField, NSUInteger idx,
                                                    BOOL *stop) {
-    if ([uiTextField isKindOfClass:[MDCBaseTextField class]]) {
-      MDCBaseTextField *textField = (MDCBaseTextField *)uiTextField;
+    if ([uiTextField isKindOfClass:[MDCBaseTextField2 class]]) {
+      MDCBaseTextField2 *textField = (MDCBaseTextField2 *)uiTextField;
       BOOL isEven = idx % 2 == 0;
       if (self.isErrored) {
         if ([textField respondsToSelector:@selector(applyErrorThemeWithScheme:)]) {
