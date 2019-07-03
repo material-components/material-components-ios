@@ -71,8 +71,6 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 /** The title font for bar items. */
 @property(nonnull, nonatomic, strong) NSMutableDictionary<NSNumber *, UIFont *> *stateToTitleFont;
 
-/** The default color for the ripple view if there is no explicit value set. */
-@property(nonnull, nonatomic, readonly) UIColor *defaultRippleColor;
 @end
 
 @implementation MDCTabBarView
@@ -85,7 +83,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 - (instancetype)init {
   self = [super init];
   if (self) {
-    _defaultRippleColor = [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.16];
+    _rippleColor = [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.16];
     _needsScrollToSelectedItem = YES;
     _items = @[];
     _stateToImageTintColor = [NSMutableDictionary dictionary];
@@ -132,13 +130,12 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
       continue;
     }
     MDCTabBarViewItemView *itemView = (MDCTabBarViewItemView *)subview;
-    itemView.rippleTouchController.rippleView.rippleColor =
-        self.rippleColor ?: self.defaultRippleColor;
+    itemView.rippleTouchController.rippleView.rippleColor = self.rippleColor;
   }
 }
 
 - (void)setRippleColor:(UIColor *)rippleColor {
-  _rippleColor = rippleColor;
+  _rippleColor = [rippleColor copy];
   [self updateRippleColorForAllViews];
 }
 
@@ -182,8 +179,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
                                             : item.accessibilityTraits;
       mdcItemView.titleLabel.textColor = [self titleColorForState:UIControlStateNormal];
       mdcItemView.iconImageView.image = item.image;
-      mdcItemView.rippleTouchController.rippleView.rippleColor =
-          self.rippleColor ?: self.defaultRippleColor;
+      mdcItemView.rippleTouchController.rippleView.rippleColor = self.rippleColor;
       itemView = mdcItemView;
     }
     UITapGestureRecognizer *tapGesture =
