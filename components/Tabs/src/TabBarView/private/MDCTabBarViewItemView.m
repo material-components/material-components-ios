@@ -139,8 +139,8 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
   CGSize labelSize =
       CGSizeMake(labelWidthFitSize.width, MIN(contentSize.height, labelWidthFitSize.height));
   return CGRectMake(CGRectGetMidX(contentFrame) - (labelWidthFitSize.width / 2),
-                    CGRectGetMidY(contentFrame) - (labelWidthFitSize.height / 2),
-                    labelSize.width, labelSize.height);
+                    CGRectGetMidY(contentFrame) - (labelWidthFitSize.height / 2), labelSize.width,
+                    labelSize.height);
 }
 
 - (void)layoutSubviewsTextOnly {
@@ -202,8 +202,7 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
       contentSize.width, contentSize.height - (imageFinalSize.height + kImageTitlePadding));
   CGSize finalLabelSize = [self.titleLabel sizeThatFits:availableLabelSize];
   return CGRectMake(CGRectGetMidX(contentFrame) - (finalLabelSize.width / 2),
-                    CGRectGetMinY(contentFrame), finalLabelSize.width,
-                    contentSize.height);
+                    CGRectGetMinY(contentFrame), finalLabelSize.width, contentSize.height);
 }
 
 - (void)layoutSubviewsTextAndImage {
