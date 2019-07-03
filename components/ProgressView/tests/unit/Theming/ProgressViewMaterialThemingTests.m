@@ -39,11 +39,19 @@ static const CGFloat MDCProgressViewTrackColorDesaturation = (CGFloat)0.3;
 
 #pragma mark - Tests
 
+- (MDCSemanticColorScheme *)defaultColorScheme {
+  return [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+}
+
+- (MDCSemanticColorScheme *)customColorScheme {
+  MDCSemanticColorScheme *defaultColorScheme = [self defaultColorScheme];
+  defaultColorScheme.primaryColor = [UIColor blueColor];
+  return defaultColorScheme;
+}
+
 - (void)testProgressViewMaterialTheming {
   MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
-  MDCSemanticColorScheme *colorScheme =
-      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-  scheme.colorScheme = colorScheme;
+  scheme.colorScheme = [self defaultColorScheme];
 
   // When
   [self.progressView applyThemeWithScheme:scheme];
@@ -52,8 +60,23 @@ static const CGFloat MDCProgressViewTrackColorDesaturation = (CGFloat)0.3;
   // Test Colors
   XCTAssertEqualObjects(
       self.progressView.trackTintColor,
-      [self defaultTrackTintColorForProgressTintColor:colorScheme.primaryColor]);
-  XCTAssertEqualObjects(self.progressView.progressTintColor, colorScheme.primaryColor);
+      [self defaultTrackTintColorForProgressTintColor:scheme.colorScheme.primaryColor]);
+  XCTAssertEqualObjects(self.progressView.progressTintColor, scheme.colorScheme.primaryColor);
+}
+
+- (void)testProgressViewMaterialThemingWithACustomColorScheme {
+  MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
+  scheme.colorScheme = [self customColorScheme];
+  
+  // When
+  [self.progressView applyThemeWithScheme:scheme];
+  
+  // Then
+  // Test Colors
+  XCTAssertEqualObjects(
+                        self.progressView.trackTintColor,
+                        [self defaultTrackTintColorForProgressTintColor:scheme.colorScheme.primaryColor]);
+  XCTAssertEqualObjects(self.progressView.progressTintColor, scheme.colorScheme.primaryColor);
 }
 
 - (UIColor *)defaultTrackTintColorForProgressTintColor:(UIColor *)progressTintColor {
