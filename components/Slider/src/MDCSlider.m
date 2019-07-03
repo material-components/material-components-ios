@@ -114,7 +114,7 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   } else {
     _hapticsEnabled = NO;
   }
-  _fullHapticsEnabled = NO;
+  _shouldEnableHapticsForAllDiscreteValues = NO;
 }
 
 #pragma mark - Color customization methods
@@ -333,10 +333,10 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   }
 }
 
-- (void)setFullHapticsEnabled:(BOOL)fullHapticsEnabled {
+- (void)setShouldEnableHapticsForAllDiscreteValues:(BOOL)shouldEnableHapticsForAllDiscreteValues {
   if (@available(iOS 10.0, *)) {
     if (_thumbTrack.numDiscreteValues >= 2) {
-      _fullHapticsEnabled = fullHapticsEnabled;
+      _shouldEnableHapticsForAllDiscreteValues = shouldEnableHapticsForAllDiscreteValues;
     }
   }
 }
@@ -553,7 +553,7 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   [self sendActionsForControlEvents:UIControlEventValueChanged];
   UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, self.accessibilityValue);
   if (@available(iOS 10.0, *)) {
-    if (self.fullHapticsEnabled) {
+    if (self.shouldEnableHapticsForAllDiscreteValues && self.hapticsEnabled) {
       [self.feedbackGenerator impactOccurred];
     } else if (self.hapticsEnabled && (_thumbTrack.value == _thumbTrack.minimumValue ||
                                        _thumbTrack.value == _thumbTrack.maximumValue)) {

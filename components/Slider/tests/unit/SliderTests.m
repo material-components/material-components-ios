@@ -1117,30 +1117,30 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   }
 }
 
-- (void)testDefaultFullHapticsEnabledValue {
+- (void)testDefaultsSouldEnableHapticsForAllDiscreteValuesValue {
   if (@available(iOS 10.0, *)) {
     for (NSUInteger i = 0; i < 5; ++i) {
       // When
       self.slider.numberOfDiscreteValues = i;
 
       // Then
-      XCTAssertFalse(self.slider.fullHapticsEnabled);
+      XCTAssertFalse(self.slider.shouldEnableHapticsForAllDiscreteValues);
     }
   }
 }
 
-- (void)testSettingFullHapticsEnabledValue {
+- (void)testSettingshouldEnableHapticsForAllDiscreteValuesValue {
   if (@available(iOS 10.0, *)) {
     for (NSUInteger i = 0; i < 5; ++i) {
       // When
       self.slider.numberOfDiscreteValues = i;
-      self.slider.fullHapticsEnabled = YES;
+      self.slider.shouldEnableHapticsForAllDiscreteValues = YES;
 
       // Then
       if (i == 0 || i == 1) {
-        XCTAssertFalse(self.slider.fullHapticsEnabled);
+        XCTAssertFalse(self.slider.shouldEnableHapticsForAllDiscreteValues);
       } else {
-        XCTAssertTrue(self.slider.fullHapticsEnabled);
+        XCTAssertTrue(self.slider.shouldEnableHapticsForAllDiscreteValues);
       }
     }
   }
@@ -1195,13 +1195,38 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   }
 }
 
-- (void)testEnabledFullHapticFeedback {
+- (void)testEnabledFullHapticNotEnabledHapticFeedback {
   // Given
   self.slider.minimumValue = 0;
   self.slider.maximumValue = 5;
   self.slider.hapticsEnabled = NO;
   self.slider.numberOfDiscreteValues = 2;
-  self.slider.fullHapticsEnabled = YES;
+  self.slider.shouldEnableHapticsForAllDiscreteValues = YES;
+
+  if (@available(iOS 10.0, *)) {
+    _mockFeedbackGenerator = [[MockUIImpactFeedbackGenerator alloc] init];
+    self.slider.feedbackGenerator = _mockFeedbackGenerator;
+    for (NSUInteger i = 0; i < 6; ++i) {
+      self.slider.value = i;
+
+      // When
+      [self.slider thumbTrackValueChanged:self.slider.thumbTrack];
+
+      // Then
+      XCTAssertFalse(_mockFeedbackGenerator.impactHasOccurred);
+
+      _mockFeedbackGenerator.impactHasOccurred = NO;
+    }
+  }
+}
+
+- (void)testEnabledFullHapticFeedback {
+  // Given
+  self.slider.minimumValue = 0;
+  self.slider.maximumValue = 5;
+  self.slider.hapticsEnabled = YES;
+  self.slider.numberOfDiscreteValues = 2;
+  self.slider.shouldEnableHapticsForAllDiscreteValues = YES;
 
   if (@available(iOS 10.0, *)) {
     _mockFeedbackGenerator = [[MockUIImpactFeedbackGenerator alloc] init];
@@ -1217,15 +1242,6 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 
       _mockFeedbackGenerator.impactHasOccurred = NO;
     }
-  }
-}
-
-- (void)testDefaultHapticsEnabledValues {
-  NSOperatingSystemVersion iOS10Version = {10, 0, 0};
-  if ([NSProcessInfo.processInfo isOperatingSystemAtLeastVersion:iOS10Version]) {
-    XCTAssertTrue(self.slider.hapticsEnabled);
-  } else {
-    XCTAssertFalse(self.slider.hapticsEnabled);
   }
 }
 

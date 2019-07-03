@@ -344,11 +344,11 @@ IB_DESIGNABLE
 
 /** When @c YES, haptics for any value change are enabled for discrete sliders. The haptics casue
  a light impact reaction when the slider value changes for discrete sliders. Can only be set to yes
- for discrete sliders.
+ for discrete sliders. Haptics will only occur if hapticsEnable is also set to @c YES.
 
  Defaults to @c NO
  */
-@property(nonatomic, assign) BOOL fullHapticsEnabled;
+@property(nonatomic, assign) BOOL shouldEnableHapticsForAllDiscreteValues;
 
 @end
 
