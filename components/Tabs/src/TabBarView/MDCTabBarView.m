@@ -186,7 +186,6 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
           self.rippleColor ?: self.defaultRippleColor;
       itemView = mdcItemView;
     }
-    itemView.translatesAutoresizingMaskIntoConstraints = NO;
     UITapGestureRecognizer *tapGesture =
         [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapItemView:)];
     [itemView addGestureRecognizer:tapGesture];
