@@ -231,13 +231,21 @@ static UIImage *fakeImage(CGFloat width, CGFloat height) {
   // Grab the `contentFrame` before layout to be sure it's calculated correctly at any time.
   CGRect contentFrame = itemView.contentFrame;
   [itemView layoutIfNeeded];
-  XCTAssertFalse(
-      CGRectEqualToRect(contentFrame, CGRectZero),
-      @"The `contentFrame` of an item view must not return CGRectZero when a title is set.");
+  XCTAssertFalse(CGRectEqualToRect(contentFrame, CGRectZero), @"(%@) is equal to (%@))",
+                 NSStringFromCGRect(contentFrame), NSStringFromCGRect(CGRectZero));
   XCTAssertEqualWithAccuracy(CGRectGetHeight(contentFrame),
                              CGRectGetHeight(itemView.titleLabel.bounds), 0.001);
   XCTAssertLessThanOrEqual(CGRectGetWidth(contentFrame),
                            CGRectGetWidth(itemView.titleLabel.bounds));
+  CGPoint itemViewMidBounds = CGPointMake(CGRectGetMidX(itemView.bounds), CGRectGetMidY(itemView.bounds));
+  XCTAssertTrue(CGRectContainsPoint(contentFrame, itemViewMidBounds),
+                @"(%@) does not contain (%@)", NSStringFromCGRect(contentFrame), NSStringFromCGPoint(itemViewMidBounds));
+  CGPoint itemViewTopCenter = CGPointMake(CGRectGetMidX(itemView.bounds), CGRectGetMinY(itemView.bounds));
+  XCTAssertFalse(CGRectContainsPoint(contentFrame, itemViewTopCenter),
+                @"(%@) does not contain (%@)", NSStringFromCGRect(contentFrame), NSStringFromCGPoint(itemViewTopCenter));
+  CGPoint itemViewBottomCenter = CGPointMake(CGRectGetMidX(itemView.bounds), CGRectGetMaxY(itemView.bounds));
+  XCTAssertFalse(CGRectContainsPoint(contentFrame, itemViewBottomCenter),
+                 @"(%@) does not contain (%@)", NSStringFromCGRect(contentFrame), NSStringFromCGPoint(itemViewBottomCenter));
 }
 
 - (void)testContentFrameForIconOnlyViewReturnsIconImageViewFittingFrame {
@@ -252,13 +260,21 @@ static UIImage *fakeImage(CGFloat width, CGFloat height) {
   // Grab the `contentFrame` before layout to be sure it's calculated correctly at any time.
   CGRect contentFrame = itemView.contentFrame;
   [itemView layoutIfNeeded];
-  XCTAssertFalse(
-      CGRectEqualToRect(contentFrame, CGRectZero),
-      @"The `contentFrame` of an item view must not return CGRectZero when an image is set.");
+  XCTAssertFalse(CGRectEqualToRect(contentFrame, CGRectZero), @"(%@) is equal to (%@)",
+                 NSStringFromCGRect(contentFrame), NSStringFromCGRect(CGRectZero));
   XCTAssertEqualWithAccuracy(CGRectGetHeight(contentFrame),
                              CGRectGetHeight(itemView.iconImageView.bounds), 0.001);
   XCTAssertLessThanOrEqual(CGRectGetWidth(contentFrame),
                            CGRectGetWidth(itemView.iconImageView.bounds));
+  CGPoint itemViewMidBounds = CGPointMake(CGRectGetMidX(itemView.bounds), CGRectGetMidY(itemView.bounds));
+  XCTAssertTrue(CGRectContainsPoint(contentFrame, itemViewMidBounds),
+                @"(%@) does not contain (%@)", NSStringFromCGRect(contentFrame), NSStringFromCGPoint(itemViewMidBounds));
+  CGPoint itemViewTopCenter = CGPointMake(CGRectGetMidX(itemView.bounds), CGRectGetMinY(itemView.bounds));
+  XCTAssertFalse(CGRectContainsPoint(contentFrame, itemViewTopCenter),
+                 @"(%@) does not contain (%@)", NSStringFromCGRect(contentFrame), NSStringFromCGPoint(itemViewTopCenter));
+  CGPoint itemViewBottomCenter = CGPointMake(CGRectGetMidX(itemView.bounds), CGRectGetMaxY(itemView.bounds));
+  XCTAssertFalse(CGRectContainsPoint(contentFrame, itemViewBottomCenter),
+                 @"(%@) does not contain (%@)", NSStringFromCGRect(contentFrame), NSStringFromCGPoint(itemViewBottomCenter));
 }
 
 - (void)testContentFramForTextAndIconViewReturnsTitleLabelFittingFrame {
@@ -274,13 +290,18 @@ static UIImage *fakeImage(CGFloat width, CGFloat height) {
   // Grab the `contentFrame` before layout to be sure it's calculated correctly at any time.
   CGRect contentFrame = itemView.contentFrame;
   [itemView layoutIfNeeded];
-  XCTAssertFalse(CGRectEqualToRect(contentFrame, CGRectZero),
-                 @"The `contentFrame` of an item view must not return CGRectZero when a title and "
-                 @"image are set.");
+  XCTAssertFalse(CGRectEqualToRect(contentFrame, CGRectZero), @"(%@) is equal to (%@)",
+                 NSStringFromCGRect(contentFrame), NSStringFromCGRect(CGRectZero));
   XCTAssertEqualWithAccuracy(CGRectGetHeight(contentFrame),
                              CGRectGetHeight(itemView.titleLabel.bounds), 0.001);
   XCTAssertLessThanOrEqual(CGRectGetWidth(contentFrame),
                            CGRectGetWidth(itemView.titleLabel.bounds));
+  CGPoint itemViewMidBounds = CGPointMake(CGRectGetMidX(itemView.bounds), CGRectGetMidY(itemView.bounds));
+  XCTAssertTrue(CGRectContainsPoint(contentFrame, itemViewMidBounds),
+                @"(%@) does not contain (%@)", NSStringFromCGRect(contentFrame), NSStringFromCGPoint(itemViewMidBounds));
+  CGPoint itemViewBottomCenter = CGPointMake(CGRectGetMidX(itemView.bounds), CGRectGetMaxY(itemView.bounds));
+  XCTAssertFalse(CGRectContainsPoint(contentFrame, itemViewBottomCenter),
+                 @"(%@) does not contain (%@)", NSStringFromCGRect(contentFrame), NSStringFromCGPoint(itemViewBottomCenter));
 }
 
 @end
