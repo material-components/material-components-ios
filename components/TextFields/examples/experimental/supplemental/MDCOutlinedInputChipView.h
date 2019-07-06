@@ -15,29 +15,24 @@
 #import <UIKit/UIKit.h>
 
 #import "MDCBaseInputChipView.h"
-#import "MDCContainedInputView.h"
-#import "MDCContainerStylerFilled.h"
-#import "MDCContainerStylerOutlined.h"
-#import "MaterialContainerScheme.h"
 
 /**
- This category is used to style SimpleTextField instances with an MDCContainerScheme.
+ An implementation of a Material outlined text field.
  */
-@interface MDCBaseInputChipView (MaterialTheming)
+__attribute__((objc_subclassing_restricted)) @interface MDCOutlinedInputChipView : MDCBaseInputChipView
 
 /**
- Applies a container scheme's subsystem-specific schemes to the receiver.
- 
- @param scheme A container scheme instance.
+ Sets the outline color for a given state.
+ @param outlineColor The UIColor for the given state.
+ @param state The UIControlState. The accepted values are UIControlStateNormal,
+ UIControlStateDisabled, and UIControlStateEditing, which is a custom MDC
+ UIControlState value.
  */
-- (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
-
+- (void)setOutlineColor:(nonnull UIColor *)outlineColor forState:(UIControlState)state;
 /**
- Applies a container scheme's subsystem-specific schemes to the receiver in a manner best suited to
- convey an error state.
- 
- @param scheme A container scheme instance.
+ Returns the outline color for a given state.
+ @param state The UIControlState.
  */
-- (void)applyErrorThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
+- (nonnull UIColor *)outlineColorForState:(UIControlState)state;
 
 @end

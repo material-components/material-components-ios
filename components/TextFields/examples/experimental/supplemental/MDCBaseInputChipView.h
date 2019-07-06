@@ -14,25 +14,82 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialContainerScheme.h"
-
-#import "MDCContainedInputView.h"
+#import "MDCTextControlLabelBehavior.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MDCBaseInputChipView : UIControl <MDCContainedInputView>
+@interface MDCBaseInputChipView : UIControl
+
+/**
+ The @c label is a label that occupies the area the text usually occupies when there is no
+ text. It is distinct from the placeholder in that it can move above the text area or disappear to
+ reveal the placeholder when editing begins.
+ */
+@property(strong, nonatomic, readonly, nonnull) UILabel *label;
+
+/**
+ This property determines the behavior of the textfield's label during editing.
+ @note The default is MDCTextControlLabelBehaviorFloats.
+ */
+@property(nonatomic, assign) MDCTextControlLabelBehavior labelBehavior;
+
+/**
+ The @c leadingAssistiveLabel is a label below the text on the leading edge of the view. It can be
+ used to display helper or error text.
+ */
+@property(strong, nonatomic, readonly, nonnull) UILabel *leadingAssistiveLabel;
+
+/**
+ The @c trailingAssistiveLabel is a label below the text on the trailing edge of the view. It can be
+ used to display helper or error text.
+ */
+@property(strong, nonatomic, readonly, nonnull) UILabel *trailingAssistiveLabel;
+
+/**
+ Indicates whether the text field should automatically update its font when the device’s
+ UIContentSizeCategory is changed.
+ This property is modeled after the adjustsFontForContentSizeCategory property in the
+ UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
+ Defaults value is NO.
+ */
+@property(nonatomic, setter=mdc_setAdjustsFontForContentSizeCategory:)
+BOOL mdc_adjustsFontForContentSizeCategory;
+
+/**
+ Sets the label color for a given state.
+ @param labelColor The UIColor for the given state.
+ @param state The UIControlState. The accepted values are UIControlStateNormal,
+ UIControlStateDisabled, and UIControlStateEditing, which is a custom MDC
+ UIControlState value.
+ */
+- (void)setLabelColor:(nonnull UIColor *)labelColor forState:(UIControlState)state;
+/**
+ Returns the label color for a given state.
+ @param state The UIControlState.
+ */
+- (nonnull UIColor *)labelColorForState:(UIControlState)state;
+
+/**
+ Sets the text color for a given state.
+ @param textColor The UIColor for the given state.
+ @param state The UIControlState. The accepted values are UIControlStateNormal,
+ UIControlStateDisabled, and UIControlStateEditing, which is a custom MDC
+ UIControlState value.
+ */
+- (void)setTextColor:(nonnull UIColor *)textColor forState:(UIControlState)state;
+/**
+ Returns the text color for a given state.
+ @param state The UIControlState.
+ */
+- (nonnull UIColor *)textColorForState:(UIControlState)state;
+
+
 @property(strong, nonatomic, readonly) UITextField *textField;
-@property(strong, nonatomic, readonly) UILabel *label;
-
 @property(nonatomic, assign) BOOL chipsWrap;
-
 @property(nonatomic, assign) CGFloat chipRowHeight;
 @property(nonatomic, assign) CGFloat chipRowSpacing;
-
 - (void)addChip:(UIView *)chip;
-
-@property(nonatomic, assign) BOOL canFloatingLabelFloat;
-// TODO: This needs to be replaced with an InputChipView specific label behavior property
+@property(nonatomic, assign) CGFloat preferredContainerHeight;
 
 @end
 

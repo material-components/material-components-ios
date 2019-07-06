@@ -19,6 +19,11 @@
 #import "MaterialButtons+Theming.h"
 #import "MaterialColorScheme.h"
 #import "supplemental/MDCBaseInputChipView.h"
+#import "supplemental/MDCBaseInputChipView+MaterialTheming.h"
+#import "supplemental/MDCFilledInputChipView.h"
+#import "supplemental/MDCFilledInputChipView+MaterialTheming.h"
+#import "supplemental/MDCOutlinedInputChipView.h"
+#import "supplemental/MDCOutlinedInputChipView+MaterialTheming.h"
 
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar+TypographyThemer.h"
@@ -182,20 +187,20 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
   return label;
 }
 
-- (MDCBaseInputChipView *)createOutlinedNonWrappingInputChipView {
-  MDCBaseInputChipView *inputChipView = [[MDCBaseInputChipView alloc] init];
+- (MDCOutlinedInputChipView *)createOutlinedNonWrappingInputChipView {
+  MDCOutlinedInputChipView *inputChipView = [[MDCOutlinedInputChipView alloc] init];
   inputChipView.textField.placeholder = @"Outlined non-wrapping";
-  [inputChipView applyOutlinedThemeWithScheme:self.containerScheme];
+  [inputChipView applyThemeWithScheme:self.containerScheme];
   inputChipView.chipsWrap = NO;
-  inputChipView.canFloatingLabelFloat = YES;
+  inputChipView.labelBehavior = MDCTextControlLabelBehaviorFloats;
   inputChipView.chipRowHeight = self.chipHeight;
   [inputChipView sizeToFit];
   inputChipView.textField.delegate = self;
   return inputChipView;
 }
 
-- (MDCBaseInputChipView *)createOutlinedWrappingInputChipView {
-  MDCBaseInputChipView *inputChipView = [self createOutlinedNonWrappingInputChipView];
+- (MDCOutlinedInputChipView *)createOutlinedWrappingInputChipView {
+  MDCOutlinedInputChipView *inputChipView = [self createOutlinedNonWrappingInputChipView];
   inputChipView.textField.placeholder = @"Outlined wrapping";
   inputChipView.chipsWrap = YES;
   inputChipView.preferredContainerHeight = 150;
@@ -203,20 +208,20 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
   return inputChipView;
 }
 
-- (MDCBaseInputChipView *)createFilledNonWrappingInputChipView {
-  MDCBaseInputChipView *inputChipView = [[MDCBaseInputChipView alloc] init];
+- (MDCFilledInputChipView *)createFilledNonWrappingInputChipView {
+  MDCFilledInputChipView *inputChipView = [[MDCFilledInputChipView alloc] init];
   inputChipView.textField.placeholder = @"Filled non-wrapping";
-  [inputChipView applyFilledThemeWithScheme:self.containerScheme];
+  [inputChipView applyThemeWithScheme:self.containerScheme];
   inputChipView.chipsWrap = NO;
-  inputChipView.canFloatingLabelFloat = YES;
+  inputChipView.labelBehavior = MDCTextControlLabelBehaviorFloats;
   inputChipView.chipRowHeight = self.chipHeight;
   [inputChipView sizeToFit];
   inputChipView.textField.delegate = self;
   return inputChipView;
 }
 
-- (MDCBaseInputChipView *)createFilledWrappingInputChipView {
-  MDCBaseInputChipView *inputChipView = [self createFilledNonWrappingInputChipView];
+- (MDCFilledInputChipView *)createFilledWrappingInputChipView {
+  MDCFilledInputChipView *inputChipView = [self createFilledNonWrappingInputChipView];
   inputChipView.textField.placeholder = @"Filled wrapping";
   inputChipView.chipsWrap = YES;
   inputChipView.preferredContainerHeight = 150;
@@ -224,9 +229,6 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
   [inputChipView sizeToFit];
   return inputChipView;
 }
-
-
-
 
 - (CGFloat)chipHeight {
   MDCChipView *chip = [self createChipWithText:@"Test"

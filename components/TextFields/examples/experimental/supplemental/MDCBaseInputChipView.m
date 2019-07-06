@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import "MDCBaseInputChipView.h"
+#import "MDCBaseInputChipView+Private.h"
 #import "MDCBaseInputChipViewLayout.h"
 
 #import <CoreGraphics/CoreGraphics.h>
@@ -146,7 +147,6 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 @synthesize underlineLabelDrawPriority = _underlineLabelDrawPriority;
 @synthesize customAssistiveLabelDrawPriority = _customAssistiveLabelDrawPriority;
 @synthesize containerStyler = _containerStyler;
-@synthesize canFloatingLabelFloat = _canFloatingLabelFloat;
 @synthesize label = _label;
 
 #pragma mark Object Lifecycle
@@ -740,7 +740,11 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   }
 }
 
-#pragma mark Placeholder
+#pragma mark Floating Label
+
+- (BOOL)canFloatingLabelFloat {
+  return self.labelBehavior == MDCTextControlLabelBehaviorFloats;
+}
 
 - (MDCContainedInputViewLabelState)determineCurrentFloatingLabelState {
   return [self floatingLabelStateWithPlaceholder:self.textField.placeholder
@@ -909,5 +913,44 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   }
   return colorScheme;
 }
+
+
+
+
+
+- (void)setLabelColor:(nonnull UIColor *)labelColor forState:(UIControlState)state {
+  MDCContainedInputViewState containedInputViewState =
+  MDCContainedInputViewStateWithUIControlState(state);
+  id<MDCContainedInputViewColorScheming> colorScheme =
+  [self containedInputViewColorSchemingForState:containedInputViewState];
+  colorScheme.floatingLabelColor = labelColor;
+  [self setNeedsLayout];
+}
+
+- (UIColor *)labelColorForState:(UIControlState)state {
+  MDCContainedInputViewState containedInputViewState =
+  MDCContainedInputViewStateWithUIControlState(state);
+  id<MDCContainedInputViewColorScheming> colorScheme =
+  [self containedInputViewColorSchemingForState:containedInputViewState];
+  return colorScheme.floatingLabelColor;
+}
+
+- (void)setTextColor:(nonnull UIColor *)labelColor forState:(UIControlState)state {
+  MDCContainedInputViewState containedInputViewState =
+  MDCContainedInputViewStateWithUIControlState(state);
+  id<MDCContainedInputViewColorScheming> colorScheme =
+  [self containedInputViewColorSchemingForState:containedInputViewState];
+  colorScheme.textColor = labelColor;
+  [self setNeedsLayout];
+}
+
+- (UIColor *)textColorForState:(UIControlState)state {
+  MDCContainedInputViewState containedInputViewState =
+  MDCContainedInputViewStateWithUIControlState(state);
+  id<MDCContainedInputViewColorScheming> colorScheme =
+  [self containedInputViewColorSchemingForState:containedInputViewState];
+  return colorScheme.textColor;
+}
+
 
 @end

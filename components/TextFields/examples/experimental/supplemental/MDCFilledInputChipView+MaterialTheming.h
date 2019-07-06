@@ -14,20 +14,17 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCBaseInputChipView.h"
-#import "MDCContainedInputView.h"
-#import "MDCContainerStylerFilled.h"
-#import "MDCContainerStylerOutlined.h"
+#import "MDCFilledInputChipView.h"
 #import "MaterialContainerScheme.h"
 
 /**
- This category is used to style SimpleTextField instances with an MDCContainerScheme.
+ This category is used to style MDCFilledInputChipView instances with an MDCContainerScheme.
  */
-@interface MDCBaseInputChipView (MaterialTheming)
+@interface MDCFilledInputChipView (MaterialTheming)
 
 /**
  Applies a container scheme's subsystem-specific schemes to the receiver.
- 
+
  @param scheme A container scheme instance.
  */
 - (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
@@ -35,7 +32,7 @@
 /**
  Applies a container scheme's subsystem-specific schemes to the receiver in a manner best suited to
  convey an error state.
- 
+
  @param scheme A container scheme instance.
  */
 - (void)applyErrorThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;

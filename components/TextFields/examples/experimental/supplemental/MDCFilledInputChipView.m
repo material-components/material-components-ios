@@ -12,27 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCFilledTextField.h"
+#import "MDCFilledInputChipView.h"
 
 #import <Foundation/Foundation.h>
 
-#import "MDCBaseTextField+Private.h"
+#import "MDCBaseInputChipView+Private.h"
 #import "MDCContainedInputView.h"
 #import "MDCContainerStylerFilled.h"
 
-@interface MDCFilledTextFieldPositioningDelegate
+@interface MDCFilledInputChipViewPositioningDelegate
     : NSObject <MDCContainedInputViewStylerPositioningDelegate>
 @end
 
-@interface MDCFilledTextField ()
+@interface MDCFilledInputChipView ()
 @end
 
-@implementation MDCFilledTextField
+@implementation MDCFilledInputChipView
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    [self commonMDCFilledTextFieldInit];
+    [self commonMDCFilledInputChipViewInit];
   }
   return self;
 }
@@ -40,14 +40,14 @@
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    [self commonMDCFilledTextFieldInit];
+    [self commonMDCFilledInputChipViewInit];
   }
   return self;
 }
 
-- (void)commonMDCFilledTextFieldInit {
-  MDCFilledTextFieldPositioningDelegate *positioningDelegate =
-      [[MDCFilledTextFieldPositioningDelegate alloc] init];
+- (void)commonMDCFilledInputChipViewInit {
+  MDCFilledInputChipViewPositioningDelegate *positioningDelegate =
+      [[MDCFilledInputChipViewPositioningDelegate alloc] init];
   MDCContainerStylerFilled *filledStyle =
       [[MDCContainerStylerFilled alloc] initWithPositioningDelegate:positioningDelegate];
   self.containerStyler = filledStyle;
@@ -116,15 +116,62 @@
 
 @end
 
-@implementation MDCFilledTextFieldPositioningDelegate
+//@implementation MDCFilledInputChipViewPositioningDelegate
+//
+//- (CGFloat)assistiveLabelPaddingWithContainerHeight:(CGFloat)containerHeight {
+//  return (CGFloat)0.13 * containerHeight;
+//}
+//
+//- (CGFloat)defaultContainerHeightWithTextHeight:(CGFloat)textHeight {
+//  return (CGFloat)2 * textHeight;
+////  return (CGFloat)3.3 * textHeight;
+//}
+//
+//- (CGFloat)containerHeightWithTextHeight:(CGFloat)textHeight
+//                preferredContainerHeight:(CGFloat)preferredContainerHeight {
+//  if (preferredContainerHeight > 0) {
+//    return preferredContainerHeight;
+//  }
+//  return [self defaultContainerHeightWithTextHeight:textHeight];
+//}
+//
+//- (CGFloat)floatingLabelMinYWithTextHeight:(CGFloat)textHeight
+//                       floatingLabelHeight:(CGFloat)floatingLabelHeight
+//                  preferredContainerHeight:(CGFloat)preferredContainerHeight {
+//  CGFloat containerHeight = [self containerHeightWithTextHeight:textHeight
+//                                       preferredContainerHeight:preferredContainerHeight];
+//  CGFloat offset = containerHeight * (CGFloat)0.28;
+//  return offset - ((CGFloat)0.5 * floatingLabelHeight);
+//}
+//
+//- (CGFloat)textMinYWithFloatingLabelWithTextHeight:(CGFloat)textHeight
+//                               floatingLabelHeight:(CGFloat)floatingLabelHeight
+//                          preferredContainerHeight:(CGFloat)preferredContainerHeight {
+//  CGFloat containerHeight = [self containerHeightWithTextHeight:textHeight
+//                                       preferredContainerHeight:preferredContainerHeight];
+//  CGFloat offset = containerHeight * (CGFloat)0.64;
+//  return offset - ((CGFloat)0.5 * textHeight);
+//}
+//
+//- (CGFloat)textMinYWithoutFloatingLabelWithTextHeight:(CGFloat)textHeight
+//                                  floatingLabelHeight:(CGFloat)floatingLabelHeight
+//                             preferredContainerHeight:(CGFloat)preferredContainerHeight {
+//  CGFloat containerHeight = [self containerHeightWithTextHeight:textHeight
+//                                       preferredContainerHeight:preferredContainerHeight];
+//  CGFloat offset = containerHeight * (CGFloat)0.5;
+//  return offset - ((CGFloat)0.5 * textHeight);
+//}
+//
+//@end
+
+@implementation MDCFilledInputChipViewPositioningDelegate
 
 - (CGFloat)assistiveLabelPaddingWithContainerHeight:(CGFloat)containerHeight {
   return (CGFloat)0.13 * containerHeight;
 }
 
 - (CGFloat)defaultContainerHeightWithTextHeight:(CGFloat)textHeight {
-  return (CGFloat)2 * textHeight;
-//  return (CGFloat)3.3 * textHeight;
+  return 2 * textHeight;
 }
 
 - (CGFloat)containerHeightWithTextHeight:(CGFloat)textHeight
@@ -140,7 +187,7 @@
                   preferredContainerHeight:(CGFloat)preferredContainerHeight {
   CGFloat containerHeight = [self containerHeightWithTextHeight:textHeight
                                        preferredContainerHeight:preferredContainerHeight];
-  CGFloat offset = containerHeight * (CGFloat)0.28;
+  CGFloat offset = containerHeight * (CGFloat)0.20;
   return offset - ((CGFloat)0.5 * floatingLabelHeight);
 }
 
@@ -163,3 +210,4 @@
 }
 
 @end
+

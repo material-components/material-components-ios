@@ -96,7 +96,7 @@
 }
 
 - (void)setUpLabelBehavior {
-  self.labelBehavior = MDCBaseTextFieldLabelBehaviorFloats;
+  self.labelBehavior = MDCTextControlLabelBehaviorFloats;
 }
 
 - (void)setUpLayoutDirection {
@@ -468,7 +468,7 @@
   [self setNeedsLayout];
 }
 
-- (void)setLabelBehavior:(MDCBaseTextFieldLabelBehavior)labelBehavior {
+- (void)setLabelBehavior:(MDCTextControlLabelBehavior)labelBehavior {
   if (_labelBehavior == labelBehavior) {
     return;
   }
@@ -636,7 +636,7 @@
 #pragma mark Floating Label
 
 - (BOOL)canFloatingLabelFloat {
-  return self.labelBehavior == MDCBaseTextFieldLabelBehaviorFloats;
+  return self.labelBehavior == MDCTextControlLabelBehaviorFloats;
 }
 
 - (BOOL)shouldPlaceholderBeVisible {

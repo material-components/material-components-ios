@@ -14,14 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-/** This type is used to configure the behavior of an MDCBaseTextField's label. */
-typedef NS_ENUM(NSInteger, MDCBaseTextFieldLabelBehavior) {
-  /** Indicates that the text field label animates to a position above the text when editing begins.
-   */
-  MDCBaseTextFieldLabelBehaviorFloats,
-  /** Indicates that the text field label disappears when editing begins. */
-  MDCBaseTextFieldLabelBehaviorDisappears,
-};
+#import "MDCTextControlLabelBehavior.h"
 
 /**
  A UITextField subclass that attempts to do the following:
@@ -43,9 +36,9 @@ typedef NS_ENUM(NSInteger, MDCBaseTextFieldLabelBehavior) {
 
 /**
  This property determines the behavior of the textfield's label during editing.
- @note The default is MDCBaseTextFieldLabelBehaviorFloats.
+ @note The default is MDCTextControlLabelBehaviorFloats.
  */
-@property(nonatomic, assign) MDCBaseTextFieldLabelBehavior labelBehavior;
+@property(nonatomic, assign) MDCTextControlLabelBehavior labelBehavior;
 
 /**
  The @c leadingAssistiveLabel is a label below the text on the leading edge of the view. It can be

@@ -12,27 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCOutlinedTextField.h"
+#import "MDCOutlinedInputChipView.h"
 
 #import <Foundation/Foundation.h>
 
-#import "MDCBaseTextField+Private.h"
+#import "MDCBaseInputChipView+Private.h"
 #import "MDCContainedInputView.h"
 #import "MDCContainerStylerOutlined.h"
 
-@interface MDCOutlinedTextFieldPositioningDelegate
+@interface MDCOutlinedInputChipViewPositioningDelegate
     : NSObject <MDCContainedInputViewStylerPositioningDelegate>
 @end
 
-@interface MDCOutlinedTextField ()
+@interface MDCOutlinedInputChipView ()
 @end
 
-@implementation MDCOutlinedTextField
+@implementation MDCOutlinedInputChipView
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    [self commonMDCOutlinedTextFieldInit];
+    [self commonMDCOutlinedInputChipViewInit];
   }
   return self;
 }
@@ -40,14 +40,14 @@
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    [self commonMDCOutlinedTextFieldInit];
+    [self commonMDCOutlinedInputChipViewInit];
   }
   return self;
 }
 
-- (void)commonMDCOutlinedTextFieldInit {
-  MDCOutlinedTextFieldPositioningDelegate *positioningDelegate =
-      [[MDCOutlinedTextFieldPositioningDelegate alloc] init];
+- (void)commonMDCOutlinedInputChipViewInit {
+  MDCOutlinedInputChipViewPositioningDelegate *positioningDelegate =
+      [[MDCOutlinedInputChipViewPositioningDelegate alloc] init];
   MDCContainerStylerOutlined *outlinedStyle =
       [[MDCContainerStylerOutlined alloc] initWithPositioningDelegate:positioningDelegate];
   self.containerStyler = outlinedStyle;
@@ -82,15 +82,14 @@
 
 @end
 
-@implementation MDCOutlinedTextFieldPositioningDelegate
+@implementation MDCOutlinedInputChipViewPositioningDelegate
 
 - (CGFloat)assistiveLabelPaddingWithContainerHeight:(CGFloat)containerHeight {
   return (CGFloat)0.13 * containerHeight;
 }
 
 - (CGFloat)defaultContainerHeightWithTextHeight:(CGFloat)textHeight {
-  return (CGFloat)2 * textHeight;
-  //  return (CGFloat)3.3 * textHeight;
+  return 2 * textHeight;
 }
 
 - (CGFloat)containerHeightWithTextHeight:(CGFloat)textHeight
@@ -126,3 +125,49 @@
 }
 
 @end
+
+
+//@implementation MDCOutlinedInputChipViewPositioningDelegate
+//
+//- (CGFloat)assistiveLabelPaddingWithContainerHeight:(CGFloat)containerHeight {
+//  return (CGFloat)0.13 * containerHeight;
+//}
+//
+//- (CGFloat)defaultContainerHeightWithTextHeight:(CGFloat)textHeight {
+//  return (CGFloat)2 * textHeight;
+//  //  return (CGFloat)3.3 * textHeight;
+//}
+//
+//- (CGFloat)containerHeightWithTextHeight:(CGFloat)textHeight
+//                preferredContainerHeight:(CGFloat)preferredContainerHeight {
+//  if (preferredContainerHeight > 0) {
+//    return preferredContainerHeight;
+//  }
+//  return [self defaultContainerHeightWithTextHeight:textHeight];
+//}
+//
+//- (CGFloat)floatingLabelMinYWithTextHeight:(CGFloat)textHeight
+//                       floatingLabelHeight:(CGFloat)floatingLabelHeight
+//                  preferredContainerHeight:(CGFloat)preferredContainerHeight {
+//  return 0 - ((CGFloat)0.5 * floatingLabelHeight);
+//}
+//
+//- (CGFloat)textMinYWithFloatingLabelWithTextHeight:(CGFloat)textHeight
+//                               floatingLabelHeight:(CGFloat)floatingLabelHeight
+//                          preferredContainerHeight:(CGFloat)preferredContainerHeight {
+//  CGFloat containerHeight = [self containerHeightWithTextHeight:textHeight
+//                                       preferredContainerHeight:preferredContainerHeight];
+//  CGFloat offset = containerHeight * (CGFloat)0.5;
+//  return offset - ((CGFloat)0.5 * textHeight);
+//}
+//
+//- (CGFloat)textMinYWithoutFloatingLabelWithTextHeight:(CGFloat)textHeight
+//                                  floatingLabelHeight:(CGFloat)floatingLabelHeight
+//                             preferredContainerHeight:(CGFloat)preferredContainerHeight {
+//  CGFloat containerHeight = [self containerHeightWithTextHeight:textHeight
+//                                       preferredContainerHeight:preferredContainerHeight];
+//  CGFloat offset = containerHeight * (CGFloat)0.5;
+//  return offset - ((CGFloat)0.5 * textHeight);
+//}
+//
+//@end
