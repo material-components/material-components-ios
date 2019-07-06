@@ -36,7 +36,7 @@
 
 @implementation MDCBaseInputChipViewTextView
 
--(instancetype)init {
+- (instancetype)init {
   self = [super init];
   if (self) {
     [self commonMDCBaseInputChipViewTextViewInit];
@@ -44,7 +44,7 @@
   return self;
 }
 
--(instancetype)initWithFrame:(CGRect)frame {
+- (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
     [self commonMDCBaseInputChipViewTextViewInit];
@@ -68,10 +68,9 @@
 }
 
 - (BOOL)becomeFirstResponder {
-
   self.layer.borderColor = [UIColor redColor].CGColor;
   self.layer.borderWidth = 1;
-  
+
   BOOL didBecomeFirstResponder = [super becomeFirstResponder];
   [self.inputChipViewTextViewDelegate
       inputChipViewTextViewDidBecomeFirstResponder:didBecomeFirstResponder];
@@ -193,7 +192,6 @@
   [self setUpPlaceholderManager];
 }
 
-
 - (void)setUpPlaceholderManager {
   self.labelAnimator = [[MDCContainedInputViewLabelAnimator alloc] init];
 }
@@ -263,7 +261,7 @@
 }
 
 - (void)setUpClearButton {
-  //TODO: Use CIV clear button
+  // TODO: Use CIV clear button
 }
 
 - (void)setUpGradientLayers {
@@ -361,26 +359,26 @@
   //  NSLog(@"offset from start: %@",NSStringFromCGPoint(offsetFromStart));
 
   CGPoint offset = self.lastTouchInitialContentOffset;
-//  if (self.chipsWrap) {
-    CGFloat height = CGRectGetHeight(self.frame);
-    offset.y -= offsetFromStart.y;
-    if (offset.y < 0) {
-      offset.y = 0;
-    }
-    if (offset.y + height > self.scrollView.contentSize.height) {
-      offset.y = self.scrollView.contentSize.height - height;
-    }
-    self.scrollView.contentOffset = offset;
-//  } else {
-//    CGFloat width = CGRectGetWidth(self.frame);
-//    offset.x -= offsetFromStart.x;
-//    if (offset.x < 0) {
-//      offset.x = 0;
-//    }
-//    if (offset.x + width > self.scrollView.contentSize.width) {
-//      offset.x = self.scrollView.contentSize.width - width;
-//    }
-//  }
+  //  if (self.chipsWrap) {
+  CGFloat height = CGRectGetHeight(self.frame);
+  offset.y -= offsetFromStart.y;
+  if (offset.y < 0) {
+    offset.y = 0;
+  }
+  if (offset.y + height > self.scrollView.contentSize.height) {
+    offset.y = self.scrollView.contentSize.height - height;
+  }
+  self.scrollView.contentOffset = offset;
+  //  } else {
+  //    CGFloat width = CGRectGetWidth(self.frame);
+  //    offset.x -= offsetFromStart.x;
+  //    if (offset.x < 0) {
+  //      offset.x = 0;
+  //    }
+  //    if (offset.x + width > self.scrollView.contentSize.width) {
+  //      offset.x = self.scrollView.contentSize.width - width;
+  //    }
+  //  }
   self.scrollView.contentOffset = offset;
 
   return result;
@@ -414,19 +412,19 @@
 
 - (MDCBaseTextAreaLayout *)calculateLayoutWithSize:(CGSize)size {
   return [[MDCBaseTextAreaLayout alloc] initWithSize:size
-                                   containerStyler:self.containerStyler
-                                              text:self.inputChipViewTextView.text
-                                              font:self.normalFont
-                                      floatingFont:self.floatingFont
-                                             label:self.label
-                                floatingLabelState:self.floatingLabelState
-                                leftAssistiveLabel:self.leftAssistiveLabel
-                               rightAssistiveLabel:self.rightAssistiveLabel
-                        underlineLabelDrawPriority:self.underlineLabelDrawPriority
-                  customAssistiveLabelDrawPriority:self.customAssistiveLabelDrawPriority
-                          preferredContainerHeight:self.preferredContainerHeight
-                                             isRTL:self.isRTL
-                                         isEditing:self.isFirstResponder];
+                                     containerStyler:self.containerStyler
+                                                text:self.inputChipViewTextView.text
+                                                font:self.normalFont
+                                        floatingFont:self.floatingFont
+                                               label:self.label
+                                  floatingLabelState:self.floatingLabelState
+                                  leftAssistiveLabel:self.leftAssistiveLabel
+                                 rightAssistiveLabel:self.rightAssistiveLabel
+                          underlineLabelDrawPriority:self.underlineLabelDrawPriority
+                    customAssistiveLabelDrawPriority:self.customAssistiveLabelDrawPriority
+                            preferredContainerHeight:self.preferredContainerHeight
+                                               isRTL:self.isRTL
+                                           isEditing:self.isFirstResponder];
 }
 
 - (void)preLayoutSubviews {
@@ -562,11 +560,10 @@
                                        isEditing:self.isFirstResponder];
 }
 
-- (MDCContainedInputViewLabelState)
-    floatingLabelStateWithPlaceholder:(NSString *)placeholder
-                                 text:(NSString *)text
-                canFloatingLabelFloat:(BOOL)canFloatingLabelFloat
-                            isEditing:(BOOL)isEditing {
+- (MDCContainedInputViewLabelState)floatingLabelStateWithPlaceholder:(NSString *)placeholder
+                                                                text:(NSString *)text
+                                               canFloatingLabelFloat:(BOOL)canFloatingLabelFloat
+                                                           isEditing:(BOOL)isEditing {
   BOOL hasPlaceholder = placeholder.length > 0;
   BOOL hasText = text.length > 0;
   if (hasPlaceholder) {
@@ -628,11 +625,11 @@
 
 #pragma mark Fonts
 
--(UIFont *)normalFont {
+- (UIFont *)normalFont {
   return self.inputChipViewTextView.effectiveFont;
 }
 
--(UIFont *)floatingFont {
+- (UIFont *)floatingFont {
   return [self.containerStyler floatingFontWithFont:self.normalFont];
 }
 

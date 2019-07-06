@@ -96,7 +96,8 @@
 
 static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
-@interface MDCBaseInputChipView () <MDCBaseInputChipViewTextFieldDelegate, UIGestureRecognizerDelegate>
+@interface MDCBaseInputChipView () <MDCBaseInputChipViewTextFieldDelegate,
+                                    UIGestureRecognizerDelegate>
 
 #pragma mark MDCContainedInputView properties
 @property(strong, nonatomic) UIButton *clearButton;
@@ -137,7 +138,6 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 @property(nonatomic, strong)
     NSMutableDictionary<NSNumber *, id<MDCContainedInputViewColorScheming>> *colorSchemes;
-
 
 @end
 
@@ -468,26 +468,26 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 - (MDCBaseInputChipViewLayout *)calculateLayoutWithSize:(CGSize)size {
   return [[MDCBaseInputChipViewLayout alloc] initWithSize:size
-                                   containerStyler:self.containerStyler
-                                              text:self.inputChipViewTextField.text
-                                       placeholder:self.inputChipViewTextField.placeholder
-                                              font:self.normalFont
-                                      floatingFont:self.floatingFont
-                                floatingLabelState:self.floatingLabelState
-                                             chips:self.chips
-                                    staleChipViews:self.chips
-                                         chipsWrap:self.chipsWrap
-                                     chipRowHeight:self.chipRowHeight
-                                  interChipSpacing:self.chipRowSpacing
-                                       clearButton:self.clearButton
-                               clearButtonViewMode:self.textField.clearButtonMode
-                                leftAssistiveLabel:self.leftAssistiveLabel
-                               rightAssistiveLabel:self.rightAssistiveLabel
-                        underlineLabelDrawPriority:self.underlineLabelDrawPriority
-                  customAssistiveLabelDrawPriority:self.customAssistiveLabelDrawPriority
-                          preferredContainerHeight:self.preferredContainerHeight
-                                             isRTL:self.isRTL
-                                         isEditing:self.inputChipViewTextField.isEditing];
+                                          containerStyler:self.containerStyler
+                                                     text:self.inputChipViewTextField.text
+                                              placeholder:self.inputChipViewTextField.placeholder
+                                                     font:self.normalFont
+                                             floatingFont:self.floatingFont
+                                       floatingLabelState:self.floatingLabelState
+                                                    chips:self.chips
+                                           staleChipViews:self.chips
+                                                chipsWrap:self.chipsWrap
+                                            chipRowHeight:self.chipRowHeight
+                                         interChipSpacing:self.chipRowSpacing
+                                              clearButton:self.clearButton
+                                      clearButtonViewMode:self.textField.clearButtonMode
+                                       leftAssistiveLabel:self.leftAssistiveLabel
+                                      rightAssistiveLabel:self.rightAssistiveLabel
+                               underlineLabelDrawPriority:self.underlineLabelDrawPriority
+                         customAssistiveLabelDrawPriority:self.customAssistiveLabelDrawPriority
+                                 preferredContainerHeight:self.preferredContainerHeight
+                                                    isRTL:self.isRTL
+                                                isEditing:self.inputChipViewTextField.isEditing];
 }
 
 - (void)preLayoutSubviews {
@@ -754,12 +754,11 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
                                            chips:self.chips];
 }
 
-- (MDCContainedInputViewLabelState)
-    floatingLabelStateWithPlaceholder:(NSString *)placeholder
-                                 text:(NSString *)text
-                canFloatingLabelFloat:(BOOL)canFloatingLabelFloat
-                            isEditing:(BOOL)isEditing
-                                chips:(NSArray<UIView *> *)chips {
+- (MDCContainedInputViewLabelState)floatingLabelStateWithPlaceholder:(NSString *)placeholder
+                                                                text:(NSString *)text
+                                               canFloatingLabelFloat:(BOOL)canFloatingLabelFloat
+                                                           isEditing:(BOOL)isEditing
+                                                               chips:(NSArray<UIView *> *)chips {
   BOOL hasPlaceholder = placeholder.length > 0;
   BOOL hasText = text.length > 0;
   BOOL hasChips = chips.count > 0;
@@ -822,11 +821,11 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 #pragma mark Fonts
 
--(UIFont *)normalFont {
+- (UIFont *)normalFont {
   return self.inputChipViewTextField.effectiveFont;
 }
 
--(UIFont *)floatingFont {
+- (UIFont *)floatingFont {
   return [self.containerStyler floatingFontWithFont:self.normalFont];
 }
 
@@ -914,43 +913,38 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   return colorScheme;
 }
 
-
-
-
-
 - (void)setLabelColor:(nonnull UIColor *)labelColor forState:(UIControlState)state {
   MDCContainedInputViewState containedInputViewState =
-  MDCContainedInputViewStateWithUIControlState(state);
+      MDCContainedInputViewStateWithUIControlState(state);
   id<MDCContainedInputViewColorScheming> colorScheme =
-  [self containedInputViewColorSchemingForState:containedInputViewState];
+      [self containedInputViewColorSchemingForState:containedInputViewState];
   colorScheme.floatingLabelColor = labelColor;
   [self setNeedsLayout];
 }
 
 - (UIColor *)labelColorForState:(UIControlState)state {
   MDCContainedInputViewState containedInputViewState =
-  MDCContainedInputViewStateWithUIControlState(state);
+      MDCContainedInputViewStateWithUIControlState(state);
   id<MDCContainedInputViewColorScheming> colorScheme =
-  [self containedInputViewColorSchemingForState:containedInputViewState];
+      [self containedInputViewColorSchemingForState:containedInputViewState];
   return colorScheme.floatingLabelColor;
 }
 
 - (void)setTextColor:(nonnull UIColor *)labelColor forState:(UIControlState)state {
   MDCContainedInputViewState containedInputViewState =
-  MDCContainedInputViewStateWithUIControlState(state);
+      MDCContainedInputViewStateWithUIControlState(state);
   id<MDCContainedInputViewColorScheming> colorScheme =
-  [self containedInputViewColorSchemingForState:containedInputViewState];
+      [self containedInputViewColorSchemingForState:containedInputViewState];
   colorScheme.textColor = labelColor;
   [self setNeedsLayout];
 }
 
 - (UIColor *)textColorForState:(UIControlState)state {
   MDCContainedInputViewState containedInputViewState =
-  MDCContainedInputViewStateWithUIControlState(state);
+      MDCContainedInputViewStateWithUIControlState(state);
   id<MDCContainedInputViewColorScheming> colorScheme =
-  [self containedInputViewColorSchemingForState:containedInputViewState];
+      [self containedInputViewColorSchemingForState:containedInputViewState];
   return colorScheme.textColor;
 }
-
 
 @end

@@ -222,8 +222,8 @@
           withParentClassTextAreaFrame:[super textRectForBounds:self.bounds]];
   adjustedPlaceholderFrame = CGRectOffset(adjustedPlaceholderFrame, 0, -1);
   [self.labelAnimator layOutPlaceholderLabel:self.placeholderLabel
-                                   placeholderFrame:adjustedPlaceholderFrame
-                               isPlaceholderVisible:self.isPlaceholderVisible];
+                            placeholderFrame:adjustedPlaceholderFrame
+                        isPlaceholderVisible:self.isPlaceholderVisible];
   [self.labelAnimator layOutLabel:self.label
                             state:self.floatingLabelState
                  normalLabelFrame:self.layout.floatingLabelFrameNormal
@@ -273,27 +273,27 @@
   CGFloat normalizedCustomAssistiveLabelDrawPriority =
       [self normalizedCustomAssistiveLabelDrawPriority:self.customAssistiveLabelDrawPriority];
   return [[MDCBaseTextFieldLayout alloc]
-                  initWithTextFieldSize:textFieldSize
-                        containerStyler:self.containerStyler
-                                   text:self.text
-                            placeholder:self.placeholder
-                                   font:self.normalFont
-                           floatingFont:self.floatingFont
-                                  label:self.label
-                  canFloatingLabelFloat:self.canFloatingLabelFloat
-                               leftView:self.leftView
-                           leftViewMode:self.leftViewMode
-                              rightView:self.rightView
-                          rightViewMode:self.rightViewMode
-                            clearButton:self.clearButton
-                        clearButtonMode:self.clearButtonMode
-                     leftAssistiveLabel:self.leftAssistiveLabel
-                    rightAssistiveLabel:self.rightAssistiveLabel
-             underlineLabelDrawPriority:self.underlineLabelDrawPriority
-       customAssistiveLabelDrawPriority:normalizedCustomAssistiveLabelDrawPriority
-               preferredContainerHeight:self.preferredContainerHeight
-                                  isRTL:self.isRTL
-                              isEditing:self.isEditing];
+                 initWithTextFieldSize:textFieldSize
+                       containerStyler:self.containerStyler
+                                  text:self.text
+                           placeholder:self.placeholder
+                                  font:self.normalFont
+                          floatingFont:self.floatingFont
+                                 label:self.label
+                 canFloatingLabelFloat:self.canFloatingLabelFloat
+                              leftView:self.leftView
+                          leftViewMode:self.leftViewMode
+                             rightView:self.rightView
+                         rightViewMode:self.rightViewMode
+                           clearButton:self.clearButton
+                       clearButtonMode:self.clearButtonMode
+                    leftAssistiveLabel:self.leftAssistiveLabel
+                   rightAssistiveLabel:self.rightAssistiveLabel
+            underlineLabelDrawPriority:self.underlineLabelDrawPriority
+      customAssistiveLabelDrawPriority:normalizedCustomAssistiveLabelDrawPriority
+              preferredContainerHeight:self.preferredContainerHeight
+                                 isRTL:self.isRTL
+                             isEditing:self.isEditing];
 }
 
 - (CGFloat)normalizedCustomAssistiveLabelDrawPriority:(CGFloat)customPriority {
@@ -562,11 +562,11 @@
 
 #pragma mark Fonts
 
--(UIFont *)normalFont {
+- (UIFont *)normalFont {
   return self.font ?: [self uiTextFieldDefaultFont];
 }
 
--(UIFont *)floatingFont {
+- (UIFont *)floatingFont {
   return [self.containerStyler floatingFontWithFont:self.normalFont];
 }
 
@@ -676,11 +676,10 @@
   }
 }
 
-- (MDCContainedInputViewLabelState)
-    floatingLabelStateWithFloatingLabel:(UILabel *)floatingLabel
-                                   text:(NSString *)text
-                  canFloatingLabelFloat:(BOOL)canFloatingLabelFloat
-                              isEditing:(BOOL)isEditing {
+- (MDCContainedInputViewLabelState)floatingLabelStateWithFloatingLabel:(UILabel *)floatingLabel
+                                                                  text:(NSString *)text
+                                                 canFloatingLabelFloat:(BOOL)canFloatingLabelFloat
+                                                             isEditing:(BOOL)isEditing {
   BOOL hasFloatingLabelText = floatingLabel.text.length > 0;
   BOOL hasText = text.length > 0;
   if (hasFloatingLabelText) {

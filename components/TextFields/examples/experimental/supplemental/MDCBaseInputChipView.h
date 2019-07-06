@@ -53,7 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
  Defaults value is NO.
  */
 @property(nonatomic, setter=mdc_setAdjustsFontForContentSizeCategory:)
-BOOL mdc_adjustsFontForContentSizeCategory;
+    BOOL mdc_adjustsFontForContentSizeCategory;
 
 /**
  Sets the label color for a given state.
@@ -82,7 +82,6 @@ BOOL mdc_adjustsFontForContentSizeCategory;
  @param state The UIControlState.
  */
 - (nonnull UIColor *)textColorForState:(UIControlState)state;
-
 
 @property(strong, nonatomic, readonly) UITextField *textField;
 @property(nonatomic, assign) BOOL chipsWrap;

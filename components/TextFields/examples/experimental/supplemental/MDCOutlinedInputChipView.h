@@ -19,7 +19,8 @@
 /**
  An implementation of a Material outlined text field.
  */
-__attribute__((objc_subclassing_restricted)) @interface MDCOutlinedInputChipView : MDCBaseInputChipView
+__attribute__((objc_subclassing_restricted)) @interface MDCOutlinedInputChipView
+    : MDCBaseInputChipView
 
 /**
  Sets the outline color for a given state.

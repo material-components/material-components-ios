@@ -22,7 +22,7 @@
 
 @implementation MDCContainedInputViewLabelAnimator
 
--(instancetype)init {
+- (instancetype)init {
   self = [super init];
   if (self) {
     self.animationDuration = 0.2;
@@ -31,11 +31,11 @@
 }
 
 - (void)layOutLabel:(nonnull UILabel *)floatingLabel
-              state:(MDCContainedInputViewLabelState)floatingLabelState
-   normalLabelFrame:(CGRect)normalLabelFrame
- floatingLabelFrame:(CGRect)floatingLabelFrame
-         normalFont:(nonnull UIFont *)normalFont
-       floatingFont:(nonnull UIFont *)floatingFont {
+                 state:(MDCContainedInputViewLabelState)floatingLabelState
+      normalLabelFrame:(CGRect)normalLabelFrame
+    floatingLabelFrame:(CGRect)floatingLabelFrame
+            normalFont:(nonnull UIFont *)normalFont
+          floatingFont:(nonnull UIFont *)floatingFont {
   UIFont *targetFont = normalFont;
   CGRect targetFrame = normalLabelFrame;
   BOOL floatingLabelShouldHide = NO;

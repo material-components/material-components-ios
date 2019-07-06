@@ -45,20 +45,20 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong) NSArray<NSNumber *> *horizontalGradientLocations;
 
 - (instancetype)initWithSize:(CGSize)size
-                      containerStyler:(id<MDCContainedInputViewStyler>)containerStyler
-                                 text:(NSString *)text
-                                 font:(UIFont *)font
-                         floatingFont:(UIFont *)floatingFont
-                                label:(UILabel *)label
-                   floatingLabelState:(MDCContainedInputViewLabelState)floatingLabelState
-                   leftAssistiveLabel:(UILabel *)leftAssistiveLabel
-                  rightAssistiveLabel:(UILabel *)rightAssistiveLabel
-           underlineLabelDrawPriority:
-               (MDCContainedInputViewAssistiveLabelDrawPriority)underlineLabelDrawPriority
-     customAssistiveLabelDrawPriority:(CGFloat)normalizedCustomAssistiveLabelDrawPriority
-             preferredContainerHeight:(CGFloat)preferredContainerHeight
-                                isRTL:(BOOL)isRTL
-                            isEditing:(BOOL)isEditing;
+                     containerStyler:(id<MDCContainedInputViewStyler>)containerStyler
+                                text:(NSString *)text
+                                font:(UIFont *)font
+                        floatingFont:(UIFont *)floatingFont
+                               label:(UILabel *)label
+                  floatingLabelState:(MDCContainedInputViewLabelState)floatingLabelState
+                  leftAssistiveLabel:(UILabel *)leftAssistiveLabel
+                 rightAssistiveLabel:(UILabel *)rightAssistiveLabel
+          underlineLabelDrawPriority:
+              (MDCContainedInputViewAssistiveLabelDrawPriority)underlineLabelDrawPriority
+    customAssistiveLabelDrawPriority:(CGFloat)normalizedCustomAssistiveLabelDrawPriority
+            preferredContainerHeight:(CGFloat)preferredContainerHeight
+                               isRTL:(BOOL)isRTL
+                           isEditing:(BOOL)isEditing;
 @end
 
 NS_ASSUME_NONNULL_END

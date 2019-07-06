@@ -18,12 +18,12 @@
 
 #import "MaterialButtons+Theming.h"
 #import "MaterialColorScheme.h"
-#import "supplemental/MDCBaseInputChipView.h"
 #import "supplemental/MDCBaseInputChipView+MaterialTheming.h"
-#import "supplemental/MDCFilledInputChipView.h"
+#import "supplemental/MDCBaseInputChipView.h"
 #import "supplemental/MDCFilledInputChipView+MaterialTheming.h"
-#import "supplemental/MDCOutlinedInputChipView.h"
+#import "supplemental/MDCFilledInputChipView.h"
 #import "supplemental/MDCOutlinedInputChipView+MaterialTheming.h"
+#import "supplemental/MDCOutlinedInputChipView.h"
 
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar+TypographyThemer.h"
@@ -253,8 +253,8 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
 }
 
 - (void)updateInputChipViewStates {
-  [self.allInputChipViews enumerateObjectsUsingBlock:^(MDCBaseInputChipView *inputChipView, NSUInteger idx,
-                                                       BOOL *stop) {
+  [self.allInputChipViews enumerateObjectsUsingBlock:^(MDCBaseInputChipView *inputChipView,
+                                                       NSUInteger idx, BOOL *stop) {
     BOOL isEven = idx % 2 == 0;
     if (self.isErrored) {
       // TODO: Make InputChipView respond to error theme selector
@@ -332,10 +332,10 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
 #pragma mark IBActions
 
 - (void)resignFirstResponderButtonTapped:(UIButton *)button {
-  [self.allInputChipViews
-      enumerateObjectsUsingBlock:^(MDCBaseInputChipView *inputChipView, NSUInteger idx, BOOL *stop) {
-        [inputChipView resignFirstResponder];
-      }];
+  [self.allInputChipViews enumerateObjectsUsingBlock:^(MDCBaseInputChipView *inputChipView,
+                                                       NSUInteger idx, BOOL *stop) {
+    [inputChipView resignFirstResponder];
+  }];
 }
 
 - (void)toggleErrorButtonTapped:(UIButton *)button {

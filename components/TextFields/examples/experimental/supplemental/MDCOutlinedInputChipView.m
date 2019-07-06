@@ -126,7 +126,6 @@
 
 @end
 
-
 //@implementation MDCOutlinedInputChipViewPositioningDelegate
 //
 //- (CGFloat)assistiveLabelPaddingWithContainerHeight:(CGFloat)containerHeight {

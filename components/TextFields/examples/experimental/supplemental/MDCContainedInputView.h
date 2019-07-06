@@ -75,15 +75,13 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewAssistiveLabelDrawPriority) {
   MDCContainedInputViewAssistiveLabelDrawPriorityCustom,
 };
 
-
-
 @protocol MDCContainedInputViewStyler;
 @protocol MDCContainedInputViewColorScheming;
 
 @protocol MDCContainedInputView <NSObject>
 /**
  */
-//TODO: Add property docs
+// TODO: Add property docs
 @property(nonatomic, strong, nonnull) MDCContainedInputViewLabelAnimator *labelAnimator;
 
 /**
@@ -111,7 +109,8 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewAssistiveLabelDrawPriority) {
 @property(strong, nonatomic, readonly, nonnull) UILabel *label;
 
 /**
- The @c normalFont is the contained input view's primary font. The text is this font. The label also has this font when it isn't floating.
+ The @c normalFont is the contained input view's primary font. The text is this font. The label also
+ has this font when it isn't floating.
  */
 @property(strong, nonatomic, readonly, nonnull) UIFont *normalFont;
 

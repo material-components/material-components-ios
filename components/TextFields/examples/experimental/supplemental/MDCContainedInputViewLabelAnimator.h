@@ -20,17 +20,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MDCContainedInputViewLabelAnimator : NSObject
 
-@property (nonatomic, assign) NSTimeInterval animationDuration;
+@property(nonatomic, assign) NSTimeInterval animationDuration;
 
 - (void)layOutPlaceholderLabel:(nonnull UILabel *)placeholderLabel
               placeholderFrame:(CGRect)placeholderFrame
           isPlaceholderVisible:(BOOL)isPlaceholderVisible;
 - (void)layOutLabel:(nonnull UILabel *)floatingLabel
-              state:(MDCContainedInputViewLabelState)floatingLabelState
-   normalLabelFrame:(CGRect)normalLabelFrame
- floatingLabelFrame:(CGRect)floatingLabelFrame
-         normalFont:(nonnull UIFont *)normalFont
-       floatingFont:(nonnull UIFont *)floatingFont;
+                 state:(MDCContainedInputViewLabelState)floatingLabelState
+      normalLabelFrame:(CGRect)normalLabelFrame
+    floatingLabelFrame:(CGRect)floatingLabelFrame
+            normalFont:(nonnull UIFont *)normalFont
+          floatingFont:(nonnull UIFont *)floatingFont;
 @end
 
 NS_ASSUME_NONNULL_END

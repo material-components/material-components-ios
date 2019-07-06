@@ -19,7 +19,8 @@
 /**
  An implementation of a Material filled text field.
  */
-__attribute__((objc_subclassing_restricted)) @interface MDCFilledInputChipView : MDCBaseInputChipView
+__attribute__((objc_subclassing_restricted)) @interface MDCFilledInputChipView
+    : MDCBaseInputChipView
 
 /**
  Sets the filled background color for a given state.

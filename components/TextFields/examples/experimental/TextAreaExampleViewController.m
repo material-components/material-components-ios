@@ -18,8 +18,8 @@
 
 #import "MaterialButtons+Theming.h"
 #import "MaterialColorScheme.h"
-#import "supplemental/MDCBaseTextArea.h"
 #import "supplemental/MDCBaseTextArea+MaterialTheming.h"
+#import "supplemental/MDCBaseTextArea.h"
 
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar+TypographyThemer.h"
@@ -89,12 +89,10 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
   self.scrollView = [[UIScrollView alloc] init];
   [self.view addSubview:self.scrollView];
   self.scrollViewSubviews = @[
-    [self createToggleErrorButton],
-    [self createResignFirstResponderButton],
-    [self createLabelWithText:@"Filled TextArea:"],
-    [self createFilledTextArea],
-//    [self createLabelWithText:@"Outlined TextArea:"],
-//    [self createOutlinedTextArea],
+    [self createToggleErrorButton], [self createResignFirstResponderButton],
+    [self createLabelWithText:@"Filled TextArea:"], [self createFilledTextArea],
+    //    [self createLabelWithText:@"Outlined TextArea:"],
+    //    [self createOutlinedTextArea],
   ];
   for (UIView *view in self.scrollViewSubviews) {
     [self.scrollView addSubview:view];
@@ -217,32 +215,32 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
 }
 
 - (void)updateTextAreaStates {
-  [self.allInputTextAreas enumerateObjectsUsingBlock:^(MDCBaseTextArea *textArea, NSUInteger idx,
-                                                       BOOL *stop) {
-    BOOL isEven = idx % 2 == 0;
-    if (self.isErrored) {
-      // TODO: Make TextArea respond to error theme selector
-      //      if ([textArea respondsToSelector:@selector(applyErrorThemeWithScheme:)]) {
-      //        [textArea applyErrorThemeWithScheme:self.containerScheme];
-      //      }
-      if (isEven) {
-        textArea.leadingAssistiveLabel.text = @"Suspendisse quam elit, mattis sit amet justo "
-                                                   @"vel, venenatis lobortis massa. Donec metus "
-                                                   @"dolor.";
-      } else {
-        textArea.leadingAssistiveLabel.text = @"This is an error.";
-      }
-    } else {
-      if ([textArea respondsToSelector:@selector(applyThemeWithScheme:)]) {
-        [textArea applyThemeWithScheme:self.containerScheme];
-      }
-      if (isEven) {
-        textArea.leadingAssistiveLabel.text = @"This is helper text.";
-      } else {
-        textArea.leadingAssistiveLabel.text = nil;
-      }
-    }
-  }];
+  [self.allInputTextAreas
+      enumerateObjectsUsingBlock:^(MDCBaseTextArea *textArea, NSUInteger idx, BOOL *stop) {
+        BOOL isEven = idx % 2 == 0;
+        if (self.isErrored) {
+          // TODO: Make TextArea respond to error theme selector
+          //      if ([textArea respondsToSelector:@selector(applyErrorThemeWithScheme:)]) {
+          //        [textArea applyErrorThemeWithScheme:self.containerScheme];
+          //      }
+          if (isEven) {
+            textArea.leadingAssistiveLabel.text = @"Suspendisse quam elit, mattis sit amet justo "
+                                                  @"vel, venenatis lobortis massa. Donec metus "
+                                                  @"dolor.";
+          } else {
+            textArea.leadingAssistiveLabel.text = @"This is an error.";
+          }
+        } else {
+          if ([textArea respondsToSelector:@selector(applyThemeWithScheme:)]) {
+            [textArea applyThemeWithScheme:self.containerScheme];
+          }
+          if (isEven) {
+            textArea.leadingAssistiveLabel.text = @"This is helper text.";
+          } else {
+            textArea.leadingAssistiveLabel.text = nil;
+          }
+        }
+      }];
   [self.view setNeedsLayout];
 }
 
