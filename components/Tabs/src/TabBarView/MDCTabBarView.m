@@ -663,35 +663,6 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   }
 }
 
-- (void)applySelectionTemplateToSelectionViewForItemView:(UIView *)itemView {
-  if (!itemView) {
-    return;
-  }
-  // Extract content frame from item view.
-  CGRect selectionIndicatorBounds = CGRectStandardize(itemView.bounds);
-  CGRect contentFrame = selectionIndicatorBounds;
-  if ([itemView conformsToProtocol:@protocol(MDCTabBarViewIndicatorSupporting)]) {
-    UIView<MDCTabBarViewIndicatorSupporting> *supportingView =
-        (UIView<MDCTabBarViewIndicatorSupporting> *)itemView;
-    contentFrame = supportingView.contentFrame;
-  }
-
-  // Construct a context object describing the selected tab.
-  UITabBarItem *item = self.items[[self.itemViews indexOfObject:itemView]];
-  MDCTabBarViewPrivateIndicatorContext *context =
-      [[MDCTabBarViewPrivateIndicatorContext alloc] initWithItem:item
-                                                          bounds:selectionIndicatorBounds
-                                                    contentFrame:contentFrame];
-
-  // Ask the template for attributes.
-  id<MDCTabBarViewIndicatorTemplate> template = self.selectionIndicatorTemplate;
-  MDCTabBarViewIndicatorAttributes *indicatorAttributes =
-      [template indicatorAttributesForContext:context];
-
-  // Update the selection indicator.
-  [self.selectionIndicatorView applySelectionIndicatorAttributes:indicatorAttributes];
-}
-
 /// Sets _selectionIndicator's bounds and center to display under the item at the given index with
 /// no animation. May be called from an animation block to animate the transition.
 - (void)updateSelectionIndicatorToIndex:(NSUInteger)index {
