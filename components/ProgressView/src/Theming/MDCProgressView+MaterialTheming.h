@@ -17,8 +17,9 @@
 #import "MaterialContainerScheme.h"
 
 /**
- This category is used to style MDCProgressView instances to a specific Material style which can be found
- within the [Material Guidelines](https://material.io/design/components/progress-indicators.html).
+ This category is used to style MDCProgressView instances to a specific Material style which can be
+ found within the [Material
+ Guidelines](https://material.io/design/components/progress-indicators.html).
  */
 @interface MDCProgressView (MaterialTheming)
 
