@@ -437,9 +437,9 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     }
     MDCTabBarViewItemView *tabBarItemView = (MDCTabBarViewItemView *)updatedItemView;
     id newValue = [object valueForKey:keyPath];
-//    if (newValue == [NSNull null]) {
-//      newValue = nil;
-//    }
+    if (newValue == [NSNull null]) {
+      newValue = nil;
+    }
     if ([keyPath isEqualToString:kImageKeyPath]) {
       tabBarItemView.iconImageView.image = newValue;
       [tabBarItemView invalidateIntrinsicContentSize];
