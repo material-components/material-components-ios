@@ -160,6 +160,11 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
   CGSize labelWidthFitSize = [self.titleLabel sizeThatFits:contentSize];
   CGSize labelSize = CGSizeMake(MIN(contentSize.width, labelWidthFitSize.width),
                                 MIN(contentSize.height, labelWidthFitSize.height));
+  // The label attempted to be taller than allowed by the content insets. Give it the full content
+  // width available.
+  if (labelWidthFitSize.height > contentSize.height) {
+    labelSize = CGSizeMake(contentSize.width, labelSize.height);
+  }
   CGRect labelFrame = CGRectMake(CGRectGetMidX(contentFrame) - (labelSize.width / 2),
                                  CGRectGetMidY(contentFrame) - (labelSize.height / 2),
                                  labelSize.width, labelSize.height);
