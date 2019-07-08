@@ -802,4 +802,42 @@ static UIImage *fakeImage(CGSize size) {
   XCTAssertFalse(mockCustomView.setSelectedCalledWithAnimation);
 }
 
+#pragma mark - Key-Value Observing (KVO)
+
+- (void)testSettingTitleNilFromNonNilValue {
+  // Given
+  self.tabBarView.items = @[ self.itemA ];
+  self.itemA.title = @"Not nil";
+
+  // When
+  self.itemA.title = nil;
+
+  // Then
+  XCTAssertNoThrow([self.tabBarView layoutIfNeeded]);
+}
+
+- (void)testSettingImageNilFromNonNilValue {
+  // Given
+  self.tabBarView.items = @[ self.itemA ];
+  self.itemA.image = fakeImage(CGSizeMake(24, 24));
+
+  // When
+  self.itemA.image = nil;
+
+  // Then
+  XCTAssertNoThrow([self.tabBarView layoutIfNeeded]);
+}
+
+- (void)testSettingSelectedImageNilFromNonNilValue {
+  // Given
+  self.tabBarView.items = @[ self.itemA ];
+  self.itemA.selectedImage = fakeImage(CGSizeMake(24, 24));
+
+  // When
+  self.itemA.selectedImage = nil;
+
+  // Then
+  XCTAssertNoThrow([self.tabBarView layoutIfNeeded]);
+}
+
 @end
