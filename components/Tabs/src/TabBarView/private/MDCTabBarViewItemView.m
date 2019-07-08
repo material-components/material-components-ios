@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #import "MDCTabBarViewItemView.h"
-#import "MaterialMath.h"
 
 #import <CoreGraphics/CoreGraphics.h>
 
