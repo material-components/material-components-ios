@@ -436,17 +436,28 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
       return;
     }
     MDCTabBarViewItemView *tabBarItemView = (MDCTabBarViewItemView *)updatedItemView;
-
+    id newValue = [object valueForKey:keyPath];
+    if (newValue == [NSNull null]) {
+      newValue = nil;
+    }
     if ([keyPath isEqualToString:kImageKeyPath]) {
-      tabBarItemView.iconImageView.image = change[NSKeyValueChangeNewKey];
+      tabBarItemView.iconImageView.image = newValue;
+      [tabBarItemView invalidateIntrinsicContentSize];
+      [tabBarItemView setNeedsLayout];
+      [self invalidateIntrinsicContentSize];
+      [self setNeedsLayout];
     } else if ([keyPath isEqualToString:kTitleKeyPath]) {
-      tabBarItemView.titleLabel.text = change[NSKeyValueChangeNewKey];
+      tabBarItemView.titleLabel.text = newValue;
+      [tabBarItemView invalidateIntrinsicContentSize];
+      [tabBarItemView setNeedsLayout];
+      [self invalidateIntrinsicContentSize];
+      [self setNeedsLayout];
     } else if ([keyPath isEqualToString:kAccessibilityLabelKeyPath]) {
-      tabBarItemView.accessibilityLabel = change[NSKeyValueChangeNewKey];
+      tabBarItemView.accessibilityLabel = newValue;
     } else if ([keyPath isEqualToString:kAccessibilityHintKeyPath]) {
-      tabBarItemView.accessibilityHint = change[NSKeyValueChangeNewKey];
+      tabBarItemView.accessibilityHint = newValue;
     } else if ([keyPath isEqualToString:kAccessibilityIdentifierKeyPath]) {
-      tabBarItemView.accessibilityIdentifier = change[NSKeyValueChangeNewKey];
+      tabBarItemView.accessibilityIdentifier = newValue;
     } else if ([keyPath isEqualToString:kAccessibilityTraitsKeyPath]) {
       tabBarItemView.accessibilityTraits = [change[NSKeyValueChangeNewKey] unsignedLongLongValue];
       if (tabBarItemView.accessibilityTraits == UIAccessibilityTraitNone) {
