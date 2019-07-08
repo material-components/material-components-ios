@@ -40,6 +40,7 @@ static const CGFloat kScrollableTabsLeadingEdgeInset = 52;
 /// Default duration in seconds for selection change animations.
 static const NSTimeInterval kSelectionChangeAnimationDuration = 0.3;
 
+static NSString *const kSelectedImageKeyPath = @"selectedImage";
 static NSString *const kImageKeyPath = @"image";
 static NSString *const kTitleKeyPath = @"title";
 static NSString *const kAccessibilityLabelKeyPath = @"accessibilityLabel";
@@ -178,7 +179,8 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
                                             ? UIAccessibilityTraitButton
                                             : item.accessibilityTraits;
       mdcItemView.titleLabel.textColor = [self titleColorForState:UIControlStateNormal];
-      mdcItemView.iconImageView.image = item.image;
+      mdcItemView.image = item.image;
+      mdcItemView.selectedImage = item.selectedImage;
       mdcItemView.rippleTouchController.rippleView.rippleColor = self.rippleColor;
       itemView = mdcItemView;
     }
@@ -387,6 +389,10 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
               options:NSKeyValueObservingOptionNew
               context:kKVOContextMDCTabBarView];
     [item addObserver:self
+           forKeyPath:kSelectedImageKeyPath
+              options:NSKeyValueObservingOptionNew
+              context:kKVOContextMDCTabBarView];
+    [item addObserver:self
            forKeyPath:kTitleKeyPath
               options:NSKeyValueObservingOptionNew
               context:kKVOContextMDCTabBarView];
@@ -412,6 +418,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 - (void)removeObserversFromTabBarItems {
   for (UITabBarItem *item in self.items) {
     [item removeObserver:self forKeyPath:kImageKeyPath context:kKVOContextMDCTabBarView];
+    [item removeObserver:self forKeyPath:kSelectedImageKeyPath context:kKVOContextMDCTabBarView];
     [item removeObserver:self forKeyPath:kTitleKeyPath context:kKVOContextMDCTabBarView];
     [item removeObserver:self
               forKeyPath:kAccessibilityLabelKeyPath
@@ -451,7 +458,13 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
       newValue = nil;
     }
     if ([keyPath isEqualToString:kImageKeyPath]) {
-      tabBarItemView.iconImageView.image = newValue;
+      tabBarItemView.image = newValue;
+      [tabBarItemView invalidateIntrinsicContentSize];
+      [tabBarItemView setNeedsLayout];
+      [self invalidateIntrinsicContentSize];
+      [self setNeedsLayout];
+    } else if ([keyPath isEqualToString:kSelectedImageKeyPath]) {
+      tabBarItemView.selectedImage = newValue;
       [tabBarItemView invalidateIntrinsicContentSize];
       [tabBarItemView setNeedsLayout];
       [self invalidateIntrinsicContentSize];
