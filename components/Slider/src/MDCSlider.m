@@ -554,7 +554,9 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, self.accessibilityValue);
   if (@available(iOS 10.0, *)) {
     if (self.hapticsEnabled) {
-      if (self.shouldEnableHapticsForAllDiscreteValues || _thumbTrack.value == _thumbTrack.minimumValue || _thumbTrack.value == _thumbTrack.maximumValue) {
+      if (self.shouldEnableHapticsForAllDiscreteValues ||
+          _thumbTrack.value == _thumbTrack.minimumValue ||
+          _thumbTrack.value == _thumbTrack.maximumValue) {
         [self.feedbackGenerator impactOccurred];
       }
     }
