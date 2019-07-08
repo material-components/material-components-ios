@@ -196,6 +196,7 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
   inputChipView.chipRowHeight = self.chipHeight;
   [inputChipView sizeToFit];
   inputChipView.textField.delegate = self;
+  inputChipView.mdc_adjustsFontForContentSizeCategory = YES;
   return inputChipView;
 }
 
@@ -205,11 +206,13 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
   inputChipView.chipsWrap = YES;
   inputChipView.preferredContainerHeight = 150;
   [inputChipView sizeToFit];
+  inputChipView.mdc_adjustsFontForContentSizeCategory = YES;
   return inputChipView;
 }
 
 - (MDCFilledInputChipView *)createFilledNonWrappingInputChipView {
   MDCFilledInputChipView *inputChipView = [[MDCFilledInputChipView alloc] init];
+  inputChipView.mdc_adjustsFontForContentSizeCategory = YES;
   inputChipView.textField.placeholder = @"Filled non-wrapping";
   [inputChipView applyThemeWithScheme:self.containerScheme];
   inputChipView.chipsWrap = NO;

@@ -23,6 +23,7 @@
 #import "MDCContainedInputView.h"
 #import "MDCContainedInputViewLabelAnimator.h"
 #import "MaterialMath.h"
+#import "MaterialTypography.h"
 
 @class MDCBaseInputChipViewTextField;
 @protocol MDCBaseInputChipViewTextFieldDelegate <NSObject>
@@ -45,6 +46,10 @@
   return self.font ?: [UIFont systemFontOfSize:[UIFont systemFontSize]];
 }
 
+-(void)setFont:(UIFont *)font {
+  [super setFont:font];
+  
+}
 - (void)deleteBackward {
   NSString *oldText = self.text;
   [super deleteBackward];
@@ -837,6 +842,44 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   });
   return font;
 }
+
+#pragma mark Dynamic Type
+
+- (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
+  _mdc_adjustsFontForContentSizeCategory = adjusts;
+  if (_mdc_adjustsFontForContentSizeCategory) {
+    [self startObservingUIContentSizeCategory];
+  } else {
+    [self stopObservingUIContentSizeCategory];
+  }
+  [self updateFontsForDynamicType];
+}
+
+- (void)updateFontsForDynamicType {
+  if (self.mdc_adjustsFontForContentSizeCategory) {
+    UIFont *textFont = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
+    UIFont *helperFont = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleCaption];
+    self.textField.font = textFont;
+    self.label.font = textFont;
+    self.leadingAssistiveLabel.font = helperFont;
+    self.leadingAssistiveLabel.font = helperFont;
+  }
+  [self setNeedsLayout];
+}
+
+- (void)startObservingUIContentSizeCategory {
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(updateFontsForDynamicType)
+                                               name:UIContentSizeCategoryDidChangeNotification
+                                             object:nil];
+}
+
+- (void)stopObservingUIContentSizeCategory {
+  [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                  name:UIContentSizeCategoryDidChangeNotification
+                                                object:nil];
+}
+
 
 #pragma mark Custom UIView Geometry Methods
 
