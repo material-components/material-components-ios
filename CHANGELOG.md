@@ -1,3 +1,58 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+## Changes
+
+### FlexibleHeader
+
+* [use MDCEdgeInsetsEqualToEdgeInsets to compare insets when enforcing insets for scroll view.(#7807)](https://github.com/material-components/material-components-ios/commit/bc07f0c53239f8eb7c2df5eaa9e82995177636a8) (Wenyu Zhang)
+
+### Slider
+
+* [Haptics For Slider (#7738)](https://github.com/material-components/material-components-ios/commit/2674c8cd134dcf84d48c18326bea5607a823e10f) (afweiss)
+
+### Tabs
+
+* [Add Selection Indicator (#7767)](https://github.com/material-components/material-components-ios/commit/d8581113f6427dcbd508102d4d4c704e3473aefa) (Robert Moore)
+* [Allow setting ripple color. (#7784)](https://github.com/material-components/material-components-ios/commit/88e5a52f9f41b955bfe68cfa85564e387a98187e) (Robert Moore)
+* [Customize selection indicator color. (#7774)](https://github.com/material-components/material-components-ios/commit/e4aee2a13bdff24154e22e5d02a2886ef18b060b) (Robert Moore)
+* [Deduplicate item view layout and contentFrame calculation. (#7796)](https://github.com/material-components/material-components-ios/commit/c22a1f0475882d85e9939208ec52ba14a6f3186c) (Robert Moore)
+* [Fix `contentFrame` for item view. (#7782)](https://github.com/material-components/material-components-ios/commit/08816595403ca942a7a53b57b0acaf982a52179a) (Robert Moore)
+* [Fixes layout for changing font sizes. (#7771)](https://github.com/material-components/material-components-ios/commit/4842c32fd80cfa3ee38cd197319286bc8af3ca38) (Robert Moore)
+* [Improve text and image rendering. (#7803)](https://github.com/material-components/material-components-ios/commit/0dc3125598ab30b2b33e38ce128a0cac651aa9e5) (Robert Moore)
+* [Include public headers in umbrella header. (#7783)](https://github.com/material-components/material-components-ios/commit/1065634918ffbdf06a46333788b256e28c98edc9) (Robert Moore)
+* [Inject dummy scroll view into example. (#7772)](https://github.com/material-components/material-components-ios/commit/5a7efb0fcc80f4975801f635f2272adb4c1109bb) (Robert Moore)
+* [Inset scrollable tabs by 52 points. (#7776)](https://github.com/material-components/material-components-ios/commit/a19b73048b65c10a27a2e7715b142cdaebea0097) (Robert Moore)
+* [Item views should translate their autoresizing mask into constraints](https://github.com/material-components/material-components-ios/commit/a1d7a78ff5573aceda6b7256ee9de1c2ae341dda) (Ang)
+* [Remove extra `contentView` from item view. (#7795)](https://github.com/material-components/material-components-ios/commit/8b028b22bc8d879b67a67da2ab0c12243a7f7278) (Robert Moore)
+* [Remove unused/duplicate method. (#7793)](https://github.com/material-components/material-components-ios/commit/32905f37e650209e8a455b05cd5822f380dfc0c5) (Robert Moore)
+* [Switch to manual layout (#7764)](https://github.com/material-components/material-components-ios/commit/583a1bd5f164071c8aa2418bc1431fbdc46f4766) (Robert Moore)
+* [Update README for TabBarView. (#7799)](https://github.com/material-components/material-components-ios/commit/4c41b1008920f6350f8a5b08a714a6e38e262ae9) (Robert Moore)
+* [Vertically hug content in sizeThatFits: (#7777)](https://github.com/material-components/material-components-ios/commit/012c11de3210ff194ae4ba0c43dace79752d3ded) (Robert Moore)
+
+### private/Math
+
+* [Add MDCEdgeInsetsEqualToEdgeInsets to compare two UIEdgeInsets. (#7804)](https://github.com/material-components/material-components-ios/commit/46454f9f4b38ff9cc18ad7c174bd5740b5069c7f) (Wenyu Zhang)
+
+## Multi-component changes
+
+* [Add an MDCProgressView theming extension (#7791)](https://github.com/material-components/material-components-ios/commit/43920aed56d0f8f49838c43abdaaf17217a79a77) (Andrew Overton)
+
+---
+
 # 85.4.0
 
 This minor release includes changes to the MDCTabBarView Beta component.
