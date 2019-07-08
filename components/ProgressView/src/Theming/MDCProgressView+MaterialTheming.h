@@ -12,16 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialContainerScheme.h"
 #import "MaterialProgressView.h"
 
+#import "MaterialContainerScheme.h"
+
 /**
- Applies an object conforming to MDCContainerScheming to theme a MDCProgressView.
+ This category is used to style MDCProgressView instances to a specific Material style which can be found
+ within the [Material Guidelines](https://material.io/design/components/progress-indicators.html).
  */
 @interface MDCProgressView (MaterialTheming)
 
 /**
- Applies a container scheme to an MDCProgressView instance.
+ Applies an object conforming to MDCContainerScheming to theme an MDCProgressView.
 
  @param scheme A container scheme instance containing any desired customizations to the theming
  system.
