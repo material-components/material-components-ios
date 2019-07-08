@@ -14,12 +14,12 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCTabBarViewIndicatorSupporting.h"
+#import "MDCTabBarViewCustomViewable.h"
 
 #import <MaterialComponents/MaterialRipple.h>
 
 /** A basic view that displays a title and image for a tab bar item within MDCTabBarView. */
-@interface MDCTabBarViewItemView : UIView <MDCTabBarViewIndicatorSupporting>
+@interface MDCTabBarViewItemView : UIView <MDCTabBarViewCustomViewable>
 
 /** The image view to display the icon. */
 @property(nonatomic, strong) UIImageView *iconImageView;

@@ -275,4 +275,13 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
   return [super accessibilityLabel] ?: self.titleLabel.text;
 }
 
+#pragma mark - MDCTabBarViewCustomViewable
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+  // TODO(https://github.com/material-components/material-components-ios/issues/7801): Add
+  // item view support for selection.
+  // TODO(https://github.com/material-components/material-components-ios/issues/7798): Switch to
+  // using the selected image.
+}
+
 @end
