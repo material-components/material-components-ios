@@ -1,24 +1,38 @@
-# #develop#
+# 85.5.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This minor release includes a theming extension for ProgressView, a bug fix for FlexibleHeader, haptics support for Slider, and progress on a number of core MDCTabBarView features.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
+ProgressView now has a theming extension.
+
+```objc
+MDCProgressView *progressView = ...
+MDCContainerScheme *containerScheme = ...
+[progressView applyThemeWithScheme:containerScheme];
+```
+
 ## API changes
 
-## Component changes
+### ProgressView+Theming
 
-## Changes
+**New extension.**
+
+### Slider
+
+#### MDCSlider
+
+*new* property: `hapticsEnabled` in `MDCSlider`
+
+## Component changes
 
 ### FlexibleHeader
 
 * [use MDCEdgeInsetsEqualToEdgeInsets to compare insets when enforcing insets for scroll view.(#7807)](https://github.com/material-components/material-components-ios/commit/bc07f0c53239f8eb7c2df5eaa9e82995177636a8) (Wenyu Zhang)
+
+### ProgressView
+
+* [Add an MDCProgressView theming extension (#7791)](https://github.com/material-components/material-components-ios/commit/43920aed56d0f8f49838c43abdaaf17217a79a77) (Andrew Overton)
 
 ### Slider
 
@@ -46,10 +60,6 @@ Replace this text with example code for each new feature.
 ### private/Math
 
 * [Add MDCEdgeInsetsEqualToEdgeInsets to compare two UIEdgeInsets. (#7804)](https://github.com/material-components/material-components-ios/commit/46454f9f4b38ff9cc18ad7c174bd5740b5069c7f) (Wenyu Zhang)
-
-## Multi-component changes
-
-* [Add an MDCProgressView theming extension (#7791)](https://github.com/material-components/material-components-ios/commit/43920aed56d0f8f49838c43abdaaf17217a79a77) (Andrew Overton)
 
 ---
 
