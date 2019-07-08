@@ -16,7 +16,7 @@
 
 #import "MDCTabBarItem.h"
 #import "MDCTabBarView.h"
-#import "MDCTabBarViewIndicatorSupporting.h"
+#import "MDCTabBarViewCustomViewable.h"
 #import "MDCTabBarViewItemView.h"
 
 /** The typical size of an image in a Tab bar. */
@@ -35,7 +35,7 @@ static const CGFloat kMinItemWidth = 90;
 static const CGFloat kMaxItemWidth = 360;
 
 /** A custom view to place in an MDCTabBarView. */
-@interface MDCTabBarViewSnapshotTestsCustomView : UIView <MDCTabBarViewIndicatorSupporting>
+@interface MDCTabBarViewSnapshotTestsCustomView : UIView <MDCTabBarViewCustomViewable>
 /** A switch shown in the view. */
 @property(nonatomic, strong) UISwitch *aSwitch;
 @end
@@ -44,6 +44,10 @@ static const CGFloat kMaxItemWidth = 360;
 
 - (CGRect)contentFrame {
   return CGRectStandardize(self.aSwitch.frame);
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+  // No-op since this is an example.
 }
 
 - (UISwitch *)aSwitch {

@@ -21,7 +21,7 @@ static NSString *const kExampleTitle = @"TabBarView";
 
 /** A custom view to place in an MDCTabBarView. */
 @interface MDCTabBarViewTypicalExampleViewControllerCustomView
-    : UIView <MDCTabBarViewIndicatorSupporting>
+    : UIView <MDCTabBarViewCustomViewable>
 /** A switch shown in the view. */
 @property(nonatomic, strong) UISwitch *aSwitch;
 @end
@@ -30,6 +30,10 @@ static NSString *const kExampleTitle = @"TabBarView";
 
 - (CGRect)contentFrame {
   return CGRectStandardize(self.aSwitch.frame);
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+  // This is where a real custom view would handle its selection state change.
 }
 
 - (UISwitch *)aSwitch {

@@ -15,12 +15,11 @@
 #import <Foundation/Foundation.h>
 
 /**
- A simple protocol that indicates the responder can be targeted by an
- @c MDCTabBarViewIndicatorTemplate.
+ A simple protocol that custom views rendered in MDCTabBarView must conform to.
 
  @seealso MDCTabBarViewIndicatorTemplate
  */
-@protocol MDCTabBarViewIndicatorSupporting
+@protocol MDCTabBarViewCustomViewable
 
 /**
  The bounds of the receiver.
@@ -32,5 +31,13 @@
  the content.
  */
 @property(readonly) CGRect contentFrame;
+
+/**
+ Called when the view should change its appearance based on its selection status.
+
+ @param selected The new selection state of the view.
+ @param animated Whether the change should be animated.
+ */
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated;
 
 @end

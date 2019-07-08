@@ -15,8 +15,8 @@
 #import "MDCTabBarView.h"
 
 #import "MDCTabBarItemCustomViewing.h"
+#import "MDCTabBarViewCustomViewable.h"
 #import "MDCTabBarViewDelegate.h"
-#import "MDCTabBarViewIndicatorSupporting.h"
 #import "MDCTabBarViewIndicatorTemplate.h"
 #import "MDCTabBarViewUnderlineIndicatorTemplate.h"
 #import "private/MDCTabBarViewIndicatorView.h"
@@ -221,6 +221,11 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     UIView *oldSelectedItemView = self.itemViews[oldSelectedItemIndex];
     oldSelectedItemView.accessibilityTraits =
         (oldSelectedItemView.accessibilityTraits & ~UIAccessibilityTraitSelected);
+    if ([oldSelectedItemView conformsToProtocol:@protocol(MDCTabBarViewCustomViewable)]) {
+      UIView<MDCTabBarViewCustomViewable> *customViewableView =
+          (UIView<MDCTabBarViewCustomViewable> *)oldSelectedItemView;
+      [customViewableView setSelected:NO animated:animated];
+    }
   }
 
   // Handle setting to `nil` without passing it to the nonnull parameter in `indexOfObject:`
@@ -244,6 +249,11 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   UIView *newSelectedItemView = self.itemViews[itemIndex];
   newSelectedItemView.accessibilityTraits =
       (newSelectedItemView.accessibilityTraits | UIAccessibilityTraitSelected);
+  if ([newSelectedItemView conformsToProtocol:@protocol(MDCTabBarViewCustomViewable)]) {
+    UIView<MDCTabBarViewCustomViewable> *customViewableView =
+        (UIView<MDCTabBarViewCustomViewable> *)newSelectedItemView;
+    [customViewableView setSelected:YES animated:animated];
+  }
   [self updateTitleColorForAllViews];
   [self updateImageTintColorForAllViews];
   [self updateTitleFontForAllViews];
@@ -698,9 +708,9 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   // Extract content frame from item view.
   CGRect contentFrame = selectionIndicatorBounds;
   UIView *itemView = self.itemViews[index];
-  if ([itemView conformsToProtocol:@protocol(MDCTabBarViewIndicatorSupporting)]) {
-    UIView<MDCTabBarViewIndicatorSupporting> *supportingView =
-        (UIView<MDCTabBarViewIndicatorSupporting> *)itemView;
+  if ([itemView conformsToProtocol:@protocol(MDCTabBarViewCustomViewable)]) {
+    UIView<MDCTabBarViewCustomViewable> *supportingView =
+        (UIView<MDCTabBarViewCustomViewable> *)itemView;
     contentFrame = supportingView.contentFrame;
   }
 
