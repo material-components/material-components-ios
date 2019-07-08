@@ -96,6 +96,7 @@ mdc_extension_objc_library(
     deps = [
         "//components/AnimationTiming",
         "//components/Ripple",
+        "//components/private/Math",
         "@material_internationalization_ios//:MDFInternationalization",
     ],
 )

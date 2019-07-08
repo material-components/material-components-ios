@@ -113,6 +113,7 @@ Pod::Spec.new do |mdc|
     ]
     extension.dependency "MaterialComponents/AnimationTiming"
     extension.dependency "MaterialComponents/Ripple"
+    extension.dependency "MaterialComponents/private/Math"
     extension.dependency "MDFInternationalization"
 
     extension.test_spec 'UnitTests' do |unit_tests|

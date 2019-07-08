@@ -14,6 +14,10 @@
 
 #import "MDCTabBarViewItemView.h"
 
+#import <CoreGraphics/CoreGraphics.h>
+
+#import "MaterialMath.h"
+
 /** The minimum width of any item view. */
 static const CGFloat kMinWidth = 90;
 
@@ -126,15 +130,16 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
 }
 
 - (CGRect)contentFrameForTitleLabelInTextOnlyLayout {
-  CGRect contentFrame = UIEdgeInsetsInsetRect(self.bounds, kEdgeInsetsTextOnly);
+  CGRect insetBounds = UIEdgeInsetsInsetRect(self.bounds, kEdgeInsetsTextOnly);
 
-  CGSize contentSize = CGSizeMake(CGRectGetWidth(contentFrame), CGRectGetHeight(contentFrame));
+  CGSize contentSize = CGSizeMake(CGRectGetWidth(insetBounds), CGRectGetHeight(insetBounds));
   CGSize labelWidthFitSize = [self.titleLabel sizeThatFits:contentSize];
   CGSize labelSize =
       CGSizeMake(labelWidthFitSize.width, MIN(contentSize.height, labelWidthFitSize.height));
-  return CGRectMake(CGRectGetMidX(contentFrame) - (labelWidthFitSize.width / 2),
-                    CGRectGetMidY(contentFrame) - (labelWidthFitSize.height / 2), labelSize.width,
-                    labelSize.height);
+  CGRect contentFrame = CGRectMake(CGRectGetMidX(insetBounds) - (labelWidthFitSize.width / 2),
+                                   CGRectGetMidY(insetBounds) - (labelWidthFitSize.height / 2),
+                                   labelSize.width, labelSize.height);
+  return MDCRectAlignToScale(contentFrame, self.window.screen.scale);
 }
 
 - (void)layoutSubviewsTextOnly {
@@ -145,19 +150,22 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
   CGSize labelSize =
       CGSizeMake(contentSize.width, MIN(contentSize.height, labelWidthFitSize.height));
   self.titleLabel.bounds = CGRectMake(0, 0, labelSize.width, labelSize.height);
-  self.titleLabel.center = CGPointMake(CGRectGetMidX(contentFrame), CGRectGetMidY(contentFrame));
+  CGPoint center = CGPointMake(CGRectGetMidX(contentFrame), CGRectGetMidY(contentFrame));
+  self.titleLabel.center = MDCRoundCenterWithBoundsAndScale(center, self.titleLabel.bounds,
+                                                            self.window.screen.scale > 0 ?: 1);
 }
 
 - (CGRect)contentFrameForImageViewInImageOnlyLayout {
-  CGRect contentFrame = UIEdgeInsetsInsetRect(self.bounds, kEdgeInsetsImageOnly);
+  CGRect insetBounds = UIEdgeInsetsInsetRect(self.bounds, kEdgeInsetsImageOnly);
 
-  CGSize contentSize = CGSizeMake(CGRectGetWidth(contentFrame), CGRectGetHeight(contentFrame));
+  CGSize contentSize = CGSizeMake(CGRectGetWidth(insetBounds), CGRectGetHeight(insetBounds));
   CGSize imageIntrinsicContentSize = self.iconImageView.intrinsicContentSize;
   CGSize imageFinalSize = CGSizeMake(MIN(contentSize.width, imageIntrinsicContentSize.width),
                                      MIN(contentSize.height, imageIntrinsicContentSize.height));
-  return CGRectMake(CGRectGetMidX(contentFrame) - (imageFinalSize.width / 2),
-                    CGRectGetMidY(contentFrame) - (imageFinalSize.height / 2), imageFinalSize.width,
-                    imageFinalSize.height);
+  CGRect contentFrame = CGRectMake(CGRectGetMidX(insetBounds) - (imageFinalSize.width / 2),
+                                   CGRectGetMidY(insetBounds) - (imageFinalSize.height / 2),
+                                   imageFinalSize.width, imageFinalSize.height);
+  return MDCRectAlignToScale(contentFrame, self.window.screen.scale);
 }
 
 - (void)layoutSubviewsImageOnly {
@@ -168,13 +176,15 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
   CGSize imageFinalSize = CGSizeMake(MIN(contentSize.width, imageIntrinsicContentSize.width),
                                      MIN(contentSize.height, imageIntrinsicContentSize.height));
   self.iconImageView.bounds = CGRectMake(0, 0, imageFinalSize.width, imageFinalSize.height);
-  self.iconImageView.center = CGPointMake(CGRectGetMidX(contentFrame), CGRectGetMidY(contentFrame));
+  CGPoint center = CGPointMake(CGRectGetMidX(contentFrame), CGRectGetMidY(contentFrame));
+  self.iconImageView.center = MDCRoundCenterWithBoundsAndScale(center, self.iconImageView.bounds,
+                                                               self.window.screen.scale > 0 ?: 1);
 }
 
 - (CGRect)contentFrameForTitleLabelInTextAndImageLayout {
-  CGRect contentFrame = UIEdgeInsetsInsetRect(self.bounds, kEdgeInsetsTextAndImage);
+  CGRect insetBounds = UIEdgeInsetsInsetRect(self.bounds, kEdgeInsetsTextAndImage);
 
-  CGSize contentSize = CGSizeMake(CGRectGetWidth(contentFrame), CGRectGetHeight(contentFrame));
+  CGSize contentSize = CGSizeMake(CGRectGetWidth(insetBounds), CGRectGetHeight(insetBounds));
   CGSize labelSingleLineSize = self.titleLabel.intrinsicContentSize;
   CGSize availableIconSize = CGSizeMake(
       contentSize.width, contentSize.height - (kImageTitlePadding + labelSingleLineSize.height));
@@ -189,8 +199,10 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
   CGSize availableLabelSize = CGSizeMake(
       contentSize.width, contentSize.height - (imageFinalSize.height + kImageTitlePadding));
   CGSize finalLabelSize = [self.titleLabel sizeThatFits:availableLabelSize];
-  return CGRectMake(CGRectGetMidX(contentFrame) - (finalLabelSize.width / 2),
-                    CGRectGetMinY(contentFrame), finalLabelSize.width, contentSize.height);
+  CGRect contentFrame =
+      CGRectMake(CGRectGetMidX(insetBounds) - (finalLabelSize.width / 2),
+                 CGRectGetMinY(insetBounds), finalLabelSize.width, contentSize.height);
+  return MDCRectAlignToScale(contentFrame, self.window.screen.scale);
 }
 
 - (void)layoutSubviewsTextAndImage {
@@ -207,8 +219,10 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
       CGSizeMake(MIN(imageIntrinsicContentSize.width, availableIconSize.width),
                  MIN(imageIntrinsicContentSize.height, availableIconSize.height));
   self.iconImageView.bounds = CGRectMake(0, 0, imageFinalSize.width, imageFinalSize.height);
-  self.iconImageView.center = CGPointMake(CGRectGetMidX(contentFrame),
-                                          CGRectGetMinY(contentFrame) + imageFinalSize.height / 2);
+  CGPoint center = CGPointMake(CGRectGetMidX(contentFrame),
+                               CGRectGetMinY(contentFrame) + imageFinalSize.height / 2);
+  self.iconImageView.center = MDCRoundCenterWithBoundsAndScale(center, self.iconImageView.bounds,
+                                                               self.window.screen.scale > 0 ?: 1);
 
   // Now position the label from the bottom.
   CGSize availableLabelSize = CGSizeMake(
