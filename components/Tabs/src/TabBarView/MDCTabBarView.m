@@ -34,6 +34,9 @@ static char *const kKVOContextMDCTabBarView = "kKVOContextMDCTabBarView";
 /** Minimum (typical) height of a Material Tab bar. */
 static const CGFloat kMinHeight = 48;
 
+/** The leading edge inset for scrollable tabs. */
+static const CGFloat kScrollableTabsLeadingEdgeInset = 52;
+
 /// Default duration in seconds for selection change animations.
 static const NSTimeInterval kSelectionChangeAnimationDuration = 0.3;
 
@@ -67,6 +70,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
 /** The title font for bar items. */
 @property(nonnull, nonatomic, strong) NSMutableDictionary<NSNumber *, UIFont *> *stateToTitleFont;
+
 @end
 
 @implementation MDCTabBarView
@@ -79,6 +83,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 - (instancetype)init {
   self = [super init];
   if (self) {
+    _rippleColor = [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.16];
     _needsScrollToSelectedItem = YES;
     _items = @[];
     _stateToImageTintColor = [NSMutableDictionary dictionary];
@@ -90,6 +95,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     _selectionIndicatorView = [[MDCTabBarViewIndicatorView alloc] init];
     _selectionIndicatorView.translatesAutoresizingMaskIntoConstraints = NO;
     _selectionIndicatorView.userInteractionEnabled = NO;
+    _selectionIndicatorView.tintColor = UIColor.blackColor;
 
     _selectionIndicatorTemplate = [[MDCTabBarViewUnderlineIndicatorTemplate alloc] init];
 
@@ -116,6 +122,26 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
 - (UIColor *)barTintColor {
   return self.backgroundColor;
+}
+
+- (void)updateRippleColorForAllViews {
+  for (UIView *subview in self.itemViews) {
+    if (![subview isKindOfClass:[MDCTabBarViewItemView class]]) {
+      continue;
+    }
+    MDCTabBarViewItemView *itemView = (MDCTabBarViewItemView *)subview;
+    itemView.rippleTouchController.rippleView.rippleColor = self.rippleColor;
+  }
+}
+
+- (void)setRippleColor:(UIColor *)rippleColor {
+  _rippleColor = [rippleColor copy];
+  [self updateRippleColorForAllViews];
+}
+
+- (void)setSelectionIndicatorStrokeColor:(UIColor *)selectionIndicatorStrokeColor {
+  _selectionIndicatorStrokeColor = selectionIndicatorStrokeColor ?: UIColor.blackColor;
+  self.selectionIndicatorView.tintColor = self.selectionIndicatorStrokeColor;
 }
 
 - (void)setItems:(NSArray<UITabBarItem *> *)items {
@@ -153,9 +179,9 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
                                             : item.accessibilityTraits;
       mdcItemView.titleLabel.textColor = [self titleColorForState:UIControlStateNormal];
       mdcItemView.iconImageView.image = item.image;
+      mdcItemView.rippleTouchController.rippleView.rippleColor = self.rippleColor;
       itemView = mdcItemView;
     }
-    itemView.translatesAutoresizingMaskIntoConstraints = NO;
     UITapGestureRecognizer *tapGesture =
         [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapItemView:)];
     [itemView addGestureRecognizer:tapGesture];
@@ -494,7 +520,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   BOOL isRTL =
       self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
 
-  CGFloat itemViewOriginX = 0;
+  CGFloat itemViewOriginX = isRTL ? 0 : kScrollableTabsLeadingEdgeInset;
   CGFloat itemViewOriginY = 0;
   CGFloat itemViewHeight = [self availableSizeForSubviewLayout].height;
   NSEnumerator<UIView *> *itemViewEnumerator =
@@ -536,7 +562,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 }
 
 - (CGSize)intrinsicContentSizeForScrollableLayout {
-  CGFloat totalWidth = 0;
+  CGFloat totalWidth = kScrollableTabsLeadingEdgeInset;
   CGFloat maxHeight = 0;
   for (UIView *itemView in self.itemViews) {
     CGSize contentSize = itemView.intrinsicContentSize;
@@ -550,7 +576,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
 - (CGSize)sizeThatFits:(CGSize)size {
   CGSize intrinsicSize = self.intrinsicContentSize;
-  return CGSizeMake(MAX(intrinsicSize.width, size.width), MAX(intrinsicSize.height, size.height));
+  return CGSizeMake(MAX(intrinsicSize.width, size.width), intrinsicSize.height);
 }
 
 #pragma mark - Helpers
@@ -575,7 +601,8 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
   BOOL isRTL =
       self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
-  CGFloat viewOriginX = isRTL ? self.contentSize.width : 0;
+  CGFloat originAdjustment = [self isJustifiedLayoutStyle] ? 0 : kScrollableTabsLeadingEdgeInset;
+  CGFloat viewOriginX = isRTL ? self.contentSize.width - originAdjustment : originAdjustment;
 
   for (NSUInteger i = 0; i < index; ++i) {
     CGSize viewSize = [self expectedSizeForView:self.itemViews[i]];

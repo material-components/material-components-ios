@@ -1,3 +1,70 @@
+# 85.4.0
+
+This minor release includes changes to the MDCTabBarView Beta component.
+
+## API Changes
+
+### Tabs+TabBarView
+
+#### MDCTabBarViewIndicatorTemplate
+
+*new* protocol: `MDCTabBarViewIndicatorTemplate`
+
+*new* method: `-indicatorAttributesForContext:` in `MDCTabBarViewIndicatorTemplate`
+
+#### MDCTabBarViewIndicatorAttributes
+
+*new* class: `MDCTabBarViewIndicatorAttributes`
+
+*new* property: `path` in `MDCTabBarViewIndicatorAttributes`
+
+#### MDCTabBarViewIndicatorContext
+
+*new* property: `contentFrame` in `MDCTabBarViewIndicatorContext`
+
+*new* protocol: `MDCTabBarViewIndicatorContext`
+
+*new* property: `item` in `MDCTabBarViewIndicatorContext`
+
+*new* property: `bounds` in `MDCTabBarViewIndicatorContext`
+
+#### MDCTabBarView
+
+*new* property: `rippleColor` in `MDCTabBarView`
+
+#### MDCTabBarViewUnderlineIndicatorTemplate
+
+*new* class: `MDCTabBarViewUnderlineIndicatorTemplate`
+
+## Component changes
+
+### Tabs
+
+* [Allow setting ripple color. (#7784)](https://github.com/material-components/material-components-ios/commit/196e2fc524ac42f0d5e09bbbe4906b29c0da6aea) (Robert Moore)
+* [Fix `contentFrame` for item view. (#7782)](https://github.com/material-components/material-components-ios/commit/f008d405ff112cbf585a9753e6c26f4d69c13e4c) (Robert Moore)
+* [Include public headers in umbrella header. (#7783)](https://github.com/material-components/material-components-ios/commit/59e6c2c2558b7514eb8b4e3080c39e764456caf6) (Robert Moore)
+* [Item views should translate their autoresizing mask into constraints](https://github.com/material-components/material-components-ios/commit/708f42f772dd2ac08350f8a2ac3415efe8373be2) (Ang)
+
+---
+
+# 85.3.0
+
+This minor release includes changes to the MDCTabBarView Beta component.
+
+## Component changes
+
+### Tabs
+
+* [Add Selection Indicator (#7767)](https://github.com/material-components/material-components-ios/commit/fa410ccaa038969e74a60a579f66ada34e7e9604) (Robert Moore)
+* [Customize selection indicator color. (#7774)](https://github.com/material-components/material-components-ios/commit/178536925e5ded30c98f7acc10811f59568f8ffe) (Robert Moore)
+* [Fixes layout for changing font sizes. (#7771)](https://github.com/material-components/material-components-ios/commit/be8bd0db086fce66d8feccf6b8fc1a30a7477957) (Robert Moore)
+* [Inject dummy scroll view into example. (#7772)](https://github.com/material-components/material-components-ios/commit/b28813b88ba3820d731df2bbf84f7dc71a636033) (Robert Moore)
+* [Inset scrollable tabs by 52 points. (#7776)](https://github.com/material-components/material-components-ios/commit/f82228af1855eb038d841a151065bfa7cacebdce) (Robert Moore)
+* [Switch to manual layout (#7764)](https://github.com/material-components/material-components-ios/commit/5bdb3411707a9e363b9ff815c726e8b227b0f60c) (Robert Moore)
+* [Vertically hug content in sizeThatFits: (#7777)](https://github.com/material-components/material-components-ios/commit/021b2f8a1862470e8cb129c5fbc1de21356e53a2) (Robert Moore)
+
+---
+
 # 85.2.0
 
 In this minor release we have fixed bugs in Buttons and FlexibleHeader, added new features to Banner, added a theming extension for BottomNavigation, and improved test coverage in BottomSheet.

@@ -34,6 +34,11 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
 /** The color of the Tab bar's background. */
 @property(nullable, nonatomic, copy) UIColor *barTintColor;
 
+/**
+ The color for the Ripple effect for touch feedback.
+ */
+@property(nonnull, nonatomic, copy) UIColor *rippleColor;
+
 /** The tab bar view delegate. */
 @property(nullable, nonatomic, weak) id<MDCTabBarViewDelegate> tabBarDelegate;
 
@@ -42,6 +47,11 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
  indicator in this tab bar.
  */
 @property(nonnull, nonatomic, strong) id<MDCTabBarViewIndicatorTemplate> selectionIndicatorTemplate;
+
+/**
+ The stroke color for the selection indicator. If no value is set, then a default value is used.
+ */
+@property(nullable, nonatomic, copy) UIColor *selectionIndicatorStrokeColor;
 
 /**
  Sets the color of the bar items' image @c tintColor for the given control state.  Supports
