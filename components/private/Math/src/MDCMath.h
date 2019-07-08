@@ -244,7 +244,6 @@ static inline CGPoint MDCRoundCenterWithBoundsAndScale(CGPoint center,
   return CGPointMake(origin.x + halfWidth, origin.y + halfHeight);
 }
 
-
 /// Compare two edge insets using MDCCGFloatEqual.
 /// @param insets1 An edge inset to compare with insets2
 /// @param insets2 An edge inset to compare with insets1
