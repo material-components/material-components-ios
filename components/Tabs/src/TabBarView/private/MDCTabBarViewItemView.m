@@ -96,19 +96,6 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
   }
 }
 
-- (CGRect)contentFrame {
-  if (!self.iconImageView.image) {
-    if (self.titleLabel.text.length) {
-      return [self contentFrameForTitleOnlyLayout];
-    }
-    return CGRectZero;
-  }
-  if (self.titleLabel.text.length) {
-    return [self contentFrameForTitleAndImageLayout];
-  }
-  return [self contentFrameForImageOnlyLayout];
-}
-
 #pragma mark - UIView
 
 - (void)layoutSubviews {
@@ -131,25 +118,6 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
     self.titleLabel.frame = titleLabelFrame;
     self.iconImageView.frame = iconImageViewFrame;
   }
-}
-
-- (CGRect)contentFrameForTitleOnlyLayout {
-  return [self titleLabelFrameForTitleOnlyLayout];
-}
-
-- (CGRect)contentFrameForImageOnlyLayout {
-  return [self iconImageViewFrameForImageOnlyLayout];
-}
-
-- (CGRect)contentFrameForTitleAndImageLayout {
-  CGRect titleLabelFrame = CGRectZero;
-  CGRect iconImageViewFrame = CGRectZero;
-  [self layoutTitleLabelFrame:&titleLabelFrame iconImageViewFrame:&iconImageViewFrame];
-  return MDCRectAlignToScale(
-      CGRectMake(CGRectGetMinX(titleLabelFrame), CGRectGetMinY(iconImageViewFrame),
-                 CGRectGetWidth(titleLabelFrame),
-                 CGRectGetMaxY(titleLabelFrame) - CGRectGetMinY(iconImageViewFrame)),
-      self.window.screen.scale);
 }
 
 - (CGRect)titleLabelFrameForTitleOnlyLayout {
@@ -282,6 +250,38 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
   // item view support for selection.
   // TODO(https://github.com/material-components/material-components-ios/issues/7798): Switch to
   // using the selected image.
+}
+
+- (CGRect)contentFrame {
+  if (!self.iconImageView.image) {
+    if (self.titleLabel.text.length) {
+      return [self contentFrameForTitleOnlyLayout];
+    }
+    return CGRectZero;
+  }
+  if (self.titleLabel.text.length) {
+    return [self contentFrameForTitleAndImageLayout];
+  }
+  return [self contentFrameForImageOnlyLayout];
+}
+
+- (CGRect)contentFrameForTitleOnlyLayout {
+  return [self titleLabelFrameForTitleOnlyLayout];
+}
+
+- (CGRect)contentFrameForImageOnlyLayout {
+  return [self iconImageViewFrameForImageOnlyLayout];
+}
+
+- (CGRect)contentFrameForTitleAndImageLayout {
+  CGRect titleLabelFrame = CGRectZero;
+  CGRect iconImageViewFrame = CGRectZero;
+  [self layoutTitleLabelFrame:&titleLabelFrame iconImageViewFrame:&iconImageViewFrame];
+  return MDCRectAlignToScale(
+      CGRectMake(CGRectGetMinX(titleLabelFrame), CGRectGetMinY(iconImageViewFrame),
+                 CGRectGetWidth(titleLabelFrame),
+                 CGRectGetMaxY(titleLabelFrame) - CGRectGetMinY(iconImageViewFrame)),
+      self.window.screen.scale);
 }
 
 @end
