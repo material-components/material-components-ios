@@ -21,7 +21,7 @@ static NSString *const kExampleTitle = @"TabBarView";
 
 /** A custom view to place in an MDCTabBarView. */
 @interface MDCTabBarViewTypicalExampleViewControllerCustomView
-    : UIView <MDCTabBarViewIndicatorSupporting>
+    : UIView <MDCTabBarViewCustomViewable>
 /** A switch shown in the view. */
 @property(nonatomic, strong) UISwitch *aSwitch;
 @end
@@ -30,6 +30,10 @@ static NSString *const kExampleTitle = @"TabBarView";
 
 - (CGRect)contentFrame {
   return CGRectStandardize(self.aSwitch.frame);
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+  // This is where a real custom view would handle its selection state change.
 }
 
 - (UISwitch *)aSwitch {
@@ -66,6 +70,12 @@ static NSString *const kExampleTitle = @"TabBarView";
 /** The container scheme injected into this example. */
 @property(nonatomic, strong) id<MDCContainerScheming> containerScheme;
 
+/** Titles for the items. */
+@property(nonatomic, copy) NSArray<NSString *> *tabBarItemTitles;
+
+/** Images for the items. */
+@property(nonatomic, copy) NSArray<UIImage *> *tabBarItemIcons;
+
 @end
 
 @implementation MDCTabBarViewTypicalExampleViewController
@@ -82,32 +92,36 @@ static NSString *const kExampleTitle = @"TabBarView";
 
   self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
 
-  UITabBarItem *item1 = [[UITabBarItem alloc]
-      initWithTitle:@"Home"
-              image:[[UIImage imageNamed:@"Home"]
-                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
-                tag:0];
-  UITabBarItem *item2 = [[UITabBarItem alloc]
-      initWithTitle:@"Unselectable"
-              image:[[UIImage imageNamed:@"Favorite"]
-                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
-                tag:1];
+  NSMutableArray<UIImage *> *itemIcons = [NSMutableArray array];
+  [itemIcons addObject:[[UIImage imageNamed:@"Home"]
+                           imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+  [itemIcons addObject:[[UIImage imageNamed:@"Favorite"]
+                           imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+  [itemIcons addObject:[[UIImage imageNamed:@"Cake"]
+                           imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+  [itemIcons addObject:[[UIImage imageNamed:@"Email"]
+                           imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+  [itemIcons addObject:[[UIImage imageNamed:@"Search"]
+                           imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+  self.tabBarItemIcons = itemIcons;
+  self.tabBarItemTitles = @[ @"Home", @"Unselectable", @"Cake", @"Email", @"Search" ];
+
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:self.tabBarItemTitles[0]
+                                                      image:itemIcons[0]
+                                                        tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:self.tabBarItemTitles[1]
+                                                      image:itemIcons[1]
+                                                        tag:1];
   item2.accessibilityTraits = UIAccessibilityTraitStaticText;
-  UITabBarItem *item3 = [[UITabBarItem alloc]
-      initWithTitle:@"Cake"
-              image:[[UIImage imageNamed:@"Cake"]
-                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
-                tag:2];
-  UITabBarItem *item4 = [[UITabBarItem alloc]
-      initWithTitle:@"Email"
-              image:[[UIImage imageNamed:@"Email"]
-                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
-                tag:3];
-  UITabBarItem *item5 = [[UITabBarItem alloc]
-      initWithTitle:@"Search"
-              image:[[UIImage imageNamed:@"Search"]
-                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
-                tag:4];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:self.tabBarItemTitles[2]
+                                                      image:itemIcons[2]
+                                                        tag:2];
+  UITabBarItem *item4 = [[UITabBarItem alloc] initWithTitle:self.tabBarItemTitles[3]
+                                                      image:itemIcons[3]
+                                                        tag:3];
+  UITabBarItem *item5 = [[UITabBarItem alloc] initWithTitle:self.tabBarItemTitles[4]
+                                                      image:itemIcons[4]
+                                                        tag:4];
   MDCTabBarItem *item6 = [[MDCTabBarItem alloc] initWithTitle:@"A switch" image:nil tag:5];
   MDCTabBarViewTypicalExampleViewControllerCustomView *switchView =
       [[MDCTabBarViewTypicalExampleViewControllerCustomView alloc] init];
@@ -117,21 +131,6 @@ static NSString *const kExampleTitle = @"TabBarView";
   self.tabBar = [[MDCTabBarView alloc] init];
   self.tabBar.tabBarDelegate = self;
   self.tabBar.items = @[ item1, item2, item3, item4, item5, item6 ];
-  self.tabBar.barTintColor = self.containerScheme.colorScheme.secondaryColor;
-  [self.tabBar setTitleColor:self.containerScheme.colorScheme.onSecondaryColor
-                    forState:UIControlStateNormal];
-  [self.tabBar setTitleColor:self.containerScheme.colorScheme.primaryColor
-                    forState:UIControlStateSelected];
-  [self.tabBar setImageTintColor:self.containerScheme.colorScheme.onSecondaryColor
-                        forState:UIControlStateNormal];
-  [self.tabBar setImageTintColor:self.containerScheme.colorScheme.primaryColor
-                        forState:UIControlStateSelected];
-  [self.tabBar setTitleFont:self.containerScheme.typographyScheme.button
-                   forState:UIControlStateNormal];
-  [self.tabBar setTitleFont:[UIFont systemFontOfSize:16] forState:UIControlStateSelected];
-  self.tabBar.selectionIndicatorStrokeColor = self.containerScheme.colorScheme.onSecondaryColor;
-  self.tabBar.rippleColor =
-      [self.containerScheme.colorScheme.primaryColor colorWithAlphaComponent:(CGFloat)0.1];
   self.tabBar.selectedItem = item4;
   self.tabBar.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:self.tabBar];
@@ -144,6 +143,63 @@ static NSString *const kExampleTitle = @"TabBarView";
   }
   [self.view.leftAnchor constraintEqualToAnchor:self.tabBar.leftAnchor].active = YES;
   [self.view.rightAnchor constraintEqualToAnchor:self.tabBar.rightAnchor].active = YES;
+
+  [self applyThemingToTabBarView];
+  [self addSegmentedControl];
+}
+
+- (void)applyThemingToTabBarView {
+  self.tabBar.barTintColor = self.containerScheme.colorScheme.surfaceColor;
+  [self.tabBar setTitleColor:[self.containerScheme.colorScheme.onSurfaceColor
+                                 colorWithAlphaComponent:(CGFloat)0.6]
+                    forState:UIControlStateNormal];
+  [self.tabBar setTitleColor:self.containerScheme.colorScheme.primaryColor
+                    forState:UIControlStateSelected];
+  [self.tabBar setImageTintColor:[self.containerScheme.colorScheme.onSurfaceColor
+                                     colorWithAlphaComponent:(CGFloat)0.6]
+                        forState:UIControlStateNormal];
+  [self.tabBar setImageTintColor:self.containerScheme.colorScheme.primaryColor
+                        forState:UIControlStateSelected];
+  [self.tabBar setTitleFont:self.containerScheme.typographyScheme.button
+                   forState:UIControlStateNormal];
+  [self.tabBar setTitleFont:[UIFont systemFontOfSize:16] forState:UIControlStateSelected];
+  self.tabBar.selectionIndicatorStrokeColor = self.containerScheme.colorScheme.primaryColor;
+  self.tabBar.rippleColor =
+      [self.containerScheme.colorScheme.primaryColor colorWithAlphaComponent:(CGFloat)0.1];
+  self.tabBar.bottomDividerColor =
+      [self.containerScheme.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.12];
+}
+
+- (void)addSegmentedControl {
+  UISegmentedControl *segmentedControl =
+      [[UISegmentedControl alloc] initWithItems:@[ @"Titles", @"Icons", @"Titles and Icons" ]];
+  segmentedControl.selectedSegmentIndex = 2;
+  [segmentedControl addTarget:self
+                       action:@selector(segmentedControlChangedValue:)
+             forControlEvents:UIControlEventValueChanged];
+  [self.view addSubview:segmentedControl];
+  segmentedControl.translatesAutoresizingMaskIntoConstraints = NO;
+  if (@available(iOS 11.0, *)) {
+    [self.view.layoutMarginsGuide.centerXAnchor
+        constraintEqualToAnchor:segmentedControl.centerXAnchor]
+        .active = YES;
+    [self.view.layoutMarginsGuide.centerYAnchor
+        constraintEqualToAnchor:segmentedControl.centerYAnchor]
+        .active = YES;
+    [self.view.layoutMarginsGuide.leadingAnchor
+        constraintLessThanOrEqualToAnchor:segmentedControl.leadingAnchor]
+        .active = YES;
+    [self.view.layoutMarginsGuide.trailingAnchor
+        constraintGreaterThanOrEqualToAnchor:segmentedControl.trailingAnchor]
+        .active = YES;
+  } else {
+    [self.view.centerXAnchor constraintEqualToAnchor:segmentedControl.centerXAnchor].active = YES;
+    [self.view.centerYAnchor constraintEqualToAnchor:segmentedControl.centerYAnchor].active = YES;
+    [self.view.leadingAnchor constraintLessThanOrEqualToAnchor:segmentedControl.leadingAnchor]
+        .active = YES;
+    [self.view.trailingAnchor constraintGreaterThanOrEqualToAnchor:segmentedControl.trailingAnchor]
+        .active = YES;
+  }
 }
 
 #pragma mark - MDCTabBarViewDelegate
@@ -167,6 +223,46 @@ static NSString *const kExampleTitle = @"TabBarView";
   bugFixScrollView.userInteractionEnabled = NO;
   bugFixScrollView.hidden = YES;
   [self.view addSubview:bugFixScrollView];
+}
+
+#pragma mark - Item style variations
+
+- (void)segmentedControlChangedValue:(id)sender {
+  if ([sender isKindOfClass:[UISegmentedControl class]]) {
+    UISegmentedControl *segmentedControl = (UISegmentedControl *)sender;
+    if (segmentedControl.selectedSegmentIndex == 0) {
+      [self changeItemsToTextOnly];
+    } else if (segmentedControl.selectedSegmentIndex == 1) {
+      [self changeItemsToImageOnly];
+    } else {
+      [self changeItemsToTextAndImage];
+    }
+  }
+}
+
+- (void)changeItemsToTextOnly {
+  for (NSUInteger index = 0; index < self.tabBar.items.count; ++index) {
+    UITabBarItem *item = self.tabBar.items[index];
+    item.image = nil;
+    item.selectedImage = nil;
+    item.title = self.tabBarItemTitles[index % self.tabBarItemTitles.count];
+  }
+}
+
+- (void)changeItemsToImageOnly {
+  for (NSUInteger index = 0; index < self.tabBar.items.count; ++index) {
+    UITabBarItem *item = self.tabBar.items[index];
+    item.image = self.tabBarItemIcons[index % self.tabBarItemIcons.count];
+    item.title = nil;
+  }
+}
+
+- (void)changeItemsToTextAndImage {
+  for (NSUInteger index = 0; index < self.tabBar.items.count; ++index) {
+    UITabBarItem *item = self.tabBar.items[index];
+    item.image = self.tabBarItemIcons[index % self.tabBarItemIcons.count];
+    item.title = self.tabBarItemTitles[index % self.tabBarItemTitles.count];
+  }
 }
 
 @end

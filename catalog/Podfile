@@ -51,6 +51,7 @@ target "MDCCatalog" do
     'private/ThumbTrack/UnitTests',
     'private/UIMetrics/UnitTests',
     'ProgressView/UnitTests',
+    'ProgressView+Theming/UnitTests',
     'Ripple/UnitTests',
     'schemes/Color/UnitTests',
     'schemes/Container/UnitTests',
