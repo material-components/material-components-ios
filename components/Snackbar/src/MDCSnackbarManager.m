@@ -554,7 +554,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   if (self) {
     _internalManager = [[MDCSnackbarManagerInternal alloc] initWithSnackbarManager:self];
     _uppercaseButtonTitle = YES;
-    _disabledButtonAlpha = 0.12;
+    _disabledButtonAlpha = 0.12f;
   }
   return self;
 }
