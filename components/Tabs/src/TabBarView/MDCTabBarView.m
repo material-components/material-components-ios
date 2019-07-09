@@ -489,22 +489,13 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     }
     if ([keyPath isEqualToString:kImageKeyPath]) {
       tabBarItemView.image = newValue;
-      [tabBarItemView invalidateIntrinsicContentSize];
-      [tabBarItemView setNeedsLayout];
-      [self invalidateIntrinsicContentSize];
-      [self setNeedsLayout];
+      [self markIntrinsicContentSizeAndLayoutNeedingUpdateForSelfAndItemView:tabBarItemView];
     } else if ([keyPath isEqualToString:kSelectedImageKeyPath]) {
       tabBarItemView.selectedImage = newValue;
-      [tabBarItemView invalidateIntrinsicContentSize];
-      [tabBarItemView setNeedsLayout];
-      [self invalidateIntrinsicContentSize];
-      [self setNeedsLayout];
+      [self markIntrinsicContentSizeAndLayoutNeedingUpdateForSelfAndItemView:tabBarItemView];
     } else if ([keyPath isEqualToString:kTitleKeyPath]) {
       tabBarItemView.titleLabel.text = newValue;
-      [tabBarItemView invalidateIntrinsicContentSize];
-      [tabBarItemView setNeedsLayout];
-      [self invalidateIntrinsicContentSize];
-      [self setNeedsLayout];
+      [self markIntrinsicContentSizeAndLayoutNeedingUpdateForSelfAndItemView:tabBarItemView];
     } else if ([keyPath isEqualToString:kAccessibilityLabelKeyPath]) {
       tabBarItemView.accessibilityLabel = newValue;
     } else if ([keyPath isEqualToString:kAccessibilityHintKeyPath]) {
@@ -524,6 +515,13 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   } else {
     [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
   }
+}
+
+- (void)markIntrinsicContentSizeAndLayoutNeedingUpdateForSelfAndItemView:(UIView *)itemView {
+  [itemView invalidateIntrinsicContentSize];
+  [itemView setNeedsLayout];
+  [self invalidateIntrinsicContentSize];
+  [self setNeedsLayout];
 }
 
 #pragma mark - UIView
