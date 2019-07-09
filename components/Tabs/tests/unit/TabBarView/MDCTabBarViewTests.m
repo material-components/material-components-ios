@@ -202,7 +202,7 @@ static UIImage *fakeImage(CGSize size) {
   XCTAssertEqualObjects(self.tabBarView.rippleColor, [[UIColor alloc] initWithWhite:0
                                                                               alpha:(CGFloat)0.16]);
   XCTAssertEqualObjects(self.tabBarView.bottomDividerColor, UIColor.clearColor);
-  XCTAssertNil(self.tabBarView.barTintColor);
+  XCTAssertEqualObjects(self.tabBarView.barTintColor, UIColor.whiteColor);
 }
 
 /// Tab bars should by default select nil in their items array. The behavior should also be
