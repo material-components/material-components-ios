@@ -7,8 +7,8 @@ This minor release includes a theming extension for ProgressView, a bug fix for 
 ProgressView now has a theming extension.
 
 ```objc
-MDCProgressView *progressView = ...
-MDCContainerScheme *containerScheme = ...
+MDCProgressView *progressView = [[MDCProgressView alloc] init];
+MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
 [progressView applyThemeWithScheme:containerScheme];
 ```
 
