@@ -33,6 +33,7 @@ MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
 ### ProgressView
 
 * [Add an MDCProgressView theming extension (#7791)](https://github.com/material-components/material-components-ios/commit/43920aed56d0f8f49838c43abdaaf17217a79a77) (Andrew Overton)
+* [Provide unique names for methods (#7824)](https://github.com/material-components/material-components-ios/commit/6f2d5eb654b6ca1d812c42cd1d13d87c2f692daa) (Robert Moore)
 
 ### Slider
 
