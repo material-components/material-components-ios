@@ -34,6 +34,9 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
 /** The color of the Tab bar's background. */
 @property(nullable, nonatomic, copy) UIColor *barTintColor;
 
+/** The color of the bottom divider. Default is clear. */
+@property(nonnull, nonatomic, copy) UIColor *bottomDividerColor;
+
 /**
  The color for the Ripple effect for touch feedback.
  */

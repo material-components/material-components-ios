@@ -149,21 +149,25 @@ static NSString *const kExampleTitle = @"TabBarView";
 }
 
 - (void)applyThemingToTabBarView {
-  self.tabBar.barTintColor = self.containerScheme.colorScheme.secondaryColor;
-  [self.tabBar setTitleColor:self.containerScheme.colorScheme.onSecondaryColor
+  self.tabBar.barTintColor = self.containerScheme.colorScheme.surfaceColor;
+  [self.tabBar setTitleColor:[self.containerScheme.colorScheme.onSurfaceColor
+                                 colorWithAlphaComponent:(CGFloat)0.6]
                     forState:UIControlStateNormal];
   [self.tabBar setTitleColor:self.containerScheme.colorScheme.primaryColor
                     forState:UIControlStateSelected];
-  [self.tabBar setImageTintColor:self.containerScheme.colorScheme.onSecondaryColor
+  [self.tabBar setImageTintColor:[self.containerScheme.colorScheme.onSurfaceColor
+                                     colorWithAlphaComponent:(CGFloat)0.6]
                         forState:UIControlStateNormal];
   [self.tabBar setImageTintColor:self.containerScheme.colorScheme.primaryColor
                         forState:UIControlStateSelected];
   [self.tabBar setTitleFont:self.containerScheme.typographyScheme.button
                    forState:UIControlStateNormal];
   [self.tabBar setTitleFont:[UIFont systemFontOfSize:16] forState:UIControlStateSelected];
-  self.tabBar.selectionIndicatorStrokeColor = self.containerScheme.colorScheme.onSecondaryColor;
+  self.tabBar.selectionIndicatorStrokeColor = self.containerScheme.colorScheme.primaryColor;
   self.tabBar.rippleColor =
       [self.containerScheme.colorScheme.primaryColor colorWithAlphaComponent:(CGFloat)0.1];
+  self.tabBar.bottomDividerColor =
+      [self.containerScheme.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.12];
 }
 
 - (void)addSegmentedControl {
