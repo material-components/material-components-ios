@@ -234,9 +234,6 @@
  */
 @property(nonatomic, weak, nullable) id<MDCSnackbarManagerDelegate> delegate;
 
-@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
-(UITraitCollection *_Nonnull previousTraitCollection, UITraitCollection *_Nonnull currentTraitCollection);
-
 @end
 
 /**

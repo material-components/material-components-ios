@@ -11,7 +11,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-#import <objc/runtime.h>
 
 #import "MDCButton+MaterialTheming.h"
 
@@ -21,44 +20,7 @@
 
 @implementation MDCButton (MaterialTheming)
 
-#pragma mark - MDCThemable
-- (void)mdc_applyThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
-  [self applyTextThemeWithScheme:containerScheme];
-}
 
-- (id)initContainerThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
-  self = [self initWithFrame:CGRectZero];
-  if (self) {
-    [self applyContainedThemeWithScheme:containerScheme];
-  }
-  return self;
-}
-
-- (id<MDCContainerScheming>)mdc_containerScheme {
-  return objc_getAssociatedObject(self, @selector(mdc_containerScheme));
-}
-
-- (void)setMdc_containerScheme:(id<MDCContainerScheming>)mdc_containerScheme {
-  objc_setAssociatedObject(self, @selector(mdc_containerScheme), mdc_containerScheme,
-                           OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (id<MDCContainerScheming>)mdc_effectiveContainerScheme {
-  return objc_getAssociatedObject(self, @selector(mdc_effectiveContainerScheme));
-}
-
-- (void)setMdc_effectiveContainerScheme:
-    (id<MDCContainerScheming> _Nullable)mdc_effectiveContainerScheme {
-  objc_setAssociatedObject(self, @selector(mdc_effectiveContainerScheme),
-                           mdc_effectiveContainerScheme, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-//- (id)initContainerTheme {
-//  self = [self initWithFrame:CGRectZero];
-//  if (self) {
-//    [self applyContainedThemeWithScheme:containerScheme];
-//  }
-//}
 
 #pragma mark - Contained Button Themers
 

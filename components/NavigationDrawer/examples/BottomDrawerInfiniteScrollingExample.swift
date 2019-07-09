@@ -20,7 +20,7 @@ import MaterialComponents.MaterialNavigationDrawer
 import MaterialComponents.MaterialNavigationDrawer_ColorThemer
 
 class BottomDrawerInfiniteScrollingExample: UIViewController {
-  @objc var colorScheme = MDCSemanticColorScheme(defaults: .material201906)
+  @objc var colorScheme = MDCSemanticColorScheme()
   let bottomAppBar = MDCBottomAppBarView()
 
   let headerViewController = DrawerHeaderViewController()
@@ -28,9 +28,9 @@ class BottomDrawerInfiniteScrollingExample: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    colorScheme = MDCSemanticColorScheme(defaults: .material201906)
     view.backgroundColor = colorScheme.backgroundColor
     contentViewController.colorScheme = colorScheme
+
     bottomAppBar.isFloatingButtonHidden = true
     let barButtonLeadingItem = UIBarButtonItem()
     let menuImage = UIImage(named:"Menu")?.withRenderingMode(.alwaysTemplate)
@@ -71,7 +71,6 @@ class BottomDrawerInfiniteScrollingExample: UIViewController {
     bottomDrawerViewController.headerViewController = headerViewController
     bottomDrawerViewController.trackingScrollView = contentViewController.tableView
     bottomDrawerViewController.isTopHandleHidden = false
-    // TODO YAR LOLZ
     MDCBottomDrawerColorThemer.applySemanticColorScheme(colorScheme,
                                                         toBottomDrawer: bottomDrawerViewController)
     present(bottomDrawerViewController, animated: true, completion: nil)

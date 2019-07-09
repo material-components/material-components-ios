@@ -731,10 +731,6 @@ static const CGFloat kMaximumHeight = 80;
   self.rotationDuration = duration;
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-  [super traitCollectionDidChange:previousTraitCollection];
-}
-
 - (void)didRotate:(__unused NSNotification *)notification {
   // The UIApplicationDidChangeStatusBarOrientationNotification happens pretty much immediately
   // after the willRotate notification, before any layouts are changed. By delaying this until the

@@ -21,11 +21,6 @@
  */
 @interface MDCButton (MaterialTheming)
 
-@property(nonatomic, strong, nullable) id<MDCContainerScheming>
-    mdc_containerScheme;  // If nil, inherit from superview.
-@property(nonatomic, readonly, nullable) id<MDCContainerScheming>
-    mdc_effectiveContainerScheme;  // The resolved theme.
-
 /**
  Applies the theme for a contained button to this instance.
 

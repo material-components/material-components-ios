@@ -130,15 +130,6 @@
   }
 }
 
-- (CGFloat)mdc_elevation {
-  return 1;
-}
-
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-  [super traitCollectionDidChange:previousTraitCollection];
-  
-}
-
 - (BOOL)isAccessibilityMode {
   return UIAccessibilityIsVoiceOverRunning() || UIAccessibilityIsSwitchControlRunning();
 }

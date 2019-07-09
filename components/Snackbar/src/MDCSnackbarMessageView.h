@@ -103,9 +103,6 @@
 @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
 
-@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
-(UITraitCollection *_Nonnull previousTraitCollection, UITraitCollection *_Nonnull currentTraitCollection);
-
 @end
 
 // clang-format off

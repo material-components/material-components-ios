@@ -182,11 +182,6 @@ static UIColor *DrawerShadowColor(void) {
   [self.originalPresentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-  [super traitCollectionDidChange:previousTraitCollection];
-  NSLog(@"hehehehe");
-}
-
 #pragma mark UIGestureRecognizerDelegate (Public)
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
@@ -791,7 +786,7 @@ static UIColor *DrawerShadowColor(void) {
     }
   }
 
-  CGFloat scrollingDistance = _contentHeaderTopInset + totalHeight;
+  CGFloat scrollingDistance = _contentHeaderTopInset + contentHeaderHeight + contentHeight;
   _contentHeightSurplus = scrollingDistance - containerHeight;
   if ([self shouldPresentFullScreen]) {
     self.drawerState = MDCBottomDrawerStateFullScreen;
@@ -800,7 +795,7 @@ static UIColor *DrawerShadowColor(void) {
   } else {
     self.drawerState = MDCBottomDrawerStateCollapsed;
   }
-  if (addedContentHeight < kEpsilon && containerHeight > totalHeight &&
+  if (addedContentHeight < kEpsilon && (_contentHeaderTopInset > _contentHeightSurplus) &&
       (_contentHeaderTopInset - _contentHeightSurplus < self.addedContentHeightThreshold)) {
     CGFloat addedContentheight = _contentHeaderTopInset - _contentHeightSurplus;
     [self cacheLayoutCalculationsWithAddedContentHeight:addedContentheight];

@@ -42,10 +42,6 @@
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                           toCard:(nonnull MDCCard *)card;
 
-+ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
-                          toCard:(nonnull MDCCard *)card
-              atCurrentElevation:(CGFloat)currentElevation;
-
 /**
  Applies a color scheme's properties to an MDCCardCollectionCell.
 
