@@ -16,6 +16,9 @@
 
 @interface UIColor (MaterialElevation)
 
-@property(nonatomic, assign) CGFloat mdc_elevation;
+- (UIColor *)resolvedColorWithTraitCollection:(UITraitCollection *)traitCollection
+                                 andElevation:(CGFloat)elevation;
+
+- (UIColor *)colorForElevation:(CGFloat)elevation;
 
 @end

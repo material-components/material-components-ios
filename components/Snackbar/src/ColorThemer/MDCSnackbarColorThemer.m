@@ -25,8 +25,15 @@
   snackbarManager.snackbarMessageViewBackgroundColor = [MDCSemanticColorScheme
                blendColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.8]
       withBackgroundColor:colorScheme.surfaceColor];
-  snackbarManager.messageTextColor =
-      [colorScheme.surfaceColor colorWithAlphaComponent:(CGFloat)0.87];
+
+//  if (colorScheme.shouldLightenElevatedSurfacesWithDarkMode) {
+//    CGFloat finalElevation = snackbarManager.mdc_absoluteElevation + snackbarManager.mdc_elevation;
+//    id<MDCColorScheming> resolvedColorScheme =
+//        [colorScheme resolvedSchemeForElevation:finalElevation];
+//    snackbarManager.messageTextColor =
+//    [resolvedColorScheme.surfaceColor colorWithAlphaComponent:(CGFloat)0.87];
+//  }
+
   UIColor *buttonTitleColor = [colorScheme.surfaceColor colorWithAlphaComponent:(CGFloat)0.6];
   [snackbarManager setButtonTitleColor:buttonTitleColor forState:UIControlStateNormal];
   [snackbarManager setButtonTitleColor:buttonTitleColor forState:UIControlStateHighlighted];

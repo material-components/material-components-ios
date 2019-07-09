@@ -16,16 +16,30 @@
 
 #import "UIColor+MaterialElevation.h"
 
+#import "MDCSemanticColorScheme.h"
+
 @implementation UIColor (MaterialElevation)
 
-- (void)setMdc_elevation:(CGFloat)mdc_elevation {
-  objc_setAssociatedObject(self, @selector(mdc_elevation),
-                           [NSNumber numberWithDouble:mdc_elevation],
-                           OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (UIColor *)resolvedColorWithTraitCollection:(UITraitCollection *)traitCollection
+                                 andElevation:(CGFloat)elevation {
+  UIColor *copy = self.copy;
+  if (@available(iOS 13.0, *)) {
+    UIColor *resolvedColor = [copy resolvedColorWithTraitCollection:traitCollection];
+    if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+      copy = [resolvedColor colorForElevation:elevation];
+    } else {
+        copy = resolvedColor;
+    }
+  } else {
+    copy = [copy colorForElevation:elevation];
+  }
+  return copy;
 }
 
-- (CGFloat)mdc_elevation {
-  return [objc_getAssociatedObject(self, @selector(mdc_elevation)) doubleValue];
+- (UIColor *)colorForElevation:(CGFloat)elevation {
+  CGFloat alphaValue = 4.5 * log(elevation + 1) + 2;
+  return [MDCSemanticColorScheme blendColor:[UIColor colorWithWhite:1 alpha:alphaValue * 0.01]
+                        withBackgroundColor:self];
 }
 
 @end

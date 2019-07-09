@@ -409,6 +409,14 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   }
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+  NSLog(@"lolz");
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(previousTraitCollection, self.traitCollection);
+  }
+}
+
 #pragma mark - Subclass overrides
 
 + (BOOL)requiresConstraintBasedLayout {

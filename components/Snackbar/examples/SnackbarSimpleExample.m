@@ -28,7 +28,7 @@
 
   if (!self.colorScheme) {
     self.colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201906];
   }
   if (!self.typographyScheme) {
     self.typographyScheme =
@@ -133,7 +133,11 @@
   [MDCSnackbarManager setButtonTitleColor:MDCPalette.purplePalette.tint700
                                  forState:UIControlStateHighlighted];
   MDCSnackbarManager.messageTextColor = MDCPalette.greenPalette.tint500;
+  MDCSnackbarManager.snackbarMessageViewBackgroundColor = self.colorScheme.surfaceColor;
   [MDCSnackbarManager showMessage:message];
+  MDCSnackbarManager.defaultManager.traitCollectionDidChangeBlock = ^(UITraitCollection *previousTraitCollection, UITraitCollection *currentTraitCollection) {
+    NSLog(@"woohoo");
+  };
 }
 
 - (void)showCustomizedSnackbar:(id)sender {

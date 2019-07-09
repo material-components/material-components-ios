@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import "MDCCardsColorThemer.h"
+#import "MaterialShadowLayer.h"
 
 static const CGFloat kStrokeVariantBorderOpacity = (CGFloat)0.37;
 
@@ -20,19 +21,30 @@ static const CGFloat kStrokeVariantBorderOpacity = (CGFloat)0.37;
 
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                           toCard:(nonnull MDCCard *)card {
+  CGFloat finalElevation =
+      card.mdc_absoluteElevation + [card shadowElevationForState:card.state];
   if (colorScheme.shouldLightenElevatedSurfacesWithDarkMode) {
-    CGFloat finalElevation = card.mdc_absoluteElevation + card.mdc_elevation;
-    id<MDCColorScheming> resolvedColorScheme =
-        [colorScheme resolvedSchemeForElevation:finalElevation];
-    card.backgroundColor = resolvedColorScheme.surfaceColor;
-    if (@available(iOS 13.0, *)) {
-      UIColor *lolz = [card.backgroundColor resolvedColorWithTraitCollection:card.traitCollection];
-      NSLog(@"%@", lolz);
-    } else {
-      // Fallback on earlier versions
-    }
+    card.backgroundColor =
+    [colorScheme.backgroundColor resolvedColorWithTraitCollection:card.traitCollection
+                                                     andElevation:finalElevation];
+    __weak MDCCard *weakCard = card;
+    card.elevationDidChangeBlock = ^(CGFloat previousElevation, CGFloat currentElevation) {
+      weakCard.backgroundColor =
+      [colorScheme.backgroundColor resolvedColorWithTraitCollection:weakCard.traitCollection
+                                                       andElevation:currentElevation];
+    };
+  } else {
+    card.backgroundColor = colorScheme.backgroundColor;
   }
-  //  card.backgroundColor = colorScheme.surfaceColor;
+  __weak MDCCard *weakCard = card;
+  card.traitCollectionDidChangeBlock = ^(UITraitCollection *previousTraitCollection) {
+    NSLog(@"hello");
+    if (@available(iOS 13.0, *)) {
+      if ([weakCard.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+        [self applySemanticColorScheme:colorScheme toCard:weakCard];
+      }
+    }
+  };
 }
 
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme

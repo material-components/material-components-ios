@@ -14,9 +14,6 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol MDCThemingElevationDelegate <NSObject>
-
-@optional
-- (void)elevationDidChange:(nonnull UIView *)view;
-
+@protocol MDCAbsoluteElevation
+@property (nonatomic, assign) CGFloat mdc_absoluteElevation;
 @end

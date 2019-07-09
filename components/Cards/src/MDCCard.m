@@ -16,7 +16,6 @@
 
 #import "MaterialMath.h"
 #import "MaterialShapes.h"
-#import "UITraitCollection+MaterialElevationUpdating.h"
 
 static const CGFloat MDCCardShadowElevationNormal = 1;
 static const CGFloat MDCCardShadowElevationHighlighted = 8;
@@ -36,26 +35,17 @@ static const BOOL MDCCardIsInteractableDefault = YES;
   CGPoint _lastTouch;
 }
 
+@synthesize mdc_absoluteElevation;
 @dynamic layer;
 
 + (Class)layerClass {
   return [MDCShapedShadowLayer class];
 }
 
-- (CGFloat)mdc_elevation {
-  return [self shadowElevationForState:self.state];
-}
-
-- (void)updateElevationLightening {
-  //  [NSNotificationCenter.defaultCenter postNotificationName:@"ElevationDidChange" object:nil
-  //  userInfo:nil];
-  NSLog(@"update elevation lightening");
-}
-
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
   [super traitCollectionDidChange:previousTraitCollection];
   if (self.traitCollectionDidChangeBlock) {
-    self.traitCollectionDidChangeBlock(previousTraitCollection, self.traitCollection);
+    self.traitCollectionDidChangeBlock(previousTraitCollection);
   }
 }
 
@@ -164,19 +154,9 @@ static const BOOL MDCCardIsInteractableDefault = YES;
       self.layer.shadowPath = [self boundingPath].CGPath;
     }
     [(MDCShadowLayer *)self.layer setElevation:elevation];
-
-    if (self.traitCollectionDidChangeBlock) {
-      UITraitCollection *traitCollection =
-          [UITraitCollection traitCollectionWithMaterialElevation:elevation];
-      NSLog(@"%f", traitCollection.materialElevation);
-      traitCollection =
-          [UITraitCollection traitCollectionWithTraitsFromCollectionsIncludingElevation:@[
-            self.traitCollection, traitCollection
-          ]];
-      NSLog(@"%f", traitCollection.materialElevation);
-      self.traitCollectionDidChangeBlock(self.traitCollection, traitCollection);
+    if (self.elevationDidChangeBlock) {
+      self.elevationDidChangeBlock(self.layer.elevation, elevation);
     }
-    [self updateElevationLightening];
   }
 }
 
@@ -384,5 +364,6 @@ static const BOOL MDCCardIsInteractableDefault = YES;
     [self addSubview:_inkView];
   }
 }
+
 
 @end

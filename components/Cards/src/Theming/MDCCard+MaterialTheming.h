@@ -19,7 +19,7 @@
  This category is used to style MDCCard instances to a specific Material style which can be found
  within the [Material Guidelines](https://material.io/design/components/cards.html).
  */
-@interface MDCCard (MaterialTheming) <MDCThemingElevationDelegate>
+@interface MDCCard (MaterialTheming)
 
 /**
  Applies the Material Card style to an MDCCard instance.

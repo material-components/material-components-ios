@@ -14,7 +14,6 @@
 
 #import "MDCSemanticColorScheme.h"
 #import "MDCDarkMode.h"
-#import "UIColor+MaterialElevation.h"
 
 static UIColor *ColorFromRGB(uint32_t colorValue) {
   return [UIColor colorWithRed:(CGFloat)(((colorValue >> 16) & 0xFF) / 255.0)
@@ -54,29 +53,6 @@ static UIColor *DynamicColor(UIColor *defaultColor, UIColor *darkColor) {
   return defaultColor;
 #endif
 }
-
-// static UIColor *DynamicColorWithElevationForSurfaces(UIColor *defaultColor, UIColor *darkColor) {
-//#if defined(__IPHONE_13_0)
-//  if (@available(iOS 13.0, *)) {
-//    return [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
-//      NSLog(@"HELLO IM HERE");
-//      if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
-////        if (darkColor.mdc_elevation > 0) {
-////          return [MDCDarkMode lightenBackgroundColor:darkColor
-////                                       withElevation:darkColor.mdc_elevation];
-////        }
-//        return darkColor;
-//      } else {
-//        return defaultColor;
-//      }
-//    }];
-//  } else {
-//    return defaultColor;
-//  }
-//#else
-//  return defaultColor;
-//#endif
-//}
 
 @implementation MDCSemanticColorScheme
 
@@ -131,35 +107,23 @@ static UIColor *DynamicColor(UIColor *defaultColor, UIColor *darkColor) {
   return self;
 }
 
-- (MDCSemanticColorScheme *)resolvedSchemeForElevation:(CGFloat)elevation {
+- (MDCSemanticColorScheme *)resolvedSchemeForTraitCollection:(UITraitCollection *)traitCollection elevation:(CGFloat)elevation {
   MDCSemanticColorScheme *copy = [self copy];
   if (!self.shouldLightenElevatedSurfacesWithDarkMode) {
     return copy;
   }
 
   if (@available(iOS 13.0, *)) {
-    UITraitCollection *darkThemeTraitCollection =
-        [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
-    UITraitCollection *lightThemeTraitCollection =
-        [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleLight];
-
-    // Surface Color
-    UIColor *resolvedDarkSurfaceColor =
-        [copy.surfaceColor resolvedColorWithTraitCollection:darkThemeTraitCollection];
-    UIColor *resolvedLightSurfaceColor =
-        [copy.surfaceColor resolvedColorWithTraitCollection:lightThemeTraitCollection];
-    copy.surfaceColor = DynamicColor(resolvedLightSurfaceColor,
-                                     [MDCDarkMode lightenBackgroundColor:resolvedDarkSurfaceColor
-                                                           withElevation:elevation]);
-
-    // Background Color
-    UIColor *resolvedDarkBackgroundColor =
-        [copy.backgroundColor resolvedColorWithTraitCollection:darkThemeTraitCollection];
-    UIColor *resolvedLightBackgroundColor =
-        [copy.backgroundColor resolvedColorWithTraitCollection:lightThemeTraitCollection];
-    copy.backgroundColor = DynamicColor(
-        resolvedLightBackgroundColor,
-        [MDCDarkMode lightenBackgroundColor:resolvedDarkBackgroundColor withElevation:elevation]);
+    UIColor *resolvedSurfaceColor =
+        [copy.surfaceColor resolvedColorWithTraitCollection:traitCollection];
+    UIColor *resolvedBackgroundColor =
+        [copy.backgroundColor resolvedColorWithTraitCollection:traitCollection];
+    if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+      copy.surfaceColor = [MDCDarkMode lightenBackgroundColor:resolvedSurfaceColor
+                                                             withElevation:elevation];
+      copy.backgroundColor = [MDCDarkMode lightenBackgroundColor:resolvedBackgroundColor
+                                                   withElevation:elevation];
+    }
   } else {
     copy.surfaceColor = [MDCDarkMode lightenBackgroundColor:copy.surfaceColor
                                               withElevation:elevation];
@@ -197,16 +161,6 @@ static UIColor *DynamicColor(UIColor *defaultColor, UIColor *darkColor) {
   copy.onBackgroundColor = self.onBackgroundColor;
 
   return copy;
-}
-
-#pragma mark - Custom Color Getters
-
-- (UIColor *)surfaceColorWithElevation:(CGFloat)elevation {
-  return [MDCDarkMode lightenBackgroundColor:_surfaceColor withElevation:elevation];
-}
-
-- (UIColor *)backgroundColorWithElevation:(CGFloat)elevation {
-  return [MDCDarkMode lightenBackgroundColor:_backgroundColor withElevation:elevation];
 }
 
 @end

@@ -20,8 +20,13 @@ static const CGFloat kScrimAlpha = (CGFloat)0.32;
 
 + (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
                   toBottomDrawer:(nonnull MDCBottomDrawerViewController *)bottomDrawer {
-  bottomDrawer.headerViewController.view.backgroundColor = colorScheme.surfaceColor;
-  bottomDrawer.contentViewController.view.backgroundColor = colorScheme.surfaceColor;
+//  if (colorScheme.shouldLightenElevatedSurfacesWithDarkMode) {
+//    CGFloat finalElevation = bottomDrawer.mdc_absoluteElevation + bottomDrawer.mdc_elevation;
+//    id<MDCColorScheming> resolvedColorScheme =
+//        [colorScheme resolvedSchemeForTraitCollection:bottomDrawer.traitCollection elevation:finalElevation];
+//    bottomDrawer.headerViewController.view.backgroundColor = resolvedColorScheme.surfaceColor;
+//    bottomDrawer.contentViewController.view.backgroundColor = resolvedColorScheme.surfaceColor;
+//  }
   bottomDrawer.scrimColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kScrimAlpha];
 }
 

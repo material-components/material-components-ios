@@ -17,7 +17,6 @@ import MaterialComponents.MaterialButtons_ButtonThemer
 import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialCards_Theming
 import MaterialComponents.MaterialButtons_Theming
-import MaterialComponents.UITraitCollection_MaterialElevationUpdating
 
 class CardExampleViewController: UIViewController {
   @IBOutlet weak var imageView: CardImageView!
@@ -48,21 +47,21 @@ class CardExampleViewController: UIViewController {
     button.applyTextTheme(withScheme: containerScheme)
     button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     card.mdc_absoluteElevation = 1;
-    card.applyTheme(withScheme: containerScheme)
+    self.card.applyTheme(withScheme: self.containerScheme)
     card.isInteractable = false
-    card.traitCollectionDidChangeBlock = { previousTraitCollection, currentTraitCollection in
-      self.card.applyTheme(withColorScheme: self.containerScheme.colorScheme)
-//      self.card.
-    };
+//    card.traitCollectionDidChangeBlock = { _ in
+//      self.card.applyTheme(withColorScheme: self.containerScheme.colorScheme)
+//    };
+//    card.elevationDidChangeBlock = { previousElevation, currentElevation in
+//      if let color = self.card.backgroundColor {
+//          self.card.backgroundColor =
+//            MDCDarkMode.lightenBackgroundColor(color,
+//                                               withElevation: currentElevation)
+//      }
+//    };
     imageView.isAccessibilityElement = true
     imageView.accessibilityLabel = "Missing Dish"
   }
-
-//  override func viewWillLayoutSubviews() {
-//    super.viewWillLayoutSubviews()
-//    button.applyTextTheme(withScheme: containerScheme)
-//    card.applyTheme(withScheme: containerScheme)
-//  }
 
   override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
     super.traitCollectionDidChange(previousTraitCollection)
@@ -70,8 +69,6 @@ class CardExampleViewController: UIViewController {
 
   @objc func buttonTapped() {
     card.setShadowElevation(ShadowElevation(rawValue: 15), for: .normal)
-    // How do i remove this line below
-//    card.applyTheme(withScheme: containerScheme)
   }
 
   override public var traitCollection: UITraitCollection {

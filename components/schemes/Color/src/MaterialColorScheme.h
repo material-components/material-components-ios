@@ -17,7 +17,4 @@
 #import "MDCLegacyTonalColorScheme.h"
 #import "MDCLegacyTonalPalette.h"
 #import "MDCSemanticColorScheme.h"
-//#import "UIColor+MaterialElevation.h"
-//#import "MDCDarkModeElevationLightening.h"
-#import "MDCThemingElevationDelegate.h"
-#import "UIView+DarkModeElevatable.h"
+#import "UIColor+MaterialElevation.h"

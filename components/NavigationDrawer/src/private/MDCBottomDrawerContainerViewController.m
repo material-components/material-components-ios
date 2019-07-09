@@ -182,6 +182,11 @@ static UIColor *DrawerShadowColor(void) {
   [self.originalPresentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+  NSLog(@"hehehehe");
+}
+
 #pragma mark UIGestureRecognizerDelegate (Public)
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer

@@ -13,14 +13,15 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
-#import "MDCDarkModeElevationLightening.h"
+
+#import "MDCAbsoluteElevation.h"
 #import "MaterialInk.h"
 #import "MaterialRipple.h"
 #import "MaterialShadowLayer.h"
 
 @protocol MDCShapeGenerating;
 
-@interface MDCCard : UIControl <MDCDarkModeElevationLightening>
+@interface MDCCard : UIControl <MDCAbsoluteElevation>
 
 /**
  The corner radius for the card
@@ -156,8 +157,9 @@
 @property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator;
 
 @property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
-    (UITraitCollection *_Nonnull previousTraitCollection, UITraitCollection *_Nonnull currentTraitCollection);
+    (UITraitCollection *_Nonnull previousTraitCollection);
 
-//@property(nonatomic, weak, nullable) id<MDCThemingElevationDelegate> elevationDelegate;
+@property(nonatomic, copy, nullable) void (^elevationDidChangeBlock)
+(CGFloat previousElevation, CGFloat currentElevation);
 
 @end
