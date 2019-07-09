@@ -192,13 +192,17 @@ static UIImage *fakeImage(CGSize size) {
   [super tearDown];
 }
 
-- (void)testInitCreatesObject {
+- (void)testDefaultValues {
   // When
   MDCTabBarView *tabBarView = [[MDCTabBarView alloc] init];
 
   // Then
   XCTAssertNotNil(tabBarView);
   XCTAssertNotNil(tabBarView.items);
+  XCTAssertEqualObjects(self.tabBarView.rippleColor, [[UIColor alloc] initWithWhite:0
+                                                                              alpha:(CGFloat)0.16]);
+  XCTAssertEqualObjects(self.tabBarView.bottomDividerColor, UIColor.clearColor);
+  XCTAssertEqualObjects(self.tabBarView.barTintColor, UIColor.whiteColor);
 }
 
 /// Tab bars should by default select nil in their items array. The behavior should also be
@@ -305,17 +309,6 @@ static UIImage *fakeImage(CGSize size) {
   // Then
   XCTAssertEqual(self.tabBarView.backgroundColor, UIColor.purpleColor);
   XCTAssertEqual(self.tabBarView.barTintColor, self.tabBarView.backgroundColor);
-}
-
-- (void)testDefaultRippleColor {
-  // Then
-  XCTAssertEqualObjects(self.tabBarView.rippleColor, [[UIColor alloc] initWithWhite:0
-                                                                              alpha:(CGFloat)0.16]);
-}
-
-- (void)testDefaultBottomDividerColor {
-  // Then
-  XCTAssertEqualObjects(self.tabBarView.bottomDividerColor, UIColor.clearColor);
 }
 
 - (void)testImageTintColorForStateFallsBackToNormalState {
