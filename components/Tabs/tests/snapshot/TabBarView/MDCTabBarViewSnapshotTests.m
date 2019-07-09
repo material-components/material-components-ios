@@ -371,7 +371,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
 
 #pragma mark - Selection
 
-- (void)testChangingSelectedItemIgnoresSelectedImage {
+- (void)testChangingSelectedItemUsesSelectedImage {
   // Given
   self.tabBarView.bounds = CGRectMake(0, 0, 360, kExpectedHeightTitlesAndIcons);
   self.item1.image = self.typicalIcon1;
@@ -480,7 +480,13 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
-- (void)testChangingImageOfSelectedItemAfterAddingToBar {
+/**
+ This order of operations has no effect because UITabBarItem assigns a copy the value set for
+ @c image to @c selectedImage if it is currently @c nil. Since MDCTabBarView can only retrieve
+ images from the public API of UITabBarItem, there is a value for @c selectedImage. As a result,
+ changing the value of @c image will not update @c selectedImage.
+ */
+- (void)testChangingImageOfSelectedItemAfterAddingToBarDoesNothing {
   // Given
   self.tabBarView.bounds = CGRectMake(0, 0, 360, kExpectedHeightTitlesAndIcons);
   UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:self.typicalIcon1 tag:0];
@@ -512,7 +518,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
-- (void)testChangingSelectedImageOfSelectedItemAfterAddingToBarDoesNothing {
+- (void)testChangingSelectedImageOfSelectedItemAfterAddingToBarUpdatesView {
   // Given
   self.tabBarView.bounds = CGRectMake(0, 0, 360, kExpectedHeightTitlesAndIcons);
   UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:self.typicalIcon1 tag:0];
