@@ -37,6 +37,9 @@ static const CGFloat kMinHeight = 48;
 /** The leading edge inset for scrollable tabs. */
 static const CGFloat kScrollableTabsLeadingEdgeInset = 52;
 
+/** The height of the bottom divider view. */
+static const CGFloat kBottomDividerHeight = 1;
+
 /// Default duration in seconds for selection change animations.
 static const NSTimeInterval kSelectionChangeAnimationDuration = 0.3;
 
@@ -510,8 +513,9 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   } else {
     [self layoutSubviewsForScrollableLayout];
   }
-  self.bottomDividerView.frame = CGRectMake(
-      CGRectGetMinX(self.bounds), CGRectGetMaxY(self.bounds) - 1, CGRectGetWidth(self.bounds), 1);
+  self.bottomDividerView.frame =
+      CGRectMake(CGRectGetMinX(self.bounds), CGRectGetMaxY(self.bounds) - kBottomDividerHeight,
+                 CGRectGetWidth(self.bounds), kBottomDividerHeight);
   self.contentSize = [self calculatedContentSize];
   [self updateSelectionIndicatorToIndex:[self.items indexOfObject:self.selectedItem]];
 
