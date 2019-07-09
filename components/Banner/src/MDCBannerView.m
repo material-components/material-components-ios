@@ -568,7 +568,6 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
     self.textLabel.font = textFont;
     [mutableAttributedText beginEditing];
     __block BOOL hasScalableFont = NO;
-    __weak typeof(self) weakSelf = self;
     [mutableAttributedText
         enumerateAttribute:NSFontAttributeName
                    inRange:NSMakeRange(0, mutableAttributedText.length)
@@ -579,7 +578,7 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
                     if (previousFont.mdc_scalingCurve) {
                       hasScalableFont = YES;
                       UIFont *scaledFont =
-                          [previousFont mdc_scaledFontForTraitEnvironment:weakSelf];
+                          [previousFont mdc_scaledFontForTraitEnvironment:self];
                       [mutableAttributedText removeAttribute:NSFontAttributeName range:range];
                       [mutableAttributedText addAttribute:NSFontAttributeName
                                                     value:scaledFont
