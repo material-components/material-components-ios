@@ -255,7 +255,7 @@
 - (void)testManagerForwardsButtonProperties {
   // Given
   self.manager.disabledButtonAlpha = 0.5;
-  self.manager.uppercaseButtonTitles = NO;
+  self.manager.uppercaseButtonTitle = NO;
   self.manager.buttonInkColor = UIColor.redColor;
   MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
   action.title = @"Tap Me";

@@ -228,7 +228,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
                                      dismissHandler:dismissHandler
                                     snackbarManager:self.manager];
   for (MDCButton *button in snackbarView.actionButtons) {
-    button.uppercaseTitle = self.manager.uppercaseButtonTitles;
+    button.uppercaseTitle = self.manager.uppercaseButtonTitle;
     button.disabledAlpha = self.manager.disabledButtonAlpha;
     if (self.manager.buttonInkColor) {
       button.inkColor = self.manager.buttonInkColor;
@@ -553,7 +553,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   self = [super init];
   if (self) {
     _internalManager = [[MDCSnackbarManagerInternal alloc] initWithSnackbarManager:self];
-    _uppercaseButtonTitles = YES;
+    _uppercaseButtonTitle = YES;
     _disabledButtonAlpha = 0.12;
   }
   return self;
