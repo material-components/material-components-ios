@@ -227,6 +227,14 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   snackbarView = [[viewClass alloc] initWithMessage:message
                                      dismissHandler:dismissHandler
                                     snackbarManager:self.manager];
+  for (MDCButton *button in snackbarView.actionButtons) {
+    button.uppercaseTitle = self.manager.uppercaseButtonTitles;
+    button.disabledAlpha = self.manager.disabledButtonAlpha;
+    if (self.manager.buttonInkColor) {
+      button.inkColor = self.manager.buttonInkColor;
+    }
+  }
+
   snackbarView.accessibilityViewIsModal =
       self.manager.shouldEnableAccessibilityViewIsModal && ![self isSnackbarTransient:snackbarView];
   [self.delegate willPresentSnackbarWithMessageView:snackbarView];
@@ -545,6 +553,8 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   self = [super init];
   if (self) {
     _internalManager = [[MDCSnackbarManagerInternal alloc] initWithSnackbarManager:self];
+    _uppercaseButtonTitles = YES;
+    _disabledButtonAlpha = 0.12;
   }
   return self;
 }
