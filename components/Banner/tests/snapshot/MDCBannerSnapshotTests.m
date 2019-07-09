@@ -308,20 +308,20 @@ static const CGFloat kBannerContentPadding = 10.0f;
     // Given
     self.bannerView = [[MDCBannerView alloc] init];
     self.typographyScheme =
-    [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
 
     // When
     NSMutableAttributedString *bannerString =
-    [[NSMutableAttributedString alloc] initWithString:kBannerShortText];
+        [[NSMutableAttributedString alloc] initWithString:kBannerShortText];
     [bannerString addAttribute:NSFontAttributeName
-                          value:self.typographyScheme.body1
-                          range:NSMakeRange(10, 8)];
+                         value:self.typographyScheme.body1
+                         range:NSMakeRange(10, 8)];
     [bannerString addAttribute:NSForegroundColorAttributeName
-                          value:UIColor.redColor
-                          range:NSMakeRange(0, 9)];
+                         value:UIColor.redColor
+                         range:NSMakeRange(0, 9)];
     [bannerString addAttribute:NSLinkAttributeName
-                          value:@"http://www.google.com"
-                          range:NSMakeRange([kBannerShortText length] - 2, 2)];
+                         value:@"http://www.google.com"
+                         range:NSMakeRange([kBannerShortText length] - 2, 2)];
     self.bannerView.textLabel.font = self.typographyScheme.body2;
     self.bannerView.textLabel.attributedText = bannerString;
     MDCButton *button = self.bannerView.leadingButton;
@@ -334,7 +334,7 @@ static const CGFloat kBannerContentPadding = 10.0f;
 
     // Then
     [self generateSnapshotWithContentSizeCategoryAndNotificationPost:
-     UIContentSizeCategoryExtraExtraLarge
+              UIContentSizeCategoryExtraExtraLarge
                                                     andVerifyForView:self.bannerView];
   }
 }
