@@ -513,7 +513,7 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 }
 
 - (BOOL)isAbleToFitTextLabel:(UILabel *)textLabel withWidthLimit:(CGFloat)widthLimit {
-  CGSize size = [textLabel.text sizeWithAttributes:@{NSFontAttributeName : textLabel.font}];
+  CGSize size = [textLabel sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
   return size.width <= widthLimit;
 }
 
@@ -558,11 +558,38 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 }
 
 - (void)updateTextFont {
-  UIFont *textFont = self.textLabel.font;
-  if (self.mdc_adjustsFontForContentSizeCategory && textFont.mdc_scalingCurve) {
-    textFont = [textFont mdc_scaledFontForTraitEnvironment:self];
+  if (self.mdc_adjustsFontForContentSizeCategory) {
+    NSAttributedString *attributedText = self.textLabel.attributedText;
+    NSMutableAttributedString *mutableAttributedText = [attributedText mutableCopy];
+    UIFont *textFont = self.textLabel.font;
+    if (textFont.mdc_scalingCurve) {
+      textFont = [textFont mdc_scaledFontForTraitEnvironment:self];
+    }
+    self.textLabel.font = textFont;
+    [mutableAttributedText beginEditing];
+    __block BOOL hasScalableFont = NO;
+    [mutableAttributedText
+        enumerateAttribute:NSFontAttributeName
+                   inRange:NSMakeRange(0, mutableAttributedText.length)
+                   options:0
+                usingBlock:^(id value, NSRange range, BOOL *stop) {
+                  if (value) {
+                    UIFont *previousFont = (UIFont *)value;
+                    if (previousFont.mdc_scalingCurve) {
+                      hasScalableFont = YES;
+                      UIFont *scaledFont = [previousFont mdc_scaledFontForTraitEnvironment:self];
+                      [mutableAttributedText removeAttribute:NSFontAttributeName range:range];
+                      [mutableAttributedText addAttribute:NSFontAttributeName
+                                                    value:scaledFont
+                                                    range:range];
+                    }
+                  }
+                }];
+    [mutableAttributedText endEditing];
+    if (hasScalableFont) {
+      self.textLabel.attributedText = [mutableAttributedText copy];
+    }
   }
-  self.textLabel.font = textFont;
 }
 
 @end
