@@ -378,6 +378,16 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   }
 }
 
+#pragma mark - Custom APIs
+
+- (id)accessibilityElementForItem:(UITabBarItem *)item {
+  NSUInteger itemIndex = [self.items indexOfObject:item];
+  if (itemIndex == NSNotFound || itemIndex >= self.itemViews.count) {
+    return nil;
+  }
+  return self.itemViews[itemIndex];
+}
+
 #pragma mark - Key-Value Observing (KVO)
 
 - (void)addObserversToTabBarItems {

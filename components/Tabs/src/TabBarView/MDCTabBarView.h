@@ -101,4 +101,15 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
  */
 - (nullable UIFont *)titleFontForState:(UIControlState)state;
 
+/**
+ Returns the @c UIAccessibility element associated with the provided item.
+
+ @note The returned object is not guaranteed to be of type @c UIAccessibilityElement. It is
+       guaranteed to be the same object UIAccessibility systems identify as representing @c item.
+
+ @param item A tab bar item in the receivers @c items array.
+ @return The @c UIAccessibility element associated with @c item if one exists, else @c nil.
+ */
+- (nullable id)accessibilityElementForItem:(nonnull UITabBarItem *)item;
+
 @end
