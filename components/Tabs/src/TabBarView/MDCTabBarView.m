@@ -52,6 +52,9 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 /** The views representing each tab bar item. */
 @property(nonnull, nonatomic, copy) NSArray<UIView *> *itemViews;
 
+/** The bottom divider view shown behind the default indicator template. */
+@property(nonnull, nonatomic, strong) UIView *bottomDividerView;
+
 /** @c YES if the items are laid-out in a justified style. */
 @property(nonatomic, readonly) BOOL isJustifiedLayoutStyle;
 
@@ -99,6 +102,12 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
     _selectionIndicatorTemplate = [[MDCTabBarViewUnderlineIndicatorTemplate alloc] init];
 
+    // The bottom divider is positioned behind the selection indicator.
+    _bottomDividerView = [[UIView alloc] init];
+    _bottomDividerView.backgroundColor = UIColor.clearColor;
+    [self addSubview:_bottomDividerView];
+
+    // The selection indicator is positioned behind the item views.
     [self addSubview:_selectionIndicatorView];
 
     // By default, inset the content within the safe area. This is generally the desired behavior,
@@ -142,6 +151,14 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 - (void)setSelectionIndicatorStrokeColor:(UIColor *)selectionIndicatorStrokeColor {
   _selectionIndicatorStrokeColor = selectionIndicatorStrokeColor ?: UIColor.blackColor;
   self.selectionIndicatorView.tintColor = self.selectionIndicatorStrokeColor;
+}
+
+- (void)setBottomDividerColor:(UIColor *)bottomDividerColor {
+  self.bottomDividerView.backgroundColor = bottomDividerColor;
+}
+
+- (UIColor *)bottomDividerColor {
+  return self.bottomDividerView.backgroundColor;
 }
 
 - (void)setItems:(NSArray<UITabBarItem *> *)items {
@@ -493,6 +510,8 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   } else {
     [self layoutSubviewsForScrollableLayout];
   }
+  self.bottomDividerView.frame = CGRectMake(
+      CGRectGetMinX(self.bounds), CGRectGetMaxY(self.bounds) - 1, CGRectGetWidth(self.bounds), 1);
   self.contentSize = [self calculatedContentSize];
   [self updateSelectionIndicatorToIndex:[self.items indexOfObject:self.selectedItem]];
 
