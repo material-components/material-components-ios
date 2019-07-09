@@ -25,11 +25,11 @@ static const CGFloat MDCProgressViewTrackColorDesaturation = (CGFloat)0.3;
 
 - (void)applyThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
   self.trackTintColor =
-      [[self class] defaultTrackTintColorForProgressTintColor:colorScheme.primaryColor];
+      [[self class] mdcThemingDefaultTrackTintColorForProgressTintColor:colorScheme.primaryColor];
   self.progressTintColor = colorScheme.primaryColor;
 }
 
-+ (UIColor *)defaultTrackTintColorForProgressTintColor:(UIColor *)progressTintColor {
++ (UIColor *)mdcThemingDefaultTrackTintColorForProgressTintColor:(UIColor *)progressTintColor {
   CGFloat hue, saturation, brightness, alpha;
   if ([progressTintColor getHue:&hue saturation:&saturation brightness:&brightness alpha:&alpha]) {
     CGFloat newSaturation = MIN(saturation * MDCProgressViewTrackColorDesaturation, 1);
