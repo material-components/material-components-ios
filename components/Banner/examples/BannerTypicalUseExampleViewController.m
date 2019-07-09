@@ -211,6 +211,13 @@ static NSString *const exampleExtraLongText =
                             exampleUseSelector:@selector(showMultilineLongTextStyleBanner)];
   [bannerExampleList addObject:exampleUseInfo8];
 
+  BannerExampleUseInfo *exampleUseInfo9 = [BannerExampleUseInfo
+      infoWithIdentifier:@"example9"
+             displayName:@"Long Attributed Text with One Action"
+        exampleUseTarget:self
+      exampleUseSelector:@selector(showMultilineLongAttributedTextStyleBanner)];
+  [bannerExampleList addObject:exampleUseInfo9];
+
   return [bannerExampleList copy];
 }
 
@@ -386,6 +393,47 @@ static NSString *const exampleExtraLongText =
 
   MDCBannerView *bannerView = [[MDCBannerView alloc] init];
   bannerView.textLabel.text = exampleLongText;
+  bannerView.backgroundColor = self.colorScheme.surfaceColor;
+  UIEdgeInsets margins = UIEdgeInsetsZero;
+  margins.left = exampleBannerContentPadding;
+  margins.right = exampleBannerContentPadding;
+  bannerView.layoutMargins = margins;
+  [self.view addSubview:bannerView];
+  self.bannerView = bannerView;
+
+  MDCButton *button = bannerView.leadingButton;
+  [button setTitle:@"Dismiss" forState:UIControlStateNormal];
+  button.uppercaseTitle = YES;
+  [button setTitleColor:self.colorScheme.primaryColor forState:UIControlStateNormal];
+  button.backgroundColor = self.colorScheme.surfaceColor;
+  bannerView.trailingButton.hidden = YES;
+  bannerView.imageView.hidden = YES;
+  bannerView.showsDivider = YES;
+
+  [button addTarget:self
+                action:@selector(dismissBanner)
+      forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)showMultilineLongAttributedTextStyleBanner {
+  if (self.bannerView) {
+    [self.bannerView removeFromSuperview];
+  }
+
+  MDCBannerView *bannerView = [[MDCBannerView alloc] init];
+  NSMutableAttributedString *exampleString =
+      [[NSMutableAttributedString alloc] initWithString:exampleLongText];
+  [exampleString addAttribute:NSFontAttributeName
+                        value:self.typographyScheme.body2
+                        range:NSMakeRange(6, 5)];
+  [exampleString addAttribute:NSForegroundColorAttributeName
+                        value:UIColor.redColor
+                        range:NSMakeRange(12, 5)];
+  [exampleString addAttribute:NSLinkAttributeName
+                        value:@"http://www.google.com"
+                        range:NSMakeRange([exampleLongText length] - 11, 11)];
+  bannerView.textLabel.attributedText = exampleString;
+  bannerView.mdc_adjustsFontForContentSizeCategory = YES;
   bannerView.backgroundColor = self.colorScheme.surfaceColor;
   UIEdgeInsets margins = UIEdgeInsetsZero;
   margins.left = exampleBannerContentPadding;
