@@ -70,7 +70,7 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
 - (void)testInitWithMaterialDefaultsDark {
   // Given
   MDCSemanticColorScheme *colorScheme =
-  [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterialDark201907];
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterialDark201907];
 
   // Then
   XCTAssertEqualObjects(colorScheme.primaryColor, ColorFromRGB(0xBB86FC));
