@@ -643,7 +643,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
 - (CGSize)sizeThatFits:(CGSize)size {
   CGSize intrinsicSize = self.intrinsicContentSize;
-  return CGSizeMake(MAX(intrinsicSize.width, size.width), intrinsicSize.height);
+  return CGSizeMake(size.width, intrinsicSize.height);
 }
 
 #pragma mark - Helpers
