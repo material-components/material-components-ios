@@ -21,6 +21,12 @@
 /** A basic view that displays a title and image for a tab bar item within MDCTabBarView. */
 @interface MDCTabBarViewItemView : UIView <MDCTabBarViewCustomViewable>
 
+/** The image to display when unselected. */
+@property(nonatomic, strong) UIImage *image;
+
+/** The image to display when selected. */
+@property(nonatomic, strong) UIImage *selectedImage;
+
 /** The image view to display the icon. */
 @property(nonatomic, strong) UIImageView *iconImageView;
 
