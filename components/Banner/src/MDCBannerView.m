@@ -561,6 +561,11 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   if (self.mdc_adjustsFontForContentSizeCategory) {
     NSAttributedString *attributedText = self.textLabel.attributedText;
     NSMutableAttributedString *mutableAttributedText = [attributedText mutableCopy];
+    UIFont *textFont = self.textLabel.font;
+    if (textFont.mdc_scalingCurve) {
+      textFont = [textFont mdc_scaledFontForTraitEnvironment:self];
+    }
+    self.textLabel.font = textFont;
     [mutableAttributedText beginEditing];
     __block BOOL hasScalableFont = NO;
     __weak typeof(self) weakSelf = self;
