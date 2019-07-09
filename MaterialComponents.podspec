@@ -1050,6 +1050,7 @@ Pod::Spec.new do |mdc|
     component.dependency 'MDFTextAccessibility'
     component.dependency "MaterialComponents/private/Application"
     component.dependency "MaterialComponents/private/UIMetrics"
+    component.dependency "MaterialComponents/private/Math"
 
     component.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
