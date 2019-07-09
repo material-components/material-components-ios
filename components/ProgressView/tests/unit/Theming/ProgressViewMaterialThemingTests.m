@@ -60,7 +60,8 @@ static const CGFloat MDCProgressViewTrackColorDesaturation = (CGFloat)0.3;
   // Test Colors
   XCTAssertEqualObjects(
       self.progressView.trackTintColor,
-      [self defaultTrackTintColorForProgressTintColor:scheme.colorScheme.primaryColor]);
+      [self
+          mdcThemingTestDefaultTrackTintColorForProgressTintColor:scheme.colorScheme.primaryColor]);
   XCTAssertEqualObjects(self.progressView.progressTintColor, scheme.colorScheme.primaryColor);
 }
 
@@ -75,11 +76,12 @@ static const CGFloat MDCProgressViewTrackColorDesaturation = (CGFloat)0.3;
   // Test Colors
   XCTAssertEqualObjects(
       self.progressView.trackTintColor,
-      [self defaultTrackTintColorForProgressTintColor:scheme.colorScheme.primaryColor]);
+      [self
+          mdcThemingTestDefaultTrackTintColorForProgressTintColor:scheme.colorScheme.primaryColor]);
   XCTAssertEqualObjects(self.progressView.progressTintColor, scheme.colorScheme.primaryColor);
 }
 
-- (UIColor *)defaultTrackTintColorForProgressTintColor:(UIColor *)progressTintColor {
+- (UIColor *)mdcThemingTestDefaultTrackTintColorForProgressTintColor:(UIColor *)progressTintColor {
   CGFloat hue, saturation, brightness, alpha;
   if ([progressTintColor getHue:&hue saturation:&saturation brightness:&brightness alpha:&alpha]) {
     CGFloat newSaturation = MIN(saturation * MDCProgressViewTrackColorDesaturation, 1);
