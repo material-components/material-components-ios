@@ -840,4 +840,46 @@ static UIImage *fakeImage(CGSize size) {
   XCTAssertNoThrow([self.tabBarView layoutIfNeeded]);
 }
 
+#pragma mark - Custom APIs
+
+- (void)testAccessibilityElementForItemNotInItemsArrayReturnsNil {
+  // Given
+  self.tabBarView.items = @[ self.itemA ];
+
+  // When
+  UIAccessibilityElement *element = [self.tabBarView accessibilityElementForItem:self.itemB];
+
+  // Then
+  XCTAssertNil(element);
+}
+
+- (void)testAccessibilityElementForEmptyItemsArrayReturnsNil {
+  // Given
+  self.tabBarView.items = @[];
+
+  // When
+  UIAccessibilityElement *element = [self.tabBarView accessibilityElementForItem:self.itemB];
+
+  // Then
+  XCTAssertNil(element);
+}
+
+- (void)testAccessibilityElementForItemInItemsArrayReturnsItemViewWithMatchingTitleAndImage {
+  // Given
+  self.itemB.image = fakeImage(CGSizeMake(24, 24));
+  self.tabBarView.items = @[ self.itemA, self.itemB, self.itemC ];
+
+  // When
+  UIAccessibilityElement *element = [self.tabBarView accessibilityElementForItem:self.itemB];
+
+  // Then
+  XCTAssertTrue([element isKindOfClass:[MDCTabBarViewItemView class]], @"(%@) is not of class (%@)",
+                element, NSStringFromClass([MDCTabBarViewItemView class]));
+  if ([element isKindOfClass:[MDCTabBarViewItemView class]]) {
+    MDCTabBarViewItemView *itemView = (MDCTabBarViewItemView *)element;
+    XCTAssertEqualObjects(itemView.titleLabel.text, self.itemB.title);
+    XCTAssertEqualObjects(itemView.iconImageView.image, self.itemB.image);
+  }
+}
+
 @end
