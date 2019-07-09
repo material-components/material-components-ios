@@ -564,20 +564,24 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
     [mutableAttributedText beginEditing];
     __block BOOL hasScalableFont = NO;
     __weak typeof(self) weakSelf = self;
-    [mutableAttributedText enumerateAttribute:NSFontAttributeName
-                                      inRange:NSMakeRange(0, mutableAttributedText.length)
-                                      options:0
-                                   usingBlock:^(id value, NSRange range, BOOL *stop) {
-      if (value) {
-        UIFont *previousFont = (UIFont *)value;
-        if (previousFont.mdc_scalingCurve) {
-          hasScalableFont = YES;
-          UIFont *scaledFont = [previousFont mdc_scaledFontForTraitEnvironment:weakSelf];
-          [mutableAttributedText removeAttribute:NSFontAttributeName range:range];
-          [mutableAttributedText addAttribute:NSFontAttributeName value:scaledFont range:range];
-        }
-      }
-    }];
+    [mutableAttributedText
+        enumerateAttribute:NSFontAttributeName
+                   inRange:NSMakeRange(0, mutableAttributedText.length)
+                   options:0
+                usingBlock:^(id value, NSRange range, BOOL *stop) {
+                  if (value) {
+                    UIFont *previousFont = (UIFont *)value;
+                    if (previousFont.mdc_scalingCurve) {
+                      hasScalableFont = YES;
+                      UIFont *scaledFont =
+                          [previousFont mdc_scaledFontForTraitEnvironment:weakSelf];
+                      [mutableAttributedText removeAttribute:NSFontAttributeName range:range];
+                      [mutableAttributedText addAttribute:NSFontAttributeName
+                                                    value:scaledFont
+                                                    range:range];
+                    }
+                  }
+                }];
     [mutableAttributedText endEditing];
     if (hasScalableFont) {
       self.textLabel.attributedText = [mutableAttributedText copy];
