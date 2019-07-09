@@ -706,7 +706,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 - (CGSize)availableSizeForSubviewLayout {
   CGRect availableBounds = self.bounds;
   if (@available(iOS 11.0, *)) {
-    availableBounds = UIEdgeInsetsInsetRect(availableBounds, self.adjustedContentInset);
+    availableBounds = UIEdgeInsetsInsetRect(availableBounds, self.safeAreaInsets);
   }
   return CGSizeMake(CGRectGetWidth(availableBounds), CGRectGetHeight(availableBounds));
 }
