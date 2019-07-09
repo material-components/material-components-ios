@@ -313,6 +313,11 @@ static UIImage *fakeImage(CGSize size) {
                                                                               alpha:(CGFloat)0.16]);
 }
 
+- (void)testDefaultBottomDividerColor {
+  // Then
+  XCTAssertEqualObjects(self.tabBarView.bottomDividerColor, UIColor.clearColor);
+}
+
 - (void)testImageTintColorForStateFallsBackToNormalState {
   // Given
   [self.tabBarView setImageTintColor:nil forState:UIControlStateNormal];
@@ -838,6 +843,48 @@ static UIImage *fakeImage(CGSize size) {
 
   // Then
   XCTAssertNoThrow([self.tabBarView layoutIfNeeded]);
+}
+
+#pragma mark - Custom APIs
+
+- (void)testAccessibilityElementForItemNotInItemsArrayReturnsNil {
+  // Given
+  self.tabBarView.items = @[ self.itemA ];
+
+  // When
+  UIAccessibilityElement *element = [self.tabBarView accessibilityElementForItem:self.itemB];
+
+  // Then
+  XCTAssertNil(element);
+}
+
+- (void)testAccessibilityElementForEmptyItemsArrayReturnsNil {
+  // Given
+  self.tabBarView.items = @[];
+
+  // When
+  UIAccessibilityElement *element = [self.tabBarView accessibilityElementForItem:self.itemB];
+
+  // Then
+  XCTAssertNil(element);
+}
+
+- (void)testAccessibilityElementForItemInItemsArrayReturnsItemViewWithMatchingTitleAndImage {
+  // Given
+  self.itemB.image = fakeImage(CGSizeMake(24, 24));
+  self.tabBarView.items = @[ self.itemA, self.itemB, self.itemC ];
+
+  // When
+  UIAccessibilityElement *element = [self.tabBarView accessibilityElementForItem:self.itemB];
+
+  // Then
+  XCTAssertTrue([element isKindOfClass:[MDCTabBarViewItemView class]], @"(%@) is not of class (%@)",
+                element, NSStringFromClass([MDCTabBarViewItemView class]));
+  if ([element isKindOfClass:[MDCTabBarViewItemView class]]) {
+    MDCTabBarViewItemView *itemView = (MDCTabBarViewItemView *)element;
+    XCTAssertEqualObjects(itemView.titleLabel.text, self.itemB.title);
+    XCTAssertEqualObjects(itemView.iconImageView.image, self.itemB.image);
+  }
 }
 
 @end
