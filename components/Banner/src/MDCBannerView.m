@@ -577,8 +577,7 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
                     UIFont *previousFont = (UIFont *)value;
                     if (previousFont.mdc_scalingCurve) {
                       hasScalableFont = YES;
-                      UIFont *scaledFont =
-                          [previousFont mdc_scaledFontForTraitEnvironment:self];
+                      UIFont *scaledFont = [previousFont mdc_scaledFontForTraitEnvironment:self];
                       [mutableAttributedText removeAttribute:NSFontAttributeName range:range];
                       [mutableAttributedText addAttribute:NSFontAttributeName
                                                     value:scaledFont
