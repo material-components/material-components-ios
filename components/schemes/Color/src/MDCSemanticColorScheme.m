@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #import "MDCSemanticColorScheme.h"
-#import "MDCDarkMode.h"
 
 static UIColor *ColorFromRGB(uint32_t colorValue) {
   return [UIColor colorWithRed:(CGFloat)(((colorValue >> 16) & 0xFF) / 255.0)
@@ -105,32 +104,6 @@ static UIColor *DynamicColor(UIColor *defaultColor, UIColor *darkColor) {
     }
   }
   return self;
-}
-
-- (MDCSemanticColorScheme *)resolvedSchemeForTraitCollection:(UITraitCollection *)traitCollection elevation:(CGFloat)elevation {
-  MDCSemanticColorScheme *copy = [self copy];
-  if (!self.shouldLightenElevatedSurfacesWithDarkMode) {
-    return copy;
-  }
-
-  if (@available(iOS 13.0, *)) {
-    UIColor *resolvedSurfaceColor =
-        [copy.surfaceColor resolvedColorWithTraitCollection:traitCollection];
-    UIColor *resolvedBackgroundColor =
-        [copy.backgroundColor resolvedColorWithTraitCollection:traitCollection];
-    if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
-      copy.surfaceColor = [MDCDarkMode lightenBackgroundColor:resolvedSurfaceColor
-                                                             withElevation:elevation];
-      copy.backgroundColor = [MDCDarkMode lightenBackgroundColor:resolvedBackgroundColor
-                                                   withElevation:elevation];
-    }
-  } else {
-    copy.surfaceColor = [MDCDarkMode lightenBackgroundColor:copy.surfaceColor
-                                              withElevation:elevation];
-    copy.backgroundColor = [MDCDarkMode lightenBackgroundColor:copy.backgroundColor
-                                                 withElevation:elevation];
-  }
-  return copy;
 }
 
 + (UIColor *)blendColor:(UIColor *)color withBackgroundColor:(UIColor *)backgroundColor {

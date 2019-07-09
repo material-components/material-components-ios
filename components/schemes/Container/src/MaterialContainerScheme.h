@@ -13,4 +13,3 @@
 // limitations under the License.
 
 #import "MDCContainerScheme.h"
-#import "MDCThemeable.h"
