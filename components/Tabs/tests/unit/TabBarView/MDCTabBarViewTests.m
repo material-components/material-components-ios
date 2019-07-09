@@ -313,6 +313,11 @@ static UIImage *fakeImage(CGSize size) {
                                                                               alpha:(CGFloat)0.16]);
 }
 
+- (void)testDefaultBottomDividerColor {
+  // Then
+  XCTAssertEqualObjects(self.tabBarView.bottomDividerColor, UIColor.clearColor);
+}
+
 - (void)testImageTintColorForStateFallsBackToNormalState {
   // Given
   [self.tabBarView setImageTintColor:nil forState:UIControlStateNormal];
