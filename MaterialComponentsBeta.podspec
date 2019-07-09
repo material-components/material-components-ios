@@ -1,6 +1,6 @@
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponentsBeta"
-  mdc.version      = "85.4.0"
+  mdc.version      = "85.5.0"
   mdc.authors      = "The Material Components authors."
   mdc.summary      = "A collection of stand-alone alpha UI libraries that are not yet guaranteed to be ready for general production use. Use with caution."
   mdc.homepage     = "https://github.com/material-components/material-components-ios"
@@ -113,6 +113,7 @@ Pod::Spec.new do |mdc|
     ]
     extension.dependency "MaterialComponents/AnimationTiming"
     extension.dependency "MaterialComponents/Ripple"
+    extension.dependency "MaterialComponents/private/Math"
     extension.dependency "MDFInternationalization"
 
     extension.test_spec 'UnitTests' do |unit_tests|

@@ -16,6 +16,7 @@
 
 #import "MDCFlexibleHeaderView+ShiftBehavior.h"
 #import "MaterialApplication.h"
+#import "MaterialMath.h"
 #import "MaterialUIMetrics.h"
 #import "private/MDCFlexibleHeaderMinMaxHeight.h"
 #import "private/MDCFlexibleHeaderTopSafeArea.h"
@@ -643,7 +644,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   insets.top += topInsetAdjustment;
   info.injectedTopContentInset = desiredTopInset;
   info.hasInjectedTopContentInset = YES;
-  if (!UIEdgeInsetsEqualToEdgeInsets(scrollView.contentInset, insets)) {
+  if (!MDCEdgeInsetsEqualToEdgeInsets(scrollView.contentInset, insets)) {
     scrollView.contentInset = insets;
   }
 

@@ -32,6 +32,7 @@ mdc_public_objc_library(
     ],
     deps = [
         "//components/private/Application",
+        "//components/private/Math",
         "//components/private/UIMetrics",
         "@material_text_accessibility_ios//:MDFTextAccessibility",
     ],
