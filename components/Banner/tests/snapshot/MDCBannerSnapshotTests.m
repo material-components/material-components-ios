@@ -309,6 +309,12 @@ static const CGFloat kBannerContentPadding = 10.0f;
     self.bannerView = [[MDCBannerView alloc] init];
     self.typographyScheme =
         [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+    MDCButton *button = self.bannerView.leadingButton;
+    [button setTitle:@"Action" forState:UIControlStateNormal];
+    [button setTitleFont:self.typographyScheme.button forState:UIControlStateNormal];
+    button.uppercaseTitle = YES;
+    [button setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
+    self.bannerView.trailingButton.hidden = YES;
 
     // When
     NSMutableAttributedString *bannerString =
@@ -324,12 +330,6 @@ static const CGFloat kBannerContentPadding = 10.0f;
                          range:NSMakeRange([kBannerShortText length] - 2, 2)];
     self.bannerView.textLabel.font = self.typographyScheme.body2;
     self.bannerView.textLabel.attributedText = bannerString;
-    MDCButton *button = self.bannerView.leadingButton;
-    [button setTitle:@"Action" forState:UIControlStateNormal];
-    [button setTitleFont:self.typographyScheme.button forState:UIControlStateNormal];
-    button.uppercaseTitle = YES;
-    [button setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
-    self.bannerView.trailingButton.hidden = YES;
     self.bannerView.mdc_adjustsFontForContentSizeCategory = YES;
 
     // Then
