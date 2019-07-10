@@ -1,18 +1,6 @@
-# #develop#
+# 85.5.1
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
-
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
-## API changes
-
-## Component changes
+This patch release makes a FlexibleHeader dependency on MaterialMath explicit in MaterialComponents.podspec so that pod lib lint validations pass and the release can be published successfully with Cocoapods. There are no code changes.
 
 ---
 
