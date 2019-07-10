@@ -640,8 +640,8 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
-  CGSize intrinsicSize = self.intrinsicContentSize;
-  return CGSizeMake(MAX(intrinsicSize.width, size.width), intrinsicSize.height);
+  CGSize fitSize = [self intrinsicContentSizeForJustifiedLayout];
+  return CGSizeMake(size.width, fitSize.height);
 }
 
 #pragma mark - Helpers

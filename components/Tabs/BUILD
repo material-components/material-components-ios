@@ -85,8 +85,8 @@ mdc_extension_objc_library(
     name = "Theming",
     deps = [
         ":Tabs",
-        "//components/schemes/Container",
         "//components/schemes/Color",
+        "//components/schemes/Container",
         "//components/schemes/Typography",
     ],
 )
@@ -186,8 +186,8 @@ mdc_objc_library(
     deps = [
         ":Tabs",
         ":Theming",
-        "//components/schemes/Container",
         "//components/schemes/Color",
+        "//components/schemes/Container",
         "//components/schemes/Typography",
     ],
 )
@@ -225,6 +225,8 @@ mdc_snapshot_objc_library(
         ":Tabs",
         ":Theming",
         ":privateTabBarView",
+        "//components/AppBar",
+        "//components/HeaderStackView",
     ],
 )
 
