@@ -395,6 +395,8 @@ run_cocoapods() {
     gem_install xcpretty 
     echo "running gem install cocoapods-clean..."
     gem install cocoapods-clean
+    echo "pod --version:"
+    pod --version
     pod clean
     pod cache clean --all
 
