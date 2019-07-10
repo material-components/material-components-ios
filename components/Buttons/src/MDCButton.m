@@ -317,7 +317,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
   [super traitCollectionDidChange:previousTraitCollection];
 
-  [self updateTitleFont];
   if (self.traitCollectionDidChangeBlock) {
     self.traitCollectionDidChangeBlock(previousTraitCollection);
   }
