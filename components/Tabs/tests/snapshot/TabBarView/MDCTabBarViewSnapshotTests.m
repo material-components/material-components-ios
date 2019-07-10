@@ -34,6 +34,11 @@ static const CGFloat kMinItemWidth = 90;
 /** The maximum width of a tab bar item. */
 static const CGFloat kMaxItemWidth = 360;
 
+static inline void SizeViewToIntrinsicContentSize(UIView *view) {
+  CGSize intrinsicContentSize = view.intrinsicContentSize;
+  view.bounds = CGRectMake(0, 0, intrinsicContentSize.width, intrinsicContentSize.height);
+}
+
 /** A custom view to place in an MDCTabBarView. */
 @interface MDCTabBarViewSnapshotTestsCustomView : UIView <MDCTabBarViewCustomViewable>
 /** A switch shown in the view. */
@@ -393,7 +398,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:self.typicalIcon1 tag:0];
   UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:self.typicalIcon2 tag:1];
   self.tabBarView.items = @[ item1, item2 ];
-  [self.tabBarView sizeToFit];
+  SizeViewToIntrinsicContentSize(self.tabBarView);
   [self.tabBarView setSelectedItem:item1 animated:NO];
   [self.tabBarView setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
   [self.tabBarView setImageTintColor:UIColor.blackColor forState:UIControlStateNormal];
@@ -703,7 +708,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   // When
   UIEdgeInsets safeAreaInsets = UIEdgeInsetsMake(16, 44, 0, 0);
   superview.customSafeAreaInsets = safeAreaInsets;
-  CGSize fitSize = [self.tabBarView sizeThatFits:CGSizeZero];
+  CGSize fitSize = self.tabBarView.intrinsicContentSize;
   fitSize = CGSizeMake(fitSize.width + safeAreaInsets.left, fitSize.height + safeAreaInsets.top);
   self.tabBarView.bounds = CGRectMake(0, 0, fitSize.width, fitSize.height);
   superview.bounds = CGRectMake(0, 0, CGRectGetWidth(self.tabBarView.bounds),
@@ -728,7 +733,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   // When
   UIEdgeInsets safeAreaInsets = UIEdgeInsetsMake(0, 0, 16, 44);
   superview.customSafeAreaInsets = safeAreaInsets;
-  CGSize fitSize = [self.tabBarView sizeThatFits:CGSizeZero];
+  CGSize fitSize = self.tabBarView.intrinsicContentSize;
   fitSize =
       CGSizeMake(fitSize.width + safeAreaInsets.right, fitSize.height + safeAreaInsets.bottom);
   self.tabBarView.bounds = CGRectMake(0, 0, fitSize.width, fitSize.height);
@@ -817,7 +822,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   // When
   UIEdgeInsets contentInset = UIEdgeInsetsMake(15, 0, 0, 45);
   self.tabBarView.contentInset = contentInset;
-  CGSize fitSize = [self.tabBarView sizeThatFits:CGSizeZero];
+  CGSize fitSize = self.tabBarView.intrinsicContentSize;
   fitSize = CGSizeMake(fitSize.width + contentInset.right, fitSize.height + contentInset.top);
   self.tabBarView.bounds = CGRectMake(0, 0, fitSize.width, fitSize.height);
 
@@ -837,7 +842,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   // When
   UIEdgeInsets contentInset = UIEdgeInsetsMake(0, 45, 15, 0);
   self.tabBarView.contentInset = contentInset;
-  CGSize fitSize = [self.tabBarView sizeThatFits:CGSizeZero];
+  CGSize fitSize = self.tabBarView.intrinsicContentSize;
   fitSize = CGSizeMake(fitSize.width + contentInset.left, fitSize.height + contentInset.bottom);
   self.tabBarView.bounds = CGRectMake(0, 0, fitSize.width, fitSize.height);
 
@@ -894,7 +899,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   UIEdgeInsets contentInset = UIEdgeInsetsMake(5, 10, 0, 0);
   superview.customSafeAreaInsets = safeAreaInsets;
   self.tabBarView.contentInset = contentInset;
-  CGSize fitSize = [self.tabBarView sizeThatFits:CGSizeZero];
+  CGSize fitSize = self.tabBarView.intrinsicContentSize;
   fitSize = CGSizeMake(fitSize.width + safeAreaInsets.left + contentInset.left,
                        fitSize.height + safeAreaInsets.top + contentInset.top);
   self.tabBarView.bounds = CGRectMake(0, 0, fitSize.width, fitSize.height);
@@ -922,7 +927,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   UIEdgeInsets contentInset = UIEdgeInsetsMake(0, 0, 5, 10);
   superview.customSafeAreaInsets = safeAreaInsets;
   self.tabBarView.contentInset = contentInset;
-  CGSize fitSize = [self.tabBarView sizeThatFits:CGSizeZero];
+  CGSize fitSize = self.tabBarView.intrinsicContentSize;
   fitSize = CGSizeMake(fitSize.width + safeAreaInsets.right + contentInset.right,
                        fitSize.height + safeAreaInsets.bottom + contentInset.bottom);
   self.tabBarView.bounds = CGRectMake(0, 0, fitSize.width, fitSize.height);
@@ -1050,7 +1055,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   // When
   [self.tabBarView setTitleFont:[UIFont systemFontOfSize:8] forState:UIControlStateNormal];
   [self.tabBarView setTitleFont:[UIFont systemFontOfSize:24] forState:UIControlStateSelected];
-  [self.tabBarView sizeToFit];
+  SizeViewToIntrinsicContentSize(self.tabBarView);
 
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBarView];
@@ -1066,7 +1071,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
 
   // When
   [self.tabBarView setTitleFont:[UIFont systemFontOfSize:8] forState:UIControlStateNormal];
-  [self.tabBarView sizeToFit];
+  SizeViewToIntrinsicContentSize(self.tabBarView);
 
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBarView];
@@ -1085,7 +1090,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   // When
   [self.tabBarView setTitleFont:nil forState:UIControlStateNormal];
   [self.tabBarView setTitleFont:nil forState:UIControlStateSelected];
-  [self.tabBarView sizeToFit];
+  SizeViewToIntrinsicContentSize(self.tabBarView);
 
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBarView];
@@ -1128,7 +1133,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:self.typicalIcon3 tag:3];
   self.tabBarView.items = @[ item1, item2, item3 ];
   [self.tabBarView setSelectedItem:item2 animated:NO];
-  [self.tabBarView sizeToFit];
+  SizeViewToIntrinsicContentSize(self.tabBarView);
 
   // When
   self.tabBarView.rippleColor = [UIColor.orangeColor colorWithAlphaComponent:(CGFloat)0.25];
@@ -1145,7 +1150,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:self.typicalIcon3 tag:3];
   self.tabBarView.items = @[ item1, item2, item3 ];
   [self.tabBarView setSelectedItem:item2 animated:NO];
-  [self.tabBarView sizeToFit];
+  SizeViewToIntrinsicContentSize(self.tabBarView);
 
   // When
   self.tabBarView.selectionIndicatorStrokeColor = UIColor.purpleColor;
@@ -1161,7 +1166,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:self.typicalIcon3 tag:3];
   self.tabBarView.items = @[ item1, item2, item3 ];
   [self.tabBarView setSelectedItem:item2 animated:NO];
-  [self.tabBarView sizeToFit];
+  SizeViewToIntrinsicContentSize(self.tabBarView);
   self.tabBarView.selectionIndicatorStrokeColor = UIColor.purpleColor;
 
   // When
@@ -1178,7 +1183,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:self.typicalIcon3 tag:3];
   self.tabBarView.items = @[ item1, item2, item3 ];
   [self.tabBarView setSelectedItem:item2 animated:NO];
-  [self.tabBarView sizeToFit];
+  SizeViewToIntrinsicContentSize(self.tabBarView);
   self.tabBarView.bottomDividerColor = UIColor.purpleColor;
 
   // When
@@ -1201,7 +1206,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
 
   // When
   self.tabBarView.items = @[ item1, customViewItem, item3 ];
-  [self.tabBarView sizeToFit];
+  SizeViewToIntrinsicContentSize(self.tabBarView);
 
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBarView];

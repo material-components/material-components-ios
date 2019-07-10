@@ -120,6 +120,8 @@ Pod::Spec.new do |mdc|
       unit_tests.source_files = [
         "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/*.{h,m,swift}",
       ]
+      unit_tests.dependency "MaterialComponents/AppBar"
+      unit_tests.dependency "MaterialComponents/HeaderStackView"
       unit_tests.dependency "MaterialComponents/Typography"
     end
   end
