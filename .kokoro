@@ -413,7 +413,7 @@ run_cocoapods() {
     fi
   elif [ "$DEPENDENCY_SYSTEM" = "cocoapods-podspec" ]; then
     launchctl remove com.apple.CoreSimulator.CoreSimulatorService || true 
-    pod lib lint MaterialComponents.podspec --skip-tests
+    pod lib lint MaterialComponents.podspec --skip-tests --verbose
   fi
 
   if [ -n "$CODECOV_TOKEN" ]; then
