@@ -9,6 +9,7 @@ Pod::Spec.new do |mdc|
   mdc.platform     = :ios
   mdc.requires_arc = true
   mdc.ios.deployment_target = '9.0'
+  mdc.swift_version = '4.2'
 
   # See MaterialComponents.podspec for the subspec structure and template.
 
