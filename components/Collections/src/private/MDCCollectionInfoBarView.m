@@ -113,9 +113,7 @@ static inline UIColor *CollectionInfoBarRedColor(void) {
     [self setShouldApplyBackgroundViewShadow:_shouldApplyBackgroundViewShadow];
   }
 
-  if (_style == MDCCollectionInfoBarViewStyleActionable) {
-    [self updateBorderColor];
-  }
+  [self updateBorderColor];
 }
 
 - (void)layoutSublayersOfLayer:(CALayer *)layer {
@@ -184,10 +182,8 @@ static inline UIColor *CollectionInfoBarRedColor(void) {
 
     // Adds border to be positioned during sublayer layout.
     self.backgroundView.clipsToBounds = YES;
-    if (!_backgroundBorderLayer) {
-      [self updateBorderColor];
-    }
   }
+  [self updateBorderColor];
 }
 
 - (void)updateBorderColor {
@@ -197,7 +193,11 @@ static inline UIColor *CollectionInfoBarRedColor(void) {
       white = 1;
     }
   }
-  _backgroundBorderLayer.borderColor = [UIColor colorWithWhite:white alpha:(CGFloat)0.1].CGColor;
+  CGFloat alpha = 0;
+  if (_style == MDCCollectionInfoBarViewStyleActionable) {
+    alpha = 0.1;
+  }
+  _backgroundBorderLayer.borderColor = [UIColor colorWithWhite:white alpha:alpha].CGColor;
 }
 
 - (BOOL)isVisible {
