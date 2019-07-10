@@ -19,7 +19,6 @@
 #import "MDCSnackbarMessageView.h"
 
 #import "MaterialAnimationTiming.h"
-#import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
 #import "private/MDCSnackbarMessageViewInternal.h"
@@ -145,11 +144,6 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
  Holds onto the dismissal handler, called when the Snackbar should dismiss due to user interaction.
  */
 @property(nonatomic, copy) MDCSnackbarMessageDismissHandler dismissalHandler;
-
-/**
- The elevation of the snackbar view.
- */
-@property(nonatomic, assign) MDCShadowElevation elevation;
 
 @end
 

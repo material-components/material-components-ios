@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
+
 #import "MaterialButtons.h"
+#import "MaterialShadowElevations.h"
 
 /**
  Class which provides the default implementation of a Snackbar.
@@ -57,6 +59,11 @@
  The array of action buttons of the snackbar.
  */
 @property(nonatomic, strong, nullable) NSMutableArray<MDCButton *> *actionButtons;
+
+/**
+ The elevation of the snackbar view.
+ */
+@property(nonatomic, assign) MDCShadowElevation elevation;
 
 /**
  The @c accessibilityLabel to apply to the message of the Snackbar.

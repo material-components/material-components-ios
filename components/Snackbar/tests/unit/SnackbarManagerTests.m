@@ -81,4 +81,21 @@
   [self waitForExpectations:@[ expect ] timeout:3];
 }
 
+- (void)testDefaultElevation {
+  // Then
+  XCTAssertEqual([[MDCSnackbarManager alloc] init].elevation, MDCShadowElevationSnackbar);
+}
+
+- (void)testCustomElevation {
+  // Given
+  MDCSnackbarManager *manager = [[MDCSnackbarManager alloc] init];
+  CGFloat fakeElevation = 10;
+
+  // When
+  manager.elevation = fakeElevation;
+
+  // Then
+  XCTAssertEqual(manager.elevation, fakeElevation);
+}
+
 @end

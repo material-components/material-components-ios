@@ -73,6 +73,23 @@
   XCTAssertEqualObjects(messageView.messageTextColor, UIColor.whiteColor);
 }
 
+- (void)testDefaultElevation {
+  // Then
+  XCTAssertEqual([[MDCSnackbarMessageView alloc] init].elevation, MDCShadowElevationSnackbar);
+}
+
+- (void)testCustomElevation {
+  // Given
+  CGFloat fakeElevation = 10;
+  MDCSnackbarMessageView *messageView = [[MDCSnackbarMessageView alloc] init];
+
+  // When
+  messageView.elevation = fakeElevation;
+
+  // Then
+  XCTAssertEqual(messageView.elevation, fakeElevation);
+}
+
 - (void)testAccessibilityLabelDefaultIsNil {
   // When
   [self.manager showMessage:self.message];
