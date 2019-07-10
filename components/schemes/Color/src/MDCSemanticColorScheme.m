@@ -15,7 +15,7 @@
 #import "MDCSemanticColorScheme.h"
 
 static UIColor *DynamicColor(UIColor *defaultColor, UIColor *darkColor) {
-#if defined(__IPHONE_13_0)
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     return [UIColor
         colorWithDynamicProvider:^UIColor *_Nonnull(UITraitCollection *_Nonnull traitCollection) {
