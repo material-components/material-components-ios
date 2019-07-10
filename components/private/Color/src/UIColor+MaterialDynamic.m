@@ -21,13 +21,13 @@
 #if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     return [UIColor
-            colorWithDynamicProvider:^UIColor *_Nonnull(UITraitCollection *_Nonnull traitCollection) {
-              if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
-                return darkColor;
-              } else {
-                return defaultColor;
-              }
-            }];
+        colorWithDynamicProvider:^UIColor *_Nonnull(UITraitCollection *_Nonnull traitCollection) {
+          if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            return darkColor;
+          } else {
+            return defaultColor;
+          }
+        }];
   } else {
     return defaultColor;
   }
