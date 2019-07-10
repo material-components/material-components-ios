@@ -15,18 +15,22 @@
 #import "MDCSemanticColorScheme.h"
 
 static UIColor *DynamicColor(UIColor *defaultColor, UIColor *darkColor) {
+#if defined(__IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     return [UIColor
-        colorWithDynamicProvider:^UIColor *_Nonnull(UITraitCollection *_Nonnull traitCollection) {
-          if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
-            return darkColor;
-          } else {
-            return defaultColor;
-          }
-        }];
+            colorWithDynamicProvider:^UIColor *_Nonnull(UITraitCollection *_Nonnull traitCollection) {
+              if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+                return darkColor;
+              } else {
+                return defaultColor;
+              }
+            }];
   } else {
     return defaultColor;
   }
+#else
+  return defaultColor;
+#endif
 }
 
 static UIColor *ColorFromRGB(uint32_t colorValue) {
