@@ -57,6 +57,18 @@ static CGFloat blendColorChannel(CGFloat value, CGFloat bValue, CGFloat alpha, C
         _onSurfaceColor = ColorFromRGB(0x000000);
         _onBackgroundColor = ColorFromRGB(0x000000);
         break;
+      case MDCColorSchemeDefaultsMaterialDark201907:
+        _primaryColor = ColorFromRGB(0xBB86FC);
+        _primaryColorVariant = ColorFromRGB(0x3700B3);
+        _secondaryColor = ColorFromRGB(0x03DAC6);
+        _errorColor = ColorFromRGB(0xCF6679);
+        _surfaceColor = ColorFromRGB(0x121212);
+        _backgroundColor = ColorFromRGB(0x121212);
+        _onPrimaryColor = ColorFromRGB(0x000000);
+        _onSecondaryColor = ColorFromRGB(0x000000);
+        _onSurfaceColor = ColorFromRGB(0xFFFFFF);
+        _onBackgroundColor = ColorFromRGB(0xFFFFFF);
+        break;
     }
   }
   return self;

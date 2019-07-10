@@ -67,6 +67,24 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
   XCTAssertEqualObjects(colorScheme.onBackgroundColor, ColorFromRGB(0x000000));
 }
 
+- (void)testInitWithMaterialDefaultsDark {
+  // Given
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterialDark201907];
+
+  // Then
+  XCTAssertEqualObjects(colorScheme.primaryColor, ColorFromRGB(0xBB86FC));
+  XCTAssertEqualObjects(colorScheme.primaryColorVariant, ColorFromRGB(0x3700B3));
+  XCTAssertEqualObjects(colorScheme.secondaryColor, ColorFromRGB(0x03DAC6));
+  XCTAssertEqualObjects(colorScheme.errorColor, ColorFromRGB(0xCF6679));
+  XCTAssertEqualObjects(colorScheme.surfaceColor, ColorFromRGB(0x121212));
+  XCTAssertEqualObjects(colorScheme.backgroundColor, ColorFromRGB(0x121212));
+  XCTAssertEqualObjects(colorScheme.onPrimaryColor, ColorFromRGB(0x000000));
+  XCTAssertEqualObjects(colorScheme.onSecondaryColor, ColorFromRGB(0x000000));
+  XCTAssertEqualObjects(colorScheme.onSurfaceColor, ColorFromRGB(0xFFFFFF));
+  XCTAssertEqualObjects(colorScheme.onBackgroundColor, ColorFromRGB(0xFFFFFF));
+}
+
 - (void)testColorMergeForOpaqueColor {
   UIColor *backgroundColor = [UIColor whiteColor];
   UIColor *blendColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:1.0];
