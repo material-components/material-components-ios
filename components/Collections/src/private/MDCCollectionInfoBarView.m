@@ -71,6 +71,11 @@ static inline UIColor *CollectionInfoBarRedColor(void) {
       (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
   _backgroundView.hidden = YES;
 
+  _backgroundBorderLayer = [CALayer layer];
+  _backgroundBorderLayer.borderWidth = 1 / [[UIScreen mainScreen] scale];
+  [_backgroundView.layer addSublayer:_backgroundBorderLayer];
+  [self updateBorderColor];
+
   _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
   _titleLabel.backgroundColor = [UIColor clearColor];
   _titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -106,6 +111,10 @@ static inline UIColor *CollectionInfoBarRedColor(void) {
 
   if (_shouldApplyBackgroundViewShadow) {
     [self setShouldApplyBackgroundViewShadow:_shouldApplyBackgroundViewShadow];
+  }
+
+  if (_style == MDCCollectionInfoBarViewStyleActionable) {
+    [self updateBorderColor];
   }
 }
 
@@ -176,12 +185,19 @@ static inline UIColor *CollectionInfoBarRedColor(void) {
     // Adds border to be positioned during sublayer layout.
     self.backgroundView.clipsToBounds = YES;
     if (!_backgroundBorderLayer) {
-      _backgroundBorderLayer = [CALayer layer];
-      _backgroundBorderLayer.borderColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.1].CGColor;
-      _backgroundBorderLayer.borderWidth = 1 / [[UIScreen mainScreen] scale];
-      [self.backgroundView.layer addSublayer:_backgroundBorderLayer];
+      [self updateBorderColor];
     }
   }
+}
+
+- (void)updateBorderColor {
+  CGFloat white = 0;
+  if (@available(iOS 12.0, *)) {
+    if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+      white = 1;
+    }
+  }
+  _backgroundBorderLayer.borderColor = [UIColor colorWithWhite:white alpha:(CGFloat)0.1].CGColor;
 }
 
 - (BOOL)isVisible {
