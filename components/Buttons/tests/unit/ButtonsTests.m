@@ -1327,7 +1327,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
                  UIAccessibilityTraitAllowsDirectInteraction | UIAccessibilityTraitButton);
 }
 
-#pragma mark -UITraitCollection
+#pragma mark - UITraitCollection
 
 - (void)testTraitCollectionDidChangeBlockCalledWhenTraitCollectionChanges {
   // Given
