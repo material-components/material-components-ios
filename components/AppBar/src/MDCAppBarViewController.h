@@ -36,6 +36,13 @@
  */
 @property(nonatomic, strong, nonnull) MDCHeaderStackView *headerStackView;
 
+/**
+ A block that is invoked when the AppBarViewController receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (UITraitCollection *_Nullable previousTraitCollection);
+
 @end
 
 #pragma mark - To be deprecated
