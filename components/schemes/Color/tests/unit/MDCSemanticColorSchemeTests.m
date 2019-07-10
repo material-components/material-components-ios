@@ -85,6 +85,117 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
   XCTAssertEqualObjects(colorScheme.onBackgroundColor, ColorFromRGB(0xFFFFFF));
 }
 
+- (void)testInitWithMaterialDefaults201907WhenUserInterfaceStyleIsDarkForiOS13 {
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+  if (@available(iOS 13.0, *)) {
+    // Given
+    MDCSemanticColorScheme *colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201907];
+
+    // When
+    UITraitCollection *traitCollection =
+        [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
+
+    // Then
+    XCTAssertEqualObjects(
+        [colorScheme.primaryColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0xBB86FC));
+    XCTAssertEqualObjects(
+        [colorScheme.primaryColorVariant resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0x3700B3));
+    XCTAssertEqualObjects(
+        [colorScheme.secondaryColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0x03DAC6));
+    XCTAssertEqualObjects([colorScheme.errorColor resolvedColorWithTraitCollection:traitCollection],
+                          ColorFromRGB(0xCF6679));
+    XCTAssertEqualObjects(
+        [colorScheme.surfaceColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0x121212));
+    XCTAssertEqualObjects(
+        [colorScheme.backgroundColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0x121212));
+    XCTAssertEqualObjects(
+        [colorScheme.onPrimaryColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0x000000));
+    XCTAssertEqualObjects(
+        [colorScheme.onSecondaryColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0x000000));
+    XCTAssertEqualObjects(
+        [colorScheme.onSurfaceColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0xFFFFFF));
+    XCTAssertEqualObjects(
+        [colorScheme.onBackgroundColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0xFFFFFF));
+  }
+#endif
+}
+
+- (void)testInitWithMaterialDefaults201907WhenUserInterfaceStyleIsLightForiOS13 {
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+  if (@available(iOS 13.0, *)) {
+    // Given
+    MDCSemanticColorScheme *colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201907];
+
+    // When
+    UITraitCollection *traitCollection =
+        [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleLight];
+
+    // Then
+    XCTAssertEqualObjects(
+        [colorScheme.primaryColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0x6200EE));
+    XCTAssertEqualObjects(
+        [colorScheme.primaryColorVariant resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0x3700B3));
+    XCTAssertEqualObjects(
+        [colorScheme.secondaryColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0x03DAC6));
+    XCTAssertEqualObjects([colorScheme.errorColor resolvedColorWithTraitCollection:traitCollection],
+                          ColorFromRGB(0xB00020));
+    XCTAssertEqualObjects(
+        [colorScheme.surfaceColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0xFFFFFF));
+    XCTAssertEqualObjects(
+        [colorScheme.backgroundColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0xFFFFFF));
+    XCTAssertEqualObjects(
+        [colorScheme.onPrimaryColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0xFFFFFF));
+    XCTAssertEqualObjects(
+        [colorScheme.onSecondaryColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0x000000));
+    XCTAssertEqualObjects(
+        [colorScheme.onSurfaceColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0x000000));
+    XCTAssertEqualObjects(
+        [colorScheme.onBackgroundColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0x000000));
+  }
+#endif
+}
+
+- (void)testInitWithMaterialDefaults201907WhenUserInterfaceStyleIsLightForPreiOS13 {
+  if (@available(iOS 13.0, *)) {
+  } else {
+    // Given
+    MDCSemanticColorScheme *colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201907];
+
+    // Then
+    XCTAssertEqualObjects(colorScheme.primaryColor, ColorFromRGB(0x6200EE));
+    XCTAssertEqualObjects(colorScheme.primaryColorVariant, ColorFromRGB(0x3700B3));
+    XCTAssertEqualObjects(colorScheme.secondaryColor, ColorFromRGB(0x03DAC6));
+    XCTAssertEqualObjects(colorScheme.errorColor, ColorFromRGB(0xB00020));
+    XCTAssertEqualObjects(colorScheme.surfaceColor, ColorFromRGB(0xFFFFFF));
+    XCTAssertEqualObjects(colorScheme.backgroundColor, ColorFromRGB(0xFFFFFF));
+    XCTAssertEqualObjects(colorScheme.onPrimaryColor, ColorFromRGB(0xFFFFFF));
+    XCTAssertEqualObjects(colorScheme.onSecondaryColor, ColorFromRGB(0x000000));
+    XCTAssertEqualObjects(colorScheme.onSurfaceColor, ColorFromRGB(0x000000));
+    XCTAssertEqualObjects(colorScheme.onBackgroundColor, ColorFromRGB(0x000000));
+  }
+}
+
 - (void)testColorMergeForOpaqueColor {
   UIColor *backgroundColor = [UIColor whiteColor];
   UIColor *blendColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:1.0];

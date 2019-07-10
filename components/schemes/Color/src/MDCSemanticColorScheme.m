@@ -14,6 +14,25 @@
 
 #import "MDCSemanticColorScheme.h"
 
+static UIColor *DynamicColor(UIColor *defaultColor, UIColor *darkColor) {
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+  if (@available(iOS 13.0, *)) {
+    return [UIColor
+        colorWithDynamicProvider:^UIColor *_Nonnull(UITraitCollection *_Nonnull traitCollection) {
+          if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            return darkColor;
+          } else {
+            return defaultColor;
+          }
+        }];
+  } else {
+    return defaultColor;
+  }
+#else
+  return defaultColor;
+#endif
+}
+
 static UIColor *ColorFromRGB(uint32_t colorValue) {
   return [UIColor colorWithRed:(CGFloat)(((colorValue >> 16) & 0xFF) / 255.0)
                          green:(CGFloat)(((colorValue >> 8) & 0xFF) / 255.0)
@@ -68,6 +87,18 @@ static CGFloat blendColorChannel(CGFloat value, CGFloat bValue, CGFloat alpha, C
         _onSecondaryColor = ColorFromRGB(0x000000);
         _onSurfaceColor = ColorFromRGB(0xFFFFFF);
         _onBackgroundColor = ColorFromRGB(0xFFFFFF);
+        break;
+      case MDCColorSchemeDefaultsMaterial201907:
+        _primaryColor = DynamicColor(ColorFromRGB(0x6200EE), ColorFromRGB(0xBB86FC));
+        _primaryColorVariant = DynamicColor(ColorFromRGB(0x3700B3), ColorFromRGB(0x3700B3));
+        _secondaryColor = DynamicColor(ColorFromRGB(0x03DAC6), ColorFromRGB(0x03DAC6));
+        _errorColor = DynamicColor(ColorFromRGB(0xB00020), ColorFromRGB(0xCF6679));
+        _surfaceColor = DynamicColor(ColorFromRGB(0xFFFFFF), ColorFromRGB(0x121212));
+        _backgroundColor = DynamicColor(ColorFromRGB(0xFFFFFF), ColorFromRGB(0x121212));
+        _onPrimaryColor = DynamicColor(ColorFromRGB(0xFFFFFF), ColorFromRGB(0x000000));
+        _onSecondaryColor = DynamicColor(ColorFromRGB(0x000000), ColorFromRGB(0x000000));
+        _onSurfaceColor = DynamicColor(ColorFromRGB(0x000000), ColorFromRGB(0xFFFFFF));
+        _onBackgroundColor = DynamicColor(ColorFromRGB(0x000000), ColorFromRGB(0xFFFFFF));
         break;
     }
   }
