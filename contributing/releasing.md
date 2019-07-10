@@ -253,6 +253,11 @@ Send our local podspec through the CocoaPods linter:
 
     pod lib lint MaterialComponents.podspec --skip-tests
 
+If you find unexpected errors when running `pod lib lint`, this may be caused due to having multiple Xcode versions.
+Please try running this command before, and trying again:
+
+    launchctl remove com.apple.CoreSimulator.CoreSimulatorService || true 
+
 CocoaPods publishes a directory of publicly available pods through its **trunk** service.
 Note: Ensure that you can [push the podspec](#publish-to-cocoapods) later by checking for `MaterialComponents` in your list of available `Pods` when you:
 

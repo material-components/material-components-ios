@@ -412,6 +412,7 @@ run_cocoapods() {
       bash scripts/test_all catalog/MDCCatalog.xcworkspace:MDCCatalog
     fi
   elif [ "$DEPENDENCY_SYSTEM" = "cocoapods-podspec" ]; then
+    launchctl remove com.apple.CoreSimulator.CoreSimulatorService || true 
     pod lib lint MaterialComponents.podspec --skip-tests
   fi
 
