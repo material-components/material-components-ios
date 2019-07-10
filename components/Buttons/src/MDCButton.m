@@ -314,6 +314,15 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   return superSize;
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  [self updateTitleFont];
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(previousTraitCollection);
+  }
+}
+
 #pragma mark - UIResponder
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
