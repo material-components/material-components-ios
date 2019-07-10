@@ -15,7 +15,9 @@
 #import <XCTest/XCTest.h>
 
 #import "../../../src/TabBarView/private/MDCTabBarViewItemView.h"
+#import "MDCTabBarItem.h"
 #import "MDCTabBarView.h"
+#import "MDCTabBarViewCustomViewable.h"
 #import "MDCTabBarViewDelegate.h"
 #import "MaterialTypography.h"
 
@@ -34,6 +36,38 @@ static UIImage *fakeImage(CGSize size) {
 }
 
 #pragma mark - Test Doubles
+
+/** A mock class for custom view testing. Records calls to `setSelected:animated:`. */
+@interface MDCTabBarViewTestCustomViewMock : UIView <MDCTabBarViewCustomViewable>
+
+/** Whether this view is selected. */
+@property(nonatomic, assign, getter=isSelected) BOOL selected;
+
+/** @c YES if this view was marked selected (or unselected) with animation, else @c NO. */
+@property(nonatomic, assign) BOOL setSelectedCalledWithAnimation;
+
+@end
+
+@implementation MDCTabBarViewTestCustomViewMock
+
+- (CGSize)intrinsicContentSize {
+  return CGSizeMake(1, 1);
+}
+
+- (CGSize)sizeThatFits:(CGSize)size {
+  return self.intrinsicContentSize;
+}
+
+- (CGRect)contentFrame {
+  return CGRectZero;
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+  self.selected = selected;
+  self.setSelectedCalledWithAnimation = animated;
+}
+
+@end
 
 /** A fake @c UITapGestureRecognizer subclass that allows the @c view property to be set. */
 @interface MDCTabBarViewFakeTapGestureRecognizer : UITapGestureRecognizer
@@ -158,13 +192,17 @@ static UIImage *fakeImage(CGSize size) {
   [super tearDown];
 }
 
-- (void)testInitCreatesObject {
+- (void)testDefaultValues {
   // When
   MDCTabBarView *tabBarView = [[MDCTabBarView alloc] init];
 
   // Then
   XCTAssertNotNil(tabBarView);
   XCTAssertNotNil(tabBarView.items);
+  XCTAssertEqualObjects(self.tabBarView.rippleColor, [[UIColor alloc] initWithWhite:0
+                                                                              alpha:(CGFloat)0.16]);
+  XCTAssertEqualObjects(self.tabBarView.bottomDividerColor, UIColor.clearColor);
+  XCTAssertEqualObjects(self.tabBarView.barTintColor, UIColor.whiteColor);
 }
 
 /// Tab bars should by default select nil in their items array. The behavior should also be
@@ -271,12 +309,6 @@ static UIImage *fakeImage(CGSize size) {
   // Then
   XCTAssertEqual(self.tabBarView.backgroundColor, UIColor.purpleColor);
   XCTAssertEqual(self.tabBarView.barTintColor, self.tabBarView.backgroundColor);
-}
-
-- (void)testDefaultRippleColor {
-  // Then
-  XCTAssertEqualObjects(self.tabBarView.rippleColor, [[UIColor alloc] initWithWhite:0
-                                                                              alpha:(CGFloat)0.16]);
 }
 
 - (void)testImageTintColorForStateFallsBackToNormalState {
@@ -647,7 +679,7 @@ static UIImage *fakeImage(CGSize size) {
   XCTAssertGreaterThanOrEqual(actualIntrinsicContentSize.height, intrinsicSizeMinimalSize.height);
 }
 
-- (void)testSizeThatFitsExpandsToFitContent {
+- (void)testSizeThatFitsFitsOnlyIncreasesHeightForTooSmallSize {
   // Given
   self.tabBarView.items = @[ self.itemA ];
 
@@ -655,7 +687,7 @@ static UIImage *fakeImage(CGSize size) {
   CGSize size = [self.tabBarView sizeThatFits:CGSizeZero];
 
   // Then
-  XCTAssertGreaterThan(size.width, 0);
+  XCTAssertEqualWithAccuracy(size.width, 0, 0.001);
   XCTAssertEqualWithAccuracy(size.height, kMinHeight, 0.001);
 }
 
@@ -671,6 +703,181 @@ static UIImage *fakeImage(CGSize size) {
   // Then
   XCTAssertEqualWithAccuracy(size.width, biggerSize.width, 0.001);
   XCTAssertEqualWithAccuracy(size.height, intrinsicSize.height, 0.001);
+}
+
+#pragma mark - Custom Views
+
+- (void)testCustomViewSetSelectedAnimatedCalledForSelectedWithImplicitAnimation {
+  // Given
+  MDCTabBarViewTestCustomViewMock *mockCustomView = [[MDCTabBarViewTestCustomViewMock alloc] init];
+  MDCTabBarItem *customItem = [[MDCTabBarItem alloc] init];
+  customItem.mdc_customView = mockCustomView;
+  self.tabBarView.items = @[ customItem ];
+
+  // When
+  [self.tabBarView setSelectedItem:customItem];
+
+  // Then
+  XCTAssertTrue(mockCustomView.selected);
+  XCTAssertTrue(mockCustomView.setSelectedCalledWithAnimation);
+}
+
+- (void)testCustomViewSetSelectedAnimatedCalledForUnselectedWithImplicitAnimation {
+  // Given
+  MDCTabBarViewTestCustomViewMock *mockCustomView = [[MDCTabBarViewTestCustomViewMock alloc] init];
+  MDCTabBarItem *customItem = [[MDCTabBarItem alloc] init];
+  customItem.mdc_customView = mockCustomView;
+  self.tabBarView.items = @[ customItem ];
+  [self.tabBarView setSelectedItem:customItem];
+
+  // When
+  [self.tabBarView setSelectedItem:nil];
+
+  // Then
+  XCTAssertFalse(mockCustomView.selected);
+  XCTAssertTrue(mockCustomView.setSelectedCalledWithAnimation);
+}
+
+- (void)testCustomViewSetSelectedAnimatedCalledForSelectedWithExplicitAnimation {
+  // Given
+  MDCTabBarViewTestCustomViewMock *mockCustomView = [[MDCTabBarViewTestCustomViewMock alloc] init];
+  MDCTabBarItem *customItem = [[MDCTabBarItem alloc] init];
+  customItem.mdc_customView = mockCustomView;
+  self.tabBarView.items = @[ customItem ];
+
+  // When
+  [self.tabBarView setSelectedItem:customItem animated:YES];
+
+  // Then
+  XCTAssertTrue(mockCustomView.selected);
+  XCTAssertTrue(mockCustomView.setSelectedCalledWithAnimation);
+}
+
+- (void)testCustomViewSetSelectedAnimatedCalledForUnselectedWithExplicitAnimation {
+  // Given
+  MDCTabBarViewTestCustomViewMock *mockCustomView = [[MDCTabBarViewTestCustomViewMock alloc] init];
+  MDCTabBarItem *customItem = [[MDCTabBarItem alloc] init];
+  customItem.mdc_customView = mockCustomView;
+  self.tabBarView.items = @[ customItem ];
+  [self.tabBarView setSelectedItem:customItem];
+
+  // When
+  [self.tabBarView setSelectedItem:nil animated:YES];
+
+  // Then
+  XCTAssertFalse(mockCustomView.selected);
+  XCTAssertTrue(mockCustomView.setSelectedCalledWithAnimation);
+}
+
+- (void)testCustomViewSetSelectedAnimatedCalledForSelectedWithoutAnimation {
+  // Given
+  MDCTabBarViewTestCustomViewMock *mockCustomView = [[MDCTabBarViewTestCustomViewMock alloc] init];
+  MDCTabBarItem *customItem = [[MDCTabBarItem alloc] init];
+  customItem.mdc_customView = mockCustomView;
+  self.tabBarView.items = @[ customItem ];
+
+  // When
+  [self.tabBarView setSelectedItem:customItem animated:NO];
+
+  // Then
+  XCTAssertTrue(mockCustomView.selected);
+  XCTAssertFalse(mockCustomView.setSelectedCalledWithAnimation);
+}
+
+- (void)testCustomViewSetSelectedAnimatedCalledForUnselectedWithoutAnimation {
+  // Given
+  MDCTabBarViewTestCustomViewMock *mockCustomView = [[MDCTabBarViewTestCustomViewMock alloc] init];
+  MDCTabBarItem *customItem = [[MDCTabBarItem alloc] init];
+  customItem.mdc_customView = mockCustomView;
+  self.tabBarView.items = @[ customItem ];
+  [self.tabBarView setSelectedItem:customItem];
+
+  // When
+  [self.tabBarView setSelectedItem:nil animated:NO];
+
+  // Then
+  XCTAssertFalse(mockCustomView.selected);
+  XCTAssertFalse(mockCustomView.setSelectedCalledWithAnimation);
+}
+
+#pragma mark - Key-Value Observing (KVO)
+
+- (void)testSettingTitleNilFromNonNilValue {
+  // Given
+  self.tabBarView.items = @[ self.itemA ];
+  self.itemA.title = @"Not nil";
+
+  // When
+  self.itemA.title = nil;
+
+  // Then
+  XCTAssertNoThrow([self.tabBarView layoutIfNeeded]);
+}
+
+- (void)testSettingImageNilFromNonNilValue {
+  // Given
+  self.tabBarView.items = @[ self.itemA ];
+  self.itemA.image = fakeImage(CGSizeMake(24, 24));
+
+  // When
+  self.itemA.image = nil;
+
+  // Then
+  XCTAssertNoThrow([self.tabBarView layoutIfNeeded]);
+}
+
+- (void)testSettingSelectedImageNilFromNonNilValue {
+  // Given
+  self.tabBarView.items = @[ self.itemA ];
+  self.itemA.selectedImage = fakeImage(CGSizeMake(24, 24));
+
+  // When
+  self.itemA.selectedImage = nil;
+
+  // Then
+  XCTAssertNoThrow([self.tabBarView layoutIfNeeded]);
+}
+
+#pragma mark - Custom APIs
+
+- (void)testAccessibilityElementForItemNotInItemsArrayReturnsNil {
+  // Given
+  self.tabBarView.items = @[ self.itemA ];
+
+  // When
+  UIAccessibilityElement *element = [self.tabBarView accessibilityElementForItem:self.itemB];
+
+  // Then
+  XCTAssertNil(element);
+}
+
+- (void)testAccessibilityElementForEmptyItemsArrayReturnsNil {
+  // Given
+  self.tabBarView.items = @[];
+
+  // When
+  UIAccessibilityElement *element = [self.tabBarView accessibilityElementForItem:self.itemB];
+
+  // Then
+  XCTAssertNil(element);
+}
+
+- (void)testAccessibilityElementForItemInItemsArrayReturnsItemViewWithMatchingTitleAndImage {
+  // Given
+  self.itemB.image = fakeImage(CGSizeMake(24, 24));
+  self.tabBarView.items = @[ self.itemA, self.itemB, self.itemC ];
+
+  // When
+  UIAccessibilityElement *element = [self.tabBarView accessibilityElementForItem:self.itemB];
+
+  // Then
+  XCTAssertTrue([element isKindOfClass:[MDCTabBarViewItemView class]], @"(%@) is not of class (%@)",
+                element, NSStringFromClass([MDCTabBarViewItemView class]));
+  if ([element isKindOfClass:[MDCTabBarViewItemView class]]) {
+    MDCTabBarViewItemView *itemView = (MDCTabBarViewItemView *)element;
+    XCTAssertEqualObjects(itemView.titleLabel.text, self.itemB.title);
+    XCTAssertEqualObjects(itemView.iconImageView.image, self.itemB.image);
+  }
 }
 
 @end

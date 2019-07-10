@@ -15,8 +15,8 @@
 #import "MDCTabBarView.h"
 
 #import "MDCTabBarItemCustomViewing.h"
+#import "MDCTabBarViewCustomViewable.h"
 #import "MDCTabBarViewDelegate.h"
-#import "MDCTabBarViewIndicatorSupporting.h"
 #import "MDCTabBarViewIndicatorTemplate.h"
 #import "MDCTabBarViewUnderlineIndicatorTemplate.h"
 #import "private/MDCTabBarViewIndicatorView.h"
@@ -37,9 +37,13 @@ static const CGFloat kMinHeight = 48;
 /** The leading edge inset for scrollable tabs. */
 static const CGFloat kScrollableTabsLeadingEdgeInset = 52;
 
+/** The height of the bottom divider view. */
+static const CGFloat kBottomDividerHeight = 1;
+
 /// Default duration in seconds for selection change animations.
 static const NSTimeInterval kSelectionChangeAnimationDuration = 0.3;
 
+static NSString *const kSelectedImageKeyPath = @"selectedImage";
 static NSString *const kImageKeyPath = @"image";
 static NSString *const kTitleKeyPath = @"title";
 static NSString *const kAccessibilityLabelKeyPath = @"accessibilityLabel";
@@ -51,6 +55,9 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
 /** The views representing each tab bar item. */
 @property(nonnull, nonatomic, copy) NSArray<UIView *> *itemViews;
+
+/** The bottom divider view shown behind the default indicator template. */
+@property(nonnull, nonatomic, strong) UIView *bottomDividerView;
 
 /** @c YES if the items are laid-out in a justified style. */
 @property(nonatomic, readonly) BOOL isJustifiedLayoutStyle;
@@ -99,6 +106,12 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
     _selectionIndicatorTemplate = [[MDCTabBarViewUnderlineIndicatorTemplate alloc] init];
 
+    // The bottom divider is positioned behind the selection indicator.
+    _bottomDividerView = [[UIView alloc] init];
+    _bottomDividerView.backgroundColor = UIColor.clearColor;
+    [self addSubview:_bottomDividerView];
+
+    // The selection indicator is positioned behind the item views.
     [self addSubview:_selectionIndicatorView];
 
     // By default, inset the content within the safe area. This is generally the desired behavior,
@@ -144,6 +157,14 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   self.selectionIndicatorView.tintColor = self.selectionIndicatorStrokeColor;
 }
 
+- (void)setBottomDividerColor:(UIColor *)bottomDividerColor {
+  self.bottomDividerView.backgroundColor = bottomDividerColor;
+}
+
+- (UIColor *)bottomDividerColor {
+  return self.bottomDividerView.backgroundColor;
+}
+
 - (void)setItems:(NSArray<UITabBarItem *> *)items {
   NSParameterAssert(items);
 
@@ -178,7 +199,8 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
                                             ? UIAccessibilityTraitButton
                                             : item.accessibilityTraits;
       mdcItemView.titleLabel.textColor = [self titleColorForState:UIControlStateNormal];
-      mdcItemView.iconImageView.image = item.image;
+      mdcItemView.image = item.image;
+      mdcItemView.selectedImage = item.selectedImage;
       mdcItemView.rippleTouchController.rippleView.rippleColor = self.rippleColor;
       itemView = mdcItemView;
     }
@@ -221,6 +243,11 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     UIView *oldSelectedItemView = self.itemViews[oldSelectedItemIndex];
     oldSelectedItemView.accessibilityTraits =
         (oldSelectedItemView.accessibilityTraits & ~UIAccessibilityTraitSelected);
+    if ([oldSelectedItemView conformsToProtocol:@protocol(MDCTabBarViewCustomViewable)]) {
+      UIView<MDCTabBarViewCustomViewable> *customViewableView =
+          (UIView<MDCTabBarViewCustomViewable> *)oldSelectedItemView;
+      [customViewableView setSelected:NO animated:animated];
+    }
   }
 
   // Handle setting to `nil` without passing it to the nonnull parameter in `indexOfObject:`
@@ -244,6 +271,11 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   UIView *newSelectedItemView = self.itemViews[itemIndex];
   newSelectedItemView.accessibilityTraits =
       (newSelectedItemView.accessibilityTraits | UIAccessibilityTraitSelected);
+  if ([newSelectedItemView conformsToProtocol:@protocol(MDCTabBarViewCustomViewable)]) {
+    UIView<MDCTabBarViewCustomViewable> *customViewableView =
+        (UIView<MDCTabBarViewCustomViewable> *)newSelectedItemView;
+    [customViewableView setSelected:YES animated:animated];
+  }
   [self updateTitleColorForAllViews];
   [self updateImageTintColorForAllViews];
   [self updateTitleFontForAllViews];
@@ -368,12 +400,26 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   }
 }
 
+#pragma mark - Custom APIs
+
+- (id)accessibilityElementForItem:(UITabBarItem *)item {
+  NSUInteger itemIndex = [self.items indexOfObject:item];
+  if (itemIndex == NSNotFound || itemIndex >= self.itemViews.count) {
+    return nil;
+  }
+  return self.itemViews[itemIndex];
+}
+
 #pragma mark - Key-Value Observing (KVO)
 
 - (void)addObserversToTabBarItems {
   for (UITabBarItem *item in self.items) {
     [item addObserver:self
            forKeyPath:kImageKeyPath
+              options:NSKeyValueObservingOptionNew
+              context:kKVOContextMDCTabBarView];
+    [item addObserver:self
+           forKeyPath:kSelectedImageKeyPath
               options:NSKeyValueObservingOptionNew
               context:kKVOContextMDCTabBarView];
     [item addObserver:self
@@ -402,6 +448,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 - (void)removeObserversFromTabBarItems {
   for (UITabBarItem *item in self.items) {
     [item removeObserver:self forKeyPath:kImageKeyPath context:kKVOContextMDCTabBarView];
+    [item removeObserver:self forKeyPath:kSelectedImageKeyPath context:kKVOContextMDCTabBarView];
     [item removeObserver:self forKeyPath:kTitleKeyPath context:kKVOContextMDCTabBarView];
     [item removeObserver:self
               forKeyPath:kAccessibilityLabelKeyPath
@@ -436,17 +483,25 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
       return;
     }
     MDCTabBarViewItemView *tabBarItemView = (MDCTabBarViewItemView *)updatedItemView;
-
+    id newValue = [object valueForKey:keyPath];
+    if (newValue == [NSNull null]) {
+      newValue = nil;
+    }
     if ([keyPath isEqualToString:kImageKeyPath]) {
-      tabBarItemView.iconImageView.image = change[NSKeyValueChangeNewKey];
+      tabBarItemView.image = newValue;
+      [self markIntrinsicContentSizeAndLayoutNeedingUpdateForSelfAndItemView:tabBarItemView];
+    } else if ([keyPath isEqualToString:kSelectedImageKeyPath]) {
+      tabBarItemView.selectedImage = newValue;
+      [self markIntrinsicContentSizeAndLayoutNeedingUpdateForSelfAndItemView:tabBarItemView];
     } else if ([keyPath isEqualToString:kTitleKeyPath]) {
-      tabBarItemView.titleLabel.text = change[NSKeyValueChangeNewKey];
+      tabBarItemView.titleLabel.text = newValue;
+      [self markIntrinsicContentSizeAndLayoutNeedingUpdateForSelfAndItemView:tabBarItemView];
     } else if ([keyPath isEqualToString:kAccessibilityLabelKeyPath]) {
-      tabBarItemView.accessibilityLabel = change[NSKeyValueChangeNewKey];
+      tabBarItemView.accessibilityLabel = newValue;
     } else if ([keyPath isEqualToString:kAccessibilityHintKeyPath]) {
-      tabBarItemView.accessibilityHint = change[NSKeyValueChangeNewKey];
+      tabBarItemView.accessibilityHint = newValue;
     } else if ([keyPath isEqualToString:kAccessibilityIdentifierKeyPath]) {
-      tabBarItemView.accessibilityIdentifier = change[NSKeyValueChangeNewKey];
+      tabBarItemView.accessibilityIdentifier = newValue;
     } else if ([keyPath isEqualToString:kAccessibilityTraitsKeyPath]) {
       tabBarItemView.accessibilityTraits = [change[NSKeyValueChangeNewKey] unsignedLongLongValue];
       if (tabBarItemView.accessibilityTraits == UIAccessibilityTraitNone) {
@@ -462,6 +517,13 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   }
 }
 
+- (void)markIntrinsicContentSizeAndLayoutNeedingUpdateForSelfAndItemView:(UIView *)itemView {
+  [itemView invalidateIntrinsicContentSize];
+  [itemView setNeedsLayout];
+  [self invalidateIntrinsicContentSize];
+  [self setNeedsLayout];
+}
+
 #pragma mark - UIView
 
 - (void)layoutSubviews {
@@ -472,6 +534,9 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   } else {
     [self layoutSubviewsForScrollableLayout];
   }
+  self.bottomDividerView.frame =
+      CGRectMake(CGRectGetMinX(self.bounds), CGRectGetMaxY(self.bounds) - kBottomDividerHeight,
+                 CGRectGetWidth(self.bounds), kBottomDividerHeight);
   self.contentSize = [self calculatedContentSize];
   [self updateSelectionIndicatorToIndex:[self.items indexOfObject:self.selectedItem]];
 
@@ -575,8 +640,8 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
-  CGSize intrinsicSize = self.intrinsicContentSize;
-  return CGSizeMake(MAX(intrinsicSize.width, size.width), intrinsicSize.height);
+  CGSize fitSize = [self intrinsicContentSizeForJustifiedLayout];
+  return CGSizeMake(size.width, fitSize.height);
 }
 
 #pragma mark - Helpers
@@ -639,7 +704,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 - (CGSize)availableSizeForSubviewLayout {
   CGRect availableBounds = self.bounds;
   if (@available(iOS 11.0, *)) {
-    availableBounds = UIEdgeInsetsInsetRect(availableBounds, self.adjustedContentInset);
+    availableBounds = UIEdgeInsetsInsetRect(availableBounds, self.safeAreaInsets);
   }
   return CGSizeMake(CGRectGetWidth(availableBounds), CGRectGetHeight(availableBounds));
 }
@@ -687,9 +752,9 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   // Extract content frame from item view.
   CGRect contentFrame = selectionIndicatorBounds;
   UIView *itemView = self.itemViews[index];
-  if ([itemView conformsToProtocol:@protocol(MDCTabBarViewIndicatorSupporting)]) {
-    UIView<MDCTabBarViewIndicatorSupporting> *supportingView =
-        (UIView<MDCTabBarViewIndicatorSupporting> *)itemView;
+  if ([itemView conformsToProtocol:@protocol(MDCTabBarViewCustomViewable)]) {
+    UIView<MDCTabBarViewCustomViewable> *supportingView =
+        (UIView<MDCTabBarViewCustomViewable> *)itemView;
     contentFrame = supportingView.contentFrame;
   }
 

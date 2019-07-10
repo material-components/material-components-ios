@@ -34,6 +34,9 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
 /** The color of the Tab bar's background. */
 @property(nullable, nonatomic, copy) UIColor *barTintColor;
 
+/** The color of the bottom divider. Default is clear. */
+@property(nonnull, nonatomic, copy) UIColor *bottomDividerColor;
+
 /**
  The color for the Ripple effect for touch feedback.
  */
@@ -100,5 +103,16 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
  If no value for a control state is set, the value for @c UIControlStateNormal is returned.
  */
 - (nullable UIFont *)titleFontForState:(UIControlState)state;
+
+/**
+ Returns the @c UIAccessibility element associated with the provided item.
+
+ @note The returned object is not guaranteed to be of type @c UIAccessibilityElement. It is
+       guaranteed to be the same object UIAccessibility systems identify as representing @c item.
+
+ @param item A tab bar item in the receivers @c items array.
+ @return The @c UIAccessibility element associated with @c item if one exists, else @c nil.
+ */
+- (nullable id)accessibilityElementForItem:(nonnull UITabBarItem *)item;
 
 @end

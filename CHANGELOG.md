@@ -1,3 +1,62 @@
+# 85.6.0
+
+This minor release includes features and bug fixes for the MDCTabBarView Beta component.
+
+## API changes
+
+### Tabs+TabBarView
+
+#### MDCTabBarViewIndicatorSupporting
+
+*removed* protocol: `MDCTabBarViewIndicatorSupporting`
+
+*removed* property: `bounds` in `MDCTabBarViewIndicatorSupporting`
+
+*removed* property: `contentFrame` in `MDCTabBarViewIndicatorSupporting`
+
+#### MDCTabBarItemCustomViewing
+
+*modified* property: `mdc_customView` in `MDCTabBarItemCustomViewing`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@property (readwrite, strong, nonatomic, nullable)     UIView<MDCTabBarViewIndicatorSupporting> *mdc_customView;` |
+| To: | `@property (readwrite, strong, nonatomic, nullable)     UIView<MDCTabBarViewCustomViewable> *mdc_customView;` |
+
+#### MDCTabBarView
+
+*new* property: `bottomDividerColor` in `MDCTabBarView`
+
+*new* method: `-accessibilityElementForItem:` in `MDCTabBarView`
+
+#### MDCTabBarViewCustomViewable
+
+*new* property: `bounds` in `MDCTabBarViewCustomViewable`
+
+*new* property: `contentFrame` in `MDCTabBarViewCustomViewable`
+
+*new* protocol: `MDCTabBarViewCustomViewable`
+
+*new* method: `-setSelected:animated:` in `MDCTabBarViewCustomViewable`
+
+## Component changes
+
+### Tabs
+
+* [Add `accessibilityElementForItem:` API. (#7818)](https://github.com/material-components/material-components-ios/commit/8ef861ecfa2a2cb6546566b8efc00db967ef07d0) (Robert Moore)
+* [Add `setSelected:animated:` API for custom views. (#7810)](https://github.com/material-components/material-components-ios/commit/561e705493bb28238d8f95beed811e99c8251b2f) (Robert Moore)
+* [Add bottom divider. (#7817)](https://github.com/material-components/material-components-ios/commit/552afeb6ad0029d2b90b0c0de4e7f88b4a32ecc2) (Robert Moore)
+* [Add item style options for TabBarView example. (#7808)](https://github.com/material-components/material-components-ios/commit/345dba9e7aca85c86c1bacaf9a6a7fcd449489b5) (Robert Moore)
+* [Add snapshot tests for contentInset on MDCTabBarView. (#7815)](https://github.com/material-components/material-components-ios/commit/cb1d31b600f19e77f1d88f0f72414078dd5ffa72) (Robert Moore)
+* [Add support for `selectedImage` from UITabBarItem. (#7814)](https://github.com/material-components/material-components-ios/commit/25e50656516b17b3c5eed79d5c688bd548bf1354) (Robert Moore)
+* [Adjust sizeThatFits: behavior for TabBarView. (#7846)](https://github.com/material-components/material-components-ios/commit/34dad12ff6a722f9f12d56de025ac509e3cd6dc0) (Robert Moore)
+* [Combine "default" unit tests. (#7822)](https://github.com/material-components/material-components-ios/commit/20a2e3d580ebdae25d337c2c6643b5ed4e83f54d) (Robert Moore)
+* [Don't handle `contentInset` directly in layout. (#7816)](https://github.com/material-components/material-components-ios/commit/671e960b77c23a1eb2ce958017ddcf77ffc6bf19) (Robert Moore)
+* [Fix crash when assigning `nil` for KVO'd title. (#7806)](https://github.com/material-components/material-components-ios/commit/88efc5f05033a84289cdfe32f48b66ec521447e0) (Robert Moore)
+* [Minor refactoring of KVO code. (#7825)](https://github.com/material-components/material-components-ios/commit/0bef8d0bd8457be44fbbb1afd7e393096dfb146e) (Robert Moore)
+
+---
+
 # 85.5.1
 
 This patch release makes a FlexibleHeader dependency on MaterialMath explicit in MaterialComponents.podspec so that pod lib lint validations pass and the release can be published successfully with Cocoapods. There are no code changes.

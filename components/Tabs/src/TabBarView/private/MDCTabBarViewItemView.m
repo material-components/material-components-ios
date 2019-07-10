@@ -48,9 +48,14 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
 
 @interface MDCTabBarViewItemView ()
 
+/** Indicates the selection status of this item view. */
+@property(nonatomic, assign, getter=isSelected) BOOL selected;
+
 @end
 
 @implementation MDCTabBarViewItemView
+
+@synthesize selectedImage = _selectedImage;
 
 #pragma mark - Init
 
@@ -96,19 +101,6 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
   }
 }
 
-- (CGRect)contentFrame {
-  if (!self.iconImageView.image) {
-    if (self.titleLabel.text.length) {
-      return [self contentFrameForTitleOnlyLayout];
-    }
-    return CGRectZero;
-  }
-  if (self.titleLabel.text.length) {
-    return [self contentFrameForTitleAndImageLayout];
-  }
-  return [self contentFrameForImageOnlyLayout];
-}
-
 #pragma mark - UIView
 
 - (void)layoutSubviews {
@@ -131,25 +123,6 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
     self.titleLabel.frame = titleLabelFrame;
     self.iconImageView.frame = iconImageViewFrame;
   }
-}
-
-- (CGRect)contentFrameForTitleOnlyLayout {
-  return [self titleLabelFrameForTitleOnlyLayout];
-}
-
-- (CGRect)contentFrameForImageOnlyLayout {
-  return [self iconImageViewFrameForImageOnlyLayout];
-}
-
-- (CGRect)contentFrameForTitleAndImageLayout {
-  CGRect titleLabelFrame = CGRectZero;
-  CGRect iconImageViewFrame = CGRectZero;
-  [self layoutTitleLabelFrame:&titleLabelFrame iconImageViewFrame:&iconImageViewFrame];
-  return MDCRectAlignToScale(
-      CGRectMake(CGRectGetMinX(titleLabelFrame), CGRectGetMinY(iconImageViewFrame),
-                 CGRectGetWidth(titleLabelFrame),
-                 CGRectGetMaxY(titleLabelFrame) - CGRectGetMinY(iconImageViewFrame)),
-      self.window.screen.scale);
 }
 
 - (CGRect)titleLabelFrameForTitleOnlyLayout {
@@ -269,10 +242,84 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
                                                      kEdgeInsetsTextAndImage.bottom));
 }
 
+#pragma mark - MDCTabBarViewItemView properties
+
+- (void)setImage:(UIImage *)image {
+  _image = image;
+  self.iconImageView.image = self.selected ? self.selectedImage : self.image;
+  [self setNeedsLayout];
+}
+
+- (void)setSelectedImage:(UIImage *)selectedImage {
+  _selectedImage = selectedImage;
+  self.iconImageView.image = self.selected ? self.selectedImage : self.image;
+  [self setNeedsLayout];
+}
+
+- (UIImage *)selectedImage {
+  return _selectedImage ?: self.image;
+}
+
 #pragma mark - UIAccessibility
 
 - (NSString *)accessibilityLabel {
   return [super accessibilityLabel] ?: self.titleLabel.text;
+}
+
+#pragma mark - MDCTabBarViewCustomViewable
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+  // TODO(https://github.com/material-components/material-components-ios/issues/7801): Add
+  // item view support for selection.
+  void (^animationBlock)(void) = ^{
+    self->_selected = selected;
+    if (selected) {
+      self.iconImageView.image = self.selectedImage ?: self.image;
+    } else {
+      self.iconImageView.image = self.image;
+    }
+  };
+
+  if (animated) {
+    [UIView animateWithDuration:0.3 animations:animationBlock];
+  } else {
+    animationBlock();
+  }
+
+  // TODO(https://github.com/material-components/material-components-ios/issues/7798): Switch to
+  // using the selected image.
+}
+
+- (CGRect)contentFrame {
+  if (!self.iconImageView.image) {
+    if (self.titleLabel.text.length) {
+      return [self contentFrameForTitleOnlyLayout];
+    }
+    return CGRectZero;
+  }
+  if (self.titleLabel.text.length) {
+    return [self contentFrameForTitleAndImageLayout];
+  }
+  return [self contentFrameForImageOnlyLayout];
+}
+
+- (CGRect)contentFrameForTitleOnlyLayout {
+  return [self titleLabelFrameForTitleOnlyLayout];
+}
+
+- (CGRect)contentFrameForImageOnlyLayout {
+  return [self iconImageViewFrameForImageOnlyLayout];
+}
+
+- (CGRect)contentFrameForTitleAndImageLayout {
+  CGRect titleLabelFrame = CGRectZero;
+  CGRect iconImageViewFrame = CGRectZero;
+  [self layoutTitleLabelFrame:&titleLabelFrame iconImageViewFrame:&iconImageViewFrame];
+  return MDCRectAlignToScale(
+      CGRectMake(CGRectGetMinX(titleLabelFrame), CGRectGetMinY(iconImageViewFrame),
+                 CGRectGetWidth(titleLabelFrame),
+                 CGRectGetMaxY(titleLabelFrame) - CGRectGetMinY(iconImageViewFrame)),
+      self.window.screen.scale);
 }
 
 @end
