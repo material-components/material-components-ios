@@ -16,11 +16,11 @@
 		5CA6E62B1FDB253E001F2A17 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA6E62A1FDB253E001F2A17 /* HeaderView.swift */; };
 		5CDA58A81FD735FE00DB25A8 /* MDCDrawDragons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CDA58A71FD735FE00DB25A8 /* MDCDrawDragons.swift */; };
 		5CE8092D1FD729880068A050 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE8092C1FD729880068A050 /* AppDelegate.swift */; };
-		FB8EC1F332014048A5D49496 /* Pods_MDCDragons.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1727545609D5A05DD1A8DD8 /* Pods_MDCDragons.framework */; };
+		FC6D5B4F87C16E8732A15C37 /* Pods_MDCDragons.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30FD17F2E034699346B751B2 /* Pods_MDCDragons.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		096F30AD42FD7675B81193D1 /* Pods-MDCDragons.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCDragons.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MDCDragons/Pods-MDCDragons.debug.xcconfig"; sourceTree = "<group>"; };
+		30FD17F2E034699346B751B2 /* Pods_MDCDragons.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MDCDragons.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C3964411FD72D0E003CB44B /* MDCDragonsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDCDragonsController.swift; sourceTree = "<group>"; };
 		5C541FD51FE2E57800A34B11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = MDCCatalog/Assets.xcassets; sourceTree = SOURCE_ROOT; };
 		5C541FD81FE2EB8100A34B11 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = MDCCatalog/Base.lproj/LaunchScreen.storyboard; sourceTree = SOURCE_ROOT; };
@@ -33,8 +33,8 @@
 		5CE809291FD729880068A050 /* MDCDragons.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MDCDragons.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CE8092C1FD729880068A050 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5CE809381FD729880068A050 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		63301F6E1E07E3E0BAAFE1AF /* Pods-MDCDragons.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCDragons.release.xcconfig"; path = "Pods/Target Support Files/Pods-MDCDragons/Pods-MDCDragons.release.xcconfig"; sourceTree = "<group>"; };
-		D1727545609D5A05DD1A8DD8 /* Pods_MDCDragons.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MDCDragons.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		608A9FC389DFA6D7879152D5 /* Pods-MDCDragons.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCDragons.debug.xcconfig"; path = "Target Support Files/Pods-MDCDragons/Pods-MDCDragons.debug.xcconfig"; sourceTree = "<group>"; };
+		9E769D661A9239B6E8192622 /* Pods-MDCDragons.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDCDragons.release.xcconfig"; path = "Target Support Files/Pods-MDCDragons/Pods-MDCDragons.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,20 +42,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB8EC1F332014048A5D49496 /* Pods_MDCDragons.framework in Frameworks */,
+				FC6D5B4F87C16E8732A15C37 /* Pods_MDCDragons.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0BCC0721E858C1DAB5477403 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				608A9FC389DFA6D7879152D5 /* Pods-MDCDragons.debug.xcconfig */,
+				9E769D661A9239B6E8192622 /* Pods-MDCDragons.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		5CE809201FD729880068A050 = {
 			isa = PBXGroup;
 			children = (
 				5CE8092B1FD729880068A050 /* MDCDragons */,
 				5CE8092A1FD729880068A050 /* Products */,
-				C13C3AD82808890ACEB8EB50 /* Pods */,
 				D4ABDA04F1CA652783DC8BBB /* Frameworks */,
+				0BCC0721E858C1DAB5477403 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -84,20 +94,11 @@
 			path = MDCDragons;
 			sourceTree = "<group>";
 		};
-		C13C3AD82808890ACEB8EB50 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				096F30AD42FD7675B81193D1 /* Pods-MDCDragons.debug.xcconfig */,
-				63301F6E1E07E3E0BAAFE1AF /* Pods-MDCDragons.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		D4ABDA04F1CA652783DC8BBB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				5C96F5101FDF047E00F5E8AF /* MaterialCatalog.framework */,
-				D1727545609D5A05DD1A8DD8 /* Pods_MDCDragons.framework */,
+				30FD17F2E034699346B751B2 /* Pods_MDCDragons.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -109,11 +110,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5CE809511FD729880068A050 /* Build configuration list for PBXNativeTarget "MDCDragons" */;
 			buildPhases = (
-				9813A3952025837D99EDE840 /* [CP] Check Pods Manifest.lock */,
+				96DC218FEF629BCBDCE524BF /* [CP] Check Pods Manifest.lock */,
 				5CE809251FD729880068A050 /* Sources */,
 				5CE809261FD729880068A050 /* Frameworks */,
 				5CE809271FD729880068A050 /* Resources */,
-				EAC6C5AE2318143FD02F1206 /* [CP] Embed Pods Frameworks */,
+				9B4AA982496B03F30B30BE28 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -172,16 +173,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		9813A3952025837D99EDE840 /* [CP] Check Pods Manifest.lock */ = {
+		96DC218FEF629BCBDCE524BF /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			inputFileListPaths = (
 			);
 			inputPaths = (
 				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
 				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-MDCDragons-checkManifestLockResult.txt",
 			);
@@ -190,10 +195,12 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		EAC6C5AE2318143FD02F1206 /* [CP] Embed Pods Frameworks */ = {
+		9B4AA982496B03F30B30BE28 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			inputFileListPaths = (
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-MDCDragons/Pods-MDCDragons-frameworks.sh",
@@ -208,6 +215,8 @@
 				"${BUILT_PRODUCTS_DIR}/MotionTransitioning/MotionTransitioning.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CatalogByConvention.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MDFInternationalization.framework",
@@ -367,7 +376,7 @@
 		};
 		5CE809521FD729880068A050 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 096F30AD42FD7675B81193D1 /* Pods-MDCDragons.debug.xcconfig */;
+			baseConfigurationReference = 608A9FC389DFA6D7879152D5 /* Pods-MDCDragons.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconInverse;
 				CODE_SIGN_STYLE = Automatic;
@@ -383,7 +392,7 @@
 		};
 		5CE809531FD729880068A050 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 63301F6E1E07E3E0BAAFE1AF /* Pods-MDCDragons.release.xcconfig */;
+			baseConfigurationReference = 9E769D661A9239B6E8192622 /* Pods-MDCDragons.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconInverse;
 				CODE_SIGN_STYLE = Automatic;
