@@ -2,6 +2,12 @@
 
 This patch release makes a FlexibleHeader dependency on MaterialMath explicit in MaterialComponents.podspec so that pod lib lint validations pass and the release can be published successfully with Cocoapods. There are no code changes.
 
+## Component changes
+
+### FlexibleHeader
+
+* [Add Math dependency to FlexibleHeader](https://github.com/material-components/material-components-ios/commit/a7b621138b03b4664623e7a021b256063bfd2026)
+
 ---
 
 # 85.5.0
