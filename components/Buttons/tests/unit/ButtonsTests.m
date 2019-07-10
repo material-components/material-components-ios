@@ -1333,7 +1333,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
   // Given
   MDCButton *button = [[MDCButton alloc] init];
   XCTestExpectation *expectation =
-  [self expectationWithDescription:@"Called traitCollectionDidChange"];
+      [self expectationWithDescription:@"Called traitCollectionDidChange"];
   button.traitCollectionDidChangeBlock = ^(UITraitCollection *_Nullable previousTraitCollection) {
     [expectation fulfill];
   };
@@ -1344,6 +1344,5 @@ static NSString *controlStateDescription(UIControlState controlState) {
   // Then
   [self waitForExpectations:@[ expectation ] timeout:1];
 }
-
 
 @end
