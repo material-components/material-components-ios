@@ -32,10 +32,10 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
 - (void)testInitMatchesInitWithMaterialDefaults {
   // Given
   MDCSemanticColorScheme *initScheme =
-  [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   MDCSemanticColorScheme *mdDefaultScheme =
-  [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-  
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+
   // Then
   XCTAssertEqualObjects(initScheme.primaryColor, mdDefaultScheme.primaryColor);
   XCTAssertEqualObjects(initScheme.primaryColorVariant, mdDefaultScheme.primaryColorVariant);
@@ -52,8 +52,8 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
 - (void)testInitWithMaterialDefaults {
   // Given
   MDCSemanticColorScheme *colorScheme =
-  [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-  
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+
   // Then
   XCTAssertEqualObjects(colorScheme.primaryColor, ColorFromRGB(0x6200EE));
   XCTAssertEqualObjects(colorScheme.primaryColorVariant, ColorFromRGB(0x3700B3));
@@ -70,8 +70,8 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
 - (void)testInitWithMaterialDefaultsDark {
   // Given
   MDCSemanticColorScheme *colorScheme =
-  [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterialDark201907];
-  
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterialDark201907];
+
   // Then
   XCTAssertEqualObjects(colorScheme.primaryColor, ColorFromRGB(0xBB86FC));
   XCTAssertEqualObjects(colorScheme.primaryColorVariant, ColorFromRGB(0x3700B3));
@@ -85,48 +85,47 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
   XCTAssertEqualObjects(colorScheme.onBackgroundColor, ColorFromRGB(0xFFFFFF));
 }
 
-
 - (void)testInitWithMaterialDefaults201907WhenUserInterfaceStyleIsDarkForiOS13 {
 #if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     // Given
     MDCSemanticColorScheme *colorScheme =
-    [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201907];
-    
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201907];
+
     // When
     UITraitCollection *traitCollection =
-    [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
-    
+        [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
+
     // Then
     XCTAssertEqualObjects(
-                          [colorScheme.primaryColor resolvedColorWithTraitCollection:traitCollection],
-                          ColorFromRGB(0xBB86FC));
+        [colorScheme.primaryColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0xBB86FC));
     XCTAssertEqualObjects(
-                          [colorScheme.primaryColorVariant resolvedColorWithTraitCollection:traitCollection],
-                          ColorFromRGB(0x3700B3));
+        [colorScheme.primaryColorVariant resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0x3700B3));
     XCTAssertEqualObjects(
-                          [colorScheme.secondaryColor resolvedColorWithTraitCollection:traitCollection],
-                          ColorFromRGB(0x03DAC6));
+        [colorScheme.secondaryColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0x03DAC6));
     XCTAssertEqualObjects([colorScheme.errorColor resolvedColorWithTraitCollection:traitCollection],
                           ColorFromRGB(0xCF6679));
     XCTAssertEqualObjects(
-                          [colorScheme.surfaceColor resolvedColorWithTraitCollection:traitCollection],
-                          ColorFromRGB(0x121212));
+        [colorScheme.surfaceColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0x121212));
     XCTAssertEqualObjects(
-                          [colorScheme.backgroundColor resolvedColorWithTraitCollection:traitCollection],
-                          ColorFromRGB(0x121212));
+        [colorScheme.backgroundColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0x121212));
     XCTAssertEqualObjects(
-                          [colorScheme.onPrimaryColor resolvedColorWithTraitCollection:traitCollection],
-                          ColorFromRGB(0x000000));
+        [colorScheme.onPrimaryColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0x000000));
     XCTAssertEqualObjects(
-                          [colorScheme.onSecondaryColor resolvedColorWithTraitCollection:traitCollection],
-                          ColorFromRGB(0x000000));
+        [colorScheme.onSecondaryColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0x000000));
     XCTAssertEqualObjects(
-                          [colorScheme.onSurfaceColor resolvedColorWithTraitCollection:traitCollection],
-                          ColorFromRGB(0xFFFFFF));
+        [colorScheme.onSurfaceColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0xFFFFFF));
     XCTAssertEqualObjects(
-                          [colorScheme.onBackgroundColor resolvedColorWithTraitCollection:traitCollection],
-                          ColorFromRGB(0xFFFFFF));
+        [colorScheme.onBackgroundColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0xFFFFFF));
   }
 #endif
 }
@@ -136,42 +135,42 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
   if (@available(iOS 13.0, *)) {
     // Given
     MDCSemanticColorScheme *colorScheme =
-    [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201907];
-    
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201907];
+
     // When
     UITraitCollection *traitCollection =
-    [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleLight];
-    
+        [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleLight];
+
     // Then
     XCTAssertEqualObjects(
-                          [colorScheme.primaryColor resolvedColorWithTraitCollection:traitCollection],
-                          ColorFromRGB(0x6200EE));
+        [colorScheme.primaryColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0x6200EE));
     XCTAssertEqualObjects(
-                          [colorScheme.primaryColorVariant resolvedColorWithTraitCollection:traitCollection],
-                          ColorFromRGB(0x3700B3));
+        [colorScheme.primaryColorVariant resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0x3700B3));
     XCTAssertEqualObjects(
-                          [colorScheme.secondaryColor resolvedColorWithTraitCollection:traitCollection],
-                          ColorFromRGB(0x03DAC6));
+        [colorScheme.secondaryColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0x03DAC6));
     XCTAssertEqualObjects([colorScheme.errorColor resolvedColorWithTraitCollection:traitCollection],
                           ColorFromRGB(0xB00020));
     XCTAssertEqualObjects(
-                          [colorScheme.surfaceColor resolvedColorWithTraitCollection:traitCollection],
-                          ColorFromRGB(0xFFFFFF));
+        [colorScheme.surfaceColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0xFFFFFF));
     XCTAssertEqualObjects(
-                          [colorScheme.backgroundColor resolvedColorWithTraitCollection:traitCollection],
-                          ColorFromRGB(0xFFFFFF));
+        [colorScheme.backgroundColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0xFFFFFF));
     XCTAssertEqualObjects(
-                          [colorScheme.onPrimaryColor resolvedColorWithTraitCollection:traitCollection],
-                          ColorFromRGB(0xFFFFFF));
+        [colorScheme.onPrimaryColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0xFFFFFF));
     XCTAssertEqualObjects(
-                          [colorScheme.onSecondaryColor resolvedColorWithTraitCollection:traitCollection],
-                          ColorFromRGB(0x000000));
+        [colorScheme.onSecondaryColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0x000000));
     XCTAssertEqualObjects(
-                          [colorScheme.onSurfaceColor resolvedColorWithTraitCollection:traitCollection],
-                          ColorFromRGB(0x000000));
+        [colorScheme.onSurfaceColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0x000000));
     XCTAssertEqualObjects(
-                          [colorScheme.onBackgroundColor resolvedColorWithTraitCollection:traitCollection],
-                          ColorFromRGB(0x000000));
+        [colorScheme.onBackgroundColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0x000000));
   }
 #endif
 }
@@ -181,8 +180,8 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
   } else {
     // Given
     MDCSemanticColorScheme *colorScheme =
-    [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201907];
-    
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201907];
+
     // Then
     XCTAssertEqualObjects(colorScheme.primaryColor, ColorFromRGB(0x6200EE));
     XCTAssertEqualObjects(colorScheme.primaryColorVariant, ColorFromRGB(0x3700B3));
@@ -230,7 +229,7 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
                                            green:(CGFloat)0.94000000000000006
                                             blue:(CGFloat)0.94000000000000006
                                            alpha:(CGFloat)1];
-  
+
   XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resultColor
                                                     secondColor:expectedColor]);
 }
@@ -307,7 +306,7 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
   [firstColor getRed:&fRed green:&fGreen blue:&fBlue alpha:&fAlpha];
   CGFloat sRed = 0.0, sGreen = 0.0, sBlue = 0.0, sAlpha = 0.0;
   [secondColor getRed:&sRed green:&sGreen blue:&sBlue alpha:&sAlpha];
-  
+
   return (MDCCGFloatEqual(fRed, sRed) && MDCCGFloatEqual(fGreen, sGreen) &&
           MDCCGFloatEqual(fBlue, sBlue) && MDCCGFloatEqual(fAlpha, sAlpha));
 }
@@ -315,10 +314,10 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
 - (void)testColorSchemeCopy {
   // Given
   MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
-  
+
   // When
   MDCSemanticColorScheme *colorSchemeCopy = [colorScheme copy];
-  
+
   // Then
   XCTAssertNotEqual(colorScheme, colorSchemeCopy);
   XCTAssertEqualObjects(colorScheme.primaryColor, colorSchemeCopy.primaryColor);
