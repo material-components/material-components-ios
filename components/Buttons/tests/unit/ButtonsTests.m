@@ -96,6 +96,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
 
 @interface TestButton : MDCButton
 @property(nonatomic, strong) FakeShadowLayer *shadowLayer;
+@property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
 @end
 
 @implementation TestButton
@@ -110,6 +111,11 @@ static NSString *controlStateDescription(UIControlState controlState) {
   }
   return self;
 }
+
+- (UITraitCollection *)traitCollection {
+  return self.traitCollectionOverride ?: [super traitCollection];
+}
+
 @end
 
 @interface ButtonsTests : XCTestCase
@@ -1343,6 +1349,30 @@ static NSString *controlStateDescription(UIControlState controlState) {
 
   // Then
   [self waitForExpectations:@[ expectation ] timeout:1];
+}
+
+- (void)testShadowColorRespondsToDynamicColor {
+  if (@available(iOS 13.0, *)) {
+    // Given
+    TestButton *testButton = [[TestButton alloc] init];
+    UIColor *darkModeColor = UIColor.whiteColor;
+    UIColor *dynamicColor = [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
+      if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
+        return UIColor.blackColor;
+      } else {
+        return darkModeColor;
+      }
+    }];
+    [testButton setShadowColor:dynamicColor forState:UIControlStateNormal];
+
+    // When
+    testButton.traitCollectionOverride = [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
+    [testButton layoutIfNeeded];
+
+    // Then
+    UIColor *shadowColor = [[testButton shadowColorForState:UIControlStateNormal] resolvedColorWithTraitCollection:testButton.traitCollection];
+    XCTAssertEqualObjects(shadowColor, darkModeColor);
+  }
 }
 
 @end
