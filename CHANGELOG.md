@@ -1,18 +1,28 @@
-# #develop#
+# 85.7.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This minor release exposes some properties on Snackbars and fixes a Banner bug.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
 ## API changes
 
+### Snackbar
+
+#### MDCSnackbarManager
+
+*new* property: `buttonInkColor` in `MDCSnackbarManager`
+
+*new* property: `uppercaseButtonTitle` in `MDCSnackbarManager`
+
+*new* property: `disabledButtonAlpha` in `MDCSnackbarManager`
+
 ## Component changes
+
+### Snackbar
+
+* [Add button styling properties to MDCSnackbarManager (#7832)](https://github.com/material-components/material-components-ios/commit/fc625843c77e85b64030c7be20df23d7907bab0e) (Bryan Oltman)
+
+### Banner
+
+* [Fix dynamic type support for attributed string (#7820)](https://github.com/material-components/material-components-ios/commit/112433335c229e45d1382b3ba013bcf28e239409) (Wenyu Zhang)
 
 ---
 
