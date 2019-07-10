@@ -181,6 +181,21 @@
 @property(nonatomic, strong, nullable) UIFont *buttonFont;
 
 /**
+ If true, converts button titles to uppercase. Defaults to MDCButton's default (YES).
+ */
+@property(nonatomic, assign) BOOL uppercaseButtonTitle;
+
+/**
+ Alpha of disabled buttons. Defaults to the MDCButton's default (0.12).
+ */
+@property(nonatomic) CGFloat disabledButtonAlpha;
+
+/**
+ The color for the ink view in the Snackbar message view's buttons.
+ */
+@property(nonatomic, strong, nullable) UIColor *buttonInkColor;
+
+/**
  If enabled, modifications of class styling properties will be applied immediately
  to the currently presented Snackbar.
 
