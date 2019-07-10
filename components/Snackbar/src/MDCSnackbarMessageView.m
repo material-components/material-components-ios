@@ -349,8 +349,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 
     _label.textColor = _messageTextColor;
 
-    [self initializeMDCSnackbarMessageViewButtons:message
-                                      withManager:manager];
+    [self initializeMDCSnackbarMessageViewButtons:message withManager:manager];
   }
 
   return self;
