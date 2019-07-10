@@ -410,6 +410,21 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   return self.itemViews[itemIndex];
 }
 
+- (CGRect)rectForItem:(UITabBarItem *)item
+    inCoordinateSpace:(id<UICoordinateSpace>)coordinateSpace {
+  if (item == nil) {
+    return CGRectNull;
+  }
+  NSUInteger index = [self.items indexOfObject:item];
+  if (index == NSNotFound || index >= self.itemViews.count) {
+    return CGRectNull;
+  }
+  CGRect frame = self.itemViews[index].frame;
+  frame = CGRectMake(CGRectGetMinX(frame), CGRectGetMinY(frame), CGRectGetWidth(frame),
+                     CGRectGetHeight(frame));
+  return [coordinateSpace convertRect:frame fromCoordinateSpace:self];
+}
+
 #pragma mark - Key-Value Observing (KVO)
 
 - (void)addObserversToTabBarItems {

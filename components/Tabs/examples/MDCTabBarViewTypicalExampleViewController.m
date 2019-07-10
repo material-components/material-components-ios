@@ -62,7 +62,8 @@ static NSString *const kExampleTitle = @"TabBarView";
 /**
  Typical use example showing how to place an @c MDCTabBarView within another view.
  */
-@interface MDCTabBarViewTypicalExampleViewController : UIViewController <MDCTabBarViewDelegate>
+@interface MDCTabBarViewTypicalExampleViewController
+    : UIViewController <MDCTabBarViewDelegate, UIScrollViewDelegate>
 
 /** The tab bar for this example. */
 @property(nonatomic, strong) MDCTabBarView *tabBar;
@@ -130,6 +131,7 @@ static NSString *const kExampleTitle = @"TabBarView";
 
   self.tabBar = [[MDCTabBarView alloc] init];
   self.tabBar.tabBarDelegate = self;
+  self.tabBar.delegate = self;
   self.tabBar.items = @[ item1, item2, item3, item4, item5, item6 ];
   self.tabBar.selectedItem = item4;
   self.tabBar.translatesAutoresizingMaskIntoConstraints = NO;
@@ -263,6 +265,47 @@ static NSString *const kExampleTitle = @"TabBarView";
     item.image = self.tabBarItemIcons[index % self.tabBarItemIcons.count];
     item.title = self.tabBarItemTitles[index % self.tabBarItemTitles.count];
   }
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+  [self logVisibleItems];
+}
+
+#pragma mark - UIViewController
+
+- (void)viewWillTransitionToSize:(CGSize)size
+       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+  [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+  [coordinator
+      animateAlongsideTransition:nil
+                      completion:^(
+                          id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
+                        [self logVisibleItems];
+                      }];
+}
+
+- (void)viewDidLayoutSubviews {
+  [super viewDidLayoutSubviews];
+  [self logVisibleItems];
+}
+
+- (void)logVisibleItems {
+  NSMutableArray<NSString *> *visibleItemTitles = [NSMutableArray array];
+  for (UITabBarItem *item in self.tabBar.items) {
+    CGRect itemViewInWindow = [self.tabBar rectForItem:item inCoordinateSpace:self.view.window];
+    CGRect overlapRect = CGRectIntersection(self.view.window.bounds, itemViewInWindow);
+    if (CGRectIsNull(overlapRect) || CGRectGetWidth(itemViewInWindow) < 1) {
+      continue;
+    }
+    CGFloat percentVisible = CGRectGetWidth(overlapRect) / CGRectGetWidth(itemViewInWindow);
+    NSString *description =
+        [NSString stringWithFormat:@"%@ (%.1f%%)", item.title, percentVisible * 100];
+    [visibleItemTitles addObject:description];
+  }
+
+  NSLog(@"Visible items: %@", visibleItemTitles);
 }
 
 @end

@@ -880,4 +880,58 @@ static UIImage *fakeImage(CGSize size) {
   }
 }
 
+- (void)testRectForItemNotFoundReturnsNullRectangle {
+  // Given
+  self.tabBarView.items = @[];
+
+  // When
+  CGRect itemFrame = [self.tabBarView rectForItem:self.itemC inCoordinateSpace:self.tabBarView];
+
+  // Then
+  XCTAssertTrue(CGRectIsNull(itemFrame), @"(%@) is not equal to (%@)",
+                NSStringFromCGRect(itemFrame), NSStringFromCGRect(CGRectNull));
+}
+
+- (void)testRectForItemConvertedToTabBarView {
+  // Given
+  self.tabBarView.items = @[ self.itemA ];
+  [self.tabBarView sizeToFit];
+  [self.tabBarView layoutIfNeeded];
+
+  // When
+  CGRect itemFrame = [self.tabBarView rectForItem:self.itemA inCoordinateSpace:self.tabBarView];
+
+  // Then
+  XCTAssertTrue(CGRectEqualToRect(itemFrame, self.tabBarView.bounds), @"(%@) is not equal to (%@)",
+                NSStringFromCGRect(itemFrame), NSStringFromCGRect(self.tabBarView.bounds));
+}
+
+- (void)testRectForItemConvertedToSuperView {
+  // Given
+  UIOffset tabBarOffsetWithinSuperview = UIOffsetMake(30, 40);
+  self.tabBarView.items = @[ self.itemA ];
+  [self.tabBarView sizeToFit];
+  [self.tabBarView layoutIfNeeded];
+  UIView *superView =
+      [[UIView alloc] initWithFrame:CGRectMake(0, 0,
+                                               CGRectGetWidth(self.tabBarView.bounds) +
+                                                   tabBarOffsetWithinSuperview.horizontal,
+                                               CGRectGetHeight(self.tabBarView.bounds) +
+                                                   tabBarOffsetWithinSuperview.vertical)];
+  [superView addSubview:self.tabBarView];
+  self.tabBarView.center =
+      CGPointMake(CGRectGetMidX(superView.bounds) + (tabBarOffsetWithinSuperview.horizontal / 2),
+                  CGRectGetMidY(superView.bounds) + (tabBarOffsetWithinSuperview.vertical / 2));
+
+  // When
+  CGRect itemFrame = [self.tabBarView rectForItem:self.itemA inCoordinateSpace:superView];
+  CGRect expectedFrame =
+      CGRectMake(tabBarOffsetWithinSuperview.horizontal, tabBarOffsetWithinSuperview.vertical,
+                 CGRectGetWidth(self.tabBarView.bounds), CGRectGetHeight(self.tabBarView.bounds));
+
+  // Then
+  XCTAssertTrue(CGRectEqualToRect(itemFrame, expectedFrame), @"(%@) is not equal to (%@)",
+                NSStringFromCGRect(itemFrame), NSStringFromCGRect(expectedFrame));
+}
+
 @end
