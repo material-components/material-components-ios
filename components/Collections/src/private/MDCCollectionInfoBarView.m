@@ -187,15 +187,15 @@ static inline UIColor *CollectionInfoBarRedColor(void) {
 }
 
 - (void)updateBorderColor {
-  CGFloat white = 0;
+  CGFloat white = 0.0f;
   if (@available(iOS 12.0, *)) {
     if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
-      white = 1;
+      white = 1.0f;
     }
   }
   CGFloat alpha = 0;
   if (_style == MDCCollectionInfoBarViewStyleActionable) {
-    alpha = 0.1;
+    alpha = 0.1f;
   }
   _backgroundBorderLayer.borderColor = [UIColor colorWithWhite:white alpha:alpha].CGColor;
 }
