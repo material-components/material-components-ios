@@ -69,7 +69,7 @@ static NSString *const kItemTitleLong2Arabic =
 }
 
 - (void)generateSnapshotAndVerifyForView:(UIView *)view {
-  UIView *snapshotView = [view mdc_addToBackgroundView];
+  UIView *snapshotView = [view mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(50, 50, 50, 50)];
   [self snapshotVerifyView:snapshotView];
 }
 
