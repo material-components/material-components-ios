@@ -227,14 +227,6 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   snackbarView = [[viewClass alloc] initWithMessage:message
                                      dismissHandler:dismissHandler
                                     snackbarManager:self.manager];
-  for (MDCButton *button in snackbarView.actionButtons) {
-    button.uppercaseTitle = self.manager.uppercaseButtonTitle;
-    button.disabledAlpha = self.manager.disabledButtonAlpha;
-    if (self.manager.buttonInkColor) {
-      button.inkColor = self.manager.buttonInkColor;
-    }
-  }
-
   snackbarView.accessibilityViewIsModal =
       self.manager.shouldEnableAccessibilityViewIsModal && ![self isSnackbarTransient:snackbarView];
   [self.delegate willPresentSnackbarWithMessageView:snackbarView];
