@@ -36,6 +36,9 @@ mdc_objc_library(
         "UIKit",
         "XCTest",
     ],
+    deps = [
+        ":Color",
+    ],
     visibility = ["//visibility:private"],
 )
 
