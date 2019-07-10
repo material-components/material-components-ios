@@ -465,6 +465,13 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
   }
 }
 
+- (void)setShouldInvalidateLayout:(BOOL)shouldInvalidateLayout {
+  _shouldInvalidateLayout = shouldInvalidateLayout;
+  if (shouldInvalidateLayout) {
+    [_cellBackgroundCaches removeAllObjects];
+  }
+}
+
 - (void)invalidateLayoutForStyleChange {
   _shouldInvalidateLayout = YES;
 }
