@@ -44,6 +44,19 @@ const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
   return self;
 }
 
+- (UIColor *)dynamicColor {
+  if (@available(iOS 13.0, *)) {
+    return [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
+      if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
+        return UIColor.redColor;
+      } else {
+        return UIColor.blueColor;
+      }
+    }];
+  }
+  return self.containerScheme.colorScheme.primaryColor;
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
 
@@ -54,6 +67,7 @@ const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
   MDCButton *containedButton = [[MDCButton alloc] init];
   [containedButton setTitle:@"Button" forState:UIControlStateNormal];
   [containedButton applyContainedThemeWithScheme:self.containerScheme];
+  [containedButton setShadowColor:[self dynamicColor] forState:UIControlStateNormal];
   [containedButton sizeToFit];
   CGFloat containedButtonVerticalInset =
       MIN(0, -(kMinimumAccessibleButtonSize.height - CGRectGetHeight(containedButton.bounds)) / 2);

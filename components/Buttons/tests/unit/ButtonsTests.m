@@ -1356,21 +1356,24 @@ static NSString *controlStateDescription(UIControlState controlState) {
     // Given
     TestButton *testButton = [[TestButton alloc] init];
     UIColor *darkModeColor = UIColor.whiteColor;
-    UIColor *dynamicColor = [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
-      if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
-        return UIColor.blackColor;
-      } else {
-        return darkModeColor;
-      }
-    }];
+    UIColor *dynamicColor =
+        [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
+          if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
+            return UIColor.blackColor;
+          } else {
+            return darkModeColor;
+          }
+        }];
     [testButton setShadowColor:dynamicColor forState:UIControlStateNormal];
 
     // When
-    testButton.traitCollectionOverride = [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
+    testButton.traitCollectionOverride =
+        [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
     [testButton layoutIfNeeded];
 
     // Then
-    UIColor *shadowColor = [[testButton shadowColorForState:UIControlStateNormal] resolvedColorWithTraitCollection:testButton.traitCollection];
+    UIColor *shadowColor = [[testButton shadowColorForState:UIControlStateNormal]
+        resolvedColorWithTraitCollection:testButton.traitCollection];
     XCTAssertEqualObjects(shadowColor, darkModeColor);
   }
 }
