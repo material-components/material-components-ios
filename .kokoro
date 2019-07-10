@@ -413,7 +413,7 @@ run_cocoapods() {
     fi
   elif [ "$DEPENDENCY_SYSTEM" = "cocoapods" ]; then
     echo "running pod lib lint"
-    pod lib lint MaterialComponents.podspec --skip-tests --verbose --fail-fast
+    pod lib lint MaterialComponents.podspec --skip-tests --verbose --allow-warnings --fail-fast
   fi
 
   if [ -n "$CODECOV_TOKEN" ]; then
