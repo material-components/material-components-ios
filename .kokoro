@@ -392,8 +392,11 @@ run_cocoapods() {
     # Move into our cloned repo
     cd github/repo
 
-    gem_install xcpretty 
-    echo "running gem install cocoapods-clean..."
+    gem_install xcpretty
+    gem install cocoapods -v "$COCOAPODS_VERSION"
+    pod --version
+
+    # Install cocoapods-clean for https://github.com/material-components/material-components-ios/issues/6678
     gem install cocoapods-clean
     pod clean
     pod cache clean --all
@@ -414,7 +417,7 @@ run_cocoapods() {
     fi
   elif [ "$DEPENDENCY_SYSTEM" = "cocoapods" ]; then
     echo "running pod lib lint"
-    pod lib lint MaterialComponents.podspec --skip-tests --verbose --allow-warnings --fail-fast
+    pod lib lint MaterialComponents.podspec --skip-tests --allow-warnings --fail-fast
   fi
 
   if [ -n "$CODECOV_TOKEN" ]; then
