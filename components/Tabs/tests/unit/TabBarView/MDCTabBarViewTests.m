@@ -705,6 +705,39 @@ static UIImage *fakeImage(CGSize size) {
   XCTAssertEqualWithAccuracy(size.height, intrinsicSize.height, 0.001);
 }
 
+- (void)testSizeToFitResizesToFitContentFromInitiallySmallBounds {
+  // Given
+  self.tabBarView.items = @[ self.itemA ];
+  self.tabBarView.bounds = CGRectZero;
+
+  // When
+  [self.tabBarView sizeToFit];
+
+  // Then
+  CGSize fitSize =
+      CGSizeMake(CGRectGetWidth(self.tabBarView.bounds), CGRectGetHeight(self.tabBarView.bounds));
+  CGSize intrinsicContentSize = self.tabBarView.intrinsicContentSize;
+  XCTAssertEqualWithAccuracy(fitSize.width, intrinsicContentSize.width, 0.001);
+  XCTAssertEqualWithAccuracy(fitSize.height, intrinsicContentSize.height, 0.001);
+}
+
+- (void)testSizeToFitResizesToHugContentVerticallyButRetainsWiderBounds {
+  // Given
+  self.tabBarView.items = @[ self.itemA ];
+  CGSize tooLargeSize = CGSizeMake(100000, 200000);
+  self.tabBarView.bounds = CGRectMake(0, 0, tooLargeSize.width, tooLargeSize.height);
+
+  // When
+  [self.tabBarView sizeToFit];
+
+  // Then
+  CGSize fitSize =
+      CGSizeMake(CGRectGetWidth(self.tabBarView.bounds), CGRectGetHeight(self.tabBarView.bounds));
+  CGSize intrinsicContentSize = self.tabBarView.intrinsicContentSize;
+  XCTAssertEqualWithAccuracy(fitSize.width, tooLargeSize.width, 0.001);
+  XCTAssertEqualWithAccuracy(fitSize.height, intrinsicContentSize.height, 0.001);
+}
+
 #pragma mark - Custom Views
 
 - (void)testCustomViewSetSelectedAnimatedCalledForSelectedWithImplicitAnimation {
