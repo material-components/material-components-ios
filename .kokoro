@@ -16,7 +16,7 @@
 
 # Fail on any error
 set -e
-COCOAPODS_VERSION="1.6.0"
+COCOAPODS_VERSION="1.7.4"
 
 # Fix permissions issue with Ruby Gems (b/128326105)
 if [ -n "$KOKORO_BUILD_NUMBER" ]; then
@@ -393,7 +393,7 @@ run_cocoapods() {
     cd github/repo
 
     gem_install xcpretty 
-    echo "running gem install cocoapods-clean..."
+    gem install cocoapods -v "$COCOAPODS_VERSION"
     gem install cocoapods-clean
     echo "pod --version:"
     pod --version
