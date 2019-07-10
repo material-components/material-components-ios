@@ -14,6 +14,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MDCBottomSheetController.h"
+#import "MaterialShadowElevations.h"
 
 @class MDCBottomSheetPresentationController;
 
@@ -133,5 +134,10 @@
  Delegate to tell the presenter when to dismiss.
  */
 @property(nonatomic, weak, nullable) id<MDCBottomSheetPresentationControllerDelegate> delegate;
+
+/**
+ The elevation of the bottom sheet. Defaults to @c MDCShadowElevationModalBottomSheet.
+ */
+@property(nonatomic, assign) MDCShadowElevation elevation;
 
 @end

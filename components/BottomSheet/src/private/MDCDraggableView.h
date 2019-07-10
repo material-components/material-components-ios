@@ -14,6 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialShadowElevations.h"
+
 @protocol MDCDraggableViewDelegate;
 
 @interface MDCDraggableView : UIView
@@ -22,6 +24,9 @@
  * The @c UIScrollView passed in the initializer.
  */
 @property(nonatomic, strong, readonly, nullable) UIScrollView *scrollView;
+
+/** The elevation of the bottom sheet container view. */
+@property(nonatomic, assign) MDCShadowElevation elevation;
 
 /**
  * Delegate for handling drag events.

@@ -37,6 +37,7 @@ static const NSTimeInterval MDCBottomSheetTransitionDuration = 0.25;
   self = [super init];
   if (self) {
     _scrimAccessibilityTraits = UIAccessibilityTraitButton;
+    _elevation = MDCShadowElevationModalBottomSheet;
   }
   return self;
 }
@@ -56,6 +57,7 @@ static const NSTimeInterval MDCBottomSheetTransitionDuration = 0.25;
   presentationController.scrimAccessibilityHint = _scrimAccessibilityHint;
   presentationController.scrimAccessibilityLabel = _scrimAccessibilityLabel;
   presentationController.preferredSheetHeight = _preferredSheetHeight;
+  presentationController.elevation = self.elevation;
   return presentationController;
 }
 
@@ -192,6 +194,10 @@ static const NSTimeInterval MDCBottomSheetTransitionDuration = 0.25;
 
 - (UIAccessibilityTraits)scrimAccessibilityTraits {
   return _scrimAccessibilityTraits;
+}
+
+- (void)setElevation:(MDCShadowElevation)elevation {
+  _elevation = elevation;
 }
 
 @end

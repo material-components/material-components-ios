@@ -14,6 +14,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MDCSheetState.h"
+#import "MaterialShadowElevations.h"
 
 @protocol MDCSheetContainerViewDelegate;
 
@@ -29,6 +30,9 @@
 
 - (nonnull instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
 - (nullable instancetype)initWithCoder:(nullable NSCoder *)aDecoder NS_UNAVAILABLE;
+
+/** The elevation of the bottom sheet container view. */
+@property(nonatomic, assign) MDCShadowElevation elevation;
 
 @end
 

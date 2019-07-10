@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import "MDCDraggableView.h"
+#import "MaterialShadowLayer.h"
 
 static void CancelGestureRecognizer(UIGestureRecognizer *gesture) {
   if (gesture.enabled) {
@@ -30,6 +31,10 @@ static void CancelGestureRecognizer(UIGestureRecognizer *gesture) {
 
 @implementation MDCDraggableView
 
++ (Class)layerClass {
+  return [MDCShadowLayer class];
+}
+
 - (instancetype)initWithFrame:(CGRect)frame scrollView:(UIScrollView *)scrollView {
   self = [super initWithFrame:frame];
   if (self) {
@@ -39,7 +44,6 @@ static void CancelGestureRecognizer(UIGestureRecognizer *gesture) {
     _dragRecognizer.maximumNumberOfTouches = 1;
     _dragRecognizer.delegate = self;
     [self addGestureRecognizer:_dragRecognizer];
-
     self.clipsToBounds = YES;
   }
   return self;
@@ -104,6 +108,11 @@ static void CancelGestureRecognizer(UIGestureRecognizer *gesture) {
     return YES;
   }
   return NO;
+}
+
+- (void)setElevation:(MDCShadowElevation)elevation {
+  _elevation = elevation;
+  [(MDCShadowLayer *)self.layer setElevation:elevation];
 }
 
 @end
