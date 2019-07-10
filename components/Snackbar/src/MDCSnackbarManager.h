@@ -183,7 +183,7 @@
 /**
  If true, converts button titles to uppercase. Defaults to MDCButton's default (YES).
  */
-@property(nonatomic) BOOL uppercaseButtonTitle;
+@property(nonatomic, assign) BOOL uppercaseButtonTitle;
 
 /**
  Alpha of disabled buttons. Defaults to the MDCButton's default (0.12).
