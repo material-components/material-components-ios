@@ -22,8 +22,6 @@
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
-#import "MaterialShadowElevations.h"
-#import "MaterialShadowLayer.h"
 #import "private/MDCSnackbarMessageViewInternal.h"
 #import "private/MDCSnackbarOverlayView.h"
 #import "private/MaterialSnackbarStrings.h"
