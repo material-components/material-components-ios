@@ -349,13 +349,14 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 
     _label.textColor = _messageTextColor;
 
-    [self initializeMDCSnackbarMessageViewButtons:message];
+    [self initializeMDCSnackbarMessageViewButtons:message withManager:manager];
   }
 
   return self;
 }
 
-- (void)initializeMDCSnackbarMessageViewButtons:(MDCSnackbarMessage *)message {
+- (void)initializeMDCSnackbarMessageViewButtons:(MDCSnackbarMessage *)message
+                                    withManager:(MDCSnackbarManager *)manager {
   // Add buttons to the view. We'll use this opportunity to determine how much space a button will
   // need, to inform the layout direction.
   NSMutableArray *actions = [NSMutableArray array];
@@ -392,6 +393,12 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     [button addTarget:self
                   action:@selector(handleButtonTapped:)
         forControlEvents:UIControlEventTouchUpInside];
+
+    button.uppercaseTitle = manager.uppercaseButtonTitle;
+    button.disabledAlpha = manager.disabledButtonAlpha;
+    if (manager.buttonInkColor) {
+      button.inkColor = manager.buttonInkColor;
+    }
 
     [actions addObject:buttonView];
   }
