@@ -15,9 +15,19 @@
 #import "MaterialRipple.h"
 #import "MaterialSnapshot.h"
 
+@interface TestRippleView : MDCRippleView
+@property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
+@end
+
+@implementation TestRippleView
+- (UITraitCollection *)traitCollection {
+  return self.traitCollectionOverride ?: [super traitCollection];
+}
+@end
+
 @interface MDCRippleViewSnapshotTests : MDCSnapshotTestCase
 
-@property(nonatomic, strong) MDCRippleView *rippleView;
+@property(nonatomic, strong) TestRippleView *rippleView;
 @property(nonatomic, strong) UIView *view;
 
 @end
@@ -32,7 +42,7 @@
   //   self.recordMode = YES;
 
   self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
-  self.rippleView = [[MDCRippleView alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
+  self.rippleView = [[TestRippleView alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
   [self.view addSubview:self.rippleView];
 }
 
@@ -48,6 +58,11 @@
 - (void)generateSnapshotAndVerifyForView:(UIView *)view {
   UIView *snapshotView = [view mdc_addToBackgroundView];
   [self snapshotVerifyView:snapshotView];
+}
+
+- (void)generateSnapshotForIOS13AndVerifyForView:(UIView *)view {
+  UIView *snapshotView = [view mdc_addToBackgroundView];
+  [self snapshotVerifyViewForIOS13:snapshotView];
 }
 
 #pragma mark - Tests
@@ -81,6 +96,59 @@
 
   // Then
   [self generateSnapshotAndVerifyForView:self.view];
+}
+
+- (void)testRippleColorRespondsToDynamicColorBeforeRippleBegan {
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+  if (@available(iOS 13.0, *)) {
+    // Given
+    UIColor *darkModeColor = UIColor.redColor;
+    UIColor *dynamicColor =
+    [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
+      if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
+        return UIColor.blueColor;
+      } else {
+        return darkModeColor;
+      }
+    }];
+    self.rippleView.rippleColor = dynamicColor;
+
+    // When
+    self.rippleView.traitCollectionOverride =
+    [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
+    [self.rippleView beginRippleTouchDownAtPoint:self.rippleView.center animated:NO completion:nil];
+
+    // Then
+    [self generateSnapshotForIOS13AndVerifyForView:self.view];
+  }
+#endif
+}
+
+- (void)testRippleColorRespondsToDynamicColorAfterRippleBegan {
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+  if (@available(iOS 13.0, *)) {
+    // Given
+    UIColor *darkModeColor = UIColor.redColor;
+    UIColor *dynamicColor =
+    [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
+      if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
+        return UIColor.blueColor;
+      } else {
+        return darkModeColor;
+      }
+    }];
+    self.rippleView.rippleColor = dynamicColor;
+
+    // When
+    [self.rippleView beginRippleTouchDownAtPoint:self.rippleView.center animated:NO completion:nil];
+    self.rippleView.traitCollectionOverride =
+        [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
+    [self.rippleView layoutIfNeeded];
+
+    // Then
+    [self generateSnapshotForIOS13AndVerifyForView:self.view];
+  }
+#endif
 }
 
 @end
