@@ -131,6 +131,13 @@ __attribute__((objc_subclassing_restricted)) @interface MDCAppBarNavigationContr
 - (nullable MDCAppBarViewController *)appBarViewControllerForViewController:
     (nonnull UIViewController *)viewController;
 
+/**
+ A block that is assigned to each assigned to each @c MDCAppBarViewController's
+ @c traitCollectionDidChange:.
+ */
+@property(nonatomic, copy, nullable) void (^defaultTraitCollectionDidChangeBlock)
+    (UITraitCollection *_Nullable previousTraitCollection);
+
 @end
 
 @interface MDCAppBarNavigationController (ToBeDeprecated)

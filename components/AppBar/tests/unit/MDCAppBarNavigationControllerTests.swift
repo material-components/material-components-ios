@@ -25,7 +25,7 @@ private class MockAppBarNavigationControllerDelegate:
   }
 }
 
-class AppBarNavigationControllerTests: XCTestCase {
+class MDCAppBarNavigationControllerTests: XCTestCase {
 
   var navigationController: MDCAppBarNavigationController!
   override func setUp() {
@@ -39,6 +39,7 @@ class AppBarNavigationControllerTests: XCTestCase {
 
     super.tearDown()
   }
+  // MARK: -  AppBar injection
 
   func testInitializingWithRootViewControllerInjectsAnAppBar() {
     // Given
@@ -197,6 +198,88 @@ class AppBarNavigationControllerTests: XCTestCase {
                    "The navigation controller may have injected another App Bar when it shouldn't"
                     + " have.")
   }
+
+  // MARK: - traitCollectionDidChangeBlock support
+
+  func testInitializingWithRootViewControllerDoesntSetTraitCollectionDidChangeBlock() {
+    // Given
+    let viewController = UIViewController()
+
+    // When
+    let _ = MDCAppBarNavigationController(rootViewController: viewController)
+
+    // Then
+    let injectedAppBarViewController = viewController.children.first as! MDCAppBarViewController
+    XCTAssertNotNil(injectedAppBarViewController)
+    XCTAssertNil(injectedAppBarViewController.traitCollectionDidChangeBlock)
+  }
+
+  func testPushingAViewControllerAssignsTraitCollectionDidChangeBlock() {
+    // Given
+    let viewController = UIViewController()
+    let block: ((UITraitCollection?) -> Void)? = { previousTraitCollection in }
+    navigationController.defaultTraitCollectionDidChangeBlock = block
+
+    // When
+    navigationController.pushViewController(viewController, animated: false)
+
+    // Then
+    let injectedAppBarViewController = viewController.children.first as! MDCAppBarViewController
+    XCTAssertNotNil(injectedAppBarViewController)
+    XCTAssertNotNil(injectedAppBarViewController.traitCollectionDidChangeBlock)
+  }
+
+  func testSettingAViewControllerAssignsTraitCollectionDidChangeBlock() {
+    // Given
+    let viewController = UIViewController()
+    let block: ((UITraitCollection?) -> Void)? = { previousTraitCollection in }
+    navigationController.defaultTraitCollectionDidChangeBlock = block
+
+    // When
+    navigationController.viewControllers = [viewController]
+
+    // Then
+    let injectedAppBarViewController = viewController.children.first as! MDCAppBarViewController
+    XCTAssertNotNil(injectedAppBarViewController)
+    XCTAssertNotNil(injectedAppBarViewController.traitCollectionDidChangeBlock)
+  }
+
+  func testSettingAViewControllerAnimatedAssignsTraitCollectionDidChangeBlock() {
+    // Given
+    let viewController = UIViewController()
+    let block: ((UITraitCollection?) -> Void)? = { previousTraitCollection in }
+    navigationController.defaultTraitCollectionDidChangeBlock = block
+
+    // When
+    navigationController.setViewControllers([viewController], animated: false)
+
+    // Then
+    let injectedAppBarViewController = viewController.children.first as! MDCAppBarViewController
+    XCTAssertNotNil(injectedAppBarViewController)
+    XCTAssertNotNil(injectedAppBarViewController.traitCollectionDidChangeBlock)
+  }
+
+  func testPushingAnAppBarContainerViewControllerAssignsTraitCollectionDidChangeBlock() {
+    // Given
+    let viewController = UIViewController()
+    let container = MDCAppBarContainerViewController(contentViewController: viewController)
+
+    // When
+    navigationController.pushViewController(container, animated: false)
+
+    // Then
+    var verifiedContainerVC = false
+    for viewController in navigationController.children {
+      if viewController is MDCAppBarContainerViewController {
+        verifiedContainerVC = true
+        let containerVCChild = viewController as! MDCAppBarContainerViewController
+        // TODO
+        // XCTAssertNotNil(containerVCChild.traitCollectionDidChangeBlock)
+      }
+    }
+  }
+
+  // MARK: - The rest
 
   func testStatusBarStyleIsFetchedFromFlexibleHeaderViewController() {
     // Given
