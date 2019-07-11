@@ -269,7 +269,9 @@
     [self.button layoutIfNeeded];
     
     // Then
-    [self generateSnapshotForIOS13AndVerifyForView:self.button];
+    [self.button sizeToFit];
+    UIView *snapshotView = [self.button mdc_addToBackgroundView];
+    [self snapshotVerifyViewForIOS13:snapshotView];
   }
 #endif
 }
