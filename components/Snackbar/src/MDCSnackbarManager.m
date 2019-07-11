@@ -524,6 +524,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 @implementation MDCSnackbarManager {
   UIColor *_snackbarMessageViewBackgroundColor;
   UIColor *_snackbarMessageViewShadowColor;
+  MDCShadowElevation _messageElevation;
   UIColor *_messageTextColor;
   UIFont *_messageFont;
   UIFont *_buttonFont;
@@ -550,6 +551,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
     _internalManager = [[MDCSnackbarManagerInternal alloc] initWithSnackbarManager:self];
     _uppercaseButtonTitle = YES;
     _disabledButtonAlpha = (CGFloat)0.12;
+    _messageElevation = MDCShadowElevationSnackbar;
   }
   return self;
 }
@@ -695,6 +697,19 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
     _messageTextColor = messageTextColor;
     [self runSnackbarUpdatesOnMainThread:^{
       [self.internalManager.currentSnackbar setMessageTextColor:messageTextColor];
+    }];
+  }
+}
+
+- (MDCShadowElevation)messageElevation {
+  return _messageElevation;
+}
+
+- (void)setMessageElevation:(MDCShadowElevation)messageElevation {
+  if (_messageElevation != messageElevation) {
+    _messageElevation = messageElevation;
+    [self runSnackbarUpdatesOnMainThread:^{
+      self.internalManager.currentSnackbar.elevation = messageElevation;
     }];
   }
 }
