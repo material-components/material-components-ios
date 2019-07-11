@@ -72,16 +72,27 @@ static CGFloat blendColorChannel(CGFloat value, CGFloat bValue, CGFloat alpha, C
         _onBackgroundColor = ColorFromRGB(0xFFFFFF);
         break;
       case MDCColorSchemeDefaultsMaterial201907:
-        _primaryColor = [UIColor colorWithUserInterfaceStyleDarkColor:ColorFromRGB(0xBB86FC) defaultColor:ColorFromRGB(0x6200EE)];
-        _primaryColorVariant = [UIColor colorWithUserInterfaceStyleDarkColor:ColorFromRGB(0x3700B3) defaultColor:ColorFromRGB(0x3700B3)];
-        _secondaryColor = [UIColor colorWithUserInterfaceStyleDarkColor:ColorFromRGB(0x03DAC6) defaultColor:ColorFromRGB(0x03DAC6)];
-        _errorColor = [UIColor colorWithUserInterfaceStyleDarkColor:ColorFromRGB(0xCF6679) defaultColor:ColorFromRGB(0xB00020)];
-        _surfaceColor = [UIColor colorWithUserInterfaceStyleDarkColor:ColorFromRGB(0x121212) defaultColor:ColorFromRGB(0xFFFFFF)];
-        _backgroundColor = [UIColor colorWithUserInterfaceStyleDarkColor:ColorFromRGB(0x121212) defaultColor:ColorFromRGB(0xFFFFFF)];
-        _onPrimaryColor = [UIColor colorWithUserInterfaceStyleDarkColor:ColorFromRGB(0x000000) defaultColor:ColorFromRGB(0xFFFFFF)];
-        _onSecondaryColor = [UIColor colorWithUserInterfaceStyleDarkColor:ColorFromRGB(0x000000) defaultColor:ColorFromRGB(0x000000)];
-        _onSurfaceColor = [UIColor colorWithUserInterfaceStyleDarkColor:ColorFromRGB(0xFFFFFF) defaultColor:ColorFromRGB(0x000000)];
-        _onBackgroundColor = [UIColor colorWithUserInterfaceStyleDarkColor:ColorFromRGB(0xFFFFFF) defaultColor:ColorFromRGB(0x000000)];
+        _primaryColor = [UIColor colorWithUserInterfaceStyleDarkColor:ColorFromRGB(0xBB86FC)
+                                                         defaultColor:ColorFromRGB(0x6200EE)];
+        _primaryColorVariant =
+            [UIColor colorWithUserInterfaceStyleDarkColor:ColorFromRGB(0x3700B3)
+                                             defaultColor:ColorFromRGB(0x3700B3)];
+        _secondaryColor = [UIColor colorWithUserInterfaceStyleDarkColor:ColorFromRGB(0x03DAC6)
+                                                           defaultColor:ColorFromRGB(0x03DAC6)];
+        _errorColor = [UIColor colorWithUserInterfaceStyleDarkColor:ColorFromRGB(0xCF6679)
+                                                       defaultColor:ColorFromRGB(0xB00020)];
+        _surfaceColor = [UIColor colorWithUserInterfaceStyleDarkColor:ColorFromRGB(0x121212)
+                                                         defaultColor:ColorFromRGB(0xFFFFFF)];
+        _backgroundColor = [UIColor colorWithUserInterfaceStyleDarkColor:ColorFromRGB(0x121212)
+                                                            defaultColor:ColorFromRGB(0xFFFFFF)];
+        _onPrimaryColor = [UIColor colorWithUserInterfaceStyleDarkColor:ColorFromRGB(0x000000)
+                                                           defaultColor:ColorFromRGB(0xFFFFFF)];
+        _onSecondaryColor = [UIColor colorWithUserInterfaceStyleDarkColor:ColorFromRGB(0x000000)
+                                                             defaultColor:ColorFromRGB(0x000000)];
+        _onSurfaceColor = [UIColor colorWithUserInterfaceStyleDarkColor:ColorFromRGB(0xFFFFFF)
+                                                           defaultColor:ColorFromRGB(0x000000)];
+        _onBackgroundColor = [UIColor colorWithUserInterfaceStyleDarkColor:ColorFromRGB(0xFFFFFF)
+                                                              defaultColor:ColorFromRGB(0x000000)];
         break;
     }
   }
