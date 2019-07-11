@@ -1351,33 +1351,4 @@ static NSString *controlStateDescription(UIControlState controlState) {
   [self waitForExpectations:@[ expectation ] timeout:1];
 }
 
-- (void)testShadowColorRespondsToDynamicColor {
-#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
-  if (@available(iOS 13.0, *)) {
-    // Given
-    TestButton *testButton = [[TestButton alloc] init];
-    UIColor *darkModeColor = UIColor.whiteColor;
-    UIColor *dynamicColor =
-        [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
-          if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
-            return UIColor.blackColor;
-          } else {
-            return darkModeColor;
-          }
-        }];
-    [testButton setShadowColor:dynamicColor forState:UIControlStateNormal];
-
-    // When
-    testButton.traitCollectionOverride =
-        [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
-    [testButton layoutIfNeeded];
-
-    // Then
-    UIColor *shadowColor = [[testButton shadowColorForState:UIControlStateNormal]
-        resolvedColorWithTraitCollection:testButton.traitCollection];
-    XCTAssertEqualObjects(shadowColor, darkModeColor);
-  }
-#endif
-}
-
 @end
