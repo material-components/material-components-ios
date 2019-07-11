@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
+
 #import "MDCSnackbarAlignment.h"
+#import "MaterialShadowElevations.h"
 
 @class MDCSnackbarMessage;
 @class MDCSnackbarMessageView;
@@ -164,6 +166,9 @@
  The color for the shadow color for the Snackbar message view.
  */
 @property(nonatomic, strong, nullable) UIColor *snackbarMessageViewShadowColor;
+
+/** The elevation for the Snackbar message view. */
+@property(nonatomic, assign) MDCShadowElevation messageElevation;
 
 /**
  The color for the message text in the Snackbar message view.
