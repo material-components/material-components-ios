@@ -895,7 +895,9 @@ static UIImage *fakeImage(CGSize size) {
 - (void)testRectForItemConvertedToTabBarView {
   // Given
   self.tabBarView.items = @[ self.itemA ];
-  [self.tabBarView sizeToFit];
+  CGSize intrinsicContentSize = self.tabBarView.intrinsicContentSize;
+  self.tabBarView.bounds =
+      CGRectMake(0, 0, intrinsicContentSize.width, intrinsicContentSize.height);
   [self.tabBarView layoutIfNeeded];
 
   // When
@@ -910,21 +912,23 @@ static UIImage *fakeImage(CGSize size) {
   // Given
   UIOffset tabBarOffsetWithinSuperview = UIOffsetMake(30, 40);
   self.tabBarView.items = @[ self.itemA ];
-  [self.tabBarView sizeToFit];
+  CGSize intrinsicContentSize = self.tabBarView.intrinsicContentSize;
+  self.tabBarView.bounds =
+      CGRectMake(0, 0, intrinsicContentSize.width, intrinsicContentSize.height);
   [self.tabBarView layoutIfNeeded];
-  UIView *superView =
+  UIView *tabBarSuperview =
       [[UIView alloc] initWithFrame:CGRectMake(0, 0,
                                                CGRectGetWidth(self.tabBarView.bounds) +
                                                    tabBarOffsetWithinSuperview.horizontal,
                                                CGRectGetHeight(self.tabBarView.bounds) +
                                                    tabBarOffsetWithinSuperview.vertical)];
-  [superView addSubview:self.tabBarView];
-  self.tabBarView.center =
-      CGPointMake(CGRectGetMidX(superView.bounds) + (tabBarOffsetWithinSuperview.horizontal / 2),
-                  CGRectGetMidY(superView.bounds) + (tabBarOffsetWithinSuperview.vertical / 2));
+  [tabBarSuperview addSubview:self.tabBarView];
+  self.tabBarView.center = CGPointMake(
+      CGRectGetMidX(tabBarSuperview.bounds) + (tabBarOffsetWithinSuperview.horizontal / 2),
+      CGRectGetMidY(tabBarSuperview.bounds) + (tabBarOffsetWithinSuperview.vertical / 2));
 
   // When
-  CGRect itemFrame = [self.tabBarView rectForItem:self.itemA inCoordinateSpace:superView];
+  CGRect itemFrame = [self.tabBarView rectForItem:self.itemA inCoordinateSpace:tabBarSuperview];
   CGRect expectedFrame =
       CGRectMake(tabBarOffsetWithinSuperview.horizontal, tabBarOffsetWithinSuperview.vertical,
                  CGRectGetWidth(self.tabBarView.bounds), CGRectGetHeight(self.tabBarView.bounds));

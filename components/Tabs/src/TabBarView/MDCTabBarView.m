@@ -419,9 +419,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   if (index == NSNotFound || index >= self.itemViews.count) {
     return CGRectNull;
   }
-  CGRect frame = self.itemViews[index].frame;
-  frame = CGRectMake(CGRectGetMinX(frame), CGRectGetMinY(frame), CGRectGetWidth(frame),
-                     CGRectGetHeight(frame));
+  CGRect frame = CGRectStandardize(self.itemViews[index].frame);
   return [coordinateSpace convertRect:frame fromCoordinateSpace:self];
 }
 

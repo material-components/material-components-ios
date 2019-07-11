@@ -15,6 +15,7 @@
 #import <UIKit/UIKit.h>
 
 #import <MaterialComponents/MaterialContainerScheme.h>
+#import <MaterialComponents/MaterialMath.h>
 #import "MaterialTabs+TabBarView.h"
 
 static NSString *const kExampleTitle = @"TabBarView";
@@ -76,6 +77,9 @@ static NSString *const kExampleTitle = @"TabBarView";
 
 /** Images for the items. */
 @property(nonatomic, copy) NSArray<UIImage *> *tabBarItemIcons;
+
+/** Tracks the UITabBarItem views that are currently on-screen. */
+@property(nonatomic, copy) NSSet<UITabBarItem *> *visibleItems;
 
 @end
 
@@ -270,7 +274,7 @@ static NSString *const kExampleTitle = @"TabBarView";
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-  [self logVisibleItems];
+  [self logItemVisibilityChanges];
 }
 
 #pragma mark - UIViewController
@@ -282,30 +286,48 @@ static NSString *const kExampleTitle = @"TabBarView";
       animateAlongsideTransition:nil
                       completion:^(
                           id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
-                        [self logVisibleItems];
+                        [self logItemVisibilityChanges];
                       }];
 }
 
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
-  [self logVisibleItems];
+  [self logItemVisibilityChanges];
 }
 
-- (void)logVisibleItems {
-  NSMutableArray<NSString *> *visibleItemTitles = [NSMutableArray array];
+- (void)logItemVisibilityChanges {
+  NSMutableSet<UITabBarItem *> *visibleItems = [NSMutableSet set];
   for (UITabBarItem *item in self.tabBar.items) {
     CGRect itemViewInWindow = [self.tabBar rectForItem:item inCoordinateSpace:self.view.window];
     CGRect overlapRect = CGRectIntersection(self.view.window.bounds, itemViewInWindow);
-    if (CGRectIsNull(overlapRect) || CGRectGetWidth(itemViewInWindow) < 1) {
+
+    // Avoid dividing by zero
+    if (CGRectIsNull(overlapRect) || MDCCGFloatEqual(CGRectGetWidth(itemViewInWindow), 0)) {
       continue;
     }
-    CGFloat percentVisible = CGRectGetWidth(overlapRect) / CGRectGetWidth(itemViewInWindow);
-    NSString *description =
-        [NSString stringWithFormat:@"%@ (%.1f%%)", item.title, percentVisible * 100];
-    [visibleItemTitles addObject:description];
+    [visibleItems addObject:item];
   }
 
-  NSLog(@"Visible items: %@", visibleItemTitles);
+  NSMutableSet<UITabBarItem *> *noLongerVisibleItems = [NSMutableSet set];
+  NSMutableSet<UITabBarItem *> *visibleItemsCopy = [visibleItems copy];
+  for (UITabBarItem *item in self.visibleItems) {
+    if (![visibleItems containsObject:item]) {
+      [noLongerVisibleItems addObject:item];
+    }
+    [visibleItems removeObject:item];
+  }
+  self.visibleItems = visibleItemsCopy;
+
+  if (visibleItems.count) {
+    for (UITabBarItem *item in visibleItems) {
+      NSLog(@"(%@) became visible.", item.title ?: @(item.tag));
+    }
+  }
+  if (noLongerVisibleItems.count) {
+    for (UITabBarItem *item in noLongerVisibleItems) {
+      NSLog(@"(%@) is no longer visible.", item.title ?: @(item.tag));
+    }
+  }
 }
 
 @end
