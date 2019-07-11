@@ -218,7 +218,7 @@ class MDCAppBarNavigationControllerTests: XCTestCase {
     // Given
     let viewController = UIViewController()
     let block: ((MDCAppBarViewController, UITraitCollection?) -> Void)? = {_, _ in }
-    navigationController.defaultTraitCollectionDidChangeBlock = block
+    navigationController.traitCollectionDidChangeBlockForAppBarController = block
 
     // When
     navigationController.pushViewController(viewController, animated: false)
@@ -233,7 +233,7 @@ class MDCAppBarNavigationControllerTests: XCTestCase {
     // Given
     let viewController = UIViewController()
     let block: ((MDCAppBarViewController, UITraitCollection?) -> Void)? = {_, _ in }
-    navigationController.defaultTraitCollectionDidChangeBlock = block
+    navigationController.traitCollectionDidChangeBlockForAppBarController = block
 
     // When
     navigationController.viewControllers = [viewController]
@@ -248,7 +248,7 @@ class MDCAppBarNavigationControllerTests: XCTestCase {
     // Given
     let viewController = UIViewController()
     let block: ((MDCAppBarViewController, UITraitCollection?) -> Void)? = {_, _ in }
-    navigationController.defaultTraitCollectionDidChangeBlock = block
+    navigationController.traitCollectionDidChangeBlockForAppBarController = block
 
     // When
     navigationController.setViewControllers([viewController], animated: false)
