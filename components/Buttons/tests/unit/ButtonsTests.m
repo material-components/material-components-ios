@@ -1327,4 +1327,22 @@ static NSString *controlStateDescription(UIControlState controlState) {
                  UIAccessibilityTraitAllowsDirectInteraction | UIAccessibilityTraitButton);
 }
 
+#pragma mark - UITraitCollection
+
+- (void)testTraitCollectionDidChangeBlockCalledWhenTraitCollectionChanges {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+  XCTestExpectation *expectation =
+      [self expectationWithDescription:@"Called traitCollectionDidChange"];
+  button.traitCollectionDidChangeBlock = ^(UITraitCollection *_Nullable previousTraitCollection) {
+    [expectation fulfill];
+  };
+
+  // When
+  [button traitCollectionDidChange:nil];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+}
+
 @end
