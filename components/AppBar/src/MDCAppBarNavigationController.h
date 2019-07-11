@@ -131,6 +131,15 @@ __attribute__((objc_subclassing_restricted)) @interface MDCAppBarNavigationContr
 - (nullable MDCAppBarViewController *)appBarViewControllerForViewController:
     (nonnull UIViewController *)viewController;
 
+/**
+ A block that is assigned to each injected @c MDCAppBarViewController's
+ @c traitCollectionDidChangeBlock property. The block will be executed when the injected
+ @c MDCAppBarViewController's @c -traitCollectionDidChange: is called.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlockForAppBarController)
+    (MDCAppBarViewController *_Nonnull appBarViewController,
+     UITraitCollection *_Nullable previousTraitCollection);
+
 @end
 
 @interface MDCAppBarNavigationController (ToBeDeprecated)
