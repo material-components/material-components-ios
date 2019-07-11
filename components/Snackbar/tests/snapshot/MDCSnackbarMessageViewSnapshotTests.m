@@ -201,12 +201,13 @@ static NSString *const kItemTitleLong2Arabic =
 
 - (void)testWithCustomElevation {
   // Given
-  MDCSnackbarMessageView *messageView = [self snackbarMessageViewWithText:kItemTitleShort1Latin actionTitle:kItemTitleShort2Latin];
+  MDCSnackbarMessageView *messageView = [self snackbarMessageViewWithText:kItemTitleShort1Latin
+                                                              actionTitle:kItemTitleShort2Latin];
   messageView.frame = CGRectMake(0, 0, kWidth, kHeightSingleLineText);
-  
+
   // When
   messageView.elevation = 12;
-  
+
   // Then
   [self generateSnapshotAndVerifyForView:messageView];
 }
