@@ -14,10 +14,7 @@
 
 #import "MaterialRipple.h"
 #import "MaterialSnapshot.h"
-
-static inline UIColor *DynamicColor(UIColor *lightColor) {
-  return [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.14];
-}
+#import "UIColor+MaterialDynamic.h"
 
 /**
  Creates a fake MDCRippleView that has its traitCollection overriden.
@@ -112,16 +109,8 @@ static inline UIColor *DynamicColor(UIColor *lightColor) {
 #if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     // Given
-    UIColor *darkModeColor = UIColor.redColor;
-    UIColor *dynamicColor =
-        [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
-          if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
-            return UIColor.blueColor;
-          } else {
-            return darkModeColor;
-          }
-        }];
-    self.rippleView.rippleColor = dynamicColor;
+    self.rippleView.rippleColor = [UIColor colorWithUserInterfaceStyleDarkColor:UIColor.redColor
+                                                                   defaultColor:UIColor.blueColor];
 
     // When
     self.rippleView.traitCollectionOverride =
@@ -138,17 +127,8 @@ static inline UIColor *DynamicColor(UIColor *lightColor) {
 #if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     // Given
-//    [UIColor ]
-    UIColor *darkModeColor = UIColor.redColor;
-    UIColor *dynamicColor =
-        [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
-          if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
-            return UIColor.blueColor;
-          } else {
-            return darkModeColor;
-          }
-        }];
-    self.rippleView.rippleColor = dynamicColor;
+    self.rippleView.rippleColor = [UIColor colorWithUserInterfaceStyleDarkColor:UIColor.redColor
+                                                                   defaultColor:UIColor.blueColor];
 
     // When
     [self.rippleView beginRippleTouchDownAtPoint:self.rippleView.center animated:NO completion:nil];

@@ -97,5 +97,8 @@ mdc_snapshot_objc_library(
 
 mdc_snapshot_test(
     name = "snapshot_tests",
-    deps = [":snapshot_test_lib"],
+    deps = [
+        ":snapshot_test_lib",
+        "//components/private/Color",
+    ],
 )
