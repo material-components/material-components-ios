@@ -256,7 +256,7 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
   [super traitCollectionDidChange:previousTraitCollection];
 
   if (self.traitCollectionDidChangeBlock) {
-    self.traitCollectionDidChangeBlock(previousTraitCollection);
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
   }
 }
 
