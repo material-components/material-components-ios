@@ -303,4 +303,40 @@ static const CGFloat kBannerContentPadding = 10.0f;
   }
 }
 
+- (void)testDynamicTypeForAttributedTextStringWhenContentSizeCategoryIsExtraExtraLarge {
+  if (@available(iOS 10.0, *)) {
+    // Given
+    self.bannerView = [[MDCBannerView alloc] init];
+    self.typographyScheme =
+        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+    MDCButton *button = self.bannerView.leadingButton;
+    [button setTitle:@"Action" forState:UIControlStateNormal];
+    [button setTitleFont:self.typographyScheme.button forState:UIControlStateNormal];
+    button.uppercaseTitle = YES;
+    [button setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
+    self.bannerView.trailingButton.hidden = YES;
+
+    // When
+    NSMutableAttributedString *bannerString =
+        [[NSMutableAttributedString alloc] initWithString:kBannerShortText];
+    [bannerString addAttribute:NSFontAttributeName
+                         value:self.typographyScheme.body1
+                         range:NSMakeRange(10, 8)];
+    [bannerString addAttribute:NSForegroundColorAttributeName
+                         value:UIColor.redColor
+                         range:NSMakeRange(0, 9)];
+    [bannerString addAttribute:NSLinkAttributeName
+                         value:@"http://www.google.com"
+                         range:NSMakeRange([kBannerShortText length] - 2, 2)];
+    self.bannerView.textLabel.font = self.typographyScheme.body2;
+    self.bannerView.textLabel.attributedText = bannerString;
+    self.bannerView.mdc_adjustsFontForContentSizeCategory = YES;
+
+    // Then
+    [self generateSnapshotWithContentSizeCategoryAndNotificationPost:
+              UIContentSizeCategoryExtraExtraLarge
+                                                    andVerifyForView:self.bannerView];
+  }
+}
+
 @end

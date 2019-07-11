@@ -21,6 +21,7 @@
 #import "../../src/private/MDCSnackbarOverlayView.h"
 
 @interface MDCSnackbarManagerInternal (Testing)
+@property(nonatomic) MDCSnackbarMessageView *currentSnackbar;
 @property(nonatomic) MDCSnackbarOverlayView *overlayView;
 @property(nonatomic) BOOL isVoiceOverRunningOverride;
 @end
@@ -249,6 +250,30 @@
 
   // Then
   XCTAssertTrue(self.manager.internalManager.overlayView.accessibilityViewIsModal);
+}
+
+- (void)testManagerForwardsButtonProperties {
+  // Given
+  self.manager.disabledButtonAlpha = (CGFloat)0.5;
+  self.manager.uppercaseButtonTitle = NO;
+  self.manager.buttonInkColor = UIColor.redColor;
+  MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
+  action.title = @"Tap Me";
+  self.message.action = action;
+
+  // When
+  [self.manager showMessage:self.message];
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [expectation fulfill];
+  });
+  [self waitForExpectationsWithTimeout:3 handler:nil];
+
+  // Then
+  MDCButton *actionButton = self.manager.internalManager.currentSnackbar.actionButtons.firstObject;
+  XCTAssertFalse(actionButton.uppercaseTitle);
+  XCTAssertEqual(actionButton.disabledAlpha, 0.5);
+  XCTAssertEqualObjects(UIColor.redColor, actionButton.inkColor);
 }
 
 @end
