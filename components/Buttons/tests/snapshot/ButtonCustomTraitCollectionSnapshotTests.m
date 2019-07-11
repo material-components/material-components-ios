@@ -248,4 +248,29 @@
   [self generateSnapshotAndVerifyForView:self.button];
 }
 
+- (void)testShadowColorRespondsToDynamicColor {
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+  if (@available(iOS 13.0, *)) {
+    // Given
+    UIColor *darkModeColor = UIColor.whiteColor;
+    UIColor *dynamicColor =
+    [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
+      if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
+        return UIColor.blackColor;
+      } else {
+        return darkModeColor;
+      }
+    }];
+    [self.button setShadowColor:dynamicColor forState:UIControlStateNormal];
+    
+    // When
+    self.button.traitCollectionOverride =
+    [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
+    [self.button layoutIfNeeded];
+    
+    // Then
+    [self generateSnapshotForIOS13AndVerifyForView:self.button];
+  }
+#endif
+}
 @end
