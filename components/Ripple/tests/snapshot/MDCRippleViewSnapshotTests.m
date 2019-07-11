@@ -104,18 +104,18 @@
     // Given
     UIColor *darkModeColor = UIColor.redColor;
     UIColor *dynamicColor =
-    [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
-      if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
-        return UIColor.blueColor;
-      } else {
-        return darkModeColor;
-      }
-    }];
+        [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
+          if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
+            return UIColor.blueColor;
+          } else {
+            return darkModeColor;
+          }
+        }];
     self.rippleView.rippleColor = dynamicColor;
 
     // When
     self.rippleView.traitCollectionOverride =
-    [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
+        [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
     [self.rippleView beginRippleTouchDownAtPoint:self.rippleView.center animated:NO completion:nil];
 
     // Then
@@ -130,13 +130,13 @@
     // Given
     UIColor *darkModeColor = UIColor.redColor;
     UIColor *dynamicColor =
-    [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
-      if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
-        return UIColor.blueColor;
-      } else {
-        return darkModeColor;
-      }
-    }];
+        [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
+          if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
+            return UIColor.blueColor;
+          } else {
+            return darkModeColor;
+          }
+        }];
     self.rippleView.rippleColor = dynamicColor;
 
     // When
