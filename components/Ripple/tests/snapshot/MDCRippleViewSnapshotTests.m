@@ -49,7 +49,8 @@
   //   self.recordMode = YES;
 
   self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
-  self.rippleView = [[MDCRippleViewSnaphotTestRippleViewFake alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
+  self.rippleView =
+      [[MDCRippleViewSnaphotTestRippleViewFake alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
   [self.view addSubview:self.rippleView];
 }
 
