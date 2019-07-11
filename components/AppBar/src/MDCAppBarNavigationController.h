@@ -136,7 +136,8 @@ __attribute__((objc_subclassing_restricted)) @interface MDCAppBarNavigationContr
  @c traitCollectionDidChange:.
  */
 @property(nonatomic, copy, nullable) void (^defaultTraitCollectionDidChangeBlock)
-    (UITraitCollection *_Nullable previousTraitCollection);
+    (MDCAppBarViewController *_Nonnull appBarViewController,
+     UITraitCollection *_Nullable previousTraitCollection);
 
 @end
 

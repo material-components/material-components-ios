@@ -201,7 +201,7 @@ class MDCAppBarNavigationControllerTests: XCTestCase {
 
   // MARK: - traitCollectionDidChangeBlock support
 
-  func testInitializingWithRootViewControllerDoesntSetTraitCollectionDidChangeBlock() {
+  func testInitializingWithRootViewControllerDoesNotSetTraitCollectionDidChangeBlock() {
     // Given
     let viewController = UIViewController()
 
@@ -217,7 +217,7 @@ class MDCAppBarNavigationControllerTests: XCTestCase {
   func testPushingAViewControllerAssignsTraitCollectionDidChangeBlock() {
     // Given
     let viewController = UIViewController()
-    let block: ((UITraitCollection?) -> Void)? = { previousTraitCollection in }
+    let block: ((MDCAppBarViewController, UITraitCollection?) -> Void)? = {_, _ in }
     navigationController.defaultTraitCollectionDidChangeBlock = block
 
     // When
@@ -232,7 +232,7 @@ class MDCAppBarNavigationControllerTests: XCTestCase {
   func testSettingAViewControllerAssignsTraitCollectionDidChangeBlock() {
     // Given
     let viewController = UIViewController()
-    let block: ((UITraitCollection?) -> Void)? = { previousTraitCollection in }
+    let block: ((MDCAppBarViewController, UITraitCollection?) -> Void)? = {_, _ in }
     navigationController.defaultTraitCollectionDidChangeBlock = block
 
     // When
@@ -247,7 +247,7 @@ class MDCAppBarNavigationControllerTests: XCTestCase {
   func testSettingAViewControllerAnimatedAssignsTraitCollectionDidChangeBlock() {
     // Given
     let viewController = UIViewController()
-    let block: ((UITraitCollection?) -> Void)? = { previousTraitCollection in }
+    let block: ((MDCAppBarViewController, UITraitCollection?) -> Void)? = {_, _ in }
     navigationController.defaultTraitCollectionDidChangeBlock = block
 
     // When
@@ -259,24 +259,47 @@ class MDCAppBarNavigationControllerTests: XCTestCase {
     XCTAssertNotNil(injectedAppBarViewController.traitCollectionDidChangeBlock)
   }
 
-  func testPushingAnAppBarContainerViewControllerAssignsTraitCollectionDidChangeBlock() {
+  func testPushingAnAppBarContainerViewControllerDoesNotAssignTraitCollectionDidChangeBlock() {
     // Given
     let viewController = UIViewController()
     let container = MDCAppBarContainerViewController(contentViewController: viewController)
+    var blockSemaphore = false
+    let block: ((MDCAppBarViewController, UITraitCollection?) -> Void)? =
+      { _, _ in
+        blockSemaphore = true
+      }
+    container.appBarViewController.traitCollectionDidChangeBlock = block
 
     // When
     navigationController.pushViewController(container, animated: false)
+    container.appBarViewController.traitCollectionDidChange(nil)
 
     // Then
-    var verifiedContainerVC = false
-    for viewController in navigationController.children {
-      if viewController is MDCAppBarContainerViewController {
-        verifiedContainerVC = true
-        let containerVCChild = viewController as! MDCAppBarContainerViewController
-        // TODO
-        // XCTAssertNotNil(containerVCChild.traitCollectionDidChangeBlock)
+    XCTAssertTrue(blockSemaphore)
+  }
+
+  func testPushingAContainedAppBarContainerViewControllerDoesNotAssignTraitCollectionDidChangeBlock() {
+    // Given
+    let viewController = UIViewController()
+    let container = MDCAppBarContainerViewController(contentViewController: viewController)
+    let nestedContainer = UIViewController()
+    nestedContainer.addChild(container)
+    nestedContainer.view.addSubview(container.view)
+    container.didMove(toParent: nestedContainer)
+    var blockSemaphore = false
+    let block: ((MDCAppBarViewController, UITraitCollection?) -> Void)? =
+      { _, _ in
+        blockSemaphore = true
       }
-    }
+    container.appBarViewController.traitCollectionDidChangeBlock = block
+
+
+    // When
+    navigationController.pushViewController(nestedContainer, animated: false)
+    container.appBarViewController.traitCollectionDidChange(nil)
+
+    // Then
+    XCTAssertTrue(blockSemaphore)
   }
 
   // MARK: - The rest
