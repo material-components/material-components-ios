@@ -37,11 +37,11 @@
  Used to test dynamic type visual differences based on different @c UIContentSizeCategory
  values.
  */
-@interface ButtonDynamicTypeSnapshotTests : MDCSnapshotTestCase
+@interface ButtonCustomTraitCollectionSnapshotTests : MDCSnapshotTestCase
 @property(nonatomic, strong, nullable) ButtonDynamicTypeSnapshotTestFakeButton *button;
 @end
 
-@implementation ButtonDynamicTypeSnapshotTests
+@implementation ButtonCustomTraitCollectionSnapshotTests
 
 - (void)setUp {
   [super setUp];
