@@ -19,6 +19,8 @@
 #import "MDCSnackbarMessageView.h"
 
 #import "MaterialAnimationTiming.h"
+#import "MaterialShadowElevations.h"
+#import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
 #import "private/MDCSnackbarMessageViewInternal.h"
 #import "private/MDCSnackbarOverlayView.h"
@@ -42,17 +44,6 @@ static inline UIColor *MDCRGBAColor(uint8_t r, uint8_t g, uint8_t b, float a) {
  The thickness of the Snackbar border.
  */
 static const CGFloat kBorderWidth = 0;
-
-/**
- Shadow coloring.
- */
-static const CGFloat kShadowAlpha = (CGFloat)0.24;
-
-static const CGSize kShadowOffset = (CGSize){0.0, 2.0};
-static const CGSize kLegacyShadowOffset = (CGSize){0.0, 1.0};
-
-static const CGFloat kShadowSpread = 4;
-static const CGFloat kLegacyShadowSpread = 1;
 
 /**
  The radius of the corners.
@@ -155,6 +146,11 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
  */
 @property(nonatomic, copy) MDCSnackbarMessageDismissHandler dismissalHandler;
 
+/**
+ The elevation of the snackbar view.
+ */
+@property(nonatomic, assign) MDCShadowElevation elevation;
+
 @end
 
 @interface MDCSnackbarMessageViewButton : MDCFlatButton
@@ -231,17 +227,13 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     _dismissalHandler = [handler copy];
 
     self.backgroundColor = _snackbarMessageViewBackgroundColor;
-    self.layer.shadowColor = _snackbarMessageViewShadowColor.CGColor;
-    self.layer.shadowOpacity = (float)kShadowAlpha;
     if (MDCSnackbarMessage.usesLegacySnackbar) {
       self.layer.cornerRadius = kLegacyCornerRadius;
-      self.layer.shadowOffset = kLegacyShadowOffset;
-      self.layer.shadowRadius = kLegacyShadowSpread;
     } else {
       self.layer.cornerRadius = kCornerRadius;
-      self.layer.shadowOffset = kShadowOffset;
-      self.layer.shadowRadius = kShadowSpread;
     }
+    _elevation = MDCShadowElevationSnackbar;
+    [(MDCShadowLayer *)self.layer setElevation:MDCShadowElevationSnackbar];
 
     _anchoredToScreenBottom = YES;
 
@@ -414,6 +406,15 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     // In case our dismissal handler has a reference to us, release the block.
     self.dismissalHandler = nil;
   }
+}
+
++ (Class)layerClass {
+  return [MDCShadowLayer class];
+}
+
+- (void)setElevation:(MDCShadowElevation)elevation {
+  _elevation = elevation;
+  [(MDCShadowLayer *)self.layer setElevation:_elevation];
 }
 
 #pragma mark - Subclass overrides
