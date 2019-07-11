@@ -16,8 +16,8 @@
 
 @implementation UIColor (MaterialDynamic)
 
-+ (UIColor *)colorWithColorForUserInterfaceStyleDark:(UIColor *)darkColor
-                                        defaultColor:(UIColor *)defaultColor {
++ (UIColor *)colorWithUserInterfaceStyleDarkColor:(UIColor *)darkColor
+                                     defaultColor:(UIColor *)defaultColor {
 #if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     return [UIColor

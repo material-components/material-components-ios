@@ -29,8 +29,8 @@
     UIColor *lightColor = UIColor.whiteColor;
 
     // When
-    UIColor *dynamicColor = [UIColor colorWithColorForUserInterfaceStyleDark:darkColor
-                                                                defaultColor:lightColor];
+    UIColor *dynamicColor = [UIColor colorWithUserInterfaceStyleDarkColor:darkColor
+                                                             defaultColor:lightColor];
     UITraitCollection *traitCollection =
         [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
 
@@ -49,8 +49,8 @@
     UIColor *lightColor = UIColor.whiteColor;
 
     // When
-    UIColor *dynamicColor = [UIColor colorWithColorForUserInterfaceStyleDark:darkColor
-                                                                defaultColor:lightColor];
+    UIColor *dynamicColor = [UIColor colorWithUserInterfaceStyleDarkColor:darkColor
+                                                             defaultColor:lightColor];
     UITraitCollection *traitCollection =
         [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleLight];
 
@@ -69,8 +69,8 @@
     UIColor *lightColor = UIColor.whiteColor;
 
     // When
-    UIColor *dynamicColor = [UIColor colorWithColorForUserInterfaceStyleDark:darkColor
-                                                                defaultColor:lightColor];
+    UIColor *dynamicColor = [UIColor colorWithUserInterfaceStyleDarkColor:darkColor
+                                                             defaultColor:lightColor];
 
     // Then
     XCTAssertEqualObjects(dynamicColor, lightColor);

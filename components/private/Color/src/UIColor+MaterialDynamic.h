@@ -25,8 +25,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param darkColor A color object returned when @c userInterfaceStyle is @c
 /// UIUserInterfaceStyleDark based on currently active traits.
 /// @param defaultColor A default color object.
-+ (UIColor *)colorWithColorForUserInterfaceStyleDark:(UIColor *)darkColor
-                                        defaultColor:(UIColor *)defaultColor;
++ (UIColor *)colorWithUserInterfaceStyleDarkColor:(UIColor *)darkColor
+                                     defaultColor:(UIColor *)defaultColor;
 
 @end
 
