@@ -1,3 +1,31 @@
+# 85.7.0
+
+This minor release exposes some properties on Snackbars and fixes a Banner bug.
+
+## API changes
+
+### Snackbar
+
+#### MDCSnackbarManager
+
+*new* property: `buttonInkColor` in `MDCSnackbarManager`
+
+*new* property: `uppercaseButtonTitle` in `MDCSnackbarManager`
+
+*new* property: `disabledButtonAlpha` in `MDCSnackbarManager`
+
+## Component changes
+
+### Snackbar
+
+* [Add button styling properties to MDCSnackbarManager (#7832)](https://github.com/material-components/material-components-ios/commit/fc625843c77e85b64030c7be20df23d7907bab0e) (Bryan Oltman)
+
+### Banner
+
+* [Fix dynamic type support for attributed string (#7820)](https://github.com/material-components/material-components-ios/commit/112433335c229e45d1382b3ba013bcf28e239409) (Wenyu Zhang)
+
+---
+
 # 85.6.0
 
 This minor release includes features and bug fixes for the MDCTabBarView Beta component.
