@@ -45,6 +45,7 @@ target "MDCCatalog" do
     'PageControl/UnitTests',
     'Palettes/UnitTests',
     'private/Application/UnitTests',
+    'private/Color/UnitTests',
     'private/KeyboardWatcher/UnitTests',
     'private/Math/UnitTests',
     'private/Overlay/UnitTests',

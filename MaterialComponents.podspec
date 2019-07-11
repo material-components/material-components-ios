@@ -2031,6 +2031,20 @@ Pod::Spec.new do |mdc|
       end
     end
 
+    private_spec.subspec "Color" do |component|
+      component.ios.deployment_target = '9.0'
+      component.public_header_files = "components/private/#{component.base_name}/src/*.h"
+      component.source_files = "components/private/#{component.base_name}/src/*.{h,m}"
+
+      component.test_spec 'UnitTests' do |unit_tests|
+        unit_tests.source_files = [
+          "components/private/#{component.base_name}/tests/unit/*.{h,m,swift}",
+          "components/private/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        ]
+        unit_tests.resources = "components/private/#{component.base_name}/tests/unit/resources/*"
+      end
+    end
+
     private_spec.subspec "KeyboardWatcher" do |component|
       component.ios.deployment_target = '9.0'
       component.public_header_files = "components/private/#{component.base_name}/src/*.h"
