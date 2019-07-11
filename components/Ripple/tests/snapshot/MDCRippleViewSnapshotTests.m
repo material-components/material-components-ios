@@ -15,19 +15,29 @@
 #import "MaterialRipple.h"
 #import "MaterialSnapshot.h"
 
-@interface TestRippleView : MDCRippleView
+static inline UIColor *DynamicColor(UIColor *lightColor) {
+  return [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.14];
+}
+
+/**
+ Creates a fake MDCRippleView that has its traitCollection overriden.
+ */
+@interface MDCRippleViewSnaphotTestRippleViewFake : MDCRippleView
 @property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
 @end
 
-@implementation TestRippleView
+@implementation MDCRippleViewSnaphotTestRippleViewFake
 - (UITraitCollection *)traitCollection {
   return self.traitCollectionOverride ?: [super traitCollection];
 }
 @end
 
+/**
+ Snapshot tests for the MDCRippleView class.
+ */
 @interface MDCRippleViewSnapshotTests : MDCSnapshotTestCase
 
-@property(nonatomic, strong) TestRippleView *rippleView;
+@property(nonatomic, strong) MDCRippleViewSnaphotTestRippleViewFake *rippleView;
 @property(nonatomic, strong) UIView *view;
 
 @end
@@ -42,7 +52,7 @@
   //   self.recordMode = YES;
 
   self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
-  self.rippleView = [[TestRippleView alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
+  self.rippleView = [[MDCRippleViewSnaphotTestRippleViewFake alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
   [self.view addSubview:self.rippleView];
 }
 
@@ -128,6 +138,7 @@
 #if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     // Given
+//    [UIColor ]
     UIColor *darkModeColor = UIColor.redColor;
     UIColor *dynamicColor =
         [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
