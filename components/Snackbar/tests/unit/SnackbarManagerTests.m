@@ -83,7 +83,7 @@
 
 - (void)testDefaultElevation {
   // Then
-  XCTAssertEqual([[MDCSnackbarManager alloc] init].elevation, MDCShadowElevationSnackbar);
+  XCTAssertEqual([[MDCSnackbarManager alloc] init].messageElevation, MDCShadowElevationSnackbar);
 }
 
 - (void)testCustomElevation {
@@ -92,10 +92,10 @@
   CGFloat fakeElevation = 10;
 
   // When
-  manager.elevation = fakeElevation;
+  manager.messageElevation = fakeElevation;
 
   // Then
-  XCTAssertEqual(manager.elevation, fakeElevation);
+  XCTAssertEqual(manager.messageElevation, fakeElevation);
 }
 
 @end

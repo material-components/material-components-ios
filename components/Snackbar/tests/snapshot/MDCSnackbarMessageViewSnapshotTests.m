@@ -186,7 +186,7 @@ static NSString *const kItemTitleLong2Arabic =
   [self generateSnapshotAndVerifyForView:messageView];
 }
 
-- (void)testWithCustomElevation {
+- (void)testWithZeroElevation {
   // Given
   MDCSnackbarMessageView *messageView = [self snackbarMessageViewWithText:kItemTitleShort1Latin
                                                               actionTitle:kItemTitleShort2Latin];
@@ -195,6 +195,18 @@ static NSString *const kItemTitleLong2Arabic =
   // When
   messageView.elevation = 0;
 
+  // Then
+  [self generateSnapshotAndVerifyForView:messageView];
+}
+
+- (void)testWithCustomElevation {
+  // Given
+  MDCSnackbarMessageView *messageView = [self snackbarMessageViewWithText:kItemTitleShort1Latin actionTitle:kItemTitleShort2Latin];
+  messageView.frame = CGRectMake(0, 0, kWidth, kHeightSingleLineText);
+  
+  // When
+  messageView.elevation = 12;
+  
   // Then
   [self generateSnapshotAndVerifyForView:messageView];
 }

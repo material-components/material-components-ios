@@ -168,7 +168,7 @@
 @property(nonatomic, strong, nullable) UIColor *snackbarMessageViewShadowColor;
 
 /** The elevation for the Snackbar message view. */
-@property(nonatomic, assign) MDCShadowElevation elevation;
+@property(nonatomic, assign) MDCShadowElevation messageElevation;
 
 /**
  The color for the message text in the Snackbar message view.
