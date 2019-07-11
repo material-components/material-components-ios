@@ -28,7 +28,8 @@
   XCTestExpectation *expectation =
       [self expectationWithDescription:@"Called traitCollectionDidChange"];
   appBarController.traitCollectionDidChangeBlock =
-      ^(UITraitCollection *_Nullable previousTraitCollection) {
+      ^(MDCAppBarViewController *_Nonnull appBarViewController,
+        UITraitCollection *_Nullable previousTraitCollection) {
         [expectation fulfill];
       };
 
@@ -39,15 +40,18 @@
   [self waitForExpectations:@[ expectation ] timeout:1];
 }
 
-- (void)testTraitCollectionDidChangeBlockCalledWithExpectedPreviousTraitCollection {
+- (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
   // Given
   MDCAppBarViewController *appBarController = [[MDCAppBarViewController alloc] init];
   XCTestExpectation *expectation =
       [self expectationWithDescription:@"Called traitCollectionDidChange"];
   __block UITraitCollection *passedTraitCollection;
+  __block MDCAppBarViewController *passedAppBarViewController;
   appBarController.traitCollectionDidChangeBlock =
-      ^(UITraitCollection *_Nullable previousTraitCollection) {
+      ^(MDCAppBarViewController *_Nonnull appBarViewController,
+        UITraitCollection *_Nullable previousTraitCollection) {
         passedTraitCollection = previousTraitCollection;
+        passedAppBarViewController = appBarViewController;
         [expectation fulfill];
       };
 
@@ -58,6 +62,7 @@
   // Then
   [self waitForExpectations:@[ expectation ] timeout:1];
   XCTAssertEqual(passedTraitCollection, testCollection);
+  XCTAssertEqual(passedAppBarViewController, appBarController);
 }
 
 @end
