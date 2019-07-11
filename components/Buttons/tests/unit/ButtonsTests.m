@@ -1352,6 +1352,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
 }
 
 - (void)testShadowColorRespondsToDynamicColor {
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     // Given
     TestButton *testButton = [[TestButton alloc] init];
@@ -1376,6 +1377,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
         resolvedColorWithTraitCollection:testButton.traitCollection];
     XCTAssertEqualObjects(shadowColor, darkModeColor);
   }
+#endif
 }
 
 @end
