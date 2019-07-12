@@ -14,8 +14,8 @@
 
 #import "MaterialSnapshot.h"
 
-#import "MaterialCards.h"
 #import "MaterialCards+Theming.h"
+#import "MaterialCards.h"
 
 @interface MDCCardWithCustomTraitCollection : MDCCard
 @property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
@@ -41,7 +41,7 @@
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-//    self.recordMode = YES;
+  //    self.recordMode = YES;
 
   self.card = [[MDCCardWithCustomTraitCollection alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
   self.containerScheme = [[MDCContainerScheme alloc] init];
@@ -69,20 +69,20 @@
     // Given
     UIColor *darkModeColor = UIColor.whiteColor;
     UIColor *dynamicColor =
-    [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
-      if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
-        return UIColor.blackColor;
-      } else {
-        return darkModeColor;
-      }
-    }];
+        [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
+          if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
+            return UIColor.blackColor;
+          } else {
+            return darkModeColor;
+          }
+        }];
     [self.card setShadowColor:dynamicColor forState:UIControlStateNormal];
-    
+
     // When
     self.card.traitCollectionOverride =
-    [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
+        [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
     [self.card layoutIfNeeded];
-    
+
     // Then
     [self.card sizeToFit];
     UIView *snapshotView = [self.card mdc_addToBackgroundView];
