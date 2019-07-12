@@ -232,12 +232,12 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   [self.delegate willPresentSnackbarWithMessageView:snackbarView];
   self.currentSnackbar = snackbarView;
 
-  __weak MDCSnackbarManager *weakSelf = self.manager;
+  __weak MDCSnackbarManager *weakManager = self.manager;
   snackbarView.traitCollectionDidChangeBlock =
       ^(MDCSnackbarMessageView * _Nonnull messageView,
         UITraitCollection * _Nullable previousTraitCollection) {
-        if (weakSelf.traitCollectionDidChangeBlock) {
-          weakSelf.traitCollectionDidChangeBlock(messageView, previousTraitCollection);
+        if (weakManager.traitCollectionDidChangeBlock) {
+          weakManager.traitCollectionDidChangeBlock(messageView, previousTraitCollection);
         }
       };
 
