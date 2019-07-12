@@ -15,8 +15,17 @@
 #import <XCTest/XCTest.h>
 #import "MaterialSnackbar.h"
 
-@interface SnackbarManagerTests : XCTestCase
+#import "../../src/private/MDCSnackbarManagerInternal.h"
 
+@interface MDCSnackbarManagerInternal (Testing)
+@property(nonatomic) MDCSnackbarMessageView *currentSnackbar;
+@end
+
+@interface MDCSnackbarManager (Testing)
+@property(nonnull, nonatomic, strong) MDCSnackbarManagerInternal *internalManager;
+@end
+
+@interface SnackbarManagerTests : XCTestCase
 @end
 
 @implementation SnackbarManagerTests
@@ -96,6 +105,40 @@
 
   // Then
   XCTAssertEqual(manager.messageElevation, fakeElevation);
+}
+
+- (void)testTraitCollectionDidChangeCalledWhenCurrentSnackbarTraitCollectionChanges {
+  // Given
+  MDCSnackbarManager *manager = [[MDCSnackbarManager alloc] init];
+  MDCSnackbarMessage *message = [MDCSnackbarMessage messageWithText:@"test"];
+
+  XCTestExpectation *traitCollectionExpectation =
+      [self expectationWithDescription:@"Called traitCollectionDidChange"];
+  __block UITraitCollection *passedTraitCollection;
+  __block MDCSnackbarMessageView *passedMessageView;
+  manager.traitCollectionDidChangeBlock =
+      ^(MDCSnackbarMessageView * _Nonnull messageView,
+        UITraitCollection * _Nullable previousTraitCollection) {
+        passedMessageView = messageView;
+        passedTraitCollection = previousTraitCollection;
+        [traitCollectionExpectation fulfill];
+      };
+
+  // When
+  [manager showMessage:message];
+  XCTestExpectation *showExpectation = [self expectationWithDescription:@"completed"];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [showExpectation fulfill];
+  });
+  [self waitForExpectations:@[ showExpectation ] timeout:1];
+
+  UITraitCollection *testCollection = [UITraitCollection traitCollectionWithDisplayScale:77];
+  [manager.internalManager.currentSnackbar traitCollectionDidChange:testCollection];
+
+  // Then
+  [self waitForExpectations:@[ traitCollectionExpectation ] timeout:1];
+  XCTAssertEqual(passedTraitCollection, testCollection);
+  XCTAssertEqual(passedMessageView, manager.internalManager.currentSnackbar);
 }
 
 @end
