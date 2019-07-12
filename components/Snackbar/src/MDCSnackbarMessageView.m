@@ -413,7 +413,12 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
   [super traitCollectionDidChange:previousTraitCollection];
+
   self.layer.shadowColor = self.snackbarMessageViewShadowColor.CGColor;
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
 }
 
 #pragma mark - Subclass overrides

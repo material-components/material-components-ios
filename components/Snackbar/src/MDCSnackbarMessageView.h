@@ -110,6 +110,14 @@
 @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
 
+/**
+ A block that is invoked when the MDCSnackbarMessageView receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCSnackbarMessageView *_Nonnull messageView,
+     UITraitCollection *_Nullable previousTraitCollection);
+
 @end
 
 // clang-format off
