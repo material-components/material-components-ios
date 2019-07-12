@@ -296,35 +296,35 @@ static NSString *const kExampleTitle = @"TabBarView";
 }
 
 - (void)logItemVisibilityChanges {
-  NSMutableSet<UITabBarItem *> *visibleItems = [NSMutableSet set];
+  NSMutableSet<UITabBarItem *> *allVisibleItems = [NSMutableSet set];
+  NSMutableSet<UITabBarItem *> *itemsThatEnteredTheWindowBounds = [NSMutableSet set];
+  NSMutableSet<UITabBarItem *> *itemsThatLeftTheWindowBounds = [NSMutableSet set];
   for (UITabBarItem *item in self.tabBar.items) {
     CGRect itemViewInWindow = [self.tabBar rectForItem:item inCoordinateSpace:self.view.window];
     CGRect overlapRect = CGRectIntersection(self.view.window.bounds, itemViewInWindow);
 
     // Avoid dividing by zero
     if (CGRectIsNull(overlapRect) || MDCCGFloatEqual(CGRectGetWidth(itemViewInWindow), 0)) {
+      if ([self.visibleItems containsObject:item]) {
+        [itemsThatLeftTheWindowBounds addObject:item];
+      }
       continue;
     }
-    [visibleItems addObject:item];
-  }
-
-  NSMutableSet<UITabBarItem *> *noLongerVisibleItems = [NSMutableSet set];
-  NSMutableSet<UITabBarItem *> *visibleItemsCopy = [visibleItems copy];
-  for (UITabBarItem *item in self.visibleItems) {
-    if (![visibleItems containsObject:item]) {
-      [noLongerVisibleItems addObject:item];
+    [allVisibleItems addObject:item];
+    if (![self.visibleItems containsObject:item]) {
+      [itemsThatEnteredTheWindowBounds addObject:item];
     }
-    [visibleItems removeObject:item];
   }
-  self.visibleItems = visibleItemsCopy;
 
-  if (visibleItems.count) {
-    for (UITabBarItem *item in visibleItems) {
+  self.visibleItems = allVisibleItems;
+
+  if (itemsThatEnteredTheWindowBounds.count) {
+    for (UITabBarItem *item in itemsThatEnteredTheWindowBounds) {
       NSLog(@"(%@) became visible.", item.title ?: @(item.tag));
     }
   }
-  if (noLongerVisibleItems.count) {
-    for (UITabBarItem *item in noLongerVisibleItems) {
+  if (itemsThatLeftTheWindowBounds.count) {
+    for (UITabBarItem *item in itemsThatLeftTheWindowBounds) {
       NSLog(@"(%@) is no longer visible.", item.title ?: @(item.tag));
     }
   }

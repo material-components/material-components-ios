@@ -28,6 +28,9 @@ static const CGFloat kExpectedHeightTitlesOrIconsOnly = 48;
 /** The expected height of Tabs with titles and icons. */
 static const CGFloat kExpectedHeightTitlesAndIcons = 72;
 
+/** The leading inset for scrollable tabs. */
+static const CGFloat kLeadingInsetForScrollableTabs = 52;
+
 /** The minimum width of a tab bar item. */
 static const CGFloat kMinItemWidth = 90;
 
@@ -1239,7 +1242,8 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   // Given
   self.tabBarView.items = @[ self.item1, self.item2 ];
   CGSize intrinsicContentSize = self.tabBarView.intrinsicContentSize;
-  self.tabBarView.bounds = CGRectMake(0, 0, 170, intrinsicContentSize.height);
+  self.tabBarView.bounds = CGRectMake(0, 0, kMinItemWidth * 1.2 + kLeadingInsetForScrollableTabs,
+                                      intrinsicContentSize.height);
   UIView *itemRectOverlayView = [[UIView alloc] init];
   itemRectOverlayView.backgroundColor =
       [UIColor.magentaColor colorWithAlphaComponent:(CGFloat)0.25];
