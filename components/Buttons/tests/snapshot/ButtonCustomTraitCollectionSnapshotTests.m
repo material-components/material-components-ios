@@ -254,20 +254,20 @@
     // Given
     UIColor *darkModeColor = UIColor.whiteColor;
     UIColor *dynamicColor =
-    [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
-      if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
-        return UIColor.blackColor;
-      } else {
-        return darkModeColor;
-      }
-    }];
+        [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
+          if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
+            return UIColor.blackColor;
+          } else {
+            return darkModeColor;
+          }
+        }];
     [self.button setShadowColor:dynamicColor forState:UIControlStateNormal];
-    
+
     // When
     self.button.traitCollectionOverride =
-    [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
+        [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
     [self.button layoutIfNeeded];
-    
+
     // Then
     [self.button sizeToFit];
     UIView *snapshotView = [self.button mdc_addToBackgroundView];
