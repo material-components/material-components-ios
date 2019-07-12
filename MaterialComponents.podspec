@@ -1514,6 +1514,7 @@ Pod::Spec.new do |mdc|
     component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
 
     component.dependency "MaterialComponents/AnimationTiming"
+    component.dependency "MaterialComponents/private/Color"
     component.dependency "MaterialComponents/private/Math"
 
     component.test_spec 'UnitTests' do |unit_tests|
