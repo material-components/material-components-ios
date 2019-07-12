@@ -17,7 +17,7 @@
 import UIKit
 import MaterialComponents.MaterialFlexibleHeader
 
-class ShrineCollectionViewController: UICollectionViewController {
+class ShrineCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
   var headerViewController: MDCFlexibleHeaderViewController!
   fileprivate let shrineData: ShrineData
@@ -63,13 +63,11 @@ class ShrineCollectionViewController: UICollectionViewController {
 
   func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
-                      sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
+                      sizeForItemAt indexPath: IndexPath) -> CGSize {
     var safeAreaInset: CGFloat = 20
-    #if swift(>=3.2)
-      if #available(iOS 11.0, *) {
-        safeAreaInset += self.view.safeAreaInsets.left + self.view.safeAreaInsets.right
-      }
-    #endif
+    if #available(iOS 11.0, *) {
+      safeAreaInset += self.view.safeAreaInsets.left + self.view.safeAreaInsets.right
+    }
     let cellWidth = floor((self.view.frame.size.width - 10 - safeAreaInset) / 2)
     let cellHeight = cellWidth * 1.2
     return CGSize(width: cellWidth, height: cellHeight)
