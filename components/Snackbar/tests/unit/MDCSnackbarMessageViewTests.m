@@ -293,4 +293,37 @@
   XCTAssertEqualObjects(UIColor.redColor, actionButton.inkColor);
 }
 
+- (void)testTraitCollectionDidChangeCalledWhenTraitCollectionChanges {
+  // Given
+  MDCSnackbarMessage *message = [MDCSnackbarMessage messageWithText:@"test"];
+
+  // When
+  [self.manager showMessage:message];
+  XCTestExpectation *showExpectation = [self expectationWithDescription:@"completed"];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [showExpectation fulfill];
+  });
+  [self waitForExpectations:@[ showExpectation ] timeout:1];
+
+  XCTestExpectation *traitCollectionExpectation =
+      [self expectationWithDescription:@"Called traitCollectionDidChange"];
+  __block UITraitCollection *passedTraitCollection;
+  __block MDCSnackbarMessageView *passedMessageView;
+  self.delegate.presentedView.traitCollectionDidChangeBlock =
+      ^(MDCSnackbarMessageView *_Nonnull messageView,
+        UITraitCollection *_Nullable previousTraitCollection) {
+          passedMessageView = messageView;
+          passedTraitCollection = previousTraitCollection;
+          [traitCollectionExpectation fulfill];
+      };
+
+  UITraitCollection *testCollection = [UITraitCollection traitCollectionWithDisplayScale:77];
+  [self.delegate.presentedView traitCollectionDidChange:testCollection];
+
+  // Then
+  [self waitForExpectations:@[ traitCollectionExpectation ] timeout:1];
+  XCTAssertEqual(passedTraitCollection, testCollection);
+  XCTAssertEqual(passedMessageView, self.delegate.presentedView);
+}
+
 @end

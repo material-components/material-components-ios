@@ -231,16 +231,6 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
       self.manager.shouldEnableAccessibilityViewIsModal && ![self isSnackbarTransient:snackbarView];
   [self.delegate willPresentSnackbarWithMessageView:snackbarView];
   self.currentSnackbar = snackbarView;
-
-  __weak MDCSnackbarManager *weakManager = self.manager;
-  snackbarView.traitCollectionDidChangeBlock =
-      ^(MDCSnackbarMessageView *_Nonnull messageView,
-        UITraitCollection *_Nullable previousTraitCollection) {
-        if (weakManager.traitCollectionDidChangeBlock) {
-          weakManager.traitCollectionDidChangeBlock(messageView, previousTraitCollection);
-        }
-      };
-
   self.overlayView.accessibilityViewIsModal = snackbarView.accessibilityViewIsModal;
   self.overlayView.hidden = NO;
   [self activateOverlay:self.overlayView];
