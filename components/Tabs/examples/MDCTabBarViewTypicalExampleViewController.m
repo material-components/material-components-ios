@@ -247,6 +247,15 @@ static NSString *const kExampleTitle = @"TabBarView";
                                  : NSNotFound;
   for (NSUInteger index = 0; index < self.tabBar.items.count; ++index) {
     UITabBarItem *originalItem = self.tabBar.items[index];
+    if ([originalItem isKindOfClass:[MDCTabBarItem class]]) {
+      MDCTabBarItem *originalCustomItem = (MDCTabBarItem *)originalItem;
+      MDCTabBarItem *newCustomItem = [[MDCTabBarItem alloc] initWithTitle:nil
+                                                                    image:nil
+                                                                      tag:originalItem.tag];
+      newCustomItem.mdc_customView = originalCustomItem.mdc_customView;
+      [newItems addObject:newCustomItem];
+      continue;
+    }
     UITabBarItem *newItem = [[UITabBarItem alloc] initWithTitle:nil image:nil tag:originalItem.tag];
     newItem.title = self.tabBarItemTitles[index % self.tabBarItemTitles.count];
     [newItems addObject:newItem];
