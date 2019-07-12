@@ -362,6 +362,11 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   [self fhv_setShadowLayer:shadowLayer intensityDidChangeBlock:block];
 }
 
+- (void)setShadowColor:(UIColor *)shadowColor {
+  _shadowColor = [shadowColor copy];
+  [self fhv_updateShadowColor];
+}
+
 #pragma mark - UIView
 
 - (CGSize)sizeThatFits:(CGSize)size {
@@ -371,6 +376,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 - (void)layoutSubviews {
   [super layoutSubviews];
 
+  [self fhv_updateShadowColor];
   [self fhv_updateShadowPath];
   [CATransaction begin];
   BOOL disableActions = [CATransaction disableActions];
@@ -669,6 +675,12 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   UIBezierPath *path =
       [UIBezierPath bezierPathWithRect:CGRectInset(self.bounds, -self.layer.shadowRadius, 0)];
   self.layer.shadowPath = [path CGPath];
+}
+
+- (void)fhv_updateShadowColor {
+  _defaultShadowLayer.shadowColor = self.shadowColor.CGColor;
+  _customShadowLayer.shadowColor = self.shadowColor.CGColor;
+  _shadowLayer.shadowColor = self.shadowColor.CGColor;
 }
 
 #pragma mark Typically-used values
