@@ -117,8 +117,8 @@
   __block UITraitCollection *passedTraitCollection;
   __block MDCSnackbarMessageView *passedMessageView;
   manager.traitCollectionDidChangeBlock =
-      ^(MDCSnackbarMessageView * _Nonnull messageView,
-        UITraitCollection * _Nullable previousTraitCollection) {
+      ^(MDCSnackbarMessageView *_Nonnull messageView,
+        UITraitCollection *_Nullable previousTraitCollection) {
         passedMessageView = messageView;
         passedTraitCollection = previousTraitCollection;
         [traitCollectionExpectation fulfill];

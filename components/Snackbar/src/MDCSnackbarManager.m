@@ -234,8 +234,8 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 
   __weak MDCSnackbarManager *weakManager = self.manager;
   snackbarView.traitCollectionDidChangeBlock =
-      ^(MDCSnackbarMessageView * _Nonnull messageView,
-        UITraitCollection * _Nullable previousTraitCollection) {
+      ^(MDCSnackbarMessageView *_Nonnull messageView,
+        UITraitCollection *_Nullable previousTraitCollection) {
         if (weakManager.traitCollectionDidChangeBlock) {
           weakManager.traitCollectionDidChangeBlock(messageView, previousTraitCollection);
         }
