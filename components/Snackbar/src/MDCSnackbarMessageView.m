@@ -913,6 +913,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
                    cornerRadius:MDCSnackbarMessage.usesLegacySnackbar ? kLegacyCornerRadius
                                                                       : kCornerRadius];
   self.layer.shadowPath = path.CGPath;
+  self.layer.shadowColor = self.snackbarMessageViewShadowColor.CGColor;
 }
 
 #pragma mark - Sizing
