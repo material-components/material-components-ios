@@ -303,7 +303,7 @@ static NSString *const kExampleTitle = @"TabBarView";
     CGRect itemViewInWindow = [self.tabBar rectForItem:item inCoordinateSpace:self.view.window];
     CGRect overlapRect = CGRectIntersection(self.view.window.bounds, itemViewInWindow);
 
-    // Avoid dividing by zero
+    // Views that don't intersect (or only at the very edge) the window's bounds
     if (CGRectIsNull(overlapRect) || MDCCGFloatEqual(CGRectGetWidth(itemViewInWindow), 0)) {
       if ([self.visibleItems containsObject:item]) {
         [itemsThatLeftTheWindowBounds addObject:item];
