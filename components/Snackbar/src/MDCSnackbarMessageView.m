@@ -411,6 +411,14 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   [(MDCShadowLayer *)self.layer setElevation:_elevation];
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
+}
+
 #pragma mark - Subclass overrides
 
 + (BOOL)requiresConstraintBasedLayout {

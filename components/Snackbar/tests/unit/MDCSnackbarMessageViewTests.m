@@ -293,4 +293,29 @@
   XCTAssertEqualObjects(UIColor.redColor, actionButton.inkColor);
 }
 
+- (void)testTraitCollectionDidChangeCalledWhenTraitCollectionChanges {
+  // Given
+  MDCSnackbarMessageView *messageView = [[MDCSnackbarMessageView alloc] init];
+  XCTestExpectation *expectation =
+      [self expectationWithDescription:@"Called traitCollectionDidChange"];
+  __block UITraitCollection *passedTraitCollection;
+  __block MDCSnackbarMessageView *passedMessageView;
+  messageView.traitCollectionDidChangeBlock =
+      ^(MDCSnackbarMessageView *_Nonnull inMessageView,
+        UITraitCollection *_Nullable previousTraitCollection) {
+        passedMessageView = inMessageView;
+        passedTraitCollection = previousTraitCollection;
+        [expectation fulfill];
+      };
+
+  // When
+  UITraitCollection *testCollection = [UITraitCollection traitCollectionWithDisplayScale:77];
+  [messageView traitCollectionDidChange:testCollection];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertEqual(passedTraitCollection, testCollection);
+  XCTAssertEqual(passedMessageView, messageView);
+}
+
 @end
