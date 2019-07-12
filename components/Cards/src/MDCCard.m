@@ -106,6 +106,8 @@ static const BOOL MDCCardIsInteractableDefault = YES;
   if (!self.layer.shapeGenerator) {
     self.layer.shadowPath = [self boundingPath].CGPath;
   }
+
+  [self updateShadowColor];
 }
 
 - (void)setCornerRadius:(CGFloat)cornerRadius {
