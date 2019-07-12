@@ -39,41 +39,43 @@
 
 - (void)setUp {
   [super setUp];
-  
+
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-    self.recordMode = YES;
+  self.recordMode = YES;
 }
 
 - (void)testTraitCollectionDidChangeColorForShadow {
 #if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     // Given
-    MDCFlexibleHeaderTraitCollectionTestView *flexibleHeader = [[MDCFlexibleHeaderTraitCollectionTestView alloc] init];
+    MDCFlexibleHeaderTraitCollectionTestView *flexibleHeader =
+        [[MDCFlexibleHeaderTraitCollectionTestView alloc] init];
     flexibleHeader.bounds = CGRectMake(0, 0, 500, 200);
     UIColor *darkModeColor = UIColor.redColor;
     UIColor *dynamicColor =
-    [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
-      if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
-        return UIColor.blueColor;
-      } else {
-        return darkModeColor;
-      }
-    }];
+        [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
+          if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
+            return UIColor.blueColor;
+          } else {
+            return darkModeColor;
+          }
+        }];
     flexibleHeader.backgroundColor = UIColor.whiteColor;
     flexibleHeader.shadowLayer = [[MDCShadowLayer alloc] init];
     MDCShadowLayer *shadowLayer = (MDCShadowLayer *)flexibleHeader.shadowLayer;
     shadowLayer.elevation = 20;
     flexibleHeader.shadowColor = dynamicColor;
-    
+
     // When
     flexibleHeader.traitCollectionOverride =
-    [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
+        [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
     [flexibleHeader layoutIfNeeded];
-    
+
     // Then
     [flexibleHeader sizeToFit];
-    UIView *snapshotView = [flexibleHeader mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(50, 50, 50, 50)];
+    UIView *snapshotView =
+        [flexibleHeader mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(50, 50, 50, 50)];
     [self snapshotVerifyViewForIOS13:snapshotView];
   }
 #endif
