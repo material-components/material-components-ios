@@ -16,6 +16,7 @@
 #import "MaterialSnackbar.h"
 
 @interface SnackbarManagerTests : XCTestCase
+
 @end
 
 @implementation SnackbarManagerTests
