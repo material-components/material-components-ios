@@ -96,6 +96,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
 
 @interface TestButton : MDCButton
 @property(nonatomic, strong) FakeShadowLayer *shadowLayer;
+@property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
 @end
 
 @implementation TestButton
@@ -110,6 +111,11 @@ static NSString *controlStateDescription(UIControlState controlState) {
   }
   return self;
 }
+
+- (UITraitCollection *)traitCollection {
+  return self.traitCollectionOverride ?: [super traitCollection];
+}
+
 @end
 
 @interface ButtonsTests : XCTestCase

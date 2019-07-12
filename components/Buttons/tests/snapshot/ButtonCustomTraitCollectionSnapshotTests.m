@@ -37,11 +37,11 @@
  Used to test dynamic type visual differences based on different @c UIContentSizeCategory
  values.
  */
-@interface ButtonDynamicTypeSnapshotTests : MDCSnapshotTestCase
+@interface ButtonCustomTraitCollectionSnapshotTests : MDCSnapshotTestCase
 @property(nonatomic, strong, nullable) ButtonDynamicTypeSnapshotTestFakeButton *button;
 @end
 
-@implementation ButtonDynamicTypeSnapshotTests
+@implementation ButtonCustomTraitCollectionSnapshotTests
 
 - (void)setUp {
   [super setUp];
@@ -248,4 +248,31 @@
   [self generateSnapshotAndVerifyForView:self.button];
 }
 
+- (void)testShadowColorRespondsToDynamicColor {
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+  if (@available(iOS 13.0, *)) {
+    // Given
+    UIColor *darkModeColor = UIColor.whiteColor;
+    UIColor *dynamicColor =
+        [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
+          if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
+            return UIColor.blackColor;
+          } else {
+            return darkModeColor;
+          }
+        }];
+    [self.button setShadowColor:dynamicColor forState:UIControlStateNormal];
+
+    // When
+    self.button.traitCollectionOverride =
+        [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
+    [self.button layoutIfNeeded];
+
+    // Then
+    [self.button sizeToFit];
+    UIView *snapshotView = [self.button mdc_addToBackgroundView];
+    [self snapshotVerifyViewForIOS13:snapshotView];
+  }
+#endif
+}
 @end
