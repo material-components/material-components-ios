@@ -312,9 +312,9 @@
   self.delegate.presentedView.traitCollectionDidChangeBlock =
       ^(MDCSnackbarMessageView *_Nonnull messageView,
         UITraitCollection *_Nullable previousTraitCollection) {
-          passedMessageView = messageView;
-          passedTraitCollection = previousTraitCollection;
-          [traitCollectionExpectation fulfill];
+        passedMessageView = messageView;
+        passedTraitCollection = previousTraitCollection;
+        [traitCollectionExpectation fulfill];
       };
 
   UITraitCollection *testCollection = [UITraitCollection traitCollectionWithDisplayScale:77];
