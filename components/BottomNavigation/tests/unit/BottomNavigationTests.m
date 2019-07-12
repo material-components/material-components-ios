@@ -511,4 +511,30 @@
   XCTAssertNil(result);
 }
 
+#pragma mark - traitCollectionDidChangeBlock
+
+- (void)testTraitCollectionDidChangeBlockCalledWhenTraitCollectionChanges {
+  // Given
+  __block MDCBottomNavigationBar *passedBottomNavigationBar = nil;
+  __block UITraitCollection *passedTraitCollection = nil;
+  XCTestExpectation *expectation =
+      [self expectationWithDescription:@"Called traitCollectionDidChangeBlock"];
+  UITraitCollection *testTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:77];
+  void (^block)(MDCBottomNavigationBar *_Nonnull, UITraitCollection *_Nullable) = ^void(
+      MDCBottomNavigationBar *bottomNavigationBar, UITraitCollection *previousTraitCollection) {
+    passedBottomNavigationBar = bottomNavigationBar;
+    passedTraitCollection = previousTraitCollection;
+    [expectation fulfill];
+  };
+  self.bottomNavBar.traitCollectionDidChangeBlock = block;
+
+  // When
+  [self.bottomNavBar traitCollectionDidChange:testTraitCollection];
+  [self waitForExpectations:@[ expectation ] timeout:1];
+
+  // Then
+  XCTAssertEqual(passedBottomNavigationBar, self.bottomNavBar);
+  XCTAssertEqual(passedTraitCollection, testTraitCollection);
+}
+
 @end

@@ -479,6 +479,14 @@ static NSString *const kOfAnnouncement = @"of";
   return nil;
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
+}
+
 #pragma mark - Touch handlers
 
 - (void)didTouchUpInsideButton:(UIButton *)button {
