@@ -194,7 +194,13 @@ static NSString *const kExampleTitle = @"TabBarView";
         .active = YES;
   } else {
     [self.view.centerXAnchor constraintEqualToAnchor:segmentedControl.centerXAnchor].active = YES;
-    [self.view.centerYAnchor constraintEqualToAnchor:segmentedControl.centerYAnchor].active = YES;
+    NSLayoutConstraint *centerYConstraint =
+        [self.view.centerYAnchor constraintEqualToAnchor:segmentedControl.centerYAnchor];
+    centerYConstraint.priority = UILayoutPriorityDefaultLow;
+    centerYConstraint.active = YES;
+    [self.tabBar.bottomAnchor constraintLessThanOrEqualToAnchor:segmentedControl.topAnchor
+                                                       constant:-16]
+        .active = YES;
     [self.view.leadingAnchor constraintLessThanOrEqualToAnchor:segmentedControl.leadingAnchor]
         .active = YES;
     [self.view.trailingAnchor constraintGreaterThanOrEqualToAnchor:segmentedControl.trailingAnchor]
