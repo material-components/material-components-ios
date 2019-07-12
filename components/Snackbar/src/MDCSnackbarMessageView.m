@@ -411,6 +411,11 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   [(MDCShadowLayer *)self.layer setElevation:_elevation];
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+  self.layer.shadowColor = self.snackbarMessageViewShadowColor.CGColor;
+}
+
 #pragma mark - Subclass overrides
 
 + (BOOL)requiresConstraintBasedLayout {
