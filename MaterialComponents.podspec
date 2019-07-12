@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponents"
-  mdc.version      = "85.6.0"
+  mdc.version      = "85.7.0"
   mdc.authors      = "The Material Components authors."
   mdc.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   mdc.homepage     = "https://github.com/material-components/material-components-ios"
@@ -1957,6 +1957,7 @@ Pod::Spec.new do |mdc|
       scheme.ios.deployment_target = '9.0'
       scheme.public_header_files = "components/schemes/#{scheme.base_name}/src/*.h"
       scheme.source_files = "components/schemes/#{scheme.base_name}/src/*.{h,m}"
+      scheme.dependency "MaterialComponents/private/Color"
 
       scheme.test_spec 'UnitTests' do |unit_tests|
         unit_tests.source_files = [

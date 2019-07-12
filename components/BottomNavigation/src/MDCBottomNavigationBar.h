@@ -199,6 +199,14 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
 @property(nonatomic, assign) BOOL enableRippleBehavior;
 
 /**
+A block that is invoked when the @c MDCBottomNavigationBar receives a call to @c
+traitCollectionDidChange:. The block is called after the call to the superclass.
+*/
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCBottomNavigationBar *_Nonnull bottomNavigationBar,
+     UITraitCollection *_Nullable previousTraitCollection);
+
+/**
  Returns the navigation bar subview associated with the specific item.
 
  @param item A UITabBarItem
