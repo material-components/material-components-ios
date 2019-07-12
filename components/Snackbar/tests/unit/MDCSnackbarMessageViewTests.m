@@ -295,35 +295,27 @@
 
 - (void)testTraitCollectionDidChangeCalledWhenTraitCollectionChanges {
   // Given
-  MDCSnackbarMessage *message = [MDCSnackbarMessage messageWithText:@"test"];
-
-  // When
-  [self.manager showMessage:message];
-  XCTestExpectation *showExpectation = [self expectationWithDescription:@"completed"];
-  dispatch_async(dispatch_get_main_queue(), ^{
-    [showExpectation fulfill];
-  });
-  [self waitForExpectations:@[ showExpectation ] timeout:1];
-
-  XCTestExpectation *traitCollectionExpectation =
+  MDCSnackbarMessageView *messageView = [[MDCSnackbarMessageView alloc] init];
+  XCTestExpectation *expectation =
       [self expectationWithDescription:@"Called traitCollectionDidChange"];
   __block UITraitCollection *passedTraitCollection;
   __block MDCSnackbarMessageView *passedMessageView;
-  self.delegate.presentedView.traitCollectionDidChangeBlock =
-      ^(MDCSnackbarMessageView *_Nonnull messageView,
+  messageView.traitCollectionDidChangeBlock =
+      ^(MDCSnackbarMessageView *_Nonnull inMessageView,
         UITraitCollection *_Nullable previousTraitCollection) {
-        passedMessageView = messageView;
+        passedMessageView = inMessageView;
         passedTraitCollection = previousTraitCollection;
-        [traitCollectionExpectation fulfill];
+        [expectation fulfill];
       };
 
+  // When
   UITraitCollection *testCollection = [UITraitCollection traitCollectionWithDisplayScale:77];
-  [self.delegate.presentedView traitCollectionDidChange:testCollection];
+  [messageView traitCollectionDidChange:testCollection];
 
   // Then
-  [self waitForExpectations:@[ traitCollectionExpectation ] timeout:1];
+  [self waitForExpectations:@[ expectation ] timeout:1];
   XCTAssertEqual(passedTraitCollection, testCollection);
-  XCTAssertEqual(passedMessageView, self.delegate.presentedView);
+  XCTAssertEqual(passedMessageView, messageView);
 }
 
 @end
