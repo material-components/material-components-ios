@@ -241,11 +241,19 @@ static NSString *const kExampleTitle = @"TabBarView";
 }
 
 - (void)changeItemsToTextOnly {
+  NSMutableArray<UITabBarItem *> *newItems = [NSMutableArray array];
+  NSUInteger selectedIndex = self.tabBar.selectedItem
+                                 ? [self.tabBar.items indexOfObject:self.tabBar.selectedItem]
+                                 : NSNotFound;
   for (NSUInteger index = 0; index < self.tabBar.items.count; ++index) {
-    UITabBarItem *item = self.tabBar.items[index];
-    item.image = nil;
-    item.selectedImage = nil;
-    item.title = self.tabBarItemTitles[index % self.tabBarItemTitles.count];
+    UITabBarItem *originalItem = self.tabBar.items[index];
+    UITabBarItem *newItem = [[UITabBarItem alloc] initWithTitle:nil image:nil tag:originalItem.tag];
+    newItem.title = self.tabBarItemTitles[index % self.tabBarItemTitles.count];
+    [newItems addObject:newItem];
+  }
+  self.tabBar.items = newItems;
+  if (selectedIndex != NSNotFound) {
+    self.tabBar.selectedItem = self.tabBar.items[selectedIndex];
   }
 }
 
