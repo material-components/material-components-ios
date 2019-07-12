@@ -15,16 +15,6 @@
 #import <XCTest/XCTest.h>
 #import "MaterialSnackbar.h"
 
-#import "../../src/private/MDCSnackbarManagerInternal.h"
-
-@interface MDCSnackbarManagerInternal (Testing)
-@property(nonatomic) MDCSnackbarMessageView *currentSnackbar;
-@end
-
-@interface MDCSnackbarManager (Testing)
-@property(nonnull, nonatomic, strong) MDCSnackbarManagerInternal *internalManager;
-@end
-
 @interface SnackbarManagerTests : XCTestCase
 @end
 
