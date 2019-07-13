@@ -31,6 +31,18 @@ static const CGFloat kWidthNarrow = 240;
 static const CGFloat kHeightTall = 120;
 static const CGFloat kHeightShort = 48;
 
+@interface FakeMDCBottomNavigationBarTraitCollectionOverride : MDCBottomNavigationBar
+@property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
+@end
+
+@implementation FakeMDCBottomNavigationBarTraitCollectionOverride
+
+- (UITraitCollection *)traitCollection {
+  return self.traitCollectionOverride ?: [super traitCollection];
+}
+
+@end
+
 @interface MDCBottomNavigationBarSnapshotTests : MDCSnapshotTestCase
 @property(nonatomic, strong) MDCFakeBottomNavigationBar *navigationBar;
 @property(nonatomic, strong) UITabBarItem *tabItem1;
@@ -417,6 +429,35 @@ static const CGFloat kHeightShort = 48;
 
   // Then
   [self generateAndVerifySnapshot];
+}
+
+- (void)testShadowColorRespondsToDynamicColor {
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+  if (@available(iOS 13.0, *)) {
+    // Given
+    FakeMDCBottomNavigationBarTraitCollectionOverride *navigationBar =
+        (FakeMDCBottomNavigationBarTraitCollectionOverride *)self.navigationBar;
+    UIColor *darkModeColor = UIColor.redColor;
+    UIColor *dynamicColor =
+        [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
+          if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
+            return UIColor.blackColor;
+          } else {
+            return darkModeColor;
+          }
+        }];
+    navigationBar.shadowColor = dynamicColor;
+
+    // When
+    navigationBar.traitCollectionOverride =
+        [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
+    [navigationBar layoutIfNeeded];
+
+    // Then
+    UIView *snapshotView = [navigationBar mdc_addToBackgroundView];
+    [self snapshotVerifyViewForIOS13:snapshotView];
+  }
+#endif
 }
 
 @end
