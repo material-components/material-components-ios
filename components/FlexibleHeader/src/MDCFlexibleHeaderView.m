@@ -291,6 +291,8 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   _customShadowLayer.hidden = YES;
   [self.layer addSublayer:_customShadowLayer];
 
+  _shadowColor = UIColor.blackColor;
+
   _topSafeAreaGuide = [[UIView alloc] init];
   _topSafeAreaGuide.frame = CGRectMake(0, 0, 0, [_topSafeArea topSafeAreaInset]);
   [self addSubview:_topSafeAreaGuide];
