@@ -31,18 +31,6 @@ static const CGFloat kWidthNarrow = 240;
 static const CGFloat kHeightTall = 120;
 static const CGFloat kHeightShort = 48;
 
-@interface FakeMDCBottomNavigationBarTraitCollectionOverride : MDCBottomNavigationBar
-@property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
-@end
-
-@implementation FakeMDCBottomNavigationBarTraitCollectionOverride
-
-- (UITraitCollection *)traitCollection {
-  return self.traitCollectionOverride ?: [super traitCollection];
-}
-
-@end
-
 @interface MDCBottomNavigationBarSnapshotTests : MDCSnapshotTestCase
 @property(nonatomic, strong) MDCFakeBottomNavigationBar *navigationBar;
 @property(nonatomic, strong) UITabBarItem *tabItem1;
@@ -435,8 +423,7 @@ static const CGFloat kHeightShort = 48;
 #if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     // Given
-    FakeMDCBottomNavigationBarTraitCollectionOverride *navigationBar =
-        (FakeMDCBottomNavigationBarTraitCollectionOverride *)self.navigationBar;
+    self.recordMode = YES;
     UIColor *darkModeColor = UIColor.redColor;
     UIColor *dynamicColor =
         [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
@@ -446,15 +433,17 @@ static const CGFloat kHeightShort = 48;
             return darkModeColor;
           }
         }];
-    navigationBar.shadowColor = dynamicColor;
+    self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthiPad,
+                                          MDCBottomNavigationBarTestHeightTypical);
+    self.navigationBar.shadowColor = dynamicColor;
 
     // When
-    navigationBar.traitCollectionOverride =
+    self.navigationBar.traitCollectionOverride =
         [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
-    [navigationBar layoutIfNeeded];
+    [self.navigationBar layoutIfNeeded];
 
     // Then
-    UIView *snapshotView = [navigationBar mdc_addToBackgroundView];
+    UIView *snapshotView = [self.navigationBar mdc_addToBackgroundView];
     [self snapshotVerifyViewForIOS13:snapshotView];
   }
 #endif
