@@ -12,21 +12,50 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import XCTest
 import UIKit
 import MaterialComponents.MaterialFlexibleHeader
+import MaterialComponents.MaterialShadowLayer
 
 class MDCFlexibleHeaderShadowTests: XCTestCase {
   var flexibleHeader: MDCFlexibleHeaderView!
 
-  func setUp() {
+  override func setUp() {
     super.setUp()
 
     flexibleHeader = MDCFlexibleHeaderView()
   }
 
-  func tearDown() {
+  override func tearDown() {
     flexibleHeader = nil
 
     super.tearDown()
+  }
+
+  func testDefaultFlexibleHeaderShadow() {
+    // Then
+    XCTAssertNil(flexibleHeader.shadowLayer)
+  }
+
+  func testMaterialShadowLayer() {
+    // Given
+    let shadowLayer = MDCShadowLayer()
+
+    // When
+    flexibleHeader.shadowLayer = shadowLayer
+
+    // Then
+    XCTAssertEqual(flexibleHeader.shadowLayer, shadowLayer)
+  }
+
+  func testCALayerShadowLayer() {
+    // Given
+    let fakeShadowLayer = CALayer()
+
+    // When
+    flexibleHeader.shadowLayer = fakeShadowLayer
+
+    // Then
+    XCTAssertEqual(flexibleHeader.shadowLayer, fakeShadowLayer)
   }
 }
