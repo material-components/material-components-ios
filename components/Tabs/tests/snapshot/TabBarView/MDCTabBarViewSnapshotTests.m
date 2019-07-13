@@ -28,6 +28,9 @@ static const CGFloat kExpectedHeightTitlesOrIconsOnly = 48;
 /** The expected height of Tabs with titles and icons. */
 static const CGFloat kExpectedHeightTitlesAndIcons = 72;
 
+/** The leading inset for scrollable tabs. */
+static const CGFloat kLeadingInsetForScrollableTabs = 52;
+
 /** The minimum width of a tab bar item. */
 static const CGFloat kMinItemWidth = 90;
 
@@ -252,7 +255,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
 - (void)generateSnapshotAndVerifyForView:(UIView *)view {
   // Needed so that the stack view can be constrained correctly and then allow any "scrolling" to
   // take place for the selected item to be visible.
-  [self.tabBarView layoutIfNeeded];
+  [view layoutIfNeeded];
   UIView *snapshotView = [view mdc_addToBackgroundView];
   [self snapshotVerifyView:snapshotView];
 }
@@ -1210,6 +1213,85 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
 
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+#pragma mark - rectForItem:inCoordinateSpace:
+
+- (void)testRectForItemInCoordinateSpaceWithinBounds {
+  // Given
+  self.tabBarView.items = @[ self.item1, self.item2, self.item3 ];
+  CGSize intrinsicContentSize = self.tabBarView.intrinsicContentSize;
+  self.tabBarView.bounds =
+      CGRectMake(0, 0, intrinsicContentSize.width, intrinsicContentSize.height);
+  UIView *itemRectOverlayView = [[UIView alloc] init];
+  itemRectOverlayView.backgroundColor =
+      [UIColor.magentaColor colorWithAlphaComponent:(CGFloat)0.25];
+  [self.tabBarView addSubview:itemRectOverlayView];
+  [self.tabBarView layoutIfNeeded];
+
+  // When
+  CGRect item2FrameRect = [self.tabBarView rectForItem:self.item2
+                                     inCoordinateSpace:self.tabBarView];
+  itemRectOverlayView.frame = item2FrameRect;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testRectForItemInCoordinateSpaceWhenPartiallyOutsideBarBounds {
+  // Given
+  self.tabBarView.items = @[ self.item1, self.item2 ];
+  CGSize intrinsicContentSize = self.tabBarView.intrinsicContentSize;
+  self.tabBarView.bounds = CGRectMake(0, 0, kMinItemWidth * 1.2 + kLeadingInsetForScrollableTabs,
+                                      intrinsicContentSize.height);
+  UIView *itemRectOverlayView = [[UIView alloc] init];
+  itemRectOverlayView.backgroundColor =
+      [UIColor.magentaColor colorWithAlphaComponent:(CGFloat)0.25];
+  [self.tabBarView addSubview:itemRectOverlayView];
+  [self.tabBarView layoutIfNeeded];
+
+  // When
+  CGRect item2FrameRect = [self.tabBarView rectForItem:self.item2
+                                     inCoordinateSpace:self.tabBarView];
+  itemRectOverlayView.frame = item2FrameRect;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testRectForItemInCoordinateSpaceWithSafeAreaInsets {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:2];
+  self.tabBarView.items = @[ item1, item2 ];
+  [self.tabBarView setSelectedItem:item2 animated:NO];
+
+  UIEdgeInsets safeAreaInsets = UIEdgeInsetsMake(16, 44, 0, 0);
+  CGSize fitSize = self.tabBarView.intrinsicContentSize;
+  fitSize = CGSizeMake(fitSize.width + safeAreaInsets.left, fitSize.height + safeAreaInsets.top);
+  self.tabBarView.bounds = CGRectMake(0, 0, fitSize.width, fitSize.height);
+
+  MDCTabBarViewSnapshotTestsSuperview *superview =
+      [[MDCTabBarViewSnapshotTestsSuperview alloc] init];
+  [superview addSubview:self.tabBarView];
+  superview.customSafeAreaInsets = safeAreaInsets;
+  superview.bounds = CGRectMake(0, 0, CGRectGetWidth(self.tabBarView.bounds),
+                                CGRectGetHeight(self.tabBarView.bounds));
+  self.tabBarView.center =
+      CGPointMake(CGRectGetMidX(superview.bounds), CGRectGetMidY(superview.bounds));
+
+  UIView *itemRectOverlayView = [[UIView alloc] init];
+  itemRectOverlayView.backgroundColor =
+      [UIColor.magentaColor colorWithAlphaComponent:(CGFloat)0.25];
+  [superview addSubview:itemRectOverlayView];
+  [superview layoutIfNeeded];
+
+  // When
+  CGRect item2FrameRect = [self.tabBarView rectForItem:item2 inCoordinateSpace:superview];
+  itemRectOverlayView.frame = item2FrameRect;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:superview];
 }
 
 @end
