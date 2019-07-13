@@ -153,7 +153,9 @@ static NSString *const kOfAnnouncement = @"of";
 #endif
   _elevation = MDCShadowElevationBottomNavigationBar;
   [(MDCShadowLayer *)self.layer setElevation:_elevation];
-  _shadowColor = UIColor.blackColor;
+  UIColor *defaultShadowColor = UIColor.blackColor;
+  _shadowColor = defaultShadowColor;
+  self.layer.shadowColor = defaultShadowColor.CGColor;
   _itemViews = [NSMutableArray array];
   _itemTitleFont = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleCaption];
 
@@ -235,7 +237,9 @@ static NSString *const kOfAnnouncement = @"of";
 }
 
 - (void)setShadowColor:(UIColor *)shadowColor {
-  _shadowColor = [shadowColor copy];
+  UIColor *shadowColorCopy = [shadowColor copy];
+  _shadowColor = shadowColorCopy;
+  self.layer.shadowColor = shadowColorCopy.CGColor;
 }
 
 - (BOOL)isTitleBelowIcon {
