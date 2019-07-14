@@ -44,4 +44,16 @@
   [[self shadowLayer] setElevation:elevation];
 }
 
+- (void)setShadowColor:(UIColor *)shadowColor {
+  UIColor *shadowColorCopy = [shadowColor copy];
+  _shadowColor = shadowColorCopy;
+  [self shadowLayer].shadowColor = shadowColorCopy.CGColor;
+}
+
+- (void)layoutSubviews {
+  [super layoutSubviews];
+
+  [self shadowLayer].shadowColor = self.shadowColor.CGColor;
+}
+
 @end
