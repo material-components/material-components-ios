@@ -91,6 +91,7 @@ swift_library(
         ":CanAlwaysExpandToMaximumHeight",
         ":ColorThemer",
         ":FlexibleHeader",
+        "//components/ShadowLayer",
     ],
 )
 
