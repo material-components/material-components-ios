@@ -96,6 +96,13 @@
 @property(nonatomic, assign) MDCShadowElevation dialogElevation;
 
 /**
+ Customize the shadow color of dialog.
+
+ Defaults to black.
+ */
+@property(nonatomic, copy, nonnull) UIColor *dialogShadowColor;
+
+/**
  Customize the color of the background scrim.
 
  Defaults to a semi-transparent Black.

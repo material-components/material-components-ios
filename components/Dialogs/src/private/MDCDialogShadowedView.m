@@ -31,6 +31,7 @@
   self = [super init];
   if (self) {
     [[self shadowLayer] setElevation:MDCShadowElevationDialog];
+    _shadowColor = UIColor.blackColor;
   }
   return self;
 }
