@@ -352,8 +352,10 @@
     // Given
     UIColor *shadowColor = [UIColor colorWithUserInterfaceStyleDarkColor:UIColor.greenColor
                                                            defaultColor:UIColor.blackColor];
-    ShadowViewCustomTraitCollectionSnapshotTestFake *trackingView = [[ShadowViewCustomTraitCollectionSnapshotTestFake alloc] initWithFrame:CGRectMake(0, 0, 100, 200)];
+    ShadowViewCustomTraitCollectionSnapshotTestFake *trackingView = [[ShadowViewCustomTraitCollectionSnapshotTestFake alloc] init];
+    trackingView.bounds = CGRectMake(0, 0, 100, 200);
     trackingView.shadowColor = shadowColor;
+    trackingView.backgroundColor = UIColor.whiteColor;
 
     // When
     trackingView.traitCollectionOverride =
