@@ -58,6 +58,7 @@
   XCTAssertNotNil(self.alert.title);
   XCTAssertNotNil(self.alert.message);
   XCTAssertTrue(self.alert.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
+  XCTAssertEqualObjects(self.alert.shadowColor, UIColor.blackColor);
 }
 
 - (void)testAlertControllerWithTitleMessage {
@@ -299,6 +300,17 @@
   // Then
   MDCDialogShadowedView *shadowView = self.alert.mdc_dialogPresentationController.trackingView;
   XCTAssertEqual(shadowView.elevation, elevation);
+}
+
+- (void)testCustomShadowColor {
+  // Given
+  UIColor *fakeColor = UIColor.orangeColor;
+
+  // When
+  self.alert.shadowColor = fakeColor;
+
+  // Then
+  XCTAssertEqualObjects(self.alert.mdc_dialogPresentationController.trackingView, fakeColor);
 }
 
 - (void)testDialogBackgroundColorIsNotClearWhenNoThemingIsApllied {
