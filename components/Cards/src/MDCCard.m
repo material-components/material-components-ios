@@ -108,6 +108,8 @@ static const BOOL MDCCardIsInteractableDefault = YES;
   }
 
   [self updateShadowColor];
+  [self updateBackgroundColor];
+  [self updateBorderColor];
 }
 
 - (void)setCornerRadius:(CGFloat)cornerRadius {
