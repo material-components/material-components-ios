@@ -378,6 +378,14 @@ IB_DESIGNABLE
 /** The delegate for this header view. */
 @property(nonatomic, weak, nullable) id<MDCFlexibleHeaderViewDelegate> delegate;
 
+/**
+ A block that is invoked when the FlexibleHeaderView receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCFlexibleHeaderView *_Nonnull flexibleHeaderView,
+     UITraitCollection *_Nullable previousTraitCollection);
+
 @end
 
 /**
