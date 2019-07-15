@@ -35,9 +35,7 @@ class MDCFlexibleHeaderShadowTests: XCTestCase {
   func testDefaultFlexibleHeaderShadow() {
     // Then
     XCTAssertNil(flexibleHeader.shadowLayer)
-    XCTAssertEqual(flexibleHeader.shadowColor, .black)
   }
-
 
   func testMaterialShadowLayer() {
     // Given

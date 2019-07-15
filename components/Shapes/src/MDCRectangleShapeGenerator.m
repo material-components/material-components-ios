@@ -195,7 +195,7 @@ typedef enum : NSUInteger {
 
   CGPathCloseSubpath(path);
 
-  return path;
+  return CFAutorelease(path);
 }
 
 - (CGFloat)angleOfCorner:(MDCShapeCornerPosition)cornerPosition forViewSize:(CGSize)size {
