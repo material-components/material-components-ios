@@ -59,7 +59,7 @@ static CGFloat blendColorChannel(CGFloat value, CGFloat bValue, CGFloat alpha, C
         _onSurfaceColor = ColorFromRGB(0x000000);
         _onBackgroundColor = ColorFromRGB(0x000000);
         _elevationOverlayColor = ColorFromRGB(0x000000);
-        _elevationOverlayEnabled = NO;
+        _elevationOverlayEnabledForDarkMode = NO;
         break;
       case MDCColorSchemeDefaultsMaterialDark201907:
         _primaryColor = ColorFromRGB(0xBB86FC);
@@ -73,7 +73,7 @@ static CGFloat blendColorChannel(CGFloat value, CGFloat bValue, CGFloat alpha, C
         _onSurfaceColor = ColorFromRGB(0xFFFFFF);
         _onBackgroundColor = ColorFromRGB(0xFFFFFF);
         _elevationOverlayColor = ColorFromRGB(0xFFFFFF);
-        _elevationOverlayEnabled = YES;
+        _elevationOverlayEnabledForDarkMode = YES;
         break;
       case MDCColorSchemeDefaultsMaterial201907:
         _primaryColor = [UIColor colorWithUserInterfaceStyleDarkColor:ColorFromRGB(0xBB86FC)
@@ -100,7 +100,7 @@ static CGFloat blendColorChannel(CGFloat value, CGFloat bValue, CGFloat alpha, C
         _elevationOverlayColor =
             [UIColor colorWithUserInterfaceStyleDarkColor:ColorFromRGB(0xFFFFFF)
                                              defaultColor:ColorFromRGB(0x000000)];
-        _elevationOverlayEnabled = YES;
+        _elevationOverlayEnabledForDarkMode = YES;
         break;
     }
   }

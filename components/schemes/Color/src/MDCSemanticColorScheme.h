@@ -81,9 +81,9 @@
 @property(nonnull, readonly, copy, nonatomic) UIColor *elevationOverlayColor;
 
 /**
- A flag that indicates whether the overlay color should be applied on an elevated surface.
+ A flag that indicates whether the overlay color should be applied on an elevated surface in Dark Mode.
  */
-@property(readonly, assign, nonatomic) BOOL elevationOverlayEnabled;
+@property(readonly, assign, nonatomic) BOOL elevationOverlayEnabledForDarkMode;
 
 @end
 
@@ -123,7 +123,7 @@ typedef NS_ENUM(NSInteger, MDCColorSchemeDefaults) {
 @property(nonnull, readwrite, copy, nonatomic) UIColor *onSurfaceColor;
 @property(nonnull, readwrite, copy, nonatomic) UIColor *onBackgroundColor;
 @property(nonnull, readwrite, copy, nonatomic) UIColor *elevationOverlayColor;
-@property(readwrite, assign, nonatomic) BOOL elevationOverlayEnabled;
+@property(readwrite, assign, nonatomic) BOOL elevationOverlayEnabledForDarkMode;
 
 /**
  Initializes the color scheme with the latest material defaults.
