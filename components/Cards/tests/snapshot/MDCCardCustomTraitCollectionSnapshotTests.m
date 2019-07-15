@@ -1,4 +1,4 @@
-// Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2019-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,6 +17,9 @@
 #import "MaterialCards+Theming.h"
 #import "MaterialCards.h"
 
+/**
+ An MDCCard subclass that allows the user to override the @c traitCollection property.
+ */
 @interface MDCCardWithCustomTraitCollection : MDCCard
 @property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
 @end
@@ -27,6 +30,9 @@
 }
 @end
 
+/**
+ A Snapshot test case for testing MDCCardWithCustomTraitCollection   the @c traitCollection property.
+ */
 @interface MDCCardCustomTraitCollectionSnapshotTests : MDCSnapshotTestCase
 
 @property(nonatomic, strong) MDCContainerScheme *containerScheme;
@@ -67,13 +73,12 @@
 #if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     // Given
-    UIColor *darkModeColor = UIColor.whiteColor;
     UIColor *dynamicColor =
         [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
           if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
-            return UIColor.blackColor;
+            return UIColor.magentaColor;
           } else {
-            return darkModeColor;
+            return UIColor.greenColor;
           }
         }];
     [self.card setShadowColor:dynamicColor forState:UIControlStateNormal];
