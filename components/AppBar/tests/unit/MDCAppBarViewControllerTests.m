@@ -28,7 +28,7 @@
   XCTestExpectation *expectation =
       [self expectationWithDescription:@"Called traitCollectionDidChange"];
   appBarController.traitCollectionDidChangeBlock =
-      ^(MDCAppBarViewController *_Nonnull appBarViewController,
+      ^(MDCFlexibleHeaderViewController *_Nonnull appBarViewController,
         UITraitCollection *_Nullable previousTraitCollection) {
         [expectation fulfill];
       };
@@ -46,9 +46,9 @@
   XCTestExpectation *expectation =
       [self expectationWithDescription:@"Called traitCollectionDidChange"];
   __block UITraitCollection *passedTraitCollection;
-  __block MDCAppBarViewController *passedAppBarViewController;
+  __block MDCFlexibleHeaderViewController *passedAppBarViewController;
   appBarController.traitCollectionDidChangeBlock =
-      ^(MDCAppBarViewController *_Nonnull appBarViewController,
+      ^(MDCFlexibleHeaderViewController *_Nonnull appBarViewController,
         UITraitCollection *_Nullable previousTraitCollection) {
         passedTraitCollection = previousTraitCollection;
         passedAppBarViewController = appBarViewController;
