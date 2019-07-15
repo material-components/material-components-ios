@@ -217,7 +217,7 @@ class MDCAppBarNavigationControllerTests: XCTestCase {
   func testPushingAViewControllerAssignsTraitCollectionDidChangeBlock() {
     // Given
     let viewController = UIViewController()
-    let block: ((MDCAppBarViewController, UITraitCollection?) -> Void)? = {_, _ in }
+    let block: ((MDCFlexibleHeaderViewController, UITraitCollection?) -> Void)? = {_, _ in }
     navigationController.traitCollectionDidChangeBlockForAppBarController = block
 
     // When
@@ -232,7 +232,7 @@ class MDCAppBarNavigationControllerTests: XCTestCase {
   func testSettingAViewControllerAssignsTraitCollectionDidChangeBlock() {
     // Given
     let viewController = UIViewController()
-    let block: ((MDCAppBarViewController, UITraitCollection?) -> Void)? = {_, _ in }
+    let block: ((MDCFlexibleHeaderViewController, UITraitCollection?) -> Void)? = {_, _ in }
     navigationController.traitCollectionDidChangeBlockForAppBarController = block
 
     // When
@@ -247,7 +247,7 @@ class MDCAppBarNavigationControllerTests: XCTestCase {
   func testSettingAViewControllerAnimatedAssignsTraitCollectionDidChangeBlock() {
     // Given
     let viewController = UIViewController()
-    let block: ((MDCAppBarViewController, UITraitCollection?) -> Void)? = {_, _ in }
+    let block: ((MDCFlexibleHeaderViewController, UITraitCollection?) -> Void)? = {_, _ in }
     navigationController.traitCollectionDidChangeBlockForAppBarController = block
 
     // When
@@ -264,7 +264,7 @@ class MDCAppBarNavigationControllerTests: XCTestCase {
     let viewController = UIViewController()
     let container = MDCAppBarContainerViewController(contentViewController: viewController)
     var blockSemaphore = false
-    let block: ((MDCAppBarViewController, UITraitCollection?) -> Void)? =
+    let block: ((MDCFlexibleHeaderViewController, UITraitCollection?) -> Void)? =
       { _, _ in
         blockSemaphore = true
       }
@@ -287,7 +287,7 @@ class MDCAppBarNavigationControllerTests: XCTestCase {
     nestedContainer.view.addSubview(container.view)
     container.didMove(toParent: nestedContainer)
     var blockSemaphore = false
-    let block: ((MDCAppBarViewController, UITraitCollection?) -> Void)? =
+    let block: ((MDCFlexibleHeaderViewController, UITraitCollection?) -> Void)? =
       { _, _ in
         blockSemaphore = true
       }
