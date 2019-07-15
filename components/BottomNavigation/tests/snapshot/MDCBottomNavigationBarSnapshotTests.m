@@ -433,6 +433,7 @@ static const CGFloat kHeightShort = 48;
         }];
     self.navigationBar.bounds = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthiPad,
                                           MDCBottomNavigationBarTestHeightTypical);
+    self.navigationBar.elevation = 10;
     self.navigationBar.shadowColor = dynamicColor;
 
     // When
