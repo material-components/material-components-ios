@@ -31,7 +31,8 @@
 @end
 
 /**
- A Snapshot test case for testing MDCCardWithCustomTraitCollection   the @c traitCollection property.
+ A Snapshot test case for testing MDCCardWithCustomTraitCollection   the @c traitCollection
+ property.
  */
 @interface MDCCardCustomTraitCollectionSnapshotTests : MDCSnapshotTestCase
 
