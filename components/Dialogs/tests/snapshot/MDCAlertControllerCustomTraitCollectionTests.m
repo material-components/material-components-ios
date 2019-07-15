@@ -17,9 +17,9 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKit.h>
 
+#import "../../../private/Color/src/UIColor+MaterialDynamic.h"
 #import "MaterialDialogs.h"
 #import "MaterialTypography.h"
-#import "../../../private/Color/src/UIColor+MaterialDynamic.h"
 
 /**
  A @c MDCAlertController test fake to override the @c traitCollection to test for dynamic type.
@@ -37,7 +37,8 @@
 @end
 
 @interface MDCAlertControllerCustomTraitCollectionTests : MDCSnapshotTestCase
-@property(nonatomic, strong, nullable) AlertControllerCustomTraitCollectionSnapshotTestFake *alertController;
+@property(nonatomic, strong, nullable)
+    AlertControllerCustomTraitCollectionSnapshotTestFake *alertController;
 @end
 
 @implementation MDCAlertControllerCustomTraitCollectionTests
@@ -309,21 +310,23 @@
 #if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     // Given
-    UIColor *shadowColor = [UIColor colorWithUserInterfaceStyleDarkColor:UIColor.magentaColor defaultColor:UIColor.blackColor];
-    UIColor *titleColor = [UIColor colorWithUserInterfaceStyleDarkColor:UIColor.greenColor defaultColor:UIColor.blackColor];
-    UIColor *messageColor = [UIColor colorWithUserInterfaceStyleDarkColor:UIColor.purpleColor defaultColor:UIColor.blackColor];
-    UIColor *backgroundColor = [UIColor colorWithUserInterfaceStyleDarkColor:UIColor.blueColor defaultColor:UIColor.blackColor];
-    self.alertController.shadowColor = shadowColor;
+    UIColor *titleColor = [UIColor colorWithUserInterfaceStyleDarkColor:UIColor.greenColor
+                                                           defaultColor:UIColor.blackColor];
+    UIColor *messageColor = [UIColor colorWithUserInterfaceStyleDarkColor:UIColor.purpleColor
+                                                             defaultColor:UIColor.blackColor];
+    UIColor *backgroundColor = [UIColor colorWithUserInterfaceStyleDarkColor:UIColor.blueColor
+                                                                defaultColor:UIColor.blackColor];
     self.alertController.titleColor = titleColor;
     self.alertController.messageColor = messageColor;
     self.alertController.backgroundColor = backgroundColor;
 
     // When
     self.alertController.traitCollectionOverride =
-    [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
+        [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
 
     // Then
-    UIView *snapshotView = [self.alertController.view mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(50, 50, 50, 50)];
+    UIView *snapshotView = [self.alertController.view
+        mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(50, 50, 50, 50)];
     [self snapshotVerifyViewForIOS13:snapshotView];
   }
 #endif
