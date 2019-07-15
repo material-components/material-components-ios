@@ -42,7 +42,7 @@
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  self.recordMode = YES;
+  // self.recordMode = YES;
 }
 
 - (void)testTraitCollectionDidChangeColorForShadow {
@@ -52,13 +52,12 @@
     MDCFlexibleHeaderTraitCollectionTestView *flexibleHeader =
         [[MDCFlexibleHeaderTraitCollectionTestView alloc] init];
     flexibleHeader.bounds = CGRectMake(0, 0, 500, 200);
-    UIColor *darkModeColor = UIColor.redColor;
     UIColor *dynamicColor =
         [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
           if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
             return UIColor.blueColor;
           } else {
-            return darkModeColor;
+            return UIColor.redColor;
           }
         }];
     flexibleHeader.backgroundColor = UIColor.whiteColor;

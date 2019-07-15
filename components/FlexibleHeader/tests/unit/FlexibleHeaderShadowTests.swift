@@ -74,7 +74,7 @@ class MDCFlexibleHeaderShadowTests: XCTestCase {
     if let shadowLayer = flexibleHeader.shadowLayer {
       XCTAssertEqual(shadowLayer.shadowColor, fakeColor.cgColor)
     } else {
-      XCTFail("MDCFlexibleHeader.shadowLayer should not be (nil) after being set")
+      XCTAssertNotNil(flexibleHeader.shadowLayer)
     }
   }
 
@@ -91,7 +91,7 @@ class MDCFlexibleHeaderShadowTests: XCTestCase {
     if let shadowLayer = flexibleHeader.shadowLayer {
       XCTAssertEqual(shadowLayer.shadowColor, fakeColor.cgColor)
     } else {
-      XCTFail("MDCFlexibleHeader.shadowLayer should not be (nil) after being set")
+      XCTAssertNotNil(flexibleHeader.shadowLayer)
     }
   }
 }
