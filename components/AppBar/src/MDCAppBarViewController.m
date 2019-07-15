@@ -38,6 +38,8 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
   NSLayoutConstraint *_topSafeAreaConstraint;
 }
 
+@synthesize traitCollectionDidChangeBlock;
+
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
