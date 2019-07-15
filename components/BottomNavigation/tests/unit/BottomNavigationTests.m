@@ -282,6 +282,29 @@
   XCTAssertEqualWithAccuracy(self.bottomNavBar.elevation, customElevation, 0.001);
 }
 
+- (void)testDefaultShadowColor {
+  // Then
+  XCTAssertEqualObjects(self.bottomNavBar.shadowColor, UIColor.blackColor);
+  XCTAssertTrue(
+      CGColorEqualToColor(self.bottomNavBar.layer.shadowColor, UIColor.blackColor.CGColor),
+      @"(%@) is not equal to (%@)", self.bottomNavBar.layer.shadowColor,
+      UIColor.blackColor.CGColor);
+}
+
+- (void)testCustomShadowColor {
+  // Given
+  UIColor *fakeColor = UIColor.orangeColor;
+
+  // When
+  self.bottomNavBar.shadowColor = fakeColor;
+
+  // Then
+  XCTAssertEqualObjects(self.bottomNavBar.shadowColor, fakeColor);
+  XCTAssertTrue(CGColorEqualToColor(self.bottomNavBar.layer.shadowColor, fakeColor.CGColor),
+                @"(%@) is not equal to (%@)", self.bottomNavBar.layer.shadowColor,
+                fakeColor.CGColor);
+}
+
 - (void)testViewForItemFound {
   // Given
   UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];

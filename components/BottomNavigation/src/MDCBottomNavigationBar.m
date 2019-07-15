@@ -153,6 +153,9 @@ static NSString *const kOfAnnouncement = @"of";
 #endif
   _elevation = MDCShadowElevationBottomNavigationBar;
   [(MDCShadowLayer *)self.layer setElevation:_elevation];
+  UIColor *defaultShadowColor = UIColor.blackColor;
+  _shadowColor = defaultShadowColor;
+  self.layer.shadowColor = defaultShadowColor.CGColor;
   _itemViews = [NSMutableArray array];
   _itemTitleFont = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleCaption];
 
@@ -177,6 +180,7 @@ static NSString *const kOfAnnouncement = @"of";
   CGRect standardBounds = CGRectStandardize(self.bounds);
   self.blurEffectView.frame = standardBounds;
   self.barView.frame = standardBounds;
+  self.layer.shadowColor = self.shadowColor.CGColor;
 
   CGSize size = standardBounds.size;
   if (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
@@ -230,6 +234,12 @@ static NSString *const kOfAnnouncement = @"of";
 - (void)setElevation:(MDCShadowElevation)elevation {
   _elevation = elevation;
   [(MDCShadowLayer *)self.layer setElevation:elevation];
+}
+
+- (void)setShadowColor:(UIColor *)shadowColor {
+  UIColor *shadowColorCopy = [shadowColor copy];
+  _shadowColor = shadowColorCopy;
+  self.layer.shadowColor = shadowColorCopy.CGColor;
 }
 
 - (BOOL)isTitleBelowIcon {
