@@ -74,6 +74,17 @@
  @c backgroundColor.
  */
 @property(nonnull, readonly, copy, nonatomic) UIColor *onBackgroundColor;
+
+/**
+ A color used on the overlay when a surface is elevated.
+ */
+@property(nonnull, readonly, copy, nonatomic) UIColor *elevationOverlayColor;
+
+/**
+ A flag that indicates whether the overlay color should be applied on an elevated surface.
+ */
+@property(readonly, assign, nonatomic) BOOL elevationOverlayEnabled;
+
 @end
 
 /**
@@ -111,6 +122,8 @@ typedef NS_ENUM(NSInteger, MDCColorSchemeDefaults) {
 @property(nonnull, readwrite, copy, nonatomic) UIColor *onSecondaryColor;
 @property(nonnull, readwrite, copy, nonatomic) UIColor *onSurfaceColor;
 @property(nonnull, readwrite, copy, nonatomic) UIColor *onBackgroundColor;
+@property(nonnull, readwrite, copy, nonatomic) UIColor *elevationOverlayColor;
+@property(readwrite, assign, nonatomic) BOOL elevationOverlayEnabled;
 
 /**
  Initializes the color scheme with the latest material defaults.
