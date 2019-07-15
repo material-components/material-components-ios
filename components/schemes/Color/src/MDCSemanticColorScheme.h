@@ -76,13 +76,13 @@
 @property(nonnull, readonly, copy, nonatomic) UIColor *onBackgroundColor;
 
 /**
- A color used on the overlay when a surface is elevated.
+ A color that is used for the elevation overlays, applied with an alpha on top of surfaces.
  */
 @property(nonnull, readonly, copy, nonatomic) UIColor *elevationOverlayColor;
 
 /**
  A flag that indicates whether the overlay color should be applied on an elevated surface in Dark
- Mode.
+ Mode. There is no elevation overlay applied in Light Mode.
  */
 @property(readonly, assign, nonatomic) BOOL elevationOverlayEnabledForDarkMode;
 
