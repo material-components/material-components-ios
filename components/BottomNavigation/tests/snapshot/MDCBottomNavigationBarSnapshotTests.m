@@ -423,7 +423,6 @@ static const CGFloat kHeightShort = 48;
 #if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     // Given
-    self.recordMode = YES;
     UIColor *dynamicColor =
         [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
           if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
