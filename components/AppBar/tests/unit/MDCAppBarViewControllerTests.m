@@ -31,6 +31,7 @@
       ^(MDCAppBarViewController *_Nonnull appBarViewController,
         UITraitCollection *_Nullable previousTraitCollection) {
         [expectation fulfill];
+        appBarViewController.traitCollectionDidChangeBlock = nil;
       };
 
   // When
@@ -53,6 +54,7 @@
         passedTraitCollection = previousTraitCollection;
         passedAppBarViewController = appBarViewController;
         [expectation fulfill];
+        appBarViewController.traitCollectionDidChangeBlock = nil;
       };
 
   // When
