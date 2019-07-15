@@ -310,21 +310,22 @@
   self.alert.shadowColor = fakeColor;
 
   // Then
-  XCTAssertEqualObjects(self.alert.mdc_dialogPresentationController.trackingView.shadowColor, fakeColor);
+  XCTAssertEqualObjects(self.alert.mdc_dialogPresentationController.trackingView.shadowColor,
+                        fakeColor);
 }
 
 - (void)testCustomShadowColorOnPresenationController {
   // Given
   UIColor *fakeColor = UIColor.orangeColor;
-  MDCDialogPresentationController *presentationController = [[MDCDialogPresentationController
-                                                             alloc] initWithPresentedViewController:[[UIViewController alloc] init] presentingViewController:nil];
+  MDCDialogPresentationController *presentationController = [[MDCDialogPresentationController alloc]
+      initWithPresentedViewController:[[UIViewController alloc] init]
+             presentingViewController:nil];
 
   // When
   presentationController.dialogShadowColor = fakeColor;
 
   // Then
-  XCTAssertEqualObjects(presentationController.trackingView.shadowColor
-                        , fakeColor);
+  XCTAssertEqualObjects(presentationController.trackingView.shadowColor, fakeColor);
 }
 
 - (void)testDialogBackgroundColorIsNotClearWhenNoThemingIsApllied {
