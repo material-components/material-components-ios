@@ -19,6 +19,7 @@
 
 #import "MaterialButtons.h"
 #import "MaterialTypography.h"
+#import "../../../private/Color/src/UIColor+MaterialDynamic.h"
 
 
 /** A @c MDCButton test fake to override the @c traitCollection to test for dynamic type. */
@@ -253,17 +254,14 @@
 #if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     // Given
-    UIColor *dynamicColor =
-        [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
-          if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
-            return UIColor.blackColor;
-          } else {
-            return UIColor.magentaColor;
-          }
-        }];
-    [self.button setShadowColor:dynamicColor forState:UIControlStateNormal];
-    [self.button setBackgroundColor:dynamicColor forState:UIControlStateNormal];
-    [self.button setBorderColor:dynamicColor forState:UIControlStateNormal];
+    UIColor *shadowColor = [UIColor colorWithUserInterfaceStyleDarkColor:UIColor.magentaColor defaultColor:UIColor.blackColor];
+    UIColor *backgroundColor = [UIColor colorWithUserInterfaceStyleDarkColor:UIColor.yellowColor defaultColor:UIColor.blackColor];
+    UIColor *borderColor = [UIColor colorWithUserInterfaceStyleDarkColor:UIColor.greenColor defaultColor:UIColor.blackColor];
+    [self.button setShadowColor:shadowColor forState:UIControlStateNormal];
+    [self.button setBackgroundColor:backgroundColor forState:UIControlStateNormal];
+    [self.button setBorderColor:borderColor forState:UIControlStateNormal];
+    [self.button setBorderWidth:2 forState:UIControlStateNormal];
+    [self.button setElevation:10 forState:UIControlStateNormal];
 
     // When
     self.button.traitCollectionOverride =
@@ -272,7 +270,7 @@
 
     // Then
     [self.button sizeToFit];
-    UIView *snapshotView = [self.button mdc_addToBackgroundView];
+    UIView *snapshotView = [self.button mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(50, 50, 50, 50)];
     [self snapshotVerifyViewForIOS13:snapshotView];
   }
 #endif
