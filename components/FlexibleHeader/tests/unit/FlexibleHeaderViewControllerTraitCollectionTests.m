@@ -22,18 +22,17 @@
 
 @implementation FlexibleHeaderTraitCollectionDidChangeTests
 
-- (void)
-testTraitCollectionDidChangeBlockCalledWhenTraitCollectionChanges {
+- (void)testTraitCollectionDidChangeBlockCalledWhenTraitCollectionChanges {
   // Given
   MDCFlexibleHeaderViewController *flexibleHeaderController =
-  [[MDCFlexibleHeaderViewController alloc] init];
+      [[MDCFlexibleHeaderViewController alloc] init];
   XCTestExpectation *expectation =
-  [self expectationWithDescription:@"Called traitCollectionDidChange"];
+      [self expectationWithDescription:@"Called traitCollectionDidChange"];
   flexibleHeaderController.traitCollectionDidChangeBlock =
-  ^(MDCFlexibleHeaderViewController *_Nonnull flexibleHeaderViewController,
-    UITraitCollection *_Nullable previousTraitCollection) {
-    [expectation fulfill];
-  };
+      ^(MDCFlexibleHeaderViewController *_Nonnull flexibleHeaderViewController,
+        UITraitCollection *_Nullable previousTraitCollection) {
+        [expectation fulfill];
+      };
 
   // When
   [flexibleHeaderController traitCollectionDidChange:nil];
@@ -42,22 +41,21 @@ testTraitCollectionDidChangeBlockCalledWhenTraitCollectionChanges {
   [self waitForExpectations:@[ expectation ] timeout:1];
 }
 
-- (void)
-testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
+- (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
   // Given
   MDCFlexibleHeaderViewController *flexibleHeaderController =
-  [[MDCFlexibleHeaderViewController alloc] init];
+      [[MDCFlexibleHeaderViewController alloc] init];
   XCTestExpectation *expectation =
-  [self expectationWithDescription:@"Called traitCollectionDidChange"];
+      [self expectationWithDescription:@"Called traitCollectionDidChange"];
   __block UITraitCollection *passedTraitCollection;
   __block MDCFlexibleHeaderViewController *passedFlexibleHeader;
   flexibleHeaderController.traitCollectionDidChangeBlock =
-  ^(MDCFlexibleHeaderViewController *_Nonnull flexibleHeaderViewController,
-    UITraitCollection *_Nullable previousTraitCollection) {
-    passedTraitCollection = previousTraitCollection;
-    passedFlexibleHeader = flexibleHeaderViewController;
-    [expectation fulfill];
-  };
+      ^(MDCFlexibleHeaderViewController *_Nonnull flexibleHeaderViewController,
+        UITraitCollection *_Nullable previousTraitCollection) {
+        passedTraitCollection = previousTraitCollection;
+        passedFlexibleHeader = flexibleHeaderViewController;
+        [expectation fulfill];
+      };
 
   // When
   UITraitCollection *testCollection = [UITraitCollection traitCollectionWithDisplayScale:77];
@@ -70,4 +68,3 @@ testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
 }
 
 @end
-
