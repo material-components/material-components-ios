@@ -81,7 +81,8 @@
 @property(nonnull, readonly, copy, nonatomic) UIColor *elevationOverlayColor;
 
 /**
- A flag that indicates whether the overlay color should be applied on an elevated surface in Dark Mode.
+ A flag that indicates whether the overlay color should be applied on an elevated surface in Dark
+ Mode.
  */
 @property(readonly, assign, nonatomic) BOOL elevationOverlayEnabledForDarkMode;
 

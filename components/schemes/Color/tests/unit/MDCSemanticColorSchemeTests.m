@@ -48,7 +48,8 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
   XCTAssertEqualObjects(initScheme.onSurfaceColor, mdDefaultScheme.onSurfaceColor);
   XCTAssertEqualObjects(initScheme.onBackgroundColor, mdDefaultScheme.onBackgroundColor);
   XCTAssertEqualObjects(initScheme.elevationOverlayColor, mdDefaultScheme.elevationOverlayColor);
-  XCTAssertEqual(initScheme.elevationOverlayEnabledForDarkMode, mdDefaultScheme.elevationOverlayEnabledForDarkMode);
+  XCTAssertEqual(initScheme.elevationOverlayEnabledForDarkMode,
+                 mdDefaultScheme.elevationOverlayEnabledForDarkMode);
 }
 
 - (void)testInitWithMaterialDefaults {
