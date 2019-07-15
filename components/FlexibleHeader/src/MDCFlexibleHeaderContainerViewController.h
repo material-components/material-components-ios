@@ -75,7 +75,7 @@
  traitCollectionDidChange:. The block is called after the call to the superclass.
  */
 @property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
-(MDCFlexibleHeaderContainerViewController *_Nonnull flexibleHeaderContainer,
-UITraitCollection *_Nullable previousTraitCollection);
+    (MDCFlexibleHeaderContainerViewController *_Nonnull flexibleHeaderContainer,
+     UITraitCollection *_Nullable previousTraitCollection);
 
 @end
