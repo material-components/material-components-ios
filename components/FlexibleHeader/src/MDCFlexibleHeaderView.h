@@ -64,6 +64,9 @@ IB_DESIGNABLE
  */
 @property(nonatomic, strong, nullable) CALayer *shadowLayer;
 
+/** The shadow color of the @c shadowLayer. Defaults to black. */
+@property(nonatomic, copy, nonnull) UIColor *shadowColor;
+
 /**
  Sets a custom shadow layer and a block that should be executed when shadow intensity changes.
  */

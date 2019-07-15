@@ -173,6 +173,9 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
  */
 @property(nonatomic, assign) MDCShadowElevation elevation;
 
+/** The color of the shadow of the bottom navigation bar. Defaults to black. */
+@property(nonatomic, copy, nonnull) UIColor *shadowColor;
+
 /**
  The number of lines used for item titles. It is possible that long titles may cause the text to
  extend beyond the safe area of the Bottom Navigation bar. It is recommended that short titles are
