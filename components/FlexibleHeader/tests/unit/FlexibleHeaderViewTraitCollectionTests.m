@@ -16,11 +16,11 @@
 
 #import "MaterialFlexibleHeader.h"
 
-@interface FlexibleHeaderTraitCollectionDidChangeTests : XCTestCase
+@interface FlexibleHeaderViewTraitCollectionTests : XCTestCase
 
 @end
 
-@implementation FlexibleHeaderTraitCollectionDidChangeTests
+@implementation FlexibleHeaderViewTraitCollectionTests
 
 - (void)testTraitCollectionDidChangeBlockCalledWhenTraitCollectionChanges {
   // Given
