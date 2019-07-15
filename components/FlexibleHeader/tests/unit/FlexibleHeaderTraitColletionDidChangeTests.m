@@ -26,12 +26,12 @@
   // Given
   MDCFlexibleHeaderView *flexibleHeader = [[MDCFlexibleHeaderView alloc] init];
   XCTestExpectation *expectation =
-  [self expectationWithDescription:@"Called traitCollectionDidChange"];
+      [self expectationWithDescription:@"Called traitCollectionDidChange"];
   flexibleHeader.traitCollectionDidChangeBlock =
-  ^(MDCFlexibleHeaderView *_Nonnull flexibleHeaderView,
-    UITraitCollection *_Nullable previousTraitCollection) {
-    [expectation fulfill];
-  };
+      ^(MDCFlexibleHeaderView *_Nonnull flexibleHeaderView,
+        UITraitCollection *_Nullable previousTraitCollection) {
+        [expectation fulfill];
+      };
 
   // When
   [flexibleHeader traitCollectionDidChange:nil];
@@ -44,16 +44,16 @@
   // Given
   MDCFlexibleHeaderView *flexibleHeader = [[MDCFlexibleHeaderView alloc] init];
   XCTestExpectation *expectation =
-  [self expectationWithDescription:@"Called traitCollectionDidChange"];
+      [self expectationWithDescription:@"Called traitCollectionDidChange"];
   __block UITraitCollection *passedTraitCollection;
   __block MDCFlexibleHeaderView *passedFlexibleHeader;
   flexibleHeader.traitCollectionDidChangeBlock =
-  ^(MDCFlexibleHeaderView *_Nonnull flexibleHeaderView,
-    UITraitCollection *_Nullable previousTraitCollection) {
-    passedTraitCollection = previousTraitCollection;
-    passedFlexibleHeader = flexibleHeaderView;
-    [expectation fulfill];
-  };
+      ^(MDCFlexibleHeaderView *_Nonnull flexibleHeaderView,
+        UITraitCollection *_Nullable previousTraitCollection) {
+        passedTraitCollection = previousTraitCollection;
+        passedFlexibleHeader = flexibleHeaderView;
+        [expectation fulfill];
+      };
 
   // When
   UITraitCollection *testCollection = [UITraitCollection traitCollectionWithDisplayScale:77];
