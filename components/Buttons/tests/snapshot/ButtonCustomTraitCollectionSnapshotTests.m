@@ -20,6 +20,7 @@
 #import "MaterialButtons.h"
 #import "MaterialTypography.h"
 
+
 /** A @c MDCButton test fake to override the @c traitCollection to test for dynamic type. */
 @interface ButtonDynamicTypeSnapshotTestFakeButton : MDCButton
 @property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
@@ -248,20 +249,21 @@
   [self generateSnapshotAndVerifyForView:self.button];
 }
 
-- (void)testShadowColorRespondsToDynamicColor {
+- (void)testButtonRespondsToDynamicColor {
 #if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     // Given
-    UIColor *darkModeColor = UIColor.whiteColor;
     UIColor *dynamicColor =
         [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
           if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
             return UIColor.blackColor;
           } else {
-            return darkModeColor;
+            return UIColor.magentaColor;
           }
         }];
     [self.button setShadowColor:dynamicColor forState:UIControlStateNormal];
+    [self.button setBackgroundColor:dynamicColor forState:UIControlStateNormal];
+    [self.button setBorderColor:dynamicColor forState:UIControlStateNormal];
 
     // When
     self.button.traitCollectionOverride =
@@ -275,4 +277,5 @@
   }
 #endif
 }
+
 @end
