@@ -17,10 +17,9 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKit.h>
 
+#import "../../../private/Color/src/UIColor+MaterialDynamic.h"
 #import "MaterialButtons.h"
 #import "MaterialTypography.h"
-#import "../../../private/Color/src/UIColor+MaterialDynamic.h"
-
 
 /** A @c MDCButton test fake to override the @c traitCollection to test for dynamic type. */
 @interface ButtonDynamicTypeSnapshotTestFakeButton : MDCButton
@@ -254,9 +253,12 @@
 #if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     // Given
-    UIColor *shadowColor = [UIColor colorWithUserInterfaceStyleDarkColor:UIColor.magentaColor defaultColor:UIColor.blackColor];
-    UIColor *backgroundColor = [UIColor colorWithUserInterfaceStyleDarkColor:UIColor.yellowColor defaultColor:UIColor.blackColor];
-    UIColor *borderColor = [UIColor colorWithUserInterfaceStyleDarkColor:UIColor.greenColor defaultColor:UIColor.blackColor];
+    UIColor *shadowColor = [UIColor colorWithUserInterfaceStyleDarkColor:UIColor.magentaColor
+                                                            defaultColor:UIColor.blackColor];
+    UIColor *backgroundColor = [UIColor colorWithUserInterfaceStyleDarkColor:UIColor.yellowColor
+                                                                defaultColor:UIColor.blackColor];
+    UIColor *borderColor = [UIColor colorWithUserInterfaceStyleDarkColor:UIColor.greenColor
+                                                            defaultColor:UIColor.blackColor];
     [self.button setShadowColor:shadowColor forState:UIControlStateNormal];
     [self.button setBackgroundColor:backgroundColor forState:UIControlStateNormal];
     [self.button setBorderColor:borderColor forState:UIControlStateNormal];
@@ -270,7 +272,8 @@
 
     // Then
     [self.button sizeToFit];
-    UIView *snapshotView = [self.button mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(50, 50, 50, 50)];
+    UIView *snapshotView =
+        [self.button mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(50, 50, 50, 50)];
     [self snapshotVerifyViewForIOS13:snapshotView];
   }
 #endif
