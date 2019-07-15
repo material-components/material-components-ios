@@ -17,9 +17,10 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKit.h>
 
-#import "../../../private/Color/src/UIColor+MaterialDynamic.h"
 #import "MaterialDialogs.h"
 #import "MaterialTypography.h"
+#import "../../src/private/MDCDialogShadowedView.h"
+#import "../../../private/Color/src/UIColor+MaterialDynamic.h"
 
 /**
  A @c MDCAlertController test fake to override the @c traitCollection to test for dynamic type.
@@ -29,6 +30,19 @@
 @end
 
 @implementation AlertControllerCustomTraitCollectionSnapshotTestFake
+
+- (UITraitCollection *)traitCollection {
+  return self.traitCollectionOverride ?: [super traitCollection];
+}
+
+@end
+
+/** A @c MDCDialogShadowedView test fake to override the @c traitCollection to test. */
+@interface ShadowViewCustomTraitCollectionSnapshotTestFake : MDCDialogShadowedView
+@property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
+@end
+
+@implementation ShadowViewCustomTraitCollectionSnapshotTestFake
 
 - (UITraitCollection *)traitCollection {
   return self.traitCollectionOverride ?: [super traitCollection];
@@ -327,6 +341,27 @@
     // Then
     UIView *snapshotView = [self.alertController.view
         mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(50, 50, 50, 50)];
+    [self snapshotVerifyViewForIOS13:snapshotView];
+  }
+#endif
+}
+
+- (void)testDynamicColorSupportForTrackingView {
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+  if (@available(iOS 13.0, *)) {
+    // Given
+    UIColor *shadowColor = [UIColor colorWithUserInterfaceStyleDarkColor:UIColor.greenColor
+                                                           defaultColor:UIColor.blackColor];
+    ShadowViewCustomTraitCollectionSnapshotTestFake *trackingView = [[ShadowViewCustomTraitCollectionSnapshotTestFake alloc] initWithFrame:CGRectMake(0, 0, 100, 200)];
+    trackingView.shadowColor = shadowColor;
+
+    // When
+    trackingView.traitCollectionOverride =
+    [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
+
+    // Then
+    UIView *snapshotView = [trackingView
+                            mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(50, 50, 50, 50)];
     [self snapshotVerifyViewForIOS13:snapshotView];
   }
 #endif
