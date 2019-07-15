@@ -401,6 +401,11 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
 
   // Use the larger of the two radii to ensure everything is encircled.
   _outerRadius = MAX(minTextRadius, minInnerHighlightRadius);
+
+  // To support dynamic color
+//  _pulseLayer.fillColor = [UIColor purpleColor].CGColor;
+  _innerLayer.fillColor = _innerHighlightColor.CGColor;
+  _outerLayer.fillColor = _outerHighlightColor.CGColor;
 }
 
 - (void)didTapView:(UITapGestureRecognizer *)tapGestureRecognizer {
