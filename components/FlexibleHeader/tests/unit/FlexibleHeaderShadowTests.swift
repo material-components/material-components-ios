@@ -58,4 +58,38 @@ class MDCFlexibleHeaderShadowTests: XCTestCase {
     // Then
     XCTAssertEqual(flexibleHeader.shadowLayer, fakeShadowLayer)
   }
+
+  func testMaterialShadowLayerWithCustomShadowColor() {
+    // Given
+    let shadowLayer = MDCShadowLayer()
+    flexibleHeader.shadowLayer = shadowLayer
+    let fakeColor = UIColor.blue
+
+    // When
+    flexibleHeader.shadowColor = fakeColor
+
+    // Then
+    if let shadowLayer = flexibleHeader.shadowLayer {
+      XCTAssertEqual(shadowLayer.shadowColor, fakeColor.cgColor)
+    } else {
+      XCTAssertNotNil(flexibleHeader.shadowLayer)
+    }
+  }
+
+  func testCALayerWithCustomShadowColor() {
+    // Given
+    let shadowLayer = CALayer()
+    flexibleHeader.shadowLayer = shadowLayer
+    let fakeColor = UIColor.blue
+
+    // When
+    flexibleHeader.shadowColor = fakeColor
+
+    // Then
+    if let shadowLayer = flexibleHeader.shadowLayer {
+      XCTAssertEqual(shadowLayer.shadowColor, fakeColor.cgColor)
+    } else {
+      XCTAssertNotNil(flexibleHeader.shadowLayer)
+    }
+  }
 }
