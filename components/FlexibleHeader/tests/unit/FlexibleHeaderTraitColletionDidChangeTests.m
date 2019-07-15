@@ -76,7 +76,6 @@
       ^(MDCFlexibleHeaderViewController *_Nonnull flexibleHeaderViewController,
         UITraitCollection *_Nullable previousTraitCollection) {
         [expectation fulfill];
-        flexibleHeaderViewController.traitCollectionDidChangeBlock = nil;
       };
 
   // When
@@ -101,7 +100,6 @@
         passedTraitCollection = previousTraitCollection;
         passedFlexibleHeader = flexibleHeaderViewController;
         [expectation fulfill];
-        flexibleHeaderViewController.traitCollectionDidChangeBlock = nil;
       };
 
   // When

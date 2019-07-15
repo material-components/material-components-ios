@@ -38,8 +38,6 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
   NSLayoutConstraint *_topSafeAreaConstraint;
 }
 
-@synthesize traitCollectionDidChangeBlock;
-
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
@@ -252,14 +250,6 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
   CGRect frame = self.view.frame;
   frame.size.width = CGRectGetWidth(parent.view.bounds);
   self.view.frame = frame;
-}
-
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-  [super traitCollectionDidChange:previousTraitCollection];
-
-  if (self.traitCollectionDidChangeBlock) {
-    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
-  }
 }
 
 #pragma mark - UIAccessibility
