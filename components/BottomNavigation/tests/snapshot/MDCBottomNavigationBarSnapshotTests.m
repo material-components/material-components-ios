@@ -423,6 +423,7 @@ static const CGFloat kHeightShort = 48;
 #if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     // Given
+    self.recordMode = YES;
     UIColor *dynamicColor =
         [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
           if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
@@ -432,7 +433,7 @@ static const CGFloat kHeightShort = 48;
           }
         }];
     self.navigationBar.bounds = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthiPad,
-                                          MDCBottomNavigationBarTestHeightTypical);
+                                           MDCBottomNavigationBarTestHeightTypical);
     self.navigationBar.elevation = 10;
     self.navigationBar.shadowColor = dynamicColor;
 
@@ -442,7 +443,8 @@ static const CGFloat kHeightShort = 48;
     [self.navigationBar layoutIfNeeded];
 
     // Then
-    UIView *snapshotView = [self.navigationBar mdc_addToBackgroundView];
+    UIView *snapshotView =
+        [self.navigationBar mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(50, 50, 50, 50)];
     [self snapshotVerifyViewForIOS13:snapshotView];
   }
 #endif
