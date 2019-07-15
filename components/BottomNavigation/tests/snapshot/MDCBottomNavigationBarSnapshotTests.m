@@ -423,17 +423,15 @@ static const CGFloat kHeightShort = 48;
 #if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     // Given
-    self.recordMode = YES;
-    UIColor *darkModeColor = UIColor.redColor;
     UIColor *dynamicColor =
         [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
           if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
             return UIColor.blackColor;
           } else {
-            return darkModeColor;
+            return UIColor.redColor;
           }
         }];
-    self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthiPad,
+    self.navigationBar.bounds = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthiPad,
                                           MDCBottomNavigationBarTestHeightTypical);
     self.navigationBar.shadowColor = dynamicColor;
 
