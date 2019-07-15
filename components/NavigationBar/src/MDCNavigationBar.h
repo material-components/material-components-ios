@@ -307,9 +307,8 @@ IB_DESIGNABLE
  A block that is invoked when the NavigationBar receives a call to @c
  traitCollectionDidChange:. The block is called after the call to the superclass.
  */
-@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
-(MDCNavigationBar *_Nonnull navigationBar,
-UITraitCollection *_Nullable previousTraitCollection);
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)(
+    MDCNavigationBar *_Nonnull navigationBar, UITraitCollection *_Nullable previousTraitCollection);
 
 #pragma mark Observing UINavigationItem instances
 

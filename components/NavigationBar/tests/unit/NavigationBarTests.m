@@ -549,12 +549,11 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   // Given
   MDCNavigationBar *navigationBar = [[MDCNavigationBar alloc] init];
   XCTestExpectation *expectation =
-  [self expectationWithDescription:@"Called traitCollectionDidChange"];
+      [self expectationWithDescription:@"Called traitCollectionDidChange"];
   navigationBar.traitCollectionDidChangeBlock =
-  ^(MDCNavigationBar *_Nonnull navBar,
-    UITraitCollection *_Nullable previousTraitCollection) {
-    [expectation fulfill];
-  };
+      ^(MDCNavigationBar *_Nonnull navBar, UITraitCollection *_Nullable previousTraitCollection) {
+        [expectation fulfill];
+      };
 
   // When
   [navigationBar traitCollectionDidChange:nil];
@@ -563,20 +562,19 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   [self waitForExpectations:@[ expectation ] timeout:1];
 }
 
-- (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters{
+- (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
   // Given
   MDCNavigationBar *navigationBar = [[MDCNavigationBar alloc] init];
   XCTestExpectation *expectation =
-  [self expectationWithDescription:@"Called traitCollectionDidChange"];
+      [self expectationWithDescription:@"Called traitCollectionDidChange"];
   __block UITraitCollection *passedTraitCollection;
   __block MDCNavigationBar *passedNavigationBar;
   navigationBar.traitCollectionDidChangeBlock =
-  ^(MDCNavigationBar *_Nonnull navBar,
-    UITraitCollection *_Nullable previousTraitCollection) {
-    passedTraitCollection = previousTraitCollection;
-    passedNavigationBar = navBar;
-    [expectation fulfill];
-  };
+      ^(MDCNavigationBar *_Nonnull navBar, UITraitCollection *_Nullable previousTraitCollection) {
+        passedTraitCollection = previousTraitCollection;
+        passedNavigationBar = navBar;
+        [expectation fulfill];
+      };
 
   // When
   UITraitCollection *testCollection = [UITraitCollection traitCollectionWithDisplayScale:77];
