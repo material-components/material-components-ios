@@ -285,8 +285,10 @@
 - (void)testDefaultShadowColor {
   // Then
   XCTAssertEqualObjects(self.bottomNavBar.shadowColor, UIColor.blackColor);
-  XCTAssertTrue(CGColorEqualToColor(self.bottomNavBar.layer.shadowColor, UIColor.blackColor.CGColor), @"(%@) is not equal to (%@)", self.bottomNavBar.layer.shadowColor,
-                UIColor.blackColor.CGColor);
+  XCTAssertTrue(
+      CGColorEqualToColor(self.bottomNavBar.layer.shadowColor, UIColor.blackColor.CGColor),
+      @"(%@) is not equal to (%@)", self.bottomNavBar.layer.shadowColor,
+      UIColor.blackColor.CGColor);
 }
 
 - (void)testCustomShadowColor {
@@ -299,8 +301,8 @@
   // Then
   XCTAssertEqualObjects(self.bottomNavBar.shadowColor, fakeColor);
   XCTAssertTrue(CGColorEqualToColor(self.bottomNavBar.layer.shadowColor, fakeColor.CGColor),
-                 @"(%@) is not equal to (%@)", self.bottomNavBar.layer.shadowColor,
-                 fakeColor.CGColor);
+                @"(%@) is not equal to (%@)", self.bottomNavBar.layer.shadowColor,
+                fakeColor.CGColor);
 }
 
 - (void)testViewForItemFound {
