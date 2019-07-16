@@ -47,6 +47,9 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
   XCTAssertEqualObjects(initScheme.onSecondaryColor, mdDefaultScheme.onSecondaryColor);
   XCTAssertEqualObjects(initScheme.onSurfaceColor, mdDefaultScheme.onSurfaceColor);
   XCTAssertEqualObjects(initScheme.onBackgroundColor, mdDefaultScheme.onBackgroundColor);
+  XCTAssertEqualObjects(initScheme.elevationOverlayColor, mdDefaultScheme.elevationOverlayColor);
+  XCTAssertEqual(initScheme.elevationOverlayEnabledForDarkMode,
+                 mdDefaultScheme.elevationOverlayEnabledForDarkMode);
 }
 
 - (void)testInitWithMaterialDefaults {
@@ -65,6 +68,8 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
   XCTAssertEqualObjects(colorScheme.onSecondaryColor, ColorFromRGB(0x000000));
   XCTAssertEqualObjects(colorScheme.onSurfaceColor, ColorFromRGB(0x000000));
   XCTAssertEqualObjects(colorScheme.onBackgroundColor, ColorFromRGB(0x000000));
+  XCTAssertEqualObjects(colorScheme.elevationOverlayColor, ColorFromRGB(0x000000));
+  XCTAssertEqual(colorScheme.elevationOverlayEnabledForDarkMode, NO);
 }
 
 - (void)testInitWithMaterialDefaultsDark {
@@ -83,6 +88,8 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
   XCTAssertEqualObjects(colorScheme.onSecondaryColor, ColorFromRGB(0x000000));
   XCTAssertEqualObjects(colorScheme.onSurfaceColor, ColorFromRGB(0xFFFFFF));
   XCTAssertEqualObjects(colorScheme.onBackgroundColor, ColorFromRGB(0xFFFFFF));
+  XCTAssertEqualObjects(colorScheme.elevationOverlayColor, ColorFromRGB(0xFFFFFF));
+  XCTAssertEqual(colorScheme.elevationOverlayEnabledForDarkMode, YES);
 }
 
 - (void)testInitWithMaterialDefaults201907WhenUserInterfaceStyleIsDarkForiOS13 {
@@ -126,6 +133,10 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
     XCTAssertEqualObjects(
         [colorScheme.onBackgroundColor resolvedColorWithTraitCollection:traitCollection],
         ColorFromRGB(0xFFFFFF));
+    XCTAssertEqualObjects(
+        [colorScheme.elevationOverlayColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0xFFFFFF));
+    XCTAssertEqual(colorScheme.elevationOverlayEnabledForDarkMode, YES);
   }
 #endif
 }
@@ -171,6 +182,10 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
     XCTAssertEqualObjects(
         [colorScheme.onBackgroundColor resolvedColorWithTraitCollection:traitCollection],
         ColorFromRGB(0x000000));
+    XCTAssertEqualObjects(
+        [colorScheme.elevationOverlayColor resolvedColorWithTraitCollection:traitCollection],
+        ColorFromRGB(0x000000));
+    XCTAssertEqual(colorScheme.elevationOverlayEnabledForDarkMode, YES);
   }
 #endif
 }
@@ -193,6 +208,8 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
     XCTAssertEqualObjects(colorScheme.onSecondaryColor, ColorFromRGB(0x000000));
     XCTAssertEqualObjects(colorScheme.onSurfaceColor, ColorFromRGB(0x000000));
     XCTAssertEqualObjects(colorScheme.onBackgroundColor, ColorFromRGB(0x000000));
+    XCTAssertEqualObjects(colorScheme.elevationOverlayColor, ColorFromRGB(0x000000));
+    XCTAssertEqual(colorScheme.elevationOverlayEnabledForDarkMode, YES);
   }
 }
 
