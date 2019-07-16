@@ -17,17 +17,19 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKit.h>
 
+#import "../../../private/Color/src/UIColor+MaterialDynamic.h"
+#import "../../src/private/MDCDialogShadowedView.h"
 #import "MaterialDialogs.h"
 #import "MaterialTypography.h"
 
 /**
  A @c MDCAlertController test fake to override the @c traitCollection to test for dynamic type.
  */
-@interface AlertControllerDynamicTypeSnapshotTestFake : MDCAlertController
+@interface AlertControllerCustomTraitCollectionSnapshotTestFake : MDCAlertController
 @property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
 @end
 
-@implementation AlertControllerDynamicTypeSnapshotTestFake
+@implementation AlertControllerCustomTraitCollectionSnapshotTestFake
 
 - (UITraitCollection *)traitCollection {
   return self.traitCollectionOverride ?: [super traitCollection];
@@ -35,11 +37,25 @@
 
 @end
 
-@interface MDCAlertControllerDynamicTypeTests : MDCSnapshotTestCase
-@property(nonatomic, strong, nullable) AlertControllerDynamicTypeSnapshotTestFake *alertController;
+/** An @c MDCDialogShadowedView test fake to override the @c traitCollection to test. */
+@interface ShadowViewCustomTraitCollectionSnapshotTestFake : MDCDialogShadowedView
+@property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
 @end
 
-@implementation MDCAlertControllerDynamicTypeTests
+@implementation ShadowViewCustomTraitCollectionSnapshotTestFake
+
+- (UITraitCollection *)traitCollection {
+  return self.traitCollectionOverride ?: [super traitCollection];
+}
+
+@end
+
+@interface MDCAlertControllerCustomTraitCollectionTests : MDCSnapshotTestCase
+@property(nonatomic, strong, nullable)
+    AlertControllerCustomTraitCollectionSnapshotTestFake *alertController;
+@end
+
+@implementation MDCAlertControllerCustomTraitCollectionTests
 
 - (void)setUp {
   [super setUp];
@@ -48,7 +64,7 @@
   // test you wish to recreate the golden for).
   //  self.recordMode = YES;
 
-  self.alertController = [[AlertControllerDynamicTypeSnapshotTestFake alloc] init];
+  self.alertController = [[AlertControllerCustomTraitCollectionSnapshotTestFake alloc] init];
   self.alertController.title = @"Material";
   self.alertController.message =
       @"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt "
@@ -302,6 +318,57 @@
 
   // Then
   [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
+- (void)testDynamicColorSupport {
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+  if (@available(iOS 13.0, *)) {
+    // Given
+    UIColor *titleColor = [UIColor colorWithUserInterfaceStyleDarkColor:UIColor.greenColor
+                                                           defaultColor:UIColor.blackColor];
+    UIColor *messageColor = [UIColor colorWithUserInterfaceStyleDarkColor:UIColor.purpleColor
+                                                             defaultColor:UIColor.blackColor];
+    UIColor *backgroundColor = [UIColor colorWithUserInterfaceStyleDarkColor:UIColor.blueColor
+                                                                defaultColor:UIColor.blackColor];
+    self.alertController.titleColor = titleColor;
+    self.alertController.messageColor = messageColor;
+    self.alertController.backgroundColor = backgroundColor;
+
+    // When
+    self.alertController.traitCollectionOverride =
+        [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
+
+    // Then
+    UIView *snapshotView = [self.alertController.view
+        mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(50, 50, 50, 50)];
+    [self snapshotVerifyViewForIOS13:snapshotView];
+  }
+#endif
+}
+
+- (void)testDynamicColorSupportForTrackingView {
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+  if (@available(iOS 13.0, *)) {
+    // Given
+    UIColor *shadowColor = [UIColor colorWithUserInterfaceStyleDarkColor:UIColor.greenColor
+                                                            defaultColor:UIColor.blackColor];
+    ShadowViewCustomTraitCollectionSnapshotTestFake *trackingView =
+        [[ShadowViewCustomTraitCollectionSnapshotTestFake alloc] init];
+    trackingView.frame = CGRectMake(0, 0, 100, 200);
+    trackingView.shadowColor = shadowColor;
+    trackingView.backgroundColor = UIColor.whiteColor;
+
+    // When
+    trackingView.traitCollectionOverride =
+        [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
+    [trackingView layoutIfNeeded];
+
+    // Then
+    UIView *snapshotView =
+        [trackingView mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(50, 50, 50, 50)];
+    [self snapshotVerifyViewForIOS13:snapshotView];
+  }
+#endif
 }
 
 @end
