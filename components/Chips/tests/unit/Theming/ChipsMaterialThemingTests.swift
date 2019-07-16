@@ -16,11 +16,11 @@ import XCTest
 
 import MaterialComponents.MaterialChips
 import MaterialComponents.MaterialColorScheme
+import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialShapeScheme
 import MaterialComponents.MaterialShapeLibrary
 import MaterialComponents.MaterialTypographyScheme
-import MaterialComponentsBeta.MaterialChips_Theming
-import MaterialComponentsBeta.MaterialContainerScheme
+import MaterialComponents.MaterialChips_Theming
 
 class ChipsMaterialThemingTests: XCTestCase {
 

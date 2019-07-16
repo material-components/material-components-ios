@@ -115,7 +115,7 @@ class StatefulRippleExample : UIViewController {
 
 extension StatefulRippleExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Ripple", "Stateful Ripple"],
       "primaryDemo": false,

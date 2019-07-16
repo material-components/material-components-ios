@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <MaterialComponents/MaterialAppBar.h>
+#import "MaterialAppBar.h"
 #import "MaterialContainerScheme.h"
 
 /**

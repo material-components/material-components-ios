@@ -76,10 +76,6 @@ import MaterialComponents.MaterialTypographyScheme
 ```
 <!--</div>-->
 
-## Extensions
+## Usage
 
-<!-- Template: Extensions should be called out separately from Usage docs.
-
-- [Typography Theming](typography-theming.md)
--->
-
+- [Dynamic Type](dynamic-type.md)

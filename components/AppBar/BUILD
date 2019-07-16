@@ -22,6 +22,8 @@ load(
     "mdc_public_objc_library",
     "mdc_snapshot_objc_library",
     "mdc_snapshot_test",
+    "mdc_unit_test_objc_library",
+    "mdc_unit_test_swift_library",
     "mdc_unit_test_suite",
 )
 load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
@@ -110,37 +112,28 @@ mdc_examples_swift_library(
     name = "SwiftExamples",
     deps = [
         ":AppBar",
-        ":ColorThemer",
-        ":TypographyThemer",
+        ":Theming",
         "//components/FlexibleHeader:CanAlwaysExpandToMaximumHeight",
         "//components/Tabs",
         "//components/schemes/Color",
+        "//components/schemes/Container",
         "//components/schemes/Typography",
     ],
 )
 
-mdc_objc_library(
+mdc_unit_test_objc_library(
     name = "unit_test_sources",
-    srcs = glob([
-        "tests/unit/*.m",
+    extra_srcs = glob([
         "tests/unit/Theming/*.m",
     ]),
-    sdk_frameworks = ["XCTest"],
-    visibility = ["//visibility:private"],
     deps = [
         ":AppBar",
         ":Theming",
     ],
 )
 
-swift_library(
+mdc_unit_test_swift_library(
     name = "unit_test_swift_sources",
-    srcs = glob(["tests/unit/*.swift"]),
-    copts = [
-        "-swift-version",
-        "3",
-    ],
-    visibility = ["//visibility:private"],
     deps = [
         ":AppBar",
         ":ColorThemer",
@@ -152,6 +145,7 @@ swift_library(
 mdc_unit_test_suite(
     name = "unit_tests",
     deps = [
+        ":unit_test_sources",
         ":unit_test_swift_sources",
     ],
 )

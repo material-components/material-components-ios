@@ -14,21 +14,17 @@
 
 import CoreGraphics
 import UIKit
-
 import MaterialComponents.MaterialAppBar
-import MaterialComponents.MaterialAppBar_ColorThemer
-import MaterialComponents.MaterialAppBar_TypographyThemer
-import MaterialComponents.MaterialColorScheme
+import MaterialComponents.MaterialAppBar_Theming
+import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialFlexibleHeader_CanAlwaysExpandToMaximumHeight
 import MaterialComponents.MaterialTabs
-import MaterialComponents.MaterialTypographyScheme
 
 // This example demonstrates issues with flexible header tabs and animations.
 class AppBarAnimatedJumpExample: UIViewController {
 
   lazy var appBarViewController: MDCAppBarViewController = self.makeAppBar()
-  var colorScheme = MDCSemanticColorScheme()
-  var typographyScheme = MDCTypographyScheme()
+  @objc var containerScheme: MDCContainerScheming = MDCContainerScheme()
 
   fileprivate let tabs = [
     SimpleComposedTableViewController(title: "First"),
@@ -63,21 +59,16 @@ class AppBarAnimatedJumpExample: UIViewController {
       tab.tabBarItem.tag = offset
     }
 
-    MDCAppBarColorThemer.applyColorScheme(colorScheme, to: appBarViewController)
-    MDCAppBarTypographyThemer.applyTypographyScheme(typographyScheme, to: appBarViewController)
+    appBarViewController.applyPrimaryTheme(withScheme: containerScheme)
 
     // Need to update the status bar style after applying the theme.
     appBarViewController.view.isOpaque = false
     setNeedsStatusBarAppearanceUpdate()
 
     view.isOpaque = false
-    view.backgroundColor = colorScheme.backgroundColor
+    view.backgroundColor = containerScheme.colorScheme.backgroundColor
     view.addSubview(appBarViewController.view)
-    #if swift(>=4.2)
     appBarViewController.didMove(toParent: self)
-    #else
-    appBarViewController.didMove(toParentViewController: self)
-    #endif
 
     switchToTab(tabs[0], animated: false)
   }
@@ -90,7 +81,7 @@ class AppBarAnimatedJumpExample: UIViewController {
     let removeOld: (() -> Void)
     let animateOut: (() -> Void)
     if let currentTab = currentTab {
-      currentTab.willMove(toParentViewController: nil)
+      currentTab.willMove(toParent: nil)
 
       animateOut = {
         currentTab.view.alpha = 0
@@ -99,7 +90,7 @@ class AppBarAnimatedJumpExample: UIViewController {
       removeOld = {
         currentTab.headerView = nil
         currentTab.view.removeFromSuperview()
-        currentTab.removeFromParentViewController()
+        currentTab.removeFromParent()
       }
     } else {
       removeOld = {}
@@ -113,12 +104,8 @@ class AppBarAnimatedJumpExample: UIViewController {
 
     // Show new tab.
     view.addSubview(tab.view)
-    view.sendSubview(toBack: tab.view)
-    #if swift(>=4.2)
+    view.sendSubviewToBack(tab.view)
     tab.didMove(toParent: self)
-    #else
-    tab.didMove(toParentViewController: self)
-    #endif
     tab.headerView = self.appBarViewController.headerView
 
     tab.view.alpha = 0
@@ -162,7 +149,7 @@ class AppBarAnimatedJumpExample: UIViewController {
   private func makeAppBar() -> MDCAppBarViewController {
     let appBarViewController = MDCAppBarViewController()
 
-    addChildViewController(appBarViewController)
+    addChild(appBarViewController)
 
     // Give the tab bar enough height to accomodate all possible item appearances.
     appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
@@ -178,7 +165,7 @@ class AppBarAnimatedJumpExample: UIViewController {
     return appBarViewController
   }
 
-  override var childViewControllerForStatusBarStyle: UIViewController? {
+  override var childForStatusBarStyle: UIViewController? {
     return appBarViewController
   }
 }
@@ -191,7 +178,7 @@ extension AppBarAnimatedJumpExample: MDCTabBarDelegate {
 
 extension AppBarAnimatedJumpExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["App Bar", "Manual Tabs Jump (Animated)"],
       "primaryDemo": false,

@@ -26,7 +26,7 @@ typedef void (^MDCRippleCompletionBlock)(void);
 
  - MDCRippleStyleBounded: The ripple is bound to the view.
  - MDCRippleStyleUnbounded: The ripple is unbounded and ripples to the size of the smallest circle
- that covers the entire rectangulat bounds, plus an additional 10 points.
+ that covers the entire rectangular bounds, plus an additional 10 points.
  */
 typedef NS_ENUM(NSInteger, MDCRippleStyle) {
   MDCRippleStyleBounded = 0,
@@ -60,6 +60,13 @@ typedef NS_ENUM(NSInteger, MDCRippleStyle) {
  The ripple's color.
  */
 @property(nonatomic, strong, nonnull) UIColor *rippleColor;
+
+/**
+ The maximum radius the ripple can expand to.
+
+ @note This property is ignored if @c rippleStyle is set to @c MDCRippleStyleBounded.
+ */
+@property(nonatomic, assign) CGFloat maximumRadius;
 
 /**
  Sets the ripple color of the currently active ripple.

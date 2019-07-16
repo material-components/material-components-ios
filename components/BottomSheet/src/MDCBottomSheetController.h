@@ -46,6 +46,14 @@
 @property(nonatomic, weak, nullable) UIScrollView *trackingScrollView;
 
 /**
+ This property determines if @c showFlashIndicators is called by default when @c
+ MDCBottomSheetController calls @c viewDidAppear.
+
+ @note Defaults to @c NO.
+ */
+@property(nonatomic, assign) BOOL shouldFlashScrollIndicatorsOnAppearance;
+
+/**
  When set to false, the bottom sheet controller can't be dismissed by tapping outside of sheet area.
  */
 @property(nonatomic, assign) BOOL dismissOnBackgroundTap;
@@ -134,7 +142,7 @@
  Delegate for MDCBottomSheetController.
  */
 @protocol MDCBottomSheetControllerDelegate <NSObject>
-
+@optional
 /**
  Called when the user taps the dimmed background or swipes the bottom sheet off to dismiss the
  bottom sheet. Also called with accessibility escape "two finger Z" gestures.
@@ -145,4 +153,23 @@
  */
 - (void)bottomSheetControllerDidDismissBottomSheet:(nonnull MDCBottomSheetController *)controller;
 
+/**
+ Called when the state of the bottom sheet changes.
+
+ Note: See what states the sheet can transition to by looking at MDCSheetState.
+
+ @param controller The MDCBottomSheetController that its state changed.
+ @param state The state the sheet changed to.
+ */
+- (void)bottomSheetControllerStateChanged:(nonnull MDCBottomSheetController *)controller
+                                    state:(MDCSheetState)state;
+
+/**
+ Called when the Y offset of the sheet's changes in relation to the top of the screen.
+
+ @param controller The MDCBottomSheetController that its Y offset changed.
+ @param yOffset The Y offset the bottom sheet changed to.
+ */
+- (void)bottomSheetControllerDidChangeYOffset:(nonnull MDCBottomSheetController *)controller
+                                      yOffset:(CGFloat)yOffset;
 @end

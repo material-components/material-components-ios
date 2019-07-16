@@ -20,7 +20,7 @@ import MaterialComponents.MaterialNavigationDrawer
 import MaterialComponents.MaterialNavigationDrawer_ColorThemer
 
 class BottomDrawerInfiniteScrollingExample: UIViewController {
-  var colorScheme = MDCSemanticColorScheme()
+  @objc var colorScheme = MDCSemanticColorScheme()
   let bottomAppBar = MDCBottomAppBarView()
 
   let headerViewController = DrawerHeaderViewController()
@@ -64,6 +64,7 @@ class BottomDrawerInfiniteScrollingExample: UIViewController {
 
   @objc private func presentNavigationDrawer() {
     let bottomDrawerViewController = MDCBottomDrawerViewController()
+    bottomDrawerViewController.maximumInitialDrawerHeight = 400;
     bottomDrawerViewController.contentViewController = contentViewController
     contentViewController.drawerVC = bottomDrawerViewController
     bottomDrawerViewController.setTopCornersRadius(12, for: .collapsed)
@@ -77,7 +78,7 @@ class BottomDrawerInfiniteScrollingExample: UIViewController {
 }
 
 class DrawerContentTableViewController: UITableViewController {
-  var colorScheme: MDCSemanticColorScheme!
+  @objc var colorScheme: MDCSemanticColorScheme!
   weak var drawerVC: MDCBottomDrawerViewController!
 
   override var preferredContentSize: CGSize {
@@ -144,7 +145,7 @@ class DrawerContentTableViewController: UITableViewController {
 
 extension BottomDrawerInfiniteScrollingExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Navigation Drawer", "Bottom Drawer Infinite Scrolling"],
       "description": "Navigation Drawer",

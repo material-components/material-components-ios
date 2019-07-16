@@ -15,8 +15,8 @@
 import UIKit
 
 import MaterialComponents.MaterialButtons
-import MaterialComponentsBeta.MaterialButtons_Theming
-import MaterialComponentsBeta.MaterialContainerScheme
+import MaterialComponents.MaterialContainerScheme
+import MaterialComponents.MaterialButtons_Theming
 
 class FloatingButtonExampleSwiftViewController: UIViewController {
 
@@ -52,7 +52,7 @@ class FloatingButtonExampleSwiftViewController: UIViewController {
     largeIconFloatingButton.translatesAutoresizingMaskIntoConstraints = false
     largeIconFloatingButton.setImage(plusImage36, for: .normal)
     largeIconFloatingButton.accessibilityLabel = "Create"
-    largeIconFloatingButton.setContentEdgeInsets(UIEdgeInsetsMake(-6, -6, -6, 0), for: .default,
+    largeIconFloatingButton.setContentEdgeInsets(UIEdgeInsets(top: -6, left: -6, bottom: -6, right: 0), for: .default,
                                                  in: .expanded)
     largeIconFloatingButton.applySecondaryTheme(withScheme: containerScheme)
 
@@ -116,7 +116,7 @@ class FloatingButtonExampleSwiftViewController: UIViewController {
 
 extension FloatingButtonExampleSwiftViewController {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Buttons", "Floating Action Button (Swift)"],
       "primaryDemo": false,

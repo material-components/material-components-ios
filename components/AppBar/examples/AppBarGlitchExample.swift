@@ -14,21 +14,17 @@
 
 import UIKit
 import CoreGraphics
-
-import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialAppBar
-import MaterialComponents.MaterialAppBar_ColorThemer
-import MaterialComponents.MaterialAppBar_TypographyThemer
+import MaterialComponents.MaterialAppBar_Theming
+import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialTabs
-import MaterialComponents.MaterialTypographyScheme
 import MaterialComponents.MaterialFlexibleHeader_CanAlwaysExpandToMaximumHeight
 
 // This example demonstrates the issue found in GitHub issue #5412
 class AppBarJumpExample: UIViewController {
 
   lazy var appBarViewController: MDCAppBarViewController = self.makeAppBar()
-  var colorScheme = MDCSemanticColorScheme()
-  var typographyScheme = MDCTypographyScheme()
+  @objc var containerScheme: MDCContainerScheming = MDCContainerScheme()
 
   fileprivate let firstTab = SimpleComposedTableViewController()
   fileprivate let secondTab = SimpleComposedTableViewController()
@@ -61,19 +57,14 @@ class AppBarJumpExample: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    MDCAppBarColorThemer.applyColorScheme(colorScheme, to: appBarViewController)
-    MDCAppBarTypographyThemer.applyTypographyScheme(typographyScheme, to: appBarViewController)
+    appBarViewController.applyPrimaryTheme(withScheme: containerScheme)
 
     // Need to update the status bar style after applying the theme.
     setNeedsStatusBarAppearanceUpdate()
 
-    view.backgroundColor = colorScheme.backgroundColor
+    view.backgroundColor = containerScheme.colorScheme.backgroundColor
     view.addSubview(appBarViewController.view)
-    #if swift(>=4.2)
     appBarViewController.didMove(toParent: self)
-    #else
-    appBarViewController.didMove(toParentViewController: self)
-    #endif
 
     switchToTab(firstTab)
   }
@@ -84,9 +75,9 @@ class AppBarJumpExample: UIViewController {
 
     if let currentTab = currentTab {
       currentTab.headerView = nil
-      currentTab.willMove(toParentViewController: nil)
+      currentTab.willMove(toParent: nil)
       currentTab.view.removeFromSuperview()
-      currentTab.removeFromParentViewController()
+      currentTab.removeFromParent()
     }
 
     if let tabView = tab.view {
@@ -95,12 +86,8 @@ class AppBarJumpExample: UIViewController {
     }
 
     view.addSubview(tab.view)
-    view.sendSubview(toBack: tab.view)
-    #if swift(>=4.2)
+    view.sendSubviewToBack(tab.view)
     tab.didMove(toParent: self)
-    #else
-    tab.didMove(toParentViewController: self)
-    #endif
 
     tab.headerView = appBarViewController.headerView
 
@@ -123,7 +110,7 @@ class AppBarJumpExample: UIViewController {
   private func makeAppBar() -> MDCAppBarViewController {
     let appBarViewController = MDCAppBarViewController()
 
-    addChildViewController(appBarViewController)
+    addChild(appBarViewController)
 
     // Give the tab bar enough height to accomodate all possible item appearances.
     appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
@@ -139,7 +126,7 @@ class AppBarJumpExample: UIViewController {
     return appBarViewController
   }
 
-  override var childViewControllerForStatusBarStyle: UIViewController? {
+  override var childForStatusBarStyle: UIViewController? {
     return appBarViewController
   }
 }
@@ -156,7 +143,7 @@ extension AppBarJumpExample: MDCTabBarDelegate {
 
 extension AppBarJumpExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["App Bar", "Manual Tabs Jump"],
       "primaryDemo": false,

@@ -34,11 +34,9 @@ class AppBarWrappingLegacyTopLayoutGuideTests: XCTestCase {
     // Then
     XCTAssertNil(container.appBar.headerViewController.topLayoutGuideViewController)
     XCTAssertEqual(contentViewController.topLayoutGuide.length, 0)
-    #if swift(>=3.2)
     if #available(iOS 11.0, *) {
       XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top, 0)
     }
-    #endif
   }
 
   // MARK: Untracked table view
@@ -57,12 +55,10 @@ class AppBarWrappingLegacyTopLayoutGuideTests: XCTestCase {
     // Then
     XCTAssertNil(container.appBar.headerViewController.topLayoutGuideViewController)
     XCTAssertEqual(contentViewController.topLayoutGuide.length, 0)
-    #if swift(>=3.2)
     if #available(iOS 11.0, *) {
       XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top, 0)
       XCTAssertEqual(contentViewController.tableView.adjustedContentInset.top, 0)
     }
-    #endif
   }
 
   // MARK: Tracked table view
@@ -84,14 +80,12 @@ class AppBarWrappingLegacyTopLayoutGuideTests: XCTestCase {
     // Then
     XCTAssertNil(container.appBar.headerViewController.topLayoutGuideViewController)
     XCTAssertEqual(contentViewController.topLayoutGuide.length, 0)
-    #if swift(>=3.2)
     if #available(iOS 11.0, *) {
       XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top, 0)
       XCTAssertEqual(contentViewController.tableView.adjustedContentInset.top,
                      container.appBar.headerViewController.headerView.maximumHeight
                       + MDCDeviceTopSafeAreaInset())
     }
-    #endif
   }
 
   // MARK: Untracked collection view
@@ -111,12 +105,10 @@ class AppBarWrappingLegacyTopLayoutGuideTests: XCTestCase {
     // Then
     XCTAssertNil(container.appBar.headerViewController.topLayoutGuideViewController)
     XCTAssertEqual(contentViewController.topLayoutGuide.length, 0)
-    #if swift(>=3.2)
     if #available(iOS 11.0, *) {
       XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top, 0)
       XCTAssertEqual(contentViewController.collectionView!.adjustedContentInset.top, 0)
     }
-    #endif
   }
 
   // MARK: Tracked collection view
@@ -140,14 +132,12 @@ class AppBarWrappingLegacyTopLayoutGuideTests: XCTestCase {
     // Then
     XCTAssertNil(container.appBar.headerViewController.topLayoutGuideViewController)
     XCTAssertEqual(contentViewController.topLayoutGuide.length, 0)
-    #if swift(>=3.2)
     if #available(iOS 11.0, *) {
       XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top, 0)
       XCTAssertEqual(contentViewController.collectionView!.adjustedContentInset.top,
                      container.appBar.headerViewController.headerView.maximumHeight
                       + MDCDeviceTopSafeAreaInset())
     }
-    #endif
   }
 
 }

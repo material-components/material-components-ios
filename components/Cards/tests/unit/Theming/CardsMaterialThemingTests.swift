@@ -16,10 +16,10 @@ import XCTest
 
 import MaterialComponents.MaterialCards
 import MaterialComponents.MaterialColorScheme
+import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialShapeLibrary
 import MaterialComponents.MaterialShapeScheme
-import MaterialComponentsBeta.MaterialCards_Theming
-import MaterialComponentsBeta.MaterialContainerScheme
+import MaterialComponents.MaterialCards_Theming
 
 class CardsMaterialThemingTests: XCTestCase {
 
@@ -99,7 +99,7 @@ class CardsMaterialThemingTests: XCTestCase {
     }
 
     // Test remaining properties
-    [UIControlState.normal, .highlighted, .selected, .disabled].forEach {
+    [UIControl.State.normal, .highlighted, .selected, .disabled].forEach {
       XCTAssertEqual(card.shadowElevation(for: $0),
                      ShadowElevation.none,
                      "Shadow elevation incorrect for state \($0)")

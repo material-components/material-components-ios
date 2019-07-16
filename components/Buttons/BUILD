@@ -38,6 +38,7 @@ mdc_public_objc_library(
     ],
     deps = [
         "//components/Ink",
+        "//components/Ripple",
         "//components/ShadowElevations",
         "//components/ShadowLayer",
         "//components/ShapeLibrary",
@@ -54,7 +55,6 @@ mdc_extension_objc_library(
         ":Buttons",
         ":ColorThemer",
         ":ShapeThemer",
-        ":TypographyThemer",
         "//components/ShadowElevations",
         "//components/schemes/Container",
     ],
@@ -169,6 +169,7 @@ mdc_objc_library(
         ":TypographyThemer",
         ":private",
         "//components/Palettes",
+        "//components/Typography",
     ],
 )
 
@@ -180,7 +181,7 @@ swift_library(
     ]),
     copts = [
         "-swift-version",
-        "3",
+        "4.2",
     ],
     visibility = ["//visibility:private"],
     deps = [
@@ -204,6 +205,7 @@ mdc_snapshot_objc_library(
     name = "snapshot_test_lib",
     deps = [
         ":Buttons",
+        ":Theming",
     ],
 )
 

@@ -15,8 +15,9 @@ Each release is driven by a single **release engineer**, who is also a Googler. 
 is expected to do the following, in order of priority:
 
 - Do not break Google.
-- Cut a release by first thing Wednesday morning, NYC time, without exception.
-- Land a release at least once a week.
+- Cut a release early in the working calendar week.
+- Land a release at least once every calendar week.
+- (Optional) Share something new with the team while you're waiting for tests to pass.
 
 If something is stopping the release engineer from achieving any of the above goals, the culprit
 code should be removed immediately from the release.
@@ -28,6 +29,16 @@ typical weekly release.
 
 If you are not able to cut a release Wednesday morning, cut it Tuesday evening before you leave the
 office.
+
+Please post regular updates about the status of the release to the team's chat room. This helps inform the
+team of the status of the release, and also encourages team problem solving in the event that something is
+stuck. At minimum, the following inflection points should be noted:
+
+- The release is being initiated.
+- Internal testing of the release has begun.
+- Internal testing of the release has ended.
+- The release has been submitted internally.
+- The release has been published to CocoaPods.
 
 For Googlers, also read [go/mdc-release-engineering](http://go/mdc-release-engineering) for additional details.
 
@@ -44,7 +55,7 @@ Please follow [using git-lfs instructions](https://github.com/material-component
 
 Verify that xcode-select is pointing to an Xcode installation directory:
 
-    sudo xcode-select -p
+    xcode-select -p
     
     # Example output:
     # /Applications/Xcode.app/Contents/Developer
@@ -121,7 +132,7 @@ exception to our normal squash-and-merge procedure.
 
 ### Start internal testing
 
-You can now start the internal release testing process documented at [go/mdc-releasing](http://go/mdc-releasing#import-the-release-candidate).
+You can now start the internal release testing process documented at [go/mdc-releasing](http://go/mdc-releasing#requirements).
 
 ### Resolve any failures
 
@@ -329,7 +340,7 @@ You can now publish the release to GitHub:
 ## Publish to Cocoapods
 
     git checkout stable
-    pod trunk push MaterialComponents.podspec --skip-tests
+    pod trunk push MaterialComponents.podspec --skip-tests --allow-warnings
 
 ## Coordinate with release-blocking clients to finish work
 

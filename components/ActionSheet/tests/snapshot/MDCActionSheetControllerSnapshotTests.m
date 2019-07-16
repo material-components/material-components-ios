@@ -50,6 +50,22 @@ static NSString *const kLongTitle4Arabic =
 static NSString *const kLongTitle5Arabic =
     @"بلا العظمى الدنمارك من, كلّ المارق لإعلان بالحرب ما, بخطوط مشروط عل دنو.";
 
+/**
+ A custom superview that supports setting `safeAreaInsets` used for testing the Action Sheet
+ controller.
+ */
+@interface MDCActionSheetControllerSnapshotTestsSuperview : UIView
+@property(nonatomic, assign) UIEdgeInsets customSafeAreaInsets;
+@end
+
+@implementation MDCActionSheetControllerSnapshotTestsSuperview
+
+- (UIEdgeInsets)safeAreaInsets {
+  return _customSafeAreaInsets;
+}
+
+@end
+
 /** Snapshot tests for MDCActionSheetController's view. */
 @interface MDCActionSheetControllerSnapshotTests : MDCSnapshotTestCase
 
@@ -439,6 +455,258 @@ static NSString *const kLongTitle5Arabic =
   [controller.view layoutIfNeeded];
   [self changeViewToRTL:controller.view];
   controller.view.bounds = CGRectMake(0, 0, 120, 480);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:controller.view];
+}
+
+#pragma mark - Safe Area
+
+- (void)testSafeAreaTopLeftBottomRightLTR {
+  // Given
+  MDCActionSheetControllerSnapshotTestsSuperview *superview =
+      [[MDCActionSheetControllerSnapshotTestsSuperview alloc]
+          initWithFrame:CGRectMake(0, 0, 360, 240)];
+  MDCActionSheetAction *action1 = [MDCActionSheetAction
+      actionWithTitle:kLongTitle1Latin
+                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
+                                         withStyle:MDCSnapshotTestImageStyleCheckerboard]
+              handler:nil];
+
+  MDCActionSheetController *controller =
+      [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Latin
+                                                       message:kLongTitle2Latin];
+  [controller addAction:action1];
+  [superview addSubview:controller.view];
+  controller.view.frame = superview.bounds;
+
+  // When
+  superview.customSafeAreaInsets = UIEdgeInsetsMake(90, 80, 40, 20);
+  [controller.view setNeedsLayout];
+  [controller.view layoutIfNeeded];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:superview];
+}
+
+- (void)testSafeAreaTopLeftBottomRightRTL {
+  // Given
+  MDCActionSheetControllerSnapshotTestsSuperview *superview =
+      [[MDCActionSheetControllerSnapshotTestsSuperview alloc]
+          initWithFrame:CGRectMake(0, 0, 360, 240)];
+  MDCActionSheetAction *action1 = [MDCActionSheetAction
+      actionWithTitle:kLongTitle1Arabic
+                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
+                                         withStyle:MDCSnapshotTestImageStyleCheckerboard]
+              handler:nil];
+
+  MDCActionSheetController *controller =
+      [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Arabic
+                                                       message:kLongTitle2Arabic];
+  [controller addAction:action1];
+  [superview addSubview:controller.view];
+  controller.view.frame = superview.bounds;
+
+  // When
+  superview.customSafeAreaInsets = UIEdgeInsetsMake(90, 80, 40, 20);
+  [self changeViewToRTL:controller.view];
+  [controller.view setNeedsLayout];
+  [controller.view layoutIfNeeded];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:superview];
+}
+
+- (void)testSafeAreaTopLeftLTR {
+  // Given
+  MDCActionSheetControllerSnapshotTestsSuperview *superview =
+      [[MDCActionSheetControllerSnapshotTestsSuperview alloc]
+          initWithFrame:CGRectMake(0, 0, 360, 240)];
+  MDCActionSheetAction *action1 = [MDCActionSheetAction
+      actionWithTitle:kLongTitle1Latin
+                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
+                                         withStyle:MDCSnapshotTestImageStyleCheckerboard]
+              handler:nil];
+
+  MDCActionSheetController *controller =
+      [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Latin
+                                                       message:kLongTitle2Latin];
+  [controller addAction:action1];
+  [superview addSubview:controller.view];
+  controller.view.frame = superview.bounds;
+
+  // When
+  superview.customSafeAreaInsets = UIEdgeInsetsMake(120, 120, 0, 0);
+  [controller.view setNeedsLayout];
+  [controller.view layoutIfNeeded];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:superview];
+}
+
+- (void)testSafeAreaTopLeftRTL {
+  // Given
+  MDCActionSheetControllerSnapshotTestsSuperview *superview =
+      [[MDCActionSheetControllerSnapshotTestsSuperview alloc]
+          initWithFrame:CGRectMake(0, 0, 360, 240)];
+  MDCActionSheetAction *action1 = [MDCActionSheetAction
+      actionWithTitle:kLongTitle1Arabic
+                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
+                                         withStyle:MDCSnapshotTestImageStyleCheckerboard]
+              handler:nil];
+
+  MDCActionSheetController *controller =
+      [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Arabic
+                                                       message:kLongTitle2Arabic];
+  [controller addAction:action1];
+  [superview addSubview:controller.view];
+  controller.view.frame = superview.bounds;
+
+  // When
+  superview.customSafeAreaInsets = UIEdgeInsetsMake(120, 120, 0, 0);
+  [self changeViewToRTL:controller.view];
+  [controller.view setNeedsLayout];
+  [controller.view layoutIfNeeded];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:superview];
+}
+
+- (void)testSafeAreaBottomRightLTR {
+  // Given
+  MDCActionSheetControllerSnapshotTestsSuperview *superview =
+      [[MDCActionSheetControllerSnapshotTestsSuperview alloc]
+          initWithFrame:CGRectMake(0, 0, 360, 240)];
+  MDCActionSheetAction *action1 = [MDCActionSheetAction
+      actionWithTitle:kLongTitle1Latin
+                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
+                                         withStyle:MDCSnapshotTestImageStyleCheckerboard]
+              handler:nil];
+
+  MDCActionSheetController *controller =
+      [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Latin
+                                                       message:kLongTitle2Latin];
+  [controller addAction:action1];
+  [superview addSubview:controller.view];
+  controller.view.frame = superview.bounds;
+
+  // When
+  superview.customSafeAreaInsets = UIEdgeInsetsMake(0, 0, 80, 80);
+  [controller.view setNeedsLayout];
+  [controller.view layoutIfNeeded];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:superview];
+}
+
+- (void)testSafeAreaBottomRightRTL {
+  // Given
+  MDCActionSheetControllerSnapshotTestsSuperview *superview =
+      [[MDCActionSheetControllerSnapshotTestsSuperview alloc]
+          initWithFrame:CGRectMake(0, 0, 360, 240)];
+  MDCActionSheetAction *action1 = [MDCActionSheetAction
+      actionWithTitle:kLongTitle1Arabic
+                image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)
+                                         withStyle:MDCSnapshotTestImageStyleCheckerboard]
+              handler:nil];
+
+  MDCActionSheetController *controller =
+      [MDCActionSheetController actionSheetControllerWithTitle:kLongTitle4Arabic
+                                                       message:kLongTitle2Arabic];
+  [controller addAction:action1];
+  [superview addSubview:controller.view];
+  controller.view.frame = superview.bounds;
+
+  // When
+  superview.customSafeAreaInsets = UIEdgeInsetsMake(0, 0, 80, 80);
+  [self changeViewToRTL:controller.view];
+  [controller.view setNeedsLayout];
+  [controller.view layoutIfNeeded];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:superview];
+}
+
+- (void)testActionSheetWhenActionsOnlyHaveTitles {
+  // Given
+  MDCActionSheetAction *action1 = [MDCActionSheetAction actionWithTitle:kShortTitle1Latin
+                                                                  image:nil
+                                                                handler:nil];
+  MDCActionSheetAction *action2 = [MDCActionSheetAction actionWithTitle:kShortTitle2Latin
+                                                                  image:nil
+                                                                handler:nil];
+  MDCActionSheetController *controller =
+      [MDCActionSheetController actionSheetControllerWithTitle:nil];
+  [controller addAction:action1];
+  [controller addAction:action2];
+
+  // When
+  controller.view.bounds = CGRectMake(0, 0, 320, 200);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:controller.view];
+}
+
+- (void)testActionSheetWhenActionsOnlyHaveTitlesAndAlignTitlesEnabled {
+  // Given
+  MDCActionSheetAction *action1 = [MDCActionSheetAction actionWithTitle:kShortTitle1Latin
+                                                                  image:nil
+                                                                handler:nil];
+  MDCActionSheetAction *action2 = [MDCActionSheetAction actionWithTitle:kShortTitle2Latin
+                                                                  image:nil
+                                                                handler:nil];
+  MDCActionSheetController *controller =
+      [MDCActionSheetController actionSheetControllerWithTitle:nil];
+  [controller addAction:action1];
+  [controller addAction:action2];
+
+  // When
+  controller.alwaysAlignTitleLeadingEdges = YES;
+  controller.view.bounds = CGRectMake(0, 0, 320, 200);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:controller.view];
+}
+
+- (void)testActionSheetWhenSomeActionsHaveIconsAndTitlesAndSomeActionsOnlyHaveTitles {
+  // Given
+  MDCActionSheetAction *action1 =
+      [MDCActionSheetAction actionWithTitle:kShortTitle1Latin
+                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
+                                    handler:nil];
+  MDCActionSheetAction *action2 = [MDCActionSheetAction actionWithTitle:kShortTitle2Latin
+                                                                  image:nil
+                                                                handler:nil];
+  MDCActionSheetController *controller =
+      [MDCActionSheetController actionSheetControllerWithTitle:nil];
+  [controller addAction:action1];
+  [controller addAction:action2];
+
+  // When
+  controller.view.bounds = CGRectMake(0, 0, 320, 200);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:controller.view];
+}
+
+- (void)
+    testActionSheetWhenSomeActionsHaveIconsAndTitlesAndSomeActionsOnlyHavingTitlesAndAlignTitlesEnabled {
+  // Given
+  MDCActionSheetAction *action1 =
+      [MDCActionSheetAction actionWithTitle:kShortTitle1Latin
+                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
+                                    handler:nil];
+  MDCActionSheetAction *action2 = [MDCActionSheetAction actionWithTitle:kShortTitle2Latin
+                                                                  image:nil
+                                                                handler:nil];
+  MDCActionSheetController *controller =
+      [MDCActionSheetController actionSheetControllerWithTitle:nil];
+  [controller addAction:action1];
+  [controller addAction:action2];
+
+  // When
+  controller.alwaysAlignTitleLeadingEdges = YES;
+  controller.view.bounds = CGRectMake(0, 0, 320, 200);
 
   // Then
   [self generateSnapshotAndVerifyForView:controller.view];

@@ -235,6 +235,7 @@ static UIButton *DeleteButton() {
 @implementation ChipModel
 
 - (void)apply:(MDCChipView *)chipView {
+  chipView.enableRippleBehavior = YES;
   chipView.titleLabel.text = self.title;
   chipView.imageView.image = self.showProfilePic ? [self faceImage] : nil;
   chipView.selectedImageView.image = self.showDoneImage ? [self doneImage] : nil;

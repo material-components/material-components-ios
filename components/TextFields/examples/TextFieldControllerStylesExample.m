@@ -100,13 +100,15 @@
 
   [self.textFieldControllerFilled mdc_setAdjustsFontForContentSizeCategory:YES];
 
+  id<UILayoutSupport> topGuide = self.topLayoutGuide;
   [NSLayoutConstraint
       activateConstraints:[NSLayoutConstraint
-                              constraintsWithVisualFormat:@"V:[charMax]-[floating]"
+                              constraintsWithVisualFormat:@"V:[topGuide]-[charMax]-[floating]"
                                                   options:NSLayoutFormatAlignAllLeading |
                                                           NSLayoutFormatAlignAllTrailing
                                                   metrics:nil
                                                     views:@{
+                                                      @"topGuide" : topGuide,
                                                       @"charMax" : textFieldOutlined,
                                                       @"floating" : textFieldFilled
                                                     }]];

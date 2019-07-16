@@ -18,7 +18,7 @@ import MaterialComponents.MaterialColorScheme
 
 class BottomNavigationTypicalUseSwiftExample: UIViewController {
 
-  var colorScheme = MDCSemanticColorScheme()
+  @objc var colorScheme = MDCSemanticColorScheme()
 
   // Create a bottom navigation bar to add to a view.
   let bottomNavBar = MDCBottomNavigationBar()
@@ -70,7 +70,7 @@ class BottomNavigationTypicalUseSwiftExample: UIViewController {
 // MARK: Catalog by convention
 extension BottomNavigationTypicalUseSwiftExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Bottom Navigation", "Bottom Navigation (Swift)"],
       "primaryDemo": false,

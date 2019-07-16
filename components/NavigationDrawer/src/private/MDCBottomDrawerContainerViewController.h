@@ -85,6 +85,11 @@
  */
 @property(nonatomic, nullable) UIViewController<MDCBottomDrawerHeader> *headerViewController;
 
+/**
+ The header's shadow color. Defaults to black with 20% opacity.
+ */
+@property(nonatomic, strong, nullable) UIColor *headerShadowColor;
+
 // The original presenting view controller.
 @property(nonatomic, readonly, nonnull) UIViewController *originalPresentingViewController;
 
@@ -119,6 +124,24 @@
  Defaults to 0.
  */
 @property(nonatomic, assign) CGFloat addedHeight;
+
+/**
+ The height of the drawer at initial layout. This is an absolute point-based value.
+
+ Defaults to 50% of the screens height.
+
+ @note In VoiceOver, SwitchControl, and UIUserInterfaceSizeClassCompact (mobile landscape) the
+ value will equal to 100% of the screens height.
+ */
+@property(nonatomic, assign) CGFloat maximumInitialDrawerHeight;
+
+/**
+ A flag allowing clients to opt-in to the drawer adding additional height to the content to include
+ the bottom safe area inset. This will remove the need for clients to calculate their content size
+ with the bottom safe area when setting the preferredContentSize of the contentViewController.
+ Defaults to NO.
+ */
+@property(nonatomic, assign) BOOL shouldIncludeSafeAreaInContentHeight;
 
 /**
  Sets the content offset Y of the drawer's content. If contentOffsetY is set to 0, the

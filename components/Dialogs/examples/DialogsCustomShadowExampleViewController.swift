@@ -15,10 +15,10 @@
 import UIKit
 
 import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialButtons_Theming
+import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialDialogs
-import MaterialComponentsBeta.MaterialButtons_Theming
-import MaterialComponentsBeta.MaterialContainerScheme
-import MaterialComponentsBeta.MaterialDialogs_Theming
+import MaterialComponents.MaterialDialogs_Theming
 
 class CustomShadowViewController: UIViewController {
 
@@ -32,7 +32,7 @@ class CustomShadowViewController: UIViewController {
     // Setting the corner radius of the view's layer will propagate to the shadow
     // layer when the view is presented by MDCDailogPresentationController.
     // Note that setting the corner radius in viewDidLoad is not recommended, since it
-    // will be overriden if callers apply a themer to the MDCDailogPresentationController instance.
+    // will be overridden if callers apply a themer to the MDCDailogPresentationController instance.
     self.view.layer.cornerRadius = 32.0
 
     bodyLabel.text =
@@ -63,15 +63,15 @@ class DialogsCustomShadowExampleViewController: UIViewController {
 
   let textButton = MDCButton()
   let transitionController = MDCDialogTransitionController()
-  var containerScheme: MDCContainerScheming = MDCContainerScheme()
+  @objc var containerScheme: MDCContainerScheming = MDCContainerScheme()
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
     view.backgroundColor = containerScheme.colorScheme.backgroundColor
 
-    textButton.setTitle("PRESENT ALERT", for: UIControlState())
-    textButton.setTitleColor(UIColor(white: 0.1, alpha:1), for: UIControlState())
+    textButton.setTitle("PRESENT ALERT", for: UIControl.State())
+    textButton.setTitleColor(UIColor(white: 0.1, alpha:1), for: UIControl.State())
     textButton.sizeToFit()
     textButton.translatesAutoresizingMaskIntoConstraints = false
     textButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
@@ -112,7 +112,7 @@ class DialogsCustomShadowExampleViewController: UIViewController {
 
   // MARK: Catalog by convention
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Dialogs", "View with Corner Radius"],
       "primaryDemo": false,

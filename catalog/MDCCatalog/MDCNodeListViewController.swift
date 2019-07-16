@@ -24,13 +24,13 @@ import MaterialComponents.MaterialButtons_ButtonThemer
 import MaterialComponents.MaterialCollections
 import MaterialComponents.MaterialTypography
 import MaterialComponents.MaterialFlexibleHeader_ColorThemer
-import MaterialComponentsBeta.MaterialButtons_Theming
+import MaterialComponents.MaterialButtons_Theming
 
 class NodeViewTableViewDemoCell: UITableViewCell {
 
   let label = UILabel()
 
-  override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+  override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
     textLabel!.font = MDCTypography.subheadFont()
     imageView!.image = UIImage(named: "Demo")
@@ -95,7 +95,7 @@ class NodeViewTableViewPrimaryDemoCell: UITableViewCell {
 
   let containedButton = MDCButton()
 
-  override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+  override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     setupContainedButton()
   }
@@ -213,14 +213,10 @@ class MDCNodeListViewController: CBCNodeListViewController {
     additionalExamplesSectionHeader = createAdditionalExamplesSectionHeader()
     self.tableView.backgroundColor = UIColor.white
     self.tableView.separatorStyle = .none
-    self.tableView.sectionHeaderHeight = UITableViewAutomaticDimension
+    self.tableView.sectionHeaderHeight = UITableView.automaticDimension
 
     var charactersCount = 0
-    #if swift(>=3.2)
-      charactersCount = node.title.count
-    #else
-      charactersCount = node.title.characters.count
-    #endif
+    charactersCount = node.title.count
     if charactersCount > 0 {
       self.tableView.accessibilityIdentifier = "Table" + node.title
     } else {
@@ -239,7 +235,7 @@ class MDCNodeListViewController: CBCNodeListViewController {
     self.navigationController?.setNavigationBarHidden(true, animated: animated)
   }
 
-  func themeDidChange(notification: NSNotification) {
+  @objc func themeDidChange(notification: NSNotification) {
     setNeedsStatusBarAppearanceUpdate()
     self.tableView.reloadData()
   }
@@ -298,7 +294,7 @@ extension MDCNodeListViewController {
     sectionTitleLabel.translatesAutoresizingMaskIntoConstraints = false
     sectionTitleLabel.text = sectionNames[1]
     sectionTitleLabel.numberOfLines = 0
-    sectionTitleLabel.setContentCompressionResistancePriority(1000, for: .vertical)
+    sectionTitleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
 
     sectionView.addSubview(lineDivider)
     sectionView.addSubview(sectionTitleLabel)
@@ -368,7 +364,6 @@ extension MDCNodeListViewController {
         constant: self.padding).isActive = true
     }
     // Title Label to Section View
-    #if swift(>=3.2)
     if #available(iOS 11.0, *) {
       // Align to the safe area insets.
       sectionTitleLabel.leadingAnchor
@@ -380,9 +375,6 @@ extension MDCNodeListViewController {
     } else {
       preiOS11Behavior()
     }
-    #else
-    preiOS11Behavior()
-    #endif
 
      NSLayoutConstraint(
       item: sectionView,
@@ -405,7 +397,7 @@ extension MDCNodeListViewController {
     sectionTitleLabel.translatesAutoresizingMaskIntoConstraints = false
     sectionTitleLabel.text = sectionNames[0]
     sectionTitleLabel.numberOfLines = 0
-    sectionTitleLabel.setContentCompressionResistancePriority(1000, for: .vertical)
+    sectionTitleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
     mainSectionHeaderTitleLabel = sectionTitleLabel
 
     let descriptionLabel = UILabel()
@@ -413,14 +405,14 @@ extension MDCNodeListViewController {
 
     let paragraphStyle = NSMutableParagraphStyle()
     paragraphStyle.lineSpacing = descriptionLineHeight - descriptionLabel.font.lineHeight
-    let attrs = [NSParagraphStyleAttributeName: paragraphStyle]
+    let attrs = [NSAttributedString.Key.paragraphStyle: paragraphStyle]
 
     descriptionLabel.attributedText =
         NSAttributedString(string:componentDescription, attributes:attrs)
     descriptionLabel.alpha = MDCTypography.body1FontOpacity()
     descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
     descriptionLabel.numberOfLines = 0
-    descriptionLabel.setContentCompressionResistancePriority(1000, for: .vertical)
+    descriptionLabel.setContentCompressionResistancePriority(.required, for: .vertical)
     mainSectionHeaderDescriptionLabel = descriptionLabel
 
     sectionView.addSubview(sectionTitleLabel)
@@ -445,7 +437,6 @@ extension MDCNodeListViewController {
         multiplier: 1.0,
         constant: self.padding).isActive = true
     }
-    #if swift(>=3.2)
     if #available(iOS 11.0, *) {
       // Align to the safe area insets.
       sectionTitleLabel.leadingAnchor
@@ -457,9 +448,6 @@ extension MDCNodeListViewController {
     } else {
       preiOS11Behavior()
     }
-    #else
-    preiOS11Behavior()
-    #endif
 
     NSLayoutConstraint(
       item: sectionTitleLabel,
@@ -555,7 +543,7 @@ extension MDCNodeListViewController {
     return true
   }
 
-  func primaryDemoButtonClicked () {
+  @objc func primaryDemoButtonClicked () {
     let indexPath = IndexPath(row: 0, section: Section.description.rawValue)
     self.tableView(self.tableView, didSelectRowAt: indexPath)
   }

@@ -19,6 +19,9 @@
 
 /**
  Objects conforming to MDCListScheming provide themers for each subsystem relevant to List Items.
+
+ @warning This API will eventually be deprecated. The replacement API is: `MDCContainerScheming`.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 @protocol MDCListScheming
 
@@ -36,6 +39,9 @@
 
 /**
  MDCListScheme is a concrete implementation of MDCListScheming.
+
+ @warning This API will eventually be deprecated. The replacement API is: `MDCContainerScheme`.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 @interface MDCListScheme : NSObject <MDCListScheming>
 

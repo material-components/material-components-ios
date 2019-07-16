@@ -27,7 +27,7 @@
 
 @end
 
-@interface MDCInkView () <CALayerDelegate, MDCInkLayerDelegate>
+@interface MDCInkView () <CALayerDelegate, MDCInkLayerDelegate, MDCLegacyInkLayerDelegate>
 
 @property(nonatomic, strong) CAShapeLayer *maskLayer;
 @property(nonatomic, copy) MDCInkCompletionBlock startInkRippleCompletionBlock;
@@ -74,6 +74,8 @@
   // Use mask layer when the superview has a shadowPath.
   _maskLayer = [CAShapeLayer layer];
   _maskLayer.delegate = self;
+
+  self.inkLayer.animationDelegate = self;
 }
 
 - (void)layoutSubviews {
@@ -259,6 +261,20 @@
     [view addSubview:foundInkView];
   }
   return foundInkView;
+}
+
+#pragma mark - MDCLegacyInkLayerDelegate
+
+- (void)legacyInkLayerAnimationDidStart:(MDCLegacyInkLayer *)inkLayer {
+  if ([self.animationDelegate respondsToSelector:@selector(inkAnimationDidStart:)]) {
+    [self.animationDelegate inkAnimationDidStart:self];
+  }
+}
+
+- (void)legacyInkLayerAnimationDidEnd:(MDCLegacyInkLayer *)inkLayer {
+  if ([self.animationDelegate respondsToSelector:@selector(inkAnimationDidEnd:)]) {
+    [self.animationDelegate inkAnimationDidEnd:self];
+  }
 }
 
 #pragma mark - MDCInkLayerDelegate

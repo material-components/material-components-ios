@@ -14,13 +14,13 @@
 
 import XCTest
 
+import MaterialComponents.MaterialButtons_Theming
 import MaterialComponents.MaterialDialogs
+import MaterialComponents.MaterialDialogs_Theming
 import MaterialComponents.MaterialColorScheme
+import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialTypographyScheme
 import MaterialComponents.MaterialShadowElevations
-import MaterialComponentsBeta.MaterialContainerScheme
-import MaterialComponentsBeta.MaterialButtons_Theming
-import MaterialComponentsBeta.MaterialDialogs_Theming
 
 class DialogsMaterialThemingTests: XCTestCase {
 
@@ -93,7 +93,7 @@ class DialogsMaterialThemingTests: XCTestCase {
         XCTAssertEqual(button.titleColor(for: .normal), colorScheme.primaryColor)
         XCTAssertEqual(button.titleColor(for: .disabled), colorScheme.onSurfaceColor.withAlphaComponent(0.38))
         XCTAssertEqual(button.disabledAlpha,1)
-        XCTAssertEqual(button.inkColor,colorScheme.primaryColor.withAlphaComponent(0.16))
+        XCTAssertEqual(button.inkColor,colorScheme.primaryColor.withAlphaComponent(0.12))
         XCTAssertEqual(button.borderColor(for: .normal), colorScheme.onSurfaceColor.withAlphaComponent(0.12))
         // Test shape
         XCTAssertEqual(button.layer.cornerRadius, kCornerRadius, accuracy: 0.001)

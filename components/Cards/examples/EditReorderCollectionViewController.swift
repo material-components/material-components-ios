@@ -15,8 +15,8 @@
 import UIKit
 
 import MaterialComponents.MaterialColorScheme
+import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialTypographyScheme
-import MaterialComponentsBeta.MaterialContainerScheme
 
 class EditReorderCollectionViewController: UIViewController,
   UICollectionViewDelegate,
@@ -31,7 +31,7 @@ class EditReorderCollectionViewController: UIViewController,
                                         collectionViewLayout: UICollectionViewFlowLayout())
   var toggle = ToggleMode.edit
 
-  var containerScheme: MDCContainerScheming
+  @objc var containerScheme: MDCContainerScheming
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     containerScheme = MDCContainerScheme()
@@ -83,21 +83,17 @@ class EditReorderCollectionViewController: UIViewController,
       dataSource.append((image: images[ind].image, title: images[ind].title, selected: false))
     }
 
-    #if swift(>=3.2)
-      if #available(iOS 11, *) {
-        let guide = view.safeAreaLayoutGuide
-        NSLayoutConstraint.activate([
-          collectionView.leftAnchor.constraint(equalTo: guide.leftAnchor),
-          collectionView.rightAnchor.constraint(equalTo: guide.rightAnchor),
-          collectionView.topAnchor.constraint(equalTo: view.topAnchor),
-          collectionView.bottomAnchor.constraint(equalTo: guide.bottomAnchor)])
-        collectionView.contentInsetAdjustmentBehavior = .always
-      } else {
-        preiOS11Constraints()
-      }
-    #else
+    if #available(iOS 11, *) {
+      let guide = view.safeAreaLayoutGuide
+      NSLayoutConstraint.activate([
+        collectionView.leftAnchor.constraint(equalTo: guide.leftAnchor),
+        collectionView.rightAnchor.constraint(equalTo: guide.rightAnchor),
+        collectionView.topAnchor.constraint(equalTo: view.topAnchor),
+        collectionView.bottomAnchor.constraint(equalTo: guide.bottomAnchor)])
+      collectionView.contentInsetAdjustmentBehavior = .always
+    } else {
       preiOS11Constraints()
-    #endif
+    }
 
     self.updateTitle()
   }
@@ -124,7 +120,7 @@ class EditReorderCollectionViewController: UIViewController,
     }
   }
 
-  func toggleModes() {
+  @objc func toggleModes() {
     switch toggle {
     case .edit:
       toggle = .reorder
@@ -250,7 +246,7 @@ class EditReorderCollectionViewController: UIViewController,
 
 extension EditReorderCollectionViewController {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Cards", "Edit/Reorder"],
       "primaryDemo": false,

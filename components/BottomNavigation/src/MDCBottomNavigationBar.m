@@ -22,6 +22,7 @@
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
+#import "private/MDCBottomNavigationBar+Private.h"
 #import "private/MDCBottomNavigationItemView.h"
 #import "private/MaterialBottomNavigationStrings.h"
 #import "private/MaterialBottomNavigationStrings_table.h"
@@ -53,7 +54,11 @@ static NSString *const kTitlePositionAdjustment = @"titlePositionAdjustment";
 
 static NSString *const kOfAnnouncement = @"of";
 
-@interface MDCBottomNavigationBar () <MDCInkTouchControllerDelegate>
+@interface MDCBottomNavigationBar () <MDCInkTouchControllerDelegate,
+                                      MDCRippleTouchControllerDelegate>
+
+// Declared in MDCBottomNavigationBar (ToBeDeprecated)
+@property(nonatomic, assign) BOOL sizeThatFitsIncludesSafeArea;
 
 @property(nonatomic, assign) BOOL itemsDistributed;
 @property(nonatomic, readonly) BOOL isTitleBelowIcon;
@@ -99,7 +104,8 @@ static NSString *const kOfAnnouncement = @"of";
   _itemsDistributed = YES;
   _barTintColor = [UIColor whiteColor];
   _truncatesLongTitles = YES;
-  _sizeThatFitsIncludesSafeArea = YES;
+  _sizeThatFitsIncludesSafeArea = NO;
+  _titlesNumberOfLines = 1;
 
   // Remove any unarchived subviews and reconfigure the view hierarchy
   if (self.subviews.count) {
@@ -147,6 +153,9 @@ static NSString *const kOfAnnouncement = @"of";
 #endif
   _elevation = MDCShadowElevationBottomNavigationBar;
   [(MDCShadowLayer *)self.layer setElevation:_elevation];
+  UIColor *defaultShadowColor = UIColor.blackColor;
+  _shadowColor = defaultShadowColor;
+  self.layer.shadowColor = defaultShadowColor.CGColor;
   _itemViews = [NSMutableArray array];
   _itemTitleFont = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleCaption];
 
@@ -171,6 +180,7 @@ static NSString *const kOfAnnouncement = @"of";
   CGRect standardBounds = CGRectStandardize(self.bounds);
   self.blurEffectView.frame = standardBounds;
   self.barView.frame = standardBounds;
+  self.layer.shadowColor = self.shadowColor.CGColor;
 
   CGSize size = standardBounds.size;
   if (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
@@ -224,6 +234,12 @@ static NSString *const kOfAnnouncement = @"of";
 - (void)setElevation:(MDCShadowElevation)elevation {
   _elevation = elevation;
   [(MDCShadowLayer *)self.layer setElevation:elevation];
+}
+
+- (void)setShadowColor:(UIColor *)shadowColor {
+  UIColor *shadowColorCopy = [shadowColor copy];
+  _shadowColor = shadowColorCopy;
+  self.layer.shadowColor = shadowColorCopy.CGColor;
 }
 
 - (BOOL)isTitleBelowIcon {
@@ -461,14 +477,27 @@ static NSString *const kOfAnnouncement = @"of";
   return _itemViews[itemIndex];
 }
 
-#pragma mark - Touch handlers
+- (UITabBarItem *)tabBarItemForPoint:(CGPoint)point {
+  for (NSUInteger i = 0; (i < self.itemViews.count) && (i < self.items.count); i++) {
+    UIView *itemView = self.itemViews[i];
+    BOOL isPointInView = CGRectContainsPoint(itemView.frame, point);
+    if (isPointInView) {
+      return self.items[i];
+    }
+  }
 
-- (void)didTouchDownButton:(UIButton *)button {
-  MDCBottomNavigationItemView *itemView = (MDCBottomNavigationItemView *)button.superview;
-  CGPoint centerPoint =
-      CGPointMake(CGRectGetMidX(itemView.inkView.bounds), CGRectGetMidY(itemView.inkView.bounds));
-  [itemView.inkView startTouchBeganAnimationAtPoint:centerPoint completion:nil];
+  return nil;
 }
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
+}
+
+#pragma mark - Touch handlers
 
 - (void)didTouchUpInsideButton:(UIButton *)button {
   for (NSUInteger i = 0; i < self.items.count; i++) {
@@ -487,16 +516,6 @@ static NSString *const kOfAnnouncement = @"of";
       }
     }
   }
-}
-
-- (void)didTouchUpOutsideButton:(UIButton *)button {
-  MDCBottomNavigationItemView *itemView = (MDCBottomNavigationItemView *)button.superview;
-  [itemView.inkView startTouchEndedAnimationAtPoint:CGPointZero completion:nil];
-}
-
-- (void)didCancelTouchesForButton:(UIButton *)button {
-  MDCBottomNavigationItemView *itemView = (MDCBottomNavigationItemView *)button.superview;
-  [itemView.inkView cancelAllAnimationsAnimated:NO];
 }
 
 #pragma mark - Setters
@@ -524,6 +543,7 @@ static NSString *const kOfAnnouncement = @"of";
     MDCBottomNavigationItemView *itemView =
         [[MDCBottomNavigationItemView alloc] initWithFrame:CGRectZero];
     itemView.title = item.title;
+    itemView.titleNumberOfLines = self.titlesNumberOfLines;
     itemView.itemTitleFont = self.itemTitleFont;
     itemView.selectedItemTintColor = self.selectedItemTintColor;
     itemView.selectedItemTitleColor = self.selectedItemTitleColor;
@@ -542,6 +562,7 @@ static NSString *const kOfAnnouncement = @"of";
     MDCInkTouchController *controller = [[MDCInkTouchController alloc] initWithView:itemView];
     controller.delegate = self;
     [self.inkControllers addObject:controller];
+    itemView.rippleTouchController.delegate = self;
 
     if (self.shouldPretendToBeATabBar) {
       NSString *key = kMaterialBottomNavigationStringTable
@@ -678,6 +699,15 @@ static NSString *const kOfAnnouncement = @"of";
   [self setNeedsLayout];
 }
 
+- (void)setTitlesNumberOfLines:(NSInteger)titlesNumberOfLines {
+  _titlesNumberOfLines = titlesNumberOfLines;
+  for (MDCBottomNavigationItemView *itemView in self.itemViews) {
+    itemView.titleNumberOfLines = titlesNumberOfLines;
+  }
+  [self invalidateIntrinsicContentSize];
+  [self setNeedsLayout];
+}
+
 - (void)setBarTintColor:(UIColor *)barTintColor {
   _barTintColor = barTintColor;
   self.barView.backgroundColor = barTintColor;
@@ -748,6 +778,24 @@ static NSString *const kOfAnnouncement = @"of";
     return ((MDCBottomNavigationItemView *)inkTouchController.view).inkView;
   }
   return nil;
+}
+
+- (BOOL)inkTouchController:(MDCInkTouchController *)inkTouchController
+    shouldProcessInkTouchesAtTouchLocation:(CGPoint)location {
+  if (self.enableRippleBehavior) {
+    return NO;
+  }
+  return YES;
+}
+
+#pragma mark - MDCRippleTouchControllerDelegate methods
+
+- (BOOL)rippleTouchController:(MDCRippleTouchController *)rippleTouchController
+    shouldProcessRippleTouchesAtTouchLocation:(CGPoint)location {
+  if (self.enableRippleBehavior) {
+    return YES;
+  }
+  return NO;
 }
 
 @end

@@ -20,14 +20,25 @@
 
 /**
  The Material Design floating button themer for instances of MDCRaisedButton.
+
+ @warning This API will eventually be deprecated. The replacement API is:
+ `MDCFloatingButton`'s `-applySecondaryThemeWithScheme:`
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 @interface MDCFloatingActionButtonThemer : NSObject
+@end
+
+@interface MDCFloatingActionButtonThemer (ToBeDeprecated)
 
 /**
  Applies a button scheme's properties to an MDCRaisedButton using the floating button style.
 
  @param scheme The button scheme to apply to the component instance.
  @param button A component instance to which the scheme should be applied.
+
+ @warning This API will eventually be deprecated. The replacement API is:
+ `MDCFloatingButton`'s `-applySecondaryThemeWithScheme:`
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyScheme:(nonnull id<MDCButtonScheming>)scheme
            toButton:(nonnull MDCFloatingButton *)button;

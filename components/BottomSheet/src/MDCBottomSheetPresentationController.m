@@ -31,8 +31,10 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 
   if ([viewController.view isKindOfClass:[UIScrollView class]]) {
     scrollView = (UIScrollView *)viewController.view;
+#if !TARGET_OS_UIKITFORMAC
   } else if ([viewController.view isKindOfClass:[UIWebView class]]) {
     scrollView = ((UIWebView *)viewController.view).scrollView;
+#endif
   } else if ([viewController isKindOfClass:[UICollectionViewController class]]) {
     scrollView = ((UICollectionViewController *)viewController).collectionView;
   }
@@ -291,6 +293,14 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   id<MDCBottomSheetPresentationControllerDelegate> strongDelegate = self.delegate;
   if ([strongDelegate respondsToSelector:@selector(bottomSheetWillChangeState:sheetState:)]) {
     [strongDelegate bottomSheetWillChangeState:self sheetState:sheetState];
+  }
+}
+
+- (void)sheetContainerViewDidChangeYOffset:(nonnull MDCSheetContainerView *)containerView
+                                   yOffset:(CGFloat)yOffset {
+  id<MDCBottomSheetPresentationControllerDelegate> strongDelegate = self.delegate;
+  if ([strongDelegate respondsToSelector:@selector(bottomSheetDidChangeYOffset:yOffset:)]) {
+    [strongDelegate bottomSheetDidChangeYOffset:self yOffset:yOffset];
   }
 }
 

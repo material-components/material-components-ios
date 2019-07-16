@@ -14,26 +14,32 @@
 
 #import "MDCActionSheetItemTableViewCell.h"
 
+#import <MaterialComponents/MaterialRipple.h>
 #import <MaterialComponents/MaterialTypography.h>
 
 static const CGFloat kLabelAlpha = (CGFloat)0.87;
-static const CGFloat kImageLeadingPadding = 16;
+static const CGFloat kImageLeadingPadding = 8;
 static const CGFloat kImageTopPadding = 16;
 static const CGFloat kImageHeightAndWidth = 24;
-static const CGFloat kTitleLeadingPadding = 72;
-static const CGFloat kTitleTrailingPadding = 16;
+static const CGFloat kTitleLeadingPadding = 64;
+static const CGFloat kTitleTrailingPadding = 8;
 static const CGFloat kActionItemTitleVerticalPadding = 18;
+
+static inline UIColor *RippleColor() {
+  return [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.14];
+}
 
 @interface MDCActionSheetItemTableViewCell ()
 @property(nonatomic, strong) UILabel *actionLabel;
 @property(nonatomic, strong) UIImageView *actionImageView;
 @property(nonatomic, strong) MDCInkTouchController *inkTouchController;
+@property(nonatomic, strong) MDCRippleTouchController *rippleTouchController;
 @end
 
 @implementation MDCActionSheetItemTableViewCell {
   MDCActionSheetAction *_itemAction;
   NSLayoutConstraint *_titleLeadingConstraint;
-  NSLayoutConstraint *_titleWidthConstraint;
+  NSLayoutConstraint *_titleTrailingConstraint;
 }
 
 @synthesize mdc_adjustsFontForContentSizeCategory = _mdc_adjustsFontForContentSizeCategory;
@@ -60,7 +66,7 @@ static const CGFloat kActionItemTitleVerticalPadding = 18;
   _actionLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
   _actionLabel.textColor = [UIColor.blackColor colorWithAlphaComponent:kLabelAlpha];
   CGFloat leadingConstant;
-  if (_itemAction.image) {
+  if (_itemAction.image || _addLeadingPadding) {
     leadingConstant = kTitleLeadingPadding;
   } else {
     leadingConstant = kImageLeadingPadding;
@@ -82,25 +88,28 @@ static const CGFloat kActionItemTitleVerticalPadding = 18;
                                 constant:-kActionItemTitleVerticalPadding]
       .active = YES;
   _titleLeadingConstraint = [NSLayoutConstraint constraintWithItem:_actionLabel
-                                                         attribute:NSLayoutAttributeLeading
+                                                         attribute:NSLayoutAttributeLeadingMargin
                                                          relatedBy:NSLayoutRelationEqual
                                                             toItem:self.contentView
-                                                         attribute:NSLayoutAttributeLeading
+                                                         attribute:NSLayoutAttributeLeadingMargin
                                                         multiplier:1
                                                           constant:leadingConstant];
   _titleLeadingConstraint.active = YES;
-  CGFloat width = CGRectGetWidth(self.contentView.frame) - leadingConstant - kTitleTrailingPadding;
-  _titleWidthConstraint = [NSLayoutConstraint constraintWithItem:_actionLabel
-                                                       attribute:NSLayoutAttributeWidth
-                                                       relatedBy:NSLayoutRelationEqual
-                                                          toItem:nil
-                                                       attribute:NSLayoutAttributeNotAnAttribute
-                                                      multiplier:1
-                                                        constant:width];
-  _titleWidthConstraint.active = YES;
+  _titleTrailingConstraint = [NSLayoutConstraint constraintWithItem:self.contentView
+                                                          attribute:NSLayoutAttributeTrailingMargin
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:_actionLabel
+                                                          attribute:NSLayoutAttributeTrailingMargin
+                                                         multiplier:1
+                                                           constant:kTitleTrailingPadding];
+  _titleTrailingConstraint.active = YES;
   if (!_inkTouchController) {
     _inkTouchController = [[MDCInkTouchController alloc] initWithView:self];
     [_inkTouchController addInkView];
+  }
+
+  if (!_rippleTouchController) {
+    _rippleTouchController = [[MDCRippleTouchController alloc] init];
   }
 
   _actionImageView = [[UIImageView alloc] init];
@@ -115,10 +124,10 @@ static const CGFloat kActionItemTitleVerticalPadding = 18;
                                 constant:kImageTopPadding]
       .active = YES;
   [NSLayoutConstraint constraintWithItem:_actionImageView
-                               attribute:NSLayoutAttributeLeading
+                               attribute:NSLayoutAttributeLeadingMargin
                                relatedBy:NSLayoutRelationEqual
                                   toItem:self.contentView
-                               attribute:NSLayoutAttributeLeading
+                               attribute:NSLayoutAttributeLeadingMargin
                               multiplier:1
                                 constant:kImageLeadingPadding]
       .active = YES;
@@ -146,14 +155,13 @@ static const CGFloat kActionItemTitleVerticalPadding = 18;
   self.actionLabel.accessibilityLabel = _itemAction.accessibilityLabel;
   self.actionLabel.text = _itemAction.title;
   CGFloat leadingConstant;
-  if (_itemAction.image) {
+  if (_itemAction.image || self.addLeadingPadding) {
     leadingConstant = kTitleLeadingPadding;
   } else {
     leadingConstant = kImageLeadingPadding;
   }
   _titleLeadingConstraint.constant = leadingConstant;
-  CGFloat width = CGRectGetWidth(self.contentView.frame) - leadingConstant - kTitleTrailingPadding;
-  _titleWidthConstraint.constant = width;
+  _titleTrailingConstraint.constant = kTitleTrailingPadding;
 
   self.actionImageView.image = [_itemAction.image imageWithRenderingMode:self.imageRenderingMode];
 }
@@ -202,8 +210,32 @@ static const CGFloat kActionItemTitleVerticalPadding = 18;
 - (void)setInkColor:(UIColor *)inkColor {
   _inkColor = inkColor;
   // If no ink color then reset to the default ink color
-  self.inkTouchController.defaultInkView.inkColor =
-      inkColor ?: [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.14];
+  self.inkTouchController.defaultInkView.inkColor = inkColor ?: RippleColor();
+}
+
+- (void)setRippleColor:(UIColor *)rippleColor {
+  if (rippleColor != nil && (_rippleColor == rippleColor || [_rippleColor isEqual:rippleColor])) {
+    return;
+  }
+  _rippleColor = rippleColor;
+
+  // If no ripple color then reset to the default ripple color.
+  self.rippleTouchController.rippleView.rippleColor = rippleColor ?: RippleColor();
+}
+
+- (void)setEnableRippleBehavior:(BOOL)enableRippleBehavior {
+  if (_enableRippleBehavior == enableRippleBehavior) {
+    return;
+  }
+  _enableRippleBehavior = enableRippleBehavior;
+
+  if (enableRippleBehavior) {
+    [self.inkTouchController.defaultInkView removeFromSuperview];
+    [self.rippleTouchController addRippleToView:self];
+  } else {
+    [self.rippleTouchController.rippleView removeFromSuperview];
+    [self.inkTouchController addInkView];
+  }
 }
 
 - (void)setImageRenderingMode:(UIImageRenderingMode)imageRenderingMode {

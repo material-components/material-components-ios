@@ -20,7 +20,7 @@ load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
 
-IOS_MINIMUM_OS = "8.0"
+IOS_MINIMUM_OS = "9.0"
 
 ios_application(
     name = "MDCCatalog",
@@ -66,7 +66,7 @@ swift_library(
     srcs = native.glob(["MDCCatalog/*.swift"]),
     copts = [
         "-swift-version",
-        "3",
+        "4.2",
     ],
     resources = ["MDCDragons/HeaderView.xib"],
     deps = [
@@ -120,7 +120,7 @@ swift_library(
     srcs = native.glob(["MDCDragons/*.swift"]),
     copts = [
         "-swift-version",
-        "3",
+        "4.2",
     ],
     data = glob(["MDCCatalog/Assets.xcassets/*.imageset/**"]),
     resources = ["MDCDragons/HeaderView.xib"],

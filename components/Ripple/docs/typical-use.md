@@ -68,7 +68,7 @@ MDCRippleTouchController *rippleTouchController = [[MDCRippleTouchController all
 
 The `MDCRippleTouchControllerDelegate` gives you some control over aspects of the
 ripple/touch relationship and its placement in the view hierarchy.
-In the example below we are using the delegate to declare that we only want to process ripple 
+In the example below we are using the delegate to declare that we only want to process ripple
 touches if the touch is in a certain location. We also insert the Ripple view at the bottom of
 the parent view's view hierarchy. The reason we insert the ripple view at the bottom of the parent view's
 hierarchy in this example, is so the ripple's overlay color would not affect the visibility and contrast
@@ -154,9 +154,9 @@ own touch processing:
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift
-let myCustomView = MyCustomView(frame: CGRect.zero)
+let myCustomView = MyCustomView(frame: .zero)
 let rippleView = MDCRippleView()
-rippleView.rippleColor = UIColor.red
+rippleView.rippleColor = .red
 myCustomView.addSubview(rippleView)
 ...
 // When the touches begin, there is one animation
@@ -170,7 +170,7 @@ rippleView.beginRippleTouchUpAnimated(animated: true, completion: nil)
 ```objc
 MyCustomView *myCustomView = [[MyCustomView alloc] initWithFrame:CGRectZero];
 MDCRippleView *rippleView = [[MDCRippleView alloc] init];
-rippleView.rippleColor = [UIColor redColor];
+rippleView.rippleColor = UIColor.redColor;
 [myCustomView addSubview:rippleView];
 ...
 // When the touches begin, there is one animation
@@ -184,7 +184,7 @@ rippleView.rippleColor = [UIColor redColor];
 ### MDCStatefulRippleView
 
 You can also use MDCStatefulRippleView to display stateful ripples using your
-own touch processing. 
+own touch processing.
 To fully benefit from MDCStatefulRipple's ability to move between states visually,
 the view that is adding the stateful ripple view must override 
 UIView's `touchesBegan`, `touchesMoved`, `touchesEnded` and `touchesCancelled`
@@ -194,9 +194,9 @@ Here is an example:
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift
-let myCustomView = MyCustomView(frame: CGRect.zero)
+let myCustomView = MyCustomView(frame: .zero)
 let statefulRippleView = MDCStatefulRippleView()
-statefulRippleView.setRippleColor(UIColor.blue, for: MDCRippleStateSelected)
+statefulRippleView.setRippleColor(.blue, for: .selected)
 myCustomView.addSubview(statefulRippleView)
 
 ...
@@ -232,7 +232,7 @@ override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
 ```objc
 MyCustomView *myCustomView = [[MyCustomView alloc] initWithFrame:CGRectZero];
 MDCStatefulRippleView *statefulRippleView = [[MDCStatefulRippleView alloc] init];
-[statefulRippleView setRippleColor:[UIColor blueColor] forState:MDCRippleStateSelected];
+[statefulRippleView setRippleColor:UIColor.blueColor forState:MDCRippleStateSelected];
 [myCustomView addSubview:statefulRippleView];
 
 ...
@@ -253,14 +253,14 @@ MDCStatefulRippleView *statefulRippleView = [[MDCStatefulRippleView alloc] init]
   [statefulRippleView touchesEnded:touches withEvent:event];
   [super touchesEnded:touches withEvent:event];
 
-  statefulRippleView.rippleHighlighted = NO; 
+  statefulRippleView.rippleHighlighted = NO;
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
   [statefulRippleView touchesCancelled:touches withEvent:event];
   [super touchesCancelled:touches withEvent:event];
 
-  statefulRippleView.rippleHighlighted = NO; 
+  statefulRippleView.rippleHighlighted = NO;
 }
 ```
 <!--</div>-->

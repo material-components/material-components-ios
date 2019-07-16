@@ -14,13 +14,10 @@
 
 import UIKit
 import CoreGraphics
-
-import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialAppBar
-import MaterialComponents.MaterialAppBar_ColorThemer
-import MaterialComponents.MaterialAppBar_TypographyThemer
+import MaterialComponents.MaterialAppBar_Theming
+import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialTabs
-import MaterialComponents.MaterialTypographyScheme
 import MaterialComponents.MaterialFlexibleHeader_CanAlwaysExpandToMaximumHeight
 
 // An example that demonstrates the behavior of an App Bar with Tabs and manually swapped tab view
@@ -31,8 +28,7 @@ import MaterialComponents.MaterialFlexibleHeader_CanAlwaysExpandToMaximumHeight
 class AppBarManualTabsExample: UIViewController {
 
   lazy var appBarViewController: MDCAppBarViewController = self.makeAppBar()
-  var colorScheme = MDCSemanticColorScheme()
-  var typographyScheme = MDCTypographyScheme()
+  @objc var containerScheme: MDCContainerScheming = MDCContainerScheme()
 
   fileprivate let firstTab = SimpleInheritedTableViewController()
   fileprivate let secondTab = SimpleInheritedTableViewController()
@@ -65,19 +61,14 @@ class AppBarManualTabsExample: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    MDCAppBarColorThemer.applyColorScheme(colorScheme, to: appBarViewController)
-    MDCAppBarTypographyThemer.applyTypographyScheme(typographyScheme, to: appBarViewController)
+    appBarViewController.applyPrimaryTheme(withScheme: containerScheme)
 
     // Need to update the status bar style after applying the theme.
     setNeedsStatusBarAppearanceUpdate()
 
-    view.backgroundColor = colorScheme.backgroundColor
+    view.backgroundColor = containerScheme.colorScheme.backgroundColor
     view.addSubview(appBarViewController.view)
-    #if swift(>=4.2)
     appBarViewController.didMove(toParent: self)
-    #else
-    appBarViewController.didMove(toParentViewController: self)
-    #endif
 
     switchToTab(firstTab)
   }
@@ -87,9 +78,9 @@ class AppBarManualTabsExample: UIViewController {
 
     if let currentTab = currentTab {
       currentTab.headerView = nil
-      currentTab.willMove(toParentViewController: nil)
+      currentTab.willMove(toParent: nil)
       currentTab.view.removeFromSuperview()
-      currentTab.removeFromParentViewController()
+      currentTab.removeFromParent()
     }
 
     if let tabView = tab.view {
@@ -98,13 +89,9 @@ class AppBarManualTabsExample: UIViewController {
     }
 
     view.addSubview(tab.tableView)
-    view.sendSubview(toBack: tab.tableView)
+    view.sendSubviewToBack(tab.tableView)
 
-    #if swift(>=4.2)
     tab.didMove(toParent: self)
-    #else
-    tab.didMove(toParentViewController: self)
-    #endif
 
     tab.headerView = appBarViewController.headerView
 
@@ -127,7 +114,7 @@ class AppBarManualTabsExample: UIViewController {
   private func makeAppBar() -> MDCAppBarViewController {
     let appBarViewController = MDCAppBarViewController()
 
-    addChildViewController(appBarViewController)
+    addChild(appBarViewController)
 
     // Give the tab bar enough height to accomodate all possible item appearances.
     appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
@@ -143,7 +130,7 @@ class AppBarManualTabsExample: UIViewController {
     return appBarViewController
   }
 
-  override var childViewControllerForStatusBarStyle: UIViewController? {
+  override var childForStatusBarStyle: UIViewController? {
     return appBarViewController
   }
 }
@@ -160,7 +147,7 @@ extension AppBarManualTabsExample: MDCTabBarDelegate {
 
 extension AppBarManualTabsExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["App Bar", "Manual tabs"],
       "primaryDemo": false,

@@ -79,4 +79,6 @@
  */
 - (void)draggableView:(nonnull MDCDraggableView *)view draggingEndedWithVelocity:(CGPoint)velocity;
 
+- (void)draggableView:(nonnull MDCDraggableView *)view didPanToOffset:(CGFloat)offset;
+
 @end

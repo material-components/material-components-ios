@@ -17,6 +17,7 @@
 #import "../../src/private/MDCBottomDrawerContainerViewController.h"
 #import "../../src/private/MDCBottomDrawerHeaderMask.h"
 #import "MDCNavigationDrawerFakes.h"
+#import "MaterialShadowLayer.h"
 
 @interface MDCBottomDrawerDelegateTest
     : UIViewController <MDCBottomDrawerPresentationControllerDelegate>
@@ -58,12 +59,12 @@
 @property(nonatomic, readonly) CGFloat contentHeightSurplus;
 @property(nonatomic, readonly) BOOL contentScrollsToReveal;
 @property(nonatomic) MDCBottomDrawerState drawerState;
-@property(nonatomic) CGFloat initialDrawerFactor;
 @property(nullable, nonatomic, readonly) UIPresentationController *presentationController;
+@property(nonatomic) MDCShadowLayer *headerShadowLayer;
 - (void)cacheLayoutCalculations;
 - (void)updateViewWithContentOffset:(CGPoint)contentOffset;
 - (void)updateDrawerState:(CGFloat)transitionPercentage;
-- (CGFloat)calculateInitialDrawerFactor;
+- (CGFloat)calculateMaximumInitialDrawerHeight;
 @end
 
 @interface MDCBottomDrawerPresentationController (ScrollViewTests) <
@@ -322,7 +323,7 @@
   XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeightSurplus, 0, 0.001);
 }
 
-- (void)testContentHeightSurplusWithScrollabelContent {
+- (void)testContentHeightSurplusWithScrollableContent {
   // Given
   CGSize fakePreferredContentSize = CGSizeMake(200, 1000);
   [self setupHeaderWithPreferredContentSize:fakePreferredContentSize];
@@ -613,30 +614,79 @@
   XCTAssertEqualWithAccuracy(newContentViewControllerHeight, contentViewControllerHeight, 0.001);
 }
 
-- (void)testCalculateInitialDrawerFactorWithSmallHeight {
+- (void)testCalculateInitialDrawerHeightWithSmallHeight {
   // Given
   CGRect fakeRect = CGRectMake(0, 0, 250, 500);
   self.fakeBottomDrawer.originalPresentingViewController.view.bounds = fakeRect;
   self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(250, 100);
 
   // When
-  CGFloat drawerFactor = [self.fakeBottomDrawer calculateInitialDrawerFactor];
+  CGFloat drawerHeight = [self.fakeBottomDrawer calculateMaximumInitialDrawerHeight];
 
   // Then
-  XCTAssertEqualWithAccuracy(drawerFactor, 0.2, 0.001);
+  XCTAssertEqualWithAccuracy(drawerHeight, 100, 0.001);
 }
 
-- (void)testCalculateInitialDrawerFactorWithLargeHeight {
+- (void)testCalculateInitialDrawerHeightWithLargeHeight {
   // Given
   CGRect fakeRect = CGRectMake(0, 0, 250, 500);
   self.fakeBottomDrawer.originalPresentingViewController.view.bounds = fakeRect;
   self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(250, 1000);
 
   // When
-  CGFloat drawerFactor = [self.fakeBottomDrawer calculateInitialDrawerFactor];
+  CGFloat drawerHeight = [self.fakeBottomDrawer calculateMaximumInitialDrawerHeight];
 
   // Then
-  XCTAssertEqualWithAccuracy(drawerFactor, 0.5, 0.001);
+  XCTAssertEqualWithAccuracy(drawerHeight, 250, 0.001);
+}
+
+- (void)testSettingMaximumInitialDrawerHeight {
+  // Given
+  self.drawerViewController.maximumInitialDrawerHeight = 500;
+
+  // Then
+  MDCBottomDrawerPresentationController *presentationController =
+      (MDCBottomDrawerPresentationController *)self.drawerViewController.presentationController;
+  XCTAssertEqualWithAccuracy(presentationController.maximumInitialDrawerHeight, 500, 0.001);
+}
+
+- (void)testInitialDrawerHeight {
+  // Given
+  CGRect fakeRect = CGRectMake(0, 0, 250, 500);
+  self.fakeBottomDrawer.maximumInitialDrawerHeight = 320;
+  self.fakeBottomDrawer.originalPresentingViewController.view.bounds = fakeRect;
+  self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(250, 1000);
+
+  // When
+  CGFloat drawerHeight = [self.fakeBottomDrawer calculateMaximumInitialDrawerHeight];
+
+  // Then
+  XCTAssertEqualWithAccuracy(drawerHeight, 320, 0.001);
+}
+
+- (void)testInitialDrawerHeightWithMaximalHeightBiggerThanPreferredContentSize {
+  // Given
+  CGRect fakeRect = CGRectMake(0, 0, 250, 500);
+  self.fakeBottomDrawer.maximumInitialDrawerHeight = 1000;
+  self.fakeBottomDrawer.originalPresentingViewController.view.bounds = fakeRect;
+  self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(250, 320);
+
+  // When
+  CGFloat drawerHeight = [self.fakeBottomDrawer calculateMaximumInitialDrawerHeight];
+
+  // Then
+  XCTAssertEqualWithAccuracy(drawerHeight, 320, 0.001);
+}
+
+- (void)testDrawerHeightReasonableRounding {
+  // Given
+  CGRect fakeRect = CGRectMake(0, 0, 250, 500);
+  self.fakeBottomDrawer.maximumInitialDrawerHeight = (CGFloat)412.3;
+  self.fakeBottomDrawer.originalPresentingViewController.view.bounds = fakeRect;
+  self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(250, 1000);
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 88, 0.001);
 }
 
 - (void)testExpandToFullScreen {
@@ -662,6 +712,60 @@
       0.001);
   XCTAssertEqualWithAccuracy(CGRectGetMinY(self.fakeBottomDrawer.scrollView.frame), 0, 0.001);
   XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 20, 0.01);
+}
+
+- (void)testNavigationDrawerCorrectShadowValue {
+  // When
+  [self.fakeBottomDrawer viewWillLayoutSubviews];
+  [self.fakeBottomDrawer viewWillAppear:YES];
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.headerShadowLayer.elevation, 4, 0.001);
+}
+
+- (void)testMaximumInitialDrawerHeightWhenPreferredContentSizeIsntUpdatedYet {
+  // Given
+  CGRect fakeRect = CGRectMake(0, 0, 250, 500);
+  self.fakeBottomDrawer.originalPresentingViewController.view.bounds = fakeRect;
+  self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(250, 0);
+
+  // When
+  CGFloat drawerHeight = [self.fakeBottomDrawer calculateMaximumInitialDrawerHeight];
+
+  // Then
+  XCTAssertEqualWithAccuracy(drawerHeight, 250, 0.001);
+}
+
+- (void)testSettingShouldIncludeSafeAreaInContentHeight {
+  // Given
+  self.drawerViewController.shouldIncludeSafeAreaInContentHeight = YES;
+
+  // When
+  MDCBottomDrawerPresentationController *presentationController =
+      (MDCBottomDrawerPresentationController *)self.drawerViewController.presentationController;
+  [presentationController presentationTransitionWillBegin];
+
+  // Then
+  XCTAssertTrue(presentationController.shouldIncludeSafeAreaInContentHeight);
+  XCTAssertTrue(presentationController.bottomDrawerContainerViewController
+                    .shouldIncludeSafeAreaInContentHeight);
+}
+
+- (void)testFullScreenContentLayoutCalculationsComplete {
+  // Given
+  UIViewController *fakeViewController = [[UIViewController alloc] init];
+  fakeViewController.view.frame = CGRectMake(0, 0, 200, UIScreen.mainScreen.bounds.size.height);
+  self.drawerViewController.contentViewController = fakeViewController;
+  [self.drawerViewController expandToFullscreenWithDuration:0 completion:nil];
+
+  // When
+  MDCBottomDrawerPresentationController *presentationController =
+      (MDCBottomDrawerPresentationController *)self.drawerViewController.presentationController;
+  [presentationController.bottomDrawerContainerViewController cacheLayoutCalculations];
+
+  // Then
+  // This test was put in place to validate that cacheLayoutCalculations doesn't infinitely recurse
+  // It has no visible side effects, so as long as this test finishes, it passes
 }
 
 @end

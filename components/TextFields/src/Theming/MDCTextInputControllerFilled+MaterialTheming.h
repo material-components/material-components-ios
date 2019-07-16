@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import <MaterialComponents/MaterialContainerScheme.h>
 #import <MaterialComponents/MaterialTextFields.h>
-#import <MaterialComponentsBeta/MaterialContainerScheme.h>
 
 /**
  This category is used to style MDCTextInputControllerFilled instances to a specific Material style
@@ -23,7 +23,7 @@
 @interface MDCTextInputControllerFilled (MaterialTheming)
 
 /**
- Applies a container scheme to this instance.
+ Applies the Material theme to this instance.
 
  @param scheme A container scheme instance containing any desired customizations to the theming
  system.

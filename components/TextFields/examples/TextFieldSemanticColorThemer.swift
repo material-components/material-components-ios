@@ -19,8 +19,8 @@ import MaterialComponents.MaterialTextFields_TypographyThemer
 
 final class TextFieldSemanticColorThemer: UIViewController {
 
-  var colorScheme = MDCSemanticColorScheme()
-  var typographyScheme = MDCTypographyScheme()
+  @objc var colorScheme = MDCSemanticColorScheme()
+  @objc var typographyScheme = MDCTypographyScheme()
 
   let textfieldStandard: MDCTextField = {
     let textfield = MDCTextField()
@@ -102,7 +102,6 @@ final class TextFieldSemanticColorThemer: UIViewController {
                                        multiplier: 1,
                                        constant: 0)]
 
-    #if swift(>=3.2)
     if #available(iOS 11.0, *) {
       constraints += [NSLayoutConstraint(item: textfieldStandard,
                                          attribute: .top,
@@ -134,22 +133,6 @@ final class TextFieldSemanticColorThemer: UIViewController {
                                          multiplier: 1,
                                          constant: -20)]
     }
-    #else
-    constraints += [NSLayoutConstraint(item: textfieldStandard,
-                                       attribute: .top,
-                                       relatedBy: .equal,
-                                       toItem: scrollView,
-                                       attribute: .top,
-                                       multiplier: 1,
-                                       constant: 20),
-                    NSLayoutConstraint(item: textfieldAlternative,
-                                       attribute: .bottom,
-                                       relatedBy: .equal,
-                                       toItem: scrollView,
-                                       attribute: .bottomMargin,
-                                       multiplier: 1,
-                                       constant: -20)]
-    #endif
 
     NSLayoutConstraint.activate(constraints)
   }
@@ -195,22 +178,22 @@ extension TextFieldSemanticColorThemer {
     notificationCenter.addObserver(
       self,
       selector: #selector(keyboardWillShow(notif:)),
-      name: .UIKeyboardWillChangeFrame,
+      name: UIResponder.keyboardWillChangeFrameNotification,
       object: nil)
     notificationCenter.addObserver(
       self,
       selector: #selector(keyboardWillShow(notif:)),
-      name: .UIKeyboardWillShow,
+      name: UIResponder.keyboardWillShowNotification,
       object: nil)
     notificationCenter.addObserver(
       self,
       selector: #selector(keyboardWillHide(notif:)),
-      name: .UIKeyboardWillHide,
+      name: UIResponder.keyboardWillHideNotification,
       object: nil)
   }
 
   @objc func keyboardWillShow(notif: Notification) {
-    guard let frame = notif.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else {
+    guard let frame = notif.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
       return
     }
     scrollView.contentInset = UIEdgeInsets(top: 0.0,
@@ -228,7 +211,7 @@ extension TextFieldSemanticColorThemer {
 
 extension TextFieldSemanticColorThemer {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Text Field", "Theming Text Fields"],
       "primaryDemo": false,

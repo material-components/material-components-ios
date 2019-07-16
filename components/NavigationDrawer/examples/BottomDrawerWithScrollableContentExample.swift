@@ -20,7 +20,7 @@ import MaterialComponents.MaterialNavigationDrawer
 import MaterialComponents.MaterialNavigationDrawer_ColorThemer
 
 class BottomDrawerWithScrollableContentExample: UIViewController {
-  var colorScheme = MDCSemanticColorScheme()
+  @objc var colorScheme = MDCSemanticColorScheme()
   let bottomAppBar = MDCBottomAppBarView()
 
   let headerViewController = DrawerHeaderViewController()
@@ -64,6 +64,7 @@ class BottomDrawerWithScrollableContentExample: UIViewController {
 
   @objc func presentNavigationDrawer() {
     let bottomDrawerViewController = MDCBottomDrawerViewController()
+    bottomDrawerViewController.maximumInitialDrawerHeight = 400;
     bottomDrawerViewController.contentViewController = contentViewController
     bottomDrawerViewController.headerViewController = headerViewController
     bottomDrawerViewController.trackingScrollView = contentViewController.collectionView
@@ -75,7 +76,7 @@ class BottomDrawerWithScrollableContentExample: UIViewController {
 
 class DrawerContentWithScrollViewController: UIViewController,
     UICollectionViewDelegate, UICollectionViewDataSource {
-  var colorScheme: MDCSemanticColorScheme!
+  @objc var colorScheme: MDCSemanticColorScheme!
 
   let collectionView: UICollectionView
   let layout = UICollectionViewFlowLayout()
@@ -130,7 +131,7 @@ class DrawerContentWithScrollViewController: UIViewController,
 
 extension BottomDrawerWithScrollableContentExample {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Navigation Drawer", "Bottom Drawer Scrollable Content"],
       "primaryDemo": false,

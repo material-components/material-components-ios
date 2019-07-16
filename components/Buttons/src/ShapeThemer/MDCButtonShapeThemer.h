@@ -19,14 +19,25 @@
 
 /**
  The Material Design shape system's themer for instances of MDCButton.
+
+ @warning This API will eventually be deprecated. The replacement API is any of
+ `MDCButton`'s Theming extensions.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 @interface MDCButtonShapeThemer : NSObject
+@end
+
+@interface MDCButtonShapeThemer (ToBeDeprecated)
 
 /**
  Applies a shape scheme's properties to an MDCButton.
 
  @param shapeScheme The shape scheme to apply to the component instance.
  @param button A component instance to which the shape scheme should be applied.
+
+ @warning This API will eventually be deprecated. The replacement API is any of
+ `MDCButton`'s Theming extensions.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyShapeScheme:(nonnull id<MDCShapeScheming>)shapeScheme
                 toButton:(nonnull MDCButton *)button;

@@ -15,15 +15,15 @@
 import UIKit
 
 import MaterialComponents.MaterialColorScheme
+import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialTypographyScheme
 
 import MaterialComponents.MaterialActionSheet
-import MaterialComponentsBeta.MaterialActionSheet_Theming
-import MaterialComponentsBeta.MaterialContainerScheme
+import MaterialComponents.MaterialActionSheet_Theming
 
 class ActionSheetSwiftExampleViewController: UIViewController {
 
-  var containerScheme: MDCContainerScheming = MDCContainerScheme()
+  @objc var containerScheme: MDCContainerScheming = MDCContainerScheme()
   
   let tableView = UITableView()
   enum ActionSheetExampleType {
@@ -98,7 +98,7 @@ class ActionSheetSwiftExampleViewController: UIViewController {
 // MARK: Catalog by Convensions
 extension ActionSheetSwiftExampleViewController {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Action Sheet", "Action Sheet (Swift)"],
       "primaryDemo": false,

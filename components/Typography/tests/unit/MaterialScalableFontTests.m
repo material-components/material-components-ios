@@ -35,6 +35,22 @@
   XCTAssert([font mdc_isSimplyEqual:nonScaledFont1]);
 }
 
+- (void)testScalingCurveIsCopied {
+  // Given
+  UIFont *font = [UIFont systemFontOfSize:18.0];
+  NSMutableDictionary<UIContentSizeCategory, NSNumber *> *scalingCurve = [@{
+    UIContentSizeCategoryExtraSmall : @0,
+  } mutableCopy];
+  font.mdc_scalingCurve = scalingCurve;
+
+  // When
+  scalingCurve[UIContentSizeCategoryExtraSmall] = @100;
+
+  // Then
+  XCTAssertNotEqual(font.mdc_scalingCurve[UIContentSizeCategoryExtraSmall],
+                    scalingCurve[UIContentSizeCategoryExtraSmall]);
+}
+
 - (void)testNegativeAndZeroScalingCurve {
   // Given
   UIFont *font = [UIFont systemFontOfSize:18.0];

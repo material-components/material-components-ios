@@ -15,8 +15,8 @@
 import UIKit
 
 import MaterialComponents.MaterialCards
+import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialShapeLibrary
-import MaterialComponentsBeta.MaterialContainerScheme
 
 class ShapedCardCollectionCell: MDCCardCollectionCell {
   override init(frame: CGRect) {
@@ -41,7 +41,7 @@ class EditReorderShapedCollectionViewController: UIViewController,
   UICollectionViewDataSource,
   UICollectionViewDelegateFlowLayout {
 
-  var containerScheme: MDCContainerScheming
+  @objc var containerScheme: MDCContainerScheming
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     containerScheme = MDCContainerScheme()
@@ -92,22 +92,17 @@ class EditReorderShapedCollectionViewController: UIViewController,
       dataSource.append((i, false))
     }
 
-    #if swift(>=3.2)
-      if #available(iOS 11, *) {
-        let guide = view.safeAreaLayoutGuide
-        NSLayoutConstraint.activate([
-          collectionView.leftAnchor.constraint(equalTo: guide.leftAnchor),
-          collectionView.rightAnchor.constraint(equalTo: guide.rightAnchor),
-          collectionView.topAnchor.constraint(equalTo: view.topAnchor),
-          collectionView.bottomAnchor.constraint(equalTo: guide.bottomAnchor)])
-        collectionView.contentInsetAdjustmentBehavior = .always
-      } else {
-        preiOS11Constraints()
-      }
-    #else
+    if #available(iOS 11, *) {
+      let guide = view.safeAreaLayoutGuide
+      NSLayoutConstraint.activate([
+        collectionView.leftAnchor.constraint(equalTo: guide.leftAnchor),
+        collectionView.rightAnchor.constraint(equalTo: guide.rightAnchor),
+        collectionView.topAnchor.constraint(equalTo: view.topAnchor),
+        collectionView.bottomAnchor.constraint(equalTo: guide.bottomAnchor)])
+      collectionView.contentInsetAdjustmentBehavior = .always
+    } else {
       preiOS11Constraints()
-    #endif
-
+    }
   }
 
   func preiOS11Constraints() {
@@ -121,7 +116,7 @@ class EditReorderShapedCollectionViewController: UIViewController,
                                                             views: ["view": collectionView]));
   }
 
-  func toggleModes() {
+  @objc func toggleModes() {
     if toggle == .edit {
       toggle = .reorder
       navigationItem.rightBarButtonItem?.title = "Reorder"
@@ -216,7 +211,7 @@ class EditReorderShapedCollectionViewController: UIViewController,
 
 extension EditReorderShapedCollectionViewController {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Cards", "Shaped Edit/Reorder"],
       "primaryDemo": false,

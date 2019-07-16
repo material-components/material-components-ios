@@ -287,4 +287,38 @@
       CGPointZero, MDCRoundCenterWithBoundsAndScale(CGPointMake(1, 2), CGRectNull, 1)));
 }
 
+- (void)testUIEdgeInsetsEqualToEdgeInsets {
+  // Given
+  CGFloat epsilon = 0;
+#if CGFLOAT_IS_DOUBLE
+  epsilon = DBL_EPSILON;
+#else
+  epsilon = FLT_EPSILON;
+#endif
+
+  // When
+  UIEdgeInsets insets1 = UIEdgeInsetsMake(1, 1, 1, 1);
+  UIEdgeInsets insets2 = UIEdgeInsetsMake(1 + epsilon, 1 + epsilon, 1 + epsilon, 1 + epsilon);
+
+  // Then
+  XCTAssertFalse(UIEdgeInsetsEqualToEdgeInsets(insets1, insets2));
+}
+
+- (void)testMDCEdgeInsetsEqualToEdgeInsets {
+  // Given
+  CGFloat epsilon = 0;
+#if CGFLOAT_IS_DOUBLE
+  epsilon = DBL_EPSILON;
+#else
+  epsilon = FLT_EPSILON;
+#endif
+
+  // When
+  UIEdgeInsets insets1 = UIEdgeInsetsMake(1, 1, 1, 1);
+  UIEdgeInsets insets2 = UIEdgeInsetsMake(1 + epsilon, 1 + epsilon, 1 + epsilon, 1 + epsilon);
+
+  // Then
+  XCTAssertTrue(MDCEdgeInsetsEqualToEdgeInsets(insets1, insets2));
+}
+
 @end

@@ -16,12 +16,12 @@ import XCTest
 
 import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialColorScheme
+import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialShadowElevations
 import MaterialComponents.MaterialShapeScheme
 import MaterialComponents.MaterialShapeLibrary
 import MaterialComponents.MaterialTypographyScheme
-import MaterialComponentsBeta.MaterialButtons_Theming
-import MaterialComponentsBeta.MaterialContainerScheme
+import MaterialComponents.MaterialButtons_Theming
 
 class ButtonsThemingTest: XCTestCase {
 
@@ -104,11 +104,19 @@ class ButtonsThemingTest: XCTestCase {
     // Then
     // Test Colors
     XCTAssertEqual(button.backgroundColor(for: .normal), .clear)
+    XCTAssertEqual(button.imageTintColor(for: .normal), colorScheme.primaryColor)
+    XCTAssertEqual(
+      button.imageTintColor(for: .disabled),
+      colorScheme.onSurfaceColor.withAlphaComponent(0.38))
     XCTAssertEqual(button.titleColor(for: .normal), colorScheme.primaryColor)
-    XCTAssertEqual(button.titleColor(for: .disabled), colorScheme.onSurfaceColor.withAlphaComponent(0.38))
+    XCTAssertEqual(
+      button.titleColor(for: .disabled),
+      colorScheme.onSurfaceColor.withAlphaComponent(0.38))
     XCTAssertEqual(button.disabledAlpha,1)
-    XCTAssertEqual(button.inkColor,colorScheme.primaryColor.withAlphaComponent(0.16))
-    XCTAssertEqual(button.borderColor(for: .normal), colorScheme.onSurfaceColor.withAlphaComponent(0.12))
+    XCTAssertEqual(button.inkColor,colorScheme.primaryColor.withAlphaComponent(0.12))
+    XCTAssertEqual(
+      button.borderColor(for: .normal),
+      colorScheme.onSurfaceColor.withAlphaComponent(0.12))
     // Test shape
     XCTAssertEqual(button.layer.cornerRadius, baselineCornerRadius, accuracy: 0.001)
     // Test typography

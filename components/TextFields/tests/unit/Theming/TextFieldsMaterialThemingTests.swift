@@ -16,9 +16,9 @@ import XCTest
 
 import MaterialComponents.MaterialTextFields
 import MaterialComponents.MaterialColorScheme
+import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialTypographyScheme
-import MaterialComponentsBeta.MaterialContainerScheme
-import MaterialComponentsBeta.MaterialTextFields_Theming
+import MaterialComponents.MaterialTextFields_Theming
 
 class TextFieldsMaterialThemingTests: XCTestCase {
 
@@ -28,6 +28,11 @@ class TextFieldsMaterialThemingTests: XCTestCase {
   let filledSurfaceOverlayAlpha: CGFloat = 0.04
   let filledIndicatorLineAlpha: CGFloat = 0.42
   let filledIconAlpha: CGFloat = 0.54
+
+  let outlinedTextFieldActiveAlpha: CGFloat = 0.87
+  let outlinedTextFieldOnSurfaceAlpha: CGFloat = 0.6
+  let outlinedTextFieldDisabledAlpha: CGFloat = 0.38
+  let outlinedTextFieldIconAlpha: CGFloat = 0.54
 
   func testMDCTextInputControllerFilledThemingWithContainerScheme() {
     // Given
@@ -71,6 +76,44 @@ class TextFieldsMaterialThemingTests: XCTestCase {
     let placeholderScale: CGFloat =
       scheme.typographyScheme.caption.pointSize / scheme.typographyScheme.subtitle1.pointSize
     XCTAssertEqual(CGFloat(textFieldControllerFilled.floatingPlaceholderScale.doubleValue),
+                   placeholderScale)
+  }
+
+  func testMDCTextInputControllerOutlinedThemingWithContainerScheme() {
+    // Given
+    let textFieldOutlined = MDCTextField()
+    let textFieldControllerOutlined = MDCTextInputControllerOutlined(textInput: textFieldOutlined)
+    let scheme: MDCContainerScheme = MDCContainerScheme()
+
+    // When
+    textFieldControllerOutlined.applyTheme(withScheme: scheme)
+
+    // Then
+    // Color
+    let onSurfaceOpacity = scheme.colorScheme.onSurfaceColor.withAlphaComponent(outlinedTextFieldOnSurfaceAlpha)
+    XCTAssertEqual(textFieldControllerOutlined.activeColor, scheme.colorScheme.primaryColor)
+    XCTAssertEqual(textFieldControllerOutlined.errorColor, scheme.colorScheme.errorColor)
+    XCTAssertEqual(textFieldControllerOutlined.trailingUnderlineLabelTextColor, onSurfaceOpacity)
+    XCTAssertEqual(textFieldControllerOutlined.normalColor, onSurfaceOpacity)
+    XCTAssertEqual(textFieldControllerOutlined.inlinePlaceholderColor, onSurfaceOpacity)
+    let textInput = textFieldControllerOutlined.textInput as! MDCTextInput
+    XCTAssertEqual(textInput.textColor, scheme.colorScheme.onSurfaceColor.withAlphaComponent(outlinedTextFieldActiveAlpha))
+    XCTAssertEqual(textFieldControllerOutlined.leadingUnderlineLabelTextColor, onSurfaceOpacity)
+    XCTAssertEqual(textFieldControllerOutlined.disabledColor, scheme.colorScheme.onSurfaceColor.withAlphaComponent(outlinedTextFieldDisabledAlpha))
+    XCTAssertEqual(textFieldControllerOutlined.textInputClearButtonTintColor, scheme.colorScheme.onSurfaceColor.withAlphaComponent(outlinedTextFieldIconAlpha))
+    XCTAssertEqual(textFieldControllerOutlined.floatingPlaceholderNormalColor, onSurfaceOpacity)
+    XCTAssertEqual(textFieldControllerOutlined.floatingPlaceholderActiveColor, scheme.colorScheme.primaryColor.withAlphaComponent(outlinedTextFieldActiveAlpha))
+
+    // Typography
+    XCTAssertEqual(textFieldControllerOutlined.inlinePlaceholderFont,
+                   scheme.typographyScheme.subtitle1)
+    XCTAssertEqual(textFieldControllerOutlined.leadingUnderlineLabelFont,
+                   scheme.typographyScheme.caption)
+    XCTAssertEqual(textFieldControllerOutlined.trailingUnderlineLabelFont,
+                   scheme.typographyScheme.caption)
+    let placeholderScale: CGFloat =
+      scheme.typographyScheme.caption.pointSize / scheme.typographyScheme.subtitle1.pointSize
+    XCTAssertEqual(CGFloat(textFieldControllerOutlined.floatingPlaceholderScale.doubleValue),
                    placeholderScale)
   }
 }

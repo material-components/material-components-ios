@@ -14,7 +14,8 @@
 
 import Foundation
 import MaterialComponents.MaterialButtons
-import MaterialComponents.MaterialButtons_ButtonThemer
+import MaterialComponents.MaterialButtons_Theming
+import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialMaskedTransition
 
 open class MaskedTransitionTypicalUseSwiftExample: UIViewController {
@@ -23,12 +24,11 @@ open class MaskedTransitionTypicalUseSwiftExample: UIViewController {
     let name: String
     let viewControllerType: UIViewController.Type
     let calculateFrame: ((UIPresentationController) -> CGRect)?
-    let autoresizingMask: UIViewAutoresizing
+    let autoresizingMask: UIView.AutoresizingMask
     let useSafeAreaInsets: Bool
   }
   var targets: [TargetInfo] = []
-  var colorScheme = MDCSemanticColorScheme()
-  var typographyScheme = MDCTypographyScheme()
+  @objc var containerScheme = MDCContainerScheme()
   let rightFAB = MDCFloatingButton()
   let leftFAB = MDCFloatingButton()
 
@@ -43,21 +43,18 @@ open class MaskedTransitionTypicalUseSwiftExample: UIViewController {
     view.addSubview(tableView)
 
     let addImage = UIImage(named: "Add")
-    let buttonScheme = MDCButtonScheme()
-    buttonScheme.colorScheme = colorScheme
-    buttonScheme.typographyScheme = typographyScheme
     rightFAB.setImage(addImage, for: .normal)
-    MDCFloatingActionButtonThemer.applyScheme(buttonScheme, to: rightFAB)
+    rightFAB.applySecondaryTheme(withScheme: containerScheme)
     rightFAB.addTarget(self, action: #selector(didTapFab), for: .touchUpInside)
     view.addSubview(rightFAB)
 
     leftFAB.setImage(addImage, for: .normal)
-    MDCFloatingActionButtonThemer.applyScheme(buttonScheme, to: leftFAB)
+    leftFAB.applySecondaryTheme(withScheme: containerScheme)
     leftFAB.addTarget(self, action: #selector(didTapFab), for: .touchUpInside)
     view.addSubview(leftFAB)
 
     targets.append(.init(name: "Bottom sheet", viewControllerType: ModalViewController.self, calculateFrame: { info in
-      let containerBounds = info.frameOfPresentedViewInContainerView
+      guard let containerBounds = info.containerView?.bounds else { return .zero }
       let size = CGSize(width: containerBounds.width, height: 300)
       return CGRect(x: containerBounds.minX,
                     y: containerBounds.height - size.height,
@@ -66,7 +63,7 @@ open class MaskedTransitionTypicalUseSwiftExample: UIViewController {
     }, autoresizingMask: [.flexibleWidth, .flexibleTopMargin], useSafeAreaInsets: true))
 
     targets.append(.init(name: "Centered card", viewControllerType: ModalViewController.self, calculateFrame: { info in
-      let containerBounds = info.frameOfPresentedViewInContainerView
+      guard let containerBounds = info.containerView?.bounds else { return .zero }
       let size = CGSize(width: 200, height: 200)
       return CGRect(x: (containerBounds.width - size.width) / 2,
                     y: (containerBounds.height - size.height) / 2,
@@ -118,7 +115,7 @@ open class MaskedTransitionTypicalUseSwiftExample: UIViewController {
   }
 
   var transitionController: MDCMaskedTransitionController? = nil
-  func didTapFab(fab: UIView) {
+  @objc func didTapFab(fab: UIView) {
     guard let indexPathForSelectedRow = tableView.indexPathForSelectedRow else { return }
     let target = targets[indexPathForSelectedRow.row]
     let vc = target.viewControllerType.init()
@@ -169,7 +166,7 @@ private class ToolbarViewController: UIViewController {
     view.addSubview(toolbar)
   }
 
-  func didTap() {
+  @objc func didTap() {
     dismiss(animated: true)
   }
 }
@@ -238,14 +235,14 @@ private class ModalViewController: UIViewController {
                        constant: bottomOffset).isActive = true
   }
   
-  func didTap() {
+  @objc func didTap() {
     dismiss(animated: true)
   }
 }
 
 extension MaskedTransitionTypicalUseSwiftExample {
   // MARK: - CatalogByConvention
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs" : [ "Masked Transition", "Masked Transition (Swift)" ],
       "description" : "Examples of how the Floating Action Button can transition to other "

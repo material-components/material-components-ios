@@ -23,13 +23,21 @@
  Themes @c MDCChipView objects to set their text font to the appropriate font trait given a font
  scheme.
 
- @warning This class will soon be deprecated. Please consider using MDCChipViewTypographyThemer
- instead.
+ @warning This API will eventually be deprecated. See the individual method documentation for
+ details on replacement APIs.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 @interface MDCChipViewFontThemer : NSObject
+@end
+
+@interface MDCChipViewFontThemer (ToBeDeprecated)
 
 /**
  Applies the provided font scheme to the given Chip.
+
+ @warning This API will eventually be deprecated. The replacement API is any of `MDCCard`'s theming
+ extensions.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyFontScheme:(nonnull id<MDCFontScheme>)fontScheme
              toChipView:(nonnull MDCChipView *)chipView;

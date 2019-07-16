@@ -65,10 +65,18 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
                                         UITableViewDataSource>
 @property(nonatomic, strong) UITableView *tableView;
 @property(nonatomic, strong) MDCActionSheetHeaderView *header;
+
+/**
+ Determines if a @c MDCActionSheetItemTableViewCell should add leading padding or not.
+
+ @note Defaults to @c NO.
+ */
+@property(nonatomic, assign) BOOL addLeadingPaddingToCell;
 @end
 
 @implementation MDCActionSheetController {
   NSMutableArray<MDCActionSheetAction *> *_actions;
+  UIColor *_inkColor;
 }
 
 @synthesize mdc_adjustsFontForContentSizeCategory = _mdc_adjustsFontForContentSizeCategory;
@@ -141,6 +149,12 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
 
   self.view.backgroundColor = self.backgroundColor;
   self.tableView.frame = self.view.bounds;
+  self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
+  self.view.preservesSuperviewLayoutMargins = YES;
+  if (@available(iOS 11.0, *)) {
+    self.view.insetsLayoutMarginsFromSafeArea = NO;
+    self.tableView.insetsLayoutMarginsFromSafeArea = NO;
+  }
   [self.view addSubview:self.tableView];
   [self.view addSubview:self.header];
 }
@@ -186,6 +200,12 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
   return MDCCeil(preferredHeight);
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+
+  [self.transitionController.trackingScrollView flashScrollIndicators];
+}
+
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
 
@@ -228,6 +248,10 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
 - (void)setDismissOnBackgroundTap:(BOOL)dismissOnBackgroundTap {
   _transitionController.dismissOnBackgroundTap = dismissOnBackgroundTap;
   self.mdc_bottomSheetPresentationController.dismissOnBackgroundTap = dismissOnBackgroundTap;
+}
+
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+  return self.presentingViewController.supportedInterfaceOrientations;
 }
 
 /* Disable setter. Always use internal transition controller */
@@ -280,8 +304,11 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
   cell.actionFont = self.actionFont;
   cell.accessibilityIdentifier = action.accessibilityIdentifier;
   cell.inkColor = self.inkColor;
+  cell.rippleColor = self.rippleColor;
+  cell.enableRippleBehavior = self.enableRippleBehavior;
   cell.tintColor = self.actionTintColor;
   cell.imageRenderingMode = self.imageRenderingMode;
+  cell.addLeadingPadding = self.addLeadingPaddingToCell;
   cell.actionTextColor = self.actionTextColor;
   return cell;
 }
@@ -401,8 +428,47 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
   [self.tableView reloadData];
 }
 
+- (void)setAlwaysAlignTitleLeadingEdges:(BOOL)alignTitles {
+  _alwaysAlignTitleLeadingEdges = alignTitles;
+  // Check to make sure at least one action has an image. If not then all actions will align already
+  // and we don't need to add padding.
+  self.addLeadingPaddingToCell = [self anyActionHasAnImage];
+  [self.tableView reloadData];
+}
+
+- (BOOL)anyActionHasAnImage {
+  for (MDCActionSheetAction *action in self.actions) {
+    if (action.image) {
+      return YES;
+    }
+  }
+  return NO;
+}
+
+- (UIColor *)inkColor {
+  return _inkColor;
+}
+
 - (void)setInkColor:(UIColor *)inkColor {
   _inkColor = inkColor;
+  [self.tableView reloadData];
+}
+
+- (void)setRippleColor:(UIColor *)rippleColor {
+  if (_rippleColor == rippleColor || [_rippleColor isEqual:rippleColor]) {
+    return;
+  }
+  _rippleColor = rippleColor;
+
+  [self.tableView reloadData];
+}
+
+- (void)setEnableRippleBehavior:(BOOL)enableRippleBehavior {
+  if (_enableRippleBehavior == enableRippleBehavior) {
+    return;
+  }
+  _enableRippleBehavior = enableRippleBehavior;
+
   [self.tableView reloadData];
 }
 

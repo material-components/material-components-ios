@@ -60,12 +60,22 @@ mdc_objc_library(
     visibility = ["//visibility:public"],
     deps = [
         "//components/Ink",
+        "//components/Palettes",
+        "//components/Ripple",
         "//components/ShadowElevations",
         "//components/ShadowLayer",
         "//components/Typography",
         "//components/private/Math",
         "@material_internationalization_ios//:MDFInternationalization",
     ],
+)
+
+# Should only be used by test targets or :BottomNavigationBeta until
+# that can be rolled-up into the main target.
+mdc_objc_library(
+    name = "privateHeaders",
+    hdrs = native.glob(["src/private/*.h"]),
+    visibility = ["//visibility:private"],
 )
 
 mdc_objc_library(
@@ -79,7 +89,21 @@ mdc_objc_library(
     includes = ["src"],
     sdk_frameworks = ["CoreGraphics"],
     visibility = ["//:__subpackages__"],
-    deps = [":BottomNavigation"],
+    deps = [
+        ":BottomNavigation",
+        ":privateHeaders",
+    ],
+)
+
+mdc_extension_objc_library(
+    name = "Theming",
+    deps = [
+        ":BottomNavigation",
+        "//components/ShadowElevations",
+        "//components/schemes/Color",
+        "//components/schemes/Container",
+        "//components/schemes/Typography",
+    ],
 )
 
 filegroup(
@@ -146,11 +170,11 @@ swift_library(
     ),
     copts = [
         "-swift-version",
-        "3",
+        "4.2",
     ],
     deps = [
-        ":BottomNavigationBeta",
         ":BottomNavigation",
+        ":BottomNavigationBeta",
         ":ColorThemer",
         ":ObjcExamples",
         ":TypographyThemer",
@@ -167,6 +191,7 @@ mdc_objc_library(
         [
             "tests/unit/*.m",
             "tests/unit/*.h",
+            "tests/unit/Theming/*.m",
         ],
         exclude = ["tests/unit/MDCBottomNavigationBarControllerTests.m"],
     ),
@@ -178,8 +203,10 @@ mdc_objc_library(
     deps = [
         ":BottomNavigation",
         ":ColorThemer",
+        ":Theming",
         ":TypographyThemer",
         ":private",
+        "//components/Typography",
     ],
 )
 
@@ -199,10 +226,10 @@ mdc_objc_library(
 
 ios_unit_test(
     name = "unit_tests_beta",
-    deps = [":unit_test_beta_sources"],
-    minimum_os_version = "9.0",
     flaky = 1,
+    minimum_os_version = "9.0",
     test_host = "//components/private/Snapshot/TestHost",
+    deps = [":unit_test_beta_sources"],
 )
 
 mdc_unit_test_suite(
@@ -217,6 +244,7 @@ mdc_snapshot_objc_library(
     deps = [
         ":BottomNavigation",
         ":ColorThemer",
+        ":Theming",
         ":TypographyThemer",
         ":private",
     ],

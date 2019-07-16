@@ -54,7 +54,7 @@ class CollectionsSimpleSwiftDemo: MDCCollectionViewController {
 // MARK: Catalog by convention
 extension CollectionsSimpleSwiftDemo {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": [ "Collections", "Simple Swift Demo"],
       "primaryDemo": false,

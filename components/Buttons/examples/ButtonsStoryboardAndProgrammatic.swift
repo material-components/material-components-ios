@@ -16,8 +16,8 @@ import Foundation
 import UIKit
 
 import MaterialComponents.MaterialButtons
-import MaterialComponentsBeta.MaterialButtons_Theming
-import MaterialComponentsBeta.MaterialContainerScheme
+import MaterialComponents.MaterialContainerScheme
+import MaterialComponents.MaterialButtons_Theming
 
 class ButtonsSwiftAndStoryboardController: UIViewController {
 
@@ -97,11 +97,9 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
 
   private func layoutContainer() {
     let viewLayoutGuide: Any = {
-      #if swift(>=3.2)
-        if #available(iOS 11.0, *) {
-          return view.safeAreaLayoutGuide
-        }
-      #endif
+      if #available(iOS 11.0, *) {
+        return view.safeAreaLayoutGuide
+      }
       return view
     }()
     NSLayoutConstraint.activate([
@@ -209,7 +207,7 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
 
 extension ButtonsSwiftAndStoryboardController {
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Buttons", "Buttons (Swift and Storyboard)"],
       "primaryDemo": false,

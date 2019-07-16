@@ -19,6 +19,9 @@
 
 /**
  The Material Design color system's themer for instances of MDCAlertController.
+
+ @warning This API is deprecated. Learn more at
+ docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 __deprecated_msg("Please use MaterialDialogs+Theming.") @interface MDCAlertColorThemer : NSObject
 
@@ -27,22 +30,20 @@ __deprecated_msg("Please use MaterialDialogs+Theming.") @interface MDCAlertColor
 
  @param colorScheme The color scheme to apply to the component instance.
  @param alertController A component instance to which the color scheme should be applied.
+
+ @warning This API is deprecated. Learn more at
+ docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                toAlertController:(nonnull MDCAlertController *)alertController;
 
-@end
-
-@interface MDCAlertColorThemer (ToBeDeprecated)
-
 /**
  Applies a color scheme to theme to all MDCAlertController alert dialogs.
 
- @warning This method will soon be deprecated. There is no direct replacement. Consider using
- @c applySemanticColorScheme:toAlertController: instead. Learn more at
- components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
-
  @param colorScheme The color scheme to apply to all MDCAlertController alert dialogs.
+
+ @warning This API is deprecated. Learn more at
+ docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme;
 

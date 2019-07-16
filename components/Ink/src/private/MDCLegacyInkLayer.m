@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #import "MDCLegacyInkLayer.h"
-#import "MDCLegacyInkLayer+Testing.h"
+#import "MDCLegacyInkLayer+Private.h"
 
 #import <UIKit/UIKit.h>
 
@@ -113,6 +113,8 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
 }
 
 - (void)enter {
+  [self.animationDelegate animationDidStart:self];
+
   _rippleState = kInkRippleSpreading;
   [_inkLayer addSublayer:self];
   _animationCleared = NO;
@@ -272,11 +274,7 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
     [CATransaction setCompletionBlock:^(void) {
       MDCLegacyInkLayerForegroundRipple *strongSelf = weakSelf;
       [strongSelf removeFromSuperlayer];
-
-      if ([strongSelf.animationDelegate respondsToSelector:@selector(animationDidStop:
-                                                                           shapeLayer:finished:)]) {
-        [strongSelf.animationDelegate animationDidStop:nil shapeLayer:strongSelf finished:YES];
-      }
+      [strongSelf.animationDelegate animationDidStop:nil shapeLayer:strongSelf finished:YES];
     }];
     [CATransaction commit];
     return;
@@ -402,11 +400,7 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
     [CATransaction setCompletionBlock:^(void) {
       MDCLegacyInkLayerBackgroundRipple *strongSelf = weakSelf;
       [strongSelf removeFromSuperlayer];
-
-      if ([strongSelf.animationDelegate respondsToSelector:@selector(animationDidStop:
-                                                                           shapeLayer:finished:)]) {
-        [strongSelf.animationDelegate animationDidStop:nil shapeLayer:strongSelf finished:YES];
-      }
+      [strongSelf.animationDelegate animationDidStop:nil shapeLayer:strongSelf finished:YES];
     }];
     [CATransaction commit];
     return;
@@ -476,12 +470,8 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
   self = [super init];
   if (self) {
     self.masksToBounds = YES;
-    _inkColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.08];
-    _bounded = YES;
-    _compositeRipple = [CAShapeLayer layer];
-    _foregroundRipples = [NSMutableArray array];
-    _backgroundRipples = [NSMutableArray array];
-    [self addSublayer:_compositeRipple];
+    [self commonMDCLegacyInkLayerInit];
+    _animating = NO;
   }
   return self;
 }
@@ -490,8 +480,7 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
   self = [super initWithCoder:aDecoder];
 
   if (self) {
-    _bounded = YES;
-    _inkColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.08];
+    _animating = NO;
     // Discard any sublayers, which should be the composite ripple and any active ripples
     if (self.sublayers.count > 0) {
       NSArray<CALayer *> *sublayers = [self.sublayers copy];
@@ -499,13 +488,19 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
         [sublayer removeFromSuperlayer];
       }
     }
-    _compositeRipple = [CAShapeLayer layer];
-    _foregroundRipples = [NSMutableArray array];
-    _backgroundRipples = [NSMutableArray array];
-    [self addSublayer:_compositeRipple];
+    [self commonMDCLegacyInkLayerInit];
   }
 
   return self;
+}
+
+- (void)commonMDCLegacyInkLayerInit {
+  _bounded = YES;
+  _inkColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.08];
+  _compositeRipple = [CAShapeLayer layer];
+  _foregroundRipples = [NSMutableArray array];
+  _backgroundRipples = [NSMutableArray array];
+  [self addSublayer:_compositeRipple];
 }
 
 - (void)layoutSublayers {
@@ -522,6 +517,15 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
   UIBezierPath *ripplePath = [UIBezierPath bezierPathWithOvalInRect:rippleBounds];
   rippleMaskLayer.path = ripplePath.CGPath;
   _compositeRipple.mask = rippleMaskLayer;
+}
+
+- (void)enterAllInks {
+  for (MDCLegacyInkLayerForegroundRipple *foregroundRipple in self.foregroundRipples) {
+    [foregroundRipple enterWithCompletion:nil];
+  }
+  for (MDCLegacyInkLayerBackgroundRipple *backgroundRipple in self.backgroundRipples) {
+    [backgroundRipple enter];
+  }
 }
 
 - (void)resetAllInk:(BOOL)animated {
@@ -613,19 +617,37 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
   [self resetBottomInk:YES toPoint:point completion:completionBlock];
 }
 
-#pragma mark - MDCLegacyInkLayerRippleDelegate
+#pragma mark - MDCLegacyRippleInkLayerDelegate
+
+- (void)animationDidStart:(MDCLegacyInkLayerRipple *)layerRipple {
+  if (!self.isAnimating) {
+    self.animating = YES;
+
+    if ([self.animationDelegate respondsToSelector:@selector(legacyInkLayerAnimationDidStart:)]) {
+      [self.animationDelegate legacyInkLayerAnimationDidStart:self];
+    }
+  }
+}
 
 - (void)animationDidStop:(__unused CAAnimation *)anim
-              shapeLayer:(CAShapeLayer *)shapeLayer
+              shapeLayer:(MDCLegacyInkLayerRipple *)layerRipple
                 finished:(__unused BOOL)finished {
   // Even when the ripple is "exited" without animation, we need to remove it from compositeRipple
-  [shapeLayer removeFromSuperlayer];
-  [shapeLayer removeAllAnimations];
+  [layerRipple removeFromSuperlayer];
+  [layerRipple removeAllAnimations];
 
-  if ([shapeLayer isMemberOfClass:[MDCLegacyInkLayerForegroundRipple class]]) {
-    [self.foregroundRipples removeObject:(MDCLegacyInkLayerForegroundRipple *)shapeLayer];
-  } else if ([shapeLayer isMemberOfClass:[MDCLegacyInkLayerBackgroundRipple class]]) {
-    [self.backgroundRipples removeObject:(MDCLegacyInkLayerBackgroundRipple *)shapeLayer];
+  if ([layerRipple isKindOfClass:[MDCLegacyInkLayerForegroundRipple class]]) {
+    [self.foregroundRipples removeObject:(MDCLegacyInkLayerForegroundRipple *)layerRipple];
+  } else if ([layerRipple isKindOfClass:[MDCLegacyInkLayerBackgroundRipple class]]) {
+    [self.backgroundRipples removeObject:(MDCLegacyInkLayerBackgroundRipple *)layerRipple];
+  }
+
+  // Check if all ink layer animations did finish and call animation end callback
+  if (self.isAnimating && self.foregroundRipples.count == 0 && self.backgroundRipples.count == 0) {
+    self.animating = NO;
+    if ([self.animationDelegate respondsToSelector:@selector(legacyInkLayerAnimationDidEnd:)]) {
+      [self.animationDelegate legacyInkLayerAnimationDidEnd:self];
+    }
   }
 }
 

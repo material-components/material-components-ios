@@ -73,6 +73,16 @@
   return _headerViewController.preferredStatusBarStyle;
 }
 
+#pragma mark TraitCollection
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
+}
+
 #pragma mark - Public
 
 - (void)setContentViewController:(UIViewController *)contentViewController {

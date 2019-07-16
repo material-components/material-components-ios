@@ -19,14 +19,26 @@
 
 /**
  The Material Design color system's text field themer.
+
+ @warning This API will eventually be deprecated. See the individual method documentation for
+ details on replacement APIs.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 @interface MDCTextFieldColorThemer : NSObject
+@end
+
+@interface MDCTextFieldColorThemer (ToBeDeprecated)
 
 /**
  Applies a color scheme to theme MDCTextField in MDCTextInputController.
 
  @param colorScheme The color scheme to apply.
  @param textInputController A MDCTextInputController instance to apply a color scheme.
+
+ @warning This API will eventually be deprecated. The replacement API is:
+ `MDCTextInputControllerFilled`'s `-applyThemeWithScheme:` or
+ `MDCTextInputControllerOutlined`'s `-applyThemeWithScheme:`.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
            toTextInputController:(nonnull id<MDCTextInputController>)textInputController;
@@ -37,6 +49,9 @@
 
  @param colorScheme The color scheme to apply.
  @param textInputControllerClass A Class that conforms to MDCTextInputController (at least.)
+
+ @warning This API will eventually be deprecated. There will be no replacement for this API.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
     toAllTextInputControllersOfClass:(nonnull Class<MDCTextInputController>)textInputControllerClass
@@ -47,23 +62,23 @@
 
  @param colorScheme The color scheme to apply.
  @param textInput A MDCTextInput instance to apply a color scheme.
+
+ @warning This API will eventually be deprecated. There will be no replacement for this API.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                      toTextInput:(nonnull id<MDCTextInput>)textInput;
 
-@end
-
-@interface MDCTextFieldColorThemer (ToBeDeprecated)
-
 /**
  Applies a color scheme to theme MDCTextField in MDCTextInputController.
 
- @warning This method will soon be deprecated. Consider using
- +applySemanticColorScheme:toTextInputController: instead. Learn more at
- components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
-
  @param colorScheme The color scheme to apply.
  @param textInputController A MDCTextInputController instance to apply a color scheme.
+
+ @warning This API will eventually be deprecated. The replacement API is:
+ `MDCTextInputControllerFilled`'s `-applyThemeWithScheme:` or
+ `MDCTextInputControllerOutlined`'s `-applyThemeWithScheme:`.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
     toTextInputController:(nonnull id<MDCTextInputController>)textInputController;
@@ -72,12 +87,11 @@
  Applies a color scheme to MDCTextField for all instances of the class
  using the default color class properties.
 
- @warning This method will soon be deprecated. Consider using
- +applySemanticColorScheme:toAllTextInputControllersOfClass: instead. Learn more at
- components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
-
  @param colorScheme The color scheme to apply.
  @param textInputControllerClass A Class that conforms to MDCTextInputController (at least.)
+
+ @warning This API will eventually be deprecated. There will be no replacement for this API.
+ Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
     toAllTextInputControllersOfClass:(nonnull Class<MDCTextInputController>)textInputControllerClass

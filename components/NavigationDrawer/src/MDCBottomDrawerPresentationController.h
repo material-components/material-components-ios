@@ -88,6 +88,28 @@
 @property(nonatomic, strong, nullable) UIColor *topHandleColor;
 
 /**
+ The absolute height in points to which the drawer may expand initially.
+
+ Defaults to 0, indicating no value has been set and it should use the default behavior of 50%
+ of the screen's height.
+
+ If the value is larger than the container's height, this will result the drawer being presented
+ at fullscreen.
+
+ Note: When TraitCollection is UIUserInterfaceSizeClassCompact or when using
+ VoiceOver or SwitchControl, the drawer will always present at full screen.
+ */
+@property(nonatomic, assign) CGFloat maximumInitialDrawerHeight;
+
+/**
+ A flag allowing clients to opt-in to the drawer adding additional height to the content to include
+ the bottom safe area inset. This will remove the need for clients to calculate their content size
+ with the bottom safe area when setting the preferredContentSize of the contentViewController.
+ Defaults to NO.
+ */
+@property(nonatomic, assign) BOOL shouldIncludeSafeAreaInContentHeight;
+
+/**
  A boolean value that indicates whether the drawer is currently the full height of the window.
  */
 @property(nonatomic, readonly) BOOL contentReachesFullscreen;

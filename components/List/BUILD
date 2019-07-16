@@ -23,6 +23,7 @@ load(
     "mdc_snapshot_test",
     "mdc_unit_test_suite",
 )
+load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
 
@@ -34,6 +35,7 @@ mdc_public_objc_library(
     ],
     deps = [
         "//components/Ink",
+        "//components/Ripple",
         "//components/ShadowElevations",
         "//components/ShadowLayer",
         "//components/Typography",
@@ -45,6 +47,7 @@ mdc_extension_objc_library(
     name = "TypographyThemer",
     deps = [
         ":List",
+        "//components/Typography",
         "//components/schemes/Typography",
     ],
 )
@@ -54,6 +57,16 @@ mdc_extension_objc_library(
     deps = [
         ":List",
         "//components/schemes/Color",
+    ],
+)
+
+mdc_extension_objc_library(
+    name = "Theming",
+    deps = [
+        ":List",
+        ":ColorThemer",
+        ":TypographyThemer",
+        "//components/schemes/Container",
     ],
 )
 
@@ -82,6 +95,27 @@ mdc_objc_library(
         ":List",
         ":ListThemer",
         ":TypographyThemer",
+        "//components/Typography",
+        "//components/schemes/Typography",
+    ],
+)
+
+swift_library(
+    name = "unit_test_swift_sources",
+    srcs = glob([
+        "tests/unit/*.swift",
+        "tests/unit/Theming/*.swift",
+    ]),
+    copts = [
+        "-swift-version",
+        "4.2",
+    ],
+    visibility = ["//visibility:private"],
+    deps = [
+        ":List",
+        ":ColorThemer",
+        ":TypographyThemer",
+        ":Theming",
     ],
 )
 
@@ -89,6 +123,7 @@ mdc_unit_test_suite(
     name = "unit_tests",
     deps = [
         ":unit_test_sources",
+        ":unit_test_swift_sources",
     ],
 )
 
@@ -112,6 +147,7 @@ mdc_snapshot_objc_library(
     name = "snapshot_test_lib",
     deps = [
         ":List",
+        "//components/schemes/Typography",
     ],
 )
 

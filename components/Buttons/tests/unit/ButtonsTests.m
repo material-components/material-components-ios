@@ -96,6 +96,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
 
 @interface TestButton : MDCButton
 @property(nonatomic, strong) FakeShadowLayer *shadowLayer;
+@property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
 @end
 
 @implementation TestButton
@@ -110,6 +111,11 @@ static NSString *controlStateDescription(UIControlState controlState) {
   }
   return self;
 }
+
+- (UITraitCollection *)traitCollection {
+  return self.traitCollectionOverride ?: [super traitCollection];
+}
+
 @end
 
 @interface ButtonsTests : XCTestCase
@@ -307,6 +313,73 @@ static NSString *controlStateDescription(UIControlState controlState) {
   }
 }
 
+- (void)testBorderColorForState {
+  for (NSUInteger state = 0; state <= kNumUIControlStates; ++state) {
+    // Given
+    UIColor *color = randomColor();
+
+    // When
+    [self.button setBorderColor:color forState:state];
+
+    // Then
+    XCTAssertEqualObjects([self.button borderColorForState:state], color);
+  }
+}
+
+- (void)testBorderColorForStateFallbackBehavior {
+  // When
+  [self.button setBorderColor:UIColor.redColor forState:UIControlStateNormal];
+
+  // Then
+  for (NSUInteger state = 0; state <= kNumUIControlStates; ++state) {
+    XCTAssertEqualObjects([self.button borderColorForState:state], UIColor.redColor);
+  }
+}
+
+- (void)testBorderColorForStateBehaviorMatchesTitleColorForStateForward {
+  // Given
+  MDCButton *testButton = [[MDCButton alloc] init];
+  UIButton *uiButton = [[UIButton alloc] init];
+
+  // When
+  UIControlState maxState = UIControlStateNormal | UIControlStateHighlighted |
+                            UIControlStateDisabled | UIControlStateSelected;
+  for (UIControlState state = 0; state <= maxState; ++state) {
+    UIColor *color = [UIColor colorWithWhite:0 alpha:(CGFloat)(state / (CGFloat)maxState)];
+    [testButton setBorderColor:color forState:state];
+    [uiButton setTitleColor:color forState:state];
+  }
+
+  // Then
+  for (UIControlState state = 0; state <= maxState; ++state) {
+    XCTAssertEqualObjects([testButton borderColorForState:state],
+                          [uiButton titleColorForState:state], @" for state (%lu)",
+                          (unsigned long)state);
+  }
+}
+
+- (void)testBorderColorForStateBehaviorMatchesTitleColorForStateBackward {
+  // Given
+  MDCButton *testButton = [[MDCButton alloc] init];
+  UIButton *uiButton = [[UIButton alloc] init];
+
+  // When
+  UIControlState maxState = UIControlStateNormal | UIControlStateHighlighted |
+                            UIControlStateDisabled | UIControlStateSelected;
+  for (NSInteger state = maxState; state >= 0; --state) {
+    UIColor *color = [UIColor colorWithWhite:0 alpha:(CGFloat)(state / (CGFloat)maxState)];
+    [testButton setBorderColor:color forState:state];
+    [uiButton setTitleColor:color forState:state];
+  }
+
+  // Then
+  for (UIControlState state = 0; state <= maxState; ++state) {
+    XCTAssertEqualObjects([testButton borderColorForState:state],
+                          [uiButton titleColorForState:state], @" for state (%lu)",
+                          (unsigned long)state);
+  }
+}
+
 - (void)testBackgroundColorForState {
   for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
     // Given
@@ -425,6 +498,96 @@ static NSString *controlStateDescription(UIControlState controlState) {
                           [uiButton titleColorForState:state], @" for state (%lu)",
                           (unsigned long)state);
   }
+}
+
+#pragma mark - titleFont:forState:
+
+- (void)testTitleFontForState {
+  for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
+    // Given
+    UIFont *randomFont = [UIFont systemFontOfSize:arc4random_uniform(100)];
+
+    // When
+    [self.button setTitleFont:randomFont forState:controlState];
+
+    // Then
+    XCTAssertEqualObjects([self.button titleFontForState:controlState], randomFont);
+  }
+}
+
+- (void)testTitleFontForStateFallbackBehavior {
+  // Given
+  UIFont *fakeFont = [UIFont systemFontOfSize:25];
+  // When
+  [self.button setTitleFont:fakeFont forState:UIControlStateNormal];
+
+  // Then
+  for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
+    XCTAssertEqualObjects([self.button titleFontForState:controlState], fakeFont);
+  }
+}
+
+- (void)testTitleFontForStateFallbackBehaviorWithLegacyDynamicType {
+  // Given
+  self.button.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
+
+  // When
+  self.button.mdc_adjustsFontForContentSizeCategory = YES;
+
+  // Then
+  for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
+    XCTAssertTrue(
+        [[self.button titleFontForState:controlState]
+            mdc_isSimplyEqual:[[MDCTypography buttonFont]
+                                  mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleButton
+                                               scaledForDynamicType:YES]],
+        @"(%@) is not equal to (%@)", [self.button titleFontForState:UIControlStateNormal],
+        [[MDCTypography buttonFont] mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleButton
+                                                 scaledForDynamicType:YES]);
+  }
+}
+
+- (void)testTitleFontForStateWithLegacyDynamicTypeReturnsRenderedFonts {
+  // Given
+  UIFont *userFont = [UIFont systemFontOfSize:99];
+  [self.button setTitleFont:userFont forState:UIControlStateNormal];
+
+  // When
+  self.button.mdc_adjustsFontForContentSizeCategory = YES;
+  self.button.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
+
+  // Then
+  XCTAssertFalse([[self.button titleFontForState:UIControlStateNormal] mdc_isSimplyEqual:userFont],
+                 @"(%@) is equal to (%@)", [self.button titleFontForState:UIControlStateNormal],
+                 userFont);
+  XCTAssertFalse([self.button.titleLabel.font mdc_isSimplyEqual:userFont], @"(%@) is equal to (%@)",
+                 self.button.titleLabel.font, userFont);
+  XCTAssertTrue([[self.button titleFontForState:UIControlStateNormal]
+                    mdc_isSimplyEqual:self.button.titleLabel.font],
+                @"(%@) is not equal to (%@)", [self.button titleFontForState:UIControlStateNormal],
+                self.button.titleLabel.font);
+}
+
+- (void)testTitleFontForStateWithLegacyDynamicTypeRestoresUserFonts {
+  // Given
+  UIFont *userFont = [UIFont systemFontOfSize:99];
+  [self.button setTitleFont:userFont forState:UIControlStateNormal];
+  self.button.mdc_adjustsFontForContentSizeCategory = YES;
+  self.button.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
+
+  // When
+  self.button.mdc_adjustsFontForContentSizeCategory = NO;
+
+  // Then
+  XCTAssertTrue([[self.button titleFontForState:UIControlStateNormal] mdc_isSimplyEqual:userFont],
+                @"(%@) is not equal to (%@)", [self.button titleFontForState:UIControlStateNormal],
+                userFont);
+  XCTAssertTrue([self.button.titleLabel.font mdc_isSimplyEqual:userFont],
+                @"(%@) is not equal to (%@)", self.button.titleLabel.font, userFont);
+  XCTAssertTrue([[self.button titleFontForState:UIControlStateNormal]
+                    mdc_isSimplyEqual:self.button.titleLabel.font],
+                @"(%@) is not equal to (%@)", [self.button titleFontForState:UIControlStateNormal],
+                self.button.titleLabel.font);
 }
 
 #pragma mark - shadowColor:forState:
@@ -1022,6 +1185,49 @@ static NSString *controlStateDescription(UIControlState controlState) {
                              @"Font size should be equal to MDCFontTextStyleButton's.");
 }
 
+/**
+ Test legacy dynamic type has no impact on a @c MDCButton when @c
+ adjustFontForContentSizeCategoryWhenScaledFontIsUnavailable is set to @c NO before setting @c
+ mdc_adjustsFontForContentSizeCategory to @c YES that the font stays the same.
+ */
+- (void)testLegacyDynamicTypeDisabledThenDynamicTypeTurnedOn {
+  // Given
+  UIFont *fakeFont = [UIFont systemFontOfSize:55];
+  [self.button setTitleFont:fakeFont forState:UIControlStateNormal];
+  UIFont *originalFont = self.button.titleLabel.font;
+  self.button.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = NO;
+
+  // When
+  self.button.mdc_adjustsFontForContentSizeCategory = YES;
+
+  // Then
+  XCTAssertTrue([self.button.titleLabel.font mdc_isSimplyEqual:originalFont],
+                @"(%@) is not equal to (%@)", self.button.titleLabel.font, originalFont);
+  XCTAssertTrue(
+      [[self.button titleFontForState:UIControlStateNormal] mdc_isSimplyEqual:originalFont],
+      @"(%@) is not equal to (%@)", [self.button titleFontForState:UIControlStateNormal],
+      originalFont);
+}
+
+/**
+ Test legacy dynamic type impacts a @c MDCButton when @c
+ adjustFontForContentSizeCategoryWhenScaledFontIsUnavailable is set to @c YES that the font changes.
+ */
+- (void)testLegacyDynamicTypeEnabled {
+  // Given
+  UIFont *fakeFont = [UIFont systemFontOfSize:55];
+  [self.button setTitleFont:fakeFont forState:UIControlStateNormal];
+  UIFont *originalFont = self.button.titleLabel.font;
+  self.button.mdc_adjustsFontForContentSizeCategory = YES;
+
+  // When
+  self.button.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
+
+  // Then
+  XCTAssertFalse([self.button.titleLabel.font mdc_isSimplyEqual:originalFont], @"%@ is equal to %@",
+                 self.button.titleLabel.font, originalFont);
+}
+
 #pragma mark - Size-related tests
 
 - (void)testSizeThatFitsWithMinimumOnly {
@@ -1125,6 +1331,24 @@ static NSString *controlStateDescription(UIControlState controlState) {
   // Then
   XCTAssertEqual(self.button.accessibilityTraits,
                  UIAccessibilityTraitAllowsDirectInteraction | UIAccessibilityTraitButton);
+}
+
+#pragma mark - UITraitCollection
+
+- (void)testTraitCollectionDidChangeBlockCalledWhenTraitCollectionChanges {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+  XCTestExpectation *expectation =
+      [self expectationWithDescription:@"Called traitCollectionDidChange"];
+  button.traitCollectionDidChangeBlock = ^(UITraitCollection *_Nullable previousTraitCollection) {
+    [expectation fulfill];
+  };
+
+  // When
+  [button traitCollectionDidChange:nil];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
 }
 
 @end

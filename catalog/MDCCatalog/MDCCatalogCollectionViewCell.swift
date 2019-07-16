@@ -38,7 +38,10 @@ class MDCCatalogCollectionViewCell: UICollectionViewCell {
     contentView.clipsToBounds = true
     contentView.addSubview(tile)
     self.isAccessibilityElement = true
-    self.accessibilityTraits |= UIAccessibilityTraitButton
+    let rawAccessibilityTraits =
+      accessibilityTraits.rawValue | UIAccessibilityTraits.button.rawValue
+    accessibilityTraits = UIAccessibilityTraits(rawValue: rawAccessibilityTraits)
+    accessibilityHint = "Opens the example"
 
     updateTheme()
 
@@ -85,7 +88,7 @@ class MDCCatalogCollectionViewCell: UICollectionViewCell {
     label.textColor = AppTheme.globalTheme.colorScheme.onBackgroundColor
   }
 
-  func themeDidChange(notification: NSNotification) {
+  @objc func themeDidChange(notification: NSNotification) {
     updateTheme()
   }
 

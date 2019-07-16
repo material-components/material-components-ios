@@ -50,13 +50,13 @@ class  MDCBottomNavigationControllerExampleCollectionViewController: UICollectio
 
 class BottomNavigationControllerExampleViewController: MDCBottomNavigationBarController {
 
-  public var colorScheme: MDCColorScheming  = MDCSemanticColorScheme() {
+  @objc public var colorScheme: MDCColorScheming  = MDCSemanticColorScheme() {
     didSet {
       apply(colorScheme: colorScheme)
     }
   }
 
-  public var typographyScheme: MDCTypographyScheming = MDCTypographyScheme() {
+  @objc public var typographyScheme: MDCTypographyScheming = MDCTypographyScheme() {
     didSet {
       apply(typographyScheme: typographyScheme)
     }
@@ -82,7 +82,7 @@ class BottomNavigationControllerExampleViewController: MDCBottomNavigationBarCon
     viewControllers = [ viewController1, viewController2, viewController3 ]
   }
 
-  class func catalogMetadata() -> [String: Any] {
+  @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Bottom Navigation", "Bottom Navigation Controller"],
       "presentable": false

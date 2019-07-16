@@ -160,11 +160,23 @@ IB_DESIGNABLE
 @property(nonatomic, strong, nullable) UIColor *titleTextColor;
 
 /**
- The inkColor that is used for all buttons in trailing and leading button bars.
+ The rippleColor that is used for all buttons in trailing and leading button bars.
 
- If set to nil, button bar buttons use default ink color.
+ If set to nil, button bar buttons use default ripple color.
  */
-@property(nonatomic, strong, nullable) UIColor *inkColor;
+@property(nonatomic, strong, nullable) UIColor *rippleColor;
+
+/**
+ By setting this property to @c YES, the Ripple component will be used instead of Ink
+ to display visual feedback to the user.
+
+ @note This property will eventually be enabled by default, deprecated, and then deleted as part
+ of our migration to Ripple. Learn more at
+ https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple
+
+ Defaults to NO.
+ */
+@property(nonatomic, assign) BOOL enableRippleBehavior;
 
 /**
  If true, all button titles will be converted to uppercase.
@@ -262,10 +274,41 @@ IB_DESIGNABLE
 @property(nonatomic, strong, nullable) UIBarButtonItem *trailingBarButtonItem;
 
 /**
+ Returns the rect of the leading item's view within the given @c coordinateSpace.
+
+ If the provided item is not contained in @c leadingBarButtonItems, then the behavior is undefined.
+
+ @param item The item within @c leadingBarButtonItems whose rect should be computed.
+ @param coordinateSpace The coordinate space the returned rect should be in relation to.
+ */
+- (CGRect)rectForLeadingBarButtonItem:(nonnull UIBarButtonItem *)item
+                    inCoordinateSpace:(nonnull id<UICoordinateSpace>)coordinateSpace
+    NS_SWIFT_NAME(rect(forLeading:in:));
+
+/**
+ Returns the rect of the trailing item's view within the given @c coordinateSpace.
+
+ If the provided item is not contained in @c trailingBarButtonItems, then the behavior is undefined.
+
+ @param item The item within @c trailingBarButtonItems whose rect should be computed.
+ @param coordinateSpace The coordinate space the returned rect should be in relation to.
+ */
+- (CGRect)rectForTrailingBarButtonItem:(nonnull UIBarButtonItem *)item
+                     inCoordinateSpace:(nonnull id<UICoordinateSpace>)coordinateSpace
+    NS_SWIFT_NAME(rect(forTrailing:in:));
+
+/**
  The horizontal text alignment of the navigation bar title. Defaults to
  MDCNavigationBarTitleAlignmentLeading.
  */
 @property(nonatomic) MDCNavigationBarTitleAlignment titleAlignment;
+
+/**
+ A block that is invoked when the NavigationBar receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)(
+    MDCNavigationBar *_Nonnull navigationBar, UITraitCollection *_Nullable previousTraitCollection);
 
 #pragma mark Observing UINavigationItem instances
 
@@ -324,5 +367,19 @@ IB_DESIGNABLE
 
 /** The text alignment of the navigation bar title. Defaults to NSTextAlignmentLeft. */
 @property(nonatomic) NSTextAlignment textAlignment __deprecated_msg("Use titleAlignment instead.");
+
+@end
+
+@interface MDCNavigationBar (ToBeDeprecated)
+
+/**
+ The inkColor that is used for all buttons in trailing and leading button bars.
+
+ If set to nil, button bar buttons use default ink color.
+ @warning This method will eventually be deprecated. Opt-in to Ripple by setting
+ enableRippleBehavior to YES, and then use rippleColor instead. Learn more at
+ https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple
+ */
+@property(nonatomic, strong, nullable) UIColor *inkColor;
 
 @end

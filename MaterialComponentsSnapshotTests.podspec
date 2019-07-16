@@ -15,8 +15,8 @@ module SnapshotPodspecHelper
         source_files = Dir["components/#{@name}/tests/snapshot/*.{h,m,swift}"]
         supplemental_files = Dir["components/#{@name}/tests/snapshot/supplemental/*.{h,m,swift}"]
         example_files = Dir["components/#{@name}/examples/tests/snapshot/*.{h,m,swift}"]
-        theming_files = Dir["components/#{@name}/tests/snapshot/Theming/*.{h,m,swift}"]
-        return source_files + supplemental_files + example_files + theming_files
+        extension_files = Dir["components/#{@name}/tests/snapshot/*/*.{h,m,swift}"]
+        return source_files + supplemental_files + example_files + extension_files
       end
       return []
     end
@@ -32,7 +32,7 @@ module SnapshotPodspecHelper
   end
 
   def self.snapshot_sources
-    base_sources = ["components/private/Snapshot/src/*.{h,m,swift}"]
+    base_sources = ["components/private/Snapshot/src/*.{h,m,swift}", "components/private/Snapshot/src/*/*.{h,m,swift}"]
     return components.reduce(base_sources) do |sources_so_far, component|
       sources_so_far + component.source_files
     end
@@ -53,13 +53,13 @@ end
 
 Pod::Spec.new do |s|
   s.name         = "MaterialComponentsSnapshotTests"
-  s.version      = "80.0.0"
+  s.version      = "85.7.0"
   s.authors      = "The Material Components authors."
   s.summary      = "This spec is an aggregate of all the Material Components snapshot tests."
   s.homepage     = "https://github.com/material-components/material-components-ios"
   s.license      = 'Apache 2.0'
   s.source       = { :git => "https://github.com/material-components/material-components-ios.git", :tag => "v#{s.version}" }
-  s.platform     = :ios, '8.0'
+  s.platform     = :ios, '9.0'
   s.requires_arc = true
   s.dependency 'MaterialComponents'
   s.dependency 'MaterialComponentsBeta'
@@ -71,7 +71,7 @@ Pod::Spec.new do |s|
   s.source_files = ["components/private/Snapshot/src/SourceDummies/*.{h,m}"]
 
   s.test_spec "SnapshotTests" do |snapshot_tests|
-    snapshot_tests.ios.deployment_target = '8.0'
+    snapshot_tests.ios.deployment_target = '9.0'
     snapshot_tests.requires_app_host = true
     snapshot_tests.source_files = SnapshotPodspecHelper.snapshot_sources
     snapshot_tests.resources = SnapshotPodspecHelper.snapshot_resources
