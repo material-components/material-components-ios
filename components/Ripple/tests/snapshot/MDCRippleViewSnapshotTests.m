@@ -17,7 +17,7 @@
 #import "UIColor+MaterialDynamic.h"
 
 /**
- Creates a fake MDCRippleView that has its traitCollection overriden.
+ Creates a fake MDCRippleView that has its traitCollection overridden.
  */
 @interface MDCRippleViewSnaphotTestRippleViewFake : MDCRippleView
 @property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
