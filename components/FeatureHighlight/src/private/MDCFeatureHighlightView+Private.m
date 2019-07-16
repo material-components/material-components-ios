@@ -529,6 +529,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   NSArray *keyTimes = @[ @0, @0.5, @1 ];
   __block id pulseColorStart;
   __block id pulseColorEnd;
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     [self.traitCollection performAsCurrentTraitCollection:^{
       pulseColorStart =
@@ -544,6 +545,13 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
                 .CGColor;
     pulseColorEnd = (__bridge id)[_innerHighlightColor colorWithAlphaComponent:0].CGColor;
   }
+#else
+  pulseColorStart =
+      (__bridge id)
+          [_innerHighlightColor colorWithAlphaComponent:kMDCFeatureHighlightPulseStartAlpha]
+              .CGColor;
+  pulseColorEnd = (__bridge id)[_innerHighlightColor colorWithAlphaComponent:0].CGColor;
+#endif
 
   CGFloat radius = _innerRadius;
 
