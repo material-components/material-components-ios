@@ -116,8 +116,8 @@ __attribute__((objc_subclassing_restricted)) @interface MDCActionSheetController
  traitCollectionDidChange:. The block is called after the call to the superclass.
  */
 @property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
-(MDCActionSheetController *_Nonnull actionSheet,
-UITraitCollection *_Nullable previousTraitCollection);
+    (MDCActionSheetController *_Nonnull actionSheet,
+     UITraitCollection *_Nullable previousTraitCollection);
 
 /**
  Indicates whether the button should automatically update its font when the device’s
