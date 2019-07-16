@@ -173,6 +173,7 @@ mdc_snapshot_objc_library(
     deps = [
         ":Dialogs",
         ":Theming",
+        ":private",
         "//components/schemes/Color",
         "//components/schemes/Container",
         "//components/schemes/Typography",
