@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialSnackbar.h"
 #import "MaterialContainerScheme.h"
+#import "MaterialSnackbar.h"
 
 /** This category is used to style MDCSnackbarManager instances. */
 @interface MDCSnackbarManager (MaterialTheming)

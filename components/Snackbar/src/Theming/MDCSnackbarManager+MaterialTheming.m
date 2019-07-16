@@ -15,8 +15,8 @@
 #import "MDCSnackbarManager+MaterialTheming.h"
 
 #import "MaterialColorScheme.h"
-#import "MaterialTypographyScheme.h"
 #import "MaterialShadowElevations.h"
+#import "MaterialTypographyScheme.h"
 
 static const CGFloat kSnackbarBackgroundOpacity = (CGFloat)0.8;
 static const CGFloat kSnackbarMessageTextOpacity = (CGFloat)0.87;
@@ -32,10 +32,12 @@ static const CGFloat kSnackbarMessageTextOpacity = (CGFloat)0.87;
 #pragma mark - Private
 
 - (void)applyThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
-  self.snackbarMessageViewBackgroundColor = [MDCSemanticColorScheme
-                                         blendColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:kSnackbarBackgroundOpacity]
-                                         withBackgroundColor:colorScheme.surfaceColor];
-  self.messageTextColor = [colorScheme.surfaceColor colorWithAlphaComponent:kSnackbarMessageTextOpacity];
+  self.snackbarMessageViewBackgroundColor =
+      [MDCSemanticColorScheme blendColor:[colorScheme.onSurfaceColor
+                                             colorWithAlphaComponent:kSnackbarBackgroundOpacity]
+                     withBackgroundColor:colorScheme.surfaceColor];
+  self.messageTextColor =
+      [colorScheme.surfaceColor colorWithAlphaComponent:kSnackbarMessageTextOpacity];
   [self setButtonTitleColor:colorScheme.primaryColorVariant forState:UIControlStateNormal];
 }
 

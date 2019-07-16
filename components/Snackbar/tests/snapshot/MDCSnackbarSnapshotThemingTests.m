@@ -95,8 +95,10 @@ static NSString *const kItemTitleShort2Latin = @"No";
 - (void)testWithCustomContainerScheme {
   // Given
   MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
-  containerScheme.colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterialDark201907];
-  containerScheme.typographyScheme = [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+  containerScheme.colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterialDark201907];
+  containerScheme.typographyScheme =
+      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
 
   // When
   [self.testManager applyThemeWithScheme:containerScheme];
