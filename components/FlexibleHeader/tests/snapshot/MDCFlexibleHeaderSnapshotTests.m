@@ -83,7 +83,7 @@
 - (void)testShadowColor {
   // Given
   MDCFlexibleHeaderTraitCollectionTestView *flexibleHeader =
-  [[MDCFlexibleHeaderTraitCollectionTestView alloc] init];
+      [[MDCFlexibleHeaderTraitCollectionTestView alloc] init];
   flexibleHeader.bounds = CGRectMake(0, 0, 500, 200);
   UIColor *shadowColor = UIColor.redColor;
   flexibleHeader.backgroundColor = UIColor.whiteColor;
@@ -97,7 +97,7 @@
   // Then
   [flexibleHeader sizeToFit];
   UIView *snapshotView =
-  [flexibleHeader mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(50, 50, 50, 50)];
+      [flexibleHeader mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(50, 50, 50, 50)];
   [self snapshotVerifyView:snapshotView];
 }
 
