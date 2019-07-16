@@ -1,3 +1,121 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+## Changes
+
+### AppBar
+
+* [Add `defaultTraitCollectionDidChangeBlock` for injecting into AppBars. (#7887)](https://github.com/material-components/material-components-ios/commit/9bd3a8958d0a0c72967db062f78b3f77c48b47ee) (Robert Moore)
+* [Add `traitCollectionDidChangeBlock` to AppBarViewController. (#7851)](https://github.com/material-components/material-components-ios/commit/97a39fc6ddb739c4182c0f3b32b795996d0fe050) (Robert Moore)
+* [Provide app bar parameter for traitCollectionDidChange block. (#7888)](https://github.com/material-components/material-components-ios/commit/56e940a9726afe95650eeb753b5f8566233d0567) (Robert Moore)
+
+### Banner
+
+* [fix dynamic type support for attributed string. (#7820)](https://github.com/material-components/material-components-ios/commit/112433335c229e45d1382b3ba013bcf28e239409) (Wenyu Zhang)
+
+### BottomNavigation
+
+* [ Add shadowColor API. (#7910)](https://github.com/material-components/material-components-ios/commit/3d62ea7a29c3c4ddf99b410836199e56bbe84fd8) (Cody Weaver)
+* [Add `traitCollectionDidChangeBlock` API. (#7893)](https://github.com/material-components/material-components-ios/commit/fcf9b24138b3469332e93e819b3c8a04e59bedeb) (Robert Moore)
+
+### Buttons
+
+* [Add dynamic color support (#7914)](https://github.com/material-components/material-components-ios/commit/0f8e19aab5fa86453f7b681c6bf4141e3c6166ec) (Cody Weaver)
+* [Add dynamic color support to MDCButton (#7858)](https://github.com/material-components/material-components-ios/commit/01a2002f9f01a7820c59fa560f8c5bcf8867ca2c) (Cody Weaver)
+* [add traitCollectionDidChangeBlock API. (#7853)](https://github.com/material-components/material-components-ios/commit/04408e0407a02713376a63c9414a51787ad96c20) (Wenyu Zhang)
+
+### FlexibleHeader
+
+* [Add dynamic color support to flexible header (#7904)](https://github.com/material-components/material-components-ios/commit/9f2f025fc0efb982d1ebad28290e7c66f9eac148) (Cody Weaver)
+* [Add traitCollectionDidChangeBlock (#7915)](https://github.com/material-components/material-components-ios/commit/238be999695140ff043e43d97c8063d6fa7026fc) (Cody Weaver)
+* [Add traitCollectionDidChangeBlock (#7922)](https://github.com/material-components/material-components-ios/commit/ac6fda5d8d599e1290be629d2e5ca2acd3f6de87) (Cody Weaver)
+* [Add unit test for the shadow layer (#7909)](https://github.com/material-components/material-components-ios/commit/b0b04a2adfe5549a9cf48f1b7aaba3aa65fa0eda) (Cody Weaver)
+
+### NavigationBar
+
+* [Add traitCollectionDidChange block. (#7918)](https://github.com/material-components/material-components-ios/commit/3d9d2db94d5a8429a9ee2cdf9733f761e50b99db) (Cody Weaver)
+
+### NavigationDrawer
+
+* [Expose headerShadowColor to allow clients to provide a dynamic color (#7900)](https://github.com/material-components/material-components-ios/commit/385df73f8df055cba799e2d76efddb1849e3261f) (Bryan Oltman)
+
+### ProgressView
+
+* [Provide unique names for methods. (#7824)](https://github.com/material-components/material-components-ios/commit/6f2d5eb654b6ca1d812c42cd1d13d87c2f692daa) (Robert Moore)
+
+### Ripple
+
+* [Add dynamic color support for ripple. (#7877)](https://github.com/material-components/material-components-ios/commit/edb5f11af1a830e004fdffef536c4b6306b4eb4b) (Yarden Eitan)
+
+### Shapes
+
+* [Fix memory leak in -[MDCRectangleShapeGenerator pathForSize:] by returning an autoreleased CGPathRef (#7913)](https://github.com/material-components/material-components-ios/commit/783fd0762151ec6ab72442abad673b5b9c6c7a48) (Julien Poumailloux)
+
+### Slider
+
+* [Allowing Full Haptics for Discrete Sliders (#7765)](https://github.com/material-components/material-components-ios/commit/46efae77c646285b4971ad13d0a0662d68653122) (afweiss)
+
+### Snackbar
+
+* [Add button styling properties to MDCSnackbarManager (#7832)](https://github.com/material-components/material-components-ios/commit/fc625843c77e85b64030c7be20df23d7907bab0e) (Bryan Oltman)
+* [Add traitCollectionDidChangeBlock API (#7903)](https://github.com/material-components/material-components-ios/commit/4c9ca7d45965d7d3dbfc025ca9a5991f05aeb8bb) (Bryan Oltman)
+* [Allow clients to customize elevation (#7844)](https://github.com/material-components/material-components-ios/commit/ba841d886eb8f43e23fe37cb11eba06bb7194cab) (Cody Weaver)
+* [Support dynamic color (#7905)](https://github.com/material-components/material-components-ios/commit/fac684eb4ca24d469313611ddbf1e9888ff8b2da) (Bryan Oltman)
+* [Use MDCShadowLayer instead of UIKit shadows (#7843)](https://github.com/material-components/material-components-ios/commit/64d5d315ada2886029f558f36596731663e7041b) (Cody Weaver)
+
+### Tabs
+
+* [Add `accessibilityElementForItem:` API. (#7818)](https://github.com/material-components/material-components-ios/commit/4ed8860b20d76dbadf527225e2dbf037feaa4029) (Robert Moore)
+* [Add `setSelected:animated:` API for custom views. (#7810)](https://github.com/material-components/material-components-ios/commit/9e8165694e4dfe4921281308161c8a622adecfe5) (Robert Moore)
+* [Add bottom divider. (#7817)](https://github.com/material-components/material-components-ios/commit/09a7df6530b6b88049251428a4990943fef0ff1f) (Robert Moore)
+* [Add item style options for TabBarView example. (#7808)](https://github.com/material-components/material-components-ios/commit/4cb495c435dfaa6e08d50e7cd97284570ceceb77) (Robert Moore)
+* [Add snapshot tests for contentInset on MDCTabBarView. (#7815)](https://github.com/material-components/material-components-ios/commit/71b103e6816dcfb308987bd65b07f7908c06ac73) (Robert Moore)
+* [Add support for `selectedImage` from UITabBarItem. (#7814)](https://github.com/material-components/material-components-ios/commit/1ead0b6fac7ba10da81379c19ba15bf59a15a8c0) (Robert Moore)
+* [Adjust sizeThatFits: behavior for TabBarView. (#7846)](https://github.com/material-components/material-components-ios/commit/7c7208fb509b52fcf571a6679df7b718c15fc061) (Robert Moore)
+* [Allow clients to calculate when a view appears/disappears. (#7841)](https://github.com/material-components/material-components-ios/commit/3a0c1ee2e8bd2257894ab696d4759ab67e390993) (Robert Moore)
+* [Combine "default" unit tests. (#7822)](https://github.com/material-components/material-components-ios/commit/bc008a2ae6fc27a49370dbfb6abed0c0660c1467) (Robert Moore)
+* [Don't handle `contentInset` directly in layout. (#7816)](https://github.com/material-components/material-components-ios/commit/b67ae677623ac314f037e5c35f38e40117e84de6) (Robert Moore)
+* [Fix crash when assigning `nil` for KVO'd title. (#7806)](https://github.com/material-components/material-components-ios/commit/fffcb4a5a006b34a157fcac4c9cc89d630e0976a) (Robert Moore)
+* [Fix segmented control position. (#7898)](https://github.com/material-components/material-components-ios/commit/640220d66d277047113430c566ea5b161692e959) (Robert Moore)
+* [Fix title-only example. (#7897)](https://github.com/material-components/material-components-ios/commit/f2b258014408fa90a3d60b2e6e3dc027ae47bfa9) (Robert Moore)
+* [Minor refactoring of KVO code. (#7825)](https://github.com/material-components/material-components-ios/commit/bd61834803047560d3f6095ffa72c4b52cba5934) (Robert Moore)
+* [Retain custom view in example. (#7901)](https://github.com/material-components/material-components-ios/commit/4d99e843059129e84ef9061603e092f8b537faaa) (Robert Moore)
+
+### TextFields
+
+* [Textfields dynamic color support (#7889)](https://github.com/material-components/material-components-ios/commit/b2f2a5d77fead5f1164b2884bf540f3295f48927) (Andrew Overton)
+
+### private/Snapshot
+
+* [added ios13 support for snapshots (#7861)](https://github.com/material-components/material-components-ios/commit/48f78118a7d268c92521bad12b118238de74a3fb) (Yarden Eitan)
+
+### schemes/Color
+
+* [Add a default color scheme for Dark mode. (#7831)](https://github.com/material-components/material-components-ios/commit/666b17a34646ea9dde490e1a22c65ab806c6d5bc) (Wenyu Zhang)
+* [Add dynamic color scheme MDCColorSchemeDefaultsMaterial201907. (#7848)](https://github.com/material-components/material-components-ios/commit/6f83e12273d3739dba06f48a1cac3d09865b3cb2) (Wenyu Zhang)
+* [Use UIColor method instead of static method to generate (#7894)](https://github.com/material-components/material-components-ios/commit/0175300afc821396a31b5cd7d0bd638b9ce58dac) (Wenyu Zhang)
+* [add two properties for elevation overlay color in color (#7924)](https://github.com/material-components/material-components-ios/commit/914e9a37fb0ef1e4a3663126bb61997c3600920c) (Wenyu Zhang)
+
+## Multi-component changes
+
+* [Add UIColor+MaterialDynamic to support dynamic color. (#7860)](https://github.com/material-components/material-components-ios/commit/a65f36d4beaa7d8859c93a046967270375387d13) (Wenyu Zhang)
+* [Add traitCollectionDidChange block (#7917)](https://github.com/material-components/material-components-ios/commit/1161a9db986e8cf33799628645ed09ce017dd98a) (Cody Weaver)
+
+---
+
 # 85.7.0
 
 This minor release exposes some properties on Snackbars and fixes a Banner bug.
