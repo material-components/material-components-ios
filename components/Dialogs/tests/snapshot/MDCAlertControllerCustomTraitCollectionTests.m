@@ -17,10 +17,10 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKit.h>
 
+#import "../../../private/Color/src/UIColor+MaterialDynamic.h"
+#import "../../src/private/MDCDialogShadowedView.h"
 #import "MaterialDialogs.h"
 #import "MaterialTypography.h"
-#import "../../src/private/MDCDialogShadowedView.h"
-#import "../../../private/Color/src/UIColor+MaterialDynamic.h"
 
 /**
  A @c MDCAlertController test fake to override the @c traitCollection to test for dynamic type.
@@ -351,18 +351,21 @@
   if (@available(iOS 13.0, *)) {
     // Given
     UIColor *shadowColor = [UIColor colorWithUserInterfaceStyleDarkColor:UIColor.greenColor
-                                                           defaultColor:UIColor.blackColor];
-    ShadowViewCustomTraitCollectionSnapshotTestFake *trackingView = [[ShadowViewCustomTraitCollectionSnapshotTestFake alloc] init];
+                                                            defaultColor:UIColor.blackColor];
+    ShadowViewCustomTraitCollectionSnapshotTestFake *trackingView =
+        [[ShadowViewCustomTraitCollectionSnapshotTestFake alloc] init];
     trackingView.frame = CGRectMake(0, 0, 100, 200);
     trackingView.shadowColor = shadowColor;
     trackingView.backgroundColor = UIColor.whiteColor;
 
     // When
-    trackingView.traitCollectionOverride = [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
+    trackingView.traitCollectionOverride =
+        [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
     [trackingView layoutIfNeeded];
 
     // Then
-    UIView *snapshotView = [trackingView mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(50, 50, 50, 50)];
+    UIView *snapshotView =
+        [trackingView mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(50, 50, 50, 50)];
     [self snapshotVerifyViewForIOS13:snapshotView];
   }
 #endif
