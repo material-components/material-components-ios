@@ -403,7 +403,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   _outerRadius = MAX(minTextRadius, minInnerHighlightRadius);
 
   // To support dynamic color
-//  _pulseLayer.fillColor = [UIColor purpleColor].CGColor;
+  _pulseLayer.fillColor = _innerHighlightColor.CGColor;
   _innerLayer.fillColor = _innerHighlightColor.CGColor;
   _outerLayer.fillColor = _outerHighlightColor.CGColor;
 }
