@@ -64,6 +64,7 @@ target "MDCCatalog" do
     'Shapes/UnitTests',
     'Slider/UnitTests',
     'Snackbar/UnitTests',
+    'Snackbar+Theming/UnitTests',
     'Tabs/UnitTests',
     'Tabs+Theming/UnitTests',
     'TextFields/UnitTests',

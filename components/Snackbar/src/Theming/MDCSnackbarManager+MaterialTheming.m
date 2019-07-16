@@ -32,7 +32,7 @@ static const CGFloat kSnackbarMessageTextOpacity = (CGFloat)0.87;
 #pragma mark - Private
 
 - (void)applyThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
-  self.snackbarMessageViewShadowColor = [MDCSemanticColorScheme
+  self.snackbarMessageViewBackgroundColor = [MDCSemanticColorScheme
                                          blendColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:kSnackbarBackgroundOpacity]
                                          withBackgroundColor:colorScheme.surfaceColor];
   self.messageTextColor = [colorScheme.surfaceColor colorWithAlphaComponent:kSnackbarMessageTextOpacity];
