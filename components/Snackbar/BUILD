@@ -39,6 +39,8 @@ mdc_public_objc_library(
         "//components/AnimationTiming",
         "//components/Buttons",
         "//components/OverlayWindow",
+        "//components/ShadowElevations",
+        "//components/ShadowLayer",
         "//components/Typography",
         "//components/private/Application",
         "//components/private/KeyboardWatcher",

@@ -12,25 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-/**
- A simple protocol that indicates the responder can be targeted by an
- @c MDCTabBarViewIndicatorTemplate.
+NS_ASSUME_NONNULL_BEGIN
 
- @seealso MDCTabBarViewIndicatorTemplate
- */
-@protocol MDCTabBarViewIndicatorSupporting
+@interface UIColor (MaterialDynamic)
 
-/**
- The bounds of the receiver.
- */
-@property(readonly) CGRect bounds;
-
-/**
- The frame of the content of the receiver. Used to position the Selection Indicator relative to
- the content.
- */
-@property(readonly) CGRect contentFrame;
+/// Returns a color object that picks its value from given color objects dynamically
+/// based on currently active traits. For pre iOS 13, this method returns the default
+/// color object.
+///
+/// @param darkColor A color object returned when @c userInterfaceStyle is @c
+/// UIUserInterfaceStyleDark based on currently active traits.
+/// @param defaultColor A default color object.
++ (UIColor *)colorWithUserInterfaceStyleDarkColor:(UIColor *)darkColor
+                                     defaultColor:(UIColor *)defaultColor;
 
 @end
+
+NS_ASSUME_NONNULL_END

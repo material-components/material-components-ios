@@ -34,6 +34,14 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
 /** The color of the Tab bar's background. */
 @property(nullable, nonatomic, copy) UIColor *barTintColor;
 
+/** The color of the bottom divider. Default is clear. */
+@property(nonnull, nonatomic, copy) UIColor *bottomDividerColor;
+
+/**
+ The color for the Ripple effect for touch feedback.
+ */
+@property(nonnull, nonatomic, copy) UIColor *rippleColor;
+
 /** The tab bar view delegate. */
 @property(nullable, nonatomic, weak) id<MDCTabBarViewDelegate> tabBarDelegate;
 
@@ -95,5 +103,26 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
  If no value for a control state is set, the value for @c UIControlStateNormal is returned.
  */
 - (nullable UIFont *)titleFontForState:(UIControlState)state;
+
+/**
+ Returns the @c UIAccessibility element associated with the provided item.
+
+ @note The returned object is not guaranteed to be of type @c UIAccessibilityElement. It is
+       guaranteed to be the same object UIAccessibility systems identify as representing @c item.
+
+ @param item A tab bar item in the receivers @c items array.
+ @return The @c UIAccessibility element associated with @c item if one exists, else @c nil.
+ */
+- (nullable id)accessibilityElementForItem:(nonnull UITabBarItem *)item;
+
+/**
+ Provides the frame of the tab bar subview that visually represents @c item. If @c item is not
+ present in the tab bar's list of items, then the null rectangle is returned.
+
+ @param item The tab bar item for computing a frame.
+ @param coordinateSpace The space in which to calculate the item's corresponding frame.
+ */
+- (CGRect)rectForItem:(nonnull UITabBarItem *)item
+    inCoordinateSpace:(nonnull id<UICoordinateSpace>)coordinateSpace;
 
 @end

@@ -25,6 +25,9 @@ licenses(["notice"])  # Apache 2.0
 
 mdc_public_objc_library(
     name = "Color",
+    deps = [
+        "//components/private/Color",
+    ],
 )
 
 package_group(

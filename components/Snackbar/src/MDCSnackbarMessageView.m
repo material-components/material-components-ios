@@ -19,6 +19,7 @@
 #import "MDCSnackbarMessageView.h"
 
 #import "MaterialAnimationTiming.h"
+#import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
 #import "private/MDCSnackbarMessageViewInternal.h"
 #import "private/MDCSnackbarOverlayView.h"
@@ -42,17 +43,6 @@ static inline UIColor *MDCRGBAColor(uint8_t r, uint8_t g, uint8_t b, float a) {
  The thickness of the Snackbar border.
  */
 static const CGFloat kBorderWidth = 0;
-
-/**
- Shadow coloring.
- */
-static const CGFloat kShadowAlpha = (CGFloat)0.24;
-
-static const CGSize kShadowOffset = (CGSize){0.0, 2.0};
-static const CGSize kLegacyShadowOffset = (CGSize){0.0, 1.0};
-
-static const CGFloat kShadowSpread = 4;
-static const CGFloat kLegacyShadowSpread = 1;
 
 /**
  The radius of the corners.
@@ -231,17 +221,13 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     _dismissalHandler = [handler copy];
 
     self.backgroundColor = _snackbarMessageViewBackgroundColor;
-    self.layer.shadowColor = _snackbarMessageViewShadowColor.CGColor;
-    self.layer.shadowOpacity = (float)kShadowAlpha;
     if (MDCSnackbarMessage.usesLegacySnackbar) {
       self.layer.cornerRadius = kLegacyCornerRadius;
-      self.layer.shadowOffset = kLegacyShadowOffset;
-      self.layer.shadowRadius = kLegacyShadowSpread;
     } else {
       self.layer.cornerRadius = kCornerRadius;
-      self.layer.shadowOffset = kShadowOffset;
-      self.layer.shadowRadius = kShadowSpread;
     }
+    _elevation = MDCShadowElevationSnackbar;
+    [(MDCShadowLayer *)self.layer setElevation:MDCShadowElevationSnackbar];
 
     _anchoredToScreenBottom = YES;
 
@@ -349,13 +335,14 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 
     _label.textColor = _messageTextColor;
 
-    [self initializeMDCSnackbarMessageViewButtons:message];
+    [self initializeMDCSnackbarMessageViewButtons:message withManager:manager];
   }
 
   return self;
 }
 
-- (void)initializeMDCSnackbarMessageViewButtons:(MDCSnackbarMessage *)message {
+- (void)initializeMDCSnackbarMessageViewButtons:(MDCSnackbarMessage *)message
+                                    withManager:(MDCSnackbarManager *)manager {
   // Add buttons to the view. We'll use this opportunity to determine how much space a button will
   // need, to inform the layout direction.
   NSMutableArray *actions = [NSMutableArray array];
@@ -393,6 +380,12 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
                   action:@selector(handleButtonTapped:)
         forControlEvents:UIControlEventTouchUpInside];
 
+    button.uppercaseTitle = manager.uppercaseButtonTitle;
+    button.disabledAlpha = manager.disabledButtonAlpha;
+    if (manager.buttonInkColor) {
+      button.inkColor = manager.buttonInkColor;
+    }
+
     [actions addObject:buttonView];
   }
 
@@ -406,6 +399,23 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 
     // In case our dismissal handler has a reference to us, release the block.
     self.dismissalHandler = nil;
+  }
+}
+
++ (Class)layerClass {
+  return [MDCShadowLayer class];
+}
+
+- (void)setElevation:(MDCShadowElevation)elevation {
+  _elevation = elevation;
+  [(MDCShadowLayer *)self.layer setElevation:_elevation];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
   }
 }
 
@@ -903,6 +913,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
                    cornerRadius:MDCSnackbarMessage.usesLegacySnackbar ? kLegacyCornerRadius
                                                                       : kCornerRadius];
   self.layer.shadowPath = path.CGPath;
+  self.layer.shadowColor = self.snackbarMessageViewShadowColor.CGColor;
 }
 
 #pragma mark - Sizing

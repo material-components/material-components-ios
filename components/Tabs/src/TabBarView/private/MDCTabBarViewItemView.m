@@ -14,6 +14,10 @@
 
 #import "MDCTabBarViewItemView.h"
 
+#import <CoreGraphics/CoreGraphics.h>
+
+#import "MaterialMath.h"
+
 /** The minimum width of any item view. */
 static const CGFloat kMinWidth = 90;
 
@@ -44,11 +48,14 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
 
 @interface MDCTabBarViewItemView ()
 
-@property(nonatomic, strong) UIView *contentView;
+/** Indicates the selection status of this item view. */
+@property(nonatomic, assign, getter=isSelected) BOOL selected;
 
 @end
 
 @implementation MDCTabBarViewItemView
+
+@synthesize selectedImage = _selectedImage;
 
 #pragma mark - Init
 
@@ -79,27 +86,19 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
   if (!_rippleTouchController) {
     _rippleTouchController = [[MDCRippleTouchController alloc] initWithView:self];
   }
-  if (!_contentView) {
-    _contentView = [[UIView alloc] initWithFrame:CGRectZero];
-    [self addSubview:_contentView];
-  }
   if (!_iconImageView) {
     _iconImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
     _iconImageView.contentMode = UIViewContentModeScaleAspectFit;
     _iconImageView.isAccessibilityElement = NO;
-    [_contentView addSubview:_iconImageView];
+    [self addSubview:_iconImageView];
   }
   if (!_titleLabel) {
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     _titleLabel.textAlignment = NSTextAlignmentCenter;
     _titleLabel.numberOfLines = 2;
     _titleLabel.isAccessibilityElement = NO;
-    [_contentView addSubview:_titleLabel];
+    [self addSubview:_titleLabel];
   }
-}
-
-- (CGRect)contentFrame {
-  return self.contentView.frame;
 }
 
 #pragma mark - UIView
@@ -112,71 +111,87 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
   }
 
   if (self.titleLabel.text.length && !self.iconImageView.image) {
-    [self layoutSubviewsTextOnly];
+    self.titleLabel.frame = [self titleLabelFrameForTitleOnlyLayout];
     return;
   } else if (!self.titleLabel.text.length && self.iconImageView.image) {
-    [self layoutSubviewsImageOnly];
+    self.iconImageView.frame = [self iconImageViewFrameForImageOnlyLayout];
     return;
   } else {
-    [self layoutSubviewsTextAndImage];
+    CGRect titleLabelFrame = CGRectZero;
+    CGRect iconImageViewFrame = CGRectZero;
+    [self layoutTitleLabelFrame:&titleLabelFrame iconImageViewFrame:&iconImageViewFrame];
+    self.titleLabel.frame = titleLabelFrame;
+    self.iconImageView.frame = iconImageViewFrame;
   }
 }
 
-- (void)layoutSubviewsTextOnly {
+- (CGRect)titleLabelFrameForTitleOnlyLayout {
   CGRect contentFrame = UIEdgeInsetsInsetRect(self.bounds, kEdgeInsetsTextOnly);
-  self.contentView.frame = contentFrame;
 
-  CGSize contentSize =
-      CGSizeMake(CGRectGetWidth(self.contentView.bounds), CGRectGetHeight(self.contentView.bounds));
+  CGSize contentSize = CGSizeMake(CGRectGetWidth(contentFrame), CGRectGetHeight(contentFrame));
   CGSize labelWidthFitSize = [self.titleLabel sizeThatFits:contentSize];
-  CGSize labelSize =
-      CGSizeMake(contentSize.width, MIN(contentSize.height, labelWidthFitSize.height));
-  self.titleLabel.bounds = CGRectMake(0, 0, labelSize.width, labelSize.height);
-  self.titleLabel.center =
-      CGPointMake(CGRectGetMidX(self.contentView.bounds), CGRectGetMidY(self.contentView.bounds));
+  CGSize labelSize = CGSizeMake(MIN(contentSize.width, labelWidthFitSize.width),
+                                MIN(contentSize.height, labelWidthFitSize.height));
+  // The label attempted to be taller than allowed by the content insets. Give it the full content
+  // width available.
+  if (labelWidthFitSize.height > contentSize.height) {
+    labelSize = CGSizeMake(contentSize.width, labelSize.height);
+  }
+  CGRect labelFrame = CGRectMake(CGRectGetMidX(contentFrame) - (labelSize.width / 2),
+                                 CGRectGetMidY(contentFrame) - (labelSize.height / 2),
+                                 labelSize.width, labelSize.height);
+  return MDCRectAlignToScale(labelFrame, self.window.screen.scale);
 }
 
-- (void)layoutSubviewsImageOnly {
+- (CGRect)iconImageViewFrameForImageOnlyLayout {
   CGRect contentFrame = UIEdgeInsetsInsetRect(self.bounds, kEdgeInsetsImageOnly);
-  self.contentView.frame = contentFrame;
 
-  CGSize contentSize =
-      CGSizeMake(CGRectGetWidth(self.contentView.bounds), CGRectGetHeight(self.contentView.bounds));
+  CGSize contentSize = CGSizeMake(CGRectGetWidth(contentFrame), CGRectGetHeight(contentFrame));
   CGSize imageIntrinsicContentSize = self.iconImageView.intrinsicContentSize;
   CGSize imageFinalSize = CGSizeMake(MIN(contentSize.width, imageIntrinsicContentSize.width),
                                      MIN(contentSize.height, imageIntrinsicContentSize.height));
-  self.iconImageView.bounds = CGRectMake(0, 0, imageFinalSize.width, imageFinalSize.height);
-  self.iconImageView.center =
-      CGPointMake(CGRectGetMidX(self.contentView.bounds), CGRectGetMidY(self.contentView.bounds));
+  CGRect imageViewFrame = CGRectMake(CGRectGetMidX(contentFrame) - (imageFinalSize.width / 2),
+                                     CGRectGetMidY(contentFrame) - (imageFinalSize.height / 2),
+                                     imageFinalSize.width, imageFinalSize.height);
+  return MDCRectAlignToScale(imageViewFrame, self.window.screen.scale);
 }
 
-- (void)layoutSubviewsTextAndImage {
+- (void)layoutTitleLabelFrame:(CGRect *)titleLabelFrame
+           iconImageViewFrame:(CGRect *)iconImageViewFrame {
   CGRect contentFrame = UIEdgeInsetsInsetRect(self.bounds, kEdgeInsetsTextAndImage);
-  self.contentView.frame = contentFrame;
 
   CGSize contentSize = CGSizeMake(CGRectGetWidth(contentFrame), CGRectGetHeight(contentFrame));
   CGSize labelSingleLineSize = self.titleLabel.intrinsicContentSize;
   CGSize availableIconSize = CGSizeMake(
-      contentSize.width, contentSize.height - kImageTitlePadding - labelSingleLineSize.height);
+      contentSize.width, contentSize.height - (kImageTitlePadding + labelSingleLineSize.height));
 
   // Position the image, limiting it so that at least 1 line of text remains.
   CGSize imageIntrinsicContentSize = self.iconImageView.intrinsicContentSize;
   CGSize imageFinalSize =
       CGSizeMake(MIN(imageIntrinsicContentSize.width, availableIconSize.width),
                  MIN(imageIntrinsicContentSize.height, availableIconSize.height));
-  self.iconImageView.bounds = CGRectMake(0, 0, imageFinalSize.width, imageFinalSize.height);
-  self.iconImageView.center =
-      CGPointMake(CGRectGetMidX(self.contentView.bounds),
-                  CGRectGetMinY(self.contentView.bounds) + imageFinalSize.height / 2);
+  CGRect imageViewFrame =
+      CGRectMake(CGRectGetMidX(contentFrame) - (imageFinalSize.width / 2),
+                 CGRectGetMinY(contentFrame), imageFinalSize.width, imageFinalSize.height);
+  imageViewFrame = MDCRectAlignToScale(imageViewFrame, self.window.screen.scale);
+  if (iconImageViewFrame != NULL) {
+    *iconImageViewFrame = imageViewFrame;
+  }
 
-  // Now position the label from the bottom.g
-  CGSize availableLabelSize = CGSizeMake(
-      contentSize.width, contentSize.height - imageFinalSize.height - kImageTitlePadding);
+  if (titleLabelFrame == NULL) {
+    return;
+  }
+
+  // Now position the label from the bottom.
+  CGSize availableLabelSize =
+      CGSizeMake(contentSize.width,
+                 contentSize.height - (CGRectGetHeight(imageViewFrame) + kImageTitlePadding));
   CGSize finalLabelSize = [self.titleLabel sizeThatFits:availableLabelSize];
-  self.titleLabel.bounds = CGRectMake(0, 0, finalLabelSize.width, finalLabelSize.height);
-  self.titleLabel.center =
-      CGPointMake(CGRectGetMidX(self.contentView.bounds),
-                  CGRectGetMaxY(self.contentView.bounds) - finalLabelSize.height / 2);
+  CGRect titleFrame = CGRectMake(CGRectGetMidX(contentFrame) - (finalLabelSize.width / 2),
+                                 CGRectGetMaxY(contentFrame) - finalLabelSize.height,
+                                 finalLabelSize.width, finalLabelSize.height);
+  titleFrame = MDCRectAlignToScale(titleFrame, self.window.screen.scale);
+  *titleLabelFrame = titleFrame;
 }
 
 - (CGSize)intrinsicContentSize {
@@ -197,7 +212,7 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
 
 - (CGSize)sizeThatFitsTextOnly:(CGSize)size {
   CGSize maxSize =
-      CGSizeMake(kMaxWidth - kEdgeInsetsTextOnly.left - kEdgeInsetsTextOnly.right, CGFLOAT_MAX);
+      CGSizeMake(kMaxWidth - (kEdgeInsetsTextOnly.left + kEdgeInsetsTextOnly.right), CGFLOAT_MAX);
   CGSize labelSize = [self.titleLabel sizeThatFits:maxSize];
   return CGSizeMake(
       MAX(kMinWidth, labelSize.width + kEdgeInsetsTextOnly.left + kEdgeInsetsTextOnly.right),
@@ -216,7 +231,7 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
 
 - (CGSize)sizeThatFitsTextAndImage:(CGSize)size {
   CGSize maxSize = CGSizeMake(
-      kMaxWidth - kEdgeInsetsTextAndImage.left - kEdgeInsetsTextAndImage.right, CGFLOAT_MAX);
+      kMaxWidth - (kEdgeInsetsTextAndImage.left + kEdgeInsetsTextAndImage.right), CGFLOAT_MAX);
   CGSize labelFitSize = [self.titleLabel sizeThatFits:maxSize];
   CGSize imageFitSize = self.iconImageView.intrinsicContentSize;
   return CGSizeMake(MAX(kMinWidth, MIN(kMaxWidth, kEdgeInsetsTextAndImage.left +
@@ -227,10 +242,84 @@ static const UIEdgeInsets kEdgeInsetsImageOnly = {.top = 12, .right = 16, .botto
                                                      kEdgeInsetsTextAndImage.bottom));
 }
 
+#pragma mark - MDCTabBarViewItemView properties
+
+- (void)setImage:(UIImage *)image {
+  _image = image;
+  self.iconImageView.image = self.selected ? self.selectedImage : self.image;
+  [self setNeedsLayout];
+}
+
+- (void)setSelectedImage:(UIImage *)selectedImage {
+  _selectedImage = selectedImage;
+  self.iconImageView.image = self.selected ? self.selectedImage : self.image;
+  [self setNeedsLayout];
+}
+
+- (UIImage *)selectedImage {
+  return _selectedImage ?: self.image;
+}
+
 #pragma mark - UIAccessibility
 
 - (NSString *)accessibilityLabel {
   return [super accessibilityLabel] ?: self.titleLabel.text;
+}
+
+#pragma mark - MDCTabBarViewCustomViewable
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+  // TODO(https://github.com/material-components/material-components-ios/issues/7801): Add
+  // item view support for selection.
+  void (^animationBlock)(void) = ^{
+    self->_selected = selected;
+    if (selected) {
+      self.iconImageView.image = self.selectedImage ?: self.image;
+    } else {
+      self.iconImageView.image = self.image;
+    }
+  };
+
+  if (animated) {
+    [UIView animateWithDuration:0.3 animations:animationBlock];
+  } else {
+    animationBlock();
+  }
+
+  // TODO(https://github.com/material-components/material-components-ios/issues/7798): Switch to
+  // using the selected image.
+}
+
+- (CGRect)contentFrame {
+  if (!self.iconImageView.image) {
+    if (self.titleLabel.text.length) {
+      return [self contentFrameForTitleOnlyLayout];
+    }
+    return CGRectZero;
+  }
+  if (self.titleLabel.text.length) {
+    return [self contentFrameForTitleAndImageLayout];
+  }
+  return [self contentFrameForImageOnlyLayout];
+}
+
+- (CGRect)contentFrameForTitleOnlyLayout {
+  return [self titleLabelFrameForTitleOnlyLayout];
+}
+
+- (CGRect)contentFrameForImageOnlyLayout {
+  return [self iconImageViewFrameForImageOnlyLayout];
+}
+
+- (CGRect)contentFrameForTitleAndImageLayout {
+  CGRect titleLabelFrame = CGRectZero;
+  CGRect iconImageViewFrame = CGRectZero;
+  [self layoutTitleLabelFrame:&titleLabelFrame iconImageViewFrame:&iconImageViewFrame];
+  return MDCRectAlignToScale(
+      CGRectMake(CGRectGetMinX(titleLabelFrame), CGRectGetMinY(iconImageViewFrame),
+                 CGRectGetWidth(titleLabelFrame),
+                 CGRectGetMaxY(titleLabelFrame) - CGRectGetMinY(iconImageViewFrame)),
+      self.window.screen.scale);
 }
 
 @end

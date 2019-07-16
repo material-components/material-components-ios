@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponents"
-  mdc.version      = "85.3.0"
+  mdc.version      = "85.7.0"
   mdc.authors      = "The Material Components authors."
   mdc.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   mdc.homepage     = "https://github.com/material-components/material-components-ios"
@@ -1049,6 +1049,7 @@ Pod::Spec.new do |mdc|
 
     component.dependency 'MDFTextAccessibility'
     component.dependency "MaterialComponents/private/Application"
+    component.dependency "MaterialComponents/private/Math"
     component.dependency "MaterialComponents/private/UIMetrics"
 
     component.test_spec 'UnitTests' do |unit_tests|
@@ -1058,6 +1059,7 @@ Pod::Spec.new do |mdc|
       ]
       unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
       unit_tests.dependency "MaterialComponents/FlexibleHeader+ColorThemer"
+      unit_tests.dependency "MaterialComponents/ShadowLayer"
     end
   end
 
@@ -1486,6 +1488,25 @@ Pod::Spec.new do |mdc|
     extension.dependency "MaterialComponents/Themes"
   end
 
+  mdc.subspec "ProgressView+Theming" do |extension|
+    extension.ios.deployment_target = '9.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = [
+    "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}",
+    "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/private/*.{h,m}"
+    ]
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/schemes/Container"
+
+    extension.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = [
+      "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/*.{h,m,swift}",
+      "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/supplemental/*.{h,m,swift}"
+      ]
+      unit_tests.resources = "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/resources/*"
+    end
+  end
+
   # Ripple
 
   mdc.subspec "Ripple" do |component|
@@ -1494,6 +1515,7 @@ Pod::Spec.new do |mdc|
     component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
 
     component.dependency "MaterialComponents/AnimationTiming"
+    component.dependency "MaterialComponents/private/Color"
     component.dependency "MaterialComponents/private/Math"
 
     component.test_spec 'UnitTests' do |unit_tests|
@@ -1626,6 +1648,8 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/AnimationTiming"
     component.dependency "MaterialComponents/Buttons"
     component.dependency "MaterialComponents/OverlayWindow"
+    component.dependency "MaterialComponents/ShadowElevations"
+    component.dependency "MaterialComponents/ShadowLayer"
     component.dependency "MaterialComponents/Typography"
     component.dependency "MaterialComponents/private/Application"
     component.dependency "MaterialComponents/private/KeyboardWatcher"
@@ -1935,6 +1959,7 @@ Pod::Spec.new do |mdc|
       scheme.ios.deployment_target = '9.0'
       scheme.public_header_files = "components/schemes/#{scheme.base_name}/src/*.h"
       scheme.source_files = "components/schemes/#{scheme.base_name}/src/*.{h,m}"
+      scheme.dependency "MaterialComponents/private/Color"
 
       scheme.test_spec 'UnitTests' do |unit_tests|
         unit_tests.source_files = [
@@ -1998,6 +2023,20 @@ Pod::Spec.new do |mdc|
     registerIcons(private_spec)
 
     private_spec.subspec "Application" do |component|
+      component.ios.deployment_target = '9.0'
+      component.public_header_files = "components/private/#{component.base_name}/src/*.h"
+      component.source_files = "components/private/#{component.base_name}/src/*.{h,m}"
+
+      component.test_spec 'UnitTests' do |unit_tests|
+        unit_tests.source_files = [
+          "components/private/#{component.base_name}/tests/unit/*.{h,m,swift}",
+          "components/private/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        ]
+        unit_tests.resources = "components/private/#{component.base_name}/tests/unit/resources/*"
+      end
+    end
+
+    private_spec.subspec "Color" do |component|
       component.ios.deployment_target = '9.0'
       component.public_header_files = "components/private/#{component.base_name}/src/*.h"
       component.source_files = "components/private/#{component.base_name}/src/*.{h,m}"

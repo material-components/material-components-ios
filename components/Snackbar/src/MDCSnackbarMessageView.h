@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
+
 #import "MaterialButtons.h"
+#import "MaterialShadowElevations.h"
 
 /**
  Class which provides the default implementation of a Snackbar.
@@ -59,6 +61,11 @@
 @property(nonatomic, strong, nullable) NSMutableArray<MDCButton *> *actionButtons;
 
 /**
+ The elevation of the snackbar view.
+ */
+@property(nonatomic, assign) MDCShadowElevation elevation;
+
+/**
  The @c accessibilityLabel to apply to the message of the Snackbar.
  */
 @property(nullable, nonatomic, copy) NSString *accessibilityLabel;
@@ -102,6 +109,14 @@
  */
 @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
+
+/**
+ A block that is invoked when the MDCSnackbarMessageView receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCSnackbarMessageView *_Nonnull messageView,
+     UITraitCollection *_Nullable previousTraitCollection);
 
 @end
 

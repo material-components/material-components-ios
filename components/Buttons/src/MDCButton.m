@@ -239,6 +239,10 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)layoutSubviews {
   [super layoutSubviews];
+
+  [self updateShadowColor];
+  [self updateBackgroundColor];
+  [self updateBorderColor];
   if (!self.layer.shapeGenerator) {
     self.layer.shadowPath = [self boundingPath].CGPath;
   }
@@ -312,6 +316,14 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
     superSize.width = MIN(self.maximumSize.width, superSize.width);
   }
   return superSize;
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(previousTraitCollection);
+  }
 }
 
 #pragma mark - UIResponder

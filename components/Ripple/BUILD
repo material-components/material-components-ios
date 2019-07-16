@@ -92,7 +92,10 @@ mdc_unit_test_suite(
 
 mdc_snapshot_objc_library(
     name = "snapshot_test_lib",
-    deps = [":Ripple"],
+    deps = [
+        ":Ripple",
+        "//components/private/Color",
+    ],
 )
 
 mdc_snapshot_test(

@@ -39,10 +39,6 @@ static NSString *const kContentOffsetKeyPath = @"contentOffset";
 NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
     @"kMDCBottomDrawerScrollViewAccessibilityIdentifier";
 
-static UIColor *DrawerShadowColor(void) {
-  return [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.2];
-}
-
 @interface MDCBottomDrawerContainerViewController (LayoutCalculations)
 
 /**
@@ -167,6 +163,7 @@ static UIColor *DrawerShadowColor(void) {
     _maximumInitialDrawerHeight =
         self.presentingViewBounds.size.height * kInitialDrawerHeightFactor;
     _shouldPresentAtFullscreen = NO;
+    _headerShadowColor = [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.2];
   }
   return self;
 }
@@ -559,13 +556,15 @@ static UIColor *DrawerShadowColor(void) {
 
 - (void)setUpHeaderBottomShadowIfNeeded {
   if (self.headerShadowLayer) {
+    // Duplicated from below to support dynamic color updates
+    self.headerShadowLayer.shadowColor = self.headerShadowColor.CGColor;
     return;
   }
 
   self.headerShadowLayer = [[MDCShadowLayer alloc] init];
   // The header acts as an AppBar, so it keeps the same elevation value.
   self.headerShadowLayer.elevation = MDCShadowElevationAppBar;
-  self.headerShadowLayer.shadowColor = DrawerShadowColor().CGColor;
+  self.headerShadowLayer.shadowColor = self.headerShadowColor.CGColor;
   [self.headerViewController.view.layer addSublayer:self.headerShadowLayer];
   self.headerShadowLayer.hidden = YES;
 }

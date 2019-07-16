@@ -96,6 +96,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
 
 @interface TestButton : MDCButton
 @property(nonatomic, strong) FakeShadowLayer *shadowLayer;
+@property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
 @end
 
 @implementation TestButton
@@ -110,6 +111,11 @@ static NSString *controlStateDescription(UIControlState controlState) {
   }
   return self;
 }
+
+- (UITraitCollection *)traitCollection {
+  return self.traitCollectionOverride ?: [super traitCollection];
+}
+
 @end
 
 @interface ButtonsTests : XCTestCase
@@ -1325,6 +1331,24 @@ static NSString *controlStateDescription(UIControlState controlState) {
   // Then
   XCTAssertEqual(self.button.accessibilityTraits,
                  UIAccessibilityTraitAllowsDirectInteraction | UIAccessibilityTraitButton);
+}
+
+#pragma mark - UITraitCollection
+
+- (void)testTraitCollectionDidChangeBlockCalledWhenTraitCollectionChanges {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+  XCTestExpectation *expectation =
+      [self expectationWithDescription:@"Called traitCollectionDidChange"];
+  button.traitCollectionDidChangeBlock = ^(UITraitCollection *_Nullable previousTraitCollection) {
+    [expectation fulfill];
+  };
+
+  // When
+  [button traitCollectionDidChange:nil];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
 }
 
 @end

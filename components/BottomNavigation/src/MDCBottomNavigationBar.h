@@ -173,6 +173,9 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
  */
 @property(nonatomic, assign) MDCShadowElevation elevation;
 
+/** The color of the shadow of the bottom navigation bar. Defaults to black. */
+@property(nonatomic, copy, nonnull) UIColor *shadowColor;
+
 /**
  The number of lines used for item titles. It is possible that long titles may cause the text to
  extend beyond the safe area of the Bottom Navigation bar. It is recommended that short titles are
@@ -197,6 +200,14 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
  Defaults to NO.
  */
 @property(nonatomic, assign) BOOL enableRippleBehavior;
+
+/**
+A block that is invoked when the @c MDCBottomNavigationBar receives a call to @c
+traitCollectionDidChange:. The block is called after the call to the superclass.
+*/
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCBottomNavigationBar *_Nonnull bottomNavigationBar,
+     UITraitCollection *_Nullable previousTraitCollection);
 
 /**
  Returns the navigation bar subview associated with the specific item.
