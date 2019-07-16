@@ -132,6 +132,7 @@ swift_library(
         ":Snackbar",
         ":TypographyThemer",
         ":private",
+        ":Theming",
     ],
 )
 
@@ -153,7 +154,6 @@ mdc_objc_library(
         ":ColorThemer",
         ":FontThemer",
         ":Snackbar",
-        ":Theming",
         ":private",
     ],
 )
