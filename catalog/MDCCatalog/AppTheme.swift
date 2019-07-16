@@ -49,16 +49,10 @@ final class AppTheme {
 func DefaultContainerScheme() -> MDCContainerScheme {
   let containerScheme = MDCContainerScheme()
 
-  let colorScheme = MDCSemanticColorScheme()
-  colorScheme.primaryColor =  UIColor(red: CGFloat(0x21) / 255.0,
-                                      green: CGFloat(0x21) / 255.0,
-                                      blue: CGFloat(0x21) / 255.0,
-                                      alpha: 1)
-  colorScheme.primaryColorVariant = .init(white: 0.7, alpha: 1)
-  colorScheme.secondaryColor = UIColor(red: CGFloat(0x00) / 255.0,
-                                       green: CGFloat(0xE6) / 255.0,
-                                       blue: CGFloat(0x76) / 255.0,
-                                       alpha: 1)
+  let colorScheme = MDCSemanticColorScheme(defaults: .material201907)
+  colorScheme.primaryColor =  primaryColor()
+  colorScheme.primaryColorVariant = primaryColorVariant()
+  colorScheme.secondaryColor = secondaryColor()
   containerScheme.colorScheme = colorScheme
 
   let typographyScheme = MDCTypographyScheme()
@@ -71,4 +65,64 @@ func DefaultContainerScheme() -> MDCContainerScheme {
   containerScheme.shapeScheme = shapeScheme
 
   return containerScheme
+}
+
+private func primaryColor() -> UIColor {
+  if #available(iOS 13.0, *) {
+    return UIColor { (trait) -> UIColor in
+      if (trait.userInterfaceStyle == .dark) {
+        return UIColor(
+          red: CGFloat(0xde) / 255.0,
+          green: CGFloat(0xde) / 255.0,
+          blue: CGFloat(0xde) / 255.0,
+          alpha: 1)
+      }
+      return UIColor(
+        red: CGFloat(0x21) / 255.0,
+        green: CGFloat(0x21) / 255.0,
+        blue: CGFloat(0x21) / 255.0,
+        alpha: 1)
+    }
+  }
+  return UIColor(
+    red: CGFloat(0x21) / 255.0,
+    green: CGFloat(0x21) / 255.0,
+    blue: CGFloat(0x21) / 255.0,
+    alpha: 1)
+}
+
+private func primaryColorVariant() -> UIColor {
+  if #available(iOS 13.0, *) {
+    return UIColor { (trait) -> UIColor in
+      if (trait.userInterfaceStyle == .dark) {
+        return .init(white: 0.3, alpha: 1)
+      }
+      return .init(white: 0.7, alpha: 1)
+    }
+  }
+  return .init(white: 0.7, alpha: 1)
+}
+
+private func secondaryColor() -> UIColor {
+  if #available(iOS 13.0, *) {
+    return UIColor { (trait) -> UIColor in
+      if (trait.userInterfaceStyle == .dark) {
+        return UIColor(
+          red: CGFloat(0xFF) / 255.0,
+          green: CGFloat(0x19) / 255.0,
+          blue: CGFloat(0x89) / 255.0,
+          alpha: 1)
+      }
+      return  UIColor(
+        red: CGFloat(0x00) / 255.0,
+        green: CGFloat(0xE6) / 255.0,
+        blue: CGFloat(0x76) / 255.0,
+        alpha: 1)
+    }
+  }
+  return UIColor(
+    red: CGFloat(0x00) / 255.0,
+    green: CGFloat(0xE6) / 255.0,
+    blue: CGFloat(0x76) / 255.0,
+    alpha: 1)
 }
