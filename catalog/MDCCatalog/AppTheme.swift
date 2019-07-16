@@ -69,7 +69,7 @@ func DefaultContainerScheme() -> MDCContainerScheme {
 
 private func primaryColor() -> UIColor {
   if #available(iOS 13.0, *) {
-    return UIColor { (trait) -> UIColor in
+    return UIColor(dynamicProvider: { (trait) -> UIColor in
       if (trait.userInterfaceStyle == .dark) {
         return UIColor(
           red: CGFloat(0xde) / 255.0,
@@ -82,7 +82,7 @@ private func primaryColor() -> UIColor {
         green: CGFloat(0x21) / 255.0,
         blue: CGFloat(0x21) / 255.0,
         alpha: 1)
-    }
+    })
   }
   return UIColor(
     red: CGFloat(0x21) / 255.0,
@@ -93,19 +93,19 @@ private func primaryColor() -> UIColor {
 
 private func primaryColorVariant() -> UIColor {
   if #available(iOS 13.0, *) {
-    return UIColor { (trait) -> UIColor in
+    return UIColor(dynamicProvider: { (trait) -> UIColor in
       if (trait.userInterfaceStyle == .dark) {
         return .init(white: 0.3, alpha: 1)
       }
       return .init(white: 0.7, alpha: 1)
-    }
+    })
   }
   return .init(white: 0.7, alpha: 1)
 }
 
 private func secondaryColor() -> UIColor {
   if #available(iOS 13.0, *) {
-    return UIColor { (trait) -> UIColor in
+    return UIColor(dynamicProvider: { (trait) -> UIColor in
       if (trait.userInterfaceStyle == .dark) {
         return UIColor(
           red: CGFloat(0xFF) / 255.0,
@@ -118,7 +118,7 @@ private func secondaryColor() -> UIColor {
         green: CGFloat(0xE6) / 255.0,
         blue: CGFloat(0x76) / 255.0,
         alpha: 1)
-    }
+    })
   }
   return UIColor(
     red: CGFloat(0x00) / 255.0,
