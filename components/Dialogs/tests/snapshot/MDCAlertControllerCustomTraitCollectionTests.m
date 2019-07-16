@@ -37,7 +37,7 @@
 
 @end
 
-/** A @c MDCDialogShadowedView test fake to override the @c traitCollection to test. */
+/** An @c MDCDialogShadowedView test fake to override the @c traitCollection to test. */
 @interface ShadowViewCustomTraitCollectionSnapshotTestFake : MDCDialogShadowedView
 @property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
 @end

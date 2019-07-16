@@ -96,7 +96,7 @@
 @property(nonatomic, assign) MDCShadowElevation dialogElevation;
 
 /**
- Customize the shadow color of dialog.
+ The color of the shadow that will be applied to the @c MDCDialogPresentationController.
 
  Defaults to black.
  */

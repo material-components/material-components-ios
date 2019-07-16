@@ -97,7 +97,7 @@
 @property(nonatomic, assign) MDCShadowElevation elevation;
 
 /**
- The color fo the shadow that will be applied to the Alert Controller view. Defaults to black.
+ The color of the shadow that will be applied to the @c MDCAlertController view. Defaults to black.
  */
 @property(nonatomic, copy, nonnull) UIColor *shadowColor;
 
