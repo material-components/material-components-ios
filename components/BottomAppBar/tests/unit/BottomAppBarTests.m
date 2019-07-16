@@ -162,11 +162,13 @@
 - (void)testTraitCollectionDidChangeBlockCalledWhenTraitCollectionChanges {
   // Given
   MDCBottomAppBarView *bottomAppBar = [[MDCBottomAppBarView alloc] init];
-  XCTestExpectation *expectation = [[XCTestExpectation alloc] initWithDescription:@"traitCollectionDidChange"];
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollectionDidChange"];
   bottomAppBar.traitCollectionDidChangeBlock =
-    ^(MDCBottomAppBarView * _Nonnull bottomAppBarView, UITraitCollection * _Nullable previousTraitCollection) {
-    [expectation fulfill];
-  };
+      ^(MDCBottomAppBarView *_Nonnull bottomAppBarView,
+        UITraitCollection *_Nullable previousTraitCollection) {
+        [expectation fulfill];
+      };
 
   // When
   [bottomAppBar traitCollectionDidChange:nil];
@@ -178,15 +180,17 @@
 - (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
   // Given
   MDCBottomAppBarView *bottomAppBar = [[MDCBottomAppBarView alloc] init];
-  XCTestExpectation *expectation = [[XCTestExpectation alloc] initWithDescription:@"traitCollectionDidChange"];
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollectionDidChange"];
   __block UITraitCollection *passedTraitCollection;
   __block MDCBottomAppBarView *passedBottomAppBar;
   bottomAppBar.traitCollectionDidChangeBlock =
-  ^(MDCBottomAppBarView * _Nonnull bottomAppBarView, UITraitCollection * _Nullable previousTraitCollection) {
-    [expectation fulfill];
-    passedTraitCollection = previousTraitCollection;
-    passedBottomAppBar = bottomAppBarView;
-  };
+      ^(MDCBottomAppBarView *_Nonnull bottomAppBarView,
+        UITraitCollection *_Nullable previousTraitCollection) {
+        [expectation fulfill];
+        passedTraitCollection = previousTraitCollection;
+        passedBottomAppBar = bottomAppBarView;
+      };
   UITraitCollection *testTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
 
   // When

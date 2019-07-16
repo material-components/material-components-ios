@@ -134,7 +134,7 @@ typedef NS_ENUM(NSInteger, MDCBottomAppBarFloatingButtonPosition) {
  traitCollectionDidChange:. The block is called after the call to the superclass.
  */
 @property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
-(MDCBottomAppBarView *_Nonnull bottomAppBar,
-UITraitCollection *_Nullable previousTraitCollection);
+    (MDCBottomAppBarView *_Nonnull bottomAppBar,
+     UITraitCollection *_Nullable previousTraitCollection);
 
 @end
