@@ -29,7 +29,7 @@ class MDCCatalogTileView: UIView {
     }
   }
   private lazy var imageView = UIImageView()
-  private let imageCache = NSCache<AnyObject, UIImage>()
+  let imageCache = NSCache<AnyObject, UIImage>()
 
   deinit {
     NotificationCenter.default.removeObserver(self,
@@ -56,7 +56,6 @@ class MDCCatalogTileView: UIView {
 
   @objc func themeDidChange(notification: NSNotification) {
     imageCache.removeAllObjects()
-    setNeedsLayout()
   }
 
   override func layoutSubviews() {
@@ -147,14 +146,22 @@ class MDCCatalogTileView: UIView {
       newImage = MDCDrawImage(bounds, { MDCCatalogDrawMiscTile($0, $1) }, colorScheme)
     }
 
-    guard let unwrappedImage = newImage else {
-      let emptyImage = UIImage()
-      imageCache.setObject(emptyImage, forKey: componentNameString as AnyObject)
-      return emptyImage
-    }
-
-    imageCache.setObject(unwrappedImage, forKey: componentNameString as AnyObject)
-    return unwrappedImage
+    let styledImage = style(image: newImage)
+    imageCache.setObject(styledImage, forKey: componentNameString as AnyObject)
+    return styledImage
   }
   // swiftlint:enable function_body_length
+}
+
+/// Styles the image to support both light and dark mode.
+///
+/// - Note: If given `nil` will return a empty image styles correctly.
+/// - Parameter image: The image to be styled.
+private func style(image: UIImage?) -> UIImage {
+  let primaryColor = AppTheme.globalTheme.colorScheme.primaryColor
+  guard let unwrappedImage = image else {
+    let emptyImage = UIImage()
+    return emptyImage.withTintColor(primaryColor)
+  }
+  return unwrappedImage.withTintColor(primaryColor)
 }
