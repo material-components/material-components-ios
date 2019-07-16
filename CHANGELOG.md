@@ -1,20 +1,100 @@
-# #develop#
+# 85.8.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This minor release includes two new default color schemes and elevation properties to prepare for Dark Mode, dynamic color
+support in several components, Haptics feature in Slider, and a number of MDCTabBarView features.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
+Several components support `traitCollectionDidChangeBlock` to allow clients inject a block for exection when traitCollections
+changes. Slider supports Haptics feature.
+
 ## API changes
 
-## Component changes
+### AppBar
 
-## Changes
+#### MDCAppBar
+
+*new* property: `traitCollectionDidChangeBlockForAppBarController` in `MDCAppBarNavigationController`
+
+### BottomNavigation
+
+#### MDCBottomNavigationBar
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCBottomNavigationBar`
+
+### Buttons
+
+#### MDCButton
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCButton`
+
+### FlexibleHeader
+
+#### MDCFlexibleHeaderContainerViewController
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCFlexibleHeaderContainerViewController`
+
+#### MDCFlexibleHeaderView
+
+*new* property: `shadowColor` in `MDCFlexibleHeaderView`
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCFlexibleHeaderView`
+
+#### MDCFlexibleHeaderViewController
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCFlexibleHeaderViewController`
+
+### NavigationBar
+
+#### MDCNavigationBar 
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCNavigationBar`
+
+### NavigationDrawer
+
+#### MDCBottomDrawerContainerViewController  
+
+*new* property: `headerShadowColor` in `MDCBottomDrawerContainerViewController`
+
+### Slider
+
+#### MDCSlider
+
+*new* property: `shouldEnableHapticsForAllDiscreteValues` in `MDCSlider`
+
+### Snackbar
+
+#### MDCSnackbarManager 
+
+*new* property: `messageElevation` in `MDCSnackbarManager`
+
+#### MDCSnackbarMessageView
+
+*new* property: `elevation` in `MDCSnackbarMessageView`
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCSnackbarMessageView`
+
+### Tabs+TabBarView
+
+#### MDCTabBarView 
+
+*new* method: `-rectForItem:inCoordinateSpace:` in `MDCTabBarView`
+
+### schemes/Color
+
+#### MDCColorScheming
+
+*new* property: `elevationOverlayColor` in `MDCColorScheming`
+
+*new* property: `elevationOverlayEnabledForDarkMode` in `MDCColorScheming`
+
+#### MDCSemanticColorScheme
+
+*new* property: `elevationOverlayColor` in `MDCSemanticColorScheme`
+
+*new* property: `elevationOverlayEnabledForDarkMode` in `MDCSemanticColorScheme`
+
+## Component changes
 
 ### AppBar
 
