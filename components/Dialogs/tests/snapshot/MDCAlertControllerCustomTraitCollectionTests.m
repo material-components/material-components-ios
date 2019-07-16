@@ -358,12 +358,11 @@
     trackingView.backgroundColor = UIColor.whiteColor;
 
     // When
-    trackingView.traitCollectionOverride =
-    [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
+    trackingView.traitCollectionOverride = [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
+    [trackingView layoutIfNeeded];
 
     // Then
-    UIView *snapshotView = [trackingView
-                            mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(50, 50, 50, 50)];
+    UIView *snapshotView = [trackingView mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(50, 50, 50, 50)];
     [self snapshotVerifyViewForIOS13:snapshotView];
   }
 #endif
