@@ -63,9 +63,14 @@ class MDCCatalogTileView: UIView {
     guard !bounds.isEmpty else {
       return
     }
-    imageView.tintColor = AppTheme.globalTheme.colorScheme.primaryColor
+    //imageView.tintColor = AppTheme.globalTheme.colorScheme.primaryColor
     imageView.image = getImage(componentNameString)
     imageView.frame = bounds
+  }
+
+  override func draw(_ rect: CGRect) {
+    super.draw(rect)
+    imageCache.removeAllObjects()
   }
 
   func getImage(_ key: String) -> UIImage {
@@ -146,22 +151,14 @@ class MDCCatalogTileView: UIView {
       newImage = MDCDrawImage(bounds, { MDCCatalogDrawMiscTile($0, $1) }, colorScheme)
     }
 
-    let styledImage = style(image: newImage)
-    imageCache.setObject(styledImage, forKey: componentNameString as AnyObject)
-    return styledImage
+    guard let unwrappedImage = newImage else {
+      let emptyImage = UIImage()
+      imageCache.setObject(emptyImage, forKey: componentNameString as AnyObject)
+      return emptyImage
+    }
+
+    imageCache.setObject(unwrappedImage, forKey: componentNameString as AnyObject)
+    return unwrappedImage
   }
   // swiftlint:enable function_body_length
-}
-
-/// Styles the image to support both light and dark mode.
-///
-/// - Note: If given `nil` will return a empty image styles correctly.
-/// - Parameter image: The image to be styled.
-private func style(image: UIImage?) -> UIImage {
-  let primaryColor = AppTheme.globalTheme.colorScheme.primaryColor
-  guard let unwrappedImage = image else {
-    let emptyImage = UIImage()
-    return emptyImage.withTintColor(primaryColor)
-  }
-  return unwrappedImage.withTintColor(primaryColor)
 }
