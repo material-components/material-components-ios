@@ -29,7 +29,7 @@ class MDCCatalogTileView: UIView {
     }
   }
   private lazy var imageView = UIImageView()
-  let imageCache = NSCache<AnyObject, UIImage>()
+  private let imageCache = NSCache<AnyObject, UIImage>()
 
   deinit {
     NotificationCenter.default.removeObserver(self,
@@ -63,7 +63,6 @@ class MDCCatalogTileView: UIView {
     guard !bounds.isEmpty else {
       return
     }
-    imageView.tintColor = AppTheme.globalTheme.colorScheme.primaryColor
     imageView.image = getImage(componentNameString)
     imageView.frame = bounds
   }
