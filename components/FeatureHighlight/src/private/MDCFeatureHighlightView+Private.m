@@ -527,11 +527,24 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
 
 - (void)animatePulse {
   NSArray *keyTimes = @[ @0, @0.5, @1 ];
-  id pulseColorStart =
+  __block id pulseColorStart;
+  __block id pulseColorEnd;
+  if (@available(iOS 13.0, *)) {
+    [self.traitCollection performAsCurrentTraitCollection:^{
+      pulseColorStart =
       (__bridge id)
-          [_innerHighlightColor colorWithAlphaComponent:kMDCFeatureHighlightPulseStartAlpha]
+          [self.innerHighlightColor colorWithAlphaComponent:kMDCFeatureHighlightPulseStartAlpha]
               .CGColor;
-  id pulseColorEnd = (__bridge id)[_innerHighlightColor colorWithAlphaComponent:0].CGColor;
+      pulseColorEnd = (__bridge id)[self.innerHighlightColor colorWithAlphaComponent:0].CGColor;
+    }];
+  } else {
+    pulseColorStart =
+        (__bridge id)
+            [_innerHighlightColor colorWithAlphaComponent:kMDCFeatureHighlightPulseStartAlpha]
+                .CGColor;
+    pulseColorEnd = (__bridge id)[_innerHighlightColor colorWithAlphaComponent:0].CGColor;
+  }
+
   CGFloat radius = _innerRadius;
 
   [CATransaction begin];
