@@ -49,6 +49,17 @@ mdc_public_objc_library(
     ],
 )
 
+mdc_extension_objc_library(
+    name = "Theming",
+    deps = [
+        ":Snackbar",
+        "//components/ShadowElevations",
+        "//components/schemes/Color",
+        "//components/schemes/Container",
+        "//components/schemes/Typography",
+    ],
+)
+
 filegroup(
     name = "BundleFiles",
     srcs = glob([
