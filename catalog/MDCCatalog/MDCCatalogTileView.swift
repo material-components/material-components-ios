@@ -56,6 +56,7 @@ class MDCCatalogTileView: UIView {
 
   @objc func themeDidChange(notification: NSNotification) {
     imageCache.removeAllObjects()
+    setNeedsLayout()
   }
 
   override func layoutSubviews() {
@@ -63,6 +64,7 @@ class MDCCatalogTileView: UIView {
     guard !bounds.isEmpty else {
       return
     }
+    imageView.tintColor = AppTheme.globalTheme.colorScheme.primaryColor
     imageView.image = getImage(componentNameString)
     imageView.frame = bounds
   }
