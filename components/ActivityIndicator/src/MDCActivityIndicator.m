@@ -1016,6 +1016,14 @@ static const CGFloat kSingleCycleRotation =
   return UIAccessibilityTraitUpdatesFrequently;
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
+}
+
 @end
 
 @implementation MDCActivityIndicatorTransition
