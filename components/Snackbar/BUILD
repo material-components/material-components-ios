@@ -153,6 +153,7 @@ mdc_objc_library(
         ":ColorThemer",
         ":FontThemer",
         ":Snackbar",
+        ":Theming",
         ":private",
     ],
 )
@@ -169,6 +170,7 @@ mdc_snapshot_objc_library(
     name = "snapshot_test_lib",
     deps = [
         ":Snackbar",
+        ":Theming",
         ":private",
     ],
 )
