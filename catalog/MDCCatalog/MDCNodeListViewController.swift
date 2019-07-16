@@ -534,7 +534,7 @@ extension MDCNodeListViewController {
       cell!.accessibilityIdentifier = "Cell" + cell!.textLabel!.text!
       cell!.accessoryType = .disclosureIndicator
     }
-
+    cell?.backgroundColor = AppTheme.globalTheme.colorScheme.backgroundColor
     return cell!
   }
 
