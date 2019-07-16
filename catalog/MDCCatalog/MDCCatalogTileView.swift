@@ -63,7 +63,6 @@ class MDCCatalogTileView: UIView {
     guard !bounds.isEmpty else {
       return
     }
-    //imageView.tintColor = AppTheme.globalTheme.colorScheme.primaryColor
     imageView.image = getImage(componentNameString)
     imageView.frame = bounds
   }
