@@ -15,7 +15,6 @@
 #import "MaterialFeatureHighlight+FeatureHighlightAccessibilityMutator.h"
 #import "MaterialFeatureHighlight.h"
 #import "supplemental/FeatureHighlightExampleSupplemental.h"
-#import "UIColor+MaterialDynamic.h"
 
 @implementation FeatureHighlightColorExample
 
@@ -29,16 +28,8 @@
                                                               completion:nil];
   highlightController.titleText = @"So pretty!";
   highlightController.bodyText = @"What a nice color you've chosen.";
+  highlightController.outerHighlightColor = cell.accessoryView.backgroundColor;
   [MDCFeatureHighlightAccessibilityMutator mutate:highlightController];
-//  highlightController.outerHighlightColor = cell.accessoryView.backgroundColor;
-  highlightController.outerHighlightColor =
-    [UIColor colorWithUserInterfaceStyleDarkColor:[[UIColor greenColor] colorWithAlphaComponent:0.3]
-                                     defaultColor:[[UIColor redColor] colorWithAlphaComponent:0.3]];
-  highlightController.innerHighlightColor =
-    [UIColor colorWithUserInterfaceStyleDarkColor:[UIColor redColor]
-                                     defaultColor:[UIColor greenColor]];
-  highlightController.titleColor = [UIColor colorWithUserInterfaceStyleDarkColor:[UIColor yellowColor] defaultColor:[UIColor blueColor]];
-  highlightController.bodyColor = [UIColor colorWithUserInterfaceStyleDarkColor:[UIColor yellowColor] defaultColor:[UIColor blueColor]];
   [self presentViewController:highlightController animated:YES completion:nil];
 }
 
