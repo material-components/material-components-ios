@@ -16,6 +16,18 @@
 
 #import "MaterialActivityIndicator.h"
 
+@interface MDCActivityIndicatorSnapshotFake : MDCActivityIndicator
+@property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
+@end
+
+@implementation MDCActivityIndicatorSnapshotFake
+
+- (UITraitCollection *)traitCollection {
+  return self.traitCollectionOverride ?: [super traitCollection];
+}
+
+@end
+
 /** Snapshot tests for MDCActivityIndicator. */
 @interface MDCActivityIndicatorSnapshotTests : MDCSnapshotTestCase
 
@@ -154,6 +166,36 @@
 
   // Then
   [self generateSnapshotAndVerifyForView:self.indicator];
+}
+
+- (void)testProgressViewSupportsDynamicColor {
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+  if (@available(iOS 13.0, *)) {
+    // Given
+    MDCActivityIndicatorSnapshotFake *indiciator = [[MDCActivityIndicatorSnapshotFake alloc] initWithFrame:CGRectMake(0, 0, 64, 64)];
+    [indicator startAnimating];
+    indicator.layer.speed = 0;
+    UIColor *dynamicColor =
+    [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
+      if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
+        return UIColor.magentaColor;
+      } else {
+        return UIColor.greenColor;
+      }
+    }];
+    indicator.cycleColors = @[ dynamicColor ];
+
+    // When
+    indicator.traitCollectionOverride =
+    [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
+    indicator.indicatorMode = MDCActivityIndicatorModeDeterminate;
+    [indicator setProgress:1 animated:NO];
+
+    // Then
+    UIView *snapshotView = [indiciator mdc_addToBackgroundView];
+    [self snapshotVerifyViewForIOS13:snapshotView];
+  }
+#endif
 }
 
 @end
