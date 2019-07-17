@@ -549,7 +549,7 @@ static NSString *const kLongTitleArabic =
   // Given
   self.itemView.titleLabel.textColor = UIColor.yellowColor;
   self.itemView.iconImageView.tintColor = UIColor.magentaColor;
-  self.itemView.rippleTouchController.rippleView.rippleColor  = UIColor.blueColor;
+  self.itemView.rippleTouchController.rippleView.rippleColor = UIColor.blueColor;
   [self.itemView sizeToFit];
 
   // When
