@@ -188,11 +188,6 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
   [self.activeRippleLayer fadeOutRippleAnimated:animated completion:completion];
 }
 
-- (void)setActiveRippleColor:(UIColor *)rippleColor {
-  _activeRippleColor = rippleColor;
-  self.activeRippleLayer.fillColor = rippleColor.CGColor;
-}
-
 #pragma mark - MDCRippleLayerDelegate
 
 - (void)rippleLayerTouchDownAnimationDidBegin:(MDCRippleLayer *)rippleLayer {
