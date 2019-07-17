@@ -38,7 +38,8 @@ static NSString *const kExampleTitle = @"TabBarView";
   self = [super init];
   if (self) {
     _aSwitch = [[UISwitch alloc] init];
-    _animationTimingFunction = [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
+    _animationTimingFunction =
+        [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
   }
   return self;
 }
@@ -65,16 +66,15 @@ static NSString *const kExampleTitle = @"TabBarView";
 - (void)switchTapped:(id)sender {
   [self invalidateIntrinsicContentSize];
   [self setNeedsLayout];
-  [UIView
-   mdc_animateWithTimingFunction:self.animationTimingFunction
-                           duration:self.animationDuration
-                              delay:0
-                            options:0
-                         animations:^{
-                           [self.superview setNeedsLayout];
-                           [self.superview layoutIfNeeded];
-                         }
-                         completion:nil];
+  [UIView mdc_animateWithTimingFunction:self.animationTimingFunction
+                               duration:self.animationDuration
+                                  delay:0
+                                options:0
+                             animations:^{
+                               [self.superview setNeedsLayout];
+                               [self.superview layoutIfNeeded];
+                             }
+                             completion:nil];
 }
 
 - (CGSize)intrinsicContentSize {
