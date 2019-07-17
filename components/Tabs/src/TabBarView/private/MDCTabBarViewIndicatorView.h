@@ -35,6 +35,6 @@
  Called to indicate that the indicator should update to display new attributes. This method may be
  called from an implicit animation block.
  */
-- (void)applySelectionIndicatorAttributes:(MDCTabBarViewIndicatorAttributes *)attributes;
+- (void)applySelectionIndicatorAttributes:(nonnull MDCTabBarViewIndicatorAttributes *)attributes;
 
 @end

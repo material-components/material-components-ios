@@ -46,7 +46,7 @@
     XCTAssertEqualWithAccuracy(animationForPath.duration, expectedDuration, 0.0001);
     XCTAssertEqualObjects(animationForPath.timingFunction, expectedFunction);
   } @catch (NSException *exception) {
-    XCTAssertTrue(NO, @"(%@) is not an animation.", actionForPath);
+    XCTAssertTrue(NO, @"(%@) is not an animation: %@", actionForPath, exception);
   }
 }
 
@@ -70,7 +70,7 @@
     XCTAssertEqualWithAccuracy(animationForPath.duration, expectedDuration, 0.0001);
     XCTAssertEqualObjects(animationForPath.timingFunction, expectedFunction);
   } @catch (NSException *exception) {
-    XCTAssertTrue(NO, @"(%@) is not an animation.", actionForPath);
+    XCTAssertTrue(NO, @"(%@) is not an animation: %@", actionForPath, exception);
   }
 }
 

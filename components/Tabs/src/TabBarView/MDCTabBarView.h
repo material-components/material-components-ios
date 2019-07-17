@@ -144,6 +144,7 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
  when performing implicit UIView-based animations to ensure that all animations internal to the
  TabBarView are coordinated using the same parameters.
  */
-@property(nonatomic, readonly) CAMediaTimingFunction *selectionChangeAnimationTimingFunction;
+@property(nonatomic, readonly, nonnull)
+    CAMediaTimingFunction *selectionChangeAnimationTimingFunction;
 
 @end
