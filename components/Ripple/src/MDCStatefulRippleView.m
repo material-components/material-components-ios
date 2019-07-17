@@ -94,7 +94,7 @@ static UIColor *RippleSelectedColor(void) {
 
 - (void)updateActiveRippleColor {
   UIColor *rippleColor = [self rippleColorForState:self.state];
-  [self setActiveRippleColor:rippleColor];
+  self.activeRippleColor = rippleColor;
 }
 
 - (void)setRippleColor:(UIColor *)rippleColor forState:(MDCRippleState)state {

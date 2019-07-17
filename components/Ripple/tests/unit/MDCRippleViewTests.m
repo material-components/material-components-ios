@@ -145,7 +145,7 @@
 
   // When
   [rippleView beginRippleTouchDownAtPoint:CGPointMake(0, 0) animated:YES completion:nil];
-  [rippleView setActiveRippleColor:[UIColor blueColor]];
+  rippleView.activeRippleColor = [UIColor blueColor];
 
   // Then
   XCTAssertTrue(
