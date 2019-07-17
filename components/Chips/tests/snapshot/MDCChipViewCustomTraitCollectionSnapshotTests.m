@@ -48,7 +48,7 @@
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  //        self.recordMode = YES;
+//          self.recordMode = YES;
 
   self.chip = [[MDCChipViewWithCustomTraitCollection alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
   self.containerScheme = [[MDCContainerScheme alloc] init];
@@ -70,7 +70,7 @@
   [self snapshotVerifyView:snapshotView];
 }
 
-- (void)testShadowColorRespondsToDynamicColor {
+- (void)testDynamicColorSupport {
 #if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     // Given
