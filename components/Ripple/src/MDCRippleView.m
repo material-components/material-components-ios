@@ -60,7 +60,6 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
   self.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
 
   _rippleColor = [[UIColor alloc] initWithWhite:0 alpha:kRippleDefaultAlpha];
-  _activeRippleColor = _rippleColor;
 
   _rippleStyle = MDCRippleStyleBounded;
   self.layer.masksToBounds = YES;
@@ -75,14 +74,6 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
 
   [self updateRippleStyle];
   self.activeRippleLayer.fillColor = self.activeRippleColor.CGColor;
-}
-
-- (void)setActiveRippleColor:(UIColor *)rippleColor {
-  if (rippleColor == nil) {
-    return;
-  }
-  _activeRippleColor = rippleColor;
-  self.activeRippleLayer.fillColor = rippleColor.CGColor;
 }
 
 - (void)layoutSublayersOfLayer:(CALayer *)layer {
@@ -156,6 +147,13 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
     return nil;
   }
   return _activeRippleLayer;
+}
+
+- (UIColor *)activeRippleColor {
+  if (_activeRippleColor) {
+    return _activeRippleColor;
+  }
+  return self.rippleColor;
 }
 
 - (void)beginRippleTouchDownAtPoint:(CGPoint)point
