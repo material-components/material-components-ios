@@ -51,7 +51,9 @@ static NSString *const kExampleTitle = @"TabBarView";
   [super layoutSubviews];
   if (self.aSwitch.superview != self) {
     [self addSubview:_aSwitch];
-    [self.aSwitch addTarget:self action:@selector(switchTapped:) forControlEvents:UIControlEventValueChanged];
+    [self.aSwitch addTarget:self
+                     action:@selector(switchTapped:)
+           forControlEvents:UIControlEventValueChanged];
   }
   self.aSwitch.center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
 }
@@ -59,15 +61,17 @@ static NSString *const kExampleTitle = @"TabBarView";
 - (void)switchTapped:(id)sender {
   [self invalidateIntrinsicContentSize];
   [self setNeedsLayout];
-  [UIView animateWithDuration:self.animationDuration animations:^{
-    [self.superview setNeedsLayout];
-    [self.superview layoutIfNeeded];
-  }];
+  [UIView animateWithDuration:self.animationDuration
+                   animations:^{
+                     [self.superview setNeedsLayout];
+                     [self.superview layoutIfNeeded];
+                   }];
 }
 
 - (CGSize)intrinsicContentSize {
   if (self.aSwitch.isOn) {
-    return CGSizeMake(self.aSwitch.intrinsicContentSize.width * 2, self.aSwitch.intrinsicContentSize.height * 2);
+    return CGSizeMake(self.aSwitch.intrinsicContentSize.width * 2,
+                      self.aSwitch.intrinsicContentSize.height * 2);
   }
   return self.aSwitch.intrinsicContentSize;
 }
