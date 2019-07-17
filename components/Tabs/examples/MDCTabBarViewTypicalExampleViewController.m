@@ -25,9 +25,19 @@ static NSString *const kExampleTitle = @"TabBarView";
     : UIView <MDCTabBarViewCustomViewable>
 /** A switch shown in the view. */
 @property(nonatomic, strong) UISwitch *aSwitch;
+/** Duration for animating changes to this view. */
+@property(nonatomic, assign) CFTimeInterval animationDuration;
 @end
 
 @implementation MDCTabBarViewTypicalExampleViewControllerCustomView
+
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    _aSwitch = [[UISwitch alloc] init];
+  }
+  return self;
+}
 
 - (CGRect)contentFrame {
   return CGRectStandardize(self.aSwitch.frame);
@@ -37,20 +47,28 @@ static NSString *const kExampleTitle = @"TabBarView";
   // This is where a real custom view would handle its selection state change.
 }
 
-- (UISwitch *)aSwitch {
-  if (!_aSwitch) {
-    _aSwitch = [[UISwitch alloc] init];
-    [self addSubview:_aSwitch];
-  }
-  return _aSwitch;
-}
-
 - (void)layoutSubviews {
   [super layoutSubviews];
+  if (self.aSwitch.superview != self) {
+    [self addSubview:_aSwitch];
+    [self.aSwitch addTarget:self action:@selector(switchTapped:) forControlEvents:UIControlEventValueChanged];
+  }
   self.aSwitch.center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
 }
 
+- (void)switchTapped:(id)sender {
+  [self invalidateIntrinsicContentSize];
+  [self setNeedsLayout];
+  [UIView animateWithDuration:self.animationDuration animations:^{
+    [self.superview setNeedsLayout];
+    [self.superview layoutIfNeeded];
+  }];
+}
+
 - (CGSize)intrinsicContentSize {
+  if (self.aSwitch.isOn) {
+    return CGSizeMake(self.aSwitch.intrinsicContentSize.width * 2, self.aSwitch.intrinsicContentSize.height * 2);
+  }
   return self.aSwitch.intrinsicContentSize;
 }
 
@@ -96,6 +114,10 @@ static NSString *const kExampleTitle = @"TabBarView";
   }
 
   self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
+  self.tabBar = [[MDCTabBarView alloc] init];
+  self.tabBar.tabBarDelegate = self;
+  self.tabBar.delegate = self;
+  [self.view addSubview:self.tabBar];
 
   NSMutableArray<UIImage *> *itemIcons = [NSMutableArray array];
   [itemIcons addObject:[[UIImage imageNamed:@"Home"]
@@ -132,15 +154,12 @@ static NSString *const kExampleTitle = @"TabBarView";
       [[MDCTabBarViewTypicalExampleViewControllerCustomView alloc] init];
   item6.mdc_customView = switchView;
   switchView.aSwitch.onTintColor = self.containerScheme.colorScheme.primaryColor;
+  switchView.animationDuration = self.tabBar.selectionChangeAnimationDuration;
 
-  self.tabBar = [[MDCTabBarView alloc] init];
-  self.tabBar.tabBarDelegate = self;
-  self.tabBar.delegate = self;
-  self.tabBar.items = @[ item1, item2, item3, item4, item5, item6 ];
+  self.tabBar.items = @[ item1, item2, item6, item4, item5, item3 ];
   self.tabBar.selectedItem = item4;
-  self.tabBar.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.view addSubview:self.tabBar];
 
+  self.tabBar.translatesAutoresizingMaskIntoConstraints = NO;
   if (@available(iOS 11.0, *)) {
     [self.view.layoutMarginsGuide.topAnchor constraintEqualToAnchor:self.tabBar.topAnchor].active =
         YES;

@@ -126,3 +126,17 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
     inCoordinateSpace:(nonnull id<UICoordinateSpace>)coordinateSpace;
 
 @end
+
+/** Animation and motion-related APIs. */
+@interface MDCTabBarView (Animations)
+
+/**
+ The total duration for all animations that take place during a selection change.
+
+ This is guaranteed to be the total time between the start of the first animation and the end of
+ the last animation that takes place for selection changes. There may not be a specific animation
+ that has this exact duration.
+ */
+@property(nonatomic, readonly) CFTimeInterval selectionChangeAnimationDuration;
+
+@end

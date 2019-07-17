@@ -938,4 +938,9 @@ static UIImage *fakeImage(CGSize size) {
                 NSStringFromCGRect(itemFrame), NSStringFromCGRect(expectedFrame));
 }
 
+- (void)testSelectionChangeAnimationDurationValue {
+  // Then
+  XCTAssertEqualWithAccuracy(self.tabBarView.selectionChangeAnimationDuration, 0.3, 0.0001);
+}
+
 @end

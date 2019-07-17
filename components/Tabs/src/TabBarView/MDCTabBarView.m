@@ -423,6 +423,10 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   return [coordinateSpace convertRect:frame fromCoordinateSpace:self];
 }
 
+- (CFTimeInterval)selectionChangeAnimationDuration {
+  return kSelectionChangeAnimationDuration;
+}
+
 #pragma mark - Key-Value Observing (KVO)
 
 - (void)addObserversToTabBarItems {
@@ -807,9 +811,9 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
         [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
     // Wrap in explicit CATransaction to allow layer-based animations with the correct duration.
     [CATransaction begin];
-    [CATransaction setAnimationDuration:kSelectionChangeAnimationDuration];
+    [CATransaction setAnimationDuration:self.selectionChangeAnimationDuration];
     [CATransaction setAnimationTimingFunction:easeInOutFunction];
-    [UIView animateWithDuration:kSelectionChangeAnimationDuration
+    [UIView animateWithDuration:self.selectionChangeAnimationDuration
                           delay:0
                         options:UIViewAnimationOptionBeginFromCurrentState
                      animations:animationBlock
