@@ -172,6 +172,7 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
   [self.layer addSublayer:rippleLayer];
   [rippleLayer startRippleAtPoint:point animated:animated completion:completion];
   self.activeRippleLayer = rippleLayer;
+  self.activeRippleColor = self.rippleColor;
 }
 
 - (void)beginRippleTouchUpAnimated:(BOOL)animated
