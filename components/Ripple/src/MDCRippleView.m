@@ -60,6 +60,7 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
   self.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
 
   _rippleColor = [[UIColor alloc] initWithWhite:0 alpha:kRippleDefaultAlpha];
+  _activeRippleColor = _rippleColor;
 
   _rippleStyle = MDCRippleStyleBounded;
   self.layer.masksToBounds = YES;
