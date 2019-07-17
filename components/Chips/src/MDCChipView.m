@@ -647,6 +647,10 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
       subview.frame = flippedRect;
     }
   }
+
+  [self updateBackgroundColor];
+  [self updateBorderColor];
+  [self updateShadowColor];
 }
 
 - (CGRect)contentRect {
