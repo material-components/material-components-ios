@@ -144,13 +144,15 @@ static UIColor *RippleSelectedColor(void) {
   _selected = selected;
   // Go into the selected state visually.
   if (selected) {
-    [self updateActiveRippleColor];
     if (!self.activeRippleLayer) {
       // If we go into the selected state but a ripple layer doesn't exist yet, it means we went
       // into this state without initially creating the ripple overlay by going through the
       // highlighted state. This usually occurs when cells are reused and the selected state is
       // manually set to show the cell's existing state.
+      [self updateRippleColor];
       [self beginRippleTouchDownAtPoint:_lastTouch animated:NO completion:nil];
+    } else {
+      [self updateActiveRippleColor];
     }
   } else {
     // If we are no longer selecting, we cancel all the ripples.
@@ -167,7 +169,7 @@ static UIColor *RippleSelectedColor(void) {
   // Go into the highlighted state visually.
   if (rippleHighlighted && !_tapWentInsideOfBounds) {
     // If ripple becomes highlighted we initiate a ripple with animation.
-    [self updateActiveRippleColor];
+    [self updateRippleColor];
     [self beginRippleTouchDownAtPoint:_lastTouch animated:_didReceiveTouch completion:nil];
   } else if (!rippleHighlighted) {
     if (!self.allowsSelection && !self.dragged && !_tapWentOutsideOfBounds) {
@@ -186,11 +188,13 @@ static UIColor *RippleSelectedColor(void) {
   _dragged = dragged;
   // Go into the dragged state visually.
   if (dragged) {
-    [self updateActiveRippleColor];
     if (!self.activeRippleLayer) {
       // If we go into the dragged state manually, without coming from the highlighted state,
       // We present the ripple overlay instantly without animation.
+      [self updateRippleColor];
       [self beginRippleTouchDownAtPoint:_lastTouch animated:NO completion:nil];
+    } else {
+      [self updateActiveRippleColor];
     }
   } else {
     // If we are no longer dragging, we cancel all the ripples.
