@@ -69,7 +69,7 @@ typedef NS_ENUM(NSUInteger, MDCTabBarViewInternalLayoutStyle) {
 
   /**
    Items are equally-sized where each of the items is the width of the widest item. The items are
-   positioned at the center of the bar.
+   positioned at the center of the bar. The bar is not scrollable.
    */
   MDCTabBarViewInternalLayoutStyleFixedClusteredCentered = 2,
 
