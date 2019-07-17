@@ -14,27 +14,28 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MDCAppBarViewController.h"
+#import "MaterialFlexibleHeader.h"
 
-@interface MDCAppBarViewControllerTests : XCTestCase
+@interface FlexibleHeaderViewControllerTraitCollectionTests : XCTestCase
 
 @end
 
-@implementation MDCAppBarViewControllerTests
+@implementation FlexibleHeaderViewControllerTraitCollectionTests
 
 - (void)testTraitCollectionDidChangeBlockCalledWhenTraitCollectionChanges {
   // Given
-  MDCAppBarViewController *appBarController = [[MDCAppBarViewController alloc] init];
+  MDCFlexibleHeaderViewController *flexibleHeaderController =
+      [[MDCFlexibleHeaderViewController alloc] init];
   XCTestExpectation *expectation =
       [self expectationWithDescription:@"Called traitCollectionDidChange"];
-  appBarController.traitCollectionDidChangeBlock =
-      ^(MDCFlexibleHeaderViewController *_Nonnull appBarViewController,
+  flexibleHeaderController.traitCollectionDidChangeBlock =
+      ^(MDCFlexibleHeaderViewController *_Nonnull flexibleHeaderViewController,
         UITraitCollection *_Nullable previousTraitCollection) {
         [expectation fulfill];
       };
 
   // When
-  [appBarController traitCollectionDidChange:nil];
+  [flexibleHeaderController traitCollectionDidChange:nil];
 
   // Then
   [self waitForExpectations:@[ expectation ] timeout:1];
@@ -42,27 +43,28 @@
 
 - (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
   // Given
-  MDCAppBarViewController *appBarController = [[MDCAppBarViewController alloc] init];
+  MDCFlexibleHeaderViewController *flexibleHeaderController =
+      [[MDCFlexibleHeaderViewController alloc] init];
   XCTestExpectation *expectation =
       [self expectationWithDescription:@"Called traitCollectionDidChange"];
   __block UITraitCollection *passedTraitCollection;
-  __block MDCFlexibleHeaderViewController *passedAppBarViewController;
-  appBarController.traitCollectionDidChangeBlock =
-      ^(MDCFlexibleHeaderViewController *_Nonnull appBarViewController,
+  __block MDCFlexibleHeaderViewController *passedFlexibleHeader;
+  flexibleHeaderController.traitCollectionDidChangeBlock =
+      ^(MDCFlexibleHeaderViewController *_Nonnull flexibleHeaderViewController,
         UITraitCollection *_Nullable previousTraitCollection) {
         passedTraitCollection = previousTraitCollection;
-        passedAppBarViewController = appBarViewController;
+        passedFlexibleHeader = flexibleHeaderViewController;
         [expectation fulfill];
       };
 
   // When
   UITraitCollection *testCollection = [UITraitCollection traitCollectionWithDisplayScale:77];
-  [appBarController traitCollectionDidChange:testCollection];
+  [flexibleHeaderController traitCollectionDidChange:testCollection];
 
   // Then
   [self waitForExpectations:@[ expectation ] timeout:1];
   XCTAssertEqual(passedTraitCollection, testCollection);
-  XCTAssertEqual(passedAppBarViewController, appBarController);
+  XCTAssertEqual(passedFlexibleHeader, flexibleHeaderController);
 }
 
 @end

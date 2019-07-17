@@ -67,6 +67,11 @@ class MDCCatalogTileView: UIView {
     imageView.frame = bounds
   }
 
+  override func draw(_ rect: CGRect) {
+    super.draw(rect)
+    imageCache.removeAllObjects()
+  }
+
   func getImage(_ key: String) -> UIImage {
     if let cachedImage = imageCache.object(forKey: key as AnyObject) {
       let scale = UIScreen.main.scale

@@ -1059,6 +1059,7 @@ Pod::Spec.new do |mdc|
       ]
       unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
       unit_tests.dependency "MaterialComponents/FlexibleHeader+ColorThemer"
+      unit_tests.dependency "MaterialComponents/ShadowLayer"
     end
   end
 

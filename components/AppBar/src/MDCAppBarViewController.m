@@ -252,14 +252,6 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
   self.view.frame = frame;
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-  [super traitCollectionDidChange:previousTraitCollection];
-
-  if (self.traitCollectionDidChangeBlock) {
-    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
-  }
-}
-
 #pragma mark - UIAccessibility
 
 - (BOOL)accessibilityPerformEscape {

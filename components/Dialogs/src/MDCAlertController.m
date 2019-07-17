@@ -116,6 +116,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
     _titleAlignment = NSTextAlignmentNatural;
     _actionManager = [[MDCAlertActionManager alloc] init];
     _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
+    _shadowColor = UIColor.blackColor;
 
     super.transitioningDelegate = _transitionController;
     super.modalPresentationStyle = UIModalPresentationCustom;
@@ -276,6 +277,12 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 - (void)setElevation:(MDCShadowElevation)elevation {
   _elevation = elevation;
   self.mdc_dialogPresentationController.dialogElevation = elevation;
+}
+
+- (void)setShadowColor:(UIColor *)shadowColor {
+  UIColor *shadowColorCopy = [shadowColor copy];
+  _shadowColor = shadowColorCopy;
+  self.mdc_dialogPresentationController.dialogShadowColor = shadowColorCopy;
 }
 
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {

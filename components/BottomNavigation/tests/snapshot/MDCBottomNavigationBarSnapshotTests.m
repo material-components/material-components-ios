@@ -419,4 +419,34 @@ static const CGFloat kHeightShort = 48;
   [self generateAndVerifySnapshot];
 }
 
+- (void)testShadowColorRespondsToDynamicColor {
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+  if (@available(iOS 13.0, *)) {
+    // Given
+    UIColor *dynamicColor =
+        [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
+          if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
+            return UIColor.blackColor;
+          } else {
+            return UIColor.redColor;
+          }
+        }];
+    self.navigationBar.bounds = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthiPad,
+                                           MDCBottomNavigationBarTestHeightTypical);
+    self.navigationBar.elevation = 10;
+    self.navigationBar.shadowColor = dynamicColor;
+
+    // When
+    self.navigationBar.traitCollectionOverride =
+        [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
+    [self.navigationBar layoutIfNeeded];
+
+    // Then
+    UIView *snapshotView =
+        [self.navigationBar mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(50, 50, 50, 50)];
+    [self snapshotVerifyViewForIOS13:snapshotView];
+  }
+#endif
+}
+
 @end
