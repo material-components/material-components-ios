@@ -97,4 +97,28 @@
   }
 }
 
+- (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
+  // Given
+  MDCBannerView *banner = [[MDCBannerView alloc] init];
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollectionDidChange"];
+  __block UITraitCollection *passedTraitCollection;
+  __block MDCBannerView *passedBannerView;
+  banner.traitCollectionDidChangeBlock =
+      ^(MDCBannerView *_Nonnull bannerView, UITraitCollection *_Nullable previousTraitCollection) {
+        [expectation fulfill];
+        passedTraitCollection = previousTraitCollection;
+        passedBannerView = bannerView;
+      };
+  UITraitCollection *testTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
+
+  // When
+  [banner traitCollectionDidChange:testTraitCollection];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertEqual(passedTraitCollection, testTraitCollection);
+  XCTAssertEqual(passedBannerView, banner);
+}
+
 @end
