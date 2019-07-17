@@ -59,6 +59,7 @@ typedef NS_ENUM(NSUInteger, MDCTabBarViewInternalLayoutStyle) {
 
   /** Items are laid-out from leading to trailing and sized to their intrinsic content size. */
   MDCTabBarViewInternalLayoutStyleScrollable = 0,
+
   /**
    Items are equally-sized where each of the items receives an equal portion of the bar's width.
    For example, if there are 3 items and the bar is 360 points wide, each item receives 120 points
