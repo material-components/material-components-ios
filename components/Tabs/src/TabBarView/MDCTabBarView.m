@@ -826,7 +826,7 @@ typedef NS_ENUM(NSUInteger, MDCTabBarViewInternalLayoutStyle) {
       largestHeight = intrinsicContentSize.height;
     }
   }
-  return largestSize;
+  return CGSizeMake(largestWidth, largestHeight);
 }
 
 - (CGSize)availableSizeForSubviewLayout {
