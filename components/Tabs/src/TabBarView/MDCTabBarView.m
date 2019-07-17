@@ -83,7 +83,7 @@ typedef NS_ENUM(NSUInteger, MDCTabBarViewInternalLayoutStyle) {
 /** The bottom divider view shown behind the default indicator template. */
 @property(nonnull, nonatomic, strong) UIView *bottomDividerView;
 
-/** @c YES if the items are laid-out in a justified style. */
+/** @c YES if the items are laid-out in a scrollable style. */
 @property(nonatomic, readonly) BOOL isScrollableLayoutStyle;
 
 /** Used to scroll to the selected item during the first call to @c layoutSubviews. */
@@ -606,13 +606,14 @@ typedef NS_ENUM(NSUInteger, MDCTabBarViewInternalLayoutStyle) {
 }
 
 - (MDCTabBarViewInternalLayoutStyle)layoutStyle {
+  if (self.items.count == 0) {
+    return MDCTabBarViewInternalLayoutStyleFixedJustified;
+  }
+
   CGSize availableSize = [self availableSizeForSubviewLayout];
   CGFloat requiredWidthForJustifiedLayout = [self intrinsicContentSizeForJustifiedLayout].width;
   if (availableSize.width < requiredWidthForJustifiedLayout) {
     return MDCTabBarViewInternalLayoutStyleScrollable;
-  }
-  if (self.items.count == 0) {
-    return MDCTabBarViewInternalLayoutStyleFixedJustified;
   }
   if ((availableSize.width / self.items.count) > kMaxItemWidth) {
     return MDCTabBarViewInternalLayoutStyleFixedClusteredCentered;
@@ -814,14 +815,15 @@ typedef NS_ENUM(NSUInteger, MDCTabBarViewInternalLayoutStyle) {
 }
 
 - (CGSize)estimatedItemViewSizeForClusteredFixedLayout {
-  CGSize largestSize = CGSizeZero;
+  CGFloat largestWidth = 0;
+  CGFloat largestHeight = 0;
   for (UIView *view in self.itemViews) {
     CGSize intrinsicContentSize = view.intrinsicContentSize;
-    if (intrinsicContentSize.width > largestSize.width) {
-      largestSize = CGSizeMake(intrinsicContentSize.width, largestSize.height);
+    if (intrinsicContentSize.width > largestWidth) {
+      largestWidth = intrinsicContentSize.width;
     }
-    if (intrinsicContentSize.height > largestSize.height) {
-      largestSize = CGSizeMake(largestSize.width, intrinsicContentSize.height);
+    if (intrinsicContentSize.height > largestHeight) {
+      largestHeight = intrinsicContentSize.height;
     }
   }
   return largestSize;
