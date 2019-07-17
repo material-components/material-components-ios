@@ -73,7 +73,7 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
   [super layoutSubviews];
 
   [self updateRippleStyle];
-  self.activeRippleLayer.fillColor = self.rippleColor.CGColor;
+  self.activeRippleLayer.fillColor = self.activeRippleColor.CGColor;
 }
 
 - (void)layoutSublayersOfLayer:(CALayer *)layer {
@@ -187,11 +187,19 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
   [self.activeRippleLayer fadeOutRippleAnimated:animated completion:completion];
 }
 
-- (void)setActiveRippleColor:(UIColor *)rippleColor {
-  if (rippleColor == nil) {
-    return;
-  }
-  self.activeRippleLayer.fillColor = rippleColor.CGColor;
+//- (void)setActiveRippleColor:(UIColor *)rippleColor {
+//  if (rippleColor == nil) {
+//    return;
+//  }
+//  self.activeRippleLayer.fillColor = rippleColor.CGColor;
+//}
+
+- (void)setActiveRippleColor:(UIColor *)activeRippleColor {
+  _activeRippleColor = activeRippleColor;
+//  if (activeRippleColor == nil) {
+//    return;
+//  }
+  self.activeRippleLayer.fillColor = activeRippleColor.CGColor;
 }
 
 #pragma mark - MDCRippleLayerDelegate
