@@ -172,16 +172,15 @@
 #if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     // Given
-    self.recordMode = YES;
     MDCActivityIndicatorSnapshotFake *indicator = [[MDCActivityIndicatorSnapshotFake alloc] initWithFrame:CGRectMake(0, 0, 64, 64)];
     [indicator startAnimating];
     indicator.layer.speed = 0;
     UIColor *dynamicColor =
     [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
       if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
-        return UIColor.magentaColor;
+        return UIColor.blackColor;
       } else {
-        return UIColor.greenColor;
+        return UIColor.purpleColor;
       }
     }];
     indicator.cycleColors = @[ dynamicColor ];
@@ -193,7 +192,7 @@
     [indicator setProgress:1 animated:NO];
 
     // Then
-    UIView *snapshotView = [indiciator mdc_addToBackgroundView];
+    UIView *snapshotView = [indicator mdc_addToBackgroundView];
     [self snapshotVerifyViewForIOS13:snapshotView];
   }
 #endif
