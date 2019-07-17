@@ -14,6 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import <MaterialComponents/MaterialAnimationTiming.h>
 #import <MaterialComponents/MaterialContainerScheme.h>
 #import <MaterialComponents/MaterialMath.h>
 #import "MaterialTabs+TabBarView.h"
@@ -25,8 +26,10 @@ static NSString *const kExampleTitle = @"TabBarView";
     : UIView <MDCTabBarViewCustomViewable>
 /** A switch shown in the view. */
 @property(nonatomic, strong) UISwitch *aSwitch;
-/** Duration for animating changes to this view. */
+/** Duration for animating changes to the tab bar view. */
 @property(nonatomic, assign) CFTimeInterval animationDuration;
+/** The timing function for animating changes to the tab bar view. */
+@property(nonatomic, strong) CAMediaTimingFunction *animationTimingFunction;
 @end
 
 @implementation MDCTabBarViewTypicalExampleViewControllerCustomView
@@ -35,6 +38,7 @@ static NSString *const kExampleTitle = @"TabBarView";
   self = [super init];
   if (self) {
     _aSwitch = [[UISwitch alloc] init];
+    _animationTimingFunction = [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
   }
   return self;
 }
@@ -61,11 +65,16 @@ static NSString *const kExampleTitle = @"TabBarView";
 - (void)switchTapped:(id)sender {
   [self invalidateIntrinsicContentSize];
   [self setNeedsLayout];
-  [UIView animateWithDuration:self.animationDuration
-                   animations:^{
-                     [self.superview setNeedsLayout];
-                     [self.superview layoutIfNeeded];
-                   }];
+  [UIView
+   mdc_animateWithTimingFunction:self.animationTimingFunction
+                           duration:self.animationDuration
+                              delay:0
+                            options:0
+                         animations:^{
+                           [self.superview setNeedsLayout];
+                           [self.superview layoutIfNeeded];
+                         }
+                         completion:nil];
 }
 
 - (CGSize)intrinsicContentSize {
@@ -159,6 +168,7 @@ static NSString *const kExampleTitle = @"TabBarView";
   item6.mdc_customView = switchView;
   switchView.aSwitch.onTintColor = self.containerScheme.colorScheme.primaryColor;
   switchView.animationDuration = self.tabBar.selectionChangeAnimationDuration;
+  switchView.animationTimingFunction = self.tabBar.selectionChangeAnimationTimingFunction;
 
   self.tabBar.items = @[ item1, item2, item6, item4, item5, item3 ];
   self.tabBar.selectedItem = item4;

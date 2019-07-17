@@ -103,6 +103,9 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     _selectionIndicatorView.translatesAutoresizingMaskIntoConstraints = NO;
     _selectionIndicatorView.userInteractionEnabled = NO;
     _selectionIndicatorView.tintColor = UIColor.blackColor;
+    _selectionIndicatorView.indicatorPathAnimationDuration = kSelectionChangeAnimationDuration;
+    _selectionIndicatorView.indicatorPathTimingFunction =
+        [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
 
     _selectionIndicatorTemplate = [[MDCTabBarViewUnderlineIndicatorTemplate alloc] init];
 
@@ -425,6 +428,10 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
 - (CFTimeInterval)selectionChangeAnimationDuration {
   return kSelectionChangeAnimationDuration;
+}
+
+- (CAMediaTimingFunction *)selectionChangeAnimationTimingFunction {
+  return [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
 }
 
 #pragma mark - Key-Value Observing (KVO)
