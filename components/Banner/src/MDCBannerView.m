@@ -548,7 +548,7 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
   [super traitCollectionDidChange:previousTraitCollection];
-  
+
   [self updateBannerFont];
 
   if (self.traitCollectionDidChangeBlock) {

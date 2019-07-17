@@ -101,16 +101,15 @@
   // Given
   MDCBannerView *banner = [[MDCBannerView alloc] init];
   XCTestExpectation *expectation =
-  [[XCTestExpectation alloc] initWithDescription:@"traitCollectionDidChange"];
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollectionDidChange"];
   __block UITraitCollection *passedTraitCollection;
   __block MDCBannerView *passedBannerView;
   banner.traitCollectionDidChangeBlock =
-  ^(MDCBannerView *_Nonnull bannerView,
-    UITraitCollection *_Nullable previousTraitCollection) {
-    [expectation fulfill];
-    passedTraitCollection = previousTraitCollection;
-    passedBannerView = bannerView;
-  };
+      ^(MDCBannerView *_Nonnull bannerView, UITraitCollection *_Nullable previousTraitCollection) {
+        [expectation fulfill];
+        passedTraitCollection = previousTraitCollection;
+        passedBannerView = bannerView;
+      };
   UITraitCollection *testTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
 
   // When

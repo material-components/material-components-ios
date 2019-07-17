@@ -101,8 +101,6 @@ __attribute__((objc_subclassing_restricted)) @interface MDCBannerView : UIView
  traitCollectionDidChange:. The block is called after the call to the superclass.
  */
 @property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
-(MDCBannerView *_Nonnull bannerView,
-UITraitCollection *_Nullable previousTraitCollection);
-
+    (MDCBannerView *_Nonnull bannerView, UITraitCollection *_Nullable previousTraitCollection);
 
 @end
