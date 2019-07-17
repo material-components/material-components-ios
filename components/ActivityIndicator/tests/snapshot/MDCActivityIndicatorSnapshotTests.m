@@ -172,22 +172,23 @@
 #if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     // Given
-    MDCActivityIndicatorSnapshotFake *indicator = [[MDCActivityIndicatorSnapshotFake alloc] initWithFrame:CGRectMake(0, 0, 64, 64)];
+    MDCActivityIndicatorSnapshotFake *indicator =
+        [[MDCActivityIndicatorSnapshotFake alloc] initWithFrame:CGRectMake(0, 0, 64, 64)];
     [indicator startAnimating];
     indicator.layer.speed = 0;
     UIColor *dynamicColor =
-    [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
-      if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
-        return UIColor.blackColor;
-      } else {
-        return UIColor.purpleColor;
-      }
-    }];
+        [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
+          if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
+            return UIColor.blackColor;
+          } else {
+            return UIColor.purpleColor;
+          }
+        }];
     indicator.cycleColors = @[ dynamicColor ];
 
     // When
     indicator.traitCollectionOverride =
-    [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
+        [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
     indicator.indicatorMode = MDCActivityIndicatorModeDeterminate;
     [indicator setProgress:1 animated:NO];
 
