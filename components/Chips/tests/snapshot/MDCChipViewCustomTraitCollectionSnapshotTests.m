@@ -48,7 +48,7 @@
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-//        self.recordMode = YES;
+  //        self.recordMode = YES;
 
   self.chip = [[MDCChipViewWithCustomTraitCollection alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
   self.containerScheme = [[MDCContainerScheme alloc] init];
@@ -83,21 +83,21 @@
           }
         }];
     UIColor *dynamicBackgroundColor =
-    [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
-      if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
-        return UIColor.orangeColor;
-      } else {
-        return UIColor.redColor;
-      }
-    }];
+        [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
+          if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
+            return UIColor.orangeColor;
+          } else {
+            return UIColor.redColor;
+          }
+        }];
     UIColor *dynamicBorderColor =
-    [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
-      if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
-        return UIColor.yellowColor;
-      } else {
-        return UIColor.brownColor;
-      }
-    }];
+        [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
+          if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
+            return UIColor.yellowColor;
+          } else {
+            return UIColor.brownColor;
+          }
+        }];
 
     [self.chip setBorderWidth:3 forState:UIControlStateHighlighted];
     [self.chip setShadowColor:dynamicShadowColor forState:UIControlStateHighlighted];
