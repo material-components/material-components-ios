@@ -38,6 +38,8 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
 
 @implementation MDCRippleView
 
+@synthesize activeRippleColor = _activeRippleColor;
+
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
@@ -154,6 +156,11 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
     return _activeRippleColor;
   }
   return self.rippleColor;
+}
+
+- (void)setActiveRippleColor:(UIColor *)rippleColor {
+  _activeRippleColor = rippleColor;
+  self.activeRippleLayer.fillColor = rippleColor.CGColor;
 }
 
 - (void)beginRippleTouchDownAtPoint:(CGPoint)point
