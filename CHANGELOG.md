@@ -136,10 +136,6 @@ changes. Slider supports Haptics feature.
 
 * [Provide unique names for methods. (#7824)](https://github.com/material-components/material-components-ios/commit/6f2d5eb654b6ca1d812c42cd1d13d87c2f692daa) (Robert Moore)
 
-### Ripple
-
-* [Add dynamic color support for ripple. (#7877)](https://github.com/material-components/material-components-ios/commit/edb5f11af1a830e004fdffef536c4b6306b4eb4b) (Yarden Eitan)
-
 ### Shapes
 
 * [Fix memory leak in -[MDCRectangleShapeGenerator pathForSize:] by returning an autoreleased CGPathRef (#7913)](https://github.com/material-components/material-components-ios/commit/783fd0762151ec6ab72442abad673b5b9c6c7a48) (Julien Poumailloux)
