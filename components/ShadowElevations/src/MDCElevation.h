@@ -21,10 +21,9 @@
 @protocol MDCElevation <NSObject>
 
 /**
- The current elevation of the conforming @c UIView object.
+ The current elevation of the conforming @c UIView reciever.
 
- If an elevation API already exist, then this getter can directly call that API to get the current
- elevation.
+ The elevation for the current state of the receiver.
  */
 @property(nonatomic, assign, readonly) CGFloat mdc_currentElevation;
 
