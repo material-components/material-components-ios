@@ -31,8 +31,9 @@
 
  Use this block to respond to elevation changes in the view or its ancestor views.
 
- @param elevation The @c mdc_currentElevation plus the @c mdc_currentElevation of all ancestor views.
+ @param elevation The @c mdc_currentElevation plus the @c mdc_currentElevation of all ancestor
+ views.
  */
-@property (nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)(CGFloat elevation);
+@property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)(CGFloat elevation);
 
 @end
