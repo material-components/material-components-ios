@@ -20,7 +20,7 @@
 
 static NSString *const kBannerShortText = @"tristique senectus et";
 static NSString *const kBannerMiddleLengthText =
-@"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.";
+    @"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.";
 static NSString *const kBannerLongText =
     @"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.";
 static const CGFloat kBannerContentPadding = 10.0f;
