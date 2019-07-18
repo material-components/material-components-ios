@@ -40,6 +40,7 @@ static CGFloat const kSliderVerticalMargin = 12;
 @property(nonatomic, assign) BOOL hollowCircle;
 @property(nonatomic, assign) BOOL enabled;
 @property(nonatomic, assign) BOOL hapticsEnabled;
+@property(nonatomic, assign) BOOL shouldEnableHapticsForAllDiscreteValues;
 
 - (void)didChangeMDCSliderValue:(MDCSlider *)slider;
 
@@ -62,6 +63,7 @@ static CGFloat const kSliderVerticalMargin = 12;
     _hollowCircle = YES;
     _enabled = YES;
     _hapticsEnabled = YES;
+    _shouldEnableHapticsForAllDiscreteValues = NO;
   }
 
   return self;
@@ -109,6 +111,7 @@ static CGFloat const kSliderVerticalMargin = 12;
   _slider.thumbHollowAtStart = model.hollowCircle;
   _slider.enabled = model.enabled;
   _slider.hapticsEnabled = model.hapticsEnabled;
+  _slider.shouldEnableHapticsForAllDiscreteValues = model.shouldEnableHapticsForAllDiscreteValues;
 
   // Don't apply a `nil` color, use the default
   if (model.sliderColor) {
@@ -249,6 +252,14 @@ static CGFloat const kSliderVerticalMargin = 12;
     model.numDiscreteValues = 7;
     model.value = 1;
     model.discreteValueLabel = NO;
+    [_sliders addObject:model];
+
+    model = [[MDCSliderModel alloc] init];
+    model.labelString = @"Discrete slider with full haptics";
+    model.numDiscreteValues = 5;
+    model.value = 1;
+    model.discreteValueLabel = NO;
+    model.shouldEnableHapticsForAllDiscreteValues = YES;
     [_sliders addObject:model];
 
     model = [[MDCSliderModel alloc] init];

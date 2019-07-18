@@ -115,4 +115,14 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
  */
 - (nullable id)accessibilityElementForItem:(nonnull UITabBarItem *)item;
 
+/**
+ Provides the frame of the tab bar subview that visually represents @c item. If @c item is not
+ present in the tab bar's list of items, then the null rectangle is returned.
+
+ @param item The tab bar item for computing a frame.
+ @param coordinateSpace The space in which to calculate the item's corresponding frame.
+ */
+- (CGRect)rectForItem:(nonnull UITabBarItem *)item
+    inCoordinateSpace:(nonnull id<UICoordinateSpace>)coordinateSpace;
+
 @end

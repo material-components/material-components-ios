@@ -73,6 +73,23 @@
   XCTAssertEqualObjects(messageView.messageTextColor, UIColor.whiteColor);
 }
 
+- (void)testDefaultElevation {
+  // Then
+  XCTAssertEqual([[MDCSnackbarMessageView alloc] init].elevation, MDCShadowElevationSnackbar);
+}
+
+- (void)testCustomElevation {
+  // Given
+  CGFloat fakeElevation = 10;
+  MDCSnackbarMessageView *messageView = [[MDCSnackbarMessageView alloc] init];
+
+  // When
+  messageView.elevation = fakeElevation;
+
+  // Then
+  XCTAssertEqual(messageView.elevation, fakeElevation);
+}
+
 - (void)testAccessibilityLabelDefaultIsNil {
   // When
   [self.manager showMessage:self.message];
@@ -274,6 +291,31 @@
   XCTAssertFalse(actionButton.uppercaseTitle);
   XCTAssertEqual(actionButton.disabledAlpha, 0.5);
   XCTAssertEqualObjects(UIColor.redColor, actionButton.inkColor);
+}
+
+- (void)testTraitCollectionDidChangeCalledWhenTraitCollectionChanges {
+  // Given
+  MDCSnackbarMessageView *messageView = [[MDCSnackbarMessageView alloc] init];
+  XCTestExpectation *expectation =
+      [self expectationWithDescription:@"Called traitCollectionDidChange"];
+  __block UITraitCollection *passedTraitCollection;
+  __block MDCSnackbarMessageView *passedMessageView;
+  messageView.traitCollectionDidChangeBlock =
+      ^(MDCSnackbarMessageView *_Nonnull inMessageView,
+        UITraitCollection *_Nullable previousTraitCollection) {
+        passedMessageView = inMessageView;
+        passedTraitCollection = previousTraitCollection;
+        [expectation fulfill];
+      };
+
+  // When
+  UITraitCollection *testCollection = [UITraitCollection traitCollectionWithDisplayScale:77];
+  [messageView traitCollectionDidChange:testCollection];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertEqual(passedTraitCollection, testCollection);
+  XCTAssertEqual(passedMessageView, messageView);
 }
 
 @end

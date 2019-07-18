@@ -282,6 +282,29 @@
   XCTAssertEqualWithAccuracy(self.bottomNavBar.elevation, customElevation, 0.001);
 }
 
+- (void)testDefaultShadowColor {
+  // Then
+  XCTAssertEqualObjects(self.bottomNavBar.shadowColor, UIColor.blackColor);
+  XCTAssertTrue(
+      CGColorEqualToColor(self.bottomNavBar.layer.shadowColor, UIColor.blackColor.CGColor),
+      @"(%@) is not equal to (%@)", self.bottomNavBar.layer.shadowColor,
+      UIColor.blackColor.CGColor);
+}
+
+- (void)testCustomShadowColor {
+  // Given
+  UIColor *fakeColor = UIColor.orangeColor;
+
+  // When
+  self.bottomNavBar.shadowColor = fakeColor;
+
+  // Then
+  XCTAssertEqualObjects(self.bottomNavBar.shadowColor, fakeColor);
+  XCTAssertTrue(CGColorEqualToColor(self.bottomNavBar.layer.shadowColor, fakeColor.CGColor),
+                @"(%@) is not equal to (%@)", self.bottomNavBar.layer.shadowColor,
+                fakeColor.CGColor);
+}
+
 - (void)testViewForItemFound {
   // Given
   UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
@@ -509,6 +532,32 @@
 
   // Then
   XCTAssertNil(result);
+}
+
+#pragma mark - traitCollectionDidChangeBlock
+
+- (void)testTraitCollectionDidChangeBlockCalledWhenTraitCollectionChanges {
+  // Given
+  __block MDCBottomNavigationBar *passedBottomNavigationBar = nil;
+  __block UITraitCollection *passedTraitCollection = nil;
+  XCTestExpectation *expectation =
+      [self expectationWithDescription:@"Called traitCollectionDidChangeBlock"];
+  UITraitCollection *testTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:77];
+  void (^block)(MDCBottomNavigationBar *_Nonnull, UITraitCollection *_Nullable) = ^void(
+      MDCBottomNavigationBar *bottomNavigationBar, UITraitCollection *previousTraitCollection) {
+    passedBottomNavigationBar = bottomNavigationBar;
+    passedTraitCollection = previousTraitCollection;
+    [expectation fulfill];
+  };
+  self.bottomNavBar.traitCollectionDidChangeBlock = block;
+
+  // When
+  [self.bottomNavBar traitCollectionDidChange:testTraitCollection];
+  [self waitForExpectations:@[ expectation ] timeout:1];
+
+  // Then
+  XCTAssertEqual(passedBottomNavigationBar, self.bottomNavBar);
+  XCTAssertEqual(passedTraitCollection, testTraitCollection);
 }
 
 @end

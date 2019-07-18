@@ -325,6 +325,13 @@
  */
 + (nonnull instancetype)buttonWithType:(UIButtonType)buttonType NS_UNAVAILABLE;
 
+/**
+ A block that is invoked when the MDCButton receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (UITraitCollection *_Nullable previousTraitCollection);
+
 #pragma mark - Deprecated
 
 /**

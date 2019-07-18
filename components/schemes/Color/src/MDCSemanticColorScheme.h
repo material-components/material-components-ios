@@ -74,6 +74,18 @@
  @c backgroundColor.
  */
 @property(nonnull, readonly, copy, nonatomic) UIColor *onBackgroundColor;
+
+/**
+ A color that is used for the elevation overlays, applied with an alpha on top of surfaces.
+ */
+@property(nonnull, readonly, copy, nonatomic) UIColor *elevationOverlayColor;
+
+/**
+ A flag that indicates whether the overlay color should be applied on an elevated surface in Dark
+ Mode. There is no elevation overlay applied in Light Mode.
+ */
+@property(readonly, assign, nonatomic) BOOL elevationOverlayEnabledForDarkMode;
+
 @end
 
 /**
@@ -83,7 +95,15 @@ typedef NS_ENUM(NSInteger, MDCColorSchemeDefaults) {
   /**
    The Material defaults, circa April 2018.
    */
-  MDCColorSchemeDefaultsMaterial201804
+  MDCColorSchemeDefaultsMaterial201804,
+  /**
+   The Material Dark Mode defaults, circa July 2019.
+   */
+  MDCColorSchemeDefaultsMaterialDark201907,
+  /**
+   The Material defaults supporting dynamic color for iOS 13, circa July 2019.
+   */
+  MDCColorSchemeDefaultsMaterial201907,
 };
 
 /**
@@ -103,6 +123,8 @@ typedef NS_ENUM(NSInteger, MDCColorSchemeDefaults) {
 @property(nonnull, readwrite, copy, nonatomic) UIColor *onSecondaryColor;
 @property(nonnull, readwrite, copy, nonatomic) UIColor *onSurfaceColor;
 @property(nonnull, readwrite, copy, nonatomic) UIColor *onBackgroundColor;
+@property(nonnull, readwrite, copy, nonatomic) UIColor *elevationOverlayColor;
+@property(readwrite, assign, nonatomic) BOOL elevationOverlayEnabledForDarkMode;
 
 /**
  Initializes the color scheme with the latest material defaults.

@@ -15,6 +15,7 @@
 #import <UIKit/UIKit.h>
 
 #import <MaterialComponents/MaterialContainerScheme.h>
+#import <MaterialComponents/MaterialMath.h>
 #import "MaterialTabs+TabBarView.h"
 
 static NSString *const kExampleTitle = @"TabBarView";
@@ -62,7 +63,8 @@ static NSString *const kExampleTitle = @"TabBarView";
 /**
  Typical use example showing how to place an @c MDCTabBarView within another view.
  */
-@interface MDCTabBarViewTypicalExampleViewController : UIViewController <MDCTabBarViewDelegate>
+@interface MDCTabBarViewTypicalExampleViewController
+    : UIViewController <MDCTabBarViewDelegate, UIScrollViewDelegate>
 
 /** The tab bar for this example. */
 @property(nonatomic, strong) MDCTabBarView *tabBar;
@@ -75,6 +77,9 @@ static NSString *const kExampleTitle = @"TabBarView";
 
 /** Images for the items. */
 @property(nonatomic, copy) NSArray<UIImage *> *tabBarItemIcons;
+
+/** Tracks the UITabBarItem views that are currently on-screen. */
+@property(nonatomic, copy) NSSet<UITabBarItem *> *visibleItems;
 
 @end
 
@@ -130,6 +135,7 @@ static NSString *const kExampleTitle = @"TabBarView";
 
   self.tabBar = [[MDCTabBarView alloc] init];
   self.tabBar.tabBarDelegate = self;
+  self.tabBar.delegate = self;
   self.tabBar.items = @[ item1, item2, item3, item4, item5, item6 ];
   self.tabBar.selectedItem = item4;
   self.tabBar.translatesAutoresizingMaskIntoConstraints = NO;
@@ -194,7 +200,13 @@ static NSString *const kExampleTitle = @"TabBarView";
         .active = YES;
   } else {
     [self.view.centerXAnchor constraintEqualToAnchor:segmentedControl.centerXAnchor].active = YES;
-    [self.view.centerYAnchor constraintEqualToAnchor:segmentedControl.centerYAnchor].active = YES;
+    NSLayoutConstraint *centerYConstraint =
+        [self.view.centerYAnchor constraintEqualToAnchor:segmentedControl.centerYAnchor];
+    centerYConstraint.priority = UILayoutPriorityDefaultLow;
+    centerYConstraint.active = YES;
+    [self.tabBar.bottomAnchor constraintLessThanOrEqualToAnchor:segmentedControl.topAnchor
+                                                       constant:-16]
+        .active = YES;
     [self.view.leadingAnchor constraintLessThanOrEqualToAnchor:segmentedControl.leadingAnchor]
         .active = YES;
     [self.view.trailingAnchor constraintGreaterThanOrEqualToAnchor:segmentedControl.trailingAnchor]
@@ -241,11 +253,28 @@ static NSString *const kExampleTitle = @"TabBarView";
 }
 
 - (void)changeItemsToTextOnly {
+  NSMutableArray<UITabBarItem *> *newItems = [NSMutableArray array];
+  NSUInteger selectedIndex = self.tabBar.selectedItem
+                                 ? [self.tabBar.items indexOfObject:self.tabBar.selectedItem]
+                                 : NSNotFound;
   for (NSUInteger index = 0; index < self.tabBar.items.count; ++index) {
-    UITabBarItem *item = self.tabBar.items[index];
-    item.image = nil;
-    item.selectedImage = nil;
-    item.title = self.tabBarItemTitles[index % self.tabBarItemTitles.count];
+    UITabBarItem *originalItem = self.tabBar.items[index];
+    if ([originalItem isKindOfClass:[MDCTabBarItem class]]) {
+      MDCTabBarItem *originalCustomItem = (MDCTabBarItem *)originalItem;
+      MDCTabBarItem *newCustomItem = [[MDCTabBarItem alloc] initWithTitle:nil
+                                                                    image:nil
+                                                                      tag:originalItem.tag];
+      newCustomItem.mdc_customView = originalCustomItem.mdc_customView;
+      [newItems addObject:newCustomItem];
+      continue;
+    }
+    UITabBarItem *newItem = [[UITabBarItem alloc] initWithTitle:nil image:nil tag:originalItem.tag];
+    newItem.title = self.tabBarItemTitles[index % self.tabBarItemTitles.count];
+    [newItems addObject:newItem];
+  }
+  self.tabBar.items = newItems;
+  if (selectedIndex != NSNotFound) {
+    self.tabBar.selectedItem = self.tabBar.items[selectedIndex];
   }
 }
 
@@ -262,6 +291,65 @@ static NSString *const kExampleTitle = @"TabBarView";
     UITabBarItem *item = self.tabBar.items[index];
     item.image = self.tabBarItemIcons[index % self.tabBarItemIcons.count];
     item.title = self.tabBarItemTitles[index % self.tabBarItemTitles.count];
+  }
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+  [self logItemVisibilityChanges];
+}
+
+#pragma mark - UIViewController
+
+- (void)viewWillTransitionToSize:(CGSize)size
+       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+  [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+  [coordinator
+      animateAlongsideTransition:nil
+                      completion:^(
+                          id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
+                        [self logItemVisibilityChanges];
+                      }];
+}
+
+- (void)viewDidLayoutSubviews {
+  [super viewDidLayoutSubviews];
+  [self logItemVisibilityChanges];
+}
+
+- (void)logItemVisibilityChanges {
+  NSMutableSet<UITabBarItem *> *allVisibleItems = [NSMutableSet set];
+  NSMutableSet<UITabBarItem *> *itemsThatEnteredTheWindowBounds = [NSMutableSet set];
+  NSMutableSet<UITabBarItem *> *itemsThatLeftTheWindowBounds = [NSMutableSet set];
+  for (UITabBarItem *item in self.tabBar.items) {
+    CGRect itemViewInWindow = [self.tabBar rectForItem:item inCoordinateSpace:self.view.window];
+    CGRect overlapRect = CGRectIntersection(self.view.window.bounds, itemViewInWindow);
+
+    // Views that don't intersect (or only at the very edge) the window's bounds
+    if (CGRectIsNull(overlapRect) || MDCCGFloatEqual(CGRectGetWidth(itemViewInWindow), 0)) {
+      if ([self.visibleItems containsObject:item]) {
+        [itemsThatLeftTheWindowBounds addObject:item];
+      }
+      continue;
+    }
+    [allVisibleItems addObject:item];
+    if (![self.visibleItems containsObject:item]) {
+      [itemsThatEnteredTheWindowBounds addObject:item];
+    }
+  }
+
+  self.visibleItems = allVisibleItems;
+
+  if (itemsThatEnteredTheWindowBounds.count) {
+    for (UITabBarItem *item in itemsThatEnteredTheWindowBounds) {
+      NSLog(@"(%@) became visible.", item.title ?: @(item.tag));
+    }
+  }
+  if (itemsThatLeftTheWindowBounds.count) {
+    for (UITabBarItem *item in itemsThatLeftTheWindowBounds) {
+      NSLog(@"(%@) is no longer visible.", item.title ?: @(item.tag));
+    }
   }
 }
 

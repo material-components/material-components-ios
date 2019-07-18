@@ -85,6 +85,11 @@
  */
 @property(nonatomic, nullable) UIViewController<MDCBottomDrawerHeader> *headerViewController;
 
+/**
+ The header's shadow color. Defaults to black with 20% opacity.
+ */
+@property(nonatomic, strong, nullable) UIColor *headerShadowColor;
+
 // The original presenting view controller.
 @property(nonatomic, readonly, nonnull) UIViewController *originalPresentingViewController;
 
