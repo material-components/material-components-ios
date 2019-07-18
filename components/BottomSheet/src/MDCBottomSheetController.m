@@ -238,6 +238,14 @@
   return _transitionController.scrimAccessibilityTraits;
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
+}
+
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 - (void)bottomSheetPresentationControllerDidDismissBottomSheet:
