@@ -120,4 +120,41 @@
   [self generateSnapshotAndVerifyForView:self.slider];
 }
 
+- (void)testDynamicColorSupport {
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+  if (@available(iOS 13.0, *)) {
+    // Given
+    UIColor *sliderDynamicColor =
+        [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
+          if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
+            return UIColor.blackColor;
+          } else {
+            return UIColor.purpleColor;
+          }
+        }];
+    UIColor *sliderBackgroundDynamicColor =
+        [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
+          if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
+            return UIColor.blackColor;
+          } else {
+            return UIColor.grayColor;
+          }
+        }];
+
+    [self.slider setTrackFillColor:sliderDynamicColor forState:UIControlStateNormal];
+    [self.slider setThumbColor:sliderDynamicColor forState:UIControlStateNormal];
+    [self.slider setTrackBackgroundColor:sliderBackgroundDynamicColor
+                                forState:UIControlStateNormal];
+    self.slider.thumbElevation = 5;
+
+    // When
+    self.slider.overrideUserInterfaceStyle = UIUserInterfaceStyleDark;
+
+    // Then
+    UIView *snapshotView = [self.slider mdc_addToBackgroundView];
+    [self snapshotVerifyViewForIOS13:snapshotView];
+  }
+#endif
+}
+
 @end
