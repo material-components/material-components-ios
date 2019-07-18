@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <CoreGraphics/CoreGraphic.h>
+#import <CoreGraphics/CoreGraphics.h>
 
 /**
  This protocol is used by @c UIViews that want to provide their elevation and wish to react to
@@ -47,6 +47,5 @@
  view hierarchy, like a @c UIPresentationController.
  */
 @property(nonatomic, assign, readwrite) CGFloat mdc_overrideBaseElevation;
-@end
 
 @end
