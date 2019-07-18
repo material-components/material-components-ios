@@ -33,6 +33,6 @@
  This can be used in cases where there is elevation behind an object that is not part of the
  view hierarchy, like a @c UIPresentationController.
 */
-@property (nonatomic, assign, readwrite) CGFloat mdc_overrideBaseElevation;
+@property(nonatomic, assign, readwrite) CGFloat mdc_overrideBaseElevation;
 
 @end
