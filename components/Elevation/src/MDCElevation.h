@@ -25,6 +25,17 @@
  */
 @property(nonatomic, assign, readonly) CGFloat mdc_currentElevation;
 
+/**
+ This block is called when the elevation changes for the conforming @c UIView or @c UIViewController
+ reciever or one of its direct ancestors in the view hierarchy.
+
+ Use this block to respond to elevation changes in the view or its ancestor views.
+
+ @param elevation The @c mdc_currentElevation plus the @c mdc_currentElevation of all ancestor
+ views.
+ */
+@property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)(CGFloat elevation);
+
 @optional
 
 /**
@@ -32,7 +43,7 @@
 
  This can be used in cases where there is elevation behind an object that is not part of the
  view hierarchy, like a @c UIPresentationController.
-*/
+ */
 @property(nonatomic, assign, readwrite) CGFloat mdc_overrideBaseElevation;
 
 @end
