@@ -125,26 +125,24 @@
   if (@available(iOS 13.0, *)) {
     // Given
     UIColor *sliderDynamicColor =
-    [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
-      if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
-        return UIColor.blackColor;
-      } else {
-        return UIColor.purpleColor;
-      }
-    }];
+        [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
+          if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
+            return UIColor.blackColor;
+          } else {
+            return UIColor.purpleColor;
+          }
+        }];
     UIColor *sliderBackgroundDynamicColor =
-    [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
-      if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
-        return UIColor.blackColor;
-      } else {
-        return UIColor.grayColor;
-      }
-    }];
+        [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
+          if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
+            return UIColor.blackColor;
+          } else {
+            return UIColor.grayColor;
+          }
+        }];
 
-    [self.slider setTrackFillColor:sliderDynamicColor
-                          forState:UIControlStateNormal];
-    [self.slider setThumbColor:sliderDynamicColor
-                      forState:UIControlStateNormal];
+    [self.slider setTrackFillColor:sliderDynamicColor forState:UIControlStateNormal];
+    [self.slider setThumbColor:sliderDynamicColor forState:UIControlStateNormal];
     [self.slider setTrackBackgroundColor:sliderBackgroundDynamicColor
                                 forState:UIControlStateNormal];
     self.slider.thumbElevation = 5;
