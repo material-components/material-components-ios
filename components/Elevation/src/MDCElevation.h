@@ -16,15 +16,12 @@
 #import <Foundation/Foundation.h>
 
 /**
- This protocol is used by @c UIViews that want to provide their elevation and wish to react to
- elevation changes occuring in their view hierarchy.
+ Provides APIs for @c UIViews to communicate their elevation throughout the view hierarchy.
  */
 @protocol MDCElevation <NSObject>
 
 /**
- The current elevation of the conforming @c UIView reciever.
-
- The elevation for the current state of the receiver.
+ The current elevation of the conforming @c UIView.
  */
 @property(nonatomic, assign, readonly) CGFloat mdc_currentElevation;
 
