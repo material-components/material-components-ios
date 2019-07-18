@@ -18,6 +18,44 @@ import MaterialComponentsBeta.MaterialBottomNavigationBeta
 import MaterialComponents.MaterialBottomNavigation_ColorThemer
 import MaterialComponents.MaterialBottomNavigation_TypographyThemer
 
+class BottomNavigationControllerExampleScrollableChildViewController : UICollectionViewController {
+
+  let numberOfItems = 200
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
+    collectionView.dataSource = self
+    collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+
+    if #available(iOS 11.0, *) {
+      collectionView.contentInsetAdjustmentBehavior = .always
+      collectionView.insetsLayoutMarginsFromSafeArea = true
+    }
+  }
+
+  override func numberOfSections(in collectionView: UICollectionView) -> Int {
+    return 1
+  }
+
+  override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return numberOfItems
+  }
+
+  override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    let cellColors: NSArray = {
+      let colors = NSMutableArray()
+    for i in stride(from: 0, to: 1, by: 1.0 / Double(numberOfItems)) {
+      colors.add(UIColor(hue: CGFloat(i), saturation: 1, brightness: 1, alpha: 1))
+      }
+      return colors.copy() as! NSArray
+    }()
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+    cell.backgroundColor = (cellColors[indexPath.row % cellColors.count] as! UIColor)
+    return cell
+  }
+}
+
 class BottomNavigationControllerExampleViewController: MDCBottomNavigationBarController {
 
   @objc public var colorScheme: MDCColorScheming  = MDCSemanticColorScheme() {
@@ -37,7 +75,9 @@ class BottomNavigationControllerExampleViewController: MDCBottomNavigationBarCon
 
     self.navigationBar.alignment = .justifiedAdjacentTitles
 
-    let viewController1 = UIViewController()
+    let flowLayout = UICollectionViewFlowLayout()
+    flowLayout.estimatedItemSize = CGSize(width: 96, height: 48)
+    let viewController1 = BottomNavigationControllerExampleScrollableChildViewController(collectionViewLayout: flowLayout)
     viewController1.view.backgroundColor = colorScheme.primaryColor
     viewController1.tabBarItem = UITabBarItem(title: "Item 1", image: UIImage(named: "Home"), tag: 0)
 
