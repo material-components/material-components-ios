@@ -136,6 +136,14 @@
 - (nonnull instancetype)initWithContentViewController:
     (nonnull UIViewController *)contentViewController;
 
+/**
+ A block that is invoked when the @c MDCBottomSheetController receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCBottomSheetController *_Nonnull bottomSheetController,
+     UITraitCollection *_Nullable previousTraitCollection);
+
 @end
 
 /**
