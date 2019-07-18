@@ -30,9 +30,9 @@
 - (void)mdc_elevationDidChange;
 
 /**
- Returns the sum of all @c superviews in the view hierarchy that conform to @c MDCElevation @c mdc_currentElevation.
+ Returns the sum of all @c superviews in the view hierarchy that conform to @c MDCElevation @c
+ mdc_currentElevation.
  */
 - (CGFloat)mdc_baseElevation;
 
 @end
-

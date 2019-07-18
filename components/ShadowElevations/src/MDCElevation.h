@@ -27,7 +27,7 @@
  This block is typically used by clients that want to re-theme the color of the view in dark mode
  based on the elevation that is provided.
  */
-@property (nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)(CGFloat elevation);
+@property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)(CGFloat elevation);
 
 /**
  The current elevation of the conforming @c UIView object.
@@ -35,7 +35,7 @@
  If an elevation API already exist, then this getter can directly call that API to get the current
  elevation.
  */
-@property (nonatomic, assign, readonly) CGFloat mdc_currentElevation;
+@property(nonatomic, assign, readonly) CGFloat mdc_currentElevation;
 
 @optional
 
@@ -46,8 +46,7 @@
  This can be used in cases where there is latent elevation behind an object that is not part of the
  view hierarchy, like a @c UIPresentationController.
  */
-@property (nonatomic, assign, readwrite) CGFloat mdc_overrideBaseElevation;
+@property(nonatomic, assign, readwrite) CGFloat mdc_overrideBaseElevation;
 @end
-
 
 @end
