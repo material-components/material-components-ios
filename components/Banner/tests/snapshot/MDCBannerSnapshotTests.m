@@ -19,9 +19,14 @@
 #import "MaterialTypographyScheme.h"
 
 static NSString *const kBannerShortText = @"tristique senectus et";
+static NSString *const kBannerMiddleLengthText =
+    @"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.";
 static NSString *const kBannerLongText =
     @"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.";
+
+// Content Padding is used for testing banner with specific layout margins.
 static const CGFloat kBannerContentPadding = 10.0f;
+static const CGFloat kBannerLargeContentPadding = 30.0f;
 
 @interface MDCBannerViewSnapshotDynamicTypeContentSizeCategoryOverrideWindow : UIWindow
 
@@ -244,6 +249,33 @@ static const CGFloat kBannerContentPadding = 10.0f;
   button2.uppercaseTitle = YES;
   [self changeViewToRTL:self.bannerView];
   self.bannerView.imageView.hidden = YES;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.bannerView];
+}
+
+- (void)testMiddleLengthTextWithLargeLayoutMargin {
+  // Given
+  self.bannerView.textLabel.text = kBannerMiddleLengthText;
+  MDCButton *button1 = self.bannerView.leadingButton;
+  [button1 setTitle:@"Action1" forState:UIControlStateNormal];
+  [button1 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
+  button1.uppercaseTitle = YES;
+  self.bannerView.trailingButton.hidden = YES;
+  self.bannerView.imageView.hidden = YES;
+
+  // When
+  if (@available(iOS 11.0, *)) {
+    NSDirectionalEdgeInsets directionalEdgeInsets = NSDirectionalEdgeInsetsZero;
+    directionalEdgeInsets.leading = kBannerLargeContentPadding;
+    directionalEdgeInsets.trailing = kBannerLargeContentPadding;
+    self.bannerView.directionalLayoutMargins = directionalEdgeInsets;
+  } else {
+    UIEdgeInsets margins = UIEdgeInsetsZero;
+    margins.left = kBannerLargeContentPadding;
+    margins.right = kBannerLargeContentPadding;
+    self.bannerView.layoutMargins = margins;
+  }
 
   // Then
   [self generateSnapshotAndVerifyForView:self.bannerView];
