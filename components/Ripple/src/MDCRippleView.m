@@ -38,6 +38,8 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
 
 @implementation MDCRippleView
 
+@synthesize activeRippleLayer = _activeRippleLayer;
+
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
@@ -149,6 +151,11 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
   return _activeRippleLayer;
 }
 
+- (void)setActiveRippleLayer:(MDCRippleLayer *)activeRippleLayer {
+  _activeRippleLayer = activeRippleLayer;
+  self.activeRippleColor = self.rippleColor;
+}
+
 - (void)beginRippleTouchDownAtPoint:(CGPoint)point
                            animated:(BOOL)animated
                          completion:(nullable MDCRippleCompletionBlock)completion {
@@ -172,7 +179,6 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
   [self.layer addSublayer:rippleLayer];
   [rippleLayer startRippleAtPoint:point animated:animated completion:completion];
   self.activeRippleLayer = rippleLayer;
-  self.activeRippleColor = self.rippleColor;
 }
 
 - (void)beginRippleTouchUpAnimated:(BOOL)animated
