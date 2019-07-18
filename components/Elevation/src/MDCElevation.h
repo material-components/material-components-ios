@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import <CoreGraphics/CoreGraphics.h>
+#import <Foundation/Foundation.h>
 
 /**
  This protocol is used by @c UIViews that want to provide their elevation and wish to react to
