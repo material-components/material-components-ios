@@ -23,6 +23,8 @@ static NSString *const kBannerMiddleLengthText =
     @"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.";
 static NSString *const kBannerLongText =
     @"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.";
+
+// Content Padding is used for testing banner with specific layout margins.
 static const CGFloat kBannerContentPadding = 10.0f;
 static const CGFloat kBannerLargeContentPadding = 30.0f;
 
