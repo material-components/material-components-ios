@@ -423,4 +423,14 @@ static const int kMDCButtonAnimationDuration = 200;
   return [UIColor colorWithCGColor:_bottomBarLayer.shadowColor];
 }
 
+#pragma mark TraitCollection
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
+}
+
 @end

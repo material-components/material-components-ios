@@ -167,6 +167,31 @@ static CGFloat randomNumber() {
   XCTAssertFalse(indicator.animating);
 }
 
+- (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
+  // Given
+  MDCActivityIndicator *activityIndicator = [[MDCActivityIndicator alloc] init];
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollectionDidChange"];
+  __block UITraitCollection *passedTraitCollection;
+  __block MDCActivityIndicator *passedActivityIndicator;
+  activityIndicator.traitCollectionDidChangeBlock =
+      ^(MDCActivityIndicator *_Nonnull indicator,
+        UITraitCollection *_Nullable previousTraitCollection) {
+        [expectation fulfill];
+        passedTraitCollection = previousTraitCollection;
+        passedActivityIndicator = indicator;
+      };
+  UITraitCollection *testTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
+
+  // When
+  [activityIndicator traitCollectionDidChange:testTraitCollection];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertEqual(passedTraitCollection, testTraitCollection);
+  XCTAssertEqual(passedActivityIndicator, activityIndicator);
+}
+
 #pragma mark - Helpers
 
 - (void)verifySettingProgressOnIndicator:(MDCActivityIndicator *)indicator animated:(BOOL)animated {
