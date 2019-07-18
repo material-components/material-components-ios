@@ -327,13 +327,14 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 - (CGSize)sizeThatFits:(CGSize)size {
   MDCBannerViewLayoutStyle layoutStyle = [self layoutStyleForSizeToFit:size];
   CGFloat frameHeight = 0.0f;
+  CGFloat widthLimit = size.width;
+  CGFloat marginsPadding = self.layoutMargins.left + self.layoutMargins.right;
+  widthLimit -= marginsPadding;
+  widthLimit -= (kLeadingPadding + kTrailingPadding);
+  CGSize adjustedSizeToFit = CGSizeMake(widthLimit, size.height);
   switch (layoutStyle) {
     case MDCBannerViewLayoutStyleSingleRow: {
       frameHeight += kTopPaddingSmall + kBottomPadding;
-      CGFloat widthLimit = size.width;
-      CGFloat marginsPadding = self.layoutMargins.left + self.layoutMargins.right;
-      widthLimit -= marginsPadding;
-      widthLimit -= (kLeadingPadding + kTrailingPadding);
       [self.leadingButton sizeToFit];
       CGFloat buttonWidth = CGRectGetWidth(self.leadingButton.frame);
       widthLimit -= (buttonWidth + kHorizontalSpaceBetweenTextLabelAndButton);
@@ -352,7 +353,7 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
     }
     case MDCBannerViewLayoutStyleMultiRowAlignedButton: {
       frameHeight += kTopPaddingLarge + kBottomPadding;
-      frameHeight += [self getFrameHeightOfImageViewAndTextLabelWithSizeToFit:size];
+      frameHeight += [self getFrameHeightOfImageViewAndTextLabelWithSizeToFit:adjustedSizeToFit];
       CGSize leadingButtonSize = [self.leadingButton sizeThatFits:CGSizeZero];
       CGSize trailingButtonSize = [self.trailingButton sizeThatFits:CGSizeZero];
       frameHeight += MAX(leadingButtonSize.height, trailingButtonSize.height);
@@ -360,7 +361,7 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
     }
     case MDCBannerViewLayoutStyleMultiRowStackedButton: {
       frameHeight += kTopPaddingLarge + kBottomPadding;
-      frameHeight += [self getFrameHeightOfImageViewAndTextLabelWithSizeToFit:size];
+      frameHeight += [self getFrameHeightOfImageViewAndTextLabelWithSizeToFit:adjustedSizeToFit];
       CGSize leadingButtonSize = [self.leadingButton sizeThatFits:CGSizeZero];
       CGSize trailingButtonSize = [self.trailingButton sizeThatFits:CGSizeZero];
       frameHeight +=
@@ -487,7 +488,7 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 
 - (CGFloat)getFrameHeightOfImageViewAndTextLabelWithSizeToFit:(CGSize)sizeToFit {
   CGFloat frameHeight = 0;
-  CGFloat remainingWidth = sizeToFit.width - kLeadingPadding - kTrailingPadding;
+  CGFloat remainingWidth = sizeToFit.width;
   CGSize textLabelSize = CGSizeZero;
   if (!self.imageView.hidden) {
     remainingWidth -= (kImageViewSideLength + kSpaceBetweenIconImageAndTextLabel);
