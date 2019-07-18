@@ -96,4 +96,11 @@ __attribute__((objc_subclassing_restricted)) @interface MDCBannerView : UIView
 @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:, assign)
     BOOL mdc_adjustsFontForContentSizeCategory;
 
+/**
+ A block that is invoked when the @c MDCBannerView receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCBannerView *_Nonnull bannerView, UITraitCollection *_Nullable previousTraitCollection);
+
 @end

@@ -34,6 +34,9 @@ static char *const kKVOContextMDCTabBarView = "kKVOContextMDCTabBarView";
 /** Minimum (typical) height of a Material Tab bar. */
 static const CGFloat kMinHeight = 48;
 
+/** Maximum width of an item view. */
+static const CGFloat kMaxItemWidth = 360;
+
 /** The leading edge inset for scrollable tabs. */
 static const CGFloat kScrollableTabsLeadingEdgeInset = 52;
 
@@ -51,6 +54,27 @@ static NSString *const kAccessibilityHintKeyPath = @"accessibilityHint";
 static NSString *const kAccessibilityIdentifierKeyPath = @"accessibilityIdentifier";
 static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
+/** The internal layout styles of the tab bar. */
+typedef NS_ENUM(NSUInteger, MDCTabBarViewInternalLayoutStyle) {
+
+  /** Items are laid-out from leading to trailing and sized to their intrinsic content size. */
+  MDCTabBarViewInternalLayoutStyleScrollable = 0,
+
+  /**
+   Items are equally-sized where each of the items receives an equal portion of the bar's width.
+   For example, if there are 3 items and the bar is 360 points wide, each item receives 120 points
+   in width.
+   */
+  MDCTabBarViewInternalLayoutStyleFixedJustified = 1,
+
+  /**
+   Items are equally-sized where each of the items is the width of the widest item. The items are
+   positioned at the center of the bar. The bar is not scrollable.
+   */
+  MDCTabBarViewInternalLayoutStyleFixedClusteredCentered = 2,
+
+};
+
 @interface MDCTabBarView ()
 
 /** The views representing each tab bar item. */
@@ -59,8 +83,8 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 /** The bottom divider view shown behind the default indicator template. */
 @property(nonnull, nonatomic, strong) UIView *bottomDividerView;
 
-/** @c YES if the items are laid-out in a justified style. */
-@property(nonatomic, readonly) BOOL isJustifiedLayoutStyle;
+/** @c YES if the items are laid-out in a scrollable style. */
+@property(nonatomic, readonly) BOOL isScrollableLayoutStyle;
 
 /** Used to scroll to the selected item during the first call to @c layoutSubviews. */
 @property(nonatomic, assign) BOOL needsScrollToSelectedItem;
@@ -542,11 +566,21 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  if (self.isJustifiedLayoutStyle) {
-    [self layoutSubviewsForJustifiedLayout];
-  } else {
-    [self layoutSubviewsForScrollableLayout];
+  switch ([self layoutStyle]) {
+    case MDCTabBarViewInternalLayoutStyleFixedJustified: {
+      [self layoutSubviewsForJustifiedLayout];
+      break;
+    }
+    case MDCTabBarViewInternalLayoutStyleFixedClusteredCentered: {
+      [self layoutSubviewsForFixedClusteredCenteredLayout];
+      break;
+    }
+    case MDCTabBarViewInternalLayoutStyleScrollable: {
+      [self layoutSubviewsForScrollableLayout];
+      break;
+    }
   }
+
   self.bottomDividerView.frame =
       CGRectMake(CGRectGetMinX(self.bounds), CGRectGetMaxY(self.bounds) - kBottomDividerHeight,
                  CGRectGetWidth(self.bounds), kBottomDividerHeight);
@@ -567,10 +601,24 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   }
 }
 
-- (BOOL)isJustifiedLayoutStyle {
-  CGSize contentSize = [self availableSizeForSubviewLayout];
-  CGFloat requiredWidth = [self intrinsicContentSizeForJustifiedLayout].width;
-  return contentSize.width >= requiredWidth;
+- (BOOL)isScrollableLayoutStyle {
+  return [self layoutStyle] == MDCTabBarViewInternalLayoutStyleScrollable;
+}
+
+- (MDCTabBarViewInternalLayoutStyle)layoutStyle {
+  if (self.items.count == 0) {
+    return MDCTabBarViewInternalLayoutStyleFixedJustified;
+  }
+
+  CGSize availableSize = [self availableSizeForSubviewLayout];
+  CGFloat requiredWidthForJustifiedLayout = [self intrinsicContentSizeForJustifiedLayout].width;
+  if (availableSize.width < requiredWidthForJustifiedLayout) {
+    return MDCTabBarViewInternalLayoutStyleScrollable;
+  }
+  if ((availableSize.width / self.items.count) > kMaxItemWidth) {
+    return MDCTabBarViewInternalLayoutStyleFixedClusteredCentered;
+  }
+  return MDCTabBarViewInternalLayoutStyleFixedJustified;
 }
 
 - (void)layoutSubviewsForJustifiedLayout {
@@ -583,6 +631,29 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   CGSize contentSize = [self availableSizeForSubviewLayout];
   CGFloat itemViewWidth = contentSize.width / self.itemViews.count;
   CGFloat itemViewOriginX = 0;
+  CGFloat itemViewOriginY = 0;
+  CGFloat itemViewHeight = contentSize.height;
+  NSEnumerator<UIView *> *itemViewEnumerator =
+      isRTL ? [self.itemViews reverseObjectEnumerator] : [self.itemViews objectEnumerator];
+
+  for (UIView *itemView in itemViewEnumerator) {
+    itemView.frame = CGRectMake(itemViewOriginX, itemViewOriginY, itemViewWidth, itemViewHeight);
+    itemViewOriginX += itemViewWidth;
+  }
+}
+
+- (void)layoutSubviewsForFixedClusteredCenteredLayout {
+  if (self.itemViews.count == 0) {
+    return;
+  }
+
+  BOOL isRTL =
+      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
+
+  CGSize contentSize = [self availableSizeForSubviewLayout];
+  CGFloat itemViewWidth = [self estimatedItemViewSizeForClusteredFixedLayout].width;
+  CGFloat totalRequiredWidth = itemViewWidth * self.items.count;
+  CGFloat itemViewOriginX = (contentSize.width - totalRequiredWidth) / 2;
   CGFloat itemViewOriginY = 0;
   CGFloat itemViewHeight = contentSize.height;
   NSEnumerator<UIView *> *itemViewEnumerator =
@@ -621,10 +692,16 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 }
 
 - (CGSize)calculatedContentSize {
-  if (self.isJustifiedLayoutStyle) {
-    return [self intrinsicContentSizeForJustifiedLayout];
-  } else {
-    return [self intrinsicContentSizeForScrollableLayout];
+  switch ([self layoutStyle]) {
+    case MDCTabBarViewInternalLayoutStyleFixedJustified: {
+      return [self intrinsicContentSizeForJustifiedLayout];
+    }
+    case MDCTabBarViewInternalLayoutStyleFixedClusteredCentered: {
+      return [self intrinsicContentSizeForClusteredFixedLayout];
+    }
+    case MDCTabBarViewInternalLayoutStyleScrollable: {
+      return [self intrinsicContentSizeForScrollableLayout];
+    }
   }
 }
 
@@ -650,6 +727,14 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     totalWidth += contentSize.width;
   }
   return CGSizeMake(totalWidth, MAX(kMinHeight, maxHeight));
+}
+
+- (CGSize)intrinsicContentSizeForClusteredFixedLayout {
+  if (self.items.count == 0) {
+    return CGSizeZero;
+  }
+  CGSize estimatedItemSize = [self estimatedItemViewSizeForClusteredFixedLayout];
+  return CGSizeMake(estimatedItemSize.width * self.items.count, estimatedItemSize.height);
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
@@ -679,7 +764,7 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 
   BOOL isRTL =
       self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
-  CGFloat originAdjustment = [self isJustifiedLayoutStyle] ? 0 : kScrollableTabsLeadingEdgeInset;
+  CGFloat originAdjustment = self.isScrollableLayoutStyle ? kScrollableTabsLeadingEdgeInset : 0;
   CGFloat viewOriginX = isRTL ? self.contentSize.width - originAdjustment : originAdjustment;
 
   for (NSUInteger i = 0; i < index; ++i) {
@@ -701,10 +786,25 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
   if (self.itemViews.count == 0) {
     return CGSizeZero;
   }
-  if (self.isJustifiedLayoutStyle && CGRectGetWidth(self.bounds) > 0) {
-    CGSize contentSize = [self availableSizeForSubviewLayout];
-    return CGSizeMake(contentSize.width / self.itemViews.count, contentSize.height);
+
+  switch ([self layoutStyle]) {
+    case MDCTabBarViewInternalLayoutStyleFixedJustified: {
+      if (CGRectGetWidth(self.bounds) > 0) {
+        CGSize contentSize = [self availableSizeForSubviewLayout];
+        return CGSizeMake(contentSize.width / self.itemViews.count, contentSize.height);
+      }
+      return [self estimatedIntrinsicSizeForView:view];
+    }
+    case MDCTabBarViewInternalLayoutStyleFixedClusteredCentered: {
+      return [self estimatedItemViewSizeForClusteredFixedLayout];
+    }
+    case MDCTabBarViewInternalLayoutStyleScrollable: {
+      return [self estimatedIntrinsicSizeForView:view];
+    }
   }
+}
+
+- (CGSize)estimatedIntrinsicSizeForView:(UIView *)view {
   CGSize expectedItemSize = view.intrinsicContentSize;
   if (expectedItemSize.width == UIViewNoIntrinsicMetric) {
     NSAssert(expectedItemSize.width != UIViewNoIntrinsicMetric,
@@ -712,6 +812,21 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
     expectedItemSize = [view sizeThatFits:self.contentSize];
   }
   return expectedItemSize;
+}
+
+- (CGSize)estimatedItemViewSizeForClusteredFixedLayout {
+  CGFloat largestWidth = 0;
+  CGFloat largestHeight = 0;
+  for (UIView *view in self.itemViews) {
+    CGSize intrinsicContentSize = view.intrinsicContentSize;
+    if (intrinsicContentSize.width > largestWidth) {
+      largestWidth = intrinsicContentSize.width;
+    }
+    if (intrinsicContentSize.height > largestHeight) {
+      largestHeight = intrinsicContentSize.height;
+    }
+  }
+  return CGSizeMake(largestWidth, largestHeight);
 }
 
 - (CGSize)availableSizeForSubviewLayout {

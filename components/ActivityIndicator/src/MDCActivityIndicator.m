@@ -148,6 +148,8 @@ static const CGFloat kSingleCycleRotation =
 
     [self updateStrokePath];
   }];
+
+  [self updateStrokeColor];
 }
 
 - (void)commonMDCActivityIndicatorInit {

@@ -14,27 +14,10 @@
 
 #import "MaterialRipple.h"
 #import "MaterialSnapshot.h"
-#import "UIColor+MaterialDynamic.h"
 
-/**
- Creates a fake MDCRippleView that has its traitCollection overriden.
- */
-@interface MDCRippleViewSnaphotTestRippleViewFake : MDCRippleView
-@property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
-@end
-
-@implementation MDCRippleViewSnaphotTestRippleViewFake
-- (UITraitCollection *)traitCollection {
-  return self.traitCollectionOverride ?: [super traitCollection];
-}
-@end
-
-/**
- Snapshot tests for the MDCRippleView class.
- */
 @interface MDCRippleViewSnapshotTests : MDCSnapshotTestCase
 
-@property(nonatomic, strong) MDCRippleViewSnaphotTestRippleViewFake *rippleView;
+@property(nonatomic, strong) MDCRippleView *rippleView;
 @property(nonatomic, strong) UIView *view;
 
 @end
@@ -49,8 +32,7 @@
   //   self.recordMode = YES;
 
   self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
-  self.rippleView =
-      [[MDCRippleViewSnaphotTestRippleViewFake alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
+  self.rippleView = [[MDCRippleView alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
   [self.view addSubview:self.rippleView];
 }
 
@@ -66,11 +48,6 @@
 - (void)generateSnapshotAndVerifyForView:(UIView *)view {
   UIView *snapshotView = [view mdc_addToBackgroundView];
   [self snapshotVerifyView:snapshotView];
-}
-
-- (void)generateSnapshotForIOS13AndVerifyForView:(UIView *)view {
-  UIView *snapshotView = [view mdc_addToBackgroundView];
-  [self snapshotVerifyViewForIOS13:snapshotView];
 }
 
 #pragma mark - Tests
@@ -104,43 +81,6 @@
 
   // Then
   [self generateSnapshotAndVerifyForView:self.view];
-}
-
-- (void)testRippleColorRespondsToDynamicColorBeforeRippleBegan {
-#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
-  if (@available(iOS 13.0, *)) {
-    // Given
-    self.rippleView.rippleColor = [UIColor colorWithUserInterfaceStyleDarkColor:UIColor.redColor
-                                                                   defaultColor:UIColor.blueColor];
-
-    // When
-    self.rippleView.traitCollectionOverride =
-        [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
-    [self.rippleView beginRippleTouchDownAtPoint:self.rippleView.center animated:NO completion:nil];
-
-    // Then
-    [self generateSnapshotForIOS13AndVerifyForView:self.view];
-  }
-#endif
-}
-
-- (void)testRippleColorRespondsToDynamicColorAfterRippleBegan {
-#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
-  if (@available(iOS 13.0, *)) {
-    // Given
-    self.rippleView.rippleColor = [UIColor colorWithUserInterfaceStyleDarkColor:UIColor.redColor
-                                                                   defaultColor:UIColor.blueColor];
-
-    // When
-    [self.rippleView beginRippleTouchDownAtPoint:self.rippleView.center animated:NO completion:nil];
-    self.rippleView.traitCollectionOverride =
-        [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
-    [self.rippleView layoutIfNeeded];
-
-    // Then
-    [self generateSnapshotForIOS13AndVerifyForView:self.view];
-  }
-#endif
 }
 
 @end
