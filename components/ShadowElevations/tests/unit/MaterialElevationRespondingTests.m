@@ -18,9 +18,7 @@
 
 /** Test class for testing @c UIViews that conform to @c MDCElevation */
 @interface FakeMDCShadowElevationRespondingView : UIView <MDCElevation>
-@property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)(CGFloat elevation);
 @property(nonatomic, assign, readonly) CGFloat mdc_currentElevation;
-@property(nonatomic, assign, readwrite) CGFloat mdc_overrideBaseElevation;
 @property(nonatomic, assign) CGFloat elevation;
 @end
 
@@ -32,23 +30,6 @@
 
 - (void)setElevation:(CGFloat)elevation {
   _elevation = elevation;
-  [self mdc_elevationDidChange];
-}
-
-@end
-
-/** Test class for testing @c UIViewControllers that conform to @c MDCElevation */
-@interface FakeMDCShadowElevationRespondingViewController : UIViewController <MDCElevation>
-@property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)(CGFloat elevation);
-@property(nonatomic, assign, readonly) CGFloat mdc_currentElevation;
-@property(nonatomic, assign, readwrite) CGFloat mdc_overrideBaseElevation;
-@property(nonatomic, assign) CGFloat elevation;
-@end
-
-@implementation FakeMDCShadowElevationRespondingViewController
-
-- (CGFloat)mdc_currentElevation {
-  return self.elevation;
 }
 
 @end
@@ -62,16 +43,13 @@
 - (void)testViewElevationDidChangeCallsBlock {
   // Given
   FakeMDCShadowElevationRespondingView *view = [[FakeMDCShadowElevationRespondingView alloc] init];
-  XCTestExpectation *expectation = [[XCTestExpectation alloc] initWithDescription:@"elevationDidChange"];
-  view.mdc_elevationDidChangeBlock = ^(CGFloat elevation) {
-    [expectation fulfill];
-  };
+  CGFloat fakeElevation = 10;
 
   // When
   view.elevation = 10;
 
   // Then
-  [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertEqual(view.mdc_currentElevation, fakeElevation);
 }
 
 @end
