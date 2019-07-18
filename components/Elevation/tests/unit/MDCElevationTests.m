@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialShadowElevations.h"
+#import "MaterialElevation.h"
 
 #import <XCTest/XCTest.h>
 
@@ -34,11 +34,11 @@
 
 @end
 
-@interface MaterialElevationRespondingTests : XCTestCase
+@interface MDCElevationTests : XCTestCase
 
 @end
 
-@implementation MaterialElevationRespondingTests
+@implementation MDCElevationTests
 
 - (void)testViewElevationDidChangeCallsBlock {
   // Given

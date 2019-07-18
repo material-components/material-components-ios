@@ -33,6 +33,7 @@ target "MDCCatalog" do
     'Dialogs+Theming/UnitTests',
     'FeatureHighlight/UnitTests',
     'FlexibleHeader/UnitTests',
+    'Elevation/UnitTests',
     'HeaderStackView/UnitTests',
     'Ink/UnitTests',
     'LibraryInfo/UnitTests',
