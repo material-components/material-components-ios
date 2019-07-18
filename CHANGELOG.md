@@ -123,6 +123,7 @@ changes. Slider supports Haptics feature.
 * [Add traitCollectionDidChangeBlock (#7915)](https://github.com/material-components/material-components-ios/commit/238be999695140ff043e43d97c8063d6fa7026fc) (Cody Weaver)
 * [Add traitCollectionDidChangeBlock (#7922)](https://github.com/material-components/material-components-ios/commit/ac6fda5d8d599e1290be629d2e5ca2acd3f6de87) (Cody Weaver)
 * [Add unit test for the shadow layer (#7909)](https://github.com/material-components/material-components-ios/commit/b0b04a2adfe5549a9cf48f1b7aaba3aa65fa0eda) (Cody Weaver)
+* [Add traitCollectionDidChange block (#7917)](https://github.com/material-components/material-components-ios/commit/1161a9db986e8cf33799628645ed09ce017dd98a) (Cody Weaver)
 
 ### NavigationBar
 
@@ -174,6 +175,10 @@ changes. Slider supports Haptics feature.
 
 * [Textfields dynamic color support (#7889)](https://github.com/material-components/material-components-ios/commit/b2f2a5d77fead5f1164b2884bf540f3295f48927) (Andrew Overton)
 
+### private/Color
+
+* [Add UIColor+MaterialDynamic to support dynamic color. (#7860)](https://github.com/material-components/material-components-ios/commit/a65f36d4beaa7d8859c93a046967270375387d13) (Wenyu Zhang)
+
 ### private/Snapshot
 
 * [added ios13 support for snapshots (#7861)](https://github.com/material-components/material-components-ios/commit/48f78118a7d268c92521bad12b118238de74a3fb) (Yarden Eitan)
@@ -184,11 +189,6 @@ changes. Slider supports Haptics feature.
 * [Add dynamic color scheme MDCColorSchemeDefaultsMaterial201907. (#7848)](https://github.com/material-components/material-components-ios/commit/6f83e12273d3739dba06f48a1cac3d09865b3cb2) (Wenyu Zhang)
 * [Use UIColor method instead of static method to generate (#7894)](https://github.com/material-components/material-components-ios/commit/0175300afc821396a31b5cd7d0bd638b9ce58dac) (Wenyu Zhang)
 * [add two properties for elevation overlay color in color (#7924)](https://github.com/material-components/material-components-ios/commit/914e9a37fb0ef1e4a3663126bb61997c3600920c) (Wenyu Zhang)
-
-## Multi-component changes
-
-* [Add UIColor+MaterialDynamic to support dynamic color. (#7860)](https://github.com/material-components/material-components-ios/commit/a65f36d4beaa7d8859c93a046967270375387d13) (Wenyu Zhang)
-* [Add traitCollectionDidChange block (#7917)](https://github.com/material-components/material-components-ios/commit/1161a9db986e8cf33799628645ed09ce017dd98a) (Cody Weaver)
 
 ---
 
