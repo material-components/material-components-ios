@@ -153,6 +153,10 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
 
 - (void)setActiveRippleLayer:(MDCRippleLayer *)activeRippleLayer {
   _activeRippleLayer = activeRippleLayer;
+
+  // When the active ripple layer is set, a new ripple layer is created which takes
+  // its color from @c rippleColor. Therefore, @activeRippleColor now becomes that
+  // color.
   self.activeRippleColor = self.rippleColor;
 }
 
