@@ -68,14 +68,10 @@ typedef NS_ENUM(NSInteger, MDCRippleStyle) {
  */
 @property(nonatomic, assign) CGFloat maximumRadius;
 
+/**
+ The ripple color of the currently active ripple.
+ */
 @property(nonatomic, strong, nonnull) UIColor *activeRippleColor;
-
-///**
-// Sets the ripple color of the currently active ripple.
-//
-// @param rippleColor The color to set the active ripple to.
-// */
-//- (void)setActiveRippleColor:(nullable UIColor *)rippleColor;
 
 /**
  Cancels all the existing ripples.

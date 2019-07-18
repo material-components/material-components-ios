@@ -188,18 +188,8 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
   [self.activeRippleLayer fadeOutRippleAnimated:animated completion:completion];
 }
 
-//- (void)setActiveRippleColor:(UIColor *)rippleColor {
-//  if (rippleColor == nil) {
-//    return;
-//  }
-//  self.activeRippleLayer.fillColor = rippleColor.CGColor;
-//}
-
 - (void)setActiveRippleColor:(UIColor *)activeRippleColor {
   _activeRippleColor = activeRippleColor;
-//  if (activeRippleColor == nil) {
-//    return;
-//  }
   self.activeRippleLayer.fillColor = activeRippleColor.CGColor;
 }
 
