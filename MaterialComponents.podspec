@@ -967,11 +967,6 @@ Pod::Spec.new do |mdc|
     "components/#{component.base_name}/src/Material#{component.base_name}.bundle"
     ]
 
-    component.dependency "MDFInternationalization"
-    component.dependency "MaterialComponents/Palettes"
-    component.dependency "MaterialComponents/private/Application"
-    component.dependency "MotionAnimator", "~> 2.0"
-
     component.test_spec 'UnitTests' do |unit_tests|
       unit_tests.source_files = [
       "components/#{component.base_name}/tests/unit/*.{h,m,swift}",

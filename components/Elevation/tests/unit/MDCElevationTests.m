@@ -17,12 +17,12 @@
 #import <XCTest/XCTest.h>
 
 /** Test class for testing @c UIViews that conform to @c MDCElevation */
-@interface FakeMDCShadowElevationRespondingView : UIView <MDCElevation>
+@interface FakeMDCElevationConformingView : UIView <MDCElevation>
 @property(nonatomic, assign, readonly) CGFloat mdc_currentElevation;
 @property(nonatomic, assign) CGFloat elevation;
 @end
 
-@implementation FakeMDCShadowElevationRespondingView
+@implementation FakeMDCElevationConformingView
 
 - (CGFloat)mdc_currentElevation {
   return self.elevation;
@@ -42,7 +42,7 @@
 
 - (void)testViewElevationDidChangeCallsBlock {
   // Given
-  FakeMDCShadowElevationRespondingView *view = [[FakeMDCShadowElevationRespondingView alloc] init];
+  FakeMDCElevationConformingView *view = [[FakeMDCElevationConformingView alloc] init];
   CGFloat fakeElevation = 10;
 
   // When
