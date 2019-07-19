@@ -312,7 +312,6 @@ static const CGFloat kBannerLargeContentPadding = 30.0f;
   [self generateSnapshotAndVerifyForView:self.bannerView];
 }
 
-
 - (void)testSingleRowStyleLongTextWithSingleActionLTR {
   // When
   self.bannerView.textLabel.text = kBannerLongText;
