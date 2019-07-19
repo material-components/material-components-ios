@@ -195,7 +195,7 @@ IB_DESIGNABLE
 /**
  The shadow color of the cursor (thumb).
 
- Default vlaue is black
+ Default value is black
  */
 @property(nonatomic, strong, nonnull) UIColor *thumbShadowColor;
 

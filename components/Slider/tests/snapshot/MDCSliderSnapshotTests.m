@@ -146,7 +146,7 @@
           if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
             return UIColor.blackColor;
           } else {
-            return UIColor.clearColor;
+            return UIColor.blueColor;
           }
         }];
 
