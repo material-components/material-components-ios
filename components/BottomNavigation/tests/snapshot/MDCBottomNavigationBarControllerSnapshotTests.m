@@ -161,7 +161,10 @@ static const CGSize kSizeOfCellInScrollableChild = (CGSize){(CGFloat)48, (CGFloa
 - (void)testScrollableChildViewControllerScrolledToBottom {
   // Given
   self.navBarController.selectedViewController = self.scrollableChildVC;
-  [self.navBarController.view layoutIfNeeded];
+  // Forces the layout system to update the layout margins and correctly position the
+  // scroll view within the content view of the Bottom Navigation bar.
+  UIView *backgroundView = [self.navBarController.view mdc_addToBackgroundView];
+  [backgroundView drawViewHierarchyInRect:backgroundView.bounds afterScreenUpdates:YES];
 
   // When
   NSIndexPath *lastItemIndexPath = [NSIndexPath indexPathForRow:kNumberOfCellsInScrollableChild - 1
@@ -171,7 +174,7 @@ static const CGSize kSizeOfCellInScrollableChild = (CGSize){(CGFloat)48, (CGFloa
                                                         animated:NO];
 
   // Then
-  [self generateAndVerifySnapshot];
+  [self snapshotVerifyView:backgroundView];
 }
 
 - (void)testNonScrollingChildViewControllerWithSafeAreaInsets {
@@ -208,7 +211,10 @@ static const CGSize kSizeOfCellInScrollableChild = (CGSize){(CGFloat)48, (CGFloa
     self.navBarController.additionalSafeAreaInsets = UIEdgeInsetsMake(10, 15, 25, 20);
   }
   self.navBarController.selectedViewController = self.scrollableChildVC;
-  [self.navBarController.view layoutIfNeeded];
+  // Forces the layout system to update the layout margins and correctly position the
+  // scroll view within the content view of the Bottom Navigation bar.
+  UIView *backgroundView = [self.navBarController.view mdc_addToBackgroundView];
+  [backgroundView drawViewHierarchyInRect:backgroundView.bounds afterScreenUpdates:YES];
 
   // When
   NSIndexPath *lastItemIndexPath = [NSIndexPath indexPathForRow:kNumberOfCellsInScrollableChild - 1
