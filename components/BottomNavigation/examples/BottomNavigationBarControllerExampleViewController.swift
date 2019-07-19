@@ -92,7 +92,7 @@ class BottomNavigationControllerExampleViewController: MDCBottomNavigationBarCon
   @objc class func catalogMetadata() -> [String: Any] {
     return [
       "breadcrumbs": ["Bottom Navigation", "Bottom Navigation Controller"],
-      "presentable": false
+      "presentable": true
     ]
   }
 }

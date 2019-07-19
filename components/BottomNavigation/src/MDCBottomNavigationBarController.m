@@ -103,14 +103,14 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
 
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
-  [self updateAdditionalSafeAreaInsets];
+  [self updateNavigationBarInsets];
 }
 
 - (void)viewSafeAreaInsetsDidChange {
   if (@available(iOS 11.0, *)) {
     [super viewSafeAreaInsetsDidChange];
   }
-  [self updateAdditionalSafeAreaInsets];
+  [self updateNavigationBarInsets];
 }
 
 - (void)setSelectedViewController:(nullable UIViewController *)selectedViewController {
@@ -348,31 +348,56 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
   if (viewController && doesNotContainViewController) {
     [self addChildViewController:viewController];
     [self.content addSubview:viewController.view];
-    [self addConstraintsForContentView:viewController.view];
+    [self addConstraintsForChildView:viewController.view];
     [viewController didMoveToParentViewController:self];
   }
-  [self updateAdditionalSafeAreaInsets];
+  [self updateNavigationBarInsets];
 }
 
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
 
-  [self updateAdditionalSafeAreaInsets];
-
+  [self updateNavigationBarInsets];
 }
 
-- (void)updateAdditionalSafeAreaInsets {
+- (void)updateNavigationBarInsets {
   UIEdgeInsets currentSafeAreaInsets = UIEdgeInsetsZero;
   CGFloat navigationBarHeight = CGRectGetHeight(self.navigationBar.frame);
   if (@available(iOS 11.0, *)) {
     currentSafeAreaInsets = self.view.safeAreaInsets;
   }
-  UIEdgeInsets additionalSafeAreaInsets = UIEdgeInsetsMake(0, 0, navigationBarHeight - currentSafeAreaInsets.bottom, 0);
+  UIEdgeInsets additionalSafeAreaInsets =
+      UIEdgeInsetsMake(0, 0, navigationBarHeight - currentSafeAreaInsets.bottom, 0);
   NSLog(@"%@", NSStringFromUIEdgeInsets(additionalSafeAreaInsets));
   if (@available(iOS 11.0, *)) {
     self.selectedViewController.additionalSafeAreaInsets = additionalSafeAreaInsets;
   } else {
     self.content.layoutMargins = additionalSafeAreaInsets;
+    // Based on an article by Ryan Fox, attempt to adjust the contentInset of either the view
+    // or its first subview.
+    // https://medium.com/@wailord/the-automaticallyadjustsscrollviewinsets-rabbit-hole-b9153a769ce9
+    if (self.selectedViewController.automaticallyAdjustsScrollViewInsets) {
+      UIScrollView *scrollView;
+      if ([self.selectedViewController.view isKindOfClass:[UIScrollView class]]) {
+        scrollView = (UIScrollView *)self.selectedViewController.view;
+      } else if ([self.selectedViewController.view.subviews.firstObject
+                     isKindOfClass:[UIScrollView class]]) {
+        scrollView = (UIScrollView *)self.selectedViewController.view.subviews.firstObject;
+      }
+      // Ideally, we would probably set an associated object that tracks the insets applied
+      // as a result of the Bottom Navigation bar, then we could compute the difference between that
+      // value and this value.
+
+      // However, because Bottom Navigation is intended to be used at the application root (it is
+      // meant for app-wide navigation) we assume no other view controller is applying a content
+      // to the child. If such a situation exists, most clients should probably manage their own
+      // contentInset values. If that approach will not work, then the more complex solution
+      // proposed above may be necessary.
+      UIEdgeInsets contentInset = scrollView.contentInset;
+      contentInset.bottom = navigationBarHeight;
+      scrollView.contentInset = contentInset;
+      scrollView.scrollIndicatorInsets = contentInset;
+    }
   }
 }
 
@@ -407,74 +432,14 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
  * navigation bar.
  */
 - (void)loadConstraints {
-  self.content.translatesAutoresizingMaskIntoConstraints = NO;
-  self.navigationBar.translatesAutoresizingMaskIntoConstraints = NO;
-
-  // Navigation Bar Constraints
-  NSArray<NSLayoutConstraint *> *navigationBarConstraints = @[
-    [NSLayoutConstraint constraintWithItem:self.navigationBar
-                                 attribute:NSLayoutAttributeLeading
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self.view
-                                 attribute:NSLayoutAttributeLeading
-                                multiplier:1
-                                  constant:0],
-    [NSLayoutConstraint constraintWithItem:self.navigationBar
-                                 attribute:NSLayoutAttributeTrailing
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self.view
-                                 attribute:NSLayoutAttributeTrailing
-                                multiplier:1
-                                  constant:0],
-    [NSLayoutConstraint constraintWithItem:self.navigationBar
-                                 attribute:NSLayoutAttributeBottom
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self.view
-                                 attribute:NSLayoutAttributeBottom
-                                multiplier:1
-                                  constant:0],
-  ];
-
-  // Content View Constraints
-  NSArray<NSLayoutConstraint *> *contentConstraints = @[
-    [NSLayoutConstraint constraintWithItem:self.content
-                                 attribute:NSLayoutAttributeLeading
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self.view
-                                 attribute:NSLayoutAttributeLeading
-                                multiplier:1
-                                  constant:0],
-    [NSLayoutConstraint constraintWithItem:self.content
-                                 attribute:NSLayoutAttributeTrailing
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self.view
-                                 attribute:NSLayoutAttributeTrailing
-                                multiplier:1
-                                  constant:0],
-    [NSLayoutConstraint constraintWithItem:self.content
-                                 attribute:NSLayoutAttributeTop
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self.view
-                                 attribute:NSLayoutAttributeTop
-                                multiplier:1
-                                  constant:0],
-    [NSLayoutConstraint constraintWithItem:self.content
-                                 attribute:NSLayoutAttributeBottom
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self.view
-                                 attribute:NSLayoutAttributeBottom
-                                multiplier:1
-                                  constant:0]
-  ];
-
-  [NSLayoutConstraint activateConstraints:navigationBarConstraints];
-  [NSLayoutConstraint activateConstraints:contentConstraints];
+  [self loadConstraintsForNavigationBar];
+  [self loadConstraintsForContentContainerView];
 }
 
-- (void)loadiOS9PlusConstraints {
+- (void)loadConstraintsForNavigationBar {
+  self.navigationBar.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view.leftAnchor constraintEqualToAnchor:self.navigationBar.leftAnchor].active = YES;
   [self.view.rightAnchor constraintEqualToAnchor:self.navigationBar.rightAnchor].active = YES;
-  [self.navigationBar.topAnchor constraintEqualToAnchor:self.content.bottomAnchor].active = YES;
   [self.navigationBar.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor].active = YES;
 
   if (@available(iOS 11.0, *)) {
@@ -482,18 +447,20 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
         constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor]
         .active = YES;
   }
+}
 
-  // Content View Constraints
+- (void)loadConstraintsForContentContainerView {
+  self.content.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view.leftAnchor constraintEqualToAnchor:self.content.leftAnchor].active = YES;
   [self.view.rightAnchor constraintEqualToAnchor:self.content.rightAnchor].active = YES;
-
   [self.view.topAnchor constraintEqualToAnchor:self.content.topAnchor].active = YES;
+  [self.view.bottomAnchor constraintEqualToAnchor:self.content.bottomAnchor].active = YES;
 }
 
 /**
  * Pins the given view to the edges of the content view.
  */
-- (void)addConstraintsForContentView:(UIView *)view {
+- (void)addConstraintsForChildView:(UIView *)view {
   view.translatesAutoresizingMaskIntoConstraints = NO;
   [view.leadingAnchor constraintEqualToAnchor:self.content.leadingAnchor].active = YES;
   [view.trailingAnchor constraintEqualToAnchor:self.content.trailingAnchor].active = YES;
