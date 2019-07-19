@@ -17,7 +17,6 @@
 #import <CoreGraphics/CoreGraphics.h>
 
 #import "MaterialApplication.h"
-#import "MaterialMath.h"
 #import "private/MDCBottomNavigationBar+Private.h"
 #import "private/MDCBottomNavigationLargeItemDialogView.h"
 
