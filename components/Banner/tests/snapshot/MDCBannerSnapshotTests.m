@@ -281,6 +281,37 @@ static const CGFloat kBannerLargeContentPadding = 30.0f;
   [self generateSnapshotAndVerifyForView:self.bannerView];
 }
 
+- (void)testMiddleLengthTextAndStackedButtonsWithLargeLayoutMargin {
+  // Given
+  self.bannerView.textLabel.text = kBannerMiddleLengthText;
+  MDCButton *button1 = self.bannerView.leadingButton;
+  [button1 setTitle:@"Action1" forState:UIControlStateNormal];
+  [button1 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
+  button1.uppercaseTitle = YES;
+  MDCButton *button2 = self.bannerView.trailingButton;
+  [button2 setTitle:@"Action2" forState:UIControlStateNormal];
+  [button2 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
+  button2.uppercaseTitle = YES;
+  self.bannerView.bannerViewLayoutStyle = MDCBannerViewLayoutStyleMultiRowStackedButton;
+  self.bannerView.imageView.hidden = YES;
+
+  // When
+  if (@available(iOS 11.0, *)) {
+    NSDirectionalEdgeInsets directionalEdgeInsets = NSDirectionalEdgeInsetsZero;
+    directionalEdgeInsets.leading = kBannerLargeContentPadding;
+    directionalEdgeInsets.trailing = kBannerLargeContentPadding;
+    self.bannerView.directionalLayoutMargins = directionalEdgeInsets;
+  } else {
+    UIEdgeInsets margins = UIEdgeInsetsZero;
+    margins.left = kBannerLargeContentPadding;
+    margins.right = kBannerLargeContentPadding;
+    self.bannerView.layoutMargins = margins;
+  }
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.bannerView];
+}
+
 - (void)testSingleRowStyleLongTextWithSingleActionLTR {
   // When
   self.bannerView.textLabel.text = kBannerLongText;
