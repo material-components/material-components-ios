@@ -81,7 +81,7 @@ static const CGFloat kBannerLargeContentPadding = 30.0f;
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  // self.recordMode = YES;
+   self.recordMode = YES;
 
   self.bannerView = [[MDCBannerView alloc] initWithFrame:CGRectZero];
   if (@available(iOS 11.0, *)) {
@@ -280,6 +280,38 @@ static const CGFloat kBannerLargeContentPadding = 30.0f;
   // Then
   [self generateSnapshotAndVerifyForView:self.bannerView];
 }
+
+- (void)testMiddleLengthTextAndStackedButtonsWithLargeLayoutMargin {
+  // Given
+  self.bannerView.textLabel.text = kBannerMiddleLengthText;
+  MDCButton *button1 = self.bannerView.leadingButton;
+  [button1 setTitle:@"Action1" forState:UIControlStateNormal];
+  [button1 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
+  button1.uppercaseTitle = YES;
+  MDCButton *button2 = self.bannerView.trailingButton;
+  [button2 setTitle:@"Action2" forState:UIControlStateNormal];
+  [button2 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
+  button2.uppercaseTitle = YES;
+  self.bannerView.bannerViewLayoutStyle = MDCBannerViewLayoutStyleMultiRowStackedButton;
+  self.bannerView.imageView.hidden = YES;
+
+  // When
+  if (@available(iOS 11.0, *)) {
+    NSDirectionalEdgeInsets directionalEdgeInsets = NSDirectionalEdgeInsetsZero;
+    directionalEdgeInsets.leading = kBannerLargeContentPadding;
+    directionalEdgeInsets.trailing = kBannerLargeContentPadding;
+    self.bannerView.directionalLayoutMargins = directionalEdgeInsets;
+  } else {
+    UIEdgeInsets margins = UIEdgeInsetsZero;
+    margins.left = kBannerLargeContentPadding;
+    margins.right = kBannerLargeContentPadding;
+    self.bannerView.layoutMargins = margins;
+  }
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.bannerView];
+}
+
 
 - (void)testSingleRowStyleLongTextWithSingleActionLTR {
   // When
