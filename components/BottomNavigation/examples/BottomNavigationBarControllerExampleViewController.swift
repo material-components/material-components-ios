@@ -72,7 +72,7 @@ class BottomNavigationControllerExampleViewController: MDCBottomNavigationBarCon
     let flowLayout = UICollectionViewFlowLayout()
     flowLayout.estimatedItemSize = CGSize(width: 96, height: 48)
     let viewController1 = BottomNavigationControllerExampleScrollableChildViewController(collectionViewLayout: flowLayout)
-    viewController1.view.backgroundColor = colorScheme.primaryColor
+    viewController1.collectionView.backgroundColor = colorScheme.primaryColorVariant
     viewController1.tabBarItem = UITabBarItem(title: "Item 1", image: UIImage(named: "Home"), tag: 0)
 
     let viewController2 = UIViewController()
