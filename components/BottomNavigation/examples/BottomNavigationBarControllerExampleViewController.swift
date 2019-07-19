@@ -35,8 +35,6 @@ class BottomNavigationControllerExampleScrollableChildViewController: UICollecti
       self.automaticallyAdjustsScrollViewInsets = true
       collectionView?.preservesSuperviewLayoutMargins = true
     }
-    collectionView?.dataSource = self
-    collectionView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
   }
 
   override func numberOfSections(in collectionView: UICollectionView) -> Int {
