@@ -20,17 +20,19 @@
 static const CGFloat kNumberOfCellsInScrollableChild = 25;
 
 /** The size of a cell in the scrollable child view controller. */
-static const CGSize kSizeOfCellInScrollableChild = (CGSize){(CGFloat)48, (CGFloat)48 };
+static const CGSize kSizeOfCellInScrollableChild = (CGSize){(CGFloat)48, (CGFloat)48};
 
 /** A view controller with content that expands to fit its bounds. */
-@interface MDCBottomNavigationBarControllerSnapshotTestFixedContentChildViewController : UIViewController
+@interface MDCBottomNavigationBarControllerSnapshotTestFixedContentChildViewController
+    : UIViewController
 @end
 
 @implementation MDCBottomNavigationBarControllerSnapshotTestFixedContentChildViewController
 @end
 
 /** A view controller with content that scrolls. */
-@interface MDCBottomNavigationBarControllerSnapshotTestScrollableChildViewController : UICollectionViewController <UICollectionViewDataSource>
+@interface MDCBottomNavigationBarControllerSnapshotTestScrollableChildViewController
+    : UICollectionViewController <UICollectionViewDataSource>
 /** The flow layout for this view controller. */
 @property(nonatomic, readonly, nonnull) UICollectionViewFlowLayout *flowLayout;
 @end
@@ -40,7 +42,8 @@ static const CGSize kSizeOfCellInScrollableChild = (CGSize){(CGFloat)48, (CGFloa
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
+  [self.collectionView registerClass:[UICollectionViewCell class]
+          forCellWithReuseIdentifier:@"cell"];
   self.collectionView.dataSource = self;
   if (@available(iOS 11.0, *)) {
     self.collectionView.insetsLayoutMarginsFromSafeArea = YES;
@@ -56,22 +59,17 @@ static const CGSize kSizeOfCellInScrollableChild = (CGSize){(CGFloat)48, (CGFloa
   return 1;
 }
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-  return 25;
+- (NSInteger)collectionView:(UICollectionView *)collectionView
+     numberOfItemsInSection:(NSInteger)section {
+  return kNumberOfCellsInScrollableChild;
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-  static NSArray<UIColor *> *cellColors;
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    NSMutableArray *mutableColors = [NSMutableArray array];
-    for (CGFloat hue = 0; hue < 1; hue += (CGFloat)0.05) {
-      [mutableColors addObject:[UIColor colorWithHue:hue saturation:1 brightness:1 alpha:1]];
-    }
-    cellColors = [mutableColors copy];
-  });
-  UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
-  cell.backgroundColor = cellColors[indexPath.row % cellColors.count];
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+  CGFloat hue = indexPath.row / kNumberOfCellsInScrollableChild;
+  UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell"
+                                                                         forIndexPath:indexPath];
+  cell.backgroundColor = [UIColor colorWithHue:hue saturation:1 brightness:1 alpha:1];
   return cell;
 }
 
@@ -84,10 +82,13 @@ static const CGSize kSizeOfCellInScrollableChild = (CGSize){(CGFloat)48, (CGFloa
 @property(nonatomic, strong) MDCBottomNavigationBarController *navBarController;
 
 /** A child view controller that has scrollable content. */
-@property(nonatomic, strong) MDCBottomNavigationBarControllerSnapshotTestScrollableChildViewController *scrollableChildVC;
+@property(nonatomic, strong)
+    MDCBottomNavigationBarControllerSnapshotTestScrollableChildViewController *scrollableChildVC;
 
 /** A child view controller with non-scrolling content. */
-@property(nonatomic, strong) MDCBottomNavigationBarControllerSnapshotTestFixedContentChildViewController *fixedContentChildVC;
+@property(nonatomic, strong)
+    MDCBottomNavigationBarControllerSnapshotTestFixedContentChildViewController
+        *fixedContentChildVC;
 
 @end
 
@@ -101,16 +102,21 @@ static const CGSize kSizeOfCellInScrollableChild = (CGSize){(CGFloat)48, (CGFloa
   //  self.recordMode = YES;
 
   self.navBarController = [[MDCBottomNavigationBarController alloc] init];
-  self.navBarController.navigationBar.barTintColor = [UIColor.redColor colorWithAlphaComponent:(CGFloat)0.5];
+  self.navBarController.navigationBar.barTintColor =
+      [UIColor.redColor colorWithAlphaComponent:(CGFloat)0.5];
   self.navBarController.view.backgroundColor = UIColor.whiteColor;
+  self.navBarController.view.bounds = CGRectMake(0, 0, 240, 360);
 
-  self.fixedContentChildVC = [[MDCBottomNavigationBarControllerSnapshotTestFixedContentChildViewController alloc] init];
+  self.fixedContentChildVC =
+      [[MDCBottomNavigationBarControllerSnapshotTestFixedContentChildViewController alloc] init];
   self.fixedContentChildVC.view.backgroundColor = UIColor.blueColor;
   self.fixedContentChildVC.tabBarItem.title = @"Fixed";
 
   UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
   flowLayout.estimatedItemSize = kSizeOfCellInScrollableChild;
-  self.scrollableChildVC = [[MDCBottomNavigationBarControllerSnapshotTestScrollableChildViewController alloc] initWithCollectionViewLayout:flowLayout];
+  self.scrollableChildVC =
+      [[MDCBottomNavigationBarControllerSnapshotTestScrollableChildViewController alloc]
+          initWithCollectionViewLayout:flowLayout];
   self.scrollableChildVC.collectionView.backgroundColor = UIColor.blueColor;
   self.scrollableChildVC.tabBarItem.title = @"Scrollable";
 
@@ -135,9 +141,6 @@ static const CGSize kSizeOfCellInScrollableChild = (CGSize){(CGFloat)48, (CGFloa
 #pragma mark - Tests
 
 - (void)testNonScrollingChildViewControllerDefault {
-  // Given
-  self.navBarController.view.bounds = CGRectMake(0, 0, 240, 360);
-
   // When
   self.navBarController.selectedViewController = self.fixedContentChildVC;
   [self.navBarController.view layoutIfNeeded];
@@ -147,9 +150,6 @@ static const CGSize kSizeOfCellInScrollableChild = (CGSize){(CGFloat)48, (CGFloa
 }
 
 - (void)testScrollableChildViewControllerDefault {
-  // Given
-  self.navBarController.view.bounds = CGRectMake(0, 0, 240, 360);
-
   // When
   self.navBarController.selectedViewController = self.scrollableChildVC;
   [self.navBarController.view layoutIfNeeded];
@@ -160,13 +160,15 @@ static const CGSize kSizeOfCellInScrollableChild = (CGSize){(CGFloat)48, (CGFloa
 
 - (void)testScrollableChildViewControllerScrolledToBottom {
   // Given
-  self.navBarController.view.bounds = CGRectMake(0, 0, 240, 360);
   self.navBarController.selectedViewController = self.scrollableChildVC;
   [self.navBarController.view layoutIfNeeded];
 
   // When
-  NSIndexPath *lastItemIndexPath = [NSIndexPath indexPathForRow:kNumberOfCellsInScrollableChild - 1 inSection:0];
-  [self.scrollableChildVC.collectionView scrollToItemAtIndexPath:lastItemIndexPath atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+  NSIndexPath *lastItemIndexPath = [NSIndexPath indexPathForRow:kNumberOfCellsInScrollableChild - 1
+                                                      inSection:0];
+  [self.scrollableChildVC.collectionView scrollToItemAtIndexPath:lastItemIndexPath
+                                                atScrollPosition:UICollectionViewScrollPositionTop
+                                                        animated:NO];
 
   // Then
   [self generateAndVerifySnapshot];
@@ -174,7 +176,6 @@ static const CGSize kSizeOfCellInScrollableChild = (CGSize){(CGFloat)48, (CGFloa
 
 - (void)testNonScrollingChildViewControllerWithSafeAreaInsets {
   // Given
-  self.navBarController.view.bounds = CGRectMake(0, 0, 240, 360);
   if (@available(iOS 11.0, *)) {
     self.navBarController.additionalSafeAreaInsets = UIEdgeInsetsMake(10, 15, 25, 20);
   }
@@ -189,7 +190,6 @@ static const CGSize kSizeOfCellInScrollableChild = (CGSize){(CGFloat)48, (CGFloa
 
 - (void)testScrollableChildViewControllerWithSafeAreaInsets {
   // Given
-  self.navBarController.view.bounds = CGRectMake(0, 0, 240, 360);
   if (@available(iOS 11.0, *)) {
     self.navBarController.additionalSafeAreaInsets = UIEdgeInsetsMake(10, 15, 25, 20);
   }
@@ -204,7 +204,6 @@ static const CGSize kSizeOfCellInScrollableChild = (CGSize){(CGFloat)48, (CGFloa
 
 - (void)testScrollingChildViewControllerWithSafeAreaInsetsScrolledToBottom {
   // Given
-  self.navBarController.view.bounds = CGRectMake(0, 0, 240, 360);
   if (@available(iOS 11.0, *)) {
     self.navBarController.additionalSafeAreaInsets = UIEdgeInsetsMake(10, 15, 25, 20);
   }
@@ -212,8 +211,11 @@ static const CGSize kSizeOfCellInScrollableChild = (CGSize){(CGFloat)48, (CGFloa
   [self.navBarController.view layoutIfNeeded];
 
   // When
-  NSIndexPath *lastItemIndexPath = [NSIndexPath indexPathForRow:kNumberOfCellsInScrollableChild - 1 inSection:0];
-  [self.scrollableChildVC.collectionView scrollToItemAtIndexPath:lastItemIndexPath atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+  NSIndexPath *lastItemIndexPath = [NSIndexPath indexPathForRow:kNumberOfCellsInScrollableChild - 1
+                                                      inSection:0];
+  [self.scrollableChildVC.collectionView scrollToItemAtIndexPath:lastItemIndexPath
+                                                atScrollPosition:UICollectionViewScrollPositionTop
+                                                        animated:NO];
 
   // Then
   [self generateAndVerifySnapshot];

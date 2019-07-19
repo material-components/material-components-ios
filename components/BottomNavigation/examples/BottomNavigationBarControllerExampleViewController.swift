@@ -43,15 +43,9 @@ class BottomNavigationControllerExampleScrollableChildViewController : UICollect
   }
 
   override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cellColors: NSArray = {
-      let colors = NSMutableArray()
-    for i in stride(from: 0, to: 1, by: 1.0 / Double(numberOfItems)) {
-      colors.add(UIColor(hue: CGFloat(i), saturation: 1, brightness: 1, alpha: 1))
-      }
-      return colors.copy() as! NSArray
-    }()
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-    cell.backgroundColor = (cellColors[indexPath.row % cellColors.count] as! UIColor)
+    let hue = CGFloat(indexPath.row) / CGFloat(numberOfItems)
+    cell.backgroundColor = UIColor(hue: hue, saturation: 1, brightness: 1, alpha: 1)
     return cell
   }
 }
