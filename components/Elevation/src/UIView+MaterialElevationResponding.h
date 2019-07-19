@@ -12,5 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCElevation.h"
-#import "UIView+MaterialElevationResponding.h"
+#import <UIKit/UIKit.h>
+
+/**
+ Allows elevation changes to propagate down the view hierarchy and allows objects
+ conforming to @c MDCElevation to react to those changes accordingly.
+ */
+@interface UIView (MaterialElevationResponding)
+
+/**
+ Returns the sum of all @c superviews in the view hierarchy that conform to @c MDCElevation @c mdc_currentElevation.
+ */
+- (CGFloat)mdc_baseElevation;
+
+@end
