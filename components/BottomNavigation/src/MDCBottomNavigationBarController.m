@@ -17,6 +17,7 @@
 #import <CoreGraphics/CoreGraphics.h>
 
 #import "MaterialApplication.h"
+#import "MaterialMath.h"
 #import "private/MDCBottomNavigationBar+Private.h"
 #import "private/MDCBottomNavigationLargeItemDialogView.h"
 
@@ -98,6 +99,18 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
   if (self.isLongPressPopUpViewEnabled && !self.isNavigationBarLongPressRecognizerRegistered) {
     [self.navigationBar addGestureRecognizer:self.navigationBarLongPressRecognizer];
   }
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+  [self updateAdditionalSafeAreaInsets];
+}
+
+- (void)viewSafeAreaInsetsDidChange {
+  if (@available(iOS 11.0, *)) {
+    [super viewSafeAreaInsetsDidChange];
+  }
+  [self updateAdditionalSafeAreaInsets];
 }
 
 - (void)setSelectedViewController:(nullable UIViewController *)selectedViewController {
@@ -338,6 +351,29 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
     [self addConstraintsForContentView:viewController.view];
     [viewController didMoveToParentViewController:self];
   }
+  [self updateAdditionalSafeAreaInsets];
+}
+
+- (void)viewDidLayoutSubviews {
+  [super viewDidLayoutSubviews];
+
+  [self updateAdditionalSafeAreaInsets];
+
+}
+
+- (void)updateAdditionalSafeAreaInsets {
+  UIEdgeInsets currentSafeAreaInsets = UIEdgeInsetsZero;
+  CGFloat navigationBarHeight = CGRectGetHeight(self.navigationBar.frame);
+  if (@available(iOS 11.0, *)) {
+    currentSafeAreaInsets = self.view.safeAreaInsets;
+  }
+  UIEdgeInsets additionalSafeAreaInsets = UIEdgeInsetsMake(0, 0, navigationBarHeight - currentSafeAreaInsets.bottom, 0);
+  NSLog(@"%@", NSStringFromUIEdgeInsets(additionalSafeAreaInsets));
+  if (@available(iOS 11.0, *)) {
+    self.selectedViewController.additionalSafeAreaInsets = additionalSafeAreaInsets;
+  } else {
+    self.content.layoutMargins = additionalSafeAreaInsets;
+  }
 }
 
 /**
@@ -375,6 +411,67 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
   self.navigationBar.translatesAutoresizingMaskIntoConstraints = NO;
 
   // Navigation Bar Constraints
+  NSArray<NSLayoutConstraint *> *navigationBarConstraints = @[
+    [NSLayoutConstraint constraintWithItem:self.navigationBar
+                                 attribute:NSLayoutAttributeLeading
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.view
+                                 attribute:NSLayoutAttributeLeading
+                                multiplier:1
+                                  constant:0],
+    [NSLayoutConstraint constraintWithItem:self.navigationBar
+                                 attribute:NSLayoutAttributeTrailing
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.view
+                                 attribute:NSLayoutAttributeTrailing
+                                multiplier:1
+                                  constant:0],
+    [NSLayoutConstraint constraintWithItem:self.navigationBar
+                                 attribute:NSLayoutAttributeBottom
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.view
+                                 attribute:NSLayoutAttributeBottom
+                                multiplier:1
+                                  constant:0],
+  ];
+
+  // Content View Constraints
+  NSArray<NSLayoutConstraint *> *contentConstraints = @[
+    [NSLayoutConstraint constraintWithItem:self.content
+                                 attribute:NSLayoutAttributeLeading
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.view
+                                 attribute:NSLayoutAttributeLeading
+                                multiplier:1
+                                  constant:0],
+    [NSLayoutConstraint constraintWithItem:self.content
+                                 attribute:NSLayoutAttributeTrailing
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.view
+                                 attribute:NSLayoutAttributeTrailing
+                                multiplier:1
+                                  constant:0],
+    [NSLayoutConstraint constraintWithItem:self.content
+                                 attribute:NSLayoutAttributeTop
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.view
+                                 attribute:NSLayoutAttributeTop
+                                multiplier:1
+                                  constant:0],
+    [NSLayoutConstraint constraintWithItem:self.content
+                                 attribute:NSLayoutAttributeBottom
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.view
+                                 attribute:NSLayoutAttributeBottom
+                                multiplier:1
+                                  constant:0]
+  ];
+
+  [NSLayoutConstraint activateConstraints:navigationBarConstraints];
+  [NSLayoutConstraint activateConstraints:contentConstraints];
+}
+
+- (void)loadiOS9PlusConstraints {
   [self.view.leftAnchor constraintEqualToAnchor:self.navigationBar.leftAnchor].active = YES;
   [self.view.rightAnchor constraintEqualToAnchor:self.navigationBar.rightAnchor].active = YES;
   [self.navigationBar.topAnchor constraintEqualToAnchor:self.content.bottomAnchor].active = YES;
