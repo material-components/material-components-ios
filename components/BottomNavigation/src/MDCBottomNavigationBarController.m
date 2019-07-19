@@ -367,7 +367,6 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
   }
   UIEdgeInsets additionalSafeAreaInsets =
       UIEdgeInsetsMake(0, 0, navigationBarHeight - currentSafeAreaInsets.bottom, 0);
-  NSLog(@"%@", NSStringFromUIEdgeInsets(additionalSafeAreaInsets));
   if (@available(iOS 11.0, *)) {
     self.selectedViewController.additionalSafeAreaInsets = additionalSafeAreaInsets;
   } else {
