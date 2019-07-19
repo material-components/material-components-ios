@@ -347,7 +347,7 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
   if (viewController && doesNotContainViewController) {
     [self addChildViewController:viewController];
     [self.content addSubview:viewController.view];
-    [self addConstraintsForChildView:viewController.view];
+    [self addConstraintsForChildViewControllerView:viewController.view];
     [viewController didMoveToParentViewController:self];
   }
   [self updateNavigationBarInsets];
@@ -458,7 +458,7 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
 /**
  * Pins the given view to the edges of the content view.
  */
-- (void)addConstraintsForChildView:(UIView *)view {
+- (void)addConstraintsForChildViewControllerView:(UIView *)view {
   view.translatesAutoresizingMaskIntoConstraints = NO;
   [view.leadingAnchor constraintEqualToAnchor:self.content.leadingAnchor].active = YES;
   [view.trailingAnchor constraintEqualToAnchor:self.content.trailingAnchor].active = YES;
