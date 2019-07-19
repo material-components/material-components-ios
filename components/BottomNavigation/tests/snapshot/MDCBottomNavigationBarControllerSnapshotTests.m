@@ -17,7 +17,7 @@
 #import "MDCBottomNavigationBarController.h"
 
 /** Number of cells shown in the scrollable child view controller. */
-static const CGFloat kNumberOfCellsInScrollableChild = 25;
+static const NSInteger kNumberOfCellsInScrollableChild = 25;
 
 /** The size of a cell in the scrollable child view controller. */
 static const CGSize kSizeOfCellInScrollableChild = (CGSize){(CGFloat)48, (CGFloat)48};
@@ -66,7 +66,7 @@ static const CGSize kSizeOfCellInScrollableChild = (CGSize){(CGFloat)48, (CGFloa
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-  CGFloat hue = indexPath.row / kNumberOfCellsInScrollableChild;
+  CGFloat hue = (CGFloat)indexPath.row / kNumberOfCellsInScrollableChild;
   UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell"
                                                                          forIndexPath:indexPath];
   cell.backgroundColor = [UIColor colorWithHue:hue saturation:1 brightness:1 alpha:1];
