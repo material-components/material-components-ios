@@ -18,6 +18,7 @@
 
 @interface MDCFakeConformingMDCElevationView : UIView <MDCElevation>
 @property(nonatomic, assign, readonly) CGFloat mdc_currentElevation;
+@property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)(CGFloat elevation);
 @property(nonatomic, assign) CGFloat elevation;
 @end
 
@@ -31,6 +32,7 @@
 
 @interface MDCFakeConformingMDCElevationViewController : UIViewController <MDCElevation>
 @property(nonatomic, assign, readonly) CGFloat mdc_currentElevation;
+@property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)(CGFloat elevation);
 @property(nonatomic, assign) CGFloat elevation;
 @end
 
@@ -44,6 +46,7 @@
 
 @interface MDCFakeConformingMDCElevationOverrideView : UIView <MDCElevation>
 @property(nonatomic, assign, readwrite) CGFloat mdc_overrideBaseElevation;
+@property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)(CGFloat elevation);
 @property(nonatomic, assign, readonly) CGFloat mdc_currentElevation;
 @property(nonatomic, assign) CGFloat elevation;
 @end
@@ -58,11 +61,12 @@
 
 @interface MDCFakeConformingMDCElevationOverrideViewController : UIViewController <MDCElevation>
 @property(nonatomic, assign, readwrite) CGFloat mdc_overrideBaseElevation;
+@property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)(CGFloat elevation);
 @property(nonatomic, assign, readonly) CGFloat mdc_currentElevation;
 @property(nonatomic, assign) CGFloat elevation;
 @end
 
-@implementation MDCFakeConformingMDCElevationViewController
+@implementation MDCFakeConformingMDCElevationOverrideViewController
 
 - (CGFloat)mdc_currentElevation {
   return self.elevation;
@@ -107,18 +111,56 @@
 
 - (void)testViewInElevationView {
   // Given
-  CGFloat fakeElevation = 10;
+  CGFloat fakeElevation = 3;
   self.fakeElevationView.elevation = fakeElevation;
 
   // When
   [self.fakeElevationView addSubview:self.fakeView];
 
   // Then
-  XCTAssertEqual(self.fakeView.mdc_baseElevation, 10);
+  XCTAssertEqual(self.fakeView.mdc_baseElevation, fakeElevation);
 }
 
 - (void)testViewInNonElevationViewInElevationView {
   // Given
+  UIView *middleView = [[UIView alloc] init];
+  CGFloat fakeElevation = 3;
+  self.fakeElevationView.elevation = fakeElevation;
+
+  // When
+  [self.fakeElevationView addSubview:middleView];
+  [middleView addSubview:self.fakeView];
+
+  // Then
+  XCTAssertEqual(self.fakeView.mdc_baseElevation, fakeElevation);
+}
+
+- (void)testViewInElevationOverrideView {
+  // Given
+  CGFloat fakeElevation = 3;
+  self.fakeElevationOverrideView.elevation = 20;
+  self.fakeElevationOverrideView.mdc_overrideBaseElevation = fakeElevation;
+
+  // When
+  [self.fakeElevationView addSubview:self.fakeView];
+
+  // Then
+  XCTAssertEqual(self.fakeView.mdc_baseElevation, fakeElevation);
+}
+
+- (void)testViewInNonElevationViewInElevationOverrideView {
+  // Given
+  UIView *middleView = [[UIView alloc] init];
+  CGFloat fakeElevation = 3;
+  self.fakeElevationOverrideView.elevation = 20;
+  self.fakeElevationOverrideView.mdc_overrideBaseElevation = fakeElevation;
+
+  // When
+  [self.fakeElevationView addSubview:middleView];
+  [middleView addSubview:self.fakeView];
+
+  // Then
+  XCTAssertEqual(self.fakeView.mdc_baseElevation, fakeElevation);
 }
 
 @end

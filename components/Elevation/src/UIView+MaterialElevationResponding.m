@@ -27,9 +27,9 @@
     if (elevatableCurrent) {
       if ([elevatableCurrent respondsToSelector:@selector(mdc_overrideBaseElevation)]) {
         totalElevation += elevatableCurrent.mdc_overrideBaseElevation;
-        break;
+      } else {
+        totalElevation += elevatableCurrent.mdc_currentElevation;
       }
-      totalElevation += elevatableCurrent.mdc_currentElevation;
     }
     current = current.superview;
   }
