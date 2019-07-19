@@ -104,12 +104,12 @@ static const CGSize kSizeOfCellInScrollableChild = (CGSize){(CGFloat)48, (CGFloa
   self.navBarController = [[MDCBottomNavigationBarController alloc] init];
   self.navBarController.navigationBar.barTintColor =
       [UIColor.redColor colorWithAlphaComponent:(CGFloat)0.5];
-  self.navBarController.view.backgroundColor = UIColor.whiteColor;
+  self.navBarController.view.backgroundColor = UIColor.blackColor;
   self.navBarController.view.bounds = CGRectMake(0, 0, 240, 360);
 
   self.fixedContentChildVC =
       [[MDCBottomNavigationBarControllerSnapshotTestFixedContentChildViewController alloc] init];
-  self.fixedContentChildVC.view.backgroundColor = UIColor.blueColor;
+  self.fixedContentChildVC.view.backgroundColor = UIColor.whiteColor;
   self.fixedContentChildVC.tabBarItem.title = @"Fixed";
 
   UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
@@ -117,11 +117,12 @@ static const CGSize kSizeOfCellInScrollableChild = (CGSize){(CGFloat)48, (CGFloa
   self.scrollableChildVC =
       [[MDCBottomNavigationBarControllerSnapshotTestScrollableChildViewController alloc]
           initWithCollectionViewLayout:flowLayout];
-  self.scrollableChildVC.collectionView.backgroundColor = UIColor.blueColor;
+  self.scrollableChildVC.collectionView.backgroundColor = UIColor.whiteColor;
   self.scrollableChildVC.tabBarItem.title = @"Scrollable";
 
   self.navBarController.viewControllers = @[ self.scrollableChildVC, self.fixedContentChildVC ];
-  self.navBarController.navigationBar.unselectedItemTintColor = UIColor.blackColor;
+  self.navBarController.navigationBar.unselectedItemTintColor = UIColor.whiteColor;
+  self.navBarController.navigationBar.selectedItemTitleColor = UIColor.whiteColor;
   self.navBarController.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
 }
 

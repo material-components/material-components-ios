@@ -18,7 +18,7 @@ import MaterialComponentsBeta.MaterialBottomNavigationBeta
 import MaterialComponents.MaterialBottomNavigation_ColorThemer
 import MaterialComponents.MaterialBottomNavigation_TypographyThemer
 
-class BottomNavigationControllerExampleScrollableChildViewController : UICollectionViewController {
+class BottomNavigationControllerExampleScrollableChildViewController: UICollectionViewController {
 
   let numberOfItems = 200
 
