@@ -73,7 +73,8 @@
 @interface MDCMaterialElevationRespondingTests : XCTestCase
 @property(nonatomic, strong, nullable) UIView *fakeView;
 @property(nonatomic, strong, nullable) MDCFakeConformingMDCElevationView *fakeElevationView;
-@property(nonatomic, strong, nullable) MDCFakeConformingMDCElevationOverrideView *fakeElevationOverrideView;
+@property(nonatomic, strong, nullable)
+    MDCFakeConformingMDCElevationOverrideView *fakeElevationOverrideView;
 @property(nonatomic, strong, nullable) UIViewController *fakeViewController;
 @property(nonatomic, strong, nullable) UIViewController *fakeElevationViewController;
 @property(nonatomic, strong, nullable) UIViewController *fakeElevationOverrideViewController;
@@ -89,7 +90,8 @@
   self.fakeElevationOverrideView = [[MDCFakeConformingMDCElevationOverrideView alloc] init];
   self.fakeViewController = [[UIViewController alloc] init];
   self.fakeElevationViewController = [[MDCFakeConformingMDCElevationViewController alloc] init];
-  self.fakeElevationOverrideViewController = [[MDCFakeConformingMDCElevationOverrideViewController alloc] init];
+  self.fakeElevationOverrideViewController =
+      [[MDCFakeConformingMDCElevationOverrideViewController alloc] init];
 }
 
 - (void)tearDown {
@@ -117,7 +119,6 @@
 
 - (void)testViewInNonElevationViewInElevationView {
   // Given
-
 }
 
 @end
