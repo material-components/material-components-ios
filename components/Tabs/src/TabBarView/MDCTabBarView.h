@@ -125,10 +125,7 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
 - (CGRect)rectForItem:(nonnull UITabBarItem *)item
     inCoordinateSpace:(nonnull id<UICoordinateSpace>)coordinateSpace;
 
-@end
-
-/** Animation and motion-related APIs. */
-@interface MDCTabBarView (Animations)
+#pragma mark - Animation
 
 /**
  The total duration for all animations that take place during a selection change.
