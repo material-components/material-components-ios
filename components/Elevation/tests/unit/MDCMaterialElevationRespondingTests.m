@@ -96,8 +96,7 @@
 @interface MDCMaterialElevationRespondingTests : XCTestCase
 @property(nonatomic, strong, nullable) UIView *view;
 @property(nonatomic, strong, nullable) MDCConformingMDCElevationView *elevationView;
-@property(nonatomic, strong, nullable)
-    MDCConformingMDCElevationOverrideView *elevationOverrideView;
+@property(nonatomic, strong, nullable) MDCConformingMDCElevationOverrideView *elevationOverrideView;
 @property(nonatomic, strong, nullable) UIViewController *viewController;
 @property(nonatomic, strong, nullable)
     MDCConformingMDCElevationViewController *elevationViewController;
