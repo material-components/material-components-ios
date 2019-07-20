@@ -16,6 +16,10 @@
 
 #import <XCTest/XCTest.h>
 
+/**
+ Used for testing @c UIViews that conform to @c MDCElevation and do not respond to @c
+ mdc_overrideBaseElevation.
+ */
 @interface MDCConformingMDCElevationView : UIView <MDCElevation>
 @property(nonatomic, assign, readonly) CGFloat mdc_currentElevation;
 @property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)(CGFloat elevation);
@@ -30,6 +34,10 @@
 
 @end
 
+/**
+ Used for testing @c UIViewControllers that conform to @c MDCElevation and do not respond to @c
+ mdc_overrideBaseElevation.
+ */
 @interface MDCConformingMDCElevationViewController : UIViewController <MDCElevation>
 @property(nonatomic, assign, readonly) CGFloat mdc_currentElevation;
 @property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)(CGFloat elevation);
@@ -44,6 +52,10 @@
 
 @end
 
+/**
+ Used for testing @c UIViews that conform to @c MDCElevation and do respond to @c
+ mdc_overrideBaseElevation.
+ */
 @interface MDCConformingMDCElevationOverrideView : UIView <MDCElevation>
 @property(nonatomic, assign, readwrite) CGFloat mdc_overrideBaseElevation;
 @property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)(CGFloat elevation);
@@ -59,6 +71,10 @@
 
 @end
 
+/**
+ Used for testing @c UIViewControllers that conform to @c MDCElevation and do respond to @c
+ mdc_overrideBaseElevation.
+ */
 @interface MDCConformingMDCElevationOverrideViewController : UIViewController <MDCElevation>
 @property(nonatomic, assign, readwrite) CGFloat mdc_overrideBaseElevation;
 @property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)(CGFloat elevation);
@@ -74,6 +90,9 @@
 
 @end
 
+/**
+ Used for testing @c MaterialElevationResponding category on @c UIView.
+ */
 @interface MDCMaterialElevationRespondingTests : XCTestCase
 @property(nonatomic, strong, nullable) UIView *view;
 @property(nonatomic, strong, nullable) MDCConformingMDCElevationView *elevationView;
