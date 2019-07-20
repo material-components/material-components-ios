@@ -199,7 +199,36 @@
   self.fakeElevationOverrideViewController.mdc_overrideBaseElevation = fakeElevation;
 
   // When
-  [self.fakeElevationViewController.view addSubview:self.fakeView];
+  [self.fakeElevationOverrideViewController.view addSubview:self.fakeView];
+
+  // Then
+  XCTAssertEqual(self.fakeView.mdc_baseElevation, fakeElevation);
+}
+
+- (void)testViewInUIViewInElevationViewController {
+  // Given
+  CGFloat fakeElevation = 3;
+  self.fakeElevationViewController.elevation = fakeElevation;
+  UIView *middleView = [[UIView alloc] init];
+
+  // When
+  [middleView addSubview:self.fakeView];
+  [self.fakeElevationViewController.view addSubview:middleView];
+
+  // Then
+  XCTAssertEqual(self.fakeView.mdc_baseElevation, fakeElevation);
+}
+
+- (void)testViewInUIViewInElevationOverrideViewController {
+  // Given
+  CGFloat fakeElevation = 3;
+  self.fakeElevationOverrideViewController.elevation = 20;
+  self.fakeElevationOverrideViewController.mdc_overrideBaseElevation = fakeElevation;
+  UIView *middleView = [[UIView alloc] init];
+
+  // When
+  [middleView addSubview:self.fakeView];
+  [self.fakeElevationOverrideViewController.view addSubview:middleView];
 
   // Then
   XCTAssertEqual(self.fakeView.mdc_baseElevation, fakeElevation);
