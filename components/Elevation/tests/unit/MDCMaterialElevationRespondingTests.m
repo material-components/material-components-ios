@@ -80,8 +80,10 @@
 @property(nonatomic, strong, nullable)
     MDCFakeConformingMDCElevationOverrideView *fakeElevationOverrideView;
 @property(nonatomic, strong, nullable) UIViewController *fakeViewController;
-@property(nonatomic, strong, nullable) UIViewController *fakeElevationViewController;
-@property(nonatomic, strong, nullable) UIViewController *fakeElevationOverrideViewController;
+@property(nonatomic, strong, nullable)
+    MDCFakeConformingMDCElevationViewController *fakeElevationViewController;
+@property(nonatomic, strong, nullable)
+    MDCFakeConformingMDCElevationOverrideViewController *fakeElevationOverrideViewController;
 @end
 
 @implementation MDCMaterialElevationRespondingTests
@@ -142,7 +144,7 @@
   self.fakeElevationOverrideView.mdc_overrideBaseElevation = fakeElevation;
 
   // When
-  [self.fakeElevationView addSubview:self.fakeView];
+  [self.fakeElevationOverrideView addSubview:self.fakeView];
 
   // Then
   XCTAssertEqual(self.fakeView.mdc_baseElevation, fakeElevation);
@@ -156,8 +158,48 @@
   self.fakeElevationOverrideView.mdc_overrideBaseElevation = fakeElevation;
 
   // When
-  [self.fakeElevationView addSubview:middleView];
+  [self.fakeElevationOverrideView addSubview:middleView];
   [middleView addSubview:self.fakeView];
+
+  // Then
+  XCTAssertEqual(self.fakeView.mdc_baseElevation, fakeElevation);
+}
+
+- (void)testViewInElevationViewInElevationOverrideView {
+  // Given
+  CGFloat fakeElevation = 3;
+  CGFloat fakeElevationOverride = 4;
+  self.fakeElevationView.elevation = fakeElevation;
+  self.fakeElevationOverrideView.mdc_overrideBaseElevation = fakeElevationOverride;
+
+  // When
+  [self.fakeElevationOverrideView addSubview:self.fakeElevationView];
+  [self.fakeElevationView addSubview:self.fakeView];
+
+  // Then
+  XCTAssertEqual(self.fakeView.mdc_baseElevation, fakeElevation + fakeElevationOverride);
+}
+
+- (void)testViewInElevationViewController {
+  // Given
+  CGFloat fakeElevation = 3;
+  self.fakeElevationViewController.elevation = fakeElevation;
+
+  // When
+  [self.fakeElevationViewController.view addSubview:self.fakeView];
+
+  // Then
+  XCTAssertEqual(self.fakeView.mdc_baseElevation, fakeElevation);
+}
+
+- (void)testViewInElevationOverrideViewController {
+  // Given
+  CGFloat fakeElevation = 3;
+  self.fakeElevationOverrideViewController.elevation = 20;
+  self.fakeElevationOverrideViewController.mdc_overrideBaseElevation = fakeElevation;
+
+  // When
+  [self.fakeElevationViewController.view addSubview:self.fakeView];
 
   // Then
   XCTAssertEqual(self.fakeView.mdc_baseElevation, fakeElevation);
