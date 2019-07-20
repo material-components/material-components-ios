@@ -120,7 +120,7 @@
   [self.fakeElevationView addSubview:self.fakeView];
 
   // Then
-  XCTAssertEqual(self.fakeView.mdc_baseElevation, fakeElevation);
+  XCTAssertEqualWithAccuracy(self.fakeView.mdc_baseElevation, fakeElevation, 0.001);
 }
 
 - (void)testViewInNonElevationViewInElevationView {
@@ -134,7 +134,7 @@
   [middleView addSubview:self.fakeView];
 
   // Then
-  XCTAssertEqual(self.fakeView.mdc_baseElevation, fakeElevation);
+  XCTAssertEqualWithAccuracy(self.fakeView.mdc_baseElevation, fakeElevation, 0.001);
 }
 
 - (void)testViewInElevationOverrideView {
@@ -147,7 +147,7 @@
   [self.fakeElevationOverrideView addSubview:self.fakeView];
 
   // Then
-  XCTAssertEqual(self.fakeView.mdc_baseElevation, fakeElevation);
+  XCTAssertEqualWithAccuracy(self.fakeView.mdc_baseElevation, fakeElevation, 0.001);
 }
 
 - (void)testViewInNonElevationViewInElevationOverrideView {
@@ -162,7 +162,7 @@
   [middleView addSubview:self.fakeView];
 
   // Then
-  XCTAssertEqual(self.fakeView.mdc_baseElevation, fakeElevation);
+  XCTAssertEqualWithAccuracy(self.fakeView.mdc_baseElevation, fakeElevation, 0.001);
 }
 
 - (void)testViewInElevationViewInElevationOverrideView {
@@ -189,7 +189,7 @@
   [self.fakeElevationViewController.view addSubview:self.fakeView];
 
   // Then
-  XCTAssertEqual(self.fakeView.mdc_baseElevation, fakeElevation);
+  XCTAssertEqualWithAccuracy(self.fakeView.mdc_baseElevation, fakeElevation, 0.001);
 }
 
 - (void)testViewInElevationOverrideViewController {
@@ -202,7 +202,7 @@
   [self.fakeElevationOverrideViewController.view addSubview:self.fakeView];
 
   // Then
-  XCTAssertEqual(self.fakeView.mdc_baseElevation, fakeElevation);
+  XCTAssertEqualWithAccuracy(self.fakeView.mdc_baseElevation, fakeElevation, 0.001);
 }
 
 - (void)testViewInUIViewInElevationViewController {
@@ -216,7 +216,7 @@
   [self.fakeElevationViewController.view addSubview:middleView];
 
   // Then
-  XCTAssertEqual(self.fakeView.mdc_baseElevation, fakeElevation);
+  XCTAssertEqualWithAccuracy(self.fakeView.mdc_baseElevation, fakeElevation, 0.001);
 }
 
 - (void)testViewInUIViewInElevationOverrideViewController {
@@ -231,7 +231,7 @@
   [self.fakeElevationOverrideViewController.view addSubview:middleView];
 
   // Then
-  XCTAssertEqual(self.fakeView.mdc_baseElevation, fakeElevation);
+  XCTAssertEqualWithAccuracy(self.fakeView.mdc_baseElevation, fakeElevation, 0.001);
 }
 
 @end

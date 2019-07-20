@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKit.h>
 
 /**
@@ -24,6 +25,6 @@
  Returns the sum of all @c superviews in the view hierarchy that conform to @c MDCElevation @c
  mdc_currentElevation.
  */
-- (CGFloat)mdc_baseElevation;
+@property(nonatomic, assign, readonly) CGFloat mdc_baseElevation;
 
 @end
