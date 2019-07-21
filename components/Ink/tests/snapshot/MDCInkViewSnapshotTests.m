@@ -110,7 +110,7 @@
   if (@available(iOS 13.0, *)) {
     // Given
     self.inkView.inkColor = [UIColor colorWithUserInterfaceStyleDarkColor:UIColor.redColor
-                                                                   defaultColor:UIColor.blueColor];
+                                                             defaultColor:UIColor.blueColor];
 
     // When
     self.inkView.usesLegacyInkRipple = NO;
@@ -130,7 +130,7 @@
   if (@available(iOS 13.0, *)) {
     // Given
     self.inkView.inkColor = [UIColor colorWithUserInterfaceStyleDarkColor:UIColor.redColor
-                                                                   defaultColor:UIColor.blueColor];
+                                                             defaultColor:UIColor.blueColor];
 
     // When
     self.inkView.usesLegacyInkRipple = NO;
@@ -145,6 +145,5 @@
   }
 #endif
 }
-
 
 @end
