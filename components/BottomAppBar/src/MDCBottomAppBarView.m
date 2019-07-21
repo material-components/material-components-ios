@@ -251,6 +251,9 @@ static const int kMDCButtonAnimationDuration = 200;
   self.floatingButton.center =
       [self getFloatingButtonCenterPositionForAppBarWidth:CGRectGetWidth(self.bounds)];
   [self renderPathBasedOnFloatingButtonVisibitlityAnimated:NO];
+
+  self.bottomBarLayer.fillColor = self.barTintColor.CGColor;
+  self.bottomBarLayer.shadowColor = self.shadowColor.CGColor;
 }
 
 - (UIEdgeInsets)mdc_safeAreaInsets {
@@ -384,11 +387,8 @@ static const int kMDCButtonAnimationDuration = 200;
 }
 
 - (void)setBarTintColor:(UIColor *)barTintColor {
+  _barTintColor = barTintColor;
   _bottomBarLayer.fillColor = barTintColor.CGColor;
-}
-
-- (UIColor *)barTintColor {
-  return [UIColor colorWithCGColor:_bottomBarLayer.fillColor];
 }
 
 - (void)setLeadingBarItemsTintColor:(UIColor *)leadingBarItemsTintColor {
@@ -416,11 +416,8 @@ static const int kMDCButtonAnimationDuration = 200;
 }
 
 - (void)setShadowColor:(UIColor *)shadowColor {
+  _shadowColor = shadowColor;
   _bottomBarLayer.shadowColor = shadowColor.CGColor;
-}
-
-- (UIColor *)shadowColor {
-  return [UIColor colorWithCGColor:_bottomBarLayer.shadowColor];
 }
 
 #pragma mark TraitCollection
