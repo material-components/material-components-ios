@@ -20,9 +20,21 @@
 @interface MDCTabBarViewIndicatorView : UIView
 
 /**
+ The animation duration for changes to the path of the selection indicator.
+ Defaults to 300 milliseconds.
+ */
+@property(nonatomic, assign) CFTimeInterval indicatorPathAnimationDuration;
+
+/**
+ The timing function for animating changes to the path of the selection indicator. Defaults to an
+ ease-in ease-out function.
+ */
+@property(nonatomic, strong, nonnull) CAMediaTimingFunction *indicatorPathTimingFunction;
+
+/**
  Called to indicate that the indicator should update to display new attributes. This method may be
  called from an implicit animation block.
  */
-- (void)applySelectionIndicatorAttributes:(MDCTabBarViewIndicatorAttributes *)attributes;
+- (void)applySelectionIndicatorAttributes:(nonnull MDCTabBarViewIndicatorAttributes *)attributes;
 
 @end

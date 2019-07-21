@@ -140,6 +140,9 @@
 /** The elevation of the track thumb that moves along the track. */
 @property(nonatomic, assign) MDCShadowElevation thumbElevation;
 
+/** The shadow color of the track thumb. Defaults to black */
+@property(nonnull, nonatomic, strong) UIColor *thumbShadowColor;
+
 /** Whether or not the thumb should be smaller when the track is disabled. Defaults to NO. */
 @property(nonatomic, assign) BOOL thumbIsSmallerWhenDisabled;
 
