@@ -29,7 +29,7 @@
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  //  self.recordMode = YES;
+  // self.recordMode = YES;
 
   self.slider = [[MDCSlider alloc] initWithFrame:CGRectMake(0, 0, 120, 48)];
   self.slider.statefulAPIEnabled = YES;
@@ -141,11 +141,21 @@
           }
         }];
 
+    UIColor *sliderThumbShadowDynamicColor =
+        [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
+          if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
+            return UIColor.blackColor;
+          } else {
+            return UIColor.blueColor;
+          }
+        }];
+
     [self.slider setTrackFillColor:sliderDynamicColor forState:UIControlStateNormal];
     [self.slider setThumbColor:sliderDynamicColor forState:UIControlStateNormal];
     [self.slider setTrackBackgroundColor:sliderBackgroundDynamicColor
                                 forState:UIControlStateNormal];
     self.slider.thumbElevation = 5;
+    self.slider.thumbShadowColor = sliderThumbShadowDynamicColor;
 
     // When
     self.slider.overrideUserInterfaceStyle = UIUserInterfaceStyleDark;
