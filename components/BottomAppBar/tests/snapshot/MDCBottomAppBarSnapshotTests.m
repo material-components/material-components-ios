@@ -168,21 +168,21 @@
   if (@available(iOS 13.0, *)) {
     // Given
     UIColor *barTintDynamicColor =
-    [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
-      if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
-        return UIColor.blackColor;
-      } else {
-        return UIColor.purpleColor;
-      }
-    }];
+        [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
+          if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
+            return UIColor.blackColor;
+          } else {
+            return UIColor.purpleColor;
+          }
+        }];
     UIColor *shadowDynamicColor =
-    [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
-      if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
-        return UIColor.blackColor;
-      } else {
-        return UIColor.blueColor;
-      }
-    }];
+        [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
+          if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
+            return UIColor.blackColor;
+          } else {
+            return UIColor.blueColor;
+          }
+        }];
     self.appBar.barTintColor = barTintDynamicColor;
     self.appBar.shadowColor = shadowDynamicColor;
 
