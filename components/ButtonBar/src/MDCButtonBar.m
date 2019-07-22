@@ -175,7 +175,8 @@ static NSString *const kEnabledSelector = @"enabled";
   [super traitCollectionDidChange:previousTraitCollection];
 
   const BOOL isPad = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad;
-  if (isPad && self.traitCollection.horizontalSizeClass != previousTraitCollection.horizontalSizeClass) {
+  if (isPad &&
+      self.traitCollection.horizontalSizeClass != previousTraitCollection.horizontalSizeClass) {
     [self reloadButtonViews];
   }
 

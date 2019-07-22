@@ -43,16 +43,15 @@
 - (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
   // Given
   XCTestExpectation *expectation =
-  [[XCTestExpectation alloc] initWithDescription:@"traitCollectionDidChange"];
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollectionDidChange"];
   __block UITraitCollection *passedTraitCollection;
   __block MDCButtonBar *passedButtonBar;
   self.buttonBar.traitCollectionDidChangeBlock =
-  ^(MDCButtonBar *_Nonnull buttonBar,
-    UITraitCollection *_Nullable previousTraitCollection) {
-    [expectation fulfill];
-    passedTraitCollection = previousTraitCollection;
-    passedButtonBar = buttonBar;
-  };
+      ^(MDCButtonBar *_Nonnull buttonBar, UITraitCollection *_Nullable previousTraitCollection) {
+        [expectation fulfill];
+        passedTraitCollection = previousTraitCollection;
+        passedButtonBar = buttonBar;
+      };
   UITraitCollection *testTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
 
   // When
@@ -63,6 +62,5 @@
   XCTAssertEqual(passedTraitCollection, testTraitCollection);
   XCTAssertEqual(passedButtonBar, self.buttonBar);
 }
-
 
 @end
