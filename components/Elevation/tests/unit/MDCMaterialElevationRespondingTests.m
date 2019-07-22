@@ -81,7 +81,8 @@
   if (self.superview) {
     if ([self.superview conformsToProtocol:@protocol(MDCElevation)]) {
       UIView<MDCElevation> *superview = (UIView<MDCElevation> *)self.superview;
-      return superview.mdc_currentElevation + superview.mdc_baseElevation + self.mdc_currentElevation;
+      return superview.mdc_currentElevation + superview.mdc_baseElevation +
+             self.mdc_currentElevation;
     }
     return self.superview.mdc_baseElevation + self.mdc_currentElevation;
   }
