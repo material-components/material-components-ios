@@ -78,7 +78,13 @@
 @implementation MDCConformingMDCElevationOverrideViewSubclass
 
 - (CGFloat)mdc_overrideBaseElevation {
-  return self.mdc_baseElevation;
+  if (self.superview) {
+    if ([self.superview conformsToProtocol:@protocol(MDCElevation)]) {
+      return self.superview.mdc_
+    }
+    return self.superview.mdc_baseElevation + self.superview.mdc_currentElevation;
+  }
+  return 0;
 }
 
 @end
