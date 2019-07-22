@@ -91,7 +91,7 @@
 @end
 
 /**
- Used for testing @c MaterialElevationResponding category on @c UIView.
+ Tests for the @c MaterialElevationResponding category on @c UIView.
  */
 @interface MDCMaterialElevationRespondingTests : XCTestCase
 @property(nonatomic, strong, nullable) UIView *view;
