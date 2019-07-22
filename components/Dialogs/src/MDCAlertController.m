@@ -124,6 +124,13 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   return self;
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
+}
+
 /* Disable setter. Always use internal transition controller */
 - (void)setTransitioningDelegate:
     (__unused id<UIViewControllerTransitioningDelegate>)transitioningDelegate {
