@@ -80,9 +80,9 @@
 - (CGFloat)mdc_overrideBaseElevation {
   if (self.superview) {
     if ([self.superview conformsToProtocol:@protocol(MDCElevation)]) {
-      return self.superview.mdc_
+      UIView<MDCElevation> *superview = (UIView<MDCElevation> *)self.superview;
+      return superview.mdc_baseElevation + superview.mdc_currentElevation;
     }
-    return self.superview.mdc_baseElevation + self.superview.mdc_currentElevation;
   }
   return 0;
 }
