@@ -31,7 +31,7 @@
 @end
 
 /**
- A Snapshot test case for testing MDCTabBarWithCustomTraitCollection
+ A Snapshot test case for testing MDCTabBarWithCustomTraitCollection's dynamic color support.
  */
 @interface MDCTabBarDynamicColorSnapshotTests : MDCSnapshotTestCase
 
@@ -53,7 +53,7 @@
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  //  self.recordMode = YES;
+  //    self.recordMode = YES;
 
   self.tabBar = [[MDCTabBarWithCustomTraitCollection alloc] init];
   self.tabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;
@@ -93,11 +93,11 @@
 
   self.containerScheme = [[MDCContainerScheme alloc] init];
   self.containerScheme.colorScheme =
-      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201907];
 
 #if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
-    UIColor *dynamicTintColor =
+    UIColor *dynamicOnPrimary =
         [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
           if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
             return UIColor.greenColor;
@@ -105,7 +105,7 @@
             return UIColor.yellowColor;
           }
         }];
-    self.tabBar.tintColor = dynamicTintColor;
+    self.containerScheme.colorScheme.onPrimaryColor = dynamicOnPrimary;
 
     UIColor *dynamicBadgeColor =
         [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
@@ -141,13 +141,31 @@
   [self snapshotVerifyView:snapshotView];
 }
 
-- (void)testDynamicColorSupport {
+- (void)testColorSchemeDefaultsWithLightUserInterfaceStyle {
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+  if (@available(iOS 13.0, *)) {
+    // When
+    [self.tabBar applyPrimaryThemeWithScheme:self.containerScheme];
+    self.tabBar.items = @[ self.item1, self.item2, self.item3, self.item4 ];
+    self.tabBar.frame = CGRectMake(0, 0, 480, 100);
+    [self.tabBar sizeToFit];
+    [self.tabBar layoutIfNeeded];
+
+    // Then
+    UIView *snapshotView = [self.tabBar mdc_addToBackgroundView];
+    [self snapshotVerifyViewForIOS13:snapshotView];
+  }
+#endif
+}
+
+- (void)testColorSchemeDefaultsWithDarkUserInterfaceStyle {
 #if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     // When
     self.tabBar.traitCollectionOverride =
         [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
     self.tabBar.items = @[ self.item1, self.item2, self.item3, self.item4 ];
+    [self.tabBar applyPrimaryThemeWithScheme:self.containerScheme];
     self.tabBar.frame = CGRectMake(0, 0, 480, 100);
     [self.tabBar sizeToFit];
     [self.tabBar layoutIfNeeded];
