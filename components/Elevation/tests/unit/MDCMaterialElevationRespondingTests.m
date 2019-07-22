@@ -316,4 +316,72 @@
                              0.001);
 }
 
+// + self.overrideElevationView
+//   + self.view
+//     + self.elevationView
+- (void)testElevationViewInUIViewInOverrideView {
+  // Given
+  CGFloat fakeElevation = 3;
+  CGFloat fakeOverrideElevation = 7;
+  self.elevationOverrideView.elevation = fakeElevation;
+  self.elevationOverrideView.mdc_overrideBaseElevation = fakeOverrideElevation;
+
+  // When
+  [self.elevationOverrideView addSubview:self.view];
+  [self.view addSubview:self.elevationView];
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.elevationView.mdc_baseElevation, fakeOverrideElevation, 0.001);
+}
+
+// + self.elevationView
+//   + self.view
+//     + self.elevationOverrideView
+- (void)testElevationOverrideViewInUIViewInElevationView {
+  // Given
+  CGFloat fakeElevation = 100;
+  CGFloat fakeOverideElevation = 3;
+  self.elevationView.elevation = fakeElevation;
+  self.elevationOverrideView.mdc_overrideBaseElevation = fakeOverideElevation;
+
+  // When
+  [self.elevationView addSubview:self.view];
+  [self.view addSubview:self.elevationOverrideView];
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.elevationOverrideView.mdc_baseElevation, fakeOverideElevation,
+                             0.001);
+}
+
+// + self.view
+//   + self.elevationView
+- (void)testElevationViewInUIView {
+  // Given
+  CGFloat fakeElevation = 3;
+  self.elevationView.elevation = fakeElevation;
+
+  // When
+  [self.view addSubview:self.elevationView];
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.elevationView.mdc_baseElevation, 0, 0.001);
+}
+
+// + self.view
+//   - self.elevationOverrideView
+- (void)testElevationOverrideViewInUIView {
+  // Given
+  CGFloat fakeElevation = 3;
+  CGFloat fakeElevationOverride = 7;
+  self.elevationOverrideView.elevation = fakeElevation;
+  self.elevationOverrideView.mdc_overrideBaseElevation = fakeElevationOverride;
+
+  // When
+  [self.view addSubview:self.elevationOverrideView];
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.elevationOverrideView.mdc_baseElevation, fakeElevationOverride,
+                             0.001);
+}
+
 @end
