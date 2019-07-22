@@ -24,11 +24,11 @@ class MDCDialogPresentationControllerTests: XCTestCase {
                                         presenting: UIViewController())
     let expectation = XCTestExpectation(description: "traitCollectionDidChange")
     var passedTraitCollection: UITraitCollection!
-    var passedAlertController: MDCDialogPresentationController!
+    var passedPresentationController: MDCDialogPresentationController!
     presentationController.traitCollectionDidChangeBlock = {
-      blockAlertController, previousTraitCollection in
+      blockPresentationController, previousTraitCollection in
       passedTraitCollection = previousTraitCollection
-      passedAlertController = blockAlertController
+      passedPresentationController = blockPresentationController
           expectation.fulfill()
     }
     let traitCollection = UITraitCollection(displayScale: 7)
@@ -39,6 +39,6 @@ class MDCDialogPresentationControllerTests: XCTestCase {
     // Then
     wait(for: [expectation], timeout: 1)
     XCTAssertEqual(passedTraitCollection, traitCollection)
-    XCTAssertEqual(passedAlertController, presentationController)
+    XCTAssertEqual(passedPresentationController, presentationController)
   }
 }
