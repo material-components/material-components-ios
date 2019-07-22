@@ -31,8 +31,7 @@
 @end
 
 /**
- A Snapshot test case for testing MDCChipViewWithCustomTraitCollection   the @c traitCollection
- property.
+ A Snapshot test case for testing MDCChipViewWithCustomTraitCollection
  */
 @interface MDCChipViewCustomTraitCollectionSnapshotTests : MDCSnapshotTestCase
 
@@ -103,12 +102,11 @@
     [self.chip setShadowColor:dynamicShadowColor forState:UIControlStateHighlighted];
     [self.chip setBorderColor:dynamicBorderColor forState:UIControlStateHighlighted];
     [self.chip setBackgroundColor:dynamicBackgroundColor forState:UIControlStateHighlighted];
+    self.chip.highlighted = YES;
 
     // When
     self.chip.traitCollectionOverride =
         [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
-
-    self.chip.highlighted = YES;
 
     // Then
     [self.chip sizeToFit];
