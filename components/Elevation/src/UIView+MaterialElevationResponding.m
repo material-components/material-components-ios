@@ -21,13 +21,20 @@
 - (CGFloat)mdc_baseElevation {
   CGFloat totalElevation = 0;
 
+  if ([self conformsToProtocol:@protocol(MDCElevation)]) {
+    id<MDCElevation> elevatableSelf = (id<MDCElevation>)self;
+    if ([elevatableSelf respondsToSelector:@selector(mdc_overrideBaseElevation)]) {
+      return elevatableSelf.mdc_overrideBaseElevation;
+    }
+  }
+
   if (!self.superview) {
     return totalElevation;
   }
-  UIView *superView = self.superview;
+  UIView *current = self.superview;
 
-  while (superView != nil) {
-    id<MDCElevation> elevatableCurrent = [superView conformingObjectInResponderChain];
+  while (current != nil) {
+    id<MDCElevation> elevatableCurrent = [current conformingObjectInResponderChain];
     if (elevatableCurrent) {
       if ([elevatableCurrent respondsToSelector:@selector(mdc_overrideBaseElevation)]) {
         totalElevation += elevatableCurrent.mdc_overrideBaseElevation;
@@ -35,7 +42,7 @@
       }
       totalElevation += elevatableCurrent.mdc_currentElevation;
     }
-    superView = superView.superview;
+    current = current.superview;
   }
   return totalElevation;
 }
