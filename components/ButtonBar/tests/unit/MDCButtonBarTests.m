@@ -16,13 +16,14 @@
 
 #import "MaterialButtonBar.h"
 
-@interface ButtonBarTests : XCTestCase
+/// Unit tests for MDCButtonBar.
+@interface MDCButtonBarTests : XCTestCase
 
 @property(nonatomic, strong, nullable) MDCButtonBar *buttonBar;
 
 @end
 
-@implementation ButtonBarTests
+@implementation MDCButtonBarTests
 
 - (void)setUp {
   [super setUp];
