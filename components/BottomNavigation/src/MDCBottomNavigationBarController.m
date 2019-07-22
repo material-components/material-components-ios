@@ -356,7 +356,10 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
 
 /**
  Adjusts all relevant insets in subviews and the selected child view controller. This include @c
- safeAreaInsets and scroll view insets.
+ safeAreaInsets and scroll view insets.  This will ensure that although the child view controller's
+ view is positioned behind the bar, it can still lay out its content above the Bottom Navigation
+ bar.  For a UIScrollView, this means manipulating both @c contentInset and
+ @c scrollIndicatorInsets.
  */
 - (void)updateNavigationBarInsets {
   UIEdgeInsets currentSafeAreaInsets = UIEdgeInsetsZero;
