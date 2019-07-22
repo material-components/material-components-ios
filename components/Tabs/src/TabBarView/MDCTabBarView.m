@@ -127,6 +127,9 @@ typedef NS_ENUM(NSUInteger, MDCTabBarViewInternalLayoutStyle) {
     _selectionIndicatorView.translatesAutoresizingMaskIntoConstraints = NO;
     _selectionIndicatorView.userInteractionEnabled = NO;
     _selectionIndicatorView.tintColor = UIColor.blackColor;
+    _selectionIndicatorView.indicatorPathAnimationDuration = kSelectionChangeAnimationDuration;
+    _selectionIndicatorView.indicatorPathTimingFunction =
+        [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
 
     _selectionIndicatorTemplate = [[MDCTabBarViewUnderlineIndicatorTemplate alloc] init];
 
@@ -445,6 +448,14 @@ typedef NS_ENUM(NSUInteger, MDCTabBarViewInternalLayoutStyle) {
   }
   CGRect frame = CGRectStandardize(self.itemViews[index].frame);
   return [coordinateSpace convertRect:frame fromCoordinateSpace:self];
+}
+
+- (CFTimeInterval)selectionChangeAnimationDuration {
+  return kSelectionChangeAnimationDuration;
+}
+
+- (CAMediaTimingFunction *)selectionChangeAnimationTimingFunction {
+  return [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
 }
 
 #pragma mark - Key-Value Observing (KVO)
@@ -922,9 +933,9 @@ typedef NS_ENUM(NSUInteger, MDCTabBarViewInternalLayoutStyle) {
         [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
     // Wrap in explicit CATransaction to allow layer-based animations with the correct duration.
     [CATransaction begin];
-    [CATransaction setAnimationDuration:kSelectionChangeAnimationDuration];
+    [CATransaction setAnimationDuration:self.selectionChangeAnimationDuration];
     [CATransaction setAnimationTimingFunction:easeInOutFunction];
-    [UIView animateWithDuration:kSelectionChangeAnimationDuration
+    [UIView animateWithDuration:self.selectionChangeAnimationDuration
                           delay:0
                         options:UIViewAnimationOptionBeginFromCurrentState
                      animations:animationBlock
