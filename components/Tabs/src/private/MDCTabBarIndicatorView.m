@@ -66,6 +66,12 @@
 
 @implementation MDCTabBarIndicatorShapeView
 
+- (void)layoutSubviews {
+  [super layoutSubviews];
+
+  [self updateShapeLayerFillColor];
+}
+
 - (UIBezierPath *)path {
   CAShapeLayer *shapeLayer = (CAShapeLayer *)self.layer;
   CGPathRef cgPath = shapeLayer.path;
@@ -97,7 +103,10 @@
 - (void)tintColorDidChange {
   [super tintColorDidChange];
 
-  // Update layer fill color
+  [self updateShapeLayerFillColor];
+}
+
+- (void)updateShapeLayerFillColor {
   CAShapeLayer *shapeLayer = (CAShapeLayer *)self.layer;
   shapeLayer.fillColor = self.tintColor.CGColor;
 }
