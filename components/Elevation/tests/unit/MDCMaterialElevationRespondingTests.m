@@ -148,6 +148,8 @@
   [super tearDown];
 }
 
+// + self.elevationView
+//   - self.view
 - (void)testViewInElevationView {
   // Given
   CGFloat fakeElevation = 3;
@@ -160,6 +162,9 @@
   XCTAssertEqualWithAccuracy(self.view.mdc_baseElevation, fakeElevation, 0.001);
 }
 
+// + self.elevationView
+//   + middleView
+//     - self.view
 - (void)testViewInNonElevationViewInElevationView {
   // Given
   UIView *middleView = [[UIView alloc] init];
@@ -174,6 +179,8 @@
   XCTAssertEqualWithAccuracy(self.view.mdc_baseElevation, fakeElevation, 0.001);
 }
 
+// + self.elevationOverrideView
+//   - self.view
 - (void)testViewInElevationOverrideView {
   // Given
   CGFloat fakeElevation = 3;
@@ -187,6 +194,9 @@
   XCTAssertEqualWithAccuracy(self.view.mdc_baseElevation, fakeElevation, 0.001);
 }
 
+// + self.elevationOverrideView
+//   + middleView
+//     - self.view
 - (void)testViewInNonElevationViewInElevationOverrideView {
   // Given
   UIView *middleView = [[UIView alloc] init];
@@ -202,6 +212,9 @@
   XCTAssertEqualWithAccuracy(self.view.mdc_baseElevation, fakeElevation, 0.001);
 }
 
+// + self.elevationOverrideView
+//   + self.elevationView
+//     - self.view
 - (void)testViewInElevationViewInElevationOverrideView {
   // Given
   CGFloat fakeElevation = 3;
@@ -217,6 +230,8 @@
   XCTAssertEqual(self.view.mdc_baseElevation, fakeElevation + fakeElevationOverride);
 }
 
+// + self.elevationViewController
+//   - self.view
 - (void)testViewInElevationViewController {
   // Given
   CGFloat fakeElevation = 3;
@@ -229,6 +244,8 @@
   XCTAssertEqualWithAccuracy(self.view.mdc_baseElevation, fakeElevation, 0.001);
 }
 
+// + self.elevationOverrideViewController
+//   - self.view
 - (void)testViewInElevationOverrideViewController {
   // Given
   CGFloat fakeElevation = 3;
@@ -242,6 +259,9 @@
   XCTAssertEqualWithAccuracy(self.view.mdc_baseElevation, fakeElevation, 0.001);
 }
 
+// + self.elevationViewController
+//   + middleView
+//     - self.view
 - (void)testViewInUIViewInElevationViewController {
   // Given
   CGFloat fakeElevation = 3;
@@ -249,13 +269,16 @@
   UIView *middleView = [[UIView alloc] init];
 
   // When
-  [middleView addSubview:self.view];
   [self.elevationViewController.view addSubview:middleView];
+  [middleView addSubview:self.view];
 
   // Then
   XCTAssertEqualWithAccuracy(self.view.mdc_baseElevation, fakeElevation, 0.001);
 }
 
+// + self.elevationOverrideViewController
+//   + self.middleView
+//     - self.view
 - (void)testViewInUIViewInElevationOverrideViewController {
   // Given
   CGFloat fakeElevation = 3;
@@ -264,13 +287,16 @@
   UIView *middleView = [[UIView alloc] init];
 
   // When
-  [middleView addSubview:self.view];
   [self.elevationOverrideViewController.view addSubview:middleView];
+  [middleView addSubview:self.view];
 
   // Then
   XCTAssertEqualWithAccuracy(self.view.mdc_baseElevation, fakeElevation, 0.001);
 }
 
+// + self.elevationView
+//   + subclassView
+//     - self.view
 - (void)testViewInElevationOverrideSubclassView {
   // Given
   CGFloat fakeElevationOne = 3;
