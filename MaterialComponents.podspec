@@ -11,7 +11,6 @@ Pod::Spec.new do |mdc|
                        :tag => "v#{mdc.version}" }
   mdc.platform     = :ios
   mdc.requires_arc = true
-  mdc.swift_version = '4.2'
   mdc.ios.deployment_target = '9.0'
 
   # # Subspec explanation

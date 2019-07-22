@@ -393,10 +393,10 @@ run_cocoapods() {
     cd github/repo
 
     gem_install xcpretty 
-    echo "running gem install cocoapods-clean..."
-    gem install cocoapods-clean
-    pod clean
-    pod cache clean --all
+    # echo "running gem install cocoapods-clean..."
+    # gem install cocoapods-clean
+    # pod clean
+    # pod cache clean --all
 
     # Install git-lfs
     brew_install git-lfs
