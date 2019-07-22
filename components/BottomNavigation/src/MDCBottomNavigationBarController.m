@@ -100,11 +100,6 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
   }
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-  [super viewDidAppear:animated];
-  [self updateNavigationBarInsets];
-}
-
 - (void)viewSafeAreaInsetsDidChange {
   if (@available(iOS 11.0, *)) {
     [super viewSafeAreaInsetsDidChange];
@@ -359,6 +354,10 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
   [self updateNavigationBarInsets];
 }
 
+/**
+ Adjusts all relevant insets in subviews and the selected child view controller. This include @c
+ safeAreaInsets and scroll view insets.
+ */
 - (void)updateNavigationBarInsets {
   UIEdgeInsets currentSafeAreaInsets = UIEdgeInsetsZero;
   CGFloat navigationBarHeight = CGRectGetHeight(self.navigationBar.frame);
