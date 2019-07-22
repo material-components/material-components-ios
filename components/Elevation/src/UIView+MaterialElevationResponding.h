@@ -22,7 +22,8 @@
 @interface UIView (MaterialElevationResponding)
 
 /**
- Returns the sum of superview @c mdc_currentElevation recursively.
+ Returns the sum of all @c mdc_currentElevation of the superviews going up the view hierarchy
+ recursively.
 
  @note If a view in the heirarchy responds to @c mdc_overrideBaseElevation the sum of the current
  total plus that value is returned.
