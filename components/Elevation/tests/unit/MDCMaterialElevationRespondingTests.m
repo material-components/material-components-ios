@@ -71,6 +71,18 @@
 
 @end
 
+@interface MDCConformingMDCElevationOverrideViewSubclass : MDCConformingMDCElevationOverrideView
+
+@end
+
+@implementation MDCConformingMDCElevationOverrideViewSubclass
+
+- (CGFloat)mdc_overrideBaseElevation {
+  return self.mdc_baseElevation;
+}
+
+@end
+
 /**
  Used for testing @c UIViewControllers that conform to @c MDCElevation and do respond to @c
  mdc_overrideBaseElevation.
@@ -250,6 +262,24 @@
 
   // Then
   XCTAssertEqualWithAccuracy(self.view.mdc_baseElevation, fakeElevation, 0.001);
+}
+
+- (void)testViewInElevationOverrideSubclassView {
+  // Given
+  CGFloat fakeElevationOne = 3;
+  CGFloat fakeElevationTwo = 10;
+  MDCConformingMDCElevationOverrideViewSubclass *subclassView =
+      [[MDCConformingMDCElevationOverrideViewSubclass alloc] init];
+  subclassView.elevation = fakeElevationOne;
+  self.elevationView.elevation = fakeElevationTwo;
+
+  // When
+  [self.elevationView addSubview:subclassView];
+  [subclassView addSubview:self.view];
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.view.mdc_baseElevation, fakeElevationOne + fakeElevationTwo,
+                             0.001);
 }
 
 @end
