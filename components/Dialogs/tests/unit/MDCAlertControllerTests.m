@@ -418,15 +418,16 @@
   // Given
   MDCAlertController *alertController = [[MDCAlertController alloc] init];
   XCTestExpectation *expectation =
-  [[XCTestExpectation alloc] initWithDescription:@"traitCollectionDidChange"];
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollectionDidChange"];
   __block UITraitCollection *passedTraitCollection;
   __block MDCAlertController *passedAlertController;
   alertController.traitCollectionDidChangeBlock =
-  ^(MDCAlertController *_Nonnull blockAlertController, UITraitCollection *_Nullable previousTraitCollection) {
-    [expectation fulfill];
-    passedTraitCollection = previousTraitCollection;
-    passedAlertController = blockAlertController;
-  };
+      ^(MDCAlertController *_Nonnull blockAlertController,
+        UITraitCollection *_Nullable previousTraitCollection) {
+        [expectation fulfill];
+        passedTraitCollection = previousTraitCollection;
+        passedAlertController = blockAlertController;
+      };
   UITraitCollection *testTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
 
   // When
