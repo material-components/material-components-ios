@@ -31,9 +31,6 @@ class BottomNavigationControllerExampleScrollableChildViewController: UICollecti
     if #available(iOS 11.0, *) {
       collectionView.contentInsetAdjustmentBehavior = .always
       collectionView.insetsLayoutMarginsFromSafeArea = true
-    } else {
-      self.automaticallyAdjustsScrollViewInsets = true
-      collectionView?.preservesSuperviewLayoutMargins = true
     }
   }
 
