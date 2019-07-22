@@ -83,6 +83,9 @@ static const int kMDCButtonAnimationDuration = 200;
   [self addFloatingButton];
   [self addBottomBarLayer];
   [self addNavBar];
+
+  self.barTintColor = UIColor.whiteColor;
+  self.shadowColor = UIColor.blackColor;
 }
 
 - (void)addFloatingButton {
