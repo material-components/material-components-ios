@@ -95,6 +95,7 @@
     if ([layer isKindOfClass:[MDCInkLayer class]]) {
       MDCInkLayer *inkLayer = (MDCInkLayer *)layer;
       inkLayer.bounds = inkBounds;
+      inkLayer.fillColor = self.inkColor.CGColor;
     }
   }
 }

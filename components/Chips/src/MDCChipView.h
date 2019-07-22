@@ -335,4 +335,11 @@
 - (void)setTitleColor:(nullable UIColor *)titleColor
              forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
+/**
+ A block that is invoked when the MDCChipView receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCChipView *_Nonnull activityIndicator, UITraitCollection *_Nullable previousTraitCollection);
+
 @end
