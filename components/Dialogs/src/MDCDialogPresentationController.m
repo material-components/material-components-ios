@@ -115,6 +115,13 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
   [self unregisterKeyboardNotifications];
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
+}
+
 - (CGRect)frameOfPresentedViewInContainerView {
   CGRect containerBounds = CGRectStandardize(self.containerView.bounds);
 
