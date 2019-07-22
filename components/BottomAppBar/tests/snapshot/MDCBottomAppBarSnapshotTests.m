@@ -193,7 +193,7 @@
     CGSize aSize = [self.appBar sizeThatFits:CGSizeMake(360, INFINITY)];
     self.appBar.bounds = CGRectMake(0, 0, aSize.width, aSize.height);
     [self.appBar layoutIfNeeded];
-    UIView *snapshotView = [self.appBar mdc_addToBackgroundView];
+    UIView *snapshotView = [self.appBar mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(50, 50, 50, 50)];
     [self snapshotVerifyViewForIOS13:snapshotView];
   }
 #endif
