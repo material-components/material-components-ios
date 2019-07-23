@@ -106,6 +106,12 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
   [self updateNavigationBarInsets];
 }
 
+- (void)viewDidLayoutSubviews {
+  [super viewDidLayoutSubviews];
+
+  [self updateNavigationBarInsets];
+}
+
 - (void)setSelectedViewController:(nullable UIViewController *)selectedViewController {
   // Assert that the given VC is one of our view controllers or it is nil (we are unselecting)
   NSAssert(
@@ -151,14 +157,6 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
   // Update the selected index value and views.
   _selectedIndex = selectedIndex;
   [self updateViewsForSelectedIndex:selectedIndex];
-}
-
-- (void)removeExistingViewControllers {
-  NSArray<UIViewController *> *childViewControllers = self.childViewControllers;
-  for (UIViewController *childViewController in childViewControllers) {
-    [childViewController.view removeFromSuperview];
-    [childViewController removeFromParentViewController];
-  }
 }
 
 - (void)addNewChildViewControllers:(NSArray<UIViewController *> *)newChildViewControllers {
@@ -353,10 +351,12 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
 
 #pragma mark - Private Methods
 
-- (void)viewDidLayoutSubviews {
-  [super viewDidLayoutSubviews];
-
-  [self updateNavigationBarInsets];
+- (void)removeExistingViewControllers {
+  NSArray<UIViewController *> *childViewControllers = self.childViewControllers;
+  for (UIViewController *childViewController in childViewControllers) {
+    [childViewController.view removeFromSuperview];
+    [childViewController removeFromParentViewController];
+  }
 }
 
 /**
