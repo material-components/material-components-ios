@@ -76,6 +76,8 @@ Replace this text with example code for each new feature.
 * [Add elevationDidChangeBlock to MDCElevation protocol (#7962)](https://github.com/material-components/material-components-ios/commit/c1ab40b72f1a56cefc793be095145699fefb3374) (Cody Weaver)
 * [Add property mdc_overrideElevation property (#7965)](https://github.com/material-components/material-components-ios/commit/0c0d26356bfdc4de6a57ca9a77cbebbb5545c285) (Cody Weaver)
 * [Add second protocol for overrides (#8034)](https://github.com/material-components/material-components-ios/commit/26a6a9139a1c83177c50034d93d667e04f882944) (Cody Weaver)
+* [Add MDCElevationOverride to umbrella header (#8052)](https://github.com/material-components/material-components-ios/commit/eab643ea8c0afb928b014af3dea88992fd1218b5) (Robert Moore)
+* [Improve protocol naming (#8055)](https://github.com/material-components/material-components-ios/commit/d9d038130a30fc57be90bc87ff04218a1ba1a721) (Yarden Eitan)
 
 ### FeatureHighlight
 
