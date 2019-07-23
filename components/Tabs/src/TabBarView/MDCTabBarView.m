@@ -652,8 +652,6 @@ typedef NS_ENUM(NSUInteger, MDCTabBarViewInternalLayoutStyle) {
       return MDCTabBarViewInternalLayoutStyleFixedClusteredCentered;
     }
   }
-  // Unreachable
-  return MDCTabBarViewInternalLayoutStyleFixedJustified;
 }
 
 - (void)layoutSubviewsForJustifiedLayout {
@@ -742,7 +740,6 @@ typedef NS_ENUM(NSUInteger, MDCTabBarViewInternalLayoutStyle) {
       return [self intrinsicContentSizeForClusteredFixedLayout];
     }
   }
-  return [self intrinsicContentSizeForJustifiedLayout];
 }
 
 - (CGSize)calculatedContentSize {
