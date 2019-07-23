@@ -73,6 +73,18 @@ typedef NS_ENUM(NSUInteger, MDCTabBarViewInternalLayoutStyle) {
    */
   MDCTabBarViewInternalLayoutStyleFixedClusteredCentered = 2,
 
+  /**
+   Items are equally-sized where each of the items is the width of the widest item. The items are
+   positioned at the leading edge of the bar. The bar is not scrollable.
+   */
+  MDCTabBarViewInternalLayoutStyleFixedClusteredLeading = 3,
+
+  /**
+   Items are equally-sized where each of the items is the width of the widest item. The items are
+   positioned at the trailing edge of the bar. The bar is not scrollable.
+   */
+  MDCTabBarViewInternalLayoutStyleFixedClusteredTrailing = 4,
+
 };
 
 @interface MDCTabBarView ()
@@ -120,6 +132,7 @@ typedef NS_ENUM(NSUInteger, MDCTabBarViewInternalLayoutStyle) {
     _stateToImageTintColor = [NSMutableDictionary dictionary];
     _stateToTitleColor = [NSMutableDictionary dictionary];
     _stateToTitleFont = [NSMutableDictionary dictionary];
+    _preferredLayoutStyle = MDCTabBarViewLayoutStyleFixed;
     self.backgroundColor = UIColor.whiteColor;
     self.showsHorizontalScrollIndicator = NO;
 
@@ -190,6 +203,12 @@ typedef NS_ENUM(NSUInteger, MDCTabBarViewInternalLayoutStyle) {
 
 - (UIColor *)bottomDividerColor {
   return self.bottomDividerView.backgroundColor;
+}
+
+- (void)setPreferredLayoutStyle:(MDCTabBarViewLayoutStyle)preferredLayoutStyle {
+  _preferredLayoutStyle = preferredLayoutStyle;
+  [self setNeedsLayout];
+  [self invalidateIntrinsicContentSize];
 }
 
 - (void)setItems:(NSArray<UITabBarItem *> *)items {
@@ -582,8 +601,10 @@ typedef NS_ENUM(NSUInteger, MDCTabBarViewInternalLayoutStyle) {
       [self layoutSubviewsForJustifiedLayout];
       break;
     }
-    case MDCTabBarViewInternalLayoutStyleFixedClusteredCentered: {
-      [self layoutSubviewsForFixedClusteredCenteredLayout];
+    case MDCTabBarViewInternalLayoutStyleFixedClusteredCentered:
+    case MDCTabBarViewInternalLayoutStyleFixedClusteredTrailing:
+    case MDCTabBarViewInternalLayoutStyleFixedClusteredLeading: {
+      [self layoutSubviewsForFixedClusteredLayout:[self layoutStyle]];
       break;
     }
     case MDCTabBarViewInternalLayoutStyleScrollable: {
@@ -623,12 +644,40 @@ typedef NS_ENUM(NSUInteger, MDCTabBarViewInternalLayoutStyle) {
 
   CGSize availableSize = [self availableSizeForSubviewLayout];
   CGFloat requiredWidthForJustifiedLayout = [self intrinsicContentSizeForJustifiedLayout].width;
-  if (availableSize.width < requiredWidthForJustifiedLayout) {
-    return MDCTabBarViewInternalLayoutStyleScrollable;
+  CGFloat requiredWidthForClusteredLayout = [self intrinsicContentSizeForClusteredLayout].width;
+  switch (self.preferredLayoutStyle) {
+    case MDCTabBarViewLayoutStyleScrollable: {
+      return MDCTabBarViewInternalLayoutStyleScrollable;
+    }
+    case MDCTabBarViewLayoutStyleFixed: {
+      if (availableSize.width < requiredWidthForJustifiedLayout) {
+        return MDCTabBarViewInternalLayoutStyleScrollable;
+      }
+      if ((availableSize.width / self.items.count) > kMaxItemWidth) {
+        return MDCTabBarViewInternalLayoutStyleFixedClusteredCentered;
+      }
+      return MDCTabBarViewInternalLayoutStyleFixedJustified;
+    }
+    case MDCTabBarViewLayoutStyleFixedClusteredCentered: {
+      if (availableSize.width < requiredWidthForClusteredLayout) {
+        return MDCTabBarViewInternalLayoutStyleScrollable;
+      }
+      return MDCTabBarViewInternalLayoutStyleFixedClusteredCentered;
+    }
+    case MDCTabBarViewLayoutStyleFixedClusteredLeading: {
+      if (availableSize.width < requiredWidthForClusteredLayout) {
+        return MDCTabBarViewInternalLayoutStyleScrollable;
+      }
+      return MDCTabBarViewInternalLayoutStyleFixedClusteredLeading;
+    }
+    case MDCTabBarViewLayoutStyleFixedClusteredTrailing: {
+      if (availableSize.width < requiredWidthForClusteredLayout) {
+        return MDCTabBarViewInternalLayoutStyleScrollable;
+      }
+      return MDCTabBarViewInternalLayoutStyleFixedClusteredTrailing;
+    }
   }
-  if ((availableSize.width / self.items.count) > kMaxItemWidth) {
-    return MDCTabBarViewInternalLayoutStyleFixedClusteredCentered;
-  }
+  // Unreachable
   return MDCTabBarViewInternalLayoutStyleFixedJustified;
 }
 
@@ -653,7 +702,7 @@ typedef NS_ENUM(NSUInteger, MDCTabBarViewInternalLayoutStyle) {
   }
 }
 
-- (void)layoutSubviewsForFixedClusteredCenteredLayout {
+- (void)layoutSubviewsForFixedClusteredLayout:(MDCTabBarViewInternalLayoutStyle)layoutStyle {
   if (self.itemViews.count == 0) {
     return;
   }
@@ -664,7 +713,19 @@ typedef NS_ENUM(NSUInteger, MDCTabBarViewInternalLayoutStyle) {
   CGSize contentSize = [self availableSizeForSubviewLayout];
   CGFloat itemViewWidth = [self estimatedItemViewSizeForClusteredFixedLayout].width;
   CGFloat totalRequiredWidth = itemViewWidth * self.items.count;
-  CGFloat itemViewOriginX = (contentSize.width - totalRequiredWidth) / 2;
+  // Start-out assuming left-aligned because it requires no computation.
+  CGFloat itemViewOriginX = 0;
+  // Right-aligned
+  if ((isRTL && layoutStyle == MDCTabBarViewInternalLayoutStyleFixedClusteredLeading) ||
+      (!isRTL && layoutStyle == MDCTabBarViewInternalLayoutStyleFixedClusteredTrailing)) {
+    itemViewOriginX = CGRectGetMinX([self availableBoundsForSubviewLayout]) +
+                      (contentSize.width - totalRequiredWidth);
+  }
+  // Centered
+  else if (layoutStyle == MDCTabBarViewInternalLayoutStyleFixedClusteredCentered) {
+    itemViewOriginX = (contentSize.width - totalRequiredWidth) / 2;
+  }
+
   CGFloat itemViewOriginY = 0;
   CGFloat itemViewHeight = contentSize.height;
   NSEnumerator<UIView *> *itemViewEnumerator =
@@ -680,7 +741,15 @@ typedef NS_ENUM(NSUInteger, MDCTabBarViewInternalLayoutStyle) {
   BOOL isRTL =
       self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
 
-  CGFloat itemViewOriginX = isRTL ? 0 : kScrollableTabsLeadingEdgeInset;
+  CGFloat itemViewOriginX = kScrollableTabsLeadingEdgeInset;
+  if (isRTL) {
+    CGFloat requiredBarSize = [self intrinsicContentSizeForScrollableLayout].width;
+    CGFloat boundsBarDiff = [self availableSizeForSubviewLayout].width - requiredBarSize;
+    itemViewOriginX = CGRectGetMinX([self availableBoundsForSubviewLayout]);
+    if (boundsBarDiff > 0) {
+      itemViewOriginX += boundsBarDiff;
+    }
+  }
   CGFloat itemViewOriginY = 0;
   CGFloat itemViewHeight = [self availableSizeForSubviewLayout].height;
   NSEnumerator<UIView *> *itemViewEnumerator =
@@ -699,6 +768,19 @@ typedef NS_ENUM(NSUInteger, MDCTabBarViewInternalLayoutStyle) {
 }
 
 - (CGSize)intrinsicContentSize {
+  switch (self.preferredLayoutStyle) {
+    case MDCTabBarViewLayoutStyleFixed: {
+      return [self intrinsicContentSizeForJustifiedLayout];
+    }
+    case MDCTabBarViewLayoutStyleScrollable: {
+      return [self intrinsicContentSizeForScrollableLayout];
+    }
+    case MDCTabBarViewLayoutStyleFixedClusteredLeading:
+    case MDCTabBarViewLayoutStyleFixedClusteredCentered:
+    case MDCTabBarViewLayoutStyleFixedClusteredTrailing: {
+      return [self intrinsicContentSizeForClusteredLayout];
+    }
+  }
   return [self intrinsicContentSizeForJustifiedLayout];
 }
 
@@ -707,8 +789,10 @@ typedef NS_ENUM(NSUInteger, MDCTabBarViewInternalLayoutStyle) {
     case MDCTabBarViewInternalLayoutStyleFixedJustified: {
       return [self intrinsicContentSizeForJustifiedLayout];
     }
-    case MDCTabBarViewInternalLayoutStyleFixedClusteredCentered: {
-      return [self intrinsicContentSizeForClusteredFixedLayout];
+    case MDCTabBarViewInternalLayoutStyleFixedClusteredCentered:
+    case MDCTabBarViewInternalLayoutStyleFixedClusteredTrailing:
+    case MDCTabBarViewInternalLayoutStyleFixedClusteredLeading: {
+      return [self intrinsicContentSizeForClusteredLayout];
     }
     case MDCTabBarViewInternalLayoutStyleScrollable: {
       return [self intrinsicContentSizeForScrollableLayout];
@@ -740,7 +824,7 @@ typedef NS_ENUM(NSUInteger, MDCTabBarViewInternalLayoutStyle) {
   return CGSizeMake(totalWidth, MAX(kMinHeight, maxHeight));
 }
 
-- (CGSize)intrinsicContentSizeForClusteredFixedLayout {
+- (CGSize)intrinsicContentSizeForClusteredLayout {
   if (self.items.count == 0) {
     return CGSizeZero;
   }
@@ -806,7 +890,9 @@ typedef NS_ENUM(NSUInteger, MDCTabBarViewInternalLayoutStyle) {
       }
       return [self estimatedIntrinsicSizeForView:view];
     }
-    case MDCTabBarViewInternalLayoutStyleFixedClusteredCentered: {
+    case MDCTabBarViewInternalLayoutStyleFixedClusteredCentered:
+    case MDCTabBarViewInternalLayoutStyleFixedClusteredTrailing:
+    case MDCTabBarViewInternalLayoutStyleFixedClusteredLeading: {
       return [self estimatedItemViewSizeForClusteredFixedLayout];
     }
     case MDCTabBarViewInternalLayoutStyleScrollable: {
@@ -840,12 +926,16 @@ typedef NS_ENUM(NSUInteger, MDCTabBarViewInternalLayoutStyle) {
   return CGSizeMake(largestWidth, largestHeight);
 }
 
-- (CGSize)availableSizeForSubviewLayout {
-  CGRect availableBounds = self.bounds;
+- (CGRect)availableBoundsForSubviewLayout {
+  CGRect availableBounds = CGRectStandardize(self.bounds);
   if (@available(iOS 11.0, *)) {
     availableBounds = UIEdgeInsetsInsetRect(availableBounds, self.safeAreaInsets);
   }
-  return CGSizeMake(CGRectGetWidth(availableBounds), CGRectGetHeight(availableBounds));
+  return availableBounds;
+}
+
+- (CGSize)availableSizeForSubviewLayout {
+  return [self availableBoundsForSubviewLayout].size;
 }
 
 #pragma mark - Actions
