@@ -95,15 +95,11 @@
 }
 
 - (void)changeToRTLAndArabicWithTitle:(NSString *)title {
-  if (@available(iOS 9.0, *)) {
-    self.navigationBar.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
-  }
+  self.navigationBar.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
   for (UITabBarItem *item in self.navigationBar.items) {
     item.title = title;
-    if (@available(iOS 9.0, *)) {
-      UIView *view = [self.navigationBar viewForItem:item];
-      view.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
-    }
+    UIView *view = [self.navigationBar viewForItem:item];
+    view.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
   }
   self.navigationBar.items[1].badgeValue = MDCBottomNavigationTestBadgeTitleArabic;
 }
@@ -193,66 +189,60 @@
 }
 
 - (void)testBarItemsBottomAnchorWithOffset {
-  if (@available(iOS 9.0, *)) {
-    // Given
-    self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
-    self.navigationBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles;
-    self.navigationBar.selectedItem = self.tabItem2;
+  // Given
+  self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+  self.navigationBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles;
+  self.navigationBar.selectedItem = self.tabItem2;
 
-    UIView *superView =
-        [[UIView alloc] initWithFrame:CGRectMake(0, 0, MDCBottomNavigationBarTestWidthTypical,
-                                                 MDCBottomNavigationBarTestHeightTypical * 2)];
-    [superView addSubview:self.navigationBar];
-    self.navigationBar.translatesAutoresizingMaskIntoConstraints = NO;
-    [superView.bottomAnchor constraintEqualToAnchor:self.navigationBar.bottomAnchor].active = YES;
-    [superView.leadingAnchor constraintEqualToAnchor:self.navigationBar.leadingAnchor].active = YES;
-    [superView.trailingAnchor constraintEqualToAnchor:self.navigationBar.trailingAnchor].active =
-        YES;
+  UIView *superView =
+      [[UIView alloc] initWithFrame:CGRectMake(0, 0, MDCBottomNavigationBarTestWidthTypical,
+                                               MDCBottomNavigationBarTestHeightTypical * 2)];
+  [superView addSubview:self.navigationBar];
+  self.navigationBar.translatesAutoresizingMaskIntoConstraints = NO;
+  [superView.bottomAnchor constraintEqualToAnchor:self.navigationBar.bottomAnchor].active = YES;
+  [superView.leadingAnchor constraintEqualToAnchor:self.navigationBar.leadingAnchor].active = YES;
+  [superView.trailingAnchor constraintEqualToAnchor:self.navigationBar.trailingAnchor].active = YES;
 
-    // When
-    [self.navigationBar.barItemsBottomAnchor constraintEqualToAnchor:superView.bottomAnchor
-                                                            constant:-20]
-        .active = YES;
-    [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
-    [self.navigationBar setNeedsLayout];
-    [self.navigationBar layoutIfNeeded];
-    [self.navigationBar setNeedsUpdateConstraints];
-    [self.navigationBar updateConstraintsIfNeeded];
-    [superView setNeedsUpdateConstraints];
-    [superView updateConstraintsIfNeeded];
-    [superView layoutIfNeeded];
+  // When
+  [self.navigationBar.barItemsBottomAnchor constraintEqualToAnchor:superView.bottomAnchor
+                                                          constant:-20]
+      .active = YES;
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
+  [self.navigationBar setNeedsLayout];
+  [self.navigationBar layoutIfNeeded];
+  [self.navigationBar setNeedsUpdateConstraints];
+  [self.navigationBar updateConstraintsIfNeeded];
+  [superView setNeedsUpdateConstraints];
+  [superView updateConstraintsIfNeeded];
+  [superView layoutIfNeeded];
 
-    // Then
-    UIView *backgroundView = [superView mdc_addToBackgroundView];
-    [self snapshotVerifyView:backgroundView];
-  }
+  // Then
+  UIView *backgroundView = [superView mdc_addToBackgroundView];
+  [self snapshotVerifyView:backgroundView];
 }
 
 - (void)testBarItemsBottomAnchorWithoutOffset {
-  if (@available(iOS 9.0, *)) {
-    // Given
-    self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
-    self.navigationBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles;
-    self.navigationBar.selectedItem = self.tabItem2;
+  // Given
+  self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+  self.navigationBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles;
+  self.navigationBar.selectedItem = self.tabItem2;
 
-    UIView *superView =
-        [[UIView alloc] initWithFrame:CGRectMake(0, 0, MDCBottomNavigationBarTestWidthTypical,
-                                                 MDCBottomNavigationBarTestHeightTypical * 2)];
-    [superView addSubview:self.navigationBar];
-    self.navigationBar.translatesAutoresizingMaskIntoConstraints = NO;
-    [superView.bottomAnchor constraintEqualToAnchor:self.navigationBar.bottomAnchor].active = YES;
-    [superView.leadingAnchor constraintEqualToAnchor:self.navigationBar.leadingAnchor].active = YES;
-    [superView.trailingAnchor constraintEqualToAnchor:self.navigationBar.trailingAnchor].active =
-        YES;
+  UIView *superView =
+      [[UIView alloc] initWithFrame:CGRectMake(0, 0, MDCBottomNavigationBarTestWidthTypical,
+                                               MDCBottomNavigationBarTestHeightTypical * 2)];
+  [superView addSubview:self.navigationBar];
+  self.navigationBar.translatesAutoresizingMaskIntoConstraints = NO;
+  [superView.bottomAnchor constraintEqualToAnchor:self.navigationBar.bottomAnchor].active = YES;
+  [superView.leadingAnchor constraintEqualToAnchor:self.navigationBar.leadingAnchor].active = YES;
+  [superView.trailingAnchor constraintEqualToAnchor:self.navigationBar.trailingAnchor].active = YES;
 
-    // When
-    [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
-    [superView layoutIfNeeded];
+  // When
+  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
+  [superView layoutIfNeeded];
 
-    // Then
-    UIView *backgroundView = [superView mdc_addToBackgroundView];
-    [self snapshotVerifyView:backgroundView];
-  }
+  // Then
+  UIView *backgroundView = [superView mdc_addToBackgroundView];
+  [self snapshotVerifyView:backgroundView];
 }
 
 @end
