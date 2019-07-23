@@ -288,7 +288,6 @@ static NSString *const kItemTitleLong1Arabic =
 
 - (void)testFixedClusteredLeadingLayoutStyleFitSizeMixedTitlesLatinLTR {
   // When
-  self.item1.title = kItemTitleLong1Latin;
   self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredLeading;
 
   // Then
@@ -299,7 +298,6 @@ static NSString *const kItemTitleLong1Arabic =
 - (void)testFixedClusteredLeadingLayoutStyleFitSizeMixedTitlesArabicRTL {
   // When
   [self changeToArabicStrings];
-  self.item1.title = kItemTitleLong1Arabic;
   [self changeViewToRTL:self.tabBarView];
   self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredLeading;
 
@@ -310,7 +308,6 @@ static NSString *const kItemTitleLong1Arabic =
 
 - (void)testFixedClusteredLeadingLayoutStyleTooNarrowSizeMixedTitlesLatinLTR {
   // When
-  self.item1.title = kItemTitleLong1Latin;
   self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredLeading;
 
   // Then
@@ -321,7 +318,6 @@ static NSString *const kItemTitleLong1Arabic =
 - (void)testFixedClusteredLeadingLayoutStyleTooNarrowSizeMixedTitlesArabicRTL {
   // When
   [self changeToArabicStrings];
-  self.item1.title = kItemTitleLong1Arabic;
   [self changeViewToRTL:self.tabBarView];
   self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredLeading;
 
@@ -332,7 +328,6 @@ static NSString *const kItemTitleLong1Arabic =
 
 - (void)testFixedClusteredLeadingLayoutStyleTooWideSizeMixedTitlesLatinLTR {
   // When
-  self.item1.title = kItemTitleLong1Latin;
   self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredLeading;
 
   // Then
@@ -343,7 +338,6 @@ static NSString *const kItemTitleLong1Arabic =
 - (void)testFixedClusteredLeadingLayoutStyleTooWideSizeMixedTitlesArabicRTL {
   // When
   [self changeToArabicStrings];
-  self.item1.title = kItemTitleLong1Arabic;
   [self changeViewToRTL:self.tabBarView];
   self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredLeading;
 
@@ -356,7 +350,6 @@ static NSString *const kItemTitleLong1Arabic =
 
 - (void)testFixedClusteredTrailingLayoutStyleFitSizeMixedTitlesLatinLTR {
   // When
-  self.item1.title = kItemTitleLong1Latin;
   self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredTrailing;
 
   // Then
@@ -367,7 +360,6 @@ static NSString *const kItemTitleLong1Arabic =
 - (void)testFixedClusteredTrailingLayoutStyleFitSizeMixedTitlesArabicRTL {
   // When
   [self changeToArabicStrings];
-  self.item1.title = kItemTitleLong1Arabic;
   [self changeViewToRTL:self.tabBarView];
   self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredTrailing;
 
@@ -378,7 +370,6 @@ static NSString *const kItemTitleLong1Arabic =
 
 - (void)testFixedClusteredTrailingLayoutStyleTooNarrowSizeMixedTitlesLatinLTR {
   // When
-  self.item1.title = kItemTitleLong1Latin;
   self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredTrailing;
 
   // Then
@@ -389,7 +380,6 @@ static NSString *const kItemTitleLong1Arabic =
 - (void)testFixedClusteredTrailingLayoutStyleTooNarrowSizeMixedTitlesArabicRTL {
   // When
   [self changeToArabicStrings];
-  self.item1.title = kItemTitleLong1Arabic;
   [self changeViewToRTL:self.tabBarView];
   self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredTrailing;
 
@@ -400,7 +390,6 @@ static NSString *const kItemTitleLong1Arabic =
 
 - (void)testFixedClusteredTrailingLayoutStyleTooWideSizeMixedTitlesLatinLTR {
   // When
-  self.item1.title = kItemTitleLong1Latin;
   self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredTrailing;
 
   // Then
@@ -411,7 +400,6 @@ static NSString *const kItemTitleLong1Arabic =
 - (void)testFixedClusteredTrailingLayoutStyleTooWideSizeMixedTitlesArabicRTL {
   // When
   [self changeToArabicStrings];
-  self.item1.title = kItemTitleLong1Arabic;
   [self changeViewToRTL:self.tabBarView];
   self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredTrailing;
 
@@ -424,7 +412,6 @@ static NSString *const kItemTitleLong1Arabic =
 
 - (void)testScrollableLayoutStyleFitSizeLatinLTR {
   // When
-  self.item1.title = kItemTitleLong1Latin;
   self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleScrollable;
 
   // Then
