@@ -319,4 +319,12 @@ typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
  */
 @property(nonatomic, readonly) MDCCardCellState state;
 
+/**
+ A block that is invoked when the @c MDCCardCollectionCell receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCCardCollectionCell *_Nonnull collectionCell,
+     UITraitCollection *_Nullable previousTraitCollection);
+
 @end
