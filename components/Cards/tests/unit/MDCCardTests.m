@@ -430,4 +430,16 @@ static UIImage *FakeImage(void) {
   XCTAssertTrue(weakElevationDidChangeBlockWasCalled.boolValue);
 }
 
+- (void)testSettingOverrideBaseElevationReturnsSetValue {
+  // Given
+  CGFloat expectedBaseElevation = 99;
+
+  // When
+  self.card.mdc_overrideBaseElevation = expectedBaseElevation;
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.card.mdc_overrideBaseElevation, expectedBaseElevation,
+                             0.001);
+}
+
 @end
