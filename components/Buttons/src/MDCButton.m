@@ -167,11 +167,6 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   self.adjustsImageWhenHighlighted = NO;
   self.showsTouchWhenHighlighted = NO;
 
-  // Default content insets
-  self.contentEdgeInsets = [self defaultContentEdgeInsets];
-  _minimumSize = CGSizeZero;
-  _maximumSize = CGSizeZero;
-
   self.layer.cornerRadius = MDCButtonDefaultCornerRadius;
   if (!self.layer.shapeGenerator) {
     self.layer.shadowPath = [self boundingPath].CGPath;
@@ -203,6 +198,19 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
   _rippleView = [[MDCStatefulRippleView alloc] initWithFrame:self.bounds];
   _rippleView.rippleColor = [UIColor colorWithWhite:1 alpha:(CGFloat)0.12];
+
+  // Default content insets
+  // The default contentEdgeInsets are set here (instead of above, as they were previously) because
+  // of an iOS 13 bug (b/136088498) wherein setting self.self.contentEdgeInsets before accessing
+  // self.imageView causes the imageView's bounds.origin to be set to:
+  //                   { -(i.left + i.right), -(i.top + i.bottom) }
+  //
+  // This causes images created by using imageWithHorizontallyFlippedOrientation to not display.
+  // Images that have not been created this way seem to be fine.
+  // Setting a title does not seem to have any affect on this behavior.
+  self.contentEdgeInsets = [self defaultContentEdgeInsets];
+  _minimumSize = CGSizeZero;
+  _maximumSize = CGSizeZero;
 
   // Uppercase all titles
   if (_uppercaseTitle) {
@@ -841,7 +849,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 - (UIEdgeInsets)defaultContentEdgeInsets {
-  return UIEdgeInsetsMake(8, 16, 8, 16);
+  //  return UIEdgeInsetsMake(8, 16, 8, 16);
+  return UIEdgeInsetsMake(8, 5, 8, -4);
 }
 
 - (BOOL)shouldHaveOpaqueBackground {
