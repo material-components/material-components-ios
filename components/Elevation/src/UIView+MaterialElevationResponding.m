@@ -30,7 +30,8 @@
     }
     id<MDCElevationOverriding> elevatableCurrentOverride =
         [current objectConfromingToOverrideInResponderChain];
-    if (elevatableCurrentOverride != nil && elevatableCurrentOverride.mdc_overrideBaseElevation >= 0) {
+    if (elevatableCurrentOverride != nil &&
+        elevatableCurrentOverride.mdc_overrideBaseElevation >= 0) {
       totalElevation += elevatableCurrentOverride.mdc_overrideBaseElevation;
       break;
     }
