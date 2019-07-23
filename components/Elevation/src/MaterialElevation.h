@@ -14,4 +14,3 @@
 
 #import "MDCElevation.h"
 #import "MDCElevationOverride.h"
-#import "UIView+MaterialElevationResponding.h"
