@@ -18,7 +18,7 @@
 /**
  Provides APIs for @c UIViews to communicate their elevation throughout the view hierarchy.
  */
-@protocol MDCElevation <NSObject>
+@protocol MDCElevation
 
 /**
  The current elevation of the conforming @c UIView.

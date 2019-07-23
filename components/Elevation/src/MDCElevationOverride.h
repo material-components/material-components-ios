@@ -18,7 +18,7 @@
 /**
  Provides APIs for @c UIViews to communicate their elevation throughout the view hierarchy.
  */
-@protocol MDCElevationOverride <NSObject>
+@protocol MDCElevationOverride
 
 /**
  Used by @c MaterialElevationResponding instead of @c mdc_baseElevation.
