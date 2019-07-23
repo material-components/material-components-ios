@@ -43,18 +43,20 @@
 
 - (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
   // Given
-  MDCFeatureHighlightViewController *controller = [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:[[UIView alloc] init] completion:nil];
+  MDCFeatureHighlightViewController *controller =
+      [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:[[UIView alloc] init]
+                                                              completion:nil];
   XCTestExpectation *expectation =
-  [[XCTestExpectation alloc] initWithDescription:@"traitCollection"];
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollection"];
   __block UITraitCollection *passedTraitCollection = nil;
   __block MDCFeatureHighlightViewController *passedFeatureHighlight = nil;
   controller.traitCollectionDidChangeBlock =
-  ^(MDCFeatureHighlightViewController *_Nonnull featureHighlight,
-    UITraitCollection *_Nullable previousTraitCollection) {
-    passedTraitCollection = previousTraitCollection;
-    passedFeatureHighlight = featureHighlight;
-    [expectation fulfill];
-  };
+      ^(MDCFeatureHighlightViewController *_Nonnull featureHighlight,
+        UITraitCollection *_Nullable previousTraitCollection) {
+        passedTraitCollection = previousTraitCollection;
+        passedFeatureHighlight = featureHighlight;
+        [expectation fulfill];
+      };
   UITraitCollection *fakeTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
 
   // When
