@@ -227,11 +227,7 @@
   [self.alert addAction:action2];
 
   // Force the view to load
-  if (@available(iOS 9.0, *)) {
-    [self.alert loadViewIfNeeded];
-  } else {
-    (void)self.alert.view;
-  }
+  [self.alert loadViewIfNeeded];
 
   // Then
   NSArray<UIButton *> *buttons = self.alert.alertView.actionManager.buttonsInActionOrder;

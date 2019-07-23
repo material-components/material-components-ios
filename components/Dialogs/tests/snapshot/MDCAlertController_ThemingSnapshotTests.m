@@ -169,9 +169,7 @@ static NSString *const kMessageLongArabic =
 }
 
 - (void)changeToRTL:(MDCAlertController *)alertController {
-  if (@available(iOS 9.0, *)) {
-    [self changeViewToRTL:alertController.view];
-  }
+  [self changeViewToRTL:alertController.view];
 }
 
 #pragma mark - Tests
