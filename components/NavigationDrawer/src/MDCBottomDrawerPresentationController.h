@@ -139,4 +139,12 @@
  */
 - (void)expandToFullscreenWithDuration:(CGFloat)duration
                             completion:(void (^__nullable)(BOOL finished))completion;
+
+/**
+ A block that is invoked when the @c MDCBottomDrawerPresentationController  receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCBottomDrawerPresentationController *_Nullable presentationController,
+     UITraitCollection *_Nullable previousTraitCollection);
 @end
