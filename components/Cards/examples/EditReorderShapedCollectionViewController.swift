@@ -81,12 +81,10 @@ class EditReorderShapedCollectionViewController: UIViewController,
                                                         target: self,
                                                         action: #selector(toggleModes))
 
-    if #available(iOS 9.0, *) {
-      longPressGesture = UILongPressGestureRecognizer(target: self,
-                                                      action: #selector(handleReordering(gesture:)))
-      longPressGesture.cancelsTouchesInView = false
-      collectionView.addGestureRecognizer(longPressGesture)
-    }
+    longPressGesture = UILongPressGestureRecognizer(target: self,
+                                                    action: #selector(handleReordering(gesture:)))
+    longPressGesture.cancelsTouchesInView = false
+    collectionView.addGestureRecognizer(longPressGesture)
 
     for i in 0..<20 {
       dataSource.append((i, false))

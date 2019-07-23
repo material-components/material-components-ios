@@ -141,6 +141,13 @@
  */
 - (nullable UIColor *)shadowColorForState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
+/**
+ A block that is invoked when the @c MDCCard receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCCard *_Nonnull card, UITraitCollection *_Nullable previousTraitCollection);
+
 /*
  The shape generator used to define the card's shape.
  When set, layer properties such as cornerRadius and other layer properties are nullified/zeroed.

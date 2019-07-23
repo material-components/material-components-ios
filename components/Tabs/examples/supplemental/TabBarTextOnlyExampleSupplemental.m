@@ -50,17 +50,7 @@ static NSString *const kReusableIdentifierItem = @"Cell";
   self.appBarViewController.headerView.minimumHeight = kTabBarHeight;
   self.appBarViewController.headerView.maximumHeight = kAppBarMinHeight + kTabBarHeight;
 
-  UIFont *font;
-  if (@available(iOS 9.0, *)) {
-    font = [UIFont monospacedDigitSystemFontOfSize:14 weight:UIFontWeightRegular];
-  } else {
-    font = [UIFont systemFontOfSize:14];
-    UIFontDescriptor *descriptor =
-        [[font fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitMonoSpace];
-    if (descriptor) {
-      font = [UIFont fontWithDescriptor:descriptor size:0.0];
-    }
-  }
+  UIFont *font = [UIFont monospacedDigitSystemFontOfSize:14 weight:UIFontWeightRegular];
 
   self.appBarViewController.navigationBar.titleTextAttributes =
       @{NSForegroundColorAttributeName : [UIColor whiteColor], NSFontAttributeName : font};
