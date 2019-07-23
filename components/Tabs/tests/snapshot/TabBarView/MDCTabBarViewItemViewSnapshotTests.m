@@ -83,9 +83,7 @@ static NSString *const kLongTitleArabic =
 }
 
 - (void)changeToRTL {
-  if (@available(iOS 9.0, *)) {
-    self.itemView.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
-  }
+  self.itemView.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
 }
 
 #pragma mark - Tests

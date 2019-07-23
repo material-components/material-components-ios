@@ -87,18 +87,6 @@
   self.appBarViewController.headerView.minMaxHeightIncludesSafeArea = NO;
   self.appBarViewController.headerView.minimumHeight = 56 + 72;
 
-  UIFont *font;
-  if (@available(iOS 9.0, *)) {
-    font = [UIFont monospacedDigitSystemFontOfSize:14 weight:UIFontWeightRegular];
-  } else {
-    font = [UIFont systemFontOfSize:14];
-    UIFontDescriptor *descriptor =
-        [[font fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitMonoSpace];
-    if (descriptor) {
-      font = [UIFont fontWithDescriptor:descriptor size:0.0];
-    }
-  }
-
   [self.view addSubview:self.appBarViewController.view];
   [self.appBarViewController didMoveToParentViewController:self];
 

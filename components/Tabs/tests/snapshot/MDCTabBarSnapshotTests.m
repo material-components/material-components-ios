@@ -105,9 +105,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
 }
 
 - (void)changeLayoutToRTL {
-  if (@available(iOS 9.0, *)) {
-    [self changeViewToRTL:self.tabBar];
-  }
+  [self changeViewToRTL:self.tabBar];
 }
 
 - (void)setTitlesToLatinLong {
