@@ -17,6 +17,29 @@ import UIKit
 import MaterialComponentsBeta.MaterialBottomNavigationBeta
 import MaterialComponents.MaterialBottomNavigation_ColorThemer
 import MaterialComponents.MaterialBottomNavigation_TypographyThemer
+import MaterialComponents.MaterialColorScheme
+
+class BottomNavigationControllerExampleFixedChildViewController: UIViewController {
+
+  var colorScheme: MDCColorScheming = MDCSemanticColorScheme(defaults: .material201804)
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
+    self.view.backgroundColor = colorScheme.secondaryColor
+  }
+  override var prefersHomeIndicatorAutoHidden: Bool {
+    return false
+  }
+
+  override var preferredStatusBarStyle: UIStatusBarStyle {
+    return .default
+  }
+
+  override var prefersStatusBarHidden: Bool {
+    return false
+  }
+}
 
 class BottomNavigationControllerExampleScrollableChildViewController: UICollectionViewController {
 
@@ -48,6 +71,18 @@ class BottomNavigationControllerExampleScrollableChildViewController: UICollecti
     cell.backgroundColor = UIColor(hue: hue, saturation: 1, brightness: 1, alpha: 1)
     return cell
   }
+
+  override var prefersStatusBarHidden: Bool {
+    return true
+  }
+
+  override var preferredStatusBarStyle: UIStatusBarStyle {
+    return .lightContent
+  }
+
+  override var prefersHomeIndicatorAutoHidden: Bool {
+    return true
+  }
 }
 
 class BottomNavigationControllerExampleViewController: MDCBottomNavigationBarController {
@@ -75,8 +110,8 @@ class BottomNavigationControllerExampleViewController: MDCBottomNavigationBarCon
     viewController1.collectionView.backgroundColor = colorScheme.primaryColorVariant
     viewController1.tabBarItem = UITabBarItem(title: "Item 1", image: UIImage(named: "Home"), tag: 0)
 
-    let viewController2 = UIViewController()
-    viewController2.view.backgroundColor = colorScheme.secondaryColor
+    let viewController2 = BottomNavigationControllerExampleFixedChildViewController()
+    viewController2.colorScheme = self.colorScheme
     viewController2.tabBarItem = UITabBarItem(title: "Item 2", image: UIImage(named: "Favorite"), tag: 1)
 
     let viewController3 = UIViewController()
