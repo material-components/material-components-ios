@@ -98,13 +98,6 @@ static NSString *const kMessageLongArabic =
   [self snapshotVerifyView:snapshotView];
 }
 
-- (void)changeViewToRTL:(UIView *)view {
-  view.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
-  for (UIView *subview in view.subviews) {
-    [self changeViewToRTL:subview];
-  }
-}
-
 - (void)changeToRTL:(MDCAlertController *)alertController {
   [self changeViewToRTL:alertController.view];
 }
