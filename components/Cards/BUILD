@@ -36,6 +36,7 @@ mdc_public_objc_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
+        "//components/Elevation",
         "//components/Ink",
         "//components/Ripple",
         "//components/ShadowLayer",
