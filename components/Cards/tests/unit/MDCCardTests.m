@@ -413,7 +413,6 @@ static UIImage *FakeImage(void) {
   XCTAssertEqual(self.card.state, UIControlStateNormal);
   XCTAssertEqual(self.card.mdc_currentElevation,
                  [self.card shadowElevationForState:UIControlStateNormal]);
-
 }
 
 - (void)testElevationDidChangeBlockIsCorrectlySetUp {
@@ -438,8 +437,7 @@ static UIImage *FakeImage(void) {
   self.card.mdc_overrideBaseElevation = expectedBaseElevation;
 
   // Then
-  XCTAssertEqualWithAccuracy(self.card.mdc_overrideBaseElevation, expectedBaseElevation,
-                             0.001);
+  XCTAssertEqualWithAccuracy(self.card.mdc_overrideBaseElevation, expectedBaseElevation, 0.001);
 }
 
 @end
