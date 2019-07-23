@@ -40,6 +40,13 @@
  */
 @property(nonatomic, strong, nullable) UIColor *rippleColor;
 
+/**
+ A block that is invoked when the @c MDCBaseCell receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCBaseCell *_Nonnull cell, UITraitCollection *_Nullable previousTraitCollection);
+
 @end
 
 @interface MDCBaseCell (ToBeDeprecated)
