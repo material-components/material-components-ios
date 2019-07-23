@@ -17,6 +17,25 @@
 @protocol MDCTabBarViewDelegate;
 @protocol MDCTabBarViewIndicatorTemplate;
 
+typedef NS_ENUM(NSUInteger, MDCTabBarViewLayoutStyle) {
+
+  /**
+   Each item's width is calculated as the width of the bar divided by the number of items.
+   */
+  MDCTabBarViewLayoutStyleFixed = 0,
+
+  /**
+   Each item's width is based on its content and the items are arranged horizontally starting from
+   the leading edge of the bar. */
+  MDCTabBarViewLayoutStyleScrollable = 1,
+
+  /**
+   Each item's width is as wide as the widest item. The items are arranged in the horizontal center
+   of the bar.
+   */
+  MDCTabBarViewLayoutStyleFixedClusteredCentered = 2,
+};
+
 /**
  An implementation of Material Tabs (https://material.io/design/components/tabs.html).
  */
@@ -55,6 +74,13 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
  The stroke color for the selection indicator. If no value is set, then a default value is used.
  */
 @property(nullable, nonatomic, copy) UIColor *selectionIndicatorStrokeColor;
+
+/**
+ The preferred layout style of the bar.  If possible, this layout style will be used. If not,
+ another style will be used. For example, if the bar is too narrow for a Fixed layout style, then a
+ Scrollable layout style may be used instead. Defaults to @c MDCTabBarViewLayoutStyleFixed.
+ */
+@property(nonatomic, assign) MDCTabBarViewLayoutStyle preferredLayoutStyle;
 
 /**
  Sets the color of the bar items' image @c tintColor for the given control state.  Supports
