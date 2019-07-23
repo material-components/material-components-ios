@@ -16,8 +16,8 @@
 #import <UIKit/UIKit.h>
 
 /**
- Allows elevation changes to propagate down the view hierarchy and allows objects
- conforming to @c MDCElevation to react to those changes accordingly.
+ Allows elevation changes to propagate down the view hierarchy and allows objects conforming to
+ @c MDCElevatable to react to those changes accordingly.
  */
 @interface UIView (MaterialElevationResponding)
 
@@ -25,8 +25,11 @@
  Returns the sum of all @c mdc_currentElevation of the superviews going up the view hierarchy
  recursively.
 
- @note If a view in the hierarchy conforms to @c MDCOverrideElevation the sum of the current
- total plus that value is returned.
+ If a view in the hierarchy conforms to @c MDCElevationOveriding the sum of the current total plus
+ that value is returned.
+
+ If a @c UIViewController responds to @c MDCElevatable or @c MDCElevationOveriding then its @c view
+ will report its base elevation.
  */
 @property(nonatomic, assign, readonly) CGFloat mdc_baseElevation;
 

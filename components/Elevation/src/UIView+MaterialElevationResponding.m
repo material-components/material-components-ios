@@ -30,11 +30,9 @@
     }
     id<MDCElevationOverriding> elevatableCurrentOverride =
         [current objectConfromingToOverrideInResponderChain];
-    if (elevatableCurrentOverride != nil) {
-      if (elevatableCurrentOverride.mdc_overrideBaseElevation >= 0) {
-        totalElevation += elevatableCurrentOverride.mdc_overrideBaseElevation;
-        break;
-      }
+    if (elevatableCurrentOverride != nil && elevatableCurrentOverride.mdc_overrideBaseElevation >= 0) {
+      totalElevation += elevatableCurrentOverride.mdc_overrideBaseElevation;
+      break;
     }
     current = current.superview;
   }
