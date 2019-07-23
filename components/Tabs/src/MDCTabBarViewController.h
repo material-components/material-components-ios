@@ -62,7 +62,8 @@ IB_DESIGNABLE
  traitCollectionDidChange:. The block is called after the call to the superclass.
  */
 @property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
-(MDCTabBarViewController *_Nonnull tabBarViewController, UITraitCollection *_Nullable previousTraitCollection);
+    (MDCTabBarViewController *_Nonnull tabBarViewController,
+     UITraitCollection *_Nullable previousTraitCollection);
 
 @end
 

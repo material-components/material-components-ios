@@ -51,16 +51,15 @@
   // Given
   MDCTabBar *testTabBar = [[MDCTabBar alloc] init];
   XCTestExpectation *expectation =
-  [[XCTestExpectation alloc] initWithDescription:@"traitCollection"];
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollection"];
   __block UITraitCollection *passedTraitCollection = nil;
   __block MDCTabBar *passedTabBar = nil;
   testTabBar.traitCollectionDidChangeBlock =
-  ^(MDCTabBar *_Nonnull tabBar,
-    UITraitCollection *_Nullable previousTraitCollection) {
-    passedTraitCollection = previousTraitCollection;
-    passedTabBar = tabBar;
-    [expectation fulfill];
-  };
+      ^(MDCTabBar *_Nonnull tabBar, UITraitCollection *_Nullable previousTraitCollection) {
+        passedTraitCollection = previousTraitCollection;
+        passedTabBar = tabBar;
+        [expectation fulfill];
+      };
   UITraitCollection *fakeTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
 
   // When
