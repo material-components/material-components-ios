@@ -78,7 +78,7 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
 /**
  The preferred layout style of the bar.  If possible, this layout style will be used. If not,
  another style will be used. For example, if the bar is too narrow for a Fixed layout style, then a
- Scrollable layout style may be used instead.
+ Scrollable layout style may be used instead. Defaults to @c MDCTabBarViewLayoutStyleFixed.
  */
 @property(nonatomic, assign) MDCTabBarViewLayoutStyle preferredLayoutStyle;
 
