@@ -27,10 +27,9 @@ static NSString *const kBannerLongText =
 // Arabic text constants for testing Banner in RTL mode.
 static NSString *const kBannerShortTextArabic = @"ما تنفّس.";
 static NSString *const kBannerMiddleLengthTextArabic =
-@"دول السيطرة استطاعوا ٣٠. مليون وفرنسا أوراقهم انه تم.";
+    @"دول السيطرة استطاعوا ٣٠. مليون وفرنسا أوراقهم انه تم.";
 static NSString *const kBannerLongTextArabic =
-@"دول السيطرة استطاعوا ٣٠. مليون وفرنسا أوراقهم انه تم, نفس قد والديون العالمية. دون ما تنفّس.";
-
+    @"دول السيطرة استطاعوا ٣٠. مليون وفرنسا أوراقهم انه تم, نفس قد والديون العالمية. دون ما تنفّس.";
 
 // Content Padding is used for testing banner with specific layout margins.
 static const CGFloat kBannerContentPadding = 10.0f;
@@ -89,7 +88,7 @@ static const CGFloat kBannerLargeContentPadding = 30.0f;
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-   self.recordMode = YES;
+  self.recordMode = YES;
 
   self.bannerView = [[MDCBannerView alloc] initWithFrame:CGRectZero];
   if (@available(iOS 11.0, *)) {
