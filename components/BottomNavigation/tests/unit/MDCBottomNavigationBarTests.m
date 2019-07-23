@@ -43,11 +43,11 @@
 @property(nonatomic, strong) UILabel *label;
 @end
 
-@interface BottomNavigationTests : XCTestCase
+@interface MDCBottomNavigationBarTests : XCTestCase
 @property(nonatomic, strong) MDCBottomNavigationBar *bottomNavBar;
 @end
 
-@implementation BottomNavigationTests
+@implementation MDCBottomNavigationBarTests
 
 - (void)setUp {
   self.bottomNavBar = [[MDCBottomNavigationBar alloc] init];
@@ -65,6 +65,12 @@
   XCTAssertEqualObjects(bar.backgroundColor, UIColor.whiteColor);
   XCTAssertFalse(bar.isBackgroundBlurEnabled);
   XCTAssertEqual(bar.backgroundBlurEffectStyle, UIBlurEffectStyleExtraLight);
+  XCTAssertEqualWithAccuracy(self.bottomNavBar.elevation, MDCShadowElevationBottomNavigationBar,
+                             0.001);
+  XCTAssertEqualWithAccuracy(self.bottomNavBar.mdc_currentElevation, self.bottomNavBar.elevation,
+                             0.001);
+  XCTAssertLessThan(self.bottomNavBar.mdc_overrideBaseElevation, 0);
+  XCTAssertNil(self.bottomNavBar.mdc_elevationDidChangeBlock);
 }
 
 #pragma mark - Fonts
@@ -558,6 +564,29 @@
   // Then
   XCTAssertEqual(passedBottomNavigationBar, self.bottomNavBar);
   XCTAssertEqual(passedTraitCollection, testTraitCollection);
+}
+
+#pragma mark - MDCElevation
+
+- (void)testCurrentElevationMatchesElevationWhenElevationChanges {
+  // When
+  self.bottomNavBar.elevation = MDCShadowElevationQuickEntryResting;
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.bottomNavBar.mdc_currentElevation, self.bottomNavBar.elevation,
+                             0.001);
+}
+
+- (void)testSettingOverrideBaseElevationReturnsSetValue {
+  // Given
+  CGFloat expectedBaseElevation = 99;
+
+  // When
+  self.bottomNavBar.mdc_overrideBaseElevation = expectedBaseElevation;
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.bottomNavBar.mdc_overrideBaseElevation, expectedBaseElevation,
+                             0.001);
 }
 
 @end

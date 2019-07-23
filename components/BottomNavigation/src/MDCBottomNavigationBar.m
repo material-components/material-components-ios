@@ -76,6 +76,9 @@ static NSString *const kOfAnnouncement = @"of";
 
 @implementation MDCBottomNavigationBar
 
+@synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
+@synthesize mdc_elevationDidChangeBlock = _mdc_elevationDidChangeBlock;
+
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
@@ -106,6 +109,7 @@ static NSString *const kOfAnnouncement = @"of";
   _truncatesLongTitles = YES;
   _sizeThatFitsIncludesSafeArea = NO;
   _titlesNumberOfLines = 1;
+  _mdc_overrideBaseElevation = -1;
 
   // Remove any unarchived subviews and reconfigure the view hierarchy
   if (self.subviews.count) {
@@ -793,6 +797,12 @@ static NSString *const kOfAnnouncement = @"of";
     return YES;
   }
   return NO;
+}
+
+#pragma mark - MDCElevation
+
+- (CGFloat)mdc_currentElevation {
+  return self.elevation;
 }
 
 @end

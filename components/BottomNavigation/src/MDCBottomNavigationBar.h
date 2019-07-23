@@ -14,6 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialElevation.h"
 #import "MaterialShadowElevations.h"
 
 @protocol MDCBottomNavigationBarDelegate;
@@ -57,7 +58,7 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
  can be selected at at time. The selected item's title text is displayed. Title text for unselected
  items are hidden.
  */
-@interface MDCBottomNavigationBar : UIView
+@interface MDCBottomNavigationBar : UIView <MDCElevation>
 
 /** The bottom navigation bar delegate. */
 @property(nonatomic, weak, nullable) id<MDCBottomNavigationBarDelegate> delegate;
