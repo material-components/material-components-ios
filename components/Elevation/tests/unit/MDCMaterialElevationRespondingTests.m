@@ -17,8 +17,8 @@
 #import <XCTest/XCTest.h>
 
 /**
- Used for testing @c UIViews that conform to @c MDCElevation and do not respond to @c
- mdc_overrideBaseElevation.
+ Used for testing @c UIViews that conform to @c MDCElevation and do not conform to @c
+ MDCElevationOverride.
  */
 @interface MDCConformingMDCElevationView : UIView <MDCElevation>
 @property(nonatomic, assign, readonly) CGFloat mdc_currentElevation;
@@ -35,8 +35,8 @@
 @end
 
 /**
- Used for testing @c UIViewControllers that conform to @c MDCElevation and do not respond to @c
- mdc_overrideBaseElevation.
+ Used for testing @c UIViewControllers that conform to @c MDCElevation and do not conform to @c
+ MDCElevationOverride.
  */
 @interface MDCConformingMDCElevationViewController : UIViewController <MDCElevation>
 @property(nonatomic, assign, readonly) CGFloat mdc_currentElevation;
@@ -53,10 +53,10 @@
 @end
 
 /**
- Used for testing @c UIViews that conform to @c MDCElevation and do respond to @c
- mdc_overrideBaseElevation.
+ Used for testing @c UIViews that conform to @c MDCElevation and does conform to @c
+ MDCElevationOverride.
  */
-@interface MDCConformingMDCElevationOverrideView : UIView <MDCElevation>
+@interface MDCConformingMDCElevationOverrideView : UIView <MDCElevation, MDCElevationOverride>
 @property(nonatomic, assign, readwrite) CGFloat mdc_overrideBaseElevation;
 @property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)(CGFloat elevation);
 @property(nonatomic, assign, readonly) CGFloat mdc_currentElevation;
@@ -78,24 +78,16 @@
 @implementation MDCConformingMDCElevationOverrideViewSubclass
 
 - (CGFloat)mdc_overrideBaseElevation {
-  if (self.superview) {
-    if ([self.superview conformsToProtocol:@protocol(MDCElevation)]) {
-      UIView<MDCElevation> *superview = (UIView<MDCElevation> *)self.superview;
-      return superview.mdc_currentElevation + superview.mdc_baseElevation +
-             self.mdc_currentElevation;
-    }
-    return self.superview.mdc_baseElevation + self.mdc_currentElevation;
-  }
-  return 0;
+  return -1;
 }
 
 @end
 
 /**
- Used for testing @c UIViewControllers that conform to @c MDCElevation and do respond to @c
- mdc_overrideBaseElevation.
+ Used for testing @c UIViewControllers that conform to @c MDCElevation and does conform to @c
+ MDCElevationOverride.
  */
-@interface MDCConformingMDCElevationOverrideViewController : UIViewController <MDCElevation>
+@interface MDCConformingMDCElevationOverrideViewController : UIViewController <MDCElevation, MDCElevationOverride>
 @property(nonatomic, assign, readwrite) CGFloat mdc_overrideBaseElevation;
 @property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)(CGFloat elevation);
 @property(nonatomic, assign, readonly) CGFloat mdc_currentElevation;
@@ -185,14 +177,15 @@
 - (void)testViewInElevationOverrideView {
   // Given
   CGFloat fakeElevation = 3;
-  self.elevationOverrideView.elevation = 20;
+  CGFloat fakeCurrentElevation = 20;
+  self.elevationOverrideView.elevation = fakeCurrentElevation;
   self.elevationOverrideView.mdc_overrideBaseElevation = fakeElevation;
 
   // When
   [self.elevationOverrideView addSubview:self.view];
 
   // Then
-  XCTAssertEqualWithAccuracy(self.view.mdc_baseElevation, fakeElevation, 0.001);
+  XCTAssertEqualWithAccuracy(self.view.mdc_baseElevation, fakeElevation + fakeCurrentElevation, 0.001);
 }
 
 // + self.elevationOverrideView
@@ -202,7 +195,8 @@
   // Given
   UIView *middleView = [[UIView alloc] init];
   CGFloat fakeElevation = 3;
-  self.elevationOverrideView.elevation = 20;
+  CGFloat fakeCurrentElevation = 20;
+  self.elevationOverrideView.elevation = fakeCurrentElevation;
   self.elevationOverrideView.mdc_overrideBaseElevation = fakeElevation;
 
   // When
@@ -210,7 +204,7 @@
   [middleView addSubview:self.view];
 
   // Then
-  XCTAssertEqualWithAccuracy(self.view.mdc_baseElevation, fakeElevation, 0.001);
+  XCTAssertEqualWithAccuracy(self.view.mdc_baseElevation, fakeElevation + fakeCurrentElevation, 0.001);
 }
 
 // + self.elevationOverrideView
@@ -250,14 +244,15 @@
 - (void)testViewInElevationOverrideViewController {
   // Given
   CGFloat fakeElevation = 3;
-  self.elevationOverrideViewController.elevation = 20;
+  CGFloat fakeCurrentElevation = 20;
+  self.elevationOverrideViewController.elevation = fakeCurrentElevation;
   self.elevationOverrideViewController.mdc_overrideBaseElevation = fakeElevation;
 
   // When
   [self.elevationOverrideViewController.view addSubview:self.view];
 
   // Then
-  XCTAssertEqualWithAccuracy(self.view.mdc_baseElevation, fakeElevation, 0.001);
+  XCTAssertEqualWithAccuracy(self.view.mdc_baseElevation, fakeElevation + fakeCurrentElevation, 0.001);
 }
 
 // + self.elevationViewController
@@ -283,7 +278,8 @@
 - (void)testViewInUIViewInElevationOverrideViewController {
   // Given
   CGFloat fakeElevation = 3;
-  self.elevationOverrideViewController.elevation = 20;
+  CGFloat fakeCurrentElevation = 20;
+  self.elevationOverrideViewController.elevation = fakeCurrentElevation;
   self.elevationOverrideViewController.mdc_overrideBaseElevation = fakeElevation;
   UIView *middleView = [[UIView alloc] init];
 
@@ -292,7 +288,7 @@
   [middleView addSubview:self.view];
 
   // Then
-  XCTAssertEqualWithAccuracy(self.view.mdc_baseElevation, fakeElevation, 0.001);
+  XCTAssertEqualWithAccuracy(self.view.mdc_baseElevation, fakeElevation + fakeCurrentElevation, 0.001);
 }
 
 // + self.elevationView
@@ -331,7 +327,7 @@
   [self.view addSubview:self.elevationView];
 
   // Then
-  XCTAssertEqualWithAccuracy(self.elevationView.mdc_baseElevation, fakeOverrideElevation, 0.001);
+  XCTAssertEqualWithAccuracy(self.elevationView.mdc_baseElevation, fakeElevation + fakeOverrideElevation, 0.001);
 }
 
 // + self.elevationView

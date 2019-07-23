@@ -15,6 +15,7 @@
 #import "UIView+MaterialElevationResponding.h"
 
 #import "MDCElevation.h"
+#import "MDCElevationOverride.h"
 
 @implementation UIView (MaterialElevationResponding)
 
@@ -23,14 +24,15 @@
   UIView *current = self;
 
   while (current != nil) {
-    id<MDCElevation> elevatableCurrent = [current conformingObjectInResponderChain];
-    if (elevatableCurrent) {
-      if ([elevatableCurrent respondsToSelector:@selector(mdc_overrideBaseElevation)]) {
-        totalElevation += elevatableCurrent.mdc_overrideBaseElevation;
+    id<MDCElevation> elevatableCurrent = [current objectConformingToElevationInResponderChain];
+    if (current != self) {
+      totalElevation += elevatableCurrent.mdc_currentElevation;
+    }
+    id<MDCElevationOverride> elevatableCurrentOverride = [current objectConfromingToOverrideInResponderChain];
+    if (elevatableCurrentOverride != nil) {
+      if (elevatableCurrentOverride.mdc_overrideBaseElevation >= 0) {
+        totalElevation += elevatableCurrentOverride.mdc_overrideBaseElevation;
         break;
-      }
-      if (current != self) {
-        totalElevation += elevatableCurrent.mdc_currentElevation;
       }
     }
     current = current.superview;
@@ -40,11 +42,31 @@
 
 /**
  Checks whether a @c UIView or it's managing @c UIViewController conform to @c
+ MDCOverrideElevation.
+
+ @returns the conforming @c UIView then @c UIViewController, otherwise @c nil.
+ */
+- (id<MDCElevationOverride>)objectConfromingToOverrideInResponderChain {
+  if ([self conformsToProtocol:@protocol(MDCElevationOverride)]) {
+    return (id<MDCElevationOverride>)self;
+  }
+
+  UIResponder *nextResponder = self.nextResponder;
+  if ([nextResponder isKindOfClass:[UIViewController class]] &&
+      [nextResponder conformsToProtocol:@protocol(MDCElevationOverride)]) {
+    return (id<MDCElevationOverride>)nextResponder;
+  }
+
+  return nil;
+}
+
+/**
+ Checks whether a @c UIView or it's managing @c UIViewController conform to @c
  MDCElevation.
 
  @returns the conforming @c UIView then @c UIViewController, otherwise @c nil.
  */
-- (id<MDCElevation>)conformingObjectInResponderChain {
+- (id<MDCElevation>)objectConformingToElevationInResponderChain {
   if ([self conformsToProtocol:@protocol(MDCElevation)]) {
     return (id<MDCElevation>)self;
   }
