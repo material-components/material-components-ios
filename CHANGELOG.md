@@ -1,20 +1,156 @@
-# #develop#
+# 85.9.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This minor release includes new elevation protocols to prepare for Dark Mode, dynamic color
+support in several components, and a number of MDCTabBarView features.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
+Several components support `traitCollectionDidChangeBlock` to allow clients inject a block for exection when traitCollections
+changes. TabBarView allows clients to set preferred layout style. 
+
 ## API changes
 
-## Component changes
+### ActionSheet
 
-## Changes
+#### MDCActionSheetController
+
+*new* property: `traitCollectionDidChangeBlockForAppBarController` in `MDCActionSheetController`
+
+### ActivityIndicator
+
+#### MDCActivityIndicator
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCActivityIndicator`
+
+### Banner
+
+#### MDCBannerView
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCBannerView`
+
+### BottomAppBar
+
+#### MDCBottomAppBarView
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCBottomAppBarView`
+
+### BottomSheet
+
+#### MDCBottomSheetController
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCBottomSheetController`
+
+#### MDCBottomSheetPresentationController
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCBottomSheetPresentationController`
+
+### ButtonBar
+
+#### MDCButtonBar
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCButtonBar`
+
+### Cards
+
+#### MDCCard
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCCard`
+
+#### MDCCardCollectionCell
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCCardCollectionCell`
+
+### Chips
+
+#### MDCChipView
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCChipView`
+
+### Dialogs
+
+#### MDCAlertController
+
+*new* property: `shadowColor` in `MDCAlertController`
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCAlertController`
+
+#### MDCDialogPresentationController
+
+*new* property: `dialogShadowColor` in `MDCDialogPresentationController`
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCDialogPresentationController`
+
+### Elevation
+
+#### MDCElevatable
+
+*new* property: `mdc_currentElevation` in `MDCElevatable`
+
+*new* property: `mdc_elevationDidChangeBlock` in `MDCElevatable`
+
+*new* protocol: `MDCElevatable`
+
+#### MDCElevatableOverriding
+
+*new* property: `mdc_overrideBaseElevation` in `MDCElevatable`
+
+*new* protocol: `MDCElevatableOverriding`
+
+### List
+
+#### MDCBaseCell
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCBaseCell`
+
+### NavigationDrawer
+
+#### MDCBottomDrawerPresentationController
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCBottomDrawerPresentationController`
+
+#### MDCBottomDrawerViewController
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCBottomDrawerViewController`
+
+### Ripple
+
+#### MDCRippleView
+
+*new* property: `activeRippleColor` in `MDCRippleView`
+
+*removed* method: `-setActiveRippleColor:` in `MDCRippleView`
+
+### Slider
+
+#### MDCSlider
+
+*new* property: `thumbShadowColor` in `MDCSlider`
+
+### Tabs
+
+#### MDCTabBarView
+
+*new* enum value: `MDCTabBarViewLayoutStyleFixed` in `MDCTabBarView`
+
+*new* enum value: `MDCTabBarViewLayoutStyleScrollable` in `MDCTabBarView`
+
+*new* enum value: `MDCTabBarViewLayoutStyleFixedClusteredCentered` in `MDCTabBarView`
+
+*new* enum value: `MDCTabBarViewLayoutStyleFixedClusteredLeading` in `MDCTabBarView`
+
+*new* enum value: `MDCTabBarViewLayoutStyleFixedClusteredTrailing` in `MDCTabBarView`
+
+*new* enum: `MDCTabBarViewLayoutStyle`
+
+*new* typedef: `MDCTabBarViewLayoutStyle`
+
+*new* property: `preferredLayoutStyle` in `MDCTabBarView`
+
+*new* property: `selectionChangeAnimationDuration` in `MDCTabBarView`
+
+*new* property: `selectionChangeAnimationTimingFunction` in `MDCTabBarView`
+
+## Component changes
 
 ### ActionSheet
 
