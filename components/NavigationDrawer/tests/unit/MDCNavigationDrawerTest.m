@@ -62,4 +62,28 @@
   }
 }
 
+- (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
+  // Given
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollection"];
+  __block UITraitCollection *passedTraitCollection = nil;
+  __block MDCBottomDrawerViewController *passedBottomDrawer = nil;
+  self.navigationDrawer.traitCollectionDidChangeBlock =
+      ^(MDCBottomDrawerViewController *_Nonnull navigationDrawer,
+        UITraitCollection *_Nullable previousTraitCollection) {
+        passedTraitCollection = previousTraitCollection;
+        passedBottomDrawer = navigationDrawer;
+        [expectation fulfill];
+      };
+  UITraitCollection *fakeTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
+
+  // When
+  [self.navigationDrawer traitCollectionDidChange:fakeTraitCollection];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertEqual(passedBottomDrawer, self.navigationDrawer);
+  XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
+}
+
 @end
