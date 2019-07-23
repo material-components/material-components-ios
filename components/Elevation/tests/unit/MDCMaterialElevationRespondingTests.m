@@ -88,7 +88,7 @@
  MDCElevatableOverride.
  */
 @interface MDCConformingMDCElevatableOverrideViewController
-: UIViewController <MDCElevatable, MDCElevationOverriding>
+    : UIViewController <MDCElevatable, MDCElevationOverriding>
 @property(nonatomic, assign, readwrite) CGFloat mdc_overrideBaseElevation;
 @property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)(CGFloat elevation);
 @property(nonatomic, assign, readonly) CGFloat mdc_currentElevation;
@@ -109,7 +109,8 @@
 @interface MDCMaterialElevationRespondingTests : XCTestCase
 @property(nonatomic, strong, nullable) UIView *view;
 @property(nonatomic, strong, nullable) MDCConformingMDCElevatableView *elevationView;
-@property(nonatomic, strong, nullable) MDCConformingMDCElevatableOverrideView *elevationOverrideView;
+@property(nonatomic, strong, nullable)
+    MDCConformingMDCElevatableOverrideView *elevationOverrideView;
 @property(nonatomic, strong, nullable) UIViewController *viewController;
 @property(nonatomic, strong, nullable)
     MDCConformingMDCElevatableViewController *elevationViewController;
@@ -401,7 +402,8 @@
   [self.view addSubview:self.elevationView];
 
   // Then
-  XCTAssertEqualWithAccuracy(self.elevationView.mdc_baseElevation, fakeViewControllerElevation + fakeViewControllerOverride, 0.001);
+  XCTAssertEqualWithAccuracy(self.elevationView.mdc_baseElevation,
+                             fakeViewControllerElevation + fakeViewControllerOverride, 0.001);
 }
 
 // + self.elevationViewController
@@ -421,7 +423,8 @@
   [self.view addSubview:self.elevationOverrideViewController.view];
 
   // Then
-  XCTAssertEqualWithAccuracy(self.elevationOverrideViewController.view.mdc_baseElevation, fakeViewControllerOverride, 0.001);
+  XCTAssertEqualWithAccuracy(self.elevationOverrideViewController.view.mdc_baseElevation,
+                             fakeViewControllerOverride, 0.001);
 }
 
 // + self.view
@@ -450,7 +453,8 @@
   [self.view addSubview:self.elevationOverrideViewController.view];
 
   // Then
-  XCTAssertEqualWithAccuracy(self.elevationOverrideViewController.view.mdc_baseElevation, fakeElevationOverride, 0.001);
+  XCTAssertEqualWithAccuracy(self.elevationOverrideViewController.view.mdc_baseElevation,
+                             fakeElevationOverride, 0.001);
 }
 
 @end
