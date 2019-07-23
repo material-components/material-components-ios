@@ -28,8 +28,8 @@
  If a view in the hierarchy conforms to @c MDCElevationOveriding the sum of the current total plus
  that value is returned.
 
- If a @c UIViewController responds to @c MDCElevatable or @c MDCElevationOveriding then its @c view
- will report its base elevation.
+ If a @c UIViewController conforms to @c MDCElevatable or @c MDCElevationOveriding then its @c view
+ will report the view controllers base elevation.
  */
 @property(nonatomic, assign, readonly) CGFloat mdc_baseElevation;
 
