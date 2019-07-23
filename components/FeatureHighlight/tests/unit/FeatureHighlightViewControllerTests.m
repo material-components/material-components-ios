@@ -45,6 +45,7 @@
   // Given
   MDCFeatureHighlightViewController *controller =
       [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:[[UIView alloc] init]
+                                                             andShowView:[[UIView alloc] init]
                                                               completion:nil];
   XCTestExpectation *expectation =
       [[XCTestExpectation alloc] initWithDescription:@"traitCollection"];
