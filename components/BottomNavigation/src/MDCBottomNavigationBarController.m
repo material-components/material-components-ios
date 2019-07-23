@@ -126,7 +126,6 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
   // Remove current VC and add new one.
   [self.selectedViewController.view removeFromSuperview];
   [self.content addSubview:selectedViewController.view];
-  [selectedViewController didMoveToParentViewController:self];
   [self addConstraintsForChildViewControllerView:selectedViewController.view];
 
   // Set the iVar and update selected index
@@ -162,6 +161,7 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
 - (void)addNewChildViewControllers:(NSArray<UIViewController *> *)newChildViewControllers {
   for (UIViewController *viewController in newChildViewControllers) {
     [self addChildViewController:viewController];
+    [viewController didMoveToParentViewController:self];
   }
 }
 
