@@ -36,6 +36,7 @@ static const BOOL MDCCardIsInteractableDefault = YES;
 }
 
 @dynamic layer;
+@synthesize mdc_elevationDidChangeBlock;
 
 + (Class)layerClass {
   return [MDCShapedShadowLayer class];
@@ -358,6 +359,10 @@ static const BOOL MDCCardIsInteractableDefault = YES;
     }
     [self addSubview:_inkView];
   }
+}
+
+- (CGFloat)mdc_currentElevation {
+  return [self shadowElevationForState:self.state];
 }
 
 @end

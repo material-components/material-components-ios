@@ -381,4 +381,30 @@ static UIImage *FakeImage(void) {
   XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
 }
 
+- (void)testCurrentElevationOfMDCElevationProvidesCorrectValue {
+  // When
+  [self.card setShadowElevation:12 forState:UIControlStateNormal];
+
+  // Then
+  XCTAssertEqual(self.card.state, UIControlStateNormal);
+  XCTAssertEqual(self.card.mdc_currentElevation,
+                 [self.card shadowElevationForState:UIControlStateNormal]);
+
+}
+
+- (void)testElevationDidChangeBlockIsCorrectlySetUp {
+  // Given
+  __block NSNumber *weakElevationDidChangeBlockWasCalled = @NO;
+  self.card.mdc_elevationDidChangeBlock = ^(CGFloat elevation) {
+    weakElevationDidChangeBlockWasCalled = @YES;
+  };
+
+  // When
+  self.card.mdc_elevationDidChangeBlock(0);
+
+  // Then
+  XCTAssertTrue(weakElevationDidChangeBlockWasCalled.boolValue);
+
+}
+
 @end
