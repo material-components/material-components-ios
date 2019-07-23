@@ -73,15 +73,6 @@ static NSString *const kItemTitleLong2Arabic =
   [self snapshotVerifyView:snapshotView];
 }
 
-- (void)changeViewToRTL:(UIView *)view {
-  if (@available(iOS 9.0, *)) {
-    view.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
-    for (UIView *subview in view.subviews) {
-      [self changeViewToRTL:subview];
-    }
-  }
-}
-
 - (MDCSnackbarMessageView *)snackbarMessageViewWithMessage:(MDCSnackbarMessage *)message {
   return [[MDCSnackbarMessageView alloc] initWithMessage:message
                                           dismissHandler:nil
