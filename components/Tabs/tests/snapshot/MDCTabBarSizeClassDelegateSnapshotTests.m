@@ -101,9 +101,7 @@ static NSString *const kItemTitleShort3Arabic = @"وتم";
 }
 
 - (void)changeLayoutToRTL {
-  if (@available(iOS 9.0, *)) {
-    [self changeViewToRTL:self.tabBar];
-  }
+  [self changeViewToRTL:self.tabBar];
 }
 
 - (void)setTitlesToArabicShort {
