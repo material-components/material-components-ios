@@ -112,6 +112,14 @@ static const BOOL MDCCardIsInteractableDefault = YES;
   [self updateBorderColor];
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
+}
+
 - (void)setCornerRadius:(CGFloat)cornerRadius {
   self.layer.cornerRadius = cornerRadius;
   [self setNeedsLayout];

@@ -358,4 +358,27 @@ static UIImage *FakeImage(void) {
                     [self.cell verticalImageAlignmentForState:MDCCardCellStateHighlighted]);
 }
 
+- (void)testTraitCollectionDidChangeBlockCalledWithExpectedParametersForCard {
+  // Given
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollection"];
+  __block UITraitCollection *passedTraitCollection = nil;
+  __block MDCCard *passedCard = nil;
+  self.card.traitCollectionDidChangeBlock =
+      ^(MDCCard *_Nonnull card, UITraitCollection *_Nullable previousTraitCollection) {
+        passedTraitCollection = previousTraitCollection;
+        passedCard = card;
+        [expectation fulfill];
+      };
+  UITraitCollection *fakeTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
+
+  // When
+  [self.card traitCollectionDidChange:fakeTraitCollection];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertEqual(passedCard, self.card);
+  XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
+}
+
 @end
