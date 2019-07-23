@@ -34,6 +34,18 @@ typedef NS_ENUM(NSUInteger, MDCTabBarViewLayoutStyle) {
    of the bar.
    */
   MDCTabBarViewLayoutStyleFixedClusteredCentered = 2,
+
+  /**
+   Each item's width is as wide as the widest item. The items are arranged horizontally on the
+   leading edge of the bar.
+   */
+  MDCTabBarViewLayoutStyleFixedClusteredLeading = 3,
+
+  /**
+   Each item's width is as wide as the widest item. The items are arranged horizontally on the
+   trailing edge of the bar.
+   */
+  MDCTabBarViewLayoutStyleFixedClusteredTrailing = 4,
 };
 
 /**

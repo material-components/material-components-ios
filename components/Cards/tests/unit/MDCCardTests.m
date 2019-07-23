@@ -381,4 +381,28 @@ static UIImage *FakeImage(void) {
   XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
 }
 
+- (void)testTraitCollectionDidChangeBlockCalledWithExpectedParametersForCardCollectionCell {
+  // Given
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollection"];
+  __block UITraitCollection *passedTraitCollection = nil;
+  __block MDCCardCollectionCell *passedCollectionCell = nil;
+  self.cell.traitCollectionDidChangeBlock =
+      ^(MDCCardCollectionCell *_Nonnull collectionCell,
+        UITraitCollection *_Nullable previousTraitCollection) {
+        passedTraitCollection = previousTraitCollection;
+        passedCollectionCell = collectionCell;
+        [expectation fulfill];
+      };
+  UITraitCollection *fakeTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
+
+  // When
+  [self.cell traitCollectionDidChange:fakeTraitCollection];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertEqual(passedCollectionCell, self.cell);
+  XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
+}
+
 @end

@@ -24,13 +24,13 @@
 @property(nonatomic, strong) MDCInkView *inkView;
 @end
 
-@interface MDCBaseCellRippleTests : XCTestCase
+@interface MDCBaseCellTests : XCTestCase
 
 @property(nonatomic, strong, nullable) MDCBaseCell *baseCell;
 
 @end
 
-@implementation MDCBaseCellRippleTests
+@implementation MDCBaseCellTests
 
 - (void)setUp {
   [super setUp];
@@ -107,6 +107,29 @@
 
   // Then
   XCTAssertEqualObjects(self.baseCell.rippleView.rippleColor, color);
+}
+
+- (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
+  // Given
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollection"];
+  __block UITraitCollection *passedTraitCollection = nil;
+  __block MDCBaseCell *passedCell = nil;
+  self.baseCell.traitCollectionDidChangeBlock =
+      ^(MDCBaseCell *_Nonnull cell, UITraitCollection *_Nullable previousTraitCollection) {
+        passedTraitCollection = previousTraitCollection;
+        passedCell = cell;
+        [expectation fulfill];
+      };
+  UITraitCollection *fakeTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
+
+  // When
+  [self.baseCell traitCollectionDidChange:fakeTraitCollection];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertEqual(passedCell, self.baseCell);
+  XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
 }
 
 @end
