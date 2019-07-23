@@ -236,6 +236,10 @@ changes. TabBarView allows clients to set preferred layout style.
 * [Add traitCollectionDidChange block (#8008)](https://github.com/material-components/material-components-ios/commit/e68ae6c57b7fca486fe1542b275dd6747b601b46) (Cody Weaver)
 * [Add traitCollectionDidChange block to presentation controller. (#8009)](https://github.com/material-components/material-components-ios/commit/5516e8dc0af11465ce88805adac014a0916492c2) (Cody Weaver)
 
+### private/Snapshot
+
+* [add support to change TextInput to RTL mode. (#7986)](https://github.com/material-components/material-components-ios/commit/4953449e209b1e9187b12440e890b5e935d2ec70) (Wenyu Zhang)
+
 ### Ripple
 
 * [Add dynamic color support for ripple. (#7968)](https://github.com/material-components/material-components-ios/commit/5cdb7f95f75a516de2eb208f93ee1ad9e5253ed6) (Yarden Eitan)
@@ -245,6 +249,7 @@ changes. TabBarView allows clients to set preferred layout style.
 
 * [Add snapshot test for dynamic color with elevation. (#7960)](https://github.com/material-components/material-components-ios/commit/ceb874acaf2ff3876d39dec21a7c6acb62578834) (Wenyu Zhang)
 * [change track background color. (#7967)](https://github.com/material-components/material-components-ios/commit/cf7ed4c5f9c92f290110f7aee0d6718ea06903fb) (Wenyu Zhang)
+* [Add shadowColor to support dynamic color behavior. (#7972)](https://github.com/material-components/material-components-ios/commit/4d47e68dd807877538c0857d83b0ddc2ec30280b) (Wenyu Zhang)
 
 ### Tabs
 
@@ -262,10 +267,8 @@ changes. TabBarView allows clients to set preferred layout style.
 
 ## Multi-component changes
 
-* [Add shadowColor to support dynamic color behavior. (#7972)](https://github.com/material-components/material-components-ios/commit/4d47e68dd807877538c0857d83b0ddc2ec30280b) (Wenyu Zhang)
 * [Drop iOS 9 guards for Swift. (#8001)](https://github.com/material-components/material-components-ios/commit/ff2d8a4e7f67567c870158ec6699f0970faf0c2a) (Robert Moore)
 * [Remove RTL snapshot method overrides. (#7996)](https://github.com/material-components/material-components-ios/commit/8dcf1e4a568a75c48c139c1cdf5ca3e2882759ef) (Robert Moore)
-* [add support to change TextInput to RTL mode. (#7986)](https://github.com/material-components/material-components-ios/commit/4953449e209b1e9187b12440e890b5e935d2ec70) (Wenyu Zhang)
 
 ---
 
