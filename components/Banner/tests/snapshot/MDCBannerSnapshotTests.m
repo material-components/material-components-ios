@@ -150,15 +150,6 @@ static const CGFloat kBannerLargeContentPadding = 30.0f;
   [self snapshotVerifyView:snapshotWindow];
 }
 
-- (void)changeViewToRTL:(UIView *)view {
-  if (@available(iOS 9.0, *)) {
-    view.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
-    for (UIView *subview in view.subviews) {
-      [self changeViewToRTL:subview];
-    }
-  }
-}
-
 #pragma mark - Tests
 
 - (void)testShortTextWithSingleActionLTR {
@@ -336,6 +327,43 @@ static const CGFloat kBannerLargeContentPadding = 30.0f;
   self.bannerView.bannerViewLayoutStyle = MDCBannerViewLayoutStyleSingleRow;
   [self changeViewToRTL:self.bannerView];
   self.bannerView.imageView.hidden = YES;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.bannerView];
+}
+
+- (void)testLongTextWithTwoActionsAndIconLTR {
+  // When
+  self.bannerView.textLabel.text = kBannerLongText;
+  MDCButton *button1 = self.bannerView.leadingButton;
+  [button1 setTitle:@"Action1" forState:UIControlStateNormal];
+  [button1 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
+  button1.uppercaseTitle = YES;
+  MDCButton *button2 = self.bannerView.trailingButton;
+  [button2 setTitle:@"Action2" forState:UIControlStateNormal];
+  [button2 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
+  button2.uppercaseTitle = YES;
+  self.bannerView.imageView.hidden = NO;
+  self.bannerView.imageView.image = [UIImage mdc_testImageOfSize:CGSizeMake(40, 40)];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.bannerView];
+}
+
+- (void)testLongTextWithTwoActionsAndIconRTL {
+  // When
+  self.bannerView.textLabel.text = kBannerLongText;
+  MDCButton *button1 = self.bannerView.leadingButton;
+  [button1 setTitle:@"Action1" forState:UIControlStateNormal];
+  [button1 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
+  button1.uppercaseTitle = YES;
+  MDCButton *button2 = self.bannerView.trailingButton;
+  [button2 setTitle:@"Action2" forState:UIControlStateNormal];
+  [button2 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
+  button2.uppercaseTitle = YES;
+  self.bannerView.imageView.hidden = NO;
+  self.bannerView.imageView.image = [UIImage mdc_testImageOfSize:CGSizeMake(40, 40)];
+  [self changeViewToRTL:self.bannerView];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.bannerView];

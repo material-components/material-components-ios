@@ -26,11 +26,8 @@ static const CGFloat kCornerRadius = 4;
   // TODO(https://github.com/material-components/material-components-ios/issues/6637 ): Force-load
   // the view before setting the buttons fonts to ensure that they aren't overwritten in
   // -updateButtonFont. If the bug gets fixed, this hack can be removed.
-  if (@available(iOS 9.0, *)) {
-    [self loadViewIfNeeded];
-  } else {
-    (void)self.view;
-  }
+  [self loadViewIfNeeded];
+
   // Color
   [self applyColorThemeWithScheme:scheme.colorScheme];
 

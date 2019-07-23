@@ -75,9 +75,7 @@ static const CGFloat kItemViewContentHorizontalMargin = 12;
 }
 
 - (void)changeToRTLAndArabicWithBadgeValue:(NSString *)badgeValue {
-  if (@available(iOS 9.0, *)) {
-    self.itemView.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
-  }
+  self.itemView.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
   self.itemView.title = MDCBottomNavigationTestLongTitleArabic;
   self.itemView.badgeValue = badgeValue;
 }

@@ -74,6 +74,11 @@ static NSString *const kiPhone8ModelB = @"iPhone10,4";
                                   tolerancePercent);
 }
 
+- (void)changeViewToRTL:(UIView *)view {
+  [self changeViewLayoutToRTL:view];
+  [self changeTextInputToRTL:view];
+}
+
 // TODO(https://github.com/material-components/material-components-ios/issues/5888)
 // Support multiple OS versions and devices for snapshots
 - (BOOL)isSupportedDevice {
@@ -123,6 +128,27 @@ static NSString *const kiPhone8ModelB = @"iPhone10,4";
   deviceName = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
 #endif
   return deviceName;
+}
+
+- (void)changeViewLayoutToRTL:(UIView *)view {
+  view.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
+  for (UIView *subview in view.subviews) {
+    [self changeViewLayoutToRTL:subview];
+  }
+}
+
+- (void)changeTextInputToRTL:(UIView *)view {
+  if ([view conformsToProtocol:@protocol(UITextInput)]) {
+    id<UITextInput> textInput = (id<UITextInput>)view;
+    UITextRange *textRange = [textInput textRangeFromPosition:textInput.beginningOfDocument
+                                                   toPosition:textInput.endOfDocument];
+    if (textRange) {
+      [textInput setBaseWritingDirection:UITextWritingDirectionRightToLeft forRange:textRange];
+    }
+  }
+  for (UIView *subview in view.subviews) {
+    [self changeTextInputToRTL:subview];
+  }
 }
 
 @end
