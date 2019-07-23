@@ -244,6 +244,7 @@ changes. TabBarView allows clients to set preferred layout style.
 
 * [Add dynamic color support for ripple. (#7968)](https://github.com/material-components/material-components-ios/commit/5cdb7f95f75a516de2eb208f93ee1ad9e5253ed6) (Yarden Eitan)
 * [Turn activeRippleColor into a property (#7949)](https://github.com/material-components/material-components-ios/commit/8a0308f6499abb877e0e5fb6f6686c82eb101526) (Yarden Eitan)
+* [Fix active ripple layer not using active ripple color. (#8059)](https://github.com/material-components/material-components-ios/commit/013f3a890ee637898975bf36ebdda79b9de8eab0) (Wenyu Zhang)
 
 ### Slider
 
