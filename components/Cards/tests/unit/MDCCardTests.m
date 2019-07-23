@@ -358,7 +358,6 @@ static UIImage *FakeImage(void) {
                     [self.cell verticalImageAlignmentForState:MDCCardCellStateHighlighted]);
 }
 
-
 - (void)testTraitCollectionDidChangeBlockCalledWithExpectedParametersForCard {
   // Given
   XCTestExpectation *expectation =
@@ -383,13 +382,27 @@ static UIImage *FakeImage(void) {
 }
 
 - (void)testTraitCollectionDidChangeBlockCalledWithExpectedParametersForCardCollectionCell {
-  __block MDCCardCollectionCell *passedCardCollectionCell = nil;
+  // Given
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollection"];
+  __block UITraitCollection *passedTraitCollection = nil;
+  __block MDCCardCollectionCell *passedCollectionCell = nil;
   self.cell.traitCollectionDidChangeBlock =
-  ^(MDCCardCollectionCell *_Nonnull collectionCell,
-    UITraitCollection *_Nullable previousTraitCollection) {
-    passedTraitCollection = previousTraitCollection;
-    passedCardCollectionCell = collectionCell;
-XCTAssertEqual(passedCardCollectionCell, self.cell);
+      ^(MDCCardCollectionCell *_Nonnull collectionCell,
+        UITraitCollection *_Nullable previousTraitCollection) {
+        passedTraitCollection = previousTraitCollection;
+        passedCollectionCell = collectionCell;
+        [expectation fulfill];
+      };
+  UITraitCollection *fakeTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
+
+  // When
+  [self.cell traitCollectionDidChange:fakeTraitCollection];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertEqual(passedCollectionCell, self.cell);
+  XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
 }
 
 @end
