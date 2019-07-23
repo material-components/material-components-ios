@@ -34,6 +34,7 @@
  @param elevation The @c mdc_currentElevation plus the @c mdc_currentElevation of all ancestor
  views.
  */
-@property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)(CGFloat elevation);
+@property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)
+(id<MDCElevatable>_Nonnull elevatableSelf, CGFloat elevation);
 
 @end
