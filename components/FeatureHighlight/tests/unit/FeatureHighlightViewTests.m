@@ -31,7 +31,7 @@
   // Given
   MDCFeatureHighlightView *view = [[MDCFeatureHighlightView alloc] init];
   XCTestExpectation *expectation =
-  [[XCTestExpectation alloc] initWithDescription:@"traitCollection"];
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollection"];
   __block UITraitCollection *passedTraitCollection = nil;
   __block MDCFeatureHighlightView *passedFeatureHighlightView = nil;
   view.traitCollectionDidChangeBlock = ^(MDCFeatureHighlightView *_Nonnull featureHighlight,
