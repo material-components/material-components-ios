@@ -242,16 +242,6 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   }
 }
 
-- (void)changeViewToRTL:(UIView *)view {
-  for (UIView *subview in view.subviews) {
-    if ([view isKindOfClass:[UIImageView class]]) {
-      continue;
-    }
-    [self changeViewToRTL:subview];
-  }
-  view.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
-}
-
 - (void)generateSnapshotAndVerifyForView:(UIView *)view {
   // Needed so that the stack view can be constrained correctly and then allow any "scrolling" to
   // take place for the selected item to be visible.

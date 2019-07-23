@@ -100,15 +100,6 @@ static NSString *const kTrailingTitleArabic = @"كل.";
   [self snapshotVerifyView:snapshotView];
 }
 
-- (void)changeViewToRTL:(UIView *)view {
-  if (@available(iOS 9.0, *)) {
-    view.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
-    for (UIView *subview in view.subviews) {
-      [self changeViewToRTL:subview];
-    }
-  }
-}
-
 - (void)changeToRTLAndArabic {
   self.leadingTitleItem.title = kLeadingTitleArabic;
   self.middleTitleItem.title = kMiddleTitleArabic;

@@ -138,6 +138,15 @@
  */
 - (void)expandToFullscreenWithDuration:(CGFloat)duration
                             completion:(void (^__nullable)(BOOL finished))completion;
+
+/**
+ A block that is invoked when the @c MDCBottomDrawerViewController receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCBottomDrawerViewController *_Nonnull bottomDrawer,
+     UITraitCollection *_Nullable previousTraitCollection);
+
 @end
 
 /**

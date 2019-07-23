@@ -112,15 +112,11 @@
 }
 
 - (void)changeToRTLAndArabicWithTitle:(NSString *)title {
-  if (@available(iOS 9.0, *)) {
-    self.navigationBar.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
-  }
+  self.navigationBar.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
   for (UITabBarItem *item in self.navigationBar.items) {
     item.title = title;
-    if (@available(iOS 9.0, *)) {
-      UIView *view = [self.navigationBar viewForItem:item];
-      view.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
-    }
+    UIView *view = [self.navigationBar viewForItem:item];
+    view.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
   }
   self.navigationBar.items[1].badgeValue = MDCBottomNavigationTestBadgeTitleArabic;
 }

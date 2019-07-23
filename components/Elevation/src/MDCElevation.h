@@ -18,7 +18,7 @@
 /**
  Provides APIs for @c UIViews to communicate their elevation throughout the view hierarchy.
  */
-@protocol MDCElevation <NSObject>
+@protocol MDCElevation
 
 /**
  The current elevation of the conforming @c UIView.
@@ -35,15 +35,5 @@
  views.
  */
 @property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)(CGFloat elevation);
-
-@optional
-
-/**
- When available, used by @c MaterialElevationResponding instead of @c mdc_baseElevation.
-
- This can be used in cases where there is elevation behind an object that is not part of the
- view hierarchy, like a @c UIPresentationController.
- */
-@property(nonatomic, assign, readwrite) CGFloat mdc_overrideBaseElevation;
 
 @end
