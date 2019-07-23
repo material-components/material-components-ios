@@ -141,20 +141,18 @@ class TextFieldTests: XCTestCase {
     XCTAssertTrue(textField.subviews.contains(leftView))
     XCTAssertTrue(textField.subviews.contains(rightView))
 
-    if #available(iOS 9.0, *) {
-      if UIView.userInterfaceLayoutDirection(for: .unspecified) == .leftToRight {
-        XCTAssertEqual(textField.leadingView, leftView)
-        XCTAssertEqual(textField.leadingView, textField.leftView)
+    if UIView.userInterfaceLayoutDirection(for: .unspecified) == .leftToRight {
+      XCTAssertEqual(textField.leadingView, leftView)
+      XCTAssertEqual(textField.leadingView, textField.leftView)
 
-        XCTAssertEqual(textField.trailingView, rightView)
-        XCTAssertEqual(textField.trailingView, textField.rightView)
-      } else {
-        XCTAssertEqual(textField.leadingView, rightView)
-        XCTAssertEqual(textField.leadingView, textField.rightView)
+      XCTAssertEqual(textField.trailingView, rightView)
+      XCTAssertEqual(textField.trailingView, textField.rightView)
+    } else {
+      XCTAssertEqual(textField.leadingView, rightView)
+      XCTAssertEqual(textField.leadingView, textField.rightView)
 
-        XCTAssertEqual(textField.trailingView, leftView)
-        XCTAssertEqual(textField.trailingView, textField.leftView)
-      }
+      XCTAssertEqual(textField.trailingView, leftView)
+      XCTAssertEqual(textField.trailingView, textField.leftView)
     }
   }
 
