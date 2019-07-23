@@ -65,16 +65,16 @@
 - (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
   // Given
   XCTestExpectation *expectation =
-  [[XCTestExpectation alloc] initWithDescription:@"traitCollection"];
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollection"];
   __block UITraitCollection *passedTraitCollection = nil;
   __block MDCBottomDrawerViewController *passedBottomDrawer = nil;
   self.navigationDrawer.traitCollectionDidChangeBlock =
-  ^(MDCBottomDrawerViewController *_Nonnull navigationDrawer,
-    UITraitCollection *_Nullable previousTraitCollection) {
-    passedTraitCollection = previousTraitCollection;
-    passedBottomDrawer = navigationDrawer;
-    [expectation fulfill];
-  };
+      ^(MDCBottomDrawerViewController *_Nonnull navigationDrawer,
+        UITraitCollection *_Nullable previousTraitCollection) {
+        passedTraitCollection = previousTraitCollection;
+        passedBottomDrawer = navigationDrawer;
+        [expectation fulfill];
+      };
   UITraitCollection *fakeTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
 
   // When

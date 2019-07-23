@@ -144,8 +144,8 @@
  traitCollectionDidChange:. The block is called after the call to the superclass.
  */
 @property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
-(MDCBottomDrawerViewController *_Nonnull bottomDrawer,
-UITraitCollection *_Nullable previousTraitCollection);
+    (MDCBottomDrawerViewController *_Nonnull bottomDrawer,
+     UITraitCollection *_Nullable previousTraitCollection);
 
 @end
 
