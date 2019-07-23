@@ -28,7 +28,8 @@
     if (current != self) {
       totalElevation += elevatableCurrent.mdc_currentElevation;
     }
-    id<MDCElevationOverride> elevatableCurrentOverride = [current objectConfromingToOverrideInResponderChain];
+    id<MDCElevationOverride> elevatableCurrentOverride =
+        [current objectConfromingToOverrideInResponderChain];
     if (elevatableCurrentOverride != nil) {
       if (elevatableCurrentOverride.mdc_overrideBaseElevation >= 0) {
         totalElevation += elevatableCurrentOverride.mdc_overrideBaseElevation;
