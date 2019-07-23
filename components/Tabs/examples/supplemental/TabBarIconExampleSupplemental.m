@@ -87,8 +87,6 @@
   self.appBarViewController.headerView.minMaxHeightIncludesSafeArea = NO;
   self.appBarViewController.headerView.minimumHeight = 56 + 72;
 
-  UIFont *font = [UIFont monospacedDigitSystemFontOfSize:14 weight:UIFontWeightRegular];
-
   [self.view addSubview:self.appBarViewController.view];
   [self.appBarViewController didMoveToParentViewController:self];
 
