@@ -168,4 +168,11 @@ typedef void (^MDCFeatureHighlightCompletion)(BOOL accepted);
  */
 - (void)rejectFeature;
 
+/**
+ A block that is invoked when the @c MDCFeatureHighlightViewController receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+(MDCFeatureHighlightViewController *_Nonnull featureHighlight, UITraitCollection *_Nullable previousTraitCollection);
+
 @end
