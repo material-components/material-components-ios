@@ -27,7 +27,7 @@
 
 /**
  This block is called when the elevation changes for the conforming @c UIView or @c UIViewController
- reciever or one of its direct ancestors in the view hierarchy.
+ receiver or one of its direct ancestors in the view hierarchy.
 
  Use this block to respond to elevation changes in the view or its ancestor views.
 
