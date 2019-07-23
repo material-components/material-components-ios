@@ -27,4 +27,28 @@
   XCTAssertNotNil(view);
 }
 
+- (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
+  // Given
+  MDCFeatureHighlightView *view = [[MDCFeatureHighlightView alloc] init];
+  XCTestExpectation *expectation =
+  [[XCTestExpectation alloc] initWithDescription:@"traitCollection"];
+  __block UITraitCollection *passedTraitCollection = nil;
+  __block MDCFeatureHighlightView *passedFeatureHighlightView = nil;
+  view.traitCollectionDidChangeBlock = ^(MDCFeatureHighlightView *_Nonnull featureHighlight,
+                                         UITraitCollection *_Nullable previousTraitCollection) {
+    passedTraitCollection = previousTraitCollection;
+    passedFeatureHighlightView = featureHighlight;
+    [expectation fulfill];
+  };
+  UITraitCollection *fakeTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
+
+  // When
+  [view traitCollectionDidChange:fakeTraitCollection];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertEqual(passedFeatureHighlightView, view);
+  XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
+}
+
 @end
