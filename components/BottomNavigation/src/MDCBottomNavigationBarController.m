@@ -67,7 +67,6 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
   if (self) {
     _navigationBar = [[MDCBottomNavigationBar alloc] init];
     _content = [[UIView alloc] init];
-    _viewControllers = @[];
     _selectedIndex = NSNotFound;
     _dismissingLargeItemView = NO;
     _longPressPopUpViewEnabled = YES;
@@ -119,8 +118,10 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
   }
 
   // Remove current VC and add new one.
-  [self removeContentViewController:self.selectedViewController];
-  [self addContentViewController:selectedViewController];
+  [self.selectedViewController.view removeFromSuperview];
+  [self.content addSubview:selectedViewController.view];
+  [selectedViewController didMoveToParentViewController:self];
+  [self addConstraintsForChildViewControllerView:selectedViewController.view];
 
   // Set the iVar and update selected index
   _selectedViewController = selectedViewController;
@@ -152,13 +153,32 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
   [self updateViewsForSelectedIndex:selectedIndex];
 }
 
+- (void)removeExistingViewControllers {
+  NSArray<UIViewController *> *childViewControllers = self.childViewControllers;
+  for (UIViewController *childViewController in childViewControllers) {
+    [childViewController.view removeFromSuperview];
+    [childViewController removeFromParentViewController];
+  }
+}
+
+- (void)addNewChildViewControllers:(NSArray<UIViewController *> *)newChildViewControllers {
+  for (UIViewController *viewController in newChildViewControllers) {
+    [self addChildViewController:viewController];
+  }
+}
+
+- (NSArray<UIViewController *> *)viewControllers {
+  return [self.childViewControllers copy];
+}
+
 - (void)setViewControllers:(NSArray<UIViewController *> *)viewControllers {
   [self deselectCurrentItem];
-  NSArray *viewControllersCopy = [viewControllers copy];
-  _viewControllers = viewControllersCopy;
-  self.navigationBar.items = [self tabBarItemsForViewControllers:viewControllersCopy];
+  [self removeExistingViewControllers];
 
-  self.selectedViewController = viewControllersCopy.firstObject;
+  [self addNewChildViewControllers:[viewControllers copy]];
+  self.navigationBar.items = [self tabBarItemsForViewControllers:self.childViewControllers];
+
+  self.selectedViewController = self.childViewControllers.firstObject;
 }
 
 - (void)setLongPressPopUpViewEnabled:(BOOL)isLongPressPopUpViewEnabled {
@@ -176,6 +196,14 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
 }
 
 - (UIViewController *)childViewControllerForStatusBarHidden {
+  return self.selectedViewController;
+}
+
+- (UIViewController *)childViewControllerForHomeIndicatorAutoHidden {
+  return self.selectedViewController;
+}
+
+- (UIViewController *)childViewControllerForScreenEdgesDeferringSystemGestures {
   return self.selectedViewController;
 }
 
@@ -325,29 +353,6 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
 
 #pragma mark - Private Methods
 
-/**
- * Removes the given view controller from its parent view controller and its view from its superview
- */
-- (void)removeContentViewController:(UIViewController *)viewController {
-  [viewController removeFromParentViewController];
-  [viewController.view removeFromSuperview];
-}
-
-/**
- * Adds the given view controller to the view controller hierarchy and its view to the content
- * view.
- */
-- (void)addContentViewController:(UIViewController *)viewController {
-  BOOL doesNotContainViewController = ![self.childViewControllers containsObject:viewController];
-  if (viewController && doesNotContainViewController) {
-    [self addChildViewController:viewController];
-    [self.content addSubview:viewController.view];
-    [self addConstraintsForChildViewControllerView:viewController.view];
-    [viewController didMoveToParentViewController:self];
-  }
-  [self updateNavigationBarInsets];
-}
-
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
 
@@ -425,6 +430,10 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
   // Update the navigation bar's selected item.
   self.navigationBar.selectedItem = selectedViewController.tabBarItem;
   [self setNeedsStatusBarAppearanceUpdate];
+  if (@available(iOS 11.0, *)) {
+    [self setNeedsUpdateOfHomeIndicatorAutoHidden];
+    [self setNeedsUpdateOfScreenEdgesDeferringSystemGestures];
+  }
 }
 
 /**
