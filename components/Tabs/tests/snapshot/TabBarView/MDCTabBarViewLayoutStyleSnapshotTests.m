@@ -286,7 +286,7 @@ static NSString *const kItemTitleLong1Arabic =
 
 #pragma mark - FixedClusteredLeading Layout
 
-- (void)testFixedClusteredLeadingLayoutStyleFitSizeMixedTitlesLatinLTR {
+- (void)testFixedClusteredLeadingLayoutStyleFitSizeLatinLTR {
   // When
   self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredLeading;
 
@@ -295,7 +295,7 @@ static NSString *const kItemTitleLong1Arabic =
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
-- (void)testFixedClusteredLeadingLayoutStyleFitSizeMixedTitlesArabicRTL {
+- (void)testFixedClusteredLeadingLayoutStyleFitSizeArabicRTL {
   // When
   [self changeToArabicStrings];
   [self changeViewToRTL:self.tabBarView];
@@ -306,7 +306,7 @@ static NSString *const kItemTitleLong1Arabic =
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
-- (void)testFixedClusteredLeadingLayoutStyleTooNarrowSizeMixedTitlesLatinLTR {
+- (void)testFixedClusteredLeadingLayoutStyleTooNarrowSizeLatinLTR {
   // When
   self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredLeading;
 
@@ -315,7 +315,7 @@ static NSString *const kItemTitleLong1Arabic =
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
-- (void)testFixedClusteredLeadingLayoutStyleTooNarrowSizeMixedTitlesArabicRTL {
+- (void)testFixedClusteredLeadingLayoutStyleTooNarrowSizeArabicRTL {
   // When
   [self changeToArabicStrings];
   [self changeViewToRTL:self.tabBarView];
@@ -326,7 +326,7 @@ static NSString *const kItemTitleLong1Arabic =
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
-- (void)testFixedClusteredLeadingLayoutStyleTooWideSizeMixedTitlesLatinLTR {
+- (void)testFixedClusteredLeadingLayoutStyleTooWideSizeLatinLTR {
   // When
   self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredLeading;
 
@@ -335,7 +335,7 @@ static NSString *const kItemTitleLong1Arabic =
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
-- (void)testFixedClusteredLeadingLayoutStyleTooWideSizeMixedTitlesArabicRTL {
+- (void)testFixedClusteredLeadingLayoutStyleTooWideSizeArabicRTL {
   // When
   [self changeToArabicStrings];
   [self changeViewToRTL:self.tabBarView];
@@ -348,7 +348,7 @@ static NSString *const kItemTitleLong1Arabic =
 
 #pragma mark - FixedClusteredTrailing Layout
 
-- (void)testFixedClusteredTrailingLayoutStyleFitSizeMixedTitlesLatinLTR {
+- (void)testFixedClusteredTrailingLayoutStyleFitSizeLatinLTR {
   // When
   self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredTrailing;
 
@@ -357,7 +357,7 @@ static NSString *const kItemTitleLong1Arabic =
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
-- (void)testFixedClusteredTrailingLayoutStyleFitSizeMixedTitlesArabicRTL {
+- (void)testFixedClusteredTrailingLayoutStyleFitSizeArabicRTL {
   // When
   [self changeToArabicStrings];
   [self changeViewToRTL:self.tabBarView];
@@ -368,7 +368,7 @@ static NSString *const kItemTitleLong1Arabic =
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
-- (void)testFixedClusteredTrailingLayoutStyleTooNarrowSizeMixedTitlesLatinLTR {
+- (void)testFixedClusteredTrailingLayoutStyleTooNarrowSizeLatinLTR {
   // When
   self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredTrailing;
 
@@ -377,7 +377,7 @@ static NSString *const kItemTitleLong1Arabic =
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
-- (void)testFixedClusteredTrailingLayoutStyleTooNarrowSizeMixedTitlesArabicRTL {
+- (void)testFixedClusteredTrailingLayoutStyleTooNarrowSizeArabicRTL {
   // When
   [self changeToArabicStrings];
   [self changeViewToRTL:self.tabBarView];
@@ -388,7 +388,7 @@ static NSString *const kItemTitleLong1Arabic =
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
-- (void)testFixedClusteredTrailingLayoutStyleTooWideSizeMixedTitlesLatinLTR {
+- (void)testFixedClusteredTrailingLayoutStyleTooWideSizeLatinLTR {
   // When
   self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredTrailing;
 
@@ -397,7 +397,7 @@ static NSString *const kItemTitleLong1Arabic =
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
-- (void)testFixedClusteredTrailingLayoutStyleTooWideSizeMixedTitlesArabicRTL {
+- (void)testFixedClusteredTrailingLayoutStyleTooWideSizeArabicRTL {
   // When
   [self changeToArabicStrings];
   [self changeViewToRTL:self.tabBarView];
