@@ -284,10 +284,147 @@ static NSString *const kItemTitleLong1Arabic =
   [self generateSnapshotAndVerifyForView:self.tabBarView];
 }
 
+#pragma mark - FixedClusteredLeading Layout
+
+- (void)testFixedClusteredLeadingLayoutStyleFitSizeMixedTitlesLatinLTR {
+  // When
+  self.item1.title = kItemTitleLong1Latin;
+  self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredLeading;
+
+  // Then
+  [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeZero];
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testFixedClusteredLeadingLayoutStyleFitSizeMixedTitlesArabicRTL {
+  // When
+  [self changeToArabicStrings];
+  self.item1.title = kItemTitleLong1Arabic;
+  [self changeViewToRTL:self.tabBarView];
+  self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredLeading;
+
+  // Then
+  [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeZero];
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testFixedClusteredLeadingLayoutStyleTooNarrowSizeMixedTitlesLatinLTR {
+  // When
+  self.item1.title = kItemTitleLong1Latin;
+  self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredLeading;
+
+  // Then
+  [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeMake(-100, 0)];
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testFixedClusteredLeadingLayoutStyleTooNarrowSizeMixedTitlesArabicRTL {
+  // When
+  [self changeToArabicStrings];
+  self.item1.title = kItemTitleLong1Arabic;
+  [self changeViewToRTL:self.tabBarView];
+  self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredLeading;
+
+  // Then
+  [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeMake(-100, 0)];
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testFixedClusteredLeadingLayoutStyleTooWideSizeMixedTitlesLatinLTR {
+  // When
+  self.item1.title = kItemTitleLong1Latin;
+  self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredLeading;
+
+  // Then
+  [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeMake(100, 0)];
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testFixedClusteredLeadingLayoutStyleTooWideSizeMixedTitlesArabicRTL {
+  // When
+  [self changeToArabicStrings];
+  self.item1.title = kItemTitleLong1Arabic;
+  [self changeViewToRTL:self.tabBarView];
+  self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredLeading;
+
+  // Then
+  [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeMake(100, 0)];
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+#pragma mark - FixedClusteredTrailing Layout
+
+- (void)testFixedClusteredTrailingLayoutStyleFitSizeMixedTitlesLatinLTR {
+  // When
+  self.item1.title = kItemTitleLong1Latin;
+  self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredTrailing;
+
+  // Then
+  [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeZero];
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testFixedClusteredTrailingLayoutStyleFitSizeMixedTitlesArabicRTL {
+  // When
+  [self changeToArabicStrings];
+  self.item1.title = kItemTitleLong1Arabic;
+  [self changeViewToRTL:self.tabBarView];
+  self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredTrailing;
+
+  // Then
+  [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeZero];
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testFixedClusteredTrailingLayoutStyleTooNarrowSizeMixedTitlesLatinLTR {
+  // When
+  self.item1.title = kItemTitleLong1Latin;
+  self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredTrailing;
+
+  // Then
+  [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeMake(-100, 0)];
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testFixedClusteredTrailingLayoutStyleTooNarrowSizeMixedTitlesArabicRTL {
+  // When
+  [self changeToArabicStrings];
+  self.item1.title = kItemTitleLong1Arabic;
+  [self changeViewToRTL:self.tabBarView];
+  self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredTrailing;
+
+  // Then
+  [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeMake(-100, 0)];
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testFixedClusteredTrailingLayoutStyleTooWideSizeMixedTitlesLatinLTR {
+  // When
+  self.item1.title = kItemTitleLong1Latin;
+  self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredTrailing;
+
+  // Then
+  [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeMake(100, 0)];
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testFixedClusteredTrailingLayoutStyleTooWideSizeMixedTitlesArabicRTL {
+  // When
+  [self changeToArabicStrings];
+  self.item1.title = kItemTitleLong1Arabic;
+  [self changeViewToRTL:self.tabBarView];
+  self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleFixedClusteredTrailing;
+
+  // Then
+  [self sizeViewToIntrinsicContentSize:self.tabBarView extraSize:CGSizeMake(100, 0)];
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
 #pragma mark - Scrollable Layout
 
 - (void)testScrollableLayoutStyleFitSizeLatinLTR {
   // When
+  self.item1.title = kItemTitleLong1Latin;
   self.tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleScrollable;
 
   // Then
