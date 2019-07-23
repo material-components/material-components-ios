@@ -146,8 +146,7 @@
  traitCollectionDidChange:. The block is called after the call to the superclass.
  */
 @property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
-(MDCCard *_Nonnull card,
-UITraitCollection *_Nullable previousTraitCollection);
+    (MDCCard *_Nonnull card, UITraitCollection *_Nullable previousTraitCollection);
 
 /*
  The shape generator used to define the card's shape.

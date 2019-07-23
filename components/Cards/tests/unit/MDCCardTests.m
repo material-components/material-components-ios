@@ -360,14 +360,16 @@ static UIImage *FakeImage(void) {
 
 - (void)testTraitCollectionDidChangeBlockCalledWithExpectedParametersForCard {
   // Given
-  XCTestExpectation *expectation = [[XCTestExpectation alloc] initWithDescription:@"traitCollection"];
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollection"];
   __block UITraitCollection *passedTraitCollection = nil;
   __block MDCCard *passedCard = nil;
-  self.card.traitCollectionDidChangeBlock = ^(MDCCard * _Nonnull card, UITraitCollection * _Nullable previousTraitCollection) {
-    passedTraitCollection = previousTraitCollection;
-    passedCard = card;
-    [expectation fulfill];
-  };
+  self.card.traitCollectionDidChangeBlock =
+      ^(MDCCard *_Nonnull card, UITraitCollection *_Nullable previousTraitCollection) {
+        passedTraitCollection = previousTraitCollection;
+        passedCard = card;
+        [expectation fulfill];
+      };
   UITraitCollection *fakeTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
 
   // When
