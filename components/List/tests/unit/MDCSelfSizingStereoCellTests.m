@@ -177,4 +177,28 @@
   XCTAssert(attributes.size.height > initialAttributeSize.height);
 }
 
+- (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
+  // Given
+  MDCSelfSizingStereoCell *stereoCell = [[MDCSelfSizingStereoCell alloc] init];
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollection"];
+  __block UITraitCollection *passedTraitCollection = nil;
+  __block MDCBaseCell *passedCell = nil;
+  stereoCell.traitCollectionDidChangeBlock =
+      ^(MDCBaseCell *_Nonnull cell, UITraitCollection *_Nullable previousTraitCollection) {
+        passedTraitCollection = previousTraitCollection;
+        passedCell = cell;
+        [expectation fulfill];
+      };
+  UITraitCollection *fakeTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
+
+  // When
+  [stereoCell traitCollectionDidChange:fakeTraitCollection];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertEqual(passedCell, stereoCell);
+  XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
+}
+
 @end

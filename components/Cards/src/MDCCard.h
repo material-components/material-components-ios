@@ -21,7 +21,7 @@
 
 @protocol MDCShapeGenerating;
 
-@interface MDCCard : UIControl <MDCElevation>
+@interface MDCCard : UIControl <MDCElevation, MDCElevationOverride>
 
 /**
  The corner radius for the card

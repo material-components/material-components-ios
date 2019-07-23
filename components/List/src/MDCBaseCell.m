@@ -102,6 +102,14 @@
   self.inkView.frame = self.bounds;
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
+}
+
 #pragma mark UICollectionViewCell Overrides
 
 - (void)setHighlighted:(BOOL)highlighted {

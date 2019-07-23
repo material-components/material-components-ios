@@ -149,6 +149,14 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
   [self updateImageAlignment];
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
+}
+
 - (void)updateCardCellVisuals {
   [self updateShadowElevation];
   [self updateBorderColor];
