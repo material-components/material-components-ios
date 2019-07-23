@@ -315,8 +315,7 @@ IB_DESIGNABLE
  traitCollectionDidChange:. The block is called after the call to the superclass.
  */
 @property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
-(MDCSlider *_Nonnull slider, UITraitCollection *_Nullable previousTraitCollection);
-
+    (MDCSlider *_Nonnull slider, UITraitCollection *_Nullable previousTraitCollection);
 
 #pragma mark - To be deprecated
 
