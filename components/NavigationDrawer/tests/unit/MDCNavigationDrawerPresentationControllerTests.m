@@ -66,4 +66,34 @@
                              0.001);
 }
 
+- (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
+  // Given
+  MDCBottomDrawerViewController *fakeBottomDrawer = [[MDCBottomDrawerViewController alloc] init];
+  UIViewController *fakePresentingViewController = [[UIViewController alloc] init];
+  MDCBottomDrawerPresentationController *fakePresentationController =
+      [[MDCBottomDrawerPresentationController alloc]
+          initWithPresentedViewController:fakeBottomDrawer
+                 presentingViewController:fakePresentingViewController];
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollection"];
+  __block UITraitCollection *passedTraitCollection = nil;
+  __block MDCBottomDrawerPresentationController *passedPresentationController = nil;
+  fakePresentationController.traitCollectionDidChangeBlock =
+      ^(MDCBottomDrawerPresentationController *_Nullable presentationController,
+        UITraitCollection *_Nullable previousTraitCollection) {
+        passedPresentationController = presentationController;
+        passedTraitCollection = previousTraitCollection;
+        [expectation fulfill];
+      };
+  UITraitCollection *fakeTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
+
+  // When
+  [fakePresentationController traitCollectionDidChange:fakeTraitCollection];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertEqual(passedPresentationController, fakePresentationController);
+  XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
+}
+
 @end
