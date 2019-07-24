@@ -341,6 +341,6 @@
  traitCollectionDidChange:. The block is called after the call to the superclass.
  */
 @property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
-    (MDCChipView *_Nonnull activityIndicator, UITraitCollection *_Nullable previousTraitCollection);
+    (MDCChipView *_Nonnull chip, UITraitCollection *_Nullable previousTraitCollection);
 
 @end
