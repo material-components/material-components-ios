@@ -73,8 +73,9 @@
  A block that is invoked when the @c MDCMultilineTextField receives a call to @c
  traitCollectionDidChange:. The block is called after the call to the superclass.
  */
-@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
-(MDCMultilineTextField *_Nonnull textField, UITraitCollection *_Nullable previousTraitCollection);
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)(
+    MDCMultilineTextField *_Nonnull textField, UITraitCollection *_Nullable previousTraitCollection)
+    ;
 
 @end
 

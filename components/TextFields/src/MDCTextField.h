@@ -59,6 +59,6 @@ extern NSString *_Nonnull const MDCTextInputDidToggleEnabledNotification;
  traitCollectionDidChange:. The block is called after the call to the superclass.
  */
 @property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
-(MDCTextField *_Nonnull textField, UITraitCollection *_Nullable previousTraitCollection);
+    (MDCTextField *_Nonnull textField, UITraitCollection *_Nullable previousTraitCollection);
 
 @end

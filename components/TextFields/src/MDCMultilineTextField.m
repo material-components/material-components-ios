@@ -283,7 +283,6 @@
   [self updateIntrinsicSizeFromTextView];
 }
 
-
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
   [super traitCollectionDidChange:previousTraitCollection];
 
