@@ -83,7 +83,7 @@
   UIColor *backgroundColor = [UIColor whiteColor];
   UIColor *blendColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:1.0];
   UIColor *expectedColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:1];
-  UIColor *resultColor = [UIColor blendColor:blendColor withBackgroundColor:backgroundColor];
+  UIColor *resultColor = [UIColor mdc_blendColor:blendColor withBackgroundColor:backgroundColor];
   XCTAssertEqualObjects(resultColor, expectedColor);
 }
 
@@ -94,7 +94,7 @@
                                            green:(CGFloat)0.5
                                             blue:(CGFloat)0.5
                                            alpha:1];
-  UIColor *resultColor = [UIColor blendColor:blendColor withBackgroundColor:backgroundColor];
+  UIColor *resultColor = [UIColor mdc_blendColor:blendColor withBackgroundColor:backgroundColor];
   XCTAssertEqualObjects(resultColor, expectedColor);
 }
 
@@ -104,7 +104,7 @@
                                         green:(CGFloat)0.9
                                          blue:(CGFloat)0.9
                                         alpha:(CGFloat)0.6];
-  UIColor *resultColor = [UIColor blendColor:blendColor withBackgroundColor:backgroundColor];
+  UIColor *resultColor = [UIColor mdc_blendColor:blendColor withBackgroundColor:backgroundColor];
   UIColor *expectedColor = [UIColor colorWithRed:(CGFloat)0.94000000000000006
                                            green:(CGFloat)0.94000000000000006
                                             blue:(CGFloat)0.94000000000000006
@@ -121,7 +121,7 @@
                                            green:(CGFloat)0.5
                                             blue:(CGFloat)0.5
                                            alpha:1];
-  UIColor *resultColor = [UIColor blendColor:blendColor withBackgroundColor:backgroundColor];
+  UIColor *resultColor = [UIColor mdc_blendColor:blendColor withBackgroundColor:backgroundColor];
   XCTAssertEqualObjects(resultColor, expectedColor);
 }
 
@@ -138,7 +138,7 @@
                                            green:(CGFloat)0.64761904761904765
                                             blue:(CGFloat)0.87619047619047618
                                            alpha:(CGFloat)0.84000000000000008];
-  UIColor *resultColor = [UIColor blendColor:blendColor withBackgroundColor:backgroundColor];
+  UIColor *resultColor = [UIColor mdc_blendColor:blendColor withBackgroundColor:backgroundColor];
   XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resultColor
                                                     secondColor:expectedColor]);
 }
@@ -156,7 +156,7 @@
                                            green:(CGFloat)0.2672340425531915
                                             blue:(CGFloat)0.20000000000000004
                                            alpha:(CGFloat)0.93999999999999994];
-  UIColor *resultColor = [UIColor blendColor:blendColor withBackgroundColor:backgroundColor];
+  UIColor *resultColor = [UIColor mdc_blendColor:blendColor withBackgroundColor:backgroundColor];
   XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resultColor
                                                     secondColor:expectedColor]);
 }
@@ -171,7 +171,7 @@
                                            green:(CGFloat)0.63913043478260867
                                             blue:(CGFloat)0.16956521739130434
                                            alpha:(CGFloat)0.92000000000000004];
-  UIColor *resultColor = [UIColor blendColor:blendColor withBackgroundColor:backgroundColor];
+  UIColor *resultColor = [UIColor mdc_blendColor:blendColor withBackgroundColor:backgroundColor];
   XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resultColor
                                                     secondColor:expectedColor]);
 }

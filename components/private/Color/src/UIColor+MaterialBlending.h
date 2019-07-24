@@ -25,8 +25,8 @@ NS_ASSUME_NONNULL_BEGIN
  @param color UIColor value that sits on top.
  @param backgroundColor UIColor on the background.
  */
-+ (nonnull UIColor *)blendColor:(nonnull UIColor *)color
-            withBackgroundColor:(nonnull UIColor *)backgroundColor;
++ (nonnull UIColor *)mdc_blendColor:(nonnull UIColor *)color
+                withBackgroundColor:(nonnull UIColor *)backgroundColor;
 
 @end
 
