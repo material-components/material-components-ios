@@ -49,4 +49,39 @@
   }
 }
 
+// TODO: (
+- (void)testElevationDidChangeBlockCalledWhenStateChangeCausesElevationChange {
+  // Given
+  MDCChipView *chip = [[MDCChipView alloc] init];
+  [chip setElevation:1 forState:UIControlStateNormal];
+  [chip setElevation:9 forState:UIControlStateSelected];
+  __block CGFloat newElevation = 0;
+  chip.mdc_elevationDidChangeBlock = ^(CGFloat elevation) {
+    newElevation = elevation;
+  };
+
+  // When
+  chip.selected = YES;
+
+  // Then
+  XCTAssertEqualWithAccuracy(newElevation, [chip elevationForState:UIControlStateSelected], 0.001);
+}
+
+- (void)testElevationDidChangeBlockNotCalledWhenStateChangeDoesNotCauseElevationChange {
+  // Given
+  MDCChipView *chip = [[MDCChipView alloc] init];
+  [chip setElevation:1 forState:UIControlStateNormal];
+  [chip setElevation:9 forState:UIControlStateHighlighted];
+  __block BOOL blockCalled = NO;
+  chip.mdc_elevationDidChangeBlock = ^(CGFloat elevation) {
+    blockCalled = YES;
+  };
+
+  // When
+  chip.highlighted = YES;
+
+  // Then
+  XCTAssertFalse(blockCalled);
+}
+
 @end
