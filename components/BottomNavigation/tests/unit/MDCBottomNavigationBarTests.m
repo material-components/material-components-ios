@@ -594,7 +594,7 @@
   self.bottomNavBar.elevation = 5;
   __block BOOL blockCalled = NO;
   self.bottomNavBar.mdc_elevationDidChangeBlock =
-      ^(id<MDCElevatable> _Nonnull object, CGFloat elevation) {
+      ^(MDCBottomNavigationBar *object, CGFloat elevation) {
         blockCalled = YES;
       };
 
@@ -610,7 +610,7 @@
   self.bottomNavBar.elevation = 5;
   __block BOOL blockCalled = NO;
   self.bottomNavBar.mdc_elevationDidChangeBlock =
-      ^(id<MDCElevatable> _Nonnull object, CGFloat elevation) {
+      ^(MDCBottomNavigationBar *object, CGFloat elevation) {
         blockCalled = YES;
       };
 

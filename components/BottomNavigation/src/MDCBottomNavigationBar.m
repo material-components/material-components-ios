@@ -77,7 +77,6 @@ static NSString *const kOfAnnouncement = @"of";
 @implementation MDCBottomNavigationBar
 
 @synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
-@synthesize mdc_elevationDidChangeBlock = _mdc_elevationDidChangeBlock;
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
