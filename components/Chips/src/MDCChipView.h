@@ -196,6 +196,13 @@
 @property(nonatomic, assign) UIEdgeInsets hitAreaInsets;
 
 /**
+ A block that is invoked when the MDCChipView receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCChipView *_Nonnull chip, UITraitCollection *_Nullable previousTraitCollection);
+
+/**
  This block is called after a change of the chip view's elevation or one of its view
  hierarchy ancestors.
 
@@ -206,7 +213,7 @@
  @param object This chip view.
  */
 @property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)
-    (MDCChipView *_Nonnull object, CGFloat elevation);
+    (MDCChipView *_Nonnull chip, CGFloat elevation);
 
 /*
  A color used as the chip's @c backgroundColor for @c state.
@@ -348,12 +355,5 @@
  */
 - (void)setTitleColor:(nullable UIColor *)titleColor
              forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
-
-/**
- A block that is invoked when the MDCChipView receives a call to @c
- traitCollectionDidChange:. The block is called after the call to the superclass.
- */
-@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
-    (MDCChipView *_Nonnull chip, UITraitCollection *_Nullable previousTraitCollection);
 
 @end
