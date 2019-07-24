@@ -65,14 +65,13 @@
 
   // Then
   XCTAssertEqualWithAccuracy(newElevation, [chip elevationForState:UIControlStateSelected], 0.001);
-  XCTAssertEqualWithAccuracy(newElevation, chip.mdc_currentElevation + chip.mdc_baseElevation, 0.001);
 }
 
 - (void)testElevationDidChangeBlockNotCalledWhenStateChangeDoesNotCauseElevationChange {
   // Given
   MDCChipView *chip = [[MDCChipView alloc] init];
   [chip setElevation:1 forState:UIControlStateNormal];
-  [chip setElevation:9 forState:UIControlStateHighlighted];
+  [chip setElevation:1 forState:UIControlStateHighlighted];
   __block BOOL blockCalled = NO;
   chip.mdc_elevationDidChangeBlock = ^(MDCChipView *object, CGFloat elevation) {
     blockCalled = YES;

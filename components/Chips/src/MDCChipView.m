@@ -427,7 +427,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
 - (void)updateElevation {
   CGFloat newElevation = [self elevationForState:self.state];
-  if (MDCCGFloatEqual(self.layer.elevation, newElevation)) {
+  if (!MDCCGFloatEqual(self.layer.elevation, newElevation)) {
     self.layer.elevation = newElevation;
     [self mdc_elevationDidChange];
   }
