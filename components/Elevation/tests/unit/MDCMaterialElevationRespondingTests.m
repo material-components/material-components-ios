@@ -461,4 +461,78 @@
                              fakeElevationOverride, 0.001);
 }
 
+#pragma mark - Elevation did change
+
+- (void)testElevationDidChangeCallsElevationDidChangeBlockAndCorrectParameters {
+  // Given
+  CGFloat fakeElevation = 3;
+  self.elevationOverrideView.mdc_overrideBaseElevation = fakeElevation;
+  [self.elevationOverrideView addSubview:self.elevationView];
+  __block CGFloat passedElevation = -1;
+  __block id<MDCElevatable> passedObject = nil;
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"elevationDidChange"];
+  self.elevationView.mdc_elevationDidChangeBlock =
+      ^(MDCConformingMDCElevatableView *view, CGFloat elevation) {
+        passedElevation = elevation;
+        passedObject = view;
+        [expectation fulfill];
+      };
+
+  // When
+  [self.elevationView mdc_elevationDidChange];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertEqualWithAccuracy(passedElevation, fakeElevation, 0.001);
+  XCTAssertEqual(passedObject, self.elevationView);
+}
+
+- (void)testElevationDidChangeCallsSubviews {
+  // Given
+  [self.view addSubview:self.elevationOverrideView];
+  [self.elevationOverrideView addSubview:self.elevationView];
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"elevationDidChange"];
+  self.elevationView.mdc_elevationDidChangeBlock =
+      ^(MDCConformingMDCElevatableView *view, CGFloat elevation) {
+        [expectation fulfill];
+      };
+
+  // When
+  [self.view mdc_elevationDidChange];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+}
+
+- (void)testElevationDidChangeForSuperviewBeforeSubviewsBlockIsCalled {
+  // Given
+  XCTestExpectation *expectation =
+      [self expectationWithDescription:@("Override view elevation block was called.")];
+  CGFloat fakeOverrideElevation = 99;
+  __block CGFloat viewBaseElevation = -1;
+  [self.view addSubview:self.elevationOverrideView];
+  [self.elevationOverrideView addSubview:self.elevationView];
+  self.elevationView.mdc_elevationDidChangeBlock =
+      ^(MDCConformingMDCElevatableView *view, CGFloat elevation) {
+        viewBaseElevation = view.mdc_baseElevation;
+      };
+  self.elevationOverrideView.mdc_elevationDidChangeBlock =
+      ^(MDCConformingMDCElevatableOverrideView *view, CGFloat elevation) {
+        if ([view conformsToProtocol:@protocol(MDCElevationOverriding)]) {
+          id<MDCElevationOverriding> viewAsOverriding = (id<MDCElevationOverriding>)view;
+          viewAsOverriding.mdc_overrideBaseElevation = fakeOverrideElevation;
+          [expectation fulfill];
+        }
+      };
+
+  // When
+  [self.view mdc_elevationDidChange];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertEqualWithAccuracy(viewBaseElevation, fakeOverrideElevation, 0.001);
+}
+
 @end
