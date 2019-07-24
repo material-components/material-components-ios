@@ -22,11 +22,6 @@
 
 @implementation FeatureHighlightNoopTest
 
-- (void)testSimpleBuild {
-  MDCFeatureHighlightView *view = [[MDCFeatureHighlightView alloc] init];
-  XCTAssertNotNil(view);
-}
-
 - (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
   // Given
   MDCFeatureHighlightView *view = [[MDCFeatureHighlightView alloc] init];
