@@ -1,4 +1,4 @@
-// Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2019-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,36 +14,36 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialHeaderStackView.h"
+#import "MaterialTabs.h"
 
-@interface HeaderStackViewNoopTest : XCTestCase
+@interface MDCTabBarViewControllerTests : XCTestCase
 
 @end
 
-@implementation HeaderStackViewNoopTest
+@implementation MDCTabBarViewControllerTests
 
 - (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
   // Given
-  MDCHeaderStackView *testHeaderStackView = [[MDCHeaderStackView alloc] init];
+  MDCTabBarViewController *testTabBarController = [[MDCTabBarViewController alloc] init];
   XCTestExpectation *expectation =
       [[XCTestExpectation alloc] initWithDescription:@"traitCollection"];
   __block UITraitCollection *passedTraitCollection = nil;
-  __block MDCHeaderStackView *passedHeaderStackView = nil;
-  testHeaderStackView.traitCollectionDidChangeBlock =
-      ^(MDCHeaderStackView *_Nonnull headerStackView,
+  __block MDCTabBarViewController *passedTabBarController = nil;
+  testTabBarController.traitCollectionDidChangeBlock =
+      ^(MDCTabBarViewController *_Nonnull tabBarViewController,
         UITraitCollection *_Nullable previousTraitCollection) {
         passedTraitCollection = previousTraitCollection;
-        passedHeaderStackView = headerStackView;
+        passedTabBarController = tabBarViewController;
         [expectation fulfill];
       };
   UITraitCollection *fakeTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
 
   // When
-  [testHeaderStackView traitCollectionDidChange:fakeTraitCollection];
+  [testTabBarController traitCollectionDidChange:fakeTraitCollection];
 
   // Then
   [self waitForExpectations:@[ expectation ] timeout:1];
-  XCTAssertEqual(passedHeaderStackView, testHeaderStackView);
+  XCTAssertEqual(passedTabBarController, testTabBarController);
   XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
 }
 

@@ -23,7 +23,7 @@
 @interface MDCConformingMDCElevatableView : UIView <MDCElevatable>
 @property(nonatomic, assign, readonly) CGFloat mdc_currentElevation;
 @property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)
-    (id<MDCElevatable> _Nonnull elevatableSelf, CGFloat elevation);
+    (MDCConformingMDCElevatableView *view, CGFloat elevation);
 @property(nonatomic, assign) CGFloat elevation;
 @end
 
@@ -42,7 +42,7 @@
 @interface MDCConformingMDCElevatableViewController : UIViewController <MDCElevatable>
 @property(nonatomic, assign, readonly) CGFloat mdc_currentElevation;
 @property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)
-    (id<MDCElevatable> _Nonnull elevatableSelf, CGFloat elevation);
+    (MDCConformingMDCElevatableViewController *viewController, CGFloat elevation);
 @property(nonatomic, assign) CGFloat elevation;
 @end
 
@@ -61,7 +61,7 @@
 @interface MDCConformingMDCElevatableOverrideView : UIView <MDCElevatable, MDCElevationOverriding>
 @property(nonatomic, assign, readwrite) CGFloat mdc_overrideBaseElevation;
 @property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)
-    (id<MDCElevatable> _Nonnull elevatableSelf, CGFloat elevation);
+    (MDCConformingMDCElevatableOverrideView *view, CGFloat elevation);
 @property(nonatomic, assign, readonly) CGFloat mdc_currentElevation;
 @property(nonatomic, assign) CGFloat elevation;
 @end
@@ -94,7 +94,7 @@
     : UIViewController <MDCElevatable, MDCElevationOverriding>
 @property(nonatomic, assign, readwrite) CGFloat mdc_overrideBaseElevation;
 @property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)
-    (id<MDCElevatable> _Nonnull elevatableSelf, CGFloat elevation);
+    (MDCConformingMDCElevatableOverrideViewController *viewController, CGFloat elevation);
 @property(nonatomic, assign, readonly) CGFloat mdc_currentElevation;
 @property(nonatomic, assign) CGFloat elevation;
 @end

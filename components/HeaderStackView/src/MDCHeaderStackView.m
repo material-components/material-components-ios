@@ -53,6 +53,14 @@
   _bottomBar.frame = bottomBarFrame;
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
+}
+
 #pragma mark - Public
 
 - (void)setTopBar:(UIView *)topBar {
