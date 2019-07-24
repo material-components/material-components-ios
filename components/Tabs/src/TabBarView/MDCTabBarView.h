@@ -95,6 +95,30 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
 @property(nonatomic, assign) MDCTabBarViewLayoutStyle preferredLayoutStyle;
 
 /**
+ A block that is invoked when the @c MDCTabBarView receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCTabBarView *_Nonnull tabBar, UITraitCollection *_Nullable previousTraitCollection);
+
+/**
+ The total duration for all animations that take place during a selection change.
+
+ This is guaranteed to be the total time between the start of the first animation and the end of
+ the last animation that takes place for selection changes. There may not be a specific animation
+ that has this exact duration.
+ */
+@property(nonatomic, readonly) CFTimeInterval selectionChangeAnimationDuration;
+
+/**
+ The timing function used by the tab bar when selection changes are animated. This should be used
+ when performing implicit UIView-based animations to ensure that all animations internal to the
+ TabBarView are coordinated using the same parameters.
+ */
+@property(nonatomic, readonly, nonnull)
+    CAMediaTimingFunction *selectionChangeAnimationTimingFunction;
+
+/**
  Sets the color of the bar items' image @c tintColor for the given control state.  Supports
  @c UIControlStateNormal and @c UIControlStateSelected.
 
@@ -162,31 +186,5 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
  */
 - (CGRect)rectForItem:(nonnull UITabBarItem *)item
     inCoordinateSpace:(nonnull id<UICoordinateSpace>)coordinateSpace;
-
-/**
- A block that is invoked when the @c MDCTabBarView receives a call to @c
- traitCollectionDidChange:. The block is called after the call to the superclass.
- */
-@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
-    (MDCTabBarView *_Nonnull tabBar, UITraitCollection *_Nullable previousTraitCollection);
-
-#pragma mark - Animation
-
-/**
- The total duration for all animations that take place during a selection change.
-
- This is guaranteed to be the total time between the start of the first animation and the end of
- the last animation that takes place for selection changes. There may not be a specific animation
- that has this exact duration.
- */
-@property(nonatomic, readonly) CFTimeInterval selectionChangeAnimationDuration;
-
-/**
- The timing function used by the tab bar when selection changes are animated. This should be used
- when performing implicit UIView-based animations to ensure that all animations internal to the
- TabBarView are coordinated using the same parameters.
- */
-@property(nonatomic, readonly, nonnull)
-    CAMediaTimingFunction *selectionChangeAnimationTimingFunction;
 
 @end
