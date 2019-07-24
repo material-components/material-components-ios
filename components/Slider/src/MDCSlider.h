@@ -191,6 +191,14 @@ IB_DESIGNABLE
  Default value is MDCElevationNone.
  */
 @property(nonatomic, assign) MDCShadowElevation thumbElevation UI_APPEARANCE_SELECTOR;
+
+/**
+ The shadow color of the cursor (thumb).
+
+ Default value is black
+ */
+@property(nonatomic, strong, nonnull) UIColor *thumbShadowColor;
+
 /**
  The number of discrete values that the slider can take.
 

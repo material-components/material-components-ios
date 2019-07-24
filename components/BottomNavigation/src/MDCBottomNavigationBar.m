@@ -159,19 +159,16 @@ static NSString *const kOfAnnouncement = @"of";
   _itemViews = [NSMutableArray array];
   _itemTitleFont = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleCaption];
 
-  if (@available(iOS 9.0, *)) {
-    _barItemsLayoutGuide = [[UILayoutGuide alloc] init];
-    _barItemsLayoutGuide.identifier = @"MDCBottomNavigationBarItemsLayoutGuide";
-    [_itemsLayoutView addLayoutGuide:_barItemsLayoutGuide];
-    [_barItemsLayoutGuide.bottomAnchor constraintEqualToAnchor:_itemsLayoutView.bottomAnchor]
-        .active = YES;
-    [_barItemsLayoutGuide.topAnchor constraintEqualToAnchor:_itemsLayoutView.topAnchor].active =
-        YES;
-    [_barItemsLayoutGuide.leadingAnchor constraintEqualToAnchor:_itemsLayoutView.leadingAnchor]
-        .active = YES;
-    [_barItemsLayoutGuide.trailingAnchor constraintEqualToAnchor:_itemsLayoutView.trailingAnchor]
-        .active = YES;
-  }
+  _barItemsLayoutGuide = [[UILayoutGuide alloc] init];
+  _barItemsLayoutGuide.identifier = @"MDCBottomNavigationBarItemsLayoutGuide";
+  [_itemsLayoutView addLayoutGuide:_barItemsLayoutGuide];
+  [_barItemsLayoutGuide.bottomAnchor constraintEqualToAnchor:_itemsLayoutView.bottomAnchor].active =
+      YES;
+  [_barItemsLayoutGuide.topAnchor constraintEqualToAnchor:_itemsLayoutView.topAnchor].active = YES;
+  [_barItemsLayoutGuide.leadingAnchor constraintEqualToAnchor:_itemsLayoutView.leadingAnchor]
+      .active = YES;
+  [_barItemsLayoutGuide.trailingAnchor constraintEqualToAnchor:_itemsLayoutView.trailingAnchor]
+      .active = YES;
 }
 
 - (void)layoutSubviews {

@@ -110,15 +110,6 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   [super tearDown];
 }
 
-- (void)changeViewToRTL:(UIView *)view {
-  if (@available(iOS 9.0, *)) {
-    view.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
-    for (UIView *subview in view.subviews) {
-      [self changeViewToRTL:subview];
-    }
-  }
-}
-
 - (void)setStringsToArabicShort {
   self.itemWithTitle1.title = kItemTitleShort1Arabic;
   self.itemWithTitle2.title = kItemTitleShort2Arabic;

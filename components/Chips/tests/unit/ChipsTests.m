@@ -448,4 +448,28 @@ static inline UIImage *TestImage(CGSize size) {
   XCTAssertTrue(chipView.adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable);
 }
 
+- (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
+  // Given
+  MDCChipView *chipView = [[MDCChipView alloc] init];
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollectionDidChange"];
+  __block UITraitCollection *passedTraitCollection;
+  __block MDCChipView *passedChipView;
+  chipView.traitCollectionDidChangeBlock =
+      ^(MDCChipView *_Nonnull blockChipView, UITraitCollection *_Nullable previousTraitCollection) {
+        [expectation fulfill];
+        passedTraitCollection = previousTraitCollection;
+        passedChipView = blockChipView;
+      };
+  UITraitCollection *testTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
+
+  // When
+  [chipView traitCollectionDidChange:testTraitCollection];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertEqual(passedTraitCollection, testTraitCollection);
+  XCTAssertEqual(passedChipView, chipView);
+}
+
 @end

@@ -106,6 +106,18 @@ static const BOOL MDCCardIsInteractableDefault = YES;
   if (!self.layer.shapeGenerator) {
     self.layer.shadowPath = [self boundingPath].CGPath;
   }
+
+  [self updateShadowColor];
+  [self updateBackgroundColor];
+  [self updateBorderColor];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
 }
 
 - (void)setCornerRadius:(CGFloat)cornerRadius {

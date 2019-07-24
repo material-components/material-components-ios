@@ -108,4 +108,39 @@ class ActionSheetTest: XCTestCase {
     XCTAssertEqual(actionSheet.view.backgroundColor, actionSheet.backgroundColor)
     XCTAssertEqual(actionSheet.view.backgroundColor, newBackgroundColor)
   }
+
+  func testTraitCollectionDidChangeBlockCalledWhenTraitCollectionChanges() {
+    // Given
+    let expectation = XCTestExpectation(description: "traitCollectionDidChange")
+    actionSheet.traitCollectionDidChangeBlock = { (_, _) in
+      expectation.fulfill()
+    }
+
+    // When
+    actionSheet.traitCollectionDidChange(nil)
+
+    // Then
+    self.wait(for: [expectation], timeout: 1)
+  }
+
+  func testTraitCollectionDidChangeBlockCalledWithExpectedParameters() {
+    // Given
+    let expectation = XCTestExpectation(description: "traitCollectionDidChange")
+    var passedTraitCollection: UITraitCollection? = nil
+    var passedActionSheet: MDCActionSheetController? = nil
+    actionSheet.traitCollectionDidChangeBlock = { (action, traitCollection) in
+      passedTraitCollection = traitCollection
+      passedActionSheet = action
+      expectation.fulfill()
+    }
+    let fakeTraitCollection = UITraitCollection(displayScale: 77)
+
+    // When
+    actionSheet.traitCollectionDidChange(fakeTraitCollection)
+
+    // Then
+    self.wait(for: [expectation], timeout: 1)
+    XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
+    XCTAssertEqual(passedActionSheet, actionSheet);
+  }
 }

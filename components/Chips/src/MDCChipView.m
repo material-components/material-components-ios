@@ -236,6 +236,13 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
                                                 object:nil];
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
+}
+
 - (void)setShapeGenerator:(id<MDCShapeGenerating>)shapeGenerator {
   if (shapeGenerator) {
     self.layer.cornerRadius = 0;
@@ -647,6 +654,10 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
       subview.frame = flippedRect;
     }
   }
+
+  [self updateBackgroundColor];
+  [self updateBorderColor];
+  [self updateShadowColor];
 }
 
 - (CGRect)contentRect {

@@ -65,6 +65,14 @@
   }
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
+}
+
 - (id<UIViewControllerTransitioningDelegate>)transitioningDelegate {
   return self.transitionController;
 }

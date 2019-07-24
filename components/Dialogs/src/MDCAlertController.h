@@ -96,6 +96,11 @@
 /** The elevation that will be applied to the Alert Controller view. Default to 24. */
 @property(nonatomic, assign) MDCShadowElevation elevation;
 
+/**
+ The color of the shadow that will be applied to the @c MDCAlertController view. Defaults to black.
+ */
+@property(nonatomic, copy, nonnull) UIColor *shadowColor;
+
 // TODO(iangordon): Add support for preferredAction to match UIAlertController.
 // TODO(iangordon): Consider adding support for UITextFields to match UIAlertController.
 
@@ -172,6 +177,14 @@
  Defaults to NO.
  */
 @property(nonatomic, assign) BOOL enableRippleBehavior;
+
+/**
+ A block that is invoked when the MDCAlertController receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCAlertController *_Nullable alertController,
+     UITraitCollection *_Nullable previousTraitCollection);
 
 @end
 

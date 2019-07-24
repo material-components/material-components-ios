@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponents"
-  mdc.version      = "85.8.0"
+  mdc.version      = "85.9.0"
   mdc.authors      = "The Material Components authors."
   mdc.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   mdc.homepage     = "https://github.com/material-components/material-components-ios"
@@ -956,6 +956,22 @@ Pod::Spec.new do |mdc|
     end
   end
 
+  mdc.subspec "Elevation" do |component|
+    component.ios.deployment_target = '9.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = [
+      "components/#{component.base_name}/src/*.{h,m}",
+      "components/#{component.base_name}/src/private/*.{h,m}"
+    ]
+
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = [
+        "components/#{component.base_name}/tests/unit/*.{h,m,swift}",
+        "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+      ]
+    end
+  end
+
   # FeatureHighlight
 
   mdc.subspec "FeatureHighlight" do |component|
@@ -1127,6 +1143,7 @@ Pod::Spec.new do |mdc|
       "components/#{component.base_name}/src/private/*.{h,m}"
     ]
 
+    component.dependency "MaterialComponents/private/Color"
     component.dependency "MaterialComponents/private/Math"
 
     component.test_spec 'UnitTests' do |unit_tests|
@@ -1515,6 +1532,7 @@ Pod::Spec.new do |mdc|
     component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
 
     component.dependency "MaterialComponents/AnimationTiming"
+    component.dependency "MaterialComponents/private/Color"
     component.dependency "MaterialComponents/private/Math"
 
     component.test_spec 'UnitTests' do |unit_tests|

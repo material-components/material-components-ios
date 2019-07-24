@@ -21,6 +21,8 @@
 #import "MDCTabBarViewDelegate.h"
 #import "MaterialTypography.h"
 
+#import "MaterialAnimationTiming.h"
+
 // Minimum height of the MDCTabBar view.
 static const CGFloat kMinHeight = 48;
 
@@ -936,6 +938,42 @@ static UIImage *fakeImage(CGSize size) {
   // Then
   XCTAssertTrue(CGRectEqualToRect(itemFrame, expectedFrame), @"(%@) is not equal to (%@)",
                 NSStringFromCGRect(itemFrame), NSStringFromCGRect(expectedFrame));
+}
+
+- (void)testDefaultSelectionChangeAnimationDurationValue {
+  // Then
+  XCTAssertEqualWithAccuracy(self.tabBarView.selectionChangeAnimationDuration, 0.3, 0.0001);
+}
+
+- (void)testDefaultSelectionChangeAnimationTimingFunction {
+  // Then
+  CAMediaTimingFunction *expectedFunction =
+      [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
+  float expectedControlPoint1[2];
+  float expectedControlPoint2[2];
+  float expectedControlPoint3[2];
+  float expectedControlPoint4[2];
+  [expectedFunction getControlPointAtIndex:0 values:expectedControlPoint1];
+  [expectedFunction getControlPointAtIndex:1 values:expectedControlPoint2];
+  [expectedFunction getControlPointAtIndex:2 values:expectedControlPoint3];
+  [expectedFunction getControlPointAtIndex:3 values:expectedControlPoint4];
+  CAMediaTimingFunction *actualFunction = self.tabBarView.selectionChangeAnimationTimingFunction;
+  float actualControlPoint1[2];
+  float actualControlPoint2[2];
+  float actualControlPoint3[2];
+  float actualControlPoint4[2];
+  [actualFunction getControlPointAtIndex:0 values:actualControlPoint1];
+  [actualFunction getControlPointAtIndex:1 values:actualControlPoint2];
+  [actualFunction getControlPointAtIndex:2 values:actualControlPoint3];
+  [actualFunction getControlPointAtIndex:3 values:actualControlPoint4];
+  XCTAssertEqualWithAccuracy(actualControlPoint1[0], expectedControlPoint1[0], 0.0001);
+  XCTAssertEqualWithAccuracy(actualControlPoint1[1], expectedControlPoint1[1], 0.0001);
+  XCTAssertEqualWithAccuracy(actualControlPoint2[0], expectedControlPoint2[0], 0.0001);
+  XCTAssertEqualWithAccuracy(actualControlPoint2[1], expectedControlPoint2[1], 0.0001);
+  XCTAssertEqualWithAccuracy(actualControlPoint3[0], expectedControlPoint3[0], 0.0001);
+  XCTAssertEqualWithAccuracy(actualControlPoint3[1], expectedControlPoint3[1], 0.0001);
+  XCTAssertEqualWithAccuracy(actualControlPoint4[0], expectedControlPoint4[0], 0.0001);
+  XCTAssertEqualWithAccuracy(actualControlPoint4[1], expectedControlPoint4[1], 0.0001);
 }
 
 @end

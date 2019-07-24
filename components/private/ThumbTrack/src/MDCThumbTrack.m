@@ -376,6 +376,14 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   return _thumbView.elevation;
 }
 
+- (void)setThumbShadowColor:(UIColor *)thumbShadowColor {
+  _thumbView.shadowColor = thumbShadowColor;
+}
+
+- (UIColor *)thumbShadowColor {
+  return _thumbView.shadowColor;
+}
+
 - (void)setShouldDisplayDiscreteDots:(BOOL)shouldDisplayDiscreteDots {
   if (_shouldDisplayDiscreteDots != shouldDisplayDiscreteDots) {
     if (shouldDisplayDiscreteDots) {
