@@ -71,9 +71,9 @@
     MDCFontScaler *fontScaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleBody2];
     UIFont *scalableFont = [fontScaler scaledFontWithFont:font];
     scalableFont = [scalableFont mdc_scaledFontAtDefaultSize];
-    bannerView.textLabel.font = scalableFont;
-    bannerView.textLabel.text = @"Banner Text";
-    CGFloat originalTextFontSize = bannerView.textLabel.font.pointSize;
+    bannerView.textView.font = scalableFont;
+    bannerView.textView.text = @"Banner Text";
+    CGFloat originalTextFontSize = bannerView.textView.font.pointSize;
     MDCButton *leadingButton = bannerView.leadingButton;
     [leadingButton setTitleFont:scalableFont forState:UIControlStateNormal];
     CGFloat originalButtonFontSize =
@@ -89,7 +89,7 @@
                       object:nil];
 
     // Then
-    CGFloat actualTextFontSize = bannerView.textLabel.font.pointSize;
+    CGFloat actualTextFontSize = bannerView.textView.font.pointSize;
     XCTAssertGreaterThan(actualTextFontSize, originalTextFontSize);
     CGFloat actualButtonFontSize =
         [bannerView.leadingButton titleFontForState:UIControlStateNormal].pointSize;
