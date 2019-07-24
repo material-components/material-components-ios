@@ -154,6 +154,7 @@
   CGFloat fakeElevation = 3;
   self.elevationView.elevation = fakeElevation;
   self.view.elevation = fakeElevation;
+
   // When
   [self.elevationView addSubview:self.view];
 
