@@ -35,6 +35,6 @@
  views.
  */
 @property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)
-(id<MDCElevatable>_Nonnull elevatableSelf, CGFloat elevation);
+    (id<MDCElevatable> _Nonnull elevatableSelf, CGFloat elevation);
 
 @end

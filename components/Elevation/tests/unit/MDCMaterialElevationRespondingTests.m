@@ -23,7 +23,7 @@
 @interface MDCConformingMDCElevatableView : UIView <MDCElevatable>
 @property(nonatomic, assign, readonly) CGFloat mdc_currentElevation;
 @property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)
-(id<MDCElevatable>_Nonnull elevatableSelf, CGFloat elevation);
+    (id<MDCElevatable> _Nonnull elevatableSelf, CGFloat elevation);
 @property(nonatomic, assign) CGFloat elevation;
 @end
 
@@ -42,7 +42,7 @@
 @interface MDCConformingMDCElevatableViewController : UIViewController <MDCElevatable>
 @property(nonatomic, assign, readonly) CGFloat mdc_currentElevation;
 @property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)
-(id<MDCElevatable>_Nonnull elevatableSelf, CGFloat elevation);
+    (id<MDCElevatable> _Nonnull elevatableSelf, CGFloat elevation);
 @property(nonatomic, assign) CGFloat elevation;
 @end
 
@@ -61,7 +61,7 @@
 @interface MDCConformingMDCElevatableOverrideView : UIView <MDCElevatable, MDCElevationOverriding>
 @property(nonatomic, assign, readwrite) CGFloat mdc_overrideBaseElevation;
 @property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)
-(id<MDCElevatable>_Nonnull elevatableSelf, CGFloat elevation);
+    (id<MDCElevatable> _Nonnull elevatableSelf, CGFloat elevation);
 @property(nonatomic, assign, readonly) CGFloat mdc_currentElevation;
 @property(nonatomic, assign) CGFloat elevation;
 @end
@@ -94,7 +94,7 @@
     : UIViewController <MDCElevatable, MDCElevationOverriding>
 @property(nonatomic, assign, readwrite) CGFloat mdc_overrideBaseElevation;
 @property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)
-(id<MDCElevatable>_Nonnull elevatableSelf, CGFloat elevation);
+    (id<MDCElevatable> _Nonnull elevatableSelf, CGFloat elevation);
 @property(nonatomic, assign, readonly) CGFloat mdc_currentElevation;
 @property(nonatomic, assign) CGFloat elevation;
 @end
@@ -470,12 +470,14 @@
   [self.elevationOverrideView addSubview:self.elevationView];
   __block CGFloat passedElevation = -1;
   __block id<MDCElevatable> passedObject = nil;
-  XCTestExpectation *expectation = [[XCTestExpectation alloc] initWithDescription:@"elevationDidChange"];
-  self.elevationView.mdc_elevationDidChangeBlock = ^(id<MDCElevatable>  _Nonnull elevatableSelf, CGFloat elevation) {
-    passedElevation = elevation;
-    passedObject = elevatableSelf;
-    [expectation fulfill];
-  };
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"elevationDidChange"];
+  self.elevationView.mdc_elevationDidChangeBlock =
+      ^(id<MDCElevatable> _Nonnull elevatableSelf, CGFloat elevation) {
+        passedElevation = elevation;
+        passedObject = elevatableSelf;
+        [expectation fulfill];
+      };
 
   // When
   [self.elevationView mdc_elevationDidChange];
@@ -490,10 +492,12 @@
   // Given
   [self.view addSubview:self.elevationOverrideView];
   [self.elevationOverrideView addSubview:self.elevationView];
-  XCTestExpectation *expectation = [[XCTestExpectation alloc] initWithDescription:@"elevationDidChange"];
-  self.elevationView.mdc_elevationDidChangeBlock = ^(id<MDCElevatable>  _Nonnull elevatableSelf, CGFloat elevation) {
-    [expectation fulfill];
-  };
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"elevationDidChange"];
+  self.elevationView.mdc_elevationDidChangeBlock =
+      ^(id<MDCElevatable> _Nonnull elevatableSelf, CGFloat elevation) {
+        [expectation fulfill];
+      };
 
   // When
   [self.view mdc_elevationDidChange];
