@@ -74,6 +74,13 @@ typedef NS_ENUM(NSInteger, MDCRippleStyle) {
 @property(nonatomic, strong, nonnull) UIColor *activeRippleColor;
 
 /**
+ A block that is invoked when the @c MDCRippleView receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCRippleView *_Nonnull ripple, UITraitCollection *_Nullable previousTraitCollection);
+
+/**
  Cancels all the existing ripples.
 
  @param animated Whether to animate the cancellation of the ripples or not.
@@ -121,6 +128,7 @@ typedef NS_ENUM(NSInteger, MDCRippleStyle) {
  */
 - (void)beginRippleTouchUpAnimated:(BOOL)animated
                         completion:(nullable MDCRippleCompletionBlock)completion;
+
 @end
 
 /**
