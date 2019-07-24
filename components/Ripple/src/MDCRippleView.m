@@ -75,7 +75,15 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
   [super layoutSubviews];
 
   [self updateRippleStyle];
-  self.activeRippleLayer.fillColor = self.rippleColor.CGColor;
+  self.activeRippleLayer.fillColor = self.activeRippleColor.CGColor;
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
 }
 
 - (void)layoutSublayersOfLayer:(CALayer *)layer {
