@@ -406,6 +406,7 @@ Pod::Spec.new do |mdc|
 
     component.dependency 'MDFInternationalization'
     component.dependency 'MDFTextAccessibility'
+    component.dependency "MaterialComponents/Elevation"
     component.dependency "MaterialComponents/Ink"
     component.dependency "MaterialComponents/Ripple"
     component.dependency "MaterialComponents/ShadowElevations"

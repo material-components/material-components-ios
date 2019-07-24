@@ -49,7 +49,6 @@
   }
 }
 
-// TODO: (
 - (void)testElevationDidChangeBlockCalledWhenStateChangeCausesElevationChange {
   // Given
   MDCChipView *chip = [[MDCChipView alloc] init];
