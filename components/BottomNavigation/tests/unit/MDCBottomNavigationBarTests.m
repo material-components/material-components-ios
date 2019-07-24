@@ -589,4 +589,36 @@
                              0.001);
 }
 
+- (void)testElevationDidChangeBlockCalledWhenElevationChangesValue {
+  // Given
+  self.bottomNavBar.elevation = 5;
+  __block BOOL blockCalled = NO;
+  self.bottomNavBar.mdc_elevationDidChangeBlock =
+      ^(id<MDCElevatable> _Nonnull object, CGFloat elevation) {
+        blockCalled = YES;
+      };
+
+  // When
+  self.bottomNavBar.elevation = self.bottomNavBar.elevation + 1;
+
+  // Then
+  XCTAssertTrue(blockCalled);
+}
+
+- (void)testElevationDidChangeBlockNotCalledWhenElevationIsSetWithoutChangingValue {
+  // Given
+  self.bottomNavBar.elevation = 5;
+  __block BOOL blockCalled = NO;
+  self.bottomNavBar.mdc_elevationDidChangeBlock =
+      ^(id<MDCElevatable> _Nonnull object, CGFloat elevation) {
+        blockCalled = YES;
+      };
+
+  // When
+  self.bottomNavBar.elevation = self.bottomNavBar.elevation;
+
+  // Then
+  XCTAssertFalse(blockCalled);
+}
+
 @end

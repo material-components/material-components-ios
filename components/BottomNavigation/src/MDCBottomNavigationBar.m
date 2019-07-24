@@ -233,8 +233,12 @@ static NSString *const kOfAnnouncement = @"of";
 }
 
 - (void)setElevation:(MDCShadowElevation)elevation {
+  BOOL elevationChanged = !MDCCGFloatEqual(_elevation, elevation);
   _elevation = elevation;
   [(MDCShadowLayer *)self.layer setElevation:elevation];
+  if (elevationChanged) {
+    [self mdc_elevationDidChange];
+  }
 }
 
 - (void)setShadowColor:(UIColor *)shadowColor {
