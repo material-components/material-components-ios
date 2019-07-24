@@ -22,11 +22,6 @@
 
 @implementation HeaderStackViewNoopTest
 
-- (void)testExample {
-  MDCHeaderStackView *view = [[MDCHeaderStackView alloc] init];
-  XCTAssertNotNil(view);
-}
-
 - (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
   // Given
   MDCHeaderStackView *testHeaderStackView = [[MDCHeaderStackView alloc] init];
