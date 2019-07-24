@@ -405,28 +405,16 @@ static UIImage *FakeImage(void) {
   XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
 }
 
-- (void)testCurrentElevationOfMDCElevationProvidesCorrectValue {
+#pragma mark - MDCElevation
+
+- (void)testCurrentElevationMatchesElevationWhenElevationChanges {
   // When
-  [self.card setShadowElevation:12 forState:UIControlStateNormal];
+  [self.card setShadowElevation:4 forState:UIControlStateNormal];
 
   // Then
-  XCTAssertEqual(self.card.state, UIControlStateNormal);
-  XCTAssertEqual(self.card.mdc_currentElevation,
-                 [self.card shadowElevationForState:UIControlStateNormal]);
-}
-
-- (void)testElevationDidChangeBlockIsCorrectlySetUp {
-  // Given
-  __block NSNumber *weakElevationDidChangeBlockWasCalled = @NO;
-  self.card.mdc_elevationDidChangeBlock = ^(CGFloat elevation) {
-    weakElevationDidChangeBlockWasCalled = @YES;
-  };
-
-  // When
-  self.card.mdc_elevationDidChangeBlock(0);
-
-  // Then
-  XCTAssertTrue(weakElevationDidChangeBlockWasCalled.boolValue);
+  XCTAssertEqualWithAccuracy(self.card.mdc_currentElevation,
+                             [self.card shadowElevationForState:UIControlStateNormal],
+                             0.001);
 }
 
 - (void)testSettingOverrideBaseElevationReturnsSetValue {
@@ -437,7 +425,42 @@ static UIImage *FakeImage(void) {
   self.card.mdc_overrideBaseElevation = expectedBaseElevation;
 
   // Then
-  XCTAssertEqualWithAccuracy(self.card.mdc_overrideBaseElevation, expectedBaseElevation, 0.001);
+  XCTAssertEqualWithAccuracy(self.card.mdc_overrideBaseElevation, expectedBaseElevation,
+                             0.001);
+}
+
+- (void)testElevationDidChangeBlockCalledWhenElevationChangesValue {
+  // Given
+  [self.card setShadowElevation:5 forState:UIControlStateNormal];
+  __block BOOL blockCalled = NO;
+  self.card.mdc_elevationDidChangeBlock =
+  ^(MDCCard *object, CGFloat elevation) {
+    blockCalled = YES;
+  };
+
+  // When
+  [self.card setShadowElevation:[self.card shadowElevationForState:UIControlStateNormal] + 1
+                       forState:UIControlStateNormal];
+
+  // Then
+  XCTAssertTrue(blockCalled);
+}
+
+- (void)testElevationDidChangeBlockNotCalledWhenElevationIsSetWithoutChangingValue {
+  // Given
+  [self.card setShadowElevation:5 forState:UIControlStateNormal];
+  __block BOOL blockCalled = NO;
+  self.card.mdc_elevationDidChangeBlock =
+  ^(MDCCard *object, CGFloat elevation) {
+    blockCalled = YES;
+  };
+
+  // When
+  [self.card setShadowElevation:[self.card shadowElevationForState:UIControlStateNormal]
+                       forState:UIControlStateNormal];
+
+  // Then
+  XCTAssertFalse(blockCalled);
 }
 
 @end

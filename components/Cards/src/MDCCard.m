@@ -36,7 +36,6 @@ static const BOOL MDCCardIsInteractableDefault = YES;
 }
 
 @dynamic layer;
-@synthesize mdc_elevationDidChangeBlock;
 @synthesize mdc_overrideBaseElevation;
 
 + (Class)layerClass {
@@ -160,6 +159,7 @@ static const BOOL MDCCardIsInteractableDefault = YES;
       self.layer.shadowPath = [self boundingPath].CGPath;
     }
     [(MDCShadowLayer *)self.layer setElevation:elevation];
+    [self mdc_elevationDidChange];
   }
 }
 
