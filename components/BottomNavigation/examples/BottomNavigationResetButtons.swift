@@ -85,7 +85,6 @@ class BottomNavigationResetExample: UIViewController {
     view.backgroundColor = colorScheme.backgroundColor
     view.addSubview(bottomNavBar)
 
-    bottomNavBar.sizeThatFitsIncludesSafeArea = false
     bottomNavBar.alignment = .centered
 
     // Add items to the bottom navigation bar.
