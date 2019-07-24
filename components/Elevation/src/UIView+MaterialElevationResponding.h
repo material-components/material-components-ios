@@ -33,4 +33,12 @@
  */
 @property(nonatomic, assign, readonly) CGFloat mdc_baseElevation;
 
+/**
+ Should be called when the view's @c mdc_currentElevation has changed. Will be called on the
+ reciever's @c subviews.
+
+ If a @c UIView views conform to @c MDCElevation then @c mdc_elevationDidChangeBlock: is called.
+ */
+- (void)mdc_elevationDidChange;
+
 @end

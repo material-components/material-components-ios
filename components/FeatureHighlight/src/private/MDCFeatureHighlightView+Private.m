@@ -408,6 +408,14 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   _outerLayer.fillColor = _outerHighlightColor.CGColor;
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
+}
+
 - (void)didTapView:(UITapGestureRecognizer *)tapGestureRecognizer {
   CGPoint pos = [tapGestureRecognizer locationInView:self];
   CGFloat pointDist = CGPointDistanceToPoint(_highlightPoint, pos);
