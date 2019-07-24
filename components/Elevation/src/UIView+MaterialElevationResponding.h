@@ -13,19 +13,24 @@
 // limitations under the License.
 
 #import <CoreGraphics/CoreGraphics.h>
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 /**
- Provides APIs for @c UIViews to communicate their elevation throughout the view hierarchy.
+ Allows elevation changes to propagate down the view hierarchy and allows objects conforming to
+ @c MDCElevatable to react to those changes accordingly.
  */
-@protocol MDCElevationOverride
+@interface UIView (MaterialElevationResponding)
 
 /**
- Used by @c MaterialElevationResponding instead of @c mdc_baseElevation.
+ Returns the sum of all @c mdc_currentElevation of the superviews going up the view hierarchy
+ recursively.
 
- This can be used in cases where there is elevation behind an object that is not part of the
- view hierarchy, like a @c UIPresentationController.
+ If a view in the hierarchy conforms to @c MDCElevationOveriding the sum of the current total plus
+ that value is returned.
+
+ If a @c UIViewController conforms to @c MDCElevatable or @c MDCElevationOveriding then its @c view
+ will report the view controllers base elevation.
  */
-@property(nonatomic, assign, readwrite) CGFloat mdc_overrideBaseElevation;
+@property(nonatomic, assign, readonly) CGFloat mdc_baseElevation;
 
 @end
