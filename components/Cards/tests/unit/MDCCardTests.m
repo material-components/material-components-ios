@@ -407,7 +407,7 @@ static UIImage *FakeImage(void) {
 
 #pragma mark - MDCElevation
 
-- (void)testCurrentElevationMatchesElevationWhenElevationChanges {
+- (void)testCurrentElevationMatchesElevationWhenElevationChangesForCard {
   // When
   [self.card setShadowElevation:4 forState:UIControlStateNormal];
 
@@ -416,7 +416,7 @@ static UIImage *FakeImage(void) {
                              [self.card shadowElevationForState:UIControlStateNormal], 0.001);
 }
 
-- (void)testSettingOverrideBaseElevationReturnsSetValue {
+- (void)testSettingOverrideBaseElevationReturnsSetValueForCard {
   // Given
   CGFloat expectedBaseElevation = 99;
 
@@ -427,7 +427,7 @@ static UIImage *FakeImage(void) {
   XCTAssertEqualWithAccuracy(self.card.mdc_overrideBaseElevation, expectedBaseElevation, 0.001);
 }
 
-- (void)testElevationDidChangeBlockCalledWhenElevationChangesValue {
+- (void)testElevationDidChangeBlockCalledWhenElevationChangesValueForCard {
   // Given
   [self.card setShadowElevation:5 forState:UIControlStateNormal];
   __block BOOL blockCalled = NO;
@@ -443,7 +443,7 @@ static UIImage *FakeImage(void) {
   XCTAssertTrue(blockCalled);
 }
 
-- (void)testElevationDidChangeBlockNotCalledWhenElevationIsSetWithoutChangingValue {
+- (void)testElevationDidChangeBlockNotCalledWhenElevationIsSetWithoutChangingValueForCard {
   // Given
   [self.card setShadowElevation:5 forState:UIControlStateNormal];
   __block BOOL blockCalled = NO;
@@ -457,6 +457,68 @@ static UIImage *FakeImage(void) {
 
   // Then
   XCTAssertFalse(blockCalled);
+}
+
+- (void)testDefaultValueForOverrideBaseElevationIsNegativeForCard {
+  // Then
+  XCTAssertLessThan(self.card.mdc_overrideBaseElevation, 0);
+}
+
+- (void)testCurrentElevationMatchesElevationWhenElevationChangesForCardCell {
+  // When
+  [self.cell setShadowElevation:4 forState:MDCCardCellStateNormal];
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.cell.mdc_currentElevation,
+                             [self.cell shadowElevationForState:MDCCardCellStateNormal], 0.001);
+}
+
+- (void)testSettingOverrideBaseElevationReturnsSetValueForCardCell {
+  // Given
+  CGFloat expectedBaseElevation = 99;
+
+  // When
+  self.cell.mdc_overrideBaseElevation = expectedBaseElevation;
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.cell.mdc_overrideBaseElevation, expectedBaseElevation, 0.001);
+}
+
+- (void)testElevationDidChangeBlockCalledWhenElevationChangesValueForCardCell {
+  // Given
+  [self.cell setShadowElevation:5 forState:MDCCardCellStateNormal];
+  __block BOOL blockCalled = NO;
+  self.cell.mdc_elevationDidChangeBlock = ^(MDCCardCollectionCell *object, CGFloat elevation) {
+    blockCalled = YES;
+  };
+
+  // When
+  [self.cell setShadowElevation:[self.cell shadowElevationForState:MDCCardCellStateNormal] + 1
+                       forState:MDCCardCellStateNormal];
+
+  // Then
+  XCTAssertTrue(blockCalled);
+}
+
+- (void)testElevationDidChangeBlockNotCalledWhenElevationIsSetWithoutChangingValueForCardCell {
+  // Given
+  [self.cell setShadowElevation:5 forState:MDCCardCellStateNormal];
+  __block BOOL blockCalled = NO;
+  self.cell.mdc_elevationDidChangeBlock = ^(MDCCardCollectionCell *object, CGFloat elevation) {
+    blockCalled = YES;
+  };
+
+  // When
+  [self.cell setShadowElevation:[self.cell shadowElevationForState:MDCCardCellStateNormal]
+                       forState:MDCCardCellStateNormal];
+
+  // Then
+  XCTAssertFalse(blockCalled);
+}
+
+- (void)testDefaultValueForOverrideBaseElevationIsNegativeForCardCell {
+  // Then
+  XCTAssertLessThan(self.cell.mdc_overrideBaseElevation, 0);
 }
 
 @end

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
+#import "MaterialElevation.h"
 #import "MaterialInk.h"
 #import "MaterialRipple.h"
 #import "MaterialShadowLayer.h"
@@ -74,7 +75,7 @@ typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
   MDCCardCellVerticalImageAlignmentBottom,
 };
 
-@interface MDCCardCollectionCell : UICollectionViewCell
+@interface MDCCardCollectionCell : UICollectionViewCell <MDCElevatable, MDCElevationOverriding>
 
 /**
  When selectable is set to YES, a tap on a cell will trigger a visual change between selected
@@ -327,4 +328,14 @@ typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
     (MDCCardCollectionCell *_Nonnull collectionCell,
      UITraitCollection *_Nullable previousTraitCollection);
 
+/**
+ This block is called after a change of the card's elevation or one of its view
+ hierarchy ancestors.
+ Use this block to respond to elevation changes in the view or its ancestor views.
+ @param elevation The @c mdc_currentElevation plus the @c mdc_currentElevation of all ancestor
+ views.
+ @param object This card.
+ */
+@property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)
+    (MDCCardCollectionCell *_Nonnull object, CGFloat elevation);
 @end
