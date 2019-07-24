@@ -849,7 +849,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 - (UIEdgeInsets)defaultContentEdgeInsets {
-    return UIEdgeInsetsMake(8, 16, 8, 16);
+  return UIEdgeInsetsMake(8, 16, 8, 16);
 }
 
 - (BOOL)shouldHaveOpaqueBackground {
