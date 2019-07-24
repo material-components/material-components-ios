@@ -54,6 +54,7 @@ IB_DESIGNABLE
  traitCollectionDidChange:. The block is called after the call to the superclass.
  */
 @property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
-(MDCHeaderStackView *_Nonnull headerStackView, UITraitCollection *_Nullable previousTraitCollection);
+    (MDCHeaderStackView *_Nonnull headerStackView,
+     UITraitCollection *_Nullable previousTraitCollection);
 
 @end

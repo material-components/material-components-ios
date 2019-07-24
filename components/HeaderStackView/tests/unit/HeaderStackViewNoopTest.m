@@ -31,15 +31,16 @@
   // Given
   MDCHeaderStackView *testHeaderStackView = [[MDCHeaderStackView alloc] init];
   XCTestExpectation *expectation =
-  [[XCTestExpectation alloc] initWithDescription:@"traitCollection"];
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollection"];
   __block UITraitCollection *passedTraitCollection = nil;
   __block MDCHeaderStackView *passedHeaderStackView = nil;
   testHeaderStackView.traitCollectionDidChangeBlock =
-  ^(MDCHeaderStackView *_Nonnull headerStackView, UITraitCollection *_Nullable previousTraitCollection) {
-    passedTraitCollection = previousTraitCollection;
-    passedHeaderStackView = headerStackView;
-    [expectation fulfill];
-  };
+      ^(MDCHeaderStackView *_Nonnull headerStackView,
+        UITraitCollection *_Nullable previousTraitCollection) {
+        passedTraitCollection = previousTraitCollection;
+        passedHeaderStackView = headerStackView;
+        [expectation fulfill];
+      };
   UITraitCollection *fakeTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
 
   // When
