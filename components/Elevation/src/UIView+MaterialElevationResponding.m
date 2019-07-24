@@ -58,6 +58,13 @@
   return totalElevation;
 }
 
+- (CGFloat)mdc_absoluteElevation {
+  CGFloat elevation = self.mdc_baseElevation;
+  id<MDCElevatable> elevatableSelf = [self objectConformingToElevationInResponderChain];
+  elevation += elevatableSelf.mdc_currentElevation;
+  return elevation;
+}
+
 /**
  Checks whether a @c UIView or it's managing @c UIViewController conform to @c
  MDCOverrideElevation.

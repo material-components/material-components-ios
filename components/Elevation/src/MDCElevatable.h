@@ -31,8 +31,8 @@
 
  Use this block to respond to elevation changes in the view or its ancestor views.
 
- @param elevation The @c mdc_currentElevation plus the @c mdc_currentElevation of all ancestor
- views.
+ @param absoluteElevation The @c mdc_currentElevation plus the @c mdc_currentElevation of all ancestor
+ views. This equates to @c mdc_absoluteElevation of the UIView+MaterialElevationResponding category.
  @param object The receiver (self) which conforms to the protocol.
  */
 @property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)
