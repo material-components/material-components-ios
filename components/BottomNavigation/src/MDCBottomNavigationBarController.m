@@ -354,6 +354,7 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
 - (void)removeExistingViewControllers {
   NSArray<UIViewController *> *childViewControllers = self.childViewControllers;
   for (UIViewController *childViewController in childViewControllers) {
+    [childViewController willMoveToParentViewController:nil];
     [childViewController.view removeFromSuperview];
     [childViewController removeFromParentViewController];
   }
