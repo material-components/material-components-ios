@@ -230,7 +230,8 @@ traitCollectionDidChange:. The block is called after the call to the superclass.
 
  Defaults to @c NO.
  */
-@property(nonatomic, assign) BOOL sizeThatFitsIncludesSafeArea __deprecated_msg("This was a migration API and is being removed.");
+@property(nonatomic, assign) BOOL sizeThatFitsIncludesSafeArea __deprecated_msg(
+    "This was a migration API and is being removed.");
 
 @end
 
