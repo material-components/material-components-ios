@@ -157,6 +157,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   _fonts = [NSMutableDictionary dictionary];
   _accessibilityTraitsIncludesButton = YES;
   _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
+  _mdc_overrideBaseElevation = -1;
 
   if (!_backgroundColors) {
     // _backgroundColors may have already been initialized by setting the backgroundColor setter.

@@ -1353,6 +1353,14 @@ static NSString *controlStateDescription(UIControlState controlState) {
 
 #pragma mark - MaterialElevation
 
+- (void)testDefaultValueForOverrideBaseElevationIsNegative {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+
+  // Then
+  XCTAssertLessThan(button.mdc_overrideBaseElevation, 0);
+}
+
 - (void)testCurrentElevationMatchesElevationForState {
   // Given
   MDCButton *button = [[MDCButton alloc] init];
