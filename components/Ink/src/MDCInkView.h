@@ -170,7 +170,7 @@ typedef NS_ENUM(NSInteger, MDCInkStyle) {
  traitCollectionDidChange:. The block is called after the call to the superclass.
  */
 @property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
-(MDCInkView *_Nonnull ink, UITraitCollection *_Nullable previousTraitCollection);
+    (MDCInkView *_Nonnull ink, UITraitCollection *_Nullable previousTraitCollection);
 
 @end
 

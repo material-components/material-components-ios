@@ -115,15 +115,15 @@
   // Given
   MDCInkView *testInkView = [[MDCInkView alloc] init];
   XCTestExpectation *expectation =
-  [[XCTestExpectation alloc] initWithDescription:@"traitCollection"];
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollection"];
   __block UITraitCollection *passedTraitCollection = nil;
   __block MDCInkView *passedInkView = nil;
   testInkView.traitCollectionDidChangeBlock =
-  ^(MDCInkView*_Nonnull ink, UITraitCollection *_Nullable previousTraitCollection) {
-    passedTraitCollection = previousTraitCollection;
-    passedInkView = ink;
-    [expectation fulfill];
-  };
+      ^(MDCInkView *_Nonnull ink, UITraitCollection *_Nullable previousTraitCollection) {
+        passedTraitCollection = previousTraitCollection;
+        passedInkView = ink;
+        [expectation fulfill];
+      };
   UITraitCollection *fakeTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
 
   // When
