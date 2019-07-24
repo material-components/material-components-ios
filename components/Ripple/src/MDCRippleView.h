@@ -127,8 +127,7 @@ typedef NS_ENUM(NSInteger, MDCRippleStyle) {
  traitCollectionDidChange:. The block is called after the call to the superclass.
  */
 @property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
-(MDCRippleView *_Nonnull ripple,
-UITraitCollection *_Nullable previousTraitCollection);
+    (MDCRippleView *_Nonnull ripple, UITraitCollection *_Nullable previousTraitCollection);
 
 @end
 

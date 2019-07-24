@@ -253,16 +253,15 @@
   // Given
   MDCRippleView *testRippleView = [[MDCRippleView alloc] init];
   XCTestExpectation *expectation =
-  [[XCTestExpectation alloc] initWithDescription:@"traitCollection"];
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollection"];
   __block UITraitCollection *passedTraitCollection = nil;
   __block MDCRippleView *passedRippleView = nil;
   testRippleView.traitCollectionDidChangeBlock =
-  ^(MDCRippleView *_Nonnull ripple,
-    UITraitCollection *_Nullable previousTraitCollection) {
-    passedTraitCollection = previousTraitCollection;
-    passedRippleView = ripple;
-    [expectation fulfill];
-  };
+      ^(MDCRippleView *_Nonnull ripple, UITraitCollection *_Nullable previousTraitCollection) {
+        passedTraitCollection = previousTraitCollection;
+        passedRippleView = ripple;
+        [expectation fulfill];
+      };
   UITraitCollection *fakeTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
 
   // When
