@@ -283,6 +283,15 @@
   [self updateIntrinsicSizeFromTextView];
 }
 
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
+}
+
 - (void)updateConstraints {
   if (!self.textViewLeading) {
     self.textViewLeading = [NSLayoutConstraint constraintWithItem:self.textView

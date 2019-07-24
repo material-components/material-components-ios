@@ -730,6 +730,14 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
   }
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
+}
+
 - (void)updateConstraints {
   [_fundament updateConstraintsOfInput];
 
