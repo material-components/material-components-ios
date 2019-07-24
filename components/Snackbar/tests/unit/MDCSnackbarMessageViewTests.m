@@ -319,15 +319,14 @@
 }
 
 - (void)testCurrentElevationMatchesElevationWhenElevationChanges {
-  //Given
+  // Given
   MDCSnackbarMessageView *messageView = [[MDCSnackbarMessageView alloc] init];
 
   // When
   messageView.elevation = 4;
 
   // Then
-  XCTAssertEqualWithAccuracy(messageView.mdc_currentElevation,
-                             messageView.elevation, 0.001);
+  XCTAssertEqualWithAccuracy(messageView.mdc_currentElevation, messageView.elevation, 0.001);
 }
 
 - (void)testSettingOverrideBaseElevationReturnsSetValue {
@@ -375,7 +374,7 @@
 }
 
 - (void)testDefaultValueForOverrideBaseElevationIsNegative {
-  //Given
+  // Given
   MDCSnackbarMessageView *messageView = [[MDCSnackbarMessageView alloc] init];
 
   // Then
