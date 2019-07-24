@@ -507,7 +507,27 @@
 }
 
 - (void)testElevationDidChangeForSuperviewBeforeSubviewsBlockIsCalled {
-  
+  // Given
+  XCTestExpectation *expectation = [self expectationWithDescription:@("Override view elevation block was called.")];
+  __block CGFloat viewBaseElevation = -1;
+  [self.view addSubview:self.elevationOverrideView];
+  [self.elevationOverrideView addSubview:self.elevationView];
+  self.elevationView.mdc_elevationDidChangeBlock = ^(id<MDCElevatable> object, CGFloat elevation) {
+    viewBaseElevation = object.mdc_baseElevation;
+  };
+  self.elevationOverrideView.mdc_elevationDidChangeBlock = ^(id<MDCElevatable> object, CGFloat elevation) {
+    if ([object conformsToProtocol:@protocol(MDCElevationOverriding)]) {
+      id<MDCElevationOverriding> objectAsOverriding = (id<MDCElevationOverriding>)object;
+      objectAsOverriding.mdc_overrideBaseElevation = 99;
+      [expectation fulfill];
+    }
+  };
+
+  // When
+  [self.view mdc_elevationDidChange];
+
+  // Then
+  XCTAssertEqualWithAccuracy(viewBaseElevation, 99, 0.001);
 }
 
 @end
