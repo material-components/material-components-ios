@@ -214,6 +214,8 @@ changes. TabBarView allows clients to set preferred layout style.
 * [Add second protocol for overrides (#8034)](https://github.com/material-components/material-components-ios/commit/26a6a9139a1c83177c50034d93d667e04f882944) (Cody Weaver)
 * [Add MDCElevationOverride to umbrella header (#8052)](https://github.com/material-components/material-components-ios/commit/eab643ea8c0afb928b014af3dea88992fd1218b5) (Robert Moore)
 * [Improve protocol naming (#8055)](https://github.com/material-components/material-components-ios/commit/d9d038130a30fc57be90bc87ff04218a1ba1a721) (Yarden Eitan)
+* [Add category to UIView (#7969)](https://github.com/material-components/material-components-ios/commit/f335b9627799cffa4259a498086a489df811657a) (Cody Weaver)
+* [passing self to the elevationDidChangeBlock (#8058)](https://github.com/material-components/material-components-ios/commit/0643370347a8d0b31ef4eb590c84dfa2424d0ed4) (Yarden Eitan)
 
 ### FeatureHighlight
 
