@@ -171,8 +171,7 @@
                                            green:(CGFloat)0.63913043478260867
                                             blue:(CGFloat)0.16956521739130434
                                            alpha:(CGFloat)0.92000000000000004];
-  UIColor *resultColor = [UIColor blendColor:blendColor
-                         withBackgroundColor:backgroundColor];
+  UIColor *resultColor = [UIColor blendColor:blendColor withBackgroundColor:backgroundColor];
   XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resultColor
                                                     secondColor:expectedColor]);
 }
