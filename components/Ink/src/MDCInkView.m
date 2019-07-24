@@ -100,6 +100,14 @@
   }
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
+}
+
 - (void)setInkStyle:(MDCInkStyle)inkStyle {
   _inkStyle = inkStyle;
   if (self.usesLegacyInkRipple) {

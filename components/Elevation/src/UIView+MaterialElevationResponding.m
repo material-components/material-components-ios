@@ -19,6 +19,24 @@
 
 @implementation UIView (MaterialElevationResponding)
 
+- (void)mdc_elevationDidChange {
+  CGFloat baseElevation = self.mdc_baseElevation;
+  [self mdc_elevationDidChangeWithBaseElevation:baseElevation];
+}
+
+- (void)mdc_elevationDidChangeWithBaseElevation:(CGFloat)baseElevation {
+  CGFloat elevation = baseElevation;
+  id<MDCElevatable> elevatableSelf = [self objectConformingToElevationInResponderChain];
+  if (elevatableSelf.mdc_elevationDidChangeBlock) {
+    elevation += elevatableSelf.mdc_currentElevation;
+    elevatableSelf.mdc_elevationDidChangeBlock(elevatableSelf, elevation);
+  }
+
+  for (UIView *subview in self.subviews) {
+    [subview mdc_elevationDidChangeWithBaseElevation:elevation];
+  }
+}
+
 - (CGFloat)mdc_baseElevation {
   CGFloat totalElevation = 0;
   UIView *current = self;
