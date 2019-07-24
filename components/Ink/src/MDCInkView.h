@@ -165,6 +165,13 @@ typedef NS_ENUM(NSInteger, MDCInkStyle) {
  */
 + (nonnull MDCInkView *)injectedInkViewForView:(nonnull UIView *)view;
 
+/**
+ A block that is invoked when the @c MDCInkView receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+(MDCInkView *_Nonnull ink, UITraitCollection *_Nullable previousTraitCollection);
+
 @end
 
 /**
