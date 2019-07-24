@@ -29,7 +29,7 @@
   id<MDCElevatable> elevatableSelf = [self objectConformingToElevationInResponderChain];
   if (elevatableSelf.mdc_elevationDidChangeBlock) {
     elevation += elevatableSelf.mdc_currentElevation;
-    elevatableSelf.mdc_elevationDidChangeBlock(self, elevation);
+    elevatableSelf.mdc_elevationDidChangeBlock(elevatableSelf, elevation);
   }
 
   for (UIView *subview in self.subviews) {
