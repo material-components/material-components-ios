@@ -221,8 +221,7 @@
   XCTAssertEqualWithAccuracy(self.view.mdc_baseElevation, fakeElevation + fakeCurrentElevation,
                              0.001);
   XCTAssertEqualWithAccuracy(self.view.mdc_absoluteElevation,
-                             fakeElevation + fakeElevation + fakeCurrentElevation,
-                             0.001);
+                             fakeElevation + fakeElevation + fakeCurrentElevation, 0.001);
 }
 
 // + self.elevationOverrideView
@@ -280,8 +279,7 @@
   XCTAssertEqualWithAccuracy(self.view.mdc_baseElevation, fakeElevation + fakeCurrentElevation,
                              0.001);
   XCTAssertEqualWithAccuracy(self.view.mdc_absoluteElevation,
-                             fakeElevation + fakeElevation + fakeCurrentElevation,
-                             0.001);
+                             fakeElevation + fakeElevation + fakeCurrentElevation, 0.001);
 }
 
 // + self.elevationViewController
@@ -323,8 +321,7 @@
   XCTAssertEqualWithAccuracy(self.view.mdc_baseElevation, fakeElevation + fakeCurrentElevation,
                              0.001);
   XCTAssertEqualWithAccuracy(self.view.mdc_absoluteElevation,
-                             fakeElevation + fakeElevation + fakeCurrentElevation,
-                             0.001);
+                             fakeElevation + fakeElevation + fakeCurrentElevation, 0.001);
 }
 
 // + self.elevationView
@@ -348,8 +345,7 @@
   XCTAssertEqualWithAccuracy(self.view.mdc_baseElevation, fakeElevationOne + fakeElevationTwo,
                              0.001);
   XCTAssertEqualWithAccuracy(self.view.mdc_absoluteElevation,
-                             fakeElevationOne + fakeElevationOne + fakeElevationTwo,
-                             0.001);
+                             fakeElevationOne + fakeElevationOne + fakeElevationTwo, 0.001);
 }
 
 // + self.overrideElevationView
@@ -392,8 +388,8 @@
   // Then
   XCTAssertEqualWithAccuracy(self.elevationOverrideView.mdc_baseElevation, fakeOverideElevation,
                              0.001);
-  XCTAssertEqualWithAccuracy(self.elevationOverrideView.mdc_absoluteElevation, fakeElevation + fakeOverideElevation,
-                             0.001);
+  XCTAssertEqualWithAccuracy(self.elevationOverrideView.mdc_absoluteElevation,
+                             fakeElevation + fakeOverideElevation, 0.001);
 }
 
 // + self.view
@@ -427,8 +423,7 @@
   XCTAssertEqualWithAccuracy(self.elevationOverrideView.mdc_baseElevation, fakeElevationOverride,
                              0.001);
   XCTAssertEqualWithAccuracy(self.elevationOverrideView.mdc_absoluteElevation,
-                             fakeElevationOverride + fakeElevation,
-                             0.001);
+                             fakeElevationOverride + fakeElevation, 0.001);
 }
 
 // + self.elevationOverrideViewController
