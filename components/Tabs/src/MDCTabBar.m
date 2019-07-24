@@ -187,6 +187,14 @@ static inline UIColor *RippleColor() {
   _itemBar.frame = CGRectMake(0, 0, sizeThatFits.width, sizeThatFits.height);
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
+}
+
 #pragma mark - Public
 
 + (CGFloat)defaultHeightForBarPosition:(UIBarPosition)position

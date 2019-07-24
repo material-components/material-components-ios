@@ -38,7 +38,6 @@ class BottomNavigationNilBadges : UIViewController {
     view.backgroundColor = colorScheme.backgroundColor
     view.addSubview(bottomNavBar)
 
-    bottomNavBar.sizeThatFitsIncludesSafeArea = false
     // Always show bottom navigation bar item titles.
     bottomNavBar.titleVisibility = .always
 
