@@ -188,6 +188,7 @@
 
 - (void)setElevation:(MDCShadowElevation)elevation {
   _elevation = elevation;
+  self.view.elevation = elevation;
   self.mdc_bottomSheetPresentationController.elevation = elevation;
 }
 

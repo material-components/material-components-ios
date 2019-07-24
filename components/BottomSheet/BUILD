@@ -32,6 +32,7 @@ mdc_public_objc_library(
         "UIKit",
     ],
     deps = [
+        "//components/ShadowLayer",
         "//components/ShapeLibrary",
         "//components/Shapes",
         "//components/private/KeyboardWatcher",
@@ -78,9 +79,9 @@ mdc_examples_objc_library(
         "//components/AppBar",
         "//components/AppBar:ColorThemer",
         "//components/AppBar:TypographyThemer",
+        "//components/Buttons",
         "//components/ShapeLibrary",
         "//components/Shapes",
-        "//components/Buttons",
         "//components/private/Application",
         "//components/schemes/Color",
         "//components/schemes/Typography",
