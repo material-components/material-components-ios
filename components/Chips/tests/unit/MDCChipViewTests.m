@@ -56,7 +56,7 @@
   [chip setElevation:1 forState:UIControlStateNormal];
   [chip setElevation:9 forState:UIControlStateSelected];
   __block CGFloat newElevation = 0;
-  chip.mdc_elevationDidChangeBlock = ^(id<MDCElevatable> object, CGFloat elevation) {
+  chip.mdc_elevationDidChangeBlock = ^(MDCChipView *object, CGFloat elevation) {
     newElevation = elevation;
   };
 
@@ -65,6 +65,7 @@
 
   // Then
   XCTAssertEqualWithAccuracy(newElevation, [chip elevationForState:UIControlStateSelected], 0.001);
+  XCTAssertEqualWithAccuracy(newElevation, chip.mdc_currentElevation + chip.mdc_baseElevation, 0.001);
 }
 
 - (void)testElevationDidChangeBlockNotCalledWhenStateChangeDoesNotCauseElevationChange {
@@ -73,7 +74,7 @@
   [chip setElevation:1 forState:UIControlStateNormal];
   [chip setElevation:9 forState:UIControlStateHighlighted];
   __block BOOL blockCalled = NO;
-  chip.mdc_elevationDidChangeBlock = ^(id<MDCElevatable> object, CGFloat elevation) {
+  chip.mdc_elevationDidChangeBlock = ^(MDCChipView *object, CGFloat elevation) {
     blockCalled = YES;
   };
 

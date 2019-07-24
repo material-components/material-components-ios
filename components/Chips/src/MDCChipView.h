@@ -195,6 +195,19 @@
  */
 @property(nonatomic, assign) UIEdgeInsets hitAreaInsets;
 
+/**
+ This block is called after a change of the chip view's elevation or one of its view
+ hierarchy ancestors.
+
+ Use this block to respond to elevation changes in the view or its ancestor views.
+
+ @param elevation The @c mdc_currentElevation plus the @c mdc_currentElevation of all ancestor
+ views.
+ @param object This chip view.
+ */
+@property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)
+    (MDCChipView *_Nonnull object, CGFloat elevation);
+
 /*
  A color used as the chip's @c backgroundColor for @c state.
 
