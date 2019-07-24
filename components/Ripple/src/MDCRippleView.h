@@ -121,6 +121,15 @@ typedef NS_ENUM(NSInteger, MDCRippleStyle) {
  */
 - (void)beginRippleTouchUpAnimated:(BOOL)animated
                         completion:(nullable MDCRippleCompletionBlock)completion;
+
+/**
+ A block that is invoked when the @c MDCRippleView receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+(MDCRippleView *_Nonnull ripple,
+UITraitCollection *_Nullable previousTraitCollection);
+
 @end
 
 /**
