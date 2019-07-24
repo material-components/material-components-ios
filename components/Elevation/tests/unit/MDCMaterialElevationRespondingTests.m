@@ -546,8 +546,7 @@
   [self.elevationOverrideViewController.view addSubview:self.view];
 
   // Then
-  XCTAssertEqualWithAccuracy(self.view.mdc_baseElevation, self.view.mdc_absoluteElevation,
-                             0.001);
+  XCTAssertEqualWithAccuracy(self.view.mdc_baseElevation, self.view.mdc_absoluteElevation, 0.001);
 }
 
 @end
