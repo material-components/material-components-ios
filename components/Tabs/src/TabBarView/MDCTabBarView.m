@@ -633,6 +633,14 @@ typedef NS_ENUM(NSUInteger, MDCTabBarViewInternalLayoutStyle) {
   }
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
+}
+
 - (BOOL)isScrollableLayoutStyle {
   return [self layoutStyle] == MDCTabBarViewInternalLayoutStyleScrollable;
 }

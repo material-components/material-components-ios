@@ -136,6 +136,14 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = (CGFloat)1.5;
       [self attributedStringForString:self.bodyText lineSpacing:kMDCFeatureHighlightLineSpacing];
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
+}
+
 - (void)dealloc {
   [_pulseTimer invalidate];
 }

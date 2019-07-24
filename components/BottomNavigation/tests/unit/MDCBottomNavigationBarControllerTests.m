@@ -19,7 +19,7 @@
 
 static CGFloat const kDefaultExpectationTimeout = 15;
 
-@interface MDCBottomNavigationControllerTests
+@interface MDCBottomNavigationBarControllerTests
     : XCTestCase <MDCBottomNavigationBarControllerDelegate>
 
 /** The bottom navigation controller to test **/
@@ -45,7 +45,7 @@ static CGFloat const kDefaultExpectationTimeout = 15;
 
 @end
 
-@implementation MDCBottomNavigationControllerTests
+@implementation MDCBottomNavigationBarControllerTests
 
 - (void)setUp {
   [super setUp];
@@ -266,6 +266,51 @@ static CGFloat const kDefaultExpectationTimeout = 15;
   // When/Then
   XCTAssertThrowsSpecificNamed(self.bottomNavigationBarController.navigationBar.items = tabBarItems,
                                NSException, NSInternalInconsistencyException);
+}
+
+- (void)testSettingViewControllersUpdatesChildViewControllers {
+  // Given
+  UIViewController *childViewController1 = [[UIViewController alloc] init];
+  UIViewController *childViewController2 = [[UIViewController alloc] init];
+
+  // When
+  self.bottomNavigationBarController.viewControllers =
+      @[ childViewController1, childViewController2 ];
+
+  // Then
+  XCTAssertEqual(self.bottomNavigationBarController.viewControllers.count, 2U);
+  XCTAssertEqual(self.bottomNavigationBarController.childViewControllers.count, 2U);
+  XCTAssertEqual(self.bottomNavigationBarController.viewControllers.firstObject,
+                 childViewController1);
+  XCTAssertEqual(self.bottomNavigationBarController.selectedViewController, childViewController1);
+}
+
+- (void)testSettingViewControllersEmptyUpdatesChildViewControllers {
+  // Given
+  UIViewController *childViewController = [[UIViewController alloc] init];
+  self.bottomNavigationBarController.viewControllers = @[ childViewController ];
+
+  // When
+  self.bottomNavigationBarController.viewControllers = @[];
+
+  // Then
+  XCTAssertEqual(self.bottomNavigationBarController.viewControllers.count, 0U);
+  XCTAssertEqual(self.bottomNavigationBarController.childViewControllers.count, 0U);
+  XCTAssertNil(self.bottomNavigationBarController.selectedViewController);
+}
+
+- (void)testNonSelectedViewControllersHaveViewsLazilyLoaded {
+  // Given
+  UIViewController *childViewController1 = [[UIViewController alloc] init];
+  UIViewController *childViewController2 = [[UIViewController alloc] init];
+
+  // When
+  self.bottomNavigationBarController.viewControllers =
+      @[ childViewController1, childViewController2 ];
+
+  // Then
+  XCTAssertTrue(childViewController1.viewLoaded);
+  XCTAssertFalse(childViewController2.viewLoaded);
 }
 
 #pragma mark - MDCBottomNavigationBarControllerDelegate Methods

@@ -1245,6 +1245,29 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   }
 }
 
+- (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
+  // Given
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollection"];
+  __block UITraitCollection *passedTraitCollection = nil;
+  __block MDCSlider *passedSlider = nil;
+  self.slider.traitCollectionDidChangeBlock =
+      ^(MDCSlider *_Nonnull slider, UITraitCollection *_Nullable previousTraitCollection) {
+        passedTraitCollection = previousTraitCollection;
+        passedSlider = slider;
+        [expectation fulfill];
+      };
+  UITraitCollection *fakeTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
+
+  // When
+  [self.slider traitCollectionDidChange:fakeTraitCollection];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertEqual(passedSlider, self.slider);
+  XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
+}
+
 #pragma mark Private test helpers
 
 - (CGFloat)randomNumber {

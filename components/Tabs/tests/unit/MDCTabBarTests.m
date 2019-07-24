@@ -47,4 +47,28 @@
   XCTAssertTrue(tabBar.displaysUppercaseTitles);
 }
 
+- (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
+  // Given
+  MDCTabBar *testTabBar = [[MDCTabBar alloc] init];
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollection"];
+  __block UITraitCollection *passedTraitCollection = nil;
+  __block MDCTabBar *passedTabBar = nil;
+  testTabBar.traitCollectionDidChangeBlock =
+      ^(MDCTabBar *_Nonnull tabBar, UITraitCollection *_Nullable previousTraitCollection) {
+        passedTraitCollection = previousTraitCollection;
+        passedTabBar = tabBar;
+        [expectation fulfill];
+      };
+  UITraitCollection *fakeTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
+
+  // When
+  [testTabBar traitCollectionDidChange:fakeTraitCollection];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertEqual(passedTabBar, testTabBar);
+  XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
+}
+
 @end
