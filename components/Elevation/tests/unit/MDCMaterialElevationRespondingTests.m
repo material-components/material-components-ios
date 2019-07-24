@@ -111,7 +111,7 @@
  Tests for the @c MaterialElevationResponding category on @c UIView.
  */
 @interface MDCMaterialElevationRespondingTests : XCTestCase
-@property(nonatomic, strong, nullable) UIView *view;
+@property(nonatomic, strong, nullable) MDCConformingMDCElevatableView *view;
 @property(nonatomic, strong, nullable) MDCConformingMDCElevatableView *elevationView;
 @property(nonatomic, strong, nullable)
     MDCConformingMDCElevatableOverrideView *elevationOverrideView;
@@ -127,7 +127,7 @@
 - (void)setUp {
   [super setUp];
 
-  self.view = [[UIView alloc] init];
+  self.view = [[MDCConformingMDCElevatableView alloc] init];
   self.elevationView = [[MDCConformingMDCElevatableView alloc] init];
   self.elevationOverrideView = [[MDCConformingMDCElevatableOverrideView alloc] init];
   self.viewController = [[UIViewController alloc] init];
@@ -153,12 +153,13 @@
   // Given
   CGFloat fakeElevation = 3;
   self.elevationView.elevation = fakeElevation;
-
+  self.view.elevation = fakeElevation;
   // When
   [self.elevationView addSubview:self.view];
 
   // Then
   XCTAssertEqualWithAccuracy(self.view.mdc_baseElevation, fakeElevation, 0.001);
+  XCTAssertEqualWithAccuracy(self.view.mdc_absoluteElevation, fakeElevation + fakeElevation, 0.001);
 }
 
 // + self.elevationView
@@ -169,6 +170,7 @@
   UIView *middleView = [[UIView alloc] init];
   CGFloat fakeElevation = 3;
   self.elevationView.elevation = fakeElevation;
+  self.view.elevation = fakeElevation;
 
   // When
   [self.elevationView addSubview:middleView];
@@ -176,6 +178,7 @@
 
   // Then
   XCTAssertEqualWithAccuracy(self.view.mdc_baseElevation, fakeElevation, 0.001);
+  XCTAssertEqualWithAccuracy(self.view.mdc_absoluteElevation, fakeElevation + fakeElevation, 0.001);
 }
 
 // + self.elevationOverrideView
@@ -186,6 +189,7 @@
   CGFloat fakeCurrentElevation = 20;
   self.elevationOverrideView.elevation = fakeCurrentElevation;
   self.elevationOverrideView.mdc_overrideBaseElevation = fakeElevation;
+  self.view.elevation = fakeElevation;
 
   // When
   [self.elevationOverrideView addSubview:self.view];
@@ -193,6 +197,8 @@
   // Then
   XCTAssertEqualWithAccuracy(self.view.mdc_baseElevation, fakeElevation + fakeCurrentElevation,
                              0.001);
+  XCTAssertEqualWithAccuracy(self.view.mdc_absoluteElevation,
+                             fakeElevation + fakeElevation + fakeCurrentElevation, 0.001);
 }
 
 // + self.elevationOverrideView
@@ -205,6 +211,7 @@
   CGFloat fakeCurrentElevation = 20;
   self.elevationOverrideView.elevation = fakeCurrentElevation;
   self.elevationOverrideView.mdc_overrideBaseElevation = fakeElevation;
+  self.view.elevation = fakeElevation;
 
   // When
   [self.elevationOverrideView addSubview:middleView];
@@ -212,6 +219,9 @@
 
   // Then
   XCTAssertEqualWithAccuracy(self.view.mdc_baseElevation, fakeElevation + fakeCurrentElevation,
+                             0.001);
+  XCTAssertEqualWithAccuracy(self.view.mdc_absoluteElevation,
+                             fakeElevation + fakeElevation + fakeCurrentElevation,
                              0.001);
 }
 
@@ -224,13 +234,17 @@
   CGFloat fakeElevationOverride = 4;
   self.elevationView.elevation = fakeElevation;
   self.elevationOverrideView.mdc_overrideBaseElevation = fakeElevationOverride;
+  self.view.elevation = fakeElevation;
 
   // When
   [self.elevationOverrideView addSubview:self.elevationView];
   [self.elevationView addSubview:self.view];
 
   // Then
-  XCTAssertEqual(self.view.mdc_baseElevation, fakeElevation + fakeElevationOverride);
+  XCTAssertEqualWithAccuracy(self.view.mdc_baseElevation, fakeElevation + fakeElevationOverride,
+                             0.001);
+  XCTAssertEqualWithAccuracy(self.view.mdc_absoluteElevation,
+                             fakeElevation + fakeElevation + fakeElevationOverride, 0.001);
 }
 
 // + self.elevationViewController
@@ -239,12 +253,14 @@
   // Given
   CGFloat fakeElevation = 3;
   self.elevationViewController.elevation = fakeElevation;
+  self.view.elevation = fakeElevation;
 
   // When
   [self.elevationViewController.view addSubview:self.view];
 
   // Then
   XCTAssertEqualWithAccuracy(self.view.mdc_baseElevation, fakeElevation, 0.001);
+  XCTAssertEqualWithAccuracy(self.view.mdc_absoluteElevation, fakeElevation + fakeElevation, 0.001);
 }
 
 // + self.elevationOverrideViewController
@@ -255,12 +271,16 @@
   CGFloat fakeCurrentElevation = 20;
   self.elevationOverrideViewController.elevation = fakeCurrentElevation;
   self.elevationOverrideViewController.mdc_overrideBaseElevation = fakeElevation;
+  self.view.elevation = fakeElevation;
 
   // When
   [self.elevationOverrideViewController.view addSubview:self.view];
 
   // Then
   XCTAssertEqualWithAccuracy(self.view.mdc_baseElevation, fakeElevation + fakeCurrentElevation,
+                             0.001);
+  XCTAssertEqualWithAccuracy(self.view.mdc_absoluteElevation,
+                             fakeElevation + fakeElevation + fakeCurrentElevation,
                              0.001);
 }
 
@@ -271,6 +291,7 @@
   // Given
   CGFloat fakeElevation = 3;
   self.elevationViewController.elevation = fakeElevation;
+  self.view.elevation = fakeElevation;
   UIView *middleView = [[UIView alloc] init];
 
   // When
@@ -279,6 +300,7 @@
 
   // Then
   XCTAssertEqualWithAccuracy(self.view.mdc_baseElevation, fakeElevation, 0.001);
+  XCTAssertEqualWithAccuracy(self.view.mdc_absoluteElevation, fakeElevation + fakeElevation, 0.001);
 }
 
 // + self.elevationOverrideViewController
@@ -290,6 +312,7 @@
   CGFloat fakeCurrentElevation = 20;
   self.elevationOverrideViewController.elevation = fakeCurrentElevation;
   self.elevationOverrideViewController.mdc_overrideBaseElevation = fakeElevation;
+  self.view.elevation = fakeElevation;
   UIView *middleView = [[UIView alloc] init];
 
   // When
@@ -298,6 +321,9 @@
 
   // Then
   XCTAssertEqualWithAccuracy(self.view.mdc_baseElevation, fakeElevation + fakeCurrentElevation,
+                             0.001);
+  XCTAssertEqualWithAccuracy(self.view.mdc_absoluteElevation,
+                             fakeElevation + fakeElevation + fakeCurrentElevation,
                              0.001);
 }
 
@@ -312,6 +338,7 @@
       [[MDCConformingMDCElevatableOverrideViewSubclass alloc] init];
   subclassView.elevation = fakeElevationOne;
   self.elevationView.elevation = fakeElevationTwo;
+  self.view.elevation = fakeElevationOne;
 
   // When
   [self.elevationView addSubview:subclassView];
@@ -319,6 +346,9 @@
 
   // Then
   XCTAssertEqualWithAccuracy(self.view.mdc_baseElevation, fakeElevationOne + fakeElevationTwo,
+                             0.001);
+  XCTAssertEqualWithAccuracy(self.view.mdc_absoluteElevation,
+                             fakeElevationOne + fakeElevationOne + fakeElevationTwo,
                              0.001);
 }
 
@@ -331,6 +361,7 @@
   CGFloat fakeOverrideElevation = 7;
   self.elevationOverrideView.elevation = fakeElevation;
   self.elevationOverrideView.mdc_overrideBaseElevation = fakeOverrideElevation;
+  self.elevationView.elevation = fakeElevation;
 
   // When
   [self.elevationOverrideView addSubview:self.view];
@@ -339,6 +370,8 @@
   // Then
   XCTAssertEqualWithAccuracy(self.elevationView.mdc_baseElevation,
                              fakeElevation + fakeOverrideElevation, 0.001);
+  XCTAssertEqualWithAccuracy(self.elevationView.mdc_absoluteElevation,
+                             fakeElevation + fakeElevation + fakeOverrideElevation, 0.001);
 }
 
 // + self.elevationView
@@ -348,8 +381,9 @@
   // Given
   CGFloat fakeElevation = 100;
   CGFloat fakeOverideElevation = 3;
-  self.elevationView.elevation = fakeElevation;
+  self.elevationOverrideView.elevation = fakeElevation;
   self.elevationOverrideView.mdc_overrideBaseElevation = fakeOverideElevation;
+  self.view.elevation = fakeElevation;
 
   // When
   [self.elevationView addSubview:self.view];
@@ -357,6 +391,8 @@
 
   // Then
   XCTAssertEqualWithAccuracy(self.elevationOverrideView.mdc_baseElevation, fakeOverideElevation,
+                             0.001);
+  XCTAssertEqualWithAccuracy(self.elevationOverrideView.mdc_absoluteElevation, fakeElevation + fakeOverideElevation,
                              0.001);
 }
 
@@ -372,6 +408,7 @@
 
   // Then
   XCTAssertEqualWithAccuracy(self.elevationView.mdc_baseElevation, 0, 0.001);
+  XCTAssertEqualWithAccuracy(self.elevationView.mdc_absoluteElevation, fakeElevation, 0.001);
 }
 
 // + self.view
@@ -388,6 +425,9 @@
 
   // Then
   XCTAssertEqualWithAccuracy(self.elevationOverrideView.mdc_baseElevation, fakeElevationOverride,
+                             0.001);
+  XCTAssertEqualWithAccuracy(self.elevationOverrideView.mdc_absoluteElevation,
+                             fakeElevationOverride + fakeElevation,
                              0.001);
 }
 
@@ -407,6 +447,8 @@
 
   // Then
   XCTAssertEqualWithAccuracy(self.elevationView.mdc_baseElevation,
+                             fakeViewControllerElevation + fakeViewControllerOverride, 0.001);
+  XCTAssertEqualWithAccuracy(self.elevationView.mdc_absoluteElevation,
                              fakeViewControllerElevation + fakeViewControllerOverride, 0.001);
 }
 
@@ -429,6 +471,8 @@
   // Then
   XCTAssertEqualWithAccuracy(self.elevationOverrideViewController.view.mdc_baseElevation,
                              fakeViewControllerOverride, 0.001);
+  XCTAssertEqualWithAccuracy(self.elevationOverrideViewController.view.mdc_absoluteElevation,
+                             fakeViewControllerOverride + fakeViewControllerElevation, 0.001);
 }
 
 // + self.view
@@ -442,6 +486,7 @@
 
   // Then
   XCTAssertEqualWithAccuracy(self.elevationViewController.view.mdc_baseElevation, 0, 0.001);
+  XCTAssertEqualWithAccuracy(self.elevationViewController.view.mdc_absoluteElevation, 100, 0.001);
 }
 
 // + self.view
@@ -459,6 +504,8 @@
   // Then
   XCTAssertEqualWithAccuracy(self.elevationOverrideViewController.view.mdc_baseElevation,
                              fakeElevationOverride, 0.001);
+  XCTAssertEqualWithAccuracy(self.elevationOverrideViewController.view.mdc_absoluteElevation,
+                             fakeElevationOverride + fakeElevation, 0.001);
 }
 
 #pragma mark - Elevation did change
