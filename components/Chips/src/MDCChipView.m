@@ -125,6 +125,9 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   BOOL _mdc_adjustsFontForContentSizeCategory;
 }
 
+@synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
+@synthesize mdc_elevationDidChangeBlock = _mdc_elevationDidChangeBlock;
+
 @dynamic layer;
 
 + (Class)layerClass {
@@ -400,6 +403,10 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
 - (void)updateBorderWidth {
   self.layer.shapedBorderWidth = [self borderWidthForState:self.state];
+}
+
+- (CGFloat)mdc_currentElevation {
+  return [self elevationForState:self.state];
 }
 
 - (CGFloat)elevationForState:(UIControlState)state {
