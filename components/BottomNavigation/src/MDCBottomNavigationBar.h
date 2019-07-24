@@ -14,6 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialElevation.h"
 #import "MaterialShadowElevations.h"
 
 @protocol MDCBottomNavigationBarDelegate;
@@ -57,7 +58,7 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
  can be selected at at time. The selected item's title text is displayed. Title text for unselected
  items are hidden.
  */
-@interface MDCBottomNavigationBar : UIView
+@interface MDCBottomNavigationBar : UIView <MDCElevatable, MDCElevationOverriding>
 
 /** The bottom navigation bar delegate. */
 @property(nonatomic, weak, nullable) id<MDCBottomNavigationBarDelegate> delegate;
@@ -208,6 +209,19 @@ traitCollectionDidChange:. The block is called after the call to the superclass.
 @property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
     (MDCBottomNavigationBar *_Nonnull bottomNavigationBar,
      UITraitCollection *_Nullable previousTraitCollection);
+
+/**
+ This block is called after a change of the bottom navigation bar's elevation or one of its view
+ hierarchy ancestors.
+
+ Use this block to respond to elevation changes in the view or its ancestor views.
+
+ @param elevation The @c mdc_currentElevation plus the @c mdc_currentElevation of all ancestor
+ views.
+ @param object This bottom navigation bar.
+ */
+@property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)
+    (MDCBottomNavigationBar *_Nonnull object, CGFloat elevation);
 
 /**
  Returns the navigation bar subview associated with the specific item.
