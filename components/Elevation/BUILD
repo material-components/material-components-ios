@@ -30,6 +30,9 @@ mdc_public_objc_library(
     sdk_frameworks = [
         "CoreGraphics",
     ],
+    deps = [
+        "//components/private/Color",
+    ],
 )
 
 mdc_unit_test_objc_library(
@@ -41,6 +44,8 @@ mdc_unit_test_objc_library(
     visibility = ["//visibility:private"],
     deps = [
         ":Elevation",
+        "//components/private/Color",
+        "//components/private/Math",
     ],
 )
 
