@@ -14,7 +14,7 @@ changes. TabBarView allows clients to set preferred layout style.
 
 #### MDCActionSheetController
 
-*new* property: `traitCollectionDidChangeBlockForAppBarController` in `MDCActionSheetController`
+*new* property: `traitCollectionDidChangeBlock` in `MDCActionSheetController`
 
 ### ActivityIndicator
 
