@@ -36,6 +36,6 @@
  @param object The receiver (self) which conforms to the protocol.
  */
 @property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)
-    (id<MDCElevatable>_Nonnull object, CGFloat elevation);
+    (id<MDCElevatable> _Nonnull object, CGFloat elevation);
 
 @end
