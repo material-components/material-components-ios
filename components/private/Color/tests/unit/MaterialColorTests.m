@@ -176,6 +176,23 @@
                                                     secondColor:expectedColor]);
 }
 
+- (void)testP3ColorMergeTest {
+  if (@available(iOS 10.0, *)) {
+    UIColor *backgroundColor = [UIColor colorWithWhite:(CGFloat)0.3 alpha:(CGFloat)0.8];
+    UIColor *blendColor = [UIColor colorWithDisplayP3Red:0.1
+                                                   green:0.2
+                                                    blue:0.3
+                                                   alpha:0.4];
+    UIColor *expectedColor = [UIColor colorWithRed:(CGFloat)0.19059444720094854
+                                             green:(CGFloat)0.25595822821963915
+                                              blue:(CGFloat)0.30395004586739971
+                                             alpha:(CGFloat)0.88];
+    UIColor *resultColor = [UIColor mdc_blendColor:blendColor withBackgroundColor:backgroundColor];
+    XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resultColor
+                                                      secondColor:expectedColor]);
+  }
+}
+
 - (BOOL)compareColorsWithFloatPrecisionFirstColor:(UIColor *)firstColor
                                       secondColor:(UIColor *)secondColor {
   CGFloat fRed = 0.0, fGreen = 0.0, fBlue = 0.0, fAlpha = 0.0;
