@@ -200,7 +200,6 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
   }
 }
 
-
 - (void)testColorWithPatternImageMergeTest {
   if (@available(iOS 10.0, *)) {
     UIColor *backgroundColor = [UIColor colorWithHue:(CGFloat)0.7
