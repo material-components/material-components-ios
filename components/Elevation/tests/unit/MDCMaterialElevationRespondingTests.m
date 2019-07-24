@@ -535,4 +535,19 @@
   XCTAssertEqualWithAccuracy(viewBaseElevation, fakeOverrideElevation, 0.001);
 }
 
+- (void)testAbsoluteElevationReturnsCorrectValue {
+  // Given
+  CGFloat fakeElevation = 3;
+  CGFloat fakeCurrentElevation = 20;
+  self.elevationOverrideViewController.elevation = fakeCurrentElevation;
+  self.elevationOverrideViewController.mdc_overrideBaseElevation = fakeElevation;
+
+  // When
+  [self.elevationOverrideViewController.view addSubview:self.view];
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.view.mdc_baseElevation, self.view.mdc_absoluteElevation,
+                             0.001);
+}
+
 @end
