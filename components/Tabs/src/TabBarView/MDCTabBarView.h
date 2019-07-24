@@ -163,6 +163,13 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
 - (CGRect)rectForItem:(nonnull UITabBarItem *)item
     inCoordinateSpace:(nonnull id<UICoordinateSpace>)coordinateSpace;
 
+/**
+ A block that is invoked when the @c MDCTabBarView receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCTabBarView *_Nonnull tabBar, UITraitCollection *_Nullable previousTraitCollection);
+
 #pragma mark - Animation
 
 /**
