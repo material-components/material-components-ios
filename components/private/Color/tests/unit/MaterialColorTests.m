@@ -189,7 +189,10 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
 - (void)testP3ColorMergeTest {
   if (@available(iOS 10.0, *)) {
     UIColor *backgroundColor = [UIColor colorWithWhite:(CGFloat)0.3 alpha:(CGFloat)0.8];
-    UIColor *blendColor = [UIColor colorWithDisplayP3Red:0.1 green:0.2 blue:0.3 alpha:0.4];
+    UIColor *blendColor = [UIColor colorWithDisplayP3Red:(CGFloat)0.1
+                                                   green:(CGFloat)0.2
+                                                    blue:(CGFloat)0.3
+                                                   alpha:(CGFloat)0.4];
     UIColor *expectedColor = [UIColor colorWithRed:(CGFloat)0.19059444720094854
                                              green:(CGFloat)0.25595822821963915
                                               blue:(CGFloat)0.30395004586739971
