@@ -34,6 +34,14 @@
 @property(nonatomic, assign, readonly) CGFloat mdc_baseElevation;
 
 /**
+ Returns the sum of the view's @c mdc_currentElevation with the @c mdc_currentElevation of its
+ superviews going up the view hierarchy recursively.
+
+ This value is effectively the sum of @c mdc_baseElevation and @c mdc_currentElevation.
+ */
+@property(nonatomic, assign, readonly) CGFloat mdc_absoluteElevation;
+
+/**
  Should be called when the view's @c mdc_currentElevation has changed. Will be called on the
  reciever's @c subviews.
 
