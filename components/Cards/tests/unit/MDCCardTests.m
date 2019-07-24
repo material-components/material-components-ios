@@ -413,8 +413,7 @@ static UIImage *FakeImage(void) {
 
   // Then
   XCTAssertEqualWithAccuracy(self.card.mdc_currentElevation,
-                             [self.card shadowElevationForState:UIControlStateNormal],
-                             0.001);
+                             [self.card shadowElevationForState:UIControlStateNormal], 0.001);
 }
 
 - (void)testSettingOverrideBaseElevationReturnsSetValue {
@@ -425,16 +424,14 @@ static UIImage *FakeImage(void) {
   self.card.mdc_overrideBaseElevation = expectedBaseElevation;
 
   // Then
-  XCTAssertEqualWithAccuracy(self.card.mdc_overrideBaseElevation, expectedBaseElevation,
-                             0.001);
+  XCTAssertEqualWithAccuracy(self.card.mdc_overrideBaseElevation, expectedBaseElevation, 0.001);
 }
 
 - (void)testElevationDidChangeBlockCalledWhenElevationChangesValue {
   // Given
   [self.card setShadowElevation:5 forState:UIControlStateNormal];
   __block BOOL blockCalled = NO;
-  self.card.mdc_elevationDidChangeBlock =
-  ^(MDCCard *object, CGFloat elevation) {
+  self.card.mdc_elevationDidChangeBlock = ^(MDCCard *object, CGFloat elevation) {
     blockCalled = YES;
   };
 
@@ -450,8 +447,7 @@ static UIImage *FakeImage(void) {
   // Given
   [self.card setShadowElevation:5 forState:UIControlStateNormal];
   __block BOOL blockCalled = NO;
-  self.card.mdc_elevationDidChangeBlock =
-  ^(MDCCard *object, CGFloat elevation) {
+  self.card.mdc_elevationDidChangeBlock = ^(MDCCard *object, CGFloat elevation) {
     blockCalled = YES;
   };
 
