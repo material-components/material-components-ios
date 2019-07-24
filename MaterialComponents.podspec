@@ -579,6 +579,7 @@ Pod::Spec.new do |mdc|
         "components/#{component.base_name}/src/MDCCard+Ripple.{h,m}",
         "components/#{component.base_name}/src/MDCCardCollectionCell+Ripple.{h,m}"
     ]
+    component.dependency "MaterialComponents/Elevation"
     component.dependency "MaterialComponents/Ink"
     component.dependency "MaterialComponents/Ripple"
     component.dependency "MaterialComponents/ShadowLayer"

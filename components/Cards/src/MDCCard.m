@@ -36,6 +36,7 @@ static const BOOL MDCCardIsInteractableDefault = YES;
 }
 
 @dynamic layer;
+@synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
 
 + (Class)layerClass {
   return [MDCShapedShadowLayer class];
@@ -60,6 +61,7 @@ static const BOOL MDCCardIsInteractableDefault = YES;
 - (void)commonMDCCardInit {
   self.layer.cornerRadius = MDCCardCornerRadiusDefault;
   _interactable = MDCCardIsInteractableDefault;
+  _mdc_overrideBaseElevation = -1;
 
   if (_inkView == nil) {
     _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
@@ -158,6 +160,7 @@ static const BOOL MDCCardIsInteractableDefault = YES;
       self.layer.shadowPath = [self boundingPath].CGPath;
     }
     [(MDCShadowLayer *)self.layer setElevation:elevation];
+    [self mdc_elevationDidChange];
   }
 }
 
@@ -358,6 +361,10 @@ static const BOOL MDCCardIsInteractableDefault = YES;
     }
     [self addSubview:_inkView];
   }
+}
+
+- (CGFloat)mdc_currentElevation {
+  return [self shadowElevationForState:self.state];
 }
 
 @end
