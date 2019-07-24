@@ -22,7 +22,7 @@
  */
 @interface MDCConformingMDCElevatableView : UIView <MDCElevatable>
 @property(nonatomic, assign, readonly) CGFloat mdc_currentElevation;
-@property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)(CGFloat elevation);
+@property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)(MDCConformingMDCElevatableView *view, CGFloat elevation);
 @property(nonatomic, assign) CGFloat elevation;
 @end
 
@@ -40,7 +40,7 @@
  */
 @interface MDCConformingMDCElevatableViewController : UIViewController <MDCElevatable>
 @property(nonatomic, assign, readonly) CGFloat mdc_currentElevation;
-@property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)(CGFloat elevation);
+@property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)(MDCConformingMDCElevatableViewController *viewController, CGFloat elevation);
 @property(nonatomic, assign) CGFloat elevation;
 @end
 
@@ -58,7 +58,7 @@
  */
 @interface MDCConformingMDCElevatableOverrideView : UIView <MDCElevatable, MDCElevationOverriding>
 @property(nonatomic, assign, readwrite) CGFloat mdc_overrideBaseElevation;
-@property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)(CGFloat elevation);
+@property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)(MDCConformingMDCElevatableOverrideView *view, CGFloat elevation);
 @property(nonatomic, assign, readonly) CGFloat mdc_currentElevation;
 @property(nonatomic, assign) CGFloat elevation;
 @end
@@ -90,7 +90,7 @@
 @interface MDCConformingMDCElevatableOverrideViewController
     : UIViewController <MDCElevatable, MDCElevationOverriding>
 @property(nonatomic, assign, readwrite) CGFloat mdc_overrideBaseElevation;
-@property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)(CGFloat elevation);
+@property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)(MDCConformingMDCElevatableOverrideViewController *viewController, CGFloat elevation);
 @property(nonatomic, assign, readonly) CGFloat mdc_currentElevation;
 @property(nonatomic, assign) CGFloat elevation;
 @end
