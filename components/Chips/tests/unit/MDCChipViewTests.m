@@ -22,7 +22,27 @@
 
 @implementation MDCChipViewTests
 
-#pragma mark - MDCElevation
+#pragma mark - MaterialElevation
+
+- (void)testDefaultValueForOverrideBaseElevationIsNegative {
+  // Given
+  MDCChipView *chip = [[MDCChipView alloc] init];
+
+  // Then
+  XCTAssertLessThan(chip.mdc_overrideBaseElevation, 0);
+}
+
+- (void)testSettingOverrideBaseElevationReturnsSetValue {
+  // Given
+  MDCChipView *chip = [[MDCChipView alloc] init];
+  CGFloat expectedBaseElevation = 99;
+
+  // When
+  chip.mdc_overrideBaseElevation = expectedBaseElevation;
+
+  // Then
+  XCTAssertEqualWithAccuracy(chip.mdc_overrideBaseElevation, expectedBaseElevation, 0.001);
+}
 
 - (void)testCurrentElevationMatchesElevationForState {
   // Given
