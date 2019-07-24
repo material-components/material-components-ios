@@ -98,7 +98,7 @@ typedef NS_ENUM(NSInteger, MDCInkStyle) {
  traitCollectionDidChange:. The block is called after the call to the superclass.
  */
 @property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
-(MDCInkView *_Nonnull ink, UITraitCollection *_Nullable previousTraitCollection);
+    (MDCInkView *_Nonnull ink, UITraitCollection *_Nullable previousTraitCollection);
 
 /**
  Start the first part of the "press and release" animation at a particular point.
