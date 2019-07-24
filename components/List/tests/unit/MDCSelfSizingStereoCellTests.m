@@ -201,4 +201,59 @@
   XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
 }
 
+#pragma mark - MaterialElevation
+
+- (void)testDefaultValueForOverrideBaseElevationIsNegative {
+  // Given
+  MDCSelfSizingStereoCell *cell = [[MDCSelfSizingStereoCell alloc] init];
+
+  // Then
+  XCTAssertLessThan(cell.mdc_overrideBaseElevation, 0);
+}
+
+- (void)testSettingOverrideBaseElevationReturnsSetValue {
+  // Given
+  CGFloat expectedBaseElevation = 99;
+  MDCSelfSizingStereoCell *cell = [[MDCSelfSizingStereoCell alloc] init];
+
+  // When
+  cell.mdc_overrideBaseElevation = expectedBaseElevation;
+
+  // Then
+  XCTAssertEqualWithAccuracy(cell.mdc_overrideBaseElevation, expectedBaseElevation, 0.001);
+}
+
+- (void)testElevationDidChangeBlockCalledWhenElevationChangesValue {
+  // Given
+  MDCSelfSizingStereoCell *cell = [[MDCSelfSizingStereoCell alloc] init];
+  const CGFloat finalElevation = 6;
+  cell.elevation = finalElevation - 1;
+  __block CGFloat newElevation = -1;
+  cell.mdc_elevationDidChangeBlock = ^(MDCBaseCell *blockCell, CGFloat elevation) {
+    newElevation = elevation;
+  };
+
+  // When
+  cell.elevation = cell.elevation + 1;
+
+  // Then
+  XCTAssertEqualWithAccuracy(newElevation, finalElevation, 0.001);
+}
+
+- (void)testElevationDidChangeBlockNotCalledWhenElevationIsSetWithoutChangingValue {
+  // Given
+  MDCSelfSizingStereoCell *cell = [[MDCSelfSizingStereoCell alloc] init];
+  cell.elevation = 5;
+  __block BOOL blockCalled = NO;
+  cell.mdc_elevationDidChangeBlock = ^(MDCBaseCell *blockCell, CGFloat elevation) {
+    blockCalled = YES;
+  };
+
+  // When
+  cell.elevation = cell.elevation;
+
+  // Then
+  XCTAssertFalse(blockCalled);
+}
+
 @end

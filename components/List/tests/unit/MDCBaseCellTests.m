@@ -132,4 +132,56 @@
   XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
 }
 
+#pragma mark - MaterialElevation
+
+- (void)testDefaultValueForOverrideBaseElevationIsNegative {
+  // Given
+  MDCBaseCell *cell = [[MDCBaseCell alloc] init];
+
+  // Then
+  XCTAssertLessThan(cell.mdc_overrideBaseElevation, 0);
+}
+
+- (void)testSettingOverrideBaseElevationReturnsSetValue {
+  // Given
+  CGFloat expectedBaseElevation = 99;
+
+  // When
+  self.baseCell.mdc_overrideBaseElevation = expectedBaseElevation;
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.baseCell.mdc_overrideBaseElevation, expectedBaseElevation, 0.001);
+}
+
+- (void)testElevationDidChangeBlockCalledWhenElevationChangesValue {
+  // Given
+  const CGFloat finalElevation = 6;
+  self.baseCell.elevation = finalElevation - 1;
+  __block CGFloat newElevation = -1;
+  self.baseCell.mdc_elevationDidChangeBlock = ^(MDCBaseCell *cell, CGFloat elevation) {
+    newElevation = elevation;
+  };
+
+  // When
+  self.baseCell.elevation = self.baseCell.elevation + 1;
+
+  // Then
+  XCTAssertEqualWithAccuracy(newElevation, finalElevation, 0.001);
+}
+
+- (void)testElevationDidChangeBlockNotCalledWhenElevationIsSetWithoutChangingValue {
+  // Given
+  self.baseCell.elevation = 5;
+  __block BOOL blockCalled = NO;
+  self.baseCell.mdc_elevationDidChangeBlock = ^(MDCBaseCell *object, CGFloat elevation) {
+    blockCalled = YES;
+  };
+
+  // When
+  self.baseCell.elevation = self.baseCell.elevation;
+
+  // Then
+  XCTAssertFalse(blockCalled);
+}
+
 @end
