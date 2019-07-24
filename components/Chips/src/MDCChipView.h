@@ -15,6 +15,7 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKit.h>
 
+#import "MaterialElevation.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialShapes.h"
 
@@ -34,7 +35,7 @@
  be left-aligned, and the accessory view will be right aligned. In the centered mode, all three will
  appear together in the center of the chip.
  */
-@interface MDCChipView : UIControl
+@interface MDCChipView : UIControl <MDCElevatable, MDCElevationOverriding>
 
 /*
  A UIImageView that leads the title label.
@@ -194,6 +195,26 @@
  */
 @property(nonatomic, assign) UIEdgeInsets hitAreaInsets;
 
+/**
+ A block that is invoked when the MDCChipView receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCChipView *_Nonnull chip, UITraitCollection *_Nullable previousTraitCollection);
+
+/**
+ This block is called after a change of the chip view's elevation or one of its view
+ hierarchy ancestors.
+
+ Use this block to respond to elevation changes in the view or its ancestor views.
+
+ @param elevation The @c mdc_currentElevation plus the @c mdc_currentElevation of all ancestor
+ views.
+ @param object This chip view.
+ */
+@property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)
+    (MDCChipView *_Nonnull chip, CGFloat elevation);
+
 /*
  A color used as the chip's @c backgroundColor for @c state.
 
@@ -334,12 +355,5 @@
  */
 - (void)setTitleColor:(nullable UIColor *)titleColor
              forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
-
-/**
- A block that is invoked when the MDCChipView receives a call to @c
- traitCollectionDidChange:. The block is called after the call to the superclass.
- */
-@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
-    (MDCChipView *_Nonnull activityIndicator, UITraitCollection *_Nullable previousTraitCollection);
 
 @end

@@ -125,6 +125,8 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   BOOL _mdc_adjustsFontForContentSizeCategory;
 }
 
+@synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
+
 @dynamic layer;
 
 + (Class)layerClass {
@@ -402,6 +404,10 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   self.layer.shapedBorderWidth = [self borderWidthForState:self.state];
 }
 
+- (CGFloat)mdc_currentElevation {
+  return [self elevationForState:self.state];
+}
+
 - (CGFloat)elevationForState:(UIControlState)state {
   NSNumber *elevation = _elevations[@(state)];
   if (elevation == nil && state != UIControlStateNormal) {
@@ -421,8 +427,9 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
 - (void)updateElevation {
   CGFloat newElevation = [self elevationForState:self.state];
-  if (self.layer.elevation != newElevation) {
+  if (!MDCCGFloatEqual(self.layer.elevation, newElevation)) {
     self.layer.elevation = newElevation;
+    [self mdc_elevationDidChange];
   }
 }
 
