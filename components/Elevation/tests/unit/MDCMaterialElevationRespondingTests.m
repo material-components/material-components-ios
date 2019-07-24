@@ -531,6 +531,7 @@
   [self.view mdc_elevationDidChange];
 
   // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
   XCTAssertEqualWithAccuracy(viewBaseElevation, fakeOverrideElevation, 0.001);
 }
 
