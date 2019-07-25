@@ -1,18 +1,12 @@
-# #develop#
+# 85.9.1
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This patch release fixes a crash in BottomNavigation when a KVO'd property is assigned `nil`.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+## Changes
 
-Replace this text with links to deprecation guides.
-## New features
+### BottomNavigation
 
-Replace this text with example code for each new feature.
-## API changes
-
-## Component changes
+* [Make KVO safe for `nil`. (#8083)](https://github.com/material-components/material-components-ios/commit/5af184f197e8c0d299617a0ed60fed03c0445d6b) (Robert Moore)
 
 ---
 
