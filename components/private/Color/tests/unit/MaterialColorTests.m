@@ -189,14 +189,14 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
 - (void)testP3ColorMergeTest {
   if (@available(iOS 10.0, *)) {
     UIColor *backgroundColor = [UIColor colorWithWhite:(CGFloat)0.3 alpha:(CGFloat)0.8];
-    UIColor *blendColor = [UIColor colorWithDisplayP3Red:(CGFloat)0.1
-                                                   green:(CGFloat)0.2
-                                                    blue:(CGFloat)0.3
-                                                   alpha:(CGFloat)0.4];
-    UIColor *expectedColor = [UIColor colorWithRed:(CGFloat)0.19059444720094854
-                                             green:(CGFloat)0.25595822821963915
-                                              blue:(CGFloat)0.30395004586739971
-                                             alpha:(CGFloat)0.88];
+    UIColor *blendColor = [UIColor colorWithRed:(CGFloat)0.9
+                                          green:(CGFloat)0.82
+                                           blue:(CGFloat)0.1
+                                          alpha:(CGFloat)0.6];
+    UIColor *expectedColor = [UIColor colorWithRed:(CGFloat)0.69130434782608696
+                                             green:(CGFloat)0.63913043478260867
+                                              blue:(CGFloat)0.16956521739130434
+                                             alpha:(CGFloat)0.92000000000000004];
     UIColor *resultColor = [UIColor mdc_blendColor:blendColor withBackgroundColor:backgroundColor];
     XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resultColor
                                                       secondColor:expectedColor]);
