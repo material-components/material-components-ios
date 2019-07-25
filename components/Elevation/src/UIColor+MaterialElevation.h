@@ -16,17 +16,24 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ Provides extension to UIColor for Material Elevation usage.
+ */
 @interface UIColor (MaterialElevation)
 
-/// Returns a color that takes the specified elevation value into account.
-/// @param elevation The elevation to use when resolving the color.
-- (UIColor *)resolvedColorWithElevation:(CGFloat)elevation;
+/**
+ Returns a color that takes the specified elevation value into account.
+ @param elevation The elevation to use when resolving the color.
+ */
+- (UIColor *)mdc_resolvedColorWithElevation:(CGFloat)elevation;
 
-/// Returns a color that takes the specified elevation value and traits into account.
-/// @param traitCollection The traits to use when resolving the color.
-/// @param elevation The elevation to use when resolving the color.
-- (UIColor *)resolvedColorWithTraitCollection:(UITraitCollection *)traitCollection
-                                    elevation:(CGFloat)elevation API_AVAILABLE(ios(13.0));
+/**
+ Returns a color that takes the specified elevation value and traits into account.
+ @param traitCollection The traits to use when resolving the color.
+ @param elevation The elevation to use when resolving the color.
+ */
+- (UIColor *)mdc_resolvedColorWithTraitCollection:(UITraitCollection *)traitCollection
+                                        elevation:(CGFloat)elevation API_AVAILABLE(ios(13.0));
 
 @end
 

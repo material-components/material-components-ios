@@ -14,35 +14,48 @@
 
 #import "UIColor+MaterialElevation.h"
 
+#import <CoreGraphics/CoreGraphics.h>
+
+#import "MaterialMath.h"
 #import "UIColor+MaterialBlending.h"
 
 @implementation UIColor (MaterialElevation)
 
-- (UIColor *)resolvedColorWithTraitCollection:(UITraitCollection *)traitCollection
-                                    elevation:(CGFloat)elevation {
+- (UIColor *)mdc_resolvedColorWithTraitCollection:(UITraitCollection *)traitCollection
+                                        elevation:(CGFloat)elevation {
 #if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     UIColor *resolvedColor = [self resolvedColorWithTraitCollection:traitCollection];
     if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
-      return [resolvedColor resolvedColorWithElevation:elevation];
+      return [resolvedColor mdc_resolvedColorWithElevation:elevation];
     } else {
       return resolvedColor;
     }
   } else {
-    return [self resolvedColorWithElevation:elevation];
+    return [self mdc_resolvedColorWithElevation:elevation];
   }
 #else
-  return [self resolvedColorWithElevation:elevation];
+  return [self mdc_resolvedColorWithElevation:elevation];
 #endif
 }
 
-- (UIColor *)resolvedColorWithElevation:(CGFloat)elevation {
+- (UIColor *)mdc_resolvedColorWithElevation:(CGFloat)elevation {
   UIColor *overlayColor = UIColor.whiteColor;
-  return [self resolvedColorWithElevation:elevation overlayColor:overlayColor];
+  return [self mdc_resolvedColorWithElevation:elevation overlayColor:overlayColor];
 }
 
-- (UIColor *)resolvedColorWithElevation:(CGFloat)elevation overlayColor:(UIColor *)overlayColor {
-  CGFloat alphaValue = 4.5 * log(elevation + 1) + 2;
+- (UIColor *)mdc_resolvedColorWithElevation:(CGFloat)elevation
+                               overlayColor:(UIColor *)overlayColor {
+  if (CGColorGetPattern(self.CGColor)) {
+    [NSException
+         raise:NSGenericException
+        format:@"Pattern-Base Color %@ is not supported in %@", self, NSStringFromSelector(_cmd)];
+  }
+  elevation = MAX(elevation, 0);
+  CGFloat alphaValue = 0;
+  if (!MDCCGFloatEqual(elevation, 0)) {
+    alphaValue = 4.5 * log(elevation + 1) + 2;
+  }
   return [UIColor mdc_blendColor:[overlayColor colorWithAlphaComponent:alphaValue * 0.01]
              withBackgroundColor:self];
 }

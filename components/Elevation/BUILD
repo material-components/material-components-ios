@@ -32,6 +32,7 @@ mdc_public_objc_library(
     ],
     deps = [
         "//components/private/Color",
+        "//components/private/Math",
     ],
 )
 

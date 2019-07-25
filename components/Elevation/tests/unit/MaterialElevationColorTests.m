@@ -18,27 +18,169 @@
 #import "MaterialMath.h"
 #import "UIColor+MaterialDynamic.h"
 
+/** Returns a generated image of the given color and bounds. */
+static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
+  UIGraphicsBeginImageContext(bounds.size);
+  [color setFill];
+  UIRectFill(bounds);
+  UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+  UIGraphicsEndImageContext();
+  return image;
+}
+
 @interface MaterialElevationColorTests : XCTestCase
+
+@property(nonatomic, readwrite) UIColor *rgbColor;
+@property(nonatomic, readwrite) UIColor *greyScaleColor;
+@property(nonatomic, readwrite) UIColor *p3DisplayColor;
+@property(nonatomic, readwrite) UIColor *patternColor;
 
 @end
 
 @implementation MaterialElevationColorTests
 
-- (void)testResolvedColorWithElevation {
+- (void)setUp {
+  [super setUp];
+
+  self.rgbColor = [UIColor colorWithRed:(CGFloat)0.9
+                                  green:(CGFloat)0.8
+                                   blue:(CGFloat)0.6
+                                  alpha:(CGFloat)0.6];
+  self.greyScaleColor = [UIColor colorWithRed:(CGFloat)0.9
+                                        green:(CGFloat)0.9
+                                         blue:(CGFloat)0.9
+                                        alpha:(CGFloat)0.6];
+  if (@available(iOS 10.0, *)) {
+    self.p3DisplayColor = [UIColor colorWithDisplayP3Red:0.8 green:0.7 blue:0.5 alpha:0.4];
+  } else {
+    self.p3DisplayColor = nil;
+  }
+}
+
+- (void)tearDown {
+  self.rgbColor = nil;
+  self.greyScaleColor = nil;
+  self.p3DisplayColor = nil;
+
+  [super tearDown];
+}
+
+- (void)testResolvedColorWithZeroElevation {
   // Given
-  CGFloat elevation = (CGFloat)10;
-  UIColor *color = UIColor.blackColor;
+  CGFloat elevation = (CGFloat)0;
 
   // When
-  UIColor *resolvedColor = [color resolvedColorWithElevation:elevation];
-  UIColor *expectedColor = [UIColor colorWithRed:(CGFloat)0.1279052872759267
-                                           green:(CGFloat)0.1279052872759267
-                                            blue:(CGFloat)0.1279052872759267
-                                           alpha:(CGFloat)1];
+  UIColor *resolvedRGBColor = [self.rgbColor mdc_resolvedColorWithElevation:elevation];
+  UIColor *resolvedGreyScaleColor = [self.greyScaleColor mdc_resolvedColorWithElevation:elevation];
+  UIColor *resolvedP3DisplayColor = [self.p3DisplayColor mdc_resolvedColorWithElevation:elevation];
 
   // Then
-  XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resolvedColor
-                                                    secondColor:expectedColor]);
+  UIColor *expectedRGBColor = self.rgbColor;
+  UIColor *expectedGreyScaleColor = self.greyScaleColor;
+  UIColor *expectedP3Display = self.p3DisplayColor;
+  XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resolvedRGBColor
+                                                    secondColor:expectedRGBColor],
+                @"(%@) is not equal to (%@)", resolvedRGBColor, expectedRGBColor);
+  XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resolvedGreyScaleColor
+                                                    secondColor:expectedGreyScaleColor],
+                @"(%@) is not equal to (%@)", resolvedGreyScaleColor, expectedGreyScaleColor);
+  XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resolvedP3DisplayColor
+                                                    secondColor:expectedP3Display],
+                @"(%@) is not equal to (%@)", resolvedP3DisplayColor, expectedP3Display);
+}
+
+- (void)testResolvedColorWithLowElevation {
+  // Given
+  CGFloat elevation = (CGFloat)10;
+
+  // When
+  UIColor *resolvedRGBColor = [self.rgbColor mdc_resolvedColorWithElevation:elevation];
+  UIColor *resolvedGreyScaleColor = [self.greyScaleColor mdc_resolvedColorWithElevation:elevation];
+  UIColor *resolvedP3DisplayColor = [self.p3DisplayColor mdc_resolvedColorWithElevation:elevation];
+
+  // Then
+  UIColor *expectedRGBColor = [UIColor colorWithRed:(CGFloat)0.91964261807423053
+                                              green:(CGFloat)0.83928523614846129
+                                               blue:(CGFloat)0.67857047229692247
+                                              alpha:(CGFloat)0.65116211491037057];
+  ;
+  UIColor *expectedGreyScaleColor = [UIColor colorWithRed:(CGFloat)0.91964261807423053
+                                                    green:(CGFloat)0.91964261807423053
+                                                     blue:(CGFloat)0.91964261807423053
+                                                    alpha:(CGFloat)0.65116211491037057];
+  ;
+  UIColor *expectedP3Display = [UIColor colorWithRed:(CGFloat)0.86849367970437186
+                                               green:(CGFloat)0.77713910118968843
+                                                blue:(CGFloat)0.61272176809458923
+                                               alpha:(CGFloat)0.47674317236555602];
+  XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resolvedRGBColor
+                                                    secondColor:expectedRGBColor],
+                @"(%@) is not equal to (%@)", resolvedRGBColor, expectedRGBColor);
+  XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resolvedGreyScaleColor
+                                                    secondColor:expectedGreyScaleColor],
+                @"(%@) is not equal to (%@)", resolvedGreyScaleColor, expectedGreyScaleColor);
+  XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resolvedP3DisplayColor
+                                                    secondColor:expectedP3Display],
+                @"(%@) is not equal to (%@)", resolvedP3DisplayColor, expectedP3Display);
+}
+
+- (void)testResolvedColorWithHighElevation {
+  // Given
+  CGFloat elevation = (CGFloat)10000;
+
+  // When
+  UIColor *resolvedRGBColor = [self.rgbColor mdc_resolvedColorWithElevation:elevation];
+  UIColor *resolvedGreyScaleColor = [self.greyScaleColor mdc_resolvedColorWithElevation:elevation];
+  UIColor *resolvedP3DisplayColor = [self.p3DisplayColor mdc_resolvedColorWithElevation:elevation];
+
+  // Then
+  UIColor *expectedRGBColor = [UIColor colorWithRed:(CGFloat)0.95614843571155961
+                                              green:(CGFloat)0.91229687142311943
+                                               blue:(CGFloat)0.82459374284623876
+                                              alpha:(CGFloat)0.77378792660557727];
+  ;
+  UIColor *expectedGreyScaleColor = [UIColor colorWithRed:(CGFloat)0.95614843571155961
+                                                    green:(CGFloat)0.95614843571155961
+                                                     blue:(CGFloat)0.95614843571155961
+                                                    alpha:(CGFloat)0.77378792660557727];
+  ;
+  UIColor *expectedP3Display = [UIColor colorWithRed:(CGFloat)0.9384637763413608
+                                               green:(CGFloat)0.89571590108272103
+                                                blue:(CGFloat)0.81877950928077237
+                                               alpha:(CGFloat)0.66068188990836596];
+  XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resolvedRGBColor
+                                                    secondColor:expectedRGBColor],
+                @"(%@) is not equal to (%@)", resolvedRGBColor, expectedRGBColor);
+  XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resolvedGreyScaleColor
+                                                    secondColor:expectedGreyScaleColor],
+                @"(%@) is not equal to (%@)", resolvedGreyScaleColor, expectedGreyScaleColor);
+  XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resolvedP3DisplayColor
+                                                    secondColor:expectedP3Display],
+                @"(%@) is not equal to (%@)", resolvedP3DisplayColor, expectedP3Display);
+}
+
+- (void)testResolvedColorWithNegativeElevation {
+  // Given
+  CGFloat elevation = (CGFloat)-10;
+
+  // When
+  UIColor *resolvedRGBColor = [self.rgbColor mdc_resolvedColorWithElevation:elevation];
+  UIColor *resolvedGreyScaleColor = [self.greyScaleColor mdc_resolvedColorWithElevation:elevation];
+  UIColor *resolvedP3DisplayColor = [self.p3DisplayColor mdc_resolvedColorWithElevation:elevation];
+
+  // Then
+  UIColor *expectedRGBColor = self.rgbColor;
+  UIColor *expectedGreyScaleColor = self.greyScaleColor;
+  UIColor *expectedP3Display = self.p3DisplayColor;
+  XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resolvedRGBColor
+                                                    secondColor:expectedRGBColor],
+                @"(%@) is not equal to (%@)", resolvedRGBColor, expectedRGBColor);
+  XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resolvedGreyScaleColor
+                                                    secondColor:expectedGreyScaleColor],
+                @"(%@) is not equal to (%@)", resolvedGreyScaleColor, expectedGreyScaleColor);
+  XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resolvedP3DisplayColor
+                                                    secondColor:expectedP3Display],
+                @"(%@) is not equal to (%@)", resolvedP3DisplayColor, expectedP3Display);
 }
 
 - (void)testResolvedColorWithElevationForDynamicColorOniOS13AndAbove {
@@ -54,13 +196,14 @@
     // When
     UITraitCollection *traitCollection =
         [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
-    UIColor *resolvedColor = [dynamicColor resolvedColorWithTraitCollection:traitCollection
-                                                                  elevation:elevation];
+    UIColor *resolvedColor = [dynamicColor mdc_resolvedColorWithTraitCollection:traitCollection
+                                                                      elevation:elevation];
 
     // Then
-    UIColor *expectedColor = [darkColor resolvedColorWithElevation:elevation];
+    UIColor *expectedColor = [darkColor mdc_resolvedColorWithElevation:elevation];
     XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resolvedColor
-                                                      secondColor:expectedColor]);
+                                                      secondColor:expectedColor],
+                  @"(%@) is not equal to (%@)", resolvedColor, expectedColor);
   }
 #endif
 }
@@ -75,15 +218,28 @@
     // When
     UITraitCollection *traitCollection =
         [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
-    UIColor *resolvedColor = [staticColor resolvedColorWithTraitCollection:traitCollection
-                                                                 elevation:elevation];
+    UIColor *resolvedColor = [staticColor mdc_resolvedColorWithTraitCollection:traitCollection
+                                                                     elevation:elevation];
 
     // Then
-    UIColor *expectedColor = [staticColor resolvedColorWithElevation:elevation];
+    UIColor *expectedColor = [staticColor mdc_resolvedColorWithElevation:elevation];
     XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resolvedColor
-                                                      secondColor:expectedColor]);
+                                                      secondColor:expectedColor],
+                  @"(%@) is not equal to (%@)", resolvedColor, expectedColor);
   }
 #endif
+}
+
+- (void)testResolvedColorWithElevationForPatternBasedColor {
+  // Given
+  UIImage *patternImage = fakeImageWithColorAndSize(UIColor.blueColor, CGRectMake(0, 0, 100, 100));
+  UIColor *patternColor = [UIColor colorWithPatternImage:patternImage];
+  CGFloat elevation = (CGFloat)10;
+
+  // When/Then
+  XCTAssertThrowsSpecificNamed(
+      [patternColor mdc_resolvedColorWithElevation:elevation], NSException, NSGenericException,
+      @"Expected exception when resolving a Pattern-Based color with elevation");
 }
 
 - (BOOL)compareColorsWithFloatPrecisionFirstColor:(UIColor *)firstColor
