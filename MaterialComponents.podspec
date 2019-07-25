@@ -245,6 +245,7 @@ Pod::Spec.new do |mdc|
     component.dependency "MDFInternationalization"
     component.dependency "MaterialComponents/Buttons"
     component.dependency "MaterialComponents/NavigationBar"
+    component.dependency "MaterialComponents/ShadowLayer"
     component.dependency "MaterialComponents/private/Math"
 
     component.test_spec 'UnitTests' do |unit_tests|

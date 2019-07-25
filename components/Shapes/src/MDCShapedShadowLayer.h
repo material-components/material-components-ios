@@ -78,4 +78,6 @@
  */
 @property(nonatomic, strong, nonnull) CAShapeLayer *colorLayer;
 
+@property(nonatomic, assign, nullable) CGPathRef path;
+
 @end

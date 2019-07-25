@@ -14,9 +14,10 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialShadowLayer.h"
 #import "MDCBottomAppBarView.h"
 
-@interface MDCBottomAppBarLayer : CAShapeLayer
+@interface MDCBottomAppBarLayer : MDCShapedShadowLayer
 
 - (CGPathRef)pathFromRect:(CGRect)rect
            floatingButton:(MDCFloatingButton *)floatingButton

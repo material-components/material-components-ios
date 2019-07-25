@@ -38,18 +38,18 @@
 
 + (instancetype)layer {
   MDCBottomAppBarLayer *layer = [super layer];
-  layer.fillColor = [UIColor whiteColor].CGColor;
-  layer.shadowColor = [UIColor blackColor].CGColor;
+  layer.colorLayer.fillColor = [UIColor whiteColor].CGColor;
+  layer.colorLayer.shadowColor = [UIColor blackColor].CGColor;
 
   // TODO(#2018): These shadow attributes will be updated once specs are finalized.
   CGFloat scale = UIScreen.mainScreen.scale;
-  layer.shadowOpacity = (float)0.4;
-  layer.shadowRadius = 4;
-  layer.shadowOffset = CGSizeMake(0, 2);
-  layer.needsDisplayOnBoundsChange = YES;
-  layer.contentsScale = scale;
-  layer.rasterizationScale = scale;
-  layer.shouldRasterize = YES;
+  layer.colorLayer.shadowOpacity = (float)0.4;
+  layer.colorLayer.shadowRadius = 4;
+  layer.colorLayer.shadowOffset = CGSizeMake(0, 2);
+  layer.colorLayer.needsDisplayOnBoundsChange = YES;
+  layer.colorLayer.contentsScale = scale;
+  layer.colorLayer.rasterizationScale = scale;
+  layer.colorLayer.shouldRasterize = YES;
   return layer;
 }
 

@@ -255,8 +255,8 @@ static const int kMDCButtonAnimationDuration = 200;
       [self getFloatingButtonCenterPositionForAppBarWidth:CGRectGetWidth(self.bounds)];
   [self renderPathBasedOnFloatingButtonVisibitlityAnimated:NO];
 
-  self.bottomBarLayer.fillColor = self.barTintColor.CGColor;
-  self.bottomBarLayer.shadowColor = self.shadowColor.CGColor;
+  self.bottomBarLayer.colorLayer.fillColor = self.barTintColor.CGColor;
+  self.bottomBarLayer.colorLayer.shadowColor = self.shadowColor.CGColor;
 }
 
 - (UIEdgeInsets)mdc_safeAreaInsets {
@@ -391,7 +391,7 @@ static const int kMDCButtonAnimationDuration = 200;
 
 - (void)setBarTintColor:(UIColor *)barTintColor {
   _barTintColor = barTintColor;
-  _bottomBarLayer.fillColor = barTintColor.CGColor;
+  _bottomBarLayer.colorLayer.fillColor = barTintColor.CGColor;
 }
 
 - (void)setLeadingBarItemsTintColor:(UIColor *)leadingBarItemsTintColor {
