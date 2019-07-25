@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import "MaterialColor.h"
 #import "MaterialRipple.h"
 #import "MaterialSnapshot.h"
-#import "UIColor+MaterialDynamic.h"
 
 /**
  Creates a fake MDCRippleView that has its traitCollection overridden.

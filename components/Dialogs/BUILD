@@ -174,6 +174,7 @@ mdc_snapshot_objc_library(
         ":Dialogs",
         ":Theming",
         ":private",
+        "//components/private/Color",
         "//components/schemes/Color",
         "//components/schemes/Container",
         "//components/schemes/Typography",
