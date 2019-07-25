@@ -284,11 +284,8 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   [self updatePreferredSheetHeight];
 }
 
-- (MDCShadowElevation)elevation {
-  return self.sheetView.elevation;
-}
-
 - (void)setElevation:(MDCShadowElevation)elevation {
+  _elevation = elevation;
   self.sheetView.elevation = elevation;
 }
 

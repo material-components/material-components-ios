@@ -19,5 +19,63 @@
 
 #import "MaterialSnapshot.h"
 
+/** Snapshot test for @c MDCBottomSheetController. */
+@interface MDCBottomSheetSnapshotTests : MDCSnapshotTestCase
+@property(nonatomic, strong, nullable) MDCBottomSheetController *bottomSheet;
+@end
 
+@implementation MDCBottomSheetSnapshotTests
+
+- (void)setUp {
+  [super setUp];
+
+  // Uncomment below to recreate all the goldens (or add the following line to the specific
+  // test you wish to recreate the golden for).
+  //  self.recordMode = YES;
+
+  UIViewController *fakeViewController = [[UIViewController alloc] init];
+  fakeViewController.view.backgroundColor = UIColor.yellowColor;
+  self.bottomSheet = [[MDCBottomSheetController alloc] initWithContentViewController:fakeViewController];
+}
+
+- (void)tearDown {
+  self.bottomSheet = nil;
+
+  [super tearDown];
+}
+
+- (void)generateAndVerifySnapshot {
+  UIView *backgroundView = [self.bottomSheet.view mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(50, 50, 50, 50)];
+  [self snapshotVerifyView:backgroundView];
+}
+
+- (void)testBottomSheetTallAndNarrow {
+  // Given
+  self.bottomSheet.view.bounds = CGRectMake(0, 0, 100, 500);
+  [self.bottomSheet.view layoutIfNeeded];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testBottomSheetWideAndShort {
+  // Given
+  self.bottomSheet.view.bounds = CGRectMake(0, 0, 500, 100);
+  [self.bottomSheet.view layoutIfNeeded];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testBottomSheetWithCustomElevation {
+  // Given
+  self.bottomSheet.view.bounds = CGRectMake(0, 0, 375, 500);
+  self.bottomSheet.elevation = 100;
+  [self.bottomSheet.view layoutIfNeeded];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
+@end
 
