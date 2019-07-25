@@ -101,6 +101,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 @implementation MDCButton
 
+@synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
 @dynamic layer;
 
 + (Class)layerClass {
@@ -156,6 +157,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   _fonts = [NSMutableDictionary dictionary];
   _accessibilityTraitsIncludesButton = YES;
   _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
+  _mdc_overrideBaseElevation = -1;
 
   if (!_backgroundColors) {
     // _backgroundColors may have already been initialized by setting the backgroundColor setter.
@@ -581,13 +583,14 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)animateButtonToHeightForState:(UIControlState)state {
   CGFloat newElevation = [self elevationForState:state];
-  if (self.layer.elevation == newElevation) {
+  if (MDCCGFloatEqual(self.layer.elevation, newElevation)) {
     return;
   }
   [CATransaction begin];
   [CATransaction setAnimationDuration:MDCButtonAnimationDuration];
   self.layer.elevation = newElevation;
   [CATransaction commit];
+  [self mdc_elevationDidChange];
 }
 
 #pragma mark - BackgroundColor
@@ -670,6 +673,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
     return;
   }
   self.layer.elevation = newElevation;
+  [self mdc_elevationDidChange];
 
   // The elevation of the normal state controls whether this button is flat or not, and flat buttons
   // have different background color requirements than raised buttons.
@@ -784,6 +788,12 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
     _fonts[@(storageState)] = font;
     [self updateTitleFont];
   }
+}
+
+#pragma mark - MaterialElevation
+
+- (CGFloat)mdc_currentElevation {
+  return [self elevationForState:self.state];
 }
 
 #pragma mark - Private methods
