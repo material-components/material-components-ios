@@ -21,8 +21,10 @@ typedef void (^MDCInkCompletionBlock)(void);
 
 /** Ink styles. */
 typedef NS_ENUM(NSInteger, MDCInkStyle) {
-  MDCInkStyleBounded,  /** Ink is clipped to the view's bounds. */
-  MDCInkStyleUnbounded /** Ink is not clipped to the view's bounds. */
+  /** Ink is clipped to the view's bounds. */
+  MDCInkStyleBounded,
+  /** Ink is not clipped to the view's bounds. */
+  MDCInkStyleUnbounded
 };
 
 /**
