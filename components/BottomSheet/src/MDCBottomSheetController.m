@@ -59,7 +59,6 @@
   [self addChildViewController:self.contentViewController];
   [self.view addSubview:self.contentViewController.view];
   [self.contentViewController didMoveToParentViewController:self];
-  NSLog(@"Elevation = %f", self.view.elevation);
 }
 
 - (void)viewWillAppear:(BOOL)animated {

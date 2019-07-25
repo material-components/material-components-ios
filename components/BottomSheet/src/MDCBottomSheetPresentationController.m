@@ -124,7 +124,7 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   self.sheetView.delegate = self;
   self.sheetView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
 
-  //[containerView addSubview:_dimmingView];
+  [containerView addSubview:_dimmingView];
   [containerView addSubview:self.sheetView];
 
   [self updatePreferredSheetHeight];
