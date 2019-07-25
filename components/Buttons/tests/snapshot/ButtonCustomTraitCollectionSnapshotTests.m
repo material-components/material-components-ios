@@ -17,8 +17,8 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKit.h>
 
-#import "../../../private/Color/src/UIColor+MaterialDynamic.h"
 #import "MaterialButtons.h"
+#import "MaterialColor.h"
 #import "MaterialTypography.h"
 
 /** A @c MDCButton test fake to override the @c traitCollection to test for dynamic type. */

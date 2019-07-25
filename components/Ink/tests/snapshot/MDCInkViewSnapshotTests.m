@@ -14,8 +14,8 @@
 
 #import "MaterialSnapshot.h"
 
+#import "MaterialColor.h"
 #import "MaterialInk.h"
-#import "UIColor+MaterialDynamic.h"
 
 /**
  Creates a fake MDCInkView that has its traitCollection overridden.
