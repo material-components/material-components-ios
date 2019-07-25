@@ -52,7 +52,8 @@
                                                              defaultColor:lightColor];
 
     // When
-    UITraitCollection *traitCollection = [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
+    UITraitCollection *traitCollection =
+        [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
     UIColor *resolvedColor = [dynamicColor resolvedColorWithTraitCollection:traitCollection
                                                                andElevation:elevation];
 
@@ -72,9 +73,10 @@
     UIColor *staticColor = UIColor.blackColor;
 
     // When
-    UITraitCollection *traitCollection = [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
+    UITraitCollection *traitCollection =
+        [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
     UIColor *resolvedColor = [staticColor resolvedColorWithTraitCollection:traitCollection
-                                                               andElevation:elevation];
+                                                              andElevation:elevation];
 
     // Then
     UIColor *expectedColor = [staticColor resolvedColorWithElevation:elevation];

@@ -38,12 +38,10 @@
 
 - (UIColor *)resolvedColorWithElevation:(CGFloat)elevation {
   UIColor *overlayColor = UIColor.whiteColor;
-  return [self resolvedColorWithElevation:elevation
-                             overlayColor:overlayColor];
+  return [self resolvedColorWithElevation:elevation overlayColor:overlayColor];
 }
 
-- (UIColor *)resolvedColorWithElevation:(CGFloat)elevation
-                           overlayColor:(UIColor *)overlayColor {
+- (UIColor *)resolvedColorWithElevation:(CGFloat)elevation overlayColor:(UIColor *)overlayColor {
   CGFloat alphaValue = 4.5 * log(elevation + 1) + 2;
   return [UIColor mdc_blendColor:[overlayColor colorWithAlphaComponent:alphaValue * 0.01]
              withBackgroundColor:self];
