@@ -566,15 +566,14 @@
   XCTAssertEqual(passedTraitCollection, testTraitCollection);
 }
 
-#pragma mark - MDCElevation
+#pragma mark - MaterialElevation
 
-- (void)testCurrentElevationMatchesElevationWhenElevationChanges {
-  // When
-  self.bottomNavBar.elevation = MDCShadowElevationQuickEntryResting;
+- (void)testDefaultValueForOverrideBaseElevationIsNegative {
+  // Given
+  MDCBottomNavigationBar *bottomNavigationBar = [[MDCBottomNavigationBar alloc] init];
 
   // Then
-  XCTAssertEqualWithAccuracy(self.bottomNavBar.mdc_currentElevation, self.bottomNavBar.elevation,
-                             0.001);
+  XCTAssertLessThan(bottomNavigationBar.mdc_overrideBaseElevation, 0);
 }
 
 - (void)testSettingOverrideBaseElevationReturnsSetValue {
@@ -586,6 +585,15 @@
 
   // Then
   XCTAssertEqualWithAccuracy(self.bottomNavBar.mdc_overrideBaseElevation, expectedBaseElevation,
+                             0.001);
+}
+
+- (void)testCurrentElevationMatchesElevationWhenElevationChanges {
+  // When
+  self.bottomNavBar.elevation = MDCShadowElevationQuickEntryResting;
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.bottomNavBar.mdc_currentElevation, self.bottomNavBar.elevation,
                              0.001);
 }
 
