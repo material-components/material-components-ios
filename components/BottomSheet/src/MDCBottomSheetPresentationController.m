@@ -121,9 +121,8 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
                                                      scrollView:scrollView];
   self.sheetView.delegate = self;
   self.sheetView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-  self.sheetView.elevation = self.elevation;
 
-  [containerView addSubview:_dimmingView];
+  //[containerView addSubview:_dimmingView];
   [containerView addSubview:self.sheetView];
 
   [self updatePreferredSheetHeight];
@@ -285,8 +284,12 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   [self updatePreferredSheetHeight];
 }
 
+- (MDCShadowElevation)elevation {
+  return self.sheetView.elevation;
+}
+
 - (void)setElevation:(MDCShadowElevation)elevation {
-  _elevation = elevation;
+  self.sheetView.elevation = elevation;
 }
 
 #pragma mark - MDCSheetContainerViewDelegate

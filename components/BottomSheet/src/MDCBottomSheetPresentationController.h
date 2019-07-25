@@ -136,7 +136,7 @@
 @property(nonatomic, weak, nullable) id<MDCBottomSheetPresentationControllerDelegate> delegate;
 
 /**
- The elevation of the bottom sheet. Defaults to @c MDCShadowElevationModalBottomSheet.
+ The elevation of the bottom sheet. Defaults to @c MDCShadowElevationNone.
  */
 @property(nonatomic, assign) MDCShadowElevation elevation;
 

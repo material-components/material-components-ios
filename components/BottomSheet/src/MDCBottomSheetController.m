@@ -31,6 +31,7 @@
 
 - (void)loadView {
   self.view = [[MDCShapedView alloc] initWithFrame:CGRectZero];
+  self.view.elevation = self.elevation;
 }
 
 - (nonnull instancetype)initWithContentViewController:
@@ -58,6 +59,7 @@
   [self addChildViewController:self.contentViewController];
   [self.view addSubview:self.contentViewController.view];
   [self.contentViewController didMoveToParentViewController:self];
+  NSLog(@"Elevation = %f", self.view.elevation);
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -189,7 +191,6 @@
 - (void)setElevation:(MDCShadowElevation)elevation {
   _elevation = elevation;
   self.view.elevation = elevation;
-  self.mdc_bottomSheetPresentationController.elevation = elevation;
 }
 
 /* Disable setter. Always use internal transition controller */

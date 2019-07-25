@@ -396,8 +396,11 @@ static const CGFloat kSheetBounceBuffer = 150;
   }
 }
 
+- (MDCShadowElevation)elevation {
+  return self.sheet.elevation;
+}
+
 - (void)setElevation:(MDCShadowElevation)elevation {
-  _elevation = elevation;
   self.sheet.elevation = elevation;
 }
 
