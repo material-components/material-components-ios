@@ -68,6 +68,7 @@
   // Given
   CGFloat fakeElevation = 7;
   self.presentationController = self.bottomSheet.mdc_bottomSheetPresentationController;
+  [self.presentationController presentationTransitionWillBegin];
 
   // When
   self.presentationController.elevation = fakeElevation;
