@@ -71,6 +71,7 @@ mdc_objc_library(
     deps = [
         ":BottomSheet",
         ":privateHeaders",
+        "//components/ShadowElevations",
     ],
 )
 
