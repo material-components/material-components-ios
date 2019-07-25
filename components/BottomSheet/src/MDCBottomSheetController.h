@@ -14,8 +14,8 @@
 
 #import <UIKit/UIKit.h>
 #import "MDCSheetState.h"
-#import "MaterialShapes.h"
 #import "MaterialShadowElevations.h"
+#import "MaterialShapes.h"
 
 @protocol MDCBottomSheetControllerDelegate;
 

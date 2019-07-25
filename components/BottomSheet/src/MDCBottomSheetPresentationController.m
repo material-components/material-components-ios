@@ -64,8 +64,10 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 
 @synthesize delegate;
 
-- (instancetype)initWithPresentedViewController:(UIViewController *)presentedViewController presentingViewController:(UIViewController *)presentingViewController {
-  self = [super initWithPresentedViewController:presentedViewController presentingViewController:presentingViewController];
+- (instancetype)initWithPresentedViewController:(UIViewController *)presentedViewController
+                       presentingViewController:(UIViewController *)presentingViewController {
+  self = [super initWithPresentedViewController:presentedViewController
+                       presentingViewController:presentingViewController];
   if (self) {
     _elevation = MDCShadowElevationModalBottomSheet;
   }

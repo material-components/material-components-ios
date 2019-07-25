@@ -35,7 +35,8 @@
 
   UIViewController *fakeViewController = [[UIViewController alloc] init];
   fakeViewController.view.backgroundColor = UIColor.yellowColor;
-  self.bottomSheet = [[MDCBottomSheetController alloc] initWithContentViewController:fakeViewController];
+  self.bottomSheet =
+      [[MDCBottomSheetController alloc] initWithContentViewController:fakeViewController];
 }
 
 - (void)tearDown {
@@ -45,7 +46,8 @@
 }
 
 - (void)generateAndVerifySnapshot {
-  UIView *backgroundView = [self.bottomSheet.view mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(50, 50, 50, 50)];
+  UIView *backgroundView =
+      [self.bottomSheet.view mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(50, 50, 50, 50)];
   [self snapshotVerifyView:backgroundView];
 }
 
@@ -78,4 +80,3 @@
 }
 
 @end
-

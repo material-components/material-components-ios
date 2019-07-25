@@ -54,7 +54,8 @@
   self.presentationController = self.bottomSheet.mdc_bottomSheetPresentationController;
 
   // Then
-  XCTAssertEqualWithAccuracy(self.presentationController.elevation, MDCShadowElevationModalBottomSheet, 0.001);
+  XCTAssertEqualWithAccuracy(self.presentationController.elevation,
+                             MDCShadowElevationModalBottomSheet, 0.001);
 }
 
 - (void)testCustomElevaiton {
