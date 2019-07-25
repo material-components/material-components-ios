@@ -31,7 +31,7 @@
 
 - (void)testDefaultElevation {
   // Given
-  MDCSheetContainerView *sheetContainer = [[MDCSheetContainerView alloc] init];
+  MDCSheetContainerView *sheetContainer = [[MDCSheetContainerView alloc] initWithFrame:CGRectZero contentView:[[UIView alloc] init] scrollView:[[UIScrollView alloc] init]];
 
   // Then
   XCTAssertEqualWithAccuracy(sheetContainer.elevation, MDCShadowElevationNone, 0.001);
@@ -39,7 +39,7 @@
 
 - (void)testCustomElevation {
   // Given
-  MDCSheetContainerView *sheetContainer = [[MDCSheetContainerView alloc] init];
+    MDCSheetContainerView *sheetContainer = [[MDCSheetContainerView alloc] initWithFrame:CGRectZero contentView:[[UIView alloc] init] scrollView:[[UIScrollView alloc] init]];
 
   // When
   sheetContainer.elevation = MDCShadowElevationModalBottomSheet;
