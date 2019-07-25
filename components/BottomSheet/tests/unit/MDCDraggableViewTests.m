@@ -16,7 +16,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialElevation.h"
+#import "MaterialShadowElevations.h"
 
 /** Tests for @c MDCDraggableView. */
 @interface MDCDraggableViewTests : XCTestCase

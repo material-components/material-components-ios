@@ -17,7 +17,7 @@
 #import <XCTest/XCTest.h>
 
 #import "../../src/private/MDCDraggableView.h"
-#import "MaterialElevation.h"
+#import "MaterialShadowElevations.h"
 
 @interface MDCSheetContainerView (ElevationTesting)
 @property(nonatomic) MDCDraggableView *sheet;
