@@ -17,6 +17,12 @@
 #import <XCTest/XCTest.h>
 
 #import "MaterialShadowElevations.h"
+#import "../../src/private/MDCSheetContainerView.h"
+
+/** Used to test the elevation @c MDCBottomSheetPresentationController and it's @c sheetView. */
+@interface MDCBottomSheetPresentationController (MDCElevationTesting)
+@property(nonatomic, strong) MDCSheetContainerView *sheetView;
+@end
 
 @interface MDCBottomSheetCustomizationTests : XCTestCase
 
@@ -68,6 +74,7 @@
 
   // Then
   XCTAssertEqualWithAccuracy(self.presentationController.elevation, fakeElevation, 0.001);
+  XCTAssertEqualWithAccuracy(self.presentationController.sheetView.elevation, fakeElevation, 0.001);
 }
 
 // Test that the presentation controller for a bottom sheet can have its scrim color set.

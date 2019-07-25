@@ -27,7 +27,7 @@
 - (void)setUp {
   [super setUp];
 
-  self.bottomSheet = [[MDCBottomSheetController alloc] init];
+  self.bottomSheet = [[MDCBottomSheetController alloc] initWithContentViewController:[[UIViewController alloc] init]];
 }
 
 - (void)tearDown {
@@ -53,12 +53,18 @@
 - (void)testCustomShadowElevation {
   // Given
   CGFloat fakeElevation = 3;
+  [self.bottomSheet loadView];
+  MDCShapedView *view = nil;
+  if ([self.bottomSheet.view isKindOfClass:[MDCShapedView class]]) {
+    view = (MDCShapedView *)self.bottomSheet.view;
+  }
 
   // When
   self.bottomSheet.elevation = fakeElevation;
 
   // Then
   XCTAssertEqualWithAccuracy(self.bottomSheet.elevation, fakeElevation, 0.001);
+  XCTAssertEqualWithAccuracy(view.elevation, fakeElevation, 0.001);
 }
 
 - (void)testBottonSheetControllerTraitCollectionDidChangeBlockCalledWithExpectedParameters {
