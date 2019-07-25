@@ -16,6 +16,8 @@
 
 #import <XCTest/XCTest.h>
 
+#import "MaterialShadowElevations.h"
+
 @interface MDCBottomSheetCustomizationTests : XCTestCase
 
 /** A dummy content view controller for presenting within the bottom sheet controller. */
@@ -45,6 +47,26 @@
   self.dummyContentViewController = nil;
 
   [super tearDown];
+}
+
+- (void)testDefaultElevationForPresentationController {
+  // Given
+  self.presentationController = self.bottomSheet.mdc_bottomSheetPresentationController;
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.presentationController.elevation, MDCShadowElevationModalBottomSheet, 0.001);
+}
+
+- (void)testCustomElevaiton {
+  // Given
+  CGFloat fakeElevation = 7;
+  self.presentationController = self.bottomSheet.mdc_bottomSheetPresentationController;
+
+  // When
+  self.presentationController.elevation = fakeElevation;
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.presentationController.elevation, fakeElevation, 0.001);
 }
 
 // Test that the presentation controller for a bottom sheet can have its scrim color set.
