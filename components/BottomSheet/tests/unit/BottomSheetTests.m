@@ -27,7 +27,8 @@
 - (void)setUp {
   [super setUp];
 
-  self.bottomSheet = [[MDCBottomSheetController alloc] initWithContentViewController:[[UIViewController alloc] init]];
+  self.bottomSheet = [[MDCBottomSheetController alloc]
+      initWithContentViewController:[[UIViewController alloc] init]];
 }
 
 - (void)tearDown {

@@ -16,8 +16,8 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialShadowElevations.h"
 #import "../../src/private/MDCSheetContainerView.h"
+#import "MaterialShadowElevations.h"
 
 /** Used to test the elevation @c MDCBottomSheetPresentationController and it's @c sheetView. */
 @interface MDCBottomSheetPresentationController (MDCElevationTesting)

@@ -16,8 +16,8 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialElevation.h"
 #import "../../src/private/MDCDraggableView.h"
+#import "MaterialElevation.h"
 
 @interface MDCSheetContainerView (ElevationTesting)
 @property(nonatomic) MDCDraggableView *sheet;
@@ -46,7 +46,8 @@
 
   // Then
   XCTAssertEqualWithAccuracy(sheetContainer.elevation, MDCShadowElevationModalBottomSheet, 0.001);
-  XCTAssertEqualWithAccuracy(sheetContainer.sheet.elevation, MDCShadowElevationModalBottomSheet, 0.001);
+  XCTAssertEqualWithAccuracy(sheetContainer.sheet.elevation, MDCShadowElevationModalBottomSheet,
+                             0.001);
 }
 
 @end
