@@ -54,9 +54,9 @@
   elevation = MAX(elevation, 0);
   CGFloat alphaValue = 0;
   if (!MDCCGFloatEqual(elevation, 0)) {
-    alphaValue = 4.5 * log(elevation + 1) + 2;
+    alphaValue = 4.5 * log(elevation + 1) + (CGFloat)2;
   }
-  return [UIColor mdc_blendColor:[overlayColor colorWithAlphaComponent:alphaValue * 0.01]
+  return [UIColor mdc_blendColor:[overlayColor colorWithAlphaComponent:alphaValue * (CGFloat)0.01]
              withBackgroundColor:self];
 }
 
