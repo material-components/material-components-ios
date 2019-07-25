@@ -41,6 +41,7 @@ mdc_unit_test_objc_library(
     testonly = 1,
     sdk_frameworks = [
         "UIKit",
+        "CoreGraphics",
     ],
     visibility = ["//visibility:private"],
     deps = [

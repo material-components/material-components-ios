@@ -12,9 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKit.h>
-
-NS_ASSUME_NONNULL_BEGIN
 
 /**
  Provides extension to UIColor for Material Elevation usage.
@@ -25,16 +24,21 @@ NS_ASSUME_NONNULL_BEGIN
  Returns a color that takes the specified elevation value into account.
  @param elevation The elevation to use when resolving the color.
  */
-- (UIColor *)mdc_resolvedColorWithElevation:(CGFloat)elevation;
+- (nonnull UIColor *)mdc_resolvedColorWithElevation:(CGFloat)elevation;
 
 /**
  Returns a color that takes the specified elevation value and traits into account.
+ When userInterfaceStyle is UIUserInterfaceStyleDark in traitCollection, elevation will be used
+ to resolve the color.
+ Negative elevation is treated as 0. Pattern-based UIColor is not supported.
+ UIColor in UIExtendedGrayColorSpace will be resolved to UIExtendedSRGBColorSpace.
+
  @param traitCollection The traits to use when resolving the color.
  @param elevation The elevation to use when resolving the color.
  */
-- (UIColor *)mdc_resolvedColorWithTraitCollection:(UITraitCollection *)traitCollection
-                                        elevation:(CGFloat)elevation API_AVAILABLE(ios(13.0));
+- (nonnull UIColor *)mdc_resolvedColorWithTraitCollection:
+                         (nonnull UITraitCollection *)traitCollection
+                                                elevation:(CGFloat)elevation
+    API_AVAILABLE(ios(13.0));
 
 @end
-
-NS_ASSUME_NONNULL_END

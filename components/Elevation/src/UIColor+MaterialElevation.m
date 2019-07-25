@@ -40,21 +40,16 @@
 }
 
 - (UIColor *)mdc_resolvedColorWithElevation:(CGFloat)elevation {
-  UIColor *overlayColor = UIColor.whiteColor;
-  return [self mdc_resolvedColorWithElevation:elevation overlayColor:overlayColor];
-}
-
-- (UIColor *)mdc_resolvedColorWithElevation:(CGFloat)elevation
-                               overlayColor:(UIColor *)overlayColor {
   if (CGColorGetPattern(self.CGColor)) {
-    [NSException
-         raise:NSGenericException
-        format:@"Pattern-Base Color %@ is not supported in %@", self, NSStringFromSelector(_cmd)];
+    [NSException raise:NSGenericException
+                format:@"Pattern-based colors are not supported by %@", NSStringFromSelector(_cmd)];
   }
+
+  UIColor *overlayColor = UIColor.whiteColor;
   elevation = MAX(elevation, 0);
   CGFloat alphaValue = 0;
   if (!MDCCGFloatEqual(elevation, 0)) {
-    alphaValue = 4.5 * log(elevation + 1) + (CGFloat)2;
+    alphaValue = (CGFloat)4.5 * (CGFloat)log(elevation + 1) + 2;
   }
   return [UIColor mdc_blendColor:[overlayColor colorWithAlphaComponent:alphaValue * (CGFloat)0.01]
              withBackgroundColor:self];

@@ -46,21 +46,21 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
                                   green:(CGFloat)0.8
                                    blue:(CGFloat)0.6
                                   alpha:(CGFloat)0.6];
-  self.greyScaleColor = [UIColor colorWithRed:(CGFloat)0.9
-                                        green:(CGFloat)0.9
-                                         blue:(CGFloat)0.9
-                                        alpha:(CGFloat)0.6];
+  self.greyScaleColor = [UIColor colorWithWhite:0.8 alpha:0.6];
   if (@available(iOS 10.0, *)) {
     self.p3DisplayColor = [UIColor colorWithDisplayP3Red:0.8 green:0.7 blue:0.5 alpha:0.4];
   } else {
     self.p3DisplayColor = nil;
   }
+  UIImage *patternImage = fakeImageWithColorAndSize(UIColor.blueColor, CGRectMake(0, 0, 100, 100));
+  self.patternColor = [UIColor colorWithPatternImage:patternImage];
 }
 
 - (void)tearDown {
   self.rgbColor = nil;
   self.greyScaleColor = nil;
   self.p3DisplayColor = nil;
+  self.patternColor = nil;
 
   [super tearDown];
 }
@@ -104,9 +104,9 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
                                                blue:(CGFloat)0.67857047229692247
                                               alpha:(CGFloat)0.65116211491037057];
   ;
-  UIColor *expectedGreyScaleColor = [UIColor colorWithRed:(CGFloat)0.91964261807423053
-                                                    green:(CGFloat)0.91964261807423053
-                                                     blue:(CGFloat)0.91964261807423053
+  UIColor *expectedGreyScaleColor = [UIColor colorWithRed:(CGFloat)0.83928523614846129
+                                                    green:(CGFloat)0.83928523614846129
+                                                     blue:(CGFloat)0.83928523614846129
                                                     alpha:(CGFloat)0.65116211491037057];
   ;
   UIColor *expectedP3Display = [UIColor colorWithRed:(CGFloat)0.86849367970437186
@@ -139,9 +139,9 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
                                                blue:(CGFloat)0.82459374284623876
                                               alpha:(CGFloat)0.77378792660557727];
   ;
-  UIColor *expectedGreyScaleColor = [UIColor colorWithRed:(CGFloat)0.95614843571155961
-                                                    green:(CGFloat)0.95614843571155961
-                                                     blue:(CGFloat)0.95614843571155961
+  UIColor *expectedGreyScaleColor = [UIColor colorWithRed:(CGFloat)0.91229687142311943
+                                                    green:(CGFloat)0.91229687142311943
+                                                     blue:(CGFloat)0.91229687142311943
                                                     alpha:(CGFloat)0.77378792660557727];
   ;
   UIColor *expectedP3Display = [UIColor colorWithRed:(CGFloat)0.9384637763413608
@@ -230,15 +230,13 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
 #endif
 }
 
-- (void)testResolvedColorWithElevationForPatternBasedColor {
+- (void)testResolvedColorWithElevationForPatternBasedColorThrowException {
   // Given
-  UIImage *patternImage = fakeImageWithColorAndSize(UIColor.blueColor, CGRectMake(0, 0, 100, 100));
-  UIColor *patternColor = [UIColor colorWithPatternImage:patternImage];
   CGFloat elevation = (CGFloat)10;
 
   // When/Then
   XCTAssertThrowsSpecificNamed(
-      [patternColor mdc_resolvedColorWithElevation:elevation], NSException, NSGenericException,
+      [self.patternColor mdc_resolvedColorWithElevation:elevation], NSException, NSGenericException,
       @"Expected exception when resolving a Pattern-Based color with elevation");
 }
 
