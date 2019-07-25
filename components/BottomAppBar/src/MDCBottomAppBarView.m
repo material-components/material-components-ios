@@ -174,9 +174,9 @@ static const int kMDCButtonAnimationDuration = 200;
     pathAnimation.delegate = self;
     [pathAnimation setValue:kMDCBottomAppBarViewPathString
                      forKey:kMDCBottomAppBarViewAnimKeyString];
-    [self.bottomBarLayer addAnimation:pathAnimation forKey:kMDCBottomAppBarViewPathString];
+    [self.bottomBarLayer.colorLayer addAnimation:pathAnimation forKey:kMDCBottomAppBarViewPathString];
   } else {
-    self.bottomBarLayer.path = pathWithCut;
+    self.bottomBarLayer.colorLayer.path = pathWithCut;
   }
 }
 
