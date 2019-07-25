@@ -34,7 +34,7 @@ mdc_public_objc_library(
         "UIKit",
     ],
     deps = [
-        "//components/ShadowElevation",
+        "//components/ShadowElevations",
         "//components/ShadowLayer",
         "//components/ShapeLibrary",
         "//components/Shapes",
