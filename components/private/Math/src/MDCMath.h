@@ -57,6 +57,14 @@ static inline CGFloat MDCFabs(CGFloat value) {
 #endif
 }
 
+static inline CGFloat MDCLog(CGFloat value) {
+#if CGFLOAT_IS_DOUBLE
+  return log(value);
+#else
+  return logf(value);
+#endif
+}
+
 static inline CGFloat MDCDegreesToRadians(CGFloat degrees) {
 #if CGFLOAT_IS_DOUBLE
   return degrees * (CGFloat)M_PI / 180.0;
