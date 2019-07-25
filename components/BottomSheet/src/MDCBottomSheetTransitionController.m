@@ -196,8 +196,4 @@ static const NSTimeInterval MDCBottomSheetTransitionDuration = 0.25;
   return _scrimAccessibilityTraits;
 }
 
-- (void)setElevation:(MDCShadowElevation)elevation {
-  _elevation = elevation;
-}
-
 @end

@@ -20,11 +20,11 @@
 #import "MaterialSnapshot.h"
 
 /** Snapshot test for @c MDCBottomSheetController. */
-@interface MDCBottomSheetSnapshotTests : MDCSnapshotTestCase
+@interface MDCBottomSheetControllerSnapshotTests : MDCSnapshotTestCase
 @property(nonatomic, strong, nullable) MDCBottomSheetController *bottomSheet;
 @end
 
-@implementation MDCBottomSheetSnapshotTests
+@implementation MDCBottomSheetControllerSnapshotTests
 
 - (void)setUp {
   [super setUp];
