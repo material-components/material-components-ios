@@ -49,6 +49,9 @@
   elevation = MAX(elevation, 0);
   CGFloat alphaValue = 0;
   if (!MDCCGFloatEqual(elevation, 0)) {
+    // A formula is used here to simulate the alpha percentage stated on
+    // https://material.io/design/color/dark-theme.html#properties
+    // AlphaValue = 4.5 * ln (elevationValue + 1) + 2
     alphaValue = (CGFloat)4.5 * (CGFloat)log(elevation + 1) + 2;
   }
   return [UIColor mdc_blendColor:[overlayColor colorWithAlphaComponent:alphaValue * (CGFloat)0.01]
