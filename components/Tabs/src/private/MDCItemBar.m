@@ -820,10 +820,16 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 }
 
 - (void)configureVisibleCells {
-  for (UICollectionViewCell *cell in _collectionView.visibleCells) {
+  NSArray<NSIndexPath *> *indexPaths = [self.collectionView indexPathsForVisibleItems];
+  for (NSIndexPath *indexPath in indexPaths) {
+    UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
     if ([cell isKindOfClass:[MDCItemBarCell class]]) {
       MDCItemBarCell *itemCell = (MDCItemBarCell *)cell;
       [self configureCell:itemCell];
+      UITabBarItem *item = [self itemAtIndexPath:indexPath];
+      if (item) {
+        [itemCell updateWithItem:item atIndex:indexPath.item count:_items.count];
+      }
     }
   }
 }

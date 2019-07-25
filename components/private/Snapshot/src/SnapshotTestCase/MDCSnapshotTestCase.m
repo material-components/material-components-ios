@@ -24,6 +24,8 @@
  */
 static NSString *const kiPhone7ModelA = @"iPhone9,1";
 static NSString *const kiPhone7ModelB = @"iPhone9,3";
+static NSString *const kiPhone8ModelA = @"iPhone10,1";
+static NSString *const kiPhone8ModelB = @"iPhone10,4";
 
 @implementation MDCSnapshotTestCase
 
@@ -33,11 +35,19 @@ static NSString *const kiPhone7ModelB = @"iPhone9,3";
 }
 
 - (void)snapshotVerifyView:(UIView *)view {
-  [self snapshotVerifyView:view tolerance:0];
+  [self snapshotVerifyView:view tolerance:0 supportIOS13:NO];
 }
 
-- (void)snapshotVerifyView:(UIView *)view tolerance:(CGFloat)tolerancePercent {
-  if (![self isSupportedDevice]) {
+- (void)snapshotVerifyViewForIOS13:(UIView *)view {
+  [self snapshotVerifyView:view tolerance:0 supportIOS13:YES];
+}
+
+- (void)snapshotVerifyView:(UIView *)view
+                 tolerance:(CGFloat)tolerancePercent
+              supportIOS13:(BOOL)supportIOS13 {
+  if (!supportIOS13 && ![self isSupportedDevice]) {
+    return;
+  } else if (supportIOS13 && ![self isSupportedIOS13Device]) {
     return;
   }
 
@@ -64,6 +74,11 @@ static NSString *const kiPhone7ModelB = @"iPhone9,3";
                                   tolerancePercent);
 }
 
+- (void)changeViewToRTL:(UIView *)view {
+  [self changeViewLayoutToRTL:view];
+  [self changeTextInputToRTL:view];
+}
+
 // TODO(https://github.com/material-components/material-components-ios/issues/5888)
 // Support multiple OS versions and devices for snapshots
 - (BOOL)isSupportedDevice {
@@ -84,6 +99,24 @@ static NSString *const kiPhone7ModelB = @"iPhone9,3";
   return YES;
 }
 
+- (BOOL)isSupportedIOS13Device {
+  if (NSProcessInfo.processInfo.operatingSystemVersion.majorVersion != 13 ||
+      NSProcessInfo.processInfo.operatingSystemVersion.minorVersion != 0 ||
+      NSProcessInfo.processInfo.operatingSystemVersion.patchVersion != 0) {
+    NSLog(@"Unsupported device. Snapshot tests currently only run on iOS 13.0.0");
+    return NO;
+  }
+
+  NSString *deviceName = [self getDeviceName];
+  if (!([deviceName isEqualToString:kiPhone8ModelA] ||
+        [deviceName isEqualToString:kiPhone8ModelB])) {
+    NSLog(@"Unsupported device. Snapshot tests currently only run on iPhone 8");
+    return NO;
+  }
+
+  return YES;
+}
+
 - (NSString *)getDeviceName {
   NSString *deviceName;
 #if TARGET_OS_SIMULATOR
@@ -95,6 +128,27 @@ static NSString *const kiPhone7ModelB = @"iPhone9,3";
   deviceName = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
 #endif
   return deviceName;
+}
+
+- (void)changeViewLayoutToRTL:(UIView *)view {
+  view.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
+  for (UIView *subview in view.subviews) {
+    [self changeViewLayoutToRTL:subview];
+  }
+}
+
+- (void)changeTextInputToRTL:(UIView *)view {
+  if ([view conformsToProtocol:@protocol(UITextInput)]) {
+    id<UITextInput> textInput = (id<UITextInput>)view;
+    UITextRange *textRange = [textInput textRangeFromPosition:textInput.beginningOfDocument
+                                                   toPosition:textInput.endOfDocument];
+    if (textRange) {
+      [textInput setBaseWritingDirection:UITextWritingDirectionRightToLeft forRange:textRange];
+    }
+  }
+  for (UIView *subview in view.subviews) {
+    [self changeTextInputToRTL:subview];
+  }
 }
 
 @end

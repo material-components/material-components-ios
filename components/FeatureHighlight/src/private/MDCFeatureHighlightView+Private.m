@@ -401,6 +401,19 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
 
   // Use the larger of the two radii to ensure everything is encircled.
   _outerRadius = MAX(minTextRadius, minInnerHighlightRadius);
+
+  // To support dynamic color
+  _pulseLayer.fillColor = _innerHighlightColor.CGColor;
+  _innerLayer.fillColor = _innerHighlightColor.CGColor;
+  _outerLayer.fillColor = _outerHighlightColor.CGColor;
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
 }
 
 - (void)didTapView:(UITapGestureRecognizer *)tapGestureRecognizer {
@@ -522,11 +535,32 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
 
 - (void)animatePulse {
   NSArray *keyTimes = @[ @0, @0.5, @1 ];
-  id pulseColorStart =
+  __block id pulseColorStart;
+  __block id pulseColorEnd;
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+  if (@available(iOS 13.0, *)) {
+    [self.traitCollection performAsCurrentTraitCollection:^{
+      pulseColorStart =
+          (__bridge id)
+              [self.innerHighlightColor colorWithAlphaComponent:kMDCFeatureHighlightPulseStartAlpha]
+                  .CGColor;
+      pulseColorEnd = (__bridge id)[self.innerHighlightColor colorWithAlphaComponent:0].CGColor;
+    }];
+  } else {
+    pulseColorStart =
+        (__bridge id)
+            [_innerHighlightColor colorWithAlphaComponent:kMDCFeatureHighlightPulseStartAlpha]
+                .CGColor;
+    pulseColorEnd = (__bridge id)[_innerHighlightColor colorWithAlphaComponent:0].CGColor;
+  }
+#else
+  pulseColorStart =
       (__bridge id)
           [_innerHighlightColor colorWithAlphaComponent:kMDCFeatureHighlightPulseStartAlpha]
               .CGColor;
-  id pulseColorEnd = (__bridge id)[_innerHighlightColor colorWithAlphaComponent:0].CGColor;
+  pulseColorEnd = (__bridge id)[_innerHighlightColor colorWithAlphaComponent:0].CGColor;
+#endif
+
   CGFloat radius = _innerRadius;
 
   [CATransaction begin];

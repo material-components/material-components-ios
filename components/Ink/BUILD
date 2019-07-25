@@ -90,6 +90,7 @@ mdc_snapshot_objc_library(
     name = "snapshot_test_lib",
     deps = [
         ":Ink",
+        "//components/private/Color",
     ],
 )
 

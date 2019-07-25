@@ -331,6 +331,14 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
   return self.header.message;
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
+}
+
 - (void)setTitleFont:(UIFont *)titleFont {
   self.header.titleFont = titleFont;
 }

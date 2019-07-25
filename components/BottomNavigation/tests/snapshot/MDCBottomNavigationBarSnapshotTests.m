@@ -117,15 +117,11 @@ static const CGFloat kHeightShort = 48;
 }
 
 - (void)changeToRTLAndArabicWithTitle:(NSString *)title {
-  if (@available(iOS 9.0, *)) {
-    self.navigationBar.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
-  }
+  self.navigationBar.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
   for (UITabBarItem *item in self.navigationBar.items) {
     item.title = title;
-    if (@available(iOS 9.0, *)) {
-      UIView *view = [self.navigationBar viewForItem:item];
-      view.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
-    }
+    UIView *view = [self.navigationBar viewForItem:item];
+    view.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
   }
   if (self.navigationBar.items.count >= 2U) {
     self.navigationBar.items[1].badgeValue = MDCBottomNavigationTestBadgeTitleArabic;
@@ -417,6 +413,36 @@ static const CGFloat kHeightShort = 48;
 
   // Then
   [self generateAndVerifySnapshot];
+}
+
+- (void)testShadowColorRespondsToDynamicColor {
+#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
+  if (@available(iOS 13.0, *)) {
+    // Given
+    UIColor *dynamicColor =
+        [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
+          if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
+            return UIColor.blackColor;
+          } else {
+            return UIColor.redColor;
+          }
+        }];
+    self.navigationBar.bounds = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthiPad,
+                                           MDCBottomNavigationBarTestHeightTypical);
+    self.navigationBar.elevation = 10;
+    self.navigationBar.shadowColor = dynamicColor;
+
+    // When
+    self.navigationBar.traitCollectionOverride =
+        [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
+    [self.navigationBar layoutIfNeeded];
+
+    // Then
+    UIView *snapshotView =
+        [self.navigationBar mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(50, 50, 50, 50)];
+    [self snapshotVerifyViewForIOS13:snapshotView];
+  }
+#endif
 }
 
 @end

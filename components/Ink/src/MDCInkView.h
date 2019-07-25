@@ -94,6 +94,13 @@ typedef NS_ENUM(NSInteger, MDCInkStyle) {
 @property(nonatomic, assign) CGPoint customInkCenter;
 
 /**
+ A block that is invoked when the @c MDCInkView receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCInkView *_Nonnull ink, UITraitCollection *_Nullable previousTraitCollection);
+
+/**
  Start the first part of the "press and release" animation at a particular point.
 
  The "press and release" animation begins by fading in the ink ripple when this method is called.

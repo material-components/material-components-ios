@@ -22,12 +22,20 @@
 /** The path to display. It will be filled using the view's tintColor. */
 @property(nonatomic, nullable) UIBezierPath *path;
 
+/** The animation duration for changes to the path of the selection indicator. */
+@property(nonatomic, assign) CFTimeInterval indicatorPathAnimationDuration;
+
+/** The timing function for animating changes to the path of the selection indicator. */
+@property(nonatomic, strong, nonnull) CAMediaTimingFunction *indicatorPathTimingFunction;
+
 @end
 
-@implementation MDCTabBarViewIndicatorView {
-  /// View responsible for drawing the indicator's path.
-  MDCTabBarViewIndicatorShapeView *_shapeView;
-}
+@interface MDCTabBarViewIndicatorView ()
+/// View responsible for drawing the indicator's path.
+@property(nonatomic, strong) MDCTabBarViewIndicatorShapeView *shapeView;
+@end
+
+@implementation MDCTabBarViewIndicatorView
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
@@ -48,7 +56,23 @@
 #pragma mark - Public
 
 - (void)applySelectionIndicatorAttributes:(MDCTabBarViewIndicatorAttributes *)attributes {
-  _shapeView.path = attributes.path;
+  self.shapeView.path = attributes.path;
+}
+
+- (CAMediaTimingFunction *)indicatorPathTimingFunction {
+  return self.shapeView.indicatorPathTimingFunction;
+}
+
+- (void)setIndicatorPathTimingFunction:(CAMediaTimingFunction *)indicatorPathTimingFunction {
+  self.shapeView.indicatorPathTimingFunction = indicatorPathTimingFunction;
+}
+
+- (CFTimeInterval)indicatorPathAnimationDuration {
+  return self.shapeView.indicatorPathAnimationDuration;
+}
+
+- (void)setIndicatorPathAnimationDuration:(CFTimeInterval)indicatorPathAnimationDuration {
+  self.shapeView.indicatorPathAnimationDuration = indicatorPathAnimationDuration;
 }
 
 #pragma mark - Private
@@ -65,6 +89,28 @@
 #pragma mark -
 
 @implementation MDCTabBarViewIndicatorShapeView
+
+- (instancetype)initWithFrame:(CGRect)frame {
+  self = [super initWithFrame:frame];
+  if (self) {
+    [self commonMDCTabBarViewIndicatorShapeViewInit];
+  }
+  return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+  self = [super initWithCoder:aDecoder];
+  if (self) {
+    [self commonMDCTabBarViewIndicatorShapeViewInit];
+  }
+  return self;
+}
+
+- (void)commonMDCTabBarViewIndicatorShapeViewInit {
+  _indicatorPathTimingFunction =
+      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+  _indicatorPathAnimationDuration = 0.3;
+}
 
 - (UIBezierPath *)path {
   CAShapeLayer *shapeLayer = (CAShapeLayer *)self.layer;
@@ -83,7 +129,10 @@
   id<CAAction> action = [super actionForLayer:layer forKey:event];
   // Support implicit animation of paths.
   if ((!action || action == [NSNull null]) && (layer == self.layer) && [event isEqual:@"path"]) {
-    return [CABasicAnimation animationWithKeyPath:event];
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:event];
+    animation.duration = self.indicatorPathAnimationDuration;
+    animation.timingFunction = self.indicatorPathTimingFunction;
+    return animation;
   }
   return action;
 }

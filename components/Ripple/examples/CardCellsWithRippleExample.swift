@@ -64,17 +64,15 @@ class CardCellsWithRippleExample: UIViewController,
     collectionView.allowsMultipleSelection = true
     view.addSubview(collectionView)
 
-    if #available(iOS 9.0, *) {
-      navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Reorder",
-                                                          style: .plain,
-                                                          target: self,
-                                                          action: #selector(toggleModes))
+    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Reorder",
+                                                        style: .plain,
+                                                        target: self,
+                                                        action: #selector(toggleModes))
 
-      let longPressGesture = UILongPressGestureRecognizer(target: self,
-                                                          action: #selector(reorderCards(gesture:)))
-      longPressGesture.cancelsTouchesInView = false
-      collectionView.addGestureRecognizer(longPressGesture)
-    }
+    let longPressGesture = UILongPressGestureRecognizer(target: self,
+                                                        action: #selector(reorderCards(gesture:)))
+    longPressGesture.cancelsTouchesInView = false
+    collectionView.addGestureRecognizer(longPressGesture)
 
     if #available(iOS 11, *) {
       let guide = view.safeAreaLayoutGuide

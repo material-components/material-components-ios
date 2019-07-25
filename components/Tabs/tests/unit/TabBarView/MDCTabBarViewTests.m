@@ -21,6 +21,8 @@
 #import "MDCTabBarViewDelegate.h"
 #import "MaterialTypography.h"
 
+#import "MaterialAnimationTiming.h"
+
 // Minimum height of the MDCTabBar view.
 static const CGFloat kMinHeight = 48;
 
@@ -679,7 +681,7 @@ static UIImage *fakeImage(CGSize size) {
   XCTAssertGreaterThanOrEqual(actualIntrinsicContentSize.height, intrinsicSizeMinimalSize.height);
 }
 
-- (void)testSizeThatFitsExpandsToFitContent {
+- (void)testSizeThatFitsFitsOnlyIncreasesHeightForTooSmallSize {
   // Given
   self.tabBarView.items = @[ self.itemA ];
 
@@ -687,7 +689,7 @@ static UIImage *fakeImage(CGSize size) {
   CGSize size = [self.tabBarView sizeThatFits:CGSizeZero];
 
   // Then
-  XCTAssertGreaterThan(size.width, 0);
+  XCTAssertEqualWithAccuracy(size.width, 0, 0.001);
   XCTAssertEqualWithAccuracy(size.height, kMinHeight, 0.001);
 }
 
@@ -878,6 +880,123 @@ static UIImage *fakeImage(CGSize size) {
     XCTAssertEqualObjects(itemView.titleLabel.text, self.itemB.title);
     XCTAssertEqualObjects(itemView.iconImageView.image, self.itemB.image);
   }
+}
+
+- (void)testRectForItemNotFoundReturnsNullRectangle {
+  // Given
+  self.tabBarView.items = @[];
+
+  // When
+  CGRect itemFrame = [self.tabBarView rectForItem:self.itemC inCoordinateSpace:self.tabBarView];
+
+  // Then
+  XCTAssertTrue(CGRectIsNull(itemFrame), @"(%@) is not equal to (%@)",
+                NSStringFromCGRect(itemFrame), NSStringFromCGRect(CGRectNull));
+}
+
+- (void)testRectForItemConvertedToTabBarView {
+  // Given
+  self.tabBarView.items = @[ self.itemA ];
+  CGSize intrinsicContentSize = self.tabBarView.intrinsicContentSize;
+  self.tabBarView.bounds =
+      CGRectMake(0, 0, intrinsicContentSize.width, intrinsicContentSize.height);
+  [self.tabBarView layoutIfNeeded];
+
+  // When
+  CGRect itemFrame = [self.tabBarView rectForItem:self.itemA inCoordinateSpace:self.tabBarView];
+
+  // Then
+  XCTAssertTrue(CGRectEqualToRect(itemFrame, self.tabBarView.bounds), @"(%@) is not equal to (%@)",
+                NSStringFromCGRect(itemFrame), NSStringFromCGRect(self.tabBarView.bounds));
+}
+
+- (void)testRectForItemConvertedToSuperView {
+  // Given
+  UIOffset tabBarOffsetWithinSuperview = UIOffsetMake(30, 40);
+  self.tabBarView.items = @[ self.itemA ];
+  CGSize intrinsicContentSize = self.tabBarView.intrinsicContentSize;
+  self.tabBarView.bounds =
+      CGRectMake(0, 0, intrinsicContentSize.width, intrinsicContentSize.height);
+  [self.tabBarView layoutIfNeeded];
+  UIView *tabBarSuperview =
+      [[UIView alloc] initWithFrame:CGRectMake(0, 0,
+                                               CGRectGetWidth(self.tabBarView.bounds) +
+                                                   tabBarOffsetWithinSuperview.horizontal,
+                                               CGRectGetHeight(self.tabBarView.bounds) +
+                                                   tabBarOffsetWithinSuperview.vertical)];
+  [tabBarSuperview addSubview:self.tabBarView];
+  self.tabBarView.center = CGPointMake(
+      CGRectGetMidX(tabBarSuperview.bounds) + (tabBarOffsetWithinSuperview.horizontal / 2),
+      CGRectGetMidY(tabBarSuperview.bounds) + (tabBarOffsetWithinSuperview.vertical / 2));
+
+  // When
+  CGRect itemFrame = [self.tabBarView rectForItem:self.itemA inCoordinateSpace:tabBarSuperview];
+  CGRect expectedFrame =
+      CGRectMake(tabBarOffsetWithinSuperview.horizontal, tabBarOffsetWithinSuperview.vertical,
+                 CGRectGetWidth(self.tabBarView.bounds), CGRectGetHeight(self.tabBarView.bounds));
+
+  // Then
+  XCTAssertTrue(CGRectEqualToRect(itemFrame, expectedFrame), @"(%@) is not equal to (%@)",
+                NSStringFromCGRect(itemFrame), NSStringFromCGRect(expectedFrame));
+}
+
+- (void)testDefaultSelectionChangeAnimationDurationValue {
+  // Then
+  XCTAssertEqualWithAccuracy(self.tabBarView.selectionChangeAnimationDuration, 0.3, 0.0001);
+}
+
+- (void)testDefaultSelectionChangeAnimationTimingFunction {
+  // Then
+  CAMediaTimingFunction *expectedFunction =
+      [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
+  float expectedControlPoint1[2];
+  float expectedControlPoint2[2];
+  float expectedControlPoint3[2];
+  float expectedControlPoint4[2];
+  [expectedFunction getControlPointAtIndex:0 values:expectedControlPoint1];
+  [expectedFunction getControlPointAtIndex:1 values:expectedControlPoint2];
+  [expectedFunction getControlPointAtIndex:2 values:expectedControlPoint3];
+  [expectedFunction getControlPointAtIndex:3 values:expectedControlPoint4];
+  CAMediaTimingFunction *actualFunction = self.tabBarView.selectionChangeAnimationTimingFunction;
+  float actualControlPoint1[2];
+  float actualControlPoint2[2];
+  float actualControlPoint3[2];
+  float actualControlPoint4[2];
+  [actualFunction getControlPointAtIndex:0 values:actualControlPoint1];
+  [actualFunction getControlPointAtIndex:1 values:actualControlPoint2];
+  [actualFunction getControlPointAtIndex:2 values:actualControlPoint3];
+  [actualFunction getControlPointAtIndex:3 values:actualControlPoint4];
+  XCTAssertEqualWithAccuracy(actualControlPoint1[0], expectedControlPoint1[0], 0.0001);
+  XCTAssertEqualWithAccuracy(actualControlPoint1[1], expectedControlPoint1[1], 0.0001);
+  XCTAssertEqualWithAccuracy(actualControlPoint2[0], expectedControlPoint2[0], 0.0001);
+  XCTAssertEqualWithAccuracy(actualControlPoint2[1], expectedControlPoint2[1], 0.0001);
+  XCTAssertEqualWithAccuracy(actualControlPoint3[0], expectedControlPoint3[0], 0.0001);
+  XCTAssertEqualWithAccuracy(actualControlPoint3[1], expectedControlPoint3[1], 0.0001);
+  XCTAssertEqualWithAccuracy(actualControlPoint4[0], expectedControlPoint4[0], 0.0001);
+  XCTAssertEqualWithAccuracy(actualControlPoint4[1], expectedControlPoint4[1], 0.0001);
+}
+
+- (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
+  // Given
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollection"];
+  __block UITraitCollection *passedTraitCollection = nil;
+  __block MDCTabBarView *passedTabBar = nil;
+  self.tabBarView.traitCollectionDidChangeBlock =
+      ^(MDCTabBarView *_Nonnull tabBar, UITraitCollection *_Nullable previousTraitCollection) {
+        passedTraitCollection = previousTraitCollection;
+        passedTabBar = tabBar;
+        [expectation fulfill];
+      };
+  UITraitCollection *fakeTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
+
+  // When
+  [self.tabBarView traitCollectionDidChange:fakeTraitCollection];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertEqual(passedTabBar, self.tabBarView);
+  XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
 }
 
 @end

@@ -223,6 +223,14 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
                                            withTransitionCoordinator:coordinator];
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
+}
+
 - (void)setScrimColor:(UIColor *)scrimColor {
   _scrimColor = scrimColor;
   self.scrimView.backgroundColor = scrimColor;

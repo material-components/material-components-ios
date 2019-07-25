@@ -28,11 +28,19 @@ static const CGFloat kExpectedHeightTitlesOrIconsOnly = 48;
 /** The expected height of Tabs with titles and icons. */
 static const CGFloat kExpectedHeightTitlesAndIcons = 72;
 
+/** The leading inset for scrollable tabs. */
+static const CGFloat kLeadingInsetForScrollableTabs = 52;
+
 /** The minimum width of a tab bar item. */
 static const CGFloat kMinItemWidth = 90;
 
 /** The maximum width of a tab bar item. */
 static const CGFloat kMaxItemWidth = 360;
+
+static inline void SizeViewToIntrinsicContentSize(UIView *view) {
+  CGSize intrinsicContentSize = view.intrinsicContentSize;
+  view.bounds = CGRectMake(0, 0, intrinsicContentSize.width, intrinsicContentSize.height);
+}
 
 /** A custom view to place in an MDCTabBarView. */
 @interface MDCTabBarViewSnapshotTestsCustomView : UIView <MDCTabBarViewCustomViewable>
@@ -234,20 +242,10 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   }
 }
 
-- (void)changeViewToRTL:(UIView *)view {
-  for (UIView *subview in view.subviews) {
-    if ([view isKindOfClass:[UIImageView class]]) {
-      continue;
-    }
-    [self changeViewToRTL:subview];
-  }
-  view.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
-}
-
 - (void)generateSnapshotAndVerifyForView:(UIView *)view {
   // Needed so that the stack view can be constrained correctly and then allow any "scrolling" to
   // take place for the selected item to be visible.
-  [self.tabBarView layoutIfNeeded];
+  [view layoutIfNeeded];
   UIView *snapshotView = [view mdc_addToBackgroundView];
   [self snapshotVerifyView:snapshotView];
 }
@@ -393,7 +391,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"One" image:self.typicalIcon1 tag:0];
   UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"Two" image:self.typicalIcon2 tag:1];
   self.tabBarView.items = @[ item1, item2 ];
-  [self.tabBarView sizeToFit];
+  SizeViewToIntrinsicContentSize(self.tabBarView);
   [self.tabBarView setSelectedItem:item1 animated:NO];
   [self.tabBarView setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
   [self.tabBarView setImageTintColor:UIColor.blackColor forState:UIControlStateNormal];
@@ -703,7 +701,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   // When
   UIEdgeInsets safeAreaInsets = UIEdgeInsetsMake(16, 44, 0, 0);
   superview.customSafeAreaInsets = safeAreaInsets;
-  CGSize fitSize = [self.tabBarView sizeThatFits:CGSizeZero];
+  CGSize fitSize = self.tabBarView.intrinsicContentSize;
   fitSize = CGSizeMake(fitSize.width + safeAreaInsets.left, fitSize.height + safeAreaInsets.top);
   self.tabBarView.bounds = CGRectMake(0, 0, fitSize.width, fitSize.height);
   superview.bounds = CGRectMake(0, 0, CGRectGetWidth(self.tabBarView.bounds),
@@ -728,10 +726,60 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   // When
   UIEdgeInsets safeAreaInsets = UIEdgeInsetsMake(0, 0, 16, 44);
   superview.customSafeAreaInsets = safeAreaInsets;
-  CGSize fitSize = [self.tabBarView sizeThatFits:CGSizeZero];
+  CGSize fitSize = self.tabBarView.intrinsicContentSize;
   fitSize =
       CGSizeMake(fitSize.width + safeAreaInsets.right, fitSize.height + safeAreaInsets.bottom);
   self.tabBarView.bounds = CGRectMake(0, 0, fitSize.width, fitSize.height);
+  superview.bounds = CGRectMake(0, 0, CGRectGetWidth(self.tabBarView.bounds),
+                                CGRectGetHeight(self.tabBarView.bounds));
+  self.tabBarView.center =
+      CGPointMake(CGRectGetMidX(superview.bounds), CGRectGetMidY(superview.bounds));
+
+  // Then
+  [self generateSnapshotAndVerifyForView:superview];
+}
+
+- (void)testSafeAreaTopAndLeftInsetsForFixedClusteredCenteredLayoutStyle {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:2];
+  MDCTabBarViewSnapshotTestsSuperview *superview =
+      [[MDCTabBarViewSnapshotTestsSuperview alloc] init];
+  [superview addSubview:self.tabBarView];
+  self.tabBarView.items = @[ item1, item2 ];
+  [self.tabBarView setSelectedItem:item2 animated:NO];
+
+  // When
+  UIEdgeInsets safeAreaInsets = UIEdgeInsetsMake(16, 44, 0, 0);
+  superview.customSafeAreaInsets = safeAreaInsets;
+  self.tabBarView.bounds =
+      CGRectMake(0, 0, kMaxItemWidth * self.tabBarView.items.count + 1 + safeAreaInsets.left,
+                 kExpectedHeightTitlesOrIconsOnly + safeAreaInsets.top);
+  superview.bounds = CGRectMake(0, 0, CGRectGetWidth(self.tabBarView.bounds),
+                                CGRectGetHeight(self.tabBarView.bounds));
+  self.tabBarView.center =
+      CGPointMake(CGRectGetMidX(superview.bounds), CGRectGetMidY(superview.bounds));
+
+  // Then
+  [self generateSnapshotAndVerifyForView:superview];
+}
+
+- (void)testSafeAreaRightAndBottomInsetsForFixedClusteredCenteredLayoutStyle {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:1];
+  MDCTabBarViewSnapshotTestsSuperview *superview =
+      [[MDCTabBarViewSnapshotTestsSuperview alloc] init];
+  [superview addSubview:self.tabBarView];
+  self.tabBarView.items = @[ item1, item2 ];
+  [self.tabBarView setSelectedItem:item2 animated:NO];
+
+  // When
+  UIEdgeInsets safeAreaInsets = UIEdgeInsetsMake(0, 0, 16, 44);
+  superview.customSafeAreaInsets = safeAreaInsets;
+  self.tabBarView.bounds =
+      CGRectMake(0, 0, kMaxItemWidth * self.tabBarView.items.count + 1 + safeAreaInsets.right,
+                 kExpectedHeightTitlesOrIconsOnly + safeAreaInsets.bottom);
   superview.bounds = CGRectMake(0, 0, CGRectGetWidth(self.tabBarView.bounds),
                                 CGRectGetHeight(self.tabBarView.bounds));
   self.tabBarView.center =
@@ -817,7 +865,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   // When
   UIEdgeInsets contentInset = UIEdgeInsetsMake(15, 0, 0, 45);
   self.tabBarView.contentInset = contentInset;
-  CGSize fitSize = [self.tabBarView sizeThatFits:CGSizeZero];
+  CGSize fitSize = self.tabBarView.intrinsicContentSize;
   fitSize = CGSizeMake(fitSize.width + contentInset.right, fitSize.height + contentInset.top);
   self.tabBarView.bounds = CGRectMake(0, 0, fitSize.width, fitSize.height);
 
@@ -837,9 +885,45 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   // When
   UIEdgeInsets contentInset = UIEdgeInsetsMake(0, 45, 15, 0);
   self.tabBarView.contentInset = contentInset;
-  CGSize fitSize = [self.tabBarView sizeThatFits:CGSizeZero];
+  CGSize fitSize = self.tabBarView.intrinsicContentSize;
   fitSize = CGSizeMake(fitSize.width + contentInset.left, fitSize.height + contentInset.bottom);
   self.tabBarView.bounds = CGRectMake(0, 0, fitSize.width, fitSize.height);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testCustomInsetsTopAndRightRepositionsFixedClusteredCenteredViews {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:1];
+  self.tabBarView.items = @[ item1, item2 ];
+  [self.tabBarView setSelectedItem:item1 animated:NO];
+
+  // When
+  UIEdgeInsets contentInset = UIEdgeInsetsMake(15, 0, 0, 45);
+  self.tabBarView.contentInset = contentInset;
+  self.tabBarView.bounds = CGRectMake(0, 0, kMaxItemWidth * self.tabBarView.items.count + 1,
+                                      kExpectedHeightTitlesOrIconsOnly);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testCustomInsetsBottomAndLeftRepositionsFixedClusteredCenteredViews {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:1];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"3" image:nil tag:2];
+  UITabBarItem *item4 = [[UITabBarItem alloc] initWithTitle:@"4" image:nil tag:3];
+  self.tabBarView.items = @[ item1, item2, item3, item4 ];
+  [self.tabBarView setSelectedItem:item1 animated:NO];
+
+  // When
+  UIEdgeInsets contentInset = UIEdgeInsetsMake(0, 45, 15, 0);
+  self.tabBarView.contentInset = contentInset;
+  self.tabBarView.bounds = CGRectMake(0, 0, kMaxItemWidth * self.tabBarView.items.count + 1,
+                                      kExpectedHeightTitlesOrIconsOnly);
 
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBarView];
@@ -894,7 +978,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   UIEdgeInsets contentInset = UIEdgeInsetsMake(5, 10, 0, 0);
   superview.customSafeAreaInsets = safeAreaInsets;
   self.tabBarView.contentInset = contentInset;
-  CGSize fitSize = [self.tabBarView sizeThatFits:CGSizeZero];
+  CGSize fitSize = self.tabBarView.intrinsicContentSize;
   fitSize = CGSizeMake(fitSize.width + safeAreaInsets.left + contentInset.left,
                        fitSize.height + safeAreaInsets.top + contentInset.top);
   self.tabBarView.bounds = CGRectMake(0, 0, fitSize.width, fitSize.height);
@@ -922,7 +1006,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   UIEdgeInsets contentInset = UIEdgeInsetsMake(0, 0, 5, 10);
   superview.customSafeAreaInsets = safeAreaInsets;
   self.tabBarView.contentInset = contentInset;
-  CGSize fitSize = [self.tabBarView sizeThatFits:CGSizeZero];
+  CGSize fitSize = self.tabBarView.intrinsicContentSize;
   fitSize = CGSizeMake(fitSize.width + safeAreaInsets.right + contentInset.right,
                        fitSize.height + safeAreaInsets.bottom + contentInset.bottom);
   self.tabBarView.bounds = CGRectMake(0, 0, fitSize.width, fitSize.height);
@@ -1050,7 +1134,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   // When
   [self.tabBarView setTitleFont:[UIFont systemFontOfSize:8] forState:UIControlStateNormal];
   [self.tabBarView setTitleFont:[UIFont systemFontOfSize:24] forState:UIControlStateSelected];
-  [self.tabBarView sizeToFit];
+  SizeViewToIntrinsicContentSize(self.tabBarView);
 
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBarView];
@@ -1066,7 +1150,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
 
   // When
   [self.tabBarView setTitleFont:[UIFont systemFontOfSize:8] forState:UIControlStateNormal];
-  [self.tabBarView sizeToFit];
+  SizeViewToIntrinsicContentSize(self.tabBarView);
 
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBarView];
@@ -1085,7 +1169,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   // When
   [self.tabBarView setTitleFont:nil forState:UIControlStateNormal];
   [self.tabBarView setTitleFont:nil forState:UIControlStateSelected];
-  [self.tabBarView sizeToFit];
+  SizeViewToIntrinsicContentSize(self.tabBarView);
 
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBarView];
@@ -1128,7 +1212,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:self.typicalIcon3 tag:3];
   self.tabBarView.items = @[ item1, item2, item3 ];
   [self.tabBarView setSelectedItem:item2 animated:NO];
-  [self.tabBarView sizeToFit];
+  SizeViewToIntrinsicContentSize(self.tabBarView);
 
   // When
   self.tabBarView.rippleColor = [UIColor.orangeColor colorWithAlphaComponent:(CGFloat)0.25];
@@ -1145,7 +1229,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:self.typicalIcon3 tag:3];
   self.tabBarView.items = @[ item1, item2, item3 ];
   [self.tabBarView setSelectedItem:item2 animated:NO];
-  [self.tabBarView sizeToFit];
+  SizeViewToIntrinsicContentSize(self.tabBarView);
 
   // When
   self.tabBarView.selectionIndicatorStrokeColor = UIColor.purpleColor;
@@ -1161,7 +1245,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:self.typicalIcon3 tag:3];
   self.tabBarView.items = @[ item1, item2, item3 ];
   [self.tabBarView setSelectedItem:item2 animated:NO];
-  [self.tabBarView sizeToFit];
+  SizeViewToIntrinsicContentSize(self.tabBarView);
   self.tabBarView.selectionIndicatorStrokeColor = UIColor.purpleColor;
 
   // When
@@ -1178,7 +1262,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"Three" image:self.typicalIcon3 tag:3];
   self.tabBarView.items = @[ item1, item2, item3 ];
   [self.tabBarView setSelectedItem:item2 animated:NO];
-  [self.tabBarView sizeToFit];
+  SizeViewToIntrinsicContentSize(self.tabBarView);
   self.tabBarView.bottomDividerColor = UIColor.purpleColor;
 
   // When
@@ -1201,10 +1285,89 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
 
   // When
   self.tabBarView.items = @[ item1, customViewItem, item3 ];
-  [self.tabBarView sizeToFit];
+  SizeViewToIntrinsicContentSize(self.tabBarView);
 
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+#pragma mark - rectForItem:inCoordinateSpace:
+
+- (void)testRectForItemInCoordinateSpaceWithinBounds {
+  // Given
+  self.tabBarView.items = @[ self.item1, self.item2, self.item3 ];
+  CGSize intrinsicContentSize = self.tabBarView.intrinsicContentSize;
+  self.tabBarView.bounds =
+      CGRectMake(0, 0, intrinsicContentSize.width, intrinsicContentSize.height);
+  UIView *itemRectOverlayView = [[UIView alloc] init];
+  itemRectOverlayView.backgroundColor =
+      [UIColor.magentaColor colorWithAlphaComponent:(CGFloat)0.25];
+  [self.tabBarView addSubview:itemRectOverlayView];
+  [self.tabBarView layoutIfNeeded];
+
+  // When
+  CGRect item2FrameRect = [self.tabBarView rectForItem:self.item2
+                                     inCoordinateSpace:self.tabBarView];
+  itemRectOverlayView.frame = item2FrameRect;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testRectForItemInCoordinateSpaceWhenPartiallyOutsideBarBounds {
+  // Given
+  self.tabBarView.items = @[ self.item1, self.item2 ];
+  CGSize intrinsicContentSize = self.tabBarView.intrinsicContentSize;
+  self.tabBarView.bounds = CGRectMake(0, 0, kMinItemWidth * 1.2 + kLeadingInsetForScrollableTabs,
+                                      intrinsicContentSize.height);
+  UIView *itemRectOverlayView = [[UIView alloc] init];
+  itemRectOverlayView.backgroundColor =
+      [UIColor.magentaColor colorWithAlphaComponent:(CGFloat)0.25];
+  [self.tabBarView addSubview:itemRectOverlayView];
+  [self.tabBarView layoutIfNeeded];
+
+  // When
+  CGRect item2FrameRect = [self.tabBarView rectForItem:self.item2
+                                     inCoordinateSpace:self.tabBarView];
+  itemRectOverlayView.frame = item2FrameRect;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.tabBarView];
+}
+
+- (void)testRectForItemInCoordinateSpaceWithSafeAreaInsets {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:2];
+  self.tabBarView.items = @[ item1, item2 ];
+  [self.tabBarView setSelectedItem:item2 animated:NO];
+
+  UIEdgeInsets safeAreaInsets = UIEdgeInsetsMake(16, 44, 0, 0);
+  CGSize fitSize = self.tabBarView.intrinsicContentSize;
+  fitSize = CGSizeMake(fitSize.width + safeAreaInsets.left, fitSize.height + safeAreaInsets.top);
+  self.tabBarView.bounds = CGRectMake(0, 0, fitSize.width, fitSize.height);
+
+  MDCTabBarViewSnapshotTestsSuperview *superview =
+      [[MDCTabBarViewSnapshotTestsSuperview alloc] init];
+  [superview addSubview:self.tabBarView];
+  superview.customSafeAreaInsets = safeAreaInsets;
+  superview.bounds = CGRectMake(0, 0, CGRectGetWidth(self.tabBarView.bounds),
+                                CGRectGetHeight(self.tabBarView.bounds));
+  self.tabBarView.center =
+      CGPointMake(CGRectGetMidX(superview.bounds), CGRectGetMidY(superview.bounds));
+
+  UIView *itemRectOverlayView = [[UIView alloc] init];
+  itemRectOverlayView.backgroundColor =
+      [UIColor.magentaColor colorWithAlphaComponent:(CGFloat)0.25];
+  [superview addSubview:itemRectOverlayView];
+  [superview layoutIfNeeded];
+
+  // When
+  CGRect item2FrameRect = [self.tabBarView rectForItem:item2 inCoordinateSpace:superview];
+  itemRectOverlayView.frame = item2FrameRect;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:superview];
 }
 
 @end

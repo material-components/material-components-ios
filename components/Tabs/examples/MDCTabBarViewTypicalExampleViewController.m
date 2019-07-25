@@ -14,7 +14,9 @@
 
 #import <UIKit/UIKit.h>
 
+#import <MaterialComponents/MaterialAnimationTiming.h>
 #import <MaterialComponents/MaterialContainerScheme.h>
+#import <MaterialComponents/MaterialMath.h>
 #import "MaterialTabs+TabBarView.h"
 
 static NSString *const kExampleTitle = @"TabBarView";
@@ -24,9 +26,23 @@ static NSString *const kExampleTitle = @"TabBarView";
     : UIView <MDCTabBarViewCustomViewable>
 /** A switch shown in the view. */
 @property(nonatomic, strong) UISwitch *aSwitch;
+/** Duration for animating changes to the tab bar view. */
+@property(nonatomic, assign) CFTimeInterval animationDuration;
+/** The timing function for animating changes to the tab bar view. */
+@property(nonatomic, strong) CAMediaTimingFunction *animationTimingFunction;
 @end
 
 @implementation MDCTabBarViewTypicalExampleViewControllerCustomView
+
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    _aSwitch = [[UISwitch alloc] init];
+    _animationTimingFunction =
+        [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
+  }
+  return self;
+}
 
 - (CGRect)contentFrame {
   return CGRectStandardize(self.aSwitch.frame);
@@ -36,20 +52,36 @@ static NSString *const kExampleTitle = @"TabBarView";
   // This is where a real custom view would handle its selection state change.
 }
 
-- (UISwitch *)aSwitch {
-  if (!_aSwitch) {
-    _aSwitch = [[UISwitch alloc] init];
-    [self addSubview:_aSwitch];
-  }
-  return _aSwitch;
-}
-
 - (void)layoutSubviews {
   [super layoutSubviews];
+  if (self.aSwitch.superview != self) {
+    [self addSubview:_aSwitch];
+    [self.aSwitch addTarget:self
+                     action:@selector(switchTapped:)
+           forControlEvents:UIControlEventValueChanged];
+  }
   self.aSwitch.center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
 }
 
+- (void)switchTapped:(id)sender {
+  [self invalidateIntrinsicContentSize];
+  [self setNeedsLayout];
+  [UIView mdc_animateWithTimingFunction:self.animationTimingFunction
+                               duration:self.animationDuration
+                                  delay:0
+                                options:0
+                             animations:^{
+                               [self.superview setNeedsLayout];
+                               [self.superview layoutIfNeeded];
+                             }
+                             completion:nil];
+}
+
 - (CGSize)intrinsicContentSize {
+  if (self.aSwitch.isOn) {
+    return CGSizeMake(self.aSwitch.intrinsicContentSize.width * 2,
+                      self.aSwitch.intrinsicContentSize.height * 2);
+  }
   return self.aSwitch.intrinsicContentSize;
 }
 
@@ -62,7 +94,8 @@ static NSString *const kExampleTitle = @"TabBarView";
 /**
  Typical use example showing how to place an @c MDCTabBarView within another view.
  */
-@interface MDCTabBarViewTypicalExampleViewController : UIViewController <MDCTabBarViewDelegate>
+@interface MDCTabBarViewTypicalExampleViewController
+    : UIViewController <MDCTabBarViewDelegate, UIScrollViewDelegate>
 
 /** The tab bar for this example. */
 @property(nonatomic, strong) MDCTabBarView *tabBar;
@@ -75,6 +108,9 @@ static NSString *const kExampleTitle = @"TabBarView";
 
 /** Images for the items. */
 @property(nonatomic, copy) NSArray<UIImage *> *tabBarItemIcons;
+
+/** Tracks the UITabBarItem views that are currently on-screen. */
+@property(nonatomic, copy) NSSet<UITabBarItem *> *visibleItems;
 
 @end
 
@@ -91,6 +127,10 @@ static NSString *const kExampleTitle = @"TabBarView";
   }
 
   self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
+  self.tabBar = [[MDCTabBarView alloc] init];
+  self.tabBar.tabBarDelegate = self;
+  self.tabBar.delegate = self;
+  [self.view addSubview:self.tabBar];
 
   NSMutableArray<UIImage *> *itemIcons = [NSMutableArray array];
   [itemIcons addObject:[[UIImage imageNamed:@"Home"]
@@ -127,14 +167,13 @@ static NSString *const kExampleTitle = @"TabBarView";
       [[MDCTabBarViewTypicalExampleViewControllerCustomView alloc] init];
   item6.mdc_customView = switchView;
   switchView.aSwitch.onTintColor = self.containerScheme.colorScheme.primaryColor;
+  switchView.animationDuration = self.tabBar.selectionChangeAnimationDuration;
+  switchView.animationTimingFunction = self.tabBar.selectionChangeAnimationTimingFunction;
 
-  self.tabBar = [[MDCTabBarView alloc] init];
-  self.tabBar.tabBarDelegate = self;
-  self.tabBar.items = @[ item1, item2, item3, item4, item5, item6 ];
+  self.tabBar.items = @[ item1, item2, item6, item4, item5, item3 ];
   self.tabBar.selectedItem = item4;
-  self.tabBar.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.view addSubview:self.tabBar];
 
+  self.tabBar.translatesAutoresizingMaskIntoConstraints = NO;
   if (@available(iOS 11.0, *)) {
     [self.view.layoutMarginsGuide.topAnchor constraintEqualToAnchor:self.tabBar.topAnchor].active =
         YES;
@@ -194,7 +233,13 @@ static NSString *const kExampleTitle = @"TabBarView";
         .active = YES;
   } else {
     [self.view.centerXAnchor constraintEqualToAnchor:segmentedControl.centerXAnchor].active = YES;
-    [self.view.centerYAnchor constraintEqualToAnchor:segmentedControl.centerYAnchor].active = YES;
+    NSLayoutConstraint *centerYConstraint =
+        [self.view.centerYAnchor constraintEqualToAnchor:segmentedControl.centerYAnchor];
+    centerYConstraint.priority = UILayoutPriorityDefaultLow;
+    centerYConstraint.active = YES;
+    [self.tabBar.bottomAnchor constraintLessThanOrEqualToAnchor:segmentedControl.topAnchor
+                                                       constant:-16]
+        .active = YES;
     [self.view.leadingAnchor constraintLessThanOrEqualToAnchor:segmentedControl.leadingAnchor]
         .active = YES;
     [self.view.trailingAnchor constraintGreaterThanOrEqualToAnchor:segmentedControl.trailingAnchor]
@@ -241,11 +286,28 @@ static NSString *const kExampleTitle = @"TabBarView";
 }
 
 - (void)changeItemsToTextOnly {
+  NSMutableArray<UITabBarItem *> *newItems = [NSMutableArray array];
+  NSUInteger selectedIndex = self.tabBar.selectedItem
+                                 ? [self.tabBar.items indexOfObject:self.tabBar.selectedItem]
+                                 : NSNotFound;
   for (NSUInteger index = 0; index < self.tabBar.items.count; ++index) {
-    UITabBarItem *item = self.tabBar.items[index];
-    item.image = nil;
-    item.selectedImage = nil;
-    item.title = self.tabBarItemTitles[index % self.tabBarItemTitles.count];
+    UITabBarItem *originalItem = self.tabBar.items[index];
+    if ([originalItem isKindOfClass:[MDCTabBarItem class]]) {
+      MDCTabBarItem *originalCustomItem = (MDCTabBarItem *)originalItem;
+      MDCTabBarItem *newCustomItem = [[MDCTabBarItem alloc] initWithTitle:nil
+                                                                    image:nil
+                                                                      tag:originalItem.tag];
+      newCustomItem.mdc_customView = originalCustomItem.mdc_customView;
+      [newItems addObject:newCustomItem];
+      continue;
+    }
+    UITabBarItem *newItem = [[UITabBarItem alloc] initWithTitle:nil image:nil tag:originalItem.tag];
+    newItem.title = self.tabBarItemTitles[index % self.tabBarItemTitles.count];
+    [newItems addObject:newItem];
+  }
+  self.tabBar.items = newItems;
+  if (selectedIndex != NSNotFound) {
+    self.tabBar.selectedItem = self.tabBar.items[selectedIndex];
   }
 }
 
@@ -262,6 +324,65 @@ static NSString *const kExampleTitle = @"TabBarView";
     UITabBarItem *item = self.tabBar.items[index];
     item.image = self.tabBarItemIcons[index % self.tabBarItemIcons.count];
     item.title = self.tabBarItemTitles[index % self.tabBarItemTitles.count];
+  }
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+  [self logItemVisibilityChanges];
+}
+
+#pragma mark - UIViewController
+
+- (void)viewWillTransitionToSize:(CGSize)size
+       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+  [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+  [coordinator
+      animateAlongsideTransition:nil
+                      completion:^(
+                          id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
+                        [self logItemVisibilityChanges];
+                      }];
+}
+
+- (void)viewDidLayoutSubviews {
+  [super viewDidLayoutSubviews];
+  [self logItemVisibilityChanges];
+}
+
+- (void)logItemVisibilityChanges {
+  NSMutableSet<UITabBarItem *> *allVisibleItems = [NSMutableSet set];
+  NSMutableSet<UITabBarItem *> *itemsThatEnteredTheWindowBounds = [NSMutableSet set];
+  NSMutableSet<UITabBarItem *> *itemsThatLeftTheWindowBounds = [NSMutableSet set];
+  for (UITabBarItem *item in self.tabBar.items) {
+    CGRect itemViewInWindow = [self.tabBar rectForItem:item inCoordinateSpace:self.view.window];
+    CGRect overlapRect = CGRectIntersection(self.view.window.bounds, itemViewInWindow);
+
+    // Views that don't intersect (or only at the very edge) the window's bounds
+    if (CGRectIsNull(overlapRect) || MDCCGFloatEqual(CGRectGetWidth(itemViewInWindow), 0)) {
+      if ([self.visibleItems containsObject:item]) {
+        [itemsThatLeftTheWindowBounds addObject:item];
+      }
+      continue;
+    }
+    [allVisibleItems addObject:item];
+    if (![self.visibleItems containsObject:item]) {
+      [itemsThatEnteredTheWindowBounds addObject:item];
+    }
+  }
+
+  self.visibleItems = allVisibleItems;
+
+  if (itemsThatEnteredTheWindowBounds.count) {
+    for (UITabBarItem *item in itemsThatEnteredTheWindowBounds) {
+      NSLog(@"(%@) became visible.", item.title ?: @(item.tag));
+    }
+  }
+  if (itemsThatLeftTheWindowBounds.count) {
+    for (UITabBarItem *item in itemsThatLeftTheWindowBounds) {
+      NSLog(@"(%@) is no longer visible.", item.title ?: @(item.tag));
+    }
   }
 }
 

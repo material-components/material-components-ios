@@ -140,4 +140,12 @@
  */
 @property(nonatomic, assign) MDCShadowElevation elevation;
 
+/**
+ A block that is invoked when the @c MDCBottomSheetPresentationController receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCBottomSheetPresentationController *_Nonnull bottomSheetPresentationController,
+     UITraitCollection *_Nullable previousTraitCollection);
+
 @end

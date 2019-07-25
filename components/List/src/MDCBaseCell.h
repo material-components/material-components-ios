@@ -14,9 +14,10 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialElevation.h"
 #import "MaterialShadowElevations.h"
 
-@interface MDCBaseCell : UICollectionViewCell
+@interface MDCBaseCell : UICollectionViewCell <MDCElevatable, MDCElevationOverriding>
 
 /**
  The current elevation of the cell.
@@ -39,6 +40,26 @@
  The color of the cell’s underlying Ripple.
  */
 @property(nonatomic, strong, nullable) UIColor *rippleColor;
+
+/**
+ A block that is invoked when the @c MDCBaseCell receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCBaseCell *_Nonnull cell, UITraitCollection *_Nullable previousTraitCollection);
+
+/**
+ This block is called after a change of the cell's elevation or one of its view
+ hierarchy ancestors.
+
+ Use this block to respond to elevation changes in the view or its ancestor views.
+
+ @param elevation The @c mdc_currentElevation plus the @c mdc_currentElevation of all ancestor
+ views.
+ @param cell This cell.
+ */
+@property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)
+    (MDCBaseCell *_Nonnull cell, CGFloat absoluteElevation);
 
 @end
 

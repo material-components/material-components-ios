@@ -44,6 +44,7 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
   CGPoint _lastTouch;
 }
 
+@synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
 @synthesize state = _state;
 @dynamic layer;
 
@@ -72,6 +73,8 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 }
 
 - (void)commonMDCCardCollectionCellInit {
+  _mdc_overrideBaseElevation = -1;
+
   if (_inkView == nil) {
     _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
     _inkView.autoresizingMask =
@@ -147,6 +150,14 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
     self.layer.shadowPath = [self boundingPath].CGPath;
   }
   [self updateImageAlignment];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
 }
 
 - (void)updateCardCellVisuals {
@@ -295,6 +306,7 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
       self.layer.shadowPath = [self boundingPath].CGPath;
     }
     [(MDCShadowLayer *)self.layer setElevation:elevation];
+    [self mdc_elevationDidChange];
   }
 }
 
@@ -630,4 +642,9 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
     [self addSubview:_inkView];
   }
 }
+
+- (CGFloat)mdc_currentElevation {
+  return [self shadowElevationForState:self.state];
+}
+
 @end

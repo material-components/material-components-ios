@@ -61,4 +61,60 @@
   XCTAssertEqualWithAccuracy(self.bottomSheet.elevation, fakeElevation, 0.001);
 }
 
+- (void)testBottonSheetControllerTraitCollectionDidChangeBlockCalledWithExpectedParameters {
+  // Given
+  MDCBottomSheetController *bottomSheet = [[MDCBottomSheetController alloc] init];
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollectionDidChange"];
+  __block UITraitCollection *passedTraitCollection;
+  __block MDCBottomSheetController *passedBottomSheet;
+  bottomSheet.traitCollectionDidChangeBlock =
+      ^(MDCBottomSheetController *_Nonnull bottomSheetController,
+        UITraitCollection *_Nullable previousTraitCollection) {
+        [expectation fulfill];
+        passedTraitCollection = previousTraitCollection;
+        passedBottomSheet = bottomSheetController;
+      };
+  UITraitCollection *testTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
+
+  // When
+  [bottomSheet traitCollectionDidChange:testTraitCollection];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertEqual(passedTraitCollection, testTraitCollection);
+  XCTAssertEqual(passedBottomSheet, bottomSheet);
+}
+
+- (void)
+    testBottonSheetPresentationControllerTraitCollectionDidChangeBlockCalledWithExpectedParameters {
+  // Given
+  UIViewController *stubPresentingViewController = [[UIViewController alloc] init];
+  UIViewController *stubPresentedViewController = [[UIViewController alloc] init];
+  MDCBottomSheetPresentationController *bottomSheetPresentationController =
+      [[MDCBottomSheetPresentationController alloc]
+          initWithPresentedViewController:stubPresentedViewController
+                 presentingViewController:stubPresentingViewController];
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollectionDidChange"];
+  __block UITraitCollection *passedTraitCollection;
+  __block MDCBottomSheetPresentationController *passedBottomSheetPresentationController;
+  bottomSheetPresentationController.traitCollectionDidChangeBlock =
+      ^(MDCBottomSheetPresentationController *_Nonnull presentationController,
+        UITraitCollection *_Nullable previousTraitCollection) {
+        [expectation fulfill];
+        passedTraitCollection = previousTraitCollection;
+        passedBottomSheetPresentationController = presentationController;
+      };
+  UITraitCollection *testTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
+
+  // When
+  [bottomSheetPresentationController traitCollectionDidChange:testTraitCollection];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertEqual(passedTraitCollection, testTraitCollection);
+  XCTAssertEqual(passedBottomSheetPresentationController, bottomSheetPresentationController);
+}
+
 @end

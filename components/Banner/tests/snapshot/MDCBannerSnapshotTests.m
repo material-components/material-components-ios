@@ -19,9 +19,21 @@
 #import "MaterialTypographyScheme.h"
 
 static NSString *const kBannerShortText = @"tristique senectus et";
+static NSString *const kBannerMiddleLengthText =
+    @"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.";
 static NSString *const kBannerLongText =
     @"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.";
+
+// Arabic text constants for testing Banner in RTL mode.
+static NSString *const kBannerShortTextArabic = @"ما تنفّس.";
+static NSString *const kBannerMiddleLengthTextArabic =
+    @"دول السيطرة استطاعوا ٣٠. مليون وفرنسا أوراقهم انه تم.";
+static NSString *const kBannerLongTextArabic =
+    @"دول السيطرة استطاعوا ٣٠. مليون وفرنسا أوراقهم انه تم, نفس قد والديون العالمية. دون ما تنفّس.";
+
+// Content Padding is used for testing banner with specific layout margins.
 static const CGFloat kBannerContentPadding = 10.0f;
+static const CGFloat kBannerLargeContentPadding = 30.0f;
 
 @interface MDCBannerViewSnapshotDynamicTypeContentSizeCategoryOverrideWindow : UIWindow
 
@@ -145,20 +157,11 @@ static const CGFloat kBannerContentPadding = 10.0f;
   [self snapshotVerifyView:snapshotWindow];
 }
 
-- (void)changeViewToRTL:(UIView *)view {
-  if (@available(iOS 9.0, *)) {
-    view.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
-    for (UIView *subview in view.subviews) {
-      [self changeViewToRTL:subview];
-    }
-  }
-}
-
 #pragma mark - Tests
 
 - (void)testShortTextWithSingleActionLTR {
   // When
-  self.bannerView.textLabel.text = kBannerShortText;
+  self.bannerView.textView.text = kBannerShortText;
   MDCButton *button = self.bannerView.leadingButton;
   [button setTitle:@"Action" forState:UIControlStateNormal];
   button.uppercaseTitle = YES;
@@ -170,9 +173,9 @@ static const CGFloat kBannerContentPadding = 10.0f;
   [self generateSnapshotAndVerifyForView:self.bannerView];
 }
 
-- (void)testShortTextWithSingleActionRTL {
+- (void)testShortTextWithSingleActionRTLInArabic {
   // When
-  self.bannerView.textLabel.text = kBannerShortText;
+  self.bannerView.textView.text = kBannerShortTextArabic;
   MDCButton *button = self.bannerView.leadingButton;
   [button setTitle:@"Action" forState:UIControlStateNormal];
   [button setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
@@ -187,7 +190,7 @@ static const CGFloat kBannerContentPadding = 10.0f;
 
 - (void)testLongTextWithSingleActionLTR {
   // When
-  self.bannerView.textLabel.text = kBannerLongText;
+  self.bannerView.textView.text = kBannerLongText;
   MDCButton *button = self.bannerView.leadingButton;
   [button setTitle:@"Action" forState:UIControlStateNormal];
   [button setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
@@ -199,9 +202,9 @@ static const CGFloat kBannerContentPadding = 10.0f;
   [self generateSnapshotAndVerifyForView:self.bannerView];
 }
 
-- (void)testLongTextWithSingleActionRTL {
+- (void)testLongTextWithSingleActionRTLInArabic {
   // When
-  self.bannerView.textLabel.text = kBannerLongText;
+  self.bannerView.textView.text = kBannerLongTextArabic;
   MDCButton *button = self.bannerView.leadingButton;
   [button setTitle:@"Action" forState:UIControlStateNormal];
   [button setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
@@ -216,7 +219,7 @@ static const CGFloat kBannerContentPadding = 10.0f;
 
 - (void)testLongTextWithTwoActionsLTR {
   // When
-  self.bannerView.textLabel.text = kBannerLongText;
+  self.bannerView.textView.text = kBannerLongText;
   MDCButton *button1 = self.bannerView.leadingButton;
   [button1 setTitle:@"Action1" forState:UIControlStateNormal];
   [button1 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
@@ -231,9 +234,9 @@ static const CGFloat kBannerContentPadding = 10.0f;
   [self generateSnapshotAndVerifyForView:self.bannerView];
 }
 
-- (void)testLongTextWithTwoActionsRTL {
+- (void)testLongTextWithTwoActionsRTLInArabic {
   // When
-  self.bannerView.textLabel.text = kBannerLongText;
+  self.bannerView.textView.text = kBannerLongTextArabic;
   MDCButton *button1 = self.bannerView.leadingButton;
   [button1 setTitle:@"Action1" forState:UIControlStateNormal];
   [button1 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
@@ -244,6 +247,64 @@ static const CGFloat kBannerContentPadding = 10.0f;
   button2.uppercaseTitle = YES;
   [self changeViewToRTL:self.bannerView];
   self.bannerView.imageView.hidden = YES;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.bannerView];
+}
+
+- (void)testMiddleLengthTextWithLargeLayoutMargin {
+  // Given
+  self.bannerView.textView.text = kBannerMiddleLengthText;
+  MDCButton *button1 = self.bannerView.leadingButton;
+  [button1 setTitle:@"Action1" forState:UIControlStateNormal];
+  [button1 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
+  button1.uppercaseTitle = YES;
+  self.bannerView.trailingButton.hidden = YES;
+  self.bannerView.imageView.hidden = YES;
+
+  // When
+  if (@available(iOS 11.0, *)) {
+    NSDirectionalEdgeInsets directionalEdgeInsets = NSDirectionalEdgeInsetsZero;
+    directionalEdgeInsets.leading = kBannerLargeContentPadding;
+    directionalEdgeInsets.trailing = kBannerLargeContentPadding;
+    self.bannerView.directionalLayoutMargins = directionalEdgeInsets;
+  } else {
+    UIEdgeInsets margins = UIEdgeInsetsZero;
+    margins.left = kBannerLargeContentPadding;
+    margins.right = kBannerLargeContentPadding;
+    self.bannerView.layoutMargins = margins;
+  }
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.bannerView];
+}
+
+- (void)testMiddleLengthTextAndStackedButtonsWithLargeLayoutMargin {
+  // Given
+  self.bannerView.textView.text = kBannerMiddleLengthText;
+  MDCButton *button1 = self.bannerView.leadingButton;
+  [button1 setTitle:@"Action1" forState:UIControlStateNormal];
+  [button1 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
+  button1.uppercaseTitle = YES;
+  MDCButton *button2 = self.bannerView.trailingButton;
+  [button2 setTitle:@"Action2" forState:UIControlStateNormal];
+  [button2 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
+  button2.uppercaseTitle = YES;
+  self.bannerView.bannerViewLayoutStyle = MDCBannerViewLayoutStyleMultiRowStackedButton;
+  self.bannerView.imageView.hidden = YES;
+
+  // When
+  if (@available(iOS 11.0, *)) {
+    NSDirectionalEdgeInsets directionalEdgeInsets = NSDirectionalEdgeInsetsZero;
+    directionalEdgeInsets.leading = kBannerLargeContentPadding;
+    directionalEdgeInsets.trailing = kBannerLargeContentPadding;
+    self.bannerView.directionalLayoutMargins = directionalEdgeInsets;
+  } else {
+    UIEdgeInsets margins = UIEdgeInsetsZero;
+    margins.left = kBannerLargeContentPadding;
+    margins.right = kBannerLargeContentPadding;
+    self.bannerView.layoutMargins = margins;
+  }
 
   // Then
   [self generateSnapshotAndVerifyForView:self.bannerView];
@@ -251,7 +312,7 @@ static const CGFloat kBannerContentPadding = 10.0f;
 
 - (void)testSingleRowStyleLongTextWithSingleActionLTR {
   // When
-  self.bannerView.textLabel.text = kBannerLongText;
+  self.bannerView.textView.text = kBannerLongText;
   MDCButton *button1 = self.bannerView.leadingButton;
   [button1 setTitle:@"Action1" forState:UIControlStateNormal];
   [button1 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
@@ -263,9 +324,9 @@ static const CGFloat kBannerContentPadding = 10.0f;
   [self generateSnapshotAndVerifyForView:self.bannerView];
 }
 
-- (void)testSingleRowStyleLongTextWithSingleActionRTL {
+- (void)testSingleRowStyleLongTextWithSingleActionRTLInArabic {
   // When
-  self.bannerView.textLabel.text = kBannerLongText;
+  self.bannerView.textView.text = kBannerLongTextArabic;
   MDCButton *button1 = self.bannerView.leadingButton;
   [button1 setTitle:@"Action1" forState:UIControlStateNormal];
   [button1 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
@@ -273,6 +334,43 @@ static const CGFloat kBannerContentPadding = 10.0f;
   self.bannerView.bannerViewLayoutStyle = MDCBannerViewLayoutStyleSingleRow;
   [self changeViewToRTL:self.bannerView];
   self.bannerView.imageView.hidden = YES;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.bannerView];
+}
+
+- (void)testLongTextWithTwoActionsAndIconLTR {
+  // When
+  self.bannerView.textView.text = kBannerLongText;
+  MDCButton *button1 = self.bannerView.leadingButton;
+  [button1 setTitle:@"Action1" forState:UIControlStateNormal];
+  [button1 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
+  button1.uppercaseTitle = YES;
+  MDCButton *button2 = self.bannerView.trailingButton;
+  [button2 setTitle:@"Action2" forState:UIControlStateNormal];
+  [button2 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
+  button2.uppercaseTitle = YES;
+  self.bannerView.imageView.hidden = NO;
+  self.bannerView.imageView.image = [UIImage mdc_testImageOfSize:CGSizeMake(40, 40)];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.bannerView];
+}
+
+- (void)testLongTextWithTwoActionsAndIconRTLInArabic {
+  // When
+  self.bannerView.textView.text = kBannerLongTextArabic;
+  MDCButton *button1 = self.bannerView.leadingButton;
+  [button1 setTitle:@"Action1" forState:UIControlStateNormal];
+  [button1 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
+  button1.uppercaseTitle = YES;
+  MDCButton *button2 = self.bannerView.trailingButton;
+  [button2 setTitle:@"Action2" forState:UIControlStateNormal];
+  [button2 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
+  button2.uppercaseTitle = YES;
+  self.bannerView.imageView.hidden = NO;
+  self.bannerView.imageView.image = [UIImage mdc_testImageOfSize:CGSizeMake(40, 40)];
+  [self changeViewToRTL:self.bannerView];
 
   // Then
   [self generateSnapshotAndVerifyForView:self.bannerView];
@@ -286,14 +384,50 @@ static const CGFloat kBannerContentPadding = 10.0f;
         [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
 
     // When
-    self.bannerView.textLabel.text = kBannerShortText;
-    self.bannerView.textLabel.font = self.typographyScheme.body2;
+    self.bannerView.textView.text = kBannerShortText;
+    self.bannerView.textView.font = self.typographyScheme.body2;
     MDCButton *button = self.bannerView.leadingButton;
     [button setTitle:@"Action" forState:UIControlStateNormal];
     [button setTitleFont:self.typographyScheme.button forState:UIControlStateNormal];
     button.uppercaseTitle = YES;
     [button setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
     self.bannerView.trailingButton.hidden = YES;
+    self.bannerView.mdc_adjustsFontForContentSizeCategory = YES;
+
+    // Then
+    [self generateSnapshotWithContentSizeCategoryAndNotificationPost:
+              UIContentSizeCategoryExtraExtraLarge
+                                                    andVerifyForView:self.bannerView];
+  }
+}
+
+- (void)testDynamicTypeForAttributedTextStringWhenContentSizeCategoryIsExtraExtraLarge {
+  if (@available(iOS 10.0, *)) {
+    // Given
+    self.bannerView = [[MDCBannerView alloc] init];
+    self.typographyScheme =
+        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
+    MDCButton *button = self.bannerView.leadingButton;
+    [button setTitle:@"Action" forState:UIControlStateNormal];
+    [button setTitleFont:self.typographyScheme.button forState:UIControlStateNormal];
+    button.uppercaseTitle = YES;
+    [button setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
+    self.bannerView.trailingButton.hidden = YES;
+
+    // When
+    NSMutableAttributedString *bannerString =
+        [[NSMutableAttributedString alloc] initWithString:kBannerShortText];
+    [bannerString addAttribute:NSFontAttributeName
+                         value:self.typographyScheme.body1
+                         range:NSMakeRange(10, 8)];
+    [bannerString addAttribute:NSForegroundColorAttributeName
+                         value:UIColor.redColor
+                         range:NSMakeRange(0, 9)];
+    [bannerString addAttribute:NSLinkAttributeName
+                         value:@"http://www.google.com"
+                         range:NSMakeRange([kBannerShortText length] - 2, 2)];
+    self.bannerView.textView.attributedText = bannerString;
+    self.bannerView.textView.font = self.typographyScheme.body2;
     self.bannerView.mdc_adjustsFontForContentSizeCategory = YES;
 
     // Then

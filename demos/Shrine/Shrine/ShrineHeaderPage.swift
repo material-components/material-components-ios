@@ -46,7 +46,7 @@ struct ShrineHeaderPage {
     self.imageName = imageName
     self.description = description
 
-    imageView.contentMode = UIViewContentMode.scaleAspectFill
+    imageView.contentMode = UIView.ContentMode.scaleAspectFill
     imageView.autoresizingMask = .flexibleHeight
     (page as AnyObject).addSubview(imageView)
     let url = URL(string: ShrineData.baseURL + imageName)
@@ -87,7 +87,7 @@ struct ShrineHeaderPage {
     let paragraphStyle = NSMutableParagraphStyle()
     paragraphStyle.lineHeightMultiple = lineHeightMultiple
     let attrString = NSMutableAttributedString(string: string)
-    attrString.addAttribute(NSParagraphStyleAttributeName, value:paragraphStyle,
+    attrString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle,
                             range:NSRange(location: 0, length: attrString.length))
     return attrString
   }

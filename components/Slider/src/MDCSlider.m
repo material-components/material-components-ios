@@ -261,6 +261,14 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   return _thumbTrack.numDiscreteValues;
 }
 
+- (UIColor *)thumbShadowColor {
+  return _thumbTrack.thumbShadowColor;
+}
+
+- (void)setThumbShadowColor:(UIColor *)thumbShadowColor {
+  _thumbTrack.thumbShadowColor = thumbShadowColor;
+}
+
 - (void)setNumberOfDiscreteValues:(NSUInteger)numberOfDiscreteValues {
   _thumbTrack.numDiscreteValues = numberOfDiscreteValues;
 }
@@ -448,6 +456,14 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 - (void)layoutSubviews {
   [super layoutSubviews];
   _thumbTrack.frame = self.bounds;
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
 }
 
 - (CGSize)sizeThatFits:(__unused CGSize)size {

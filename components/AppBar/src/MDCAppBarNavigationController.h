@@ -17,6 +17,7 @@
 @class MDCAppBar;
 @class MDCAppBarViewController;
 @class MDCAppBarNavigationController;
+@class MDCFlexibleHeaderViewController;
 
 /**
  Defines the events that an MDCAppBarNavigationController may send to a delegate.
@@ -130,6 +131,15 @@ __attribute__((objc_subclassing_restricted)) @interface MDCAppBarNavigationContr
  */
 - (nullable MDCAppBarViewController *)appBarViewControllerForViewController:
     (nonnull UIViewController *)viewController;
+
+/**
+ A block that is assigned to each injected @c MDCAppBarViewController's
+ @c traitCollectionDidChangeBlock property. The block will be executed when the injected
+ @c MDCAppBarViewController's @c -traitCollectionDidChange: is called.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlockForAppBarController)
+    (MDCFlexibleHeaderViewController *_Nonnull flexibleHeaderViewController,
+     UITraitCollection *_Nullable previousTraitCollection);
 
 @end
 

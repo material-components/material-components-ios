@@ -74,7 +74,7 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
                                width: boundsWidth,
                                height: pageControlSize.height)
     pageControl.addTarget(self, action: #selector(didChangePage),
-                          for: UIControlEvents.valueChanged)
+                          for: UIControl.Event.valueChanged)
     addSubview(pageControl)
 
     addHeaderPages()
@@ -171,7 +171,7 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
     pageControl.scrollViewDidEndScrollingAnimation(scrollView)
   }
 
-  func didChangePage(_ sender: MDCPageControl) {
+  @objc func didChangePage(_ sender: MDCPageControl) {
     var offset = scrollView.contentOffset
     offset.x = CGFloat(sender.currentPage) * scrollView.bounds.size.width
     scrollView.setContentOffset(offset, animated: true)
