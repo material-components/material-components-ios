@@ -31,7 +31,7 @@
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-    self.recordMode = YES;
+  //  self.recordMode = YES;
 
   UIViewController *fakeViewController = [[UIViewController alloc] init];
   fakeViewController.view.backgroundColor = UIColor.yellowColor;
