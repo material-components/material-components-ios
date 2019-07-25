@@ -55,7 +55,7 @@
     UITraitCollection *traitCollection =
         [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
     UIColor *resolvedColor = [dynamicColor resolvedColorWithTraitCollection:traitCollection
-                                                               andElevation:elevation];
+                                                                  elevation:elevation];
 
     // Then
     UIColor *expectedColor = [darkColor resolvedColorWithElevation:elevation];
@@ -76,7 +76,7 @@
     UITraitCollection *traitCollection =
         [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
     UIColor *resolvedColor = [staticColor resolvedColorWithTraitCollection:traitCollection
-                                                              andElevation:elevation];
+                                                                 elevation:elevation];
 
     // Then
     UIColor *expectedColor = [staticColor resolvedColorWithElevation:elevation];

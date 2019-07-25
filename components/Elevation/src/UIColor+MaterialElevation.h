@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param traitCollection The traits to use when resolving the color.
 /// @param elevation The elevation to use when resolving the color.
 - (UIColor *)resolvedColorWithTraitCollection:(UITraitCollection *)traitCollection
-                                 andElevation:(CGFloat)elevation API_AVAILABLE(ios(13.0));
+                                    elevation:(CGFloat)elevation API_AVAILABLE(ios(13.0));
 
 @end
 

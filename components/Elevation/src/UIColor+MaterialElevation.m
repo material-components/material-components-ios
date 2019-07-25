@@ -19,7 +19,7 @@
 @implementation UIColor (MaterialElevation)
 
 - (UIColor *)resolvedColorWithTraitCollection:(UITraitCollection *)traitCollection
-                                 andElevation:(CGFloat)elevation {
+                                    elevation:(CGFloat)elevation {
 #if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     UIColor *resolvedColor = [self resolvedColorWithTraitCollection:traitCollection];
