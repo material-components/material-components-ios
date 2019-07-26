@@ -782,7 +782,7 @@
 
 - (void)testCorrectDefaultElevationValue {
   // When
-  [self.fakeBottomDrawer viewDidLoad];
+  [self.fakeBottomDrawer loadViewIfNeeded];
 
   // Then
   XCTAssertEqualWithAccuracy(((MDCShadowLayer *)self.fakeBottomDrawer.shadowedView.layer).elevation,
@@ -794,11 +794,22 @@
   self.fakeBottomDrawer.elevation = 12;
 
   // When
-  [self.fakeBottomDrawer viewDidLoad];
+  [self.fakeBottomDrawer loadViewIfNeeded];
 
   // Then
   XCTAssertEqualWithAccuracy(((MDCShadowLayer *)self.fakeBottomDrawer.shadowedView.layer).elevation,
                              12, 0.001);
+}
+
+- (void)testSettingElevationInPresentationControllerAfterPresentationWillPropagateCorrectly {
+  // When
+  [self.presentationController presentationTransitionWillBegin];
+  self.presentationController.elevation = 20;
+
+  // Then
+  MDCBottomDrawerContainerViewController *drawerContainer =
+      self.presentationController.bottomDrawerContainerViewController;
+  XCTAssertEqualWithAccuracy(drawerContainer.shadowedView.shadowLayer.elevation, 20, 0.001);
 }
 
 - (void)testSettingShadowColorInDrawerViewControllerPropogatesToPresentationController {
@@ -813,7 +824,7 @@
 
 - (void)testCorrectDefaultShadowColorValue {
   // When
-  [self.fakeBottomDrawer viewDidLoad];
+  [self.fakeBottomDrawer loadViewIfNeeded];
 
   // Then
   XCTAssertTrue(CGColorEqualToColor(self.fakeBottomDrawer.shadowedView.layer.shadowColor,
@@ -825,11 +836,23 @@
   self.drawerViewController.drawerShadowColor = UIColor.blueColor;
 
   // When
-  [self.fakeBottomDrawer viewDidLoad];
+  [self.fakeBottomDrawer loadViewIfNeeded];
 
   // Then
   XCTAssertTrue(CGColorEqualToColor(self.fakeBottomDrawer.shadowedView.layer.shadowColor,
                                     UIColor.blueColor.CGColor));
+}
+
+- (void)testSettingShadowColorInPresentationControllerAfterPresentationWillPropagateCorrectly {
+  // When
+  [self.presentationController presentationTransitionWillBegin];
+  self.presentationController.drawerShadowColor = UIColor.redColor;
+
+  // Then
+  MDCBottomDrawerContainerViewController *drawerContainer =
+      self.presentationController.bottomDrawerContainerViewController;
+  XCTAssertTrue(CGColorEqualToColor(drawerContainer.shadowedView.layer.shadowColor,
+                                    UIColor.redColor.CGColor));
 }
 
 @end

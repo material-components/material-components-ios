@@ -40,11 +40,19 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
     @"kMDCBottomDrawerScrollViewAccessibilityIdentifier";
 
 @interface MDCBottomDrawerShadowedView : UIView
+- (MDCShadowLayer *)shadowLayer;
 @end
 
 @implementation MDCBottomDrawerShadowedView
 + (Class)layerClass {
   return [MDCShadowLayer class];
+}
+
+- (MDCShadowLayer *)shadowLayer {
+  if ([self.layer isKindOfClass:[MDCShadowLayer class]]) {
+    return (MDCShadowLayer *)self.layer;
+  }
+  return nil;
 }
 @end
 
@@ -175,7 +183,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
     _maximumInitialDrawerHeight =
         self.presentingViewBounds.size.height * kInitialDrawerHeightFactor;
     _shouldPresentAtFullscreen = NO;
-    UIColor *shadowColor = [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.2];
+    UIColor *shadowColor = [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.2];
     _headerShadowColor = shadowColor;
     _drawerShadowColor = shadowColor;
     _elevation = MDCShadowElevationNavDrawer;
@@ -381,6 +389,16 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
   }
 }
 
+- (void)setElevation:(MDCShadowElevation)elevation {
+  _elevation = elevation;
+  self.shadowedView.shadowLayer.elevation = elevation;
+}
+
+- (void)setDrawerShadowColor:(UIColor *)drawerShadowColor {
+  _drawerShadowColor = drawerShadowColor;
+  self.shadowedView.shadowLayer.shadowColor = drawerShadowColor.CGColor;
+}
+
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
   CGFloat topAreaInsetForHeader = (self.headerViewController ? MDCDeviceTopSafeAreaInset() : 0);
   CGFloat drawerOffset = self.contentHeaderTopInset - topAreaInsetForHeader;
@@ -431,7 +449,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 
   self.shadowedView.layer.shadowColor = self.drawerShadowColor.CGColor;
   self.shadowedView.backgroundColor = UIColor.clearColor;
-  ((MDCShadowLayer *)self.shadowedView.layer).elevation = self.elevation;
+  self.shadowedView.shadowLayer.elevation = self.elevation;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -509,7 +527,8 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
   }
   self.shadowedView.frame = topView.frame;
   if (topView.layer.mask) {
-    self.shadowedView.layer.shadowPath = ((CAShapeLayer *)topView.layer.mask).path;
+    CAShapeLayer *shapeLayer = topView.layer.mask;
+    self.shadowedView.layer.shadowPath = shapeLayer.path;
   }
 
   [self.headerViewController.view.superview bringSubviewToFront:self.headerViewController.view];
@@ -662,8 +681,8 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
       CGRectMake(0, contentHeaderViewTop, contentHeaderViewWidth, contentHeaderViewHeight);
   self.shadowedView.frame = contentHeaderView.frame;
   if (self.headerViewController.view.layer.mask) {
-    self.shadowedView.layer.shadowPath =
-        ((CAShapeLayer *)self.headerViewController.view.layer.mask).path;
+    CAShapeLayer *shapeLayer = self.headerViewController.view.layer.mask;
+    self.shadowedView.layer.shadowPath = shapeLayer.path;
   }
 }
 

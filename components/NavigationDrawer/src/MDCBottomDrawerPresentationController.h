@@ -118,7 +118,7 @@
 /**
  The drawer's top shadow color. Defaults to black with 20% opacity.
  */
-@property(nonatomic, strong, nullable) UIColor *drawerShadowColor;
+@property(nonatomic, strong, nonnull) UIColor *drawerShadowColor;
 
 /**
  The drawer's elevation. Defaults to MDCShadowElevationNavDrawer.

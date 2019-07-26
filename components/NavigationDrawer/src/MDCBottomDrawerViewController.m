@@ -54,6 +54,8 @@
   _maskLayer = [[MDCBottomDrawerHeaderMask alloc] initWithMaximumCornerRadius:0
                                                           minimumCornerRadius:0];
   _maximumInitialDrawerHeight = 0;
+  _drawerShadowColor = [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.2];
+  _elevation = MDCShadowElevationNavDrawer;
 }
 
 - (void)viewWillLayoutSubviews {
