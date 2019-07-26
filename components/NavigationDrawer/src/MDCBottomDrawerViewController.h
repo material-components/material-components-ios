@@ -15,6 +15,7 @@
 #import <UIKit/UIKit.h>
 #import "MDCBottomDrawerPresentationController.h"
 #import "MDCBottomDrawerState.h"
+#import "MaterialElevation.h"
 #import "MaterialShadowElevations.h"
 
 @protocol MDCBottomDrawerHeader;
@@ -24,7 +25,9 @@
  View controller for containing a Google Material bottom drawer.
  */
 @interface MDCBottomDrawerViewController
-    : UIViewController <MDCBottomDrawerPresentationControllerDelegate>
+    : UIViewController <MDCBottomDrawerPresentationControllerDelegate,
+                        MDCElevatable,
+                        MDCElevationOverriding>
 
 /**
  The main content displayed by the drawer.
@@ -105,6 +108,17 @@
  The bottom drawer delegate.
  */
 @property(nonatomic, weak, nullable) id<MDCBottomDrawerViewControllerDelegate> delegate;
+
+/**
+ This block is called after a change of the bottom drawer view controller's elevation or one of its
+ view hierarchy ancestors. Use this block to respond to elevation changes in the view or its
+ ancestor views.
+ @param elevation The @c mdc_currentElevation plus the @c mdc_currentElevation of all ancestor
+ views.
+ @param object This bottom drawer view controller.
+ */
+@property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)
+    (MDCBottomDrawerViewController *_Nonnull bottomDrawerViewController, CGFloat elevation);
 
 /**
  Sets the top corners radius for an MDCBottomDrawerState drawerState

@@ -1377,6 +1377,7 @@ Pod::Spec.new do |mdc|
     ]
     component.exclude_files = "components/#{component.base_name}/src/private/MDCBottomDrawerContainerViewController+Testing.h"
 
+    component.dependency "MaterialComponents/Elevation"
     component.dependency "MaterialComponents/Palettes"
     component.dependency "MaterialComponents/ShadowLayer"
     component.dependency "MaterialComponents/private/Math"
