@@ -34,6 +34,7 @@ mdc_public_objc_library(
     ],
     deps = [
         "//components/Elevation",
+        "//components/ShadowElevations",
         "//components/private/Application",
         "//components/private/Math",
         "//components/private/UIMetrics",
