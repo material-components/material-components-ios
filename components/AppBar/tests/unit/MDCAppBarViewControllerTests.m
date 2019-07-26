@@ -16,10 +16,6 @@
 
 #import "MDCAppBarViewController.h"
 
-@interface MDCFlexibleHeaderView ()
-- (void)fhv_accumulatorDidChange;
-@end
-
 @interface MDCAppBarViewControllerTests : XCTestCase
 
 @end
@@ -86,9 +82,7 @@
       };
 
   // When
-  // fhv_accumulatorDidChange is an internal method in MDCFlexibleHeaderView that triggers a call
-  // to its shadowIntensityDidChange block
-  [appBarController.headerView fhv_accumulatorDidChange];
+  [appBarController.headerView setVisibleShadowOpacity:1];
 
   // Then
   [self waitForExpectations:@[ expectation ] timeout:1];
