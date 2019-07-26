@@ -36,7 +36,7 @@
  UIColor in UIExtendedGrayColorSpace will be resolved to UIExtendedSRGBColorSpace.
 
  @param traitCollection The traits to use when resolving the color.
- @param elevation The elevation to use when resolving the color.
+ @param elevation The mdc_absoluteElevation to use when resolving the color.
  */
 - (nonnull UIColor *)mdc_resolvedColorWithTraitCollection:
                          (nonnull UITraitCollection *)traitCollection
