@@ -18,6 +18,7 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
+#import "MaterialMath.h"
 #import "MaterialNavigationBar.h"
 #import "private/MDCBottomAppBarAttributes.h"
 #import "private/MDCBottomAppBarLayer.h"
@@ -55,6 +56,8 @@ static const int kMDCButtonAnimationDuration = 200;
 
 @implementation MDCBottomAppBarView
 
+@synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
+
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
@@ -86,6 +89,8 @@ static const int kMDCButtonAnimationDuration = 200;
 
   self.barTintColor = UIColor.whiteColor;
   self.shadowColor = UIColor.blackColor;
+  _elevation = MDCShadowElevationBottomAppBar;
+  _mdc_overrideBaseElevation = -1;
 }
 
 - (void)addFloatingButton {
@@ -302,6 +307,14 @@ static const int kMDCButtonAnimationDuration = 200;
 
 #pragma mark - Setters
 
+- (void)setElevation:(MDCShadowElevation)elevation {
+  if (MDCCGFloatEqual(elevation, _elevation)) {
+    return;
+  }
+  _elevation = elevation;
+  [self mdc_elevationDidChange];
+}
+
 - (void)setFloatingButton:(MDCFloatingButton *)floatingButton {
   if (_floatingButton == floatingButton) {
     return;
@@ -431,6 +444,12 @@ static const int kMDCButtonAnimationDuration = 200;
   if (self.traitCollectionDidChangeBlock) {
     self.traitCollectionDidChangeBlock(self, previousTraitCollection);
   }
+}
+
+#pragma mark - MDCElevation
+
+- (CGFloat)mdc_currentElevation {
+  return self.elevation;
 }
 
 @end

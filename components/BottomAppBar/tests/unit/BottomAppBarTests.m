@@ -202,4 +202,47 @@
   XCTAssertEqual(passedBottomAppBar, bottomAppBar);
 }
 
+- (void)testElevationDidChangeBlockCalledWhenElevationChangesValue {
+  // Given
+  MDCBottomAppBarView *bottomAppBar = [[MDCBottomAppBarView alloc] init];
+  const CGFloat finalElevation = 6;
+  bottomAppBar.elevation = finalElevation - 1;
+  __block CGFloat newElevation = -1;
+  bottomAppBar.mdc_elevationDidChangeBlock =
+      ^(MDCBottomAppBarView *blockAppBar, CGFloat elevation) {
+        newElevation = elevation;
+      };
+
+  // When
+  bottomAppBar.elevation = bottomAppBar.elevation + 1;
+
+  // Then
+  XCTAssertEqualWithAccuracy(newElevation, finalElevation, 0.001);
+}
+
+- (void)testElevationDidChangeBlockNotCalledWhenElevationIsSetWithoutChangingValue {
+  // Given
+  MDCBottomAppBarView *bottomAppBar = [[MDCBottomAppBarView alloc] init];
+  bottomAppBar.elevation = 5;
+  __block BOOL blockCalled = NO;
+  bottomAppBar.mdc_elevationDidChangeBlock =
+      ^(MDCBottomAppBarView *blockAppBar, CGFloat elevation) {
+        blockCalled = YES;
+      };
+
+  // When
+  bottomAppBar.elevation = bottomAppBar.elevation;
+
+  // Then
+  XCTAssertFalse(blockCalled);
+}
+
+- (void)testDefaultValueForOverrideBaseElevationIsNegative {
+  // Given
+  MDCBottomAppBarView *bottomAppBar = [[MDCBottomAppBarView alloc] init];
+
+  // Then
+  XCTAssertLessThan(bottomAppBar.mdc_overrideBaseElevation, 0);
+}
+
 @end
