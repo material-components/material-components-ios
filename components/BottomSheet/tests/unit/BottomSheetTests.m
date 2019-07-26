@@ -124,4 +124,69 @@
   XCTAssertEqual(passedBottomSheetPresentationController, bottomSheetPresentationController);
 }
 
+#pragma mark - MaterialElevation
+
+- (void)testDefaultOverrideBaseElevationIsNegative {
+  // Given
+  MDCBottomSheetController *bottomSheet = [[MDCBottomSheetController alloc] init];
+
+  // Then
+  XCTAssertLessThan(bottomSheet.mdc_overrideBaseElevation, 0);
+}
+
+- (void)testSettingBaseOverrideBaseElevationReturnsSetValue {
+  // Given
+  CGFloat fakeElevation = 99;
+  MDCBottomSheetController *controller = [[MDCBottomSheetController alloc] init];
+
+  // When
+  controller.mdc_overrideBaseElevation = fakeElevation;
+
+  // Then
+  XCTAssertEqualWithAccuracy(controller.mdc_overrideBaseElevation, fakeElevation, 0.001);
+}
+
+- (void)testCurrentElevationMatchesElevationWhenElevationChanges {
+  // When
+  MDCBottomSheetController *controller = [[MDCBottomSheetController alloc] init];
+  controller.elevation = 77;
+
+  // Then
+  XCTAssertEqualWithAccuracy(controller.mdc_currentElevation, controller.elevation, 0.001);
+}
+
+- (void)testElevationDidChangeBlockCalledWhenElevationChangesValue {
+  // Given
+  MDCBottomSheetController *controller = [[MDCBottomSheetController alloc] init];
+  controller.elevation = 5;
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"elevationDidChange"];
+  controller.mdc_elevationDidChangeBlock =
+      ^(MDCBottomSheetController *_Nonnull bottomSheet, CGFloat absoluteElevation) {
+        [expectation fulfill];
+      };
+
+  // When
+  controller.elevation = controller.elevation + 1;
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+}
+
+- (void)testElevationDidChangeBlockNotCalledWhenElevationIsSetWithoutChangingValue {
+  // Given
+  MDCBottomSheetController *controller = [[MDCBottomSheetController alloc] init];
+  __block BOOL blockCalled = NO;
+  controller.mdc_elevationDidChangeBlock =
+      ^(MDCBottomSheetController *_Nonnull bottomSheet, CGFloat absoluteElevation) {
+        blockCalled = YES;
+      };
+
+  // When
+  controller.elevation = controller.elevation;
+
+  // Then
+  XCTAssertFalse(blockCalled);
+}
+
 @end

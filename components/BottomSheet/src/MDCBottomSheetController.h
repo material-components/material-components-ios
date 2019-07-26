@@ -14,6 +14,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MDCSheetState.h"
+#import "MaterialElevation.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialShapes.h"
 
@@ -29,7 +30,7 @@
  MDCBottomSheetController automatically sets the appropriate presentation style and
  transitioningDelegate for the bottom sheet behavior.
  */
-@interface MDCBottomSheetController : UIViewController
+@interface MDCBottomSheetController : UIViewController <MDCElevatable, MDCElevationOverriding>
 
 /**
  The view controller being presented as a bottom sheet.
@@ -109,6 +110,17 @@
  The elevation of the bottom sheet. Defaults to @c MDCShadowElevationModalBottomSheet.
  */
 @property(nonatomic, assign) MDCShadowElevation elevation;
+
+/**
+ This block is called after a change of the bottom sheet controller's elevation.
+
+  Use this block to respond to elevation changes in the alert controller or its ancestors.
+
+  @param bottomSheet This bottom sheet controller.
+ @param absoluteElevation The @c mdc_absoluteElevation this alert controller.
+ */
+@property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)
+    (MDCBottomSheetController *_Nonnull bottomSheet, CGFloat absoluteElevation);
 
 /**
  Sets the shape generator for state that is used to define the bottom sheet's shape for that state.
