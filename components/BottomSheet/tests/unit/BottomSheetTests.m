@@ -12,36 +12,60 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <XCTest/XCTest.h>
 #import "MaterialBottomSheet.h"
 
-@interface BottomSheetTests : XCTestCase
+#import <XCTest/XCTest.h>
 
+#import "MaterialShadowElevations.h"
+
+@interface BottomSheetTests : XCTestCase
+@property(nonatomic, strong, nullable) MDCBottomSheetController *bottomSheet;
 @end
 
 @implementation BottomSheetTests
 
-- (void)testNoop {
-  XCTAssertTrue(YES);
+- (void)setUp {
+  [super setUp];
+
+  self.bottomSheet = [[MDCBottomSheetController alloc]
+      initWithContentViewController:[[UIViewController alloc] init]];
+}
+
+- (void)tearDown {
+  self.bottomSheet = nil;
+
+  [super tearDown];
 }
 
 - (void)testBottomSheetDefaults {
-  // Given
-  MDCBottomSheetController *bottomSheet = [[MDCBottomSheetController alloc] init];
-
   // Then
-  XCTAssertFalse(bottomSheet.shouldFlashScrollIndicatorsOnAppearance);
+  XCTAssertFalse(self.bottomSheet.shouldFlashScrollIndicatorsOnAppearance);
+  XCTAssertEqualWithAccuracy(self.bottomSheet.elevation, MDCShadowElevationModalBottomSheet, 0.001);
 }
 
 - (void)testSetShowScrollIndicatorsResultsInCorrectValue {
-  // Given
-  MDCBottomSheetController *bottomSheet = [[MDCBottomSheetController alloc] init];
-
   // When
-  bottomSheet.shouldFlashScrollIndicatorsOnAppearance = YES;
+  self.bottomSheet.shouldFlashScrollIndicatorsOnAppearance = YES;
 
   // Then
-  XCTAssertTrue(bottomSheet.shouldFlashScrollIndicatorsOnAppearance);
+  XCTAssertTrue(self.bottomSheet.shouldFlashScrollIndicatorsOnAppearance);
+}
+
+- (void)testCustomShadowElevation {
+  // Given
+  CGFloat fakeElevation = 3;
+  [self.bottomSheet loadView];
+  MDCShapedView *view = nil;
+  if ([self.bottomSheet.view isKindOfClass:[MDCShapedView class]]) {
+    view = (MDCShapedView *)self.bottomSheet.view;
+  }
+
+  // When
+  self.bottomSheet.elevation = fakeElevation;
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.bottomSheet.elevation, fakeElevation, 0.001);
+  XCTAssertEqualWithAccuracy(view.elevation, fakeElevation, 0.001);
 }
 
 - (void)testBottonSheetControllerTraitCollectionDidChangeBlockCalledWithExpectedParameters {

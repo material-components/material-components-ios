@@ -368,6 +368,8 @@ Pod::Spec.new do |mdc|
 
     component.dependency "MaterialComponents/ShapeLibrary"
     component.dependency "MaterialComponents/Shapes"
+    component.dependency "MaterialComponents/ShadowElevations"
+    component.dependency "MaterialComponents/ShadowLayer"
     component.dependency "MaterialComponents/private/KeyboardWatcher"
     component.dependency "MaterialComponents/private/Math"
 

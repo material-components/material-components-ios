@@ -31,6 +31,15 @@
 
 - (void)loadView {
   self.view = [[MDCShapedView alloc] initWithFrame:CGRectZero];
+  self.view.elevation = self.elevation;
+}
+
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    _elevation = MDCShadowElevationModalBottomSheet;
+  }
+  return self;
 }
 
 - (nonnull instancetype)initWithContentViewController:
@@ -43,6 +52,7 @@
     super.modalPresentationStyle = UIModalPresentationCustom;
     _shapeGenerators = [NSMutableDictionary dictionary];
     _state = MDCSheetStatePreferred;
+    _elevation = MDCShadowElevationModalBottomSheet;
   }
   return self;
 }
@@ -183,6 +193,11 @@
       self.contentViewController.view.layer.mask = nil;
     }
   }
+}
+
+- (void)setElevation:(MDCShadowElevation)elevation {
+  _elevation = elevation;
+  self.view.elevation = elevation;
 }
 
 /* Disable setter. Always use internal transition controller */
