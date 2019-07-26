@@ -54,6 +54,8 @@
   _maskLayer = [[MDCBottomDrawerHeaderMask alloc] initWithMaximumCornerRadius:0
                                                           minimumCornerRadius:0];
   _maximumInitialDrawerHeight = 0;
+  _drawerShadowColor = [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.2];
+  _elevation = MDCShadowElevationNavDrawer;
 }
 
 - (void)viewWillLayoutSubviews {
@@ -181,6 +183,24 @@
     MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
         (MDCBottomDrawerPresentationController *)self.presentationController;
     bottomDrawerPresentationController.maximumInitialDrawerHeight = maximumInitialDrawerHeight;
+  }
+}
+
+- (void)setElevation:(MDCShadowElevation)elevation {
+  _elevation = elevation;
+  if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
+        (MDCBottomDrawerPresentationController *)self.presentationController;
+    bottomDrawerPresentationController.elevation = elevation;
+  }
+}
+
+- (void)setDrawerShadowColor:(UIColor *)drawerShadowColor {
+  _drawerShadowColor = drawerShadowColor;
+  if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
+        (MDCBottomDrawerPresentationController *)self.presentationController;
+    bottomDrawerPresentationController.drawerShadowColor = drawerShadowColor;
   }
 }
 
