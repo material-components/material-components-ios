@@ -39,7 +39,7 @@ static NSString *const kContentOffsetKeyPath = @"contentOffset";
 NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
     @"kMDCBottomDrawerScrollViewAccessibilityIdentifier";
 
-@interface MDCBottomDrawerShadowedView: UIView
+@interface MDCBottomDrawerShadowedView : UIView
 @end
 
 @implementation MDCBottomDrawerShadowedView
