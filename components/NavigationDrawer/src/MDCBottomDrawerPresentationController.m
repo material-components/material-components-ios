@@ -53,6 +53,8 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   if (self) {
     _topHandleHidden = YES;
     _maximumInitialDrawerHeight = 0;
+    _drawerShadowColor = [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.2];
+    _elevation = MDCShadowElevationNavDrawer;
   }
   return self;
 }
@@ -78,6 +80,8 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   }
   bottomDrawerContainerViewController.shouldIncludeSafeAreaInContentHeight =
       self.shouldIncludeSafeAreaInContentHeight;
+  bottomDrawerContainerViewController.elevation = self.elevation;
+  bottomDrawerContainerViewController.drawerShadowColor = self.drawerShadowColor;
   if ([self.presentedViewController isKindOfClass:[MDCBottomDrawerViewController class]]) {
     // If in fact the presentedViewController is an MDCBottomDrawerViewController,
     // we then know there is a content and an (optional) header view controller.
@@ -246,19 +250,13 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   self.topHandle.backgroundColor = topHandleColor;
 }
 
-- (MDCShadowElevation)elevation {
-  return self.bottomDrawerContainerViewController.elevation;
-}
-
 - (void)setElevation:(MDCShadowElevation)elevation {
+  _elevation = elevation;
   self.bottomDrawerContainerViewController.elevation = elevation;
 }
 
-- (UIColor *)drawerShadowColor {
-  return self.bottomDrawerContainerViewController.drawerShadowColor;
-}
-
 - (void)setDrawerShadowColor:(UIColor *)drawerShadowColor {
+  _drawerShadowColor = drawerShadowColor;
   self.bottomDrawerContainerViewController.drawerShadowColor = drawerShadowColor;
 }
 

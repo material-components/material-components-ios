@@ -812,6 +812,17 @@
   XCTAssertEqualWithAccuracy(drawerContainer.shadowedView.shadowLayer.elevation, 20, 0.001);
 }
 
+- (void)testSettingElevationInPresentationControllerBeforePresentationWillPropagateCorrectly {
+  // When
+  self.presentationController.elevation = 20;
+  [self.presentationController presentationTransitionWillBegin];
+
+  // Then
+  MDCBottomDrawerContainerViewController *drawerContainer =
+  self.presentationController.bottomDrawerContainerViewController;
+  XCTAssertEqualWithAccuracy(drawerContainer.shadowedView.shadowLayer.elevation, 20, 0.001);
+}
+
 - (void)testSettingShadowColorInDrawerViewControllerPropogatesToPresentationController {
   // Given
   self.drawerViewController.drawerShadowColor = UIColor.blueColor;
@@ -851,6 +862,18 @@
   // Then
   MDCBottomDrawerContainerViewController *drawerContainer =
       self.presentationController.bottomDrawerContainerViewController;
+  XCTAssertTrue(CGColorEqualToColor(drawerContainer.shadowedView.layer.shadowColor,
+                                    UIColor.redColor.CGColor));
+}
+
+- (void)testSettingShadowColorInPresentationControllerBeforePresentationWillPropagateCorrectly {
+  // When
+  self.presentationController.drawerShadowColor = UIColor.redColor;
+  [self.presentationController presentationTransitionWillBegin];
+
+  // Then
+  MDCBottomDrawerContainerViewController *drawerContainer =
+  self.presentationController.bottomDrawerContainerViewController;
   XCTAssertTrue(CGColorEqualToColor(drawerContainer.shadowedView.layer.shadowColor,
                                     UIColor.redColor.CGColor));
 }
