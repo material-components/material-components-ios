@@ -14,8 +14,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialShadowElevations.h"
-
 @protocol MDCDraggableViewDelegate;
 
 @interface MDCDraggableView : UIView

@@ -14,7 +14,6 @@
 
 #import <UIKit/UIKit.h>
 #import "MDCSheetState.h"
-#import "MaterialShadowElevations.h"
 
 @protocol MDCSheetContainerViewDelegate;
 
