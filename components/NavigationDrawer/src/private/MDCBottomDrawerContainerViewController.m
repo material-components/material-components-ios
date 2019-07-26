@@ -540,7 +540,8 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
   [self removeScrollViewObserver];
 }
 
-- (void)preferredContentSizeDidChangeForChildContentContainer:(nonnull id<UIContentContainer>)container {
+- (void)preferredContentSizeDidChangeForChildContentContainer:
+    (nonnull id<UIContentContainer>)container {
   [super preferredContentSizeDidChangeForChildContentContainer:container];
   if ([container isKindOfClass:[UIViewController class]]) {
     UIViewController *containerViewController = (UIViewController *)container;
