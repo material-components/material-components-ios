@@ -1068,6 +1068,9 @@ Pod::Spec.new do |mdc|
     ]
 
     component.dependency 'MDFTextAccessibility'
+    component.dependency "MaterialComponents/Elevation"
+    component.dependency "MaterialComponents/ShadowElevations"
+    component.dependency "MaterialComponents/ShadowLayer"
     component.dependency "MaterialComponents/private/Application"
     component.dependency "MaterialComponents/private/Math"
     component.dependency "MaterialComponents/private/UIMetrics"
