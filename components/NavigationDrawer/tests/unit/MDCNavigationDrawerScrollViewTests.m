@@ -839,7 +839,7 @@
 
   // Then
   XCTAssertTrue(CGColorEqualToColor(self.fakeBottomDrawer.shadowedView.layer.shadowColor,
-                                    [UIColor colorWithWhite:0 alpha:0.2].CGColor));
+                                    [UIColor colorWithWhite:0 alpha:(CGFloat)0.2].CGColor));
 }
 
 - (void)testShadowColorIsSetCorrectly {
