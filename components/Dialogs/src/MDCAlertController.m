@@ -298,10 +298,6 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   return self.elevation;
 }
 
-- (CGFloat)mdc_overrideBaseElevation {
-  return _mdc_overrideBaseElevation;
-}
-
 - (void)setShadowColor:(UIColor *)shadowColor {
   UIColor *shadowColorCopy = [shadowColor copy];
   _shadowColor = shadowColorCopy;
