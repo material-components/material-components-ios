@@ -390,7 +390,7 @@ IB_DESIGNABLE
      UITraitCollection *_Nullable previousTraitCollection);
 
 /**
- The elevation of the header. Defaults to @c MDCShadowElevationAppBar .
+ The elevation of the header.
  */
 @property(nonatomic, assign) MDCShadowElevation elevation;
 
