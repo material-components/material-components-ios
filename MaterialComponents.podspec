@@ -1677,12 +1677,14 @@ Pod::Spec.new do |mdc|
 
     component.dependency "MaterialComponents/AnimationTiming"
     component.dependency "MaterialComponents/Buttons"
+    component.dependency "MaterialComponents/Elevation"
     component.dependency "MaterialComponents/OverlayWindow"
     component.dependency "MaterialComponents/ShadowElevations"
     component.dependency "MaterialComponents/ShadowLayer"
     component.dependency "MaterialComponents/Typography"
     component.dependency "MaterialComponents/private/Application"
     component.dependency "MaterialComponents/private/KeyboardWatcher"
+    component.dependency "MaterialComponents/private/Math"
     component.dependency "MaterialComponents/private/Overlay"
 
     component.test_spec 'UnitTests' do |unit_tests|
