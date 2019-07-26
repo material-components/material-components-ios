@@ -54,6 +54,8 @@
     // AlphaValue = 4.5 * ln (elevationValue + 1) + 2
     alphaValue = (CGFloat)4.5 * (CGFloat)log(elevation + 1) + 2;
   }
+  // TODO (https://github.com/material-components/material-components-ios/issues/8096):
+  // Grayscale color should be returned if color space is UIExtendedGrayColorSpace.
   return [UIColor mdc_blendColor:[overlayColor colorWithAlphaComponent:alphaValue * (CGFloat)0.01]
              withBackgroundColor:self];
 }
