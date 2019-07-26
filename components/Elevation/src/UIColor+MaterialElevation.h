@@ -24,7 +24,7 @@
  Returns a color that takes the specified elevation value into account.
  The color is the blended color of Surface and Elevation Overlay in
  https://material.io/design/color/dark-theme.html#properties
- @param elevation The elevation to use when resolving the color.
+ @param elevation The mdc_absoluteElevation value to use when resolving the color.
  */
 - (nonnull UIColor *)mdc_resolvedColorWithElevation:(CGFloat)elevation;
 
