@@ -197,8 +197,8 @@
         (MDCBottomDrawerPresentationController *)self.presentationController;
     BOOL elevationDidChange =
         !MDCCGFloatEqual(bottomDrawerPresentationController.elevation, elevation);
-    bottomDrawerPresentationController.elevation = elevation;
     if (elevationDidChange) {
+      bottomDrawerPresentationController.elevation = elevation;
       [self.view mdc_elevationDidChange];
     }
   }
