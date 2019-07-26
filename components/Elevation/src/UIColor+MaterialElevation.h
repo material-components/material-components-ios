@@ -24,7 +24,9 @@
  Returns a color that takes the specified elevation value into account.
  The color is the blended color of Surface and Elevation Overlay in
  https://material.io/design/color/dark-theme.html#properties
- @param elevation The mdc_absoluteElevation value to use when resolving the color.
+ Negative elevation is treated as 0.
+ Pattern-based UIColor is not supported.
+ @param elevation The @c mdc_absoluteElevation value to use when resolving the color.
  */
 - (nonnull UIColor *)mdc_resolvedColorWithElevation:(CGFloat)elevation;
 
@@ -32,14 +34,16 @@
  Returns a color that takes the specified elevation value and traits into account.
  When userInterfaceStyle is UIUserInterfaceStyleDark in traitCollection, elevation will be used
  to resolve the color.
- Negative elevation is treated as 0. Pattern-based UIColor is not supported.
+ Negative elevation is treated as 0.
+ Pattern-based UIColor is not supported.
  UIColor in UIExtendedGrayColorSpace will be resolved to UIExtendedSRGBColorSpace.
 
  @param traitCollection The traits to use when resolving the color.
- @param elevation The mdc_absoluteElevation to use when resolving the color.
+ @param elevation The @c mdc_absoluteElevation to use when resolving the color.
  */
 - (nonnull UIColor *)mdc_resolvedColorWithTraitCollection:
                          (nonnull UITraitCollection *)traitCollection
-                                                elevation:(CGFloat)elevation;
+                                                elevation:(CGFloat)elevation
+    API_AVAILABLE(ios(13.0));
 
 @end

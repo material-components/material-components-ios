@@ -225,18 +225,21 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
 }
 
 - (void)testResolvedColorWithElevationForStaticColorOnPreiOS13 {
-  // Given
-  CGFloat elevation = (CGFloat)10;
-  UIColor *staticColor = UIColor.blackColor;
+  if (@available(iOS 13.0, *)) {
+  } else {
+    // Given
+    CGFloat elevation = (CGFloat)10;
+    UIColor *staticColor = UIColor.blackColor;
+    UITraitCollection *traitCollection = [[UITraitCollection alloc] init];
 
-  // When
-  UITraitCollection *traitCollection = [[UITraitCollection alloc] init];
-  UIColor *resolvedColor = [staticColor mdc_resolvedColorWithTraitCollection:traitCollection
-                                                                   elevation:elevation];
-
-  // Then
-  UIColor *expectedColor = staticColor;
-  [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedColor secondColor:expectedColor];
+    // When/Then
+    XCTAssertThrowsSpecificNamed(
+        [staticColor performSelector:@selector(mdc_resolvedColorWithTraitCollection:elevation:)
+                          withObject:traitCollection
+                          withObject:@(elevation)],
+        NSException, NSGenericException, @"Expected exception when %@ is called on pre iOS13",
+        NSStringFromSelector(@selector(mdc_resolvedColorWithTraitCollection:elevation:)));
+  }
 }
 
 - (void)testResolvedColorWithElevationForPatternBasedColorThrowException {
