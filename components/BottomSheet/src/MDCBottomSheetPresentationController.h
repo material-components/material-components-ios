@@ -14,7 +14,6 @@
 
 #import <UIKit/UIKit.h>
 #import "MDCBottomSheetController.h"
-#import "MaterialShadowElevations.h"
 
 @class MDCBottomSheetPresentationController;
 

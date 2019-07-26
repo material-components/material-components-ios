@@ -14,8 +14,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialShadowElevations.h"
-
 /**
  MDCBottomSheetTransitionController is be used to setup a custom transition and animationed
  presentation and dismissal for material-styled bottom-sheet presentation.
@@ -59,11 +57,6 @@
  the content height.
  */
 @property(nonatomic, assign) CGFloat preferredSheetHeight;
-
-/**
- The elevation of the bottom sheet. Defaults to @c MDCShadowElevationModalBottomSheet.
- */
-@property(nonatomic, assign) MDCShadowElevation elevation;
 
 @end
 
