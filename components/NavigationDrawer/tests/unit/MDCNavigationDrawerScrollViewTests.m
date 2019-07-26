@@ -15,8 +15,8 @@
 #import <XCTest/XCTest.h>
 
 #import "../../src/private/MDCBottomDrawerContainerViewController.h"
-#import "../../src/private/MDCBottomDrawerContainerViewController.m"
 #import "../../src/private/MDCBottomDrawerHeaderMask.h"
+#import "../../src/private/MDCBottomDrawerShadowedView.h"
 #import "MDCNavigationDrawerFakes.h"
 #import "MaterialShadowLayer.h"
 
