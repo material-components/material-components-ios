@@ -184,6 +184,24 @@
   }
 }
 
+- (void)setElevation:(MDCShadowElevation)elevation {
+  _elevation = elevation;
+  if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
+        (MDCBottomDrawerPresentationController *)self.presentationController;
+    bottomDrawerPresentationController.elevation = elevation;
+  }
+}
+
+- (void)setDrawerShadowColor:(UIColor *)drawerShadowColor {
+  _drawerShadowColor = drawerShadowColor;
+  if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
+        (MDCBottomDrawerPresentationController *)self.presentationController;
+    bottomDrawerPresentationController.drawerShadowColor = drawerShadowColor;
+  }
+}
+
 - (void)setShouldIncludeSafeAreaInContentHeight:(BOOL)shouldIncludeSafeAreaInContentHeight {
   _shouldIncludeSafeAreaInContentHeight = shouldIncludeSafeAreaInContentHeight;
   if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
