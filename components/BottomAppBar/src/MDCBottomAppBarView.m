@@ -18,6 +18,7 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
+#import "MaterialMath.h"
 #import "MaterialNavigationBar.h"
 #import "private/MDCBottomAppBarAttributes.h"
 #import "private/MDCBottomAppBarLayer.h"
@@ -88,7 +89,7 @@ static const int kMDCButtonAnimationDuration = 200;
 
   self.barTintColor = UIColor.whiteColor;
   self.shadowColor = UIColor.blackColor;
-  self.elevation = MDCShadowElevationBottomNavigationBar;
+  _elevation = MDCShadowElevationBottomAppBar;
   _mdc_overrideBaseElevation = -1;
 }
 
@@ -307,7 +308,7 @@ static const int kMDCButtonAnimationDuration = 200;
 #pragma mark - Setters
 
 - (void)setElevation:(MDCShadowElevation)elevation {
-  if (elevation == _elevation) {
+  if (MDCCGFloatEqual(elevation, _elevation)) {
     return;
   }
   _elevation = elevation;

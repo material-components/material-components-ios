@@ -138,7 +138,7 @@ typedef NS_ENUM(NSInteger, MDCBottomAppBarFloatingButtonPosition) {
      UITraitCollection *_Nullable previousTraitCollection);
 
 /**
- The elevation of the bottom app bar. Defaults to @c MDCShadowElevationBottomNavigationBar.
+ The elevation of the bottom app bar. Defaults to @c MDCShadowElevationBottomAppBar.
  */
 @property(nonatomic, assign) MDCShadowElevation elevation;
 
@@ -153,6 +153,6 @@ typedef NS_ENUM(NSInteger, MDCBottomAppBarFloatingButtonPosition) {
  @param object This bottom app bar.
  */
 @property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)
-    (MDCBottomAppBarView *_Nonnull object, CGFloat elevation);
+    (MDCBottomAppBarView *_Nonnull bottomAppBar, CGFloat elevation);
 
 @end

@@ -237,4 +237,12 @@
   XCTAssertFalse(blockCalled);
 }
 
+- (void)testDefaultValueForOverrideBaseElevationIsNegative {
+  // Given
+  MDCBottomAppBarView *bottomAppBar = [[MDCBottomAppBarView alloc] init];
+
+  // Then
+  XCTAssertLessThan(bottomAppBar.mdc_overrideBaseElevation, 0);
+}
+
 @end
