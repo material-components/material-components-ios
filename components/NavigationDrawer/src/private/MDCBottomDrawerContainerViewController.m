@@ -429,7 +429,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 
   self.scrollView.accessibilityIdentifier = kMDCBottomDrawerScrollViewAccessibilityIdentifier;
 
-  self.shadowedView.layer.shadowColor = self.headerShadowColor.CGColor;
+  self.shadowedView.layer.shadowColor = self.drawerShadowColor.CGColor;
   self.shadowedView.backgroundColor = UIColor.clearColor;
   ((MDCShadowLayer *)self.shadowedView.layer).elevation = self.elevation;
 }
