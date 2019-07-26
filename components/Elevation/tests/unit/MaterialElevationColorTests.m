@@ -80,10 +80,13 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
   UIColor *expectedRGBColor = self.rgbColor;
   UIColor *expectedGreyScaleColor = self.greyScaleColor;
   UIColor *expectedP3Display = self.p3DisplayColor;
-  [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedRGBColor secondColor:expectedRGBColor];
-  [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedGreyScaleColor secondColor:expectedGreyScaleColor];
+  [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedRGBColor
+                                          secondColor:expectedRGBColor];
+  [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedGreyScaleColor
+                                          secondColor:expectedGreyScaleColor];
   if (@available(iOS 10.0, *)) {
-    [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedP3DisplayColor secondColor:expectedP3Display];
+    [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedP3DisplayColor
+                                            secondColor:expectedP3Display];
   }
 }
 
@@ -111,10 +114,13 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
                                                green:(CGFloat)0.77713910118968843
                                                 blue:(CGFloat)0.61272176809458923
                                                alpha:(CGFloat)0.47674317236555602];
-  [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedRGBColor secondColor:expectedRGBColor];
-  [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedGreyScaleColor secondColor:expectedGreyScaleColor];
+  [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedRGBColor
+                                          secondColor:expectedRGBColor];
+  [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedGreyScaleColor
+                                          secondColor:expectedGreyScaleColor];
   if (@available(iOS 10.0, *)) {
-    [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedP3DisplayColor secondColor:expectedP3Display];
+    [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedP3DisplayColor
+                                            secondColor:expectedP3Display];
   }
 }
 
@@ -142,10 +148,13 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
                                                green:(CGFloat)0.89571590108272103
                                                 blue:(CGFloat)0.81877950928077237
                                                alpha:(CGFloat)0.66068188990836596];
-  [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedRGBColor secondColor:expectedRGBColor];
-  [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedGreyScaleColor secondColor:expectedGreyScaleColor];
+  [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedRGBColor
+                                          secondColor:expectedRGBColor];
+  [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedGreyScaleColor
+                                          secondColor:expectedGreyScaleColor];
   if (@available(iOS 10.0, *)) {
-    [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedP3DisplayColor secondColor:expectedP3Display];
+    [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedP3DisplayColor
+                                            secondColor:expectedP3Display];
   }
 }
 
@@ -162,10 +171,13 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
   UIColor *expectedRGBColor = self.rgbColor;
   UIColor *expectedGreyScaleColor = self.greyScaleColor;
   UIColor *expectedP3Display = self.p3DisplayColor;
-  [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedRGBColor secondColor:expectedRGBColor];
-  [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedGreyScaleColor secondColor:expectedGreyScaleColor];
+  [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedRGBColor
+                                          secondColor:expectedRGBColor];
+  [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedGreyScaleColor
+                                          secondColor:expectedGreyScaleColor];
   if (@available(iOS 10.0, *)) {
-    [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedP3DisplayColor secondColor:expectedP3Display];
+    [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedP3DisplayColor
+                                            secondColor:expectedP3Display];
   }
 }
 
@@ -207,8 +219,7 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
 
     // Then
     UIColor *expectedColor = [staticColor mdc_resolvedColorWithElevation:elevation];
-    [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedColor
-                                            secondColor:expectedColor];
+    [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedColor secondColor:expectedColor];
   }
 #endif
 }
@@ -225,8 +236,7 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
 
   // Then
   UIColor *expectedColor = staticColor;
-  [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedColor
-                                          secondColor:expectedColor];
+  [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedColor secondColor:expectedColor];
 }
 
 - (void)testResolvedColorWithElevationForPatternBasedColorThrowException {
@@ -246,10 +256,14 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
   CGFloat sRed = 0.0, sGreen = 0.0, sBlue = 0.0, sAlpha = 0.0;
   [secondColor getRed:&sRed green:&sGreen blue:&sBlue alpha:&sAlpha];
 
-  XCTAssertEqualWithAccuracy(fRed, sRed, 0.001, @"(%@) is not equal to (%@)", firstColor, secondColor);
-  XCTAssertEqualWithAccuracy(fGreen, sGreen, 0.001, @"(%@) is not equal to (%@)", firstColor, secondColor);
-  XCTAssertEqualWithAccuracy(fBlue, sBlue, 0.001, @"(%@) is not equal to (%@)", firstColor, secondColor);
-  XCTAssertEqualWithAccuracy(fAlpha, sAlpha, 0.001, @"(%@) is not equal to (%@)", firstColor, secondColor);
+  XCTAssertEqualWithAccuracy(fRed, sRed, 0.001, @"(%@) is not equal to (%@)", firstColor,
+                             secondColor);
+  XCTAssertEqualWithAccuracy(fGreen, sGreen, 0.001, @"(%@) is not equal to (%@)", firstColor,
+                             secondColor);
+  XCTAssertEqualWithAccuracy(fBlue, sBlue, 0.001, @"(%@) is not equal to (%@)", firstColor,
+                             secondColor);
+  XCTAssertEqualWithAccuracy(fAlpha, sAlpha, 0.001, @"(%@) is not equal to (%@)", firstColor,
+                             secondColor);
 }
 
 @end
