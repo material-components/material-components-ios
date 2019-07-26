@@ -16,6 +16,7 @@
 
 #import "MDCBottomDrawerTransitionController.h"
 #import "MaterialUIMetrics.h"
+#import "MaterialMath.h"
 #import "private/MDCBottomDrawerHeaderMask.h"
 
 @interface MDCBottomDrawerViewController () <MDCBottomDrawerPresentationControllerDelegate>
@@ -30,6 +31,8 @@
   NSMutableDictionary<NSNumber *, NSNumber *> *_topCornersRadius;
   BOOL _isMaskAppliedFirstTime;
 }
+
+@synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nil bundle:nil];
@@ -56,6 +59,7 @@
   _maximumInitialDrawerHeight = 0;
   _drawerShadowColor = [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.2];
   _elevation = MDCShadowElevationNavDrawer;
+  _mdc_overrideBaseElevation = -1;
 }
 
 - (void)viewWillLayoutSubviews {
@@ -191,8 +195,17 @@
   if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
     MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
         (MDCBottomDrawerPresentationController *)self.presentationController;
+    BOOL elevationDidChange =
+        !MDCCGFloatEqual(bottomDrawerPresentationController.elevation, elevation);
     bottomDrawerPresentationController.elevation = elevation;
+    if (elevationDidChange) {
+      [self.view mdc_elevationDidChange];
+    }
   }
+}
+
+- (CGFloat)mdc_currentElevation {
+  return self.elevation;
 }
 
 - (void)setDrawerShadowColor:(UIColor *)drawerShadowColor {
