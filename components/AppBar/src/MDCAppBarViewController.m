@@ -56,9 +56,11 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
 
 - (void)MDCAppBarViewController_commonInit {
   // Shadow layer
+  __weak MDCAppBarViewController *weakSelf = self;
   MDCFlexibleHeaderShadowIntensityChangeBlock intensityBlock =
       ^(CALayer *_Nonnull shadowLayer, CGFloat intensity) {
         CGFloat elevation = MDCShadowElevationAppBar * intensity;
+        weakSelf.headerView.elevation = elevation;
         [(MDCShadowLayer *)shadowLayer setElevation:elevation];
       };
   [self.headerView setShadowLayer:[MDCShadowLayer layer] intensityDidChangeBlock:intensityBlock];
