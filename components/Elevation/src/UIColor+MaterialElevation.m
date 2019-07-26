@@ -32,10 +32,10 @@
       return resolvedColor;
     }
   } else {
-    return [self mdc_resolvedColorWithElevation:elevation];
+    return self;
   }
 #else
-  return [self mdc_resolvedColorWithElevation:elevation];
+  return self;
 #endif
 }
 
