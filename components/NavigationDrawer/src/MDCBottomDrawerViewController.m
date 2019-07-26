@@ -15,8 +15,8 @@
 #import "MDCBottomDrawerViewController.h"
 
 #import "MDCBottomDrawerTransitionController.h"
-#import "MaterialUIMetrics.h"
 #import "MaterialMath.h"
+#import "MaterialUIMetrics.h"
 #import "private/MDCBottomDrawerHeaderMask.h"
 
 @interface MDCBottomDrawerViewController () <MDCBottomDrawerPresentationControllerDelegate>
