@@ -819,7 +819,7 @@
 
   // Then
   MDCBottomDrawerContainerViewController *drawerContainer =
-  self.presentationController.bottomDrawerContainerViewController;
+      self.presentationController.bottomDrawerContainerViewController;
   XCTAssertEqualWithAccuracy(drawerContainer.shadowedView.shadowLayer.elevation, 20, 0.001);
 }
 
@@ -873,7 +873,7 @@
 
   // Then
   MDCBottomDrawerContainerViewController *drawerContainer =
-  self.presentationController.bottomDrawerContainerViewController;
+      self.presentationController.bottomDrawerContainerViewController;
   XCTAssertTrue(CGColorEqualToColor(drawerContainer.shadowedView.layer.shadowColor,
                                     UIColor.redColor.CGColor));
 }
