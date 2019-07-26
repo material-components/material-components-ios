@@ -776,7 +776,7 @@
 
   // Then
   MDCBottomDrawerPresentationController *presentationController =
-  (MDCBottomDrawerPresentationController *)self.drawerViewController.presentationController;
+      (MDCBottomDrawerPresentationController *)self.drawerViewController.presentationController;
   XCTAssertEqualWithAccuracy(presentationController.elevation, 20, 0.001);
 }
 
@@ -785,7 +785,8 @@
   [self.fakeBottomDrawer viewDidLoad];
 
   // Then
-  XCTAssertEqualWithAccuracy(((MDCShadowLayer *)self.fakeBottomDrawer.shadowedView.layer).elevation, 16, 0.001);
+  XCTAssertEqualWithAccuracy(((MDCShadowLayer *)self.fakeBottomDrawer.shadowedView.layer).elevation,
+                             16, 0.001);
 }
 
 - (void)testElevationIsSetCorrectly {
@@ -796,7 +797,8 @@
   [self.fakeBottomDrawer viewDidLoad];
 
   // Then
-  XCTAssertEqualWithAccuracy(((MDCShadowLayer *)self.fakeBottomDrawer.shadowedView.layer).elevation, 12, 0.001);
+  XCTAssertEqualWithAccuracy(((MDCShadowLayer *)self.fakeBottomDrawer.shadowedView.layer).elevation,
+                             12, 0.001);
 }
 
 - (void)testSettingShadowColorInDrawerViewControllerPropogatesToPresentationController {
@@ -815,7 +817,7 @@
 
   // Then
   XCTAssertTrue(CGColorEqualToColor(self.fakeBottomDrawer.shadowedView.layer.shadowColor,
-                        [UIColor colorWithWhite:0 alpha:0.2].CGColor));
+                                    [UIColor colorWithWhite:0 alpha:0.2].CGColor));
 }
 
 - (void)testShadowColorIsSetCorrectly {
@@ -826,7 +828,8 @@
   [self.fakeBottomDrawer viewDidLoad];
 
   // Then
-  XCTAssertTrue(CGColorEqualToColor(self.fakeBottomDrawer.shadowedView.layer.shadowColor, UIColor.blueColor.CGColor));
+  XCTAssertTrue(CGColorEqualToColor(self.fakeBottomDrawer.shadowedView.layer.shadowColor,
+                                    UIColor.blueColor.CGColor));
 }
 
 @end
