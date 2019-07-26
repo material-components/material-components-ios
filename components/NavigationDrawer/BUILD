@@ -57,17 +57,6 @@ mdc_objc_library(
 )
 
 mdc_objc_library(
-    name = "privateTesting",
-    testonly = 1,
-    hdrs = native.glob([
-        "src/private/*.h",
-        "src/private/*.m",
-    ]),
-    includes = ["src/private"],
-    visibility = ["//visibility:private"],
-)
-
-mdc_objc_library(
     name = "TestingHeader",
     testonly = 1,
     hdrs = native.glob(["src/private/MDCBottomDrawerContainerViewController+Testing.h"]),
@@ -102,7 +91,7 @@ mdc_objc_library(
     deps = [
         ":ColorThemer",
         ":NavigationDrawer",
-        ":privateTesting",
+        ":private",
     ],
 )
 

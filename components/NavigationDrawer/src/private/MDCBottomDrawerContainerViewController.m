@@ -16,8 +16,8 @@
 
 #import "MDCBottomDrawerHeader.h"
 #import "MDCBottomDrawerHeaderMask.h"
+#import "MDCBottomDrawerShadowedView.h"
 #import "MaterialMath.h"
-#import "MaterialShadowLayer.h"
 #import "MaterialUIMetrics.h"
 
 static const CGFloat kVerticalShadowAnimationDistance = 10;
@@ -35,13 +35,9 @@ static const CGFloat kEpsilon = (CGFloat)0.001;
 static const CGFloat kScrollViewBufferForPerformance = 20;
 static const CGFloat kDragVelocityThresholdForHidingDrawer = -2;
 static const CGFloat kInitialDrawerHeightFactor = (CGFloat)0.5;
-static NSString *_Nonnull const kContentOffsetKeyPath = @"contentOffset";
+static NSString *const kContentOffsetKeyPath = @"contentOffset";
 NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
     @"kMDCBottomDrawerScrollViewAccessibilityIdentifier";
-
-@interface MDCBottomDrawerShadowedView : UIView
-- (MDCShadowLayer *)shadowLayer;
-@end
 
 @implementation MDCBottomDrawerShadowedView
 + (Class)layerClass {
@@ -541,7 +537,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 }
 
 - (void)preferredContentSizeDidChangeForChildContentContainer:
-    (nonnull id<UIContentContainer>)container {
+    (id<UIContentContainer>)container {
   [super preferredContentSizeDidChangeForChildContentContainer:container];
   if ([container isKindOfClass:[UIViewController class]]) {
     UIViewController *containerViewController = (UIViewController *)container;
@@ -718,7 +714,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 
 #pragma mark Getters (Private)
 
-- (nonnull UIScrollView *)scrollView {
+- (UIScrollView *)scrollView {
   if (!_scrollView) {
     _scrollView = [[UIScrollView alloc] init];
     _scrollView.showsVerticalScrollIndicator = NO;
@@ -752,7 +748,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size
-       withTransitionCoordinator:(nonnull id<UIViewControllerTransitionCoordinator>)coordinator {
+       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
   [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
   _contentHeaderTopInset = NSNotFound;
   _contentHeightSurplus = NSNotFound;
@@ -761,13 +757,13 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 
 #pragma mark UIScrollViewDelegate (Private)
 
-- (void)scrollViewWillBeginDragging:(nonnull UIScrollView *)scrollView {
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
   self.scrollViewBeganDraggingFromFullscreen = self.currentlyFullscreen;
 }
 
-- (void)scrollViewWillEndDragging:(nonnull UIScrollView *)scrollView
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView
                      withVelocity:(CGPoint)velocity
-              targetContentOffset:(nonnull inout CGPoint *)targetContentOffset {
+              targetContentOffset:(inout CGPoint *)targetContentOffset {
   BOOL scrollViewBeganDraggingFromFullscreen = self.scrollViewBeganDraggingFromFullscreen;
   self.scrollViewBeganDraggingFromFullscreen = NO;
 
