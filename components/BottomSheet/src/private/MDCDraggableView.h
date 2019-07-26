@@ -25,9 +25,6 @@
  */
 @property(nonatomic, strong, readonly, nullable) UIScrollView *scrollView;
 
-/** The elevation of the bottom sheet container view. */
-@property(nonatomic, assign) MDCShadowElevation elevation;
-
 /**
  * Delegate for handling drag events.
  */

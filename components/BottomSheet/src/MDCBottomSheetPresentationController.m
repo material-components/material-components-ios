@@ -64,16 +64,6 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 
 @synthesize delegate;
 
-- (instancetype)initWithPresentedViewController:(UIViewController *)presentedViewController
-                       presentingViewController:(UIViewController *)presentingViewController {
-  self = [super initWithPresentedViewController:presentedViewController
-                       presentingViewController:presentingViewController];
-  if (self) {
-    _elevation = MDCShadowElevationModalBottomSheet;
-  }
-  return self;
-}
-
 - (UIView *)presentedView {
   return self.sheetView;
 }
@@ -284,11 +274,6 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 - (void)setPreferredSheetHeight:(CGFloat)preferredSheetHeight {
   _preferredSheetHeight = preferredSheetHeight;
   [self updatePreferredSheetHeight];
-}
-
-- (void)setElevation:(MDCShadowElevation)elevation {
-  _elevation = elevation;
-  self.sheetView.elevation = elevation;
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {

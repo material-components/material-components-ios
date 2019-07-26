@@ -55,29 +55,6 @@
   [super tearDown];
 }
 
-- (void)testDefaultElevationForPresentationController {
-  // Given
-  self.presentationController = self.bottomSheet.mdc_bottomSheetPresentationController;
-
-  // Then
-  XCTAssertEqualWithAccuracy(self.presentationController.elevation,
-                             MDCShadowElevationModalBottomSheet, 0.001);
-}
-
-- (void)testCustomElevaiton {
-  // Given
-  CGFloat fakeElevation = 7;
-  self.presentationController = self.bottomSheet.mdc_bottomSheetPresentationController;
-  [self.presentationController presentationTransitionWillBegin];
-
-  // When
-  self.presentationController.elevation = fakeElevation;
-
-  // Then
-  XCTAssertEqualWithAccuracy(self.presentationController.elevation, fakeElevation, 0.001);
-  XCTAssertEqualWithAccuracy(self.presentationController.sheetView.elevation, fakeElevation, 0.001);
-}
-
 // Test that the presentation controller for a bottom sheet can have its scrim color set.
 - (void)testApplyingScrimColorToPresentationController {
   // Make a scrim color.

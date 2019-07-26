@@ -110,9 +110,4 @@ static void CancelGestureRecognizer(UIGestureRecognizer *gesture) {
   return NO;
 }
 
-- (void)setElevation:(MDCShadowElevation)elevation {
-  _elevation = elevation;
-  [(MDCShadowLayer *)self.layer setElevation:elevation];
-}
-
 @end
