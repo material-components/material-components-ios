@@ -974,6 +974,7 @@ Pod::Spec.new do |mdc|
         "components/#{component.base_name}/tests/unit/*.{h,m,swift}",
         "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
       ]
+      unit_tests.dependency "MaterialComponents/private/Color"
     end
   end
 

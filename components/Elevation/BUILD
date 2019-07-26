@@ -47,7 +47,6 @@ mdc_unit_test_objc_library(
     deps = [
         ":Elevation",
         "//components/private/Color",
-        "//components/private/Math",
     ],
 )
 
