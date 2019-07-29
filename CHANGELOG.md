@@ -132,6 +132,7 @@ tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleScrollable;
 
 ### NavigationDrawer
 
+* [Adds an elevation and shadow to Bottom Drawer. (#8095)](https://github.com/material-components/material-components-ios/commit/7ded6431437dd364bbb6ca0b7ef16f6b6a981ef3) (Yarden Eitan)
 * [Adding MDCElevation support (#8100)](https://github.com/material-components/material-components-ios/commit/b8ea85d21ae3c1affadd68853b8aea4dd79408cc) (Yarden Eitan)
 
 ### PageControl
@@ -176,7 +177,6 @@ tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleScrollable;
 ## Multi-component changes
 
 * [Add conformance to MDCElevatable, MDCElevationOverriding (#8094)](https://github.com/material-components/material-components-ios/commit/02a707a5b401c8a0321445a77964f0cb38e69440) (Bryan Oltman)
-* [Adds an elevation and shadow to Bottom Drawer. (#8095)](https://github.com/material-components/material-components-ios/commit/7ded6431437dd364bbb6ca0b7ef16f6b6a981ef3) (Yarden Eitan)
 * [Correct `elevationDidChangeBlock` type. (#8106)](https://github.com/material-components/material-components-ios/commit/1c0827f2ef6c80cecb484931c10cd39c63f60b43) (Robert Moore)
 * [Create umbrella header. (#8091)](https://github.com/material-components/material-components-ios/commit/66435f1b685c363c2ee534d8f2a065cef369b2b0) (Robert Moore)
 
