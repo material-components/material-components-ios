@@ -366,6 +366,7 @@ Pod::Spec.new do |mdc|
       "components/#{component.base_name}/src/private/*.{h,m}"
     ]
 
+    component.dependency "MaterialComponents/Elevation"
     component.dependency "MaterialComponents/ShapeLibrary"
     component.dependency "MaterialComponents/Shapes"
     component.dependency "MaterialComponents/ShadowElevations"
