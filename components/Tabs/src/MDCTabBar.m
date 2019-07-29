@@ -118,6 +118,8 @@ static inline UIColor *RippleColor() {
 @synthesize alignment = _alignment;
 @synthesize barPosition = _barPosition;
 @synthesize itemAppearance = _itemAppearance;
+@synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
+@synthesize mdc_elevationDidChangeBlock = _mdc_elevationDidChangeBlock;
 
 #pragma mark - Initialization
 
@@ -193,6 +195,10 @@ static inline UIColor *RippleColor() {
   if (self.traitCollectionDidChangeBlock) {
     self.traitCollectionDidChangeBlock(self, previousTraitCollection);
   }
+}
+
+- (CGFloat)mdc_currentElevation {
+  return 0;
 }
 
 #pragma mark - Public
