@@ -440,19 +440,19 @@ static const CGFloat kSafeAreaAmount = 20;
 
 #pragma mark - MaterialElevation
 
- - (void)testDefaultOverrideBaseElevationIsNegative {
-   // Then
+- (void)testDefaultOverrideBaseElevationIsNegative {
+  // Then
   XCTAssertLessThan(self.actionSheet.mdc_overrideBaseElevation, 0);
 }
 
- - (void)testSettingBaseOverrideBaseElevationReturnsSetValue {
+- (void)testSettingBaseOverrideBaseElevationReturnsSetValue {
   // Given
   CGFloat fakeElevation = 99;
 
-   // When
+  // When
   self.actionSheet.mdc_overrideBaseElevation = fakeElevation;
 
-   // Then
+  // Then
   XCTAssertEqualWithAccuracy(self.actionSheet.mdc_overrideBaseElevation, fakeElevation, 0.001);
 }
 

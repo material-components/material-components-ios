@@ -39,7 +39,8 @@
  in a sheet from the bottom.
 
  */
-__attribute__((objc_subclassing_restricted)) @interface MDCActionSheetController : UIViewController <MDCElevatable, MDCElevationOverriding>
+__attribute__((objc_subclassing_restricted)) @interface MDCActionSheetController
+    : UIViewController<MDCElevatable, MDCElevationOverriding>
 
 /**
  Designated initializer to create and return a view controller for displaying an alert to the user.
