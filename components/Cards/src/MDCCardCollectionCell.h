@@ -328,14 +328,4 @@ typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
     (MDCCardCollectionCell *_Nonnull collectionCell,
      UITraitCollection *_Nullable previousTraitCollection);
 
-/**
- This block is called after a change of the card's elevation or one of its view
- hierarchy ancestors.
- Use this block to respond to elevation changes in the view or its ancestor views.
- @param elevation The @c mdc_currentElevation plus the @c mdc_currentElevation of all ancestor
- views.
- @param object This card.
- */
-@property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)
-    (MDCCardCollectionCell *_Nonnull object, CGFloat elevation);
 @end

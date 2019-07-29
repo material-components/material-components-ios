@@ -171,19 +171,6 @@
     (UITraitCollection *_Nullable previousTraitCollection);
 
 /**
- This block is called after a change of the button's elevation or one of its view hierarchy
- ancestors.
-
- Use this block to respond to elevation changes in the view or its ancestor views.
-
- @param elevation The @c mdc_currentElevation plus the @c mdc_currentElevation of all ancestor
- views.
- @param object This button.
- */
-@property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)
-    (MDCButton *_Nonnull button, CGFloat elevation);
-
-/**
  A color used as the button's @c backgroundColor for @c state.
 
  @param state The state.

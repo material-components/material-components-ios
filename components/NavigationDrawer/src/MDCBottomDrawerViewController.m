@@ -33,6 +33,7 @@
 }
 
 @synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
+@synthesize mdc_elevationDidChangeBlock = _mdc_elevationDidChangeBlock;
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nil bundle:nil];
