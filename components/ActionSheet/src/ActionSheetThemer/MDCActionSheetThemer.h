@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCActionSheetScheme.h"
-#import "MaterialActionSheet.h"
-
 #import <Foundation/Foundation.h>
+#import <MaterialComponents/MaterialActionSheet.h>
+
+#import "MDCActionSheetScheme.h"
 
 /**
  The Material Design action sheet themer for instances of MDCActionSheet.
