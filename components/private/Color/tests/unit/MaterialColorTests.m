@@ -14,7 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MDCMath.h"
+#import "MaterialMath.h"
 #import "UIColor+MaterialBlending.h"
 #import "UIColor+MaterialDynamic.h"
 
