@@ -70,12 +70,11 @@
 
 - (void)testBottonSheetControllerTraitCollectionDidChangeBlockCalledWithExpectedParameters {
   // Given
-  MDCBottomSheetController *bottomSheet = [[MDCBottomSheetController alloc] init];
   XCTestExpectation *expectation =
       [[XCTestExpectation alloc] initWithDescription:@"traitCollectionDidChange"];
   __block UITraitCollection *passedTraitCollection;
   __block MDCBottomSheetController *passedBottomSheet;
-  bottomSheet.traitCollectionDidChangeBlock =
+  self.bottomSheet.traitCollectionDidChangeBlock =
       ^(MDCBottomSheetController *_Nonnull bottomSheetController,
         UITraitCollection *_Nullable previousTraitCollection) {
         [expectation fulfill];
@@ -85,12 +84,12 @@
   UITraitCollection *testTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
 
   // When
-  [bottomSheet traitCollectionDidChange:testTraitCollection];
+  [self.bottomSheet traitCollectionDidChange:testTraitCollection];
 
   // Then
   [self waitForExpectations:@[ expectation ] timeout:1];
   XCTAssertEqual(passedTraitCollection, testTraitCollection);
-  XCTAssertEqual(passedBottomSheet, bottomSheet);
+  XCTAssertEqual(passedBottomSheet, self.bottomSheet);
 }
 
 - (void)
@@ -127,11 +126,8 @@
 #pragma mark - MaterialElevation
 
 - (void)testDefaultOverrideBaseElevationIsNegative {
-  // Given
-  MDCBottomSheetController *bottomSheet = [[MDCBottomSheetController alloc] init];
-
   // Then
-  XCTAssertLessThan(bottomSheet.mdc_overrideBaseElevation, 0);
+  XCTAssertLessThan(self.bottomSheet.mdc_overrideBaseElevation, 0);
 }
 
 - (void)testSettingBaseOverrideBaseElevationReturnsSetValue {

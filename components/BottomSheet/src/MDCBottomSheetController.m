@@ -37,15 +37,6 @@
   self.view.elevation = self.elevation;
 }
 
-- (instancetype)init {
-  self = [super init];
-  if (self) {
-    _elevation = MDCShadowElevationModalBottomSheet;
-    _mdc_overrideBaseElevation = -1;
-  }
-  return self;
-}
-
 - (nonnull instancetype)initWithContentViewController:
     (nonnull UIViewController *)contentViewController {
   if (self = [super initWithNibName:nil bundle:nil]) {
@@ -66,12 +57,14 @@
   [super viewDidLoad];
 
   self.view.preservesSuperviewLayoutMargins = YES;
-  self.contentViewController.view.autoresizingMask =
-      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-  self.contentViewController.view.frame = self.view.bounds;
-  [self addChildViewController:self.contentViewController];
-  [self.view addSubview:self.contentViewController.view];
-  [self.contentViewController didMoveToParentViewController:self];
+  if (self.contentViewController) {
+    self.contentViewController.view.autoresizingMask =
+        UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    self.contentViewController.view.frame = self.view.bounds;
+    [self addChildViewController:self.contentViewController];
+    [self.view addSubview:self.contentViewController.view];
+    [self.contentViewController didMoveToParentViewController:self];
+  }
 }
 
 - (void)viewWillAppear:(BOOL)animated {

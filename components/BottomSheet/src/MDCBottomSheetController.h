@@ -112,6 +112,11 @@
 @property(nonatomic, assign) MDCShadowElevation elevation;
 
 /**
+ Bottom sheet controllers must be created with @c initWithContentViewController:.
+ */
+- (nonnull instancetype)init NS_UNAVAILABLE;
+
+/**
  Initializes the controller with a content view controller.
 
  @param contentViewController The view controller to be presented as a bottom sheet.
