@@ -37,6 +37,7 @@ mdc_public_objc_library(
         "//components/Ink",
         "//components/Ripple",
         "//components/Typography",
+        "//components/private/Math",
     ],
 )
 
