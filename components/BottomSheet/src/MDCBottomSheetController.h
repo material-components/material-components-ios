@@ -110,6 +110,8 @@
  */
 @property(nonatomic, assign) MDCShadowElevation elevation;
 
+- (nonnull instancetype)init NS_DEPRECATED_IOS(9_0, 9_0, "Use initWithContentViewController:");
+
 /**
  Sets the shape generator for state that is used to define the bottom sheet's shape for that state.
 
