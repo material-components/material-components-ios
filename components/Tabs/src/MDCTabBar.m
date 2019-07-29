@@ -180,6 +180,7 @@ static inline UIColor *RippleColor() {
   [self addSubview:_dividerBar];
 
   [self updateItemBarStyle];
+  _mdc_overrideBaseElevation = -1;
 }
 
 - (void)layoutSubviews {
