@@ -126,11 +126,8 @@
 #pragma mark - MaterialElevation
 
 - (void)testDefaultOverrideBaseElevationIsNegative {
-  // Given
-  MDCBottomSheetController *bottomSheet = [[MDCBottomSheetController alloc] init];
-
   // Then
-  XCTAssertLessThan(bottomSheet.mdc_overrideBaseElevation, 0);
+  XCTAssertLessThan(self.bottomSheet.mdc_overrideBaseElevation, 0);
 }
 
 - (void)testSettingBaseOverrideBaseElevationReturnsSetValue {
