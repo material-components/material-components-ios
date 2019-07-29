@@ -405,7 +405,7 @@ IB_DESIGNABLE
  @param object This flexible header view
  */
 @property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)
-    (MDCFlexibleHeaderView *_Nonnull flexibleHeaderView, CGFloat elevation);
+    (id<MDCElevatable> _Nonnull flexibleHeaderView, CGFloat elevation);
 
 @end
 

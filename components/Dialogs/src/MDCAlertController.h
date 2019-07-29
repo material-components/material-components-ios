@@ -159,7 +159,7 @@
  @param absoluteElevation The @c mdc_absoluteElevation this alert controller.
  */
 @property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)
-    (MDCAlertController *_Nonnull alertController, CGFloat absoluteElevation);
+    (id<MDCElevatable> _Nonnull alertController, CGFloat absoluteElevation);
 
 /**
  Affects the fallback behavior for when a scaled font is not provided.

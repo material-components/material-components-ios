@@ -128,7 +128,7 @@
  @param object This snackbar message view.
  */
 @property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)
-    (MDCSnackbarMessageView *_Nonnull object, CGFloat elevation);
+    (id<MDCElevatable> _Nonnull object, CGFloat elevation);
 
 @end
 

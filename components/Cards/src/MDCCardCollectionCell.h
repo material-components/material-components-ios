@@ -337,5 +337,5 @@ typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
  @param object This card.
  */
 @property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)
-    (MDCCardCollectionCell *_Nonnull object, CGFloat elevation);
+    (id<MDCElevatable> _Nonnull object, CGFloat elevation);
 @end

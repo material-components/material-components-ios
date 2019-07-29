@@ -118,7 +118,7 @@
  @param object This bottom drawer view controller.
  */
 @property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)
-    (MDCBottomDrawerViewController *_Nonnull bottomDrawerViewController, CGFloat elevation);
+    (id<MDCElevatable> _Nonnull bottomDrawerViewController, CGFloat elevation);
 
 /**
  Sets the top corners radius for an MDCBottomDrawerState drawerState

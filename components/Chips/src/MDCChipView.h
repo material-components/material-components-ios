@@ -213,7 +213,7 @@
  @param object This chip view.
  */
 @property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)
-    (MDCChipView *_Nonnull chip, CGFloat elevation);
+    (id<MDCElevatable> _Nonnull chip, CGFloat elevation);
 
 /*
  A color used as the chip's @c backgroundColor for @c state.

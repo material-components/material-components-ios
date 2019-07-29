@@ -221,7 +221,7 @@ traitCollectionDidChange:. The block is called after the call to the superclass.
  @param object This bottom navigation bar.
  */
 @property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)
-    (MDCBottomNavigationBar *_Nonnull object, CGFloat elevation);
+    (id<MDCElevatable> _Nonnull object, CGFloat elevation);
 
 /**
  Returns the navigation bar subview associated with the specific item.

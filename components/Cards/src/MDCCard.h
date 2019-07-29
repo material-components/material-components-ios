@@ -172,5 +172,5 @@
  @param object This card.
  */
 @property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)
-    (MDCCard *_Nonnull object, CGFloat elevation);
+    (id<MDCElevatable> _Nonnull object, CGFloat elevation);
 @end

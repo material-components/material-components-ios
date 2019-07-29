@@ -59,7 +59,7 @@
  @param cell This cell.
  */
 @property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)
-    (MDCBaseCell *_Nonnull cell, CGFloat absoluteElevation);
+    (id<MDCElevatable> _Nonnull cell, CGFloat absoluteElevation);
 
 @end
 

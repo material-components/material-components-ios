@@ -181,7 +181,7 @@
  @param object This button.
  */
 @property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)
-    (MDCButton *_Nonnull button, CGFloat elevation);
+    (id<MDCElevatable> _Nonnull button, CGFloat elevation);
 
 /**
  A color used as the button's @c backgroundColor for @c state.

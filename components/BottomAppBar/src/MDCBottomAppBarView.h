@@ -153,6 +153,6 @@ typedef NS_ENUM(NSInteger, MDCBottomAppBarFloatingButtonPosition) {
  @param object This bottom app bar.
  */
 @property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)
-    (MDCBottomAppBarView *_Nonnull bottomAppBar, CGFloat elevation);
+    (id<MDCElevatable> _Nonnull bottomAppBar, CGFloat elevation);
 
 @end
