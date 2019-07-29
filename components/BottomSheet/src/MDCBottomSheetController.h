@@ -111,7 +111,10 @@
  */
 @property(nonatomic, assign) MDCShadowElevation elevation;
 
-- (nonnull instancetype)init NS_DEPRECATED_IOS(9_0, 9_0, "Use initWithContentViewController:");
+/**
+ Bottom sheet controllers must be created with @c initWithContentViewController:.
+ */
+- (nonnull instancetype)init NS_UNAVAILABLE;
 
 /**
  Initializes the controller with a content view controller.
