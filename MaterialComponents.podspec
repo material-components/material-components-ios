@@ -1328,6 +1328,7 @@ Pod::Spec.new do |mdc|
     component.dependency "MDFTextAccessibility"
 
     component.dependency "MaterialComponents/ButtonBar"
+    component.dependency "MaterialComponents/Elevation"
     component.dependency "MaterialComponents/Typography"
     component.dependency "MDFInternationalization"
     component.dependency "MaterialComponents/private/Math"
