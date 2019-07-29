@@ -78,10 +78,10 @@
   MDCTabBar *tabBar = [[MDCTabBar alloc] init];
   CGFloat fakeElevation = 99;
 
-   // When
+  // When
   tabBar.mdc_overrideBaseElevation = fakeElevation;
 
-   // Then
+  // Then
   XCTAssertEqualWithAccuracy(tabBar.mdc_overrideBaseElevation, fakeElevation, 0.001);
 }
 

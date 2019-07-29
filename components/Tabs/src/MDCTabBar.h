@@ -14,10 +14,10 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialElevation.h"
 #import "MDCTabBarAlignment.h"
 #import "MDCTabBarItemAppearance.h"
 #import "MDCTabBarTextTransform.h"
+#import "MaterialElevation.h"
 
 @class MDCTabBarItem;
 @protocol MDCTabBarDelegate;
