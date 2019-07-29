@@ -1,3 +1,461 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+### Banner
+
+#### MDCBannerView
+
+*new* property: `textView` in `MDCBannerView`
+
+*removed* property: `textLabel` in `MDCBannerView`
+
+### BottomAppBar
+
+#### MDCBottomAppBarView
+
+*new* property: `mdc_elevationDidChangeBlock` in `MDCBottomAppBarView`
+
+*new* property: `elevation` in `MDCBottomAppBarView`
+
+### BottomNavigation
+
+#### MDCBottomNavigationBar
+
+*new* property: `mdc_elevationDidChangeBlock` in `MDCBottomNavigationBar`
+
+#### MDCBottomNavigationBar(Deprecated)
+
+*new* category: `MDCBottomNavigationBar(Deprecated)`
+
+*modified* property: `sizeThatFitsIncludesSafeArea` in `MDCBottomNavigationBar(Deprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cy)MDCBottomNavigationBar@ToBeDeprecated` |
+| To: | `c:objc(cy)MDCBottomNavigationBar@Deprecated` |
+
+*modified* property: `sizeThatFitsIncludesSafeArea` in `MDCBottomNavigationBar(Deprecated)`
+
+| Type of change: | Deprecation |
+|---|---|
+| From: | `0` |
+| To: | `1` |
+
+*modified* property: `sizeThatFitsIncludesSafeArea` in `MDCBottomNavigationBar(Deprecated)`
+
+| Type of change: | Deprecation message |
+|---|---|
+| From: | `` |
+| To: | `This was a migration API and is being removed.` |
+
+#### MDCBottomNavigationBar(ToBeDeprecated)
+
+*removed* category: `MDCBottomNavigationBar(ToBeDeprecated)`
+
+### BottomSheet
+
+#### MDCBottomSheetController
+
+*new* property: `elevation` in `MDCBottomSheetController`
+
+### Buttons
+
+#### MDCButton
+
+*new* property: `mdc_elevationDidChangeBlock` in `MDCButton`
+
+### Cards
+
+#### MDCCard
+
+*new* property: `mdc_elevationDidChangeBlock` in `MDCCard`
+
+*modified* class: `MDCCard`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@interface MDCCard : UIControl  /**  The corner radius for the card  Default is set to 4.  */ @property(nonatomic, assign) CGFloat cornerRadius UI_APPEARANCE_SELECTOR;  /**  The inkView for the card that is initiated on tap  */ @property(nonatomic, readonly, strong, nonnull) MDCInkView *inkView;  /**  The rippleView for the card that is initiated on tap. The ripple view is the successor of ink  view, and can be used by setting `enableRippleBehavior` to YES after initializing the card.  */ @property(nonatomic, readonly, strong, nonnull) MDCStatefulRippleView *rippleView;  /**  This property defines if a card as a whole should be interactable or not.  What this means is that when isInteractable is set to NO, there will be no ink ripple and  no change in shadow elevation when tapped or selected. Also the card container itself will not be  tappable, but any of its subviews will still be tappable.   Default is set to YES.   Important: Our specification for cards explicitly define a card as being an interactable component.  Therefore, this property should be set to NO *only if* there are other interactable items within  the card's content, such as buttons or other tappable controls.  */ @property(nonatomic, getter=isInteractable) IBInspectable BOOL interactable;  /**  By setting this property to YES, you will enable and use inkView's successor rippleView as the  main view to provide visual feedback for taps. It is recommended to set this property right after  initializing the card.   Defaults to NO.  */ @property(nonatomic, assign) BOOL enableRippleBehavior;  /**  Sets the shadow elevation for an UIControlState state   @param shadowElevation The shadow elevation  @param state UIControlState the card state  */ - (void)setShadowElevation:(MDCShadowElevation)shadowElevation                   forState:(UIControlState)state UI_APPEARANCE_SELECTOR;  /**  Returns the shadow elevation for an UIControlState state   If no elevation has been set for a state, the value for UIControlStateNormal will be returned.  Default value for UIControlStateNormal is 1  Default value for UIControlStateHighlighted is 8   @param state UIControlState the card state  @return The shadow elevation for the requested state.  */ - (MDCShadowElevation)shadowElevationForState:(UIControlState)state UI_APPEARANCE_SELECTOR;  /**  Sets the border width for an UIControlState state   @param borderWidth The border width  @param state UIControlState the card state  */ - (void)setBorderWidth:(CGFloat)borderWidth forState:(UIControlState)state UI_APPEARANCE_SELECTOR;  /**  Returns the border width for an UIControlState state   If no border width has been set for a state, the value for UIControlStateNormal will be returned.  Default value for UIControlStateNormal is 0   @param state UIControlState the card state  @return The border width for the requested state.  */ - (CGFloat)borderWidthForState:(UIControlState)state UI_APPEARANCE_SELECTOR;  /**  Sets the border color for an UIControlState state   @param borderColor The border color  @param state UIControlState the card state  */ - (void)setBorderColor:(nullable UIColor *)borderColor               forState:(UIControlState)state UI_APPEARANCE_SELECTOR;  /**  Returns the border color for an UIControlState state   If no border color has been set for a state, it will check the value of UIControlStateNormal.  If that value also isn't set, then nil will be returned.   @param state UIControlState the card state  @return The border color for the requested state.  */ - (nullable UIColor *)borderColorForState:(UIControlState)state UI_APPEARANCE_SELECTOR;  /**  Sets the shadow color for an UIControlState state   @param shadowColor The shadow color  @param state UIControlState the card state  */ - (void)setShadowColor:(nullable UIColor *)shadowColor               forState:(UIControlState)state UI_APPEARANCE_SELECTOR;  /**  Returns the shadow color for an UIControlState state   If no color has been set for a state, the value for MDCCardViewStateNormal will be returned.  Default value for UIControlStateNormal is blackColor   @param state UIControlState the card state  @return The shadow color for the requested state.  */ - (nullable UIColor *)shadowColorForState:(UIControlState)state UI_APPEARANCE_SELECTOR;  /**  A block that is invoked when the @c MDCCard receives a call to @c  traitCollectionDidChange:. The block is called after the call to the superclass.  */ @property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)     (MDCCard *_Nonnull card, UITraitCollection *_Nullable previousTraitCollection);  /*  The shape generator used to define the card's shape.  When set, layer properties such as cornerRadius and other layer properties are nullified/zeroed.  If a layer property is explicitly set after the shapeGenerator has been set, it will lead to  unexpected behavior.   When the shapeGenerator is nil, MDCCard will use the default underlying layer with  its default settings.   Default value for shapeGenerator is nil.  */ @property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator;  @end` |
+| To: | `@interface MDCCard : UIControl <MDCElevatable, MDCElevationOverriding>  /**  The corner radius for the card  Default is set to 4.  */ @property(nonatomic, assign) CGFloat cornerRadius UI_APPEARANCE_SELECTOR;  /**  The inkView for the card that is initiated on tap  */ @property(nonatomic, readonly, strong, nonnull) MDCInkView *inkView;  /**  The rippleView for the card that is initiated on tap. The ripple view is the successor of ink  view, and can be used by setting `enableRippleBehavior` to YES after initializing the card.  */ @property(nonatomic, readonly, strong, nonnull) MDCStatefulRippleView *rippleView;  /**  This property defines if a card as a whole should be interactable or not.  What this means is that when isInteractable is set to NO, there will be no ink ripple and  no change in shadow elevation when tapped or selected. Also the card container itself will not be  tappable, but any of its subviews will still be tappable.   Default is set to YES.   Important: Our specification for cards explicitly define a card as being an interactable component.  Therefore, this property should be set to NO *only if* there are other interactable items within  the card's content, such as buttons or other tappable controls.  */ @property(nonatomic, getter=isInteractable) IBInspectable BOOL interactable;  /**  By setting this property to YES, you will enable and use inkView's successor rippleView as the  main view to provide visual feedback for taps. It is recommended to set this property right after  initializing the card.   Defaults to NO.  */ @property(nonatomic, assign) BOOL enableRippleBehavior;  /**  Sets the shadow elevation for an UIControlState state   @param shadowElevation The shadow elevation  @param state UIControlState the card state  */ - (void)setShadowElevation:(MDCShadowElevation)shadowElevation                   forState:(UIControlState)state UI_APPEARANCE_SELECTOR;  /**  Returns the shadow elevation for an UIControlState state   If no elevation has been set for a state, the value for UIControlStateNormal will be returned.  Default value for UIControlStateNormal is 1  Default value for UIControlStateHighlighted is 8   @param state UIControlState the card state  @return The shadow elevation for the requested state.  */ - (MDCShadowElevation)shadowElevationForState:(UIControlState)state UI_APPEARANCE_SELECTOR;  /**  Sets the border width for an UIControlState state   @param borderWidth The border width  @param state UIControlState the card state  */ - (void)setBorderWidth:(CGFloat)borderWidth forState:(UIControlState)state UI_APPEARANCE_SELECTOR;  /**  Returns the border width for an UIControlState state   If no border width has been set for a state, the value for UIControlStateNormal will be returned.  Default value for UIControlStateNormal is 0   @param state UIControlState the card state  @return The border width for the requested state.  */ - (CGFloat)borderWidthForState:(UIControlState)state UI_APPEARANCE_SELECTOR;  /**  Sets the border color for an UIControlState state   @param borderColor The border color  @param state UIControlState the card state  */ - (void)setBorderColor:(nullable UIColor *)borderColor               forState:(UIControlState)state UI_APPEARANCE_SELECTOR;  /**  Returns the border color for an UIControlState state   If no border color has been set for a state, it will check the value of UIControlStateNormal.  If that value also isn't set, then nil will be returned.   @param state UIControlState the card state  @return The border color for the requested state.  */ - (nullable UIColor *)borderColorForState:(UIControlState)state UI_APPEARANCE_SELECTOR;  /**  Sets the shadow color for an UIControlState state   @param shadowColor The shadow color  @param state UIControlState the card state  */ - (void)setShadowColor:(nullable UIColor *)shadowColor               forState:(UIControlState)state UI_APPEARANCE_SELECTOR;  /**  Returns the shadow color for an UIControlState state   If no color has been set for a state, the value for MDCCardViewStateNormal will be returned.  Default value for UIControlStateNormal is blackColor   @param state UIControlState the card state  @return The shadow color for the requested state.  */ - (nullable UIColor *)shadowColorForState:(UIControlState)state UI_APPEARANCE_SELECTOR;  /**  A block that is invoked when the @c MDCCard receives a call to @c  traitCollectionDidChange:. The block is called after the call to the superclass.  */ @property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)     (MDCCard *_Nonnull card, UITraitCollection *_Nullable previousTraitCollection);  /*  The shape generator used to define the card's shape.  When set, layer properties such as cornerRadius and other layer properties are nullified/zeroed.  If a layer property is explicitly set after the shapeGenerator has been set, it will lead to  unexpected behavior.   When the shapeGenerator is nil, MDCCard will use the default underlying layer with  its default settings.   Default value for shapeGenerator is nil.  */ @property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator;  /**  This block is called after a change of the card's elevation or one of its view  hierarchy ancestors.  Use this block to respond to elevation changes in the view or its ancestor views.  @param elevation The @c mdc_currentElevation plus the @c mdc_currentElevation of all ancestor  views.  @param object This card.  */ @property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)     (MDCCard *_Nonnull object, CGFloat elevation); @end` |
+
+#### MDCCardCollectionCell
+
+*new* property: `mdc_elevationDidChangeBlock` in `MDCCardCollectionCell`
+
+*modified* class: `MDCCardCollectionCell`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@interface MDCCardCollectionCell : UICollectionViewCell  /**  When selectable is set to YES, a tap on a cell will trigger a visual change between selected  and unselected. When it is set to NO, a tap will trigger a normal tap (rather than trigger  different visual selection states on the card).  Default is set to NO.  */ @property(nonatomic, assign, getter=isSelectable) BOOL selectable;  /**  A Boolean value indicating whether the card is in the dragged state.  */ @property(nonatomic, getter=isDragged) BOOL dragged;  /**  The corner radius for the card  Default is set to 4.  */ @property(nonatomic, assign) CGFloat cornerRadius UI_APPEARANCE_SELECTOR;  /**  The inkView for the card that is initiated on tap  */ @property(nonatomic, readonly, strong, nonnull) MDCInkView *inkView;  /**  The rippleView for the card that is initiated on tap. The ripple view is the successor of ink  view, and can be used by setting `enableRippleBehavior` to YES after initializing the card.  */ @property(nonatomic, readonly, strong, nonnull) MDCStatefulRippleView *rippleView;  /**  This property defines if a card as a whole should be interactable or not.  What this means is that when isInteractable is set to NO, there will be no ink ripple and  no change in shadow elevation when tapped or selected. Also the card container itself will not be  tappable, but any of its subviews will still be tappable.   Default is set to YES.   Important: Our specification for cards explicitly define a card as being an interactable component.  Therefore, this property should be set to NO *only if* there are other interactable items within  the card's content, such as buttons or other tappable controls.  */ @property(nonatomic, getter=isInteractable) IBInspectable BOOL interactable;  /*  The shape generator used to define the card cell's shape.  When set, layer properties such as cornerRadius and other layer properties are nullified/zeroed.  If a layer property is explicitly set after the shapeGenerator has been set, it will lead to  unexpected behavior.   When the shapeGenerator is nil, MDCCardCollectionCell will use the default underlying layer with  its default settings.   Default value for shapeGenerator is nil.  */ @property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator;  /**  By setting this property to YES, you will enable and use inkView's successor rippleView as the  main view to provide visual feedback for taps. It is recommended to set this property right after  initializing the card.   Defaults to NO.  */ @property(nonatomic, assign) BOOL enableRippleBehavior;  /**  Sets the shadow elevation for an MDCCardViewState state   @param shadowElevation The shadow elevation  @param state MDCCardCellState the card state  */ - (void)setShadowElevation:(MDCShadowElevation)shadowElevation                   forState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  Returns the shadow elevation for an MDCCardViewState state   If no elevation has been set for a state, the value for MDCCardCellStateNormal will be returned.  Default value for MDCCardCellStateNormal is 1  Default value for MDCCardCellStateHighlighted is 8  Default value for MDCCardCellStateSelected is 8   @param state MDCCardCellStateNormal the card state  @return The shadow elevation for the requested state.  */ - (MDCShadowElevation)shadowElevationForState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  Sets the border width for an MDCCardViewState state   @param borderWidth The border width  @param state MDCCardCellState the card state  */ - (void)setBorderWidth:(CGFloat)borderWidth forState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  Returns the border width for an MDCCardCellState state   If no border width has been set for a state, the value for MDCCardCellStateNormal will be returned.  Default value for MDCCardCellStateNormal is 0   @param state MDCCardCellState the card state  @return The border width for the requested state.  */ - (CGFloat)borderWidthForState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  Sets the border color for an MDCCardCellStateNormal state   @param borderColor The border color  @param state MDCCardCellState the card state  */ - (void)setBorderColor:(nullable UIColor *)borderColor               forState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  Returns the border color for an MDCCardCellStateNormal state   If no border color has been set for a state, it will check the value of UIControlStateNormal.  If that value also isn't set, then nil will be returned.   @param state MDCCardCellState the card state  @return The border color for the requested state.  */ - (nullable UIColor *)borderColorForState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  Sets the shadow color for an MDCCardCellStateNormal state   @param shadowColor The shadow color  @param state MDCCardCellState the card state  */ - (void)setShadowColor:(nullable UIColor *)shadowColor               forState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  Returns the shadow color for an MDCCardCellStateNormal state   If no color has been set for a state, the value for MDCCardViewStateNormal will be returned.  Default value for MDCCardCellStateNormal is blackColor   @param state MDCCardCellState the card state  @return The shadow color for the requested state.  */ - (nullable UIColor *)shadowColorForState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  Returns the image for an MDCCardCellStateNormal state.   @note The image is only displayed when `selectable` is YES.  If no image has been set for a state, it will check the value of UIControlStateNormal.  If that value also isn't set, then nil will be returned.  Default value for MDCCardCellStateSelected is ic_check_circle   @param state MDCCardCellState the card state  @return The image for the requested state.  */ - (nullable UIImage *)imageForState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  Sets the image for an MDCCardCellStateNormal state   @note The image is only displayed when `selectable` is YES.  @param image The image  @param state MDCCardCellState the card state  */ - (void)setImage:(nullable UIImage *)image forState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  Returns the horizontal image alignment for an MDCCardCellStateNormal state   @note The image is only displayed when `selectable` is YES.  If no alignment has been set for a state, it will check the value of UIControlStateNormal.  If that value also isn't set, then MDCCardCellImageHorizontalAlignmentRight will be returned.   @param state MDCCardCellState the card state  @return The horizontal alignment for the requested state.  */ - (MDCCardCellHorizontalImageAlignment)horizontalImageAlignmentForState:(MDCCardCellState)state     UI_APPEARANCE_SELECTOR;  /**  Sets the image alignment for an MDCCardCellStateNormal state   @note The image is only displayed when `selectable` is YES.  @param horizontalImageAlignment The image alignment  @param state MDCCardCellState the card state  */ - (void)setHorizontalImageAlignment:(MDCCardCellHorizontalImageAlignment)horizontalImageAlignment                            forState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  Returns the vertical image alignment for an MDCCardCellStateNormal state   @note The image is only displayed when `selectable` is YES.  If no alignment has been set for a state, it will check the value of UIControlStateNormal.  If that value also isn't set, then MDCCardCellImageVerticalAlignmentTop will be returned.   @param state MDCCardCellState the card state  @return The vertical alignment for the requested state.  */ - (MDCCardCellVerticalImageAlignment)verticalImageAlignmentForState:(MDCCardCellState)state     UI_APPEARANCE_SELECTOR;  /**  Sets the image alignment for an MDCCardCellStateNormal state   @note The image is only displayed when `selectable` is YES.  @param verticalImageAlignment The image alignment  @param state MDCCardCellState the card state  */ - (void)setVerticalImageAlignment:(MDCCardCellVerticalImageAlignment)verticalImageAlignment                          forState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  Returns the image tint color for an MDCCardCellStateNormal state   @note The image is only displayed when `selectable` is YES.  If no tint color has been set for a state, it will check the value of UIControlStateNormal.  If that value also isn't set, then nil will be returned.   @param state MDCCardCellState the card state  @return The image tint color for the requested state.  */ - (nullable UIColor *)imageTintColorForState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  Sets the image tint color for an MDCCardCellStateNormal state   @note The image is only displayed when `selectable` is YES.  @param imageTintColor The image tint color  @param state MDCCardCellState the card state  */ - (void)setImageTintColor:(nullable UIColor *)imageTintColor                  forState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  The state of the card cell.  Default is MDCCardCellStateNormal.  */ @property(nonatomic, readonly) MDCCardCellState state;  /**  A block that is invoked when the @c MDCCardCollectionCell receives a call to @c  traitCollectionDidChange:. The block is called after the call to the superclass.  */ @property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)     (MDCCardCollectionCell *_Nonnull collectionCell,      UITraitCollection *_Nullable previousTraitCollection);  @end` |
+| To: | `@interface MDCCardCollectionCell : UICollectionViewCell <MDCElevatable, MDCElevationOverriding>  /**  When selectable is set to YES, a tap on a cell will trigger a visual change between selected  and unselected. When it is set to NO, a tap will trigger a normal tap (rather than trigger  different visual selection states on the card).  Default is set to NO.  */ @property(nonatomic, assign, getter=isSelectable) BOOL selectable;  /**  A Boolean value indicating whether the card is in the dragged state.  */ @property(nonatomic, getter=isDragged) BOOL dragged;  /**  The corner radius for the card  Default is set to 4.  */ @property(nonatomic, assign) CGFloat cornerRadius UI_APPEARANCE_SELECTOR;  /**  The inkView for the card that is initiated on tap  */ @property(nonatomic, readonly, strong, nonnull) MDCInkView *inkView;  /**  The rippleView for the card that is initiated on tap. The ripple view is the successor of ink  view, and can be used by setting `enableRippleBehavior` to YES after initializing the card.  */ @property(nonatomic, readonly, strong, nonnull) MDCStatefulRippleView *rippleView;  /**  This property defines if a card as a whole should be interactable or not.  What this means is that when isInteractable is set to NO, there will be no ink ripple and  no change in shadow elevation when tapped or selected. Also the card container itself will not be  tappable, but any of its subviews will still be tappable.   Default is set to YES.   Important: Our specification for cards explicitly define a card as being an interactable component.  Therefore, this property should be set to NO *only if* there are other interactable items within  the card's content, such as buttons or other tappable controls.  */ @property(nonatomic, getter=isInteractable) IBInspectable BOOL interactable;  /*  The shape generator used to define the card cell's shape.  When set, layer properties such as cornerRadius and other layer properties are nullified/zeroed.  If a layer property is explicitly set after the shapeGenerator has been set, it will lead to  unexpected behavior.   When the shapeGenerator is nil, MDCCardCollectionCell will use the default underlying layer with  its default settings.   Default value for shapeGenerator is nil.  */ @property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator;  /**  By setting this property to YES, you will enable and use inkView's successor rippleView as the  main view to provide visual feedback for taps. It is recommended to set this property right after  initializing the card.   Defaults to NO.  */ @property(nonatomic, assign) BOOL enableRippleBehavior;  /**  Sets the shadow elevation for an MDCCardViewState state   @param shadowElevation The shadow elevation  @param state MDCCardCellState the card state  */ - (void)setShadowElevation:(MDCShadowElevation)shadowElevation                   forState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  Returns the shadow elevation for an MDCCardViewState state   If no elevation has been set for a state, the value for MDCCardCellStateNormal will be returned.  Default value for MDCCardCellStateNormal is 1  Default value for MDCCardCellStateHighlighted is 8  Default value for MDCCardCellStateSelected is 8   @param state MDCCardCellStateNormal the card state  @return The shadow elevation for the requested state.  */ - (MDCShadowElevation)shadowElevationForState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  Sets the border width for an MDCCardViewState state   @param borderWidth The border width  @param state MDCCardCellState the card state  */ - (void)setBorderWidth:(CGFloat)borderWidth forState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  Returns the border width for an MDCCardCellState state   If no border width has been set for a state, the value for MDCCardCellStateNormal will be returned.  Default value for MDCCardCellStateNormal is 0   @param state MDCCardCellState the card state  @return The border width for the requested state.  */ - (CGFloat)borderWidthForState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  Sets the border color for an MDCCardCellStateNormal state   @param borderColor The border color  @param state MDCCardCellState the card state  */ - (void)setBorderColor:(nullable UIColor *)borderColor               forState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  Returns the border color for an MDCCardCellStateNormal state   If no border color has been set for a state, it will check the value of UIControlStateNormal.  If that value also isn't set, then nil will be returned.   @param state MDCCardCellState the card state  @return The border color for the requested state.  */ - (nullable UIColor *)borderColorForState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  Sets the shadow color for an MDCCardCellStateNormal state   @param shadowColor The shadow color  @param state MDCCardCellState the card state  */ - (void)setShadowColor:(nullable UIColor *)shadowColor               forState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  Returns the shadow color for an MDCCardCellStateNormal state   If no color has been set for a state, the value for MDCCardViewStateNormal will be returned.  Default value for MDCCardCellStateNormal is blackColor   @param state MDCCardCellState the card state  @return The shadow color for the requested state.  */ - (nullable UIColor *)shadowColorForState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  Returns the image for an MDCCardCellStateNormal state.   @note The image is only displayed when `selectable` is YES.  If no image has been set for a state, it will check the value of UIControlStateNormal.  If that value also isn't set, then nil will be returned.  Default value for MDCCardCellStateSelected is ic_check_circle   @param state MDCCardCellState the card state  @return The image for the requested state.  */ - (nullable UIImage *)imageForState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  Sets the image for an MDCCardCellStateNormal state   @note The image is only displayed when `selectable` is YES.  @param image The image  @param state MDCCardCellState the card state  */ - (void)setImage:(nullable UIImage *)image forState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  Returns the horizontal image alignment for an MDCCardCellStateNormal state   @note The image is only displayed when `selectable` is YES.  If no alignment has been set for a state, it will check the value of UIControlStateNormal.  If that value also isn't set, then MDCCardCellImageHorizontalAlignmentRight will be returned.   @param state MDCCardCellState the card state  @return The horizontal alignment for the requested state.  */ - (MDCCardCellHorizontalImageAlignment)horizontalImageAlignmentForState:(MDCCardCellState)state     UI_APPEARANCE_SELECTOR;  /**  Sets the image alignment for an MDCCardCellStateNormal state   @note The image is only displayed when `selectable` is YES.  @param horizontalImageAlignment The image alignment  @param state MDCCardCellState the card state  */ - (void)setHorizontalImageAlignment:(MDCCardCellHorizontalImageAlignment)horizontalImageAlignment                            forState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  Returns the vertical image alignment for an MDCCardCellStateNormal state   @note The image is only displayed when `selectable` is YES.  If no alignment has been set for a state, it will check the value of UIControlStateNormal.  If that value also isn't set, then MDCCardCellImageVerticalAlignmentTop will be returned.   @param state MDCCardCellState the card state  @return The vertical alignment for the requested state.  */ - (MDCCardCellVerticalImageAlignment)verticalImageAlignmentForState:(MDCCardCellState)state     UI_APPEARANCE_SELECTOR;  /**  Sets the image alignment for an MDCCardCellStateNormal state   @note The image is only displayed when `selectable` is YES.  @param verticalImageAlignment The image alignment  @param state MDCCardCellState the card state  */ - (void)setVerticalImageAlignment:(MDCCardCellVerticalImageAlignment)verticalImageAlignment                          forState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  Returns the image tint color for an MDCCardCellStateNormal state   @note The image is only displayed when `selectable` is YES.  If no tint color has been set for a state, it will check the value of UIControlStateNormal.  If that value also isn't set, then nil will be returned.   @param state MDCCardCellState the card state  @return The image tint color for the requested state.  */ - (nullable UIColor *)imageTintColorForState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  Sets the image tint color for an MDCCardCellStateNormal state   @note The image is only displayed when `selectable` is YES.  @param imageTintColor The image tint color  @param state MDCCardCellState the card state  */ - (void)setImageTintColor:(nullable UIColor *)imageTintColor                  forState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  The state of the card cell.  Default is MDCCardCellStateNormal.  */ @property(nonatomic, readonly) MDCCardCellState state;  /**  A block that is invoked when the @c MDCCardCollectionCell receives a call to @c  traitCollectionDidChange:. The block is called after the call to the superclass.  */ @property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)     (MDCCardCollectionCell *_Nonnull collectionCell,      UITraitCollection *_Nullable previousTraitCollection);  /**  This block is called after a change of the card's elevation or one of its view  hierarchy ancestors.  Use this block to respond to elevation changes in the view or its ancestor views.  @param elevation The @c mdc_currentElevation plus the @c mdc_currentElevation of all ancestor  views.  @param object This card.  */ @property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)     (MDCCardCollectionCell *_Nonnull object, CGFloat elevation); @end` |
+
+### Chips
+
+#### MDCChipView
+
+*new* property: `mdc_elevationDidChangeBlock` in `MDCChipView`
+
+*modified* class: `MDCChipView`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@interface MDCChipView : UIControl  /*  A UIImageView that leads the title label.  */ @property(nonatomic, readonly, nonnull) IBInspectable UIImageView *imageView;  /*  A UIImageView that leads the title label. Appears in front of the imageView. Only visible when the  chip is selected.   This image view is typically used to show some icon that denotes the chip as selected, such as a  check mark. If imageView has no image then the chip will require resizing when selected or  deselected to account for the changing visibility of selectedImageView.  */ @property(nonatomic, readonly, nonnull) IBInspectable UIImageView *selectedImageView;  /*  A UIView that trails the title label.   It will be given a size based on the value returned from sizeThatFits:.  */ @property(nonatomic, strong, nullable) IBInspectable UIView *accessoryView;  /*  The title label.   @note The title color is controlled by setTitleColor:forState:.  @note The title font is controlled by setTitleFont.  */ @property(nonatomic, readonly, nonnull) IBInspectable UILabel *titleLabel;  /*  Padding around the chip content. Each subview can be further padded with their invidual padding  property.   The chip uses this property to determine intrinsicContentSize and sizeThatFits.   Defaults to (4, 4, 4, 4).  */ @property(nonatomic, assign) UIEdgeInsets contentPadding UI_APPEARANCE_SELECTOR;  /*  Padding around the image view. Only used if the image view has a non-nil image.   The chip uses this property to determine intrinsicContentSize and sizeThatFits.   Defaults to (0, 0, 0, 0).  */ @property(nonatomic, assign) UIEdgeInsets imagePadding UI_APPEARANCE_SELECTOR;  /*  Padding around the accessory view. Only used if the accessory view is non-nil.   The chip uses this property to determine intrinsicContentSize and sizeThatFits.   Defaults to (0, 0, 0, 0).  */ @property(nonatomic, assign) UIEdgeInsets accessoryPadding UI_APPEARANCE_SELECTOR;  /*  Padding around the title.   The chip uses this property to determine intrinsicContentSize and sizeThatFits.   Defaults to (3, 8, 4, 8). The top padding is shorter so the default height of a chip is 32 pts.  */ @property(nonatomic, assign) UIEdgeInsets titlePadding UI_APPEARANCE_SELECTOR;  /*  Font used to render the title.   If nil, the chip will use the system font.  */ @property(nonatomic, strong, nullable) UIFont *titleFont UI_APPEARANCE_SELECTOR;  /*  This property determines if an @c MDCChipView should use the @c MDCRippleView behavior or not.  By setting this property to @c YES, @c MDCStatefulRippleView is used to provide the user visual  touch feedback, instead of the legacy @c MDCInkView.  @note Defaults to @c NO.  */ @property(nonatomic, assign) BOOL enableRippleBehavior;  /**  Enabling the selection of the Chip on tap (when RippleBehavior is enabled).  When rippleAllowsSelection is enabled, tapping a chip automatically toggles the chip's selected  state (after a short ripple animation). When disabled, tapping a chip creates a momentary ripple  animation while the chip remains unselected.   @note: This property is ignored when RippleBehavior is disabled.   Defaults to: Yes.  */ @property(nonatomic) BOOL rippleAllowsSelection;  /*  The color of the ink ripple.  */ @property(nonatomic, strong, null_resettable)     UIColor *inkColor UI_APPEARANCE_SELECTOR __deprecated_msg("Use setInkColor:forState:");  /*  The shape generator used to define the chip's shape.  */ @property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator UI_APPEARANCE_SELECTOR;  /*  Indicates whether the chip should automatically update its font when the device’s  UIContentSizeCategory is changed.   This property is modeled after the adjustsFontForContentSizeCategory property in the  UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.   If set to YES, this button will base its text font on MDCFontTextStyleButton.   Default value is NO.  */ @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;  /**  Enable legacy font scaling curves for Dynamic Type.   Legacy font scaling uses the older [UIFont mdc_fontSizedForMaterialTextStyle:scaledForDynamicType:  category instead of the MDCFontScaler API.   Default value is YES.  */ @property(nonatomic, readwrite, setter=mdc_setLegacyFontScaling:)     BOOL mdc_legacyFontScaling __deprecated;  /**  Affects the fallback behavior for when a scaled font is not provided.   If enabled, the font size will adjust even if a scaled font has not been provided for  a given UIFont property on this component.   If disabled, the font size will only be adjusted if a scaled font has been provided.  This behavior most closely matches UIKit's.   Default value is YES, but this flag will eventually default to NO and then be deprecated  and deleted.  */ @property(nonatomic, assign) BOOL adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;  /**  The minimum dimensions of the Chip. A non-positive value for either height or width is equivalent  to no minimum for that dimension.   Defaults to a minimum height of 32 points, and no minimum width.  */ @property(nonatomic, assign) CGSize minimumSize UI_APPEARANCE_SELECTOR;  /**  Custom insets to use when computing touch targets. A positive inset value will shrink the hit  area for the Chip.  */ @property(nonatomic, assign) UIEdgeInsets hitAreaInsets;  /*  A color used as the chip's @c backgroundColor for @c state.   If no background color has been set for a given state, the returned value will fall back to the  value set for UIControlStateNormal.   @param state The control state.  @return The background color.  */ - (nullable UIColor *)backgroundColorForState:(UIControlState)state;  /*  A color used as the chip's @c backgroundColor.   Defaults to blue.   @param backgroundColor The background color.  @param state The control state.  */ - (void)setBackgroundColor:(nullable UIColor *)backgroundColor                   forState:(UIControlState)state UI_APPEARANCE_SELECTOR;  /*  Returns the border color for a particular control state.   If no border width has been set for a given state, the returned value will fall back to the value  set for UIControlStateNormal.   @param state The control state.  @return The border color for the requested state.  */ - (nullable UIColor *)borderColorForState:(UIControlState)state;  /*  Sets the border color for a particular control state.   @param borderColor The border color.  @param state The control state.  */ - (void)setBorderColor:(nullable UIColor *)borderColor               forState:(UIControlState)state UI_APPEARANCE_SELECTOR;  /*  Returns the border width for a particular control state.   If no border width has been set for a given state, the returned value will fall back to the value  set for UIControlStateNormal.   @param state The control state.  @return The border width for the requested state.  */ - (CGFloat)borderWidthForState:(UIControlState)state;  /*  Sets the border width for a particular control state.   @param borderWidth The border width.  @param state The control state.  */ - (void)setBorderWidth:(CGFloat)borderWidth forState:(UIControlState)state UI_APPEARANCE_SELECTOR;  /*  Returns the elevation for a particular control state.   If no elevation has been set for a given state, the returned value will fall back to the value set  for UIControlStateNormal.   @param state The control state.  @return The elevation for the requested state.  */ - (MDCShadowElevation)elevationForState:(UIControlState)state;  /*  Sets the elevation for a particular control state.   @param elevation The elevation.  @param state The control state.  */ - (void)setElevation:(MDCShadowElevation)elevation             forState:(UIControlState)state UI_APPEARANCE_SELECTOR;  /*  Returns the ink color for a particular control state.   If no ink color has been set for a given state, the returned value will fall back to the value  set for UIControlStateNormal. Defaults to nil. When nil MDCInkView.defaultInkColor is used.   @param state The control state.  @return The ink color for the requested state.  */ - (nullable UIColor *)inkColorForState:(UIControlState)state;  /*  Sets the ink color for a particular control state.   @param inkColor The ink color.  @param state The control state.  */ - (void)setInkColor:(nullable UIColor *)inkColor            forState:(UIControlState)state UI_APPEARANCE_SELECTOR;  /*  Returns the shadow color for a particular control state.   If no shadow color has been set for a given state, the returned value will fall back to the value  set for UIControlStateNormal.   @param state The control state.  @return The shadow color for the requested state.  */ - (nullable UIColor *)shadowColorForState:(UIControlState)state;  /*  Sets the shadow color for a particular control state.   @param elevation The shadow color.  @param state The control state.  */ - (void)setShadowColor:(nullable UIColor *)shadowColor               forState:(UIControlState)state UI_APPEARANCE_SELECTOR;  /*  Returns the title color for a particular control state.   If no title color has been set for a given state, the returned value will fall back to the value  set for UIControlStateNormal.   @param state The control state.  @return The title color for the requested state.  */ - (nullable UIColor *)titleColorForState:(UIControlState)state;  /*  Sets the title color for a particular control state.   @param titleColor The title color.  @param state The control state.  */ - (void)setTitleColor:(nullable UIColor *)titleColor              forState:(UIControlState)state UI_APPEARANCE_SELECTOR;  /**  A block that is invoked when the MDCChipView receives a call to @c  traitCollectionDidChange:. The block is called after the call to the superclass.  */ @property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)     (MDCChipView *_Nonnull activityIndicator, UITraitCollection *_Nullable previousTraitCollection);  @end` |
+| To: | `@interface MDCChipView : UIControl <MDCElevatable, MDCElevationOverriding>  /*  A UIImageView that leads the title label.  */ @property(nonatomic, readonly, nonnull) IBInspectable UIImageView *imageView;  /*  A UIImageView that leads the title label. Appears in front of the imageView. Only visible when the  chip is selected.   This image view is typically used to show some icon that denotes the chip as selected, such as a  check mark. If imageView has no image then the chip will require resizing when selected or  deselected to account for the changing visibility of selectedImageView.  */ @property(nonatomic, readonly, nonnull) IBInspectable UIImageView *selectedImageView;  /*  A UIView that trails the title label.   It will be given a size based on the value returned from sizeThatFits:.  */ @property(nonatomic, strong, nullable) IBInspectable UIView *accessoryView;  /*  The title label.   @note The title color is controlled by setTitleColor:forState:.  @note The title font is controlled by setTitleFont.  */ @property(nonatomic, readonly, nonnull) IBInspectable UILabel *titleLabel;  /*  Padding around the chip content. Each subview can be further padded with their invidual padding  property.   The chip uses this property to determine intrinsicContentSize and sizeThatFits.   Defaults to (4, 4, 4, 4).  */ @property(nonatomic, assign) UIEdgeInsets contentPadding UI_APPEARANCE_SELECTOR;  /*  Padding around the image view. Only used if the image view has a non-nil image.   The chip uses this property to determine intrinsicContentSize and sizeThatFits.   Defaults to (0, 0, 0, 0).  */ @property(nonatomic, assign) UIEdgeInsets imagePadding UI_APPEARANCE_SELECTOR;  /*  Padding around the accessory view. Only used if the accessory view is non-nil.   The chip uses this property to determine intrinsicContentSize and sizeThatFits.   Defaults to (0, 0, 0, 0).  */ @property(nonatomic, assign) UIEdgeInsets accessoryPadding UI_APPEARANCE_SELECTOR;  /*  Padding around the title.   The chip uses this property to determine intrinsicContentSize and sizeThatFits.   Defaults to (3, 8, 4, 8). The top padding is shorter so the default height of a chip is 32 pts.  */ @property(nonatomic, assign) UIEdgeInsets titlePadding UI_APPEARANCE_SELECTOR;  /*  Font used to render the title.   If nil, the chip will use the system font.  */ @property(nonatomic, strong, nullable) UIFont *titleFont UI_APPEARANCE_SELECTOR;  /*  This property determines if an @c MDCChipView should use the @c MDCRippleView behavior or not.  By setting this property to @c YES, @c MDCStatefulRippleView is used to provide the user visual  touch feedback, instead of the legacy @c MDCInkView.  @note Defaults to @c NO.  */ @property(nonatomic, assign) BOOL enableRippleBehavior;  /**  Enabling the selection of the Chip on tap (when RippleBehavior is enabled).  When rippleAllowsSelection is enabled, tapping a chip automatically toggles the chip's selected  state (after a short ripple animation). When disabled, tapping a chip creates a momentary ripple  animation while the chip remains unselected.   @note: This property is ignored when RippleBehavior is disabled.   Defaults to: Yes.  */ @property(nonatomic) BOOL rippleAllowsSelection;  /*  The color of the ink ripple.  */ @property(nonatomic, strong, null_resettable)     UIColor *inkColor UI_APPEARANCE_SELECTOR __deprecated_msg("Use setInkColor:forState:");  /*  The shape generator used to define the chip's shape.  */ @property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator UI_APPEARANCE_SELECTOR;  /*  Indicates whether the chip should automatically update its font when the device’s  UIContentSizeCategory is changed.   This property is modeled after the adjustsFontForContentSizeCategory property in the  UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.   If set to YES, this button will base its text font on MDCFontTextStyleButton.   Default value is NO.  */ @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;  /**  Enable legacy font scaling curves for Dynamic Type.   Legacy font scaling uses the older [UIFont mdc_fontSizedForMaterialTextStyle:scaledForDynamicType:  category instead of the MDCFontScaler API.   Default value is YES.  */ @property(nonatomic, readwrite, setter=mdc_setLegacyFontScaling:)     BOOL mdc_legacyFontScaling __deprecated;  /**  Affects the fallback behavior for when a scaled font is not provided.   If enabled, the font size will adjust even if a scaled font has not been provided for  a given UIFont property on this component.   If disabled, the font size will only be adjusted if a scaled font has been provided.  This behavior most closely matches UIKit's.   Default value is YES, but this flag will eventually default to NO and then be deprecated  and deleted.  */ @property(nonatomic, assign) BOOL adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;  /**  The minimum dimensions of the Chip. A non-positive value for either height or width is equivalent  to no minimum for that dimension.   Defaults to a minimum height of 32 points, and no minimum width.  */ @property(nonatomic, assign) CGSize minimumSize UI_APPEARANCE_SELECTOR;  /**  Custom insets to use when computing touch targets. A positive inset value will shrink the hit  area for the Chip.  */ @property(nonatomic, assign) UIEdgeInsets hitAreaInsets;  /**  A block that is invoked when the MDCChipView receives a call to @c  traitCollectionDidChange:. The block is called after the call to the superclass.  */ @property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)     (MDCChipView *_Nonnull chip, UITraitCollection *_Nullable previousTraitCollection);  /**  This block is called after a change of the chip view's elevation or one of its view  hierarchy ancestors.   Use this block to respond to elevation changes in the view or its ancestor views.   @param elevation The @c mdc_currentElevation plus the @c mdc_currentElevation of all ancestor  views.  @param object This chip view.  */ @property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)     (MDCChipView *_Nonnull chip, CGFloat elevation);  /*  A color used as the chip's @c backgroundColor for @c state.   If no background color has been set for a given state, the returned value will fall back to the  value set for UIControlStateNormal.   @param state The control state.  @return The background color.  */ - (nullable UIColor *)backgroundColorForState:(UIControlState)state;  /*  A color used as the chip's @c backgroundColor.   Defaults to blue.   @param backgroundColor The background color.  @param state The control state.  */ - (void)setBackgroundColor:(nullable UIColor *)backgroundColor                   forState:(UIControlState)state UI_APPEARANCE_SELECTOR;  /*  Returns the border color for a particular control state.   If no border width has been set for a given state, the returned value will fall back to the value  set for UIControlStateNormal.   @param state The control state.  @return The border color for the requested state.  */ - (nullable UIColor *)borderColorForState:(UIControlState)state;  /*  Sets the border color for a particular control state.   @param borderColor The border color.  @param state The control state.  */ - (void)setBorderColor:(nullable UIColor *)borderColor               forState:(UIControlState)state UI_APPEARANCE_SELECTOR;  /*  Returns the border width for a particular control state.   If no border width has been set for a given state, the returned value will fall back to the value  set for UIControlStateNormal.   @param state The control state.  @return The border width for the requested state.  */ - (CGFloat)borderWidthForState:(UIControlState)state;  /*  Sets the border width for a particular control state.   @param borderWidth The border width.  @param state The control state.  */ - (void)setBorderWidth:(CGFloat)borderWidth forState:(UIControlState)state UI_APPEARANCE_SELECTOR;  /*  Returns the elevation for a particular control state.   If no elevation has been set for a given state, the returned value will fall back to the value set  for UIControlStateNormal.   @param state The control state.  @return The elevation for the requested state.  */ - (MDCShadowElevation)elevationForState:(UIControlState)state;  /*  Sets the elevation for a particular control state.   @param elevation The elevation.  @param state The control state.  */ - (void)setElevation:(MDCShadowElevation)elevation             forState:(UIControlState)state UI_APPEARANCE_SELECTOR;  /*  Returns the ink color for a particular control state.   If no ink color has been set for a given state, the returned value will fall back to the value  set for UIControlStateNormal. Defaults to nil. When nil MDCInkView.defaultInkColor is used.   @param state The control state.  @return The ink color for the requested state.  */ - (nullable UIColor *)inkColorForState:(UIControlState)state;  /*  Sets the ink color for a particular control state.   @param inkColor The ink color.  @param state The control state.  */ - (void)setInkColor:(nullable UIColor *)inkColor            forState:(UIControlState)state UI_APPEARANCE_SELECTOR;  /*  Returns the shadow color for a particular control state.   If no shadow color has been set for a given state, the returned value will fall back to the value  set for UIControlStateNormal.   @param state The control state.  @return The shadow color for the requested state.  */ - (nullable UIColor *)shadowColorForState:(UIControlState)state;  /*  Sets the shadow color for a particular control state.   @param elevation The shadow color.  @param state The control state.  */ - (void)setShadowColor:(nullable UIColor *)shadowColor               forState:(UIControlState)state UI_APPEARANCE_SELECTOR;  /*  Returns the title color for a particular control state.   If no title color has been set for a given state, the returned value will fall back to the value  set for UIControlStateNormal.   @param state The control state.  @return The title color for the requested state.  */ - (nullable UIColor *)titleColorForState:(UIControlState)state;  /*  Sets the title color for a particular control state.   @param titleColor The title color.  @param state The control state.  */ - (void)setTitleColor:(nullable UIColor *)titleColor              forState:(UIControlState)state UI_APPEARANCE_SELECTOR;  @end` |
+
+### Dialogs
+
+#### MDCAlertController
+
+*new* property: `mdc_elevationDidChangeBlock` in `MDCAlertController`
+
+### Elevation
+
+#### UIView(MaterialElevationResponding)
+
+*new* method: `-mdc_elevationDidChange` in `UIView(MaterialElevationResponding)`
+
+*new* property: `mdc_absoluteElevation` in `UIView(MaterialElevationResponding)`
+
+#### UIColor(MaterialElevation)
+
+*new* category: `UIColor(MaterialElevation)`
+
+*new* method: `-mdc_resolvedColorWithTraitCollection:elevation:` in `UIColor(MaterialElevation)`
+
+*new* method: `-mdc_resolvedColorWithElevation:` in `UIColor(MaterialElevation)`
+
+### FeatureHighlight
+
+#### MDCFeatureHighlightViewController
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCFeatureHighlightViewController`
+
+#### MDCFeatureHighlightView
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCFeatureHighlightView`
+
+*modified* class: `MDCFeatureHighlightView`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@interface MDCFeatureHighlightView : UIView  @property(nonatomic, strong, nullable) UIColor *innerHighlightColor UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *outerHighlightColor UI_APPEARANCE_SELECTOR;  @property(nonatomic, strong, nullable) UIFont *titleFont UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *titleColor UI_APPEARANCE_SELECTOR;  @property(nonatomic, strong, nullable) UIFont *bodyFont UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *bodyColor UI_APPEARANCE_SELECTOR;  /*  Indicates whether the view's contents should automatically update their font when the device’s  UIContentSizeCategory changes.   This property is modeled after the adjustsFontForContentSizeCategory property in the  UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.   Default value is NO.  */ @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;  /**  Enable legacy font scaling curves for Dynamic Type  Default value is NO.  */ @property(nonatomic, readwrite, setter=mdc_setLegacyFontScaling:) BOOL mdc_legacyFontScaling;  @end` |
+| To: | `@interface MDCFeatureHighlightView : UIView  @property(nonatomic, strong, nullable) UIColor *innerHighlightColor UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *outerHighlightColor UI_APPEARANCE_SELECTOR;  @property(nonatomic, strong, nullable) UIFont *titleFont UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *titleColor UI_APPEARANCE_SELECTOR;  @property(nonatomic, strong, nullable) UIFont *bodyFont UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *bodyColor UI_APPEARANCE_SELECTOR;  /*  Indicates whether the view's contents should automatically update their font when the device’s  UIContentSizeCategory changes.   This property is modeled after the adjustsFontForContentSizeCategory property in the  UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.   Default value is NO.  */ @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;  /**  Enable legacy font scaling curves for Dynamic Type  Default value is NO.  */ @property(nonatomic, readwrite, setter=mdc_setLegacyFontScaling:) BOOL mdc_legacyFontScaling;  /**  A block that is invoked when the @c MDCFeatureHighlightView receives a call to @c  traitCollectionDidChange:. The block is called after the call to the superclass.  */ @property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)     (MDCFeatureHighlightView *_Nonnull featureHighlight,      UITraitCollection *_Nullable previousTraitCollection);  @end` |
+
+### FlexibleHeader
+
+#### MDCFlexibleHeaderView()
+
+*new* category: `MDCFlexibleHeaderView()`
+
+*removed* category: `MDCFlexibleHeaderView()`
+
+*modified* property: `contentView` in `MDCFlexibleHeaderView()`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(ext)MDCFlexibleHeaderView@MDCFlexibleHeaderView.h@15931` |
+| To: | `c:objc(ext)MDCFlexibleHeaderView@MDCFlexibleHeaderView.h@16670` |
+
+#### MDCFlexibleHeaderShadowIntensityChangeBlock
+
+*modified* typedef: `MDCFlexibleHeaderShadowIntensityChangeBlock`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `typedef void (^MDCFlexibleHeaderShadowIntensityChangeBlock)(CALayer *_Nonnull shadowLayer,                                                             CGFloat intensity)` |
+| To: | `typedef void (^MDCFlexibleHeaderShadowIntensityChangeBlock)(__kindof CALayer *_Nonnull shadowLayer,                                                             CGFloat intensity)` |
+
+#### MDCFlexibleHeaderView
+
+*new* property: `mdc_elevationDidChangeBlock` in `MDCFlexibleHeaderView`
+
+*new* property: `elevation` in `MDCFlexibleHeaderView`
+
+*modified* method: `-setShadowLayer:intensityDidChangeBlock:` in `MDCFlexibleHeaderView`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `- (void)setShadowLayer:(nonnull CALayer *)shadowLayer     intensityDidChangeBlock:         (nonnull MDCFlexibleHeaderShadowIntensityChangeBlock)block;` |
+| To: | `- (void)setShadowLayer:(nonnull __kindof CALayer *)shadowLayer     intensityDidChangeBlock:         (nonnull MDCFlexibleHeaderShadowIntensityChangeBlock)block;` |
+
+*modified* property: `shadowLayer` in `MDCFlexibleHeaderView`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@property (readwrite, strong, nonatomic, nullable) CALayer *shadowLayer;` |
+| To: | `@property (readwrite, strong, nonatomic, nullable) __kindof CALayer *shadowLayer;` |
+
+### HeaderStackView
+
+#### MDCHeaderStackView
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCHeaderStackView`
+
+### Ink
+
+#### MDCInkView
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCInkView`
+
+### List
+
+#### MDCBaseCell
+
+*new* property: `mdc_elevationDidChangeBlock` in `MDCBaseCell`
+
+*modified* class: `MDCBaseCell`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@interface MDCBaseCell : UICollectionViewCell  /**  The current elevation of the cell.  */ @property(nonatomic, assign) MDCShadowElevation elevation;  /**  By setting this property to @c YES, the Ripple component will be used instead of Ink  to display visual feedback to the user.   @note This property will eventually be enabled by default, deprecated, and then deleted as part  of our migration to Ripple. Learn more at  https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple   Defaults to NO.  */ @property(nonatomic, assign) BOOL enableRippleBehavior;  /**  The color of the cell’s underlying Ripple.  */ @property(nonatomic, strong, nullable) UIColor *rippleColor;  /**  A block that is invoked when the @c MDCBaseCell receives a call to @c  traitCollectionDidChange:. The block is called after the call to the superclass.  */ @property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)     (MDCBaseCell *_Nonnull cell, UITraitCollection *_Nullable previousTraitCollection);  @end` |
+| To: | `@interface MDCBaseCell : UICollectionViewCell <MDCElevatable, MDCElevationOverriding>  /**  The current elevation of the cell.  */ @property(nonatomic, assign) MDCShadowElevation elevation;  /**  By setting this property to @c YES, the Ripple component will be used instead of Ink  to display visual feedback to the user.   @note This property will eventually be enabled by default, deprecated, and then deleted as part  of our migration to Ripple. Learn more at  https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple   Defaults to NO.  */ @property(nonatomic, assign) BOOL enableRippleBehavior;  /**  The color of the cell’s underlying Ripple.  */ @property(nonatomic, strong, nullable) UIColor *rippleColor;  /**  A block that is invoked when the @c MDCBaseCell receives a call to @c  traitCollectionDidChange:. The block is called after the call to the superclass.  */ @property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)     (MDCBaseCell *_Nonnull cell, UITraitCollection *_Nullable previousTraitCollection);  /**  This block is called after a change of the cell's elevation or one of its view  hierarchy ancestors.   Use this block to respond to elevation changes in the view or its ancestor views.   @param elevation The @c mdc_currentElevation plus the @c mdc_currentElevation of all ancestor  views.  @param cell This cell.  */ @property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)     (MDCBaseCell *_Nonnull cell, CGFloat absoluteElevation);  @end` |
+
+### NavigationDrawer
+
+#### MDCBottomDrawerViewController
+
+*new* property: `mdc_elevationDidChangeBlock` in `MDCBottomDrawerViewController`
+
+*new* property: `drawerShadowColor` in `MDCBottomDrawerViewController`
+
+*new* property: `elevation` in `MDCBottomDrawerViewController`
+
+*modified* class: `MDCBottomDrawerViewController`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `class MDCBottomDrawerViewController : UIViewController, MDCBottomDrawerPresentationControllerDelegate` |
+| To: | `class MDCBottomDrawerViewController : UIViewController` |
+
+*modified* class: `MDCBottomDrawerViewController`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@interface MDCBottomDrawerViewController     : UIViewController <MDCBottomDrawerPresentationControllerDelegate>` |
+| To: | `@interface MDCBottomDrawerViewController : UIViewController` |
+
+#### MDCBottomDrawerPresentationController
+
+*new* property: `drawerShadowColor` in `MDCBottomDrawerPresentationController`
+
+*new* property: `elevation` in `MDCBottomDrawerPresentationController`
+
+### PageControl
+
+#### MDCPageControl
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCPageControl`
+
+### ProgressView
+
+#### MDCProgressView
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCProgressView`
+
+### Ripple
+
+#### MDCRippleView
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCRippleView`
+
+### ShadowElevations
+
+#### MDCShadowElevationBottomAppBar
+
+*new* constant: `MDCShadowElevationBottomAppBar`
+
+### Slider
+
+#### MDCSlider
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCSlider`
+
+### Snackbar
+
+#### MDCSnackbarMessageView()
+
+*new* category: `MDCSnackbarMessageView()`
+
+*removed* category: `MDCSnackbarMessageView()`
+
+*modified* property: `snackbarMessageViewTextColor` in `MDCSnackbarMessageView()`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(ext)MDCSnackbarMessageView@MDCSnackbarMessageView.h@3959` |
+| To: | `c:objc(ext)MDCSnackbarMessageView@MDCSnackbarMessageView.h@4525` |
+
+#### MDCSnackbarMessageView
+
+*new* property: `mdc_elevationDidChangeBlock` in `MDCSnackbarMessageView`
+
+### Tabs
+
+#### MDCTabBarViewController
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCTabBarViewController`
+
+#### MDCTabBar
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCTabBar`
+
+### Tabs+TabBarView
+
+#### MDCTabBarView
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCTabBarView`
+
+### TextFields
+
+#### MDCTextField
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCTextField`
+
+#### MDCMultilineTextField
+
+*new* property: `traitCollectionDidChangeBlock` in `MDCMultilineTextField`
+
+## Component changes
+
+## Changes
+
+### AppBar
+
+* [Set headerView elevation when shadow intensity changes (#8101)](https://github.com/material-components/material-components-ios/commit/74a65bc6d092c2a6a5a501217165c406d68a4e04) (Bryan Oltman)
+
+### Banner
+
+* [use UITextView for text instead of UILabel. (#7993)](https://github.com/material-components/material-components-ios/commit/e58c550a212040ef8cedd0b7c14ef4521c46de19) (Wenyu Zhang)
+
+### BottomAppBar
+
+* [Remove no-op tests. (#8072)](https://github.com/material-components/material-components-ios/commit/db4b31e1edb5d1460f4282f0196db7a50187071a) (Robert Moore)
+
+### BottomNavigation
+
+* [Add MDCElevation support. (#8038)](https://github.com/material-components/material-components-ios/commit/4768e610a8054741f8024161a5b3ebe28f69f608) (Robert Moore)
+* [Deprecate `sizeThatFitsIncludesSafeArea`. (#8066)](https://github.com/material-components/material-components-ios/commit/b6eed78eb43deb580348e293ff561663bf738369) (Robert Moore)
+* [Don't set `sizeThatFitsIncludesSafeArea`. (#8065)](https://github.com/material-components/material-components-ios/commit/48e95bbf0e16e361a6e26210790c89650af1bfd7) (Robert Moore)
+* [Make KVO safe for `nil`. (#8083)](https://github.com/material-components/material-components-ios/commit/eed4679d887829fc35a160b080eaad24e7995cb3) (Robert Moore)
+* [Store child VCs in `childViewControllers`. (#7992)](https://github.com/material-components/material-components-ios/commit/9ed52651c4390722d1a6b3024e896e1d3008520a) (Robert Moore)
+* [Test for `mdc_overrideBaseElevation` (#8075)](https://github.com/material-components/material-components-ios/commit/bce0f4937b2c1956afef21cbacd434aef5ab6190) (Robert Moore)
+
+### BottomSheet
+
+* [Add elevation property (#8089)](https://github.com/material-components/material-components-ios/commit/43dddb988e341b88b033419d731e09e2cf003de1) (Cody Weaver)
+
+### Buttons
+
+* [Move MDCButton's defaultContentInset configuration to later in init (#8069)](https://github.com/material-components/material-components-ios/commit/4fcf3cd5a221297d428f965d2f876a139b3a0516) (Bryan Oltman)
+
+### Cards
+
+* [CardCell Supports MaterialElevation. (#8079)](https://github.com/material-components/material-components-ios/commit/130289a6d4960fa14d773334e381b773f0fd8ee7) (Yarden Eitan)
+* [MDCCard conforms to MDCElevation and MDCElevationOverride (#8054)](https://github.com/material-components/material-components-ios/commit/f2b12a10ed25b9c209c0b96832703d814a8cf191) (Yarden Eitan)
+
+### Chips
+
+* [Conform to MDCElevatable and MDCElevationOverriding. (#8068)](https://github.com/material-components/material-components-ios/commit/58aa3402bf0a9ca7cbf876622f6aca90f9a78e30) (Robert Moore)
+* [Fix default value for mdc_overrideBaseElevation. (#8076)](https://github.com/material-components/material-components-ios/commit/d93b4e8fd51cef6a95655f5310863ac5b3ef8279) (Robert Moore)
+
+### Dialogs
+
+* [Add MaterialElevation support to AlertController. (#8098)](https://github.com/material-components/material-components-ios/commit/dce2d98f92b38f522e92e379bbf9dc15c1f1aa85) (Robert Moore)
+
+### Elevation
+
+* [Add MDCElevationOverride to umbrella header (#8052)](https://github.com/material-components/material-components-ios/commit/eab643ea8c0afb928b014af3dea88992fd1218b5) (Robert Moore)
+* [Add a UIColor category to support resolving color with elevation. (#8085)](https://github.com/material-components/material-components-ios/commit/c3f8c6adeb4e3425d2997a291a3f616202f6c3c5) (Wenyu Zhang)
+* [Add absoluteElevation property and clarify the elevationDidChange block param (#8071)](https://github.com/material-components/material-components-ios/commit/c980a95d54ca051468945e9a9b77af7bc9acd17b) (Yarden Eitan)
+* [Add elevationDidChange method to UIView category (#8067)](https://github.com/material-components/material-components-ios/commit/e312d88119e34fa3be48c45c4da948223d9cb133) (Cody Weaver)
+* [Doc clarification (#8074)](https://github.com/material-components/material-components-ios/commit/50ba836103621f510cfb70fc6fac9a0d7ec486fc) (Yarden Eitan)
+* [Improve protocol naming (#8055)](https://github.com/material-components/material-components-ios/commit/d9d038130a30fc57be90bc87ff04218a1ba1a721) (Yarden Eitan)
+* [passing self to the elevationDidChangeBlock (#8058)](https://github.com/material-components/material-components-ios/commit/0643370347a8d0b31ef4eb590c84dfa2424d0ed4) (Yarden Eitan)
+
+### FeatureHighlight
+
+* [Add traitCollectionDidChange block (#8036)](https://github.com/material-components/material-components-ios/commit/a57245ed9102726529daa3397bee6138dfd616c7) (Cody Weaver)
+
+### FlexibleHeader
+
+* [ [FlexibleHeader] Conform to MDCElevatable, MDCElevationOverriding (#8099)](https://github.com/material-components/material-components-ios/commit/657483ea40e354ec47fb41d785c1b2b9b69cb502) (Bryan Oltman)
+
+### HeaderStackView
+
+* [Add traitCollectionDidChange block (#8061)](https://github.com/material-components/material-components-ios/commit/6190a33c72554fbd92254c4281168a07408624ec) (Cody Weaver)
+
+### Ink
+
+* [Add traitCollectionDidChange block (#8064)](https://github.com/material-components/material-components-ios/commit/b19962a7472f615a25bd68fcf87cc71e691e20ea) (Cody Weaver)
+* [Fix documentation for enum types. (#8090)](https://github.com/material-components/material-components-ios/commit/99f2aec3e28a3d1e1378c3b51f02beb03b6fb775) (Robert Moore)
+
+### List
+
+* [Support MaterialElevation. (#8078)](https://github.com/material-components/material-components-ios/commit/cbeb6f5bc77ddf504c504ad1bf610aab97370005) (Robert Moore)
+
+### NavigationDrawer
+
+* [Adding MDCElevation support (#8100)](https://github.com/material-components/material-components-ios/commit/b8ea85d21ae3c1affadd68853b8aea4dd79408cc) (Yarden Eitan)
+
+### PageControl
+
+* [Add traitCollectionDidChange block (#8037)](https://github.com/material-components/material-components-ios/commit/61aea173fa31681a84bb7b9e407b1af0ab57a72f) (Cody Weaver)
+
+### ProgressView
+
+* [Add traitCollectionDidChange block (#8035)](https://github.com/material-components/material-components-ios/commit/5ebe48ba4e8f72b5a16d2126ec1ad2d4ca2a8b08) (Cody Weaver)
+
+### Ripple
+
+* [Add traitCollectionDidChange block (#8062)](https://github.com/material-components/material-components-ios/commit/8f6338e0b2d91e31b3df276b66eb6b8ca216a92d) (Cody Weaver)
+* [Fix active ripple layer not using active ripple color. (#8059)](https://github.com/material-components/material-components-ios/commit/013f3a890ee637898975bf36ebdda79b9de8eab0) (Wenyu Zhang)
+
+### Slider
+
+* [Add traitCollectionDidChange block (#8057)](https://github.com/material-components/material-components-ios/commit/118840dfc859c217413f0ebb625105cd6c306f82) (Cody Weaver)
+
+### Snackbar
+
+* [Supports MaterialElevation. (#8081)](https://github.com/material-components/material-components-ios/commit/f1a0665d67119b446d6936c5f8ccd5202a2084ba) (Yarden Eitan)
+
+### Tabs
+
+* [Add traitCollectionDidChange block (#8056)](https://github.com/material-components/material-components-ios/commit/7bd0bdf14d9fc9283303e21c12ebf061066242ff) (Cody Weaver)
+* [Add traitCollectionDidChange block (#8060)](https://github.com/material-components/material-components-ios/commit/0d624ace58b997447c59d2c0bf6ff84dcc206fd7) (Cody Weaver)
+* [Properties before methods. (#8063)](https://github.com/material-components/material-components-ios/commit/6c3877da223db9cca3b56c3d4fd2122e99aa62d5) (Robert Moore)
+
+### TextFields
+
+* [Add traitCollectionDidChange block (#8070)](https://github.com/material-components/material-components-ios/commit/065de4b2884a55bc6ba7bb8b892db08a59d8db39) (Cody Weaver)
+
+### Typography
+
+* [Internal comments to explain font scaling. (#8087)](https://github.com/material-components/material-components-ios/commit/e64c4400356d9eb608add0dd3f7ad7b18322b256) (Robert Moore)
+
+### private/Color
+
+* [add method for regular color blending. (#8077)](https://github.com/material-components/material-components-ios/commit/997b3b2021670b4adddaee3d0abadccc63931df9) (Wenyu Zhang)
+
+## Multi-component changes
+
+* [Add category to UIView (#7969)](https://github.com/material-components/material-components-ios/commit/f335b9627799cffa4259a498086a489df811657a) (Cody Weaver)
+* [Add conformance to MDCElevatable, MDCElevationOverriding (#8094)](https://github.com/material-components/material-components-ios/commit/02a707a5b401c8a0321445a77964f0cb38e69440) (Bryan Oltman)
+* [Adds an elevation and shadow to Bottom Drawer. (#8095)](https://github.com/material-components/material-components-ios/commit/7ded6431437dd364bbb6ca0b7ef16f6b6a981ef3) (Yarden Eitan)
+* [Create umbrella header. (#8091)](https://github.com/material-components/material-components-ios/commit/66435f1b685c363c2ee534d8f2a065cef369b2b0) (Robert Moore)
+* [Support MaterialElevation. (#8073)](https://github.com/material-components/material-components-ios/commit/403c1b6a295da0fd905f4c82ecca5f365fb4aeee) (Robert Moore)
+
+---
+
 # 85.9.1
 
 This patch release fixes a crash in BottomNavigation when a KVO'd property is assigned `nil`.
