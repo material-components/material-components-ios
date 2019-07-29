@@ -112,15 +112,14 @@
 @property(nonatomic, assign) MDCShadowElevation elevation;
 
 /**
- This block is called after a change of the bottom sheet controller's elevation.
+ Initializes the controller with a content view controller.
 
-  Use this block to respond to elevation changes in the alert controller or its ancestors.
-
-  @param bottomSheet This bottom sheet controller.
- @param absoluteElevation The @c mdc_absoluteElevation this alert controller.
+ @param contentViewController The view controller to be presented as a bottom sheet.
  */
-@property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)
-    (MDCBottomSheetController *_Nonnull bottomSheet, CGFloat absoluteElevation);
+- (nonnull instancetype)initWithContentViewController:
+    (nonnull UIViewController *)contentViewController;
+
+- (nonnull instancetype)init NS_DEPRECATED_IOS(9_0, @"Please use initWithContentViewController:");
 
 /**
  Sets the shape generator for state that is used to define the bottom sheet's shape for that state.
@@ -145,14 +144,6 @@
  @return the shape generator for the state given.
  */
 - (nullable id<MDCShapeGenerating>)shapeGeneratorForState:(MDCSheetState)state;
-
-/**
- Initializes the controller with a content view controller.
-
- @param contentViewController The view controller to be presented as a bottom sheet.
- */
-- (nonnull instancetype)initWithContentViewController:
-    (nonnull UIViewController *)contentViewController;
 
 /**
  A block that is invoked when the @c MDCBottomSheetController receives a call to @c
