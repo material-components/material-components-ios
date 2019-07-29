@@ -1,7 +1,8 @@
 # 85.10.0
 
 This minor release expands support for trait collection and Material Elevation
-changes in several components. Bottom Sheet now supports shadows and elevation.
+changes in several components. Bottom Sheet and Navigation Drawer now support
+shadows and elevation.
 
 ## Breaking changes
 
@@ -32,6 +33,10 @@ The Bottom Sheet component, specifically `MDCBottomSheetController` now renders
 a shadow by default. This may cause a very slight change in the shading around
 the edges of the view. If desired, non-elevated Bottom Sheets can be configured
 by setting the `elevation` property's value to `0`.
+
+Likewise, the Navigation Drawer's `MDCBottomDrawerPresentationController`
+renders a shadow by default. To disable the shadow or modify the drawer's
+elevation, set the `elevation` property to the desired value.
 
 ```objc
 MDCBottomSheetController *bottomSheet =
