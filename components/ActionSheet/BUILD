@@ -33,6 +33,7 @@ mdc_public_objc_library(
     sdk_frameworks = ["UIKit"],
     deps = [
         "//components/BottomSheet",
+        "//components/Elevation",
         "//components/Ink",
         "//components/Ripple",
         "//components/Typography",
