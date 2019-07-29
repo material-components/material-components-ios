@@ -71,9 +71,9 @@
     MDCFontScaler *fontScaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleBody2];
     UIFont *scalableFont = [fontScaler scaledFontWithFont:font];
     scalableFont = [scalableFont mdc_scaledFontAtDefaultSize];
-    bannerView.textLabel.font = scalableFont;
-    bannerView.textLabel.text = @"Banner Text";
-    CGFloat originalTextFontSize = bannerView.textLabel.font.pointSize;
+    bannerView.textView.font = scalableFont;
+    bannerView.textView.text = @"Banner Text";
+    CGFloat originalTextFontSize = bannerView.textView.font.pointSize;
     MDCButton *leadingButton = bannerView.leadingButton;
     [leadingButton setTitleFont:scalableFont forState:UIControlStateNormal];
     CGFloat originalButtonFontSize =
@@ -89,12 +89,36 @@
                       object:nil];
 
     // Then
-    CGFloat actualTextFontSize = bannerView.textLabel.font.pointSize;
+    CGFloat actualTextFontSize = bannerView.textView.font.pointSize;
     XCTAssertGreaterThan(actualTextFontSize, originalTextFontSize);
     CGFloat actualButtonFontSize =
         [bannerView.leadingButton titleFontForState:UIControlStateNormal].pointSize;
     XCTAssertGreaterThan(actualButtonFontSize, originalButtonFontSize);
   }
+}
+
+- (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
+  // Given
+  MDCBannerView *banner = [[MDCBannerView alloc] init];
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollectionDidChange"];
+  __block UITraitCollection *passedTraitCollection;
+  __block MDCBannerView *passedBannerView;
+  banner.traitCollectionDidChangeBlock =
+      ^(MDCBannerView *_Nonnull bannerView, UITraitCollection *_Nullable previousTraitCollection) {
+        [expectation fulfill];
+        passedTraitCollection = previousTraitCollection;
+        passedBannerView = bannerView;
+      };
+  UITraitCollection *testTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
+
+  // When
+  [banner traitCollectionDidChange:testTraitCollection];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertEqual(passedTraitCollection, testTraitCollection);
+  XCTAssertEqual(passedBannerView, banner);
 }
 
 @end

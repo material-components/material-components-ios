@@ -46,4 +46,9 @@
 - (void)snapshotVerifyView:(UIView *)view
                  tolerance:(CGFloat)tolerancePercent
               supportIOS13:(BOOL)supportIOS13;
+
+/// Change view to RTL mode.
+/// @param view The view to be changed to RTL mode.
+- (void)changeViewToRTL:(UIView *)view;
+
 @end

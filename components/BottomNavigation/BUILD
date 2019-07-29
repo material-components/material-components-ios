@@ -59,6 +59,7 @@ mdc_objc_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
+        "//components/Elevation",
         "//components/Ink",
         "//components/Palettes",
         "//components/Ripple",
@@ -243,6 +244,7 @@ mdc_snapshot_objc_library(
     name = "snapshot_test_lib",
     deps = [
         ":BottomNavigation",
+        ":BottomNavigationBeta",
         ":ColorThemer",
         ":Theming",
         ":TypographyThemer",

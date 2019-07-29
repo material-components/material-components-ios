@@ -28,6 +28,8 @@
 
 @implementation MDCBaseCell
 
+@synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
+
 #pragma mark Object Lifecycle
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -57,6 +59,7 @@
   if (!self.rippleView) {
     self.rippleView = [[MDCRippleView alloc] initWithFrame:self.bounds];
   }
+  _mdc_overrideBaseElevation = -1;
 }
 
 #pragma mark Ink
@@ -102,6 +105,14 @@
   self.inkView.frame = self.bounds;
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
+}
+
 #pragma mark UICollectionViewCell Overrides
 
 - (void)setHighlighted:(BOOL)highlighted {
@@ -130,6 +141,11 @@
   }
   _elevation = elevation;
   [self updateShadowElevation];
+  [self mdc_elevationDidChange];
+}
+
+- (CGFloat)mdc_currentElevation {
+  return self.elevation;
 }
 
 - (void)setInkColor:(UIColor *)inkColor {

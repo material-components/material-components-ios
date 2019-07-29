@@ -191,6 +191,14 @@ IB_DESIGNABLE
  Default value is MDCElevationNone.
  */
 @property(nonatomic, assign) MDCShadowElevation thumbElevation UI_APPEARANCE_SELECTOR;
+
+/**
+ The shadow color of the cursor (thumb).
+
+ Default value is black
+ */
+@property(nonatomic, strong, nonnull) UIColor *thumbShadowColor;
+
 /**
  The number of discrete values that the slider can take.
 
@@ -301,6 +309,13 @@ IB_DESIGNABLE
  Defaults to YES.
  */
 @property(nonatomic, assign, getter=isThumbHollowAtStart) BOOL thumbHollowAtStart;
+
+/**
+ A block that is invoked when the @c MDCSlider receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCSlider *_Nonnull slider, UITraitCollection *_Nullable previousTraitCollection);
 
 #pragma mark - To be deprecated
 

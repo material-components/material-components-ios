@@ -38,6 +38,7 @@ mdc_objc_library(
     ],
     deps = [
         ":Color",
+        "//components/private/Math",
     ],
     visibility = ["//visibility:private"],
 )

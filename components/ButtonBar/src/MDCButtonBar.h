@@ -199,6 +199,13 @@ IB_DESIGNABLE
  */
 - (CGSize)sizeThatFits:(CGSize)size;
 
+/**
+ A block that is invoked when the @c MDCButtonBar receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCButtonBar *_Nonnull buttonBar, UITraitCollection *_Nullable previousTraitCollection);
+
 @end
 
 @interface MDCButtonBar (ToBeDeprecated)

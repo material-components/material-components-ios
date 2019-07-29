@@ -26,7 +26,6 @@ class BottomNavigationTypicalUseSwiftExample: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    bottomNavBar.sizeThatFitsIncludesSafeArea = false
     view.backgroundColor = colorScheme.backgroundColor
     view.addSubview(bottomNavBar)
 

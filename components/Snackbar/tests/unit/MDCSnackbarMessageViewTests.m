@@ -318,4 +318,67 @@
   XCTAssertEqual(passedMessageView, messageView);
 }
 
+- (void)testCurrentElevationMatchesElevationWhenElevationChanges {
+  // Given
+  MDCSnackbarMessageView *messageView = [[MDCSnackbarMessageView alloc] init];
+
+  // When
+  messageView.elevation = 4;
+
+  // Then
+  XCTAssertEqualWithAccuracy(messageView.mdc_currentElevation, messageView.elevation, 0.001);
+}
+
+- (void)testSettingOverrideBaseElevationReturnsSetValue {
+  // Given
+  MDCSnackbarMessageView *messageView = [[MDCSnackbarMessageView alloc] init];
+  CGFloat expectedBaseElevation = 99;
+
+  // When
+  messageView.mdc_overrideBaseElevation = expectedBaseElevation;
+
+  // Then
+  XCTAssertEqualWithAccuracy(messageView.mdc_overrideBaseElevation, expectedBaseElevation, 0.001);
+}
+
+- (void)testElevationDidChangeBlockCalledWhenElevationChangesValue {
+  // Given
+  MDCSnackbarMessageView *messageView = [[MDCSnackbarMessageView alloc] init];
+  messageView.elevation = 5;
+  __block BOOL blockCalled = NO;
+  messageView.mdc_elevationDidChangeBlock = ^(MDCSnackbarMessageView *object, CGFloat elevation) {
+    blockCalled = YES;
+  };
+
+  // When
+  messageView.elevation = messageView.elevation + 1;
+
+  // Then
+  XCTAssertTrue(blockCalled);
+}
+
+- (void)testElevationDidChangeBlockNotCalledWhenElevationIsSetWithoutChangingValue {
+  // Given
+  MDCSnackbarMessageView *messageView = [[MDCSnackbarMessageView alloc] init];
+  messageView.elevation = 5;
+  __block BOOL blockCalled = NO;
+  messageView.mdc_elevationDidChangeBlock = ^(MDCSnackbarMessageView *object, CGFloat elevation) {
+    blockCalled = YES;
+  };
+
+  // When
+  messageView.elevation = messageView.elevation;
+
+  // Then
+  XCTAssertFalse(blockCalled);
+}
+
+- (void)testDefaultValueForOverrideBaseElevationIsNegative {
+  // Given
+  MDCSnackbarMessageView *messageView = [[MDCSnackbarMessageView alloc] init];
+
+  // Then
+  XCTAssertLessThan(messageView.mdc_overrideBaseElevation, 0);
+}
+
 @end

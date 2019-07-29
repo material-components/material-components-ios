@@ -16,8 +16,8 @@
 
 #import "MDCBottomDrawerHeader.h"
 #import "MDCBottomDrawerHeaderMask.h"
+#import "MDCBottomDrawerShadowedView.h"
 #import "MaterialMath.h"
-#import "MaterialShadowLayer.h"
 #import "MaterialUIMetrics.h"
 
 static const CGFloat kVerticalShadowAnimationDistance = 10;
@@ -38,6 +38,19 @@ static const CGFloat kInitialDrawerHeightFactor = (CGFloat)0.5;
 static NSString *const kContentOffsetKeyPath = @"contentOffset";
 NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
     @"kMDCBottomDrawerScrollViewAccessibilityIdentifier";
+
+@implementation MDCBottomDrawerShadowedView
++ (Class)layerClass {
+  return [MDCShadowLayer class];
+}
+
+- (MDCShadowLayer *)shadowLayer {
+  if ([self.layer isKindOfClass:[MDCShadowLayer class]]) {
+    return (MDCShadowLayer *)self.layer;
+  }
+  return nil;
+}
+@end
 
 @interface MDCBottomDrawerContainerViewController (LayoutCalculations)
 
@@ -133,6 +146,9 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 // The current bottom drawer state.
 @property(nonatomic) MDCBottomDrawerState drawerState;
 
+// The view with the shadow.
+@property(nonatomic) MDCBottomDrawerShadowedView *shadowedView;
+
 // Updates both the header and content based off content offset of the scroll view.
 - (void)updateViewWithContentOffset:(CGPoint)contentOffset;
 
@@ -163,7 +179,11 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
     _maximumInitialDrawerHeight =
         self.presentingViewBounds.size.height * kInitialDrawerHeightFactor;
     _shouldPresentAtFullscreen = NO;
-    _headerShadowColor = [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.2];
+    UIColor *shadowColor = [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.2];
+    _headerShadowColor = shadowColor;
+    _drawerShadowColor = shadowColor;
+    _elevation = MDCShadowElevationNavDrawer;
+    _shadowedView = [[MDCBottomDrawerShadowedView alloc] init];
   }
   return self;
 }
@@ -365,6 +385,16 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
   }
 }
 
+- (void)setElevation:(MDCShadowElevation)elevation {
+  _elevation = elevation;
+  self.shadowedView.shadowLayer.elevation = elevation;
+}
+
+- (void)setDrawerShadowColor:(UIColor *)drawerShadowColor {
+  _drawerShadowColor = drawerShadowColor;
+  self.shadowedView.shadowLayer.shadowColor = drawerShadowColor.CGColor;
+}
+
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
   CGFloat topAreaInsetForHeader = (self.headerViewController ? MDCDeviceTopSafeAreaInset() : 0);
   CGFloat drawerOffset = self.contentHeaderTopInset - topAreaInsetForHeader;
@@ -408,9 +438,14 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
     [self addChildViewController:self.contentViewController];
     [self.scrollView addSubview:self.contentViewController.view];
     [self.contentViewController didMoveToParentViewController:self];
+    [self.scrollView insertSubview:self.shadowedView atIndex:0];
   }
 
   self.scrollView.accessibilityIdentifier = kMDCBottomDrawerScrollViewAccessibilityIdentifier;
+
+  self.shadowedView.layer.shadowColor = self.drawerShadowColor.CGColor;
+  self.shadowedView.backgroundColor = UIColor.clearColor;
+  self.shadowedView.shadowLayer.elevation = self.elevation;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -480,6 +515,18 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
   [super viewWillLayoutSubviews];
 
   [self setupLayout];
+  UIView *topView;
+  if (self.headerViewController) {
+    topView = self.headerViewController.view;
+  } else {
+    topView = self.contentViewController.view;
+  }
+  self.shadowedView.frame = topView.frame;
+  if (topView.layer.mask) {
+    CAShapeLayer *shapeLayer = topView.layer.mask;
+    self.shadowedView.layer.shadowPath = shapeLayer.path;
+  }
+
   [self.headerViewController.view.superview bringSubviewToFront:self.headerViewController.view];
   [self updateViewWithContentOffset:self.scrollView.contentOffset];
 }
@@ -628,6 +675,11 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
                                : self.contentHeaderTopInset - headerTransitionToTop * headersDiff;
   contentHeaderView.frame =
       CGRectMake(0, contentHeaderViewTop, contentHeaderViewWidth, contentHeaderViewHeight);
+  self.shadowedView.frame = contentHeaderView.frame;
+  if (self.headerViewController.view.layer.mask) {
+    CAShapeLayer *shapeLayer = self.headerViewController.view.layer.mask;
+    self.shadowedView.layer.shadowPath = shapeLayer.path;
+  }
 }
 
 - (void)updateTopHeaderBottomShadowWithContentOffset:(CGPoint)contentOffset {

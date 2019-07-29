@@ -13,13 +13,15 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
+
+#import "MaterialElevation.h"
 #import "MaterialInk.h"
 #import "MaterialRipple.h"
 #import "MaterialShadowLayer.h"
 
 @protocol MDCShapeGenerating;
 
-@interface MDCCard : UIControl
+@interface MDCCard : UIControl <MDCElevatable, MDCElevationOverriding>
 
 /**
  The corner radius for the card
@@ -141,6 +143,13 @@
  */
 - (nullable UIColor *)shadowColorForState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
+/**
+ A block that is invoked when the @c MDCCard receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCCard *_Nonnull card, UITraitCollection *_Nullable previousTraitCollection);
+
 /*
  The shape generator used to define the card's shape.
  When set, layer properties such as cornerRadius and other layer properties are nullified/zeroed.
@@ -154,4 +163,14 @@
  */
 @property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator;
 
+/**
+ This block is called after a change of the card's elevation or one of its view
+ hierarchy ancestors.
+ Use this block to respond to elevation changes in the view or its ancestor views.
+ @param elevation The @c mdc_currentElevation plus the @c mdc_currentElevation of all ancestor
+ views.
+ @param object This card.
+ */
+@property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)
+    (MDCCard *_Nonnull object, CGFloat elevation);
 @end

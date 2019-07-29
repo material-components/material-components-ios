@@ -125,6 +125,8 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   BOOL _mdc_adjustsFontForContentSizeCategory;
 }
 
+@synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
+
 @dynamic layer;
 
 + (Class)layerClass {
@@ -135,6 +137,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   _minimumSize = kMDCChipMinimumSizeDefault;
   self.rippleAllowsSelection = YES;
   self.isAccessibilityElement = YES;
+  _mdc_overrideBaseElevation = -1;
   _adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable = YES;
 }
 
@@ -234,6 +237,13 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   [[NSNotificationCenter defaultCenter] removeObserver:self
                                                   name:UIContentSizeCategoryDidChangeNotification
                                                 object:nil];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
 }
 
 - (void)setShapeGenerator:(id<MDCShapeGenerating>)shapeGenerator {
@@ -395,6 +405,10 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   self.layer.shapedBorderWidth = [self borderWidthForState:self.state];
 }
 
+- (CGFloat)mdc_currentElevation {
+  return [self elevationForState:self.state];
+}
+
 - (CGFloat)elevationForState:(UIControlState)state {
   NSNumber *elevation = _elevations[@(state)];
   if (elevation == nil && state != UIControlStateNormal) {
@@ -414,8 +428,9 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
 - (void)updateElevation {
   CGFloat newElevation = [self elevationForState:self.state];
-  if (self.layer.elevation != newElevation) {
+  if (!MDCCGFloatEqual(self.layer.elevation, newElevation)) {
     self.layer.elevation = newElevation;
+    [self mdc_elevationDidChange];
   }
 }
 
@@ -647,6 +662,10 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
       subview.frame = flippedRect;
     }
   }
+
+  [self updateBackgroundColor];
+  [self updateBorderColor];
+  [self updateShadowColor];
 }
 
 - (CGRect)contentRect {

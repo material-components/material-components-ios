@@ -152,4 +152,31 @@
   [self generateSnapshotAndVerifyForView:self.bottomDrawerViewController.view];
 }
 
+- (void)testPresentedDrawerWithShadowElevation {
+  // Given
+  self.presentingViewController.view.frame = CGRectMake(0, 0, 375, 667);
+  self.containerViewController = [[FakeBottomDrawerContainerViewController alloc]
+      initWithOriginalPresentingViewController:self.presentingViewController
+                            trackingScrollView:nil];
+  self.containerViewController.contentViewController =
+      self.bottomDrawerViewController.contentViewController;
+  self.containerViewController.headerViewController =
+      self.bottomDrawerViewController.headerViewController;
+  self.containerViewController.contentViewController.view.backgroundColor = UIColor.whiteColor;
+  self.containerViewController.headerViewController.view.backgroundColor = UIColor.whiteColor;
+
+  // When
+  self.containerViewController.drawerShadowColor = UIColor.blueColor;
+  self.bottomDrawerViewController.view.bounds = CGRectMake(0, 0, 375, 667);
+  self.bottomDrawerViewController.contentViewController.preferredContentSize =
+      CGSizeMake(375, 1000);
+  self.bottomDrawerViewController.headerViewController.preferredContentSize = CGSizeMake(375, 80);
+  [self.bottomDrawerViewController addChildViewController:self.containerViewController];
+  [self.bottomDrawerViewController.view addSubview:self.containerViewController.view];
+  [self.containerViewController didMoveToParentViewController:self.bottomDrawerViewController];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.bottomDrawerViewController.view];
+}
+
 @end

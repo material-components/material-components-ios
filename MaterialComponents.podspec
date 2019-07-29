@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponents"
-  mdc.version      = "85.7.0"
+  mdc.version      = "85.9.1"
   mdc.authors      = "The Material Components authors."
   mdc.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   mdc.homepage     = "https://github.com/material-components/material-components-ios"
@@ -287,6 +287,7 @@ Pod::Spec.new do |mdc|
     ]
 
     component.dependency "MDFInternationalization"
+    component.dependency "MaterialComponents/Elevation"
     component.dependency "MaterialComponents/Ink"
     component.dependency "MaterialComponents/Ripple"
     component.dependency "MaterialComponents/Palettes"
@@ -365,8 +366,11 @@ Pod::Spec.new do |mdc|
       "components/#{component.base_name}/src/private/*.{h,m}"
     ]
 
+    component.dependency "MaterialComponents/Elevation"
     component.dependency "MaterialComponents/ShapeLibrary"
     component.dependency "MaterialComponents/Shapes"
+    component.dependency "MaterialComponents/ShadowElevations"
+    component.dependency "MaterialComponents/ShadowLayer"
     component.dependency "MaterialComponents/private/KeyboardWatcher"
     component.dependency "MaterialComponents/private/Math"
 
@@ -405,6 +409,7 @@ Pod::Spec.new do |mdc|
 
     component.dependency 'MDFInternationalization'
     component.dependency 'MDFTextAccessibility'
+    component.dependency "MaterialComponents/Elevation"
     component.dependency "MaterialComponents/Ink"
     component.dependency "MaterialComponents/Ripple"
     component.dependency "MaterialComponents/ShadowElevations"
@@ -578,6 +583,7 @@ Pod::Spec.new do |mdc|
         "components/#{component.base_name}/src/MDCCard+Ripple.{h,m}",
         "components/#{component.base_name}/src/MDCCardCollectionCell+Ripple.{h,m}"
     ]
+    component.dependency "MaterialComponents/Elevation"
     component.dependency "MaterialComponents/Ink"
     component.dependency "MaterialComponents/Ripple"
     component.dependency "MaterialComponents/ShadowLayer"
@@ -666,6 +672,7 @@ Pod::Spec.new do |mdc|
       "components/#{component.base_name}/src/private/*.{h,m}"
     ]
     component.dependency "MDFInternationalization"
+    component.dependency "MaterialComponents/Elevation"
     component.dependency "MaterialComponents/Ink"
     component.dependency "MaterialComponents/Ripple"
     component.dependency "MaterialComponents/ShadowLayer"
@@ -874,10 +881,12 @@ Pod::Spec.new do |mdc|
     ]
 
     component.dependency "MaterialComponents/Buttons"
+    component.dependency "MaterialComponents/Elevation"
     component.dependency "MaterialComponents/ShadowElevations"
     component.dependency "MaterialComponents/ShadowLayer"
     component.dependency "MaterialComponents/Typography"
     component.dependency "MaterialComponents/private/KeyboardWatcher"
+    component.dependency "MaterialComponents/private/Math"
     component.dependency "MDFInternationalization"
 
     component.test_spec 'UnitTests' do |unit_tests|
@@ -953,6 +962,25 @@ Pod::Spec.new do |mdc|
       "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/supplemental/*.{h,m,swift}"
       ]
       unit_tests.resources = "components/#{extension.base_name.split('+')[0]}/tests/unit/#{extension.base_name.split('+')[1]}/resources/*"
+    end
+  end
+
+  mdc.subspec "Elevation" do |component|
+    component.ios.deployment_target = '9.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = [
+      "components/#{component.base_name}/src/*.{h,m}",
+      "components/#{component.base_name}/src/private/*.{h,m}"
+    ]
+    component.dependency "MaterialComponents/private/Color"
+    component.dependency "MaterialComponents/private/Math"
+
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = [
+        "components/#{component.base_name}/tests/unit/*.{h,m,swift}",
+        "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+      ]
+      unit_tests.dependency "MaterialComponents/private/Color"
     end
   end
 
@@ -1048,6 +1076,9 @@ Pod::Spec.new do |mdc|
     ]
 
     component.dependency 'MDFTextAccessibility'
+    component.dependency "MaterialComponents/Elevation"
+    component.dependency "MaterialComponents/ShadowElevations"
+    component.dependency "MaterialComponents/ShadowLayer"
     component.dependency "MaterialComponents/private/Application"
     component.dependency "MaterialComponents/private/Math"
     component.dependency "MaterialComponents/private/UIMetrics"
@@ -1127,6 +1158,7 @@ Pod::Spec.new do |mdc|
       "components/#{component.base_name}/src/private/*.{h,m}"
     ]
 
+    component.dependency "MaterialComponents/private/Color"
     component.dependency "MaterialComponents/private/Math"
 
     component.test_spec 'UnitTests' do |unit_tests|
@@ -1180,6 +1212,7 @@ Pod::Spec.new do |mdc|
       "components/#{component.base_name}/src/private/*.{h,m}"
     ]
 
+    component.dependency "MaterialComponents/Elevation"
     component.dependency "MaterialComponents/Ink"
     component.dependency "MaterialComponents/Ripple"
     component.dependency "MaterialComponents/ShadowElevations"
@@ -1347,6 +1380,7 @@ Pod::Spec.new do |mdc|
     ]
     component.exclude_files = "components/#{component.base_name}/src/private/MDCBottomDrawerContainerViewController+Testing.h"
 
+    component.dependency "MaterialComponents/Elevation"
     component.dependency "MaterialComponents/Palettes"
     component.dependency "MaterialComponents/ShadowLayer"
     component.dependency "MaterialComponents/private/Math"
@@ -1647,12 +1681,14 @@ Pod::Spec.new do |mdc|
 
     component.dependency "MaterialComponents/AnimationTiming"
     component.dependency "MaterialComponents/Buttons"
+    component.dependency "MaterialComponents/Elevation"
     component.dependency "MaterialComponents/OverlayWindow"
     component.dependency "MaterialComponents/ShadowElevations"
     component.dependency "MaterialComponents/ShadowLayer"
     component.dependency "MaterialComponents/Typography"
     component.dependency "MaterialComponents/private/Application"
     component.dependency "MaterialComponents/private/KeyboardWatcher"
+    component.dependency "MaterialComponents/private/Math"
     component.dependency "MaterialComponents/private/Overlay"
 
     component.test_spec 'UnitTests' do |unit_tests|

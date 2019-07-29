@@ -229,8 +229,8 @@ static NSString *const exampleExtraLongText =
   }
 
   MDCBannerView *bannerView = [[MDCBannerView alloc] init];
-  bannerView.textLabel.text = exampleShortText;
-  bannerView.textLabel.font = self.typographyScheme.body2;
+  bannerView.textView.text = exampleShortText;
+  bannerView.textView.font = self.typographyScheme.body2;
   bannerView.mdc_adjustsFontForContentSizeCategory = YES;
   bannerView.backgroundColor = self.colorScheme.surfaceColor;
   UIEdgeInsets margins = UIEdgeInsetsZero;
@@ -272,7 +272,7 @@ static NSString *const exampleExtraLongText =
   }
 
   MDCBannerView *bannerView = [[MDCBannerView alloc] init];
-  bannerView.textLabel.text = exampleLongText;
+  bannerView.textView.text = exampleLongText;
   bannerView.backgroundColor = self.colorScheme.surfaceColor;
   UIEdgeInsets margins = UIEdgeInsetsZero;
   margins.left = exampleBannerContentPadding;
@@ -318,7 +318,7 @@ static NSString *const exampleExtraLongText =
   }
 
   MDCBannerView *bannerView = [[MDCBannerView alloc] init];
-  bannerView.textLabel.text = exampleLongText;
+  bannerView.textView.text = exampleLongText;
   bannerView.backgroundColor = self.colorScheme.surfaceColor;
   UIEdgeInsets margins = UIEdgeInsetsZero;
   margins.left = exampleBannerContentPadding;
@@ -364,7 +364,7 @@ static NSString *const exampleExtraLongText =
 
   MDCBannerView *bannerView = [[MDCBannerView alloc] init];
   bannerView.bannerViewLayoutStyle = MDCBannerViewLayoutStyleSingleRow;
-  bannerView.textLabel.text = exampleLongText;
+  bannerView.textView.text = exampleLongText;
   bannerView.backgroundColor = self.colorScheme.surfaceColor;
   UIEdgeInsets margins = UIEdgeInsetsZero;
   margins.left = exampleBannerContentPadding;
@@ -392,7 +392,7 @@ static NSString *const exampleExtraLongText =
   }
 
   MDCBannerView *bannerView = [[MDCBannerView alloc] init];
-  bannerView.textLabel.text = exampleLongText;
+  bannerView.textView.text = exampleLongText;
   bannerView.backgroundColor = self.colorScheme.surfaceColor;
   UIEdgeInsets margins = UIEdgeInsetsZero;
   margins.left = exampleBannerContentPadding;
@@ -432,7 +432,7 @@ static NSString *const exampleExtraLongText =
   [exampleString addAttribute:NSLinkAttributeName
                         value:@"http://www.google.com"
                         range:NSMakeRange([exampleLongText length] - 11, 11)];
-  bannerView.textLabel.attributedText = exampleString;
+  bannerView.textView.attributedText = exampleString;
   bannerView.mdc_adjustsFontForContentSizeCategory = YES;
   bannerView.backgroundColor = self.colorScheme.surfaceColor;
   UIEdgeInsets margins = UIEdgeInsetsZero;

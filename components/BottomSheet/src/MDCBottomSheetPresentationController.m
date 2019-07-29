@@ -276,6 +276,14 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   [self updatePreferredSheetHeight];
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
+}
+
 #pragma mark - MDCSheetContainerViewDelegate
 
 - (void)sheetContainerViewDidHide:(nonnull __unused MDCSheetContainerView *)containerView {
