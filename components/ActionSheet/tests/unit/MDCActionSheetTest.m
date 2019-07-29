@@ -58,6 +58,7 @@ static const CGFloat kSafeAreaAmount = 20;
 - (void)testInitializerResultsInExpectedDefaults {
   // Then
   XCTAssertFalse(self.actionSheet.alwaysAlignTitleLeadingEdges);
+  XCTAssertEqualWithAccuracy(self.actionSheet.mdc_currentElevation, 0, 0.001);
 }
 
 - (void)testTitleColor {
@@ -435,6 +436,24 @@ static const CGFloat kSafeAreaAmount = 20;
 
   // Then
   XCTAssertEqualObjects(self.actionSheet.header.messageLabel.font, messageFont);
+}
+
+#pragma mark - MaterialElevation
+
+ - (void)testDefaultOverrideBaseElevationIsNegative {
+   // Then
+  XCTAssertLessThan(self.actionSheet.mdc_overrideBaseElevation, 0);
+}
+
+ - (void)testSettingBaseOverrideBaseElevationReturnsSetValue {
+  // Given
+  CGFloat fakeElevation = 99;
+
+   // When
+  self.actionSheet.mdc_overrideBaseElevation = fakeElevation;
+
+   // Then
+  XCTAssertEqualWithAccuracy(self.actionSheet.mdc_overrideBaseElevation, fakeElevation, 0.001);
 }
 
 @end
