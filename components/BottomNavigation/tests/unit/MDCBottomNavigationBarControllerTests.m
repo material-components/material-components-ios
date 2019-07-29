@@ -19,17 +19,74 @@
 
 static CGFloat const kDefaultExpectationTimeout = 15;
 
+/**
+ * A coder object used for testing state restoration of the bottom navigation controller. References
+ * to encoded objects are stored in memory and retained by this object.
+ * @warning Not all @c NSCoder methods are implemented as they are not needed at the time of
+ * writing. If the implementation of encoding/decoding the bottom navigation bar controller changes,
+ * this coder's impementation may need to be extended to support other types.
+ */
+@interface MDCBottomNavigationBarControllerTestRestorationArchive : NSCoder
+
+/** The archive that contains the objects encoded by the coder. */
+@property(nonatomic, nonnull, readonly) NSMutableDictionary<NSString *, id> *objectArchive;
+
+@end
+
+@implementation MDCBottomNavigationBarControllerTestRestorationArchive
+
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    _objectArchive = [NSMutableDictionary dictionary];
+  }
+
+  return self;
+}
+
+- (BOOL)allowsKeyedCoding {
+  return YES;
+}
+
+- (BOOL)containsValueForKey:(NSString *)key {
+  if (!key) {
+    return NO;
+  }
+
+  return self.objectArchive[key] != nil;
+}
+
+- (void)encodeObject:(id)object {
+  if ([object respondsToSelector:@selector(restorationIdentifier)]) {
+    [self encodeObject:object forKey:[object restorationIdentifier]];
+  }
+}
+
+- (void)encodeObject:(id)object forKey:(NSString *)key {
+  if (!key) {
+    return;
+  }
+
+  self.objectArchive[key] = object;
+}
+
+- (id)decodeObjectForKey:(NSString *)key {
+  return self.objectArchive[key];
+}
+
+@end
+
 @interface MDCBottomNavigationBarControllerTests
     : XCTestCase <MDCBottomNavigationBarControllerDelegate>
 
-/** The bottom navigation controller to test **/
+/** The bottom navigation controller to test. */
 @property(nonatomic, strong, nonnull)
     MDCBottomNavigationBarController *bottomNavigationBarController;
 
 /**
  * Is fufilled when the a delegate method is called. Set the description of the expectation with the
  * string value of the selector of the method you are expecting to be called.
- **/
+ */
 @property(nonatomic, strong, nullable) XCTestExpectation *delegateExpecation;
 
 /**
@@ -38,9 +95,7 @@ static CGFloat const kDefaultExpectationTimeout = 15;
  */
 @property(nonatomic, strong, nullable) NSArray<id> *expectedArguments;
 
-/**
- * The return value a delegate method should return with.
- */
+/** The return value a delegate method should return with. */
 @property(nonatomic, strong, nullable) id delegateReturnValue;
 
 @end
@@ -313,7 +368,56 @@ static CGFloat const kDefaultExpectationTimeout = 15;
   XCTAssertFalse(childViewController2.viewLoaded);
 }
 
-#pragma mark - MDCBottomNavigationBarControllerDelegate Methods
+- (void)testEncodesChildViewControllersWhenPreservingRestorationState {
+  // Given
+  UIViewController *childViewController1 = [[UIViewController alloc] init];
+  childViewController1.restorationIdentifier = @"vc1";
+
+  UIViewController *childViewController2 = [[UIViewController alloc] init];
+  childViewController2.restorationIdentifier = @"vc2";
+
+  self.bottomNavigationBarController.viewControllers =
+      @[ childViewController1, childViewController2 ];
+  self.bottomNavigationBarController.viewControllers[0].restorationIdentifier = @"vc1";
+  self.bottomNavigationBarController.viewControllers[1].restorationIdentifier = @"vc2";
+  MDCBottomNavigationBarControllerTestRestorationArchive *coder =
+      [[MDCBottomNavigationBarControllerTestRestorationArchive alloc] init];
+
+  // When
+  [self.bottomNavigationBarController encodeRestorableStateWithCoder:coder];
+
+  // Then
+  XCTAssertEqualObjects(coder.objectArchive[childViewController1.restorationIdentifier],
+                        childViewController1);
+  XCTAssertEqualObjects(coder.objectArchive[childViewController2.restorationIdentifier],
+                        childViewController2);
+}
+
+- (void)testRestoresSelectedViewControllerWhenDecodingRestoredState {
+  // Given
+  UIViewController *childViewController1 = [[UIViewController alloc] init];
+  childViewController1.restorationIdentifier = @"vc1";
+
+  UIViewController *childViewController2 = [[UIViewController alloc] init];
+  childViewController2.restorationIdentifier = @"vc2";
+
+  self.bottomNavigationBarController.viewControllers =
+      @[ childViewController1, childViewController2 ];
+  self.bottomNavigationBarController.selectedViewController = childViewController2;
+  MDCBottomNavigationBarControllerTestRestorationArchive *coder =
+      [[MDCBottomNavigationBarControllerTestRestorationArchive alloc] init];
+
+  // When
+  [self.bottomNavigationBarController encodeRestorableStateWithCoder:coder];
+  self.bottomNavigationBarController.selectedViewController = childViewController1;
+  [self.bottomNavigationBarController decodeRestorableStateWithCoder:coder];
+
+  // Then
+  XCTAssertEqualObjects(self.bottomNavigationBarController.selectedViewController,
+                        childViewController2);
+}
+
+#pragma mark MDCBottomNavigationBarControllerDelegate Methods
 
 - (void)bottomNavigationBarController:
             (MDCBottomNavigationBarController *)bottomNavigationBarController
@@ -338,9 +442,9 @@ static CGFloat const kDefaultExpectationTimeout = 15;
   return [self.delegateReturnValue boolValue];
 }
 
-#pragma mark - Helper Methods
+#pragma mark Helper Methods
 
-- (NSArray *)createArrayOfTwoFakeViewControllers {
+- (NSArray<UIViewController *> *)createArrayOfTwoFakeViewControllers {
   UIViewController *viewController1 = [[UIViewController alloc] init];
   UIViewController *viewController2 = [[UIViewController alloc] init];
 
