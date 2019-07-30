@@ -27,14 +27,14 @@ static CGFloat const kDefaultExpectationTimeout = 15;
     MDCBottomNavigationBarController *bottomNavigationBarController;
 
 /**
- * Is fufilled when the a delegate method is called. Set the description of the expectation with the
- * string value of the selector of the method you are expecting to be called.
+ Is fufilled when the a delegate method is called. Set the description of the expectation with the
+ string value of the selector of the method you are expecting to be called.
  */
 @property(nonatomic, strong, nullable) XCTestExpectation *delegateExpecation;
 
 /**
- * An array of the values of the expected arguments the delegate method should be called with.
- * The order of the array is the order the arguments appear in the method signature.
+ An array of the values of the expected arguments the delegate method should be called with. The
+ order of the array is the order the arguments appear in the method signature.
  */
 @property(nonatomic, strong, nullable) NSArray<id> *expectedArguments;
 
@@ -351,7 +351,7 @@ static CGFloat const kDefaultExpectationTimeout = 15;
 }
 
 /**
- * Verifies the state of the bottom navigation bar controller for the given expected selected index.
+ Verifies the state of the bottom navigation bar controller for the given expected selected index.
  */
 - (void)verifyStateOfSelectedIndex:(NSUInteger)index {
   XCTAssertEqual(
@@ -385,8 +385,7 @@ static CGFloat const kDefaultExpectationTimeout = 15;
 }
 
 /**
- * Verifies that the given method signature and arguments match the expected signature and
- * arguments.
+ Verifies that the given method signature and arguments match the expected signature and arguments.
  */
 - (void)verifyDelegateMethodCall:(NSString *)signature arguments:(NSArray<id> *)arguments {
   XCTAssertEqual(self.expectedArguments.count, arguments.count,
