@@ -377,9 +377,9 @@
 - (void)testElevationOverrideViewInUIViewInElevationView {
   // Given
   CGFloat fakeElevation = 100;
-  CGFloat fakeOverideElevation = 3;
+  CGFloat fakeOverrideElevation = 3;
   self.elevationOverrideView.elevation = fakeElevation;
-  self.elevationOverrideView.mdc_overrideBaseElevation = fakeOverideElevation;
+  self.elevationOverrideView.mdc_overrideBaseElevation = fakeOverrideElevation;
   self.view.elevation = fakeElevation;
 
   // When
@@ -387,10 +387,10 @@
   [self.view addSubview:self.elevationOverrideView];
 
   // Then
-  XCTAssertEqualWithAccuracy(self.elevationOverrideView.mdc_baseElevation, fakeOverideElevation,
+  XCTAssertEqualWithAccuracy(self.elevationOverrideView.mdc_baseElevation, fakeOverrideElevation,
                              0.001);
   XCTAssertEqualWithAccuracy(self.elevationOverrideView.mdc_absoluteElevation,
-                             fakeElevation + fakeOverideElevation, 0.001);
+                             fakeElevation + fakeOverrideElevation, 0.001);
 }
 
 // + self.view
