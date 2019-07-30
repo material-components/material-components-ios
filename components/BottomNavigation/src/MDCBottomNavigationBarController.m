@@ -33,7 +33,7 @@ static NSString *const kSelectedViewControllerRestorationKey = @"selectedViewCon
  * The transform of the large item view when it is in a transitional state (appearing or
  * dismissing).
  */
-static CGAffineTransform LargeItemViewAnimationTransitionTransform() {
+static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
   return CGAffineTransformScale(CGAffineTransformIdentity, (CGFloat)0.97, (CGFloat)0.97);
 }
 
@@ -571,7 +571,7 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
   [self.largeItemDialog.centerYAnchor constraintEqualToAnchor:window.centerYAnchor].active = YES;
 
   self.largeItemDialog.layer.opacity = 0;
-  self.largeItemDialog.transform = LargeItemViewAnimationTransitionTransform();
+  self.largeItemDialog.transform = MDCLargeItemViewAnimationTransitionTransform();
   [UIView animateWithDuration:kLargeItemViewAnimationDuration
                    animations:^{
                      self.largeItemDialog.layer.opacity = 1;
@@ -589,7 +589,7 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
   [UIView animateWithDuration:kLargeItemViewAnimationDuration
       animations:^{
         self.largeItemDialog.layer.opacity = 0;
-        self.largeItemDialog.transform = LargeItemViewAnimationTransitionTransform();
+        self.largeItemDialog.transform = MDCLargeItemViewAnimationTransitionTransform();
       }
       completion:^(BOOL finished) {
         if (finished) {

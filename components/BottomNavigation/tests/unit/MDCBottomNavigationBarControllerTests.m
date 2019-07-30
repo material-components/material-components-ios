@@ -79,14 +79,16 @@ static CGFloat const kDefaultExpectationTimeout = 15;
 @interface MDCBottomNavigationBarControllerTests
     : XCTestCase <MDCBottomNavigationBarControllerDelegate>
 
-/** The bottom navigation controller to test. */
+/**
+ * The bottom navigation controller to test
+ */
 @property(nonatomic, strong, nonnull)
     MDCBottomNavigationBarController *bottomNavigationBarController;
 
 /**
  * Is fufilled when the a delegate method is called. Set the description of the expectation with the
  * string value of the selector of the method you are expecting to be called.
- */
+ **/
 @property(nonatomic, strong, nullable) XCTestExpectation *delegateExpecation;
 
 /**
@@ -95,7 +97,9 @@ static CGFloat const kDefaultExpectationTimeout = 15;
  */
 @property(nonatomic, strong, nullable) NSArray<id> *expectedArguments;
 
-/** The return value a delegate method should return with. */
+/**
+ * The return value a delegate method should return with.
+ */
 @property(nonatomic, strong, nullable) id delegateReturnValue;
 
 @end
@@ -378,8 +382,6 @@ static CGFloat const kDefaultExpectationTimeout = 15;
 
   self.bottomNavigationBarController.viewControllers =
       @[ childViewController1, childViewController2 ];
-  self.bottomNavigationBarController.viewControllers[0].restorationIdentifier = @"vc1";
-  self.bottomNavigationBarController.viewControllers[1].restorationIdentifier = @"vc2";
   MDCBottomNavigationBarControllerTestRestorationArchive *coder =
       [[MDCBottomNavigationBarControllerTestRestorationArchive alloc] init];
 
@@ -393,13 +395,17 @@ static CGFloat const kDefaultExpectationTimeout = 15;
                         childViewController2);
 }
 
-- (void)testRestoresSelectedViewControllerWhenDecodingRestoredState {
+- (void)testDecodingControllerAndChildViewControllersState {
   // Given
+  NSString *title1 = @"vc1";
   UIViewController *childViewController1 = [[UIViewController alloc] init];
   childViewController1.restorationIdentifier = @"vc1";
+  childViewController1.title = title1;
 
+  NSString *title2 = @"title2";
   UIViewController *childViewController2 = [[UIViewController alloc] init];
   childViewController2.restorationIdentifier = @"vc2";
+  childViewController2.title = title2;
 
   self.bottomNavigationBarController.viewControllers =
       @[ childViewController1, childViewController2 ];
@@ -415,9 +421,11 @@ static CGFloat const kDefaultExpectationTimeout = 15;
   // Then
   XCTAssertEqualObjects(self.bottomNavigationBarController.selectedViewController,
                         childViewController2);
+  XCTAssertEqualObjects(self.bottomNavigationBarController.viewControllers[0].title, title1);
+  XCTAssertEqualObjects(self.bottomNavigationBarController.viewControllers[1].title, title2);
 }
 
-#pragma mark MDCBottomNavigationBarControllerDelegate Methods
+#pragma mark - MDCBottomNavigationBarControllerDelegate Methods
 
 - (void)bottomNavigationBarController:
             (MDCBottomNavigationBarController *)bottomNavigationBarController
@@ -442,7 +450,7 @@ static CGFloat const kDefaultExpectationTimeout = 15;
   return [self.delegateReturnValue boolValue];
 }
 
-#pragma mark Helper Methods
+#pragma mark - Helper Methods
 
 - (NSArray<UIViewController *> *)createArrayOfTwoFakeViewControllers {
   UIViewController *viewController1 = [[UIViewController alloc] init];
