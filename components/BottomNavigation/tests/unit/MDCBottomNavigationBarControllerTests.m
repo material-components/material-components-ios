@@ -79,9 +79,7 @@ static CGFloat const kDefaultExpectationTimeout = 15;
 @interface MDCBottomNavigationBarControllerTests
     : XCTestCase <MDCBottomNavigationBarControllerDelegate>
 
-/**
- * The bottom navigation controller to test
- */
+/** The bottom navigation controller to test **/
 @property(nonatomic, strong, nonnull)
     MDCBottomNavigationBarController *bottomNavigationBarController;
 
@@ -452,7 +450,7 @@ static CGFloat const kDefaultExpectationTimeout = 15;
 
 #pragma mark - Helper Methods
 
-- (NSArray<UIViewController *> *)createArrayOfTwoFakeViewControllers {
+- (NSArray *)createArrayOfTwoFakeViewControllers {
   UIViewController *viewController1 = [[UIViewController alloc] init];
   UIViewController *viewController2 = [[UIViewController alloc] init];
 
