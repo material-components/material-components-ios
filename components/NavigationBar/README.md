@@ -8,7 +8,7 @@ path: /catalog/app-bars/navigation-bars/
 api_doc_root: true
 -->
 
-<!-- This file was auto-generated using ./scripts/generate_readme NavigationBar -->
+<!-- This file was auto-generated using scripts/generate_readme NavigationBar -->
 
 # Navigation bar
 
@@ -69,6 +69,10 @@ button items.
 Read the button bar section on
 [UIBarButtonItem properties](../ButtonBar/#uibarbuttonitem-properties) to learn more about
 supported UIBarButtonItem properties.
+
+Note: The UIBarButtonItem instances set on MDCNavigationBar cannot be used to specify the popover's
+anchor point in UIPopoverPresentationController. The sourceView and sourceRect on
+UIPopoverPresentationController should be used instead.
 
 ## Installation
 
