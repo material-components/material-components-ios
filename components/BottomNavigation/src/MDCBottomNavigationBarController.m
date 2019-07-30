@@ -38,7 +38,7 @@ static CGAffineTransform LargeItemViewAnimationTransitionTransform() {
 
 @interface MDCBottomNavigationBarController ()
 
-/** The view that hosts the content for the selected view controller **/
+/** The view that hosts the content for the selected view controller. */
 @property(nonatomic, strong) UIView *content;
 
 /** The gesture recognizer for detecting long presses on tab bar items. */
@@ -361,11 +361,11 @@ static CGAffineTransform LargeItemViewAnimationTransitionTransform() {
 }
 
 /**
- Adjusts all relevant insets in subviews and the selected child view controller. This include @c
- safeAreaInsets and scroll view insets.  This will ensure that although the child view controller's
- view is positioned behind the bar, it can still lay out its content above the Bottom Navigation
- bar.  For a UIScrollView, this means manipulating both @c contentInset and
- @c scrollIndicatorInsets.
+ * Adjusts all relevant insets in subviews and the selected child view controller. This include @c
+ * safeAreaInsets and scroll view insets.  This will ensure that although the child view
+ * controller's view is positioned behind the bar, it can still lay out its content above the
+ * Bottom Navigation bar.  For a UIScrollView, this means manipulating both @c contentInset and
+ * @c scrollIndicatorInsets.
  */
 - (void)updateNavigationBarInsets {
   UIEdgeInsets currentSafeAreaInsets = UIEdgeInsetsZero;
@@ -478,7 +478,7 @@ static CGAffineTransform LargeItemViewAnimationTransitionTransform() {
   [view.bottomAnchor constraintEqualToAnchor:self.content.bottomAnchor].active = YES;
 }
 
-/** Maps an array of view controllers to their corrisponding tab bar items **/
+/** Maps an array of view controllers to their corrisponding tab bar items. */
 - (NSArray<UITabBarItem *> *)tabBarItemsForViewControllers:
     (NSArray<UIViewController *> *)viewControllers {
   NSMutableArray<UITabBarItem *> *tabBarItems = [NSMutableArray array];

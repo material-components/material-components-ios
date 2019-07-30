@@ -338,7 +338,7 @@ static CGFloat const kDefaultExpectationTimeout = 15;
 
 #pragma mark - Helper Methods
 
-- (NSArray *)createArrayOfTwoFakeViewControllers {
+- (NSArray<UIViewController *> *)createArrayOfTwoFakeViewControllers {
   UIViewController *viewController1 = [[UIViewController alloc] init];
   UIViewController *viewController2 = [[UIViewController alloc] init];
 
