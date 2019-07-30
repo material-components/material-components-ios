@@ -345,32 +345,8 @@ const CGFloat MDCTypographySecondaryOpacity = (CGFloat)0.54;
     return YES;
   }
 
-  // TODO(#1296): Remove after we drop support for iOS 8
-  // This following value (0.23) is based off what Apple made public in iOS 8.2.
-  // We are re-defining it since we can't assume it exists on iOS 8.1.
-  CGFloat MDCFontWeightMedium = (CGFloat)0.23;
-// Based on Apple's SDK-Based Development: Using Weakly Linked Methods, Functions, and Symbols.
-// https://developer.apple.com/library/content/documentation/DeveloperTools/Conceptual/cross_development/Using/using.html#//apple_ref/doc/uid/20002000-1114537-BABHHJBC
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wtautological-pointer-compare"
-#pragma clang diagnostic ignored "-Wunreachable-code"
-#pragma clang diagnostic ignored "-Wpartial-availability"
-  if (&UIFontWeightMedium != NULL) {
-    MDCFontWeightMedium = UIFontWeightMedium;
-  }
-#pragma clang diagnostic pop
-
   // We treat system font medium as large for accessibility when larger than 14.
-  if (font.mdc_weight >= MDCFontWeightMedium) {
-    return YES;
-  }
-
-  // TODO(#1296): Remove after we drop support for iOS 8
-  // iOS 8 handles medium system font requests by creating a normal weight font of a specific font
-  // face instead of a medium font weight of a general font family.  Therefore we can't assume the
-  // weight is valid on iOS 8.
-  // To workaround we return YES if the font is the specific font use on iOS 8 for Medium weights.
-  if ([font.fontName isEqualToString:@"HelveticaNeue-Medium"]) {
+  if (font.mdc_weight >= UIFontWeightMedium) {
     return YES;
   }
 
