@@ -14,6 +14,7 @@
 
 #import "MDCSlider.h"
 
+#import "MaterialMath.h"
 #import "MaterialPalettes.h"
 #import "MaterialThumbTrack.h"
 #import "private/MDCSlider+Private.h"
@@ -43,6 +44,9 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   NSMutableDictionary *_filledTickColorsForState;
   NSMutableDictionary *_backgroundTickColorsForState;
 }
+
+@synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
+@synthesize mdc_elevationDidChangeBlock = _mdc_elevationDidChangeBlock;
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
@@ -106,6 +110,8 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   _backgroundTickColorsForState = [@{} mutableCopy];
   _backgroundTickColorsForState[@(UIControlStateNormal)] = UIColor.blackColor;
   [self addSubview:_thumbTrack];
+
+  _mdc_overrideBaseElevation = -1;
 
   if (@available(iOS 10.0, *)) {
     _hapticsEnabled = YES;
@@ -250,11 +256,19 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 }
 
 - (void)setThumbElevation:(MDCShadowElevation)thumbElevation {
+  if (MDCCGFloatEqual(_thumbTrack.thumbElevation, thumbElevation)) {
+    return;
+  }
   _thumbTrack.thumbElevation = thumbElevation;
+  [self mdc_elevationDidChange];
 }
 
 - (MDCShadowElevation)thumbElevation {
   return _thumbTrack.thumbElevation;
+}
+
+- (CGFloat)mdc_currentElevation {
+  return self.thumbElevation;
 }
 
 - (NSUInteger)numberOfDiscreteValues {
