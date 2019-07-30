@@ -39,6 +39,11 @@ supported UIBarButtonItem properties.
 Note: The UIBarButtonItem instances set on MDCNavigationBar cannot be used to specify the popover's
 anchor point on UIPopoverPresentationController. The sourceView and sourceRect on
 UIPopoverPresentationController should be used instead.
+```objc
+// Set a view controller to be popped over at the center of a target view.
+aViewContoller.popoverPresentationController.sourceView = targetView;
+aViewContoller.popoverPresentationController.sourceRect = CGRectMake(CGRectGetMidX(targetView.bounds)),CGRectGetMidY(targetView.bounds), 0, 0);
+```
 
 ## Installation
 
