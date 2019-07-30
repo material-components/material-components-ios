@@ -38,9 +38,8 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
 }
 
 /**
- * Decodes a view controller with the given key from the given coder. If the coder does not have
- * an object associated with the key or the value is not a @c UIViewController this function returns
- * nil.
+ Decodes a view controller with the given key from the given coder. If the coder does not have an
+ object associated with the key or the value is not a @c UIViewController this function returns nil.
  */
 static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString *key) {
   if (![coder containsValueForKey:key]) {

@@ -20,11 +20,11 @@
 static CGFloat const kDefaultExpectationTimeout = 15;
 
 /**
- * A coder object used for testing state restoration of the bottom navigation bar controller.
- * References to encoded objects are stored in memory and retained by this object.
- * @warning Not all @c NSCoder methods are implemented as they are not needed at the time of
- * writing. If the implementation of encoding/decoding the bottom navigation bar controller changes,
- * this coder's impementation may need to be extended to support other types.
+ A coder object used for testing state restoration of the bottom navigation bar controller.
+ References to encoded objects are stored in memory and retained by this object.
+ @warning Not all @c NSCoder methods are implemented as they are not needed at the time of
+ writing. If the implementation of encoding/decoding the bottom navigation bar controller changes,
+ this coder's impementation may need to be extended to support other types.
  */
 @interface MDCBottomNavigationBarControllerTestRestorationArchive : NSCoder
 
