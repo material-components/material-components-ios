@@ -44,7 +44,7 @@
 
 /**
  Should be called when the view's @c mdc_currentElevation has changed. Will be called on the
- reciever's @c subviews.
+ receiver's @c subviews.
 
  If a @c UIView views conform to @c MDCElevation then @c mdc_elevationDidChangeBlock: is called.
  */
