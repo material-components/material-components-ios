@@ -71,7 +71,7 @@ Read the button bar section on
 supported UIBarButtonItem properties.
 
 Note: The UIBarButtonItem instances set on MDCNavigationBar cannot be used to specify the popover's
-anchor point in UIPopoverPresentationController. The sourceView and sourceRect on
+anchor point on UIPopoverPresentationController. The sourceView and sourceRect on
 UIPopoverPresentationController should be used instead.
 
 ## Installation
