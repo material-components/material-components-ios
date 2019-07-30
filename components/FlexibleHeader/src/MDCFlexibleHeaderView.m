@@ -17,6 +17,7 @@
 #import "MDCFlexibleHeaderView+ShiftBehavior.h"
 #import "MaterialApplication.h"
 #import "MaterialMath.h"
+#import "MaterialShadowElevations.h"
 #import "MaterialUIMetrics.h"
 #import "private/MDCFlexibleHeaderMinMaxHeight.h"
 #import "private/MDCFlexibleHeaderTopSafeArea.h"
@@ -208,6 +209,8 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 @dynamic minMaxHeightIncludesSafeArea;
 
 // MDCFlexibleHeader properties
+@synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
+@synthesize mdc_elevationDidChangeBlock = _mdc_elevationDidChangeBlock;
 @synthesize trackingScrollViewIsBeingScrubbed = _trackingScrollViewIsBeingScrubbed;
 @synthesize scrollPhase = _scrollPhase;
 @synthesize scrollPhaseValue = _scrollPhaseValue;
@@ -324,6 +327,8 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
                                            selector:@selector(fhv_updateLayout)
                                                name:voiceOverNotification
                                              object:nil];
+
+  _mdc_overrideBaseElevation = -1;
 }
 
 - (void)setVisibleShadowOpacity:(float)visibleShadowOpacity {
@@ -1888,6 +1893,21 @@ static BOOL isRunningiOS10_3OrAbove() {
   // Translucent content means that the status bar shifter should not use snapshotting. Otherwise,
   // stale visual content under the status bar region may be snapshotted.
   _statusBarShifter.snapshottingEnabled = !contentIsTranslucent;
+}
+
+#pragma mark - MDCElevation
+
+- (void)setElevation:(MDCShadowElevation)elevation {
+  if (MDCCGFloatEqual(elevation, _elevation)) {
+    return;
+  }
+
+  _elevation = elevation;
+  [self mdc_elevationDidChange];
+}
+
+- (CGFloat)mdc_currentElevation {
+  return self.elevation;
 }
 
 @end

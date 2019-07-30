@@ -14,9 +14,10 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialElevation.h"
 #import "MaterialShadowElevations.h"
 
-@interface MDCBaseCell : UICollectionViewCell
+@interface MDCBaseCell : UICollectionViewCell <MDCElevatable, MDCElevationOverriding>
 
 /**
  The current elevation of the cell.

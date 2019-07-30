@@ -118,11 +118,11 @@ static NSString *controlStateDescription(UIControlState controlState) {
 
 @end
 
-@interface ButtonsTests : XCTestCase
+@interface MDCButtonTests : XCTestCase
 @property(nonatomic, strong, nullable) MDCButton *button;
 @end
 
-@implementation ButtonsTests
+@implementation MDCButtonTests
 
 - (void)setUp {
   [super setUp];
@@ -1349,6 +1349,94 @@ static NSString *controlStateDescription(UIControlState controlState) {
 
   // Then
   [self waitForExpectations:@[ expectation ] timeout:1];
+}
+
+#pragma mark - MaterialElevation
+
+- (void)testDefaultValueForOverrideBaseElevationIsNegative {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+
+  // Then
+  XCTAssertLessThan(button.mdc_overrideBaseElevation, 0);
+}
+
+- (void)testCurrentElevationMatchesElevationForState {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+
+  // When
+  UIControlState allStatesCombined = UIControlStateNormal | UIControlStateDisabled |
+                                     UIControlStateSelected | UIControlStateHighlighted;
+  MDCShadowElevation startingElevation = 100;
+
+  for (NSUInteger state = 0; state <= allStatesCombined; ++state) {
+    [button setElevation:startingElevation + state forState:state];
+  }
+
+  // Then
+  for (NSUInteger state = 0; state <= allStatesCombined; ++state) {
+    if (state & (UIControlStateDisabled | UIControlStateHighlighted)) {
+      continue;
+    }
+    button.enabled = (state & UIControlStateDisabled) == UIControlStateDisabled ? NO : YES;
+    button.selected = (state & UIControlStateSelected) == UIControlStateSelected ? YES : NO;
+    button.highlighted =
+        (state & UIControlStateHighlighted) == UIControlStateHighlighted ? YES : NO;
+    XCTAssertEqualWithAccuracy(button.mdc_currentElevation, [button elevationForState:state],
+                               0.001);
+  }
+}
+
+- (void)testElevationDidChangeBlockCalledWhenStateChangeCausesElevationChange {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+  [button setElevation:1 forState:UIControlStateNormal];
+  [button setElevation:9 forState:UIControlStateSelected];
+  __block CGFloat newElevation = 0;
+  button.mdc_elevationDidChangeBlock = ^(MDCButton *object, CGFloat elevation) {
+    newElevation = elevation;
+  };
+
+  // When
+  button.selected = YES;
+
+  // Then
+  XCTAssertEqualWithAccuracy(newElevation, [button elevationForState:UIControlStateSelected],
+                             0.001);
+}
+
+- (void)testElevationDidChangeBlockNotCalledWhenStateChangeDoesNotCauseElevationChange {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+  [button setElevation:1 forState:UIControlStateNormal];
+  [button setElevation:1 forState:UIControlStateHighlighted];
+  __block BOOL blockCalled = NO;
+  button.mdc_elevationDidChangeBlock = ^(MDCButton *object, CGFloat elevation) {
+    blockCalled = YES;
+  };
+
+  // When
+  button.highlighted = YES;
+
+  // Then
+  XCTAssertFalse(blockCalled);
+}
+
+- (void)testElevationDidChangeBlockCalledWhenElevationChangesForCurrentState {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+  button.selected = YES;
+  __block CGFloat newElevation = 0;
+  button.mdc_elevationDidChangeBlock = ^(MDCButton *object, CGFloat elevation) {
+    newElevation = elevation;
+  };
+
+  // When
+  [button setElevation:99 forState:button.state];
+
+  // Then
+  XCTAssertEqualWithAccuracy(newElevation, [button elevationForState:button.state], 0.001);
 }
 
 @end

@@ -14,6 +14,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MDCSheetState.h"
+#import "MaterialShadowElevations.h"
 #import "MaterialShapes.h"
 
 @protocol MDCBottomSheetControllerDelegate;
@@ -103,6 +104,11 @@
  The current state of the bottom sheet.
  */
 @property(nonatomic, readonly) MDCSheetState state;
+
+/**
+ The elevation of the bottom sheet. Defaults to @c MDCShadowElevationModalBottomSheet.
+ */
+@property(nonatomic, assign) MDCShadowElevation elevation;
 
 /**
  Sets the shape generator for state that is used to define the bottom sheet's shape for that state.

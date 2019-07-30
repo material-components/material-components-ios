@@ -210,4 +210,27 @@
   XCTAssertNil(exception, @"PageControl crashed with exception: %@", exception);
 }
 
+- (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
+  // Given
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollection"];
+  __block UITraitCollection *passedTraitCollection = nil;
+  __block MDCPageControl *passedPageControl = nil;
+  _pageControl.traitCollectionDidChangeBlock = ^(
+      MDCPageControl *_Nonnull pageControl, UITraitCollection *_Nullable previousTraitCollection) {
+    passedTraitCollection = previousTraitCollection;
+    passedPageControl = pageControl;
+    [expectation fulfill];
+  };
+  UITraitCollection *fakeTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
+
+  // When
+  [_pageControl traitCollectionDidChange:fakeTraitCollection];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertEqual(passedPageControl, _pageControl);
+  XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
+}
+
 @end

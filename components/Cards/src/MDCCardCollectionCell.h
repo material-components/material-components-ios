@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
+#import "MaterialElevation.h"
 #import "MaterialInk.h"
 #import "MaterialRipple.h"
 #import "MaterialShadowLayer.h"
@@ -74,7 +75,7 @@ typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
   MDCCardCellVerticalImageAlignmentBottom,
 };
 
-@interface MDCCardCollectionCell : UICollectionViewCell
+@interface MDCCardCollectionCell : UICollectionViewCell <MDCElevatable, MDCElevationOverriding>
 
 /**
  When selectable is set to YES, a tap on a cell will trigger a visual change between selected

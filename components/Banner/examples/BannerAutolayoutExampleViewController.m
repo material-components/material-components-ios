@@ -56,7 +56,7 @@ static NSString *const exampleText = @"Lorem ipsum dolor";
   // Prepare Banner
   MDCBannerView *bannerView = [[MDCBannerView alloc] init];
   bannerView.translatesAutoresizingMaskIntoConstraints = NO;
-  bannerView.textLabel.text = exampleText;
+  bannerView.textView.text = exampleText;
   bannerView.trailingButton.hidden = YES;
   bannerView.showsDivider = YES;
   bannerView.layoutMargins = UIEdgeInsetsZero;

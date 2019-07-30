@@ -28,6 +28,9 @@
 
 @implementation MDCBaseCell
 
+@synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
+@synthesize mdc_elevationDidChangeBlock = _mdc_elevationDidChangeBlock;
+
 #pragma mark Object Lifecycle
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -57,6 +60,7 @@
   if (!self.rippleView) {
     self.rippleView = [[MDCRippleView alloc] initWithFrame:self.bounds];
   }
+  _mdc_overrideBaseElevation = -1;
 }
 
 #pragma mark Ink
@@ -138,6 +142,11 @@
   }
   _elevation = elevation;
   [self updateShadowElevation];
+  [self mdc_elevationDidChange];
+}
+
+- (CGFloat)mdc_currentElevation {
+  return self.elevation;
 }
 
 - (void)setInkColor:(UIColor *)inkColor {

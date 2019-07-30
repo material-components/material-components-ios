@@ -14,6 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialElevation.h"
 #import "MaterialShadowElevations.h"
 
 @protocol MDCBottomNavigationBarDelegate;
@@ -57,7 +58,7 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
  can be selected at at time. The selected item's title text is displayed. Title text for unselected
  items are hidden.
  */
-@interface MDCBottomNavigationBar : UIView
+@interface MDCBottomNavigationBar : UIView <MDCElevatable, MDCElevationOverriding>
 
 /** The bottom navigation bar delegate. */
 @property(nonatomic, weak, nullable) id<MDCBottomNavigationBarDelegate> delegate;
@@ -218,8 +219,8 @@ traitCollectionDidChange:. The block is called after the call to the superclass.
 
 @end
 
-/** APIs that will be deprecated in the near future. No new code should rely on these APIs. */
-@interface MDCBottomNavigationBar (ToBeDeprecated)
+/** APIs that are deprecated. No new code should rely on these APIs. */
+@interface MDCBottomNavigationBar (Deprecated)
 
 /**
  Flag to allow clients to gradually correct the size/position of the Bottom Navigation bar relative
@@ -230,7 +231,8 @@ traitCollectionDidChange:. The block is called after the call to the superclass.
 
  Defaults to @c NO.
  */
-@property(nonatomic, assign) BOOL sizeThatFitsIncludesSafeArea;
+@property(nonatomic, assign) BOOL sizeThatFitsIncludesSafeArea __deprecated_msg(
+    "This was a migration API and is being removed.");
 
 @end
 

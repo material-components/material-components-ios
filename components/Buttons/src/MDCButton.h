@@ -15,6 +15,7 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKit.h>
 
+#import "MaterialElevation.h"
 #import "MaterialInk.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialShapes.h"
@@ -33,7 +34,7 @@
 
  @see https://material.io/go/design-buttons
  */
-@interface MDCButton : UIButton
+@interface MDCButton : UIButton <MDCElevatable, MDCElevationOverriding>
 
 /** The ink style of the button. */
 @property(nonatomic, assign) MDCInkStyle inkStyle UI_APPEARANCE_SELECTOR;
@@ -161,6 +162,13 @@
  @note Defaults to true.
  */
 @property(nonatomic, assign) BOOL accessibilityTraitsIncludesButton;
+
+/**
+ A block that is invoked when the MDCButton receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (UITraitCollection *_Nullable previousTraitCollection);
 
 /**
  A color used as the button's @c backgroundColor for @c state.
@@ -324,13 +332,6 @@
  the button directly."
  */
 + (nonnull instancetype)buttonWithType:(UIButtonType)buttonType NS_UNAVAILABLE;
-
-/**
- A block that is invoked when the MDCButton receives a call to @c
- traitCollectionDidChange:. The block is called after the call to the superclass.
- */
-@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
-    (UITraitCollection *_Nullable previousTraitCollection);
 
 #pragma mark - Deprecated
 

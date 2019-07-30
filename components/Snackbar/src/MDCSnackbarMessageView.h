@@ -15,12 +15,13 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialButtons.h"
+#import "MaterialElevation.h"
 #import "MaterialShadowElevations.h"
 
 /**
  Class which provides the default implementation of a Snackbar.
  */
-@interface MDCSnackbarMessageView : UIView
+@interface MDCSnackbarMessageView : UIView <MDCElevatable, MDCElevationOverriding>
 
 /**
  The color for the background of the Snackbar message view.

@@ -44,7 +44,6 @@
 }
 
 - (void)configureNavigationBar {
-  self.bottomNavBar.sizeThatFitsIncludesSafeArea = NO;
   self.bottomNavBar.titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
   self.bottomNavBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles;
 

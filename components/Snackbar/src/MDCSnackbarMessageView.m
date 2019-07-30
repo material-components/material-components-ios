@@ -19,6 +19,7 @@
 #import "MDCSnackbarMessageView.h"
 
 #import "MaterialAnimationTiming.h"
+#import "MaterialMath.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
 #import "private/MDCSnackbarMessageViewInternal.h"
@@ -192,6 +193,9 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   BOOL _mdc_adjustsFontForContentSizeCategory;
 }
 
+@synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
+@synthesize mdc_elevationDidChangeBlock = _mdc_elevationDidChangeBlock;
+
 - (instancetype)initWithFrame:(CGRect)frame {
   return [self initWithMessage:nil
                 dismissHandler:nil
@@ -219,6 +223,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     _buttonFont = manager.buttonFont;
     _message = message;
     _dismissalHandler = [handler copy];
+    _mdc_overrideBaseElevation = -1;
 
     self.backgroundColor = _snackbarMessageViewBackgroundColor;
     if (MDCSnackbarMessage.usesLegacySnackbar) {
@@ -407,8 +412,12 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 }
 
 - (void)setElevation:(MDCShadowElevation)elevation {
+  BOOL elevationChanged = !MDCCGFloatEqual(_elevation, elevation);
   _elevation = elevation;
   [(MDCShadowLayer *)self.layer setElevation:_elevation];
+  if (elevationChanged) {
+    [self mdc_elevationDidChange];
+  }
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -1117,6 +1126,12 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 - (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
   [self updateMessageFont];
   [self updateButtonFont];
+}
+
+#pragma mark - Elevation
+
+- (CGFloat)mdc_currentElevation {
+  return self.elevation;
 }
 
 @end

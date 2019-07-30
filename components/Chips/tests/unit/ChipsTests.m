@@ -97,6 +97,8 @@ static inline UIImage *TestImage(CGSize size) {
   XCTAssertFalse(chip.mdc_adjustsFontForContentSizeCategory);
   XCTAssertNotNil(chip.selectedImageView);
   XCTAssertNotNil(chip.titleLabel);
+  XCTAssertEqualWithAccuracy(chip.mdc_baseElevation, 0, 0.001);
+  XCTAssertNil(chip.mdc_elevationDidChangeBlock);
   XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(chip.contentPadding, expectedContentPadding),
                 @"(%@) is not equal to (%@)", NSStringFromUIEdgeInsets(chip.contentPadding),
                 NSStringFromUIEdgeInsets(expectedContentPadding));

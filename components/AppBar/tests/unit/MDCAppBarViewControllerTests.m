@@ -65,4 +65,28 @@
   XCTAssertEqual(passedAppBarViewController, appBarController);
 }
 
+- (void)testHeaderViewElevationSetByShadowIntensityChange {
+  // Given
+  MDCAppBarViewController *appBarController = [[MDCAppBarViewController alloc] init];
+  UIScrollView *trackingScrollView = [[UIScrollView alloc] init];
+  appBarController.headerView.trackingScrollView = trackingScrollView;
+  appBarController.headerView.elevation = 0;
+  __block BOOL blockCalled = NO;
+
+  XCTestExpectation *expectation =
+      [self expectationWithDescription:@"Invoked mdc_elevationDidChangeBlock"];
+  appBarController.headerView.mdc_elevationDidChangeBlock =
+      ^(MDCFlexibleHeaderView *headerView, CGFloat elevation) {
+        blockCalled = YES;
+        [expectation fulfill];
+      };
+
+  // When
+  [appBarController.headerView setVisibleShadowOpacity:1];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertTrue(blockCalled);
+}
+
 @end

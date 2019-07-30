@@ -15,6 +15,7 @@
 #import "MDCBottomDrawerViewController.h"
 
 #import "MDCBottomDrawerTransitionController.h"
+#import "MaterialMath.h"
 #import "MaterialUIMetrics.h"
 #import "private/MDCBottomDrawerHeaderMask.h"
 
@@ -30,6 +31,9 @@
   NSMutableDictionary<NSNumber *, NSNumber *> *_topCornersRadius;
   BOOL _isMaskAppliedFirstTime;
 }
+
+@synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
+@synthesize mdc_elevationDidChangeBlock = _mdc_elevationDidChangeBlock;
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nil bundle:nil];
@@ -54,6 +58,9 @@
   _maskLayer = [[MDCBottomDrawerHeaderMask alloc] initWithMaximumCornerRadius:0
                                                           minimumCornerRadius:0];
   _maximumInitialDrawerHeight = 0;
+  _drawerShadowColor = [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.2];
+  _elevation = MDCShadowElevationNavDrawer;
+  _mdc_overrideBaseElevation = -1;
 }
 
 - (void)viewWillLayoutSubviews {
@@ -181,6 +188,33 @@
     MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
         (MDCBottomDrawerPresentationController *)self.presentationController;
     bottomDrawerPresentationController.maximumInitialDrawerHeight = maximumInitialDrawerHeight;
+  }
+}
+
+- (void)setElevation:(MDCShadowElevation)elevation {
+  _elevation = elevation;
+  if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
+        (MDCBottomDrawerPresentationController *)self.presentationController;
+    BOOL elevationDidChange =
+        !MDCCGFloatEqual(bottomDrawerPresentationController.elevation, elevation);
+    if (elevationDidChange) {
+      bottomDrawerPresentationController.elevation = elevation;
+      [self.view mdc_elevationDidChange];
+    }
+  }
+}
+
+- (CGFloat)mdc_currentElevation {
+  return self.elevation;
+}
+
+- (void)setDrawerShadowColor:(UIColor *)drawerShadowColor {
+  _drawerShadowColor = drawerShadowColor;
+  if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
+        (MDCBottomDrawerPresentationController *)self.presentationController;
+    bottomDrawerPresentationController.drawerShadowColor = drawerShadowColor;
   }
 }
 

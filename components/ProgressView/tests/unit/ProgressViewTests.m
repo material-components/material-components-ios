@@ -62,4 +62,28 @@
   XCTAssertEqual(_progressView.progress, 1);
 }
 
+- (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
+  // Given
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"traitCollection"];
+  __block UITraitCollection *passedTraitCollection = nil;
+  __block MDCProgressView *passedProgressView = nil;
+  _progressView.traitCollectionDidChangeBlock =
+      ^(MDCProgressView *_Nonnull progressView,
+        UITraitCollection *_Nullable previousTraitCollection) {
+        passedTraitCollection = previousTraitCollection;
+        passedProgressView = progressView;
+        [expectation fulfill];
+      };
+  UITraitCollection *fakeTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
+
+  // When
+  [_progressView traitCollectionDidChange:fakeTraitCollection];
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+  XCTAssertEqual(passedProgressView, _progressView);
+  XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
+}
+
 @end

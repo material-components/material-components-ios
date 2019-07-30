@@ -35,6 +35,7 @@ mdc_public_objc_library(
         "UIKit",
     ],
     deps = [
+        "//components/Elevation",
         "//components/Ink",
         "//components/Ripple",
         "//components/ShadowElevations",

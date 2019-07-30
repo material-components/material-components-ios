@@ -17,8 +17,8 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKit.h>
 
-#import "../../../private/Color/src/UIColor+MaterialDynamic.h"
 #import "../../src/private/MDCDialogShadowedView.h"
+#import "MaterialColor.h"
 #import "MaterialDialogs.h"
 #import "MaterialTypography.h"
 

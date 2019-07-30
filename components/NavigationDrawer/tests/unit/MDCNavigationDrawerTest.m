@@ -86,4 +86,62 @@
   XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
 }
 
+- (void)testDefaultValueForOverrideBaseElevationIsNegative {
+  // Then
+  XCTAssertLessThan(self.navigationDrawer.mdc_overrideBaseElevation, 0);
+}
+
+- (void)testCurrentElevationMatchesElevationWhenElevationChanges {
+  // When
+  self.navigationDrawer.elevation = 4;
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.navigationDrawer.mdc_currentElevation,
+                             self.navigationDrawer.elevation, 0.001);
+}
+
+- (void)testSettingOverrideBaseElevationReturnsSetValue {
+  // Given
+  CGFloat expectedBaseElevation = 99;
+
+  // When
+  self.navigationDrawer.mdc_overrideBaseElevation = expectedBaseElevation;
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.navigationDrawer.mdc_overrideBaseElevation, expectedBaseElevation,
+                             0.001);
+}
+
+- (void)testElevationDidChangeBlockCalledWhenElevationChangesValue {
+  // Given
+  self.navigationDrawer.elevation = 5;
+  __block BOOL blockCalled = NO;
+  self.navigationDrawer.mdc_elevationDidChangeBlock =
+      ^(MDCBottomDrawerViewController *object, CGFloat elevation) {
+        blockCalled = YES;
+      };
+
+  // When
+  self.navigationDrawer.elevation = self.navigationDrawer.elevation + 1;
+
+  // Then
+  XCTAssertTrue(blockCalled);
+}
+
+- (void)testElevationDidChangeBlockNotCalledWhenElevationIsSetWithoutChangingValue {
+  // Given
+  self.navigationDrawer.elevation = 5;
+  __block BOOL blockCalled = NO;
+  self.navigationDrawer.mdc_elevationDidChangeBlock =
+      ^(MDCBottomDrawerViewController *object, CGFloat elevation) {
+        blockCalled = YES;
+      };
+
+  // When
+  self.navigationDrawer.elevation = self.navigationDrawer.elevation;
+
+  // Then
+  XCTAssertFalse(blockCalled);
+}
+
 @end

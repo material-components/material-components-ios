@@ -13,13 +13,15 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
+
+#import "MaterialElevation.h"
 #import "MaterialInk.h"
 #import "MaterialRipple.h"
 #import "MaterialShadowLayer.h"
 
 @protocol MDCShapeGenerating;
 
-@interface MDCCard : UIControl
+@interface MDCCard : UIControl <MDCElevatable, MDCElevationOverriding>
 
 /**
  The corner radius for the card

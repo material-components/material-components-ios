@@ -66,6 +66,9 @@ static NSString *const kOfAnnouncement = @"of";
 
 @implementation MDCBottomNavigationBar
 
+@synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
+@synthesize mdc_elevationDidChangeBlock = _mdc_elevationDidChangeBlock;
+
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
@@ -96,6 +99,7 @@ static NSString *const kOfAnnouncement = @"of";
   _truncatesLongTitles = YES;
   _sizeThatFitsIncludesSafeArea = NO;
   _titlesNumberOfLines = 1;
+  _mdc_overrideBaseElevation = -1;
 
   // Remove any unarchived subviews and reconfigure the view hierarchy
   if (self.subviews.count) {
@@ -219,8 +223,12 @@ static NSString *const kOfAnnouncement = @"of";
 }
 
 - (void)setElevation:(MDCShadowElevation)elevation {
+  BOOL elevationChanged = !MDCCGFloatEqual(_elevation, elevation);
   _elevation = elevation;
   [(MDCShadowLayer *)self.layer setElevation:elevation];
+  if (elevationChanged) {
+    [self mdc_elevationDidChange];
+  }
 }
 
 - (void)setShadowColor:(UIColor *)shadowColor {
@@ -764,6 +772,12 @@ static NSString *const kOfAnnouncement = @"of";
     return YES;
   }
   return NO;
+}
+
+#pragma mark - MDCElevation
+
+- (CGFloat)mdc_currentElevation {
+  return self.elevation;
 }
 
 @end
