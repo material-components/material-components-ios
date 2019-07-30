@@ -394,19 +394,6 @@ IB_DESIGNABLE
  */
 @property(nonatomic, assign) MDCShadowElevation elevation;
 
-/**
- This block is called after a change of the flexible header view's elevation or one of its view
- hierarchy ancestors.
-
- Use this block to respond to elevation changes in the view or its ancestor views.
-
- @param elevation The @c mdc_currentElevation plus the @c mdc_currentElevation of all ancestor
- views.
- @param object This flexible header view
- */
-@property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlock)
-    (MDCFlexibleHeaderView *_Nonnull flexibleHeaderView, CGFloat elevation);
-
 @end
 
 /**

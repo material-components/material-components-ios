@@ -45,6 +45,7 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 }
 
 @synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
+@synthesize mdc_elevationDidChangeBlock = _mdc_elevationDidChangeBlock;
 @synthesize state = _state;
 @dynamic layer;
 
