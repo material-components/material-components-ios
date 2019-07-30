@@ -17,6 +17,7 @@
 #import "MDCTabBarAlignment.h"
 #import "MDCTabBarItemAppearance.h"
 #import "MDCTabBarTextTransform.h"
+#import "MaterialElevation.h"
 
 @class MDCTabBarItem;
 @protocol MDCTabBarDelegate;
@@ -40,7 +41,7 @@ typedef NS_ENUM(NSInteger, MDCTabBarItemState) {
  @see https://material.io/go/design-tabs
  */
 IB_DESIGNABLE
-@interface MDCTabBar : UIView <UIBarPositioning>
+@interface MDCTabBar : UIView <UIBarPositioning, MDCElevatable, MDCElevationOverriding>
 
 /** The default height for the tab bar with a given position and item appearance. */
 + (CGFloat)defaultHeightForBarPosition:(UIBarPosition)position

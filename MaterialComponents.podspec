@@ -1759,6 +1759,7 @@ Pod::Spec.new do |mdc|
 
     component.dependency "MDFInternationalization"
     component.dependency "MaterialComponents/AnimationTiming"
+    component.dependency "MaterialComponents/Elevation"
     component.dependency "MaterialComponents/Ink"
     component.dependency "MaterialComponents/Palettes"
     component.dependency "MaterialComponents/Ripple"
