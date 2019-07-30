@@ -8,7 +8,7 @@ path: /catalog/app-bars/navigation-bars/
 api_doc_root: true
 -->
 
-<!-- This file was auto-generated using scripts/generate_readme NavigationBar -->
+<!-- This file was auto-generated using ./scripts/generate_readme NavigationBar -->
 
 # Navigation bar
 
