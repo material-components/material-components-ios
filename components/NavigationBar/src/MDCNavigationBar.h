@@ -14,6 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialElevation.h"
+
 @protocol MDCButtonBarDelegate;
 
 /** Specifies the title alignment of the |MDCNavigationBar|. */
@@ -96,7 +98,7 @@ typedef NS_ENUM(NSInteger, MDCNavigationBarTitleViewLayoutBehavior) {
  (e.g. titleView).
  */
 IB_DESIGNABLE
-@interface MDCNavigationBar : UIView
+@interface MDCNavigationBar : UIView <MDCElevatable, MDCElevationOverriding>
 
 #pragma mark Behavior
 
