@@ -495,8 +495,14 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
 }
 
 - (void)commonMDCLegacyInkLayerInit {
+  static UIColor *defaultInkColor;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    defaultInkColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.08];
+  });
+
   _bounded = YES;
-  _inkColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.08];
+  _inkColor = defaultInkColor;
   _compositeRipple = [CAShapeLayer layer];
   _foregroundRipples = [NSMutableArray array];
   _backgroundRipples = [NSMutableArray array];
