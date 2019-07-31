@@ -93,6 +93,9 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 
 @implementation MDCBannerView
 
+@synthesize mdc_elevationDidChangeBlock = _mdc_elevationDidChangeBlock;
+@synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
+
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
@@ -170,6 +173,8 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   _divider = divider;
 
   [self setupConstraints];
+
+  _mdc_overrideBaseElevation = -1;
 }
 
 - (void)setBannerViewLayoutStyle:(MDCBannerViewLayoutStyle)bannerViewLayoutStyle {
@@ -186,6 +191,10 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 
 - (UIColor *)dividerColor {
   return self.divider.backgroundColor;
+}
+
+- (CGFloat)mdc_currentElevation {
+  return 0;
 }
 
 #pragma mark - Constraints Helpers
