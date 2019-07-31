@@ -24,12 +24,15 @@ gem_install() {
 }
 
 brew_update() {
+  ls $(brew --cache)
   brew --version
   brew update
+  ls $(brew --cache)
   brew --version
 }
 
 brew_install() {
+  echo "Installing \"$@\" using Homebrew"
   brew_update
   brew install "$@"
 }
