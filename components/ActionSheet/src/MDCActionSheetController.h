@@ -234,7 +234,7 @@ typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
  An instance of MDCActionSheetAction is passed to MDCActionSheetController to
  add an action to the action sheet.
  */
-@interface MDCActionSheetAction : NSObject<NSCopying, UIAccessibilityIdentification>
+@interface MDCActionSheetAction : NSObject <NSCopying, UIAccessibilityIdentification>
 
 /**
  Returns an action sheet action with the populated given values.
