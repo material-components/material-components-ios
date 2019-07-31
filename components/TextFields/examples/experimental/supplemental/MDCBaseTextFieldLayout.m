@@ -152,22 +152,23 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
     floatingLabelMinY = positioningDelegate.paddingBetweenTopAndFloatingLabel;
   } else {
     floatingLabelMinY = [containerStyler.positioningDelegate
-                         floatingLabelMinYWithTextHeight:font.lineHeight
-                         floatingLabelHeight:floatingLabelHeight
-                         preferredContainerHeight:preferredContainerHeight];
+        floatingLabelMinYWithTextHeight:font.lineHeight
+                    floatingLabelHeight:floatingLabelHeight
+               preferredContainerHeight:preferredContainerHeight];
   }
   CGFloat floatingLabelMaxY = floatingLabelMinY + floatingLabelHeight;
-  
+
   CGFloat textRectMinYWithFloatingLabel = 0;
   if (positioningDelegate) {
-    textRectMinYWithFloatingLabel = floatingLabelMaxY + positioningDelegate.paddingBetweenFloatingLabelAndText;
+    textRectMinYWithFloatingLabel =
+        floatingLabelMaxY + positioningDelegate.paddingBetweenFloatingLabelAndText;
   } else {
     textRectMinYWithFloatingLabel = [containerStyler.positioningDelegate
-                                     textMinYWithFloatingLabelWithTextHeight:font.lineHeight
-                                     floatingLabelHeight:floatingFont.lineHeight
-                                     preferredContainerHeight:preferredContainerHeight];
+        textMinYWithFloatingLabelWithTextHeight:font.lineHeight
+                            floatingLabelHeight:floatingFont.lineHeight
+                       preferredContainerHeight:preferredContainerHeight];
   }
-  
+
   CGFloat textRectHeight = [self textHeightWithFont:font];
   CGFloat textRectCenterYWithFloatingLabel =
       textRectMinYWithFloatingLabel + ((CGFloat)0.5 * textRectHeight);
@@ -180,8 +181,8 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
     if (preferredContainerHeight > 0) {
       topRowBottomRowDividerY = preferredContainerHeight;
     } else {
-      topRowBottomRowDividerY =
-      [containerStyler.positioningDelegate defaultContainerHeightWithTextHeight:font.lineHeight];
+      topRowBottomRowDividerY = [containerStyler.positioningDelegate
+          defaultContainerHeightWithTextHeight:font.lineHeight];
     }
   }
 
@@ -269,26 +270,24 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
       CGRectMake(actualClearButtonMinX, clearButtonFloatingLabelMinY, clearButton.sideLength,
                  clearButton.sideLength);
 
-  CGRect labelFrameNormal =
-      [self labelFrameWithText:label.text
-                    labelState:MDCContainedInputViewLabelStateNormal
-                                  font:font
-                          floatingFont:floatingFont
-                     floatingLabelMinY:floatingLabelMinY
-                 lowestPlaceholderMinX:floatingLabelNormalMinX
-                highestPlaceholderMaxX:floatingLabelNormalMaxX
-                          textRect:textRectNormal
-                                 isRTL:isRTL];
-  CGRect labelFrameFloating =
-  [self labelFrameWithText:label.text
-                labelState:MDCContainedInputViewLabelStateFloating
-                      font:font
-              floatingFont:floatingFont
-         floatingLabelMinY:floatingLabelMinY
-     lowestPlaceholderMinX:floatingLabelFloatingMinX
-    highestPlaceholderMaxX:floatingLabelFloatingMaxX
-                  textRect:textRectNormal
-                     isRTL:isRTL];
+  CGRect labelFrameNormal = [self labelFrameWithText:label.text
+                                          labelState:MDCContainedInputViewLabelStateNormal
+                                                font:font
+                                        floatingFont:floatingFont
+                                   floatingLabelMinY:floatingLabelMinY
+                               lowestPlaceholderMinX:floatingLabelNormalMinX
+                              highestPlaceholderMaxX:floatingLabelNormalMaxX
+                                            textRect:textRectNormal
+                                               isRTL:isRTL];
+  CGRect labelFrameFloating = [self labelFrameWithText:label.text
+                                            labelState:MDCContainedInputViewLabelStateFloating
+                                                  font:font
+                                          floatingFont:floatingFont
+                                     floatingLabelMinY:floatingLabelMinY
+                                 lowestPlaceholderMinX:floatingLabelFloatingMinX
+                                highestPlaceholderMaxX:floatingLabelFloatingMaxX
+                                              textRect:textRectNormal
+                                                 isRTL:isRTL];
 
   CGFloat assistiveLabelVerticalPadding = [containerStyler.positioningDelegate
       assistiveLabelPaddingWithContainerHeight:topRowBottomRowDividerY];
@@ -415,7 +414,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
            floatingLabelMinY:(CGFloat)floatingLabelMinY
        lowestPlaceholderMinX:(CGFloat)lowestPlaceholderMinX
       highestPlaceholderMaxX:(CGFloat)highestPlaceholderMaxX
-                textRect:(CGRect)textRect
+                    textRect:(CGRect)textRect
                        isRTL:(BOOL)isRTL {
   CGFloat maxWidth = highestPlaceholderMaxX - lowestPlaceholderMinX;
   CGFloat textRectMidY = CGRectGetMidY(textRect);

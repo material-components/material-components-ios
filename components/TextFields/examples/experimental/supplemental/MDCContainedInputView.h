@@ -179,7 +179,7 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewAssistiveLabelDrawPriority) {
 
 @optional
 
-@property (nonatomic, assign) CGFloat numberOfTextRows;
+@property(nonatomic, assign) CGFloat numberOfTextRows;
 
 @end
 
@@ -265,11 +265,12 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewAssistiveLabelDrawPriority) {
 - (UIFont *_Nonnull)floatingFontWithFont:(nonnull UIFont *)font;
 
 @optional
-- (nonnull id<NewPositioningDelegate>)positioningDelegateWithFoatingLabelHeight:(CGFloat)floatingLabelHeight
-                                                                  textRowHeight:(CGFloat)textRowHeight
-                                                               numberOfTextRows:(CGFloat)numberOfTextRows
-                                                                        density:(CGFloat)density
-                                                       preferredContainerHeight:(CGFloat)preferredContainerHeight;
+- (nonnull id<NewPositioningDelegate>)
+    positioningDelegateWithFoatingLabelHeight:(CGFloat)floatingLabelHeight
+                                textRowHeight:(CGFloat)textRowHeight
+                             numberOfTextRows:(CGFloat)numberOfTextRows
+                                      density:(CGFloat)density
+                     preferredContainerHeight:(CGFloat)preferredContainerHeight;
 
 @end
 
@@ -292,18 +293,16 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewAssistiveLabelDrawPriority) {
                              preferredContainerHeight:(CGFloat)preferredContainerHeight;
 @end
 
-
 @protocol NewPositioningDelegate <NSObject>
 
-@property (nonatomic, assign, readonly) CGFloat paddingBetweenTopAndFloatingLabel;
-@property (nonatomic, assign, readonly) CGFloat paddingBetweenTopAndNormalLabel;
-@property (nonatomic, assign, readonly) CGFloat paddingBetweenFloatingLabelAndText;
-@property (nonatomic, assign, readonly) CGFloat paddingBetweenTextAndBottom;
-@property (nonatomic, assign, readonly) CGFloat paddingAroundAssistiveLabels;
-@property (nonatomic, assign, readonly) CGFloat containerHeight;
+@property(nonatomic, assign, readonly) CGFloat paddingBetweenTopAndFloatingLabel;
+@property(nonatomic, assign, readonly) CGFloat paddingBetweenTopAndNormalLabel;
+@property(nonatomic, assign, readonly) CGFloat paddingBetweenFloatingLabelAndText;
+@property(nonatomic, assign, readonly) CGFloat paddingBetweenTextAndBottom;
+@property(nonatomic, assign, readonly) CGFloat paddingAroundAssistiveLabels;
+@property(nonatomic, assign, readonly) CGFloat containerHeight;
 
 @end
-
 
 /**
  A base implementation of MDCContainedInputViewStyler.

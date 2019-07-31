@@ -46,9 +46,8 @@
   return self.font ?: [UIFont systemFontOfSize:[UIFont systemFontSize]];
 }
 
--(void)setFont:(UIFont *)font {
+- (void)setFont:(UIFont *)font {
   [super setFont:font];
-  
 }
 - (void)deleteBackward {
   NSString *oldText = self.text;
@@ -473,21 +472,25 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 - (id<NewPositioningDelegate>)createPositioningDelegate {
   id<NewPositioningDelegate> positioningDelegate = nil;
-  if ([self.containerStyler respondsToSelector:@selector(positioningDelegateWithFoatingLabelHeight:textRowHeight:numberOfTextRows:density:preferredContainerHeight:)]) {
-
+  if ([self.containerStyler
+          respondsToSelector:@selector
+          (positioningDelegateWithFoatingLabelHeight:
+                                       textRowHeight:numberOfTextRows:density
+                                                    :preferredContainerHeight:)]) {
     CGFloat numberOfVisibleRows = 0;
     if (self.chipsWrap) {
-      numberOfVisibleRows = self.preferredNumberOfVisibleRows > 1 ? self.preferredNumberOfVisibleRows : 1;
+      numberOfVisibleRows =
+          self.preferredNumberOfVisibleRows > 1 ? self.preferredNumberOfVisibleRows : 1;
     } else {
       numberOfVisibleRows = 1;
     }
 
-    positioningDelegate =
-    [self.containerStyler positioningDelegateWithFoatingLabelHeight:self.floatingFont.lineHeight
-                                                      textRowHeight:self.inputChipViewTextField.font.lineHeight
-                                                   numberOfTextRows:numberOfVisibleRows
-                                                            density:0
-                                           preferredContainerHeight:self.preferredContainerHeight];
+    positioningDelegate = [self.containerStyler
+        positioningDelegateWithFoatingLabelHeight:self.floatingFont.lineHeight
+                                    textRowHeight:self.inputChipViewTextField.font.lineHeight
+                                 numberOfTextRows:numberOfVisibleRows
+                                          density:0
+                         preferredContainerHeight:self.preferredContainerHeight];
   }
   return positioningDelegate;
 }
@@ -901,7 +904,6 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
                                                   name:UIContentSizeCategoryDidChangeNotification
                                                 object:nil];
 }
-
 
 #pragma mark Custom UIView Geometry Methods
 

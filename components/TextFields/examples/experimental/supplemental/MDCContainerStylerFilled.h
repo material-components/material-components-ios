@@ -19,7 +19,6 @@
 @interface MDCContainerStylerFilledPositioningDelegate : NSObject <NewPositioningDelegate>
 @end
 
-
 @interface MDCContainedInputViewColorSchemeFilled : MDCContainedInputViewColorScheme
 @property(strong, nonatomic) UIColor *filledSublayerFillColor;
 @property(strong, nonatomic) UIColor *thinUnderlineFillColor;

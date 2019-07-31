@@ -271,13 +271,17 @@
 
 - (id<NewPositioningDelegate>)createPositioningDelegate {
   id<NewPositioningDelegate> positioningDelegate = nil;
-  if ([self.containerStyler respondsToSelector:@selector(positioningDelegateWithFoatingLabelHeight:textRowHeight:numberOfTextRows:density:preferredContainerHeight:)]) {
-    positioningDelegate =
-    [self.containerStyler positioningDelegateWithFoatingLabelHeight:self.floatingFont.lineHeight
-                                                      textRowHeight:self.font.lineHeight
-                                                   numberOfTextRows:1
-                                                            density:0
-                                           preferredContainerHeight:self.preferredContainerHeight];
+  if ([self.containerStyler
+          respondsToSelector:@selector
+          (positioningDelegateWithFoatingLabelHeight:
+                                       textRowHeight:numberOfTextRows:density
+                                                    :preferredContainerHeight:)]) {
+    positioningDelegate = [self.containerStyler
+        positioningDelegateWithFoatingLabelHeight:self.floatingFont.lineHeight
+                                    textRowHeight:self.font.lineHeight
+                                 numberOfTextRows:1
+                                          density:0
+                         preferredContainerHeight:self.preferredContainerHeight];
   }
   return positioningDelegate;
 }
@@ -294,7 +298,7 @@
                                   font:self.normalFont
                           floatingFont:self.floatingFont
                                  label:self.label
-                 canLabelFloat:self.canLabelFloat
+                         canLabelFloat:self.canLabelFloat
                               leftView:self.leftView
                           leftViewMode:self.leftViewMode
                              rightView:self.rightView
@@ -666,9 +670,9 @@
 
 - (MDCContainedInputViewLabelState)determineCurrentLabelState {
   return [self labelStateWithLabel:self.label
-                                              text:self.text
-                             canLabelFloat:self.canLabelFloat
-                                         isEditing:self.isEditing];
+                              text:self.text
+                     canLabelFloat:self.canLabelFloat
+                         isEditing:self.isEditing];
 }
 
 - (BOOL)shouldPlaceholderBeVisibleWithPlaceholder:(NSString *)placeholder

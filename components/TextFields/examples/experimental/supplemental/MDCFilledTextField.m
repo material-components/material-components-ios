@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #import "MDCFilledTextField.h"
 
 #import <Foundation/Foundation.h>
@@ -124,7 +123,7 @@
 }
 
 - (CGFloat)defaultContainerHeightWithTextHeight:(CGFloat)textHeight {
-    return (CGFloat)3.3 * textHeight;
+  return (CGFloat)3.3 * textHeight;
 }
 
 - (CGFloat)containerHeightWithTextHeight:(CGFloat)textHeight

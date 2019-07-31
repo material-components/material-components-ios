@@ -115,14 +115,14 @@ static const CGFloat kGradientBlurLength = 6;
   CGFloat globalChipRowMaxX = isRTL ? size.width - kLeadingMargin : size.width - kTrailingMargin;
   CGFloat maxTextWidth = globalChipRowMaxX - globalChipRowMinX;
   CGRect labelFrameFloating = [self floatingLabelFrameWithText:placeholder
-                                                                  font:floatingFont
-                                                          floatingFont:floatingFont
-                                                     globalChipRowMinX:globalChipRowMinX
-                                                     globalChipRowMaxX:globalChipRowMaxX
-                                                         chipRowHeight:chipRowHeight
-                                              preferredContainerHeight:preferredContainerHeight
-                                                       containerStyler:containerStyler
-                                                                 isRTL:isRTL];
+                                                          font:floatingFont
+                                                  floatingFont:floatingFont
+                                             globalChipRowMinX:globalChipRowMinX
+                                             globalChipRowMaxX:globalChipRowMaxX
+                                                 chipRowHeight:chipRowHeight
+                                      preferredContainerHeight:preferredContainerHeight
+                                               containerStyler:containerStyler
+                                                         isRTL:isRTL];
   CGFloat floatingLabelMaxY = CGRectGetMaxY(labelFrameFloating);
   CGFloat heightToCalculateNormalLabelMinY =
       [containerStyler.positioningDelegate defaultContainerHeightWithTextHeight:chipRowHeight];
