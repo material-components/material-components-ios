@@ -67,6 +67,7 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/Ink"
     component.dependency "MaterialComponents/private/Math"
     component.dependency "MaterialComponents/Ripple"
+    component.dependency "MaterialComponents/ShadowElevations"
     component.dependency "MaterialComponents/Typography"
 
     component.test_spec 'UnitTests' do |unit_tests|

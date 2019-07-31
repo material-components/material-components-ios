@@ -36,6 +36,7 @@ mdc_public_objc_library(
         "//components/Elevation",
         "//components/Ink",
         "//components/Ripple",
+        "//components/ShadowElevations",
         "//components/Typography",
         "//components/private/Math",
     ],

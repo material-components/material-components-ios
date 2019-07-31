@@ -15,6 +15,7 @@
 #import "MDCActionSheetController.h"
 
 #import "MaterialMath.h"
+#import "MaterialShadowElevations.h"
 #import "MaterialTypography.h"
 #import "private/MDCActionSheetHeaderView.h"
 #import "private/MDCActionSheetItemTableViewCell.h"
@@ -484,7 +485,7 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
 }
 
 - (CGFloat)mdc_currentElevation {
-  return 0;
+  return MDCShadowElevationModalBottomSheet;
 }
 
 @end

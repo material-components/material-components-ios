@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialMath.h"
-
 #import <XCTest/XCTest.h>
 
+#import "MaterialMath.h"
+#import "MaterialShadowElevations.h"
 #import "../../src/private/MDCActionSheetHeaderView.h"
 #import "MDCActionSheetTestHelper.h"
 
@@ -58,7 +58,7 @@ static const CGFloat kSafeAreaAmount = 20;
 - (void)testInitializerResultsInExpectedDefaults {
   // Then
   XCTAssertFalse(self.actionSheet.alwaysAlignTitleLeadingEdges);
-  XCTAssertEqualWithAccuracy(self.actionSheet.mdc_currentElevation, 0, 0.001);
+  XCTAssertEqualWithAccuracy(self.actionSheet.mdc_currentElevation, MDCShadowElevationModalBottomSheet, 0.001);
 }
 
 - (void)testTitleColor {
