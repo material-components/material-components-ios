@@ -15,6 +15,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialBottomSheet.h"
+#import "MaterialElevation.h"
 
 @class MDCActionSheetAction;
 
@@ -38,7 +39,8 @@
  in a sheet from the bottom.
 
  */
-__attribute__((objc_subclassing_restricted)) @interface MDCActionSheetController : UIViewController
+__attribute__((objc_subclassing_restricted)) @interface MDCActionSheetController
+    : UIViewController<MDCElevatable, MDCElevationOverriding>
 
 /**
  Designated initializer to create and return a view controller for displaying an alert to the user.
