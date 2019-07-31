@@ -296,6 +296,7 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewAssistiveLabelDrawPriority) {
 @protocol NewPositioningDelegate <NSObject>
 
 @property (nonatomic, assign, readonly) CGFloat paddingBetweenTopAndFloatingLabel;
+@property (nonatomic, assign, readonly) CGFloat paddingBetweenTopAndNormalLabel;
 @property (nonatomic, assign, readonly) CGFloat paddingBetweenFloatingLabelAndText;
 @property (nonatomic, assign, readonly) CGFloat paddingBetweenTextAndBottom;
 @property (nonatomic, assign, readonly) CGFloat paddingAroundAssistiveLabels;

@@ -104,7 +104,7 @@
 }
 
 - (void)setUpFloatingLabelState {
-  self.floatingLabelState = [self determineCurrentFloatingLabelState];
+  self.floatingLabelState = [self determineCurrentLabelState];
 }
 
 - (void)setUpContainedInputViewState {
@@ -206,7 +206,7 @@
 
 - (void)preLayoutSubviews {
   self.containedInputViewState = [self determineCurrentContainedInputViewState];
-  self.floatingLabelState = [self determineCurrentFloatingLabelState];
+  self.floatingLabelState = [self determineCurrentLabelState];
   self.isPlaceholderVisible = [self shouldPlaceholderBeVisible];
   self.placeholderLabel.font = self.normalFont;
   id<MDCContainedInputViewColorScheming> colorScheming =
@@ -227,7 +227,7 @@
   [self.labelAnimator layOutLabel:self.label
                             state:self.floatingLabelState
                  normalLabelFrame:self.layout.labelFrameNormal
-               floatingLabelFrame:self.layout.floatingLabelFrameFloating
+               floatingLabelFrame:self.layout.labelFrameFloating
                        normalFont:self.normalFont
                      floatingFont:self.floatingFont];
   id<MDCContainedInputViewColorScheming> colorScheming =
@@ -294,7 +294,7 @@
                                   font:self.normalFont
                           floatingFont:self.floatingFont
                                  label:self.label
-                 canFloatingLabelFloat:self.canFloatingLabelFloat
+                 canLabelFloat:self.canLabelFloat
                               leftView:self.leftView
                           leftViewMode:self.leftViewMode
                              rightView:self.rightView
@@ -653,7 +653,7 @@
 
 #pragma mark Floating Label
 
-- (BOOL)canFloatingLabelFloat {
+- (BOOL)canLabelFloat {
   return self.labelBehavior == MDCTextControlLabelBehaviorFloats;
 }
 
@@ -664,10 +664,10 @@
                                                isEditing:self.isEditing];
 }
 
-- (MDCContainedInputViewLabelState)determineCurrentFloatingLabelState {
-  return [self floatingLabelStateWithFloatingLabel:self.label
+- (MDCContainedInputViewLabelState)determineCurrentLabelState {
+  return [self labelStateWithLabel:self.label
                                               text:self.text
-                             canFloatingLabelFloat:self.canFloatingLabelFloat
+                             canLabelFloat:self.canLabelFloat
                                          isEditing:self.isEditing];
 }
 
@@ -694,14 +694,14 @@
   }
 }
 
-- (MDCContainedInputViewLabelState)floatingLabelStateWithFloatingLabel:(UILabel *)floatingLabel
-                                                                  text:(NSString *)text
-                                                 canFloatingLabelFloat:(BOOL)canFloatingLabelFloat
-                                                             isEditing:(BOOL)isEditing {
-  BOOL hasFloatingLabelText = floatingLabel.text.length > 0;
+- (MDCContainedInputViewLabelState)labelStateWithLabel:(UILabel *)label
+                                                  text:(NSString *)text
+                                         canLabelFloat:(BOOL)canLabelFloat
+                                             isEditing:(BOOL)isEditing {
+  BOOL hasFloatingLabelText = label.text.length > 0;
   BOOL hasText = text.length > 0;
   if (hasFloatingLabelText) {
-    if (canFloatingLabelFloat) {
+    if (canLabelFloat) {
       if (isEditing) {
         return MDCContainedInputViewLabelStateFloating;
       } else {

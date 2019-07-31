@@ -35,6 +35,7 @@ static const CGFloat kMaxPaddingBetweenTextAndBottom = (CGFloat)14.0;
 
 @implementation MDCContainerStylerFilledPositioningDelegate
 @synthesize paddingBetweenTopAndFloatingLabel = _paddingBetweenTopAndFloatingLabel;
+@synthesize paddingBetweenTopAndNormalLabel = _paddingBetweenTopAndNormalLabel;
 @synthesize paddingBetweenFloatingLabelAndText = _paddingBetweenFloatingLabelAndText;
 @synthesize paddingBetweenTextAndBottom = _paddingBetweenTextAndBottom;
 @synthesize containerHeight = _containerHeight;
@@ -106,6 +107,17 @@ static const CGFloat kMaxPaddingBetweenTextAndBottom = (CGFloat)14.0;
                                paddingBetweenTopAndFloatingLabel:_paddingBetweenTopAndFloatingLabel
                               paddingBetweenFloatingLabelAndText:_paddingBetweenFloatingLabelAndText
                                      paddingBetweenTextAndBottom:_paddingBetweenTextAndBottom];
+  if (numberOfTextRows > 1) {
+    CGFloat heightWithOneRow = [self calculateHeightWithFoatingLabelHeight:floatingLabelHeight
+                                                             textRowHeight:textRowHeight
+                                                          numberOfTextRows:1
+                                         paddingBetweenTopAndFloatingLabel:_paddingBetweenTopAndFloatingLabel
+                                        paddingBetweenFloatingLabelAndText:_paddingBetweenFloatingLabelAndText
+                                               paddingBetweenTextAndBottom:_paddingBetweenTextAndBottom];
+    _paddingBetweenTopAndNormalLabel = (heightWithOneRow * 0.5) - (textRowHeight * 0.5);
+  } else {
+    _paddingBetweenTopAndNormalLabel = (_containerHeight * 0.5) - (textRowHeight * 0.5);
+  }
 }
 
 - (CGFloat)standardizeDensity:(CGFloat)density {
@@ -132,15 +144,23 @@ static const CGFloat kMaxPaddingBetweenTextAndBottom = (CGFloat)14.0;
 - (CGFloat)paddingBetweenTopAndFloatingLabel {
   return _paddingBetweenTopAndFloatingLabel;
 }
+
+- (CGFloat)paddingBetweenTopAndNormalLabel {
+  return _paddingBetweenTopAndNormalLabel;
+}
+
 - (CGFloat)paddingBetweenFloatingLabelAndText {
   return _paddingBetweenFloatingLabelAndText;
 }
+
 - (CGFloat)paddingBetweenTextAndBottom {
   return _paddingBetweenTextAndBottom;
 }
+
 - (CGFloat)paddingAroundAssistiveLabels {
   return _paddingAroundAssistiveLabels;
 }
+
 - (CGFloat)containerHeight {
   return _containerHeight;
 }

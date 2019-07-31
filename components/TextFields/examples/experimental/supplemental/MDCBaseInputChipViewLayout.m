@@ -114,7 +114,7 @@ static const CGFloat kGradientBlurLength = 6;
   CGFloat globalChipRowMinX = isRTL ? kTrailingMargin : kLeadingMargin;
   CGFloat globalChipRowMaxX = isRTL ? size.width - kLeadingMargin : size.width - kTrailingMargin;
   CGFloat maxTextWidth = globalChipRowMaxX - globalChipRowMinX;
-  CGRect floatingLabelFrameFloating = [self floatingLabelFrameWithText:placeholder
+  CGRect labelFrameFloating = [self floatingLabelFrameWithText:placeholder
                                                                   font:floatingFont
                                                           floatingFont:floatingFont
                                                      globalChipRowMinX:globalChipRowMinX
@@ -123,7 +123,7 @@ static const CGFloat kGradientBlurLength = 6;
                                               preferredContainerHeight:preferredContainerHeight
                                                        containerStyler:containerStyler
                                                                  isRTL:isRTL];
-  CGFloat floatingLabelMaxY = CGRectGetMaxY(floatingLabelFrameFloating);
+  CGFloat floatingLabelMaxY = CGRectGetMaxY(labelFrameFloating);
   CGFloat heightToCalculateNormalLabelMinY =
       [containerStyler.positioningDelegate defaultContainerHeightWithTextHeight:chipRowHeight];
   CGFloat initialChipRowMinYWithFloatingLabel = [containerStyler.positioningDelegate
@@ -213,7 +213,7 @@ static const CGFloat kGradientBlurLength = 6;
   self.scrollViewContentSize = contentSize;
   self.scrollViewContentViewTouchForwardingViewFrame =
       CGRectMake(0, 0, contentSize.width, contentSize.height);
-  self.floatingLabelFrameFloating = floatingLabelFrameFloating;
+  self.labelFrameFloating = labelFrameFloating;
   self.floatingLabelFrameNormal = floatingLabelFrameNormal;
   self.globalChipRowMinX = globalChipRowMinX;
   self.globalChipRowMaxX = globalChipRowMaxX;
@@ -248,7 +248,7 @@ static const CGFloat kGradientBlurLength = 6;
   //    self.scrollViewContentViewTouchForwardingViewFrame =
   //        MDFRectFlippedHorizontally(self.scrollViewContentViewTouchForwardingViewFrame,
   //        size.width);
-  //    self.floatingLabelFrameFloating = MDFRectFlippedHorizontally(floatingLabelFrameFloating,
+  //    self.labelFrameFloating = MDFRectFlippedHorizontally(labelFrameFloating,
   //    size.width); self.floatingLabelFrameNormal =
   //    MDFRectFlippedHorizontally(floatingLabelFrameNormal, size.width);
   //    self.maskedScrollViewContainerViewFrame =
@@ -261,12 +261,12 @@ static const CGFloat kGradientBlurLength = 6;
 
 - (CGFloat)calculatedHeight {
   CGFloat maxY = 0;
-  CGFloat floatingLabelFrameFloatingMaxY = CGRectGetMaxY(self.floatingLabelFrameFloating);
-  if (floatingLabelFrameFloatingMaxY > maxY) {
-    maxY = floatingLabelFrameFloatingMaxY;
+  CGFloat labelFrameFloatingMaxY = CGRectGetMaxY(self.labelFrameFloating);
+  if (labelFrameFloatingMaxY > maxY) {
+    maxY = labelFrameFloatingMaxY;
   }
   CGFloat floatingLabelFrameNormalMaxY = CGRectGetMaxY(self.floatingLabelFrameNormal);
-  if (floatingLabelFrameFloatingMaxY > maxY) {
+  if (labelFrameFloatingMaxY > maxY) {
     maxY = floatingLabelFrameNormalMaxY;
   }
   CGFloat textRectMaxY = self.contentAreaMaxY;

@@ -29,7 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, assign) BOOL rightViewHidden;
 @property(nonatomic, assign) BOOL clearButtonHidden;
 
-@property(nonatomic, assign) CGRect floatingLabelFrameFloating;
+@property(nonatomic, assign) CGRect labelFrameFloating;
 @property(nonatomic, assign) CGRect labelFrameNormal;
 @property(nonatomic, assign) CGRect placeholderLabelFrameNormal;
 @property(nonatomic, assign) CGRect textRect;
@@ -52,7 +52,7 @@ NS_ASSUME_NONNULL_BEGIN
                                  font:(UIFont *)font
                          floatingFont:(UIFont *)floatingFont
                                 label:(UILabel *)label
-                canFloatingLabelFloat:(BOOL)canFloatingLabelFloat
+                        canLabelFloat:(BOOL)canLabelFloat
                              leftView:(UIView *)leftView
                          leftViewMode:(UITextFieldViewMode)leftViewMode
                             rightView:(UIView *)rightView
