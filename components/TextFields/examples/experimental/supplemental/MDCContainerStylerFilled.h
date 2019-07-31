@@ -16,6 +16,9 @@
 
 #import "MDCContainedInputView.h"
 
+@interface MDCContainerStylerFilledPositioningDelegate : NSObject <NewPositioningDelegate>
+@end
+
 
 @interface MDCContainedInputViewColorSchemeFilled : MDCContainedInputViewColorScheme
 @property(strong, nonatomic) UIColor *filledSublayerFillColor;

@@ -471,9 +471,31 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 #pragma mark Layout
 
+- (id<NewPositioningDelegate>)createPositioningDelegate {
+  id<NewPositioningDelegate> positioningDelegate = nil;
+  if ([self.containerStyler respondsToSelector:@selector(positioningDelegateWithFoatingLabelHeight:textRowHeight:numberOfTextRows:density:preferredContainerHeight:)]) {
+
+    CGFloat numberOfVisibleRows = 0;
+    if (self.chipsWrap) {
+      numberOfVisibleRows = self.preferredNumberOfVisibleRows > 1 ? self.preferredNumberOfVisibleRows : 1;
+    } else {
+      numberOfVisibleRows = 1;
+    }
+
+    positioningDelegate =
+    [self.containerStyler positioningDelegateWithFoatingLabelHeight:self.floatingFont.lineHeight
+                                                      textRowHeight:self.inputChipViewTextField.font.lineHeight
+                                                   numberOfTextRows:numberOfVisibleRows
+                                                            density:0
+                                           preferredContainerHeight:self.preferredContainerHeight];
+  }
+  return positioningDelegate;
+}
+
 - (MDCBaseInputChipViewLayout *)calculateLayoutWithSize:(CGSize)size {
   return [[MDCBaseInputChipViewLayout alloc] initWithSize:size
                                           containerStyler:self.containerStyler
+                                      positioningDelegate:[self createPositioningDelegate]
                                                      text:self.inputChipViewTextField.text
                                               placeholder:self.inputChipViewTextField.placeholder
                                                      font:self.normalFont

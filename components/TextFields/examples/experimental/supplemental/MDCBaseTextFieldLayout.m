@@ -30,6 +30,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
 
 - (instancetype)initWithTextFieldSize:(CGSize)textFieldSize
                       containerStyler:(id<MDCContainedInputViewStyler>)containerStyler
+                  positioningDelegate:(id<NewPositioningDelegate>)positioningDelegate
                                  text:(NSString *)text
                           placeholder:(NSString *)placeholder
                                  font:(UIFont *)font
@@ -54,6 +55,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
   if (self) {
     [self calculateLayoutWithTextFieldSize:textFieldSize
                            containerStyler:containerStyler
+                       positioningDelegate:positioningDelegate
                                       text:text
                                placeholder:placeholder
                                       font:font
@@ -82,6 +84,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
 
 - (void)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize
                          containerStyler:(id<MDCContainedInputViewStyler>)containerStyler
+                     positioningDelegate:(id<NewPositioningDelegate>)positioningDelegate
                                     text:(NSString *)text
                              placeholder:(NSString *)placeholder
                                     font:(UIFont *)font
@@ -145,8 +148,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
 
   CGFloat floatingLabelMinY = 0;
   CGFloat floatingLabelHeight = floatingFont.lineHeight;
-  if ([containerStyler conformsToProtocol:@protocol(NewPositioningDelegate)]) {
-    id<NewPositioningDelegate> positioningDelegate = (id<NewPositioningDelegate>)containerStyler;
+  if (positioningDelegate) {
     floatingLabelMinY = positioningDelegate.paddingBetweenTopAndFloatingLabel;
   } else {
     floatingLabelMinY = [containerStyler.positioningDelegate
@@ -157,8 +159,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
   CGFloat floatingLabelMaxY = floatingLabelMinY + floatingLabelHeight;
   
   CGFloat textRectMinYWithFloatingLabel = 0;
-  if ([containerStyler conformsToProtocol:@protocol(NewPositioningDelegate)]) {
-    id<NewPositioningDelegate> positioningDelegate = (id<NewPositioningDelegate>)containerStyler;
+  if (positioningDelegate) {
     textRectMinYWithFloatingLabel = floatingLabelMaxY + positioningDelegate.paddingBetweenFloatingLabelAndText;
   } else {
     textRectMinYWithFloatingLabel = [containerStyler.positioningDelegate
@@ -173,15 +174,8 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
 
   CGFloat topRowBottomRowDividerY = 0;
 
-  if ([containerStyler conformsToProtocol:@protocol(NewPositioningDelegate)]) {
-    id<NewPositioningDelegate> positioningDelegate = (id<NewPositioningDelegate>)containerStyler;
-    topRowBottomRowDividerY =
-        [positioningDelegate calculateHeightWithFoatingLabelHeight:floatingLabelHeight
-                                                     textRowHeight:textRectHeight
-                                                  numberOfTextRows:1
-                                 paddingBetweenTopAndFloatingLabel:positioningDelegate.paddingBetweenTopAndFloatingLabel
-                                paddingBetweenFloatingLabelAndText:positioningDelegate.paddingBetweenFloatingLabelAndText
-                                       paddingBetweenTextAndBottom:positioningDelegate.paddingBetweenTextAndBottom];
+  if (positioningDelegate) {
+    topRowBottomRowDividerY = positioningDelegate.containerHeight;
   } else {
     if (preferredContainerHeight > 0) {
       topRowBottomRowDividerY = preferredContainerHeight;

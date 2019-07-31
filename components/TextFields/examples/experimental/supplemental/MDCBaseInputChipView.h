@@ -89,6 +89,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, assign) CGFloat chipRowSpacing;
 - (void)addChip:(UIView *)chip;
 @property(nonatomic, assign) CGFloat preferredContainerHeight;
+@property(nonatomic, assign) CGFloat preferredNumberOfVisibleRows;
 
 @end
 

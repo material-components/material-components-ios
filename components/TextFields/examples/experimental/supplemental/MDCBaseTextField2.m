@@ -269,20 +269,26 @@
   return clearButtonFrame;
 }
 
-- (MDCBaseTextFieldLayout *)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize {
-  if ([self.containerStyler.positioningDelegate conformsToProtocol:@protocol(NewPositioningDelegate)]) {
-    id<NewPositioningDelegate> positioningDelegate = (id<NewPositioningDelegate>)self.containerStyler.positioningDelegate;
-    [positioningDelegate updatePaddingValuesWithFoatingLabelHeight:self.floatingFont.lineHeight
-                                                     textRowHeight:self.font.lineHeight
-                                                  numberOfTextRows:1
-                                                           density:0
-                                          preferredContainerHeight:self.preferredContainerHeight];
+- (id<NewPositioningDelegate>)createPositioningDelegate {
+  id<NewPositioningDelegate> positioningDelegate = nil;
+  if ([self.containerStyler respondsToSelector:@selector(positioningDelegateWithFoatingLabelHeight:textRowHeight:numberOfTextRows:density:preferredContainerHeight:)]) {
+    positioningDelegate =
+    [self.containerStyler positioningDelegateWithFoatingLabelHeight:self.floatingFont.lineHeight
+                                                      textRowHeight:self.font.lineHeight
+                                                   numberOfTextRows:1
+                                                            density:0
+                                           preferredContainerHeight:self.preferredContainerHeight];
   }
+  return positioningDelegate;
+}
+
+- (MDCBaseTextFieldLayout *)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize {
   CGFloat normalizedCustomAssistiveLabelDrawPriority =
       [self normalizedCustomAssistiveLabelDrawPriority:self.customAssistiveLabelDrawPriority];
   return [[MDCBaseTextFieldLayout alloc]
                  initWithTextFieldSize:textFieldSize
                        containerStyler:self.containerStyler
+                   positioningDelegate:[self createPositioningDelegate]
                                   text:self.text
                            placeholder:self.placeholder
                                   font:self.normalFont
