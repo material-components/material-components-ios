@@ -474,9 +474,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   id<NewPositioningDelegate> positioningDelegate = nil;
   if ([self.containerStyler
           respondsToSelector:@selector
-          (positioningDelegateWithFoatingLabelHeight:
-                                       textRowHeight:numberOfTextRows:density
-                                                    :preferredContainerHeight:)]) {
+          (positioningDelegateWithFoatingFontLineHeight:normalFontLineHeight:textRowHeight:numberOfTextRows:density:preferredContainerHeight:)]) {
     CGFloat numberOfVisibleRows = 0;
     if (self.chipsWrap) {
       numberOfVisibleRows =
@@ -485,12 +483,13 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
       numberOfVisibleRows = 1;
     }
 
-    positioningDelegate = [self.containerStyler
-        positioningDelegateWithFoatingLabelHeight:self.floatingFont.lineHeight
-                                    textRowHeight:self.inputChipViewTextField.font.lineHeight
-                                 numberOfTextRows:numberOfVisibleRows
-                                          density:0
-                         preferredContainerHeight:self.preferredContainerHeight];
+    positioningDelegate =
+        [self.containerStyler positioningDelegateWithFoatingFontLineHeight:self.floatingFont.lineHeight
+                                                      normalFontLineHeight:self.normalFont.lineHeight
+                                                             textRowHeight:self.chipRowHeight
+                                                          numberOfTextRows:numberOfVisibleRows
+                                                                   density:0
+                                                  preferredContainerHeight:self.preferredContainerHeight];
   }
   return positioningDelegate;
 }
@@ -503,6 +502,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
                                               placeholder:self.inputChipViewTextField.placeholder
                                                      font:self.normalFont
                                              floatingFont:self.floatingFont
+                                                    label:self.label
                                        floatingLabelState:self.floatingLabelState
                                                     chips:self.chips
                                            staleChipViews:self.chips
@@ -522,7 +522,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 - (void)preLayoutSubviews {
   self.containedInputViewState = [self determineCurrentContainedInputViewState];
-  self.floatingLabelState = [self determineCurrentFloatingLabelState];
+  self.floatingLabelState = [self determineCurrentLabelState];
   id<MDCContainedInputViewColorScheming> colorScheming =
       [self containedInputViewColorSchemingForState:self.containedInputViewState];
   [self applyMDCContainedInputViewColorScheming:colorScheming];
@@ -551,7 +551,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 - (void)postLayoutSubviews {
   [self.labelAnimator layOutLabel:self.label
                             state:self.floatingLabelState
-                 normalLabelFrame:self.layout.floatingLabelFrameNormal
+                 normalLabelFrame:self.layout.labelFrameNormal
                floatingLabelFrame:self.layout.labelFrameFloating
                        normalFont:self.normalFont
                      floatingFont:self.floatingFont];
@@ -772,28 +772,28 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 #pragma mark Floating Label
 
-- (BOOL)canFloatingLabelFloat {
+- (BOOL)canLabelFloat {
   return self.labelBehavior == MDCTextControlLabelBehaviorFloats;
 }
 
-- (MDCContainedInputViewLabelState)determineCurrentFloatingLabelState {
-  return [self floatingLabelStateWithPlaceholder:self.textField.placeholder
-                                            text:self.textField.text
-                           canFloatingLabelFloat:self.canFloatingLabelFloat
-                                       isEditing:self.textField.isEditing
-                                           chips:self.chips];
+- (MDCContainedInputViewLabelState)determineCurrentLabelState {
+  return [self labelStateWithLabelText:self.label.text
+                         textFieldText:self.textField.text
+                         canLabelFloat:self.canLabelFloat
+                             isEditing:self.textField.isEditing
+                                 chips:self.chips];
 }
 
-- (MDCContainedInputViewLabelState)floatingLabelStateWithPlaceholder:(NSString *)placeholder
-                                                                text:(NSString *)text
-                                               canFloatingLabelFloat:(BOOL)canFloatingLabelFloat
-                                                           isEditing:(BOOL)isEditing
-                                                               chips:(NSArray<UIView *> *)chips {
-  BOOL hasPlaceholder = placeholder.length > 0;
+- (MDCContainedInputViewLabelState)labelStateWithLabelText:(NSString *)labelText
+                                             textFieldText:(NSString *)text
+                                             canLabelFloat:(BOOL)canLabelFloat
+                                                 isEditing:(BOOL)isEditing
+                                                     chips:(NSArray<UIView *> *)chips {
+  BOOL hasLabelText = labelText.length > 0;
   BOOL hasText = text.length > 0;
   BOOL hasChips = chips.count > 0;
-  if (hasPlaceholder) {
-    if (canFloatingLabelFloat) {
+  if (hasLabelText) {
+    if (canLabelFloat) {
       if (isEditing) {
         return MDCContainedInputViewLabelStateFloating;
       } else {

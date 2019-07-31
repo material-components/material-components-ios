@@ -29,7 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong) NSArray<NSValue *> *chipFrames;
 
 @property(nonatomic, assign) CGRect labelFrameFloating;
-@property(nonatomic, assign) CGRect floatingLabelFrameNormal;
+@property(nonatomic, assign) CGRect labelFrameNormal;
 
 @property(nonatomic, assign) CGRect textFieldFrame;
 
@@ -57,6 +57,7 @@ NS_ASSUME_NONNULL_BEGIN
                          placeholder:(NSString *)placeholder
                                 font:(UIFont *)font
                         floatingFont:(UIFont *)floatingFont
+                               label:(UILabel *)label
                   floatingLabelState:(MDCContainedInputViewLabelState)floatingLabelState
                                chips:(NSArray<UIView *> *)chips
                       staleChipViews:(NSArray<UIView *> *)staleChipViews

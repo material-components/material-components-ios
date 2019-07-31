@@ -24,12 +24,12 @@ static const CGFloat kFilledContainerStylerUnderlineWidthThick = (CGFloat)2.0;
 
 static const CGFloat kLayerAnimationDuration = (CGFloat)0.2;
 
-static const CGFloat kMinPaddingBetweenTopAndFloatingLabel = (CGFloat)8.0;
-static const CGFloat kMaxPaddingBetweenTopAndFloatingLabel = (CGFloat)14.0;
-static const CGFloat kMinPaddingBetweenFloatingLabelAndText = (CGFloat)8.0;
-static const CGFloat kMaxPaddingBetweenFloatingLabelAndText = (CGFloat)14.0;
-static const CGFloat kMinPaddingBetweenTextAndBottom = (CGFloat)8.0;
-static const CGFloat kMaxPaddingBetweenTextAndBottom = (CGFloat)14.0;
+static const CGFloat kMinPaddingBetweenTopAndFloatingLabel = (CGFloat)6.0;
+static const CGFloat kMaxPaddingBetweenTopAndFloatingLabel = (CGFloat)10.0;
+static const CGFloat kMinPaddingBetweenFloatingLabelAndText = (CGFloat)4.0;
+static const CGFloat kMaxPaddingBetweenFloatingLabelAndText = (CGFloat)8.0;
+static const CGFloat kMinPaddingBetweenTextAndBottom = (CGFloat)6.0;
+static const CGFloat kMaxPaddingBetweenTextAndBottom = (CGFloat)10.0;
 
 @implementation MDCContainerStylerFilledPositioningDelegate
 @synthesize paddingBetweenTopAndFloatingLabel = _paddingBetweenTopAndFloatingLabel;
@@ -39,27 +39,31 @@ static const CGFloat kMaxPaddingBetweenTextAndBottom = (CGFloat)14.0;
 @synthesize containerHeight = _containerHeight;
 @synthesize paddingAroundAssistiveLabels = _paddingAroundAssistiveLabels;
 
-- (instancetype)initWithFoatingLabelHeight:(CGFloat)floatingLabelHeight
-                             textRowHeight:(CGFloat)textRowHeight
-                          numberOfTextRows:(CGFloat)numberOfTextRows
-                                   density:(CGFloat)density
-                  preferredContainerHeight:(CGFloat)preferredContainerHeight {
+
+- (instancetype)initWithFloatingFontLineHeight:(CGFloat)floatingLabelHeight
+                          normalFontLineHeight:(CGFloat)normalFontLineHeight
+                                 textRowHeight:(CGFloat)textRowHeight
+                              numberOfTextRows:(CGFloat)numberOfTextRows
+                                       density:(CGFloat)density
+                      preferredContainerHeight:(CGFloat)preferredContainerHeight {
   self = [super init];
   if (self) {
-    [self updatePaddingValuesWithFoatingLabelHeight:floatingLabelHeight
-                                      textRowHeight:textRowHeight
-                                   numberOfTextRows:numberOfTextRows
-                                            density:density
-                           preferredContainerHeight:preferredContainerHeight];
+    [self updatePaddingValuesWithFoatingFontLineHeight:floatingLabelHeight
+                                  normalFontLineHeight:normalFontLineHeight
+                                         textRowHeight:textRowHeight
+                                      numberOfTextRows:numberOfTextRows
+                                               density:density
+                              preferredContainerHeight:preferredContainerHeight];
   }
   return self;
 }
 
-- (void)updatePaddingValuesWithFoatingLabelHeight:(CGFloat)floatingLabelHeight
-                                    textRowHeight:(CGFloat)textRowHeight
-                                 numberOfTextRows:(CGFloat)numberOfTextRows
-                                          density:(CGFloat)density
-                         preferredContainerHeight:(CGFloat)preferredContainerHeight {
+- (void)updatePaddingValuesWithFoatingFontLineHeight:(CGFloat)floatingLabelHeight
+                                normalFontLineHeight:(CGFloat)normalFontLineHeight
+                                       textRowHeight:(CGFloat)textRowHeight
+                                    numberOfTextRows:(CGFloat)numberOfTextRows
+                                             density:(CGFloat)density
+                            preferredContainerHeight:(CGFloat)preferredContainerHeight {
   if (preferredContainerHeight > 0) {
     CGFloat minimumHeight =
         [self calculateHeightWithFoatingLabelHeight:floatingLabelHeight
@@ -115,6 +119,7 @@ static const CGFloat kMaxPaddingBetweenTextAndBottom = (CGFloat)14.0;
                                paddingBetweenTopAndFloatingLabel:_paddingBetweenTopAndFloatingLabel
                               paddingBetweenFloatingLabelAndText:_paddingBetweenFloatingLabelAndText
                                      paddingBetweenTextAndBottom:_paddingBetweenTextAndBottom];
+  CGFloat halfOfNormalFontLineHeight = (CGFloat)0.5 * normalFontLineHeight;
   if (numberOfTextRows > 1) {
     CGFloat heightWithOneRow =
         [self calculateHeightWithFoatingLabelHeight:floatingLabelHeight
@@ -123,9 +128,11 @@ static const CGFloat kMaxPaddingBetweenTextAndBottom = (CGFloat)14.0;
                   paddingBetweenTopAndFloatingLabel:_paddingBetweenTopAndFloatingLabel
                  paddingBetweenFloatingLabelAndText:_paddingBetweenFloatingLabelAndText
                         paddingBetweenTextAndBottom:_paddingBetweenTextAndBottom];
-    _paddingBetweenTopAndNormalLabel = (heightWithOneRow * 0.5) - (textRowHeight * 0.5);
+    CGFloat halfOfHeightWithOneRow = (CGFloat)0.5 * heightWithOneRow;
+    _paddingBetweenTopAndNormalLabel = halfOfHeightWithOneRow - halfOfNormalFontLineHeight;
   } else {
-    _paddingBetweenTopAndNormalLabel = (_containerHeight * 0.5) - (textRowHeight * 0.5);
+    CGFloat halfOfContainerHeight = (CGFloat)0.5 * _containerHeight;
+    _paddingBetweenTopAndNormalLabel = halfOfContainerHeight - halfOfNormalFontLineHeight;
   }
 }
 
@@ -598,18 +605,19 @@ static const CGFloat kMaxPaddingBetweenTextAndBottom = (CGFloat)14.0;
   return @"thickUnderlineGrowKey";
 }
 
-- (id<NewPositioningDelegate>)positioningDelegateWithFoatingLabelHeight:(CGFloat)floatingLabelHeight
-                                                          textRowHeight:(CGFloat)textRowHeight
-                                                       numberOfTextRows:(CGFloat)numberOfTextRows
-                                                                density:(CGFloat)density
-                                               preferredContainerHeight:
-                                                   (CGFloat)preferredContainerHeight {
+- (id<NewPositioningDelegate>)positioningDelegateWithFoatingFontLineHeight:(CGFloat)floatingLabelHeight
+                                                      normalFontLineHeight:(CGFloat)normalFontLineHeight
+                                                             textRowHeight:(CGFloat)textRowHeight
+                                                          numberOfTextRows:(CGFloat)numberOfTextRows
+                                                                   density:(CGFloat)density
+                                                  preferredContainerHeight:(CGFloat)preferredContainerHeight {
   return [[MDCContainerStylerFilledPositioningDelegate alloc]
-      initWithFoatingLabelHeight:floatingLabelHeight
-                   textRowHeight:textRowHeight
-                numberOfTextRows:numberOfTextRows
-                         density:density
-        preferredContainerHeight:preferredContainerHeight];
+          initWithFloatingFontLineHeight:floatingLabelHeight
+          normalFontLineHeight:normalFontLineHeight
+          textRowHeight:textRowHeight
+          numberOfTextRows:numberOfTextRows
+          density:density
+          preferredContainerHeight:preferredContainerHeight];
 }
 
 @end

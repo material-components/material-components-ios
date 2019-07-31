@@ -266,11 +266,12 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewAssistiveLabelDrawPriority) {
 
 @optional
 - (nonnull id<NewPositioningDelegate>)
-    positioningDelegateWithFoatingLabelHeight:(CGFloat)floatingLabelHeight
-                                textRowHeight:(CGFloat)textRowHeight
-                             numberOfTextRows:(CGFloat)numberOfTextRows
-                                      density:(CGFloat)density
-                     preferredContainerHeight:(CGFloat)preferredContainerHeight;
+    positioningDelegateWithFoatingFontLineHeight:(CGFloat)floatingLabelHeight
+                            normalFontLineHeight:(CGFloat)normalFontLineHeight
+                                   textRowHeight:(CGFloat)textRowHeight
+                                numberOfTextRows:(CGFloat)numberOfTextRows
+                                         density:(CGFloat)density
+                        preferredContainerHeight:(CGFloat)preferredContainerHeight;
 
 @end
 

@@ -44,6 +44,7 @@ static const CGFloat kGradientBlurLength = 6;
                          placeholder:(NSString *)placeholder
                                 font:(UIFont *)font
                         floatingFont:(UIFont *)floatingFont
+                               label:(UILabel *)label
                   floatingLabelState:(MDCContainedInputViewLabelState)floatingLabelState
                                chips:(NSArray<UIView *> *)chips
                       staleChipViews:(NSArray<UIView *> *)staleChipViews
@@ -69,6 +70,7 @@ static const CGFloat kGradientBlurLength = 6;
                              placeholder:placeholder
                                     font:font
                             floatingFont:floatingFont
+                                   label:label
                       floatingLabelState:floatingLabelState
                                    chips:chips
                           staleChipViews:staleChipViews
@@ -95,6 +97,7 @@ static const CGFloat kGradientBlurLength = 6;
                          placeholder:(NSString *)placeholder
                                 font:(UIFont *)font
                         floatingFont:(UIFont *)floatingFont
+                               label:(UILabel *)label
                   floatingLabelState:(MDCContainedInputViewLabelState)floatingLabelState
                                chips:(NSArray<UIView *> *)chips
                       staleChipViews:(NSArray<UIView *> *)staleChipViews
@@ -114,52 +117,72 @@ static const CGFloat kGradientBlurLength = 6;
   CGFloat globalChipRowMinX = isRTL ? kTrailingMargin : kLeadingMargin;
   CGFloat globalChipRowMaxX = isRTL ? size.width - kLeadingMargin : size.width - kTrailingMargin;
   CGFloat maxTextWidth = globalChipRowMaxX - globalChipRowMinX;
-  CGRect labelFrameFloating = [self floatingLabelFrameWithText:placeholder
-                                                          font:floatingFont
+
+  CGRect labelFrameFloating = [self floatingLabelFrameWithText:label.text
                                                   floatingFont:floatingFont
                                              globalChipRowMinX:globalChipRowMinX
                                              globalChipRowMaxX:globalChipRowMaxX
                                                  chipRowHeight:chipRowHeight
                                       preferredContainerHeight:preferredContainerHeight
                                                containerStyler:containerStyler
+                                           positioningDelegate:positioningDelegate
                                                          isRTL:isRTL];
   CGFloat floatingLabelMaxY = CGRectGetMaxY(labelFrameFloating);
+  
+  CGFloat initialChipRowMinYWithFloatingLabel = 0;
+  if (positioningDelegate) {
+    initialChipRowMinYWithFloatingLabel = floatingLabelMaxY + positioningDelegate.paddingBetweenFloatingLabelAndText;
+  } else {
   CGFloat heightToCalculateNormalLabelMinY =
       [containerStyler.positioningDelegate defaultContainerHeightWithTextHeight:chipRowHeight];
-  CGFloat initialChipRowMinYWithFloatingLabel = [containerStyler.positioningDelegate
+  initialChipRowMinYWithFloatingLabel = [containerStyler.positioningDelegate
       textMinYWithFloatingLabelWithTextHeight:chipRowHeight
                           floatingLabelHeight:floatingFont.lineHeight
                      preferredContainerHeight:heightToCalculateNormalLabelMinY];
-  CGFloat highestPossibleInitialChipRowMaxY = initialChipRowMinYWithFloatingLabel + chipRowHeight;
-
-  CGFloat contentAreaMaxY = 0;
-  CGFloat defaultContainerHeight =
-      [containerStyler.positioningDelegate defaultContainerHeightWithTextHeight:chipRowHeight];
-  if (preferredContainerHeight > 0) {
-    contentAreaMaxY = preferredContainerHeight;
-  } else {
-    contentAreaMaxY = defaultContainerHeight;
   }
-  CGFloat bottomPadding = defaultContainerHeight - highestPossibleInitialChipRowMaxY;
 
-  CGRect floatingLabelFrameNormal = [self normalLabelFrameWithText:placeholder
-                                                              font:font
-                                                      floatingFont:floatingFont
-                                                 globalChipRowMinX:globalChipRowMinX
-                                                 globalChipRowMaxX:globalChipRowMaxX
-                                                         chipsWrap:chipsWrap
-                                                     chipRowHeight:chipRowHeight
-                                          preferredContainerHeight:preferredContainerHeight
-                                                 contentAreaHeight:contentAreaMaxY
-                                                   containerStyler:containerStyler
-                                                             isRTL:isRTL];
-
-  CGFloat initialChipRowMinYNormal =
-      CGRectGetMidY(floatingLabelFrameNormal) - ((CGFloat)0.5 * chipRowHeight);
-  if (chipsWrap) {
+  CGFloat containerHeight = 0;
+  if (positioningDelegate) {
+    containerHeight = positioningDelegate.containerHeight;
   } else {
-    CGFloat center = contentAreaMaxY * (CGFloat)0.5;
-    initialChipRowMinYNormal = center - (chipRowHeight * (CGFloat)0.5);
+    CGFloat defaultContainerHeight =
+    [containerStyler.positioningDelegate defaultContainerHeightWithTextHeight:chipRowHeight];
+    if (preferredContainerHeight > 0) {
+      containerHeight = preferredContainerHeight;
+    } else {
+      containerHeight = defaultContainerHeight;
+    }
+  }
+
+  CGFloat highestPossibleInitialChipRowMaxY = initialChipRowMinYWithFloatingLabel + chipRowHeight;
+  CGFloat bottomPadding = containerHeight - highestPossibleInitialChipRowMaxY;
+
+  CGRect labelFrameNormal = [self normalLabelFrameWithText:label.text
+                                                      font:font
+                                              floatingFont:floatingFont
+                                         globalChipRowMinX:globalChipRowMinX
+                                         globalChipRowMaxX:globalChipRowMaxX
+                                                 chipsWrap:chipsWrap
+                                             chipRowHeight:chipRowHeight
+                                  preferredContainerHeight:preferredContainerHeight
+                                         contentAreaHeight:containerHeight
+                                           containerStyler:containerStyler
+                                       positioningDelegate:positioningDelegate
+                                                     isRTL:isRTL];
+
+  CGFloat initialChipRowMinYNormal = 0;
+  if (positioningDelegate) {
+    CGFloat halfOfNormalLabelHeight = (CGFloat)0.5 * font.lineHeight;
+    CGFloat halfOfChipRowHeight = ((CGFloat)0.5 * chipRowHeight);
+    initialChipRowMinYNormal =
+        positioningDelegate.paddingBetweenTopAndNormalLabel + halfOfNormalLabelHeight - halfOfChipRowHeight;
+  } else {
+    initialChipRowMinYNormal = CGRectGetMidY(labelFrameNormal) - ((CGFloat)0.5 * chipRowHeight);
+    if (chipsWrap) {
+    } else {
+      CGFloat center = containerHeight * (CGFloat)0.5;
+      initialChipRowMinYNormal = center - (chipRowHeight * (CGFloat)0.5);
+    }
   }
   CGFloat initialChipRowMinY = initialChipRowMinYNormal;
   if (floatingLabelState == MDCContainedInputViewLabelStateFloating) {
@@ -177,7 +200,7 @@ static const CGFloat kGradientBlurLength = 6;
                                                     globalChipRowMaxX:globalChipRowMaxX
                                                                 isRTL:isRTL];
 
-  CGSize scrollViewSize = CGSizeMake(size.width, contentAreaMaxY);
+  CGSize scrollViewSize = CGSizeMake(size.width, containerHeight);
 
   CGRect textFieldFrame = [self textFieldFrameWithSize:scrollViewSize
                                             chipFrames:chipFrames
@@ -206,7 +229,7 @@ static const CGFloat kGradientBlurLength = 6;
                                                  chipsWrap:chipsWrap
                                             textFieldFrame:textFieldFrame];
 
-  self.contentAreaMaxY = contentAreaMaxY;
+  self.contentAreaMaxY = containerHeight;
   self.chipFrames = chipFrames;
   self.textFieldFrame = textFieldFrame;
   self.scrollViewContentOffset = contentOffset;
@@ -214,10 +237,10 @@ static const CGFloat kGradientBlurLength = 6;
   self.scrollViewContentViewTouchForwardingViewFrame =
       CGRectMake(0, 0, contentSize.width, contentSize.height);
   self.labelFrameFloating = labelFrameFloating;
-  self.floatingLabelFrameNormal = floatingLabelFrameNormal;
+  self.labelFrameNormal = labelFrameNormal;
   self.globalChipRowMinX = globalChipRowMinX;
   self.globalChipRowMaxX = globalChipRowMaxX;
-  CGRect scrollViewRect = CGRectMake(0, 0, size.width, contentAreaMaxY);
+  CGRect scrollViewRect = CGRectMake(0, 0, size.width, containerHeight);
   self.maskedScrollViewContainerViewFrame = scrollViewRect;
   self.scrollViewFrame = scrollViewRect;
 
@@ -225,12 +248,12 @@ static const CGFloat kGradientBlurLength = 6;
       [self determineHorizontalGradientLocationsWithGlobalChipRowMinX:globalChipRowMinX
                                                     globalChipRowMaxX:globalChipRowMaxX
                                                             viewWidth:size.width
-                                                           viewHeight:contentAreaMaxY];
+                                                           viewHeight:containerHeight];
   self.verticalGradientLocations = [self
       determineVerticalGradientLocationsWithGlobalChipRowMinX:globalChipRowMinX
                                             globalChipRowMaxX:globalChipRowMaxX
                                                     viewWidth:size.width
-                                                   viewHeight:contentAreaMaxY
+                                                   viewHeight:containerHeight
                                             floatingLabelMaxY:floatingLabelMaxY
                                                 bottomPadding:bottomPadding
                                           positioningDelegate:containerStyler.positioningDelegate];
@@ -249,14 +272,13 @@ static const CGFloat kGradientBlurLength = 6;
   //        MDFRectFlippedHorizontally(self.scrollViewContentViewTouchForwardingViewFrame,
   //        size.width);
   //    self.labelFrameFloating = MDFRectFlippedHorizontally(labelFrameFloating,
-  //    size.width); self.floatingLabelFrameNormal =
-  //    MDFRectFlippedHorizontally(floatingLabelFrameNormal, size.width);
+  //    size.width); self.labelFrameNormal =
+  //    MDFRectFlippedHorizontally(labelFrameNormal, size.width);
   //    self.maskedScrollViewContainerViewFrame =
   //        MDFRectFlippedHorizontally(self.maskedScrollViewContainerViewFrame, size.width);
   //    self.scrollViewFrame = MDFRectFlippedHorizontally(scrollViewRect, size.width);
   //  }
 
-  return;
 }
 
 - (CGFloat)calculatedHeight {
@@ -265,9 +287,9 @@ static const CGFloat kGradientBlurLength = 6;
   if (labelFrameFloatingMaxY > maxY) {
     maxY = labelFrameFloatingMaxY;
   }
-  CGFloat floatingLabelFrameNormalMaxY = CGRectGetMaxY(self.floatingLabelFrameNormal);
+  CGFloat labelFrameNormalMaxY = CGRectGetMaxY(self.labelFrameNormal);
   if (labelFrameFloatingMaxY > maxY) {
-    maxY = floatingLabelFrameNormalMaxY;
+    maxY = labelFrameNormalMaxY;
   }
   CGFloat textRectMaxY = self.contentAreaMaxY;
   if (textRectMaxY > maxY) {
@@ -298,61 +320,69 @@ static const CGFloat kGradientBlurLength = 6;
           preferredContainerHeight:(CGFloat)preferredContainerHeight
                  contentAreaHeight:(CGFloat)contentAreaHeight
                    containerStyler:(id<MDCContainedInputViewStyler>)containerStyler
+               positioningDelegate:(id<NewPositioningDelegate>)positioningDelegate
                              isRTL:(BOOL)isRTL {
   CGFloat maxTextWidth = globalChipRowMaxX - globalChipRowMinX;
-  CGSize placeholderSize = [self textSizeWithText:text font:font maxWidth:maxTextWidth];
-  CGFloat placeholderMinX = globalChipRowMinX;
+  CGSize textSize = [self textSizeWithText:text font:font maxWidth:maxTextWidth];
+  CGFloat normalLabelMinX = globalChipRowMinX;
   if (isRTL) {
-    placeholderMinX = globalChipRowMaxX - placeholderSize.width;
+    normalLabelMinX = globalChipRowMaxX - textSize.width;
   }
-  CGFloat placeholderMinY = 0;
-  if (chipsWrap) {
-    CGFloat heightToCalculateNormalLabelMinY =
-        [containerStyler.positioningDelegate defaultContainerHeightWithTextHeight:chipRowHeight];
-    if (preferredContainerHeight < heightToCalculateNormalLabelMinY) {
-      heightToCalculateNormalLabelMinY = preferredContainerHeight;
-    }
-    placeholderMinY = [containerStyler.positioningDelegate
-        textMinYWithFloatingLabelWithTextHeight:chipRowHeight
-                            floatingLabelHeight:floatingFont.lineHeight
-                       preferredContainerHeight:heightToCalculateNormalLabelMinY];
+  CGFloat normalLabelMinY = 0;
+  if (positioningDelegate) {
+    normalLabelMinY = positioningDelegate.paddingBetweenTopAndNormalLabel;
   } else {
-    CGFloat center = contentAreaHeight * (CGFloat)0.5;
-    placeholderMinY = center - (placeholderSize.height * (CGFloat)0.5);
+    if (chipsWrap) {
+      CGFloat heightToCalculateNormalLabelMinY =
+      [containerStyler.positioningDelegate defaultContainerHeightWithTextHeight:chipRowHeight];
+      if (preferredContainerHeight < heightToCalculateNormalLabelMinY) {
+        heightToCalculateNormalLabelMinY = preferredContainerHeight;
+      }
+      normalLabelMinY = [containerStyler.positioningDelegate
+                         textMinYWithFloatingLabelWithTextHeight:chipRowHeight
+                         floatingLabelHeight:floatingFont.lineHeight
+                         preferredContainerHeight:heightToCalculateNormalLabelMinY];
+    } else {
+      CGFloat center = contentAreaHeight * (CGFloat)0.5;
+      normalLabelMinY = center - (textSize.height * (CGFloat)0.5);
+    }
   }
-  return CGRectMake(placeholderMinX, placeholderMinY, placeholderSize.width,
-                    placeholderSize.height);
+  return CGRectMake(normalLabelMinX, normalLabelMinY, textSize.width,
+                    textSize.height);
 }
 
 - (CGRect)floatingLabelFrameWithText:(NSString *)text
-                                font:(UIFont *)font
                         floatingFont:(UIFont *)floatingFont
                    globalChipRowMinX:(CGFloat)globalChipRowMinX
                    globalChipRowMaxX:(CGFloat)globalChipRowMaxX
                        chipRowHeight:(CGFloat)chipRowHeight
             preferredContainerHeight:(CGFloat)preferredContainerHeight
                      containerStyler:(id<MDCContainedInputViewStyler>)containerStyler
+                 positioningDelegate:(id<NewPositioningDelegate>)positioningDelegate
                                isRTL:(BOOL)isRTL {
   CGFloat maxTextWidth = globalChipRowMaxX - globalChipRowMinX - kFloatingLabelXOffset;
-  CGSize placeholderSize = [self textSizeWithText:text font:floatingFont maxWidth:maxTextWidth];
-  CGFloat placeholderMinY = 0;
-
-  CGFloat heightToCalculateFloatingLabelMinY =
-      [containerStyler.positioningDelegate defaultContainerHeightWithTextHeight:chipRowHeight];
-  if (preferredContainerHeight < heightToCalculateFloatingLabelMinY) {
-    heightToCalculateFloatingLabelMinY = preferredContainerHeight;
+  CGSize textSize = [self textSizeWithText:text font:floatingFont maxWidth:maxTextWidth];
+  CGFloat floatingLabelMinY = 0;
+  if (positioningDelegate) {
+    floatingLabelMinY = positioningDelegate.paddingBetweenTopAndFloatingLabel;
+  } else {
+    CGFloat heightToCalculateFloatingLabelMinY =
+    [containerStyler.positioningDelegate defaultContainerHeightWithTextHeight:chipRowHeight];
+    if (preferredContainerHeight < heightToCalculateFloatingLabelMinY) {
+      heightToCalculateFloatingLabelMinY = preferredContainerHeight;
+    }
+    floatingLabelMinY = [containerStyler.positioningDelegate
+                       floatingLabelMinYWithTextHeight:chipRowHeight
+                       floatingLabelHeight:floatingFont.lineHeight
+                       preferredContainerHeight:heightToCalculateFloatingLabelMinY];
   }
-  placeholderMinY = [containerStyler.positioningDelegate
-      floatingLabelMinYWithTextHeight:chipRowHeight
-                  floatingLabelHeight:floatingFont.lineHeight
-             preferredContainerHeight:heightToCalculateFloatingLabelMinY];
 
-  CGFloat placeholderMinX = globalChipRowMinX + kFloatingLabelXOffset;
+  CGFloat floatingLabelMinX = globalChipRowMinX + kFloatingLabelXOffset;
   if (isRTL) {
-    placeholderMinX = globalChipRowMaxX - kFloatingLabelXOffset - placeholderSize.width;
+    floatingLabelMinX = globalChipRowMaxX - kFloatingLabelXOffset - textSize.width;
   }
-  return CGRectMake(placeholderMinX, placeholderMinY, placeholderSize.width,
-                    placeholderSize.height);
+  return CGRectMake(floatingLabelMinX, floatingLabelMinY, textSize.width,
+                    textSize.height);
 }
 
 - (CGFloat)textHeightWithFont:(UIFont *)font {

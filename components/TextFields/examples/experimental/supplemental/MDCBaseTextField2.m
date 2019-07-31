@@ -217,12 +217,10 @@
 }
 
 - (void)postLayoutSubviews {
-  CGRect adjustedPlaceholderFrame =
-      [self adjustTextAreaFrame:self.layout.textRectFloatingLabel
-          withParentClassTextAreaFrame:[super textRectForBounds:self.bounds]];
-  adjustedPlaceholderFrame = CGRectOffset(adjustedPlaceholderFrame, 0, -1);
+  CGRect placeholderFrame = [self placeholderRectFromLayout:self.layout
+                                        floatingLabelState:self.floatingLabelState];
   [self.labelAnimator layOutPlaceholderLabel:self.placeholderLabel
-                            placeholderFrame:adjustedPlaceholderFrame
+                            placeholderFrame:placeholderFrame
                         isPlaceholderVisible:self.isPlaceholderVisible];
   [self.labelAnimator layOutLabel:self.label
                             state:self.floatingLabelState
@@ -246,11 +244,20 @@
 
 - (CGRect)textRectFromLayout:(MDCBaseTextFieldLayout *)layout
           floatingLabelState:(MDCContainedInputViewLabelState)floatingLabelState {
-  CGRect textRect = layout.textRect;
+  CGRect textRect = layout.textRectNormal;
   if (floatingLabelState == MDCContainedInputViewLabelStateFloating) {
-    textRect = layout.textRectFloatingLabel;
+    textRect = layout.textRectFloating;
   }
   return textRect;
+}
+
+- (CGRect)placeholderRectFromLayout:(MDCBaseTextFieldLayout *)layout
+          floatingLabelState:(MDCContainedInputViewLabelState)floatingLabelState {
+  CGRect placeholderRect = layout.placeholderFrameNormal;
+  if (floatingLabelState == MDCContainedInputViewLabelStateFloating) {
+    placeholderRect = layout.placeholderFrameFloating;
+  }
+  return placeholderRect;
 }
 
 - (CGRect)adjustTextAreaFrame:(CGRect)textRect
@@ -262,9 +269,9 @@
 
 - (CGRect)clearButtonFrameFromLayout:(MDCBaseTextFieldLayout *)layout
                   floatingLabelState:(MDCContainedInputViewLabelState)floatingLabelState {
-  CGRect clearButtonFrame = layout.clearButtonFrame;
+  CGRect clearButtonFrame = layout.clearButtonFrameNormal;
   if (floatingLabelState == MDCContainedInputViewLabelStateFloating) {
-    clearButtonFrame = layout.clearButtonFrameFloatingLabel;
+    clearButtonFrame = layout.clearButtonFrameFloating;
   }
   return clearButtonFrame;
 }
@@ -273,15 +280,15 @@
   id<NewPositioningDelegate> positioningDelegate = nil;
   if ([self.containerStyler
           respondsToSelector:@selector
-          (positioningDelegateWithFoatingLabelHeight:
-                                       textRowHeight:numberOfTextRows:density
-                                                    :preferredContainerHeight:)]) {
-    positioningDelegate = [self.containerStyler
-        positioningDelegateWithFoatingLabelHeight:self.floatingFont.lineHeight
-                                    textRowHeight:self.font.lineHeight
-                                 numberOfTextRows:1
-                                          density:0
-                         preferredContainerHeight:self.preferredContainerHeight];
+          (positioningDelegateWithFoatingFontLineHeight:normalFontLineHeight:textRowHeight:numberOfTextRows:density:preferredContainerHeight:)]) {
+
+    positioningDelegate =
+    [self.containerStyler positioningDelegateWithFoatingFontLineHeight:self.floatingFont.lineHeight
+                                                  normalFontLineHeight:self.normalFont.lineHeight
+                                                         textRowHeight:self.normalFont.lineHeight
+                                                      numberOfTextRows:1
+                                                               density:0
+                                              preferredContainerHeight:self.preferredContainerHeight];
   }
   return positioningDelegate;
 }

@@ -31,11 +31,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic, assign) CGRect labelFrameFloating;
 @property(nonatomic, assign) CGRect labelFrameNormal;
-@property(nonatomic, assign) CGRect placeholderLabelFrameNormal;
-@property(nonatomic, assign) CGRect textRect;
-@property(nonatomic, assign) CGRect textRectFloatingLabel;
-@property(nonatomic, assign) CGRect clearButtonFrame;
-@property(nonatomic, assign) CGRect clearButtonFrameFloatingLabel;
+@property(nonatomic, assign) CGRect placeholderFrameFloating;
+@property(nonatomic, assign) CGRect placeholderFrameNormal;
+@property(nonatomic, assign) CGRect textRectNormal;
+@property(nonatomic, assign) CGRect textRectFloating;
+@property(nonatomic, assign) CGRect clearButtonFrameNormal;
+@property(nonatomic, assign) CGRect clearButtonFrameFloating;
 @property(nonatomic, assign) CGRect leftViewFrame;
 @property(nonatomic, assign) CGRect rightViewFrame;
 @property(nonatomic, assign) CGRect underlineLabelViewFrame;
