@@ -226,7 +226,7 @@
                         isPlaceholderVisible:self.isPlaceholderVisible];
   [self.labelAnimator layOutLabel:self.label
                             state:self.floatingLabelState
-                 normalLabelFrame:self.layout.floatingLabelFrameNormal
+                 normalLabelFrame:self.layout.labelFrameNormal
                floatingLabelFrame:self.layout.floatingLabelFrameFloating
                        normalFont:self.normalFont
                      floatingFont:self.floatingFont];
@@ -270,6 +270,14 @@
 }
 
 - (MDCBaseTextFieldLayout *)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize {
+  if ([self.containerStyler conformsToProtocol:@protocol(NewPositioningDelegate)]) {
+    id<NewPositioningDelegate> positioningDelegate = (id<NewPositioningDelegate>)self.containerStyler;
+    [positioningDelegate updatePaddingValuesWithFoatingLabelHeight:self.floatingFont.lineHeight
+                                                     textRowHeight:self.font.lineHeight
+                                                  numberOfTextRows:1
+                                                           density:0
+                                          preferredContainerHeight:self.preferredContainerHeight];
+  }
   CGFloat normalizedCustomAssistiveLabelDrawPriority =
       [self normalizedCustomAssistiveLabelDrawPriority:self.customAssistiveLabelDrawPriority];
   return [[MDCBaseTextFieldLayout alloc]
@@ -493,6 +501,10 @@
 
 - (CGRect)containerFrame {
   return CGRectMake(0, 0, CGRectGetWidth(self.frame), self.layout.topRowBottomRowDividerY);
+}
+
+- (CGFloat)numberOfTextRows {
+  return 1.0;
 }
 
 #pragma mark UITextField Layout Overrides
