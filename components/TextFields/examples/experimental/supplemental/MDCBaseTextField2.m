@@ -270,8 +270,8 @@
 }
 
 - (MDCBaseTextFieldLayout *)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize {
-  if ([self.containerStyler conformsToProtocol:@protocol(NewPositioningDelegate)]) {
-    id<NewPositioningDelegate> positioningDelegate = (id<NewPositioningDelegate>)self.containerStyler;
+  if ([self.containerStyler.positioningDelegate conformsToProtocol:@protocol(NewPositioningDelegate)]) {
+    id<NewPositioningDelegate> positioningDelegate = (id<NewPositioningDelegate>)self.containerStyler.positioningDelegate;
     [positioningDelegate updatePaddingValuesWithFoatingLabelHeight:self.floatingFont.lineHeight
                                                      textRowHeight:self.font.lineHeight
                                                   numberOfTextRows:1

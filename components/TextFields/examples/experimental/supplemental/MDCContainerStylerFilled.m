@@ -19,18 +19,6 @@
 #import "MDCContainerStylerPathDrawingUtils.h"
 
 
-static const CGFloat kMinPaddingBetweenTopAndFloatingLabel = (CGFloat)8.0;
-static const CGFloat kMaxPaddingBetweenTopAndFloatingLabel = (CGFloat)14.0;
-static const CGFloat kMinPaddingBetweenFloatingLabelAndText = (CGFloat)8.0;
-static const CGFloat kMaxPaddingBetweenFloatingLabelAndText = (CGFloat)14.0;
-static const CGFloat kMinPaddingBetweenTextAndBottom = (CGFloat)8.0;
-static const CGFloat kMaxPaddingBetweenTextAndBottom = (CGFloat)14.0;
-
-
-
-
-
-
 
 static const CGFloat kFilledContainerStylerTopCornerRadius = (CGFloat)4.0;
 static const CGFloat kFilledContainerStylerUnderlineWidthThin = (CGFloat)1.0;
@@ -460,89 +448,6 @@ static const CGFloat kLayerAnimationDuration = (CGFloat)0.2;
 + (NSString *)thickUnderlineGrowKey {
   return @"thickUnderlineGrowKey";
 }
-
-#pragma mark New Positioning Delegate
-
-- (void)updatePaddingValuesWithFoatingLabelHeight:(CGFloat)floatingLabelHeight
-                                    textRowHeight:(CGFloat)textRowHeight
-                                 numberOfTextRows:(NSInteger)numberOfTextRows
-                                          density:(CGFloat)density
-                         preferredContainerHeight:(CGFloat)preferredContainerHeight {
-  if (preferredContainerHeight > 0) {
-    CGFloat minimumHeight = [self calculateHeightWithFoatingLabelHeight:floatingLabelHeight
-                                                          textRowHeight:textRowHeight
-                                                       numberOfTextRows:numberOfTextRows
-                                      paddingBetweenTopAndFloatingLabel:kMinPaddingBetweenTopAndFloatingLabel
-                                     paddingBetweenFloatingLabelAndText:kMinPaddingBetweenFloatingLabelAndText
-                                            paddingBetweenTextAndBottom:kMinPaddingBetweenTextAndBottom];
-    if (preferredContainerHeight > minimumHeight) {
-      CGFloat difference = preferredContainerHeight - minimumHeight;
-      CGFloat sumOfMinimumPaddingValues =
-          kMinPaddingBetweenTopAndFloatingLabel + kMinPaddingBetweenFloatingLabelAndText + kMinPaddingBetweenTextAndBottom;
-      _paddingBetweenTopAndFloatingLabel =
-          kMinPaddingBetweenTopAndFloatingLabel + ((kMinPaddingBetweenTopAndFloatingLabel/sumOfMinimumPaddingValues) * difference);
-      _paddingBetweenFloatingLabelAndText =
-          kMinPaddingBetweenFloatingLabelAndText + ((kMinPaddingBetweenFloatingLabelAndText/sumOfMinimumPaddingValues) * difference);
-      _paddingBetweenTextAndBottom =
-          kMinPaddingBetweenTextAndBottom + ((kMinPaddingBetweenTextAndBottom/sumOfMinimumPaddingValues) * difference);
-    } else {
-      _paddingBetweenTopAndFloatingLabel = kMinPaddingBetweenTopAndFloatingLabel;
-      _paddingBetweenFloatingLabelAndText = kMinPaddingBetweenFloatingLabelAndText;
-      _paddingBetweenTextAndBottom = kMinPaddingBetweenTextAndBottom;
-    }
-  } else {
-    CGFloat standardizedDensity = [self standardizeDensity:density];
-    CGFloat paddingBetweenTopAndFloatingLabelRange =
-        kMaxPaddingBetweenTopAndFloatingLabel - kMinPaddingBetweenTopAndFloatingLabel;
-    CGFloat paddingBetweenFloatingLabelAndTextRange =
-        kMaxPaddingBetweenFloatingLabelAndText - kMinPaddingBetweenFloatingLabelAndText;
-    CGFloat paddingBetweenTextAndBottomRange =
-        kMaxPaddingBetweenTextAndBottom - kMinPaddingBetweenTextAndBottom;
-    CGFloat paddingBetweenTopAndFloatingLabelAddition = paddingBetweenTopAndFloatingLabelRange * (1 - standardizedDensity);
-    CGFloat paddingBetweenFloatingLabelAndTextAddition = paddingBetweenFloatingLabelAndTextRange * (1 - standardizedDensity);
-    CGFloat paddingBetweenTextAndBottomAddition = paddingBetweenTextAndBottomRange * (1 - standardizedDensity);
-    _paddingBetweenTopAndFloatingLabel = kMinPaddingBetweenTopAndFloatingLabel + paddingBetweenTopAndFloatingLabelAddition;
-    _paddingBetweenFloatingLabelAndText = kMinPaddingBetweenFloatingLabelAndText + paddingBetweenFloatingLabelAndTextAddition;
-    _paddingBetweenTextAndBottom = kMinPaddingBetweenTextAndBottom + paddingBetweenTextAndBottomAddition;
-  }
-}
-
-- (CGFloat)standardizeDensity:(CGFloat)density {
-  CGFloat standardizedDensity = density;
-  if (standardizedDensity < 0) {
-    standardizedDensity = 0;
-  } else if (standardizedDensity > 1) {
-    standardizedDensity = 1;
-  }
-  return standardizedDensity;
-}
-
-
-- (CGFloat)calculateHeightWithFoatingLabelHeight:(CGFloat)floatingLabelHeight
-                                   textRowHeight:(CGFloat)textRowHeight
-                                numberOfTextRows:(NSInteger)numberOfTextRows
-               paddingBetweenTopAndFloatingLabel:(CGFloat)paddingBetweenTopAndFloatingLabel
-              paddingBetweenFloatingLabelAndText:(CGFloat)paddingBetweenFloatingLabelAndText
-                     paddingBetweenTextAndBottom:(CGFloat)paddingBetweenTextAndBottom {
-  CGFloat totalTextHeight = numberOfTextRows * textRowHeight;
-  return paddingBetweenTopAndFloatingLabel + floatingLabelHeight + paddingBetweenFloatingLabelAndText + totalTextHeight + paddingBetweenTextAndBottom;
-}
-
-
-@synthesize paddingBetweenTopAndFloatingLabel = _paddingBetweenTopAndFloatingLabel;
-@synthesize paddingBetweenFloatingLabelAndText = _paddingBetweenFloatingLabelAndText;
-@synthesize paddingBetweenTextAndBottom = _paddingBetweenTextAndBottom;
-
-- (CGFloat)paddingBetweenTopAndFloatingLabel {
-  return _paddingBetweenTopAndFloatingLabel;
-}
-- (CGFloat)paddingBetweenFloatingLabelAndText {
-  return _paddingBetweenFloatingLabelAndText;
-}
-- (CGFloat)paddingBetweenTextAndBottom {
-  return _paddingBetweenTextAndBottom;
-}
-
 
 
 @end

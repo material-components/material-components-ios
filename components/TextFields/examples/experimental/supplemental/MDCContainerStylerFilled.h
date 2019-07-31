@@ -23,5 +23,5 @@
 @property(strong, nonatomic) UIColor *thickUnderlineFillColor;
 @end
 
-@interface MDCContainerStylerFilled : MDCContainerStylerBase <MDCContainedInputViewStyler, NewPositioningDelegate>
+@interface MDCContainerStylerFilled : MDCContainerStylerBase <MDCContainedInputViewStyler>
 @end
