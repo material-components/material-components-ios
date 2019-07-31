@@ -1,42 +1,18 @@
-# #develop#
+# 85.11.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This minor release introduces Material Elevation support for Bottom Sheet,
+Navigation Bar, Slider, and Tabs. Bottom Sheet removed its broken `-init`
+initializer, and some internal clean-up was done to remove iOS 8 support.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
-## API changes
-
-### BottomSheet
-
-#### MDCBottomSheetController
-
-*new* method: `-init` in `MDCBottomSheetController`
-
-### Tabs
-
-#### MDCTabBar
-
-*modified* class: `MDCTabBar`
-
-| Type of change: | Declaration |
-|---|---|
-| From: | `@interface MDCTabBar : UIView <UIBarPositioning>` |
-| To: | `@interface MDCTabBar : UIView` |
-
-*modified* class: `MDCTabBar`
-
-| Type of change: | Swift declaration |
-|---|---|
-| From: | `class MDCTabBar : UIView, UIBarPositioning` |
-| To: | `class MDCTabBar : UIView` |
-
-## Component changes
+Support for Material Elevation expanded to several more components. APIs to
+support overriding the computed value for `mdc_baseElevation` and to respond to
+elevation changes are available. Assigning an `elevationDidChangeBlock` on a
+supported component enables code to be executed whenever the component's
+elevation changes. This may include state-based elevation changes (like
+pressing on a Chip) or when the component's elevation value is changed
+programmatically.
 
 ## Changes
 
