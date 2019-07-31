@@ -70,12 +70,11 @@
 
 - (void)testBottonSheetControllerTraitCollectionDidChangeBlockCalledWithExpectedParameters {
   // Given
-  MDCBottomSheetController *bottomSheet = [[MDCBottomSheetController alloc] init];
   XCTestExpectation *expectation =
       [[XCTestExpectation alloc] initWithDescription:@"traitCollectionDidChange"];
   __block UITraitCollection *passedTraitCollection;
   __block MDCBottomSheetController *passedBottomSheet;
-  bottomSheet.traitCollectionDidChangeBlock =
+  self.bottomSheet.traitCollectionDidChangeBlock =
       ^(MDCBottomSheetController *_Nonnull bottomSheetController,
         UITraitCollection *_Nullable previousTraitCollection) {
         [expectation fulfill];
@@ -85,12 +84,12 @@
   UITraitCollection *testTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
 
   // When
-  [bottomSheet traitCollectionDidChange:testTraitCollection];
+  [self.bottomSheet traitCollectionDidChange:testTraitCollection];
 
   // Then
   [self waitForExpectations:@[ expectation ] timeout:1];
   XCTAssertEqual(passedTraitCollection, testTraitCollection);
-  XCTAssertEqual(passedBottomSheet, bottomSheet);
+  XCTAssertEqual(passedBottomSheet, self.bottomSheet);
 }
 
 - (void)
@@ -122,6 +121,65 @@
   [self waitForExpectations:@[ expectation ] timeout:1];
   XCTAssertEqual(passedTraitCollection, testTraitCollection);
   XCTAssertEqual(passedBottomSheetPresentationController, bottomSheetPresentationController);
+}
+
+#pragma mark - MaterialElevation
+
+- (void)testDefaultOverrideBaseElevationIsNegative {
+  // Then
+  XCTAssertLessThan(self.bottomSheet.mdc_overrideBaseElevation, 0);
+}
+
+- (void)testSettingBaseOverrideBaseElevationReturnsSetValue {
+  // Given
+  CGFloat fakeElevation = 99;
+
+  // When
+  self.bottomSheet.mdc_overrideBaseElevation = fakeElevation;
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.bottomSheet.mdc_overrideBaseElevation, fakeElevation, 0.001);
+}
+
+- (void)testCurrentElevationMatchesElevationWhenElevationChanges {
+  // When
+  self.bottomSheet.elevation = 77;
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.bottomSheet.mdc_currentElevation, self.bottomSheet.elevation,
+                             0.001);
+}
+
+- (void)testElevationDidChangeBlockCalledWhenElevationChangesValue {
+  // Given
+  self.bottomSheet.elevation = 5;
+  XCTestExpectation *expectation =
+      [[XCTestExpectation alloc] initWithDescription:@"elevationDidChange"];
+  self.bottomSheet.mdc_elevationDidChangeBlock =
+      ^(MDCBottomSheetController *_Nonnull bottomSheet, CGFloat absoluteElevation) {
+        [expectation fulfill];
+      };
+
+  // When
+  self.bottomSheet.elevation = self.bottomSheet.elevation + 1;
+
+  // Then
+  [self waitForExpectations:@[ expectation ] timeout:1];
+}
+
+- (void)testElevationDidChangeBlockNotCalledWhenElevationIsSetWithoutChangingValue {
+  // Given
+  __block BOOL blockCalled = NO;
+  self.bottomSheet.mdc_elevationDidChangeBlock =
+      ^(MDCBottomSheetController *_Nonnull bottomSheet, CGFloat absoluteElevation) {
+        blockCalled = YES;
+      };
+
+  // When
+  self.bottomSheet.elevation = self.bottomSheet.elevation;
+
+  // Then
+  XCTAssertFalse(blockCalled);
 }
 
 @end

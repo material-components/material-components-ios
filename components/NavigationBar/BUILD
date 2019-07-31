@@ -34,6 +34,7 @@ mdc_public_objc_library(
         "CoreGraphics",
     ],
     deps = [
+        "//components/Elevation",
         "//components/ButtonBar",
         "//components/Typography",
         "//components/private/Math",

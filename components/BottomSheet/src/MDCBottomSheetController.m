@@ -16,6 +16,7 @@
 
 #import "MDCBottomSheetPresentationController.h"
 #import "MDCBottomSheetTransitionController.h"
+#import "MaterialMath.h"
 #import "UIViewController+MaterialBottomSheet.h"
 
 @interface MDCBottomSheetController () <MDCBottomSheetPresentationControllerDelegate>
@@ -27,19 +28,13 @@
   NSMutableDictionary<NSNumber *, id<MDCShapeGenerating>> *_shapeGenerators;
 }
 
+@synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
+@synthesize mdc_elevationDidChangeBlock = _mdc_elevationDidChangeBlock;
 @dynamic view;
 
 - (void)loadView {
   self.view = [[MDCShapedView alloc] initWithFrame:CGRectZero];
   self.view.elevation = self.elevation;
-}
-
-- (instancetype)init {
-  self = [super init];
-  if (self) {
-    _elevation = MDCShadowElevationModalBottomSheet;
-  }
-  return self;
 }
 
 - (nonnull instancetype)initWithContentViewController:
@@ -53,6 +48,7 @@
     _shapeGenerators = [NSMutableDictionary dictionary];
     _state = MDCSheetStatePreferred;
     _elevation = MDCShadowElevationModalBottomSheet;
+    _mdc_overrideBaseElevation = -1;
   }
   return self;
 }
@@ -61,12 +57,14 @@
   [super viewDidLoad];
 
   self.view.preservesSuperviewLayoutMargins = YES;
-  self.contentViewController.view.autoresizingMask =
-      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-  self.contentViewController.view.frame = self.view.bounds;
-  [self addChildViewController:self.contentViewController];
-  [self.view addSubview:self.contentViewController.view];
-  [self.contentViewController didMoveToParentViewController:self];
+  if (self.contentViewController) {
+    self.contentViewController.view.autoresizingMask =
+        UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    self.contentViewController.view.frame = self.view.bounds;
+    [self addChildViewController:self.contentViewController];
+    [self.view addSubview:self.contentViewController.view];
+    [self.contentViewController didMoveToParentViewController:self];
+  }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -196,8 +194,17 @@
 }
 
 - (void)setElevation:(MDCShadowElevation)elevation {
+  if (MDCCGFloatEqual(elevation, _elevation)) {
+    return;
+  }
+
   _elevation = elevation;
   self.view.elevation = elevation;
+  [self.view mdc_elevationDidChange];
+}
+
+- (CGFloat)mdc_currentElevation {
+  return self.elevation;
 }
 
 /* Disable setter. Always use internal transition controller */

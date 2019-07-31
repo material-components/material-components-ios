@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponents"
-  mdc.version      = "85.10.0"
+  mdc.version      = "85.11.0"
   mdc.authors      = "The Material Components authors."
   mdc.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   mdc.homepage     = "https://github.com/material-components/material-components-ios"
@@ -366,6 +366,7 @@ Pod::Spec.new do |mdc|
       "components/#{component.base_name}/src/private/*.{h,m}"
     ]
 
+    component.dependency "MaterialComponents/Elevation"
     component.dependency "MaterialComponents/ShapeLibrary"
     component.dependency "MaterialComponents/Shapes"
     component.dependency "MaterialComponents/ShadowElevations"
@@ -1327,6 +1328,7 @@ Pod::Spec.new do |mdc|
     component.dependency "MDFTextAccessibility"
 
     component.dependency "MaterialComponents/ButtonBar"
+    component.dependency "MaterialComponents/Elevation"
     component.dependency "MaterialComponents/Typography"
     component.dependency "MDFInternationalization"
     component.dependency "MaterialComponents/private/Math"
@@ -1638,8 +1640,10 @@ Pod::Spec.new do |mdc|
       "components/#{component.base_name}/src/private/*.{h,m}"
     ]
 
+    component.dependency "MaterialComponents/Elevation"
     component.dependency "MaterialComponents/Palettes"
     component.dependency "MaterialComponents/ShadowElevations"
+    component.dependency "MaterialComponents/private/Math"
     component.dependency "MaterialComponents/private/ThumbTrack"
 
     component.test_spec 'UnitTests' do |unit_tests|
@@ -1757,6 +1761,7 @@ Pod::Spec.new do |mdc|
 
     component.dependency "MDFInternationalization"
     component.dependency "MaterialComponents/AnimationTiming"
+    component.dependency "MaterialComponents/Elevation"
     component.dependency "MaterialComponents/Ink"
     component.dependency "MaterialComponents/Palettes"
     component.dependency "MaterialComponents/Ripple"
