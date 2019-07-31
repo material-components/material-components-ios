@@ -474,7 +474,9 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   id<NewPositioningDelegate> positioningDelegate = nil;
   if ([self.containerStyler
           respondsToSelector:@selector
-          (positioningDelegateWithFoatingFontLineHeight:normalFontLineHeight:textRowHeight:numberOfTextRows:density:preferredContainerHeight:)]) {
+          (positioningDelegateWithFoatingFontLineHeight:
+                                   normalFontLineHeight:textRowHeight:numberOfTextRows:density
+                                                       :preferredContainerHeight:)]) {
     CGFloat numberOfVisibleRows = 0;
     if (self.chipsWrap) {
       numberOfVisibleRows =
@@ -483,13 +485,13 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
       numberOfVisibleRows = 1;
     }
 
-    positioningDelegate =
-        [self.containerStyler positioningDelegateWithFoatingFontLineHeight:self.floatingFont.lineHeight
-                                                      normalFontLineHeight:self.normalFont.lineHeight
-                                                             textRowHeight:self.chipRowHeight
-                                                          numberOfTextRows:numberOfVisibleRows
-                                                                   density:0
-                                                  preferredContainerHeight:self.preferredContainerHeight];
+    positioningDelegate = [self.containerStyler
+        positioningDelegateWithFoatingFontLineHeight:self.floatingFont.lineHeight
+                                normalFontLineHeight:self.normalFont.lineHeight
+                                       textRowHeight:self.chipRowHeight
+                                    numberOfTextRows:numberOfVisibleRows
+                                             density:0
+                            preferredContainerHeight:self.preferredContainerHeight];
   }
   return positioningDelegate;
 }

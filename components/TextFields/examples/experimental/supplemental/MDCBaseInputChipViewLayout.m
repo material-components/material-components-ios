@@ -128,17 +128,18 @@ static const CGFloat kGradientBlurLength = 6;
                                            positioningDelegate:positioningDelegate
                                                          isRTL:isRTL];
   CGFloat floatingLabelMaxY = CGRectGetMaxY(labelFrameFloating);
-  
+
   CGFloat initialChipRowMinYWithFloatingLabel = 0;
   if (positioningDelegate) {
-    initialChipRowMinYWithFloatingLabel = floatingLabelMaxY + positioningDelegate.paddingBetweenFloatingLabelAndText;
+    initialChipRowMinYWithFloatingLabel =
+        floatingLabelMaxY + positioningDelegate.paddingBetweenFloatingLabelAndText;
   } else {
-  CGFloat heightToCalculateNormalLabelMinY =
-      [containerStyler.positioningDelegate defaultContainerHeightWithTextHeight:chipRowHeight];
-  initialChipRowMinYWithFloatingLabel = [containerStyler.positioningDelegate
-      textMinYWithFloatingLabelWithTextHeight:chipRowHeight
-                          floatingLabelHeight:floatingFont.lineHeight
-                     preferredContainerHeight:heightToCalculateNormalLabelMinY];
+    CGFloat heightToCalculateNormalLabelMinY =
+        [containerStyler.positioningDelegate defaultContainerHeightWithTextHeight:chipRowHeight];
+    initialChipRowMinYWithFloatingLabel = [containerStyler.positioningDelegate
+        textMinYWithFloatingLabelWithTextHeight:chipRowHeight
+                            floatingLabelHeight:floatingFont.lineHeight
+                       preferredContainerHeight:heightToCalculateNormalLabelMinY];
   }
 
   CGFloat containerHeight = 0;
@@ -146,7 +147,7 @@ static const CGFloat kGradientBlurLength = 6;
     containerHeight = positioningDelegate.containerHeight;
   } else {
     CGFloat defaultContainerHeight =
-    [containerStyler.positioningDelegate defaultContainerHeightWithTextHeight:chipRowHeight];
+        [containerStyler.positioningDelegate defaultContainerHeightWithTextHeight:chipRowHeight];
     if (preferredContainerHeight > 0) {
       containerHeight = preferredContainerHeight;
     } else {
@@ -174,8 +175,8 @@ static const CGFloat kGradientBlurLength = 6;
   if (positioningDelegate) {
     CGFloat halfOfNormalLabelHeight = (CGFloat)0.5 * font.lineHeight;
     CGFloat halfOfChipRowHeight = ((CGFloat)0.5 * chipRowHeight);
-    initialChipRowMinYNormal =
-        positioningDelegate.paddingBetweenTopAndNormalLabel + halfOfNormalLabelHeight - halfOfChipRowHeight;
+    initialChipRowMinYNormal = positioningDelegate.paddingBetweenTopAndNormalLabel +
+                               halfOfNormalLabelHeight - halfOfChipRowHeight;
   } else {
     initialChipRowMinYNormal = CGRectGetMidY(labelFrameNormal) - ((CGFloat)0.5 * chipRowHeight);
     if (chipsWrap) {
@@ -278,7 +279,6 @@ static const CGFloat kGradientBlurLength = 6;
   //        MDFRectFlippedHorizontally(self.maskedScrollViewContainerViewFrame, size.width);
   //    self.scrollViewFrame = MDFRectFlippedHorizontally(scrollViewRect, size.width);
   //  }
-
 }
 
 - (CGFloat)calculatedHeight {
@@ -334,21 +334,20 @@ static const CGFloat kGradientBlurLength = 6;
   } else {
     if (chipsWrap) {
       CGFloat heightToCalculateNormalLabelMinY =
-      [containerStyler.positioningDelegate defaultContainerHeightWithTextHeight:chipRowHeight];
+          [containerStyler.positioningDelegate defaultContainerHeightWithTextHeight:chipRowHeight];
       if (preferredContainerHeight < heightToCalculateNormalLabelMinY) {
         heightToCalculateNormalLabelMinY = preferredContainerHeight;
       }
       normalLabelMinY = [containerStyler.positioningDelegate
-                         textMinYWithFloatingLabelWithTextHeight:chipRowHeight
-                         floatingLabelHeight:floatingFont.lineHeight
+          textMinYWithFloatingLabelWithTextHeight:chipRowHeight
+                              floatingLabelHeight:floatingFont.lineHeight
                          preferredContainerHeight:heightToCalculateNormalLabelMinY];
     } else {
       CGFloat center = contentAreaHeight * (CGFloat)0.5;
       normalLabelMinY = center - (textSize.height * (CGFloat)0.5);
     }
   }
-  return CGRectMake(normalLabelMinX, normalLabelMinY, textSize.width,
-                    textSize.height);
+  return CGRectMake(normalLabelMinX, normalLabelMinY, textSize.width, textSize.height);
 }
 
 - (CGRect)floatingLabelFrameWithText:(NSString *)text
@@ -367,22 +366,21 @@ static const CGFloat kGradientBlurLength = 6;
     floatingLabelMinY = positioningDelegate.paddingBetweenTopAndFloatingLabel;
   } else {
     CGFloat heightToCalculateFloatingLabelMinY =
-    [containerStyler.positioningDelegate defaultContainerHeightWithTextHeight:chipRowHeight];
+        [containerStyler.positioningDelegate defaultContainerHeightWithTextHeight:chipRowHeight];
     if (preferredContainerHeight < heightToCalculateFloatingLabelMinY) {
       heightToCalculateFloatingLabelMinY = preferredContainerHeight;
     }
     floatingLabelMinY = [containerStyler.positioningDelegate
-                       floatingLabelMinYWithTextHeight:chipRowHeight
-                       floatingLabelHeight:floatingFont.lineHeight
-                       preferredContainerHeight:heightToCalculateFloatingLabelMinY];
+        floatingLabelMinYWithTextHeight:chipRowHeight
+                    floatingLabelHeight:floatingFont.lineHeight
+               preferredContainerHeight:heightToCalculateFloatingLabelMinY];
   }
 
   CGFloat floatingLabelMinX = globalChipRowMinX + kFloatingLabelXOffset;
   if (isRTL) {
     floatingLabelMinX = globalChipRowMaxX - kFloatingLabelXOffset - textSize.width;
   }
-  return CGRectMake(floatingLabelMinX, floatingLabelMinY, textSize.width,
-                    textSize.height);
+  return CGRectMake(floatingLabelMinX, floatingLabelMinY, textSize.width, textSize.height);
 }
 
 - (CGFloat)textHeightWithFont:(UIFont *)font {

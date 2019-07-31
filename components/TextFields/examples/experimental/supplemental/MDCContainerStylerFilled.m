@@ -39,7 +39,6 @@ static const CGFloat kMaxPaddingBetweenTextAndBottom = (CGFloat)10.0;
 @synthesize containerHeight = _containerHeight;
 @synthesize paddingAroundAssistiveLabels = _paddingAroundAssistiveLabels;
 
-
 - (instancetype)initWithFloatingFontLineHeight:(CGFloat)floatingLabelHeight
                           normalFontLineHeight:(CGFloat)normalFontLineHeight
                                  textRowHeight:(CGFloat)textRowHeight
@@ -605,19 +604,20 @@ static const CGFloat kMaxPaddingBetweenTextAndBottom = (CGFloat)10.0;
   return @"thickUnderlineGrowKey";
 }
 
-- (id<NewPositioningDelegate>)positioningDelegateWithFoatingFontLineHeight:(CGFloat)floatingLabelHeight
-                                                      normalFontLineHeight:(CGFloat)normalFontLineHeight
-                                                             textRowHeight:(CGFloat)textRowHeight
-                                                          numberOfTextRows:(CGFloat)numberOfTextRows
-                                                                   density:(CGFloat)density
-                                                  preferredContainerHeight:(CGFloat)preferredContainerHeight {
+- (id<NewPositioningDelegate>)
+    positioningDelegateWithFoatingFontLineHeight:(CGFloat)floatingLabelHeight
+                            normalFontLineHeight:(CGFloat)normalFontLineHeight
+                                   textRowHeight:(CGFloat)textRowHeight
+                                numberOfTextRows:(CGFloat)numberOfTextRows
+                                         density:(CGFloat)density
+                        preferredContainerHeight:(CGFloat)preferredContainerHeight {
   return [[MDCContainerStylerFilledPositioningDelegate alloc]
-          initWithFloatingFontLineHeight:floatingLabelHeight
-          normalFontLineHeight:normalFontLineHeight
-          textRowHeight:textRowHeight
-          numberOfTextRows:numberOfTextRows
-          density:density
-          preferredContainerHeight:preferredContainerHeight];
+      initWithFloatingFontLineHeight:floatingLabelHeight
+                normalFontLineHeight:normalFontLineHeight
+                       textRowHeight:textRowHeight
+                    numberOfTextRows:numberOfTextRows
+                             density:density
+            preferredContainerHeight:preferredContainerHeight];
 }
 
 @end

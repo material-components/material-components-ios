@@ -256,9 +256,8 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
                                                      : textFieldWidth - kHorizontalPadding;
     }
     normalLabelMaxX = textRectMaxX;
-    floatingLabelMaxX = shouldAttemptToDisplayRightView
-                                    ? rightViewMinX - kHorizontalPadding
-                                    : textFieldWidth - kHorizontalPadding;
+    floatingLabelMaxX = shouldAttemptToDisplayRightView ? rightViewMinX - kHorizontalPadding
+                                                        : textFieldWidth - kHorizontalPadding;
   }
 
   CGFloat textRectWidth = textRectMaxX - textRectMinX;
@@ -273,10 +272,9 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
   CGRect rightViewFrame =
       CGRectMake(rightViewMinX, rightViewMinY, CGRectGetWidth(rightView.frame), rightViewHeight);
   CGRect clearButtonFrameNormal = CGRectMake(actualClearButtonMinX, clearButtonMinY,
-                                       clearButton.sideLength, clearButton.sideLength);
-  CGRect clearButtonFrameFloating =
-      CGRectMake(actualClearButtonMinX, clearButtonFloatingMinY, clearButton.sideLength,
-                 clearButton.sideLength);
+                                             clearButton.sideLength, clearButton.sideLength);
+  CGRect clearButtonFrameFloating = CGRectMake(actualClearButtonMinX, clearButtonFloatingMinY,
+                                               clearButton.sideLength, clearButton.sideLength);
 
   CGRect labelFrameNormal = [self labelFrameWithText:label.text
                                           labelState:MDCContainedInputViewLabelStateNormal

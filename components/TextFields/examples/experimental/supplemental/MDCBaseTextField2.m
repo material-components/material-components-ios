@@ -218,7 +218,7 @@
 
 - (void)postLayoutSubviews {
   CGRect placeholderFrame = [self placeholderRectFromLayout:self.layout
-                                        floatingLabelState:self.floatingLabelState];
+                                         floatingLabelState:self.floatingLabelState];
   [self.labelAnimator layOutPlaceholderLabel:self.placeholderLabel
                             placeholderFrame:placeholderFrame
                         isPlaceholderVisible:self.isPlaceholderVisible];
@@ -252,7 +252,7 @@
 }
 
 - (CGRect)placeholderRectFromLayout:(MDCBaseTextFieldLayout *)layout
-          floatingLabelState:(MDCContainedInputViewLabelState)floatingLabelState {
+                 floatingLabelState:(MDCContainedInputViewLabelState)floatingLabelState {
   CGRect placeholderRect = layout.placeholderFrameNormal;
   if (floatingLabelState == MDCContainedInputViewLabelStateFloating) {
     placeholderRect = layout.placeholderFrameFloating;
@@ -280,15 +280,16 @@
   id<NewPositioningDelegate> positioningDelegate = nil;
   if ([self.containerStyler
           respondsToSelector:@selector
-          (positioningDelegateWithFoatingFontLineHeight:normalFontLineHeight:textRowHeight:numberOfTextRows:density:preferredContainerHeight:)]) {
-
-    positioningDelegate =
-    [self.containerStyler positioningDelegateWithFoatingFontLineHeight:self.floatingFont.lineHeight
-                                                  normalFontLineHeight:self.normalFont.lineHeight
-                                                         textRowHeight:self.normalFont.lineHeight
-                                                      numberOfTextRows:1
-                                                               density:0
-                                              preferredContainerHeight:self.preferredContainerHeight];
+          (positioningDelegateWithFoatingFontLineHeight:
+                                   normalFontLineHeight:textRowHeight:numberOfTextRows:density
+                                                       :preferredContainerHeight:)]) {
+    positioningDelegate = [self.containerStyler
+        positioningDelegateWithFoatingFontLineHeight:self.floatingFont.lineHeight
+                                normalFontLineHeight:self.normalFont.lineHeight
+                                       textRowHeight:self.normalFont.lineHeight
+                                    numberOfTextRows:1
+                                             density:0
+                            preferredContainerHeight:self.preferredContainerHeight];
   }
   return positioningDelegate;
 }

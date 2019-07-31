@@ -94,16 +94,15 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
   self.scrollView = [[UIScrollView alloc] init];
   [self.view addSubview:self.scrollView];
   self.scrollViewSubviews = @[
-    [self createToggleErrorButton],
-    [self createResignFirstResponderButton],
+    [self createToggleErrorButton], [self createResignFirstResponderButton],
     [self createLabelWithText:@"Filled InputChipView:"],
     [self createFilledNonWrappingInputChipView],
     [self createLabelWithText:@"Wrapping filled InputChipView:"],
     [self createFilledWrappingInputChipView],
-//    [self createLabelWithText:@"Outlined InputChipView:"],
-//    [self createOutlinedNonWrappingInputChipView],
-//    [self createLabelWithText:@"Wrapping outlined InputChipView:"],
-//    [self createOutlinedWrappingInputChipView],
+    //    [self createLabelWithText:@"Outlined InputChipView:"],
+    //    [self createOutlinedNonWrappingInputChipView],
+    //    [self createLabelWithText:@"Wrapping outlined InputChipView:"],
+    //    [self createOutlinedWrappingInputChipView],
   ];
   for (UIView *view in self.scrollViewSubviews) {
     [self.scrollView addSubview:view];
