@@ -1,3 +1,90 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+### BottomSheet
+
+#### MDCBottomSheetController
+
+*new* method: `-init` in `MDCBottomSheetController`
+
+### Tabs
+
+#### MDCTabBar
+
+*modified* class: `MDCTabBar`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@interface MDCTabBar : UIView <UIBarPositioning>` |
+| To: | `@interface MDCTabBar : UIView` |
+
+*modified* class: `MDCTabBar`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `class MDCTabBar : UIView, UIBarPositioning` |
+| To: | `class MDCTabBar : UIView` |
+
+## Component changes
+
+## Changes
+
+### ActionSheet
+
+* [Drop iOS 8 work-arounds. (#8120)](https://github.com/material-components/material-components-ios/commit/7bc09cdf8bac90db8acfd38431e7e60f2fec6fd3) (Robert Moore)
+
+### BottomNavigation
+
+* [Test for `additionalSafeAreaInsets` behavior. (#8113)](https://github.com/material-components/material-components-ios/commit/9e936bfb6201c07993119d0b1c2368be7a88d2fe) (Robert Moore)
+
+### BottomSheet
+
+* [Add MaterialElevation support (#8102)](https://github.com/material-components/material-components-ios/commit/606f0386b3a1cead72c7cf05caf187248e1fadc0) (Cody Weaver)
+* [Mark init unavailable (#8108)](https://github.com/material-components/material-components-ios/commit/c336d025e8b09445829a74c10aeea71e6bfbfc1e) (Cody Weaver)
+
+### Elevation
+
+* [Fix spelling typos. (#8114)](https://github.com/material-components/material-components-ios/commit/9ea5f99c122637c6da0be0be666ce095ae6f56de) (Robert Moore)
+
+### NavigationBar
+
+* [Add MaterialElevation support. (#8115)](https://github.com/material-components/material-components-ios/commit/60c60f288cc9eb0e8f87736febdeaf1993ceb79a) (Cody Weaver)
+* [Add doc to note UIBarButtonItem cannot be used in UIPopoverPresentationController. (#8129)](https://github.com/material-components/material-components-ios/commit/4191d03853b20acfe14259d4babddac7e9ee250a) (Wenyu Zhang)
+
+### Slider
+
+* [Add MaterialElevation support (#8127)](https://github.com/material-components/material-components-ios/commit/c6ab74349d0c4dc5b44d69696b3baca4a613276a) (Cody Weaver)
+
+### Tabs
+
+* [Add MaterialElevation support (#8116)](https://github.com/material-components/material-components-ios/commit/a9a0fcadd089e9db5ef45408cf20ee9ab9cf6ebc) (Cody Weaver)
+
+### Typography
+
+* [Drop iOS 8 pragmas. (#8119)](https://github.com/material-components/material-components-ios/commit/ae728261675f67286d4245f8979abc47b5ec5650) (Robert Moore)
+
+### private/Color
+
+* [Fix Math import. (#8104)](https://github.com/material-components/material-components-ios/commit/37d5b8d87cd7fbf9ed455ade98bf2b0ed91ab0a1) (Robert Moore)
+
+### schemes/Typography
+
+* [Remove CoreText dependency. (#8132)](https://github.com/material-components/material-components-ios/commit/c973907f212b58498803db1aa30d26a29c7de1e0) (Robert Moore)
+* [Remove iOS 8 code. (#8118)](https://github.com/material-components/material-components-ios/commit/867fe1bd1e05afca0958d1ecfe55d488bcfd484e) (Robert Moore)
+
+---
+
 # 85.10.0
 
 This minor release expands support for trait collection and Material Elevation
