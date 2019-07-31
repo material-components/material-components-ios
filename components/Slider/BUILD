@@ -33,7 +33,9 @@ mdc_public_objc_library(
         "UIKit",
     ],
     deps = [
+        "//components/Elevation",
         "//components/Palettes",
+        "//components/private/Math",
         "//components/private/ThumbTrack",
     ],
 )

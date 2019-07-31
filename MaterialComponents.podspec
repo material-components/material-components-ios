@@ -1640,8 +1640,10 @@ Pod::Spec.new do |mdc|
       "components/#{component.base_name}/src/private/*.{h,m}"
     ]
 
+    component.dependency "MaterialComponents/Elevation"
     component.dependency "MaterialComponents/Palettes"
     component.dependency "MaterialComponents/ShadowElevations"
+    component.dependency "MaterialComponents/private/Math"
     component.dependency "MaterialComponents/private/ThumbTrack"
 
     component.test_spec 'UnitTests' do |unit_tests|
