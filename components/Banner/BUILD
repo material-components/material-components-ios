@@ -33,6 +33,7 @@ mdc_objc_library(
     includes = ["src"],
     deps = [
         "//components/Buttons",
+        "//components/Elevation",
         "//components/Typography",
     ],
 )

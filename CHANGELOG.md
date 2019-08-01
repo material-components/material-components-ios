@@ -1,3 +1,33 @@
+# 85.12.0
+
+This minor release introduces Material Elevation support for ActionSheet and Banner (Beta). It also includes performance improvements for Ink and Ripple.
+
+## New features
+
+Support for Material Elevation expanded to two more components. APIs to support
+overriding the computed value for `mdc_baseElevation` and to respond to
+elevation changes are available. Assigning an `elevationDidChangeBlock` on a
+supported component enables code to be executed whenever the component's
+elevation changes. This may include state-based elevation changes (like
+pressing on a Chip) or when the component's elevation value is changed
+programmatically.
+
+## Changes
+
+### ActionSheet
+
+* [Add MaterialElevation support (#8111)](https://github.com/material-components/material-components-ios/commit/2feb8f96cda6fc9ab2fc7d6bcb23f1076c2055aa) (Cody Weaver)
+
+### Banner
+
+* [Add MaterialElevation support (#8142)](https://github.com/material-components/material-components-ios/commit/534649a1cd74a65c56a0d605238546796eed54a2) (Cody Weaver)
+
+## Multi-component changes
+
+* [Use static default colors (#8146)](https://github.com/material-components/material-components-ios/commit/4be077a61bfeda44058ebc1f73e2cf8b71a5c65a) (Cody Weaver)
+
+---
+
 # 85.11.0
 
 This minor release introduces Material Elevation support for Bottom Sheet,
