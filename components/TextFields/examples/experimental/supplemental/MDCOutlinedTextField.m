@@ -46,10 +46,8 @@
 }
 
 - (void)commonMDCOutlinedTextFieldInit {
-  MDCOutlinedTextFieldPositioningDelegate *positioningDelegate =
-      [[MDCOutlinedTextFieldPositioningDelegate alloc] init];
   MDCContainerStylerOutlined *outlinedStyle =
-      [[MDCContainerStylerOutlined alloc] initWithPositioningDelegate:positioningDelegate];
+      [[MDCContainerStylerOutlined alloc] init];
   self.containerStyler = outlinedStyle;
 }
 

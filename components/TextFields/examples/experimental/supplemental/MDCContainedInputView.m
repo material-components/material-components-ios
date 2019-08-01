@@ -48,15 +48,6 @@
 @implementation MDCContainerStylerBase
 @synthesize positioningDelegate = _positioningDelegate;
 
-- (instancetype)initWithPositioningDelegate:
-    (id<MDCContainedInputViewStylerPositioningDelegate>)positioningDelegate {
-  self = [super init];
-  if (self) {
-    _positioningDelegate = positioningDelegate;
-  }
-  return self;
-}
-
 - (UIFont *)floatingFontWithFont:(UIFont *)font {
   CGFloat scaleFactor = [self floatingFontSizeScaleFactor];
   CGFloat floatingFontSize = font.pointSize * scaleFactor;
@@ -100,53 +91,6 @@
 
 - (CGFloat)floatingFontSizeScaleFactor {
   return 0.75;
-}
-
-@end
-
-@implementation MDCContainerStylerBasePositioningDelegate
-
-- (CGFloat)assistiveLabelPaddingWithContainerHeight:(CGFloat)containerHeight {
-  return (CGFloat)0.13 * containerHeight;
-}
-
-- (CGFloat)defaultContainerHeightWithTextHeight:(CGFloat)textHeight {
-  return (CGFloat)3.3 * textHeight;
-}
-
-- (CGFloat)containerHeightWithTextHeight:(CGFloat)textHeight
-                preferredContainerHeight:(CGFloat)preferredContainerHeight {
-  if (preferredContainerHeight > 0) {
-    return preferredContainerHeight;
-  }
-  return [self defaultContainerHeightWithTextHeight:textHeight];
-}
-
-- (CGFloat)floatingLabelMinYWithTextHeight:(CGFloat)textHeight
-                       floatingLabelHeight:(CGFloat)floatingLabelHeight
-                  preferredContainerHeight:(CGFloat)preferredContainerHeight {
-  CGFloat containerHeight = [self containerHeightWithTextHeight:textHeight
-                                       preferredContainerHeight:preferredContainerHeight];
-  CGFloat offset = containerHeight * (CGFloat)0.28;
-  return offset - ((CGFloat)0.5 * floatingLabelHeight);
-}
-
-- (CGFloat)textMinYWithFloatingLabelWithTextHeight:(CGFloat)textHeight
-                               floatingLabelHeight:(CGFloat)floatingLabelHeight
-                          preferredContainerHeight:(CGFloat)preferredContainerHeight {
-  CGFloat containerHeight = [self containerHeightWithTextHeight:textHeight
-                                       preferredContainerHeight:preferredContainerHeight];
-  CGFloat offset = containerHeight * (CGFloat)0.64;
-  return offset - ((CGFloat)0.5 * textHeight);
-}
-
-- (CGFloat)textMinYWithoutFloatingLabelWithTextHeight:(CGFloat)textHeight
-                                  floatingLabelHeight:(CGFloat)floatingLabelHeight
-                             preferredContainerHeight:(CGFloat)preferredContainerHeight {
-  CGFloat containerHeight = [self containerHeightWithTextHeight:textHeight
-                                       preferredContainerHeight:preferredContainerHeight];
-  CGFloat offset = containerHeight * (CGFloat)0.5;
-  return offset - ((CGFloat)0.5 * textHeight);
 }
 
 @end

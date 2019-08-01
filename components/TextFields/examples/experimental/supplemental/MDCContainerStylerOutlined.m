@@ -62,70 +62,69 @@ static const CGFloat kMaxPaddingBetweenTextAndBottom = (CGFloat)10.0;
                                     numberOfTextRows:(CGFloat)numberOfTextRows
                                              density:(CGFloat)density
                             preferredContainerHeight:(CGFloat)preferredContainerHeight {
+  BOOL isMultiline = numberOfTextRows > 1 || numberOfTextRows == 0;
+  
+  CGFloat standardizedDensity = [self standardizeDensity:density];
+  CGFloat paddingBetweenTopAndFloatingLabelRange =
+  kMaxPaddingBetweenTopAndFloatingLabel - kMinPaddingBetweenTopAndFloatingLabel;
+  CGFloat paddingBetweenFloatingLabelAndTextRange =
+  kMaxPaddingBetweenFloatingLabelAndText - kMinPaddingBetweenFloatingLabelAndText;
+  CGFloat paddingBetweenTextAndBottomRange =
+  kMaxPaddingBetweenTextAndBottom - kMinPaddingBetweenTextAndBottom;
+  CGFloat paddingBetweenTopAndFloatingLabelAddition =
+  paddingBetweenTopAndFloatingLabelRange * (1 - standardizedDensity);
+  CGFloat paddingBetweenFloatingLabelAndTextAddition =
+  paddingBetweenFloatingLabelAndTextRange * (1 - standardizedDensity);
+  CGFloat paddingBetweenTextAndBottomAddition =
+  paddingBetweenTextAndBottomRange * (1 - standardizedDensity);
+  
+  _paddingBetweenTopAndFloatingLabel =
+  kMinPaddingBetweenTopAndFloatingLabel + paddingBetweenTopAndFloatingLabelAddition;
+  _paddingBetweenFloatingLabelAndText =
+  kMinPaddingBetweenFloatingLabelAndText + paddingBetweenFloatingLabelAndTextAddition;
+  _paddingBetweenTextAndBottom =
+  kMinPaddingBetweenTextAndBottom + paddingBetweenTextAndBottomAddition;
+  
+  CGFloat heightWithPaddingsDeterminedByDensity =
+  [self calculateHeightWithFoatingLabelHeight:floatingLabelHeight
+                                textRowHeight:textRowHeight
+                             numberOfTextRows:numberOfTextRows
+            paddingBetweenTopAndFloatingLabel:_paddingBetweenTopAndFloatingLabel
+           paddingBetweenFloatingLabelAndText:_paddingBetweenFloatingLabelAndText
+                  paddingBetweenTextAndBottom:_paddingBetweenTextAndBottom];
   if (preferredContainerHeight > 0) {
-    CGFloat minimumHeight =
-        [self calculateHeightWithFoatingLabelHeight:floatingLabelHeight
-                                      textRowHeight:textRowHeight
-                                   numberOfTextRows:numberOfTextRows
-                  paddingBetweenTopAndFloatingLabel:kMinPaddingBetweenTopAndFloatingLabel
-                 paddingBetweenFloatingLabelAndText:kMinPaddingBetweenFloatingLabelAndText
-                        paddingBetweenTextAndBottom:kMinPaddingBetweenTextAndBottom];
-    if (preferredContainerHeight > minimumHeight) {
-      CGFloat difference = preferredContainerHeight - minimumHeight;
-      CGFloat sumOfMinimumPaddingValues = kMinPaddingBetweenTopAndFloatingLabel +
-                                          kMinPaddingBetweenFloatingLabelAndText +
-                                          kMinPaddingBetweenTextAndBottom;
-      _paddingBetweenTopAndFloatingLabel =
-          kMinPaddingBetweenTopAndFloatingLabel +
-          ((kMinPaddingBetweenTopAndFloatingLabel / sumOfMinimumPaddingValues) * difference);
-      _paddingBetweenFloatingLabelAndText =
-          kMinPaddingBetweenFloatingLabelAndText +
-          ((kMinPaddingBetweenFloatingLabelAndText / sumOfMinimumPaddingValues) * difference);
-      _paddingBetweenTextAndBottom =
-          kMinPaddingBetweenTextAndBottom +
-          ((kMinPaddingBetweenTextAndBottom / sumOfMinimumPaddingValues) * difference);
-    } else {
-      _paddingBetweenTopAndFloatingLabel = kMinPaddingBetweenTopAndFloatingLabel;
-      _paddingBetweenFloatingLabelAndText = kMinPaddingBetweenFloatingLabelAndText;
-      _paddingBetweenTextAndBottom = kMinPaddingBetweenTextAndBottom;
+    if (preferredContainerHeight > heightWithPaddingsDeterminedByDensity) {
+      if (!isMultiline) {
+        CGFloat difference = preferredContainerHeight - heightWithPaddingsDeterminedByDensity;
+        CGFloat sumOfPaddingValues = _paddingBetweenTopAndFloatingLabel +
+        _paddingBetweenFloatingLabelAndText +
+        _paddingBetweenTextAndBottom;
+        _paddingBetweenTopAndFloatingLabel =
+        _paddingBetweenTopAndFloatingLabel +
+        ((_paddingBetweenTopAndFloatingLabel / sumOfPaddingValues) * difference);
+        _paddingBetweenFloatingLabelAndText =
+        _paddingBetweenFloatingLabelAndText +
+        ((_paddingBetweenFloatingLabelAndText / sumOfPaddingValues) * difference);
+        _paddingBetweenTextAndBottom =
+        _paddingBetweenTextAndBottom +
+        ((_paddingBetweenTextAndBottom / sumOfPaddingValues) * difference);
+      }
     }
-  } else {
-    CGFloat standardizedDensity = [self standardizeDensity:density];
-    CGFloat paddingBetweenTopAndFloatingLabelRange =
-        kMaxPaddingBetweenTopAndFloatingLabel - kMinPaddingBetweenTopAndFloatingLabel;
-    CGFloat paddingBetweenFloatingLabelAndTextRange =
-        kMaxPaddingBetweenFloatingLabelAndText - kMinPaddingBetweenFloatingLabelAndText;
-    CGFloat paddingBetweenTextAndBottomRange =
-        kMaxPaddingBetweenTextAndBottom - kMinPaddingBetweenTextAndBottom;
-    CGFloat paddingBetweenTopAndFloatingLabelAddition =
-        paddingBetweenTopAndFloatingLabelRange * (1 - standardizedDensity);
-    CGFloat paddingBetweenFloatingLabelAndTextAddition =
-        paddingBetweenFloatingLabelAndTextRange * (1 - standardizedDensity);
-    CGFloat paddingBetweenTextAndBottomAddition =
-        paddingBetweenTextAndBottomRange * (1 - standardizedDensity);
-    _paddingBetweenTopAndFloatingLabel =
-        kMinPaddingBetweenTopAndFloatingLabel + paddingBetweenTopAndFloatingLabelAddition;
-    _paddingBetweenFloatingLabelAndText =
-        kMinPaddingBetweenFloatingLabelAndText + paddingBetweenFloatingLabelAndTextAddition;
-    _paddingBetweenTextAndBottom =
-        kMinPaddingBetweenTextAndBottom + paddingBetweenTextAndBottomAddition;
   }
-
-  _containerHeight = [self calculateHeightWithFoatingLabelHeight:floatingLabelHeight
-                                                   textRowHeight:textRowHeight
-                                                numberOfTextRows:numberOfTextRows
-                               paddingBetweenTopAndFloatingLabel:_paddingBetweenTopAndFloatingLabel
-                              paddingBetweenFloatingLabelAndText:_paddingBetweenFloatingLabelAndText
-                                     paddingBetweenTextAndBottom:_paddingBetweenTextAndBottom];
+  
+  _containerHeight = heightWithPaddingsDeterminedByDensity;
+  if (preferredContainerHeight > heightWithPaddingsDeterminedByDensity) {
+    _containerHeight = preferredContainerHeight;
+  }
   CGFloat halfOfNormalFontLineHeight = (CGFloat)0.5 * normalFontLineHeight;
-  if (numberOfTextRows > 1) {
+  if (isMultiline) {
     CGFloat heightWithOneRow =
-        [self calculateHeightWithFoatingLabelHeight:floatingLabelHeight
-                                      textRowHeight:textRowHeight
-                                   numberOfTextRows:1
-                  paddingBetweenTopAndFloatingLabel:_paddingBetweenTopAndFloatingLabel
-                 paddingBetweenFloatingLabelAndText:_paddingBetweenFloatingLabelAndText
-                        paddingBetweenTextAndBottom:_paddingBetweenTextAndBottom];
+    [self calculateHeightWithFoatingLabelHeight:floatingLabelHeight
+                                  textRowHeight:textRowHeight
+                               numberOfTextRows:1
+              paddingBetweenTopAndFloatingLabel:_paddingBetweenTopAndFloatingLabel
+             paddingBetweenFloatingLabelAndText:_paddingBetweenFloatingLabelAndText
+                    paddingBetweenTextAndBottom:_paddingBetweenTextAndBottom];
     CGFloat halfOfHeightWithOneRow = (CGFloat)0.5 * heightWithOneRow;
     _paddingBetweenTopAndNormalLabel = halfOfHeightWithOneRow - halfOfNormalFontLineHeight;
   } else {
@@ -193,11 +192,9 @@ static const CGFloat kMaxPaddingBetweenTextAndBottom = (CGFloat)10.0;
 @implementation MDCContainerStylerOutlined
 @synthesize positioningDelegate = _positioningDelegate;
 
-- (instancetype)initWithPositioningDelegate:
-    (id<MDCContainedInputViewStylerPositioningDelegate>)positioningDelegate {
-  self = [super initWithPositioningDelegate:positioningDelegate];
+- (instancetype)init {
+  self = [super init];
   if (self) {
-    _positioningDelegate = positioningDelegate;
     [self setUpOutlineSublayer];
   }
   return self;

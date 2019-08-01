@@ -309,14 +309,7 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewAssistiveLabelDrawPriority) {
  A base implementation of MDCContainedInputViewStyler.
  */
 @interface MDCContainerStylerBase : NSObject <MDCContainedInputViewStyler>
-- (nonnull instancetype)initWithPositioningDelegate:
-    (nonnull id<MDCContainedInputViewStylerPositioningDelegate>)positioningDelegate;
 @end
 
-/**
- A base implementation of MDCContainedInputViewStylerPositioningDelegate.
- */
-@interface MDCContainerStylerBasePositioningDelegate
-    : NSObject <MDCContainedInputViewStylerPositioningDelegate>
 @end
 

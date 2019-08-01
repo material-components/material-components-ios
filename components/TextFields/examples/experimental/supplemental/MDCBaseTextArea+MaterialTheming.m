@@ -71,10 +71,8 @@
 }
 
 - (void)applyOutlinedThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
-  TextAreaOutlinedPositioningDelegate *positioningDelegate =
-      [[TextAreaOutlinedPositioningDelegate alloc] init];
   MDCContainerStylerOutlined *outlinedStyle =
-      [[MDCContainerStylerOutlined alloc] initWithPositioningDelegate:positioningDelegate];
+      [[MDCContainerStylerOutlined alloc] init];
   self.containerStyler = outlinedStyle;
 
   [self applyTypographySchemeWith:containerScheme];
@@ -104,10 +102,7 @@
 }
 
 - (void)applyFilledThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
-  TextAreaFilledPositioningDelegate *positioningDelegate =
-      [[TextAreaFilledPositioningDelegate alloc] init];
-  MDCContainerStylerFilled *filledStyle =
-      [[MDCContainerStylerFilled alloc] initWithPositioningDelegate:positioningDelegate];
+  MDCContainerStylerFilled *filledStyle = [[MDCContainerStylerFilled alloc] init];
   self.containerStyler = filledStyle;
 
   [self applyTypographySchemeWith:containerScheme];

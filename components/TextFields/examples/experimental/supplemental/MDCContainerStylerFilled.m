@@ -95,11 +95,7 @@ static const CGFloat kMaxPaddingBetweenTextAndBottom = (CGFloat)10.0;
                     paddingBetweenTextAndBottom:_paddingBetweenTextAndBottom];
   if (preferredContainerHeight > 0) {
     if (preferredContainerHeight > heightWithPaddingsDeterminedByDensity) {
-      if (isMultiline) {
-//        _paddingBetweenTopAndFloatingLabel = paddingBetweenTopAndFloatingLabel;
-//        _paddingBetweenFloatingLabelAndText = paddingBetweenFloatingLabelAndText;
-//        _paddingBetweenTextAndBottom = paddingBetweenTextAndBottom;
-      } else {
+      if (!isMultiline) {
         CGFloat difference = preferredContainerHeight - heightWithPaddingsDeterminedByDensity;
         CGFloat sumOfPaddingValues = _paddingBetweenTopAndFloatingLabel +
                                       _paddingBetweenFloatingLabelAndText +
@@ -114,12 +110,7 @@ static const CGFloat kMaxPaddingBetweenTextAndBottom = (CGFloat)10.0;
             _paddingBetweenTextAndBottom +
             ((_paddingBetweenTextAndBottom / sumOfPaddingValues) * difference);
       }
-    } else {
-//      _paddingBetweenTopAndFloatingLabel = paddingBetweenTopAndFloatingLabel;
-//      _paddingBetweenFloatingLabelAndText = paddingBetweenFloatingLabelAndText;
-//      _paddingBetweenTextAndBottom = paddingBetweenTextAndBottom;
     }
-  } else {
   }
 
   _containerHeight = heightWithPaddingsDeterminedByDensity;
@@ -210,11 +201,9 @@ static const CGFloat kMaxPaddingBetweenTextAndBottom = (CGFloat)10.0;
 
 @synthesize positioningDelegate = _positioningDelegate;
 
-- (instancetype)initWithPositioningDelegate:
-    (id<MDCContainedInputViewStylerPositioningDelegate>)positioningDelegate {
-  self = [super initWithPositioningDelegate:positioningDelegate];
+- (instancetype)init {
+  self = [super init];
   if (self) {
-    _positioningDelegate = positioningDelegate;
     [self setUpFilledSublayers];
   }
   return self;

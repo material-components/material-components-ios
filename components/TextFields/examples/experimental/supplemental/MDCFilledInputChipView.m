@@ -46,10 +46,7 @@
 }
 
 - (void)commonMDCFilledInputChipViewInit {
-  MDCFilledInputChipViewPositioningDelegate *positioningDelegate =
-      [[MDCFilledInputChipViewPositioningDelegate alloc] init];
-  MDCContainerStylerFilled *filledStyle =
-      [[MDCContainerStylerFilled alloc] initWithPositioningDelegate:positioningDelegate];
+  MDCContainerStylerFilled *filledStyle = [[MDCContainerStylerFilled alloc] init];
   self.containerStyler = filledStyle;
 }
 

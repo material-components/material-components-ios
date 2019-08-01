@@ -46,10 +46,8 @@
 }
 
 - (void)commonMDCOutlinedInputChipViewInit {
-  MDCOutlinedInputChipViewPositioningDelegate *positioningDelegate =
-      [[MDCOutlinedInputChipViewPositioningDelegate alloc] init];
   MDCContainerStylerOutlined *outlinedStyle =
-      [[MDCContainerStylerOutlined alloc] initWithPositioningDelegate:positioningDelegate];
+      [[MDCContainerStylerOutlined alloc] init];
   self.containerStyler = outlinedStyle;
 }
 
