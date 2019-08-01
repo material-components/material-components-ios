@@ -56,7 +56,7 @@ git_repository(
 http_file(
     name = "xctestrunner",
     executable = 1,
-    urls = ["https://github.com/google/xctestrunner/releases/download/0.2.5/ios_test_runner.par"],
+    urls = ["https://github.com/material-foundation/xctestrunner/releases/download/0.2.9/ios_test_runner.par"],
 )
 
 git_repository(
