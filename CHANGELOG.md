@@ -1,29 +1,16 @@
-# #develop#
+# 85.12.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This minor release introduces Material Elevation support for ActionSheet and Banner (Beta). It also includes performance improvements for Ink and Ripple.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
-## API changes
-
-### Banner
-
-#### MDCBannerView
-
-*modified* property: `leadingButton` in `MDCBannerView`
-
-| Type of change: | Swift declaration |
-|---|---|
-| From: | `var leadingButton: UIButton { get }` |
-| To: | `var leadingButton: UnsafeMutablePointer<Int32> { get }` |
-
-## Component changes
+Support for Material Elevation expanded to two more components. APIs to support
+overriding the computed value for `mdc_baseElevation` and to respond to
+elevation changes are available. Assigning an `elevationDidChangeBlock` on a
+supported component enables code to be executed whenever the component's
+elevation changes. This may include state-based elevation changes (like
+pressing on a Chip) or when the component's elevation value is changed
+programmatically.
 
 ## Changes
 
