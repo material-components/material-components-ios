@@ -210,8 +210,9 @@ static const NSUInteger kDefaultVerticalPadding = 20;
 
 - (MDCFilledTextField *)createDefaultFilledTextField {
   MDCFilledTextField *textField = [[MDCFilledTextField alloc] init];
-  //  textField.containerStyler.positioningDelegate.verticalDensity = 0.5;
+//    textField.containerStyler.positioningDelegate.verticalDensity = 1;
   textField.mdc_adjustsFontForContentSizeCategory = YES;
+//  textField.labelBehavior = MDCTextControlLabelBehaviorDisappears;
   textField.placeholder = @"555-555-5555";
   textField.label.text = @"Phone number";
   textField.clearButtonMode = UITextFieldViewModeWhileEditing;

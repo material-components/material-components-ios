@@ -310,6 +310,3 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewAssistiveLabelDrawPriority) {
  */
 @interface MDCContainerStylerBase : NSObject <MDCContainedInputViewStyler>
 @end
-
-@end
-

@@ -534,6 +534,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 }
 
 - (MDCContainedInputViewState)determineCurrentContainedInputViewState {
+  
   return [self
       containedInputViewStateWithIsEnabled:(self.enabled && self.inputChipViewTextField.enabled)
                                  isEditing:self.inputChipViewTextField.isEditing];

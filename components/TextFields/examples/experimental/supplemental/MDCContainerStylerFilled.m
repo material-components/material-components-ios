@@ -26,10 +26,12 @@ static const CGFloat kLayerAnimationDuration = (CGFloat)0.2;
 
 static const CGFloat kMinPaddingBetweenTopAndFloatingLabel = (CGFloat)6.0;
 static const CGFloat kMaxPaddingBetweenTopAndFloatingLabel = (CGFloat)10.0;
-static const CGFloat kMinPaddingBetweenFloatingLabelAndText = (CGFloat)4.0;
-static const CGFloat kMaxPaddingBetweenFloatingLabelAndText = (CGFloat)8.0;
+static const CGFloat kMinPaddingBetweenFloatingLabelAndText = (CGFloat)3.0;
+static const CGFloat kMaxPaddingBetweenFloatingLabelAndText = (CGFloat)6.0;
 static const CGFloat kMinPaddingBetweenTextAndBottom = (CGFloat)6.0;
 static const CGFloat kMaxPaddingBetweenTextAndBottom = (CGFloat)10.0;
+static const CGFloat kMinPaddingAroundAssistiveLabels = (CGFloat)3.0;
+static const CGFloat kMaxPaddingAroundAssistiveLabels = (CGFloat)6.0;
 
 @implementation MDCContainerStylerFilledPositioningDelegate
 @synthesize paddingBetweenTopAndFloatingLabel = _paddingBetweenTopAndFloatingLabel;
@@ -72,12 +74,16 @@ static const CGFloat kMaxPaddingBetweenTextAndBottom = (CGFloat)10.0;
       kMaxPaddingBetweenFloatingLabelAndText - kMinPaddingBetweenFloatingLabelAndText;
   CGFloat paddingBetweenTextAndBottomRange =
       kMaxPaddingBetweenTextAndBottom - kMinPaddingBetweenTextAndBottom;
+  CGFloat paddingAroundAssistiveLabelsRange =
+      kMaxPaddingAroundAssistiveLabels - kMinPaddingAroundAssistiveLabels;
   CGFloat paddingBetweenTopAndFloatingLabelAddition =
       paddingBetweenTopAndFloatingLabelRange * (1 - standardizedDensity);
   CGFloat paddingBetweenFloatingLabelAndTextAddition =
       paddingBetweenFloatingLabelAndTextRange * (1 - standardizedDensity);
   CGFloat paddingBetweenTextAndBottomAddition =
       paddingBetweenTextAndBottomRange * (1 - standardizedDensity);
+  CGFloat paddingAroundAssistiveLabelsAddition =
+      paddingAroundAssistiveLabelsRange * (1 - standardizedDensity);
   
   _paddingBetweenTopAndFloatingLabel =
       kMinPaddingBetweenTopAndFloatingLabel + paddingBetweenTopAndFloatingLabelAddition;
@@ -85,7 +91,9 @@ static const CGFloat kMaxPaddingBetweenTextAndBottom = (CGFloat)10.0;
       kMinPaddingBetweenFloatingLabelAndText + paddingBetweenFloatingLabelAndTextAddition;
   _paddingBetweenTextAndBottom =
       kMinPaddingBetweenTextAndBottom + paddingBetweenTextAndBottomAddition;
-  
+  _paddingAroundAssistiveLabels =
+      kMinPaddingAroundAssistiveLabels + paddingAroundAssistiveLabelsAddition;
+
   CGFloat heightWithPaddingsDeterminedByDensity =
     [self calculateHeightWithFoatingLabelHeight:floatingLabelHeight
                                   textRowHeight:textRowHeight

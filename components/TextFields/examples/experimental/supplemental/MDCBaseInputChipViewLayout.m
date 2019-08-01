@@ -129,31 +129,10 @@ static const CGFloat kGradientBlurLength = 6;
                                                          isRTL:isRTL];
   CGFloat floatingLabelMaxY = CGRectGetMaxY(labelFrameFloating);
 
-  CGFloat initialChipRowMinYWithFloatingLabel = 0;
-  if (positioningDelegate) {
-    initialChipRowMinYWithFloatingLabel =
+  CGFloat initialChipRowMinYWithFloatingLabel =
         floatingLabelMaxY + positioningDelegate.paddingBetweenFloatingLabelAndText;
-  } else {
-    CGFloat heightToCalculateNormalLabelMinY =
-        [containerStyler.positioningDelegate defaultContainerHeightWithTextHeight:chipRowHeight];
-    initialChipRowMinYWithFloatingLabel = [containerStyler.positioningDelegate
-        textMinYWithFloatingLabelWithTextHeight:chipRowHeight
-                            floatingLabelHeight:floatingFont.lineHeight
-                       preferredContainerHeight:heightToCalculateNormalLabelMinY];
-  }
 
-  CGFloat containerHeight = 0;
-  if (positioningDelegate) {
-    containerHeight = positioningDelegate.containerHeight;
-  } else {
-    CGFloat defaultContainerHeight =
-        [containerStyler.positioningDelegate defaultContainerHeightWithTextHeight:chipRowHeight];
-    if (preferredContainerHeight > 0) {
-      containerHeight = preferredContainerHeight;
-    } else {
-      containerHeight = defaultContainerHeight;
-    }
-  }
+  CGFloat containerHeight = positioningDelegate.containerHeight;
 
   CGFloat highestPossibleInitialChipRowMaxY = initialChipRowMinYWithFloatingLabel + chipRowHeight;
   CGFloat bottomPadding = containerHeight - highestPossibleInitialChipRowMaxY;
@@ -173,19 +152,10 @@ static const CGFloat kGradientBlurLength = 6;
                                                      isRTL:isRTL];
 
   CGFloat initialChipRowMinYNormal = 0;
-  if (positioningDelegate) {
-    CGFloat halfOfNormalLabelHeight = (CGFloat)0.5 * font.lineHeight;
-    CGFloat halfOfChipRowHeight = ((CGFloat)0.5 * chipRowHeight);
-    initialChipRowMinYNormal = positioningDelegate.paddingBetweenTopAndNormalLabel +
-                               halfOfNormalLabelHeight - halfOfChipRowHeight;
-  } else {
-    initialChipRowMinYNormal = CGRectGetMidY(labelFrameNormal) - ((CGFloat)0.5 * chipRowHeight);
-    if (chipsWrap) {
-    } else {
-      CGFloat center = containerHeight * (CGFloat)0.5;
-      initialChipRowMinYNormal = center - (chipRowHeight * (CGFloat)0.5);
-    }
-  }
+  CGFloat halfOfNormalLabelHeight = (CGFloat)0.5 * font.lineHeight;
+  CGFloat halfOfChipRowHeight = ((CGFloat)0.5 * chipRowHeight);
+  initialChipRowMinYNormal = positioningDelegate.paddingBetweenTopAndNormalLabel +
+                             halfOfNormalLabelHeight - halfOfChipRowHeight;
   CGFloat initialChipRowMinY = initialChipRowMinYNormal;
   if (floatingLabelState == MDCContainedInputViewLabelStateFloating) {
     initialChipRowMinY = initialChipRowMinYWithFloatingLabel;
@@ -324,25 +294,7 @@ static const CGFloat kGradientBlurLength = 6;
   if (isRTL) {
     normalLabelMinX = globalChipRowMaxX - textSize.width;
   }
-  CGFloat normalLabelMinY = 0;
-  if (positioningDelegate) {
-    normalLabelMinY = positioningDelegate.paddingBetweenTopAndNormalLabel;
-  } else {
-    if (chipsWrap) {
-      CGFloat heightToCalculateNormalLabelMinY =
-          [containerStyler.positioningDelegate defaultContainerHeightWithTextHeight:chipRowHeight];
-      if (preferredContainerHeight < heightToCalculateNormalLabelMinY) {
-        heightToCalculateNormalLabelMinY = preferredContainerHeight;
-      }
-      normalLabelMinY = [containerStyler.positioningDelegate
-          textMinYWithFloatingLabelWithTextHeight:chipRowHeight
-                              floatingLabelHeight:floatingFont.lineHeight
-                         preferredContainerHeight:heightToCalculateNormalLabelMinY];
-    } else {
-      CGFloat center = contentAreaHeight * (CGFloat)0.5;
-      normalLabelMinY = center - (textSize.height * (CGFloat)0.5);
-    }
-  }
+  CGFloat normalLabelMinY = positioningDelegate.paddingBetweenTopAndNormalLabel;
   return CGRectMake(normalLabelMinX, normalLabelMinY, textSize.width, textSize.height);
 }
 
@@ -357,20 +309,7 @@ static const CGFloat kGradientBlurLength = 6;
                                isRTL:(BOOL)isRTL {
   CGFloat maxTextWidth = globalChipRowMaxX - globalChipRowMinX - kFloatingLabelXOffset;
   CGSize textSize = [self textSizeWithText:text font:floatingFont maxWidth:maxTextWidth];
-  CGFloat floatingLabelMinY = 0;
-  if (positioningDelegate) {
-    floatingLabelMinY = positioningDelegate.paddingBetweenTopAndFloatingLabel;
-  } else {
-    CGFloat heightToCalculateFloatingLabelMinY =
-        [containerStyler.positioningDelegate defaultContainerHeightWithTextHeight:chipRowHeight];
-    if (preferredContainerHeight < heightToCalculateFloatingLabelMinY) {
-      heightToCalculateFloatingLabelMinY = preferredContainerHeight;
-    }
-    floatingLabelMinY = [containerStyler.positioningDelegate
-        floatingLabelMinYWithTextHeight:chipRowHeight
-                    floatingLabelHeight:floatingFont.lineHeight
-               preferredContainerHeight:heightToCalculateFloatingLabelMinY];
-  }
+  CGFloat floatingLabelMinY = positioningDelegate.paddingBetweenTopAndFloatingLabel;
 
   CGFloat floatingLabelMinX = globalChipRowMinX + kFloatingLabelXOffset;
   if (isRTL) {
@@ -719,11 +658,13 @@ static const CGFloat kGradientBlurLength = 6;
 - (NSArray<NSNumber *> *)determineVerticalGradientLocationsWithViewHeight:(CGFloat)viewHeight
                                                         floatingLabelMaxY:(CGFloat)floatingLabelMaxY
                                                             bottomPadding:(CGFloat)bottomPadding {
-  CGFloat topFadeStart = floatingLabelMaxY / viewHeight;
+  CGFloat topFadeStartRatioNumerator = floatingLabelMaxY;
+  
+  CGFloat topFadeStart = topFadeStartRatioNumerator / viewHeight;
   if (topFadeStart <= 0) {
     topFadeStart = 0;
   }
-  CGFloat topFadeEnd = (floatingLabelMaxY + kGradientBlurLength) / viewHeight;
+  CGFloat topFadeEnd = (topFadeStartRatioNumerator + kGradientBlurLength) / viewHeight;
   if (topFadeEnd <= 0) {
     topFadeEnd = 0;
   }
