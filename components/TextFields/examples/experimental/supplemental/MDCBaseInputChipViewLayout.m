@@ -157,7 +157,8 @@ static const CGFloat kGradientBlurLength = 6;
 
   CGFloat highestPossibleInitialChipRowMaxY = initialChipRowMinYWithFloatingLabel + chipRowHeight;
   CGFloat bottomPadding = containerHeight - highestPossibleInitialChipRowMaxY;
-
+  bottomPadding = positioningDelegate.paddingBetweenTextAndBottom;
+  
   CGRect labelFrameNormal = [self normalLabelFrameWithText:label.text
                                                       font:font
                                               floatingFont:floatingFont
@@ -248,16 +249,11 @@ static const CGFloat kGradientBlurLength = 6;
   self.horizontalGradientLocations =
       [self determineHorizontalGradientLocationsWithGlobalChipRowMinX:globalChipRowMinX
                                                     globalChipRowMaxX:globalChipRowMaxX
-                                                            viewWidth:size.width
-                                                           viewHeight:containerHeight];
-  self.verticalGradientLocations = [self
-      determineVerticalGradientLocationsWithGlobalChipRowMinX:globalChipRowMinX
-                                            globalChipRowMaxX:globalChipRowMaxX
-                                                    viewWidth:size.width
-                                                   viewHeight:containerHeight
-                                            floatingLabelMaxY:floatingLabelMaxY
-                                                bottomPadding:bottomPadding
-                                          positioningDelegate:containerStyler.positioningDelegate];
+                                                            viewWidth:size.width];
+  self.verticalGradientLocations =
+      [self determineVerticalGradientLocationsWithViewHeight:containerHeight
+                                           floatingLabelMaxY:floatingLabelMaxY
+                                               bottomPadding:bottomPadding];
 
   //  if (isRTL) {
   //    NSMutableArray<NSValue *> *rtlChips =
@@ -692,8 +688,7 @@ static const CGFloat kGradientBlurLength = 6;
 - (NSArray<NSNumber *> *)
     determineHorizontalGradientLocationsWithGlobalChipRowMinX:(CGFloat)globalChipRowMinX
                                             globalChipRowMaxX:(CGFloat)globalChipRowMaxX
-                                                    viewWidth:(CGFloat)viewWidth
-                                                   viewHeight:(CGFloat)viewHeight {
+                                                    viewWidth:(CGFloat)viewWidth {
   CGFloat leftFadeStart = (globalChipRowMinX - kGradientBlurLength) / viewWidth;
   if (leftFadeStart < 0) {
     leftFadeStart = 0;
@@ -721,16 +716,9 @@ static const CGFloat kGradientBlurLength = 6;
   ];
 }
 
-- (NSArray<NSNumber *> *)
-    determineVerticalGradientLocationsWithGlobalChipRowMinX:(CGFloat)globalChipRowMinX
-                                          globalChipRowMaxX:(CGFloat)globalChipRowMaxX
-                                                  viewWidth:(CGFloat)viewWidth
-                                                 viewHeight:(CGFloat)viewHeight
-                                          floatingLabelMaxY:(CGFloat)floatingLabelMaxY
-                                              bottomPadding:(CGFloat)bottomPadding
-                                        positioningDelegate:
-                                            (id<MDCContainedInputViewStylerPositioningDelegate>)
-                                                positioningDelegate {
+- (NSArray<NSNumber *> *)determineVerticalGradientLocationsWithViewHeight:(CGFloat)viewHeight
+                                                        floatingLabelMaxY:(CGFloat)floatingLabelMaxY
+                                                            bottomPadding:(CGFloat)bottomPadding {
   CGFloat topFadeStart = floatingLabelMaxY / viewHeight;
   if (topFadeStart <= 0) {
     topFadeStart = 0;

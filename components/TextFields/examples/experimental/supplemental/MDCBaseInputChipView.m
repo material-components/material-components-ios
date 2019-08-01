@@ -479,8 +479,10 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
                                                        :preferredContainerHeight:)]) {
     CGFloat numberOfVisibleRows = 0;
     if (self.chipsWrap) {
-      numberOfVisibleRows =
-          self.preferredNumberOfVisibleRows > 1 ? self.preferredNumberOfVisibleRows : 1;
+      numberOfVisibleRows = self.preferredNumberOfVisibleRows;
+      if (numberOfVisibleRows <= 0) {
+        numberOfVisibleRows = 0;
+      }
     } else {
       numberOfVisibleRows = 1;
     }
