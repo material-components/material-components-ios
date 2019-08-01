@@ -1,3 +1,46 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+### Banner
+
+#### MDCBannerView
+
+*modified* property: `leadingButton` in `MDCBannerView`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `var leadingButton: UIButton { get }` |
+| To: | `var leadingButton: UnsafeMutablePointer<Int32> { get }` |
+
+## Component changes
+
+## Changes
+
+### ActionSheet
+
+* [Add MaterialElevation support (#8111)](https://github.com/material-components/material-components-ios/commit/2feb8f96cda6fc9ab2fc7d6bcb23f1076c2055aa) (Cody Weaver)
+
+### Banner
+
+* [Add MaterialElevation support (#8142)](https://github.com/material-components/material-components-ios/commit/534649a1cd74a65c56a0d605238546796eed54a2) (Cody Weaver)
+
+## Multi-component changes
+
+* [Use static default colors (#8146)](https://github.com/material-components/material-components-ios/commit/4be077a61bfeda44058ebc1f73e2cf8b71a5c65a) (Cody Weaver)
+
+---
+
 # 85.11.0
 
 This minor release introduces Material Elevation support for Bottom Sheet,
