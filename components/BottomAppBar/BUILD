@@ -21,7 +21,7 @@ load(
     "mdc_objc_library",
     "mdc_public_objc_library",
     "mdc_snapshot_objc_library",
-    "mdc_snapshot_test",
+    "mdc_snapshot_test_suite",
     "mdc_unit_test_objc_library",
     "mdc_unit_test_suite",
 )
@@ -114,7 +114,7 @@ mdc_snapshot_objc_library(
     ],
 )
 
-mdc_snapshot_test(
+mdc_snapshot_test_suite(
     name = "snapshot_tests",
     deps = [":snapshot_test_lib"],
 )

@@ -15,7 +15,12 @@ DEFAULT_IOS_RUNNER_TARGETS = [
     "//components/testing/runners:IPHONE_X_IN_11_0",
 ]
 
-SNAPSHOT_IOS_RUNNER_TARGET = "//components/testing/runners:IPHONE_7_IN_11_2"
+SNAPSHOT_IOS_RUNNER_DEFAULT_TARGET = "//components/testing/runners:IPHONE_7_IN_11_2"
+
+SNAPSHOT_IOS_RUNNER_TARGETS = [
+        SNAPSHOT_IOS_RUNNER_DEFAULT_TARGET,
+        "//components/testing/runners:IPHONE_8_IN_13_0",
+]
 
 def mdc_objc_library(
     name,
@@ -244,7 +249,29 @@ def mdc_snapshot_test(
       name = name,
       deps = deps,
       minimum_os_version = minimum_os_version,
-      runner = SNAPSHOT_IOS_RUNNER_TARGET,
+      runner = SNAPSHOT_IOS_RUNNER_DEFAULT_TARGET,
+      tags = tags,
+      test_host = "//components/private/Snapshot/TestHost",
+      visibility = visibility,
+      # TODO(https://github.com/material-components/material-components-ios/issues/6335)
+      flaky = 1,
+      size = size,
+      **kwargs)
+
+def mdc_snapshot_test_suite(
+    name,
+    deps = [],
+    minimum_os_version = SNAPSHOT_IOS_MINIMUM_OS,
+    visibility = ["//visibility:private"],
+    size = "medium",
+    tags = ["exclusive"],
+    **kwargs):
+  """Declare an MDC ios_unit_test for snapshot tests."""
+  ios_unit_test_suite(
+      name = name,
+      deps = deps,
+      minimum_os_version = minimum_os_version,
+      runners = SNAPSHOT_IOS_RUNNER_TARGETS,
       tags = tags,
       test_host = "//components/private/Snapshot/TestHost",
       visibility = visibility,
