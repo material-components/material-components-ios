@@ -53,7 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
                                  font:(UIFont *)font
                          floatingFont:(UIFont *)floatingFont
                                 label:(UILabel *)label
-                        canLabelFloat:(BOOL)canLabelFloat
+                           labelState:(MDCContainedInputViewLabelState)labelState
                              leftView:(UIView *)leftView
                          leftViewMode:(UITextFieldViewMode)leftViewMode
                             rightView:(UIView *)rightView

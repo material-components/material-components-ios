@@ -50,7 +50,7 @@ NS_ASSUME_NONNULL_BEGIN
                                 font:(UIFont *)font
                         floatingFont:(UIFont *)floatingFont
                                label:(UILabel *)label
-                  floatingLabelState:(MDCContainedInputViewLabelState)floatingLabelState
+                          labelState:(MDCContainedInputViewLabelState)labelState
                   leftAssistiveLabel:(UILabel *)leftAssistiveLabel
                  rightAssistiveLabel:(UILabel *)rightAssistiveLabel
           underlineLabelDrawPriority:

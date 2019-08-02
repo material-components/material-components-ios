@@ -71,8 +71,7 @@
 }
 
 - (void)applyOutlinedThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
-  MDCContainerStylerOutlined *outlinedStyle =
-      [[MDCContainerStylerOutlined alloc] init];
+  MDCContainerStylerOutlined *outlinedStyle = [[MDCContainerStylerOutlined alloc] init];
   self.containerStyler = outlinedStyle;
 
   [self applyTypographySchemeWith:containerScheme];

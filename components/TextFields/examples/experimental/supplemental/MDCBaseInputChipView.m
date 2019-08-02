@@ -138,7 +138,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 @property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
 
 @property(nonatomic, assign) MDCContainedInputViewState containedInputViewState;
-@property(nonatomic, assign) MDCContainedInputViewLabelState floatingLabelState;
+@property(nonatomic, assign) MDCContainedInputViewLabelState labelState;
 
 @property(nonatomic, strong)
     NSMutableDictionary<NSNumber *, id<MDCContainedInputViewColorScheming>> *colorSchemes;
@@ -507,7 +507,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
                                                      font:self.normalFont
                                              floatingFont:self.floatingFont
                                                     label:self.label
-                                       floatingLabelState:self.floatingLabelState
+                                               labelState:self.labelState
                                                     chips:self.chips
                                            staleChipViews:self.chips
                                                 chipsWrap:self.chipsWrap
@@ -526,7 +526,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 - (void)preLayoutSubviews {
   self.containedInputViewState = [self determineCurrentContainedInputViewState];
-  self.floatingLabelState = [self determineCurrentLabelState];
+  self.labelState = [self determineCurrentLabelState];
   id<MDCContainedInputViewColorScheming> colorScheming =
       [self containedInputViewColorSchemingForState:self.containedInputViewState];
   [self applyMDCContainedInputViewColorScheming:colorScheming];
@@ -534,7 +534,6 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 }
 
 - (MDCContainedInputViewState)determineCurrentContainedInputViewState {
-  
   return [self
       containedInputViewStateWithIsEnabled:(self.enabled && self.inputChipViewTextField.enabled)
                                  isEditing:self.inputChipViewTextField.isEditing];
@@ -555,7 +554,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 - (void)postLayoutSubviews {
   [self.labelAnimator layOutLabel:self.label
-                            state:self.floatingLabelState
+                            state:self.labelState
                  normalLabelFrame:self.layout.labelFrameNormal
                floatingLabelFrame:self.layout.labelFrameFloating
                        normalFont:self.normalFont
@@ -566,7 +565,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
                    withContainedInputViewColorScheming:colorScheming];
 
   //  self.clearButton.frame = [self clearButtonFrameFromLayout:self.layout
-  //                                           floatingLabelState:self.floatingLabelState];
+  //                                           labelState:self.labelState];
   //  self.clearButton.hidden = self.layout.clearButtonHidden;
   //  self.leftAssistiveLabel.frame = self.layout.leftAssistiveLabelFrame;
   //  self.rightAssistiveLabel.frame = self.layout.rightAssistiveLabelFrame;

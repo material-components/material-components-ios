@@ -46,8 +46,7 @@
 }
 
 - (void)commonMDCOutlinedTextFieldInit {
-  MDCContainerStylerOutlined *outlinedStyle =
-      [[MDCContainerStylerOutlined alloc] init];
+  MDCContainerStylerOutlined *outlinedStyle = [[MDCContainerStylerOutlined alloc] init];
   self.containerStyler = outlinedStyle;
 }
 

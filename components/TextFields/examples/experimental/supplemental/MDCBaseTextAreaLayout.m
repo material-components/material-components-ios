@@ -43,7 +43,7 @@ static const CGFloat kGradientBlurLength = 6;
                                 font:(UIFont *)font
                         floatingFont:(UIFont *)floatingFont
                                label:(UILabel *)label
-                  floatingLabelState:(MDCContainedInputViewLabelState)floatingLabelState
+                          labelState:(MDCContainedInputViewLabelState)labelState
                   leftAssistiveLabel:(UILabel *)leftAssistiveLabel
                  rightAssistiveLabel:(UILabel *)rightAssistiveLabel
           underlineLabelDrawPriority:
@@ -60,7 +60,7 @@ static const CGFloat kGradientBlurLength = 6;
                                     font:font
                             floatingFont:floatingFont
                                    label:label
-                      floatingLabelState:floatingLabelState
+                              labelState:labelState
                       leftAssistiveLabel:leftAssistiveLabel
                      rightAssistiveLabel:rightAssistiveLabel
               underlineLabelDrawPriority:underlineLabelDrawPriority
@@ -78,7 +78,7 @@ static const CGFloat kGradientBlurLength = 6;
                                 font:(UIFont *)font
                         floatingFont:(UIFont *)floatingFont
                                label:(UILabel *)label
-                  floatingLabelState:(MDCContainedInputViewLabelState)floatingLabelState
+                          labelState:(MDCContainedInputViewLabelState)labelState
                   leftAssistiveLabel:(UILabel *)leftAssistiveLabel
                  rightAssistiveLabel:(UILabel *)rightAssistiveLabel
           underlineLabelDrawPriority:
@@ -131,7 +131,7 @@ static const CGFloat kGradientBlurLength = 6;
 
   CGFloat textViewMinYNormal = CGRectGetMidY(normalLabelFrame) - ((CGFloat)0.5 * font.lineHeight);
   CGFloat textViewMinY = textViewMinYNormal;
-  if (floatingLabelState == MDCContainedInputViewLabelStateFloating) {
+  if (labelState == MDCContainedInputViewLabelStateFloating) {
     textViewMinY = textViewMinYWithFloatingLabel;
   }
 

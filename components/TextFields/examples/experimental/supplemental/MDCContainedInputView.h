@@ -100,7 +100,7 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewAssistiveLabelDrawPriority) {
  value is affected by things like the view's state, the value for @c canFloatingLabelFloat, and the
  text of the floating label.
  */
-@property(nonatomic, assign, readonly) MDCContainedInputViewLabelState floatingLabelState;
+@property(nonatomic, assign, readonly) MDCContainedInputViewLabelState labelState;
 
 /**
  The @c label is a label that occupies the text area when there is no text and that floats

@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
               placeholderFrame:(CGRect)placeholderFrame
           isPlaceholderVisible:(BOOL)isPlaceholderVisible;
 - (void)layOutLabel:(nonnull UILabel *)floatingLabel
-                 state:(MDCContainedInputViewLabelState)floatingLabelState
+                 state:(MDCContainedInputViewLabelState)labelState
       normalLabelFrame:(CGRect)normalLabelFrame
     floatingLabelFrame:(CGRect)floatingLabelFrame
             normalFont:(nonnull UIFont *)normalFont

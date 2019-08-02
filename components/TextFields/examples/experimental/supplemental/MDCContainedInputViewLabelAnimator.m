@@ -31,7 +31,7 @@
 }
 
 - (void)layOutLabel:(nonnull UILabel *)floatingLabel
-                 state:(MDCContainedInputViewLabelState)floatingLabelState
+                 state:(MDCContainedInputViewLabelState)labelState
       normalLabelFrame:(CGRect)normalLabelFrame
     floatingLabelFrame:(CGRect)floatingLabelFrame
             normalFont:(nonnull UIFont *)normalFont
@@ -39,7 +39,7 @@
   UIFont *targetFont = normalFont;
   CGRect targetFrame = normalLabelFrame;
   BOOL floatingLabelShouldHide = NO;
-  switch (floatingLabelState) {
+  switch (labelState) {
     case MDCContainedInputViewLabelStateFloating:
       targetFont = floatingFont;
       targetFrame = floatingLabelFrame;

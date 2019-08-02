@@ -42,8 +42,7 @@
 }
 
 - (void)commonMDCFilledTextFieldInit {
-  MDCContainerStylerFilled *filledStyle =
-      [[MDCContainerStylerFilled alloc] init];
+  MDCContainerStylerFilled *filledStyle = [[MDCContainerStylerFilled alloc] init];
   self.containerStyler = filledStyle;
 }
 

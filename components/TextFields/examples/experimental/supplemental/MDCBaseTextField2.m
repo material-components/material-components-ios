@@ -37,7 +37,7 @@
 @property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
 
 @property(nonatomic, assign) MDCContainedInputViewState containedInputViewState;
-@property(nonatomic, assign) MDCContainedInputViewLabelState floatingLabelState;
+@property(nonatomic, assign) MDCContainedInputViewLabelState labelState;
 @property(nonatomic, assign) BOOL isPlaceholderVisible;
 
 @property(nonatomic, strong)
@@ -90,7 +90,7 @@
 - (void)initializeProperties {
   [self setUpLabelBehavior];
   [self setUpLayoutDirection];
-  [self setUpFloatingLabelState];
+  [self setUpLabelState];
   [self setUpContainedInputViewState];
   [self setUpColorSchemesDictionary];
 }
@@ -103,8 +103,8 @@
   self.layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
 }
 
-- (void)setUpFloatingLabelState {
-  self.floatingLabelState = [self determineCurrentLabelState];
+- (void)setUpLabelState {
+  self.labelState = [self determineCurrentLabelState];
 }
 
 - (void)setUpContainedInputViewState {
@@ -203,7 +203,7 @@
 
 - (void)preLayoutSubviews {
   self.containedInputViewState = [self determineCurrentContainedInputViewState];
-  self.floatingLabelState = [self determineCurrentLabelState];
+  self.labelState = [self determineCurrentLabelState];
   self.isPlaceholderVisible = [self shouldPlaceholderBeVisible];
   self.placeholderLabel.font = self.normalFont;
   id<MDCContainedInputViewColorScheming> colorScheming =
@@ -214,13 +214,12 @@
 }
 
 - (void)postLayoutSubviews {
-  CGRect placeholderFrame = [self placeholderRectFromLayout:self.layout
-                                         floatingLabelState:self.floatingLabelState];
+  CGRect placeholderFrame = [self placeholderRectFromLayout:self.layout labelState:self.labelState];
   [self.labelAnimator layOutPlaceholderLabel:self.placeholderLabel
                             placeholderFrame:placeholderFrame
                         isPlaceholderVisible:self.isPlaceholderVisible];
   [self.labelAnimator layOutLabel:self.label
-                            state:self.floatingLabelState
+                            state:self.labelState
                  normalLabelFrame:self.layout.labelFrameNormal
                floatingLabelFrame:self.layout.labelFrameFloating
                        normalFont:self.normalFont
@@ -229,8 +228,7 @@
       [self containedInputViewColorSchemingForState:self.containedInputViewState];
   [self.containerStyler applyStyleToContainedInputView:self
                    withContainedInputViewColorScheming:colorScheming];
-  self.clearButton.frame = [self clearButtonFrameFromLayout:self.layout
-                                         floatingLabelState:self.floatingLabelState];
+  self.clearButton.frame = [self clearButtonFrameFromLayout:self.layout labelState:self.labelState];
   self.clearButton.hidden = self.layout.clearButtonHidden;
   self.underlineLabelView.frame = self.layout.underlineLabelViewFrame;
   self.underlineLabelView.layout = self.layout.underlineLabelViewLayout;
@@ -240,18 +238,18 @@
 }
 
 - (CGRect)textRectFromLayout:(MDCBaseTextFieldLayout *)layout
-          floatingLabelState:(MDCContainedInputViewLabelState)floatingLabelState {
+                  labelState:(MDCContainedInputViewLabelState)labelState {
   CGRect textRect = layout.textRectNormal;
-  if (floatingLabelState == MDCContainedInputViewLabelStateFloating) {
+  if (labelState == MDCContainedInputViewLabelStateFloating) {
     textRect = layout.textRectFloating;
   }
   return textRect;
 }
 
 - (CGRect)placeholderRectFromLayout:(MDCBaseTextFieldLayout *)layout
-                 floatingLabelState:(MDCContainedInputViewLabelState)floatingLabelState {
+                         labelState:(MDCContainedInputViewLabelState)labelState {
   CGRect placeholderRect = layout.placeholderFrameNormal;
-  if (floatingLabelState == MDCContainedInputViewLabelStateFloating) {
+  if (labelState == MDCContainedInputViewLabelStateFloating) {
     placeholderRect = layout.placeholderFrameFloating;
   }
   return placeholderRect;
@@ -265,9 +263,9 @@
 }
 
 - (CGRect)clearButtonFrameFromLayout:(MDCBaseTextFieldLayout *)layout
-                  floatingLabelState:(MDCContainedInputViewLabelState)floatingLabelState {
+                          labelState:(MDCContainedInputViewLabelState)labelState {
   CGRect clearButtonFrame = layout.clearButtonFrameNormal;
-  if (floatingLabelState == MDCContainedInputViewLabelStateFloating) {
+  if (labelState == MDCContainedInputViewLabelStateFloating) {
     clearButtonFrame = layout.clearButtonFrameFloating;
   }
   return clearButtonFrame;
@@ -303,7 +301,7 @@
                                   font:self.normalFont
                           floatingFont:self.floatingFont
                                  label:self.label
-                         canLabelFloat:self.canLabelFloat
+                            labelState:self.labelState
                               leftView:self.leftView
                           leftViewMode:self.leftViewMode
                              rightView:self.rightView
@@ -525,15 +523,13 @@
 #pragma mark UITextField Layout Overrides
 
 - (CGRect)textRectForBounds:(CGRect)bounds {
-  CGRect textRect = [self textRectFromLayout:self.layout
-                          floatingLabelState:self.floatingLabelState];
+  CGRect textRect = [self textRectFromLayout:self.layout labelState:self.labelState];
   return [self adjustTextAreaFrame:textRect
       withParentClassTextAreaFrame:[super textRectForBounds:bounds]];
 }
 
 - (CGRect)editingRectForBounds:(CGRect)bounds {
-  CGRect textRect = [self textRectFromLayout:self.layout
-                          floatingLabelState:self.floatingLabelState];
+  CGRect textRect = [self textRectFromLayout:self.layout labelState:self.labelState];
   return [self adjustTextAreaFrame:textRect
       withParentClassTextAreaFrame:[super editingRectForBounds:bounds]];
 }
@@ -571,7 +567,7 @@
 }
 
 - (CGRect)placeholderRectForBounds:(CGRect)bounds {
-  if (self.floatingLabelState == MDCContainedInputViewLabelStateNormal) {
+  if (self.labelState == MDCContainedInputViewLabelStateNormal) {
     return CGRectZero;
   }
   return [super placeholderRectForBounds:bounds];
@@ -668,7 +664,7 @@
 
 - (BOOL)shouldPlaceholderBeVisible {
   return [self shouldPlaceholderBeVisibleWithPlaceholder:self.placeholder
-                                      floatingLabelState:self.floatingLabelState
+                                              labelState:self.labelState
                                                     text:self.text
                                                isEditing:self.isEditing];
 }
@@ -681,8 +677,7 @@
 }
 
 - (BOOL)shouldPlaceholderBeVisibleWithPlaceholder:(NSString *)placeholder
-                               floatingLabelState:
-                                   (MDCContainedInputViewLabelState)floatingLabelState
+                                       labelState:(MDCContainedInputViewLabelState)labelState
                                              text:(NSString *)text
                                         isEditing:(BOOL)isEditing {
   BOOL hasPlaceholder = placeholder.length > 0;
@@ -692,7 +687,7 @@
     if (hasText) {
       return NO;
     } else {
-      if (floatingLabelState == MDCContainedInputViewLabelStateNormal) {
+      if (labelState == MDCContainedInputViewLabelStateNormal) {
         return NO;
       } else {
         return YES;

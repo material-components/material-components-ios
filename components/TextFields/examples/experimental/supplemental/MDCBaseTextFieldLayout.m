@@ -36,7 +36,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
                                  font:(UIFont *)font
                          floatingFont:(UIFont *)floatingFont
                                 label:(UILabel *)label
-                        canLabelFloat:(BOOL)canLabelFloat
+                           labelState:(MDCContainedInputViewLabelState)labelState
                              leftView:(UIView *)leftView
                          leftViewMode:(UITextFieldViewMode)leftViewMode
                             rightView:(UIView *)rightView
@@ -61,7 +61,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
                                       font:font
                               floatingFont:floatingFont
                                      label:label
-                             canLabelFloat:canLabelFloat
+                                labelState:labelState
                                   leftView:leftView
                               leftViewMode:leftViewMode
                                  rightView:rightView
@@ -90,7 +90,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
                                     font:(UIFont *)font
                             floatingFont:(UIFont *)floatingFont
                                    label:(UILabel *)label
-                           canLabelFloat:(BOOL)canLabelFloat
+                              labelState:(MDCContainedInputViewLabelState)labelState
                                 leftView:(UIView *)leftView
                             leftViewMode:(UITextFieldViewMode)leftViewMode
                                rightView:(UIView *)rightView
@@ -151,7 +151,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
   CGFloat floatingLabelMaxY = floatingLabelMinY + floatingLabelHeight;
 
   CGFloat textRectMinYWithFloatingLabel =
-        floatingLabelMaxY + positioningDelegate.paddingBetweenFloatingLabelAndText;
+      floatingLabelMaxY + positioningDelegate.paddingBetweenFloatingLabelAndText;
 
   CGFloat textRectHeight = [self textHeightWithFont:font];
   CGFloat textRectCenterYWithFloatingLabel =

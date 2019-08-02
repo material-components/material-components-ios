@@ -111,7 +111,7 @@
 @property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
 
 @property(nonatomic, assign) MDCContainedInputViewState containedInputViewState;
-@property(nonatomic, assign) MDCContainedInputViewLabelState floatingLabelState;
+@property(nonatomic, assign) MDCContainedInputViewLabelState labelState;
 
 @property(nonatomic, strong)
     NSMutableDictionary<NSNumber *, id<MDCContainedInputViewColorScheming>> *colorSchemes;
@@ -417,7 +417,7 @@
                                                 font:self.normalFont
                                         floatingFont:self.floatingFont
                                                label:self.label
-                                  floatingLabelState:self.floatingLabelState
+                                          labelState:self.labelState
                                   leftAssistiveLabel:self.leftAssistiveLabel
                                  rightAssistiveLabel:self.rightAssistiveLabel
                           underlineLabelDrawPriority:self.underlineLabelDrawPriority
@@ -429,7 +429,7 @@
 
 - (void)preLayoutSubviews {
   self.containedInputViewState = [self determineCurrentContainedInputViewState];
-  self.floatingLabelState = [self determineCurrentFloatingLabelState];
+  self.labelState = [self determineCurrentLabelState];
   id<MDCContainedInputViewColorScheming> colorScheming =
       [self containedInputViewColorSchemingForState:self.containedInputViewState];
   [self applyMDCContainedInputViewColorScheming:colorScheming];
@@ -457,7 +457,7 @@
 
 - (void)postLayoutSubviews {
   [self.labelAnimator layOutLabel:self.label
-                            state:self.floatingLabelState
+                            state:self.labelState
                  normalLabelFrame:self.layout.normalLabelFrame
                floatingLabelFrame:self.layout.floatingLabelFrame
                        normalFont:self.normalFont
@@ -468,7 +468,7 @@
                    withContainedInputViewColorScheming:colorScheming];
 
   //  self.clearButton.frame = [self clearButtonFrameFromLayout:self.layout
-  //                                           floatingLabelState:self.floatingLabelState];
+  //                                           labelState:self.labelState];
   //  self.clearButton.hidden = self.layout.clearButtonHidden;
   //  self.leftAssistiveLabel.frame = self.layout.leftAssistiveLabelFrame;
   //  self.rightAssistiveLabel.frame = self.layout.rightAssistiveLabelFrame;
@@ -553,17 +553,17 @@
 
 #pragma mark Placeholder
 
-- (MDCContainedInputViewLabelState)determineCurrentFloatingLabelState {
-  return [self floatingLabelStateWithPlaceholder:self.label.text
-                                            text:self.textView.text
-                           canFloatingLabelFloat:self.canFloatingLabelFloat
-                                       isEditing:self.isFirstResponder];
+- (MDCContainedInputViewLabelState)determineCurrentLabelState {
+  return [self labelStateWithPlaceholder:self.label.text
+                                    text:self.textView.text
+                   canFloatingLabelFloat:self.canFloatingLabelFloat
+                               isEditing:self.isFirstResponder];
 }
 
-- (MDCContainedInputViewLabelState)floatingLabelStateWithPlaceholder:(NSString *)placeholder
-                                                                text:(NSString *)text
-                                               canFloatingLabelFloat:(BOOL)canFloatingLabelFloat
-                                                           isEditing:(BOOL)isEditing {
+- (MDCContainedInputViewLabelState)labelStateWithPlaceholder:(NSString *)placeholder
+                                                        text:(NSString *)text
+                                       canFloatingLabelFloat:(BOOL)canFloatingLabelFloat
+                                                   isEditing:(BOOL)isEditing {
   BOOL hasPlaceholder = placeholder.length > 0;
   BOOL hasText = text.length > 0;
   if (hasPlaceholder) {

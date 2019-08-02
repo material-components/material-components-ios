@@ -66,7 +66,7 @@ static const CGFloat kMaxPaddingAroundAssistiveLabels = (CGFloat)6.0;
                                              density:(CGFloat)density
                             preferredContainerHeight:(CGFloat)preferredContainerHeight {
   BOOL isMultiline = numberOfTextRows > 1 || numberOfTextRows == 0;
-  
+
   CGFloat standardizedDensity = [self standardizeDensity:density];
   CGFloat paddingBetweenTopAndFloatingLabelRange =
       kMaxPaddingBetweenTopAndFloatingLabel - kMinPaddingBetweenTopAndFloatingLabel;
@@ -84,7 +84,7 @@ static const CGFloat kMaxPaddingAroundAssistiveLabels = (CGFloat)6.0;
       paddingBetweenTextAndBottomRange * (1 - standardizedDensity);
   CGFloat paddingAroundAssistiveLabelsAddition =
       paddingAroundAssistiveLabelsRange * (1 - standardizedDensity);
-  
+
   _paddingBetweenTopAndFloatingLabel =
       kMinPaddingBetweenTopAndFloatingLabel + paddingBetweenTopAndFloatingLabelAddition;
   _paddingBetweenFloatingLabelAndText =
@@ -95,19 +95,19 @@ static const CGFloat kMaxPaddingAroundAssistiveLabels = (CGFloat)6.0;
       kMinPaddingAroundAssistiveLabels + paddingAroundAssistiveLabelsAddition;
 
   CGFloat heightWithPaddingsDeterminedByDensity =
-    [self calculateHeightWithFoatingLabelHeight:floatingLabelHeight
-                                  textRowHeight:textRowHeight
-                               numberOfTextRows:numberOfTextRows
-              paddingBetweenTopAndFloatingLabel:_paddingBetweenTopAndFloatingLabel
-             paddingBetweenFloatingLabelAndText:_paddingBetweenFloatingLabelAndText
-                    paddingBetweenTextAndBottom:_paddingBetweenTextAndBottom];
+      [self calculateHeightWithFoatingLabelHeight:floatingLabelHeight
+                                    textRowHeight:textRowHeight
+                                 numberOfTextRows:numberOfTextRows
+                paddingBetweenTopAndFloatingLabel:_paddingBetweenTopAndFloatingLabel
+               paddingBetweenFloatingLabelAndText:_paddingBetweenFloatingLabelAndText
+                      paddingBetweenTextAndBottom:_paddingBetweenTextAndBottom];
   if (preferredContainerHeight > 0) {
     if (preferredContainerHeight > heightWithPaddingsDeterminedByDensity) {
       if (!isMultiline) {
         CGFloat difference = preferredContainerHeight - heightWithPaddingsDeterminedByDensity;
         CGFloat sumOfPaddingValues = _paddingBetweenTopAndFloatingLabel +
-                                      _paddingBetweenFloatingLabelAndText +
-                                      _paddingBetweenTextAndBottom;
+                                     _paddingBetweenFloatingLabelAndText +
+                                     _paddingBetweenTextAndBottom;
         _paddingBetweenTopAndFloatingLabel =
             _paddingBetweenTopAndFloatingLabel +
             ((_paddingBetweenTopAndFloatingLabel / sumOfPaddingValues) * difference);

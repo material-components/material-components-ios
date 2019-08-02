@@ -63,55 +63,55 @@ static const CGFloat kMaxPaddingBetweenTextAndBottom = (CGFloat)10.0;
                                              density:(CGFloat)density
                             preferredContainerHeight:(CGFloat)preferredContainerHeight {
   BOOL isMultiline = numberOfTextRows > 1 || numberOfTextRows == 0;
-  
+
   CGFloat standardizedDensity = [self standardizeDensity:density];
   CGFloat paddingBetweenTopAndFloatingLabelRange =
-  kMaxPaddingBetweenTopAndFloatingLabel - kMinPaddingBetweenTopAndFloatingLabel;
+      kMaxPaddingBetweenTopAndFloatingLabel - kMinPaddingBetweenTopAndFloatingLabel;
   CGFloat paddingBetweenFloatingLabelAndTextRange =
-  kMaxPaddingBetweenFloatingLabelAndText - kMinPaddingBetweenFloatingLabelAndText;
+      kMaxPaddingBetweenFloatingLabelAndText - kMinPaddingBetweenFloatingLabelAndText;
   CGFloat paddingBetweenTextAndBottomRange =
-  kMaxPaddingBetweenTextAndBottom - kMinPaddingBetweenTextAndBottom;
+      kMaxPaddingBetweenTextAndBottom - kMinPaddingBetweenTextAndBottom;
   CGFloat paddingBetweenTopAndFloatingLabelAddition =
-  paddingBetweenTopAndFloatingLabelRange * (1 - standardizedDensity);
+      paddingBetweenTopAndFloatingLabelRange * (1 - standardizedDensity);
   CGFloat paddingBetweenFloatingLabelAndTextAddition =
-  paddingBetweenFloatingLabelAndTextRange * (1 - standardizedDensity);
+      paddingBetweenFloatingLabelAndTextRange * (1 - standardizedDensity);
   CGFloat paddingBetweenTextAndBottomAddition =
-  paddingBetweenTextAndBottomRange * (1 - standardizedDensity);
-  
+      paddingBetweenTextAndBottomRange * (1 - standardizedDensity);
+
   _paddingBetweenTopAndFloatingLabel =
-  kMinPaddingBetweenTopAndFloatingLabel + paddingBetweenTopAndFloatingLabelAddition;
+      kMinPaddingBetweenTopAndFloatingLabel + paddingBetweenTopAndFloatingLabelAddition;
   _paddingBetweenFloatingLabelAndText =
-  kMinPaddingBetweenFloatingLabelAndText + paddingBetweenFloatingLabelAndTextAddition;
+      kMinPaddingBetweenFloatingLabelAndText + paddingBetweenFloatingLabelAndTextAddition;
   _paddingBetweenTextAndBottom =
-  kMinPaddingBetweenTextAndBottom + paddingBetweenTextAndBottomAddition;
-  
+      kMinPaddingBetweenTextAndBottom + paddingBetweenTextAndBottomAddition;
+
   CGFloat heightWithPaddingsDeterminedByDensity =
-  [self calculateHeightWithFoatingLabelHeight:floatingLabelHeight
-                                textRowHeight:textRowHeight
-                             numberOfTextRows:numberOfTextRows
-            paddingBetweenTopAndFloatingLabel:_paddingBetweenTopAndFloatingLabel
-           paddingBetweenFloatingLabelAndText:_paddingBetweenFloatingLabelAndText
-                  paddingBetweenTextAndBottom:_paddingBetweenTextAndBottom];
+      [self calculateHeightWithFoatingLabelHeight:floatingLabelHeight
+                                    textRowHeight:textRowHeight
+                                 numberOfTextRows:numberOfTextRows
+                paddingBetweenTopAndFloatingLabel:_paddingBetweenTopAndFloatingLabel
+               paddingBetweenFloatingLabelAndText:_paddingBetweenFloatingLabelAndText
+                      paddingBetweenTextAndBottom:_paddingBetweenTextAndBottom];
   if (preferredContainerHeight > 0) {
     if (preferredContainerHeight > heightWithPaddingsDeterminedByDensity) {
       if (!isMultiline) {
         CGFloat difference = preferredContainerHeight - heightWithPaddingsDeterminedByDensity;
         CGFloat sumOfPaddingValues = _paddingBetweenTopAndFloatingLabel +
-        _paddingBetweenFloatingLabelAndText +
-        _paddingBetweenTextAndBottom;
+                                     _paddingBetweenFloatingLabelAndText +
+                                     _paddingBetweenTextAndBottom;
         _paddingBetweenTopAndFloatingLabel =
-        _paddingBetweenTopAndFloatingLabel +
-        ((_paddingBetweenTopAndFloatingLabel / sumOfPaddingValues) * difference);
+            _paddingBetweenTopAndFloatingLabel +
+            ((_paddingBetweenTopAndFloatingLabel / sumOfPaddingValues) * difference);
         _paddingBetweenFloatingLabelAndText =
-        _paddingBetweenFloatingLabelAndText +
-        ((_paddingBetweenFloatingLabelAndText / sumOfPaddingValues) * difference);
+            _paddingBetweenFloatingLabelAndText +
+            ((_paddingBetweenFloatingLabelAndText / sumOfPaddingValues) * difference);
         _paddingBetweenTextAndBottom =
-        _paddingBetweenTextAndBottom +
-        ((_paddingBetweenTextAndBottom / sumOfPaddingValues) * difference);
+            _paddingBetweenTextAndBottom +
+            ((_paddingBetweenTextAndBottom / sumOfPaddingValues) * difference);
       }
     }
   }
-  
+
   _containerHeight = heightWithPaddingsDeterminedByDensity;
   if (preferredContainerHeight > heightWithPaddingsDeterminedByDensity) {
     _containerHeight = preferredContainerHeight;
@@ -119,12 +119,12 @@ static const CGFloat kMaxPaddingBetweenTextAndBottom = (CGFloat)10.0;
   CGFloat halfOfNormalFontLineHeight = (CGFloat)0.5 * normalFontLineHeight;
   if (isMultiline) {
     CGFloat heightWithOneRow =
-    [self calculateHeightWithFoatingLabelHeight:floatingLabelHeight
-                                  textRowHeight:textRowHeight
-                               numberOfTextRows:1
-              paddingBetweenTopAndFloatingLabel:_paddingBetweenTopAndFloatingLabel
-             paddingBetweenFloatingLabelAndText:_paddingBetweenFloatingLabelAndText
-                    paddingBetweenTextAndBottom:_paddingBetweenTextAndBottom];
+        [self calculateHeightWithFoatingLabelHeight:floatingLabelHeight
+                                      textRowHeight:textRowHeight
+                                   numberOfTextRows:1
+                  paddingBetweenTopAndFloatingLabel:_paddingBetweenTopAndFloatingLabel
+                 paddingBetweenFloatingLabelAndText:_paddingBetweenFloatingLabelAndText
+                        paddingBetweenTextAndBottom:_paddingBetweenTextAndBottom];
     CGFloat halfOfHeightWithOneRow = (CGFloat)0.5 * heightWithOneRow;
     _paddingBetweenTopAndNormalLabel = halfOfHeightWithOneRow - halfOfNormalFontLineHeight;
   } else {
@@ -237,7 +237,7 @@ static const CGFloat kMaxPaddingBetweenTextAndBottom = (CGFloat)10.0;
   uiView = (UIView *)containedInputView;
   CGRect placeholderFrame = containedInputView.label.frame;
   BOOL isFloatingLabelFloating =
-      containedInputView.floatingLabelState == MDCContainedInputViewLabelStateFloating;
+      containedInputView.labelState == MDCContainedInputViewLabelStateFloating;
   CGFloat topRowBottomRowDividerY = CGRectGetMaxY(containedInputView.containerFrame);
   CGFloat lineWidth = [self outlineLineWidthForState:containedInputView.containedInputViewState];
   [self applyStyleTo:uiView
