@@ -53,6 +53,8 @@ git_repository(
     tag = "v3.0.0",
 )
 
+# TODO: https://github.com/material-components/material-components-ios/issues/8182
+# Restore this back to google/xctestrunner repository once Xcode 11's fix is in their new release
 http_file(
     name = "xctestrunner",
     executable = 1,
