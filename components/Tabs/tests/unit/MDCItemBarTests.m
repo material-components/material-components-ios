@@ -15,7 +15,7 @@
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 
-#import "MDCItemBar.h"
+#import "../../src/private/MDCItemBar.h"
 
 @interface MDCItemBar (Testing)
 - (UITabBarItem *)itemAtIndexPath:(NSIndexPath *)indexPath;
