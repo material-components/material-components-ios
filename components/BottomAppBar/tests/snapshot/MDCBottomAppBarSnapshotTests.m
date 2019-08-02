@@ -27,7 +27,7 @@
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  //  self.recordMode = YES;
+    self.recordMode = YES;
 
   self.appBar = [[MDCBottomAppBarView alloc] init];
   UIBarButtonItem *leading1 = [[UIBarButtonItem alloc] initWithTitle:@"L1"
@@ -134,7 +134,7 @@
   [self changeViewToRTL:self.appBar];
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.appBar];
+  [self snapshotVerifyViewForIOS13:self.appBar];
 }
 
 - (void)testFloatingButtonElevationSecondaryLTR {
@@ -142,7 +142,7 @@
   self.appBar.floatingButtonElevation = MDCBottomAppBarFloatingButtonElevationSecondary;
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.appBar];
+  [self snapshotVerifyViewForIOS13:self.appBar];
 }
 
 - (void)testFloatingButtonElevationSecondaryRTL {
@@ -151,34 +151,34 @@
   [self changeViewToRTL:self.appBar];
 
   // Then
-  [self generateSnapshotAndVerifyForView:self.appBar];
+  [self snapshotVerifyViewForIOS13:self.appBar];
 }
 
 - (void)testDynamicColorSupportOniOS13AndAbove {
 #if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
   if (@available(iOS 13.0, *)) {
     // Given
-    UIColor *barTintDynamicColor =
-        [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
-          if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
-            return UIColor.blackColor;
-          } else {
-            return UIColor.purpleColor;
-          }
-        }];
-    UIColor *shadowDynamicColor =
-        [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
-          if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
-            return UIColor.blackColor;
-          } else {
-            return UIColor.blueColor;
-          }
-        }];
-    self.appBar.barTintColor = barTintDynamicColor;
-    self.appBar.shadowColor = shadowDynamicColor;
+//    UIColor *barTintDynamicColor =
+//        [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
+//          if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
+//            return UIColor.blackColor;
+//          } else {
+//            return UIColor.purpleColor;
+//          }
+//        }];
+//    UIColor *shadowDynamicColor =
+//        [UIColor colorWithDynamicProvider:^(UITraitCollection *traitCollection) {
+//          if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
+//            return UIColor.blackColor;
+//          } else {
+//            return UIColor.blueColor;
+//          }
+//        }];
+    self.appBar.barTintColor = UIColor.purpleColor;
+    self.appBar.shadowColor = UIColor.blueColor;
 
     // When
-    self.appBar.overrideUserInterfaceStyle = UIUserInterfaceStyleDark;
+//    self.appBar.overrideUserInterfaceStyle = UIUserInterfaceStyleDark;
 
     // Then
     CGSize aSize = [self.appBar sizeThatFits:CGSizeMake(360, INFINITY)];

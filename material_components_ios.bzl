@@ -13,6 +13,7 @@ DEFAULT_IOS_RUNNER_TARGETS = [
     "//components/testing/runners:IPAD_PRO_12_9_IN_9_3",
     "//components/testing/runners:IPHONE_7_PLUS_IN_10_3",
     "//components/testing/runners:IPHONE_X_IN_11_0",
+    "//components/testing/runners:IPHONE_8_IN_13_0",
 ]
 
 SNAPSHOT_IOS_RUNNER_DEFAULT_TARGET = "//components/testing/runners:IPHONE_7_IN_11_2"

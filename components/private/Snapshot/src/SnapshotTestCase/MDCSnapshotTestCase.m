@@ -45,11 +45,11 @@ static NSString *const kiPhone8ModelB = @"iPhone10,4";
 - (void)snapshotVerifyView:(UIView *)view
                  tolerance:(CGFloat)tolerancePercent
               supportIOS13:(BOOL)supportIOS13 {
-  if (!supportIOS13 && ![self isSupportedDevice]) {
-    return;
-  } else if (supportIOS13 && ![self isSupportedIOS13Device]) {
-    return;
-  }
+//  if (!supportIOS13 && ![self isSupportedDevice]) {
+//    return;
+//  } else if (supportIOS13 && ![self isSupportedIOS13Device]) {
+//    return;
+//  }
 
   UIImage *result = nil;
 
@@ -57,6 +57,7 @@ static NSString *const kiPhone8ModelB = @"iPhone10,4";
     UIGraphicsImageRenderer *renderer =
         [[UIGraphicsImageRenderer alloc] initWithSize:view.frame.size];
     result = [renderer imageWithActions:^(UIGraphicsImageRendererContext *_Nonnull context) {
+//      NSAssert([NSThread isMainThread], @"Not at main thread");
       BOOL success = [view drawViewHierarchyInRect:view.bounds afterScreenUpdates:YES];
       NSAssert(success, @"View %@ must draw correctly", view);
     }];
