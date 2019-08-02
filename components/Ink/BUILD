@@ -20,6 +20,7 @@ load(
     "mdc_public_objc_library",
     "mdc_snapshot_objc_library",
     "mdc_snapshot_test",
+    "mdc_unit_test_objc_library",
     "mdc_unit_test_suite",
 )
 
@@ -30,7 +31,6 @@ mdc_public_objc_library(
     sdk_frameworks = [
         "CoreGraphics",
         "QuartzCore",
-        "UIKit",
     ],
     deps = [
         "//components/private/Math",
@@ -47,8 +47,8 @@ mdc_extension_objc_library(
 
 mdc_objc_library(
     name = "private",
+    testonly = 1,
     hdrs = native.glob(["src/private/*.h"]),
-    includes = ["src/private"],
     visibility = ["//visibility:private"],
     deps = [":Ink"],
 )
@@ -62,16 +62,8 @@ mdc_examples_objc_library(
     ],
 )
 
-mdc_objc_library(
+mdc_unit_test_objc_library(
     name = "unit_test_sources",
-    testonly = 1,
-    srcs = glob(["tests/unit/*.m"]),
-    hdrs = glob(["tests/unit/*.h"]),
-    sdk_frameworks = [
-        "UIKit",
-        "XCTest",
-    ],
-    visibility = ["//visibility:private"],
     deps = [
         ":ColorThemer",
         ":Ink",
