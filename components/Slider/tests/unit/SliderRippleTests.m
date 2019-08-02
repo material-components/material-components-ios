@@ -14,7 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MDCSlider+Private.h"
+#import "../../src/private/MDCSlider+Private.h"
 #import "MaterialInk.h"
 #import "MaterialPalettes.h"
 #import "MaterialRipple.h"
