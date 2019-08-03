@@ -54,13 +54,19 @@ static NSString *const kiPhone8ModelB = @"iPhone10,4";
   UIImage *result = nil;
 
   if (@available(iOS 10, *)) {
-    UIGraphicsImageRenderer *renderer =
-        [[UIGraphicsImageRenderer alloc] initWithSize:view.frame.size];
-    result = [renderer imageWithActions:^(UIGraphicsImageRendererContext *_Nonnull context) {
-//      NSAssert([NSThread isMainThread], @"Not at main thread");
-      BOOL success = [view drawViewHierarchyInRect:view.bounds afterScreenUpdates:YES];
-      NSAssert(success, @"View %@ must draw correctly", view);
-    }];
+//    UIGraphicsImageRenderer *renderer =
+//        [[UIGraphicsImageRenderer alloc] initWithSize:view.frame.size];
+//    result = [renderer imageWithActions:^(UIGraphicsImageRendererContext *_Nonnull context) {
+////      NSAssert([NSThread isMainThread], @"Not at main thread");
+//      BOOL success = [view drawViewHierarchyInRect:view.bounds afterScreenUpdates:YES];
+//      NSAssert(success, @"View %@ must draw correctly", view);
+//    }];
+
+    UIGraphicsBeginImageContextWithOptions(view.frame.size, NO, 0);
+    BOOL success = [view drawViewHierarchyInRect:view.bounds afterScreenUpdates:YES];
+    NSAssert(success, @"View %@ must draw correctly", view);
+    result = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
 
     NSAssert(result != nil, @"View %@ must render image", view);
   } else {
