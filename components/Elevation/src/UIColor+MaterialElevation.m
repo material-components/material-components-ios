@@ -53,13 +53,13 @@
       // as in the main formula below there is a jump between any number larger than 0 to an
       // alpha value of 2. This formula provides a gradual polynomial curve that makes the delta
       // of the alpha value between lower numbers to be smaller than the higher numbers.
-      // AlphaValue = 5 * elevationValue ^ 2
-      alphaValue = 5 * MDCPow((CGFloat)elevation, 2);
+      // AlphaValue = 5.11916 * elevationValue ^ 2
+      alphaValue = (CGFloat)5.11916 * MDCPow((CGFloat)elevation, 2);
     } else {
       // A formula is used here to simulate the alpha percentage stated on
       // https://material.io/design/color/dark-theme.html#properties
       // AlphaValue = 4.5 * ln (elevationValue + 1) + 2
-      // Note: Both formulas meet at the transition point of (1,5).
+      // Note: Both formulas meet at the transition point of (1, 5.11916).
       alphaValue = (CGFloat)4.5 * (CGFloat)log(elevation + 1) + 2;
     }
   }
