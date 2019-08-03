@@ -32,6 +32,7 @@ licenses(["notice"])  # Apache 2.0
 mdc_objc_library(
     name = "private",
     hdrs = native.glob(["src/private/*.h"]),
+    includes = ["src/private"],
     visibility = [":test_targets"],
 )
 
