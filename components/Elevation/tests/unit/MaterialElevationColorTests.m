@@ -269,4 +269,32 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
                              secondColor);
 }
 
+- (void)testSmoothJumpBetweenElevationToAlphaForValuesCloseToZero {
+  // Given
+  CGFloat firstElevation = (CGFloat)0.01;
+  CGFloat secondElevation = (CGFloat)0;
+
+  // When
+  UIColor *resolvedFirstRGBColor = [self.rgbColor mdc_resolvedColorWithElevation:firstElevation];
+  UIColor *resolvedSecondRGBColor = [self.rgbColor mdc_resolvedColorWithElevation:secondElevation];
+
+  // Then
+  [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedFirstRGBColor
+                                          secondColor:resolvedSecondRGBColor];
+}
+
+- (void)testSmoothJumpBetweenElevationToAlphaForValuesCloseToOne {
+  // Given
+  CGFloat firstElevation = (CGFloat)0.99;
+  CGFloat secondElevation = (CGFloat)1;
+
+  // When
+  UIColor *resolvedFirstRGBColor = [self.rgbColor mdc_resolvedColorWithElevation:firstElevation];
+  UIColor *resolvedSecondRGBColor = [self.rgbColor mdc_resolvedColorWithElevation:secondElevation];
+
+  // Then
+  [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedFirstRGBColor
+                                          secondColor:resolvedSecondRGBColor];
+}
+
 @end
