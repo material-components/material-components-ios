@@ -55,9 +55,11 @@ static NSString *const kiPhone8ModelB = @"iPhone10,4";
 
   UIImage *result = nil;
 
-  if (@available(iOS 10, *)) {
-    result = [UIImage fb_imageForViewLayer:view];
-  }
+  UIGraphicsBeginImageContextWithOptions(view.bounds.size, NO, 0);
+  CGContextRef context = UIGraphicsGetCurrentContext();
+  [view.layer renderInContext:context];
+  result = UIGraphicsGetImageFromCurrentImageContext();
+  UIGraphicsEndImageContext();
 
   UIImageView *imageView = [[UIImageView alloc] initWithFrame:view.frame];
   imageView.image = result;
