@@ -55,7 +55,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-  //  self.recordMode = YES;
+//    self.recordMode = YES;
 
   CGSize imageSize = CGSizeMake(24, 24);
   self.tabBar = [[MDCTabBar alloc] init];
@@ -150,287 +150,287 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
   // Then
   [self generateSnapshotAndVerifyForView:self.tabBar];
 }
-
-- (void)testTabBarDefaultItemsFitArabicRTL {
-  // When
-  [self setTitlesToArabicShort];
-  [self changeLayoutToRTL];
-  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
-  [self.tabBar sizeToFit];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.tabBar];
-}
-
-- (void)testTabBarJustifiedItemsFitLatinLTR {
-  // When
-  self.tabBar.alignment = MDCTabBarAlignmentJustified;
-  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
-  [self.tabBar sizeToFit];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.tabBar];
-}
-
-- (void)testTabBarJustifiedItemsFitArabicRTL {
-  // When
-  self.tabBar.alignment = MDCTabBarAlignmentJustified;
-  [self setTitlesToArabicShort];
-  [self changeLayoutToRTL];
-  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
-  [self.tabBar sizeToFit];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.tabBar];
-}
-
-- (void)testTabBarCenterItemsFitLatinLTR {
-  // When
-  self.tabBar.alignment = MDCTabBarAlignmentCenter;
-  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
-  [self.tabBar sizeToFit];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.tabBar];
-}
-
-- (void)testTabBarCenterItemsFitArabicRTL {
-  // When
-  self.tabBar.alignment = MDCTabBarAlignmentCenter;
-  [self setTitlesToArabicShort];
-  [self changeLayoutToRTL];
-  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
-  [self.tabBar sizeToFit];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.tabBar];
-}
-
-- (void)testTabBarCenterSelectedItemsFitLatinLTR {
-  // When
-  self.tabBar.alignment = MDCTabBarAlignmentCenterSelected;
-  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
-  [self.tabBar sizeToFit];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.tabBar];
-}
-
-- (void)testTabBarCenterSelectedItemsFitArabicRTL {
-  // When
-  self.tabBar.alignment = MDCTabBarAlignmentCenterSelected;
-  [self setTitlesToArabicShort];
-  [self changeLayoutToRTL];
-  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
-  [self.tabBar sizeToFit];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.tabBar];
-}
-
-- (void)testTabBarLeadingItemsFitLatinLTR {
-  // When
-  self.tabBar.alignment = MDCTabBarAlignmentLeading;
-  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
-  [self.tabBar sizeToFit];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.tabBar];
-}
-
-- (void)testTabBarLeadingItemsFitArabicRTL {
-  // When
-  self.tabBar.alignment = MDCTabBarAlignmentLeading;
-  [self setTitlesToArabicShort];
-  [self changeLayoutToRTL];
-  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
-  [self.tabBar sizeToFit];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.tabBar];
-}
-
-#pragma mark - Long Strings
-
-- (void)testTabBarDefaultItemsDontFitLatinLTR {
-  // When
-  [self setTitlesToLatinLong];
-  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
-  [self.tabBar sizeToFit];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.tabBar];
-}
-
-- (void)testTabBarDefaultItemsDontFitArabicRTL {
-  // When
-  [self setTitlesToArabicLong];
-  [self changeLayoutToRTL];
-  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
-  [self.tabBar sizeToFit];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.tabBar];
-}
-
-- (void)testTabBarJustifiedItemsDontFitLatinLTR {
-  // When
-  self.tabBar.alignment = MDCTabBarAlignmentJustified;
-  [self setTitlesToLatinLong];
-  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
-  [self.tabBar sizeToFit];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.tabBar];
-}
-
-- (void)testTabBarJustifiedItemsDontFitArabicRTL {
-  // When
-  self.tabBar.alignment = MDCTabBarAlignmentJustified;
-  [self setTitlesToArabicLong];
-  [self changeLayoutToRTL];
-  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
-  [self.tabBar sizeToFit];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.tabBar];
-}
-
-- (void)testTabBarCenterItemsDontFitLatinLTR {
-  // When
-  self.tabBar.alignment = MDCTabBarAlignmentCenter;
-  [self setTitlesToLatinLong];
-  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
-  [self.tabBar sizeToFit];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.tabBar];
-}
-
-- (void)testTabBarCenterItemsDontFitArabicRTL {
-  // When
-  self.tabBar.alignment = MDCTabBarAlignmentCenter;
-  [self setTitlesToArabicLong];
-  [self changeLayoutToRTL];
-  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
-  [self.tabBar sizeToFit];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.tabBar];
-}
-
-- (void)testTabBarCenterSelectedItemsDontFitLatinLTR {
-  // When
-  self.tabBar.alignment = MDCTabBarAlignmentCenterSelected;
-  [self setTitlesToLatinLong];
-  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
-  [self.tabBar sizeToFit];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.tabBar];
-}
-
-- (void)testTabBarCenterSelectedItemsDontFitArabicRTL {
-  // When
-  self.tabBar.alignment = MDCTabBarAlignmentCenterSelected;
-  [self setTitlesToArabicLong];
-  [self changeLayoutToRTL];
-  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
-  [self.tabBar sizeToFit];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.tabBar];
-}
-
-- (void)testTabBarLeadingItemsDontFitLatinLTR {
-  // When
-  self.tabBar.alignment = MDCTabBarAlignmentLeading;
-  [self setTitlesToLatinLong];
-  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
-  [self.tabBar sizeToFit];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.tabBar];
-}
-
-- (void)testTabBarLeadingItemsDontFitArabicRTL {
-  // When
-  self.tabBar.alignment = MDCTabBarAlignmentLeading;
-  [self setTitlesToArabicLong];
-  [self changeLayoutToRTL];
-  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
-  [self.tabBar sizeToFit];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.tabBar];
-}
-
-#pragma mark - Style Tests
-
-- (void)testTabBarDefaultAlignmentTitledImagesAppearanceLatinLTR {
-  // When
-  self.tabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;
-  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
-  [self.tabBar sizeToFit];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.tabBar];
-}
-
-- (void)testTabBarDefaultAlignmentTitledImagesAppearanceArabicRTL {
-  // When
-  self.tabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;
-  [self setTitlesToArabicShort];
-  [self changeLayoutToRTL];
-  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
-  [self.tabBar sizeToFit];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.tabBar];
-}
-
-- (void)testTabBarDefaultAlignmentImagesAppearanceLatinLTR {
-  // When
-  self.tabBar.itemAppearance = MDCTabBarItemAppearanceImages;
-  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
-  [self.tabBar sizeToFit];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.tabBar];
-}
-
-- (void)testTabBarDefaultAlignmentImagesAppearanceArabicRTL {
-  // When
-  self.tabBar.itemAppearance = MDCTabBarItemAppearanceImages;
-  [self setTitlesToArabicShort];
-  [self changeLayoutToRTL];
-  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
-  [self.tabBar sizeToFit];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.tabBar];
-}
-
-- (void)testTabBarItemBadgeColors {
-  // When
-  self.tabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;
-  if (@available(iOS 10.0, *)) {
-    self.item1.badgeValue = kItemTitleShort3Latin;
-    self.item1.badgeColor = UIColor.cyanColor;
-    self.item2.badgeValue = kItemTitleShort1Latin;
-    self.item2.badgeColor = UIColor.orangeColor;
-    self.item3.badgeValue = kItemTitleShort2Latin;
-    self.item3.badgeColor = UIColor.blackColor;
-    self.item4.badgeValue = kItemTitleShort1Latin;
-    self.item4.badgeColor = UIColor.blueColor;
-    self.item5.badgeValue = kItemTitleShort3Latin;
-    self.item5.badgeColor = UIColor.whiteColor;
-  }
-  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
-  [self.tabBar sizeToFit];
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.tabBar];
-}
+//
+//- (void)testTabBarDefaultItemsFitArabicRTL {
+//  // When
+//  [self setTitlesToArabicShort];
+//  [self changeLayoutToRTL];
+//  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
+//  [self.tabBar sizeToFit];
+//
+//  // Then
+//  [self generateSnapshotAndVerifyForView:self.tabBar];
+//}
+//
+//- (void)testTabBarJustifiedItemsFitLatinLTR {
+//  // When
+//  self.tabBar.alignment = MDCTabBarAlignmentJustified;
+//  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
+//  [self.tabBar sizeToFit];
+//
+//  // Then
+//  [self generateSnapshotAndVerifyForView:self.tabBar];
+//}
+//
+//- (void)testTabBarJustifiedItemsFitArabicRTL {
+//  // When
+//  self.tabBar.alignment = MDCTabBarAlignmentJustified;
+//  [self setTitlesToArabicShort];
+//  [self changeLayoutToRTL];
+//  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
+//  [self.tabBar sizeToFit];
+//
+//  // Then
+//  [self generateSnapshotAndVerifyForView:self.tabBar];
+//}
+//
+//- (void)testTabBarCenterItemsFitLatinLTR {
+//  // When
+//  self.tabBar.alignment = MDCTabBarAlignmentCenter;
+//  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
+//  [self.tabBar sizeToFit];
+//
+//  // Then
+//  [self generateSnapshotAndVerifyForView:self.tabBar];
+//}
+//
+//- (void)testTabBarCenterItemsFitArabicRTL {
+//  // When
+//  self.tabBar.alignment = MDCTabBarAlignmentCenter;
+//  [self setTitlesToArabicShort];
+//  [self changeLayoutToRTL];
+//  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
+//  [self.tabBar sizeToFit];
+//
+//  // Then
+//  [self generateSnapshotAndVerifyForView:self.tabBar];
+//}
+//
+//- (void)testTabBarCenterSelectedItemsFitLatinLTR {
+//  // When
+//  self.tabBar.alignment = MDCTabBarAlignmentCenterSelected;
+//  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
+//  [self.tabBar sizeToFit];
+//
+//  // Then
+//  [self generateSnapshotAndVerifyForView:self.tabBar];
+//}
+//
+//- (void)testTabBarCenterSelectedItemsFitArabicRTL {
+//  // When
+//  self.tabBar.alignment = MDCTabBarAlignmentCenterSelected;
+//  [self setTitlesToArabicShort];
+//  [self changeLayoutToRTL];
+//  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
+//  [self.tabBar sizeToFit];
+//
+//  // Then
+//  [self generateSnapshotAndVerifyForView:self.tabBar];
+//}
+//
+//- (void)testTabBarLeadingItemsFitLatinLTR {
+//  // When
+//  self.tabBar.alignment = MDCTabBarAlignmentLeading;
+//  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
+//  [self.tabBar sizeToFit];
+//
+//  // Then
+//  [self generateSnapshotAndVerifyForView:self.tabBar];
+//}
+//
+//- (void)testTabBarLeadingItemsFitArabicRTL {
+//  // When
+//  self.tabBar.alignment = MDCTabBarAlignmentLeading;
+//  [self setTitlesToArabicShort];
+//  [self changeLayoutToRTL];
+//  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
+//  [self.tabBar sizeToFit];
+//
+//  // Then
+//  [self generateSnapshotAndVerifyForView:self.tabBar];
+//}
+//
+//#pragma mark - Long Strings
+//
+//- (void)testTabBarDefaultItemsDontFitLatinLTR {
+//  // When
+//  [self setTitlesToLatinLong];
+//  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
+//  [self.tabBar sizeToFit];
+//
+//  // Then
+//  [self generateSnapshotAndVerifyForView:self.tabBar];
+//}
+//
+//- (void)testTabBarDefaultItemsDontFitArabicRTL {
+//  // When
+//  [self setTitlesToArabicLong];
+//  [self changeLayoutToRTL];
+//  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
+//  [self.tabBar sizeToFit];
+//
+//  // Then
+//  [self generateSnapshotAndVerifyForView:self.tabBar];
+//}
+//
+//- (void)testTabBarJustifiedItemsDontFitLatinLTR {
+//  // When
+//  self.tabBar.alignment = MDCTabBarAlignmentJustified;
+//  [self setTitlesToLatinLong];
+//  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
+//  [self.tabBar sizeToFit];
+//
+//  // Then
+//  [self generateSnapshotAndVerifyForView:self.tabBar];
+//}
+//
+//- (void)testTabBarJustifiedItemsDontFitArabicRTL {
+//  // When
+//  self.tabBar.alignment = MDCTabBarAlignmentJustified;
+//  [self setTitlesToArabicLong];
+//  [self changeLayoutToRTL];
+//  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
+//  [self.tabBar sizeToFit];
+//
+//  // Then
+//  [self generateSnapshotAndVerifyForView:self.tabBar];
+//}
+//
+//- (void)testTabBarCenterItemsDontFitLatinLTR {
+//  // When
+//  self.tabBar.alignment = MDCTabBarAlignmentCenter;
+//  [self setTitlesToLatinLong];
+//  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
+//  [self.tabBar sizeToFit];
+//
+//  // Then
+//  [self generateSnapshotAndVerifyForView:self.tabBar];
+//}
+//
+//- (void)testTabBarCenterItemsDontFitArabicRTL {
+//  // When
+//  self.tabBar.alignment = MDCTabBarAlignmentCenter;
+//  [self setTitlesToArabicLong];
+//  [self changeLayoutToRTL];
+//  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
+//  [self.tabBar sizeToFit];
+//
+//  // Then
+//  [self generateSnapshotAndVerifyForView:self.tabBar];
+//}
+//
+//- (void)testTabBarCenterSelectedItemsDontFitLatinLTR {
+//  // When
+//  self.tabBar.alignment = MDCTabBarAlignmentCenterSelected;
+//  [self setTitlesToLatinLong];
+//  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
+//  [self.tabBar sizeToFit];
+//
+//  // Then
+//  [self generateSnapshotAndVerifyForView:self.tabBar];
+//}
+//
+//- (void)testTabBarCenterSelectedItemsDontFitArabicRTL {
+//  // When
+//  self.tabBar.alignment = MDCTabBarAlignmentCenterSelected;
+//  [self setTitlesToArabicLong];
+//  [self changeLayoutToRTL];
+//  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
+//  [self.tabBar sizeToFit];
+//
+//  // Then
+//  [self generateSnapshotAndVerifyForView:self.tabBar];
+//}
+//
+//- (void)testTabBarLeadingItemsDontFitLatinLTR {
+//  // When
+//  self.tabBar.alignment = MDCTabBarAlignmentLeading;
+//  [self setTitlesToLatinLong];
+//  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
+//  [self.tabBar sizeToFit];
+//
+//  // Then
+//  [self generateSnapshotAndVerifyForView:self.tabBar];
+//}
+//
+//- (void)testTabBarLeadingItemsDontFitArabicRTL {
+//  // When
+//  self.tabBar.alignment = MDCTabBarAlignmentLeading;
+//  [self setTitlesToArabicLong];
+//  [self changeLayoutToRTL];
+//  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
+//  [self.tabBar sizeToFit];
+//
+//  // Then
+//  [self generateSnapshotAndVerifyForView:self.tabBar];
+//}
+//
+//#pragma mark - Style Tests
+//
+//- (void)testTabBarDefaultAlignmentTitledImagesAppearanceLatinLTR {
+//  // When
+//  self.tabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;
+//  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
+//  [self.tabBar sizeToFit];
+//
+//  // Then
+//  [self generateSnapshotAndVerifyForView:self.tabBar];
+//}
+//
+//- (void)testTabBarDefaultAlignmentTitledImagesAppearanceArabicRTL {
+//  // When
+//  self.tabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;
+//  [self setTitlesToArabicShort];
+//  [self changeLayoutToRTL];
+//  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
+//  [self.tabBar sizeToFit];
+//
+//  // Then
+//  [self generateSnapshotAndVerifyForView:self.tabBar];
+//}
+//
+//- (void)testTabBarDefaultAlignmentImagesAppearanceLatinLTR {
+//  // When
+//  self.tabBar.itemAppearance = MDCTabBarItemAppearanceImages;
+//  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
+//  [self.tabBar sizeToFit];
+//
+//  // Then
+//  [self generateSnapshotAndVerifyForView:self.tabBar];
+//}
+//
+//- (void)testTabBarDefaultAlignmentImagesAppearanceArabicRTL {
+//  // When
+//  self.tabBar.itemAppearance = MDCTabBarItemAppearanceImages;
+//  [self setTitlesToArabicShort];
+//  [self changeLayoutToRTL];
+//  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
+//  [self.tabBar sizeToFit];
+//
+//  // Then
+//  [self generateSnapshotAndVerifyForView:self.tabBar];
+//}
+//
+//- (void)testTabBarItemBadgeColors {
+//  // When
+//  self.tabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;
+//  if (@available(iOS 10.0, *)) {
+//    self.item1.badgeValue = kItemTitleShort3Latin;
+//    self.item1.badgeColor = UIColor.cyanColor;
+//    self.item2.badgeValue = kItemTitleShort1Latin;
+//    self.item2.badgeColor = UIColor.orangeColor;
+//    self.item3.badgeValue = kItemTitleShort2Latin;
+//    self.item3.badgeColor = UIColor.blackColor;
+//    self.item4.badgeValue = kItemTitleShort1Latin;
+//    self.item4.badgeColor = UIColor.blueColor;
+//    self.item5.badgeValue = kItemTitleShort3Latin;
+//    self.item5.badgeColor = UIColor.whiteColor;
+//  }
+//  self.tabBar.frame = CGRectMake(0, 0, 480, 100);
+//  [self.tabBar sizeToFit];
+//
+//  // Then
+//  [self generateSnapshotAndVerifyForView:self.tabBar];
+//}
 
 @end
