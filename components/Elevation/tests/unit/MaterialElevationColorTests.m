@@ -233,7 +233,8 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
     UITraitCollection *traitCollection = [[UITraitCollection alloc] init];
 
     // When
-    UIColor *color = [staticColor mdc_resolvedColorWithTraitCollection:traitCollection elevation:elevation];
+    UIColor *color = [staticColor mdc_resolvedColorWithTraitCollection:traitCollection
+                                                             elevation:elevation];
 
     // Then
     [self assertEqualColorsWithFloatPrecisionFirstColor:color secondColor:staticColor];
