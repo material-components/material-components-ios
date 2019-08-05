@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #import <XCTest/XCTest.h>
-#import "MDCLegacyInkLayer+Private.h"
+#import "../../src/private/MDCLegacyInkLayer+Private.h"
 #import "MaterialInk.h"
 
 #pragma mark - Property exposure

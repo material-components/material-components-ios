@@ -1,3 +1,244 @@
+# 86.0.0
+
+In this major release we have provided improvements to our Elevation code for Dark Mode as well as internal clean up. 
+
+## Breaking changes
+
+Our `MDCElevatable` protocol now conforms to NSObject so it can leverage the `isKindOfClass:` and `conformsToProtocol:` APIs.
+
+## API changes
+
+### Elevation
+
+#### MDCElevatable
+
+*modified* protocol: `MDCElevatable`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@protocol MDCElevatable` |
+| To: | `@protocol MDCElevatable <NSObject>` |
+
+*modified* protocol: `MDCElevatable`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `protocol MDCElevatable` |
+| To: | `protocol MDCElevatable : NSObjectProtocol` |
+
+## Component changes
+
+## Changes
+
+### ActionSheet
+
+* [BUILD file uses Skylark macros. (#8152)](https://github.com/material-components/material-components-ios/commit/e3a0fb9a4d72a9fff660288628d566f0e9a61944) (Robert Moore)
+
+### ActivityIndicator
+
+* [Update BUILD to use Skylark macros. (#8153)](https://github.com/material-components/material-components-ios/commit/ed55e0f1b2d7210f92fbd29132218f6e6aa1394e) (Robert Moore)
+
+### AnimationTiming
+
+* [Use Skylark macros in BUILD file. (#8154)](https://github.com/material-components/material-components-ios/commit/25dcf26e73c85d6c83f437cb1a3d43c26d2e31cf) (Robert Moore)
+
+### Banner
+
+* [Use Starlark macros. (#8155)](https://github.com/material-components/material-components-ios/commit/d123d7a35613201a44c8f88b2bcbc9016f94f33d) (Robert Moore)
+
+### BottomAppBar
+
+* [Use Starlark macros. (#8156)](https://github.com/material-components/material-components-ios/commit/ff0c94cdf8eb256bec8f333e837015e6dcf162bf) (Robert Moore)
+
+### BottomNavigation
+
+* [Renames functions and fixes comments. (#8133)](https://github.com/material-components/material-components-ios/commit/3b54f2c6ea1731a061761070b9dd8497822ea9d3) (Eric Lee)
+* [Use Starlark macros. (#8159)](https://github.com/material-components/material-components-ios/commit/3c03bd05d62ab78ed1371c874d170107afb14f09) (Robert Moore)
+
+### BottomSheet
+
+* [Use Starlark macros. (#8160)](https://github.com/material-components/material-components-ios/commit/51f63776ace8802208f7eb56a95fa3f81b95e7fe) (Robert Moore)
+
+### ButtonBar
+
+* [Use Starlark macros. (#8161)](https://github.com/material-components/material-components-ios/commit/cab960098bf0e10bac7e2c4adb2492273d1646b1) (Robert Moore)
+
+### Buttons
+
+* [Use Starlark macros. (#8162)](https://github.com/material-components/material-components-ios/commit/54fe07bd2e489e3b0edf2f9b2e754f78da5326a0) (Robert Moore)
+
+### Cards
+
+* [Use Starlark macros. (#8163)](https://github.com/material-components/material-components-ios/commit/6578b292e25201667f3fb032d0020a80464f77e5) (Robert Moore)
+
+### Chips
+
+* [Use Starlark macros. (#8164)](https://github.com/material-components/material-components-ios/commit/363e02d8bdd759f2226b33a5e23dc5d7c9349155) (Robert Moore)
+
+### CollectionCells
+
+* [Use Starlark macros. (#8165)](https://github.com/material-components/material-components-ios/commit/3255f96aa61b02e89cd0b8672879382435e7f09b) (Robert Moore)
+
+### CollectionLayoutAttributes
+
+* [Use more Starlark macros. (#8166)](https://github.com/material-components/material-components-ios/commit/43828e32ce81f2628a2495cc742836294a29263c) (Robert Moore)
+
+### Collections
+
+* [Use more Starlark macros. (#8167)](https://github.com/material-components/material-components-ios/commit/a97f0e9dd435b009e34bc056fee579ca7f4a166d) (Robert Moore)
+
+### Elevation
+
+* [Add smooth continuous formula for values between 0 and 1 (#8212)](https://github.com/material-components/material-components-ios/commit/7d6164356f78b8987a7fece2c3072ddd51701760) (Yarden Eitan)
+* [Update mdc_resolvedColorWithTraitCollection:elevation: to support pre-iOS 13 (#8217)](https://github.com/material-components/material-components-ios/commit/3f121b7014b04d470b83d7fc5f80c5ca2efd1130) (Yarden Eitan)
+* [nsobject (#8188)](https://github.com/material-components/material-components-ios/commit/17f000a076ddda25dd83581ea1dbb37982ef0c82) (Yarden Eitan)
+
+### FeatureHighlight
+
+* [Use Starlark rules. (#8168)](https://github.com/material-components/material-components-ios/commit/e92e0ef7d591e28b3338bb5001f25cbb7837a8a9) (Robert Moore)
+
+### FlexibleHeader
+
+* [Use Starlark macros. (#8169)](https://github.com/material-components/material-components-ios/commit/6e7b7474f368564ca3690560ef46f50f1b748dc3) (Robert Moore)
+
+### HeaderStackView
+
+* [Use Starlark macros. (#8170)](https://github.com/material-components/material-components-ios/commit/a047c779d54048a8efef7212a1a65bcc8366a42d) (Robert Moore)
+
+### Ink
+
+* [Use Starlark macros. (#8172)](https://github.com/material-components/material-components-ios/commit/77c5ebbe7e2f90ddb0846c57949c9a8949c866c3) (Robert Moore)
+
+### LibraryInfo
+
+* [Use Starlark macros. (#8173)](https://github.com/material-components/material-components-ios/commit/67927c9e6f30cf1c259cb5406022188fe60350fb) (Robert Moore)
+
+### List
+
+* [Use Starlark macros in BUILD file. (#8174)](https://github.com/material-components/material-components-ios/commit/0d493b69ccd4768fac3edbf8ac6617814e36d2af) (Robert Moore)
+
+### MaskedTransition
+
+* [Use more Starlark macros. (#8175)](https://github.com/material-components/material-components-ios/commit/ec20611bed01086b5eaf4d5e5b0bd2a77f7d6914) (Robert Moore)
+
+### NavigationBar
+
+* [Use Starlark macros. (#8176)](https://github.com/material-components/material-components-ios/commit/bbdf2f459fdb9b0f735a3cf5acc62b7862c2e35d) (Robert Moore)
+
+### NavigationDrawer
+
+* [Use more Starlark macros. (#8177)](https://github.com/material-components/material-components-ios/commit/58df819da46b672eec751724d14990d7e31b81c2) (Robert Moore)
+
+### OverlayWindow
+
+* [Use more Starlark macros. (#8178)](https://github.com/material-components/material-components-ios/commit/2ed63ed2060bd5b8d44545529f7fa94a13af9679) (Robert Moore)
+
+### PageControl
+
+* [Use Starlark macros in BUILD file. (#8179)](https://github.com/material-components/material-components-ios/commit/b0ee32b59b11f3e7ec332fcc9872829cdb6c4254) (Robert Moore)
+
+### Palettes
+
+* [Use more Starlark macros in the BUILD file. (#8180)](https://github.com/material-components/material-components-ios/commit/6ed797156d8e9c0c2c9cf76b26ed234c1eb5e64d) (Robert Moore)
+
+### ProgressView
+
+* [Add more Starlark macros. (#8181)](https://github.com/material-components/material-components-ios/commit/bbfe5f8193e0f87eba1e15f0e36d86e02c4ab272) (Robert Moore)
+
+### Ripple
+
+* [Use Starlark macros. (#8183)](https://github.com/material-components/material-components-ios/commit/48d3d591bf83a69f5f886a4c5639baa930f799fc) (Robert Moore)
+
+### ShadowElevations
+
+* [Use Starlark macros. (#8184)](https://github.com/material-components/material-components-ios/commit/0cb45de8fc4d8a308172380a038121f2de4c32a1) (Robert Moore)
+
+### ShadowLayer
+
+* [Use Starlark macros. (#8185)](https://github.com/material-components/material-components-ios/commit/c354e6f35ae7c8182fe3890f06cbaaf4e9437c8d) (Robert Moore)
+
+### ShapeLibrary
+
+* [Use Starlark macros. (#8186)](https://github.com/material-components/material-components-ios/commit/fad566278ea6175ff94e0d493507f02389e9cba4) (Robert Moore)
+
+### Shapes
+
+* [Use Starlark macros. (#8192)](https://github.com/material-components/material-components-ios/commit/b556ab09c363ed54237aecd97dc01c2a944ccc4f) (Robert Moore)
+
+### Slider
+
+* [Use Starlark BUILD macros. (#8194)](https://github.com/material-components/material-components-ios/commit/be45bbf3ee672f0ca6ef905447a802d90190b43f) (Robert Moore)
+
+### Snackbar
+
+* [Use Starlark macros in BUILD file. (#8195)](https://github.com/material-components/material-components-ios/commit/870cd5b40461022bebf8a3d7b6075318a66d153a) (Robert Moore)
+
+### Tabs
+
+* [Use Starlark macros in BUILD file. (#8196)](https://github.com/material-components/material-components-ios/commit/7718df1037838ec664c97cc82a1ed1c2214b6f09) (Robert Moore)
+
+### TextFields
+
+* [Use Starlark macros in the BUILD file. (#8197)](https://github.com/material-components/material-components-ios/commit/9f707d1a65b0f51d13f085bcb029d76f13b447ff) (Robert Moore)
+
+### Themes
+
+* [Use Starlark macros in BUILD file. (#8198)](https://github.com/material-components/material-components-ios/commit/e17f9d9d5273d5d38520d8c294d81436317faed7) (Robert Moore)
+
+### Typography
+
+* [Use Starlark macros. (#8199)](https://github.com/material-components/material-components-ios/commit/80e8c3252ef16cffcd4a3c4f535f18b4f6e7004b) (Robert Moore)
+
+### private/Application
+
+* [Use Starlark macros in BUILD file. (#8200)](https://github.com/material-components/material-components-ios/commit/4d435b8096665d30bfbb98a5531c09b7d85c9a6c) (Robert Moore)
+
+### private/Color
+
+* [Use Starlark macros. (#8201)](https://github.com/material-components/material-components-ios/commit/5d42706fdafbb57839339b423418cd5432275b2b) (Robert Moore)
+
+### private/Icons
+
+* [Use Starlark macros in BUILD file. (#8202)](https://github.com/material-components/material-components-ios/commit/6a9ee1fa0cec1eabb28697df9394a474da367604) (Robert Moore)
+
+### private/KeyboardWatcher
+
+* [Use more Starlark macros. (#8203)](https://github.com/material-components/material-components-ios/commit/fa5080487912fa7cd8a1e7e4da9e3682860cb351) (Robert Moore)
+
+### private/Math
+
+* [Use Starlark macros. (#8204)](https://github.com/material-components/material-components-ios/commit/00c88d5317762471c034d259db6c75eae23ad523) (Robert Moore)
+
+### private/Overlay
+
+* [Use more Starlark macros. (#8205)](https://github.com/material-components/material-components-ios/commit/09b261953767614d8ec5d7f7885a6d3bd28c8dad) (Robert Moore)
+
+### private/ThumbTrack
+
+* [Use Starlark macros in BUILD file. (#8206)](https://github.com/material-components/material-components-ios/commit/be19699d29e835e9564cc048c3992b1563a5f688) (Robert Moore)
+
+### private/UIMetrics
+
+* [Use Starlark macros in the BUILD file. (#8207)](https://github.com/material-components/material-components-ios/commit/e048554a3e1d22a14933571716123ef55be63958) (Robert Moore)
+
+### schemes/Color
+
+* [Use Starlark macros in BUILD file. (#8208)](https://github.com/material-components/material-components-ios/commit/dc800bbb04d4c876ded748af3b12377ab8df53ed) (Robert Moore)
+
+### schemes/Container
+
+* [Use Starlark macros in the BUILD file. (#8210)](https://github.com/material-components/material-components-ios/commit/15ae19df4b9b04170045cb9fbcaea49986badf80) (Robert Moore)
+
+### schemes/Shape
+
+* [Use Starlark macros in BUILD file. (#8209)](https://github.com/material-components/material-components-ios/commit/08ee58bcb31761a99e625fb8f3432a003fc1423f) (Robert Moore)
+
+### schemes/Typography
+
+* [Use Starlark macros in BUILD file. (#8211)](https://github.com/material-components/material-components-ios/commit/9e56b9c2143f459c5a1686d854e4a627fddc959b) (Robert Moore)
+
+---
+
 # 85.12.0
 
 This minor release introduces Material Elevation support for ActionSheet and Banner (Beta). It also includes performance improvements for Ink and Ripple.

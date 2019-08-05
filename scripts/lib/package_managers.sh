@@ -24,12 +24,21 @@ gem_install() {
 }
 
 brew_update() {
-  brew --version
-  brew update
-  brew --version
+  brew_current=$(brew config | grep -E 'Core tap HEAD: [0-9a-f]+' | grep -oE '[0-9a-f]+$')
+  echo "Current Homebrew HEAD is ($brew_current)"
+  echo "Last Brew update HEAD is ($BREW_VERSION)"
+  if [ -z "$BREW_VERSION" -o "$brew_current" != $"BREW_VERSION" ]; then 
+    brew --version
+    echo "Updating Homebrew"
+    brew update
+    BREW_VERSION=$(brew config | grep -E 'Core tap HEAD: [0-9a-f]+' | grep -oE '[0-9a-f]+$')
+    echo "Homebrew HEAD is now ($BREW_VERSION)"
+    brew --version
+  fi
 }
 
 brew_install() {
+  echo "Installing \"$@\" using Homebrew"
   brew_update
   brew install "$@"
 }

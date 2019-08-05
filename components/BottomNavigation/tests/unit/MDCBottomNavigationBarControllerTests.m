@@ -22,25 +22,23 @@ static CGFloat const kDefaultExpectationTimeout = 15;
 @interface MDCBottomNavigationBarControllerTests
     : XCTestCase <MDCBottomNavigationBarControllerDelegate>
 
-/** The bottom navigation controller to test **/
+/** The bottom navigation controller to test. */
 @property(nonatomic, strong, nonnull)
     MDCBottomNavigationBarController *bottomNavigationBarController;
 
 /**
- * Is fufilled when the a delegate method is called. Set the description of the expectation with the
- * string value of the selector of the method you are expecting to be called.
- **/
+ Is fufilled when the a delegate method is called. Set the description of the expectation with the
+ string value of the selector of the method you are expecting to be called.
+ */
 @property(nonatomic, strong, nullable) XCTestExpectation *delegateExpecation;
 
 /**
- * An array of the values of the expected arguments the delegate method should be called with.
- * The order of the array is the order the arguments appear in the method signature.
+ An array of the values of the expected arguments the delegate method should be called with. The
+ order of the array is the order the arguments appear in the method signature.
  */
 @property(nonatomic, strong, nullable) NSArray<id> *expectedArguments;
 
-/**
- * The return value a delegate method should return with.
- */
+/** The return value a delegate method should return with. */
 @property(nonatomic, strong, nullable) id delegateReturnValue;
 
 @end
@@ -373,7 +371,7 @@ static CGFloat const kDefaultExpectationTimeout = 15;
 
 #pragma mark - Helper Methods
 
-- (NSArray *)createArrayOfTwoFakeViewControllers {
+- (NSArray<UIViewController *> *)createArrayOfTwoFakeViewControllers {
   UIViewController *viewController1 = [[UIViewController alloc] init];
   UIViewController *viewController2 = [[UIViewController alloc] init];
 
@@ -386,7 +384,7 @@ static CGFloat const kDefaultExpectationTimeout = 15;
 }
 
 /**
- * Verifies the state of the bottom navigation bar controller for the given expected selected index.
+ Verifies the state of the bottom navigation bar controller for the given expected selected index.
  */
 - (void)verifyStateOfSelectedIndex:(NSUInteger)index {
   XCTAssertEqual(
@@ -409,9 +407,7 @@ static CGFloat const kDefaultExpectationTimeout = 15;
       (unsigned long)index);
 }
 
-/**
- * Verifies that the bottom navigation controller has no view controller selected.
- */
+/** Verifies that the bottom navigation controller has no view controller selected. */
 - (void)verifyDeselect {
   XCTAssertNil(self.bottomNavigationBarController.selectedViewController,
                @"Expected bottom navigation bar's selected view controller to be nil on deselect.");
@@ -422,8 +418,7 @@ static CGFloat const kDefaultExpectationTimeout = 15;
 }
 
 /**
- * Verifies that the given method signature and arguments match the expected signature and
- * arguments.
+ Verifies that the given method signature and arguments match the expected signature and arguments.
  */
 - (void)verifyDelegateMethodCall:(NSString *)signature arguments:(NSArray<id> *)arguments {
   XCTAssertEqual(self.expectedArguments.count, arguments.count,
@@ -442,9 +437,7 @@ static CGFloat const kDefaultExpectationTimeout = 15;
   }
 }
 
-/**
- * Returns the string equivalent for the given boolean.
- */
+/** Returns the string equivalent for the given boolean. */
 - (NSString *)boolToString:(BOOL)val {
   return (val) ? @"YES" : @"NO";
 }

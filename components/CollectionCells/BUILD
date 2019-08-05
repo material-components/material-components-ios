@@ -18,6 +18,7 @@ load(
     "mdc_examples_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
+    "mdc_unit_test_objc_library",
     "mdc_unit_test_suite",
 )
 
@@ -26,9 +27,6 @@ licenses(["notice"])  # Apache 2.0
 mdc_public_objc_library(
     name = "CollectionCells",
     bundles = [":Bundle"],
-    sdk_frameworks = [
-        "UIKit",
-    ],
     deps = [
         "//components/CollectionLayoutAttributes",
         "//components/Ink",
@@ -67,18 +65,8 @@ objc_bundle(
     bundle_imports = [":BundleFiles"],
 )
 
-mdc_objc_library(
+mdc_unit_test_objc_library(
     name = "unit_test_sources",
-    testonly = 1,
-    srcs = native.glob([
-        "tests/unit/*.m",
-        "tests/unit/*.h",
-    ]),
-    sdk_frameworks = [
-        "UIKit",
-        "XCTest",
-    ],
-    visibility = ["//visibility:private"],
     deps = [
         ":CollectionCells",
     ],

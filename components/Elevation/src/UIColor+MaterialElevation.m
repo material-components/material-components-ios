@@ -33,9 +33,7 @@
     }
   }
 #endif
-  [NSException raise:NSGenericException
-              format:@"%@ is only supported on iOS 13 and above", NSStringFromSelector(_cmd)];
-  return nil;
+  return self;
 }
 
 - (UIColor *)mdc_resolvedColorWithElevation:(CGFloat)elevation {
@@ -48,10 +46,20 @@
   elevation = MAX(elevation, 0);
   CGFloat alphaValue = 0;
   if (!MDCCGFloatEqual(elevation, 0)) {
-    // A formula is used here to simulate the alpha percentage stated on
-    // https://material.io/design/color/dark-theme.html#properties
-    // AlphaValue = 4.5 * ln (elevationValue + 1) + 2
-    alphaValue = (CGFloat)4.5 * (CGFloat)log(elevation + 1) + 2;
+    if (elevation < 1) {
+      // A formula for values between 0 to 1 is used here to simulate the alpha percentage
+      // as in the main formula below there is a jump between any number larger than 0 to an
+      // alpha value of 2. This formula provides a gradual polynomial curve that makes the delta
+      // of the alpha value between lower numbers to be smaller than the higher numbers.
+      // AlphaValue = 5.11916 * elevationValue ^ 2
+      alphaValue = (CGFloat)5.11916 * MDCPow((CGFloat)elevation, 2);
+    } else {
+      // A formula is used here to simulate the alpha percentage stated on
+      // https://material.io/design/color/dark-theme.html#properties
+      // AlphaValue = 4.5 * ln (elevationValue + 1) + 2
+      // Note: Both formulas meet at the transition point of (1, 5.11916).
+      alphaValue = (CGFloat)4.5 * (CGFloat)log(elevation + 1) + 2;
+    }
   }
   // TODO (https://github.com/material-components/material-components-ios/issues/8096):
   // Grayscale color should be returned if color space is UIExtendedGrayColorSpace.
