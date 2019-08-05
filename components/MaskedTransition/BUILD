@@ -15,11 +15,12 @@
 
 load(
     "//:material_components_ios.bzl",
+    "mdc_examples_swift_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
+    "mdc_unit_test_objc_library",
     "mdc_unit_test_suite",
 )
-load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
 
@@ -28,7 +29,6 @@ mdc_public_objc_library(
     sdk_frameworks = [
         "CoreGraphics",
         "QuartzCore",
-        "UIKit",
     ],
     deps = [
         "@material_internationalization_ios//:MDFInternationalization",
@@ -40,35 +40,19 @@ mdc_public_objc_library(
 mdc_objc_library(
     name = "private",
     hdrs = native.glob(["src/private/*.h"]),
-    includes = ["src/private"],
     visibility = ["//visibility:private"],
 )
 
-mdc_objc_library(
+mdc_unit_test_objc_library(
     name = "unit_test_sources",
-    testonly = 1,
-    srcs = native.glob([
-        "tests/unit/*.m",
-        "tests/unit/*.h",
-    ]),
-    sdk_frameworks = [
-        "UIKit",
-        "XCTest",
-    ],
-    visibility = ["//visibility:private"],
     deps = [
         ":MaskedTransition",
         ":private",
     ],
 )
 
-swift_library(
+mdc_examples_swift_library(
     name = "SwiftExamples",
-    srcs = native.glob(["examples/*.swift"]),
-    copts = [
-        "-swift-version",
-        "4.2",
-    ],
     deps = [
         ":MaskedTransition",
         "//components/Buttons",

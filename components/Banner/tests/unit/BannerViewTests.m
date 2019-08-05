@@ -56,55 +56,65 @@
 @end
 
 @interface BannerViewTests : XCTestCase
-
+@property(nonatomic, strong, nullable) MDCBannerView *banner;
 @end
 
 @implementation BannerViewTests
 
+- (void)setUp {
+  [super setUp];
+
+  self.banner = [[MDCBannerView alloc] init];
+}
+
+- (void)tearDown {
+  self.banner = nil;
+
+  [super tearDown];
+}
+
 - (void)testBannerViewDynamicTypeBehavior {
   if (@available(iOS 10.0, *)) {
     // Given
-    MDCBannerView *bannerView = [[MDCBannerView alloc] init];
-    bannerView.trailingButton.hidden = YES;
-    bannerView.mdc_adjustsFontForContentSizeCategory = YES;
+    self.banner.trailingButton.hidden = YES;
+    self.banner.mdc_adjustsFontForContentSizeCategory = YES;
     UIFont *font = [UIFont systemFontOfSize:10.0 weight:UIFontWeightRegular];
     MDCFontScaler *fontScaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleBody2];
     UIFont *scalableFont = [fontScaler scaledFontWithFont:font];
     scalableFont = [scalableFont mdc_scaledFontAtDefaultSize];
-    bannerView.textView.font = scalableFont;
-    bannerView.textView.text = @"Banner Text";
-    CGFloat originalTextFontSize = bannerView.textView.font.pointSize;
-    MDCButton *leadingButton = bannerView.leadingButton;
+    self.banner.textView.font = scalableFont;
+    self.banner.textView.text = @"Banner Text";
+    CGFloat originalTextFontSize = self.banner.textView.font.pointSize;
+    MDCButton *leadingButton = self.banner.leadingButton;
     [leadingButton setTitleFont:scalableFont forState:UIControlStateNormal];
     CGFloat originalButtonFontSize =
-        [bannerView.leadingButton titleFontForState:UIControlStateNormal].pointSize;
+        [self.banner.leadingButton titleFontForState:UIControlStateNormal].pointSize;
 
     // When
     MDCBannerViewTestsDynamicTypeContentSizeCategoryOverrideWindow *extraExtraLargeContainer =
         [[MDCBannerViewTestsDynamicTypeContentSizeCategoryOverrideWindow alloc]
             initWithContentSizeCategoryOverride:UIContentSizeCategoryExtraExtraLarge];
-    [extraExtraLargeContainer addSubview:bannerView];
+    [extraExtraLargeContainer addSubview:self.banner];
     [NSNotificationCenter.defaultCenter
         postNotificationName:UIContentSizeCategoryDidChangeNotification
                       object:nil];
 
     // Then
-    CGFloat actualTextFontSize = bannerView.textView.font.pointSize;
+    CGFloat actualTextFontSize = self.banner.textView.font.pointSize;
     XCTAssertGreaterThan(actualTextFontSize, originalTextFontSize);
     CGFloat actualButtonFontSize =
-        [bannerView.leadingButton titleFontForState:UIControlStateNormal].pointSize;
+        [self.banner.leadingButton titleFontForState:UIControlStateNormal].pointSize;
     XCTAssertGreaterThan(actualButtonFontSize, originalButtonFontSize);
   }
 }
 
 - (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
   // Given
-  MDCBannerView *banner = [[MDCBannerView alloc] init];
   XCTestExpectation *expectation =
       [[XCTestExpectation alloc] initWithDescription:@"traitCollectionDidChange"];
   __block UITraitCollection *passedTraitCollection;
   __block MDCBannerView *passedBannerView;
-  banner.traitCollectionDidChangeBlock =
+  self.banner.traitCollectionDidChangeBlock =
       ^(MDCBannerView *_Nonnull bannerView, UITraitCollection *_Nullable previousTraitCollection) {
         [expectation fulfill];
         passedTraitCollection = previousTraitCollection;
@@ -113,12 +123,30 @@
   UITraitCollection *testTraitCollection = [UITraitCollection traitCollectionWithDisplayScale:7];
 
   // When
-  [banner traitCollectionDidChange:testTraitCollection];
+  [self.banner traitCollectionDidChange:testTraitCollection];
 
   // Then
   [self waitForExpectations:@[ expectation ] timeout:1];
   XCTAssertEqual(passedTraitCollection, testTraitCollection);
-  XCTAssertEqual(passedBannerView, banner);
+  XCTAssertEqual(passedBannerView, self.banner);
+}
+
+#pragma mark - MaterialElevation
+
+- (void)testDefaultBaseElevationOverrideIsNegative {
+  // Then
+  XCTAssertLessThan(self.banner.mdc_overrideBaseElevation, 0);
+}
+
+- (void)testSettingOverrideBaseElevationReturnsSetValue {
+  // Given
+  CGFloat expectedBaseElevation = 99;
+
+  // When
+  self.banner.mdc_overrideBaseElevation = expectedBaseElevation;
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.banner.mdc_overrideBaseElevation, expectedBaseElevation, 0.001);
 }
 
 @end

@@ -22,9 +22,10 @@ load(
     "mdc_public_objc_library",
     "mdc_snapshot_objc_library",
     "mdc_snapshot_test",
+    "mdc_unit_test_objc_library",
     "mdc_unit_test_suite",
+    "mdc_unit_test_swift_library",
 )
-load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
 
@@ -35,6 +36,7 @@ mdc_public_objc_library(
     ],
     deps = [
         "//components/ButtonBar",
+        "//components/Elevation",
         "//components/Typography",
         "//components/private/Math",
         "@material_internationalization_ios//:MDFInternationalization",
@@ -83,18 +85,8 @@ mdc_examples_swift_library(
     ],
 )
 
-mdc_objc_library(
+mdc_unit_test_objc_library(
     name = "unit_test_sources",
-    testonly = 1,
-    srcs = native.glob([
-        "tests/unit/*.m",
-        "tests/unit/*.h",
-    ]),
-    sdk_frameworks = [
-        "UIKit",
-        "XCTest",
-    ],
-    visibility = ["//visibility:private"],
     deps = [
         ":ColorThemer",
         ":NavigationBar",
@@ -103,14 +95,8 @@ mdc_objc_library(
     ],
 )
 
-swift_library(
+mdc_unit_test_swift_library(
     name = "unit_test_swift_sources",
-    srcs = native.glob(["tests/unit/*.swift"]),
-    copts = [
-        "-swift-version",
-        "4.2",
-    ],
-    visibility = ["//visibility:private"],
     deps = [
         ":ColorThemer",
         ":NavigationBar",

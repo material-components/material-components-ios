@@ -25,8 +25,9 @@
  Returns the sum of all @c mdc_currentElevation of the superviews going up the view hierarchy
  recursively.
 
- If a view in the hierarchy conforms to @c MDCElevationOveriding the sum of the current total plus
- that value is returned.
+ If a view in the hierarchy conforms to @c MDCElevationOveriding and  @c mdc_overrideBaseElevation
+ is non-negative, then  the sum of the current total plus the value of @c mdc_overrideBaseElevation
+ is returned.
 
  If a @c UIViewController conforms to @c MDCElevatable or @c MDCElevationOveriding then its @c view
  will report the view controllers base elevation.
@@ -43,7 +44,7 @@
 
 /**
  Should be called when the view's @c mdc_currentElevation has changed. Will be called on the
- reciever's @c subviews.
+ receiver's @c subviews.
 
  If a @c UIView views conform to @c MDCElevation then @c mdc_elevationDidChangeBlock: is called.
  */

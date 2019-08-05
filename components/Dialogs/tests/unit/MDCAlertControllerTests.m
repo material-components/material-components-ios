@@ -435,4 +435,72 @@
   XCTAssertEqual(passedAlertController, alertController);
 }
 
+#pragma mark - MaterialElevation
+
+- (void)testDefaultBaseElevationOverrideIsNegative {
+  // Given
+  MDCAlertController *controller = [[MDCAlertController alloc] init];
+  (void)controller;
+
+  // Then
+  XCTAssertLessThan(controller.mdc_overrideBaseElevation, 0);
+}
+
+- (void)testSettingOverrideBaseElevationReturnsSetValue {
+  // Given
+  CGFloat expectedBaseElevation = 99;
+  MDCAlertController *alertController = [[MDCAlertController alloc] init];
+
+  // When
+  alertController.mdc_overrideBaseElevation = expectedBaseElevation;
+
+  // Then
+  XCTAssertEqualWithAccuracy(alertController.mdc_overrideBaseElevation, expectedBaseElevation,
+                             0.001);
+}
+
+- (void)testCurrentElevationMatchesElevationWhenElevationChanges {
+  // When
+  MDCAlertController *alertController = [[MDCAlertController alloc] init];
+  alertController.elevation = 77;
+
+  // Then
+  XCTAssertEqualWithAccuracy(alertController.mdc_currentElevation, alertController.elevation,
+                             0.001);
+}
+
+- (void)testElevationDidChangeBlockCalledWhenElevationChangesValue {
+  // Given
+  MDCAlertController *alertController = [[MDCAlertController alloc] init];
+  alertController.elevation = 5;
+  __block BOOL blockCalled = NO;
+  alertController.mdc_elevationDidChangeBlock =
+      ^(MDCAlertController *controller, CGFloat elevation) {
+        blockCalled = YES;
+      };
+
+  // When
+  alertController.elevation = alertController.elevation + 1;
+
+  // Then
+  XCTAssertTrue(blockCalled);
+}
+
+- (void)testElevationDidChangeBlockNotCalledWhenElevationIsSetWithoutChangingValue {
+  // Given
+  MDCAlertController *alertController = [[MDCAlertController alloc] init];
+  alertController.elevation = 5;
+  __block BOOL blockCalled = NO;
+  alertController.mdc_elevationDidChangeBlock =
+      ^(MDCAlertController *controller, CGFloat elevation) {
+        blockCalled = YES;
+      };
+
+  // When
+  alertController.elevation = alertController.elevation;
+
+  // Then
+  XCTAssertFalse(blockCalled);
+}
+
 @end

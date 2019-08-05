@@ -16,8 +16,8 @@
 
 load(
     "//:material_components_ios.bzl",
-    "mdc_objc_library",
     "mdc_public_objc_library",
+    "mdc_unit_test_objc_library",
     "mdc_unit_test_suite",
 )
 
@@ -32,15 +32,8 @@ mdc_public_objc_library(
     ],
 )
 
-mdc_objc_library(
+mdc_unit_test_objc_library(
     name = "unit_test_sources",
-    testonly = 1,
-    srcs = glob(["tests/unit/*.m"]),
-    hdrs = glob(["tests/unit/*.h"]),
-    sdk_frameworks = [
-        "XCTest",
-    ],
-    visibility = ["//visibility:private"],
     deps = [
         ":Container",
     ],

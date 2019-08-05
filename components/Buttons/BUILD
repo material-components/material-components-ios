@@ -23,7 +23,9 @@ load(
     "mdc_public_objc_library",
     "mdc_snapshot_objc_library",
     "mdc_snapshot_test",
+    "mdc_unit_test_objc_library",
     "mdc_unit_test_suite",
+    "mdc_unit_test_swift_library",
 )
 load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
@@ -34,7 +36,6 @@ mdc_public_objc_library(
     sdk_frameworks = [
         "CoreGraphics",
         "QuartzCore",
-        "UIKit",
     ],
     deps = [
         "//components/Elevation",
@@ -105,8 +106,8 @@ mdc_extension_objc_library(
 
 mdc_objc_library(
     name = "private",
+    testonly = 1,
     hdrs = native.glob(["src/private/*.h"]),
-    includes = ["src/private"],
     visibility = [":test_targets"],
 )
 
@@ -146,20 +147,12 @@ package_group(
     ],
 )
 
-mdc_objc_library(
+mdc_unit_test_objc_library(
     name = "unit_test_sources",
-    testonly = 1,
-    srcs = glob([
-        "tests/unit/*.m",
-        "tests/unit/*.h",
+    extra_srcs = glob([
         "tests/unit/supplemental/*.m",
         "tests/unit/supplemental/*.h",
     ]),
-    sdk_frameworks = [
-        "UIKit",
-        "XCTest",
-    ],
-    visibility = ["//visibility:private"],
     xibs = native.glob(["tests/unit/resources/*.xib"]),
     deps = [
         ":ButtonThemer",
@@ -174,17 +167,11 @@ mdc_objc_library(
     ],
 )
 
-swift_library(
+mdc_unit_test_swift_library(
     name = "unit_test_swift_sources",
-    srcs = native.glob([
-        "tests/unit/*.swift",
+    extra_srcs = native.glob([
         "tests/unit/Theming/*.swift",
     ]),
-    copts = [
-        "-swift-version",
-        "4.2",
-    ],
-    visibility = ["//visibility:private"],
     deps = [
         ":Buttons",
         ":ColorThemer",

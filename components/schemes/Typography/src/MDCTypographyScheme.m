@@ -14,7 +14,6 @@
 
 #import "MDCTypographyScheme.h"
 
-#import <CoreText/CoreText.h>
 #import <MaterialComponents/MaterialTypography.h>
 
 @implementation MDCTypographyScheme
@@ -30,10 +29,6 @@
 
     switch (defaults) {
       case MDCTypographySchemeDefaultsMaterial201804:
-#if defined(__IPHONE_8_2)
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wpartial-availability"
-#pragma clang diagnostic ignored "-Wtautological-pointer-compare"
         _headline1 = [UIFont systemFontOfSize:96.0 weight:UIFontWeightLight];
         _headline2 = [UIFont systemFontOfSize:60.0 weight:UIFontWeightLight];
         _headline3 = [UIFont systemFontOfSize:48.0 weight:UIFontWeightRegular];
@@ -47,29 +42,8 @@
         _caption = [UIFont systemFontOfSize:12.0 weight:UIFontWeightRegular];
         _button = [UIFont systemFontOfSize:14.0 weight:UIFontWeightMedium];
         _overline = [UIFont systemFontOfSize:12.0 weight:UIFontWeightMedium];
-#pragma clang diagnostic pop
-#else
-        // TODO(#1296): Remove after we drop support for iOS 8
-        _headline1 = [UIFont systemFontOfSize:96.0];
-        _headline2 = [UIFont systemFontOfSize:60.0];
-        _headline3 = [UIFont systemFontOfSize:48.0];
-        _headline4 = [UIFont systemFontOfSize:34.0];
-        _headline5 = [UIFont systemFontOfSize:24.0];
-        _headline6 = [UIFont systemFontOfSize:20.0];
-        _subtitle1 = [UIFont systemFontOfSize:16.0];
-        _subtitle2 = [UIFont systemFontOfSize:14.0];
-        _body1 = [UIFont systemFontOfSize:16.0];
-        _body2 = [UIFont systemFontOfSize:14.0];
-        _caption = [UIFont systemFontOfSize:12.0];
-        _button = [UIFont systemFontOfSize:14.0];
-        _overline = [UIFont systemFontOfSize:12.0];
-#endif
         break;
       case MDCTypographySchemeDefaultsMaterial201902:
-#if defined(__IPHONE_8_2)
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wpartial-availability"
-#pragma clang diagnostic ignored "-Wtautological-pointer-compare"
         _headline1 = [UIFont systemFontOfSize:96.0 weight:UIFontWeightLight];
         _headline2 = [UIFont systemFontOfSize:60.0 weight:UIFontWeightLight];
         _headline3 = [UIFont systemFontOfSize:48.0 weight:UIFontWeightRegular];
@@ -83,23 +57,6 @@
         _caption = [UIFont systemFontOfSize:12.0 weight:UIFontWeightRegular];
         _button = [UIFont systemFontOfSize:14.0 weight:UIFontWeightMedium];
         _overline = [UIFont systemFontOfSize:12.0 weight:UIFontWeightMedium];
-#pragma clang diagnostic pop
-#else
-        // TODO(#1296): Remove after we drop support for iOS 8
-        _headline1 = [UIFont systemFontOfSize:96.0];
-        _headline2 = [UIFont systemFontOfSize:60.0];
-        _headline3 = [UIFont systemFontOfSize:48.0];
-        _headline4 = [UIFont systemFontOfSize:34.0];
-        _headline5 = [UIFont systemFontOfSize:24.0];
-        _headline6 = [UIFont systemFontOfSize:20.0];
-        _subtitle1 = [UIFont systemFontOfSize:16.0];
-        _subtitle2 = [UIFont systemFontOfSize:14.0];
-        _body1 = [UIFont systemFontOfSize:16.0];
-        _body2 = [UIFont systemFontOfSize:14.0];
-        _caption = [UIFont systemFontOfSize:12.0];
-        _button = [UIFont systemFontOfSize:14.0];
-        _overline = [UIFont systemFontOfSize:12.0];
-#endif
 
         // Attach a sizing curve to all fonts
         MDCFontScaler *fontScaler =
