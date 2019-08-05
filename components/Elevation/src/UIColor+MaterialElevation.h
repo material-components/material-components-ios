@@ -43,7 +43,5 @@
  */
 - (nonnull UIColor *)mdc_resolvedColorWithTraitCollection:
                          (nonnull UITraitCollection *)traitCollection
-                                                elevation:(CGFloat)elevation
-    API_AVAILABLE(ios(13.0));
-
+                                                elevation:(CGFloat)elevation;
 @end

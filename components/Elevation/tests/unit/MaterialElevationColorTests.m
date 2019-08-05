@@ -232,13 +232,12 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
     UIColor *staticColor = UIColor.blackColor;
     UITraitCollection *traitCollection = [[UITraitCollection alloc] init];
 
-    // When/Then
-    XCTAssertThrowsSpecificNamed(
-        [staticColor performSelector:@selector(mdc_resolvedColorWithTraitCollection:elevation:)
-                          withObject:traitCollection
-                          withObject:@(elevation)],
-        NSException, NSGenericException, @"Expected exception when %@ is called on pre iOS13",
-        NSStringFromSelector(@selector(mdc_resolvedColorWithTraitCollection:elevation:)));
+    // When
+    UIColor *color = [staticColor mdc_resolvedColorWithTraitCollection:traitCollection
+                                                             elevation:elevation];
+
+    // Then
+    [self assertEqualColorsWithFloatPrecisionFirstColor:color secondColor:staticColor];
   }
 }
 
@@ -267,6 +266,34 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
                              secondColor);
   XCTAssertEqualWithAccuracy(fAlpha, sAlpha, 0.001, @"(%@) is not equal to (%@)", firstColor,
                              secondColor);
+}
+
+- (void)testSmoothJumpBetweenElevationToAlphaForValuesCloseToZero {
+  // Given
+  CGFloat firstElevation = (CGFloat)0.01;
+  CGFloat secondElevation = (CGFloat)0;
+
+  // When
+  UIColor *resolvedFirstRGBColor = [self.rgbColor mdc_resolvedColorWithElevation:firstElevation];
+  UIColor *resolvedSecondRGBColor = [self.rgbColor mdc_resolvedColorWithElevation:secondElevation];
+
+  // Then
+  [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedFirstRGBColor
+                                          secondColor:resolvedSecondRGBColor];
+}
+
+- (void)testSmoothJumpBetweenElevationToAlphaForValuesCloseToOne {
+  // Given
+  CGFloat firstElevation = (CGFloat)0.99;
+  CGFloat secondElevation = (CGFloat)1;
+
+  // When
+  UIColor *resolvedFirstRGBColor = [self.rgbColor mdc_resolvedColorWithElevation:firstElevation];
+  UIColor *resolvedSecondRGBColor = [self.rgbColor mdc_resolvedColorWithElevation:secondElevation];
+
+  // Then
+  [self assertEqualColorsWithFloatPrecisionFirstColor:resolvedFirstRGBColor
+                                          secondColor:resolvedSecondRGBColor];
 }
 
 @end

@@ -14,9 +14,9 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MDCItemBar.h"
-#import "MDCItemBarCell.h"
-#import "MDCItemBarStyle.h"
+#import "../../src/private/MDCItemBar.h"
+#import "../../src/private/MDCItemBarCell.h"
+#import "../../src/private/MDCItemBarStyle.h"
 #import "MaterialInk.h"
 #import "MaterialRipple.h"
 #import "MaterialTabs.h"

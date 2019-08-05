@@ -29,16 +29,16 @@ static const NSTimeInterval kLongPressMinimumPressDuration = 0.2;
 static const NSUInteger kLongPressNumberOfTouchesRequired = 1;
 
 /**
- * The transform of the large item view when it is in a transitional state (appearing or
- * dismissing).
+ The transform of the large item view when it is in a transitional state (appearing or
+ dismissing).
  */
-static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
+static CGAffineTransform LargeItemViewAnimationTransitionTransform() {
   return CGAffineTransformScale(CGAffineTransformIdentity, (CGFloat)0.97, (CGFloat)0.97);
 }
 
 @interface MDCBottomNavigationBarController ()
 
-/** The view that hosts the content for the selected view controller **/
+/** The view that hosts the content for the selected view controller. */
 @property(nonatomic, strong) UIView *content;
 
 /** The gesture recognizer for detecting long presses on tab bar items. */
@@ -53,8 +53,8 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
     BOOL navigationBarLongPressRecognizerRegistered;
 
 /**
- * Indicates if the large item view is in the process of dismissing. This is to ensure that the
- * dialog animation is not started again if it is already animating a dismissal.
+ Indicates if the large item view is in the process of dismissing. This is to ensure that the dialog
+ animation is not started again if it is already animating a dismissal.
  */
 @property(nonatomic, getter=isDismissingLargeItemDialog) BOOL dismissingLargeItemView;
 
@@ -309,9 +309,9 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
 }
 
 /**
- * Handles when the navigation bar long press gesture recognizer gesture has been initiated or the
- * touch point was updated.
- * @param point CGPoint The point within @c navigationBar coordinate space.
+ Handles when the navigation bar long press gesture recognizer gesture has been initiated or the
+ touch point was updated.
+ @param point CGPoint The point within @c navigationBar coordinate space.
  */
 - (void)handleNavigationBarLongPressUpdatedForPoint:(CGPoint)point {
   if (!self.isContentSizeCategoryAccessibilityCategory) {
@@ -337,8 +337,8 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
 }
 
 /**
- * Handles when the navigation bar long press gesture recognizer gesture has concluded.
- * @param point CGPoint The point within @c navigationBar coordinate space.
+ Handles when the navigation bar long press gesture recognizer gesture has concluded.
+ @param point CGPoint The point within @c navigationBar coordinate space.
  */
 - (void)handleNavigationBarLongPressEndedForPoint:(CGPoint)point {
   UITabBarItem *item = [self.navigationBar tabBarItemForPoint:point];
@@ -408,8 +408,8 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
 }
 
 /**
- * Deselects the currently set item.  Sets the selectedIndex to NSNotFound, the naviagation bar's
- * selected item to nil, and the selectedViewController to nil.
+ Deselects the currently set item.  Sets the selectedIndex to NSNotFound, the naviagation bar's
+ selected item to nil, and the selectedViewController to nil.
  */
 - (void)deselectCurrentItem {
   _selectedIndex = NSNotFound;
@@ -420,8 +420,8 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
 }
 
 /**
- * Sets the selected view controller to the corresponding index and updates the navigation bar's
- * selected item.
+ Sets the selected view controller to the corresponding index and updates the navigation bar's
+ selected item.
  */
 - (void)updateViewsForSelectedIndex:(NSUInteger)index {
   // Update the selected view controller
@@ -438,8 +438,8 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
 }
 
 /**
- * Hooks up the constraints for the subviews of this controller.  Namely the content view and the
- * navigation bar.
+ Hooks up the constraints for the subviews of this controller.  Namely the content view and the
+ navigation bar.
  */
 - (void)loadConstraints {
   [self loadConstraintsForNavigationBar];
@@ -468,7 +468,7 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
 }
 
 /**
- * Pins the given view to the edges of the content view.
+ Pins the given view to the edges of the content view.
  */
 - (void)addConstraintsForChildViewControllerView:(UIView *)view {
   view.translatesAutoresizingMaskIntoConstraints = NO;
@@ -478,7 +478,7 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
   [view.bottomAnchor constraintEqualToAnchor:self.content.bottomAnchor].active = YES;
 }
 
-/** Maps an array of view controllers to their corrisponding tab bar items **/
+/** Maps an array of view controllers to their corrisponding tab bar items. */
 - (NSArray<UITabBarItem *> *)tabBarItemsForViewControllers:
     (NSArray<UIViewController *> *)viewControllers {
   NSMutableArray<UITabBarItem *> *tabBarItems = [NSMutableArray array];
@@ -498,7 +498,7 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
 }
 
 /**
- * Returns an exception for when the navigation bar's items are changed from outside of this class.
+ Returns an exception for when the navigation bar's items are changed from outside of this class.
  */
 - (NSException *)unauthorizedItemsChangedException {
   NSString *reason = [NSString
@@ -526,7 +526,7 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
   [self.largeItemDialog.centerYAnchor constraintEqualToAnchor:window.centerYAnchor].active = YES;
 
   self.largeItemDialog.layer.opacity = 0;
-  self.largeItemDialog.transform = MDCLargeItemViewAnimationTransitionTransform();
+  self.largeItemDialog.transform = LargeItemViewAnimationTransitionTransform();
   [UIView animateWithDuration:kLargeItemViewAnimationDuration
                    animations:^{
                      self.largeItemDialog.layer.opacity = 1;
@@ -544,7 +544,7 @@ static CGAffineTransform MDCLargeItemViewAnimationTransitionTransform() {
   [UIView animateWithDuration:kLargeItemViewAnimationDuration
       animations:^{
         self.largeItemDialog.layer.opacity = 0;
-        self.largeItemDialog.transform = MDCLargeItemViewAnimationTransitionTransform();
+        self.largeItemDialog.transform = LargeItemViewAnimationTransitionTransform();
       }
       completion:^(BOOL finished) {
         if (finished) {
