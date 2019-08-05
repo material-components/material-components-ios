@@ -35,6 +35,8 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 @interface MDCSlider () <MDCThumbTrackDelegate>
 @property(nonnull, nonatomic, strong)
     UIImpactFeedbackGenerator *feedbackGenerator API_AVAILABLE(ios(10.0));
+@property(nonatomic) CGFloat previousValue;
+@property(nonatomic) BOOL firstValueChange;
 @end
 
 @implementation MDCSlider {
@@ -121,6 +123,8 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
     _hapticsEnabled = NO;
   }
   _shouldEnableHapticsForAllDiscreteValues = NO;
+
+  _firstValueChange = true;
 }
 
 #pragma mark - Color customization methods
@@ -584,12 +588,20 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, self.accessibilityValue);
   if (@available(iOS 10.0, *)) {
     if (self.hapticsEnabled) {
+      BOOL crossesAnchor = (!_firstValueChange) &&
+      (( _previousValue < _thumbTrack.filledTrackAnchorValue && _thumbTrack.filledTrackAnchorValue < _thumbTrack.value) ||
+      (_thumbTrack.value < _thumbTrack.filledTrackAnchorValue && _thumbTrack.filledTrackAnchorValue < _previousValue));
       if (self.shouldEnableHapticsForAllDiscreteValues ||
           _thumbTrack.value == _thumbTrack.minimumValue ||
-          _thumbTrack.value == _thumbTrack.maximumValue) {
+          _thumbTrack.value == _thumbTrack.maximumValue ||
+          crossesAnchor) {
         [self.feedbackGenerator impactOccurred];
       }
     }
+  }
+  self.previousValue = _thumbTrack.value;
+  if (_firstValueChange){
+    _firstValueChange = false;
   }
 }
 
