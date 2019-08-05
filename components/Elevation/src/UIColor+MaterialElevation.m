@@ -33,9 +33,7 @@
     }
   }
 #endif
-  [NSException raise:NSGenericException
-              format:@"%@ is only supported on iOS 13 and above", NSStringFromSelector(_cmd)];
-  return nil;
+  return self;
 }
 
 - (UIColor *)mdc_resolvedColorWithElevation:(CGFloat)elevation {
