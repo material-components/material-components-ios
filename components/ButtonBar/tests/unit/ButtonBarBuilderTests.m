@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #import <XCTest/XCTest.h>
-#import "MDCAppBarButtonBarBuilder.h"
+#import "../../src/private/MDCAppBarButtonBarBuilder.h"
 #import "MaterialButtonBar.h"
 #import "MaterialButtons.h"
 

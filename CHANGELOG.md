@@ -1,3 +1,280 @@
+# 85.12.0
+
+This minor release introduces Material Elevation support for ActionSheet and Banner (Beta). It also includes performance improvements for Ink and Ripple.
+
+## New features
+
+Support for Material Elevation expanded to two more components. APIs to support
+overriding the computed value for `mdc_baseElevation` and to respond to
+elevation changes are available. Assigning an `elevationDidChangeBlock` on a
+supported component enables code to be executed whenever the component's
+elevation changes. This may include state-based elevation changes (like
+pressing on a Chip) or when the component's elevation value is changed
+programmatically.
+
+## Changes
+
+### ActionSheet
+
+* [Add MaterialElevation support (#8111)](https://github.com/material-components/material-components-ios/commit/2feb8f96cda6fc9ab2fc7d6bcb23f1076c2055aa) (Cody Weaver)
+
+### Banner
+
+* [Add MaterialElevation support (#8142)](https://github.com/material-components/material-components-ios/commit/534649a1cd74a65c56a0d605238546796eed54a2) (Cody Weaver)
+
+## Multi-component changes
+
+* [Use static default colors (#8146)](https://github.com/material-components/material-components-ios/commit/4be077a61bfeda44058ebc1f73e2cf8b71a5c65a) (Cody Weaver)
+
+---
+
+# 85.11.0
+
+This minor release introduces Material Elevation support for Bottom Sheet,
+Navigation Bar, Slider, and Tabs. Bottom Sheet removed its broken `-init`
+initializer, and some internal clean-up was done to remove iOS 8 support.
+
+## New features
+
+Support for Material Elevation expanded to several more components. APIs to
+support overriding the computed value for `mdc_baseElevation` and to respond to
+elevation changes are available. Assigning an `elevationDidChangeBlock` on a
+supported component enables code to be executed whenever the component's
+elevation changes. This may include state-based elevation changes (like
+pressing on a Chip) or when the component's elevation value is changed
+programmatically.
+
+## Changes
+
+### ActionSheet
+
+* [Drop iOS 8 work-arounds. (#8120)](https://github.com/material-components/material-components-ios/commit/7bc09cdf8bac90db8acfd38431e7e60f2fec6fd3) (Robert Moore)
+
+### BottomNavigation
+
+* [Test for `additionalSafeAreaInsets` behavior. (#8113)](https://github.com/material-components/material-components-ios/commit/9e936bfb6201c07993119d0b1c2368be7a88d2fe) (Robert Moore)
+
+### BottomSheet
+
+* [Add MaterialElevation support (#8102)](https://github.com/material-components/material-components-ios/commit/606f0386b3a1cead72c7cf05caf187248e1fadc0) (Cody Weaver)
+* [Mark init unavailable (#8108)](https://github.com/material-components/material-components-ios/commit/c336d025e8b09445829a74c10aeea71e6bfbfc1e) (Cody Weaver)
+
+### Elevation
+
+* [Fix spelling typos. (#8114)](https://github.com/material-components/material-components-ios/commit/9ea5f99c122637c6da0be0be666ce095ae6f56de) (Robert Moore)
+
+### NavigationBar
+
+* [Add MaterialElevation support. (#8115)](https://github.com/material-components/material-components-ios/commit/60c60f288cc9eb0e8f87736febdeaf1993ceb79a) (Cody Weaver)
+* [Add doc to note UIBarButtonItem cannot be used in UIPopoverPresentationController. (#8129)](https://github.com/material-components/material-components-ios/commit/4191d03853b20acfe14259d4babddac7e9ee250a) (Wenyu Zhang)
+
+### Slider
+
+* [Add MaterialElevation support (#8127)](https://github.com/material-components/material-components-ios/commit/c6ab74349d0c4dc5b44d69696b3baca4a613276a) (Cody Weaver)
+
+### Tabs
+
+* [Add MaterialElevation support (#8116)](https://github.com/material-components/material-components-ios/commit/a9a0fcadd089e9db5ef45408cf20ee9ab9cf6ebc) (Cody Weaver)
+
+### Typography
+
+* [Drop iOS 8 pragmas. (#8119)](https://github.com/material-components/material-components-ios/commit/ae728261675f67286d4245f8979abc47b5ec5650) (Robert Moore)
+
+### private/Color
+
+* [Fix Math import. (#8104)](https://github.com/material-components/material-components-ios/commit/37d5b8d87cd7fbf9ed455ade98bf2b0ed91ab0a1) (Robert Moore)
+
+### schemes/Typography
+
+* [Remove CoreText dependency. (#8132)](https://github.com/material-components/material-components-ios/commit/c973907f212b58498803db1aa30d26a29c7de1e0) (Robert Moore)
+* [Remove iOS 8 code. (#8118)](https://github.com/material-components/material-components-ios/commit/867fe1bd1e05afca0958d1ecfe55d488bcfd484e) (Robert Moore)
+
+---
+
+# 85.10.0
+
+This minor release expands support for trait collection and Material Elevation
+changes in several components. Bottom Sheet and Navigation Drawer now support
+shadows and elevation.
+
+## Breaking changes
+
+The following breaking changes were made for Beta components that are not
+published to CocoaPods.
+
+*   `MDCBottomNavigationBarController` now positions child view controllers'
+    views behind the Bottom Navigation bar.
+*   `MDCBannerView` now uses a `UITextView` for the message text instead of a
+    `UILabel`.
+
+## New features
+
+Several more components received APIs that allow responding to
+`UITraitCollection` changes. Assigning a `traitCollectionDidBlock` on a
+supported component enables code to be executed in the component's
+`traitCollectionDidChange:` method without subclassing.
+
+Support for Material Elevation expanded to several more components. APIs to
+support overriding the computed value for `mdc_baseElevation` and to respond to
+elevation changes are available. Assigning an `elevationDidChangeBlock` on a
+supported component enables code to be executed whenever the component's
+elevation changes. This may include state-based elevation changes (like
+pressing on a Chip) or when the component's elevation value is changed
+programmatically.
+
+The Bottom Sheet component, specifically `MDCBottomSheetController` now renders
+a shadow by default. This may cause a very slight change in the shading around
+the edges of the view. If desired, non-elevated Bottom Sheets can be configured
+by setting the `elevation` property's value to `0`.
+
+Likewise, the Navigation Drawer's `MDCBottomDrawerPresentationController`
+renders a shadow by default. To disable the shadow or modify the drawer's
+elevation, set the `elevation` property to the desired value.
+
+```objc
+MDCBottomSheetController *bottomSheet =
+      [[MDCBottomSheetController alloc] initWithContentViewController:mySheetContentVC];
+bottomSheet.elevation = 0;
+```
+
+`MDCTabBarView`, currently in Beta, now provides an API to set its preferred
+layout style.
+
+```objc
+MDCTabBarView *tabBarView = [[MDCTabBarView alloc] init];
+tabBarView.preferredLayoutStyle = MDCTabBarViewLayoutStyleScrollable;
+```
+
+## Changes
+
+### AppBar
+
+* [Set headerView elevation when shadow intensity changes (#8101)](https://github.com/material-components/material-components-ios/commit/74a65bc6d092c2a6a5a501217165c406d68a4e04) (Bryan Oltman)
+
+### Banner
+
+* [use UITextView for text instead of UILabel. (#7993)](https://github.com/material-components/material-components-ios/commit/e58c550a212040ef8cedd0b7c14ef4521c46de19) (Wenyu Zhang)
+
+### BottomAppBar
+
+* [Remove no-op tests. (#8072)](https://github.com/material-components/material-components-ios/commit/db4b31e1edb5d1460f4282f0196db7a50187071a) (Robert Moore)
+
+### BottomNavigation
+
+* [Add MDCElevation support. (#8038)](https://github.com/material-components/material-components-ios/commit/4768e610a8054741f8024161a5b3ebe28f69f608) (Robert Moore)
+* [Deprecate `sizeThatFitsIncludesSafeArea`. (#8066)](https://github.com/material-components/material-components-ios/commit/b6eed78eb43deb580348e293ff561663bf738369) (Robert Moore)
+* [Don't set `sizeThatFitsIncludesSafeArea`. (#8065)](https://github.com/material-components/material-components-ios/commit/48e95bbf0e16e361a6e26210790c89650af1bfd7) (Robert Moore)
+* [Make KVO safe for `nil`. (#8083)](https://github.com/material-components/material-components-ios/commit/eed4679d887829fc35a160b080eaad24e7995cb3) (Robert Moore)
+* [Store child VCs in `childViewControllers`. (#7992)](https://github.com/material-components/material-components-ios/commit/9ed52651c4390722d1a6b3024e896e1d3008520a) (Robert Moore)
+* [Test for `mdc_overrideBaseElevation` (#8075)](https://github.com/material-components/material-components-ios/commit/bce0f4937b2c1956afef21cbacd434aef5ab6190) (Robert Moore)
+
+### BottomSheet
+
+* [Add elevation property (#8089)](https://github.com/material-components/material-components-ios/commit/43dddb988e341b88b033419d731e09e2cf003de1) (Cody Weaver)
+
+### Buttons
+
+* [Move MDCButton's defaultContentInset configuration to later in init (#8069)](https://github.com/material-components/material-components-ios/commit/4fcf3cd5a221297d428f965d2f876a139b3a0516) (Bryan Oltman)
+* [Support MaterialElevation. (#8073)](https://github.com/material-components/material-components-ios/commit/403c1b6a295da0fd905f4c82ecca5f365fb4aeee) (Robert Moore)
+
+### Cards
+
+* [CardCell Supports MaterialElevation. (#8079)](https://github.com/material-components/material-components-ios/commit/130289a6d4960fa14d773334e381b773f0fd8ee7) (Yarden Eitan)
+* [MDCCard conforms to MDCElevation and MDCElevationOverride (#8054)](https://github.com/material-components/material-components-ios/commit/f2b12a10ed25b9c209c0b96832703d814a8cf191) (Yarden Eitan)
+
+### Chips
+
+* [Conform to MDCElevatable and MDCElevationOverriding. (#8068)](https://github.com/material-components/material-components-ios/commit/58aa3402bf0a9ca7cbf876622f6aca90f9a78e30) (Robert Moore)
+* [Fix default value for mdc_overrideBaseElevation. (#8076)](https://github.com/material-components/material-components-ios/commit/d93b4e8fd51cef6a95655f5310863ac5b3ef8279) (Robert Moore)
+
+### Dialogs
+
+* [Add MaterialElevation support to AlertController. (#8098)](https://github.com/material-components/material-components-ios/commit/dce2d98f92b38f522e92e379bbf9dc15c1f1aa85) (Robert Moore)
+
+### Elevation
+
+* [Add MDCElevationOverride to umbrella header (#8052)](https://github.com/material-components/material-components-ios/commit/eab643ea8c0afb928b014af3dea88992fd1218b5) (Robert Moore)
+* [Add a UIColor category to support resolving color with elevation. (#8085)](https://github.com/material-components/material-components-ios/commit/c3f8c6adeb4e3425d2997a291a3f616202f6c3c5) (Wenyu Zhang)
+* [Add absoluteElevation property and clarify the elevationDidChange block param (#8071)](https://github.com/material-components/material-components-ios/commit/c980a95d54ca051468945e9a9b77af7bc9acd17b) (Yarden Eitan)
+* [Add elevationDidChange method to UIView category (#8067)](https://github.com/material-components/material-components-ios/commit/e312d88119e34fa3be48c45c4da948223d9cb133) (Cody Weaver)
+* [Doc clarification (#8074)](https://github.com/material-components/material-components-ios/commit/50ba836103621f510cfb70fc6fac9a0d7ec486fc) (Yarden Eitan)
+* [Improve protocol naming (#8055)](https://github.com/material-components/material-components-ios/commit/d9d038130a30fc57be90bc87ff04218a1ba1a721) (Yarden Eitan)
+* [passing self to the elevationDidChangeBlock (#8058)](https://github.com/material-components/material-components-ios/commit/0643370347a8d0b31ef4eb590c84dfa2424d0ed4) (Yarden Eitan)
+* [Add category to UIView (#7969)](https://github.com/material-components/material-components-ios/commit/f335b9627799cffa4259a498086a489df811657a) (Cody Weaver)
+
+### FeatureHighlight
+
+* [Add traitCollectionDidChange block (#8036)](https://github.com/material-components/material-components-ios/commit/a57245ed9102726529daa3397bee6138dfd616c7) (Cody Weaver)
+
+### FlexibleHeader
+
+* [ [FlexibleHeader] Conform to MDCElevatable, MDCElevationOverriding (#8099)](https://github.com/material-components/material-components-ios/commit/657483ea40e354ec47fb41d785c1b2b9b69cb502) (Bryan Oltman)
+
+### HeaderStackView
+
+* [Add traitCollectionDidChange block (#8061)](https://github.com/material-components/material-components-ios/commit/6190a33c72554fbd92254c4281168a07408624ec) (Cody Weaver)
+
+### Ink
+
+* [Add traitCollectionDidChange block (#8064)](https://github.com/material-components/material-components-ios/commit/b19962a7472f615a25bd68fcf87cc71e691e20ea) (Cody Weaver)
+* [Fix documentation for enum types. (#8090)](https://github.com/material-components/material-components-ios/commit/99f2aec3e28a3d1e1378c3b51f02beb03b6fb775) (Robert Moore)
+
+### List
+
+* [Support MaterialElevation. (#8078)](https://github.com/material-components/material-components-ios/commit/cbeb6f5bc77ddf504c504ad1bf610aab97370005) (Robert Moore)
+
+### NavigationDrawer
+
+* [Adds an elevation and shadow to Bottom Drawer. (#8095)](https://github.com/material-components/material-components-ios/commit/7ded6431437dd364bbb6ca0b7ef16f6b6a981ef3) (Yarden Eitan)
+* [Adding MDCElevation support (#8100)](https://github.com/material-components/material-components-ios/commit/b8ea85d21ae3c1affadd68853b8aea4dd79408cc) (Yarden Eitan)
+
+### PageControl
+
+* [Add traitCollectionDidChange block (#8037)](https://github.com/material-components/material-components-ios/commit/61aea173fa31681a84bb7b9e407b1af0ab57a72f) (Cody Weaver)
+
+### ProgressView
+
+* [Add traitCollectionDidChange block (#8035)](https://github.com/material-components/material-components-ios/commit/5ebe48ba4e8f72b5a16d2126ec1ad2d4ca2a8b08) (Cody Weaver)
+
+### Ripple
+
+* [Add traitCollectionDidChange block (#8062)](https://github.com/material-components/material-components-ios/commit/8f6338e0b2d91e31b3df276b66eb6b8ca216a92d) (Cody Weaver)
+* [Fix active ripple layer not using active ripple color. (#8059)](https://github.com/material-components/material-components-ios/commit/013f3a890ee637898975bf36ebdda79b9de8eab0) (Wenyu Zhang)
+
+### Slider
+
+* [Add traitCollectionDidChange block (#8057)](https://github.com/material-components/material-components-ios/commit/118840dfc859c217413f0ebb625105cd6c306f82) (Cody Weaver)
+
+### Snackbar
+
+* [Supports MaterialElevation. (#8081)](https://github.com/material-components/material-components-ios/commit/f1a0665d67119b446d6936c5f8ccd5202a2084ba) (Yarden Eitan)
+
+### Tabs
+
+* [Add traitCollectionDidChange block (#8056)](https://github.com/material-components/material-components-ios/commit/7bd0bdf14d9fc9283303e21c12ebf061066242ff) (Cody Weaver)
+* [Add traitCollectionDidChange block (#8060)](https://github.com/material-components/material-components-ios/commit/0d624ace58b997447c59d2c0bf6ff84dcc206fd7) (Cody Weaver)
+* [Properties before methods. (#8063)](https://github.com/material-components/material-components-ios/commit/6c3877da223db9cca3b56c3d4fd2122e99aa62d5) (Robert Moore)
+
+### TextFields
+
+* [Add traitCollectionDidChange block (#8070)](https://github.com/material-components/material-components-ios/commit/065de4b2884a55bc6ba7bb8b892db08a59d8db39) (Cody Weaver)
+
+### Typography
+
+* [Internal comments to explain font scaling. (#8087)](https://github.com/material-components/material-components-ios/commit/e64c4400356d9eb608add0dd3f7ad7b18322b256) (Robert Moore)
+
+### private/Color
+
+* [add method for regular color blending. (#8077)](https://github.com/material-components/material-components-ios/commit/997b3b2021670b4adddaee3d0abadccc63931df9) (Wenyu Zhang)
+
+## Multi-component changes
+
+* [Add conformance to MDCElevatable, MDCElevationOverriding (#8094)](https://github.com/material-components/material-components-ios/commit/02a707a5b401c8a0321445a77964f0cb38e69440) (Bryan Oltman)
+* [Correct `elevationDidChangeBlock` type. (#8106)](https://github.com/material-components/material-components-ios/commit/1c0827f2ef6c80cecb484931c10cd39c63f60b43) (Robert Moore)
+* [Create umbrella header. (#8091)](https://github.com/material-components/material-components-ios/commit/66435f1b685c363c2ee534d8f2a065cef369b2b0) (Robert Moore)
+
+---
+
 # 85.9.1
 
 This patch release fixes a crash in BottomNavigation when a KVO'd property is assigned `nil`.

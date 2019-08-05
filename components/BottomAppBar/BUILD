@@ -22,6 +22,7 @@ load(
     "mdc_public_objc_library",
     "mdc_snapshot_objc_library",
     "mdc_snapshot_test",
+    "mdc_unit_test_objc_library",
     "mdc_unit_test_suite",
 )
 
@@ -89,19 +90,8 @@ mdc_examples_swift_library(
     ],
 )
 
-mdc_objc_library(
+mdc_unit_test_objc_library(
     name = "unit_test_sources",
-    testonly = 1,
-    srcs = native.glob([
-        "tests/unit/*.m",
-        "tests/unit/*.h",
-    ]),
-    sdk_frameworks = [
-        "UIKit",
-        "XCTest",
-        "CoreGraphics",
-    ],
-    visibility = ["//visibility:private"],
     deps = [
         ":BottomAppBar",
         ":ColorThemer",

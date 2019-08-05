@@ -14,7 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MDCButton+Subclassing.h"
+#import "../../src/private/MDCButton+Subclassing.h"
 #import "MaterialButtons.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialTypography.h"

@@ -586,4 +586,20 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   XCTAssertEqual(passedNavigationBar, navigationBar);
 }
 
+- (void)testDefaultElevations {
+  XCTAssertEqualWithAccuracy(self.navBar.mdc_currentElevation, 0, 0.001);
+  XCTAssertLessThan(self.navBar.mdc_overrideBaseElevation, 0);
+}
+
+- (void)testSettingBaseOverrideBaseElevationReturnsSetValue {
+  // Given
+  CGFloat fakeElevation = 99;
+
+  // When
+  self.navBar.mdc_overrideBaseElevation = fakeElevation;
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.navBar.mdc_overrideBaseElevation, fakeElevation, 0.001);
+}
+
 @end

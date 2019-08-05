@@ -12,10 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <UIKit/UIKit.h>
 #import "MaterialButtons.h"
-
+#import "MaterialElevation.h"
 #import "MaterialShadowElevations.h"
+
+#import <CoreGraphics/CoreGraphics.h>
+#import <UIKit/UIKit.h>
 
 @class MDCAlertAction;
 
@@ -27,7 +29,7 @@
  MDCAlertController class is intended to be used as-is and does not support subclassing. The view
  hierarchy for this class is private and must not be modified.
  */
-@interface MDCAlertController : UIViewController
+@interface MDCAlertController : UIViewController <MDCElevatable, MDCElevationOverriding>
 
 /**
  Convenience constructor to create and return a view controller for displaying an alert to the user.
@@ -128,6 +130,26 @@
     BOOL mdc_adjustsFontForContentSizeCategory;
 
 /**
+ By setting this property to @c YES, the Ripple component will be used instead of Ink
+ to display visual feedback to the user.
+
+ @note This property will eventually be enabled by default, deprecated, and then deleted as part
+ of our migration to Ripple. Learn more at
+ https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple
+
+ Defaults to NO.
+ */
+@property(nonatomic, assign) BOOL enableRippleBehavior;
+
+/**
+ A block that is invoked when the MDCAlertController receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCAlertController *_Nullable alertController,
+     UITraitCollection *_Nullable previousTraitCollection);
+
+/**
  Affects the fallback behavior for when a scaled font is not provided.
 
  If @c YES, the font size will adjust even if a scaled font has not been provided for
@@ -138,13 +160,6 @@
  Default value is @c YES.
  */
 @property(nonatomic, assign) BOOL adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
-
-/** MDCAlertController handles its own transitioning delegate. */
-- (void)setTransitioningDelegate:
-    (_Nullable id<UIViewControllerTransitioningDelegate>)transitioningDelegate NS_UNAVAILABLE;
-
-/** MDCAlertController.modalPresentationStyle is always UIModalPresentationCustom. */
-- (void)setModalPresentationStyle:(UIModalPresentationStyle)modalPresentationStyle NS_UNAVAILABLE;
 
 /**
  The actions that the user can take in response to the alert.
@@ -166,25 +181,12 @@
  */
 - (void)addAction:(nonnull MDCAlertAction *)action;
 
-/**
- By setting this property to @c YES, the Ripple component will be used instead of Ink
- to display visual feedback to the user.
+/** MDCAlertController handles its own transitioning delegate. */
+- (void)setTransitioningDelegate:
+    (_Nullable id<UIViewControllerTransitioningDelegate>)transitioningDelegate NS_UNAVAILABLE;
 
- @note This property will eventually be enabled by default, deprecated, and then deleted as part
- of our migration to Ripple. Learn more at
- https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple
-
- Defaults to NO.
- */
-@property(nonatomic, assign) BOOL enableRippleBehavior;
-
-/**
- A block that is invoked when the MDCAlertController receives a call to @c
- traitCollectionDidChange:. The block is called after the call to the superclass.
- */
-@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
-    (MDCAlertController *_Nullable alertController,
-     UITraitCollection *_Nullable previousTraitCollection);
+/** MDCAlertController.modalPresentationStyle is always UIModalPresentationCustom. */
+- (void)setModalPresentationStyle:(UIModalPresentationStyle)modalPresentationStyle NS_UNAVAILABLE;
 
 @end
 

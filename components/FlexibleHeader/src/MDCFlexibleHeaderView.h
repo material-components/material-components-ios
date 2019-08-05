@@ -14,8 +14,11 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialElevation.h"
+#import "MaterialShadowElevations.h"
+
 typedef void (^MDCFlexibleHeaderChangeContentInsetsBlock)(void);
-typedef void (^MDCFlexibleHeaderShadowIntensityChangeBlock)(CALayer *_Nonnull shadowLayer,
+typedef void (^MDCFlexibleHeaderShadowIntensityChangeBlock)(__kindof CALayer *_Nonnull shadowLayer,
                                                             CGFloat intensity);
 
 /** Mutually exclusive phases that the flexible header view can be in. */
@@ -55,14 +58,14 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderScrollPhase) {
  events are listed in the UIScrollViewDelegate events section.
  */
 IB_DESIGNABLE
-@interface MDCFlexibleHeaderView : UIView
+@interface MDCFlexibleHeaderView : UIView <MDCElevatable, MDCElevationOverriding>
 
 #pragma mark Custom shadow
 
 /**
  Custom shadow shown under flexible header content.
  */
-@property(nonatomic, strong, nullable) CALayer *shadowLayer;
+@property(nonatomic, strong, nullable) __kindof CALayer *shadowLayer;
 
 /** The shadow color of the @c shadowLayer. Defaults to black. */
 @property(nonatomic, copy, nonnull) UIColor *shadowColor;
@@ -70,7 +73,7 @@ IB_DESIGNABLE
 /**
  Sets a custom shadow layer and a block that should be executed when shadow intensity changes.
  */
-- (void)setShadowLayer:(nonnull CALayer *)shadowLayer
+- (void)setShadowLayer:(nonnull __kindof CALayer *)shadowLayer
     intensityDidChangeBlock:(nonnull MDCFlexibleHeaderShadowIntensityChangeBlock)block;
 
 #pragma mark UIScrollViewDelegate events
@@ -385,6 +388,11 @@ IB_DESIGNABLE
 @property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
     (MDCFlexibleHeaderView *_Nonnull flexibleHeaderView,
      UITraitCollection *_Nullable previousTraitCollection);
+
+/**
+ The elevation of the header.
+ */
+@property(nonatomic, assign) MDCShadowElevation elevation;
 
 @end
 

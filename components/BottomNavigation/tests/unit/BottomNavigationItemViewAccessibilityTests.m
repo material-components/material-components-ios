@@ -14,7 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MDCBottomNavigationItemView.h"
+#import "../../src/private/MDCBottomNavigationItemView.h"
 
 @interface BottomNavigationItemViewAccessibilityTests : XCTestCase
 

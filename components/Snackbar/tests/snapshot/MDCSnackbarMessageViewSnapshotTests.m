@@ -18,7 +18,7 @@
 // isn't imported first.
 // clang-format off
 #import "MaterialSnackbar.h"
-#import "MDCSnackbarMessageViewInternal.h"
+#import "../../src/private/MDCSnackbarMessageViewInternal.h"
 // clang-format on
 
 /** The width of the Snackbar for testing. */

@@ -22,7 +22,9 @@ load(
     "mdc_snapshot_objc_library",
     "mdc_snapshot_test",
     "mdc_public_objc_library",
+    "mdc_unit_test_objc_library",
     "mdc_unit_test_suite",
+    "mdc_unit_test_swift_library",
 )
 load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
@@ -72,6 +74,7 @@ mdc_extension_objc_library(
 
 mdc_objc_library(
     name = "privateHeaders",
+    testonly = 1,
     hdrs = glob(["src/*.h"]),
     visibility = ["//visibility:private"],
     deps = [":Chips"],
@@ -105,17 +108,9 @@ mdc_extension_objc_library(
     name = "TypographyThemer",
     deps = [
         ":Chips",
-        "//components/schemes/Typography",
         "//components/Typography",
+        "//components/schemes/Typography",
     ],
-)
-
-mdc_objc_library(
-    name = "private",
-    testonly = 1,
-    hdrs = native.glob(["src/private/*.h"]),
-    includes = ["src/private"],
-    visibility = ["//visibility:private"],
 )
 
 mdc_examples_objc_library(
@@ -147,17 +142,11 @@ mdc_examples_swift_library(
     ],
 )
 
-swift_library(
+mdc_unit_test_swift_library(
     name = "unit_test_swift_sources",
-    srcs = glob([
-        "tests/unit/*.swift",
+    extra_srcs = glob([
         "tests/unit/Theming/*.swift",
     ]),
-    copts = [
-        "-swift-version",
-        "4.2",
-    ],
-    visibility = ["//visibility:private"],
     deps = [
         ":Chips",
         ":Theming",
@@ -167,18 +156,8 @@ swift_library(
     ],
 )
 
-mdc_objc_library(
+mdc_unit_test_objc_library(
     name = "unit_test_sources",
-    testonly = 1,
-    srcs = native.glob([
-        "tests/unit/*.m",
-        "tests/unit/*.h",
-    ]),
-    sdk_frameworks = [
-        "UIKit",
-        "XCTest",
-    ],
-    visibility = ["//visibility:private"],
     deps = [
         ":ChipThemer",
         ":Chips",
@@ -186,7 +165,6 @@ mdc_objc_library(
         ":FontThemer",
         ":ShapeThemer",
         ":TypographyThemer",
-        ":private",
         ":privateHeaders",
         "//components/ShapeLibrary",
         "//components/TextFields:private",
@@ -197,6 +175,7 @@ mdc_unit_test_suite(
     name = "unit_tests",
     deps = [
         ":unit_test_sources",
+        ":unit_test_swift_sources",
     ],
 )
 

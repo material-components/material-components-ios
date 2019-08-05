@@ -39,43 +39,40 @@
 @interface MDCBottomNavigationBarController : UIViewController <MDCBottomNavigationBarDelegate>
 
 /**
- * The bottom navigation bar that hosts the tab bar items.
- * @warning This controller sets itself as the navigation bar's delegate.  If you would like to
- * observe changes to the navigation bar, conform to @c MDCBottomNavigationBarControllerDelegate
- * and set the delegate property of this controller.
+ The bottom navigation bar that hosts the tab bar items.
+ @warning This controller sets itself as the navigation bar's delegate.  If you would like to
+ observe changes to the navigation bar, conform to @c MDCBottomNavigationBarControllerDelegate
+ and set the delegate property of this controller.
  */
 @property(nonatomic, strong, readonly, nonnull) MDCBottomNavigationBar *navigationBar;
 
 /**
- * An array of view controllers to display when their corresponding tab bar item is selected in the
- * navigation bar.  When this property is set, the navigation bar's @c items property will be set to
- * an array composed of the @c tabBarItem property of each view controller in this array.
- * @see UIViewController#tabBarItem
+ An array of view controllers to display when their corresponding tab bar item is selected in the
+ navigation bar.  When this property is set, the navigation bar's @c items property will be set to
+ an array composed of the @c tabBarItem property of each view controller in this array.
+ @see UIViewController#tabBarItem
  */
 @property(nonatomic, copy, nonnull) NSArray<__kindof UIViewController *> *viewControllers;
 
-/**
- * The delegate to observe changes to the navigationBar.
- */
+/** The delegate to observe changes to the navigationBar. */
 @property(nonatomic, weak, nullable) id<MDCBottomNavigationBarControllerDelegate> delegate;
 
 /**
- * The current selected view controller.  When setting this property, the view controller must
- * be in @c viewControllers .
+ The current selected view controller.  When setting this property, the view controller must be in
+ @c viewControllers.
  */
 @property(nonatomic, assign, nullable) __kindof UIViewController *selectedViewController;
 
 /**
- * The index of the current selected tab item.  When setting this property the value must be in
- * bounds of @c viewcontrollers .
- * If no tab item is selected it will be set to NSNotFound.
+ The index of the current selected tab item.  When setting this property the value must be in bounds
+ of @c viewcontrollers. If no tab item is selected it will be set to NSNotFound.
  */
 @property(nonatomic) NSUInteger selectedIndex;
 
 /**
- * If enabled and the user has selected a @c UIContentSizeCategory of @c .AccessibilityMedium or
- * larger, then when the user long-pressed on a tab item a view will be presented with a larger
- * version of the image and title.
+ If enabled and the user has selected a @c UIContentSizeCategory of @c .AccessibilityMedium or
+ larger, then when the user long-pressed on a tab item a view will be presented with a larger
+ version of the image and title.
  */
 @property(nonatomic, getter=isLongPressPopUpViewEnabled) BOOL longPressPopUpViewEnabled;
 
@@ -89,25 +86,25 @@
 @end
 
 /**
- * The protocol for clients of the MDCBottomNavigationBarController to conform to for updates on the
- * bottom navigation bar, manage selection, and other possible actions.
+ The protocol for clients of the MDCBottomNavigationBarController to conform to for updates on the
+ bottom navigation bar, manage selection, and other possible actions.
  */
 @protocol MDCBottomNavigationBarControllerDelegate <NSObject>
 @optional
 /**
- * Called when the user makes a selection in the bottom navigation bar.
- * @warning This method is not called when the selection is set programmatically.
+ Called when the user makes a selection in the bottom navigation bar.
+ @warning This method is not called when the selection is set programmatically.
  */
 - (void)bottomNavigationBarController:
             (nonnull MDCBottomNavigationBarController *)bottomNavigationBarController
               didSelectViewController:(nonnull UIViewController *)viewController;
 
 /**
- * Delegates may implement this method if they wish to determine if the bottom navigation controller
- * should select an item.  If true is returned, the selection will continue as normal.  If false,
- * selection will not proceed.
- * @warning This method is called in response to user action, not programmatically setting the
- * selection.
+ Delegates may implement this method if they wish to determine if the bottom navigation controller
+ should select an item.  If true is returned, the selection will continue as normal. If false,
+ selection will not proceed.
+ @warning This method is called in response to user action, not programmatically setting the
+ selection.
  */
 - (BOOL)bottomNavigationBarController:
             (nonnull MDCBottomNavigationBarController *)bottomNavigationBarController

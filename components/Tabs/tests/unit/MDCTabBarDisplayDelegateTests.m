@@ -14,7 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MDCItemBar.h"
+#import "../../src/private/MDCItemBar.h"
 #import "MDCTabBarDisplayDelegate.h"
 #import "MaterialTabs.h"
 

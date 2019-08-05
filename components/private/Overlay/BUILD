@@ -17,6 +17,7 @@ load(
     "//:material_components_ios.bzl",
     "mdc_objc_library",
     "mdc_public_objc_library",
+    "mdc_unit_test_objc_library",
     "mdc_unit_test_suite",
 )
 
@@ -27,29 +28,17 @@ mdc_public_objc_library(
     sdk_frameworks = [
         "QuartzCore",
         "CoreGraphics",
-        "UIKit",
     ],
 )
 
 mdc_objc_library(
     name = "private",
     hdrs = native.glob(["src/private/*.h"]),
-    includes = ["src/private"],
     visibility = ["//visibility:private"],
 )
 
 mdc_objc_library(
     name = "unit_test_sources",
-    testonly = 1,
-    srcs = native.glob([
-        "tests/unit/*.m",
-        "tests/unit/*.h",
-    ]),
-    sdk_frameworks = [
-        "UIKit",
-        "XCTest",
-    ],
-    visibility = ["//visibility:private"],
     deps = [
         ":Overlay",
         ":private",
