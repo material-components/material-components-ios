@@ -588,19 +588,20 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, self.accessibilityValue);
   if (@available(iOS 10.0, *)) {
     if (self.hapticsEnabled) {
-      BOOL crossesAnchor = (!_firstValueChange) &&
-      (( _previousValue < _thumbTrack.filledTrackAnchorValue && _thumbTrack.filledTrackAnchorValue < _thumbTrack.value) ||
-      (_thumbTrack.value < _thumbTrack.filledTrackAnchorValue && _thumbTrack.filledTrackAnchorValue < _previousValue));
+      BOOL crossesAnchor =
+          (!_firstValueChange) && ((_previousValue < _thumbTrack.filledTrackAnchorValue &&
+                                    _thumbTrack.filledTrackAnchorValue < _thumbTrack.value) ||
+                                   (_thumbTrack.value < _thumbTrack.filledTrackAnchorValue &&
+                                    _thumbTrack.filledTrackAnchorValue < _previousValue));
       if (self.shouldEnableHapticsForAllDiscreteValues ||
           _thumbTrack.value == _thumbTrack.minimumValue ||
-          _thumbTrack.value == _thumbTrack.maximumValue ||
-          crossesAnchor) {
+          _thumbTrack.value == _thumbTrack.maximumValue || crossesAnchor) {
         [self.feedbackGenerator impactOccurred];
       }
     }
   }
   self.previousValue = _thumbTrack.value;
-  if (_firstValueChange){
+  if (_firstValueChange) {
     _firstValueChange = false;
   }
 }
