@@ -51,6 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
                         floatingFont:(UIFont *)floatingFont
                                label:(UILabel *)label
                           labelState:(MDCContainedInputViewLabelState)labelState
+                       labelBehavior:(MDCTextControlLabelBehavior)labelBehavior
                   leftAssistiveLabel:(UILabel *)leftAssistiveLabel
                  rightAssistiveLabel:(UILabel *)rightAssistiveLabel
           underlineLabelDrawPriority:
@@ -59,6 +60,7 @@ NS_ASSUME_NONNULL_BEGIN
             preferredContainerHeight:(CGFloat)preferredContainerHeight
                                isRTL:(BOOL)isRTL
                            isEditing:(BOOL)isEditing;
+
 @end
 
 NS_ASSUME_NONNULL_END

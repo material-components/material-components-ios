@@ -22,6 +22,7 @@
 #import "MDCContainedInputAssistiveLabelView.h"
 #import "MDCContainedInputClearButton.h"
 #import "MDCContainedInputViewLabelAnimator.h"
+#import "MDCContainerStylerBase.h"
 #import "MDCContainerStylerPathDrawingUtils.h"
 #import "MaterialMath.h"
 #import "MaterialTypography.h"
@@ -277,14 +278,17 @@
           respondsToSelector:@selector
           (positioningDelegateWithFoatingFontLineHeight:
                                    normalFontLineHeight:textRowHeight:numberOfTextRows:density
-                                                       :preferredContainerHeight:)]) {
+                                                       :preferredContainerHeight:labelState
+                                                       :labelBehavior:)]) {
     positioningDelegate = [self.containerStyler
         positioningDelegateWithFoatingFontLineHeight:self.floatingFont.lineHeight
                                 normalFontLineHeight:self.normalFont.lineHeight
                                        textRowHeight:self.normalFont.lineHeight
                                     numberOfTextRows:1
                                              density:0
-                            preferredContainerHeight:self.preferredContainerHeight];
+                            preferredContainerHeight:self.preferredContainerHeight
+                                          labelState:self.labelState
+                                       labelBehavior:self.labelBehavior];
   }
   return positioningDelegate;
 }

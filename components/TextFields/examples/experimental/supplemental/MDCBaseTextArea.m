@@ -21,6 +21,7 @@
 
 #import "MDCContainedInputView.h"
 #import "MDCContainedInputViewLabelAnimator.h"
+#import "MDCContainerStylerBase.h"
 #import "MaterialMath.h"
 
 @class MDCBaseInputChipViewTextView;
@@ -418,6 +419,7 @@
                                         floatingFont:self.floatingFont
                                                label:self.label
                                           labelState:self.labelState
+                                       labelBehavior:self.labelBehavior
                                   leftAssistiveLabel:self.leftAssistiveLabel
                                  rightAssistiveLabel:self.rightAssistiveLabel
                           underlineLabelDrawPriority:self.underlineLabelDrawPriority

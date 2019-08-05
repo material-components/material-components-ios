@@ -15,9 +15,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MDCContainedInputView.h"
-
-@interface MDCContainerStylerOutlinedPositioningDelegate : NSObject <NewPositioningDelegate>
-@end
+#import "MDCContainerStylerBase.h"
 
 @interface MDCContainedInputViewColorSchemeOutlined : MDCContainedInputViewColorScheme
 @property(strong, nonatomic) UIColor *outlineColor;

@@ -21,6 +21,13 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MDCBaseTextArea : UIControl <MDCContainedInputView>
+
+/**
+ This property determines the behavior of the textfield's label during editing.
+ @note The default is MDCTextControlLabelBehaviorFloats.
+ */
+@property(nonatomic, assign) MDCTextControlLabelBehavior labelBehavior;
+
 @property(strong, nonatomic, readonly) UITextView *textView;
 @property(strong, nonatomic, readonly) UILabel *label;
 @property(nonatomic, assign) NSInteger numberOfVisibleLines;

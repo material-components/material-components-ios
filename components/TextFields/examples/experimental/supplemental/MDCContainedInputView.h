@@ -17,6 +17,7 @@
 
 #import "MDCContainedInputViewLabelAnimator.h"
 #import "MDCContainedInputViewLabelState.h"
+#import "MDCTextControlLabelBehavior.h"
 
 /**
  A set of Contained Input View states outlined in the Material guidelines. These states overlap with
@@ -234,12 +235,6 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewAssistiveLabelDrawPriority) {
 @protocol MDCContainedInputViewStyler <NSObject>
 
 /**
- The style's positioningDelegate. Different implementations of MDCContainedInputView may need
- different vertical positioning delegates for different stylers.
- */
-@property(strong, nonatomic, nonnull, readonly) id<MDCContainedInputViewStylerPositioningDelegate>
-    positioningDelegate;
-/**
  This method provides a default object conforming to MDCContainedInputViewColorScheming.
  */
 - (nonnull id<MDCContainedInputViewColorScheming>)defaultColorSchemeForState:
@@ -264,14 +259,19 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewAssistiveLabelDrawPriority) {
 
 - (UIFont *_Nonnull)floatingFontWithFont:(nonnull UIFont *)font;
 
-@optional
+/**
+ This method returns an object that tells a Contained Input View where to position it's views
+ vertically.
+ */
 - (nonnull id<NewPositioningDelegate>)
     positioningDelegateWithFoatingFontLineHeight:(CGFloat)floatingLabelHeight
                             normalFontLineHeight:(CGFloat)normalFontLineHeight
                                    textRowHeight:(CGFloat)textRowHeight
                                 numberOfTextRows:(CGFloat)numberOfTextRows
                                          density:(CGFloat)density
-                        preferredContainerHeight:(CGFloat)preferredContainerHeight;
+                        preferredContainerHeight:(CGFloat)preferredContainerHeight
+                                      labelState:(MDCContainedInputViewLabelState)labelState
+                                   labelBehavior:(MDCTextControlLabelBehavior)labelBehavior;
 
 @end
 
@@ -303,10 +303,4 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewAssistiveLabelDrawPriority) {
 @property(nonatomic, assign, readonly) CGFloat paddingAroundAssistiveLabels;
 @property(nonatomic, assign, readonly) CGFloat containerHeight;
 
-@end
-
-/**
- A base implementation of MDCContainedInputViewStyler.
- */
-@interface MDCContainerStylerBase : NSObject <MDCContainedInputViewStyler>
 @end

@@ -22,6 +22,7 @@
 
 #import "MDCContainedInputView.h"
 #import "MDCContainedInputViewLabelAnimator.h"
+#import "MDCContainerStylerBase.h"
 #import "MaterialMath.h"
 #import "MaterialTypography.h"
 
@@ -476,7 +477,8 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
           respondsToSelector:@selector
           (positioningDelegateWithFoatingFontLineHeight:
                                    normalFontLineHeight:textRowHeight:numberOfTextRows:density
-                                                       :preferredContainerHeight:)]) {
+                                                       :preferredContainerHeight:labelState
+                                                       :labelBehavior:)]) {
     CGFloat numberOfVisibleRows = 0;
     if (self.chipsWrap) {
       numberOfVisibleRows = self.preferredNumberOfVisibleRows;
@@ -493,7 +495,9 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
                                        textRowHeight:self.chipRowHeight
                                     numberOfTextRows:numberOfVisibleRows
                                              density:0
-                            preferredContainerHeight:self.preferredContainerHeight];
+                            preferredContainerHeight:self.preferredContainerHeight
+                                          labelState:self.labelState
+                                       labelBehavior:self.labelBehavior];
   }
   return positioningDelegate;
 }
