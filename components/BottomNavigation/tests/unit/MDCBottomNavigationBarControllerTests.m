@@ -419,6 +419,7 @@ static CGFloat const kDefaultExpectationTimeout = 15;
                         childViewController2);
   XCTAssertEqualObjects(self.bottomNavigationBarController.viewControllers[0].title, title1);
   XCTAssertEqualObjects(self.bottomNavigationBarController.viewControllers[1].title, title2);
+}
 
 - (void)testOverwritesAdditionalSafeAreaInsetsOfSelectedViewController {
   // Given
