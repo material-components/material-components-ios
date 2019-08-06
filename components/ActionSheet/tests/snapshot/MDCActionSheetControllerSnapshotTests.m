@@ -700,11 +700,7 @@ static NSString *const kLongTitle5Arabic =
   [self generateSnapshotAndVerifyForView:controller.view];
 }
 
-<<<<<<< HEAD
-- (void)testActionSheetWithCustomActionSheetControllerTintColorAndOneActionCustomTintColor {
-=======
 - (void)testActionSheetWithCustomActionSheetControllerTitleColorAndOneActionCustomTitleColor {
->>>>>>> develop
   // Given
   MDCActionSheetAction *action1 =
       [MDCActionSheetAction actionWithTitle:kShortTitle1Latin
@@ -725,24 +721,15 @@ static NSString *const kLongTitle5Arabic =
   [controller addAction:action3];
 
   // When
-<<<<<<< HEAD
-  controller.actionTintColor = UIColor.blueColor;
-  action2.tintColor = UIColor.orangeColor;
-=======
   controller.actionTextColor = UIColor.blueColor;
   action2.titleColor = UIColor.orangeColor;
->>>>>>> develop
   controller.view.bounds = CGRectMake(0, 0, 320, 200);
 
   // Then
   [self generateSnapshotAndVerifyForView:controller.view];
 }
 
-<<<<<<< HEAD
-- (void)testActionSheetWhenEveryActionHasCustomTintColor {
-=======
 - (void)testActionSheetWhenEveryActionHasCustomTitleColor {
->>>>>>> develop
   // Given
   MDCActionSheetAction *action1 =
       [MDCActionSheetAction actionWithTitle:kShortTitle1Latin
@@ -763,15 +750,68 @@ static NSString *const kLongTitle5Arabic =
   [controller addAction:action3];
 
   // When
-<<<<<<< HEAD
-  action1.tintColor = UIColor.blueColor;
-  action2.tintColor = UIColor.redColor;
-  action3.tintColor = UIColor.greenColor;
-=======
   action1.titleColor = UIColor.blueColor;
   action2.titleColor = UIColor.redColor;
   action3.titleColor = UIColor.greenColor;
->>>>>>> develop
+  controller.view.bounds = CGRectMake(0, 0, 320, 200);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:controller.view];
+}
+
+- (void)testActionSheetWithCustomActionSheetControllerTintColorAndOneActionCustomTintColor {
+  // Given
+  MDCActionSheetAction *action1 =
+      [MDCActionSheetAction actionWithTitle:kShortTitle1Latin
+                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
+                                    handler:nil];
+  MDCActionSheetAction *action2 =
+      [MDCActionSheetAction actionWithTitle:kShortTitle2Latin
+                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
+                                    handler:nil];
+  MDCActionSheetAction *action3 =
+      [MDCActionSheetAction actionWithTitle:kShortTitle3Latin
+                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
+                                    handler:nil];
+  MDCActionSheetController *controller =
+      [MDCActionSheetController actionSheetControllerWithTitle:nil];
+  [controller addAction:action1];
+  [controller addAction:action2];
+  [controller addAction:action3];
+
+  // When
+  controller.actionTintColor = UIColor.blueColor;
+  action2.tintColor = UIColor.orangeColor;
+  controller.view.bounds = CGRectMake(0, 0, 320, 200);
+
+  // Then
+  [self generateSnapshotAndVerifyForView:controller.view];
+}
+
+- (void)testActionSheetWhenEveryActionHasCustomTintColor {
+  // Given
+  MDCActionSheetAction *action1 =
+      [MDCActionSheetAction actionWithTitle:kShortTitle1Latin
+                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
+                                    handler:nil];
+  MDCActionSheetAction *action2 =
+      [MDCActionSheetAction actionWithTitle:kShortTitle2Latin
+                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
+                                    handler:nil];
+  MDCActionSheetAction *action3 =
+      [MDCActionSheetAction actionWithTitle:kShortTitle3Latin
+                                      image:[UIImage mdc_testImageOfSize:CGSizeMake(24, 24)]
+                                    handler:nil];
+  MDCActionSheetController *controller =
+      [MDCActionSheetController actionSheetControllerWithTitle:nil];
+  [controller addAction:action1];
+  [controller addAction:action2];
+  [controller addAction:action3];
+
+  // When
+  action1.tintColor = UIColor.blueColor;
+  action2.tintColor = UIColor.redColor;
+  action3.tintColor = UIColor.greenColor;
   controller.view.bounds = CGRectMake(0, 0, 320, 200);
 
   // Then
