@@ -266,15 +266,6 @@ def mdc_ci_config_setting():
         values = {"define": "ci_mode=autobot"},
     )
 
-def mdc_unit_test_extension_runners_select():
-    """Config select for unit test extension used by mdc continuous integration"""
-    mdc_ci_config_setting()
-    return select({
-        ":kokoro": KOKORO_EXTENSION_IOS_RUNNER_TARGET,
-        ":autobot": AUTOBOT_EXTENSION_IOS_RUNNER_TARGET,
-        "//conditions:default": KOKORO_EXTENSION_IOS_RUNNER_TARGET, 
-    })
-
 def mdc_unit_test_suite(
     name,
     deps = [],
@@ -283,6 +274,7 @@ def mdc_unit_test_suite(
     size = "medium",
     **kwargs):
     """Declare a MDC unit_test_suite and a unit_test_extension using the ios_runners matrix."""
+    mdc_ci_config_setting()
     ios_unit_test_suite(
         name = name,
         deps = deps,
@@ -296,7 +288,11 @@ def mdc_unit_test_suite(
         name = name + '_extension',
         deps = deps,
         minimum_os_version = minimum_os_version,
-        runner = mdc_unit_test_extension_runners_select(),
+        runner = select({
+            ":kokoro": KOKORO_EXTENSION_IOS_RUNNER_TARGET,
+            ":autobot": AUTOBOT_EXTENSION_IOS_RUNNER_TARGET,
+            "//conditions:default": KOKORO_EXTENSION_IOS_RUNNER_TARGET,
+        }),
         visibility = visibility,
         size = size,
         **kwargs)
