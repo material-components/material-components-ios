@@ -316,5 +316,4 @@
   XCTAssertEqualObjects(cell.actionImageView.tintColor, fakeColor);
 }
 
-
 @end
