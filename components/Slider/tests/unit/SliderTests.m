@@ -1225,19 +1225,22 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   self.slider.minimumValue = 0;
   self.slider.maximumValue = 5;
   self.slider.hapticsEnabled = YES;
-  self.slider.numberOfDiscreteValues = 2;
+  self.slider.numberOfDiscreteValues = 6;
   self.slider.shouldEnableHapticsForAllDiscreteValues = YES;
 
   if (@available(iOS 10.0, *)) {
     _mockFeedbackGenerator = [[MockUIImpactFeedbackGenerator alloc] init];
     self.slider.feedbackGenerator = _mockFeedbackGenerator;
     for (NSUInteger i = 0; i < 6; ++i) {
-      self.slider.value = i;
+      //self.slider.value = i;
+      [self.slider setValue:i];
 
       // When
       [self.slider thumbTrackValueChanged:self.slider.thumbTrack];
 
       // Then
+      NSLog(@"EACH");
+      NSLog(@"%lu", i);
       XCTAssertTrue(_mockFeedbackGenerator.impactHasOccurred);
 
       _mockFeedbackGenerator.impactHasOccurred = NO;
@@ -1245,7 +1248,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   }
 }
 
-- (void)testHapticFeedbackAtAnchor {
+- (void)testHapticFeedbackAcrossAnchor {
   // Given
   self.slider.minimumValue = 0;
   self.slider.maximumValue = 9;
@@ -1256,6 +1259,33 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
     _mockFeedbackGenerator = [[MockUIImpactFeedbackGenerator alloc] init];
     self.slider.feedbackGenerator = _mockFeedbackGenerator;
     for (NSUInteger i = 1; i < 9; i++) {
+      self.slider.value = i;
+
+      // When
+      [self.slider thumbTrackValueChanged:self.slider.thumbTrack];
+
+      // Then
+      if (i == 5) {
+        XCTAssertTrue(_mockFeedbackGenerator.impactHasOccurred);
+      } else {
+        XCTAssertFalse(_mockFeedbackGenerator.impactHasOccurred);
+      }
+      _mockFeedbackGenerator.impactHasOccurred = NO;
+    }
+  }
+}
+
+- (void)testHapticFeedbackAtAnchor {
+  // Given
+  self.slider.minimumValue = 0;
+  self.slider.maximumValue = 10;
+  self.slider.hapticsEnabled = YES;
+  self.slider.filledTrackAnchorValue = 5;
+
+  if (@available(iOS 10.0, *)) {
+    _mockFeedbackGenerator = [[MockUIImpactFeedbackGenerator alloc] init];
+    self.slider.feedbackGenerator = _mockFeedbackGenerator;
+    for (NSUInteger i = 1; i < 10; i++) {
       self.slider.value = i;
 
       // When
