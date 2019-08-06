@@ -1232,15 +1232,12 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
     _mockFeedbackGenerator = [[MockUIImpactFeedbackGenerator alloc] init];
     self.slider.feedbackGenerator = _mockFeedbackGenerator;
     for (NSUInteger i = 0; i < 6; ++i) {
-      //self.slider.value = i;
-      [self.slider setValue:i];
+      self.slider.value = i;
 
       // When
       [self.slider thumbTrackValueChanged:self.slider.thumbTrack];
 
       // Then
-      NSLog(@"EACH");
-      NSLog(@"%lu", i);
       XCTAssertTrue(_mockFeedbackGenerator.impactHasOccurred);
 
       _mockFeedbackGenerator.impactHasOccurred = NO;

@@ -124,7 +124,7 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   }
   _shouldEnableHapticsForAllDiscreteValues = NO;
 
-  _firstValueChange = true;
+  _firstValueChange = YES;
 }
 
 #pragma mark - Color customization methods
@@ -602,7 +602,7 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   }
   self.previousValue = _thumbTrack.value;
   if (_firstValueChange) {
-    _firstValueChange = false;
+    _firstValueChange = NO;
   }
 }
 
