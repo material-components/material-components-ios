@@ -178,4 +178,20 @@
   XCTAssertEqual(cell.actionLabel.accessibilityLabel, action.accessibilityLabel);
 }
 
+- (void)testSetActionItemColor {
+  // Given
+  UIColor *fakeColor = UIColor.orangeColor;
+  MDCActionSheetAction *action = [MDCActionSheetAction actionWithTitle:@"Foo" image:nil handler:nil];
+  [self.actionSheet addAction:action];
+  
+  // When
+  action.titleColor = fakeColor;
+  [self.actionSheet.view setNeedsLayout];
+  [self.actionSheet.view layoutIfNeeded];
+  
+  // Then
+  MDCActionSheetItemTableViewCell *cell = [MDCActionSheetTestHelper getCellFromActionSheet:self.actionSheet atIndex:0];
+  XCTAssertEqualObjects(cell.textLabel.textColor, fakeColor);
+}
+
 @end

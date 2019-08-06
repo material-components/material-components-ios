@@ -264,6 +264,13 @@ typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
  */
 @property(nonatomic, nullable, copy) NSString *accessibilityIdentifier;
 
+/**
+ The color of the action title.
+ 
+ @note If no @c titleColor is provided then the @c actionTextColor from the controller will be used.
+ */
+@property(nonatomic, copy, nullable) UIColor *titleColor;
+
 @end
 
 @interface MDCActionSheetController (ToBeDeprecated)
