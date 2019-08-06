@@ -720,16 +720,16 @@ static NSString *const kLongTitle5Arabic =
   [controller addAction:action2];
   [controller addAction:action3];
 
-   // When
+  // When
   controller.actionTintColor = UIColor.blueColor;
   action2.tintColor = UIColor.orangeColor;
   controller.view.bounds = CGRectMake(0, 0, 320, 200);
 
-   // Then
+  // Then
   [self generateSnapshotAndVerifyForView:controller.view];
 }
 
- - (void)testActionSheetWhenEveryActionHasCustomTintColor {
+- (void)testActionSheetWhenEveryActionHasCustomTintColor {
   // Given
   MDCActionSheetAction *action1 =
       [MDCActionSheetAction actionWithTitle:kShortTitle1Latin
@@ -749,15 +749,14 @@ static NSString *const kLongTitle5Arabic =
   [controller addAction:action2];
   [controller addAction:action3];
 
-   // When
+  // When
   action1.tintColor = UIColor.blueColor;
   action2.tintColor = UIColor.redColor;
   action3.tintColor = UIColor.greenColor;
   controller.view.bounds = CGRectMake(0, 0, 320, 200);
 
-   // Then
+  // Then
   [self generateSnapshotAndVerifyForView:controller.view];
 }
-
 
 @end
