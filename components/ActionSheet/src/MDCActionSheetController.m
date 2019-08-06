@@ -56,7 +56,12 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
                                                        handler:self.completionHandler];
   action.accessibilityIdentifier = self.accessibilityIdentifier;
   action.accessibilityLabel = self.accessibilityLabel;
+  action.titleColor = self.titleColor;
   return action;
+}
+
+- (void)setTitleColor:(UIColor *)titleColor {
+  _titleColor = [titleColor copy];
 }
 
 @end
@@ -313,7 +318,7 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
   cell.tintColor = self.actionTintColor;
   cell.imageRenderingMode = self.imageRenderingMode;
   cell.addLeadingPadding = self.addLeadingPaddingToCell;
-  cell.actionTextColor = self.actionTextColor;
+  cell.actionTextColor = action.titleColor ?: self.actionTextColor;
   return cell;
 }
 
