@@ -1245,6 +1245,33 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   }
 }
 
+- (void)testHapticFeedbackAtAnchor {
+  // Given
+  self.slider.minimumValue = 0;
+  self.slider.maximumValue = 9;
+  self.slider.hapticsEnabled = YES;
+  self.slider.filledTrackAnchorValue = 4.5;
+
+  if (@available(iOS 10.0, *)) {
+    _mockFeedbackGenerator = [[MockUIImpactFeedbackGenerator alloc] init];
+    self.slider.feedbackGenerator = _mockFeedbackGenerator;
+    for (NSUInteger i = 1; i < 9; i++) {
+      self.slider.value = i;
+
+      // When
+      [self.slider thumbTrackValueChanged:self.slider.thumbTrack];
+
+      // Then
+      if (i == 5) {
+        XCTAssertTrue(_mockFeedbackGenerator.impactHasOccurred);
+      } else {
+        XCTAssertFalse(_mockFeedbackGenerator.impactHasOccurred);
+      }
+      _mockFeedbackGenerator.impactHasOccurred = NO;
+    }
+  }
+}
+
 - (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
   // Given
   XCTestExpectation *expectation =
