@@ -181,17 +181,70 @@
 - (void)testSetActionItemColor {
   // Given
   UIColor *fakeColor = UIColor.orangeColor;
-  MDCActionSheetAction *action = [MDCActionSheetAction actionWithTitle:@"Foo" image:nil handler:nil];
+  MDCActionSheetAction *action = [MDCActionSheetAction actionWithTitle:@"Foo"
+                                                                 image:nil
+                                                               handler:nil];
   [self.actionSheet addAction:action];
-  
+
   // When
   action.titleColor = fakeColor;
-  [self.actionSheet.view setNeedsLayout];
-  [self.actionSheet.view layoutIfNeeded];
-  
+
   // Then
-  MDCActionSheetItemTableViewCell *cell = [MDCActionSheetTestHelper getCellFromActionSheet:self.actionSheet atIndex:0];
-  XCTAssertEqualObjects(cell.textLabel.textColor, fakeColor);
+  MDCActionSheetItemTableViewCell *cell =
+      [MDCActionSheetTestHelper getCellFromActionSheet:self.actionSheet atIndex:0];
+  XCTAssertEqualObjects(cell.actionLabel.textColor, fakeColor);
+}
+
+- (void)testSetActionItemColorForOnlyOneCell {
+  // Given
+  UIColor *fakeCellColor = UIColor.orangeColor;
+  UIColor *fakeControllerColor = UIColor.blueColor;
+  MDCActionSheetAction *actionOne = [MDCActionSheetAction actionWithTitle:@"Foo"
+                                                                    image:nil
+                                                                  handler:nil];
+  MDCActionSheetAction *actionTwo = [MDCActionSheetAction actionWithTitle:@"Bar"
+                                                                    image:nil
+                                                                  handler:nil];
+  MDCActionSheetAction *actionThree = [MDCActionSheetAction actionWithTitle:@"Baz"
+                                                                      image:nil
+                                                                    handler:nil];
+  [self.actionSheet addAction:actionOne];
+  [self.actionSheet addAction:actionTwo];
+  [self.actionSheet addAction:actionThree];
+
+  // When
+  actionTwo.titleColor = fakeCellColor;
+  self.actionSheet.actionTextColor = fakeControllerColor;
+
+  // Then
+  NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheet];
+  for (NSUInteger index = 0; index < cells.count; ++index) {
+    MDCActionSheetItemTableViewCell *cell = cells[index];
+    if (index == 1) {
+      XCTAssertEqualObjects(cell.actionLabel.textColor, fakeCellColor);
+    } else {
+      XCTAssertEqualObjects(cell.actionLabel.textColor, fakeControllerColor);
+    }
+  }
+}
+
+- (void)testSetActionItemColorThenResetToNilFallsBackToControllerColor {
+  // Given
+  UIColor *fakeColor = UIColor.orangeColor;
+  MDCActionSheetAction *action = [MDCActionSheetAction actionWithTitle:@"Foo"
+                                                                 image:nil
+                                                               handler:nil];
+  action.titleColor = UIColor.blueColor;
+  [self.actionSheet addAction:action];
+
+  // When
+  self.actionSheet.actionTextColor = fakeColor;
+  action.titleColor = nil;
+
+  // Then
+  MDCActionSheetItemTableViewCell *cell =
+      [MDCActionSheetTestHelper getCellFromActionSheet:self.actionSheet atIndex:0];
+  XCTAssertEqualObjects(cell.actionLabel.textColor, fakeColor);
 }
 
 @end
