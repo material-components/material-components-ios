@@ -56,7 +56,12 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
                                                        handler:self.completionHandler];
   action.accessibilityIdentifier = self.accessibilityIdentifier;
   action.accessibilityLabel = self.accessibilityLabel;
+  action.tintColor = self.tintColor;
   return action;
+}
+
+- (void)setTintColor:(UIColor *)tintColor {
+  _tintColor = [tintColor copy];
 }
 
 @end
@@ -310,7 +315,7 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
   cell.inkColor = self.inkColor;
   cell.rippleColor = self.rippleColor;
   cell.enableRippleBehavior = self.enableRippleBehavior;
-  cell.tintColor = self.actionTintColor;
+  cell.tintColor = action.tintColor ?: self.actionTintColor;
   cell.imageRenderingMode = self.imageRenderingMode;
   cell.addLeadingPadding = self.addLeadingPaddingToCell;
   cell.actionTextColor = self.actionTextColor;

@@ -274,6 +274,13 @@ typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
  */
 @property(nonatomic, nullable, copy) NSString *accessibilityIdentifier;
 
+/**
+ The tint color of the action.
+
+ @note If no @c tintColor is provided then the @c actionTintColor from the controller will be used.
+ */
+@property(nonatomic, copy, nullable) UIColor *tintColor;
+
 @end
 
 @interface MDCActionSheetController (ToBeDeprecated)
