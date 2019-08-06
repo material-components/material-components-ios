@@ -376,7 +376,8 @@ run_bazel() {
   bazel $COMMAND $TARGET --xcode_version $xcode_version --ios_minimum_os=9.0 \
     --ios_multi_cpus=i386,x86_64 $extra_args $verbosity_args \
     --test_env="FB_REFERENCE_IMAGE_DIR=$snapshot_dir" \
-    --test_env="IMAGE_DIFF_DIR=$tmp_img_dir"
+    --test_env="IMAGE_DIFF_DIR=$tmp_img_dir" \
+    --define ci_mode=kokoro
 }
 
 run_cocoapods() {
