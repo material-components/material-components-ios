@@ -260,6 +260,13 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   self.bottomDrawerContainerViewController.drawerShadowColor = drawerShadowColor;
 }
 
+- (void)setMaximumInitialDrawerHeight:(CGFloat)maximumInitialDrawerHeight {
+  _maximumInitialDrawerHeight = maximumInitialDrawerHeight;
+
+  self.bottomDrawerContainerViewController.maximumInitialDrawerHeight =
+      self.maximumInitialDrawerHeight;
+}
+
 - (BOOL)contentReachesFullscreen {
   return self.bottomDrawerContainerViewController.contentReachesFullscreen;
 }
