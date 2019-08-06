@@ -444,7 +444,7 @@ static const CGFloat kLayerAnimationDuration = (CGFloat)0.2;
   return @"thickUnderlineGrowKey";
 }
 
-- (id<NewPositioningDelegate>)
+- (id<MDCContainerStylerPositioningDelegate>)
     positioningDelegateWithFoatingFontLineHeight:(CGFloat)floatingLabelHeight
                             normalFontLineHeight:(CGFloat)normalFontLineHeight
                                    textRowHeight:(CGFloat)textRowHeight

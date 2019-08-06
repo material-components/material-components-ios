@@ -93,7 +93,7 @@ static const CGFloat kGradientBlurLength = 6;
         preferredNumberOfVisibleRows:(CGFloat)preferredNumberOfVisibleRows
                                isRTL:(BOOL)isRTL
                            isEditing:(BOOL)isEditing {
-  id<NewPositioningDelegate> positioningDelegate =
+  id<MDCContainerStylerPositioningDelegate> positioningDelegate =
       [containerStyler positioningDelegateWithFoatingFontLineHeight:floatingFont.lineHeight
                                                normalFontLineHeight:font.lineHeight
                                                       textRowHeight:font.lineHeight
@@ -342,7 +342,7 @@ static const CGFloat kGradientBlurLength = 6;
                                        floatingLabelMaxY:(CGFloat)floatingLabelMaxY
                                            bottomPadding:(CGFloat)bottomPadding
                                      positioningDelegate:
-                                         (id<NewPositioningDelegate>)positioningDelegate {
+                                         (id<MDCContainerStylerPositioningDelegate>)positioningDelegate {
   CGFloat topFadeStart = floatingLabelMaxY / viewHeight;
   if (topFadeStart <= 0) {
     topFadeStart = 0;

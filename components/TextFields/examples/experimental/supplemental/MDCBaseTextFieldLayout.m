@@ -30,7 +30,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
 
 - (instancetype)initWithTextFieldSize:(CGSize)textFieldSize
                       containerStyler:(id<MDCContainedInputViewStyler>)containerStyler
-                  positioningDelegate:(id<NewPositioningDelegate>)positioningDelegate
+                  positioningDelegate:(id<MDCContainerStylerPositioningDelegate>)positioningDelegate
                                  text:(NSString *)text
                           placeholder:(NSString *)placeholder
                                  font:(UIFont *)font
@@ -84,7 +84,7 @@ static const CGFloat kHorizontalPadding = (CGFloat)12.0;
 
 - (void)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize
                          containerStyler:(id<MDCContainedInputViewStyler>)containerStyler
-                     positioningDelegate:(id<NewPositioningDelegate>)positioningDelegate
+                     positioningDelegate:(id<MDCContainerStylerPositioningDelegate>)positioningDelegate
                                     text:(NSString *)text
                              placeholder:(NSString *)placeholder
                                     font:(UIFont *)font

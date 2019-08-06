@@ -18,7 +18,7 @@
 #import "MDCContainerStylerBase.h"
 #import "MDCTextControlLabelBehavior.h"
 
-@interface MDCContainerStylerBasePositioningDelegate : NSObject <NewPositioningDelegate>
+@interface MDCContainerStylerBasePositioningDelegate : NSObject <MDCContainerStylerPositioningDelegate>
 
 @property(nonatomic, assign, readonly) CGFloat paddingBetweenTopAndFloatingLabel;
 @property(nonatomic, assign, readonly) CGFloat paddingBetweenTopAndNormalLabel;

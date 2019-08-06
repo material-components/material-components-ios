@@ -39,7 +39,7 @@ static const CGFloat kGradientBlurLength = 6;
 
 - (instancetype)initWithSize:(CGSize)size
                      containerStyler:(id<MDCContainedInputViewStyler>)containerStyler
-                 positioningDelegate:(id<NewPositioningDelegate>)positioningDelegate
+                 positioningDelegate:(id<MDCContainerStylerPositioningDelegate>)positioningDelegate
                                 text:(NSString *)text
                          placeholder:(NSString *)placeholder
                                 font:(UIFont *)font
@@ -92,7 +92,7 @@ static const CGFloat kGradientBlurLength = 6;
 
 - (void)calculateLayoutWithSize:(CGSize)size
                      containerStyler:(id<MDCContainedInputViewStyler>)containerStyler
-                 positioningDelegate:(id<NewPositioningDelegate>)positioningDelegate
+                 positioningDelegate:(id<MDCContainerStylerPositioningDelegate>)positioningDelegate
                                 text:(NSString *)text
                          placeholder:(NSString *)placeholder
                                 font:(UIFont *)font

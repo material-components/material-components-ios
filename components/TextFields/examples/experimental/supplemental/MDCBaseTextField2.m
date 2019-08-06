@@ -272,8 +272,8 @@
   return clearButtonFrame;
 }
 
-- (id<NewPositioningDelegate>)createPositioningDelegate {
-  id<NewPositioningDelegate> positioningDelegate = nil;
+- (id<MDCContainerStylerPositioningDelegate>)createPositioningDelegate {
+  id<MDCContainerStylerPositioningDelegate> positioningDelegate = nil;
   if ([self.containerStyler
           respondsToSelector:@selector
           (positioningDelegateWithFoatingFontLineHeight:

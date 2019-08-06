@@ -20,10 +20,6 @@
 #import "MDCContainedInputView.h"
 #import "MDCContainerStylerOutlined.h"
 
-@interface MDCOutlinedTextFieldPositioningDelegate
-    : NSObject <MDCContainedInputViewStylerPositioningDelegate>
-@end
-
 @interface MDCOutlinedTextField ()
 @end
 
@@ -75,50 +71,6 @@
     return outlinedColorScheme.outlineColor;
   }
   return [UIColor clearColor];
-}
-
-@end
-
-@implementation MDCOutlinedTextFieldPositioningDelegate
-
-- (CGFloat)assistiveLabelPaddingWithContainerHeight:(CGFloat)containerHeight {
-  return (CGFloat)0.13 * containerHeight;
-}
-
-- (CGFloat)defaultContainerHeightWithTextHeight:(CGFloat)textHeight {
-  return (CGFloat)3.3 * textHeight;
-}
-
-- (CGFloat)containerHeightWithTextHeight:(CGFloat)textHeight
-                preferredContainerHeight:(CGFloat)preferredContainerHeight {
-  if (preferredContainerHeight > 0) {
-    return preferredContainerHeight;
-  }
-  return [self defaultContainerHeightWithTextHeight:textHeight];
-}
-
-- (CGFloat)floatingLabelMinYWithTextHeight:(CGFloat)textHeight
-                       floatingLabelHeight:(CGFloat)floatingLabelHeight
-                  preferredContainerHeight:(CGFloat)preferredContainerHeight {
-  return 0 - ((CGFloat)0.5 * floatingLabelHeight);
-}
-
-- (CGFloat)textMinYWithFloatingLabelWithTextHeight:(CGFloat)textHeight
-                               floatingLabelHeight:(CGFloat)floatingLabelHeight
-                          preferredContainerHeight:(CGFloat)preferredContainerHeight {
-  CGFloat containerHeight = [self containerHeightWithTextHeight:textHeight
-                                       preferredContainerHeight:preferredContainerHeight];
-  CGFloat offset = containerHeight * (CGFloat)0.5;
-  return offset - ((CGFloat)0.5 * textHeight);
-}
-
-- (CGFloat)textMinYWithoutFloatingLabelWithTextHeight:(CGFloat)textHeight
-                                  floatingLabelHeight:(CGFloat)floatingLabelHeight
-                             preferredContainerHeight:(CGFloat)preferredContainerHeight {
-  CGFloat containerHeight = [self containerHeightWithTextHeight:textHeight
-                                       preferredContainerHeight:preferredContainerHeight];
-  CGFloat offset = containerHeight * (CGFloat)0.5;
-  return offset - ((CGFloat)0.5 * textHeight);
 }
 
 @end

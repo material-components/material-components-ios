@@ -229,8 +229,7 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewAssistiveLabelDrawPriority) {
 @property(strong, nonatomic, nonnull) UIColor *errorColor;
 @end
 
-@protocol MDCContainedInputViewStylerPositioningDelegate;
-@protocol NewPositioningDelegate;
+@protocol MDCContainerStylerPositioningDelegate;
 
 @protocol MDCContainedInputViewStyler <NSObject>
 
@@ -263,7 +262,7 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewAssistiveLabelDrawPriority) {
  This method returns an object that tells a Contained Input View where to position it's views
  vertically.
  */
-- (nonnull id<NewPositioningDelegate>)
+- (nonnull id<MDCContainerStylerPositioningDelegate>)
     positioningDelegateWithFoatingFontLineHeight:(CGFloat)floatingLabelHeight
                             normalFontLineHeight:(CGFloat)normalFontLineHeight
                                    textRowHeight:(CGFloat)textRowHeight
@@ -280,21 +279,7 @@ typedef NS_ENUM(NSUInteger, MDCContainedInputViewAssistiveLabelDrawPriority) {
  helps achieve the variations in floating label position across the filled and outlined styles as
  well as the general density of the views.
  */
-@protocol MDCContainedInputViewStylerPositioningDelegate <NSObject>
-- (CGFloat)assistiveLabelPaddingWithContainerHeight:(CGFloat)containerHeight;
-- (CGFloat)defaultContainerHeightWithTextHeight:(CGFloat)textHeight;
-- (CGFloat)floatingLabelMinYWithTextHeight:(CGFloat)textHeight
-                       floatingLabelHeight:(CGFloat)floatingLabelHeight
-                  preferredContainerHeight:(CGFloat)preferredContainerHeight;
-- (CGFloat)textMinYWithFloatingLabelWithTextHeight:(CGFloat)textHeight
-                               floatingLabelHeight:(CGFloat)floatingLabelHeight
-                          preferredContainerHeight:(CGFloat)preferredContainerHeight;
-- (CGFloat)textMinYWithoutFloatingLabelWithTextHeight:(CGFloat)textHeight
-                                  floatingLabelHeight:(CGFloat)floatingLabelHeight
-                             preferredContainerHeight:(CGFloat)preferredContainerHeight;
-@end
-
-@protocol NewPositioningDelegate <NSObject>
+@protocol MDCContainerStylerPositioningDelegate <NSObject>
 
 @property(nonatomic, assign, readonly) CGFloat paddingBetweenTopAndFloatingLabel;
 @property(nonatomic, assign, readonly) CGFloat paddingBetweenTopAndNormalLabel;

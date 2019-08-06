@@ -67,7 +67,7 @@
   return 0.75;
 }
 
-- (id<NewPositioningDelegate>)
+- (id<MDCContainerStylerPositioningDelegate>)
     positioningDelegateWithFoatingFontLineHeight:(CGFloat)floatingLabelHeight
                             normalFontLineHeight:(CGFloat)normalFontLineHeight
                                    textRowHeight:(CGFloat)textRowHeight

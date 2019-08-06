@@ -471,8 +471,8 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
 
 #pragma mark Layout
 
-- (id<NewPositioningDelegate>)createPositioningDelegate {
-  id<NewPositioningDelegate> positioningDelegate = nil;
+- (id<MDCContainerStylerPositioningDelegate>)createPositioningDelegate {
+  id<MDCContainerStylerPositioningDelegate> positioningDelegate = nil;
   if ([self.containerStyler
           respondsToSelector:@selector
           (positioningDelegateWithFoatingFontLineHeight:

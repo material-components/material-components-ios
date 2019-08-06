@@ -47,7 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithTextFieldSize:(CGSize)textFieldSize
                       containerStyler:(id<MDCContainedInputViewStyler>)containerStyler
-                  positioningDelegate:(id<NewPositioningDelegate>)positioningDelegate
+                  positioningDelegate:(id<MDCContainerStylerPositioningDelegate>)positioningDelegate
                                  text:(NSString *)text
                           placeholder:(NSString *)placeholder
                                  font:(UIFont *)font

@@ -186,7 +186,7 @@ static const CGFloat kFloatingLabelOutlineSidePadding = (CGFloat)5.0;
   return defaultLineWidth;
 }
 
-- (id<NewPositioningDelegate>)
+- (id<MDCContainerStylerPositioningDelegate>)
     positioningDelegateWithFoatingFontLineHeight:(CGFloat)floatingFontLineHeight
                             normalFontLineHeight:(CGFloat)normalFontLineHeight
                                    textRowHeight:(CGFloat)textRowHeight

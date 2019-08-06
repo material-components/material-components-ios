@@ -20,14 +20,6 @@
 #import "MDCContainerStylerOutlined.h"
 #import "MaterialContainerScheme.h"
 
-@interface TextAreaOutlinedPositioningDelegate
-    : NSObject <MDCContainedInputViewStylerPositioningDelegate>
-@end
-
-@interface TextAreaFilledPositioningDelegate
-    : NSObject <MDCContainedInputViewStylerPositioningDelegate>
-@end
-
 /**
  This category is used to style SimpleTextField instances with an MDCContainerScheme.
  */
