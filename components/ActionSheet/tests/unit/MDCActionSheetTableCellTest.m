@@ -187,12 +187,12 @@
   [self.actionSheet addAction:action];
 
   // When
-  action.tintColor = fakeColor;
+  action.titleColor = fakeColor;
 
   // Then
   MDCActionSheetItemTableViewCell *cell =
       [MDCActionSheetTestHelper getCellFromActionSheet:self.actionSheet atIndex:0];
-  XCTAssertEqualObjects(cell.actionImageView.tintColor, fakeColor);
+  XCTAssertEqualObjects(cell.actionLabel.textColor, fakeColor);
 }
 
 - (void)testSetActionItemColorForOnlyOneCell {
@@ -213,17 +213,17 @@
   [self.actionSheet addAction:actionThree];
 
   // When
-  actionTwo.tintColor = fakeCellColor;
-  self.actionSheet.actionTintColor = fakeControllerColor;
+  actionTwo.titleColor = fakeCellColor;
+  self.actionSheet.actionTextColor = fakeControllerColor;
 
   // Then
   NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheet];
   for (NSUInteger index = 0; index < cells.count; ++index) {
     MDCActionSheetItemTableViewCell *cell = cells[index];
     if (index == 1) {
-      XCTAssertEqualObjects(cell.actionImageView.tintColor, fakeCellColor);
+      XCTAssertEqualObjects(cell.actionLabel.textColor, fakeCellColor);
     } else {
-      XCTAssertEqualObjects(cell.actionImageView.tintColor, fakeControllerColor);
+      XCTAssertEqualObjects(cell.actionLabel.textColor, fakeControllerColor);
     }
   }
 }
@@ -238,13 +238,13 @@
   [self.actionSheet addAction:action];
 
   // When
-  self.actionSheet.actionTintColor = fakeColor;
-  action.tintColor = nil;
+  self.actionSheet.actionTextColor = fakeColor;
+  action.titleColor = nil;
 
   // Then
   MDCActionSheetItemTableViewCell *cell =
       [MDCActionSheetTestHelper getCellFromActionSheet:self.actionSheet atIndex:0];
-  XCTAssertEqualObjects(cell.actionImageView.tintColor, fakeColor);
+  XCTAssertEqualObjects(cell.actionLabel.textColor, fakeColor);
 }
 
 @end

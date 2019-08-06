@@ -56,6 +56,7 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
                                                        handler:self.completionHandler];
   action.accessibilityIdentifier = self.accessibilityIdentifier;
   action.accessibilityLabel = self.accessibilityLabel;
+  action.titleColor = self.titleColor;
   action.tintColor = self.tintColor;
   return action;
 }
@@ -314,7 +315,7 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
   cell.tintColor = action.tintColor ?: self.actionTintColor;
   cell.imageRenderingMode = self.imageRenderingMode;
   cell.addLeadingPadding = self.addLeadingPaddingToCell;
-  cell.actionTextColor = self.actionTextColor;
+  cell.actionTextColor = action.titleColor ?: self.actionTextColor;
   return cell;
 }
 
