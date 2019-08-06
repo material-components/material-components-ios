@@ -587,12 +587,14 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   [self sendActionsForControlEvents:UIControlEventValueChanged];
   UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, self.accessibilityValue);
   if (@available(iOS 10.0, *)) {
-    if (self.hapticsEnabled && (_firstValueChange || _previousValue != _thumbTrack.value)) {
+    if (self.hapticsEnabled && _previousValue != _thumbTrack.value){
+      BOOL valueCrossesAboveAnchor = (_previousValue < _thumbTrack.filledTrackAnchorValue &&
+                                      _thumbTrack.filledTrackAnchorValue <= _thumbTrack.value);
+      BOOL valueCrossesBelowAnchor = (_thumbTrack.value <= _thumbTrack.filledTrackAnchorValue &&
+                                      _thumbTrack.filledTrackAnchorValue < _previousValue));
       BOOL crossesAnchor =
-          (!_firstValueChange) && ((_previousValue < _thumbTrack.filledTrackAnchorValue &&
-                                    _thumbTrack.filledTrackAnchorValue <= _thumbTrack.value) ||
-                                   (_thumbTrack.value <= _thumbTrack.filledTrackAnchorValue &&
-                                    _thumbTrack.filledTrackAnchorValue < _previousValue));
+          (!_firstValueChange) && (valueCrossesAboveAnchor ||
+                                   valueCrossesBelowAnchor);
       if (self.shouldEnableHapticsForAllDiscreteValues ||
           _thumbTrack.value == _thumbTrack.minimumValue ||
           _thumbTrack.value == _thumbTrack.maximumValue || crossesAnchor) {
