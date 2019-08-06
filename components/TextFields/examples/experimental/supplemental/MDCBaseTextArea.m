@@ -55,6 +55,7 @@
 
 - (void)commonMDCBaseInputChipViewTextViewInit {
   self.backgroundColor = [UIColor clearColor];
+  self.textContainerInset = UIEdgeInsetsZero;
 }
 
 - (UIFont *)effectiveFont {
@@ -125,7 +126,6 @@
 @synthesize underlineLabelDrawPriority = _underlineLabelDrawPriority;
 @synthesize customAssistiveLabelDrawPriority = _customAssistiveLabelDrawPriority;
 @synthesize containerStyler = _containerStyler;
-@synthesize canFloatingLabelFloat = _canFloatingLabelFloat;
 @synthesize label = _label;
 
 #pragma mark Object Lifecycle
@@ -425,6 +425,7 @@
                           underlineLabelDrawPriority:self.underlineLabelDrawPriority
                     customAssistiveLabelDrawPriority:self.customAssistiveLabelDrawPriority
                             preferredContainerHeight:self.preferredContainerHeight
+                        preferredNumberOfVisibleRows:self.preferredNumberOfVisibleRows
                                                isRTL:self.isRTL
                                            isEditing:self.isFirstResponder];
 }
@@ -553,23 +554,27 @@
   }
 }
 
-#pragma mark Placeholder
+#pragma mark Label
 
-- (MDCContainedInputViewLabelState)determineCurrentLabelState {
-  return [self labelStateWithPlaceholder:self.label.text
-                                    text:self.textView.text
-                   canFloatingLabelFloat:self.canFloatingLabelFloat
-                               isEditing:self.isFirstResponder];
+- (BOOL)canLabelFloat {
+  return self.labelBehavior == MDCTextControlLabelBehaviorFloats;
 }
 
-- (MDCContainedInputViewLabelState)labelStateWithPlaceholder:(NSString *)placeholder
-                                                        text:(NSString *)text
-                                       canFloatingLabelFloat:(BOOL)canFloatingLabelFloat
-                                                   isEditing:(BOOL)isEditing {
-  BOOL hasPlaceholder = placeholder.length > 0;
+- (MDCContainedInputViewLabelState)determineCurrentLabelState {
+  return [self labelStateWithLabelText:self.label.text
+                                  text:self.textView.text
+                         canLabelFloat:self.canLabelFloat
+                             isEditing:self.isFirstResponder];
+}
+
+- (MDCContainedInputViewLabelState)labelStateWithLabelText:(NSString *)labelText
+                                                      text:(NSString *)text
+                                             canLabelFloat:(BOOL)canLabelFloat
+                                                 isEditing:(BOOL)isEditing {
+  BOOL hasLabelText = labelText.length > 0;
   BOOL hasText = text.length > 0;
-  if (hasPlaceholder) {
-    if (canFloatingLabelFloat) {
+  if (hasLabelText) {
+    if (canLabelFloat) {
       if (isEditing) {
         return MDCContainedInputViewLabelStateFloating;
       } else {

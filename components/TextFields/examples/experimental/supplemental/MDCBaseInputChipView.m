@@ -778,7 +778,7 @@ static const CGFloat kChipAnimationDuration = (CGFloat)0.25;
   }
 }
 
-#pragma mark Floating Label
+#pragma mark Label
 
 - (BOOL)canLabelFloat {
   return self.labelBehavior == MDCTextControlLabelBehaviorFloats;

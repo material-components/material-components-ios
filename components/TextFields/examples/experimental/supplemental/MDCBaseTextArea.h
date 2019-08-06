@@ -31,8 +31,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong, nonatomic, readonly) UITextView *textView;
 @property(strong, nonatomic, readonly) UILabel *label;
 @property(nonatomic, assign) NSInteger numberOfVisibleLines;
-@property(nonatomic, assign) NSInteger maxNumberOfLines;
-@property(nonatomic, assign) BOOL canFloatingLabelFloat;
+@property(nonatomic, assign) CGFloat preferredContainerHeight;
+@property(nonatomic, assign) CGFloat preferredNumberOfVisibleRows;
+
+
+
 // TODO: This needs to be replaced with an InputChipView specific label behavior property
 
 @end

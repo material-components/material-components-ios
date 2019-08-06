@@ -181,7 +181,6 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
   [textArea applyOutlinedThemeWithScheme:self.containerScheme];
   textArea.textView.delegate = self;
   textArea.label.text = @"Stuff";
-  textArea.canFloatingLabelFloat = YES;
   textArea.preferredContainerHeight = 150;
   [textArea sizeToFit];
   return textArea;
@@ -192,8 +191,7 @@ static const CGFloat kSideMargin = (CGFloat)20.0;
   [textArea applyFilledThemeWithScheme:self.containerScheme];
   textArea.textView.delegate = self;
   textArea.label.text = @"Stuff";
-  textArea.canFloatingLabelFloat = YES;
-  textArea.preferredContainerHeight = 150;
+  textArea.preferredNumberOfVisibleRows = 4;
   [textArea sizeToFit];
   return textArea;
 }
