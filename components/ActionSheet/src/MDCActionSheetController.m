@@ -60,10 +60,6 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
   return action;
 }
 
-- (void)setTintColor:(UIColor *)tintColor {
-  _tintColor = [tintColor copy];
-}
-
 @end
 
 @interface MDCActionSheetController () <MDCBottomSheetPresentationControllerDelegate,
