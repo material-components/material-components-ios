@@ -60,10 +60,6 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
   return action;
 }
 
-- (void)setTitleColor:(UIColor *)titleColor {
-  _titleColor = [titleColor copy];
-}
-
 @end
 
 @interface MDCActionSheetController () <MDCBottomSheetPresentationControllerDelegate,
